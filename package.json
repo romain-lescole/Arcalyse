@@ -6,6 +6,7 @@
   "scripts": {
     "build": "node build.js",
     "build:propre": "node build.js --no-markers",
+    "livraison": "node build.js --livraison",
     "index": "node tools/index.js",
     "split": "node tools/split.js",
     "smoke": "node tests/smoke.js",

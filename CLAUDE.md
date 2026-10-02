@@ -12,7 +12,8 @@ Application **autonome et 100 % hors ligne** qui charge un fichier `.capella` (X
 6. **Vérification par défaut = `node build.js`** (syntaxe de chaque module). Test navigateur (`node tests/smoke.js`) seulement si l'utilisateur le demande ou après un gros changement transversal. **Pas de capture d'écran** sauf demande.
 7. Ne rien supprimer ou renommer de visible sans le signaler. Ne pas committer sans demande ; proposer un message de commit en fin de tâche.
 8. **Textes** : l'interface est en français ; tout libellé affiché reste écrit en clair dans le code (pas de clés). Après des changements de libellés, régénérer l'inventaire `node tools/textes.js` (ou `--en`). Pour l'anglais, suivre `docs/i18n/LISEZMOI.md` (démarche `_L()` + traduction au build, pièges connus) — ne pas improviser une autre méthode.
-9. Après ajout/déplacement de fonctions : `node tools/index.js` (régénère l'index). Après un changement visible : mettre à jour l'aide `src/html/aide.html`. Décision technique notable : une ligne dans `docs/NOTES-TECHNIQUES.md`.
+9. **Ne jamais modifier `livraison/`** sauf si l'utilisateur demande explicitement une livraison (`node build.js --livraison`).
+10. Après ajout/déplacement de fonctions : `node tools/index.js` (régénère l'index). Après un changement visible : mettre à jour l'aide `src/html/aide.html`. Décision technique notable : une ligne dans `docs/NOTES-TECHNIQUES.md`.
 
 ## Architecture du code
 
@@ -71,6 +72,7 @@ Textes : inventaire **`docs/TEXTES.md`** ; traduction : **`docs/i18n/`**. Détai
 ```
 node build.js                 # assemble dist/relation-map-capella-fr.html (avec repères @@BEGIN/@@END) + contrôles
 node build.js --no-markers    # version sans repères (livraison « propre », identique octet pour octet à l'original découpé)
+node build.js --livraison     # version livrée, sans repères → livraison/relation-map-capella-fr.html (versionnée ; sur demande explicite uniquement)
 node tools/index.js           # régénère docs/INDEX-FONCTIONS.md
 node tools/textes.js [--en]   # inventaire de tous les textes affichés → docs/TEXTES.md + docs/textes.csv (colonne anglaise avec --en)
 node tools/split.js f.html    # réimporte dans src/ un fichier assemblé AVEC repères (modifié ailleurs) ; --dry pour simuler

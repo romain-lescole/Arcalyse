@@ -5,6 +5,8 @@
  *   node build.js                 → dist/relation-map-capella-fr.html (avec repères de modules)
  *   node build.js --no-markers    → même chose, sans les commentaires @@BEGIN/@@END
  *   node build.js --out chemin    → fichier de sortie personnalisé
+ *   node build.js --livraison     → livraison/relation-map-capella-fr.html, sans repères : version livrée,
+ *                                   versionnée dans Git (dist/ n'est pas touché) ; rappelle les commandes git.
  *
  * Contrôles effectués à chaque assemblage :
  *   - syntaxe JavaScript de chaque module (erreur localisée : fichier + ligne) ;
@@ -19,9 +21,11 @@ const fs = require('fs'), path = require('path'), vm = require('vm');
 
 const ROOT = __dirname, SRC = path.join(ROOT, 'src');
 const args = process.argv.slice(2);
-const markers = !args.includes('--no-markers');
+const livraison = args.includes('--livraison');                 // version livrée : sans repères, dans livraison/
+const markers = !livraison && !args.includes('--no-markers');
 const outArg = args.indexOf('--out');
-const OUT = outArg >= 0 ? path.resolve(args[outArg + 1]) : path.join(ROOT, 'dist', 'relation-map-capella-fr.html');
+const OUT = livraison ? path.join(ROOT, 'livraison', 'relation-map-capella-fr.html')
+  : outArg >= 0 ? path.resolve(args[outArg + 1]) : path.join(ROOT, 'dist', 'relation-map-capella-fr.html');
 
 /** Commentaires de repère selon le langage du fichier inclus. */
 function marks(p) {
@@ -72,3 +76,10 @@ fs.writeFileSync(OUT, html);
 const kb = (Buffer.byteLength(html) / 1024).toFixed(0);
 warnings.forEach(w => console.warn('⚠ ' + w));
 console.log(`✔ ${path.relative(ROOT, OUT) || OUT} — ${kb} Ko, ${included.length} fichiers, ${jsFiles.length} modules JS, syntaxe OK${markers ? '' : ' (sans repères)'}`);
+if (livraison) console.log(`
+Livraison prête. Pour la publier (remplacer X.Y par le numéro de version) :
+  git add livraison
+  git commit -m "Livraison vX.Y"
+  git tag vX.Y
+  git push
+  git push --tags`);

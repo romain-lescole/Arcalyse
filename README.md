@@ -77,6 +77,32 @@ Seul le fichier **`dist/relation-map-capella-fr.html`** est nécessaire : il est
 - `node build.js` produit une version avec de petits commentaires de repère `@@BEGIN …@@` (invisibles à l'utilisation, ils permettent de réimporter le fichier, voir §5).
 - `node build.js --no-markers` produit une version sans ces repères, si vous préférez livrer un fichier « propre ».
 
+### Livrer une version
+
+**Pourquoi deux dossiers ?** `dist/` est régénéré à chaque build et changerait à chaque modification : il n'est pas versionné, pour ne pas encombrer l'historique. `livraison/` ne change que lorsque vous décidez de livrer : chaque version livrée y est conservée dans Git et peut être retrouvée.
+
+**Quand livrer** : quand une version est prête à être utilisée sur le PC sécurisé.
+
+**Comment livrer**, depuis le dossier du projet (remplacer `X.Y` par le numéro de version) :
+```
+node build.js --livraison          (ou : npm run livraison)
+git add livraison
+git commit -m "Livraison vX.Y"
+git tag vX.Y
+git push
+git push --tags
+```
+Le build produit `livraison/relation-map-capella-fr.html` sans repères, avec les mêmes contrôles que d'habitude. Il rappelle ces commandes à la fin.
+
+**Récupérer le fichier depuis n'importe quel PC, sans rien installer** :
+1. Ouvrir github.com et se connecter : la connexion est nécessaire car le dépôt est privé.
+2. Ouvrir le dépôt `relation-map-capella`, puis le dossier `livraison`, puis le fichier `relation-map-capella-fr.html`.
+3. Cliquer sur le bouton **« Download raw file »** (icône de téléchargement en haut à droite du fichier).
+
+**Retrouver une ancienne livraison** :
+- sur la page du fichier, le bouton **History** liste chaque livraison : ouvrez celle voulue, puis « Download raw file » ;
+- ou par tag : menu des branches → onglet **Tags** → choisir `vX.Y`, puis aller dans `livraison/`.
+
 ## 5. Revenir travailler dans Claude.ai (conversation classique)
 
 C'est possible à tout moment :
