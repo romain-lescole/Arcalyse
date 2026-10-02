@@ -15,6 +15,7 @@ let capChainsSelectedId=null;     // chaîne affichée dans la vue Relation Map
 let capChainsSearch='';           // filtre texte de la liste des chaînes (vue Relation Map)
 let capChainsEmptyFilter='all';   // contenu : 'all' | 'full' (non vides) | 'empty' (vides : aucune fonction ni échange)
 let capChainsLayerFilter='all';   // filtre de catégorie ARCADIA : 'all' | OA | SA | LA | PA | EPBS | ?
+let capChainsSort='model';        // tri : 'model' (ordre du modèle) | 'fn-desc' | 'fn-asc' (nombre de fonctions)
 let capChainMapOpts={layout:'LR', compact:false, cut:false}; // réglages de la vue Relation Map des chaînes
 let _capChainSvgSeq=0;            // identifiants uniques de marqueurs SVG
 
@@ -372,12 +373,18 @@ function capChainDiagramSvg(chain){
     ${edgesSvg}${nodesSvg}${labelsSvg}</svg>`;
 }
 
-/** Retourne les chaînes après application des filtres de type et de catégorie ARCADIA. */
+/** Retourne les chaînes après application des filtres de type et de catégorie ARCADIA,
+ * triées selon capChainsSort (ordre du modèle conservé à égalité). */
 function capChainsFiltered(){
   if(!capChainsData) capChainsData=capComputeChains();
-  return capChainsData.filter(c=>(capChainsFilter==='all'||c.type===capChainsFilter)
+  const list=capChainsData.filter(c=>(capChainsFilter==='all'||c.type===capChainsFilter)
     && (capChainsLayerFilter==='all'||c.layer===capChainsLayerFilter) && capChainEmptyOk(c));
+  if(capChainsSort==='fn-desc') list.sort((a,b)=>capChainFnCount(b)-capChainFnCount(a));
+  else if(capChainsSort==='fn-asc') list.sort((a,b)=>capChainFnCount(a)-capChainFnCount(b));
+  return list;
 }
+/** Nombre de fonctions (ou de composants pour un Physical Path) impliquées dans la chaîne. */
+function capChainFnCount(c){ return (c.graph&&c.graph.nodes||[]).length; }
 /** Vrai si la chaîne est vide : aucune fonction (ou composant) ni échange impliqué. */
 function capChainIsEmpty(c){ const g=c.graph||{}; return !(g.nodes&&g.nodes.length)&&!(g.edges&&g.edges.length); }
 /** Vrai si la chaîne passe le filtre de contenu (toutes / non vides / vides). */
@@ -419,6 +426,8 @@ function capRenderChains(){
         return `<button class="cap-lf-btn${capChainsLayerFilter===k?' active':''}" data-lf="${k}" title="${capEsc(lv.label)}" style="${capChainsLayerFilter===k?`border-color:${lv.color};color:${lv.color}`:''}">${k==='?'?'Non classées':k} (${cntL(k)})</button>`;}).join('')}</span>
       <span class="tb-grp" style="margin-left:auto" title="Chaîne vide : aucune fonction (ou composant) ni échange impliqué"><span class="tb-grp-l">Contenu</span>
         ${[['all','Toutes'],['full','Non vides'],['empty','Vides']].map(([k,l])=>`<button class="cap-lf-btn${capChainsEmptyFilter===k?' active':''}" data-ef="${k}"${k==='empty'&&cntE('empty')?' style="color:var(--c-warn,#e3b341)"':''}>${l} (${cntE(k)})</button>`).join('')}</span>
+      <span class="tb-grp" title="Tri des chaînes par nombre de fonctions (composants pour les Physical Paths)"><span class="tb-grp-l">Tri</span>
+        ${[['model','Ordre du modèle'],['fn-desc','Fonctions ↓'],['fn-asc','Fonctions ↑']].map(([k,l])=>`<button class="cap-lf-btn${capChainsSort===k?' active':''}" data-chsort="${k}">${l}</button>`).join('')}</span>
     </div>
     <div class="cap-chain-legend">
       <span><i style="background:${CAP_CHAIN_KIND.actor.fill};border-color:${CAP_CHAIN_KIND.actor.stroke}"></i>Porté par un acteur</span>
@@ -431,6 +440,7 @@ function capRenderChains(){
   container.querySelectorAll('[data-cf]').forEach(btn=>btn.addEventListener('click',()=>{capChainsFilter=btn.dataset.cf||'all';capRenderChains();}));
   container.querySelectorAll('[data-lf]').forEach(btn=>btn.addEventListener('click',()=>{capChainsLayerFilter=btn.dataset.lf||'all';capRenderChains();}));
   container.querySelectorAll('[data-ef]').forEach(btn=>btn.addEventListener('click',()=>{capChainsEmptyFilter=btn.dataset.ef||'all';capRenderChains();}));
+  container.querySelectorAll('[data-chsort]').forEach(btn=>btn.addEventListener('click',()=>{capChainsSort=btn.dataset.chsort||'model';capRenderChains();}));
   container.querySelectorAll('[data-sv]').forEach(btn=>btn.addEventListener('click',()=>{capChainsSubView=btn.dataset.sv;capRenderChains();}));
 }
 
