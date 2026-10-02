@@ -683,9 +683,21 @@ function capFillHeight(root){
 window.addEventListener('resize',()=>capFillHeight());
 
 /** Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage. */
+/** Vue « ƒ Fonctions » (menu principal, au même niveau que 🔬 Analyses) : hiérarchie, tableau,
+ * traçabilité, métriques, contrôles et dossier (↻ Recalculer de 🔬 Analyses vide aussi son cache).
+ */
+function capRenderFunctionsView(){
+  const c=document.getElementById('cap-view-functions'); if(!c) return;
+  if(!c._built){
+    c.innerHTML='<div data-hold="fns"></div>';
+    c._built=true;
+  }
+  capRenderFunctions(c.firstElementChild);
+}
+
 function capRenderAnalyses(){
   const c=document.getElementById('cap-view-analyses'); if(!c) return;
-  const SUBS=[['fns','ƒ Fonctions'],['trace','🧬 Traçabilité inter-couches'],['caps','🎯 Capacités & missions'],['states','🔁 Modes & états'],['diff','⚖ Comparaison de versions']];
+  const SUBS=[['trace','🧬 Traçabilité inter-couches'],['caps','🎯 Capacités & missions'],['states','🔁 Modes & états'],['diff','⚖ Comparaison de versions']];
   if(!c._built){
     c.innerHTML=`<div class="phl-toggle-bar">${SUBS.map(([k,l])=>`<button class="phl-toggle-btn" data-an="${k}">${l}</button>`).join('')}
       <button class="phl-export-btn" id="ana-recalc" style="margin-left:auto" title="Vider les résultats et recalculer l'analyse affichée">↻ Recalculer</button></div><div id="ana-box"></div>`;
@@ -700,7 +712,7 @@ function capRenderAnalyses(){
   }
   c.querySelectorAll('[data-an]').forEach(b=>b.classList.toggle('active',b.dataset.an===capAnaSub));
   const box=c.querySelector('#ana-box');
-  const R={fns:capRenderFunctions, trace:capRenderTrace, caps:capRenderCapabilities, states:capRenderStates, diff:capRenderDiff}[capAnaSub];
+  const R={trace:capRenderTrace, caps:capRenderCapabilities, states:capRenderStates, diff:capRenderDiff}[capAnaSub];
   const holder=box.querySelector(`[data-hold="${capAnaSub}"]`)||(()=>{ const d=document.createElement('div'); d.dataset.hold=capAnaSub; box.appendChild(d); return d; })();
   box.querySelectorAll('[data-hold]').forEach(h=>h.style.display=h===holder?'':'none');
   R(holder);

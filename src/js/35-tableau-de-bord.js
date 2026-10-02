@@ -325,64 +325,80 @@ function capDashExample(){
 }
 
 /** Vue « 📐 Tableau de bord » : tableaux de bord personnalisés (indicateurs, graphiques, tableaux, textes),
- * disposition libre par glisser-déposer, redimensionnement à la souris, plusieurs tableaux, exports HTML et JSON.
+ * un onglet par page (＋ pour en ajouter), disposition libre par glisser-déposer, redimensionnement à la souris,
+ * insertion d'un élément entre deux autres, exports HTML et JSON. La position de défilement est conservée
+ * d'un rendu à l'autre tant que l'on reste sur la même page.
  * @param {HTMLElement} box - Conteneur de la sous-vue
  */
 function capRenderDashboard(box){
   if(!capDashStore||!capDashStore.list||!capDashStore.list.length){ const d=capDashExample(); capDashStore={cur:d.id,list:[d]}; capDashSave(); }
   const S=capDashStore, dash=S.list.find(d=>d.id===S.cur)||S.list[0]; S.cur=dash.id;
   const st=box._dash=box._dash||{edit:false};
+  // Défilement conservé lors des modifications (remis en haut seulement au changement de page)
+  const sc0=box.querySelector('.dash-scroll'), keep=st.shown===dash.id;
+  const scTop=keep&&sc0?sc0.scrollTop:0, boxTop=keep?box.scrollTop:0; st.shown=dash.id;
   const cat=capDashCatalog(), byId={}; cat.forEach(m=>byId[m.id]=m);
   const esc=capEsc, cols=dash.cols||4;
   const rerender=()=>capRenderDashboard(box), save=()=>{ capDashSave(); };
   const titleOf=w=>w.t||(w.v==='text'?'':(byId[w.m]||{}).l||w.m);
-  box.innerHTML=`<div class="phl-filter-bar" style="flex-wrap:wrap;margin-bottom:8px;gap:6px">
-      <span class="tb-grp" title="Tableau de bord affiché"><select id="dash-sel" class="phl-filter-input" style="width:auto;max-width:240px" title="Tableau de bord affiché">${S.list.map(d=>`<option value="${esc(d.id)}"${d.id===dash.id?' selected':''}>${esc(d.name)}</option>`).join('')}</select>
-      <button class="cap-lf-btn${st.edit?' active':''}" id="dash-edit" title="Ajouter, configurer, déplacer et redimensionner les éléments">${st.edit?'✔ Terminer':'✏ Modifier'}</button></span>
+  box.innerHTML=`<div class="dash-tabs">${S.list.map(d=>`<div class="dash-tab${d.id===dash.id?' active':''}" data-dtab="${esc(d.id)}" title="${esc(d.name)} — double-clic pour renommer"><span class="dash-tab-n">${esc(d.name)}</span>${d.id===dash.id?'<span class="dash-tab-ren" data-dren title="Renommer la page">✎</span>':''}</div>`).join('')}<button class="dash-tab dash-tab-add" id="dash-new" title="Nouvelle page de tableau de bord">＋</button></div>
+    <div class="phl-filter-bar" style="flex-wrap:wrap;margin-bottom:8px;gap:6px">
+      <span class="tb-grp"><button class="cap-lf-btn${st.edit?' active':''}" id="dash-edit" title="Ajouter, configurer, déplacer et redimensionner les éléments">${st.edit?'✔ Terminer':'✏ Modifier'}</button></span>
       ${st.edit?`<span class="tb-grp" title="Contenu"><button class="cap-lf-btn" id="dash-add" style="border-color:var(--c-accent);color:var(--c-accent)">＋ Ajouter un élément</button></span>
         <span class="tb-grp" title="Mise en page"><input id="dash-name" class="phl-filter-input" value="${esc(dash.name)}" title="Nom du tableau de bord" style="width:170px">
         <select id="dash-cols" class="phl-filter-input" title="Nombre de colonnes de la grille">${[3,4,6].map(n=>`<option value="${n}"${n===cols?' selected':''}>${n} colonnes</option>`).join('')}</select></span>
-        <span class="tb-grp" title="Gestion des tableaux de bord"><button class="cap-lf-btn" id="dash-new" title="Nouveau tableau de bord vide">＋ Nouveau</button>
-        <button class="cap-lf-btn" id="dash-dup" title="Dupliquer ce tableau de bord">⧉ Dupliquer</button>
+        <span class="tb-grp" title="Gestion des pages"><button class="cap-lf-btn" id="dash-dup" title="Dupliquer ce tableau de bord">⧉ Dupliquer</button>
         <button class="cap-lf-btn" id="dash-ex" title="Ajouter un tableau de bord d'exemple">✨ Exemple</button>
         <button class="cap-lf-btn" id="dash-del" title="Supprimer ce tableau de bord"${S.list.length<2?' disabled':''}>🗑 Supprimer</button></span>`:''}
       <span class="tb-grp" style="margin-left:auto" title="Impression">
-        <select id="dash-orient" class="phl-filter-input" style="width:auto" title="Orientation de la page A4"><option value="landscape"${st.orient!=='portrait'?' selected':''}>A4 paysage</option><option value="portrait"${st.orient==='portrait'?' selected':''}>A4 portrait</option></select>
+        <select id="dash-orient" class="phl-filter-input" style="width:auto" title="Orientation de la page A4"><option value="portrait"${st.orient!=='landscape'?' selected':''}>A4 portrait</option><option value="landscape"${st.orient==='landscape'?' selected':''}>A4 paysage</option></select>
         <button class="phl-export-btn" id="dash-print" title="Imprimer au format A4 (ou enregistrer en PDF depuis la fenêtre d'impression)">🖨 Imprimer</button></span>
       <span class="tb-grp" title="Exports">
         <button class="phl-export-btn" id="dash-html" title="Tableau de bord en HTML autonome (tel qu'affiché), imprimable">🌐 HTML</button>
         <button class="phl-export-btn" id="dash-json" title="Exporter la disposition (pour la réutiliser sur un autre modèle)">⬇ JSON</button>
         <button class="phl-export-btn" id="dash-imp" title="Importer une disposition exportée">⬆ JSON</button><input type="file" id="dash-file" accept=".json" style="display:none"></span>
     </div>
-    ${st.edit?'<p class="ana-help">Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML.</p>':''}
+    ${st.edit?'<p class="ana-help">Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d\'un élément pour en insérer un avant lui · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML.</p>':''}
     <div class="dash-scroll" data-fill="6"><div class="dash-grid${st.edit?' dash-edit':''}" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">
       ${dash.widgets.map(w=>`<div class="dash-w" data-wid="${esc(w.id)}" style="grid-column:span ${Math.min(cols,w.w||1)};grid-row:span ${w.h||1}">
         <div class="dash-wh${!st.edit&&w.v==='text'&&!w.t?' dash-wh-none':''}"${st.edit?' draggable="true"':''}>${st.edit?'<span class="ana-dim" style="cursor:grab">⠿</span>':''}<span class="dash-wt" title="${esc(titleOf(w))}">${esc(titleOf(w))}</span>
           ${st.edit?'<span class="dash-wa"><button data-wcfg title="Configurer">⚙</button><button data-wdup title="Dupliquer">⧉</button><button data-wdel title="Retirer">✕</button></span>':''}</div>
-        <div class="dash-wb"></div>${st.edit?'<div class="dash-rz" title="Glisser pour redimensionner"></div>':''}</div>`).join('')}
+        <div class="dash-wb"></div>${st.edit?'<div class="dash-rz" title="Glisser pour redimensionner"></div><button class="dash-ins" data-ins title="Insérer un élément ici">＋</button>':''}</div>`).join('')}
+      ${st.edit&&dash.widgets.length?'<button class="dash-add-tile" data-add-end title="Ajouter un élément à la fin">＋ Ajouter un élément</button>':''}
       ${!dash.widgets.length?`<div class="dash-empty" style="grid-column:1/-1;height:200px;border:1px dashed var(--c-border);border-radius:8px">Tableau de bord vide. ${st.edit?'Cliquez sur « ＋ Ajouter un élément ».':'Cliquez sur « ✏ Modifier » pour ajouter des indicateurs.'}</div>`:''}
     </div></div>`;
   capFillHeight(box);
   const grid=box.querySelector('.dash-grid');
+  box.scrollTop=boxTop; box.querySelector('.dash-scroll').scrollTop=scTop;
   /** Dessine le contenu de chaque élément aux dimensions réelles de son cadre. */
-  const paint=()=>grid.querySelectorAll('.dash-w').forEach(el=>{ const w=dash.widgets.find(x=>x.id===el.dataset.wid), b=el.querySelector('.dash-wb');
+  const paint=()=>grid.querySelectorAll('.dash-w[data-wid]').forEach(el=>{ const w=dash.widgets.find(x=>x.id===el.dataset.wid), b=el.querySelector('.dash-wb');
     b.innerHTML=capDashDraw(w,byId[w.m],b.clientWidth-20,b.clientHeight-12); });
   paint();
   if(box._dashRO) box._dashRO.disconnect();
   if(window.ResizeObserver){ let t, w0=grid.clientWidth; box._dashRO=new ResizeObserver(()=>{ if(Math.abs(grid.clientWidth-w0)<4) return; w0=grid.clientWidth; clearTimeout(t); t=setTimeout(paint,150); }); box._dashRO.observe(grid); }
 
   // Barre d'outils
-  box.querySelector('#dash-sel').onchange=e=>{ S.cur=e.target.value; save(); rerender(); };
+  /** Renommage d'une page dans son onglet : Entrée ou sortie du champ = valider, Échap = annuler. */
+  const renameTab=tab=>{ const d=S.list.find(x=>x.id===tab.dataset.dtab); if(!d||tab.querySelector('input')) return;
+    tab.innerHTML=`<input class="dash-tab-in" value="${esc(d.name)}" title="Nom de la page">`;
+    const inp=tab.querySelector('input'); let done=false; inp.focus(); inp.select();
+    const end=ok=>{ if(done) return; done=true; if(ok){ d.name=inp.value.trim()||d.name; save(); } rerender(); };
+    inp.onkeydown=e=>{ e.stopPropagation(); if(e.key==='Enter') end(true); else if(e.key==='Escape') end(false); };
+    inp.onblur=()=>end(true); inp.onclick=e=>e.stopPropagation(); inp.ondblclick=e=>e.stopPropagation(); };
+  box.querySelectorAll('[data-dtab]').forEach(b=>{
+    b.onclick=()=>{ if(b.dataset.dtab!==S.cur){ S.cur=b.dataset.dtab; save(); rerender(); } };
+    b.ondblclick=()=>renameTab(b); });
+  box.querySelector('[data-dren]')?.addEventListener('click',e=>{ e.stopPropagation(); renameTab(e.target.closest('[data-dtab]')); });
   box.querySelector('#dash-edit').onclick=()=>{ st.edit=!st.edit; rerender(); };
   box.querySelector('#dash-add')?.addEventListener('click',()=>capDashEditor(dash,null,()=>{ save(); rerender(); }));
   box.querySelector('#dash-name')?.addEventListener('change',e=>{ dash.name=e.target.value.trim()||'Tableau de bord'; save(); rerender(); });
   box.querySelector('#dash-cols')?.addEventListener('change',e=>{ dash.cols=+e.target.value; save(); rerender(); });
-  box.querySelector('#dash-new')?.addEventListener('click',()=>{ const d={id:capDashUid(),name:'Nouveau tableau de bord',cols:4,widgets:[]}; S.list.push(d); S.cur=d.id; save(); rerender(); });
+  box.querySelector('#dash-new').onclick=()=>{ const d={id:capDashUid(),name:'Page '+(S.list.length+1),cols:4,widgets:[]}; S.list.push(d); S.cur=d.id; st.edit=true; save(); rerender(); };
   box.querySelector('#dash-dup')?.addEventListener('click',()=>{ const d=JSON.parse(JSON.stringify(dash)); d.id=capDashUid(); d.name+=' (copie)'; d.widgets.forEach(w=>w.id=capDashUid()); S.list.push(d); S.cur=d.id; save(); rerender(); });
   box.querySelector('#dash-ex')?.addEventListener('click',()=>{ const d=capDashExample(); S.list.push(d); S.cur=d.id; save(); rerender(); });
   box.querySelector('#dash-del')?.addEventListener('click',()=>{ if(S.list.length<2||!confirm(`Supprimer le tableau de bord « ${dash.name} » ?`)) return; S.list=S.list.filter(d=>d!==dash); S.cur=S.list[0].id; save(); rerender(); });
   box.querySelector('#dash-orient').onchange=e=>{ st.orient=e.target.value; };
-  box.querySelector('#dash-print').onclick=()=>capDashPrint(dash, byId, st.orient||'landscape');
+  box.querySelector('#dash-print').onclick=()=>capDashPrint(dash, byId, st.orient||'portrait');
   box.querySelector('#dash-json').onclick=()=>capDownloadBlob(new Blob([JSON.stringify({capellaDashboard:1,...dash},null,2)],{type:'application/json'}),(dash.name.replace(/[^\w\-]+/g,'_')||'tableau-de-bord')+'.json');
   box.querySelector('#dash-imp').onclick=()=>box.querySelector('#dash-file').click();
   box.querySelector('#dash-file').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader();
@@ -395,7 +411,7 @@ function capRenderDashboard(box){
       .dash-kpi b{font-size:30px;line-height:1.1}.dash-kpi span{font-size:11px;color:var(--c-dim)}.dash-st{font-size:10px;padding:0 6px;border-radius:8px;border:1px solid currentColor;margin-left:6px}
       .dash-leg{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:11px;color:var(--c-dim)}.dash-leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px}
       .dash-tbl{border-collapse:collapse;width:100%;font-size:11px}.dash-tbl th,.dash-tbl td{border-bottom:1px solid var(--c-border);padding:2px 6px;text-align:left}.dash-txt{font-size:15px;font-weight:600;white-space:pre-wrap}.dash-empty{color:var(--c-dim);font-size:12px}`;
-    const html=`<style>${css}</style><div class="dash-grid" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">${[...grid.querySelectorAll('.dash-w')].map(el=>{ const w=dash.widgets.find(x=>x.id===el.dataset.wid);
+    const html=`<style>${css}</style><div class="dash-grid" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">${[...grid.querySelectorAll('.dash-w[data-wid]')].map(el=>{ const w=dash.widgets.find(x=>x.id===el.dataset.wid);
       return `<div class="dash-w" style="grid-column:span ${Math.min(cols,w.w||1)};grid-row:span ${w.h||1}"><div class="dash-wh">${esc(titleOf(w))}</div><div class="dash-wb">${el.querySelector('.dash-wb').innerHTML}</div></div>`; }).join('')}</div>`;
     capHtmlReport({title:'📐 '+dash.name, subtitle:`${dash.widgets.length} élément(s)`, tabs:[{key:'d',label:'Tableau de bord',html}], filename:(dash.name.replace(/[^\w\-]+/g,'_')||'tableau-de-bord')+'.html'});
   };
@@ -405,6 +421,8 @@ function capRenderDashboard(box){
   const wOf=el=>dash.widgets.find(x=>x.id===el.closest('.dash-w').dataset.wid);
   grid.querySelectorAll('[data-wcfg]').forEach(b=>b.onclick=()=>capDashEditor(dash,wOf(b),()=>{ save(); rerender(); }));
   grid.querySelectorAll('[data-wdup]').forEach(b=>b.onclick=()=>{ const w=wOf(b), c={...JSON.parse(JSON.stringify(w)),id:capDashUid()}; dash.widgets.splice(dash.widgets.indexOf(w)+1,0,c); save(); rerender(); });
+  grid.querySelectorAll('[data-ins]').forEach(b=>b.onclick=()=>capDashEditor(dash,null,()=>{ save(); rerender(); },dash.widgets.indexOf(wOf(b))));
+  grid.querySelector('[data-add-end]')?.addEventListener('click',()=>capDashEditor(dash,null,()=>{ save(); rerender(); }));
   grid.querySelectorAll('[data-wdel]').forEach(b=>b.onclick=()=>{ const w=wOf(b); dash.widgets.splice(dash.widgets.indexOf(w),1); save(); rerender(); });
   // Glisser-déposer : insertion avant / après l'élément survolé
   let drag=null;
@@ -412,7 +430,7 @@ function capRenderDashboard(box){
     h.addEventListener('dragstart',e=>{ drag=wOf(h); e.dataTransfer.effectAllowed='move'; try{ e.dataTransfer.setData('text/plain',drag.id); }catch(_){} h.closest('.dash-w').classList.add('dash-dragging'); });
     h.addEventListener('dragend',()=>{ drag=null; grid.querySelectorAll('.dash-w').forEach(x=>x.classList.remove('dash-dragging','dash-drop-l','dash-drop-r')); });
   });
-  grid.querySelectorAll('.dash-w').forEach(el=>{
+  grid.querySelectorAll('.dash-w[data-wid]').forEach(el=>{
     el.addEventListener('dragover',e=>{ if(!drag) return; e.preventDefault(); const r=el.getBoundingClientRect(), right=e.clientX>r.left+r.width/2;
       el.classList.toggle('dash-drop-r',right); el.classList.toggle('dash-drop-l',!right); });
     el.addEventListener('dragleave',()=>el.classList.remove('dash-drop-l','dash-drop-r'));
@@ -473,14 +491,16 @@ function capDashPrint(dash, byId, orient){
  * @param {object} dash - Tableau de bord
  * @param {object|null} w0 - Élément à configurer (null = ajout)
  * @param {Function} done - Rappel après validation
+ * @param {number} [at] - Position d'insertion du nouvel élément (fin du tableau si absente)
  */
-function capDashEditor(dash,w0,done){
+function capDashEditor(dash,w0,done,at){
   const cat=capDashCatalog(), esc=capEsc, cols=dash.cols||4;
   const w=w0?JSON.parse(JSON.stringify(w0)):{id:capDashUid(),m:'',v:'',w:2,h:2,top:10};
   let q='';
   const ov=document.createElement('div'); ov.className='dash-modal';
   ov.innerHTML=`<div class="dash-dlg"><div class="dash-cat"><div style="padding:10px 10px 4px"><b style="font-size:13px">${w0?'⚙ Configurer l\'élément':'＋ Ajouter un élément'}</b>
-      <input id="dash-q" class="phl-filter-input" placeholder="🔍 Rechercher un indicateur…" style="width:100%;margin-top:8px"></div><div class="dash-cat-l"></div></div>
+      <input id="dash-q" class="phl-filter-input" placeholder="🔍 Rechercher un indicateur…" style="width:100%;margin-top:8px">
+      <div style="display:flex;gap:4px;margin-top:6px"><button class="cap-lf-btn" id="dash-cat-open" title="Déplier toutes les catégories">⊞ Tout déplier</button><button class="cap-lf-btn" id="dash-cat-close" title="Replier toutes les catégories">⊟ Tout replier</button></div></div><div class="dash-cat-l"></div></div>
     <div class="dash-cfg"><div class="dash-form"></div><div class="dash-prev"><div class="dash-wh"><span class="dash-wt"></span><span class="ana-dim" style="font-weight:400">aperçu</span></div><div class="dash-wb"></div></div>
       <div style="display:flex;gap:6px;justify-content:flex-end"><button class="cap-lf-btn" id="dash-cancel">Annuler</button><button class="cap-lf-btn" id="dash-ok" style="border-color:var(--c-accent);color:var(--c-accent)">${w0?'✔ Enregistrer':'＋ Ajouter'}</button></div></div></div>`;
   document.body.appendChild(ov);
@@ -488,10 +508,15 @@ function capDashEditor(dash,w0,done){
   const close=()=>{ ov.remove(); document.removeEventListener('keydown',key); };
   const key=e=>{ if(e.key==='Escape') close(); };
   document.addEventListener('keydown',key);
-  /** Liste du catalogue, filtrée par la recherche et groupée. */
-  const list=()=>{ const ql=q.toLowerCase(), groups=[...new Set(cat.map(m=>m.g))];
+  // Catégories dépliées : « Mise en page » et celle de l'élément configuré (toutes pendant une recherche)
+  const groups=[...new Set(cat.map(m=>m.g))].sort((a,b)=>(b==='Mise en page')-(a==='Mise en page'));
+  const open=new Set(['Mise en page', (cat.find(m=>m.id===w.m)||{}).g]);
+  /** Liste du catalogue, filtrée par la recherche, groupée (« Mise en page » en premier) et repliable. */
+  const list=()=>{ const ql=q.toLowerCase();
     L.innerHTML=groups.map(g=>{ const ms=cat.filter(m=>m.g===g&&(!ql||(m.l+' '+m.g+' '+m.d).toLowerCase().includes(ql))); if(!ms.length) return '';
-      return `<div class="dash-cat-g">${esc(g)}</div>`+ms.map(m=>`<div class="dash-cat-i${m.id===w.m?' sel':''}" data-m="${esc(m.id)}" title="${esc(m.d||m.l)}"><span>${esc(m.l)}</span><em>${CAP_DASH_KIND[m.kind]}</em></div>`).join(''); }).join('')||'<div class="ana-dim" style="padding:10px">Aucun indicateur.</div>';
+      const op=!!ql||open.has(g);
+      return `<div class="dash-cat-g" data-g="${esc(g)}" title="${op?'Replier':'Déplier'} la catégorie"><span class="dash-cat-tog">${op?'▾':'▸'}</span>${esc(g)}<em>${ms.length}</em></div>`+(!op?'':ms.map(m=>`<div class="dash-cat-i${m.id===w.m?' sel':''}" data-m="${esc(m.id)}" title="${esc(m.d||m.l)}"><span>${esc(m.l)}</span><em>${CAP_DASH_KIND[m.kind]}</em></div>`).join('')); }).join('')||'<div class="ana-dim" style="padding:10px">Aucun indicateur.</div>';
+    L.querySelectorAll('[data-g]').forEach(el=>el.onclick=()=>{ const g=el.dataset.g; if(open.has(g)) open.delete(g); else open.add(g); list(); });
     L.querySelectorAll('[data-m]').forEach(el=>el.onclick=()=>{ const m=cat.find(x=>x.id===el.dataset.m), keep=w.m&&cat.find(x=>x.id===w.m)?.kind===m.kind;
       w.m=m.id; if(!keep){ const v=CAP_DASH_VIZ[m.kind][0]; w.v=v[0]; w.w=Math.min(cols,v[2]); w.h=v[3]; } list(); cfg(); }); };
   /** Formulaire de configuration et aperçu. */
@@ -520,9 +545,11 @@ function capDashEditor(dash,w0,done){
     const b=prev.querySelector('.dash-wb'); b.style.width=Math.min(avail,colW*w.w)+'px'; b.style.height=(w.h*130-34)+'px';
     b.innerHTML=capDashDraw(w,m,Math.min(avail,colW*w.w)-20,w.h*130-46); };
   ov.querySelector('#dash-q').oninput=e=>{ q=e.target.value; list(); };
+  ov.querySelector('#dash-cat-open').onclick=()=>{ groups.forEach(g=>open.add(g)); list(); };
+  ov.querySelector('#dash-cat-close').onclick=()=>{ open.clear(); list(); };
   ov.querySelector('#dash-cancel').onclick=close;
   ov.addEventListener('mousedown',e=>{ if(e.target===ov) close(); });
-  ov.querySelector('#dash-ok').onclick=()=>{ if(!w.m) return; if(w0) Object.assign(w0,w); else dash.widgets.push(w); close(); done(); };
+  ov.querySelector('#dash-ok').onclick=()=>{ if(!w.m) return; if(w0) Object.assign(w0,w); else if(at>=0) dash.widgets.splice(at,0,w); else dash.widgets.push(w); close(); done(); };
   list(); cfg(); setTimeout(()=>ov.querySelector('#dash-q').focus(),0);
   if(w.m) L.querySelector('.dash-cat-i.sel')?.scrollIntoView({block:'center'});
 }

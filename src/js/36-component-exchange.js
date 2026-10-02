@@ -1,7 +1,7 @@
 /** Réinitialise caches et états de la vue Analyses (appelé au chargement d'un nouveau modèle). */
 function capAnaReset(){
   _capAnaCache={};
-  const c=document.getElementById('cap-view-analyses'); if(c){ c.innerHTML=''; c._built=false; }
+  ['cap-view-analyses','cap-view-functions'].forEach(id=>{ const c=document.getElementById(id); if(c){ c.innerHTML=''; c._built=false; } });
 }
 
 /** Rend la vue Component Exchange — même structure que Physical Link (≡ Ligne / ▣ Composant,

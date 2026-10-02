@@ -15,10 +15,10 @@
       <button class="htab" data-ht="ui">🧭 Interface</button>
       <button class="htab" data-ht="rm">🗺 Relation Map</button>
       <button class="htab" data-ht="tv">📊 Table View</button>
-      <button class="htab" data-ht="cap">🔷 Capella Data</button>
+      <button class="htab" data-ht="cap">🔷 Vues Capella</button>
       <button class="htab" data-ht="chains">⚡ Chaînes</button>
       <button class="htab" data-ht="itf">🔌 Interfaces & ports</button>
-      <button class="htab" data-ht="ana">🔬 Analyses</button>
+      <button class="htab" data-ht="ana">ƒ Fonctions · 🔬 Analyses</button>
       <button class="htab" data-ht="usecase">🧪 Cas d'usage</button>
     </div>
     <!-- Content -->
@@ -31,7 +31,7 @@
         <h3>Ouvrir un modèle</h3>
         <ol>
           <li>Glissez-déposez un fichier <code>.capella</code> <b>n'importe où dans la fenêtre</b>, ou cliquez <b>📂 Parcourir…</b> sur l'écran d'accueil (ou <b>🔷 CAPELLA</b> dans la barre).</li>
-          <li>Le modèle est analysé puis la vue <b>🔷 Capella Data</b> s'ouvre automatiquement.</li>
+          <li>Le modèle est analysé puis la vue <b>🧭 Explorateur › ▦ Cartes</b> s'ouvre automatiquement.</li>
           <li>Pour changer de modèle, redéposez simplement un autre fichier.</li>
         </ol>
         <p class="hp-note">Seul le fichier sémantique <code>.capella</code> est lu. Les fichiers <code>.aird</code> (diagrammes) et <code>.afm</code> sont refusés : ils ne contiennent pas les éléments du modèle.</p>
@@ -39,10 +39,10 @@
         <div class="hp-grid">
           <div class="hp-card"><b>🗺 Relation Map</b><span>Graphe interactif centré sur un élément et ses voisins, filtrable par types et relations.</span></div>
           <div class="hp-card"><b>📊 Table View</b><span>Tableau de tous les éléments du fichier, avec colonnes calculées (Metachain).</span></div>
-          <div class="hp-card"><b>🔷 Capella Data</b><span>Vues d'analyse dédiées : arborescence, cartes, tableau, liens, chaînes, interfaces, ports, index.</span></div>
+          <div class="hp-card"><b>🔷 Vues Capella</b><span>Vues d'analyse dédiées : explorateur (arborescence, cartes, tableau, index), liens, chaînes, interfaces, ports, index.</span></div>
         </div>
         <h3>Sauvegarder et partager</h3>
-        <p><b>💾 Page HTML</b> enregistre toute l'application <b>avec le modèle embarqué</b>. À l'ouverture de ce fichier, le modèle se recharge tout seul : pratique pour figer un état ou partager une analyse avec quelqu'un qui n'a pas Capella.</p>
+        <p><b>💾 Enregistrer</b> (Ctrl+S) écrit la page directement dans un fichier choisi une fois, puis l'écrase à chaque enregistrement, sans passer par les téléchargements (Edge / Chrome ; ailleurs, la page est téléchargée). Maj+clic ou Ctrl+Maj+S : enregistrer sous. <b>💾 Page HTML</b> télécharge la page. Dans les deux cas, toute l'application est enregistrée <b>avec le modèle embarqué</b>. À l'ouverture de ce fichier, le modèle se recharge tout seul : pratique pour figer un état ou partager une analyse avec quelqu'un qui n'a pas Capella.</p>
         <h3>Sécurité et fonctionnement hors ligne</h3>
         <p><b>Aucune connexion réseau n'est nécessaire ni utilisée.</b> Toutes les ressources sont intégrées au fichier, y compris la bibliothèque graphique <code>D3.js v7.9.0</code> (licence ISC). Aucun cookie, aucun stockage navigateur, aucun traçage, aucun envoi de données. Les exports (PDF, ZIP, PNG, SVG, CSV, HTML) sont générés dans le navigateur, sans bibliothèque externe, et les rapports HTML produits sont eux aussi autonomes. Une <b>💾 Page HTML</b> sauvegardée reste utilisable hors ligne.</p>
       </div>
@@ -52,12 +52,14 @@
         <h2>Barre d'outils</h2>
         <h3>Niveau 1 — toujours visible</h3>
         <table class="hp-t">
-          <tr><td>🗺 · 📊 · 🔷</td><td>Modes Relation Map, Table View, Capella Data.</td></tr>
-          <tr><td>🌳 ▦ 📋 🔗 ⚡ 🔌 🔀 🧩 🔬 📐 📖</td><td>Onglets de Capella Data, visibles dès qu'un modèle est chargé. Un clic bascule directement sur la vue correspondante, depuis n'importe quel mode.</td></tr>
+          <tr><td>🗺 · 📊</td><td>Modes Relation Map et Table View.</td></tr>
+          <tr><td>🧭 🔗 ⚡ 🔌 🔀 🧩 ƒ 🔬 📐</td><td>Vues Capella, au même niveau que les modes et toujours visibles (sans modèle chargé, elles invitent à en charger un). Un clic bascule directement sur la vue correspondante, depuis n'importe quel mode.</td></tr>
           <tr><td>🔷 CAPELLA</td><td>Ouvre un fichier <code>.capella</code>.</td></tr>
-          <tr><td>💾 Page HTML</td><td>Sauvegarde autonome de la page avec le modèle embarqué.</td></tr>
+          <tr><td>💾 Enregistrer</td><td>Enregistrement direct dans un fichier HTML (Ctrl+S ; Maj+clic ou Ctrl+Maj+S : enregistrer sous).</td></tr>
+          <tr><td>💾 Page HTML</td><td>Téléchargement de la page autonome avec le modèle embarqué.</td></tr>
           <tr><td>🖼 Export ▾</td><td>Image du graphe Relation Map : PNG, JPEG ou SVG.</td></tr>
-          <tr><td>Thème</td><td>Office 2007 (par défaut), Sombre, Clair, Marine, Nature, Contraste. Les vues se redessinent avec des couleurs adaptées.</td></tr>
+          <tr><td>Thème</td><td>Sombre (par défaut), Office 2007, Clair, Marine, Nature, Contraste. Les vues se redessinent avec des couleurs adaptées ; en thème clair (Office 2007, Clair ou personnalisé clair), les textes colorés sont automatiquement foncés pour rester lisibles.</td></tr>
+          <tr><td>🎨</td><td>Thème personnalisé : toutes les couleurs (fonds, textes, accent, bordures, statuts, Relation Map, couches ARCADIA), aperçu en direct, « Partir de » un thème existant, contraste du texte affiché, ⬇ / ⬆ JSON. Il apparaît ensuite comme « 🎨 Personnalisé » dans la liste et est conservé dans la page enregistrée.</td></tr>
           <tr><td>? Aide</td><td>Cette documentation (aussi accessible depuis l'écran d'accueil).</td></tr>
         </table>
         <h3>Niveau 2 — commandes de la Relation Map</h3>
@@ -129,16 +131,18 @@
 
       <!-- ── CAPELLA DATA ── -->
       <div id="ht-cap" class="ht-panel" style="display:none">
-        <h2>🔷 Capella Data</h2>
+        <h2>🔷 Vues Capella</h2>
         <table class="hp-t">
-          <tr><td>🌳 Arborescence</td><td>Arbre complet du modèle ; déplier / replier.</td></tr>
-          <tr><td>▦ Cartes</td><td>Éléments groupés par couche ARCADIA, filtres de couche et recherche.</td></tr>
-          <tr><td>📋 Tableau</td><td>Tableau paginé : colonnes paramétrables et redimensionnables, filtres par colonne, colonnes Metachain (voir Table View), export CSV/JSON, sauvegarde de vue.</td></tr>
+          <tr><td>🧭 Explorateur</td><td>Quatre onglets : 🌳 Arborescence, ▦ Cartes, 📋 Tableau et 📖 Index des types (détaillés ci-dessous) ; le menu rouvre le dernier onglet utilisé. La barre latérale des types n'est affichée que dans l'Explorateur.</td></tr>
+          <tr><td>🧭 Explorateur › 🌳 Arborescence</td><td>Arbre complet du modèle ; déplier / replier.</td></tr>
+          <tr><td>🧭 Explorateur › ▦ Cartes</td><td>Éléments groupés par couche ARCADIA, filtres de couche et recherche.</td></tr>
+          <tr><td>🧭 Explorateur › 📋 Tableau</td><td>Tableau paginé : colonnes paramétrables et redimensionnables, filtres par colonne, colonnes Metachain (voir Table View), export CSV/JSON, sauvegarde de vue.</td></tr>
           <tr><td>🔗 Liens</td><td>Relations Capella extraites, groupées et filtrables par type.</td></tr>
           <tr><td>⚡ Chaînes</td><td>Chaînes fonctionnelles, processus opérationnels et chemins physiques : diagrammes, tables et exports (onglet ⚡ Chaînes).</td></tr>
           <tr><td>🔌 Physical Link · 🔀 Component Exchange · 🧩 Ports</td><td>Analyse des interfaces et contrôles de cohérence (onglet 🔌 Interfaces & ports).</td></tr>
+          <tr><td>ƒ Fonctions</td><td>Fonctions couche par couche : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier (onglet ƒ Fonctions · 🔬 Analyses).</td></tr>
           <tr><td>🔬 Analyses</td><td>Traçabilité inter-couches, capacités & missions, modes & états, comparaison de deux versions (onglet 🔬 Analyses).</td></tr>
-          <tr><td>📖 Index des types</td><td>Glossaire des types présents : type technique, Human Type, nombre, description.</td></tr>
+          <tr><td>🧭 Explorateur › 📖 Index des types</td><td>Glossaire des types présents : type technique, Human Type, nombre, description.</td></tr>
         </table>
         <h3>Panneau de détail</h3>
         <p>Un clic sur un nom (presque partout) ouvre le panneau de détail : Human Type et description, attributs, <b>références sortantes</b>, <b>références entrantes</b> (qui pointe vers cet élément ?), propriétaire et éléments possédés. Tout y est cliquable pour naviguer de proche en proche.</p>
@@ -196,10 +200,10 @@
 
       <!-- ── ANALYSES ── -->
       <div id="ht-ana" class="ht-panel" style="display:none">
-        <h2>🔬 Analyses</h2>
+        <h2>ƒ Fonctions et 🔬 Analyses</h2>
         <p class="hp-note">Les résultats sont gardés en mémoire ; <b>↻ Recalculer</b> les rafraîchit. Les contrôles ne sont calculés qu'à l'ouverture de l'onglet 🩺 Contrôles.</p>
         <p class="hp-lead">Analyses transverses calculées à partir de ce que contient le modèle ouvert : une rubrique absente du modèle (pas de machine à états, pas de capacités…) est simplement signalée comme vide, et les contrôles ne portent que sur les pratiques réellement utilisées.</p>
-        <h3>ƒ Fonctions</h3>
+        <h3>ƒ Fonctions (menu principal)</h3>
         <p>Activités OA et fonctions SA / LA / PA, couche par couche, avec leurs <b>descriptions mises en avant</b>.</p>
         <p><b>Filtre Allocation</b> (🌳 Hiérarchie et 📋 Tableau) : <span class="hp-chip" style="--c:#3fb950">🧩 Système</span> <span class="hp-chip" style="--c:#58a6ff">👤 Acteurs</span> <span class="hp-chip" style="--c:#8b949e">∅ Non allouées</span>, avec le nombre de fonctions de chaque nature. Clic = afficher / masquer, double-clic = uniquement cette nature (double-clic à nouveau : tout réafficher). Chaque fonction porte un liseré de la couleur correspondante (double liseré si allouée à la fois au système et à un acteur) ; dans l'arbre, les fonctions mères conservées pour la hiérarchie sont estompées. Colonne « Nature de l'allocation » dans le tableau et les exports.</p>
         <p><b>Allocataire</b> (liste à côté du filtre) : un acteur précis, ou le système et ses sous-systèmes en arbre indenté (couches boîte blanche LA / PA), avec le nombre de fonctions ; un sous-système inclut ses sous-composants. ✕ retire le filtre. En boîte blanche, la colonne « Sous-système » donne le chemin des composants englobants (chemin complet au survol).</p>
@@ -243,11 +247,11 @@
         <h3>📐 Tableau de bord (onglet à part, à côté de 🔬 Analyses)</h3>
         <p>Composez vos propres tableaux de bord à partir de <b>tous les indicateurs calculés</b> (≈ 130 sur un modèle complet) : modèle, fonctions (par couche et comparaison des couches, allocation, allocataires, sous-systèmes, nommage), chaînes, Component Exchanges, Physical Links, ports, traçabilité, capacités, modes & états, contrôles. Un tableau de bord d'exemple est créé au premier affichage.</p>
         <table class="hp-t">
-          <tr><td>✏ Modifier</td><td>Passe en édition : <b>＋ Ajouter un élément</b> (catalogue avec recherche, aperçu en direct), ⚙ configurer, ⧉ dupliquer, ✕ retirer.</td></tr>
+          <tr><td>✏ Modifier</td><td>Passe en édition : <b>＋ Ajouter un élément</b> (catalogue avec recherche et catégories repliables, « Mise en page » en tête, aperçu en direct), ＋ au survol d'un élément pour en insérer un avant lui, tuile « ＋ Ajouter un élément » en fin de page, ⚙ configurer, ⧉ dupliquer, ✕ retirer. La vue garde sa position de défilement pendant les modifications.</td></tr>
           <tr><td>Représentations</td><td>Indicateur chiffré, jauge (vert ≥ 90 %, orange ≥ 50 %, rouge sinon), barres horizontales ou verticales, anneau, barres empilées ou groupées, tableau, texte libre (titres, commentaires). Nombre de catégories affichées (le reste est regroupé en « Autres ») et tri réglables.</td></tr>
           <tr><td>Disposition</td><td>Glisser un élément par son titre pour le déplacer ; coin inférieur droit pour le redimensionner (aimanté à la grille de 3, 4 ou 6 colonnes).</td></tr>
-          <tr><td>Plusieurs tableaux</td><td>Liste déroulante, ＋ Nouveau, ⧉ Dupliquer, ✨ Exemple, 🗑 Supprimer, renommage. Les tableaux de bord sont conservés dans la 💾 Page HTML.</td></tr>
-          <tr><td>Impression</td><td>🖨 Imprimer au format <b>A4 paysage ou portrait</b> : les éléments sont redessinés à la taille de la page, en couleurs claires, avec en-tête (nom, modèle, date). « Enregistrer au format PDF » dans la fenêtre d'impression pour obtenir un PDF.</td></tr>
+          <tr><td>Plusieurs pages</td><td>Un onglet par page de tableau de bord ; l'onglet <b>＋</b> ajoute une page vide. Double-clic sur un onglet (ou ✎ sur l'onglet actif) pour le renommer. En édition : ⧉ Dupliquer, ✨ Exemple, 🗑 Supprimer. Les tableaux de bord sont conservés dans la 💾 Page HTML.</td></tr>
+          <tr><td>Impression</td><td>🖨 Imprimer au format <b>A4 portrait</b> (par défaut) ou paysage : les éléments sont redessinés à la taille de la page, en couleurs claires, avec en-tête (nom, modèle, date). « Enregistrer au format PDF » dans la fenêtre d'impression pour obtenir un PDF.</td></tr>
           <tr><td>Exports</td><td>🌐 HTML autonome (tel qu'affiché) ; ⬇ / ⬆ JSON pour réutiliser une disposition sur un autre modèle.</td></tr>
         </table>
       </div>
@@ -256,8 +260,8 @@
       <div id="ht-usecase" class="ht-panel" style="display:none">
         <h2>🧪 Cas d'usage — revue d'un modèle Capella</h2>
         <ol class="hp-steps">
-          <li><b>Charger</b> le <code>.capella</code> (glisser-déposer). Consulter <b>📖 Index des types</b> pour voir la composition du modèle.</li>
-          <li><b>Parcourir</b> avec ▦ Cartes et 🌳 Arborescence ; ouvrir le panneau de détail pour suivre les références entrantes et sortantes.</li>
+          <li><b>Charger</b> le <code>.capella</code> (glisser-déposer). Consulter <b>🧭 Explorateur › 📖 Index des types</b> pour voir la composition du modèle.</li>
+          <li><b>Parcourir</b> avec 🧭 Explorateur (▦ Cartes et 🌳 Arborescence) ; ouvrir le panneau de détail pour suivre les références entrantes et sortantes.</li>
           <li><b>Analyser un voisinage</b> dans 🗺 Relation Map : choisir un composant dans l'arborescence, régler profondeur, disposition et critères.</li>
           <li><b>Revoir les chaînes</b> dans ⚡ Chaînes : entrées/sorties, fonctions non allouées (gris), échanges sans CE porteur.</li>
           <li><b>Contrôler les interfaces</b> : 🔀 Component Exchange (matrice N², CE sans FE, orientations), 🔌 Physical Link (liens sans CE), 🧩 Ports (alignement FE ↔ CE ↔ PL).</li>

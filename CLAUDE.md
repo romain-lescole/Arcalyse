@@ -36,7 +36,7 @@ Application **autonome et 100 % hors ligne** qui charge un fichier `.capella` (X
 | `js/08-editeur-modele.js` | Modale d'édition (éléments, relations, paquetages) |
 | `js/09-arborescence.js` | Arborescence du panneau gauche (`buildArbo`, sélection multiple, collage) |
 | `js/10-table-view.js` | **Table View** : onglets, moteur Metachain `tv…`, constructeur de colonnes |
-| `js/11-sauvegarde-toolbar-init.js` | Sauvegarde/chargement JSON, gestionnaires de la barre, raccourcis, initialisation (`applyTheme('office2007')`) |
+| `js/11-sauvegarde-toolbar-init.js` | Sauvegarde/chargement JSON, gestionnaires de la barre, raccourcis, initialisation (`applyTheme('dark')`) |
 | `js/20-capella-chargement.js` | Moteur Capella : `capLoadFile`, parsing XML, `capBuildTree`, registre des types, injection dans la Relation Map, `capSaveFullPage`, écran d'accueil |
 | `js/21-capella-vues-base.js` | Barre latérale, ▦ Cartes, 📋 Tableau Capella (colonnes, Metachain `cap…`), 🌳 Arborescence |
 | `js/22-capella-liens.js` | `CAP_LINK_SECTIONS` (20 relations, `humanLabel`), `capComputeLinks`, vue 🔗 Liens |
@@ -51,21 +51,23 @@ Application **autonome et 100 % hors ligne** qui charge un fichier `.capella` (X
 | `js/31-analyses-traca-capacites.js` | 🔬 Analyses : `_capAnaCache`, `CAP_ANA_LAYERS`, 🧬 traçabilité inter-couches, 🎯 capacités & missions |
 | `js/32-analyses-etats-comparaison.js` | 🔁 Modes & états, ⚖ comparaison de versions |
 | `js/33-qualite-noms.js` | Qualité des noms : `CAP_EN_VERBS` (≈ 1 000), `CAP_FR_VERBS`, `capNameQuality`, `capFnNQ`, règles perso |
-| `js/34-fonctions.js` | ƒ Fonctions (`capComputeFunctions`, allocation `capFnAllocKind`/`capCompAncestors`, `capRenderFunctions` : hiérarchie, tableau façon Excel, traçabilité, métriques, contrôles, dossier), `capFillHeight`, `capRenderAnalyses` |
+| `js/34-fonctions.js` | ƒ Fonctions (`capComputeFunctions`, allocation `capFnAllocKind`/`capCompAncestors`, `capRenderFunctions` : hiérarchie, tableau façon Excel, traçabilité, métriques, contrôles, dossier ; vue principale `capRenderFunctionsView`), `capFillHeight`, `capRenderAnalyses` |
 | `js/35-tableau-de-bord.js` | 📐 Tableau de bord : catalogue `capDashCatalog`, rendu SVG `capDashDraw`, éditeur, stockage, impression A4 |
 | `js/36-component-exchange.js` | `capAnaReset`, 🔀 Component Exchange |
 | `js/37-capella-cablage.js` | Câblage final (détail par id, redimensionnement de la barre latérale) |
+| `js/38-theme-perso.js` | 🎨 Thème personnalisé : éditeur `capThemeEditor`, stockage `cap-theme-custom`, couleurs des couches `capThemeLayersApply` |
 
 Textes : inventaire **`docs/TEXTES.md`** ; traduction : **`docs/i18n/`**. Détails fonctionnels et pièges connus : **`docs/NOTES-TECHNIQUES.md`** (à lire quand on touche une zone). Liste des fonctions par module : **`docs/INDEX-FONCTIONS.md`**.
 
 ## Conventions utiles
 
-- Couleurs : toujours via les variables CSS (`var(--c-text)`, `var(--c-dim)`, `var(--c-warn,#e3b341)`…). Texte sur fond coloré : `capInk(fond)`. Texte coloré sur le fond du thème : `capTextOn(couleur)`. Thème par défaut : Office 2007 (clair) — vérifier le contraste en clair **et** en sombre.
+- Thèmes clairs : `html[data-tone="light"]` (Office 2007, Clair, personnalisé clair) pour les règles communes ; un correcteur automatique fonce les textes colorés trop pâles (voir NOTES-TECHNIQUES).
+- Couleurs : toujours via les variables CSS (`var(--c-text)`, `var(--c-dim)`, `var(--c-warn,#e3b341)`…). Texte sur fond coloré : `capInk(fond)`. Texte coloré sur le fond du thème : `capTextOn(couleur)`. Thème par défaut : Sombre — vérifier le contraste en clair **et** en sombre.
 - Hauteur « jusqu'en bas » d'un bloc : attribut `data-fill="6"` + appel `capFillHeight(conteneur)` après rendu.
 - Groupes de commandes dans une barre : `<span class="tb-grp">…</span>` (libellé facultatif `.tb-grp-l`) ; compteur filtré : `.ana-fn-cnt`.
 - Les analyses sont mises en cache dans `_capAnaCache` (vidé par ↻ Recalculer et au chargement d'un modèle).
 - Tout nouvel indicateur calculé doit être ajouté au catalogue du tableau de bord (`capDashCatalog`, libellé nommant le sujet : « Fonctions SA — … »), et son rendu doit tenir dans le cadre.
-- Données persistées dans la 💾 Page HTML : blocs `<script type="application/json">` créés à l'exécution (`cap-name-rules`, `cap-dashboards`) — pas de `localStorage`.
+- Données persistées dans la 💾 Page HTML : blocs `<script type="application/json">` créés à l'exécution (`cap-name-rules`, `cap-dashboards`, `cap-theme-custom`) — pas de `localStorage`.
 
 ## Commandes
 

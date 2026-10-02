@@ -99,6 +99,8 @@ document.getElementById('cap-detail-close')?.addEventListener('click',()=>{const
 
 // ── Sub-toolbar wiring ──
 // ── Capella toolbar view buttons (now in main toolbar) ──
+const CAP_ELEM_VIEWS=['tree','cards','table','index']; // vues regroupées sous le menu 🧭 Explorateur
+let capElemView='cards';                               // dernier onglet ouvert dans 🧭 Explorateur
 /** Met à jour les boutons actifs et les groupes de contrôles visibles
  * selon la vue Capella courante (tree/cards/table/links/chains/physlink).
  * @param {string} view
@@ -110,24 +112,39 @@ function capUpdateToolbarForView(view){
   if(layerGrp) layerGrp.style.display=(view==='cards'||view==='table')?'flex':'none';
   if(treeGrp)  treeGrp.style.display=(view==='tree')?'flex':'none';
   // Barre de recherche / statistiques et compteur : inutiles dans les vues qui ont leurs propres filtres
-  const own=['analyses','dashboard','links','chains','physlink','compex','ports'].includes(view);
+  const own=['functions','analyses','dashboard','links','chains','physlink','compex','ports','index'].includes(view);
   const sub=document.getElementById('cap-sub-toolbar'), rc=document.getElementById('cap-result-count');
   if(sub) sub.style.display=own?'none':'flex'; if(rc) rc.style.display=own?'none':'';
-  // Active state on all view buttons
-  ['cap-v-tree','cap-v-cards','cap-v-table','cap-v-links','cap-v-chains','cap-v-physlink','cap-v-compex','cap-v-ports','cap-v-analyses','cap-v-dashboard','cap-v-index'].forEach(id=>{
-    document.getElementById(id)?.classList.toggle('active', id==='cap-v-'+view);
-  });
+  // Barre latérale des types : inutile dans les vues de 🔗 Liens à 📐 Tableau de bord
+  const noSide=['links','chains','physlink','compex','ports','functions','analyses','dashboard'].includes(view);
+  ['cap-sidebar','cap-sidebar-resizer'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display=noSide?'none':'flex'; });
+  // Menu 🧭 Explorateur : regroupe Arborescence, Cartes, Tableau et Index des types (onglets #cap-elem-tabs)
+  const isElem=CAP_ELEM_VIEWS.includes(view);
+  if(isElem) capElemView=view;
+  const tabs=document.getElementById('cap-elem-tabs');
+  if(tabs){ tabs.style.display=isElem?'flex':'none';
+    tabs.querySelectorAll('[data-ev]').forEach(b=>b.classList.toggle('active', b.dataset.ev===view)); }
+  // État actif des boutons de vue
+  const btnId='cap-v-'+(isElem?'elements':view);
+  document.querySelectorAll('#cap-tb-views .tbtn').forEach(b=>b.classList.toggle('active', b.id===btnId));
 }
 
-['cap-v-tree','cap-v-cards','cap-v-table','cap-v-links','cap-v-chains','cap-v-physlink','cap-v-compex','cap-v-ports','cap-v-analyses','cap-v-dashboard','cap-v-index'].forEach(id=>{
+/** Affiche une vue Capella (bascule en mode capella si besoin).
+ * @param {string} view - 'tree'|'cards'|'table'|'index'|'links'|'chains'|…
+ */
+function capShowView(view){
+  capCurrentView=view; capPage=0;
+  capUpdateToolbarForView(view);
+  if(currentMode!=='capella') applyMode('capella'); // bascule depuis Relation Map / Table View
+  else capRenderCurrentView();
+}
+['cap-v-elements','cap-v-links','cap-v-chains','cap-v-physlink','cap-v-compex','cap-v-ports','cap-v-functions','cap-v-analyses','cap-v-dashboard'].forEach(id=>{
   document.getElementById(id)?.addEventListener('click',()=>{
-    const view=id.replace('cap-v-','');
-    capCurrentView=view; capPage=0;
-    capUpdateToolbarForView(view);
-    if(currentMode!=='capella') applyMode('capella'); // bascule depuis Relation Map / Table View
-    else capRenderCurrentView();
+    const v=id.replace('cap-v-','');
+    capShowView(v==='elements'?capElemView:v);
   });
 });
+document.querySelectorAll('#cap-elem-tabs [data-ev]').forEach(b=>b.addEventListener('click',()=>capShowView(b.dataset.ev)));
 // Tree expand/collapse
 document.getElementById('cap-expand-all')?.addEventListener('click',()=>{
   const c=document.getElementById('cap-view-tree');if(!c)return;

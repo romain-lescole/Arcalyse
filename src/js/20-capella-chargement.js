@@ -27,12 +27,13 @@ let capLinksData=null, capChainsData=null, capLinksFilter='all', capChainsFilter
 let capTreeFilter='';
 let capLoaded=false;
 
-/** Sauvegarde la page actuelle (tout le HTML/CSS/JS de l'application) dans un fichier HTML
+/** Construit le HTML de la page actuelle (tout le HTML/CSS/JS de l'application), fichier
  * autonome, en y embarquant le fichier .capella déjà chargé en mémoire (sérialisé depuis
  * cap_xmlDoc). À l'ouverture, un petit script de bootstrap relit ce XML embarqué et rejoue
  * automatiquement le même pipeline de chargement que lors d'un import manuel — la page
- * rouverte se comporte donc exactement comme l'état actuel, fichier Capella déjà chargé. */
-function capSaveFullPage(){
+ * rouverte se comporte donc exactement comme l'état actuel, fichier Capella déjà chargé.
+ * @returns {string} Document HTML complet */
+function capBuildPageHtml(){
   // Clone le document actuel tel quel
   const doc = document.documentElement.cloneNode(true);
 
@@ -79,7 +80,6 @@ function capSaveFullPage(){
         capApplyPanelOnLoad();
       });
       capLoaded = true;
-      document.getElementById('mode-capella').style.display = '';
       applyMode('capella');
       if (typeof capUpdateWelcome === 'function') capUpdateWelcome();
     } catch (err) {
@@ -93,15 +93,46 @@ function capSaveFullPage(){
     doc.querySelector('body').appendChild(bootScript);
   }
 
-  const html = '<!DOCTYPE html>\\n' + doc.outerHTML;
-  const blob = new Blob([html], {type:'text/html'});
+  return '<!DOCTYPE html>\\n' + doc.outerHTML;
+}
+/** Nom de fichier proposé pour la page sauvegardée. */
+function capPageFileName(){ return capLoaded ? 'relation-map-avec-modele.html' : 'relation-map.html'; }
+/** Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur). */
+function capSaveFullPage(){
+  const blob = new Blob([capBuildPageHtml()], {type:'text/html'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = capLoaded ? 'relation-map-avec-modele.html' : 'relation-map.html';
+  a.download = capPageFileName();
   a.click();
   URL.revokeObjectURL(a.href);
 }
+let _capSaveHandle=null;   // fichier choisi pour l'enregistrement direct (valable pour la session)
+/** Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
+ * puis l'écrase à chaque enregistrement suivant, sans passer par les téléchargements.
+ * Repli sur le téléchargement si le navigateur ne le permet pas (Firefox…).
+ * @param {boolean} [saveAs] - true : redemander l'emplacement (« Enregistrer sous »)
+ */
+async function capSavePageDirect(saveAs){
+  if(!window.showSaveFilePicker){ capSaveFullPage(); return; }
+  const btn=document.getElementById('b-save-direct');
+  try{
+    if(saveAs||!_capSaveHandle) _capSaveHandle=await window.showSaveFilePicker({suggestedName:capPageFileName(),
+      types:[{description:'Page HTML',accept:{'text/html':['.html','.htm']}}]});
+    const w=await _capSaveHandle.createWritable(); await w.write(capBuildPageHtml()); await w.close();
+    if(btn){ btn.title=`Enregistrer dans « ${_capSaveHandle.name} » (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous`;
+      const t=btn.textContent; btn.textContent='✔ Enregistré'; setTimeout(()=>{ btn.textContent=t; },1500); }
+  }catch(e){
+    if(e&&e.name==='AbortError') return;   // fenêtre annulée par l'utilisateur
+    console.error(e); _capSaveHandle=null;
+    alert('Enregistrement direct impossible ('+(e&&e.message||e)+').\nLa page va être téléchargée à la place.');
+    capSaveFullPage();
+  }
+}
 document.getElementById('b-save-page')?.addEventListener('click', capSaveFullPage);
+document.getElementById('b-save-direct')?.addEventListener('click', e=>capSavePageDirect(e.shiftKey));
+document.addEventListener('keydown', e=>{
+  if(e.ctrlKey&&!e.altKey&&(e.key==='s'||e.key==='S')){ e.preventDefault(); capSavePageDirect(e.shiftKey); }
+});
 
 /** Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s */
 function capEsc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
@@ -156,7 +187,6 @@ function capLoadFile(f){
         });
         capLoaded=true;
         capCurrentFileName=name;
-        document.getElementById('mode-capella').style.display='';
         applyMode('capella');
         capWelcomeStatus('','');
         capShowWelcome(false);
@@ -663,7 +693,7 @@ function capInjectChainsToModal(){
  * Met à jour les boutons de vue et les compteurs de stats.
  */
 function capRenderCurrentView(){
-  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-links','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-ports','cap-view-analyses','cap-view-dashboard','cap-view-index'].forEach(id=>{
+  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-links','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-index'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
   const pg=document.getElementById('cap-pagination'); if(pg) pg.style.display='none';
@@ -671,7 +701,7 @@ function capRenderCurrentView(){
   if(!capLoaded){
     document.getElementById('cap-view-cards').style.display='block';
     document.getElementById('cap-view-cards').innerHTML='<div style="text-align:center;padding:60px;color:var(--c-dim)"><div style="font-size:48px;margin-bottom:12px">🔷</div><div>Chargez un fichier .capella<br>via le bouton 🔷 CAPELLA</div></div>';
-    capUpdateToolbarForView('cards');
+    capUpdateToolbarForView(capCurrentView);
     return;
   }
 
@@ -699,6 +729,9 @@ function capRenderCurrentView(){
   } else if(capCurrentView==='compex'){
     document.getElementById('cap-view-compex').style.display='block';
     capRenderCompExchange();
+  } else if(capCurrentView==='functions'){
+    document.getElementById('cap-view-functions').style.display='block';
+    capRenderFunctionsView();
   } else if(capCurrentView==='analyses'){
     document.getElementById('cap-view-analyses').style.display='block';
     capRenderAnalyses();

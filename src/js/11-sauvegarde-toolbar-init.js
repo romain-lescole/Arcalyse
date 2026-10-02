@@ -118,7 +118,6 @@ document.querySelectorAll('.lbtn').forEach(b=>b.onclick=()=>{
 document.getElementById('mode-rm')?.addEventListener('click',()=>applyMode('default'));
 document.getElementById('mode-pbs')?.addEventListener('click',()=>applyMode('PBS'));
 document.getElementById('mode-table')?.addEventListener('click',()=>applyMode('table'));
-document.getElementById('mode-capella')?.addEventListener('click',()=>applyMode('capella'));
 
 // Sélecteur de thème
 document.getElementById('theme-sel').onchange=ev=>applyTheme(ev.target.value);
@@ -231,8 +230,8 @@ document.addEventListener('keydown', ev=>{
 /* ═══════════════════════════════════════════════════════════════════════
    21. INITIALISATION
    ═══════════════════════════════════════════════════════════════════════ */
-applyTheme('office2007');   // applique le thème par défaut (Office 2007)
-document.getElementById('theme-sel').value='office2007';
+applyTheme('dark');   // applique le thème par défaut (Sombre)
+document.getElementById('theme-sel').value='dark';
 migratePkgsToElements(); // convertit packages en éléments type Package
 setupMarkers();        // crée les marqueurs SVG
 buildPanel();          // construit le panneau de critères

@@ -165,11 +165,14 @@ select.inp,input.inp{width:100%;padding:4px 7px;background:var(--c-bg3);
 /* ── Zone graphique ── */
 #graph{flex:1;position:relative;overflow:hidden;background:var(--c-bg)}
 /* ── Thème Office 2007 : ruban dégradé, boutons « verre », surbrillance dorée ── */
-html[data-theme="office2007"],html[data-theme="light"]{--c-warn:#8a5a00;--c-ok:#1a7f37;--c-err:#c62828;}
-html[data-theme="office2007"] .ana-fn-b,html[data-theme="light"] .ana-fn-b{color:#33475f;}
-html[data-theme="office2007"] .ana-fn-b.warn,html[data-theme="light"] .ana-fn-b.warn{color:#7a4b00;background:#fff3cd;border-color:#d9a520;}
-html[data-theme="office2007"] #rm-chain-banner .rmcb-t,html[data-theme="light"] #rm-chain-banner .rmcb-t{color:#1a7f37;}
-html[data-theme="office2007"] .ana-dim,html[data-theme="light"] .ana-dim{color:#4c6485;}
+html[data-tone="light"]{--c-warn:#8a5a00;--c-ok:#146c2e;--c-err:#c62828;}
+/* Thèmes clairs : survol et sélection des tableaux plus clairs, pour garder les textes colorés lisibles (contraste ≥ 4,5) */
+html[data-tone="light"] .prt-t tr:hover td{background:color-mix(in srgb,var(--c-accent) 8%,var(--c-bg2));}
+html[data-tone="light"] .ana-fnt tbody td.sel{background:color-mix(in srgb,var(--c-accent) 12%,var(--c-bg2))!important;}
+html[data-tone="light"] .ana-fn-b{color:#33475f;}
+html[data-tone="light"] .ana-fn-b.warn{color:#7a4b00;background:#fff3cd;border-color:#d9a520;}
+html[data-tone="light"] #rm-chain-banner .rmcb-t{color:#1a7f37;}
+html[data-tone="light"] .ana-dim{color:var(--c-dim);}
 html[data-theme="office2007"] #toolbar,html[data-theme="office2007"] #toolbar2{background:linear-gradient(#f6f9fd 0%,#dbe6f5 45%,#c7d8ef 55%,#dce8f7 100%);border-bottom:1px solid #8db2e3;}
 html[data-theme="office2007"] .tbtn,html[data-theme="office2007"] .cap-lf-btn,html[data-theme="office2007"] .phl-toggle-btn,html[data-theme="office2007"] .phl-export-btn{background:linear-gradient(#ffffff,#e3edf9);border-color:#a9c3e6;color:#15283f;}
 html[data-theme="office2007"] .tbtn:hover,html[data-theme="office2007"] .cap-lf-btn:hover,html[data-theme="office2007"] .phl-toggle-btn:hover,html[data-theme="office2007"] .phl-export-btn:hover{background:linear-gradient(#fff8d9,#ffe38a);border-color:#e3b93d;}
@@ -578,7 +581,7 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
 .cap-chain-conn-label{font-size:10px;color:var(--c-dim);font-family:monospace;font-style:italic;}
 
 /* Mode buttons */
-#mode-rm,#mode-pbs,#mode-table,#mode-capella{font-size:11px;font-weight:700;letter-spacing:.03em;}
+#mode-rm,#mode-pbs,#mode-table,#cap-tb-views .tbtn{font-size:11px;font-weight:700;letter-spacing:.03em;}
 
 
 /* ── Dropdown menus in toolbar ── */
@@ -617,6 +620,8 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
 .phl-link-name{font-size:11px;font-weight:600;color:#38bdf8;}
 .phl-link-arrow{font-size:12px;color:var(--c-dim);}
 .phl-sep{width:1px;background:var(--c-border);align-self:stretch;flex-shrink:0;}
+/* Thèmes clairs : cartouche d'un seul fond (les teintes des cellules, pensées pour le sombre, juraient avec --c-bg2) */
+html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){background:transparent;}
 
 /* View B — Expandable component cards */
 .phl-comp-card{border:1px solid var(--c-border);border-radius:9px;overflow:hidden;
@@ -831,6 +836,18 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
 .ana-vf-ft{display:flex;align-items:center;gap:4px;justify-content:flex-end;margin-top:3px;} .ana-vf-ft .ana-vf-n{margin-right:auto;font-size:11px;}
 /* ── Tableau de bord personnalisable ── */
 .dash-scroll{overflow:auto;padding:2px;}
+.dash-tabs{display:flex;align-items:flex-end;gap:2px;border-bottom:1px solid var(--c-border);margin-bottom:8px;overflow-x:auto;}
+.dash-tab{background:var(--c-bg2);border:1px solid var(--c-border);border-bottom:none;border-radius:6px 6px 0 0;padding:5px 14px;font-size:12px;color:var(--c-dim);cursor:pointer;white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis;margin-bottom:-1px;}
+.dash-tab:hover{color:var(--c-text);background:var(--c-bg3);}
+.dash-tab.active{background:var(--c-bg);color:var(--c-text);font-weight:600;border-top:2px solid var(--c-accent);}
+.dash-tab-add{font-weight:700;padding:5px 10px;color:var(--c-accent);}
+.dash-tab-ren{margin-left:6px;opacity:.55;font-weight:400;}
+.dash-tab-ren:hover{opacity:1;}
+.dash-tab-in{font:inherit;font-size:12px;padding:1px 4px;width:160px;border:1px solid var(--c-accent);border-radius:4px;background:var(--c-bg);color:var(--c-text);outline:none;}
+.dash-ins{position:absolute;left:2px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;border:1px solid var(--c-accent);background:var(--c-bg);color:var(--c-accent);font-size:13px;line-height:16px;padding:0;cursor:pointer;opacity:0;transition:opacity .12s;z-index:2;}
+.dash-w:hover .dash-ins{opacity:1;}
+.dash-add-tile{border:1px dashed var(--c-border);border-radius:8px;background:transparent;color:var(--c-dim);font-size:12px;cursor:pointer;}
+.dash-add-tile:hover{border-color:var(--c-accent);color:var(--c-accent);}
 .dash-grid{display:grid;gap:10px;grid-auto-rows:120px;}
 .dash-w{position:relative;display:flex;flex-direction:column;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:8px;min-width:0;overflow:hidden;}
 .dash-edit .dash-w{border-style:dashed;}
@@ -867,7 +884,10 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
 .dash-dlg{background:var(--c-bg);border:1px solid var(--c-border);border-radius:10px;width:min(1100px,94vw);height:min(720px,90vh);display:grid;grid-template-columns:340px minmax(0,1fr);overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.4);}
 .dash-cat{border-right:1px solid var(--c-border);display:flex;flex-direction:column;min-height:0;background:var(--c-bg2);}
 .dash-cat-l{overflow:auto;flex:1;padding:2px 8px 10px;}
-.dash-cat-g{font-size:10.5px;font-weight:700;color:var(--c-dim);text-transform:uppercase;letter-spacing:.04em;margin:10px 4px 3px;}
+.dash-cat-g{display:flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;color:var(--c-dim);text-transform:uppercase;letter-spacing:.04em;margin:8px 0 2px;padding:3px 4px;border-radius:4px;cursor:pointer;user-select:none;}
+.dash-cat-g:hover{background:var(--c-bg3);color:var(--c-text);}
+.dash-cat-g em{font-style:normal;font-weight:400;margin-left:auto;}
+.dash-cat-tog{width:10px;}
 .dash-cat-i{display:flex;gap:6px;align-items:center;padding:4px 6px;border-radius:5px;cursor:pointer;font-size:12px;color:var(--c-text);}
 .dash-cat-i:hover{background:var(--c-bg3);}
 .dash-cat-i.sel{background:var(--c-bg4);outline:1px solid var(--c-accent);}
@@ -877,3 +897,16 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
 .dash-form label{color:var(--c-dim);}
 .dash-prev{flex:1;min-height:0;overflow:auto;border:1px dashed var(--c-border);border-radius:8px;padding:6px;}
 .dash-prev .dash-wb{background:var(--c-bg2);border:1px solid var(--c-border);border-radius:8px;overflow:auto;}
+
+/* 🎨 Éditeur de thème personnalisé (38-theme-perso.js) */
+.thm-dlg{background:var(--c-bg);border:1px solid var(--c-border);border-radius:10px;width:min(760px,94vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,.4);}
+.thm-hd,.thm-ft{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 16px;}
+.thm-hd{border-bottom:1px solid var(--c-border);}
+.thm-ft{border-top:1px solid var(--c-border);}
+.thm-body{overflow:auto;padding:6px 16px 12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:4px 24px;}
+.thm-g{grid-column:1/-1;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--c-dim);margin-top:10px;padding-bottom:2px;border-bottom:1px solid var(--c-border);}
+.thm-row{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--c-text);}
+.thm-row span{flex:1;min-width:0;}
+.thm-row input[type=color]{width:34px;height:22px;padding:0;border:1px solid var(--c-border);border-radius:4px;background:none;cursor:pointer;}
+.thm-txt{width:150px!important;font-family:monospace;font-size:11px!important;}
+.thm-txt.bad{border-color:var(--c-err,#f85149)!important;}

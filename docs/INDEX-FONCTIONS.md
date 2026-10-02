@@ -8,15 +8,26 @@
 - `TCFG` (l. 25)
 - `MODES` (l. 37)
 
-## 02-themes.js — 184 lignes
+## 02-themes.js — 308 lignes
 
 - `THEMES` (l. 6)
 - `capInk` (l. 57) — Couleur de texte lisible sur un fond donné : noir ou blanc, selon le meilleur contraste (WCAG).
 - `capTextOn` (l. 67) — Couleur d'un texte coloré lisible sur le fond du thème : assombrie en thème clair.
 - `capIsLight` (l. 72) — Indique si le thème courant est clair (couleurs de texte foncées nécessaires).
-- `applyTheme` (l. 81) — Applique le thème visuel global (dark/light/dracula/solarized/nord).
-- `applyMode` (l. 110) — Bascule entre les modes d'affichage : default (Relation Map), PBS, table, capella.
-- `tv` (l. 182) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
+- `CAP_MIN_CONTRAST` (l. 80) — Contraste minimal visé pour un texte coloré (WCAG AA, texte courant).
+- `capParseColor` (l. 85) — Décompose une couleur CSS (#rgb, #rrggbb, rgb(), rgba()) en [r,g,b,a].
+- `capLuminance` (l. 94) — Luminance relative WCAG d'une couleur [r,g,b].
+- `capContrast` (l. 96) — Rapport de contraste WCAG entre deux couleurs [r,g,b].
+- `capBlend` (l. 98) — Superpose une couleur semi-transparente [r,g,b,a] sur un fond opaque [r,g,b,1].
+- `capHex` (l. 100) — Couleur [r,g,b] → #rrggbb.
+- `capReadableOn` (l. 107) — Couleur de texte lisible sur un fond donné, en conservant la teinte : foncée sur fond clair, éclaircie
+- `capEffectiveBg` (l. 121) — Fond effectif (opaque) derrière un élément : superpose les fonds semi-transparents de ses ancêtres.
+- `capFixContrast` (l. 133) — Corrige le contraste des textes colorés en ligne (style="color:…") d'un sous-arbre, en thème clair.
+- `capRestoreContrast` (l. 149) — Rend leurs couleurs d'origine aux textes corrigés par capFixContrast (retour à un thème sombre).
+- `capContrastCss` (l. 156) — Génère, pour le thème clair courant, des règles qui foncent les couleurs de texte fixes des feuilles
+- `applyTheme` (l. 198) — Applique le thème visuel global (dark/light/dracula/solarized/nord).
+- `applyMode` (l. 233) — Bascule entre les modes d'affichage : default (Relation Map), PBS, table, capella.
+- `tv` (l. 306) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
 
 ## 03-rm-etat-svg.js — 121 lignes
 
@@ -142,15 +153,15 @@
 - `buildTableView` (l. 679) — Construit intégralement la vue Table View : barre d'outils, menu de sélection des
 - `onModelChanged` (l. 1398) — Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel.
 
-## 11-sauvegarde-toolbar-init.js — 263 lignes
+## 11-sauvegarde-toolbar-init.js — 262 lignes
 
 - `saveJSON` (l. 5) — Sérialise MODEL, RCFG, TCFG et S en JSON et télécharge le fichier.
 - `loadJSON` (l. 19) — Charge un fichier JSON et restaure l'état complet de l'application.
 - `applyDepth` (l. 106) — Applique la profondeur d'exploration du graphe (bornée entre 1 et 10),
-- `openHelpModal` (l. 151) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
-- `positionOverlay` (l. 247) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
+- `openHelpModal` (l. 150) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
+- `positionOverlay` (l. 246) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
 
-## 20-capella-chargement.js — 728 lignes
+## 20-capella-chargement.js — 761 lignes
 
 - `CAP_LAYERS` (l. 4)
 - `CAP_NS_LAYER` (l. 12)
@@ -159,30 +170,33 @@
 - `CAP_TECHNICAL_TYPES` (l. 15)
 - `CAP_PKG_TYPES` (l. 16)
 - `CAP_TYPE_ICON` (l. 17)
-- `capSaveFullPage` (l. 35) — Sauvegarde la page actuelle (tout le HTML/CSS/JS de l'application) dans un fichier HTML
-- `capEsc` (l. 107) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
-- `capLoadFile` (l. 122) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
-- `capShowWelcome` (l. 176) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
-- `capWelcomeStatus` (l. 187) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
-- `capUpdateWelcome` (l. 193) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
-- `XSI_NS` (l. 229)
-- `capXType` (l. 231) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
-- `capTName` (l. 233) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
-- `capXId` (l. 235) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
-- `capXName` (l. 237) — Lit l'attribut 'name' d'un élément XML Capella.
-- `capResolveLayer` (l. 242) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
-- `capGetAttrs` (l. 248) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
-- `capBuildTree` (l. 258) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
-- `capRunBulk` (l. 284) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
-- `capBuildTypeRegistry` (l. 294) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
-- `capApplyPanelOnLoad` (l. 313) — Appelée après le chargement Capella : configure le panneau gauche RM.
-- `capInjectToArbo` (l. 376) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
-- `capInjectCapellaRelsToCriteria` (l. 480) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
-- `capInjectLinksToModel` (l. 521) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
-- `capFilterArboToLinked` (l. 565) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
-- `capInjectChainsToModal` (l. 604) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
-- `capRenderCurrentView` (l. 665) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
-- `capUpdateStatChips` (l. 719) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
+- `capBuildPageHtml` (l. 36) — Construit le HTML de la page actuelle (tout le HTML/CSS/JS de l'application), fichier
+- `capPageFileName` (l. 99) — Nom de fichier proposé pour la page sauvegardée.
+- `capSaveFullPage` (l. 101) — Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur).
+- `capSavePageDirect` (l. 115) — Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
+- `capEsc` (l. 138) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
+- `capLoadFile` (l. 153) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
+- `capShowWelcome` (l. 206) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
+- `capWelcomeStatus` (l. 217) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
+- `capUpdateWelcome` (l. 223) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
+- `XSI_NS` (l. 259)
+- `capXType` (l. 261) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
+- `capTName` (l. 263) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
+- `capXId` (l. 265) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
+- `capXName` (l. 267) — Lit l'attribut 'name' d'un élément XML Capella.
+- `capResolveLayer` (l. 272) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
+- `capGetAttrs` (l. 278) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
+- `capBuildTree` (l. 288) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
+- `capRunBulk` (l. 314) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
+- `capBuildTypeRegistry` (l. 324) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
+- `capApplyPanelOnLoad` (l. 343) — Appelée après le chargement Capella : configure le panneau gauche RM.
+- `capInjectToArbo` (l. 406) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
+- `capInjectCapellaRelsToCriteria` (l. 510) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
+- `capInjectLinksToModel` (l. 551) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
+- `capFilterArboToLinked` (l. 595) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
+- `capInjectChainsToModal` (l. 634) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
+- `capRenderCurrentView` (l. 695) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
+- `capUpdateStatChips` (l. 752) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
 ## 21-capella-vues-base.js — 1119 lignes
 
@@ -226,29 +240,30 @@
 - `capComputeLinks` (l. 30) — Extrait et résout toutes les relations Capella depuis le XML :
 - `capRenderLinks` (l. 136) — Rend la vue Liens : tableau des relations Capella groupées par type.
 
-## 23-chaines.js — 523 lignes
+## 23-chaines.js — 533 lignes
 
 - `CAP_CHAIN_COLORS` (l. 2)
 - `CAP_CHAIN_LABELS` (l. 3)
 - `CAP_ACTOR_TYPES` (l. 4)
 - `CAP_CHAIN_ARCH` (l. 5)
 - `CAP_CHAIN_KIND` (l. 8) — Couleurs des boîtes, reprises des diagrammes Capella : bleu = élément porté par un acteur,
-- `capIsActorEl` (l. 26) — Indique si un composant XML est un acteur (attribut actor="true" des versions récentes
-- `capBuildFunctionAllocationIndex` (l. 38) — Construit l'index fonction → composant allocataire à partir des ComponentFunctionalAllocation
-- `capComputeChains` (l. 56) — Extrait les chaînes (FunctionalChain, OperationalProcess, PhysicalPath) sous forme de GRAPHE
-- `capChainLayout` (l. 176) — Calcule une disposition en couches (Sugiyama simplifié) d'un graphe de chaîne :
-- `capWrapLines` (l. 252) — Découpe un nom en lignes pour l'affichage dans une boîte.
-- `capChainDiagramSvg` (l. 266) — Produit le diagramme SVG d'une chaîne dans le style Capella (haut → bas) : boîtes bleues
-- `capChainsFiltered` (l. 376) — Retourne les chaînes après application des filtres de type et de catégorie ARCADIA.
-- `capChainIsEmpty` (l. 382) — Vrai si la chaîne est vide : aucune fonction (ou composant) ni échange impliqué.
-- `capChainEmptyOk` (l. 384) — Vrai si la chaîne passe le filtre de contenu (toutes / non vides / vides).
-- `CAP_CHAIN_LAYER_ORDER` (l. 385)
-- `capChainLayerInfo` (l. 387) — Libellé et couleurs d'une catégorie ARCADIA de chaîne ('?' = non classée).
-- `capChainLayerBadge` (l. 391) — Badge coloré de catégorie ARCADIA (OA, SA, LA, PA…).
-- `capRenderChains` (l. 398) — Rend la vue Chaînes : filtres (type + catégorie ARCADIA), légende et bascule entre les
-- `capRenderChainCards` (l. 439) — Construit le HTML des cartes de chaînes, regroupées par catégorie ARCADIA
-- `capChainCardBody` (l. 470) — Rend le contenu d'une carte ouverte : entrées/sorties, diagramme et table des échanges.
-- `capWireChainCards` (l. 504) — Attache l'ouverture/fermeture des cartes (rendu paresseux du diagramme) et la navigation.
+- `capIsActorEl` (l. 27) — Indique si un composant XML est un acteur (attribut actor="true" des versions récentes
+- `capBuildFunctionAllocationIndex` (l. 39) — Construit l'index fonction → composant allocataire à partir des ComponentFunctionalAllocation
+- `capComputeChains` (l. 57) — Extrait les chaînes (FunctionalChain, OperationalProcess, PhysicalPath) sous forme de GRAPHE
+- `capChainLayout` (l. 177) — Calcule une disposition en couches (Sugiyama simplifié) d'un graphe de chaîne :
+- `capWrapLines` (l. 253) — Découpe un nom en lignes pour l'affichage dans une boîte.
+- `capChainDiagramSvg` (l. 267) — Produit le diagramme SVG d'une chaîne dans le style Capella (haut → bas) : boîtes bleues
+- `capChainsFiltered` (l. 378) — Retourne les chaînes après application des filtres de type et de catégorie ARCADIA,
+- `capChainFnCount` (l. 387) — Nombre de fonctions (ou de composants pour un Physical Path) impliquées dans la chaîne.
+- `capChainIsEmpty` (l. 389) — Vrai si la chaîne est vide : aucune fonction (ou composant) ni échange impliqué.
+- `capChainEmptyOk` (l. 391) — Vrai si la chaîne passe le filtre de contenu (toutes / non vides / vides).
+- `CAP_CHAIN_LAYER_ORDER` (l. 392)
+- `capChainLayerInfo` (l. 394) — Libellé et couleurs d'une catégorie ARCADIA de chaîne ('?' = non classée).
+- `capChainLayerBadge` (l. 398) — Badge coloré de catégorie ARCADIA (OA, SA, LA, PA…).
+- `capRenderChains` (l. 405) — Rend la vue Chaînes : filtres (type + catégorie ARCADIA), légende et bascule entre les
+- `capRenderChainCards` (l. 449) — Construit le HTML des cartes de chaînes, regroupées par catégorie ARCADIA
+- `capChainCardBody` (l. 480) — Rend le contenu d'une carte ouverte : entrées/sorties, diagramme et table des échanges.
+- `capWireChainCards` (l. 514) — Attache l'ouverture/fermeture des cartes (rendu paresseux du diagramme) et la navigation.
 
 ## 24-chaines-export.js — 814 lignes
 
@@ -277,11 +292,13 @@
 - `capChainExportRefreshCount` (l. 540) — Met à jour le compteur de sélection et la case « Tout » sans re-rendre les cartes (garde les cartes ouvertes).
 - `capRenderChainMap` (l. 551) — Rend la sous-vue « Relation Map » : liste des chaînes groupée par catégorie ARCADIA à gauche,
 
-## 25-panneau-detail.js — 169 lignes
+## 25-panneau-detail.js — 186 lignes
 
 - `capOpenDetail` (l. 5) — Ouvre le panneau de détail (colonne droite de l'overlay) pour un élément Capella.
 - `capOpenDetailNode` (l. 94) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
-- `capUpdateToolbarForView` (l. 106) — Met à jour les boutons actifs et les groupes de contrôles visibles
+- `CAP_ELEM_VIEWS` (l. 102)
+- `capUpdateToolbarForView` (l. 108) — Met à jour les boutons actifs et les groupes de contrôles visibles
+- `capShowView` (l. 135) — Affiche une vue Capella (bascule en mode capella si besoin).
 
 ## 26-rapports-html.js — 101 lignes
 
@@ -358,7 +375,7 @@
 - `capNameQuality` (l. 29) — Analyse la qualité rédactionnelle d'un nom de fonction : verbe en tête (infinitif en français, forme de base en anglais),
 - `capFnNQ` (l. 58) — Diagnostic de nom d'une fonction, mis en cache (recalculé si les règles personnalisées changent). Fonctions racines ignorées.
 
-## 34-fonctions.js — 707 lignes
+## 34-fonctions.js — 719 lignes
 
 - `capIsCompEl` (l. 3) — Indique si un élément XML est un composant, une entité ou un acteur (porteur d'allocations).
 - `capCompAncestors` (l. 11) — Chaîne des composants englobants d'un composant, de la racine (le système) au parent direct.
@@ -372,9 +389,10 @@
 - `capRenderFunctions` (l. 187)
 - `capFnDossierHtml` (l. 651) — Dossier fonctionnel HTML autonome : un onglet par couche (sections numérotées et indentées : description,
 - `capFillHeight` (l. 676) — Ajuste la hauteur des éléments marqués data-fill pour qu'ils occupent la fenêtre jusqu'en bas.
-- `capRenderAnalyses` (l. 686) — Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage.
+- `capRenderFunctionsView` (l. 689) — Vue « ƒ Fonctions » (menu principal, au même niveau que 🔬 Analyses) : hiérarchie, tableau,
+- `capRenderAnalyses` (l. 698)
 
-## 35-tableau-de-bord.js — 528 lignes
+## 35-tableau-de-bord.js — 555 lignes
 
 - `CAP_DASH_PAL` (l. 3) — Palette catégorielle à ordre fixe (contrôlée pour le daltonisme), déclinée pour thèmes clairs et sombres.
 - `CAP_DASH_AK` (l. 6) — Couleurs des natures d'allocation (identiques au filtre « Allocation » de ƒ Fonctions).
@@ -392,9 +410,9 @@
 - `capDashSave` (l. 305) — Enregistre les tableaux de bord dans la page (bloc JSON repris par la 💾 Page HTML).
 - `capDashUid` (l. 311) — Identifiant court et unique pour un tableau de bord ou un élément.
 - `capDashExample` (l. 315) — Tableau de bord d'exemple adapté au modèle ouvert (synthèse de quelques indicateurs clés).
-- `capRenderDashboard` (l. 331) — Vue « 📐 Tableau de bord » : tableaux de bord personnalisés (indicateurs, graphiques, tableaux, textes),
-- `capDashPrint` (l. 441) — Imprime un tableau de bord au format A4 : les éléments sont redessinés à la taille de la page
-- `capDashEditor` (l. 477) — Fenêtre d'ajout ou de configuration d'un élément : catalogue des indicateurs (recherche, groupes),
+- `capRenderDashboard` (l. 333) — Vue « 📐 Tableau de bord » : tableaux de bord personnalisés (indicateurs, graphiques, tableaux, textes),
+- `capDashPrint` (l. 459) — Imprime un tableau de bord au format A4 : les éléments sont redessinés à la taille de la page
+- `capDashEditor` (l. 496) — Fenêtre d'ajout ou de configuration d'un élément : catalogue des indicateurs (recherche, groupes),
 
 ## 36-component-exchange.js — 338 lignes
 
@@ -404,3 +422,13 @@
 ## 37-capella-cablage.js — 38 lignes
 
 - `capOpenDetailById` (l. 7) — Ouvre le panneau de détail Capella pour un des deux IDs fournis (src ou tgt).
+
+## 38-theme-perso.js — 127 lignes
+
+- `CAP_THEME_FIELDS` (l. 7) — Variables de couleur personnalisables : [variable CSS, libellé, groupe].
+- `CAP_THEME_LAYERS` (l. 16) — Couches ARCADIA dont la couleur est personnalisable : [clé CAP_LAYERS, libellé].
+- `capThemeSave` (l. 24) — Enregistre le thème personnalisé dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capThemeRegister` (l. 30) — Déclare (ou retire) le thème personnalisé dans THEMES et dans le sélecteur de thème.
+- `capThemeLayerDefaults` (l. 40) — Couleurs d'origine des couches ARCADIA (mémorisées au premier appel).
+- `capThemeLayersApply` (l. 48) — Applique les couleurs de couches du thème personnalisé (ou celles d'origine pour un autre thème)
+- `capThemeEditor` (l. 59) — Ouvre l'éditeur du thème personnalisé : toutes les couleurs regroupées (fonds, textes, statuts,
