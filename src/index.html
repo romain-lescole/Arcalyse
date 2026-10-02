@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relation Map — Capella</title>
+<style>
+@@INCLUDE css/styles.css@@
+</style>
+</head>
+<body>
+
+@@INCLUDE html/interface.html@@
+
+@@INCLUDE html/aide.html@@
+
+<style>
+@@INCLUDE css/aide.css@@
+</style>
+
+<!-- ════════════════════════  SCRIPTS  ════════════════════════ -->
+<!-- D3.js v7.9.0 (ISC, © Mike Bostock) embarqué pour un fonctionnement 100 % hors ligne — source : npm d3@7.9.0, dist/d3.min.js -->
+<script id="d3-embedded">
+@@INCLUDE vendor/d3.min.js@@
+</script>
+<script>
+@@INCLUDE js/01-donnees-config.js@@
+
+@@INCLUDE js/02-themes.js@@
+
+@@INCLUDE js/03-rm-etat-svg.js@@
+
+@@INCLUDE js/04-rm-arbre-rendu.js@@
+
+@@INCLUDE js/05-rm-vue-chaine.js@@
+
+@@INCLUDE js/06-rm-interactions-export.js@@
+
+@@INCLUDE js/07-rm-panneau-criteres.js@@
+
+@@INCLUDE js/08-editeur-modele.js@@
+
+@@INCLUDE js/09-arborescence.js@@
+
+@@INCLUDE js/10-table-view.js@@
+
+@@INCLUDE js/11-sauvegarde-toolbar-init.js@@
+@@INCLUDE js/20-capella-chargement.js@@
+
+@@INCLUDE js/21-capella-vues-base.js@@
+
+@@INCLUDE js/22-capella-liens.js@@
+
+@@INCLUDE js/23-chaines.js@@
+
+@@INCLUDE js/24-chaines-export.js@@
+
+@@INCLUDE js/25-panneau-detail.js@@
+
+@@INCLUDE js/26-rapports-html.js@@
+
+@@INCLUDE js/27-interfaces-calculs.js@@
+@@INCLUDE js/28-index-types.js@@
+
+@@INCLUDE js/29-physical-link.js@@
+
+@@INCLUDE js/30-ports.js@@
+
+@@INCLUDE js/31-analyses-traca-capacites.js@@
+@@INCLUDE js/32-analyses-etats-comparaison.js@@
+
+@@INCLUDE js/33-qualite-noms.js@@
+
+@@INCLUDE js/34-fonctions.js@@
+
+
+
+
+@@INCLUDE js/35-tableau-de-bord.js@@
+
+
+@@INCLUDE js/36-component-exchange.js@@
+@@INCLUDE js/37-capella-cablage.js@@
+
+</script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+* text=auto eol=lf
+*.capella -diff
+src/vendor/** -diff linguist-vendored

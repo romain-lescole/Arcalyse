@@ -1,0 +1,457 @@
+<!-- ════════════════════════  TOOLBAR  ════════════════════════ -->
+<div id="toolbar">
+  <div class="tbtn active" id="mode-rm"    title="Relation Map">🗺 Relation Map</div>
+  <div class="tbtn"        id="mode-pbs"   title="PBS" style="display:none">🌲 PBS</div>
+  <div class="tbtn"        id="mode-table" title="Table View">📊 Table View</div>
+  <div class="tbtn"        id="mode-capella" title="Capella Data" style="display:none">🔷 Capella Data</div>
+  <!-- Vues Capella Data : toujours visibles dès qu'un modèle est chargé (clic = bascule en Capella Data) -->
+  <div id="cap-tb-views" style="display:none;align-items:center;gap:3px;">
+    <div class="tsep" style="margin:0 2px;"></div>
+    <div class="tbtn" id="cap-v-tree">🌳 Arborescence</div>
+    <div class="tbtn active" id="cap-v-cards">▦ Cartes</div>
+    <div class="tbtn" id="cap-v-table">📋 Tableau</div>
+    <div class="tbtn" id="cap-v-links">🔗 Liens</div>
+    <div class="tbtn" id="cap-v-chains">⚡ Chaînes</div>
+    <div class="tbtn" id="cap-v-physlink">🔌 Physical Link</div>
+    <div class="tbtn" id="cap-v-compex">🔀 Component Exchange</div>
+    <div class="tbtn" id="cap-v-ports" title="Traçabilité Function Port ↔ Component Port ↔ Physical Port">🧩 Ports</div>
+    <div class="tbtn" id="cap-v-analyses" title="Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions">🔬 Analyses</div>
+    <div class="tbtn" id="cap-v-dashboard" title="Tableaux de bord personnalisés : indicateurs, graphiques, tableaux">📐 Tableau de bord</div>
+    <div class="tbtn" id="cap-v-index">📖 Index des types</div>
+  </div>
+  <!-- Spacer : tout ce qui suit est poussé à droite -->
+  <div id="tb-spacer"></div>
+  <div class="tbtn" id="b-ref" style="display:none">↺ Reset</div>
+  <div class="tsep"></div>
+  <div class="tbtn" id="b-capella-load" title="Charger un fichier Capella">🔷 CAPELLA</div>
+  <div class="tbtn" id="b-save-page" title="Sauvegarder la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome">💾 Page HTML</div>
+  <!-- Éditer/Sauver/Charger → dropdown -->
+  <div style="position:relative;display:none" id="b-edit-wrap"><!-- menu Éditer retiré de l'interface (version Capella) -->
+    <div class="tbtn" id="b-edit-menu" title="Éditer / Sauver / Charger">✏ Éditer ▾</div>
+    <div id="b-edit-dd" style="display:none;position:absolute;top:calc(100% + 4px);right:0;z-index:500;
+         background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;
+         min-width:160px;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;">
+      <div class="ctx-i" id="b-edit">✏ Éditeur de modèle</div>
+      <div class="ctx-i" id="b-save">💾 Sauvegarder</div>
+      <div class="ctx-i" id="b-load">📂 Charger un fichier</div>
+    </div>
+  </div>
+  <!-- PNG/JPEG/SVG → dropdown -->
+  <div style="position:relative;" id="b-exp-wrap">
+    <div class="tbtn" id="b-exp-menu" title="Exporter image">🖼 Export ▾</div>
+    <div id="b-exp-dd" style="display:none;position:absolute;top:calc(100% + 4px);right:0;z-index:500;
+         background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;
+         min-width:140px;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;">
+      <div class="ctx-i" id="b-expng">🖼 PNG</div>
+      <div class="ctx-i" id="b-expjpg">📷 JPEG</div>
+      <div class="ctx-i" id="b-exsvg">📐 SVG</div>
+    </div>
+  </div>
+  <div class="tsep"></div>
+  <!-- Sélecteur de thème -->
+  <span style="font-size:11px;color:var(--c-dim)">Thème :</span>
+  <select id="theme-sel" title="Changer le thème">
+    <option value="dark">🌙 Sombre</option>
+    <option value="light">☀️ Clair</option>
+    <option value="blue">🌊 Marine</option>
+    <option value="green">🌿 Nature</option>
+    <option value="office2007">🗂 Office 2007</option>
+    <option value="contrast">⚡ Contraste</option>
+  </select>
+  <div class="tsep"></div>
+  <div class="tbtn" id="b-help" title="Aide">? Aide</div>
+</div>
+<!-- Toolbar niveau 2 : commandes propres à la Relation Map -->
+<div id="toolbar2">
+  <div class="tbtn" id="b-zi"  title="Zoom avant (Ctrl++)">＋</div>
+  <div class="tbtn" id="b-zo"  title="Zoom arrière (Ctrl+-)">－</div>
+  <div class="tbtn" id="b-fit" title="Ajuster (Ctrl+W)">⊡ Fit</div>
+  <div class="tsep"></div>
+  <div class="tbtn" id="b-ea">↓ Ouvrir tout</div>
+  <div class="tbtn" id="b-ca">↑ Fermer tout</div>
+  <div class="tsep"></div>
+  <div class="tbtn" id="b-num"># Nums</div>
+  <div class="tbtn active" id="b-leg">◉ Légende</div>
+  <div class="tbtn active" id="b-rln">⌁ Relations</div>
+  <div class="tbtn" id="b-cut" title="Couper les noms longs">✂ Noms</div>
+  <div class="tbtn" id="b-single" style="display:none">⊙ Unique</div>
+  <div class="tbtn" id="b-compact">⬡ Compact</div>
+</div>
+
+<!-- ════════════════════════  MAIN  ════════════════════════ -->
+<div id="main">
+  <!-- Écran d'accueil : ouverture d'un fichier Capella (glisser-déposer ou explorateur) -->
+  <div id="cap-welcome">
+    <button id="cw-help" type="button" title="Aide et présentation des fonctionnalités">❓ Aide</button>
+    <div id="cap-drop-zone" title="Cliquer pour parcourir, ou glisser-déposer un fichier .capella">
+      <div class="cw-icon">🔷</div>
+      <div class="cw-title" id="cw-title">Ouvrir un modèle Capella</div>
+      <div class="cw-sub" id="cw-sub">Glissez-déposez votre fichier <strong>.capella</strong> ici<br>ou recherchez-le dans l'explorateur de fichiers.</div>
+      <button class="cw-btn" id="cw-browse" type="button">📂 Parcourir…</button>
+      <div class="cw-status" id="cw-status"></div>
+      <div class="cw-hint">Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé.</div>
+      <a href="#" class="cw-help-link" id="cw-help-link">📖 Que peut-on analyser ? Découvrir les fonctionnalités</a>
+    </div>
+  </div>
+
+  <!-- Panel gauche + barre de redimensionnement -->
+  <div id="panel">
+    <div id="panel-inner">
+    <div id="panel-close-row">
+      <span>Panneau</span>
+      <div id="panel-close-btn" title="Réduire le panneau">◀</div>
+    </div>
+    <div class="sec" id="sec-arbo">
+      <div class="sec-hdr"><span>Arborescence</span>
+        <span style="display:flex;align-items:center;gap:2px;margin-left:auto;margin-right:4px">
+          <span title="Tout développer" onclick="event.stopPropagation();arboExpandAll()"
+                style="cursor:pointer;font-size:13px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">⊞</span>
+          <span title="Tout réduire"    onclick="event.stopPropagation();arboCollapseAll()"
+                style="cursor:pointer;font-size:13px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">⊟</span>
+        </span>
+        <span class="chv">▾</span></div>
+      <div id="arbo-msel-bar" style="display:none;align-items:center;gap:6px;padding:3px 8px;font-size:10px;color:var(--c-accent);background:color-mix(in srgb,var(--c-accent) 10%,transparent);border-bottom:1px solid var(--c-border);">
+        <span id="arbo-msel-count"></span>
+        <span style="margin-left:auto;cursor:pointer;color:var(--c-dim);" title="Vider la sélection" onclick="arboClearMultiSel()">✕ vider</span>
+      </div>
+      <div class="arbo-search-wrap" style="padding:4px 6px 2px;">
+        <input id="arbo-search" type="text" placeholder="🔍 Filtrer l'arborescence…"
+               style="width:100%;padding:4px 8px;background:var(--c-bg3);border:1px solid var(--c-border);
+                      border-radius:6px;color:var(--c-text);font-size:11px;outline:none;box-sizing:border-box;"
+               oninput="buildArbo()">
+      </div>
+      <div class="sec-body" id="arbo-body" style="padding:4px 6px;max-height:45vh;overflow-y:auto"></div>
+    </div>
+    <div id="arbo-ctx-menu"></div>
+    <div class="sec" id="sec-disposition">
+      <div class="sec-hdr"><span>Disposition &amp; Profondeur</span><span class="chv">▾</span></div>
+      <div class="sec-body">
+        <div style="font-size:11px;color:var(--c-dim);margin-bottom:3px">Profondeur</div>
+        <div class="depth-row">
+          <div class="tbtn" id="b-dm" style="padding:3px 8px">−</div>
+          <input class="inp" type="number" id="dep-inp" min="1" max="10" value="3">
+          <div class="tbtn" id="b-dp" style="padding:3px 8px">+</div>
+        </div>
+        <div style="font-size:11px;color:var(--c-dim);margin:10px 0 3px">Disposition</div>
+        <div class="layout-row">
+          <div class="lbtn active" data-l="LR">→ LR</div>
+          <div class="lbtn" data-l="TB">↓ TB</div>
+          <div class="lbtn" data-l="RL">← RL</div>
+          <div class="lbtn" data-l="radial">◉ Rad</div>
+          <div class="lbtn" data-l="zigzag" title="Zigzag 7:3 — séquence en grille">⚡ Zig</div>
+        </div>
+      </div>
+    </div>
+    <div class="sec" style="display:none">
+      <div class="sec-hdr"><span>Contexte</span><span class="chv">▾</span></div>
+      <div class="sec-body">
+        <select class="inp" id="ctx-sel"></select>
+        <div style="margin-top:5px;font-size:10px;color:var(--c-dim)">
+          Double-clic sur un nœud pour changer le contexte
+        </div>
+        <div id="b-new-ctx-el" class="add-btn" style="margin-top:8px">✚ Créer un nouvel élément</div>
+      </div>
+    </div>
+    <div class="sec" id="sec-rel">
+      <div class="sec-hdr coll"><span>Critères de relation</span>
+        <span style="display:flex;align-items:center;gap:2px;margin-left:auto;margin-right:4px">
+          <span title="Tout sélectionner"   onclick="event.stopPropagation();relSelectAll(true)"
+                style="cursor:pointer;font-size:13px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">☑</span>
+          <span title="Tout désélectionner" onclick="event.stopPropagation();relSelectAll(false)"
+                style="cursor:pointer;font-size:13px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">☐</span>
+        </span>
+        <span class="chv">▾</span></div>
+      <div class="sec-body" id="rel-body"></div>
+    </div>
+    <div class="sec" id="sec-cap-typ" style="display:none">
+      <div class="sec-hdr"><span>🔷 Type d'élément</span>
+        <span style="display:flex;align-items:center;gap:2px;margin-left:auto;margin-right:4px">
+          <span title="Réinitialiser (tout décocher)" onclick="event.stopPropagation();tvCapTypeFilter=new Set();buildTableView();"
+                style="cursor:pointer;font-size:11px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">↺ Défaut</span>
+        </span>
+        <span class="chv">▾</span></div>
+      <div class="sec-body" id="cap-typ-body" style="max-height:50vh;overflow-y:auto"></div>
+    </div>
+    <div class="sec" id="sec-typ">
+      <div class="sec-hdr coll"><span id="sec-typ-label">Types d'éléments</span>
+        <span style="display:flex;align-items:center;gap:2px;margin-left:auto;margin-right:4px">
+          <span title="Tout sélectionner"   onclick="event.stopPropagation();typSelectAll(true)"
+                style="cursor:pointer;font-size:13px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">☑</span>
+          <span title="Tout désélectionner" onclick="event.stopPropagation();typSelectAll(false)"
+                style="cursor:pointer;font-size:13px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">☐</span>
+        </span>
+        <span class="chv">▾</span></div>
+      <div class="sec-body" id="typ-body"></div>
+    </div>
+    <div class="sec" style="display:none">
+      <div class="sec-hdr"><span>Portée (Paquetages)</span><span class="chv">▾</span></div>
+      <div class="sec-body" id="scp-body"></div>
+    </div>
+    <div class="sec" id="sec-props">
+      <div class="sec-hdr"><span>Propriétés</span><span class="chv">▾</span></div>
+      <div class="sec-body" id="props-body" style="padding:6px 8px"></div>
+    </div>
+    </div><!-- /panel-inner -->
+  </div><!-- /panel -->
+  <div id="panel-resize-bar"></div>
+  <div id="panel-open-tab" title="Ouvrir le panneau">▶</div>
+
+  <!-- Table View -->
+  <div id="table-view">
+    <div class="tv-tabbar" id="tv-tabbar"></div>
+    <div class="tv-toolbar" id="tv-toolbar"></div>
+    <div class="tv-scroll"><table id="tv-table"><thead></thead><tbody></tbody></table></div>
+  </div>
+
+  <input type="file" id="tv-table-view-input" accept=".json" style="display:none">
+  <div id="tv-customcol-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:400;"></div>
+  <div id="tv-customcol-panel" style="display:none;position:fixed;top:0;right:-460px;width:440px;height:100%;
+       background:var(--c-bg2);border-left:1px solid var(--c-border);z-index:401;
+       box-shadow:-8px 0 24px rgba(0,0,0,.4);transition:right .25s ease;overflow-y:auto;padding:18px;">
+    <div style="display:flex;align-items:center;margin-bottom:14px;">
+      <span id="tv-customcol-title" style="font-weight:700;font-size:14px;">✨ Colonne personnalisée — Metachain Navigation</span>
+      <span id="tv-customcol-close" style="margin-left:auto;cursor:pointer;color:var(--c-dim);font-size:18px;line-height:1;">×</span>
+    </div>
+    <p style="font-size:11px;color:var(--c-dim);margin-bottom:12px;">
+      Chaque ligne du metachain associe un <strong style="color:var(--c-text)">Metaclass</strong> (le type d'élément
+      à cette étape) à une <strong style="color:var(--c-text)">Property</strong> (un attribut/relation à suivre,
+      ou une valeur terminale comme <em>Name</em>, <em>ID</em> ou un attribut précis qui arrête la chaîne).
+      Le Metaclass de la 1ʳᵉ ligne est le type de départ ; à partir de la 2ᵉ ligne, il est imposé par le résultat
+      de la Property précédente.
+    </p>
+    <div style="display:flex;gap:6px;padding:4px 0 6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--c-dim);">
+      <span style="flex:1;">Metaclass or Stereotype</span>
+      <span style="flex:1;">Property</span>
+      <span style="width:16px;"></span>
+    </div>
+    <div id="tv-customcol-steps"></div>
+    <div id="tv-customcol-addstep" class="add-btn" style="margin-bottom:14px;">+ Insert (nouvelle étape)</div>
+    <div style="border-top:1px solid var(--c-border);padding-top:12px;">
+      <div style="font-size:11px;color:var(--c-dim);margin-bottom:4px;">Nom de la colonne</div>
+      <input id="tv-customcol-name" type="text" class="inp" style="width:100%;box-sizing:border-box;margin-bottom:14px;" placeholder="ex: Functions of Component">
+      <div id="tv-customcol-create" class="tbtn" style="text-align:center;width:100%;box-sizing:border-box;">Créer la colonne</div>
+    </div>
+  </div>
+
+  <!-- Zone SVG -->
+  <div id="graph">
+    <svg id="svg">
+      <defs id="defs"></defs>
+      <g id="root">
+        <g id="g-links"></g>
+        <g id="g-nodes"></g>
+      </g>
+    </svg>
+    <div id="legend"><h3>Légende</h3><div id="leg-body"></div></div>
+  </div>
+</div><!-- /main -->
+
+<div id="infobar"><span id="info-txt">Prêt</span></div>
+
+<!-- ════════════════════════  INFOBULLE  ════════════════════════ -->
+<div id="tip"><div class="tn" id="tt-n"></div><div class="ts" id="tt-s"></div></div>
+
+<!-- ════════════════════════  MENU CONTEXTUEL  ════════════════════════ -->
+<div id="ctxmenu">
+  <div class="ctx-i" id="cx-edit">✏ Modifier l'élément</div>
+  <div class="ctx-i" id="cx-new-rel">→ Créer une relation vers…</div>
+  <div class="ctx-i" id="cx-new-child">✦ Créer un élément enfant</div>
+  <div class="ctx-s"></div>
+  <div class="ctx-i" id="cx-ctx">⊙ Définir comme contexte</div>
+  <div class="ctx-i" id="cx-exp">↓ Développer</div>
+  <div class="ctx-i" id="cx-col">↑ Réduire</div>
+  <div class="ctx-s"></div>
+  <div class="ctx-i danger" id="cx-hide">👁 Masquer l'élément</div>
+</div>
+
+<!-- ════════════════════════  PANNEAU FLOTTANT  ════════════════════════ -->
+<div id="float-panel">
+  <h4 id="float-title"></h4>
+  <div id="float-body"></div>
+  <div class="fbtns">
+    <button class="fbtn-cancel" id="float-cancel">Annuler</button>
+    <button class="fbtn-save"   id="float-save">Sauvegarder</button>
+  </div>
+</div>
+
+<!-- ════════════════════════  MODALE ÉDITEUR  ════════════════════════ -->
+<div id="modal-ov">
+  <div id="modal-box">
+    <div id="modal-hdr">
+      <span>✏ Éditeur de modèle</span>
+      <button id="modal-close">✕</button>
+    </div>
+    <div id="modal-tabs">
+      <button class="mtab active" data-t="el">Éléments (<span id="el-count">0</span>)</button>
+      <button class="mtab" data-t="rel">Relations (<span id="rel-count">0</span>)</button>
+      <button class="mtab" data-t="pkg">Paquetages (<span id="pkg-count">0</span>)</button>
+      <button class="mtab" data-t="chains" id="mtab-chains" style="display:none">Chaînes (<span id="chains-count">0</span>)</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════  MODAL EXPORT QUALITÉ  ════════════════════════ -->
+<div id="export-ov">
+  <div id="export-box">
+    <h3 id="export-title">Exporter</h3>
+    <div style="font-size:12px;color:var(--c-dim);margin-bottom:10px">Résolution :</div>
+    <div class="dpi-row">
+      <div class="dpi-btn" data-dpi="1">1× Normal</div>
+      <div class="dpi-btn active" data-dpi="2">2× HD</div>
+      <div class="dpi-btn" data-dpi="3">3× Ultra</div>
+      <div class="dpi-btn" data-dpi="4">4× Max</div>
+    </div>
+    <div style="font-size:11px;color:var(--c-dim);margin-bottom:12px" id="export-size-info"></div>
+    <div class="fbtns">
+      <button class="fbtn-cancel" id="export-cancel">Annuler</button>
+      <button class="fbtn-save" id="export-confirm">Exporter</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="file-input" accept=".json" style="display:none">
+<input type="file" id="capella-file-input" accept=".capella,.melodymodeller,.xml" style="display:none">
+
+<!-- ═══ CAPELLA DATA PANEL (full overlay, shown when mode=capella) ═══ -->
+<div id="capella-overlay" style="display:none;position:fixed;inset:0;top:0;bottom:25px;background:var(--c-bg);z-index:50;flex-direction:row;">
+  <!-- Left sidebar: type filter -->
+  <div id="cap-sidebar" style="width:240px;flex-shrink:0;border-right:1px solid var(--c-border);
+       display:flex;flex-direction:column;overflow:hidden;background:var(--c-bg2);">
+    <div id="cap-sidebar-hdr" style="padding:10px 12px 8px;border-bottom:1px solid var(--c-border);
+         display:flex;flex-direction:column;gap:7px;background:var(--c-bg);">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--c-dim)">Types d'éléments</div>
+      <input type="text" id="cap-type-search" placeholder="Filtrer les types…"
+             style="width:100%;padding:5px 9px;background:var(--c-bg3);border:1px solid var(--c-border);
+                    border-radius:6px;color:var(--c-text);font-size:12px;outline:none;">
+      <div style="display:flex;gap:5px;">
+        <button id="cap-sb-all" style="flex:1;padding:3px 0;background:var(--c-bg3);border:1px solid var(--c-border);
+                border-radius:5px;color:var(--c-dim);font-size:11px;cursor:pointer;">Tout cocher</button>
+        <button id="cap-sb-none" style="flex:1;padding:3px 0;background:var(--c-bg3);border:1px solid var(--c-border);
+                border-radius:5px;color:var(--c-dim);font-size:11px;cursor:pointer;">Aucun</button>
+        <button id="cap-sb-def" style="flex:1;padding:3px 0;background:var(--c-bg3);border:1px solid var(--c-border);
+                border-radius:5px;color:var(--c-dim);font-size:11px;cursor:pointer;">Défaut</button>
+      </div>
+    </div>
+    <div id="cap-type-list" style="flex:1;overflow-y:auto;padding:4px 0;"></div>
+  </div>
+
+  <!-- Resize handle for cap-sidebar -->
+  <div id="cap-sidebar-resizer" style="width:5px;flex-shrink:0;cursor:col-resize;background:transparent;
+       border-left:2px solid var(--c-border);transition:border-color .15s;position:relative;z-index:10;"
+       title="Glisser pour redimensionner">
+  </div>
+
+  <!-- Content area -->
+  <div id="cap-content" style="flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden;">
+    <!-- Sub-toolbar: stats + filters + search + expand/json — always in content area -->
+    <div id="cap-sub-toolbar" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:6px 12px;border-bottom:1px solid var(--c-border);background:var(--c-bg2);flex-shrink:0;">
+      <!-- Stats chips -->
+      <div id="cap-stat-chips" style="display:flex;gap:4px;align-items:center;flex-wrap:wrap;"></div>
+      <div style="width:1px;height:18px;background:var(--c-border);flex-shrink:0;"></div>
+      <!-- Search -->
+      <input type="text" id="cap-search" placeholder="Rechercher…"
+             style="width:150px;padding:4px 9px;background:var(--c-bg3);border:1px solid var(--c-border);border-radius:6px;color:var(--c-text);font-size:12px;outline:none;flex-shrink:0;">
+      <!-- Layer filter + CSV (cards/table) -->
+      <div id="cap-tb-layer-grp" style="display:none;align-items:center;gap:3px;flex-wrap:wrap;">
+        <button class="tbtn active" data-layer="all">Tous</button>
+        <button class="tbtn" data-layer="OA" style="color:#3b82f6">OA</button>
+        <button class="tbtn" data-layer="SA" style="color:#22c55e">SA</button>
+        <button class="tbtn" data-layer="LA" style="color:#eab308">LA</button>
+        <button class="tbtn" data-layer="PA" style="color:#f97316">PA</button>
+        <button class="tbtn" data-layer="EPBS" style="color:#ef4444">EPBS</button>
+        <button class="tbtn" data-layer="Shared" style="color:#a78bfa">Tranv.</button>
+        <div style="width:1px;height:18px;background:var(--c-border);"></div>
+        <button class="tbtn" id="cap-exp-csv">⬇ CSV</button>
+      </div>
+      <!-- Tree controls (tree view) -->
+      <div id="cap-tb-tree-grp" style="display:none;align-items:center;gap:3px;">
+        <button class="tbtn" id="cap-expand-all">⊞ Déplier</button>
+        <button class="tbtn" id="cap-collapse-all">⊟ Réduire</button>
+        <div style="width:1px;height:18px;background:var(--c-border);"></div>
+        <button class="tbtn" id="cap-exp-json">⬇ JSON</button>
+      </div>
+    </div>
+    <div id="cap-result-count" style="padding:4px 12px;font-size:11px;color:var(--c-dim);flex-shrink:0;"></div>
+
+    <div id="cap-view-cards"  style="flex:1;overflow-y:auto;padding:12px 16px;display:block;"></div>
+    <div id="cap-view-table"  style="flex:1;overflow:hidden;display:none;flex-direction:column;">
+      <div id="cap-table-toolbar" style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-bottom:1px solid var(--c-border);flex-shrink:0;"></div>
+      <div style="flex:1;overflow:auto;">
+        <table id="cap-table" style="border-collapse:collapse;width:max-content;min-width:100%;font-size:12px;table-layout:fixed;">
+          <thead id="cap-table-head"></thead>
+          <tbody id="cap-table-body"></tbody>
+        </table>
+      </div>
+      <div id="cap-pagination" style="display:flex;align-items:center;gap:8px;padding:8px 16px;
+           border-top:1px solid var(--c-border);font-size:12px;color:var(--c-dim);">
+        <button class="tbtn" id="cap-btn-prev">← Préc.</button>
+        <span id="cap-page-info"></span>
+        <button class="tbtn" id="cap-btn-next">Suiv. →</button>
+        <select id="cap-page-size" style="margin-left:auto;padding:3px 7px;background:var(--c-bg3);
+                border:1px solid var(--c-border);border-radius:5px;color:var(--c-text);font-size:11px;">
+          <option value="50">50/page</option>
+          <option value="100" selected>100/page</option>
+          <option value="200">200/page</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Panneau latéral : constructeur de colonne personnalisée — navigation Metachain
+         (modèle MagicDraw : chaque étape = un Metaclass + une Property) -->
+    <input type="file" id="cap-table-view-input" accept=".json" style="display:none">
+    <div id="cap-customcol-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:400;"></div>
+    <div id="cap-customcol-panel" style="display:none;position:fixed;top:0;right:-460px;width:440px;height:100%;
+         background:var(--c-bg2);border-left:1px solid var(--c-border);z-index:401;
+         box-shadow:-8px 0 24px rgba(0,0,0,.4);transition:right .25s ease;overflow-y:auto;padding:18px;">
+      <div style="display:flex;align-items:center;margin-bottom:14px;">
+        <span id="cap-customcol-title" style="font-weight:700;font-size:14px;">✨ Colonne personnalisée — Metachain Navigation</span>
+        <span id="cap-customcol-close" style="margin-left:auto;cursor:pointer;color:var(--c-dim);font-size:18px;line-height:1;">×</span>
+      </div>
+      <p style="font-size:11px;color:var(--c-dim);margin-bottom:12px;">
+        Chaque ligne du metachain associe un <strong style="color:var(--c-text)">Metaclass</strong> (le type d'élément
+        à cette étape) à une <strong style="color:var(--c-text)">Property</strong> (un attribut/relation à suivre,
+        ou une valeur terminale comme <em>Name</em>, <em>ID</em> ou un attribut précis qui arrête la chaîne).
+        Le Metaclass de la 1ʳᵉ ligne est le type de départ ; à partir de la 2ᵉ ligne, il est imposé par le résultat
+        de la Property précédente.
+      </p>
+      <div style="display:flex;gap:6px;padding:4px 0 6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--c-dim);">
+        <span style="flex:1;">Metaclass or Stereotype</span>
+        <span style="flex:1;">Property</span>
+        <span style="width:16px;"></span>
+      </div>
+      <div id="cap-customcol-steps"></div>
+      <div id="cap-customcol-addstep" class="add-btn" style="margin-bottom:14px;">+ Insert (nouvelle étape)</div>
+      <div style="border-top:1px solid var(--c-border);padding-top:12px;">
+        <div style="font-size:11px;color:var(--c-dim);margin-bottom:4px;">Nom de la colonne</div>
+        <input id="cap-customcol-name" type="text" class="inp" style="width:100%;box-sizing:border-box;margin-bottom:14px;" placeholder="ex: Functions of Component">
+        <div id="cap-customcol-create" class="tbtn" style="text-align:center;width:100%;box-sizing:border-box;">Créer la colonne</div>
+      </div>
+    </div>
+
+    <div id="cap-view-tree"   style="flex:1;overflow-y:auto;padding:10px 16px;display:none;"></div>
+    <div id="cap-view-links"  style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
+    <div id="cap-view-chains" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
+    <div id="cap-view-physlink" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
+    <div id="cap-view-compex" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
+    <div id="cap-view-ports" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
+    <div id="cap-view-analyses" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
+    <div id="cap-view-dashboard" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
+    <div id="cap-view-index" style="flex:1;overflow:hidden;display:none;flex-direction:column;"></div>
+
+    <div id="cap-empty" style="display:none;text-align:center;padding:60px;color:var(--c-dim);">
+      <div style="font-size:32px;margin-bottom:12px;">🔷</div>
+      <div>Aucun élément ne correspond.</div>
+    </div>
+  </div>
+
+  <!-- Detail panel — inline right column, shown on element click -->
+  <div id="cap-detail" style="display:none;width:320px;flex-shrink:0;border-left:1px solid var(--c-border);
+       background:var(--c-bg2);overflow-y:auto;padding:16px;flex-direction:column;position:relative;">
+    <button id="cap-detail-close" style="position:absolute;top:10px;right:10px;background:none;
+            border:none;color:var(--c-dim);cursor:pointer;font-size:18px;line-height:1;">×</button>
+    <div id="cap-detail-content"></div>
+  </div>
+</div>
+
+<!-- cap-detail moved inside capella-overlay -->

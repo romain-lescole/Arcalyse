@@ -1,0 +1,15 @@
+{
+  "name": "relation-map-capella",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Explorateur et analyseur autonome (hors ligne) de modèles Capella — sources découpées, assemblées en un fichier HTML unique par build.js",
+  "scripts": {
+    "build": "node build.js",
+    "build:propre": "node build.js --no-markers",
+    "index": "node tools/index.js",
+    "split": "node tools/split.js",
+    "smoke": "node tests/smoke.js",
+    "textes": "node tools/textes.js",
+    "textes:en": "node tools/textes.js --en"
+  }
+}

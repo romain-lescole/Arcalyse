@@ -1,0 +1,271 @@
+<!-- ════════════════════════  MODALE AIDE JSON  ════════════════════════ -->
+<div id="help-ov" style="position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:4000;
+     display:none;align-items:center;justify-content:center">
+  <div style="background:var(--c-bg);border:1px solid var(--c-border);border-radius:8px;
+       width:860px;max-width:96vw;max-height:90vh;display:flex;flex-direction:column;
+       box-shadow:0 8px 32px rgba(0,0,0,.6)">
+    <!-- Header -->
+    <div style="display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--c-border);flex-shrink:0">
+      <span style="font-weight:700;font-size:14px">📖 Aide — Relation Map · Capella</span>
+      <button id="help-close" style="background:none;border:none;color:var(--c-dim);cursor:pointer;font-size:20px;line-height:1;margin-left:auto">✕</button>
+    </div>
+    <!-- Tab bar -->
+    <div class="hp-tabs" id="help-tabs">
+      <button class="htab active" data-ht="start">🚀 Démarrage</button>
+      <button class="htab" data-ht="ui">🧭 Interface</button>
+      <button class="htab" data-ht="rm">🗺 Relation Map</button>
+      <button class="htab" data-ht="tv">📊 Table View</button>
+      <button class="htab" data-ht="cap">🔷 Capella Data</button>
+      <button class="htab" data-ht="chains">⚡ Chaînes</button>
+      <button class="htab" data-ht="itf">🔌 Interfaces & ports</button>
+      <button class="htab" data-ht="ana">🔬 Analyses</button>
+      <button class="htab" data-ht="usecase">🧪 Cas d'usage</button>
+    </div>
+    <!-- Content -->
+    <div class="hp" id="help-body">
+
+      <!-- ── DÉMARRAGE ── -->
+      <div id="ht-start" class="ht-panel">
+        <h2>Relation Map — explorateur de modèles Capella</h2>
+        <p class="hp-lead">Application autonome (un seul fichier HTML) pour <b>explorer, analyser, contrôler et exporter</b> un modèle Capella / ARCADIA sans ouvrir Capella. Le fichier <code>.capella</code> est lu localement dans le navigateur : <b>aucune donnée n'est envoyée</b>.</p>
+        <h3>Ouvrir un modèle</h3>
+        <ol>
+          <li>Glissez-déposez un fichier <code>.capella</code> <b>n'importe où dans la fenêtre</b>, ou cliquez <b>📂 Parcourir…</b> sur l'écran d'accueil (ou <b>🔷 CAPELLA</b> dans la barre).</li>
+          <li>Le modèle est analysé puis la vue <b>🔷 Capella Data</b> s'ouvre automatiquement.</li>
+          <li>Pour changer de modèle, redéposez simplement un autre fichier.</li>
+        </ol>
+        <p class="hp-note">Seul le fichier sémantique <code>.capella</code> est lu. Les fichiers <code>.aird</code> (diagrammes) et <code>.afm</code> sont refusés : ils ne contiennent pas les éléments du modèle.</p>
+        <h3>Les trois modes</h3>
+        <div class="hp-grid">
+          <div class="hp-card"><b>🗺 Relation Map</b><span>Graphe interactif centré sur un élément et ses voisins, filtrable par types et relations.</span></div>
+          <div class="hp-card"><b>📊 Table View</b><span>Tableau de tous les éléments du fichier, avec colonnes calculées (Metachain).</span></div>
+          <div class="hp-card"><b>🔷 Capella Data</b><span>Vues d'analyse dédiées : arborescence, cartes, tableau, liens, chaînes, interfaces, ports, index.</span></div>
+        </div>
+        <h3>Sauvegarder et partager</h3>
+        <p><b>💾 Page HTML</b> enregistre toute l'application <b>avec le modèle embarqué</b>. À l'ouverture de ce fichier, le modèle se recharge tout seul : pratique pour figer un état ou partager une analyse avec quelqu'un qui n'a pas Capella.</p>
+        <h3>Sécurité et fonctionnement hors ligne</h3>
+        <p><b>Aucune connexion réseau n'est nécessaire ni utilisée.</b> Toutes les ressources sont intégrées au fichier, y compris la bibliothèque graphique <code>D3.js v7.9.0</code> (licence ISC). Aucun cookie, aucun stockage navigateur, aucun traçage, aucun envoi de données. Les exports (PDF, ZIP, PNG, SVG, CSV, HTML) sont générés dans le navigateur, sans bibliothèque externe, et les rapports HTML produits sont eux aussi autonomes. Une <b>💾 Page HTML</b> sauvegardée reste utilisable hors ligne.</p>
+      </div>
+
+      <!-- ── INTERFACE ── -->
+      <div id="ht-ui" class="ht-panel" style="display:none">
+        <h2>Barre d'outils</h2>
+        <h3>Niveau 1 — toujours visible</h3>
+        <table class="hp-t">
+          <tr><td>🗺 · 📊 · 🔷</td><td>Modes Relation Map, Table View, Capella Data.</td></tr>
+          <tr><td>🌳 ▦ 📋 🔗 ⚡ 🔌 🔀 🧩 🔬 📐 📖</td><td>Onglets de Capella Data, visibles dès qu'un modèle est chargé. Un clic bascule directement sur la vue correspondante, depuis n'importe quel mode.</td></tr>
+          <tr><td>🔷 CAPELLA</td><td>Ouvre un fichier <code>.capella</code>.</td></tr>
+          <tr><td>💾 Page HTML</td><td>Sauvegarde autonome de la page avec le modèle embarqué.</td></tr>
+          <tr><td>🖼 Export ▾</td><td>Image du graphe Relation Map : PNG, JPEG ou SVG.</td></tr>
+          <tr><td>Thème</td><td>Office 2007 (par défaut), Sombre, Clair, Marine, Nature, Contraste. Les vues se redessinent avec des couleurs adaptées.</td></tr>
+          <tr><td>? Aide</td><td>Cette documentation (aussi accessible depuis l'écran d'accueil).</td></tr>
+        </table>
+        <h3>Niveau 2 — commandes de la Relation Map</h3>
+        <p>Affiché uniquement en mode 🗺 Relation Map.</p>
+        <table class="hp-t">
+          <tr><td>＋ / － / ⊡ Fit</td><td>Zoom avant, arrière, ajuster à la fenêtre.</td></tr>
+          <tr><td>↓ Ouvrir tout / ↑ Fermer tout</td><td>Développe ou replie tous les nœuds du graphe.</td></tr>
+          <tr><td># Nums</td><td>Numéros sur les relations.</td></tr>
+          <tr><td>◉ Légende</td><td>Légende des types et des relations.</td></tr>
+          <tr><td>⌁ Relations</td><td>Noms des relations sur les arêtes.</td></tr>
+          <tr><td>✂ Noms</td><td>Coupe les noms trop longs.</td></tr>
+          <tr><td>⊙ Unique</td><td>Mode d'affichage unique (lorsqu'il est proposé).</td></tr>
+          <tr><td>⬡ Compact</td><td>Nœuds réduits.</td></tr>
+        </table>
+        <h3>Raccourcis clavier</h3>
+        <table class="hp-t">
+          <tr><td>Ctrl + / Ctrl −</td><td>Zoom avant / arrière (aussi Ctrl + molette).</td></tr>
+          <tr><td>Ctrl W</td><td>Ajuster la vue.</td></tr>
+          <tr><td>Échap</td><td>Ferme la fenêtre ou le menu ouvert.</td></tr>
+          <tr><td>Ctrl/Cmd + clic, Maj + clic</td><td>Sélection multiple dans l'arborescence.</td></tr>
+          <tr><td>Ctrl V</td><td>Colle une liste (texte ou Excel) sous l'élément sélectionné de l'arborescence.</td></tr>
+        </table>
+      </div>
+
+      <!-- ── RELATION MAP ── -->
+      <div id="ht-rm" class="ht-panel" style="display:none">
+        <h2>🗺 Relation Map</h2>
+        <p class="hp-lead">Graphe centré sur un élément de contexte : ses voisins sont affichés jusqu'à la profondeur choisie, selon les relations Capella sélectionnées (allocation fonction → composant, échanges, liens physiques, chaînes…).</p>
+        <h3>Interactions dans le graphe</h3>
+        <table class="hp-t">
+          <tr><td>Clic sur un nœud</td><td>Sélectionne l'élément et affiche ses propriétés.</td></tr>
+          <tr><td>Double-clic</td><td>Fait de ce nœud le nouveau contexte.</td></tr>
+          <tr><td>Clic droit</td><td>Menu contextuel : éditer, masquer / afficher, supprimer, ajouter une relation.</td></tr>
+          <tr><td>Glisser le fond · molette</td><td>Déplacement et zoom.</td></tr>
+        </table>
+        <h3>Panneau gauche</h3>
+        <table class="hp-t">
+          <tr><td>Arborescence</td><td>Éléments du modèle ayant au moins une relation, à leur place hiérarchique (chaînes comprises). Filtre texte avec surbrillance. Clic = recentre le graphe. Sélection multiple (Ctrl/Maj), glisser-déposer de groupe en conservant la hiérarchie. Clic droit : <b>📋 coller une liste</b> (une ligne = un élément enfant) et <b>🔄 Convert to…</b> (changement de type en masse).</td></tr>
+          <tr><td>Disposition & profondeur</td><td>→ LR, ↓ TB, ← RL, ◉ radiale, ⚡ zigzag (lecture de séquences) ; profondeur de voisinage 1 à 10.</td></tr>
+          <tr><td>Critères de relation</td><td>Cocher / décocher les types de relations Capella affichés (groupes cochables en bloc).</td></tr>
+          <tr><td>Types d'éléments</td><td>Filtre des types affichés, couleurs par couche ARCADIA.</td></tr>
+          <tr><td>Propriétés</td><td>Attributs de l'élément sélectionné.</td></tr>
+        </table>
+        <h3>Afficher une chaîne dans le graphe</h3>
+        <p>Clic sur une chaîne (⚡) dans l'arborescence, ou bouton <b>🗺</b> de la vue ⚡ Chaînes : la Relation Map passe en <b>vue chaîne</b>, qui affiche le graphe complet — <b>plusieurs entrées, plusieurs sorties, ramifications et boucles</b> — disposé en couches selon la disposition choisie (→ LR, ↓ TB, ← RL). Liseré bleu = porté par un acteur, vert = par le système, gris = non alloué ; badge ENTRÉE / SORTIE ; arêtes étiquetées par l'échange. Un bandeau résume la chaîne ; <b>✕ Quitter la chaîne</b>, un double-clic sur un nœud ou un clic dans l'arborescence reviennent à la Relation Map.</p>
+        <h3>Lecture du graphe</h3>
+        <p>Survol d'un nœud : ses voisins directs restent en évidence, le reste s'estompe. Le bandeau de chaque nœud porte le nom lisible de son type. Le panneau <b>Types d'éléments</b> ne liste que les types présents dans l'arborescence, triés par couche ARCADIA, avec leur nombre d'éléments.</p>
+        <h3>Couleurs ARCADIA</h3>
+        <p><span class="hp-chip" style="--c:#3b82f6">OA</span> Analyse opérationnelle · <span class="hp-chip" style="--c:#22c55e">SA</span> Analyse système · <span class="hp-chip" style="--c:#eab308">LA</span> Architecture logique · <span class="hp-chip" style="--c:#a855f7">PA</span> Architecture physique (PC NODE, PC BEHAVIOR) · <span class="hp-chip" style="--c:#ef4444">EPBS</span> Éléments de configuration.</p>
+      </div>
+
+      <!-- ── TABLE VIEW ── -->
+      <div id="ht-tv" class="ht-panel" style="display:none">
+        <h2>📊 Table View</h2>
+        <p class="hp-lead">Tableau de <b>tous les éléments du fichier</b> (pas seulement ceux de l'arborescence), avec onglets, filtres par colonne et export CSV. Le menu <b>⊞ Colonnes</b> choisit les attributs affichés.</p>
+        <h3>✨ Colonnes personnalisées — Metachain</h3>
+        <p>Construisez une colonne calculée en enchaînant des étapes <b>Metaclass → Property</b>, à la manière du Metachain Navigation de MagicDraw. Les Properties proposées sont calculées à partir des données réellement présentes :</p>
+        <table class="hp-t">
+          <tr><td>Name · ID · Type · Human Type · attributs</td><td>Valeurs terminales (fin de chaîne).</td></tr>
+          <tr><td>Owner [Type]</td><td>Premier ancêtre du type choisi.</td></tr>
+          <tr><td>Owned element [Type]</td><td>Enfants directs du type choisi (ex. les ports d'un composant).</td></tr>
+          <tr><td>Relations Capella</td><td>Allocation, réalisation, implication… dans les deux sens.</td></tr>
+          <tr><td>attribut → Type</td><td>Référence sortante (<code>source</code>, <code>target</code>, <code>involved</code>…).</td></tr>
+          <tr><td>← référence entrante</td><td>Éléments qui pointent vers celui-ci (navigation inverse).</td></tr>
+          <tr><td>via [Type] → [Type]</td><td>Passage par un élément intermédiaire (ex. port → Physical Link → port opposé).</td></tr>
+        </table>
+        <p><b>+ Insert</b> ajoute une étape · <b>✕</b> supprime une étape et les suivantes · <b>≡ En ligne / ☰ Empilé</b> pour les cellules à plusieurs valeurs · <b>💾 Sauver vue / 📂 Charger vue</b> exporte et recharge toute la configuration en JSON.</p>
+      </div>
+
+      <!-- ── CAPELLA DATA ── -->
+      <div id="ht-cap" class="ht-panel" style="display:none">
+        <h2>🔷 Capella Data</h2>
+        <table class="hp-t">
+          <tr><td>🌳 Arborescence</td><td>Arbre complet du modèle ; déplier / replier.</td></tr>
+          <tr><td>▦ Cartes</td><td>Éléments groupés par couche ARCADIA, filtres de couche et recherche.</td></tr>
+          <tr><td>📋 Tableau</td><td>Tableau paginé : colonnes paramétrables et redimensionnables, filtres par colonne, colonnes Metachain (voir Table View), export CSV/JSON, sauvegarde de vue.</td></tr>
+          <tr><td>🔗 Liens</td><td>Relations Capella extraites, groupées et filtrables par type.</td></tr>
+          <tr><td>⚡ Chaînes</td><td>Chaînes fonctionnelles, processus opérationnels et chemins physiques : diagrammes, tables et exports (onglet ⚡ Chaînes).</td></tr>
+          <tr><td>🔌 Physical Link · 🔀 Component Exchange · 🧩 Ports</td><td>Analyse des interfaces et contrôles de cohérence (onglet 🔌 Interfaces & ports).</td></tr>
+          <tr><td>🔬 Analyses</td><td>Traçabilité inter-couches, capacités & missions, modes & états, comparaison de deux versions (onglet 🔬 Analyses).</td></tr>
+          <tr><td>📖 Index des types</td><td>Glossaire des types présents : type technique, Human Type, nombre, description.</td></tr>
+        </table>
+        <h3>Panneau de détail</h3>
+        <p>Un clic sur un nom (presque partout) ouvre le panneau de détail : Human Type et description, attributs, <b>références sortantes</b>, <b>références entrantes</b> (qui pointe vers cet élément ?), propriétaire et éléments possédés. Tout y est cliquable pour naviguer de proche en proche.</p>
+      </div>
+
+      <!-- ── CHAÎNES ── -->
+      <div id="ht-chains" class="ht-panel" style="display:none">
+        <h2>⚡ Chaînes</h2>
+        <p class="hp-lead"><code>FunctionalChain</code>, <code>OperationalProcess</code> et <code>PhysicalPath</code> sont reconstruits sous forme de <b>graphe</b> : plusieurs entrées, plusieurs sorties, ramifications et boucles sont conservées.</p>
+        <h3>Filtres et sous-vues</h3>
+        <p>Filtre par type et par couche (OA, SA, LA, PA, EPBS), et par contenu : <b>Toutes / Non vides / Vides</b> (chaîne vide = aucune fonction ni échange impliqué). <b>▦ Diagrammes</b> : une carte par chaîne. <b>🗺 Vue Relation Map</b> : graphe interactif (dispositions LR / TB / RL / radiale / zigzag, ⬡ Compact, ✂ Noms) et injection dans la Relation Map principale.</p>
+        <h3>Contenu d'une carte</h3>
+        <ul>
+          <li>Diagramme de haut en bas, style Capella : <span class="hp-chip" style="--c:#4a4aa8">bleu</span> porté par un acteur, <span class="hp-chip" style="--c:#1f6b1f">vert</span> porté par le système, <span class="hp-chip" style="--c:#8a8a8a">gris</span> non alloué ; bordure épaisse = entrée ou sortie.</li>
+          <li><b>Fonctions impliquées</b> : ordre du flux, type, composant d'allocation, rôle entrée/sortie, nombre d'échanges entrants/sortants.</li>
+          <li><b>Functional Exchanges impliqués</b> : source → cible numérotées, Exchange Items, Component Exchange porteur. Pour un chemin physique : composants, Physical Links et CE alloués.</li>
+          <li>Boutons 🖼 PNG · 📐 SVG · 📋 Copier (coller dans Word/PowerPoint) · ⬇ CSV.</li>
+        </ul>
+        <h3>Export groupé</h3>
+        <p>Cochez des cartes (ou <b>Tout</b>). Sans sélection, toutes les chaînes affichées sont exportées. Options :</p>
+        <table class="hp-t">
+          <tr><td>Cadre</td><td>Cadre et onglet en haut à gauche : <code>[FC]</code>, <code>[OP]</code> ou <code>[PP]</code> + nom, bande à la couleur de la couche.</td></tr>
+          <tr><td>Cartouche</td><td>En bas à droite : projet, diagramme, type, couche, contenu, date et fichier, numéro de planche.</td></tr>
+          <tr><td>Légende · Description</td><td>Légende des couleurs ; description Capella de la chaîne.</td></tr>
+          <tr><td>Annexes</td><td>PDF : planche(s) d'annexe après chaque diagramme (entrées/sorties, fonctions, échanges), paginées. ZIP : un CSV par chaîne.</td></tr>
+          <tr><td>×1 · ×2 · ×3</td><td>Résolution des images PNG et PDF.</td></tr>
+        </table>
+        <p><b>📄 PDF</b> : page de sommaire, une planche par chaîne (A4 orientée automatiquement), signets de navigation. <b>🗜 ZIP PNG / ZIP SVG</b> : images individuelles numérotées. <b>🌐 HTML</b> : rapport autonome à onglets (Sommaire avec liens, Diagrammes vectoriels + tables), avec recherche intégrée.</p>
+      </div>
+
+      <!-- ── INTERFACES ── -->
+      <div id="ht-itf" class="ht-panel" style="display:none">
+        <h2>🔌 Interfaces & ports</h2>
+        <p class="hp-lead">Trois vues complémentaires, du fonctionnel au physique. Chacune propose des <b>vues Ligne / Composant</b>, une <b>▦ Matrice N²</b> composant × composant (clic sur une cellule = liste des échanges) et un rapport <b>🩺 Contrôles</b>.</p>
+        <p><b>Exports HTML</b> (🔀 et 🔌) : <b>⬇ HTML</b> = la vue affichée ; <b>⬇ HTML (toutes les vues)</b> = rapport à onglets Vue Ligne / Vue Composant / Matrice / Contrôles, filtres appliqués, avec recherche et matrice cliquable. Les fichiers sont autonomes et reprennent les couleurs du thème courant.</p>
+        <h3>🔀 Component Exchange</h3>
+        <p>Orientation des <code>ComponentPort</code> : <span class="hp-chip" style="--c:#8b949e">UNSET</span> (attribut absent) · <span class="hp-chip" style="--c:#f0883e">IN</span> · <span class="hp-chip" style="--c:#3fb950">OUT</span> · <span class="hp-chip" style="--c:#a371f7">⇄ INOUT</span>. Le <b>sens réel</b> est déduit des deux ports :</p>
+        <table class="hp-t">
+          <tr><td>→ Orienté / ← Inversé</td><td>Un port IN ou OUT impose le sens (source → cible ou l'inverse).</td></tr>
+          <tr><td>⇄ Bidirectionnel</td><td>Port(s) INOUT sans autre contrainte.</td></tr>
+          <tr><td>? Non orienté</td><td>Deux ports UNSET : sens inconnu (trait pointillé).</td></tr>
+          <tr><td>⚠ Incohérent</td><td>OUT→OUT ou IN→IN — sauf pour une <code>DELEGATION</code>, où le sens est déduit de l'imbrication parent / enfant.</td></tr>
+        </table>
+        <p>Chaque exchange affiche son <b>kind</b> (ASSEMBLY, DELEGATION, FLOW), ses <b>FE alloués</b> (ƒ), ses <b>Exchange Items</b> (▤) et ses <b>Physical Links</b> porteurs (🔌). Contrôles : CE sans FE, ports orphelins, orientations incohérentes, CE non orientés, CE de couche PA non alloués à un lien physique.</p>
+        <h3>🔌 Physical Link</h3>
+        <p>Liens entre composants physiques (et acteurs) via leurs <code>PhysicalPort</code>. Pour chaque lien : les <b>Component Exchanges alloués</b> (⇢) et, sur chaque port, un badge <b>n CP</b> indiquant les Component Ports alloués. Filtres avec / sans CE. Contrôles : liens sans CE, ports physiques non reliés ou sans Component Port, CE de couche PA non alloués.</p>
+        <h3>🧩 Ports</h3>
+        <p>Traçabilité <b>Function Port ↔ Component Port ↔ Physical Port</b>, reconstruite à partir des <code>PortAllocation</code> et <code>ComponentPortAllocation</code>.</p>
+        <table class="hp-t">
+          <tr><td>≡ Traçabilité</td><td>Une ligne par Function Port / Component Port avec FE, CE, ports physiques et liens. Filtres couche, texte, « chaînes incomplètes ». Export CSV.</td></tr>
+          <tr><td>▣ Par composant</td><td>Ports physiques → Component Ports portés ; Component Ports ← Function Ports alloués.</td></tr>
+          <tr><td>🩺 Contrôles</td><td>Ports non alloués à chaque niveau ; sens incohérent entre port de fonction et port de composant ; <b>alignement FE ↔ CE</b> (les ports du FE doivent être alloués aux ports du CE qui le porte) et <b>CE ↔ PL</b> (idem avec les ports physiques). Les délégations sont suivies de proche en proche.</td></tr>
+        </table>
+      </div>
+
+      <!-- ── ANALYSES ── -->
+      <div id="ht-ana" class="ht-panel" style="display:none">
+        <h2>🔬 Analyses</h2>
+        <p class="hp-note">Les résultats sont gardés en mémoire ; <b>↻ Recalculer</b> les rafraîchit. Les contrôles ne sont calculés qu'à l'ouverture de l'onglet 🩺 Contrôles.</p>
+        <p class="hp-lead">Analyses transverses calculées à partir de ce que contient le modèle ouvert : une rubrique absente du modèle (pas de machine à états, pas de capacités…) est simplement signalée comme vide, et les contrôles ne portent que sur les pratiques réellement utilisées.</p>
+        <h3>ƒ Fonctions</h3>
+        <p>Activités OA et fonctions SA / LA / PA, couche par couche, avec leurs <b>descriptions mises en avant</b>.</p>
+        <p><b>Filtre Allocation</b> (🌳 Hiérarchie et 📋 Tableau) : <span class="hp-chip" style="--c:#3fb950">🧩 Système</span> <span class="hp-chip" style="--c:#58a6ff">👤 Acteurs</span> <span class="hp-chip" style="--c:#8b949e">∅ Non allouées</span>, avec le nombre de fonctions de chaque nature. Clic = afficher / masquer, double-clic = uniquement cette nature (double-clic à nouveau : tout réafficher). Chaque fonction porte un liseré de la couleur correspondante (double liseré si allouée à la fois au système et à un acteur) ; dans l'arbre, les fonctions mères conservées pour la hiérarchie sont estompées. Colonne « Nature de l'allocation » dans le tableau et les exports.</p>
+        <p><b>Allocataire</b> (liste à côté du filtre) : un acteur précis, ou le système et ses sous-systèmes en arbre indenté (couches boîte blanche LA / PA), avec le nombre de fonctions ; un sous-système inclut ses sous-composants. ✕ retire le filtre. En boîte blanche, la colonne « Sous-système » donne le chemin des composants englobants (chemin complet au survol).</p>
+        <table class="hp-t">
+          <tr><td>🌳 Hiérarchie</td><td>Arbre numéroté (1, 1.1, 1.2…) avec badges : allocation, échanges ⇄, réalise ⬆ / réalisée par ⬇, description manquante. Option « Descriptions » pour les lire dans l'arbre. Clic sur une fonction : <b>fiche</b> à droite (chemin, description, résumé, sous-fonctions, allocation, ports, échanges entrants et sortants, chaînes, capacités, états, arbre de traçabilité vers le haut et vers le bas). Les liens de la fiche naviguent d'une fonction ou d'une couche à l'autre. Le séparateur ⋮ entre l'arbre et la fiche se glisse pour ajuster les largeurs (double-clic : largeurs par défaut).</td></tr>
+          <tr><td>📋 Tableau</td><td>Une ligne par fonction, indentée (option <b>À plat</b> sans indentation) ; colonnes redimensionnables (bord de l'en-tête), triables (clic), filtrables par texte (champ sous l'en-tête) ou <b>par valeurs comme dans Excel</b> (▼ : tri, recherche, cases à cocher avec effectifs ; une colonne à plusieurs valeurs est éclatée) et masquables (⊞ Colonnes) ; descriptions complètes en option ; filtres rapides ; nombre de fonctions affichées / total. <b>Sélection de cellules</b> : clic-glisser, Ctrl+clic, Maj+clic, puis 📋 Copier ou Ctrl+C (collage dans Excel ou Word ; Échap efface). Exports CSV et 🌐 HTML (colonnes, largeurs, filtres et tri actuels).</td></tr>
+          <tr><td>⛓ Traçabilité</td><td>Chemins OA → SA → LA → PA passant par la couche choisie, avec descriptions ; ∅ = rupture.</td></tr>
+          <tr><td>📊 Métriques</td><td>◂ réduit une couche (elle passe à gauche des libellés, ▸ pour la déplier) ; seules les couches dépliées sont exportées : 🌐 HTML du tableau des indicateurs, 🖼 PNG haute définition ou 📋 copie de l'image pour une présentation. Comparatif des couches : nombre, feuilles, profondeur, taux de description, d'allocation, d'échanges, de traçabilité, de couverture par chaînes et capacités ; répartition par niveau ; fonctions les plus connectées.</td></tr>
+          <tr><td>✍ Qualité des noms</td><td>Hors ligne : verbe en tête (infinitif en français, forme de base en anglais — liste intégrée d’environ 1 000 verbes), forme en -ing ou nom d'action en tête, verbes vagues, majuscule, espaces, ponctuation, longueur, langue minoritaire dans la couche. Colonne « Qualité du nom » et filtre « Nom à revoir » dans le tableau, indicateur dans les métriques. ⚙ Règles de nommage : verbes métier acceptés et faux verbes, conservés dans la 💾 Page HTML.</td></tr>
+          <tr><td>🩺 Contrôles</td><td>Qualité des noms (ci-dessus), descriptions absentes ou trop courtes, marqueurs TODO/TBD/NOT DONE, doublons, allocations manquantes, multiples ou sur une fonction mère, feuilles sans échange, échanges sur fonctions mères, ports inutilisés, ruptures de traçabilité.</td></tr>
+          <tr><td>📄 Dossier fonctionnel</td><td>Rapport HTML : un onglet par couche, une section numérotée par fonction (description, allocation, entrées / sorties, réalisations, chaînes, capacités), plus métriques et contrôles. Imprimable.</td></tr>
+        </table>
+        <h3>🧬 Traçabilité inter-couches</h3>
+        <p>Exploite tous les liens <code>…Realization</code> (fonctions, composants, échanges, ports, capacités, chaînes, scénarios, états, données, éléments de configuration) et, en option, les <code>TransfoLink</code> de transition.</p>
+        <table class="hp-t">
+          <tr><td>▦ Couverture</td><td>Par catégorie et passage OA→SA→LA→PA→EPBS : <b>▼ réalisés</b> (éléments du haut réalisés par le bas) et <b>▲ réalisants</b> (éléments du bas qui réalisent le haut), en % avec code couleur. Clic sur une cellule : éléments non tracés.</td></tr>
+          <tr><td>⛓ Chemins</td><td>Une ligne par chemin de traçabilité, une colonne par couche (ex. activité OA → fonction SA → fonction LA → fonction PA).</td></tr>
+          <tr><td>🔗 Liens</td><td>Liste filtrable de tous les liens de réalisation.</td></tr>
+          <tr><td>Fonctions feuilles</td><td>Ignore les fonctions mères (conteneurs), qui ne sont généralement pas réalisées.</td></tr>
+        </table>
+        <h3>🎯 Capacités & missions</h3>
+        <p>Capacités opérationnelles, capacités système, Capability Realizations (LA/PA) et missions : fonctions, chaînes, acteurs/composants impliqués (y compris via Part pour les anciennes versions), scénarios, inclusions, missions qui les exploitent, réalisations entre couches.</p>
+        <table class="hp-t">
+          <tr><td>▣ Cartes</td><td>Une carte par capacité ou mission, groupées par couche.</td></tr>
+          <tr><td>▦ Matrice</td><td>Capacités × acteurs/composants, × fonctions, × chaînes, ou missions × capacités.</td></tr>
+          <tr><td>🩺 Contrôles</td><td>Capacités sans fonction ni chaîne, sans acteur, sans scénario, non réalisées plus bas, non exploitées par une mission ; missions vides ; fonctions feuilles hors de toute capacité.</td></tr>
+        </table>
+        <h3>🔁 Modes & états</h3>
+        <table class="hp-t">
+          <tr><td>◈ Machines à états</td><td>Par composant : diagramme (états bleus, modes jaunes, ● initial, ◉ final, ◆ choix ; transitions étiquetées <i>déclencheur [garde] / effet</i>), tables des états (entry / do / exit, fonctions disponibles) et des transitions.</td></tr>
+          <tr><td>▦ Fonctions × états</td><td>Disponibilité des fonctions dans chaque état ou mode (<code>availableInStates</code>).</td></tr>
+          <tr><td>🩺 Contrôles</td><td>Régions sans état initial, états inatteignables, états sans issue, transitions sans déclencheur ni garde, fonctions jamais disponibles.</td></tr>
+        </table>
+        <h3>⚖ Comparaison de versions</h3>
+        <p>Chargez une autre version du même modèle (par défaut l'<b>ancienne</b> ; ⇄ pour inverser). Les éléments sont appariés par identifiant :</p>
+        <table class="hp-t">
+          <tr><td>➕ ➖ ✎ ↪</td><td>Ajoutés, supprimés, modifiés (nom, description, attributs, références traduites en noms, contenu), déplacés (changement de propriétaire).</td></tr>
+          <tr><td>Détail</td><td>Clic sur une ligne : propriété par propriété, avant / après.</td></tr>
+          <tr><td>Filtres & export</td><td>Statut, couche, type, nom ; synthèse par type ; CSV (une ligne par propriété modifiée).</td></tr>
+        </table>
+        <h3>📐 Tableau de bord (onglet à part, à côté de 🔬 Analyses)</h3>
+        <p>Composez vos propres tableaux de bord à partir de <b>tous les indicateurs calculés</b> (≈ 130 sur un modèle complet) : modèle, fonctions (par couche et comparaison des couches, allocation, allocataires, sous-systèmes, nommage), chaînes, Component Exchanges, Physical Links, ports, traçabilité, capacités, modes & états, contrôles. Un tableau de bord d'exemple est créé au premier affichage.</p>
+        <table class="hp-t">
+          <tr><td>✏ Modifier</td><td>Passe en édition : <b>＋ Ajouter un élément</b> (catalogue avec recherche, aperçu en direct), ⚙ configurer, ⧉ dupliquer, ✕ retirer.</td></tr>
+          <tr><td>Représentations</td><td>Indicateur chiffré, jauge (vert ≥ 90 %, orange ≥ 50 %, rouge sinon), barres horizontales ou verticales, anneau, barres empilées ou groupées, tableau, texte libre (titres, commentaires). Nombre de catégories affichées (le reste est regroupé en « Autres ») et tri réglables.</td></tr>
+          <tr><td>Disposition</td><td>Glisser un élément par son titre pour le déplacer ; coin inférieur droit pour le redimensionner (aimanté à la grille de 3, 4 ou 6 colonnes).</td></tr>
+          <tr><td>Plusieurs tableaux</td><td>Liste déroulante, ＋ Nouveau, ⧉ Dupliquer, ✨ Exemple, 🗑 Supprimer, renommage. Les tableaux de bord sont conservés dans la 💾 Page HTML.</td></tr>
+          <tr><td>Impression</td><td>🖨 Imprimer au format <b>A4 paysage ou portrait</b> : les éléments sont redessinés à la taille de la page, en couleurs claires, avec en-tête (nom, modèle, date). « Enregistrer au format PDF » dans la fenêtre d'impression pour obtenir un PDF.</td></tr>
+          <tr><td>Exports</td><td>🌐 HTML autonome (tel qu'affiché) ; ⬇ / ⬆ JSON pour réutiliser une disposition sur un autre modèle.</td></tr>
+        </table>
+      </div>
+
+      <!-- ── CAS D'USAGE ── -->
+      <div id="ht-usecase" class="ht-panel" style="display:none">
+        <h2>🧪 Cas d'usage — revue d'un modèle Capella</h2>
+        <ol class="hp-steps">
+          <li><b>Charger</b> le <code>.capella</code> (glisser-déposer). Consulter <b>📖 Index des types</b> pour voir la composition du modèle.</li>
+          <li><b>Parcourir</b> avec ▦ Cartes et 🌳 Arborescence ; ouvrir le panneau de détail pour suivre les références entrantes et sortantes.</li>
+          <li><b>Analyser un voisinage</b> dans 🗺 Relation Map : choisir un composant dans l'arborescence, régler profondeur, disposition et critères.</li>
+          <li><b>Revoir les chaînes</b> dans ⚡ Chaînes : entrées/sorties, fonctions non allouées (gris), échanges sans CE porteur.</li>
+          <li><b>Contrôler les interfaces</b> : 🔀 Component Exchange (matrice N², CE sans FE, orientations), 🔌 Physical Link (liens sans CE), 🧩 Ports (alignement FE ↔ CE ↔ PL).</li>
+          <li><b>Mesurer la maturité</b> dans 🔬 Analyses : couverture de traçabilité entre couches, capacités non couvertes, machines à états incomplètes ; <b>comparer</b> avec la version précédente du modèle pour préparer une revue.</li>
+          <li><b>Produire un livrable</b> : PDF des chaînes avec annexes, CSV des contrôles et des tables, rapports HTML ; ou <b>💾 Page HTML</b> pour partager toute l'analyse.</li>
+        </ol>
+      </div>
+
+    </div><!-- /help-body -->
+  </div>
+</div>

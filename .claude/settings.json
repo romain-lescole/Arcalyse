@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node build.js:*)",
+      "Bash(node tools/index.js:*)",
+      "Bash(node tools/split.js:*)",
+      "Bash(node tests/smoke.js:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run index:*)",
+      "Bash(npm run smoke:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(node tools/textes.js:*)",
+      "Bash(npm run textes:*)"
+    ],
+    "deny": [
+      "Read(./src/vendor/**)",
+      "Read(./tools/lib/**)"
+    ]
+  }
+}
