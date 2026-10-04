@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 2013 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 2275 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -684,45 +684,45 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 213 | Modèle actuel : |
 | 213 | Déposez un nouveau fichier .capella pour le remplacer. |
 | 275 | Shared |
-| 293 | Project |
-| 350 | Composition |
-| 350 | Aggregation |
-| 350 | Association |
-| 350 | Containment |
-| 350 | Generalization |
-| 350 | Realization |
-| 350 | Dependency |
-| 350 | Usage |
-| 350 | Abstraction |
-| 350 | Refine |
-| 350 | Trace |
-| 350 | Satisfy |
-| 350 | Verify |
-| 350 | Copy |
-| 350 | Allocation |
-| 351 | Block |
-| 351 | Component |
-| 351 | Class |
-| 351 | Interface |
-| 351 | Requirement |
-| 351 | Package |
-| 354 | Aggregation |
-| 354 | Association |
-| 354 | Containment |
-| 354 | Generalization |
-| 354 | Realization |
-| 354 | Dependency |
-| 354 | Usage |
-| 354 | Abstraction |
-| 354 | Refine |
-| 354 | Trace |
-| 354 | Satisfy |
-| 354 | Verify |
-| 354 | Copy |
-| 354 | Allocation |
-| 463 | PhysicalComponent (NODE) |
-| 464 | PhysicalComponent (BEHAVIOR) |
-| 703 | 🔷 Chargez un fichier .capella via le bouton 🔷 CAPELLA |
+| 294 | Project |
+| 351 | Composition |
+| 351 | Aggregation |
+| 351 | Association |
+| 351 | Containment |
+| 351 | Generalization |
+| 351 | Realization |
+| 351 | Dependency |
+| 351 | Usage |
+| 351 | Abstraction |
+| 351 | Refine |
+| 351 | Trace |
+| 351 | Satisfy |
+| 351 | Verify |
+| 351 | Copy |
+| 351 | Allocation |
+| 352 | Block |
+| 352 | Component |
+| 352 | Class |
+| 352 | Interface |
+| 352 | Requirement |
+| 352 | Package |
+| 355 | Aggregation |
+| 355 | Association |
+| 355 | Containment |
+| 355 | Generalization |
+| 355 | Realization |
+| 355 | Dependency |
+| 355 | Usage |
+| 355 | Abstraction |
+| 355 | Refine |
+| 355 | Trace |
+| 355 | Satisfy |
+| 355 | Verify |
+| 355 | Copy |
+| 355 | Allocation |
+| 464 | PhysicalComponent (NODE) |
+| 465 | PhysicalComponent (BEHAVIOR) |
+| 704 | 🔷 Chargez un fichier .capella via le bouton 🔷 CAPELLA |
 
 ## js/21-capella-vues-base.js
 
@@ -1132,8 +1132,8 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 54 | Attributs |
 | 59 | Références sortantes → |
 | 67 | Références entrantes ← (navigation inverse) |
-| 77 | Owner (parent) |
-| 83 | Owned elements ( |
+| 80 | Owner (parent) |
+| 86 | Owned elements ( |
 
 ## js/26-rapports-html.js
 
@@ -1767,6 +1767,10 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 700 | 🎯 Capacités & missions |
 | 700 | 🔁 Modes & états |
 | 700 | ⚖ Comparaison de versions |
+| 700 | 📑 Exigences |
+| 700 | 🏷 Propriétés |
+| 700 | 🗃 Données & interfaces |
+| 700 | ⛓ Contraintes |
 | 702 | ↻ Recalculer |
 
 ## js/35-tableau-de-bord.js
@@ -1970,86 +1974,94 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 176 | cap.chk |
 | 176 | Modes & états |
 | 176 | sm.chk |
+| 176 | Exigences |
+| 176 | rq.chk |
+| 176 | Propriétés |
+| 176 | pv.chk |
+| 176 | Données & interfaces |
+| 176 | dm.chk |
+| 176 | Contraintes |
+| 176 | ct.chk |
 | 176 | Nombre total de constats par domaine |
-| 178 | Texte libre (titre, commentaire) |
-| 187 | Indicateur |
-| 203 | à surveiller |
-| 213 | Autres ( |
-| 224 | Texte vide — ⚙ pour le modifier. |
-| 225 | Indicateur indisponible pour ce modèle. |
-| 226 | Aucune donnée dans ce modèle. |
-| 227 | var(--c-dim) |
-| 227 | var(--c-text) |
-| 227 | var(--c-bg2) |
-| 245 | Catégorie |
-| 245 | Taux |
-| 245 | Nombre |
-| 245 | Détail |
-| 245 | Part |
-| 248 | autre(s) ligne(s) — agrandir le cadre pour tout voir |
-| 253 | catégorie(s) |
-| 266 | Autres ( |
-| 275 | Autres ( |
-| 318 | Synthèse du modèle — |
-| 318 | Capella |
-| 319 | mdl.n |
-| 319 | Fonctions (toutes couches) |
-| 320 | mdl.layer |
-| 321 | fn.L.desc |
-| 321 | ch.empty |
-| 322 | ce.dir |
-| 323 | chk.sum |
-| 323 | tr.tab |
-| 324 | Synthèse du modèle |
-| 344 | — double-clic pour renommer |
-| 346 | ✔ Terminer |
-| 346 | ✏ Modifier |
-| 347 | ＋ Ajouter un élément |
-| 349 | ⧉ Dupliquer ✨ Exemple |
-| 352 | 🗑 Supprimer |
-| 361 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. |
-| 362 | ,minmax(0,1fr)) |
-| 367 | ＋ Ajouter un élément |
-| 368 | Tableau de bord vide. |
-| 368 | Cliquez sur « ＋ Ajouter un élément ». |
-| 368 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. |
-| 394 | Tableau de bord |
-| 396 | Page |
-| 397 | (copie) |
-| 399 | Supprimer le tableau de bord « |
-| 406 | Tableau importé |
-| 407 | Fichier de tableau de bord invalide. |
-| 414 | ,minmax(0,1fr)) |
-| 416 | élément(s) |
-| 416 | Tableau de bord |
-| 463 | Modèle Capella |
-| 501 | ⊞ Tout déplier ⊟ Tout replier aperçu Annuler |
-| 501 | ⚙ Configurer l'élément |
-| 501 | ＋ Ajouter un élément |
-| 505 | ✔ Enregistrer |
-| 505 | ＋ Ajouter |
-| 513 | Mise en page |
-| 518 | la catégorie |
-| 518 | Replier |
-| 518 | Déplier |
-| 518 | Aucun indicateur. |
-| 525 | Choisissez un indicateur dans la liste de gauche. |
-| 528 | Indicateur |
-| 528 | Titre |
-| 530 | Représentation |
-| 530 | Texte |
-| 531 | Taille |
-| 532 | col. |
-| 534 | Catégories |
-| 534 | Tri Par défaut |
-| 534 | 5 premières |
-| 534 | 8 premières |
-| 534 | 10 premières |
-| 534 | 15 premières |
-| 534 | 20 premières |
-| 534 | Toutes |
-| 535 | Valeur décroissante |
-| 535 | Ordre naturel |
+| 180 | Texte libre (titre, commentaire) |
+| 189 | Indicateur |
+| 205 | à surveiller |
+| 215 | Autres ( |
+| 226 | Texte vide — ⚙ pour le modifier. |
+| 227 | Indicateur indisponible pour ce modèle. |
+| 228 | Aucune donnée dans ce modèle. |
+| 229 | var(--c-dim) |
+| 229 | var(--c-text) |
+| 229 | var(--c-bg2) |
+| 247 | Catégorie |
+| 247 | Taux |
+| 247 | Nombre |
+| 247 | Détail |
+| 247 | Part |
+| 250 | autre(s) ligne(s) — agrandir le cadre pour tout voir |
+| 255 | catégorie(s) |
+| 268 | Autres ( |
+| 277 | Autres ( |
+| 320 | Synthèse du modèle — |
+| 320 | Capella |
+| 321 | mdl.n |
+| 321 | Fonctions (toutes couches) |
+| 322 | mdl.layer |
+| 323 | fn.L.desc |
+| 323 | ch.empty |
+| 324 | ce.dir |
+| 325 | chk.sum |
+| 325 | tr.tab |
+| 326 | Synthèse du modèle |
+| 346 | — double-clic pour renommer |
+| 348 | ✔ Terminer |
+| 348 | ✏ Modifier |
+| 349 | ＋ Ajouter un élément |
+| 351 | ⧉ Dupliquer ✨ Exemple |
+| 354 | 🗑 Supprimer |
+| 363 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. |
+| 364 | ,minmax(0,1fr)) |
+| 369 | ＋ Ajouter un élément |
+| 370 | Tableau de bord vide. |
+| 370 | Cliquez sur « ＋ Ajouter un élément ». |
+| 370 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. |
+| 396 | Tableau de bord |
+| 398 | Page |
+| 399 | (copie) |
+| 401 | Supprimer le tableau de bord « |
+| 408 | Tableau importé |
+| 409 | Fichier de tableau de bord invalide. |
+| 416 | ,minmax(0,1fr)) |
+| 418 | élément(s) |
+| 418 | Tableau de bord |
+| 465 | Modèle Capella |
+| 503 | ⊞ Tout déplier ⊟ Tout replier aperçu Annuler |
+| 503 | ⚙ Configurer l'élément |
+| 503 | ＋ Ajouter un élément |
+| 507 | ✔ Enregistrer |
+| 507 | ＋ Ajouter |
+| 515 | Mise en page |
+| 520 | la catégorie |
+| 520 | Replier |
+| 520 | Déplier |
+| 520 | Aucun indicateur. |
+| 527 | Choisissez un indicateur dans la liste de gauche. |
+| 530 | Indicateur |
+| 530 | Titre |
+| 532 | Représentation |
+| 532 | Texte |
+| 533 | Taille |
+| 534 | col. |
+| 536 | Catégories |
+| 536 | Tri Par défaut |
+| 536 | 5 premières |
+| 536 | 8 premières |
+| 536 | 10 premières |
+| 536 | 15 premières |
+| 536 | 20 premières |
+| 536 | Toutes |
+| 537 | Valeur décroissante |
+| 537 | Ordre naturel |
 
 ## js/36-component-exchange.js
 
@@ -2161,3 +2173,258 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 91 | (lisible à partir de 4,5) |
 | 111 | Supprimer le thème personnalisé ? |
 | 118 | Fichier de thème invalide. |
+
+## js/39-exigences-donnees.js
+
+| Ligne | Texte |
+|---:|---|
+| 45 | Aucun élément ne correspond au filtre. |
+| 65 | Toutes ( |
+| 66 | Hors couche |
+| 100 | ⬇ CSV |
+| 136 | Capella |
+| 136 | Requirements Viewpoint |
+| 142 | Requirement |
+| 180 | Exigence |
+| 180 | Type |
+| 190 | Exigences liées à aucun élément du modèle |
+| 190 | Ni relation Capella ni trace vers une fonction, un composant… |
+| 191 | Exigences sans texte |
+| 192 | Exigences sans identifiant |
+| 193 | Identifiants en double |
+| 193 | Au sein d'une même famille (Requirements Viewpoint ou exigences Capella) |
+| 194 | Relations vers un élément introuvable |
+| 194 | Cible supprimée ou hors du fichier chargé |
+| 195 | Fonctions feuilles sans exigence |
+| 195 | Couches où d'autres fonctions sont déjà liées à des exigences |
+| 195 | Fonction |
+| 195 | Type |
+| 196 | Composants / acteurs sans exigence |
+| 196 | Couches où d'autres composants sont déjà liés à des exigences |
+| 196 | Composant |
+| 196 | Type |
+| 206 | Aucune exigence dans ce modèle (ni Requirements Viewpoint, ni exigences Capella). |
+| 216 | exigence(s) · |
+| 216 | liée(s) au modèle ( |
+| 216 | %). Cliquez un nom pour ouvrir le détail. |
+| 217 | Exigence |
+| 217 | Type |
+| 217 | Texte |
+| 217 | Attributs |
+| 217 | Éléments liés |
+| 217 | Exigences liées |
+| 222 | ∅ aucun |
+| 225 | Nombre d'éléments liés à chaque exigence, par couche ARCADIA. |
+| 226 | Exigence |
+| 226 | Hors couche |
+| 228 | Couche |
+| 228 | Exigences liées |
+| 228 | Éléments liés |
+| 231 | 📋 Liste |
+| 231 | ▦ Couverture |
+| 231 | 🩺 Contrôles |
+| 232 | ID, nom, texte… |
+| 233 | Toutes les familles |
+| 234 | Tous les types |
+| 235 | Tous les attributs |
+| 236 | Liées ou non |
+| 236 | Liées au modèle |
+| 236 | Non liées |
+| 237 | Exigence |
+| 237 | Famille |
+| 237 | Type |
+| 237 | Dossier |
+| 237 | Texte |
+| 237 | Éléments liés |
+| 237 | Couches |
+| 237 | Exigences liées |
+| 297 | (propriété simple) |
+| 325 | Éléments concernés par un groupe PVMT mais non renseignés |
+| 325 | Selon les classes et architectures déclarées dans la définition du groupe (groupes à condition exclus) |
+| 325 | Élément |
+| 325 | Type |
+| 325 | Groupe attendu |
+| 326 | Valeurs numériques restées à la valeur par défaut (0) |
+| 326 | Propriété appliquée mais jamais saisie |
+| 326 | Élément |
+| 326 | Groupe |
+| 326 | Propriété |
+| 327 | Énumérations ou textes non renseignés |
+| 327 | Élément |
+| 327 | Groupe |
+| 327 | Propriété |
+| 328 | Groupes appliqués dont la définition est introuvable |
+| 328 | Élément |
+| 328 | Groupe |
+| 328 | Propriété |
+| 329 | Groupes appliqués sans lien vers leur définition |
+| 329 | Élément |
+| 329 | Groupe |
+| 329 | Propriété |
+| 339 | Aucune propriété (PVMT ou propriété simple) dans ce modèle. |
+| 352 | Couche |
+| 352 | Élément |
+| 352 | Type |
+| 355 | Couche |
+| 355 | Élément |
+| 355 | Type |
+| 356 | Total |
+| 361 | Groupe |
+| 361 | Propriété |
+| 361 | Valeurs |
+| 361 | Non saisies |
+| 361 | Synthèse |
+| 363 | · min |
+| 363 | · max |
+| 363 | · moy. |
+| 364 | (vide) |
+| 366 | propriété(s) |
+| 369 | Domaine |
+| 369 | Groupe |
+| 369 | S'applique à |
+| 369 | Architectures |
+| 369 | Propriétés |
+| 369 | Éléments renseignés |
+| 369 | Éléments manquants |
+| 373 | (avec condition) |
+| 374 | Aucune définition PVMT dans ce modèle. |
+| 376 | ▦ Grille par groupe |
+| 376 | Σ Synthèse |
+| 376 | 📖 Définitions |
+| 376 | 🩺 Contrôles |
+| 378 | Élément, valeur… |
+| 378 | Groupe, propriété… |
+| 379 | Une ligne par élément, une colonne par propriété du groupe. ○ = valeur par défaut jamais saisie. |
+| 428 | implémente |
+| 432 | spécialisé par |
+| 459 | Exchange Items portés par aucun échange ni interface |
+| 459 | Exchange Item |
+| 459 | Type |
+| 460 | Exchange Items sans élément (contenu non décrit) |
+| 460 | Seulement si le modèle décrit le contenu d'autres Exchange Items |
+| 460 | Exchange Item |
+| 460 | Type |
+| 461 | Functional Exchanges sans Exchange Item |
+| 461 | Couches où d'autres FE portent déjà des Exchange Items |
+| 461 | Functional Exchange |
+| 461 | Type |
+| 462 | Interfaces sans Exchange Item alloué |
+| 462 | Interface |
+| 462 | Type |
+| 463 | Interfaces ni fournies, ni requises, ni utilisées |
+| 463 | Interface |
+| 463 | Type |
+| 464 | Exchange Items d'un FE absents des interfaces des ports du CE porteur |
+| 464 | Seulement pour les CE dont les ports déclarent des interfaces |
+| 464 | Component Exchange |
+| 464 | Functional Exchange |
+| 464 | Exchange Item manquant |
+| 465 | Classes et types de données jamais utilisés |
+| 465 | Hors types prédéfinis |
+| 465 | Type |
+| 465 | Nature |
+| 475 | Aucun Exchange Item, interface ni type de données dans ce modèle. |
+| 481 | Couche |
+| 481 | Exchange Item |
+| 481 | Mécanisme |
+| 481 | Éléments |
+| 481 | Functional Exchanges |
+| 481 | Component Exchanges |
+| 481 | Interfaces |
+| 489 | Couche |
+| 489 | Interface |
+| 489 | Exchange Items |
+| 489 | Fournie par |
+| 489 | Requise par |
+| 489 | Utilisée / implémentée par |
+| 491 | ∅ aucun |
+| 492 | Aucune interface dans ce modèle. |
+| 496 | Couche |
+| 496 | Type |
+| 496 | Nature |
+| 496 | Contenu |
+| 496 | Hérite de |
+| 496 | Utilisé par |
+| 497 | unité : |
+| 500 | unité : |
+| 501 | Aucun type de données dans ce modèle. |
+| 503 | 📦 Exchange Items |
+| 503 | 🔌 Interfaces |
+| 503 | 🧱 Classes & types |
+| 503 | 🩺 Contrôles |
+| 504 | Nom, contenu… |
+| 505 | types prédéfinis |
+| 519 | pré-condition |
+| 532 | texte lié |
+| 546 | (sans nom) |
+| 547 | Contrainte |
+| 547 | Possédée par |
+| 550 | Contraintes vides (ni nom ni expression) |
+| 551 | Contraintes sans expression |
+| 551 | Seul le nom porte l'information |
+| 552 | Expressions citant un élément introuvable |
+| 552 | Lien de texte vers un élément supprimé |
+| 553 | Contraintes sans élément contraint explicite |
+| 554 | Contraintes en double sur un même élément |
+| 564 | Aucune contrainte dans ce modèle. |
+| 567 | Couche |
+| 567 | Contrainte |
+| 567 | Rôle |
+| 567 | Expression |
+| 567 | Langage |
+| 567 | Porte sur |
+| 567 | Possédée par |
+| 569 | (sans nom) |
+| 572 | 📋 Liste |
+| 572 | 🩺 Contrôles |
+| 573 | Nom, expression, élément… |
+| 590 | Exigence |
+| 590 | Type |
+| 591 | Texte |
+| 592 | Éléments liés |
+| 593 | Exigences liées |
+| 595 | Exigences liées ( |
+| 597 | Propriétés ( |
+| 599 | Contraintes ( |
+| 599 | (sans nom) |
+| 601 | Détail étendu indisponible |
+| 611 | Exigences — nombre |
+| 611 | liée(s) au modèle |
+| 612 | rq.cov |
+| 612 | Exigences — liées au modèle |
+| 613 | rq.kind |
+| 613 | Exigences — par type |
+| 614 | rq.layer |
+| 614 | Exigences — couches des éléments liés |
+| 614 | Hors couche |
+| 614 | Nombre d'exigences liées à au moins un élément de la couche |
+| 615 | rq.chk |
+| 615 | Exigences — contrôles |
+| 616 | Exigences — par « |
+| 616 | (non renseigné) |
+| 618 | Propriétés — valeurs appliquées |
+| 618 | élément(s) |
+| 619 | pv.set |
+| 619 | Propriétés — valeurs saisies |
+| 619 | Valeurs différentes de la valeur par défaut |
+| 620 | pv.grp |
+| 620 | Propriétés — éléments par groupe |
+| 621 | pv.chk |
+| 621 | Propriétés — contrôles |
+| 623 | pv.sum. |
+| 623 | Propriétés — Σ « |
+| 624 | élément(s) |
+| 626 | Données — Exchange Items |
+| 626 | interface(s) · |
+| 626 | type(s) |
+| 627 | dm.used |
+| 627 | Données — Exchange Items portés par un échange |
+| 628 | Données — Functional Exchanges avec Exchange Item, par couche |
+| 630 | dm.chk |
+| 630 | Données & interfaces — contrôles |
+| 632 | Contraintes — nombre |
+| 633 | ct.layer |
+| 633 | Contraintes — par couche |
+| 633 | Hors couche |
+| 634 | ct.chk |
+| 634 | Contraintes — contrôles |

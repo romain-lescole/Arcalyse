@@ -161,7 +161,7 @@
 - `openHelpModal` (l. 150) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
 - `positionOverlay` (l. 246) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
 
-## 20-capella-chargement.js — 761 lignes
+## 20-capella-chargement.js — 762 lignes
 
 - `CAP_LAYERS` (l. 4)
 - `CAP_NS_LAYER` (l. 12)
@@ -186,17 +186,17 @@
 - `capXName` (l. 267) — Lit l'attribut 'name' d'un élément XML Capella.
 - `capResolveLayer` (l. 272) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
 - `capGetAttrs` (l. 278) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
-- `capBuildTree` (l. 288) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
-- `capRunBulk` (l. 314) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
-- `capBuildTypeRegistry` (l. 324) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
-- `capApplyPanelOnLoad` (l. 343) — Appelée après le chargement Capella : configure le panneau gauche RM.
-- `capInjectToArbo` (l. 406) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
-- `capInjectCapellaRelsToCriteria` (l. 510) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
-- `capInjectLinksToModel` (l. 551) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
-- `capFilterArboToLinked` (l. 595) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
-- `capInjectChainsToModal` (l. 634) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
-- `capRenderCurrentView` (l. 695) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
-- `capUpdateStatChips` (l. 752) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
+- `capBuildTree` (l. 289) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
+- `capRunBulk` (l. 315) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
+- `capBuildTypeRegistry` (l. 325) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
+- `capApplyPanelOnLoad` (l. 344) — Appelée après le chargement Capella : configure le panneau gauche RM.
+- `capInjectToArbo` (l. 407) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
+- `capInjectCapellaRelsToCriteria` (l. 511) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
+- `capInjectLinksToModel` (l. 552) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
+- `capFilterArboToLinked` (l. 596) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
+- `capInjectChainsToModal` (l. 635) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
+- `capRenderCurrentView` (l. 696) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
+- `capUpdateStatChips` (l. 753) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
 ## 21-capella-vues-base.js — 1119 lignes
 
@@ -293,13 +293,13 @@
 - `capChainExportRefreshCount` (l. 540) — Met à jour le compteur de sélection et la case « Tout » sans re-rendre les cartes (garde les cartes ouvertes).
 - `capRenderChainMap` (l. 551) — Rend la sous-vue « Relation Map » : liste des chaînes groupée par catégorie ARCADIA à gauche,
 
-## 25-panneau-detail.js — 186 lignes
+## 25-panneau-detail.js — 189 lignes
 
 - `capOpenDetail` (l. 5) — Ouvre le panneau de détail (colonne droite de l'overlay) pour un élément Capella.
-- `capOpenDetailNode` (l. 94) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
-- `CAP_ELEM_VIEWS` (l. 102)
-- `capUpdateToolbarForView` (l. 108) — Met à jour les boutons actifs et les groupes de contrôles visibles
-- `capShowView` (l. 135) — Affiche une vue Capella (bascule en mode capella si besoin).
+- `capOpenDetailNode` (l. 97) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
+- `CAP_ELEM_VIEWS` (l. 105)
+- `capUpdateToolbarForView` (l. 111) — Met à jour les boutons actifs et les groupes de contrôles visibles
+- `capShowView` (l. 138) — Affiche une vue Capella (bascule en mode capella si besoin).
 
 ## 26-rapports-html.js — 101 lignes
 
@@ -394,7 +394,7 @@
 - `capRenderFunctionsView` (l. 689) — Vue « ƒ Fonctions » (menu principal, au même niveau que 🔬 Analyses) : hiérarchie, tableau,
 - `capRenderAnalyses` (l. 698)
 
-## 35-tableau-de-bord.js — 555 lignes
+## 35-tableau-de-bord.js — 557 lignes
 
 - `CAP_DASH_PAL` (l. 3) — Palette catégorielle à ordre fixe (contrôlée pour le daltonisme), déclinée pour thèmes clairs et sombres.
 - `CAP_DASH_AK` (l. 6) — Couleurs des natures d'allocation (identiques au filtre « Allocation » de ƒ Fonctions).
@@ -404,17 +404,17 @@
 - `capDashPct` (l. 28) — Taux arrondi d'éléments vérifiant un prédicat.
 - `capDashCount` (l. 34) — Compte les éléments par clé (une ou plusieurs clés par élément) et trie par effectif décroissant.
 - `capDashCatalog` (l. 44) — Catalogue de tous les indicateurs disponibles pour le modèle ouvert (fonctions, chaînes, interfaces,
-- `capDashValue` (l. 185) — Valeur (mise en cache) d'un indicateur du catalogue ; null si le modèle ne contient pas la donnée.
-- `capDashCut` (l. 198) — Échappe un texte et le tronque pour une étiquette de graphique.
-- `capDashLevel` (l. 203) — Niveau d'un pourcentage : bon (≥ 90), à surveiller (≥ 50), faible.
-- `capDashCats` (l. 209) — Prépare les catégories d'une répartition : tri, limite d'affichage et regroupement en « Autres ».
-- `capDashDraw` (l. 223) — Dessine le contenu d'un élément du tableau de bord.
-- `capDashSave` (l. 305) — Enregistre les tableaux de bord dans la page (bloc JSON repris par la 💾 Page HTML).
-- `capDashUid` (l. 311) — Identifiant court et unique pour un tableau de bord ou un élément.
-- `capDashExample` (l. 315) — Tableau de bord d'exemple adapté au modèle ouvert (synthèse de quelques indicateurs clés).
-- `capRenderDashboard` (l. 333) — Vue « 📐 Tableau de bord » : tableaux de bord personnalisés (indicateurs, graphiques, tableaux, textes),
-- `capDashPrint` (l. 459) — Imprime un tableau de bord au format A4 : les éléments sont redessinés à la taille de la page
-- `capDashEditor` (l. 496) — Fenêtre d'ajout ou de configuration d'un élément : catalogue des indicateurs (recherche, groupes),
+- `capDashValue` (l. 187) — Valeur (mise en cache) d'un indicateur du catalogue ; null si le modèle ne contient pas la donnée.
+- `capDashCut` (l. 200) — Échappe un texte et le tronque pour une étiquette de graphique.
+- `capDashLevel` (l. 205) — Niveau d'un pourcentage : bon (≥ 90), à surveiller (≥ 50), faible.
+- `capDashCats` (l. 211) — Prépare les catégories d'une répartition : tri, limite d'affichage et regroupement en « Autres ».
+- `capDashDraw` (l. 225) — Dessine le contenu d'un élément du tableau de bord.
+- `capDashSave` (l. 307) — Enregistre les tableaux de bord dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capDashUid` (l. 313) — Identifiant court et unique pour un tableau de bord ou un élément.
+- `capDashExample` (l. 317) — Tableau de bord d'exemple adapté au modèle ouvert (synthèse de quelques indicateurs clés).
+- `capRenderDashboard` (l. 335) — Vue « 📐 Tableau de bord » : tableaux de bord personnalisés (indicateurs, graphiques, tableaux, textes),
+- `capDashPrint` (l. 461) — Imprime un tableau de bord au format A4 : les éléments sont redessinés à la taille de la page
+- `capDashEditor` (l. 498) — Fenêtre d'ajout ou de configuration d'un élément : catalogue des indicateurs (recherche, groupes),
 
 ## 36-component-exchange.js — 338 lignes
 
@@ -434,3 +434,39 @@
 - `capThemeLayerDefaults` (l. 40) — Couleurs d'origine des couches ARCADIA (mémorisées au premier appel).
 - `capThemeLayersApply` (l. 48) — Applique les couleurs de couches du thème personnalisé (ou celles d'origine pour un autre thème)
 - `capThemeEditor` (l. 59) — Ouvre l'éditeur du thème personnalisé : toutes les couleurs regroupées (fonds, textes, statuts,
+
+## 39-exigences-donnees.js — 636 lignes
+
+- `capXtPlain` (l. 14) — Convertit un texte riche (HTML des exigences, linkedText) en texte brut.
+- `capXtShort` (l. 25) — Texte tronqué avec info-bulle portant le texte complet.
+- `capXtLinks` (l. 34) — Liste repliable de liens vers des éléments (avec badge de couche si demandé).
+- `capXtTable` (l. 44) — Tableau HTML simple (classe .ana-t).
+- `capXtViewBtns` (l. 54) — Boutons de choix de vue.
+- `capXtLayerBtns` (l. 62) — Boutons de filtre par couche ARCADIA (seulement les couches présentes).
+- `capXtSelect` (l. 74) — Liste déroulante liée à une clé de l'état de la vue.
+- `capXtBind` (l. 83) — Branche les commandes d'une sous-vue (vue, couche, listes, cases, recherche, CSV).
+- `capXtBar` (l. 98) — Barre de commandes standard d'une sous-vue.
+- `capXtSearch` (l. 107) — Champ de recherche standard.
+- `capXtHas` (l. 109) — Vrai si la recherche (minuscules) figure dans l'un des textes.
+- `capXtId` (l. 111) — Identifiant d'un élément XML, ou '' s'il est absent.
+- `capXtDePart` (l. 113) — Élément courant résolu : un Part renvoie au composant qu'il type.
+- `capReqIfName` (l. 118) — Nom ReqIF lisible d'un élément du Requirements Viewpoint (type, attribut, valeur…).
+- `capComputeRequirements` (l. 124) — Calcule les exigences des deux familles (Requirements Viewpoint et exigences Capella de base),
+- `capReqChecks` (l. 177) — Sections de contrôle des exigences (réutilisées par le tableau de bord).
+- `capRenderRequirements` (l. 203) — Rend la sous-vue 📑 Exigences : liste filtrable, couverture par couche, contrôles.
+- `CAP_PV_ARCH` (l. 243)
+- `capPvValue` (l. 250) — Valeur lisible d'une PropertyValue Capella (valeur par défaut EMF si absente).
+- `capPvUnit` (l. 258) — Unité d'une propriété PVMT (sous-propriété « __UNIT__ » de la propriété ou de sa définition).
+- `capComputePvmt` (l. 267) — Calcule les propriétés PVMT : définitions (domaines, groupes, propriétés, applicabilité)
+- `capPvMissing` (l. 306) — Éléments auxquels un groupe PVMT s'applique (classes et architectures déclarées) sans l'avoir reçu.
+- `capPvChecks` (l. 320) — Sections de contrôle des propriétés PVMT (réutilisées par le tableau de bord).
+- `capRenderPvmt` (l. 336) — Rend la sous-vue 🏷 Propriétés : grille par groupe (une colonne par propriété), synthèse, définitions, contrôles.
+- `CAP_DM_TYPES` (l. 386)
+- `capComputeDataModel` (l. 392) — Calcule le modèle de données : Exchange Items (éléments, échanges et interfaces qui les portent),
+- `capDmChecks` (l. 443) — Sections de contrôle du modèle de données et des interfaces (réutilisées par le tableau de bord).
+- `capRenderDataModel` (l. 472) — Rend la sous-vue 🗃 Données & interfaces : Exchange Items, interfaces, classes et types, contrôles.
+- `capComputeConstraints` (l. 515) — Calcule les contraintes : expression (liens linkedText résolus), langage, éléments contraints, propriétaire.
+- `capCtChecks` (l. 544) — Sections de contrôle des contraintes (réutilisées par le tableau de bord).
+- `capRenderConstraints` (l. 561) — Rend la sous-vue ⛓ Contraintes : liste filtrable et contrôles.
+- `capXtDetail` (l. 584) — Sections supplémentaires du panneau de détail : exigences liées, propriétés, contraintes.
+- `capXtDashCatalog` (l. 608) — Ajoute au catalogue du tableau de bord les indicateurs Exigences, Propriétés, Données & interfaces, Contraintes.

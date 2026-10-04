@@ -697,7 +697,7 @@ function capRenderFunctionsView(){
 
 function capRenderAnalyses(){
   const c=document.getElementById('cap-view-analyses'); if(!c) return;
-  const SUBS=[['trace','🧬 Traçabilité inter-couches'],['caps','🎯 Capacités & missions'],['states','🔁 Modes & états'],['diff','⚖ Comparaison de versions']];
+  const SUBS=[['trace','🧬 Traçabilité inter-couches'],['caps','🎯 Capacités & missions'],['states','🔁 Modes & états'],['diff','⚖ Comparaison de versions'],['reqs','📑 Exigences'],['pvmt','🏷 Propriétés'],['data','🗃 Données & interfaces'],['cts','⛓ Contraintes']];
   if(!c._built){
     c.innerHTML=`<div class="phl-toggle-bar">${SUBS.map(([k,l])=>`<button class="phl-toggle-btn" data-an="${k}">${l}</button>`).join('')}
       <button class="phl-export-btn" id="ana-recalc" style="margin-left:auto" title="Vider les résultats et recalculer l'analyse affichée">↻ Recalculer</button></div><div id="ana-box"></div>`;
@@ -705,14 +705,14 @@ function capRenderAnalyses(){
     c.querySelector('#ana-recalc').onclick=()=>{
       // Vide les résultats en mémoire et relance la sous-vue affichée
       _capAnaCache={}; _capPortsCache=null;
-      c.querySelectorAll('[data-hold]').forEach(h=>{ h.innerHTML=''; ['_fn','_tr','_cp','_sm'].forEach(k=>delete h[k]); });
+      c.querySelectorAll('[data-hold]').forEach(h=>{ h.innerHTML=''; ['_fn','_tr','_cp','_sm','_rq','_pv','_dm','_ct'].forEach(k=>delete h[k]); });
       capRenderAnalyses();
     };
     c._built=true;
   }
   c.querySelectorAll('[data-an]').forEach(b=>b.classList.toggle('active',b.dataset.an===capAnaSub));
   const box=c.querySelector('#ana-box');
-  const R={trace:capRenderTrace, caps:capRenderCapabilities, states:capRenderStates, diff:capRenderDiff}[capAnaSub];
+  const R={trace:capRenderTrace, caps:capRenderCapabilities, states:capRenderStates, diff:capRenderDiff, reqs:capRenderRequirements, pvmt:capRenderPvmt, data:capRenderDataModel, cts:capRenderConstraints}[capAnaSub];
   const holder=box.querySelector(`[data-hold="${capAnaSub}"]`)||(()=>{ const d=document.createElement('div'); d.dataset.hold=capAnaSub; box.appendChild(d); return d; })();
   box.querySelectorAll('[data-hold]').forEach(h=>h.style.display=h===holder?'':'none');
   R(holder);

@@ -264,7 +264,7 @@ function capTName(el){const t=capXType(el);return t.includes(':')?t.split(':').p
 /** Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé). */
 function capXId(el){return el.getAttribute('id')||el.getAttributeNS('http://www.omg.org/XMI','id')||'';}
 /** Lit l'attribut 'name' d'un élément XML Capella. */
-function capXName(el){return el.getAttribute('name')||'';}
+function capXName(el){return el.getAttribute('name')||el.getAttribute('ReqIFLongName')||el.getAttribute('ReqIFName')||'';}
 
 /** Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
  * à partir du préfixe de namespace ou des ancêtres XML.
@@ -279,6 +279,7 @@ function capGetAttrs(node){
   const attrs={};
   for(const k of CAP_ATTR_KEYS){const v=node.getAttribute(k);if(v!==null&&v!=='')attrs[k]=v;}
   for(const a of node.attributes){const n=a.localName;if(!CAP_ATTR_KEYS.includes(n)&&n!=='id'&&!n.startsWith('xmlns')&&n!=='type'&&a.value)attrs[n]=a.value;}
+  if(!attrs.name){const r=node.getAttribute('ReqIFLongName')||node.getAttribute('ReqIFName');if(r)attrs.name=r;} // Requirements Viewpoint : nom ReqIF
   return attrs;
 }
 /** Construit récursivement l'arbre d'éléments Capella depuis le XML.

@@ -173,7 +173,9 @@ function capDashCatalog(){
     {l:'Sans Component Exchange',v:PL().filter(x=>!x.ces.length).length},{l:'Ports physiques sans lien',v:(PL().allPorts||[]).filter(p=>!p.connected).length},
     {l:'Ports physiques sans Component Port',v:(PL().allPorts||[]).filter(p=>!(p.cps||[]).length).length},{l:'CE (PA) non alloués',v:(PL().unallocCEs||[]).length}].filter(x=>x.v)}));
   add('Contrôles','chk.sum','Synthèse des contrôles par domaine','series',()=>{ const tot=id=>{ const m=C.find(x=>x.id===id), v=m&&capDashValue(m); return v?v.cats.reduce((s,c)=>s+c.v,0):0; };
-    return {cats:[['Fonctions','chk.fn'],['Ports','chk.pt'],['Component Exchanges','chk.ce'],['Physical Links','chk.pl'],['Capacités','cap.chk'],['Modes & états','sm.chk']].map(([l,id])=>({l,v:tot(id)})).filter(x=>x.v).sort((a,b)=>b.v-a.v)}; },'Nombre total de constats par domaine');
+    return {cats:[['Fonctions','chk.fn'],['Ports','chk.pt'],['Component Exchanges','chk.ce'],['Physical Links','chk.pl'],['Capacités','cap.chk'],['Modes & états','sm.chk'],['Exigences','rq.chk'],['Propriétés','pv.chk'],['Données & interfaces','dm.chk'],['Contraintes','ct.chk']].map(([l,id])=>({l,v:tot(id)})).filter(x=>x.v).sort((a,b)=>b.v-a.v)}; },'Nombre total de constats par domaine');
+
+  capXtDashCatalog(add, LC);
 
   add('Mise en page','txt','Texte libre (titre, commentaire)','text',()=>({}));
   return _capAnaCache.dashCat=C;

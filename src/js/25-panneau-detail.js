@@ -72,6 +72,9 @@ function capOpenDetail(id){
     });
   }
 
+  // Exigences, propriétés (PVMT) et contraintes de l'élément
+  html+=capXtDetail(el.id, secTitle);
+
   // Owner
   if(parent){
     html+=secTitle('Owner (parent)','#a78bfa');

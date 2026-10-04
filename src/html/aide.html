@@ -244,8 +244,33 @@
           <tr><td>Détail</td><td>Clic sur une ligne : propriété par propriété, avant / après.</td></tr>
           <tr><td>Filtres & export</td><td>Statut, couche, type, nom ; synthèse par type ; CSV (une ligne par propriété modifiée).</td></tr>
         </table>
+        <h3>📑 Exigences</h3>
+        <p>Exigences du <b>Requirements Viewpoint</b> (identifiant, texte, attributs, relations Capella entrantes / sortantes et relations entre exigences) et <b>exigences Capella</b> de base (SystemUserRequirement…, traces RequirementsTrace). Filtres : famille, type, valeur d'attribut, liées ou non au modèle.</p>
+        <table class="hp-t">
+          <tr><td>📋 Liste</td><td>ID, nom, dossier, texte, attributs, éléments liés (avec leur couche) et exigences liées.</td></tr>
+          <tr><td>▦ Couverture</td><td>Nombre d'éléments liés à chaque exigence, par couche ARCADIA.</td></tr>
+          <tr><td>🩺 Contrôles</td><td>Exigences liées à aucun élément, sans texte, sans identifiant, identifiants en double, relations vers un élément introuvable ; fonctions feuilles et composants sans exigence (seulement dans les couches où d'autres éléments en ont).</td></tr>
+        </table>
+        <h3>🏷 Propriétés (PVMT)</h3>
+        <p>Propriétés des extensions PVMT (domaines, groupes, propriétés et unités) et propriétés simples posées sur les éléments. ○ = valeur par défaut jamais saisie.</p>
+        <table class="hp-t">
+          <tr><td>▦ Grille par groupe</td><td>Une ligne par élément, une colonne par propriété du groupe ; total des propriétés numériques.</td></tr>
+          <tr><td>Σ Synthèse</td><td>Par propriété : somme, minimum, maximum et moyenne des valeurs numériques, ou répartition des valeurs.</td></tr>
+          <tr><td>📖 Définitions</td><td>Groupes définis, classes et architectures auxquelles ils s'appliquent, éléments renseignés et manquants.</td></tr>
+          <tr><td>🩺 Contrôles</td><td>Éléments concernés par un groupe mais non renseignés, valeurs restées par défaut, groupes sans lien vers leur définition.</td></tr>
+        </table>
+        <h3>🗃 Données & interfaces</h3>
+        <table class="hp-t">
+          <tr><td>📦 Exchange Items</td><td>Mécanisme, éléments (nom : type [cardinalité]), Functional / Component Exchanges qui les portent, interfaces qui les allouent.</td></tr>
+          <tr><td>🔌 Interfaces</td><td>Exchange Items alloués, ports qui les fournissent ou les requièrent, composants qui les utilisent ou les implémentent.</td></tr>
+          <tr><td>🧱 Classes & types</td><td>Classes (propriétés typées), énumérations (littéraux), grandeurs physiques (unité), héritage et usages ; types prédéfinis en option.</td></tr>
+          <tr><td>🩺 Contrôles</td><td>Exchange Items non portés ou sans contenu, Functional Exchanges sans Exchange Item, interfaces vides ou inutilisées, Exchange Items d'un FE absents des interfaces des ports du CE porteur, types jamais utilisés.</td></tr>
+        </table>
+        <h3>⛓ Contraintes</h3>
+        <p>Toutes les contraintes : rôle (garde, pré / post-condition), expression (les liens de texte sont remplacés par le nom de l'élément cité), langage, éléments contraints, propriétaire. Contrôles : contraintes vides ou sans expression, éléments cités introuvables, sans élément contraint, doublons.</p>
+        <p class="hp-note">Le panneau de détail d'un élément affiche aussi ses exigences liées, ses propriétés et ses contraintes. Les indicateurs correspondants sont dans le catalogue du 📐 Tableau de bord.</p>
         <h3>📐 Tableau de bord (onglet à part, à côté de 🔬 Analyses)</h3>
-        <p>Composez vos propres tableaux de bord à partir de <b>tous les indicateurs calculés</b> (≈ 130 sur un modèle complet) : modèle, fonctions (par couche et comparaison des couches, allocation, allocataires, sous-systèmes, nommage), chaînes, Component Exchanges, Physical Links, ports, traçabilité, capacités, modes & états, contrôles. Un tableau de bord d'exemple est créé au premier affichage.</p>
+        <p>Composez vos propres tableaux de bord à partir de <b>tous les indicateurs calculés</b> (≈ 130 sur un modèle complet) : modèle, fonctions (par couche et comparaison des couches, allocation, allocataires, sous-systèmes, nommage), chaînes, Component Exchanges, Physical Links, ports, traçabilité, capacités, modes & états, exigences, propriétés, données & interfaces, contraintes, contrôles. Un tableau de bord d'exemple est créé au premier affichage.</p>
         <table class="hp-t">
           <tr><td>✏ Modifier</td><td>Passe en édition : <b>＋ Ajouter un élément</b> (catalogue avec recherche et catégories repliables, « Mise en page » en tête, aperçu en direct), ＋ au survol d'un élément pour en insérer un avant lui, tuile « ＋ Ajouter un élément » en fin de page, ⚙ configurer, ⧉ dupliquer, ✕ retirer. La vue garde sa position de défilement pendant les modifications.</td></tr>
           <tr><td>Représentations</td><td>Indicateur chiffré, jauge (vert ≥ 90 %, orange ≥ 50 %, rouge sinon), barres horizontales ou verticales, anneau, barres empilées ou groupées, tableau, texte libre (titres, commentaires). Nombre de catégories affichées (le reste est regroupé en « Autres ») et tri réglables.</td></tr>
