@@ -73,11 +73,11 @@ function capRenderCompExchange(){
    */
   function orientBadge(o){
     const os=CAP_ORIENT_STYLE[o]||CAP_ORIENT_STYLE.UNSET;
-    return `<span title="${os.t}" style="font-size:8px;font-weight:700;padding:1px 4px;border-radius:3px;border:1px solid ${os.c};color:${os.c};vertical-align:middle;margin-left:4px;${o==='UNSET'?'opacity:.6;':''}">${o==='INOUT'?'⇄ INOUT':o}</span>`;
+    return `<span title="${os.t}" style="font-size:10px;font-weight:700;padding:1px 4px;border-radius:3px;border:1px solid ${os.c};color:${os.c};vertical-align:middle;margin-left:4px;${o==='UNSET'?'opacity:.6;':''}">${o==='INOUT'?'⇄ INOUT':o}</span>`;
   }
   /** Badge du kind de l'exchange (ASSEMBLY, DELEGATION, FLOW ; rien si UNSET). */
   function kindBadge(k){
-    return k&&k!=='UNSET'?`<span title="Kind du Component Exchange" style="font-size:8px;font-weight:700;padding:1px 4px;border-radius:3px;background:var(--c-bg3);border:1px solid var(--c-border);color:var(--c-dim);">${capEsc(k)}</span>`:'';
+    return k&&k!=='UNSET'?`<span title="Kind du Component Exchange" style="font-size:10px;font-weight:700;padding:1px 4px;border-radius:3px;background:var(--c-bg3);border:1px solid var(--c-border);color:var(--c-dim);">${capEsc(k)}</span>`:'';
   }
   /** Icône d'alerte (incohérence d'orientation). */
   function warnIcon(l){ return l.warn?`<span title="⚠ ${capEsc(l.warn)}" style="color:var(--c-warn,#e3b341);font-size:12px;cursor:help;">⚠</span>`:''; }
@@ -90,7 +90,7 @@ function capRenderCompExchange(){
     if(l.items.length) parts.push(`<span title="Exchange Items transportés">▤ ${l.items.map(i=>detLink(i.id,i.name)).join(', ')}</span>`);
     if(l.pls.length) parts.push(`<span title="Physical Links porteurs">🔌 ${l.pls.map(pl=>detLink(pl.id,pl.name)).join(', ')}</span>`);
     if(!l.fes.length) parts.push(`<span title="Aucun Functional Exchange alloué à cet exchange" style="color:var(--c-warn,#e3b341)">∅ FE</span>`);
-    return parts.length?`<div style="font-size:9.5px;color:var(--c-dim);display:flex;flex-wrap:wrap;gap:2px 10px;justify-content:center;max-width:100%;">${parts.join('')}</div>`:'';
+    return parts.length?`<div style="font-size:11.5px;color:var(--c-dim);display:flex;flex-wrap:wrap;gap:2px 10px;justify-content:center;max-width:100%;">${parts.join('')}</div>`:'';
   }
 
   /** Construit le HTML du contenu de la vue selon le mode actif (Ligne ou Composant).
@@ -113,12 +113,12 @@ function capRenderCompExchange(){
         const arrR=(l.dir==='fwd'||l.dir==='bi')?`<span style="font-size:14px;line-height:1;color:${lc.bg};margin-left:-2px;">▶</span>`:'';
         const tip=l.dir==='rev'?`${l.tgt.pcName} → ${l.src.pcName}`:l.dir==='bi'?`${l.src.pcName} ⇄ ${l.tgt.pcName}`:l.dir==='unset'?'Sens non défini':`${l.src.pcName} → ${l.tgt.pcName}`;
         return`<div class="phl-line">
-          <div class="phl-cell phl-cell-pc">
-            ${detLink(l.src.pcId,l.src.pcName,`color:${sc}`).replace('class="cex-det"','class="cex-det phl-pc-name"')}
+          <div class="phl-cell phl-cell-pc" style="--phl-c:${sc}">
+            ${detLink(l.src.pcId,l.src.pcName,`color:${capTextOn(sc)}`).replace('class="cex-det"','class="cex-det phl-pc-name"')}
             <span class="phl-port-name">⬦ ${capEsc(l.src.portName)}${orientBadge(l.src.portOrient)}</span>
           </div>
           <div class="phl-cell phl-cell-link" style="padding:6px 14px;gap:2px;">
-            <span style="display:flex;gap:5px;align-items:center;"><span style="font-size:10px;color:var(--c-dim);font-family:monospace;">#${num}</span>${kindBadge(l.kind)}<span style="font-size:9px;color:var(--c-dim);" title="${CAP_CEX_DIRS[l.dir].tip}">${CAP_CEX_DIRS[l.dir].label}</span>${warnIcon(l)}</span>
+            <span style="display:flex;gap:5px;align-items:center;"><span style="font-size:11.5px;color:var(--c-dim);font-family:monospace;">#${num}</span>${kindBadge(l.kind)}<span style="font-size:11px;color:var(--c-dim);" title="${CAP_CEX_DIRS[l.dir].tip}">${CAP_CEX_DIRS[l.dir].label}</span>${warnIcon(l)}</span>
             <span style="display:flex;align-items:center;gap:0;width:100%;justify-content:center;" title="Sens du signal : ${capEsc(tip)}">
               ${arrL}
               <span style="flex:1;max-width:40px;height:2px;${dash}"></span>
@@ -128,8 +128,8 @@ function capRenderCompExchange(){
             </span>
             ${infoLine(l)}
           </div>
-          <div class="phl-cell phl-cell-pc" style="align-items:flex-end">
-            ${detLink(l.tgt.pcId,l.tgt.pcName,`color:${tc}`).replace('class="cex-det"','class="cex-det phl-pc-name"')}
+          <div class="phl-cell phl-cell-pc phl-cell-r" style="--phl-c:${tc}">
+            ${detLink(l.tgt.pcId,l.tgt.pcName,`color:${capTextOn(tc)}`).replace('class="cex-det"','class="cex-det phl-pc-name"')}
             <span class="phl-port-name">⬦ ${capEsc(l.tgt.portName)}${orientBadge(l.tgt.portOrient)}</span>
           </div>
         </div>`;

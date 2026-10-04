@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 1960 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 2013 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -827,9 +827,62 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 22 | Mission → système / acteur impliqué |
 | 23 | Mission→Capability |
 | 23 | Mission → capacité exploitée |
-| 143 | Toutes ( |
-| 154 | Source ID source Cible ID cible |
-| 165 | Aucun lien. |
+| 25 | FunctionalExchange: Function→Function |
+| 25 | Function |
+| 25 | Échange fonctionnel (fonction → fonction) |
+| 26 | ComponentExchange: Component→Component |
+| 26 | Component |
+| 26 | Échange de composants (composant → composant) |
+| 27 | PhysicalLink: PhysicalComponent→PhysicalComponent |
+| 27 | Lien physique (composant ↔ composant) |
+| 28 | Exchange→ExchangeItem |
+| 28 | Échange → élément échangé (Exchange Item) |
+| 29 | FunctionRealization: Function→Function |
+| 29 | Function |
+| 29 | Fonction → fonction réalisée (couche supérieure) |
+| 30 | ComponentRealization: Component→Component |
+| 30 | Component |
+| 30 | Composant → composant réalisé (couche supérieure) |
+| 31 | FunctionalExchangeRealization: FunctionalExchange→FunctionalExchange |
+| 31 | Échange fonctionnel → échange réalisé (couche supérieure) |
+| 32 | ComponentExchange→FunctionalExchange |
+| 32 | Échange de composants → échange fonctionnel alloué |
+| 33 | PhysicalLink→ComponentExchange |
+| 33 | Lien / chemin physique → échange de composants alloué |
+| 34 | PhysicalPort→ComponentPort |
+| 34 | Port physique → port de composant alloué |
+| 35 | FunctionalChain→Function |
+| 35 | Chaîne fonctionnelle → fonction impliquée |
+| 36 | FunctionalChain→FunctionalExchange |
+| 36 | Chaîne fonctionnelle → échange impliqué |
+| 37 | Capability→Function |
+| 37 | Capacité → fonction impliquée |
+| 38 | Capability→FunctionalChain |
+| 38 | Capacité → chaîne fonctionnelle impliquée |
+| 42 | Décomposition |
+| 43 | Allocation |
+| 44 | Échanges |
+| 45 | Réalisation inter-couches |
+| 46 | Capacités & missions |
+| 47 | Chaînes |
+| 222 | Toutes les relations ( |
+| 225 | ID ⬇ CSV |
+| 227 | types de relations présents |
+| 227 | Relations non trouvées dans ce modèle : |
+| 256 | Source |
+| 258 | Cible |
+| 258 | ID source |
+| 258 | Via |
+| 258 | ID cible |
+| 266 | Aucun lien. |
+| 277 | Relation |
+| 277 | Source |
+| 277 | Type source |
+| 277 | ID source |
+| 277 | Via |
+| 277 | Cible |
+| 277 | Type cible |
+| 277 | ID cible |
 
 ## js/23-chaines.js
 

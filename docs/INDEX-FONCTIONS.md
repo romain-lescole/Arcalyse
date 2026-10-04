@@ -234,11 +234,12 @@
 - `capRenderTree` (l. 1069) — Rend la vue Arborescence Capella (hiérarchie XML complète).
 - `capRenderTreeNode` (l. 1080) — Rend récursivement un nœud de l'arborescence Capella.
 
-## 22-capella-liens.js — 167 lignes
+## 22-capella-liens.js — 280 lignes
 
 - `CAP_LINK_SECTIONS` (l. 2)
-- `capComputeLinks` (l. 30) — Extrait et résout toutes les relations Capella depuis le XML :
-- `capRenderLinks` (l. 136) — Rend la vue Liens : tableau des relations Capella groupées par type.
+- `CAP_LINK_GROUPS` (l. 41) — Groupes de relations affichés dans la barre de la vue 🔗 Liens (ordre d'affichage).
+- `capComputeLinks` (l. 54) — Extrait et résout toutes les relations Capella depuis le XML :
+- `capRenderLinks` (l. 201) — Rend la vue Liens : barre (recherche, filtres groupés par famille de relations, export)
 
 ## 23-chaines.js — 533 lignes
 
