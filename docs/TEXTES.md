@@ -1148,23 +1148,23 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 58 | Émetteur ↓ / Récepteur → |
 | 58 | Composant |
 | 72 | composants · cliquez une cellule pour lister les |
-| 82 | à vérifier |
-| 82 | ✔ Aucune anomalie détectée |
-| 87 | ✔ RAS |
-| 106 | Port d'entrée (IN) |
-| 107 | Port de sortie (OUT) |
-| 108 | Port bidirectionnel (INOUT) |
-| 109 | Orientation non définie (UNSET) |
-| 113 | → Orienté |
-| 113 | Sens source → cible |
-| 114 | ← Inversé |
-| 114 | Sens cible → source (déduit des orientations de ports) |
-| 115 | ⇄ Bidirectionnel |
-| 115 | Échange dans les deux sens (port INOUT) |
-| 116 | ? Non orienté |
-| 116 | Aucun port orienté : sens inconnu |
-| 145 | Deux ports OUT reliés |
-| 146 | Deux ports IN reliés |
+| 94 | à vérifier |
+| 94 | ✔ Aucune anomalie détectée |
+| 99 | ✔ RAS |
+| 118 | Port d'entrée (IN) |
+| 119 | Port de sortie (OUT) |
+| 120 | Port bidirectionnel (INOUT) |
+| 121 | Orientation non définie (UNSET) |
+| 125 | → Orienté |
+| 125 | Sens source → cible |
+| 126 | ← Inversé |
+| 126 | Sens cible → source (déduit des orientations de ports) |
+| 127 | ⇄ Bidirectionnel |
+| 127 | Échange dans les deux sens (port INOUT) |
+| 128 | ? Non orienté |
+| 128 | Aucun port orienté : sens inconnu |
+| 157 | Deux ports OUT reliés |
+| 158 | Deux ports IN reliés |
 
 ## js/28-index-types.js
 

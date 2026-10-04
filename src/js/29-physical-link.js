@@ -85,7 +85,7 @@ function capRenderPhysLink(){
   /** Ligne des Component Exchanges alloués au lien (ou alerte s'il n'y en a aucun). */
   function ceLine(l){
     return l.ces.length
-      ? `<div style="font-size:11.5px;color:var(--c-dim);text-align:center;max-width:100%" title="Component Exchanges alloués">⇢ ${l.ces.map(c=>capDetLink(c.id,c.name)).join(', ')}</div>`
+      ? `<div style="font-size:11.5px;color:var(--c-dim);text-align:center;max-width:100%" title="Component Exchanges alloués">⇢ ${capFoldList(l.ces.map(c=>capDetLink(c.id,c.name)))}</div>`
       : `<div style="font-size:11.5px;color:var(--c-warn,#e3b341)" title="Aucun Component Exchange alloué à ce lien">∅ CE</div>`;
   }
   /** Rapport de contrôles : liens sans CE, ports physiques orphelins ou sans ComponentPort, CE PA non alloués. */

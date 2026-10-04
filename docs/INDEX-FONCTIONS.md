@@ -307,21 +307,22 @@
 - `capReportClean` (l. 33) — Nettoie un fragment HTML de l'application pour un fichier autonome : retire les appels au panneau de détail
 - `capHtmlReport` (l. 44) — Construit et télécharge un rapport HTML autonome à onglets.
 
-## 27-interfaces-calculs.js — 313 lignes
+## 27-interfaces-calculs.js — 325 lignes
 
 - `capArchLayerOf` (l. 8) — Couche ARCADIA d'un élément XML, déduite de l'architecture qui le contient.
 - `capBuildIdMap` (l. 17) — Index id → élément XML, sur l'attribut plain « id » ET xmi:id (namespacé).
 - `capCsvDownload` (l. 31) — Télécharge un CSV (séparateur « ; », BOM UTF-8 pour Excel).
 - `capMatrixBuild` (l. 44) — Construit une matrice composant × composant (N² des interfaces).
-- `capDiagHtml` (l. 80) — Rend un rapport de contrôles : sections repliables avec compteur et niveau (ok / avertissement).
-- `capDetLink` (l. 97) — Lien HTML cliquable ouvrant le panneau de détail d'un élément Capella.
-- `CAP_PORT_ORIENTS` (l. 103) — Valeurs de l'attribut orientation d'un ComponentPort (OrientationPortKind).
-- `CAP_ORIENT_STYLE` (l. 105) — Style d'affichage de chaque orientation de port (couleur, libellé, info-bulle).
-- `CAP_CEX_DIRS` (l. 112) — Libellés des sens effectifs d'un Component Exchange.
-- `capNormOrient` (l. 123) — Normalise l'orientation d'un port Capella : attribut absent (valeur par défaut EMF) → 'UNSET'.
-- `capCexDirection` (l. 137) — Déduit le sens effectif d'un Component Exchange à partir des orientations de ses deux ports.
-- `capComputeCompExchanges` (l. 156) — Calcule les Component Exchanges : pour chaque ComponentExchange, résout source/target
-- `capComputePhysLinks` (l. 243) — Calcule les Physical Links du modèle : pour chaque PhysicalLink, résout les deux
+- `capFoldList` (l. 81) — Liste repliable d'éléments HTML séparés par des virgules : au-delà de `max`, le reste est masqué derrière « +N autres » (clic pour déplier /
+- `capDiagHtml` (l. 92) — Rend un rapport de contrôles : sections repliables avec compteur et niveau (ok / avertissement).
+- `capDetLink` (l. 109) — Lien HTML cliquable ouvrant le panneau de détail d'un élément Capella.
+- `CAP_PORT_ORIENTS` (l. 115) — Valeurs de l'attribut orientation d'un ComponentPort (OrientationPortKind).
+- `CAP_ORIENT_STYLE` (l. 117) — Style d'affichage de chaque orientation de port (couleur, libellé, info-bulle).
+- `CAP_CEX_DIRS` (l. 124) — Libellés des sens effectifs d'un Component Exchange.
+- `capNormOrient` (l. 135) — Normalise l'orientation d'un port Capella : attribut absent (valeur par défaut EMF) → 'UNSET'.
+- `capCexDirection` (l. 149) — Déduit le sens effectif d'un Component Exchange à partir des orientations de ses deux ports.
+- `capComputeCompExchanges` (l. 168) — Calcule les Component Exchanges : pour chaque ComponentExchange, résout source/target
+- `capComputePhysLinks` (l. 255) — Calcule les Physical Links du modèle : pour chaque PhysicalLink, résout les deux
 
 ## 28-index-types.js — 113 lignes
 

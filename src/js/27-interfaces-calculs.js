@@ -73,6 +73,18 @@ function capMatrixBuild(links, opts){
   return {html:h, cells};
 }
 
+/** Liste repliable d'éléments HTML séparés par des virgules : au-delà de `max`, le reste est masqué derrière « +N autres » (clic pour déplier / replier).
+ * @param {string[]} items - Fragments HTML (liens cliquables)
+ * @param {number} [max=4] - Nombre d'éléments affichés replié
+ * @returns {string} HTML de la liste
+ */
+function capFoldList(items, max){
+  max=max||4;
+  if(items.length<=max+1) return items.join(', ');
+  const rest=items.length-max;
+  return `${items.slice(0,max).join(', ')}<span class="cap-fold-more" style="display:none">, ${items.slice(max).join(', ')}</span> <span class="cap-fold-btn" data-n="${rest}" title="Afficher / masquer les ${rest} autres" onclick="event.stopPropagation();const m=this.previousElementSibling,o=m.style.display==='none';m.style.display=o?'':'none';this.textContent=o?'▴ réduire':'+'+this.dataset.n+' autres';">+${rest} autres</span>`;
+}
+
 /** Rend un rapport de contrôles : sections repliables avec compteur et niveau (ok / avertissement).
  * @param {object[]} sections - [{icon, title, tip, items:string[] (HTML), cols?:string[]}]
  * @returns {string} HTML du rapport

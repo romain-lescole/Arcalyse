@@ -86,9 +86,9 @@ function capRenderCompExchange(){
   /** Ligne d'informations secondaires : FE alloués, Exchange Items, Physical Links porteurs. */
   function infoLine(l){
     const parts=[];
-    if(l.fes.length) parts.push(`<span title="Functional Exchanges alloués">ƒ ${l.fes.map(f=>detLink(f.id,f.name)).join(', ')}</span>`);
-    if(l.items.length) parts.push(`<span title="Exchange Items transportés">▤ ${l.items.map(i=>detLink(i.id,i.name)).join(', ')}</span>`);
-    if(l.pls.length) parts.push(`<span title="Physical Links porteurs">🔌 ${l.pls.map(pl=>detLink(pl.id,pl.name)).join(', ')}</span>`);
+    if(l.fes.length) parts.push(`<span title="Functional Exchanges alloués">ƒ ${capFoldList(l.fes.map(f=>detLink(f.id,f.name)))}</span>`);
+    if(l.items.length) parts.push(`<span title="Exchange Items transportés">▤ ${capFoldList(l.items.map(i=>detLink(i.id,i.name)))}</span>`);
+    if(l.pls.length) parts.push(`<span title="Physical Links porteurs">🔌 ${capFoldList(l.pls.map(pl=>detLink(pl.id,pl.name)))}</span>`);
     if(!l.fes.length) parts.push(`<span title="Aucun Functional Exchange alloué à cet exchange" style="color:var(--c-warn,#e3b341)">∅ FE</span>`);
     return parts.length?`<div style="font-size:11.5px;color:var(--c-dim);display:flex;flex-wrap:wrap;gap:2px 10px;justify-content:center;max-width:100%;">${parts.join('')}</div>`:'';
   }
