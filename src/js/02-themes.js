@@ -7,7 +7,7 @@ const THEMES = {
   dark: {
     css: {'--c-bg':'#1e1e2e','--c-bg2':'#181825','--c-bg3':'#313244',
           '--c-bg4':'#252536','--c-border':'#45475a','--c-text':'#cdd6f4',
-          '--c-dim':'#7f849c','--c-accent':'#89b4fa','--c-ctx':'#f9e2af',
+          '--c-dim':'#ebeeff','--c-accent':'#89b4fa','--c-ctx':'#f9e2af',
           '--c-node-bg':'#2a2a3d','--c-node-txt':'#cdd6f4',
           '--c-node-hdr':'rgba(0,0,0,.65)','--c-shadow':'rgba(0,0,0,.5)'},
   },
