@@ -79,14 +79,14 @@ function capRenderPhysLink(){
    */
   /** Badge du nombre de ComponentPorts alloués à un port physique (info-bulle : détail). */
   function cpBadge(e){
-    if(!e.cps.length) return `<span title="Aucun ComponentPort alloué à ce port physique" style="font-size:8px;padding:1px 4px;border-radius:3px;border:1px dashed var(--c-border);color:var(--c-dim);margin-left:4px;opacity:.7">0 CP</span>`;
-    return `<span title="${capEsc('ComponentPorts alloués :\n'+e.cps.map(c=>`${c.compName} ⬦ ${c.name} (${c.orient})`).join('\n'))}" style="font-size:8px;font-weight:700;padding:1px 4px;border-radius:3px;border:1px solid var(--c-accent);color:var(--c-accent);margin-left:4px;cursor:help">${e.cps.length} CP</span>`;
+    if(!e.cps.length) return `<span title="Aucun ComponentPort alloué à ce port physique" style="font-size:10px;padding:1px 4px;border-radius:3px;border:1px dashed var(--c-border);color:var(--c-dim);margin-left:4px;opacity:.7">0 CP</span>`;
+    return `<span title="${capEsc('ComponentPorts alloués :\n'+e.cps.map(c=>`${c.compName} ⬦ ${c.name} (${c.orient})`).join('\n'))}" style="font-size:10px;font-weight:700;padding:1px 4px;border-radius:3px;border:1px solid var(--c-accent);color:var(--c-accent);margin-left:4px;cursor:help">${e.cps.length} CP</span>`;
   }
   /** Ligne des Component Exchanges alloués au lien (ou alerte s'il n'y en a aucun). */
   function ceLine(l){
     return l.ces.length
-      ? `<div style="font-size:9.5px;color:var(--c-dim);text-align:center;max-width:100%" title="Component Exchanges alloués">⇢ ${l.ces.map(c=>capDetLink(c.id,c.name)).join(', ')}</div>`
-      : `<div style="font-size:9.5px;color:var(--c-warn,#e3b341)" title="Aucun Component Exchange alloué à ce lien">∅ CE</div>`;
+      ? `<div style="font-size:11.5px;color:var(--c-dim);text-align:center;max-width:100%" title="Component Exchanges alloués">⇢ ${l.ces.map(c=>capDetLink(c.id,c.name)).join(', ')}</div>`
+      : `<div style="font-size:11.5px;color:var(--c-warn,#e3b341)" title="Aucun Component Exchange alloué à ce lien">∅ CE</div>`;
   }
   /** Rapport de contrôles : liens sans CE, ports physiques orphelins ou sans ComponentPort, CE PA non alloués. */
   function buildDiag(filtered){
@@ -116,18 +116,18 @@ function capRenderPhysLink(){
         const lc=linkColorMap[l.linkName]||{bg:'#8b949e',fg:'#fff'};
         const num=linkNumMap[l.linkId]||'';
         return`<div class="phl-line">
-          <div class="phl-cell phl-cell-pc">
-            ${capDetLink(l.src.pcId,l.src.pcName,'color:'+sc).replace('class="cex-det"','class="cex-det phl-pc-name"')}
+          <div class="phl-cell phl-cell-pc" style="--phl-c:${sc}">
+            ${capDetLink(l.src.pcId,l.src.pcName,'color:'+capTextOn(sc)).replace('class="cex-det"','class="cex-det phl-pc-name"')}
             <span class="phl-port-name">⬦ ${capDetLink(l.src.portId,l.src.portName)}${cpBadge(l.src)}</span>
           </div>
           <div class="phl-cell phl-cell-link" style="padding:6px 14px;gap:2px;">
-            <span style="font-size:10px;color:var(--c-dim);font-family:monospace;">#${num}</span>
+            <span style="font-size:11.5px;color:var(--c-dim);font-family:monospace;">#${num}</span>
             <span class="phl-link-badge" style="background:${lc.bg};color:${lc.fg};border-color:${lc.bg};cursor:pointer" onclick="capOpenDetailById('${capEsc(l.linkId)}')">${capEsc(l.linkName)}</span>
             <span style="font-size:13px;color:var(--c-dim);font-weight:600;">↔</span>
             ${ceLine(l)}
           </div>
-          <div class="phl-cell phl-cell-pc" style="align-items:flex-end">
-            ${capDetLink(l.tgt.pcId,l.tgt.pcName,'color:'+tc).replace('class="cex-det"','class="cex-det phl-pc-name"')}
+          <div class="phl-cell phl-cell-pc phl-cell-r" style="--phl-c:${tc}">
+            ${capDetLink(l.tgt.pcId,l.tgt.pcName,'color:'+capTextOn(tc)).replace('class="cex-det"','class="cex-det phl-pc-name"')}
             <span class="phl-port-name">⬦ ${capDetLink(l.tgt.portId,l.tgt.portName)}${cpBadge(l.tgt)}</span>
           </div>
         </div>`;
@@ -155,7 +155,7 @@ function capRenderPhysLink(){
             <span class="phl-lr-arrow">↔</span>
             <span class="phl-lr-port-tgt">⬦ ${capEsc(lk.portTgt)}</span>
             ${capDetLink(lk.pcTgtId,lk.pcTgt,'color:'+tc).replace('class="cex-det"','class="cex-det phl-lr-comp-tgt"')}
-            <span style="font-size:9.5px;color:${lk.l.ces.length?'var(--c-dim)':'#e3b341'};margin-left:6px" title="Component Exchanges alloués">${lk.l.ces.length?'⇢ '+lk.l.ces.length+' CE':'∅ CE'}</span>
+            <span style="font-size:11.5px;color:${lk.l.ces.length?'var(--c-dim)':'#e3b341'};margin-left:6px" title="Component Exchanges alloués">${lk.l.ces.length?'⇢ '+lk.l.ces.length+' CE':'∅ CE'}</span>
           </div>`;
         }).join('');
         return`<div class="phl-comp-card">
