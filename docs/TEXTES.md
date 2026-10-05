@@ -2491,9 +2491,9 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 344 | 📋 Voir le delta en attente ( |
 | 344 | enreg., |
 | 344 | diff.) ✔ Mettre à jour l'affichage |
-| 347 | Vérification automatique toutes les |
+| 347 | Détecter les nouvelles versions toutes les |
 | 347 | Disponible quand un fichier .capella est suivi |
-| 349 | Vérifier au retour dans la fenêtre La mise à jour n'est jamais appliquée sans votre validation. |
+| 349 | Vérifier au retour dans la fenêtre Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée. |
 | 352 | 🕘 Historique des mises à jour ( |
 | 353 | ⚖ Comparer avec la version avant la dernière mise à jour |
 | 354 | ⚖ Comparer avec la version d'ouverture |

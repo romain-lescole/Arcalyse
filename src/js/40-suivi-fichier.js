@@ -344,10 +344,10 @@ function capWatchMenuRender(){
     ${p?`<div class="ctx-i" data-wm="delta">📋 Voir le delta en attente (${p.versions.length} enreg., ${p.counts.total} diff.)</div>
       <div class="ctx-i" data-wm="apply">✔ Mettre à jour l'affichage</div>`:''}
     <div class="cw-m-sep"></div>
-    <label class="cw-m-opt" title="${src?'':'Disponible quand un fichier .capella est suivi'}"><input type="checkbox" data-wm="auto"${w.auto?' checked':''}${src?'':' disabled'}> Vérification automatique toutes les
+    <label class="cw-m-opt" title="${src?'':'Disponible quand un fichier .capella est suivi'}"><input type="checkbox" data-wm="auto"${w.auto?' checked':''}${src?'':' disabled'}> Détecter les nouvelles versions toutes les
       <select data-wm="period">${per.map(([v,l])=>`<option value="${v}"${w.period===v?' selected':''}>${l}</option>`).join('')}</select></label>
     <label class="cw-m-opt"><input type="checkbox" data-wm="focus"${w.onFocus?' checked':''}${src?'':' disabled'}> Vérifier au retour dans la fenêtre</label>
-    <div class="cw-m-hint">La mise à jour n'est jamais appliquée sans votre validation.</div>
+    <div class="cw-m-hint">Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée.</div>
     <div class="cw-m-sep"></div>
     <div class="ctx-i${w.history.length?'':' cw-off'}" data-wm="hist">🕘 Historique des mises à jour (${w.history.length})</div>
     <div class="ctx-i${w.prevDoc?'':' cw-off'}" data-wm="last">⚖ Comparer avec la version avant la dernière mise à jour</div>
