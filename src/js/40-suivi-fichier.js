@@ -13,7 +13,7 @@ const _capWatch={
   handle:null, file:null, name:'',              // source suivie (accès direct ou simple fichier)
   shownHash:'', shownMtime:0, shownAt:0, shownIdx:null, // version affichée
   diskMtime:0, diskSize:-1, diskHash:'',        // dernier état vu sur le disque
-  auto:true, period:30, onFocus:true, timer:null, busy:false,
+  auto:false, period:30, onFocus:true, timer:null, busy:false,
   state:'',                                     // '' | 'stale' (modifié, relecture impossible) | 'missing' | 'denied' | 'writing'
   lastCheck:0,
   pending:null,                                 // version en attente de validation
