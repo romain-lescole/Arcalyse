@@ -975,6 +975,38 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
 .cw-d-tl tr.cw-d-v:hover{background:var(--c-bg3);}
 .cw-d-tl tr.cw-d-v.sel{background:color-mix(in srgb,var(--c-accent) 18%,transparent);}
 .cw-d-apply{font-weight:700;}
+
+/* ── ☰ Barre des vues Capella (menus, épingles, Ctrl+K) ── */
+.cap-nav-grp{display:flex;align-items:center;gap:2px;padding-right:3px;}
+.cap-nav-arr{padding:0 3px;margin-left:2px;border-left:1px solid var(--c-border);opacity:.75;}
+.cap-nav-arr:hover{opacity:1;color:var(--c-accent,var(--c-text));}
+#cap-nav-cfg{padding-left:9px;padding-right:9px;}
+#cap-nav-dd{position:fixed;z-index:2500;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;min-width:260px;max-width:360px;
+  max-height:calc(100vh - 80px);overflow:auto;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;font-size:12px;}
+#cap-nav-q{display:block;width:calc(100% - 16px);margin:4px 8px 6px;padding:5px 8px;box-sizing:border-box;background:var(--c-bg3);color:var(--c-text);
+  border:1px solid var(--c-border);border-radius:4px;font-size:12px;outline:none;}
+#cap-nav-q:focus{border-color:var(--c-accent,var(--c-border));}
+.cap-nav-it{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.cap-nav-it.cur{font-weight:700;}
+.cap-nav-it.cur>span:first-child::before{content:'● ';color:var(--c-accent,var(--c-text));}
+.cap-nav-it.hl{background:var(--c-bg3);}
+.cap-nav-g{color:var(--c-dim);font-size:10.5px;}
+.cap-nav-pin{opacity:.25;filter:grayscale(1);padding:0 2px;cursor:pointer;}
+.cap-nav-pin:hover{opacity:.7;}
+.cap-nav-pin.on{opacity:1;filter:none;}
+.cap-nav-h{display:flex;align-items:center;gap:6px;padding:7px 13px 3px;color:var(--c-dim);font-size:11px;font-weight:700;border-top:1px solid var(--c-border);margin-top:3px;cursor:pointer;}
+.cap-nav-h:first-child{border-top:none;margin-top:0;}
+.cap-nav-hint{padding:4px 13px;color:var(--c-dim);font-size:10.5px;font-style:italic;}
+/* ── 🔬 Tableaux des analyses : ligne de filtres, largeur des colonnes ── */
+.cap-tf-row th{padding:2px 4px!important;background:var(--c-bg2)!important;text-transform:none!important;}
+.cap-tf-row input{width:100%;min-width:36px;box-sizing:border-box;padding:2px 5px;font-size:11px;font-weight:400;background:var(--c-bg3);color:var(--c-text);border:1px solid var(--c-border);border-radius:3px;outline:none;}
+.cap-tf-row input.on{border-color:var(--c-accent);}
+.cap-tf-rz{position:absolute;top:0;right:-3px;width:7px;height:100%;cursor:col-resize;z-index:2;user-select:none;}
+.cap-tf-rz:hover,.cap-tf-rz.drag{background:var(--c-accent);opacity:.45;}
+table.cap-tf-fixed{table-layout:fixed;}
+table.cap-tf-fixed td,table.cap-tf-fixed th{overflow-wrap:anywhere;}
+.cap-tf-cnt{font-size:11px;color:var(--c-dim);margin:4px 0 2px;}
+.cap-tf-clr{margin-left:8px;cursor:pointer;color:var(--c-accent);}
 </style>
 </head>
 <body>
@@ -985,29 +1017,23 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
   <div class="tbtn"        id="mode-pbs"   title="PBS" style="display:none">🌲 PBS</div>
   <div class="tbtn"        id="mode-table" title="Table View">📊 Table View</div>
   <!-- Vues Capella : au même niveau que Relation Map / Table View, toujours visibles (clic = bascule en mode capella) -->
-  <div id="cap-tb-views" style="display:flex;align-items:center;gap:3px;">
-    <div class="tbtn" id="cap-v-elements" title="Explorer le modèle : arborescence, cartes, tableau, index des types">🧭 Explorateur</div>
-    <div class="tbtn" id="cap-v-links">🔗 Liens</div>
-    <div class="tbtn" id="cap-v-chains">⚡ Chaînes</div>
-    <div class="tbtn" id="cap-v-physlink">🔌 Physical Link</div>
-    <div class="tbtn" id="cap-v-compex">🔀 Component Exchange</div>
-    <div class="tbtn" id="cap-v-ports" title="Traçabilité Function Port ↔ Component Port ↔ Physical Port">🧩 Ports</div>
-    <div class="tbtn" id="cap-v-functions" title="Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier">ƒ Fonctions</div>
-    <div class="tbtn" id="cap-v-analyses" title="Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions">🔬 Analyses</div>
-    <div class="tbtn" id="cap-v-dashboard" title="Tableaux de bord personnalisés : indicateurs, graphiques, tableaux">📐 Tableau de bord</div>
-  </div>
+  <!-- Boutons générés par capNavRender (41-barre-vues.js) : menus 🧭 Explorateur / 📡 Flux & interfaces / 🔬 Analyses, vues épinglées, ☰ -->
+  <div id="cap-tb-views" style="display:flex;align-items:center;gap:3px;"></div>
   <!-- Spacer : tout ce qui suit est poussé à droite -->
   <div id="tb-spacer"></div>
   <div class="tbtn" id="b-ref" style="display:none">↺ Reset</div>
   <div class="tsep"></div>
-  <div class="tbtn" id="b-capella-load" title="Charger un fichier Capella">🔷 CAPELLA</div>
+  <!-- 📁 Fichier ▾ : ouvrir un modèle, enregistrer, enregistrer sous, télécharger la page (menu rempli par capNavMenuFill) -->
+  <div class="tbtn" id="b-file-menu" data-dd="file" title="Ouvrir un modèle Capella, enregistrer la page">📁 Fichier ▾</div>
+  <div class="tbtn" id="b-save-direct" title="Enregistrer la page (avec le modèle chargé) directement dans un fichier HTML, sans passer par les téléchargements (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous">💾</div>
+  <!-- Commandes conservées pour le code existant, accessibles par le menu 📁 Fichier -->
+  <div class="tbtn" id="b-capella-load" title="Charger un fichier Capella" style="display:none">🔷 CAPELLA</div>
+  <div class="tbtn" id="b-save-page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome" style="display:none">💾 Page HTML</div>
   <!-- 🔄 Suivi du fichier .capella (mises à jour, delta, historique) — visible quand un modèle est chargé -->
   <div style="position:relative;display:none" id="b-cap-watch">
     <div class="tbtn" id="b-cap-watch-main">🔄 Suivi<span id="b-cap-watch-badge" class="cw-badge" style="display:none"></span> ▾</div>
     <div id="cap-watch-dd" style="display:none"></div>
   </div>
-  <div class="tbtn" id="b-save-direct" title="Enregistrer la page (avec le modèle chargé) directement dans un fichier HTML, sans passer par les téléchargements (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous">💾 Enregistrer</div>
-  <div class="tbtn" id="b-save-page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome">💾 Page HTML</div>
   <!-- Éditer/Sauver/Charger → dropdown -->
   <div style="position:relative;display:none" id="b-edit-wrap"><!-- menu Éditer retiré de l'interface (version Capella) -->
     <div class="tbtn" id="b-edit-menu" title="Éditer / Sauver / Charger">✏ Éditer ▾</div>
@@ -1019,21 +1045,9 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
       <div class="ctx-i" id="b-load">📂 Charger un fichier</div>
     </div>
   </div>
-  <!-- PNG/JPEG/SVG → dropdown -->
-  <div style="position:relative;" id="b-exp-wrap">
-    <div class="tbtn" id="b-exp-menu" title="Exporter image">🖼 Export ▾</div>
-    <div id="b-exp-dd" style="display:none;position:absolute;top:calc(100% + 4px);right:0;z-index:500;
-         background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;
-         min-width:140px;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;">
-      <div class="ctx-i" id="b-expng">🖼 PNG</div>
-      <div class="ctx-i" id="b-expjpg">📷 JPEG</div>
-      <div class="ctx-i" id="b-exsvg">📐 SVG</div>
-    </div>
-  </div>
-  <div class="tsep"></div>
-  <!-- Sélecteur de thème -->
-  <span style="font-size:11px;color:var(--c-dim)">Thème :</span>
-  <select id="theme-sel" title="Changer le thème">
+  <!-- 🎨 Thème ▾ : liste des thèmes + personnalisation (le sélecteur caché reste la référence du thème choisi) -->
+  <div class="tbtn" id="b-theme-menu" data-dd="theme" title="Changer le thème, créer ou modifier un thème personnalisé">🎨 Thème ▾</div>
+  <select id="theme-sel" title="Changer le thème" style="display:none">
     <option value="dark">🌙 Sombre</option>
     <option value="light">☀️ Clair</option>
     <option value="blue">🌊 Marine</option>
@@ -1041,8 +1055,7 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
     <option value="office2007">🗂 Office 2007</option>
     <option value="contrast">⚡ Contraste</option>
   </select>
-  <div class="tbtn" id="b-theme-edit" title="Créer ou modifier un thème personnalisé (toutes les couleurs)">🎨</div>
-  <div class="tsep"></div>
+  <div class="tbtn" id="b-theme-edit" title="Créer ou modifier un thème personnalisé (toutes les couleurs)" style="display:none">🎨</div>
   <div class="tbtn" id="b-help" title="Aide">? Aide</div>
 </div>
 <!-- Toolbar niveau 2 : commandes propres à la Relation Map -->
@@ -1060,6 +1073,18 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
   <div class="tbtn" id="b-cut" title="Couper les noms longs">✂ Noms</div>
   <div class="tbtn" id="b-single" style="display:none">⊙ Unique</div>
   <div class="tbtn" id="b-compact">⬡ Compact</div>
+  <div class="tsep"></div>
+  <!-- PNG/JPEG/SVG → dropdown (Relation Map uniquement) -->
+  <div style="position:relative;" id="b-exp-wrap">
+    <div class="tbtn" id="b-exp-menu" title="Exporter image">🖼 Export ▾</div>
+    <div id="b-exp-dd" style="display:none;position:absolute;top:calc(100% + 4px);left:0;z-index:500;
+         background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;
+         min-width:140px;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;">
+      <div class="ctx-i" id="b-expng">🖼 PNG</div>
+      <div class="ctx-i" id="b-expjpg">📷 JPEG</div>
+      <div class="ctx-i" id="b-exsvg">📐 SVG</div>
+    </div>
+  </div>
 </div>
 
 <!-- ════════════════════════  MAIN  ════════════════════════ -->
@@ -1342,6 +1367,8 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
         <button class="cap-lf-btn" data-ev="index">📖 Index des types</button>
       </span>
     </div>
+    <!-- Onglets du menu 📡 Flux & interfaces : vues du menu non épinglées (remplis par capNavFluxTabs) -->
+    <div id="cap-flux-tabs" class="cap-lf-bar" style="display:none;gap:6px;padding:6px 12px;border-bottom:1px solid var(--c-border);flex-shrink:0;"></div>
     <!-- Sub-toolbar: stats + filters + search + expand/json — always in content area -->
     <div id="cap-sub-toolbar" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:6px 12px;border-bottom:1px solid var(--c-border);background:var(--c-bg2);flex-shrink:0;">
       <!-- Stats chips -->
@@ -1487,7 +1514,7 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
         <p class="hp-lead">Application autonome (un seul fichier HTML) pour <b>explorer, analyser, contrôler et exporter</b> un modèle Capella / ARCADIA sans ouvrir Capella. Le fichier <code>.capella</code> est lu localement dans le navigateur : <b>aucune donnée n'est envoyée</b>.</p>
         <h3>Ouvrir un modèle</h3>
         <ol>
-          <li>Glissez-déposez un fichier <code>.capella</code> <b>n'importe où dans la fenêtre</b>, ou cliquez <b>📂 Parcourir…</b> sur l'écran d'accueil (ou <b>🔷 CAPELLA</b> dans la barre).</li>
+          <li>Glissez-déposez un fichier <code>.capella</code> <b>n'importe où dans la fenêtre</b>, ou cliquez <b>📂 Parcourir…</b> sur l'écran d'accueil (ou <b>📁 Fichier › 🔷 Ouvrir un modèle Capella</b>).</li>
           <li>Le modèle est analysé puis la vue <b>🧭 Explorateur › ▦ Cartes</b> s'ouvre automatiquement.</li>
           <li>Pour changer de modèle, redéposez simplement un autre fichier.</li>
         </ol>
@@ -1510,13 +1537,13 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
         <h3>Niveau 1 — toujours visible</h3>
         <table class="hp-t">
           <tr><td>🗺 · 📊</td><td>Modes Relation Map et Table View.</td></tr>
-          <tr><td>🧭 🔗 ⚡ 🔌 🔀 🧩 ƒ 🔬 📐</td><td>Vues Capella, au même niveau que les modes et toujours visibles (sans modèle chargé, elles invitent à en charger un). Un clic bascule directement sur la vue correspondante, depuis n'importe quel mode.</td></tr>
-          <tr><td>🔷 CAPELLA</td><td>Ouvre un fichier <code>.capella</code>.</td></tr>
-          <tr><td>💾 Enregistrer</td><td>Enregistrement direct dans un fichier HTML (Ctrl+S ; Maj+clic ou Ctrl+Maj+S : enregistrer sous).</td></tr>
-          <tr><td>💾 Page HTML</td><td>Téléchargement de la page autonome avec le modèle embarqué.</td></tr>
-          <tr><td>🖼 Export ▾</td><td>Image du graphe Relation Map : PNG, JPEG ou SVG.</td></tr>
-          <tr><td>Thème</td><td>Sombre (par défaut), Office 2007, Clair, Marine, Nature, Contraste. Les vues se redessinent avec des couleurs adaptées ; en thème clair (Office 2007, Clair ou personnalisé clair), les textes colorés sont automatiquement foncés pour rester lisibles.</td></tr>
-          <tr><td>🎨</td><td>Thème personnalisé : toutes les couleurs (fonds, textes, accent, bordures, statuts, Relation Map, couches ARCADIA), aperçu en direct, « Partir de » un thème existant, contraste du texte affiché, ⬇ / ⬆ JSON. Il apparaît ensuite comme « 🎨 Personnalisé » dans la liste et est conservé dans la page enregistrée.</td></tr>
+          <tr><td>🧭 ▾ · 📡 ▾ · ⚡ · ƒ · 🔬 ▾ · 📐 · ☰</td><td>Vues Capella, au même niveau que les modes et toujours visibles (sans modèle chargé, elles invitent à en charger un) : menus ▾ et vues épinglées, réglables par ☰ (voir l'onglet Vues Capella). Un clic bascule directement sur la vue correspondante, depuis n'importe quel mode.</td></tr>
+          <tr><td>📁 Fichier ▾</td><td>🔷 Ouvrir un modèle Capella (<code>.capella</code>) ; 💾 Enregistrer (Ctrl+S) et Enregistrer sous… (Ctrl+Maj+S) : enregistrement direct dans un fichier HTML ; 🌐 Télécharger la page HTML : page autonome avec le modèle embarqué.</td></tr>
+          <tr><td>💾</td><td>Enregistrement direct (Ctrl+S ; Maj+clic ou Ctrl+Maj+S : enregistrer sous).</td></tr>
+          <tr><td>🔄 Suivi ▾</td><td>Nouvelles versions du fichier .capella (voir plus bas).</td></tr>
+          <tr><td>🎨 Thème ▾</td><td>Sombre (par défaut), Office 2007, Clair, Marine, Nature, Contraste. Les vues se redessinent avec des couleurs adaptées ; en thème clair (Office 2007, Clair ou personnalisé clair), les textes colorés sont automatiquement foncés pour rester lisibles.</td></tr>
+          <tr><td>🎨 Thème › Personnaliser…</td><td>Thème personnalisé : toutes les couleurs (fonds, textes, accent, bordures, statuts, Relation Map, couches ARCADIA), aperçu en direct, « Partir de » un thème existant, contraste du texte affiché, ⬇ / ⬆ JSON. Il apparaît ensuite comme « 🎨 Personnalisé » dans la liste et est conservé dans la page enregistrée.</td></tr>
+          <tr><td>🖼 Export ▾</td><td>Image du graphe Relation Map : PNG, JPEG ou SVG (2e barre de la Relation Map).</td></tr>
           <tr><td>? Aide</td><td>Cette documentation (aussi accessible depuis l'écran d'accueil).</td></tr>
         </table>
         <h3>Niveau 2 — commandes de la Relation Map</h3>
@@ -1535,6 +1562,7 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
         <table class="hp-t">
           <tr><td>Ctrl + / Ctrl −</td><td>Zoom avant / arrière (aussi Ctrl + molette).</td></tr>
           <tr><td>Ctrl W</td><td>Ajuster la vue.</td></tr>
+          <tr><td>Ctrl K</td><td>Aller à une vue : recherche par nom dans le menu ☰ (Entrée pour ouvrir).</td></tr>
           <tr><td>Échap</td><td>Ferme la fenêtre ou le menu ouvert.</td></tr>
           <tr><td>Ctrl/Cmd + clic, Maj + clic</td><td>Sélection multiple dans l'arborescence.</td></tr>
           <tr><td>Ctrl V</td><td>Colle une liste (texte ou Excel) sous l'élément sélectionné de l'arborescence.</td></tr>
@@ -1589,6 +1617,12 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
       <!-- ── CAPELLA DATA ── -->
       <div id="ht-cap" class="ht-panel" style="display:none">
         <h2>🔷 Vues Capella</h2>
+        <h3>Barre des vues (en haut)</h3>
+        <table class="hp-t">
+          <tr><td>Menus ▾</td><td><b>🧭 Explorateur</b> (Arborescence, Cartes, Tableau, Index des types, 🔗 Liens), <b>📡 Flux & interfaces</b> (⚡ Chaînes, 🔀 Component Exchange, 🔌 Physical Link, 🧩 Ports), <b>🔬 Analyses</b> (toutes les sous-vues). Un clic sur le nom rouvre la dernière vue du menu ; la flèche ▾ affiche la liste.</td></tr>
+          <tr><td>📌 Épingler</td><td>Dans un menu, 📌 place la vue en bouton direct dans la barre (par défaut : ⚡ Chaînes, ƒ Fonctions, 📐 Tableau de bord) ; un second clic la retire.</td></tr>
+          <tr><td>☰ (Ctrl K)</td><td>Toutes les vues : recherche (taper puis Entrée, flèches ↑ ↓), cases pour afficher ou masquer chaque menu, épingles, ↺ Rétablir la barre par défaut. Une vue masquée reste accessible ici. Le réglage est enregistré avec la 💾 Page HTML.</td></tr>
+        </table>
         <table class="hp-t">
           <tr><td>🧭 Explorateur</td><td>Quatre onglets : 🌳 Arborescence, ▦ Cartes, 📋 Tableau et 📖 Index des types (détaillés ci-dessous) ; le menu rouvre le dernier onglet utilisé. La barre latérale des types n'est affichée que dans l'Explorateur.</td></tr>
           <tr><td>🧭 Explorateur › 🌳 Arborescence</td><td>Arbre complet du modèle ; déplier / replier.</td></tr>
@@ -1660,6 +1694,7 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
       <div id="ht-ana" class="ht-panel" style="display:none">
         <h2>ƒ Fonctions et 🔬 Analyses</h2>
         <p class="hp-note">Les résultats sont gardés en mémoire ; <b>↻ Recalculer</b> les rafraîchit. Les contrôles ne sont calculés qu'à l'ouverture de l'onglet 🩺 Contrôles.</p>
+        <p class="hp-note"><b>Tableaux</b> : sous chaque en-tête, un champ <b>Filtrer…</b> par colonne (plusieurs mots : tous requis ; <code>!mot</code> : exclure) ; le nombre de lignes affichées s'affiche au-dessus, avec ✕ effacer. Glisser le bord droit d'un en-tête règle la largeur de la colonne (double-clic : largeur automatique). Filtres et largeurs sont conservés quand la vue se redessine.</p>
         <p class="hp-lead">Analyses transverses calculées à partir de ce que contient le modèle ouvert : une rubrique absente du modèle (pas de machine à états, pas de capacités…) est simplement signalée comme vide, et les contrôles ne portent que sur les pratiques réellement utilisées.</p>
         <h3>ƒ Fonctions (menu principal)</h3>
         <p>Activités OA et fonctions SA / LA / PA, couche par couche, avec leurs <b>descriptions mises en avant</b>.</p>
@@ -1696,13 +1731,13 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
           <tr><td>🩺 Contrôles</td><td>Régions sans état initial, états inatteignables, états sans issue, transitions sans déclencheur ni garde, fonctions jamais disponibles.</td></tr>
         </table>
         <h3>🔄 Suivi du fichier .capella (mises à jour)</h3>
-        <p>Le bouton <b>🔄 Suivi</b> (à côté de 🔷 CAPELLA) détecte qu'une nouvelle version du fichier chargé a été enregistrée (par Capella) et propose de mettre à jour l'affichage. <b>Rien n'est appliqué sans votre validation.</b></p>
+        <p>Le bouton <b>🔄 Suivi</b> (à côté de 📁 Fichier) détecte qu'une nouvelle version du fichier chargé a été enregistrée (par Capella) et propose de mettre à jour l'affichage. <b>Rien n'est appliqué sans votre validation.</b></p>
         <table class="hp-t">
-          <tr><td>Détection</td><td>Automatique (toutes les 10 s, 30 s, 1 min ou 5 min, et au retour dans la fenêtre) ou manuelle (🔍 Vérifier maintenant). Une notification affiche le nombre d'éléments ➕ ajoutés, ➖ supprimés, ✎ modifiés, ↪ déplacés ; le badge du bouton indique le nombre d'enregistrements en attente.</td></tr>
+          <tr><td>Détection</td><td>Automatique, à cocher dans le menu 🔄 Suivi (désactivée par défaut ; toutes les 10 s, 30 s, 1 min ou 5 min), au retour dans la fenêtre ou manuelle (🔍 Vérifier maintenant). Une notification affiche le nombre d'éléments ➕ ajoutés, ➖ supprimés, ✎ modifiés, ↪ déplacés ; le badge du bouton indique le nombre d'enregistrements en attente.</td></tr>
           <tr><td>Delta</td><td>🔍 Voir le delta : liste filtrable, détail propriété par propriété (avant / après), synthèse par couche, export CSV, ou ouverture dans ⚖ Comparaison de versions.</td></tr>
           <tr><td>Plusieurs enregistrements</td><td>Le delta <b>cumulé</b> (modèle affiché → dernier enregistrement) est celui qui sera appliqué ; chaque enregistrement détecté est aussi listé avec son propre delta (par rapport au précédent). Si le fichier revient à la version affichée, la proposition disparaît.</td></tr>
           <tr><td>Après mise à jour</td><td>La vue en cours est conservée. 🕘 Historique des mises à jour de la session (delta de chacune) ; ⚖ comparaison avec la version d'avant la dernière mise à jour ou avec la version d'ouverture.</td></tr>
-          <tr><td>Navigateur</td><td>Edge / Chrome : ouvrez le modèle par 🔷 CAPELLA ou par glisser-déposer pour un accès direct (relecture automatique). Sinon (autre navigateur, page HTML sauvegardée), la modification est signalée quand c'est possible et il faut resélectionner le fichier (📂).</td></tr>
+          <tr><td>Navigateur</td><td>Edge / Chrome : ouvrez le modèle par 📁 Fichier › 🔷 Ouvrir ou par glisser-déposer pour un accès direct (relecture automatique). Sinon (autre navigateur, page HTML sauvegardée), la modification est signalée quand c'est possible et il faut resélectionner le fichier (📂).</td></tr>
         </table>
         <h3>⚖ Comparaison de versions</h3>
         <p>Chargez une autre version du même modèle (par défaut l'<b>ancienne</b> ; ⇄ pour inverser). Les éléments sont appariés par identifiant :</p>
@@ -7098,7 +7133,7 @@ function capRenderCurrentView(){
 
   if(!capLoaded){
     document.getElementById('cap-view-cards').style.display='block';
-    document.getElementById('cap-view-cards').innerHTML='<div style="text-align:center;padding:60px;color:var(--c-dim)"><div style="font-size:48px;margin-bottom:12px">🔷</div><div>Chargez un fichier .capella<br>via le bouton 🔷 CAPELLA</div></div>';
+    document.getElementById('cap-view-cards').innerHTML='<div style="text-align:center;padding:60px;color:var(--c-dim)"><div style="font-size:48px;margin-bottom:12px">🔷</div><div>Chargez un fichier .capella<br>via 📁 Fichier › 🔷 Ouvrir un modèle Capella</div></div>';
     capUpdateToolbarForView(capCurrentView);
     return;
   }
@@ -10036,9 +10071,8 @@ function capUpdateToolbarForView(view){
   const tabs=document.getElementById('cap-elem-tabs');
   if(tabs){ tabs.style.display=isElem?'flex':'none';
     tabs.querySelectorAll('[data-ev]').forEach(b=>b.classList.toggle('active', b.dataset.ev===view)); }
-  // État actif des boutons de vue
-  const btnId='cap-v-'+(isElem?'elements':view);
-  document.querySelectorAll('#cap-tb-views .tbtn').forEach(b=>b.classList.toggle('active', b.id===btnId));
+  // État actif des boutons de vue (barre générée par capNavRender)
+  capNavSync(true);
 }
 
 /** Affiche une vue Capella (bascule en mode capella si besoin).
@@ -10050,12 +10084,7 @@ function capShowView(view){
   if(currentMode!=='capella') applyMode('capella'); // bascule depuis Relation Map / Table View
   else capRenderCurrentView();
 }
-['cap-v-elements','cap-v-links','cap-v-chains','cap-v-physlink','cap-v-compex','cap-v-ports','cap-v-functions','cap-v-analyses','cap-v-dashboard'].forEach(id=>{
-  document.getElementById(id)?.addEventListener('click',()=>{
-    const v=id.replace('cap-v-','');
-    capShowView(v==='elements'?capElemView:v);
-  });
-});
+// Boutons de vue de la barre du haut : voir 41-barre-vues.js (menus, épingles, Ctrl+K)
 document.querySelectorAll('#cap-elem-tabs [data-ev]').forEach(b=>b.addEventListener('click',()=>capShowView(b.dataset.ev)));
 // Tree expand/collapse
 document.getElementById('cap-expand-all')?.addEventListener('click',()=>{
@@ -12693,11 +12722,13 @@ function capRenderAnalyses(){
     c._built=true;
   }
   c.querySelectorAll('[data-an]').forEach(b=>b.classList.toggle('active',b.dataset.an===capAnaSub));
+  capNavSync();   // barre du haut : sous-vue épinglée ou menu 🔬 Analyses
   const box=c.querySelector('#ana-box');
   const R={trace:capRenderTrace, caps:capRenderCapabilities, states:capRenderStates, diff:capRenderDiff, reqs:capRenderRequirements, pvmt:capRenderPvmt, data:capRenderDataModel, cts:capRenderConstraints}[capAnaSub];
   const holder=box.querySelector(`[data-hold="${capAnaSub}"]`)||(()=>{ const d=document.createElement('div'); d.dataset.hold=capAnaSub; box.appendChild(d); return d; })();
   box.querySelectorAll('[data-hold]').forEach(h=>h.style.display=h===holder?'':'none');
   R(holder);
+  capTfWatch(box); capTfEnhanceAll(box);   // filtres et largeur des colonnes des tableaux (42-tableaux-analyses.js)
 }
 
 
@@ -13639,7 +13670,7 @@ function capOpenDetailById(id1, id2){
   resizer.addEventListener('mouseleave',e=>{ if(!e.buttons) resizer.style.borderColor=''; });
 })();
 /* ═══════════════════════════════════════════════════════════════════════
-   THÈME PERSONNALISÉ — éditeur de couleurs (bouton 🎨 à côté du sélecteur de thème)
+   THÈME PERSONNALISÉ — éditeur de couleurs (menu 🎨 Thème › Personnaliser…)
    Un seul thème personnalisé (« 🎨 Personnalisé »), conservé dans la 💾 Page HTML
    (bloc JSON cap-theme-custom) : variables de couleur + couleurs des couches ARCADIA.
    ═══════════════════════════════════════════════════════════════════════ */
@@ -14403,7 +14434,7 @@ function capXtDashCatalog(add, LC){
  * Détecte qu'une nouvelle version du fichier chargé a été enregistrée (par Capella),
  * calcule le delta avec le modèle affiché (moteur de ⚖ Comparaison de versions) et propose
  * la mise à jour, qui n'est appliquée qu'après validation.
- * - Accès direct (Edge/Chrome, fichier ouvert par 🔷 CAPELLA ou glissé) : relecture possible à tout moment.
+ * - Accès direct (Edge/Chrome, fichier ouvert par 📁 Fichier › 🔷 Ouvrir ou glissé) : relecture possible à tout moment.
  * - Accès limité (autre navigateur, page sauvegardée) : le navigateur signale au mieux que le fichier a changé ;
  *   il faut alors le resélectionner (📂).
  * Plusieurs enregistrements avant validation : le delta proposé est CUMULÉ (affiché → dernière version),
@@ -14414,7 +14445,7 @@ const _capWatch={
   handle:null, file:null, name:'',              // source suivie (accès direct ou simple fichier)
   shownHash:'', shownMtime:0, shownAt:0, shownIdx:null, // version affichée
   diskMtime:0, diskSize:-1, diskHash:'',        // dernier état vu sur le disque
-  auto:true, period:30, onFocus:true, timer:null, busy:false,
+  auto:false, period:30, onFocus:true, timer:null, busy:false,
   state:'',                                     // '' | 'stale' (modifié, relecture impossible) | 'missing' | 'denied' | 'writing'
   lastCheck:0,
   pending:null,                                 // version en attente de validation
@@ -14921,6 +14952,373 @@ function capWatchShowHistory(){
   capWatchUpdateUi();
   window.addEventListener('load',capWatchUpdateUi);   // après un éventuel amorçage de page sauvegardée
 })();
+/* ══ ☰ BARRE DES VUES CAPELLA ══════════════════════════════════════════════════════
+ * La barre du haut regroupe les vues dans des menus déroulants (🧭 Explorateur, 📡 Flux & interfaces,
+ * 🔬 Analyses) ; n'importe quelle vue ou sous-vue peut être épinglée (📌) en bouton direct.
+ * Le menu ☰ (ou Ctrl+K) permet de chercher une vue et de régler la barre : menus affichés, épingles,
+ * retour aux réglages par défaut. Réglage enregistré dans la page (bloc JSON cap-toolbar, repris par la 💾 Page HTML).
+ */
+/** Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
+ * g = groupe (menu déroulant ; '' = vue sans menu), t = info-bulle. */
+var CAP_NAV_ITEMS=[
+  {k:'tree',      l:'🌳 Arborescence',      g:'explore'},
+  {k:'cards',     l:'▦ Cartes',             g:'explore'},
+  {k:'table',     l:'📋 Tableau',           g:'explore'},
+  {k:'index',     l:'📖 Index des types',   g:'explore'},
+  {k:'links',     l:'🔗 Liens',             g:'explore', t:'Relations entre les éléments du modèle'},
+  {k:'chains',    l:'⚡ Chaînes',           g:'flux'},
+  {k:'compex',    l:'🔀 Component Exchange', g:'flux'},
+  {k:'physlink',  l:'🔌 Physical Link',     g:'flux'},
+  {k:'ports',     l:'🧩 Ports',             g:'flux', t:'Traçabilité Function Port ↔ Component Port ↔ Physical Port'},
+  {k:'functions', l:'ƒ Fonctions',          g:'',     t:'Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier'},
+  {k:'ana:trace', l:'🧬 Traçabilité inter-couches', g:'ana'},
+  {k:'ana:caps',  l:'🎯 Capacités & missions',     g:'ana'},
+  {k:'ana:states',l:'🔁 Modes & états',            g:'ana'},
+  {k:'ana:diff',  l:'⚖ Comparaison de versions',  g:'ana'},
+  {k:'ana:reqs',  l:'📑 Exigences',               g:'ana'},
+  {k:'ana:pvmt',  l:'🏷 Propriétés',              g:'ana'},
+  {k:'ana:data',  l:'🗃 Données & interfaces',     g:'ana'},
+  {k:'ana:cts',   l:'⛓ Contraintes',              g:'ana'},
+  {k:'dashboard', l:'📐 Tableau de bord',   g:'',     t:'Tableaux de bord personnalisés : indicateurs, graphiques, tableaux'}
+];
+/** Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton). */
+var CAP_NAV_GROUPS=[
+  {g:'explore', id:'cap-v-elements', l:'🧭 Explorateur',       t:'Explorer le modèle : arborescence, cartes, tableau, index des types, liens'},
+  {g:'flux',    id:'cap-v-flux',     l:'📡 Flux & interfaces', t:'Chaînes, Component Exchange, Physical Link, ports'},
+  {g:'',        id:'',               l:'',                     t:''},   // place des vues sans menu (ƒ Fonctions)
+  {g:'ana',     id:'cap-v-analyses', l:'🔬 Analyses',          t:'Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes'}
+];
+/** Réglage par défaut : tous les menus affichés, ⚡ Chaînes, ƒ Fonctions et 📐 Tableau de bord en boutons directs. */
+var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['chains','functions','dashboard']};
+var _capNav=(()=>{ try{ const el=document.getElementById('cap-toolbar'); const o=el&&JSON.parse(el.textContent);
+  if(o&&o.groups&&Array.isArray(o.pins)) return o; }catch(e){} return JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); })();
+var _capNavLast={explore:'cards', flux:'chains', ana:'ana:trace'};   // dernière sous-vue ouverte par menu
+
+/** Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML). */
+function capNavSave(){
+  let el=document.getElementById('cap-toolbar');
+  if(!el){ el=document.createElement('script'); el.type='application/json'; el.id='cap-toolbar'; document.head.appendChild(el); }
+  el.textContent=JSON.stringify(_capNav).replace(/</g,'\\u003c');
+}
+
+/** Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
+ * @param {boolean} [force] - Ignorer le mode courant (appel pendant une bascule vers le mode capella)
+ * @returns {string} Clé, ou '' hors du mode capella
+ */
+function capNavCurKey(force){
+  if(!force&&currentMode!=='capella') return '';
+  return capCurrentView==='analyses'?'ana:'+capAnaSub:capCurrentView;
+}
+
+/** Ouvre une vue du catalogue (ou Relation Map / Table View pour les clés @rm, @table).
+ * @param {string} k - Clé de la vue
+ */
+function capNavOpen(k){
+  capNavClose();
+  if(k==='@rm'||k==='@table'){ document.getElementById(k==='@rm'?'mode-rm':'mode-table')?.click(); return; }
+  if(k.startsWith('ana:')){ capAnaSub=k.slice(4); capShowView('analyses'); }
+  else capShowView(k);
+}
+
+/** Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
+ * @param {string} g - Groupe ('explore'|'flux'|'ana')
+ */
+function capNavGroupOpen(g){
+  const items=CAP_NAV_ITEMS.filter(i=>i.g===g), free=items.filter(i=>!_capNav.pins.includes(i.k));
+  const last=_capNavLast[g];
+  capNavOpen(free.some(i=>i.k===last)?last:(free[0]||items[0]).k);
+}
+
+/** Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
+ * affichés quand la vue courante en fait partie.
+ * @param {string} cur - Clé de la vue affichée
+ */
+function capNavFluxTabs(cur){
+  const bar=document.getElementById('cap-flux-tabs'); if(!bar) return;
+  const free=CAP_NAV_ITEMS.filter(i=>i.g==='flux'&&!_capNav.pins.includes(i.k));
+  const show=free.some(i=>i.k===cur);
+  bar.style.display=show?'flex':'none';
+  if(!show) return;
+  bar.innerHTML=`<span class="tb-grp">${free.map(i=>`<button class="cap-lf-btn${i.k===cur?' active':''}" data-open="${i.k}" title="${i.t||''}">${i.l}</button>`).join('')}</span>`;
+}
+
+/** Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles). */
+function capNavRender(){
+  const box=document.getElementById('cap-tb-views'); if(!box) return;
+  const pin=k=>{ const it=CAP_NAV_ITEMS.find(i=>i.k===k);
+    return `<div class="tbtn" id="cap-v-${k.replace(':','-')}" data-open="${k}" title="${it.t||''}">${it.l}</div>`; };
+  let h='';
+  CAP_NAV_GROUPS.forEach(G=>{
+    if(G.g&&_capNav.groups[G.g]!==false)
+      h+=`<div class="tbtn cap-nav-grp" id="${G.id}" data-g="${G.g}" title="${G.t}">${G.l}<span class="cap-nav-arr" data-dd="${G.g}" title="Choisir une vue">▾</span></div>`;
+    CAP_NAV_ITEMS.filter(i=>i.g===G.g&&_capNav.pins.includes(i.k)).forEach(i=>h+=pin(i.k));
+  });
+  // Vues épinglées sans menu placées après le dernier groupe (📐 Tableau de bord)
+  h=h.replace(pin('dashboard'),'');
+  if(_capNav.pins.includes('dashboard')) h+=pin('dashboard');
+  h+=`<div class="tbtn" id="cap-nav-cfg" title="Toutes les vues, recherche (Ctrl+K) et réglage de la barre">☰</div>`;
+  box.innerHTML=h;
+  capNavSync();
+}
+
+/** Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
+ * @param {boolean} [force] - Ignorer le mode courant (voir capNavCurKey)
+ */
+function capNavSync(force){
+  if(typeof _capNav==='undefined') return;   // appelé avant le chargement de ce module
+  const cur=capNavCurKey(force), it=CAP_NAV_ITEMS.find(i=>i.k===cur);
+  if(it&&it.g) _capNavLast[it.g]=cur;
+  document.querySelectorAll('#cap-tb-views [data-open]').forEach(b=>b.classList.toggle('active',b.dataset.open===cur));
+  document.querySelectorAll('#cap-tb-views .cap-nav-grp').forEach(b=>{
+    const on=!!it&&it.g===b.dataset.g&&!_capNav.pins.includes(cur);
+    b.classList.toggle('active',on);
+    const G=CAP_NAV_GROUPS.find(x=>x.g===b.dataset.g);
+    b.title=(it&&it.g===b.dataset.g?'Vue affichée : '+it.l+'\n':'')+G.t;
+  });
+  capNavFluxTabs(cur);
+}
+
+/** Ferme le menu déroulant de la barre des vues. */
+function capNavClose(){
+  const dd=document.getElementById('cap-nav-dd'); if(dd) dd.style.display='none';
+}
+
+/** Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
+ * @param {Object} it - Élément de CAP_NAV_ITEMS
+ * @param {string} [extra] - Texte complémentaire (groupe, en recherche)
+ * @returns {string} HTML
+ */
+function capNavRow(it, extra){
+  const on=_capNav.pins.includes(it.k), cur=capNavCurKey()===it.k;
+  return `<div class="ctx-i cap-nav-it${cur?' cur':''}" data-open="${it.k}" title="${it.t||''}"><span>${it.l}${extra?` <span class="cap-nav-g">${extra}</span>`:''}</span>`+
+    (it.k[0]==='@'?'':`<span class="cap-nav-pin${on?' on':''}" data-pin="${it.k}" title="${on?'Retirer de la barre':'Épingler dans la barre (bouton direct)'}">📌</span>`)+`</div>`;
+}
+
+/** Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
+ * @param {string} g - Groupe ('explore'|'flux'|'ana') ou '☰'
+ * @param {HTMLElement} anchor - Bouton sous lequel placer le menu
+ */
+function capNavMenu(g, anchor){
+  let dd=document.getElementById('cap-nav-dd');
+  if(!dd){
+    dd=document.createElement('div'); dd.id='cap-nav-dd'; document.body.appendChild(dd);
+    dd.addEventListener('click',e=>{
+      const p=e.target.closest('[data-pin]');
+      if(p){ e.stopPropagation(); const k=p.dataset.pin, i=_capNav.pins.indexOf(k);
+        if(i>=0) _capNav.pins.splice(i,1); else _capNav.pins.push(k);
+        capNavSave(); capNavRender(); capNavMenuFill(); return; }
+      const o=e.target.closest('[data-open]'); if(o){ capNavOpen(o.dataset.open); return; }
+      const th=e.target.closest('[data-thm]');
+      if(th){ capNavClose(); const sel=document.getElementById('theme-sel'); sel.value=th.dataset.thm; sel.dispatchEvent(new Event('change')); return; }
+      const a=e.target.closest('[data-act]');
+      if(a){ capNavClose(); ({open:()=>capPickCapellaFile(), save:()=>capSavePageDirect(false), saveas:()=>capSavePageDirect(true),
+        page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor()})[a.dataset.act](); return; }
+      if(e.target.closest('[data-reset]')){ _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); capNavSave(); capNavRender(); capNavMenuFill(); }
+    });
+    dd.addEventListener('change',e=>{
+      const c=e.target.closest('[data-gv]'); if(!c) return;
+      _capNav.groups[c.dataset.gv]=c.checked; capNavSave(); capNavRender();
+    });
+  }
+  if(dd.style.display!=='none'&&dd.dataset.g===g){ capNavClose(); return; }
+  dd.dataset.g=g;
+  dd.innerHTML=g==='☰'?`<input id="cap-nav-q" type="text" placeholder="🔍 Aller à une vue… (Ctrl+K)" autocomplete="off"><div id="cap-nav-res"></div>`:'<div id="cap-nav-res"></div>';
+  capNavMenuFill();
+  dd.style.display='block';
+  const r=anchor.getBoundingClientRect(), w=dd.offsetWidth;
+  dd.style.top=(r.bottom+4)+'px';
+  dd.style.left=Math.max(8,Math.min(r.left, window.innerWidth-w-8))+'px';
+  const q=dd.querySelector('#cap-nav-q');
+  if(q){
+    q.focus();
+    q.oninput=()=>capNavMenuFill();
+    q.onkeydown=e=>{
+      const rows=[...dd.querySelectorAll('#cap-nav-res [data-open]')], i=rows.findIndex(r=>r.classList.contains('hl'));
+      if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault(); if(!rows.length) return;
+        const n=(i+(e.key==='ArrowDown'?1:-1)+rows.length)%rows.length;
+        rows.forEach((r,j)=>r.classList.toggle('hl',j===n)); rows[n].scrollIntoView({block:'nearest'}); }
+      else if(e.key==='Enter'){ const r=rows[i<0?0:i]; if(r) capNavOpen(r.dataset.open); }
+      else if(e.key==='Escape') capNavClose();
+    };
+  }
+}
+
+/** Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche. */
+function capNavMenuFill(){
+  const dd=document.getElementById('cap-nav-dd'), res=dd&&dd.querySelector('#cap-nav-res'); if(!res) return;
+  const g=dd.dataset.g;
+  if(g==='file'){
+    const sc=s=>` <span class="cap-nav-g">${s}</span>`;
+    res.innerHTML=`<div class="ctx-i" data-act="open">🔷 Ouvrir un modèle Capella…</div><div class="cw-m-sep"></div>
+      <div class="ctx-i" data-act="save">💾 Enregistrer${sc('Ctrl+S')}</div>
+      <div class="ctx-i" data-act="saveas">💾 Enregistrer sous…${sc('Ctrl+Maj+S')}</div>
+      <div class="ctx-i" data-act="page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome">🌐 Télécharger la page HTML</div>
+      <div class="cap-nav-hint">La page enregistrée contient le modèle chargé et vos réglages.</div>`;
+    return;
+  }
+  if(g==='theme'){
+    const sel=document.getElementById('theme-sel');
+    res.innerHTML=[...sel.options].map(o=>`<div class="ctx-i cap-nav-it${o.value===sel.value?' cur':''}" data-thm="${o.value}"><span>${o.textContent}</span></div>`).join('')+
+      `<div class="cw-m-sep"></div><div class="ctx-i" data-act="themeedit" title="Créer ou modifier un thème personnalisé (toutes les couleurs)">🎨 Personnaliser…</div>`;
+    return;
+  }
+  if(g!=='☰'){ res.innerHTML=CAP_NAV_ITEMS.filter(i=>i.g===g).map(i=>capNavRow(i)).join('')+
+    `<div class="cap-nav-hint">📌 épingle une vue en bouton direct dans la barre.</div>`; return; }
+  const norm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+  const q=norm((dd.querySelector('#cap-nav-q')||{}).value||'').trim();
+  const gl=x=>(CAP_NAV_GROUPS.find(G=>G.g===x)||{}).l||'';
+  if(q){
+    const all=[{k:'@rm',l:'🗺 Relation Map',g:''},{k:'@table',l:'📊 Table View',g:''},...CAP_NAV_ITEMS];
+    const hit=all.filter(i=>q.split(/\s+/).every(w=>norm(i.l+' '+gl(i.g)+' '+(i.t||'')).includes(w)));
+    res.innerHTML=hit.length?hit.map(i=>capNavRow(i,gl(i.g))).join(''):'<div class="cap-nav-hint">Aucune vue ne correspond.</div>';
+    res.querySelector('[data-open]')?.classList.add('hl');
+    return;
+  }
+  let h='';
+  CAP_NAV_GROUPS.forEach(G=>{
+    h+=G.g?`<label class="cap-nav-h"><input type="checkbox" data-gv="${G.g}"${_capNav.groups[G.g]!==false?' checked':''}> Menu ${G.l} ▾ dans la barre</label>`
+          :'<div class="cap-nav-h">Autres vues</div>';
+    h+=CAP_NAV_ITEMS.filter(i=>i.g===G.g).map(i=>capNavRow(i)).join('');
+  });
+  h+=`<div class="cw-m-sep"></div><div class="ctx-i" data-reset="1">↺ Rétablir la barre par défaut</div>
+    <div class="cap-nav-hint">📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML.</div>`;
+  res.innerHTML=h;
+}
+
+// Câblage : clics de la barre (délégation), fermeture du menu, raccourci Ctrl+K
+(function(){
+  const box=document.getElementById('cap-tb-views'); if(!box) return;
+  box.addEventListener('click',e=>{
+    const dd=e.target.closest('[data-dd]'); if(dd){ e.stopPropagation(); capNavMenu(dd.dataset.dd, dd.closest('.cap-nav-grp')); return; }
+    const grp=e.target.closest('.cap-nav-grp'); if(grp){ capNavGroupOpen(grp.dataset.g); return; }
+    const o=e.target.closest('[data-open]'); if(o){ capNavOpen(o.dataset.open); return; }
+    const cfg=e.target.closest('#cap-nav-cfg'); if(cfg){ e.stopPropagation(); capNavMenu('☰', cfg); }
+  });
+  // Menus 📁 Fichier et 🎨 Thème (partie droite de la barre), onglets 📡 Flux & interfaces
+  ['b-file-menu','b-theme-menu'].forEach(id=>document.getElementById(id)?.addEventListener('click',e=>{
+    e.stopPropagation(); capNavMenu(e.currentTarget.dataset.dd, e.currentTarget); }));
+  document.getElementById('cap-flux-tabs')?.addEventListener('click',e=>{ const o=e.target.closest('[data-open]'); if(o) capNavOpen(o.dataset.open); });
+  document.addEventListener('mousedown',e=>{ if(!e.target.closest('#cap-nav-dd,[data-dd],#cap-nav-cfg')) capNavClose(); });
+  document.addEventListener('keydown',e=>{
+    if((e.ctrlKey||e.metaKey)&&!e.altKey&&(e.key==='k'||e.key==='K')){ e.preventDefault();
+      const dd=document.getElementById('cap-nav-dd');
+      if(dd&&dd.style.display!=='none'&&dd.dataset.g==='☰') capNavClose(); else capNavMenu('☰', document.getElementById('cap-nav-cfg')); }
+    else if(e.key==='Escape') capNavClose();
+  });
+  window.addEventListener('resize',capNavClose);
+  capNavRender();
+})();
+/* ══ 🔬 TABLEAUX DES ANALYSES : FILTRES ET LARGEUR DES COLONNES ═══════════════════════
+ * Chaque tableau affiché dans une sous-vue de 🔬 Analyses (table.ana-t, table.cap-chain-xtable ; ni les matrices
+ * ni les tableaux clé/valeur) reçoit une ligne de filtres sous l'en-tête (un champ par colonne) et des poignées
+ * de redimensionnement sur le bord droit des en-têtes. Les tableaux étant redessinés par leurs sous-vues,
+ * un observateur équipe les nouveaux tableaux ; filtres et largeurs sont retenus par sous-vue et par en-tête
+ * (le temps de la session).
+ */
+var _capTfState={};   // clé (sous-vue + en-têtes) → {f:[filtres], w:[largeurs px]}
+
+/** Normalise un texte pour la comparaison (minuscules, sans accents).
+ * @param {string} s
+ * @returns {string}
+ */
+function capTfNorm(s){ return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase(); }
+
+/** Équipe les tableaux pas encore traités d'un conteneur.
+ * @param {HTMLElement} root - Conteneur (zone des sous-vues de 🔬 Analyses)
+ */
+function capTfEnhanceAll(root){
+  root.querySelectorAll('table.ana-t:not(.ana-kv), table.cap-chain-xtable').forEach(t=>{ if(!t._tf) capTfEnhance(t); });
+}
+
+/** Ajoute la ligne de filtres et les poignées de redimensionnement à un tableau.
+ * @param {HTMLTableElement} t
+ */
+function capTfEnhance(t){
+  t._tf=true;
+  if(t.parentElement.closest('table')) return;             // tableau imbriqué (détail d'une ligne)
+  const head=t.rows[0];
+  if(!head||!head.cells.length||[...head.cells].some(c=>c.tagName!=='TH'||c.colSpan>1)) return;
+  const n=head.cells.length;
+  const key=capAnaSub+'|'+[...head.cells].map(c=>c.textContent.trim()).join('¦');
+  const st=_capTfState[key]||(_capTfState[key]={f:[],w:[]});
+  // Ligne de filtres
+  const fr=document.createElement('tr'); fr.className='cap-tf-row';
+  fr.innerHTML=[...Array(n)].map((_,i)=>`<th><input type="text" data-tf="${i}" placeholder="Filtrer…" title="Filtrer cette colonne (plusieurs mots : tous requis ; « ! » en tête : exclure)" value="${capEsc(st.f[i]||'')}"></th>`).join('');
+  head.after(fr);
+  fr.addEventListener('input',e=>{ const i=+e.target.dataset.tf; st.f[i]=e.target.value; capTfFilter(t,st); });
+  // Poignées de redimensionnement
+  [...head.cells].forEach((th,i)=>{
+    th.style.position='relative';
+    const h=document.createElement('span'); h.className='cap-tf-rz'; h.title='Glisser pour régler la largeur de la colonne (double-clic : largeur automatique)';
+    h.addEventListener('click',e=>e.stopPropagation());
+    h.addEventListener('dblclick',e=>{ e.stopPropagation(); st.w=[]; t.classList.remove('cap-tf-fixed'); t.style.width='';
+      [...head.cells].forEach(c=>c.style.width=''); });
+    h.addEventListener('mousedown',e=>{
+      e.preventDefault(); e.stopPropagation();
+      capTfFreeze(t,st);
+      const x0=e.clientX, w0=st.w[i]; h.classList.add('drag');
+      const mv=ev=>{ st.w[i]=Math.max(40,Math.round(w0+ev.clientX-x0)); capTfWidths(t,st); };
+      const up=()=>{ h.classList.remove('drag'); document.removeEventListener('mousemove',mv); document.removeEventListener('mouseup',up); };
+      document.addEventListener('mousemove',mv); document.addEventListener('mouseup',up);
+    });
+    th.appendChild(h);
+  });
+  if(st.w.length===n) capTfWidths(t,st);
+  if(st.f.some(Boolean)) capTfFilter(t,st);
+}
+
+/** Fige les largeurs actuelles des colonnes (avant le premier redimensionnement).
+ * @param {HTMLTableElement} t
+ * @param {Object} st - État du tableau ({f, w})
+ */
+function capTfFreeze(t,st){
+  const cells=[...t.rows[0].cells];
+  if(st.w.length!==cells.length) st.w=cells.map(c=>Math.round(c.getBoundingClientRect().width));
+  capTfWidths(t,st);
+}
+
+/** Applique les largeurs retenues (disposition fixe, le texte passe à la ligne).
+ * @param {HTMLTableElement} t
+ * @param {Object} st - État du tableau ({f, w})
+ */
+function capTfWidths(t,st){
+  t.classList.add('cap-tf-fixed');
+  [...t.rows[0].cells].forEach((c,i)=>c.style.width=st.w[i]+'px');
+  t.style.width=st.w.reduce((a,b)=>a+b,0)+'px';
+}
+
+/** Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
+ * Une ligne de détail (une seule cellule fusionnée) suit la ligne qui la précède.
+ * @param {HTMLTableElement} t
+ * @param {Object} st - État du tableau ({f, w})
+ */
+function capTfFilter(t,st){
+  const tests=st.f.map(v=>{ const ws=capTfNorm(v).trim().split(/\s+/).filter(Boolean);
+    return ws.length?ws.map(w=>w[0]==='!'&&w.length>1?{w:w.slice(1),neg:true}:{w,neg:false}):null; });
+  [...t.querySelectorAll('.cap-tf-row input')].forEach((inp,i)=>inp.classList.toggle('on',!!tests[i]));
+  let tot=0, vis=0, prev=true;
+  [...t.rows].slice(2).forEach(r=>{
+    if(r.cells.length===1&&r.cells[0].colSpan>1){ r.style.display=prev?'':'none'; return; }
+    const ok=tests.every((ts,i)=>!ts||(()=>{ const txt=capTfNorm(r.cells[i]?r.cells[i].textContent:''); return ts.every(x=>txt.includes(x.w)!==x.neg); })());
+    r.style.display=ok?'':'none'; prev=ok; tot++; if(ok) vis++;
+  });
+  let cnt=t._tfCnt;
+  if(!cnt){ cnt=t._tfCnt=document.createElement('div'); cnt.className='cap-tf-cnt'; (t.parentElement.style.overflow==='auto'?t.parentElement:t).before(cnt); }
+  const on=tests.some(Boolean);
+  cnt.style.display=on?'':'none';
+  cnt.innerHTML=on?`🔍 ${vis} / ${tot} ligne${tot>1?'s':''} <span class="cap-tf-clr" title="Effacer les filtres de ce tableau">✕ effacer</span>`:'';
+  const clr=cnt.querySelector('.cap-tf-clr');
+  if(clr) clr.onclick=()=>{ st.f=[]; t.querySelectorAll('.cap-tf-row input').forEach(i=>i.value=''); capTfFilter(t,st); };
+}
+
+/** Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
+ * @param {HTMLElement} box - Conteneur #ana-box
+ */
+function capTfWatch(box){
+  if(box._tfObs) return;
+  box._tfObs=new MutationObserver(()=>{ clearTimeout(box._tfT); box._tfT=setTimeout(()=>capTfEnhanceAll(box),20); });
+  box._tfObs.observe(box,{childList:true,subtree:true});
+}
 
 </script>
 </body>
