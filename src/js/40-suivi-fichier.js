@@ -85,26 +85,46 @@ function capWatchArm(){
     _capWatch.timer=setInterval(()=>{ if(document.visibilityState==='visible') capWatchCheck(false); }, _capWatch.period*1000);
 }
 
+let _capPickerKo=false;   // sélecteur à accès direct refusé une fois (stratégie du poste, page intégrée…) : sélecteur classique ensuite
+
 /** Ouvre un fichier Capella à charger : sélecteur avec accès direct (Edge/Chrome, permet le 🔄 suivi),
- * sinon sélecteur de fichier classique. */
-async function capPickCapellaFile(){
-  const r=await capWatchPick(); if(!r) return;
-  if(r.input){ document.getElementById('capella-file-input').click(); return; }
-  capLoadFile(r.file, r.handle);
+ * sinon sélecteur de fichier classique. Le choix est fait sans attendre, pour garder l'autorisation du clic. */
+function capPickCapellaFile(){
+  if(!window.showOpenFilePicker||_capPickerKo){ document.getElementById('capella-file-input').click(); return; }
+  capWatchPick().then(r=>{
+    if(!r) return;
+    if(r.input){ capWatchPickerFailed(document.getElementById('capella-file-input'), true); return; }
+    capLoadFile(r.file, r.handle);
+  });
+}
+
+/** Repli quand le sélecteur à accès direct a été refusé : tente le sélecteur classique (le navigateur peut
+ * l'ignorer, le clic d'origine ayant été consommé) et invite à recliquer ou à glisser le fichier.
+ * @param {HTMLInputElement} input - Sélecteur classique à ouvrir
+ * @param {boolean} welcome - true : message dans l'écran d'accueil, sinon message bref
+ */
+function capWatchPickerFailed(input, welcome){
+  try{ input.click(); }catch(e){}
+  const msg='Le sélecteur de fichiers de ce navigateur est indisponible : cliquez de nouveau pour choisir le fichier, ou glissez-le dans la fenêtre.';
+  if(welcome){ capShowWelcome(true); capWelcomeStatus(msg,'err'); } else capWatchFlash(msg);
 }
 
 /** Demande un fichier .capella avec le sélecteur à accès direct quand le navigateur le permet.
- * @returns {Promise<{file:File,handle:FileSystemFileHandle}|{input:true}|null>} Fichier choisi,
- *   {input:true} s'il faut passer par le sélecteur classique, null si annulé
+ * Un refus (ou une annulation immédiate, signe d'un blocage) bascule définitivement sur le sélecteur classique.
+ * @returns {Promise<{file:File,handle:FileSystemFileHandle}|{input:true,failed?:boolean}|null>} Fichier choisi,
+ *   {input:true} s'il faut passer par le sélecteur classique (failed : après un refus), null si annulé
  */
 async function capWatchPick(){
-  if(!window.showOpenFilePicker) return {input:true};
+  if(!window.showOpenFilePicker||_capPickerKo) return {input:true};
+  const t0=Date.now();
   try{
     const [h]=await window.showOpenFilePicker({types:[{description:'Modèle Capella',accept:{'application/xml':['.capella','.melodymodeller','.xml']}}]});
     return {file:await h.getFile(), handle:h};
   }catch(e){
-    if(e&&e.name==='AbortError') return null;
-    return {input:true};   // sélecteur refusé (page intégrée…) : sélecteur classique
+    if(e&&e.name==='AbortError'&&Date.now()-t0>400) return null;   // fenêtre fermée par l'utilisateur
+    console.warn('Sélecteur à accès direct indisponible :', e);
+    _capPickerKo=true;
+    return {input:true, failed:true};
   }
 }
 
@@ -202,12 +222,11 @@ function capWatchRegister(text, hash, mtime, manual){
 /** Choisit manuellement la nouvelle version du fichier (accès limité, page sauvegardée, fichier déplacé) :
  * le fichier choisi devient la source suivie et son contenu est comparé au modèle affiché, sans le charger. */
 async function capWatchPickNewVersion(){
+  const inp=document.getElementById('cap-watch-input');
+  inp.onchange=()=>{ const f=inp.files[0]; inp.value=''; if(f) adopt(f,null); };
+  if(!window.showOpenFilePicker||_capPickerKo){ inp.click(); return; }
   const r=await capWatchPick(); if(!r) return;
-  if(r.input){
-    const inp=document.getElementById('cap-watch-input');
-    inp.onchange=()=>{ const f=inp.files[0]; inp.value=''; if(f) adopt(f,null); };
-    inp.click(); return;
-  }
+  if(r.input){ capWatchPickerFailed(inp, false); return; }
   adopt(r.file, r.handle);
   /** Adopte le fichier choisi comme source et le compare au modèle affiché. */
   async function adopt(f, h){
