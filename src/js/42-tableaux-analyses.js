@@ -26,6 +26,7 @@ function capTfEnhanceAll(root){
 function capTfEnhance(t){
   t._tf=true;
   if(t.parentElement.closest('table')) return;             // tableau imbriqué (détail d'une ligne)
+  capTfScrollWrap(t);
   const head=t.rows[0];
   if(!head||!head.cells.length||[...head.cells].some(c=>c.tagName!=='TH'||c.colSpan>1)) return;
   const n=head.cells.length;
@@ -55,6 +56,19 @@ function capTfEnhance(t){
   });
   if(st.w.length===n) capTfWidths(t,st);
   if(st.f.some(Boolean)) capTfFilter(t,st);
+}
+
+/** Place le tableau dans un conteneur à défilement horizontal (colonnes élargies ou contenu plus large que la vue),
+ * sauf s'il se trouve déjà dans une zone qui défile horizontalement à l'intérieur de 🔬 Analyses.
+ * @param {HTMLTableElement} t
+ */
+function capTfScrollWrap(t){
+  for(let a=t.parentElement; a&&a.id!=='ana-box'&&a.id!=='cap-view-analyses'; a=a.parentElement){
+    if(a.classList.contains('cap-tf-scroll')) return;
+    const o=getComputedStyle(a).overflowX; if(o==='auto'||o==='scroll') return;
+  }
+  const w=document.createElement('div'); w.className='cap-tf-scroll';
+  t.before(w); w.appendChild(t);
 }
 
 /** Fige les largeurs actuelles des colonnes (avant le premier redimensionnement).
@@ -93,7 +107,7 @@ function capTfFilter(t,st){
     r.style.display=ok?'':'none'; prev=ok; tot++; if(ok) vis++;
   });
   let cnt=t._tfCnt;
-  if(!cnt){ cnt=t._tfCnt=document.createElement('div'); cnt.className='cap-tf-cnt'; (t.parentElement.style.overflow==='auto'?t.parentElement:t).before(cnt); }
+  if(!cnt){ cnt=t._tfCnt=document.createElement('div'); cnt.className='cap-tf-cnt'; (t.parentElement.style.overflow==='auto'||t.parentElement.classList.contains('cap-tf-scroll')?t.parentElement:t).before(cnt); }
   const on=tests.some(Boolean);
   cnt.style.display=on?'':'none';
   cnt.innerHTML=on?`🔍 ${vis} / ${tot} ligne${tot>1?'s':''} <span class="cap-tf-clr" title="Effacer les filtres de ce tableau">✕ effacer</span>`:'';

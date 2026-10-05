@@ -519,15 +519,16 @@
 - `capNavMenu` (l. 147) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
 - `capNavMenuFill` (l. 194) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
 
-## 42-tableaux-analyses.js — 112 lignes
+## 42-tableaux-analyses.js — 126 lignes
 
 - `capTfNorm` (l. 14) — Normalise un texte pour la comparaison (minuscules, sans accents).
 - `capTfEnhanceAll` (l. 19) — Équipe les tableaux pas encore traités d'un conteneur.
 - `capTfEnhance` (l. 26) — Ajoute la ligne de filtres et les poignées de redimensionnement à un tableau.
-- `capTfFreeze` (l. 64) — Fige les largeurs actuelles des colonnes (avant le premier redimensionnement).
-- `capTfWidths` (l. 74) — Applique les largeurs retenues (disposition fixe, le texte passe à la ligne).
-- `capTfFilter` (l. 85) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
-- `capTfWatch` (l. 107) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
+- `capTfScrollWrap` (l. 65) — Place le tableau dans un conteneur à défilement horizontal (colonnes élargies ou contenu plus large que la vue),
+- `capTfFreeze` (l. 78) — Fige les largeurs actuelles des colonnes (avant le premier redimensionnement).
+- `capTfWidths` (l. 88) — Applique les largeurs retenues (disposition fixe, le texte passe à la ligne).
+- `capTfFilter` (l. 99) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
+- `capTfWatch` (l. 121) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
 
 ## 43-visite-guidee.js — 354 lignes
 
