@@ -2791,7 +2791,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 161 | 🖼 Présentation |
 | 161 | ≡ Vue Ligne : un échange par ligne · ▣ Vue Fonction : regroupé par fonction · ◧ Vue Blocs : fonctions dessinées comme dans Capella (pins d'entrée verts à gauche, de sortie orange à droite) · ▦ Matrice fonction × fonction · 🩺 Contrôles . |
 | 162 | 🔢 Compteur |
-| 162 | Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 100. |
+| 162 | Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 500. |
 | 163 | #cap-view-fex .fex-layer-btn |
 | 163 | 🧱 Couche |
 | 163 | Filtre par couche ARCADIA (OA, SA, LA, PA). |
@@ -2931,68 +2931,68 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 144 | ∅ Item |
 | 157 | sans port |
 | 171 | sans port |
-| 190 | ÉMET → |
-| 190 | Sortie — la fonction émet l'échange |
-| 190 | ← REÇOIT |
-| 190 | Entrée — la fonction reçoit l'échange |
-| 197 | sans port |
-| 199 | Aucun Exchange Item |
-| 201 | sans port |
-| 209 | échange |
-| 228 | non connecté |
-| 229 | (échange relié directement à la fonction, sans port) |
-| 239 | aucun port ni échange |
-| 252 | fonctions : la matrice est limitée aux |
-| 252 | plus connectées (filtrez par couche ou par fonction pour voir les autres). |
-| 256 | échanges |
-| 256 | Source ↓ / Cible → |
-| 267 | · page |
-| 278 | Aucune fonction ne correspond au filtre. |
-| 280 | Fonctions |
-| 282 | Aucun functional exchange ne correspond au filtre. |
-| 287 | Fonctions |
-| 290 | Échanges |
-| 307 | échange |
-| 321 | ≡ Vue Ligne |
-| 321 | ▣ Vue Fonction |
-| 321 | ◧ Vue Blocs |
-| 321 | ▦ Matrice |
-| 321 | 🩺 Contrôles |
-| 325 | fonction « |
-| 325 | échange « |
-| 326 | ⇆ Functional Exchanges |
-| 326 | échanges |
-| 326 | · filtres : |
-| 333 | Entrée |
-| 333 | Sortie |
-| 338 | Couche |
-| 338 | Fonction |
-| 338 | Sens |
-| 338 | Port |
-| 338 | Functional Exchange |
-| 338 | Fonction distante |
-| 338 | Port distant |
-| 341 | Couche |
-| 341 | Fonction source |
-| 341 | Port source |
-| 341 | Functional Exchange |
-| 341 | Port cible |
-| 341 | Fonction cible |
-| 341 | Exchange Items |
-| 341 | Component Exchanges |
-| 341 | Chaînes |
-| 349 | ≡ Vue Ligne |
-| 349 | Un échange par ligne : fonction source ▶ échange ▶ fonction cible |
-| 349 | ▣ Vue Fonction |
-| 349 | Échanges regroupés par fonction |
-| 350 | ◧ Vue Blocs |
-| 350 | Fonctions dessinées comme dans Capella : pins d'entrée (verts) à gauche, de sortie (orange) à droite |
-| 351 | ▦ Matrice |
-| 351 | Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus |
-| 351 | 🩺 Contrôles |
-| 351 | Ports orphelins, échanges sans Exchange Item, fonctions sans échange… |
-| 357 | Toutes |
-| 358 | ƒ Fonction : |
-| 363 | 🔍 Échange : |
-| 366 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
-| 366 | avec ports ou échanges |
+| 191 | ÉMET → |
+| 191 | Sortie — la fonction émet l'échange |
+| 191 | ← REÇOIT |
+| 191 | Entrée — la fonction reçoit l'échange |
+| 198 | sans port |
+| 200 | Aucun Exchange Item |
+| 202 | sans port |
+| 210 | échange |
+| 232 | non connecté |
+| 233 | (échange relié directement à la fonction, sans port) |
+| 243 | aucun port ni échange |
+| 256 | fonctions : pour rester fluide, la matrice en affiche |
+| 256 | (les plus connectées). Filtrez par couche ou par fonction pour voir les autres. |
+| 260 | échanges |
+| 260 | Source ↓ / Cible → |
+| 271 | · page |
+| 282 | Aucune fonction ne correspond au filtre. |
+| 284 | Fonctions |
+| 286 | Aucun functional exchange ne correspond au filtre. |
+| 291 | Fonctions |
+| 294 | Échanges |
+| 311 | échange |
+| 325 | ≡ Vue Ligne |
+| 325 | ▣ Vue Fonction |
+| 325 | ◧ Vue Blocs |
+| 325 | ▦ Matrice |
+| 325 | 🩺 Contrôles |
+| 329 | fonction « |
+| 329 | échange « |
+| 330 | ⇆ Functional Exchanges |
+| 330 | échanges |
+| 330 | · filtres : |
+| 337 | Entrée |
+| 337 | Sortie |
+| 342 | Couche |
+| 342 | Fonction |
+| 342 | Sens |
+| 342 | Port |
+| 342 | Functional Exchange |
+| 342 | Fonction distante |
+| 342 | Port distant |
+| 345 | Couche |
+| 345 | Fonction source |
+| 345 | Port source |
+| 345 | Functional Exchange |
+| 345 | Port cible |
+| 345 | Fonction cible |
+| 345 | Exchange Items |
+| 345 | Component Exchanges |
+| 345 | Chaînes |
+| 353 | ≡ Vue Ligne |
+| 353 | Un échange par ligne : fonction source ▶ échange ▶ fonction cible |
+| 353 | ▣ Vue Fonction |
+| 353 | Échanges regroupés par fonction |
+| 354 | ◧ Vue Blocs |
+| 354 | Fonctions dessinées comme dans Capella : pins d'entrée (verts) à gauche, de sortie (orange) à droite |
+| 355 | ▦ Matrice |
+| 355 | Matrice fonction × fonction (ligne = source, colonne = cible), 200 fonctions au plus |
+| 355 | 🩺 Contrôles |
+| 355 | Ports orphelins, échanges sans Exchange Item, fonctions sans échange… |
+| 361 | Toutes |
+| 362 | ƒ Fonction : |
+| 367 | 🔍 Échange : |
+| 370 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 370 | avec ports ou échanges |

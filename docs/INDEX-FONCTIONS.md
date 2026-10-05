@@ -551,7 +551,7 @@
 - `capTourKey` (l. 345) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
 - `capTourEnd` (l. 354) — Quitte la visite guidée et retire la mise en évidence.
 
-## 44-functional-exchange.js — 387 lignes
+## 44-functional-exchange.js — 391 lignes
 
 - `CAP_FEX_PAGE` (l. 8)
 - `CAP_FEX_MX_MAX` (l. 9)

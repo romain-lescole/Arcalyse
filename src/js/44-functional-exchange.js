@@ -3,10 +3,10 @@
  * ≡ Vue Ligne (un échange par ligne), ▣ Vue Fonction (regroupé par fonction),
  * ◧ Vue Blocs (chaque fonction dessinée comme dans Capella : boîte verte, pins d'entrée à gauche,
  * de sortie à droite, avec l'échange et la fonction distante), ▦ Matrice fonction × fonction, 🩺 Contrôles.
- * Pagination par 100 (lignes, fonctions, blocs) ; matrice limitée aux 100 fonctions les plus connectées.
+ * Pagination par 500 (lignes, fonctions, blocs) ; matrice limitée à 200 fonctions (les plus connectées), pour rester fluide sur les gros modèles.
  */
-var CAP_FEX_PAGE=100;    // éléments par page (Ligne, Fonction, Blocs)
-var CAP_FEX_MX_MAX=100;  // fonctions au plus dans la matrice
+var CAP_FEX_PAGE=500;    // éléments par page (Ligne, Fonction, Blocs) : ≈ 0,3 s de rendu ; tout afficher (3 000 fonctions) ≈ 2 s à chaque filtre
+var CAP_FEX_MX_MAX=200;  // fonctions au plus dans la matrice : 200 ≈ 0,5 s, 300 ≈ 1,6 s
 var _capFexView='line';
 
 /** Calcule les Functional Exchanges du modèle avec leurs fonctions et ports d'extrémité, les Exchange Items,
@@ -183,7 +183,8 @@ function capRenderFunctionalExchange(){
         g.rows.push({x,role,me,other});
       });
     });
-    return Object.values(by).sort((a,b)=>CAP_ANA_LAYERS.indexOf(a.layer)-CAP_ANA_LAYERS.indexOf(b.layer)||String(a.num).localeCompare(String(b.num),undefined,{numeric:true}));
+    const cmp=new Intl.Collator(undefined,{numeric:true}).compare;   // bien plus rapide que localeCompare répété
+    return Object.values(by).sort((a,b)=>CAP_ANA_LAYERS.indexOf(a.layer)-CAP_ANA_LAYERS.indexOf(b.layer)||cmp(String(a.num),String(b.num)));
   }
   /** Vue Fonction : une carte dépliable par fonction. */
   function buildCards(groups, open){
@@ -217,10 +218,13 @@ function capRenderFunctionalExchange(){
   /** Vue Blocs : chaque fonction dessinée comme dans Capella, pins d'entrée à gauche et de sortie à droite ;
    * à côté de chaque pin, l'échange et la fonction distante. */
   function buildBlocks(fns){
+    // Échanges reliés directement à une fonction (sans port), indexés une fois par fonction
+    const dIn={}, dOut={};
+    allLinks.forEach(x=>{ if(!x.tgt.portId) (dIn[x.tgt.fnId]=dIn[x.tgt.fnId]||[]).push(x); if(!x.src.portId) (dOut[x.src.fnId]=dOut[x.src.fnId]||[]).push(x); });
     return `<div class="fex-blocks">${fns.map(f=>{
       // Entrées / sorties : ports réels, puis un pin virtuel par échange relié directement à la fonction (activités OA…)
       const ends=dir=>[...(dir==='IN'?f.ins:f.outs).map(p=>({id:p.id, name:p.name, xs:X.portFes[p.id]||[], real:true})),
-        ...allLinks.filter(x=>dir==='IN'?(x.tgt.fnId===f.id&&!x.tgt.portId):(x.src.fnId===f.id&&!x.src.portId)).map(x=>({id:'', name:'', xs:[x], real:false}))];
+        ...((dir==='IN'?dIn:dOut)[f.id]||[]).map(x=>({id:'', name:'', xs:[x], real:false}))];
       const ins=ends('IN'), outs=ends('OUT');
       const side=(list,dir)=>list.map(e=>{
         const lab=e.xs.length?e.xs.map(x=>{ const o=dir==='IN'?x.src:x.tgt;
@@ -243,13 +247,13 @@ function capRenderFunctionalExchange(){
     }).join('')}</div>`;
   }
 
-  /** Matrice fonction × fonction (100 fonctions au plus, les plus connectées). */
+  /** Matrice fonction × fonction (CAP_FEX_MX_MAX fonctions au plus, les plus connectées). */
   function buildMatrix(list){
     const deg={}; list.forEach(x=>{ deg[x.src.fnId]=(deg[x.src.fnId]||0)+1; deg[x.tgt.fnId]=(deg[x.tgt.fnId]||0)+1; });
     const ids=Object.keys(deg); let keep=null, note='';
     if(ids.length>CAP_FEX_MX_MAX){
       keep=new Set(ids.sort((a,b)=>deg[b]-deg[a]).slice(0,CAP_FEX_MX_MAX));
-      note=`<div class="cap-mx-hint">⚠ ${ids.length} fonctions : la matrice est limitée aux ${CAP_FEX_MX_MAX} plus connectées (filtrez par couche ou par fonction pour voir les autres).</div>`;
+      note=`<div class="cap-mx-hint">⚠ ${ids.length} fonctions : pour rester fluide, la matrice en affiche ${CAP_FEX_MX_MAX} (les plus connectées). Filtrez par couche ou par fonction pour voir les autres.</div>`;
     }
     const L=list.filter(x=>!keep||(keep.has(x.src.fnId)&&keep.has(x.tgt.fnId))).map(x=>({x, dir:'fwd',
       src:{pcId:x.src.fnId, pcName:fnLabel(x.src.fnNum,x.src.fnName), layer:x.src.layer}, tgt:{pcId:x.tgt.fnId, pcName:fnLabel(x.tgt.fnNum,x.tgt.fnName), layer:x.tgt.layer}}));
@@ -348,7 +352,7 @@ function capRenderFunctionalExchange(){
     const f=getFiltered();
     const V=[['line','≡ Vue Ligne','Un échange par ligne : fonction source ▶ échange ▶ fonction cible'],['card','▣ Vue Fonction','Échanges regroupés par fonction'],
       ['block','◧ Vue Blocs','Fonctions dessinées comme dans Capella : pins d\'entrée (verts) à gauche, de sortie (orange) à droite'],
-      ['matrix','▦ Matrice','Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus'],['diag','🩺 Contrôles','Ports orphelins, échanges sans Exchange Item, fonctions sans échange…']];
+      ['matrix','▦ Matrice','Matrice fonction × fonction (ligne = source, colonne = cible), 200 fonctions au plus'],['diag','🩺 Contrôles','Ports orphelins, échanges sans Exchange Item, fonctions sans échange…']];
     container.innerHTML=`
       <div class="phl-toggle-bar">
         ${V.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}
