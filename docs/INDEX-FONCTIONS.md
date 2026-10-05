@@ -294,13 +294,13 @@
 - `capChainExportRefreshCount` (l. 540) — Met à jour le compteur de sélection et la case « Tout » sans re-rendre les cartes (garde les cartes ouvertes).
 - `capRenderChainMap` (l. 551) — Rend la sous-vue « Relation Map » : liste des chaînes groupée par catégorie ARCADIA à gauche,
 
-## 25-panneau-detail.js — 189 lignes
+## 25-panneau-detail.js — 183 lignes
 
 - `capOpenDetail` (l. 5) — Ouvre le panneau de détail (colonne droite de l'overlay) pour un élément Capella.
 - `capOpenDetailNode` (l. 97) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
 - `CAP_ELEM_VIEWS` (l. 105)
 - `capUpdateToolbarForView` (l. 111) — Met à jour les boutons actifs et les groupes de contrôles visibles
-- `capShowView` (l. 138) — Affiche une vue Capella (bascule en mode capella si besoin).
+- `capShowView` (l. 137) — Affiche une vue Capella (bascule en mode capella si besoin).
 
 ## 26-rapports-html.js — 101 lignes
 
@@ -378,7 +378,7 @@
 - `capNameQuality` (l. 29) — Analyse la qualité rédactionnelle d'un nom de fonction : verbe en tête (infinitif en français, forme de base en anglais),
 - `capFnNQ` (l. 58) — Diagnostic de nom d'une fonction, mis en cache (recalculé si les règles personnalisées changent). Fonctions racines ignorées.
 
-## 34-fonctions.js — 719 lignes
+## 34-fonctions.js — 721 lignes
 
 - `capIsCompEl` (l. 3) — Indique si un élément XML est un composant, une entité ou un acteur (porteur d'allocations).
 - `capCompAncestors` (l. 11) — Chaîne des composants englobants d'un composant, de la racine (le système) au parent direct.
@@ -501,3 +501,30 @@
 - `capWatchModalRefresh` (l. 402) — Réaffiche la fenêtre du delta si elle montre la version en attente (nouvel enregistrement détecté entre-temps).
 - `capWatchShowDelta` (l. 410) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 490) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
+
+## 41-barre-vues.js — 257 lignes
+
+- `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
+- `CAP_NAV_GROUPS` (l. 31) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
+- `CAP_NAV_DEFAULT` (l. 38) — Réglage par défaut : tous les menus affichés, ⚡ Chaînes, ƒ Fonctions et 📐 Tableau de bord en boutons directs.
+- `capNavSave` (l. 44) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capNavCurKey` (l. 54) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
+- `capNavOpen` (l. 62) — Ouvre une vue du catalogue (ou Relation Map / Table View pour les clés @rm, @table).
+- `capNavGroupOpen` (l. 72) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
+- `capNavFluxTabs` (l. 82) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
+- `capNavRender` (l. 92) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
+- `capNavSync` (l. 113) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
+- `capNavClose` (l. 128) — Ferme le menu déroulant de la barre des vues.
+- `capNavRow` (l. 137) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
+- `capNavMenu` (l. 147) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
+- `capNavMenuFill` (l. 193) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+
+## 42-tableaux-analyses.js — 112 lignes
+
+- `capTfNorm` (l. 14) — Normalise un texte pour la comparaison (minuscules, sans accents).
+- `capTfEnhanceAll` (l. 19) — Équipe les tableaux pas encore traités d'un conteneur.
+- `capTfEnhance` (l. 26) — Ajoute la ligne de filtres et les poignées de redimensionnement à un tableau.
+- `capTfFreeze` (l. 64) — Fige les largeurs actuelles des colonnes (avant le premier redimensionnement).
+- `capTfWidths` (l. 74) — Applique les largeurs retenues (disposition fixe, le texte passe à la ligne).
+- `capTfFilter` (l. 85) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
+- `capTfWatch` (l. 107) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.

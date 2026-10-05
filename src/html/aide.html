@@ -30,7 +30,7 @@
         <p class="hp-lead">Application autonome (un seul fichier HTML) pour <b>explorer, analyser, contrôler et exporter</b> un modèle Capella / ARCADIA sans ouvrir Capella. Le fichier <code>.capella</code> est lu localement dans le navigateur : <b>aucune donnée n'est envoyée</b>.</p>
         <h3>Ouvrir un modèle</h3>
         <ol>
-          <li>Glissez-déposez un fichier <code>.capella</code> <b>n'importe où dans la fenêtre</b>, ou cliquez <b>📂 Parcourir…</b> sur l'écran d'accueil (ou <b>🔷 CAPELLA</b> dans la barre).</li>
+          <li>Glissez-déposez un fichier <code>.capella</code> <b>n'importe où dans la fenêtre</b>, ou cliquez <b>📂 Parcourir…</b> sur l'écran d'accueil (ou <b>📁 Fichier › 🔷 Ouvrir un modèle Capella</b>).</li>
           <li>Le modèle est analysé puis la vue <b>🧭 Explorateur › ▦ Cartes</b> s'ouvre automatiquement.</li>
           <li>Pour changer de modèle, redéposez simplement un autre fichier.</li>
         </ol>
@@ -53,13 +53,13 @@
         <h3>Niveau 1 — toujours visible</h3>
         <table class="hp-t">
           <tr><td>🗺 · 📊</td><td>Modes Relation Map et Table View.</td></tr>
-          <tr><td>🧭 🔗 ⚡ 🔌 🔀 🧩 ƒ 🔬 📐</td><td>Vues Capella, au même niveau que les modes et toujours visibles (sans modèle chargé, elles invitent à en charger un). Un clic bascule directement sur la vue correspondante, depuis n'importe quel mode.</td></tr>
-          <tr><td>🔷 CAPELLA</td><td>Ouvre un fichier <code>.capella</code>.</td></tr>
-          <tr><td>💾 Enregistrer</td><td>Enregistrement direct dans un fichier HTML (Ctrl+S ; Maj+clic ou Ctrl+Maj+S : enregistrer sous).</td></tr>
-          <tr><td>💾 Page HTML</td><td>Téléchargement de la page autonome avec le modèle embarqué.</td></tr>
-          <tr><td>🖼 Export ▾</td><td>Image du graphe Relation Map : PNG, JPEG ou SVG.</td></tr>
-          <tr><td>Thème</td><td>Sombre (par défaut), Office 2007, Clair, Marine, Nature, Contraste. Les vues se redessinent avec des couleurs adaptées ; en thème clair (Office 2007, Clair ou personnalisé clair), les textes colorés sont automatiquement foncés pour rester lisibles.</td></tr>
-          <tr><td>🎨</td><td>Thème personnalisé : toutes les couleurs (fonds, textes, accent, bordures, statuts, Relation Map, couches ARCADIA), aperçu en direct, « Partir de » un thème existant, contraste du texte affiché, ⬇ / ⬆ JSON. Il apparaît ensuite comme « 🎨 Personnalisé » dans la liste et est conservé dans la page enregistrée.</td></tr>
+          <tr><td>🧭 ▾ · 📡 ▾ · ⚡ · ƒ · 🔬 ▾ · 📐 · ☰</td><td>Vues Capella, au même niveau que les modes et toujours visibles (sans modèle chargé, elles invitent à en charger un) : menus ▾ et vues épinglées, réglables par ☰ (voir l'onglet Vues Capella). Un clic bascule directement sur la vue correspondante, depuis n'importe quel mode.</td></tr>
+          <tr><td>📁 Fichier ▾</td><td>🔷 Ouvrir un modèle Capella (<code>.capella</code>) ; 💾 Enregistrer (Ctrl+S) et Enregistrer sous… (Ctrl+Maj+S) : enregistrement direct dans un fichier HTML ; 🌐 Télécharger la page HTML : page autonome avec le modèle embarqué.</td></tr>
+          <tr><td>💾</td><td>Enregistrement direct (Ctrl+S ; Maj+clic ou Ctrl+Maj+S : enregistrer sous).</td></tr>
+          <tr><td>🔄 Suivi ▾</td><td>Nouvelles versions du fichier .capella (voir plus bas).</td></tr>
+          <tr><td>🎨 Thème ▾</td><td>Sombre (par défaut), Office 2007, Clair, Marine, Nature, Contraste. Les vues se redessinent avec des couleurs adaptées ; en thème clair (Office 2007, Clair ou personnalisé clair), les textes colorés sont automatiquement foncés pour rester lisibles.</td></tr>
+          <tr><td>🎨 Thème › Personnaliser…</td><td>Thème personnalisé : toutes les couleurs (fonds, textes, accent, bordures, statuts, Relation Map, couches ARCADIA), aperçu en direct, « Partir de » un thème existant, contraste du texte affiché, ⬇ / ⬆ JSON. Il apparaît ensuite comme « 🎨 Personnalisé » dans la liste et est conservé dans la page enregistrée.</td></tr>
+          <tr><td>🖼 Export ▾</td><td>Image du graphe Relation Map : PNG, JPEG ou SVG (2e barre de la Relation Map).</td></tr>
           <tr><td>? Aide</td><td>Cette documentation (aussi accessible depuis l'écran d'accueil).</td></tr>
         </table>
         <h3>Niveau 2 — commandes de la Relation Map</h3>
@@ -78,6 +78,7 @@
         <table class="hp-t">
           <tr><td>Ctrl + / Ctrl −</td><td>Zoom avant / arrière (aussi Ctrl + molette).</td></tr>
           <tr><td>Ctrl W</td><td>Ajuster la vue.</td></tr>
+          <tr><td>Ctrl K</td><td>Aller à une vue : recherche par nom dans le menu ☰ (Entrée pour ouvrir).</td></tr>
           <tr><td>Échap</td><td>Ferme la fenêtre ou le menu ouvert.</td></tr>
           <tr><td>Ctrl/Cmd + clic, Maj + clic</td><td>Sélection multiple dans l'arborescence.</td></tr>
           <tr><td>Ctrl V</td><td>Colle une liste (texte ou Excel) sous l'élément sélectionné de l'arborescence.</td></tr>
@@ -132,6 +133,12 @@
       <!-- ── CAPELLA DATA ── -->
       <div id="ht-cap" class="ht-panel" style="display:none">
         <h2>🔷 Vues Capella</h2>
+        <h3>Barre des vues (en haut)</h3>
+        <table class="hp-t">
+          <tr><td>Menus ▾</td><td><b>🧭 Explorateur</b> (Arborescence, Cartes, Tableau, Index des types, 🔗 Liens), <b>📡 Flux & interfaces</b> (⚡ Chaînes, 🔀 Component Exchange, 🔌 Physical Link, 🧩 Ports), <b>🔬 Analyses</b> (toutes les sous-vues). Un clic sur le nom rouvre la dernière vue du menu ; la flèche ▾ affiche la liste.</td></tr>
+          <tr><td>📌 Épingler</td><td>Dans un menu, 📌 place la vue en bouton direct dans la barre (par défaut : ⚡ Chaînes, ƒ Fonctions, 📐 Tableau de bord) ; un second clic la retire.</td></tr>
+          <tr><td>☰ (Ctrl K)</td><td>Toutes les vues : recherche (taper puis Entrée, flèches ↑ ↓), cases pour afficher ou masquer chaque menu, épingles, ↺ Rétablir la barre par défaut. Une vue masquée reste accessible ici. Le réglage est enregistré avec la 💾 Page HTML.</td></tr>
+        </table>
         <table class="hp-t">
           <tr><td>🧭 Explorateur</td><td>Quatre onglets : 🌳 Arborescence, ▦ Cartes, 📋 Tableau et 📖 Index des types (détaillés ci-dessous) ; le menu rouvre le dernier onglet utilisé. La barre latérale des types n'est affichée que dans l'Explorateur.</td></tr>
           <tr><td>🧭 Explorateur › 🌳 Arborescence</td><td>Arbre complet du modèle ; déplier / replier.</td></tr>
@@ -203,6 +210,7 @@
       <div id="ht-ana" class="ht-panel" style="display:none">
         <h2>ƒ Fonctions et 🔬 Analyses</h2>
         <p class="hp-note">Les résultats sont gardés en mémoire ; <b>↻ Recalculer</b> les rafraîchit. Les contrôles ne sont calculés qu'à l'ouverture de l'onglet 🩺 Contrôles.</p>
+        <p class="hp-note"><b>Tableaux</b> : sous chaque en-tête, un champ <b>Filtrer…</b> par colonne (plusieurs mots : tous requis ; <code>!mot</code> : exclure) ; le nombre de lignes affichées s'affiche au-dessus, avec ✕ effacer. Glisser le bord droit d'un en-tête règle la largeur de la colonne (double-clic : largeur automatique). Filtres et largeurs sont conservés quand la vue se redessine.</p>
         <p class="hp-lead">Analyses transverses calculées à partir de ce que contient le modèle ouvert : une rubrique absente du modèle (pas de machine à états, pas de capacités…) est simplement signalée comme vide, et les contrôles ne portent que sur les pratiques réellement utilisées.</p>
         <h3>ƒ Fonctions (menu principal)</h3>
         <p>Activités OA et fonctions SA / LA / PA, couche par couche, avec leurs <b>descriptions mises en avant</b>.</p>
@@ -239,13 +247,13 @@
           <tr><td>🩺 Contrôles</td><td>Régions sans état initial, états inatteignables, états sans issue, transitions sans déclencheur ni garde, fonctions jamais disponibles.</td></tr>
         </table>
         <h3>🔄 Suivi du fichier .capella (mises à jour)</h3>
-        <p>Le bouton <b>🔄 Suivi</b> (à côté de 🔷 CAPELLA) détecte qu'une nouvelle version du fichier chargé a été enregistrée (par Capella) et propose de mettre à jour l'affichage. <b>Rien n'est appliqué sans votre validation.</b></p>
+        <p>Le bouton <b>🔄 Suivi</b> (à côté de 📁 Fichier) détecte qu'une nouvelle version du fichier chargé a été enregistrée (par Capella) et propose de mettre à jour l'affichage. <b>Rien n'est appliqué sans votre validation.</b></p>
         <table class="hp-t">
-          <tr><td>Détection</td><td>Automatique (toutes les 10 s, 30 s, 1 min ou 5 min, et au retour dans la fenêtre) ou manuelle (🔍 Vérifier maintenant). Une notification affiche le nombre d'éléments ➕ ajoutés, ➖ supprimés, ✎ modifiés, ↪ déplacés ; le badge du bouton indique le nombre d'enregistrements en attente.</td></tr>
+          <tr><td>Détection</td><td>Automatique, à cocher dans le menu 🔄 Suivi (désactivée par défaut ; toutes les 10 s, 30 s, 1 min ou 5 min), au retour dans la fenêtre ou manuelle (🔍 Vérifier maintenant). Une notification affiche le nombre d'éléments ➕ ajoutés, ➖ supprimés, ✎ modifiés, ↪ déplacés ; le badge du bouton indique le nombre d'enregistrements en attente.</td></tr>
           <tr><td>Delta</td><td>🔍 Voir le delta : liste filtrable, détail propriété par propriété (avant / après), synthèse par couche, export CSV, ou ouverture dans ⚖ Comparaison de versions.</td></tr>
           <tr><td>Plusieurs enregistrements</td><td>Le delta <b>cumulé</b> (modèle affiché → dernier enregistrement) est celui qui sera appliqué ; chaque enregistrement détecté est aussi listé avec son propre delta (par rapport au précédent). Si le fichier revient à la version affichée, la proposition disparaît.</td></tr>
           <tr><td>Après mise à jour</td><td>La vue en cours est conservée. 🕘 Historique des mises à jour de la session (delta de chacune) ; ⚖ comparaison avec la version d'avant la dernière mise à jour ou avec la version d'ouverture.</td></tr>
-          <tr><td>Navigateur</td><td>Edge / Chrome : ouvrez le modèle par 🔷 CAPELLA ou par glisser-déposer pour un accès direct (relecture automatique). Sinon (autre navigateur, page HTML sauvegardée), la modification est signalée quand c'est possible et il faut resélectionner le fichier (📂).</td></tr>
+          <tr><td>Navigateur</td><td>Edge / Chrome : ouvrez le modèle par 📁 Fichier › 🔷 Ouvrir ou par glisser-déposer pour un accès direct (relecture automatique). Sinon (autre navigateur, page HTML sauvegardée), la modification est signalée quand c'est possible et il faut resélectionner le fichier (📂).</td></tr>
         </table>
         <h3>⚖ Comparaison de versions</h3>
         <p>Chargez une autre version du même modèle (par défaut l'<b>ancienne</b> ; ⇄ pour inverser). Les éléments sont appariés par identifiant :</p>

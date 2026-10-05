@@ -4,29 +4,23 @@
   <div class="tbtn"        id="mode-pbs"   title="PBS" style="display:none">🌲 PBS</div>
   <div class="tbtn"        id="mode-table" title="Table View">📊 Table View</div>
   <!-- Vues Capella : au même niveau que Relation Map / Table View, toujours visibles (clic = bascule en mode capella) -->
-  <div id="cap-tb-views" style="display:flex;align-items:center;gap:3px;">
-    <div class="tbtn" id="cap-v-elements" title="Explorer le modèle : arborescence, cartes, tableau, index des types">🧭 Explorateur</div>
-    <div class="tbtn" id="cap-v-links">🔗 Liens</div>
-    <div class="tbtn" id="cap-v-chains">⚡ Chaînes</div>
-    <div class="tbtn" id="cap-v-physlink">🔌 Physical Link</div>
-    <div class="tbtn" id="cap-v-compex">🔀 Component Exchange</div>
-    <div class="tbtn" id="cap-v-ports" title="Traçabilité Function Port ↔ Component Port ↔ Physical Port">🧩 Ports</div>
-    <div class="tbtn" id="cap-v-functions" title="Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier">ƒ Fonctions</div>
-    <div class="tbtn" id="cap-v-analyses" title="Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions">🔬 Analyses</div>
-    <div class="tbtn" id="cap-v-dashboard" title="Tableaux de bord personnalisés : indicateurs, graphiques, tableaux">📐 Tableau de bord</div>
-  </div>
+  <!-- Boutons générés par capNavRender (41-barre-vues.js) : menus 🧭 Explorateur / 📡 Flux & interfaces / 🔬 Analyses, vues épinglées, ☰ -->
+  <div id="cap-tb-views" style="display:flex;align-items:center;gap:3px;"></div>
   <!-- Spacer : tout ce qui suit est poussé à droite -->
   <div id="tb-spacer"></div>
   <div class="tbtn" id="b-ref" style="display:none">↺ Reset</div>
   <div class="tsep"></div>
-  <div class="tbtn" id="b-capella-load" title="Charger un fichier Capella">🔷 CAPELLA</div>
+  <!-- 📁 Fichier ▾ : ouvrir un modèle, enregistrer, enregistrer sous, télécharger la page (menu rempli par capNavMenuFill) -->
+  <div class="tbtn" id="b-file-menu" data-dd="file" title="Ouvrir un modèle Capella, enregistrer la page">📁 Fichier ▾</div>
+  <div class="tbtn" id="b-save-direct" title="Enregistrer la page (avec le modèle chargé) directement dans un fichier HTML, sans passer par les téléchargements (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous">💾</div>
+  <!-- Commandes conservées pour le code existant, accessibles par le menu 📁 Fichier -->
+  <div class="tbtn" id="b-capella-load" title="Charger un fichier Capella" style="display:none">🔷 CAPELLA</div>
+  <div class="tbtn" id="b-save-page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome" style="display:none">💾 Page HTML</div>
   <!-- 🔄 Suivi du fichier .capella (mises à jour, delta, historique) — visible quand un modèle est chargé -->
   <div style="position:relative;display:none" id="b-cap-watch">
     <div class="tbtn" id="b-cap-watch-main">🔄 Suivi<span id="b-cap-watch-badge" class="cw-badge" style="display:none"></span> ▾</div>
     <div id="cap-watch-dd" style="display:none"></div>
   </div>
-  <div class="tbtn" id="b-save-direct" title="Enregistrer la page (avec le modèle chargé) directement dans un fichier HTML, sans passer par les téléchargements (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous">💾 Enregistrer</div>
-  <div class="tbtn" id="b-save-page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome">💾 Page HTML</div>
   <!-- Éditer/Sauver/Charger → dropdown -->
   <div style="position:relative;display:none" id="b-edit-wrap"><!-- menu Éditer retiré de l'interface (version Capella) -->
     <div class="tbtn" id="b-edit-menu" title="Éditer / Sauver / Charger">✏ Éditer ▾</div>
@@ -38,21 +32,9 @@
       <div class="ctx-i" id="b-load">📂 Charger un fichier</div>
     </div>
   </div>
-  <!-- PNG/JPEG/SVG → dropdown -->
-  <div style="position:relative;" id="b-exp-wrap">
-    <div class="tbtn" id="b-exp-menu" title="Exporter image">🖼 Export ▾</div>
-    <div id="b-exp-dd" style="display:none;position:absolute;top:calc(100% + 4px);right:0;z-index:500;
-         background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;
-         min-width:140px;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;">
-      <div class="ctx-i" id="b-expng">🖼 PNG</div>
-      <div class="ctx-i" id="b-expjpg">📷 JPEG</div>
-      <div class="ctx-i" id="b-exsvg">📐 SVG</div>
-    </div>
-  </div>
-  <div class="tsep"></div>
-  <!-- Sélecteur de thème -->
-  <span style="font-size:11px;color:var(--c-dim)">Thème :</span>
-  <select id="theme-sel" title="Changer le thème">
+  <!-- 🎨 Thème ▾ : liste des thèmes + personnalisation (le sélecteur caché reste la référence du thème choisi) -->
+  <div class="tbtn" id="b-theme-menu" data-dd="theme" title="Changer le thème, créer ou modifier un thème personnalisé">🎨 Thème ▾</div>
+  <select id="theme-sel" title="Changer le thème" style="display:none">
     <option value="dark">🌙 Sombre</option>
     <option value="light">☀️ Clair</option>
     <option value="blue">🌊 Marine</option>
@@ -60,8 +42,7 @@
     <option value="office2007">🗂 Office 2007</option>
     <option value="contrast">⚡ Contraste</option>
   </select>
-  <div class="tbtn" id="b-theme-edit" title="Créer ou modifier un thème personnalisé (toutes les couleurs)">🎨</div>
-  <div class="tsep"></div>
+  <div class="tbtn" id="b-theme-edit" title="Créer ou modifier un thème personnalisé (toutes les couleurs)" style="display:none">🎨</div>
   <div class="tbtn" id="b-help" title="Aide">? Aide</div>
 </div>
 <!-- Toolbar niveau 2 : commandes propres à la Relation Map -->
@@ -79,6 +60,18 @@
   <div class="tbtn" id="b-cut" title="Couper les noms longs">✂ Noms</div>
   <div class="tbtn" id="b-single" style="display:none">⊙ Unique</div>
   <div class="tbtn" id="b-compact">⬡ Compact</div>
+  <div class="tsep"></div>
+  <!-- PNG/JPEG/SVG → dropdown (Relation Map uniquement) -->
+  <div style="position:relative;" id="b-exp-wrap">
+    <div class="tbtn" id="b-exp-menu" title="Exporter image">🖼 Export ▾</div>
+    <div id="b-exp-dd" style="display:none;position:absolute;top:calc(100% + 4px);left:0;z-index:500;
+         background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;
+         min-width:140px;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;">
+      <div class="ctx-i" id="b-expng">🖼 PNG</div>
+      <div class="ctx-i" id="b-expjpg">📷 JPEG</div>
+      <div class="ctx-i" id="b-exsvg">📐 SVG</div>
+    </div>
+  </div>
 </div>
 
 <!-- ════════════════════════  MAIN  ════════════════════════ -->
@@ -361,6 +354,8 @@
         <button class="cap-lf-btn" data-ev="index">📖 Index des types</button>
       </span>
     </div>
+    <!-- Onglets du menu 📡 Flux & interfaces : vues du menu non épinglées (remplis par capNavFluxTabs) -->
+    <div id="cap-flux-tabs" class="cap-lf-bar" style="display:none;gap:6px;padding:6px 12px;border-bottom:1px solid var(--c-border);flex-shrink:0;"></div>
     <!-- Sub-toolbar: stats + filters + search + expand/json — always in content area -->
     <div id="cap-sub-toolbar" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:6px 12px;border-bottom:1px solid var(--c-border);background:var(--c-bg2);flex-shrink:0;">
       <!-- Stats chips -->

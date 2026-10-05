@@ -968,3 +968,35 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
 .cw-d-tl tr.cw-d-v:hover{background:var(--c-bg3);}
 .cw-d-tl tr.cw-d-v.sel{background:color-mix(in srgb,var(--c-accent) 18%,transparent);}
 .cw-d-apply{font-weight:700;}
+
+/* ── ☰ Barre des vues Capella (menus, épingles, Ctrl+K) ── */
+.cap-nav-grp{display:flex;align-items:center;gap:2px;padding-right:3px;}
+.cap-nav-arr{padding:0 3px;margin-left:2px;border-left:1px solid var(--c-border);opacity:.75;}
+.cap-nav-arr:hover{opacity:1;color:var(--c-accent,var(--c-text));}
+#cap-nav-cfg{padding-left:9px;padding-right:9px;}
+#cap-nav-dd{position:fixed;z-index:2500;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;min-width:260px;max-width:360px;
+  max-height:calc(100vh - 80px);overflow:auto;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;font-size:12px;}
+#cap-nav-q{display:block;width:calc(100% - 16px);margin:4px 8px 6px;padding:5px 8px;box-sizing:border-box;background:var(--c-bg3);color:var(--c-text);
+  border:1px solid var(--c-border);border-radius:4px;font-size:12px;outline:none;}
+#cap-nav-q:focus{border-color:var(--c-accent,var(--c-border));}
+.cap-nav-it{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.cap-nav-it.cur{font-weight:700;}
+.cap-nav-it.cur>span:first-child::before{content:'● ';color:var(--c-accent,var(--c-text));}
+.cap-nav-it.hl{background:var(--c-bg3);}
+.cap-nav-g{color:var(--c-dim);font-size:10.5px;}
+.cap-nav-pin{opacity:.25;filter:grayscale(1);padding:0 2px;cursor:pointer;}
+.cap-nav-pin:hover{opacity:.7;}
+.cap-nav-pin.on{opacity:1;filter:none;}
+.cap-nav-h{display:flex;align-items:center;gap:6px;padding:7px 13px 3px;color:var(--c-dim);font-size:11px;font-weight:700;border-top:1px solid var(--c-border);margin-top:3px;cursor:pointer;}
+.cap-nav-h:first-child{border-top:none;margin-top:0;}
+.cap-nav-hint{padding:4px 13px;color:var(--c-dim);font-size:10.5px;font-style:italic;}
+/* ── 🔬 Tableaux des analyses : ligne de filtres, largeur des colonnes ── */
+.cap-tf-row th{padding:2px 4px!important;background:var(--c-bg2)!important;text-transform:none!important;}
+.cap-tf-row input{width:100%;min-width:36px;box-sizing:border-box;padding:2px 5px;font-size:11px;font-weight:400;background:var(--c-bg3);color:var(--c-text);border:1px solid var(--c-border);border-radius:3px;outline:none;}
+.cap-tf-row input.on{border-color:var(--c-accent);}
+.cap-tf-rz{position:absolute;top:0;right:-3px;width:7px;height:100%;cursor:col-resize;z-index:2;user-select:none;}
+.cap-tf-rz:hover,.cap-tf-rz.drag{background:var(--c-accent);opacity:.45;}
+table.cap-tf-fixed{table-layout:fixed;}
+table.cap-tf-fixed td,table.cap-tf-fixed th{overflow-wrap:anywhere;}
+.cap-tf-cnt{font-size:11px;color:var(--c-dim);margin:4px 0 2px;}
+.cap-tf-clr{margin-left:8px;cursor:pointer;color:var(--c-accent);}

@@ -719,7 +719,7 @@ function capRenderCurrentView(){
 
   if(!capLoaded){
     document.getElementById('cap-view-cards').style.display='block';
-    document.getElementById('cap-view-cards').innerHTML='<div style="text-align:center;padding:60px;color:var(--c-dim)"><div style="font-size:48px;margin-bottom:12px">🔷</div><div>Chargez un fichier .capella<br>via le bouton 🔷 CAPELLA</div></div>';
+    document.getElementById('cap-view-cards').innerHTML='<div style="text-align:center;padding:60px;color:var(--c-dim)"><div style="font-size:48px;margin-bottom:12px">🔷</div><div>Chargez un fichier .capella<br>via 📁 Fichier › 🔷 Ouvrir un modèle Capella</div></div>';
     capUpdateToolbarForView(capCurrentView);
     return;
   }

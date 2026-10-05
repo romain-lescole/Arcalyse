@@ -30,16 +30,32 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
   await p.setInputFiles('#capella-file-input', model);
   await p.waitForFunction(() => typeof capLoaded !== 'undefined' && capLoaded, null, { timeout: 180000 });
   const step = async (label, fn) => { const n = errs.length; try { await fn(); } catch (e) { errs.push(label + ' : ' + e.message); } await p.waitForTimeout(250); console.log((errs.length > n ? '✖ ' : '✔ ') + label); };
-  for (const v of ['tree', 'cards', 'table', 'links', 'chains', 'physlink', 'compex', 'ports', 'analyses', 'dashboard', 'index'])
-    await step('vue ' + v, () => p.click('#cap-v-' + v));
+  for (const v of ['tree', 'cards', 'table', 'links', 'chains', 'physlink', 'compex', 'ports', 'functions', 'analyses', 'dashboard', 'index'])
+    await step('vue ' + v, () => p.evaluate(k => capNavOpen(k), v));
+  await step('barre : menu, épingle, Ctrl+K', async () => {
+    await p.click('#cap-v-analyses .cap-nav-arr'); await p.click('#cap-nav-dd [data-open="ana:reqs"]');
+    await p.click('#cap-v-analyses .cap-nav-arr'); await p.click('#cap-nav-dd [data-pin="ana:reqs"]'); await p.click('#cap-v-ana-reqs');
+    await p.keyboard.press('Control+K'); await p.keyboard.type('ports'); await p.keyboard.press('Enter');
+    if (await p.evaluate(() => capCurrentView) !== 'ports') throw new Error('Ctrl+K : vue Ports non ouverte');
+    await p.evaluate(() => { _capNav = JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); capNavRender(); });
+    await p.click('#cap-v-flux'); await p.click('#cap-flux-tabs [data-open="physlink"]');
+    if (await p.evaluate(() => capCurrentView) !== 'physlink') throw new Error('onglets 📡 Flux : Physical Link non ouvert');
+    await p.click('#b-theme-menu'); await p.click('#cap-nav-dd [data-thm="light"]');
+    await p.click('#b-theme-menu'); await p.click('#cap-nav-dd [data-thm="dark"]');
+    await p.click('#b-file-menu'); await p.keyboard.press('Escape'); });
   await step('analyses : sous-vues', async () => { await p.click('#cap-v-analyses');
-    for (const b of await p.$$('#cap-view-analyses [data-an]')) { await b.click(); await p.waitForTimeout(300); } });
-  await step('ƒ Fonctions : vues', async () => { await p.click('#cap-view-analyses [data-an="fns"]');
-    for (const v of ['tree', 'table', 'trace', 'metrics', 'checks']) { await p.click(`#cap-view-analyses [data-fv="${v}"]`); await p.waitForTimeout(300); } });
+    for (const b of await p.$$('#cap-view-analyses [data-an]')) { await b.click(); await p.waitForTimeout(300); }
+    await p.evaluate(() => capNavOpen('ana:states')); await p.waitForTimeout(300);
+    const inp = p.locator('#ana-box .cap-tf-row input:visible').first();
+    if (await inp.count()) { await inp.fill('zzzz'); await p.waitForTimeout(100);
+      if (!/^🔍 0 \//.test(await p.evaluate(() => [...document.querySelectorAll('#ana-box .cap-tf-cnt')].map(c => c.textContent).find(Boolean) || ''))) throw new Error('filtre de tableau inopérant');
+      await inp.fill(''); } });
+  await step('ƒ Fonctions : vues', async () => { await p.click('#cap-v-functions');
+    for (const v of ['tree', 'table', 'trace', 'metrics', 'checks']) { await p.click(`#cap-view-functions [data-fv="${v}"]`); await p.waitForTimeout(300); } });
   await step('Relation Map', () => p.click('#mode-rm'));
   await step('Table View', () => p.click('#mode-table'));
   await step('tableau de bord : tous les indicateurs', async () => {
-    await p.click('#cap-v-dashboard');
+    await p.click('#cap-v-dashboard');   // bouton épinglé par défaut
     const r = await p.evaluate(() => { const bad = []; capDashCatalog().forEach(m => CAP_DASH_VIZ[m.kind].forEach(([v]) => {
       try { capDashDraw({ m: m.id, v, top: 10, txt: 'x' }, m, 400, 220); } catch (e) { bad.push(m.id + '/' + v + ' : ' + e.message); } })); return bad; });
     r.forEach(x => errs.push(x));
