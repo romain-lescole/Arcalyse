@@ -712,7 +712,7 @@ function capInjectChainsToModal(){
  * Met à jour les boutons de vue et les compteurs de stats.
  */
 function capRenderCurrentView(){
-  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-links','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-index'].forEach(id=>{
+  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-links','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-fex','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-index'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
   const pg=document.getElementById('cap-pagination'); if(pg) pg.style.display='none';
@@ -748,6 +748,9 @@ function capRenderCurrentView(){
   } else if(capCurrentView==='compex'){
     document.getElementById('cap-view-compex').style.display='block';
     capRenderCompExchange();
+  } else if(capCurrentView==='fex'){
+    document.getElementById('cap-view-fex').style.display='block';
+    capRenderFunctionalExchange();
   } else if(capCurrentView==='functions'){
     document.getElementById('cap-view-functions').style.display='block';
     capRenderFunctionsView();

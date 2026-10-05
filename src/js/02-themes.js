@@ -222,6 +222,9 @@ function applyTheme(name) {
   if (cexView && cexView.style.display !== 'none' && cexView._cex) {
     capRenderCompExchange();
   }
+  // Idem pour Functional Exchange
+  const fexView = document.getElementById('cap-view-fex');
+  if (fexView && fexView.style.display !== 'none' && fexView._fex) capRenderFunctionalExchange();
   // Contraste des textes colorés : remise à l'origine, puis correction si le thème est clair
   capRestoreContrast(); capContrastCss(); capFixContrast(document.body);
 }

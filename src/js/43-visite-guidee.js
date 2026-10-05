@@ -70,7 +70,7 @@ var CAP_TOUR_EXPLORE=[
 ];
 /** Étapes communes aux vues de 📡 Flux & interfaces (onglets de navigation). */
 var CAP_TOUR_FLUX={s:'#cap-flux-tabs', t:'📡 Flux & interfaces',
-  x:'Ces onglets passent d\'une vue d\'interfaces à l\'autre : <b>🔀 Component Exchange</b>, <b>🔌 Physical Link</b> et <b>🧩 Ports</b>.'};
+  x:'Ces onglets passent d\'une vue d\'interfaces à l\'autre : <b>🔀 Component Exchange</b>, <b>⇆ Functional Exchange</b>, <b>🔌 Physical Link</b> et <b>🧩 Ports</b>.'};
 /** Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »). */
 var CAP_TOUR_ANA_TXT={
   trace:'<b>🧬 Traçabilité inter-couches</b> : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés.',
@@ -157,6 +157,13 @@ var CAP_TOUR_VIEWS={
     {s:'#cex-node-input,#cex-name-input', t:'🔍 Filtres', x:'Par composant, ou par nom d\'échange, d\'échange fonctionnel ou d\'Exchange Item.'},
     {s:'#cex-exp-csv,#cex-exp-html,#cex-exp-html-all', t:'⬇ Exports', x:'CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues.'},
     {s:'#cex-main', t:'📋 Résultat', x:'Clic sur un composant ou un échange pour ouvrir son détail.'}]},
+  fex:{l:'⇆ Functional Exchange', steps:[CAP_TOUR_FLUX,
+    {s:'#cap-view-fex .phl-toggle-btn', t:'🖼 Présentation', x:'<b>≡ Vue Ligne</b> : un échange par ligne · <b>▣ Vue Fonction</b> : regroupé par fonction · <b>◧ Vue Blocs</b> : fonctions dessinées comme dans Capella (pins d\'entrée verts à gauche, de sortie orange à droite) · <b>▦ Matrice</b> fonction × fonction · <b>🩺 Contrôles</b>.'},
+    {s:'#fex-counter', t:'🔢 Compteur', x:'Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 100.'},
+    {s:'#cap-view-fex .fex-layer-btn', t:'🧱 Couche', x:'Filtre par couche ARCADIA (OA, SA, LA, PA).'},
+    {s:'#fex-fn-input,#fex-name-input', t:'🔍 Filtres', x:'Par fonction, ou par nom d\'échange ou d\'Exchange Item.'},
+    {s:'#fex-exp-csv,#fex-exp-html,#fex-exp-html-all', t:'⬇ Exports', x:'CSV de la vue, rapport HTML de la vue (toutes les pages), ou rapport HTML autonome avec toutes les vues.'},
+    {s:'#fex-main', t:'📋 Résultat', x:'Clic sur une fonction ou un échange pour ouvrir son détail.'}]},
   physlink:{l:'🔌 Physical Link', steps:[CAP_TOUR_FLUX,
     {s:'#cap-view-physlink .phl-toggle-btn', t:'🖼 Présentation', x:'<b>≡ Vue Ligne</b>, <b>▣ Vue Composant</b>, <b>▦ Matrice</b> composant × composant et <b>🩺 Contrôles</b> des liens physiques.'},
     {s:'#phl-counter', t:'🔢 Compteur', x:'Liens affichés après filtres / total.'},

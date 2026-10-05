@@ -55,7 +55,7 @@ function capMatrixBuild(links, opts){
   });
   const max=Math.max(1,...Object.values(cells).map(v=>v.length));
   const th=c=>`<span style="color:${opts.colorOf(c)}">${capEsc(c.pcName)}</span>`;
-  let h=`<div class="cap-mx-wrap"><table class="cap-mx"><thead><tr><th class="cap-mx-corner">${opts.directed?'Émetteur ↓ / Récepteur →':'Composant'}</th>`;
+  let h=`<div class="cap-mx-wrap"><table class="cap-mx"><thead><tr><th class="cap-mx-corner">${opts.corner||(opts.directed?'Émetteur ↓ / Récepteur →':'Composant')}</th>`;
   list.forEach(c=>{ h+=`<th class="cap-mx-col" title="${capEsc(c.pcName)}"><div>${th(c)}</div></th>`; });
   h+='<th class="cap-mx-col"><div><b>Σ</b></div></th></tr></thead><tbody>';
   list.forEach((r,i)=>{
@@ -69,7 +69,7 @@ function capMatrixBuild(links, opts){
     });
     h+=`<td class="cap-mx-tot">${tot||''}</td></tr>`;
   });
-  h+=`</tbody></table></div><div class="cap-mx-hint">${list.length} composants · cliquez une cellule pour lister les ${opts.unit}</div><div class="cap-mx-detail"></div>`;
+  h+=`</tbody></table></div><div class="cap-mx-hint">${list.length} ${opts.noun||'composants'} · cliquez une cellule pour lister les ${opts.unit}</div><div class="cap-mx-detail"></div>`;
   return {html:h, cells};
 }
 
