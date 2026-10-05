@@ -1002,9 +1002,16 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
 .cap-tf-row input{width:100%;min-width:36px;box-sizing:border-box;padding:2px 5px;font-size:11px;font-weight:400;background:var(--c-bg3);color:var(--c-text);border:1px solid var(--c-border);border-radius:3px;outline:none;}
 .cap-tf-row input.on{border-color:var(--c-accent);}
 .cap-tf-rz{position:absolute;top:0;right:-3px;width:7px;height:100%;cursor:col-resize;z-index:2;user-select:none;}
+th:last-child>.cap-tf-rz{right:0;}   /* pas de débordement de 3 px (barre de défilement inutile) */
 .cap-tf-rz:hover,.cap-tf-rz.drag{background:var(--c-accent);opacity:.45;}
 table.cap-tf-fixed{table-layout:fixed;}
 table.cap-tf-fixed td,table.cap-tf-fixed th{overflow-wrap:anywhere;}
+.cap-tf-scroll{overflow-x:auto;overflow-y:hidden;max-width:100%;margin-bottom:0;scrollbar-width:none;}
+.cap-tf-scroll::-webkit-scrollbar{display:none;}
+.cap-tf-hbar{position:sticky;bottom:0;z-index:4;overflow-x:auto;overflow-y:hidden;height:15px;margin-bottom:8px;background:var(--c-bg2);border-top:1px solid var(--c-border);}
+.cap-tf-hbar>div{height:1px;}
+#cap-view-analyses .cap-tf-hbar{bottom:-12px;}   /* colle au bord bas réel de la vue (marge intérieure de 12 px) */
+.cap-tf-scroll>table{margin-bottom:0;}
 .cap-tf-cnt{font-size:11px;color:var(--c-dim);margin:4px 0 2px;}
 .cap-tf-clr{margin-left:8px;cursor:pointer;color:var(--c-accent);}
 /* ── 🎓 Visite guidée (43-visite-guidee.js) : cadre clignotant, reste de l'écran assombri, bulle ── */
@@ -1721,7 +1728,7 @@ table.cap-tf-fixed td,table.cap-tf-fixed th{overflow-wrap:anywhere;}
       <div id="ht-ana" class="ht-panel" style="display:none">
         <h2>ƒ Fonctions et 🔬 Analyses</h2>
         <p class="hp-note">Les résultats sont gardés en mémoire ; <b>↻ Recalculer</b> les rafraîchit. Les contrôles ne sont calculés qu'à l'ouverture de l'onglet 🩺 Contrôles.</p>
-        <p class="hp-note"><b>Tableaux</b> : sous chaque en-tête, un champ <b>Filtrer…</b> par colonne (plusieurs mots : tous requis ; <code>!mot</code> : exclure) ; le nombre de lignes affichées s'affiche au-dessus, avec ✕ effacer. Glisser le bord droit d'un en-tête règle la largeur de la colonne (double-clic : largeur automatique). Filtres et largeurs sont conservés quand la vue se redessine.</p>
+        <p class="hp-note"><b>Tableaux</b> : sous chaque en-tête, un champ <b>Filtrer…</b> par colonne (plusieurs mots : tous requis ; <code>!mot</code> : exclure) ; le nombre de lignes affichées s'affiche au-dessus, avec ✕ effacer. Glisser le bord droit d'un en-tête règle la largeur de la colonne (double-clic : largeur automatique). Filtres et largeurs sont conservés quand la vue se redessine. Un tableau plus large que la vue a une <b>barre de défilement horizontal</b> collée en bas de l'écran tant qu'il est visible (aussi Maj + molette).</p>
         <p class="hp-lead">Analyses transverses calculées à partir de ce que contient le modèle ouvert : une rubrique absente du modèle (pas de machine à états, pas de capacités…) est simplement signalée comme vide, et les contrôles ne portent que sur les pratiques réellement utilisées.</p>
         <h3>ƒ Fonctions (menu principal)</h3>
         <p>Activités OA et fonctions SA / LA / PA, couche par couche, avec leurs <b>descriptions mises en avant</b>.</p>
@@ -15272,6 +15279,7 @@ function capTfEnhanceAll(root){
 function capTfEnhance(t){
   t._tf=true;
   if(t.parentElement.closest('table')) return;             // tableau imbriqué (détail d'une ligne)
+  capTfScrollWrap(t);
   const head=t.rows[0];
   if(!head||!head.cells.length||[...head.cells].some(c=>c.tagName!=='TH'||c.colSpan>1)) return;
   const n=head.cells.length;
@@ -15301,6 +15309,47 @@ function capTfEnhance(t){
   });
   if(st.w.length===n) capTfWidths(t,st);
   if(st.f.some(Boolean)) capTfFilter(t,st);
+}
+
+/** Place le tableau dans un conteneur à défilement horizontal (seule la vue défile verticalement) et lui ajoute
+ * une barre de défilement horizontal flottante, collée en bas de l'écran tant que le tableau est visible.
+ * Si le tableau est déjà dans une zone défilante de 🔬 Analyses sans hauteur limitée, c'est cette zone qui est équipée.
+ * @param {HTMLTableElement} t
+ */
+function capTfScrollWrap(t){
+  let w=null;
+  for(let a=t.parentElement; a&&a.id!=='ana-box'&&a.id!=='cap-view-analyses'; a=a.parentElement){
+    if(a.classList.contains('cap-tf-scroll')) return;
+    const cs=getComputedStyle(a);
+    if(cs.overflowX==='auto'||cs.overflowX==='scroll'){
+      if(cs.maxHeight!=='none'||a.style.height) return;   // zone à hauteur limitée : elle a déjà ses barres
+      w=a; break;                                          // zone existante, haute comme le tableau
+    }
+  }
+  if(!w){ w=document.createElement('div'); t.before(w); w.appendChild(t); }
+  w.classList.add('cap-tf-scroll');
+  capTfHBar(w,t);
+}
+
+/** Barre de défilement horizontal flottante d'un tableau : synchronisée avec son conteneur, affichée seulement
+ * quand le tableau est plus large que la vue.
+ * @param {HTMLElement} w - Conteneur à défilement horizontal
+ * @param {HTMLTableElement} t - Tableau
+ */
+function capTfHBar(w,t){
+  const bar=document.createElement('div'); bar.className='cap-tf-hbar';
+  bar.title='Défilement horizontal du tableau';
+  const inner=document.createElement('div'); bar.appendChild(inner);
+  w.after(bar);
+  bar.addEventListener('scroll',()=>{ if(w.scrollLeft!==bar.scrollLeft) w.scrollLeft=bar.scrollLeft; });
+  w.addEventListener('scroll',()=>{ if(bar.scrollLeft!==w.scrollLeft) bar.scrollLeft=w.scrollLeft; });
+  const fit=()=>{
+    const over=w.scrollWidth>w.clientWidth+1;
+    bar.style.display=over?'':'none';
+    if(over){ inner.style.width=w.scrollWidth+'px'; bar.style.width=w.clientWidth+'px'; bar.scrollLeft=w.scrollLeft; }
+  };
+  fit();
+  if(window.ResizeObserver){ const ro=new ResizeObserver(fit); ro.observe(t); ro.observe(w); }
 }
 
 /** Fige les largeurs actuelles des colonnes (avant le premier redimensionnement).
@@ -15339,7 +15388,7 @@ function capTfFilter(t,st){
     r.style.display=ok?'':'none'; prev=ok; tot++; if(ok) vis++;
   });
   let cnt=t._tfCnt;
-  if(!cnt){ cnt=t._tfCnt=document.createElement('div'); cnt.className='cap-tf-cnt'; (t.parentElement.style.overflow==='auto'?t.parentElement:t).before(cnt); }
+  if(!cnt){ cnt=t._tfCnt=document.createElement('div'); cnt.className='cap-tf-cnt'; (t.parentElement.style.overflow==='auto'||t.parentElement.classList.contains('cap-tf-scroll')?t.parentElement:t).before(cnt); }
   const on=tests.some(Boolean);
   cnt.style.display=on?'':'none';
   cnt.innerHTML=on?`🔍 ${vis} / ${tot} ligne${tot>1?'s':''} <span class="cap-tf-clr" title="Effacer les filtres de ce tableau">✕ effacer</span>`:'';
