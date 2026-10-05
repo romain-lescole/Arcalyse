@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 2275 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 2389 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -30,143 +30,144 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 20 | ↺ Reset |
 | 22 | 🔷 CAPELLA |
 | 22 | Charger un fichier Capella  (infobulle) |
-| 23 | 💾 Enregistrer |
-| 23 | Enregistrer la page (avec le modèle chargé) directement dans un fichier HTML, sans passer par les téléchargements (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous  (infobulle) |
-| 24 | 💾 Page HTML |
-| 24 | Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome  (infobulle) |
-| 27 | ✏ Éditer ▾ |
-| 27 | Éditer / Sauver / Charger  (infobulle) |
-| 31 | ✏ Éditeur de modèle |
-| 32 | 💾 Sauvegarder |
-| 33 | 📂 Charger un fichier |
-| 38 | 🖼 Export ▾ |
-| 38 | Exporter image  (infobulle) |
-| 42 | 🖼 PNG |
-| 43 | 📷 JPEG |
-| 44 | 📐 SVG |
-| 49 | Thème : |
-| 50 | Changer le thème  (infobulle) |
-| 51 | 🌙 Sombre |
-| 52 | ☀️ Clair |
-| 53 | 🌊 Marine |
-| 54 | 🌿 Nature |
-| 55 | 🗂 Office 2007 |
-| 56 | ⚡ Contraste |
-| 58 | Créer ou modifier un thème personnalisé (toutes les couleurs)  (infobulle) |
-| 60 | ? Aide |
-| 60 | Aide  (infobulle) |
-| 64 | Zoom avant (Ctrl++)  (infobulle) |
-| 65 | Zoom arrière (Ctrl+-)  (infobulle) |
-| 66 | ⊡ Fit |
-| 66 | Ajuster (Ctrl+W)  (infobulle) |
-| 68 | ↓ Ouvrir tout |
-| 69 | ↑ Fermer tout |
-| 71 | # Nums |
-| 72 | ◉ Légende |
-| 73 | ⌁ Relations |
-| 74 | ✂ Noms |
-| 74 | Couper les noms longs  (infobulle) |
-| 75 | ⊙ Unique |
-| 76 | ⬡ Compact |
-| 83 | ❓ Aide |
-| 83 | Aide et présentation des fonctionnalités  (infobulle) |
-| 84 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) |
-| 86 | Ouvrir un modèle Capella |
-| 87 | Glissez-déposez votre fichier |
-| 87 | ou recherchez-le dans l'explorateur de fichiers. |
-| 88 | 📂 Parcourir… |
-| 90 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. |
-| 91 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités |
-| 99 | Panneau |
-| 100 | Réduire le panneau  (infobulle) |
-| 103 | Arborescence |
-| 105 | Tout développer  (infobulle) |
-| 107 | Tout réduire  (infobulle) |
-| 113 | ✕ vider |
-| 113 | Vider la sélection  (infobulle) |
-| 116 | 🔍 Filtrer l'arborescence…  (infobulle) |
-| 127 | Profondeur |
-| 133 | Disposition |
-| 138 | ◉ Rad |
-| 139 | ⚡ Zig |
-| 139 | Zigzag 7:3 — séquence en grille  (infobulle) |
-| 144 | Contexte |
-| 150 | ✚ Créer un nouvel élément |
-| 154 | Critères de relation |
-| 156 | Tout sélectionner  (infobulle) |
-| 158 | Tout désélectionner  (infobulle) |
-| 165 | 🔷 Type d'élément |
-| 167 | Réinitialiser (tout décocher)  (infobulle) |
-| 168 | ↺ Défaut |
-| 174 | Types d'éléments |
-| 176 | Tout sélectionner  (infobulle) |
-| 178 | Tout désélectionner  (infobulle) |
-| 185 | Portée (Paquetages) |
-| 189 | Propriétés |
-| 195 | Ouvrir le panneau  (infobulle) |
-| 210 | ✨ Colonne personnalisée — Metachain Navigation |
-| 214 | Metaclass |
-| 215 | Property |
-| 216 | Name |
-| 221 | Metaclass or Stereotype |
-| 222 | Property |
-| 226 | + Insert (nouvelle étape) |
-| 228 | Nom de la colonne |
-| 229 | ex: Functions of Component  (infobulle) |
-| 230 | Créer la colonne |
-| 243 | Légende |
-| 247 | Prêt |
-| 254 | ✏ Modifier l'élément |
-| 255 | → Créer une relation vers… |
-| 256 | ✦ Créer un élément enfant |
-| 258 | ⊙ Définir comme contexte |
-| 259 | ↓ Développer |
-| 260 | ↑ Réduire |
-| 262 | 👁 Masquer l'élément |
-| 270 | Annuler |
-| 271 | Sauvegarder |
-| 279 | ✏ Éditeur de modèle |
-| 283 | Éléments ( |
-| 284 | Relations ( |
-| 285 | Paquetages ( |
-| 286 | Chaînes ( |
-| 295 | Exporter |
-| 296 | Résolution : |
-| 298 | 1× Normal |
-| 300 | 3× Ultra |
-| 301 | 4× Max |
-| 305 | Annuler |
-| 306 | Exporter |
-| 321 | Types d'éléments |
-| 322 | Filtrer les types…  (infobulle) |
-| 327 | Tout cocher |
-| 329 | Aucun |
-| 331 | Défaut |
-| 340 | Glisser pour redimensionner  (infobulle) |
-| 348 | 🌳 Arborescence |
-| 349 | ▦ Cartes |
-| 350 | 📋 Tableau |
-| 351 | 📖 Index des types |
-| 360 | Rechercher…  (infobulle) |
-| 364 | Tous |
-| 370 | Tranv. |
-| 372 | ⬇ CSV |
-| 376 | ⊞ Déplier |
-| 377 | ⊟ Réduire |
-| 379 | ⬇ JSON |
-| 395 | ← Préc. |
-| 397 | Suiv. → |
-| 415 | ✨ Colonne personnalisée — Metachain Navigation |
-| 419 | Metaclass |
-| 420 | Property |
-| 421 | Name |
-| 426 | Metaclass or Stereotype |
-| 427 | Property |
-| 431 | + Insert (nouvelle étape) |
-| 433 | Nom de la colonne |
-| 434 | ex: Functions of Component  (infobulle) |
-| 435 | Créer la colonne |
-| 452 | Aucun élément ne correspond. |
+| 25 | 🔄 Suivi |
+| 28 | 💾 Enregistrer |
+| 28 | Enregistrer la page (avec le modèle chargé) directement dans un fichier HTML, sans passer par les téléchargements (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous  (infobulle) |
+| 29 | 💾 Page HTML |
+| 29 | Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome  (infobulle) |
+| 32 | ✏ Éditer ▾ |
+| 32 | Éditer / Sauver / Charger  (infobulle) |
+| 36 | ✏ Éditeur de modèle |
+| 37 | 💾 Sauvegarder |
+| 38 | 📂 Charger un fichier |
+| 43 | 🖼 Export ▾ |
+| 43 | Exporter image  (infobulle) |
+| 47 | 🖼 PNG |
+| 48 | 📷 JPEG |
+| 49 | 📐 SVG |
+| 54 | Thème : |
+| 55 | Changer le thème  (infobulle) |
+| 56 | 🌙 Sombre |
+| 57 | ☀️ Clair |
+| 58 | 🌊 Marine |
+| 59 | 🌿 Nature |
+| 60 | 🗂 Office 2007 |
+| 61 | ⚡ Contraste |
+| 63 | Créer ou modifier un thème personnalisé (toutes les couleurs)  (infobulle) |
+| 65 | ? Aide |
+| 65 | Aide  (infobulle) |
+| 69 | Zoom avant (Ctrl++)  (infobulle) |
+| 70 | Zoom arrière (Ctrl+-)  (infobulle) |
+| 71 | ⊡ Fit |
+| 71 | Ajuster (Ctrl+W)  (infobulle) |
+| 73 | ↓ Ouvrir tout |
+| 74 | ↑ Fermer tout |
+| 76 | # Nums |
+| 77 | ◉ Légende |
+| 78 | ⌁ Relations |
+| 79 | ✂ Noms |
+| 79 | Couper les noms longs  (infobulle) |
+| 80 | ⊙ Unique |
+| 81 | ⬡ Compact |
+| 88 | ❓ Aide |
+| 88 | Aide et présentation des fonctionnalités  (infobulle) |
+| 89 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) |
+| 91 | Ouvrir un modèle Capella |
+| 92 | Glissez-déposez votre fichier |
+| 92 | ou recherchez-le dans l'explorateur de fichiers. |
+| 93 | 📂 Parcourir… |
+| 95 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. |
+| 96 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités |
+| 104 | Panneau |
+| 105 | Réduire le panneau  (infobulle) |
+| 108 | Arborescence |
+| 110 | Tout développer  (infobulle) |
+| 112 | Tout réduire  (infobulle) |
+| 118 | ✕ vider |
+| 118 | Vider la sélection  (infobulle) |
+| 121 | 🔍 Filtrer l'arborescence…  (infobulle) |
+| 132 | Profondeur |
+| 138 | Disposition |
+| 143 | ◉ Rad |
+| 144 | ⚡ Zig |
+| 144 | Zigzag 7:3 — séquence en grille  (infobulle) |
+| 149 | Contexte |
+| 155 | ✚ Créer un nouvel élément |
+| 159 | Critères de relation |
+| 161 | Tout sélectionner  (infobulle) |
+| 163 | Tout désélectionner  (infobulle) |
+| 170 | 🔷 Type d'élément |
+| 172 | Réinitialiser (tout décocher)  (infobulle) |
+| 173 | ↺ Défaut |
+| 179 | Types d'éléments |
+| 181 | Tout sélectionner  (infobulle) |
+| 183 | Tout désélectionner  (infobulle) |
+| 190 | Portée (Paquetages) |
+| 194 | Propriétés |
+| 200 | Ouvrir le panneau  (infobulle) |
+| 215 | ✨ Colonne personnalisée — Metachain Navigation |
+| 219 | Metaclass |
+| 220 | Property |
+| 221 | Name |
+| 226 | Metaclass or Stereotype |
+| 227 | Property |
+| 231 | + Insert (nouvelle étape) |
+| 233 | Nom de la colonne |
+| 234 | ex: Functions of Component  (infobulle) |
+| 235 | Créer la colonne |
+| 248 | Légende |
+| 252 | Prêt |
+| 259 | ✏ Modifier l'élément |
+| 260 | → Créer une relation vers… |
+| 261 | ✦ Créer un élément enfant |
+| 263 | ⊙ Définir comme contexte |
+| 264 | ↓ Développer |
+| 265 | ↑ Réduire |
+| 267 | 👁 Masquer l'élément |
+| 275 | Annuler |
+| 276 | Sauvegarder |
+| 284 | ✏ Éditeur de modèle |
+| 288 | Éléments ( |
+| 289 | Relations ( |
+| 290 | Paquetages ( |
+| 291 | Chaînes ( |
+| 300 | Exporter |
+| 301 | Résolution : |
+| 303 | 1× Normal |
+| 305 | 3× Ultra |
+| 306 | 4× Max |
+| 310 | Annuler |
+| 311 | Exporter |
+| 331 | Types d'éléments |
+| 332 | Filtrer les types…  (infobulle) |
+| 337 | Tout cocher |
+| 339 | Aucun |
+| 341 | Défaut |
+| 350 | Glisser pour redimensionner  (infobulle) |
+| 358 | 🌳 Arborescence |
+| 359 | ▦ Cartes |
+| 360 | 📋 Tableau |
+| 361 | 📖 Index des types |
+| 370 | Rechercher…  (infobulle) |
+| 374 | Tous |
+| 380 | Tranv. |
+| 382 | ⬇ CSV |
+| 386 | ⊞ Déplier |
+| 387 | ⊟ Réduire |
+| 389 | ⬇ JSON |
+| 405 | ← Préc. |
+| 407 | Suiv. → |
+| 425 | ✨ Colonne personnalisée — Metachain Navigation |
+| 429 | Metaclass |
+| 430 | Property |
+| 431 | Name |
+| 436 | Metaclass or Stereotype |
+| 437 | Property |
+| 441 | + Insert (nouvelle étape) |
+| 443 | Nom de la colonne |
+| 444 | ex: Functions of Component  (infobulle) |
+| 445 | Créer la colonne |
+| 462 | Aucun élément ne correspond. |
 
 ## js/01-donnees-config.js
 
@@ -673,56 +674,56 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 123 | ✔ Enregistré |
 | 127 | Enregistrement direct impossible ( |
 | 127 | ). La page va être téléchargée à la place. |
-| 157 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. |
-| 161 | » n'est pas un fichier Capella (.capella attendu). |
-| 164 | Chargement de « |
-| 167 | Impossible de lire « |
-| 173 | XML invalide |
-| 178 | Aucun élément Capella reconnu dans ce fichier |
-| 194 | Erreur de chargement : |
-| 212 | Ouvrir un autre modèle Capella |
-| 213 | Modèle actuel : |
-| 213 | Déposez un nouveau fichier .capella pour le remplacer. |
-| 275 | Shared |
-| 294 | Project |
-| 351 | Composition |
-| 351 | Aggregation |
-| 351 | Association |
-| 351 | Containment |
-| 351 | Generalization |
-| 351 | Realization |
-| 351 | Dependency |
-| 351 | Usage |
-| 351 | Abstraction |
-| 351 | Refine |
-| 351 | Trace |
-| 351 | Satisfy |
-| 351 | Verify |
-| 351 | Copy |
-| 351 | Allocation |
-| 352 | Block |
-| 352 | Component |
-| 352 | Class |
-| 352 | Interface |
-| 352 | Requirement |
-| 352 | Package |
-| 355 | Aggregation |
-| 355 | Association |
-| 355 | Containment |
-| 355 | Generalization |
-| 355 | Realization |
-| 355 | Dependency |
-| 355 | Usage |
-| 355 | Abstraction |
-| 355 | Refine |
-| 355 | Trace |
-| 355 | Satisfy |
-| 355 | Verify |
-| 355 | Copy |
-| 355 | Allocation |
-| 464 | PhysicalComponent (NODE) |
-| 465 | PhysicalComponent (BEHAVIOR) |
-| 704 | 🔷 Chargez un fichier .capella via le bouton 🔷 CAPELLA |
+| 158 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. |
+| 162 | » n'est pas un fichier Capella (.capella attendu). |
+| 165 | Chargement de « |
+| 168 | Impossible de lire « |
+| 174 | XML invalide |
+| 180 | Erreur de chargement : |
+| 199 | Aucun élément Capella reconnu dans ce fichier |
+| 224 | Ouvrir un autre modèle Capella |
+| 225 | Modèle actuel : |
+| 225 | Déposez un nouveau fichier .capella pour le remplacer. |
+| 291 | Shared |
+| 310 | Project |
+| 367 | Composition |
+| 367 | Aggregation |
+| 367 | Association |
+| 367 | Containment |
+| 367 | Generalization |
+| 367 | Realization |
+| 367 | Dependency |
+| 367 | Usage |
+| 367 | Abstraction |
+| 367 | Refine |
+| 367 | Trace |
+| 367 | Satisfy |
+| 367 | Verify |
+| 367 | Copy |
+| 367 | Allocation |
+| 368 | Block |
+| 368 | Component |
+| 368 | Class |
+| 368 | Interface |
+| 368 | Requirement |
+| 368 | Package |
+| 371 | Aggregation |
+| 371 | Association |
+| 371 | Containment |
+| 371 | Generalization |
+| 371 | Realization |
+| 371 | Dependency |
+| 371 | Usage |
+| 371 | Abstraction |
+| 371 | Refine |
+| 371 | Trace |
+| 371 | Satisfy |
+| 371 | Verify |
+| 371 | Copy |
+| 371 | Allocation |
+| 480 | PhysicalComponent (NODE) |
+| 481 | PhysicalComponent (BEHAVIOR) |
+| 720 | 🔷 Chargez un fichier .capella via le bouton 🔷 CAPELLA |
 
 ## js/21-capella-vues-base.js
 
@@ -2428,3 +2429,121 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 633 | Hors couche |
 | 634 | ct.chk |
 | 634 | Contraintes — contrôles |
+
+## js/40-suivi-fichier.js
+
+| Ligne | Texte |
+|---:|---|
+| 59 | aucune différence |
+| 60 | var(--c-ok,#3fb950) |
+| 60 | ajouté(s) |
+| 60 | var(--c-err,#f85149) |
+| 60 | supprimé(s) |
+| 60 | var(--c-warn,#e3b341) |
+| 60 | modifié(s) |
+| 60 | déplacé(s) |
+| 103 | Modèle Capella |
+| 148 | ✔ Le fichier n'a pas changé |
+| 152 | Aucun nouvel enregistrement depuis la dernière détection |
+| 152 | ✔ Le fichier n'a pas changé |
+| 159 | ✔ Le fichier correspond au modèle affiché |
+| 180 | ⚠ Fichier illisible pour l'instant (enregistrement en cours ?) — réessayez |
+| 191 | Fichier réenregistré — aucune différence de contenu |
+| 214 | Le fichier choisi (« |
+| 214 | ») n'a pas le même nom que le modèle affiché (« |
+| 214 | »). Le comparer quand même ? |
+| 215 | Impossible de lire « |
+| 220 | ✔ Le fichier correspond au modèle affiché |
+| 236 | Mise à jour impossible : |
+| 236 | Le modèle précédent est conservé. |
+| 246 | — avant la mise à jour de |
+| 249 | ✔ Modèle mis à jour ( |
+| 249 | différence(s)) |
+| 258 | — sur le disque ( |
+| 258 | ), non appliquée |
+| 259 | — avant la mise à jour de |
+| 260 | — version d'ouverture ( |
+| 282 | enregistrement(s) détecté(s) — |
+| 282 | différence(s) avec le modèle affiché |
+| 283 | Le fichier a été modifié : resélectionnez-le pour voir le delta |
+| 284 | Suivi du fichier .capella : vérifier les mises à jour, delta, historique |
+| 305 | 🔄 Modèle modifié sur le disque « |
+| 306 | enregistrements détectés depuis |
+| 306 | , dernier à |
+| 306 | enregistré le |
+| 307 | par rapport au modèle affiché 🔍 Voir le delta ✔ Mettre à jour Plus tard |
+| 310 | a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta. |
+| 311 | est introuvable (déplacé, renommé ou supprimé). Choisissez le fichier à suivre. |
+| 312 | n'est plus accessible (autorisation refusée). Choisissez de nouveau le fichier à suivre. |
+| 313 | Modèle modifié sur le disque |
+| 313 | Fichier suivi indisponible |
+| 314 | 📂 Choisir le fichier… Plus tard |
+| 339 | accès direct — relecture automatique |
+| 339 | accès limité — modification signalée, fichier à resélectionner |
+| 339 | aucun fichier suivi (page sauvegardée) |
+| 340 | 1 min |
+| 340 | 5 min |
+| 341 | Affiché : fichier du |
+| 342 | Dernière vérification : |
+| 342 | en cours… |
+| 343 | Vérifier maintenant |
+| 343 | Choisir le fichier à comparer… |
+| 344 | 📋 Voir le delta en attente ( |
+| 344 | enreg., |
+| 344 | diff.) ✔ Mettre à jour l'affichage |
+| 347 | Détecter les nouvelles versions toutes les |
+| 347 | Disponible quand un fichier .capella est suivi |
+| 349 | Vérifier au retour dans la fenêtre Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée. |
+| 352 | 🕘 Historique des mises à jour ( |
+| 353 | ⚖ Comparer avec la version avant la dernière mise à jour |
+| 354 | ⚖ Comparer avec la version d'ouverture |
+| 355 | 📂 Suivre un autre fichier (nouvelle version)… |
+| 396 | Modèle affiché : fichier du |
+| 397 | Mise à jour appliquée à |
+| 397 | : fichier du |
+| 397 | enregistrements cumulés) |
+| 401 | Σ Cumul — modèle affiché → dernier enregistrement |
+| 404 | Ajouté |
+| 404 | var(--c-ok,#3fb950) |
+| 404 | Supprimé |
+| 404 | var(--c-err,#f85149) |
+| 404 | Modifié |
+| 404 | var(--c-warn,#e3b341) |
+| 417 | changement(s) |
+| 418 | Propriété Avant Après |
+| 423 | Delta des modifications |
+| 423 | Mise à jour du |
+| 427 | Par couche : |
+| 427 | Enregistrement |
+| 429 | Tous |
+| 429 | ➕ Ajoutés |
+| 429 | ➖ Supprimés |
+| 429 | ✎ Modifiés |
+| 429 | ↪ Déplacés |
+| 432 | Statut Couche Type Élément Détail |
+| 433 | lignes affichées sur |
+| 433 | — filtrez, exportez en CSV ou ouvrez ⚖ Comparaison. |
+| 434 | ⬇ CSV |
+| 434 | Aucune différence pour ce filtre. |
+| 438 | ⚖ Ouvrir dans Comparaison de versions |
+| 439 | ⚖ Ouvrir dans Comparaison de versions |
+| 441 | Plus tard ✔ Mettre à jour l'affichage |
+| 441 | Fermer |
+| 456 | Ajouté |
+| 456 | Supprimé |
+| 456 | Modifié |
+| 456 | (déplacé) |
+| 459 | Statut |
+| 459 | Couche |
+| 459 | Type |
+| 459 | Élément |
+| 459 | Propriété |
+| 459 | Avant |
+| 459 | Après |
+| 468 | 🕘 Historique des mises à jour — « |
+| 469 | » ✕ Ouvert à |
+| 471 | . Cliquez sur une mise à jour pour voir son delta. |
+| 472 | Appliquée à Fichier du Enreg. Changements |
+| 474 | Aucune mise à jour appliquée depuis l'ouverture du modèle. |
+| 476 | Fermer |
+| 476 | ⚖ Delta cumulé depuis l'ouverture |

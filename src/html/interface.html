@@ -20,6 +20,11 @@
   <div class="tbtn" id="b-ref" style="display:none">↺ Reset</div>
   <div class="tsep"></div>
   <div class="tbtn" id="b-capella-load" title="Charger un fichier Capella">🔷 CAPELLA</div>
+  <!-- 🔄 Suivi du fichier .capella (mises à jour, delta, historique) — visible quand un modèle est chargé -->
+  <div style="position:relative;display:none" id="b-cap-watch">
+    <div class="tbtn" id="b-cap-watch-main">🔄 Suivi<span id="b-cap-watch-badge" class="cw-badge" style="display:none"></span> ▾</div>
+    <div id="cap-watch-dd" style="display:none"></div>
+  </div>
   <div class="tbtn" id="b-save-direct" title="Enregistrer la page (avec le modèle chargé) directement dans un fichier HTML, sans passer par les téléchargements (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous">💾 Enregistrer</div>
   <div class="tbtn" id="b-save-page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome">💾 Page HTML</div>
   <!-- Éditer/Sauver/Charger → dropdown -->
@@ -310,6 +315,11 @@
 
 <input type="file" id="file-input" accept=".json" style="display:none">
 <input type="file" id="capella-file-input" accept=".capella,.melodymodeller,.xml" style="display:none">
+<input type="file" id="cap-watch-input" accept=".capella,.melodymodeller,.xml" style="display:none">
+<!-- 🔄 Suivi du fichier : notification de mise à jour, message bref, fenêtre du delta -->
+<div id="cap-watch-note" style="display:none"></div>
+<div id="cap-watch-flash" style="display:none"></div>
+<div id="cap-watch-ov" style="display:none"></div>
 
 <!-- ═══ CAPELLA DATA PANEL (full overlay, shown when mode=capella) ═══ -->
 <div id="capella-overlay" style="display:none;position:fixed;inset:0;top:0;bottom:25px;background:var(--c-bg);z-index:50;flex-direction:row;">

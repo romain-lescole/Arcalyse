@@ -138,7 +138,7 @@ document.addEventListener('keydown', e=>{
 function capEsc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 // ── File loading ──
-document.getElementById('b-capella-load').addEventListener('click',()=>document.getElementById('capella-file-input').click());
+document.getElementById('b-capella-load').addEventListener('click',()=>capPickCapellaFile());
 document.getElementById('capella-file-input').addEventListener('change',e=>{
   const f=e.target.files[0]; if(!f) return;
   capLoadFile(f);
@@ -149,8 +149,9 @@ document.getElementById('capella-file-input').addEventListener('change',e=>{
  * l'extension, lit le XML localement puis rejoue le pipeline complet (arbre, types,
  * relations, liens, chaînes, panneaux) et bascule sur la vue Capella Data.
  * @param {File} f - Fichier choisi ou déposé
+ * @param {FileSystemFileHandle} [handle] - Accès au fichier sur disque (Edge/Chrome), pour le 🔄 suivi des mises à jour
  */
-function capLoadFile(f){
+function capLoadFile(f, handle){
   const name=(f&&f.name)||'';
   const ext=(name.split('.').pop()||'').toLowerCase();
   if (ext==='aird' || ext==='afm') {
@@ -171,23 +172,8 @@ function capLoadFile(f){
       try{
         const doc=new DOMParser().parseFromString(ev.target.result,'application/xml');
         if(doc.querySelector('parsererror')) throw new Error('XML invalide');
-        cap_xmlDoc=doc;
-        capAllElements=[];
-        _capParentIndexCache=null; _capElementByIdCache=null; _tvCapRowsCache=null; capChainsData=null; capLinksData=null; _capPortsCache=null; capAnaReset();
-        capTreeData=capBuildTree(doc.documentElement,new Set());
-        if(!capAllElements.length) throw new Error('Aucun élément Capella reconnu dans ce fichier');
-        capBuildTypeRegistry();
-        capRunBulk(()=>{ // un seul rendu du panneau et de l'arborescence à la fin
-          capInjectToArbo();
-          capInjectCapellaRelsToCriteria();
-          capInjectLinksToModel();
-          capFilterArboToLinked();
-          capInjectChainsToModal();
-          capApplyPanelOnLoad();
-        });
-        capLoaded=true;
-        capCurrentFileName=name;
-        applyMode('capella');
+        capApplyXmlDoc(doc, name);
+        capWatchSetSource(f, handle||null, ev.target.result);
         capWelcomeStatus('','');
         capShowWelcome(false);
       }catch(err){
@@ -197,6 +183,32 @@ function capLoadFile(f){
     },30);
   };
   reader.readAsText(f,'UTF-8');
+}
+
+/** Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
+ * reconstruit l'arbre et le registre des types, rejoue les injections et réaffiche la vue Capella courante.
+ * Lève une erreur si aucun élément Capella n'est reconnu (le modèle affiché est alors perdu : l'appelant affiche l'erreur).
+ * @param {Document} doc - Document XML Capella
+ * @param {string} name - Nom du fichier
+ */
+function capApplyXmlDoc(doc, name){
+  cap_xmlDoc=doc;
+  capAllElements=[];
+  _capParentIndexCache=null; _capElementByIdCache=null; _tvCapRowsCache=null; capChainsData=null; capLinksData=null; _capPortsCache=null; capAnaReset();
+  capTreeData=capBuildTree(doc.documentElement,new Set());
+  if(!capAllElements.length) throw new Error('Aucun élément Capella reconnu dans ce fichier');
+  capBuildTypeRegistry();
+  capRunBulk(()=>{ // un seul rendu du panneau et de l'arborescence à la fin
+    capInjectToArbo();
+    capInjectCapellaRelsToCriteria();
+    capInjectLinksToModel();
+    capFilterArboToLinked();
+    capInjectChainsToModal();
+    capApplyPanelOnLoad();
+  });
+  capLoaded=true;
+  capCurrentFileName=name;
+  applyMode('capella');
 }
 
 /* ── Écran d'accueil & glisser-déposer ─────────────────────────────────── */
@@ -224,7 +236,7 @@ function capUpdateWelcome(){ capShowWelcome(!capLoaded); }
 
 (function(){
   const zone=document.getElementById('cap-drop-zone');
-  const browse=()=>document.getElementById('capella-file-input').click();
+  const browse=()=>capPickCapellaFile();
   document.getElementById('cw-browse').addEventListener('click',ev=>{ ev.stopPropagation(); browse(); });
   zone.addEventListener('click',browse);
   // Clic hors de la zone quand un modèle est chargé : referme la surimpression
@@ -249,7 +261,11 @@ function capUpdateWelcome(){ capShowWelcome(!capLoaded); }
     if(!hasFiles(ev)) return;
     ev.preventDefault(); depth=0; zone.classList.remove('cw-drag');
     const f=ev.dataTransfer.files&&ev.dataTransfer.files[0];
-    if(f) capLoadFile(f); else if(capLoaded) capShowWelcome(false);
+    // Edge/Chrome : récupère aussi l'accès au fichier (à demander pendant l'événement) pour le 🔄 suivi
+    const it=ev.dataTransfer.items&&ev.dataTransfer.items[0];
+    const hp=(it&&it.getAsFileSystemHandle)?it.getAsFileSystemHandle().catch(()=>null):null;
+    if(!f){ if(capLoaded) capShowWelcome(false); return; }
+    if(hp) hp.then(h=>capLoadFile(f, h&&h.kind==='file'?h:null)); else capLoadFile(f);
   });
   capUpdateWelcome();
   window.addEventListener('load',capUpdateWelcome); // après un éventuel amorçage de page sauvegardée

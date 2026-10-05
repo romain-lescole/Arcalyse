@@ -142,6 +142,7 @@
           <tr><td>🔌 Physical Link · 🔀 Component Exchange · 🧩 Ports</td><td>Analyse des interfaces et contrôles de cohérence (onglet 🔌 Interfaces & ports).</td></tr>
           <tr><td>ƒ Fonctions</td><td>Fonctions couche par couche : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier (onglet ƒ Fonctions · 🔬 Analyses).</td></tr>
           <tr><td>🔬 Analyses</td><td>Traçabilité inter-couches, capacités & missions, modes & états, comparaison de deux versions (onglet 🔬 Analyses).</td></tr>
+          <tr><td>🔄 Suivi</td><td>Détection des nouvelles versions du fichier .capella, delta des modifications et mise à jour après validation.</td></tr>
           <tr><td>🧭 Explorateur › 📖 Index des types</td><td>Glossaire des types présents : type technique, Human Type, nombre, description.</td></tr>
         </table>
         <h3>Panneau de détail</h3>
@@ -236,6 +237,15 @@
           <tr><td>◈ Machines à états</td><td>Par composant : diagramme (états bleus, modes jaunes, ● initial, ◉ final, ◆ choix ; transitions étiquetées <i>déclencheur [garde] / effet</i>), tables des états (entry / do / exit, fonctions disponibles) et des transitions.</td></tr>
           <tr><td>▦ Fonctions × états</td><td>Disponibilité des fonctions dans chaque état ou mode (<code>availableInStates</code>).</td></tr>
           <tr><td>🩺 Contrôles</td><td>Régions sans état initial, états inatteignables, états sans issue, transitions sans déclencheur ni garde, fonctions jamais disponibles.</td></tr>
+        </table>
+        <h3>🔄 Suivi du fichier .capella (mises à jour)</h3>
+        <p>Le bouton <b>🔄 Suivi</b> (à côté de 🔷 CAPELLA) détecte qu'une nouvelle version du fichier chargé a été enregistrée (par Capella) et propose de mettre à jour l'affichage. <b>Rien n'est appliqué sans votre validation.</b></p>
+        <table class="hp-t">
+          <tr><td>Détection</td><td>Automatique (toutes les 10 s, 30 s, 1 min ou 5 min, et au retour dans la fenêtre) ou manuelle (🔍 Vérifier maintenant). Une notification affiche le nombre d'éléments ➕ ajoutés, ➖ supprimés, ✎ modifiés, ↪ déplacés ; le badge du bouton indique le nombre d'enregistrements en attente.</td></tr>
+          <tr><td>Delta</td><td>🔍 Voir le delta : liste filtrable, détail propriété par propriété (avant / après), synthèse par couche, export CSV, ou ouverture dans ⚖ Comparaison de versions.</td></tr>
+          <tr><td>Plusieurs enregistrements</td><td>Le delta <b>cumulé</b> (modèle affiché → dernier enregistrement) est celui qui sera appliqué ; chaque enregistrement détecté est aussi listé avec son propre delta (par rapport au précédent). Si le fichier revient à la version affichée, la proposition disparaît.</td></tr>
+          <tr><td>Après mise à jour</td><td>La vue en cours est conservée. 🕘 Historique des mises à jour de la session (delta de chacune) ; ⚖ comparaison avec la version d'avant la dernière mise à jour ou avec la version d'ouverture.</td></tr>
+          <tr><td>Navigateur</td><td>Edge / Chrome : ouvrez le modèle par 🔷 CAPELLA ou par glisser-déposer pour un accès direct (relecture automatique). Sinon (autre navigateur, page HTML sauvegardée), la modification est signalée quand c'est possible et il faut resélectionner le fichier (📂).</td></tr>
         </table>
         <h3>⚖ Comparaison de versions</h3>
         <p>Chargez une autre version du même modèle (par défaut l'<b>ancienne</b> ; ⇄ pour inverser). Les éléments sont appariés par identifiant :</p>

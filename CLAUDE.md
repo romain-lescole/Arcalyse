@@ -57,6 +57,7 @@ Application **autonome et 100 % hors ligne** qui charge un fichier `.capella` (X
 | `js/37-capella-cablage.js` | Câblage final (détail par id, redimensionnement de la barre latérale) |
 | `js/39-exigences-donnees.js` | 🔬 Analyses : 📑 Exigences (`capComputeRequirements`), 🏷 Propriétés PVMT (`capComputePvmt`), 🗃 Données & interfaces (`capComputeDataModel`), ⛓ Contraintes ; sections du panneau de détail (`capXtDetail`), indicateurs du tableau de bord (`capXtDashCatalog`) |
 | `js/38-theme-perso.js` | 🎨 Thème personnalisé : éditeur `capThemeEditor`, stockage `cap-theme-custom`, couleurs des couches `capThemeLayersApply` |
+| `js/40-suivi-fichier.js` | 🔄 Suivi du fichier `.capella` : `_capWatch`, détection (`capWatchCheck`, accès direct `showOpenFilePicker`), delta cumulé / pas à pas, `capWatchApply`, historique |
 
 Textes : inventaire **`docs/TEXTES.md`** ; traduction : **`docs/i18n/`**. Détails fonctionnels et pièges connus : **`docs/NOTES-TECHNIQUES.md`** (à lire quand on touche une zone). Liste des fonctions par module : **`docs/INDEX-FONCTIONS.md`**.
 
