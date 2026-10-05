@@ -287,7 +287,7 @@ function capRenderDiff(box){
       <div class="ana-diff-file"><span class="ana-dim">Ancienne version (référence)</span><b>${capEsc(oldName||'—')}</b></div>
       <button class="cap-lf-btn" id="ana-df-swap" title="Inverser ancienne / nouvelle"${capDiffDoc?'':' disabled'}>⇄</button>
       <div class="ana-diff-file"><span class="ana-dim">Nouvelle version</span><b>${capEsc(newName||'—')}</b></div>
-      <label class="cw-btn ana-diff-load">📂 ${capDiffDoc?'Changer la version à comparer…':'Charger une autre version (.capella)…'}<input type="file" id="ana-df-file" accept=".capella,.melodymodeller,.xml" style="display:none"></label>
+      <label class="cw-btn ana-diff-load">📂 ${capDiffDoc?'Changer la version à comparer…':'Charger une autre version (.capella)…'}<input type="file" id="ana-df-file"${capIsMobile()?'':' accept=".capella,.melodymodeller,.xml"'} style="display:none"></label>
     </div>`;
   if(!capDiffDoc){
     box.innerHTML=head+`<div class="phl-empty">Chargez une autre version du même modèle (par défaut considérée comme l'<b>ancienne</b> version ; ⇄ pour inverser).<br>Les éléments sont appariés par identifiant : ajoutés, supprimés, modifiés (attributs, description, références, contenu) et déplacés.</div>`;

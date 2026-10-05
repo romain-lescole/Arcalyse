@@ -472,7 +472,7 @@
 - `capXtDetail` (l. 584) — Sections supplémentaires du panneau de détail : exigences liées, propriétés, contraintes.
 - `capXtDashCatalog` (l. 608) — Ajoute au catalogue du tableau de bord les indicateurs Exigences, Propriétés, Données & interfaces, Contraintes.
 
-## 40-suivi-fichier.js — 516 lignes
+## 40-suivi-fichier.js — 523 lignes
 
 - `capWatchHash` (l. 30) — Empreinte rapide d'un texte (FNV-1a 32 bits + longueur), pour reconnaître une version déjà vue.
 - `capWatchTime` (l. 37) — Heure lisible (hh:mm:ss) d'un horodatage. @param {number} t - Millisecondes
@@ -482,21 +482,22 @@
 - `capWatchChips` (l. 58) — Pastilles ➕ ➖ ✎ ↪ d'un comptage. @param {object} c - Comptage capWatchCounts @returns {string} HTML
 - `capWatchSetSource` (l. 69) — Enregistre la source suivie après le chargement d'un modèle (remet le suivi à zéro).
 - `capWatchArm` (l. 82) — (Ré)arme la vérification périodique selon les réglages.
-- `capPickCapellaFile` (l. 92) — Ouvre un fichier Capella à charger : sélecteur avec accès direct (Edge/Chrome, permet le 🔄 suivi),
-- `capWatchPickerFailed` (l. 106) — Repli quand le sélecteur à accès direct a été refusé : tente le sélecteur classique (le navigateur peut
-- `capWatchPick` (l. 117) — Demande un fichier .capella avec le sélecteur à accès direct quand le navigateur le permet.
-- `capWatchReadDisk` (l. 135) — Lit l'état du fichier suivi sur le disque.
-- `capWatchCheck` (l. 154) — Vérifie si le fichier suivi a changé et, le cas échéant, prépare la mise à jour (delta + notification).
-- `capWatchRegister` (l. 195) — Analyse une nouvelle version lue sur le disque et l'ajoute aux enregistrements en attente :
-- `capWatchPickNewVersion` (l. 224) — Choisit manuellement la nouvelle version du fichier (accès limité, page sauvegardée, fichier déplacé) :
-- `capWatchApply` (l. 249) — Applique la version en attente : recharge le modèle (vue courante conservée), archive le delta dans l'historique
-- `capWatchOpenCompare` (l. 274) — Ouvre ⚖ Comparaison de versions (🔬 Analyses) sur deux versions connues du suivi.
-- `capWatchUpdateUi` (l. 291) — Met à jour le bouton 🔄 Suivi (visibilité, badge, info-bulle).
-- `capWatchFlash` (l. 308) — Affiche brièvement un message dans la notification (sans action). @param {string} msg - Message
-- `capWatchNote` (l. 317) — Affiche ou masque la notification de mise à jour (coin inférieur droit).
-- `capWatchMenu` (l. 347) — Ouvre ou ferme le menu du bouton 🔄 Suivi. @param {boolean} [show] - Forcer l'état (sinon bascule)
-- `capWatchMenuRender` (l. 355) — Construit le contenu du menu 🔄 Suivi (état de la source, réglages, historique).
-- `capWatchModalClose` (l. 391) — Ferme la fenêtre du delta.
-- `capWatchModalRefresh` (l. 395) — Réaffiche la fenêtre du delta si elle montre la version en attente (nouvel enregistrement détecté entre-temps).
-- `capWatchShowDelta` (l. 403) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
-- `capWatchShowHistory` (l. 483) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
+- `capIsMobile` (l. 90) — Vrai sur téléphone / tablette : leurs sélecteurs ne connaissent pas l'extension .capella et grisent ces fichiers
+- `capPickCapellaFile` (l. 99) — Ouvre un fichier Capella à charger : sélecteur avec accès direct (Edge/Chrome, permet le 🔄 suivi),
+- `capWatchPickerFailed` (l. 113) — Repli quand le sélecteur à accès direct a été refusé : tente le sélecteur classique (le navigateur peut
+- `capWatchPick` (l. 124) — Demande un fichier .capella avec le sélecteur à accès direct quand le navigateur le permet.
+- `capWatchReadDisk` (l. 142) — Lit l'état du fichier suivi sur le disque.
+- `capWatchCheck` (l. 161) — Vérifie si le fichier suivi a changé et, le cas échéant, prépare la mise à jour (delta + notification).
+- `capWatchRegister` (l. 202) — Analyse une nouvelle version lue sur le disque et l'ajoute aux enregistrements en attente :
+- `capWatchPickNewVersion` (l. 231) — Choisit manuellement la nouvelle version du fichier (accès limité, page sauvegardée, fichier déplacé) :
+- `capWatchApply` (l. 256) — Applique la version en attente : recharge le modèle (vue courante conservée), archive le delta dans l'historique
+- `capWatchOpenCompare` (l. 281) — Ouvre ⚖ Comparaison de versions (🔬 Analyses) sur deux versions connues du suivi.
+- `capWatchUpdateUi` (l. 298) — Met à jour le bouton 🔄 Suivi (visibilité, badge, info-bulle).
+- `capWatchFlash` (l. 315) — Affiche brièvement un message dans la notification (sans action). @param {string} msg - Message
+- `capWatchNote` (l. 324) — Affiche ou masque la notification de mise à jour (coin inférieur droit).
+- `capWatchMenu` (l. 354) — Ouvre ou ferme le menu du bouton 🔄 Suivi. @param {boolean} [show] - Forcer l'état (sinon bascule)
+- `capWatchMenuRender` (l. 362) — Construit le contenu du menu 🔄 Suivi (état de la source, réglages, historique).
+- `capWatchModalClose` (l. 398) — Ferme la fenêtre du delta.
+- `capWatchModalRefresh` (l. 402) — Réaffiche la fenêtre du delta si elle montre la version en attente (nouvel enregistrement détecté entre-temps).
+- `capWatchShowDelta` (l. 410) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
+- `capWatchShowHistory` (l. 490) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).

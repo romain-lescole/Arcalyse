@@ -2442,110 +2442,110 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 60 | var(--c-warn,#e3b341) |
 | 60 | modifié(s) |
 | 60 | déplacé(s) |
-| 108 | Le sélecteur de fichiers de ce navigateur est indisponible : cliquez de nouveau pour choisir le fichier, ou glissez-le dans la fenêtre. |
-| 121 | Modèle Capella |
-| 125 | Sélecteur à accès direct indisponible : |
-| 168 | ✔ Le fichier n'a pas changé |
-| 172 | Aucun nouvel enregistrement depuis la dernière détection |
-| 172 | ✔ Le fichier n'a pas changé |
-| 179 | ✔ Le fichier correspond au modèle affiché |
-| 200 | ⚠ Fichier illisible pour l'instant (enregistrement en cours ?) — réessayez |
-| 211 | Fichier réenregistré — aucune différence de contenu |
-| 233 | Le fichier choisi (« |
-| 233 | ») n'a pas le même nom que le modèle affiché (« |
-| 233 | »). Le comparer quand même ? |
-| 234 | Impossible de lire « |
-| 239 | ✔ Le fichier correspond au modèle affiché |
-| 255 | Mise à jour impossible : |
-| 255 | Le modèle précédent est conservé. |
-| 265 | — avant la mise à jour de |
-| 268 | ✔ Modèle mis à jour ( |
-| 268 | différence(s)) |
-| 277 | — sur le disque ( |
-| 277 | ), non appliquée |
-| 278 | — avant la mise à jour de |
-| 279 | — version d'ouverture ( |
-| 301 | enregistrement(s) détecté(s) — |
-| 301 | différence(s) avec le modèle affiché |
-| 302 | Le fichier a été modifié : resélectionnez-le pour voir le delta |
-| 303 | Suivi du fichier .capella : vérifier les mises à jour, delta, historique |
-| 324 | 🔄 Modèle modifié sur le disque « |
-| 325 | enregistrements détectés depuis |
-| 325 | , dernier à |
-| 325 | enregistré le |
-| 326 | par rapport au modèle affiché 🔍 Voir le delta ✔ Mettre à jour Plus tard |
-| 329 | a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta. |
-| 330 | est introuvable (déplacé, renommé ou supprimé). Choisissez le fichier à suivre. |
-| 331 | n'est plus accessible (autorisation refusée). Choisissez de nouveau le fichier à suivre. |
-| 332 | Modèle modifié sur le disque |
-| 332 | Fichier suivi indisponible |
-| 333 | 📂 Choisir le fichier… Plus tard |
-| 358 | accès direct — relecture automatique |
-| 358 | accès limité — modification signalée, fichier à resélectionner |
-| 358 | aucun fichier suivi (page sauvegardée) |
-| 359 | 1 min |
-| 359 | 5 min |
-| 360 | Affiché : fichier du |
-| 361 | Dernière vérification : |
-| 361 | en cours… |
-| 362 | Vérifier maintenant |
-| 362 | Choisir le fichier à comparer… |
-| 363 | 📋 Voir le delta en attente ( |
-| 363 | enreg., |
-| 363 | diff.) ✔ Mettre à jour l'affichage |
-| 366 | Détecter les nouvelles versions toutes les |
-| 366 | Disponible quand un fichier .capella est suivi |
-| 368 | Vérifier au retour dans la fenêtre Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée. |
-| 371 | 🕘 Historique des mises à jour ( |
-| 372 | ⚖ Comparer avec la version avant la dernière mise à jour |
-| 373 | ⚖ Comparer avec la version d'ouverture |
-| 374 | 📂 Suivre un autre fichier (nouvelle version)… |
-| 415 | Modèle affiché : fichier du |
-| 416 | Mise à jour appliquée à |
-| 416 | : fichier du |
-| 416 | enregistrements cumulés) |
-| 420 | Σ Cumul — modèle affiché → dernier enregistrement |
-| 423 | Ajouté |
-| 423 | var(--c-ok,#3fb950) |
-| 423 | Supprimé |
-| 423 | var(--c-err,#f85149) |
-| 423 | Modifié |
-| 423 | var(--c-warn,#e3b341) |
-| 436 | changement(s) |
-| 437 | Propriété Avant Après |
-| 442 | Delta des modifications |
-| 442 | Mise à jour du |
-| 446 | Par couche : |
-| 446 | Enregistrement |
-| 448 | Tous |
-| 448 | ➕ Ajoutés |
-| 448 | ➖ Supprimés |
-| 448 | ✎ Modifiés |
-| 448 | ↪ Déplacés |
-| 451 | Statut Couche Type Élément Détail |
-| 452 | lignes affichées sur |
-| 452 | — filtrez, exportez en CSV ou ouvrez ⚖ Comparaison. |
-| 453 | ⬇ CSV |
-| 453 | Aucune différence pour ce filtre. |
-| 457 | ⚖ Ouvrir dans Comparaison de versions |
-| 458 | ⚖ Ouvrir dans Comparaison de versions |
-| 460 | Plus tard ✔ Mettre à jour l'affichage |
-| 460 | Fermer |
-| 475 | Ajouté |
-| 475 | Supprimé |
-| 475 | Modifié |
-| 475 | (déplacé) |
-| 478 | Statut |
-| 478 | Couche |
-| 478 | Type |
-| 478 | Élément |
-| 478 | Propriété |
-| 478 | Avant |
-| 478 | Après |
-| 487 | 🕘 Historique des mises à jour — « |
-| 488 | » ✕ Ouvert à |
-| 490 | . Cliquez sur une mise à jour pour voir son delta. |
-| 491 | Appliquée à Fichier du Enreg. Changements |
-| 493 | Aucune mise à jour appliquée depuis l'ouverture du modèle. |
-| 495 | Fermer |
-| 495 | ⚖ Delta cumulé depuis l'ouverture |
+| 115 | Le sélecteur de fichiers de ce navigateur est indisponible : cliquez de nouveau pour choisir le fichier, ou glissez-le dans la fenêtre. |
+| 128 | Modèle Capella |
+| 132 | Sélecteur à accès direct indisponible : |
+| 175 | ✔ Le fichier n'a pas changé |
+| 179 | Aucun nouvel enregistrement depuis la dernière détection |
+| 179 | ✔ Le fichier n'a pas changé |
+| 186 | ✔ Le fichier correspond au modèle affiché |
+| 207 | ⚠ Fichier illisible pour l'instant (enregistrement en cours ?) — réessayez |
+| 218 | Fichier réenregistré — aucune différence de contenu |
+| 240 | Le fichier choisi (« |
+| 240 | ») n'a pas le même nom que le modèle affiché (« |
+| 240 | »). Le comparer quand même ? |
+| 241 | Impossible de lire « |
+| 246 | ✔ Le fichier correspond au modèle affiché |
+| 262 | Mise à jour impossible : |
+| 262 | Le modèle précédent est conservé. |
+| 272 | — avant la mise à jour de |
+| 275 | ✔ Modèle mis à jour ( |
+| 275 | différence(s)) |
+| 284 | — sur le disque ( |
+| 284 | ), non appliquée |
+| 285 | — avant la mise à jour de |
+| 286 | — version d'ouverture ( |
+| 308 | enregistrement(s) détecté(s) — |
+| 308 | différence(s) avec le modèle affiché |
+| 309 | Le fichier a été modifié : resélectionnez-le pour voir le delta |
+| 310 | Suivi du fichier .capella : vérifier les mises à jour, delta, historique |
+| 331 | 🔄 Modèle modifié sur le disque « |
+| 332 | enregistrements détectés depuis |
+| 332 | , dernier à |
+| 332 | enregistré le |
+| 333 | par rapport au modèle affiché 🔍 Voir le delta ✔ Mettre à jour Plus tard |
+| 336 | a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta. |
+| 337 | est introuvable (déplacé, renommé ou supprimé). Choisissez le fichier à suivre. |
+| 338 | n'est plus accessible (autorisation refusée). Choisissez de nouveau le fichier à suivre. |
+| 339 | Modèle modifié sur le disque |
+| 339 | Fichier suivi indisponible |
+| 340 | 📂 Choisir le fichier… Plus tard |
+| 365 | accès direct — relecture automatique |
+| 365 | accès limité — modification signalée, fichier à resélectionner |
+| 365 | aucun fichier suivi (page sauvegardée) |
+| 366 | 1 min |
+| 366 | 5 min |
+| 367 | Affiché : fichier du |
+| 368 | Dernière vérification : |
+| 368 | en cours… |
+| 369 | Vérifier maintenant |
+| 369 | Choisir le fichier à comparer… |
+| 370 | 📋 Voir le delta en attente ( |
+| 370 | enreg., |
+| 370 | diff.) ✔ Mettre à jour l'affichage |
+| 373 | Détecter les nouvelles versions toutes les |
+| 373 | Disponible quand un fichier .capella est suivi |
+| 375 | Vérifier au retour dans la fenêtre Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée. |
+| 378 | 🕘 Historique des mises à jour ( |
+| 379 | ⚖ Comparer avec la version avant la dernière mise à jour |
+| 380 | ⚖ Comparer avec la version d'ouverture |
+| 381 | 📂 Suivre un autre fichier (nouvelle version)… |
+| 422 | Modèle affiché : fichier du |
+| 423 | Mise à jour appliquée à |
+| 423 | : fichier du |
+| 423 | enregistrements cumulés) |
+| 427 | Σ Cumul — modèle affiché → dernier enregistrement |
+| 430 | Ajouté |
+| 430 | var(--c-ok,#3fb950) |
+| 430 | Supprimé |
+| 430 | var(--c-err,#f85149) |
+| 430 | Modifié |
+| 430 | var(--c-warn,#e3b341) |
+| 443 | changement(s) |
+| 444 | Propriété Avant Après |
+| 449 | Delta des modifications |
+| 449 | Mise à jour du |
+| 453 | Par couche : |
+| 453 | Enregistrement |
+| 455 | Tous |
+| 455 | ➕ Ajoutés |
+| 455 | ➖ Supprimés |
+| 455 | ✎ Modifiés |
+| 455 | ↪ Déplacés |
+| 458 | Statut Couche Type Élément Détail |
+| 459 | lignes affichées sur |
+| 459 | — filtrez, exportez en CSV ou ouvrez ⚖ Comparaison. |
+| 460 | ⬇ CSV |
+| 460 | Aucune différence pour ce filtre. |
+| 464 | ⚖ Ouvrir dans Comparaison de versions |
+| 465 | ⚖ Ouvrir dans Comparaison de versions |
+| 467 | Plus tard ✔ Mettre à jour l'affichage |
+| 467 | Fermer |
+| 482 | Ajouté |
+| 482 | Supprimé |
+| 482 | Modifié |
+| 482 | (déplacé) |
+| 485 | Statut |
+| 485 | Couche |
+| 485 | Type |
+| 485 | Élément |
+| 485 | Propriété |
+| 485 | Avant |
+| 485 | Après |
+| 494 | 🕘 Historique des mises à jour — « |
+| 495 | » ✕ Ouvert à |
+| 497 | . Cliquez sur une mise à jour pour voir son delta. |
+| 498 | Appliquée à Fichier du Enreg. Changements |
+| 500 | Aucune mise à jour appliquée depuis l'ouverture du modèle. |
+| 502 | Fermer |
+| 502 | ⚖ Delta cumulé depuis l'ouverture |

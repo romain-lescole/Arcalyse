@@ -85,7 +85,14 @@ function capWatchArm(){
     _capWatch.timer=setInterval(()=>{ if(document.visibilityState==='visible') capWatchCheck(false); }, _capWatch.period*1000);
 }
 
-let _capPickerKo=false;   // sélecteur à accès direct refusé une fois (stratégie du poste, page intégrée…) : sélecteur classique ensuite
+/** Vrai sur téléphone / tablette : leurs sélecteurs ne connaissent pas l'extension .capella et grisent ces fichiers
+ * si on filtre (attribut accept, types du sélecteur à accès direct). @returns {boolean} */
+function capIsMobile(){
+  return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent||'')||(navigator.maxTouchPoints>1&&/Macintosh/.test(navigator.userAgent||''));
+}
+// Sur mobile : aucun filtre de type (l'extension est vérifiée au chargement) et sélecteur classique uniquement
+let _capPickerKo=capIsMobile();   // sélecteur à accès direct refusé une fois (stratégie du poste, page intégrée…) ou mobile : sélecteur classique
+if(_capPickerKo) ['capella-file-input','cap-watch-input','ana-df-file'].forEach(id=>document.getElementById(id)?.removeAttribute('accept'));
 
 /** Ouvre un fichier Capella à charger : sélecteur avec accès direct (Edge/Chrome, permet le 🔄 suivi),
  * sinon sélecteur de fichier classique. Le choix est fait sans attendre, pour garder l'autorisation du clic. */
