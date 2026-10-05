@@ -2,7 +2,7 @@
  * Détecte qu'une nouvelle version du fichier chargé a été enregistrée (par Capella),
  * calcule le delta avec le modèle affiché (moteur de ⚖ Comparaison de versions) et propose
  * la mise à jour, qui n'est appliquée qu'après validation.
- * - Accès direct (Edge/Chrome, fichier ouvert par 🔷 CAPELLA ou glissé) : relecture possible à tout moment.
+ * - Accès direct (Edge/Chrome, fichier ouvert par 📁 Fichier › 🔷 Ouvrir ou glissé) : relecture possible à tout moment.
  * - Accès limité (autre navigateur, page sauvegardée) : le navigateur signale au mieux que le fichier a changé ;
  *   il faut alors le resélectionner (📂).
  * Plusieurs enregistrements avant validation : le delta proposé est CUMULÉ (affiché → dernière version),

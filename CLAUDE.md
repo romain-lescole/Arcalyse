@@ -58,6 +58,8 @@ Application **autonome et 100 % hors ligne** qui charge un fichier `.capella` (X
 | `js/39-exigences-donnees.js` | 🔬 Analyses : 📑 Exigences (`capComputeRequirements`), 🏷 Propriétés PVMT (`capComputePvmt`), 🗃 Données & interfaces (`capComputeDataModel`), ⛓ Contraintes ; sections du panneau de détail (`capXtDetail`), indicateurs du tableau de bord (`capXtDashCatalog`) |
 | `js/38-theme-perso.js` | 🎨 Thème personnalisé : éditeur `capThemeEditor`, stockage `cap-theme-custom`, couleurs des couches `capThemeLayersApply` |
 | `js/40-suivi-fichier.js` | 🔄 Suivi du fichier `.capella` : `_capWatch`, détection (`capWatchCheck`, accès direct `showOpenFilePicker`), delta cumulé / pas à pas, `capWatchApply`, historique |
+| `js/41-barre-vues.js` | ☰ Barre des vues : catalogue `CAP_NAV_ITEMS`, menus groupés, épingles, menu ☰ / Ctrl+K (`capNavRender`, `capNavOpen`), réglage `cap-toolbar` |
+| `js/42-tableaux-analyses.js` | 🔬 Tableaux des analyses : ligne de filtres par colonne et largeur des colonnes ajoutées automatiquement (`capTfEnhanceAll`, observateur `capTfWatch`), état `_capTfState` |
 
 Textes : inventaire **`docs/TEXTES.md`** ; traduction : **`docs/i18n/`**. Détails fonctionnels et pièges connus : **`docs/NOTES-TECHNIQUES.md`** (à lire quand on touche une zone). Liste des fonctions par module : **`docs/INDEX-FONCTIONS.md`**.
 

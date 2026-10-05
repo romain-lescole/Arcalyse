@@ -127,9 +127,8 @@ function capUpdateToolbarForView(view){
   const tabs=document.getElementById('cap-elem-tabs');
   if(tabs){ tabs.style.display=isElem?'flex':'none';
     tabs.querySelectorAll('[data-ev]').forEach(b=>b.classList.toggle('active', b.dataset.ev===view)); }
-  // État actif des boutons de vue
-  const btnId='cap-v-'+(isElem?'elements':view);
-  document.querySelectorAll('#cap-tb-views .tbtn').forEach(b=>b.classList.toggle('active', b.id===btnId));
+  // État actif des boutons de vue (barre générée par capNavRender)
+  capNavSync(true);
 }
 
 /** Affiche une vue Capella (bascule en mode capella si besoin).
@@ -141,12 +140,7 @@ function capShowView(view){
   if(currentMode!=='capella') applyMode('capella'); // bascule depuis Relation Map / Table View
   else capRenderCurrentView();
 }
-['cap-v-elements','cap-v-links','cap-v-chains','cap-v-physlink','cap-v-compex','cap-v-ports','cap-v-functions','cap-v-analyses','cap-v-dashboard'].forEach(id=>{
-  document.getElementById(id)?.addEventListener('click',()=>{
-    const v=id.replace('cap-v-','');
-    capShowView(v==='elements'?capElemView:v);
-  });
-});
+// Boutons de vue de la barre du haut : voir 41-barre-vues.js (menus, épingles, Ctrl+K)
 document.querySelectorAll('#cap-elem-tabs [data-ev]').forEach(b=>b.addEventListener('click',()=>capShowView(b.dataset.ev)));
 // Tree expand/collapse
 document.getElementById('cap-expand-all')?.addEventListener('click',()=>{

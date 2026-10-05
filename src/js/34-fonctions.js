@@ -711,9 +711,11 @@ function capRenderAnalyses(){
     c._built=true;
   }
   c.querySelectorAll('[data-an]').forEach(b=>b.classList.toggle('active',b.dataset.an===capAnaSub));
+  capNavSync();   // barre du haut : sous-vue épinglée ou menu 🔬 Analyses
   const box=c.querySelector('#ana-box');
   const R={trace:capRenderTrace, caps:capRenderCapabilities, states:capRenderStates, diff:capRenderDiff, reqs:capRenderRequirements, pvmt:capRenderPvmt, data:capRenderDataModel, cts:capRenderConstraints}[capAnaSub];
   const holder=box.querySelector(`[data-hold="${capAnaSub}"]`)||(()=>{ const d=document.createElement('div'); d.dataset.hold=capAnaSub; box.appendChild(d); return d; })();
   box.querySelectorAll('[data-hold]').forEach(h=>h.style.display=h===holder?'':'none');
   R(holder);
+  capTfWatch(box); capTfEnhanceAll(box);   // filtres et largeur des colonnes des tableaux (42-tableaux-analyses.js)
 }

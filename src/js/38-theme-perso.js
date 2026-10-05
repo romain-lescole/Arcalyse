@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════
-   THÈME PERSONNALISÉ — éditeur de couleurs (bouton 🎨 à côté du sélecteur de thème)
+   THÈME PERSONNALISÉ — éditeur de couleurs (menu 🎨 Thème › Personnaliser…)
    Un seul thème personnalisé (« 🎨 Personnalisé »), conservé dans la 💾 Page HTML
    (bloc JSON cap-theme-custom) : variables de couleur + couleurs des couches ARCADIA.
    ═══════════════════════════════════════════════════════════════════════ */
