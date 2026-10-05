@@ -502,7 +502,7 @@
 - `capWatchShowDelta` (l. 410) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 490) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 263 lignes
+## 41-barre-vues.js — 266 lignes
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
 - `CAP_NAV_GROUPS` (l. 31) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
@@ -529,14 +529,22 @@
 - `capTfFilter` (l. 85) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
 - `capTfWatch` (l. 107) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
 
-## 43-visite-guidee.js — 176 lignes
+## 43-visite-guidee.js — 354 lignes
 
-- `CAP_TOUR_STEPS` (l. 9) — Étapes de la visite : s = sélecteur de la zone (absent = bulle centrée), t = titre, x = texte (HTML),
-- `capTourVisible` (l. 59) — Indique si la zone d'une étape est affichée à l'écran.
-- `capTourStart` (l. 70) — Lance la visite guidée depuis la première étape.
-- `capTourGo` (l. 93) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
-- `capTourPos` (l. 112) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
-- `capTourRenderPop` (l. 119) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
-- `capTourPlace` (l. 130) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
-- `capTourKey` (l. 160) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
-- `capTourEnd` (l. 169) — Quitte la visite guidée et retire la mise en évidence.
+- `CAP_TOUR_STEPS` (l. 12) — Étapes de la visite générale : s = sélecteur CSS de la zone (toutes les correspondances visibles sont encadrées
+- `CAP_TOUR_EXPLORE` (l. 57) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
+- `CAP_TOUR_FLUX` (l. 72) — Étapes communes aux vues de 📡 Flux & interfaces (onglets de navigation).
+- `CAP_TOUR_ANA_TXT` (l. 75) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
+- `CAP_TOUR_VIEWS` (l. 87) — Visites contextuelles, par vue : clé = '@rm', '@table' ou vue Capella (capCurrentView) ; l = nom de la vue,
+- `capTourCtxKey` (l. 200) — Clé de la vue affichée pour les visites contextuelles.
+- `capTourCtx` (l. 209) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
+- `capTourEls` (l. 217) — Éléments affichés désignés par le sélecteur d'une étape.
+- `capTourVisible` (l. 228) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
+- `capTourStart` (l. 238) — Lance une visite guidée depuis sa première étape.
+- `capTourStartView` (l. 259) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
+- `capTourGo` (l. 267) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
+- `capTourPos` (l. 287) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
+- `capTourRenderPop` (l. 294) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
+- `capTourPlace` (l. 306) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
+- `capTourKey` (l. 338) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
+- `capTourEnd` (l. 347) — Quitte la visite guidée et retire la mise en évidence.
