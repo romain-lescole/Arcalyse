@@ -2430,7 +2430,7 @@
 "js/41-barre-vues.js";"235";"Autres vues"
 "js/41-barre-vues.js";"238";"↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML."
 "js/42-tableaux-analyses.js";"42";"Glisser pour régler la largeur de la colonne (double-clic : largeur automatique)"
-"js/42-tableaux-analyses.js";"99";"✕ effacer"
+"js/42-tableaux-analyses.js";"134";"✕ effacer"
 "js/43-visite-guidee.js";"13";"🎓 Bienvenue dans Relation Map Capella"
 "js/43-visite-guidee.js";"15";"🔷 Ouvrir un modèle"
 "js/43-visite-guidee.js";"16";"Glissez-déposez un fichier .capella ici, ou cliquez pour le chercher. Le fichier est lu sur ce poste : rien n'est envoyé."

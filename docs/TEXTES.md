@@ -2599,7 +2599,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | Ligne | Texte |
 |---:|---|
 | 42 | Glisser pour régler la largeur de la colonne (double-clic : largeur automatique) |
-| 99 | ✕ effacer |
+| 134 | ✕ effacer |
 
 ## js/43-visite-guidee.js
 

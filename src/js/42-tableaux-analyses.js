@@ -39,7 +39,6 @@ function capTfEnhance(t){
   fr.addEventListener('input',e=>{ const i=+e.target.dataset.tf; st.f[i]=e.target.value; capTfFilter(t,st); });
   // Poignées de redimensionnement
   [...head.cells].forEach((th,i)=>{
-    th.style.position='relative';
     const h=document.createElement('span'); h.className='cap-tf-rz'; h.title='Glisser pour régler la largeur de la colonne (double-clic : largeur automatique)';
     h.addEventListener('click',e=>e.stopPropagation());
     h.addEventListener('dblclick',e=>{ e.stopPropagation(); st.w=[]; t.classList.remove('cap-tf-fixed'); t.style.width='';
@@ -54,21 +53,43 @@ function capTfEnhance(t){
     });
     th.appendChild(h);
   });
+  capTfSticky(t);   // position « sticky » : sert aussi de repère aux poignées
   if(st.w.length===n) capTfWidths(t,st);
   if(st.f.some(Boolean)) capTfFilter(t,st);
 }
 
-/** Place le tableau dans un conteneur à défilement horizontal (colonnes élargies ou contenu plus large que la vue),
- * sauf s'il se trouve déjà dans une zone qui défile horizontalement à l'intérieur de 🔬 Analyses.
+/** Place le tableau dans un conteneur qui défile dans les deux sens, limité à la hauteur de la fenêtre (la barre
+ * horizontale reste visible même pour une longue liste). Si le tableau est déjà dans une zone défilante de
+ * 🔬 Analyses sans hauteur limitée, c'est cette zone qui est limitée.
  * @param {HTMLTableElement} t
  */
 function capTfScrollWrap(t){
   for(let a=t.parentElement; a&&a.id!=='ana-box'&&a.id!=='cap-view-analyses'; a=a.parentElement){
     if(a.classList.contains('cap-tf-scroll')) return;
-    const o=getComputedStyle(a).overflowX; if(o==='auto'||o==='scroll') return;
+    const cs=getComputedStyle(a);
+    if(cs.overflowX==='auto'||cs.overflowX==='scroll'){
+      if(cs.maxHeight==='none'&&!a.style.height) a.classList.add('cap-tf-scroll');   // zone existante, haute comme le tableau
+      return;
+    }
   }
   const w=document.createElement('div'); w.className='cap-tf-scroll';
   t.before(w); w.appendChild(t);
+}
+
+/** Fige l'en-tête et la ligne de filtres en haut du conteneur défilant.
+ * @param {HTMLTableElement} t
+ */
+function capTfSticky(t){
+  const head=t.rows[0], fr=t.rows[1]; if(!head) return;
+  [...head.cells].forEach(c=>{ c.style.position='sticky'; c.style.top='0'; c.style.zIndex='3'; });
+  if(fr&&fr.classList.contains('cap-tf-row')){
+    const set=()=>{ const h=head.getBoundingClientRect().height; if(h) [...fr.cells].forEach(c=>{ c.style.position='sticky'; c.style.top=h+'px'; c.style.zIndex='3'; }); };
+    set();
+    if(!head.getBoundingClientRect().height){   // tableau encore masqué : calcul au premier affichage
+      requestAnimationFrame(set);
+      t.closest('.cap-tf-scroll')?.addEventListener('scroll',set,{once:true});
+    }
+  }
 }
 
 /** Fige les largeurs actuelles des colonnes (avant le premier redimensionnement).

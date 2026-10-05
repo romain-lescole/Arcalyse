@@ -998,7 +998,7 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
 .cap-tf-rz:hover,.cap-tf-rz.drag{background:var(--c-accent);opacity:.45;}
 table.cap-tf-fixed{table-layout:fixed;}
 table.cap-tf-fixed td,table.cap-tf-fixed th{overflow-wrap:anywhere;}
-.cap-tf-scroll{overflow-x:auto;max-width:100%;margin-bottom:8px;}
+.cap-tf-scroll{overflow:auto;max-width:100%;max-height:calc(100vh - 120px);margin-bottom:8px;}
 .cap-tf-scroll>table{margin-bottom:0;}
 .cap-tf-cnt{font-size:11px;color:var(--c-dim);margin:4px 0 2px;}
 .cap-tf-clr{margin-left:8px;cursor:pointer;color:var(--c-accent);}
