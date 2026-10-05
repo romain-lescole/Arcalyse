@@ -39,6 +39,7 @@ function capTfEnhance(t){
   fr.addEventListener('input',e=>{ const i=+e.target.dataset.tf; st.f[i]=e.target.value; capTfFilter(t,st); });
   // Poignées de redimensionnement
   [...head.cells].forEach((th,i)=>{
+    th.style.position='relative';
     const h=document.createElement('span'); h.className='cap-tf-rz'; h.title='Glisser pour régler la largeur de la colonne (double-clic : largeur automatique)';
     h.addEventListener('click',e=>e.stopPropagation());
     h.addEventListener('dblclick',e=>{ e.stopPropagation(); st.w=[]; t.classList.remove('cap-tf-fixed'); t.style.width='';
@@ -53,43 +54,49 @@ function capTfEnhance(t){
     });
     th.appendChild(h);
   });
-  capTfSticky(t);   // position « sticky » : sert aussi de repère aux poignées
   if(st.w.length===n) capTfWidths(t,st);
   if(st.f.some(Boolean)) capTfFilter(t,st);
 }
 
-/** Place le tableau dans un conteneur qui défile dans les deux sens, limité à la hauteur de la fenêtre (la barre
- * horizontale reste visible même pour une longue liste). Si le tableau est déjà dans une zone défilante de
- * 🔬 Analyses sans hauteur limitée, c'est cette zone qui est limitée.
+/** Place le tableau dans un conteneur à défilement horizontal (seule la vue défile verticalement) et lui ajoute
+ * une barre de défilement horizontal flottante, collée en bas de l'écran tant que le tableau est visible.
+ * Si le tableau est déjà dans une zone défilante de 🔬 Analyses sans hauteur limitée, c'est cette zone qui est équipée.
  * @param {HTMLTableElement} t
  */
 function capTfScrollWrap(t){
+  let w=null;
   for(let a=t.parentElement; a&&a.id!=='ana-box'&&a.id!=='cap-view-analyses'; a=a.parentElement){
     if(a.classList.contains('cap-tf-scroll')) return;
     const cs=getComputedStyle(a);
     if(cs.overflowX==='auto'||cs.overflowX==='scroll'){
-      if(cs.maxHeight==='none'&&!a.style.height) a.classList.add('cap-tf-scroll');   // zone existante, haute comme le tableau
-      return;
+      if(cs.maxHeight!=='none'||a.style.height) return;   // zone à hauteur limitée : elle a déjà ses barres
+      w=a; break;                                          // zone existante, haute comme le tableau
     }
   }
-  const w=document.createElement('div'); w.className='cap-tf-scroll';
-  t.before(w); w.appendChild(t);
+  if(!w){ w=document.createElement('div'); t.before(w); w.appendChild(t); }
+  w.classList.add('cap-tf-scroll');
+  capTfHBar(w,t);
 }
 
-/** Fige l'en-tête et la ligne de filtres en haut du conteneur défilant.
- * @param {HTMLTableElement} t
+/** Barre de défilement horizontal flottante d'un tableau : synchronisée avec son conteneur, affichée seulement
+ * quand le tableau est plus large que la vue.
+ * @param {HTMLElement} w - Conteneur à défilement horizontal
+ * @param {HTMLTableElement} t - Tableau
  */
-function capTfSticky(t){
-  const head=t.rows[0], fr=t.rows[1]; if(!head) return;
-  [...head.cells].forEach(c=>{ c.style.position='sticky'; c.style.top='0'; c.style.zIndex='3'; });
-  if(fr&&fr.classList.contains('cap-tf-row')){
-    const set=()=>{ const h=head.getBoundingClientRect().height; if(h) [...fr.cells].forEach(c=>{ c.style.position='sticky'; c.style.top=h+'px'; c.style.zIndex='3'; }); };
-    set();
-    if(!head.getBoundingClientRect().height){   // tableau encore masqué : calcul au premier affichage
-      requestAnimationFrame(set);
-      t.closest('.cap-tf-scroll')?.addEventListener('scroll',set,{once:true});
-    }
-  }
+function capTfHBar(w,t){
+  const bar=document.createElement('div'); bar.className='cap-tf-hbar';
+  bar.title='Défilement horizontal du tableau';
+  const inner=document.createElement('div'); bar.appendChild(inner);
+  w.after(bar);
+  bar.addEventListener('scroll',()=>{ if(w.scrollLeft!==bar.scrollLeft) w.scrollLeft=bar.scrollLeft; });
+  w.addEventListener('scroll',()=>{ if(bar.scrollLeft!==w.scrollLeft) bar.scrollLeft=w.scrollLeft; });
+  const fit=()=>{
+    const over=w.scrollWidth>w.clientWidth+1;
+    bar.style.display=over?'':'none';
+    if(over){ inner.style.width=w.scrollWidth+'px'; bar.style.width=w.clientWidth+'px'; bar.scrollLeft=w.scrollLeft; }
+  };
+  fit();
+  if(window.ResizeObserver){ const ro=new ResizeObserver(fit); ro.observe(t); ro.observe(w); }
 }
 
 /** Fige les largeurs actuelles des colonnes (avant le premier redimensionnement).

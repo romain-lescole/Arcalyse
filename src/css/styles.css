@@ -995,10 +995,15 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
 .cap-tf-row input{width:100%;min-width:36px;box-sizing:border-box;padding:2px 5px;font-size:11px;font-weight:400;background:var(--c-bg3);color:var(--c-text);border:1px solid var(--c-border);border-radius:3px;outline:none;}
 .cap-tf-row input.on{border-color:var(--c-accent);}
 .cap-tf-rz{position:absolute;top:0;right:-3px;width:7px;height:100%;cursor:col-resize;z-index:2;user-select:none;}
+th:last-child>.cap-tf-rz{right:0;}   /* pas de débordement de 3 px (barre de défilement inutile) */
 .cap-tf-rz:hover,.cap-tf-rz.drag{background:var(--c-accent);opacity:.45;}
 table.cap-tf-fixed{table-layout:fixed;}
 table.cap-tf-fixed td,table.cap-tf-fixed th{overflow-wrap:anywhere;}
-.cap-tf-scroll{overflow:auto;max-width:100%;max-height:calc(100vh - 120px);margin-bottom:8px;}
+.cap-tf-scroll{overflow-x:auto;overflow-y:hidden;max-width:100%;margin-bottom:0;scrollbar-width:none;}
+.cap-tf-scroll::-webkit-scrollbar{display:none;}
+.cap-tf-hbar{position:sticky;bottom:0;z-index:4;overflow-x:auto;overflow-y:hidden;height:15px;margin-bottom:8px;background:var(--c-bg2);border-top:1px solid var(--c-border);}
+.cap-tf-hbar>div{height:1px;}
+#cap-view-analyses .cap-tf-hbar{bottom:-12px;}   /* colle au bord bas réel de la vue (marge intérieure de 12 px) */
 .cap-tf-scroll>table{margin-bottom:0;}
 .cap-tf-cnt{font-size:11px;color:var(--c-dim);margin:4px 0 2px;}
 .cap-tf-clr{margin-left:8px;cursor:pointer;color:var(--c-accent);}

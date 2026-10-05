@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 2691 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 2692 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -2598,8 +2598,9 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte |
 |---:|---|
-| 42 | Glisser pour régler la largeur de la colonne (double-clic : largeur automatique) |
-| 134 | ✕ effacer |
+| 43 | Glisser pour régler la largeur de la colonne (double-clic : largeur automatique) |
+| 88 | Défilement horizontal du tableau |
+| 141 | ✕ effacer |
 
 ## js/43-visite-guidee.js
 
