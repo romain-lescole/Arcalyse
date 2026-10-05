@@ -263,8 +263,10 @@ function capUpdateWelcome(){ capShowWelcome(!capLoaded); }
     const f=ev.dataTransfer.files&&ev.dataTransfer.files[0];
     // Edge/Chrome : récupère aussi l'accès au fichier (à demander pendant l'événement) pour le 🔄 suivi
     const it=ev.dataTransfer.items&&ev.dataTransfer.items[0];
-    const hp=(it&&it.getAsFileSystemHandle)?it.getAsFileSystemHandle().catch(()=>null):null;
+    let hp=null;
+    try{ if(it&&it.getAsFileSystemHandle) hp=Promise.race([it.getAsFileSystemHandle(), new Promise(r=>setTimeout(()=>r(null),1500))]).catch(()=>null); }catch(e){ hp=null; }
     if(!f){ if(capLoaded) capShowWelcome(false); return; }
+    // Le chargement ne dépend jamais de l'accès direct : sans lui, le fichier est chargé quand même
     if(hp) hp.then(h=>capLoadFile(f, h&&h.kind==='file'?h:null)); else capLoadFile(f);
   });
   capUpdateWelcome();
