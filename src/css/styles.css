@@ -1000,3 +1000,27 @@ table.cap-tf-fixed{table-layout:fixed;}
 table.cap-tf-fixed td,table.cap-tf-fixed th{overflow-wrap:anywhere;}
 .cap-tf-cnt{font-size:11px;color:var(--c-dim);margin:4px 0 2px;}
 .cap-tf-clr{margin-left:8px;cursor:pointer;color:var(--c-accent);}
+/* ── 🎓 Visite guidée (43-visite-guidee.js) : cadre clignotant, reste de l'écran assombri, bulle ── */
+#cap-tour-block{position:fixed;inset:0;z-index:5000;display:none;background:transparent;}
+#cap-tour-spot{position:fixed;z-index:5001;display:none;pointer-events:none;border-radius:8px;
+  box-shadow:0 0 0 9999px rgba(0,0,0,.62);outline:3px solid var(--c-accent);outline-offset:0;
+  transition:left .3s ease,top .3s ease,width .3s ease,height .3s ease;animation:ct-blink 1.1s ease-in-out infinite;}
+#cap-tour-spot.ct-none{outline:none;animation:none;}
+@keyframes ct-blink{
+  0%,100%{outline-color:var(--c-accent);box-shadow:0 0 0 9999px rgba(0,0,0,.62),inset 0 0 0 0 transparent,0 0 14px 3px var(--c-accent);}
+  50%{outline-color:transparent;box-shadow:0 0 0 9999px rgba(0,0,0,.62),inset 0 0 18px 2px color-mix(in srgb,var(--c-accent) 45%,transparent),0 0 0 0 transparent;}
+}
+#cap-tour-pop{position:fixed;z-index:5002;display:none;width:340px;max-width:calc(100vw - 16px);box-sizing:border-box;
+  background:var(--c-bg2);color:var(--c-text);border:1px solid var(--c-accent);border-radius:10px;
+  box-shadow:0 10px 32px rgba(0,0,0,.45);padding:12px 14px 10px;font-size:12.5px;line-height:1.5;
+  transition:left .3s ease,top .3s ease;}
+#cap-tour-pop .ct-hd{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;}
+#cap-tour-pop .ct-t{flex:1;font-weight:700;font-size:13.5px;color:var(--c-accent);}
+#cap-tour-pop .ct-x{cursor:pointer;color:var(--c-dim);font-size:15px;line-height:1;padding:2px 4px;border-radius:4px;}
+#cap-tour-pop .ct-x:hover{color:var(--c-text);background:var(--c-bg3);}
+#cap-tour-pop .ct-b{color:var(--c-text);}
+#cap-tour-pop .ct-ft{display:flex;align-items:center;gap:6px;margin-top:12px;flex-wrap:wrap;}
+#cap-tour-pop .ct-n{flex:1;font-size:11px;color:var(--c-dim);}
+#cap-tour-pop button[disabled]{opacity:.4;cursor:default;}
+#cap-tour-pop .ct-next{border-color:var(--c-accent);color:var(--c-accent);font-weight:600;}
+#cap-drop-zone #cw-tour-link{margin-left:16px;}

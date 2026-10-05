@@ -502,7 +502,7 @@
 - `capWatchShowDelta` (l. 410) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 490) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 257 lignes
+## 41-barre-vues.js — 263 lignes
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
 - `CAP_NAV_GROUPS` (l. 31) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
@@ -517,7 +517,7 @@
 - `capNavClose` (l. 128) — Ferme le menu déroulant de la barre des vues.
 - `capNavRow` (l. 137) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
 - `capNavMenu` (l. 147) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
-- `capNavMenuFill` (l. 193) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+- `capNavMenuFill` (l. 194) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
 
 ## 42-tableaux-analyses.js — 112 lignes
 
@@ -528,3 +528,15 @@
 - `capTfWidths` (l. 74) — Applique les largeurs retenues (disposition fixe, le texte passe à la ligne).
 - `capTfFilter` (l. 85) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
 - `capTfWatch` (l. 107) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
+
+## 43-visite-guidee.js — 176 lignes
+
+- `CAP_TOUR_STEPS` (l. 9) — Étapes de la visite : s = sélecteur de la zone (absent = bulle centrée), t = titre, x = texte (HTML),
+- `capTourVisible` (l. 59) — Indique si la zone d'une étape est affichée à l'écran.
+- `capTourStart` (l. 70) — Lance la visite guidée depuis la première étape.
+- `capTourGo` (l. 93) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
+- `capTourPos` (l. 112) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
+- `capTourRenderPop` (l. 119) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
+- `capTourPlace` (l. 130) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
+- `capTourKey` (l. 160) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
+- `capTourEnd` (l. 169) — Quitte la visite guidée et retire la mise en évidence.

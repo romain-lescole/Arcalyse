@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 2428 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 2474 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -37,125 +37,126 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 42 | 🗂 Office 2007 |
 | 43 | ⚡ Contraste |
 | 45 | Créer ou modifier un thème personnalisé (toutes les couleurs)  (infobulle) |
-| 46 | ? Aide |
-| 46 | Aide  (infobulle) |
-| 50 | Zoom avant (Ctrl++)  (infobulle) |
-| 51 | Zoom arrière (Ctrl+-)  (infobulle) |
-| 52 | ⊡ Fit |
-| 52 | Ajuster (Ctrl+W)  (infobulle) |
-| 54 | ↓ Ouvrir tout |
-| 55 | ↑ Fermer tout |
-| 57 | # Nums |
-| 58 | ◉ Légende |
-| 59 | ⌁ Relations |
-| 60 | ✂ Noms |
-| 60 | Couper les noms longs  (infobulle) |
-| 61 | ⊙ Unique |
-| 62 | ⬡ Compact |
-| 66 | 🖼 Export ▾ |
-| 66 | Exporter image  (infobulle) |
-| 70 | 🖼 PNG |
-| 71 | 📷 JPEG |
-| 72 | 📐 SVG |
-| 81 | ❓ Aide |
-| 81 | Aide et présentation des fonctionnalités  (infobulle) |
-| 82 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) |
-| 84 | Ouvrir un modèle Capella |
-| 85 | Glissez-déposez votre fichier |
-| 85 | ou recherchez-le dans l'explorateur de fichiers. |
-| 86 | 📂 Parcourir… |
-| 88 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. |
-| 89 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités |
-| 97 | Panneau |
-| 98 | Réduire le panneau  (infobulle) |
-| 101 | Arborescence |
-| 103 | Tout développer  (infobulle) |
-| 105 | Tout réduire  (infobulle) |
-| 111 | ✕ vider |
-| 111 | Vider la sélection  (infobulle) |
-| 114 | 🔍 Filtrer l'arborescence…  (infobulle) |
-| 125 | Profondeur |
-| 131 | Disposition |
-| 136 | ◉ Rad |
-| 137 | ⚡ Zig |
-| 137 | Zigzag 7:3 — séquence en grille  (infobulle) |
-| 142 | Contexte |
-| 148 | ✚ Créer un nouvel élément |
-| 152 | Critères de relation |
-| 154 | Tout sélectionner  (infobulle) |
-| 156 | Tout désélectionner  (infobulle) |
-| 163 | 🔷 Type d'élément |
-| 165 | Réinitialiser (tout décocher)  (infobulle) |
-| 166 | ↺ Défaut |
-| 172 | Types d'éléments |
-| 174 | Tout sélectionner  (infobulle) |
-| 176 | Tout désélectionner  (infobulle) |
-| 183 | Portée (Paquetages) |
-| 187 | Propriétés |
-| 193 | Ouvrir le panneau  (infobulle) |
-| 208 | ✨ Colonne personnalisée — Metachain Navigation |
-| 212 | Metaclass |
-| 213 | Property |
-| 214 | Name |
-| 219 | Metaclass or Stereotype |
-| 220 | Property |
-| 224 | + Insert (nouvelle étape) |
-| 226 | Nom de la colonne |
-| 227 | ex: Functions of Component  (infobulle) |
-| 228 | Créer la colonne |
-| 241 | Légende |
-| 245 | Prêt |
-| 252 | ✏ Modifier l'élément |
-| 253 | → Créer une relation vers… |
-| 254 | ✦ Créer un élément enfant |
-| 256 | ⊙ Définir comme contexte |
-| 257 | ↓ Développer |
-| 258 | ↑ Réduire |
-| 260 | 👁 Masquer l'élément |
-| 268 | Annuler |
-| 269 | Sauvegarder |
-| 277 | ✏ Éditeur de modèle |
-| 281 | Éléments ( |
-| 282 | Relations ( |
-| 283 | Paquetages ( |
-| 284 | Chaînes ( |
-| 293 | Exporter |
-| 294 | Résolution : |
-| 296 | 1× Normal |
-| 298 | 3× Ultra |
-| 299 | 4× Max |
-| 303 | Annuler |
-| 304 | Exporter |
-| 324 | Types d'éléments |
-| 325 | Filtrer les types…  (infobulle) |
-| 330 | Tout cocher |
-| 332 | Aucun |
-| 334 | Défaut |
-| 343 | Glisser pour redimensionner  (infobulle) |
-| 351 | 🌳 Arborescence |
-| 352 | ▦ Cartes |
-| 353 | 📋 Tableau |
-| 354 | 📖 Index des types |
-| 365 | Rechercher…  (infobulle) |
-| 369 | Tous |
-| 375 | Tranv. |
-| 377 | ⬇ CSV |
-| 381 | ⊞ Déplier |
-| 382 | ⊟ Réduire |
-| 384 | ⬇ JSON |
-| 400 | ← Préc. |
-| 402 | Suiv. → |
-| 420 | ✨ Colonne personnalisée — Metachain Navigation |
-| 424 | Metaclass |
-| 425 | Property |
-| 426 | Name |
-| 431 | Metaclass or Stereotype |
-| 432 | Property |
-| 436 | + Insert (nouvelle étape) |
-| 438 | Nom de la colonne |
-| 439 | ex: Functions of Component  (infobulle) |
-| 440 | Créer la colonne |
-| 457 | Aucun élément ne correspond. |
+| 47 | ? Aide ▾ |
+| 47 | Aide complète, visite guidée de l'outil  (infobulle) |
+| 51 | Zoom avant (Ctrl++)  (infobulle) |
+| 52 | Zoom arrière (Ctrl+-)  (infobulle) |
+| 53 | ⊡ Fit |
+| 53 | Ajuster (Ctrl+W)  (infobulle) |
+| 55 | ↓ Ouvrir tout |
+| 56 | ↑ Fermer tout |
+| 58 | # Nums |
+| 59 | ◉ Légende |
+| 60 | ⌁ Relations |
+| 61 | ✂ Noms |
+| 61 | Couper les noms longs  (infobulle) |
+| 62 | ⊙ Unique |
+| 63 | ⬡ Compact |
+| 67 | 🖼 Export ▾ |
+| 67 | Exporter image  (infobulle) |
+| 71 | 🖼 PNG |
+| 72 | 📷 JPEG |
+| 73 | 📐 SVG |
+| 82 | ❓ Aide |
+| 82 | Aide et présentation des fonctionnalités  (infobulle) |
+| 83 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) |
+| 85 | Ouvrir un modèle Capella |
+| 86 | Glissez-déposez votre fichier |
+| 86 | ou recherchez-le dans l'explorateur de fichiers. |
+| 87 | 📂 Parcourir… |
+| 89 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. |
+| 90 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités |
+| 91 | 🎓 Visite guidée de l'interface |
+| 99 | Panneau |
+| 100 | Réduire le panneau  (infobulle) |
+| 103 | Arborescence |
+| 105 | Tout développer  (infobulle) |
+| 107 | Tout réduire  (infobulle) |
+| 113 | ✕ vider |
+| 113 | Vider la sélection  (infobulle) |
+| 116 | 🔍 Filtrer l'arborescence…  (infobulle) |
+| 127 | Profondeur |
+| 133 | Disposition |
+| 138 | ◉ Rad |
+| 139 | ⚡ Zig |
+| 139 | Zigzag 7:3 — séquence en grille  (infobulle) |
+| 144 | Contexte |
+| 150 | ✚ Créer un nouvel élément |
+| 154 | Critères de relation |
+| 156 | Tout sélectionner  (infobulle) |
+| 158 | Tout désélectionner  (infobulle) |
+| 165 | 🔷 Type d'élément |
+| 167 | Réinitialiser (tout décocher)  (infobulle) |
+| 168 | ↺ Défaut |
+| 174 | Types d'éléments |
+| 176 | Tout sélectionner  (infobulle) |
+| 178 | Tout désélectionner  (infobulle) |
+| 185 | Portée (Paquetages) |
+| 189 | Propriétés |
+| 195 | Ouvrir le panneau  (infobulle) |
+| 210 | ✨ Colonne personnalisée — Metachain Navigation |
+| 214 | Metaclass |
+| 215 | Property |
+| 216 | Name |
+| 221 | Metaclass or Stereotype |
+| 222 | Property |
+| 226 | + Insert (nouvelle étape) |
+| 228 | Nom de la colonne |
+| 229 | ex: Functions of Component  (infobulle) |
+| 230 | Créer la colonne |
+| 243 | Légende |
+| 247 | Prêt |
+| 254 | ✏ Modifier l'élément |
+| 255 | → Créer une relation vers… |
+| 256 | ✦ Créer un élément enfant |
+| 258 | ⊙ Définir comme contexte |
+| 259 | ↓ Développer |
+| 260 | ↑ Réduire |
+| 262 | 👁 Masquer l'élément |
+| 270 | Annuler |
+| 271 | Sauvegarder |
+| 279 | ✏ Éditeur de modèle |
+| 283 | Éléments ( |
+| 284 | Relations ( |
+| 285 | Paquetages ( |
+| 286 | Chaînes ( |
+| 295 | Exporter |
+| 296 | Résolution : |
+| 298 | 1× Normal |
+| 300 | 3× Ultra |
+| 301 | 4× Max |
+| 305 | Annuler |
+| 306 | Exporter |
+| 326 | Types d'éléments |
+| 327 | Filtrer les types…  (infobulle) |
+| 332 | Tout cocher |
+| 334 | Aucun |
+| 336 | Défaut |
+| 345 | Glisser pour redimensionner  (infobulle) |
+| 353 | 🌳 Arborescence |
+| 354 | ▦ Cartes |
+| 355 | 📋 Tableau |
+| 356 | 📖 Index des types |
+| 367 | Rechercher…  (infobulle) |
+| 371 | Tous |
+| 377 | Tranv. |
+| 379 | ⬇ CSV |
+| 383 | ⊞ Déplier |
+| 384 | ⊟ Réduire |
+| 386 | ⬇ JSON |
+| 402 | ← Préc. |
+| 404 | Suiv. → |
+| 422 | ✨ Colonne personnalisée — Metachain Navigation |
+| 426 | Metaclass |
+| 427 | Property |
+| 428 | Name |
+| 433 | Metaclass or Stereotype |
+| 434 | Property |
+| 438 | + Insert (nouvelle étape) |
+| 440 | Nom de la colonne |
+| 441 | ex: Functions of Component  (infobulle) |
+| 442 | Créer la colonne |
+| 459 | Aucun élément ne correspond. |
 
 ## js/01-donnees-config.js
 
@@ -2574,21 +2575,22 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 122 | Vue affichée : |
 | 140 | Retirer de la barre |
 | 140 | Épingler dans la barre (bouton direct) |
-| 198 | 🔷 Ouvrir un modèle Capella… 💾 Enregistrer |
-| 199 | 💾 Enregistrer sous… |
-| 199 | Ctrl+S |
-| 200 | 🌐 Télécharger la page HTML La page enregistrée contient le modèle chargé et vos réglages. |
-| 200 | Ctrl+Maj+S |
-| 208 | 🎨 Personnaliser… |
-| 212 | 📌 épingle une vue en bouton direct dans la barre. |
-| 217 | 🗺 Relation Map |
-| 217 | @table |
-| 217 | 📊 Table View |
-| 219 | Aucune vue ne correspond. |
-| 225 | Menu |
-| 225 | ▾ dans la barre |
-| 226 | Autres vues |
-| 229 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
+| 199 | 🔷 Ouvrir un modèle Capella… 💾 Enregistrer |
+| 200 | 💾 Enregistrer sous… |
+| 200 | Ctrl+S |
+| 201 | 🌐 Télécharger la page HTML La page enregistrée contient le modèle chargé et vos réglages. |
+| 201 | Ctrl+Maj+S |
+| 207 | 📖 Aide complète 🎓 Visite guidée |
+| 214 | 🎨 Personnaliser… |
+| 218 | 📌 épingle une vue en bouton direct dans la barre. |
+| 223 | 🗺 Relation Map |
+| 223 | @table |
+| 223 | 📊 Table View |
+| 225 | Aucune vue ne correspond. |
+| 231 | Menu |
+| 231 | ▾ dans la barre |
+| 232 | Autres vues |
+| 235 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
 
 ## js/42-tableaux-analyses.js
 
@@ -2596,3 +2598,52 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 |---:|---|
 | 42 | Glisser pour régler la largeur de la colonne (double-clic : largeur automatique) |
 | 99 | ✕ effacer |
+
+## js/43-visite-guidee.js
+
+| Ligne | Texte |
+|---:|---|
+| 10 | 🎓 Bienvenue dans Relation Map Capella |
+| 12 | 🔷 Ouvrir un modèle |
+| 13 | Glissez-déposez un fichier .capella ici, ou cliquez pour le chercher. Le fichier est lu sur ce poste : rien n'est envoyé. |
+| 14 | 🧭 Barre des vues |
+| 15 | Toutes les vues d'analyse du modèle sont regroupées ici, dans des menus déroulants (▾) et des boutons directs. |
+| 16 | 🧭 Explorateur |
+| 17 | Parcourir le modèle : arborescence, cartes, tableau filtrable, index des types et liens entre éléments. |
+| 18 | 📡 Flux & interfaces |
+| 19 | Chaînes fonctionnelles, Component Exchange, Physical Link et traçabilité des ports. |
+| 20 | ⚡ Chaînes |
+| 21 | Les chaînes fonctionnelles du modèle, filtrables par type, couche et contenu, avec export image, PDF ou HTML. |
+| 22 | ƒ Fonctions |
+| 23 | Hiérarchie des fonctions, tableau, allocation aux composants, métriques, contrôles de qualité des noms et dossier imprimable. |
+| 24 | 🔬 Analyses |
+| 25 | Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données et contraintes. |
+| 26 | 📐 Tableau de bord |
+| 27 | Composez vos propres tableaux de bord : indicateurs, graphiques et tableaux, imprimables en A4. |
+| 28 | ☰ Toutes les vues |
+| 29 | Cherchez une vue par son nom (raccourci Ctrl+K ) et réglez la barre : 📌 épingle une vue en bouton direct. |
+| 30 | 🗺 Relation Map |
+| 31 | Graphe interactif des éléments et de leurs relations : zoom, dépliage, disposition, export en image. |
+| 32 | 📊 Table View |
+| 33 | Tableaux construits à la demande, avec colonnes calculées le long des relations du modèle. |
+| 34 | 🏷 Types affichés |
+| 35 | Cochez les types d'éléments à afficher dans les vues. Le champ du haut filtre la liste. |
+| 36 | 🔍 Recherche et filtres |
+| 37 | Recherche plein texte, filtre par couche ARCADIA (OA, SA, LA, PA…) et export CSV / JSON de la vue affichée. |
+| 38 | ▦ Zone de travail |
+| 39 | La vue choisie s'affiche ici. Cliquez sur un élément pour ouvrir son panneau de détail (propriétés, relations, liens). |
+| 40 | 📁 Fichier |
+| 41 | Ouvrir un autre modèle, enregistrer la page, ou télécharger une page HTML autonome qui contient le modèle et vos réglages. |
+| 42 | 💾 Enregistrer |
+| 44 | 🔄 Suivi du fichier |
+| 45 | Détecte les nouvelles versions du fichier .capella et montre ce qui a changé (delta, historique). |
+| 46 | 🎨 Thème |
+| 47 | Choisissez un thème clair ou sombre, ou créez votre propre thème personnalisé. |
+| 48 | ? Aide |
+| 49 | L'aide complète et cette visite guidée restent accessibles à tout moment depuis ce menu. |
+| 50 | ✅ C'est parti ! |
+| 51 | La visite est terminée. Vous pouvez la relancer depuis ? Aide ▾ → 🎓 Visite guidée . |
+| 122 | Étape |
+| 124 | ◀ Précédent |
+| 125 | Terminer ✓ |
+| 125 | Suivant ▶ |

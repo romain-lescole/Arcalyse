@@ -78,6 +78,7 @@ Chaînes de navigation Metaclass → Property, façon MagicDraw.
 
 - Thèmes : `THEMES`, `applyTheme(name)`, `currentTheme` (`'light'` est le seul thème clair). Les vues Physical Link / Component Exchange se re-rendent au changement de thème.
 - Couleurs ARCADIA : `CAP_LAYERS` ; noms lisibles et descriptions des types : `CAP_HUMAN_NAMES`.
+- 🎓 Visite guidée (`43-visite-guidee.js`) : étapes `CAP_TOUR_STEPS` (sélecteur, titre, texte, `m:'loaded'|'empty'`, action `pre`) ; une étape dont la zone n'est pas affichée est sautée (`capTourVisible`). Mise en évidence = un seul cadre `#cap-tour-spot` dont l'ombre géante assombrit le reste ; `#cap-tour-block` bloque les clics. Nouvelle zone à présenter → ajouter une étape.
 - Échappement HTML : `capEsc` ; lecture XML : `capTName`, `capXId`, `capXName`.
 - Rapports HTML autonomes : `capHtmlReport` (onglets, recherche, matrice cliquable via `data-lid`, CSS repris par `capReportCss`, nettoyage `capReportClean`) — utilisés par Component Exchange et Physical Link (`exportHtml(all)`, vue courante ou toutes les vues) et par les Chaînes (`capChainExportHtml`, sans la vue Relation Map). Attention : écrire `<\/script>` dans les gabarits.
 - Outils partagés : `capArchLayerOf`, `capBuildIdMap`, `capCsvDownload`, `capMatrixBuild` (N²), `capDiagHtml` (rapports de contrôles), `capDetLink`, `capOrientBadge`.

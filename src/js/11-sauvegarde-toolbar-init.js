@@ -125,7 +125,7 @@ document.getElementById('theme-sel').onchange=ev=>applyTheme(ev.target.value);
 svg.on('click',()=>{ S.selNode=null; render(); });
 
 // ── Aide JSON ──
-document.getElementById('b-help').onclick = ()=>openHelpModal();
+// Bouton ? Aide ▾ : menu (aide complète, visite guidée) câblé dans 41-barre-vues.js
 // Accès à l'aide depuis l'écran d'accueil (sans déclencher l'ouverture du sélecteur de fichier)
 document.getElementById('cw-help')?.addEventListener('click', ev=>{ ev.stopPropagation(); openHelpModal('start'); });
 document.getElementById('cw-help-link')?.addEventListener('click', ev=>{ ev.preventDefault(); ev.stopPropagation(); openHelpModal('start'); });
