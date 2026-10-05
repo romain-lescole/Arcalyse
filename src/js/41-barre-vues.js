@@ -158,7 +158,8 @@ function capNavMenu(g, anchor){
       if(th){ capNavClose(); const sel=document.getElementById('theme-sel'); sel.value=th.dataset.thm; sel.dispatchEvent(new Event('change')); return; }
       const a=e.target.closest('[data-act]');
       if(a){ capNavClose(); ({open:()=>capPickCapellaFile(), save:()=>capSavePageDirect(false), saveas:()=>capSavePageDirect(true),
-        page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor()})[a.dataset.act](); return; }
+        page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor(),
+        help:()=>openHelpModal(), tour:()=>capTourStart(), tourview:()=>capTourStartView()})[a.dataset.act](); return; }
       if(e.target.closest('[data-reset]')){ _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); capNavSave(); capNavRender(); capNavMenuFill(); }
     });
     dd.addEventListener('change',e=>{
@@ -202,6 +203,14 @@ function capNavMenuFill(){
       <div class="cap-nav-hint">La page enregistrée contient le modèle chargé et vos réglages.</div>`;
     return;
   }
+  if(g==='help'){
+    const v=capTourCtx();
+    res.innerHTML=`<div class="ctx-i" data-act="help">📖 Aide complète</div>
+      <div class="ctx-i" data-act="tour" title="Découvrir l'interface pas à pas">🎓 Visite guidée</div>`+
+      (v?`<div class="ctx-i" data-act="tourview" title="Présente les menus et les commandes de la vue affichée">🎯 Visite de cette vue <span class="cap-nav-g">${v.l}</span></div>`
+        :`<div class="cap-nav-hint">🎯 Chargez un modèle pour la visite de chaque vue.</div>`);
+    return;
+  }
   if(g==='theme'){
     const sel=document.getElementById('theme-sel');
     res.innerHTML=[...sel.options].map(o=>`<div class="ctx-i cap-nav-it${o.value===sel.value?' cur':''}" data-thm="${o.value}"><span>${o.textContent}</span></div>`).join('')+
@@ -240,8 +249,8 @@ function capNavMenuFill(){
     const o=e.target.closest('[data-open]'); if(o){ capNavOpen(o.dataset.open); return; }
     const cfg=e.target.closest('#cap-nav-cfg'); if(cfg){ e.stopPropagation(); capNavMenu('☰', cfg); }
   });
-  // Menus 📁 Fichier et 🎨 Thème (partie droite de la barre), onglets 📡 Flux & interfaces
-  ['b-file-menu','b-theme-menu'].forEach(id=>document.getElementById(id)?.addEventListener('click',e=>{
+  // Menus 📁 Fichier, 🎨 Thème et ? Aide (partie droite de la barre), onglets 📡 Flux & interfaces
+  ['b-file-menu','b-theme-menu','b-help'].forEach(id=>document.getElementById(id)?.addEventListener('click',e=>{
     e.stopPropagation(); capNavMenu(e.currentTarget.dataset.dd, e.currentTarget); }));
   document.getElementById('cap-flux-tabs')?.addEventListener('click',e=>{ const o=e.target.closest('[data-open]'); if(o) capNavOpen(o.dataset.open); });
   document.addEventListener('mousedown',e=>{ if(!e.target.closest('#cap-nav-dd,[data-dd],#cap-nav-cfg')) capNavClose(); });

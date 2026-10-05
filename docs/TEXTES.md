@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 2428 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 2692 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -37,125 +37,126 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 42 | 🗂 Office 2007 |
 | 43 | ⚡ Contraste |
 | 45 | Créer ou modifier un thème personnalisé (toutes les couleurs)  (infobulle) |
-| 46 | ? Aide |
-| 46 | Aide  (infobulle) |
-| 50 | Zoom avant (Ctrl++)  (infobulle) |
-| 51 | Zoom arrière (Ctrl+-)  (infobulle) |
-| 52 | ⊡ Fit |
-| 52 | Ajuster (Ctrl+W)  (infobulle) |
-| 54 | ↓ Ouvrir tout |
-| 55 | ↑ Fermer tout |
-| 57 | # Nums |
-| 58 | ◉ Légende |
-| 59 | ⌁ Relations |
-| 60 | ✂ Noms |
-| 60 | Couper les noms longs  (infobulle) |
-| 61 | ⊙ Unique |
-| 62 | ⬡ Compact |
-| 66 | 🖼 Export ▾ |
-| 66 | Exporter image  (infobulle) |
-| 70 | 🖼 PNG |
-| 71 | 📷 JPEG |
-| 72 | 📐 SVG |
-| 81 | ❓ Aide |
-| 81 | Aide et présentation des fonctionnalités  (infobulle) |
-| 82 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) |
-| 84 | Ouvrir un modèle Capella |
-| 85 | Glissez-déposez votre fichier |
-| 85 | ou recherchez-le dans l'explorateur de fichiers. |
-| 86 | 📂 Parcourir… |
-| 88 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. |
-| 89 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités |
-| 97 | Panneau |
-| 98 | Réduire le panneau  (infobulle) |
-| 101 | Arborescence |
-| 103 | Tout développer  (infobulle) |
-| 105 | Tout réduire  (infobulle) |
-| 111 | ✕ vider |
-| 111 | Vider la sélection  (infobulle) |
-| 114 | 🔍 Filtrer l'arborescence…  (infobulle) |
-| 125 | Profondeur |
-| 131 | Disposition |
-| 136 | ◉ Rad |
-| 137 | ⚡ Zig |
-| 137 | Zigzag 7:3 — séquence en grille  (infobulle) |
-| 142 | Contexte |
-| 148 | ✚ Créer un nouvel élément |
-| 152 | Critères de relation |
-| 154 | Tout sélectionner  (infobulle) |
-| 156 | Tout désélectionner  (infobulle) |
-| 163 | 🔷 Type d'élément |
-| 165 | Réinitialiser (tout décocher)  (infobulle) |
-| 166 | ↺ Défaut |
-| 172 | Types d'éléments |
-| 174 | Tout sélectionner  (infobulle) |
-| 176 | Tout désélectionner  (infobulle) |
-| 183 | Portée (Paquetages) |
-| 187 | Propriétés |
-| 193 | Ouvrir le panneau  (infobulle) |
-| 208 | ✨ Colonne personnalisée — Metachain Navigation |
-| 212 | Metaclass |
-| 213 | Property |
-| 214 | Name |
-| 219 | Metaclass or Stereotype |
-| 220 | Property |
-| 224 | + Insert (nouvelle étape) |
-| 226 | Nom de la colonne |
-| 227 | ex: Functions of Component  (infobulle) |
-| 228 | Créer la colonne |
-| 241 | Légende |
-| 245 | Prêt |
-| 252 | ✏ Modifier l'élément |
-| 253 | → Créer une relation vers… |
-| 254 | ✦ Créer un élément enfant |
-| 256 | ⊙ Définir comme contexte |
-| 257 | ↓ Développer |
-| 258 | ↑ Réduire |
-| 260 | 👁 Masquer l'élément |
-| 268 | Annuler |
-| 269 | Sauvegarder |
-| 277 | ✏ Éditeur de modèle |
-| 281 | Éléments ( |
-| 282 | Relations ( |
-| 283 | Paquetages ( |
-| 284 | Chaînes ( |
-| 293 | Exporter |
-| 294 | Résolution : |
-| 296 | 1× Normal |
-| 298 | 3× Ultra |
-| 299 | 4× Max |
-| 303 | Annuler |
-| 304 | Exporter |
-| 324 | Types d'éléments |
-| 325 | Filtrer les types…  (infobulle) |
-| 330 | Tout cocher |
-| 332 | Aucun |
-| 334 | Défaut |
-| 343 | Glisser pour redimensionner  (infobulle) |
-| 351 | 🌳 Arborescence |
-| 352 | ▦ Cartes |
-| 353 | 📋 Tableau |
-| 354 | 📖 Index des types |
-| 365 | Rechercher…  (infobulle) |
-| 369 | Tous |
-| 375 | Tranv. |
-| 377 | ⬇ CSV |
-| 381 | ⊞ Déplier |
-| 382 | ⊟ Réduire |
-| 384 | ⬇ JSON |
-| 400 | ← Préc. |
-| 402 | Suiv. → |
-| 420 | ✨ Colonne personnalisée — Metachain Navigation |
-| 424 | Metaclass |
-| 425 | Property |
-| 426 | Name |
-| 431 | Metaclass or Stereotype |
-| 432 | Property |
-| 436 | + Insert (nouvelle étape) |
-| 438 | Nom de la colonne |
-| 439 | ex: Functions of Component  (infobulle) |
-| 440 | Créer la colonne |
-| 457 | Aucun élément ne correspond. |
+| 47 | ? Aide ▾ |
+| 47 | Aide complète, visite guidée de l'outil  (infobulle) |
+| 51 | Zoom avant (Ctrl++)  (infobulle) |
+| 52 | Zoom arrière (Ctrl+-)  (infobulle) |
+| 53 | ⊡ Fit |
+| 53 | Ajuster (Ctrl+W)  (infobulle) |
+| 55 | ↓ Ouvrir tout |
+| 56 | ↑ Fermer tout |
+| 58 | # Nums |
+| 59 | ◉ Légende |
+| 60 | ⌁ Relations |
+| 61 | ✂ Noms |
+| 61 | Couper les noms longs  (infobulle) |
+| 62 | ⊙ Unique |
+| 63 | ⬡ Compact |
+| 67 | 🖼 Export ▾ |
+| 67 | Exporter image  (infobulle) |
+| 71 | 🖼 PNG |
+| 72 | 📷 JPEG |
+| 73 | 📐 SVG |
+| 82 | ❓ Aide |
+| 82 | Aide et présentation des fonctionnalités  (infobulle) |
+| 83 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) |
+| 85 | Ouvrir un modèle Capella |
+| 86 | Glissez-déposez votre fichier |
+| 86 | ou recherchez-le dans l'explorateur de fichiers. |
+| 87 | 📂 Parcourir… |
+| 89 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. |
+| 90 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités |
+| 91 | 🎓 Visite guidée de l'interface |
+| 99 | Panneau |
+| 100 | Réduire le panneau  (infobulle) |
+| 103 | Arborescence |
+| 105 | Tout développer  (infobulle) |
+| 107 | Tout réduire  (infobulle) |
+| 113 | ✕ vider |
+| 113 | Vider la sélection  (infobulle) |
+| 116 | 🔍 Filtrer l'arborescence…  (infobulle) |
+| 127 | Profondeur |
+| 133 | Disposition |
+| 138 | ◉ Rad |
+| 139 | ⚡ Zig |
+| 139 | Zigzag 7:3 — séquence en grille  (infobulle) |
+| 144 | Contexte |
+| 150 | ✚ Créer un nouvel élément |
+| 154 | Critères de relation |
+| 156 | Tout sélectionner  (infobulle) |
+| 158 | Tout désélectionner  (infobulle) |
+| 165 | 🔷 Type d'élément |
+| 167 | Réinitialiser (tout décocher)  (infobulle) |
+| 168 | ↺ Défaut |
+| 174 | Types d'éléments |
+| 176 | Tout sélectionner  (infobulle) |
+| 178 | Tout désélectionner  (infobulle) |
+| 185 | Portée (Paquetages) |
+| 189 | Propriétés |
+| 195 | Ouvrir le panneau  (infobulle) |
+| 210 | ✨ Colonne personnalisée — Metachain Navigation |
+| 214 | Metaclass |
+| 215 | Property |
+| 216 | Name |
+| 221 | Metaclass or Stereotype |
+| 222 | Property |
+| 226 | + Insert (nouvelle étape) |
+| 228 | Nom de la colonne |
+| 229 | ex: Functions of Component  (infobulle) |
+| 230 | Créer la colonne |
+| 243 | Légende |
+| 247 | Prêt |
+| 254 | ✏ Modifier l'élément |
+| 255 | → Créer une relation vers… |
+| 256 | ✦ Créer un élément enfant |
+| 258 | ⊙ Définir comme contexte |
+| 259 | ↓ Développer |
+| 260 | ↑ Réduire |
+| 262 | 👁 Masquer l'élément |
+| 270 | Annuler |
+| 271 | Sauvegarder |
+| 279 | ✏ Éditeur de modèle |
+| 283 | Éléments ( |
+| 284 | Relations ( |
+| 285 | Paquetages ( |
+| 286 | Chaînes ( |
+| 295 | Exporter |
+| 296 | Résolution : |
+| 298 | 1× Normal |
+| 300 | 3× Ultra |
+| 301 | 4× Max |
+| 305 | Annuler |
+| 306 | Exporter |
+| 326 | Types d'éléments |
+| 327 | Filtrer les types…  (infobulle) |
+| 332 | Tout cocher |
+| 334 | Aucun |
+| 336 | Défaut |
+| 345 | Glisser pour redimensionner  (infobulle) |
+| 353 | 🌳 Arborescence |
+| 354 | ▦ Cartes |
+| 355 | 📋 Tableau |
+| 356 | 📖 Index des types |
+| 367 | Rechercher…  (infobulle) |
+| 371 | Tous |
+| 377 | Tranv. |
+| 379 | ⬇ CSV |
+| 383 | ⊞ Déplier |
+| 384 | ⊟ Réduire |
+| 386 | ⬇ JSON |
+| 402 | ← Préc. |
+| 404 | Suiv. → |
+| 422 | ✨ Colonne personnalisée — Metachain Navigation |
+| 426 | Metaclass |
+| 427 | Property |
+| 428 | Name |
+| 433 | Metaclass or Stereotype |
+| 434 | Property |
+| 438 | + Insert (nouvelle étape) |
+| 440 | Nom de la colonne |
+| 441 | ex: Functions of Component  (infobulle) |
+| 442 | Créer la colonne |
+| 459 | Aucun élément ne correspond. |
 
 ## js/01-donnees-config.js
 
@@ -2574,25 +2575,293 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 122 | Vue affichée : |
 | 140 | Retirer de la barre |
 | 140 | Épingler dans la barre (bouton direct) |
-| 198 | 🔷 Ouvrir un modèle Capella… 💾 Enregistrer |
-| 199 | 💾 Enregistrer sous… |
-| 199 | Ctrl+S |
-| 200 | 🌐 Télécharger la page HTML La page enregistrée contient le modèle chargé et vos réglages. |
-| 200 | Ctrl+Maj+S |
-| 208 | 🎨 Personnaliser… |
-| 212 | 📌 épingle une vue en bouton direct dans la barre. |
-| 217 | 🗺 Relation Map |
-| 217 | @table |
-| 217 | 📊 Table View |
-| 219 | Aucune vue ne correspond. |
-| 225 | Menu |
-| 225 | ▾ dans la barre |
-| 226 | Autres vues |
-| 229 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
+| 199 | 🔷 Ouvrir un modèle Capella… 💾 Enregistrer |
+| 200 | 💾 Enregistrer sous… |
+| 200 | Ctrl+S |
+| 201 | 🌐 Télécharger la page HTML La page enregistrée contient le modèle chargé et vos réglages. |
+| 201 | Ctrl+Maj+S |
+| 208 | 📖 Aide complète 🎓 Visite guidée |
+| 210 | 🎯 Visite de cette vue |
+| 211 | 🎯 Chargez un modèle pour la visite de chaque vue. |
+| 217 | 🎨 Personnaliser… |
+| 221 | 📌 épingle une vue en bouton direct dans la barre. |
+| 226 | 🗺 Relation Map |
+| 226 | @table |
+| 226 | 📊 Table View |
+| 228 | Aucune vue ne correspond. |
+| 234 | Menu |
+| 234 | ▾ dans la barre |
+| 235 | Autres vues |
+| 238 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
 
 ## js/42-tableaux-analyses.js
 
 | Ligne | Texte |
 |---:|---|
-| 42 | Glisser pour régler la largeur de la colonne (double-clic : largeur automatique) |
-| 99 | ✕ effacer |
+| 43 | Glisser pour régler la largeur de la colonne (double-clic : largeur automatique) |
+| 88 | Défilement horizontal du tableau |
+| 141 | ✕ effacer |
+
+## js/43-visite-guidee.js
+
+| Ligne | Texte |
+|---:|---|
+| 13 | 🎓 Bienvenue dans Relation Map Capella |
+| 15 | 🔷 Ouvrir un modèle |
+| 16 | Glissez-déposez un fichier .capella ici, ou cliquez pour le chercher. Le fichier est lu sur ce poste : rien n'est envoyé. |
+| 17 | 🧭 Barre des vues |
+| 18 | Toutes les vues d'analyse du modèle sont regroupées ici, dans des menus déroulants (▾) et des boutons directs. |
+| 19 | 🧭 Explorateur |
+| 20 | Parcourir le modèle : arborescence, cartes, tableau filtrable, index des types et liens entre éléments. |
+| 21 | 📡 Flux & interfaces |
+| 22 | Chaînes fonctionnelles, Component Exchange, Physical Link et traçabilité des ports. |
+| 23 | ⚡ Chaînes |
+| 24 | Les chaînes fonctionnelles du modèle, filtrables par type, couche et contenu, avec export image, PDF ou HTML. |
+| 25 | ƒ Fonctions |
+| 26 | Hiérarchie des fonctions, tableau, allocation aux composants, métriques, contrôles de qualité des noms et dossier imprimable. |
+| 27 | 🔬 Analyses |
+| 28 | Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données et contraintes. |
+| 29 | 📐 Tableau de bord |
+| 30 | Composez vos propres tableaux de bord : indicateurs, graphiques et tableaux, imprimables en A4. |
+| 31 | ☰ Toutes les vues |
+| 32 | Cherchez une vue par son nom (raccourci Ctrl+K ) et réglez la barre : 📌 épingle une vue en bouton direct. |
+| 33 | 🗺 Relation Map |
+| 34 | Graphe interactif des éléments et de leurs relations : zoom, dépliage, disposition, export en image. |
+| 35 | 📊 Table View |
+| 36 | Tableaux construits à la demande, avec colonnes calculées le long des relations du modèle. |
+| 37 | 🏷 Types affichés |
+| 38 | Cochez les types d'éléments à afficher dans les vues. Le champ du haut filtre la liste. |
+| 39 | 🔍 Recherche et filtres |
+| 40 | Recherche plein texte, filtre par couche ARCADIA (OA, SA, LA, PA…) et export CSV / JSON de la vue affichée. |
+| 41 | ▦ Zone de travail |
+| 42 | La vue choisie s'affiche ici. Cliquez sur un élément pour ouvrir son panneau de détail (propriétés, relations, liens). |
+| 43 | 📁 Fichier |
+| 44 | Ouvrir un autre modèle, enregistrer la page, ou télécharger une page HTML autonome qui contient le modèle et vos réglages. |
+| 45 | 💾 Enregistrer |
+| 47 | 🔄 Suivi du fichier |
+| 48 | Détecte les nouvelles versions du fichier .capella et montre ce qui a changé (delta, historique). |
+| 49 | 🎨 Thème |
+| 50 | Choisissez un thème clair ou sombre, ou créez votre propre thème personnalisé. |
+| 51 | ? Aide |
+| 52 | L'aide complète et cette visite guidée restent accessibles à tout moment depuis ce menu. |
+| 53 | ✅ C'est parti ! |
+| 54 | La visite est terminée. Vous pouvez la relancer depuis ? Aide ▾ → 🎓 Visite guidée . Dans chaque vue, ? Aide ▾ → 🎯 Visite de cette vue présente ses menus et ce qu'ils font. |
+| 58 | 🧭 Sous-vues de l'Explorateur |
+| 59 | Quatre façons de parcourir le modèle : 🌳 Arborescence (hiérarchie), ▦ Cartes (une carte par élément), 📋 Tableau (colonnes, tri, filtres) et 📖 Index des types . |
+| 60 | 🏷 Types d'éléments |
+| 62 | 📊 Répartition |
+| 63 | Nombre total d'éléments du modèle et répartition par couche. |
+| 64 | 🔍 Recherche |
+| 65 | Filtre les éléments affichés par nom, type ou identifiant. |
+| 66 | 🧱 Couches |
+| 67 | Limite l'affichage à une couche ARCADIA ( Tous pour les réafficher). ⬇ CSV exporte les éléments affichés. |
+| 68 | 🔢 Résultat |
+| 69 | Nombre d'éléments qui passent les filtres (types, recherche, couche). |
+| 72 | 📡 Flux & interfaces |
+| 73 | Ces onglets passent d'une vue d'interfaces à l'autre : 🔀 Component Exchange , 🔌 Physical Link et 🧩 Ports . |
+| 76 | 🧬 Traçabilité inter-couches : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés. |
+| 77 | 🎯 Capacités & missions : qui participe à quelle capacité ou mission (acteurs, fonctions, chaînes) et les capacités sans contenu. |
+| 78 | 🔁 Modes & états : machines d'états, transitions et éléments disponibles dans chaque mode ou état. |
+| 79 | ⚖ Comparaison de versions : chargez une autre version du fichier .capella pour voir les éléments ajoutés, supprimés et modifiés. |
+| 80 | 📑 Exigences : exigences du modèle, éléments qui les satisfont et exigences non couvertes. |
+| 81 | 🏷 Propriétés : propriétés et valeurs (PVMT) appliquées aux éléments. |
+| 82 | 🗃 Données & interfaces : classes, types de données, Exchange Items et interfaces, avec leurs utilisations. |
+| 83 | ⛓ Contraintes : contraintes du modèle et éléments contraints. |
+| 88 | 🗺 Relation Map |
+| 89 | 🗺 Relation Map |
+| 89 | Graphe centré sur un élément de contexte : ses voisins sont affichés jusqu'à la profondeur choisie, selon les relations Capella cochées. |
+| 90 | #b-zi,#b-zo,#b-fit |
+| 90 | 🔍 Zoom |
+| 91 | ＋ / － zooment (Ctrl++ / Ctrl+-), ⊡ Fit ajuste le graphe à la fenêtre (Ctrl+W). La molette zoome aussi et le fond se déplace à la souris. |
+| 92 | ↕ Ouvrir / fermer tout |
+| 93 | Déplie ou replie tous les nœuds du graphe d'un coup. |
+| 94 | #b-num,#b-leg,#b-rln,#b-cut,#b-compact |
+| 94 | 👁 Affichage |
+| 95 | # Nums numérote les relations, ◉ Légende affiche la légende, ⌁ Relations écrit le nom des relations sur les arêtes, ✂ Noms coupe les noms longs, ⬡ Compact réduit les nœuds. |
+| 96 | 🖼 Export |
+| 97 | Enregistre le graphe en image PNG , JPEG ou SVG . |
+| 98 | 🌳 Arborescence |
+| 100 | 📐 Disposition & profondeur |
+| 101 | Profondeur de voisinage (1 à 10) et disposition du graphe : → LR, ↓ TB, ← RL, ◉ radiale, ⚡ zigzag. |
+| 102 | 🔗 Critères de relation |
+| 104 | 🏷 Types d'éléments |
+| 105 | Types affichés dans le graphe, avec la couleur de leur couche ARCADIA. |
+| 106 | 📝 Propriétés |
+| 107 | Attributs de l'élément sélectionné dans le graphe. |
+| 108 | 🕸 Graphe |
+| 109 | Clic sur un nœud : sélection et propriétés · double-clic : il devient le contexte · clic droit : menu (éditer, masquer, relation…) · survol : ses voisins restent en évidence. |
+| 110 | ◉ Légende |
+| 110 | Couleurs des types et des relations affichés. |
+| 111 | ◀ Panneau |
+| 113 | 📊 Table View |
+| 114 | 📊 Table View |
+| 114 | Tableau de tous les éléments du fichier, avec onglets, filtres par colonne, colonnes calculées et export. |
+| 115 | 🗂 Onglets |
+| 116 | 🔷 Type d'élément |
+| 116 | Choisissez les types d'éléments listés dans le tableau, groupés par couche ARCADIA. |
+| 117 | 🧰 Commandes du tableau |
+| 118 | ⊞ Colonnes choisit les attributs affichés, ✨ Colonne perso crée une colonne calculée (Metachain), ≡ En ligne / ☰ Empilé règle les cellules à plusieurs valeurs, 💾 Sauver vue / 📂 Charger vue exportent la configuration en JSON. |
+| 119 | #tv-table thead |
+| 119 | ↕ En-têtes |
+| 120 | #tv-table tbody |
+| 120 | 📋 Lignes |
+| 120 | Un élément par ligne. Le nombre d'éléments affichés est indiqué dans la barre du tableau. |
+| 122 | ▦ Cartes |
+| 123 | ▦ Cartes |
+| 124 | Une carte par élément, regroupées par couche : type, nom et identifiant. Clic sur une carte : panneau de détail (propriétés, relations, liens). |
+| 125 | 🌳 Arborescence |
+| 126 | 🌳 Commandes |
+| 126 | ⊞ Déplier / ⊟ Réduire toute l'arborescence, ⬇ JSON l'exporte. |
+| 127 | 🌳 Arborescence |
+| 128 | 📋 Tableau |
+| 129 | 🧰 Commandes du tableau |
+| 130 | ⊞ Colonnes choisit les colonnes, ✨ Colonne perso en calcule une (Metachain), ≡ En ligne règle les cellules multiples, 💾 Sauver vue / 📂 Charger vue gardent la configuration, ↺ Réinitialiser revient au départ. |
+| 131 | ↕ En-têtes |
+| 132 | 📄 Pages |
+| 132 | Navigation de page en page et nombre de lignes par page. |
+| 133 | 📖 Index des types |
+| 134 | #cap-view-index input.inp |
+| 134 | 🔍 Recherche |
+| 134 | Cherche un type par son nom technique, son nom lisible ou sa description. |
+| 135 | ↕ Tri |
+| 135 | Clic sur un titre de colonne pour trier (nom, nombre d'éléments…). |
+| 136 | 📖 Types |
+| 136 | Chaque type présent dans le modèle : nom lisible, nombre d'éléments et description ARCADIA. |
+| 137 | 🔗 Liens |
+| 138 | 🔗 Liens |
+| 138 | Toutes les relations entre éléments du modèle, classées par nature : décomposition, allocation, échanges, réalisation inter-couches, capacités, chaînes. |
+| 139 | #cap-view-links .cap-lf-q |
+| 139 | 🔍 Recherche |
+| 139 | Filtre les liens par élément, échange ou identifiant. |
+| 140 | #cap-view-links .cap-lf-glab,#cap-view-links .cap-lf-btn |
+| 140 | 🔗 Relations |
+| 141 | #cap-view-links .cap-lf-csv |
+| 141 | ⬇ Export |
+| 141 | Exporte les liens affichés en CSV (la case voisine ajoute les identifiants). |
+| 142 | #cap-view-links .cap-link-table |
+| 142 | 📋 Tableau des liens |
+| 142 | Source → cible pour chaque lien. Clic sur un élément pour ouvrir son détail. |
+| 143 | ⚡ Chaînes |
+| 144 | ⚡ Chaînes |
+| 144 | Chaînes fonctionnelles, processus opérationnels et chemins physiques du modèle, avec leur diagramme. |
+| 145 | #cap-view-chains [data-cf] |
+| 145 | 🏷 Type |
+| 145 | Filtre par type de chaîne. |
+| 146 | #cap-view-chains [data-sv] |
+| 146 | 🖼 Présentation |
+| 146 | ▦ Diagrammes : une carte dépliable par chaîne · 🗺 Vue Relation Map : graphe interactif. |
+| 147 | #cap-view-chains [data-lf] |
+| 147 | 🧱 Catégorie |
+| 147 | Filtre par couche ARCADIA. |
+| 148 | #cap-view-chains [data-ef],#cap-view-chains [data-chsort] |
+| 148 | 🧹 Contenu et tri |
+| 148 | Vides : chaînes sans fonction ni échange (à compléter). Tri par nombre de fonctions. |
+| 149 | #cap-view-chains .cap-chain-legend |
+| 149 | 🎨 Légende |
+| 149 | Couleur des fonctions selon qu'elles sont portées par un acteur, par le système ou non allouées. |
+| 150 | #cap-view-chains .cap-chx-bar |
+| 150 | 📦 Export groupé |
+| 150 | Cochez des chaînes (aucune = toutes celles affichées) puis exportez-les en PDF , ZIP d'images PNG ou SVG, ou HTML . Les cases règlent le contenu (cadre, cartouche, légende, description, annexes), la liste ×1 / ×2 la résolution. |
+| 151 | #cap-view-chains .cap-chain-card |
+| 151 | ▦ Carte de chaîne |
+| 151 | Clic pour déplier le diagramme : fonctions, échanges, entrées / sorties. Le bouton 🗺 l'ouvre dans la Relation Map. |
+| 152 | 🗺 Vue Relation Map |
+| 152 | Graphe interactif de la chaîne choisie : dispositions, zoom et export. |
+| 153 | 🔀 Component Exchange |
+| 154 | #cap-view-compex .phl-toggle-btn |
+| 154 | 🖼 Présentation |
+| 154 | ≡ Vue Ligne : un échange par ligne · ▣ Vue Composant : regroupé par composant · ▦ Matrice : composant × composant · 🩺 Contrôles : anomalies détectées. |
+| 155 | 🔢 Compteur |
+| 155 | Échanges affichés après filtres / total. |
+| 156 | #cap-view-compex .cex-dir-btn,#cex-kind-sel |
+| 156 | ⇄ Sens et nature |
+| 156 | Filtre par sens de l'échange (orienté, inversé, bidirectionnel) et par nature (FLOW…). |
+| 157 | #cex-node-input,#cex-name-input |
+| 157 | 🔍 Filtres |
+| 157 | Par composant, ou par nom d'échange, d'échange fonctionnel ou d'Exchange Item. |
+| 158 | #cex-exp-csv,#cex-exp-html,#cex-exp-html-all |
+| 158 | ⬇ Exports |
+| 158 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
+| 159 | 📋 Résultat |
+| 159 | Clic sur un composant ou un échange pour ouvrir son détail. |
+| 160 | 🔌 Physical Link |
+| 161 | #cap-view-physlink .phl-toggle-btn |
+| 161 | 🖼 Présentation |
+| 161 | ≡ Vue Ligne , ▣ Vue Composant , ▦ Matrice composant × composant et 🩺 Contrôles des liens physiques. |
+| 162 | 🔢 Compteur |
+| 162 | Liens affichés après filtres / total. |
+| 163 | #cap-view-physlink .phl-ce-btn |
+| 163 | ⇢ Component Exchange |
+| 163 | Liens qui portent (ou non) des échanges de composants alloués. |
+| 164 | #phl-node-input,#phl-name-input |
+| 164 | 🔍 Filtres |
+| 164 | Par composant, ou par nom de lien ou d'échange. |
+| 165 | #phl-exp-csv,#phl-exp-html,#phl-exp-html-all |
+| 165 | ⬇ Exports |
+| 165 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
+| 166 | 📋 Résultat |
+| 166 | Clic sur un composant ou un lien pour ouvrir son détail. |
+| 167 | 🧩 Ports |
+| 168 | #cap-view-ports .phl-toggle-btn |
+| 168 | 🖼 Présentation |
+| 168 | ≡ Traçabilité Function Port ↔ Component Port ↔ Physical Port, ▣ Par composant , et 🩺 Contrôles (ports non alloués, chaînes incomplètes). |
+| 169 | 🔢 Compteur |
+| 169 | Lignes affichées après filtres / total. |
+| 170 | 🔍 Recherche |
+| 170 | Filtre par fonction, composant, port ou échange. La case voisine ne garde que les chaînes incomplètes. |
+| 171 | ⬇ CSV |
+| 171 | Exporte le tableau affiché. |
+| 172 | 📋 Résultat |
+| 172 | Les lignes incomplètes sont signalées en couleur. Clic sur un élément pour ouvrir son détail. |
+| 173 | ƒ Fonctions |
+| 174 | ƒ Fonctions |
+| 174 | Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles. |
+| 175 | #cap-view-functions [data-fv] |
+| 175 | 🖼 Présentation |
+| 175 | 🌳 Hiérarchie · 📋 Tableau façon Excel · ⛓ Traçabilité entre couches · 📊 Métriques · 🩺 Contrôles (qualité des noms, fonctions non allouées…). |
+| 176 | #cap-view-functions [data-fl] |
+| 176 | 🧱 Couche |
+| 176 | Choisit la couche ARCADIA étudiée (OA, SA, LA, PA). |
+| 177 | #ana-fn-q,#ana-fn-desc,#ana-fn-exp,#ana-fn-col |
+| 177 | 🔍 Recherche et affichage |
+| 178 | #cap-view-functions .ana-ak,#ana-fn-who |
+| 178 | 🎯 Allocation |
+| 179 | #ana-fn-csv,#ana-fn-html |
+| 179 | ⬇ Exports |
+| 179 | ⬇ CSV et 📄 Dossier fonctionnel : document HTML avec une section par fonction (description, allocation, échanges, traçabilité). |
+| 180 | #cap-view-functions .phl-filter-bar + * |
+| 180 | 📋 Résultat |
+| 180 | Clic sur une fonction pour ouvrir son détail. |
+| 181 | 🔬 Analyses |
+| 182 | #cap-view-analyses [data-an] |
+| 182 | 🔬 Analyses |
+| 182 | Huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes. |
+| 183 | #cap-view-analyses [data-an].active |
+| 183 | 🔎 Analyse affichée |
+| 183 | Analyse en cours. |
+| 184 | ↻ Recalculer |
+| 185 | #ana-box .phl-filter-bar |
+| 185 | 🧰 Options |
+| 185 | Présentations, filtres et export CSV propres à l'analyse affichée. |
+| 186 | 📋 Résultat |
+| 187 | 📐 Tableau de bord |
+| 188 | 📐 Tableau de bord |
+| 188 | Pages d'indicateurs, graphiques et tableaux sur le modèle, à composer soi-même et à imprimer. |
+| 189 | #cap-view-dashboard .dash-tabs |
+| 189 | 🗂 Pages |
+| 190 | ✏ Modifier |
+| 190 | Passe en édition : ajouter des éléments depuis le catalogue d'indicateurs, les configurer, déplacer et redimensionner. ✔ Terminer pour sortir. |
+| 191 | #dash-orient,#dash-print,#dash-html |
+| 191 | 🖨 Impression |
+| 191 | Format A4 portrait ou paysage, impression, ou export en page HTML autonome. |
+| 192 | #dash-json,#dash-imp |
+| 192 | ⬇⬆ JSON |
+| 192 | Exporte ou importe la définition des tableaux de bord pour les réutiliser sur un autre modèle. |
+| 193 | #cap-view-dashboard .dash-scroll |
+| 193 | 📐 Page |
+| 193 | Les éléments du tableau de bord, calculés sur le modèle chargé. |
+| 201 | @table |
+| 298 | Étape |
+| 300 | ◀ Précédent |
+| 301 | Terminer ✓ |
+| 301 | Suivant ▶ |

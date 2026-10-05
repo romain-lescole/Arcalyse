@@ -26,6 +26,7 @@ function capTfEnhanceAll(root){
 function capTfEnhance(t){
   t._tf=true;
   if(t.parentElement.closest('table')) return;             // tableau imbriqué (détail d'une ligne)
+  capTfScrollWrap(t);
   const head=t.rows[0];
   if(!head||!head.cells.length||[...head.cells].some(c=>c.tagName!=='TH'||c.colSpan>1)) return;
   const n=head.cells.length;
@@ -55,6 +56,47 @@ function capTfEnhance(t){
   });
   if(st.w.length===n) capTfWidths(t,st);
   if(st.f.some(Boolean)) capTfFilter(t,st);
+}
+
+/** Place le tableau dans un conteneur à défilement horizontal (seule la vue défile verticalement) et lui ajoute
+ * une barre de défilement horizontal flottante, collée en bas de l'écran tant que le tableau est visible.
+ * Si le tableau est déjà dans une zone défilante de 🔬 Analyses sans hauteur limitée, c'est cette zone qui est équipée.
+ * @param {HTMLTableElement} t
+ */
+function capTfScrollWrap(t){
+  let w=null;
+  for(let a=t.parentElement; a&&a.id!=='ana-box'&&a.id!=='cap-view-analyses'; a=a.parentElement){
+    if(a.classList.contains('cap-tf-scroll')) return;
+    const cs=getComputedStyle(a);
+    if(cs.overflowX==='auto'||cs.overflowX==='scroll'){
+      if(cs.maxHeight!=='none'||a.style.height) return;   // zone à hauteur limitée : elle a déjà ses barres
+      w=a; break;                                          // zone existante, haute comme le tableau
+    }
+  }
+  if(!w){ w=document.createElement('div'); t.before(w); w.appendChild(t); }
+  w.classList.add('cap-tf-scroll');
+  capTfHBar(w,t);
+}
+
+/** Barre de défilement horizontal flottante d'un tableau : synchronisée avec son conteneur, affichée seulement
+ * quand le tableau est plus large que la vue.
+ * @param {HTMLElement} w - Conteneur à défilement horizontal
+ * @param {HTMLTableElement} t - Tableau
+ */
+function capTfHBar(w,t){
+  const bar=document.createElement('div'); bar.className='cap-tf-hbar';
+  bar.title='Défilement horizontal du tableau';
+  const inner=document.createElement('div'); bar.appendChild(inner);
+  w.after(bar);
+  bar.addEventListener('scroll',()=>{ if(w.scrollLeft!==bar.scrollLeft) w.scrollLeft=bar.scrollLeft; });
+  w.addEventListener('scroll',()=>{ if(bar.scrollLeft!==w.scrollLeft) bar.scrollLeft=w.scrollLeft; });
+  const fit=()=>{
+    const over=w.scrollWidth>w.clientWidth+1;
+    bar.style.display=over?'':'none';
+    if(over){ inner.style.width=w.scrollWidth+'px'; bar.style.width=w.clientWidth+'px'; bar.scrollLeft=w.scrollLeft; }
+  };
+  fit();
+  if(window.ResizeObserver){ const ro=new ResizeObserver(fit); ro.observe(t); ro.observe(w); }
 }
 
 /** Fige les largeurs actuelles des colonnes (avant le premier redimensionnement).
@@ -93,7 +135,7 @@ function capTfFilter(t,st){
     r.style.display=ok?'':'none'; prev=ok; tot++; if(ok) vis++;
   });
   let cnt=t._tfCnt;
-  if(!cnt){ cnt=t._tfCnt=document.createElement('div'); cnt.className='cap-tf-cnt'; (t.parentElement.style.overflow==='auto'?t.parentElement:t).before(cnt); }
+  if(!cnt){ cnt=t._tfCnt=document.createElement('div'); cnt.className='cap-tf-cnt'; (t.parentElement.style.overflow==='auto'||t.parentElement.classList.contains('cap-tf-scroll')?t.parentElement:t).before(cnt); }
   const on=tests.some(Boolean);
   cnt.style.display=on?'':'none';
   cnt.innerHTML=on?`🔍 ${vis} / ${tot} ligne${tot>1?'s':''} <span class="cap-tf-clr" title="Effacer les filtres de ce tableau">✕ effacer</span>`:'';
