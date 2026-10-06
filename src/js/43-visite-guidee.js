@@ -159,7 +159,7 @@ var CAP_TOUR_VIEWS={
     {s:'#cex-main', t:'📋 Résultat', x:'Clic sur un composant ou un échange pour ouvrir son détail.'}]},
   fex:{l:'⇆ Functional Exchange', steps:[CAP_TOUR_FLUX,
     {s:'#cap-view-fex .phl-toggle-btn', t:'🖼 Présentation', x:'<b>≡ Vue Ligne</b> : un échange par ligne · <b>▣ Vue Fonction</b> : regroupé par fonction · <b>◧ Vue Blocs</b> : fonctions dessinées comme dans Capella (pins d\'entrée verts à gauche, de sortie orange à droite) · <b>▦ Matrice</b> fonction × fonction · <b>🩺 Contrôles</b>.'},
-    {s:'#fex-counter', t:'🔢 Compteur', x:'Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 500.'},
+    {s:'#fex-counter', t:'🔢 Compteur', x:'Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 100.'},
     {s:'#cap-view-fex .fex-layer-btn', t:'🧱 Couche', x:'Filtre par couche ARCADIA (OA, SA, LA, PA).'},
     {s:'#fex-fn-input,#fex-name-input', t:'🔍 Filtres', x:'Par fonction, ou par nom d\'échange ou d\'Exchange Item.'},
     {s:'#fex-exp-csv,#fex-exp-html,#fex-exp-html-all', t:'⬇ Exports', x:'CSV de la vue, rapport HTML de la vue (toutes les pages), ou rapport HTML autonome avec toutes les vues.'},

@@ -3,10 +3,10 @@
  * ≡ Vue Ligne (un échange par ligne), ▣ Vue Fonction (regroupé par fonction),
  * ◧ Vue Blocs (chaque fonction dessinée comme dans Capella : boîte verte, pins d'entrée à gauche,
  * de sortie à droite, avec l'échange et la fonction distante), ▦ Matrice fonction × fonction, 🩺 Contrôles.
- * Pagination par 500 (lignes, fonctions, blocs) ; matrice limitée à 200 fonctions (les plus connectées), pour rester fluide sur les gros modèles.
+ * Pagination par 100 (lignes, fonctions, blocs) ; matrice limitée à 100 fonctions (les plus connectées), pour rester fluide sur les gros modèles.
  */
-var CAP_FEX_PAGE=500;    // éléments par page (Ligne, Fonction, Blocs) : ≈ 0,3 s de rendu ; tout afficher (3 000 fonctions) ≈ 2 s à chaque filtre
-var CAP_FEX_MX_MAX=200;  // fonctions au plus dans la matrice : 200 ≈ 0,5 s, 300 ≈ 1,6 s
+var CAP_FEX_PAGE=100;    // éléments par page (Ligne, Fonction, Blocs) : ≈ 0,1 s de rendu ; tout afficher (3 000 fonctions) ≈ 2 s à chaque filtre
+var CAP_FEX_MX_MAX=100;  // fonctions au plus dans la matrice : 100 ≈ 0,2 s, 200 ≈ 0,5 s, 300 ≈ 1,6 s
 var _capFexView='line';
 
 /** Calcule les Functional Exchanges du modèle avec leurs fonctions et ports d'extrémité, les Exchange Items,
@@ -352,7 +352,7 @@ function capRenderFunctionalExchange(){
     const f=getFiltered();
     const V=[['line','≡ Vue Ligne','Un échange par ligne : fonction source ▶ échange ▶ fonction cible'],['card','▣ Vue Fonction','Échanges regroupés par fonction'],
       ['block','◧ Vue Blocs','Fonctions dessinées comme dans Capella : pins d\'entrée (verts) à gauche, de sortie (orange) à droite'],
-      ['matrix','▦ Matrice','Matrice fonction × fonction (ligne = source, colonne = cible), 200 fonctions au plus'],['diag','🩺 Contrôles','Ports orphelins, échanges sans Exchange Item, fonctions sans échange…']];
+      ['matrix','▦ Matrice','Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus'],['diag','🩺 Contrôles','Ports orphelins, échanges sans Exchange Item, fonctions sans échange…']];
     container.innerHTML=`
       <div class="phl-toggle-bar">
         ${V.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}

@@ -2791,7 +2791,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 161 | 🖼 Présentation |
 | 161 | ≡ Vue Ligne : un échange par ligne · ▣ Vue Fonction : regroupé par fonction · ◧ Vue Blocs : fonctions dessinées comme dans Capella (pins d'entrée verts à gauche, de sortie orange à droite) · ▦ Matrice fonction × fonction · 🩺 Contrôles . |
 | 162 | 🔢 Compteur |
-| 162 | Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 500. |
+| 162 | Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 100. |
 | 163 | #cap-view-fex .fex-layer-btn |
 | 163 | 🧱 Couche |
 | 163 | Filtre par couche ARCADIA (OA, SA, LA, PA). |
@@ -2988,7 +2988,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 354 | ◧ Vue Blocs |
 | 354 | Fonctions dessinées comme dans Capella : pins d'entrée (verts) à gauche, de sortie (orange) à droite |
 | 355 | ▦ Matrice |
-| 355 | Matrice fonction × fonction (ligne = source, colonne = cible), 200 fonctions au plus |
+| 355 | Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus |
 | 355 | 🩺 Contrôles |
 | 355 | Ports orphelins, échanges sans Exchange Item, fonctions sans échange… |
 | 361 | Toutes |
