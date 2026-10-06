@@ -1104,8 +1104,7 @@ html[data-tone="light"] .fex-pname{color:#2a5a2a;}
 /* ── 🧱 Composants : blocs et ports façon Capella ── */
 .cb-box{border-radius:3px;}
 .cb-box.cb-k-sys{border-color:#6f9be0;background:color-mix(in srgb,#5b8ad6 24%,var(--c-bg));}
-.cb-box.cb-k-act{border-color:#9fe6ff;background:color-mix(in srgb,#7fd8ff 34%,var(--c-bg));}   /* bleu clair bien distinct du bleu système en thème sombre */
-html:not([data-tone="light"]) .cb-box.cb-k-act .fex-box-t{color:#e6f9ff;}
+.cb-box.cb-k-act{border-color:#7fd8ff;background:color-mix(in srgb,#7fd8ff 14%,var(--c-bg));}
 .cb-box.cb-k-node{border-color:#e3b341;background:color-mix(in srgb,#e3b341 16%,var(--c-bg));}
 .cb-box .fex-box-t{color:var(--c-text);align-items:flex-start;padding-top:12px;}
 .cb-ic{font-size:12px;margin-right:4px;}
