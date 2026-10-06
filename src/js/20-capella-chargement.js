@@ -128,6 +128,13 @@ async function capSavePageDirect(saveAs){
     capSaveFullPage();
   }
 }
+// Avertissement avant de quitter la page (bouton ← Précédent, fermeture de l'onglet, autre adresse) quand un modèle
+// est chargé : tout le travail en cours (modèle, filtres, tableaux de bord non enregistrés) serait perdu.
+// Le navigateur affiche son propre message (le texte ne peut pas être personnalisé).
+window.addEventListener('beforeunload', e=>{
+  if(!capLoaded||window._capNoLeaveWarn) return;
+  e.preventDefault(); e.returnValue='';
+});
 document.getElementById('b-save-page')?.addEventListener('click', capSaveFullPage);
 document.getElementById('b-save-direct')?.addEventListener('click', e=>capSavePageDirect(e.shiftKey));
 document.addEventListener('keydown', e=>{

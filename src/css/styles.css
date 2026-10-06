@@ -1061,3 +1061,20 @@ table.cap-tf-fixed td,table.cap-tf-fixed th{overflow-wrap:anywhere;}
 html[data-tone="light"] .fex-box{background:#c5ffa6;border-color:#2f6b2f;}
 html[data-tone="light"] .fex-box-t{color:#0b5a2a;}
 html[data-tone="light"] .fex-pname{color:#2a5a2a;}
+
+/* ── ⚖ Rapport de comparaison de versions ── */
+.dr-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:6px 0;}
+.dr-actions{padding:6px 0;border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border);}
+.dr-opt{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--c-dim);}
+.dr-link{color:var(--c-accent);cursor:pointer;}
+.dr-report{margin-top:8px;}
+.dr-grp{margin:10px 0 4px;}
+.dr-grp-h{font-weight:700;font-size:13px;margin-bottom:4px;}
+.dr-line{display:flex;gap:6px;align-items:flex-start;padding:3px 4px;border-bottom:1px solid var(--c-border);font-size:12.5px;}
+.dr-line:hover{background:var(--c-bg3);}
+.dr-line.dr-off .dr-txt{opacity:.4;text-decoration:line-through;}
+.dr-chk{padding-top:1px;}
+.dr-txt{flex:1;min-width:0;line-height:1.45;}
+.dr-meta{font-size:11px;color:var(--c-dim);}
+.dr-open{cursor:pointer;color:var(--c-accent);font-size:11px;}
+.dr-det{margin:4px 0 4px;max-width:1100px;}

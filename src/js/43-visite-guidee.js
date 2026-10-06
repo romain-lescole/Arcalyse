@@ -76,7 +76,7 @@ var CAP_TOUR_ANA_TXT={
   trace:'<b>🧬 Traçabilité inter-couches</b> : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés.',
   caps:'<b>🎯 Capacités & missions</b> : qui participe à quelle capacité ou mission (acteurs, fonctions, chaînes) et les capacités sans contenu.',
   states:'<b>🔁 Modes & états</b> : machines d\'états, transitions et éléments disponibles dans chaque mode ou état.',
-  diff:'<b>⚖ Comparaison de versions</b> : chargez une autre version du fichier .capella pour voir les éléments ajoutés, supprimés et modifiés.',
+  diff:'<b>⚖ Comparaison de versions</b> : chargez une autre version du fichier .capella. Le rapport classe les changements en 8 catégories (créations, suppressions, renommages, descriptions, propriétés, liens, déplacements, types), sur 4 niveaux (Synthèse → Complet), et se copie dans Word, Outlook, Teams ou Excel.',
   reqs:'<b>📑 Exigences</b> : exigences du modèle, éléments qui les satisfont et exigences non couvertes.',
   pvmt:'<b>🏷 Propriétés</b> : propriétés et valeurs (PVMT) appliquées aux éléments.',
   data:'<b>🗃 Données & interfaces</b> : classes, types de données, Exchange Items et interfaces, avec leurs utilisations.',

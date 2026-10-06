@@ -17,7 +17,7 @@ function capTfNorm(s){ return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,
  * @param {HTMLElement} root - Conteneur (zone des sous-vues de 🔬 Analyses)
  */
 function capTfEnhanceAll(root){
-  root.querySelectorAll('table.ana-t:not(.ana-kv), table.cap-chain-xtable').forEach(t=>{ if(!t._tf) capTfEnhance(t); });
+  root.querySelectorAll('table.ana-t:not(.ana-kv):not(.dr-det), table.cap-chain-xtable').forEach(t=>{ if(!t._tf) capTfEnhance(t); });
 }
 
 /** Ajoute la ligne de filtres et les poignées de redimensionnement à un tableau.

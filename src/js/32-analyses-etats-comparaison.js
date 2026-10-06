@@ -248,7 +248,7 @@ function capDiffIndex(doc){
  * Les références (#id) sont traduites en noms pour la lecture.
  * @param {object} A - Index de l'ancienne version
  * @param {object} B - Index de la nouvelle version
- * @returns {object[]} Différences {status:'add'|'del'|'mod', e, changes:[{k,a,b}], moved}
+ * @returns {object[]} Différences {status:'add'|'del'|'mod', e, changes:[{k,a,b, ref?, added?, removed?}], moved}
  */
 function capDiffCompute(A, B){
   const nameOf=(ix,v)=>String(v||'').split(/\s+/).map(tok=>{ if(!tok.startsWith('#')) return tok; const e=ix[tok.slice(1)]; return e?(e.name||e.type):tok; }).join(', ');
@@ -265,7 +265,12 @@ function capDiffCompute(A, B){
       if(va===vb) return;
       const clean=v=>k==='description'?String(v).replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim():v;
       if(k==='description'&&clean(va)===clean(vb)) return;
-      changes.push({k, a:isRef(va)?nameOf(A,va):clean(va), b:isRef(vb)?nameOf(B,vb):clean(vb)});
+      const ref=isRef(va)||isRef(vb), c={k, a:isRef(va)?nameOf(A,va):clean(va), b:isRef(vb)?nameOf(B,vb):clean(vb)};
+      if(ref){   // références : noms ajoutés / retirés (rapport de comparaison)
+        const ta=new Set(String(va).split(/\s+/).filter(Boolean)), tb=new Set(String(vb).split(/\s+/).filter(Boolean));
+        c.ref=true; c.added=[...tb].filter(t=>!ta.has(t)).map(t=>nameOf(B,t)); c.removed=[...ta].filter(t=>!tb.has(t)).map(t=>nameOf(A,t));
+      }
+      changes.push(c);
     });
     if(a.content!==b.content) changes.push({k:'contenu', a:a.content.replace(/<[^>]+>/g,' ').trim(), b:b.content.replace(/<[^>]+>/g,' ').trim()});
     const moved=a.parent!==b.parent;
@@ -275,12 +280,11 @@ function capDiffCompute(A, B){
   return out;
 }
 
-/** Rend la sous-vue Comparaison : chargement d'une autre version du modèle, synthèse par type, liste filtrable
- * des différences avec le détail attribut par attribut, export CSV.
+/** Rend la sous-vue Comparaison : chargement d'une autre version du modèle (ancienne / nouvelle, ⇄ pour inverser),
+ * puis rapport par catégories et niveaux (capDrRender, 45-comparaison-rapport.js).
  * @param {HTMLElement} box - Conteneur
  */
 function capRenderDiff(box){
-  const st=box._df=box._df||{status:'all', layer:'all', type:'all', q:'', open:new Set()};
   const cur=capCurrentFileName||'modèle chargé';
   const oldName=capDiffSwap?cur:capDiffName, newName=capDiffSwap?capDiffName:cur;
   const head=`<div class="ana-diff-head">
@@ -290,75 +294,30 @@ function capRenderDiff(box){
       <label class="cw-btn ana-diff-load">📂 ${capDiffDoc?'Changer la version à comparer…':'Charger une autre version (.capella)…'}<input type="file" id="ana-df-file"${capIsMobile()?'':' accept=".capella,.melodymodeller,.xml"'} style="display:none"></label>
     </div>`;
   if(!capDiffDoc){
-    box.innerHTML=head+`<div class="phl-empty">Chargez une autre version du même modèle (par défaut considérée comme l'<b>ancienne</b> version ; ⇄ pour inverser).<br>Les éléments sont appariés par identifiant : ajoutés, supprimés, modifiés (attributs, description, références, contenu) et déplacés.</div>`;
+    box.innerHTML=head+`<div class="phl-empty">Chargez une autre version du même modèle (par défaut considérée comme l'<b>ancienne</b> version ; ⇄ pour inverser).<br>Les éléments sont appariés par identifiant ; le rapport classe les changements en créations, suppressions, renommages, descriptions, propriétés, liens, déplacements et changements de type, du plus synthétique au plus complet, et se copie dans Word, Outlook, Teams ou Excel.</div>`;
     wire(); return;
   }
   if(!_capAnaCache.diff||_capAnaCache.diffSwap!==capDiffSwap){
     const cIdx=capDiffIndex(cap_xmlDoc), oIdx=capDiffIndex(capDiffDoc);
-    _capAnaCache.diff=capDiffSwap?capDiffCompute(cIdx,oIdx):capDiffCompute(oIdx,cIdx); _capAnaCache.diffSwap=capDiffSwap;
+    const A=capDiffSwap?cIdx:oIdx, B=capDiffSwap?oIdx:cIdx;
+    _capAnaCache.diff=capDiffCompute(A,B); _capAnaCache.diffIdx={A,B}; _capAnaCache.diffSwap=capDiffSwap;
   }
-  const diffs=_capAnaCache.diff;
-  const ST={add:{i:'➕',l:'Ajoutés',c:'#3fb950'}, del:{i:'➖',l:'Supprimés',c:'#f85149'}, mod:{i:'✎',l:'Modifiés',c:'#e3b341'}, mov:{i:'↪',l:'Déplacés',c:'#58a6ff'}};
-  const cnt=k=>k==='mov'?diffs.filter(d=>d.moved).length:diffs.filter(d=>d.status===k).length;
-  const q=st.q.trim().toLowerCase();
-  const f=diffs.filter(d=>(st.status==='all'||(st.status==='mov'?d.moved:d.status===st.status))&&(st.layer==='all'||d.e.layer===st.layer)
-    &&(st.type==='all'||d.e.type===st.type)&&(!q||(d.e.name+' '+d.e.type).toLowerCase().includes(q)))
-    .sort((a,b)=>CAP_CHAIN_LAYER_ORDER.indexOf(a.e.layer)-CAP_CHAIN_LAYER_ORDER.indexOf(b.e.layer)||a.e.type.localeCompare(b.e.type)||(a.e.name||'').localeCompare(b.e.name||'','fr'));
-  box._dfRows=f;
-  const types=[...new Set(diffs.map(d=>d.e.type))].sort();
-  const layers=CAP_CHAIN_LAYER_ORDER.filter(k=>diffs.some(d=>d.e.layer===k));
-  // Synthèse par type
-  const byType={}; diffs.forEach(d=>{ const t=byType[d.e.type]=byType[d.e.type]||{add:0,del:0,mod:0}; t[d.status]++; });
-  const synth=Object.entries(byType).sort((a,b)=>(b[1].add+b[1].del+b[1].mod)-(a[1].add+a[1].del+a[1].mod));
-  const inCur=d=>(d.status!=='del')!==capDiffSwap; // élément présent dans le modèle chargé → lien vers le détail
-  const MAX=1500;
-  const rowsHtml=f.slice(0,MAX).map((d,i)=>{
-    const s=ST[d.status], open=st.open.has(d.e.id+d.status);
-    const nm=inCur(d)?capDetLink(d.e.id,d.e.name||'('+capAnaHuman(d.e.type)+')'):capEsc(d.e.name||'('+capAnaHuman(d.e.type)+')');
-    return `<tr class="ana-df-row" data-k="${capEsc(d.e.id+d.status)}"><td style="color:${s.c};white-space:nowrap">${s.i} ${s.l.slice(0,-1)}${d.moved?' <span style="color:#58a6ff">↪</span>':''}</td>
-      <td>${capChainLayerBadge(d.e.layer)}</td><td class="ana-dim">${capEsc(capAnaHuman(d.e.type))}</td><td>${nm}</td>
-      <td class="ana-dim">${d.changes.length?`${d.changes.length} changement(s) ${open?'▾':'▸'}`:''}</td></tr>
-      ${open&&d.changes.length?`<tr class="ana-df-det"><td colspan="5"><table class="ana-t"><tr><th>Propriété</th><th>Avant</th><th>Après</th></tr>
-        ${d.changes.map(c=>`<tr><td><b>${capEsc(c.k)}</b></td><td class="ana-old">${capEsc(String(c.a).slice(0,600))||'<i>vide</i>'}</td><td class="ana-new">${capEsc(String(c.b).slice(0,600))||'<i>vide</i>'}</td></tr>`).join('')}</table></td></tr>`:''}`;
-  }).join('');
-  box.innerHTML=head+`
-    <div class="phl-filter-bar" style="flex-wrap:wrap;margin:8px 0">
-      <button class="cap-lf-btn${st.status==='all'?' active':''}" data-dfs="all">Tous (${diffs.length})</button>
-      ${Object.entries(ST).map(([k,s])=>`<button class="cap-lf-btn${st.status===k?' active':''}" data-dfs="${k}" style="${st.status===k?`border-color:${s.c};color:${s.c}`:''}">${s.i} ${s.l} (${cnt(k)})</button>`).join('')}
-      <span class="tsep"></span>
-      <select id="ana-df-layer" class="phl-filter-input" style="width:auto"><option value="all">Toutes couches</option>${layers.map(k=>`<option value="${k}"${st.layer===k?' selected':''}>${k==='?'?'Hors couche':k}</option>`).join('')}</select>
-      <select id="ana-df-type" class="phl-filter-input" style="width:auto;max-width:220px"><option value="all">Tous types</option>${types.map(t=>`<option value="${capEsc(t)}"${st.type===t?' selected':''}>${capEsc(capAnaHuman(t))}</option>`).join('')}</select>
-      <input id="ana-df-q" class="phl-filter-input" placeholder="🔍 Nom…" value="${capEsc(st.q)}" style="width:160px">
-      <button class="phl-export-btn" id="ana-df-csv" style="margin-left:auto">⬇ CSV</button>
-    </div>
-    ${diffs.length?`<details class="cap-chain-xdet"><summary>Synthèse par type (${synth.length})</summary><table class="ana-t"><tr><th>Type</th><th>➕</th><th>➖</th><th>✎</th></tr>
-      ${synth.map(([t,c])=>`<tr><td>${capEsc(capAnaHuman(t))}</td><td>${c.add||''}</td><td>${c.del||''}</td><td>${c.mod||''}</td></tr>`).join('')}</table></details>
-    <table class="ana-t ana-df"><tr><th>Statut</th><th>Couche</th><th>Type</th><th>Élément</th><th>Détail</th></tr>${rowsHtml}</table>
-    ${f.length>MAX?`<div class="cap-mx-hint">${MAX} lignes affichées sur ${f.length} — filtrez ou exportez en CSV.</div>`:''}`
-    :'<div class="phl-empty">✔ Les deux versions sont identiques (au niveau des éléments identifiés).</div>'}`;
+  box.innerHTML=head+'<div id="ana-dr"></div>';
+  const host=box.querySelector('#ana-dr');
+  if(box._drState) host._dr=box._drState;   // réglages conservés d'un rendu à l'autre
+  capDrRender(host, _capAnaCache.diff, _capAnaCache.diffIdx.A, _capAnaCache.diffIdx.B, {oldName, newName});
+  box._drState=host._dr;
   wire();
-  /** Branche les contrôles de la sous-vue. */
+  /** Branche le chargement de la version à comparer et l'inversion. */
   function wire(){
     box.querySelector('#ana-df-file')?.addEventListener('change',e=>{
       const file=e.target.files[0]; if(!file) return;
       const r=new FileReader();
       r.onload=ev=>{ const doc=new DOMParser().parseFromString(ev.target.result,'application/xml');
         if(doc.querySelector('parsererror')){ alert('Fichier XML invalide'); return; }
-        capDiffDoc=doc; capDiffName=file.name; delete _capAnaCache.diff; st.open=new Set(); capRenderDiff(box); };
+        capDiffDoc=doc; capDiffName=file.name; delete _capAnaCache.diff; if(box._drState) box._drState.ex.clear(); capRenderDiff(box); };
       r.readAsText(file);
     });
-    box.querySelector('#ana-df-swap')?.addEventListener('click',()=>{ capDiffSwap=!capDiffSwap; st.open=new Set(); capRenderDiff(box); });
-    box.querySelectorAll('[data-dfs]').forEach(b=>b.onclick=()=>{ st.status=b.dataset.dfs; capRenderDiff(box); });
-    box.querySelector('#ana-df-layer')?.addEventListener('change',e=>{ st.layer=e.target.value; capRenderDiff(box); });
-    box.querySelector('#ana-df-type')?.addEventListener('change',e=>{ st.type=e.target.value; capRenderDiff(box); });
-    let deb; box.querySelector('#ana-df-q')?.addEventListener('input',e=>{ st.q=e.target.value; clearTimeout(deb); deb=setTimeout(()=>{ const p=e.target.selectionStart; capRenderDiff(box); const i=box.querySelector('#ana-df-q'); i.focus(); i.setSelectionRange(p,p); },250); });
-    box.querySelectorAll('.ana-df-row').forEach(tr=>tr.onclick=()=>{ const k=tr.dataset.k; if(st.open.has(k)) st.open.delete(k); else st.open.add(k); capRenderDiff(box); });
-    box.querySelector('#ana-df-csv')?.addEventListener('click',()=>{
-      const rows=[]; (box._dfRows||[]).forEach(d=>{
-        const base=[{add:'Ajouté',del:'Supprimé',mod:'Modifié'}[d.status]+(d.moved?' (déplacé)':''), d.e.layer, capAnaHuman(d.e.type), d.e.name, d.e.id];
-        if(!d.changes.length) rows.push([...base,'','','']); else d.changes.forEach(c=>rows.push([...base,c.k,c.a,c.b]));
-      });
-      capCsvDownload('comparaison-versions.csv',['Statut','Couche','Type','Élément','ID','Propriété','Avant','Après'],rows);
-    });
+    box.querySelector('#ana-df-swap')?.addEventListener('click',()=>{ capDiffSwap=!capDiffSwap; if(box._drState) box._drState.ex.clear(); capRenderDiff(box); });
   }
 }

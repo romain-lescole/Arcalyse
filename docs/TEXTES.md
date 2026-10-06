@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 2818 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 2909 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -663,56 +663,56 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 123 | ✔ Enregistré |
 | 127 | Enregistrement direct impossible ( |
 | 127 | ). La page va être téléchargée à la place. |
-| 158 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. |
-| 162 | » n'est pas un fichier Capella (.capella attendu). |
-| 165 | Chargement de « |
-| 168 | Impossible de lire « |
-| 174 | XML invalide |
-| 180 | Erreur de chargement : |
-| 199 | Aucun élément Capella reconnu dans ce fichier |
-| 224 | Ouvrir un autre modèle Capella |
-| 225 | Modèle actuel : |
-| 225 | Déposez un nouveau fichier .capella pour le remplacer. |
-| 293 | Shared |
-| 312 | Project |
-| 369 | Composition |
-| 369 | Aggregation |
-| 369 | Association |
-| 369 | Containment |
-| 369 | Generalization |
-| 369 | Realization |
-| 369 | Dependency |
-| 369 | Usage |
-| 369 | Abstraction |
-| 369 | Refine |
-| 369 | Trace |
-| 369 | Satisfy |
-| 369 | Verify |
-| 369 | Copy |
-| 369 | Allocation |
-| 370 | Block |
-| 370 | Component |
-| 370 | Class |
-| 370 | Interface |
-| 370 | Requirement |
-| 370 | Package |
-| 373 | Aggregation |
-| 373 | Association |
-| 373 | Containment |
-| 373 | Generalization |
-| 373 | Realization |
-| 373 | Dependency |
-| 373 | Usage |
-| 373 | Abstraction |
-| 373 | Refine |
-| 373 | Trace |
-| 373 | Satisfy |
-| 373 | Verify |
-| 373 | Copy |
-| 373 | Allocation |
-| 482 | PhysicalComponent (NODE) |
-| 483 | PhysicalComponent (BEHAVIOR) |
-| 722 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella |
+| 165 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. |
+| 169 | » n'est pas un fichier Capella (.capella attendu). |
+| 172 | Chargement de « |
+| 175 | Impossible de lire « |
+| 181 | XML invalide |
+| 187 | Erreur de chargement : |
+| 206 | Aucun élément Capella reconnu dans ce fichier |
+| 231 | Ouvrir un autre modèle Capella |
+| 232 | Modèle actuel : |
+| 232 | Déposez un nouveau fichier .capella pour le remplacer. |
+| 300 | Shared |
+| 319 | Project |
+| 376 | Composition |
+| 376 | Aggregation |
+| 376 | Association |
+| 376 | Containment |
+| 376 | Generalization |
+| 376 | Realization |
+| 376 | Dependency |
+| 376 | Usage |
+| 376 | Abstraction |
+| 376 | Refine |
+| 376 | Trace |
+| 376 | Satisfy |
+| 376 | Verify |
+| 376 | Copy |
+| 376 | Allocation |
+| 377 | Block |
+| 377 | Component |
+| 377 | Class |
+| 377 | Interface |
+| 377 | Requirement |
+| 377 | Package |
+| 380 | Aggregation |
+| 380 | Association |
+| 380 | Containment |
+| 380 | Generalization |
+| 380 | Realization |
+| 380 | Dependency |
+| 380 | Usage |
+| 380 | Abstraction |
+| 380 | Refine |
+| 380 | Trace |
+| 380 | Satisfy |
+| 380 | Verify |
+| 380 | Copy |
+| 380 | Allocation |
+| 489 | PhysicalComponent (NODE) |
+| 490 | PhysicalComponent (BEHAVIOR) |
+| 729 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella |
 
 ## js/21-capella-vues-base.js
 
@@ -1472,41 +1472,13 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 215 | Déclencheur |
 | 215 | Garde |
 | 215 | Effet |
-| 272 | propriétaire |
-| 284 | modèle chargé |
-| 286 | Ancienne version (référence) |
-| 288 | ⇄ Nouvelle version |
-| 290 | Changer la version à comparer… |
-| 290 | Charger une autre version (.capella)… |
-| 301 | Ajoutés |
-| 301 | Supprimés |
-| 301 | Modifiés |
-| 301 | Déplacés |
-| 320 | changement(s) |
-| 321 | Propriété Avant Après |
-| 326 | Tous ( |
-| 327 | Toutes couches |
-| 329 | Tous types |
-| 329 | Hors couche |
-| 331 | ⬇ CSV |
-| 334 | Synthèse par type ( |
-| 334 | ) Type ➕ ➖ ✎ |
-| 335 | Statut Couche Type Élément Détail |
-| 337 | lignes affichées sur |
-| 337 | — filtrez ou exportez en CSV. |
-| 338 | ✔ Les deux versions sont identiques (au niveau des éléments identifiés). |
-| 346 | Fichier XML invalide |
-| 358 | Ajouté |
-| 358 | Supprimé |
-| 358 | Modifié |
-| 358 | (déplacé) |
-| 361 | Statut |
-| 361 | Couche |
-| 361 | Type |
-| 361 | Élément |
-| 361 | Propriété |
-| 361 | Avant |
-| 361 | Après |
+| 277 | propriétaire |
+| 288 | modèle chargé |
+| 290 | Ancienne version (référence) |
+| 292 | ⇄ Nouvelle version |
+| 294 | Changer la version à comparer… |
+| 294 | Charger une autre version (.capella)… |
+| 317 | Fichier XML invalide |
 
 ## js/33-qualite-noms.js
 
@@ -2664,7 +2636,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 76 | 🧬 Traçabilité inter-couches : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés. |
 | 77 | 🎯 Capacités & missions : qui participe à quelle capacité ou mission (acteurs, fonctions, chaînes) et les capacités sans contenu. |
 | 78 | 🔁 Modes & états : machines d'états, transitions et éléments disponibles dans chaque mode ou état. |
-| 79 | ⚖ Comparaison de versions : chargez une autre version du fichier .capella pour voir les éléments ajoutés, supprimés et modifiés. |
+| 79 | ⚖ Comparaison de versions : chargez une autre version du fichier .capella. Le rapport classe les changements en 8 catégories (créations, suppressions, renommages, descriptions, propriétés, liens, déplacements, types), sur 4 niveaux (Synthèse → Complet), et se copie dans Word, Outlook, Teams ou Excel. |
 | 80 | 📑 Exigences : exigences du modèle, éléments qui les satisfont et exigences non couvertes. |
 | 81 | 🏷 Propriétés : propriétés et valeurs (PVMT) appliquées aux éléments. |
 | 82 | 🗃 Données & interfaces : classes, types de données, Exchange Items et interfaces, avec leurs utilisations. |
@@ -2996,3 +2968,127 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 367 | 🔍 Échange : |
 | 370 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
 | 370 | avec ports ou échanges |
+
+## js/45-comparaison-rapport.js
+
+| Ligne | Texte |
+|---:|---|
+| 11 | Créations |
+| 11 | Création |
+| 12 | Suppressions |
+| 12 | Suppression |
+| 13 | Renommages |
+| 13 | Renommage |
+| 14 | Descriptions |
+| 14 | Description |
+| 15 | Propriétés |
+| 15 | Propriété |
+| 16 | Liens |
+| 16 | Lien |
+| 17 | Déplacements |
+| 17 | Déplacement |
+| 18 | Changements de type |
+| 18 | Type |
+| 22 | Ports |
+| 23 | Échanges |
+| 24 | Chaînes & scénarios |
+| 25 | Fonctions |
+| 26 | Composants & acteurs |
+| 27 | Capacités & missions |
+| 28 | Modes & états |
+| 29 | Exigences |
+| 30 | Données & interfaces |
+| 31 | Paquetages |
+| 42 | Autres |
+| 142 | (sans nom) |
+| 147 | — dans « |
+| 147 | — était dans « |
+| 147 | — avec |
+| 147 | élément |
+| 149 | résumé modifié |
+| 149 | description modifiée |
+| 149 | modifié |
+| 150 | retiré ( |
+| 152 | modifié |
+| 153 | : déplacé de « |
+| 153 | » vers « |
+| 164 | (sans nom) |
+| 165 | Contenu : |
+| 173 | Hors couche |
+| 173 | (racine) |
+| 195 | catégories : |
+| 196 | couches : |
+| 196 | familles : |
+| 197 | recherche « |
+| 197 | ligne(s) exclue(s) |
+| 198 | Comparaison de versions |
+| 208 | Catégorie |
+| 208 | Total |
+| 208 | Hors couche |
+| 212 | changement(s) |
+| 212 | · filtres : |
+| 214 | Famille |
+| 225 | Propriété |
+| 225 | Avant |
+| 225 | Après |
+| 236 | changement(s) |
+| 237 | Filtres : |
+| 240 | Par famille : |
+| 259 | Catégorie |
+| 259 | Couche |
+| 259 | Famille |
+| 259 | Type |
+| 259 | Élément |
+| 259 | Ancien nom |
+| 259 | Parent |
+| 259 | Propriété |
+| 259 | Avant |
+| 259 | Après |
+| 259 | Résumé |
+| 259 | Chemin |
+| 274 | ** changement(s) |
+| 274 | · filtres : |
+| 276 | \| Catégorie \| |
+| 276 | \| Total \| |
+| 286 | \| Propriété \| Avant \| Après \| |
+| 336 | Synthèse |
+| 336 | Compteurs par catégorie, couche et famille |
+| 336 | Simple |
+| 336 | Une phrase par changement |
+| 336 | Détaillé |
+| 336 | Avec chaque propriété avant → après |
+| 336 | Complet |
+| 336 | Avec identifiant, type technique et chemin |
+| 337 | Catégorie |
+| 337 | Couche |
+| 337 | Famille |
+| 337 | Élément parent |
+| 338 | 📋 Copier (mis en forme) |
+| 338 | Pour Word, Outlook, Teams, OneNote : titres, listes, tableaux et couleurs |
+| 338 | 📋 Copier (texte brut) |
+| 338 | Lignes indentées, pour un e-mail simple ou un outil de suivi |
+| 338 | 📋 Copier (tableau Excel) |
+| 338 | Une ligne par changement, colonnes séparées par des tabulations |
+| 338 | 📋 Copier (Markdown) |
+| 338 | Pour GitLab / GitHub, wiki |
+| 353 | Propriété Avant Après |
+| 354 | lignes affichées sur |
+| 354 | — la copie et les exports contiennent tout. |
+| 355 | Aucun changement pour ces filtres. |
+| 358 | Niveau |
+| 360 | Préréglage 📰 Notes de version 🔍 Revue 🧾 Audit Catégories |
+| 367 | ✱ Couches |
+| 371 | Toutes familles |
+| 371 | Hors couche |
+| 371 | Aucune sélection = toutes |
+| 373 | Regrouper par |
+| 375 | Rattacher le technique à son élément |
+| 378 | changement(s) retenu(s) |
+| 378 | exclu(s) ↺ tout réinclure |
+| 380 | 📋 Copier ⬇ CSV ⬇ HTML 🖨 Imprimer |
+| 380 | Format : |
+| 418 | ✔ Copié |
+| 418 | ⚠ Copie impossible |
+| 418 | 📋 Copier |
+| 422 | Comparaison de versions |
+| 427 | Fenêtre bloquée par le navigateur : utilisez ⬇ HTML puis imprimez le fichier. |

@@ -43,6 +43,7 @@
           <div class="hp-card"><b>🔷 Vues Capella</b><span>Vues d'analyse dédiées : explorateur (arborescence, cartes, tableau, index), liens, chaînes, interfaces, ports, index.</span></div>
         </div>
         <h3>Sauvegarder et partager</h3>
+        <p class="hp-note">⚠ Quand un modèle est chargé, le navigateur demande une confirmation avant de quitter la page (bouton ← Précédent, fermeture de l'onglet) : sinon le travail en cours serait perdu. Pensez à 💾 Enregistrer.</p>
         <p><b>💾 Enregistrer</b> (Ctrl+S) écrit la page directement dans un fichier choisi une fois, puis l'écrase à chaque enregistrement, sans passer par les téléchargements (Edge / Chrome ; ailleurs, la page est téléchargée). Maj+clic ou Ctrl+Maj+S : enregistrer sous. <b>💾 Page HTML</b> télécharge la page. Dans les deux cas, toute l'application est enregistrée <b>avec le modèle embarqué</b>. À l'ouverture de ce fichier, le modèle se recharge tout seul : pratique pour figer un état ou partager une analyse avec quelqu'un qui n'a pas Capella.</p>
         <h3>Sécurité et fonctionnement hors ligne</h3>
         <p><b>Aucune connexion réseau n'est nécessaire ni utilisée.</b> Toutes les ressources sont intégrées au fichier, y compris la bibliothèque graphique <code>D3.js v7.9.0</code> (licence ISC). Aucun cookie, aucun stockage navigateur, aucun traçage, aucun envoi de données. Les exports (PDF, ZIP, PNG, SVG, CSV, HTML) sont générés dans le navigateur, sans bibliothèque externe, et les rapports HTML produits sont eux aussi autonomes. Une <b>💾 Page HTML</b> sauvegardée reste utilisable hors ligne.</p>
@@ -267,11 +268,22 @@
           <tr><td>Navigateur</td><td>Edge / Chrome : ouvrez le modèle par 📁 Fichier › 🔷 Ouvrir ou par glisser-déposer pour un accès direct (relecture automatique). Sinon (autre navigateur, page HTML sauvegardée), la modification est signalée quand c'est possible et il faut resélectionner le fichier (📂).</td></tr>
         </table>
         <h3>⚖ Comparaison de versions</h3>
-        <p>Chargez une autre version du même modèle (par défaut l'<b>ancienne</b> ; ⇄ pour inverser). Les éléments sont appariés par identifiant :</p>
+        <p>Chargez une autre version du même modèle (par défaut l'<b>ancienne</b> ; ⇄ pour inverser). Les éléments sont appariés par identifiant et les changements classés en <b>8 catégories</b> :</p>
         <table class="hp-t">
-          <tr><td>➕ ➖ ✎ ↪</td><td>Ajoutés, supprimés, modifiés (nom, description, attributs, références traduites en noms, contenu), déplacés (changement de propriétaire).</td></tr>
-          <tr><td>Détail</td><td>Clic sur une ligne : propriété par propriété, avant / après.</td></tr>
-          <tr><td>Filtres & export</td><td>Statut, couche, type, nom ; synthèse par type ; CSV (une ligne par propriété modifiée).</td></tr>
+          <tr><td>➕ Création · ➖ Suppression</td><td>Avec le conteneur ; les éléments contenus (ports d'une fonction supprimée…) sont rattachés : « avec 2 éléments contenus ».</td></tr>
+          <tr><td>✏ Renommage</td><td>Ancien nom → nouveau nom.</td></tr>
+          <tr><td>📝 Description</td><td>Description ou résumé modifié (les différences de mise en forme seule sont ignorées).</td></tr>
+          <tr><td>⚙ Propriétés</td><td>Attributs (kind, nature, orientation…), valeurs de propriétés.</td></tr>
+          <tr><td>🔗 Liens</td><td>Références ajoutées (+) ou retirées (−) : allocations, réalisations, Exchange Items…</td></tr>
+          <tr><td>↪ Déplacement · 🔁 Type</td><td>Changement de propriétaire ; changement de type de l'élément.</td></tr>
+        </table>
+        <table class="hp-t">
+          <tr><td>Niveaux</td><td><b>Synthèse</b> (compteurs par catégorie, couche et famille) · <b>Simple</b> (une phrase par changement) · <b>Détaillé</b> (chaque propriété avant → après) · <b>Complet</b> (+ identifiant, type technique, chemin).</td></tr>
+          <tr><td>Préréglages</td><td>📰 Notes de version (Simple) · 🔍 Revue (Détaillé) · 🧾 Audit (Complet, éléments techniques non regroupés).</td></tr>
+          <tr><td>Filtres</td><td>Catégories, couches, familles de types, recherche ; regroupement par catégorie, couche, famille ou élément parent. <b>Rattacher le technique à son élément</b> (coché par défaut) : allocations, réalisations, implications… apparaissent comme 🔗 liens de l'élément concerné plutôt que comme éléments à part.</td></tr>
+          <tr><td>Exclure une ligne</td><td>Décochez-la : elle reste visible (barrée) mais disparaît de la copie et des exports ; ↺ tout réinclure.</td></tr>
+          <tr><td>📋 Copier</td><td>Copie exactement ce qui est affiché, au format choisi : <b>mis en forme</b> (Word, Outlook, Teams, OneNote : titres, listes, tableaux), <b>texte brut</b>, <b>tableau Excel</b> (une ligne par changement) ou <b>Markdown</b>.</td></tr>
+          <tr><td>Exports</td><td>⬇ CSV, ⬇ HTML autonome, 🖨 Imprimer (ou PDF).</td></tr>
         </table>
         <h3>📑 Exigences</h3>
         <p>Exigences du <b>Requirements Viewpoint</b> (identifiant, texte, attributs, relations Capella entrantes / sortantes et relations entre exigences) et <b>exigences Capella</b> de base (SystemUserRequirement…, traces RequirementsTrace). Filtres : famille, type, valeur d'attribut, liées ou non au modèle.</p>
