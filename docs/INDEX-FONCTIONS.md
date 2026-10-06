@@ -614,3 +614,10 @@
 - `capCbChecks` (l. 49) — Sections de contrôle des composants et de leurs ports (rapport 🩺 et tableau de bord).
 - `capCbDashCatalog` (l. 74) — Indicateurs 🧱 Composants pour le catalogue du tableau de bord.
 - `capRenderComponentBlocks` (l. 87) — Rend la vue 🧱 d'une couche (barre, filtres, contenu paginé, exports).
+
+## 48-barres-groupes.js — 60 lignes
+
+- `CAP_TBG_ROOTS` (l. 7)
+- `capTbKind` (l. 13) — Nature d'un élément de barre pour le regroupement.
+- `capTbGroup` (l. 31) — Entoure, dans une barre, chaque suite de commandes de même nature par un cadre .tb-grp.
+- `capTbGroupAll` (l. 47) — Regroupe toutes les barres d'un conteneur. @param {HTMLElement} root

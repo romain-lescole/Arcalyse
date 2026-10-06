@@ -88,7 +88,7 @@ function capNavFluxTabs(cur){
   const show=free.some(i=>i.k===cur);
   bar.style.display=show?'flex':'none';
   if(!show) return;
-  bar.innerHTML=free.map(i=>`<button class="phl-toggle-btn${i.k===cur?' active':''}" data-open="${i.k}" title="${i.t||''}">${i.l}</button>`).join('');   // même présentation que les onglets de 🔬 Analyses
+  bar.innerHTML=`<span class="tb-grp">${free.map(i=>`<button class="phl-toggle-btn${i.k===cur?' active':''}" data-open="${i.k}" title="${i.t||''}">${i.l}</button>`).join('')}</span>`;   // onglets entourés comme les groupes de ƒ Fonctions
 }
 
 /** Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles). */
