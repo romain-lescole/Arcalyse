@@ -10,7 +10,7 @@ var CAP_FEX_MX_MAX=100;  // fonctions au plus dans la matrice : 100 ≈ 0,2 s, 2
 var _capFexView='block';
 var _capFexGo=null;   // fonction à afficher à la prochaine ouverture de la vue (depuis une autre vue)
 
-/** Ouvre ⇆ Functional Exchange sur le bloc d'une fonction (Vue Blocs, page et filtres ajustés).
+/** Ouvre ƒ⇆ Functional Exchange sur le bloc d'une fonction (Vue Blocs, page et filtres ajustés).
  * @param {string} id - Fonction
  */
 function capFexOpenFn(id){ _capFexGo=id; capNavOpen('fex'); }
@@ -90,7 +90,7 @@ function capFexChecks(layer){
   return sec;
 }
 
-/** Indicateurs ⇆ Functional Exchange pour le catalogue du tableau de bord.
+/** Indicateurs ƒ⇆ Functional Exchange pour le catalogue du tableau de bord.
  * @param {Function} add - Ajout d'un indicateur (groupe, clé, libellé, forme, calcul, info-bulle)
  * @param {Function} LC - Couleur d'une couche
  */
@@ -102,7 +102,7 @@ function capFexDashCatalog(add, LC){
   add('Functional Exchange','fex.chk','Functional Exchanges — contrôles','series',()=>({cats:capFexChecks().map(s=>({l:s.title,v:s.items.length})).filter(c=>c.v).sort((a,b)=>b.v-a.v)}));
 }
 
-/** Rend la vue ⇆ Functional Exchange (barre, filtres, contenu paginé, exports). */
+/** Rend la vue ƒ⇆ Functional Exchange (barre, filtres, contenu paginé, exports). */
 function capRenderFunctionalExchange(){
   const container=document.getElementById('cap-view-fex'); if(!container) return;
   const X=capComputeFunctionalExchanges(), allLinks=X.list;
@@ -390,7 +390,7 @@ function capRenderFunctionalExchange(){
     const tabs=VIEWS.filter(v=>keys.includes(v[0])||(v[0]==='line'&&keys.includes('matrix'))).map(([k,label])=>({key:k,label,html:buildContent(f,k)}));
     const cells={}; Object.entries(container._fexCells||{}).forEach(([k,ls])=>cells[k]=ls.map(l=>l.x.id));
     const fi=[st.layer!=='all'&&`couche ${st.layer}`, akOn()&&'allocation : '+[...st.ak].map(k=>CAP_FN_AK[k].l).join(' + '), st.who&&`allocataire « ${((who.act.get(st.who)||who.comp.get(st.who)||{}).name||'')} »`,st.fnFilter&&`fonction « ${st.fnFilter} »`,st.nameFilter&&`échange « ${st.nameFilter} »`].filter(Boolean).join(', ');
-    capHtmlReport({title:'⇆ Functional Exchanges', subtitle:`${f.length}/${allLinks.length} échanges${fi?' · filtres : '+fi:''}`, tabs, active:st.view, cells,
+    capHtmlReport({title:'ƒ⇆ Functional Exchanges', subtitle:`${f.length}/${allLinks.length} échanges${fi?' · filtres : '+fi:''}`, tabs, active:st.view, cells,
       filename:all?'functional-exchanges-rapport.html':`functional-exchanges-${st.view}.html`});
   }
 

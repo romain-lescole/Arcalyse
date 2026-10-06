@@ -1,5 +1,5 @@
 /* ══ 🧱 LOGICAL COMPONENT / 🧱 SYSTEM COMPONENT (VUE BLOCS) ═════════════════════════
- * Même logique que ⇆ Functional Exchange, pour les composants d'une couche : 🧱 Logical Component (LA) et
+ * Même logique que ƒ⇆ Functional Exchange, pour les composants d'une couche : 🧱 Logical Component (LA) et
  * 🧱 System Component (SA), même code et mêmes couleurs.
  * ◧ Vue Blocs (chaque composant dessiné comme dans Capella : boîte bleue pour le système, bleu clair pour un acteur ;
  * Component Ports sur les bords selon leur orientation UNSET / IN / OUT / INOUT ; à côté de chaque port, le
@@ -179,7 +179,7 @@ function capRenderComponentBlocks(L, host, holder){
         <div class="fex-box cb-box cb-k-${c.kind}" title="${capEsc(capAnaHuman(c.type))} — ${c.layer}${c.actor?' — acteur':''}${c.nature?' — '+c.nature:''}">
           <div class="fex-box-t"><span class="cb-ic">${c.actor?'👤':c.kind==='node'?'🖥':'▣'}</span> ${det(c.id,c.name)}</div>
           <div class="fex-pins-in">${pins(L,'L')}</div><div class="fex-pins-out">${pins(R,'R')}</div>
-          ${c.fns.length?`<div class="cb-fns" data-fnl="${capEsc(c.id)}" title="Afficher / masquer les fonctions allouées (clic sur une fonction : son bloc dans ⇆ Functional Exchange)">ƒ ${c.fns.length} fonction${c.fns.length>1?'s':''} ${st.fnOpen.has(c.id)?'▴':'▾'}</div>`:''}
+          ${c.fns.length?`<div class="cb-fns" data-fnl="${capEsc(c.id)}" title="Afficher / masquer les fonctions allouées (clic sur une fonction : son bloc dans ƒ⇆ Functional Exchange)">ƒ ${c.fns.length} fonction${c.fns.length>1?'s':''} ${st.fnOpen.has(c.id)?'▴':'▾'}</div>`:''}
           ${c.children.length?`<div class="cb-kids" title="${c.children.length} sous-composant(s) : ${capEsc(c.children.map(k=>C.byId[k].name).join(', '))}">⧉ ${c.children.length}</div>`:''}
           ${!c.ports.length?'<div class="fex-box-empty">aucun port</div>':''}
         </div>
@@ -194,12 +194,12 @@ function capRenderComponentBlocks(L, host, holder){
     const F=capComputeFunctions(), cmp=new Intl.Collator(undefined,{numeric:true}).compare;
     const fs=c.fns.map(x=>F.byId[x.id]||x).sort((a,b)=>cmp(String(a.num||''),String(b.num||''))||String(a.name).localeCompare(b.name));
     return `<div class="cb-fnlist" data-fnlist="${capEsc(c.id)}">
-      <div class="cb-fnhead">ƒ ${fs.length} fonction${fs.length>1?'s':''} allouée${fs.length>1?'s':''} à « ${capEsc(c.name)} » <span class="fex-dim">— clic : son bloc dans ⇆ Functional Exchange</span></div>
+      <div class="cb-fnhead">ƒ ${fs.length} fonction${fs.length>1?'s':''} allouée${fs.length>1?'s':''} à « ${capEsc(c.name)} » <span class="fex-dim">— clic : son bloc dans ƒ⇆ Functional Exchange</span></div>
       ${fs.length>12?'<input class="phl-filter-input cb-fnq" placeholder="🔍 Filtrer les fonctions…" style="width:100%;margin:4px 0">':''}
-      <div class="cb-fnitems">${fs.map(f=>`<div class="cb-fn" data-fexfn="${capEsc(f.id)}" title="Ouvrir ce bloc dans ⇆ Functional Exchange">ƒ ${f.num&&f.num!=='?'?'['+capEsc(f.num)+'] ':''}${capEsc(f.name)}${f.layer?` <span class="fex-dim">${f.layer}</span>`:''}</div>`).join('')}</div>
+      <div class="cb-fnitems">${fs.map(f=>`<div class="cb-fn" data-fexfn="${capEsc(f.id)}" title="Ouvrir ce bloc dans ƒ⇆ Functional Exchange">ƒ ${f.num&&f.num!=='?'?'['+capEsc(f.num)+'] ':''}${capEsc(f.name)}${f.layer?` <span class="fex-dim">${f.layer}</span>`:''}</div>`).join('')}</div>
     </div>`;
   }
-  /** Branche une liste de fonctions dépliée (filtre, clic vers ⇆ Functional Exchange). @param {HTMLElement} el */
+  /** Branche une liste de fonctions dépliée (filtre, clic vers ƒ⇆ Functional Exchange). @param {HTMLElement} el */
   function wireFnList(el){
     el.querySelectorAll('[data-fexfn]').forEach(x=>x.onclick=ev=>{ ev.stopPropagation(); capFexOpenFn(x.dataset.fexfn); });
     const q=el.querySelector('.cb-fnq'); if(q) q.oninput=()=>{ const t=capTfNorm(q.value.trim()); el.querySelectorAll('.cb-fn').forEach(x=>x.style.display=!t||capTfNorm(x.textContent).includes(t)?'':'none'); };
@@ -377,13 +377,14 @@ function capRenderComponentBlocks(L, host, holder){
     const base=C.comps.filter(c=>underOk(c.id)&&!(pv&&st.withPorts&&!c.ports.length));
     const kinds=['sys','node','act'].filter(k=>C.comps.some(c=>c.kind===k));
     const Vs=V0.only?V.filter(v=>v[0]==='block'):V;
-    container.innerHTML=`
+    container.innerHTML=`${V0.only?'':`
       <div class="phl-toggle-bar">
-        ${V0.only?'':Vs.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}
+        ${Vs.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}
         <span id="cb-counter" style="font-size:11px;color:var(--c-dim);font-family:monospace;">${counterText()}</span>
         <span class="cap-mx-hint" style="margin-left:12px">${V0.scope} · ${C.comps.length} ${V0.what} · ${allLinks.length} ${V0.lw}</span>
-      </div>
+      </div>`}
       <div class="phl-filter-bar" style="margin-bottom:8px;flex-wrap:wrap;">
+        ${V0.only?`<span id="cb-counter" style="font-size:11px;color:var(--c-dim);font-family:monospace;margin-right:8px" title="${V0.scope} · ${C.comps.length} ${V0.what} · ${allLinks.length} ${V0.lw}">${counterText()}</span>`:''}
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;">🧱 Composant :</span>
         <input id="cb-name" type="text" class="phl-filter-input" placeholder="Filtrer par composant…" value="${capEsc(st.name)}" style="width:180px;">
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;margin-left:8px;">🔍 ${L==='PN'?'Lien':'Échange'} :</span>

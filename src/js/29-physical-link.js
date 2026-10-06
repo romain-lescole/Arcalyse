@@ -220,7 +220,7 @@ function capRenderPhysLink(){
     _capPhysLinkView=st.view;
     const PHL_VIEWS=[['block','◧ Vue Blocs','Nœuds dessinés comme dans Capella : jaune = nœud du système, bleu clair = nœud acteur ; ports physiques jaunes'],['line','≡ Vue Ligne',''],['card','▣ Vue Composant',''],['matrix','▦ Matrice','Matrice N² composant × composant'],['diag','🩺 Contrôles','Liens sans CE, ports orphelins, CE non alloués…']];
     if(st.view==='block'){   // ◧ Vue Blocs : rendu commun aux vues 🧱 (47-composants.js)
-      container.innerHTML=`<div class="phl-toggle-bar">${PHL_VIEWS.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}</div><div id="phl-blk"></div>`;
+      container.innerHTML=`<div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Physical Links de la couche <b>PA</b> entre <b>Physical Components Node</b> (nœuds du système en jaune, nœuds acteurs en bleu clair).</div><div class="phl-toggle-bar">${PHL_VIEWS.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}</div><div id="phl-blk"></div>`;
       container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.addEventListener('click',()=>{ st.view=b.dataset.pv; render(); }));
       capRenderComponentBlocks('PN', container.querySelector('#phl-blk'), container);
       return;
