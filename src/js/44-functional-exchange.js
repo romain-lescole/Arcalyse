@@ -10,6 +10,14 @@ var CAP_FEX_MX_MAX=100;  // fonctions au plus dans la matrice : 100 ≈ 0,2 s, 2
 var _capFexView='block';
 var _capFexGo=null;   // fonction à afficher à la prochaine ouverture de la vue (depuis une autre vue)
 
+/** Conseil d'affichage des Vues Blocs : rendu plus proche de Capella avec un thème clair (affiché seulement en thème sombre).
+ * @returns {string} HTML du conseil, ou chaîne vide si un thème clair est déjà actif
+ */
+function capBlkThemeHint(){
+  if(capIsLight()) return '';
+  return `<div class="ana-dim" style="font-size:11px;margin:2px 0 6px;">💡 Les blocs sont plus lisibles, et plus proches du rendu Capella, avec le thème <b>Office 2007</b> ou <b>Clair</b> (menu 🎨 Thème ▾).</div>`;
+}
+
 /** Géométrie d'un côté de bloc (Vues Blocs) : une ligne par pin ou port, plus haute quand il a plusieurs
  * connexions (listées les unes sous les autres) ; le pin est centré sur sa ligne.
  * @param {number[]} counts - Nombre de connexions de chaque pin, dans l'ordre
@@ -341,7 +349,7 @@ function capRenderFunctionalExchange(){
       if(all) return buildBlocks(fns);
       const p=paged(fns,'Fonctions'), bf=st.back&&X.fnById[st.back];
       const back=bf?`<div class="fex-backbar"><button class="cap-lf-btn" id="fex-back" title="Revenir au bloc d'où vous venez">↩ Revenir à « ${capEsc(fnLabel(bf.num,bf.name))} »</button></div>`:'';
-      return back+p.bar+buildBlocks(p.slice)+p.bar;
+      return capBlkThemeHint()+back+p.bar+buildBlocks(p.slice)+p.bar;
     }
     if(!list.length) return '<div class="phl-empty">Aucun functional exchange ne correspond au filtre.</div>';
     if(view==='matrix') return buildMatrix(list);

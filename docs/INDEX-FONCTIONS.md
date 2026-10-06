@@ -555,17 +555,18 @@
 - `capTourKey` (l. 363) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
 - `capTourEnd` (l. 372) — Quitte la visite guidée et retire la mise en évidence.
 
-## 44-functional-exchange.js — 484 lignes
+## 44-functional-exchange.js — 492 lignes
 
 - `CAP_FEX_PAGE` (l. 8)
 - `CAP_FEX_MX_MAX` (l. 9)
-- `capBlkRows` (l. 18) — Géométrie d'un côté de bloc (Vues Blocs) : une ligne par pin ou port, plus haute quand il a plusieurs
-- `capBlkSide` (l. 26) — Texte d'une ligne de pin : connexions en liste (une par ligne) quand il y en a plusieurs.
-- `capFexOpenFn` (l. 34) — Ouvre ƒ⇆ Functional Exchange sur le bloc d'une fonction (Vue Blocs, page et filtres ajustés).
-- `capComputeFunctionalExchanges` (l. 40) — Calcule les Functional Exchanges du modèle avec leurs fonctions et ports d'extrémité, les Exchange Items,
-- `capFexChecks` (l. 86) — Sections de contrôle des Functional Exchanges et des ports de fonctions (rapport 🩺 et tableau de bord).
-- `capFexDashCatalog` (l. 115) — Indicateurs ƒ⇆ Functional Exchange pour le catalogue du tableau de bord.
-- `capRenderFunctionalExchange` (l. 124) — Rend la vue ƒ⇆ Functional Exchange (barre, filtres, contenu paginé, exports).
+- `capBlkThemeHint` (l. 16) — Conseil d'affichage des Vues Blocs : rendu plus proche de Capella avec un thème clair (affiché seulement en thème sombre).
+- `capBlkRows` (l. 26) — Géométrie d'un côté de bloc (Vues Blocs) : une ligne par pin ou port, plus haute quand il a plusieurs
+- `capBlkSide` (l. 34) — Texte d'une ligne de pin : connexions en liste (une par ligne) quand il y en a plusieurs.
+- `capFexOpenFn` (l. 42) — Ouvre ƒ⇆ Functional Exchange sur le bloc d'une fonction (Vue Blocs, page et filtres ajustés).
+- `capComputeFunctionalExchanges` (l. 48) — Calcule les Functional Exchanges du modèle avec leurs fonctions et ports d'extrémité, les Exchange Items,
+- `capFexChecks` (l. 94) — Sections de contrôle des Functional Exchanges et des ports de fonctions (rapport 🩺 et tableau de bord).
+- `capFexDashCatalog` (l. 123) — Indicateurs ƒ⇆ Functional Exchange pour le catalogue du tableau de bord.
+- `capRenderFunctionalExchange` (l. 132) — Rend la vue ƒ⇆ Functional Exchange (barre, filtres, contenu paginé, exports).
 
 ## 45-comparaison-rapport.js — 431 lignes
 

@@ -279,7 +279,7 @@ function capRenderComponentBlocks(L, host, holder){
       if(all) return buildBlocks(cs);
       const p=paged(cs,'Composants'), bc=st.back&&C.byId[st.back];
       const back=bc?`<div class="fex-backbar"><button class="cap-lf-btn" id="cb-back">↩ Revenir à « ${capEsc(bc.name)} »</button></div>`:'';
-      return back+p.bar+buildBlocks(p.slice)+p.bar;
+      return capBlkThemeHint()+back+p.bar+buildBlocks(p.slice)+p.bar;
     }
     const ls=getLinks(); if(!ls.length) return '<div class="phl-empty">Aucun Component Exchange ne correspond au filtre.</div>';
     if(view==='matrix'){
