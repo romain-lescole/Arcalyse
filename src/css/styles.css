@@ -1114,3 +1114,11 @@ html[data-tone="light"] .cb-box.cb-k-sys{background:linear-gradient(180deg,#c9e0
 html[data-tone="light"] .cb-box.cb-k-act{background:linear-gradient(180deg,#e3feff,#c4e3ff);border-color:#3c3c96;}
 html[data-tone="light"] .cb-box.cb-k-node{background:linear-gradient(180deg,#fffbe0,#f3df85);border-color:#8a6d00;}
 html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
+
+.cb-port-PP{background:linear-gradient(180deg,#fff7b0,#e6cf4a);border-color:#7a6a00;}
+.cb-fns{cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px;}
+.cb-fns:hover{color:var(--c-accent);}
+.cb-fnlist{grid-column:2;margin-top:6px;border:1px solid var(--c-border);border-radius:6px;background:var(--c-bg2);padding:6px 8px;max-height:240px;overflow:auto;font-size:11.5px;}
+.cb-fnhead{font-weight:600;margin-bottom:3px;}
+.cb-fn{padding:2px 4px;border-radius:3px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cb-fn:hover{background:var(--c-bg3);color:var(--c-accent);}

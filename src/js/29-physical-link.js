@@ -218,9 +218,17 @@ function capRenderPhysLink(){
    */
   function render(){
     _capPhysLinkView=st.view;
+    const PHL_VIEWS=[['block','◧ Vue Blocs','Nœuds dessinés comme dans Capella : jaune = nœud du système, bleu clair = nœud acteur ; ports physiques jaunes'],['line','≡ Vue Ligne',''],['card','▣ Vue Composant',''],['matrix','▦ Matrice','Matrice N² composant × composant'],['diag','🩺 Contrôles','Liens sans CE, ports orphelins, CE non alloués…']];
+    if(st.view==='block'){   // ◧ Vue Blocs : rendu commun aux vues 🧱 (47-composants.js)
+      container.innerHTML=`<div class="phl-toggle-bar">${PHL_VIEWS.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}</div><div id="phl-blk"></div>`;
+      container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.addEventListener('click',()=>{ st.view=b.dataset.pv; render(); }));
+      capRenderComponentBlocks('PN', container.querySelector('#phl-blk'), container);
+      return;
+    }
     const filtered=getFiltered();
     container.innerHTML=`
       <div class="phl-toggle-bar">
+        <button class="phl-toggle-btn" data-pv="block" title="${PHL_VIEWS[0][2]}">◧ Vue Blocs</button>
         <button class="phl-toggle-btn${st.view==='line'?' active':''}" data-pv="line">≡ Vue Ligne</button>
         <button class="phl-toggle-btn${st.view==='card'?' active':''}" data-pv="card">▣ Vue Composant</button>
         <button class="phl-toggle-btn${st.view==='matrix'?' active':''}" data-pv="matrix" title="Matrice N² composant × composant">▦ Matrice</button>

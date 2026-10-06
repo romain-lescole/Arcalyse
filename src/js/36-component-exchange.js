@@ -20,7 +20,7 @@ function capBehaviorExchanges(){
 /** Rend la vue Component Exchange — même structure que Physical Link (≡ Ligne / ▣ Composant,
  * filtres, exports CSV/HTML) mais pour les ComponentExchange (source/target → ComponentPort
  * → composant parent). Coloration adaptative par TYPE de composant (thème clair/sombre). */
-let _capCompExView = 'line';
+let _capCompExView = 'block';
 function capRenderCompExchange(){
   const container=document.getElementById('cap-view-compex'); if(!container) return;
   const allLinks=capBehaviorExchanges();   // PA, Physical Components Behavior
@@ -261,14 +261,23 @@ function capRenderCompExchange(){
     container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.classList.toggle('active',b.dataset.pv===st.view));
   }
 
+  const CEX_VIEWS=[['block','◧ Vue Blocs','Composants Behavior dessinés comme dans Capella (bleu = système, bleu clair = acteur), ports UNSET / IN / OUT / INOUT'],['line','≡ Vue Ligne',''],['card','▣ Vue Composant',''],['matrix','▦ Matrice','Matrice N² composant × composant'],['diag','🩺 Contrôles','Ports orphelins, exchanges sans FE, orientations incohérentes…']];
   /** Construit et affiche l'intégralité de la vue (barre d'outils, filtres, contenu, écouteurs).
    */
   function render(){
     _capCompExView=st.view;
     const filtered=getFiltered();
+    if(st.view==='block'){   // ◧ Vue Blocs : rendu commun aux vues 🧱 (47-composants.js), mêmes couleurs que 🧱 Logical Component
+      container.innerHTML=`<div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Component Exchanges de la couche <b>PA</b> entre <b>Physical Components Behavior</b> (${allLinks.length} sur ${allLinks.total} dans le modèle).</div>
+        <div class="phl-toggle-bar">${CEX_VIEWS.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}</div><div id="cex-blk"></div>`;
+      container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.addEventListener('click',()=>{ st.view=b.dataset.pv; render(); }));
+      capRenderComponentBlocks('PB', container.querySelector('#cex-blk'), container);
+      return;
+    }
     container.innerHTML=`
       <div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Component Exchanges de la couche <b>PA</b> entre <b>Physical Components Behavior</b> (${allLinks.length} sur ${allLinks.total} dans le modèle). Les échanges SA et LA sont dans 🧱 System Component et 🧱 Logical Component ; les liens entre nœuds dans 🔌 Physical Link.</div>
       <div class="phl-toggle-bar">
+        <button class="phl-toggle-btn" data-pv="block" title="${CEX_VIEWS[0][2]}">◧ Vue Blocs</button>
         <button class="phl-toggle-btn${st.view==='line'?' active':''}" data-pv="line">≡ Vue Ligne</button>
         <button class="phl-toggle-btn${st.view==='card'?' active':''}" data-pv="card">▣ Vue Composant</button>
         <button class="phl-toggle-btn${st.view==='matrix'?' active':''}" data-pv="matrix" title="Matrice N² composant × composant (ligne = émetteur, colonne = récepteur)">▦ Matrice</button>

@@ -330,7 +330,7 @@
 - `capRenderIndex` (l. 14) — Construit la vue « Index des types » : barre de recherche, en-têtes triables et
 - `capRenderIndexBody` (l. 45) — Rend les lignes de l'Index des types : un type Capella distinct par ligne
 
-## 29-physical-link.js — 297 lignes
+## 29-physical-link.js — 305 lignes
 
 - `capRenderPhysLink` (l. 4) — Rend la vue Physical Link avec deux modes (≡ Ligne / ▣ Composant),
 
@@ -417,7 +417,7 @@
 - `capDashPrint` (l. 463) — Imprime un tableau de bord au format A4 : les éléments sont redessinés à la taille de la page
 - `capDashEditor` (l. 500) — Fenêtre d'ajout ou de configuration d'un élément : catalogue des indicateurs (recherche, groupes),
 
-## 36-component-exchange.js — 352 lignes
+## 36-component-exchange.js — 361 lignes
 
 - `capAnaReset` (l. 2) — Réinitialise caches et états de la vue Analyses (appelé au chargement d'un nouveau modèle).
 - `capBehaviorExchanges` (l. 11) — Component Exchanges du périmètre de la vue 🔀 Behavior Exchange : couche PA, entre Physical Components
@@ -555,14 +555,15 @@
 - `capTourKey` (l. 359) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
 - `capTourEnd` (l. 368) — Quitte la visite guidée et retire la mise en évidence.
 
-## 44-functional-exchange.js — 460 lignes
+## 44-functional-exchange.js — 467 lignes
 
 - `CAP_FEX_PAGE` (l. 8)
 - `CAP_FEX_MX_MAX` (l. 9)
-- `capComputeFunctionalExchanges` (l. 16) — Calcule les Functional Exchanges du modèle avec leurs fonctions et ports d'extrémité, les Exchange Items,
-- `capFexChecks` (l. 62) — Sections de contrôle des Functional Exchanges et des ports de fonctions (rapport 🩺 et tableau de bord).
-- `capFexDashCatalog` (l. 91) — Indicateurs ⇆ Functional Exchange pour le catalogue du tableau de bord.
-- `capRenderFunctionalExchange` (l. 100) — Rend la vue ⇆ Functional Exchange (barre, filtres, contenu paginé, exports).
+- `capFexOpenFn` (l. 16) — Ouvre ⇆ Functional Exchange sur le bloc d'une fonction (Vue Blocs, page et filtres ajustés).
+- `capComputeFunctionalExchanges` (l. 22) — Calcule les Functional Exchanges du modèle avec leurs fonctions et ports d'extrémité, les Exchange Items,
+- `capFexChecks` (l. 68) — Sections de contrôle des Functional Exchanges et des ports de fonctions (rapport 🩺 et tableau de bord).
+- `capFexDashCatalog` (l. 97) — Indicateurs ⇆ Functional Exchange pour le catalogue du tableau de bord.
+- `capRenderFunctionalExchange` (l. 106) — Rend la vue ⇆ Functional Exchange (barre, filtres, contenu paginé, exports).
 
 ## 45-comparaison-rapport.js — 431 lignes
 
@@ -602,12 +603,12 @@
 - `capCfgLoadFile` (l. 123) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
 - `capCfgLoadUpdate` (l. 137) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
 
-## 47-composants.js — 372 lignes
+## 47-composants.js — 417 lignes
 
 - `CAP_CB_PAGE` (l. 10)
 - `CAP_CB_LAYERS` (l. 13) — Vues 🧱 par couche : conteneur, clé de vue (barre), libellé.
-- `CAP_CB_TYPES` (l. 16) — Types de composants dessinés (versions récentes et anciennes de Capella).
-- `capComputeComponentBlocks` (l. 21) — Composants du modèle avec leurs ports, échanges, sous-composants et fonctions allouées.
-- `capCbChecks` (l. 46) — Sections de contrôle des composants et de leurs ports (rapport 🩺 et tableau de bord).
-- `capCbDashCatalog` (l. 71) — Indicateurs 🧱 Composants pour le catalogue du tableau de bord.
-- `capRenderComponentBlocks` (l. 84) — Rend la vue 🧱 d'une couche (barre, filtres, contenu paginé, exports).
+- `CAP_CB_TYPES` (l. 19) — Types de composants dessinés (versions récentes et anciennes de Capella).
+- `capComputeComponentBlocks` (l. 24) — Composants du modèle avec leurs ports, échanges, sous-composants et fonctions allouées.
+- `capCbChecks` (l. 49) — Sections de contrôle des composants et de leurs ports (rapport 🩺 et tableau de bord).
+- `capCbDashCatalog` (l. 74) — Indicateurs 🧱 Composants pour le catalogue du tableau de bord.
+- `capRenderComponentBlocks` (l. 87) — Rend la vue 🧱 d'une couche (barre, filtres, contenu paginé, exports).

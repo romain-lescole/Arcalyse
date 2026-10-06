@@ -8,6 +8,12 @@
 var CAP_FEX_PAGE=100;    // éléments par page (Ligne, Fonction, Blocs) : ≈ 0,1 s de rendu ; tout afficher (3 000 fonctions) ≈ 2 s à chaque filtre
 var CAP_FEX_MX_MAX=100;  // fonctions au plus dans la matrice : 100 ≈ 0,2 s, 200 ≈ 0,5 s, 300 ≈ 1,6 s
 var _capFexView='block';
+var _capFexGo=null;   // fonction à afficher à la prochaine ouverture de la vue (depuis une autre vue)
+
+/** Ouvre ⇆ Functional Exchange sur le bloc d'une fonction (Vue Blocs, page et filtres ajustés).
+ * @param {string} id - Fonction
+ */
+function capFexOpenFn(id){ _capFexGo=id; capNavOpen('fex'); }
 
 /** Calcule les Functional Exchanges du modèle avec leurs fonctions et ports d'extrémité, les Exchange Items,
  * les Component Exchanges qui les allouent et les chaînes qui les impliquent ; indexe aussi les ports de chaque fonction.
@@ -456,4 +462,5 @@ function capRenderFunctionalExchange(){
     wireMain();
   }
   render();
+  if(_capFexGo){ const g=_capFexGo; _capFexGo=null; if(st.view!=='block'){ st.view='block'; render(); } gotoFn(g); }
 }

@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════
    PHYSICAL LINK VIEW
 ═══════════════════════════════════════════════ */
-let _capPhysLinkView = 'line'; // 'line' | 'card'
+let _capPhysLinkView = 'block'; // 'block' | 'line' | 'card' | 'matrix' | 'diag'
 
 /** Extrait les PhysicalLink du modèle Capella.
  * Résout les linkEnds (IDs de PhysicalPort) vers leurs PhysicalComponent parents.
