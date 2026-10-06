@@ -14,6 +14,7 @@ var CAP_NAV_ITEMS=[
   {k:'links',     l:'🔗 Liens',             g:'explore', t:'Relations entre les éléments du modèle'},
   {k:'chains',    l:'⚡ Chaînes',           g:'flux'},
   {k:'compex',    l:'🔀 Component Exchange', g:'flux'},
+  {k:'cblk',      l:'🧱 Composants', g:'flux', t:'Composants en blocs façon Capella (ports UNSET / IN / OUT / INOUT, échanges, composants distants), lignes, matrice, contrôles'},
   {k:'fex',       l:'⇆ Functional Exchange', g:'flux', t:'Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles'},
   {k:'physlink',  l:'🔌 Physical Link',     g:'flux'},
   {k:'ports',     l:'🧩 Ports',             g:'flux', t:'Traçabilité Function Port ↔ Component Port ↔ Physical Port'},
@@ -31,7 +32,7 @@ var CAP_NAV_ITEMS=[
 /** Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton). */
 var CAP_NAV_GROUPS=[
   {g:'explore', id:'cap-v-elements', l:'🧭 Explorateur',       t:'Explorer le modèle : arborescence, cartes, tableau, index des types, liens'},
-  {g:'flux',    id:'cap-v-flux',     l:'📡 Flux & interfaces', t:'Chaînes, Component Exchange, Functional Exchange, Physical Link, ports'},
+  {g:'flux',    id:'cap-v-flux',     l:'📡 Flux & interfaces', t:'Chaînes, composants, Component Exchange, Functional Exchange, Physical Link, ports'},
   {g:'',        id:'',               l:'',                     t:''},   // place des vues sans menu (ƒ Fonctions)
   {g:'ana',     id:'cap-v-analyses', l:'🔬 Analyses',          t:'Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes'}
 ];
@@ -233,6 +234,7 @@ function capNavMenuFill(){
   if(q){
     const all=[{k:'@rm',l:'🗺 Relation Map',g:''},{k:'@table',l:'📊 Table View',g:''},...CAP_NAV_ITEMS];
     const hit=all.filter(i=>q.split(/\s+/).every(w=>norm(i.l+' '+gl(i.g)+' '+(i.t||'')).includes(w)));
+    const inName=i=>q.split(/\s+/).every(w=>norm(i.l).includes(w)); hit.sort((a,b)=>inName(b)-inName(a));   // le nom de la vue prime sur l'info-bulle
     res.innerHTML=hit.length?hit.map(i=>capNavRow(i,gl(i.g))).join(''):'<div class="cap-nav-hint">Aucune vue ne correspond.</div>';
     res.querySelector('[data-open]')?.classList.add('hl');
     return;

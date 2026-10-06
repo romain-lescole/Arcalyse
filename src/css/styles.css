@@ -1097,3 +1097,20 @@ html[data-tone="light"] .fex-pname{color:#2a5a2a;}
 #cap-cfg-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
 .cfg-part{display:flex;gap:8px;align-items:flex-start;padding:6px 4px;border-bottom:1px solid var(--c-border);font-size:12.5px;cursor:pointer;}
 .cfg-part input{margin-top:3px;}
+
+/* ── 🧱 Composants : blocs et ports façon Capella ── */
+.cb-box{border-radius:3px;}
+.cb-box.cb-k-sys{border-color:#6f9be0;background:color-mix(in srgb,#5b8ad6 24%,var(--c-bg));}
+.cb-box.cb-k-act{border-color:#7fd8ff;background:color-mix(in srgb,#7fd8ff 14%,var(--c-bg));}
+.cb-box.cb-k-node{border-color:#e3b341;background:color-mix(in srgb,#e3b341 16%,var(--c-bg));}
+.cb-box .fex-box-t{color:var(--c-text);align-items:flex-start;padding-top:12px;}
+.cb-ic{font-size:12px;margin-right:4px;}
+.cb-fns{position:absolute;left:0;right:0;bottom:6px;text-align:center;font-size:10.5px;color:var(--c-dim);}
+.cb-kids{position:absolute;right:8px;bottom:5px;font-size:11px;color:var(--c-dim);cursor:help;}
+.cb-port{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;font:700 12px/1 monospace;color:#111;background:#fff;border:1.5px solid #222;flex-shrink:0;vertical-align:middle;}
+.cb-port-UNSET{background:linear-gradient(180deg,#d29b9b,#8f3f3f);border-color:#4a1515;}
+.cb-port-orphan{opacity:.45;}
+html[data-tone="light"] .cb-box.cb-k-sys{background:linear-gradient(180deg,#c9e0f7,#8fb3df);border-color:#3c3c96;}
+html[data-tone="light"] .cb-box.cb-k-act{background:linear-gradient(180deg,#e3feff,#c4e3ff);border-color:#3c3c96;}
+html[data-tone="light"] .cb-box.cb-k-node{background:linear-gradient(180deg,#fffbe0,#f3df85);border-color:#8a6d00;}
+html[data-tone="light"] .cb-box .fex-box-t{color:#111;}

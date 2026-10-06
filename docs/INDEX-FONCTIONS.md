@@ -8,7 +8,7 @@
 - `TCFG` (l. 25)
 - `MODES` (l. 37)
 
-## 02-themes.js — 311 lignes
+## 02-themes.js — 314 lignes
 
 - `THEMES` (l. 6)
 - `capInk` (l. 57) — Couleur de texte lisible sur un fond donné : noir ou blanc, selon le meilleur contraste (WCAG).
@@ -26,8 +26,8 @@
 - `capRestoreContrast` (l. 149) — Rend leurs couleurs d'origine aux textes corrigés par capFixContrast (retour à un thème sombre).
 - `capContrastCss` (l. 156) — Génère, pour le thème clair courant, des règles qui foncent les couleurs de texte fixes des feuilles
 - `applyTheme` (l. 198) — Applique le thème visuel global (dark/light/dracula/solarized/nord).
-- `applyMode` (l. 236) — Bascule entre les modes d'affichage : default (Relation Map), PBS, table, capella.
-- `tv` (l. 309) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
+- `applyMode` (l. 239) — Bascule entre les modes d'affichage : default (Relation Map), PBS, table, capella.
+- `tv` (l. 312) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
 
 ## 03-rm-etat-svg.js — 121 lignes
 
@@ -161,7 +161,7 @@
 - `openHelpModal` (l. 150) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
 - `positionOverlay` (l. 246) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
 
-## 20-capella-chargement.js — 791 lignes
+## 20-capella-chargement.js — 794 lignes
 
 - `CAP_LAYERS` (l. 4)
 - `CAP_NS_LAYER` (l. 12)
@@ -197,7 +197,7 @@
 - `capFilterArboToLinked` (l. 622) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
 - `capInjectChainsToModal` (l. 661) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
 - `capRenderCurrentView` (l. 722) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
-- `capUpdateStatChips` (l. 782) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
+- `capUpdateStatChips` (l. 785) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
 ## 21-capella-vues-base.js — 1119 lignes
 
@@ -395,7 +395,7 @@
 - `capRenderFunctionsView` (l. 689) — Vue « ƒ Fonctions » (menu principal, au même niveau que 🔬 Analyses) : hiérarchie, tableau,
 - `capRenderAnalyses` (l. 698)
 
-## 35-tableau-de-bord.js — 558 lignes
+## 35-tableau-de-bord.js — 559 lignes
 
 - `CAP_DASH_PAL` (l. 3) — Palette catégorielle à ordre fixe (contrôlée pour le daltonisme), déclinée pour thèmes clairs et sombres.
 - `CAP_DASH_AK` (l. 6) — Couleurs des natures d'allocation (identiques au filtre « Allocation » de ƒ Fonctions).
@@ -405,17 +405,17 @@
 - `capDashPct` (l. 28) — Taux arrondi d'éléments vérifiant un prédicat.
 - `capDashCount` (l. 34) — Compte les éléments par clé (une ou plusieurs clés par élément) et trie par effectif décroissant.
 - `capDashCatalog` (l. 44) — Catalogue de tous les indicateurs disponibles pour le modèle ouvert (fonctions, chaînes, interfaces,
-- `capDashValue` (l. 188) — Valeur (mise en cache) d'un indicateur du catalogue ; null si le modèle ne contient pas la donnée.
-- `capDashCut` (l. 201) — Échappe un texte et le tronque pour une étiquette de graphique.
-- `capDashLevel` (l. 206) — Niveau d'un pourcentage : bon (≥ 90), à surveiller (≥ 50), faible.
-- `capDashCats` (l. 212) — Prépare les catégories d'une répartition : tri, limite d'affichage et regroupement en « Autres ».
-- `capDashDraw` (l. 226) — Dessine le contenu d'un élément du tableau de bord.
-- `capDashSave` (l. 308) — Enregistre les tableaux de bord dans la page (bloc JSON repris par la 💾 Page HTML).
-- `capDashUid` (l. 314) — Identifiant court et unique pour un tableau de bord ou un élément.
-- `capDashExample` (l. 318) — Tableau de bord d'exemple adapté au modèle ouvert (synthèse de quelques indicateurs clés).
-- `capRenderDashboard` (l. 336) — Vue « 📐 Tableau de bord » : tableaux de bord personnalisés (indicateurs, graphiques, tableaux, textes),
-- `capDashPrint` (l. 462) — Imprime un tableau de bord au format A4 : les éléments sont redessinés à la taille de la page
-- `capDashEditor` (l. 499) — Fenêtre d'ajout ou de configuration d'un élément : catalogue des indicateurs (recherche, groupes),
+- `capDashValue` (l. 189) — Valeur (mise en cache) d'un indicateur du catalogue ; null si le modèle ne contient pas la donnée.
+- `capDashCut` (l. 202) — Échappe un texte et le tronque pour une étiquette de graphique.
+- `capDashLevel` (l. 207) — Niveau d'un pourcentage : bon (≥ 90), à surveiller (≥ 50), faible.
+- `capDashCats` (l. 213) — Prépare les catégories d'une répartition : tri, limite d'affichage et regroupement en « Autres ».
+- `capDashDraw` (l. 227) — Dessine le contenu d'un élément du tableau de bord.
+- `capDashSave` (l. 309) — Enregistre les tableaux de bord dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capDashUid` (l. 315) — Identifiant court et unique pour un tableau de bord ou un élément.
+- `capDashExample` (l. 319) — Tableau de bord d'exemple adapté au modèle ouvert (synthèse de quelques indicateurs clés).
+- `capRenderDashboard` (l. 337) — Vue « 📐 Tableau de bord » : tableaux de bord personnalisés (indicateurs, graphiques, tableaux, textes),
+- `capDashPrint` (l. 463) — Imprime un tableau de bord au format A4 : les éléments sont redessinés à la taille de la page
+- `capDashEditor` (l. 500) — Fenêtre d'ajout ou de configuration d'un élément : catalogue des indicateurs (recherche, groupes),
 
 ## 36-component-exchange.js — 338 lignes
 
@@ -505,22 +505,22 @@
 - `capWatchShowDelta` (l. 433) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 513) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 274 lignes
+## 41-barre-vues.js — 275 lignes
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
-- `CAP_NAV_GROUPS` (l. 32) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
-- `CAP_NAV_DEFAULT` (l. 39) — Réglage par défaut : tous les menus affichés, ⚡ Chaînes, ƒ Fonctions et 📐 Tableau de bord en boutons directs.
-- `capNavSave` (l. 45) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
-- `capNavCurKey` (l. 55) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
-- `capNavOpen` (l. 63) — Ouvre une vue du catalogue (ou Relation Map / Table View pour les clés @rm, @table).
-- `capNavGroupOpen` (l. 73) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
-- `capNavFluxTabs` (l. 83) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
-- `capNavRender` (l. 93) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
-- `capNavSync` (l. 114) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
-- `capNavClose` (l. 129) — Ferme le menu déroulant de la barre des vues.
-- `capNavRow` (l. 138) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
-- `capNavMenu` (l. 148) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
-- `capNavMenuFill` (l. 195) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+- `CAP_NAV_GROUPS` (l. 33) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
+- `CAP_NAV_DEFAULT` (l. 40) — Réglage par défaut : tous les menus affichés, ⚡ Chaînes, ƒ Fonctions et 📐 Tableau de bord en boutons directs.
+- `capNavSave` (l. 46) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capNavCurKey` (l. 56) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
+- `capNavOpen` (l. 64) — Ouvre une vue du catalogue (ou Relation Map / Table View pour les clés @rm, @table).
+- `capNavGroupOpen` (l. 74) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
+- `capNavFluxTabs` (l. 84) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
+- `capNavRender` (l. 94) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
+- `capNavSync` (l. 115) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
+- `capNavClose` (l. 130) — Ferme le menu déroulant de la barre des vues.
+- `capNavRow` (l. 139) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
+- `capNavMenu` (l. 149) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
+- `capNavMenuFill` (l. 196) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
 
 ## 42-tableaux-analyses.js — 154 lignes
 
@@ -534,27 +534,27 @@
 - `capTfFilter` (l. 127) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
 - `capTfWatch` (l. 149) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
 
-## 43-visite-guidee.js — 362 lignes
+## 43-visite-guidee.js — 369 lignes
 
 - `CAP_TOUR_STEPS` (l. 12) — Étapes de la visite générale : s = sélecteur CSS de la zone (toutes les correspondances visibles sont encadrées
 - `CAP_TOUR_EXPLORE` (l. 57) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
 - `CAP_TOUR_FLUX` (l. 72) — Étapes communes aux vues de 📡 Flux & interfaces (onglets de navigation).
 - `CAP_TOUR_ANA_TXT` (l. 75) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
 - `CAP_TOUR_VIEWS` (l. 87) — Visites contextuelles, par vue : clé = '@rm', '@table' ou vue Capella (capCurrentView) ; l = nom de la vue,
-- `capTourCtxKey` (l. 208) — Clé de la vue affichée pour les visites contextuelles.
-- `capTourCtx` (l. 217) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
-- `capTourEls` (l. 225) — Éléments affichés désignés par le sélecteur d'une étape.
-- `capTourVisible` (l. 236) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
-- `capTourStart` (l. 246) — Lance une visite guidée depuis sa première étape.
-- `capTourStartView` (l. 267) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
-- `capTourGo` (l. 275) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
-- `capTourPos` (l. 295) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
-- `capTourRenderPop` (l. 302) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
-- `capTourPlace` (l. 314) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
-- `capTourKey` (l. 346) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
-- `capTourEnd` (l. 355) — Quitte la visite guidée et retire la mise en évidence.
+- `capTourCtxKey` (l. 215) — Clé de la vue affichée pour les visites contextuelles.
+- `capTourCtx` (l. 224) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
+- `capTourEls` (l. 232) — Éléments affichés désignés par le sélecteur d'une étape.
+- `capTourVisible` (l. 243) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
+- `capTourStart` (l. 253) — Lance une visite guidée depuis sa première étape.
+- `capTourStartView` (l. 274) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
+- `capTourGo` (l. 282) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
+- `capTourPos` (l. 302) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
+- `capTourRenderPop` (l. 309) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
+- `capTourPlace` (l. 321) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
+- `capTourKey` (l. 353) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
+- `capTourEnd` (l. 362) — Quitte la visite guidée et retire la mise en évidence.
 
-## 44-functional-exchange.js — 426 lignes
+## 44-functional-exchange.js — 460 lignes
 
 - `CAP_FEX_PAGE` (l. 8)
 - `CAP_FEX_MX_MAX` (l. 9)
@@ -600,3 +600,12 @@
 - `capCfgDialog` (l. 87) — Fenêtre de choix des parties à enregistrer ou à charger.
 - `capCfgLoadFile` (l. 123) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
 - `capCfgLoadUpdate` (l. 137) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
+
+## 47-composants.js — 316 lignes
+
+- `CAP_CB_PAGE` (l. 8)
+- `CAP_CB_TYPES` (l. 11) — Types de composants dessinés (versions récentes et anciennes de Capella).
+- `capComputeComponentBlocks` (l. 16) — Composants du modèle avec leurs ports, échanges, sous-composants et fonctions allouées.
+- `capCbChecks` (l. 41) — Sections de contrôle des composants et de leurs ports (rapport 🩺 et tableau de bord).
+- `capCbDashCatalog` (l. 66) — Indicateurs 🧱 Composants pour le catalogue du tableau de bord.
+- `capRenderComponentBlocks` (l. 74) — Rend la vue 🧱 Composants (barre, filtres, contenu paginé, exports).
