@@ -13,7 +13,10 @@ var CAP_NAV_ITEMS=[
   {k:'index',     l:'📖 Index des types',   g:'explore'},
   {k:'links',     l:'🔗 Liens',             g:'explore', t:'Relations entre les éléments du modèle'},
   {k:'chains',    l:'⚡ Chaînes',           g:'flux'},
-  {k:'compex',    l:'🔀 Component Exchange', g:'flux'},
+  {k:'fex',       l:'ƒ⇆ Functional Exchange', g:'flux', t:'Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles'},
+  {k:'csys',      l:'🧱 System Component', g:'flux', t:'System Components (SA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles'},
+  {k:'cblk',      l:'🧱 Logical Component', g:'flux', t:'Logical Components (LA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles'},
+  {k:'compex',    l:'🔀 Behavior Exchange', g:'flux', t:'Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange)'},
   {k:'physlink',  l:'🔌 Physical Link',     g:'flux'},
   {k:'ports',     l:'🧩 Ports',             g:'flux', t:'Traçabilité Function Port ↔ Component Port ↔ Physical Port'},
   {k:'functions', l:'ƒ Fonctions',          g:'',     t:'Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier'},
@@ -30,7 +33,7 @@ var CAP_NAV_ITEMS=[
 /** Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton). */
 var CAP_NAV_GROUPS=[
   {g:'explore', id:'cap-v-elements', l:'🧭 Explorateur',       t:'Explorer le modèle : arborescence, cartes, tableau, index des types, liens'},
-  {g:'flux',    id:'cap-v-flux',     l:'📡 Flux & interfaces', t:'Chaînes, Component Exchange, Physical Link, ports'},
+  {g:'flux',    id:'cap-v-flux',     l:'📡 Flux & interfaces', t:'Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, ports'},
   {g:'',        id:'',               l:'',                     t:''},   // place des vues sans menu (ƒ Fonctions)
   {g:'ana',     id:'cap-v-analyses', l:'🔬 Analyses',          t:'Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes'}
 ];
@@ -85,7 +88,7 @@ function capNavFluxTabs(cur){
   const show=free.some(i=>i.k===cur);
   bar.style.display=show?'flex':'none';
   if(!show) return;
-  bar.innerHTML=`<span class="tb-grp">${free.map(i=>`<button class="cap-lf-btn${i.k===cur?' active':''}" data-open="${i.k}" title="${i.t||''}">${i.l}</button>`).join('')}</span>`;
+  bar.innerHTML=`<span class="tb-grp">${free.map(i=>`<button class="phl-toggle-btn${i.k===cur?' active':''}" data-open="${i.k}" title="${i.t||''}">${i.l}</button>`).join('')}</span>`;   // onglets entourés comme les groupes de ƒ Fonctions
 }
 
 /** Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles). */
@@ -158,7 +161,7 @@ function capNavMenu(g, anchor){
       if(th){ capNavClose(); const sel=document.getElementById('theme-sel'); sel.value=th.dataset.thm; sel.dispatchEvent(new Event('change')); return; }
       const a=e.target.closest('[data-act]');
       if(a){ capNavClose(); ({open:()=>capPickCapellaFile(), save:()=>capSavePageDirect(false), saveas:()=>capSavePageDirect(true),
-        page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor(),
+        page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor(), update:()=>capCfgLoadUpdate(), cfgsave:()=>capCfgDialog('save'), cfgload:()=>capCfgLoadFile(),
         help:()=>openHelpModal(), tour:()=>capTourStart(), tourview:()=>capTourStartView()})[a.dataset.act](); return; }
       if(e.target.closest('[data-reset]')){ _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); capNavSave(); capNavRender(); capNavMenuFill(); }
     });
@@ -196,11 +199,18 @@ function capNavMenuFill(){
   const g=dd.dataset.g;
   if(g==='file'){
     const sc=s=>` <span class="cap-nav-g">${s}</span>`;
-    res.innerHTML=`<div class="ctx-i" data-act="open">🔷 Ouvrir un modèle Capella…</div><div class="cw-m-sep"></div>
-      <div class="ctx-i" data-act="save">💾 Enregistrer${sc('Ctrl+S')}</div>
+    res.innerHTML=`<div class="ctx-i" data-act="open" title="Remplace le modèle affiché par un autre fichier .capella">🔷 Ouvrir un modèle Capella…</div>
+      <div class="ctx-i" data-act="update" title="Compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour l'affichage après validation">🔄 Charger une mise à jour du modèle…</div>
+      <div class="cap-nav-hint">Mise à jour : delta affiché avant validation ; alerte si les deux fichiers semblent être des projets différents.</div>
+      <div class="cw-m-sep"></div>
+      <div class="ctx-i" data-act="save" title="Page HTML autonome : modèle + interface et vues">💾 Enregistrer${sc('Ctrl+S')}</div>
       <div class="ctx-i" data-act="saveas">💾 Enregistrer sous…${sc('Ctrl+Maj+S')}</div>
       <div class="ctx-i" data-act="page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome">🌐 Télécharger la page HTML</div>
-      <div class="cap-nav-hint">La page enregistrée contient le modèle chargé et vos réglages.</div>`;
+      <div class="cap-nav-hint">La page HTML enregistrée contient : <b>le modèle chargé</b>, la barre des vues (menus, épingles), les tableaux de bord, les colonnes et vues du 📋 Tableau et de la 📊 Table View, le thème et les règles de nommage.<br>Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues.</div>
+      <div class="cw-m-sep"></div>
+      <div class="ctx-i" data-act="cfgsave" title="Fichier .json sans le modèle : barre, tableaux de bord, 📋 Tableau, 📊 Table View, thème, règles de nommage (au choix)">⚙ Enregistrer l'interface et les vues…</div>
+      <div class="ctx-i" data-act="cfgload" title="Applique un fichier .json d'interface (au choix des parties)">⚙ Charger une interface et des vues…</div>
+      <div class="cap-nav-hint">Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page.</div>`;
     return;
   }
   if(g==='help'){
@@ -225,6 +235,7 @@ function capNavMenuFill(){
   if(q){
     const all=[{k:'@rm',l:'🗺 Relation Map',g:''},{k:'@table',l:'📊 Table View',g:''},...CAP_NAV_ITEMS];
     const hit=all.filter(i=>q.split(/\s+/).every(w=>norm(i.l+' '+gl(i.g)+' '+(i.t||'')).includes(w)));
+    const inName=i=>q.split(/\s+/).every(w=>norm(i.l).includes(w)); hit.sort((a,b)=>inName(b)-inName(a));   // le nom de la vue prime sur l'info-bulle
     res.innerHTML=hit.length?hit.map(i=>capNavRow(i,gl(i.g))).join(''):'<div class="cap-nav-hint">Aucune vue ne correspond.</div>';
     res.querySelector('[data-open]')?.classList.add('hl');
     return;

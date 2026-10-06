@@ -33,7 +33,7 @@ function capRenderPhysLink(){
   // des variantes sombres. En thème sombre, on conserve les couleurs claires d'origine.
   const isLight = capIsLight();
   const pcColor = n => {
-    if (n==='ACTOR') return isLight?'#8a5a00':'#e3b341';
+    if (n==='ACTOR') return capTextOn('#7fd8ff');   // bleu clair des acteurs, comme 🧱 System Component
     if (!isLight) {
       return n==='NODE'?'#fffcb7':n==='BEHAVIOR'?'#96b1da':'#c084fc';
     } else {
@@ -44,9 +44,9 @@ function capRenderPhysLink(){
   const projectName=(cap_xmlDoc&&cap_xmlDoc.documentElement)?(cap_xmlDoc.documentElement.getAttribute('name')||'Capella Project'):'Capella Project';
 
   // Couleur de fond pour les badges (NODE/BEHAVIOR) dans l'en-tête des cartes composant.
-  // Le badge utilise background + texte blanc → en thème clair on utilise les variantes sombres.
+  // Texte du badge : capInk (noir sur fond clair, blanc sur fond foncé) ; en thème clair, variantes sombres.
   const pcBadgeBg = n => {
-    if (n==='ACTOR') return isLight?'#8a5a00':'#b08800';
+    if (n==='ACTOR') return '#7fd8ff';
     if (!isLight) {
       return n==='NODE'?'#fffcb7':n==='BEHAVIOR'?'#96b1da':'#c084fc';
     } else {
@@ -160,7 +160,7 @@ function capRenderPhysLink(){
         }).join('');
         return`<div class="phl-comp-card">
           <div class="phl-comp-hdr" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open');this.querySelector('.phl-comp-toggle').classList.toggle('open')">
-            <span class="phl-comp-badge" style="background:${pcBadgeBg(pc.nature)};color:#fff">${capEsc(pc.nature==='ACTOR'?'ACTEUR':(pc.nature||'—'))}</span>
+            <span class="phl-comp-badge" style="background:${pcBadgeBg(pc.nature)};color:${capInk(pcBadgeBg(pc.nature))}">${capEsc(pc.nature==='ACTOR'?'ACTEUR':(pc.nature||'—'))}</span>
             <span class="phl-comp-title" style="color:${pcColor(pc.nature)}">${capEsc(pc.pcName)}</span>
             <span class="phl-comp-cnt">${pc.links.length} lien${pc.links.length>1?'s':''}</span>
             <span class="phl-comp-toggle">▶</span>
@@ -218,9 +218,17 @@ function capRenderPhysLink(){
    */
   function render(){
     _capPhysLinkView=st.view;
+    const PHL_VIEWS=[['block','◧ Vue Blocs','Nœuds dessinés comme dans Capella : jaune = nœud du système, bleu clair = nœud acteur ; ports physiques jaunes'],['line','≡ Vue Ligne',''],['card','▣ Vue Composant',''],['matrix','▦ Matrice','Matrice N² composant × composant'],['diag','🩺 Contrôles','Liens sans CE, ports orphelins, CE non alloués…']];
+    if(st.view==='block'){   // ◧ Vue Blocs : rendu commun aux vues 🧱 (47-composants.js)
+      container.innerHTML=`<div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Physical Links de la couche <b>PA</b> entre <b>Physical Components Node</b> (nœuds du système en jaune, nœuds acteurs en bleu clair).</div><div class="phl-toggle-bar">${PHL_VIEWS.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}</div><div id="phl-blk"></div>`;
+      container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.addEventListener('click',()=>{ st.view=b.dataset.pv; render(); }));
+      capRenderComponentBlocks('PN', container.querySelector('#phl-blk'), container);
+      return;
+    }
     const filtered=getFiltered();
     container.innerHTML=`
       <div class="phl-toggle-bar">
+        <button class="phl-toggle-btn" data-pv="block" title="${PHL_VIEWS[0][2]}">◧ Vue Blocs</button>
         <button class="phl-toggle-btn${st.view==='line'?' active':''}" data-pv="line">≡ Vue Ligne</button>
         <button class="phl-toggle-btn${st.view==='card'?' active':''}" data-pv="card">▣ Vue Composant</button>
         <button class="phl-toggle-btn${st.view==='matrix'?' active':''}" data-pv="matrix" title="Matrice N² composant × composant">▦ Matrice</button>

@@ -1031,3 +1031,103 @@ table.cap-tf-fixed td,table.cap-tf-fixed th{overflow-wrap:anywhere;}
 #cap-tour-pop button[disabled]{opacity:.4;cursor:default;}
 #cap-tour-pop .ct-next{border-color:var(--c-accent);color:var(--c-accent);font-weight:600;}
 #cap-drop-zone #cw-tour-link{margin-left:16px;}
+
+/* ── ⇆ Functional Exchange : pins façon Capella et Vue Blocs ── */
+.fex-pin{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;font-size:8px;line-height:1;color:#fff;border:1px solid;flex-shrink:0;vertical-align:middle;}
+.fex-pin-in{background:#1d6b3a;border-color:#0e4a24;}
+.fex-pin-out{background:#e0581c;border-color:#a33d0f;}
+.fex-pin-orphan{opacity:.45;}
+.fex-pin-virt{border-style:dashed;opacity:.8;}
+.fex-dim{color:var(--c-dim);}
+.fex-pager{display:flex;align-items:center;justify-content:center;gap:10px;margin:8px 0;font-size:12px;color:var(--c-dim);}
+.fex-blocks{display:flex;flex-direction:column;gap:22px;padding:6px 0;}
+.fex-blk{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,360px) minmax(0,1fr);align-items:start;}
+.fex-side{padding-top:19px;min-width:0;}
+.fex-pl{height:30px;display:flex;align-items:center;position:relative;font-size:11.5px;min-width:0;}
+.fex-side-in .fex-pl{justify-content:flex-end;padding-right:16px;}
+.fex-side-out .fex-pl{padding-left:16px;}
+.fex-side-in .fex-pl::after,.fex-side-out .fex-pl::before{content:'';position:absolute;top:50%;width:14px;height:1px;background:var(--c-dim);}
+.fex-side-in .fex-pl::after{right:0;}
+.fex-side-out .fex-pl::before{left:0;}
+.fex-pl-txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.fex-box{position:relative;height:var(--fex-h);border:1.5px solid #4dd880;border-radius:12px;background:color-mix(in srgb,#4dd880 16%,var(--c-bg));box-shadow:2px 2px 5px rgba(0,0,0,.25);}   /* fond uni en thème sombre ; dégradé en thème clair (plus bas) */
+.fex-box.fex-k-act{border-color:#79b8ff;background:color-mix(in srgb,#58a6ff 18%,var(--c-bg));}
+.fex-box.fex-k-none{border-color:#8b949e;background:color-mix(in srgb,#8b949e 14%,var(--c-bg));}
+.fex-k-act .fex-box-t{color:#b6d8ff;}
+.fex-k-none .fex-box-t{color:#d0d7de;}
+.fex-go{cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px;}
+.fex-go:hover{text-decoration-style:solid;}
+.fex-blk.fex-flash .fex-box{outline:3px solid var(--c-accent);outline-offset:3px;transition:outline-color .3s;}
+.fex-backbar{display:flex;justify-content:flex-start;margin:4px 0;}
+.fex-box-t{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 86px;font-weight:700;font-size:13px;color:#9ff5b8;}
+.fex-box-empty{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:10px;color:var(--c-dim);font-style:italic;}
+.fex-att{position:absolute;top:5px;left:86px;right:86px;text-align:center;font-size:10px;color:var(--c-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:1;}
+.fex-att-go{cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px;}
+.fex-att-go:hover{color:var(--c-accent);}
+.fex-bpin{position:absolute;display:flex;align-items:center;gap:4px;height:16px;transform:translateY(-50%);max-width:48%;}
+.fex-pins-in .fex-bpin{left:-8px;}
+.fex-pins-out .fex-bpin{right:-8px;flex-direction:row-reverse;}
+.fex-pname{font-size:10px;color:var(--c-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80px;}
+
+html[data-tone="light"] .fex-box{background:linear-gradient(180deg,#f1ffe6,#c5ffa6);border-color:#2f6b2f;}
+html[data-tone="light"] .fex-box-t{color:#0b5a2a;}
+html[data-tone="light"] .fex-box.fex-k-act{background:linear-gradient(180deg,#e3fbff,#c2e2ff);border-color:#3c3c96;}
+html[data-tone="light"] .fex-k-act .fex-box-t{color:#1d3f73;}
+html[data-tone="light"] .fex-box.fex-k-none{background:linear-gradient(180deg,#f6f6f6,#d8d8d8);border-color:#7d7d7d;}
+html[data-tone="light"] .fex-k-none .fex-box-t{color:#333;}
+html[data-tone="light"] .fex-pname{color:#2a5a2a;}
+
+/* ── ⚖ Rapport de comparaison de versions ── */
+.dr-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:6px 0;}
+.dr-actions{padding:6px 0;border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border);}
+.dr-opt{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--c-dim);}
+.dr-link{color:var(--c-accent);cursor:pointer;}
+.dr-report{margin-top:8px;}
+.dr-grp{margin:10px 0 4px;}
+.dr-grp-h{font-weight:700;font-size:13px;margin-bottom:4px;}
+.dr-line{display:flex;gap:6px;align-items:flex-start;padding:3px 4px;border-bottom:1px solid var(--c-border);font-size:12.5px;}
+.dr-line:hover{background:var(--c-bg3);}
+.dr-line.dr-off .dr-txt{opacity:.4;text-decoration:line-through;}
+.dr-chk{padding-top:1px;}
+.dr-txt{flex:1;min-width:0;line-height:1.45;}
+.dr-meta{font-size:11px;color:var(--c-dim);}
+.dr-open{cursor:pointer;color:var(--c-accent);font-size:11px;}
+.dr-det{margin:4px 0 4px;max-width:1100px;}
+
+.cw-suspect{margin:6px 0;padding:6px 8px;border:1px solid var(--c-warn,#e3b341);border-radius:5px;background:color-mix(in srgb,var(--c-warn,#e3b341) 12%,transparent);font-size:11.5px;color:var(--c-text);}
+
+/* ── ⚙ Interface et vues ── */
+#cap-cfg-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
+.cfg-part{display:flex;gap:8px;align-items:flex-start;padding:6px 4px;border-bottom:1px solid var(--c-border);font-size:12.5px;cursor:pointer;}
+.cfg-part input{margin-top:3px;}
+
+/* ── 🧱 Composants : blocs et ports façon Capella ── */
+.cb-box{border-radius:3px;}
+.cb-box.cb-k-sys{border-color:#6f9be0;background:color-mix(in srgb,#5b8ad6 24%,var(--c-bg));}
+.cb-box.cb-k-act{border-color:#7fd8ff;background:color-mix(in srgb,#7fd8ff 14%,var(--c-bg));}
+.cb-box.cb-k-node{border-color:#e3b341;background:color-mix(in srgb,#e3b341 16%,var(--c-bg));}
+.cb-box .fex-box-t{color:var(--c-text);align-items:flex-start;padding-top:12px;}
+.cb-ic{font-size:12px;margin-right:4px;}
+.cb-fns{position:absolute;left:0;right:0;bottom:6px;text-align:center;font-size:10.5px;color:var(--c-dim);}
+.cb-kids{position:absolute;right:8px;bottom:5px;font-size:11px;color:var(--c-dim);cursor:help;}
+.cb-port{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;font:700 12px/1 monospace;color:#111;background:#fff;border:1.5px solid #222;flex-shrink:0;vertical-align:middle;}
+.cb-port-UNSET{background:linear-gradient(180deg,#d29b9b,#8f3f3f);border-color:#4a1515;}
+.cb-port-orphan{opacity:.45;}
+html[data-tone="light"] .cb-box.cb-k-sys{background:linear-gradient(180deg,#c9e0f7,#8fb3df);border-color:#3c3c96;}
+html[data-tone="light"] .cb-box.cb-k-act{background:linear-gradient(180deg,#e3feff,#c4e3ff);border-color:#3c3c96;}
+html[data-tone="light"] .cb-box.cb-k-node{background:linear-gradient(180deg,#fffbe0,#f3df85);border-color:#8a6d00;}
+html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
+
+.cb-port-PP{background:linear-gradient(180deg,#fff7b0,#e6cf4a);border-color:#7a6a00;}
+.cb-fns{cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px;}
+.cb-fns:hover{color:var(--c-accent);}
+.cb-fnlist{grid-column:2;margin-top:6px;border:1px solid var(--c-border);border-radius:6px;background:var(--c-bg2);padding:6px 8px;max-height:240px;overflow:auto;font-size:11.5px;}
+.cb-fnhead{font-weight:600;margin-bottom:3px;}
+.cb-fn{padding:2px 4px;border-radius:3px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cb-fn:hover{background:var(--c-bg3);color:var(--c-accent);}
+
+/* Pin ou port à plusieurs connexions : liste verticale centrée sur le pin, avec une accolade */
+.fex-pl-row{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:18px;}
+.fex-side-in .fex-pl-txt{text-align:right;}
+.fex-side-in .fex-pl-multi .fex-pl-txt{border-right:1.5px solid var(--c-dim);padding-right:6px;}
+.fex-side-out .fex-pl-multi .fex-pl-txt{border-left:1.5px solid var(--c-dim);padding-left:6px;}

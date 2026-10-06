@@ -4,13 +4,28 @@ function capAnaReset(){
   ['cap-view-analyses','cap-view-functions'].forEach(id=>{ const c=document.getElementById(id); if(c){ c.innerHTML=''; c._built=false; } });
 }
 
+/** Component Exchanges du périmètre de la vue 🔀 Behavior Exchange : couche PA, entre Physical Components
+ * de nature Behavior, ou entre un composant Behavior et un acteur (nœud le plus souvent) qui lui est relié. Les échanges SA et LA sont traités par 🧱 System / Logical Component.
+ * @returns {object[]} Échanges (avec allPorts limités aux mêmes composants)
+ */
+function capBehaviorExchanges(){
+  const all=capComputeCompExchanges(), CB=capComputeComponentBlocks();
+  const ok=e=>e.pcType==='PhysicalComponent'&&e.pcNature!=='NODE';
+  const act=e=>!!(CB.byId[e.pcId]&&CB.byId[e.pcId].actor);   // acteur (souvent un nœud) relié à un composant Behavior
+  const out=all.filter(l=>l.layer==='PA'&&(ok(l.src)||ok(l.tgt))&&(ok(l.src)||act(l.src))&&(ok(l.tgt)||act(l.tgt)));
+  const actPorts=new Set(); out.forEach(l=>[l.src,l.tgt].forEach(e=>{ if(!ok(e)) actPorts.add(e.portId); }));
+  out.allPorts=(all.allPorts||[]).filter(p=>p.layer==='PA'&&(ok(p)||actPorts.has(p.portId)));
+  out.total=all.length;
+  return out;
+}
+
 /** Rend la vue Component Exchange — même structure que Physical Link (≡ Ligne / ▣ Composant,
  * filtres, exports CSV/HTML) mais pour les ComponentExchange (source/target → ComponentPort
  * → composant parent). Coloration adaptative par TYPE de composant (thème clair/sombre). */
-let _capCompExView = 'line';
+let _capCompExView = 'block';
 function capRenderCompExchange(){
   const container=document.getElementById('cap-view-compex'); if(!container) return;
-  const allLinks=capComputeCompExchanges();
+  const allLinks=capBehaviorExchanges();   // PA, Physical Components Behavior
 
   const linkNumMap={};
   let linkNum=1;
@@ -34,7 +49,10 @@ function capRenderCompExchange(){
 
   // Coloration par TYPE de composant, adaptative clair/sombre (même approche que Physical Link)
   const isLight = capIsLight();
-  const compColor = (type, nature) => {
+  const CB=capComputeComponentBlocks();
+  /** Couleur d'un composant : acteurs en bleu clair (comme 🧱 System Component), sinon selon le type et la nature. */
+  const compColor = (type, nature, id) => {
+    if (id&&CB.byId[id]&&CB.byId[id].actor) return capTextOn('#7fd8ff');
     if (type==='PhysicalComponent') return isLight ? (nature==='NODE'?'#7a6500':nature==='BEHAVIOR'?'#1a4f8a':'#7c28d8')
                                                    : (nature==='NODE'?'#fffcb7':nature==='BEHAVIOR'?'#96b1da':'#c084fc');
     const dark  = {SystemComponent:'#58a6ff', LogicalComponent:'#4dd880', Entity:'#f0883e',
@@ -100,12 +118,12 @@ function capRenderCompExchange(){
     if(view==='diag') return buildDiag(filtered);
     if(!filtered.length) return '<div class="phl-empty">Aucun component exchange ne correspond au filtre.</div>';
     if(view==='matrix'){
-      const mx=capMatrixBuild(filtered,{directed:true, unit:'exchanges', colorOf:e=>compColor(e.pcType,e.pcNature)});
+      const mx=capMatrixBuild(filtered,{directed:true, unit:'exchanges', colorOf:e=>compColor(e.pcType,e.pcNature,e.pcId)});
       container._cexCells=mx.cells; return mx.html;
     }
     if(view==='line'){
       return filtered.map(l=>{
-        const sc=compColor(l.src.pcType,l.src.pcNature), tc=compColor(l.tgt.pcType,l.tgt.pcNature);
+        const sc=compColor(l.src.pcType,l.src.pcNature,l.src.pcId), tc=compColor(l.tgt.pcType,l.tgt.pcNature,l.tgt.pcId);
         const lc=linkColorMap[l.linkName]||{bg:'#8b949e',fg:'#fff'};
         const num=linkNumMap[l.linkId]||'';
         const dash=l.dir==='unset'?`background:repeating-linear-gradient(90deg,${lc.bg} 0 4px,transparent 4px 7px);`:`background:${lc.bg};`;
@@ -154,12 +172,12 @@ function capRenderCompExchange(){
         unset:{arrow:'—', color:'#8b949e', label:'? N.O.',   tip:'Non orienté — aucun port IN/OUT/INOUT'},
       };
       return Object.values(byPC).map(pc=>{
-        const c=compColor(pc.pcType,pc.nature);
+        const c=compColor(pc.pcType,pc.nature,pc.pcId);
         const cnt={out:0,in:0,bi:0,unset:0}; pc.links.forEach(lk=>cnt[lk.role]++);
         const rows=pc.links.map(lk=>{
           const l=lk.l, R=ROLE[lk.role];
           const lc=linkColorMap[l.linkName]||{bg:'#8b949e',fg:'#fff'};
-          const tc=compColor(lk.pcTgtType,lk.pcTgtNature);
+          const tc=compColor(lk.pcTgtType,lk.pcTgtNature,lk.pcTgtId);
           const num=linkNumMap[l.linkId]||'';
           return`<div class="phl-link-row">
             <span style="font-size:10px;color:var(--c-dim);font-family:monospace;min-width:28px;">#${num}</span>
@@ -174,11 +192,11 @@ function capRenderCompExchange(){
             ${warnIcon(l)}
           </div>`;
         }).join('');
-        const humanType=(CAP_HUMAN_NAMES[pc.pcType]||{}).h||pc.pcType;
+        const humanType=CB.byId[pc.pcId]&&CB.byId[pc.pcId].actor?'Acteur':((CAP_HUMAN_NAMES[pc.pcType]||{}).h||pc.pcType);
         const cntTxt=[cnt.out&&`${cnt.out} →`,cnt.in&&`${cnt.in} ←`,cnt.bi&&`${cnt.bi} ⇄`,cnt.unset&&`${cnt.unset} ?`].filter(Boolean).join(' · ');
         return`<div class="phl-comp-card">
           <div class="phl-comp-hdr" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open');this.querySelector('.phl-comp-toggle').classList.toggle('open')">
-            <span class="phl-comp-badge" style="background:${c};color:#fff">${capEsc(humanType)}</span>
+            <span class="phl-comp-badge" style="background:${c};color:${capInk(c)}">${capEsc(humanType)}</span>
             <span class="phl-comp-title" style="color:${c}">${capEsc(pc.pcName)}</span>
             <span class="phl-comp-cnt" title="émis · reçus · bidirectionnels · non orientés">${pc.links.length} exchange${pc.links.length>1?'s':''} (${cntTxt})</span>
             <span class="phl-comp-toggle">▶</span>
@@ -221,7 +239,7 @@ function capRenderCompExchange(){
       html:k==='line'?lineHtml:k==='card'?buildContent(f,'card').replace(/class="phl-comp-(hdr|body|toggle)"/g,'class="phl-comp-$1 open"'):buildContent(f,k)}));
     const cells={}; Object.entries(container._cexCells||{}).forEach(([k,ls])=>cells[k]=ls.map(l=>l.linkId));
     const fi=[st.nodeFilter&&`composant « ${st.nodeFilter} »`,st.nameFilter&&`exchange « ${st.nameFilter} »`,st.dirFilter!=='all'&&`sens ${st.dirFilter}`,st.kindFilter!=='all'&&`kind ${st.kindFilter}`].filter(Boolean).join(', ');
-    capHtmlReport({title:'🔀 Component Exchanges', subtitle:`${f.length}/${allLinks.length} exchanges${fi?' · filtres : '+fi:''}`, tabs, active:st.view, cells,
+    capHtmlReport({title:'🔀 Behavior Exchanges (PA)', subtitle:`${f.length}/${allLinks.length} exchanges${fi?' · filtres : '+fi:''}`, tabs, active:st.view, cells,
       filename:all?'component-exchanges-rapport.html':`component-exchanges-${st.view}.html`});
   }
 
@@ -248,13 +266,23 @@ function capRenderCompExchange(){
     container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.classList.toggle('active',b.dataset.pv===st.view));
   }
 
+  const CEX_VIEWS=[['block','◧ Vue Blocs','Composants Behavior dessinés comme dans Capella (bleu = système, bleu clair = acteur), ports UNSET / IN / OUT / INOUT'],['line','≡ Vue Ligne',''],['card','▣ Vue Composant',''],['matrix','▦ Matrice','Matrice N² composant × composant'],['diag','🩺 Contrôles','Ports orphelins, exchanges sans FE, orientations incohérentes…']];
   /** Construit et affiche l'intégralité de la vue (barre d'outils, filtres, contenu, écouteurs).
    */
   function render(){
     _capCompExView=st.view;
     const filtered=getFiltered();
+    if(st.view==='block'){   // ◧ Vue Blocs : rendu commun aux vues 🧱 (47-composants.js), mêmes couleurs que 🧱 Logical Component
+      container.innerHTML=`<div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Component Exchanges de la couche <b>PA</b> entre <b>Physical Components Behavior</b>, ou entre un Behavior et un <b>acteur</b> (nœud) qui lui est relié (${allLinks.length} sur ${allLinks.total} dans le modèle).</div>
+        <div class="phl-toggle-bar">${CEX_VIEWS.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}</div><div id="cex-blk"></div>`;
+      container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.addEventListener('click',()=>{ st.view=b.dataset.pv; render(); }));
+      capRenderComponentBlocks('PB', container.querySelector('#cex-blk'), container);
+      return;
+    }
     container.innerHTML=`
+      <div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Component Exchanges de la couche <b>PA</b> entre <b>Physical Components Behavior</b>, ou entre un Behavior et un <b>acteur</b> (nœud) qui lui est relié (${allLinks.length} sur ${allLinks.total} dans le modèle). Les échanges SA et LA sont dans 🧱 System Component et 🧱 Logical Component ; les liens entre nœuds dans 🔌 Physical Link.</div>
       <div class="phl-toggle-bar">
+        <button class="phl-toggle-btn" data-pv="block" title="${CEX_VIEWS[0][2]}">◧ Vue Blocs</button>
         <button class="phl-toggle-btn${st.view==='line'?' active':''}" data-pv="line">≡ Vue Ligne</button>
         <button class="phl-toggle-btn${st.view==='card'?' active':''}" data-pv="card">▣ Vue Composant</button>
         <button class="phl-toggle-btn${st.view==='matrix'?' active':''}" data-pv="matrix" title="Matrice N² composant × composant (ligne = émetteur, colonne = récepteur)">▦ Matrice</button>

@@ -176,6 +176,8 @@ function capDashCatalog(){
     return {cats:[['Fonctions','chk.fn'],['Ports','chk.pt'],['Component Exchanges','chk.ce'],['Physical Links','chk.pl'],['Capacités','cap.chk'],['Modes & états','sm.chk'],['Exigences','rq.chk'],['Propriétés','pv.chk'],['Données & interfaces','dm.chk'],['Contraintes','ct.chk']].map(([l,id])=>({l,v:tot(id)})).filter(x=>x.v).sort((a,b)=>b.v-a.v)}; },'Nombre total de constats par domaine');
 
   capXtDashCatalog(add, LC);
+  capFexDashCatalog(add, LC);
+  capCbDashCatalog(add, LC);
 
   add('Mise en page','txt','Texte libre (titre, commentaire)','text',()=>({}));
   return _capAnaCache.dashCat=C;

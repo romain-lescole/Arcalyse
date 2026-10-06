@@ -34,6 +34,7 @@ let capLoaded=false;
  * rouverte se comporte donc exactement comme l'état actuel, fichier Capella déjà chargé.
  * @returns {string} Document HTML complet */
 function capBuildPageHtml(){
+  capCfgStoreViews();   // 📋 Tableau, 📊 Table View et thème choisi mémorisés dans la page (46-config-interface.js)
   // Clone le document actuel tel quel
   const doc = document.documentElement.cloneNode(true);
 
@@ -128,6 +129,13 @@ async function capSavePageDirect(saveAs){
     capSaveFullPage();
   }
 }
+// Avertissement avant de quitter la page (bouton ← Précédent, fermeture de l'onglet, autre adresse) quand un modèle
+// est chargé : tout le travail en cours (modèle, filtres, tableaux de bord non enregistrés) serait perdu.
+// Le navigateur affiche son propre message (le texte ne peut pas être personnalisé).
+window.addEventListener('beforeunload', e=>{
+  if(!capLoaded||window._capNoLeaveWarn) return;
+  e.preventDefault(); e.returnValue='';
+});
 document.getElementById('b-save-page')?.addEventListener('click', capSaveFullPage);
 document.getElementById('b-save-direct')?.addEventListener('click', e=>capSavePageDirect(e.shiftKey));
 document.addEventListener('keydown', e=>{
@@ -712,7 +720,7 @@ function capInjectChainsToModal(){
  * Met à jour les boutons de vue et les compteurs de stats.
  */
 function capRenderCurrentView(){
-  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-links','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-index'].forEach(id=>{
+  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-links','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-fex','cap-view-cblk','cap-view-csys','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-index'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
   const pg=document.getElementById('cap-pagination'); if(pg) pg.style.display='none';
@@ -748,6 +756,15 @@ function capRenderCurrentView(){
   } else if(capCurrentView==='compex'){
     document.getElementById('cap-view-compex').style.display='block';
     capRenderCompExchange();
+  } else if(capCurrentView==='cblk'){
+    document.getElementById('cap-view-cblk').style.display='block';
+    capRenderComponentBlocks('LA');
+  } else if(capCurrentView==='csys'){
+    document.getElementById('cap-view-csys').style.display='block';
+    capRenderComponentBlocks('SA');
+  } else if(capCurrentView==='fex'){
+    document.getElementById('cap-view-fex').style.display='block';
+    capRenderFunctionalExchange();
   } else if(capCurrentView==='functions'){
     document.getElementById('cap-view-functions').style.display='block';
     capRenderFunctionsView();

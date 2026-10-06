@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════
    PHYSICAL LINK VIEW
 ═══════════════════════════════════════════════ */
-let _capPhysLinkView = 'line'; // 'line' | 'card'
+let _capPhysLinkView = 'block'; // 'block' | 'line' | 'card' | 'matrix' | 'diag'
 
 /** Extrait les PhysicalLink du modèle Capella.
  * Résout les linkEnds (IDs de PhysicalPort) vers leurs PhysicalComponent parents.
@@ -16,7 +16,7 @@ let _capPhysLinkView = 'line'; // 'line' | 'card'
  * @returns {string} Feuille de style
  */
 function capReportCss(){
-  const re=/\.(phl-|cap-mx|cap-diag|cap-chain|cap-lf-btn|cap-type-badge|prt-|cex-det|ana-)/;
+  const re=/\.(phl-|fex-|cb-|cap-mx|cap-diag|cap-chain|cap-lf-btn|cap-type-badge|prt-|cex-det|ana-)/;
   let css='';
   for(const sh of document.styleSheets){
     let rules; try{ rules=sh.cssRules; }catch(e){ continue; }

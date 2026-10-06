@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 2692 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3158 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -156,7 +156,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 440 | Nom de la colonne |
 | 441 | ex: Functions of Component  (infobulle) |
 | 442 | Créer la colonne |
-| 459 | Aucun élément ne correspond. |
+| 462 | Aucun élément ne correspond. |
 
 ## js/01-donnees-config.js
 
@@ -657,62 +657,62 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 15 | Part |
 | 15 | Execution |
 | 24 | Shared |
-| 120 | Page HTML |
-| 122 | Enregistrer dans « |
-| 122 | » (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous |
-| 123 | ✔ Enregistré |
-| 127 | Enregistrement direct impossible ( |
-| 127 | ). La page va être téléchargée à la place. |
-| 158 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. |
-| 162 | » n'est pas un fichier Capella (.capella attendu). |
-| 165 | Chargement de « |
-| 168 | Impossible de lire « |
-| 174 | XML invalide |
-| 180 | Erreur de chargement : |
-| 199 | Aucun élément Capella reconnu dans ce fichier |
-| 224 | Ouvrir un autre modèle Capella |
-| 225 | Modèle actuel : |
-| 225 | Déposez un nouveau fichier .capella pour le remplacer. |
-| 293 | Shared |
-| 312 | Project |
-| 369 | Composition |
-| 369 | Aggregation |
-| 369 | Association |
-| 369 | Containment |
-| 369 | Generalization |
-| 369 | Realization |
-| 369 | Dependency |
-| 369 | Usage |
-| 369 | Abstraction |
-| 369 | Refine |
-| 369 | Trace |
-| 369 | Satisfy |
-| 369 | Verify |
-| 369 | Copy |
-| 369 | Allocation |
-| 370 | Block |
-| 370 | Component |
-| 370 | Class |
-| 370 | Interface |
-| 370 | Requirement |
-| 370 | Package |
-| 373 | Aggregation |
-| 373 | Association |
-| 373 | Containment |
-| 373 | Generalization |
-| 373 | Realization |
-| 373 | Dependency |
-| 373 | Usage |
-| 373 | Abstraction |
-| 373 | Refine |
-| 373 | Trace |
-| 373 | Satisfy |
-| 373 | Verify |
-| 373 | Copy |
-| 373 | Allocation |
-| 482 | PhysicalComponent (NODE) |
-| 483 | PhysicalComponent (BEHAVIOR) |
-| 722 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella |
+| 121 | Page HTML |
+| 123 | Enregistrer dans « |
+| 123 | » (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous |
+| 124 | ✔ Enregistré |
+| 128 | Enregistrement direct impossible ( |
+| 128 | ). La page va être téléchargée à la place. |
+| 166 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. |
+| 170 | » n'est pas un fichier Capella (.capella attendu). |
+| 173 | Chargement de « |
+| 176 | Impossible de lire « |
+| 182 | XML invalide |
+| 188 | Erreur de chargement : |
+| 207 | Aucun élément Capella reconnu dans ce fichier |
+| 232 | Ouvrir un autre modèle Capella |
+| 233 | Modèle actuel : |
+| 233 | Déposez un nouveau fichier .capella pour le remplacer. |
+| 301 | Shared |
+| 320 | Project |
+| 377 | Composition |
+| 377 | Aggregation |
+| 377 | Association |
+| 377 | Containment |
+| 377 | Generalization |
+| 377 | Realization |
+| 377 | Dependency |
+| 377 | Usage |
+| 377 | Abstraction |
+| 377 | Refine |
+| 377 | Trace |
+| 377 | Satisfy |
+| 377 | Verify |
+| 377 | Copy |
+| 377 | Allocation |
+| 378 | Block |
+| 378 | Component |
+| 378 | Class |
+| 378 | Interface |
+| 378 | Requirement |
+| 378 | Package |
+| 381 | Aggregation |
+| 381 | Association |
+| 381 | Containment |
+| 381 | Generalization |
+| 381 | Realization |
+| 381 | Dependency |
+| 381 | Usage |
+| 381 | Abstraction |
+| 381 | Refine |
+| 381 | Trace |
+| 381 | Satisfy |
+| 381 | Verify |
+| 381 | Copy |
+| 381 | Allocation |
+| 490 | PhysicalComponent (NODE) |
+| 491 | PhysicalComponent (BEHAVIOR) |
+| 730 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella |
 
 ## js/21-capella-vues-base.js
 
@@ -1137,7 +1137,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 |---:|---|
 | 58 | Émetteur ↓ / Récepteur → |
 | 58 | Composant |
-| 72 | composants · cliquez une cellule pour lister les |
+| 72 | · cliquez une cellule pour lister les |
 | 94 | à vérifier |
 | 94 | ✔ Aucune anomalie détectée |
 | 99 | ✔ RAS |
@@ -1205,16 +1205,25 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 185 | sans CE |
 | 186 | 🔌 Physical Links |
 | 186 | · filtres : |
-| 224 | ≡ Vue Ligne |
-| 225 | ▣ Vue Composant |
-| 226 | ▦ Matrice |
-| 227 | 🩺 Contrôles |
-| 230 | Tous |
-| 230 | ⇢ Avec CE |
-| 230 | ∅ Sans CE |
-| 231 | 🖥 Composant : |
-| 236 | 🔍 Lien : |
-| 238 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 221 | ◧ Vue Blocs |
+| 221 | ≡ Vue Ligne |
+| 221 | ▣ Vue Composant |
+| 221 | ▦ Matrice |
+| 221 | Matrice N² composant × composant |
+| 221 | 🩺 Contrôles |
+| 221 | Liens sans CE, ports orphelins, CE non alloués… |
+| 223 | Périmètre : Physical Links de la couche PA entre Physical Components Node (nœuds du système en jaune, nœuds acteurs en bleu clair). |
+| 231 | ◧ Vue Blocs |
+| 232 | ≡ Vue Ligne |
+| 233 | ▣ Vue Composant |
+| 234 | ▦ Matrice |
+| 235 | 🩺 Contrôles |
+| 238 | Tous |
+| 238 | ⇢ Avec CE |
+| 238 | ∅ Sans CE |
+| 239 | 🖥 Composant : |
+| 244 | 🔍 Lien : |
+| 246 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
 
 ## js/30-ports.js
 
@@ -1472,41 +1481,13 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 215 | Déclencheur |
 | 215 | Garde |
 | 215 | Effet |
-| 272 | propriétaire |
-| 284 | modèle chargé |
-| 286 | Ancienne version (référence) |
-| 288 | ⇄ Nouvelle version |
-| 290 | Changer la version à comparer… |
-| 290 | Charger une autre version (.capella)… |
-| 301 | Ajoutés |
-| 301 | Supprimés |
-| 301 | Modifiés |
-| 301 | Déplacés |
-| 320 | changement(s) |
-| 321 | Propriété Avant Après |
-| 326 | Tous ( |
-| 327 | Toutes couches |
-| 329 | Tous types |
-| 329 | Hors couche |
-| 331 | ⬇ CSV |
-| 334 | Synthèse par type ( |
-| 334 | ) Type ➕ ➖ ✎ |
-| 335 | Statut Couche Type Élément Détail |
-| 337 | lignes affichées sur |
-| 337 | — filtrez ou exportez en CSV. |
-| 338 | ✔ Les deux versions sont identiques (au niveau des éléments identifiés). |
-| 346 | Fichier XML invalide |
-| 358 | Ajouté |
-| 358 | Supprimé |
-| 358 | Modifié |
-| 358 | (déplacé) |
-| 361 | Statut |
-| 361 | Couche |
-| 361 | Type |
-| 361 | Élément |
-| 361 | Propriété |
-| 361 | Avant |
-| 361 | Après |
+| 277 | propriétaire |
+| 288 | modèle chargé |
+| 290 | Ancienne version (référence) |
+| 292 | ⇄ Nouvelle version |
+| 294 | Changer la version à comparer… |
+| 294 | Charger une autre version (.capella)… |
+| 317 | Fichier XML invalide |
 
 ## js/33-qualite-noms.js
 
@@ -1973,144 +1954,157 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 176 | Contraintes |
 | 176 | ct.chk |
 | 176 | Nombre total de constats par domaine |
-| 180 | Texte libre (titre, commentaire) |
-| 189 | Indicateur |
-| 205 | à surveiller |
-| 215 | Autres ( |
-| 226 | Texte vide — ⚙ pour le modifier. |
-| 227 | Indicateur indisponible pour ce modèle. |
-| 228 | Aucune donnée dans ce modèle. |
-| 229 | var(--c-dim) |
-| 229 | var(--c-text) |
-| 229 | var(--c-bg2) |
-| 247 | Catégorie |
-| 247 | Taux |
-| 247 | Nombre |
-| 247 | Détail |
-| 247 | Part |
-| 250 | autre(s) ligne(s) — agrandir le cadre pour tout voir |
-| 255 | catégorie(s) |
-| 268 | Autres ( |
-| 277 | Autres ( |
-| 320 | Synthèse du modèle — |
-| 320 | Capella |
-| 321 | mdl.n |
-| 321 | Fonctions (toutes couches) |
-| 322 | mdl.layer |
-| 323 | fn.L.desc |
-| 323 | ch.empty |
-| 324 | ce.dir |
-| 325 | chk.sum |
-| 325 | tr.tab |
-| 326 | Synthèse du modèle |
-| 346 | — double-clic pour renommer |
-| 348 | ✔ Terminer |
-| 348 | ✏ Modifier |
-| 349 | ＋ Ajouter un élément |
-| 351 | ⧉ Dupliquer ✨ Exemple |
-| 354 | 🗑 Supprimer |
-| 363 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. |
-| 364 | ,minmax(0,1fr)) |
-| 369 | ＋ Ajouter un élément |
-| 370 | Tableau de bord vide. |
-| 370 | Cliquez sur « ＋ Ajouter un élément ». |
-| 370 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. |
-| 396 | Tableau de bord |
-| 398 | Page |
-| 399 | (copie) |
-| 401 | Supprimer le tableau de bord « |
-| 408 | Tableau importé |
-| 409 | Fichier de tableau de bord invalide. |
-| 416 | ,minmax(0,1fr)) |
-| 418 | élément(s) |
-| 418 | Tableau de bord |
-| 465 | Modèle Capella |
-| 503 | ⊞ Tout déplier ⊟ Tout replier aperçu Annuler |
-| 503 | ⚙ Configurer l'élément |
-| 503 | ＋ Ajouter un élément |
-| 507 | ✔ Enregistrer |
-| 507 | ＋ Ajouter |
-| 515 | Mise en page |
-| 520 | la catégorie |
-| 520 | Replier |
-| 520 | Déplier |
-| 520 | Aucun indicateur. |
-| 527 | Choisissez un indicateur dans la liste de gauche. |
-| 530 | Indicateur |
-| 530 | Titre |
-| 532 | Représentation |
-| 532 | Texte |
-| 533 | Taille |
-| 534 | col. |
-| 536 | Catégories |
-| 536 | Tri Par défaut |
-| 536 | 5 premières |
-| 536 | 8 premières |
-| 536 | 10 premières |
-| 536 | 15 premières |
-| 536 | 20 premières |
-| 536 | Toutes |
-| 537 | Valeur décroissante |
-| 537 | Ordre naturel |
+| 182 | Texte libre (titre, commentaire) |
+| 191 | Indicateur |
+| 207 | à surveiller |
+| 217 | Autres ( |
+| 228 | Texte vide — ⚙ pour le modifier. |
+| 229 | Indicateur indisponible pour ce modèle. |
+| 230 | Aucune donnée dans ce modèle. |
+| 231 | var(--c-dim) |
+| 231 | var(--c-text) |
+| 231 | var(--c-bg2) |
+| 249 | Catégorie |
+| 249 | Taux |
+| 249 | Nombre |
+| 249 | Détail |
+| 249 | Part |
+| 252 | autre(s) ligne(s) — agrandir le cadre pour tout voir |
+| 257 | catégorie(s) |
+| 270 | Autres ( |
+| 279 | Autres ( |
+| 322 | Synthèse du modèle — |
+| 322 | Capella |
+| 323 | mdl.n |
+| 323 | Fonctions (toutes couches) |
+| 324 | mdl.layer |
+| 325 | fn.L.desc |
+| 325 | ch.empty |
+| 326 | ce.dir |
+| 327 | chk.sum |
+| 327 | tr.tab |
+| 328 | Synthèse du modèle |
+| 348 | — double-clic pour renommer |
+| 350 | ✔ Terminer |
+| 350 | ✏ Modifier |
+| 351 | ＋ Ajouter un élément |
+| 353 | ⧉ Dupliquer ✨ Exemple |
+| 356 | 🗑 Supprimer |
+| 365 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. |
+| 366 | ,minmax(0,1fr)) |
+| 371 | ＋ Ajouter un élément |
+| 372 | Tableau de bord vide. |
+| 372 | Cliquez sur « ＋ Ajouter un élément ». |
+| 372 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. |
+| 398 | Tableau de bord |
+| 400 | Page |
+| 401 | (copie) |
+| 403 | Supprimer le tableau de bord « |
+| 410 | Tableau importé |
+| 411 | Fichier de tableau de bord invalide. |
+| 418 | ,minmax(0,1fr)) |
+| 420 | élément(s) |
+| 420 | Tableau de bord |
+| 467 | Modèle Capella |
+| 505 | ⊞ Tout déplier ⊟ Tout replier aperçu Annuler |
+| 505 | ⚙ Configurer l'élément |
+| 505 | ＋ Ajouter un élément |
+| 509 | ✔ Enregistrer |
+| 509 | ＋ Ajouter |
+| 517 | Mise en page |
+| 522 | la catégorie |
+| 522 | Replier |
+| 522 | Déplier |
+| 522 | Aucun indicateur. |
+| 529 | Choisissez un indicateur dans la liste de gauche. |
+| 532 | Indicateur |
+| 532 | Titre |
+| 534 | Représentation |
+| 534 | Texte |
+| 535 | Taille |
+| 536 | col. |
+| 538 | Catégories |
+| 538 | Tri Par défaut |
+| 538 | 5 premières |
+| 538 | 8 premières |
+| 538 | 10 premières |
+| 538 | 15 premières |
+| 538 | 20 premières |
+| 538 | Toutes |
+| 539 | Valeur décroissante |
+| 539 | Ordre naturel |
 
 ## js/36-component-exchange.js
 
 | Ligne | Texte |
 |---:|---|
-| 46 | Capella Project |
-| 76 | ⇄ INOUT |
-| 101 | Aucun component exchange ne correspond au filtre. |
-| 114 | Sens non défini |
-| 151 | ÉMET → |
-| 151 | Émission — ce composant envoie le signal |
-| 152 | ← REÇOIT |
-| 152 | Réception — ce composant reçoit le signal |
-| 153 | ⇄ ÉCHANGE |
-| 153 | Bidirectionnel — port INOUT |
-| 154 | Non orienté — aucun port IN/OUT/INOUT |
-| 170 | Items : |
-| 198 | Component Exchange |
-| 198 | Source |
-| 198 | Cible |
-| 198 | Couche |
-| 202 | Exchanges sans Functional Exchange alloué |
-| 202 | Aucune ComponentExchangeFunctionalExchangeAllocation |
-| 203 | Ports orphelins (ComponentPort sans exchange) |
-| 203 | Port défini sur un composant mais relié à aucun Component Exchange |
-| 203 | Composant |
-| 203 | Port |
-| 203 | Orientation |
-| 203 | Couche |
-| 205 | Orientations de ports incohérentes |
-| 205 | OUT→OUT ou IN→IN hors délégation |
-| 206 | Exchanges non orientés |
-| 206 | Les deux ports sont UNSET : le sens du flux est inconnu |
-| 207 | Exchanges de couche PA non alloués à un Physical Link |
-| 207 | Aucune ComponentExchangeAllocation depuis un PhysicalLink |
-| 216 | ≡ Vue Ligne |
-| 216 | ▣ Vue Composant |
-| 216 | ▦ Matrice |
-| 216 | 🩺 Contrôles |
-| 223 | composant « |
-| 223 | exchange « |
-| 224 | 🔀 Component Exchanges |
-| 224 | · filtres : |
-| 258 | ≡ Vue Ligne |
-| 259 | ▣ Vue Composant |
-| 260 | ▦ Matrice |
-| 261 | 🩺 Contrôles |
-| 264 | Tous |
-| 264 | Tous les sens |
-| 266 | ⚠ Incohérents |
-| 266 | Orientations de ports incohérentes (OUT→OUT, IN→IN hors délégation) |
-| 270 | Tous kinds |
-| 272 | 🖥 Composant : |
-| 276 | 🔍 Exchange : |
-| 278 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
-| 320 | ⇄ Bidirectionnel |
-| 320 | ? Non orienté |
-| 320 | Émission → |
-| 320 | ← Réception |
+| 64 | Capella Project |
+| 94 | ⇄ INOUT |
+| 119 | Aucun component exchange ne correspond au filtre. |
+| 132 | Sens non défini |
+| 169 | ÉMET → |
+| 169 | Émission — ce composant envoie le signal |
+| 170 | ← REÇOIT |
+| 170 | Réception — ce composant reçoit le signal |
+| 171 | ⇄ ÉCHANGE |
+| 171 | Bidirectionnel — port INOUT |
+| 172 | Non orienté — aucun port IN/OUT/INOUT |
+| 188 | Items : |
+| 195 | Acteur |
+| 216 | Component Exchange |
+| 216 | Source |
+| 216 | Cible |
+| 216 | Couche |
+| 220 | Exchanges sans Functional Exchange alloué |
+| 220 | Aucune ComponentExchangeFunctionalExchangeAllocation |
+| 221 | Ports orphelins (ComponentPort sans exchange) |
+| 221 | Port défini sur un composant mais relié à aucun Component Exchange |
+| 221 | Composant |
+| 221 | Port |
+| 221 | Orientation |
+| 221 | Couche |
+| 223 | Orientations de ports incohérentes |
+| 223 | OUT→OUT ou IN→IN hors délégation |
+| 224 | Exchanges non orientés |
+| 224 | Les deux ports sont UNSET : le sens du flux est inconnu |
+| 225 | Exchanges de couche PA non alloués à un Physical Link |
+| 225 | Aucune ComponentExchangeAllocation depuis un PhysicalLink |
+| 234 | ≡ Vue Ligne |
+| 234 | ▣ Vue Composant |
+| 234 | ▦ Matrice |
+| 234 | 🩺 Contrôles |
+| 241 | composant « |
+| 241 | exchange « |
+| 242 | 🔀 Behavior Exchanges (PA) |
+| 242 | · filtres : |
+| 269 | ◧ Vue Blocs |
+| 269 | Composants Behavior dessinés comme dans Capella (bleu = système, bleu clair = acteur), ports UNSET / IN / OUT / INOUT |
+| 269 | ≡ Vue Ligne |
+| 269 | ▣ Vue Composant |
+| 269 | ▦ Matrice |
+| 269 | Matrice N² composant × composant |
+| 269 | 🩺 Contrôles |
+| 269 | Ports orphelins, exchanges sans FE, orientations incohérentes… |
+| 276 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( |
+| 276 | dans le modèle). |
+| 282 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( |
+| 285 | ◧ Vue Blocs |
+| 286 | ≡ Vue Ligne |
+| 287 | ▣ Vue Composant |
+| 288 | ▦ Matrice |
+| 289 | 🩺 Contrôles |
+| 292 | Tous |
+| 292 | Tous les sens |
+| 294 | ⚠ Incohérents |
+| 294 | Orientations de ports incohérentes (OUT→OUT, IN→IN hors délégation) |
+| 298 | Tous kinds |
+| 300 | 🖥 Composant : |
+| 304 | 🔍 Exchange : |
+| 306 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 348 | ⇄ Bidirectionnel |
+| 348 | ? Non orienté |
+| 348 | Émission → |
+| 348 | ← Réception |
 
 ## js/37-capella-cablage.js
 
@@ -2440,104 +2434,109 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 186 | ✔ Le fichier correspond au modèle affiché |
 | 207 | ⚠ Fichier illisible pour l'instant (enregistrement en cours ?) — réessayez |
 | 218 | Fichier réenregistré — aucune différence de contenu |
-| 240 | Le fichier choisi (« |
-| 240 | ») n'a pas le même nom que le modèle affiché (« |
-| 240 | »). Le comparer quand même ? |
-| 241 | Impossible de lire « |
-| 246 | ✔ Le fichier correspond au modèle affiché |
-| 262 | Mise à jour impossible : |
-| 262 | Le modèle précédent est conservé. |
-| 272 | — avant la mise à jour de |
-| 275 | ✔ Modèle mis à jour ( |
-| 275 | différence(s)) |
-| 284 | — sur le disque ( |
-| 284 | ), non appliquée |
-| 285 | — avant la mise à jour de |
-| 286 | — version d'ouverture ( |
-| 308 | enregistrement(s) détecté(s) — |
-| 308 | différence(s) avec le modèle affiché |
-| 309 | Le fichier a été modifié : resélectionnez-le pour voir le delta |
-| 310 | Suivi du fichier .capella : vérifier les mises à jour, delta, historique |
-| 331 | 🔄 Modèle modifié sur le disque « |
-| 332 | enregistrements détectés depuis |
-| 332 | , dernier à |
-| 332 | enregistré le |
-| 333 | par rapport au modèle affiché 🔍 Voir le delta ✔ Mettre à jour Plus tard |
-| 336 | a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta. |
-| 337 | est introuvable (déplacé, renommé ou supprimé). Choisissez le fichier à suivre. |
-| 338 | n'est plus accessible (autorisation refusée). Choisissez de nouveau le fichier à suivre. |
-| 339 | Modèle modifié sur le disque |
-| 339 | Fichier suivi indisponible |
-| 340 | 📂 Choisir le fichier… Plus tard |
-| 365 | accès direct — relecture automatique |
-| 365 | accès limité — modification signalée, fichier à resélectionner |
-| 365 | aucun fichier suivi (page sauvegardée) |
-| 366 | 1 min |
-| 366 | 5 min |
-| 367 | Affiché : fichier du |
-| 368 | Dernière vérification : |
-| 368 | en cours… |
-| 369 | Vérifier maintenant |
-| 369 | Choisir le fichier à comparer… |
-| 370 | 📋 Voir le delta en attente ( |
-| 370 | enreg., |
-| 370 | diff.) ✔ Mettre à jour l'affichage |
-| 373 | Détecter les nouvelles versions toutes les |
-| 373 | Disponible quand un fichier .capella est suivi |
-| 375 | Vérifier au retour dans la fenêtre Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée. |
-| 378 | 🕘 Historique des mises à jour ( |
-| 379 | ⚖ Comparer avec la version avant la dernière mise à jour |
-| 380 | ⚖ Comparer avec la version d'ouverture |
-| 381 | 📂 Suivre un autre fichier (nouvelle version)… |
-| 422 | Modèle affiché : fichier du |
-| 423 | Mise à jour appliquée à |
-| 423 | : fichier du |
-| 423 | enregistrements cumulés) |
-| 427 | Σ Cumul — modèle affiché → dernier enregistrement |
-| 430 | Ajouté |
-| 430 | var(--c-ok,#3fb950) |
-| 430 | Supprimé |
-| 430 | var(--c-err,#f85149) |
-| 430 | Modifié |
-| 430 | var(--c-warn,#e3b341) |
-| 443 | changement(s) |
-| 444 | Propriété Avant Après |
-| 449 | Delta des modifications |
-| 449 | Mise à jour du |
-| 453 | Par couche : |
-| 453 | Enregistrement |
-| 455 | Tous |
-| 455 | ➕ Ajoutés |
-| 455 | ➖ Supprimés |
-| 455 | ✎ Modifiés |
-| 455 | ↪ Déplacés |
-| 458 | Statut Couche Type Élément Détail |
-| 459 | lignes affichées sur |
-| 459 | — filtrez, exportez en CSV ou ouvrez ⚖ Comparaison. |
-| 460 | ⬇ CSV |
-| 460 | Aucune différence pour ce filtre. |
-| 464 | ⚖ Ouvrir dans Comparaison de versions |
-| 465 | ⚖ Ouvrir dans Comparaison de versions |
-| 467 | Plus tard ✔ Mettre à jour l'affichage |
-| 467 | Fermer |
-| 482 | Ajouté |
-| 482 | Supprimé |
-| 482 | Modifié |
-| 482 | (déplacé) |
-| 485 | Statut |
-| 485 | Couche |
-| 485 | Type |
-| 485 | Élément |
-| 485 | Propriété |
-| 485 | Avant |
-| 485 | Après |
-| 494 | 🕘 Historique des mises à jour — « |
-| 495 | » ✕ Ouvert à |
-| 497 | . Cliquez sur une mise à jour pour voir son delta. |
-| 498 | Appliquée à Fichier du Enreg. Changements |
-| 500 | Aucune mise à jour appliquée depuis l'ouverture du modèle. |
-| 502 | Fermer |
-| 502 | ⚖ Delta cumulé depuis l'ouverture |
+| 248 | ⚠ Seuls |
+| 248 | % des éléments sont communs avec le modèle affiché : ce n'est peut-être pas le même projet . Vérifiez le delta avant de mettre à jour. |
+| 262 | Le fichier choisi (« |
+| 262 | ») n'a pas le même nom que le modèle affiché (« |
+| 262 | »). Le comparer quand même ? |
+| 263 | Impossible de lire « |
+| 268 | ✔ Le fichier correspond au modèle affiché |
+| 280 | Seuls |
+| 280 | % des éléments sont communs avec le modèle affiché : ce n'est peut-être pas le même projet. Remplacer quand même le modèle affiché par cette version ? |
+| 285 | Mise à jour impossible : |
+| 285 | Le modèle précédent est conservé. |
+| 295 | — avant la mise à jour de |
+| 298 | ✔ Modèle mis à jour ( |
+| 298 | différence(s)) |
+| 307 | — sur le disque ( |
+| 307 | ), non appliquée |
+| 308 | — avant la mise à jour de |
+| 309 | — version d'ouverture ( |
+| 331 | enregistrement(s) détecté(s) — |
+| 331 | différence(s) avec le modèle affiché |
+| 332 | Le fichier a été modifié : resélectionnez-le pour voir le delta |
+| 333 | Suivi du fichier .capella : vérifier les mises à jour, delta, historique |
+| 354 | 🔄 Nouvelle version du modèle « |
+| 355 | enregistrements détectés depuis |
+| 355 | , dernier à |
+| 355 | enregistré le |
+| 356 | par rapport au modèle affiché |
+| 356 | 🔍 Voir le delta ✔ Mettre à jour Plus tard |
+| 359 | a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta. |
+| 360 | est introuvable (déplacé, renommé ou supprimé). Choisissez le fichier à suivre. |
+| 361 | n'est plus accessible (autorisation refusée). Choisissez de nouveau le fichier à suivre. |
+| 362 | Modèle modifié sur le disque |
+| 362 | Fichier suivi indisponible |
+| 363 | 📂 Choisir le fichier… Plus tard |
+| 388 | accès direct — relecture automatique |
+| 388 | accès limité — modification signalée, fichier à resélectionner |
+| 388 | aucun fichier suivi (page sauvegardée) |
+| 389 | 1 min |
+| 389 | 5 min |
+| 390 | Affiché : fichier du |
+| 391 | Dernière vérification : |
+| 391 | en cours… |
+| 392 | Vérifier maintenant |
+| 392 | Choisir le fichier à comparer… |
+| 393 | 📋 Voir le delta en attente ( |
+| 393 | enreg., |
+| 393 | diff.) ✔ Mettre à jour l'affichage |
+| 396 | Détecter les nouvelles versions toutes les |
+| 396 | Disponible quand un fichier .capella est suivi |
+| 398 | Vérifier au retour dans la fenêtre Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée. |
+| 401 | 🕘 Historique des mises à jour ( |
+| 402 | ⚖ Comparer avec la version avant la dernière mise à jour |
+| 403 | ⚖ Comparer avec la version d'ouverture |
+| 404 | 📂 Suivre un autre fichier (nouvelle version)… |
+| 445 | Modèle affiché : fichier du |
+| 446 | Mise à jour appliquée à |
+| 446 | : fichier du |
+| 446 | enregistrements cumulés) |
+| 450 | Σ Cumul — modèle affiché → dernier enregistrement |
+| 453 | Ajouté |
+| 453 | var(--c-ok,#3fb950) |
+| 453 | Supprimé |
+| 453 | var(--c-err,#f85149) |
+| 453 | Modifié |
+| 453 | var(--c-warn,#e3b341) |
+| 466 | changement(s) |
+| 467 | Propriété Avant Après |
+| 472 | Delta des modifications |
+| 472 | Mise à jour du |
+| 476 | Par couche : |
+| 476 | Enregistrement |
+| 478 | Tous |
+| 478 | ➕ Ajoutés |
+| 478 | ➖ Supprimés |
+| 478 | ✎ Modifiés |
+| 478 | ↪ Déplacés |
+| 481 | Statut Couche Type Élément Détail |
+| 482 | lignes affichées sur |
+| 482 | — filtrez, exportez en CSV ou ouvrez ⚖ Comparaison. |
+| 483 | ⬇ CSV |
+| 483 | Aucune différence pour ce filtre. |
+| 487 | ⚖ Ouvrir dans Comparaison de versions |
+| 488 | ⚖ Ouvrir dans Comparaison de versions |
+| 490 | Plus tard ✔ Mettre à jour l'affichage |
+| 490 | Fermer |
+| 505 | Ajouté |
+| 505 | Supprimé |
+| 505 | Modifié |
+| 505 | (déplacé) |
+| 508 | Statut |
+| 508 | Couche |
+| 508 | Type |
+| 508 | Élément |
+| 508 | Propriété |
+| 508 | Avant |
+| 508 | Après |
+| 517 | 🕘 Historique des mises à jour — « |
+| 518 | » ✕ Ouvert à |
+| 520 | . Cliquez sur une mise à jour pour voir son delta. |
+| 521 | Appliquée à Fichier du Enreg. Changements |
+| 523 | Aucune mise à jour appliquée depuis l'ouverture du modèle. |
+| 525 | Fermer |
+| 525 | ⚖ Delta cumulé depuis l'ouverture |
 
 ## js/41-barre-vues.js
 
@@ -2550,49 +2549,53 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 14 | 🔗 Liens |
 | 14 | Relations entre les éléments du modèle |
 | 15 | ⚡ Chaînes |
-| 16 | 🔀 Component Exchange |
-| 17 | 🔌 Physical Link |
-| 18 | 🧩 Ports |
-| 18 | Traçabilité Function Port ↔ Component Port ↔ Physical Port |
-| 19 | ƒ Fonctions |
-| 19 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier |
-| 20 | 🧬 Traçabilité inter-couches |
-| 21 | 🎯 Capacités & missions |
-| 22 | 🔁 Modes & états |
-| 23 | ⚖ Comparaison de versions |
-| 24 | 📑 Exigences |
-| 25 | 🏷 Propriétés |
-| 26 | 🗃 Données & interfaces |
-| 27 | ⛓ Contraintes |
-| 28 | 📐 Tableau de bord |
-| 28 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux |
-| 32 | 🧭 Explorateur |
-| 32 | Explorer le modèle : arborescence, cartes, tableau, index des types, liens |
-| 33 | 📡 Flux & interfaces |
-| 33 | Chaînes, Component Exchange, Physical Link, ports |
-| 35 | 🔬 Analyses |
-| 35 | Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes |
-| 122 | Vue affichée : |
-| 140 | Retirer de la barre |
-| 140 | Épingler dans la barre (bouton direct) |
-| 199 | 🔷 Ouvrir un modèle Capella… 💾 Enregistrer |
-| 200 | 💾 Enregistrer sous… |
-| 200 | Ctrl+S |
-| 201 | 🌐 Télécharger la page HTML La page enregistrée contient le modèle chargé et vos réglages. |
-| 201 | Ctrl+Maj+S |
-| 208 | 📖 Aide complète 🎓 Visite guidée |
-| 210 | 🎯 Visite de cette vue |
-| 211 | 🎯 Chargez un modèle pour la visite de chaque vue. |
-| 217 | 🎨 Personnaliser… |
-| 221 | 📌 épingle une vue en bouton direct dans la barre. |
-| 226 | 🗺 Relation Map |
-| 226 | @table |
-| 226 | 📊 Table View |
-| 228 | Aucune vue ne correspond. |
-| 234 | Menu |
-| 234 | ▾ dans la barre |
-| 235 | Autres vues |
-| 238 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
+| 16 | ƒ⇆ Functional Exchange |
+| 16 | Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles |
+| 17 | 🧱 System Component |
+| 18 | 🧱 Logical Component |
+| 19 | 🔀 Behavior Exchange |
+| 19 | Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange) |
+| 20 | 🔌 Physical Link |
+| 21 | 🧩 Ports |
+| 21 | Traçabilité Function Port ↔ Component Port ↔ Physical Port |
+| 22 | ƒ Fonctions |
+| 22 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier |
+| 23 | 🧬 Traçabilité inter-couches |
+| 24 | 🎯 Capacités & missions |
+| 25 | 🔁 Modes & états |
+| 26 | ⚖ Comparaison de versions |
+| 27 | 📑 Exigences |
+| 28 | 🏷 Propriétés |
+| 29 | 🗃 Données & interfaces |
+| 30 | ⛓ Contraintes |
+| 31 | 📐 Tableau de bord |
+| 31 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux |
+| 35 | 🧭 Explorateur |
+| 35 | Explorer le modèle : arborescence, cartes, tableau, index des types, liens |
+| 36 | 📡 Flux & interfaces |
+| 36 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, ports |
+| 38 | 🔬 Analyses |
+| 38 | Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes |
+| 125 | Vue affichée : |
+| 143 | Retirer de la barre |
+| 143 | Épingler dans la barre (bouton direct) |
+| 206 | 💾 Enregistrer sous… |
+| 206 | Ctrl+S |
+| 207 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les colonnes et vues du 📋 Tableau et de la 📊 Table View, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. |
+| 207 | Ctrl+Maj+S |
+| 218 | 📖 Aide complète 🎓 Visite guidée |
+| 220 | 🎯 Visite de cette vue |
+| 221 | 🎯 Chargez un modèle pour la visite de chaque vue. |
+| 227 | 🎨 Personnaliser… |
+| 231 | 📌 épingle une vue en bouton direct dans la barre. |
+| 236 | 🗺 Relation Map |
+| 236 | @table |
+| 236 | 📊 Table View |
+| 239 | Aucune vue ne correspond. |
+| 245 | Menu |
+| 245 | ▾ dans la barre |
+| 246 | Autres vues |
+| 249 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
 
 ## js/42-tableaux-analyses.js
 
@@ -2636,7 +2639,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 41 | ▦ Zone de travail |
 | 42 | La vue choisie s'affiche ici. Cliquez sur un élément pour ouvrir son panneau de détail (propriétés, relations, liens). |
 | 43 | 📁 Fichier |
-| 44 | Ouvrir un autre modèle, enregistrer la page, ou télécharger une page HTML autonome qui contient le modèle et vos réglages. |
+| 44 | 🔷 Ouvrir un autre modèle (remplace l'actuel) · 🔄 Charger une mise à jour du modèle (delta puis validation, alerte si ce n'est pas le même projet) · 💾 Enregistrer la page HTML autonome (modèle + interface et vues) · ⚙ Enregistrer / Charger l'interface et les vues (fichier .json sans le modèle, pour réutiliser vos réglages). |
 | 45 | 💾 Enregistrer |
 | 47 | 🔄 Suivi du fichier |
 | 48 | Détecte les nouvelles versions du fichier .capella et montre ce qui a changé (delta, historique). |
@@ -2658,11 +2661,11 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 68 | 🔢 Résultat |
 | 69 | Nombre d'éléments qui passent les filtres (types, recherche, couche). |
 | 72 | 📡 Flux & interfaces |
-| 73 | Ces onglets passent d'une vue d'interfaces à l'autre : 🔀 Component Exchange , 🔌 Physical Link et 🧩 Ports . |
+| 73 | Ces onglets passent d'une vue d'interfaces à l'autre, du fonctionnel au physique : ƒ⇆ Functional Exchange (fonctions), 🧱 System Component (SA), 🧱 Logical Component (LA), 🔀 Behavior Exchange (PA, composants Behavior), 🔌 Physical Link (PA, nœuds) et 🧩 Ports . Chaque vue s'ouvre en ◧ Vue Blocs , le rendu façon Capella. |
 | 76 | 🧬 Traçabilité inter-couches : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés. |
 | 77 | 🎯 Capacités & missions : qui participe à quelle capacité ou mission (acteurs, fonctions, chaînes) et les capacités sans contenu. |
 | 78 | 🔁 Modes & états : machines d'états, transitions et éléments disponibles dans chaque mode ou état. |
-| 79 | ⚖ Comparaison de versions : chargez une autre version du fichier .capella pour voir les éléments ajoutés, supprimés et modifiés. |
+| 79 | ⚖ Comparaison de versions : chargez une autre version du fichier .capella. Le rapport classe les changements en 8 catégories (créations, suppressions, renommages, descriptions, propriétés, liens, déplacements, types), sur 4 niveaux (Synthèse → Complet), et se copie dans Word, Outlook, Teams ou Excel. |
 | 80 | 📑 Exigences : exigences du modèle, éléments qui les satisfont et exigences non couvertes. |
 | 81 | 🏷 Propriétés : propriétés et valeurs (PVMT) appliquées aux éléments. |
 | 82 | 🗃 Données & interfaces : classes, types de données, Exchange Items et interfaces, avec leurs utilisations. |
@@ -2767,101 +2770,584 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 151 | Clic pour déplier le diagramme : fonctions, échanges, entrées / sorties. Le bouton 🗺 l'ouvre dans la Relation Map. |
 | 152 | 🗺 Vue Relation Map |
 | 152 | Graphe interactif de la chaîne choisie : dispositions, zoom et export. |
-| 153 | 🔀 Component Exchange |
-| 154 | #cap-view-compex .phl-toggle-btn |
-| 154 | 🖼 Présentation |
-| 154 | ≡ Vue Ligne : un échange par ligne · ▣ Vue Composant : regroupé par composant · ▦ Matrice : composant × composant · 🩺 Contrôles : anomalies détectées. |
-| 155 | 🔢 Compteur |
-| 155 | Échanges affichés après filtres / total. |
-| 156 | #cap-view-compex .cex-dir-btn,#cex-kind-sel |
-| 156 | ⇄ Sens et nature |
-| 156 | Filtre par sens de l'échange (orienté, inversé, bidirectionnel) et par nature (FLOW…). |
-| 157 | #cex-node-input,#cex-name-input |
-| 157 | 🔍 Filtres |
-| 157 | Par composant, ou par nom d'échange, d'échange fonctionnel ou d'Exchange Item. |
-| 158 | #cex-exp-csv,#cex-exp-html,#cex-exp-html-all |
-| 158 | ⬇ Exports |
-| 158 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
-| 159 | 📋 Résultat |
-| 159 | Clic sur un composant ou un échange pour ouvrir son détail. |
-| 160 | 🔌 Physical Link |
-| 161 | #cap-view-physlink .phl-toggle-btn |
-| 161 | 🖼 Présentation |
-| 161 | ≡ Vue Ligne , ▣ Vue Composant , ▦ Matrice composant × composant et 🩺 Contrôles des liens physiques. |
-| 162 | 🔢 Compteur |
-| 162 | Liens affichés après filtres / total. |
-| 163 | #cap-view-physlink .phl-ce-btn |
-| 163 | ⇢ Component Exchange |
-| 163 | Liens qui portent (ou non) des échanges de composants alloués. |
-| 164 | #phl-node-input,#phl-name-input |
-| 164 | 🔍 Filtres |
-| 164 | Par composant, ou par nom de lien ou d'échange. |
-| 165 | #phl-exp-csv,#phl-exp-html,#phl-exp-html-all |
-| 165 | ⬇ Exports |
-| 165 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
-| 166 | 📋 Résultat |
-| 166 | Clic sur un composant ou un lien pour ouvrir son détail. |
-| 167 | 🧩 Ports |
-| 168 | #cap-view-ports .phl-toggle-btn |
-| 168 | 🖼 Présentation |
-| 168 | ≡ Traçabilité Function Port ↔ Component Port ↔ Physical Port, ▣ Par composant , et 🩺 Contrôles (ports non alloués, chaînes incomplètes). |
-| 169 | 🔢 Compteur |
-| 169 | Lignes affichées après filtres / total. |
-| 170 | 🔍 Recherche |
-| 170 | Filtre par fonction, composant, port ou échange. La case voisine ne garde que les chaînes incomplètes. |
-| 171 | ⬇ CSV |
-| 171 | Exporte le tableau affiché. |
-| 172 | 📋 Résultat |
-| 172 | Les lignes incomplètes sont signalées en couleur. Clic sur un élément pour ouvrir son détail. |
-| 173 | ƒ Fonctions |
-| 174 | ƒ Fonctions |
-| 174 | Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles. |
-| 175 | #cap-view-functions [data-fv] |
-| 175 | 🖼 Présentation |
-| 175 | 🌳 Hiérarchie · 📋 Tableau façon Excel · ⛓ Traçabilité entre couches · 📊 Métriques · 🩺 Contrôles (qualité des noms, fonctions non allouées…). |
-| 176 | #cap-view-functions [data-fl] |
-| 176 | 🧱 Couche |
-| 176 | Choisit la couche ARCADIA étudiée (OA, SA, LA, PA). |
-| 177 | #ana-fn-q,#ana-fn-desc,#ana-fn-exp,#ana-fn-col |
-| 177 | 🔍 Recherche et affichage |
-| 178 | #cap-view-functions .ana-ak,#ana-fn-who |
-| 178 | 🎯 Allocation |
-| 179 | #ana-fn-csv,#ana-fn-html |
-| 179 | ⬇ Exports |
-| 179 | ⬇ CSV et 📄 Dossier fonctionnel : document HTML avec une section par fonction (description, allocation, échanges, traçabilité). |
-| 180 | #cap-view-functions .phl-filter-bar + * |
-| 180 | 📋 Résultat |
-| 180 | Clic sur une fonction pour ouvrir son détail. |
-| 181 | 🔬 Analyses |
-| 182 | #cap-view-analyses [data-an] |
-| 182 | 🔬 Analyses |
-| 182 | Huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes. |
-| 183 | #cap-view-analyses [data-an].active |
-| 183 | 🔎 Analyse affichée |
-| 183 | Analyse en cours. |
-| 184 | ↻ Recalculer |
-| 185 | #ana-box .phl-filter-bar |
-| 185 | 🧰 Options |
-| 185 | Présentations, filtres et export CSV propres à l'analyse affichée. |
-| 186 | 📋 Résultat |
-| 187 | 📐 Tableau de bord |
-| 188 | 📐 Tableau de bord |
-| 188 | Pages d'indicateurs, graphiques et tableaux sur le modèle, à composer soi-même et à imprimer. |
-| 189 | #cap-view-dashboard .dash-tabs |
-| 189 | 🗂 Pages |
-| 190 | ✏ Modifier |
-| 190 | Passe en édition : ajouter des éléments depuis le catalogue d'indicateurs, les configurer, déplacer et redimensionner. ✔ Terminer pour sortir. |
-| 191 | #dash-orient,#dash-print,#dash-html |
-| 191 | 🖨 Impression |
-| 191 | Format A4 portrait ou paysage, impression, ou export en page HTML autonome. |
-| 192 | #dash-json,#dash-imp |
-| 192 | ⬇⬆ JSON |
-| 192 | Exporte ou importe la définition des tableaux de bord pour les réutiliser sur un autre modèle. |
-| 193 | #cap-view-dashboard .dash-scroll |
-| 193 | 📐 Page |
-| 193 | Les éléments du tableau de bord, calculés sur le modèle chargé. |
-| 201 | @table |
-| 298 | Étape |
-| 300 | ◀ Précédent |
-| 301 | Terminer ✓ |
-| 301 | Suivant ▶ |
+| 153 | 🔀 Behavior Exchange |
+| 154 | #cap-view-compex .cap-mx-hint |
+| 154 | 🎯 Périmètre |
+| 154 | Component Exchanges de la couche PA entre Physical Components Behavior, ou entre un Behavior et un acteur (nœud) qui lui est relié. Les échanges SA et LA sont dans 🧱 System / Logical Component, les liens entre nœuds dans 🔌 Physical Link. |
+| 155 | #cap-view-compex .phl-toggle-btn |
+| 155 | 🖼 Présentation |
+| 156 | #cap-view-compex .ana-ak |
+| 156 | 🧩 Nature (Vue Blocs) |
+| 157 | #cap-view-compex #cb-main |
+| 157 | ◧ Blocs |
+| 158 | 🔢 Compteur |
+| 158 | Échanges affichés après filtres / total. |
+| 159 | #cap-view-compex .cex-dir-btn,#cex-kind-sel |
+| 159 | ⇄ Sens et nature |
+| 159 | Filtre par sens de l'échange (orienté, inversé, bidirectionnel) et par nature (FLOW…). |
+| 160 | #cex-node-input,#cex-name-input |
+| 160 | 🔍 Filtres |
+| 160 | Par composant, ou par nom d'échange, d'échange fonctionnel ou d'Exchange Item. |
+| 161 | #cex-exp-csv,#cex-exp-html,#cex-exp-html-all |
+| 161 | ⬇ Exports |
+| 161 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
+| 162 | 📋 Résultat |
+| 162 | Clic sur un composant ou un échange pour ouvrir son détail. |
+| 163 | 🧱 System Component |
+| 164 | #cap-view-csys .phl-toggle-btn |
+| 164 | 🖼 Présentation |
+| 165 | #cap-view-csys #cb-counter |
+| 165 | 🔢 Compteur |
+| 165 | Composants (ou échanges) affichés après filtres / total (SA uniquement). Les listes sont paginées par 100. |
+| 166 | #cap-view-csys .ana-ak |
+| 166 | 🧩 Nature |
+| 166 | Système ou acteurs (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants. |
+| 167 | #cap-view-csys #cb-csv,#cap-view-csys #cb-html,#cap-view-csys #cb-html-all |
+| 167 | ⬇ Exports |
+| 167 | CSV (ports ou échanges), rapport HTML de la vue ou de toutes les vues. |
+| 168 | #cap-view-csys #cb-main |
+| 168 | 📋 Résultat |
+| 169 | 🧱 Logical Component |
+| 170 | #cap-view-cblk .phl-toggle-btn |
+| 170 | 🖼 Présentation |
+| 171 | #cap-view-cblk #cb-counter |
+| 171 | 🔢 Compteur |
+| 171 | Composants (ou échanges) affichés après filtres / total (LA uniquement). Les listes sont paginées par 100. |
+| 172 | #cap-view-cblk .ana-ak |
+| 172 | 🧩 Nature |
+| 172 | Système ou acteurs (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants. |
+| 173 | #cap-view-cblk #cb-csv,#cap-view-cblk #cb-html,#cap-view-cblk #cb-html-all |
+| 173 | ⬇ Exports |
+| 173 | CSV (ports ou échanges), rapport HTML de la vue ou de toutes les vues. |
+| 174 | #cap-view-cblk #cb-main |
+| 174 | 📋 Résultat |
+| 175 | ƒ⇆ Functional Exchange |
+| 176 | #cap-view-fex .phl-toggle-btn |
+| 176 | 🖼 Présentation |
+| 177 | #cap-view-fex .ana-ak |
+| 177 | 🧩 Allocation |
+| 178 | 🔢 Compteur |
+| 178 | Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 100. |
+| 179 | #cap-view-fex .fex-layer-btn |
+| 179 | 🧱 Couche |
+| 179 | Filtre par couche ARCADIA (OA, SA, LA, PA). |
+| 180 | #fex-fn-input,#fex-name-input |
+| 180 | 🔍 Filtres |
+| 180 | Par fonction, ou par nom d'échange ou d'Exchange Item. |
+| 181 | #fex-exp-csv,#fex-exp-html,#fex-exp-html-all |
+| 181 | ⬇ Exports |
+| 181 | CSV de la vue, rapport HTML de la vue (toutes les pages), ou rapport HTML autonome avec toutes les vues. |
+| 182 | 📋 Résultat |
+| 182 | Clic sur une fonction ou un échange pour ouvrir son détail. |
+| 183 | 🔌 Physical Link |
+| 184 | #cap-view-physlink .phl-toggle-btn |
+| 184 | 🖼 Présentation |
+| 185 | #cap-view-physlink .ana-ak |
+| 185 | 🖥 Nature (Vue Blocs) |
+| 185 | Nœuds du système ou nœuds acteurs (double-clic : uniquement ceux-ci), ou un nœud et ses sous-composants. |
+| 186 | #cap-view-physlink #cb-main |
+| 186 | ◧ Blocs |
+| 186 | Chaque nœud (jaune = système, bleu clair = acteur) avec ses ports physiques jaunes, le Physical Link et le nœud distant (clic : aller à son bloc). |
+| 187 | 🔢 Compteur |
+| 187 | Liens affichés après filtres / total. |
+| 188 | #cap-view-physlink .phl-ce-btn |
+| 188 | ⇢ Component Exchange |
+| 188 | Liens qui portent (ou non) des échanges de composants alloués. |
+| 189 | #phl-node-input,#phl-name-input |
+| 189 | 🔍 Filtres |
+| 189 | Par composant, ou par nom de lien ou d'échange. |
+| 190 | #phl-exp-csv,#phl-exp-html,#phl-exp-html-all |
+| 190 | ⬇ Exports |
+| 190 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
+| 191 | 📋 Résultat |
+| 191 | Clic sur un composant ou un lien pour ouvrir son détail. |
+| 192 | 🧩 Ports |
+| 193 | #cap-view-ports .phl-toggle-btn |
+| 193 | 🖼 Présentation |
+| 193 | ≡ Traçabilité Function Port ↔ Component Port ↔ Physical Port, ▣ Par composant , et 🩺 Contrôles (ports non alloués, chaînes incomplètes). |
+| 194 | 🔢 Compteur |
+| 194 | Lignes affichées après filtres / total. |
+| 195 | 🔍 Recherche |
+| 195 | Filtre par fonction, composant, port ou échange. La case voisine ne garde que les chaînes incomplètes. |
+| 196 | ⬇ CSV |
+| 196 | Exporte le tableau affiché. |
+| 197 | 📋 Résultat |
+| 197 | Les lignes incomplètes sont signalées en couleur. Clic sur un élément pour ouvrir son détail. |
+| 198 | ƒ Fonctions |
+| 199 | ƒ Fonctions |
+| 199 | Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles. |
+| 200 | #cap-view-functions [data-fv] |
+| 200 | 🖼 Présentation |
+| 200 | 🌳 Hiérarchie · 📋 Tableau façon Excel · ⛓ Traçabilité entre couches · 📊 Métriques · 🩺 Contrôles (qualité des noms, fonctions non allouées…). |
+| 201 | #cap-view-functions [data-fl] |
+| 201 | 🧱 Couche |
+| 201 | Choisit la couche ARCADIA étudiée (OA, SA, LA, PA). |
+| 202 | #ana-fn-q,#ana-fn-desc,#ana-fn-exp,#ana-fn-col |
+| 202 | 🔍 Recherche et affichage |
+| 203 | #cap-view-functions .ana-ak,#ana-fn-who |
+| 203 | 🎯 Allocation |
+| 204 | #ana-fn-csv,#ana-fn-html |
+| 204 | ⬇ Exports |
+| 204 | ⬇ CSV et 📄 Dossier fonctionnel : document HTML avec une section par fonction (description, allocation, échanges, traçabilité). |
+| 205 | #cap-view-functions .phl-filter-bar + * |
+| 205 | 📋 Résultat |
+| 205 | Clic sur une fonction pour ouvrir son détail. |
+| 206 | 🔬 Analyses |
+| 207 | #cap-view-analyses [data-an] |
+| 207 | 🔬 Analyses |
+| 207 | Huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes. |
+| 208 | #cap-view-analyses [data-an].active |
+| 208 | 🔎 Analyse affichée |
+| 208 | Analyse en cours. |
+| 209 | ↻ Recalculer |
+| 210 | #ana-box .phl-filter-bar |
+| 210 | 🧰 Options |
+| 210 | Présentations, filtres et export CSV propres à l'analyse affichée. |
+| 211 | 📋 Résultat |
+| 212 | 📐 Tableau de bord |
+| 213 | 📐 Tableau de bord |
+| 213 | Pages d'indicateurs, graphiques et tableaux sur le modèle, à composer soi-même et à imprimer. |
+| 214 | #cap-view-dashboard .dash-tabs |
+| 214 | 🗂 Pages |
+| 215 | ✏ Modifier |
+| 215 | Passe en édition : ajouter des éléments depuis le catalogue d'indicateurs, les configurer, déplacer et redimensionner. ✔ Terminer pour sortir. |
+| 216 | #dash-orient,#dash-print,#dash-html |
+| 216 | 🖨 Impression |
+| 216 | Format A4 portrait ou paysage, impression, ou export en page HTML autonome. |
+| 217 | #dash-json,#dash-imp |
+| 217 | ⬇⬆ JSON |
+| 217 | Exporte ou importe la définition des tableaux de bord pour les réutiliser sur un autre modèle. |
+| 218 | #cap-view-dashboard .dash-scroll |
+| 218 | 📐 Page |
+| 218 | Les éléments du tableau de bord, calculés sur le modèle chargé. |
+| 226 | @table |
+| 323 | Étape |
+| 325 | ◀ Précédent |
+| 326 | Terminer ✓ |
+| 326 | Suivant ▶ |
+
+## js/44-functional-exchange.js
+
+| Ligne | Texte |
+|---:|---|
+| 18 | 💡 Les blocs sont plus lisibles, et plus proches du rendu Capella, avec le thème Office 2007 ou Clair (menu 🎨 Thème ▾). |
+| 99 | Functional Exchange |
+| 99 | Fonction source |
+| 99 | Fonction cible |
+| 99 | Couche |
+| 105 | Ports de fonction orphelins (sans échange) |
+| 105 | Function Port défini mais relié à aucun Functional Exchange |
+| 105 | Fonction |
+| 105 | Port |
+| 105 | Sens |
+| 105 | Couche |
+| 106 | ▶ entrée |
+| 106 | sortie ▶ |
+| 107 | Échanges sans Exchange Item |
+| 107 | Aucun Exchange Item porté (exchangedItems) |
+| 108 | Fonctions feuilles sans aucun échange |
+| 108 | Fonction sans sous-fonction, ni entrée ni sortie |
+| 108 | Fonction |
+| 108 | Couche |
+| 110 | Fonctions mères portant des ports |
+| 110 | Bonne pratique Capella : les ports et échanges sont portés par les fonctions feuilles |
+| 110 | Fonction |
+| 110 | Ports |
+| 110 | Couche |
+| 113 | Échanges reliés directement à une fonction (sans port) |
+| 113 | Source ou cible sans Function Port (hors OA, où c'est la règle) |
+| 114 | Échanges LA / PA non alloués à un Component Exchange |
+| 114 | Aucune ComponentExchangeFunctionalExchangeAllocation (le modèle en utilise ailleurs) |
+| 125 | fex.n |
+| 125 | Functional Exchanges — nombre |
+| 125 | fonction(s) avec ports |
+| 126 | fex.layer |
+| 126 | Functional Exchanges — par couche |
+| 127 | fex.items |
+| 127 | Functional Exchanges — avec Exchange Item |
+| 128 | fex.chk |
+| 128 | Functional Exchanges — contrôles |
+| 173 | (sous-composants compris) |
+| 173 | une entité ou un acteur opérationnel |
+| 173 | un acteur, ou au système / à un sous-système |
+| 174 | Toutes les entités et acteurs |
+| 174 | Tous les allocataires |
+| 175 | Acteurs opérationnels |
+| 175 | Acteurs |
+| 176 | 🏢 Entités |
+| 176 | 🧩 Système / sous-systèmes |
+| 205 | Function Input Port |
+| 205 | Function Output Port |
+| 205 | — non connecté |
+| 210 | ∅ Item |
+| 223 | sans port |
+| 237 | sans port |
+| 257 | ÉMET → |
+| 257 | Sortie — la fonction émet l'échange |
+| 257 | ← REÇOIT |
+| 257 | Entrée — la fonction reçoit l'échange |
+| 264 | sans port |
+| 266 | Aucun Exchange Item |
+| 268 | sans port |
+| 276 | échange |
+| 299 | (échange relié directement à la fonction, sans port) |
+| 300 | non connecté |
+| 303 | allouée au système |
+| 303 | allouée à un acteur |
+| 303 | non allouée |
+| 303 | fonction mère (non allouée) |
+| 310 | aucun port ni échange |
+| 321 | » — clic : son bloc |
+| 332 | fonctions : pour rester fluide, la matrice en affiche |
+| 332 | (les plus connectées). Filtrez par couche ou par fonction pour voir les autres. |
+| 336 | échanges |
+| 336 | Source ↓ / Cible → |
+| 347 | · page |
+| 358 | Aucune fonction ne correspond au filtre. |
+| 360 | Fonctions |
+| 361 | ↩ Revenir à « |
+| 364 | Aucun functional exchange ne correspond au filtre. |
+| 369 | Fonctions |
+| 372 | Échanges |
+| 410 | échange |
+| 424 | ◧ Vue Blocs |
+| 424 | ≡ Vue Ligne |
+| 424 | ▣ Vue Fonction |
+| 424 | ▦ Matrice |
+| 424 | 🩺 Contrôles |
+| 428 | allocation : |
+| 428 | allocataire « |
+| 428 | fonction « |
+| 428 | échange « |
+| 429 | ƒ⇆ Functional Exchanges |
+| 429 | échanges |
+| 429 | · filtres : |
+| 436 | Entrée |
+| 436 | Sortie |
+| 441 | Couche |
+| 441 | Fonction |
+| 441 | Sens |
+| 441 | Port |
+| 441 | Functional Exchange |
+| 441 | Fonction distante |
+| 441 | Port distant |
+| 444 | Couche |
+| 444 | Fonction source |
+| 444 | Port source |
+| 444 | Functional Exchange |
+| 444 | Port cible |
+| 444 | Fonction cible |
+| 444 | Exchange Items |
+| 444 | Component Exchanges |
+| 444 | Chaînes |
+| 454 | ◧ Vue Blocs |
+| 455 | ≡ Vue Ligne |
+| 455 | Un échange par ligne : fonction source ▶ échange ▶ fonction cible |
+| 455 | ▣ Vue Fonction |
+| 455 | Échanges regroupés par fonction |
+| 456 | ▦ Matrice |
+| 456 | Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus |
+| 456 | 🩺 Contrôles |
+| 456 | Ports orphelins, échanges sans Exchange Item, fonctions sans échange… |
+| 462 | Toutes |
+| 463 | ƒ Fonction : |
+| 468 | 🔍 Échange : |
+| 471 | avec ports ou échanges |
+| 473 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 473 | Allocation |
+| 473 | — un échange est gardé si l'une de ses deux fonctions correspond |
+| 473 | — double-clic : uniquement celles-ci |
+
+## js/45-comparaison-rapport.js
+
+| Ligne | Texte |
+|---:|---|
+| 11 | Créations |
+| 11 | Création |
+| 12 | Suppressions |
+| 12 | Suppression |
+| 13 | Renommages |
+| 13 | Renommage |
+| 14 | Descriptions |
+| 14 | Description |
+| 15 | Propriétés |
+| 15 | Propriété |
+| 16 | Liens |
+| 16 | Lien |
+| 17 | Déplacements |
+| 17 | Déplacement |
+| 18 | Changements de type |
+| 18 | Type |
+| 22 | Ports |
+| 23 | Échanges |
+| 24 | Chaînes & scénarios |
+| 25 | Fonctions |
+| 26 | Composants & acteurs |
+| 27 | Capacités & missions |
+| 28 | Modes & états |
+| 29 | Exigences |
+| 30 | Données & interfaces |
+| 31 | Paquetages |
+| 42 | Autres |
+| 142 | (sans nom) |
+| 147 | — dans « |
+| 147 | — était dans « |
+| 147 | — avec |
+| 147 | élément |
+| 149 | résumé modifié |
+| 149 | description modifiée |
+| 149 | modifié |
+| 150 | retiré ( |
+| 152 | modifié |
+| 153 | : déplacé de « |
+| 153 | » vers « |
+| 164 | (sans nom) |
+| 165 | Contenu : |
+| 173 | Hors couche |
+| 173 | (racine) |
+| 195 | catégories : |
+| 196 | couches : |
+| 196 | familles : |
+| 197 | recherche « |
+| 197 | ligne(s) exclue(s) |
+| 198 | Comparaison de versions |
+| 208 | Catégorie |
+| 208 | Total |
+| 208 | Hors couche |
+| 212 | changement(s) |
+| 212 | · filtres : |
+| 214 | Famille |
+| 225 | Propriété |
+| 225 | Avant |
+| 225 | Après |
+| 236 | changement(s) |
+| 237 | Filtres : |
+| 240 | Par famille : |
+| 259 | Catégorie |
+| 259 | Couche |
+| 259 | Famille |
+| 259 | Type |
+| 259 | Élément |
+| 259 | Ancien nom |
+| 259 | Parent |
+| 259 | Propriété |
+| 259 | Avant |
+| 259 | Après |
+| 259 | Résumé |
+| 259 | Chemin |
+| 274 | ** changement(s) |
+| 274 | · filtres : |
+| 276 | \| Catégorie \| |
+| 276 | \| Total \| |
+| 286 | \| Propriété \| Avant \| Après \| |
+| 336 | Synthèse |
+| 336 | Compteurs par catégorie, couche et famille |
+| 336 | Simple |
+| 336 | Une phrase par changement |
+| 336 | Détaillé |
+| 336 | Avec chaque propriété avant → après |
+| 336 | Complet |
+| 336 | Avec identifiant, type technique et chemin |
+| 337 | Catégorie |
+| 337 | Couche |
+| 337 | Famille |
+| 337 | Élément parent |
+| 338 | 📋 Copier (mis en forme) |
+| 338 | Pour Word, Outlook, Teams, OneNote : titres, listes, tableaux et couleurs |
+| 338 | 📋 Copier (texte brut) |
+| 338 | Lignes indentées, pour un e-mail simple ou un outil de suivi |
+| 338 | 📋 Copier (tableau Excel) |
+| 338 | Une ligne par changement, colonnes séparées par des tabulations |
+| 338 | 📋 Copier (Markdown) |
+| 338 | Pour GitLab / GitHub, wiki |
+| 353 | Propriété Avant Après |
+| 354 | lignes affichées sur |
+| 354 | — la copie et les exports contiennent tout. |
+| 355 | Aucun changement pour ces filtres. |
+| 358 | Niveau |
+| 360 | Préréglage 📰 Notes de version 🔍 Revue 🧾 Audit Catégories |
+| 367 | ✱ Couches |
+| 371 | Toutes familles |
+| 371 | Hors couche |
+| 371 | Aucune sélection = toutes |
+| 373 | Regrouper par |
+| 375 | Rattacher le technique à son élément |
+| 378 | changement(s) retenu(s) |
+| 378 | exclu(s) ↺ tout réinclure |
+| 380 | 📋 Copier ⬇ CSV ⬇ HTML 🖨 Imprimer |
+| 380 | Format : |
+| 418 | ✔ Copié |
+| 418 | ⚠ Copie impossible |
+| 418 | 📋 Copier |
+| 422 | Comparaison de versions |
+| 427 | Fenêtre bloquée par le navigateur : utilisez ⬇ HTML puis imprimez le fichier. |
+
+## js/46-config-interface.js
+
+| Ligne | Texte |
+|---:|---|
+| 10 | ☰ Barre des vues |
+| 10 | menus affichés, vues épinglées |
+| 11 | 📐 Tableaux de bord |
+| 11 | pages, indicateurs, disposition |
+| 12 | 📋 Tableau |
+| 12 | colonnes affichées, colonnes personnalisées, filtres, largeurs |
+| 13 | 📊 Table View |
+| 13 | onglets de vues, colonnes personnalisées, tri, filtres, largeurs |
+| 14 | 🎨 Thème |
+| 14 | thème choisi et thème personnalisé |
+| 15 | 🔤 Règles de nommage |
+| 15 | verbes acceptés, mots refusés |
+| 80 | Vues enregistrées illisibles : |
+| 94 | perso) |
+| 96 | ⚙ Enregistrer l'interface et les vues |
+| 96 | ⚙ Charger une interface et des vues |
+| 98 | Fichier .json sans le modèle : à recharger avec un autre modèle ou une nouvelle version de la page. |
+| 99 | Fichier enregistré le |
+| 99 | . Les parties cochées remplaceront les réglages actuels. |
+| 101 | Annuler |
+| 101 | Ce fichier ne contient aucun réglage reconnu. |
+| 104 | 💾 Enregistrer |
+| 104 | 📂 Appliquer |
+| 116 | Réglage « |
+| 116 | » non appliqué : |
+| 117 | réglage(s) appliqué(s) |
+| 128 | Fichier illisible : JSON invalide. |
+| 129 | Ce fichier n'est pas un fichier « interface et vues » de Relation Map Capella. |
+| 138 | Ouvrez d'abord un modèle Capella : la mise à jour se compare au modèle affiché. |
+
+## js/47-composants.js
+
+| Ligne | Texte |
+|---:|---|
+| 13 | 🧱 Logical Component |
+| 13 | Logical Components |
+| 13 | Couche LA |
+| 13 | Component Exchanges |
+| 14 | 🧱 System Component |
+| 14 | System Components |
+| 14 | Couche SA |
+| 14 | Component Exchanges |
+| 16 | 🔀 Behavior Exchange |
+| 16 | Physical Components Behavior et acteurs reliés |
+| 16 | Couche PA · Behavior |
+| 16 | Component Exchanges |
+| 17 | 🔌 Physical Link |
+| 17 | Physical Components Node |
+| 17 | Couche PA · Nodes |
+| 17 | Physical Links |
+| 73 | Ports de composant orphelins (sans Component Exchange) |
+| 73 | Component Port défini mais relié à aucun échange |
+| 73 | Composant |
+| 73 | Port |
+| 73 | Orientation |
+| 73 | Couche |
+| 75 | Ports connectés sans orientation (UNSET) |
+| 75 | Le sens du flux n'est pas défini sur le port |
+| 75 | Composant |
+| 75 | Port |
+| 75 | Couche |
+| 77 | Échanges aux orientations incohérentes |
+| 77 | OUT → OUT ou IN → IN hors délégation |
+| 77 | Component Exchange |
+| 77 | Source |
+| 77 | Cible |
+| 77 | Couche |
+| 79 | Composants feuilles sans port |
+| 79 | Composant sans sous-composant et sans Component Port (hors acteurs) |
+| 79 | Composant |
+| 79 | Couche |
+| 81 | Composants feuilles sans fonction allouée |
+| 81 | Composant sans sous-composant à qui aucune fonction n'est allouée |
+| 81 | Composant |
+| 81 | Nature |
+| 81 | Couche |
+| 82 | Acteur |
+| 82 | Système |
+| 94 | — nombre |
+| 94 | acteur(s) |
+| 95 | cb.ports. |
+| 95 | — ports connectés |
+| 95 | Component Ports reliés à au moins un Component Exchange |
+| 96 | cb.chk. |
+| 96 | — contrôles |
+| 135 | Système |
+| 135 | Composants du système |
+| 135 | Acteurs |
+| 135 | Acteurs externes |
+| 135 | Nœuds |
+| 172 | — non connecté |
+| 174 | — non connecté |
+| 191 | non connecté |
+| 197 | — acteur |
+| 201 | sous-composant(s) : |
+| 202 | aucun port |
+| 215 | allouée |
+| 215 | » — clic : son bloc dans ƒ⇆ Functional Exchange |
+| 246 | ÉMET → |
+| 246 | Émission |
+| 246 | ← REÇOIT |
+| 246 | Réception |
+| 246 | ⇄ ÉCHANGE |
+| 246 | Bidirectionnel |
+| 246 | Non orienté |
+| 263 | Aucun Component Exchange |
+| 267 | 👤 Acteur |
+| 281 | · page |
+| 290 | Aucun composant ne correspond au filtre. |
+| 292 | Composants |
+| 293 | ↩ Revenir à « |
+| 297 | Aucun composant ne correspond au filtre. |
+| 299 | Composants |
+| 300 | ↩ Revenir à « |
+| 303 | Aucun Component Exchange ne correspond au filtre. |
+| 307 | composants : pour rester fluide, la matrice en affiche |
+| 307 | (les plus connectés). Filtrez pour voir les autres. |
+| 312 | Échanges |
+| 361 | Tous les composants |
+| 366 | ◧ Vue Blocs |
+| 366 | ▣ Vue Composant |
+| 366 | ≡ Vue Ligne |
+| 366 | ▦ Matrice |
+| 366 | 🩺 Contrôles |
+| 371 | — Vue Blocs |
+| 371 | composants · |
+| 378 | Acteur |
+| 378 | Système |
+| 379 | Acteur |
+| 379 | Système |
+| 380 | Couche |
+| 380 | Composant |
+| 380 | Nature |
+| 380 | Port |
+| 380 | Orientation |
+| 380 | Sens |
+| 380 | Composant distant |
+| 382 | Couche |
+| 382 | Composant source |
+| 382 | Port source |
+| 382 | Orientation source |
+| 382 | Component Exchange |
+| 382 | Kind |
+| 382 | Port cible |
+| 382 | Orientation cible |
+| 382 | Composant cible |
+| 382 | Functional Exchanges |
+| 390 | Aucun |
+| 390 | dans ce modèle ( |
+| 391 | ◧ Vue Blocs |
+| 392 | ▣ Vue Composant |
+| 392 | Une carte par composant avec ses échanges émis, reçus, bidirectionnels ou non orientés |
+| 393 | ≡ Vue Ligne |
+| 393 | Un Component Exchange par ligne |
+| 393 | ▦ Matrice |
+| 393 | Composant × composant (100 composants au plus) |
+| 393 | 🩺 Contrôles |
+| 393 | Ports orphelins ou sans orientation, échanges incohérents, composants sans port ou sans fonction |
+| 405 | 🧱 Composant : |
+| 408 | Lien |
+| 408 | Échange |
+| 410 | Nature |
+| 410 | avec ports |
+| 411 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 411 | — double-clic : uniquement ceux-ci |

@@ -115,11 +115,11 @@ function capUpdateToolbarForView(view){
   if(layerGrp) layerGrp.style.display=(view==='cards'||view==='table')?'flex':'none';
   if(treeGrp)  treeGrp.style.display=(view==='tree')?'flex':'none';
   // Barre de recherche / statistiques et compteur : inutiles dans les vues qui ont leurs propres filtres
-  const own=['functions','analyses','dashboard','links','chains','physlink','compex','ports','index'].includes(view);
+  const own=['functions','analyses','dashboard','links','chains','physlink','compex','fex','cblk','csys','ports','index'].includes(view);
   const sub=document.getElementById('cap-sub-toolbar'), rc=document.getElementById('cap-result-count');
   if(sub) sub.style.display=own?'none':'flex'; if(rc) rc.style.display=own?'none':'';
   // Barre latérale des types : inutile dans les vues de 🔗 Liens à 📐 Tableau de bord
-  const noSide=['links','chains','physlink','compex','ports','functions','analyses','dashboard'].includes(view);
+  const noSide=['links','chains','physlink','compex','fex','cblk','csys','ports','functions','analyses','dashboard'].includes(view);
   ['cap-sidebar','cap-sidebar-resizer'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display=noSide?'none':'flex'; });
   // Menu 🧭 Explorateur : regroupe Arborescence, Cartes, Tableau et Index des types (onglets #cap-elem-tabs)
   const isElem=CAP_ELEM_VIEWS.includes(view);

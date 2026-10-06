@@ -32,7 +32,8 @@
         <ol>
           <li>Glissez-déposez un fichier <code>.capella</code> <b>n'importe où dans la fenêtre</b>, ou cliquez <b>📂 Parcourir…</b> sur l'écran d'accueil (ou <b>📁 Fichier › 🔷 Ouvrir un modèle Capella</b>).</li>
           <li>Le modèle est analysé puis la vue <b>🧭 Explorateur › ▦ Cartes</b> s'ouvre automatiquement.</li>
-          <li>Pour changer de modèle, redéposez simplement un autre fichier.</li>
+          <li>Pour changer de modèle, redéposez simplement un autre fichier (il remplace le modèle affiché).</li>
+          <li>Pour une <b>nouvelle version du même modèle</b> : <b>📁 Fichier › 🔄 Charger une mise à jour du modèle</b> montre d'abord le delta, puis met à jour après validation (voir 🔄 Suivi).</li>
         </ol>
         <p class="hp-note">Première utilisation ? <b>? Aide ▾ › 🎓 Visite guidée</b> présente chaque zone de l'interface pas à pas (plus complète avec un modèle chargé). Dans chaque vue, <b>? Aide ▾ › 🎯 Visite de cette vue</b> en présente les menus et ce qu'ils font.</p>
         <p class="hp-note">Seul le fichier sémantique <code>.capella</code> est lu. Les fichiers <code>.aird</code> (diagrammes) et <code>.afm</code> sont refusés : ils ne contiennent pas les éléments du modèle.</p>
@@ -43,7 +44,10 @@
           <div class="hp-card"><b>🔷 Vues Capella</b><span>Vues d'analyse dédiées : explorateur (arborescence, cartes, tableau, index), liens, chaînes, interfaces, ports, index.</span></div>
         </div>
         <h3>Sauvegarder et partager</h3>
+        <p class="hp-note">⚠ Quand un modèle est chargé, le navigateur demande une confirmation avant de quitter la page (bouton ← Précédent, fermeture de l'onglet) : sinon le travail en cours serait perdu. Pensez à 💾 Enregistrer.</p>
         <p><b>💾 Enregistrer</b> (Ctrl+S) écrit la page directement dans un fichier choisi une fois, puis l'écrase à chaque enregistrement, sans passer par les téléchargements (Edge / Chrome ; ailleurs, la page est téléchargée). Maj+clic ou Ctrl+Maj+S : enregistrer sous. <b>💾 Page HTML</b> télécharge la page. Dans les deux cas, toute l'application est enregistrée <b>avec le modèle embarqué</b>. À l'ouverture de ce fichier, le modèle se recharge tout seul : pratique pour figer un état ou partager une analyse avec quelqu'un qui n'a pas Capella.</p>
+        <p>La page enregistrée contient : le <b>modèle</b>, la <b>barre des vues</b> (menus, épingles), les <b>tableaux de bord</b>, les <b>colonnes et vues</b> du 📋 Tableau et de la 📊 Table View (colonnes personnalisées, onglets, filtres, largeurs), le <b>thème</b> et les <b>règles de nommage</b>. Ne sont pas conservés : la version chargée pour ⚖ Comparaison et les filtres des autres vues.</p>
+        <p><b>📁 Fichier › ⚙ Enregistrer l'interface et les vues</b> : les mêmes réglages <b>sans le modèle</b>, dans un fichier <code>.json</code> (parties au choix) ; <b>⚙ Charger une interface et des vues</b> les réapplique, par exemple avec un autre modèle ou une nouvelle version de la page.</p>
         <h3>Sécurité et fonctionnement hors ligne</h3>
         <p><b>Aucune connexion réseau n'est nécessaire ni utilisée.</b> Toutes les ressources sont intégrées au fichier, y compris la bibliothèque graphique <code>D3.js v7.9.0</code> (licence ISC). Aucun cookie, aucun stockage navigateur, aucun traçage, aucun envoi de données. Les exports (PDF, ZIP, PNG, SVG, CSV, HTML) sont générés dans le navigateur, sans bibliothèque externe, et les rapports HTML produits sont eux aussi autonomes. Une <b>💾 Page HTML</b> sauvegardée reste utilisable hors ligne.</p>
       </div>
@@ -55,7 +59,7 @@
         <table class="hp-t">
           <tr><td>🗺 · 📊</td><td>Modes Relation Map et Table View.</td></tr>
           <tr><td>🧭 ▾ · 📡 ▾ · ⚡ · ƒ · 🔬 ▾ · 📐 · ☰</td><td>Vues Capella, au même niveau que les modes et toujours visibles (sans modèle chargé, elles invitent à en charger un) : menus ▾ et vues épinglées, réglables par ☰ (voir l'onglet Vues Capella). Un clic bascule directement sur la vue correspondante, depuis n'importe quel mode.</td></tr>
-          <tr><td>📁 Fichier ▾</td><td>🔷 Ouvrir un modèle Capella (<code>.capella</code>) ; 💾 Enregistrer (Ctrl+S) et Enregistrer sous… (Ctrl+Maj+S) : enregistrement direct dans un fichier HTML ; 🌐 Télécharger la page HTML : page autonome avec le modèle embarqué.</td></tr>
+          <tr><td>📁 Fichier ▾</td><td>🔷 <b>Ouvrir un modèle Capella</b> : remplace le modèle affiché. 🔄 <b>Charger une mise à jour du modèle</b> : compare un autre fichier au modèle affiché, montre le delta et met à jour après validation ; si moins de la moitié des éléments sont communs, une alerte signale que ce n'est peut-être pas le même projet. 💾 <b>Enregistrer</b> (Ctrl+S) / Enregistrer sous… (Ctrl+Maj+S) / 🌐 Télécharger la page HTML : page autonome contenant le modèle, la barre des vues, les tableaux de bord, les colonnes et vues du 📋 Tableau et de la 📊 Table View, le thème et les règles de nommage. ⚙ <b>Enregistrer / Charger l'interface et les vues</b> : les mêmes réglages sans le modèle, dans un fichier .json, au choix des parties, pour les réutiliser avec un autre modèle.</td></tr>
           <tr><td>💾</td><td>Enregistrement direct (Ctrl+S ; Maj+clic ou Ctrl+Maj+S : enregistrer sous).</td></tr>
           <tr><td>🔄 Suivi ▾</td><td>Nouvelles versions du fichier .capella (voir plus bas).</td></tr>
           <tr><td>🎨 Thème ▾</td><td>Sombre (par défaut), Office 2007, Clair, Marine, Nature, Contraste. Les vues se redessinent avec des couleurs adaptées ; en thème clair (Office 2007, Clair ou personnalisé clair), les textes colorés sont automatiquement foncés pour rester lisibles.</td></tr>
@@ -136,7 +140,7 @@
         <h2>🔷 Vues Capella</h2>
         <h3>Barre des vues (en haut)</h3>
         <table class="hp-t">
-          <tr><td>Menus ▾</td><td><b>🧭 Explorateur</b> (Arborescence, Cartes, Tableau, Index des types, 🔗 Liens), <b>📡 Flux & interfaces</b> (⚡ Chaînes, 🔀 Component Exchange, 🔌 Physical Link, 🧩 Ports), <b>🔬 Analyses</b> (toutes les sous-vues). Un clic sur le nom rouvre la dernière vue du menu ; la flèche ▾ affiche la liste.</td></tr>
+          <tr><td>Menus ▾</td><td><b>🧭 Explorateur</b> (Arborescence, Cartes, Tableau, Index des types, 🔗 Liens), <b>📡 Flux & interfaces</b> (⚡ Chaînes, ƒ⇆ Functional Exchange, 🧱 System Component, 🧱 Logical Component, 🔀 Behavior Exchange, 🔌 Physical Link, 🧩 Ports), <b>🔬 Analyses</b> (toutes les sous-vues). Un clic sur le nom rouvre la dernière vue du menu ; la flèche ▾ affiche la liste.</td></tr>
           <tr><td>📌 Épingler</td><td>Dans un menu, 📌 place la vue en bouton direct dans la barre (par défaut : ⚡ Chaînes, ƒ Fonctions, 📐 Tableau de bord) ; un second clic la retire.</td></tr>
           <tr><td>☰ (Ctrl K)</td><td>Toutes les vues : recherche (taper puis Entrée, flèches ↑ ↓), cases pour afficher ou masquer chaque menu, épingles, ↺ Rétablir la barre par défaut. Une vue masquée reste accessible ici. Le réglage est enregistré avec la 💾 Page HTML.</td></tr>
         </table>
@@ -147,7 +151,7 @@
           <tr><td>🧭 Explorateur › 📋 Tableau</td><td>Tableau paginé : colonnes paramétrables et redimensionnables, filtres par colonne, colonnes Metachain (voir Table View), export CSV/JSON, sauvegarde de vue.</td></tr>
           <tr><td>🔗 Liens</td><td>Relations Capella extraites (34 types : décompositions, allocations, échanges fonctionnels / de composants / liens physiques, éléments échangés, réalisations inter-couches, chaînes, capacités). Barre : recherche texte, filtres par groupe (clic sur le nom du groupe) ou par relation, colonnes d'ID à la demande, export CSV des lignes affichées ; les relations absentes du modèle sont listées en infobulle. Clic sur un nom : panneau de détail.</td></tr>
           <tr><td>⚡ Chaînes</td><td>Chaînes fonctionnelles, processus opérationnels et chemins physiques : diagrammes, tables et exports (onglet ⚡ Chaînes).</td></tr>
-          <tr><td>🔌 Physical Link · 🔀 Component Exchange · 🧩 Ports</td><td>Analyse des interfaces et contrôles de cohérence (onglet 🔌 Interfaces & ports).</td></tr>
+          <tr><td>ƒ⇆ Functional Exchange · 🧱 System / Logical Component · 🔀 Behavior Exchange · 🔌 Physical Link · 🧩 Ports</td><td>Analyse des interfaces et contrôles de cohérence (onglet 🔌 Interfaces & ports).</td></tr>
           <tr><td>ƒ Fonctions</td><td>Fonctions couche par couche : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier (onglet ƒ Fonctions · 🔬 Analyses).</td></tr>
           <tr><td>🔬 Analyses</td><td>Traçabilité inter-couches, capacités & missions, modes & états, comparaison de deux versions (onglet 🔬 Analyses).</td></tr>
           <tr><td>🔄 Suivi</td><td>Détection des nouvelles versions du fichier .capella, delta des modifications et mise à jour après validation.</td></tr>
@@ -185,9 +189,34 @@
       <!-- ── INTERFACES ── -->
       <div id="ht-itf" class="ht-panel" style="display:none">
         <h2>🔌 Interfaces & ports</h2>
-        <p class="hp-lead">Trois vues complémentaires, du fonctionnel au physique. Chacune propose des <b>vues Ligne / Composant</b>, une <b>▦ Matrice N²</b> composant × composant (clic sur une cellule = liste des échanges) et un rapport <b>🩺 Contrôles</b>.</p>
+        <p class="hp-lead">Vues d'interfaces du menu <b>📡 Flux & interfaces</b>, du fonctionnel au physique, dans l'ordre des onglets : <b>ƒ⇆ Functional Exchange</b>, <b>🧱 System Component</b>, <b>🧱 Logical Component</b>, <b>🔀 Behavior Exchange</b>, <b>🔌 Physical Link</b>, puis <b>🧩 Ports</b>. Chacune s'ouvre en <b>◧ Vue Blocs</b> (rendu façon Capella, navigation d'un bloc à l'autre) et propose aussi des vues Ligne / Composant (ou Fonction), une <b>▦ Matrice N²</b> (clic sur une cellule = liste des échanges) et un rapport <b>🩺 Contrôles</b>. Dans ƒ⇆, chaque bloc indique en petit, en haut, son rattachement : composant ou acteur d'allocation (clic : son bloc dans la vue de sa couche) ou, à défaut, sa fonction mère (clic : son bloc). En thème sombre, un conseil rappelle que la Vue Blocs est plus lisible, et plus proche de Capella, avec le thème Office 2007 ou Clair. Comme dans ƒ Fonctions, les commandes de chaque barre sont entourées par catégorie (onglets, vues, filtres et champs, exports).</p>
         <p><b>Exports HTML</b> (🔀 et 🔌) : <b>⬇ HTML</b> = la vue affichée ; <b>⬇ HTML (toutes les vues)</b> = rapport à onglets Vue Ligne / Vue Composant / Matrice / Contrôles, filtres appliqués, avec recherche et matrice cliquable. Les fichiers sont autonomes et reprennent les couleurs du thème courant.</p>
-        <h3>🔀 Component Exchange</h3>
+        <p class="hp-note">Répartition par couche : <b>🧱 System Component</b> (SA) et <b>🧱 Logical Component</b> (LA) pour les composants et leurs Component Exchanges ; <b>🔀 Behavior Exchange</b> pour les Component Exchanges de la couche PA entre Physical Components <b>Behavior</b> ; <b>🔌 Physical Link</b> pour les liens entre Physical Components <b>Node</b>.</p>
+        <h3>ƒ⇆ Functional Exchange</h3>
+        <p>Échanges entre fonctions (toutes couches), même organisation que 🧱 Logical Component, avec un filtre par couche (OA, SA, LA, PA) et un filtre <b>Allocation</b> comme dans ƒ Fonctions (🧩 Système, 👤 Acteurs, ∅ Non allouées ; double-clic : uniquement celle-ci) et la liste <b>Tous les allocataires</b> de la couche (acteurs, puis système et sous-systèmes en arbre, sous-composants compris ; en OA : entités et acteurs opérationnels) ; dans les vues d'échanges, un échange est gardé si l'une de ses deux fonctions correspond :</p>
+        <table class="hp-t">
+          <tr><td>◧ Vue Blocs</td><td>Vue par défaut. Chaque fonction dessinée <b>comme dans Capella</b> : boîte arrondie « [numéro] nom », <b>verte</b> si allouée au système, <b>bleue</b> si allouée à un acteur, <b>grise</b> si non allouée (ou fonction mère) ; pins d'entrée (verts) à gauche et de sortie (orange) à droite avec le nom du port ; à côté de chaque pin, l'échange et la fonction distante (plusieurs échanges sur un même pin : listés les uns sous les autres, centrés sur le pin). <b>Clic sur la fonction distante</b> : affiche son bloc (changement de page et filtres relâchés si besoin), <b>↩ Revenir</b> ramène au bloc de départ ; clic sur le titre d'un bloc : panneau de détail. Pin pâle : port non connecté ; pin en pointillés : échange relié directement à la fonction, sans port (cas normal des activités OA). Option « avec ports ou échanges » pour masquer les fonctions mères.</td></tr>
+          <tr><td>≡ Vue Ligne</td><td>Fonction source, pin de sortie <span class="fex-pin fex-pin-out">▶</span> et port → échange → pin d'entrée <span class="fex-pin fex-pin-in">▶</span> et port, fonction cible ; Exchange Items (▤), Component Exchanges qui l'allouent (🔀), chaînes (⚡).</td></tr>
+          <tr><td>▣ Vue Fonction</td><td>Une carte par fonction : échanges reçus (←) et émis (→).</td></tr>
+          
+          <tr><td>▦ Matrice</td><td>Fonction × fonction (ligne = source, colonne = cible), limitée à <b>100 fonctions</b> pour rester fluide (les plus connectées) ; filtrez par couche ou fonction pour voir les autres.</td></tr>
+          <tr><td>🩺 Contrôles</td><td>Ports orphelins, échanges sans Exchange Item, fonctions feuilles sans échange, fonctions mères portant des ports, échanges sans port (hors OA), échanges LA / PA non alloués à un Component Exchange.</td></tr>
+        </table>
+        <p>Les vues Ligne, Fonction et Blocs sont <b>paginées par 100</b> (◀ ▶) pour rester fluides sur les modèles de plusieurs milliers de fonctions ; les exports CSV et HTML portent sur tout le résultat filtré.</p>
+        <h3>🧱 System Component · 🧱 Logical Component</h3>
+        <p>Deux vues identiques (même code, mêmes couleurs) : <b>🧱 System Component</b> pour la couche <b>SA</b>, <b>🧱 Logical Component</b> pour la couche <b>LA</b> ; composants avec leurs <b>Component Ports</b> et <b>Component Exchanges</b>, même logique que ƒ⇆ Functional Exchange :</p>
+        <table class="hp-t">
+          <tr><td>◧ Vue Blocs</td><td>Vue par défaut. Chaque composant dessiné <b>comme dans Capella</b> : <b>bleu</b> pour le système, <b>bleu clair</b> pour un acteur ; nombre de fonctions allouées (ƒ) et de sous-composants (⧉). Ports selon leur orientation : <span class="cb-port cb-port-UNSET"></span> UNSET, <span class="cb-port">&gt;</span> IN (chevron vers l'intérieur, à gauche), <span class="cb-port">&gt;</span> OUT (vers l'extérieur, à droite), <span class="cb-port"></span> INOUT ; INOUT et UNSET vont du côté le moins chargé. À côté de chaque port : l'échange, son sens (de / vers / ⇄) et le composant distant (plusieurs échanges sur un même port : listés les uns sous les autres, centrés sur le port) ; <b>clic sur le composant distant</b> : affiche son bloc, ↩ Revenir. Port pâle : non connecté.</td></tr>
+          <tr><td>▣ Vue Composant</td><td>Une carte par composant : échanges émis (→), reçus (←), bidirectionnels (⇄) ou non orientés, avec ports, échange et composant distant (clic : aller à sa carte).</td></tr>
+          <tr><td>ƒ Fonctions allouées</td><td>« ƒ n fonctions ▾ » sous le nom d'un bloc déplie la liste des fonctions allouées (numérotées, avec un filtre au-delà de 12 et une zone qui défile pour les longues listes) ; <b>clic sur une fonction</b> : affiche son bloc dans ƒ⇆ Functional Exchange. Aussi dans 🔀 Behavior Exchange et 🔌 Physical Link.</td></tr>
+          <tr><td>≡ Vue Ligne · ▦ Matrice</td><td>Un Component Exchange par ligne ; matrice composant × composant (100 composants au plus).</td></tr>
+          <tr><td>🩺 Contrôles</td><td>Ports orphelins, ports connectés sans orientation, orientations incohérentes, composants feuilles sans port ou sans fonction allouée.</td></tr>
+          <tr><td>Filtres</td><td>Composant, échange, <b>Nature</b> (🧩 Système, 👤 Acteurs ; double-clic : uniquement ceux-ci), <b>Tous les composants</b> (un composant et ses sous-composants), « avec ports » (coché par défaut si la couche a des ports). Pages de 100.</td></tr>
+        </table>
+        <h3>🔀 Behavior Exchange (anciennement Component Exchange)</h3>
+        <p>Périmètre : Component Exchanges de la couche <b>PA</b> dont les deux extrémités sont des Physical Components <b>Behavior</b> (aucun Node). Le nombre retenu sur le total du modèle est rappelé en haut de la vue.</p>
+        <p>Périmètre : échanges entre Physical Components Behavior, et entre un Behavior et un acteur (nœud le plus souvent) qui lui est relié ; ces acteurs apparaissent avec leurs seuls ports concernés.</p>
+        <p><b>◧ Vue Blocs</b> (par défaut) : les Physical Components Behavior dessinés comme dans 🧱 Logical Component (bleu = système, bleu clair = acteur ; ports UNSET / IN / OUT / INOUT ; échanges et composants distants cliquables ; fonctions allouées dépliables). Les autres vues (Ligne, Composant, Matrice, Contrôles) sont inchangées.</p>
         <p>Orientation des <code>ComponentPort</code> : <span class="hp-chip" style="--c:#8b949e">UNSET</span> (attribut absent) · <span class="hp-chip" style="--c:#f0883e">IN</span> · <span class="hp-chip" style="--c:#3fb950">OUT</span> · <span class="hp-chip" style="--c:#a371f7">⇄ INOUT</span>. Le <b>sens réel</b> est déduit des deux ports :</p>
         <table class="hp-t">
           <tr><td>→ Orienté / ← Inversé</td><td>Un port IN ou OUT impose le sens (source → cible ou l'inverse).</td></tr>
@@ -198,6 +227,7 @@
         <p>Chaque exchange affiche son <b>kind</b> (ASSEMBLY, DELEGATION, FLOW), ses <b>FE alloués</b> (ƒ), ses <b>Exchange Items</b> (▤) et ses <b>Physical Links</b> porteurs (🔌). Contrôles : CE sans FE, ports orphelins, orientations incohérentes, CE non orientés, CE de couche PA non alloués à un lien physique.</p>
         <h3>🔌 Physical Link</h3>
         <p>Liens entre composants physiques (et acteurs) via leurs <code>PhysicalPort</code>. Pour chaque lien : les <b>Component Exchanges alloués</b> (⇢) et, sur chaque port, un badge <b>n CP</b> indiquant les Component Ports alloués. Dans les cartouches (ici comme dans 🔀 Component Exchange), les listes longues sont repliées après 4 éléments : cliquez <b>+N autres</b> pour les déplier. Filtres avec / sans CE. Contrôles : liens sans CE, ports physiques non reliés ou sans Component Port, CE de couche PA non alloués.</p>
+        <p><b>◧ Vue Blocs</b> (par défaut) : chaque nœud (Physical Component Node) dessiné comme dans Capella : <b>jaune</b> pour un nœud du système, <b>bleu clair</b> pour un nœud acteur ; <b>ports physiques</b> en carré jaune ; à côté de chaque port, le Physical Link (⇄) et le nœud distant, cliquable pour aller à son bloc. Filtres Nature (🖥 Nœuds, 👤 Acteurs) et sous-composants.</p>
         <h3>🧩 Ports</h3>
         <p>Traçabilité <b>Function Port ↔ Component Port ↔ Physical Port</b>, reconstruite à partir des <code>PortAllocation</code> et <code>ComponentPortAllocation</code>.</p>
         <table class="hp-t">
@@ -212,7 +242,7 @@
         <h2>ƒ Fonctions et 🔬 Analyses</h2>
         <p class="hp-note">Les résultats sont gardés en mémoire ; <b>↻ Recalculer</b> les rafraîchit. Les contrôles ne sont calculés qu'à l'ouverture de l'onglet 🩺 Contrôles.</p>
         <p class="hp-note"><b>Tableaux</b> : sous chaque en-tête, un champ <b>Filtrer…</b> par colonne (plusieurs mots : tous requis ; <code>!mot</code> : exclure) ; le nombre de lignes affichées s'affiche au-dessus, avec ✕ effacer. Glisser le bord droit d'un en-tête règle la largeur de la colonne (double-clic : largeur automatique). Filtres et largeurs sont conservés quand la vue se redessine. Un tableau plus large que la vue a une <b>barre de défilement horizontal</b> collée en bas de l'écran tant qu'il est visible (aussi Maj + molette).</p>
-        <p class="hp-lead">Analyses transverses calculées à partir de ce que contient le modèle ouvert : une rubrique absente du modèle (pas de machine à états, pas de capacités…) est simplement signalée comme vide, et les contrôles ne portent que sur les pratiques réellement utilisées.</p>
+        <p class="hp-lead">Analyses transverses calculées à partir de ce que contient le modèle ouvert : une rubrique absente du modèle (pas de machine à états, pas de capacités…) est simplement signalée comme vide, et les contrôles ne portent que sur les pratiques réellement utilisées. Les onglets et les commandes de chaque sous-vue sont entourés par catégorie (vues, filtres, exports), comme dans ƒ Fonctions.</p>
         <h3>ƒ Fonctions (menu principal)</h3>
         <p>Activités OA et fonctions SA / LA / PA, couche par couche, avec leurs <b>descriptions mises en avant</b>.</p>
         <p><b>Filtre Allocation</b> (🌳 Hiérarchie et 📋 Tableau) : <span class="hp-chip" style="--c:#3fb950">🧩 Système</span> <span class="hp-chip" style="--c:#58a6ff">👤 Acteurs</span> <span class="hp-chip" style="--c:#8b949e">∅ Non allouées</span>, avec le nombre de fonctions de chaque nature. Clic = afficher / masquer, double-clic = uniquement cette nature (double-clic à nouveau : tout réafficher). Chaque fonction porte un liseré de la couleur correspondante (double liseré si allouée à la fois au système et à un acteur) ; dans l'arbre, les fonctions mères conservées pour la hiérarchie sont estompées. Colonne « Nature de l'allocation » dans le tableau et les exports.</p>
@@ -254,14 +284,26 @@
           <tr><td>Delta</td><td>🔍 Voir le delta : liste filtrable, détail propriété par propriété (avant / après), synthèse par couche, export CSV, ou ouverture dans ⚖ Comparaison de versions.</td></tr>
           <tr><td>Plusieurs enregistrements</td><td>Le delta <b>cumulé</b> (modèle affiché → dernier enregistrement) est celui qui sera appliqué ; chaque enregistrement détecté est aussi listé avec son propre delta (par rapport au précédent). Si le fichier revient à la version affichée, la proposition disparaît.</td></tr>
           <tr><td>Après mise à jour</td><td>La vue en cours est conservée. 🕘 Historique des mises à jour de la session (delta de chacune) ; ⚖ comparaison avec la version d'avant la dernière mise à jour ou avec la version d'ouverture.</td></tr>
+          <tr><td>Depuis un autre fichier</td><td><b>📁 Fichier › 🔄 Charger une mise à jour du modèle</b> : choisissez le nouveau fichier ; le même delta s'affiche avant validation, et ce fichier devient celui qui est suivi. Si <b>moins de 50 % des éléments</b> sont communs avec le modèle affiché, un avertissement signale que ce n'est peut-être pas le même projet, et la mise à jour demande une confirmation.</td></tr>
           <tr><td>Navigateur</td><td>Edge / Chrome : ouvrez le modèle par 📁 Fichier › 🔷 Ouvrir ou par glisser-déposer pour un accès direct (relecture automatique). Sinon (autre navigateur, page HTML sauvegardée), la modification est signalée quand c'est possible et il faut resélectionner le fichier (📂).</td></tr>
         </table>
         <h3>⚖ Comparaison de versions</h3>
-        <p>Chargez une autre version du même modèle (par défaut l'<b>ancienne</b> ; ⇄ pour inverser). Les éléments sont appariés par identifiant :</p>
+        <p>Chargez une autre version du même modèle (par défaut l'<b>ancienne</b> ; ⇄ pour inverser). Les éléments sont appariés par identifiant et les changements classés en <b>8 catégories</b> :</p>
         <table class="hp-t">
-          <tr><td>➕ ➖ ✎ ↪</td><td>Ajoutés, supprimés, modifiés (nom, description, attributs, références traduites en noms, contenu), déplacés (changement de propriétaire).</td></tr>
-          <tr><td>Détail</td><td>Clic sur une ligne : propriété par propriété, avant / après.</td></tr>
-          <tr><td>Filtres & export</td><td>Statut, couche, type, nom ; synthèse par type ; CSV (une ligne par propriété modifiée).</td></tr>
+          <tr><td>➕ Création · ➖ Suppression</td><td>Avec le conteneur ; les éléments contenus (ports d'une fonction supprimée…) sont rattachés : « avec 2 éléments contenus ».</td></tr>
+          <tr><td>✏ Renommage</td><td>Ancien nom → nouveau nom.</td></tr>
+          <tr><td>📝 Description</td><td>Description ou résumé modifié (les différences de mise en forme seule sont ignorées).</td></tr>
+          <tr><td>⚙ Propriétés</td><td>Attributs (kind, nature, orientation…), valeurs de propriétés.</td></tr>
+          <tr><td>🔗 Liens</td><td>Références ajoutées (+) ou retirées (−) : allocations, réalisations, Exchange Items…</td></tr>
+          <tr><td>↪ Déplacement · 🔁 Type</td><td>Changement de propriétaire ; changement de type de l'élément.</td></tr>
+        </table>
+        <table class="hp-t">
+          <tr><td>Niveaux</td><td><b>Synthèse</b> (compteurs par catégorie, couche et famille) · <b>Simple</b> (une phrase par changement) · <b>Détaillé</b> (chaque propriété avant → après) · <b>Complet</b> (+ identifiant, type technique, chemin).</td></tr>
+          <tr><td>Préréglages</td><td>📰 Notes de version (Simple) · 🔍 Revue (Détaillé) · 🧾 Audit (Complet, éléments techniques non regroupés).</td></tr>
+          <tr><td>Filtres</td><td>Catégories, couches, familles de types, recherche ; regroupement par catégorie, couche, famille ou élément parent. <b>Rattacher le technique à son élément</b> (coché par défaut) : allocations, réalisations, implications… apparaissent comme 🔗 liens de l'élément concerné plutôt que comme éléments à part.</td></tr>
+          <tr><td>Exclure une ligne</td><td>Décochez-la : elle reste visible (barrée) mais disparaît de la copie et des exports ; ↺ tout réinclure.</td></tr>
+          <tr><td>📋 Copier</td><td>Copie exactement ce qui est affiché, au format choisi : <b>mis en forme</b> (Word, Outlook, Teams, OneNote : titres, listes, tableaux), <b>texte brut</b>, <b>tableau Excel</b> (une ligne par changement) ou <b>Markdown</b>.</td></tr>
+          <tr><td>Exports</td><td>⬇ CSV, ⬇ HTML autonome, 🖨 Imprimer (ou PDF).</td></tr>
         </table>
         <h3>📑 Exigences</h3>
         <p>Exigences du <b>Requirements Viewpoint</b> (identifiant, texte, attributs, relations Capella entrantes / sortantes et relations entre exigences) et <b>exigences Capella</b> de base (SystemUserRequirement…, traces RequirementsTrace). Filtres : famille, type, valeur d'attribut, liées ou non au modèle.</p>
@@ -308,8 +350,8 @@
           <li><b>Parcourir</b> avec 🧭 Explorateur (▦ Cartes et 🌳 Arborescence) ; ouvrir le panneau de détail pour suivre les références entrantes et sortantes.</li>
           <li><b>Analyser un voisinage</b> dans 🗺 Relation Map : choisir un composant dans l'arborescence, régler profondeur, disposition et critères.</li>
           <li><b>Revoir les chaînes</b> dans ⚡ Chaînes : entrées/sorties, fonctions non allouées (gris), échanges sans CE porteur.</li>
-          <li><b>Contrôler les interfaces</b> : 🔀 Component Exchange (matrice N², CE sans FE, orientations), 🔌 Physical Link (liens sans CE), 🧩 Ports (alignement FE ↔ CE ↔ PL).</li>
-          <li><b>Mesurer la maturité</b> dans 🔬 Analyses : couverture de traçabilité entre couches, capacités non couvertes, machines à états incomplètes ; <b>comparer</b> avec la version précédente du modèle pour préparer une revue.</li>
+          <li><b>Contrôler les interfaces</b> : 🧱 System / Logical Component (blocs à ports façon Capella, ports orphelins ou non orientés), 🔀 Behavior Exchange (PA), ƒ⇆ Functional Exchange (fonctions en blocs à pins façon Capella, ports orphelins, échanges sans Exchange Item), 🔌 Physical Link (liens sans CE), 🧩 Ports (alignement FE ↔ CE ↔ PL).</li>
+          <li><b>Mesurer la maturité</b> dans 🔬 Analyses : couverture de traçabilité entre couches, capacités non couvertes, machines à états incomplètes ; <b>comparer</b> avec la version précédente du modèle (⚖ rapport 📰 Notes de version ou 🔍 Revue, à copier dans Word ou Outlook) pour préparer une revue.</li>
           <li><b>Produire un livrable</b> : PDF des chaînes avec annexes, CSV des contrôles et des tables, rapports HTML ; ou <b>💾 Page HTML</b> pour partager toute l'analyse.</li>
         </ol>
       </div>

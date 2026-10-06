@@ -53,13 +53,18 @@ Application **autonome et 100 % hors ligne** qui charge un fichier `.capella` (X
 | `js/33-qualite-noms.js` | Qualité des noms : `CAP_EN_VERBS` (≈ 1 000), `CAP_FR_VERBS`, `capNameQuality`, `capFnNQ`, règles perso |
 | `js/34-fonctions.js` | ƒ Fonctions (`capComputeFunctions`, allocation `capFnAllocKind`/`capCompAncestors`, `capRenderFunctions` : hiérarchie, tableau façon Excel, traçabilité, métriques, contrôles, dossier ; vue principale `capRenderFunctionsView`), `capFillHeight`, `capRenderAnalyses` |
 | `js/35-tableau-de-bord.js` | 📐 Tableau de bord : catalogue `capDashCatalog`, rendu SVG `capDashDraw`, éditeur, stockage, impression A4 |
-| `js/36-component-exchange.js` | `capAnaReset`, 🔀 Component Exchange |
+| `js/36-component-exchange.js` | `capAnaReset`, 🔀 Behavior Exchange (vue `compex` : CE de la PA entre Physical Components Behavior, `capBehaviorExchanges`) |
 | `js/37-capella-cablage.js` | Câblage final (détail par id, redimensionnement de la barre latérale) |
 | `js/39-exigences-donnees.js` | 🔬 Analyses : 📑 Exigences (`capComputeRequirements`), 🏷 Propriétés PVMT (`capComputePvmt`), 🗃 Données & interfaces (`capComputeDataModel`), ⛓ Contraintes ; sections du panneau de détail (`capXtDetail`), indicateurs du tableau de bord (`capXtDashCatalog`) |
 | `js/38-theme-perso.js` | 🎨 Thème personnalisé : éditeur `capThemeEditor`, stockage `cap-theme-custom`, couleurs des couches `capThemeLayersApply` |
 | `js/40-suivi-fichier.js` | 🔄 Suivi du fichier `.capella` : `_capWatch`, détection (`capWatchCheck`, accès direct `showOpenFilePicker`), delta cumulé / pas à pas, `capWatchApply`, historique |
 | `js/41-barre-vues.js` | ☰ Barre des vues : catalogue `CAP_NAV_ITEMS`, menus groupés, épingles, menu ☰ / Ctrl+K (`capNavRender`, `capNavOpen`), réglage `cap-toolbar` |
 | `js/42-tableaux-analyses.js` | 🔬 Tableaux des analyses : ligne de filtres par colonne et largeur des colonnes ajoutées automatiquement (`capTfEnhanceAll`, observateur `capTfWatch`), état `_capTfState` |
+| `js/47-composants.js` | 🧱 System Component (SA) / 🧱 Logical Component (LA) : `capComputeComponentBlocks`, `CAP_CB_LAYERS`, `capCbChecks`, indicateurs `capCbDashCatalog`, vue `capRenderComponentBlocks(L, hôte, porteur)` — aussi Vue Blocs de 🔀 Behavior Exchange (PB) et 🔌 Physical Link (PN) — (Blocs à ports UNSET/IN/OUT/INOUT, fonctions dépliables vers ⇆, Composant, Ligne, Matrice ≤ 100, Contrôles ; pagination par 100) |
+| `js/48-barres-groupes.js` | ▭ Cadres par catégorie des barres de 📡 Flux & interfaces et 🔬 Analyses (comme ƒ Fonctions) : `capTbKind`, `capTbGroup`, `capTbGroupAll`, observateur sur `CAP_TBG_ROOTS` (commandes déplacées dans des `.tb-grp`, écouteurs conservés) |
+| `js/46-config-interface.js` | ⚙ Interface et vues : `CAP_CFG_PARTS`, `capCfgGet`/`capCfgSet`, fichier .json (`capCfgDialog`, `capCfgLoadFile`), bloc page `cap-ui-views` (`capCfgStoreViews`/`capCfgRestoreViews` : 📋 Tableau, 📊 Table View, thème), `capCfgLoadUpdate` |
+| `js/45-comparaison-rapport.js` | ⚖ Rapport de comparaison : 8 catégories `CAP_DR_CATS`, familles `CAP_DR_FAMS`, rattachement technique `capDrBuild`, niveaux et formats (`capDrRichHtml`, `capDrText`, `capDrTable`, `capDrMarkdown`), copie `capDrClipboard`, vue `capDrRender` |
+| `js/44-functional-exchange.js` | ƒ⇆ Functional Exchange : `capComputeFunctionalExchanges`, `capFexChecks`, indicateurs `capFexDashCatalog`, vue `capRenderFunctionalExchange` (Ligne, Fonction, Blocs à pins façon Capella, Matrice ≤ 100, Contrôles ; pagination par 100) |
 
 Textes : inventaire **`docs/TEXTES.md`** ; traduction : **`docs/i18n/`**. Détails fonctionnels et pièges connus : **`docs/NOTES-TECHNIQUES.md`** (à lire quand on touche une zone). Liste des fonctions par module : **`docs/INDEX-FONCTIONS.md`**.
 
@@ -71,7 +76,7 @@ Textes : inventaire **`docs/TEXTES.md`** ; traduction : **`docs/i18n/`**. Détai
 - Groupes de commandes dans une barre : `<span class="tb-grp">…</span>` (libellé facultatif `.tb-grp-l`) ; compteur filtré : `.ana-fn-cnt`.
 - Les analyses sont mises en cache dans `_capAnaCache` (vidé par ↻ Recalculer et au chargement d'un modèle).
 - Tout nouvel indicateur calculé doit être ajouté au catalogue du tableau de bord (`capDashCatalog`, libellé nommant le sujet : « Fonctions SA — … »), et son rendu doit tenir dans le cadre.
-- Données persistées dans la 💾 Page HTML : blocs `<script type="application/json">` créés à l'exécution (`cap-name-rules`, `cap-dashboards`, `cap-theme-custom`) — pas de `localStorage`.
+- Données persistées dans la 💾 Page HTML : blocs `<script type="application/json">` créés à l'exécution (`cap-name-rules`, `cap-dashboards`, `cap-theme-custom`, `cap-toolbar`, `cap-ui-views`) — pas de `localStorage`. Nouveau réglage d'interface : l'ajouter à `CAP_CFG_PARTS` (46) pour qu'il s'enregistre et se recharge.
 
 ## Commandes
 
