@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 2951 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 2961 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -2767,7 +2767,6 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 161 | 🖼 Présentation |
 | 162 | #cap-view-fex .ana-ak |
 | 162 | 🧩 Allocation |
-| 162 | Fonctions du système, des acteurs ou non allouées (double-clic : uniquement celles-ci). |
 | 163 | 🔢 Compteur |
 | 163 | Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 100. |
 | 164 | #cap-view-fex .fex-layer-btn |
@@ -2903,84 +2902,95 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 95 | Functional Exchanges — avec Exchange Item |
 | 96 | fex.chk |
 | 96 | Functional Exchanges — contrôles |
-| 145 | Function Input Port |
-| 145 | Function Output Port |
-| 145 | — non connecté |
-| 150 | ∅ Item |
-| 163 | sans port |
-| 177 | sans port |
-| 197 | ÉMET → |
-| 197 | Sortie — la fonction émet l'échange |
-| 197 | ← REÇOIT |
-| 197 | Entrée — la fonction reçoit l'échange |
-| 204 | sans port |
-| 206 | Aucun Exchange Item |
-| 208 | sans port |
-| 216 | échange |
-| 238 | non connecté |
-| 239 | (échange relié directement à la fonction, sans port) |
-| 244 | allouée au système |
-| 244 | allouée à un acteur |
-| 244 | non allouée |
-| 244 | fonction mère (non allouée) |
-| 250 | aucun port ni échange |
-| 263 | fonctions : pour rester fluide, la matrice en affiche |
-| 263 | (les plus connectées). Filtrez par couche ou par fonction pour voir les autres. |
-| 267 | échanges |
-| 267 | Source ↓ / Cible → |
-| 278 | · page |
-| 289 | Aucune fonction ne correspond au filtre. |
-| 291 | Fonctions |
-| 292 | ↩ Revenir à « |
-| 295 | Aucun functional exchange ne correspond au filtre. |
-| 300 | Fonctions |
-| 303 | Échanges |
-| 340 | échange |
-| 354 | ◧ Vue Blocs |
-| 354 | ≡ Vue Ligne |
-| 354 | ▣ Vue Fonction |
-| 354 | ▦ Matrice |
-| 354 | 🩺 Contrôles |
-| 358 | fonction « |
-| 358 | échange « |
-| 359 | ⇆ Functional Exchanges |
-| 359 | échanges |
-| 359 | · filtres : |
-| 366 | Entrée |
-| 366 | Sortie |
-| 371 | Couche |
-| 371 | Fonction |
-| 371 | Sens |
-| 371 | Port |
-| 371 | Functional Exchange |
-| 371 | Fonction distante |
-| 371 | Port distant |
-| 374 | Couche |
-| 374 | Fonction source |
-| 374 | Port source |
-| 374 | Functional Exchange |
-| 374 | Port cible |
-| 374 | Fonction cible |
-| 374 | Exchange Items |
-| 374 | Component Exchanges |
-| 374 | Chaînes |
+| 141 | (sous-composants compris) |
+| 141 | une entité ou un acteur opérationnel |
+| 141 | un acteur, ou au système / à un sous-système |
+| 142 | Toutes les entités et acteurs |
+| 142 | Tous les allocataires |
+| 143 | Acteurs opérationnels |
+| 143 | Acteurs |
+| 144 | 🏢 Entités |
+| 144 | 🧩 Système / sous-systèmes |
+| 173 | Function Input Port |
+| 173 | Function Output Port |
+| 173 | — non connecté |
+| 178 | ∅ Item |
+| 191 | sans port |
+| 205 | sans port |
+| 225 | ÉMET → |
+| 225 | Sortie — la fonction émet l'échange |
+| 225 | ← REÇOIT |
+| 225 | Entrée — la fonction reçoit l'échange |
+| 232 | sans port |
+| 234 | Aucun Exchange Item |
+| 236 | sans port |
+| 244 | échange |
+| 266 | non connecté |
+| 267 | (échange relié directement à la fonction, sans port) |
+| 272 | allouée au système |
+| 272 | allouée à un acteur |
+| 272 | non allouée |
+| 272 | fonction mère (non allouée) |
+| 278 | aucun port ni échange |
+| 291 | fonctions : pour rester fluide, la matrice en affiche |
+| 291 | (les plus connectées). Filtrez par couche ou par fonction pour voir les autres. |
+| 295 | échanges |
+| 295 | Source ↓ / Cible → |
+| 306 | · page |
+| 317 | Aucune fonction ne correspond au filtre. |
+| 319 | Fonctions |
+| 320 | ↩ Revenir à « |
+| 323 | Aucun functional exchange ne correspond au filtre. |
+| 328 | Fonctions |
+| 331 | Échanges |
+| 368 | échange |
 | 382 | ◧ Vue Blocs |
-| 383 | ≡ Vue Ligne |
-| 383 | Un échange par ligne : fonction source ▶ échange ▶ fonction cible |
-| 383 | ▣ Vue Fonction |
-| 383 | Échanges regroupés par fonction |
-| 384 | ▦ Matrice |
-| 384 | Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus |
-| 384 | 🩺 Contrôles |
-| 384 | Ports orphelins, échanges sans Exchange Item, fonctions sans échange… |
-| 390 | Toutes |
-| 391 | ƒ Fonction : |
-| 396 | 🔍 Échange : |
-| 399 | avec ports ou échanges |
-| 401 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
-| 401 | Allocation |
-| 401 | — un échange est gardé si l'une de ses deux fonctions correspond |
-| 401 | — double-clic : uniquement celles-ci |
+| 382 | ≡ Vue Ligne |
+| 382 | ▣ Vue Fonction |
+| 382 | ▦ Matrice |
+| 382 | 🩺 Contrôles |
+| 386 | allocation : |
+| 386 | allocataire « |
+| 386 | fonction « |
+| 386 | échange « |
+| 387 | ⇆ Functional Exchanges |
+| 387 | échanges |
+| 387 | · filtres : |
+| 394 | Entrée |
+| 394 | Sortie |
+| 399 | Couche |
+| 399 | Fonction |
+| 399 | Sens |
+| 399 | Port |
+| 399 | Functional Exchange |
+| 399 | Fonction distante |
+| 399 | Port distant |
+| 402 | Couche |
+| 402 | Fonction source |
+| 402 | Port source |
+| 402 | Functional Exchange |
+| 402 | Port cible |
+| 402 | Fonction cible |
+| 402 | Exchange Items |
+| 402 | Component Exchanges |
+| 402 | Chaînes |
+| 412 | ◧ Vue Blocs |
+| 413 | ≡ Vue Ligne |
+| 413 | Un échange par ligne : fonction source ▶ échange ▶ fonction cible |
+| 413 | ▣ Vue Fonction |
+| 413 | Échanges regroupés par fonction |
+| 414 | ▦ Matrice |
+| 414 | Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus |
+| 414 | 🩺 Contrôles |
+| 414 | Ports orphelins, échanges sans Exchange Item, fonctions sans échange… |
+| 420 | Toutes |
+| 421 | ƒ Fonction : |
+| 426 | 🔍 Échange : |
+| 429 | avec ports ou échanges |
+| 431 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 431 | Allocation |
+| 431 | — un échange est gardé si l'une de ses deux fonctions correspond |
+| 431 | — double-clic : uniquement celles-ci |
 
 ## js/45-comparaison-rapport.js
 

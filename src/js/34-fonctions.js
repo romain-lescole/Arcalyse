@@ -211,7 +211,7 @@ function capRenderFunctions(box){
     return {act,comp,kids,roots}; })();
   if(st.who&&!who.act.has(st.who)&&!who.comp.has(st.who)) st.who='';
   /** Vrai si la fonction est allouée à l'allocataire choisi (ou à l'un de ses sous-composants). */
-  const whoMatch=f=>!st.who||f.alloc.some(a=>a.id===st.who||a.anc.some(x=>x.id===st.who));
+  const whoMatch=f=>!st.who||f.alloc.some(a=>a.id===st.who||(!a.actor&&a.anc.some(x=>x.id===st.who)));   // un acteur rangé sous un composant ne compte pas pour ce composant
   const akMatch=f=>akMatch0(f)&&whoMatch(f);
   /** Liste déroulante « Allocataire » : acteurs, puis système et sous-systèmes indentés. */
   const whoSelect=()=>{

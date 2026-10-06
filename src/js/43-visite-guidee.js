@@ -159,7 +159,7 @@ var CAP_TOUR_VIEWS={
     {s:'#cex-main', t:'📋 Résultat', x:'Clic sur un composant ou un échange pour ouvrir son détail.'}]},
   fex:{l:'⇆ Functional Exchange', steps:[CAP_TOUR_FLUX,
     {s:'#cap-view-fex .phl-toggle-btn', t:'🖼 Présentation', x:'<b>◧ Vue Blocs</b> : fonctions dessinées comme dans Capella (vert = système, bleu = acteur, gris = non allouée ; pins d\'entrée verts à gauche, de sortie orange à droite ; clic sur une fonction distante = aller à son bloc) · <b>≡ Vue Ligne</b> : un échange par ligne · <b>▣ Vue Fonction</b> : regroupé par fonction · <b>▦ Matrice</b> fonction × fonction · <b>🩺 Contrôles</b>.'},
-    {s:'#cap-view-fex .ana-ak', t:'🧩 Allocation', x:'Fonctions du système, des acteurs ou non allouées (double-clic : uniquement celles-ci).'},
+    {s:'#cap-view-fex .ana-ak', t:'🧩 Allocation', x:'Fonctions du système, des acteurs ou non allouées (double-clic : uniquement celles-ci), ou d\'un allocataire précis : acteur, système ou sous-système (sous-composants compris) ; en OA, entités et acteurs opérationnels.'},
     {s:'#fex-counter', t:'🔢 Compteur', x:'Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 100.'},
     {s:'#cap-view-fex .fex-layer-btn', t:'🧱 Couche', x:'Filtre par couche ARCADIA (OA, SA, LA, PA).'},
     {s:'#fex-fn-input,#fex-name-input', t:'🔍 Filtres', x:'Par fonction, ou par nom d\'échange ou d\'Exchange Item.'},
