@@ -535,35 +535,37 @@
 - `capTfFilter` (l. 127) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
 - `capTfWatch` (l. 149) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
 
-## 43-visite-guidee.js — 375 lignes
+## 43-visite-guidee.js — 379 lignes
 
 - `CAP_TOUR_STEPS` (l. 12) — Étapes de la visite générale : s = sélecteur CSS de la zone (toutes les correspondances visibles sont encadrées
 - `CAP_TOUR_EXPLORE` (l. 57) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
 - `CAP_TOUR_FLUX` (l. 72) — Étapes communes aux vues de 📡 Flux & interfaces (onglets de navigation).
 - `CAP_TOUR_ANA_TXT` (l. 75) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
 - `CAP_TOUR_VIEWS` (l. 87) — Visites contextuelles, par vue : clé = '@rm', '@table' ou vue Capella (capCurrentView) ; l = nom de la vue,
-- `capTourCtxKey` (l. 221) — Clé de la vue affichée pour les visites contextuelles.
-- `capTourCtx` (l. 230) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
-- `capTourEls` (l. 238) — Éléments affichés désignés par le sélecteur d'une étape.
-- `capTourVisible` (l. 249) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
-- `capTourStart` (l. 259) — Lance une visite guidée depuis sa première étape.
-- `capTourStartView` (l. 280) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
-- `capTourGo` (l. 288) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
-- `capTourPos` (l. 308) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
-- `capTourRenderPop` (l. 315) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
-- `capTourPlace` (l. 327) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
-- `capTourKey` (l. 359) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
-- `capTourEnd` (l. 368) — Quitte la visite guidée et retire la mise en évidence.
+- `capTourCtxKey` (l. 225) — Clé de la vue affichée pour les visites contextuelles.
+- `capTourCtx` (l. 234) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
+- `capTourEls` (l. 242) — Éléments affichés désignés par le sélecteur d'une étape.
+- `capTourVisible` (l. 253) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
+- `capTourStart` (l. 263) — Lance une visite guidée depuis sa première étape.
+- `capTourStartView` (l. 284) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
+- `capTourGo` (l. 292) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
+- `capTourPos` (l. 312) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
+- `capTourRenderPop` (l. 319) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
+- `capTourPlace` (l. 331) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
+- `capTourKey` (l. 363) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
+- `capTourEnd` (l. 372) — Quitte la visite guidée et retire la mise en évidence.
 
-## 44-functional-exchange.js — 467 lignes
+## 44-functional-exchange.js — 484 lignes
 
 - `CAP_FEX_PAGE` (l. 8)
 - `CAP_FEX_MX_MAX` (l. 9)
-- `capFexOpenFn` (l. 16) — Ouvre ⇆ Functional Exchange sur le bloc d'une fonction (Vue Blocs, page et filtres ajustés).
-- `capComputeFunctionalExchanges` (l. 22) — Calcule les Functional Exchanges du modèle avec leurs fonctions et ports d'extrémité, les Exchange Items,
-- `capFexChecks` (l. 68) — Sections de contrôle des Functional Exchanges et des ports de fonctions (rapport 🩺 et tableau de bord).
-- `capFexDashCatalog` (l. 97) — Indicateurs ⇆ Functional Exchange pour le catalogue du tableau de bord.
-- `capRenderFunctionalExchange` (l. 106) — Rend la vue ⇆ Functional Exchange (barre, filtres, contenu paginé, exports).
+- `capBlkRows` (l. 18) — Géométrie d'un côté de bloc (Vues Blocs) : une ligne par pin ou port, plus haute quand il a plusieurs
+- `capBlkSide` (l. 26) — Texte d'une ligne de pin : connexions en liste (une par ligne) quand il y en a plusieurs.
+- `capFexOpenFn` (l. 34) — Ouvre ƒ⇆ Functional Exchange sur le bloc d'une fonction (Vue Blocs, page et filtres ajustés).
+- `capComputeFunctionalExchanges` (l. 40) — Calcule les Functional Exchanges du modèle avec leurs fonctions et ports d'extrémité, les Exchange Items,
+- `capFexChecks` (l. 86) — Sections de contrôle des Functional Exchanges et des ports de fonctions (rapport 🩺 et tableau de bord).
+- `capFexDashCatalog` (l. 115) — Indicateurs ƒ⇆ Functional Exchange pour le catalogue du tableau de bord.
+- `capRenderFunctionalExchange` (l. 124) — Rend la vue ƒ⇆ Functional Exchange (barre, filtres, contenu paginé, exports).
 
 ## 45-comparaison-rapport.js — 431 lignes
 

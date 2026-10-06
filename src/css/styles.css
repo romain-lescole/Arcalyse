@@ -1122,3 +1122,9 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
 .cb-fnhead{font-weight:600;margin-bottom:3px;}
 .cb-fn{padding:2px 4px;border-radius:3px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .cb-fn:hover{background:var(--c-bg3);color:var(--c-accent);}
+
+/* Pin ou port à plusieurs connexions : liste verticale centrée sur le pin, avec une accolade */
+.fex-pl-row{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:18px;}
+.fex-side-in .fex-pl-txt{text-align:right;}
+.fex-side-in .fex-pl-multi .fex-pl-txt{border-right:1.5px solid var(--c-dim);padding-right:6px;}
+.fex-side-out .fex-pl-multi .fex-pl-txt{border-left:1.5px solid var(--c-dim);padding-left:6px;}

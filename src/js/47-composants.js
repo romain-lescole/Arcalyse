@@ -163,19 +163,18 @@ function capRenderComponentBlocks(L, host, holder){
       const L=[], R=[];
       c.ports.filter(p=>p.orient==='IN').forEach(p=>L.push(p)); c.ports.filter(p=>p.orient==='OUT').forEach(p=>R.push(p));
       c.ports.filter(p=>p.orient!=='IN'&&p.orient!=='OUT').forEach(p=>(L.length<=R.length?L:R).push(p));
-      const side=list=>list.map(p=>{
+      const gL=capBlkRows(L.map(p=>(C.portLinks[p.id]||[]).length)), gR=capBlkRows(R.map(p=>(C.portLinks[p.id]||[]).length));
+      const side=(list,g)=>list.map((p,i)=>{
         const ls=C.portLinks[p.id]||[];
-        const lab=ls.length?ls.map(l=>{ const o=l.src.portId===p.id?l.tgt:l.src;
-          return `${det(l.linkId,l.linkName,`color:${lc(l)};font-weight:600`)} <span class="fex-dim">${roleOf(l,p.id)}</span> <span class="fex-go" data-go="${capEsc(o.pcId)}" title="Aller au bloc de ce composant" style="color:${capTextOn(NK[kindOf(o.pcId)].c)}">${capEsc(o.pcName)}</span>`; }).join('<span class="fex-dim"> · </span>')
-          :'<span class="fex-dim"><i>non connecté</i></span>';
+        const items=ls.map(l=>{ const o=l.src.portId===p.id?l.tgt:l.src;
+          return `${det(l.linkId,l.linkName,`color:${lc(l)};font-weight:600`)} <span class="fex-dim">${roleOf(l,p.id)}</span> <span class="fex-go" data-go="${capEsc(o.pcId)}" title="Aller au bloc de ce composant" style="color:${capTextOn(NK[kindOf(o.pcId)].c)}">${capEsc(o.pcName)}</span>`; });
         const tip=[`${p.name} (${p.orient})`,...ls.map(l=>{ const o=l.src.portId===p.id?l.tgt:l.src; return `${l.linkName} ${roleOf(l,p.id)} ${o.pcName}`; })].join('\n');
-        return `<div class="fex-pl"><div class="fex-pl-txt" title="${capEsc(tip)}">${lab}</div></div>`;
+        return capBlkSide(items,'<span class="fex-dim"><i>non connecté</i></span>',g.hs[i],tip);
       }).join('');
-      const pins=(list,s)=>list.map((p,i)=>`<span class="fex-bpin" style="top:${34+i*30}px">${port(p.orient,s,!(C.portLinks[p.id]||[]).length)}<span class="fex-pname">${capEsc(p.name)}</span></span>`).join('');
-      const n=Math.max(L.length,R.length,1);
+      const pins=(list,s)=>list.map((p,i)=>`<span class="fex-bpin" style="top:${(s==='L'?gL:gR).tops[i]}px">${port(p.orient,s,!(C.portLinks[p.id]||[]).length)}<span class="fex-pname">${capEsc(p.name)}</span></span>`).join('');
       const fnTip=c.fns.map(f=>f.name).join('\n');
-      return `<div class="fex-blk" data-fn="${capEsc(c.id)}" style="--fex-h:${Math.max(64,44+n*30)}px">
-        <div class="fex-side fex-side-in">${side(L)}</div>
+      return `<div class="fex-blk" data-fn="${capEsc(c.id)}" style="--fex-h:${Math.max(74,44+Math.max(gL.total,gR.total))}px">
+        <div class="fex-side fex-side-in">${side(L,gL)}</div>
         <div class="fex-box cb-box cb-k-${c.kind}" title="${capEsc(capAnaHuman(c.type))} — ${c.layer}${c.actor?' — acteur':''}${c.nature?' — '+c.nature:''}">
           <div class="fex-box-t"><span class="cb-ic">${c.actor?'👤':c.kind==='node'?'🖥':'▣'}</span> ${det(c.id,c.name)}</div>
           <div class="fex-pins-in">${pins(L,'L')}</div><div class="fex-pins-out">${pins(R,'R')}</div>
@@ -183,7 +182,7 @@ function capRenderComponentBlocks(L, host, holder){
           ${c.children.length?`<div class="cb-kids" title="${c.children.length} sous-composant(s) : ${capEsc(c.children.map(k=>C.byId[k].name).join(', '))}">⧉ ${c.children.length}</div>`:''}
           ${!c.ports.length?'<div class="fex-box-empty">aucun port</div>':''}
         </div>
-        <div class="fex-side fex-side-out">${side(R)}</div>
+        <div class="fex-side fex-side-out">${side(R,gR)}</div>
         ${st.fnOpen.has(c.id)?fnListHtml(c):''}
       </div>`;
     }).join('')}</div>`;

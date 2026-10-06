@@ -10,6 +10,24 @@ var CAP_FEX_MX_MAX=100;  // fonctions au plus dans la matrice : 100 ≈ 0,2 s, 2
 var _capFexView='block';
 var _capFexGo=null;   // fonction à afficher à la prochaine ouverture de la vue (depuis une autre vue)
 
+/** Géométrie d'un côté de bloc (Vues Blocs) : une ligne par pin ou port, plus haute quand il a plusieurs
+ * connexions (listées les unes sous les autres) ; le pin est centré sur sa ligne.
+ * @param {number[]} counts - Nombre de connexions de chaque pin, dans l'ordre
+ * @returns {{hs:number[], tops:number[], total:number}} Hauteurs, centres des pins (px depuis le haut du bloc), hauteur totale
+ */
+function capBlkRows(counts){
+  const hs=counts.map(k=>Math.max(30,k*18+12)), tops=[]; let y=19;
+  hs.forEach(h=>{ tops.push(y+h/2); y+=h; });
+  return {hs, tops, total:y-19};
+}
+/** Texte d'une ligne de pin : connexions en liste (une par ligne) quand il y en a plusieurs.
+ * @param {string[]} items - HTML de chaque connexion @param {string} empty - HTML si aucune @param {number} h - Hauteur de la ligne
+ * @param {string} tip - Info-bulle @returns {string} HTML */
+function capBlkSide(items, empty, h, tip){
+  const multi=items.length>1;
+  return `<div class="fex-pl${multi?' fex-pl-multi':''}" style="height:${h}px"><div class="fex-pl-txt" title="${capEsc(tip)}">${!items.length?empty:multi?items.map(x=>`<div class="fex-pl-row">${x}</div>`).join(''):items[0]}</div></div>`;
+}
+
 /** Ouvre ƒ⇆ Functional Exchange sur le bloc d'une fonction (Vue Blocs, page et filtres ajustés).
  * @param {string} id - Fonction
  */
@@ -266,17 +284,16 @@ function capRenderFunctionalExchange(){
       const ends=dir=>[...(dir==='IN'?f.ins:f.outs).map(p=>({id:p.id, name:p.name, xs:X.portFes[p.id]||[], real:true})),
         ...((dir==='IN'?dIn:dOut)[f.id]||[]).map(x=>({id:'', name:'', xs:[x], real:false}))];
       const ins=ends('IN'), outs=ends('OUT');
-      const side=(list,dir)=>list.map(e=>{
-        const lab=e.xs.length?e.xs.map(x=>{ const o=dir==='IN'?x.src:x.tgt;
-          return `${det(x.id,x.name,`color:${lc(x)};font-weight:600`)} <span class="fex-dim">${dir==='IN'?'de':'vers'}</span> <span class="fex-go" data-go="${capEsc(o.fnId)}" title="Aller au bloc de cette fonction" style="color:${capTextOn(AKC[akOf(o.fnId)])}">${capEsc(fnLabel(o.fnNum,o.fnName))}</span>`; }).join('<span class="fex-dim"> · </span>')
-          :'<span class="fex-dim"><i>non connecté</i></span>';
+      const gIn=capBlkRows(ins.map(e=>e.xs.length)), gOut=capBlkRows(outs.map(e=>e.xs.length));
+      const side=(list,dir)=>list.map((e,i)=>{
+        const items=e.xs.map(x=>{ const o=dir==='IN'?x.src:x.tgt;
+          return `${det(x.id,x.name,`color:${lc(x)};font-weight:600`)} <span class="fex-dim">${dir==='IN'?'de':'vers'}</span> <span class="fex-go" data-go="${capEsc(o.fnId)}" title="Aller au bloc de cette fonction" style="color:${capTextOn(AKC[akOf(o.fnId)])}">${capEsc(fnLabel(o.fnNum,o.fnName))}</span>`; });
         const tip=[e.real?e.name:'(échange relié directement à la fonction, sans port)',...e.xs.map(x=>{ const o=dir==='IN'?x.src:x.tgt; return `${x.name} ${dir==='IN'?'de':'vers'} ${o.fnName}`; })].join('\n');
-        return `<div class="fex-pl"><div class="fex-pl-txt" title="${capEsc(tip)}">${lab}</div></div>`;
+        return capBlkSide(items,'<span class="fex-dim"><i>non connecté</i></span>',(dir==='IN'?gIn:gOut).hs[i],tip);
       }).join('');
-      const pins=(list,dir)=>list.map((e,i)=>`<span class="fex-bpin" style="top:${34+i*30}px">${e.real?pin(dir,!e.xs.length):`<span class="fex-pin fex-pin-${dir==='IN'?'in':'out'} fex-pin-virt" title="Échange relié directement à la fonction (sans port)">▶</span>`}<span class="fex-pname">${capEsc(e.name)}</span></span>`).join('');
-      const n=Math.max(ins.length,outs.length,1);
+      const pins=(list,dir)=>list.map((e,i)=>`<span class="fex-bpin" style="top:${(dir==='IN'?gIn:gOut).tops[i]}px">${e.real?pin(dir,!e.xs.length):`<span class="fex-pin fex-pin-${dir==='IN'?'in':'out'} fex-pin-virt" title="Échange relié directement à la fonction (sans port)">▶</span>`}<span class="fex-pname">${capEsc(e.name)}</span></span>`).join('');
       const ak=akOf(f.id), akT={sys:'allouée au système',act:'allouée à un acteur',none:f.leaf?'non allouée':'fonction mère (non allouée)'}[ak];
-      return `<div class="fex-blk" data-fn="${capEsc(f.id)}" style="--fex-h:${44+n*30}px">
+      return `<div class="fex-blk" data-fn="${capEsc(f.id)}" style="--fex-h:${Math.max(74,44+Math.max(gIn.total,gOut.total))}px">
         <div class="fex-side fex-side-in">${side(ins,'IN')}</div>
         <div class="fex-box fex-k-${ak}" data-layer="${f.layer}" title="${capEsc(capAnaHuman(f.type))} — ${f.layer} — ${akT}${f.alloc.length?' : '+capEsc(f.alloc.map(a=>a.name).join(', ')):''}">
           <div class="fex-box-t">${det(f.id,fnLabel(f.num,f.name))}</div>
