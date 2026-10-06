@@ -2440,7 +2440,7 @@
 "js/43-visite-guidee.js";"41";"▦ Zone de travail"
 "js/43-visite-guidee.js";"42";"La vue choisie s'affiche ici. Cliquez sur un élément pour ouvrir son panneau de détail (propriétés, relations, liens)."
 "js/43-visite-guidee.js";"43";"📁 Fichier"
-"js/43-visite-guidee.js";"44";"Ouvrir un autre modèle, enregistrer la page, ou télécharger une page HTML autonome qui contient le modèle et vos réglages."
+"js/43-visite-guidee.js";"44";"🔷 Ouvrir un autre modèle (remplace l'actuel) · 🔄 Charger une mise à jour du modèle (delta puis validation, alerte si ce n'est pas le même projet) · 💾 Enregistrer la page HTML autonome (modèle + interface et vues) · ⚙ Enregistrer / Charger l'interface et les vues (fichier .json sans le modèle, pour réutiliser vos réglages)."
 "js/43-visite-guidee.js";"45";"💾 Enregistrer"
 "js/43-visite-guidee.js";"47";"🔄 Suivi du fichier"
 "js/43-visite-guidee.js";"48";"Détecte les nouvelles versions du fichier .capella et montre ce qui a changé (delta, historique)."

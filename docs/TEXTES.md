@@ -2614,7 +2614,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 41 | ▦ Zone de travail |
 | 42 | La vue choisie s'affiche ici. Cliquez sur un élément pour ouvrir son panneau de détail (propriétés, relations, liens). |
 | 43 | 📁 Fichier |
-| 44 | Ouvrir un autre modèle, enregistrer la page, ou télécharger une page HTML autonome qui contient le modèle et vos réglages. |
+| 44 | 🔷 Ouvrir un autre modèle (remplace l'actuel) · 🔄 Charger une mise à jour du modèle (delta puis validation, alerte si ce n'est pas le même projet) · 💾 Enregistrer la page HTML autonome (modèle + interface et vues) · ⚙ Enregistrer / Charger l'interface et les vues (fichier .json sans le modèle, pour réutiliser vos réglages). |
 | 45 | 💾 Enregistrer |
 | 47 | 🔄 Suivi du fichier |
 | 48 | Détecte les nouvelles versions du fichier .capella et montre ce qui a changé (delta, historique). |

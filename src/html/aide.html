@@ -32,7 +32,8 @@
         <ol>
           <li>Glissez-déposez un fichier <code>.capella</code> <b>n'importe où dans la fenêtre</b>, ou cliquez <b>📂 Parcourir…</b> sur l'écran d'accueil (ou <b>📁 Fichier › 🔷 Ouvrir un modèle Capella</b>).</li>
           <li>Le modèle est analysé puis la vue <b>🧭 Explorateur › ▦ Cartes</b> s'ouvre automatiquement.</li>
-          <li>Pour changer de modèle, redéposez simplement un autre fichier.</li>
+          <li>Pour changer de modèle, redéposez simplement un autre fichier (il remplace le modèle affiché).</li>
+          <li>Pour une <b>nouvelle version du même modèle</b> : <b>📁 Fichier › 🔄 Charger une mise à jour du modèle</b> montre d'abord le delta, puis met à jour après validation (voir 🔄 Suivi).</li>
         </ol>
         <p class="hp-note">Première utilisation ? <b>? Aide ▾ › 🎓 Visite guidée</b> présente chaque zone de l'interface pas à pas (plus complète avec un modèle chargé). Dans chaque vue, <b>? Aide ▾ › 🎯 Visite de cette vue</b> en présente les menus et ce qu'ils font.</p>
         <p class="hp-note">Seul le fichier sémantique <code>.capella</code> est lu. Les fichiers <code>.aird</code> (diagrammes) et <code>.afm</code> sont refusés : ils ne contiennent pas les éléments du modèle.</p>
@@ -45,6 +46,8 @@
         <h3>Sauvegarder et partager</h3>
         <p class="hp-note">⚠ Quand un modèle est chargé, le navigateur demande une confirmation avant de quitter la page (bouton ← Précédent, fermeture de l'onglet) : sinon le travail en cours serait perdu. Pensez à 💾 Enregistrer.</p>
         <p><b>💾 Enregistrer</b> (Ctrl+S) écrit la page directement dans un fichier choisi une fois, puis l'écrase à chaque enregistrement, sans passer par les téléchargements (Edge / Chrome ; ailleurs, la page est téléchargée). Maj+clic ou Ctrl+Maj+S : enregistrer sous. <b>💾 Page HTML</b> télécharge la page. Dans les deux cas, toute l'application est enregistrée <b>avec le modèle embarqué</b>. À l'ouverture de ce fichier, le modèle se recharge tout seul : pratique pour figer un état ou partager une analyse avec quelqu'un qui n'a pas Capella.</p>
+        <p>La page enregistrée contient : le <b>modèle</b>, la <b>barre des vues</b> (menus, épingles), les <b>tableaux de bord</b>, les <b>colonnes et vues</b> du 📋 Tableau et de la 📊 Table View (colonnes personnalisées, onglets, filtres, largeurs), le <b>thème</b> et les <b>règles de nommage</b>. Ne sont pas conservés : la version chargée pour ⚖ Comparaison et les filtres des autres vues.</p>
+        <p><b>📁 Fichier › ⚙ Enregistrer l'interface et les vues</b> : les mêmes réglages <b>sans le modèle</b>, dans un fichier <code>.json</code> (parties au choix) ; <b>⚙ Charger une interface et des vues</b> les réapplique, par exemple avec un autre modèle ou une nouvelle version de la page.</p>
         <h3>Sécurité et fonctionnement hors ligne</h3>
         <p><b>Aucune connexion réseau n'est nécessaire ni utilisée.</b> Toutes les ressources sont intégrées au fichier, y compris la bibliothèque graphique <code>D3.js v7.9.0</code> (licence ISC). Aucun cookie, aucun stockage navigateur, aucun traçage, aucun envoi de données. Les exports (PDF, ZIP, PNG, SVG, CSV, HTML) sont générés dans le navigateur, sans bibliothèque externe, et les rapports HTML produits sont eux aussi autonomes. Une <b>💾 Page HTML</b> sauvegardée reste utilisable hors ligne.</p>
       </div>
@@ -265,6 +268,7 @@
           <tr><td>Delta</td><td>🔍 Voir le delta : liste filtrable, détail propriété par propriété (avant / après), synthèse par couche, export CSV, ou ouverture dans ⚖ Comparaison de versions.</td></tr>
           <tr><td>Plusieurs enregistrements</td><td>Le delta <b>cumulé</b> (modèle affiché → dernier enregistrement) est celui qui sera appliqué ; chaque enregistrement détecté est aussi listé avec son propre delta (par rapport au précédent). Si le fichier revient à la version affichée, la proposition disparaît.</td></tr>
           <tr><td>Après mise à jour</td><td>La vue en cours est conservée. 🕘 Historique des mises à jour de la session (delta de chacune) ; ⚖ comparaison avec la version d'avant la dernière mise à jour ou avec la version d'ouverture.</td></tr>
+          <tr><td>Depuis un autre fichier</td><td><b>📁 Fichier › 🔄 Charger une mise à jour du modèle</b> : choisissez le nouveau fichier ; le même delta s'affiche avant validation, et ce fichier devient celui qui est suivi. Si <b>moins de 50 % des éléments</b> sont communs avec le modèle affiché, un avertissement signale que ce n'est peut-être pas le même projet, et la mise à jour demande une confirmation.</td></tr>
           <tr><td>Navigateur</td><td>Edge / Chrome : ouvrez le modèle par 📁 Fichier › 🔷 Ouvrir ou par glisser-déposer pour un accès direct (relecture automatique). Sinon (autre navigateur, page HTML sauvegardée), la modification est signalée quand c'est possible et il faut resélectionner le fichier (📂).</td></tr>
         </table>
         <h3>⚖ Comparaison de versions</h3>
@@ -330,8 +334,8 @@
           <li><b>Parcourir</b> avec 🧭 Explorateur (▦ Cartes et 🌳 Arborescence) ; ouvrir le panneau de détail pour suivre les références entrantes et sortantes.</li>
           <li><b>Analyser un voisinage</b> dans 🗺 Relation Map : choisir un composant dans l'arborescence, régler profondeur, disposition et critères.</li>
           <li><b>Revoir les chaînes</b> dans ⚡ Chaînes : entrées/sorties, fonctions non allouées (gris), échanges sans CE porteur.</li>
-          <li><b>Contrôler les interfaces</b> : 🔀 Component Exchange (matrice N², CE sans FE, orientations), 🔌 Physical Link (liens sans CE), 🧩 Ports (alignement FE ↔ CE ↔ PL).</li>
-          <li><b>Mesurer la maturité</b> dans 🔬 Analyses : couverture de traçabilité entre couches, capacités non couvertes, machines à états incomplètes ; <b>comparer</b> avec la version précédente du modèle pour préparer une revue.</li>
+          <li><b>Contrôler les interfaces</b> : ⇆ Functional Exchange (fonctions en blocs à pins façon Capella, ports orphelins, échanges sans Exchange Item), 🔀 Component Exchange (matrice N², CE sans FE, orientations), 🔌 Physical Link (liens sans CE), 🧩 Ports (alignement FE ↔ CE ↔ PL).</li>
+          <li><b>Mesurer la maturité</b> dans 🔬 Analyses : couverture de traçabilité entre couches, capacités non couvertes, machines à états incomplètes ; <b>comparer</b> avec la version précédente du modèle (⚖ rapport 📰 Notes de version ou 🔍 Revue, à copier dans Word ou Outlook) pour préparer une revue.</li>
           <li><b>Produire un livrable</b> : PDF des chaînes avec annexes, CSV des contrôles et des tables, rapports HTML ; ou <b>💾 Page HTML</b> pour partager toute l'analyse.</li>
         </ol>
       </div>

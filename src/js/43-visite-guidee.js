@@ -41,7 +41,7 @@ var CAP_TOUR_STEPS=[
   {s:'#cap-content', m:'loaded', t:'▦ Zone de travail',
    x:'La vue choisie s\'affiche ici. Cliquez sur un élément pour ouvrir son panneau de détail (propriétés, relations, liens).'},
   {s:'#b-file-menu', t:'📁 Fichier',
-   x:'Ouvrir un autre modèle, enregistrer la page, ou télécharger une page HTML autonome qui contient le modèle et vos réglages.'},
+   x:'<b>🔷 Ouvrir</b> un autre modèle (remplace l\'actuel) · <b>🔄 Charger une mise à jour</b> du modèle (delta puis validation, alerte si ce n\'est pas le même projet) · <b>💾 Enregistrer</b> la page HTML autonome (modèle + interface et vues) · <b>⚙ Enregistrer / Charger l\'interface et les vues</b> (fichier .json sans le modèle, pour réutiliser vos réglages).'},
   {s:'#b-save-direct', t:'💾 Enregistrer',
    x:'Enregistre directement la page avec le modèle chargé (<b>Ctrl+S</b>) ; Maj+clic pour « Enregistrer sous ».'},
   {s:'#b-cap-watch', m:'loaded', t:'🔄 Suivi du fichier',
