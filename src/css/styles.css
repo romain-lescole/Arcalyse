@@ -1050,9 +1050,9 @@ table.cap-tf-fixed td,table.cap-tf-fixed th{overflow-wrap:anywhere;}
 .fex-side-in .fex-pl::after{right:0;}
 .fex-side-out .fex-pl::before{left:0;}
 .fex-pl-txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
-.fex-box{position:relative;height:var(--fex-h);border:1.5px solid #4dd880;border-radius:12px;background:linear-gradient(180deg,color-mix(in srgb,#4dd880 10%,var(--c-bg)),color-mix(in srgb,#4dd880 24%,var(--c-bg)));box-shadow:2px 2px 5px rgba(0,0,0,.25);}
-.fex-box.fex-k-act{border-color:#79b8ff;background:linear-gradient(180deg,color-mix(in srgb,#58a6ff 10%,var(--c-bg)),color-mix(in srgb,#58a6ff 26%,var(--c-bg)));}
-.fex-box.fex-k-none{border-color:#8b949e;background:linear-gradient(180deg,color-mix(in srgb,#8b949e 8%,var(--c-bg)),color-mix(in srgb,#8b949e 20%,var(--c-bg)));}
+.fex-box{position:relative;height:var(--fex-h);border:1.5px solid #4dd880;border-radius:12px;background:color-mix(in srgb,#4dd880 16%,var(--c-bg));box-shadow:2px 2px 5px rgba(0,0,0,.25);}   /* fond uni en thème sombre ; dégradé en thème clair (plus bas) */
+.fex-box.fex-k-act{border-color:#79b8ff;background:color-mix(in srgb,#58a6ff 18%,var(--c-bg));}
+.fex-box.fex-k-none{border-color:#8b949e;background:color-mix(in srgb,#8b949e 14%,var(--c-bg));}
 .fex-k-act .fex-box-t{color:#b6d8ff;}
 .fex-k-none .fex-box-t{color:#d0d7de;}
 .fex-go{cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px;}
