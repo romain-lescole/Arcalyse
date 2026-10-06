@@ -7,7 +7,7 @@
  */
 var CAP_FEX_PAGE=100;    // éléments par page (Ligne, Fonction, Blocs) : ≈ 0,1 s de rendu ; tout afficher (3 000 fonctions) ≈ 2 s à chaque filtre
 var CAP_FEX_MX_MAX=100;  // fonctions au plus dans la matrice : 100 ≈ 0,2 s, 200 ≈ 0,5 s, 300 ≈ 1,6 s
-var _capFexView='line';
+var _capFexView='block';
 
 /** Calcule les Functional Exchanges du modèle avec leurs fonctions et ports d'extrémité, les Exchange Items,
  * les Component Exchanges qui les allouent et les chaînes qui les impliquent ; indexe aussi les ports de chaque fonction.
@@ -100,7 +100,7 @@ function capFexDashCatalog(add, LC){
 function capRenderFunctionalExchange(){
   const container=document.getElementById('cap-view-fex'); if(!container) return;
   const X=capComputeFunctionalExchanges(), allLinks=X.list;
-  if(!container._fex) container._fex={view:_capFexView, layer:'all', fnFilter:'', nameFilter:'', withPorts:true, page:0};
+  if(!container._fex) container._fex={view:_capFexView, layer:'all', fnFilter:'', nameFilter:'', withPorts:true, page:0, ak:new Set(['sys','act','none']), back:null};
   const st=container._fex;
   const isLight=capIsLight();
   const LAYER_C={OA:'#f0883e',SA:'#4dd880',LA:'#58a6ff',PA:'#e3b341'};
@@ -114,6 +114,10 @@ function capRenderFunctionalExchange(){
   /** Libellé d'une fonction façon Capella : [numéro] nom. */
   const fnLabel=(num,name)=>(num&&num!=='?'?`[${num}] `:'')+name;
 
+  /** Nature d'allocation d'une fonction pour la couleur et le filtre : 'sys' (système), 'act' (acteur), 'none' (non allouée ou fonction mère). */
+  const akOf=id=>{ const f=X.fnById[id]; if(!f) return 'none'; const k=capFnAllocKind(f); return k==='mix'?'act':k==='parent'?'none':k; };
+  const AKC={sys:'#3fb950', act:'#58a6ff', none:'#8b949e'};
+  const akOn=()=>st.ak.size<3;
   /** Échanges retenus par les filtres. */
   function getFiltered(){
     const nf=st.nameFilter.trim().toLowerCase(), ff=st.fnFilter.trim().toLowerCase();
@@ -121,6 +125,7 @@ function capRenderFunctionalExchange(){
       if(st.layer!=='all'&&x.layer!==st.layer) return false;
       if(nf&&!x.name.toLowerCase().includes(nf)&&!x.items.some(i=>i.name.toLowerCase().includes(nf))) return false;
       if(ff&&!x.src.fnName.toLowerCase().includes(ff)&&!x.tgt.fnName.toLowerCase().includes(ff)) return false;
+      if(akOn()&&!st.ak.has(akOf(x.src.fnId))&&!st.ak.has(akOf(x.tgt.fnId))) return false;   // une extrémité au moins
       return true;
     });
   }
@@ -131,6 +136,7 @@ function capRenderFunctionalExchange(){
       if(st.layer!=='all'&&f.layer!==st.layer) return false;
       if(st.withPorts&&!f.ins.length&&!f.outs.length&&!f.fesIn.length&&!f.fesOut.length) return false;
       if(ff&&!f.name.toLowerCase().includes(ff)) return false;
+      if(akOn()&&!st.ak.has(akOf(f.id))) return false;
       if(nf&&![...f.ins,...f.outs].some(p=>(X.portFes[p.id]||[]).some(x=>x.name.toLowerCase().includes(nf)))&&![...f.fesIn,...f.fesOut].some(x=>x.name.toLowerCase().includes(nf))) return false;
       return true;
     });
@@ -228,16 +234,17 @@ function capRenderFunctionalExchange(){
       const ins=ends('IN'), outs=ends('OUT');
       const side=(list,dir)=>list.map(e=>{
         const lab=e.xs.length?e.xs.map(x=>{ const o=dir==='IN'?x.src:x.tgt;
-          return `${det(x.id,x.name,`color:${lc(x)};font-weight:600`)} <span class="fex-dim">${dir==='IN'?'de':'vers'}</span> ${det(o.fnId,fnLabel(o.fnNum,o.fnName),`color:${capTextOn(fnColor(o.layer))}`)}`; }).join('<span class="fex-dim"> · </span>')
+          return `${det(x.id,x.name,`color:${lc(x)};font-weight:600`)} <span class="fex-dim">${dir==='IN'?'de':'vers'}</span> <span class="fex-go" data-go="${capEsc(o.fnId)}" title="Aller au bloc de cette fonction" style="color:${capTextOn(AKC[akOf(o.fnId)])}">${capEsc(fnLabel(o.fnNum,o.fnName))}</span>`; }).join('<span class="fex-dim"> · </span>')
           :'<span class="fex-dim"><i>non connecté</i></span>';
         const tip=[e.real?e.name:'(échange relié directement à la fonction, sans port)',...e.xs.map(x=>{ const o=dir==='IN'?x.src:x.tgt; return `${x.name} ${dir==='IN'?'de':'vers'} ${o.fnName}`; })].join('\n');
         return `<div class="fex-pl"><div class="fex-pl-txt" title="${capEsc(tip)}">${lab}</div></div>`;
       }).join('');
       const pins=(list,dir)=>list.map((e,i)=>`<span class="fex-bpin" style="top:${34+i*30}px">${e.real?pin(dir,!e.xs.length):`<span class="fex-pin fex-pin-${dir==='IN'?'in':'out'} fex-pin-virt" title="Échange relié directement à la fonction (sans port)">▶</span>`}<span class="fex-pname">${capEsc(e.name)}</span></span>`).join('');
       const n=Math.max(ins.length,outs.length,1);
-      return `<div class="fex-blk" style="--fex-h:${44+n*30}px">
+      const ak=akOf(f.id), akT={sys:'allouée au système',act:'allouée à un acteur',none:f.leaf?'non allouée':'fonction mère (non allouée)'}[ak];
+      return `<div class="fex-blk" data-fn="${capEsc(f.id)}" style="--fex-h:${44+n*30}px">
         <div class="fex-side fex-side-in">${side(ins,'IN')}</div>
-        <div class="fex-box" data-layer="${f.layer}" title="${capEsc(capAnaHuman(f.type))} — ${f.layer}">
+        <div class="fex-box fex-k-${ak}" data-layer="${f.layer}" title="${capEsc(capAnaHuman(f.type))} — ${f.layer} — ${akT}${f.alloc.length?' : '+capEsc(f.alloc.map(a=>a.name).join(', ')):''}">
           <div class="fex-box-t">${det(f.id,fnLabel(f.num,f.name))}</div>
           <div class="fex-pins-in">${pins(ins,'IN')}</div><div class="fex-pins-out">${pins(outs,'OUT')}</div>
           ${!ins.length&&!outs.length?'<div class="fex-box-empty">aucun port ni échange</div>':''}
@@ -281,7 +288,9 @@ function capRenderFunctionalExchange(){
       const fns=getFns();
       if(!fns.length) return '<div class="phl-empty">Aucune fonction ne correspond au filtre.</div>';
       if(all) return buildBlocks(fns);
-      const p=paged(fns,'Fonctions'); return p.bar+buildBlocks(p.slice)+p.bar;
+      const p=paged(fns,'Fonctions'), bf=st.back&&X.fnById[st.back];
+      const back=bf?`<div class="fex-backbar"><button class="cap-lf-btn" id="fex-back" title="Revenir au bloc d'où vous venez">↩ Revenir à « ${capEsc(fnLabel(bf.num,bf.name))} »</button></div>`:'';
+      return back+p.bar+buildBlocks(p.slice)+p.bar;
     }
     if(!list.length) return '<div class="phl-empty">Aucun functional exchange ne correspond au filtre.</div>';
     if(view==='matrix') return buildMatrix(list);
@@ -294,9 +303,29 @@ function capRenderFunctionalExchange(){
     const p=paged(list,'Échanges'); return p.bar+buildLines(p.slice)+p.bar;
   }
 
+  /** Affiche le bloc d'une fonction (Vue Blocs) : change de page si besoin, relâche les filtres qui la masquent,
+   * fait défiler jusqu'au bloc et le met en évidence ; « ↩ Revenir » ramène au bloc de départ.
+   * @param {string} id - Fonction cible
+   * @param {string} [from] - Fonction de départ (pour le retour)
+   */
+  function gotoFn(id, from){
+    let fns=getFns(), i=fns.findIndex(f=>f.id===id);
+    if(i<0){   // masquée par les filtres : on les relâche
+      const f=X.fnById[id]; if(!f) return;
+      st.fnFilter=''; st.nameFilter=''; st.ak=new Set(['sys','act','none']); st.withPorts=false;
+      if(st.layer!=='all'&&st.layer!==f.layer) st.layer=f.layer;
+      fns=getFns(); i=fns.findIndex(f=>f.id===id); if(i<0) return;
+      st.page=Math.floor(i/CAP_FEX_PAGE); st.back=from||null; render();
+    } else { st.page=Math.floor(i/CAP_FEX_PAGE); st.back=from||null; updateContent(); }
+    const el=container.querySelector(`.fex-blk[data-fn="${CSS.escape(id)}"]`); if(!el) return;
+    el.scrollIntoView({block:'center'}); el.classList.add('fex-flash'); setTimeout(()=>el.classList.remove('fex-flash'),1800);
+  }
+
   /** Branche la pagination et les cellules de la matrice du contenu courant. */
   function wireMain(){
     const main=container.querySelector('#fex-main'); if(!main) return;
+    main.querySelectorAll('[data-go]').forEach(a=>a.onclick=ev=>{ ev.stopPropagation(); gotoFn(a.dataset.go, a.closest('.fex-blk')?.dataset.fn); });
+    main.querySelector('#fex-back')?.addEventListener('click',()=>{ const b=st.back; st.back=null; if(b) gotoFn(b); });
     main.querySelectorAll('[data-pg]').forEach(b=>b.addEventListener('click',()=>{ st.page+=+b.dataset.pg; updateContent(); container.scrollTop=0; }));
     if(st.view!=='matrix') return;
     main.querySelectorAll('.cap-mx-cell').forEach(td=>td.addEventListener('click',()=>{
@@ -322,7 +351,7 @@ function capRenderFunctionalExchange(){
   /** Rapport HTML autonome : vue courante, ou toutes les vues en onglets (filtres appliqués, sans pagination). */
   function exportHtml(all){
     const f=getFiltered();
-    const VIEWS=[['line','≡ Vue Ligne'],['card','▣ Vue Fonction'],['block','◧ Vue Blocs'],['matrix','▦ Matrice'],['diag','🩺 Contrôles']];
+    const VIEWS=[['block','◧ Vue Blocs'],['line','≡ Vue Ligne'],['card','▣ Vue Fonction'],['matrix','▦ Matrice'],['diag','🩺 Contrôles']];
     const keys=all?VIEWS.map(v=>v[0]):[st.view];
     const tabs=VIEWS.filter(v=>keys.includes(v[0])||(v[0]==='line'&&keys.includes('matrix'))).map(([k,label])=>({key:k,label,html:buildContent(f,k)}));
     const cells={}; Object.entries(container._fexCells||{}).forEach(([k,ls])=>cells[k]=ls.map(l=>l.x.id));
@@ -350,8 +379,8 @@ function capRenderFunctionalExchange(){
   function render(){
     _capFexView=st.view;
     const f=getFiltered();
-    const V=[['line','≡ Vue Ligne','Un échange par ligne : fonction source ▶ échange ▶ fonction cible'],['card','▣ Vue Fonction','Échanges regroupés par fonction'],
-      ['block','◧ Vue Blocs','Fonctions dessinées comme dans Capella : pins d\'entrée (verts) à gauche, de sortie (orange) à droite'],
+    const V=[['block','◧ Vue Blocs','Fonctions dessinées comme dans Capella : pins d\'entrée (verts) à gauche, de sortie (orange) à droite ; vert = système, bleu = acteur, gris = non allouée'],
+      ['line','≡ Vue Ligne','Un échange par ligne : fonction source ▶ échange ▶ fonction cible'],['card','▣ Vue Fonction','Échanges regroupés par fonction'],
       ['matrix','▦ Matrice','Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus'],['diag','🩺 Contrôles','Ports orphelins, échanges sans Exchange Item, fonctions sans échange…']];
     container.innerHTML=`
       <div class="phl-toggle-bar">
@@ -368,6 +397,8 @@ function capRenderFunctionalExchange(){
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;margin-left:8px;">🔍 Échange :</span>
         <input id="fex-name-input" type="text" class="phl-filter-input" placeholder="Échange ou Exchange Item…" value="${capEsc(st.nameFilter)}" style="width:200px;">
         ${st.view==='block'?`<label style="font-size:11px;color:var(--c-dim);display:flex;align-items:center;gap:4px;margin-left:8px;" title="Masquer les fonctions sans port ni échange (fonctions mères le plus souvent)"><input type="checkbox" id="fex-withports"${st.withPorts?' checked':''}> avec ports ou échanges</label>`:''}
+        ${(()=>{ const base=X.fns.filter(fn=>(st.layer==='all'||fn.layer===st.layer)&&!(st.view==='block'&&st.withPorts&&!fn.ins.length&&!fn.outs.length&&!fn.fesIn.length&&!fn.fesOut.length)), n=k=>base.filter(fn=>akOf(fn.id)===k).length;
+          return `<span class="tb-grp ana-ak" style="margin-left:8px" title="Clic : afficher / masquer · double-clic : uniquement celle-ci (ou tout réafficher)${st.view==='block'?'':' — un échange est gardé si l\'une de ses deux fonctions correspond'}"><span class="tb-grp-l">Allocation</span>${['sys','act','none'].map(k=>`<label class="ana-ak-chip${st.ak.has(k)?' on':''}" style="--c:${CAP_FN_AK[k].c}" title="${CAP_FN_AK[k].tip} — double-clic : uniquement celles-ci"><input type="checkbox" data-fak="${k}"${st.ak.has(k)?' checked':''}>${CAP_FN_AK[k].i} ${CAP_FN_AK[k].l} <b>${n(k)}</b></label>`).join('')}</span>`; })()}
         <div style="margin-left:auto;display:flex;gap:6px;">
           <button class="phl-export-btn" id="fex-exp-csv">⬇ CSV</button>
           <button class="phl-export-btn" id="fex-exp-html" title="Rapport HTML de la vue affichée (toutes les pages)">⬇ HTML</button>
@@ -377,7 +408,11 @@ function capRenderFunctionalExchange(){
       <div id="fex-main">${buildContent(f)}</div>`;
     container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.addEventListener('click',()=>{ st.view=b.dataset.pv; st.page=0; render(); }));
     container.querySelectorAll('.fex-layer-btn').forEach(b=>b.addEventListener('click',()=>{ st.layer=b.dataset.ly; st.page=0; render(); }));
-    container.querySelector('#fex-withports')?.addEventListener('change',e=>{ st.withPorts=e.target.checked; st.page=0; updateContent(); });
+    container.querySelector('#fex-withports')?.addEventListener('change',e=>{ st.withPorts=e.target.checked; st.page=0; render(); });
+    container.querySelectorAll('[data-fak]').forEach(cb=>{
+      cb.onchange=()=>{ if(cb.checked) st.ak.add(cb.dataset.fak); else st.ak.delete(cb.dataset.fak); st.page=0; render(); };
+      cb.parentElement.ondblclick=ev=>{ ev.preventDefault(); const k=cb.dataset.fak; st.ak=(st.ak.size===1&&st.ak.has(k))?new Set(['sys','act','none']):new Set([k]); st.page=0; render(); };
+    });
     let deb;
     [['#fex-fn-input','fnFilter'],['#fex-name-input','nameFilter']].forEach(([sel,k])=>container.querySelector(sel)?.addEventListener('input',e=>{
       st[k]=e.target.value; st.page=0; clearTimeout(deb); deb=setTimeout(updateContent,150); }));
