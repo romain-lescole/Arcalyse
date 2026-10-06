@@ -60,6 +60,7 @@ Application **autonome et 100 % hors ligne** qui charge un fichier `.capella` (X
 | `js/40-suivi-fichier.js` | 🔄 Suivi du fichier `.capella` : `_capWatch`, détection (`capWatchCheck`, accès direct `showOpenFilePicker`), delta cumulé / pas à pas, `capWatchApply`, historique |
 | `js/41-barre-vues.js` | ☰ Barre des vues : catalogue `CAP_NAV_ITEMS`, menus groupés, épingles, menu ☰ / Ctrl+K (`capNavRender`, `capNavOpen`), réglage `cap-toolbar` |
 | `js/42-tableaux-analyses.js` | 🔬 Tableaux des analyses : ligne de filtres par colonne et largeur des colonnes ajoutées automatiquement (`capTfEnhanceAll`, observateur `capTfWatch`), état `_capTfState` |
+| `js/46-config-interface.js` | ⚙ Interface et vues : `CAP_CFG_PARTS`, `capCfgGet`/`capCfgSet`, fichier .json (`capCfgDialog`, `capCfgLoadFile`), bloc page `cap-ui-views` (`capCfgStoreViews`/`capCfgRestoreViews` : 📋 Tableau, 📊 Table View, thème), `capCfgLoadUpdate` |
 | `js/45-comparaison-rapport.js` | ⚖ Rapport de comparaison : 8 catégories `CAP_DR_CATS`, familles `CAP_DR_FAMS`, rattachement technique `capDrBuild`, niveaux et formats (`capDrRichHtml`, `capDrText`, `capDrTable`, `capDrMarkdown`), copie `capDrClipboard`, vue `capDrRender` |
 | `js/44-functional-exchange.js` | ⇆ Functional Exchange : `capComputeFunctionalExchanges`, `capFexChecks`, indicateurs `capFexDashCatalog`, vue `capRenderFunctionalExchange` (Ligne, Fonction, Blocs à pins façon Capella, Matrice ≤ 100, Contrôles ; pagination par 100) |
 
@@ -73,7 +74,7 @@ Textes : inventaire **`docs/TEXTES.md`** ; traduction : **`docs/i18n/`**. Détai
 - Groupes de commandes dans une barre : `<span class="tb-grp">…</span>` (libellé facultatif `.tb-grp-l`) ; compteur filtré : `.ana-fn-cnt`.
 - Les analyses sont mises en cache dans `_capAnaCache` (vidé par ↻ Recalculer et au chargement d'un modèle).
 - Tout nouvel indicateur calculé doit être ajouté au catalogue du tableau de bord (`capDashCatalog`, libellé nommant le sujet : « Fonctions SA — … »), et son rendu doit tenir dans le cadre.
-- Données persistées dans la 💾 Page HTML : blocs `<script type="application/json">` créés à l'exécution (`cap-name-rules`, `cap-dashboards`, `cap-theme-custom`) — pas de `localStorage`.
+- Données persistées dans la 💾 Page HTML : blocs `<script type="application/json">` créés à l'exécution (`cap-name-rules`, `cap-dashboards`, `cap-theme-custom`, `cap-toolbar`, `cap-ui-views`) — pas de `localStorage`. Nouveau réglage d'interface : l'ajouter à `CAP_CFG_PARTS` (46) pour qu'il s'enregistre et se recharge.
 
 ## Commandes
 

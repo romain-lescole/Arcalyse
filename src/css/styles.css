@@ -1078,3 +1078,10 @@ html[data-tone="light"] .fex-pname{color:#2a5a2a;}
 .dr-meta{font-size:11px;color:var(--c-dim);}
 .dr-open{cursor:pointer;color:var(--c-accent);font-size:11px;}
 .dr-det{margin:4px 0 4px;max-width:1100px;}
+
+.cw-suspect{margin:6px 0;padding:6px 8px;border:1px solid var(--c-warn,#e3b341);border-radius:5px;background:color-mix(in srgb,var(--c-warn,#e3b341) 12%,transparent);font-size:11.5px;color:var(--c-text);}
+
+/* ── ⚙ Interface et vues ── */
+#cap-cfg-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
+.cfg-part{display:flex;gap:8px;align-items:flex-start;padding:6px 4px;border-bottom:1px solid var(--c-border);font-size:12.5px;cursor:pointer;}
+.cfg-part input{margin-top:3px;}

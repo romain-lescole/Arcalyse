@@ -159,7 +159,7 @@ function capNavMenu(g, anchor){
       if(th){ capNavClose(); const sel=document.getElementById('theme-sel'); sel.value=th.dataset.thm; sel.dispatchEvent(new Event('change')); return; }
       const a=e.target.closest('[data-act]');
       if(a){ capNavClose(); ({open:()=>capPickCapellaFile(), save:()=>capSavePageDirect(false), saveas:()=>capSavePageDirect(true),
-        page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor(),
+        page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor(), update:()=>capCfgLoadUpdate(), cfgsave:()=>capCfgDialog('save'), cfgload:()=>capCfgLoadFile(),
         help:()=>openHelpModal(), tour:()=>capTourStart(), tourview:()=>capTourStartView()})[a.dataset.act](); return; }
       if(e.target.closest('[data-reset]')){ _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); capNavSave(); capNavRender(); capNavMenuFill(); }
     });
@@ -197,11 +197,18 @@ function capNavMenuFill(){
   const g=dd.dataset.g;
   if(g==='file'){
     const sc=s=>` <span class="cap-nav-g">${s}</span>`;
-    res.innerHTML=`<div class="ctx-i" data-act="open">🔷 Ouvrir un modèle Capella…</div><div class="cw-m-sep"></div>
-      <div class="ctx-i" data-act="save">💾 Enregistrer${sc('Ctrl+S')}</div>
+    res.innerHTML=`<div class="ctx-i" data-act="open" title="Remplace le modèle affiché par un autre fichier .capella">🔷 Ouvrir un modèle Capella…</div>
+      <div class="ctx-i" data-act="update" title="Compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour l'affichage après validation">🔄 Charger une mise à jour du modèle…</div>
+      <div class="cap-nav-hint">Mise à jour : delta affiché avant validation ; alerte si les deux fichiers semblent être des projets différents.</div>
+      <div class="cw-m-sep"></div>
+      <div class="ctx-i" data-act="save" title="Page HTML autonome : modèle + interface et vues">💾 Enregistrer${sc('Ctrl+S')}</div>
       <div class="ctx-i" data-act="saveas">💾 Enregistrer sous…${sc('Ctrl+Maj+S')}</div>
       <div class="ctx-i" data-act="page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome">🌐 Télécharger la page HTML</div>
-      <div class="cap-nav-hint">La page enregistrée contient le modèle chargé et vos réglages.</div>`;
+      <div class="cap-nav-hint">La page HTML enregistrée contient : <b>le modèle chargé</b>, la barre des vues (menus, épingles), les tableaux de bord, les colonnes et vues du 📋 Tableau et de la 📊 Table View, le thème et les règles de nommage.<br>Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues.</div>
+      <div class="cw-m-sep"></div>
+      <div class="ctx-i" data-act="cfgsave" title="Fichier .json sans le modèle : barre, tableaux de bord, 📋 Tableau, 📊 Table View, thème, règles de nommage (au choix)">⚙ Enregistrer l'interface et les vues…</div>
+      <div class="ctx-i" data-act="cfgload" title="Applique un fichier .json d'interface (au choix des parties)">⚙ Charger une interface et des vues…</div>
+      <div class="cap-nav-hint">Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page.</div>`;
     return;
   }
   if(g==='help'){

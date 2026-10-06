@@ -220,10 +220,32 @@ function capWatchRegister(text, hash, mtime, manual){
   }
   const step=p?capDiffCompute(p.idx,newIdx):diff;
   const v={at:Date.now(), mtime, counts:capWatchCounts(step), step:capWatchLite(step)};
-  _capWatch.pending={doc, hash, mtime, idx:newIdx, diff, counts:capWatchCounts(diff),
+  _capWatch.pending={doc, hash, mtime, idx:newIdx, diff, counts:capWatchCounts(diff), common:capWatchCommon(curIdx,newIdx),
     versions:[...(p?p.versions:[]), v].slice(-30), first:p?p.first:v.at};
   _capWatch.state=''; _capWatch.dismissed=false;
   capWatchNote(true); capWatchModalRefresh(); capWatchUpdateUi();
+}
+
+var CAP_WATCH_SAME_MIN=0.5;   // en dessous de 50 % d'éléments communs : « ce n'est peut-être pas le même projet »
+
+/** Part des éléments identifiés communs aux deux versions (rapportée à la plus grande).
+ * @param {object} A - Index de la version affichée (capDiffIndex)
+ * @param {object} B - Index de la nouvelle version
+ * @returns {number} Ratio entre 0 et 1
+ */
+function capWatchCommon(A, B){
+  const a=Object.keys(A), nb=Object.keys(B).length; let n=0;
+  a.forEach(id=>{ if(B[id]) n++; });
+  return n/Math.max(1,a.length,nb);
+}
+
+/** Avertissement (HTML) quand la nouvelle version partage trop peu d'éléments avec le modèle affiché.
+ * @param {object} p - Version en attente
+ * @returns {string} HTML, vide si les versions sont proches
+ */
+function capWatchSuspectHtml(p){
+  if(!p||p.common==null||p.common>=CAP_WATCH_SAME_MIN) return '';
+  return `<div class="cw-suspect">⚠ Seuls <b>${Math.round(p.common*100)} %</b> des éléments sont communs avec le modèle affiché : ce n'est peut-être <b>pas le même projet</b>. Vérifiez le delta avant de mettre à jour.</div>`;
 }
 
 /** Choisit manuellement la nouvelle version du fichier (accès limité, page sauvegardée, fichier déplacé) :
@@ -255,6 +277,7 @@ async function capWatchPickNewVersion(){
  * et place la version précédente dans ⚖ Comparaison de versions (sauf si l'utilisateur y a chargé sa propre version). */
 function capWatchApply(){
   const p=_capWatch.pending; if(!p) return;
+  if(p.common!=null&&p.common<CAP_WATCH_SAME_MIN&&!confirm(`Seuls ${Math.round(p.common*100)} % des éléments sont communs avec le modèle affiché : ce n'est peut-être pas le même projet.\n\nRemplacer quand même le modèle affiché par cette version ?`)) return;
   const prev=cap_xmlDoc, prevName=capCurrentFileName, mode=currentMode;
   const name=_capWatch.name||capCurrentFileName;
   try{ capApplyXmlDoc(p.doc, name); }
@@ -328,9 +351,9 @@ function capWatchNote(show){
   let html;
   if(p){
     const nv=p.versions.length;
-    html=`<div class="cw-n-t">🔄 Modèle modifié sur le disque</div>
+    html=`<div class="cw-n-t">🔄 Nouvelle version du modèle</div>
       <div class="cw-n-s">« ${name} » — ${nv>1?`<b>${nv} enregistrements</b> détectés depuis ${capWatchTime(p.first)}, dernier à ${capWatchTime(p.versions[nv-1].at)}`:`enregistré le ${capWatchDate(p.mtime)}`}</div>
-      <div class="cw-n-c">${capWatchChips(p.counts)} <span class="ana-dim">par rapport au modèle affiché</span></div>
+      <div class="cw-n-c">${capWatchChips(p.counts)} <span class="ana-dim">par rapport au modèle affiché</span></div>${capWatchSuspectHtml(p)}
       <div class="cw-n-b"><button class="cap-lf-btn" data-cw="delta">🔍 Voir le delta</button><button class="phl-export-btn" data-cw="apply">✔ Mettre à jour</button><button class="cap-lf-btn" data-cw="later">Plus tard</button></div>`;
   } else {
     const msg={stale:'a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta.',
@@ -419,7 +442,7 @@ function capWatchShowDelta(what){
   const diff=st.sel==='cumul'?(isP?p.diff:hx.diff):versions[st.sel].step;
   const counts=capWatchCounts(diff);
   const head=isP
-    ?`Modèle affiché : fichier du <b>${capWatchDate(w.shownMtime)}</b> &nbsp;→&nbsp; sur le disque : fichier du <b>${capWatchDate(p.mtime)}</b>`
+    ?`Modèle affiché : fichier du <b>${capWatchDate(w.shownMtime)}</b> &nbsp;→&nbsp; sur le disque : fichier du <b>${capWatchDate(p.mtime)}</b>${capWatchSuspectHtml(p)}`
     :`Mise à jour appliquée à <b>${capWatchTime(hx.at)}</b> : fichier du ${capWatchDate(hx.from)} → ${capWatchDate(hx.mtime)}${hx.saves>1?` (${hx.saves} enregistrements cumulés)`:''}`;
   // Plusieurs enregistrements : cumul (appliqué) + chaque enregistrement pas à pas
   const timeline=versions.length>1?`<div class="cw-d-sec">Enregistrements détectés avant validation : le delta <b>cumulé</b> est celui qui sera appliqué ; chaque ligne montre ce qu'a changé un enregistrement par rapport au précédent.</div>

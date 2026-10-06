@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 2909 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 2942 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -657,62 +657,62 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 15 | Part |
 | 15 | Execution |
 | 24 | Shared |
-| 120 | Page HTML |
-| 122 | Enregistrer dans « |
-| 122 | » (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous |
-| 123 | ✔ Enregistré |
-| 127 | Enregistrement direct impossible ( |
-| 127 | ). La page va être téléchargée à la place. |
-| 165 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. |
-| 169 | » n'est pas un fichier Capella (.capella attendu). |
-| 172 | Chargement de « |
-| 175 | Impossible de lire « |
-| 181 | XML invalide |
-| 187 | Erreur de chargement : |
-| 206 | Aucun élément Capella reconnu dans ce fichier |
-| 231 | Ouvrir un autre modèle Capella |
-| 232 | Modèle actuel : |
-| 232 | Déposez un nouveau fichier .capella pour le remplacer. |
-| 300 | Shared |
-| 319 | Project |
-| 376 | Composition |
-| 376 | Aggregation |
-| 376 | Association |
-| 376 | Containment |
-| 376 | Generalization |
-| 376 | Realization |
-| 376 | Dependency |
-| 376 | Usage |
-| 376 | Abstraction |
-| 376 | Refine |
-| 376 | Trace |
-| 376 | Satisfy |
-| 376 | Verify |
-| 376 | Copy |
-| 376 | Allocation |
-| 377 | Block |
-| 377 | Component |
-| 377 | Class |
-| 377 | Interface |
-| 377 | Requirement |
-| 377 | Package |
-| 380 | Aggregation |
-| 380 | Association |
-| 380 | Containment |
-| 380 | Generalization |
-| 380 | Realization |
-| 380 | Dependency |
-| 380 | Usage |
-| 380 | Abstraction |
-| 380 | Refine |
-| 380 | Trace |
-| 380 | Satisfy |
-| 380 | Verify |
-| 380 | Copy |
-| 380 | Allocation |
-| 489 | PhysicalComponent (NODE) |
-| 490 | PhysicalComponent (BEHAVIOR) |
-| 729 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella |
+| 121 | Page HTML |
+| 123 | Enregistrer dans « |
+| 123 | » (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous |
+| 124 | ✔ Enregistré |
+| 128 | Enregistrement direct impossible ( |
+| 128 | ). La page va être téléchargée à la place. |
+| 166 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. |
+| 170 | » n'est pas un fichier Capella (.capella attendu). |
+| 173 | Chargement de « |
+| 176 | Impossible de lire « |
+| 182 | XML invalide |
+| 188 | Erreur de chargement : |
+| 207 | Aucun élément Capella reconnu dans ce fichier |
+| 232 | Ouvrir un autre modèle Capella |
+| 233 | Modèle actuel : |
+| 233 | Déposez un nouveau fichier .capella pour le remplacer. |
+| 301 | Shared |
+| 320 | Project |
+| 377 | Composition |
+| 377 | Aggregation |
+| 377 | Association |
+| 377 | Containment |
+| 377 | Generalization |
+| 377 | Realization |
+| 377 | Dependency |
+| 377 | Usage |
+| 377 | Abstraction |
+| 377 | Refine |
+| 377 | Trace |
+| 377 | Satisfy |
+| 377 | Verify |
+| 377 | Copy |
+| 377 | Allocation |
+| 378 | Block |
+| 378 | Component |
+| 378 | Class |
+| 378 | Interface |
+| 378 | Requirement |
+| 378 | Package |
+| 381 | Aggregation |
+| 381 | Association |
+| 381 | Containment |
+| 381 | Generalization |
+| 381 | Realization |
+| 381 | Dependency |
+| 381 | Usage |
+| 381 | Abstraction |
+| 381 | Refine |
+| 381 | Trace |
+| 381 | Satisfy |
+| 381 | Verify |
+| 381 | Copy |
+| 381 | Allocation |
+| 490 | PhysicalComponent (NODE) |
+| 491 | PhysicalComponent (BEHAVIOR) |
+| 730 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella |
 
 ## js/21-capella-vues-base.js
 
@@ -2412,104 +2412,109 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 186 | ✔ Le fichier correspond au modèle affiché |
 | 207 | ⚠ Fichier illisible pour l'instant (enregistrement en cours ?) — réessayez |
 | 218 | Fichier réenregistré — aucune différence de contenu |
-| 240 | Le fichier choisi (« |
-| 240 | ») n'a pas le même nom que le modèle affiché (« |
-| 240 | »). Le comparer quand même ? |
-| 241 | Impossible de lire « |
-| 246 | ✔ Le fichier correspond au modèle affiché |
-| 262 | Mise à jour impossible : |
-| 262 | Le modèle précédent est conservé. |
-| 272 | — avant la mise à jour de |
-| 275 | ✔ Modèle mis à jour ( |
-| 275 | différence(s)) |
-| 284 | — sur le disque ( |
-| 284 | ), non appliquée |
-| 285 | — avant la mise à jour de |
-| 286 | — version d'ouverture ( |
-| 308 | enregistrement(s) détecté(s) — |
-| 308 | différence(s) avec le modèle affiché |
-| 309 | Le fichier a été modifié : resélectionnez-le pour voir le delta |
-| 310 | Suivi du fichier .capella : vérifier les mises à jour, delta, historique |
-| 331 | 🔄 Modèle modifié sur le disque « |
-| 332 | enregistrements détectés depuis |
-| 332 | , dernier à |
-| 332 | enregistré le |
-| 333 | par rapport au modèle affiché 🔍 Voir le delta ✔ Mettre à jour Plus tard |
-| 336 | a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta. |
-| 337 | est introuvable (déplacé, renommé ou supprimé). Choisissez le fichier à suivre. |
-| 338 | n'est plus accessible (autorisation refusée). Choisissez de nouveau le fichier à suivre. |
-| 339 | Modèle modifié sur le disque |
-| 339 | Fichier suivi indisponible |
-| 340 | 📂 Choisir le fichier… Plus tard |
-| 365 | accès direct — relecture automatique |
-| 365 | accès limité — modification signalée, fichier à resélectionner |
-| 365 | aucun fichier suivi (page sauvegardée) |
-| 366 | 1 min |
-| 366 | 5 min |
-| 367 | Affiché : fichier du |
-| 368 | Dernière vérification : |
-| 368 | en cours… |
-| 369 | Vérifier maintenant |
-| 369 | Choisir le fichier à comparer… |
-| 370 | 📋 Voir le delta en attente ( |
-| 370 | enreg., |
-| 370 | diff.) ✔ Mettre à jour l'affichage |
-| 373 | Détecter les nouvelles versions toutes les |
-| 373 | Disponible quand un fichier .capella est suivi |
-| 375 | Vérifier au retour dans la fenêtre Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée. |
-| 378 | 🕘 Historique des mises à jour ( |
-| 379 | ⚖ Comparer avec la version avant la dernière mise à jour |
-| 380 | ⚖ Comparer avec la version d'ouverture |
-| 381 | 📂 Suivre un autre fichier (nouvelle version)… |
-| 422 | Modèle affiché : fichier du |
-| 423 | Mise à jour appliquée à |
-| 423 | : fichier du |
-| 423 | enregistrements cumulés) |
-| 427 | Σ Cumul — modèle affiché → dernier enregistrement |
-| 430 | Ajouté |
-| 430 | var(--c-ok,#3fb950) |
-| 430 | Supprimé |
-| 430 | var(--c-err,#f85149) |
-| 430 | Modifié |
-| 430 | var(--c-warn,#e3b341) |
-| 443 | changement(s) |
-| 444 | Propriété Avant Après |
-| 449 | Delta des modifications |
-| 449 | Mise à jour du |
-| 453 | Par couche : |
-| 453 | Enregistrement |
-| 455 | Tous |
-| 455 | ➕ Ajoutés |
-| 455 | ➖ Supprimés |
-| 455 | ✎ Modifiés |
-| 455 | ↪ Déplacés |
-| 458 | Statut Couche Type Élément Détail |
-| 459 | lignes affichées sur |
-| 459 | — filtrez, exportez en CSV ou ouvrez ⚖ Comparaison. |
-| 460 | ⬇ CSV |
-| 460 | Aucune différence pour ce filtre. |
-| 464 | ⚖ Ouvrir dans Comparaison de versions |
-| 465 | ⚖ Ouvrir dans Comparaison de versions |
-| 467 | Plus tard ✔ Mettre à jour l'affichage |
-| 467 | Fermer |
-| 482 | Ajouté |
-| 482 | Supprimé |
-| 482 | Modifié |
-| 482 | (déplacé) |
-| 485 | Statut |
-| 485 | Couche |
-| 485 | Type |
-| 485 | Élément |
-| 485 | Propriété |
-| 485 | Avant |
-| 485 | Après |
-| 494 | 🕘 Historique des mises à jour — « |
-| 495 | » ✕ Ouvert à |
-| 497 | . Cliquez sur une mise à jour pour voir son delta. |
-| 498 | Appliquée à Fichier du Enreg. Changements |
-| 500 | Aucune mise à jour appliquée depuis l'ouverture du modèle. |
-| 502 | Fermer |
-| 502 | ⚖ Delta cumulé depuis l'ouverture |
+| 248 | ⚠ Seuls |
+| 248 | % des éléments sont communs avec le modèle affiché : ce n'est peut-être pas le même projet . Vérifiez le delta avant de mettre à jour. |
+| 262 | Le fichier choisi (« |
+| 262 | ») n'a pas le même nom que le modèle affiché (« |
+| 262 | »). Le comparer quand même ? |
+| 263 | Impossible de lire « |
+| 268 | ✔ Le fichier correspond au modèle affiché |
+| 280 | Seuls |
+| 280 | % des éléments sont communs avec le modèle affiché : ce n'est peut-être pas le même projet. Remplacer quand même le modèle affiché par cette version ? |
+| 285 | Mise à jour impossible : |
+| 285 | Le modèle précédent est conservé. |
+| 295 | — avant la mise à jour de |
+| 298 | ✔ Modèle mis à jour ( |
+| 298 | différence(s)) |
+| 307 | — sur le disque ( |
+| 307 | ), non appliquée |
+| 308 | — avant la mise à jour de |
+| 309 | — version d'ouverture ( |
+| 331 | enregistrement(s) détecté(s) — |
+| 331 | différence(s) avec le modèle affiché |
+| 332 | Le fichier a été modifié : resélectionnez-le pour voir le delta |
+| 333 | Suivi du fichier .capella : vérifier les mises à jour, delta, historique |
+| 354 | 🔄 Nouvelle version du modèle « |
+| 355 | enregistrements détectés depuis |
+| 355 | , dernier à |
+| 355 | enregistré le |
+| 356 | par rapport au modèle affiché |
+| 356 | 🔍 Voir le delta ✔ Mettre à jour Plus tard |
+| 359 | a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta. |
+| 360 | est introuvable (déplacé, renommé ou supprimé). Choisissez le fichier à suivre. |
+| 361 | n'est plus accessible (autorisation refusée). Choisissez de nouveau le fichier à suivre. |
+| 362 | Modèle modifié sur le disque |
+| 362 | Fichier suivi indisponible |
+| 363 | 📂 Choisir le fichier… Plus tard |
+| 388 | accès direct — relecture automatique |
+| 388 | accès limité — modification signalée, fichier à resélectionner |
+| 388 | aucun fichier suivi (page sauvegardée) |
+| 389 | 1 min |
+| 389 | 5 min |
+| 390 | Affiché : fichier du |
+| 391 | Dernière vérification : |
+| 391 | en cours… |
+| 392 | Vérifier maintenant |
+| 392 | Choisir le fichier à comparer… |
+| 393 | 📋 Voir le delta en attente ( |
+| 393 | enreg., |
+| 393 | diff.) ✔ Mettre à jour l'affichage |
+| 396 | Détecter les nouvelles versions toutes les |
+| 396 | Disponible quand un fichier .capella est suivi |
+| 398 | Vérifier au retour dans la fenêtre Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée. |
+| 401 | 🕘 Historique des mises à jour ( |
+| 402 | ⚖ Comparer avec la version avant la dernière mise à jour |
+| 403 | ⚖ Comparer avec la version d'ouverture |
+| 404 | 📂 Suivre un autre fichier (nouvelle version)… |
+| 445 | Modèle affiché : fichier du |
+| 446 | Mise à jour appliquée à |
+| 446 | : fichier du |
+| 446 | enregistrements cumulés) |
+| 450 | Σ Cumul — modèle affiché → dernier enregistrement |
+| 453 | Ajouté |
+| 453 | var(--c-ok,#3fb950) |
+| 453 | Supprimé |
+| 453 | var(--c-err,#f85149) |
+| 453 | Modifié |
+| 453 | var(--c-warn,#e3b341) |
+| 466 | changement(s) |
+| 467 | Propriété Avant Après |
+| 472 | Delta des modifications |
+| 472 | Mise à jour du |
+| 476 | Par couche : |
+| 476 | Enregistrement |
+| 478 | Tous |
+| 478 | ➕ Ajoutés |
+| 478 | ➖ Supprimés |
+| 478 | ✎ Modifiés |
+| 478 | ↪ Déplacés |
+| 481 | Statut Couche Type Élément Détail |
+| 482 | lignes affichées sur |
+| 482 | — filtrez, exportez en CSV ou ouvrez ⚖ Comparaison. |
+| 483 | ⬇ CSV |
+| 483 | Aucune différence pour ce filtre. |
+| 487 | ⚖ Ouvrir dans Comparaison de versions |
+| 488 | ⚖ Ouvrir dans Comparaison de versions |
+| 490 | Plus tard ✔ Mettre à jour l'affichage |
+| 490 | Fermer |
+| 505 | Ajouté |
+| 505 | Supprimé |
+| 505 | Modifié |
+| 505 | (déplacé) |
+| 508 | Statut |
+| 508 | Couche |
+| 508 | Type |
+| 508 | Élément |
+| 508 | Propriété |
+| 508 | Avant |
+| 508 | Après |
+| 517 | 🕘 Historique des mises à jour — « |
+| 518 | » ✕ Ouvert à |
+| 520 | . Cliquez sur une mise à jour pour voir son delta. |
+| 521 | Appliquée à Fichier du Enreg. Changements |
+| 523 | Aucune mise à jour appliquée depuis l'ouverture du modèle. |
+| 525 | Fermer |
+| 525 | ⚖ Delta cumulé depuis l'ouverture |
 
 ## js/41-barre-vues.js
 
@@ -2549,24 +2554,23 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 123 | Vue affichée : |
 | 141 | Retirer de la barre |
 | 141 | Épingler dans la barre (bouton direct) |
-| 200 | 🔷 Ouvrir un modèle Capella… 💾 Enregistrer |
-| 201 | 💾 Enregistrer sous… |
-| 201 | Ctrl+S |
-| 202 | 🌐 Télécharger la page HTML La page enregistrée contient le modèle chargé et vos réglages. |
-| 202 | Ctrl+Maj+S |
-| 209 | 📖 Aide complète 🎓 Visite guidée |
-| 211 | 🎯 Visite de cette vue |
-| 212 | 🎯 Chargez un modèle pour la visite de chaque vue. |
-| 218 | 🎨 Personnaliser… |
-| 222 | 📌 épingle une vue en bouton direct dans la barre. |
-| 227 | 🗺 Relation Map |
-| 227 | @table |
-| 227 | 📊 Table View |
-| 229 | Aucune vue ne correspond. |
-| 235 | Menu |
-| 235 | ▾ dans la barre |
-| 236 | Autres vues |
-| 239 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
+| 204 | 💾 Enregistrer sous… |
+| 204 | Ctrl+S |
+| 205 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les colonnes et vues du 📋 Tableau et de la 📊 Table View, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. |
+| 205 | Ctrl+Maj+S |
+| 216 | 📖 Aide complète 🎓 Visite guidée |
+| 218 | 🎯 Visite de cette vue |
+| 219 | 🎯 Chargez un modèle pour la visite de chaque vue. |
+| 225 | 🎨 Personnaliser… |
+| 229 | 📌 épingle une vue en bouton direct dans la barre. |
+| 234 | 🗺 Relation Map |
+| 234 | @table |
+| 234 | 📊 Table View |
+| 236 | Aucune vue ne correspond. |
+| 242 | Menu |
+| 242 | ▾ dans la barre |
+| 243 | Autres vues |
+| 246 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
 
 ## js/42-tableaux-analyses.js
 
@@ -3092,3 +3096,37 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 418 | 📋 Copier |
 | 422 | Comparaison de versions |
 | 427 | Fenêtre bloquée par le navigateur : utilisez ⬇ HTML puis imprimez le fichier. |
+
+## js/46-config-interface.js
+
+| Ligne | Texte |
+|---:|---|
+| 10 | ☰ Barre des vues |
+| 10 | menus affichés, vues épinglées |
+| 11 | 📐 Tableaux de bord |
+| 11 | pages, indicateurs, disposition |
+| 12 | 📋 Tableau |
+| 12 | colonnes affichées, colonnes personnalisées, filtres, largeurs |
+| 13 | 📊 Table View |
+| 13 | onglets de vues, colonnes personnalisées, tri, filtres, largeurs |
+| 14 | 🎨 Thème |
+| 14 | thème choisi et thème personnalisé |
+| 15 | 🔤 Règles de nommage |
+| 15 | verbes acceptés, mots refusés |
+| 80 | Vues enregistrées illisibles : |
+| 94 | perso) |
+| 96 | ⚙ Enregistrer l'interface et les vues |
+| 96 | ⚙ Charger une interface et des vues |
+| 98 | Fichier .json sans le modèle : à recharger avec un autre modèle ou une nouvelle version de la page. |
+| 99 | Fichier enregistré le |
+| 99 | . Les parties cochées remplaceront les réglages actuels. |
+| 101 | Annuler |
+| 101 | Ce fichier ne contient aucun réglage reconnu. |
+| 104 | 💾 Enregistrer |
+| 104 | 📂 Appliquer |
+| 116 | Réglage « |
+| 116 | » non appliqué : |
+| 117 | réglage(s) appliqué(s) |
+| 128 | Fichier illisible : JSON invalide. |
+| 129 | Ce fichier n'est pas un fichier « interface et vues » de Relation Map Capella. |
+| 138 | Ouvrez d'abord un modèle Capella : la mise à jour se compare au modèle affiché. |

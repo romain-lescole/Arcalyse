@@ -34,6 +34,7 @@ let capLoaded=false;
  * rouverte se comporte donc exactement comme l'état actuel, fichier Capella déjà chargé.
  * @returns {string} Document HTML complet */
 function capBuildPageHtml(){
+  capCfgStoreViews();   // 📋 Tableau, 📊 Table View et thème choisi mémorisés dans la page (46-config-interface.js)
   // Clone le document actuel tel quel
   const doc = document.documentElement.cloneNode(true);
 
