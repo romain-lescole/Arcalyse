@@ -70,7 +70,7 @@ var CAP_TOUR_EXPLORE=[
 ];
 /** Étapes communes aux vues de 📡 Flux & interfaces (onglets de navigation). */
 var CAP_TOUR_FLUX={s:'#cap-flux-tabs', t:'📡 Flux & interfaces',
-  x:'Ces onglets passent d\'une vue d\'interfaces à l\'autre : <b>🧱 Composants</b>, <b>🔀 Component Exchange</b>, <b>⇆ Functional Exchange</b>, <b>🔌 Physical Link</b> et <b>🧩 Ports</b>.'};
+  x:'Ces onglets passent d\'une vue d\'interfaces à l\'autre : <b>🧱 System / Logical Component</b>, <b>🔀 Behavior Exchange</b>, <b>⇆ Functional Exchange</b>, <b>🔌 Physical Link</b> et <b>🧩 Ports</b>.'};
 /** Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »). */
 var CAP_TOUR_ANA_TXT={
   trace:'<b>🧬 Traçabilité inter-couches</b> : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés.',
@@ -150,20 +150,26 @@ var CAP_TOUR_VIEWS={
     {s:'#cap-view-chains .cap-chx-bar', t:'📦 Export groupé', x:'Cochez des chaînes (aucune = toutes celles affichées) puis exportez-les en <b>PDF</b>, <b>ZIP</b> d\'images PNG ou SVG, ou <b>HTML</b>. Les cases règlent le contenu (cadre, cartouche, légende, description, annexes), la liste ×1 / ×2 la résolution.'},
     {s:'#cap-view-chains .cap-chain-card', one:true, t:'▦ Carte de chaîne', x:'Clic pour déplier le diagramme : fonctions, échanges, entrées / sorties. Le bouton 🗺 l\'ouvre dans la Relation Map.'},
     {s:'#cap-chainmap-wrap', t:'🗺 Vue Relation Map', x:'Graphe interactif de la chaîne choisie : dispositions, zoom et export.'}]},
-  compex:{l:'🔀 Component Exchange', steps:[CAP_TOUR_FLUX,
+  compex:{l:'🔀 Behavior Exchange', steps:[CAP_TOUR_FLUX,
+    {s:'#cap-view-compex .cap-mx-hint', t:'🎯 Périmètre', x:'Component Exchanges de la couche PA entre Physical Components Behavior. Les échanges SA et LA sont dans 🧱 System / Logical Component, les liens entre nœuds dans 🔌 Physical Link.'},
     {s:'#cap-view-compex .phl-toggle-btn', t:'🖼 Présentation', x:'<b>≡ Vue Ligne</b> : un échange par ligne · <b>▣ Vue Composant</b> : regroupé par composant · <b>▦ Matrice</b> : composant × composant · <b>🩺 Contrôles</b> : anomalies détectées.'},
     {s:'#cex-counter', t:'🔢 Compteur', x:'Échanges affichés après filtres / total.'},
     {s:'#cap-view-compex .cex-dir-btn,#cex-kind-sel', t:'⇄ Sens et nature', x:'Filtre par sens de l\'échange (orienté, inversé, bidirectionnel) et par nature (FLOW…).'},
     {s:'#cex-node-input,#cex-name-input', t:'🔍 Filtres', x:'Par composant, ou par nom d\'échange, d\'échange fonctionnel ou d\'Exchange Item.'},
     {s:'#cex-exp-csv,#cex-exp-html,#cex-exp-html-all', t:'⬇ Exports', x:'CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues.'},
     {s:'#cex-main', t:'📋 Résultat', x:'Clic sur un composant ou un échange pour ouvrir son détail.'}]},
-  cblk:{l:'🧱 Composants', steps:[CAP_TOUR_FLUX,
-    {s:'#cap-view-cblk .phl-toggle-btn', t:'🖼 Présentation', x:'<b>◧ Vue Blocs</b> : composants dessinés comme dans Capella (bleu = système, bleu clair = acteur, jaune = nœud ; ports UNSET plein, IN / OUT avec chevron, INOUT vide ; clic sur un composant distant = aller à son bloc) · <b>≡ Vue Ligne</b> · <b>▦ Matrice</b> · <b>🩺 Contrôles</b>.'},
-    {s:'#cb-counter', t:'🔢 Compteur', x:'Composants (ou échanges) affichés après filtres / total. Les listes sont paginées par 100.'},
-    {s:'#cap-view-cblk .cb-layer-btn', t:'🧱 Couche', x:'Couche ARCADIA (LA par défaut).'},
-    {s:'#cap-view-cblk .ana-ak', t:'🧩 Nature', x:'Système, acteurs ou nœuds (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants.'},
-    {s:'#cb-csv,#cb-html,#cb-html-all', t:'⬇ Exports', x:'CSV (ports ou échanges), rapport HTML de la vue ou de toutes les vues.'},
-    {s:'#cb-main', t:'📋 Résultat', x:'Clic sur un nom pour ouvrir son détail ; clic sur un composant distant pour aller à son bloc.'}]},
+  csys:{l:'🧱 System Component', steps:[CAP_TOUR_FLUX,
+    {s:'#cap-view-csys .phl-toggle-btn', t:'🖼 Présentation', x:'<b>◧ Vue Blocs</b> : System Components dessinés comme dans Capella (bleu = système, bleu clair = acteur ; ports UNSET plein, IN / OUT avec chevron, INOUT vide ; clic sur un composant distant = aller à son bloc) · <b>▣ Vue Composant</b> : échanges par composant · <b>≡ Vue Ligne</b> · <b>▦ Matrice</b> · <b>🩺 Contrôles</b>.'},
+    {s:'#cap-view-csys #cb-counter', t:'🔢 Compteur', x:'Composants (ou échanges) affichés après filtres / total (SA uniquement). Les listes sont paginées par 100.'},
+    {s:'#cap-view-csys .ana-ak', t:'🧩 Nature', x:'Système ou acteurs (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants.'},
+    {s:'#cap-view-csys #cb-csv,#cap-view-csys #cb-html,#cap-view-csys #cb-html-all', t:'⬇ Exports', x:'CSV (ports ou échanges), rapport HTML de la vue ou de toutes les vues.'},
+    {s:'#cap-view-csys #cb-main', t:'📋 Résultat', x:'Clic sur un nom pour ouvrir son détail ; clic sur un composant distant pour aller à son bloc ou à sa carte.'}]},
+  cblk:{l:'🧱 Logical Component', steps:[CAP_TOUR_FLUX,
+    {s:'#cap-view-cblk .phl-toggle-btn', t:'🖼 Présentation', x:'<b>◧ Vue Blocs</b> : Logical Components dessinés comme dans Capella (bleu = système, bleu clair = acteur ; ports UNSET plein, IN / OUT avec chevron, INOUT vide ; clic sur un composant distant = aller à son bloc) · <b>▣ Vue Composant</b> : échanges par composant · <b>≡ Vue Ligne</b> · <b>▦ Matrice</b> · <b>🩺 Contrôles</b>.'},
+    {s:'#cap-view-cblk #cb-counter', t:'🔢 Compteur', x:'Composants (ou échanges) affichés après filtres / total (LA uniquement). Les listes sont paginées par 100.'},
+    {s:'#cap-view-cblk .ana-ak', t:'🧩 Nature', x:'Système ou acteurs (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants.'},
+    {s:'#cap-view-cblk #cb-csv,#cap-view-cblk #cb-html,#cap-view-cblk #cb-html-all', t:'⬇ Exports', x:'CSV (ports ou échanges), rapport HTML de la vue ou de toutes les vues.'},
+    {s:'#cap-view-cblk #cb-main', t:'📋 Résultat', x:'Clic sur un nom pour ouvrir son détail ; clic sur un composant distant pour aller à son bloc ou à sa carte.'}]},
   fex:{l:'⇆ Functional Exchange', steps:[CAP_TOUR_FLUX,
     {s:'#cap-view-fex .phl-toggle-btn', t:'🖼 Présentation', x:'<b>◧ Vue Blocs</b> : fonctions dessinées comme dans Capella (vert = système, bleu = acteur, gris = non allouée ; pins d\'entrée verts à gauche, de sortie orange à droite ; clic sur une fonction distante = aller à son bloc) · <b>≡ Vue Ligne</b> : un échange par ligne · <b>▣ Vue Fonction</b> : regroupé par fonction · <b>▦ Matrice</b> fonction × fonction · <b>🩺 Contrôles</b>.'},
     {s:'#cap-view-fex .ana-ak', t:'🧩 Allocation', x:'Fonctions du système, des acteurs ou non allouées (double-clic : uniquement celles-ci), ou d\'un allocataire précis : acteur, système ou sous-système (sous-composants compris) ; en OA, entités et acteurs opérationnels.'},

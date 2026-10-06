@@ -1,12 +1,17 @@
-/* ══ 🧱 COMPOSANTS (VUE BLOCS) ════════════════════════════════════════════════════
- * Même logique que ⇆ Functional Exchange, pour les composants (Logical Component par défaut, toutes couches) :
- * ◧ Vue Blocs (chaque composant dessiné comme dans Capella : boîte bleue pour le système, bleu clair pour un acteur,
- * jaune pour un nœud physique ; Component Ports sur les bords selon leur orientation UNSET / IN / OUT / INOUT ;
- * à côté de chaque port, le Component Exchange et le composant distant, cliquable pour aller à son bloc),
- * ≡ Vue Ligne, ▦ Matrice composant × composant, 🩺 Contrôles. Pagination par 100 ; matrice limitée à 100 composants.
+/* ══ 🧱 LOGICAL COMPONENT / 🧱 SYSTEM COMPONENT (VUE BLOCS) ═════════════════════════
+ * Même logique que ⇆ Functional Exchange, pour les composants d'une couche : 🧱 Logical Component (LA) et
+ * 🧱 System Component (SA), même code et mêmes couleurs.
+ * ◧ Vue Blocs (chaque composant dessiné comme dans Capella : boîte bleue pour le système, bleu clair pour un acteur ;
+ * Component Ports sur les bords selon leur orientation UNSET / IN / OUT / INOUT ; à côté de chaque port, le
+ * Component Exchange et le composant distant, cliquable pour aller à son bloc), ▣ Vue Composant (échanges par
+ * composant), ≡ Vue Ligne, ▦ Matrice composant × composant, 🩺 Contrôles. Pagination par 100 ; matrice ≤ 100 composants.
+ * (Les Physical Components sont traités par 🔀 Behavior Exchange et 🔌 Physical Link.)
  */
 var CAP_CB_PAGE=100, CAP_CB_MX_MAX=100;
-var _capCbView='block';
+var _capCbView={LA:'block', SA:'block'};
+/** Vues 🧱 par couche : conteneur, clé de vue (barre), libellé. */
+var CAP_CB_LAYERS={LA:{view:'cblk', box:'cap-view-cblk', l:'🧱 Logical Component', what:'Logical Components'},
+                   SA:{view:'csys', box:'cap-view-csys', l:'🧱 System Component', what:'System Components'}};
 /** Types de composants dessinés (versions récentes et anciennes de Capella). */
 var CAP_CB_TYPES=/^(Entity|SystemComponent|LogicalComponent|PhysicalComponent|SystemActor|LogicalActor|PhysicalActor|OperationalActor)$/;
 
@@ -65,28 +70,38 @@ function capCbChecks(layer){
  */
 function capCbDashCatalog(add, LC){
   const C=()=>capComputeComponentBlocks();
-  add('Composants','cb.n','Composants — nombre par couche','series',()=>({order:'natural',cats:CAP_ANA_LAYERS.map(k=>({l:k,v:C().comps.filter(c=>c.layer===k).length,c:LC(k)})).filter(c=>c.v)}));
-  add('Composants','cb.ports','Composants — ports connectés','pct',()=>capDashPct(C().comps.flatMap(c=>c.ports),p=>(C().portLinks[p.id]||[]).length),'Component Ports reliés à au moins un Component Exchange');
-  add('Composants','cb.chk','Composants — contrôles','series',()=>({cats:capCbChecks().map(s=>({l:s.title,v:s.items.length})).filter(c=>c.v).sort((a,b)=>b.v-a.v)}));
+  Object.entries(CAP_CB_LAYERS).forEach(([L,V])=>{
+    const cs=()=>C().comps.filter(c=>c.layer===L), g=V.l.replace('🧱 ','');
+    add(g,'cb.n.'+L,`${V.what} — nombre`,'n',()=>({n:cs().length, sub:`dont ${cs().filter(c=>c.actor).length} acteur(s)`}));
+    add(g,'cb.ports.'+L,`${V.what} — ports connectés`,'pct',()=>capDashPct(cs().flatMap(c=>c.ports),p=>(C().portLinks[p.id]||[]).length),'Component Ports reliés à au moins un Component Exchange');
+    add(g,'cb.chk.'+L,`${V.what} — contrôles`,'series',()=>({cats:capCbChecks(L).map(s=>({l:s.title,v:s.items.length})).filter(c=>c.v).sort((a,b)=>b.v-a.v)}));
+  });
 }
 
-/** Rend la vue 🧱 Composants (barre, filtres, contenu paginé, exports). */
-function capRenderComponentBlocks(){
-  const container=document.getElementById('cap-view-cblk'); if(!container) return;
-  const C=capComputeComponentBlocks(), allLinks=C.links;
-  const layersPresent=CAP_ANA_LAYERS.filter(k=>C.comps.some(c=>c.layer===k));
-  if(!container._cb) container._cb={view:_capCbView, layer:layersPresent.includes('LA')?'LA':'all', name:'', ex:'', withPorts:true, page:0, nk:new Set(['sys','act','node']), under:'', back:null};
-  const st=container._cb;
-  const NK={sys:{i:'🧩',l:'Système',c:'#58a6ff',tip:'Composants du système'},act:{i:'👤',l:'Acteurs',c:'#7fd8ff',tip:'Acteurs externes'},node:{i:'🖥',l:'Nœuds',c:'#e3b341',tip:'Composants physiques de nature NODE (couche PA)'}};
+/** Rend la vue 🧱 d'une couche (barre, filtres, contenu paginé, exports).
+ * @param {'LA'|'SA'} [L] - Couche : LA (🧱 Logical Component, défaut) ou SA (🧱 System Component)
+ */
+function capRenderComponentBlocks(L){
+  L=CAP_CB_LAYERS[L]?L:'LA';
+  const V0=CAP_CB_LAYERS[L];
+  const container=document.getElementById(V0.box); if(!container) return;
+  const C0=capComputeComponentBlocks();
+  // Périmètre : composants et échanges de la couche (byId reste global pour les composants distants)
+  const C={...C0, comps:C0.comps.filter(c=>c.layer===L)};
+  const allLinks=C0.links.filter(l=>l.layer===L);
+  if(!container._cb) container._cb={view:_capCbView[L], layer:L, name:'', ex:'', withPorts:C.comps.some(c=>c.ports.length),   // « avec ports » seulement si la couche a des ports
+    page:0, nk:new Set(['sys','act']), under:'', back:null};
+  const st=container._cb; st.layer=L;
+  const NK={sys:{i:'🧩',l:'Système',c:'#58a6ff',tip:'Composants du système'},act:{i:'👤',l:'Acteurs',c:'#7fd8ff',tip:'Acteurs externes'},node:{i:'🖥',l:'Nœuds',c:'#e3b341',tip:'Nœud'}};
   const LINK_COLORS=['#0ea5e9','#f97316','#22c55e','#a855f7','#ef4444','#eab308','#06b6d4','#ec4899','#84cc16','#6366f1','#14b8a6'];
   const lnum={}; allLinks.forEach((l,i)=>lnum[l.linkId]=i+1);
   const lc=l=>LINK_COLORS[(lnum[l.linkId]||0)%LINK_COLORS.length];
   const det=(id,label,extra)=>`<span class="cex-det" style="cursor:pointer;${extra||''}" onclick="event.stopPropagation();capOpenDetailById('${capEsc(id)}')">${capEsc(label)}</span>`;
   const kindOf=id=>{ const c=C.byId[id]; return c?c.kind:'sys'; };
-  const nkOn=()=>{ const present=Object.keys(NK).filter(k=>C.comps.some(c=>c.kind===k&&(st.layer==='all'||c.layer===st.layer))); return present.some(k=>!st.nk.has(k)); };
+  const nkOn=()=>['sys','act'].some(k=>!st.nk.has(k));
   /** Vrai si le composant est le composant choisi ou l'un de ses sous-composants. */
   const underOk=id=>{ if(!st.under) return true; for(let c=C.byId[id]; c; c=C.byId[c.parent]) if(c.id===st.under) return true; return false; };
-  const compOk=c=>(st.layer==='all'||c.layer===st.layer)&&(!nkOn()||st.nk.has(c.kind))&&underOk(c.id);
+  const compOk=c=>c.layer===L&&(!nkOn()||st.nk.has(c.kind))&&underOk(c.id);
 
   /** Composants retenus par les filtres (Vue Blocs). */
   function getComps(){
@@ -103,7 +118,6 @@ function capRenderComponentBlocks(){
   function getLinks(){
     const nf=st.name.trim().toLowerCase(), xf=st.ex.trim().toLowerCase();
     return allLinks.filter(l=>{
-      if(st.layer!=='all'&&l.layer!==st.layer) return false;
       const a=C.byId[l.src.pcId], b=C.byId[l.tgt.pcId];
       if(!((a&&compOk(a))||(b&&compOk(b)))) return false;
       if(nf&&!l.src.pcName.toLowerCase().includes(nf)&&!l.tgt.pcName.toLowerCase().includes(nf)) return false;
@@ -168,6 +182,40 @@ function capRenderComponentBlocks(){
     }).join('');
   }
 
+  /** Vue Composant : une carte par composant, avec ses échanges (émis, reçus, bidirectionnels, non orientés).
+   * @param {object[]} cs - Composants @param {boolean} [open] - Cartes dépliées (rapports) */
+  function buildCards(cs, open){
+    const R={out:{a:'→',c:'#4dd880',l:'ÉMET →',t:'Émission'},in:{a:'←',c:'#f0883e',l:'← REÇOIT',t:'Réception'},bi:{a:'⇄',c:'#a371f7',l:'⇄ ÉCHANGE',t:'Bidirectionnel'},unset:{a:'—',c:'#8b949e',l:'? N.O.',t:'Non orienté'}};
+    return cs.map(c=>{
+      const rows=[]; c.ports.forEach(p=>(C.portLinks[p.id]||[]).forEach(l=>rows.push({l,p})));
+      const role=(l,pid)=>{ const r=roleOf(l,pid); return r==='vers'?'out':r==='de'?'in':r==='⇄'?'bi':'unset'; };
+      const cnt={out:0,in:0,bi:0,unset:0}; rows.forEach(x=>cnt[role(x.l,x.p.id)]++);
+      const col=NK[c.kind].c, o=open||st.openCard===c.id?' open':'';
+      const body=rows.length?rows.map(({l,p})=>{ const rr=R[role(l,p.id)], ot=l.src.portId===p.id?l.tgt:l.src, op=l.src.portId===p.id?l.tgt.portOrient:l.src.portOrient;
+        return `<div class="phl-link-row">
+          <span style="font-size:10px;color:var(--c-dim);font-family:monospace;min-width:28px;">#${lnum[l.linkId]}</span>
+          <span title="${rr.t}" style="font-size:9px;font-weight:700;color:${rr.c};min-width:58px;">${rr.l}</span>
+          <span class="phl-lr-port-src">${port(p.orient,'R',false)} ${capEsc(p.name)}</span>
+          <span class="phl-lr-arrow" style="color:${rr.c};font-weight:700;">${rr.a}</span>
+          <span class="phl-lr-link" style="background:${lc(l)};color:#fff;border-color:${lc(l)};cursor:pointer;" title="${capEsc([l.kind!=='UNSET'?l.kind:'',l.fes.length?'FE : '+l.fes.map(f=>f.name).join(', '):''].filter(Boolean).join('\n'))}" onclick="event.stopPropagation();capOpenDetailById('${capEsc(l.linkId)}')">${capEsc(l.linkName)}</span>
+          <span class="phl-lr-arrow" style="color:${rr.c};font-weight:700;">${rr.a}</span>
+          <span class="phl-lr-port-tgt">${port(op,'L',false)} ${capEsc(ot.portName)}</span>
+          <span class="fex-go phl-lr-comp-tgt" data-go="${capEsc(ot.pcId)}" title="Aller à ce composant" style="color:${capTextOn(NK[kindOf(ot.pcId)].c)}">${capEsc(ot.pcName)}</span>
+          ${l.warn?`<span title="⚠ ${capEsc(l.warn)}" style="color:var(--c-warn,#e3b341)">⚠</span>`:''}
+        </div>`; }).join(''):'<div class="phl-link-row fex-dim"><i>Aucun Component Exchange</i></div>';
+      const cntTxt=[cnt.out&&`${cnt.out} →`,cnt.in&&`${cnt.in} ←`,cnt.bi&&`${cnt.bi} ⇄`,cnt.unset&&`${cnt.unset} ?`].filter(Boolean).join(' · ');
+      return `<div class="phl-comp-card" data-cid="${capEsc(c.id)}">
+        <div class="phl-comp-hdr${o}" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open');this.querySelector('.phl-comp-toggle').classList.toggle('open')">
+          <span class="phl-comp-badge" style="background:${col};color:${capInk(col)}">${c.actor?'👤 Acteur':'🧩 '+capEsc(capAnaHuman(c.type))}</span>
+          <span class="phl-comp-title" style="color:${capTextOn(col)}">${capEsc(c.name)}</span>
+          <span class="phl-comp-cnt" title="émis · reçus · bidirectionnels · non orientés">${rows.length} exchange${rows.length>1?'s':''}${cntTxt?` (${cntTxt})`:''} · ${c.ports.length} port${c.ports.length>1?'s':''}${c.fns.length?` · ƒ ${c.fns.length}`:''}</span>
+          <span class="phl-comp-toggle${o}">▶</span>
+        </div>
+        <div class="phl-comp-body${o}">${body}</div>
+      </div>`;
+    }).join('');
+  }
+
   /** Pagination : page courante et barre ◀ ▶. */
   function paged(items, unit){
     const pages=Math.max(1,Math.ceil(items.length/CAP_CB_PAGE)); if(st.page>=pages) st.page=pages-1;
@@ -179,7 +227,14 @@ function capRenderComponentBlocks(){
   /** Contenu selon la vue (forceView : rendu complet sans pagination, pour les rapports). */
   function buildContent(forceView){
     const view=forceView||st.view, all=!!forceView;
-    if(view==='diag') return capDiagHtml(capCbChecks(st.layer));
+    if(view==='diag') return capDiagHtml(capCbChecks(L));
+    if(view==='card'){
+      const cs=getComps(); if(!cs.length) return '<div class="phl-empty">Aucun composant ne correspond au filtre.</div>';
+      if(all) return buildCards(cs,true);
+      const p=paged(cs,'Composants'), bc=st.back&&C.byId[st.back];
+      const back=bc?`<div class="fex-backbar"><button class="cap-lf-btn" id="cb-back">↩ Revenir à « ${capEsc(bc.name)} »</button></div>`:'';
+      return back+p.bar+buildCards(p.slice)+p.bar;
+    }
     if(view==='block'){
       const cs=getComps(); if(!cs.length) return '<div class="phl-empty">Aucun composant ne correspond au filtre.</div>';
       if(all) return buildBlocks(cs);
@@ -202,13 +257,13 @@ function capRenderComponentBlocks(){
   /** Affiche le bloc d'un composant (page, filtres relâchés si besoin) ; ↩ ramène au bloc de départ.
    * @param {string} id - Composant cible @param {string} [from] - Composant de départ */
   function gotoComp(id, from){
-    if(st.view!=='block'){ st.view='block'; }
+    if(st.view!=='block'&&st.view!=='card') st.view='block';
+    const c0=C.byId[id]; if(!c0||c0.layer!==L){ capOpenDetailById(id); return; }   // composant d'une autre couche : panneau de détail
     let cs=getComps(), i=cs.findIndex(c=>c.id===id);
-    if(i<0){ const c=C.byId[id]; if(!c) return;
-      st.name=''; st.ex=''; st.nk=new Set(Object.keys(NK)); st.under=''; st.withPorts=false; if(st.layer!=='all'&&st.layer!==c.layer) st.layer=c.layer;
+    if(i<0){ st.name=''; st.ex=''; st.nk=new Set(['sys','act']); st.under=''; st.withPorts=false;
       cs=getComps(); i=cs.findIndex(c=>c.id===id); if(i<0) return; }
-    st.page=Math.floor(i/CAP_CB_PAGE); st.back=from||null; render();
-    const el=container.querySelector(`.fex-blk[data-fn="${CSS.escape(id)}"]`); if(!el) return;
+    st.page=Math.floor(i/CAP_CB_PAGE); st.back=from||null; st.openCard=id; render();
+    const el=container.querySelector(st.view==='card'?`.phl-comp-card[data-cid="${CSS.escape(id)}"]`:`.fex-blk[data-fn="${CSS.escape(id)}"]`); if(!el) return;
     el.scrollIntoView({block:'center'}); el.classList.add('fex-flash'); setTimeout(()=>el.classList.remove('fex-flash'),1800);
   }
 
@@ -216,7 +271,7 @@ function capRenderComponentBlocks(){
   function wireMain(){
     const main=container.querySelector('#cb-main'); if(!main) return;
     main.querySelectorAll('[data-pg]').forEach(b=>b.addEventListener('click',()=>{ st.page+=+b.dataset.pg; updateContent(); container.scrollTop=0; }));
-    main.querySelectorAll('[data-go]').forEach(a=>a.onclick=ev=>{ ev.stopPropagation(); gotoComp(a.dataset.go, a.closest('.fex-blk')?.dataset.fn); });
+    main.querySelectorAll('[data-go]').forEach(a=>a.onclick=ev=>{ ev.stopPropagation(); gotoComp(a.dataset.go, a.closest('.fex-blk')?.dataset.fn||a.closest('.phl-comp-card')?.dataset.cid); });
     main.querySelector('#cb-back')?.addEventListener('click',()=>{ const b=st.back; st.back=null; if(b) gotoComp(b); });
     if(st.view!=='matrix') return;
     main.querySelectorAll('.cap-mx-cell').forEach(td=>td.addEventListener('click',()=>{
@@ -225,10 +280,10 @@ function capRenderComponentBlocks(){
     }));
   }
   /** Texte du compteur. */
-  const counterText=()=>st.view==='block'?`${getComps().length}/${C.comps.length} composants`:`${getLinks().length}/${allLinks.length} exchanges`;
+  const counterText=()=>(st.view==='block'||st.view==='card')?`${getComps().length}/${C.comps.length} composants`:`${getLinks().length}/${allLinks.length} exchanges`;
   /** Rafraîchit le contenu et le compteur. */
   function updateContent(){
-    _capCbView=st.view;
+    _capCbView[L]=st.view;
     const ctr=container.querySelector('#cb-counter'); if(ctr) ctr.textContent=counterText();
     const main=container.querySelector('#cb-main'); if(main) main.innerHTML=buildContent();
     wireMain();
@@ -236,22 +291,23 @@ function capRenderComponentBlocks(){
 
   /** Liste « Tous les composants » : arbre des composants de la couche (filtre sur un composant et ses sous-composants). */
   function underSelect(){
-    const cs=C.comps.filter(c=>(st.layer==='all'||c.layer===st.layer)&&c.children.length);
+    const cs=C.comps.filter(c=>c.children.length);
     if(!cs.length) return '';
     const roots=cs.filter(c=>!c.parent||!cs.some(x=>x.id===c.parent));
-    const opt=(c,d)=>`<option value="${capEsc(c.id)}"${st.under===c.id?' selected':''}>${'  '.repeat(d)}${d?'└':'▣'} ${capEsc((st.layer==='all'?`[${c.layer}] `:'')+c.name)} (${c.children.length})</option>`+
+    const opt=(c,d)=>`<option value="${capEsc(c.id)}"${st.under===c.id?' selected':''}>${'\u00a0\u00a0'.repeat(d)}${d?'└':'▣'} ${capEsc(c.name)} (${c.children.length})</option>`+
       c.children.map(k=>C.byId[k]).filter(k=>k&&k.children.length).sort((a,b)=>a.name.localeCompare(b.name)).map(k=>opt(k,d+1)).join('');
     return `<select id="cb-under" class="phl-filter-input" style="max-width:230px${st.under?';border-color:var(--c-accent)':''}" title="Un composant et ses sous-composants"><option value="">Tous les composants</option>${roots.map(r=>opt(r,0)).join('')}</select>${st.under?'<button class="cap-lf-btn" id="cb-under-x" title="Retirer ce filtre">✕</button>':''}`;
   }
 
   /** Rapport HTML autonome (vue courante ou toutes les vues). */
   function exportHtml(all){
-    const VIEWS=[['block','◧ Vue Blocs'],['line','≡ Vue Ligne'],['matrix','▦ Matrice'],['diag','🩺 Contrôles']];
+    const VIEWS=[['block','◧ Vue Blocs'],['card','▣ Vue Composant'],['line','≡ Vue Ligne'],['matrix','▦ Matrice'],['diag','🩺 Contrôles']];
     const keys=all?VIEWS.map(v=>v[0]):[st.view];
     const tabs=VIEWS.filter(v=>keys.includes(v[0])||(v[0]==='line'&&keys.includes('matrix'))).map(([k,label])=>({key:k,label,html:buildContent(k)}));
     const cells={}; Object.entries(container._cbCells||{}).forEach(([k,ls])=>cells[k]=ls.map(l=>l.linkId));
-    capHtmlReport({title:'🧱 Composants', subtitle:`${getComps().length} composants · ${getLinks().length} Component Exchanges${st.layer!=='all'?' · couche '+st.layer:''}`, tabs, active:st.view, cells,
-      filename:all?'composants-rapport.html':`composants-${st.view}.html`});
+    const fn=V0.what.toLowerCase().replace(/\s+/g,'-');
+    capHtmlReport({title:V0.l, subtitle:`${getComps().length} composants · ${getLinks().length} Component Exchanges · couche ${L}`, tabs, active:st.view, cells,
+      filename:all?`${fn}-rapport.html`:`${fn}-${st.view}.html`});
   }
   /** Export CSV : une ligne par port (Vue Blocs) ou par échange. */
   function exportCsv(){
@@ -259,34 +315,35 @@ function capRenderComponentBlocks(){
       const rows=[]; getComps().forEach(c=>c.ports.forEach(p=>{ const ls=C.portLinks[p.id]||[];
         if(!ls.length) rows.push([c.layer,c.name,c.actor?'Acteur':c.kind==='node'?'Nœud':'Système',p.name,p.orient,'','','']);
         ls.forEach(l=>{ const o=l.src.portId===p.id?l.tgt:l.src; rows.push([c.layer,c.name,c.actor?'Acteur':c.kind==='node'?'Nœud':'Système',p.name,p.orient,l.linkName,roleOf(l,p.id),o.pcName]); }); }));
-      capCsvDownload('composants-ports.csv',['Couche','Composant','Nature','Port','Orientation','Component Exchange','Sens','Composant distant'],rows); return;
+      capCsvDownload(V0.what.toLowerCase().replace(/\s+/g,'-')+'-ports.csv',['Couche','Composant','Nature','Port','Orientation','Component Exchange','Sens','Composant distant'],rows); return;
     }
-    capCsvDownload('composants-echanges.csv',['N°','Couche','Composant source','Port source','Orientation source','Component Exchange','Kind','Port cible','Orientation cible','Composant cible','Functional Exchanges'],
+    capCsvDownload(V0.what.toLowerCase().replace(/\s+/g,'-')+'-echanges.csv',['N°','Couche','Composant source','Port source','Orientation source','Component Exchange','Kind','Port cible','Orientation cible','Composant cible','Functional Exchanges'],
       getLinks().map(l=>[lnum[l.linkId],l.layer,l.src.pcName,l.src.portName,l.src.portOrient,l.linkName,l.kind,l.tgt.portName,l.tgt.portOrient,l.tgt.pcName,l.fes.map(f=>f.name).join(', ')]));
   }
 
   /** Construit toute la vue. */
   function render(){
-    _capCbView=st.view;
-    if(st.under&&!C.byId[st.under]) st.under='';
-    const V=[['block','◧ Vue Blocs','Composants dessinés comme dans Capella : ports UNSET (plein), IN, OUT (chevrons) et INOUT (vide) ; bleu = système, bleu clair = acteur, jaune = nœud'],
+    _capCbView[L]=st.view;
+    if(st.under&&!(C.byId[st.under]&&C.byId[st.under].layer===L)) st.under='';
+    if(!C.comps.length){ container.innerHTML=`<div class="phl-empty">Aucun ${V0.what.replace(/s$/,'')} dans ce modèle (couche ${L}).</div>`; return; }
+    const V=[['block','◧ Vue Blocs','Composants dessinés comme dans Capella : ports UNSET (plein), IN, OUT (chevrons) et INOUT (vide) ; bleu = système, bleu clair = acteur'],
+      ['card','▣ Vue Composant','Une carte par composant avec ses échanges émis, reçus, bidirectionnels ou non orientés'],
       ['line','≡ Vue Ligne','Un Component Exchange par ligne'],['matrix','▦ Matrice','Composant × composant (100 composants au plus)'],['diag','🩺 Contrôles','Ports orphelins ou sans orientation, échanges incohérents, composants sans port ou sans fonction']];
-    const base=C.comps.filter(c=>(st.layer==='all'||c.layer===st.layer)&&underOk(c.id)&&!(st.view==='block'&&st.withPorts&&!c.ports.length));
-    const kinds=Object.keys(NK).filter(k=>C.comps.some(c=>c.kind===k&&(st.layer==='all'||c.layer===st.layer)));
+    const pv=st.view==='block'||st.view==='card';
+    const base=C.comps.filter(c=>underOk(c.id)&&!(pv&&st.withPorts&&!c.ports.length));
+    const kinds=['sys','act'].filter(k=>C.comps.some(c=>c.kind===k));
     container.innerHTML=`
       <div class="phl-toggle-bar">
         ${V.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}
         <span id="cb-counter" style="font-size:11px;color:var(--c-dim);font-family:monospace;">${counterText()}</span>
-        <span style="display:flex;gap:4px;margin-left:12px;flex-wrap:wrap;">
-          ${[['all','Toutes',C.comps.length],...layersPresent.map(k=>[k,k,C.comps.filter(c=>c.layer===k).length])].map(([k,lab,n])=>`<button class="cap-lf-btn cb-layer-btn${st.layer===k?' active':''}" data-ly="${k}" title="Composants de la couche">${lab} (${n})</button>`).join('')}
-        </span>
+        <span class="cap-mx-hint" style="margin-left:12px">Couche ${L} · ${C.comps.length} ${V0.what} · ${allLinks.length} Component Exchanges</span>
       </div>
       <div class="phl-filter-bar" style="margin-bottom:8px;flex-wrap:wrap;">
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;">🧱 Composant :</span>
         <input id="cb-name" type="text" class="phl-filter-input" placeholder="Filtrer par composant…" value="${capEsc(st.name)}" style="width:180px;">
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;margin-left:8px;">🔍 Échange :</span>
         <input id="cb-ex" type="text" class="phl-filter-input" placeholder="Component Exchange…" value="${capEsc(st.ex)}" style="width:170px;">
-        ${st.view==='block'?`<label style="font-size:11px;color:var(--c-dim);display:flex;align-items:center;gap:4px;margin-left:8px;" title="Masquer les composants sans port (conteneurs le plus souvent)"><input type="checkbox" id="cb-withports"${st.withPorts?' checked':''}> avec ports</label>`:''}
+        ${pv?`<label style="font-size:11px;color:var(--c-dim);display:flex;align-items:center;gap:4px;margin-left:8px;" title="Masquer les composants sans port (conteneurs le plus souvent)"><input type="checkbox" id="cb-withports"${st.withPorts?' checked':''}> avec ports</label>`:''}
         <span class="tb-grp ana-ak" style="margin-left:8px" title="Clic : afficher / masquer · double-clic : uniquement celle-ci"><span class="tb-grp-l">Nature</span>${kinds.map(k=>`<label class="ana-ak-chip${st.nk.has(k)?' on':''}" style="--c:${NK[k].c}" title="${NK[k].tip} — double-clic : uniquement ceux-ci"><input type="checkbox" data-nk="${k}"${st.nk.has(k)?' checked':''}>${NK[k].i} ${NK[k].l} <b>${base.filter(c=>c.kind===k).length}</b></label>`).join('')}${underSelect()}</span>
         <div style="margin-left:auto;display:flex;gap:6px;">
           <button class="phl-export-btn" id="cb-csv">⬇ CSV</button>
@@ -296,11 +353,10 @@ function capRenderComponentBlocks(){
       </div>
       <div id="cb-main">${buildContent()}</div>`;
     container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.addEventListener('click',()=>{ st.view=b.dataset.pv; st.page=0; render(); }));
-    container.querySelectorAll('.cb-layer-btn').forEach(b=>b.addEventListener('click',()=>{ st.layer=b.dataset.ly; st.page=0; st.under=''; render(); }));
     container.querySelector('#cb-withports')?.addEventListener('change',e=>{ st.withPorts=e.target.checked; st.page=0; render(); });
     container.querySelectorAll('[data-nk]').forEach(cb=>{
       cb.onchange=()=>{ if(cb.checked) st.nk.add(cb.dataset.nk); else st.nk.delete(cb.dataset.nk); st.page=0; render(); };
-      cb.parentElement.ondblclick=ev=>{ ev.preventDefault(); const k=cb.dataset.nk; st.nk=(st.nk.size===1&&st.nk.has(k))?new Set(Object.keys(NK)):new Set([k]); st.page=0; render(); };
+      cb.parentElement.ondblclick=ev=>{ ev.preventDefault(); const k=cb.dataset.nk; st.nk=(st.nk.size===1&&st.nk.has(k))?new Set(['sys','act']):new Set([k]); st.page=0; render(); };
     });
     container.querySelector('#cb-under')?.addEventListener('change',e=>{ st.under=e.target.value; st.page=0; render(); });
     container.querySelector('#cb-under-x')?.addEventListener('click',()=>{ st.under=''; st.page=0; render(); });

@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3077 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3114 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -156,7 +156,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 440 | Nom de la colonne |
 | 441 | ex: Functions of Component  (infobulle) |
 | 442 | Créer la colonne |
-| 461 | Aucun élément ne correspond. |
+| 462 | Aucun élément ne correspond. |
 
 ## js/01-donnees-config.js
 
@@ -2029,60 +2029,61 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte |
 |---:|---|
-| 46 | Capella Project |
-| 76 | ⇄ INOUT |
-| 101 | Aucun component exchange ne correspond au filtre. |
-| 114 | Sens non défini |
-| 151 | ÉMET → |
-| 151 | Émission — ce composant envoie le signal |
-| 152 | ← REÇOIT |
-| 152 | Réception — ce composant reçoit le signal |
-| 153 | ⇄ ÉCHANGE |
-| 153 | Bidirectionnel — port INOUT |
-| 154 | Non orienté — aucun port IN/OUT/INOUT |
-| 170 | Items : |
-| 198 | Component Exchange |
-| 198 | Source |
-| 198 | Cible |
-| 198 | Couche |
-| 202 | Exchanges sans Functional Exchange alloué |
-| 202 | Aucune ComponentExchangeFunctionalExchangeAllocation |
-| 203 | Ports orphelins (ComponentPort sans exchange) |
-| 203 | Port défini sur un composant mais relié à aucun Component Exchange |
-| 203 | Composant |
-| 203 | Port |
-| 203 | Orientation |
-| 203 | Couche |
-| 205 | Orientations de ports incohérentes |
-| 205 | OUT→OUT ou IN→IN hors délégation |
-| 206 | Exchanges non orientés |
-| 206 | Les deux ports sont UNSET : le sens du flux est inconnu |
-| 207 | Exchanges de couche PA non alloués à un Physical Link |
-| 207 | Aucune ComponentExchangeAllocation depuis un PhysicalLink |
-| 216 | ≡ Vue Ligne |
-| 216 | ▣ Vue Composant |
-| 216 | ▦ Matrice |
-| 216 | 🩺 Contrôles |
-| 223 | composant « |
-| 223 | exchange « |
-| 224 | 🔀 Component Exchanges |
-| 224 | · filtres : |
-| 258 | ≡ Vue Ligne |
-| 259 | ▣ Vue Composant |
-| 260 | ▦ Matrice |
-| 261 | 🩺 Contrôles |
-| 264 | Tous |
-| 264 | Tous les sens |
-| 266 | ⚠ Incohérents |
-| 266 | Orientations de ports incohérentes (OUT→OUT, IN→IN hors délégation) |
-| 270 | Tous kinds |
-| 272 | 🖥 Composant : |
-| 276 | 🔍 Exchange : |
-| 278 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
-| 320 | ⇄ Bidirectionnel |
-| 320 | ? Non orienté |
-| 320 | Émission → |
-| 320 | ← Réception |
+| 59 | Capella Project |
+| 89 | ⇄ INOUT |
+| 114 | Aucun component exchange ne correspond au filtre. |
+| 127 | Sens non défini |
+| 164 | ÉMET → |
+| 164 | Émission — ce composant envoie le signal |
+| 165 | ← REÇOIT |
+| 165 | Réception — ce composant reçoit le signal |
+| 166 | ⇄ ÉCHANGE |
+| 166 | Bidirectionnel — port INOUT |
+| 167 | Non orienté — aucun port IN/OUT/INOUT |
+| 183 | Items : |
+| 211 | Component Exchange |
+| 211 | Source |
+| 211 | Cible |
+| 211 | Couche |
+| 215 | Exchanges sans Functional Exchange alloué |
+| 215 | Aucune ComponentExchangeFunctionalExchangeAllocation |
+| 216 | Ports orphelins (ComponentPort sans exchange) |
+| 216 | Port défini sur un composant mais relié à aucun Component Exchange |
+| 216 | Composant |
+| 216 | Port |
+| 216 | Orientation |
+| 216 | Couche |
+| 218 | Orientations de ports incohérentes |
+| 218 | OUT→OUT ou IN→IN hors délégation |
+| 219 | Exchanges non orientés |
+| 219 | Les deux ports sont UNSET : le sens du flux est inconnu |
+| 220 | Exchanges de couche PA non alloués à un Physical Link |
+| 220 | Aucune ComponentExchangeAllocation depuis un PhysicalLink |
+| 229 | ≡ Vue Ligne |
+| 229 | ▣ Vue Composant |
+| 229 | ▦ Matrice |
+| 229 | 🩺 Contrôles |
+| 236 | composant « |
+| 236 | exchange « |
+| 237 | 🔀 Behavior Exchanges (PA) |
+| 237 | · filtres : |
+| 269 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior ( |
+| 272 | ≡ Vue Ligne |
+| 273 | ▣ Vue Composant |
+| 274 | ▦ Matrice |
+| 275 | 🩺 Contrôles |
+| 278 | Tous |
+| 278 | Tous les sens |
+| 280 | ⚠ Incohérents |
+| 280 | Orientations de ports incohérentes (OUT→OUT, IN→IN hors délégation) |
+| 284 | Tous kinds |
+| 286 | 🖥 Composant : |
+| 290 | 🔍 Exchange : |
+| 292 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 334 | ⇄ Bidirectionnel |
+| 334 | ? Non orienté |
+| 334 | Émission → |
+| 334 | ← Réception |
 
 ## js/37-capella-cablage.js
 
@@ -2527,52 +2528,53 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 14 | 🔗 Liens |
 | 14 | Relations entre les éléments du modèle |
 | 15 | ⚡ Chaînes |
-| 16 | 🔀 Component Exchange |
-| 17 | 🧱 Composants |
-| 17 | Composants en blocs façon Capella (ports UNSET / IN / OUT / INOUT, échanges, composants distants), lignes, matrice, contrôles |
-| 18 | ⇆ Functional Exchange |
-| 18 | Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles |
-| 19 | 🔌 Physical Link |
-| 20 | 🧩 Ports |
-| 20 | Traçabilité Function Port ↔ Component Port ↔ Physical Port |
-| 21 | ƒ Fonctions |
-| 21 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier |
-| 22 | 🧬 Traçabilité inter-couches |
-| 23 | 🎯 Capacités & missions |
-| 24 | 🔁 Modes & états |
-| 25 | ⚖ Comparaison de versions |
-| 26 | 📑 Exigences |
-| 27 | 🏷 Propriétés |
-| 28 | 🗃 Données & interfaces |
-| 29 | ⛓ Contraintes |
-| 30 | 📐 Tableau de bord |
-| 30 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux |
-| 34 | 🧭 Explorateur |
-| 34 | Explorer le modèle : arborescence, cartes, tableau, index des types, liens |
-| 35 | 📡 Flux & interfaces |
-| 35 | Chaînes, composants, Component Exchange, Functional Exchange, Physical Link, ports |
-| 37 | 🔬 Analyses |
-| 37 | Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes |
-| 124 | Vue affichée : |
-| 142 | Retirer de la barre |
-| 142 | Épingler dans la barre (bouton direct) |
-| 205 | 💾 Enregistrer sous… |
-| 205 | Ctrl+S |
-| 206 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les colonnes et vues du 📋 Tableau et de la 📊 Table View, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. |
-| 206 | Ctrl+Maj+S |
-| 217 | 📖 Aide complète 🎓 Visite guidée |
-| 219 | 🎯 Visite de cette vue |
-| 220 | 🎯 Chargez un modèle pour la visite de chaque vue. |
-| 226 | 🎨 Personnaliser… |
-| 230 | 📌 épingle une vue en bouton direct dans la barre. |
-| 235 | 🗺 Relation Map |
-| 235 | @table |
-| 235 | 📊 Table View |
-| 237 | Aucune vue ne correspond. |
-| 243 | Menu |
-| 243 | ▾ dans la barre |
-| 244 | Autres vues |
-| 247 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
+| 16 | 🔀 Behavior Exchange |
+| 16 | Component Exchanges de la couche PA entre Physical Components Behavior (anciennement 🔀 Component Exchange) |
+| 17 | 🧱 System Component |
+| 18 | 🧱 Logical Component |
+| 19 | ⇆ Functional Exchange |
+| 19 | Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles |
+| 20 | 🔌 Physical Link |
+| 21 | 🧩 Ports |
+| 21 | Traçabilité Function Port ↔ Component Port ↔ Physical Port |
+| 22 | ƒ Fonctions |
+| 22 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier |
+| 23 | 🧬 Traçabilité inter-couches |
+| 24 | 🎯 Capacités & missions |
+| 25 | 🔁 Modes & états |
+| 26 | ⚖ Comparaison de versions |
+| 27 | 📑 Exigences |
+| 28 | 🏷 Propriétés |
+| 29 | 🗃 Données & interfaces |
+| 30 | ⛓ Contraintes |
+| 31 | 📐 Tableau de bord |
+| 31 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux |
+| 35 | 🧭 Explorateur |
+| 35 | Explorer le modèle : arborescence, cartes, tableau, index des types, liens |
+| 36 | 📡 Flux & interfaces |
+| 36 | Chaînes, System / Logical Component, Behavior Exchange, Functional Exchange, Physical Link, ports |
+| 38 | 🔬 Analyses |
+| 38 | Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes |
+| 125 | Vue affichée : |
+| 143 | Retirer de la barre |
+| 143 | Épingler dans la barre (bouton direct) |
+| 206 | 💾 Enregistrer sous… |
+| 206 | Ctrl+S |
+| 207 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les colonnes et vues du 📋 Tableau et de la 📊 Table View, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. |
+| 207 | Ctrl+Maj+S |
+| 218 | 📖 Aide complète 🎓 Visite guidée |
+| 220 | 🎯 Visite de cette vue |
+| 221 | 🎯 Chargez un modèle pour la visite de chaque vue. |
+| 227 | 🎨 Personnaliser… |
+| 231 | 📌 épingle une vue en bouton direct dans la barre. |
+| 236 | 🗺 Relation Map |
+| 236 | @table |
+| 236 | 📊 Table View |
+| 239 | Aucune vue ne correspond. |
+| 245 | Menu |
+| 245 | ▾ dans la barre |
+| 246 | Autres vues |
+| 249 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
 
 ## js/42-tableaux-analyses.js
 
@@ -2638,7 +2640,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 68 | 🔢 Résultat |
 | 69 | Nombre d'éléments qui passent les filtres (types, recherche, couche). |
 | 72 | 📡 Flux & interfaces |
-| 73 | Ces onglets passent d'une vue d'interfaces à l'autre : 🧱 Composants , 🔀 Component Exchange , ⇆ Functional Exchange , 🔌 Physical Link et 🧩 Ports . |
+| 73 | Ces onglets passent d'une vue d'interfaces à l'autre : 🧱 System / Logical Component , 🔀 Behavior Exchange , ⇆ Functional Exchange , 🔌 Physical Link et 🧩 Ports . |
 | 76 | 🧬 Traçabilité inter-couches : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés. |
 | 77 | 🎯 Capacités & missions : qui participe à quelle capacité ou mission (acteurs, fonctions, chaînes) et les capacités sans contenu. |
 | 78 | 🔁 Modes & états : machines d'états, transitions et éléments disponibles dans chaque mode ou état. |
@@ -2747,137 +2749,153 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 151 | Clic pour déplier le diagramme : fonctions, échanges, entrées / sorties. Le bouton 🗺 l'ouvre dans la Relation Map. |
 | 152 | 🗺 Vue Relation Map |
 | 152 | Graphe interactif de la chaîne choisie : dispositions, zoom et export. |
-| 153 | 🔀 Component Exchange |
-| 154 | #cap-view-compex .phl-toggle-btn |
-| 154 | 🖼 Présentation |
-| 154 | ≡ Vue Ligne : un échange par ligne · ▣ Vue Composant : regroupé par composant · ▦ Matrice : composant × composant · 🩺 Contrôles : anomalies détectées. |
-| 155 | 🔢 Compteur |
-| 155 | Échanges affichés après filtres / total. |
-| 156 | #cap-view-compex .cex-dir-btn,#cex-kind-sel |
-| 156 | ⇄ Sens et nature |
-| 156 | Filtre par sens de l'échange (orienté, inversé, bidirectionnel) et par nature (FLOW…). |
-| 157 | #cex-node-input,#cex-name-input |
-| 157 | 🔍 Filtres |
-| 157 | Par composant, ou par nom d'échange, d'échange fonctionnel ou d'Exchange Item. |
-| 158 | #cex-exp-csv,#cex-exp-html,#cex-exp-html-all |
-| 158 | ⬇ Exports |
-| 158 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
-| 159 | 📋 Résultat |
-| 159 | Clic sur un composant ou un échange pour ouvrir son détail. |
-| 160 | 🧱 Composants |
-| 161 | #cap-view-cblk .phl-toggle-btn |
-| 161 | 🖼 Présentation |
-| 162 | 🔢 Compteur |
-| 162 | Composants (ou échanges) affichés après filtres / total. Les listes sont paginées par 100. |
-| 163 | #cap-view-cblk .cb-layer-btn |
-| 163 | 🧱 Couche |
-| 163 | Couche ARCADIA (LA par défaut). |
-| 164 | #cap-view-cblk .ana-ak |
+| 153 | 🔀 Behavior Exchange |
+| 154 | #cap-view-compex .cap-mx-hint |
+| 154 | 🎯 Périmètre |
+| 154 | Component Exchanges de la couche PA entre Physical Components Behavior. Les échanges SA et LA sont dans 🧱 System / Logical Component, les liens entre nœuds dans 🔌 Physical Link. |
+| 155 | #cap-view-compex .phl-toggle-btn |
+| 155 | 🖼 Présentation |
+| 155 | ≡ Vue Ligne : un échange par ligne · ▣ Vue Composant : regroupé par composant · ▦ Matrice : composant × composant · 🩺 Contrôles : anomalies détectées. |
+| 156 | 🔢 Compteur |
+| 156 | Échanges affichés après filtres / total. |
+| 157 | #cap-view-compex .cex-dir-btn,#cex-kind-sel |
+| 157 | ⇄ Sens et nature |
+| 157 | Filtre par sens de l'échange (orienté, inversé, bidirectionnel) et par nature (FLOW…). |
+| 158 | #cex-node-input,#cex-name-input |
+| 158 | 🔍 Filtres |
+| 158 | Par composant, ou par nom d'échange, d'échange fonctionnel ou d'Exchange Item. |
+| 159 | #cex-exp-csv,#cex-exp-html,#cex-exp-html-all |
+| 159 | ⬇ Exports |
+| 159 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
+| 160 | 📋 Résultat |
+| 160 | Clic sur un composant ou un échange pour ouvrir son détail. |
+| 161 | 🧱 System Component |
+| 162 | #cap-view-csys .phl-toggle-btn |
+| 162 | 🖼 Présentation |
+| 163 | #cap-view-csys #cb-counter |
+| 163 | 🔢 Compteur |
+| 163 | Composants (ou échanges) affichés après filtres / total (SA uniquement). Les listes sont paginées par 100. |
+| 164 | #cap-view-csys .ana-ak |
 | 164 | 🧩 Nature |
-| 164 | Système, acteurs ou nœuds (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants. |
-| 165 | #cb-csv,#cb-html,#cb-html-all |
+| 164 | Système ou acteurs (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants. |
+| 165 | #cap-view-csys #cb-csv,#cap-view-csys #cb-html,#cap-view-csys #cb-html-all |
 | 165 | ⬇ Exports |
 | 165 | CSV (ports ou échanges), rapport HTML de la vue ou de toutes les vues. |
+| 166 | #cap-view-csys #cb-main |
 | 166 | 📋 Résultat |
-| 167 | ⇆ Functional Exchange |
-| 168 | #cap-view-fex .phl-toggle-btn |
+| 167 | 🧱 Logical Component |
+| 168 | #cap-view-cblk .phl-toggle-btn |
 | 168 | 🖼 Présentation |
-| 169 | #cap-view-fex .ana-ak |
-| 169 | 🧩 Allocation |
-| 170 | 🔢 Compteur |
-| 170 | Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 100. |
-| 171 | #cap-view-fex .fex-layer-btn |
-| 171 | 🧱 Couche |
-| 171 | Filtre par couche ARCADIA (OA, SA, LA, PA). |
-| 172 | #fex-fn-input,#fex-name-input |
-| 172 | 🔍 Filtres |
-| 172 | Par fonction, ou par nom d'échange ou d'Exchange Item. |
-| 173 | #fex-exp-csv,#fex-exp-html,#fex-exp-html-all |
-| 173 | ⬇ Exports |
-| 173 | CSV de la vue, rapport HTML de la vue (toutes les pages), ou rapport HTML autonome avec toutes les vues. |
-| 174 | 📋 Résultat |
-| 174 | Clic sur une fonction ou un échange pour ouvrir son détail. |
-| 175 | 🔌 Physical Link |
-| 176 | #cap-view-physlink .phl-toggle-btn |
-| 176 | 🖼 Présentation |
-| 176 | ≡ Vue Ligne , ▣ Vue Composant , ▦ Matrice composant × composant et 🩺 Contrôles des liens physiques. |
-| 177 | 🔢 Compteur |
-| 177 | Liens affichés après filtres / total. |
-| 178 | #cap-view-physlink .phl-ce-btn |
-| 178 | ⇢ Component Exchange |
-| 178 | Liens qui portent (ou non) des échanges de composants alloués. |
-| 179 | #phl-node-input,#phl-name-input |
-| 179 | 🔍 Filtres |
-| 179 | Par composant, ou par nom de lien ou d'échange. |
-| 180 | #phl-exp-csv,#phl-exp-html,#phl-exp-html-all |
-| 180 | ⬇ Exports |
-| 180 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
-| 181 | 📋 Résultat |
-| 181 | Clic sur un composant ou un lien pour ouvrir son détail. |
-| 182 | 🧩 Ports |
-| 183 | #cap-view-ports .phl-toggle-btn |
-| 183 | 🖼 Présentation |
-| 183 | ≡ Traçabilité Function Port ↔ Component Port ↔ Physical Port, ▣ Par composant , et 🩺 Contrôles (ports non alloués, chaînes incomplètes). |
-| 184 | 🔢 Compteur |
-| 184 | Lignes affichées après filtres / total. |
-| 185 | 🔍 Recherche |
-| 185 | Filtre par fonction, composant, port ou échange. La case voisine ne garde que les chaînes incomplètes. |
-| 186 | ⬇ CSV |
-| 186 | Exporte le tableau affiché. |
+| 169 | #cap-view-cblk #cb-counter |
+| 169 | 🔢 Compteur |
+| 169 | Composants (ou échanges) affichés après filtres / total (LA uniquement). Les listes sont paginées par 100. |
+| 170 | #cap-view-cblk .ana-ak |
+| 170 | 🧩 Nature |
+| 170 | Système ou acteurs (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants. |
+| 171 | #cap-view-cblk #cb-csv,#cap-view-cblk #cb-html,#cap-view-cblk #cb-html-all |
+| 171 | ⬇ Exports |
+| 171 | CSV (ports ou échanges), rapport HTML de la vue ou de toutes les vues. |
+| 172 | #cap-view-cblk #cb-main |
+| 172 | 📋 Résultat |
+| 173 | ⇆ Functional Exchange |
+| 174 | #cap-view-fex .phl-toggle-btn |
+| 174 | 🖼 Présentation |
+| 175 | #cap-view-fex .ana-ak |
+| 175 | 🧩 Allocation |
+| 176 | 🔢 Compteur |
+| 176 | Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 100. |
+| 177 | #cap-view-fex .fex-layer-btn |
+| 177 | 🧱 Couche |
+| 177 | Filtre par couche ARCADIA (OA, SA, LA, PA). |
+| 178 | #fex-fn-input,#fex-name-input |
+| 178 | 🔍 Filtres |
+| 178 | Par fonction, ou par nom d'échange ou d'Exchange Item. |
+| 179 | #fex-exp-csv,#fex-exp-html,#fex-exp-html-all |
+| 179 | ⬇ Exports |
+| 179 | CSV de la vue, rapport HTML de la vue (toutes les pages), ou rapport HTML autonome avec toutes les vues. |
+| 180 | 📋 Résultat |
+| 180 | Clic sur une fonction ou un échange pour ouvrir son détail. |
+| 181 | 🔌 Physical Link |
+| 182 | #cap-view-physlink .phl-toggle-btn |
+| 182 | 🖼 Présentation |
+| 182 | ≡ Vue Ligne , ▣ Vue Composant , ▦ Matrice composant × composant et 🩺 Contrôles des liens physiques. |
+| 183 | 🔢 Compteur |
+| 183 | Liens affichés après filtres / total. |
+| 184 | #cap-view-physlink .phl-ce-btn |
+| 184 | ⇢ Component Exchange |
+| 184 | Liens qui portent (ou non) des échanges de composants alloués. |
+| 185 | #phl-node-input,#phl-name-input |
+| 185 | 🔍 Filtres |
+| 185 | Par composant, ou par nom de lien ou d'échange. |
+| 186 | #phl-exp-csv,#phl-exp-html,#phl-exp-html-all |
+| 186 | ⬇ Exports |
+| 186 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
 | 187 | 📋 Résultat |
-| 187 | Les lignes incomplètes sont signalées en couleur. Clic sur un élément pour ouvrir son détail. |
-| 188 | ƒ Fonctions |
-| 189 | ƒ Fonctions |
-| 189 | Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles. |
-| 190 | #cap-view-functions [data-fv] |
-| 190 | 🖼 Présentation |
-| 190 | 🌳 Hiérarchie · 📋 Tableau façon Excel · ⛓ Traçabilité entre couches · 📊 Métriques · 🩺 Contrôles (qualité des noms, fonctions non allouées…). |
-| 191 | #cap-view-functions [data-fl] |
-| 191 | 🧱 Couche |
-| 191 | Choisit la couche ARCADIA étudiée (OA, SA, LA, PA). |
-| 192 | #ana-fn-q,#ana-fn-desc,#ana-fn-exp,#ana-fn-col |
-| 192 | 🔍 Recherche et affichage |
-| 193 | #cap-view-functions .ana-ak,#ana-fn-who |
-| 193 | 🎯 Allocation |
-| 194 | #ana-fn-csv,#ana-fn-html |
-| 194 | ⬇ Exports |
-| 194 | ⬇ CSV et 📄 Dossier fonctionnel : document HTML avec une section par fonction (description, allocation, échanges, traçabilité). |
-| 195 | #cap-view-functions .phl-filter-bar + * |
-| 195 | 📋 Résultat |
-| 195 | Clic sur une fonction pour ouvrir son détail. |
-| 196 | 🔬 Analyses |
-| 197 | #cap-view-analyses [data-an] |
-| 197 | 🔬 Analyses |
-| 197 | Huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes. |
-| 198 | #cap-view-analyses [data-an].active |
-| 198 | 🔎 Analyse affichée |
-| 198 | Analyse en cours. |
-| 199 | ↻ Recalculer |
-| 200 | #ana-box .phl-filter-bar |
-| 200 | 🧰 Options |
-| 200 | Présentations, filtres et export CSV propres à l'analyse affichée. |
+| 187 | Clic sur un composant ou un lien pour ouvrir son détail. |
+| 188 | 🧩 Ports |
+| 189 | #cap-view-ports .phl-toggle-btn |
+| 189 | 🖼 Présentation |
+| 189 | ≡ Traçabilité Function Port ↔ Component Port ↔ Physical Port, ▣ Par composant , et 🩺 Contrôles (ports non alloués, chaînes incomplètes). |
+| 190 | 🔢 Compteur |
+| 190 | Lignes affichées après filtres / total. |
+| 191 | 🔍 Recherche |
+| 191 | Filtre par fonction, composant, port ou échange. La case voisine ne garde que les chaînes incomplètes. |
+| 192 | ⬇ CSV |
+| 192 | Exporte le tableau affiché. |
+| 193 | 📋 Résultat |
+| 193 | Les lignes incomplètes sont signalées en couleur. Clic sur un élément pour ouvrir son détail. |
+| 194 | ƒ Fonctions |
+| 195 | ƒ Fonctions |
+| 195 | Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles. |
+| 196 | #cap-view-functions [data-fv] |
+| 196 | 🖼 Présentation |
+| 196 | 🌳 Hiérarchie · 📋 Tableau façon Excel · ⛓ Traçabilité entre couches · 📊 Métriques · 🩺 Contrôles (qualité des noms, fonctions non allouées…). |
+| 197 | #cap-view-functions [data-fl] |
+| 197 | 🧱 Couche |
+| 197 | Choisit la couche ARCADIA étudiée (OA, SA, LA, PA). |
+| 198 | #ana-fn-q,#ana-fn-desc,#ana-fn-exp,#ana-fn-col |
+| 198 | 🔍 Recherche et affichage |
+| 199 | #cap-view-functions .ana-ak,#ana-fn-who |
+| 199 | 🎯 Allocation |
+| 200 | #ana-fn-csv,#ana-fn-html |
+| 200 | ⬇ Exports |
+| 200 | ⬇ CSV et 📄 Dossier fonctionnel : document HTML avec une section par fonction (description, allocation, échanges, traçabilité). |
+| 201 | #cap-view-functions .phl-filter-bar + * |
 | 201 | 📋 Résultat |
-| 202 | 📐 Tableau de bord |
-| 203 | 📐 Tableau de bord |
-| 203 | Pages d'indicateurs, graphiques et tableaux sur le modèle, à composer soi-même et à imprimer. |
-| 204 | #cap-view-dashboard .dash-tabs |
-| 204 | 🗂 Pages |
-| 205 | ✏ Modifier |
-| 205 | Passe en édition : ajouter des éléments depuis le catalogue d'indicateurs, les configurer, déplacer et redimensionner. ✔ Terminer pour sortir. |
-| 206 | #dash-orient,#dash-print,#dash-html |
-| 206 | 🖨 Impression |
-| 206 | Format A4 portrait ou paysage, impression, ou export en page HTML autonome. |
-| 207 | #dash-json,#dash-imp |
-| 207 | ⬇⬆ JSON |
-| 207 | Exporte ou importe la définition des tableaux de bord pour les réutiliser sur un autre modèle. |
-| 208 | #cap-view-dashboard .dash-scroll |
-| 208 | 📐 Page |
-| 208 | Les éléments du tableau de bord, calculés sur le modèle chargé. |
-| 216 | @table |
-| 313 | Étape |
-| 315 | ◀ Précédent |
-| 316 | Terminer ✓ |
-| 316 | Suivant ▶ |
+| 201 | Clic sur une fonction pour ouvrir son détail. |
+| 202 | 🔬 Analyses |
+| 203 | #cap-view-analyses [data-an] |
+| 203 | 🔬 Analyses |
+| 203 | Huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes. |
+| 204 | #cap-view-analyses [data-an].active |
+| 204 | 🔎 Analyse affichée |
+| 204 | Analyse en cours. |
+| 205 | ↻ Recalculer |
+| 206 | #ana-box .phl-filter-bar |
+| 206 | 🧰 Options |
+| 206 | Présentations, filtres et export CSV propres à l'analyse affichée. |
+| 207 | 📋 Résultat |
+| 208 | 📐 Tableau de bord |
+| 209 | 📐 Tableau de bord |
+| 209 | Pages d'indicateurs, graphiques et tableaux sur le modèle, à composer soi-même et à imprimer. |
+| 210 | #cap-view-dashboard .dash-tabs |
+| 210 | 🗂 Pages |
+| 211 | ✏ Modifier |
+| 211 | Passe en édition : ajouter des éléments depuis le catalogue d'indicateurs, les configurer, déplacer et redimensionner. ✔ Terminer pour sortir. |
+| 212 | #dash-orient,#dash-print,#dash-html |
+| 212 | 🖨 Impression |
+| 212 | Format A4 portrait ou paysage, impression, ou export en page HTML autonome. |
+| 213 | #dash-json,#dash-imp |
+| 213 | ⬇⬆ JSON |
+| 213 | Exporte ou importe la définition des tableaux de bord pour les réutiliser sur un autre modèle. |
+| 214 | #cap-view-dashboard .dash-scroll |
+| 214 | 📐 Page |
+| 214 | Les éléments du tableau de bord, calculés sur le modèle chargé. |
+| 222 | @table |
+| 319 | Étape |
+| 321 | ◀ Précédent |
+| 322 | Terminer ✓ |
+| 322 | Suivant ▶ |
 
 ## js/44-functional-exchange.js
 
@@ -3171,102 +3189,121 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte |
 |---:|---|
-| 49 | Ports de composant orphelins (sans Component Exchange) |
-| 49 | Component Port défini mais relié à aucun échange |
-| 49 | Composant |
-| 49 | Port |
-| 49 | Orientation |
-| 49 | Couche |
-| 51 | Ports connectés sans orientation (UNSET) |
-| 51 | Le sens du flux n'est pas défini sur le port |
-| 51 | Composant |
-| 51 | Port |
-| 51 | Couche |
-| 53 | Échanges aux orientations incohérentes |
-| 53 | OUT → OUT ou IN → IN hors délégation |
-| 53 | Component Exchange |
-| 53 | Source |
-| 53 | Cible |
-| 53 | Couche |
-| 55 | Composants feuilles sans port |
-| 55 | Composant sans sous-composant et sans Component Port (hors acteurs) |
-| 55 | Composant |
-| 55 | Couche |
-| 57 | Composants feuilles sans fonction allouée |
-| 57 | Composant sans sous-composant à qui aucune fonction n'est allouée |
-| 57 | Composant |
-| 57 | Nature |
-| 57 | Couche |
-| 58 | Acteur |
-| 58 | Système |
-| 68 | Composants — nombre par couche |
-| 69 | cb.ports |
-| 69 | Composants — ports connectés |
-| 69 | Component Ports reliés à au moins un Component Exchange |
-| 70 | cb.chk |
-| 70 | Composants — contrôles |
-| 80 | Système |
-| 80 | Composants du système |
-| 80 | Acteurs |
-| 80 | Acteurs externes |
-| 80 | Nœuds |
-| 80 | Composants physiques de nature NODE (couche PA) |
-| 118 | — non connecté |
-| 133 | non connecté |
-| 142 | — acteur |
-| 145 | Fonctions allouées : |
-| 146 | sous-composant(s) : |
-| 147 | aucun port |
-| 175 | · page |
-| 184 | Aucun composant ne correspond au filtre. |
-| 186 | Composants |
-| 187 | ↩ Revenir à « |
-| 190 | Aucun Component Exchange ne correspond au filtre. |
-| 194 | composants : pour rester fluide, la matrice en affiche |
-| 194 | (les plus connectés). Filtrez pour voir les autres. |
-| 199 | Échanges |
-| 244 | Tous les composants |
-| 249 | ◧ Vue Blocs |
-| 249 | ≡ Vue Ligne |
-| 249 | ▦ Matrice |
-| 249 | 🩺 Contrôles |
-| 253 | 🧱 Composants |
-| 253 | composants · |
-| 253 | Component Exchanges |
-| 253 | · couche |
-| 260 | Acteur |
-| 260 | Système |
-| 261 | Acteur |
-| 261 | Système |
-| 262 | Couche |
-| 262 | Composant |
-| 262 | Nature |
-| 262 | Port |
-| 262 | Orientation |
-| 262 | Component Exchange |
-| 262 | Sens |
-| 262 | Composant distant |
-| 264 | Couche |
-| 264 | Composant source |
-| 264 | Port source |
-| 264 | Orientation source |
-| 264 | Component Exchange |
-| 264 | Kind |
-| 264 | Port cible |
-| 264 | Orientation cible |
-| 264 | Composant cible |
-| 264 | Functional Exchanges |
-| 272 | ◧ Vue Blocs |
-| 273 | ≡ Vue Ligne |
-| 273 | Un Component Exchange par ligne |
-| 273 | ▦ Matrice |
-| 273 | Composant × composant (100 composants au plus) |
-| 273 | 🩺 Contrôles |
-| 273 | Ports orphelins ou sans orientation, échanges incohérents, composants sans port ou sans fonction |
-| 281 | 🧱 Composant : |
-| 281 | Toutes |
-| 286 | 🔍 Échange : |
-| 289 | Nature |
-| 289 | avec ports |
-| 290 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
-| 290 | — double-clic : uniquement ceux-ci |
+| 13 | 🧱 Logical Component |
+| 13 | Logical Components |
+| 14 | 🧱 System Component |
+| 14 | System Components |
+| 54 | Ports de composant orphelins (sans Component Exchange) |
+| 54 | Component Port défini mais relié à aucun échange |
+| 54 | Composant |
+| 54 | Port |
+| 54 | Orientation |
+| 54 | Couche |
+| 56 | Ports connectés sans orientation (UNSET) |
+| 56 | Le sens du flux n'est pas défini sur le port |
+| 56 | Composant |
+| 56 | Port |
+| 56 | Couche |
+| 58 | Échanges aux orientations incohérentes |
+| 58 | OUT → OUT ou IN → IN hors délégation |
+| 58 | Component Exchange |
+| 58 | Source |
+| 58 | Cible |
+| 58 | Couche |
+| 60 | Composants feuilles sans port |
+| 60 | Composant sans sous-composant et sans Component Port (hors acteurs) |
+| 60 | Composant |
+| 60 | Couche |
+| 62 | Composants feuilles sans fonction allouée |
+| 62 | Composant sans sous-composant à qui aucune fonction n'est allouée |
+| 62 | Composant |
+| 62 | Nature |
+| 62 | Couche |
+| 63 | Acteur |
+| 63 | Système |
+| 75 | — nombre |
+| 75 | acteur(s) |
+| 76 | cb.ports. |
+| 76 | — ports connectés |
+| 76 | Component Ports reliés à au moins un Component Exchange |
+| 77 | cb.chk. |
+| 77 | — contrôles |
+| 95 | Système |
+| 95 | Composants du système |
+| 95 | Acteurs |
+| 95 | Acteurs externes |
+| 95 | Nœuds |
+| 132 | — non connecté |
+| 147 | non connecté |
+| 156 | — acteur |
+| 159 | Fonctions allouées : |
+| 160 | sous-composant(s) : |
+| 161 | aucun port |
+| 188 | ÉMET → |
+| 188 | Émission |
+| 188 | ← REÇOIT |
+| 188 | Réception |
+| 188 | ⇄ ÉCHANGE |
+| 188 | Bidirectionnel |
+| 188 | Non orienté |
+| 205 | Aucun Component Exchange |
+| 209 | 👤 Acteur |
+| 223 | · page |
+| 232 | Aucun composant ne correspond au filtre. |
+| 234 | Composants |
+| 235 | ↩ Revenir à « |
+| 239 | Aucun composant ne correspond au filtre. |
+| 241 | Composants |
+| 242 | ↩ Revenir à « |
+| 245 | Aucun Component Exchange ne correspond au filtre. |
+| 249 | composants : pour rester fluide, la matrice en affiche |
+| 249 | (les plus connectés). Filtrez pour voir les autres. |
+| 254 | Échanges |
+| 299 | Tous les composants |
+| 304 | ◧ Vue Blocs |
+| 304 | ▣ Vue Composant |
+| 304 | ≡ Vue Ligne |
+| 304 | ▦ Matrice |
+| 304 | 🩺 Contrôles |
+| 309 | composants · |
+| 309 | Component Exchanges · couche |
+| 316 | Acteur |
+| 316 | Système |
+| 317 | Acteur |
+| 317 | Système |
+| 318 | Couche |
+| 318 | Composant |
+| 318 | Nature |
+| 318 | Port |
+| 318 | Orientation |
+| 318 | Component Exchange |
+| 318 | Sens |
+| 318 | Composant distant |
+| 320 | Couche |
+| 320 | Composant source |
+| 320 | Port source |
+| 320 | Orientation source |
+| 320 | Component Exchange |
+| 320 | Kind |
+| 320 | Port cible |
+| 320 | Orientation cible |
+| 320 | Composant cible |
+| 320 | Functional Exchanges |
+| 328 | Aucun |
+| 328 | dans ce modèle (couche |
+| 329 | ◧ Vue Blocs |
+| 330 | ▣ Vue Composant |
+| 330 | Une carte par composant avec ses échanges émis, reçus, bidirectionnels ou non orientés |
+| 331 | ≡ Vue Ligne |
+| 331 | Un Component Exchange par ligne |
+| 331 | ▦ Matrice |
+| 331 | Composant × composant (100 composants au plus) |
+| 331 | 🩺 Contrôles |
+| 331 | Ports orphelins ou sans orientation, échanges incohérents, composants sans port ou sans fonction |
+| 338 | Couche |
+| 339 | Component Exchanges 🧱 Composant : |
+| 343 | 🔍 Échange : |
+| 346 | Nature |
+| 346 | avec ports |
+| 347 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 347 | — double-clic : uniquement ceux-ci |

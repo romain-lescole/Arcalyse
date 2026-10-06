@@ -13,8 +13,9 @@ var CAP_NAV_ITEMS=[
   {k:'index',     l:'📖 Index des types',   g:'explore'},
   {k:'links',     l:'🔗 Liens',             g:'explore', t:'Relations entre les éléments du modèle'},
   {k:'chains',    l:'⚡ Chaînes',           g:'flux'},
-  {k:'compex',    l:'🔀 Component Exchange', g:'flux'},
-  {k:'cblk',      l:'🧱 Composants', g:'flux', t:'Composants en blocs façon Capella (ports UNSET / IN / OUT / INOUT, échanges, composants distants), lignes, matrice, contrôles'},
+  {k:'compex',    l:'🔀 Behavior Exchange', g:'flux', t:'Component Exchanges de la couche PA entre Physical Components Behavior (anciennement 🔀 Component Exchange)'},
+  {k:'csys',      l:'🧱 System Component', g:'flux', t:'System Components (SA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles'},
+  {k:'cblk',      l:'🧱 Logical Component', g:'flux', t:'Logical Components (LA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles'},
   {k:'fex',       l:'⇆ Functional Exchange', g:'flux', t:'Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles'},
   {k:'physlink',  l:'🔌 Physical Link',     g:'flux'},
   {k:'ports',     l:'🧩 Ports',             g:'flux', t:'Traçabilité Function Port ↔ Component Port ↔ Physical Port'},
@@ -32,7 +33,7 @@ var CAP_NAV_ITEMS=[
 /** Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton). */
 var CAP_NAV_GROUPS=[
   {g:'explore', id:'cap-v-elements', l:'🧭 Explorateur',       t:'Explorer le modèle : arborescence, cartes, tableau, index des types, liens'},
-  {g:'flux',    id:'cap-v-flux',     l:'📡 Flux & interfaces', t:'Chaînes, composants, Component Exchange, Functional Exchange, Physical Link, ports'},
+  {g:'flux',    id:'cap-v-flux',     l:'📡 Flux & interfaces', t:'Chaînes, System / Logical Component, Behavior Exchange, Functional Exchange, Physical Link, ports'},
   {g:'',        id:'',               l:'',                     t:''},   // place des vues sans menu (ƒ Fonctions)
   {g:'ana',     id:'cap-v-analyses', l:'🔬 Analyses',          t:'Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes'}
 ];

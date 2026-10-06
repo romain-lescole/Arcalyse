@@ -224,7 +224,9 @@ function applyTheme(name) {
   }
   // Idem pour 🧱 Composants
   const cbView = document.getElementById('cap-view-cblk');
-  if (cbView && cbView.style.display !== 'none' && cbView._cb) capRenderComponentBlocks();
+  if (cbView && cbView.style.display !== 'none' && cbView._cb) capRenderComponentBlocks('LA');
+  const csView = document.getElementById('cap-view-csys');
+  if (csView && csView.style.display !== 'none' && csView._cb) capRenderComponentBlocks('SA');
   // Idem pour Functional Exchange
   const fexView = document.getElementById('cap-view-fex');
   if (fexView && fexView.style.display !== 'none' && fexView._fex) capRenderFunctionalExchange();

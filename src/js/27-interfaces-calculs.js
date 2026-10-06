@@ -244,7 +244,7 @@ function capComputeCompExchanges(){
   const used=new Set(); exchanges.forEach(x=>{ used.add(x.src.portId); used.add(x.tgt.portId); });
   exchanges.allPorts=Object.entries(portToComp).map(([pid,{comp,port}])=>({
     portId:pid, portName:N(capXName(port)), orient:capNormOrient(port.getAttribute('orientation')),
-    pcId:capXId(comp), pcName:N(capXName(comp)), pcType:capTName(comp), layer:capArchLayerOf(comp), connected:used.has(pid)}));
+    pcId:capXId(comp), pcName:N(capXName(comp)), pcType:capTName(comp), pcNature:comp.getAttribute('nature')||'', layer:capArchLayerOf(comp), connected:used.has(pid)}));
   return exchanges;
 }
 

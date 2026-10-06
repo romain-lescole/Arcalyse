@@ -4,13 +4,26 @@ function capAnaReset(){
   ['cap-view-analyses','cap-view-functions'].forEach(id=>{ const c=document.getElementById(id); if(c){ c.innerHTML=''; c._built=false; } });
 }
 
+/** Component Exchanges du périmètre de la vue 🔀 Behavior Exchange : couche PA, entre Physical Components
+ * de nature Behavior (aucune extrémité NODE). Les échanges SA et LA sont traités par 🧱 System / Logical Component.
+ * @returns {object[]} Échanges (avec allPorts limités aux mêmes composants)
+ */
+function capBehaviorExchanges(){
+  const all=capComputeCompExchanges();
+  const ok=e=>e.pcType==='PhysicalComponent'&&e.pcNature!=='NODE';
+  const out=all.filter(l=>l.layer==='PA'&&ok(l.src)&&ok(l.tgt));
+  out.allPorts=(all.allPorts||[]).filter(p=>p.layer==='PA'&&ok(p));
+  out.total=all.length;
+  return out;
+}
+
 /** Rend la vue Component Exchange — même structure que Physical Link (≡ Ligne / ▣ Composant,
  * filtres, exports CSV/HTML) mais pour les ComponentExchange (source/target → ComponentPort
  * → composant parent). Coloration adaptative par TYPE de composant (thème clair/sombre). */
 let _capCompExView = 'line';
 function capRenderCompExchange(){
   const container=document.getElementById('cap-view-compex'); if(!container) return;
-  const allLinks=capComputeCompExchanges();
+  const allLinks=capBehaviorExchanges();   // PA, Physical Components Behavior
 
   const linkNumMap={};
   let linkNum=1;
@@ -221,7 +234,7 @@ function capRenderCompExchange(){
       html:k==='line'?lineHtml:k==='card'?buildContent(f,'card').replace(/class="phl-comp-(hdr|body|toggle)"/g,'class="phl-comp-$1 open"'):buildContent(f,k)}));
     const cells={}; Object.entries(container._cexCells||{}).forEach(([k,ls])=>cells[k]=ls.map(l=>l.linkId));
     const fi=[st.nodeFilter&&`composant « ${st.nodeFilter} »`,st.nameFilter&&`exchange « ${st.nameFilter} »`,st.dirFilter!=='all'&&`sens ${st.dirFilter}`,st.kindFilter!=='all'&&`kind ${st.kindFilter}`].filter(Boolean).join(', ');
-    capHtmlReport({title:'🔀 Component Exchanges', subtitle:`${f.length}/${allLinks.length} exchanges${fi?' · filtres : '+fi:''}`, tabs, active:st.view, cells,
+    capHtmlReport({title:'🔀 Behavior Exchanges (PA)', subtitle:`${f.length}/${allLinks.length} exchanges${fi?' · filtres : '+fi:''}`, tabs, active:st.view, cells,
       filename:all?'component-exchanges-rapport.html':`component-exchanges-${st.view}.html`});
   }
 
@@ -254,6 +267,7 @@ function capRenderCompExchange(){
     _capCompExView=st.view;
     const filtered=getFiltered();
     container.innerHTML=`
+      <div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Component Exchanges de la couche <b>PA</b> entre <b>Physical Components Behavior</b> (${allLinks.length} sur ${allLinks.total} dans le modèle). Les échanges SA et LA sont dans 🧱 System Component et 🧱 Logical Component ; les liens entre nœuds dans 🔌 Physical Link.</div>
       <div class="phl-toggle-bar">
         <button class="phl-toggle-btn${st.view==='line'?' active':''}" data-pv="line">≡ Vue Ligne</button>
         <button class="phl-toggle-btn${st.view==='card'?' active':''}" data-pv="card">▣ Vue Composant</button>
