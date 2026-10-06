@@ -49,7 +49,10 @@ function capRenderCompExchange(){
 
   // Coloration par TYPE de composant, adaptative clair/sombre (même approche que Physical Link)
   const isLight = capIsLight();
-  const compColor = (type, nature) => {
+  const CB=capComputeComponentBlocks();
+  /** Couleur d'un composant : acteurs en bleu clair (comme 🧱 System Component), sinon selon le type et la nature. */
+  const compColor = (type, nature, id) => {
+    if (id&&CB.byId[id]&&CB.byId[id].actor) return capTextOn('#7fd8ff');
     if (type==='PhysicalComponent') return isLight ? (nature==='NODE'?'#7a6500':nature==='BEHAVIOR'?'#1a4f8a':'#7c28d8')
                                                    : (nature==='NODE'?'#fffcb7':nature==='BEHAVIOR'?'#96b1da':'#c084fc');
     const dark  = {SystemComponent:'#58a6ff', LogicalComponent:'#4dd880', Entity:'#f0883e',
@@ -115,12 +118,12 @@ function capRenderCompExchange(){
     if(view==='diag') return buildDiag(filtered);
     if(!filtered.length) return '<div class="phl-empty">Aucun component exchange ne correspond au filtre.</div>';
     if(view==='matrix'){
-      const mx=capMatrixBuild(filtered,{directed:true, unit:'exchanges', colorOf:e=>compColor(e.pcType,e.pcNature)});
+      const mx=capMatrixBuild(filtered,{directed:true, unit:'exchanges', colorOf:e=>compColor(e.pcType,e.pcNature,e.pcId)});
       container._cexCells=mx.cells; return mx.html;
     }
     if(view==='line'){
       return filtered.map(l=>{
-        const sc=compColor(l.src.pcType,l.src.pcNature), tc=compColor(l.tgt.pcType,l.tgt.pcNature);
+        const sc=compColor(l.src.pcType,l.src.pcNature,l.src.pcId), tc=compColor(l.tgt.pcType,l.tgt.pcNature,l.tgt.pcId);
         const lc=linkColorMap[l.linkName]||{bg:'#8b949e',fg:'#fff'};
         const num=linkNumMap[l.linkId]||'';
         const dash=l.dir==='unset'?`background:repeating-linear-gradient(90deg,${lc.bg} 0 4px,transparent 4px 7px);`:`background:${lc.bg};`;
@@ -169,12 +172,12 @@ function capRenderCompExchange(){
         unset:{arrow:'—', color:'#8b949e', label:'? N.O.',   tip:'Non orienté — aucun port IN/OUT/INOUT'},
       };
       return Object.values(byPC).map(pc=>{
-        const c=compColor(pc.pcType,pc.nature);
+        const c=compColor(pc.pcType,pc.nature,pc.pcId);
         const cnt={out:0,in:0,bi:0,unset:0}; pc.links.forEach(lk=>cnt[lk.role]++);
         const rows=pc.links.map(lk=>{
           const l=lk.l, R=ROLE[lk.role];
           const lc=linkColorMap[l.linkName]||{bg:'#8b949e',fg:'#fff'};
-          const tc=compColor(lk.pcTgtType,lk.pcTgtNature);
+          const tc=compColor(lk.pcTgtType,lk.pcTgtNature,lk.pcTgtId);
           const num=linkNumMap[l.linkId]||'';
           return`<div class="phl-link-row">
             <span style="font-size:10px;color:var(--c-dim);font-family:monospace;min-width:28px;">#${num}</span>
@@ -189,11 +192,11 @@ function capRenderCompExchange(){
             ${warnIcon(l)}
           </div>`;
         }).join('');
-        const humanType=(CAP_HUMAN_NAMES[pc.pcType]||{}).h||pc.pcType;
+        const humanType=CB.byId[pc.pcId]&&CB.byId[pc.pcId].actor?'Acteur':((CAP_HUMAN_NAMES[pc.pcType]||{}).h||pc.pcType);
         const cntTxt=[cnt.out&&`${cnt.out} →`,cnt.in&&`${cnt.in} ←`,cnt.bi&&`${cnt.bi} ⇄`,cnt.unset&&`${cnt.unset} ?`].filter(Boolean).join(' · ');
         return`<div class="phl-comp-card">
           <div class="phl-comp-hdr" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open');this.querySelector('.phl-comp-toggle').classList.toggle('open')">
-            <span class="phl-comp-badge" style="background:${c};color:#fff">${capEsc(humanType)}</span>
+            <span class="phl-comp-badge" style="background:${c};color:${capInk(c)}">${capEsc(humanType)}</span>
             <span class="phl-comp-title" style="color:${c}">${capEsc(pc.pcName)}</span>
             <span class="phl-comp-cnt" title="émis · reçus · bidirectionnels · non orientés">${pc.links.length} exchange${pc.links.length>1?'s':''} (${cntTxt})</span>
             <span class="phl-comp-toggle">▶</span>

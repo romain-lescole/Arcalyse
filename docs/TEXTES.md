@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3157 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3158 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -2038,72 +2038,73 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte |
 |---:|---|
-| 61 | Capella Project |
-| 91 | ⇄ INOUT |
-| 116 | Aucun component exchange ne correspond au filtre. |
-| 129 | Sens non défini |
-| 166 | ÉMET → |
-| 166 | Émission — ce composant envoie le signal |
-| 167 | ← REÇOIT |
-| 167 | Réception — ce composant reçoit le signal |
-| 168 | ⇄ ÉCHANGE |
-| 168 | Bidirectionnel — port INOUT |
-| 169 | Non orienté — aucun port IN/OUT/INOUT |
-| 185 | Items : |
-| 213 | Component Exchange |
-| 213 | Source |
-| 213 | Cible |
-| 213 | Couche |
-| 217 | Exchanges sans Functional Exchange alloué |
-| 217 | Aucune ComponentExchangeFunctionalExchangeAllocation |
-| 218 | Ports orphelins (ComponentPort sans exchange) |
-| 218 | Port défini sur un composant mais relié à aucun Component Exchange |
-| 218 | Composant |
-| 218 | Port |
-| 218 | Orientation |
-| 218 | Couche |
-| 220 | Orientations de ports incohérentes |
-| 220 | OUT→OUT ou IN→IN hors délégation |
-| 221 | Exchanges non orientés |
-| 221 | Les deux ports sont UNSET : le sens du flux est inconnu |
-| 222 | Exchanges de couche PA non alloués à un Physical Link |
-| 222 | Aucune ComponentExchangeAllocation depuis un PhysicalLink |
-| 231 | ≡ Vue Ligne |
-| 231 | ▣ Vue Composant |
-| 231 | ▦ Matrice |
-| 231 | 🩺 Contrôles |
-| 238 | composant « |
-| 238 | exchange « |
-| 239 | 🔀 Behavior Exchanges (PA) |
-| 239 | · filtres : |
-| 266 | ◧ Vue Blocs |
-| 266 | Composants Behavior dessinés comme dans Capella (bleu = système, bleu clair = acteur), ports UNSET / IN / OUT / INOUT |
-| 266 | ≡ Vue Ligne |
-| 266 | ▣ Vue Composant |
-| 266 | ▦ Matrice |
-| 266 | Matrice N² composant × composant |
-| 266 | 🩺 Contrôles |
-| 266 | Ports orphelins, exchanges sans FE, orientations incohérentes… |
-| 273 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( |
-| 273 | dans le modèle). |
-| 279 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( |
-| 282 | ◧ Vue Blocs |
-| 283 | ≡ Vue Ligne |
-| 284 | ▣ Vue Composant |
-| 285 | ▦ Matrice |
-| 286 | 🩺 Contrôles |
-| 289 | Tous |
-| 289 | Tous les sens |
-| 291 | ⚠ Incohérents |
-| 291 | Orientations de ports incohérentes (OUT→OUT, IN→IN hors délégation) |
-| 295 | Tous kinds |
-| 297 | 🖥 Composant : |
-| 301 | 🔍 Exchange : |
-| 303 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
-| 345 | ⇄ Bidirectionnel |
-| 345 | ? Non orienté |
-| 345 | Émission → |
-| 345 | ← Réception |
+| 64 | Capella Project |
+| 94 | ⇄ INOUT |
+| 119 | Aucun component exchange ne correspond au filtre. |
+| 132 | Sens non défini |
+| 169 | ÉMET → |
+| 169 | Émission — ce composant envoie le signal |
+| 170 | ← REÇOIT |
+| 170 | Réception — ce composant reçoit le signal |
+| 171 | ⇄ ÉCHANGE |
+| 171 | Bidirectionnel — port INOUT |
+| 172 | Non orienté — aucun port IN/OUT/INOUT |
+| 188 | Items : |
+| 195 | Acteur |
+| 216 | Component Exchange |
+| 216 | Source |
+| 216 | Cible |
+| 216 | Couche |
+| 220 | Exchanges sans Functional Exchange alloué |
+| 220 | Aucune ComponentExchangeFunctionalExchangeAllocation |
+| 221 | Ports orphelins (ComponentPort sans exchange) |
+| 221 | Port défini sur un composant mais relié à aucun Component Exchange |
+| 221 | Composant |
+| 221 | Port |
+| 221 | Orientation |
+| 221 | Couche |
+| 223 | Orientations de ports incohérentes |
+| 223 | OUT→OUT ou IN→IN hors délégation |
+| 224 | Exchanges non orientés |
+| 224 | Les deux ports sont UNSET : le sens du flux est inconnu |
+| 225 | Exchanges de couche PA non alloués à un Physical Link |
+| 225 | Aucune ComponentExchangeAllocation depuis un PhysicalLink |
+| 234 | ≡ Vue Ligne |
+| 234 | ▣ Vue Composant |
+| 234 | ▦ Matrice |
+| 234 | 🩺 Contrôles |
+| 241 | composant « |
+| 241 | exchange « |
+| 242 | 🔀 Behavior Exchanges (PA) |
+| 242 | · filtres : |
+| 269 | ◧ Vue Blocs |
+| 269 | Composants Behavior dessinés comme dans Capella (bleu = système, bleu clair = acteur), ports UNSET / IN / OUT / INOUT |
+| 269 | ≡ Vue Ligne |
+| 269 | ▣ Vue Composant |
+| 269 | ▦ Matrice |
+| 269 | Matrice N² composant × composant |
+| 269 | 🩺 Contrôles |
+| 269 | Ports orphelins, exchanges sans FE, orientations incohérentes… |
+| 276 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( |
+| 276 | dans le modèle). |
+| 282 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( |
+| 285 | ◧ Vue Blocs |
+| 286 | ≡ Vue Ligne |
+| 287 | ▣ Vue Composant |
+| 288 | ▦ Matrice |
+| 289 | 🩺 Contrôles |
+| 292 | Tous |
+| 292 | Tous les sens |
+| 294 | ⚠ Incohérents |
+| 294 | Orientations de ports incohérentes (OUT→OUT, IN→IN hors délégation) |
+| 298 | Tous kinds |
+| 300 | 🖥 Composant : |
+| 304 | 🔍 Exchange : |
+| 306 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 348 | ⇄ Bidirectionnel |
+| 348 | ? Non orienté |
+| 348 | Émission → |
+| 348 | ← Réception |
 
 ## js/37-capella-cablage.js
 

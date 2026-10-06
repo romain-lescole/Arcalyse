@@ -33,7 +33,7 @@ function capRenderPhysLink(){
   // des variantes sombres. En thème sombre, on conserve les couleurs claires d'origine.
   const isLight = capIsLight();
   const pcColor = n => {
-    if (n==='ACTOR') return isLight?'#8a5a00':'#e3b341';
+    if (n==='ACTOR') return capTextOn('#7fd8ff');   // bleu clair des acteurs, comme 🧱 System Component
     if (!isLight) {
       return n==='NODE'?'#fffcb7':n==='BEHAVIOR'?'#96b1da':'#c084fc';
     } else {
@@ -46,7 +46,7 @@ function capRenderPhysLink(){
   // Couleur de fond pour les badges (NODE/BEHAVIOR) dans l'en-tête des cartes composant.
   // Texte du badge : capInk (noir sur fond clair, blanc sur fond foncé) ; en thème clair, variantes sombres.
   const pcBadgeBg = n => {
-    if (n==='ACTOR') return isLight?'#8a5a00':'#b08800';
+    if (n==='ACTOR') return '#7fd8ff';
     if (!isLight) {
       return n==='NODE'?'#fffcb7':n==='BEHAVIOR'?'#96b1da':'#c084fc';
     } else {
