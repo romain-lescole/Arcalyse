@@ -555,7 +555,7 @@
 - `capTourKey` (l. 363) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
 - `capTourEnd` (l. 372) — Quitte la visite guidée et retire la mise en évidence.
 
-## 44-functional-exchange.js — 492 lignes
+## 44-functional-exchange.js — 503 lignes
 
 - `CAP_FEX_PAGE` (l. 8)
 - `CAP_FEX_MX_MAX` (l. 9)
@@ -606,15 +606,16 @@
 - `capCfgLoadFile` (l. 123) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
 - `capCfgLoadUpdate` (l. 137) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
 
-## 47-composants.js — 417 lignes
+## 47-composants.js — 434 lignes
 
 - `CAP_CB_PAGE` (l. 10)
 - `CAP_CB_LAYERS` (l. 13) — Vues 🧱 par couche : conteneur, clé de vue (barre), libellé.
-- `CAP_CB_TYPES` (l. 19) — Types de composants dessinés (versions récentes et anciennes de Capella).
-- `capComputeComponentBlocks` (l. 24) — Composants du modèle avec leurs ports, échanges, sous-composants et fonctions allouées.
-- `capCbChecks` (l. 49) — Sections de contrôle des composants et de leurs ports (rapport 🩺 et tableau de bord).
-- `capCbDashCatalog` (l. 74) — Indicateurs 🧱 Composants pour le catalogue du tableau de bord.
-- `capRenderComponentBlocks` (l. 87) — Rend la vue 🧱 d'une couche (barre, filtres, contenu paginé, exports).
+- `capCbOpenComp` (l. 24) — Ouvre le bloc d'un composant dans la Vue Blocs de sa couche (🧱 System / Logical Component, 🔀 Behavior Exchange,
+- `CAP_CB_TYPES` (l. 35) — Types de composants dessinés (versions récentes et anciennes de Capella).
+- `capComputeComponentBlocks` (l. 40) — Composants du modèle avec leurs ports, échanges, sous-composants et fonctions allouées.
+- `capCbChecks` (l. 65) — Sections de contrôle des composants et de leurs ports (rapport 🩺 et tableau de bord).
+- `capCbDashCatalog` (l. 90) — Indicateurs 🧱 Composants pour le catalogue du tableau de bord.
+- `capRenderComponentBlocks` (l. 103) — Rend la vue 🧱 d'une couche (barre, filtres, contenu paginé, exports).
 
 ## 48-barres-groupes.js — 60 lignes
 

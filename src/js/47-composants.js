@@ -15,6 +15,22 @@ var CAP_CB_LAYERS={LA:{view:'cblk', box:'cap-view-cblk', l:'🧱 Logical Compone
                    // Vues Blocs intégrées : 🔀 Behavior Exchange (PA, Behavior) et 🔌 Physical Link (PA, nœuds)
                    PB:{l:'🔀 Behavior Exchange', what:'Physical Components Behavior', scope:'Couche PA · Behavior', lw:'Component Exchanges', only:true},
                    PN:{l:'🔌 Physical Link', what:'Physical Components Node', scope:'Couche PA · Nodes', lw:'Physical Links', only:true}};
+var _capCbGo=null;   // {L, id} : composant à afficher à la prochaine ouverture d'une Vue Blocs (depuis une autre vue)
+
+/** Ouvre le bloc d'un composant dans la Vue Blocs de sa couche (🧱 System / Logical Component, 🔀 Behavior Exchange,
+ * 🔌 Physical Link) ; à défaut (couche OA, composant inconnu), ouvre son panneau de détail.
+ * @param {string} id - Identifiant du composant ou de l'acteur
+ */
+function capCbOpenComp(id){
+  const c=capComputeComponentBlocks().byId[id];
+  const L=!c?'':c.layer==='SA'?'SA':c.layer==='LA'?'LA':c.layer==='PA'?(c.nature==='NODE'?'PN':'PB'):'';
+  if(!L){ capOpenDetailById(id); return; }
+  _capCbGo={L, id};
+  if(L==='PB'){ _capCompExView='block'; const v=document.getElementById('cap-view-compex'); if(v&&v._cex) v._cex.view='block'; capNavOpen('compex'); }
+  else if(L==='PN'){ _capPhysLinkView='block'; const v=document.getElementById('cap-view-physlink'); if(v&&v._phl) v._phl.view='block'; capNavOpen('physlink'); }
+  else { const v=document.getElementById(CAP_CB_LAYERS[L].box); if(v&&v._cb) v._cb.view='block'; else _capCbView[L]='block'; capNavOpen(CAP_CB_LAYERS[L].view); }
+}
+
 /** Types de composants dessinés (versions récentes et anciennes de Capella). */
 var CAP_CB_TYPES=/^(Entity|SystemComponent|LogicalComponent|PhysicalComponent|SystemActor|LogicalActor|PhysicalActor|OperationalActor)$/;
 
@@ -413,4 +429,5 @@ function capRenderComponentBlocks(L, host, holder){
     wireMain();
   }
   render();
+  if(_capCbGo&&_capCbGo.L===L){ const g=_capCbGo.id; _capCbGo=null; gotoComp(g); }
 }

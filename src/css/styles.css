@@ -1061,6 +1061,9 @@ table.cap-tf-fixed td,table.cap-tf-fixed th{overflow-wrap:anywhere;}
 .fex-backbar{display:flex;justify-content:flex-start;margin:4px 0;}
 .fex-box-t{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 86px;font-weight:700;font-size:13px;color:#9ff5b8;}
 .fex-box-empty{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:10px;color:var(--c-dim);font-style:italic;}
+.fex-att{position:absolute;top:5px;left:86px;right:86px;text-align:center;font-size:10px;color:var(--c-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:1;}
+.fex-att-go{cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px;}
+.fex-att-go:hover{color:var(--c-accent);}
 .fex-bpin{position:absolute;display:flex;align-items:center;gap:4px;height:16px;transform:translateY(-50%);max-width:48%;}
 .fex-pins-in .fex-bpin{left:-8px;}
 .fex-pins-out .fex-bpin{right:-8px;flex-direction:row-reverse;}

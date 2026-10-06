@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3156 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3157 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -2995,66 +2995,67 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 303 | allouée à un acteur |
 | 303 | non allouée |
 | 303 | fonction mère (non allouée) |
-| 309 | aucun port ni échange |
-| 322 | fonctions : pour rester fluide, la matrice en affiche |
-| 322 | (les plus connectées). Filtrez par couche ou par fonction pour voir les autres. |
-| 326 | échanges |
-| 326 | Source ↓ / Cible → |
-| 337 | · page |
-| 348 | Aucune fonction ne correspond au filtre. |
-| 350 | Fonctions |
-| 351 | ↩ Revenir à « |
-| 354 | Aucun functional exchange ne correspond au filtre. |
-| 359 | Fonctions |
-| 362 | Échanges |
-| 399 | échange |
-| 413 | ◧ Vue Blocs |
-| 413 | ≡ Vue Ligne |
-| 413 | ▣ Vue Fonction |
-| 413 | ▦ Matrice |
-| 413 | 🩺 Contrôles |
-| 417 | allocation : |
-| 417 | allocataire « |
-| 417 | fonction « |
-| 417 | échange « |
-| 418 | ƒ⇆ Functional Exchanges |
-| 418 | échanges |
-| 418 | · filtres : |
-| 425 | Entrée |
-| 425 | Sortie |
-| 430 | Couche |
-| 430 | Fonction |
-| 430 | Sens |
-| 430 | Port |
-| 430 | Functional Exchange |
-| 430 | Fonction distante |
-| 430 | Port distant |
-| 433 | Couche |
-| 433 | Fonction source |
-| 433 | Port source |
-| 433 | Functional Exchange |
-| 433 | Port cible |
-| 433 | Fonction cible |
-| 433 | Exchange Items |
-| 433 | Component Exchanges |
-| 433 | Chaînes |
-| 443 | ◧ Vue Blocs |
-| 444 | ≡ Vue Ligne |
-| 444 | Un échange par ligne : fonction source ▶ échange ▶ fonction cible |
-| 444 | ▣ Vue Fonction |
-| 444 | Échanges regroupés par fonction |
-| 445 | ▦ Matrice |
-| 445 | Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus |
-| 445 | 🩺 Contrôles |
-| 445 | Ports orphelins, échanges sans Exchange Item, fonctions sans échange… |
-| 451 | Toutes |
-| 452 | ƒ Fonction : |
-| 457 | 🔍 Échange : |
-| 460 | avec ports ou échanges |
-| 462 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
-| 462 | Allocation |
-| 462 | — un échange est gardé si l'une de ses deux fonctions correspond |
-| 462 | — double-clic : uniquement celles-ci |
+| 310 | aucun port ni échange |
+| 321 | » — clic : son bloc |
+| 332 | fonctions : pour rester fluide, la matrice en affiche |
+| 332 | (les plus connectées). Filtrez par couche ou par fonction pour voir les autres. |
+| 336 | échanges |
+| 336 | Source ↓ / Cible → |
+| 347 | · page |
+| 358 | Aucune fonction ne correspond au filtre. |
+| 360 | Fonctions |
+| 361 | ↩ Revenir à « |
+| 364 | Aucun functional exchange ne correspond au filtre. |
+| 369 | Fonctions |
+| 372 | Échanges |
+| 410 | échange |
+| 424 | ◧ Vue Blocs |
+| 424 | ≡ Vue Ligne |
+| 424 | ▣ Vue Fonction |
+| 424 | ▦ Matrice |
+| 424 | 🩺 Contrôles |
+| 428 | allocation : |
+| 428 | allocataire « |
+| 428 | fonction « |
+| 428 | échange « |
+| 429 | ƒ⇆ Functional Exchanges |
+| 429 | échanges |
+| 429 | · filtres : |
+| 436 | Entrée |
+| 436 | Sortie |
+| 441 | Couche |
+| 441 | Fonction |
+| 441 | Sens |
+| 441 | Port |
+| 441 | Functional Exchange |
+| 441 | Fonction distante |
+| 441 | Port distant |
+| 444 | Couche |
+| 444 | Fonction source |
+| 444 | Port source |
+| 444 | Functional Exchange |
+| 444 | Port cible |
+| 444 | Fonction cible |
+| 444 | Exchange Items |
+| 444 | Component Exchanges |
+| 444 | Chaînes |
+| 454 | ◧ Vue Blocs |
+| 455 | ≡ Vue Ligne |
+| 455 | Un échange par ligne : fonction source ▶ échange ▶ fonction cible |
+| 455 | ▣ Vue Fonction |
+| 455 | Échanges regroupés par fonction |
+| 456 | ▦ Matrice |
+| 456 | Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus |
+| 456 | 🩺 Contrôles |
+| 456 | Ports orphelins, échanges sans Exchange Item, fonctions sans échange… |
+| 462 | Toutes |
+| 463 | ƒ Fonction : |
+| 468 | 🔍 Échange : |
+| 471 | avec ports ou échanges |
+| 473 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 473 | Allocation |
+| 473 | — un échange est gardé si l'une de ses deux fonctions correspond |
+| 473 | — double-clic : uniquement celles-ci |
 
 ## js/45-comparaison-rapport.js
 
@@ -3234,118 +3235,118 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 17 | Physical Components Node |
 | 17 | Couche PA · Nodes |
 | 17 | Physical Links |
-| 57 | Ports de composant orphelins (sans Component Exchange) |
-| 57 | Component Port défini mais relié à aucun échange |
-| 57 | Composant |
-| 57 | Port |
-| 57 | Orientation |
-| 57 | Couche |
-| 59 | Ports connectés sans orientation (UNSET) |
-| 59 | Le sens du flux n'est pas défini sur le port |
-| 59 | Composant |
-| 59 | Port |
-| 59 | Couche |
-| 61 | Échanges aux orientations incohérentes |
-| 61 | OUT → OUT ou IN → IN hors délégation |
-| 61 | Component Exchange |
-| 61 | Source |
-| 61 | Cible |
-| 61 | Couche |
-| 63 | Composants feuilles sans port |
-| 63 | Composant sans sous-composant et sans Component Port (hors acteurs) |
-| 63 | Composant |
-| 63 | Couche |
-| 65 | Composants feuilles sans fonction allouée |
-| 65 | Composant sans sous-composant à qui aucune fonction n'est allouée |
-| 65 | Composant |
-| 65 | Nature |
-| 65 | Couche |
-| 66 | Acteur |
-| 66 | Système |
-| 78 | — nombre |
-| 78 | acteur(s) |
-| 79 | cb.ports. |
-| 79 | — ports connectés |
-| 79 | Component Ports reliés à au moins un Component Exchange |
-| 80 | cb.chk. |
-| 80 | — contrôles |
-| 116 | Système |
-| 116 | Composants du système |
-| 116 | Acteurs |
-| 116 | Acteurs externes |
-| 116 | Nœuds |
-| 153 | — non connecté |
-| 155 | — non connecté |
-| 172 | non connecté |
-| 178 | — acteur |
-| 182 | sous-composant(s) : |
-| 183 | aucun port |
-| 196 | allouée |
-| 196 | » — clic : son bloc dans ƒ⇆ Functional Exchange |
-| 227 | ÉMET → |
-| 227 | Émission |
-| 227 | ← REÇOIT |
-| 227 | Réception |
-| 227 | ⇄ ÉCHANGE |
-| 227 | Bidirectionnel |
-| 227 | Non orienté |
-| 244 | Aucun Component Exchange |
-| 248 | 👤 Acteur |
-| 262 | · page |
-| 271 | Aucun composant ne correspond au filtre. |
-| 273 | Composants |
-| 274 | ↩ Revenir à « |
-| 278 | Aucun composant ne correspond au filtre. |
-| 280 | Composants |
-| 281 | ↩ Revenir à « |
-| 284 | Aucun Component Exchange ne correspond au filtre. |
-| 288 | composants : pour rester fluide, la matrice en affiche |
-| 288 | (les plus connectés). Filtrez pour voir les autres. |
-| 293 | Échanges |
-| 342 | Tous les composants |
-| 347 | ◧ Vue Blocs |
-| 347 | ▣ Vue Composant |
-| 347 | ≡ Vue Ligne |
-| 347 | ▦ Matrice |
-| 347 | 🩺 Contrôles |
-| 352 | — Vue Blocs |
-| 352 | composants · |
-| 359 | Acteur |
-| 359 | Système |
-| 360 | Acteur |
-| 360 | Système |
-| 361 | Couche |
-| 361 | Composant |
-| 361 | Nature |
-| 361 | Port |
-| 361 | Orientation |
-| 361 | Sens |
-| 361 | Composant distant |
-| 363 | Couche |
-| 363 | Composant source |
-| 363 | Port source |
-| 363 | Orientation source |
-| 363 | Component Exchange |
-| 363 | Kind |
-| 363 | Port cible |
-| 363 | Orientation cible |
-| 363 | Composant cible |
-| 363 | Functional Exchanges |
-| 371 | Aucun |
-| 371 | dans ce modèle ( |
-| 372 | ◧ Vue Blocs |
-| 373 | ▣ Vue Composant |
-| 373 | Une carte par composant avec ses échanges émis, reçus, bidirectionnels ou non orientés |
-| 374 | ≡ Vue Ligne |
-| 374 | Un Component Exchange par ligne |
-| 374 | ▦ Matrice |
-| 374 | Composant × composant (100 composants au plus) |
-| 374 | 🩺 Contrôles |
-| 374 | Ports orphelins ou sans orientation, échanges incohérents, composants sans port ou sans fonction |
-| 386 | 🧱 Composant : |
-| 389 | Lien |
-| 389 | Échange |
-| 391 | Nature |
-| 391 | avec ports |
-| 392 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
-| 392 | — double-clic : uniquement ceux-ci |
+| 73 | Ports de composant orphelins (sans Component Exchange) |
+| 73 | Component Port défini mais relié à aucun échange |
+| 73 | Composant |
+| 73 | Port |
+| 73 | Orientation |
+| 73 | Couche |
+| 75 | Ports connectés sans orientation (UNSET) |
+| 75 | Le sens du flux n'est pas défini sur le port |
+| 75 | Composant |
+| 75 | Port |
+| 75 | Couche |
+| 77 | Échanges aux orientations incohérentes |
+| 77 | OUT → OUT ou IN → IN hors délégation |
+| 77 | Component Exchange |
+| 77 | Source |
+| 77 | Cible |
+| 77 | Couche |
+| 79 | Composants feuilles sans port |
+| 79 | Composant sans sous-composant et sans Component Port (hors acteurs) |
+| 79 | Composant |
+| 79 | Couche |
+| 81 | Composants feuilles sans fonction allouée |
+| 81 | Composant sans sous-composant à qui aucune fonction n'est allouée |
+| 81 | Composant |
+| 81 | Nature |
+| 81 | Couche |
+| 82 | Acteur |
+| 82 | Système |
+| 94 | — nombre |
+| 94 | acteur(s) |
+| 95 | cb.ports. |
+| 95 | — ports connectés |
+| 95 | Component Ports reliés à au moins un Component Exchange |
+| 96 | cb.chk. |
+| 96 | — contrôles |
+| 132 | Système |
+| 132 | Composants du système |
+| 132 | Acteurs |
+| 132 | Acteurs externes |
+| 132 | Nœuds |
+| 169 | — non connecté |
+| 171 | — non connecté |
+| 188 | non connecté |
+| 194 | — acteur |
+| 198 | sous-composant(s) : |
+| 199 | aucun port |
+| 212 | allouée |
+| 212 | » — clic : son bloc dans ƒ⇆ Functional Exchange |
+| 243 | ÉMET → |
+| 243 | Émission |
+| 243 | ← REÇOIT |
+| 243 | Réception |
+| 243 | ⇄ ÉCHANGE |
+| 243 | Bidirectionnel |
+| 243 | Non orienté |
+| 260 | Aucun Component Exchange |
+| 264 | 👤 Acteur |
+| 278 | · page |
+| 287 | Aucun composant ne correspond au filtre. |
+| 289 | Composants |
+| 290 | ↩ Revenir à « |
+| 294 | Aucun composant ne correspond au filtre. |
+| 296 | Composants |
+| 297 | ↩ Revenir à « |
+| 300 | Aucun Component Exchange ne correspond au filtre. |
+| 304 | composants : pour rester fluide, la matrice en affiche |
+| 304 | (les plus connectés). Filtrez pour voir les autres. |
+| 309 | Échanges |
+| 358 | Tous les composants |
+| 363 | ◧ Vue Blocs |
+| 363 | ▣ Vue Composant |
+| 363 | ≡ Vue Ligne |
+| 363 | ▦ Matrice |
+| 363 | 🩺 Contrôles |
+| 368 | — Vue Blocs |
+| 368 | composants · |
+| 375 | Acteur |
+| 375 | Système |
+| 376 | Acteur |
+| 376 | Système |
+| 377 | Couche |
+| 377 | Composant |
+| 377 | Nature |
+| 377 | Port |
+| 377 | Orientation |
+| 377 | Sens |
+| 377 | Composant distant |
+| 379 | Couche |
+| 379 | Composant source |
+| 379 | Port source |
+| 379 | Orientation source |
+| 379 | Component Exchange |
+| 379 | Kind |
+| 379 | Port cible |
+| 379 | Orientation cible |
+| 379 | Composant cible |
+| 379 | Functional Exchanges |
+| 387 | Aucun |
+| 387 | dans ce modèle ( |
+| 388 | ◧ Vue Blocs |
+| 389 | ▣ Vue Composant |
+| 389 | Une carte par composant avec ses échanges émis, reçus, bidirectionnels ou non orientés |
+| 390 | ≡ Vue Ligne |
+| 390 | Un Component Exchange par ligne |
+| 390 | ▦ Matrice |
+| 390 | Composant × composant (100 composants au plus) |
+| 390 | 🩺 Contrôles |
+| 390 | Ports orphelins ou sans orientation, échanges incohérents, composants sans port ou sans fonction |
+| 402 | 🧱 Composant : |
+| 405 | Lien |
+| 405 | Échange |
+| 407 | Nature |
+| 407 | avec ports |
+| 408 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 408 | — double-clic : uniquement ceux-ci |

@@ -305,12 +305,22 @@ function capRenderFunctionalExchange(){
         <div class="fex-side fex-side-in">${side(ins,'IN')}</div>
         <div class="fex-box fex-k-${ak}" data-layer="${f.layer}" title="${capEsc(capAnaHuman(f.type))} — ${f.layer} — ${akT}${f.alloc.length?' : '+capEsc(f.alloc.map(a=>a.name).join(', ')):''}">
           <div class="fex-box-t">${det(f.id,fnLabel(f.num,f.name))}</div>
+          ${attachHtml(f)}
           <div class="fex-pins-in">${pins(ins,'IN')}</div><div class="fex-pins-out">${pins(outs,'OUT')}</div>
           ${!ins.length&&!outs.length?'<div class="fex-box-empty">aucun port ni échange</div>':''}
         </div>
         <div class="fex-side fex-side-out">${side(outs,'OUT')}</div>
       </div>`;
     }).join('')}</div>`;
+  }
+
+  /** Rattachement affiché en petit sous le titre d'un bloc : composants ou acteurs auxquels la fonction est allouée
+   * (clic : leur bloc dans la vue de leur couche), sinon la fonction mère (clic : son bloc).
+   * @param {object} f - Fonction @returns {string} HTML */
+  function attachHtml(f){
+    if(f.alloc.length) return `<div class="fex-att">${f.alloc.map(a=>`<span class="fex-att-go" data-comp="${capEsc(a.id)}" title="Allouée à « ${capEsc(a.name)} » — clic : son bloc">${a.actor?'👤':'▣'} ${capEsc(a.name)}</span>`).join(' · ')}</div>`;
+    const pf=f.parentId&&X.fnById[f.parentId];
+    return pf?`<div class="fex-att"><span class="fex-dim">dans</span> <span class="fex-att-go" data-go="${capEsc(pf.id)}" title="Fonction mère — clic : son bloc">ƒ ${capEsc(fnLabel(pf.num,pf.name))}</span></div>`:'';
   }
 
   /** Matrice fonction × fonction (CAP_FEX_MX_MAX fonctions au plus, les plus connectées). */
@@ -384,6 +394,7 @@ function capRenderFunctionalExchange(){
   function wireMain(){
     const main=container.querySelector('#fex-main'); if(!main) return;
     main.querySelectorAll('[data-go]').forEach(a=>a.onclick=ev=>{ ev.stopPropagation(); gotoFn(a.dataset.go, a.closest('.fex-blk')?.dataset.fn); });
+    main.querySelectorAll('[data-comp]').forEach(a=>a.onclick=ev=>{ ev.stopPropagation(); capCbOpenComp(a.dataset.comp); });
     main.querySelector('#fex-back')?.addEventListener('click',()=>{ const b=st.back; st.back=null; if(b) gotoFn(b); });
     main.querySelectorAll('[data-pg]').forEach(b=>b.addEventListener('click',()=>{ st.page+=+b.dataset.pg; updateContent(); container.scrollTop=0; }));
     if(st.view!=='matrix') return;
