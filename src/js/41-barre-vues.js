@@ -16,7 +16,7 @@ var CAP_NAV_ITEMS=[
   {k:'fex',       l:'ƒ⇆ Functional Exchange', g:'flux', t:'Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles'},
   {k:'csys',      l:'🧱 System Component', g:'flux', t:'System Components (SA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles'},
   {k:'cblk',      l:'🧱 Logical Component', g:'flux', t:'Logical Components (LA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles'},
-  {k:'compex',    l:'🔀 Behavior Exchange', g:'flux', t:'Component Exchanges de la couche PA entre Physical Components Behavior (anciennement 🔀 Component Exchange)'},
+  {k:'compex',    l:'🔀 Behavior Exchange', g:'flux', t:'Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange)'},
   {k:'physlink',  l:'🔌 Physical Link',     g:'flux'},
   {k:'ports',     l:'🧩 Ports',             g:'flux', t:'Traçabilité Function Port ↔ Component Port ↔ Physical Port'},
   {k:'functions', l:'ƒ Fonctions',          g:'',     t:'Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier'},

@@ -13,7 +13,7 @@ var _capCbView={LA:'block', SA:'block'};
 var CAP_CB_LAYERS={LA:{view:'cblk', box:'cap-view-cblk', l:'🧱 Logical Component', what:'Logical Components', scope:'Couche LA', lw:'Component Exchanges'},
                    SA:{view:'csys', box:'cap-view-csys', l:'🧱 System Component', what:'System Components', scope:'Couche SA', lw:'Component Exchanges'},
                    // Vues Blocs intégrées : 🔀 Behavior Exchange (PA, Behavior) et 🔌 Physical Link (PA, nœuds)
-                   PB:{l:'🔀 Behavior Exchange', what:'Physical Components Behavior', scope:'Couche PA · Behavior', lw:'Component Exchanges', only:true},
+                   PB:{l:'🔀 Behavior Exchange', what:'Physical Components Behavior et acteurs reliés', scope:'Couche PA · Behavior', lw:'Component Exchanges', only:true},
                    PN:{l:'🔌 Physical Link', what:'Physical Components Node', scope:'Couche PA · Nodes', lw:'Physical Links', only:true}};
 var _capCbGo=null;   // {L, id} : composant à afficher à la prochaine ouverture d'une Vue Blocs (depuis une autre vue)
 
@@ -111,7 +111,10 @@ function capRenderComponentBlocks(L, host, holder){
   const byPort=ls=>{ const m={}; ls.forEach(l=>[l.src.portId,l.tgt.portId].forEach(pid=>(m[pid]=m[pid]||[]).push(l))); return m; };
   if(L==='PB'){
     allLinks=capBehaviorExchanges();
-    C={...C0, comps:C0.comps.filter(c=>c.layer==='PA'&&c.type==='PhysicalComponent'&&c.nature!=='NODE'), portLinks:byPort(allLinks)};
+    const pl=byPort(allLinks), linked=new Set(allLinks.flatMap(l=>[l.src.pcId,l.tgt.pcId]));
+    // Composants Behavior, plus les acteurs (nœuds) reliés à un Behavior : seulement leurs ports concernés
+    C={...C0, comps:[...C0.comps.filter(c=>c.layer==='PA'&&c.type==='PhysicalComponent'&&c.nature!=='NODE'&&!c.actor),
+      ...C0.comps.filter(c=>c.layer==='PA'&&c.actor&&linked.has(c.id)).map(c=>({...c, ports:c.ports.filter(p=>pl[p.id])}))], portLinks:pl};
   } else if(L==='PN'){
     const PL=capComputePhysLinks(), pp={};
     (PL.allPorts||[]).forEach(p=>(pp[p.pcId]=pp[p.pcId]||[]).push({id:p.portId, name:p.portName, orient:'PP'}));
@@ -229,7 +232,7 @@ function capRenderComponentBlocks(L, host, holder){
         <div class="phl-cell phl-cell-pc" style="--phl-c:${sc}">${det(l.src.pcId,l.src.pcName,`color:${capTextOn(sc)}`)}<span class="phl-port-name">${port(l.src.portOrient,'R',false)} ${capEsc(l.src.portName)}</span></div>
         <div class="phl-cell phl-cell-link" style="padding:6px 14px;gap:2px;"><span style="font-size:11.5px;color:var(--c-dim);font-family:monospace;">#${lnum[l.linkId]} · ${l.layer}${l.kind&&l.kind!=='UNSET'?' · '+l.kind:''}${l.warn?' · ⚠':''}</span>
           <span style="display:flex;align-items:center;width:100%;justify-content:center;"><span style="color:${c}">${arrL}</span><span style="flex:1;max-width:40px;height:2px;background:${c}"></span>
-          <span class="phl-link-badge" style="background:${c};color:#fff;border-color:${c};cursor:pointer;" onclick="capOpenDetailById('${capEsc(l.linkId)}')">${capEsc(l.linkName)}</span>
+          <span class="phl-link-badge" style="background:${c};color:${capInk(c)};border-color:${c};cursor:pointer;" onclick="capOpenDetailById('${capEsc(l.linkId)}')">${capEsc(l.linkName)}</span>
           <span style="flex:1;max-width:40px;height:2px;background:${c}"></span><span style="color:${c}">${arrR}</span></span>
           ${l.fes.length?`<div style="font-size:11.5px;color:var(--c-dim)">ƒ ${capFoldList(l.fes.map(f=>det(f.id,f.name)))}</div>`:''}</div>
         <div class="phl-cell phl-cell-pc phl-cell-r" style="--phl-c:${tc}">${det(l.tgt.pcId,l.tgt.pcName,`color:${capTextOn(tc)}`)}<span class="phl-port-name">${port(l.tgt.portOrient,'L',false)} ${capEsc(l.tgt.portName)}</span></div>
@@ -252,7 +255,7 @@ function capRenderComponentBlocks(L, host, holder){
           <span title="${rr.t}" style="font-size:9px;font-weight:700;color:${rr.c};min-width:58px;">${rr.l}</span>
           <span class="phl-lr-port-src">${port(p.orient,'R',false)} ${capEsc(p.name)}</span>
           <span class="phl-lr-arrow" style="color:${rr.c};font-weight:700;">${rr.a}</span>
-          <span class="phl-lr-link" style="background:${lc(l)};color:#fff;border-color:${lc(l)};cursor:pointer;" title="${capEsc([l.kind!=='UNSET'?l.kind:'',l.fes.length?'FE : '+l.fes.map(f=>f.name).join(', '):''].filter(Boolean).join('\n'))}" onclick="event.stopPropagation();capOpenDetailById('${capEsc(l.linkId)}')">${capEsc(l.linkName)}</span>
+          <span class="phl-lr-link" style="background:${lc(l)};color:${capInk(lc(l))};border-color:${lc(l)};cursor:pointer;" title="${capEsc([l.kind!=='UNSET'?l.kind:'',l.fes.length?'FE : '+l.fes.map(f=>f.name).join(', '):''].filter(Boolean).join('\n'))}" onclick="event.stopPropagation();capOpenDetailById('${capEsc(l.linkId)}')">${capEsc(l.linkName)}</span>
           <span class="phl-lr-arrow" style="color:${rr.c};font-weight:700;">${rr.a}</span>
           <span class="phl-lr-port-tgt">${port(op,'L',false)} ${capEsc(ot.portName)}</span>
           <span class="fex-go phl-lr-comp-tgt" data-go="${capEsc(ot.pcId)}" title="Aller à ce composant" style="color:${capTextOn(NK[kindOf(ot.pcId)].c)}">${capEsc(ot.pcName)}</span>

@@ -5,14 +5,16 @@ function capAnaReset(){
 }
 
 /** Component Exchanges du périmètre de la vue 🔀 Behavior Exchange : couche PA, entre Physical Components
- * de nature Behavior (aucune extrémité NODE). Les échanges SA et LA sont traités par 🧱 System / Logical Component.
+ * de nature Behavior, ou entre un composant Behavior et un acteur (nœud le plus souvent) qui lui est relié. Les échanges SA et LA sont traités par 🧱 System / Logical Component.
  * @returns {object[]} Échanges (avec allPorts limités aux mêmes composants)
  */
 function capBehaviorExchanges(){
-  const all=capComputeCompExchanges();
+  const all=capComputeCompExchanges(), CB=capComputeComponentBlocks();
   const ok=e=>e.pcType==='PhysicalComponent'&&e.pcNature!=='NODE';
-  const out=all.filter(l=>l.layer==='PA'&&ok(l.src)&&ok(l.tgt));
-  out.allPorts=(all.allPorts||[]).filter(p=>p.layer==='PA'&&ok(p));
+  const act=e=>!!(CB.byId[e.pcId]&&CB.byId[e.pcId].actor);   // acteur (souvent un nœud) relié à un composant Behavior
+  const out=all.filter(l=>l.layer==='PA'&&(ok(l.src)||ok(l.tgt))&&(ok(l.src)||act(l.src))&&(ok(l.tgt)||act(l.tgt)));
+  const actPorts=new Set(); out.forEach(l=>[l.src,l.tgt].forEach(e=>{ if(!ok(e)) actPorts.add(e.portId); }));
+  out.allPorts=(all.allPorts||[]).filter(p=>p.layer==='PA'&&(ok(p)||actPorts.has(p.portId)));
   out.total=all.length;
   return out;
 }
@@ -268,14 +270,14 @@ function capRenderCompExchange(){
     _capCompExView=st.view;
     const filtered=getFiltered();
     if(st.view==='block'){   // ◧ Vue Blocs : rendu commun aux vues 🧱 (47-composants.js), mêmes couleurs que 🧱 Logical Component
-      container.innerHTML=`<div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Component Exchanges de la couche <b>PA</b> entre <b>Physical Components Behavior</b> (${allLinks.length} sur ${allLinks.total} dans le modèle).</div>
+      container.innerHTML=`<div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Component Exchanges de la couche <b>PA</b> entre <b>Physical Components Behavior</b>, ou entre un Behavior et un <b>acteur</b> (nœud) qui lui est relié (${allLinks.length} sur ${allLinks.total} dans le modèle).</div>
         <div class="phl-toggle-bar">${CEX_VIEWS.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}</div><div id="cex-blk"></div>`;
       container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.addEventListener('click',()=>{ st.view=b.dataset.pv; render(); }));
       capRenderComponentBlocks('PB', container.querySelector('#cex-blk'), container);
       return;
     }
     container.innerHTML=`
-      <div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Component Exchanges de la couche <b>PA</b> entre <b>Physical Components Behavior</b> (${allLinks.length} sur ${allLinks.total} dans le modèle). Les échanges SA et LA sont dans 🧱 System Component et 🧱 Logical Component ; les liens entre nœuds dans 🔌 Physical Link.</div>
+      <div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Component Exchanges de la couche <b>PA</b> entre <b>Physical Components Behavior</b>, ou entre un Behavior et un <b>acteur</b> (nœud) qui lui est relié (${allLinks.length} sur ${allLinks.total} dans le modèle). Les échanges SA et LA sont dans 🧱 System Component et 🧱 Logical Component ; les liens entre nœuds dans 🔌 Physical Link.</div>
       <div class="phl-toggle-bar">
         <button class="phl-toggle-btn" data-pv="block" title="${CEX_VIEWS[0][2]}">◧ Vue Blocs</button>
         <button class="phl-toggle-btn${st.view==='line'?' active':''}" data-pv="line">≡ Vue Ligne</button>

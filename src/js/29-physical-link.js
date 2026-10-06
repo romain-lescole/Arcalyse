@@ -44,7 +44,7 @@ function capRenderPhysLink(){
   const projectName=(cap_xmlDoc&&cap_xmlDoc.documentElement)?(cap_xmlDoc.documentElement.getAttribute('name')||'Capella Project'):'Capella Project';
 
   // Couleur de fond pour les badges (NODE/BEHAVIOR) dans l'en-tête des cartes composant.
-  // Le badge utilise background + texte blanc → en thème clair on utilise les variantes sombres.
+  // Texte du badge : capInk (noir sur fond clair, blanc sur fond foncé) ; en thème clair, variantes sombres.
   const pcBadgeBg = n => {
     if (n==='ACTOR') return isLight?'#8a5a00':'#b08800';
     if (!isLight) {
@@ -160,7 +160,7 @@ function capRenderPhysLink(){
         }).join('');
         return`<div class="phl-comp-card">
           <div class="phl-comp-hdr" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open');this.querySelector('.phl-comp-toggle').classList.toggle('open')">
-            <span class="phl-comp-badge" style="background:${pcBadgeBg(pc.nature)};color:#fff">${capEsc(pc.nature==='ACTOR'?'ACTEUR':(pc.nature||'—'))}</span>
+            <span class="phl-comp-badge" style="background:${pcBadgeBg(pc.nature)};color:${capInk(pcBadgeBg(pc.nature))}">${capEsc(pc.nature==='ACTOR'?'ACTEUR':(pc.nature||'—'))}</span>
             <span class="phl-comp-title" style="color:${pcColor(pc.nature)}">${capEsc(pc.pcName)}</span>
             <span class="phl-comp-cnt">${pc.links.length} lien${pc.links.length>1?'s':''}</span>
             <span class="phl-comp-toggle">▶</span>

@@ -2038,72 +2038,72 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte |
 |---:|---|
-| 59 | Capella Project |
-| 89 | ⇄ INOUT |
-| 114 | Aucun component exchange ne correspond au filtre. |
-| 127 | Sens non défini |
-| 164 | ÉMET → |
-| 164 | Émission — ce composant envoie le signal |
-| 165 | ← REÇOIT |
-| 165 | Réception — ce composant reçoit le signal |
-| 166 | ⇄ ÉCHANGE |
-| 166 | Bidirectionnel — port INOUT |
-| 167 | Non orienté — aucun port IN/OUT/INOUT |
-| 183 | Items : |
-| 211 | Component Exchange |
-| 211 | Source |
-| 211 | Cible |
-| 211 | Couche |
-| 215 | Exchanges sans Functional Exchange alloué |
-| 215 | Aucune ComponentExchangeFunctionalExchangeAllocation |
-| 216 | Ports orphelins (ComponentPort sans exchange) |
-| 216 | Port défini sur un composant mais relié à aucun Component Exchange |
-| 216 | Composant |
-| 216 | Port |
-| 216 | Orientation |
-| 216 | Couche |
-| 218 | Orientations de ports incohérentes |
-| 218 | OUT→OUT ou IN→IN hors délégation |
-| 219 | Exchanges non orientés |
-| 219 | Les deux ports sont UNSET : le sens du flux est inconnu |
-| 220 | Exchanges de couche PA non alloués à un Physical Link |
-| 220 | Aucune ComponentExchangeAllocation depuis un PhysicalLink |
-| 229 | ≡ Vue Ligne |
-| 229 | ▣ Vue Composant |
-| 229 | ▦ Matrice |
-| 229 | 🩺 Contrôles |
-| 236 | composant « |
-| 236 | exchange « |
-| 237 | 🔀 Behavior Exchanges (PA) |
-| 237 | · filtres : |
-| 264 | ◧ Vue Blocs |
-| 264 | Composants Behavior dessinés comme dans Capella (bleu = système, bleu clair = acteur), ports UNSET / IN / OUT / INOUT |
-| 264 | ≡ Vue Ligne |
-| 264 | ▣ Vue Composant |
-| 264 | ▦ Matrice |
-| 264 | Matrice N² composant × composant |
-| 264 | 🩺 Contrôles |
-| 264 | Ports orphelins, exchanges sans FE, orientations incohérentes… |
-| 271 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior ( |
-| 271 | dans le modèle). |
-| 277 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior ( |
-| 280 | ◧ Vue Blocs |
-| 281 | ≡ Vue Ligne |
-| 282 | ▣ Vue Composant |
-| 283 | ▦ Matrice |
-| 284 | 🩺 Contrôles |
-| 287 | Tous |
-| 287 | Tous les sens |
-| 289 | ⚠ Incohérents |
-| 289 | Orientations de ports incohérentes (OUT→OUT, IN→IN hors délégation) |
-| 293 | Tous kinds |
-| 295 | 🖥 Composant : |
-| 299 | 🔍 Exchange : |
-| 301 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
-| 343 | ⇄ Bidirectionnel |
-| 343 | ? Non orienté |
-| 343 | Émission → |
-| 343 | ← Réception |
+| 61 | Capella Project |
+| 91 | ⇄ INOUT |
+| 116 | Aucun component exchange ne correspond au filtre. |
+| 129 | Sens non défini |
+| 166 | ÉMET → |
+| 166 | Émission — ce composant envoie le signal |
+| 167 | ← REÇOIT |
+| 167 | Réception — ce composant reçoit le signal |
+| 168 | ⇄ ÉCHANGE |
+| 168 | Bidirectionnel — port INOUT |
+| 169 | Non orienté — aucun port IN/OUT/INOUT |
+| 185 | Items : |
+| 213 | Component Exchange |
+| 213 | Source |
+| 213 | Cible |
+| 213 | Couche |
+| 217 | Exchanges sans Functional Exchange alloué |
+| 217 | Aucune ComponentExchangeFunctionalExchangeAllocation |
+| 218 | Ports orphelins (ComponentPort sans exchange) |
+| 218 | Port défini sur un composant mais relié à aucun Component Exchange |
+| 218 | Composant |
+| 218 | Port |
+| 218 | Orientation |
+| 218 | Couche |
+| 220 | Orientations de ports incohérentes |
+| 220 | OUT→OUT ou IN→IN hors délégation |
+| 221 | Exchanges non orientés |
+| 221 | Les deux ports sont UNSET : le sens du flux est inconnu |
+| 222 | Exchanges de couche PA non alloués à un Physical Link |
+| 222 | Aucune ComponentExchangeAllocation depuis un PhysicalLink |
+| 231 | ≡ Vue Ligne |
+| 231 | ▣ Vue Composant |
+| 231 | ▦ Matrice |
+| 231 | 🩺 Contrôles |
+| 238 | composant « |
+| 238 | exchange « |
+| 239 | 🔀 Behavior Exchanges (PA) |
+| 239 | · filtres : |
+| 266 | ◧ Vue Blocs |
+| 266 | Composants Behavior dessinés comme dans Capella (bleu = système, bleu clair = acteur), ports UNSET / IN / OUT / INOUT |
+| 266 | ≡ Vue Ligne |
+| 266 | ▣ Vue Composant |
+| 266 | ▦ Matrice |
+| 266 | Matrice N² composant × composant |
+| 266 | 🩺 Contrôles |
+| 266 | Ports orphelins, exchanges sans FE, orientations incohérentes… |
+| 273 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( |
+| 273 | dans le modèle). |
+| 279 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( |
+| 282 | ◧ Vue Blocs |
+| 283 | ≡ Vue Ligne |
+| 284 | ▣ Vue Composant |
+| 285 | ▦ Matrice |
+| 286 | 🩺 Contrôles |
+| 289 | Tous |
+| 289 | Tous les sens |
+| 291 | ⚠ Incohérents |
+| 291 | Orientations de ports incohérentes (OUT→OUT, IN→IN hors délégation) |
+| 295 | Tous kinds |
+| 297 | 🖥 Composant : |
+| 301 | 🔍 Exchange : |
+| 303 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 345 | ⇄ Bidirectionnel |
+| 345 | ? Non orienté |
+| 345 | Émission → |
+| 345 | ← Réception |
 
 ## js/37-capella-cablage.js
 
@@ -2553,7 +2553,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 17 | 🧱 System Component |
 | 18 | 🧱 Logical Component |
 | 19 | 🔀 Behavior Exchange |
-| 19 | Component Exchanges de la couche PA entre Physical Components Behavior (anciennement 🔀 Component Exchange) |
+| 19 | Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange) |
 | 20 | 🔌 Physical Link |
 | 21 | 🧩 Ports |
 | 21 | Traçabilité Function Port ↔ Component Port ↔ Physical Port |
@@ -2772,7 +2772,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 153 | 🔀 Behavior Exchange |
 | 154 | #cap-view-compex .cap-mx-hint |
 | 154 | 🎯 Périmètre |
-| 154 | Component Exchanges de la couche PA entre Physical Components Behavior. Les échanges SA et LA sont dans 🧱 System / Logical Component, les liens entre nœuds dans 🔌 Physical Link. |
+| 154 | Component Exchanges de la couche PA entre Physical Components Behavior, ou entre un Behavior et un acteur (nœud) qui lui est relié. Les échanges SA et LA sont dans 🧱 System / Logical Component, les liens entre nœuds dans 🔌 Physical Link. |
 | 155 | #cap-view-compex .phl-toggle-btn |
 | 155 | 🖼 Présentation |
 | 156 | #cap-view-compex .ana-ak |
@@ -3228,7 +3228,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 14 | Couche SA |
 | 14 | Component Exchanges |
 | 16 | 🔀 Behavior Exchange |
-| 16 | Physical Components Behavior |
+| 16 | Physical Components Behavior et acteurs reliés |
 | 16 | Couche PA · Behavior |
 | 16 | Component Exchanges |
 | 17 | 🔌 Physical Link |
@@ -3270,83 +3270,83 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 95 | Component Ports reliés à au moins un Component Exchange |
 | 96 | cb.chk. |
 | 96 | — contrôles |
-| 132 | Système |
-| 132 | Composants du système |
-| 132 | Acteurs |
-| 132 | Acteurs externes |
-| 132 | Nœuds |
-| 169 | — non connecté |
-| 171 | — non connecté |
-| 188 | non connecté |
-| 194 | — acteur |
-| 198 | sous-composant(s) : |
-| 199 | aucun port |
-| 212 | allouée |
-| 212 | » — clic : son bloc dans ƒ⇆ Functional Exchange |
-| 243 | ÉMET → |
-| 243 | Émission |
-| 243 | ← REÇOIT |
-| 243 | Réception |
-| 243 | ⇄ ÉCHANGE |
-| 243 | Bidirectionnel |
-| 243 | Non orienté |
-| 260 | Aucun Component Exchange |
-| 264 | 👤 Acteur |
-| 278 | · page |
-| 287 | Aucun composant ne correspond au filtre. |
-| 289 | Composants |
-| 290 | ↩ Revenir à « |
-| 294 | Aucun composant ne correspond au filtre. |
-| 296 | Composants |
-| 297 | ↩ Revenir à « |
-| 300 | Aucun Component Exchange ne correspond au filtre. |
-| 304 | composants : pour rester fluide, la matrice en affiche |
-| 304 | (les plus connectés). Filtrez pour voir les autres. |
-| 309 | Échanges |
-| 358 | Tous les composants |
-| 363 | ◧ Vue Blocs |
-| 363 | ▣ Vue Composant |
-| 363 | ≡ Vue Ligne |
-| 363 | ▦ Matrice |
-| 363 | 🩺 Contrôles |
-| 368 | — Vue Blocs |
-| 368 | composants · |
-| 375 | Acteur |
-| 375 | Système |
-| 376 | Acteur |
-| 376 | Système |
-| 377 | Couche |
-| 377 | Composant |
-| 377 | Nature |
-| 377 | Port |
-| 377 | Orientation |
-| 377 | Sens |
-| 377 | Composant distant |
-| 379 | Couche |
-| 379 | Composant source |
-| 379 | Port source |
-| 379 | Orientation source |
-| 379 | Component Exchange |
-| 379 | Kind |
-| 379 | Port cible |
-| 379 | Orientation cible |
-| 379 | Composant cible |
-| 379 | Functional Exchanges |
-| 387 | Aucun |
-| 387 | dans ce modèle ( |
-| 388 | ◧ Vue Blocs |
-| 389 | ▣ Vue Composant |
-| 389 | Une carte par composant avec ses échanges émis, reçus, bidirectionnels ou non orientés |
-| 390 | ≡ Vue Ligne |
-| 390 | Un Component Exchange par ligne |
-| 390 | ▦ Matrice |
-| 390 | Composant × composant (100 composants au plus) |
-| 390 | 🩺 Contrôles |
-| 390 | Ports orphelins ou sans orientation, échanges incohérents, composants sans port ou sans fonction |
-| 402 | 🧱 Composant : |
-| 405 | Lien |
-| 405 | Échange |
-| 407 | Nature |
-| 407 | avec ports |
-| 408 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
-| 408 | — double-clic : uniquement ceux-ci |
+| 135 | Système |
+| 135 | Composants du système |
+| 135 | Acteurs |
+| 135 | Acteurs externes |
+| 135 | Nœuds |
+| 172 | — non connecté |
+| 174 | — non connecté |
+| 191 | non connecté |
+| 197 | — acteur |
+| 201 | sous-composant(s) : |
+| 202 | aucun port |
+| 215 | allouée |
+| 215 | » — clic : son bloc dans ƒ⇆ Functional Exchange |
+| 246 | ÉMET → |
+| 246 | Émission |
+| 246 | ← REÇOIT |
+| 246 | Réception |
+| 246 | ⇄ ÉCHANGE |
+| 246 | Bidirectionnel |
+| 246 | Non orienté |
+| 263 | Aucun Component Exchange |
+| 267 | 👤 Acteur |
+| 281 | · page |
+| 290 | Aucun composant ne correspond au filtre. |
+| 292 | Composants |
+| 293 | ↩ Revenir à « |
+| 297 | Aucun composant ne correspond au filtre. |
+| 299 | Composants |
+| 300 | ↩ Revenir à « |
+| 303 | Aucun Component Exchange ne correspond au filtre. |
+| 307 | composants : pour rester fluide, la matrice en affiche |
+| 307 | (les plus connectés). Filtrez pour voir les autres. |
+| 312 | Échanges |
+| 361 | Tous les composants |
+| 366 | ◧ Vue Blocs |
+| 366 | ▣ Vue Composant |
+| 366 | ≡ Vue Ligne |
+| 366 | ▦ Matrice |
+| 366 | 🩺 Contrôles |
+| 371 | — Vue Blocs |
+| 371 | composants · |
+| 378 | Acteur |
+| 378 | Système |
+| 379 | Acteur |
+| 379 | Système |
+| 380 | Couche |
+| 380 | Composant |
+| 380 | Nature |
+| 380 | Port |
+| 380 | Orientation |
+| 380 | Sens |
+| 380 | Composant distant |
+| 382 | Couche |
+| 382 | Composant source |
+| 382 | Port source |
+| 382 | Orientation source |
+| 382 | Component Exchange |
+| 382 | Kind |
+| 382 | Port cible |
+| 382 | Orientation cible |
+| 382 | Composant cible |
+| 382 | Functional Exchanges |
+| 390 | Aucun |
+| 390 | dans ce modèle ( |
+| 391 | ◧ Vue Blocs |
+| 392 | ▣ Vue Composant |
+| 392 | Une carte par composant avec ses échanges émis, reçus, bidirectionnels ou non orientés |
+| 393 | ≡ Vue Ligne |
+| 393 | Un Component Exchange par ligne |
+| 393 | ▦ Matrice |
+| 393 | Composant × composant (100 composants au plus) |
+| 393 | 🩺 Contrôles |
+| 393 | Ports orphelins ou sans orientation, échanges incohérents, composants sans port ou sans fonction |
+| 405 | 🧱 Composant : |
+| 408 | Lien |
+| 408 | Échange |
+| 410 | Nature |
+| 410 | avec ports |
+| 411 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 411 | — double-clic : uniquement ceux-ci |
