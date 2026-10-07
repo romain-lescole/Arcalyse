@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3158 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3176 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -59,104 +59,107 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 73 | 📐 SVG |
 | 82 | ❓ Aide |
 | 82 | Aide et présentation des fonctionnalités  (infobulle) |
-| 83 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) |
-| 85 | Ouvrir un modèle Capella |
-| 86 | Glissez-déposez votre fichier |
-| 86 | ou recherchez-le dans l'explorateur de fichiers. |
-| 87 | 📂 Parcourir… |
-| 89 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. |
-| 90 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités |
-| 91 | 🎓 Visite guidée de l'interface |
-| 99 | Panneau |
-| 100 | Réduire le panneau  (infobulle) |
-| 103 | Arborescence |
-| 105 | Tout développer  (infobulle) |
-| 107 | Tout réduire  (infobulle) |
-| 113 | ✕ vider |
-| 113 | Vider la sélection  (infobulle) |
-| 116 | 🔍 Filtrer l'arborescence…  (infobulle) |
-| 127 | Profondeur |
-| 133 | Disposition |
-| 138 | ◉ Rad |
-| 139 | ⚡ Zig |
-| 139 | Zigzag 7:3 — séquence en grille  (infobulle) |
-| 144 | Contexte |
-| 150 | ✚ Créer un nouvel élément |
-| 154 | Critères de relation |
-| 156 | Tout sélectionner  (infobulle) |
-| 158 | Tout désélectionner  (infobulle) |
-| 165 | 🔷 Type d'élément |
-| 167 | Réinitialiser (tout décocher)  (infobulle) |
-| 168 | ↺ Défaut |
-| 174 | Types d'éléments |
-| 176 | Tout sélectionner  (infobulle) |
-| 178 | Tout désélectionner  (infobulle) |
-| 185 | Portée (Paquetages) |
-| 189 | Propriétés |
-| 195 | Ouvrir le panneau  (infobulle) |
-| 210 | ✨ Colonne personnalisée — Metachain Navigation |
-| 214 | Metaclass |
-| 215 | Property |
-| 216 | Name |
-| 221 | Metaclass or Stereotype |
-| 222 | Property |
-| 226 | + Insert (nouvelle étape) |
-| 228 | Nom de la colonne |
-| 229 | ex: Functions of Component  (infobulle) |
-| 230 | Créer la colonne |
-| 243 | Légende |
-| 247 | Prêt |
-| 254 | ✏ Modifier l'élément |
-| 255 | → Créer une relation vers… |
-| 256 | ✦ Créer un élément enfant |
-| 258 | ⊙ Définir comme contexte |
-| 259 | ↓ Développer |
-| 260 | ↑ Réduire |
-| 262 | 👁 Masquer l'élément |
-| 270 | Annuler |
-| 271 | Sauvegarder |
-| 279 | ✏ Éditeur de modèle |
-| 283 | Éléments ( |
-| 284 | Relations ( |
-| 285 | Paquetages ( |
-| 286 | Chaînes ( |
-| 295 | Exporter |
-| 296 | Résolution : |
-| 298 | 1× Normal |
-| 300 | 3× Ultra |
-| 301 | 4× Max |
-| 305 | Annuler |
-| 306 | Exporter |
-| 326 | Types d'éléments |
-| 327 | Filtrer les types…  (infobulle) |
-| 332 | Tout cocher |
-| 334 | Aucun |
-| 336 | Défaut |
-| 345 | Glisser pour redimensionner  (infobulle) |
-| 353 | 🌳 Arborescence |
-| 354 | ▦ Cartes |
-| 355 | 📋 Tableau |
-| 356 | 📖 Index des types |
-| 367 | Rechercher…  (infobulle) |
-| 371 | Tous |
-| 377 | Tranv. |
-| 379 | ⬇ CSV |
-| 383 | ⊞ Déplier |
-| 384 | ⊟ Réduire |
-| 386 | ⬇ JSON |
-| 402 | ← Préc. |
-| 404 | Suiv. → |
-| 422 | ✨ Colonne personnalisée — Metachain Navigation |
-| 426 | Metaclass |
-| 427 | Property |
-| 428 | Name |
-| 433 | Metaclass or Stereotype |
-| 434 | Property |
-| 438 | + Insert (nouvelle étape) |
-| 440 | Nom de la colonne |
-| 441 | ex: Functions of Component  (infobulle) |
-| 442 | Créer la colonne |
-| 462 | Aucun élément ne correspond. |
+| 83 | 🚀 Bien démarrer |
+| 83 | · ouvrir un modèle, puis trouver l'aide et les tutoriels |
+| 83 | Visite guidée en deux temps : où ouvrir votre fichier .capella, puis, une fois le modèle chargé, où trouver l'aide et les tutoriels  (infobulle) |
+| 84 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) |
+| 86 | Ouvrir un modèle Capella |
+| 87 | Glissez-déposez votre fichier |
+| 87 | ou recherchez-le dans l'explorateur de fichiers. |
+| 88 | 📂 Parcourir… |
+| 90 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. |
+| 91 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités |
+| 92 | 🎓 Visite guidée de l'interface |
+| 100 | Panneau |
+| 101 | Réduire le panneau  (infobulle) |
+| 104 | Arborescence |
+| 106 | Tout développer  (infobulle) |
+| 108 | Tout réduire  (infobulle) |
+| 114 | ✕ vider |
+| 114 | Vider la sélection  (infobulle) |
+| 117 | 🔍 Filtrer l'arborescence…  (infobulle) |
+| 128 | Profondeur |
+| 134 | Disposition |
+| 139 | ◉ Rad |
+| 140 | ⚡ Zig |
+| 140 | Zigzag 7:3 — séquence en grille  (infobulle) |
+| 145 | Contexte |
+| 151 | ✚ Créer un nouvel élément |
+| 155 | Critères de relation |
+| 157 | Tout sélectionner  (infobulle) |
+| 159 | Tout désélectionner  (infobulle) |
+| 166 | 🔷 Type d'élément |
+| 168 | Réinitialiser (tout décocher)  (infobulle) |
+| 169 | ↺ Défaut |
+| 175 | Types d'éléments |
+| 177 | Tout sélectionner  (infobulle) |
+| 179 | Tout désélectionner  (infobulle) |
+| 186 | Portée (Paquetages) |
+| 190 | Propriétés |
+| 196 | Ouvrir le panneau  (infobulle) |
+| 211 | ✨ Colonne personnalisée — Metachain Navigation |
+| 215 | Metaclass |
+| 216 | Property |
+| 217 | Name |
+| 222 | Metaclass or Stereotype |
+| 223 | Property |
+| 227 | + Insert (nouvelle étape) |
+| 229 | Nom de la colonne |
+| 230 | ex: Functions of Component  (infobulle) |
+| 231 | Créer la colonne |
+| 244 | Légende |
+| 248 | Prêt |
+| 255 | ✏ Modifier l'élément |
+| 256 | → Créer une relation vers… |
+| 257 | ✦ Créer un élément enfant |
+| 259 | ⊙ Définir comme contexte |
+| 260 | ↓ Développer |
+| 261 | ↑ Réduire |
+| 263 | 👁 Masquer l'élément |
+| 271 | Annuler |
+| 272 | Sauvegarder |
+| 280 | ✏ Éditeur de modèle |
+| 284 | Éléments ( |
+| 285 | Relations ( |
+| 286 | Paquetages ( |
+| 287 | Chaînes ( |
+| 296 | Exporter |
+| 297 | Résolution : |
+| 299 | 1× Normal |
+| 301 | 3× Ultra |
+| 302 | 4× Max |
+| 306 | Annuler |
+| 307 | Exporter |
+| 327 | Types d'éléments |
+| 328 | Filtrer les types…  (infobulle) |
+| 333 | Tout cocher |
+| 335 | Aucun |
+| 337 | Défaut |
+| 346 | Glisser pour redimensionner  (infobulle) |
+| 354 | 🌳 Arborescence |
+| 355 | ▦ Cartes |
+| 356 | 📋 Tableau |
+| 357 | 📖 Index des types |
+| 368 | Rechercher…  (infobulle) |
+| 372 | Tous |
+| 378 | Tranv. |
+| 380 | ⬇ CSV |
+| 384 | ⊞ Déplier |
+| 385 | ⊟ Réduire |
+| 387 | ⬇ JSON |
+| 403 | ← Préc. |
+| 405 | Suiv. → |
+| 423 | ✨ Colonne personnalisée — Metachain Navigation |
+| 427 | Metaclass |
+| 428 | Property |
+| 429 | Name |
+| 434 | Metaclass or Stereotype |
+| 435 | Property |
+| 439 | + Insert (nouvelle étape) |
+| 441 | Nom de la colonne |
+| 442 | ex: Functions of Component  (infobulle) |
+| 443 | Créer la colonne |
+| 463 | Aucun élément ne correspond. |
 
 ## js/01-donnees-config.js
 
@@ -670,49 +673,49 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 182 | XML invalide |
 | 188 | Erreur de chargement : |
 | 207 | Aucun élément Capella reconnu dans ce fichier |
-| 232 | Ouvrir un autre modèle Capella |
-| 233 | Modèle actuel : |
-| 233 | Déposez un nouveau fichier .capella pour le remplacer. |
-| 301 | Shared |
-| 320 | Project |
-| 377 | Composition |
-| 377 | Aggregation |
-| 377 | Association |
-| 377 | Containment |
-| 377 | Generalization |
-| 377 | Realization |
-| 377 | Dependency |
-| 377 | Usage |
-| 377 | Abstraction |
-| 377 | Refine |
-| 377 | Trace |
-| 377 | Satisfy |
-| 377 | Verify |
-| 377 | Copy |
-| 377 | Allocation |
-| 378 | Block |
-| 378 | Component |
-| 378 | Class |
-| 378 | Interface |
-| 378 | Requirement |
-| 378 | Package |
-| 381 | Aggregation |
-| 381 | Association |
-| 381 | Containment |
-| 381 | Generalization |
-| 381 | Realization |
-| 381 | Dependency |
-| 381 | Usage |
-| 381 | Abstraction |
-| 381 | Refine |
-| 381 | Trace |
-| 381 | Satisfy |
-| 381 | Verify |
-| 381 | Copy |
-| 381 | Allocation |
-| 490 | PhysicalComponent (NODE) |
-| 491 | PhysicalComponent (BEHAVIOR) |
-| 730 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella |
+| 233 | Ouvrir un autre modèle Capella |
+| 234 | Modèle actuel : |
+| 234 | Déposez un nouveau fichier .capella pour le remplacer. |
+| 302 | Shared |
+| 321 | Project |
+| 378 | Composition |
+| 378 | Aggregation |
+| 378 | Association |
+| 378 | Containment |
+| 378 | Generalization |
+| 378 | Realization |
+| 378 | Dependency |
+| 378 | Usage |
+| 378 | Abstraction |
+| 378 | Refine |
+| 378 | Trace |
+| 378 | Satisfy |
+| 378 | Verify |
+| 378 | Copy |
+| 378 | Allocation |
+| 379 | Block |
+| 379 | Component |
+| 379 | Class |
+| 379 | Interface |
+| 379 | Requirement |
+| 379 | Package |
+| 382 | Aggregation |
+| 382 | Association |
+| 382 | Containment |
+| 382 | Generalization |
+| 382 | Realization |
+| 382 | Dependency |
+| 382 | Usage |
+| 382 | Abstraction |
+| 382 | Refine |
+| 382 | Trace |
+| 382 | Satisfy |
+| 382 | Verify |
+| 382 | Copy |
+| 382 | Allocation |
+| 491 | PhysicalComponent (NODE) |
+| 492 | PhysicalComponent (BEHAVIOR) |
+| 731 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella |
 
 ## js/21-capella-vues-base.js
 
@@ -2920,11 +2923,26 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 218 | #cap-view-dashboard .dash-scroll |
 | 218 | 📐 Page |
 | 218 | Les éléments du tableau de bord, calculés sur le modèle chargé. |
-| 226 | @table |
-| 323 | Étape |
-| 325 | ◀ Précédent |
-| 326 | Terminer ✓ |
-| 326 | Suivant ▶ |
+| 222 | 🚀 Bien démarrer |
+| 224 | 1 · Ouvrir un modèle Capella |
+| 225 | Glissez-déposez votre fichier .capella dans ce cadre (formats acceptés : .capella, .melodymodeller, .xml). Le fichier est lu sur ce poste : rien n'est envoyé. |
+| 226 | … ou le chercher |
+| 227 | Vous pouvez aussi cliquer sur 📂 Parcourir… pour le choisir dans l'explorateur de fichiers. |
+| 228 | À vous ! |
+| 229 | Cliquez sur Terminer ✓ , puis ouvrez votre fichier. Dès que le modèle sera chargé, la visite reprendra pour vous montrer où trouver l'aide et les tutoriels. |
+| 233 | ✅ Modèle ouvert |
+| 234 | Votre modèle est chargé. Voici où trouver l'aide et les tutoriels, à tout moment. |
+| 235 | ? Aide |
+| 236 | L'aide et toutes les visites guidées sont regroupées dans ce menu. |
+| 237 | 📚 Aide et tutoriels |
+| 238 | 📖 Aide complète : documentation de toutes les vues. 🎓 Visite guidée : tour complet de l'interface. 🎯 Visite de cette vue : menus et commandes de la vue affichée — disponible dans chaque vue. |
+| 239 | 🧭 Et maintenant |
+| 240 | Choisissez une vue dans cette barre, puis ? Aide ▾ → 🎯 Visite de cette vue pour la découvrir pas à pas. |
+| 250 | @table |
+| 347 | Étape |
+| 349 | ◀ Précédent |
+| 350 | Terminer ✓ |
+| 350 | Suivant ▶ |
 
 ## js/44-functional-exchange.js
 

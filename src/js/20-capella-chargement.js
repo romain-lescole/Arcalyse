@@ -217,6 +217,7 @@ function capApplyXmlDoc(doc, name){
   capLoaded=true;
   capCurrentFileName=name;
   applyMode('capella');
+  if(typeof capTourResumeAfterLoad==='function') capTourResumeAfterLoad();   // 🚀 Bien démarrer : 2e temps
 }
 
 /* ── Écran d'accueil & glisser-déposer ─────────────────────────────────── */

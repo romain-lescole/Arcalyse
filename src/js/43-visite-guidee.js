@@ -217,6 +217,30 @@ var CAP_TOUR_VIEWS={
     {s:'#dash-json,#dash-imp', t:'⬇⬆ JSON', x:'Exporte ou importe la définition des tableaux de bord pour les réutiliser sur un autre modèle.'},
     {s:'#cap-view-dashboard .dash-scroll', t:'📐 Page', x:'Les éléments du tableau de bord, calculés sur le modèle chargé.'}]}
 };
+/** 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps). */
+var CAP_TOUR_START=[
+  {t:'🚀 Bien démarrer',
+   x:'Deux temps pour bien démarrer :<br><b>1.</b> ouvrir votre modèle Capella ;<br><b>2.</b> une fois le modèle ouvert, savoir où trouver l\'aide et les tutoriels.'},
+  {s:'#cap-drop-zone', m:'empty', t:'1 · Ouvrir un modèle Capella',
+   x:'Glissez-déposez votre fichier <b>.capella</b> dans ce cadre (formats acceptés : .capella, .melodymodeller, .xml).<br>Le fichier est lu sur ce poste : rien n\'est envoyé.'},
+  {s:'#cw-browse', m:'empty', t:'… ou le chercher',
+   x:'Vous pouvez aussi cliquer sur <b>📂 Parcourir…</b> pour le choisir dans l\'explorateur de fichiers.'},
+  {m:'empty', t:'À vous !',
+   x:'Cliquez sur <b>Terminer ✓</b>, puis ouvrez votre fichier.<br>Dès que le modèle sera chargé, la visite reprendra pour vous montrer où trouver l\'aide et les tutoriels.'}
+];
+/** 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels. */
+var CAP_TOUR_AFTER=[
+  {pre:()=>capNavClose(), t:'✅ Modèle ouvert',
+   x:'Votre modèle est chargé. Voici où trouver l\'aide et les tutoriels, à tout moment.'},
+  {s:'#b-help', pre:()=>capNavClose(), t:'? Aide',
+   x:'L\'aide et toutes les visites guidées sont regroupées dans ce menu.'},
+  {s:'#cap-nav-dd', pre:()=>capTourHelpMenu(), t:'📚 Aide et tutoriels',
+   x:'<b>📖 Aide complète</b> : documentation de toutes les vues.<br><b>🎓 Visite guidée</b> : tour complet de l\'interface.<br><b>🎯 Visite de cette vue</b> : menus et commandes de la vue affichée — disponible dans chaque vue.'},
+  {s:'#cap-tb-views', pre:()=>capNavClose(), t:'🧭 Et maintenant',
+   x:'Choisissez une vue dans cette barre, puis <b>? Aide ▾ → 🎯 Visite de cette vue</b> pour la découvrir pas à pas.'}
+];
+var _capTourResume=false;   // vrai : reprendre « Bien démarrer » (2e temps) au prochain chargement de modèle
+
 var _capTour=null;   // visite en cours : {i, steps} ou null
 
 /** Clé de la vue affichée pour les visites contextuelles.
@@ -294,7 +318,7 @@ function capTourGo(d){
   const S=_capTour.steps;
   let i=_capTour.i+d;
   while(i>=0&&i<S.length&&!capTourVisible(S[i])) i+=d;
-  if(i>=S.length){ capTourEnd(); return; }
+  if(i>=S.length){ const done=_capTour.onDone; capTourEnd(); if(done) done(); return; }
   if(i<0) return;
   _capTour.i=i;
   const st=S[i];
@@ -323,7 +347,7 @@ function capTourRenderPop(){
     <div class="ct-b">${x}</div>
     <div class="ct-ft"><span class="ct-n">Étape ${p.n} / ${p.tot}</span>
       <button class="tbtn" data-tour="prev"${p.first?' disabled':''}>◀ Précédent</button>
-      <button class="tbtn ct-next" data-tour="${p.last?'end':'next'}">${p.last?'Terminer ✓':'Suivant ▶'}</button></div>`;
+      <button class="tbtn ct-next" data-tour="next">${p.last?'Terminer ✓':'Suivant ▶'}</button></div>`;
   pop.querySelector('.ct-next').focus({preventScroll:true});
 }
 
@@ -370,9 +394,33 @@ function capTourKey(e){
 
 /** Quitte la visite guidée et retire la mise en évidence. */
 function capTourEnd(){
+  if(_capTour&&_capTour.steps===CAP_TOUR_AFTER) capNavClose();
   _capTour=null;
   ['cap-tour-block','cap-tour-spot','cap-tour-pop'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='none'; });
 }
 
+/** Ouvre le menu ? Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente. */
+function capTourHelpMenu(){
+  const dd=document.getElementById('cap-nav-dd'), b=document.getElementById('b-help');
+  if(b&&!(dd&&dd.style.display!=='none'&&dd.dataset.g==='help')) capNavMenu('help', b);
+}
+
+/** Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
+ * avec un modèle déjà chargé, passe directement au 2e temps (aide et tutoriels). */
+function capTourStartHere(){
+  if(capLoaded){ capShowWelcome(false); capTourStart(CAP_TOUR_AFTER); return; }
+  capTourStart(CAP_TOUR_START);
+  _capTour.onDone=()=>{ _capTourResume=true; };   // ✕ ou Échap : pas de reprise
+}
+
+/** Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée. */
+function capTourResumeAfterLoad(){
+  if(!_capTourResume) return;
+  _capTourResume=false;
+  setTimeout(()=>{ if(capLoaded&&!_capTour) capTourStart(CAP_TOUR_AFTER); }, 600);
+}
+
+// Bouton « 🚀 Bien démarrer » de l'écran d'accueil
+document.getElementById('cw-start')?.addEventListener('click',ev=>{ ev.preventDefault(); ev.stopPropagation(); capTourStartHere(); });
 // Lien « 🎓 Visite guidée » de l'écran d'accueil (sans déclencher l'ouverture du sélecteur de fichier)
 document.getElementById('cw-tour-link')?.addEventListener('click',ev=>{ ev.preventDefault(); ev.stopPropagation(); capTourStart(); });
