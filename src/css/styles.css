@@ -1074,6 +1074,22 @@ table.cap-tf-fixed td,table.cap-tf-fixed th{overflow-wrap:anywhere;}
 html[data-tone="light"] .fex-oa .fex-blk .fex-box{background:linear-gradient(180deg,#fffbcf,#f6d96b);border-color:#6b4f2a;}
 html[data-tone="light"] .fex-oa .fex-blk .fex-box .fex-box-t{color:#2e2200;}
 .fex-oa-ic{display:inline-block;font-size:8px;font-weight:800;padding:1px 4px;margin-right:5px;border-radius:50%;background:#f5a623;color:#3a2200;border:1px solid #7a4a00;vertical-align:middle;}
+/* 🎬 Scénarios (49-scenarios.js) */
+#cap-view-scen>.phl-filter-bar{padding:10px 16px 8px;margin:0;border-bottom:1px solid var(--c-border);}
+.sc-split{display:grid;grid-template-columns:minmax(240px,300px) 1fr;}
+.sc-list{position:relative;overflow:auto;border-right:1px solid var(--c-border);padding:6px 0;}
+.sc-grp{padding:8px 10px 3px;font-size:10.5px;color:var(--c-dim);font-weight:700;display:flex;align-items:center;gap:6px;}
+.sc-cap[data-det]{cursor:pointer;} .sc-cap[data-det]:hover{color:var(--c-accent);}
+.sc-item{padding:4px 10px 4px 18px;font-size:12px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:3px solid transparent;}
+.sc-item:hover{background:var(--c-bg3);} .sc-item.on{background:color-mix(in srgb,var(--c-accent) 16%,transparent);border-left-color:var(--c-accent);}
+.sc-k{display:inline-block;font-size:9.5px;font-weight:800;padding:0 5px;border-radius:3px;background:var(--c-bg3);border:1px solid var(--c-border);color:var(--c-text);}
+.sc-n{font-size:10px;color:var(--c-dim);margin-left:4px;}
+.sc-main{min-width:0;}
+.sc-head{padding:8px 14px;font-size:12.5px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--c-border);}
+.sc-scroll{overflow:auto;background:#fff;}
+.sc-band{position:sticky;top:0;z-index:3;height:24px;background:rgba(255,255,255,.94);border-bottom:1px solid #ddd;}
+.sc-band span{position:absolute;top:3px;transform:translateX(-50%);font-size:11.5px;color:#111;padding:1px 10px;border:1px solid #8a8fb8;white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis;}
+.sc-svg .sc-ref:hover rect,.sc-svg .sc-ref:hover ellipse,.sc-svg .sc-ref:hover line,.sc-svg .sc-ref:hover path{filter:drop-shadow(0 0 2px #2f81f7);}
 .fex-att{position:absolute;top:5px;left:86px;right:86px;text-align:center;font-size:10px;color:var(--c-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:1;}
 .fex-att-go{cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px;}
 .fex-att-go:hover{color:var(--c-accent);}

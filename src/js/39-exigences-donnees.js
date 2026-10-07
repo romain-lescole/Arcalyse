@@ -597,6 +597,11 @@ function capXtDetail(id, secTitle){
     if(pv&&pv.length) h+=secTitle(`Propriétés (${pv.length})`,'#3fb950')+`<table class="ana-t ana-kv">${pv.map(v=>`<tr><td title="${capEsc(v.domain+(v.group?' › '+v.group:''))}">${capEsc(v.prop)}</td><td>${capEsc(v.value)}${v.unit?' '+capEsc(v.unit):''}${v.dflt?' <span class="ana-miss" title="Valeur par défaut, jamais saisie">○</span>':''}</td></tr>`).join('')}</table>`;
     const ct=capComputeConstraints().byEl[id];
     if(ct&&ct.length) h+=secTitle(`Contraintes (${ct.length})`,'#bc8cff')+`<table class="ana-t ana-kv">${ct.map(c=>`<tr><td>${capDetLink(c.id,c.name||'(sans nom)')}</td><td>${capEsc(c.text||'—')}</td></tr>`).join('')}</table>`;
+    // 🎬 Scénarios : diagramme du scénario, ou scénarios d'une capacité
+    const SC=capComputeScenarios(), sc=SC.byId[id], scs=SC.list.filter(s=>s.capId===id);
+    const scBtn=s=>`<div style="margin:2px 0"><button class="cap-lf-btn" onclick="capScOpen('${capEsc(s.id)}')" title="Ouvrir le diagramme de séquence dans 🎬 Scénarios">🎬 ${capEsc(s.ks)}</button> ${capEsc(s.name)} <span class="ana-dim">${s.nMsg} message(s)</span></div>`;
+    if(sc) h+=secTitle('Diagramme de séquence','#58a6ff')+scBtn(sc);
+    else if(scs.length) h+=secTitle(`Scénarios (${scs.length})`,'#58a6ff')+scs.map(scBtn).join('');
     return h;
   }catch(e){ console.warn('Détail étendu indisponible',e); return ''; }
 }

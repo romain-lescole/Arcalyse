@@ -19,6 +19,7 @@ var CAP_NAV_ITEMS=[
   {k:'cblk',      l:'🧱 Logical Component', g:'flux', t:'Logical Components (LA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles'},
   {k:'compex',    l:'🔀 Behavior Exchange', g:'flux', t:'Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange)'},
   {k:'physlink',  l:'🔌 Physical Link',     g:'flux'},
+  {k:'scen',      l:'🎬 Scénarios',        g:'flux', t:'Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références'},
   {k:'ports',     l:'🧩 Ports',             g:'flux', t:'Traçabilité Function Port ↔ Component Port ↔ Physical Port'},
   {k:'functions', l:'ƒ Fonctions',          g:'',     t:'Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier'},
   {k:'ana:trace', l:'🧬 Traçabilité inter-couches', g:'ana'},

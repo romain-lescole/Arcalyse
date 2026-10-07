@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3209 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3294 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -159,7 +159,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 441 | Nom de la colonne |
 | 442 | ex: Functions of Component  (infobulle) |
 | 443 | Créer la colonne |
-| 464 | Aucun élément ne correspond. |
+| 465 | Aucun élément ne correspond. |
 
 ## js/01-donnees-config.js
 
@@ -1959,85 +1959,85 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 176 | Contraintes |
 | 176 | ct.chk |
 | 176 | Nombre total de constats par domaine |
-| 182 | Texte libre (titre, commentaire) |
-| 191 | Indicateur |
-| 207 | à surveiller |
-| 217 | Autres ( |
-| 228 | Texte vide — ⚙ pour le modifier. |
-| 229 | Indicateur indisponible pour ce modèle. |
-| 230 | Aucune donnée dans ce modèle. |
-| 231 | var(--c-dim) |
-| 231 | var(--c-text) |
-| 231 | var(--c-bg2) |
-| 249 | Catégorie |
-| 249 | Taux |
-| 249 | Nombre |
-| 249 | Détail |
-| 249 | Part |
-| 252 | autre(s) ligne(s) — agrandir le cadre pour tout voir |
-| 257 | catégorie(s) |
-| 270 | Autres ( |
-| 279 | Autres ( |
-| 322 | Synthèse du modèle — |
-| 322 | Capella |
-| 323 | mdl.n |
-| 323 | Fonctions (toutes couches) |
-| 324 | mdl.layer |
-| 325 | fn.L.desc |
-| 325 | ch.empty |
-| 326 | ce.dir |
-| 327 | chk.sum |
-| 327 | tr.tab |
-| 328 | Synthèse du modèle |
-| 348 | — double-clic pour renommer |
-| 350 | ✔ Terminer |
-| 350 | ✏ Modifier |
-| 351 | ＋ Ajouter un élément |
-| 353 | ⧉ Dupliquer ✨ Exemple |
-| 356 | 🗑 Supprimer |
-| 365 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. |
-| 366 | ,minmax(0,1fr)) |
-| 371 | ＋ Ajouter un élément |
-| 372 | Tableau de bord vide. |
-| 372 | Cliquez sur « ＋ Ajouter un élément ». |
-| 372 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. |
-| 398 | Tableau de bord |
-| 400 | Page |
-| 401 | (copie) |
-| 403 | Supprimer le tableau de bord « |
-| 410 | Tableau importé |
-| 411 | Fichier de tableau de bord invalide. |
-| 418 | ,minmax(0,1fr)) |
-| 420 | élément(s) |
-| 420 | Tableau de bord |
-| 467 | Modèle Capella |
-| 505 | ⊞ Tout déplier ⊟ Tout replier aperçu Annuler |
-| 505 | ⚙ Configurer l'élément |
-| 505 | ＋ Ajouter un élément |
-| 509 | ✔ Enregistrer |
-| 509 | ＋ Ajouter |
-| 517 | Mise en page |
-| 522 | la catégorie |
-| 522 | Replier |
-| 522 | Déplier |
-| 522 | Aucun indicateur. |
-| 529 | Choisissez un indicateur dans la liste de gauche. |
-| 532 | Indicateur |
-| 532 | Titre |
-| 534 | Représentation |
-| 534 | Texte |
-| 535 | Taille |
-| 536 | col. |
-| 538 | Catégories |
-| 538 | Tri Par défaut |
-| 538 | 5 premières |
-| 538 | 8 premières |
-| 538 | 10 premières |
-| 538 | 15 premières |
-| 538 | 20 premières |
-| 538 | Toutes |
-| 539 | Valeur décroissante |
-| 539 | Ordre naturel |
+| 183 | Texte libre (titre, commentaire) |
+| 192 | Indicateur |
+| 208 | à surveiller |
+| 218 | Autres ( |
+| 229 | Texte vide — ⚙ pour le modifier. |
+| 230 | Indicateur indisponible pour ce modèle. |
+| 231 | Aucune donnée dans ce modèle. |
+| 232 | var(--c-dim) |
+| 232 | var(--c-text) |
+| 232 | var(--c-bg2) |
+| 250 | Catégorie |
+| 250 | Taux |
+| 250 | Nombre |
+| 250 | Détail |
+| 250 | Part |
+| 253 | autre(s) ligne(s) — agrandir le cadre pour tout voir |
+| 258 | catégorie(s) |
+| 271 | Autres ( |
+| 280 | Autres ( |
+| 323 | Synthèse du modèle — |
+| 323 | Capella |
+| 324 | mdl.n |
+| 324 | Fonctions (toutes couches) |
+| 325 | mdl.layer |
+| 326 | fn.L.desc |
+| 326 | ch.empty |
+| 327 | ce.dir |
+| 328 | chk.sum |
+| 328 | tr.tab |
+| 329 | Synthèse du modèle |
+| 349 | — double-clic pour renommer |
+| 351 | ✔ Terminer |
+| 351 | ✏ Modifier |
+| 352 | ＋ Ajouter un élément |
+| 354 | ⧉ Dupliquer ✨ Exemple |
+| 357 | 🗑 Supprimer |
+| 366 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. |
+| 367 | ,minmax(0,1fr)) |
+| 372 | ＋ Ajouter un élément |
+| 373 | Tableau de bord vide. |
+| 373 | Cliquez sur « ＋ Ajouter un élément ». |
+| 373 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. |
+| 399 | Tableau de bord |
+| 401 | Page |
+| 402 | (copie) |
+| 404 | Supprimer le tableau de bord « |
+| 411 | Tableau importé |
+| 412 | Fichier de tableau de bord invalide. |
+| 419 | ,minmax(0,1fr)) |
+| 421 | élément(s) |
+| 421 | Tableau de bord |
+| 468 | Modèle Capella |
+| 506 | ⊞ Tout déplier ⊟ Tout replier aperçu Annuler |
+| 506 | ⚙ Configurer l'élément |
+| 506 | ＋ Ajouter un élément |
+| 510 | ✔ Enregistrer |
+| 510 | ＋ Ajouter |
+| 518 | Mise en page |
+| 523 | la catégorie |
+| 523 | Replier |
+| 523 | Déplier |
+| 523 | Aucun indicateur. |
+| 530 | Choisissez un indicateur dans la liste de gauche. |
+| 533 | Indicateur |
+| 533 | Titre |
+| 535 | Représentation |
+| 535 | Texte |
+| 536 | Taille |
+| 537 | col. |
+| 539 | Catégories |
+| 539 | Tri Par défaut |
+| 539 | 5 premières |
+| 539 | 8 premières |
+| 539 | 10 premières |
+| 539 | 15 premières |
+| 539 | 20 premières |
+| 539 | Toutes |
+| 540 | Valeur décroissante |
+| 540 | Ordre naturel |
 
 ## js/36-component-exchange.js
 
@@ -2376,47 +2376,50 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 597 | Propriétés ( |
 | 599 | Contraintes ( |
 | 599 | (sans nom) |
-| 601 | Détail étendu indisponible |
-| 611 | Exigences — nombre |
-| 611 | liée(s) au modèle |
-| 612 | rq.cov |
-| 612 | Exigences — liées au modèle |
-| 613 | rq.kind |
-| 613 | Exigences — par type |
-| 614 | rq.layer |
-| 614 | Exigences — couches des éléments liés |
-| 614 | Hors couche |
-| 614 | Nombre d'exigences liées à au moins un élément de la couche |
-| 615 | rq.chk |
-| 615 | Exigences — contrôles |
-| 616 | Exigences — par « |
-| 616 | (non renseigné) |
-| 618 | Propriétés — valeurs appliquées |
-| 618 | élément(s) |
-| 619 | pv.set |
-| 619 | Propriétés — valeurs saisies |
-| 619 | Valeurs différentes de la valeur par défaut |
-| 620 | pv.grp |
-| 620 | Propriétés — éléments par groupe |
-| 621 | pv.chk |
-| 621 | Propriétés — contrôles |
-| 623 | pv.sum. |
-| 623 | Propriétés — Σ « |
-| 624 | élément(s) |
-| 626 | Données — Exchange Items |
-| 626 | interface(s) · |
-| 626 | type(s) |
-| 627 | dm.used |
-| 627 | Données — Exchange Items portés par un échange |
-| 628 | Données — Functional Exchanges avec Exchange Item, par couche |
-| 630 | dm.chk |
-| 630 | Données & interfaces — contrôles |
-| 632 | Contraintes — nombre |
-| 633 | ct.layer |
-| 633 | Contraintes — par couche |
-| 633 | Hors couche |
-| 634 | ct.chk |
-| 634 | Contraintes — contrôles |
+| 602 | message(s) |
+| 603 | Diagramme de séquence |
+| 604 | Scénarios ( |
+| 606 | Détail étendu indisponible |
+| 616 | Exigences — nombre |
+| 616 | liée(s) au modèle |
+| 617 | rq.cov |
+| 617 | Exigences — liées au modèle |
+| 618 | rq.kind |
+| 618 | Exigences — par type |
+| 619 | rq.layer |
+| 619 | Exigences — couches des éléments liés |
+| 619 | Hors couche |
+| 619 | Nombre d'exigences liées à au moins un élément de la couche |
+| 620 | rq.chk |
+| 620 | Exigences — contrôles |
+| 621 | Exigences — par « |
+| 621 | (non renseigné) |
+| 623 | Propriétés — valeurs appliquées |
+| 623 | élément(s) |
+| 624 | pv.set |
+| 624 | Propriétés — valeurs saisies |
+| 624 | Valeurs différentes de la valeur par défaut |
+| 625 | pv.grp |
+| 625 | Propriétés — éléments par groupe |
+| 626 | pv.chk |
+| 626 | Propriétés — contrôles |
+| 628 | pv.sum. |
+| 628 | Propriétés — Σ « |
+| 629 | élément(s) |
+| 631 | Données — Exchange Items |
+| 631 | interface(s) · |
+| 631 | type(s) |
+| 632 | dm.used |
+| 632 | Données — Exchange Items portés par un échange |
+| 633 | Données — Functional Exchanges avec Exchange Item, par couche |
+| 635 | dm.chk |
+| 635 | Données & interfaces — contrôles |
+| 637 | Contraintes — nombre |
+| 638 | ct.layer |
+| 638 | Contraintes — par couche |
+| 638 | Hors couche |
+| 639 | ct.chk |
+| 639 | Contraintes — contrôles |
 
 ## js/40-suivi-fichier.js
 
@@ -2562,46 +2565,48 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 20 | 🔀 Behavior Exchange |
 | 20 | Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange) |
 | 21 | 🔌 Physical Link |
-| 22 | 🧩 Ports |
-| 22 | Traçabilité Function Port ↔ Component Port ↔ Physical Port |
-| 23 | ƒ Fonctions |
-| 23 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier |
-| 24 | 🧬 Traçabilité inter-couches |
-| 25 | 🎯 Capacités & missions |
-| 26 | 🔁 Modes & états |
-| 27 | ⚖ Comparaison de versions |
-| 28 | 📑 Exigences |
-| 29 | 🏷 Propriétés |
-| 30 | 🗃 Données & interfaces |
-| 31 | ⛓ Contraintes |
-| 32 | 📐 Tableau de bord |
-| 32 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux |
-| 36 | 🧭 Explorateur |
-| 36 | Explorer le modèle : arborescence, cartes, tableau, index des types, liens |
-| 37 | 📡 Flux & interfaces |
-| 37 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, ports |
-| 39 | 🔬 Analyses |
-| 39 | Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes |
-| 126 | Vue affichée : |
-| 144 | Retirer de la barre |
-| 144 | Épingler dans la barre (bouton direct) |
-| 207 | 💾 Enregistrer sous… |
-| 207 | Ctrl+S |
-| 208 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les colonnes et vues du 📋 Tableau et de la 📊 Table View, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. |
-| 208 | Ctrl+Maj+S |
-| 219 | 📖 Aide complète 🎓 Visite guidée |
-| 221 | 🎯 Visite de cette vue |
-| 222 | 🎯 Chargez un modèle pour la visite de chaque vue. |
-| 228 | 🎨 Personnaliser… |
-| 232 | 📌 épingle une vue en bouton direct dans la barre. |
-| 237 | 🗺 Relation Map |
-| 237 | @table |
-| 237 | 📊 Table View |
-| 240 | Aucune vue ne correspond. |
-| 246 | Menu |
-| 246 | ▾ dans la barre |
-| 247 | Autres vues |
-| 250 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
+| 22 | 🎬 Scénarios |
+| 22 | Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références |
+| 23 | 🧩 Ports |
+| 23 | Traçabilité Function Port ↔ Component Port ↔ Physical Port |
+| 24 | ƒ Fonctions |
+| 24 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier |
+| 25 | 🧬 Traçabilité inter-couches |
+| 26 | 🎯 Capacités & missions |
+| 27 | 🔁 Modes & états |
+| 28 | ⚖ Comparaison de versions |
+| 29 | 📑 Exigences |
+| 30 | 🏷 Propriétés |
+| 31 | 🗃 Données & interfaces |
+| 32 | ⛓ Contraintes |
+| 33 | 📐 Tableau de bord |
+| 33 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux |
+| 37 | 🧭 Explorateur |
+| 37 | Explorer le modèle : arborescence, cartes, tableau, index des types, liens |
+| 38 | 📡 Flux & interfaces |
+| 38 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, ports |
+| 40 | 🔬 Analyses |
+| 40 | Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes |
+| 127 | Vue affichée : |
+| 145 | Retirer de la barre |
+| 145 | Épingler dans la barre (bouton direct) |
+| 208 | 💾 Enregistrer sous… |
+| 208 | Ctrl+S |
+| 209 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les colonnes et vues du 📋 Tableau et de la 📊 Table View, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. |
+| 209 | Ctrl+Maj+S |
+| 220 | 📖 Aide complète 🎓 Visite guidée |
+| 222 | 🎯 Visite de cette vue |
+| 223 | 🎯 Chargez un modèle pour la visite de chaque vue. |
+| 229 | 🎨 Personnaliser… |
+| 233 | 📌 épingle une vue en bouton direct dans la barre. |
+| 238 | 🗺 Relation Map |
+| 238 | @table |
+| 238 | 📊 Table View |
+| 241 | Aucune vue ne correspond. |
+| 247 | Menu |
+| 247 | ▾ dans la barre |
+| 248 | Autres vues |
+| 251 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
 
 ## js/42-tableaux-analyses.js
 
@@ -2860,110 +2865,128 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 188 | #cap-view-oav #fex-main |
 | 188 | 📋 Résultat |
 | 188 | Clic sur une activité ou une interaction pour ouvrir son détail. |
-| 189 | 🔌 Physical Link |
-| 190 | #cap-view-physlink .phl-toggle-btn |
-| 190 | 🖼 Présentation |
-| 191 | #cap-view-physlink .ana-ak |
-| 191 | 🖥 Nature (Vue Blocs) |
-| 191 | Nœuds du système ou nœuds acteurs (double-clic : uniquement ceux-ci), ou un nœud et ses sous-composants. |
-| 192 | #cap-view-physlink #cb-main |
-| 192 | ◧ Blocs |
-| 192 | Chaque nœud (jaune = système, bleu clair = acteur) avec ses ports physiques jaunes, le Physical Link et le nœud distant (clic : aller à son bloc). |
-| 193 | 🔢 Compteur |
-| 193 | Liens affichés après filtres / total. |
-| 194 | #cap-view-physlink .phl-ce-btn |
-| 194 | ⇢ Component Exchange |
-| 194 | Liens qui portent (ou non) des échanges de composants alloués. |
-| 195 | #phl-node-input,#phl-name-input |
-| 195 | 🔍 Filtres |
-| 195 | Par composant, ou par nom de lien ou d'échange. |
-| 196 | #phl-exp-csv,#phl-exp-html,#phl-exp-html-all |
-| 196 | ⬇ Exports |
-| 196 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
-| 197 | 📋 Résultat |
-| 197 | Clic sur un composant ou un lien pour ouvrir son détail. |
-| 198 | 🧩 Ports |
-| 199 | #cap-view-ports .phl-toggle-btn |
-| 199 | 🖼 Présentation |
-| 199 | ≡ Traçabilité Function Port ↔ Component Port ↔ Physical Port, ▣ Par composant , et 🩺 Contrôles (ports non alloués, chaînes incomplètes). |
+| 189 | 🎬 Scénarios |
+| 190 | #cap-view-scen [data-scv] |
+| 190 | 🎬 Diagramme ou contrôles |
+| 190 | 🎬 Diagramme : diagramme de séquence du scénario choisi · 🩺 Contrôles : scénarios vides, messages sans échange, lignes de vie sans élément, scénarios hors capacité, références introuvables. |
+| 191 | #cap-view-scen [data-scl] |
+| 191 | 🧱 Couche et type |
+| 191 | Filtre par couche ARCADIA et par type : ES (Exchange Scenario), FS (Functional Scenario), OES / OAS en OA, IS (Interface Scenario). |
+| 192 | 🔍 Recherche |
+| 192 | Par nom de scénario, de capacité ou de ligne de vie. |
+| 193 | #cap-view-scen .sc-list |
+| 193 | 📋 Scénarios |
+| 193 | Rangés par couche puis par capacité (clic sur 🎯 : détail de la capacité). Clic sur un scénario pour afficher son diagramme. |
+| 194 | #cap-view-scen .sc-scroll |
+| 194 | 🖼 Diagramme |
+| 194 | Redessiné à partir du modèle, façon Capella : lignes de vie (bleu clair = acteur, bleu = composant, vert = fonction), messages, barres d'activation, fonctions (vert), états (gris clair) et modes (gris foncé), fragments combinés (ALT, OPT, LOOP, PAR…) avec leurs gardes, références « ref » (clic : ouvrir le scénario). Clic sur un élément : son détail. Les noms des lignes de vie restent visibles en haut au défilement. |
+| 195 | #cap-view-scen [data-sce] |
+| 195 | ⬇ Exports |
+| 195 | Image PNG, SVG, ou copie de l'image dans le presse-papiers. − / + : zoom. |
+| 196 | 🔌 Physical Link |
+| 197 | #cap-view-physlink .phl-toggle-btn |
+| 197 | 🖼 Présentation |
+| 198 | #cap-view-physlink .ana-ak |
+| 198 | 🖥 Nature (Vue Blocs) |
+| 198 | Nœuds du système ou nœuds acteurs (double-clic : uniquement ceux-ci), ou un nœud et ses sous-composants. |
+| 199 | #cap-view-physlink #cb-main |
+| 199 | ◧ Blocs |
+| 199 | Chaque nœud (jaune = système, bleu clair = acteur) avec ses ports physiques jaunes, le Physical Link et le nœud distant (clic : aller à son bloc). |
 | 200 | 🔢 Compteur |
-| 200 | Lignes affichées après filtres / total. |
-| 201 | 🔍 Recherche |
-| 201 | Filtre par fonction, composant, port ou échange. La case voisine ne garde que les chaînes incomplètes. |
-| 202 | ⬇ CSV |
-| 202 | Exporte le tableau affiché. |
-| 203 | 📋 Résultat |
-| 203 | Les lignes incomplètes sont signalées en couleur. Clic sur un élément pour ouvrir son détail. |
-| 204 | ƒ Fonctions |
-| 205 | ƒ Fonctions |
-| 205 | Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles. |
-| 206 | #cap-view-functions [data-fv] |
+| 200 | Liens affichés après filtres / total. |
+| 201 | #cap-view-physlink .phl-ce-btn |
+| 201 | ⇢ Component Exchange |
+| 201 | Liens qui portent (ou non) des échanges de composants alloués. |
+| 202 | #phl-node-input,#phl-name-input |
+| 202 | 🔍 Filtres |
+| 202 | Par composant, ou par nom de lien ou d'échange. |
+| 203 | #phl-exp-csv,#phl-exp-html,#phl-exp-html-all |
+| 203 | ⬇ Exports |
+| 203 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
+| 204 | 📋 Résultat |
+| 204 | Clic sur un composant ou un lien pour ouvrir son détail. |
+| 205 | 🧩 Ports |
+| 206 | #cap-view-ports .phl-toggle-btn |
 | 206 | 🖼 Présentation |
-| 206 | 🌳 Hiérarchie · 📋 Tableau façon Excel · ⛓ Traçabilité entre couches · 📊 Métriques · 🩺 Contrôles (qualité des noms, fonctions non allouées…). |
-| 207 | #cap-view-functions [data-fl] |
-| 207 | 🧱 Couche |
-| 207 | Choisit la couche ARCADIA étudiée (OA, SA, LA, PA). |
-| 208 | #ana-fn-q,#ana-fn-desc,#ana-fn-exp,#ana-fn-col |
-| 208 | 🔍 Recherche et affichage |
-| 209 | #cap-view-functions .ana-ak,#ana-fn-who |
-| 209 | 🎯 Allocation |
-| 210 | #ana-fn-csv,#ana-fn-html |
-| 210 | ⬇ Exports |
-| 210 | ⬇ CSV et 📄 Dossier fonctionnel : document HTML avec une section par fonction (description, allocation, échanges, traçabilité). |
-| 211 | #cap-view-functions .phl-filter-bar + * |
-| 211 | 📋 Résultat |
-| 211 | Clic sur une fonction pour ouvrir son détail. |
-| 212 | 🔬 Analyses |
-| 213 | #cap-view-analyses [data-an] |
-| 213 | 🔬 Analyses |
-| 213 | Huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes. |
-| 214 | #cap-view-analyses [data-an].active |
-| 214 | 🔎 Analyse affichée |
-| 214 | Analyse en cours. |
-| 215 | ↻ Recalculer |
-| 216 | #ana-box .phl-filter-bar |
-| 216 | 🧰 Options |
-| 216 | Présentations, filtres et export CSV propres à l'analyse affichée. |
-| 217 | 📋 Résultat |
-| 218 | 📐 Tableau de bord |
-| 219 | 📐 Tableau de bord |
-| 219 | Pages d'indicateurs, graphiques et tableaux sur le modèle, à composer soi-même et à imprimer. |
-| 220 | #cap-view-dashboard .dash-tabs |
-| 220 | 🗂 Pages |
-| 221 | ✏ Modifier |
-| 221 | Passe en édition : ajouter des éléments depuis le catalogue d'indicateurs, les configurer, déplacer et redimensionner. ✔ Terminer pour sortir. |
-| 222 | #dash-orient,#dash-print,#dash-html |
-| 222 | 🖨 Impression |
-| 222 | Format A4 portrait ou paysage, impression, ou export en page HTML autonome. |
-| 223 | #dash-json,#dash-imp |
-| 223 | ⬇⬆ JSON |
-| 223 | Exporte ou importe la définition des tableaux de bord pour les réutiliser sur un autre modèle. |
-| 224 | #cap-view-dashboard .dash-scroll |
-| 224 | 📐 Page |
-| 224 | Les éléments du tableau de bord, calculés sur le modèle chargé. |
-| 228 | 🚀 Bien démarrer |
-| 230 | 1 · Ouvrir un modèle Capella |
-| 231 | Glissez-déposez votre fichier .capella dans ce cadre (formats acceptés : .capella, .melodymodeller, .xml). Le fichier est lu sur ce poste : rien n'est envoyé. |
-| 232 | … ou le chercher |
-| 233 | Vous pouvez aussi cliquer sur 📂 Parcourir… pour le choisir dans l'explorateur de fichiers. |
-| 234 | #b-help, #cap-nav-dd |
-| 234 | ? Aide, en haut à droite |
-| 235 | Le menu ? Aide ▾ reste accessible à tout moment, avec ou sans modèle : 📖 Aide complète et 🎓 Visite guidée . Une fois le modèle ouvert, il propose aussi 🎯 Visite de cette vue pour chaque vue. |
-| 236 | À vous ! |
-| 237 | Cliquez sur Terminer ✓ , puis ouvrez votre fichier. Dès que le modèle sera chargé, la visite reprendra pour vous montrer où trouver l'aide et les tutoriels. |
-| 241 | ✅ Modèle ouvert |
-| 242 | Votre modèle est chargé. Voici où trouver l'aide et les tutoriels, à tout moment. |
-| 243 | ? Aide |
-| 244 | L'aide et toutes les visites guidées sont regroupées dans ce menu. |
-| 245 | 📚 Aide et tutoriels |
-| 246 | 📖 Aide complète : documentation de toutes les vues. 🎓 Visite guidée : tour complet de l'interface. 🎯 Visite de cette vue : menus et commandes de la vue affichée — disponible dans chaque vue. |
-| 247 | 🧭 Et maintenant |
-| 248 | Choisissez une vue dans cette barre, puis ? Aide ▾ → 🎯 Visite de cette vue pour la découvrir pas à pas. |
-| 258 | @table |
-| 355 | Étape |
-| 357 | ◀ Précédent |
-| 358 | Terminer ✓ |
-| 358 | Suivant ▶ |
+| 206 | ≡ Traçabilité Function Port ↔ Component Port ↔ Physical Port, ▣ Par composant , et 🩺 Contrôles (ports non alloués, chaînes incomplètes). |
+| 207 | 🔢 Compteur |
+| 207 | Lignes affichées après filtres / total. |
+| 208 | 🔍 Recherche |
+| 208 | Filtre par fonction, composant, port ou échange. La case voisine ne garde que les chaînes incomplètes. |
+| 209 | ⬇ CSV |
+| 209 | Exporte le tableau affiché. |
+| 210 | 📋 Résultat |
+| 210 | Les lignes incomplètes sont signalées en couleur. Clic sur un élément pour ouvrir son détail. |
+| 211 | ƒ Fonctions |
+| 212 | ƒ Fonctions |
+| 212 | Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles. |
+| 213 | #cap-view-functions [data-fv] |
+| 213 | 🖼 Présentation |
+| 213 | 🌳 Hiérarchie · 📋 Tableau façon Excel · ⛓ Traçabilité entre couches · 📊 Métriques · 🩺 Contrôles (qualité des noms, fonctions non allouées…). |
+| 214 | #cap-view-functions [data-fl] |
+| 214 | 🧱 Couche |
+| 214 | Choisit la couche ARCADIA étudiée (OA, SA, LA, PA). |
+| 215 | #ana-fn-q,#ana-fn-desc,#ana-fn-exp,#ana-fn-col |
+| 215 | 🔍 Recherche et affichage |
+| 216 | #cap-view-functions .ana-ak,#ana-fn-who |
+| 216 | 🎯 Allocation |
+| 217 | #ana-fn-csv,#ana-fn-html |
+| 217 | ⬇ Exports |
+| 217 | ⬇ CSV et 📄 Dossier fonctionnel : document HTML avec une section par fonction (description, allocation, échanges, traçabilité). |
+| 218 | #cap-view-functions .phl-filter-bar + * |
+| 218 | 📋 Résultat |
+| 218 | Clic sur une fonction pour ouvrir son détail. |
+| 219 | 🔬 Analyses |
+| 220 | #cap-view-analyses [data-an] |
+| 220 | 🔬 Analyses |
+| 220 | Huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes. |
+| 221 | #cap-view-analyses [data-an].active |
+| 221 | 🔎 Analyse affichée |
+| 221 | Analyse en cours. |
+| 222 | ↻ Recalculer |
+| 223 | #ana-box .phl-filter-bar |
+| 223 | 🧰 Options |
+| 223 | Présentations, filtres et export CSV propres à l'analyse affichée. |
+| 224 | 📋 Résultat |
+| 225 | 📐 Tableau de bord |
+| 226 | 📐 Tableau de bord |
+| 226 | Pages d'indicateurs, graphiques et tableaux sur le modèle, à composer soi-même et à imprimer. |
+| 227 | #cap-view-dashboard .dash-tabs |
+| 227 | 🗂 Pages |
+| 228 | ✏ Modifier |
+| 228 | Passe en édition : ajouter des éléments depuis le catalogue d'indicateurs, les configurer, déplacer et redimensionner. ✔ Terminer pour sortir. |
+| 229 | #dash-orient,#dash-print,#dash-html |
+| 229 | 🖨 Impression |
+| 229 | Format A4 portrait ou paysage, impression, ou export en page HTML autonome. |
+| 230 | #dash-json,#dash-imp |
+| 230 | ⬇⬆ JSON |
+| 230 | Exporte ou importe la définition des tableaux de bord pour les réutiliser sur un autre modèle. |
+| 231 | #cap-view-dashboard .dash-scroll |
+| 231 | 📐 Page |
+| 231 | Les éléments du tableau de bord, calculés sur le modèle chargé. |
+| 235 | 🚀 Bien démarrer |
+| 237 | 1 · Ouvrir un modèle Capella |
+| 238 | Glissez-déposez votre fichier .capella dans ce cadre (formats acceptés : .capella, .melodymodeller, .xml). Le fichier est lu sur ce poste : rien n'est envoyé. |
+| 239 | … ou le chercher |
+| 240 | Vous pouvez aussi cliquer sur 📂 Parcourir… pour le choisir dans l'explorateur de fichiers. |
+| 241 | #b-help, #cap-nav-dd |
+| 241 | ? Aide, en haut à droite |
+| 242 | Le menu ? Aide ▾ reste accessible à tout moment, avec ou sans modèle : 📖 Aide complète et 🎓 Visite guidée . Une fois le modèle ouvert, il propose aussi 🎯 Visite de cette vue pour chaque vue. |
+| 243 | À vous ! |
+| 244 | Cliquez sur Terminer ✓ , puis ouvrez votre fichier. Dès que le modèle sera chargé, la visite reprendra pour vous montrer où trouver l'aide et les tutoriels. |
+| 248 | ✅ Modèle ouvert |
+| 249 | Votre modèle est chargé. Voici où trouver l'aide et les tutoriels, à tout moment. |
+| 250 | ? Aide |
+| 251 | L'aide et toutes les visites guidées sont regroupées dans ce menu. |
+| 252 | 📚 Aide et tutoriels |
+| 253 | 📖 Aide complète : documentation de toutes les vues. 🎓 Visite guidée : tour complet de l'interface. 🎯 Visite de cette vue : menus et commandes de la vue affichée — disponible dans chaque vue. |
+| 254 | 🧭 Et maintenant |
+| 255 | Choisissez une vue dans cette barre, puis ? Aide ▾ → 🎯 Visite de cette vue pour la découvrir pas à pas. |
+| 265 | @table |
+| 362 | Étape |
+| 364 | ◀ Précédent |
+| 365 | Terminer ✓ |
+| 365 | Suivant ▶ |
 
 ## js/44-functional-exchange.js
 
@@ -3407,3 +3430,70 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 67 | .phl-toggle-bar, .phl-filter-bar, .cap-lf-bar |
 | 80 | var(--c-bg) |
 | 147 | translateY( |
+
+## js/49-scenarios.js
+
+| Ligne | Texte |
+|---:|---|
+| 11 | Exchange Scenario |
+| 11 | Functional Scenario |
+| 11 | Interaction Scenario |
+| 12 | Interface Scenario |
+| 12 | Scénario |
+| 53 | (sans nom) |
+| 210 | Référence au scénario |
+| 210 | — clic : l'ouvrir |
+| 225 | (clic : détail) |
+| 237 | — fonction (clic : détail) |
+| 240 | (clic : détail) |
+| 240 | état |
+| 271 | Couche |
+| 271 | Type |
+| 271 | Scénario |
+| 271 | Capacité |
+| 271 | Détail |
+| 272 | ligne de vie « |
+| 274 | Scénarios vides (aucun message) |
+| 274 | Scénario sans SequenceMessage |
+| 274 | ligne(s) de vie |
+| 275 | Messages sans échange |
+| 275 | SequenceMessage dont l'événement n'invoque aucun échange (Functional / Component Exchange…) |
+| 275 | message(s) |
+| 276 | Lignes de vie sans élément représenté |
+| 276 | InstanceRole sans representedInstance résolu |
+| 277 | Scénarios hors capacité |
+| 277 | Scénario qui n'est pas rangé sous une capacité ou une réalisation de capacité |
+| 279 | Références vers un scénario introuvable |
+| 279 | InteractionUse sans referencedScenario résolu |
+| 280 | référence(s) |
+| 288 | Scénarios — nombre |
+| 288 | message(s) |
+| 289 | sc.layer |
+| 289 | Scénarios — par couche |
+| 290 | sc.kind |
+| 290 | Scénarios — par type |
+| 291 | sc.chk |
+| 291 | Scénarios — contrôles |
+| 304 | ✔ Diagramme copié |
+| 304 | Copie impossible dans ce navigateur. |
+| 305 | Copie d'image non disponible dans ce navigateur. |
+| 306 | Export impossible : |
+| 313 | Ce modèle ne contient aucun scénario (Scenario). |
+| 322 | Aucun scénario ne correspond au filtre. |
+| 329 | ligne(s) de vie · |
+| 329 | message(s) |
+| 329 | fragment(s) |
+| 329 | référence(s) |
+| 335 | Couche |
+| 335 | 🎬 Diagramme |
+| 335 | 🩺 Contrôles |
+| 336 | Type |
+| 336 | Toutes |
+| 337 | Tous |
+| 337 | Exchange Scenario |
+| 337 | Functional Scenario |
+| 337 | Operational Entity Scenario |
+| 337 | Operational Activity Scenario |
+| 337 | Interface Scenario |
+| 337 | Tous les types |
+| 339 | % + ⬇ PNG ⬇ SVG 📋 Copier |
