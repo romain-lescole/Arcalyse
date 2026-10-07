@@ -4,11 +4,13 @@ const CAP_CHAIN_LABELS={FunctionalChain:'Chaîne fonctionnelle',OperationalProce
 const CAP_ACTOR_TYPES=new Set(['SystemActor','LogicalActor','PhysicalActor','OperationalActor']);
 const CAP_CHAIN_ARCH={OperationalAnalysis:'OA',SystemAnalysis:'SA',LogicalArchitecture:'LA',PhysicalArchitecture:'PA',EPBSArchitecture:'EPBS'};
 /** Couleurs des boîtes, reprises des diagrammes Capella : bleu = élément porté par un acteur,
- * vert = élément porté par le système étudié, gris = élément non alloué. */
+ * vert = élément porté par le système étudié, gris = élément non alloué ; jaune = activité opérationnelle
+ * (processus opérationnels OA, quelle que soit l'entité qui la porte, comme dans Capella). */
 const CAP_CHAIN_KIND={
   actor:  {fill:'#c5e6fb', stroke:'#4a4aa8', label:'Acteur',     rm:'#58a6ff'},
   system: {fill:'#c6ffa4', stroke:'#1f6b1f', label:'Système',    rm:'#4dd880'},
   none:   {fill:'#eeeeee', stroke:'#8a8a8a', label:'Non alloué', rm:'#8b949e'},
+  oa:     {fill:'#f8dc7c', stroke:'#6b4f2a', label:'Activité opérationnelle', rm:'#e3b341'},
 };
 let capChainsSubView='diagram';   // 'diagram' (cartes + diagrammes) | 'map' (vue Relation Map)
 let capChainsSelectedId=null;     // chaîne affichée dans la vue Relation Map
@@ -98,7 +100,7 @@ function capComputeChains(){
           const fid=invEl?capXId(invEl):rid(child.getAttribute('involved'));
           const a=alloc[fid];
           nodes.push({id:capXId(child), refId:fid, name:invEl?N(capXName(invEl)):'?',
-            elemType:invEl?capTName(invEl):'?', owner:a?a.compName:'', kind:kindOfFunc(fid)});
+            elemType:invEl?capTName(invEl):'?', owner:a?a.compName:'', kind:t==='OperationalProcess'?'oa':kindOfFunc(fid)});
         } else if(ct==='FunctionalChainInvolvementLink'){
           const invEl=res(child.getAttribute('involved'));
           edges.push({id:capXId(child), refId:invEl?capXId(invEl):'', name:invEl?N(capXName(invEl)):'',
@@ -113,7 +115,7 @@ function capComputeChains(){
           const invEl=res(ref); const id=chain.id+'-n'+i; const fid=invEl?capXId(invEl):'';
           const a=alloc[fid];
           nodes.push({id, refId:fid, name:invEl?N(capXName(invEl)):'?', elemType:invEl?capTName(invEl):'?',
-            owner:a?a.compName:'', kind:kindOfFunc(fid)});
+            owner:a?a.compName:'', kind:t==='OperationalProcess'?'oa':kindOfFunc(fid)});
           if(prev) edges.push({id:id+'-e', refId:'', name:'', srcId:prev, tgtId:id});
           prev=id;
         });
@@ -302,7 +304,7 @@ function capChainDiagramSvg(chain){
   lay.routes.forEach((r,ri)=>{ if(r.back) return; for(let i=0;i<r.pts.length-1;i++){ const L=lay.layerOf[r.pts[i]]; chanRank[segKey(ri,i)]=chanCounter[L]++; } });
 
   const uid='cc'+(++_capChainSvgSeq);
-  const EC='#1a6e2e';
+  const OA=chain.type==='OperationalProcess', EC=OA?'#5c4033':'#1a6e2e';   // flèches brunes en OA, comme Capella
   let edgesSvg='', labelsSvg='';
   lay.routes.forEach((r,ri)=>{
     const e=r.edge;
@@ -360,7 +362,8 @@ function capChainDiagramSvg(chain){
     nodesSvg+=`<g class="ccn" data-ref="${capEsc(n.refId)}" style="cursor:${n.refId?'pointer':'default'}">
       <title>${capEsc(tip)}</title>
       <rect x="${x}" y="${yy}" width="${W}" height="${H}" fill="${k.fill}" stroke="${k.stroke}" stroke-width="${entrySet.has(n.id)||exitSet.has(n.id)?2.4:1.4}"/>
-      <circle cx="${x+15}" cy="${yy+H/2}" r="7" fill="#e8f5d8" stroke="#5a7d3a"/><text x="${x+15}" y="${yy+H/2+3.5}" text-anchor="middle" font-size="9" font-weight="700" fill="#2f5d1a">${icon}</text>
+      ${OA?`<ellipse cx="${x+16}" cy="${yy+H/2}" rx="10" ry="7" fill="#f5a623" stroke="#7a4a00"/><text x="${x+16}" y="${yy+H/2+3}" text-anchor="middle" font-size="7.5" font-weight="700" fill="#3a2200">OA</text>`
+        :`<circle cx="${x+15}" cy="${yy+H/2}" r="7" fill="#e8f5d8" stroke="#5a7d3a"/><text x="${x+15}" y="${yy+H/2+3.5}" text-anchor="middle" font-size="9" font-weight="700" fill="#2f5d1a">${icon}</text>`}
       ${lines.map((l,i)=>`<text x="${x+W/2+8}" y="${ty0+i*16}" text-anchor="middle" font-size="12.5" fill="#111">${capEsc(l)}</text>`).join('')}
       ${entrySet.has(n.id)?`<text x="${x+W-4}" y="${yy+11}" text-anchor="end" font-size="8.5" font-weight="700" fill="${k.stroke}">ENTRÉE</text>`:''}
       ${exitSet.has(n.id)?`<text x="${x+W-4}" y="${yy+H-4}" text-anchor="end" font-size="8.5" font-weight="700" fill="${k.stroke}">SORTIE</text>`:''}
@@ -433,6 +436,7 @@ function capRenderChains(){
       <span><i style="background:${CAP_CHAIN_KIND.actor.fill};border-color:${CAP_CHAIN_KIND.actor.stroke}"></i>Porté par un acteur</span>
       <span><i style="background:${CAP_CHAIN_KIND.system.fill};border-color:${CAP_CHAIN_KIND.system.stroke}"></i>Porté par le système</span>
       <span><i style="background:${CAP_CHAIN_KIND.none.fill};border-color:${CAP_CHAIN_KIND.none.stroke}"></i>Non alloué</span>
+      <span><i style="background:${CAP_CHAIN_KIND.oa.fill};border-color:${CAP_CHAIN_KIND.oa.stroke}"></i>Activité opérationnelle (processus OA)</span>
       <span>Bordure épaisse = entrée / sortie de la chaîne · flèches dans le sens réel des échanges</span>
     </div>`;
   if(capChainsSubView==='map'){ container.innerHTML=bar+'<div id="cap-chainmap-wrap"></div>'; capRenderChainMap(); }
