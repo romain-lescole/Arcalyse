@@ -113,3 +113,47 @@ function capTbSticky(root){
   });
   window.addEventListener('resize',()=>roots.forEach(r=>capTbSticky(r)));
 })();
+
+/* ── En-têtes de tableau qui suivent le défilement ──
+ * Les tableaux des analyses sont placés dans un bloc à défilement horizontal (.cap-tf-scroll), ce qui empêche
+ * « position:sticky » de suivre le défilement vertical de la vue. Les lignes d'en-tête (noms de colonnes et ligne
+ * de filtres) sont donc décalées verticalement (translateY) pour rester juste sous les barres collantes.
+ */
+/** Lignes d'en-tête d'un tableau : celles du <thead>, sinon les premières lignes composées uniquement de <th>.
+ * @param {HTMLTableElement} t @returns {HTMLTableRowElement[]} */
+function capThRows(t){
+  if(t.tHead&&t.tHead.rows.length) return [...t.tHead.rows];
+  const out=[];
+  for(const r of t.rows){ if(r.cells.length&&[...r.cells].every(c=>c.tagName==='TH')) out.push(r); else break; }
+  return out;
+}
+
+/** Fait suivre le défilement de la vue aux en-têtes des tableaux visibles (sous les barres collantes).
+ * @param {HTMLElement} root - Vue qui défile
+ */
+function capThFollow(root){
+  if(!root||!root.offsetParent) return;
+  const R=root.getBoundingClientRect(), bars=root.querySelectorAll('.tbs-on');
+  const limit=bars.length?Math.max(...[...bars].map(b=>b.getBoundingClientRect().bottom)):R.top;
+  root.querySelectorAll('table').forEach(t=>{
+    const rows=capThRows(t);   // recalculé : la ligne de filtres est ajoutée après le rendu (42)
+    if(!rows.length||!t.offsetParent) return;
+    const cells=rows.flatMap(r=>[...r.cells]);
+    // En-tête déjà collant par CSS dans la même zone de défilement : capTbSticky s'en charge
+    if(getComputedStyle(cells[0]).position==='sticky'&&capTbsScroller(cells[0])===root) return;
+    const r=t.getBoundingClientRect(), hh=rows.reduce((s,x)=>s+x.getBoundingClientRect().height,0);
+    const lastH=t.rows.length>rows.length?t.rows[t.rows.length-1].getBoundingClientRect().height:0;
+    const dy=Math.round(Math.max(0, Math.min(limit-r.top, r.height-hh-lastH)));
+    cells.forEach(c=>{ c.style.transform=dy?`translateY(${dy}px)`:''; c.classList.toggle('th-follow',!!dy); });
+  });
+}
+
+// Défilement des vues : en-têtes de tableau qui suivent
+(function(){
+  CAP_TBS_ROOTS.map(id=>document.getElementById(id)).filter(Boolean).forEach(root=>{
+    let pending=false;
+    const run=()=>{ if(pending) return; pending=true; requestAnimationFrame(()=>{ pending=false; capThFollow(root); }); };
+    root.addEventListener('scroll',run,{passive:true});
+    new MutationObserver(run).observe(root,{childList:true, subtree:true});
+  });
+})();
