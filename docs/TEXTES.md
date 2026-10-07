@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3294 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3317 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -70,96 +70,97 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 90 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. |
 | 91 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités |
 | 92 | 🎓 Visite guidée de l'interface |
-| 100 | Panneau |
-| 101 | Réduire le panneau  (infobulle) |
-| 104 | Arborescence |
-| 106 | Tout développer  (infobulle) |
-| 108 | Tout réduire  (infobulle) |
-| 114 | ✕ vider |
-| 114 | Vider la sélection  (infobulle) |
-| 117 | 🔍 Filtrer l'arborescence…  (infobulle) |
-| 128 | Profondeur |
-| 134 | Disposition |
-| 139 | ◉ Rad |
-| 140 | ⚡ Zig |
-| 140 | Zigzag 7:3 — séquence en grille  (infobulle) |
-| 145 | Contexte |
-| 151 | ✚ Créer un nouvel élément |
-| 155 | Critères de relation |
-| 157 | Tout sélectionner  (infobulle) |
-| 159 | Tout désélectionner  (infobulle) |
-| 166 | 🔷 Type d'élément |
-| 168 | Réinitialiser (tout décocher)  (infobulle) |
-| 169 | ↺ Défaut |
-| 175 | Types d'éléments |
-| 177 | Tout sélectionner  (infobulle) |
-| 179 | Tout désélectionner  (infobulle) |
-| 186 | Portée (Paquetages) |
-| 190 | Propriétés |
-| 196 | Ouvrir le panneau  (infobulle) |
-| 211 | ✨ Colonne personnalisée — Metachain Navigation |
-| 215 | Metaclass |
-| 216 | Property |
-| 217 | Name |
-| 222 | Metaclass or Stereotype |
-| 223 | Property |
-| 227 | + Insert (nouvelle étape) |
-| 229 | Nom de la colonne |
-| 230 | ex: Functions of Component  (infobulle) |
-| 231 | Créer la colonne |
-| 244 | Légende |
-| 248 | Prêt |
-| 255 | ✏ Modifier l'élément |
-| 256 | → Créer une relation vers… |
-| 257 | ✦ Créer un élément enfant |
-| 259 | ⊙ Définir comme contexte |
-| 260 | ↓ Développer |
-| 261 | ↑ Réduire |
-| 263 | 👁 Masquer l'élément |
-| 271 | Annuler |
-| 272 | Sauvegarder |
-| 280 | ✏ Éditeur de modèle |
-| 284 | Éléments ( |
-| 285 | Relations ( |
-| 286 | Paquetages ( |
-| 287 | Chaînes ( |
-| 296 | Exporter |
-| 297 | Résolution : |
-| 299 | 1× Normal |
-| 301 | 3× Ultra |
-| 302 | 4× Max |
-| 306 | Annuler |
-| 307 | Exporter |
-| 327 | Types d'éléments |
-| 328 | Filtrer les types…  (infobulle) |
-| 333 | Tout cocher |
-| 335 | Aucun |
-| 337 | Défaut |
-| 346 | Glisser pour redimensionner  (infobulle) |
-| 354 | 🌳 Arborescence |
-| 355 | ▦ Cartes |
-| 356 | 📋 Tableau |
-| 357 | 📖 Index des types |
-| 368 | Rechercher…  (infobulle) |
-| 372 | Tous |
-| 378 | Tranv. |
-| 380 | ⬇ CSV |
-| 384 | ⊞ Déplier |
-| 385 | ⊟ Réduire |
-| 387 | ⬇ JSON |
-| 403 | ← Préc. |
-| 405 | Suiv. → |
-| 423 | ✨ Colonne personnalisée — Metachain Navigation |
-| 427 | Metaclass |
-| 428 | Property |
-| 429 | Name |
-| 434 | Metaclass or Stereotype |
-| 435 | Property |
-| 439 | + Insert (nouvelle étape) |
-| 441 | Nom de la colonne |
-| 442 | ex: Functions of Component  (infobulle) |
-| 443 | Créer la colonne |
-| 465 | Aucun élément ne correspond. |
+| 93 | ℹ À propos |
+| 101 | Panneau |
+| 102 | Réduire le panneau  (infobulle) |
+| 105 | Arborescence |
+| 107 | Tout développer  (infobulle) |
+| 109 | Tout réduire  (infobulle) |
+| 115 | ✕ vider |
+| 115 | Vider la sélection  (infobulle) |
+| 118 | 🔍 Filtrer l'arborescence…  (infobulle) |
+| 129 | Profondeur |
+| 135 | Disposition |
+| 140 | ◉ Rad |
+| 141 | ⚡ Zig |
+| 141 | Zigzag 7:3 — séquence en grille  (infobulle) |
+| 146 | Contexte |
+| 152 | ✚ Créer un nouvel élément |
+| 156 | Critères de relation |
+| 158 | Tout sélectionner  (infobulle) |
+| 160 | Tout désélectionner  (infobulle) |
+| 167 | 🔷 Type d'élément |
+| 169 | Réinitialiser (tout décocher)  (infobulle) |
+| 170 | ↺ Défaut |
+| 176 | Types d'éléments |
+| 178 | Tout sélectionner  (infobulle) |
+| 180 | Tout désélectionner  (infobulle) |
+| 187 | Portée (Paquetages) |
+| 191 | Propriétés |
+| 197 | Ouvrir le panneau  (infobulle) |
+| 212 | ✨ Colonne personnalisée — Metachain Navigation |
+| 216 | Metaclass |
+| 217 | Property |
+| 218 | Name |
+| 223 | Metaclass or Stereotype |
+| 224 | Property |
+| 228 | + Insert (nouvelle étape) |
+| 230 | Nom de la colonne |
+| 231 | ex: Functions of Component  (infobulle) |
+| 232 | Créer la colonne |
+| 245 | Légende |
+| 249 | Prêt |
+| 256 | ✏ Modifier l'élément |
+| 257 | → Créer une relation vers… |
+| 258 | ✦ Créer un élément enfant |
+| 260 | ⊙ Définir comme contexte |
+| 261 | ↓ Développer |
+| 262 | ↑ Réduire |
+| 264 | 👁 Masquer l'élément |
+| 272 | Annuler |
+| 273 | Sauvegarder |
+| 281 | ✏ Éditeur de modèle |
+| 285 | Éléments ( |
+| 286 | Relations ( |
+| 287 | Paquetages ( |
+| 288 | Chaînes ( |
+| 297 | Exporter |
+| 298 | Résolution : |
+| 300 | 1× Normal |
+| 302 | 3× Ultra |
+| 303 | 4× Max |
+| 307 | Annuler |
+| 308 | Exporter |
+| 328 | Types d'éléments |
+| 329 | Filtrer les types…  (infobulle) |
+| 334 | Tout cocher |
+| 336 | Aucun |
+| 338 | Défaut |
+| 347 | Glisser pour redimensionner  (infobulle) |
+| 355 | 🌳 Arborescence |
+| 356 | ▦ Cartes |
+| 357 | 📋 Tableau |
+| 358 | 📖 Index des types |
+| 369 | Rechercher…  (infobulle) |
+| 373 | Tous |
+| 379 | Tranv. |
+| 381 | ⬇ CSV |
+| 385 | ⊞ Déplier |
+| 386 | ⊟ Réduire |
+| 388 | ⬇ JSON |
+| 404 | ← Préc. |
+| 406 | Suiv. → |
+| 424 | ✨ Colonne personnalisée — Metachain Navigation |
+| 428 | Metaclass |
+| 429 | Property |
+| 430 | Name |
+| 435 | Metaclass or Stereotype |
+| 436 | Property |
+| 440 | + Insert (nouvelle étape) |
+| 442 | Nom de la colonne |
+| 443 | ex: Functions of Component  (infobulle) |
+| 444 | Créer la colonne |
+| 466 | Aucun élément ne correspond. |
 
 ## js/01-donnees-config.js
 
@@ -2597,16 +2598,17 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 220 | 📖 Aide complète 🎓 Visite guidée |
 | 222 | 🎯 Visite de cette vue |
 | 223 | 🎯 Chargez un modèle pour la visite de chaque vue. |
-| 229 | 🎨 Personnaliser… |
-| 233 | 📌 épingle une vue en bouton direct dans la barre. |
-| 238 | 🗺 Relation Map |
-| 238 | @table |
-| 238 | 📊 Table View |
-| 241 | Aucune vue ne correspond. |
-| 247 | Menu |
-| 247 | ▾ dans la barre |
-| 248 | Autres vues |
-| 251 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
+| 224 | ℹ À propos |
+| 230 | 🎨 Personnaliser… |
+| 234 | 📌 épingle une vue en bouton direct dans la barre. |
+| 239 | 🗺 Relation Map |
+| 239 | @table |
+| 239 | 📊 Table View |
+| 242 | Aucune vue ne correspond. |
+| 248 | Menu |
+| 248 | ▾ dans la barre |
+| 249 | Autres vues |
+| 252 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
 
 ## js/42-tableaux-analyses.js
 
@@ -3497,3 +3499,29 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 359 | Interface Scenario |
 | 359 | Tous les types |
 | 361 | % + ⬇ PNG ⬇ SVG 📋 Copier |
+
+## js/50-a-propos.js
+
+| Ligne | Texte |
+|---:|---|
+| 6 | Romain Lescole |
+| 7 | github.com/romainl-31/relation-map-capella |
+| 9 | Copyright 2010-2023 Mike Bostock Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies. THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. |
+| 18 | Edge |
+| 21 | Version |
+| 22 | Fichier du |
+| 23 | Navigateur |
+| 24 | Accès direct au fichier (🔄 Suivi) |
+| 24 | non disponible (rechargement manuel) |
+| 25 | Modèle chargé |
+| 25 | éléments |
+| 26 | Réseau |
+| 26 | 100 % hors ligne : aucune donnée transmise |
+| 36 | ℹ À propos ✕ 🔷 Relation Map Capella Version |
+| 40 | Explorateur et analyseur hors ligne de modèles Capella / ARCADIA : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML. Auteur et licence Auteur © |
+| 46 | Développement Développé avec l'aide de Claude Code (Anthropic). Composants tiers et marques D3.js v7.9.0 Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock. Texte de la licence |
+| 52 | Capella, ARCADIA Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié. Modèles de test Exemples Capella « In-Flight Entertainment System » et « AIDA ». Informations techniques |
+| 57 | 📋 Copier les infos Fermer |
+| 63 | Relation Map Capella |
+| 64 | ✔ Informations copiées |
+| 64 | Copiez les informations : |

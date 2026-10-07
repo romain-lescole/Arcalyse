@@ -153,7 +153,7 @@
 - `buildTableView` (l. 679) — Construit intégralement la vue Table View : barre d'outils, menu de sélection des
 - `onModelChanged` (l. 1398) — Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel.
 
-## 11-sauvegarde-toolbar-init.js — 262 lignes
+## 11-sauvegarde-toolbar-init.js — 264 lignes
 
 - `saveJSON` (l. 5) — Sérialise MODEL, RCFG, TCFG et S en JSON et télécharge le fichier.
 - `loadJSON` (l. 19) — Charge un fichier JSON et restaure l'état complet de l'application.
@@ -506,7 +506,7 @@
 - `capWatchShowDelta` (l. 433) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 513) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 279 lignes
+## 41-barre-vues.js — 280 lignes
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
 - `CAP_NAV_GROUPS` (l. 36) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
@@ -656,3 +656,12 @@
 - `capScFit` (l. 311) — Ajuste la hauteur de la liste et du diagramme au bas réel de la vue (la barre d'état ne doit pas masquer
 - `capScPan` (l. 319) — Déplacement du diagramme par cliquer-glisser (en plus des barres de défilement, de la molette et de Maj + molette).
 - `capRenderScenarios` (l. 332) — Rend la vue 🎬 Scénarios : liste filtrable à gauche, diagramme de séquence (ou contrôles) à droite.
+
+## 50-a-propos.js — 70 lignes
+
+- `CAP_APP_VERSION` (l. 5)
+- `CAP_APP_AUTHOR` (l. 6)
+- `CAP_APP_REPO` (l. 7)
+- `CAP_D3_LICENSE` (l. 9) — Texte de la licence ISC de D3.js (reproduction obligatoire).
+- `capAboutTech` (l. 17) — Informations techniques (version, navigateur, accès direct aux fichiers, modèle chargé), pour un signalement.
+- `capAboutOpen` (l. 31) — Ouvre la fenêtre « À propos ».

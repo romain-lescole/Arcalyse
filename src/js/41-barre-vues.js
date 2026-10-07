@@ -40,7 +40,7 @@ var CAP_NAV_GROUPS=[
   {g:'ana',     id:'cap-v-analyses', l:'🔬 Analyses',          t:'Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes'}
 ];
 /** Réglage par défaut : tous les menus affichés, ⚡ Chaînes, ƒ Fonctions et 📐 Tableau de bord en boutons directs. */
-var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['chains','functions','dashboard']};
+var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['chains','functions','scen','dashboard']};
 var _capNav=(()=>{ try{ const el=document.getElementById('cap-toolbar'); const o=el&&JSON.parse(el.textContent);
   if(o&&o.groups&&Array.isArray(o.pins)) return o; }catch(e){} return JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); })();
 var _capNavLast={explore:'cards', flux:'chains', ana:'ana:trace'};   // dernière sous-vue ouverte par menu
@@ -164,7 +164,7 @@ function capNavMenu(g, anchor){
       const a=e.target.closest('[data-act]');
       if(a){ capNavClose(); ({open:()=>capPickCapellaFile(), save:()=>capSavePageDirect(false), saveas:()=>capSavePageDirect(true),
         page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor(), update:()=>capCfgLoadUpdate(), cfgsave:()=>capCfgDialog('save'), cfgload:()=>capCfgLoadFile(),
-        help:()=>openHelpModal(), tour:()=>capTourStart(), tourview:()=>capTourStartView()})[a.dataset.act](); return; }
+        help:()=>openHelpModal(), tour:()=>capTourStart(), tourview:()=>capTourStartView(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
       if(e.target.closest('[data-reset]')){ _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); capNavSave(); capNavRender(); capNavMenuFill(); }
     });
     dd.addEventListener('change',e=>{
@@ -220,7 +220,8 @@ function capNavMenuFill(){
     res.innerHTML=`<div class="ctx-i" data-act="help">📖 Aide complète</div>
       <div class="ctx-i" data-act="tour" title="Découvrir l'interface pas à pas">🎓 Visite guidée</div>`+
       (v?`<div class="ctx-i" data-act="tourview" title="Présente les menus et les commandes de la vue affichée">🎯 Visite de cette vue <span class="cap-nav-g">${v.l}</span></div>`
-        :`<div class="cap-nav-hint">🎯 Chargez un modèle pour la visite de chaque vue.</div>`);
+        :`<div class="cap-nav-hint">🎯 Chargez un modèle pour la visite de chaque vue.</div>`)+
+      `<div class="cw-m-sep"></div><div class="ctx-i" data-act="about" title="Version, auteur, licence, composants tiers, informations techniques">ℹ À propos</div>`;
     return;
   }
   if(g==='theme'){

@@ -252,6 +252,8 @@ function positionOverlay(){
 }
 positionOverlay();
 window.addEventListener('resize', positionOverlay);
+// La barre peut changer de hauteur sans redimensionnement (épingles, menus, modèle chargé) : on suit sa taille
+if(window.ResizeObserver&&document.getElementById('toolbar')) new ResizeObserver(()=>positionOverlay()).observe(document.getElementById('toolbar'));
 // Re-position when capella mode activates
 // ── Help button blink for first 5s ──
 (function(){

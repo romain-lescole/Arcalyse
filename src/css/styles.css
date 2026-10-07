@@ -1127,6 +1127,15 @@ html[data-tone="light"] .fex-pname{color:#2a5a2a;}
 .cw-suspect{margin:6px 0;padding:6px 8px;border:1px solid var(--c-warn,#e3b341);border-radius:5px;background:color-mix(in srgb,var(--c-warn,#e3b341) 12%,transparent);font-size:11.5px;color:var(--c-text);}
 
 /* ── ⚙ Interface et vues ── */
+#cap-about-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
+.ab-box{max-width:720px;}
+.ab-box h4{margin:14px 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--c-dim);}
+.ab-id{display:flex;gap:14px;align-items:center;}
+.ab-logo{font-size:40px;line-height:1;}
+.ab-name{font-size:18px;font-weight:800;}
+.ab-ver{font-size:12px;color:var(--c-accent);margin:2px 0 4px;}
+.ab-mono{font-family:monospace;user-select:all;}
+.ab-lic{white-space:pre-wrap;font-size:10.5px;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:5px;padding:8px;margin:6px 0 0;max-height:180px;overflow:auto;}
 #cap-cfg-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
 .cfg-part{display:flex;gap:8px;align-items:flex-start;padding:6px 4px;border-bottom:1px solid var(--c-border);font-size:12.5px;cursor:pointer;}
 .cfg-part input{margin-top:3px;}
