@@ -4,7 +4,7 @@
  */
 var CAP_APP_VERSION='1.6';   // à mettre à jour à chaque livraison (node build.js --livraison)
 var CAP_APP_AUTHOR='Romain Lescole';
-var CAP_APP_REPO='github.com/romainl-31/relation-map-capella';
+var CAP_APP_REPO='github.com/romain-lescole/relation-map-capella';
 /** Texte de la licence ISC de D3.js (reproduction obligatoire). */
 var CAP_D3_LICENSE=`Copyright 2010-2023 Mike Bostock
 

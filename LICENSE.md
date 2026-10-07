@@ -1,4 +1,4 @@
-Required Notice: Copyright 2026 Romain Lescole (https://github.com/romainl-31/relation-map-capella)
+Required Notice: Copyright 2026 Romain Lescole (https://github.com/romain-lescole/relation-map-capella)
 
 This software is licensed under the PolyForm Strict License 1.0.0, reproduced below.
 For any commercial use, modification or redistribution, contact the author.
