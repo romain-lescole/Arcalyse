@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3181 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3209 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -159,7 +159,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 441 | Nom de la colonne |
 | 442 | ex: Functions of Component  (infobulle) |
 | 443 | Créer la colonne |
-| 463 | Aucun élément ne correspond. |
+| 464 | Aucun élément ne correspond. |
 
 ## js/01-donnees-config.js
 
@@ -884,53 +884,55 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 3 | Chaîne fonctionnelle |
 | 3 | Processus opérationnel |
 | 3 | Chemin physique |
-| 9 | Acteur |
-| 10 | Système |
-| 11 | Non alloué |
-| 268 | Chaîne vide. |
-| 359 | · alloué à |
-| 359 | · ENTRÉE |
-| 359 | · SORTIE |
-| 365 | ENTRÉE |
-| 395 | Non classée |
-| 415 | Tous types ( |
-| 417 | chaîne(s) |
-| 419 | ▦ Diagrammes |
-| 420 | 🗺 Vue Relation Map |
-| 424 | Toutes catégories ( |
-| 426 | Contenu |
-| 426 | Non classées |
-| 428 | Tri |
-| 428 | Toutes |
-| 428 | Non vides |
-| 428 | Vides |
-| 430 | Ordre du modèle |
-| 430 | Fonctions ↓ |
-| 430 | Fonctions ↑ |
-| 433 | Porté par un acteur |
-| 434 | Porté par le système |
-| 435 | Non alloué Bordure épaisse = entrée / sortie de la chaîne · flèches dans le sens réel des échanges |
-| 451 | Aucune chaîne. |
-| 455 | chaîne |
-| 467 | échanges · |
-| 467 | entrée |
-| 467 | ⑂ ramifiée |
-| 493 | Entrées |
-| 494 | Sorties |
-| 495 | 🖼 PNG 📐 SVG 📋 Copier ⬇ CSV |
-| 501 | 🗺 Ouvrir en vue Relation Map |
-| 506 | Composants impliqués |
-| 506 | Fonctions impliquées |
-| 507 | Type Alloué à Rôle Entr. Sort. |
-| 507 | Composant |
-| 507 | Fonction |
-| 508 | Physical Links impliqués |
-| 508 | Functional Exchanges impliqués |
-| 509 | Source Cible |
-| 509 | Physical Link |
-| 509 | Functional Exchange |
-| 509 | Component Exchanges alloués |
-| 509 | Exchange Items CE porteur |
+| 10 | Acteur |
+| 11 | Système |
+| 12 | Non alloué |
+| 13 | Activité opérationnelle |
+| 270 | Chaîne vide. |
+| 361 | · alloué à |
+| 361 | · ENTRÉE |
+| 361 | · SORTIE |
+| 368 | ENTRÉE |
+| 398 | Non classée |
+| 418 | Tous types ( |
+| 420 | chaîne(s) |
+| 422 | ▦ Diagrammes |
+| 423 | 🗺 Vue Relation Map |
+| 427 | Toutes catégories ( |
+| 429 | Contenu |
+| 429 | Non classées |
+| 431 | Tri |
+| 431 | Toutes |
+| 431 | Non vides |
+| 431 | Vides |
+| 433 | Ordre du modèle |
+| 433 | Fonctions ↓ |
+| 433 | Fonctions ↑ |
+| 436 | Porté par un acteur |
+| 437 | Porté par le système |
+| 438 | Non alloué |
+| 439 | Activité opérationnelle (processus OA) Bordure épaisse = entrée / sortie de la chaîne · flèches dans le sens réel des échanges |
+| 455 | Aucune chaîne. |
+| 459 | chaîne |
+| 471 | échanges · |
+| 471 | entrée |
+| 471 | ⑂ ramifiée |
+| 497 | Entrées |
+| 498 | Sorties |
+| 499 | 🖼 PNG 📐 SVG 📋 Copier ⬇ CSV |
+| 505 | 🗺 Ouvrir en vue Relation Map |
+| 510 | Composants impliqués |
+| 510 | Fonctions impliquées |
+| 511 | Type Alloué à Rôle Entr. Sort. |
+| 511 | Composant |
+| 511 | Fonction |
+| 512 | Physical Links impliqués |
+| 512 | Functional Exchanges impliqués |
+| 513 | Source Cible |
+| 513 | Physical Link |
+| 513 | Functional Exchange |
+| 513 | Component Exchanges alloués |
+| 513 | Exchange Items CE porteur |
 
 ## js/24-chaines-export.js
 
@@ -2554,51 +2556,52 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 15 | ⚡ Chaînes |
 | 16 | ƒ⇆ Functional Exchange |
 | 16 | Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles |
-| 17 | 🧱 System Component |
-| 18 | 🧱 Logical Component |
-| 19 | 🔀 Behavior Exchange |
-| 19 | Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange) |
-| 20 | 🔌 Physical Link |
-| 21 | 🧩 Ports |
-| 21 | Traçabilité Function Port ↔ Component Port ↔ Physical Port |
-| 22 | ƒ Fonctions |
-| 22 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier |
-| 23 | 🧬 Traçabilité inter-couches |
-| 24 | 🎯 Capacités & missions |
-| 25 | 🔁 Modes & états |
-| 26 | ⚖ Comparaison de versions |
-| 27 | 📑 Exigences |
-| 28 | 🏷 Propriétés |
-| 29 | 🗃 Données & interfaces |
-| 30 | ⛓ Contraintes |
-| 31 | 📐 Tableau de bord |
-| 31 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux |
-| 35 | 🧭 Explorateur |
-| 35 | Explorer le modèle : arborescence, cartes, tableau, index des types, liens |
-| 36 | 📡 Flux & interfaces |
-| 36 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, ports |
-| 38 | 🔬 Analyses |
-| 38 | Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes |
-| 125 | Vue affichée : |
-| 143 | Retirer de la barre |
-| 143 | Épingler dans la barre (bouton direct) |
-| 206 | 💾 Enregistrer sous… |
-| 206 | Ctrl+S |
-| 207 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les colonnes et vues du 📋 Tableau et de la 📊 Table View, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. |
-| 207 | Ctrl+Maj+S |
-| 218 | 📖 Aide complète 🎓 Visite guidée |
-| 220 | 🎯 Visite de cette vue |
-| 221 | 🎯 Chargez un modèle pour la visite de chaque vue. |
-| 227 | 🎨 Personnaliser… |
-| 231 | 📌 épingle une vue en bouton direct dans la barre. |
-| 236 | 🗺 Relation Map |
-| 236 | @table |
-| 236 | 📊 Table View |
-| 239 | Aucune vue ne correspond. |
-| 245 | Menu |
-| 245 | ▾ dans la barre |
-| 246 | Autres vues |
-| 249 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
+| 17 | 🟨 Operational Analysis |
+| 18 | 🧱 System Component |
+| 19 | 🧱 Logical Component |
+| 20 | 🔀 Behavior Exchange |
+| 20 | Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange) |
+| 21 | 🔌 Physical Link |
+| 22 | 🧩 Ports |
+| 22 | Traçabilité Function Port ↔ Component Port ↔ Physical Port |
+| 23 | ƒ Fonctions |
+| 23 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier |
+| 24 | 🧬 Traçabilité inter-couches |
+| 25 | 🎯 Capacités & missions |
+| 26 | 🔁 Modes & états |
+| 27 | ⚖ Comparaison de versions |
+| 28 | 📑 Exigences |
+| 29 | 🏷 Propriétés |
+| 30 | 🗃 Données & interfaces |
+| 31 | ⛓ Contraintes |
+| 32 | 📐 Tableau de bord |
+| 32 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux |
+| 36 | 🧭 Explorateur |
+| 36 | Explorer le modèle : arborescence, cartes, tableau, index des types, liens |
+| 37 | 📡 Flux & interfaces |
+| 37 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, ports |
+| 39 | 🔬 Analyses |
+| 39 | Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes |
+| 126 | Vue affichée : |
+| 144 | Retirer de la barre |
+| 144 | Épingler dans la barre (bouton direct) |
+| 207 | 💾 Enregistrer sous… |
+| 207 | Ctrl+S |
+| 208 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les colonnes et vues du 📋 Tableau et de la 📊 Table View, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. |
+| 208 | Ctrl+Maj+S |
+| 219 | 📖 Aide complète 🎓 Visite guidée |
+| 221 | 🎯 Visite de cette vue |
+| 222 | 🎯 Chargez un modèle pour la visite de chaque vue. |
+| 228 | 🎨 Personnaliser… |
+| 232 | 📌 épingle une vue en bouton direct dans la barre. |
+| 237 | 🗺 Relation Map |
+| 237 | @table |
+| 237 | 📊 Table View |
+| 240 | Aucune vue ne correspond. |
+| 246 | Menu |
+| 246 | ▾ dans la barre |
+| 247 | Autres vues |
+| 250 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. |
 
 ## js/42-tableaux-analyses.js
 
@@ -2842,242 +2845,266 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 181 | CSV de la vue, rapport HTML de la vue (toutes les pages), ou rapport HTML autonome avec toutes les vues. |
 | 182 | 📋 Résultat |
 | 182 | Clic sur une fonction ou un échange pour ouvrir son détail. |
-| 183 | 🔌 Physical Link |
-| 184 | #cap-view-physlink .phl-toggle-btn |
+| 183 | 🟨 Operational Analysis |
+| 184 | #cap-view-oav .phl-toggle-btn |
 | 184 | 🖼 Présentation |
-| 185 | #cap-view-physlink .ana-ak |
-| 185 | 🖥 Nature (Vue Blocs) |
-| 185 | Nœuds du système ou nœuds acteurs (double-clic : uniquement ceux-ci), ou un nœud et ses sous-composants. |
-| 186 | #cap-view-physlink #cb-main |
-| 186 | ◧ Blocs |
-| 186 | Chaque nœud (jaune = système, bleu clair = acteur) avec ses ports physiques jaunes, le Physical Link et le nœud distant (clic : aller à son bloc). |
-| 187 | 🔢 Compteur |
-| 187 | Liens affichés après filtres / total. |
-| 188 | #cap-view-physlink .phl-ce-btn |
-| 188 | ⇢ Component Exchange |
-| 188 | Liens qui portent (ou non) des échanges de composants alloués. |
-| 189 | #phl-node-input,#phl-name-input |
-| 189 | 🔍 Filtres |
-| 189 | Par composant, ou par nom de lien ou d'échange. |
-| 190 | #phl-exp-csv,#phl-exp-html,#phl-exp-html-all |
-| 190 | ⬇ Exports |
-| 190 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
-| 191 | 📋 Résultat |
-| 191 | Clic sur un composant ou un lien pour ouvrir son détail. |
-| 192 | 🧩 Ports |
-| 193 | #cap-view-ports .phl-toggle-btn |
-| 193 | 🖼 Présentation |
-| 193 | ≡ Traçabilité Function Port ↔ Component Port ↔ Physical Port, ▣ Par composant , et 🩺 Contrôles (ports non alloués, chaînes incomplètes). |
-| 194 | 🔢 Compteur |
-| 194 | Lignes affichées après filtres / total. |
-| 195 | 🔍 Recherche |
-| 195 | Filtre par fonction, composant, port ou échange. La case voisine ne garde que les chaînes incomplètes. |
-| 196 | ⬇ CSV |
-| 196 | Exporte le tableau affiché. |
+| 185 | #cap-view-oav .ana-ak |
+| 185 | 🏢 Allocation |
+| 185 | Activités portées par une entité, par un acteur opérationnel ou non allouées (double-clic : uniquement celles-ci), ou par une entité ou un acteur précis. |
+| 186 | #cap-view-oav #fex-fn-input,#cap-view-oav #fex-name-input |
+| 186 | 🔍 Filtres |
+| 186 | Par activité, ou par nom d'interaction ou d'Exchange Item. |
+| 187 | #cap-view-oav #fex-exp-csv,#cap-view-oav #fex-exp-html,#cap-view-oav #fex-exp-html-all |
+| 187 | ⬇ Exports |
+| 187 | CSV des interactions, rapport HTML de la vue ou de toutes les vues. |
+| 188 | #cap-view-oav #fex-main |
+| 188 | 📋 Résultat |
+| 188 | Clic sur une activité ou une interaction pour ouvrir son détail. |
+| 189 | 🔌 Physical Link |
+| 190 | #cap-view-physlink .phl-toggle-btn |
+| 190 | 🖼 Présentation |
+| 191 | #cap-view-physlink .ana-ak |
+| 191 | 🖥 Nature (Vue Blocs) |
+| 191 | Nœuds du système ou nœuds acteurs (double-clic : uniquement ceux-ci), ou un nœud et ses sous-composants. |
+| 192 | #cap-view-physlink #cb-main |
+| 192 | ◧ Blocs |
+| 192 | Chaque nœud (jaune = système, bleu clair = acteur) avec ses ports physiques jaunes, le Physical Link et le nœud distant (clic : aller à son bloc). |
+| 193 | 🔢 Compteur |
+| 193 | Liens affichés après filtres / total. |
+| 194 | #cap-view-physlink .phl-ce-btn |
+| 194 | ⇢ Component Exchange |
+| 194 | Liens qui portent (ou non) des échanges de composants alloués. |
+| 195 | #phl-node-input,#phl-name-input |
+| 195 | 🔍 Filtres |
+| 195 | Par composant, ou par nom de lien ou d'échange. |
+| 196 | #phl-exp-csv,#phl-exp-html,#phl-exp-html-all |
+| 196 | ⬇ Exports |
+| 196 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
 | 197 | 📋 Résultat |
-| 197 | Les lignes incomplètes sont signalées en couleur. Clic sur un élément pour ouvrir son détail. |
-| 198 | ƒ Fonctions |
-| 199 | ƒ Fonctions |
-| 199 | Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles. |
-| 200 | #cap-view-functions [data-fv] |
-| 200 | 🖼 Présentation |
-| 200 | 🌳 Hiérarchie · 📋 Tableau façon Excel · ⛓ Traçabilité entre couches · 📊 Métriques · 🩺 Contrôles (qualité des noms, fonctions non allouées…). |
-| 201 | #cap-view-functions [data-fl] |
-| 201 | 🧱 Couche |
-| 201 | Choisit la couche ARCADIA étudiée (OA, SA, LA, PA). |
-| 202 | #ana-fn-q,#ana-fn-desc,#ana-fn-exp,#ana-fn-col |
-| 202 | 🔍 Recherche et affichage |
-| 203 | #cap-view-functions .ana-ak,#ana-fn-who |
-| 203 | 🎯 Allocation |
-| 204 | #ana-fn-csv,#ana-fn-html |
-| 204 | ⬇ Exports |
-| 204 | ⬇ CSV et 📄 Dossier fonctionnel : document HTML avec une section par fonction (description, allocation, échanges, traçabilité). |
-| 205 | #cap-view-functions .phl-filter-bar + * |
-| 205 | 📋 Résultat |
-| 205 | Clic sur une fonction pour ouvrir son détail. |
-| 206 | 🔬 Analyses |
-| 207 | #cap-view-analyses [data-an] |
-| 207 | 🔬 Analyses |
-| 207 | Huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes. |
-| 208 | #cap-view-analyses [data-an].active |
-| 208 | 🔎 Analyse affichée |
-| 208 | Analyse en cours. |
-| 209 | ↻ Recalculer |
-| 210 | #ana-box .phl-filter-bar |
-| 210 | 🧰 Options |
-| 210 | Présentations, filtres et export CSV propres à l'analyse affichée. |
+| 197 | Clic sur un composant ou un lien pour ouvrir son détail. |
+| 198 | 🧩 Ports |
+| 199 | #cap-view-ports .phl-toggle-btn |
+| 199 | 🖼 Présentation |
+| 199 | ≡ Traçabilité Function Port ↔ Component Port ↔ Physical Port, ▣ Par composant , et 🩺 Contrôles (ports non alloués, chaînes incomplètes). |
+| 200 | 🔢 Compteur |
+| 200 | Lignes affichées après filtres / total. |
+| 201 | 🔍 Recherche |
+| 201 | Filtre par fonction, composant, port ou échange. La case voisine ne garde que les chaînes incomplètes. |
+| 202 | ⬇ CSV |
+| 202 | Exporte le tableau affiché. |
+| 203 | 📋 Résultat |
+| 203 | Les lignes incomplètes sont signalées en couleur. Clic sur un élément pour ouvrir son détail. |
+| 204 | ƒ Fonctions |
+| 205 | ƒ Fonctions |
+| 205 | Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles. |
+| 206 | #cap-view-functions [data-fv] |
+| 206 | 🖼 Présentation |
+| 206 | 🌳 Hiérarchie · 📋 Tableau façon Excel · ⛓ Traçabilité entre couches · 📊 Métriques · 🩺 Contrôles (qualité des noms, fonctions non allouées…). |
+| 207 | #cap-view-functions [data-fl] |
+| 207 | 🧱 Couche |
+| 207 | Choisit la couche ARCADIA étudiée (OA, SA, LA, PA). |
+| 208 | #ana-fn-q,#ana-fn-desc,#ana-fn-exp,#ana-fn-col |
+| 208 | 🔍 Recherche et affichage |
+| 209 | #cap-view-functions .ana-ak,#ana-fn-who |
+| 209 | 🎯 Allocation |
+| 210 | #ana-fn-csv,#ana-fn-html |
+| 210 | ⬇ Exports |
+| 210 | ⬇ CSV et 📄 Dossier fonctionnel : document HTML avec une section par fonction (description, allocation, échanges, traçabilité). |
+| 211 | #cap-view-functions .phl-filter-bar + * |
 | 211 | 📋 Résultat |
-| 212 | 📐 Tableau de bord |
-| 213 | 📐 Tableau de bord |
-| 213 | Pages d'indicateurs, graphiques et tableaux sur le modèle, à composer soi-même et à imprimer. |
-| 214 | #cap-view-dashboard .dash-tabs |
-| 214 | 🗂 Pages |
-| 215 | ✏ Modifier |
-| 215 | Passe en édition : ajouter des éléments depuis le catalogue d'indicateurs, les configurer, déplacer et redimensionner. ✔ Terminer pour sortir. |
-| 216 | #dash-orient,#dash-print,#dash-html |
-| 216 | 🖨 Impression |
-| 216 | Format A4 portrait ou paysage, impression, ou export en page HTML autonome. |
-| 217 | #dash-json,#dash-imp |
-| 217 | ⬇⬆ JSON |
-| 217 | Exporte ou importe la définition des tableaux de bord pour les réutiliser sur un autre modèle. |
-| 218 | #cap-view-dashboard .dash-scroll |
-| 218 | 📐 Page |
-| 218 | Les éléments du tableau de bord, calculés sur le modèle chargé. |
-| 222 | 🚀 Bien démarrer |
-| 224 | 1 · Ouvrir un modèle Capella |
-| 225 | Glissez-déposez votre fichier .capella dans ce cadre (formats acceptés : .capella, .melodymodeller, .xml). Le fichier est lu sur ce poste : rien n'est envoyé. |
-| 226 | … ou le chercher |
-| 227 | Vous pouvez aussi cliquer sur 📂 Parcourir… pour le choisir dans l'explorateur de fichiers. |
-| 228 | #b-help, #cap-nav-dd |
-| 228 | ? Aide, en haut à droite |
-| 229 | Le menu ? Aide ▾ reste accessible à tout moment, avec ou sans modèle : 📖 Aide complète et 🎓 Visite guidée . Une fois le modèle ouvert, il propose aussi 🎯 Visite de cette vue pour chaque vue. |
-| 230 | À vous ! |
-| 231 | Cliquez sur Terminer ✓ , puis ouvrez votre fichier. Dès que le modèle sera chargé, la visite reprendra pour vous montrer où trouver l'aide et les tutoriels. |
-| 235 | ✅ Modèle ouvert |
-| 236 | Votre modèle est chargé. Voici où trouver l'aide et les tutoriels, à tout moment. |
-| 237 | ? Aide |
-| 238 | L'aide et toutes les visites guidées sont regroupées dans ce menu. |
-| 239 | 📚 Aide et tutoriels |
-| 240 | 📖 Aide complète : documentation de toutes les vues. 🎓 Visite guidée : tour complet de l'interface. 🎯 Visite de cette vue : menus et commandes de la vue affichée — disponible dans chaque vue. |
-| 241 | 🧭 Et maintenant |
-| 242 | Choisissez une vue dans cette barre, puis ? Aide ▾ → 🎯 Visite de cette vue pour la découvrir pas à pas. |
-| 252 | @table |
-| 349 | Étape |
-| 351 | ◀ Précédent |
-| 352 | Terminer ✓ |
-| 352 | Suivant ▶ |
+| 211 | Clic sur une fonction pour ouvrir son détail. |
+| 212 | 🔬 Analyses |
+| 213 | #cap-view-analyses [data-an] |
+| 213 | 🔬 Analyses |
+| 213 | Huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes. |
+| 214 | #cap-view-analyses [data-an].active |
+| 214 | 🔎 Analyse affichée |
+| 214 | Analyse en cours. |
+| 215 | ↻ Recalculer |
+| 216 | #ana-box .phl-filter-bar |
+| 216 | 🧰 Options |
+| 216 | Présentations, filtres et export CSV propres à l'analyse affichée. |
+| 217 | 📋 Résultat |
+| 218 | 📐 Tableau de bord |
+| 219 | 📐 Tableau de bord |
+| 219 | Pages d'indicateurs, graphiques et tableaux sur le modèle, à composer soi-même et à imprimer. |
+| 220 | #cap-view-dashboard .dash-tabs |
+| 220 | 🗂 Pages |
+| 221 | ✏ Modifier |
+| 221 | Passe en édition : ajouter des éléments depuis le catalogue d'indicateurs, les configurer, déplacer et redimensionner. ✔ Terminer pour sortir. |
+| 222 | #dash-orient,#dash-print,#dash-html |
+| 222 | 🖨 Impression |
+| 222 | Format A4 portrait ou paysage, impression, ou export en page HTML autonome. |
+| 223 | #dash-json,#dash-imp |
+| 223 | ⬇⬆ JSON |
+| 223 | Exporte ou importe la définition des tableaux de bord pour les réutiliser sur un autre modèle. |
+| 224 | #cap-view-dashboard .dash-scroll |
+| 224 | 📐 Page |
+| 224 | Les éléments du tableau de bord, calculés sur le modèle chargé. |
+| 228 | 🚀 Bien démarrer |
+| 230 | 1 · Ouvrir un modèle Capella |
+| 231 | Glissez-déposez votre fichier .capella dans ce cadre (formats acceptés : .capella, .melodymodeller, .xml). Le fichier est lu sur ce poste : rien n'est envoyé. |
+| 232 | … ou le chercher |
+| 233 | Vous pouvez aussi cliquer sur 📂 Parcourir… pour le choisir dans l'explorateur de fichiers. |
+| 234 | #b-help, #cap-nav-dd |
+| 234 | ? Aide, en haut à droite |
+| 235 | Le menu ? Aide ▾ reste accessible à tout moment, avec ou sans modèle : 📖 Aide complète et 🎓 Visite guidée . Une fois le modèle ouvert, il propose aussi 🎯 Visite de cette vue pour chaque vue. |
+| 236 | À vous ! |
+| 237 | Cliquez sur Terminer ✓ , puis ouvrez votre fichier. Dès que le modèle sera chargé, la visite reprendra pour vous montrer où trouver l'aide et les tutoriels. |
+| 241 | ✅ Modèle ouvert |
+| 242 | Votre modèle est chargé. Voici où trouver l'aide et les tutoriels, à tout moment. |
+| 243 | ? Aide |
+| 244 | L'aide et toutes les visites guidées sont regroupées dans ce menu. |
+| 245 | 📚 Aide et tutoriels |
+| 246 | 📖 Aide complète : documentation de toutes les vues. 🎓 Visite guidée : tour complet de l'interface. 🎯 Visite de cette vue : menus et commandes de la vue affichée — disponible dans chaque vue. |
+| 247 | 🧭 Et maintenant |
+| 248 | Choisissez une vue dans cette barre, puis ? Aide ▾ → 🎯 Visite de cette vue pour la découvrir pas à pas. |
+| 258 | @table |
+| 355 | Étape |
+| 357 | ◀ Précédent |
+| 358 | Terminer ✓ |
+| 358 | Suivant ▶ |
 
 ## js/44-functional-exchange.js
 
 | Ligne | Texte |
 |---:|---|
-| 18 | 💡 Les blocs sont plus lisibles, et plus proches du rendu Capella, avec le thème Office 2007 ou Clair (menu 🎨 Thème ▾). |
-| 99 | Functional Exchange |
-| 99 | Fonction source |
-| 99 | Fonction cible |
-| 99 | Couche |
-| 105 | Ports de fonction orphelins (sans échange) |
-| 105 | Function Port défini mais relié à aucun Functional Exchange |
-| 105 | Fonction |
-| 105 | Port |
-| 105 | Sens |
-| 105 | Couche |
-| 106 | ▶ entrée |
-| 106 | sortie ▶ |
-| 107 | Échanges sans Exchange Item |
-| 107 | Aucun Exchange Item porté (exchangedItems) |
-| 108 | Fonctions feuilles sans aucun échange |
-| 108 | Fonction sans sous-fonction, ni entrée ni sortie |
-| 108 | Fonction |
-| 108 | Couche |
-| 110 | Fonctions mères portant des ports |
-| 110 | Bonne pratique Capella : les ports et échanges sont portés par les fonctions feuilles |
-| 110 | Fonction |
-| 110 | Ports |
-| 110 | Couche |
-| 113 | Échanges reliés directement à une fonction (sans port) |
-| 113 | Source ou cible sans Function Port (hors OA, où c'est la règle) |
-| 114 | Échanges LA / PA non alloués à un Component Exchange |
-| 114 | Aucune ComponentExchangeFunctionalExchangeAllocation (le modèle en utilise ailleurs) |
-| 125 | fex.n |
-| 125 | Functional Exchanges — nombre |
-| 125 | fonction(s) avec ports |
-| 126 | fex.layer |
-| 126 | Functional Exchanges — par couche |
-| 127 | fex.items |
-| 127 | Functional Exchanges — avec Exchange Item |
-| 128 | fex.chk |
-| 128 | Functional Exchanges — contrôles |
-| 173 | (sous-composants compris) |
-| 173 | une entité ou un acteur opérationnel |
-| 173 | un acteur, ou au système / à un sous-système |
-| 174 | Toutes les entités et acteurs |
-| 174 | Tous les allocataires |
-| 175 | Acteurs opérationnels |
-| 175 | Acteurs |
-| 176 | 🏢 Entités |
-| 176 | 🧩 Système / sous-systèmes |
-| 205 | Function Input Port |
-| 205 | Function Output Port |
-| 205 | — non connecté |
-| 210 | ∅ Item |
-| 223 | sans port |
-| 237 | sans port |
-| 257 | ÉMET → |
-| 257 | Sortie — la fonction émet l'échange |
-| 257 | ← REÇOIT |
-| 257 | Entrée — la fonction reçoit l'échange |
-| 264 | sans port |
-| 266 | Aucun Exchange Item |
-| 268 | sans port |
-| 276 | échange |
-| 299 | (échange relié directement à la fonction, sans port) |
-| 300 | non connecté |
-| 303 | allouée au système |
-| 303 | allouée à un acteur |
-| 303 | non allouée |
-| 303 | fonction mère (non allouée) |
-| 310 | aucun port ni échange |
-| 321 | » — clic : son bloc |
-| 332 | fonctions : pour rester fluide, la matrice en affiche |
-| 332 | (les plus connectées). Filtrez par couche ou par fonction pour voir les autres. |
-| 336 | échanges |
-| 336 | Source ↓ / Cible → |
-| 347 | · page |
-| 358 | Aucune fonction ne correspond au filtre. |
-| 360 | Fonctions |
-| 361 | ↩ Revenir à « |
-| 364 | Aucun functional exchange ne correspond au filtre. |
-| 369 | Fonctions |
-| 372 | Échanges |
-| 410 | échange |
-| 424 | ◧ Vue Blocs |
-| 424 | ≡ Vue Ligne |
-| 424 | ▣ Vue Fonction |
-| 424 | ▦ Matrice |
-| 424 | 🩺 Contrôles |
-| 428 | allocation : |
-| 428 | allocataire « |
-| 428 | fonction « |
-| 428 | échange « |
-| 429 | ƒ⇆ Functional Exchanges |
-| 429 | échanges |
-| 429 | · filtres : |
-| 436 | Entrée |
-| 436 | Sortie |
-| 441 | Couche |
-| 441 | Fonction |
-| 441 | Sens |
-| 441 | Port |
-| 441 | Functional Exchange |
-| 441 | Fonction distante |
-| 441 | Port distant |
-| 444 | Couche |
-| 444 | Fonction source |
-| 444 | Port source |
-| 444 | Functional Exchange |
-| 444 | Port cible |
-| 444 | Fonction cible |
-| 444 | Exchange Items |
-| 444 | Component Exchanges |
-| 444 | Chaînes |
-| 454 | ◧ Vue Blocs |
-| 455 | ≡ Vue Ligne |
-| 455 | Un échange par ligne : fonction source ▶ échange ▶ fonction cible |
-| 455 | ▣ Vue Fonction |
-| 455 | Échanges regroupés par fonction |
-| 456 | ▦ Matrice |
-| 456 | Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus |
-| 456 | 🩺 Contrôles |
-| 456 | Ports orphelins, échanges sans Exchange Item, fonctions sans échange… |
-| 462 | Toutes |
-| 463 | ƒ Fonction : |
-| 468 | 🔍 Échange : |
-| 471 | avec ports ou échanges |
-| 473 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
-| 473 | Allocation |
-| 473 | — un échange est gardé si l'une de ses deux fonctions correspond |
-| 473 | — double-clic : uniquement celles-ci |
+| 19 | 💡 Les blocs sont plus lisibles, et plus proches du rendu Capella, avec le thème Office 2007 ou Clair (menu 🎨 Thème ▾). |
+| 100 | Functional Exchange |
+| 100 | Fonction source |
+| 100 | Fonction cible |
+| 100 | Couche |
+| 106 | Ports de fonction orphelins (sans échange) |
+| 106 | Function Port défini mais relié à aucun Functional Exchange |
+| 106 | Fonction |
+| 106 | Port |
+| 106 | Sens |
+| 106 | Couche |
+| 107 | ▶ entrée |
+| 107 | sortie ▶ |
+| 108 | Échanges sans Exchange Item |
+| 108 | Aucun Exchange Item porté (exchangedItems) |
+| 109 | Fonctions feuilles sans aucun échange |
+| 109 | Fonction sans sous-fonction, ni entrée ni sortie |
+| 109 | Fonction |
+| 109 | Couche |
+| 111 | Fonctions mères portant des ports |
+| 111 | Bonne pratique Capella : les ports et échanges sont portés par les fonctions feuilles |
+| 111 | Fonction |
+| 111 | Ports |
+| 111 | Couche |
+| 114 | Échanges reliés directement à une fonction (sans port) |
+| 114 | Source ou cible sans Function Port (hors OA, où c'est la règle) |
+| 115 | Échanges LA / PA non alloués à un Component Exchange |
+| 115 | Aucune ComponentExchangeFunctionalExchangeAllocation (le modèle en utilise ailleurs) |
+| 126 | fex.n |
+| 126 | Functional Exchanges — nombre |
+| 126 | fonction(s) avec ports |
+| 127 | fex.layer |
+| 127 | Functional Exchanges — par couche |
+| 128 | fex.items |
+| 128 | Functional Exchanges — avec Exchange Item |
+| 129 | fex.chk |
+| 129 | Functional Exchanges — contrôles |
+| 144 | activités |
+| 144 | Activités |
+| 144 | activité |
+| 144 | Activité |
+| 144 | Fonctions |
+| 144 | Fonction |
+| 145 | Entités |
+| 145 | Activités allouées à une entité opérationnelle (non acteur) |
+| 182 | (sous-composants compris) |
+| 182 | une entité ou un acteur opérationnel |
+| 182 | un acteur, ou au système / à un sous-système |
+| 183 | Toutes les entités et acteurs |
+| 183 | Tous les allocataires |
+| 184 | Acteurs opérationnels |
+| 184 | Acteurs |
+| 185 | 🏢 Entités |
+| 185 | 🧩 Système / sous-systèmes |
+| 214 | Function Input Port |
+| 214 | Function Output Port |
+| 214 | — non connecté |
+| 219 | ∅ Item |
+| 232 | sans port |
+| 246 | sans port |
+| 266 | ÉMET → |
+| 266 | Sortie — la fonction émet l'échange |
+| 266 | ← REÇOIT |
+| 266 | Entrée — la fonction reçoit l'échange |
+| 273 | sans port |
+| 275 | Aucun Exchange Item |
+| 277 | sans port |
+| 285 | échange |
+| 308 | (échange relié directement à la fonction, sans port) |
+| 309 | non connecté |
+| 312 | allouée au système |
+| 312 | allouée à un acteur |
+| 312 | non allouée |
+| 312 | fonction mère (non allouée) |
+| 319 | aucun port ni échange |
+| 330 | » — clic : son bloc |
+| 341 | fonctions : pour rester fluide, la matrice en affiche |
+| 341 | (les plus connectées). Filtrez par couche ou par fonction pour voir les autres. |
+| 345 | échanges |
+| 345 | Source ↓ / Cible → |
+| 356 | · page |
+| 367 | Aucune fonction ne correspond au filtre. |
+| 370 | ↩ Revenir à « |
+| 373 | Aucun functional exchange ne correspond au filtre. |
+| 381 | Échanges |
+| 419 | échange |
+| 433 | ◧ Vue Blocs |
+| 433 | ≡ Vue Ligne |
+| 433 | ▣ Vue |
+| 433 | ▦ Matrice |
+| 433 | 🩺 Contrôles |
+| 437 | allocation : |
+| 437 | allocataire « |
+| 437 | fonction « |
+| 437 | échange « |
+| 438 | 🟨 Operational Analysis — activités et interactions |
+| 438 | ƒ⇆ Functional Exchanges |
+| 438 | échanges |
+| 438 | · filtres : |
+| 445 | Entrée |
+| 445 | Sortie |
+| 450 | Couche |
+| 450 | Fonction |
+| 450 | Sens |
+| 450 | Port |
+| 450 | Functional Exchange |
+| 450 | Fonction distante |
+| 450 | Port distant |
+| 453 | Couche |
+| 453 | Fonction source |
+| 453 | Port source |
+| 453 | Functional Exchange |
+| 453 | Port cible |
+| 453 | Fonction cible |
+| 453 | Exchange Items |
+| 453 | Component Exchanges |
+| 453 | Chaînes |
+| 463 | ◧ Vue Blocs |
+| 464 | ≡ Vue Ligne |
+| 464 | Un échange par ligne : |
+| 464 | source ▶ échange ▶ |
+| 464 | ▣ Vue |
+| 464 | Échanges regroupés par |
+| 465 | ▦ Matrice |
+| 465 | Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus |
+| 465 | 🩺 Contrôles |
+| 465 | Ports orphelins, échanges sans Exchange Item, fonctions sans échange… |
+| 471 | Toutes |
+| 476 | 🟨 Activité : |
+| 476 | ƒ Fonction : |
+| 477 | 🔍 Échange : |
+| 480 | avec ports ou échanges |
+| 482 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 482 | Allocation |
+| 482 | — un échange est gardé si l'une de ses deux fonctions correspond |
+| 482 | — double-clic : uniquement celles-ci |
 
 ## js/45-comparaison-rapport.js
 
@@ -3379,3 +3406,4 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 |---:|---|
 | 67 | .phl-toggle-bar, .phl-filter-bar, .cap-lf-bar |
 | 80 | var(--c-bg) |
+| 147 | translateY( |

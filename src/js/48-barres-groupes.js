@@ -4,7 +4,7 @@
  * Les barres étant redessinées par leurs vues, un observateur regroupe chaque nouvelle barre (les commandes
  * sont déplacées, pas recréées : identifiants et écouteurs sont conservés).
  */
-var CAP_TBG_ROOTS=['cap-view-fex','cap-view-csys','cap-view-cblk','cap-view-compex','cap-view-physlink','cap-view-ports','cap-view-analyses'];
+var CAP_TBG_ROOTS=['cap-view-fex','cap-view-oav','cap-view-csys','cap-view-cblk','cap-view-compex','cap-view-physlink','cap-view-ports','cap-view-analyses'];
 
 /** Nature d'un élément de barre pour le regroupement.
  * @param {Element} el
@@ -63,7 +63,7 @@ function capTbGroupAll(root){
  * Les barres (.phl-toggle-bar, .phl-filter-bar, .cap-lf-bar) qui se suivent en haut de la vue deviennent
  * « sticky », empilées ; les en-têtes de tableau déjà collants sont décalés d'autant pour rester visibles dessous.
  */
-var CAP_TBS_ROOTS=['cap-view-chains','cap-view-fex','cap-view-csys','cap-view-cblk','cap-view-compex','cap-view-physlink','cap-view-ports','cap-view-functions','cap-view-analyses'];
+var CAP_TBS_ROOTS=['cap-view-chains','cap-view-fex','cap-view-oav','cap-view-csys','cap-view-cblk','cap-view-compex','cap-view-physlink','cap-view-ports','cap-view-functions','cap-view-analyses'];
 var CAP_TBS_BARS='.phl-toggle-bar, .phl-filter-bar, .cap-lf-bar';
 
 /** Conteneur qui fait défiler un élément (premier ancêtre dont le débordement vertical n'est pas visible).

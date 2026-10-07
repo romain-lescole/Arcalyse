@@ -721,7 +721,7 @@ function capInjectChainsToModal(){
  * Met à jour les boutons de vue et les compteurs de stats.
  */
 function capRenderCurrentView(){
-  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-links','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-fex','cap-view-cblk','cap-view-csys','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-index'].forEach(id=>{
+  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-links','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-fex','cap-view-cblk','cap-view-csys','cap-view-oav','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-index'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
   const pg=document.getElementById('cap-pagination'); if(pg) pg.style.display='none';
@@ -760,6 +760,9 @@ function capRenderCurrentView(){
   } else if(capCurrentView==='cblk'){
     document.getElementById('cap-view-cblk').style.display='block';
     capRenderComponentBlocks('LA');
+  } else if(capCurrentView==='oav'){
+    document.getElementById('cap-view-oav').style.display='block';
+    capRenderFunctionalExchange('OA');
   } else if(capCurrentView==='csys'){
     document.getElementById('cap-view-csys').style.display='block';
     capRenderComponentBlocks('SA');

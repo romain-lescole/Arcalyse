@@ -1069,6 +1069,11 @@ table.cap-tf-fixed td,table.cap-tf-fixed th{overflow-wrap:anywhere;}
 .fex-backbar{display:flex;justify-content:flex-start;margin:4px 0;}
 .fex-box-t{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 86px;font-weight:700;font-size:13px;color:#9ff5b8;}
 .fex-box-empty{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:10px;color:var(--c-dim);font-style:italic;}
+.fex-oa .fex-blk .fex-box{border-color:#c9a227;background:color-mix(in srgb,#f8dc7c 20%,var(--c-bg));}   /* 🟨 Operational Analysis : activités jaunes comme Capella */
+.fex-oa .fex-blk .fex-box .fex-box-t{color:#ffe28a;}
+html[data-tone="light"] .fex-oa .fex-blk .fex-box{background:linear-gradient(180deg,#fffbcf,#f6d96b);border-color:#6b4f2a;}
+html[data-tone="light"] .fex-oa .fex-blk .fex-box .fex-box-t{color:#2e2200;}
+.fex-oa-ic{display:inline-block;font-size:8px;font-weight:800;padding:1px 4px;margin-right:5px;border-radius:50%;background:#f5a623;color:#3a2200;border:1px solid #7a4a00;vertical-align:middle;}
 .fex-att{position:absolute;top:5px;left:86px;right:86px;text-align:center;font-size:10px;color:var(--c-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:1;}
 .fex-att-go{cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px;}
 .fex-att-go:hover{color:var(--c-accent);}

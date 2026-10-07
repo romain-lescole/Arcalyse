@@ -230,6 +230,8 @@ function applyTheme(name) {
   // Idem pour Functional Exchange
   const fexView = document.getElementById('cap-view-fex');
   if (fexView && fexView.style.display !== 'none' && fexView._fex) capRenderFunctionalExchange();
+  const oavView = document.getElementById('cap-view-oav');
+  if (oavView && oavView.style.display !== 'none' && oavView._fex) capRenderFunctionalExchange('OA');
   // Contraste des textes colorés : remise à l'origine, puis correction si le thème est clair
   capRestoreContrast(); capContrastCss(); capFixContrast(document.body);
 }

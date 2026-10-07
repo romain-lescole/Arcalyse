@@ -14,6 +14,7 @@ var CAP_NAV_ITEMS=[
   {k:'links',     l:'🔗 Liens',             g:'explore', t:'Relations entre les éléments du modèle'},
   {k:'chains',    l:'⚡ Chaînes',           g:'flux'},
   {k:'fex',       l:'ƒ⇆ Functional Exchange', g:'flux', t:'Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles'},
+  {k:'oav',       l:'🟨 Operational Analysis', g:'flux', t:'Activités opérationnelles (OA) en blocs façon Capella, avec leurs interactions et l\'entité ou l\'acteur qui les porte ; vue par activité, lignes, matrice, contrôles'},
   {k:'csys',      l:'🧱 System Component', g:'flux', t:'System Components (SA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles'},
   {k:'cblk',      l:'🧱 Logical Component', g:'flux', t:'Logical Components (LA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles'},
   {k:'compex',    l:'🔀 Behavior Exchange', g:'flux', t:'Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange)'},
