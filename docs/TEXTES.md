@@ -3478,22 +3478,22 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 304 | Copie impossible dans ce navigateur. |
 | 305 | Copie d'image non disponible dans ce navigateur. |
 | 306 | Export impossible : |
-| 313 | Ce modèle ne contient aucun scénario (Scenario). |
-| 322 | Aucun scénario ne correspond au filtre. |
-| 329 | ligne(s) de vie · |
-| 329 | message(s) |
-| 329 | fragment(s) |
-| 329 | référence(s) |
-| 335 | Couche |
-| 335 | 🎬 Diagramme |
-| 335 | 🩺 Contrôles |
-| 336 | Type |
-| 336 | Toutes |
-| 337 | Tous |
-| 337 | Exchange Scenario |
-| 337 | Functional Scenario |
-| 337 | Operational Entity Scenario |
-| 337 | Operational Activity Scenario |
-| 337 | Interface Scenario |
-| 337 | Tous les types |
-| 339 | % + ⬇ PNG ⬇ SVG 📋 Copier |
+| 335 | Ce modèle ne contient aucun scénario (Scenario). |
+| 344 | Aucun scénario ne correspond au filtre. |
+| 351 | ligne(s) de vie · |
+| 351 | message(s) |
+| 351 | fragment(s) |
+| 351 | référence(s) |
+| 357 | Couche |
+| 357 | 🎬 Diagramme |
+| 357 | 🩺 Contrôles |
+| 358 | Type |
+| 358 | Toutes |
+| 359 | Tous |
+| 359 | Exchange Scenario |
+| 359 | Functional Scenario |
+| 359 | Operational Entity Scenario |
+| 359 | Operational Activity Scenario |
+| 359 | Interface Scenario |
+| 359 | Tous les types |
+| 361 | % + ⬇ PNG ⬇ SVG 📋 Copier |

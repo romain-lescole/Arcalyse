@@ -1086,7 +1086,8 @@ html[data-tone="light"] .fex-oa .fex-blk .fex-box .fex-box-t{color:#2e2200;}
 .sc-n{font-size:10px;color:var(--c-dim);margin-left:4px;}
 .sc-main{min-width:0;}
 .sc-head{padding:8px 14px;font-size:12.5px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--c-border);}
-.sc-scroll{overflow:auto;background:#fff;}
+.sc-scroll{overflow:auto;background:#fff;cursor:grab;}
+.sc-scroll.sc-pan{cursor:grabbing;user-select:none;}
 .sc-band{position:sticky;top:0;z-index:3;height:24px;background:rgba(255,255,255,.94);border-bottom:1px solid #ddd;}
 .sc-band span{position:absolute;top:3px;transform:translateX(-50%);font-size:11.5px;color:#111;padding:1px 10px;border:1px solid #8a8fb8;white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis;}
 .sc-svg .sc-ref:hover rect,.sc-svg .sc-ref:hover ellipse,.sc-svg .sc-ref:hover line,.sc-svg .sc-ref:hover path{filter:drop-shadow(0 0 2px #2f81f7);}

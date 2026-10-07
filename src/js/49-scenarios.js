@@ -306,6 +306,28 @@ function capScExport(fmt){
   }).catch(err=>alert('Export impossible : '+err.message));
 }
 
+/** Ajuste la hauteur de la liste et du diagramme au bas réel de la vue (la barre d'état ne doit pas masquer
+ * la barre de défilement horizontale du diagramme). @param {HTMLElement} box - #cap-view-scen */
+function capScFit(box){
+  if(!box||!box.offsetParent) return;
+  const bottom=box.getBoundingClientRect().bottom;
+  box.querySelectorAll('.sc-list,.sc-scroll').forEach(el=>{ el.style.height=Math.max(160, bottom-el.getBoundingClientRect().top-2)+'px'; });
+}
+
+/** Déplacement du diagramme par cliquer-glisser (en plus des barres de défilement, de la molette et de Maj + molette).
+ * @param {HTMLElement} sc - Zone défilante .sc-scroll */
+function capScPan(sc){
+  if(!sc) return;
+  sc.addEventListener('mousedown',ev=>{
+    if(ev.button!==0||ev.target.closest('.sc-ref,.sc-iu,a,button')) return;
+    const x0=ev.clientX, y0=ev.clientY, l0=sc.scrollLeft, t0=sc.scrollTop; let moved=false;
+    const mv=e=>{ const dx=e.clientX-x0, dy=e.clientY-y0; if(!moved&&Math.abs(dx)+Math.abs(dy)<4) return; moved=true; sc.classList.add('sc-pan'); sc.scrollLeft=l0-dx; sc.scrollTop=t0-dy; e.preventDefault(); };
+    const up=()=>{ sc.classList.remove('sc-pan'); document.removeEventListener('mousemove',mv); document.removeEventListener('mouseup',up); };
+    document.addEventListener('mousemove',mv); document.addEventListener('mouseup',up);
+  });
+}
+window.addEventListener('resize',()=>capScFit(document.getElementById('cap-view-scen')));
+
 /** Rend la vue 🎬 Scénarios : liste filtrable à gauche, diagramme de séquence (ou contrôles) à droite. */
 function capRenderScenarios(){
   const box=document.getElementById('cap-view-scen'); if(!box) return;
@@ -328,7 +350,7 @@ function capRenderScenarios(){
     main=`<div class="sc-head"><span class="sc-k">${sc.ks}</span> <b class="cex-det" data-det="${e(sc.id)}" style="cursor:pointer">${e(sc.name)}</b>
         <span class="ana-dim">· ${e((CAP_SC_KINDS[sc.kind]||CAP_SC_KINDS.UNSET).l)} · ${sc.layer} · ${sc.roles.length} ligne(s) de vie · ${sc.nMsg} message(s)${sc.nFrag?` · ${sc.nFrag} fragment(s)`:''}${sc.nRef?` · ${sc.nRef} référence(s)`:''}</span>
         ${sc.capName?`<span class="ana-dim">· 🎯 <span class="cex-det" data-det="${e(sc.capId)}" style="cursor:pointer">${e(sc.capName)}</span></span>`:''}</div>
-      <div class="sc-scroll" data-fill="6"><div class="sc-band" style="width:${D.w*st.zoom}px">${sc.roles.map((r,i)=>`<span style="left:${D.L.X[i]*st.zoom}px;background:${(CAP_SC_COL[r.nat]||CAP_SC_COL.sys).f}">${e(r.name)}</span>`).join('')}</div>
+      <div class="sc-scroll"><div class="sc-band" style="width:${D.w*st.zoom}px">${sc.roles.map((r,i)=>`<span style="left:${D.L.X[i]*st.zoom}px;background:${(CAP_SC_COL[r.nat]||CAP_SC_COL.sys).f}">${e(r.name)}</span>`).join('')}</div>
         <div class="sc-svg" style="width:${D.w*st.zoom}px">${D.svg.replace('<svg ',`<svg style="width:${D.w*st.zoom}px;height:${D.h*st.zoom}px" `)}</div></div>`;
   }
   box.innerHTML=`<div class="phl-filter-bar">
@@ -339,7 +361,7 @@ function capRenderScenarios(){
       ${st.view==='diagram'?`<span class="tb-grp" style="margin-left:auto"><button class="cap-lf-btn" data-scz="-1" title="Réduire">−</button><button class="cap-lf-btn" data-scz="0" title="Taille réelle">${Math.round(st.zoom*100)} %</button><button class="cap-lf-btn" data-scz="1" title="Agrandir">+</button></span>
       <span class="tb-grp"><button class="phl-export-btn" data-sce="png">⬇ PNG</button><button class="phl-export-btn" data-sce="svg">⬇ SVG</button><button class="phl-export-btn" data-sce="clip" title="Copier l'image dans le presse-papiers">📋 Copier</button></span>`:''}
     </div>
-    <div class="sc-split"><div class="sc-list" data-fill="6">${listHtml}</div><div class="sc-main">${main}</div></div>`;
+    <div class="sc-split"><div class="sc-list">${listHtml}</div><div class="sc-main">${main}</div></div>`;
   // Écouteurs
   box.querySelectorAll('[data-scv]').forEach(b=>b.onclick=()=>{ st.view=b.dataset.scv; capRenderScenarios(); });
   box.querySelectorAll('[data-scl]').forEach(b=>b.onclick=()=>{ st.layer=b.dataset.scl; capRenderScenarios(); });
@@ -352,7 +374,8 @@ function capRenderScenarios(){
   box.querySelectorAll('.sc-svg .sc-iu').forEach(g=>g.addEventListener('click',()=>{ if(g.dataset.sc&&S.byId[g.dataset.sc]){ _capScSel=g.dataset.sc; capRenderScenarios(); } }));
   let deb; const qi=box.querySelector('#sc-q');
   if(qi) qi.oninput=()=>{ st.q=qi.value; clearTimeout(deb); deb=setTimeout(()=>{ capRenderScenarios(); const n=document.getElementById('sc-q'); if(n){ n.focus(); n.setSelectionRange(n.value.length,n.value.length); } },200); };
-  capFillHeight(box);
+  capScFit(box);
+  capScPan(box.querySelector('.sc-scroll'));
   // Sélection visible dans la liste (sans faire défiler la vue elle-même)
   const lst=box.querySelector('.sc-list'), sel=box.querySelector('.sc-item.on');
   if(lst&&sel){ const top=sel.offsetTop;   /* .sc-list est positionnée : offsetTop relatif à la liste */ if(top<lst.scrollTop||top>lst.scrollTop+lst.clientHeight-30) lst.scrollTop=Math.max(0,top-lst.clientHeight/3); }
