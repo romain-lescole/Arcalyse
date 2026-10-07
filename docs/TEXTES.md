@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3176 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3179 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -2928,21 +2928,24 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 225 | Glissez-déposez votre fichier .capella dans ce cadre (formats acceptés : .capella, .melodymodeller, .xml). Le fichier est lu sur ce poste : rien n'est envoyé. |
 | 226 | … ou le chercher |
 | 227 | Vous pouvez aussi cliquer sur 📂 Parcourir… pour le choisir dans l'explorateur de fichiers. |
-| 228 | À vous ! |
-| 229 | Cliquez sur Terminer ✓ , puis ouvrez votre fichier. Dès que le modèle sera chargé, la visite reprendra pour vous montrer où trouver l'aide et les tutoriels. |
-| 233 | ✅ Modèle ouvert |
-| 234 | Votre modèle est chargé. Voici où trouver l'aide et les tutoriels, à tout moment. |
-| 235 | ? Aide |
-| 236 | L'aide et toutes les visites guidées sont regroupées dans ce menu. |
-| 237 | 📚 Aide et tutoriels |
-| 238 | 📖 Aide complète : documentation de toutes les vues. 🎓 Visite guidée : tour complet de l'interface. 🎯 Visite de cette vue : menus et commandes de la vue affichée — disponible dans chaque vue. |
-| 239 | 🧭 Et maintenant |
-| 240 | Choisissez une vue dans cette barre, puis ? Aide ▾ → 🎯 Visite de cette vue pour la découvrir pas à pas. |
-| 250 | @table |
-| 347 | Étape |
-| 349 | ◀ Précédent |
-| 350 | Terminer ✓ |
-| 350 | Suivant ▶ |
+| 228 | #b-help, #cap-nav-dd |
+| 228 | ? Aide, en haut à droite |
+| 229 | Le menu ? Aide ▾ reste accessible à tout moment, avec ou sans modèle : 📖 Aide complète et 🎓 Visite guidée . Une fois le modèle ouvert, il propose aussi 🎯 Visite de cette vue pour chaque vue. |
+| 230 | À vous ! |
+| 231 | Cliquez sur Terminer ✓ , puis ouvrez votre fichier. Dès que le modèle sera chargé, la visite reprendra pour vous montrer où trouver l'aide et les tutoriels. |
+| 235 | ✅ Modèle ouvert |
+| 236 | Votre modèle est chargé. Voici où trouver l'aide et les tutoriels, à tout moment. |
+| 237 | ? Aide |
+| 238 | L'aide et toutes les visites guidées sont regroupées dans ce menu. |
+| 239 | 📚 Aide et tutoriels |
+| 240 | 📖 Aide complète : documentation de toutes les vues. 🎓 Visite guidée : tour complet de l'interface. 🎯 Visite de cette vue : menus et commandes de la vue affichée — disponible dans chaque vue. |
+| 241 | 🧭 Et maintenant |
+| 242 | Choisissez une vue dans cette barre, puis ? Aide ▾ → 🎯 Visite de cette vue pour la découvrir pas à pas. |
+| 252 | @table |
+| 349 | Étape |
+| 351 | ◀ Précédent |
+| 352 | Terminer ✓ |
+| 352 | Suivant ▶ |
 
 ## js/44-functional-exchange.js
 

@@ -225,7 +225,9 @@ var CAP_TOUR_START=[
    x:'Glissez-déposez votre fichier <b>.capella</b> dans ce cadre (formats acceptés : .capella, .melodymodeller, .xml).<br>Le fichier est lu sur ce poste : rien n\'est envoyé.'},
   {s:'#cw-browse', m:'empty', t:'… ou le chercher',
    x:'Vous pouvez aussi cliquer sur <b>📂 Parcourir…</b> pour le choisir dans l\'explorateur de fichiers.'},
-  {m:'empty', t:'À vous !',
+  {s:'#b-help, #cap-nav-dd', m:'empty', pre:()=>capTourHelpMenu(), t:'? Aide, en haut à droite',
+   x:'Le menu <b>? Aide ▾</b> reste accessible à tout moment, avec ou sans modèle : <b>📖 Aide complète</b> et <b>🎓 Visite guidée</b>.<br>Une fois le modèle ouvert, il propose aussi <b>🎯 Visite de cette vue</b> pour chaque vue.'},
+  {m:'empty', pre:()=>capNavClose(), t:'À vous !',
    x:'Cliquez sur <b>Terminer ✓</b>, puis ouvrez votre fichier.<br>Dès que le modèle sera chargé, la visite reprendra pour vous montrer où trouver l\'aide et les tutoriels.'}
 ];
 /** 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels. */
@@ -394,7 +396,7 @@ function capTourKey(e){
 
 /** Quitte la visite guidée et retire la mise en évidence. */
 function capTourEnd(){
-  if(_capTour&&_capTour.steps===CAP_TOUR_AFTER) capNavClose();
+  if(_capTour&&(_capTour.steps===CAP_TOUR_AFTER||_capTour.steps===CAP_TOUR_START)) capNavClose();
   _capTour=null;
   ['cap-tour-block','cap-tour-spot','cap-tour-pop'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='none'; });
 }
