@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3179 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3181 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -3372,3 +3372,10 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 410 | avec ports |
 | 411 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
 | 411 | — double-clic : uniquement ceux-ci |
+
+## js/48-barres-groupes.js
+
+| Ligne | Texte |
+|---:|---|
+| 67 | .phl-toggle-bar, .phl-filter-bar, .cap-lf-bar |
+| 80 | var(--c-bg) |

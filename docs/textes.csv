@@ -3178,3 +3178,5 @@
 "js/47-composants.js";"410";"avec ports"
 "js/47-composants.js";"411";"⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues)"
 "js/47-composants.js";"411";"— double-clic : uniquement ceux-ci"
+"js/48-barres-groupes.js";"67";".phl-toggle-bar, .phl-filter-bar, .cap-lf-bar"
+"js/48-barres-groupes.js";"80";"var(--c-bg)"
