@@ -17,9 +17,9 @@ var CAP_TOUR_STEPS=[
   {s:'#cap-tb-views', t:'🧭 Barre des vues',
    x:'Toutes les vues d\'analyse du modèle sont regroupées ici, dans des menus déroulants (▾) et des boutons directs.'},
   {s:'#cap-v-elements', t:'🧭 Explorateur',
-   x:'Parcourir le modèle : arborescence, cartes, tableau filtrable, index des types et liens entre éléments.'},
+   x:'Parcourir le modèle : arborescence, cartes, tableau filtrable, et index des types.'},
   {s:'#cap-v-flux', t:'📡 Flux & interfaces',
-   x:'Chaînes fonctionnelles, Component Exchange, Physical Link et traçabilité des ports.'},
+   x:'Chaînes fonctionnelles, échanges et composants, Physical Link, scénarios, traçabilité des ports et liens entre éléments.'},
   {s:'#cap-v-chains', t:'⚡ Chaînes',
    x:'Les chaînes fonctionnelles du modèle, filtrables par type, couche et contenu, avec export image, PDF ou HTML.'},
   {s:'#cap-v-functions', t:'ƒ Fonctions',
@@ -70,7 +70,7 @@ var CAP_TOUR_EXPLORE=[
 ];
 /** Étapes communes aux vues de 📡 Flux & interfaces (onglets de navigation). */
 var CAP_TOUR_FLUX={s:'#cap-flux-tabs', t:'📡 Flux & interfaces',
-  x:'Ces onglets passent d\'une vue d\'interfaces à l\'autre, du fonctionnel au physique : <b>ƒ⇆ Functional Exchange</b> (fonctions), <b>🧱 System Component</b> (SA), <b>🧱 Logical Component</b> (LA), <b>🔀 Behavior Exchange</b> (PA, composants Behavior), <b>🔌 Physical Link</b> (PA, nœuds) et <b>🧩 Ports</b>. Chaque vue s\'ouvre en <b>◧ Vue Blocs</b>, le rendu façon Capella.'};
+  x:'Ces onglets passent d\'une vue d\'interfaces à l\'autre, du fonctionnel au physique : <b>ƒ⇆ Functional Exchange</b> (fonctions), <b>🧱 System Component</b> (SA), <b>🧱 Logical Component</b> (LA), <b>🔀 Behavior Exchange</b> (PA, composants Behavior), <b>🔌 Physical Link</b> (PA, nœuds), <b>🧩 Ports</b> et <b>🔗 Liens</b> (toutes les relations du modèle). Chaque vue s\'ouvre en <b>◧ Vue Blocs</b>, le rendu façon Capella.'};
 /** Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »). */
 var CAP_TOUR_ANA_TXT={
   trace:'<b>🧬 Traçabilité inter-couches</b> : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés.',
@@ -149,7 +149,7 @@ var CAP_TOUR_VIEWS={
     {s:'#cap-view-index input.inp', t:'🔍 Recherche', x:'Cherche un type par son nom technique, son nom lisible ou sa description.'},
     {s:'#cap-index-thead', t:'↕ Tri', x:'Clic sur un titre de colonne pour trier (nom, nombre d\'éléments…).'},
     {s:'#cap-index-tbody', t:'📖 Types', x:'Chaque type présent dans le modèle : nom lisible, nombre d\'éléments et description ARCADIA.'}]},
-  links:{l:'🔗 Liens', steps:[
+  links:{l:'🔗 Liens', steps:[CAP_TOUR_FLUX,
     {t:'🔗 Liens', x:'Toutes les relations entre éléments du modèle, classées par nature : décomposition, allocation, échanges, réalisation inter-couches, capacités, chaînes.'},
     {s:'#cap-view-links .cap-lf-q', t:'🔍 Recherche', x:'Filtre les liens par élément, échange ou identifiant.'},
     {s:'#cap-view-links .cap-lf-glab,#cap-view-links .cap-lf-btn', t:'🔗 Relations', x:'Clic sur une relation pour n\'afficher qu\'elle ; le libellé de gauche sélectionne tout le groupe. Le nombre de liens est indiqué sur chaque bouton.'},

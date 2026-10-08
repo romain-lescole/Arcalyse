@@ -11,7 +11,6 @@ var CAP_NAV_ITEMS=[
   {k:'cards',     l:'▦ Cartes',             g:'explore'},
   {k:'table',     l:'📋 Tableau',           g:'explore'},
   {k:'index',     l:'📖 Index des types',   g:'explore'},
-  {k:'links',     l:'🔗 Liens',             g:'explore', t:'Relations entre les éléments du modèle'},
   {k:'chains',    l:'⚡ Chaînes',           g:'flux'},
   {k:'fex',       l:'ƒ⇆ Functional Exchange', g:'flux', t:'Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles'},
   {k:'oav',       l:'🟨 Operational Analysis', g:'flux', t:'Activités opérationnelles (OA) en blocs façon Capella, avec leurs interactions et l\'entité ou l\'acteur qui les porte ; vue par activité, lignes, matrice, contrôles'},
@@ -21,6 +20,7 @@ var CAP_NAV_ITEMS=[
   {k:'physlink',  l:'🔌 Physical Link',     g:'flux'},
   {k:'scen',      l:'🎬 Scénarios',        g:'flux', t:'Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références'},
   {k:'ports',     l:'🧩 Ports',             g:'flux', t:'Traçabilité Function Port ↔ Component Port ↔ Physical Port'},
+  {k:'links',     l:'🔗 Liens',             g:'flux', t:'Relations entre les éléments du modèle'},
   {k:'functions', l:'ƒ Fonctions',          g:'ana',  t:'Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier'},
   {k:'ana:trace', l:'🧬 Traçabilité inter-couches', g:'ana'},
   {k:'ana:caps',  l:'🎯 Capacités & missions',     g:'ana'},
@@ -34,8 +34,8 @@ var CAP_NAV_ITEMS=[
 ];
 /** Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton). */
 var CAP_NAV_GROUPS=[
-  {g:'explore', id:'cap-v-elements', l:'🧭 Explorateur',       t:'Explorer le modèle : arborescence, cartes, tableau, index des types, liens'},
-  {g:'flux',    id:'cap-v-flux',     l:'📡 Flux & interfaces', t:'Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, ports'},
+  {g:'explore', id:'cap-v-elements', l:'🧭 Explorateur',       t:'Explorer le modèle : arborescence, cartes, tableau, index des types'},
+  {g:'flux',    id:'cap-v-flux',     l:'📡 Flux & interfaces', t:'Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, scénarios, ports, liens'},
   {g:'',        id:'',               l:'',                     t:''},   // place des vues sans menu
   {g:'ana',     id:'cap-v-analyses', l:'🔬 Analyses',          t:'Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes'}
 ];

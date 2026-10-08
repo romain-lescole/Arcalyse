@@ -2558,21 +2558,21 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 11 | ▦ Cartes |
 | 12 | 📋 Tableau |
 | 13 | 📖 Index des types |
-| 14 | 🔗 Liens |
-| 14 | Relations entre les éléments du modèle |
-| 15 | ⚡ Chaînes |
-| 16 | ƒ⇆ Functional Exchange |
-| 16 | Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles |
-| 17 | 🟨 Operational Analysis |
-| 18 | 🧱 System Component |
-| 19 | 🧱 Logical Component |
-| 20 | 🔀 Behavior Exchange |
-| 20 | Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange) |
-| 21 | 🔌 Physical Link |
-| 22 | 🎬 Scénarios |
-| 22 | Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références |
-| 23 | 🧩 Ports |
-| 23 | Traçabilité Function Port ↔ Component Port ↔ Physical Port |
+| 14 | ⚡ Chaînes |
+| 15 | ƒ⇆ Functional Exchange |
+| 15 | Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles |
+| 16 | 🟨 Operational Analysis |
+| 17 | 🧱 System Component |
+| 18 | 🧱 Logical Component |
+| 19 | 🔀 Behavior Exchange |
+| 19 | Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange) |
+| 20 | 🔌 Physical Link |
+| 21 | 🎬 Scénarios |
+| 21 | Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références |
+| 22 | 🧩 Ports |
+| 22 | Traçabilité Function Port ↔ Component Port ↔ Physical Port |
+| 23 | 🔗 Liens |
+| 23 | Relations entre les éléments du modèle |
 | 24 | ƒ Fonctions |
 | 24 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier |
 | 25 | 🧬 Traçabilité inter-couches |
@@ -2586,9 +2586,9 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 33 | 📐 Tableau de bord |
 | 33 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux |
 | 37 | 🧭 Explorateur |
-| 37 | Explorer le modèle : arborescence, cartes, tableau, index des types, liens |
+| 37 | Explorer le modèle : arborescence, cartes, tableau, index des types |
 | 38 | 📡 Flux & interfaces |
-| 38 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, ports |
+| 38 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, scénarios, ports, liens |
 | 40 | 🔬 Analyses |
 | 40 | Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes |
 | 127 | Vue affichée : |
@@ -2631,9 +2631,9 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 17 | 🧭 Barre des vues |
 | 18 | Toutes les vues d'analyse du modèle sont regroupées ici, dans des menus déroulants (▾) et des boutons directs. |
 | 19 | 🧭 Explorateur |
-| 20 | Parcourir le modèle : arborescence, cartes, tableau filtrable, index des types et liens entre éléments. |
+| 20 | Parcourir le modèle : arborescence, cartes, tableau filtrable, et index des types. |
 | 21 | 📡 Flux & interfaces |
-| 22 | Chaînes fonctionnelles, Component Exchange, Physical Link et traçabilité des ports. |
+| 22 | Chaînes fonctionnelles, échanges et composants, Physical Link, scénarios, traçabilité des ports et liens entre éléments. |
 | 23 | ⚡ Chaînes |
 | 24 | Les chaînes fonctionnelles du modèle, filtrables par type, couche et contenu, avec export image, PDF ou HTML. |
 | 25 | ƒ Fonctions |
@@ -2677,7 +2677,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 68 | 🔢 Résultat |
 | 69 | Nombre d'éléments qui passent les filtres (types, recherche, couche). |
 | 72 | 📡 Flux & interfaces |
-| 73 | Ces onglets passent d'une vue d'interfaces à l'autre, du fonctionnel au physique : ƒ⇆ Functional Exchange (fonctions), 🧱 System Component (SA), 🧱 Logical Component (LA), 🔀 Behavior Exchange (PA, composants Behavior), 🔌 Physical Link (PA, nœuds) et 🧩 Ports . Chaque vue s'ouvre en ◧ Vue Blocs , le rendu façon Capella. |
+| 73 | Ces onglets passent d'une vue d'interfaces à l'autre, du fonctionnel au physique : ƒ⇆ Functional Exchange (fonctions), 🧱 System Component (SA), 🧱 Logical Component (LA), 🔀 Behavior Exchange (PA, composants Behavior), 🔌 Physical Link (PA, nœuds), 🧩 Ports et 🔗 Liens (toutes les relations du modèle). Chaque vue s'ouvre en ◧ Vue Blocs , le rendu façon Capella. |
 | 76 | 🧬 Traçabilité inter-couches : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés. |
 | 77 | 🎯 Capacités & missions : qui participe à quelle capacité ou mission (acteurs, fonctions, chaînes) et les capacités sans contenu. |
 | 78 | 🔁 Modes & états : machines d'états, transitions et éléments disponibles dans chaque mode ou état. |
