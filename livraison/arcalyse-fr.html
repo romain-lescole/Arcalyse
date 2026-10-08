@@ -1,9 +1,14 @@
 <!DOCTYPE html>
+<!--
+  Arcalyse — Copyright (C) 2026 Romain Lescole — https://github.com/romain-lescole/relation-map-capella
+  Logiciel libre sous GNU General Public License version 3 (voir LICENSE), fourni SANS AUCUNE GARANTIE.
+  Contient D3.js v7.9.0 — licence ISC, Copyright 2010-2023 Mike Bostock.
+-->
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Relation Map — Capella</title>
+<title>Arcalyse — votre modèle Capella, sous toutes ses coutures</title>
 <style>
 /* ═══════════════════════════════════════════════════════
    VARIABLES DE THÈME  — toutes les couleurs UI passent par ici
@@ -52,7 +57,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 /* ── Main layout ── */
 #main{display:flex;flex:1;overflow:hidden;position:relative}
 /* ── Écran d'accueil / zone de dépôt du fichier Capella ── */
-#cap-welcome{position:absolute;inset:0;z-index:450;display:flex;align-items:center;justify-content:center;
+#cap-welcome{position:absolute;inset:0;z-index:450;display:flex;flex-direction:column;align-items:center;justify-content:center;
   background:var(--c-bg);padding:24px;}
 #cap-welcome.cw-overlay{background:color-mix(in srgb,var(--c-bg) 82%,transparent);backdrop-filter:blur(2px);}
 #cap-welcome.cw-hidden{display:none;}
@@ -61,6 +66,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 #cap-drop-zone:hover{border-color:var(--c-accent);}
 #cap-drop-zone.cw-drag{border-color:var(--c-accent);background:color-mix(in srgb,var(--c-accent) 10%,var(--c-bg2));transform:scale(1.02);}
 #cap-drop-zone .cw-icon{font-size:46px;line-height:1;margin-bottom:14px;}
+#cap-drop-zone .cw-brand{display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:16px;}
+#cap-drop-zone .cw-brand-n{font-size:30px;font-weight:800;letter-spacing:.02em;color:var(--c-text);}
+#cap-drop-zone .cw-brand-s{font-size:13px;font-style:italic;color:var(--c-dim);}
 #cap-drop-zone .cw-title{font-size:18px;font-weight:700;color:var(--c-text);margin-bottom:8px;}
 #cap-drop-zone .cw-sub{font-size:12px;color:var(--c-dim);margin-bottom:22px;line-height:1.6;}
 #cap-drop-zone .cw-btn{display:inline-block;padding:9px 20px;border-radius:7px;background:var(--c-accent);color:var(--c-bg);
@@ -71,6 +79,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 #cw-help{position:absolute;top:16px;right:18px;padding:7px 14px;border-radius:18px;border:1px solid var(--c-border);
   background:var(--c-bg2);color:var(--c-text);font-size:13px;font-weight:600;cursor:pointer;}
 #cw-help:hover{border-color:var(--c-accent);color:var(--c-accent);}
+/* En-têtes collants des vues (48-barres-groupes.js) */
+.tbs-on{position:sticky;z-index:6;}
+.th-follow{position:relative;z-index:5;background:var(--c-bg3);box-shadow:0 1px 0 var(--c-border);}
+.cap-tf-row .th-follow,.th-follow.cap-tf-f{background:var(--c-bg2);}
+#cw-start{margin-bottom:14px;padding:9px 20px;border-radius:22px;border:1.5px solid var(--c-accent);background:color-mix(in srgb,var(--c-accent) 14%,var(--c-bg2));
+  color:var(--c-text);font-size:14px;font-weight:700;cursor:pointer;max-width:92%;}
+#cw-start:hover{background:color-mix(in srgb,var(--c-accent) 26%,var(--c-bg2));}
+#cw-start .cw-start-sub{font-weight:400;font-size:12px;color:var(--c-dim);}
 #cap-drop-zone .cw-help-link{display:inline-block;margin-top:12px;font-size:11.5px;color:var(--c-accent);text-decoration:none;}
 #cap-drop-zone .cw-help-link:hover{text-decoration:underline;}
 #cap-drop-zone .cw-status.err{color:#f38ba8;}
@@ -1068,6 +1084,28 @@ table.cap-tf-fixed td,table.cap-tf-fixed th{overflow-wrap:anywhere;}
 .fex-backbar{display:flex;justify-content:flex-start;margin:4px 0;}
 .fex-box-t{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 86px;font-weight:700;font-size:13px;color:#9ff5b8;}
 .fex-box-empty{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:10px;color:var(--c-dim);font-style:italic;}
+.fex-oa .fex-blk .fex-box{border-color:#c9a227;background:color-mix(in srgb,#f8dc7c 20%,var(--c-bg));}   /* 🟨 Operational Analysis : activités jaunes comme Capella */
+.fex-oa .fex-blk .fex-box .fex-box-t{color:#ffe28a;}
+html[data-tone="light"] .fex-oa .fex-blk .fex-box{background:linear-gradient(180deg,#fffbcf,#f6d96b);border-color:#6b4f2a;}
+html[data-tone="light"] .fex-oa .fex-blk .fex-box .fex-box-t{color:#2e2200;}
+.fex-oa-ic{display:inline-block;font-size:8px;font-weight:800;padding:1px 4px;margin-right:5px;border-radius:50%;background:#f5a623;color:#3a2200;border:1px solid #7a4a00;vertical-align:middle;}
+/* 🎬 Scénarios (49-scenarios.js) */
+#cap-view-scen>.phl-filter-bar{padding:10px 16px 8px;margin:0;border-bottom:1px solid var(--c-border);}
+.sc-split{display:grid;grid-template-columns:minmax(240px,300px) 1fr;}
+.sc-list{position:relative;overflow:auto;border-right:1px solid var(--c-border);padding:6px 0;}
+.sc-grp{padding:8px 10px 3px;font-size:10.5px;color:var(--c-dim);font-weight:700;display:flex;align-items:center;gap:6px;}
+.sc-cap[data-det]{cursor:pointer;} .sc-cap[data-det]:hover{color:var(--c-accent);}
+.sc-item{padding:4px 10px 4px 18px;font-size:12px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:3px solid transparent;}
+.sc-item:hover{background:var(--c-bg3);} .sc-item.on{background:color-mix(in srgb,var(--c-accent) 16%,transparent);border-left-color:var(--c-accent);}
+.sc-k{display:inline-block;font-size:9.5px;font-weight:800;padding:0 5px;border-radius:3px;background:var(--c-bg3);border:1px solid var(--c-border);color:var(--c-text);}
+.sc-n{font-size:10px;color:var(--c-dim);margin-left:4px;}
+.sc-main{min-width:0;}
+.sc-head{padding:8px 14px;font-size:12.5px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--c-border);}
+.sc-scroll{overflow:auto;background:#fff;cursor:grab;}
+.sc-scroll.sc-pan{cursor:grabbing;user-select:none;}
+.sc-band{position:sticky;top:0;z-index:3;height:24px;background:rgba(255,255,255,.94);border-bottom:1px solid #ddd;}
+.sc-band span{position:absolute;top:3px;transform:translateX(-50%);font-size:11.5px;color:#111;padding:1px 10px;border:1px solid #8a8fb8;white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis;}
+.sc-svg .sc-ref:hover rect,.sc-svg .sc-ref:hover ellipse,.sc-svg .sc-ref:hover line,.sc-svg .sc-ref:hover path{filter:drop-shadow(0 0 2px #2f81f7);}
 .fex-att{position:absolute;top:5px;left:86px;right:86px;text-align:center;font-size:10px;color:var(--c-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:1;}
 .fex-att-go{cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px;}
 .fex-att-go:hover{color:var(--c-accent);}
@@ -1104,6 +1142,17 @@ html[data-tone="light"] .fex-pname{color:#2a5a2a;}
 .cw-suspect{margin:6px 0;padding:6px 8px;border:1px solid var(--c-warn,#e3b341);border-radius:5px;background:color-mix(in srgb,var(--c-warn,#e3b341) 12%,transparent);font-size:11.5px;color:var(--c-text);}
 
 /* ── ⚙ Interface et vues ── */
+#cap-about-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
+.ab-box{max-width:720px;}
+.ab-box a{color:var(--c-accent);word-break:break-all;}
+.ab-box h4{margin:14px 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--c-dim);}
+.ab-id{display:flex;gap:14px;align-items:center;}
+.ab-logo{font-size:40px;line-height:1;}
+.ab-name{font-size:18px;font-weight:800;}
+.ab-slogan{font-size:12.5px;font-style:italic;color:var(--c-dim);margin-bottom:2px;}
+.ab-ver{font-size:12px;color:var(--c-accent);margin:2px 0 4px;}
+.ab-mono{font-family:monospace;user-select:all;}
+.ab-lic{white-space:pre-wrap;font-size:10.5px;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:5px;padding:8px;margin:6px 0 0;max-height:180px;overflow:auto;}
 #cap-cfg-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
 .cfg-part{display:flex;gap:8px;align-items:flex-start;padding:6px 4px;border-bottom:1px solid var(--c-border);font-size:12.5px;cursor:pointer;}
 .cfg-part input{margin-top:3px;}
@@ -1117,6 +1166,7 @@ html[data-tone="light"] .fex-pname{color:#2a5a2a;}
 .cb-ic{font-size:12px;margin-right:4px;}
 .cb-fns{position:absolute;left:0;right:0;bottom:6px;text-align:center;font-size:10.5px;color:var(--c-dim);}
 .cb-kids{position:absolute;right:8px;bottom:5px;font-size:11px;color:var(--c-dim);cursor:help;}
+.cb-fns ~ .fex-box-empty{bottom:22px;}   /* « aucun port » au-dessus de « ƒ n fonctions ▾ » */
 .cb-port{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;font:700 12px/1 monospace;color:#111;background:#fff;border:1.5px solid #222;flex-shrink:0;vertical-align:middle;}
 .cb-port-UNSET{background:linear-gradient(180deg,#d29b9b,#8f3f3f);border-color:#4a1515;}
 .cb-port-orphan{opacity:.45;}
@@ -1224,8 +1274,9 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
   <!-- Écran d'accueil : ouverture d'un fichier Capella (glisser-déposer ou explorateur) -->
   <div id="cap-welcome">
     <button id="cw-help" type="button" title="Aide et présentation des fonctionnalités">❓ Aide</button>
+    <button id="cw-start" type="button" title="Visite guidée en deux temps : où ouvrir votre fichier .capella, puis, une fois le modèle chargé, où trouver l'aide et les tutoriels">🚀 Bien démarrer <span class="cw-start-sub">· ouvrir un modèle, puis trouver l'aide et les tutoriels</span></button>
     <div id="cap-drop-zone" title="Cliquer pour parcourir, ou glisser-déposer un fichier .capella">
-      <div class="cw-icon">🔷</div>
+      <div class="cw-brand"><span class="cw-brand-n">🔷 Arcalyse</span><span class="cw-brand-s">Votre modèle Capella, sous toutes ses coutures.</span></div>
       <div class="cw-title" id="cw-title">Ouvrir un modèle Capella</div>
       <div class="cw-sub" id="cw-sub">Glissez-déposez votre fichier <strong>.capella</strong> ici<br>ou recherchez-le dans l'explorateur de fichiers.</div>
       <button class="cw-btn" id="cw-browse" type="button">📂 Parcourir…</button>
@@ -1233,6 +1284,7 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
       <div class="cw-hint">Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé.</div>
       <a href="#" class="cw-help-link" id="cw-help-link">📖 Que peut-on analyser ? Découvrir les fonctionnalités</a>
       <a href="#" class="cw-help-link" id="cw-tour-link">🎓 Visite guidée de l'interface</a>
+      <a href="#" class="cw-help-link" id="cw-about-link">ℹ À propos</a>
     </div>
   </div>
 
@@ -1594,6 +1646,8 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
     <div id="cap-view-compex" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-fex" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-cblk" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
+    <div id="cap-view-scen" style="flex:1;overflow:hidden;padding:0;display:none;"></div>
+    <div id="cap-view-oav" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-csys" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-ports" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-functions" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
@@ -1646,7 +1700,7 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
 
       <!-- ── DÉMARRAGE ── -->
       <div id="ht-start" class="ht-panel">
-        <h2>Relation Map — explorateur de modèles Capella</h2>
+        <h2>Arcalyse — votre modèle Capella, sous toutes ses coutures</h2>
         <p class="hp-lead">Application autonome (un seul fichier HTML) pour <b>explorer, analyser, contrôler et exporter</b> un modèle Capella / ARCADIA sans ouvrir Capella. Le fichier <code>.capella</code> est lu localement dans le navigateur : <b>aucune donnée n'est envoyée</b>.</p>
         <h3>Ouvrir un modèle</h3>
         <ol>
@@ -1655,7 +1709,7 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
           <li>Pour changer de modèle, redéposez simplement un autre fichier (il remplace le modèle affiché).</li>
           <li>Pour une <b>nouvelle version du même modèle</b> : <b>📁 Fichier › 🔄 Charger une mise à jour du modèle</b> montre d'abord le delta, puis met à jour après validation (voir 🔄 Suivi).</li>
         </ol>
-        <p class="hp-note">Première utilisation ? <b>? Aide ▾ › 🎓 Visite guidée</b> présente chaque zone de l'interface pas à pas (plus complète avec un modèle chargé). Dans chaque vue, <b>? Aide ▾ › 🎯 Visite de cette vue</b> en présente les menus et ce qu'ils font.</p>
+        <p class="hp-note">Première utilisation ? Sur l'écran d'accueil, <b>🚀 Bien démarrer</b> montre où ouvrir votre fichier, puis reprend une fois le modèle chargé pour montrer où trouver l'aide et les tutoriels. <b>? Aide ▾ › 🎓 Visite guidée</b> présente chaque zone de l'interface pas à pas (plus complète avec un modèle chargé). Dans chaque vue, <b>? Aide ▾ › 🎯 Visite de cette vue</b> en présente les menus et ce qu'ils font.</p>
         <p class="hp-note">Seul le fichier sémantique <code>.capella</code> est lu. Les fichiers <code>.aird</code> (diagrammes) et <code>.afm</code> sont refusés : ils ne contiennent pas les éléments du modèle.</p>
         <h3>Les trois modes</h3>
         <div class="hp-grid">
@@ -1685,7 +1739,7 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
           <tr><td>🎨 Thème ▾</td><td>Sombre (par défaut), Office 2007, Clair, Marine, Nature, Contraste. Les vues se redessinent avec des couleurs adaptées ; en thème clair (Office 2007, Clair ou personnalisé clair), les textes colorés sont automatiquement foncés pour rester lisibles.</td></tr>
           <tr><td>🎨 Thème › Personnaliser…</td><td>Thème personnalisé : toutes les couleurs (fonds, textes, accent, bordures, statuts, Relation Map, couches ARCADIA), aperçu en direct, « Partir de » un thème existant, contraste du texte affiché, ⬇ / ⬆ JSON. Il apparaît ensuite comme « 🎨 Personnalisé » dans la liste et est conservé dans la page enregistrée.</td></tr>
           <tr><td>🖼 Export ▾</td><td>Image du graphe Relation Map : PNG, JPEG ou SVG (2e barre de la Relation Map).</td></tr>
-          <tr><td>? Aide ▾</td><td>📖 Aide complète : cette documentation ; 🎯 Visite de cette vue : présentation des menus et commandes de la vue affichée (Relation Map, Table View, chaque vue Capella ; modèle chargé) ; 🎓 Visite guidée : découverte de l'interface pas à pas (zone mise en évidence, reste de l'écran assombri ; ◀ Précédent / Suivant ▶ ou flèches du clavier, ✕ ou Échap pour quitter). Les deux sont aussi accessibles depuis l'écran d'accueil.</td></tr>
+          <tr><td>? Aide ▾</td><td>📖 Aide complète : cette documentation ; 🎯 Visite de cette vue : présentation des menus et commandes de la vue affichée (Relation Map, Table View, chaque vue Capella ; modèle chargé) ; 🎓 Visite guidée : découverte de l'interface pas à pas (zone mise en évidence, reste de l'écran assombri ; ◀ Précédent / Suivant ▶ ou flèches du clavier, ✕ ou Échap pour quitter). Les deux sont aussi accessibles depuis l'écran d'accueil. ℹ À propos : version, auteur, licence (GNU GPL v3), contact, composants tiers (licence D3.js), informations techniques à copier pour un signalement.</td></tr>
         </table>
         <h3>Niveau 2 — commandes de la Relation Map</h3>
         <p>Affiché uniquement en mode 🗺 Relation Map.</p>
@@ -1760,8 +1814,8 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
         <h2>🔷 Vues Capella</h2>
         <h3>Barre des vues (en haut)</h3>
         <table class="hp-t">
-          <tr><td>Menus ▾</td><td><b>🧭 Explorateur</b> (Arborescence, Cartes, Tableau, Index des types, 🔗 Liens), <b>📡 Flux & interfaces</b> (⚡ Chaînes, ƒ⇆ Functional Exchange, 🧱 System Component, 🧱 Logical Component, 🔀 Behavior Exchange, 🔌 Physical Link, 🧩 Ports), <b>🔬 Analyses</b> (toutes les sous-vues). Un clic sur le nom rouvre la dernière vue du menu ; la flèche ▾ affiche la liste.</td></tr>
-          <tr><td>📌 Épingler</td><td>Dans un menu, 📌 place la vue en bouton direct dans la barre (par défaut : ⚡ Chaînes, ƒ Fonctions, 📐 Tableau de bord) ; un second clic la retire.</td></tr>
+          <tr><td>Menus ▾</td><td><b>🧭 Explorateur</b> (Arborescence, Cartes, Tableau, Index des types), <b>📡 Flux & interfaces</b> (⚡ Chaînes, ƒ⇆ Functional Exchange, 🟨 Operational Analysis, 🧱 System Component, 🧱 Logical Component, 🔀 Behavior Exchange, 🔌 Physical Link, 🎬 Scénarios, 🧩 Ports, 🔗 Liens), <b>🔬 Analyses</b> (toutes les sous-vues). Un clic sur le nom rouvre la dernière vue du menu ; la flèche ▾ affiche la liste.</td></tr>
+          <tr><td>📌 Épingler</td><td>Dans un menu, 📌 place la vue en bouton direct dans la barre (par défaut : ⚡ Chaînes, 🎬 Scénarios, 📐 Tableau de bord) ; un second clic la retire.</td></tr>
           <tr><td>☰ (Ctrl K)</td><td>Toutes les vues : recherche (taper puis Entrée, flèches ↑ ↓), cases pour afficher ou masquer chaque menu, épingles, ↺ Rétablir la barre par défaut. Une vue masquée reste accessible ici. Le réglage est enregistré avec la 💾 Page HTML.</td></tr>
         </table>
         <table class="hp-t">
@@ -1772,7 +1826,7 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
           <tr><td>🔗 Liens</td><td>Relations Capella extraites (34 types : décompositions, allocations, échanges fonctionnels / de composants / liens physiques, éléments échangés, réalisations inter-couches, chaînes, capacités). Barre : recherche texte, filtres par groupe (clic sur le nom du groupe) ou par relation, colonnes d'ID à la demande, export CSV des lignes affichées ; les relations absentes du modèle sont listées en infobulle. Clic sur un nom : panneau de détail.</td></tr>
           <tr><td>⚡ Chaînes</td><td>Chaînes fonctionnelles, processus opérationnels et chemins physiques : diagrammes, tables et exports (onglet ⚡ Chaînes).</td></tr>
           <tr><td>ƒ⇆ Functional Exchange · 🧱 System / Logical Component · 🔀 Behavior Exchange · 🔌 Physical Link · 🧩 Ports</td><td>Analyse des interfaces et contrôles de cohérence (onglet 🔌 Interfaces & ports).</td></tr>
-          <tr><td>ƒ Fonctions</td><td>Fonctions couche par couche : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier (onglet ƒ Fonctions · 🔬 Analyses).</td></tr>
+          <tr><td>🔬 Analyses › ƒ Fonctions</td><td>Fonctions couche par couche : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier (onglet ƒ Fonctions · 🔬 Analyses).</td></tr>
           <tr><td>🔬 Analyses</td><td>Traçabilité inter-couches, capacités & missions, modes & états, comparaison de deux versions (onglet 🔬 Analyses).</td></tr>
           <tr><td>🔄 Suivi</td><td>Détection des nouvelles versions du fichier .capella, delta des modifications et mise à jour après validation.</td></tr>
           <tr><td>🧭 Explorateur › 📖 Index des types</td><td>Glossaire des types présents : type technique, Human Type, nombre, description.</td></tr>
@@ -1789,7 +1843,7 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
         <p>Filtre par type et par couche (OA, SA, LA, PA, EPBS), et par contenu : <b>Toutes / Non vides / Vides</b> (chaîne vide = aucune fonction ni échange impliqué). <b>▦ Diagrammes</b> : une carte par chaîne. <b>🗺 Vue Relation Map</b> : graphe interactif (dispositions LR / TB / RL / radiale / zigzag, ⬡ Compact, ✂ Noms) et injection dans la Relation Map principale.</p>
         <h3>Contenu d'une carte</h3>
         <ul>
-          <li>Diagramme de haut en bas, style Capella : <span class="hp-chip" style="--c:#4a4aa8">bleu</span> porté par un acteur, <span class="hp-chip" style="--c:#1f6b1f">vert</span> porté par le système, <span class="hp-chip" style="--c:#8a8a8a">gris</span> non alloué ; bordure épaisse = entrée ou sortie.</li>
+          <li>Diagramme de haut en bas, style Capella : <span class="hp-chip" style="--c:#4a4aa8">bleu</span> porté par un acteur, <span class="hp-chip" style="--c:#1f6b1f">vert</span> porté par le système, <span class="hp-chip" style="--c:#8a8a8a">gris</span> non alloué ; processus opérationnels (OA) aux couleurs de Capella : <span class="hp-chip" style="--c:#6b4f2a">activités jaunes</span>, flèches brunes ; bordure épaisse = entrée ou sortie.</li>
           <li><b>Fonctions impliquées</b> : ordre du flux, type, composant d'allocation, rôle entrée/sortie, nombre d'échanges entrants/sortants.</li>
           <li><b>Functional Exchanges impliqués</b> : source → cible numérotées, Exchange Items, Component Exchange porteur. Pour un chemin physique : composants, Physical Links et CE alloués.</li>
           <li>Boutons 🖼 PNG · 📐 SVG · 📋 Copier (coller dans Word/PowerPoint) · ⬇ CSV.</li>
@@ -1809,13 +1863,13 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
       <!-- ── INTERFACES ── -->
       <div id="ht-itf" class="ht-panel" style="display:none">
         <h2>🔌 Interfaces & ports</h2>
-        <p class="hp-lead">Vues d'interfaces du menu <b>📡 Flux & interfaces</b>, du fonctionnel au physique, dans l'ordre des onglets : <b>ƒ⇆ Functional Exchange</b>, <b>🧱 System Component</b>, <b>🧱 Logical Component</b>, <b>🔀 Behavior Exchange</b>, <b>🔌 Physical Link</b>, puis <b>🧩 Ports</b>. Chacune s'ouvre en <b>◧ Vue Blocs</b> (rendu façon Capella, navigation d'un bloc à l'autre) et propose aussi des vues Ligne / Composant (ou Fonction), une <b>▦ Matrice N²</b> (clic sur une cellule = liste des échanges) et un rapport <b>🩺 Contrôles</b>. Dans ƒ⇆, chaque bloc indique en petit, en haut, son rattachement : composant ou acteur d'allocation (clic : son bloc dans la vue de sa couche) ou, à défaut, sa fonction mère (clic : son bloc). En thème sombre, un conseil rappelle que la Vue Blocs est plus lisible, et plus proche de Capella, avec le thème Office 2007 ou Clair. Comme dans ƒ Fonctions, les commandes de chaque barre sont entourées par catégorie (onglets, vues, filtres et champs, exports).</p>
+        <p class="hp-lead">Vues d'interfaces du menu <b>📡 Flux & interfaces</b>, du fonctionnel au physique, dans l'ordre des onglets : <b>ƒ⇆ Functional Exchange</b>, <b>🟨 Operational Analysis</b>, <b>🧱 System Component</b>, <b>🧱 Logical Component</b>, <b>🔀 Behavior Exchange</b>, <b>🔌 Physical Link</b>, <b>🎬 Scénarios</b>, puis <b>🧩 Ports</b>. Chacune s'ouvre en <b>◧ Vue Blocs</b> (rendu façon Capella, navigation d'un bloc à l'autre) et propose aussi des vues Ligne / Composant (ou Fonction), une <b>▦ Matrice N²</b> (clic sur une cellule = liste des échanges) et un rapport <b>🩺 Contrôles</b>. Dans ƒ⇆, chaque bloc indique en petit, en haut, son rattachement : composant ou acteur d'allocation (clic : son bloc dans la vue de sa couche) ou, à défaut, sa fonction mère (clic : son bloc). En thème sombre, un conseil rappelle que la Vue Blocs est plus lisible, et plus proche de Capella, avec le thème Office 2007 ou Clair. Les barres de commandes restent visibles en haut quand on fait défiler la vue (de même dans ⚡ Chaînes, ƒ Fonctions et 🔬 Analyses). Comme dans ƒ Fonctions, les commandes de chaque barre sont entourées par catégorie (onglets, vues, filtres et champs, exports). Dans les tableaux de 🔬 Analyses et de ƒ Fonctions › ⛓ Traçabilité, les noms de colonnes et la ligne de filtres restent eux aussi visibles au défilement.</p>
         <p><b>Exports HTML</b> (🔀 et 🔌) : <b>⬇ HTML</b> = la vue affichée ; <b>⬇ HTML (toutes les vues)</b> = rapport à onglets Vue Ligne / Vue Composant / Matrice / Contrôles, filtres appliqués, avec recherche et matrice cliquable. Les fichiers sont autonomes et reprennent les couleurs du thème courant.</p>
         <p class="hp-note">Répartition par couche : <b>🧱 System Component</b> (SA) et <b>🧱 Logical Component</b> (LA) pour les composants et leurs Component Exchanges ; <b>🔀 Behavior Exchange</b> pour les Component Exchanges de la couche PA entre Physical Components <b>Behavior</b> ; <b>🔌 Physical Link</b> pour les liens entre Physical Components <b>Node</b>.</p>
         <h3>ƒ⇆ Functional Exchange</h3>
         <p>Échanges entre fonctions (toutes couches), même organisation que 🧱 Logical Component, avec un filtre par couche (OA, SA, LA, PA) et un filtre <b>Allocation</b> comme dans ƒ Fonctions (🧩 Système, 👤 Acteurs, ∅ Non allouées ; double-clic : uniquement celle-ci) et la liste <b>Tous les allocataires</b> de la couche (acteurs, puis système et sous-systèmes en arbre, sous-composants compris ; en OA : entités et acteurs opérationnels) ; dans les vues d'échanges, un échange est gardé si l'une de ses deux fonctions correspond :</p>
         <table class="hp-t">
-          <tr><td>◧ Vue Blocs</td><td>Vue par défaut. Chaque fonction dessinée <b>comme dans Capella</b> : boîte arrondie « [numéro] nom », <b>verte</b> si allouée au système, <b>bleue</b> si allouée à un acteur, <b>grise</b> si non allouée (ou fonction mère) ; pins d'entrée (verts) à gauche et de sortie (orange) à droite avec le nom du port ; à côté de chaque pin, l'échange et la fonction distante (plusieurs échanges sur un même pin : listés les uns sous les autres, centrés sur le pin). <b>Clic sur la fonction distante</b> : affiche son bloc (changement de page et filtres relâchés si besoin), <b>↩ Revenir</b> ramène au bloc de départ ; clic sur le titre d'un bloc : panneau de détail. Pin pâle : port non connecté ; pin en pointillés : échange relié directement à la fonction, sans port (cas normal des activités OA). Option « avec ports ou échanges » pour masquer les fonctions mères.</td></tr>
+          <tr><td>◧ Vue Blocs</td><td>Vue par défaut. Chaque fonction dessinée <b>comme dans Capella</b> : boîte arrondie au nom de la fonction, <b>verte</b> si allouée au système, <b>bleue</b> si allouée à un acteur, <b>grise</b> si non allouée (ou fonction mère) ; pins d'entrée (verts) à gauche et de sortie (orange) à droite avec le nom du port ; à côté de chaque pin, l'échange et la fonction distante (plusieurs échanges sur un même pin : listés les uns sous les autres, centrés sur le pin). <b>Clic sur la fonction distante</b> : affiche son bloc (changement de page et filtres relâchés si besoin), <b>↩ Revenir</b> ramène au bloc de départ ; clic sur le titre d'un bloc : panneau de détail. Pin pâle : port non connecté ; pin en pointillés : échange relié directement à la fonction, sans port (cas normal des activités OA). Option « avec ports ou échanges » (décochée par défaut) pour masquer les fonctions mères.</td></tr>
           <tr><td>≡ Vue Ligne</td><td>Fonction source, pin de sortie <span class="fex-pin fex-pin-out">▶</span> et port → échange → pin d'entrée <span class="fex-pin fex-pin-in">▶</span> et port, fonction cible ; Exchange Items (▤), Component Exchanges qui l'allouent (🔀), chaînes (⚡).</td></tr>
           <tr><td>▣ Vue Fonction</td><td>Une carte par fonction : échanges reçus (←) et émis (→).</td></tr>
           
@@ -1823,6 +1877,11 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
           <tr><td>🩺 Contrôles</td><td>Ports orphelins, échanges sans Exchange Item, fonctions feuilles sans échange, fonctions mères portant des ports, échanges sans port (hors OA), échanges LA / PA non alloués à un Component Exchange.</td></tr>
         </table>
         <p>Les vues Ligne, Fonction et Blocs sont <b>paginées par 100</b> (◀ ▶) pour rester fluides sur les modèles de plusieurs milliers de fonctions ; les exports CSV et HTML portent sur tout le résultat filtré.</p>
+        <h3>🎬 Scénarios</h3>
+        <p>Diagrammes de séquence des scénarios Capella — <b>ES</b> (Exchange Scenario), <b>FS</b> (Functional Scenario), <b>OES</b> / <b>OAS</b> en OA, <b>IS</b> (Interface Scenario) — redessinés à partir du seul fichier .capella. À gauche, la liste rangée par couche puis par capacité (filtres couche, type, recherche) ; à droite, le diagramme : lignes de vie (bleu clair = acteur, bleu = composant, vert = fonction, gris = entité), messages avec, pour les ES, leur contexte d'échange entre accolades, barres d'activation, fonctions (rectangles verts), états (ellipses gris clair) et modes (gris foncé), fragments combinés (ALT, OPT, LOOP, PAR…) avec leurs gardes, références « ref » vers un autre scénario (clic : l'ouvrir). Clic sur un élément : son détail. Les noms des lignes de vie restent visibles en haut quand on fait défiler ; défilement par les barres, la molette (Maj + molette : horizontal) ou en cliquant-glissant sur le fond du diagramme. Zoom − / +, exports PNG / SVG et copie de l'image. <b>🩺 Contrôles</b> : scénarios vides, messages sans échange, lignes de vie sans élément représenté, scénarios hors capacité, références introuvables. Le panneau de détail d'un scénario ou d'une capacité propose aussi 🎬 pour ouvrir le diagramme.</p>
+        <p class="hp-note">L'ordre des événements est celui du modèle ; les espacements sont calculés (la mise en page dessinée dans Capella est dans le fichier .aird, non lu) : le contenu est fidèle, pas la position au pixel près.</p>
+        <h3>🟨 Operational Analysis</h3>
+        <p>Activités opérationnelles (couche OA) et leurs interactions, dans l'esprit des diagrammes OAIB de Capella. <b>◧ Vue Blocs</b> (par défaut) : blocs jaunes à coins arrondis avec le pictogramme OA, interactions entrantes à gauche et sortantes à droite (clic sur une activité distante : aller à son bloc), entité ou acteur porteur en petit en haut du bloc (clic : son détail). Aussi <b>≡ Vue Ligne</b>, <b>▣ Vue Activité</b>, <b>▦ Matrice</b> activité × activité et <b>🩺 Contrôles</b>. Filtres : activité, interaction ou Exchange Item, allocation (🏢 Entités, 👤 Acteurs, non allouées, ou une entité / un acteur précis). Exports CSV des interactions et rapports HTML.</p>
         <h3>🧱 System Component · 🧱 Logical Component</h3>
         <p>Deux vues identiques (même code, mêmes couleurs) : <b>🧱 System Component</b> pour la couche <b>SA</b>, <b>🧱 Logical Component</b> pour la couche <b>LA</b> ; composants avec leurs <b>Component Ports</b> et <b>Component Exchanges</b>, même logique que ƒ⇆ Functional Exchange :</p>
         <table class="hp-t">
@@ -1831,7 +1890,7 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
           <tr><td>ƒ Fonctions allouées</td><td>« ƒ n fonctions ▾ » sous le nom d'un bloc déplie la liste des fonctions allouées (numérotées, avec un filtre au-delà de 12 et une zone qui défile pour les longues listes) ; <b>clic sur une fonction</b> : affiche son bloc dans ƒ⇆ Functional Exchange. Aussi dans 🔀 Behavior Exchange et 🔌 Physical Link.</td></tr>
           <tr><td>≡ Vue Ligne · ▦ Matrice</td><td>Un Component Exchange par ligne ; matrice composant × composant (100 composants au plus).</td></tr>
           <tr><td>🩺 Contrôles</td><td>Ports orphelins, ports connectés sans orientation, orientations incohérentes, composants feuilles sans port ou sans fonction allouée.</td></tr>
-          <tr><td>Filtres</td><td>Composant, échange, <b>Nature</b> (🧩 Système, 👤 Acteurs ; double-clic : uniquement ceux-ci), <b>Tous les composants</b> (un composant et ses sous-composants), « avec ports » (coché par défaut si la couche a des ports). Pages de 100.</td></tr>
+          <tr><td>Filtres</td><td>Composant, échange, <b>Nature</b> (🧩 Système, 👤 Acteurs ; double-clic : uniquement ceux-ci), <b>Tous les composants</b> (un composant et ses sous-composants), « avec ports » (décoché par défaut : cocher pour masquer les composants sans port). Pages de 100.</td></tr>
         </table>
         <h3>🔀 Behavior Exchange (anciennement Component Exchange)</h3>
         <p>Périmètre : Component Exchanges de la couche <b>PA</b> dont les deux extrémités sont des Physical Components <b>Behavior</b> (aucun Node). Le nombre retenu sur le total du modèle est rappelé en haut de la vue.</p>
@@ -1863,7 +1922,7 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
         <p class="hp-note">Les résultats sont gardés en mémoire ; <b>↻ Recalculer</b> les rafraîchit. Les contrôles ne sont calculés qu'à l'ouverture de l'onglet 🩺 Contrôles.</p>
         <p class="hp-note"><b>Tableaux</b> : sous chaque en-tête, un champ <b>Filtrer…</b> par colonne (plusieurs mots : tous requis ; <code>!mot</code> : exclure) ; le nombre de lignes affichées s'affiche au-dessus, avec ✕ effacer. Glisser le bord droit d'un en-tête règle la largeur de la colonne (double-clic : largeur automatique). Filtres et largeurs sont conservés quand la vue se redessine. Un tableau plus large que la vue a une <b>barre de défilement horizontal</b> collée en bas de l'écran tant qu'il est visible (aussi Maj + molette).</p>
         <p class="hp-lead">Analyses transverses calculées à partir de ce que contient le modèle ouvert : une rubrique absente du modèle (pas de machine à états, pas de capacités…) est simplement signalée comme vide, et les contrôles ne portent que sur les pratiques réellement utilisées. Les onglets et les commandes de chaque sous-vue sont entourés par catégorie (vues, filtres, exports), comme dans ƒ Fonctions.</p>
-        <h3>ƒ Fonctions (menu principal)</h3>
+        <h3>ƒ Fonctions (premier onglet de 🔬 Analyses)</h3>
         <p>Activités OA et fonctions SA / LA / PA, couche par couche, avec leurs <b>descriptions mises en avant</b>.</p>
         <p><b>Filtre Allocation</b> (🌳 Hiérarchie et 📋 Tableau) : <span class="hp-chip" style="--c:#3fb950">🧩 Système</span> <span class="hp-chip" style="--c:#58a6ff">👤 Acteurs</span> <span class="hp-chip" style="--c:#8b949e">∅ Non allouées</span>, avec le nombre de fonctions de chaque nature. Clic = afficher / masquer, double-clic = uniquement cette nature (double-clic à nouveau : tout réafficher). Chaque fonction porte un liseré de la couleur correspondante (double liseré si allouée à la fois au système et à un acteur) ; dans l'arbre, les fonctions mères conservées pour la hiérarchie sont estompées. Colonne « Nature de l'allocation » dans le tableau et les exports.</p>
         <p><b>Allocataire</b> (liste à côté du filtre) : un acteur précis, ou le système et ses sous-systèmes en arbre indenté (couches boîte blanche LA / PA), avec le nombre de fonctions ; un sous-système inclut ses sous-composants. ✕ retire le filtre. En boîte blanche, la colonne « Sous-système » donne le chemin des composants englobants (chemin complet au survol).</p>
@@ -2285,6 +2344,8 @@ function applyTheme(name) {
   // Idem pour Functional Exchange
   const fexView = document.getElementById('cap-view-fex');
   if (fexView && fexView.style.display !== 'none' && fexView._fex) capRenderFunctionalExchange();
+  const oavView = document.getElementById('cap-view-oav');
+  if (oavView && oavView.style.display !== 'none' && oavView._fex) capRenderFunctionalExchange('OA');
   // Contraste des textes colorés : remise à l'origine, puis correction si le thème est clair
   capRestoreContrast(); capContrastCss(); capFixContrast(document.body);
 }
@@ -2312,6 +2373,8 @@ function applyMode(mode) {
   // Deuxième niveau de toolbar (commandes Relation Map) : visible uniquement en mode graphe
   const tb2=document.getElementById('toolbar2');
   if(tb2) tb2.style.display=isGraph?'flex':'none';
+  // Barre d'état (contexte, nœuds, profondeur) : propre à la Relation Map
+  const ib=document.getElementById('infobar'); if(ib) ib.style.display=isGraph?'':'none';
   // Hide export image menu in Table View and Capella Data
   const expWrap=document.getElementById('b-exp-wrap');
   if(expWrap) expWrap.style.display=(isTable||isCapella)?'none':'';
@@ -6591,6 +6654,8 @@ function positionOverlay(){
 }
 positionOverlay();
 window.addEventListener('resize', positionOverlay);
+// La barre peut changer de hauteur sans redimensionnement (épingles, menus, modèle chargé) : on suit sa taille
+if(window.ResizeObserver&&document.getElementById('toolbar')) new ResizeObserver(()=>positionOverlay()).observe(document.getElementById('toolbar'));
 // Re-position when capella mode activates
 // ── Help button blink for first 5s ──
 (function(){
@@ -6698,7 +6763,7 @@ function capBuildPageHtml(){
   return '<!DOCTYPE html>\\n' + doc.outerHTML;
 }
 /** Nom de fichier proposé pour la page sauvegardée. */
-function capPageFileName(){ return capLoaded ? 'relation-map-avec-modele.html' : 'relation-map.html'; }
+function capPageFileName(){ return capLoaded ? 'arcalyse-avec-modele.html' : 'arcalyse.html'; }
 /** Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur). */
 function capSaveFullPage(){
   const blob = new Blob([capBuildPageHtml()], {type:'text/html'});
@@ -6818,6 +6883,7 @@ function capApplyXmlDoc(doc, name){
   capLoaded=true;
   capCurrentFileName=name;
   applyMode('capella');
+  if(typeof capTourResumeAfterLoad==='function') capTourResumeAfterLoad();   // 🚀 Bien démarrer : 2e temps
 }
 
 /* ── Écran d'accueil & glisser-déposer ─────────────────────────────────── */
@@ -7015,6 +7081,15 @@ function capApplyPanelOnLoad(){
     MODEL.elements = MODEL.elements.filter(e=>!demarrageIds.has(e.id));
     MODEL.relations = MODEL.relations.filter(r=>!demarrageIds.has(r.src)&&!demarrageIds.has(r.tgt));
   }
+
+  // 3 bis. Purge des restes du modèle précédent (rechargement) : types Capella absents du nouveau modèle,
+  //    éléments masqués, focus et sélection qui ne désignent plus rien
+  { const ids=new Set(MODEL.elements.map(e=>e.id)), used=new Set(capAllElements.map(e=>e.typeName));
+    Object.keys(TCFG).forEach(t=>{ if(TCFG[t]._capella&&!used.has(t.replace(/ \(.*\)$/,''))){ delete TCFG[t]; delete S.typF[t]; } });   // « PhysicalComponent (NODE) » → PhysicalComponent
+    [...S.hidden].forEach(id=>{ if(!ids.has(id)) S.hidden.delete(id); });
+    if(S.ctx&&!ids.has(S.ctx)) S.ctx=null;
+    if(S.propEl&&!ids.has(S.propEl)){ S.propEl=null; S.selNode=null; }
+    arboMultiSel.clear(); }
 
   // 4. La différenciation PhysicalComponent (NODE/BEHAVIOR/sans nature → violet) et l'usage
   //    du nom humain comme libellé sont désormais faits directement dans capInjectToArbo()
@@ -7321,7 +7396,7 @@ function capInjectChainsToModal(){
  * Met à jour les boutons de vue et les compteurs de stats.
  */
 function capRenderCurrentView(){
-  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-links','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-fex','cap-view-cblk','cap-view-csys','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-index'].forEach(id=>{
+  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-links','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-fex','cap-view-cblk','cap-view-csys','cap-view-oav','cap-view-scen','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-index'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
   const pg=document.getElementById('cap-pagination'); if(pg) pg.style.display='none';
@@ -7360,6 +7435,12 @@ function capRenderCurrentView(){
   } else if(capCurrentView==='cblk'){
     document.getElementById('cap-view-cblk').style.display='block';
     capRenderComponentBlocks('LA');
+  } else if(capCurrentView==='scen'){
+    document.getElementById('cap-view-scen').style.display='block';
+    capRenderScenarios();
+  } else if(capCurrentView==='oav'){
+    document.getElementById('cap-view-oav').style.display='block';
+    capRenderFunctionalExchange('OA');
   } else if(capCurrentView==='csys'){
     document.getElementById('cap-view-csys').style.display='block';
     capRenderComponentBlocks('SA');
@@ -8803,11 +8884,13 @@ const CAP_CHAIN_LABELS={FunctionalChain:'Chaîne fonctionnelle',OperationalProce
 const CAP_ACTOR_TYPES=new Set(['SystemActor','LogicalActor','PhysicalActor','OperationalActor']);
 const CAP_CHAIN_ARCH={OperationalAnalysis:'OA',SystemAnalysis:'SA',LogicalArchitecture:'LA',PhysicalArchitecture:'PA',EPBSArchitecture:'EPBS'};
 /** Couleurs des boîtes, reprises des diagrammes Capella : bleu = élément porté par un acteur,
- * vert = élément porté par le système étudié, gris = élément non alloué. */
+ * vert = élément porté par le système étudié, gris = élément non alloué ; jaune = activité opérationnelle
+ * (processus opérationnels OA, quelle que soit l'entité qui la porte, comme dans Capella). */
 const CAP_CHAIN_KIND={
   actor:  {fill:'#c5e6fb', stroke:'#4a4aa8', label:'Acteur',     rm:'#58a6ff'},
   system: {fill:'#c6ffa4', stroke:'#1f6b1f', label:'Système',    rm:'#4dd880'},
   none:   {fill:'#eeeeee', stroke:'#8a8a8a', label:'Non alloué', rm:'#8b949e'},
+  oa:     {fill:'#f8dc7c', stroke:'#6b4f2a', label:'Activité opérationnelle', rm:'#e3b341'},
 };
 let capChainsSubView='diagram';   // 'diagram' (cartes + diagrammes) | 'map' (vue Relation Map)
 let capChainsSelectedId=null;     // chaîne affichée dans la vue Relation Map
@@ -8897,7 +8980,7 @@ function capComputeChains(){
           const fid=invEl?capXId(invEl):rid(child.getAttribute('involved'));
           const a=alloc[fid];
           nodes.push({id:capXId(child), refId:fid, name:invEl?N(capXName(invEl)):'?',
-            elemType:invEl?capTName(invEl):'?', owner:a?a.compName:'', kind:kindOfFunc(fid)});
+            elemType:invEl?capTName(invEl):'?', owner:a?a.compName:'', kind:t==='OperationalProcess'?'oa':kindOfFunc(fid)});
         } else if(ct==='FunctionalChainInvolvementLink'){
           const invEl=res(child.getAttribute('involved'));
           edges.push({id:capXId(child), refId:invEl?capXId(invEl):'', name:invEl?N(capXName(invEl)):'',
@@ -8912,7 +8995,7 @@ function capComputeChains(){
           const invEl=res(ref); const id=chain.id+'-n'+i; const fid=invEl?capXId(invEl):'';
           const a=alloc[fid];
           nodes.push({id, refId:fid, name:invEl?N(capXName(invEl)):'?', elemType:invEl?capTName(invEl):'?',
-            owner:a?a.compName:'', kind:kindOfFunc(fid)});
+            owner:a?a.compName:'', kind:t==='OperationalProcess'?'oa':kindOfFunc(fid)});
           if(prev) edges.push({id:id+'-e', refId:'', name:'', srcId:prev, tgtId:id});
           prev=id;
         });
@@ -9101,7 +9184,7 @@ function capChainDiagramSvg(chain){
   lay.routes.forEach((r,ri)=>{ if(r.back) return; for(let i=0;i<r.pts.length-1;i++){ const L=lay.layerOf[r.pts[i]]; chanRank[segKey(ri,i)]=chanCounter[L]++; } });
 
   const uid='cc'+(++_capChainSvgSeq);
-  const EC='#1a6e2e';
+  const OA=chain.type==='OperationalProcess', EC=OA?'#5c4033':'#1a6e2e';   // flèches brunes en OA, comme Capella
   let edgesSvg='', labelsSvg='';
   lay.routes.forEach((r,ri)=>{
     const e=r.edge;
@@ -9159,7 +9242,8 @@ function capChainDiagramSvg(chain){
     nodesSvg+=`<g class="ccn" data-ref="${capEsc(n.refId)}" style="cursor:${n.refId?'pointer':'default'}">
       <title>${capEsc(tip)}</title>
       <rect x="${x}" y="${yy}" width="${W}" height="${H}" fill="${k.fill}" stroke="${k.stroke}" stroke-width="${entrySet.has(n.id)||exitSet.has(n.id)?2.4:1.4}"/>
-      <circle cx="${x+15}" cy="${yy+H/2}" r="7" fill="#e8f5d8" stroke="#5a7d3a"/><text x="${x+15}" y="${yy+H/2+3.5}" text-anchor="middle" font-size="9" font-weight="700" fill="#2f5d1a">${icon}</text>
+      ${OA?`<ellipse cx="${x+16}" cy="${yy+H/2}" rx="10" ry="7" fill="#f5a623" stroke="#7a4a00"/><text x="${x+16}" y="${yy+H/2+3}" text-anchor="middle" font-size="7.5" font-weight="700" fill="#3a2200">OA</text>`
+        :`<circle cx="${x+15}" cy="${yy+H/2}" r="7" fill="#e8f5d8" stroke="#5a7d3a"/><text x="${x+15}" y="${yy+H/2+3.5}" text-anchor="middle" font-size="9" font-weight="700" fill="#2f5d1a">${icon}</text>`}
       ${lines.map((l,i)=>`<text x="${x+W/2+8}" y="${ty0+i*16}" text-anchor="middle" font-size="12.5" fill="#111">${capEsc(l)}</text>`).join('')}
       ${entrySet.has(n.id)?`<text x="${x+W-4}" y="${yy+11}" text-anchor="end" font-size="8.5" font-weight="700" fill="${k.stroke}">ENTRÉE</text>`:''}
       ${exitSet.has(n.id)?`<text x="${x+W-4}" y="${yy+H-4}" text-anchor="end" font-size="8.5" font-weight="700" fill="${k.stroke}">SORTIE</text>`:''}
@@ -9232,6 +9316,7 @@ function capRenderChains(){
       <span><i style="background:${CAP_CHAIN_KIND.actor.fill};border-color:${CAP_CHAIN_KIND.actor.stroke}"></i>Porté par un acteur</span>
       <span><i style="background:${CAP_CHAIN_KIND.system.fill};border-color:${CAP_CHAIN_KIND.system.stroke}"></i>Porté par le système</span>
       <span><i style="background:${CAP_CHAIN_KIND.none.fill};border-color:${CAP_CHAIN_KIND.none.stroke}"></i>Non alloué</span>
+      <span><i style="background:${CAP_CHAIN_KIND.oa.fill};border-color:${CAP_CHAIN_KIND.oa.stroke}"></i>Activité opérationnelle (processus OA)</span>
       <span>Bordure épaisse = entrée / sortie de la chaîne · flèches dans le sens réel des échanges</span>
     </div>`;
   if(capChainsSubView==='map'){ container.innerHTML=bar+'<div id="cap-chainmap-wrap"></div>'; capRenderChainMap(); }
@@ -9537,7 +9622,7 @@ function capPdfBuild(pages, docTitle){
   obj(1,`<< /Type /Catalog /Pages 2 0 R /Outlines 3 0 R /PageMode /UseOutlines >>`);
   obj(2,`<< /Type /Pages /Count ${n} /Kids [${pages.map((_,i)=>pObj(i)+' 0 R').join(' ')}] >>`);
   obj(3,`<< /Type /Outlines /Count ${n}${n?` /First ${oObj(0)} 0 R /Last ${oObj(n-1)} 0 R`:''} >>`);
-  obj(4,`<< /Title ${capPdfHexStr(docTitle)} /Producer (relation-map-capella) /CreationDate (D:${new Date().toISOString().replace(/[-:T]/g,'').slice(0,14)}) >>`);
+  obj(4,`<< /Title ${capPdfHexStr(docTitle)} /Producer (Arcalyse) /CreationDate (D:${new Date().toISOString().replace(/[-:T]/g,'').slice(0,14)}) >>`);
   pages.forEach((p,i)=>{
     const mg=24, aw=p.pw-2*mg, ah=p.ph-2*mg;
     const k=Math.min(aw/p.iw, ah/p.ih);
@@ -10263,11 +10348,11 @@ function capUpdateToolbarForView(view){
   if(layerGrp) layerGrp.style.display=(view==='cards'||view==='table')?'flex':'none';
   if(treeGrp)  treeGrp.style.display=(view==='tree')?'flex':'none';
   // Barre de recherche / statistiques et compteur : inutiles dans les vues qui ont leurs propres filtres
-  const own=['functions','analyses','dashboard','links','chains','physlink','compex','fex','cblk','csys','ports','index'].includes(view);
+  const own=['functions','analyses','dashboard','links','chains','physlink','compex','fex','oav','scen','cblk','csys','ports','index'].includes(view);
   const sub=document.getElementById('cap-sub-toolbar'), rc=document.getElementById('cap-result-count');
   if(sub) sub.style.display=own?'none':'flex'; if(rc) rc.style.display=own?'none':'';
   // Barre latérale des types : inutile dans les vues de 🔗 Liens à 📐 Tableau de bord
-  const noSide=['links','chains','physlink','compex','fex','cblk','csys','ports','functions','analyses','dashboard'].includes(view);
+  const noSide=['links','chains','physlink','compex','fex','oav','scen','cblk','csys','ports','functions','analyses','dashboard'].includes(view);
   ['cap-sidebar','cap-sidebar-resizer'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display=noSide?'none':'flex'; });
   // Menu 🧭 Explorateur : regroupe Arborescence, Cartes, Tableau et Index des types (onglets #cap-elem-tabs)
   const isElem=CAP_ELEM_VIEWS.includes(view);
@@ -11458,7 +11543,7 @@ function capRenderPorts(){
    Modes & états · Comparaison de versions. Calculs génériques : aucune
    hypothèse sur le contenu d'un modèle particulier.
 ═══════════════════════════════════════════════════════════════════ */
-let capAnaSub='trace';           // sous-vue active : trace | caps | states | diff | reqs | pvmt | data | cts (ƒ Fonctions est une vue à part)
+let capAnaSub='trace';           // sous-vue active : trace | caps | states | diff | reqs | pvmt | data | cts (onglet ƒ Fonctions : vue à part « functions »)
 var _capAnaCache={};             // caches de calcul (var : remis à zéro au chargement d'un modèle)
 const CAP_ANA_LAYERS=['OA','SA','LA','PA','EPBS'];
 /** Catégories d'éléments pour la traçabilité, reconnues par le nom de type (toutes versions de Capella). */
@@ -12864,26 +12949,46 @@ function capFillHeight(root){
 }
 window.addEventListener('resize',()=>capFillHeight());
 
-/** Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage. */
-/** Vue « ƒ Fonctions » (menu principal, au même niveau que 🔬 Analyses) : hiérarchie, tableau,
+/** Sous-vues de 🔬 Analyses (onglets) ; « fns » ouvre la vue ƒ Fonctions, qui garde son propre conteneur. */
+var CAP_ANA_SUBS=[['fns','ƒ Fonctions'],['trace','🧬 Traçabilité inter-couches'],['caps','🎯 Capacités & missions'],['states','🔁 Modes & états'],['diff','⚖ Comparaison de versions'],['reqs','📑 Exigences'],['pvmt','🏷 Propriétés'],['data','🗃 Données & interfaces'],['cts','⛓ Contraintes']];
+
+/** Onglets des sous-vues de 🔬 Analyses (communs à la vue 🔬 Analyses et à la vue ƒ Fonctions).
+ * @returns {string} HTML des boutons (attribut data-an)
+ */
+function capAnaTabsHtml(){
+  return CAP_ANA_SUBS.map(([k,l])=>`<button class="phl-toggle-btn" data-an="${k}">${l}</button>`).join('');
+}
+
+/** Ouvre une sous-vue de 🔬 Analyses depuis ses onglets (ƒ Fonctions : vue à part).
+ * @param {string} k - Clé de la sous-vue
+ */
+function capAnaTabOpen(k){
+  if(k==='fns'){ capShowView('functions'); return; }
+  capAnaSub=k;
+  if(capCurrentView==='analyses') capRenderAnalyses(); else capShowView('analyses');
+}
+
+/** Vue « ƒ Fonctions » (onglet de 🔬 Analyses) : hiérarchie, tableau,
  * traçabilité, métriques, contrôles et dossier (↻ Recalculer de 🔬 Analyses vide aussi son cache).
  */
 function capRenderFunctionsView(){
   const c=document.getElementById('cap-view-functions'); if(!c) return;
   if(!c._built){
-    c.innerHTML='<div data-hold="fns"></div>';
+    c.innerHTML=`<div class="phl-toggle-bar">${capAnaTabsHtml()}</div><div data-hold="fns"></div>`;
+    c.querySelectorAll('[data-an]').forEach(b=>{ b.classList.toggle('active',b.dataset.an==='fns'); b.onclick=()=>capAnaTabOpen(b.dataset.an); });
     c._built=true;
   }
-  capRenderFunctions(c.firstElementChild);
+  capRenderFunctions(c.querySelector('[data-hold="fns"]'));
 }
 
+/** Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage. */
 function capRenderAnalyses(){
   const c=document.getElementById('cap-view-analyses'); if(!c) return;
-  const SUBS=[['trace','🧬 Traçabilité inter-couches'],['caps','🎯 Capacités & missions'],['states','🔁 Modes & états'],['diff','⚖ Comparaison de versions'],['reqs','📑 Exigences'],['pvmt','🏷 Propriétés'],['data','🗃 Données & interfaces'],['cts','⛓ Contraintes']];
+  if(capAnaSub==='fns') capAnaSub='trace';   // ƒ Fonctions : vue à part
   if(!c._built){
-    c.innerHTML=`<div class="phl-toggle-bar">${SUBS.map(([k,l])=>`<button class="phl-toggle-btn" data-an="${k}">${l}</button>`).join('')}
+    c.innerHTML=`<div class="phl-toggle-bar">${capAnaTabsHtml()}
       <button class="phl-export-btn" id="ana-recalc" style="margin-left:auto" title="Vider les résultats et recalculer l'analyse affichée">↻ Recalculer</button></div><div id="ana-box"></div>`;
-    c.querySelectorAll('[data-an]').forEach(b=>b.onclick=()=>{ capAnaSub=b.dataset.an; capRenderAnalyses(); });
+    c.querySelectorAll('[data-an]').forEach(b=>b.onclick=()=>capAnaTabOpen(b.dataset.an));
     c.querySelector('#ana-recalc').onclick=()=>{
       // Vide les résultats en mémoire et relance la sous-vue affichée
       _capAnaCache={}; _capPortsCache=null;
@@ -13085,6 +13190,7 @@ function capDashCatalog(){
   capXtDashCatalog(add, LC);
   capFexDashCatalog(add, LC);
   capCbDashCatalog(add, LC);
+  capScDashCatalog(add, LC);
 
   add('Mise en page','txt','Texte libre (titre, commentaire)','text',()=>({}));
   return _capAnaCache.dashCat=C;
@@ -14595,6 +14701,11 @@ function capXtDetail(id, secTitle){
     if(pv&&pv.length) h+=secTitle(`Propriétés (${pv.length})`,'#3fb950')+`<table class="ana-t ana-kv">${pv.map(v=>`<tr><td title="${capEsc(v.domain+(v.group?' › '+v.group:''))}">${capEsc(v.prop)}</td><td>${capEsc(v.value)}${v.unit?' '+capEsc(v.unit):''}${v.dflt?' <span class="ana-miss" title="Valeur par défaut, jamais saisie">○</span>':''}</td></tr>`).join('')}</table>`;
     const ct=capComputeConstraints().byEl[id];
     if(ct&&ct.length) h+=secTitle(`Contraintes (${ct.length})`,'#bc8cff')+`<table class="ana-t ana-kv">${ct.map(c=>`<tr><td>${capDetLink(c.id,c.name||'(sans nom)')}</td><td>${capEsc(c.text||'—')}</td></tr>`).join('')}</table>`;
+    // 🎬 Scénarios : diagramme du scénario, ou scénarios d'une capacité
+    const SC=capComputeScenarios(), sc=SC.byId[id], scs=SC.list.filter(s=>s.capId===id);
+    const scBtn=s=>`<div style="margin:2px 0"><button class="cap-lf-btn" onclick="capScOpen('${capEsc(s.id)}')" title="Ouvrir le diagramme de séquence dans 🎬 Scénarios">🎬 ${capEsc(s.ks)}</button> ${capEsc(s.name)} <span class="ana-dim">${s.nMsg} message(s)</span></div>`;
+    if(sc) h+=secTitle('Diagramme de séquence','#58a6ff')+scBtn(sc);
+    else if(scs.length) h+=secTitle(`Scénarios (${scs.length})`,'#58a6ff')+scs.map(scBtn).join('');
     return h;
   }catch(e){ console.warn('Détail étendu indisponible',e); return ''; }
 }
@@ -15189,15 +15300,17 @@ var CAP_NAV_ITEMS=[
   {k:'cards',     l:'▦ Cartes',             g:'explore'},
   {k:'table',     l:'📋 Tableau',           g:'explore'},
   {k:'index',     l:'📖 Index des types',   g:'explore'},
-  {k:'links',     l:'🔗 Liens',             g:'explore', t:'Relations entre les éléments du modèle'},
   {k:'chains',    l:'⚡ Chaînes',           g:'flux'},
   {k:'fex',       l:'ƒ⇆ Functional Exchange', g:'flux', t:'Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles'},
+  {k:'oav',       l:'🟨 Operational Analysis', g:'flux', t:'Activités opérationnelles (OA) en blocs façon Capella, avec leurs interactions et l\'entité ou l\'acteur qui les porte ; vue par activité, lignes, matrice, contrôles'},
   {k:'csys',      l:'🧱 System Component', g:'flux', t:'System Components (SA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles'},
   {k:'cblk',      l:'🧱 Logical Component', g:'flux', t:'Logical Components (LA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles'},
   {k:'compex',    l:'🔀 Behavior Exchange', g:'flux', t:'Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange)'},
   {k:'physlink',  l:'🔌 Physical Link',     g:'flux'},
+  {k:'scen',      l:'🎬 Scénarios',        g:'flux', t:'Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références'},
   {k:'ports',     l:'🧩 Ports',             g:'flux', t:'Traçabilité Function Port ↔ Component Port ↔ Physical Port'},
-  {k:'functions', l:'ƒ Fonctions',          g:'',     t:'Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier'},
+  {k:'links',     l:'🔗 Liens',             g:'flux', t:'Relations entre les éléments du modèle'},
+  {k:'functions', l:'ƒ Fonctions',          g:'ana',  t:'Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier'},
   {k:'ana:trace', l:'🧬 Traçabilité inter-couches', g:'ana'},
   {k:'ana:caps',  l:'🎯 Capacités & missions',     g:'ana'},
   {k:'ana:states',l:'🔁 Modes & états',            g:'ana'},
@@ -15210,13 +15323,13 @@ var CAP_NAV_ITEMS=[
 ];
 /** Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton). */
 var CAP_NAV_GROUPS=[
-  {g:'explore', id:'cap-v-elements', l:'🧭 Explorateur',       t:'Explorer le modèle : arborescence, cartes, tableau, index des types, liens'},
-  {g:'flux',    id:'cap-v-flux',     l:'📡 Flux & interfaces', t:'Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, ports'},
-  {g:'',        id:'',               l:'',                     t:''},   // place des vues sans menu (ƒ Fonctions)
-  {g:'ana',     id:'cap-v-analyses', l:'🔬 Analyses',          t:'Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes'}
+  {g:'explore', id:'cap-v-elements', l:'🧭 Explorateur',       t:'Explorer le modèle : arborescence, cartes, tableau, index des types'},
+  {g:'flux',    id:'cap-v-flux',     l:'📡 Flux & interfaces', t:'Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, scénarios, ports, liens'},
+  {g:'',        id:'',               l:'',                     t:''},   // place des vues sans menu
+  {g:'ana',     id:'cap-v-analyses', l:'🔬 Analyses',          t:'Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes'}
 ];
-/** Réglage par défaut : tous les menus affichés, ⚡ Chaînes, ƒ Fonctions et 📐 Tableau de bord en boutons directs. */
-var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['chains','functions','dashboard']};
+/** Réglage par défaut : tous les menus affichés, ⚡ Chaînes, 🎬 Scénarios et 📐 Tableau de bord en boutons directs. */
+var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['chains','scen','dashboard']};
 var _capNav=(()=>{ try{ const el=document.getElementById('cap-toolbar'); const o=el&&JSON.parse(el.textContent);
   if(o&&o.groups&&Array.isArray(o.pins)) return o; }catch(e){} return JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); })();
 var _capNavLast={explore:'cards', flux:'chains', ana:'ana:trace'};   // dernière sous-vue ouverte par menu
@@ -15340,7 +15453,7 @@ function capNavMenu(g, anchor){
       const a=e.target.closest('[data-act]');
       if(a){ capNavClose(); ({open:()=>capPickCapellaFile(), save:()=>capSavePageDirect(false), saveas:()=>capSavePageDirect(true),
         page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor(), update:()=>capCfgLoadUpdate(), cfgsave:()=>capCfgDialog('save'), cfgload:()=>capCfgLoadFile(),
-        help:()=>openHelpModal(), tour:()=>capTourStart(), tourview:()=>capTourStartView()})[a.dataset.act](); return; }
+        help:()=>openHelpModal(), tour:()=>capTourStart(), tourview:()=>capTourStartView(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
       if(e.target.closest('[data-reset]')){ _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); capNavSave(); capNavRender(); capNavMenuFill(); }
     });
     dd.addEventListener('change',e=>{
@@ -15396,7 +15509,8 @@ function capNavMenuFill(){
     res.innerHTML=`<div class="ctx-i" data-act="help">📖 Aide complète</div>
       <div class="ctx-i" data-act="tour" title="Découvrir l'interface pas à pas">🎓 Visite guidée</div>`+
       (v?`<div class="ctx-i" data-act="tourview" title="Présente les menus et les commandes de la vue affichée">🎯 Visite de cette vue <span class="cap-nav-g">${v.l}</span></div>`
-        :`<div class="cap-nav-hint">🎯 Chargez un modèle pour la visite de chaque vue.</div>`);
+        :`<div class="cap-nav-hint">🎯 Chargez un modèle pour la visite de chaque vue.</div>`)+
+      `<div class="cw-m-sep"></div><div class="ctx-i" data-act="about" title="Version, auteur, licence, composants tiers, informations techniques">ℹ À propos</div>`;
     return;
   }
   if(g==='theme'){
@@ -15617,22 +15731,22 @@ function capTfWatch(box){
  * qui le renvoie), m = 'loaded' (seulement avec un modèle chargé) ou 'empty' (seulement sans modèle),
  * pre = action préalable (ex. ouvrir une vue). */
 var CAP_TOUR_STEPS=[
-  {t:'🎓 Bienvenue dans Relation Map Capella',
+  {t:'🎓 Bienvenue dans Arcalyse',
    x:'Cette visite présente les principales zones de l\'outil en quelques étapes.<br>Utilisez <b>Suivant ▶</b> et <b>◀ Précédent</b> (ou les flèches du clavier) ; <b>✕</b> ou <b>Échap</b> pour quitter à tout moment.'},
   {s:'#cap-drop-zone', m:'empty', t:'🔷 Ouvrir un modèle',
    x:'Glissez-déposez un fichier <b>.capella</b> ici, ou cliquez pour le chercher. Le fichier est lu sur ce poste : rien n\'est envoyé.'},
   {s:'#cap-tb-views', t:'🧭 Barre des vues',
    x:'Toutes les vues d\'analyse du modèle sont regroupées ici, dans des menus déroulants (▾) et des boutons directs.'},
   {s:'#cap-v-elements', t:'🧭 Explorateur',
-   x:'Parcourir le modèle : arborescence, cartes, tableau filtrable, index des types et liens entre éléments.'},
+   x:'Parcourir le modèle : arborescence, cartes, tableau filtrable, et index des types.'},
   {s:'#cap-v-flux', t:'📡 Flux & interfaces',
-   x:'Chaînes fonctionnelles, Component Exchange, Physical Link et traçabilité des ports.'},
+   x:'Chaînes fonctionnelles, échanges et composants, Physical Link, scénarios, traçabilité des ports et liens entre éléments.'},
   {s:'#cap-v-chains', t:'⚡ Chaînes',
    x:'Les chaînes fonctionnelles du modèle, filtrables par type, couche et contenu, avec export image, PDF ou HTML.'},
   {s:'#cap-v-functions', t:'ƒ Fonctions',
    x:'Hiérarchie des fonctions, tableau, allocation aux composants, métriques, contrôles de qualité des noms et dossier imprimable.'},
   {s:'#cap-v-analyses', t:'🔬 Analyses',
-   x:'Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données et contraintes.'},
+   x:'ƒ Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données et contraintes.'},
   {s:'#cap-v-dashboard', t:'📐 Tableau de bord',
    x:'Composez vos propres tableaux de bord : indicateurs, graphiques et tableaux, imprimables en A4.'},
   {s:'#cap-nav-cfg', t:'☰ Toutes les vues',
@@ -15677,7 +15791,7 @@ var CAP_TOUR_EXPLORE=[
 ];
 /** Étapes communes aux vues de 📡 Flux & interfaces (onglets de navigation). */
 var CAP_TOUR_FLUX={s:'#cap-flux-tabs', t:'📡 Flux & interfaces',
-  x:'Ces onglets passent d\'une vue d\'interfaces à l\'autre, du fonctionnel au physique : <b>ƒ⇆ Functional Exchange</b> (fonctions), <b>🧱 System Component</b> (SA), <b>🧱 Logical Component</b> (LA), <b>🔀 Behavior Exchange</b> (PA, composants Behavior), <b>🔌 Physical Link</b> (PA, nœuds) et <b>🧩 Ports</b>. Chaque vue s\'ouvre en <b>◧ Vue Blocs</b>, le rendu façon Capella.'};
+  x:'Ces onglets passent d\'une vue d\'interfaces à l\'autre, du fonctionnel au physique : <b>ƒ⇆ Functional Exchange</b> (fonctions), <b>🧱 System Component</b> (SA), <b>🧱 Logical Component</b> (LA), <b>🔀 Behavior Exchange</b> (PA, composants Behavior), <b>🔌 Physical Link</b> (PA, nœuds), <b>🧩 Ports</b> et <b>🔗 Liens</b> (toutes les relations du modèle). Chaque vue s\'ouvre en <b>◧ Vue Blocs</b>, le rendu façon Capella.'};
 /** Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »). */
 var CAP_TOUR_ANA_TXT={
   trace:'<b>🧬 Traçabilité inter-couches</b> : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés.',
@@ -15689,11 +15803,26 @@ var CAP_TOUR_ANA_TXT={
   data:'<b>🗃 Données & interfaces</b> : classes, types de données, Exchange Items et interfaces, avec leurs utilisations.',
   cts:'<b>⛓ Contraintes</b> : contraintes du modèle et éléments contraints.'
 };
+/** Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
+ * la racine de l'arborescence si son graphe compte entre 6 et 60 nœuds, sinon le premier élément très relié
+ * qui tient dans cette fourchette (à défaut, le plus proche) ; le graphe est ensuite ajusté à la fenêtre. */
+function capTourRmCtx(){
+  if(S.ctx&&MODEL.elements.some(e=>e.id===S.ctx)) return;
+  const deg={}; MODEL.relations.forEach(r=>{ deg[r.src]=(deg[r.src]||0)+1; deg[r.tgt]=(deg[r.tgt]||0)+1; });
+  const cands=[...MODEL.elements.filter(e=>!e.parentEl), ...MODEL.elements.filter(e=>deg[e.id]).sort((a,b)=>deg[b.id]-deg[a.id]).slice(0,40)];
+  const size=id=>{ S.ctx=id; try{ const t=buildTreeData(); return t?d3.hierarchy(t).descendants().length:0; }catch(e){ return 0; } };
+  let best=null, gap=Infinity;
+  for(const e of cands){ const n=size(e.id), g=n<6?6-n:n>60?n-60:0;
+    if(g<gap){ gap=g; best=e; } if(!g) break; }
+  S.ctx=null;
+  if(best){ setCtx(best.id); setTimeout(()=>document.getElementById('b-fit')?.click(),50); }
+}
+
 /** Visites contextuelles, par vue : clé = '@rm', '@table' ou vue Capella (capCurrentView) ; l = nom de la vue,
  * steps = étapes (même format que CAP_TOUR_STEPS). */
 var CAP_TOUR_VIEWS={
   '@rm':{l:'🗺 Relation Map', steps:[
-    {t:'🗺 Relation Map', x:'Graphe centré sur un <b>élément de contexte</b> : ses voisins sont affichés jusqu\'à la profondeur choisie, selon les relations Capella cochées.'},
+    {pre:()=>capTourRmCtx(), t:'🗺 Relation Map', x:'Graphe centré sur un <b>élément de contexte</b> : ses voisins sont affichés jusqu\'à la profondeur choisie, selon les relations Capella cochées.'},
     {s:'#b-zi,#b-zo,#b-fit', t:'🔍 Zoom',
      x:'<b>＋</b> / <b>－</b> zooment (Ctrl++ / Ctrl+-), <b>⊡ Fit</b> ajuste le graphe à la fenêtre (Ctrl+W). La molette zoome aussi et le fond se déplace à la souris.'},
     {s:'#b-ea,#b-ca', t:'↕ Ouvrir / fermer tout',
@@ -15741,7 +15870,7 @@ var CAP_TOUR_VIEWS={
     {s:'#cap-view-index input.inp', t:'🔍 Recherche', x:'Cherche un type par son nom technique, son nom lisible ou sa description.'},
     {s:'#cap-index-thead', t:'↕ Tri', x:'Clic sur un titre de colonne pour trier (nom, nombre d\'éléments…).'},
     {s:'#cap-index-tbody', t:'📖 Types', x:'Chaque type présent dans le modèle : nom lisible, nombre d\'éléments et description ARCADIA.'}]},
-  links:{l:'🔗 Liens', steps:[
+  links:{l:'🔗 Liens', steps:[CAP_TOUR_FLUX,
     {t:'🔗 Liens', x:'Toutes les relations entre éléments du modèle, classées par nature : décomposition, allocation, échanges, réalisation inter-couches, capacités, chaînes.'},
     {s:'#cap-view-links .cap-lf-q', t:'🔍 Recherche', x:'Filtre les liens par élément, échange ou identifiant.'},
     {s:'#cap-view-links .cap-lf-glab,#cap-view-links .cap-lf-btn', t:'🔗 Relations', x:'Clic sur une relation pour n\'afficher qu\'elle ; le libellé de gauche sélectionne tout le groupe. Le nombre de liens est indiqué sur chaque bouton.'},
@@ -15787,6 +15916,19 @@ var CAP_TOUR_VIEWS={
     {s:'#fex-fn-input,#fex-name-input', t:'🔍 Filtres', x:'Par fonction, ou par nom d\'échange ou d\'Exchange Item.'},
     {s:'#fex-exp-csv,#fex-exp-html,#fex-exp-html-all', t:'⬇ Exports', x:'CSV de la vue, rapport HTML de la vue (toutes les pages), ou rapport HTML autonome avec toutes les vues.'},
     {s:'#fex-main', t:'📋 Résultat', x:'Clic sur une fonction ou un échange pour ouvrir son détail.'}]},
+  oav:{l:'🟨 Operational Analysis', steps:[CAP_TOUR_FLUX,
+    {s:'#cap-view-oav .phl-toggle-btn', t:'🖼 Présentation', x:'<b>◧ Vue Blocs</b> : activités opérationnelles dessinées comme dans Capella (blocs jaunes, interactions entrantes à gauche, sortantes à droite ; en haut, l\'entité ou l\'acteur qui porte l\'activité ; clic sur une activité distante = aller à son bloc) · <b>≡ Vue Ligne</b> · <b>▣ Vue Activité</b> · <b>▦ Matrice</b> activité × activité · <b>🩺 Contrôles</b>.'},
+    {s:'#cap-view-oav .ana-ak', t:'🏢 Allocation', x:'Activités portées par une entité, par un acteur opérationnel ou non allouées (double-clic : uniquement celles-ci), ou par une entité ou un acteur précis.'},
+    {s:'#cap-view-oav #fex-fn-input,#cap-view-oav #fex-name-input', t:'🔍 Filtres', x:'Par activité, ou par nom d\'interaction ou d\'Exchange Item.'},
+    {s:'#cap-view-oav #fex-exp-csv,#cap-view-oav #fex-exp-html,#cap-view-oav #fex-exp-html-all', t:'⬇ Exports', x:'CSV des interactions, rapport HTML de la vue ou de toutes les vues.'},
+    {s:'#cap-view-oav #fex-main', t:'📋 Résultat', x:'Clic sur une activité ou une interaction pour ouvrir son détail.'}]},
+  scen:{l:'🎬 Scénarios', steps:[CAP_TOUR_FLUX,
+    {s:'#cap-view-scen [data-scv]', t:'🎬 Diagramme ou contrôles', x:'<b>🎬 Diagramme</b> : diagramme de séquence du scénario choisi · <b>🩺 Contrôles</b> : scénarios vides, messages sans échange, lignes de vie sans élément, scénarios hors capacité, références introuvables.'},
+    {s:'#cap-view-scen [data-scl]', t:'🧱 Couche et type', x:'Filtre par couche ARCADIA et par type : ES (Exchange Scenario), FS (Functional Scenario), OES / OAS en OA, IS (Interface Scenario).'},
+    {s:'#sc-q', t:'🔍 Recherche', x:'Par nom de scénario, de capacité ou de ligne de vie.'},
+    {s:'#cap-view-scen .sc-list', t:'📋 Scénarios', x:'Rangés par couche puis par capacité (clic sur 🎯 : détail de la capacité). Clic sur un scénario pour afficher son diagramme.'},
+    {s:'#cap-view-scen .sc-scroll', t:'🖼 Diagramme', x:'Redessiné à partir du modèle, façon Capella : lignes de vie (bleu clair = acteur, bleu = composant, vert = fonction), messages, barres d\'activation, fonctions (vert), états (gris clair) et modes (gris foncé), fragments combinés (ALT, OPT, LOOP, PAR…) avec leurs gardes, références « ref » (clic : ouvrir le scénario). Clic sur un élément : son détail. Les noms des lignes de vie restent visibles en haut au défilement.'},
+    {s:'#cap-view-scen [data-sce]', t:'⬇ Exports', x:'Image PNG, SVG, ou copie de l\'image dans le presse-papiers. − / + : zoom.'}]},
   physlink:{l:'🔌 Physical Link', steps:[CAP_TOUR_FLUX,
     {s:'#cap-view-physlink .phl-toggle-btn', t:'🖼 Présentation', x:'<b>◧ Vue Blocs</b> (par défaut) : nœuds dessinés comme dans Capella (jaune = nœud du système, bleu clair = nœud acteur ; ports physiques jaunes ; clic sur un nœud distant = aller à son bloc) · <b>≡ Vue Ligne</b>, <b>▣ Vue Composant</b>, <b>▦ Matrice</b> composant × composant et <b>🩺 Contrôles</b> des liens physiques.'},
     {s:'#cap-view-physlink .ana-ak', t:'🖥 Nature (Vue Blocs)', x:'Nœuds du système ou nœuds acteurs (double-clic : uniquement ceux-ci), ou un nœud et ses sous-composants.'},
@@ -15811,7 +15953,7 @@ var CAP_TOUR_VIEWS={
     {s:'#ana-fn-csv,#ana-fn-html', t:'⬇ Exports', x:'<b>⬇ CSV</b> et <b>📄 Dossier fonctionnel</b> : document HTML avec une section par fonction (description, allocation, échanges, traçabilité).'},
     {s:'#cap-view-functions .phl-filter-bar + *', one:true, t:'📋 Résultat', x:'Clic sur une fonction pour ouvrir son détail.'}]},
   analyses:{l:'🔬 Analyses', steps:[
-    {s:'#cap-view-analyses [data-an]', t:'🔬 Analyses', x:'Huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes.'},
+    {s:'#cap-view-analyses [data-an]', t:'🔬 Analyses', x:'ƒ Fonctions et huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes.'},
     {s:'#cap-view-analyses [data-an].active', t:'🔎 Analyse affichée', x:()=>CAP_TOUR_ANA_TXT[capAnaSub]||'Analyse en cours.'},
     {s:'#ana-recalc', t:'↻ Recalculer', x:'Les résultats sont gardés en mémoire ; ce bouton les recalcule (utile après une mise à jour du modèle).'},
     {s:'#ana-box .phl-filter-bar', one:true, t:'🧰 Options', x:'Présentations, filtres et export CSV propres à l\'analyse affichée.'},
@@ -15824,6 +15966,32 @@ var CAP_TOUR_VIEWS={
     {s:'#dash-json,#dash-imp', t:'⬇⬆ JSON', x:'Exporte ou importe la définition des tableaux de bord pour les réutiliser sur un autre modèle.'},
     {s:'#cap-view-dashboard .dash-scroll', t:'📐 Page', x:'Les éléments du tableau de bord, calculés sur le modèle chargé.'}]}
 };
+/** 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps). */
+var CAP_TOUR_START=[
+  {t:'🚀 Bien démarrer',
+   x:'Deux temps pour bien démarrer :<br><b>1.</b> ouvrir votre modèle Capella ;<br><b>2.</b> une fois le modèle ouvert, savoir où trouver l\'aide et les tutoriels.'},
+  {s:'#cap-drop-zone', m:'empty', t:'1 · Ouvrir un modèle Capella',
+   x:'Glissez-déposez votre fichier <b>.capella</b> dans ce cadre (formats acceptés : .capella, .melodymodeller, .xml).<br>Le fichier est lu sur ce poste : rien n\'est envoyé.'},
+  {s:'#cw-browse', m:'empty', t:'… ou le chercher',
+   x:'Vous pouvez aussi cliquer sur <b>📂 Parcourir…</b> pour le choisir dans l\'explorateur de fichiers.'},
+  {s:'#b-help, #cap-nav-dd', m:'empty', pre:()=>capTourHelpMenu(), t:'? Aide, en haut à droite',
+   x:'Le menu <b>? Aide ▾</b> reste accessible à tout moment, avec ou sans modèle : <b>📖 Aide complète</b> et <b>🎓 Visite guidée</b>.<br>Une fois le modèle ouvert, il propose aussi <b>🎯 Visite de cette vue</b> pour chaque vue.'},
+  {m:'empty', pre:()=>capNavClose(), t:'À vous !',
+   x:'Cliquez sur <b>Terminer ✓</b>, puis ouvrez votre fichier.<br>Dès que le modèle sera chargé, la visite reprendra pour vous montrer où trouver l\'aide et les tutoriels.'}
+];
+/** 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels. */
+var CAP_TOUR_AFTER=[
+  {pre:()=>capNavClose(), t:'✅ Modèle ouvert',
+   x:'Votre modèle est chargé. Voici où trouver l\'aide et les tutoriels, à tout moment.'},
+  {s:'#b-help', pre:()=>capNavClose(), t:'? Aide',
+   x:'L\'aide et toutes les visites guidées sont regroupées dans ce menu.'},
+  {s:'#cap-nav-dd', pre:()=>capTourHelpMenu(), t:'📚 Aide et tutoriels',
+   x:'<b>📖 Aide complète</b> : documentation de toutes les vues.<br><b>🎓 Visite guidée</b> : tour complet de l\'interface.<br><b>🎯 Visite de cette vue</b> : menus et commandes de la vue affichée — disponible dans chaque vue.'},
+  {s:'#cap-tb-views', pre:()=>capNavClose(), t:'🧭 Et maintenant',
+   x:'Choisissez une vue dans cette barre, puis <b>? Aide ▾ → 🎯 Visite de cette vue</b> pour la découvrir pas à pas.'}
+];
+var _capTourResume=false;   // vrai : reprendre « Bien démarrer » (2e temps) au prochain chargement de modèle
+
 var _capTour=null;   // visite en cours : {i, steps} ou null
 
 /** Clé de la vue affichée pour les visites contextuelles.
@@ -15901,7 +16069,7 @@ function capTourGo(d){
   const S=_capTour.steps;
   let i=_capTour.i+d;
   while(i>=0&&i<S.length&&!capTourVisible(S[i])) i+=d;
-  if(i>=S.length){ capTourEnd(); return; }
+  if(i>=S.length){ const done=_capTour.onDone; capTourEnd(); if(done) done(); return; }
   if(i<0) return;
   _capTour.i=i;
   const st=S[i];
@@ -15930,7 +16098,7 @@ function capTourRenderPop(){
     <div class="ct-b">${x}</div>
     <div class="ct-ft"><span class="ct-n">Étape ${p.n} / ${p.tot}</span>
       <button class="tbtn" data-tour="prev"${p.first?' disabled':''}>◀ Précédent</button>
-      <button class="tbtn ct-next" data-tour="${p.last?'end':'next'}">${p.last?'Terminer ✓':'Suivant ▶'}</button></div>`;
+      <button class="tbtn ct-next" data-tour="next">${p.last?'Terminer ✓':'Suivant ▶'}</button></div>`;
   pop.querySelector('.ct-next').focus({preventScroll:true});
 }
 
@@ -15977,10 +16145,34 @@ function capTourKey(e){
 
 /** Quitte la visite guidée et retire la mise en évidence. */
 function capTourEnd(){
+  if(_capTour&&(_capTour.steps===CAP_TOUR_AFTER||_capTour.steps===CAP_TOUR_START)) capNavClose();
   _capTour=null;
   ['cap-tour-block','cap-tour-spot','cap-tour-pop'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='none'; });
 }
 
+/** Ouvre le menu ? Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente. */
+function capTourHelpMenu(){
+  const dd=document.getElementById('cap-nav-dd'), b=document.getElementById('b-help');
+  if(b&&!(dd&&dd.style.display!=='none'&&dd.dataset.g==='help')) capNavMenu('help', b);
+}
+
+/** Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
+ * avec un modèle déjà chargé, passe directement au 2e temps (aide et tutoriels). */
+function capTourStartHere(){
+  if(capLoaded){ capShowWelcome(false); capTourStart(CAP_TOUR_AFTER); return; }
+  capTourStart(CAP_TOUR_START);
+  _capTour.onDone=()=>{ _capTourResume=true; };   // ✕ ou Échap : pas de reprise
+}
+
+/** Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée. */
+function capTourResumeAfterLoad(){
+  if(!_capTourResume) return;
+  _capTourResume=false;
+  setTimeout(()=>{ if(capLoaded&&!_capTour) capTourStart(CAP_TOUR_AFTER); }, 600);
+}
+
+// Bouton « 🚀 Bien démarrer » de l'écran d'accueil
+document.getElementById('cw-start')?.addEventListener('click',ev=>{ ev.preventDefault(); ev.stopPropagation(); capTourStartHere(); });
 // Lien « 🎓 Visite guidée » de l'écran d'accueil (sans déclencher l'ouverture du sélecteur de fichier)
 document.getElementById('cw-tour-link')?.addEventListener('click',ev=>{ ev.preventDefault(); ev.stopPropagation(); capTourStart(); });
 /* ══ ⇆ FUNCTIONAL EXCHANGE ═════════════════════════════════════════════════════════
@@ -15993,6 +16185,7 @@ document.getElementById('cw-tour-link')?.addEventListener('click',ev=>{ ev.preve
 var CAP_FEX_PAGE=100;    // éléments par page (Ligne, Fonction, Blocs) : ≈ 0,1 s de rendu ; tout afficher (3 000 fonctions) ≈ 2 s à chaque filtre
 var CAP_FEX_MX_MAX=100;  // fonctions au plus dans la matrice : 100 ≈ 0,2 s, 200 ≈ 0,5 s, 300 ≈ 1,6 s
 var _capFexView='block';
+var _capOavView='block';   // vue choisie dans 🟨 Operational Analysis (même moteur, couche OA seule)
 var _capFexGo=null;   // fonction à afficher à la prochaine ouverture de la vue (depuis une autre vue)
 
 /** Conseil d'affichage des Vues Blocs : rendu plus proche de Capella avec un thème clair (affiché seulement en thème sombre).
@@ -16114,11 +16307,19 @@ function capFexDashCatalog(add, LC){
 }
 
 /** Rend la vue ƒ⇆ Functional Exchange (barre, filtres, contenu paginé, exports). */
-function capRenderFunctionalExchange(){
-  const container=document.getElementById('cap-view-fex'); if(!container) return;
-  const X=capComputeFunctionalExchanges(), allLinks=X.list;
-  if(!container._fex) container._fex={view:_capFexView, layer:'all', fnFilter:'', nameFilter:'', withPorts:true, page:0, ak:new Set(['sys','act','none']), back:null};
+function capRenderFunctionalExchange(mode){
+  const OAV=mode==='OA';   // 🟨 Operational Analysis : activités et interactions OA, aux couleurs Capella
+  const container=document.getElementById(OAV?'cap-view-oav':'cap-view-fex'); if(!container) return;
+  container.classList.toggle('fex-oa', OAV);
+  const X0=capComputeFunctionalExchanges();
+  const X=OAV?{...X0, list:X0.list.filter(x=>x.layer==='OA'), fns:X0.fns.filter(f=>f.layer==='OA')}:X0, allLinks=X.list;
+  if(!container._fex) container._fex={view:OAV?_capOavView:_capFexView, layer:OAV?'OA':'all', fnFilter:'', nameFilter:'', withPorts:false, page:0, ak:new Set(['sys','act','none']), back:null};
   const st=container._fex;
+  if(OAV) st.layer='OA';
+  const keepView=()=>{ if(OAV) _capOavView=st.view; else _capFexView=st.view; };
+  /** Vocabulaire : activités / entités en OA, fonctions / système sinon. */
+  const W=OAV?{fns:'activités', Fns:'Activités', fn:'activité', Fn:'Activité'}:{fns:'fonctions', Fns:'Fonctions', fn:'fonction', Fn:'Fonction'};
+  const AKL=k=>OAV&&k==='sys'?{i:'🏢',l:'Entités',tip:'Activités allouées à une entité opérationnelle (non acteur)'}:CAP_FN_AK[k];
   const isLight=capIsLight();
   const LAYER_C={OA:'#f0883e',SA:'#4dd880',LA:'#58a6ff',PA:'#e3b341'};
   const fnColor=L=>isLight?({OA:'#a04d00',SA:'#1a7a3a',LA:'#1a4f8a',PA:'#7a6500'}[L]||'#555'):(LAYER_C[L]||'#8b949e');
@@ -16128,8 +16329,8 @@ function capRenderFunctionalExchange(){
 
   /** Lien cliquable ouvrant le panneau de détail. */
   const det=(id,label,extra,cls)=>`<span class="cex-det${cls?' '+cls:''}" style="cursor:pointer;${extra||''}" onclick="event.stopPropagation();capOpenDetailById('${capEsc(id)}')">${capEsc(label)}</span>`;
-  /** Libellé d'une fonction façon Capella : [numéro] nom. */
-  const fnLabel=(num,name)=>(num&&num!=='?'?`[${num}] `:'')+name;
+  /** Libellé d'une fonction : son nom seul (le numéro hiérarchique calculé n'est plus affiché). */
+  const fnLabel=(num,name)=>name;
 
   /** Nature d'allocation d'une fonction pour la couleur et le filtre : 'sys' (système), 'act' (acteur), 'none' (non allouée ou fonction mère). */
   const akOf=id=>{ const f=X.fnById[id]; if(!f) return 'none'; const k=capFnAllocKind(f); return k==='mix'?'act':k==='parent'?'none':k; };
@@ -16289,7 +16490,7 @@ function capRenderFunctionalExchange(){
       return `<div class="fex-blk" data-fn="${capEsc(f.id)}" style="--fex-h:${Math.max(74,44+Math.max(gIn.total,gOut.total))}px">
         <div class="fex-side fex-side-in">${side(ins,'IN')}</div>
         <div class="fex-box fex-k-${ak}" data-layer="${f.layer}" title="${capEsc(capAnaHuman(f.type))} — ${f.layer} — ${akT}${f.alloc.length?' : '+capEsc(f.alloc.map(a=>a.name).join(', ')):''}">
-          <div class="fex-box-t">${det(f.id,fnLabel(f.num,f.name))}</div>
+          <div class="fex-box-t">${OAV?'<span class="fex-oa-ic">OA</span>':''}${det(f.id,fnLabel(f.num,f.name))}</div>
           ${attachHtml(f)}
           <div class="fex-pins-in">${pins(ins,'IN')}</div><div class="fex-pins-out">${pins(outs,'OUT')}</div>
           ${!ins.length&&!outs.length?'<div class="fex-box-empty">aucun port ni échange</div>':''}
@@ -16342,7 +16543,7 @@ function capRenderFunctionalExchange(){
       const fns=getFns();
       if(!fns.length) return '<div class="phl-empty">Aucune fonction ne correspond au filtre.</div>';
       if(all) return buildBlocks(fns);
-      const p=paged(fns,'Fonctions'), bf=st.back&&X.fnById[st.back];
+      const p=paged(fns,W.Fns), bf=st.back&&X.fnById[st.back];
       const back=bf?`<div class="fex-backbar"><button class="cap-lf-btn" id="fex-back" title="Revenir au bloc d'où vous venez">↩ Revenir à « ${capEsc(fnLabel(bf.num,bf.name))} »</button></div>`:'';
       return capBlkThemeHint()+back+p.bar+buildBlocks(p.slice)+p.bar;
     }
@@ -16351,7 +16552,7 @@ function capRenderFunctionalExchange(){
     if(view==='card'){
       const groups=groupByFn(list);
       if(all) return buildCards(groups,true);
-      const p=paged(groups,'Fonctions'); return p.bar+buildCards(p.slice)+p.bar;
+      const p=paged(groups,W.Fns); return p.bar+buildCards(p.slice)+p.bar;
     }
     if(all) return buildLines(list);
     const p=paged(list,'Échanges'); return p.bar+buildLines(p.slice)+p.bar;
@@ -16392,11 +16593,11 @@ function capRenderFunctionalExchange(){
 
   /** Texte du compteur (échanges ou fonctions selon la vue). */
   function counterText(f){
-    return st.view==='block'?`${getFns().length}/${X.fns.length} fonctions`:`${f.length}/${allLinks.length} échange${allLinks.length>1?'s':''}`;
+    return st.view==='block'?`${getFns().length}/${X.fns.length} ${W.fns}`:`${f.length}/${allLinks.length} échange${allLinks.length>1?'s':''}`;
   }
   /** Rafraîchit le contenu et le compteur sans reconstruire la barre. */
   function updateContent(){
-    _capFexView=st.view;
+    keepView();
     const f=getFiltered();
     const ctr=container.querySelector('#fex-counter'); if(ctr) ctr.textContent=counterText(f);
     const main=container.querySelector('#fex-main'); if(main) main.innerHTML=buildContent(f);
@@ -16406,18 +16607,18 @@ function capRenderFunctionalExchange(){
   /** Rapport HTML autonome : vue courante, ou toutes les vues en onglets (filtres appliqués, sans pagination). */
   function exportHtml(all){
     const f=getFiltered();
-    const VIEWS=[['block','◧ Vue Blocs'],['line','≡ Vue Ligne'],['card','▣ Vue Fonction'],['matrix','▦ Matrice'],['diag','🩺 Contrôles']];
+    const VIEWS=[['block','◧ Vue Blocs'],['line','≡ Vue Ligne'],['card',`▣ Vue ${W.Fn}`],['matrix','▦ Matrice'],['diag','🩺 Contrôles']];
     const keys=all?VIEWS.map(v=>v[0]):[st.view];
     const tabs=VIEWS.filter(v=>keys.includes(v[0])||(v[0]==='line'&&keys.includes('matrix'))).map(([k,label])=>({key:k,label,html:buildContent(f,k)}));
     const cells={}; Object.entries(container._fexCells||{}).forEach(([k,ls])=>cells[k]=ls.map(l=>l.x.id));
     const fi=[st.layer!=='all'&&`couche ${st.layer}`, akOn()&&'allocation : '+[...st.ak].map(k=>CAP_FN_AK[k].l).join(' + '), st.who&&`allocataire « ${((who.act.get(st.who)||who.comp.get(st.who)||{}).name||'')} »`,st.fnFilter&&`fonction « ${st.fnFilter} »`,st.nameFilter&&`échange « ${st.nameFilter} »`].filter(Boolean).join(', ');
-    capHtmlReport({title:'ƒ⇆ Functional Exchanges', subtitle:`${f.length}/${allLinks.length} échanges${fi?' · filtres : '+fi:''}`, tabs, active:st.view, cells,
-      filename:all?'functional-exchanges-rapport.html':`functional-exchanges-${st.view}.html`});
+    capHtmlReport({title:OAV?'🟨 Operational Analysis — activités et interactions':'ƒ⇆ Functional Exchanges', subtitle:`${f.length}/${allLinks.length} échanges${fi?' · filtres : '+fi:''}`, tabs, active:st.view, cells,
+      filename:(OAV?'operational-analysis':'functional-exchanges')+(all?'-rapport.html':`-${st.view}.html`)});
   }
 
   /** Export CSV : un échange par ligne (ou une ligne par port en Vue Blocs). */
   function exportCsv(){
-    if(st.view==='block'){
+    if(st.view==='block'&&!OAV){   // en OA, pas de ports : export des interactions
       const rows=[]; getFns().forEach(f=>[...f.ins.map(p=>({p,d:'Entrée'})),...f.outs.map(p=>({p,d:'Sortie'}))].forEach(({p,d})=>{
         const xs=X.portFes[p.id]||[];
         if(!xs.length) rows.push([f.layer,f.num,f.name,d,p.name,'','','']);
@@ -16426,36 +16627,36 @@ function capRenderFunctionalExchange(){
       capCsvDownload('functional-exchanges-ports.csv',['Couche','N°','Fonction','Sens','Port','Functional Exchange','Fonction distante','Port distant'],rows);
       return;
     }
-    capCsvDownload('functional-exchanges.csv',['N°','Couche','Fonction source','Port source','Functional Exchange','Port cible','Fonction cible','Exchange Items','Component Exchanges','Chaînes'],
+    capCsvDownload(OAV?'operational-interactions.csv':'functional-exchanges.csv',['N°','Couche','Fonction source','Port source','Functional Exchange','Port cible','Fonction cible','Exchange Items','Component Exchanges','Chaînes'],
       getFiltered().map(x=>[x.num,x.layer,x.src.fnName,x.src.portName,x.name,x.tgt.portName,x.tgt.fnName,x.items.map(i=>i.name).join(', '),x.ces.map(c=>c.name).join(', '),x.chains.map(c=>c.name).join(', ')]));
   }
 
   /** Construit toute la vue (barre, filtres, contenu, écouteurs). */
   function render(){
-    _capFexView=st.view;
+    keepView();
     who=whoCompute();
     if(st.who&&!who.act.has(st.who)&&!who.comp.has(st.who)) st.who='';   // allocataire absent de la couche choisie
     const f=getFiltered();
-    const V=[['block','◧ Vue Blocs','Fonctions dessinées comme dans Capella : pins d\'entrée (verts) à gauche, de sortie (orange) à droite ; vert = système, bleu = acteur, gris = non allouée'],
-      ['line','≡ Vue Ligne','Un échange par ligne : fonction source ▶ échange ▶ fonction cible'],['card','▣ Vue Fonction','Échanges regroupés par fonction'],
+    const V=[['block','◧ Vue Blocs',OAV?'Activités opérationnelles dessinées comme dans Capella (jaune), interactions entrantes à gauche, sortantes à droite ; entité ou acteur porteur en haut du bloc (clic : son détail)':'Fonctions dessinées comme dans Capella : pins d\'entrée (verts) à gauche, de sortie (orange) à droite ; vert = système, bleu = acteur, gris = non allouée'],
+      ['line','≡ Vue Ligne',`Un échange par ligne : ${W.fn} source ▶ échange ▶ ${W.fn} cible`],['card',`▣ Vue ${W.Fn}`,`Échanges regroupés par ${W.fn}`],
       ['matrix','▦ Matrice','Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus'],['diag','🩺 Contrôles','Ports orphelins, échanges sans Exchange Item, fonctions sans échange…']];
     container.innerHTML=`
       <div class="phl-toggle-bar">
         ${V.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}
         <span id="fex-counter" style="font-size:11px;color:var(--c-dim);font-family:monospace;">${counterText(f)}</span>
         <span style="display:flex;gap:4px;margin-left:12px;flex-wrap:wrap;">
-          ${[['all','Toutes',allLinks.length],...layersPresent.map(k=>[k,k,allLinks.filter(x=>x.layer===k).length])]
+          ${OAV?'':[['all','Toutes',allLinks.length],...layersPresent.map(k=>[k,k,allLinks.filter(x=>x.layer===k).length])]
             .map(([k,lab,n])=>`<button class="cap-lf-btn fex-layer-btn${st.layer===k?' active':''}" data-ly="${k}" title="Échanges de la couche">${lab} (${n})</button>`).join('')}
         </span>
       </div>
       <div class="phl-filter-bar" style="margin-bottom:8px;">
-        <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;">ƒ Fonction :</span>
-        <input id="fex-fn-input" type="text" class="phl-filter-input" placeholder="Filtrer par fonction…" value="${capEsc(st.fnFilter)}" style="width:200px;">
+        <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;">${OAV?'🟨 Activité :':'ƒ Fonction :'}</span>
+        <input id="fex-fn-input" type="text" class="phl-filter-input" placeholder="Filtrer par ${W.fn}…" value="${capEsc(st.fnFilter)}" style="width:200px;">
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;margin-left:8px;">🔍 Échange :</span>
         <input id="fex-name-input" type="text" class="phl-filter-input" placeholder="Échange ou Exchange Item…" value="${capEsc(st.nameFilter)}" style="width:200px;">
         ${st.view==='block'?`<label style="font-size:11px;color:var(--c-dim);display:flex;align-items:center;gap:4px;margin-left:8px;" title="Masquer les fonctions sans port ni échange (fonctions mères le plus souvent)"><input type="checkbox" id="fex-withports"${st.withPorts?' checked':''}> avec ports ou échanges</label>`:''}
         ${(()=>{ const base=X.fns.filter(fn=>(st.layer==='all'||fn.layer===st.layer)&&!(st.view==='block'&&st.withPorts&&!fn.ins.length&&!fn.outs.length&&!fn.fesIn.length&&!fn.fesOut.length)&&whoFn(fn.id)), n=k=>base.filter(fn=>akOf(fn.id)===k).length;
-          return `<span class="tb-grp ana-ak" style="margin-left:8px" title="Clic : afficher / masquer · double-clic : uniquement celle-ci (ou tout réafficher)${st.view==='block'?'':' — un échange est gardé si l\'une de ses deux fonctions correspond'}"><span class="tb-grp-l">Allocation</span>${['sys','act','none'].map(k=>`<label class="ana-ak-chip${st.ak.has(k)?' on':''}" style="--c:${CAP_FN_AK[k].c}" title="${CAP_FN_AK[k].tip} — double-clic : uniquement celles-ci"><input type="checkbox" data-fak="${k}"${st.ak.has(k)?' checked':''}>${CAP_FN_AK[k].i} ${CAP_FN_AK[k].l} <b>${n(k)}</b></label>`).join('')}${whoSelect()}</span>`; })()}
+          return `<span class="tb-grp ana-ak" style="margin-left:8px" title="Clic : afficher / masquer · double-clic : uniquement celle-ci (ou tout réafficher)${st.view==='block'?'':' — un échange est gardé si l\'une de ses deux fonctions correspond'}"><span class="tb-grp-l">Allocation</span>${['sys','act','none'].map(k=>`<label class="ana-ak-chip${st.ak.has(k)?' on':''}" style="--c:${CAP_FN_AK[k].c}" title="${AKL(k).tip} — double-clic : uniquement celles-ci"><input type="checkbox" data-fak="${k}"${st.ak.has(k)?' checked':''}>${AKL(k).i} ${AKL(k).l} <b>${n(k)}</b></label>`).join('')}${whoSelect()}</span>`; })()}
         <div style="margin-left:auto;display:flex;gap:6px;">
           <button class="phl-export-btn" id="fex-exp-csv">⬇ CSV</button>
           <button class="phl-export-btn" id="fex-exp-html" title="Rapport HTML de la vue affichée (toutes les pages)">⬇ HTML</button>
@@ -16483,7 +16684,7 @@ function capRenderFunctionalExchange(){
     wireMain();
   }
   render();
-  if(_capFexGo){ const g=_capFexGo; _capFexGo=null; if(st.view!=='block'){ st.view='block'; render(); } gotoFn(g); }
+  if(!OAV&&_capFexGo){ const g=_capFexGo; _capFexGo=null; if(st.view!=='block'){ st.view='block'; render(); } gotoFn(g); }
 }
 /* ══ ⚖ RAPPORT DE COMPARAISON DE VERSIONS ═══════════════════════════════════════════
  * Transforme les différences brutes (capDiffCompute) en un rapport lisible :
@@ -17043,7 +17244,7 @@ function capCfgLoadFile(){
     const f=inp.files[0]; if(!f) return;
     f.text().then(t=>{
       let o; try{ o=capCfgRev(t); }catch(e){ alert('Fichier illisible : JSON invalide.'); return; }
-      if(!o||o.type!=='capella-interface'||!o.parts){ alert('Ce fichier n\'est pas un fichier « interface et vues » de Relation Map Capella.'); return; }
+      if(!o||o.type!=='capella-interface'||!o.parts){ alert('Ce fichier n\'est pas un fichier « interface et vues » d\'Arcalyse.'); return; }
       capCfgDialog('load',o);
     });
   };
@@ -17188,7 +17389,7 @@ function capRenderComponentBlocks(L, host, holder){
     allLinks=C0.links.filter(l=>l.layer===L);
   }
   const inScope=new Set(C.comps.map(c=>c.id));
-  if(!holder._cb) holder._cb={view:V0.only?'block':_capCbView[L], layer:L, name:'', ex:'', withPorts:C.comps.some(c=>c.ports.length),   // « avec ports » seulement si la couche a des ports
+  if(!holder._cb) holder._cb={view:V0.only?'block':_capCbView[L], layer:L, name:'', ex:'', withPorts:false,   // « avec ports » décoché par défaut : tous les composants affichés
     page:0, nk:new Set(['sys','act','node']), under:'', back:null, fnOpen:new Set()};
   const st=holder._cb; st.layer=L; if(!st.fnOpen) st.fnOpen=new Set(); if(V0.only) st.view='block';
   const NK={sys:{i:'🧩',l:'Système',c:'#58a6ff',tip:'Composants du système'},act:{i:'👤',l:'Acteurs',c:'#7fd8ff',tip:'Acteurs externes'},node:{i:'🖥',l:'Nœuds',c:'#e3b341',tip:'Nœud'}};
@@ -17251,7 +17452,9 @@ function capRenderComponentBlocks(L, host, holder){
       }).join('');
       const pins=(list,s)=>list.map((p,i)=>`<span class="fex-bpin" style="top:${(s==='L'?gL:gR).tops[i]}px">${port(p.orient,s,!(C.portLinks[p.id]||[]).length)}<span class="fex-pname">${capEsc(p.name)}</span></span>`).join('');
       const fnTip=c.fns.map(f=>f.name).join('\n');
-      return `<div class="fex-blk" data-fn="${capEsc(c.id)}" style="--fex-h:${Math.max(74,44+Math.max(gL.total,gR.total))}px">
+      // Hauteur mini pour que le titre (≈ 22 caractères par ligne) ne recouvre pas « aucun port » ni « ƒ n fonctions »
+      const tl=Math.ceil(String(c.name||'').length/22), minH=22+tl*17+(c.fns.length?18:0)+(!c.ports.length?16:0);
+      return `<div class="fex-blk" data-fn="${capEsc(c.id)}" style="--fex-h:${Math.max(74,minH,44+Math.max(gL.total,gR.total))}px">
         <div class="fex-side fex-side-in">${side(L,gL)}</div>
         <div class="fex-box cb-box cb-k-${c.kind}" title="${capEsc(capAnaHuman(c.type))} — ${c.layer}${c.actor?' — acteur':''}${c.nature?' — '+c.nature:''}">
           <div class="fex-box-t"><span class="cb-ic">${c.actor?'👤':c.kind==='node'?'🖥':'▣'}</span> ${det(c.id,c.name)}</div>
@@ -17499,7 +17702,7 @@ function capRenderComponentBlocks(L, host, holder){
  * Les barres étant redessinées par leurs vues, un observateur regroupe chaque nouvelle barre (les commandes
  * sont déplacées, pas recréées : identifiants et écouteurs sont conservés).
  */
-var CAP_TBG_ROOTS=['cap-view-fex','cap-view-csys','cap-view-cblk','cap-view-compex','cap-view-physlink','cap-view-ports','cap-view-analyses'];
+var CAP_TBG_ROOTS=['cap-view-fex','cap-view-oav','cap-view-csys','cap-view-cblk','cap-view-compex','cap-view-physlink','cap-view-ports','cap-view-analyses'];
 
 /** Nature d'un élément de barre pour le regroupement.
  * @param {Element} el
@@ -17552,6 +17755,560 @@ function capTbGroupAll(root){
       .observe(root,{childList:true, subtree:true});
   });
 })();
+
+/* ── En-têtes collants : les barres du haut d'une vue restent visibles quand on fait défiler ──
+ * Vues : ⚡ Chaînes, 📡 Flux & interfaces, ƒ Fonctions (⛓ Traçabilité, 📊 Métriques, 🩺 Contrôles…), 🔬 Analyses.
+ * Les barres (.phl-toggle-bar, .phl-filter-bar, .cap-lf-bar) qui se suivent en haut de la vue deviennent
+ * « sticky », empilées ; les en-têtes de tableau déjà collants sont décalés d'autant pour rester visibles dessous.
+ */
+var CAP_TBS_ROOTS=['cap-view-chains','cap-view-fex','cap-view-oav','cap-view-csys','cap-view-cblk','cap-view-compex','cap-view-physlink','cap-view-ports','cap-view-functions','cap-view-analyses'];
+var CAP_TBS_BARS='.phl-toggle-bar, .phl-filter-bar, .cap-lf-bar';
+
+/** Conteneur qui fait défiler un élément (premier ancêtre dont le débordement vertical n'est pas visible).
+ * @param {Element} el @returns {Element|null} */
+function capTbsScroller(el){
+  for(let p=el.parentElement; p; p=p.parentElement){ if(getComputedStyle(p).overflowY!=='visible') return p; }
+  return null;
+}
+
+/** Couleur de fond effective d'un élément (premier ancêtre au fond non transparent).
+ * @param {Element} el @returns {string} */
+function capTbsBg(el){
+  for(let p=el; p; p=p.parentElement){ const c=getComputedStyle(p).backgroundColor; if(c&&c!=='transparent'&&!/rgba\(.*,\s*0\)$/.test(c)) return c; }
+  return 'var(--c-bg)';
+}
+
+/** Rend collantes les barres du haut d'une vue et décale les en-têtes de tableau collants qui défilent avec elle.
+ * @param {HTMLElement} root - Vue qui défile (#cap-view-…)
+ */
+function capTbSticky(root){
+  if(!root||!root.offsetParent) return;   // vue masquée : mesure impossible
+  root.querySelectorAll('.tbs-on').forEach(b=>{ b.classList.remove('tbs-on'); b.style.top=''; b.style.background=''; });
+  const R=root.getBoundingClientRect(), y0=R.top-root.scrollTop, pad=parseFloat(getComputedStyle(root).paddingTop)||0;
+  const bars=[...root.querySelectorAll(CAP_TBS_BARS)].filter(b=>b.offsetParent&&!b.parentElement.closest(CAP_TBS_BARS)&&capTbsScroller(b)===root)
+    .map(b=>{ const r=b.getBoundingClientRect(); return {b, y:r.top-y0, h:r.height}; }).sort((a,b)=>a.y-b.y);
+  // En-tête = barres consécutives en haut de la vue (petits textes intercalés tolérés)
+  const head=[]; let last=pad;
+  for(const x of bars){ if(x.y-last>(head.length?45:60)) break; head.push(x); last=x.y+x.h; }
+  const bg=capTbsBg(root);
+  let top=-pad;   // la première barre recouvre aussi la marge haute de la vue
+  head.forEach(x=>{ x.b.classList.add('tbs-on'); x.b.style.top=top+'px'; x.b.style.background=bg; top+=x.h; });
+  // En-têtes de tableau collants de la même zone de défilement : sous les barres
+  root.querySelectorAll('thead th').forEach(th=>{
+    if(th.dataset.tbsTop===undefined){ if(getComputedStyle(th).position!=='sticky') return; th.dataset.tbsTop=parseFloat(getComputedStyle(th).top)||0; }
+    th.style.top=(capTbsScroller(th)===root?(+th.dataset.tbsTop)+(head.length?top:0):+th.dataset.tbsTop)+'px';
+  });
+}
+
+// Observateurs : recalcul après chaque rendu, à l'affichage de la vue et au redimensionnement
+(function(){
+  const roots=CAP_TBS_ROOTS.map(id=>document.getElementById(id)).filter(Boolean);
+  roots.forEach(root=>{
+    let pending=false;
+    const run=()=>{ if(pending) return; pending=true; requestAnimationFrame(()=>{ pending=false; capTbSticky(root); }); };
+    new MutationObserver(run).observe(root,{childList:true, subtree:true});
+    new MutationObserver(run).observe(root,{attributes:true, attributeFilter:['style']});   // vue affichée / masquée
+  });
+  window.addEventListener('resize',()=>roots.forEach(r=>capTbSticky(r)));
+})();
+
+/* ── En-têtes de tableau qui suivent le défilement ──
+ * Les tableaux des analyses sont placés dans un bloc à défilement horizontal (.cap-tf-scroll), ce qui empêche
+ * « position:sticky » de suivre le défilement vertical de la vue. Les lignes d'en-tête (noms de colonnes et ligne
+ * de filtres) sont donc décalées verticalement (translateY) pour rester juste sous les barres collantes.
+ */
+/** Lignes d'en-tête d'un tableau : celles du <thead>, sinon les premières lignes composées uniquement de <th>.
+ * @param {HTMLTableElement} t @returns {HTMLTableRowElement[]} */
+function capThRows(t){
+  if(t.tHead&&t.tHead.rows.length) return [...t.tHead.rows];
+  const out=[];
+  for(const r of t.rows){ if(r.cells.length&&[...r.cells].every(c=>c.tagName==='TH')) out.push(r); else break; }
+  return out;
+}
+
+/** Fait suivre le défilement de la vue aux en-têtes des tableaux visibles (sous les barres collantes).
+ * @param {HTMLElement} root - Vue qui défile
+ */
+function capThFollow(root){
+  if(!root||!root.offsetParent) return;
+  const R=root.getBoundingClientRect(), bars=root.querySelectorAll('.tbs-on');
+  const limit=bars.length?Math.max(...[...bars].map(b=>b.getBoundingClientRect().bottom)):R.top;
+  root.querySelectorAll('table').forEach(t=>{
+    const rows=capThRows(t);   // recalculé : la ligne de filtres est ajoutée après le rendu (42)
+    if(!rows.length||!t.offsetParent) return;
+    const cells=rows.flatMap(r=>[...r.cells]);
+    // En-tête déjà collant par CSS dans la même zone de défilement : capTbSticky s'en charge
+    if(getComputedStyle(cells[0]).position==='sticky'&&capTbsScroller(cells[0])===root) return;
+    const r=t.getBoundingClientRect(), hh=rows.reduce((s,x)=>s+x.getBoundingClientRect().height,0);
+    const lastH=t.rows.length>rows.length?t.rows[t.rows.length-1].getBoundingClientRect().height:0;
+    const dy=Math.round(Math.max(0, Math.min(limit-r.top, r.height-hh-lastH)));
+    cells.forEach(c=>{ c.style.transform=dy?`translateY(${dy}px)`:''; c.classList.toggle('th-follow',!!dy); });
+  });
+}
+
+// Défilement des vues : en-têtes de tableau qui suivent
+(function(){
+  CAP_TBS_ROOTS.map(id=>document.getElementById(id)).filter(Boolean).forEach(root=>{
+    let pending=false;
+    const run=()=>{ if(pending) return; pending=true; requestAnimationFrame(()=>{ pending=false; capThFollow(root); }); };
+    root.addEventListener('scroll',run,{passive:true});
+    new MutationObserver(run).observe(root,{childList:true, subtree:true});
+  });
+})();
+/* ══ 🎬 SCÉNARIOS (DIAGRAMMES DE SÉQUENCE) ══════════════════════════════════════════
+ * Redessine les scénarios Capella (Exchange, Functional, Operational Entity / Activity, Interface Scenarios) à partir
+ * du seul fichier .capella : la chronologie est donnée par l'ordre des ownedInteractionFragments (MessageEnd,
+ * ExecutionEnd, InteractionState, FragmentEnd, InteractionOperand) ; Execution, StateFragment, CombinedFragment et
+ * InteractionUse sont bornés par ces fragments. La mise en page (espacements, largeurs) est calculée : elle n'est
+ * pas lue dans le .aird, le rendu suit le contenu et l'ordre du modèle, pas la position exacte au pixel.
+ */
+var _capScSel=null;                 // scénario affiché
+var _capScState={q:'', layer:'all', kind:'all', view:'diagram', zoom:1};
+/** Types de scénarios Capella (attribut kind) : sigle et libellé. */
+var CAP_SC_KINDS={DATA_FLOW:{s:'ES',l:'Exchange Scenario'}, FUNCTIONAL:{s:'FS',l:'Functional Scenario'}, INTERACTION:{s:'ES',l:'Interaction Scenario'},
+  INTERFACE:{s:'IS',l:'Interface Scenario'}, UNSET:{s:'SC',l:'Scénario'}};
+/** Couleurs façon Capella (diagramme sur fond blanc dans tous les thèmes). */
+var CAP_SC_COL={
+  actor:{f:'#c6e6ff', s:'#4a4aa8', t:'#111'}, sys:{f:'#96b1da', s:'#4a4aa8', t:'#111'}, node:{f:'#fffbb4', s:'#8a6d00', t:'#111'},
+  entity:{f:'#e1e1e1', s:'#5a5a5a', t:'#111'}, fn:{f:'#c6ffa4', s:'#1f6b1f', t:'#111'}, act:{f:'#f8dc7c', s:'#6b4f2a', t:'#111'},
+  exec:{f:'#c2f5a8', s:'#2e7d2e'}, fbox:{f:'#c2f5a8', s:'#2e8b2e', t:'#1f6b1f'}, abox:{f:'#f8dc7c', s:'#6b4f2a', t:'#3a2a00'},
+  state:{f:'#e6e6e6', s:'#9a9a9a', t:'#111'}, mode:{f:'#a9b8b5', s:'#6d7c79', t:'#111'}, line:'#222', frag:'#111'};
+
+/** Sigle d'un scénario selon son type et sa couche (OES / OAS en OA, ES / FS / IS ailleurs).
+ * @param {string} kind - Attribut kind @param {string} layer - Couche @returns {string} */
+function capScKindShort(kind, layer){
+  if(layer==='OA') return kind==='FUNCTIONAL'?'OAS':'OES';
+  return (CAP_SC_KINDS[kind]||CAP_SC_KINDS.UNSET).s;
+}
+
+/** Texte d'une contrainte Capella (corps de la spécification, sinon nom). Le « texte lié » Capella
+ * (<a href="id"/>) est remplacé par le nom de l'élément désigné.
+ * @param {Element} c @returns {string} */
+function capScConstraintText(c){
+  if(!c) return '';
+  const {res}=capAnaCtx();
+  const b=[...c.getElementsByTagName('bodies')].map(x=>x.textContent.trim()).filter(Boolean)
+    .map(t=>t.replace(/<a\s+href="([^"]*)"\s*\/>/g,(m,h)=>{ const el=res(h); return el?capXName(el):''; })
+      .replace(/<a\s+href="[^"]*"\s*>(.*?)<\/a>/g,'$1').replace(/<[^>]+>/g,'').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&').trim());
+  return b.filter(Boolean).length?b.filter(Boolean).join(' '):(capXName(c)||'');
+}
+
+/** Liste des scénarios du modèle (résumé, sans mise en page), mise en cache.
+ * @returns {{list:object[], byId:object}} */
+function capComputeScenarios(){
+  if(_capAnaCache.scen) return _capAnaCache.scen;
+  const {all,res}=capAnaCtx();
+  const list=[];
+  all.forEach(el=>{
+    if(capTName(el)!=='Scenario') return;
+    const layer=capArchLayerOf(el)||'?', kind=el.getAttribute('kind')||'UNSET', cap=el.parentElement;
+    const kids=t=>[...el.children].filter(c=>c.tagName===t);
+    const roles=kids('ownedInstanceRoles').map(r=>capScRole(r,res,layer));
+    const msgs=kids('ownedMessages');
+    const msgOps=msgs.map(m=>{ const se=res(m.getAttribute('sendingEnd')), ev=se&&res(se.getAttribute('event')); return ev&&res(ev.getAttribute('operation')); });
+    const tl=kids('ownedTimeLapses');
+    list.push({id:capXId(el), name:capXName(el)||'(sans nom)', kind, ks:capScKindShort(kind,layer), layer, el,
+      capId:cap?capXId(cap):'', capName:cap?(capXName(cap)||''):'', capType:cap?capTName(cap):'',
+      roles, nMsg:msgs.length, nNoEx:msgOps.filter(o=>!o).length,
+      nFrag:tl.filter(t=>capTName(t)==='CombinedFragment').length, nRef:tl.filter(t=>capTName(t)==='InteractionUse').length,
+      nState:tl.filter(t=>capTName(t)==='StateFragment').length,
+      refs:tl.filter(t=>capTName(t)==='InteractionUse').map(t=>{ const s=res(t.getAttribute('referencedScenario')); return s?capXId(s):''; }).filter(Boolean)});
+  });
+  const byId={}; list.forEach(s=>byId[s.id]=s);
+  return _capAnaCache.scen={list, byId};
+}
+
+/** Ligne de vie : élément représenté (composant, acteur, entité, fonction) et sa nature (couleur).
+ * @param {Element} r - InstanceRole @param {Function} res - Résolution d'une référence @param {string} layer
+ * @returns {{id:string,name:string,refId:string,refType:string,nat:string}} */
+function capScRole(r, res, layer){
+  const inst=res(r.getAttribute('representedInstance'));
+  let tgt=inst, nat='sys';
+  if(inst&&capTName(inst)==='Part'){ const t=res(inst.getAttribute('abstractType')); if(t) tgt=t; }
+  const tt=tgt?capTName(tgt):'';
+  if(/Function$|^OperationalActivity$/.test(tt)) nat=layer==='OA'?'act':'fn';
+  else if(tgt&&capIsActorEl(tgt)) nat='actor';
+  else if(layer==='OA') nat='entity';
+  else if(tgt&&tgt.getAttribute('nature')==='NODE') nat='node';
+  // Libellé affiché par Capella : nom de la partie (ou de la fonction) représentée ; à défaut, celui de l'InstanceRole
+  return {id:capXId(r), name:(inst&&capXName(inst))||(tgt&&capXName(tgt))||capXName(r)||'?', refId:tgt?capXId(tgt):'', refType:tt, nat};
+}
+
+/** Mesure approximative d'un texte (px) à la taille donnée. @param {string} s @param {number} [fs] @returns {number} */
+function capScTextW(s, fs){ return (s||'').length*(fs||12)*0.56; }
+
+/** Calcule la mise en page d'un scénario : colonnes, ordonnées des fragments, messages, exécutions, états, fragments combinés.
+ * @param {object} sc - Scénario (capComputeScenarios) @returns {object} Modèle de dessin */
+function capScLayout(sc){
+  const {res}=capAnaCtx(), el=sc.el, kids=t=>[...el.children].filter(c=>c.tagName===t);
+  const roles=sc.roles, rIdx={}; roles.forEach((r,i)=>rIdx[r.id]=i);
+  const frags=kids('ownedInteractionFragments');
+  const fIdx={}; frags.forEach((f,i)=>fIdx[capXId(f)]=i);
+  const cov=f=>(f.getAttribute('coveredInstanceRoles')||'').trim().split(/\s+/).filter(Boolean).map(x=>x.replace(/^.*#/,''));
+  const rid=v=>(v||'').trim().replace(/^.*#/,'');
+  // Messages
+  const msgs=kids('ownedMessages').map(m=>{
+    const se=res(m.getAttribute('sendingEnd')), re=res(m.getAttribute('receivingEnd'));
+    const ev=se&&res(se.getAttribute('event')), op=ev&&res(ev.getAttribute('operation'));
+    const ctx=res(m.getAttribute('exchangeContext'));
+    const name=capXName(m)||(op&&capXName(op))||'';
+    const label=sc.kind==='DATA_FLOW'?`${name} {${capScConstraintText(ctx)}}`:name;
+    return {id:capXId(m), name, label, kind:m.getAttribute('kind')||'ASYNCHRONOUS_CALL', send:se?capXId(se):'', recv:re?capXId(re):'',
+      from:se?rIdx[cov(se)[0]]:undefined, to:re?rIdx[cov(re)[0]]:undefined, opId:op?capXId(op):'', opType:op?capTName(op):''};
+  });
+  const bySend={}, byRecv={}; msgs.forEach(m=>{ if(m.send) bySend[m.send]=m; if(m.recv) byRecv[m.recv]=m; });
+  // Intervalles
+  const execs=[], states=[], cfs=[], ius=[];
+  kids('ownedTimeLapses').forEach(t=>{
+    const T=capTName(t), st=rid(t.getAttribute('start')), fi=rid(t.getAttribute('finish'));
+    if(T==='Execution') execs.push({id:capXId(t), st, fi});
+    else if(T==='StateFragment'){
+      const s=res(t.getAttribute('relatedAbstractState')), fn=res(t.getAttribute('relatedAbstractFunction')), x=s||fn;
+      const xt=x?capTName(x):'';
+      states.push({id:capXId(t), st, fi, refId:x?capXId(x):'', name:x?capXName(x):(capXName(t)||'?'), k:fn?(sc.layer==='OA'?'abox':'fbox'):(xt==='Mode'?'mode':'state')});
+    }
+    else if(T==='CombinedFragment') cfs.push({id:capXId(t), st, fi, op:t.getAttribute('operator')||'', operands:(t.getAttribute('referencedOperands')||'').trim().split(/\s+/).filter(Boolean).map(x=>x.replace(/^.*#/,''))});
+    else if(T==='InteractionUse'){ const s=res(t.getAttribute('referencedScenario')); ius.push({id:capXId(t), st, fi, scId:s?capXId(s):'', name:s?capXName(s):(capXName(t)||'ref')}); }
+  });
+  const execByEnd={}; execs.forEach(x=>execByEnd[x.fi]=x);
+  const stStart={}, stEnd={}; states.forEach(s=>{ stStart[s.st]=s; stEnd[s.fi]=s; });
+  const cfStart={}, cfEnd={}; cfs.forEach(c=>{ cfStart[c.st]=c; cfEnd[c.fi]=c; });
+  const iuStart={}, iuEnd={}; ius.forEach(c=>{ iuStart[c.st]=c; iuEnd[c.fi]=c; });
+  const opnd={}; cfs.forEach(c=>c.operands.forEach((o,i)=>opnd[o]={cf:c,i}));
+  // Ordonnées
+  const Y={}; let y=96;
+  const HEAD=24, TOP=96;
+  for(let i=0;i<frags.length;i++){
+    const f=frags[i], id=capXId(f), T=capTName(f);
+    if(T==='MessageEnd'){
+      const ms=bySend[id], mr=byRecv[id];
+      if(ms){ y+=34; Y[id]=y; }
+      else if(mr){ const ys=Y[mr.send];
+        if(ys===undefined){ y+=34; Y[id]=y; }
+        else if(mr.from===mr.to){ Y[id]=Math.max(ys+20,y); y=Y[id]; }
+        else { Y[id]=ys; if(ys<y){ /* message oblique : réception après d'autres événements */ Y[id]=y; } }
+      } else { y+=14; Y[id]=y; }
+    } else if(T==='ExecutionEnd'){ const xs=execByEnd[id], ys=xs&&Y[xs.st]; y=Math.max(y+10, ys!==undefined?ys+34:0); Y[id]=y; }   // barre d'activation : 34 px au moins, comme Capella
+    else if(T==='InteractionState'){
+      const s=stStart[id], e=stEnd[id];
+      if(s){ const next=frags[i+1];
+        if(next&&capXId(next)===s.fi){ y+=14; Y[id]=y; y+=s.k==='fbox'||s.k==='abox'?40:32; Y[s.fi]=y; i++; }
+        else { y+=14; Y[id]=y; y+=s.k==='fbox'||s.k==='abox'?40:34; }
+      } else if(e){ y+=10; Y[id]=y; }
+      else { y+=10; Y[id]=y; }
+    } else if(T==='FragmentEnd'){
+      if(cfStart[id]){ y+=18; Y[id]=y; y+=20; }
+      else if(iuStart[id]){ y+=16; Y[id]=y; y+=34; }
+      else if(cfEnd[id]||iuEnd[id]){ y+=12; Y[id]=y; y+=4; }
+      else { y+=10; Y[id]=y; }
+    } else if(T==='InteractionOperand'){
+      const o=opnd[id];
+      if(o&&o.i>0){ y+=14; Y[id]=y; y+=18; } else { Y[id]=y; y+=o&&capScOperandGuard(f)?14:0; }
+    } else { y+=8; Y[id]=y; }
+  }
+  const bottom=y+40;
+  // Colonnes : largeur des en-têtes, des étiquettes de messages et des boîtes d'états
+  const n=roles.length, hw=roles.map(r=>Math.min(230,Math.max(120,capScTextW(r.name,12.5)+56)));
+  const gap=Array(Math.max(0,n-1)).fill(0).map((_,k)=>(hw[k]+hw[k+1])/2+30);
+  msgs.forEach(m=>{ if(m.from===undefined||m.to===undefined) return;
+    const a=Math.min(m.from,m.to), b=Math.max(m.from,m.to), w=capScTextW(m.label,12)+30;
+    if(a===b){ if(a<n-1) gap[a]=Math.max(gap[a], w+50); return; }
+    const need=w/(b-a); for(let k=a;k<b;k++) gap[k]=Math.max(gap[k],need); });
+  states.forEach(s=>{ const f=frags[fIdx[s.st]]; const r=f?rIdx[cov(f)[0]]:undefined; if(r===undefined) return;
+    const w=Math.min(190,capScTextW(s.name,12)+30)/2+12; if(r>0) gap[r-1]=Math.max(gap[r-1],w+hw[r-1]/2-30); if(r<n-1) gap[r]=Math.max(gap[r],w+hw[r+1]/2-30); });
+  const X=[]; let x=24+hw[0]/2+20; roles.forEach((r,i)=>{ X[i]=x; if(i<n-1) x+=gap[i]; });
+  // Étiquettes des messages réflexifs de la dernière colonne : place à droite
+  const selfLast=msgs.filter(m=>m.from===n-1&&m.to===n-1).reduce((w,m)=>Math.max(w,capScTextW(m.label,12)+50),0);
+  const width=(n?X[n-1]+Math.max(hw[n-1]/2,selfLast):200)+70;
+  return {roles, X, hw, Y, frags, fIdx, cov, rIdx, msgs, execs, states, cfs, ius, bottom, width, top:TOP, head:HEAD};
+}
+
+/** Garde (condition) d'un opérande de fragment combiné. @param {Element} f - InteractionOperand @returns {string} */
+function capScOperandGuard(f){
+  const {res}=capAnaCtx(); const g=res(f.getAttribute('guard'));
+  return g?capScConstraintText(g):'';
+}
+
+/** Découpe un texte en lignes d'environ n caractères (2 lignes au plus, « … » au-delà).
+ * @param {string} s @param {number} n @returns {string[]} */
+function capScWrap(s, n){
+  const w=(s||'').split(/\s+/), out=[]; let cur='';
+  w.forEach(x=>{ if((cur+' '+x).trim().length>n&&cur){ out.push(cur); cur=x; } else cur=(cur+' '+x).trim(); });
+  if(cur) out.push(cur);
+  return out.length>2?[out[0], out.slice(1).join(' ').slice(0,n-1)+'…']:out;
+}
+
+/** Dessine un scénario en SVG façon Capella (fond blanc).
+ * @param {object} sc - Scénario @returns {{svg:string,w:number,h:number,L:object}} */
+function capScenarioSvg(sc){
+  const L=capScLayout(sc), C=CAP_SC_COL, e=capEsc, {X,Y,roles,frags,cov,rIdx}=L;
+  const H=L.bottom+20, W=L.width;
+  const yOf=id=>Y[id];
+  const roleOfFrag=id=>{ const f=frags[L.fIdx[id]]; return f?rIdx[cov(f)[0]]:undefined; };
+  const ref=(id,inner,tip,cls)=>`<g class="sc-ref${cls?' '+cls:''}" data-ref="${e(id||'')}" style="cursor:${id?'pointer':'default'}"><title>${e(tip||'')}</title>${inner}</g>`;
+  let out='';
+  // Fragments combinés et références (sous le reste) — profondeur d'imbrication pour les marges
+  const boxes=[...L.cfs.map(c=>({c, y1:yOf(c.st), y2:yOf(c.fi), t:'cf'})), ...L.ius.map(c=>({c, y1:yOf(c.st), y2:yOf(c.fi), t:'iu'}))].filter(b=>b.y1!==undefined&&b.y2!==undefined);
+  boxes.forEach(b=>{ const f=frags[L.fIdx[b.c.st]]; const rs=f?cov(f).map(r=>rIdx[r]).filter(v=>v!==undefined):[];
+    b.r1=rs.length?Math.min(...rs):0; b.r2=rs.length?Math.max(...rs):roles.length-1;
+    b.depth=boxes.filter(o=>o!==b&&o.y1<b.y1&&o.y2>b.y2).length; });
+  boxes.sort((a,b)=>a.depth-b.depth).forEach(b=>{
+    const m=Math.max(18, 74-b.depth*12), x1=X[b.r1]-Math.min(L.hw[b.r1]/2+6,m), x2=X[b.r2]+Math.min(L.hw[b.r2]/2+6,m), y1=b.y1-14, y2=b.y2;
+    if(b.t==='cf'){
+      const lab=b.c.op||'?', lw=capScTextW(lab,11)+16;
+      out+=`<g><rect x="${x1}" y="${y1}" width="${x2-x1}" height="${y2-y1}" fill="url(#scg)" stroke="${C.frag}" stroke-width="1.3"/>
+        <path d="M${x1},${y1} H${x1+lw} V${y1+12} L${x1+lw-8},${y1+20} H${x1} Z" fill="#fff" stroke="${C.frag}" stroke-width="1"/>
+        <text x="${x1+6}" y="${y1+14}" font-size="11">${e(lab)}</text>`;
+      b.c.operands.forEach((o,i)=>{ const f=frags[L.fIdx[o]]; if(!f) return; const yo=yOf(o), g=capScOperandGuard(f);
+        if(i>0) out+=`<line x1="${x1}" y1="${yo}" x2="${x2}" y2="${yo}" stroke="${C.frag}" stroke-dasharray="6,4"/>`;
+        if(g) out+=`<text x="${x1+(i>0?8:lw+8)}" y="${(i>0?yo:y1)+14}" font-size="11" fill="#333">[${e(g)}]</text>`; });
+      out+='</g>';
+    } else {
+      out+=`<g class="sc-iu" data-sc="${e(b.c.scId)}" style="cursor:${b.c.scId?'pointer':'default'}"><title>Référence au scénario ${e(b.c.name)}${b.c.scId?' — clic : l\'ouvrir':''}</title>
+        <rect x="${x1}" y="${y1}" width="${x2-x1}" height="${y2-y1}" fill="#fff" stroke="${C.frag}" stroke-width="1.3"/>
+        <path d="M${x1},${y1} H${x1+34} V${y1+12} L${x1+26},${y1+20} H${x1} Z" fill="#fff" stroke="${C.frag}"/>
+        <text x="${x1+6}" y="${y1+14}" font-size="11">ref</text>
+        <text x="${(x1+x2)/2}" y="${(y1+y2)/2+5}" font-size="12.5" text-anchor="middle" fill="#1a4f8a" text-decoration="underline">${e(b.c.name)}</text></g>`;
+    }
+  });
+  // Lignes de vie
+  roles.forEach((r,i)=>{ const c=C[r.nat]||C.sys, w=L.hw[i], x=X[i];
+    out+=`<line x1="${x}" y1="${L.head+46}" x2="${x}" y2="${L.bottom}" stroke="#777" stroke-width="1.2" stroke-dasharray="6,5"/>
+      <line x1="${x-8}" y1="${L.bottom}" x2="${x+8}" y2="${L.bottom}" stroke="#777" stroke-width="3"/>`;
+    const lines=capScWrap(r.name,Math.max(10,Math.floor((w-40)/7)));
+    out+=ref(r.refId, `<rect x="${x-w/2}" y="${L.head}" width="${w}" height="46" fill="${c.f}" stroke="${c.s}" stroke-width="1.4"/>
+      <g transform="translate(${x-w/2+10},${L.head+15})" stroke="#111" fill="none" stroke-width="1.6"><path d="M5,0 V16 M1,0 H9 M0,9 H4 M7,9 H12 M10,6 L13,9 L10,12"/></g>
+      ${lines.map((l,k)=>`<text x="${x+8}" y="${L.head+23+(k-(lines.length-1)/2)*14+4}" font-size="12.5" text-anchor="middle" fill="${c.t}">${e(l)}</text>`).join('')}`,
+      `${r.name} — ${r.refType||'?'} (clic : détail)`);
+  });
+  // Exécutions (barres), avec décalage si imbriquées sur la même ligne de vie
+  const ex=L.execs.map(x=>({...x, r:roleOfFrag(x.st), y1:yOf(x.st), y2:yOf(x.fi)})).filter(x=>x.r!==undefined&&x.y1!==undefined&&x.y2!==undefined);
+  ex.forEach(x=>{ x.lvl=ex.filter(o=>o!==x&&o.r===x.r&&o.y1<=x.y1&&o.y2>=x.y2&&(o.y1<x.y1||o.y2>x.y2)).length; });
+  ex.sort((a,b)=>a.lvl-b.lvl).forEach(x=>{ out+=`<rect x="${X[x.r]-5+x.lvl*6}" y="${x.y1}" width="10" height="${Math.max(8,x.y2-x.y1)}" fill="${C.exec.f}" stroke="${C.exec.s}" stroke-width="1.2"/>`; });
+  const lvlAt=(r,yy)=>ex.filter(x=>x.r===r&&x.y1<=yy&&x.y2>=yy).reduce((m,x)=>Math.max(m,x.lvl+1),0);
+  // États, modes, fonctions
+  L.states.forEach(s=>{ const r=roleOfFrag(s.st), y1=yOf(s.st), y2=yOf(s.fi); if(r===undefined||y1===undefined) return;
+    const c=C[s.k], x=X[r], yb=y2===undefined?y1+30:y2, lines=capScWrap(s.name,24), w=Math.min(190,Math.max(90,capScTextW(lines[0],12)+30));
+    if(s.k==='fbox'||s.k==='abox'){ const h=Math.max(34,Math.min(yb-y1,lines.length*15+12)), ty=y1+h/2-(lines.length-1)*7.5+4;
+      out+=ref(s.refId,`<rect x="${x-w/2}" y="${y1}" width="${w}" height="${h}" fill="${c.f}" stroke="${c.s}" stroke-width="1.3"/>
+        ${lines.map((l,k)=>`<text x="${x}" y="${ty+k*15}" font-size="12" text-anchor="middle" fill="${c.t}">${e(l)}</text>`).join('')}`, `${s.name} — fonction (clic : détail)`);
+    } else { const h=Math.max(26,Math.min(yb-y1,lines.length*15+12)), cy=y1+h/2;
+      out+=ref(s.refId,`<ellipse cx="${x}" cy="${cy}" rx="${w/2}" ry="${h/2}" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/>
+        ${lines.map((l,k)=>`<text x="${x}" y="${cy-(lines.length-1)*7.5+4+k*15}" font-size="12" text-anchor="middle" fill="${c.t}">${e(l)}</text>`).join('')}`, `${s.name} — ${s.k==='mode'?'mode':'état'} (clic : détail)`);
+    }
+  });
+  // Messages
+  L.msgs.forEach(m=>{ const ys=yOf(m.send), yr=yOf(m.recv); if(m.from===undefined||m.to===undefined||ys===undefined) return;
+    const y2=yr===undefined?ys:yr, dash=m.kind==='REPLY'||m.kind==='CREATE'?' stroke-dasharray="6,4"':'', head=m.kind==='SYNCHRONOUS_CALL'?'scf':'sco';
+    const tip=`${m.name}${m.opType?' — '+m.opType:''} (${m.kind})`;
+    if(m.from===m.to){ const x=X[m.from]+5+lvlAt(m.from,ys)*6-(lvlAt(m.from,ys)?6:0), xo=x+34;
+      out+=ref(m.opId||m.id,`<path d="M${x},${ys} H${xo} V${y2} H${x+(lvlAt(m.to,y2+1)?6:0)+1}" fill="none" stroke="${C.line}" stroke-width="1.4"${dash} marker-end="url(#${head})"/>
+        <text x="${xo+6}" y="${ys-6}" font-size="12" fill="#111" class="sc-lab">${e(m.label)}</text>`, tip);
+      return; }
+    const dir=m.to>m.from?1:-1, off=r=>{ const l=lvlAt(r,ys+1); return l?5+(l-1)*6:0; };
+    const x1=X[m.from]+dir*off(m.from), x2=X[m.to]-dir*(off(m.to)||1);
+    out+=ref(m.opId||m.id,`<line x1="${x1}" y1="${ys}" x2="${x2}" y2="${y2}" stroke="${C.line}" stroke-width="1.4"${dash} marker-end="url(#${head})"/>
+      ${m.kind==='DELETE'?`<path d="M${x2-7},${y2-7} L${x2+7},${y2+7} M${x2-7},${y2+7} L${x2+7},${y2-7}" stroke="#111" stroke-width="2"/>`:''}
+      <text x="${(x1+x2)/2}" y="${Math.min(ys,y2)-6}" font-size="12" text-anchor="middle" fill="#111" class="sc-lab">${e(m.label)}</text>`, tip);
+  });
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="Segoe UI,Arial,sans-serif" style="display:block;background:#fff">
+    <defs><marker id="sco" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M1,1 L9.5,5 L1,9" fill="none" stroke="#111" stroke-width="1.5"/></marker>
+      <marker id="scf" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M1,1 L9.5,5 L1,9 Z" fill="#111"/></marker>
+      <linearGradient id="scg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ececec"/></linearGradient>
+      <style>.sc-lab{paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}</style></defs>
+    <rect width="${W}" height="${H}" fill="#fff"/>${out}</svg>`;
+  return {svg, w:W, h:H, L};
+}
+
+/** Sections de contrôle des scénarios (🩺 et tableau de bord). @returns {object[]} */
+function capScChecks(){
+  const S=capComputeScenarios().list, {res}=capAnaCtx();
+  const fl=(id,n)=>`<span class="cex-det" style="cursor:pointer" onclick="capOpenDetailById('${capEsc(id)}')">${capEsc(n)}</span>`;
+  const row=(s,extra)=>`<tr><td>${s.layer}</td><td>${s.ks}</td><td>${fl(s.id,s.name)}</td><td>${s.capName?fl(s.capId,s.capName):'—'}</td><td>${extra}</td></tr>`;
+  const cols=['Couche','Type','Scénario','Capacité','Détail'];
+  const noRef=S.flatMap(s=>s.roles.filter(r=>!r.refId).map(r=>row(s,`ligne de vie « ${capEsc(r.name)} »`)));
+  return [
+    {icon:'∅', title:'Scénarios vides (aucun message)', tip:'Scénario sans SequenceMessage', cols, items:S.filter(s=>!s.nMsg).map(s=>row(s,`${s.roles.length} ligne(s) de vie`))},
+    {icon:'⇢', title:'Messages sans échange', tip:'SequenceMessage dont l\'événement n\'invoque aucun échange (Functional / Component Exchange…)', cols, items:S.filter(s=>s.nNoEx).map(s=>row(s,`${s.nNoEx} message(s)`))},
+    {icon:'?', title:'Lignes de vie sans élément représenté', tip:'InstanceRole sans representedInstance résolu', cols, items:noRef},
+    {icon:'🎯', title:'Scénarios hors capacité', tip:'Scénario qui n\'est pas rangé sous une capacité ou une réalisation de capacité', cols,
+      items:S.filter(s=>!/Capability/.test(s.capType)).map(s=>row(s,capEsc(s.capType||'—')))},
+    {icon:'↗', title:'Références vers un scénario introuvable', tip:'InteractionUse sans referencedScenario résolu', cols,
+      items:S.filter(s=>s.nRef>s.refs.length).map(s=>row(s,`${s.nRef-s.refs.length} référence(s)`))}
+  ];
+}
+
+/** Indicateurs 🎬 Scénarios pour le catalogue du tableau de bord.
+ * @param {Function} add - Ajout d'un indicateur @param {Function} LC - Couleur d'une couche */
+function capScDashCatalog(add, LC){
+  const S=()=>capComputeScenarios().list;
+  add('Scénarios','sc.n','Scénarios — nombre','n',()=>({n:S().length, sub:`${S().reduce((t,s)=>t+s.nMsg,0)} message(s)`}));
+  add('Scénarios','sc.layer','Scénarios — par couche','series',()=>({order:'natural',cats:CAP_ANA_LAYERS.map(k=>({l:k,v:S().filter(s=>s.layer===k).length,c:LC(k)})).filter(c=>c.v)}));
+  add('Scénarios','sc.kind','Scénarios — par type','series',()=>{ const m={}; S().forEach(s=>m[s.ks]=(m[s.ks]||0)+1); return {cats:Object.entries(m).map(([l,v])=>({l,v})).sort((a,b)=>b.v-a.v)}; });
+  add('Scénarios','sc.chk','Scénarios — contrôles','series',()=>({cats:capScChecks().map(s=>({l:s.title,v:s.items.length})).filter(c=>c.v).sort((a,b)=>b.v-a.v)}));
+}
+
+/** Ouvre un scénario dans la vue 🎬 Scénarios. @param {string} id */
+function capScOpen(id){ _capScSel=id; _capScState.view='diagram'; if(capCurrentView!=='scen') capNavOpen('scen'); else capRenderScenarios(); }
+
+/** Exporte le scénario affiché : 'svg', 'png' ou 'clip' (PNG dans le presse-papiers). @param {string} fmt */
+function capScExport(fmt){
+  const sc=capComputeScenarios().byId[_capScSel]; if(!sc) return;
+  const {svg,w,h}=capScenarioSvg(sc), base=(sc.ks+'-'+sc.name).replace(/[^\w\-]+/g,'_').slice(0,80);
+  if(fmt==='svg'){ capDownloadBlob(new Blob([svg],{type:'image/svg+xml'}), base+'.svg'); return; }
+  capSvgToCanvas(svg,w,h,2).then(c=>capCanvasBlob(c,'image/png')).then(b=>{
+    if(fmt==='png') capDownloadBlob(b, base+'.png');
+    else if(navigator.clipboard&&window.ClipboardItem) navigator.clipboard.write([new ClipboardItem({'image/png':b})]).then(()=>{ if(typeof capWatchFlash==='function') capWatchFlash('✔ Diagramme copié'); },()=>alert('Copie impossible dans ce navigateur.'));
+    else alert('Copie d\'image non disponible dans ce navigateur.');
+  }).catch(err=>alert('Export impossible : '+err.message));
+}
+
+/** Ajuste la hauteur de la liste et du diagramme au bas réel de la vue (la barre d'état ne doit pas masquer
+ * la barre de défilement horizontale du diagramme). @param {HTMLElement} box - #cap-view-scen */
+function capScFit(box){
+  if(!box||!box.offsetParent) return;
+  const bottom=box.getBoundingClientRect().bottom;
+  box.querySelectorAll('.sc-list,.sc-scroll').forEach(el=>{ el.style.height=Math.max(160, bottom-el.getBoundingClientRect().top-2)+'px'; });
+}
+
+/** Déplacement du diagramme par cliquer-glisser (en plus des barres de défilement, de la molette et de Maj + molette).
+ * @param {HTMLElement} sc - Zone défilante .sc-scroll */
+function capScPan(sc){
+  if(!sc) return;
+  sc.addEventListener('mousedown',ev=>{
+    if(ev.button!==0||ev.target.closest('.sc-ref,.sc-iu,a,button')) return;
+    const x0=ev.clientX, y0=ev.clientY, l0=sc.scrollLeft, t0=sc.scrollTop; let moved=false;
+    const mv=e=>{ const dx=e.clientX-x0, dy=e.clientY-y0; if(!moved&&Math.abs(dx)+Math.abs(dy)<4) return; moved=true; sc.classList.add('sc-pan'); sc.scrollLeft=l0-dx; sc.scrollTop=t0-dy; e.preventDefault(); };
+    const up=()=>{ sc.classList.remove('sc-pan'); document.removeEventListener('mousemove',mv); document.removeEventListener('mouseup',up); };
+    document.addEventListener('mousemove',mv); document.addEventListener('mouseup',up);
+  });
+}
+window.addEventListener('resize',()=>capScFit(document.getElementById('cap-view-scen')));
+
+/** Rend la vue 🎬 Scénarios : liste filtrable à gauche, diagramme de séquence (ou contrôles) à droite. */
+function capRenderScenarios(){
+  const box=document.getElementById('cap-view-scen'); if(!box) return;
+  const S=capComputeScenarios(), st=_capScState, e=capEsc;
+  if(!S.list.length){ box.innerHTML='<div class="phl-empty">Ce modèle ne contient aucun scénario (Scenario).</div>'; return; }
+  if(!_capScSel||!S.byId[_capScSel]) _capScSel=(S.list.find(s=>s.nMsg)||S.list[0]).id;
+  const layers=CAP_ANA_LAYERS.filter(k=>S.list.some(s=>s.layer===k)), kinds=[...new Set(S.list.map(s=>s.ks))];
+  const q=st.q.trim().toLowerCase();
+  const vis=S.list.filter(s=>(st.layer==='all'||s.layer===st.layer)&&(st.kind==='all'||s.ks===st.kind)&&(!q||(s.name+' '+s.capName+' '+s.roles.map(r=>r.name).join(' ')).toLowerCase().includes(q)));
+  // Liste groupée par couche puis capacité
+  const groups=new Map(); vis.forEach(s=>{ const k=s.layer+'\u0001'+(s.capName||'—'); if(!groups.has(k)) groups.set(k,{layer:s.layer,cap:s.capName||'—',capId:s.capId,items:[]}); groups.get(k).items.push(s); });
+  const listHtml=[...groups.values()].map(g=>`<div class="sc-grp"><span class="cap-type-badge">${g.layer}</span> <span class="sc-cap"${g.capId?` data-det="${e(g.capId)}" title="Capacité — clic : détail"`:''}>🎯 ${e(g.cap)}</span></div>`+
+    g.items.map(s=>`<div class="sc-item${s.id===_capScSel?' on':''}" data-sc="${e(s.id)}" title="${e(s.name)}"><span class="sc-k">${s.ks}</span> ${e(s.name)} <span class="sc-n">${s.nMsg} msg</span></div>`).join('')).join('')
+    ||'<div class="phl-empty">Aucun scénario ne correspond au filtre.</div>';
+  const sc=S.byId[_capScSel];
+  let main='';
+  if(st.view==='diag') main=capDiagHtml(capScChecks());
+  else {
+    const D=capScenarioSvg(sc);
+    main=`<div class="sc-head"><span class="sc-k">${sc.ks}</span> <b class="cex-det" data-det="${e(sc.id)}" style="cursor:pointer">${e(sc.name)}</b>
+        <span class="ana-dim">· ${e((CAP_SC_KINDS[sc.kind]||CAP_SC_KINDS.UNSET).l)} · ${sc.layer} · ${sc.roles.length} ligne(s) de vie · ${sc.nMsg} message(s)${sc.nFrag?` · ${sc.nFrag} fragment(s)`:''}${sc.nRef?` · ${sc.nRef} référence(s)`:''}</span>
+        ${sc.capName?`<span class="ana-dim">· 🎯 <span class="cex-det" data-det="${e(sc.capId)}" style="cursor:pointer">${e(sc.capName)}</span></span>`:''}</div>
+      <div class="sc-scroll"><div class="sc-band" style="width:${D.w*st.zoom}px">${sc.roles.map((r,i)=>`<span style="left:${D.L.X[i]*st.zoom}px;background:${(CAP_SC_COL[r.nat]||CAP_SC_COL.sys).f}">${e(r.name)}</span>`).join('')}</div>
+        <div class="sc-svg" style="width:${D.w*st.zoom}px">${D.svg.replace('<svg ',`<svg style="width:${D.w*st.zoom}px;height:${D.h*st.zoom}px" `)}</div></div>`;
+  }
+  box.innerHTML=`<div class="phl-filter-bar">
+      <span class="tb-grp">${[['diagram','🎬 Diagramme'],['diag','🩺 Contrôles']].map(([k,l])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-scv="${k}">${l}</button>`).join('')}</span>
+      <span class="tb-grp"><span class="tb-grp-l">Couche</span>${[['all','Toutes'],...layers.map(k=>[k,k])].map(([k,l])=>`<button class="cap-lf-btn${st.layer===k?' active':''}" data-scl="${k}">${l} (${k==='all'?S.list.length:S.list.filter(s=>s.layer===k).length})</button>`).join('')}</span>
+      <span class="tb-grp"><span class="tb-grp-l">Type</span>${[['all','Tous'],...kinds.map(k=>[k,k])].map(([k,l])=>`<button class="cap-lf-btn${st.kind===k?' active':''}" data-sck="${k}" title="${k==='ES'?'Exchange Scenario':k==='FS'?'Functional Scenario':k==='OES'?'Operational Entity Scenario':k==='OAS'?'Operational Activity Scenario':k==='IS'?'Interface Scenario':'Tous les types'}">${l}</button>`).join('')}</span>
+      <span class="tb-grp"><input id="sc-q" class="phl-filter-input" placeholder="🔍 Scénario, capacité, ligne de vie…" value="${e(st.q)}" style="width:220px"><span class="ana-fn-cnt">${vis.length} / ${S.list.length}</span></span>
+      ${st.view==='diagram'?`<span class="tb-grp" style="margin-left:auto"><button class="cap-lf-btn" data-scz="-1" title="Réduire">−</button><button class="cap-lf-btn" data-scz="0" title="Taille réelle">${Math.round(st.zoom*100)} %</button><button class="cap-lf-btn" data-scz="1" title="Agrandir">+</button></span>
+      <span class="tb-grp"><button class="phl-export-btn" data-sce="png">⬇ PNG</button><button class="phl-export-btn" data-sce="svg">⬇ SVG</button><button class="phl-export-btn" data-sce="clip" title="Copier l'image dans le presse-papiers">📋 Copier</button></span>`:''}
+    </div>
+    <div class="sc-split"><div class="sc-list">${listHtml}</div><div class="sc-main">${main}</div></div>`;
+  // Écouteurs
+  box.querySelectorAll('[data-scv]').forEach(b=>b.onclick=()=>{ st.view=b.dataset.scv; capRenderScenarios(); });
+  box.querySelectorAll('[data-scl]').forEach(b=>b.onclick=()=>{ st.layer=b.dataset.scl; capRenderScenarios(); });
+  box.querySelectorAll('[data-sck]').forEach(b=>b.onclick=()=>{ st.kind=b.dataset.sck; capRenderScenarios(); });
+  box.querySelectorAll('[data-scz]').forEach(b=>b.onclick=()=>{ const d=+b.dataset.scz; st.zoom=d?Math.max(0.4,Math.min(2,Math.round((st.zoom+d*0.15)*100)/100)):1; capRenderScenarios(); });
+  box.querySelectorAll('[data-sce]').forEach(b=>b.onclick=()=>capScExport(b.dataset.sce));
+  box.querySelectorAll('.sc-item').forEach(it=>it.onclick=()=>{ _capScSel=it.dataset.sc; st.view='diagram'; capRenderScenarios(); });
+  box.querySelectorAll('[data-det]').forEach(a=>a.onclick=ev=>{ ev.stopPropagation(); capOpenDetailById(a.dataset.det); });
+  box.querySelectorAll('.sc-svg .sc-ref').forEach(g=>g.addEventListener('click',()=>{ if(g.dataset.ref) capOpenDetailById(g.dataset.ref); }));
+  box.querySelectorAll('.sc-svg .sc-iu').forEach(g=>g.addEventListener('click',()=>{ if(g.dataset.sc&&S.byId[g.dataset.sc]){ _capScSel=g.dataset.sc; capRenderScenarios(); } }));
+  let deb; const qi=box.querySelector('#sc-q');
+  if(qi) qi.oninput=()=>{ st.q=qi.value; clearTimeout(deb); deb=setTimeout(()=>{ capRenderScenarios(); const n=document.getElementById('sc-q'); if(n){ n.focus(); n.setSelectionRange(n.value.length,n.value.length); } },200); };
+  capScFit(box);
+  capScPan(box.querySelector('.sc-scroll'));
+  // Sélection visible dans la liste (sans faire défiler la vue elle-même)
+  const lst=box.querySelector('.sc-list'), sel=box.querySelector('.sc-item.on');
+  if(lst&&sel){ const top=sel.offsetTop;   /* .sc-list est positionnée : offsetTop relatif à la liste */ if(top<lst.scrollTop||top>lst.scrollTop+lst.clientHeight-30) lst.scrollTop=Math.max(0,top-lst.clientHeight/3); }
+}
+/* ══ ℹ À PROPOS ══════════════════════════════════════════════════════════════════
+ * Fenêtre « À propos » d'Arcalyse (menu ? Aide ▾) : identité et version, auteur, licence GNU GPL v3, contact,
+ * composants tiers (D3.js, licence ISC à reproduire), marques citées, informations techniques copiables.
+ */
+var CAP_APP_VERSION='1.6';   // à mettre à jour à chaque livraison (node build.js --livraison)
+var CAP_APP_AUTHOR='Romain Lescole';
+var CAP_APP_NAME='Arcalyse';
+var CAP_APP_SLOGAN='Votre modèle Capella, sous toutes ses coutures.';
+var CAP_APP_REPO='github.com/romain-lescole/relation-map-capella';
+/** Texte de la licence ISC de D3.js (reproduction obligatoire). */
+var CAP_D3_LICENSE=`Copyright 2010-2023 Mike Bostock
+
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.`;
+
+/** Informations techniques (version, navigateur, accès direct aux fichiers, modèle chargé), pour un signalement.
+ * @returns {string[][]} Lignes [libellé, valeur] */
+function capAboutTech(){
+  const ua=navigator.userAgent, br=(ua.match(/Edg\/[\d.]+/)||ua.match(/Firefox\/[\d.]+/)||ua.match(/Chrome\/[\d.]+/)||ua.match(/Version\/[\d.]+.*Safari/)||[ua.slice(0,60)])[0].replace('Edg/','Edge ').replace('/',' ');
+  const d=new Date(document.lastModified);
+  return [
+    ['Version', CAP_APP_VERSION],
+    ['Fichier du', isNaN(d)?'—':d.toLocaleDateString('fr-FR')],   // date seule, sans l'heure
+    ['Navigateur', br],
+    ['Navigateur de test', 'Google Chrome version 155'],
+    ['Accès direct au fichier (🔄 Suivi)', 'showOpenFilePicker' in window?'disponible':'non disponible (rechargement manuel)'],
+    ['Modèle chargé', capLoaded?`${capCurrentFileName||'—'} · ${(typeof capAllElements!=='undefined'?capAllElements.length:0).toLocaleString('fr-FR')} éléments`:'aucun'],
+    ['Réseau', '100 % hors ligne : aucune donnée transmise']
+  ];
+}
+
+/** Ouvre la fenêtre « À propos ». */
+function capAboutOpen(){
+  let ov=document.getElementById('cap-about-ov');
+  if(!ov){ ov=document.createElement('div'); ov.id='cap-about-ov'; document.body.appendChild(ov);
+    ov.addEventListener('click',e=>{ if(e.target===ov) ov.style.display='none'; }); }
+  const tech=capAboutTech(), e=capEsc, yr=new Date().getFullYear();
+  ov.innerHTML=`<div class="cw-d-box ab-box">
+    <div class="cw-d-hdr"><b>ℹ À propos</b><button class="cap-lf-btn" data-c="x">✕</button></div>
+    <div class="cw-d-body">
+      <div class="ab-id"><div class="ab-logo">🔷</div><div><div class="ab-name">${e(CAP_APP_NAME)}</div><div class="ab-slogan">${e(CAP_APP_SLOGAN)}</div>
+        <div class="ab-ver">Version ${e(CAP_APP_VERSION)} · ${e(tech[1][1])}</div>
+        <div class="ana-dim">Explorateur et analyseur hors ligne de modèles Capella / ARCADIA : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML.</div></div></div>
+      <h4>Auteur et licence</h4>
+      <table class="ana-t ana-kv">
+        <tr><td>Auteur</td><td>© ${yr} ${e(CAP_APP_AUTHOR)} — créateur et titulaire des droits</td></tr>
+        <tr><td>Licence</td><td><b>GNU General Public License version 3</b> (GPLv3) — logiciel libre : utilisation (y compris commerciale), étude, modification et redistribution autorisées ; toute version modifiée redistribuée doit l'être sous GPLv3, avec son code source. Fourni <b>sans aucune garantie</b>.<br><span class="ana-dim">Texte complet : gnu.org/licenses/gpl-3.0 (fichier LICENSE du dépôt)</span></td></tr>
+        <tr><td>Contact</td><td>Code source, signalements et contributions : <span class="ab-mono">${e(CAP_APP_REPO)}</span></td></tr>
+        <tr><td>Développement</td><td>Développé avec l'aide de Claude Code (Anthropic).</td></tr>
+      </table>
+      <h4>Composants tiers et marques</h4>
+      <table class="ana-t ana-kv">
+        <tr><td>D3.js v7.9.0</td><td>Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock.
+          <details><summary class="ana-dim">Texte de la licence</summary><pre class="ab-lic">${e(CAP_D3_LICENSE)}</pre></details></td></tr>
+        <tr><td>Capella, ARCADIA</td><td>Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié.</td></tr>
+        <tr><td>Modèles de test</td><td>Exemples Capella « In-Flight Entertainment System » (<a href="https://github.com/dbinfrago/Capella-IFE-sample" target="_blank" rel="noopener">github.com/dbinfrago/Capella-IFE-sample</a>) et « AIDA » (<a href="https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture" target="_blank" rel="noopener">sahara.irt-saintexupery.com/AIDA/AIDAArchitecture</a>).</td></tr>
+      </table>
+      <h4>Informations techniques</h4>
+      <table class="ana-t ana-kv">${tech.map(([k,v])=>`<tr><td>${e(k)}</td><td>${e(v)}</td></tr>`).join('')}</table>
+    </div>
+    <div class="cw-d-ftr"><button class="cap-lf-btn" data-c="copy" title="Copier version, navigateur et modèle, à joindre à un signalement">📋 Copier les infos</button><span style="flex:1"></span><button class="phl-export-btn" data-c="x">Fermer</button></div></div>`;
+  ov.style.display='flex';
+  ov.querySelectorAll('[data-c="x"]').forEach(b=>b.onclick=()=>{ ov.style.display='none'; });
+  ov.querySelector('[data-c="copy"]').onclick=()=>{
+    const txt=[CAP_APP_NAME, ...tech.map(([k,v])=>`${k} : ${v}`)].join('\n');
+    (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>{ if(typeof capWatchFlash==='function') capWatchFlash('✔ Informations copiées'); },()=>prompt('Copiez les informations :',txt));
+  };
+}
+
+// Lien « ℹ À propos » de l'écran d'accueil
+document.getElementById('cw-about-link')?.addEventListener('click',ev=>{ ev.preventDefault(); ev.stopPropagation(); capAboutOpen(); });
 
 </script>
 </body>
