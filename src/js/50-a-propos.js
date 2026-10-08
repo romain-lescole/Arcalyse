@@ -1,5 +1,5 @@
 /* ══ ℹ À PROPOS ══════════════════════════════════════════════════════════════════
- * Fenêtre « À propos » d'Arcalyse (menu ? Aide ▾) : identité et version, auteur, licence PolyForm Strict 1.0.0, contact,
+ * Fenêtre « À propos » d'Arcalyse (menu ? Aide ▾) : identité et version, auteur, licence GNU GPL v3, contact,
  * composants tiers (D3.js, licence ISC à reproduire), marques citées, informations techniques copiables.
  */
 var CAP_APP_VERSION='1.6';   // à mettre à jour à chaque livraison (node build.js --livraison)
@@ -45,8 +45,8 @@ function capAboutOpen(){
       <h4>Auteur et licence</h4>
       <table class="ana-t ana-kv">
         <tr><td>Auteur</td><td>© ${yr} ${e(CAP_APP_AUTHOR)} — créateur et titulaire des droits</td></tr>
-        <tr><td>Licence</td><td><b>PolyForm Strict License 1.0.0</b> — usage non commercial autorisé (personnel, recherche, enseignement, organismes publics) ; usage commercial, modification et redistribution : uniquement avec l'accord de l'auteur.<br><span class="ana-dim">Texte complet : polyformproject.org/licenses/strict/1.0.0 (fichier LICENSE.md du dépôt)</span></td></tr>
-        <tr><td>Contact</td><td>Pour toute modification, redistribution, usage commercial ou signalement : <span class="ab-mono">${e(CAP_APP_REPO)}</span></td></tr>
+        <tr><td>Licence</td><td><b>GNU General Public License version 3</b> (GPLv3) — logiciel libre : utilisation (y compris commerciale), étude, modification et redistribution autorisées ; toute version modifiée redistribuée doit l'être sous GPLv3, avec son code source. Fourni <b>sans aucune garantie</b>.<br><span class="ana-dim">Texte complet : gnu.org/licenses/gpl-3.0 (fichier LICENSE du dépôt)</span></td></tr>
+        <tr><td>Contact</td><td>Code source, signalements et contributions : <span class="ab-mono">${e(CAP_APP_REPO)}</span></td></tr>
         <tr><td>Développement</td><td>Développé avec l'aide de Claude Code (Anthropic).</td></tr>
       </table>
       <h4>Composants tiers et marques</h4>

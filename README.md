@@ -2,6 +2,8 @@
 
 *Votre modèle Capella, sous toutes ses coutures.* Explorateur et analyseur hors ligne de modèles Capella / ARCADIA (outil indépendant, non affilié à Capella).
 
+Licence : **GNU GPL v3** (fichier `LICENSE`, avis de copyright et composants tiers dans `NOTICE.md`).
+
 Ce dossier contient les **sources découpées** de l'application. Le fichier HTML unique que vous utilisez sur le PC sécurisé est **fabriqué** à partir de ces sources par une commande (`node build.js`). On ne modifie donc plus le gros fichier HTML : on modifie (ou on fait modifier par Claude Code) les petits fichiers de `src/`, puis on reconstruit.
 
 ```
