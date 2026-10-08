@@ -97,7 +97,7 @@ function capBuildPageHtml(){
   return '<!DOCTYPE html>\\n' + doc.outerHTML;
 }
 /** Nom de fichier proposé pour la page sauvegardée. */
-function capPageFileName(){ return capLoaded ? 'relation-map-avec-modele.html' : 'relation-map.html'; }
+function capPageFileName(){ return capLoaded ? 'arcalyse-avec-modele.html' : 'arcalyse.html'; }
 /** Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur). */
 function capSaveFullPage(){
   const blob = new Blob([capBuildPageHtml()], {type:'text/html'});

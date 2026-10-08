@@ -204,7 +204,7 @@ function capPdfBuild(pages, docTitle){
   obj(1,`<< /Type /Catalog /Pages 2 0 R /Outlines 3 0 R /PageMode /UseOutlines >>`);
   obj(2,`<< /Type /Pages /Count ${n} /Kids [${pages.map((_,i)=>pObj(i)+' 0 R').join(' ')}] >>`);
   obj(3,`<< /Type /Outlines /Count ${n}${n?` /First ${oObj(0)} 0 R /Last ${oObj(n-1)} 0 R`:''} >>`);
-  obj(4,`<< /Title ${capPdfHexStr(docTitle)} /Producer (relation-map-capella) /CreationDate (D:${new Date().toISOString().replace(/[-:T]/g,'').slice(0,14)}) >>`);
+  obj(4,`<< /Title ${capPdfHexStr(docTitle)} /Producer (Arcalyse) /CreationDate (D:${new Date().toISOString().replace(/[-:T]/g,'').slice(0,14)}) >>`);
   pages.forEach((p,i)=>{
     const mg=24, aw=p.pw-2*mg, ah=p.ph-2*mg;
     const k=Math.min(aw/p.iw, ah/p.ih);

@@ -10,7 +10,7 @@
  * qui le renvoie), m = 'loaded' (seulement avec un modèle chargé) ou 'empty' (seulement sans modèle),
  * pre = action préalable (ex. ouvrir une vue). */
 var CAP_TOUR_STEPS=[
-  {t:'🎓 Bienvenue dans Relation Map Capella',
+  {t:'🎓 Bienvenue dans Arcalyse',
    x:'Cette visite présente les principales zones de l\'outil en quelques étapes.<br>Utilisez <b>Suivant ▶</b> et <b>◀ Précédent</b> (ou les flèches du clavier) ; <b>✕</b> ou <b>Échap</b> pour quitter à tout moment.'},
   {s:'#cap-drop-zone', m:'empty', t:'🔷 Ouvrir un modèle',
    x:'Glissez-déposez un fichier <b>.capella</b> ici, ou cliquez pour le chercher. Le fichier est lu sur ce poste : rien n\'est envoyé.'},

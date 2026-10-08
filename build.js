@@ -2,10 +2,10 @@
 /**
  * Assemble les sources de src/ en un fichier HTML unique, autonome et 100 % hors ligne.
  *
- *   node build.js                 → dist/relation-map-capella-fr.html (avec repères de modules)
+ *   node build.js                 → dist/arcalyse-fr.html (avec repères de modules)
  *   node build.js --no-markers    → même chose, sans les commentaires @@BEGIN/@@END
  *   node build.js --out chemin    → fichier de sortie personnalisé
- *   node build.js --livraison     → livraison/relation-map-capella-fr.html, sans repères : version livrée,
+ *   node build.js --livraison     → livraison/arcalyse-fr.html, sans repères : version livrée,
  *                                   versionnée dans Git (dist/ n'est pas touché) ; rappelle les commandes git.
  *
  * Contrôles effectués à chaque assemblage :
@@ -24,8 +24,8 @@ const args = process.argv.slice(2);
 const livraison = args.includes('--livraison');                 // version livrée : sans repères, dans livraison/
 const markers = !livraison && !args.includes('--no-markers');
 const outArg = args.indexOf('--out');
-const OUT = livraison ? path.join(ROOT, 'livraison', 'relation-map-capella-fr.html')
-  : outArg >= 0 ? path.resolve(args[outArg + 1]) : path.join(ROOT, 'dist', 'relation-map-capella-fr.html');
+const OUT = livraison ? path.join(ROOT, 'livraison', 'arcalyse-fr.html')
+  : outArg >= 0 ? path.resolve(args[outArg + 1]) : path.join(ROOT, 'dist', 'arcalyse-fr.html');
 
 /** Commentaires de repère selon le langage du fichier inclus. */
 function marks(p) {

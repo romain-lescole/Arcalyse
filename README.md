@@ -1,4 +1,6 @@
-# Relation Map Capella — guide de travail
+# Arcalyse — guide de travail
+
+*Votre modèle Capella, sous toutes ses coutures.* Explorateur et analyseur hors ligne de modèles Capella / ARCADIA (outil indépendant, non affilié à Capella).
 
 Ce dossier contient les **sources découpées** de l'application. Le fichier HTML unique que vous utilisez sur le PC sécurisé est **fabriqué** à partir de ces sources par une commande (`node build.js`). On ne modifie donc plus le gros fichier HTML : on modifie (ou on fait modifier par Claude Code) les petits fichiers de `src/`, puis on reconstruit.
 
@@ -6,7 +8,7 @@ Ce dossier contient les **sources découpées** de l'application. Le fichier HTM
 relation-map-capella/
 ├── CLAUDE.md                  ← consignes lues automatiquement par Claude Code à chaque session
 ├── README.md                  ← ce guide
-├── build.js                   ← assemble src/ → dist/relation-map-capella-fr.html (+ contrôles)
+├── build.js                   ← assemble src/ → dist/arcalyse-fr.html (+ contrôles)
 ├── package.json               ← raccourcis npm (npm run build, …)
 ├── src/
 │   ├── index.html             ← squelette + ordre d'inclusion des morceaux
@@ -51,7 +53,7 @@ Pourquoi c'est plus économe : Claude Code ne lit que le fichier concerné (par 
    ```
    node build.js
    ```
-   Le message `✔ dist/relation-map-capella-fr.html — … syntaxe OK` doit s'afficher. Ouvrez ce fichier dans le navigateur : c'est exactement l'application actuelle.
+   Le message `✔ dist/arcalyse-fr.html — … syntaxe OK` doit s'afficher. Ouvrez ce fichier dans le navigateur : c'est exactement l'application actuelle.
 
 ## 3. Travailler avec Claude Code au quotidien
 
@@ -61,7 +63,7 @@ Pourquoi c'est plus économe : Claude Code ne lit que le fichier concerné (par 
    - « Dans le tableau de bord, ajoute un indicateur “ports non alloués par couche”. Lance aussi le test smoke. »
    - « Le bouton X ne fonctionne pas dans la vue Physical Link : voici le message d'erreur de la console : … »
 3. Claude Code cherche le bon module, le modifie, lance `node build.js` et vous résume le changement.
-4. Ouvrez (ou rafraîchissez avec F5) `dist/relation-map-capella-fr.html` dans le navigateur pour vérifier.
+4. Ouvrez (ou rafraîchissez avec F5) `dist/arcalyse-fr.html` dans le navigateur pour vérifier.
 5. Si c'est bon : demandez « fais un commit » (ou tapez `git add . && git commit -m "…"`). Si ce n'est pas bon : dites-le à Claude Code, ou annulez tout depuis le dernier commit avec `git restore .`.
 6. Changez de sujet ? Tapez **`/clear`** dans Claude Code : la conversation repart de zéro (les consignes de `CLAUDE.md` sont relues), ce qui évite d'accumuler du contexte et donc de la consommation.
 
@@ -73,7 +75,7 @@ Bonnes habitudes pour consommer peu :
 
 ## 4. Copier sur le PC sécurisé
 
-Seul le fichier **`dist/relation-map-capella-fr.html`** est nécessaire : il est autonome et ne fait aucun accès réseau.
+Seul le fichier **`dist/arcalyse-fr.html`** est nécessaire : il est autonome et ne fait aucun accès réseau.
 - `node build.js` produit une version avec de petits commentaires de repère `@@BEGIN …@@` (invisibles à l'utilisation, ils permettent de réimporter le fichier, voir §5).
 - `node build.js --no-markers` produit une version sans ces repères, si vous préférez livrer un fichier « propre ».
 
@@ -92,11 +94,11 @@ git tag vX.Y
 git push
 git push --tags
 ```
-Le build produit `livraison/relation-map-capella-fr.html` sans repères, avec les mêmes contrôles que d'habitude. Il rappelle ces commandes à la fin.
+Le build produit `livraison/arcalyse-fr.html` sans repères, avec les mêmes contrôles que d'habitude. Il rappelle ces commandes à la fin.
 
 **Récupérer le fichier depuis n'importe quel PC, sans rien installer** :
 1. Ouvrir github.com et se connecter : la connexion est nécessaire car le dépôt est privé.
-2. Ouvrir le dépôt `relation-map-capella`, puis le dossier `livraison`, puis le fichier `relation-map-capella-fr.html`.
+2. Ouvrir le dépôt `relation-map-capella`, puis le dossier `livraison`, puis le fichier `arcalyse-fr.html`.
 3. Cliquer sur le bouton **« Download raw file »** (icône de téléchargement en haut à droite du fichier).
 
 **Retrouver une ancienne livraison** :
@@ -106,7 +108,7 @@ Le build produit `livraison/relation-map-capella-fr.html` sans repères, avec le
 ## 5. Revenir travailler dans Claude.ai (conversation classique)
 
 C'est possible à tout moment :
-1. Envoyez dans la conversation le fichier `dist/relation-map-capella-fr.html` **construit avec repères** (commande `node build.js` normale), avec `CLAUDE.md`.
+1. Envoyez dans la conversation le fichier `dist/arcalyse-fr.html` **construit avec repères** (commande `node build.js` normale), avec `CLAUDE.md`.
 2. Récupérez le fichier modifié, placez-le par exemple dans `C:\Temp\modifie.html`, puis dans le dossier du projet :
    ```
    node tools/split.js C:\Temp\modifie.html --dry     (montre les fichiers qui vont changer)

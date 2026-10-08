@@ -143,7 +143,7 @@
   "<span class=\"th-edit\" title=\"Modifier le metachain\">✏</span><span class=\"th-del\" title=\"Supprimer cette colonne\">✕</span>": "<span class=\"th-edit\" title=\"Edit the metachain\">✏</span><span class=\"th-del\" title=\"Delete this column\">✕</span>",
   "Supprimer la colonne \"": "Delete column \"",
   "</span><span class=\"th-del\" title=\"Masquer cette colonne\">✕</span></div>": "</span><span class=\"th-del\" title=\"Hide this column\">✕</span></div>",
-  "relation-map-avec-modele.html": "relation-map-with-model.html",
+  "arcalyse-avec-modele.html": "arcalyse-with-model.html",
   " » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet.": " » is a representation/metadata file: drop the project's .capella file.",
   " » n'est pas un fichier Capella (.capella attendu).": " » is not a Capella file (.capella expected).",
   "Chargement de « ": "Loading « ",

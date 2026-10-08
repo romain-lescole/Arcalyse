@@ -13,7 +13,7 @@ Le projet actuel est **uniquement en français** : rien de ce dossier n'est enco
 ## Démarche retenue pour produire une version anglaise (à faire dans Claude Code)
 
 1. **Le texte français reste la clé** : dans le code, envelopper chaque libellé affiché par `_L('texte français')`. Le code reste lisible, et `_L` renvoie le texte tel quel en français.
-2. **Traduction au moment du build** : `node build.js --lang en` remplacera chaque `_L('…')` par sa traduction (dictionnaire `code`), traduira les textes de `interface.html` (dictionnaire `interface`), utilisera `src/html/aide.en.html` et surchargera les descriptions de types (`types`). Résultat : `dist/relation-map-capella-en.html`, sans bascule de langue dans la page (pas de coût au démarrage, pas de mélange de langues).
+2. **Traduction au moment du build** : `node build.js --lang en` remplacera chaque `_L('…')` par sa traduction (dictionnaire `code`), traduira les textes de `interface.html` (dictionnaire `interface`), utilisera `src/html/aide.en.html` et surchargera les descriptions de types (`types`). Résultat : `dist/arcalyse-en.html`, sans bascule de langue dans la page (pas de coût au démarrage, pas de mélange de langues).
 3. **Contrôles du build anglais** : textes `_L` sans traduction, mots français restants dans la sortie anglaise, `</script` dans une traduction.
 4. Avancer **module par module** (un module par session Claude Code), en relançant `node tools/textes.js --en` pour voir ce qui reste.
 

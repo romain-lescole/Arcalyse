@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Test de fumée (facultatif) : ouvre dist/relation-map-capella-fr.html dans Chromium HORS LIGNE,
+ * Test de fumée (facultatif) : ouvre dist/arcalyse-fr.html dans Chromium HORS LIGNE,
  * charge un modèle, parcourt toutes les vues et sous-vues, et signale toute erreur JavaScript.
  * Vérifie aussi qu'aucun élément du tableau de bord ne déborde de son cadre.
  *
@@ -14,7 +14,7 @@ let chromium; try { ({ chromium } = require('playwright')); }
 catch (e) { console.error('Playwright absent : npm install --save-dev playwright && npx playwright install chromium'); process.exit(2); }
 
 const ROOT = path.join(__dirname, '..');
-const page = path.join(ROOT, 'dist', 'relation-map-capella-fr.html');
+const page = path.join(ROOT, 'dist', 'arcalyse-fr.html');
 const models = path.join(__dirname, 'models');
 const model = process.argv[2] || (fs.existsSync(models) ? fs.readdirSync(models).filter(f => f.endsWith('.capella')).map(f => path.join(models, f))[0] : null);
 if (!fs.existsSync(page)) { console.error('Lancez d\'abord : node build.js'); process.exit(2); }

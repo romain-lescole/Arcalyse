@@ -1,4 +1,4 @@
-# Notes techniques — Relation Map Capella
+# Notes techniques — Arcalyse
 
 Mémoire technique du projet (fonctionnement, choix, pièges). Les règles de travail et la carte des modules sont dans `CLAUDE.md` ; la liste des fonctions par module dans `docs/INDEX-FONCTIONS.md`.
 Historique : ce document reprend le fichier « CONSIGNES » utilisé avant le découpage en modules (quand tout était dans un seul fichier HTML). Les références à « grep dans le fichier » valent désormais pour `src/`.
@@ -7,7 +7,7 @@ Historique : ce document reprend le fichier « CONSIGNES » utilisé avant le d�
 
 - Application autonome qui charge un `.capella` (XML) localement ; **version Capella uniquement** (pas de SysML, pas d'exemple intégré).
 - Utilisée sur **PC sécurisé** : aucune communication réseau. **D3.js v7.9.0 embarqué** (`src/vendor/d3.min.js`, issu de `npm pack d3@7.9.0` → `package/dist/d3.min.js`).
-- Livrable : `dist/relation-map-capella-fr.html` (~1,15 Mo, dont D3 ~280 Ko), produit par `node build.js`.
+- Livrable : `dist/arcalyse-fr.html` (~1,15 Mo, dont D3 ~280 Ko), produit par `node build.js`.
 - Une ancienne version bilingue FR/EN (mécanisme `_L()` + `I18N_EN`, rechargement via `window.name`) existe hors de ce dépôt ; elle n'est plus maintenue. Le projet actuel est **français uniquement**.
 
 ## 2. Tests
@@ -96,6 +96,7 @@ Chaînes de navigation Metaclass → Property, façon MagicDraw.
 - Cartouches `.phl-line` (🔌 Physical Link, 🔀 Component Exchange) : `align-items:stretch`, couleur du composant en bordure via `--phl-c`, cellule droite `.phl-cell-r` ; noms en `capTextOn`.
 - Thème par défaut : **Sombre** (`applyTheme('dark')`). Couleurs de statut en variables `--c-warn/--c-ok/--c-err` (assombries en thème clair) ; `capInk(bg)` choisit le texte noir/blanc le plus contrasté (bandeaux de type de la Relation Map) ; `capTextOn(c)` assombrit un texte coloré en thème clair (libellés d'arêtes).
 - Barre `#cap-sub-toolbar` + `#cap-result-count` masquées dans les vues qui ont leurs propres filtres (analyses, dashboard, links, chains, physlink, compex, ports) — `capUpdateToolbarForView`.
+- Nom de l'application : **Arcalyse** (`CAP_APP_NAME`, slogan `CAP_APP_SLOGAN` dans 50-a-propos.js), livrable `dist/arcalyse-fr.html`. « Relation Map » reste le nom de la vue graphe. Le dépôt GitHub garde son nom `relation-map-capella` tant qu'il n'est pas renommé.
 - ƒ Fonctions = premier onglet de 🔬 Analyses (`CAP_ANA_SUBS`, `capAnaTabsHtml`, `capAnaTabOpen`) mais garde sa vue propre `functions` (`#cap-view-functions`, qui affiche les mêmes onglets) ; `capAnaSub` ne vaut jamais 'fns'. Dans la barre, l'entrée `functions` est du groupe `ana` et n'est plus épinglée par défaut.
 - Rechargement d'un modèle (`capApplyPanelOnLoad`, étape 3 bis) : purge des types Capella de TCFG absents du nouveau modèle, des éléments masqués, du focus et de la sélection obsolètes. Mesures (2 modèles chargés à la suite) : pas de fuite (tas, DOM, écouteurs) ni de ralentissement du rendu Relation Map.
 - Groupes de commandes : classe `.tb-grp` (cadre arrondi) + `.tb-grp-l` (libellé) ; compteur filtré `.ana-fn-cnt` (« **n** / total »). Appliqués à ƒ Fonctions, ⚡ Chaînes, 📐 Tableau de bord.

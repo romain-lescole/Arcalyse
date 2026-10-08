@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3318 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3322 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -63,6 +63,8 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 83 | · ouvrir un modèle, puis trouver l'aide et les tutoriels |
 | 83 | Visite guidée en deux temps : où ouvrir votre fichier .capella, puis, une fois le modèle chargé, où trouver l'aide et les tutoriels  (infobulle) |
 | 84 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) |
+| 85 | 🔷 Arcalyse |
+| 85 | Votre modèle Capella, sous toutes ses coutures. |
 | 86 | Ouvrir un modèle Capella |
 | 87 | Glissez-déposez votre fichier |
 | 87 | ou recherchez-le dans l'explorateur de fichiers. |
@@ -965,7 +967,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 206 | /First |
 | 206 | 0 R /Last |
 | 207 | /Title |
-| 207 | /Producer (relation-map-capella) /CreationDate (D: |
+| 207 | /Producer (Arcalyse) /CreationDate (D: |
 | 212 | /Type /Page /Parent 2 0 R /MediaBox [0 0 |
 | 212 | ] /Resources /XObject /Im0 |
 | 212 | 0 R /Contents |
@@ -2623,7 +2625,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte |
 |---:|---|
-| 13 | 🎓 Bienvenue dans Relation Map Capella |
+| 13 | 🎓 Bienvenue dans Arcalyse |
 | 15 | 🔷 Ouvrir un modèle |
 | 16 | Glissez-déposez un fichier .capella ici, ou cliquez pour le chercher. Le fichier est lu sur ce poste : rien n'est envoyé. |
 | 17 | 🧭 Barre des vues |
@@ -3287,7 +3289,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 116 | » non appliqué : |
 | 117 | réglage(s) appliqué(s) |
 | 128 | Fichier illisible : JSON invalide. |
-| 129 | Ce fichier n'est pas un fichier « interface et vues » de Relation Map Capella. |
+| 129 | Ce fichier n'est pas un fichier « interface et vues » d'Arcalyse. |
 | 138 | Ouvrez d'abord un modèle Capella : la mise à jour se compare au modèle affiché. |
 
 ## js/47-composants.js
@@ -3506,23 +3508,25 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | Ligne | Texte |
 |---:|---|
 | 6 | Romain Lescole |
-| 7 | github.com/romain-lescole/relation-map-capella |
-| 9 | Copyright 2010-2023 Mike Bostock Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies. THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. |
-| 18 | Edge |
-| 21 | Version |
-| 22 | Fichier du |
-| 23 | Navigateur |
-| 24 | Accès direct au fichier (🔄 Suivi) |
-| 24 | non disponible (rechargement manuel) |
-| 25 | Modèle chargé |
-| 25 | éléments |
-| 26 | Réseau |
-| 26 | 100 % hors ligne : aucune donnée transmise |
-| 36 | ℹ À propos ✕ 🔷 Relation Map Capella Version |
-| 40 | Explorateur et analyseur hors ligne de modèles Capella / ARCADIA : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML. Auteur et licence Auteur © |
-| 46 | Développement Développé avec l'aide de Claude Code (Anthropic). Composants tiers et marques D3.js v7.9.0 Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock. Texte de la licence |
-| 52 | Capella, ARCADIA Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié. Modèles de test Exemples Capella « In-Flight Entertainment System » ( github.com/dbinfrago/Capella-IFE-sample ) et « AIDA » ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Informations techniques |
-| 57 | 📋 Copier les infos Fermer |
-| 63 | Relation Map Capella |
-| 64 | ✔ Informations copiées |
-| 64 | Copiez les informations : |
+| 7 | Arcalyse |
+| 8 | Votre modèle Capella, sous toutes ses coutures. |
+| 9 | github.com/romain-lescole/relation-map-capella |
+| 11 | Copyright 2010-2023 Mike Bostock Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies. THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. |
+| 20 | Edge |
+| 23 | Version |
+| 24 | Fichier du |
+| 25 | Navigateur |
+| 26 | Accès direct au fichier (🔄 Suivi) |
+| 26 | non disponible (rechargement manuel) |
+| 27 | Modèle chargé |
+| 27 | éléments |
+| 28 | Réseau |
+| 28 | 100 % hors ligne : aucune donnée transmise |
+| 38 | ℹ À propos ✕ 🔷 |
+| 41 | Version |
+| 42 | Explorateur et analyseur hors ligne de modèles Capella / ARCADIA : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML. Auteur et licence Auteur © |
+| 48 | Développement Développé avec l'aide de Claude Code (Anthropic). Composants tiers et marques D3.js v7.9.0 Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock. Texte de la licence |
+| 54 | Capella, ARCADIA Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié. Modèles de test Exemples Capella « In-Flight Entertainment System » ( github.com/dbinfrago/Capella-IFE-sample ) et « AIDA » ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Informations techniques |
+| 59 | 📋 Copier les infos Fermer |
+| 66 | ✔ Informations copiées |
+| 66 | Copiez les informations : |

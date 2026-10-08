@@ -126,7 +126,7 @@ function capCfgLoadFile(){
     const f=inp.files[0]; if(!f) return;
     f.text().then(t=>{
       let o; try{ o=capCfgRev(t); }catch(e){ alert('Fichier illisible : JSON invalide.'); return; }
-      if(!o||o.type!=='capella-interface'||!o.parts){ alert('Ce fichier n\'est pas un fichier « interface et vues » de Relation Map Capella.'); return; }
+      if(!o||o.type!=='capella-interface'||!o.parts){ alert('Ce fichier n\'est pas un fichier « interface et vues » d\'Arcalyse.'); return; }
       capCfgDialog('load',o);
     });
   };

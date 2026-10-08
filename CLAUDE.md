@@ -1,6 +1,6 @@
-# CLAUDE.md — Relation Map Capella
+# CLAUDE.md — Arcalyse
 
-Application **autonome et 100 % hors ligne** qui charge un fichier `.capella` (XML Capella / ARCADIA) dans le navigateur pour l'explorer, l'analyser, le contrôler et l'exporter. Le livrable est **un seul fichier HTML** (`dist/relation-map-capella-fr.html`) utilisé sur un **PC sécurisé sans réseau**. Les sources sont découpées dans `src/` et réassemblées par `build.js`.
+Application **autonome et 100 % hors ligne** qui charge un fichier `.capella` (XML Capella / ARCADIA) dans le navigateur pour l'explorer, l'analyser, le contrôler et l'exporter. Le livrable est **un seul fichier HTML** (`dist/arcalyse-fr.html`) utilisé sur un **PC sécurisé sans réseau**. Les sources sont découpées dans `src/` et réassemblées par `build.js`.
 
 ## Règles impératives
 
@@ -83,9 +83,9 @@ Textes : inventaire **`docs/TEXTES.md`** ; traduction : **`docs/i18n/`**. Détai
 ## Commandes
 
 ```
-node build.js                 # assemble dist/relation-map-capella-fr.html (avec repères @@BEGIN/@@END) + contrôles
+node build.js                 # assemble dist/arcalyse-fr.html (avec repères @@BEGIN/@@END) + contrôles
 node build.js --no-markers    # version sans repères (livraison « propre », identique octet pour octet à l'original découpé)
-node build.js --livraison     # version livrée, sans repères → livraison/relation-map-capella-fr.html (versionnée ; sur demande explicite uniquement)
+node build.js --livraison     # version livrée, sans repères → livraison/arcalyse-fr.html (versionnée ; sur demande explicite uniquement)
 node tools/index.js           # régénère docs/INDEX-FONCTIONS.md
 node tools/textes.js [--en]   # inventaire de tous les textes affichés → docs/TEXTES.md + docs/textes.csv (colonne anglaise avec --en)
 node tools/split.js f.html    # réimporte dans src/ un fichier assemblé AVEC repères (modifié ailleurs) ; --dry pour simuler

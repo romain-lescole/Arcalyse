@@ -1,9 +1,11 @@
 /* ══ ℹ À PROPOS ══════════════════════════════════════════════════════════════════
- * Fenêtre « À propos » (menu ? Aide ▾) : identité et version, auteur, licence PolyForm Strict 1.0.0, contact,
+ * Fenêtre « À propos » d'Arcalyse (menu ? Aide ▾) : identité et version, auteur, licence PolyForm Strict 1.0.0, contact,
  * composants tiers (D3.js, licence ISC à reproduire), marques citées, informations techniques copiables.
  */
 var CAP_APP_VERSION='1.6';   // à mettre à jour à chaque livraison (node build.js --livraison)
 var CAP_APP_AUTHOR='Romain Lescole';
+var CAP_APP_NAME='Arcalyse';
+var CAP_APP_SLOGAN='Votre modèle Capella, sous toutes ses coutures.';
 var CAP_APP_REPO='github.com/romain-lescole/relation-map-capella';
 /** Texte de la licence ISC de D3.js (reproduction obligatoire). */
 var CAP_D3_LICENSE=`Copyright 2010-2023 Mike Bostock
@@ -36,7 +38,7 @@ function capAboutOpen(){
   ov.innerHTML=`<div class="cw-d-box ab-box">
     <div class="cw-d-hdr"><b>ℹ À propos</b><button class="cap-lf-btn" data-c="x">✕</button></div>
     <div class="cw-d-body">
-      <div class="ab-id"><div class="ab-logo">🔷</div><div><div class="ab-name">Relation Map Capella</div>
+      <div class="ab-id"><div class="ab-logo">🔷</div><div><div class="ab-name">${e(CAP_APP_NAME)}</div><div class="ab-slogan">${e(CAP_APP_SLOGAN)}</div>
         <div class="ab-ver">Version ${e(CAP_APP_VERSION)} · ${e(tech[1][1])}</div>
         <div class="ana-dim">Explorateur et analyseur hors ligne de modèles Capella / ARCADIA : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML.</div></div></div>
       <h4>Auteur et licence</h4>
@@ -60,7 +62,7 @@ function capAboutOpen(){
   ov.style.display='flex';
   ov.querySelectorAll('[data-c="x"]').forEach(b=>b.onclick=()=>{ ov.style.display='none'; });
   ov.querySelector('[data-c="copy"]').onclick=()=>{
-    const txt=['Relation Map Capella', ...tech.map(([k,v])=>`${k} : ${v}`)].join('\n');
+    const txt=[CAP_APP_NAME, ...tech.map(([k,v])=>`${k} : ${v}`)].join('\n');
     (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>{ if(typeof capWatchFlash==='function') capWatchFlash('✔ Informations copiées'); },()=>prompt('Copiez les informations :',txt));
   };
 }

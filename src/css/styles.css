@@ -54,6 +54,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 #cap-drop-zone:hover{border-color:var(--c-accent);}
 #cap-drop-zone.cw-drag{border-color:var(--c-accent);background:color-mix(in srgb,var(--c-accent) 10%,var(--c-bg2));transform:scale(1.02);}
 #cap-drop-zone .cw-icon{font-size:46px;line-height:1;margin-bottom:14px;}
+#cap-drop-zone .cw-brand{display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:16px;}
+#cap-drop-zone .cw-brand-n{font-size:30px;font-weight:800;letter-spacing:.02em;color:var(--c-text);}
+#cap-drop-zone .cw-brand-s{font-size:13px;font-style:italic;color:var(--c-dim);}
 #cap-drop-zone .cw-title{font-size:18px;font-weight:700;color:var(--c-text);margin-bottom:8px;}
 #cap-drop-zone .cw-sub{font-size:12px;color:var(--c-dim);margin-bottom:22px;line-height:1.6;}
 #cap-drop-zone .cw-btn{display:inline-block;padding:9px 20px;border-radius:7px;background:var(--c-accent);color:var(--c-bg);
@@ -1134,6 +1137,7 @@ html[data-tone="light"] .fex-pname{color:#2a5a2a;}
 .ab-id{display:flex;gap:14px;align-items:center;}
 .ab-logo{font-size:40px;line-height:1;}
 .ab-name{font-size:18px;font-weight:800;}
+.ab-slogan{font-size:12.5px;font-style:italic;color:var(--c-dim);margin-bottom:2px;}
 .ab-ver{font-size:12px;color:var(--c-accent);margin:2px 0 4px;}
 .ab-mono{font-family:monospace;user-select:all;}
 .ab-lic{white-space:pre-wrap;font-size:10.5px;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:5px;padding:8px;margin:6px 0 0;max-height:180px;overflow:auto;}

@@ -660,11 +660,13 @@
 - `capScPan` (l. 319) — Déplacement du diagramme par cliquer-glisser (en plus des barres de défilement, de la molette et de Maj + molette).
 - `capRenderScenarios` (l. 332) — Rend la vue 🎬 Scénarios : liste filtrable à gauche, diagramme de séquence (ou contrôles) à droite.
 
-## 50-a-propos.js — 70 lignes
+## 50-a-propos.js — 72 lignes
 
 - `CAP_APP_VERSION` (l. 5)
 - `CAP_APP_AUTHOR` (l. 6)
-- `CAP_APP_REPO` (l. 7)
-- `CAP_D3_LICENSE` (l. 9) — Texte de la licence ISC de D3.js (reproduction obligatoire).
-- `capAboutTech` (l. 17) — Informations techniques (version, navigateur, accès direct aux fichiers, modèle chargé), pour un signalement.
-- `capAboutOpen` (l. 31) — Ouvre la fenêtre « À propos ».
+- `CAP_APP_NAME` (l. 7)
+- `CAP_APP_SLOGAN` (l. 8)
+- `CAP_APP_REPO` (l. 9)
+- `CAP_D3_LICENSE` (l. 11) — Texte de la licence ISC de D3.js (reproduction obligatoire).
+- `capAboutTech` (l. 19) — Informations techniques (version, navigateur, accès direct aux fichiers, modèle chargé), pour un signalement.
+- `capAboutOpen` (l. 33) — Ouvre la fenêtre « À propos ».

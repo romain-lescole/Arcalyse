@@ -4,7 +4,7 @@
  * (@@BEGIN/@@END) vers src/. Utile si le fichier unique a été modifié ailleurs
  * (par exemple dans une conversation Claude.ai) et qu'on veut réintégrer ces changements.
  *
- *   node tools/split.js dist/relation-map-capella-fr.html          → réécrit src/
+ *   node tools/split.js dist/arcalyse-fr.html          → réécrit src/
  *   node tools/split.js fichier.html --dry                         → affiche ce qui changerait
  *
  * Seuls les blocs entourés de repères sont réécrits ; le reste devient src/index.html.
