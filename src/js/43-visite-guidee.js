@@ -82,11 +82,26 @@ var CAP_TOUR_ANA_TXT={
   data:'<b>🗃 Données & interfaces</b> : classes, types de données, Exchange Items et interfaces, avec leurs utilisations.',
   cts:'<b>⛓ Contraintes</b> : contraintes du modèle et éléments contraints.'
 };
+/** Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
+ * la racine de l'arborescence si son graphe compte entre 6 et 60 nœuds, sinon le premier élément très relié
+ * qui tient dans cette fourchette (à défaut, le plus proche) ; le graphe est ensuite ajusté à la fenêtre. */
+function capTourRmCtx(){
+  if(S.ctx&&MODEL.elements.some(e=>e.id===S.ctx)) return;
+  const deg={}; MODEL.relations.forEach(r=>{ deg[r.src]=(deg[r.src]||0)+1; deg[r.tgt]=(deg[r.tgt]||0)+1; });
+  const cands=[...MODEL.elements.filter(e=>!e.parentEl), ...MODEL.elements.filter(e=>deg[e.id]).sort((a,b)=>deg[b.id]-deg[a.id]).slice(0,40)];
+  const size=id=>{ S.ctx=id; try{ const t=buildTreeData(); return t?d3.hierarchy(t).descendants().length:0; }catch(e){ return 0; } };
+  let best=null, gap=Infinity;
+  for(const e of cands){ const n=size(e.id), g=n<6?6-n:n>60?n-60:0;
+    if(g<gap){ gap=g; best=e; } if(!g) break; }
+  S.ctx=null;
+  if(best){ setCtx(best.id); setTimeout(()=>document.getElementById('b-fit')?.click(),50); }
+}
+
 /** Visites contextuelles, par vue : clé = '@rm', '@table' ou vue Capella (capCurrentView) ; l = nom de la vue,
  * steps = étapes (même format que CAP_TOUR_STEPS). */
 var CAP_TOUR_VIEWS={
   '@rm':{l:'🗺 Relation Map', steps:[
-    {t:'🗺 Relation Map', x:'Graphe centré sur un <b>élément de contexte</b> : ses voisins sont affichés jusqu\'à la profondeur choisie, selon les relations Capella cochées.'},
+    {pre:()=>capTourRmCtx(), t:'🗺 Relation Map', x:'Graphe centré sur un <b>élément de contexte</b> : ses voisins sont affichés jusqu\'à la profondeur choisie, selon les relations Capella cochées.'},
     {s:'#b-zi,#b-zo,#b-fit', t:'🔍 Zoom',
      x:'<b>＋</b> / <b>－</b> zooment (Ctrl++ / Ctrl+-), <b>⊡ Fit</b> ajuste le graphe à la fenêtre (Ctrl+W). La molette zoome aussi et le fond se déplace à la souris.'},
     {s:'#b-ea,#b-ca', t:'↕ Ouvrir / fermer tout',

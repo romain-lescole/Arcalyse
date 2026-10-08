@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3322 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3324 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -2686,312 +2686,312 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 81 | 🏷 Propriétés : propriétés et valeurs (PVMT) appliquées aux éléments. |
 | 82 | 🗃 Données & interfaces : classes, types de données, Exchange Items et interfaces, avec leurs utilisations. |
 | 83 | ⛓ Contraintes : contraintes du modèle et éléments contraints. |
-| 88 | 🗺 Relation Map |
-| 89 | 🗺 Relation Map |
-| 89 | Graphe centré sur un élément de contexte : ses voisins sont affichés jusqu'à la profondeur choisie, selon les relations Capella cochées. |
-| 90 | #b-zi,#b-zo,#b-fit |
-| 90 | 🔍 Zoom |
-| 91 | ＋ / － zooment (Ctrl++ / Ctrl+-), ⊡ Fit ajuste le graphe à la fenêtre (Ctrl+W). La molette zoome aussi et le fond se déplace à la souris. |
-| 92 | ↕ Ouvrir / fermer tout |
-| 93 | Déplie ou replie tous les nœuds du graphe d'un coup. |
-| 94 | #b-num,#b-leg,#b-rln,#b-cut,#b-compact |
-| 94 | 👁 Affichage |
-| 95 | # Nums numérote les relations, ◉ Légende affiche la légende, ⌁ Relations écrit le nom des relations sur les arêtes, ✂ Noms coupe les noms longs, ⬡ Compact réduit les nœuds. |
-| 96 | 🖼 Export |
-| 97 | Enregistre le graphe en image PNG , JPEG ou SVG . |
-| 98 | 🌳 Arborescence |
-| 100 | 📐 Disposition & profondeur |
-| 101 | Profondeur de voisinage (1 à 10) et disposition du graphe : → LR, ↓ TB, ← RL, ◉ radiale, ⚡ zigzag. |
-| 102 | 🔗 Critères de relation |
-| 104 | 🏷 Types d'éléments |
-| 105 | Types affichés dans le graphe, avec la couleur de leur couche ARCADIA. |
-| 106 | 📝 Propriétés |
-| 107 | Attributs de l'élément sélectionné dans le graphe. |
-| 108 | 🕸 Graphe |
-| 109 | Clic sur un nœud : sélection et propriétés · double-clic : il devient le contexte · clic droit : menu (éditer, masquer, relation…) · survol : ses voisins restent en évidence. |
-| 110 | ◉ Légende |
-| 110 | Couleurs des types et des relations affichés. |
-| 111 | ◀ Panneau |
-| 113 | 📊 Table View |
-| 114 | 📊 Table View |
-| 114 | Tableau de tous les éléments du fichier, avec onglets, filtres par colonne, colonnes calculées et export. |
-| 115 | 🗂 Onglets |
-| 116 | 🔷 Type d'élément |
-| 116 | Choisissez les types d'éléments listés dans le tableau, groupés par couche ARCADIA. |
-| 117 | 🧰 Commandes du tableau |
-| 118 | ⊞ Colonnes choisit les attributs affichés, ✨ Colonne perso crée une colonne calculée (Metachain), ≡ En ligne / ☰ Empilé règle les cellules à plusieurs valeurs, 💾 Sauver vue / 📂 Charger vue exportent la configuration en JSON. |
-| 119 | #tv-table thead |
-| 119 | ↕ En-têtes |
-| 120 | #tv-table tbody |
-| 120 | 📋 Lignes |
-| 120 | Un élément par ligne. Le nombre d'éléments affichés est indiqué dans la barre du tableau. |
-| 122 | ▦ Cartes |
-| 123 | ▦ Cartes |
-| 124 | Une carte par élément, regroupées par couche : type, nom et identifiant. Clic sur une carte : panneau de détail (propriétés, relations, liens). |
-| 125 | 🌳 Arborescence |
-| 126 | 🌳 Commandes |
-| 126 | ⊞ Déplier / ⊟ Réduire toute l'arborescence, ⬇ JSON l'exporte. |
-| 127 | 🌳 Arborescence |
-| 128 | 📋 Tableau |
-| 129 | 🧰 Commandes du tableau |
-| 130 | ⊞ Colonnes choisit les colonnes, ✨ Colonne perso en calcule une (Metachain), ≡ En ligne règle les cellules multiples, 💾 Sauver vue / 📂 Charger vue gardent la configuration, ↺ Réinitialiser revient au départ. |
-| 131 | ↕ En-têtes |
-| 132 | 📄 Pages |
-| 132 | Navigation de page en page et nombre de lignes par page. |
-| 133 | 📖 Index des types |
-| 134 | #cap-view-index input.inp |
-| 134 | 🔍 Recherche |
-| 134 | Cherche un type par son nom technique, son nom lisible ou sa description. |
-| 135 | ↕ Tri |
-| 135 | Clic sur un titre de colonne pour trier (nom, nombre d'éléments…). |
-| 136 | 📖 Types |
-| 136 | Chaque type présent dans le modèle : nom lisible, nombre d'éléments et description ARCADIA. |
-| 137 | 🔗 Liens |
-| 138 | 🔗 Liens |
-| 138 | Toutes les relations entre éléments du modèle, classées par nature : décomposition, allocation, échanges, réalisation inter-couches, capacités, chaînes. |
-| 139 | #cap-view-links .cap-lf-q |
-| 139 | 🔍 Recherche |
-| 139 | Filtre les liens par élément, échange ou identifiant. |
-| 140 | #cap-view-links .cap-lf-glab,#cap-view-links .cap-lf-btn |
-| 140 | 🔗 Relations |
-| 141 | #cap-view-links .cap-lf-csv |
-| 141 | ⬇ Export |
-| 141 | Exporte les liens affichés en CSV (la case voisine ajoute les identifiants). |
-| 142 | #cap-view-links .cap-link-table |
-| 142 | 📋 Tableau des liens |
-| 142 | Source → cible pour chaque lien. Clic sur un élément pour ouvrir son détail. |
-| 143 | ⚡ Chaînes |
-| 144 | ⚡ Chaînes |
-| 144 | Chaînes fonctionnelles, processus opérationnels et chemins physiques du modèle, avec leur diagramme. |
-| 145 | #cap-view-chains [data-cf] |
-| 145 | 🏷 Type |
-| 145 | Filtre par type de chaîne. |
-| 146 | #cap-view-chains [data-sv] |
-| 146 | 🖼 Présentation |
-| 146 | ▦ Diagrammes : une carte dépliable par chaîne · 🗺 Vue Relation Map : graphe interactif. |
-| 147 | #cap-view-chains [data-lf] |
-| 147 | 🧱 Catégorie |
-| 147 | Filtre par couche ARCADIA. |
-| 148 | #cap-view-chains [data-ef],#cap-view-chains [data-chsort] |
-| 148 | 🧹 Contenu et tri |
-| 148 | Vides : chaînes sans fonction ni échange (à compléter). Tri par nombre de fonctions. |
-| 149 | #cap-view-chains .cap-chain-legend |
-| 149 | 🎨 Légende |
-| 149 | Couleur des fonctions selon qu'elles sont portées par un acteur, par le système ou non allouées. |
-| 150 | #cap-view-chains .cap-chx-bar |
-| 150 | 📦 Export groupé |
-| 150 | Cochez des chaînes (aucune = toutes celles affichées) puis exportez-les en PDF , ZIP d'images PNG ou SVG, ou HTML . Les cases règlent le contenu (cadre, cartouche, légende, description, annexes), la liste ×1 / ×2 la résolution. |
-| 151 | #cap-view-chains .cap-chain-card |
-| 151 | ▦ Carte de chaîne |
-| 151 | Clic pour déplier le diagramme : fonctions, échanges, entrées / sorties. Le bouton 🗺 l'ouvre dans la Relation Map. |
-| 152 | 🗺 Vue Relation Map |
-| 152 | Graphe interactif de la chaîne choisie : dispositions, zoom et export. |
-| 153 | 🔀 Behavior Exchange |
-| 154 | #cap-view-compex .cap-mx-hint |
-| 154 | 🎯 Périmètre |
-| 154 | Component Exchanges de la couche PA entre Physical Components Behavior, ou entre un Behavior et un acteur (nœud) qui lui est relié. Les échanges SA et LA sont dans 🧱 System / Logical Component, les liens entre nœuds dans 🔌 Physical Link. |
-| 155 | #cap-view-compex .phl-toggle-btn |
-| 155 | 🖼 Présentation |
-| 156 | #cap-view-compex .ana-ak |
-| 156 | 🧩 Nature (Vue Blocs) |
-| 157 | #cap-view-compex #cb-main |
-| 157 | ◧ Blocs |
-| 158 | 🔢 Compteur |
-| 158 | Échanges affichés après filtres / total. |
-| 159 | #cap-view-compex .cex-dir-btn,#cex-kind-sel |
-| 159 | ⇄ Sens et nature |
-| 159 | Filtre par sens de l'échange (orienté, inversé, bidirectionnel) et par nature (FLOW…). |
-| 160 | #cex-node-input,#cex-name-input |
-| 160 | 🔍 Filtres |
-| 160 | Par composant, ou par nom d'échange, d'échange fonctionnel ou d'Exchange Item. |
-| 161 | #cex-exp-csv,#cex-exp-html,#cex-exp-html-all |
-| 161 | ⬇ Exports |
-| 161 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
-| 162 | 📋 Résultat |
-| 162 | Clic sur un composant ou un échange pour ouvrir son détail. |
-| 163 | 🧱 System Component |
-| 164 | #cap-view-csys .phl-toggle-btn |
-| 164 | 🖼 Présentation |
-| 165 | #cap-view-csys #cb-counter |
-| 165 | 🔢 Compteur |
-| 165 | Composants (ou échanges) affichés après filtres / total (SA uniquement). Les listes sont paginées par 100. |
-| 166 | #cap-view-csys .ana-ak |
-| 166 | 🧩 Nature |
-| 166 | Système ou acteurs (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants. |
-| 167 | #cap-view-csys #cb-csv,#cap-view-csys #cb-html,#cap-view-csys #cb-html-all |
-| 167 | ⬇ Exports |
-| 167 | CSV (ports ou échanges), rapport HTML de la vue ou de toutes les vues. |
-| 168 | #cap-view-csys #cb-main |
-| 168 | 📋 Résultat |
-| 169 | 🧱 Logical Component |
-| 170 | #cap-view-cblk .phl-toggle-btn |
+| 103 | 🗺 Relation Map |
+| 104 | 🗺 Relation Map |
+| 104 | Graphe centré sur un élément de contexte : ses voisins sont affichés jusqu'à la profondeur choisie, selon les relations Capella cochées. |
+| 105 | #b-zi,#b-zo,#b-fit |
+| 105 | 🔍 Zoom |
+| 106 | ＋ / － zooment (Ctrl++ / Ctrl+-), ⊡ Fit ajuste le graphe à la fenêtre (Ctrl+W). La molette zoome aussi et le fond se déplace à la souris. |
+| 107 | ↕ Ouvrir / fermer tout |
+| 108 | Déplie ou replie tous les nœuds du graphe d'un coup. |
+| 109 | #b-num,#b-leg,#b-rln,#b-cut,#b-compact |
+| 109 | 👁 Affichage |
+| 110 | # Nums numérote les relations, ◉ Légende affiche la légende, ⌁ Relations écrit le nom des relations sur les arêtes, ✂ Noms coupe les noms longs, ⬡ Compact réduit les nœuds. |
+| 111 | 🖼 Export |
+| 112 | Enregistre le graphe en image PNG , JPEG ou SVG . |
+| 113 | 🌳 Arborescence |
+| 115 | 📐 Disposition & profondeur |
+| 116 | Profondeur de voisinage (1 à 10) et disposition du graphe : → LR, ↓ TB, ← RL, ◉ radiale, ⚡ zigzag. |
+| 117 | 🔗 Critères de relation |
+| 119 | 🏷 Types d'éléments |
+| 120 | Types affichés dans le graphe, avec la couleur de leur couche ARCADIA. |
+| 121 | 📝 Propriétés |
+| 122 | Attributs de l'élément sélectionné dans le graphe. |
+| 123 | 🕸 Graphe |
+| 124 | Clic sur un nœud : sélection et propriétés · double-clic : il devient le contexte · clic droit : menu (éditer, masquer, relation…) · survol : ses voisins restent en évidence. |
+| 125 | ◉ Légende |
+| 125 | Couleurs des types et des relations affichés. |
+| 126 | ◀ Panneau |
+| 128 | 📊 Table View |
+| 129 | 📊 Table View |
+| 129 | Tableau de tous les éléments du fichier, avec onglets, filtres par colonne, colonnes calculées et export. |
+| 130 | 🗂 Onglets |
+| 131 | 🔷 Type d'élément |
+| 131 | Choisissez les types d'éléments listés dans le tableau, groupés par couche ARCADIA. |
+| 132 | 🧰 Commandes du tableau |
+| 133 | ⊞ Colonnes choisit les attributs affichés, ✨ Colonne perso crée une colonne calculée (Metachain), ≡ En ligne / ☰ Empilé règle les cellules à plusieurs valeurs, 💾 Sauver vue / 📂 Charger vue exportent la configuration en JSON. |
+| 134 | #tv-table thead |
+| 134 | ↕ En-têtes |
+| 135 | #tv-table tbody |
+| 135 | 📋 Lignes |
+| 135 | Un élément par ligne. Le nombre d'éléments affichés est indiqué dans la barre du tableau. |
+| 137 | ▦ Cartes |
+| 138 | ▦ Cartes |
+| 139 | Une carte par élément, regroupées par couche : type, nom et identifiant. Clic sur une carte : panneau de détail (propriétés, relations, liens). |
+| 140 | 🌳 Arborescence |
+| 141 | 🌳 Commandes |
+| 141 | ⊞ Déplier / ⊟ Réduire toute l'arborescence, ⬇ JSON l'exporte. |
+| 142 | 🌳 Arborescence |
+| 143 | 📋 Tableau |
+| 144 | 🧰 Commandes du tableau |
+| 145 | ⊞ Colonnes choisit les colonnes, ✨ Colonne perso en calcule une (Metachain), ≡ En ligne règle les cellules multiples, 💾 Sauver vue / 📂 Charger vue gardent la configuration, ↺ Réinitialiser revient au départ. |
+| 146 | ↕ En-têtes |
+| 147 | 📄 Pages |
+| 147 | Navigation de page en page et nombre de lignes par page. |
+| 148 | 📖 Index des types |
+| 149 | #cap-view-index input.inp |
+| 149 | 🔍 Recherche |
+| 149 | Cherche un type par son nom technique, son nom lisible ou sa description. |
+| 150 | ↕ Tri |
+| 150 | Clic sur un titre de colonne pour trier (nom, nombre d'éléments…). |
+| 151 | 📖 Types |
+| 151 | Chaque type présent dans le modèle : nom lisible, nombre d'éléments et description ARCADIA. |
+| 152 | 🔗 Liens |
+| 153 | 🔗 Liens |
+| 153 | Toutes les relations entre éléments du modèle, classées par nature : décomposition, allocation, échanges, réalisation inter-couches, capacités, chaînes. |
+| 154 | #cap-view-links .cap-lf-q |
+| 154 | 🔍 Recherche |
+| 154 | Filtre les liens par élément, échange ou identifiant. |
+| 155 | #cap-view-links .cap-lf-glab,#cap-view-links .cap-lf-btn |
+| 155 | 🔗 Relations |
+| 156 | #cap-view-links .cap-lf-csv |
+| 156 | ⬇ Export |
+| 156 | Exporte les liens affichés en CSV (la case voisine ajoute les identifiants). |
+| 157 | #cap-view-links .cap-link-table |
+| 157 | 📋 Tableau des liens |
+| 157 | Source → cible pour chaque lien. Clic sur un élément pour ouvrir son détail. |
+| 158 | ⚡ Chaînes |
+| 159 | ⚡ Chaînes |
+| 159 | Chaînes fonctionnelles, processus opérationnels et chemins physiques du modèle, avec leur diagramme. |
+| 160 | #cap-view-chains [data-cf] |
+| 160 | 🏷 Type |
+| 160 | Filtre par type de chaîne. |
+| 161 | #cap-view-chains [data-sv] |
+| 161 | 🖼 Présentation |
+| 161 | ▦ Diagrammes : une carte dépliable par chaîne · 🗺 Vue Relation Map : graphe interactif. |
+| 162 | #cap-view-chains [data-lf] |
+| 162 | 🧱 Catégorie |
+| 162 | Filtre par couche ARCADIA. |
+| 163 | #cap-view-chains [data-ef],#cap-view-chains [data-chsort] |
+| 163 | 🧹 Contenu et tri |
+| 163 | Vides : chaînes sans fonction ni échange (à compléter). Tri par nombre de fonctions. |
+| 164 | #cap-view-chains .cap-chain-legend |
+| 164 | 🎨 Légende |
+| 164 | Couleur des fonctions selon qu'elles sont portées par un acteur, par le système ou non allouées. |
+| 165 | #cap-view-chains .cap-chx-bar |
+| 165 | 📦 Export groupé |
+| 165 | Cochez des chaînes (aucune = toutes celles affichées) puis exportez-les en PDF , ZIP d'images PNG ou SVG, ou HTML . Les cases règlent le contenu (cadre, cartouche, légende, description, annexes), la liste ×1 / ×2 la résolution. |
+| 166 | #cap-view-chains .cap-chain-card |
+| 166 | ▦ Carte de chaîne |
+| 166 | Clic pour déplier le diagramme : fonctions, échanges, entrées / sorties. Le bouton 🗺 l'ouvre dans la Relation Map. |
+| 167 | 🗺 Vue Relation Map |
+| 167 | Graphe interactif de la chaîne choisie : dispositions, zoom et export. |
+| 168 | 🔀 Behavior Exchange |
+| 169 | #cap-view-compex .cap-mx-hint |
+| 169 | 🎯 Périmètre |
+| 169 | Component Exchanges de la couche PA entre Physical Components Behavior, ou entre un Behavior et un acteur (nœud) qui lui est relié. Les échanges SA et LA sont dans 🧱 System / Logical Component, les liens entre nœuds dans 🔌 Physical Link. |
+| 170 | #cap-view-compex .phl-toggle-btn |
 | 170 | 🖼 Présentation |
-| 171 | #cap-view-cblk #cb-counter |
-| 171 | 🔢 Compteur |
-| 171 | Composants (ou échanges) affichés après filtres / total (LA uniquement). Les listes sont paginées par 100. |
-| 172 | #cap-view-cblk .ana-ak |
-| 172 | 🧩 Nature |
-| 172 | Système ou acteurs (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants. |
-| 173 | #cap-view-cblk #cb-csv,#cap-view-cblk #cb-html,#cap-view-cblk #cb-html-all |
-| 173 | ⬇ Exports |
-| 173 | CSV (ports ou échanges), rapport HTML de la vue ou de toutes les vues. |
-| 174 | #cap-view-cblk #cb-main |
-| 174 | 📋 Résultat |
-| 175 | ƒ⇆ Functional Exchange |
-| 176 | #cap-view-fex .phl-toggle-btn |
-| 176 | 🖼 Présentation |
-| 177 | #cap-view-fex .ana-ak |
-| 177 | 🧩 Allocation |
-| 178 | 🔢 Compteur |
-| 178 | Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 100. |
-| 179 | #cap-view-fex .fex-layer-btn |
-| 179 | 🧱 Couche |
-| 179 | Filtre par couche ARCADIA (OA, SA, LA, PA). |
-| 180 | #fex-fn-input,#fex-name-input |
-| 180 | 🔍 Filtres |
-| 180 | Par fonction, ou par nom d'échange ou d'Exchange Item. |
-| 181 | #fex-exp-csv,#fex-exp-html,#fex-exp-html-all |
-| 181 | ⬇ Exports |
-| 181 | CSV de la vue, rapport HTML de la vue (toutes les pages), ou rapport HTML autonome avec toutes les vues. |
-| 182 | 📋 Résultat |
-| 182 | Clic sur une fonction ou un échange pour ouvrir son détail. |
-| 183 | 🟨 Operational Analysis |
-| 184 | #cap-view-oav .phl-toggle-btn |
-| 184 | 🖼 Présentation |
-| 185 | #cap-view-oav .ana-ak |
-| 185 | 🏢 Allocation |
-| 185 | Activités portées par une entité, par un acteur opérationnel ou non allouées (double-clic : uniquement celles-ci), ou par une entité ou un acteur précis. |
-| 186 | #cap-view-oav #fex-fn-input,#cap-view-oav #fex-name-input |
-| 186 | 🔍 Filtres |
-| 186 | Par activité, ou par nom d'interaction ou d'Exchange Item. |
-| 187 | #cap-view-oav #fex-exp-csv,#cap-view-oav #fex-exp-html,#cap-view-oav #fex-exp-html-all |
-| 187 | ⬇ Exports |
-| 187 | CSV des interactions, rapport HTML de la vue ou de toutes les vues. |
-| 188 | #cap-view-oav #fex-main |
-| 188 | 📋 Résultat |
-| 188 | Clic sur une activité ou une interaction pour ouvrir son détail. |
-| 189 | 🎬 Scénarios |
-| 190 | #cap-view-scen [data-scv] |
-| 190 | 🎬 Diagramme ou contrôles |
-| 190 | 🎬 Diagramme : diagramme de séquence du scénario choisi · 🩺 Contrôles : scénarios vides, messages sans échange, lignes de vie sans élément, scénarios hors capacité, références introuvables. |
-| 191 | #cap-view-scen [data-scl] |
-| 191 | 🧱 Couche et type |
-| 191 | Filtre par couche ARCADIA et par type : ES (Exchange Scenario), FS (Functional Scenario), OES / OAS en OA, IS (Interface Scenario). |
-| 192 | 🔍 Recherche |
-| 192 | Par nom de scénario, de capacité ou de ligne de vie. |
-| 193 | #cap-view-scen .sc-list |
-| 193 | 📋 Scénarios |
-| 193 | Rangés par couche puis par capacité (clic sur 🎯 : détail de la capacité). Clic sur un scénario pour afficher son diagramme. |
-| 194 | #cap-view-scen .sc-scroll |
-| 194 | 🖼 Diagramme |
-| 194 | Redessiné à partir du modèle, façon Capella : lignes de vie (bleu clair = acteur, bleu = composant, vert = fonction), messages, barres d'activation, fonctions (vert), états (gris clair) et modes (gris foncé), fragments combinés (ALT, OPT, LOOP, PAR…) avec leurs gardes, références « ref » (clic : ouvrir le scénario). Clic sur un élément : son détail. Les noms des lignes de vie restent visibles en haut au défilement. |
-| 195 | #cap-view-scen [data-sce] |
-| 195 | ⬇ Exports |
-| 195 | Image PNG, SVG, ou copie de l'image dans le presse-papiers. − / + : zoom. |
-| 196 | 🔌 Physical Link |
-| 197 | #cap-view-physlink .phl-toggle-btn |
-| 197 | 🖼 Présentation |
-| 198 | #cap-view-physlink .ana-ak |
-| 198 | 🖥 Nature (Vue Blocs) |
-| 198 | Nœuds du système ou nœuds acteurs (double-clic : uniquement ceux-ci), ou un nœud et ses sous-composants. |
-| 199 | #cap-view-physlink #cb-main |
-| 199 | ◧ Blocs |
-| 199 | Chaque nœud (jaune = système, bleu clair = acteur) avec ses ports physiques jaunes, le Physical Link et le nœud distant (clic : aller à son bloc). |
-| 200 | 🔢 Compteur |
-| 200 | Liens affichés après filtres / total. |
-| 201 | #cap-view-physlink .phl-ce-btn |
-| 201 | ⇢ Component Exchange |
-| 201 | Liens qui portent (ou non) des échanges de composants alloués. |
-| 202 | #phl-node-input,#phl-name-input |
-| 202 | 🔍 Filtres |
-| 202 | Par composant, ou par nom de lien ou d'échange. |
-| 203 | #phl-exp-csv,#phl-exp-html,#phl-exp-html-all |
-| 203 | ⬇ Exports |
-| 203 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
-| 204 | 📋 Résultat |
-| 204 | Clic sur un composant ou un lien pour ouvrir son détail. |
-| 205 | 🧩 Ports |
-| 206 | #cap-view-ports .phl-toggle-btn |
-| 206 | 🖼 Présentation |
-| 206 | ≡ Traçabilité Function Port ↔ Component Port ↔ Physical Port, ▣ Par composant , et 🩺 Contrôles (ports non alloués, chaînes incomplètes). |
-| 207 | 🔢 Compteur |
-| 207 | Lignes affichées après filtres / total. |
-| 208 | 🔍 Recherche |
-| 208 | Filtre par fonction, composant, port ou échange. La case voisine ne garde que les chaînes incomplètes. |
-| 209 | ⬇ CSV |
-| 209 | Exporte le tableau affiché. |
-| 210 | 📋 Résultat |
-| 210 | Les lignes incomplètes sont signalées en couleur. Clic sur un élément pour ouvrir son détail. |
-| 211 | ƒ Fonctions |
-| 212 | ƒ Fonctions |
-| 212 | Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles. |
-| 213 | #cap-view-functions [data-fv] |
-| 213 | 🖼 Présentation |
-| 213 | 🌳 Hiérarchie · 📋 Tableau façon Excel · ⛓ Traçabilité entre couches · 📊 Métriques · 🩺 Contrôles (qualité des noms, fonctions non allouées…). |
-| 214 | #cap-view-functions [data-fl] |
-| 214 | 🧱 Couche |
-| 214 | Choisit la couche ARCADIA étudiée (OA, SA, LA, PA). |
-| 215 | #ana-fn-q,#ana-fn-desc,#ana-fn-exp,#ana-fn-col |
-| 215 | 🔍 Recherche et affichage |
-| 216 | #cap-view-functions .ana-ak,#ana-fn-who |
-| 216 | 🎯 Allocation |
-| 217 | #ana-fn-csv,#ana-fn-html |
-| 217 | ⬇ Exports |
-| 217 | ⬇ CSV et 📄 Dossier fonctionnel : document HTML avec une section par fonction (description, allocation, échanges, traçabilité). |
-| 218 | #cap-view-functions .phl-filter-bar + * |
-| 218 | 📋 Résultat |
-| 218 | Clic sur une fonction pour ouvrir son détail. |
-| 219 | 🔬 Analyses |
-| 220 | #cap-view-analyses [data-an] |
-| 220 | 🔬 Analyses |
-| 220 | ƒ Fonctions et huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes. |
-| 221 | #cap-view-analyses [data-an].active |
-| 221 | 🔎 Analyse affichée |
-| 221 | Analyse en cours. |
-| 222 | ↻ Recalculer |
-| 223 | #ana-box .phl-filter-bar |
-| 223 | 🧰 Options |
-| 223 | Présentations, filtres et export CSV propres à l'analyse affichée. |
-| 224 | 📋 Résultat |
-| 225 | 📐 Tableau de bord |
-| 226 | 📐 Tableau de bord |
-| 226 | Pages d'indicateurs, graphiques et tableaux sur le modèle, à composer soi-même et à imprimer. |
-| 227 | #cap-view-dashboard .dash-tabs |
-| 227 | 🗂 Pages |
-| 228 | ✏ Modifier |
-| 228 | Passe en édition : ajouter des éléments depuis le catalogue d'indicateurs, les configurer, déplacer et redimensionner. ✔ Terminer pour sortir. |
-| 229 | #dash-orient,#dash-print,#dash-html |
-| 229 | 🖨 Impression |
-| 229 | Format A4 portrait ou paysage, impression, ou export en page HTML autonome. |
-| 230 | #dash-json,#dash-imp |
-| 230 | ⬇⬆ JSON |
-| 230 | Exporte ou importe la définition des tableaux de bord pour les réutiliser sur un autre modèle. |
-| 231 | #cap-view-dashboard .dash-scroll |
-| 231 | 📐 Page |
-| 231 | Les éléments du tableau de bord, calculés sur le modèle chargé. |
-| 235 | 🚀 Bien démarrer |
-| 237 | 1 · Ouvrir un modèle Capella |
-| 238 | Glissez-déposez votre fichier .capella dans ce cadre (formats acceptés : .capella, .melodymodeller, .xml). Le fichier est lu sur ce poste : rien n'est envoyé. |
-| 239 | … ou le chercher |
-| 240 | Vous pouvez aussi cliquer sur 📂 Parcourir… pour le choisir dans l'explorateur de fichiers. |
-| 241 | #b-help, #cap-nav-dd |
-| 241 | ? Aide, en haut à droite |
-| 242 | Le menu ? Aide ▾ reste accessible à tout moment, avec ou sans modèle : 📖 Aide complète et 🎓 Visite guidée . Une fois le modèle ouvert, il propose aussi 🎯 Visite de cette vue pour chaque vue. |
-| 243 | À vous ! |
-| 244 | Cliquez sur Terminer ✓ , puis ouvrez votre fichier. Dès que le modèle sera chargé, la visite reprendra pour vous montrer où trouver l'aide et les tutoriels. |
-| 248 | ✅ Modèle ouvert |
-| 249 | Votre modèle est chargé. Voici où trouver l'aide et les tutoriels, à tout moment. |
-| 250 | ? Aide |
-| 251 | L'aide et toutes les visites guidées sont regroupées dans ce menu. |
-| 252 | 📚 Aide et tutoriels |
-| 253 | 📖 Aide complète : documentation de toutes les vues. 🎓 Visite guidée : tour complet de l'interface. 🎯 Visite de cette vue : menus et commandes de la vue affichée — disponible dans chaque vue. |
-| 254 | 🧭 Et maintenant |
-| 255 | Choisissez une vue dans cette barre, puis ? Aide ▾ → 🎯 Visite de cette vue pour la découvrir pas à pas. |
-| 265 | @table |
-| 362 | Étape |
-| 364 | ◀ Précédent |
-| 365 | Terminer ✓ |
-| 365 | Suivant ▶ |
+| 171 | #cap-view-compex .ana-ak |
+| 171 | 🧩 Nature (Vue Blocs) |
+| 172 | #cap-view-compex #cb-main |
+| 172 | ◧ Blocs |
+| 173 | 🔢 Compteur |
+| 173 | Échanges affichés après filtres / total. |
+| 174 | #cap-view-compex .cex-dir-btn,#cex-kind-sel |
+| 174 | ⇄ Sens et nature |
+| 174 | Filtre par sens de l'échange (orienté, inversé, bidirectionnel) et par nature (FLOW…). |
+| 175 | #cex-node-input,#cex-name-input |
+| 175 | 🔍 Filtres |
+| 175 | Par composant, ou par nom d'échange, d'échange fonctionnel ou d'Exchange Item. |
+| 176 | #cex-exp-csv,#cex-exp-html,#cex-exp-html-all |
+| 176 | ⬇ Exports |
+| 176 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
+| 177 | 📋 Résultat |
+| 177 | Clic sur un composant ou un échange pour ouvrir son détail. |
+| 178 | 🧱 System Component |
+| 179 | #cap-view-csys .phl-toggle-btn |
+| 179 | 🖼 Présentation |
+| 180 | #cap-view-csys #cb-counter |
+| 180 | 🔢 Compteur |
+| 180 | Composants (ou échanges) affichés après filtres / total (SA uniquement). Les listes sont paginées par 100. |
+| 181 | #cap-view-csys .ana-ak |
+| 181 | 🧩 Nature |
+| 181 | Système ou acteurs (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants. |
+| 182 | #cap-view-csys #cb-csv,#cap-view-csys #cb-html,#cap-view-csys #cb-html-all |
+| 182 | ⬇ Exports |
+| 182 | CSV (ports ou échanges), rapport HTML de la vue ou de toutes les vues. |
+| 183 | #cap-view-csys #cb-main |
+| 183 | 📋 Résultat |
+| 184 | 🧱 Logical Component |
+| 185 | #cap-view-cblk .phl-toggle-btn |
+| 185 | 🖼 Présentation |
+| 186 | #cap-view-cblk #cb-counter |
+| 186 | 🔢 Compteur |
+| 186 | Composants (ou échanges) affichés après filtres / total (LA uniquement). Les listes sont paginées par 100. |
+| 187 | #cap-view-cblk .ana-ak |
+| 187 | 🧩 Nature |
+| 187 | Système ou acteurs (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants. |
+| 188 | #cap-view-cblk #cb-csv,#cap-view-cblk #cb-html,#cap-view-cblk #cb-html-all |
+| 188 | ⬇ Exports |
+| 188 | CSV (ports ou échanges), rapport HTML de la vue ou de toutes les vues. |
+| 189 | #cap-view-cblk #cb-main |
+| 189 | 📋 Résultat |
+| 190 | ƒ⇆ Functional Exchange |
+| 191 | #cap-view-fex .phl-toggle-btn |
+| 191 | 🖼 Présentation |
+| 192 | #cap-view-fex .ana-ak |
+| 192 | 🧩 Allocation |
+| 193 | 🔢 Compteur |
+| 193 | Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 100. |
+| 194 | #cap-view-fex .fex-layer-btn |
+| 194 | 🧱 Couche |
+| 194 | Filtre par couche ARCADIA (OA, SA, LA, PA). |
+| 195 | #fex-fn-input,#fex-name-input |
+| 195 | 🔍 Filtres |
+| 195 | Par fonction, ou par nom d'échange ou d'Exchange Item. |
+| 196 | #fex-exp-csv,#fex-exp-html,#fex-exp-html-all |
+| 196 | ⬇ Exports |
+| 196 | CSV de la vue, rapport HTML de la vue (toutes les pages), ou rapport HTML autonome avec toutes les vues. |
+| 197 | 📋 Résultat |
+| 197 | Clic sur une fonction ou un échange pour ouvrir son détail. |
+| 198 | 🟨 Operational Analysis |
+| 199 | #cap-view-oav .phl-toggle-btn |
+| 199 | 🖼 Présentation |
+| 200 | #cap-view-oav .ana-ak |
+| 200 | 🏢 Allocation |
+| 200 | Activités portées par une entité, par un acteur opérationnel ou non allouées (double-clic : uniquement celles-ci), ou par une entité ou un acteur précis. |
+| 201 | #cap-view-oav #fex-fn-input,#cap-view-oav #fex-name-input |
+| 201 | 🔍 Filtres |
+| 201 | Par activité, ou par nom d'interaction ou d'Exchange Item. |
+| 202 | #cap-view-oav #fex-exp-csv,#cap-view-oav #fex-exp-html,#cap-view-oav #fex-exp-html-all |
+| 202 | ⬇ Exports |
+| 202 | CSV des interactions, rapport HTML de la vue ou de toutes les vues. |
+| 203 | #cap-view-oav #fex-main |
+| 203 | 📋 Résultat |
+| 203 | Clic sur une activité ou une interaction pour ouvrir son détail. |
+| 204 | 🎬 Scénarios |
+| 205 | #cap-view-scen [data-scv] |
+| 205 | 🎬 Diagramme ou contrôles |
+| 205 | 🎬 Diagramme : diagramme de séquence du scénario choisi · 🩺 Contrôles : scénarios vides, messages sans échange, lignes de vie sans élément, scénarios hors capacité, références introuvables. |
+| 206 | #cap-view-scen [data-scl] |
+| 206 | 🧱 Couche et type |
+| 206 | Filtre par couche ARCADIA et par type : ES (Exchange Scenario), FS (Functional Scenario), OES / OAS en OA, IS (Interface Scenario). |
+| 207 | 🔍 Recherche |
+| 207 | Par nom de scénario, de capacité ou de ligne de vie. |
+| 208 | #cap-view-scen .sc-list |
+| 208 | 📋 Scénarios |
+| 208 | Rangés par couche puis par capacité (clic sur 🎯 : détail de la capacité). Clic sur un scénario pour afficher son diagramme. |
+| 209 | #cap-view-scen .sc-scroll |
+| 209 | 🖼 Diagramme |
+| 209 | Redessiné à partir du modèle, façon Capella : lignes de vie (bleu clair = acteur, bleu = composant, vert = fonction), messages, barres d'activation, fonctions (vert), états (gris clair) et modes (gris foncé), fragments combinés (ALT, OPT, LOOP, PAR…) avec leurs gardes, références « ref » (clic : ouvrir le scénario). Clic sur un élément : son détail. Les noms des lignes de vie restent visibles en haut au défilement. |
+| 210 | #cap-view-scen [data-sce] |
+| 210 | ⬇ Exports |
+| 210 | Image PNG, SVG, ou copie de l'image dans le presse-papiers. − / + : zoom. |
+| 211 | 🔌 Physical Link |
+| 212 | #cap-view-physlink .phl-toggle-btn |
+| 212 | 🖼 Présentation |
+| 213 | #cap-view-physlink .ana-ak |
+| 213 | 🖥 Nature (Vue Blocs) |
+| 213 | Nœuds du système ou nœuds acteurs (double-clic : uniquement ceux-ci), ou un nœud et ses sous-composants. |
+| 214 | #cap-view-physlink #cb-main |
+| 214 | ◧ Blocs |
+| 214 | Chaque nœud (jaune = système, bleu clair = acteur) avec ses ports physiques jaunes, le Physical Link et le nœud distant (clic : aller à son bloc). |
+| 215 | 🔢 Compteur |
+| 215 | Liens affichés après filtres / total. |
+| 216 | #cap-view-physlink .phl-ce-btn |
+| 216 | ⇢ Component Exchange |
+| 216 | Liens qui portent (ou non) des échanges de composants alloués. |
+| 217 | #phl-node-input,#phl-name-input |
+| 217 | 🔍 Filtres |
+| 217 | Par composant, ou par nom de lien ou d'échange. |
+| 218 | #phl-exp-csv,#phl-exp-html,#phl-exp-html-all |
+| 218 | ⬇ Exports |
+| 218 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. |
+| 219 | 📋 Résultat |
+| 219 | Clic sur un composant ou un lien pour ouvrir son détail. |
+| 220 | 🧩 Ports |
+| 221 | #cap-view-ports .phl-toggle-btn |
+| 221 | 🖼 Présentation |
+| 221 | ≡ Traçabilité Function Port ↔ Component Port ↔ Physical Port, ▣ Par composant , et 🩺 Contrôles (ports non alloués, chaînes incomplètes). |
+| 222 | 🔢 Compteur |
+| 222 | Lignes affichées après filtres / total. |
+| 223 | 🔍 Recherche |
+| 223 | Filtre par fonction, composant, port ou échange. La case voisine ne garde que les chaînes incomplètes. |
+| 224 | ⬇ CSV |
+| 224 | Exporte le tableau affiché. |
+| 225 | 📋 Résultat |
+| 225 | Les lignes incomplètes sont signalées en couleur. Clic sur un élément pour ouvrir son détail. |
+| 226 | ƒ Fonctions |
+| 227 | ƒ Fonctions |
+| 227 | Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles. |
+| 228 | #cap-view-functions [data-fv] |
+| 228 | 🖼 Présentation |
+| 228 | 🌳 Hiérarchie · 📋 Tableau façon Excel · ⛓ Traçabilité entre couches · 📊 Métriques · 🩺 Contrôles (qualité des noms, fonctions non allouées…). |
+| 229 | #cap-view-functions [data-fl] |
+| 229 | 🧱 Couche |
+| 229 | Choisit la couche ARCADIA étudiée (OA, SA, LA, PA). |
+| 230 | #ana-fn-q,#ana-fn-desc,#ana-fn-exp,#ana-fn-col |
+| 230 | 🔍 Recherche et affichage |
+| 231 | #cap-view-functions .ana-ak,#ana-fn-who |
+| 231 | 🎯 Allocation |
+| 232 | #ana-fn-csv,#ana-fn-html |
+| 232 | ⬇ Exports |
+| 232 | ⬇ CSV et 📄 Dossier fonctionnel : document HTML avec une section par fonction (description, allocation, échanges, traçabilité). |
+| 233 | #cap-view-functions .phl-filter-bar + * |
+| 233 | 📋 Résultat |
+| 233 | Clic sur une fonction pour ouvrir son détail. |
+| 234 | 🔬 Analyses |
+| 235 | #cap-view-analyses [data-an] |
+| 235 | 🔬 Analyses |
+| 235 | ƒ Fonctions et huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes. |
+| 236 | #cap-view-analyses [data-an].active |
+| 236 | 🔎 Analyse affichée |
+| 236 | Analyse en cours. |
+| 237 | ↻ Recalculer |
+| 238 | #ana-box .phl-filter-bar |
+| 238 | 🧰 Options |
+| 238 | Présentations, filtres et export CSV propres à l'analyse affichée. |
+| 239 | 📋 Résultat |
+| 240 | 📐 Tableau de bord |
+| 241 | 📐 Tableau de bord |
+| 241 | Pages d'indicateurs, graphiques et tableaux sur le modèle, à composer soi-même et à imprimer. |
+| 242 | #cap-view-dashboard .dash-tabs |
+| 242 | 🗂 Pages |
+| 243 | ✏ Modifier |
+| 243 | Passe en édition : ajouter des éléments depuis le catalogue d'indicateurs, les configurer, déplacer et redimensionner. ✔ Terminer pour sortir. |
+| 244 | #dash-orient,#dash-print,#dash-html |
+| 244 | 🖨 Impression |
+| 244 | Format A4 portrait ou paysage, impression, ou export en page HTML autonome. |
+| 245 | #dash-json,#dash-imp |
+| 245 | ⬇⬆ JSON |
+| 245 | Exporte ou importe la définition des tableaux de bord pour les réutiliser sur un autre modèle. |
+| 246 | #cap-view-dashboard .dash-scroll |
+| 246 | 📐 Page |
+| 246 | Les éléments du tableau de bord, calculés sur le modèle chargé. |
+| 250 | 🚀 Bien démarrer |
+| 252 | 1 · Ouvrir un modèle Capella |
+| 253 | Glissez-déposez votre fichier .capella dans ce cadre (formats acceptés : .capella, .melodymodeller, .xml). Le fichier est lu sur ce poste : rien n'est envoyé. |
+| 254 | … ou le chercher |
+| 255 | Vous pouvez aussi cliquer sur 📂 Parcourir… pour le choisir dans l'explorateur de fichiers. |
+| 256 | #b-help, #cap-nav-dd |
+| 256 | ? Aide, en haut à droite |
+| 257 | Le menu ? Aide ▾ reste accessible à tout moment, avec ou sans modèle : 📖 Aide complète et 🎓 Visite guidée . Une fois le modèle ouvert, il propose aussi 🎯 Visite de cette vue pour chaque vue. |
+| 258 | À vous ! |
+| 259 | Cliquez sur Terminer ✓ , puis ouvrez votre fichier. Dès que le modèle sera chargé, la visite reprendra pour vous montrer où trouver l'aide et les tutoriels. |
+| 263 | ✅ Modèle ouvert |
+| 264 | Votre modèle est chargé. Voici où trouver l'aide et les tutoriels, à tout moment. |
+| 265 | ? Aide |
+| 266 | L'aide et toutes les visites guidées sont regroupées dans ce menu. |
+| 267 | 📚 Aide et tutoriels |
+| 268 | 📖 Aide complète : documentation de toutes les vues. 🎓 Visite guidée : tour complet de l'interface. 🎯 Visite de cette vue : menus et commandes de la vue affichée — disponible dans chaque vue. |
+| 269 | 🧭 Et maintenant |
+| 270 | Choisissez une vue dans cette barre, puis ? Aide ▾ → 🎯 Visite de cette vue pour la découvrir pas à pas. |
+| 280 | @table |
+| 377 | Étape |
+| 379 | ◀ Précédent |
+| 380 | Terminer ✓ |
+| 380 | Suivant ▶ |
 
 ## js/44-functional-exchange.js
 
@@ -3516,17 +3516,19 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 23 | Version |
 | 24 | Fichier du |
 | 25 | Navigateur |
-| 26 | Accès direct au fichier (🔄 Suivi) |
-| 26 | non disponible (rechargement manuel) |
-| 27 | Modèle chargé |
-| 27 | éléments |
-| 28 | Réseau |
-| 28 | 100 % hors ligne : aucune donnée transmise |
-| 38 | ℹ À propos ✕ 🔷 |
-| 41 | Version |
-| 42 | Explorateur et analyseur hors ligne de modèles Capella / ARCADIA : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML. Auteur et licence Auteur © |
-| 48 | Développement Développé avec l'aide de Claude Code (Anthropic). Composants tiers et marques D3.js v7.9.0 Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock. Texte de la licence |
-| 54 | Capella, ARCADIA Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié. Modèles de test Exemples Capella « In-Flight Entertainment System » ( github.com/dbinfrago/Capella-IFE-sample ) et « AIDA » ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Informations techniques |
-| 59 | 📋 Copier les infos Fermer |
-| 66 | ✔ Informations copiées |
-| 66 | Copiez les informations : |
+| 26 | Navigateur de test |
+| 26 | Google Chrome version 155 |
+| 27 | Accès direct au fichier (🔄 Suivi) |
+| 27 | non disponible (rechargement manuel) |
+| 28 | Modèle chargé |
+| 28 | éléments |
+| 29 | Réseau |
+| 29 | 100 % hors ligne : aucune donnée transmise |
+| 39 | ℹ À propos ✕ 🔷 |
+| 42 | Version |
+| 43 | Explorateur et analyseur hors ligne de modèles Capella / ARCADIA : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML. Auteur et licence Auteur © |
+| 49 | Développement Développé avec l'aide de Claude Code (Anthropic). Composants tiers et marques D3.js v7.9.0 Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock. Texte de la licence |
+| 55 | Capella, ARCADIA Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié. Modèles de test Exemples Capella « In-Flight Entertainment System » ( github.com/dbinfrago/Capella-IFE-sample ) et « AIDA » ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Informations techniques |
+| 60 | 📋 Copier les infos Fermer |
+| 67 | ✔ Informations copiées |
+| 67 | Copiez les informations : |
