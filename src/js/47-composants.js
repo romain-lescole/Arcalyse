@@ -192,7 +192,9 @@ function capRenderComponentBlocks(L, host, holder){
       }).join('');
       const pins=(list,s)=>list.map((p,i)=>`<span class="fex-bpin" style="top:${(s==='L'?gL:gR).tops[i]}px">${port(p.orient,s,!(C.portLinks[p.id]||[]).length)}<span class="fex-pname">${capEsc(p.name)}</span></span>`).join('');
       const fnTip=c.fns.map(f=>f.name).join('\n');
-      return `<div class="fex-blk" data-fn="${capEsc(c.id)}" style="--fex-h:${Math.max(74,44+Math.max(gL.total,gR.total))}px">
+      // Hauteur mini pour que le titre (≈ 22 caractères par ligne) ne recouvre pas « aucun port » ni « ƒ n fonctions »
+      const tl=Math.ceil(String(c.name||'').length/22), minH=22+tl*17+(c.fns.length?18:0)+(!c.ports.length?16:0);
+      return `<div class="fex-blk" data-fn="${capEsc(c.id)}" style="--fex-h:${Math.max(74,minH,44+Math.max(gL.total,gR.total))}px">
         <div class="fex-side fex-side-in">${side(L,gL)}</div>
         <div class="fex-box cb-box cb-k-${c.kind}" title="${capEsc(capAnaHuman(c.type))} — ${c.layer}${c.actor?' — acteur':''}${c.nature?' — '+c.nature:''}">
           <div class="fex-box-t"><span class="cb-ic">${c.actor?'👤':c.kind==='node'?'🖥':'▣'}</span> ${det(c.id,c.name)}</div>

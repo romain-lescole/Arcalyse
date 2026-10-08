@@ -92,3 +92,14 @@ node tools/split.js f.html    # réimporte dans src/ un fichier assemblé AVEC r
 node tests/smoke.js [m.capella]   # test navigateur hors ligne (nécessite : npm i -D playwright && npx playwright install chromium)
 ```
 Modèle de test : `tests/models/In-Flight_Entertainment_System.capella` (exemple public Capella ; d'autres modèles doivent fonctionner — aucun calcul ne doit supposer un modèle particulier).
+
+## Procédures (reprises de l'ancien README, devenu une vitrine)
+
+- **README.md = vitrine utilisateur** (présentation, captures `docs/captures/*.png`, démarrage, licence). Ne pas y remettre de consignes de développement : elles sont ici. Après un changement visible important, proposer de refaire les captures (modèle IFE, thème Clair, 1440×860).
+- **Fichier HTML** : `dist/arcalyse-fr.html` (build de travail, non versionné) ; `livraison/arcalyse-fr.html` (version livrée, versionnée).
+- **Livrer une version** (sur demande explicite) : mettre à jour `CAP_APP_VERSION` (50-a-propos.js), puis
+  `node build.js --livraison` → `git add livraison` → `git commit -m "Livraison vX.Y"` → `git tag vX.Y` → `git push` + `git push --tags`.
+- **Réimporter un fichier modifié ailleurs** (ex. conversation Claude.ai, fichier construit AVEC repères) : `node tools/split.js f.html --dry` (simulation), puis sans `--dry`, puis `node build.js` et `git diff`.
+- **Test navigateur** : `npm i -D playwright && npx playwright install chromium`, puis `node tests/smoke.js [modèle]` (charge le modèle, parcourt toutes les vues, signale les erreurs JS).
+- **Erreurs du build** : `✖ Syntaxe JS — src/js/xx.js:123` → corriger à cet endroit ; `Ressource externe interdite` → retirer l'URL (l'application doit rester hors ligne).
+- **Habitudes de travail** : une demande à la fois, nommer la vue concernée (« ƒ Fonctions › Tableau »), « build seulement » si aucun test navigateur n'est utile ; pour une erreur, l'utilisateur colle le message de la console (F12).

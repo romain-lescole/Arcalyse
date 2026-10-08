@@ -1,153 +1,100 @@
-# Arcalyse — guide de travail
+<div align="center">
 
-*Votre modèle Capella, sous toutes ses coutures.* Explorateur et analyseur hors ligne de modèles Capella / ARCADIA (outil indépendant, non affilié à Capella).
+# 🔷 Arcalyse
 
-Licence : **GNU GPL v3** (fichier `LICENSE`, avis de copyright et composants tiers dans `NOTICE.md`).
+### *Votre modèle Capella, sous toutes ses coutures.*
 
-Ce dossier contient les **sources découpées** de l'application. Le fichier HTML unique que vous utilisez sur le PC sécurisé est **fabriqué** à partir de ces sources par une commande (`node build.js`). On ne modifie donc plus le gros fichier HTML : on modifie (ou on fait modifier par Claude Code) les petits fichiers de `src/`, puis on reconstruit.
+**Explorer, contrôler et comprendre un modèle Capella / ARCADIA — dans un seul fichier HTML, 100 % hors ligne.**
 
-```
-relation-map-capella/
-├── CLAUDE.md                  ← consignes lues automatiquement par Claude Code à chaque session
-├── README.md                  ← ce guide
-├── build.js                   ← assemble src/ → dist/arcalyse-fr.html (+ contrôles)
-├── package.json               ← raccourcis npm (npm run build, …)
-├── src/
-│   ├── index.html             ← squelette + ordre d'inclusion des morceaux
-│   ├── css/styles.css, css/aide.css
-│   ├── html/interface.html    ← barres d'outils, panneaux, vues
-│   ├── html/aide.html         ← l'aide de l'application
-│   ├── js/01-…js à 37-…js     ← le code, découpé par fonctionnalité (voir CLAUDE.md)
-│   └── vendor/d3.min.js       ← bibliothèque D3 embarquée (ne pas toucher)
-├── dist/                      ← fichier produit (non versionné) : C'EST LUI QU'ON COPIE SUR LE PC SÉCURISÉ
-├── docs/NOTES-TECHNIQUES.md   ← mémoire technique (ex-fichier CONSIGNES)
-├── docs/INDEX-FONCTIONS.md    ← liste des fonctions par fichier (générée)
-├── docs/TEXTES.md, textes.csv ← TOUS les textes affichés, en un seul fichier (générés)
-├── docs/i18n/                 ← dictionnaire anglais, aide anglaise, démarche de traduction
-├── tools/split.js             ← réimporter un HTML modifié ailleurs ; tools/index.js ← régénérer l'index
-├── tools/textes.js            ← générer l'inventaire des textes ; tools/lib/acorn.js ← analyseur JS utilisé par cet outil
-└── tests/smoke.js + tests/models/   ← test automatique facultatif + modèle d'exemple IFE
-```
+Aucune installation · aucun serveur · aucune donnée transmise · fonctionne sur un PC sécurisé sans réseau
 
-Pourquoi c'est plus économe : Claude Code ne lit que le fichier concerné (par ex. `35-tableau-de-bord.js`, ~530 lignes) au lieu d'un fichier de 13 000 lignes, il modifie directement vos fichiers sur le disque (plus d'envoi/récupération), et chaque session repart de `CLAUDE.md` au lieu d'un long historique de conversation.
+![Écran d'accueil](docs/captures/00-accueil.png)
+
+</div>
 
 ---
 
-## 1. Installation (une seule fois, sur votre PC Windows personnel)
+## Pourquoi Arcalyse ?
 
-1. **Node.js** (nécessaire pour `build.js`) : télécharger la version **LTS** sur https://nodejs.org et l'installer (options par défaut). Vérifier dans un nouveau terminal : `node --version`.
-2. **Git for Windows** (recommandé : historique des versions, retour arrière, et Claude Code l'utilise) : https://git-scm.com/downloads/win (options par défaut).
-3. **Claude Code**, au choix :
-   - **Dans l'application Claude pour ordinateur** que vous utilisez déjà : onglet **Code**, puis choisir le dossier du projet. C'est le plus simple, sans terminal.
-   - **Ou dans un terminal** PowerShell : `irm https://claude.ai/install.ps1 | iex`, puis ouvrir un nouveau terminal et vérifier `claude --version`. Au premier lancement de `claude`, se connecter avec votre compte Claude (abonnement Pro/Max nécessaire).
+Un modèle Capella grossit vite : des centaines de fonctions, d'échanges, de composants, de ports, réparties sur cinq couches. Dans l'atelier, chaque diagramme n'en montre qu'un morceau. **Arcalyse lit directement le fichier `.capella`** et vous donne, en quelques secondes, une vue d'ensemble, des vues façon Capella et des contrôles de cohérence — sans ouvrir Capella, sans rien installer.
 
-## 2. Mise en place du projet (une seule fois)
+- 📂 **Glissez-déposez** votre `.capella` : le modèle est analysé dans le navigateur, sur votre poste.
+- 🔒 **Hors ligne absolu** : un seul fichier HTML autonome (bibliothèque D3 embarquée), aucune requête réseau. Idéal pour les environnements sensibles.
+- 🧭 **Toutes les couches ARCADIA** : OA, SA, LA, PA, EPBS — fonctions, composants, échanges, chaînes, scénarios, exigences, propriétés.
+- 🩺 **Des contrôles prêts à l'emploi** : éléments non alloués, ports non connectés, traçabilité incomplète, noms à revoir…
+- 📤 **Exports partout** : CSV, PNG, SVG, PDF, rapports HTML autonomes, tableaux de bord imprimables en A4.
+- 🔄 **Suivi du fichier** : Arcalyse détecte les nouvelles versions du `.capella` et montre ce qui a changé.
 
-1. Décompresser l'archive, par exemple dans `C:\Projets\relation-map-capella`.
-2. Ouvrir un terminal dans ce dossier (dans l'Explorateur : clic droit sur le dossier → « Ouvrir dans le Terminal »).
-3. Créer l'historique Git :
-   ```
-   git init
-   git add .
-   git commit -m "Version initiale découpée"
-   ```
-4. Construire une première fois et vérifier :
-   ```
-   node build.js
-   ```
-   Le message `✔ dist/arcalyse-fr.html — … syntaxe OK` doit s'afficher. Ouvrez ce fichier dans le navigateur : c'est exactement l'application actuelle.
+---
 
-## 3. Travailler avec Claude Code au quotidien
+## Ce que vous pouvez faire
 
-1. Ouvrir Claude Code sur le dossier (onglet Code de l'application, ou `claude` dans un terminal ouvert dans le dossier).
-2. Décrire **une amélioration à la fois**, avec le niveau de vérification voulu. Exemples :
-   - « Dans ⚡ Chaînes, ajoute un tri par nombre de fonctions. Build seulement. »
-   - « Dans le tableau de bord, ajoute un indicateur “ports non alloués par couche”. Lance aussi le test smoke. »
-   - « Le bouton X ne fonctionne pas dans la vue Physical Link : voici le message d'erreur de la console : … »
-3. Claude Code cherche le bon module, le modifie, lance `node build.js` et vous résume le changement.
-4. Ouvrez (ou rafraîchissez avec F5) `dist/arcalyse-fr.html` dans le navigateur pour vérifier.
-5. Si c'est bon : demandez « fais un commit » (ou tapez `git add . && git commit -m "…"`). Si ce n'est pas bon : dites-le à Claude Code, ou annulez tout depuis le dernier commit avec `git restore .`.
-6. Changez de sujet ? Tapez **`/clear`** dans Claude Code : la conversation repart de zéro (les consignes de `CLAUDE.md` sont relues), ce qui évite d'accumuler du contexte et donc de la consommation.
+### 🗺 Naviguer dans les relations du modèle
+Le graphe **Relation Map** centre la vue sur un élément et déplie ses voisins jusqu'à la profondeur voulue : décompositions, allocations, échanges, réalisations entre couches. Dispositions horizontale, verticale, radiale ; zoom, filtres par relation et par type ; export image.
 
-Bonnes habitudes pour consommer peu :
-- une session (ou un `/clear`) par sujet ; regrouper les petites demandes liées dans un même message ;
-- préciser « build seulement » quand un test navigateur n'est pas utile ; les captures d'écran coûtent cher ;
-- nommer la vue ou l'onglet concerné (« ƒ Fonctions › Tableau ») : Claude Code trouve directement le bon fichier ;
-- pour une erreur, coller le message de la console du navigateur (F12 → Console).
+![Relation Map](docs/captures/01-relation-map.png)
 
-## 4. Copier sur le PC sécurisé
+### ⚡ Lire les chaînes fonctionnelles
+Chaque chaîne fonctionnelle, processus opérationnel ou chemin physique est redessiné, avec ses entrées / sorties, les fonctions impliquées, leur allocation et les échanges. Filtres par type, couche et contenu ; export PDF, PNG, SVG, ZIP ou HTML de toutes les chaînes d'un coup.
 
-Seul le fichier **`dist/arcalyse-fr.html`** est nécessaire : il est autonome et ne fait aucun accès réseau.
-- `node build.js` produit une version avec de petits commentaires de repère `@@BEGIN …@@` (invisibles à l'utilisation, ils permettent de réimporter le fichier, voir §5).
-- `node build.js --no-markers` produit une version sans ces repères, si vous préférez livrer un fichier « propre ».
+![Chaînes fonctionnelles](docs/captures/02-chaines.png)
 
-### Livrer une version
+### ƒ⇆ Voir les échanges comme dans Capella
+Les **Vues Blocs** reprennent le rendu de Capella : fonctions vertes (système) ou bleues (acteurs), pins d'entrée et de sortie, échanges et fonction distante. Un clic sur la fonction distante vous y emmène. Même principe pour l'**Operational Analysis**, les **System / Logical Components**, le **Behavior Exchange** et les **Physical Links**, avec à chaque fois vue en lignes, matrice N² et contrôles.
 
-**Pourquoi deux dossiers ?** `dist/` est régénéré à chaque build et changerait à chaque modification : il n'est pas versionné, pour ne pas encombrer l'historique. `livraison/` ne change que lorsque vous décidez de livrer : chaque version livrée y est conservée dans Git et peut être retrouvée.
+![Functional Exchange — Vue Blocs](docs/captures/03-functional-exchange.png)
 
-**Quand livrer** : quand une version est prête à être utilisée sur le PC sécurisé.
+![Logical Component — ports et échanges](docs/captures/04-logical-component.png)
 
-**Comment livrer**, depuis le dossier du projet (remplacer `X.Y` par le numéro de version) :
-```
-node build.js --livraison          (ou : npm run livraison)
-git add livraison
-git commit -m "Livraison vX.Y"
-git tag vX.Y
-git push
-git push --tags
-```
-Le build produit `livraison/arcalyse-fr.html` sans repères, avec les mêmes contrôles que d'habitude. Il rappelle ces commandes à la fin.
+![Physical Link — nœuds et liens physiques](docs/captures/09-physical-link.png)
 
-**Récupérer le fichier depuis n'importe quel PC, sans rien installer** :
-1. Ouvrir github.com et se connecter : la connexion est nécessaire car le dépôt est privé.
-2. Ouvrir le dépôt `relation-map-capella`, puis le dossier `livraison`, puis le fichier `arcalyse-fr.html`.
-3. Cliquer sur le bouton **« Download raw file »** (icône de téléchargement en haut à droite du fichier).
+### 🎬 Relire les scénarios
+Les diagrammes de séquence (ES, FS, OES, OAS, IS) sont redessinés : lignes de vie, messages, exécutions, états et modes, fragments combinés (ALT, LOOP…), références. Contrôles et export PNG / SVG.
 
-**Retrouver une ancienne livraison** :
-- sur la page du fichier, le bouton **History** liste chaque livraison : ouvrez celle voulue, puis « Download raw file » ;
-- ou par tag : menu des branches → onglet **Tags** → choisir `vX.Y`, puis aller dans `livraison/`.
+![Scénarios](docs/captures/05-scenarios.png)
 
-## 5. Revenir travailler dans Claude.ai (conversation classique)
+### 🔬 Analyser et contrôler
+- **ƒ Fonctions** : hiérarchie avec descriptions, tableau façon Excel (filtres par valeur, copie), allocation au système ou aux acteurs, traçabilité entre couches, métriques, **qualité des noms** (verbes d'action en français et en anglais, règles personnalisables) et **dossier fonctionnel** imprimable.
+- **🧬 Traçabilité inter-couches** : taux de réalisation OA → SA → LA → PA → EPBS par catégorie, en un coup d'œil, et la liste des éléments non tracés.
+- **🎯 Capacités & missions**, **🔁 Modes & états**, **📑 Exigences**, **🏷 Propriétés**, **🗃 Données & interfaces**, **⛓ Contraintes**.
+- **⚖ Comparaison de versions** : éléments ajoutés, supprimés, modifiés ou déplacés entre deux versions du modèle, avec rapport exportable.
 
-C'est possible à tout moment :
-1. Envoyez dans la conversation le fichier `dist/arcalyse-fr.html` **construit avec repères** (commande `node build.js` normale), avec `CLAUDE.md`.
-2. Récupérez le fichier modifié, placez-le par exemple dans `C:\Temp\modifie.html`, puis dans le dossier du projet :
-   ```
-   node tools/split.js C:\Temp\modifie.html --dry     (montre les fichiers qui vont changer)
-   node tools/split.js C:\Temp\modifie.html           (réécrit src/)
-   node build.js
-   git diff                                           (voir les changements)
-   git add . && git commit -m "Modifications faites dans Claude.ai"
-   ```
+![Fonctions — hiérarchie et descriptions](docs/captures/06-fonctions.png)
 
-## 6. Relire les textes, préparer l'anglais
+![Traçabilité inter-couches](docs/captures/07-tracabilite.png)
 
-Les libellés restent écrits en clair dans le code (c'est plus lisible pour vous comme pour Claude Code), mais un outil les rassemble **tous dans un seul fichier** :
-```
-node tools/textes.js          → docs/TEXTES.md (lisible) + docs/textes.csv (Excel : filtres, tri)
-node tools/textes.js --en     → ajoute la colonne « anglais » et la liste des textes non traduits
-```
-Chaque texte est donné avec son emplacement (`js/23-chaines.js` ligne 412) : pour corriger une faute, modifiez la ligne indiquée (ou demandez à Claude Code « corrige la faute ligne 412 de 23-chaines.js »), puis régénérez. Ne modifiez pas `TEXTES.md` lui-même : il est recréé à chaque fois.
+### 📐 Composer vos tableaux de bord
+Choisissez parmi des dizaines d'indicateurs (nombre d'éléments, allocation des fonctions, taux de description, chaînes vides, traçabilité…), disposez-les sur des pages A4, imprimez ou exportez en HTML.
 
-Pour une version anglaise : tout est préparé dans `docs/i18n/` (≈ 1 000 traductions déjà faites, aide anglaise à mettre à jour, démarche et pièges dans `LISEZMOI.md`). Demandez à Claude Code, une session par groupe de modules : « Mets en place la version anglaise selon docs/i18n/LISEZMOI.md, en commençant par build.js et le module 23-chaines.js ».
+![Tableau de bord](docs/captures/08-tableau-de-bord.png)
 
-## 7. Test automatique (facultatif)
+### Et aussi
+- 🧭 **Explorateur** : arborescence, cartes par couche, tableau paginé aux colonnes calculées, index des types ARCADIA.
+- 🔗 **Liens** : toutes les relations du modèle, filtrables et exportables.
+- 📊 **Table View** : tableaux construits à la demande en suivant les relations du modèle.
+- 🎨 **Thèmes** : Sombre, Clair, Office 2007, contraste élevé, et votre thème personnalisé.
+- 🎓 **Visite guidée** et aide intégrée, pour chaque vue.
+- 💾 **Page HTML** : enregistrez l'application avec votre modèle, vos tableaux de bord et vos réglages, en un seul fichier à transmettre.
 
-Il ouvre l'application hors ligne dans un navigateur invisible, charge le modèle IFE, passe dans toutes les vues et signale toute erreur.
-```
-npm install --save-dev playwright
-npx playwright install chromium
-node tests/smoke.js
-```
-Pour un autre modèle : `node tests/smoke.js C:\chemin\vers\modele.capella` (ou déposez des `.capella` dans `tests/models/`).
+---
 
-## 8. Dépannage
+## Démarrer
 
-| Problème | Solution |
-|---|---|
-| `node` n'est pas reconnu | Réinstaller Node.js LTS, puis **ouvrir un nouveau terminal**. |
-| `✖ Assemblage refusé : Syntaxe JS — src/js/xx.js:123` | Une modification a cassé le code à cet endroit : demander à Claude Code de corriger, ou `git restore src/js/xx.js`. |
-| `Ressource externe interdite` | Une URL `http(s)` a été introduite (CDN, police…) : la supprimer, l'application doit rester hors ligne. |
-| L'application affiche une erreur au chargement d'un modèle | F12 → Console, copier le message et le donner à Claude Code avec le nom de la vue concernée. |
-| Revenir à une version précédente | `git log --oneline` puis `git checkout <numéro> -- src/` (ou demander à Claude Code). |
-| Ajouter un nouveau fichier de code | Le créer dans `src/js/` **et** ajouter la ligne `@@INCLUDE js/nom.js@@` dans `src/index.html` (Claude Code le sait). |
+1. **Récupérez le fichier HTML** :
+   - version livrée, prête à l'emploi : **[`livraison/arcalyse-fr.html`](livraison/)** (bouton « Download raw file » sur GitHub) ;
+   - ou version de développement, construite à partir des sources : `node build.js` produit **`dist/arcalyse-fr.html`**.
+2. **Ouvrez-le** dans un navigateur récent (testé sous Google Chrome version 155), même sans réseau.
+3. **Glissez-déposez** votre fichier `.capella` (ou cliquez sur 📂 Parcourir…). C'est tout.
+
+> Pour essayer sans modèle à vous : les exemples publics [In-Flight Entertainment System](https://github.com/dbinfrago/Capella-IFE-sample) et [AIDA](https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture) sont dans `tests/models/`.
+
+---
+
+## Licence
+
+Arcalyse est un logiciel libre, distribué sous **GNU General Public License version 3** — voir [`LICENSE`](LICENSE) et [`NOTICE.md`](NOTICE.md).
+Copyright © 2026 Romain Lescole. Fourni sans aucune garantie.
+
+Capella et ARCADIA sont des marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Arcalyse est un outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié.
+
+D3.js v7.9.0 est embarqué sous licence ISC (© 2010-2023 Mike Bostock).

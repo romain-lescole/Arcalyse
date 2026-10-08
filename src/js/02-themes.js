@@ -259,6 +259,8 @@ function applyMode(mode) {
   // Deuxième niveau de toolbar (commandes Relation Map) : visible uniquement en mode graphe
   const tb2=document.getElementById('toolbar2');
   if(tb2) tb2.style.display=isGraph?'flex':'none';
+  // Barre d'état (contexte, nœuds, profondeur) : propre à la Relation Map
+  const ib=document.getElementById('infobar'); if(ib) ib.style.display=isGraph?'':'none';
   // Hide export image menu in Table View and Capella Data
   const expWrap=document.getElementById('b-exp-wrap');
   if(expWrap) expWrap.style.display=(isTable||isCapella)?'none':'';
