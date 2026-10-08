@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   CAPELLA ENGINE — integrated into relation-map
+   MOTEUR CAPELLA — intégré à Arcalyse
 ═══════════════════════════════════════════════════════════════════ */
 const CAP_LAYERS={
   OA:    {label:'Operational Analysis', color:'#3b82f6',bg:'rgba(59,130,246,.15)'},
