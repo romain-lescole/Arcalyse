@@ -152,8 +152,8 @@ function capRenderFunctionalExchange(mode){
 
   /** Lien cliquable ouvrant le panneau de détail. */
   const det=(id,label,extra,cls)=>`<span class="cex-det${cls?' '+cls:''}" style="cursor:pointer;${extra||''}" onclick="event.stopPropagation();capOpenDetailById('${capEsc(id)}')">${capEsc(label)}</span>`;
-  /** Libellé d'une fonction façon Capella : [numéro] nom. */
-  const fnLabel=(num,name)=>(num&&num!=='?'?`[${num}] `:'')+name;
+  /** Libellé d'une fonction : son nom seul (le numéro hiérarchique calculé n'est plus affiché). */
+  const fnLabel=(num,name)=>name;
 
   /** Nature d'allocation d'une fonction pour la couleur et le filtre : 'sys' (système), 'act' (acteur), 'none' (non allouée ou fonction mère). */
   const akOf=id=>{ const f=X.fnById[id]; if(!f) return 'none'; const k=capFnAllocKind(f); return k==='mix'?'act':k==='parent'?'none':k; };
