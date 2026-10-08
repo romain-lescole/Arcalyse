@@ -19,10 +19,10 @@ function capBehaviorExchanges(){
   return out;
 }
 
+let _capCompExView = 'block';   // présentation affichée de la vue Behavior Exchange
 /** Rend la vue Component Exchange — même structure que Physical Link (≡ Ligne / ▣ Composant,
  * filtres, exports CSV/HTML) mais pour les ComponentExchange (source/target → ComponentPort
  * → composant parent). Coloration adaptative par TYPE de composant (thème clair/sombre). */
-let _capCompExView = 'block';
 function capRenderCompExchange(){
   const container=document.getElementById('cap-view-compex'); if(!container) return;
   const allLinks=capBehaviorExchanges();   // PA, Physical Components Behavior

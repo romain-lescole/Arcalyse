@@ -50,6 +50,7 @@ function capBuildPageHtml(){
     const xmlScript = document.createElement('script');
     xmlScript.id = 'cap-embedded-xml';
     xmlScript.type = 'application/xml';
+    xmlScript.dataset.name = capCurrentFileName || '';   // nom du fichier .capella, repris à la réouverture
     xmlScript.textContent = xmlText;
     doc.querySelector('body').appendChild(xmlScript);
 
@@ -81,6 +82,7 @@ function capBuildPageHtml(){
         capApplyPanelOnLoad();
       });
       capLoaded = true;
+      capCurrentFileName = xmlEl.getAttribute('data-name') || '';
       applyMode('capella');
       if (typeof capUpdateWelcome === 'function') capUpdateWelcome();
     } catch (err) {
@@ -94,7 +96,9 @@ function capBuildPageHtml(){
     doc.querySelector('body').appendChild(bootScript);
   }
 
-  return '<!DOCTYPE html>\\n' + doc.outerHTML;
+  // Commentaires placés avant <html> (avis de copyright et licence GPLv3) : à conserver
+  const pre=[...document.childNodes].filter(n=>n.nodeType===8).map(n=>'<!--'+n.data+'-->\n').join('');
+  return '<!DOCTYPE html>\n' + pre + doc.outerHTML;
 }
 /** Nom de fichier proposé pour la page sauvegardée. */
 function capPageFileName(){ return capLoaded ? 'arcalyse-avec-modele.html' : 'arcalyse.html'; }

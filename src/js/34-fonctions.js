@@ -184,6 +184,10 @@ const CAP_FN_AK={
   none:{i:'∅',l:'Non allouées',t:'Non allouée',c:'#8b949e',tip:'Fonctions feuilles allouées à aucun composant ni acteur'},
   mix:{t:'Système + acteur',c:'#58a6ff'}, parent:{t:'— (fonction mère)',c:'var(--c-border)'}};
 
+/** Rend la vue ƒ Fonctions dans son conteneur : hiérarchie, tableau façon Excel, traçabilité, métriques,
+ * contrôles et dossier fonctionnel, avec les filtres de couche, d'allocation et de recherche.
+ * @param {HTMLElement} box - Conteneur de la vue
+ */
 function capRenderFunctions(box){
   const F=capComputeFunctions(), L=capDetLink;
   const layers=CAP_ANA_LAYERS.filter(k=>F.list.some(f=>f.layer===k));

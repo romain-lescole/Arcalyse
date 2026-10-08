@@ -511,6 +511,10 @@ function arboConvertSelectedType(ids, newType){
   }
 }
 
+/** Affiche le menu contextuel (clic droit) d'un élément de l'arborescence.
+ * @param {MouseEvent} ev - Événement du clic droit (position du menu)
+ * @param {object} el - Élément du modèle visé
+ */
 function arboShowCtxMenu(ev, el){
   // Préserve une sélection multiple existante si l'élément cliqué en fait partie ;
   // sinon la ligne cliquée devient la sélection unique.

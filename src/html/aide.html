@@ -65,7 +65,7 @@
           <tr><td>🎨 Thème ▾</td><td>Sombre (par défaut), Office 2007, Clair, Marine, Nature, Contraste. Les vues se redessinent avec des couleurs adaptées ; en thème clair (Office 2007, Clair ou personnalisé clair), les textes colorés sont automatiquement foncés pour rester lisibles.</td></tr>
           <tr><td>🎨 Thème › Personnaliser…</td><td>Thème personnalisé : toutes les couleurs (fonds, textes, accent, bordures, statuts, Relation Map, couches ARCADIA), aperçu en direct, « Partir de » un thème existant, contraste du texte affiché, ⬇ / ⬆ JSON. Il apparaît ensuite comme « 🎨 Personnalisé » dans la liste et est conservé dans la page enregistrée.</td></tr>
           <tr><td>🖼 Export ▾</td><td>Image du graphe Relation Map : PNG, JPEG ou SVG (2e barre de la Relation Map).</td></tr>
-          <tr><td>? Aide ▾</td><td>📖 Aide complète : cette documentation ; 🎯 Visite de cette vue : présentation des menus et commandes de la vue affichée (Relation Map, Table View, chaque vue Capella ; modèle chargé) ; 🎓 Visite guidée : découverte de l'interface pas à pas (zone mise en évidence, reste de l'écran assombri ; ◀ Précédent / Suivant ▶ ou flèches du clavier, ✕ ou Échap pour quitter). Les deux sont aussi accessibles depuis l'écran d'accueil. ℹ À propos : version, auteur, licence (GNU GPL v3), contact, composants tiers (licence D3.js), informations techniques à copier pour un signalement.</td></tr>
+          <tr><td>? Aide ▾</td><td>📖 Aide complète : cette documentation ; 🎯 Visite de cette vue : présentation des menus et commandes de la vue affichée (Relation Map, Table View, chaque vue Capella ; modèle chargé) ; 🎓 Visite guidée : découverte de l'interface pas à pas (zone mise en évidence, reste de l'écran assombri ; ◀ Précédent / Suivant ▶ ou flèches du clavier, ✕ ou Échap pour quitter). Les deux sont aussi accessibles depuis l'écran d'accueil. ℹ À propos : version, auteur, licence (GNU GPL v3), contact, composants tiers (licence D3.js), informations techniques à copier pour un signalement (dont le navigateur de test : Google Chrome version 155).</td></tr>
         </table>
         <h3>Niveau 2 — commandes de la Relation Map</h3>
         <p>Affiché uniquement en mode 🗺 Relation Map.</p>
@@ -94,6 +94,7 @@
       <div id="ht-rm" class="ht-panel" style="display:none">
         <h2>🗺 Relation Map</h2>
         <p class="hp-lead">Graphe centré sur un élément de contexte : ses voisins sont affichés jusqu'à la profondeur choisie, selon les relations Capella sélectionnées (allocation fonction → composant, échanges, liens physiques, chaînes…).</p>
+        <p class="hp-note">En bas de la fenêtre, la <b>barre d'état</b> rappelle l'élément de contexte, le nombre de nœuds et d'éléments uniques affichés et la profondeur ; elle n'apparaît qu'en Relation Map. 🎯 Visite de cette vue choisit un élément de contexte s'il n'y en a pas encore, pour montrer un graphe.</p>
         <h3>Interactions dans le graphe</h3>
         <table class="hp-t">
           <tr><td>Clic sur un nœud</td><td>Sélectionne l'élément et affiche ses propriétés.</td></tr>

@@ -30,7 +30,7 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
   await p.setInputFiles('#capella-file-input', model);
   await p.waitForFunction(() => typeof capLoaded !== 'undefined' && capLoaded, null, { timeout: 180000 });
   const step = async (label, fn) => { const n = errs.length; try { await fn(); } catch (e) { errs.push(label + ' : ' + e.message); } await p.waitForTimeout(250); console.log((errs.length > n ? '✖ ' : '✔ ') + label); };
-  for (const v of ['tree', 'cards', 'table', 'links', 'chains', 'physlink', 'compex', 'ports', 'functions', 'analyses', 'dashboard', 'index'])
+  for (const v of ['tree', 'cards', 'table', 'links', 'chains', 'physlink', 'compex', 'ports', 'fex', 'oav', 'csys', 'cblk', 'scen', 'functions', 'analyses', 'dashboard', 'index'])
     await step('vue ' + v, () => p.evaluate(k => capNavOpen(k), v));
   await step('barre : menu, épingle, Ctrl+K', async () => {
     await p.click('#cap-v-analyses .cap-nav-arr'); await p.click('#cap-nav-dd [data-open="ana:reqs"]');
@@ -55,6 +55,19 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     for (const v of ['tree', 'table', 'trace', 'metrics', 'checks']) { await p.click(`#cap-view-functions [data-fv="${v}"]`); await p.waitForTimeout(300); }
     await p.click('#cap-view-functions [data-an="trace"]');
     if (await p.evaluate(() => capCurrentView + ':' + capAnaSub) !== 'analyses:trace') throw new Error('retour vers 🔬 Analyses inopérant'); });
+  for (const v of ['fex', 'oav', 'csys', 'cblk', 'compex', 'physlink', 'ports', 'scen'])   // chaque présentation (Blocs, Ligne, Matrice, Contrôles…)
+    await step('sous-vues ' + v, async () => {
+      await p.evaluate(k => capNavOpen(k), v); await p.waitForTimeout(300);
+      const n = await p.locator(`#cap-view-${v} .phl-toggle-btn:visible`).count();
+      for (let i = 0; i < n; i++) { const b = p.locator(`#cap-view-${v} .phl-toggle-btn:visible`).nth(i); if (await b.count()) { await b.click(); await p.waitForTimeout(200); } }
+      if (await p.evaluate(() => capCurrentView) !== v) throw new Error('vue quittée');
+    });
+  await step('visites guidées des vues', async () => {
+    for (const v of await p.evaluate(() => Object.keys(CAP_TOUR_VIEWS))) {
+      await p.evaluate(k => { capNavOpen(k); capTourStartView(); }, v);
+      await p.waitForTimeout(150); await p.keyboard.press('Escape'); await p.evaluate(() => { if (typeof capTourEnd === 'function') capTourEnd(); });
+    } });
+  await step('À propos et aide', async () => { await p.evaluate(() => capAboutOpen()); await p.evaluate(() => { document.getElementById('cap-about-ov').style.display = 'none'; openHelpModal(); }); await p.keyboard.press('Escape'); });
   await step('Relation Map', () => p.click('#mode-rm'));
   await step('Table View', () => p.click('#mode-table'));
   await step('tableau de bord : tous les indicateurs', async () => {

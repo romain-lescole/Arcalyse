@@ -663,45 +663,25 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 15 | Part |
 | 15 | Execution |
 | 24 | Shared |
-| 121 | Page HTML |
-| 123 | Enregistrer dans « |
-| 123 | » (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous |
-| 124 | ✔ Enregistré |
-| 128 | Enregistrement direct impossible ( |
-| 128 | ). La page va être téléchargée à la place. |
-| 166 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. |
-| 170 | » n'est pas un fichier Capella (.capella attendu). |
-| 173 | Chargement de « |
-| 176 | Impossible de lire « |
-| 182 | XML invalide |
-| 188 | Erreur de chargement : |
-| 207 | Aucun élément Capella reconnu dans ce fichier |
-| 233 | Ouvrir un autre modèle Capella |
-| 234 | Modèle actuel : |
-| 234 | Déposez un nouveau fichier .capella pour le remplacer. |
-| 302 | Shared |
-| 321 | Project |
-| 378 | Composition |
-| 378 | Aggregation |
-| 378 | Association |
-| 378 | Containment |
-| 378 | Generalization |
-| 378 | Realization |
-| 378 | Dependency |
-| 378 | Usage |
-| 378 | Abstraction |
-| 378 | Refine |
-| 378 | Trace |
-| 378 | Satisfy |
-| 378 | Verify |
-| 378 | Copy |
-| 378 | Allocation |
-| 379 | Block |
-| 379 | Component |
-| 379 | Class |
-| 379 | Interface |
-| 379 | Requirement |
-| 379 | Package |
+| 125 | Page HTML |
+| 127 | Enregistrer dans « |
+| 127 | » (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous |
+| 128 | ✔ Enregistré |
+| 132 | Enregistrement direct impossible ( |
+| 132 | ). La page va être téléchargée à la place. |
+| 170 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. |
+| 174 | » n'est pas un fichier Capella (.capella attendu). |
+| 177 | Chargement de « |
+| 180 | Impossible de lire « |
+| 186 | XML invalide |
+| 192 | Erreur de chargement : |
+| 211 | Aucun élément Capella reconnu dans ce fichier |
+| 237 | Ouvrir un autre modèle Capella |
+| 238 | Modèle actuel : |
+| 238 | Déposez un nouveau fichier .capella pour le remplacer. |
+| 306 | Shared |
+| 325 | Project |
+| 382 | Composition |
 | 382 | Aggregation |
 | 382 | Association |
 | 382 | Containment |
@@ -716,9 +696,29 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 382 | Verify |
 | 382 | Copy |
 | 382 | Allocation |
-| 500 | PhysicalComponent (NODE) |
-| 501 | PhysicalComponent (BEHAVIOR) |
-| 740 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella |
+| 383 | Block |
+| 383 | Component |
+| 383 | Class |
+| 383 | Interface |
+| 383 | Requirement |
+| 383 | Package |
+| 386 | Aggregation |
+| 386 | Association |
+| 386 | Containment |
+| 386 | Generalization |
+| 386 | Realization |
+| 386 | Dependency |
+| 386 | Usage |
+| 386 | Abstraction |
+| 386 | Refine |
+| 386 | Trace |
+| 386 | Satisfy |
+| 386 | Verify |
+| 386 | Copy |
+| 386 | Allocation |
+| 504 | PhysicalComponent (NODE) |
+| 505 | PhysicalComponent (BEHAVIOR) |
+| 744 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella |
 
 ## js/21-capella-vues-base.js
 
@@ -3355,78 +3355,78 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 172 | — non connecté |
 | 174 | — non connecté |
 | 191 | non connecté |
-| 197 | — acteur |
-| 201 | sous-composant(s) : |
-| 202 | aucun port |
-| 215 | allouée |
-| 215 | » — clic : son bloc dans ƒ⇆ Functional Exchange |
-| 246 | ÉMET → |
-| 246 | Émission |
-| 246 | ← REÇOIT |
-| 246 | Réception |
-| 246 | ⇄ ÉCHANGE |
-| 246 | Bidirectionnel |
-| 246 | Non orienté |
-| 263 | Aucun Component Exchange |
-| 267 | 👤 Acteur |
-| 281 | · page |
-| 290 | Aucun composant ne correspond au filtre. |
-| 292 | Composants |
-| 293 | ↩ Revenir à « |
-| 297 | Aucun composant ne correspond au filtre. |
-| 299 | Composants |
-| 300 | ↩ Revenir à « |
-| 303 | Aucun Component Exchange ne correspond au filtre. |
-| 307 | composants : pour rester fluide, la matrice en affiche |
-| 307 | (les plus connectés). Filtrez pour voir les autres. |
-| 312 | Échanges |
-| 361 | Tous les composants |
-| 366 | ◧ Vue Blocs |
-| 366 | ▣ Vue Composant |
-| 366 | ≡ Vue Ligne |
-| 366 | ▦ Matrice |
-| 366 | 🩺 Contrôles |
-| 371 | — Vue Blocs |
-| 371 | composants · |
-| 378 | Acteur |
-| 378 | Système |
-| 379 | Acteur |
-| 379 | Système |
-| 380 | Couche |
-| 380 | Composant |
-| 380 | Nature |
-| 380 | Port |
-| 380 | Orientation |
-| 380 | Sens |
-| 380 | Composant distant |
+| 199 | — acteur |
+| 203 | sous-composant(s) : |
+| 204 | aucun port |
+| 217 | allouée |
+| 217 | » — clic : son bloc dans ƒ⇆ Functional Exchange |
+| 248 | ÉMET → |
+| 248 | Émission |
+| 248 | ← REÇOIT |
+| 248 | Réception |
+| 248 | ⇄ ÉCHANGE |
+| 248 | Bidirectionnel |
+| 248 | Non orienté |
+| 265 | Aucun Component Exchange |
+| 269 | 👤 Acteur |
+| 283 | · page |
+| 292 | Aucun composant ne correspond au filtre. |
+| 294 | Composants |
+| 295 | ↩ Revenir à « |
+| 299 | Aucun composant ne correspond au filtre. |
+| 301 | Composants |
+| 302 | ↩ Revenir à « |
+| 305 | Aucun Component Exchange ne correspond au filtre. |
+| 309 | composants : pour rester fluide, la matrice en affiche |
+| 309 | (les plus connectés). Filtrez pour voir les autres. |
+| 314 | Échanges |
+| 363 | Tous les composants |
+| 368 | ◧ Vue Blocs |
+| 368 | ▣ Vue Composant |
+| 368 | ≡ Vue Ligne |
+| 368 | ▦ Matrice |
+| 368 | 🩺 Contrôles |
+| 373 | — Vue Blocs |
+| 373 | composants · |
+| 380 | Acteur |
+| 380 | Système |
+| 381 | Acteur |
+| 381 | Système |
 | 382 | Couche |
-| 382 | Composant source |
-| 382 | Port source |
-| 382 | Orientation source |
-| 382 | Component Exchange |
-| 382 | Kind |
-| 382 | Port cible |
-| 382 | Orientation cible |
-| 382 | Composant cible |
-| 382 | Functional Exchanges |
-| 390 | Aucun |
-| 390 | dans ce modèle ( |
-| 391 | ◧ Vue Blocs |
-| 392 | ▣ Vue Composant |
-| 392 | Une carte par composant avec ses échanges émis, reçus, bidirectionnels ou non orientés |
-| 393 | ≡ Vue Ligne |
-| 393 | Un Component Exchange par ligne |
-| 393 | ▦ Matrice |
-| 393 | Composant × composant (100 composants au plus) |
-| 393 | 🩺 Contrôles |
-| 393 | Ports orphelins ou sans orientation, échanges incohérents, composants sans port ou sans fonction |
-| 405 | 🧱 Composant : |
-| 408 | Lien |
-| 408 | Échange |
-| 410 | Nature |
-| 410 | avec ports |
-| 411 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
-| 411 | — double-clic : uniquement ceux-ci |
+| 382 | Composant |
+| 382 | Nature |
+| 382 | Port |
+| 382 | Orientation |
+| 382 | Sens |
+| 382 | Composant distant |
+| 384 | Couche |
+| 384 | Composant source |
+| 384 | Port source |
+| 384 | Orientation source |
+| 384 | Component Exchange |
+| 384 | Kind |
+| 384 | Port cible |
+| 384 | Orientation cible |
+| 384 | Composant cible |
+| 384 | Functional Exchanges |
+| 392 | Aucun |
+| 392 | dans ce modèle ( |
+| 393 | ◧ Vue Blocs |
+| 394 | ▣ Vue Composant |
+| 394 | Une carte par composant avec ses échanges émis, reçus, bidirectionnels ou non orientés |
+| 395 | ≡ Vue Ligne |
+| 395 | Un Component Exchange par ligne |
+| 395 | ▦ Matrice |
+| 395 | Composant × composant (100 composants au plus) |
+| 395 | 🩺 Contrôles |
+| 395 | Ports orphelins ou sans orientation, échanges incohérents, composants sans port ou sans fonction |
+| 407 | 🧱 Composant : |
+| 410 | Lien |
+| 410 | Échange |
+| 412 | Nature |
+| 412 | avec ports |
+| 413 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 413 | — double-clic : uniquement ceux-ci |
 
 ## js/48-barres-groupes.js
 
@@ -3510,7 +3510,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 6 | Romain Lescole |
 | 7 | Arcalyse |
 | 8 | Votre modèle Capella, sous toutes ses coutures. |
-| 9 | github.com/romain-lescole/relation-map-capella |
+| 9 | github.com/romain-lescole/arcalyse |
 | 11 | Copyright 2010-2023 Mike Bostock Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies. THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. |
 | 20 | Edge |
 | 23 | Version |

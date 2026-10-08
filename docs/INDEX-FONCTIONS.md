@@ -8,7 +8,7 @@
 - `TCFG` (l. 25)
 - `MODES` (l. 37)
 
-## 02-themes.js — 318 lignes
+## 02-themes.js — 320 lignes
 
 - `THEMES` (l. 6)
 - `capInk` (l. 57) — Couleur de texte lisible sur un fond donné : noir ou blanc, selon le meilleur contraste (WCAG).
@@ -27,7 +27,7 @@
 - `capContrastCss` (l. 156) — Génère, pour le thème clair courant, des règles qui foncent les couleurs de texte fixes des feuilles
 - `applyTheme` (l. 198) — Applique le thème visuel global (dark/light/dracula/solarized/nord).
 - `applyMode` (l. 243) — Bascule entre les modes d'affichage : default (Relation Map), PBS, table, capella.
-- `tv` (l. 316) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
+- `tv` (l. 318) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
 
 ## 03-rm-etat-svg.js — 121 lignes
 
@@ -99,7 +99,7 @@
 - `showEditTypeForm` (l. 481) — Affiche un mini-formulaire inline dans la section "Types d'éléments"
 - `showNewTypeForm` (l. 530) — Affiche le formulaire de création d'un nouveau type d'élément.
 
-## 09-arborescence.js — 653 lignes
+## 09-arborescence.js — 657 lignes
 
 - `typeIcon` (l. 5) — Retourne l'icône associée à un type d'élément (définie dans TCFG). @param {string} t
 - `migratePkgsToElements` (l. 11) — Migre l'ancien format packages[] vers le nouveau format elements[] avec type='Package'.
@@ -118,8 +118,8 @@
 - `arboParseClipboardList` (l. 471) — Découpe un texte de presse-papier en liste de noms : une ligne = un élément.
 - `arboPasteListInto` (l. 479) — Crée une liste d'éléments enfants sous un owner (un nom par ligne du presse-papier).
 - `arboConvertSelectedType` (l. 499) — Change le type de tous les éléments d'un ensemble d'ids (hors packages).
-- `arboShowCtxMenu` (l. 514)
-- `arboMoveEl` (l. 636) — Déplace un élément unique vers un nouvel owner par glisser-déposer : met à jour
+- `arboShowCtxMenu` (l. 518) — Affiche le menu contextuel (clic droit) d'un élément de l'arborescence.
+- `arboMoveEl` (l. 640) — Déplace un élément unique vers un nouvel owner par glisser-déposer : met à jour
 
 ## 10-table-view.js — 1402 lignes
 
@@ -161,7 +161,7 @@
 - `openHelpModal` (l. 150) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
 - `positionOverlay` (l. 246) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
 
-## 20-capella-chargement.js — 813 lignes
+## 20-capella-chargement.js — 817 lignes
 
 - `CAP_LAYERS` (l. 4)
 - `CAP_NS_LAYER` (l. 12)
@@ -171,33 +171,33 @@
 - `CAP_PKG_TYPES` (l. 16)
 - `CAP_TYPE_ICON` (l. 17)
 - `capBuildPageHtml` (l. 36) — Construit le HTML de la page actuelle (tout le HTML/CSS/JS de l'application), fichier
-- `capPageFileName` (l. 100) — Nom de fichier proposé pour la page sauvegardée.
-- `capSaveFullPage` (l. 102) — Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur).
-- `capSavePageDirect` (l. 116) — Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
-- `capEsc` (l. 146) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
-- `capLoadFile` (l. 162) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
-- `capApplyXmlDoc` (l. 202) — Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
-- `capShowWelcome` (l. 227) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
-- `capWelcomeStatus` (l. 238) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
-- `capUpdateWelcome` (l. 244) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
-- `XSI_NS` (l. 286)
-- `capXType` (l. 288) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
-- `capTName` (l. 290) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
-- `capXId` (l. 292) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
-- `capXName` (l. 294) — Lit l'attribut 'name' d'un élément XML Capella.
-- `capResolveLayer` (l. 299) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
-- `capGetAttrs` (l. 305) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
-- `capBuildTree` (l. 316) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
-- `capRunBulk` (l. 342) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
-- `capBuildTypeRegistry` (l. 352) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
-- `capApplyPanelOnLoad` (l. 371) — Appelée après le chargement Capella : configure le panneau gauche RM.
-- `capInjectToArbo` (l. 443) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
-- `capInjectCapellaRelsToCriteria` (l. 547) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
-- `capInjectLinksToModel` (l. 588) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
-- `capFilterArboToLinked` (l. 632) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
-- `capInjectChainsToModal` (l. 671) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
-- `capRenderCurrentView` (l. 732) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
-- `capUpdateStatChips` (l. 804) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
+- `capPageFileName` (l. 104) — Nom de fichier proposé pour la page sauvegardée.
+- `capSaveFullPage` (l. 106) — Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur).
+- `capSavePageDirect` (l. 120) — Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
+- `capEsc` (l. 150) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
+- `capLoadFile` (l. 166) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
+- `capApplyXmlDoc` (l. 206) — Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
+- `capShowWelcome` (l. 231) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
+- `capWelcomeStatus` (l. 242) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
+- `capUpdateWelcome` (l. 248) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
+- `XSI_NS` (l. 290)
+- `capXType` (l. 292) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
+- `capTName` (l. 294) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
+- `capXId` (l. 296) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
+- `capXName` (l. 298) — Lit l'attribut 'name' d'un élément XML Capella.
+- `capResolveLayer` (l. 303) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
+- `capGetAttrs` (l. 309) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
+- `capBuildTree` (l. 320) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
+- `capRunBulk` (l. 346) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
+- `capBuildTypeRegistry` (l. 356) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
+- `capApplyPanelOnLoad` (l. 375) — Appelée après le chargement Capella : configure le panneau gauche RM.
+- `capInjectToArbo` (l. 447) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
+- `capInjectCapellaRelsToCriteria` (l. 551) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
+- `capInjectLinksToModel` (l. 592) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
+- `capFilterArboToLinked` (l. 636) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
+- `capInjectChainsToModal` (l. 675) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
+- `capRenderCurrentView` (l. 736) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
+- `capUpdateStatChips` (l. 808) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
 ## 21-capella-vues-base.js — 1119 lignes
 
@@ -378,7 +378,7 @@
 - `capNameQuality` (l. 29) — Analyse la qualité rédactionnelle d'un nom de fonction : verbe en tête (infinitif en français, forme de base en anglais),
 - `capFnNQ` (l. 58) — Diagnostic de nom d'une fonction, mis en cache (recalculé si les règles personnalisées changent). Fonctions racines ignorées.
 
-## 34-fonctions.js — 741 lignes
+## 34-fonctions.js — 745 lignes
 
 - `capIsCompEl` (l. 3) — Indique si un élément XML est un composant, une entité ou un acteur (porteur d'allocations).
 - `capCompAncestors` (l. 11) — Chaîne des composants englobants d'un composant, de la racine (le système) au parent direct.
@@ -389,14 +389,14 @@
 - `capFnAllocKind` (l. 165) — Nature de l'allocation d'une fonction.
 - `capFnSubsystems` (l. 176) — Sous-systèmes d'une fonction : chemin des composants englobants sous le système (« A › B »),
 - `CAP_FN_AK` (l. 181) — Libellés, icônes et couleurs des natures d'allocation (filtre, liserés, colonne du tableau).
-- `capRenderFunctions` (l. 187)
-- `capFnDossierHtml` (l. 651) — Dossier fonctionnel HTML autonome : un onglet par couche (sections numérotées et indentées : description,
-- `capFillHeight` (l. 676) — Ajuste la hauteur des éléments marqués data-fill pour qu'ils occupent la fenêtre jusqu'en bas.
-- `CAP_ANA_SUBS` (l. 686) — Sous-vues de 🔬 Analyses (onglets) ; « fns » ouvre la vue ƒ Fonctions, qui garde son propre conteneur.
-- `capAnaTabsHtml` (l. 691) — Onglets des sous-vues de 🔬 Analyses (communs à la vue 🔬 Analyses et à la vue ƒ Fonctions).
-- `capAnaTabOpen` (l. 698) — Ouvre une sous-vue de 🔬 Analyses depuis ses onglets (ƒ Fonctions : vue à part).
-- `capRenderFunctionsView` (l. 707) — Vue « ƒ Fonctions » (onglet de 🔬 Analyses) : hiérarchie, tableau,
-- `capRenderAnalyses` (l. 718) — Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage.
+- `capRenderFunctions` (l. 191) — Rend la vue ƒ Fonctions dans son conteneur : hiérarchie, tableau façon Excel, traçabilité, métriques,
+- `capFnDossierHtml` (l. 655) — Dossier fonctionnel HTML autonome : un onglet par couche (sections numérotées et indentées : description,
+- `capFillHeight` (l. 680) — Ajuste la hauteur des éléments marqués data-fill pour qu'ils occupent la fenêtre jusqu'en bas.
+- `CAP_ANA_SUBS` (l. 690) — Sous-vues de 🔬 Analyses (onglets) ; « fns » ouvre la vue ƒ Fonctions, qui garde son propre conteneur.
+- `capAnaTabsHtml` (l. 695) — Onglets des sous-vues de 🔬 Analyses (communs à la vue 🔬 Analyses et à la vue ƒ Fonctions).
+- `capAnaTabOpen` (l. 702) — Ouvre une sous-vue de 🔬 Analyses depuis ses onglets (ƒ Fonctions : vue à part).
+- `capRenderFunctionsView` (l. 711) — Vue « ƒ Fonctions » (onglet de 🔬 Analyses) : hiérarchie, tableau,
+- `capRenderAnalyses` (l. 722) — Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage.
 
 ## 35-tableau-de-bord.js — 560 lignes
 
@@ -424,7 +424,7 @@
 
 - `capAnaReset` (l. 2) — Réinitialise caches et états de la vue Analyses (appelé au chargement d'un nouveau modèle).
 - `capBehaviorExchanges` (l. 11) — Component Exchanges du périmètre de la vue 🔀 Behavior Exchange : couche PA, entre Physical Components
-- `capRenderCompExchange` (l. 26)
+- `capRenderCompExchange` (l. 26) — Rend la vue Component Exchange — même structure que Physical Link (≡ Ligne / ▣ Composant,
 
 ## 37-capella-cablage.js — 38 lignes
 
@@ -615,7 +615,7 @@
 - `capCfgLoadFile` (l. 123) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
 - `capCfgLoadUpdate` (l. 137) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
 
-## 47-composants.js — 437 lignes
+## 47-composants.js — 439 lignes
 
 - `CAP_CB_PAGE` (l. 10)
 - `CAP_CB_LAYERS` (l. 13) — Vues 🧱 par couche : conteneur, clé de vue (barre), libellé.
