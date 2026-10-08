@@ -3521,7 +3521,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 36 | ℹ À propos ✕ 🔷 Relation Map Capella Version |
 | 40 | Explorateur et analyseur hors ligne de modèles Capella / ARCADIA : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML. Auteur et licence Auteur © |
 | 46 | Développement Développé avec l'aide de Claude Code (Anthropic). Composants tiers et marques D3.js v7.9.0 Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock. Texte de la licence |
-| 52 | Capella, ARCADIA Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié. Modèles de test Exemples Capella « In-Flight Entertainment System » et « AIDA ». Informations techniques |
+| 52 | Capella, ARCADIA Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié. Modèles de test Exemples Capella « In-Flight Entertainment System » ( github.com/dbinfrago/Capella-IFE-sample ) et « AIDA » ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Informations techniques |
 | 57 | 📋 Copier les infos Fermer |
 | 63 | Relation Map Capella |
 | 64 | ✔ Informations copiées |

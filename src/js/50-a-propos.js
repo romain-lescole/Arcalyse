@@ -19,7 +19,7 @@ function capAboutTech(){
   const d=new Date(document.lastModified);
   return [
     ['Version', CAP_APP_VERSION],
-    ['Fichier du', isNaN(d)?'—':d.toLocaleString('fr-FR')],
+    ['Fichier du', isNaN(d)?'—':d.toLocaleDateString('fr-FR')],   // date seule, sans l'heure
     ['Navigateur', br],
     ['Accès direct au fichier (🔄 Suivi)', 'showOpenFilePicker' in window?'disponible':'non disponible (rechargement manuel)'],
     ['Modèle chargé', capLoaded?`${capCurrentFileName||'—'} · ${(typeof capAllElements!=='undefined'?capAllElements.length:0).toLocaleString('fr-FR')} éléments`:'aucun'],
@@ -51,7 +51,7 @@ function capAboutOpen(){
         <tr><td>D3.js v7.9.0</td><td>Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock.
           <details><summary class="ana-dim">Texte de la licence</summary><pre class="ab-lic">${e(CAP_D3_LICENSE)}</pre></details></td></tr>
         <tr><td>Capella, ARCADIA</td><td>Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié.</td></tr>
-        <tr><td>Modèles de test</td><td>Exemples Capella « In-Flight Entertainment System » et « AIDA ».</td></tr>
+        <tr><td>Modèles de test</td><td>Exemples Capella « In-Flight Entertainment System » (<a href="https://github.com/dbinfrago/Capella-IFE-sample" target="_blank" rel="noopener">github.com/dbinfrago/Capella-IFE-sample</a>) et « AIDA » (<a href="https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture" target="_blank" rel="noopener">sahara.irt-saintexupery.com/AIDA/AIDAArchitecture</a>).</td></tr>
       </table>
       <h4>Informations techniques</h4>
       <table class="ana-t ana-kv">${tech.map(([k,v])=>`<tr><td>${e(k)}</td><td>${e(v)}</td></tr>`).join('')}</table>

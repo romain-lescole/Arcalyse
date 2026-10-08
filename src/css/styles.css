@@ -1129,6 +1129,7 @@ html[data-tone="light"] .fex-pname{color:#2a5a2a;}
 /* ── ⚙ Interface et vues ── */
 #cap-about-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
 .ab-box{max-width:720px;}
+.ab-box a{color:var(--c-accent);word-break:break-all;}
 .ab-box h4{margin:14px 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--c-dim);}
 .ab-id{display:flex;gap:14px;align-items:center;}
 .ab-logo{font-size:40px;line-height:1;}
