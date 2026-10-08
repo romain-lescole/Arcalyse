@@ -1,5 +1,5 @@
 {
-  "name": "relation-map-capella",
+  "name": "arcalyse",
   "version": "1.0.0",
   "private": true,
   "description": "Explorateur et analyseur autonome (hors ligne) de modèles Capella — sources découpées, assemblées en un fichier HTML unique par build.js",

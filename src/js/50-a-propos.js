@@ -6,7 +6,7 @@ var CAP_APP_VERSION='1.6';   // à mettre à jour à chaque livraison (node buil
 var CAP_APP_AUTHOR='Romain Lescole';
 var CAP_APP_NAME='Arcalyse';
 var CAP_APP_SLOGAN='Votre modèle Capella, sous toutes ses coutures.';
-var CAP_APP_REPO='github.com/romain-lescole/relation-map-capella';
+var CAP_APP_REPO='github.com/romain-lescole/arcalyse';
 /** Texte de la licence ISC de D3.js (reproduction obligatoire). */
 var CAP_D3_LICENSE=`Copyright 2010-2023 Mike Bostock
 
@@ -46,7 +46,7 @@ function capAboutOpen(){
       <table class="ana-t ana-kv">
         <tr><td>Auteur</td><td>© ${yr} ${e(CAP_APP_AUTHOR)} — créateur et titulaire des droits</td></tr>
         <tr><td>Licence</td><td><b>GNU General Public License version 3</b> (GPLv3) — logiciel libre : utilisation (y compris commerciale), étude, modification et redistribution autorisées ; toute version modifiée redistribuée doit l'être sous GPLv3, avec son code source. Fourni <b>sans aucune garantie</b>.<br><span class="ana-dim">Texte complet : gnu.org/licenses/gpl-3.0 (fichier LICENSE du dépôt)</span></td></tr>
-        <tr><td>Contact</td><td>Code source, signalements et contributions : <span class="ab-mono">${e(CAP_APP_REPO)}</span></td></tr>
+        <tr><td>Contact</td><td>Code source, signalements et contributions : <a class="ab-mono" href="https://${e(CAP_APP_REPO)}" target="_blank" rel="noopener">${e(CAP_APP_REPO)}</a></td></tr>
         <tr><td>Développement</td><td>Développé avec l'aide de Claude Code (Anthropic).</td></tr>
       </table>
       <h4>Composants tiers et marques</h4>

@@ -1,6 +1,6 @@
 # Arcalyse — avis de droit d'auteur
 
-Copyright (C) 2026 Romain Lescole — https://github.com/romain-lescole/relation-map-capella
+Copyright (C) 2026 Romain Lescole — https://github.com/romain-lescole/arcalyse
 
 Ce programme est un logiciel libre : vous pouvez le redistribuer et/ou le modifier selon les termes de la
 **GNU General Public License version 3** publiée par la Free Software Foundation (texte complet dans le fichier `LICENSE`).
