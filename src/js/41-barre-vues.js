@@ -21,7 +21,7 @@ var CAP_NAV_ITEMS=[
   {k:'physlink',  l:'🔌 Physical Link',     g:'flux'},
   {k:'scen',      l:'🎬 Scénarios',        g:'flux', t:'Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références'},
   {k:'ports',     l:'🧩 Ports',             g:'flux', t:'Traçabilité Function Port ↔ Component Port ↔ Physical Port'},
-  {k:'functions', l:'ƒ Fonctions',          g:'',     t:'Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier'},
+  {k:'functions', l:'ƒ Fonctions',          g:'ana',  t:'Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier'},
   {k:'ana:trace', l:'🧬 Traçabilité inter-couches', g:'ana'},
   {k:'ana:caps',  l:'🎯 Capacités & missions',     g:'ana'},
   {k:'ana:states',l:'🔁 Modes & états',            g:'ana'},
@@ -36,11 +36,11 @@ var CAP_NAV_ITEMS=[
 var CAP_NAV_GROUPS=[
   {g:'explore', id:'cap-v-elements', l:'🧭 Explorateur',       t:'Explorer le modèle : arborescence, cartes, tableau, index des types, liens'},
   {g:'flux',    id:'cap-v-flux',     l:'📡 Flux & interfaces', t:'Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, ports'},
-  {g:'',        id:'',               l:'',                     t:''},   // place des vues sans menu (ƒ Fonctions)
-  {g:'ana',     id:'cap-v-analyses', l:'🔬 Analyses',          t:'Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes'}
+  {g:'',        id:'',               l:'',                     t:''},   // place des vues sans menu
+  {g:'ana',     id:'cap-v-analyses', l:'🔬 Analyses',          t:'Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes'}
 ];
-/** Réglage par défaut : tous les menus affichés, ⚡ Chaînes, ƒ Fonctions et 📐 Tableau de bord en boutons directs. */
-var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['chains','functions','scen','dashboard']};
+/** Réglage par défaut : tous les menus affichés, ⚡ Chaînes, 🎬 Scénarios et 📐 Tableau de bord en boutons directs. */
+var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['chains','scen','dashboard']};
 var _capNav=(()=>{ try{ const el=document.getElementById('cap-toolbar'); const o=el&&JSON.parse(el.textContent);
   if(o&&o.groups&&Array.isArray(o.pins)) return o; }catch(e){} return JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); })();
 var _capNavLast={explore:'cards', flux:'chains', ana:'ana:trace'};   // dernière sous-vue ouverte par menu

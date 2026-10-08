@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3317 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3318 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -714,9 +714,9 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 382 | Verify |
 | 382 | Copy |
 | 382 | Allocation |
-| 491 | PhysicalComponent (NODE) |
-| 492 | PhysicalComponent (BEHAVIOR) |
-| 731 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella |
+| 500 | PhysicalComponent (NODE) |
+| 501 | PhysicalComponent (BEHAVIOR) |
+| 740 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella |
 
 ## js/21-capella-vues-base.js
 
@@ -1740,15 +1740,16 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 669 | Capella |
 | 670 | ƒ Dossier fonctionnel |
 | 670 | - dossier fonctionnel.html |
-| 700 | 🧬 Traçabilité inter-couches |
-| 700 | 🎯 Capacités & missions |
-| 700 | 🔁 Modes & états |
-| 700 | ⚖ Comparaison de versions |
-| 700 | 📑 Exigences |
-| 700 | 🏷 Propriétés |
-| 700 | 🗃 Données & interfaces |
-| 700 | ⛓ Contraintes |
-| 702 | ↻ Recalculer |
+| 686 | ƒ Fonctions |
+| 686 | 🧬 Traçabilité inter-couches |
+| 686 | 🎯 Capacités & missions |
+| 686 | 🔁 Modes & états |
+| 686 | ⚖ Comparaison de versions |
+| 686 | 📑 Exigences |
+| 686 | 🏷 Propriétés |
+| 686 | 🗃 Données & interfaces |
+| 686 | ⛓ Contraintes |
+| 722 | ↻ Recalculer |
 
 ## js/35-tableau-de-bord.js
 
@@ -2587,7 +2588,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 38 | 📡 Flux & interfaces |
 | 38 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, ports |
 | 40 | 🔬 Analyses |
-| 40 | Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes |
+| 40 | Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes |
 | 127 | Vue affichée : |
 | 145 | Retirer de la barre |
 | 145 | Épingler dans la barre (bouton direct) |
@@ -2636,7 +2637,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 25 | ƒ Fonctions |
 | 26 | Hiérarchie des fonctions, tableau, allocation aux composants, métriques, contrôles de qualité des noms et dossier imprimable. |
 | 27 | 🔬 Analyses |
-| 28 | Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données et contraintes. |
+| 28 | ƒ Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données et contraintes. |
 | 29 | 📐 Tableau de bord |
 | 30 | Composez vos propres tableaux de bord : indicateurs, graphiques et tableaux, imprimables en A4. |
 | 31 | ☰ Toutes les vues |
@@ -2941,7 +2942,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 219 | 🔬 Analyses |
 | 220 | #cap-view-analyses [data-an] |
 | 220 | 🔬 Analyses |
-| 220 | Huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes. |
+| 220 | ƒ Fonctions et huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes. |
 | 221 | #cap-view-analyses [data-an].active |
 | 221 | 🔎 Analyse affichée |
 | 221 | Analyse en cours. |

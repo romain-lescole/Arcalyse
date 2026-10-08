@@ -1149,6 +1149,7 @@ html[data-tone="light"] .fex-pname{color:#2a5a2a;}
 .cb-ic{font-size:12px;margin-right:4px;}
 .cb-fns{position:absolute;left:0;right:0;bottom:6px;text-align:center;font-size:10.5px;color:var(--c-dim);}
 .cb-kids{position:absolute;right:8px;bottom:5px;font-size:11px;color:var(--c-dim);cursor:help;}
+.cb-fns ~ .fex-box-empty{bottom:22px;}   /* « aucun port » au-dessus de « ƒ n fonctions ▾ » */
 .cb-port{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;font:700 12px/1 monospace;color:#111;background:#fff;border:1.5px solid #222;flex-shrink:0;vertical-align:middle;}
 .cb-port-UNSET{background:linear-gradient(180deg,#d29b9b,#8f3f3f);border-color:#4a1515;}
 .cb-port-orphan{opacity:.45;}

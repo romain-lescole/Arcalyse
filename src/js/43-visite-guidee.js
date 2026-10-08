@@ -25,7 +25,7 @@ var CAP_TOUR_STEPS=[
   {s:'#cap-v-functions', t:'ƒ Fonctions',
    x:'Hiérarchie des fonctions, tableau, allocation aux composants, métriques, contrôles de qualité des noms et dossier imprimable.'},
   {s:'#cap-v-analyses', t:'🔬 Analyses',
-   x:'Traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données et contraintes.'},
+   x:'ƒ Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données et contraintes.'},
   {s:'#cap-v-dashboard', t:'📐 Tableau de bord',
    x:'Composez vos propres tableaux de bord : indicateurs, graphiques et tableaux, imprimables en A4.'},
   {s:'#cap-nav-cfg', t:'☰ Toutes les vues',
@@ -217,7 +217,7 @@ var CAP_TOUR_VIEWS={
     {s:'#ana-fn-csv,#ana-fn-html', t:'⬇ Exports', x:'<b>⬇ CSV</b> et <b>📄 Dossier fonctionnel</b> : document HTML avec une section par fonction (description, allocation, échanges, traçabilité).'},
     {s:'#cap-view-functions .phl-filter-bar + *', one:true, t:'📋 Résultat', x:'Clic sur une fonction pour ouvrir son détail.'}]},
   analyses:{l:'🔬 Analyses', steps:[
-    {s:'#cap-view-analyses [data-an]', t:'🔬 Analyses', x:'Huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes.'},
+    {s:'#cap-view-analyses [data-an]', t:'🔬 Analyses', x:'ƒ Fonctions et huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes.'},
     {s:'#cap-view-analyses [data-an].active', t:'🔎 Analyse affichée', x:()=>CAP_TOUR_ANA_TXT[capAnaSub]||'Analyse en cours.'},
     {s:'#ana-recalc', t:'↻ Recalculer', x:'Les résultats sont gardés en mémoire ; ce bouton les recalcule (utile après une mise à jour du modèle).'},
     {s:'#ana-box .phl-filter-bar', one:true, t:'🧰 Options', x:'Présentations, filtres et export CSV propres à l\'analyse affichée.'},

@@ -136,7 +136,7 @@ function capRenderFunctionalExchange(mode){
   container.classList.toggle('fex-oa', OAV);
   const X0=capComputeFunctionalExchanges();
   const X=OAV?{...X0, list:X0.list.filter(x=>x.layer==='OA'), fns:X0.fns.filter(f=>f.layer==='OA')}:X0, allLinks=X.list;
-  if(!container._fex) container._fex={view:OAV?_capOavView:_capFexView, layer:OAV?'OA':'all', fnFilter:'', nameFilter:'', withPorts:true, page:0, ak:new Set(['sys','act','none']), back:null};
+  if(!container._fex) container._fex={view:OAV?_capOavView:_capFexView, layer:OAV?'OA':'all', fnFilter:'', nameFilter:'', withPorts:false, page:0, ak:new Set(['sys','act','none']), back:null};
   const st=container._fex;
   if(OAV) st.layer='OA';
   const keepView=()=>{ if(OAV) _capOavView=st.view; else _capFexView=st.view; };

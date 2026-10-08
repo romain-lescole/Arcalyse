@@ -129,7 +129,7 @@ function capRenderComponentBlocks(L, host, holder){
     allLinks=C0.links.filter(l=>l.layer===L);
   }
   const inScope=new Set(C.comps.map(c=>c.id));
-  if(!holder._cb) holder._cb={view:V0.only?'block':_capCbView[L], layer:L, name:'', ex:'', withPorts:C.comps.some(c=>c.ports.length),   // « avec ports » seulement si la couche a des ports
+  if(!holder._cb) holder._cb={view:V0.only?'block':_capCbView[L], layer:L, name:'', ex:'', withPorts:false,   // « avec ports » décoché par défaut : tous les composants affichés
     page:0, nk:new Set(['sys','act','node']), under:'', back:null, fnOpen:new Set()};
   const st=holder._cb; st.layer=L; if(!st.fnOpen) st.fnOpen=new Set(); if(V0.only) st.view='block';
   const NK={sys:{i:'🧩',l:'Système',c:'#58a6ff',tip:'Composants du système'},act:{i:'👤',l:'Acteurs',c:'#7fd8ff',tip:'Acteurs externes'},node:{i:'🖥',l:'Nœuds',c:'#e3b341',tip:'Nœud'}};

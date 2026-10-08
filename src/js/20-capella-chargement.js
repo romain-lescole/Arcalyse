@@ -416,6 +416,15 @@ function capApplyPanelOnLoad(){
     MODEL.relations = MODEL.relations.filter(r=>!demarrageIds.has(r.src)&&!demarrageIds.has(r.tgt));
   }
 
+  // 3 bis. Purge des restes du modèle précédent (rechargement) : types Capella absents du nouveau modèle,
+  //    éléments masqués, focus et sélection qui ne désignent plus rien
+  { const ids=new Set(MODEL.elements.map(e=>e.id)), used=new Set(capAllElements.map(e=>e.typeName));
+    Object.keys(TCFG).forEach(t=>{ if(TCFG[t]._capella&&!used.has(t.replace(/ \(.*\)$/,''))){ delete TCFG[t]; delete S.typF[t]; } });   // « PhysicalComponent (NODE) » → PhysicalComponent
+    [...S.hidden].forEach(id=>{ if(!ids.has(id)) S.hidden.delete(id); });
+    if(S.ctx&&!ids.has(S.ctx)) S.ctx=null;
+    if(S.propEl&&!ids.has(S.propEl)){ S.propEl=null; S.selNode=null; }
+    arboMultiSel.clear(); }
+
   // 4. La différenciation PhysicalComponent (NODE/BEHAVIOR/sans nature → violet) et l'usage
   //    du nom humain comme libellé sont désormais faits directement dans capInjectToArbo()
   //    pendant le parcours de l'arbre XML (node.attrs.nature est disponible à cet instant,

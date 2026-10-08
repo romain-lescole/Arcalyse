@@ -44,14 +44,17 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.click('#b-theme-menu'); await p.click('#cap-nav-dd [data-thm="dark"]');
     await p.click('#b-file-menu'); await p.keyboard.press('Escape'); });
   await step('analyses : sous-vues', async () => { await p.click('#cap-v-analyses');
-    for (const b of await p.$$('#cap-view-analyses [data-an]')) { await b.click(); await p.waitForTimeout(300); }
+    for (const b of await p.$$('#cap-view-analyses [data-an]:not([data-an="fns"])')) { await b.click(); await p.waitForTimeout(300); }
     await p.evaluate(() => capNavOpen('ana:states')); await p.waitForTimeout(300);
     const inp = p.locator('#ana-box .cap-tf-row input:visible').first();
     if (await inp.count()) { await inp.fill('zzzz'); await p.waitForTimeout(100);
       if (!/^🔍 0 \//.test(await p.evaluate(() => [...document.querySelectorAll('#ana-box .cap-tf-cnt')].map(c => c.textContent).find(Boolean) || ''))) throw new Error('filtre de tableau inopérant');
       await inp.fill(''); } });
-  await step('ƒ Fonctions : vues', async () => { await p.click('#cap-v-functions');
-    for (const v of ['tree', 'table', 'trace', 'metrics', 'checks']) { await p.click(`#cap-view-functions [data-fv="${v}"]`); await p.waitForTimeout(300); } });
+  await step('ƒ Fonctions : vues', async () => { await p.click('#cap-view-analyses [data-an="fns"]');   // onglet de 🔬 Analyses
+    if (await p.evaluate(() => capCurrentView) !== 'functions') throw new Error('onglet ƒ Fonctions inopérant');
+    for (const v of ['tree', 'table', 'trace', 'metrics', 'checks']) { await p.click(`#cap-view-functions [data-fv="${v}"]`); await p.waitForTimeout(300); }
+    await p.click('#cap-view-functions [data-an="trace"]');
+    if (await p.evaluate(() => capCurrentView + ':' + capAnaSub) !== 'analyses:trace') throw new Error('retour vers 🔬 Analyses inopérant'); });
   await step('Relation Map', () => p.click('#mode-rm'));
   await step('Table View', () => p.click('#mode-table'));
   await step('tableau de bord : tous les indicateurs', async () => {

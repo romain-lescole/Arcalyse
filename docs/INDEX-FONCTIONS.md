@@ -161,7 +161,7 @@
 - `openHelpModal` (l. 150) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
 - `positionOverlay` (l. 246) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
 
-## 20-capella-chargement.js — 804 lignes
+## 20-capella-chargement.js — 813 lignes
 
 - `CAP_LAYERS` (l. 4)
 - `CAP_NS_LAYER` (l. 12)
@@ -191,13 +191,13 @@
 - `capRunBulk` (l. 342) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
 - `capBuildTypeRegistry` (l. 352) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
 - `capApplyPanelOnLoad` (l. 371) — Appelée après le chargement Capella : configure le panneau gauche RM.
-- `capInjectToArbo` (l. 434) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
-- `capInjectCapellaRelsToCriteria` (l. 538) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
-- `capInjectLinksToModel` (l. 579) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
-- `capFilterArboToLinked` (l. 623) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
-- `capInjectChainsToModal` (l. 662) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
-- `capRenderCurrentView` (l. 723) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
-- `capUpdateStatChips` (l. 795) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
+- `capInjectToArbo` (l. 443) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
+- `capInjectCapellaRelsToCriteria` (l. 547) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
+- `capInjectLinksToModel` (l. 588) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
+- `capFilterArboToLinked` (l. 632) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
+- `capInjectChainsToModal` (l. 671) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
+- `capRenderCurrentView` (l. 732) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
+- `capUpdateStatChips` (l. 804) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
 ## 21-capella-vues-base.js — 1119 lignes
 
@@ -378,7 +378,7 @@
 - `capNameQuality` (l. 29) — Analyse la qualité rédactionnelle d'un nom de fonction : verbe en tête (infinitif en français, forme de base en anglais),
 - `capFnNQ` (l. 58) — Diagnostic de nom d'une fonction, mis en cache (recalculé si les règles personnalisées changent). Fonctions racines ignorées.
 
-## 34-fonctions.js — 721 lignes
+## 34-fonctions.js — 741 lignes
 
 - `capIsCompEl` (l. 3) — Indique si un élément XML est un composant, une entité ou un acteur (porteur d'allocations).
 - `capCompAncestors` (l. 11) — Chaîne des composants englobants d'un composant, de la racine (le système) au parent direct.
@@ -392,8 +392,11 @@
 - `capRenderFunctions` (l. 187)
 - `capFnDossierHtml` (l. 651) — Dossier fonctionnel HTML autonome : un onglet par couche (sections numérotées et indentées : description,
 - `capFillHeight` (l. 676) — Ajuste la hauteur des éléments marqués data-fill pour qu'ils occupent la fenêtre jusqu'en bas.
-- `capRenderFunctionsView` (l. 689) — Vue « ƒ Fonctions » (menu principal, au même niveau que 🔬 Analyses) : hiérarchie, tableau,
-- `capRenderAnalyses` (l. 698)
+- `CAP_ANA_SUBS` (l. 686) — Sous-vues de 🔬 Analyses (onglets) ; « fns » ouvre la vue ƒ Fonctions, qui garde son propre conteneur.
+- `capAnaTabsHtml` (l. 691) — Onglets des sous-vues de 🔬 Analyses (communs à la vue 🔬 Analyses et à la vue ƒ Fonctions).
+- `capAnaTabOpen` (l. 698) — Ouvre une sous-vue de 🔬 Analyses depuis ses onglets (ƒ Fonctions : vue à part).
+- `capRenderFunctionsView` (l. 707) — Vue « ƒ Fonctions » (onglet de 🔬 Analyses) : hiérarchie, tableau,
+- `capRenderAnalyses` (l. 718) — Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage.
 
 ## 35-tableau-de-bord.js — 560 lignes
 
@@ -510,7 +513,7 @@
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
 - `CAP_NAV_GROUPS` (l. 36) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
-- `CAP_NAV_DEFAULT` (l. 43) — Réglage par défaut : tous les menus affichés, ⚡ Chaînes, ƒ Fonctions et 📐 Tableau de bord en boutons directs.
+- `CAP_NAV_DEFAULT` (l. 43) — Réglage par défaut : tous les menus affichés, ⚡ Chaînes, 🎬 Scénarios et 📐 Tableau de bord en boutons directs.
 - `capNavSave` (l. 49) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
 - `capNavCurKey` (l. 59) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
 - `capNavOpen` (l. 67) — Ouvre une vue du catalogue (ou Relation Map / Table View pour les clés @rm, @table).

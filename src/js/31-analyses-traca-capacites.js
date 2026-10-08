@@ -3,7 +3,7 @@
    Modes & états · Comparaison de versions. Calculs génériques : aucune
    hypothèse sur le contenu d'un modèle particulier.
 ═══════════════════════════════════════════════════════════════════ */
-let capAnaSub='trace';           // sous-vue active : trace | caps | states | diff | reqs | pvmt | data | cts (ƒ Fonctions est une vue à part)
+let capAnaSub='trace';           // sous-vue active : trace | caps | states | diff | reqs | pvmt | data | cts (onglet ƒ Fonctions : vue à part « functions »)
 var _capAnaCache={};             // caches de calcul (var : remis à zéro au chargement d'un modèle)
 const CAP_ANA_LAYERS=['OA','SA','LA','PA','EPBS'];
 /** Catégories d'éléments pour la traçabilité, reconnues par le nom de type (toutes versions de Capella). */

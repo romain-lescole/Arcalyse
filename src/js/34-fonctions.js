@@ -682,26 +682,46 @@ function capFillHeight(root){
 }
 window.addEventListener('resize',()=>capFillHeight());
 
-/** Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage. */
-/** Vue « ƒ Fonctions » (menu principal, au même niveau que 🔬 Analyses) : hiérarchie, tableau,
+/** Sous-vues de 🔬 Analyses (onglets) ; « fns » ouvre la vue ƒ Fonctions, qui garde son propre conteneur. */
+var CAP_ANA_SUBS=[['fns','ƒ Fonctions'],['trace','🧬 Traçabilité inter-couches'],['caps','🎯 Capacités & missions'],['states','🔁 Modes & états'],['diff','⚖ Comparaison de versions'],['reqs','📑 Exigences'],['pvmt','🏷 Propriétés'],['data','🗃 Données & interfaces'],['cts','⛓ Contraintes']];
+
+/** Onglets des sous-vues de 🔬 Analyses (communs à la vue 🔬 Analyses et à la vue ƒ Fonctions).
+ * @returns {string} HTML des boutons (attribut data-an)
+ */
+function capAnaTabsHtml(){
+  return CAP_ANA_SUBS.map(([k,l])=>`<button class="phl-toggle-btn" data-an="${k}">${l}</button>`).join('');
+}
+
+/** Ouvre une sous-vue de 🔬 Analyses depuis ses onglets (ƒ Fonctions : vue à part).
+ * @param {string} k - Clé de la sous-vue
+ */
+function capAnaTabOpen(k){
+  if(k==='fns'){ capShowView('functions'); return; }
+  capAnaSub=k;
+  if(capCurrentView==='analyses') capRenderAnalyses(); else capShowView('analyses');
+}
+
+/** Vue « ƒ Fonctions » (onglet de 🔬 Analyses) : hiérarchie, tableau,
  * traçabilité, métriques, contrôles et dossier (↻ Recalculer de 🔬 Analyses vide aussi son cache).
  */
 function capRenderFunctionsView(){
   const c=document.getElementById('cap-view-functions'); if(!c) return;
   if(!c._built){
-    c.innerHTML='<div data-hold="fns"></div>';
+    c.innerHTML=`<div class="phl-toggle-bar">${capAnaTabsHtml()}</div><div data-hold="fns"></div>`;
+    c.querySelectorAll('[data-an]').forEach(b=>{ b.classList.toggle('active',b.dataset.an==='fns'); b.onclick=()=>capAnaTabOpen(b.dataset.an); });
     c._built=true;
   }
-  capRenderFunctions(c.firstElementChild);
+  capRenderFunctions(c.querySelector('[data-hold="fns"]'));
 }
 
+/** Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage. */
 function capRenderAnalyses(){
   const c=document.getElementById('cap-view-analyses'); if(!c) return;
-  const SUBS=[['trace','🧬 Traçabilité inter-couches'],['caps','🎯 Capacités & missions'],['states','🔁 Modes & états'],['diff','⚖ Comparaison de versions'],['reqs','📑 Exigences'],['pvmt','🏷 Propriétés'],['data','🗃 Données & interfaces'],['cts','⛓ Contraintes']];
+  if(capAnaSub==='fns') capAnaSub='trace';   // ƒ Fonctions : vue à part
   if(!c._built){
-    c.innerHTML=`<div class="phl-toggle-bar">${SUBS.map(([k,l])=>`<button class="phl-toggle-btn" data-an="${k}">${l}</button>`).join('')}
+    c.innerHTML=`<div class="phl-toggle-bar">${capAnaTabsHtml()}
       <button class="phl-export-btn" id="ana-recalc" style="margin-left:auto" title="Vider les résultats et recalculer l'analyse affichée">↻ Recalculer</button></div><div id="ana-box"></div>`;
-    c.querySelectorAll('[data-an]').forEach(b=>b.onclick=()=>{ capAnaSub=b.dataset.an; capRenderAnalyses(); });
+    c.querySelectorAll('[data-an]').forEach(b=>b.onclick=()=>capAnaTabOpen(b.dataset.an));
     c.querySelector('#ana-recalc').onclick=()=>{
       // Vide les résultats en mémoire et relance la sous-vue affichée
       _capAnaCache={}; _capPortsCache=null;
