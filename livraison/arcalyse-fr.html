@@ -1739,7 +1739,7 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
           <tr><td>🎨 Thème ▾</td><td>Sombre (par défaut), Office 2007, Clair, Marine, Nature, Contraste. Les vues se redessinent avec des couleurs adaptées ; en thème clair (Office 2007, Clair ou personnalisé clair), les textes colorés sont automatiquement foncés pour rester lisibles.</td></tr>
           <tr><td>🎨 Thème › Personnaliser…</td><td>Thème personnalisé : toutes les couleurs (fonds, textes, accent, bordures, statuts, Relation Map, couches ARCADIA), aperçu en direct, « Partir de » un thème existant, contraste du texte affiché, ⬇ / ⬆ JSON. Il apparaît ensuite comme « 🎨 Personnalisé » dans la liste et est conservé dans la page enregistrée.</td></tr>
           <tr><td>🖼 Export ▾</td><td>Image du graphe Relation Map : PNG, JPEG ou SVG (2e barre de la Relation Map).</td></tr>
-          <tr><td>? Aide ▾</td><td>📖 Aide complète : cette documentation ; 🎯 Visite de cette vue : présentation des menus et commandes de la vue affichée (Relation Map, Table View, chaque vue Capella ; modèle chargé) ; 🎓 Visite guidée : découverte de l'interface pas à pas (zone mise en évidence, reste de l'écran assombri ; ◀ Précédent / Suivant ▶ ou flèches du clavier, ✕ ou Échap pour quitter). Les deux sont aussi accessibles depuis l'écran d'accueil. ℹ À propos : version, auteur, licence (GNU GPL v3), contact, composants tiers (licence D3.js), informations techniques à copier pour un signalement.</td></tr>
+          <tr><td>? Aide ▾</td><td>📖 Aide complète : cette documentation ; 🎯 Visite de cette vue : présentation des menus et commandes de la vue affichée (Relation Map, Table View, chaque vue Capella ; modèle chargé) ; 🎓 Visite guidée : découverte de l'interface pas à pas (zone mise en évidence, reste de l'écran assombri ; ◀ Précédent / Suivant ▶ ou flèches du clavier, ✕ ou Échap pour quitter). Les deux sont aussi accessibles depuis l'écran d'accueil. ℹ À propos : version, auteur, licence (GNU GPL v3), contact, composants tiers (licence D3.js), informations techniques à copier pour un signalement (dont le navigateur de test : Google Chrome version 155).</td></tr>
         </table>
         <h3>Niveau 2 — commandes de la Relation Map</h3>
         <p>Affiché uniquement en mode 🗺 Relation Map.</p>
@@ -1768,6 +1768,7 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
       <div id="ht-rm" class="ht-panel" style="display:none">
         <h2>🗺 Relation Map</h2>
         <p class="hp-lead">Graphe centré sur un élément de contexte : ses voisins sont affichés jusqu'à la profondeur choisie, selon les relations Capella sélectionnées (allocation fonction → composant, échanges, liens physiques, chaînes…).</p>
+        <p class="hp-note">En bas de la fenêtre, la <b>barre d'état</b> rappelle l'élément de contexte, le nombre de nœuds et d'éléments uniques affichés et la profondeur ; elle n'apparaît qu'en Relation Map. 🎯 Visite de cette vue choisit un élément de contexte s'il n'y en a pas encore, pour montrer un graphe.</p>
         <h3>Interactions dans le graphe</h3>
         <table class="hp-t">
           <tr><td>Clic sur un nœud</td><td>Sélectionne l'élément et affiche ses propriétés.</td></tr>
@@ -4856,6 +4857,10 @@ function arboConvertSelectedType(ids, newType){
   }
 }
 
+/** Affiche le menu contextuel (clic droit) d'un élément de l'arborescence.
+ * @param {MouseEvent} ev - Événement du clic droit (position du menu)
+ * @param {object} el - Élément du modèle visé
+ */
 function arboShowCtxMenu(ev, el){
   // Préserve une sélection multiple existante si l'élément cliqué en fait partie ;
   // sinon la ligne cliquée devient la sélection unique.
@@ -6716,6 +6721,7 @@ function capBuildPageHtml(){
     const xmlScript = document.createElement('script');
     xmlScript.id = 'cap-embedded-xml';
     xmlScript.type = 'application/xml';
+    xmlScript.dataset.name = capCurrentFileName || '';   // nom du fichier .capella, repris à la réouverture
     xmlScript.textContent = xmlText;
     doc.querySelector('body').appendChild(xmlScript);
 
@@ -6747,6 +6753,7 @@ function capBuildPageHtml(){
         capApplyPanelOnLoad();
       });
       capLoaded = true;
+      capCurrentFileName = xmlEl.getAttribute('data-name') || '';
       applyMode('capella');
       if (typeof capUpdateWelcome === 'function') capUpdateWelcome();
     } catch (err) {
@@ -6760,7 +6767,9 @@ function capBuildPageHtml(){
     doc.querySelector('body').appendChild(bootScript);
   }
 
-  return '<!DOCTYPE html>\\n' + doc.outerHTML;
+  // Commentaires placés avant <html> (avis de copyright et licence GPLv3) : à conserver
+  const pre=[...document.childNodes].filter(n=>n.nodeType===8).map(n=>'<!--'+n.data+'-->\n').join('');
+  return '<!DOCTYPE html>\n' + pre + doc.outerHTML;
 }
 /** Nom de fichier proposé pour la page sauvegardée. */
 function capPageFileName(){ return capLoaded ? 'arcalyse-avec-modele.html' : 'arcalyse.html'; }
@@ -12451,6 +12460,10 @@ const CAP_FN_AK={
   none:{i:'∅',l:'Non allouées',t:'Non allouée',c:'#8b949e',tip:'Fonctions feuilles allouées à aucun composant ni acteur'},
   mix:{t:'Système + acteur',c:'#58a6ff'}, parent:{t:'— (fonction mère)',c:'var(--c-border)'}};
 
+/** Rend la vue ƒ Fonctions dans son conteneur : hiérarchie, tableau façon Excel, traçabilité, métriques,
+ * contrôles et dossier fonctionnel, avec les filtres de couche, d'allocation et de recherche.
+ * @param {HTMLElement} box - Conteneur de la vue
+ */
 function capRenderFunctions(box){
   const F=capComputeFunctions(), L=capDetLink;
   const layers=CAP_ANA_LAYERS.filter(k=>F.list.some(f=>f.layer===k));
@@ -13593,10 +13606,10 @@ function capBehaviorExchanges(){
   return out;
 }
 
+let _capCompExView = 'block';   // présentation affichée de la vue Behavior Exchange
 /** Rend la vue Component Exchange — même structure que Physical Link (≡ Ligne / ▣ Composant,
  * filtres, exports CSV/HTML) mais pour les ComponentExchange (source/target → ComponentPort
  * → composant parent). Coloration adaptative par TYPE de composant (thème clair/sombre). */
-let _capCompExView = 'block';
 function capRenderCompExchange(){
   const container=document.getElementById('cap-view-compex'); if(!container) return;
   const allLinks=capBehaviorExchanges();   // PA, Physical Components Behavior
@@ -18241,7 +18254,7 @@ function capRenderScenarios(){
  * Fenêtre « À propos » d'Arcalyse (menu ? Aide ▾) : identité et version, auteur, licence GNU GPL v3, contact,
  * composants tiers (D3.js, licence ISC à reproduire), marques citées, informations techniques copiables.
  */
-var CAP_APP_VERSION='1.7';   // à mettre à jour à chaque livraison (node build.js --livraison)
+var CAP_APP_VERSION='1.8';   // à mettre à jour à chaque livraison (node build.js --livraison)
 var CAP_APP_AUTHOR='Romain Lescole';
 var CAP_APP_NAME='Arcalyse';
 var CAP_APP_SLOGAN='Votre modèle Capella, sous toutes ses coutures.';
