@@ -15,6 +15,12 @@ Les versions publiées avant le passage à la GPLv3 (jusqu'à la version 1.5 inc
 D3.js v7.9.0 (`src/vendor/d3.min.js`, embarqué dans le fichier livré) — licence ISC, Copyright 2010-2023 Mike Bostock.
 La licence ISC est compatible avec la GPLv3 ; son texte est reproduit dans la fenêtre ℹ À propos.
 
+## Modèles de test (`tests/models/`)
+
+Ils ne font pas partie du logiciel et restent sous leur propre licence (détails dans `tests/models/LISEZMOI.md`) :
+- `In-Flight_Entertainment_System.capella` — Copyright The Capella contributors — Eclipse Public License 2.0 ;
+- `AIDA.capella` — Copyright (c) 2016-2022 IRT AESE (IRT Saint Exupéry) — Creative Commons BY-SA 4.0.
+
 ## Marques
 
 Capella et ARCADIA sont des marques de leurs détenteurs respectifs (Eclipse Foundation, Thales).
