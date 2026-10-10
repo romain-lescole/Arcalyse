@@ -82,13 +82,7 @@ function buildPanel() {
   rb.appendChild(addRel);
 
   // ── Types d'éléments ────────────────────────────────────────────────────
-  // En mode Table View, typ-body est entièrement géré par buildTableView() (panneau
-  // "🔷 Type d'élément" + "⊞ Colonnes & relations" intégrés en permanence à gauche).
-  // On délègue donc à buildTableView() ici plutôt que de dupliquer ou d'écraser ce contenu ;
-  // le reste de buildPanel (Portée/Paquetages, arborescence) continue de s'exécuter normalement.
-  if (currentMode === 'table') {
-    buildTableView();
-  } else {
+  {
   const tb=document.getElementById('typ-body'); tb.innerHTML='';
   const SYSML_TYPES_SET=new Set(['Block','Component','Class','Interface','Requirement','Package']);
   // Avec un modèle Capella chargé : uniquement les types réellement présents dans l'arborescence
@@ -135,7 +129,7 @@ function buildPanel() {
     const row=document.createElement('div'); row.className='row';
     if (_mCfg && _mCfg.typ && !_mCfg.typ.includes(t)) row.style.display='none';
     const cb=document.createElement('input'); cb.type='checkbox'; cb.checked=S.typF[t]; cb.dataset.type=t;
-    cb.onchange=()=>{ S.typF[t]=cb.checked; if(currentMode==='table') buildTableView(); else rebuildTree(); };
+    cb.onchange=()=>{ S.typF[t]=cb.checked; rebuildTree(); };
     const sw=document.createElement('div'); sw.className='clr-sw'; sw.style.background=cfg.color;
     if (!readOnly) { sw.title='Changer la couleur'; sw.onclick=()=>{ const ci=document.createElement('input'); ci.type='color'; ci.value=cfg.color; ci.oninput=()=>{ cfg.color=ci.value; sw.style.background=ci.value; render(); }; ci.click(); }; }
     const nm=document.createElement('span'); nm.className='rname';
@@ -185,7 +179,7 @@ function buildPanel() {
       if(e.target.type==='checkbox'){
         const checked=e.target.checked;
         body.querySelectorAll('input[type=checkbox]').forEach(cb=>{cb.checked=checked;const t=cb.dataset&&cb.dataset.type;if(t){S.typF[t]=checked;}});
-        if(currentMode==='table') buildTableView(); else rebuildTree();
+        rebuildTree();
         return;
       }
       coll=!coll; body.style.maxHeight=coll?'0':'2000px'; hdr.querySelector('.grp-arr').style.transform=coll?'rotate(-90deg)':'';
@@ -200,17 +194,13 @@ function buildPanel() {
 
   makeTypGrp('SysML','var(--c-dim)',allTypListNoPkg.filter(t=>SYSML_TYPES_SET.has(t)),false);
 
-  // Groupe 🔷 Capella : uniquement en mode Relation Map (id="mode-rm")/PBS — en Table View,
-  // le filtrage par type Capella se fait via le picker dédié "🔷 Type d'élément" de la toolbar
-  // (qui utilise les types XML bruts, sans la différenciation NODE/BEHAVIOR faite ici).
-  if (currentMode !== 'table') {
-    const capTypList = allTypListNoPkg.filter(t=>(TCFG[t]&&TCFG[t]._capella) || t.startsWith('cap_'));
-    if (capTypList.length) makeTypGrp('🔷 Capella','#3b82f6',capTypList,true);
-  }
+  // Groupe 🔷 Capella (types injectés depuis le fichier, avec la différenciation NODE / BEHAVIOR)
+  const capTypList = allTypListNoPkg.filter(t=>(TCFG[t]&&TCFG[t]._capella) || t.startsWith('cap_'));
+  if (capTypList.length) makeTypGrp('🔷 Capella','#3b82f6',capTypList,true);
 
   const groupedTypes = new Set([
     ...allTypListNoPkg.filter(t=>SYSML_TYPES_SET.has(t)),
-    ...(currentMode!=='table' ? allTypListNoPkg.filter(t=>(TCFG[t]&&TCFG[t]._capella)||t.startsWith('cap_')) : [])
+    ...capTypList
   ]);
   allTypListNoPkg.filter(t=>!groupedTypes.has(t)).forEach(t=>{ if(!TCFG[t]) TCFG[t]={color:nextColor(),abbr:t.slice(0,3).toUpperCase()}; tb.appendChild(makeTypRow(t,TCFG[t],false)); });
 
@@ -218,7 +208,7 @@ function buildPanel() {
   addTyp.textContent="+ Nouveau type d'élément";
   addTyp.onclick=()=>showNewTypeForm(tb);
   tb.appendChild(addTyp);
-  } // fin du else (currentMode !== 'table')
+  }
 
   // Portée (section cachée — basée sur les éléments Package)
   const sb=document.getElementById('scp-body'); sb.innerHTML='';

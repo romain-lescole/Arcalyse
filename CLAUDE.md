@@ -34,11 +34,10 @@ Application **autonome et 100 % hors ligne** qui charge un fichier `.capella` (X
 | `js/02-themes.js` | `THEMES`, `applyTheme`, `capIsLight`, `capInk`, `capTextOn`, `applyMode` |
 | `js/03…07-rm-*.js` | **Relation Map** (graphe D3) : état `S`, SVG/zoom, marqueurs, arbre, rendu `render`, vue chaîne, interactions, export image, légende, panneau gauche (critères) |
 | `js/08-editeur-modele.js` | Modale d'édition (éléments, relations, paquetages) |
-| `js/09-arborescence.js` | Arborescence du panneau gauche (`buildArbo`, sélection multiple, collage) |
-| `js/10-table-view.js` | **Table View** : onglets, moteur Metachain `tv…`, constructeur de colonnes |
+| `js/09-arborescence.js` | Arborescence du panneau gauche (`buildArbo`, sélection multiple, collage), `rmSetElemVal`, `onModelChanged` |
 | `js/11-sauvegarde-toolbar-init.js` | Sauvegarde/chargement JSON, gestionnaires de la barre, raccourcis, initialisation (`applyTheme('dark')`) |
 | `js/20-capella-chargement.js` | Moteur Capella : `capLoadFile`, parsing XML, `capBuildTree`, registre des types, injection dans la Relation Map, `capSaveFullPage`, écran d'accueil |
-| `js/21-capella-vues-base.js` | Barre latérale, ▦ Cartes, 📋 Tableau Capella (colonnes, Metachain `cap…`), 🌳 Arborescence |
+| `js/21-capella-vues-base.js` | Barre latérale, ▦ Cartes, ▤ Tableau (colonnes, ✨ colonne par chemin : moteur Metachain `cap…`, aperçu en direct `capPp…`), 🌳 Arborescence |
 | `js/22-capella-liens.js` | `CAP_LINK_SECTIONS` (20 relations, `humanLabel`), `capComputeLinks`, vue 🔗 Liens |
 | `js/23-chaines.js` | ⚡ Chaînes : `capComputeChains` (graphe), filtres type/couche/contenu, cartes, vue Relation Map |
 | `js/24-chaines-export.js` | Exports des chaînes : PNG/SVG/presse-papiers, PDF écrit à la main, ZIP, HTML |
@@ -64,6 +63,7 @@ Application **autonome et 100 % hors ligne** qui charge un fichier `.capella` (X
 | `js/48-barres-groupes.js` | ▭ Cadres par catégorie des barres de 📡 Flux & interfaces et 🔬 Analyses (comme ƒ Fonctions) : `capTbKind`, `capTbGroup`, `capTbGroupAll`, observateur sur `CAP_TBG_ROOTS` (commandes déplacées dans des `.tb-grp`, écouteurs conservés) ; en-têtes collants `capTbSticky` (vues `CAP_TBS_ROOTS`) |
 | `js/49-scenarios.js` | 🎬 Scénarios (diagrammes de séquence) : `capComputeScenarios`, mise en page `capScLayout` (ordre des `ownedInteractionFragments`), rendu SVG `capScenarioSvg`, contrôles `capScChecks`, indicateurs `capScDashCatalog`, vue `capRenderScenarios`, `capScOpen`, exports `capScExport` |
 | `js/50-a-propos.js` | ℹ À propos (menu ? Aide ▾ et écran d'accueil) : `CAP_APP_VERSION` (à mettre à jour à chaque livraison), auteur, licence GNU GPL v3 (`LICENSE`, avis `NOTICE.md`), licence ISC de D3 `CAP_D3_LICENSE`, infos techniques `capAboutTech`, fenêtre `capAboutOpen` |
+| `js/51-tableau.js` | ▤ Tableau (bouton direct de la barre) : onglets de vues (`capTableTabs`, `capRenderTableTabs`), tri `capTableSortCycle`, ordre des colonnes `capTableColDnD`, colonnes de relations `rel:<relation>:out|in` (`capTableRelIndex`, `capTableRelPicker`), export `capTableCsv`, réglages `capTableCfgGet`/`capTableCfgSet`, conversion de l'ancienne 📊 Table View (`capTableImportTv`) |
 | `js/46-config-interface.js` | ⚙ Interface et vues : `CAP_CFG_PARTS`, `capCfgGet`/`capCfgSet`, fichier .json (`capCfgDialog`, `capCfgLoadFile`), bloc page `cap-ui-views` (`capCfgStoreViews`/`capCfgRestoreViews` : 📋 Tableau, 📊 Table View, thème), `capCfgLoadUpdate` |
 | `js/45-comparaison-rapport.js` | ⚖ Rapport de comparaison : 8 catégories `CAP_DR_CATS`, familles `CAP_DR_FAMS`, rattachement technique `capDrBuild`, niveaux et formats (`capDrRichHtml`, `capDrText`, `capDrTable`, `capDrMarkdown`), copie `capDrClipboard`, vue `capDrRender` |
 | `js/44-functional-exchange.js` | ƒ⇆ Functional Exchange : `capComputeFunctionalExchanges`, `capFexChecks`, indicateurs `capFexDashCatalog`, vue `capRenderFunctionalExchange` (Ligne, Fonction, Blocs à pins façon Capella, Matrice ≤ 100, Contrôles ; pagination par 100) ; même moteur pour 🟨 Operational Analysis (`capRenderFunctionalExchange('OA')`, vue `oav`) |

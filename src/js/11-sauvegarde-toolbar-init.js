@@ -117,7 +117,6 @@ document.querySelectorAll('.lbtn').forEach(b=>b.onclick=()=>{
 // Mode buttons wiring
 document.getElementById('mode-rm')?.addEventListener('click',()=>applyMode('default'));
 document.getElementById('mode-pbs')?.addEventListener('click',()=>applyMode('PBS'));
-document.getElementById('mode-table')?.addEventListener('click',()=>applyMode('table'));
 
 // Sélecteur de thème
 document.getElementById('theme-sel').onchange=ev=>applyTheme(ev.target.value);

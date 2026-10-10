@@ -204,88 +204,25 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
 #rm-chain-banner button:hover{border-color:var(--c-accent);}
 .typ-cnt{margin-left:auto;font-size:9.5px;font-family:monospace;color:var(--c-dim);background:var(--c-bg3);border-radius:8px;padding:0 6px;}
 
-/* ── Table View ── */
-#table-view{display:none;flex:1;flex-direction:column;overflow:hidden;background:var(--c-bg);padding:12px;gap:10px}
-.tv-tabbar{display:flex;align-items:center;gap:2px;padding:4px 8px 0;flex-shrink:0;
+/* ── ▤ Tableau : onglets de vues (51-tableau.js) ── */
+.cap-ttabbar{display:flex;align-items:center;gap:2px;padding:4px 8px 0;flex-shrink:0;flex-wrap:wrap;
   border-bottom:1px solid var(--c-border);background:var(--c-bg2)}
-.tv-tab{display:flex;align-items:center;gap:6px;padding:6px 12px;font-size:12px;
+.cap-ttab{display:flex;align-items:center;gap:6px;padding:5px 12px;font-size:12px;
   border:1px solid var(--c-border);border-bottom:none;border-radius:6px 6px 0 0;
   background:var(--c-bg3);color:var(--c-dim);cursor:pointer;white-space:nowrap;
   position:relative;top:1px;transition:background .12s,color .12s}
-.tv-tab:hover{color:var(--c-text)}
-.tv-tab.active{background:var(--c-bg);color:var(--c-text);border-bottom:1px solid var(--c-bg);font-weight:600}
-.tv-tab input.tv-tab-rename{background:transparent;border:none;color:inherit;font:inherit;
-  width:90px;outline:none;border-bottom:1px dashed var(--c-dim)}
-.tv-tab-close{font-size:11px;opacity:.5;padding:0 2px;border-radius:3px}
-.tv-tab-close:hover{opacity:1;color:#f38ba8;background:rgba(243,139,168,.12)}
-.tv-tab-add{padding:6px 10px;font-size:14px;color:var(--c-dim);cursor:pointer;border-radius:5px;line-height:1}
-.tv-tab-add:hover{color:var(--c-text);background:var(--c-bg3)}
-.tv-toolbar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;flex-shrink:0}
-.tv-btn{padding:4px 10px;background:var(--c-bg3);border:1px solid var(--c-border);
-        border-radius:4px;color:var(--c-dim);cursor:pointer;font-size:11px;user-select:none}
-.tv-btn:hover{border-color:var(--c-accent);color:var(--c-accent)}
-.tv-scroll{flex:1;overflow:auto;overflow-x:auto}
-#tv-table{border-collapse:collapse;width:max-content;min-width:100%;font-size:12px;table-layout:fixed}
-.tv-col-resizer{position:absolute;top:0;right:-3px;width:7px;height:100%;cursor:col-resize;
-  z-index:3;background:transparent;}
-.tv-col-resizer:hover,.tv-col-resizer.resizing{background:var(--c-accent);opacity:.5;}
-#tv-table.tv-resizing{cursor:col-resize;user-select:none;}
-#tv-table.tv-resizing th[draggable]{cursor:col-resize;}
-#tv-table th{position:sticky;top:0;background:var(--c-bg3);color:var(--c-dim);
-             font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
-             padding:6px 8px;border:1px solid var(--c-border);white-space:nowrap;
-             user-select:none;cursor:pointer;z-index:1;box-sizing:border-box;overflow:hidden}
-#tv-table th:hover{color:var(--c-text)}
-#tv-table th .th-inner{display:flex;align-items:center;justify-content:space-between;gap:6px}
-#tv-table th .th-del{font-size:9px;opacity:.5;cursor:pointer;padding:0 2px}
-#tv-table th .th-edit{font-size:9px;opacity:.5;cursor:pointer;padding:0 2px}
-#tv-table th .th-edit:hover{opacity:1;color:var(--c-accent)}
-#tv-table th .th-del:hover{opacity:1;color:#f38ba8}
-#tv-table th .th-sort{font-size:9px;opacity:.4;min-width:8px}
-.tv-filter-row th{position:sticky;top:30px;z-index:1;background:var(--c-bg2);padding:2px 4px}
-.tv-filter-row input{width:100%;background:transparent;border:none;outline:1px solid var(--c-border);
-                      border-radius:2px;color:var(--c-text);font-size:11px;padding:2px 4px}
-/* Relation cells in table */
-#tv-table td.tv-rel-td{padding:0;vertical-align:top}
-.tv-rel-cell{display:flex;flex-direction:column}
-.tv-rel-item{display:flex;align-items:center;gap:4px;padding:3px 6px;border-bottom:1px solid var(--c-border);font-size:11px;white-space:nowrap;overflow:hidden}
-.tv-rel-item:last-child{border-bottom:none}
-.tv-rel-dir{font-size:9px;color:var(--c-dim);flex-shrink:0;opacity:.7}
-.tv-rel-name{overflow:hidden;text-overflow:ellipsis;max-width:160px}
-.tv-rel-empty{color:var(--c-dim);font-size:11px;padding:3px 6px;text-align:center}
-/* Column drag-and-drop */
-#tv-table th[draggable]{cursor:grab}
-#tv-table th[draggable]:active{cursor:grabbing}
-#tv-table th.tv-col-dragging{opacity:.35;outline:2px dashed var(--c-accent)}
-#tv-table th.tv-col-drag-over{background:var(--c-accent)!important;color:#fff;outline:2px solid var(--c-accent)}
-/* Relation item drag-and-drop */
-.tv-rel-item[draggable]{cursor:grab}
-.tv-rel-item[draggable]:active{cursor:grabbing}
-.tv-rel-item.tv-ritem-dragging{opacity:.35;background:var(--c-bg2)}
-.tv-rel-item.tv-ritem-drag-over{background:var(--c-accent);color:#fff}
-.tv-rel-item.tv-ritem-drag-over .tv-rel-dir{color:#fff;opacity:1}
-/* Column picker */
-.tv-col-picker{position:relative}
-.tv-col-menu{position:absolute;top:calc(100% + 4px);left:0;z-index:200;background:var(--c-bg3);
-             border:1px solid var(--c-border);border-radius:4px;padding:4px 0;min-width:150px;
-             box-shadow:0 4px 14px rgba(0,0,0,.35);display:none}
-.tv-col-menu.open{display:block}
-.tv-col-menu-item{display:flex;align-items:center;gap:7px;padding:5px 10px;cursor:pointer;font-size:12px;color:var(--c-text)}
-.tv-col-menu-item:hover{background:var(--c-bg2)}
-.tv-col-menu-sep{height:1px;background:var(--c-border);margin:4px 0}
+.cap-ttab:hover{color:var(--c-text)}
+.cap-ttab.active{background:var(--c-bg);color:var(--c-text);border-bottom:1px solid var(--c-bg);font-weight:600}
+.cap-ttab input.cap-ttab-rename{background:transparent;border:none;color:inherit;font:inherit;
+  width:110px;outline:none;border-bottom:1px dashed var(--c-dim)}
+.cap-ttab-close{font-size:11px;opacity:.5;padding:0 2px;border-radius:3px}
+.cap-ttab-close:hover{opacity:1;color:var(--c-err,#f85149)}
+.cap-ttab-add{padding:5px 10px;font-size:14px;color:var(--c-dim);cursor:pointer;border-radius:5px;line-height:1}
+.cap-ttab-add:hover{color:var(--c-text);background:var(--c-bg3)}
 /* Type-filter select-all row */
 .typ-sel-btn{font-size:10px;padding:2px 7px;background:var(--c-bg3);border:1px solid var(--c-border);
              border-radius:3px;color:var(--c-dim);cursor:pointer;user-select:none}
 .typ-sel-btn:hover{border-color:var(--c-accent);color:var(--c-accent)}
-#tv-table td{padding:4px 8px;border:1px solid var(--c-border);color:var(--c-text);
-             vertical-align:middle;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#tv-table tbody tr:hover td{background:var(--c-bg3)}
-#tv-table td.tv-edit:hover{background:color-mix(in srgb,var(--c-accent) 12%,transparent);cursor:text}
-#tv-table td.tv-edit.editing{padding:0}
-#tv-table td.tv-edit.editing input,
-#tv-table td.tv-edit.editing select{width:100%;height:100%;background:var(--c-bg3);
-  border:1px solid var(--c-accent);outline:none;color:var(--c-text);font-size:12px;
-  font-family:inherit;padding:3px 6px;box-sizing:border-box}
 #svg{width:100%;height:100%}
 
 /* ── Légende ── */
@@ -433,7 +370,7 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
 #cap-table td.cap-stacked-td{white-space:normal;max-width:none;}
 .cap-colpicker-menu{position:absolute;top:calc(100% + 4px);left:0;z-index:300;
   background:var(--c-bg3);border:1px solid var(--c-border);border-radius:7px;
-  min-width:320px;max-height:480px;overflow-y:auto;box-shadow:0 6px 18px rgba(0,0,0,.35);
+  min-width:380px;max-width:480px;max-height:70vh;overflow-y:auto;box-shadow:0 6px 18px rgba(0,0,0,.35);
   display:none;padding:6px 0;}
 .cap-colpicker-menu.open{display:block;}
 .cap-colpicker-section{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;
@@ -442,12 +379,30 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
   font-size:12px;color:var(--c-text);}
 .cap-colpicker-item:hover{background:var(--c-bg2);}
 .cap-colpicker-item input[type=checkbox]{accent-color:var(--c-accent);cursor:pointer;}
+/* Menu ⊞ Colonnes : relations (libellé, nombre de liens, cases → cibles / ← sources) */
+.cap-cpr{padding:5px 12px 6px;border-bottom:1px solid color-mix(in srgb,var(--c-border) 50%,transparent);}
+.cap-cpr:hover{background:var(--c-bg2);}
+.cap-cpr-l{display:flex;align-items:baseline;gap:8px;font-size:12px;color:var(--c-text);}
+.cap-cpr-l span:first-child{flex:1;}
+.cap-cpr-n{font-size:10px;font-family:monospace;color:var(--c-dim);background:var(--c-bg2);border-radius:8px;padding:0 6px;}
+.cap-cpr-d{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:3px;}
+.cap-cpr-c{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--c-dim);cursor:pointer;}
+.cap-cpr-c:hover{color:var(--c-text);}
+.cap-cpr-c input{accent-color:var(--c-accent);cursor:pointer;margin:0;}
+/* En-têtes du tableau : tri et déplacement */
+#cap-table thead tr:first-child th{position:sticky;}
+#cap-table th .th-inner{display:flex;align-items:center;justify-content:space-between;gap:6px;}
+#cap-table th .th-l{overflow:hidden;text-overflow:ellipsis;}
+#cap-table th .th-sort{font-size:9px;opacity:.4;flex-shrink:0;}
+#cap-table th .th-sort.on{opacity:1;color:var(--c-accent);}
+#cap-table th[draggable]{cursor:grab;}
+#cap-table th.cap-col-dragging{opacity:.35;outline:2px dashed var(--c-accent);}
+#cap-table th.cap-col-drag-over{background:var(--c-accent)!important;color:#fff;}
 .cap-custom-col-builder{padding:8px 12px;border-top:1px solid var(--c-border);margin-top:4px;}
 .cap-custom-col-builder select,.cap-custom-col-builder input{width:100%;box-sizing:border-box;
   font-size:11px;padding:4px 6px;margin-bottom:5px;background:var(--c-bg2);
   border:1px solid var(--c-border);border-radius:4px;color:var(--c-text);outline:none;}
 #cap-customcol-panel.open{right:0!important;}
-#tv-customcol-panel.open{right:0!important;}
 .cap-step-row{display:flex;align-items:center;gap:6px;background:var(--c-bg3);
   border:1px solid var(--c-border);border-radius:6px;padding:7px 9px;margin-bottom:8px;}
 .cap-step-num{width:18px;height:18px;border-radius:50%;background:var(--c-accent);color:#fff;
@@ -632,7 +587,7 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
 .cap-chain-conn-label{font-size:10px;color:var(--c-dim);font-family:monospace;font-style:italic;}
 
 /* Mode buttons */
-#mode-rm,#mode-pbs,#mode-table,#cap-tb-views .tbtn{font-size:11px;font-weight:700;letter-spacing:.03em;}
+#mode-rm,#mode-pbs,#cap-tb-views .tbtn{font-size:11px;font-weight:700;letter-spacing:.03em;}
 
 
 /* ── Dropdown menus in toolbar ── */

@@ -2,9 +2,8 @@
 <div id="toolbar">
   <div class="tbtn active" id="mode-rm"    title="Relation Map">🗺 Relation Map</div>
   <div class="tbtn"        id="mode-pbs"   title="PBS" style="display:none">🌲 PBS</div>
-  <div class="tbtn"        id="mode-table" title="Table View">📊 Table View</div>
-  <!-- Vues Capella : au même niveau que Relation Map / Table View, toujours visibles (clic = bascule en mode capella) -->
-  <!-- Boutons générés par capNavRender (41-barre-vues.js) : menus 🧭 Explorateur / 📡 Flux & interfaces / 🔬 Analyses, vues épinglées, ☰ -->
+  <!-- Vues Capella : au même niveau que Relation Map, toujours visibles (clic = bascule en mode capella) -->
+  <!-- Boutons générés par capNavRender (41-barre-vues.js) : menus 🧭 Explorateur / 📡 Flux & interfaces / 🔬 Analyses, ▤ Tableau, vues épinglées, ☰ -->
   <div id="cap-tb-views" style="display:flex;align-items:center;gap:3px;"></div>
   <!-- Spacer : tout ce qui suit est poussé à droite -->
   <div id="tb-spacer"></div>
@@ -163,15 +162,6 @@
         <span class="chv">▾</span></div>
       <div class="sec-body" id="rel-body"></div>
     </div>
-    <div class="sec" id="sec-cap-typ" style="display:none">
-      <div class="sec-hdr"><span>🔷 Type d'élément</span>
-        <span style="display:flex;align-items:center;gap:2px;margin-left:auto;margin-right:4px">
-          <span title="Réinitialiser (tout décocher)" onclick="event.stopPropagation();tvCapTypeFilter=new Set();buildTableView();"
-                style="cursor:pointer;font-size:11px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">↺ Défaut</span>
-        </span>
-        <span class="chv">▾</span></div>
-      <div class="sec-body" id="cap-typ-body" style="max-height:50vh;overflow-y:auto"></div>
-    </div>
     <div class="sec" id="sec-typ">
       <div class="sec-hdr coll"><span id="sec-typ-label">Types d'éléments</span>
         <span style="display:flex;align-items:center;gap:2px;margin-left:auto;margin-right:4px">
@@ -195,43 +185,6 @@
   </div><!-- /panel -->
   <div id="panel-resize-bar"></div>
   <div id="panel-open-tab" title="Ouvrir le panneau">▶</div>
-
-  <!-- Table View -->
-  <div id="table-view">
-    <div class="tv-tabbar" id="tv-tabbar"></div>
-    <div class="tv-toolbar" id="tv-toolbar"></div>
-    <div class="tv-scroll"><table id="tv-table"><thead></thead><tbody></tbody></table></div>
-  </div>
-
-  <input type="file" id="tv-table-view-input" accept=".json" style="display:none">
-  <div id="tv-customcol-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:400;"></div>
-  <div id="tv-customcol-panel" style="display:none;position:fixed;top:0;right:-460px;width:440px;height:100%;
-       background:var(--c-bg2);border-left:1px solid var(--c-border);z-index:401;
-       box-shadow:-8px 0 24px rgba(0,0,0,.4);transition:right .25s ease;overflow-y:auto;padding:18px;">
-    <div style="display:flex;align-items:center;margin-bottom:14px;">
-      <span id="tv-customcol-title" style="font-weight:700;font-size:14px;">✨ Colonne par chemin</span>
-      <span id="tv-customcol-close" style="margin-left:auto;cursor:pointer;color:var(--c-dim);font-size:18px;line-height:1;">×</span>
-    </div>
-    <p style="font-size:11px;color:var(--c-dim);margin-bottom:12px;">
-      Le chemin (metachain) part de chaque élément du <strong style="color:var(--c-text)">type de départ</strong> et suit,
-        étape par étape, une <strong style="color:var(--c-text)">relation</strong> (allocation, propriétaire, élément contenu, port relié…).
-        La dernière étape peut lire une <strong style="color:var(--c-text)">valeur</strong> (Name, ID, attribut) à afficher dans la cellule.
-        À partir de la 2ᵉ étape, le type est imposé par le résultat de l'étape précédente.
-    </p>
-    <div style="display:flex;gap:6px;padding:4px 0 6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--c-dim);">
-      <span style="flex:1;">Type d'élément</span>
-      <span style="flex:1;">Relation ou valeur</span>
-      <span style="width:16px;"></span>
-    </div>
-    <div id="tv-customcol-steps"></div>
-    <div id="tv-customcol-addstep" class="add-btn" style="margin-bottom:14px;">+ Ajouter une étape</div>
-    <div id="tv-customcol-preview" class="cap-pp"></div>
-    <div style="border-top:1px solid var(--c-border);padding-top:12px;">
-      <div style="font-size:11px;color:var(--c-dim);margin-bottom:4px;">Nom de la colonne</div>
-      <input id="tv-customcol-name" type="text" class="inp" style="width:100%;box-sizing:border-box;margin-bottom:14px;" placeholder="ex: Functions of Component">
-      <div id="tv-customcol-create" class="tbtn" style="text-align:center;width:100%;box-sizing:border-box;">Créer la colonne</div>
-    </div>
-  </div>
 
   <!-- Zone SVG -->
   <div id="graph">
@@ -349,12 +302,11 @@
 
   <!-- Content area -->
   <div id="cap-content" style="flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden;">
-    <!-- Onglets du menu 🧭 Explorateur (visibles seulement pour les vues tree / cards / table / index) -->
+    <!-- Onglets du menu 🧭 Explorateur (visibles seulement pour les vues tree / cards / index) -->
     <div id="cap-elem-tabs" class="cap-lf-bar" style="display:none;gap:6px;padding:6px 12px;border-bottom:1px solid var(--c-border);flex-shrink:0;">
       <span class="tb-grp">
         <button class="cap-lf-btn" data-ev="tree">🌳 Arborescence</button>
         <button class="cap-lf-btn" data-ev="cards">▦ Cartes</button>
-        <button class="cap-lf-btn" data-ev="table">📋 Tableau</button>
         <button class="cap-lf-btn" data-ev="index">📖 Index des types</button>
       </span>
     </div>
@@ -392,6 +344,8 @@
 
     <div id="cap-view-cards"  style="flex:1;overflow-y:auto;padding:12px 16px;display:block;"></div>
     <div id="cap-view-table"  style="flex:1;overflow:hidden;display:none;flex-direction:column;">
+      <!-- Onglets de vues du ▤ Tableau (capRenderTableTabs, 51-tableau.js) -->
+      <div id="cap-table-tabs" class="cap-ttabbar"></div>
       <div id="cap-table-toolbar" style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-bottom:1px solid var(--c-border);flex-shrink:0;"></div>
       <div style="flex:1;overflow:auto;">
         <table id="cap-table" style="border-collapse:collapse;width:max-content;min-width:100%;font-size:12px;table-layout:fixed;">

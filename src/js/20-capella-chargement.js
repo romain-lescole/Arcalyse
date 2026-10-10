@@ -34,7 +34,7 @@ let capLoaded=false;
  * rouverte se comporte donc exactement comme l'état actuel, fichier Capella déjà chargé.
  * @returns {string} Document HTML complet */
 function capBuildPageHtml(){
-  capCfgStoreViews();   // 📋 Tableau, 📊 Table View et thème choisi mémorisés dans la page (46-config-interface.js)
+  capCfgStoreViews();   // ▤ Tableau (onglets) et thème choisi mémorisés dans la page (46-config-interface.js)
   // Clone le document actuel tel quel
   const doc = document.documentElement.cloneNode(true);
 
@@ -206,7 +206,7 @@ function capLoadFile(f, handle){
 function capApplyXmlDoc(doc, name){
   cap_xmlDoc=doc;
   capAllElements=[];
-  _capParentIndexCache=null; _capElementByIdCache=null; _tvCapRowsCache=null; capChainsData=null; capLinksData=null; _capPortsCache=null; capAnaReset();
+  _capParentIndexCache=null; _capElementByIdCache=null; _capTableRelIdx=null; capChainsData=null; capLinksData=null; _capPortsCache=null; capAnaReset();
   capTreeData=capBuildTree(doc.documentElement,new Set());
   if(!capAllElements.length) throw new Error('Aucun élément Capella reconnu dans ce fichier');
   capBuildTypeRegistry();

@@ -236,23 +236,22 @@ function applyTheme(name) {
   capRestoreContrast(); capContrastCss(); capFixContrast(document.body);
 }
 
-/** Bascule entre les modes d'affichage : default (Relation Map), PBS, table, capella.
+/** Bascule entre les modes d'affichage : default (Relation Map), PBS, capella.
  * Met à jour les boutons de mode, masque/affiche les panneaux et contrôles appropriés.
- * @param {string} mode - 'default'|'PBS'|'table'|'capella'
+ * @param {string} mode - 'default'|'PBS'|'capella'
  */
 function applyMode(mode) {
-  if (mode !== 'default' && mode !== 'PBS' && mode !== 'table' && mode !== 'capella') return;
+  if (mode !== 'default' && mode !== 'PBS' && mode !== 'capella') return;
   currentMode = mode;
-  const isTable   = mode === 'table';
   const isCapella = mode === 'capella';
-  const isGraph   = !isTable && !isCapella;
+  const isGraph   = !isCapella;
 
   // Update mode buttons
-  ['mode-rm','mode-pbs','mode-table'].forEach(id=>{
+  ['mode-rm','mode-pbs'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.classList.remove('active');
   });
   // En mode capella, le bouton actif est celui de la vue (capUpdateToolbarForView)
-  const modeMap={'default':'mode-rm','PBS':'mode-pbs','table':'mode-table'};
+  const modeMap={'default':'mode-rm','PBS':'mode-pbs'};
   const activeBtn=document.getElementById(modeMap[mode]); if(activeBtn) activeBtn.classList.add('active');
 
   // Show/hide toolbar buttons (+ to Compact)
@@ -261,9 +260,9 @@ function applyMode(mode) {
   if(tb2) tb2.style.display=isGraph?'flex':'none';
   // Barre d'état (contexte, nœuds, profondeur) : propre à la Relation Map
   const ib=document.getElementById('infobar'); if(ib) ib.style.display=isGraph?'':'none';
-  // Hide export image menu in Table View and Capella Data
+  // Menu d'export d'image masqué dans les vues Capella
   const expWrap=document.getElementById('b-exp-wrap');
-  if(expWrap) expWrap.style.display=(isTable||isCapella)?'none':'';
+  if(expWrap) expWrap.style.display=isCapella?'none':'';
   // Capella inline view buttons
   const capTbViews=document.getElementById('cap-tb-views');
   // Toujours visibles, même avant le chargement d'un modèle
@@ -272,27 +271,15 @@ function applyMode(mode) {
   }
 
   document.getElementById('graph').style.display         = isGraph ? '' : 'none';
-  document.getElementById('table-view').style.display    = isTable ? 'flex' : 'none';
   const capOv = document.getElementById('capella-overlay');
   if(capOv) { if(isCapella) capOv.classList.add('cap-visible'); else capOv.classList.remove('cap-visible'); }
-  document.getElementById('sec-disposition').style.display = (isTable||isCapella) ? 'none' : '';
-  document.querySelector('#sec-props .sec-hdr')?.classList.toggle('coll', isTable||isCapella);
-  document.querySelector('#sec-typ .sec-hdr')?.classList.toggle('coll', !(isTable||isCapella));
-  // Masque complètement le menu Arborescence en Table View (plus de section dédiée, pas seulement réduite)
-  const arboSec = document.getElementById('sec-arbo');
-  if (arboSec) arboSec.style.display = isTable ? 'none' : '';
-  // Section dédiée au picker de types Capella (groupé par couche ARCADIA), visible seulement en Table View
-  const capTypSec = document.getElementById('sec-cap-typ');
-  if (capTypSec) capTypSec.style.display = isTable ? '' : 'none';
-  // La section Types d'éléments est masquée en Table View : le picker "Colonnes" vit
-  // désormais dans la toolbar du tableau (menu déroulant ⊞ Colonnes, comme dans la vue Tableau).
-  const typSec = document.getElementById('sec-typ');
-  if (typSec) typSec.style.display = isTable ? 'none' : '';
+  document.getElementById('sec-disposition').style.display = isCapella ? 'none' : '';
+  document.querySelector('#sec-props .sec-hdr')?.classList.toggle('coll', isCapella);
+  document.querySelector('#sec-typ .sec-hdr')?.classList.toggle('coll', !isCapella);
   // Hide whole left panel in capella mode
   document.getElementById('panel').style.display = isCapella ? 'none' : '';
   document.getElementById('panel-resize-bar').style.display = isCapella ? 'none' : '';
 
-  if (isTable) { buildTableView(); return; }
   if (isCapella) { positionOverlay(); capRenderCurrentView(); return; }
 
   const rmMode = mode==='PBS' ? 'PBS' : 'default';

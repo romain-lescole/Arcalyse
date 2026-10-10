@@ -96,7 +96,7 @@ function buildPropertiesPanel() {
   } else {
     const typSel=document.createElement('select'); typSel.className='inp prop-val-edit';
     Object.keys(TCFG).forEach(t=>{ const o=document.createElement('option'); o.value=t; o.textContent=typeIcon(t)+' '+t; if(t===el.type) o.selected=true; typSel.appendChild(o); });
-    typSel.onchange=()=>{ el.type=typSel.value; buildArbo(); if(currentMode==='table') buildTableView(); else render(); buildPropertiesPanel(); };
+    typSel.onchange=()=>{ el.type=typSel.value; buildArbo(); render(); buildPropertiesPanel(); };
     propRow('Type', typSel);
   }
 
@@ -123,7 +123,7 @@ function buildPropertiesPanel() {
       nonPkg.forEach(e=>{ const o=document.createElement('option'); o.value='el:'+e.id; o.textContent=typeIcon(e.type)+' '+e.name; if(el.parentEl===e.id) o.selected=true; ge.appendChild(o); });
       parSel.appendChild(ge);
     }
-    parSel.onchange=()=>{ tvSetVal(el,'Parent',parSel.value); buildArbo(); if(currentMode==='table') buildTableView(); buildPropertiesPanel(); };
+    parSel.onchange=()=>{ rmSetElemVal(el,'Parent',parSel.value); buildArbo(); buildPropertiesPanel(); };
     propRow('Parent', parSel);
   }
 
@@ -157,7 +157,7 @@ function buildPropertiesPanel() {
       const cur=(el.attributes||{})[attr]||'';
       const inp=document.createElement('input'); inp.className='prop-val-edit'; inp.value=cur;
       inp.placeholder='—';
-      const commit=()=>{ if(!el.attributes) el.attributes={}; el.attributes[attr]=inp.value; if(currentMode==='table') buildTableView(); };
+      const commit=()=>{ if(!el.attributes) el.attributes={}; el.attributes[attr]=inp.value; };
       inp.onblur=commit; inp.onkeydown=ev=>{ if(ev.key==='Enter') inp.blur(); };
       propRow(attr, inp);
     });
@@ -352,7 +352,6 @@ function buildArbo() {
   addRoot.className='add-btn'; addRoot.textContent='📂 Nouveau package racine';
   addRoot.onclick=()=>arboAddPkg(null);
   body.appendChild(addRoot);
-  if(currentMode==='table') buildTableView();
   buildPropertiesPanel();
 }
 
@@ -373,8 +372,7 @@ function arboRenameEl(el, newName) {
   }
   el.name=newName;
   buildArbo(); // chains to buildPropertiesPanel()
-  if(currentMode==='table') buildTableView();
-  else render();
+  render();
 }
 
 /** Crée un nouveau package (type='Package') enfant d'un élément existant. */
@@ -462,7 +460,7 @@ function arboMoveEls(srcIds, tgtId){
       MODEL.relations.push({id:'rel'+(t++),src:tgtId,tgt:src.id,type:'Containment',name:'contains'});
   });
   arboCollapsed.delete('el:'+tgtId);
-  buildArbo(); if(currentMode==='table') buildTableView();
+  buildArbo();
 }
 
 /** Découpe un texte de presse-papier en liste de noms : une ligne = un élément.
@@ -653,5 +651,53 @@ function arboMoveEl(srcId, tgtId) {
   if(tgt.type!=='Package')
     MODEL.relations.push({id:'rel'+Date.now(),src:tgtId,tgt:srcId,type:'Containment',name:'contains'});
   arboCollapsed.delete('el:'+tgtId);
-  buildArbo(); if(currentMode==='table') buildTableView();
+  buildArbo();
+}
+
+/* ── Modification d'un élément du modèle de la Relation Map (reprise de l'ancienne 📊 Table View) ── */
+/** Écrit une valeur dans un champ d'un élément du modèle de la Relation Map (nom, type, parent,
+ * attribut). Les champs dérivés (ID, Human Type, Owned element) sont en lecture seule et ignorés.
+ * @param {object} el - Élément à modifier
+ * @param {string} col - Clé de la colonne
+ * @param {string} val - Nouvelle valeur saisie
+ */
+function rmSetElemVal(el, col, val) {
+  if (col==='Name') { el.name=val; return; }
+  if (col==='Type') { el.type=val; return; }
+  if (col==='ID')   return;
+  if (col==='Human Type')     return; // lecture seule — dérivé du Type
+  if (col==='Owned element')  return; // lecture seule — dérivé des relations Containment
+  if (col==='Parent') {
+    if (val==='racine') {
+      // Détacher complètement (package racine ou élément sans parent)
+      MODEL.relations=MODEL.relations.filter(r=>!(r.tgt===el.id&&r.type==='Containment'));
+      delete el.parentEl; el.pkg='';
+      return;
+    }
+    // val = 'el:<id>'
+    MODEL.relations=MODEL.relations.filter(r=>!(r.tgt===el.id&&r.type==='Containment'));
+    delete el.parentEl;
+    const [kind,ref]=val.split(':');
+    if (kind==='el') {
+      const pe=MODEL.elements.find(e=>e.id===ref);
+      if (pe) {
+        el.parentEl=pe.id;
+        /** Remonte la hiérarchie pour retrouver le nom du package conteneur d'un élément.
+         */
+        function findPkg(id){ const x=MODEL.elements.find(e=>e.id===id); if(!x) return ''; if(x.type==='Package') return x.name; return x.pkg||findPkg(x.parentEl); }
+        el.pkg=findPkg(pe.id)||pe.pkg;
+        if(pe.type!=='Package')
+          MODEL.relations.push({id:'rel'+Date.now(),src:pe.id,tgt:el.id,type:'Containment',name:'contains'});
+      }
+    }
+    return;
+  }
+  if (!el.attributes) el.attributes={};
+  el.attributes[col]=val;
+}
+
+/** Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel. */
+function onModelChanged() {
+  buildPanel(); setupMarkers();
+  rebuildTree(); updateModalCounts(); renderModalTab(editTab); setTimeout(()=>fitView(true),80);
 }

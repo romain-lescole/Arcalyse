@@ -8,7 +8,7 @@
 - `TCFG` (l. 25)
 - `MODES` (l. 37)
 
-## 02-themes.js — 320 lignes
+## 02-themes.js — 307 lignes
 
 - `THEMES` (l. 6)
 - `capInk` (l. 57) — Couleur de texte lisible sur un fond donné : noir ou blanc, selon le meilleur contraste (WCAG).
@@ -26,8 +26,8 @@
 - `capRestoreContrast` (l. 149) — Rend leurs couleurs d'origine aux textes corrigés par capFixContrast (retour à un thème sombre).
 - `capContrastCss` (l. 156) — Génère, pour le thème clair courant, des règles qui foncent les couleurs de texte fixes des feuilles
 - `applyTheme` (l. 198) — Applique le thème visuel global (dark/light/dracula/solarized/nord).
-- `applyMode` (l. 243) — Bascule entre les modes d'affichage : default (Relation Map), PBS, table, capella.
-- `tv` (l. 318) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
+- `applyMode` (l. 243) — Bascule entre les modes d'affichage : default (Relation Map), PBS, capella.
+- `tv` (l. 305) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
 
 ## 03-rm-etat-svg.js — 121 lignes
 
@@ -77,10 +77,10 @@
 - `typSelectAll` (l. 461) — Coche ou décoche tous les filtres de types d'éléments du panneau gauche.
 - `relSelectAll` (l. 469) — Coche ou décoche tous les filtres de types de relations du panneau gauche.
 
-## 07-rm-panneau-criteres.js — 261 lignes
+## 07-rm-panneau-criteres.js — 251 lignes
 
 - `buildPanel` (l. 7) — Reconstruit entièrement le panneau gauche : critères de relation, types d'éléments.
-- `capShowChainInMap` (l. 249) — Visualise une chaîne fonctionnelle dans la Relation Map en préservant ses ramifications
+- `capShowChainInMap` (l. 239) — Visualise une chaîne fonctionnelle dans la Relation Map en préservant ses ramifications
 
 ## 08-editeur-modele.js — 573 lignes
 
@@ -99,67 +99,37 @@
 - `showEditTypeForm` (l. 481) — Affiche un mini-formulaire inline dans la section "Types d'éléments"
 - `showNewTypeForm` (l. 530) — Affiche le formulaire de création d'un nouveau type d'élément.
 
-## 09-arborescence.js — 657 lignes
+## 09-arborescence.js — 704 lignes
 
 - `typeIcon` (l. 5) — Retourne l'icône associée à un type d'élément (définie dans TCFG). @param {string} t
 - `migratePkgsToElements` (l. 11) — Migre l'ancien format packages[] vers le nouveau format elements[] avec type='Package'.
 - `buildPropertiesPanel` (l. 41) — Remplit le panneau Propriétés avec les attributs de l'élément sélectionné (S.propEl).
 - `_arboInlineRename` (l. 170) — Active le renommage en place d'un nœud de l'arborescence (Entrée valide, Échap annule).
 - `buildArbo` (l. 185) — Construit l'arborescence gauche à partir de MODEL.elements.
-- `arboExpandAll` (l. 360) — Développe tous les nœuds de l'arborescence gauche.
-- `arboCollapseAll` (l. 363) — Réduit tous les nœuds de l'arborescence gauche au premier niveau.
-- `arboRenameEl` (l. 369) — Renomme un élément dans MODEL et met à jour l'arbo et le graphe.
-- `arboAddPkg` (l. 381) — Crée un nouveau package (type='Package') enfant d'un élément existant.
-- `arboAddEl` (l. 395) — Crée un nouvel élément enfant dans l'arborescence.
-- `arboDeleteEl` (l. 410) — Supprime un élément et toutes ses relations de MODEL, puis met à jour l'UI.
-- `arboClearMultiSel` (l. 428) — Vide la sélection multiple de l'arborescence et met à jour l'affichage.
-- `arboUpdateMselBar` (l. 431) — Met à jour la barre de compteur de sélection multiple sous l'en-tête Arborescence.
-- `arboMoveEls` (l. 443) — Déplace un GROUPE d'éléments vers un nouvel owner en conservant la hiérarchie interne :
-- `arboParseClipboardList` (l. 471) — Découpe un texte de presse-papier en liste de noms : une ligne = un élément.
-- `arboPasteListInto` (l. 479) — Crée une liste d'éléments enfants sous un owner (un nom par ligne du presse-papier).
-- `arboConvertSelectedType` (l. 499) — Change le type de tous les éléments d'un ensemble d'ids (hors packages).
-- `arboShowCtxMenu` (l. 518) — Affiche le menu contextuel (clic droit) d'un élément de l'arborescence.
-- `arboMoveEl` (l. 640) — Déplace un élément unique vers un nouvel owner par glisser-déposer : met à jour
+- `arboExpandAll` (l. 359) — Développe tous les nœuds de l'arborescence gauche.
+- `arboCollapseAll` (l. 362) — Réduit tous les nœuds de l'arborescence gauche au premier niveau.
+- `arboRenameEl` (l. 368) — Renomme un élément dans MODEL et met à jour l'arbo et le graphe.
+- `arboAddPkg` (l. 379) — Crée un nouveau package (type='Package') enfant d'un élément existant.
+- `arboAddEl` (l. 393) — Crée un nouvel élément enfant dans l'arborescence.
+- `arboDeleteEl` (l. 408) — Supprime un élément et toutes ses relations de MODEL, puis met à jour l'UI.
+- `arboClearMultiSel` (l. 426) — Vide la sélection multiple de l'arborescence et met à jour l'affichage.
+- `arboUpdateMselBar` (l. 429) — Met à jour la barre de compteur de sélection multiple sous l'en-tête Arborescence.
+- `arboMoveEls` (l. 441) — Déplace un GROUPE d'éléments vers un nouvel owner en conservant la hiérarchie interne :
+- `arboParseClipboardList` (l. 469) — Découpe un texte de presse-papier en liste de noms : une ligne = un élément.
+- `arboPasteListInto` (l. 477) — Crée une liste d'éléments enfants sous un owner (un nom par ligne du presse-papier).
+- `arboConvertSelectedType` (l. 497) — Change le type de tous les éléments d'un ensemble d'ids (hors packages).
+- `arboShowCtxMenu` (l. 516) — Affiche le menu contextuel (clic droit) d'un élément de l'arborescence.
+- `arboMoveEl` (l. 638) — Déplace un élément unique vers un nouvel owner par glisser-déposer : met à jour
+- `rmSetElemVal` (l. 664) — Écrit une valeur dans un champ d'un élément du modèle de la Relation Map (nom, type, parent,
+- `onModelChanged` (l. 700) — Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel.
 
-## 10-table-view.js — 1404 lignes
-
-- `tvNewTabState` (l. 6) — Construit un objet d'état vierge pour un nouvel onglet de Table View.
-- `tvActiveTab` (l. 28) — Retourne l'objet d'état de l'onglet actuellement actif.
-- `tvSyncFromActiveTab` (l. 52) — Recharge les variables d'état actives depuis l'onglet actif (tvTabs[tvActiveTabIdx]).
-- `tvSyncToActiveTab` (l. 59) — Sauvegarde les variables d'état actives dans l'onglet actif (tvTabs[tvActiveTabIdx]).
-- `TV_BUILTIN` (l. 70)
-- `tvFindElementById` (l. 74) — Cherche un élément par id dans MODEL.elements, ou dans le cache de lignes virtuelles
-- `tvFindChildrenOf` (l. 78) — Cherche tous les enfants directs (parentEl===id) dans MODEL.elements et/ou le cache virtuel.
-- `tvGetValArray` (l. 89) — Retourne TOUJOURS un tableau de valeurs pour une colonne donnée — permet de choisir
-- `tvGetVal` (l. 127) — Retourne la valeur d'affichage d'une cellule sous forme de chaîne unique :
-- `tvSetVal` (l. 137) — Écrit une valeur dans une cellule éditable de Table View. Les colonnes dérivées
-- `tvMakeCellEditable` (l. 179) — Rend une cellule du tableau éditable en place : passage en champ de saisie au
-- `buildTvTabBar` (l. 226) — Construit la barre d'onglets de Table View : un onglet = une vue indépendante complète
-- `tvAllRows` (l. 303) — Jeu de travail COMPLET pour le moteur Metachain TV : éléments natifs + toutes les lignes
-- `tvRowAttrs` (l. 311) — Attributs exploitables d'une ligne TV : attributs XML bruts Capella (via _capRaw ou
-- `tvGetMetachainMetaclasses` (l. 323) — Liste tous les Metaclass disponibles pour le moteur Metachain de Table View,
-- `tvGetAttrRefProperties` (l. 328) — Détecte les attributs de MODEL.elements[].attributes qui référencent d'autres éléments
-- `tvGetIncomingRefProperties` (l. 352) — Version TV de la détection des références ENTRANTES : trouve les types dont un attribut
-- `tvGetMetachainProperties` (l. 373) — Properties disponibles pour un Metaclass : valeurs terminales, Owner typé, Owned element
-- `tvResolveStep` (l. 420) — Exécute un pas de navigation à partir d'un élément MODEL.elements.
-- `tvExtractValue` (l. 461) — Extrait une valeur terminale simple d'un élément MODEL.elements.
-- `tvResolveMetachain` (l. 469) — Exécute une chaîne de Properties (metachain) à partir d'un élément MODEL.elements.
-- `tvRenderCustomColStepRow` (l. 498) — Rend une étape (ligne) de l'éditeur de colonne Metachain : sélecteur de Metaclass,
-- `tvRenderCustomColPanel` (l. 552) — Rend l'intégralité du panneau latéral d'édition d'une colonne Metachain
-- `tvOpenCustomColPanel` (l. 573) — Ouvre le panneau latéral de création/édition d'une colonne Metachain.
-- `tvCloseCustomColPanel` (l. 597) — Ferme le panneau latéral d'édition de colonne Metachain et réinitialise son état.
-- `tvSaveTableView` (l. 631) — Sauvegarde la configuration de la vue Table View active (colonnes, ordre, largeurs,
-- `tvLoadTableView` (l. 653) — Charge une configuration de vue Table View sauvegardée et l'applique à l'onglet actif.
-- `buildTableView` (l. 681) — Construit intégralement la vue Table View : barre d'outils, menu de sélection des
-- `onModelChanged` (l. 1400) — Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel.
-
-## 11-sauvegarde-toolbar-init.js — 264 lignes
+## 11-sauvegarde-toolbar-init.js — 263 lignes
 
 - `saveJSON` (l. 5) — Sérialise MODEL, RCFG, TCFG et S en JSON et télécharge le fichier.
 - `loadJSON` (l. 19) — Charge un fichier JSON et restaure l'état complet de l'application.
 - `applyDepth` (l. 106) — Applique la profondeur d'exploration du graphe (bornée entre 1 et 10),
-- `openHelpModal` (l. 150) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
-- `positionOverlay` (l. 246) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
+- `openHelpModal` (l. 149) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
+- `positionOverlay` (l. 245) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
 
 ## 20-capella-chargement.js — 817 lignes
 
@@ -199,49 +169,48 @@
 - `capRenderCurrentView` (l. 736) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
 - `capUpdateStatChips` (l. 808) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
-## 21-capella-vues-base.js — 1328 lignes
+## 21-capella-vues-base.js — 1334 lignes
 
 - `capRenderSidebar` (l. 5) — Rend la sidebar Capella : liste des types par couche avec cases à cocher.
 - `capGetFiltered` (l. 57) — Retourne capAllElements filtré par types activés, couche et texte de recherche.
 - `capRenderCards` (l. 69) — Rend la vue Cartes : cartes groupées par couche ARCADIA, filtrées.
 - `CAP_TABLE_BUILTIN_COLS` (l. 104) — Colonnes toujours proposées en plus des attributs bruts du XML.
-- `capGetAllRawAttrKeys` (l. 115) — Calcule dynamiquement la liste de TOUS les noms d'attributs présents dans capAllElements
-- `capGetParentIndex` (l. 128) — Construit l'index de containment du modèle Capella depuis le XML brut :
-- `capGetMetachainMetaclasses` (l. 151) — Retourne la liste des "Metaclass" (types Capella) disponibles au démarrage d'une étape :
-- `capGetElementById_` (l. 172) — Retrouve un élément Capella par son identifiant XML. S'appuie sur un index id → élément
-- `capParseAttrRefs_` (l. 181) — Découpe la valeur brute d'un attribut XML en liste d'IDs candidats (gère les attributs
-- `capGetAttrRefProperties` (l. 189) — Détecte, pour un Metaclass donné, les attributs XML bruts dont la valeur référence
-- `capGetViaIntermediateProperties` (l. 222) — Détecte le pattern "navigation via élément intermédiaire" : un type X (différent du
-- `capGetOwnerProperties` (l. 260) — Détecte tous les types d'ANCÊTRES réellement rencontrés en remontant le containment XML
-- `capGetIncomingRefProperties` (l. 290) — Détecte les RÉFÉRENCES ENTRANTES : pour un metaclass M, trouve tous les types X dont un
-- `capGetMetachainProperties` (l. 325) — Retourne toutes les Properties navigables depuis un Metaclass : valeurs terminales,
-- `capResolveStep` (l. 416) — Exécute UN pas de navigation (une Property) à partir d'un élément capAllElements donné.
-- `capExtractValue` (l. 492) — Extrait une valeur terminale "simple" d'un élément capAllElements (Name, ID, Type,
-- `capResolveMetachain` (l. 508) — Exécute une chaîne de Properties (metachain) à partir d'un élément. Le 1er pas n'est
-- `capTableGetValArray` (l. 532) — Retourne TOUJOURS un tableau de valeurs pour une colonne donnée (même les colonnes à valeur
-- `capTableGetVal` (l. 565) — Retourne la valeur d'une colonne sous forme de string unique (jointe par ', ' si plusieurs
-- `capTableColLabel` (l. 570) — Libellé humain affiché en en-tête pour une colonne donnée.
-- `capBuildTableToolbar` (l. 582) — Construit la barre d'outils au-dessus du tableau Capella : bouton de sélection des
-- `capRefreshColPickerList` (l. 671) — Reconstruit uniquement la liste interne du menu ⊞ Colonnes (#cap-colpicker-list),
-- `capApplyColResize` (l. 743) — Ajoute une poignée de redimensionnement sur le bord droit d'un <th> du tableau Capella.
-- `capRenderCustomColStepRow` (l. 771) — Construit une ligne du metachain : <select> Metaclass + <select> Property + suppression.
-- `capRenderCustomColPanel` (l. 837) — Reconstruit entièrement le panneau : recalcule le metaclass imposé de chaque ligne à partir
-- `CAP_PP_MAX_CHIPS` (l. 864)
-- `CAP_PP_MAX_OPTS` (l. 865)
-- `capPpCapAdapter` (l. 870) — Adaptateur de l'aperçu pour le 📋 Tableau Capella (capAllElements, moteur cap…).
-- `capPpTvAdapter` (l. 885) — Adaptateur de l'aperçu pour la 📊 Table View (tvAllRows, moteur tv…).
-- `capPpTrace` (l. 904) — Déroule le chemin pas à pas depuis un élément, en gardant chaque niveau intermédiaire
-- `capPpHasResult` (l. 923) — Indique si un élément donne un résultat non vide pour le chemin (cellule remplie).
-- `capPpRender` (l. 933) — Rend la zone « 👁 Aperçu en direct » d'un panneau de colonne par chemin : choix de
-- `capPpRenderBody` (l. 1001) — Rend le corps de l'aperçu : remplissage estimé sur le type de départ, puis le chemin
-- `capOpenCustomColPanel` (l. 1072) — Ouvre le panneau latéral de construction de colonne personnalisée (Metachain Navigation).
-- `capCloseCustomColPanel` (l. 1097) — Ferme le panneau latéral d'édition de colonne Metachain de la vue Tableau.
-- `capSaveTableView` (l. 1138) — Sérialise la configuration actuelle de la vue Tableau Capella (colonnes visibles, colonnes
-- `capLoadTableView` (l. 1157) — Charge une configuration de vue Tableau Capella précédemment sauvegardée et l'applique.
-- `capRenderTable` (l. 1180) — Rend intégralement la vue Tableau Capella : barre d'outils (colonnes, colonne perso,
-- `capRenderTableBodyOnly` (l. 1188) — Reconstruit uniquement le <thead>/<tbody> du tableau Capella (pas la toolbar ni le menu
-- `capRenderTree` (l. 1278) — Rend la vue Arborescence Capella (hiérarchie XML complète).
-- `capRenderTreeNode` (l. 1289) — Rend récursivement un nœud de l'arborescence Capella.
+- `capGetAllRawAttrKeys` (l. 119) — Calcule dynamiquement la liste de TOUS les noms d'attributs présents dans capAllElements
+- `capGetParentIndex` (l. 132) — Construit l'index de containment du modèle Capella depuis le XML brut :
+- `capGetMetachainMetaclasses` (l. 155) — Retourne la liste des "Metaclass" (types Capella) disponibles au démarrage d'une étape :
+- `capGetElementById_` (l. 176) — Retrouve un élément Capella par son identifiant XML. S'appuie sur un index id → élément
+- `capParseAttrRefs_` (l. 185) — Découpe la valeur brute d'un attribut XML en liste d'IDs candidats (gère les attributs
+- `capGetAttrRefProperties` (l. 193) — Détecte, pour un Metaclass donné, les attributs XML bruts dont la valeur référence
+- `capGetViaIntermediateProperties` (l. 226) — Détecte le pattern "navigation via élément intermédiaire" : un type X (différent du
+- `capGetOwnerProperties` (l. 264) — Détecte tous les types d'ANCÊTRES réellement rencontrés en remontant le containment XML
+- `capGetIncomingRefProperties` (l. 294) — Détecte les RÉFÉRENCES ENTRANTES : pour un metaclass M, trouve tous les types X dont un
+- `capGetMetachainProperties` (l. 329) — Retourne toutes les Properties navigables depuis un Metaclass : valeurs terminales,
+- `capResolveStep` (l. 420) — Exécute UN pas de navigation (une Property) à partir d'un élément capAllElements donné.
+- `capExtractValue` (l. 496) — Extrait une valeur terminale "simple" d'un élément capAllElements (Name, ID, Type,
+- `capResolveMetachain` (l. 512) — Exécute une chaîne de Properties (metachain) à partir d'un élément. Le 1er pas n'est
+- `capTableGetValArray` (l. 536) — Retourne TOUJOURS un tableau de valeurs pour une colonne donnée (même les colonnes à valeur
+- `capTableGetVal` (l. 570) — Retourne la valeur d'une colonne sous forme de string unique (jointe par ', ' si plusieurs
+- `capTableColLabel` (l. 575) — Libellé humain affiché en en-tête pour une colonne donnée.
+- `capBuildTableToolbar` (l. 588) — Construit la barre d'outils au-dessus du tableau Capella : bouton de sélection des
+- `capRefreshColPickerList` (l. 685) — Reconstruit uniquement la liste interne du menu ⊞ Colonnes (#cap-colpicker-list),
+- `capApplyColResize` (l. 763) — Ajoute une poignée de redimensionnement sur le bord droit d'un <th> du tableau Capella.
+- `capRenderCustomColStepRow` (l. 793) — Construit une ligne du metachain : <select> Metaclass + <select> Property + suppression.
+- `capRenderCustomColPanel` (l. 859) — Reconstruit entièrement le panneau : recalcule le metaclass imposé de chaque ligne à partir
+- `CAP_PP_MAX_CHIPS` (l. 886)
+- `CAP_PP_MAX_OPTS` (l. 887)
+- `capPpCapAdapter` (l. 892) — Adaptateur de l'aperçu pour le ▤ Tableau Capella (capAllElements, moteur cap…).
+- `capPpTrace` (l. 911) — Déroule le chemin pas à pas depuis un élément, en gardant chaque niveau intermédiaire
+- `capPpHasResult` (l. 930) — Indique si un élément donne un résultat non vide pour le chemin (cellule remplie).
+- `capPpRender` (l. 940) — Rend la zone « 👁 Aperçu en direct » d'un panneau de colonne par chemin : choix de
+- `capPpRenderBody` (l. 1008) — Rend le corps de l'aperçu : remplissage estimé sur le type de départ, puis le chemin
+- `capOpenCustomColPanel` (l. 1079) — Ouvre le panneau latéral de construction de colonne personnalisée (Metachain Navigation).
+- `capCloseCustomColPanel` (l. 1104) — Ferme le panneau latéral d'édition de colonne Metachain de la vue Tableau.
+- `capSaveTableView` (l. 1145) — Sérialise la configuration actuelle de la vue Tableau Capella (colonnes visibles, colonnes
+- `capLoadTableView` (l. 1166) — Charge une configuration de vue Tableau Capella précédemment sauvegardée et l'applique.
+- `capRenderTable` (l. 1185) — Rend intégralement la vue Tableau Capella : barre d'outils (colonnes, colonne perso,
+- `capRenderTableBodyOnly` (l. 1194) — Reconstruit uniquement le <thead>/<tbody> du tableau Capella (pas la toolbar ni le menu
+- `capRenderTree` (l. 1284) — Rend la vue Arborescence Capella (hiérarchie XML complète).
+- `capRenderTreeNode` (l. 1295) — Rend récursivement un nœud de l'arborescence Capella.
 
 ## 22-capella-liens.js — 280 lignes
 
@@ -302,13 +271,13 @@
 - `capChainExportRefreshCount` (l. 540) — Met à jour le compteur de sélection et la case « Tout » sans re-rendre les cartes (garde les cartes ouvertes).
 - `capRenderChainMap` (l. 551) — Rend la sous-vue « Relation Map » : liste des chaînes groupée par catégorie ARCADIA à gauche,
 
-## 25-panneau-detail.js — 183 lignes
+## 25-panneau-detail.js — 185 lignes
 
 - `capOpenDetail` (l. 5) — Ouvre le panneau de détail (colonne droite de l'overlay) pour un élément Capella.
 - `capOpenDetailNode` (l. 97) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
 - `CAP_ELEM_VIEWS` (l. 105)
 - `capUpdateToolbarForView` (l. 111) — Met à jour les boutons actifs et les groupes de contrôles visibles
-- `capShowView` (l. 137) — Affiche une vue Capella (bascule en mode capella si besoin).
+- `capShowView` (l. 139) — Affiche une vue Capella (bascule en mode capella si besoin).
 
 ## 26-rapports-html.js — 101 lignes
 
@@ -517,22 +486,23 @@
 - `capWatchShowDelta` (l. 433) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 513) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 280 lignes
+## 41-barre-vues.js — 293 lignes
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
 - `CAP_NAV_GROUPS` (l. 36) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
-- `CAP_NAV_DEFAULT` (l. 43) — Réglage par défaut : tous les menus affichés, ⚡ Chaînes, 🎬 Scénarios et 📐 Tableau de bord en boutons directs.
-- `capNavSave` (l. 49) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
-- `capNavCurKey` (l. 59) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
-- `capNavOpen` (l. 67) — Ouvre une vue du catalogue (ou Relation Map / Table View pour les clés @rm, @table).
-- `capNavGroupOpen` (l. 77) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
-- `capNavFluxTabs` (l. 87) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
-- `capNavRender` (l. 97) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
-- `capNavSync` (l. 118) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
-- `capNavClose` (l. 133) — Ferme le menu déroulant de la barre des vues.
-- `capNavRow` (l. 142) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
-- `capNavMenu` (l. 152) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
-- `capNavMenuFill` (l. 199) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+- `CAP_NAV_DEFAULT` (l. 44) — Réglage par défaut : tous les menus affichés, ▤ Tableau, ⚡ Chaînes, 🎬 Scénarios et 📐 Tableau de bord en boutons directs
+- `capNavMigrate` (l. 54) — Met à jour un réglage de barre enregistré avant l'arrivée du bouton ▤ Tableau (ancienne 📊 Table View
+- `capNavSave` (l. 60) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capNavCurKey` (l. 70) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
+- `capNavOpen` (l. 78) — Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
+- `capNavGroupOpen` (l. 88) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
+- `capNavFluxTabs` (l. 98) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
+- `capNavRender` (l. 108) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
+- `capNavSync` (l. 131) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
+- `capNavClose` (l. 146) — Ferme le menu déroulant de la barre des vues.
+- `capNavRow` (l. 155) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
+- `capNavMenu` (l. 165) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
+- `capNavMenuFill` (l. 212) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
 
 ## 42-tableaux-analyses.js — 154 lignes
 
@@ -546,31 +516,31 @@
 - `capTfFilter` (l. 127) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
 - `capTfWatch` (l. 149) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
 
-## 43-visite-guidee.js — 457 lignes
+## 43-visite-guidee.js — 448 lignes
 
 - `CAP_TOUR_STEPS` (l. 12) — Étapes de la visite générale : s = sélecteur CSS de la zone (toutes les correspondances visibles sont encadrées
 - `CAP_TOUR_EXPLORE` (l. 57) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
 - `CAP_TOUR_FLUX` (l. 72) — Étapes communes aux vues de 📡 Flux & interfaces (onglets de navigation).
 - `CAP_TOUR_ANA_TXT` (l. 75) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
 - `capTourRmCtx` (l. 88) — Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
-- `CAP_TOUR_VIEWS` (l. 102) — Visites contextuelles, par vue : clé = '@rm', '@table' ou vue Capella (capCurrentView) ; l = nom de la vue,
-- `CAP_TOUR_START` (l. 249) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
-- `CAP_TOUR_AFTER` (l. 262) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
-- `capTourCtxKey` (l. 279) — Clé de la vue affichée pour les visites contextuelles.
-- `capTourCtx` (l. 288) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
-- `capTourEls` (l. 296) — Éléments affichés désignés par le sélecteur d'une étape.
-- `capTourVisible` (l. 307) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
-- `capTourStart` (l. 317) — Lance une visite guidée depuis sa première étape.
-- `capTourStartView` (l. 338) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
-- `capTourGo` (l. 346) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
-- `capTourPos` (l. 366) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
-- `capTourRenderPop` (l. 373) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
-- `capTourPlace` (l. 385) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
-- `capTourKey` (l. 417) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
-- `capTourEnd` (l. 426) — Quitte la visite guidée et retire la mise en évidence.
-- `capTourHelpMenu` (l. 433) — Ouvre le menu ? Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
-- `capTourStartHere` (l. 440) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
-- `capTourResumeAfterLoad` (l. 447) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
+- `CAP_TOUR_VIEWS` (l. 102) — Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
+- `CAP_TOUR_START` (l. 241) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
+- `CAP_TOUR_AFTER` (l. 254) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
+- `capTourCtxKey` (l. 271) — Clé de la vue affichée pour les visites contextuelles.
+- `capTourCtx` (l. 279) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
+- `capTourEls` (l. 287) — Éléments affichés désignés par le sélecteur d'une étape.
+- `capTourVisible` (l. 298) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
+- `capTourStart` (l. 308) — Lance une visite guidée depuis sa première étape.
+- `capTourStartView` (l. 329) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
+- `capTourGo` (l. 337) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
+- `capTourPos` (l. 357) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
+- `capTourRenderPop` (l. 364) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
+- `capTourPlace` (l. 376) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
+- `capTourKey` (l. 408) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
+- `capTourEnd` (l. 417) — Quitte la visite guidée et retire la mise en évidence.
+- `capTourHelpMenu` (l. 424) — Ouvre le menu ? Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
+- `capTourStartHere` (l. 431) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
+- `capTourResumeAfterLoad` (l. 438) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
 
 ## 44-functional-exchange.js — 512 lignes
 
@@ -610,18 +580,18 @@
 - `capDrClipboard` (l. 297) — Copie dans le presse-papiers (HTML mis en forme + texte brut ; repli par sélection si l'API est refusée).
 - `capDrRender` (l. 327) — Rend le rapport de comparaison dans un conteneur (barre de réglages, filtres, rapport, copie et exports).
 
-## 46-config-interface.js — 143 lignes
+## 46-config-interface.js — 140 lignes
 
 - `CAP_CFG_PARTS` (l. 9)
-- `capCfgSer` (l. 19) — Sérialise en JSON en conservant les ensembles (Set). @param {*} o @returns {string}
-- `capCfgRev` (l. 21) — Relit un JSON produit par capCfgSer (ensembles reconstitués). @param {string} t @returns {*}
-- `capCfgGet` (l. 27) — État courant d'une partie de l'interface.
-- `capCfgSet` (l. 41) — Applique une partie de configuration à l'interface (et la mémorise dans la page).
-- `capCfgStoreViews` (l. 66) — Écrit dans la page (bloc JSON « cap-ui-views ») ce que les autres blocs ne conservent pas encore :
-- `capCfgRestoreViews` (l. 73) — Réapplique à l'ouverture de la page les vues mémorisées par capCfgStoreViews.
-- `capCfgDialog` (l. 87) — Fenêtre de choix des parties à enregistrer ou à charger.
-- `capCfgLoadFile` (l. 123) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
-- `capCfgLoadUpdate` (l. 137) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
+- `capCfgSer` (l. 18) — Sérialise en JSON en conservant les ensembles (Set). @param {*} o @returns {string}
+- `capCfgRev` (l. 20) — Relit un JSON produit par capCfgSer (ensembles reconstitués). @param {string} t @returns {*}
+- `capCfgGet` (l. 26) — État courant d'une partie de l'interface.
+- `capCfgSet` (l. 39) — Applique une partie de configuration à l'interface (et la mémorise dans la page).
+- `capCfgStoreViews` (l. 61) — Écrit dans la page (bloc JSON « cap-ui-views ») ce que les autres blocs ne conservent pas encore :
+- `capCfgRestoreViews` (l. 68) — Réapplique à l'ouverture de la page les vues mémorisées par capCfgStoreViews.
+- `capCfgDialog` (l. 82) — Fenêtre de choix des parties à enregistrer ou à charger.
+- `capCfgLoadFile` (l. 120) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
+- `capCfgLoadUpdate` (l. 134) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
 
 ## 47-composants.js — 439 lignes
 
@@ -679,3 +649,28 @@
 - `CAP_D3_LICENSE` (l. 11) — Texte de la licence ISC de D3.js (reproduction obligatoire).
 - `capAboutTech` (l. 19) — Informations techniques (version, navigateur, accès direct aux fichiers, modèle chargé), pour un signalement.
 - `capAboutOpen` (l. 34) — Ouvre la fenêtre « À propos ».
+
+## 51-tableau.js — 393 lignes
+
+- `capTableTabNew` (l. 18) — Crée un onglet de vue du tableau.
+- `capTableTabsEnsure` (l. 30) — Garantit l'existence d'au moins un onglet ; le premier reprend l'état courant du tableau.
+- `capTableSyncToTab` (l. 37) — Copie l'état de travail du tableau (colonnes, filtres, largeurs, tri) dans l'onglet actif.
+- `capTableSyncFromTab` (l. 43) — Charge l'état de l'onglet actif dans les variables de travail du tableau.
+- `capTableTabSwitch` (l. 52) — Active un onglet du tableau (l'état de l'onglet quitté est conservé).
+- `capRenderTableTabs` (l. 61) — Rend la barre d'onglets du tableau : clic = ouvrir, double-clic = renommer, ✕ = fermer,
+- `capTableRelIndex` (l. 110) — Index des relations Capella par élément : pour chaque relation, éléments cibles (out) et sources (in).
+- `capTableRelParse` (l. 131) — Décode une clé de colonne de relation « rel:<relation>:out|in ».
+- `capTableRelEnds` (l. 141) — Libellés lisibles des deux extrémités d'une relation (types source et cible).
+- `capTableRelValues` (l. 153) — Valeurs d'une colonne de relation pour un élément : noms des éléments liés (sans doublon).
+- `capTableRelLabel` (l. 165) — Libellé d'en-tête d'une colonne de relation.
+- `capTableRelPicker` (l. 179) — Ajoute au menu ⊞ Colonnes les sections « Relations — … » (groupes de 🔗 Liens) : une entrée par
+- `capTableRows` (l. 220) — Lignes du tableau : éléments filtrés (types cochés, couche, recherche, filtres par colonne), triés
+- `capTableSortCycle` (l. 241) — Passe au tri suivant sur une colonne : croissant ▲, décroissant ▼, puis sans tri.
+- `capTableColDnD` (l. 255) — Rend un en-tête déplaçable : glisser-déposer sur un autre en-tête pour changer l'ordre des colonnes.
+- `capTableCsv` (l. 282) — Exporte en CSV les colonnes affichées, pour toutes les lignes filtrées (dans l'ordre du tri).
+- `capTableCfgGet` (l. 295) — État du tableau pour l'enregistrement : onglets, colonnes par chemin, affichage des cellules multiples.
+- `capTableCfgSet` (l. 304) — Applique un état enregistré du tableau (format à onglets, ou ancien format à une seule vue).
+- `capTableTvCustom` (l. 322) — Colonnes par chemin de l'ancienne Table View reprises telles quelles : celles qui ne suivent aucune
+- `capTableTvTab` (l. 332) — Convertit un onglet (ou une vue .json) de l'ancienne Table View en onglet du tableau.
+- `capTableImportTv` (l. 352) — Reprend les réglages de l'ancienne 📊 Table View (page enregistrée ou fichier ⚙) : ses onglets
+- `capTableApplyViewFile` (l. 373) — Applique un fichier 📂 Charger vue à l'onglet actif : vue du tableau (« capella-table-view »)

@@ -1,6 +1,6 @@
 /* ══ 🎓 VISITE GUIDÉE ═══════════════════════════════════════════════════════════════
  * Didacticiel pas à pas, lancé depuis le menu ? Aide ▾ (ou l'écran d'accueil) : visite générale de l'outil, ou
- * 🎯 visite de la vue affichée (Relation Map, Table View, chaque vue Capella). Chaque étape met en
+ * 🎯 visite de la vue affichée (Relation Map, chaque vue Capella). Chaque étape met en
  * évidence une zone de l'interface (cadre clignotant, reste de l'écran assombri) et l'explique dans une bulle
  * avec ◀ Précédent / Suivant ▶ et ✕ pour quitter (clavier : ← → Entrée, Échap).
  * Les étapes dont la zone n'est pas affichée (modèle non chargé, vue masquée, bouton non épinglé) sont sautées.
@@ -17,7 +17,9 @@ var CAP_TOUR_STEPS=[
   {s:'#cap-tb-views', t:'🧭 Barre des vues',
    x:'Toutes les vues d\'analyse du modèle sont regroupées ici, dans des menus déroulants (▾) et des boutons directs.'},
   {s:'#cap-v-elements', t:'🧭 Explorateur',
-   x:'Parcourir le modèle : arborescence, cartes, tableau filtrable, et index des types.'},
+   x:'Parcourir le modèle : arborescence, cartes et index des types.'},
+  {s:'#cap-v-table', t:'▤ Tableau',
+   x:'Tous les éléments du modèle en tableau : onglets de vues, colonnes d\'attributs, de relations et par chemin, tri, filtres, export CSV.'},
   {s:'#cap-v-flux', t:'📡 Flux & interfaces',
    x:'Chaînes fonctionnelles, échanges et composants, Physical Link, scénarios, traçabilité des ports et liens entre éléments.'},
   {s:'#cap-v-chains', t:'⚡ Chaînes',
@@ -32,8 +34,6 @@ var CAP_TOUR_STEPS=[
    x:'Cherchez une vue par son nom (raccourci <b>Ctrl+K</b>) et réglez la barre : 📌 épingle une vue en bouton direct.'},
   {s:'#mode-rm', t:'🗺 Relation Map',
    x:'Graphe interactif des éléments et de leurs relations : zoom, dépliage, disposition, export en image.'},
-  {s:'#mode-table', t:'📊 Table View',
-   x:'Tableaux construits à la demande, avec colonnes calculées le long des relations du modèle.'},
   {s:'#cap-sidebar', m:'loaded', pre:()=>{ if(currentMode!=='capella') capNavOpen('cards'); }, t:'🏷 Types affichés',
    x:'Cochez les types d\'éléments à afficher dans les vues. Le champ du haut filtre la liste.'},
   {s:'#cap-sub-toolbar', m:'loaded', t:'🔍 Recherche et filtres',
@@ -56,7 +56,7 @@ var CAP_TOUR_STEPS=[
 /** Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches). */
 var CAP_TOUR_EXPLORE=[
   {s:'#cap-elem-tabs', t:'🧭 Sous-vues de l\'Explorateur',
-   x:'Quatre façons de parcourir le modèle : <b>🌳 Arborescence</b> (hiérarchie), <b>▦ Cartes</b> (une carte par élément), <b>📋 Tableau</b> (colonnes, tri, filtres) et <b>📖 Index des types</b>.'},
+   x:'Trois façons de parcourir le modèle : <b>🌳 Arborescence</b> (hiérarchie), <b>▦ Cartes</b> (une carte par élément) et <b>📖 Index des types</b>. Le <b>▤ Tableau</b> a son propre bouton dans la barre.'},
   {s:'#cap-sidebar', t:'🏷 Types d\'éléments',
    x:'Types présents dans le modèle, rangés par couche ARCADIA (OA, SA, LA, PA, EPBS, transverse). Cochez ceux à afficher ; <b>Tout cocher</b>, <b>Aucun</b> et <b>Défaut</b> règlent la liste d\'un coup. La bordure droite se tire pour élargir le panneau.'},
   {s:'#cap-stat-chips', t:'📊 Répartition',
@@ -97,7 +97,7 @@ function capTourRmCtx(){
   if(best){ setCtx(best.id); setTimeout(()=>document.getElementById('b-fit')?.click(),50); }
 }
 
-/** Visites contextuelles, par vue : clé = '@rm', '@table' ou vue Capella (capCurrentView) ; l = nom de la vue,
+/** Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
  * steps = étapes (même format que CAP_TOUR_STEPS). */
 var CAP_TOUR_VIEWS={
   '@rm':{l:'🗺 Relation Map', steps:[
@@ -125,25 +125,17 @@ var CAP_TOUR_VIEWS={
     {s:'#legend', t:'◉ Légende', x:'Couleurs des types et des relations affichés.'},
     {s:'#panel-close-btn', t:'◀ Panneau', x:'Réduit le panneau de gauche pour agrandir le graphe ; ▶ le rouvre.'}
   ]},
-  '@table':{l:'📊 Table View', steps:[
-    {t:'📊 Table View', x:'Tableau de <b>tous</b> les éléments du fichier, avec onglets, filtres par colonne, colonnes calculées et export.'},
-    {s:'#tv-tabbar', t:'🗂 Onglets', x:'Chaque onglet garde son propre tableau (types, colonnes, filtres). <b>+</b> ajoute un onglet ; double-clic pour le renommer.'},
-    {s:'#sec-cap-typ', t:'🔷 Type d\'élément', x:'Choisissez les types d\'éléments listés dans le tableau, groupés par couche ARCADIA.'},
-    {s:'#tv-toolbar', t:'🧰 Commandes du tableau',
-     x:'<b>⊞ Colonnes</b> choisit les attributs affichés, <b>✨ Colonne par chemin</b> crée une colonne calculée en suivant des relations (metachain), avec aperçu en direct sur un élément, <b>≡ En ligne</b> / ☰ Empilé règle les cellules à plusieurs valeurs, <b>💾 Sauver vue</b> / <b>📂 Charger vue</b> exportent la configuration en JSON.'},
-    {s:'#tv-table thead', t:'↕ En-têtes', x:'Clic sur un titre pour trier ; le champ sous chaque titre filtre la colonne.'},
-    {s:'#tv-table tbody', t:'📋 Lignes', x:'Un élément par ligne. Le nombre d\'éléments affichés est indiqué dans la barre du tableau.'}
-  ]},
   cards:{l:'▦ Cartes', steps:[...CAP_TOUR_EXPLORE,
     {s:'#cap-view-cards', t:'▦ Cartes',
      x:'Une carte par élément, regroupées par couche : type, nom et identifiant. <b>Clic</b> sur une carte : panneau de détail (propriétés, relations, liens).'}]},
   tree:{l:'🌳 Arborescence', steps:[...CAP_TOUR_EXPLORE,
     {s:'#cap-tb-tree-grp', t:'🌳 Commandes', x:'<b>⊞ Déplier</b> / <b>⊟ Réduire</b> toute l\'arborescence, <b>⬇ JSON</b> l\'exporte.'},
     {s:'#cap-view-tree', t:'🌳 Arborescence', x:'Hiérarchie du modèle comme dans Capella. ▶ déplie un nœud ; clic sur un élément pour ouvrir son détail.'}]},
-  table:{l:'📋 Tableau', steps:[...CAP_TOUR_EXPLORE,
+  table:{l:'▤ Tableau', steps:[...CAP_TOUR_EXPLORE.slice(1),
+    {s:'#cap-table-tabs', t:'🗂 Onglets', x:'Chaque onglet garde sa propre vue : colonnes et leur ordre, filtres, largeurs, tri. <b>+</b> ajoute un onglet (copie des colonnes affichées) ; double-clic pour le renommer ; ✕ le ferme.'},
     {s:'#cap-table-toolbar', t:'🧰 Commandes du tableau',
-     x:'<b>⊞ Colonnes</b> choisit les colonnes, <b>✨ Colonne par chemin</b> en calcule une en suivant des relations (metachain), <b>≡ En ligne</b> règle les cellules multiples, <b>💾 Sauver vue</b> / <b>📂 Charger vue</b> gardent la configuration, <b>↺ Réinitialiser</b> revient au départ.'},
-    {s:'#cap-table-head', t:'↕ En-têtes', x:'Clic sur un titre pour trier ; le champ <i>Filtrer…</i> sous chaque titre filtre la colonne. Les bords des colonnes se tirent pour les redimensionner.'},
+     x:'<b>⊞ Colonnes</b> choisit les colonnes : calculées, par chemin, <b>relations</b> (→ cibles / ← sources) et attributs du fichier. <b>✨ Colonne par chemin</b> en calcule une en suivant des relations (metachain), avec aperçu en direct. <b>≡ En ligne</b> règle les cellules multiples, <b>⬇ CSV</b> exporte les colonnes affichées, <b>💾 Sauver vue</b> / <b>📂 Charger vue</b> gardent la configuration de l\'onglet, <b>↺ Réinitialiser</b> revient au départ.'},
+    {s:'#cap-table-head', t:'↕ En-têtes', x:'<b>Clic</b> sur un titre : tri ▲, puis ▼, puis sans tri. <b>Glisser</b> un titre sur un autre : change l\'ordre des colonnes. Le champ <i>Filtrer…</i> filtre la colonne ; le bord droit d\'un titre se tire pour la largeur.'},
     {s:'#cap-pagination', t:'📄 Pages', x:'Navigation de page en page et nombre de lignes par page.'}]},
   index:{l:'📖 Index des types', steps:[CAP_TOUR_EXPLORE[0],
     {s:'#cap-view-index input.inp', t:'🔍 Recherche', x:'Cherche un type par son nom technique, son nom lisible ou sa description.'},
@@ -274,10 +266,9 @@ var _capTourResume=false;   // vrai : reprendre « Bien démarrer » (2e temps) 
 var _capTour=null;   // visite en cours : {i, steps} ou null
 
 /** Clé de la vue affichée pour les visites contextuelles.
- * @returns {string} '@rm', '@table' ou vue Capella (capCurrentView)
+ * @returns {string} '@rm' ou vue Capella (capCurrentView)
  */
 function capTourCtxKey(){
-  if(currentMode==='table') return '@table';
   if(currentMode!=='capella') return '@rm';
   return capCurrentView;
 }

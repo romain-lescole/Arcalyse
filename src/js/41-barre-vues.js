@@ -9,7 +9,7 @@
 var CAP_NAV_ITEMS=[
   {k:'tree',      l:'🌳 Arborescence',      g:'explore'},
   {k:'cards',     l:'▦ Cartes',             g:'explore'},
-  {k:'table',     l:'📋 Tableau',           g:'explore'},
+  {k:'table',     l:'▤ Tableau',            g:'',     t:'Tableau de tous les éléments du modèle : onglets de vues, colonnes d\'attributs, de relations et par chemin, tri, filtres, export CSV'},
   {k:'index',     l:'📖 Index des types',   g:'explore'},
   {k:'chains',    l:'⚡ Chaînes',           g:'flux'},
   {k:'fex',       l:'ƒ⇆ Functional Exchange', g:'flux', t:'Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles'},
@@ -34,16 +34,27 @@ var CAP_NAV_ITEMS=[
 ];
 /** Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton). */
 var CAP_NAV_GROUPS=[
-  {g:'explore', id:'cap-v-elements', l:'🧭 Explorateur',       t:'Explorer le modèle : arborescence, cartes, tableau, index des types'},
+  {g:'explore', id:'cap-v-elements', l:'🧭 Explorateur',       t:'Explorer le modèle : arborescence, cartes, index des types'},
   {g:'flux',    id:'cap-v-flux',     l:'📡 Flux & interfaces', t:'Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, scénarios, ports, liens'},
   {g:'',        id:'',               l:'',                     t:''},   // place des vues sans menu
   {g:'ana',     id:'cap-v-analyses', l:'🔬 Analyses',          t:'Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes'}
 ];
-/** Réglage par défaut : tous les menus affichés, ⚡ Chaînes, 🎬 Scénarios et 📐 Tableau de bord en boutons directs. */
-var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['chains','scen','dashboard']};
+/** Réglage par défaut : tous les menus affichés, ▤ Tableau, ⚡ Chaînes, 🎬 Scénarios et 📐 Tableau de bord en boutons directs
+ * (tbl : marque d'un réglage qui connaît le bouton ▤ Tableau, voir capNavMigrate). */
+var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['table','chains','scen','dashboard'], tbl:1};
 var _capNav=(()=>{ try{ const el=document.getElementById('cap-toolbar'); const o=el&&JSON.parse(el.textContent);
-  if(o&&o.groups&&Array.isArray(o.pins)) return o; }catch(e){} return JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); })();
+  if(o&&o.groups&&Array.isArray(o.pins)) return capNavMigrate(o); }catch(e){} return JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); })();
 var _capNavLast={explore:'cards', flux:'chains', ana:'ana:trace'};   // dernière sous-vue ouverte par menu
+
+/** Met à jour un réglage de barre enregistré avant l'arrivée du bouton ▤ Tableau (ancienne 📊 Table View
+ * retirée, 📋 Tableau sorti du menu 🧭 Explorateur) : le bouton ▤ Tableau est ajouté une fois.
+ * @param {object} o - Réglage {groups, pins}
+ * @returns {object} Réglage mis à jour
+ */
+function capNavMigrate(o){
+  if(!o.tbl){ o.tbl=1; if(!o.pins.includes('table')) o.pins.unshift('table'); }
+  return o;
+}
 
 /** Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML). */
 function capNavSave(){
@@ -61,12 +72,12 @@ function capNavCurKey(force){
   return capCurrentView==='analyses'?'ana:'+capAnaSub:capCurrentView;
 }
 
-/** Ouvre une vue du catalogue (ou Relation Map / Table View pour les clés @rm, @table).
+/** Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
  * @param {string} k - Clé de la vue
  */
 function capNavOpen(k){
   capNavClose();
-  if(k==='@rm'||k==='@table'){ document.getElementById(k==='@rm'?'mode-rm':'mode-table')?.click(); return; }
+  if(k==='@rm'){ document.getElementById('mode-rm')?.click(); return; }
   if(k.startsWith('ana:')){ capAnaSub=k.slice(4); capShowView('analyses'); }
   else capShowView(k);
 }
@@ -102,7 +113,9 @@ function capNavRender(){
   CAP_NAV_GROUPS.forEach(G=>{
     if(G.g&&_capNav.groups[G.g]!==false)
       h+=`<div class="tbtn cap-nav-grp" id="${G.id}" data-g="${G.g}" title="${G.t}">${G.l}<span class="cap-nav-arr" data-dd="${G.g}" title="Choisir une vue">▾</span></div>`;
-    CAP_NAV_ITEMS.filter(i=>i.g===G.g&&_capNav.pins.includes(i.k)).forEach(i=>h+=pin(i.k));
+    CAP_NAV_ITEMS.filter(i=>i.g===G.g&&_capNav.pins.includes(i.k)&&i.k!=='table').forEach(i=>h+=pin(i.k));
+    // ▤ Tableau : juste après le menu 🧭 Explorateur
+    if(G.g==='explore'&&_capNav.pins.includes('table')) h+=pin('table');
   });
   // Vues épinglées sans menu placées après le dernier groupe (📐 Tableau de bord)
   h=h.replace(pin('dashboard'),'');
@@ -208,9 +221,9 @@ function capNavMenuFill(){
       <div class="ctx-i" data-act="save" title="Page HTML autonome : modèle + interface et vues">💾 Enregistrer${sc('Ctrl+S')}</div>
       <div class="ctx-i" data-act="saveas">💾 Enregistrer sous…${sc('Ctrl+Maj+S')}</div>
       <div class="ctx-i" data-act="page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome">🌐 Télécharger la page HTML</div>
-      <div class="cap-nav-hint">La page HTML enregistrée contient : <b>le modèle chargé</b>, la barre des vues (menus, épingles), les tableaux de bord, les colonnes et vues du 📋 Tableau et de la 📊 Table View, le thème et les règles de nommage.<br>Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues.</div>
+      <div class="cap-nav-hint">La page HTML enregistrée contient : <b>le modèle chargé</b>, la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème et les règles de nommage.<br>Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues.</div>
       <div class="cw-m-sep"></div>
-      <div class="ctx-i" data-act="cfgsave" title="Fichier .json sans le modèle : barre, tableaux de bord, 📋 Tableau, 📊 Table View, thème, règles de nommage (au choix)">⚙ Enregistrer l'interface et les vues…</div>
+      <div class="ctx-i" data-act="cfgsave" title="Fichier .json sans le modèle : barre, tableaux de bord, ▤ Tableau, thème, règles de nommage (au choix)">⚙ Enregistrer l'interface et les vues…</div>
       <div class="ctx-i" data-act="cfgload" title="Applique un fichier .json d'interface (au choix des parties)">⚙ Charger une interface et des vues…</div>
       <div class="cap-nav-hint">Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page.</div>`;
     return;
@@ -236,7 +249,7 @@ function capNavMenuFill(){
   const q=norm((dd.querySelector('#cap-nav-q')||{}).value||'').trim();
   const gl=x=>(CAP_NAV_GROUPS.find(G=>G.g===x)||{}).l||'';
   if(q){
-    const all=[{k:'@rm',l:'🗺 Relation Map',g:''},{k:'@table',l:'📊 Table View',g:''},...CAP_NAV_ITEMS];
+    const all=[{k:'@rm',l:'🗺 Relation Map',g:''},...CAP_NAV_ITEMS];
     const hit=all.filter(i=>q.split(/\s+/).every(w=>norm(i.l+' '+gl(i.g)+' '+(i.t||'')).includes(w)));
     const inName=i=>q.split(/\s+/).every(w=>norm(i.l).includes(w)); hit.sort((a,b)=>inName(b)-inName(a));   // le nom de la vue prime sur l'info-bulle
     res.innerHTML=hit.length?hit.map(i=>capNavRow(i,gl(i.g))).join(''):'<div class="cap-nav-hint">Aucune vue ne correspond.</div>';

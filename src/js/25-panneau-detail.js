@@ -102,7 +102,7 @@ document.getElementById('cap-detail-close')?.addEventListener('click',()=>{const
 
 // ── Sub-toolbar wiring ──
 // ── Capella toolbar view buttons (now in main toolbar) ──
-const CAP_ELEM_VIEWS=['tree','cards','table','index']; // vues regroupées sous le menu 🧭 Explorateur
+const CAP_ELEM_VIEWS=['tree','cards','index']; // vues regroupées sous le menu 🧭 Explorateur (▤ Tableau : bouton direct)
 let capElemView='cards';                               // dernier onglet ouvert dans 🧭 Explorateur
 /** Met à jour les boutons actifs et les groupes de contrôles visibles
  * selon la vue Capella courante (tree/cards/table/links/chains/physlink).
@@ -114,6 +114,8 @@ function capUpdateToolbarForView(view){
   const treeGrp=document.getElementById('cap-tb-tree-grp');
   if(layerGrp) layerGrp.style.display=(view==='cards'||view==='table')?'flex':'none';
   if(treeGrp)  treeGrp.style.display=(view==='tree')?'flex':'none';
+  // ▤ Tableau : son propre ⬇ CSV exporte les colonnes affichées ; celui de la barre (attributs bruts) reste pour ▦ Cartes
+  const expCsv=document.getElementById('cap-exp-csv'); if(expCsv) expCsv.style.display=view==='table'?'none':'';
   // Barre de recherche / statistiques et compteur : inutiles dans les vues qui ont leurs propres filtres
   const own=['functions','analyses','dashboard','links','chains','physlink','compex','fex','oav','scen','cblk','csys','ports','index'].includes(view);
   const sub=document.getElementById('cap-sub-toolbar'), rc=document.getElementById('cap-result-count');
@@ -121,7 +123,7 @@ function capUpdateToolbarForView(view){
   // Barre latérale des types : inutile dans les vues de 🔗 Liens à 📐 Tableau de bord
   const noSide=['links','chains','physlink','compex','fex','oav','scen','cblk','csys','ports','functions','analyses','dashboard'].includes(view);
   ['cap-sidebar','cap-sidebar-resizer'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display=noSide?'none':'flex'; });
-  // Menu 🧭 Explorateur : regroupe Arborescence, Cartes, Tableau et Index des types (onglets #cap-elem-tabs)
+  // Menu 🧭 Explorateur : regroupe Arborescence, Cartes et Index des types (onglets #cap-elem-tabs)
   const isElem=CAP_ELEM_VIEWS.includes(view);
   if(isElem) capElemView=view;
   const tabs=document.getElementById('cap-elem-tabs');
@@ -137,7 +139,7 @@ function capUpdateToolbarForView(view){
 function capShowView(view){
   capCurrentView=view; capPage=0;
   capUpdateToolbarForView(view);
-  if(currentMode!=='capella') applyMode('capella'); // bascule depuis Relation Map / Table View
+  if(currentMode!=='capella') applyMode('capella'); // bascule depuis la Relation Map
   else capRenderCurrentView();
 }
 // Boutons de vue de la barre du haut : voir 41-barre-vues.js (menus, épingles, Ctrl+K)

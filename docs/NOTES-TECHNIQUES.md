@@ -24,7 +24,7 @@ Historique : ce document reprend le fichier « CONSIGNES » utilisé avant le d�
 
 ## 4. Modes et vues
 
-**Toolbar sur 2 niveaux** : niveau 1 (`#toolbar`) = modes 🗺 Relation Map · 📊 Table View · 🔷 Capella Data (PBS masqué) + onglets Capella Data toujours visibles dès qu'un modèle est chargé (clic = bascule en Capella Data) ; niveau 2 (`#toolbar2`) = commandes Relation Map (zoom, fit, ouvrir/fermer, Nums, Légende, Relations, Noms, Unique, Compact), visible seulement en mode graphe.
+**Toolbar sur 2 niveaux** : niveau 1 (`#toolbar`) = modes 🗺 Relation Map · 🔷 Capella Data (PBS masqué ; la 📊 Table View a été retirée, remplacée par le ▤ Tableau) + onglets Capella Data toujours visibles dès qu'un modèle est chargé (clic = bascule en Capella Data) ; niveau 2 (`#toolbar2`) = commandes Relation Map (zoom, fit, ouvrir/fermer, Nums, Légende, Relations, Noms, Unique, Compact), visible seulement en mode graphe.
 
 **Vues Capella Data** (`capCurrentView`, routage dans `capRenderCurrentView`) :
 
@@ -32,7 +32,7 @@ Historique : ce document reprend le fichier « CONSIGNES » utilisé avant le d�
 |---|---|---|
 | 🌳 Arborescence | `capRenderTreeNode` | Arbre du modèle |
 | ▦ Cartes | — | Éléments groupés par couche ARCADIA |
-| 📋 Tableau | `capRenderTable` / `capRenderTableBodyOnly` | Colonnes paramétrables, filtres, colonnes Metachain, sauvegarde de vue JSON |
+| ▤ Tableau (bouton direct, hors 🧭 Explorateur) | `capRenderTable` / `capRenderTableBodyOnly` (21), `capRenderTableTabs`… (51) | Onglets de vues, colonnes paramétrables (attributs, relations, par chemin), tri, glisser-déposer, filtres, CSV, sauvegarde de vue JSON |
 | 🔗 Liens | `capComputeLinks` | Relations Capella |
 | ⚡ Chaînes | `capRenderChains` | Voir §6 |
 | 🔌 Physical Link | `capComputePhysLinks` / `capRenderPhysLink` | Vues Ligne / Composant / ▦ Matrice / 🩺 Contrôles ; CE alloués (`ComponentExchangeAllocation`), CP alloués aux ports physiques (`ComponentPortAllocation`), acteurs ; filtre avec/sans CE ; exports CSV/HTML |
@@ -48,8 +48,10 @@ Historique : ce document reprend le fichier « CONSIGNES » utilisé avant le d�
 Chaînes de navigation Metaclass → Property, façon MagicDraw.
 
 - **Tableau Capella** : `capGetMetachainProperties`, `capResolveStep`, `capResolveMetachain`, `capExtractValue`. Types de propriétés : terminales (Name, ID, Type, Human Type, attributs), `owner`, `owned`, `via` (intermédiaire), relations Capella, `attr` (référence sortante), `incoming` (référence entrante).
-- **✨ Colonne par chemin — 👁 Aperçu en direct** (21, commun aux deux vues) : `capPpRender(which, steps)` avec un adaptateur (`capPpCapAdapter` / `capPpTvAdapter`) ; `capPpTrace` rejoue le chemin pas à pas avec la même logique que `capResolveMetachain` / `tvResolveMetachain` (à garder alignés). L'exemple est choisi automatiquement parmi les éléments donnant un résultat tant que l'utilisateur n'en a pas choisi un (`_capPpState[which].auto`) ; le taux de remplissage est borné à 120 ms de calcul.
-- **Table View** : équivalents préfixés `tv…`, calculés sur le jeu complet `tvAllRows()` (tous les éléments du fichier, pas seulement ceux injectés dans l'arborescence) ; attributs via `tvRowAttrs(el)`.
+- **✨ Colonne par chemin — 👁 Aperçu en direct** (21) : `capPpRender(which, steps)` avec un adaptateur (`capPpCapAdapter`) ; `capPpTrace` rejoue le chemin pas à pas avec la même logique que `capResolveMetachain` (à garder alignés). L'exemple est choisi automatiquement parmi les éléments donnant un résultat tant que l'utilisateur n'en a pas choisi un (`_capPpState[which].auto`) ; le taux de remplissage est borné à 120 ms de calcul.
+- **Table View retirée** (oct. 2026) : le module 10 et son moteur `tv…` sont supprimés ; un seul tableau, le ▤ Tableau (21 + 51). Les réglages anciens (`cap-ui-views.tv`, partie ⚙ « tv », vue `table-view-config`) sont convertis par `capTableImportTv` / `capTableApplyViewFile` : onglets « … (Table View) », colonnes par chemin reprises sauf celles qui suivaient une relation de la Relation Map (moteur différent). `rmSetElemVal` et `onModelChanged` (Relation Map) ont été déplacés dans 09.
+- **▤ Tableau — état** : `capTableTabs` / `capTableTabIdx` / `capTableSort` sont déclarés dans 21 (relus au chargement par `capCfgRestoreViews`, module 46) ; les fonctions sont dans 51 (hissées). Pas de `const`/`let` de premier niveau dans 51 utilisé au chargement (d'où `var` et la table de correspondance locale de `capTableTvTab`). Les variables de travail (`capTableVisibleCols`, filtres, largeurs, tri) sont recopiées dans l'onglet actif à chaque rendu (`capTableSyncToTab`).
+- **Colonnes de relations** : clé `rel:<clé CAP_LINK_SECTIONS>:out|in` ; index `capTableRelIndex` mémoïsé sur `capLinksData` (remis à zéro au chargement d'un modèle, 20). Barre ☰ : réglage `tbl` (`capNavMigrate`) ajoute une fois le bouton ▤ Tableau aux réglages enregistrés avant son arrivée.
 
 ## 6. Vue ⚡ Chaînes (dernier chantier)
 

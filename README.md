@@ -69,9 +69,9 @@ Choisissez parmi des dizaines d'indicateurs (nombre d'éléments, allocation des
 ![Tableau de bord](docs/captures/08-tableau-de-bord.png)
 
 ### Et aussi
-- 🧭 **Explorateur** : arborescence, cartes par couche, tableau paginé aux colonnes calculées, index des types ARCADIA.
+- 🧭 **Explorateur** : arborescence, cartes par couche, index des types ARCADIA.
 - 🔗 **Liens** : toutes les relations du modèle, filtrables et exportables.
-- 📊 **Table View** : tableaux construits à la demande en suivant les relations du modèle.
+- ▤ **Tableau** : tous les éléments en tableau, avec onglets de vues, colonnes de relations et colonnes calculées par chemin (aperçu en direct), tri, filtres et export CSV.
 - 🎨 **Thèmes** : Sombre, Clair, Office 2007, contraste élevé, et votre thème personnalisé.
 - 🎓 **Visite guidée** et aide intégrée, pour chaque vue.
 - 💾 **Page HTML** : enregistrez l'application avec votre modèle, vos tableaux de bord et vos réglages, en un seul fichier à transmettre.

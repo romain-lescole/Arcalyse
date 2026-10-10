@@ -461,7 +461,7 @@ function updateInfo() {
 function typSelectAll(v) {
   [...new Set([...Object.keys(TCFG),...MODEL.elements.map(e=>e.type)])].forEach(t=>S.typF[t]=v);
   buildPanel();
-  if (currentMode==='table') buildTableView(); else rebuildTree();
+  rebuildTree();
 }
 
 /** Coche ou décoche tous les filtres de types de relations du panneau gauche.
@@ -469,5 +469,5 @@ function typSelectAll(v) {
 function relSelectAll(v) {
   Object.keys(S.relF).forEach(t=>S.relF[t]=v);
   buildPanel();
-  if (currentMode!=='table') rebuildTree();
+  rebuildTree();
 }

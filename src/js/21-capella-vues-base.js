@@ -109,6 +109,10 @@ let capTableColWidths = {};       // { colKey: largeurPx }
 let capTableColFilters = {};      // { colKey: texte de filtre }
 let capTableMultiValDisplay = 'inline'; // 'inline' (en ligne, virgules) | 'stacked' (empilé verticalement)
 let capTableCustomCols = [];      // [{key, label, steps:[{kind, relKey?, direction?, filterType?}]}]
+let capTableSort = {col:null, dir:1}; // tri de l'onglet actif (dir : 1 croissant, -1 décroissant)
+let capTableTabs = null;          // onglets de vues [{id, name, visibleCols, colFilters, colWidths, sort}] (51-tableau.js)
+let capTableTabIdx = 0;           // index de l'onglet actif
+let _capColResizing = false;      // redimensionnement de colonne en cours (évite un tri ou un déplacement au relâchement)
 
 /** Calcule dynamiquement la liste de TOUS les noms d'attributs présents dans capAllElements
  * (union de toutes les clés de el.attrs sur tous les éléments du fichier XML chargé). */
@@ -416,7 +420,7 @@ function capGetMetachainProperties(metaclass){
 function capResolveStep(el, prop){
   if (prop.kind==='owned') {
     const {childrenOf} = capGetParentIndex();
-    const kids = (childrenOf[el.id]||[]).map(cid=>capAllElements.find(c=>c.id===cid)).filter(Boolean);
+    const kids = (childrenOf[el.id]||[]).map(capGetElementById_).filter(Boolean);
     return prop.childFilterType ? kids.filter(k=>k.typeName===prop.childFilterType) : kids;
   }
   if (prop.kind==='rel') {
@@ -425,9 +429,9 @@ function capResolveStep(el, prop){
     const out=[];
     rows.forEach(r=>{
       if (prop.direction==='fwd' && r.src.id===el.id) {
-        const t=capAllElements.find(c=>c.id===r.tgt.id); if(t) out.push(t);
+        const t=capGetElementById_(r.tgt.id); if(t) out.push(t);
       } else if (prop.direction==='rev' && r.tgt.id===el.id) {
-        const s=capAllElements.find(c=>c.id===r.src.id); if(s) out.push(s);
+        const s=capGetElementById_(r.src.id); if(s) out.push(s);
       }
     });
     return out;
@@ -530,6 +534,7 @@ function capResolveMetachain(el, steps){
  * unique renvoient un tableau d'un seul élément). Permet au rendu de cellule de choisir
  * l'affichage (en ligne, séparé par virgules, ou empilé verticalement) sans recalculer. */
 function capTableGetValArray(el, colKey){
+  if (colKey.startsWith('rel:')) { const v=capTableRelValues(el, colKey); return v.length ? v : ['']; }
   if (colKey==='layer')    return [el.layer||''];
   if (colKey==='typeName') return [el.typeName||''];
   if (colKey==='humanType')return [(CAP_HUMAN_NAMES[el.typeName]||{}).h||''];
@@ -539,12 +544,12 @@ function capTableGetValArray(el, colKey){
     const {parentOf} = capGetParentIndex();
     const pid = parentOf[el.id];
     if (!pid) return [''];
-    const p = capAllElements.find(c=>c.id===pid);
+    const p = capGetElementById_(pid);
     return [p ? (p.attrs.name||p.typeName) : pid];
   }
   if (colKey==='ownedElement') {
     const {childrenOf} = capGetParentIndex();
-    const kids = (childrenOf[el.id]||[]).map(cid=>capAllElements.find(c=>c.id===cid)).filter(Boolean);
+    const kids = (childrenOf[el.id]||[]).map(capGetElementById_).filter(Boolean);
     return kids.length ? kids.map(k=>k.attrs.name||k.typeName) : [''];
   }
   // Colonne personnalisée : chaîne de navigation multi-étapes (metachain)
@@ -570,6 +575,7 @@ function capTableGetVal(el, colKey){
 function capTableColLabel(colKey){
   const builtinLabels={layer:'Couche',typeName:'Type',humanType:'Human Type',name:'Name',id:'ID',parent:'Owner',ownedElement:'Owned element'};
   if (builtinLabels[colKey]) return builtinLabels[colKey];
+  if (colKey.startsWith('rel:')) return capTableRelLabel(colKey);
   const custom = capTableCustomCols.find(c=>c.key===colKey);
   if (custom) return custom.label;
   return colKey; // attribut brut : son nom XML tel quel
@@ -644,8 +650,15 @@ function capBuildTableToolbar(){
   };
   tb.appendChild(displayToggle);
 
+  // Export CSV des colonnes affichées (toutes les lignes filtrées, dans l'ordre du tri)
+  const csvBtn=document.createElement('div'); csvBtn.className='tbtn';
+  csvBtn.title='Exporter en CSV les colonnes affichées, pour toutes les lignes filtrées (ordre du tri)';
+  csvBtn.textContent='⬇ CSV';
+  csvBtn.onclick=()=>capTableCsv();
+  tb.appendChild(csvBtn);
+
   // Bouton sauvegarder/charger la vue tableau (colonnes + metachains + filtres + largeurs)
-  const saveBtn=document.createElement('div'); saveBtn.className='tbtn'; saveBtn.title='Sauvegarder cette vue tableau (colonnes, metachains, filtres) dans un fichier';
+  const saveBtn=document.createElement('div'); saveBtn.className='tbtn'; saveBtn.title='Sauvegarder la vue de cet onglet (colonnes, colonnes par chemin, filtres, largeurs, tri) dans un fichier';
   saveBtn.textContent='💾 Sauver vue';
   saveBtn.onclick=()=>capSaveTableView();
   tb.appendChild(saveBtn);
@@ -658,8 +671,9 @@ function capBuildTableToolbar(){
   // Bouton de réinitialisation (colonnes, largeurs, filtres)
   const resetBtn=document.createElement('div'); resetBtn.className='tbtn';
   resetBtn.textContent='↺ Réinitialiser';
+  resetBtn.title='Revenir aux colonnes, à l\'ordre, aux largeurs et au tri de départ, sans filtre (onglet affiché)';
   resetBtn.onclick=()=>{
-    capTableVisibleCols=null; capTableColWidths={}; capTableColFilters={};
+    capTableVisibleCols=null; capTableColWidths={}; capTableColFilters={}; capTableSort={col:null, dir:1};
     capRenderTable();
   };
   tb.appendChild(resetBtn);
@@ -688,15 +702,7 @@ function capRefreshColPickerList(){
     const cb=document.createElement('input'); cb.type='checkbox';
     cb.checked = (capTableVisibleCols||CAP_TABLE_BUILTIN_COLS).includes(colKey);
     cb.onclick=ev=>ev.stopPropagation();
-    cb.onchange=()=>{
-      if (!capTableVisibleCols) capTableVisibleCols=[...CAP_TABLE_BUILTIN_COLS];
-      if (cb.checked) { if(!capTableVisibleCols.includes(colKey)) capTableVisibleCols.push(colKey); }
-      else capTableVisibleCols=capTableVisibleCols.filter(c=>c!==colKey);
-      // Ne reconstruit QUE le tableau (pas la toolbar / le menu) pour garder le menu ouvert
-      capRenderTableBodyOnly();
-      const btnEl=document.querySelector('#cap-table-toolbar .tbtn');
-      if (btnEl) btnEl.textContent=`⊞ Colonnes (${(capTableVisibleCols||CAP_TABLE_BUILTIN_COLS).length})  ▾`;
-    };
+    cb.onchange=()=>toggleCol(colKey, cb.checked);
     const lbl=document.createElement('span'); lbl.textContent=label; lbl.style.flex='1';
     item.appendChild(cb); item.appendChild(lbl);
     if (editable) {
@@ -720,6 +726,17 @@ function capRefreshColPickerList(){
     return true;
   }
 
+  /** Affiche ou masque une colonne, sans fermer le menu. */
+  function toggleCol(colKey, on){
+    if (!capTableVisibleCols) capTableVisibleCols=[...CAP_TABLE_BUILTIN_COLS];
+    if (on) { if(!capTableVisibleCols.includes(colKey)) capTableVisibleCols.push(colKey); }
+    else capTableVisibleCols=capTableVisibleCols.filter(c=>c!==colKey);
+    // Ne reconstruit QUE le tableau (pas la toolbar / le menu) pour garder le menu ouvert
+    capRenderTableBodyOnly();
+    const btnEl=document.querySelector('#cap-table-toolbar .tbtn');
+    if (btnEl) btnEl.textContent=`⊞ Colonnes (${(capTableVisibleCols||CAP_TABLE_BUILTIN_COLS).length})  ▾`;
+  }
+
   let any=false;
   const sec1=addSection('Colonnes calculées');
   if(addItem('layer','Couche'))any=true; if(addItem('typeName','Type'))any=true; if(addItem('humanType','Human Type'))any=true;
@@ -727,11 +744,14 @@ function capRefreshColPickerList(){
   if (!sec1.nextSibling || sec1.nextSibling.className!=='cap-colpicker-item') sec1.remove();
 
   if (capTableCustomCols.length) {
-    const sec2=addSection('Colonnes personnalisées');
+    const sec2=addSection('Colonnes par chemin');
     let sec2any=false;
     capTableCustomCols.forEach(c=>{ if(addItem(c.key, c.label, true, true)) sec2any=true; });
     if (!sec2any) sec2.remove();
   }
+
+  // Relations de 🔗 Liens, par groupe, avec les deux sens (51-tableau.js)
+  capTableRelPicker(listWrap, q, toggleCol);
 
   const sec3=addSection('Attributs du fichier XML');
   let sec3any=false;
@@ -746,9 +766,11 @@ function capApplyColResize(th, colKey, table){
   handle.onmousedown=ev=>{
     ev.preventDefault(); ev.stopPropagation();
     const startX=ev.clientX, startW=th.getBoundingClientRect().width;
+    _capColResizing=true;
     handle.classList.add('resizing'); table.classList.add('cap-resizing');
     const onMove=ev2=>{ const w=Math.max(50,startW+(ev2.clientX-startX)); th.style.width=w+'px'; capTableColWidths[colKey]=w; };
     const onUp=()=>{ handle.classList.remove('resizing'); table.classList.remove('cap-resizing');
+      setTimeout(()=>{ _capColResizing=false; },0);
       document.removeEventListener('mousemove',onMove); document.removeEventListener('mouseup',onUp); };
     document.addEventListener('mousemove',onMove); document.addEventListener('mouseup',onUp);
   };
@@ -856,16 +878,16 @@ function capRenderCustomColPanel(){
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   COLONNE PAR CHEMIN — Aperçu en direct (commun au 📋 Tableau et à la 📊 Table View)
+   COLONNE PAR CHEMIN — Aperçu en direct (▤ Tableau)
    On choisit un élément d'exemple du type de départ ; l'aperçu montre, étape par
    étape, les éléments atteints puis la valeur qui apparaîtra dans la cellule.
-   Chaque vue fournit un « adaptateur » (accès à ses éléments et à son moteur).
+   Un « adaptateur » donne accès aux éléments et au moteur de chemin.
    ═══════════════════════════════════════════════════════════════════════ */
 const CAP_PP_MAX_CHIPS = 12;   // éléments affichés par étape avant « +N »
 const CAP_PP_MAX_OPTS  = 400;  // options proposées dans la liste des exemples
-const _capPpState = {cap:{type:null,id:null,q:'',auto:true}, tv:{type:null,id:null,q:'',auto:true}}; // exemple par vue (auto = pas encore choisi par l'utilisateur)
+const _capPpState = {cap:{type:null,id:null,q:'',auto:true}}; // exemple choisi (auto = pas encore choisi par l'utilisateur)
 
-/** Adaptateur de l'aperçu pour le 📋 Tableau Capella (capAllElements, moteur cap…).
+/** Adaptateur de l'aperçu pour le ▤ Tableau Capella (capAllElements, moteur cap…).
  * @returns {object} Fonctions d'accès aux éléments et au moteur de chemin */
 function capPpCapAdapter(){
   return {
@@ -880,23 +902,8 @@ function capPpCapAdapter(){
   };
 }
 
-/** Adaptateur de l'aperçu pour la 📊 Table View (tvAllRows, moteur tv…).
- * @returns {object} Fonctions d'accès aux éléments et au moteur de chemin */
-function capPpTvAdapter(){
-  return {
-    of:    t=>tvAllRows().filter(e=>e.type===t),
-    byId:  id=>tvAllRows().find(e=>e.id===id),
-    name:  e=>e.name||'(sans nom)',
-    type:  e=>e.type,
-    typeLabel: t=>t,
-    step:  tvResolveStep,
-    value: tvExtractValue,
-    resolve: tvResolveMetachain,
-  };
-}
-
 /** Déroule le chemin pas à pas depuis un élément, en gardant chaque niveau intermédiaire
- * (même logique que capResolveMetachain / tvResolveMetachain).
+ * (même logique que capResolveMetachain).
  * @param {object} el - Élément de départ
  * @param {Array} steps - Étapes {metaclass, property}
  * @param {object} ad - Adaptateur de la vue
@@ -927,12 +934,12 @@ function capPpHasResult(el, steps, ad){
 /** Rend la zone « 👁 Aperçu en direct » d'un panneau de colonne par chemin : choix de
  * l'élément d'exemple (recherche, liste, exemple suivant donnant un résultat), taux de
  * remplissage estimé, puis le chemin parcouru étape par étape et le contenu de la cellule.
- * @param {string} which - 'cap' (📋 Tableau) ou 'tv' (📊 Table View)
+ * @param {string} which - 'cap' (▤ Tableau)
  * @param {Array} steps - Étapes en cours d'édition
  */
 function capPpRender(which, steps){
   const host=document.getElementById(which+'-customcol-preview'); if (!host) return;
-  const ad = which==='tv' ? capPpTvAdapter() : capPpCapAdapter();
+  const ad = capPpCapAdapter();
   const st=_capPpState[which];
   const t0 = steps[0] && steps[0].metaclass;
   host.innerHTML='';
@@ -1138,7 +1145,9 @@ document.getElementById('cap-customcol-create')?.addEventListener('click',()=>{
 function capSaveTableView(){
   const data = {
     type: 'capella-table-view',
-    version: 1,
+    version: 2,
+    name: (capTableTabs&&capTableTabs[capTableTabIdx]||{}).name,
+    sort: capTableSort,
     visibleCols: capTableVisibleCols || CAP_TABLE_BUILTIN_COLS,
     customCols: capTableCustomCols,
     colFilters: capTableColFilters,
@@ -1158,12 +1167,8 @@ function capLoadTableView(jsonText){
   let data;
   try { data = JSON.parse(jsonText); }
   catch(e) { alert('Fichier invalide : JSON illisible.'); return; }
-  if (data.type !== 'capella-table-view') { alert('Ce fichier ne semble pas être une vue tableau Capella valide.'); return; }
-  capTableCustomCols = data.customCols || [];
-  capTableVisibleCols = data.visibleCols || null;
-  capTableColFilters = data.colFilters || {};
-  capTableColWidths = data.colWidths || {};
-  capTableMultiValDisplay = data.multiValDisplay || 'inline';
+  // Vue du tableau, ou vue de l'ancienne 📊 Table View (convertie) : appliquée à l'onglet affiché
+  if (!capTableApplyViewFile(data)) { alert('Ce fichier ne semble pas être une vue de tableau valide.'); return; }
   capRenderTable();
 }
 document.getElementById('cap-table-view-input')?.addEventListener('change', ev=>{
@@ -1178,6 +1183,7 @@ document.getElementById('cap-table-view-input')?.addEventListener('change', ev=>
  * affichage, sauvegarde de vue), en-têtes collants, ligne de filtres et corps paginé.
  */
 function capRenderTable(){
+  capRenderTableTabs();
   capBuildTableToolbar();
   capRenderTableBodyOnly();
 }
@@ -1187,15 +1193,11 @@ function capRenderTable(){
  * sans fermer le menu déroulant qui reste ouvert au-dessus. */
 function capRenderTableBodyOnly(){
   if (!capTableVisibleCols) capTableVisibleCols=[...CAP_TABLE_BUILTIN_COLS];
+  capTableTabsEnsure(); capTableSyncToTab();   // l'onglet actif garde l'état affiché
   const cols = capTableVisibleCols;
 
-  let filtered=capGetFiltered();
-  // Filtres par colonne (en plus du filtre de recherche global existant)
-  Object.entries(capTableColFilters).forEach(([colKey,val])=>{
-    if (!val) return;
-    const q=val.toLowerCase();
-    filtered=filtered.filter(el=>capTableGetVal(el,colKey).toLowerCase().includes(q));
-  });
+  // Lignes filtrées (types, couche, recherche, filtres par colonne) puis triées (51-tableau.js)
+  const filtered=capTableRows();
 
   const rc=document.getElementById('cap-result-count'); if(rc)rc.textContent=`${filtered.length} élément(s)`;
   const total=filtered.length,start=capPage*capPageSize,end=Math.min(start+capPageSize,total),slice=filtered.slice(start,end);
@@ -1203,13 +1205,17 @@ function capRenderTableBodyOnly(){
   const thead=document.getElementById('cap-table-head'); const tbody=document.getElementById('cap-table-body');
   if(!thead||!tbody) return;
 
-  // En-têtes (cliquables pour trier serait une extension future ; ici : libellé + redim.)
+  // En-têtes : clic = tri (▲ ▼ puis sans tri), glisser-déposer = ordre des colonnes, bord droit = largeur
   thead.innerHTML='';
   const hrow=document.createElement('tr');
   cols.forEach(colKey=>{
     const th=document.createElement('th');
-    th.textContent=capTableColLabel(colKey);
-    th.title=colKey;
+    const label=capTableColLabel(colKey);
+    const ico=capTableSort.col===colKey ? (capTableSort.dir===1?'▲':'▼') : '⇅';
+    th.innerHTML=`<div class="th-inner"><span class="th-l">${capEsc(label)}</span><span class="th-sort${capTableSort.col===colKey?' on':''}">${ico}</span></div>`;
+    th.title=`${label}${label!==colKey?' ('+colKey+')':''}\nClic : trier · glisser : déplacer la colonne · bord droit : largeur`;
+    th.onclick=ev=>{ if(_capColResizing||ev.target.closest('.cap-col-resizer')) return; capTableSortCycle(colKey); };
+    capTableColDnD(th, colKey, thead);
     hrow.appendChild(th);
     capApplyColResize(th, colKey, table);
   });
