@@ -490,6 +490,11 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
   border-radius:4px;transition:background .1s;}
 .cap-tree-row:hover{background:var(--c-bg3);}
 .cap-tree-row.cap-hl .cap-tree-label{color:var(--c-accent);}
+.cap-tree-row.cap-dim .cap-tree-label,.cap-tree-row.cap-dim .cap-tree-icon,.cap-tree-row.cap-dim .cap-tree-chip{opacity:.45;}
+.cap-tree-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:0 0 8px;margin-bottom:6px;border-bottom:1px solid var(--c-border);position:sticky;top:-10px;background:var(--c-bg);z-index:3;}
+.cap-tree-bar .inp{width:240px;font-size:12px;padding:4px 8px;}
+.cap-tree-lrow{gap:6px;padding:3px 4px;}
+.cap-tree-path{font-size:10px;color:var(--c-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:40%;margin-left:auto;padding:0 8px;}
 .cap-tree-tog{width:16px;height:20px;flex-shrink:0;display:flex;align-items:center;
   justify-content:center;color:var(--c-dim);font-size:9px;transition:transform .15s;}
 .cap-tree-tog.open{transform:rotate(90deg);}

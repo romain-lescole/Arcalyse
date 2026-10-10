@@ -1293,12 +1293,71 @@ function capRenderTableBodyOnly(){
 
 // ── Tree ──
 /** Rend la vue Arborescence Capella (hiérarchie XML complète). */
+var capTreeView='tree';   // affichage de 🌳 Arborescence : 'tree' (arbre) ou 'list' (liste à plat)
+const CAP_TREE_LIST_MAX=300; // lignes au plus en ☰ Liste
+
+/** Rend la vue Arborescence : barre propre (recherche, 🌳 Arbre / ☰ Liste, déplier, réduire, JSON) créée
+ * une fois — la recherche garde le focus —, puis le contenu (capRenderTreeBody). */
 function capRenderTree(){
   const container=document.getElementById('cap-view-tree'); if(!container) return;
-  container.innerHTML='';
-  if(!capTreeData) return;
-  const filter=capTreeFilter.toLowerCase();
-  capRenderTreeNode(capTreeData,container,0,filter);
+  if(!document.getElementById('cap-tree-bar')){
+    container.innerHTML=`<div id="cap-tree-bar" class="cap-tree-bar">
+      <input class="inp" id="cap-tree-q" placeholder="🔍 Chercher (nom ou type)…">
+      <span class="tb-grp" title="Affichage"><button class="phl-toggle-btn" data-tv="tree" title="Arbre ; avec une recherche : résultats dans leurs conteneurs, grisés s'ils ne correspondent pas">🌳 Arbre</button><button class="phl-toggle-btn" data-tv="list" title="Liste à plat triée par nom, avec le chemin des conteneurs (${CAP_TREE_LIST_MAX} lignes au plus)">☰ Liste</button></span>
+      <span class="tb-grp" data-tree-only><button class="tbtn" data-ta="open">⊞ Déplier</button><button class="tbtn" data-ta="close">⊟ Réduire</button></span>
+      <button class="tbtn" data-ta="json" title="Exporter les éléments des types cochés en JSON">⬇ JSON</button>
+      <span class="ana-fn-cnt" id="cap-tree-cnt"></span></div><div id="cap-tree-body"></div>`;
+    const q=document.getElementById('cap-tree-q'); q.value=capTreeFilter;
+    q.oninput=()=>{ capTreeFilter=q.value; capRenderTreeBody(); };
+    container.querySelectorAll('[data-tv]').forEach(b=>b.onclick=()=>{ capTreeView=b.dataset.tv; capRenderTreeBody(); });
+    container.querySelector('[data-ta="open"]').onclick=()=>document.getElementById('cap-expand-all')?.click();
+    container.querySelector('[data-ta="close"]').onclick=()=>document.getElementById('cap-collapse-all')?.click();
+    container.querySelector('[data-ta="json"]').onclick=()=>document.getElementById('cap-exp-json')?.click();
+  }
+  capRenderTreeBody();
+}
+
+/** Rend le contenu de 🌳 Arborescence selon l'affichage : arbre (avec une recherche : résultats et leurs
+ * conteneurs, grisés s'ils ne correspondent pas) ou liste à plat triée, avec chemin, bornée à CAP_TREE_LIST_MAX. */
+function capRenderTreeBody(){
+  const body=document.getElementById('cap-tree-body'); if(!body) return;
+  body.innerHTML='';
+  document.querySelectorAll('#cap-tree-bar [data-tv]').forEach(b=>b.classList.toggle('active', b.dataset.tv===capTreeView));
+  const only=document.querySelector('#cap-tree-bar [data-tree-only]'); if(only) only.style.display=capTreeView==='tree'?'':'none';
+  const cnt=document.getElementById('cap-tree-cnt');
+  if(!capTreeData){ if(cnt) cnt.textContent=''; return; }
+  const filter=capTreeFilter.trim().toLowerCase();
+  const isHit=n=>!filter||[(n.name||''),n.typeName,(CAP_HUMAN_NAMES[n.typeName]||{}).h||''].join(' ').toLowerCase().includes(filter);
+  // Éléments visibles (types cochés) et leur chemin de conteneurs visibles
+  const items=[];
+  const walk=(n,path)=>{
+    const vis=n.typeName!=='Project'&&capEnabledTypes.has(n.typeName);
+    if(vis&&isHit(n)) items.push({n,path});
+    const p=vis?[...path,n.name||n.typeName]:path;
+    (n.children||[]).forEach(c=>walk(c,p));
+  };
+  walk(capTreeData,[]);
+  if(cnt) cnt.textContent=filter?`${items.length} résultat(s)`:`${items.length} élément(s)`;
+  if(capTreeView==='list'){
+    items.sort((a,b)=>(a.n.name||'').localeCompare(b.n.name||'','fr'));
+    items.slice(0,CAP_TREE_LIST_MAX).forEach(({n,path})=>{
+      const lv=n.layer?CAP_LAYERS[n.layer]:null, color=lv?lv.color:'#8b949e', bg=lv?lv.bg:'rgba(139,148,158,.1)';
+      const row=document.createElement('div'); row.className='cap-tree-row cap-tree-lrow';
+      const pth=path.length>3?'… › '+path.slice(-3).join(' › '):path.join(' › ');
+      row.innerHTML=`<span class="cap-tree-icon" style="background:${bg};color:${color}">${capEsc(CAP_TYPE_ICON[n.typeName]||n.typeName.slice(0,2).toLowerCase())}</span>`
+        +`<span class="cap-tree-label${n.name?'':' unnamed'}" title="${capEsc(n.name||'')}">${capEsc(n.name||'—')}</span>`
+        +`<span class="cap-tree-path" title="${capEsc(path.join(' › '))}">${capEsc(pth)}</span>`
+        +`<span class="cap-tree-chip" style="color:${color};background:${bg}">${capEsc(n.typeName)}</span>`;
+      row.onclick=()=>capOpenDetailNode(n);
+      body.appendChild(row);
+    });
+    if(items.length>CAP_TREE_LIST_MAX){ const m=document.createElement('div'); m.className='ana-dim'; m.style.padding='8px';
+      m.textContent=`… ${items.length-CAP_TREE_LIST_MAX} autre(s) élément(s) non affiché(s) : précisez la recherche.`; body.appendChild(m); }
+    if(!items.length){ const m=document.createElement('div'); m.className='ana-dim'; m.style.padding='8px'; m.textContent='Aucun élément ne correspond.'; body.appendChild(m); }
+    return;
+  }
+  capRenderTreeNode(capTreeData,body,0,filter);
+  if(filter&&!items.length){ const m=document.createElement('div'); m.className='ana-dim'; m.style.padding='8px'; m.textContent='Aucun élément ne correspond.'; body.appendChild(m); }
 }
 /** Rend récursivement un nœud de l'arborescence Capella.
  * @param node Nœud capTreeData @param container Élément DOM parent
@@ -1318,13 +1377,14 @@ function capRenderTreeNode(node,container,depth,filter){
    * @param {object} n - Nœud à tester
    * @returns {boolean} Vrai si le nœud ou un descendant correspond
    */
-  function anyMatch(n){if(!filter)return true;if((n.name||'').toLowerCase().includes(filter)||n.typeName.toLowerCase().includes(filter))return true;if(n.children)for(const c of n.children)if(anyMatch(c))return true;return false;}
-  const matchSelf=!filter||(name.toLowerCase().includes(filter)||node.typeName.toLowerCase().includes(filter));
+  const selfHit=n=>[(n.name||''),n.typeName,(CAP_HUMAN_NAMES[n.typeName]||{}).h||''].join(' ').toLowerCase().includes(filter);
+  function anyMatch(n){if(!filter)return true;if(selfHit(n))return true;if(n.children)for(const c of n.children)if(anyMatch(c))return true;return false;}
+  const matchSelf=!filter||selfHit(node);
   if(!anyMatch(node)) return;
   const enabledCh=(node.children||[]).filter(c=>anyMatch(c));
   const hasCh=enabledCh.length>0;
   const nodeEl=document.createElement('div'); nodeEl.className='';
-  const row=document.createElement('div'); row.className='cap-tree-row'+(matchSelf&&filter?' cap-hl':'');
+  const row=document.createElement('div'); row.className='cap-tree-row'+(filter?(matchSelf?' cap-hl':' cap-dim'):'');   // recherche : conteneurs grisés s'ils ne correspondent pas
   row.style.paddingLeft=(depth*16+4)+'px';
   const tog=document.createElement('span'); tog.className='cap-tree-tog'+(hasCh?'':' leaf'); tog.textContent=hasCh?'▶':'';
   const icon=document.createElement('span'); icon.className='cap-tree-icon'; icon.style.cssText=`background:${bg};color:${color};`; icon.textContent=iconTxt;
@@ -1341,6 +1401,7 @@ function capRenderTreeNode(node,container,depth,filter){
     tog.addEventListener('click',e=>{e.stopPropagation();const o=childEl.classList.toggle('open');tog.classList.toggle('open',o);});
     row.addEventListener('click',()=>{const o=childEl.classList.toggle('open');tog.classList.toggle('open',o);capOpenDetailNode(node);});
     if(!filter&&depth<2){childEl.classList.add('open');tog.classList.add('open');}
+    if(filter) tog.classList.add('open');   // recherche : tout est déplié
   } else row.addEventListener('click',()=>capOpenDetailNode(node));
   container.appendChild(nodeEl);
 }

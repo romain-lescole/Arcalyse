@@ -30,7 +30,7 @@ Historique : ce document reprend le fichier « CONSIGNES » utilisé avant le d�
 
 | Onglet | Rendu | Contenu |
 |---|---|---|
-| 🌳 Arborescence | `capRenderTreeNode` | Arbre du modèle |
+| 🌳 Arborescence | `capRenderTree` (barre `#cap-tree-bar` créée une fois, garde le focus) → `capRenderTreeBody` → `capRenderTreeNode` | Arbre du modèle ; recherche `capTreeFilter` (conteneurs grisés `.cap-dim`), affichage `capTreeView` arbre / liste (≤ `CAP_TREE_LIST_MAX` = 300, avec chemin) ; `#cap-sub-toolbar` masqué |
 | ▦ Cartes | — | Éléments groupés par couche ARCADIA |
 | ▤ Tableau (bouton direct, hors 🧭 Explorateur) | `capRenderTable` / `capRenderTableBodyOnly` (21), `capRenderTableTabs`… (51) | Onglets de vues, colonnes paramétrables (attributs, relations, par chemin), tri, glisser-déposer, filtres, CSV, sauvegarde de vue JSON |
 | 🔗 Liens | `capComputeLinks` | Relations Capella |

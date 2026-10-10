@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3301 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3308 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -714,6 +714,14 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 1237 | Filtrer… |
 | 1259 | Aucun élément ne correspond aux filtres. |
 | 1259 | Aucun type coché pour cet onglet : cochez des types d'éléments dans le menu de gauche. |
+| 1304 | 🌳 Arbre |
+| 1306 | lignes au plus)" ☰ Liste ⊞ Déplier ⊟ Réduire ⬇ JSON |
+| 1340 | résultat(s) |
+| 1340 | élément(s) |
+| 1345 | cap-tree-row cap-tree-lrow |
+| 1355 | autre(s) élément(s) non affiché(s) : précisez la recherche. |
+| 1356 | Aucun élément ne correspond. |
+| 1360 | Aucun élément ne correspond. |
 
 ## js/22-capella-liens.js
 
@@ -2652,7 +2660,6 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 130 | Une carte par élément, regroupées par couche : type, nom et identifiant. Clic sur une carte : panneau de détail (propriétés, relations, liens). |
 | 131 | 🌳 Arborescence |
 | 132 | 🌳 Commandes |
-| 132 | ⊞ Déplier / ⊟ Réduire toute l'arborescence, ⬇ JSON l'exporte. |
 | 133 | 🌳 Arborescence |
 | 134 | ▤ Tableau |
 | 135 | 🏷 Types de l'onglet |

@@ -120,7 +120,8 @@ function capUpdateToolbarForView(view){
   const own=['functions','analyses','dashboard','links','chains','physlink','compex','fex','oav','scen','cblk','csys','ports','index'].includes(view);
   const sub=document.getElementById('cap-sub-toolbar'), rc=document.getElementById('cap-result-count');
   // ▤ Tableau : ni recherche ni filtre de couche (filtres par colonne), mais le compteur reste
-  if(sub) sub.style.display=(own||view==='table')?'none':'flex'; if(rc) rc.style.display=own?'none':'';
+  // 🌳 Arborescence : sa propre barre (recherche, Arbre / Liste, déplier, JSON) et son compteur
+  if(sub) sub.style.display=(own||view==='table'||view==='tree')?'none':'flex'; if(rc) rc.style.display=(own||view==='tree')?'none':'';
   // ▤ Tableau : chaque onglet a ses propres types cochés (51-tableau.js)
   if(typeof capTableTypesView==='function') capTableTypesView(view==='table');
   // Barre latérale des types : inutile dans les vues de 🔗 Liens à 📐 Tableau de bord

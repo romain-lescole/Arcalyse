@@ -169,7 +169,7 @@
 - `capRenderCurrentView` (l. 737) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
 - `capUpdateStatChips` (l. 809) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
-## 21-capella-vues-base.js — 1346 lignes
+## 21-capella-vues-base.js — 1407 lignes
 
 - `capRenderSidebar` (l. 5) — Rend la sidebar Capella : liste des types par couche avec cases à cocher.
 - `capGetFiltered` (l. 57) — Retourne capAllElements filtré par types activés, couche et texte de recherche.
@@ -209,8 +209,10 @@
 - `capLoadTableView` (l. 1171) — Charge une configuration de vue Tableau Capella précédemment sauvegardée et l'applique.
 - `capRenderTable` (l. 1190) — Rend intégralement la vue Tableau Capella : barre d'outils (colonnes, colonne perso,
 - `capRenderTableBodyOnly` (l. 1199) — Reconstruit uniquement le <thead>/<tbody> du tableau Capella (pas la toolbar ni le menu
-- `capRenderTree` (l. 1296) — Rend la vue Arborescence Capella (hiérarchie XML complète).
-- `capRenderTreeNode` (l. 1307) — Rend récursivement un nœud de l'arborescence Capella.
+- `CAP_TREE_LIST_MAX` (l. 1297)
+- `capRenderTree` (l. 1301) — Rend la vue Arborescence : barre propre (recherche, 🌳 Arbre / ☰ Liste, déplier, réduire, JSON) créée
+- `capRenderTreeBody` (l. 1322) — Rend le contenu de 🌳 Arborescence selon l'affichage : arbre (avec une recherche : résultats et leurs
+- `capRenderTreeNode` (l. 1366) — Rend récursivement un nœud de l'arborescence Capella.
 
 ## 22-capella-liens.js — 280 lignes
 
@@ -271,13 +273,13 @@
 - `capChainExportRefreshCount` (l. 540) — Met à jour le compteur de sélection et la case « Tout » sans re-rendre les cartes (garde les cartes ouvertes).
 - `capRenderChainMap` (l. 551) — Rend la sous-vue « Relation Map » : liste des chaînes groupée par catégorie ARCADIA à gauche,
 
-## 25-panneau-detail.js — 188 lignes
+## 25-panneau-detail.js — 189 lignes
 
 - `capOpenDetail` (l. 5) — Ouvre le panneau de détail (colonne droite de l'overlay) pour un élément Capella.
 - `capOpenDetailNode` (l. 97) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
 - `CAP_ELEM_VIEWS` (l. 105)
 - `capUpdateToolbarForView` (l. 111) — Met à jour les boutons actifs et les groupes de contrôles visibles
-- `capShowView` (l. 142) — Affiche une vue Capella (bascule en mode capella si besoin).
+- `capShowView` (l. 143) — Affiche une vue Capella (bascule en mode capella si besoin).
 
 ## 26-rapports-html.js — 101 lignes
 

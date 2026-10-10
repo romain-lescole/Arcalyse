@@ -128,8 +128,8 @@ var CAP_TOUR_VIEWS={
   cards:{l:'▦ Cartes', steps:[...CAP_TOUR_EXPLORE,
     {s:'#cap-view-cards', t:'▦ Cartes',
      x:'Une carte par élément, regroupées par couche : type, nom et identifiant. <b>Clic</b> sur une carte : panneau de détail (propriétés, relations, liens).'}]},
-  tree:{l:'🌳 Arborescence', steps:[...CAP_TOUR_EXPLORE,
-    {s:'#cap-tb-tree-grp', t:'🌳 Commandes', x:'<b>⊞ Déplier</b> / <b>⊟ Réduire</b> toute l\'arborescence, <b>⬇ JSON</b> l\'exporte.'},
+  tree:{l:'🌳 Arborescence', steps:[CAP_TOUR_EXPLORE[0], CAP_TOUR_EXPLORE[1],
+    {s:'#cap-tree-bar', t:'🌳 Commandes', x:'<b>🔍 Recherche</b> par nom ou type. <b>🌳 Arbre</b> : les résultats restent dans leurs conteneurs, grisés quand ils ne correspondent pas ; <b>☰ Liste</b> : liste à plat triée par nom avec le chemin des conteneurs (300 lignes au plus). <b>⊞ Déplier</b> / <b>⊟ Réduire</b> toute l\'arborescence, <b>⬇ JSON</b> l\'exporte.'},
     {s:'#cap-view-tree', t:'🌳 Arborescence', x:'Hiérarchie du modèle comme dans Capella. ▶ déplie un nœud ; clic sur un élément pour ouvrir son détail.'}]},
   table:{l:'▤ Tableau', steps:[
     {s:'#cap-sidebar', t:'🏷 Types de l\'onglet', x:'Types d\'éléments listés dans le tableau, propres à l\'onglet affiché (indépendants des autres vues et des autres onglets). Un nouvel onglet n\'a aucun type coché.'},
