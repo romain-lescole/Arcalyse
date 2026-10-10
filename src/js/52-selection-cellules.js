@@ -12,13 +12,15 @@
 var CAP_CS_EXCL='#cap-table, .ana-fnt, .cap-mx, .ana-kv, .fex-box-t, .dash-tbl, .rmcb-t';   // tableaux non concernés
 var _capCs={t:null, cells:new Set(), anchor:null, base:null, down:null, drag:false};          // sélection en cours
 
-/** Copie une grille de cellules dans le presse-papiers : texte tabulé (cellules multi-lignes entre guillemets)
- * et tableau HTML (retours à la ligne gardés dans la cellule, y compris dans Excel).
+/** Copie une grille de cellules dans le presse-papiers : texte tabulé sans guillemets (éditeurs de texte, champs)
+ * et tableau HTML (retours à la ligne gardés dans la cellule, y compris dans Excel et Word).
  * @param {string[][]} grid - Lignes de cellules (une cellule peut contenir des retours à la ligne)
  * @param {Function} [done] - Appelée après la copie
  */
 function capClipCopy(grid, done){
-  const tsv=grid.map(r=>r.map(v=>{ v=String(v??''); return /[\t\n"]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v; }).join('\t')).join('\r\n');
+  // Texte brut sans guillemets (collage dans un éditeur, un champ, Capella) : cellules séparées par des tabulations,
+  // éléments d'une cellule sur des lignes successives. Excel et Word lisent la version HTML ci-dessous.
+  const tsv=grid.map(r=>r.map(v=>String(v??'').replace(/\t/g,' ')).join('\t')).join('\r\n');
   const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const html='<table border="1" style="border-collapse:collapse">'+grid.map(r=>'<tr>'+r.map(v=>'<td style="vertical-align:top">'
     +esc(v).replace(/\r?\n/g,'<br style="mso-data-placement:same-cell">')+'</td>').join('')+'</tr>').join('')+'</table>';
