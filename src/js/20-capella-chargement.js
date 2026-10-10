@@ -21,7 +21,7 @@ const CAP_TYPE_ICON={OperationalAnalysis:'OA',SystemAnalysis:'SA',LogicalArchite
 // State
 let capAllElements=[], capTreeData=null, cap_xmlDoc=null;
 let capTypeRegistry={}, capEnabledTypes=new Set();
-let capCollapsedGroups=new Set(['OA','SA','LA','PA','EPBS','Shared']);
+let capCollapsedGroups=new Set();   // couches repliées dans la barre latérale des types (toutes dépliées au départ)
 let capCurrentView='cards', capCurrentLayer='all', capSearch='', capPage=0, capPageSize=100;
 let capLinksData=null, capChainsData=null, capLinksFilter='all', capChainsFilter='all';
 let capTreeFilter='';
@@ -360,6 +360,7 @@ function capBuildTypeRegistry(){
     capTypeRegistry[el.typeName].count++;
   }
   capEnabledTypes=new Set(Object.keys(capTypeRegistry).filter(t=>capTypeRegistry[t].checked));
+  _capTableTypesOn=false;   // nouveau modèle : la sélection globale des types repart d'ici (▤ Tableau, 51-tableau.js)
 }
 
 // ── Inject Capella elements into arbo ──

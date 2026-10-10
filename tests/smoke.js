@@ -73,14 +73,15 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.click('#cap-v-table');
     await p.click('#cap-table-tabs .cap-ttab-add');
     if (await p.evaluate(() => capTableTabs.length) < 2) throw new Error('onglet non ajouté');
-    await p.click('#cap-table-head tr:first-child th:nth-child(4)');
+    if (await p.evaluate(() => capEnabledTypes.size)) throw new Error('nouvel onglet : des types sont cochés');
+    await p.click('#cap-table-tabs .cap-ttab');   // retour au 1er onglet (types cochés)
+    await p.click('#cap-table-head tr:first-child th:nth-child(1)');
     if (await p.evaluate(() => capTableSort.col) !== 'name') throw new Error('tri non appliqué');
     const n = await p.evaluate(() => { const ix = capTableRelIndex(); const s = CAP_LINK_SECTIONS.find(x => ix[x.key]);
       capTableVisibleCols.push('rel:' + s.key + ':out'); capRenderTableBodyOnly();
       return [...document.querySelectorAll('#cap-table-body tr')].length; });
     if (!n) throw new Error('tableau vide après ajout d\'une colonne de relation');
-    await p.dragAndDrop('#cap-table-head tr:first-child th:nth-child(1)', '#cap-table-head tr:first-child th:nth-child(3)');
-    await p.click('#cap-table-tabs .cap-ttab'); });
+    await p.dragAndDrop('#cap-table-head tr:first-child th:nth-child(1)', '#cap-table-head tr:first-child th:nth-child(3)'); });
   await step('tableau de bord : tous les indicateurs', async () => {
     await p.click('#cap-v-dashboard');   // bouton épinglé par défaut
     const r = await p.evaluate(() => { const bad = []; capDashCatalog().forEach(m => CAP_DASH_VIZ[m.kind].forEach(([v]) => {

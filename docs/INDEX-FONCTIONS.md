@@ -131,7 +131,7 @@
 - `openHelpModal` (l. 149) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
 - `positionOverlay` (l. 245) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
 
-## 20-capella-chargement.js — 817 lignes
+## 20-capella-chargement.js — 818 lignes
 
 - `CAP_LAYERS` (l. 4)
 - `CAP_NS_LAYER` (l. 12)
@@ -160,21 +160,21 @@
 - `capBuildTree` (l. 320) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
 - `capRunBulk` (l. 346) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
 - `capBuildTypeRegistry` (l. 356) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
-- `capApplyPanelOnLoad` (l. 375) — Appelée après le chargement Capella : configure le panneau gauche RM.
-- `capInjectToArbo` (l. 447) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
-- `capInjectCapellaRelsToCriteria` (l. 551) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
-- `capInjectLinksToModel` (l. 592) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
-- `capFilterArboToLinked` (l. 636) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
-- `capInjectChainsToModal` (l. 675) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
-- `capRenderCurrentView` (l. 736) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
-- `capUpdateStatChips` (l. 808) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
+- `capApplyPanelOnLoad` (l. 376) — Appelée après le chargement Capella : configure le panneau gauche RM.
+- `capInjectToArbo` (l. 448) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
+- `capInjectCapellaRelsToCriteria` (l. 552) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
+- `capInjectLinksToModel` (l. 593) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
+- `capFilterArboToLinked` (l. 637) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
+- `capInjectChainsToModal` (l. 676) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
+- `capRenderCurrentView` (l. 737) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
+- `capUpdateStatChips` (l. 809) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
-## 21-capella-vues-base.js — 1334 lignes
+## 21-capella-vues-base.js — 1341 lignes
 
 - `capRenderSidebar` (l. 5) — Rend la sidebar Capella : liste des types par couche avec cases à cocher.
 - `capGetFiltered` (l. 57) — Retourne capAllElements filtré par types activés, couche et texte de recherche.
 - `capRenderCards` (l. 69) — Rend la vue Cartes : cartes groupées par couche ARCADIA, filtrées.
-- `CAP_TABLE_BUILTIN_COLS` (l. 104) — Colonnes toujours proposées en plus des attributs bruts du XML.
+- `CAP_TABLE_BUILTIN_COLS` (l. 104) — Colonnes affichées par défaut (Name en premier ; Couche, Type et Human Type restent proposées dans ⊞ Colonnes).
 - `capGetAllRawAttrKeys` (l. 119) — Calcule dynamiquement la liste de TOUS les noms d'attributs présents dans capAllElements
 - `capGetParentIndex` (l. 132) — Construit l'index de containment du modèle Capella depuis le XML brut :
 - `capGetMetachainMetaclasses` (l. 155) — Retourne la liste des "Metaclass" (types Capella) disponibles au démarrage d'une étape :
@@ -209,8 +209,8 @@
 - `capLoadTableView` (l. 1166) — Charge une configuration de vue Tableau Capella précédemment sauvegardée et l'applique.
 - `capRenderTable` (l. 1185) — Rend intégralement la vue Tableau Capella : barre d'outils (colonnes, colonne perso,
 - `capRenderTableBodyOnly` (l. 1194) — Reconstruit uniquement le <thead>/<tbody> du tableau Capella (pas la toolbar ni le menu
-- `capRenderTree` (l. 1284) — Rend la vue Arborescence Capella (hiérarchie XML complète).
-- `capRenderTreeNode` (l. 1295) — Rend récursivement un nœud de l'arborescence Capella.
+- `capRenderTree` (l. 1291) — Rend la vue Arborescence Capella (hiérarchie XML complète).
+- `capRenderTreeNode` (l. 1302) — Rend récursivement un nœud de l'arborescence Capella.
 
 ## 22-capella-liens.js — 280 lignes
 
@@ -271,13 +271,13 @@
 - `capChainExportRefreshCount` (l. 540) — Met à jour le compteur de sélection et la case « Tout » sans re-rendre les cartes (garde les cartes ouvertes).
 - `capRenderChainMap` (l. 551) — Rend la sous-vue « Relation Map » : liste des chaînes groupée par catégorie ARCADIA à gauche,
 
-## 25-panneau-detail.js — 185 lignes
+## 25-panneau-detail.js — 188 lignes
 
 - `capOpenDetail` (l. 5) — Ouvre le panneau de détail (colonne droite de l'overlay) pour un élément Capella.
 - `capOpenDetailNode` (l. 97) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
 - `CAP_ELEM_VIEWS` (l. 105)
 - `capUpdateToolbarForView` (l. 111) — Met à jour les boutons actifs et les groupes de contrôles visibles
-- `capShowView` (l. 139) — Affiche une vue Capella (bascule en mode capella si besoin).
+- `capShowView` (l. 142) — Affiche une vue Capella (bascule en mode capella si besoin).
 
 ## 26-rapports-html.js — 101 lignes
 
@@ -516,7 +516,7 @@
 - `capTfFilter` (l. 127) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
 - `capTfWatch` (l. 149) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
 
-## 43-visite-guidee.js — 448 lignes
+## 43-visite-guidee.js — 450 lignes
 
 - `CAP_TOUR_STEPS` (l. 12) — Étapes de la visite générale : s = sélecteur CSS de la zone (toutes les correspondances visibles sont encadrées
 - `CAP_TOUR_EXPLORE` (l. 57) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
@@ -524,23 +524,23 @@
 - `CAP_TOUR_ANA_TXT` (l. 75) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
 - `capTourRmCtx` (l. 88) — Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
 - `CAP_TOUR_VIEWS` (l. 102) — Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
-- `CAP_TOUR_START` (l. 241) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
-- `CAP_TOUR_AFTER` (l. 254) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
-- `capTourCtxKey` (l. 271) — Clé de la vue affichée pour les visites contextuelles.
-- `capTourCtx` (l. 279) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
-- `capTourEls` (l. 287) — Éléments affichés désignés par le sélecteur d'une étape.
-- `capTourVisible` (l. 298) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
-- `capTourStart` (l. 308) — Lance une visite guidée depuis sa première étape.
-- `capTourStartView` (l. 329) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
-- `capTourGo` (l. 337) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
-- `capTourPos` (l. 357) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
-- `capTourRenderPop` (l. 364) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
-- `capTourPlace` (l. 376) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
-- `capTourKey` (l. 408) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
-- `capTourEnd` (l. 417) — Quitte la visite guidée et retire la mise en évidence.
-- `capTourHelpMenu` (l. 424) — Ouvre le menu ? Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
-- `capTourStartHere` (l. 431) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
-- `capTourResumeAfterLoad` (l. 438) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
+- `CAP_TOUR_START` (l. 243) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
+- `CAP_TOUR_AFTER` (l. 256) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
+- `capTourCtxKey` (l. 273) — Clé de la vue affichée pour les visites contextuelles.
+- `capTourCtx` (l. 281) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
+- `capTourEls` (l. 289) — Éléments affichés désignés par le sélecteur d'une étape.
+- `capTourVisible` (l. 300) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
+- `capTourStart` (l. 310) — Lance une visite guidée depuis sa première étape.
+- `capTourStartView` (l. 331) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
+- `capTourGo` (l. 339) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
+- `capTourPos` (l. 359) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
+- `capTourRenderPop` (l. 366) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
+- `capTourPlace` (l. 378) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
+- `capTourKey` (l. 410) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
+- `capTourEnd` (l. 419) — Quitte la visite guidée et retire la mise en évidence.
+- `capTourHelpMenu` (l. 426) — Ouvre le menu ? Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
+- `capTourStartHere` (l. 433) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
+- `capTourResumeAfterLoad` (l. 440) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
 
 ## 44-functional-exchange.js — 512 lignes
 
@@ -650,27 +650,31 @@
 - `capAboutTech` (l. 19) — Informations techniques (version, navigateur, accès direct aux fichiers, modèle chargé), pour un signalement.
 - `capAboutOpen` (l. 34) — Ouvre la fenêtre « À propos ».
 
-## 51-tableau.js — 393 lignes
+## 51-tableau.js — 442 lignes
 
 - `capTableTabNew` (l. 18) — Crée un onglet de vue du tableau.
-- `capTableTabsEnsure` (l. 30) — Garantit l'existence d'au moins un onglet ; le premier reprend l'état courant du tableau.
-- `capTableSyncToTab` (l. 37) — Copie l'état de travail du tableau (colonnes, filtres, largeurs, tri) dans l'onglet actif.
-- `capTableSyncFromTab` (l. 43) — Charge l'état de l'onglet actif dans les variables de travail du tableau.
-- `capTableTabSwitch` (l. 52) — Active un onglet du tableau (l'état de l'onglet quitté est conservé).
-- `capRenderTableTabs` (l. 61) — Rend la barre d'onglets du tableau : clic = ouvrir, double-clic = renommer, ✕ = fermer,
-- `capTableRelIndex` (l. 110) — Index des relations Capella par élément : pour chaque relation, éléments cibles (out) et sources (in).
-- `capTableRelParse` (l. 131) — Décode une clé de colonne de relation « rel:<relation>:out|in ».
-- `capTableRelEnds` (l. 141) — Libellés lisibles des deux extrémités d'une relation (types source et cible).
-- `capTableRelValues` (l. 153) — Valeurs d'une colonne de relation pour un élément : noms des éléments liés (sans doublon).
-- `capTableRelLabel` (l. 165) — Libellé d'en-tête d'une colonne de relation.
-- `capTableRelPicker` (l. 179) — Ajoute au menu ⊞ Colonnes les sections « Relations — … » (groupes de 🔗 Liens) : une entrée par
-- `capTableRows` (l. 220) — Lignes du tableau : éléments filtrés (types cochés, couche, recherche, filtres par colonne), triés
-- `capTableSortCycle` (l. 241) — Passe au tri suivant sur une colonne : croissant ▲, décroissant ▼, puis sans tri.
-- `capTableColDnD` (l. 255) — Rend un en-tête déplaçable : glisser-déposer sur un autre en-tête pour changer l'ordre des colonnes.
-- `capTableCsv` (l. 282) — Exporte en CSV les colonnes affichées, pour toutes les lignes filtrées (dans l'ordre du tri).
-- `capTableCfgGet` (l. 295) — État du tableau pour l'enregistrement : onglets, colonnes par chemin, affichage des cellules multiples.
-- `capTableCfgSet` (l. 304) — Applique un état enregistré du tableau (format à onglets, ou ancien format à une seule vue).
-- `capTableTvCustom` (l. 322) — Colonnes par chemin de l'ancienne Table View reprises telles quelles : celles qui ne suivent aucune
-- `capTableTvTab` (l. 332) — Convertit un onglet (ou une vue .json) de l'ancienne Table View en onglet du tableau.
-- `capTableImportTv` (l. 352) — Reprend les réglages de l'ancienne 📊 Table View (page enregistrée ou fichier ⚙) : ses onglets
-- `capTableApplyViewFile` (l. 373) — Applique un fichier 📂 Charger vue à l'onglet actif : vue du tableau (« capella-table-view »)
+- `capTableTabsEnsure` (l. 32) — Garantit l'existence d'au moins un onglet ; le premier reprend l'état courant du tableau.
+- `capTableSyncToTab` (l. 39) — Copie l'état de travail du tableau (colonnes, filtres, largeurs, tri) dans l'onglet actif.
+- `capTableSyncFromTab` (l. 46) — Charge l'état de l'onglet actif dans les variables de travail du tableau.
+- `capTableTypesApply` (l. 62) — Applique un ensemble de types cochés à la barre latérale (registre) et aux filtres.
+- `capTableTypesLoad` (l. 68) — Charge les types de l'onglet actif (un onglet sans réglage reprend les types des autres vues).
+- `capTableSidebar` (l. 75) — Redessine la barre latérale des types en gardant la recherche saisie.
+- `capTableTypesView` (l. 83) — Entrée dans le ▤ Tableau ou sortie : échange les types cochés de l'onglet et ceux des autres vues.
+- `capTableTabSwitch` (l. 100) — Active un onglet du tableau (l'état de l'onglet quitté est conservé).
+- `capRenderTableTabs` (l. 109) — Rend la barre d'onglets du tableau : clic = ouvrir, double-clic = renommer, ✕ = fermer,
+- `capTableRelIndex` (l. 158) — Index des relations Capella par élément : pour chaque relation, éléments cibles (out) et sources (in).
+- `capTableRelParse` (l. 179) — Décode une clé de colonne de relation « rel:<relation>:out|in ».
+- `capTableRelEnds` (l. 189) — Libellés lisibles des deux extrémités d'une relation (types source et cible).
+- `capTableRelValues` (l. 201) — Valeurs d'une colonne de relation pour un élément : noms des éléments liés (sans doublon).
+- `capTableRelLabel` (l. 213) — Libellé d'en-tête d'une colonne de relation.
+- `capTableRelPicker` (l. 227) — Ajoute au menu ⊞ Colonnes les sections « Relations — … » (groupes de 🔗 Liens) : une entrée par
+- `capTableRows` (l. 268) — Lignes du tableau : éléments filtrés (types cochés de l'onglet, filtres par colonne), triés
+- `capTableSortCycle` (l. 290) — Passe au tri suivant sur une colonne : croissant ▲, décroissant ▼, puis sans tri.
+- `capTableColDnD` (l. 304) — Rend un en-tête déplaçable : glisser-déposer sur un autre en-tête pour changer l'ordre des colonnes.
+- `capTableCsv` (l. 331) — Exporte en CSV les colonnes affichées, pour toutes les lignes filtrées (dans l'ordre du tri).
+- `capTableCfgGet` (l. 344) — État du tableau pour l'enregistrement : onglets, colonnes par chemin, affichage des cellules multiples.
+- `capTableCfgSet` (l. 353) — Applique un état enregistré du tableau (format à onglets, ou ancien format à une seule vue).
+- `capTableTvCustom` (l. 371) — Colonnes par chemin de l'ancienne Table View reprises telles quelles : celles qui ne suivent aucune
+- `capTableTvTab` (l. 381) — Convertit un onglet (ou une vue .json) de l'ancienne Table View en onglet du tableau.
+- `capTableImportTv` (l. 401) — Reprend les réglages de l'ancienne 📊 Table View (page enregistrée ou fichier ⚙) : ses onglets
+- `capTableApplyViewFile` (l. 422) — Applique un fichier 📂 Charger vue à l'onglet actif : vue du tableau (« capella-table-view »)

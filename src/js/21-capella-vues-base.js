@@ -100,8 +100,8 @@ function capRenderCards(){
      ex. "Owned element [PhysicalPort]" = liste des enfants directs filtrés par type
    ═══════════════════════════════════════════════════════════════════════ */
 
-/** Colonnes toujours proposées en plus des attributs bruts du XML. */
-const CAP_TABLE_BUILTIN_COLS = ['layer','typeName','humanType','name','id','parent','ownedElement'];
+/** Colonnes affichées par défaut (Name en premier ; Couche, Type et Human Type restent proposées dans ⊞ Colonnes). */
+const CAP_TABLE_BUILTIN_COLS = ['name','id','parent','ownedElement'];
 let capTableVisibleCols = null;   // liste ordonnée des colonnes affichées (null = défaut au 1er rendu)
 let _capColPickerOpen = false;    // le menu ⊞ Colonnes reste-t-il ouvert entre deux rendus ?
 let _capColPickerSearch = '';     // texte de recherche dans le menu ⊞ Colonnes
@@ -739,8 +739,8 @@ function capRefreshColPickerList(){
 
   let any=false;
   const sec1=addSection('Colonnes calculées');
-  if(addItem('layer','Couche'))any=true; if(addItem('typeName','Type'))any=true; if(addItem('humanType','Human Type'))any=true;
   if(addItem('name','Name'))any=true; if(addItem('id','ID'))any=true; if(addItem('parent','Owner'))any=true; if(addItem('ownedElement','Owned element'))any=true;
+  if(addItem('layer','Couche'))any=true; if(addItem('typeName','Type'))any=true; if(addItem('humanType','Human Type'))any=true;
   if (!sec1.nextSibling || sec1.nextSibling.className!=='cap-colpicker-item') sec1.remove();
 
   if (capTableCustomCols.length) {
@@ -750,13 +750,13 @@ function capRefreshColPickerList(){
     if (!sec2any) sec2.remove();
   }
 
-  // Relations de 🔗 Liens, par groupe, avec les deux sens (51-tableau.js)
-  capTableRelPicker(listWrap, q, toggleCol);
-
   const sec3=addSection('Attributs du fichier XML');
   let sec3any=false;
   capGetAllRawAttrKeys().forEach(k=>{ if(addItem(k, k)) sec3any=true; });
   if (!sec3any) sec3.remove();
+
+  // Relations de 🔗 Liens, par groupe, avec les deux sens (51-tableau.js)
+  capTableRelPicker(listWrap, q, toggleCol);
 }
 
 /** Ajoute une poignée de redimensionnement sur le bord droit d'un <th> du tableau Capella. */
@@ -1247,6 +1247,13 @@ function capRenderTableBodyOnly(){
 
   // Lignes de données
   tbody.innerHTML='';
+  if (!slice.length) {
+    // Onglet vide : un nouvel onglet n'a aucun type coché
+    const tr=document.createElement('tr'), td=document.createElement('td');
+    td.colSpan=cols.length; td.className='cap-table-empty';
+    td.textContent = capEnabledTypes.size ? 'Aucun élément ne correspond aux filtres.' : 'Aucun type coché pour cet onglet : cochez des types d\'éléments dans le menu de gauche.';
+    tr.appendChild(td); tbody.appendChild(tr);
+  }
   slice.forEach(el=>{
     const lv=CAP_LAYERS[el.layer]||{color:'#8b949e'};
     const tr=document.createElement('tr');

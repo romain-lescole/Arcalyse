@@ -12,8 +12,8 @@
 
 /** Crée un onglet de vue du tableau.
  * @param {string} name - Nom de l'onglet
- * @param {object} [from] - Onglet dont on copie les colonnes et largeurs (nouvel onglet = copie de la vue)
- * @returns {object} {id, name, visibleCols, colFilters, colWidths, sort}
+ * @param {object} [from] - Onglet dont on copie les colonnes et largeurs (nouvel onglet = copie de la vue, sans type coché)
+ * @returns {object} {id, name, visibleCols, colFilters, colWidths, sort, types}
  */
 function capTableTabNew(name, from){
   return {
@@ -22,7 +22,9 @@ function capTableTabNew(name, from){
     visibleCols: from&&from.visibleCols ? [...from.visibleCols] : null,
     colFilters:{},
     colWidths: from ? {...(from.colWidths||{})} : {},
-    sort:{col:null, dir:1}
+    sort:{col:null, dir:1},
+    // Types cochés propres à l'onglet : aucun pour un nouvel onglet ; null = reprendre ceux des autres vues
+    types: from ? [] : null
   };
 }
 
@@ -37,6 +39,7 @@ function capTableTabsEnsure(){
 function capTableSyncToTab(){
   const t=capTableTabs&&capTableTabs[capTableTabIdx]; if(!t) return;
   t.visibleCols=capTableVisibleCols; t.colFilters=capTableColFilters; t.colWidths=capTableColWidths; t.sort=capTableSort;
+  if (_capTableTypesOn) t.types=[...capEnabledTypes];
 }
 
 /** Charge l'état de l'onglet actif dans les variables de travail du tableau. */
@@ -44,6 +47,51 @@ function capTableSyncFromTab(){
   const t=capTableTabs&&capTableTabs[capTableTabIdx]; if(!t) return;
   capTableVisibleCols=t.visibleCols||null; capTableColFilters=t.colFilters||{};
   capTableColWidths=t.colWidths||{}; capTableSort=t.sort||{col:null, dir:1};
+  if (_capTableTypesOn) { capTableTypesLoad(); capTableSidebar(); }
+}
+
+/* ── Types cochés propres à chaque onglet ──────────────────────────────────────
+ * Pendant que le ▤ Tableau est affiché, la barre latérale des types montre et modifie les types de
+ * l'onglet actif ; ceux des autres vues (Cartes, Arborescence…) sont mis de côté puis rétablis. */
+var _capTableTypesOn=false;  // vrai : capEnabledTypes contient les types de l'onglet actif (remis à faux au chargement d'un modèle, 20)
+var _capTypesGlobal=null;    // types cochés des autres vues, mis de côté pendant l'affichage du tableau
+
+/** Applique un ensemble de types cochés à la barre latérale (registre) et aux filtres.
+ * @param {Iterable<string>} types - Types à cocher
+ */
+function capTableTypesApply(types){
+  capEnabledTypes=new Set(types);
+  Object.entries(capTypeRegistry).forEach(([t,info])=>{ info.checked=capEnabledTypes.has(t); });
+}
+
+/** Charge les types de l'onglet actif (un onglet sans réglage reprend les types des autres vues). */
+function capTableTypesLoad(){
+  const t=capTableTabs&&capTableTabs[capTableTabIdx]; if(!t) return;
+  if (!Array.isArray(t.types)) t.types=[...(_capTypesGlobal||capEnabledTypes)];
+  capTableTypesApply(t.types);
+}
+
+/** Redessine la barre latérale des types en gardant la recherche saisie. */
+function capTableSidebar(){
+  if (typeof capRenderSidebar==='function') capRenderSidebar((document.getElementById('cap-type-search')||{}).value||'');
+}
+
+/** Entrée dans le ▤ Tableau ou sortie : échange les types cochés de l'onglet et ceux des autres vues.
+ * Appelé à chaque changement de vue (capUpdateToolbarForView).
+ * @param {boolean} on - Vrai si la vue affichée est le tableau
+ */
+function capTableTypesView(on){
+  if (on===_capTableTypesOn || !capLoaded) return;
+  if (on) {
+    capTableTabsEnsure();
+    _capTypesGlobal=new Set(capEnabledTypes); _capTableTypesOn=true;
+    capTableTypesLoad();
+  } else {
+    const t=capTableTabs&&capTableTabs[capTableTabIdx]; if (t) t.types=[...capEnabledTypes];
+    _capTableTypesOn=false;
+    capTableTypesApply(_capTypesGlobal||capEnabledTypes); _capTypesGlobal=null;
+  }
+  capTableSidebar();
 }
 
 /** Active un onglet du tableau (l'état de l'onglet quitté est conservé).
@@ -213,12 +261,13 @@ function capTableRelPicker(listWrap, q, onToggle){
 
 /* ── Lignes, tri, glisser-déposer, export ──────────────────────────────────────── */
 
-/** Lignes du tableau : éléments filtrés (types cochés, couche, recherche, filtres par colonne), triés
+/** Lignes du tableau : éléments filtrés (types cochés de l'onglet, filtres par colonne), triés
  * selon le tri de l'onglet actif (les cellules vides restent en bas).
  * @returns {object[]} Éléments capAllElements
  */
 function capTableRows(){
-  let rows=capGetFiltered();
+  // Types cochés de l'onglet seulement : la recherche et le filtre de couche des autres vues ne s'appliquent pas ici
+  let rows=capAllElements.filter(el=>capEnabledTypes.has(el.typeName));
   Object.entries(capTableColFilters).forEach(([colKey,val])=>{
     if (!val) return;
     const q=val.toLowerCase();

@@ -368,6 +368,7 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .cap-rel-item:last-child{border-bottom:none;}
 #cap-table td.cap-stacked-td{white-space:normal;max-width:none;}
+#cap-table td.cap-table-empty{max-width:none;white-space:normal;color:var(--c-dim);font-style:italic;padding:18px 14px;cursor:default;}
 .cap-colpicker-menu{position:absolute;top:calc(100% + 4px);left:0;z-index:300;
   background:var(--c-bg3);border:1px solid var(--c-border);border-radius:7px;
   min-width:380px;max-width:480px;max-height:70vh;overflow-y:auto;box-shadow:0 6px 18px rgba(0,0,0,.35);
