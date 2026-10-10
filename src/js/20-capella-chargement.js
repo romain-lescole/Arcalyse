@@ -2,12 +2,12 @@
    MOTEUR CAPELLA — intégré à Arcalyse
 ═══════════════════════════════════════════════════════════════════ */
 const CAP_LAYERS={
-  OA:    {label:'Operational Analysis', color:'#3b82f6',bg:'rgba(59,130,246,.15)'},
-  SA:    {label:'System Analysis',      color:'#22c55e',bg:'rgba(34,197,94,.15)'},
-  LA:    {label:'Logical Architecture', color:'#eab308',bg:'rgba(234,179,8,.15)'},
-  PA:    {label:'Physical Architecture',color:'#f97316',bg:'rgba(249,115,22,.15)'},
-  EPBS:  {label:'EPBS Architecture',   color:'#ef4444',bg:'rgba(239,68,68,.15)'},
-  Shared:{label:'Transverse',          color:'#a78bfa',bg:'rgba(167,139,250,.15)'},
+  OA:    {label:_L('Operational Analysis'), color:'#3b82f6',bg:'rgba(59,130,246,.15)'},
+  SA:    {label:_L('System Analysis'),      color:'#22c55e',bg:'rgba(34,197,94,.15)'},
+  LA:    {label:_L('Logical Architecture'), color:'#eab308',bg:'rgba(234,179,8,.15)'},
+  PA:    {label:_L('Physical Architecture'),color:'#f97316',bg:'rgba(249,115,22,.15)'},
+  EPBS:  {label:_L('EPBS Architecture'),   color:'#ef4444',bg:'rgba(239,68,68,.15)'},
+  Shared:{label:_L('Transverse'),          color:'#a78bfa',bg:'rgba(167,139,250,.15)'},
 };
 const CAP_NS_LAYER={oa:'OA',ctx:'SA',la:'LA',pa:'PA',epbs:'EPBS',fa:'Shared',cs:'Shared',interaction:'Shared',information:'Shared','information.datatype':'Shared','information.datavalue':'Shared',capellacommon:'Shared',capellacore:'Shared',capellamodeller:'Shared',libraries:'Shared'};
 const CAP_ANCESTOR_KW=[['operationalanalysis','OA'],['systemanalysis','SA'],['logicalarchitecture','LA'],['physicalarchitecture','PA'],['epbsarchitecture','EPBS']];
@@ -101,7 +101,7 @@ function capBuildPageHtml(){
   return '<!DOCTYPE html>\n' + pre + doc.outerHTML;
 }
 /** Nom de fichier proposé pour la page sauvegardée. */
-function capPageFileName(){ return capLoaded ? 'arcalyse-avec-modele.html' : 'arcalyse.html'; }
+function capPageFileName(){ return capLoaded ? _L('arcalyse-avec-modele.html') : 'arcalyse.html'; }
 /** Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur). */
 function capSaveFullPage(){
   const blob = new Blob([capBuildPageHtml()], {type:'text/html'});
@@ -122,14 +122,14 @@ async function capSavePageDirect(saveAs){
   const btn=document.getElementById('b-save-direct');
   try{
     if(saveAs||!_capSaveHandle) _capSaveHandle=await window.showSaveFilePicker({suggestedName:capPageFileName(),
-      types:[{description:'Page HTML',accept:{'text/html':['.html','.htm']}}]});
+      types:[{description:_L('Page HTML'),accept:{'text/html':['.html','.htm']}}]});
     const w=await _capSaveHandle.createWritable(); await w.write(capBuildPageHtml()); await w.close();
-    if(btn){ btn.title=`Enregistrer dans « ${_capSaveHandle.name} » (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous`;
-      const t=btn.textContent; btn.textContent='✔ Enregistré'; setTimeout(()=>{ btn.textContent=t; },1500); }
+    if(btn){ btn.title=_L(`Enregistrer dans « ${_capSaveHandle.name} » (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous`);
+      const t=btn.textContent; btn.textContent=_L('✔ Enregistré'); setTimeout(()=>{ btn.textContent=t; },1500); }
   }catch(e){
     if(e&&e.name==='AbortError') return;   // fenêtre annulée par l'utilisateur
     console.error(e); _capSaveHandle=null;
-    alert('Enregistrement direct impossible ('+(e&&e.message||e)+').\nLa page va être téléchargée à la place.');
+    alert(_L('Enregistrement direct impossible (')+(e&&e.message||e)+_L(').\nLa page va être téléchargée à la place.'));
     capSaveFullPage();
   }
 }
@@ -167,29 +167,29 @@ function capLoadFile(f, handle){
   const name=(f&&f.name)||'';
   const ext=(name.split('.').pop()||'').toLowerCase();
   if (ext==='aird' || ext==='afm') {
-    capWelcomeStatus(`« ${name} » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet.`,'err');
+    capWelcomeStatus(_L(`« ${name} » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet.`),'err');
     capShowWelcome(true); return;
   }
   if (!['capella','melodymodeller','xml'].includes(ext)) {
-    capWelcomeStatus(`« ${name} » n'est pas un fichier Capella (.capella attendu).`,'err');
+    capWelcomeStatus(_L(`« ${name} » n'est pas un fichier Capella (.capella attendu).`),'err');
     capShowWelcome(true); return;
   }
-  capWelcomeStatus(`Chargement de « ${name} »…`,'busy');
+  capWelcomeStatus(_L(`Chargement de « ${name} »…`),'busy');
   capShowWelcome(true);
   const reader=new FileReader();
-  reader.onerror=()=>capWelcomeStatus(`Impossible de lire « ${name} ».`,'err');
+  reader.onerror=()=>capWelcomeStatus(_L(`Impossible de lire « ${name} ».`),'err');
   reader.onload=ev=>{
     // Laisse le navigateur afficher l'état « Chargement… » avant le parsing (gros modèles)
     setTimeout(()=>{
       try{
         const doc=new DOMParser().parseFromString(ev.target.result,'application/xml');
-        if(doc.querySelector('parsererror')) throw new Error('XML invalide');
+        if(doc.querySelector('parsererror')) throw new Error(_L('XML invalide'));
         capApplyXmlDoc(doc, name);
         capWatchSetSource(f, handle||null, ev.target.result);
         capWelcomeStatus('','');
         capShowWelcome(false);
       }catch(err){
-        capWelcomeStatus('Erreur de chargement : '+err.message,'err');
+        capWelcomeStatus(_L('Erreur de chargement : ')+err.message,'err');
         capShowWelcome(true);
       }
     },30);
@@ -208,7 +208,7 @@ function capApplyXmlDoc(doc, name){
   capAllElements=[];
   _capParentIndexCache=null; _capElementByIdCache=null; _capTableRelIdx=null; capChainsData=null; capLinksData=null; _capPortsCache=null; capAnaReset();
   capTreeData=capBuildTree(doc.documentElement,new Set());
-  if(!capAllElements.length) throw new Error('Aucun élément Capella reconnu dans ce fichier');
+  if(!capAllElements.length) throw new Error(_L('Aucun élément Capella reconnu dans ce fichier'));
   capBuildTypeRegistry();
   capRunBulk(()=>{ // un seul rendu du panneau et de l'arborescence à la fin
     capInjectToArbo();
@@ -234,8 +234,8 @@ function capShowWelcome(show){
   w.classList.toggle('cw-overlay', !!capLoaded);
   const t=document.getElementById('cw-title'), s=document.getElementById('cw-sub');
   if (capLoaded) {
-    if(t) t.textContent='Ouvrir un autre modèle Capella';
-    if(s) s.innerHTML=`Modèle actuel : <strong>${capEsc(capCurrentFileName||'—')}</strong><br>Déposez un nouveau fichier <strong>.capella</strong> pour le remplacer.`;
+    if(t) t.textContent=_L('Ouvrir un autre modèle Capella');
+    if(s) s.innerHTML=_L(`Modèle actuel : <strong>${capEsc(capCurrentFileName||'—')}</strong><br>Déposez un nouveau fichier <strong>.capella</strong> pour le remplacer.`);
   }
 }
 /** Affiche un message d'état (chargement, erreur) dans la zone de dépôt. */
@@ -742,7 +742,7 @@ function capRenderCurrentView(){
 
   if(!capLoaded){
     document.getElementById('cap-view-cards').style.display='block';
-    document.getElementById('cap-view-cards').innerHTML='<div style="text-align:center;padding:60px;color:var(--c-dim)"><div style="font-size:48px;margin-bottom:12px">🔷</div><div>Chargez un fichier .capella<br>via 📁 Fichier › 🔷 Ouvrir un modèle Capella</div></div>';
+    document.getElementById('cap-view-cards').innerHTML=_L('<div style="text-align:center;padding:60px;color:var(--c-dim)"><div style="font-size:48px;margin-bottom:12px">🔷</div><div>Chargez un fichier .capella<br>via 📁 Fichier › 🔷 Ouvrir un modèle Capella</div></div>');
     capUpdateToolbarForView(capCurrentView);
     return;
   }

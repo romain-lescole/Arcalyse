@@ -5,7 +5,7 @@
 function capOpenDetail(id){
   const el=capAllElements.find(e=>e.id===id); if(!el) return;
   const lv=CAP_LAYERS[el.layer]||{color:'#8b949e',bg:'rgba(139,148,158,.1)'};
-  const name=el.attrs.name||'—sans nom—';
+  const name=el.attrs.name||_L('—sans nom—');
   const human=(CAP_HUMAN_NAMES[el.typeName]||{});
   const {parentOf, childrenOf}=capGetParentIndex();
 
@@ -51,12 +51,12 @@ function capOpenDetail(id){
   html+=`<h3 style="font-size:14px;font-weight:600;margin-bottom:10px;word-break:break-word">${capEsc(name)}</h3>`;
 
   // Attributs littéraux
-  html+=secTitle('Attributs');
+  html+=secTitle(_L('Attributs'));
   html+=`<table style="width:100%;border-collapse:collapse">${literalRows.map(([k,v])=>`<tr><td style="color:var(--c-dim);font-family:monospace;font-size:11px;padding:5px 0;width:100px;padding-right:10px;border-bottom:1px solid var(--c-border);vertical-align:top;">${capEsc(k)}</td><td style="color:var(--c-text);word-break:break-all;font-size:12px;padding:5px 0;border-bottom:1px solid var(--c-border);">${capEsc(String(v).slice(0,400))}</td></tr>`).join('')}</table>`;
 
   // Références sortantes (attributs → autres éléments, cliquables)
   if(outgoingRefs.length){
-    html+=secTitle('Références sortantes →','#4dd880');
+    html+=secTitle(_L('Références sortantes →'),'#4dd880');
     outgoingRefs.forEach(r=>{
       html+=`<div style="margin-bottom:6px;"><span style="font-family:monospace;font-size:10px;color:var(--c-dim);">${capEsc(r.attrKey)}</span><div style="margin-top:2px;">${r.targets.map(elLink).join('')}</div></div>`;
     });
@@ -64,7 +64,7 @@ function capOpenDetail(id){
 
   // Références entrantes (navigation inverse, cliquables)
   if(incoming.length){
-    html+=secTitle('Références entrantes ← <span style="font-weight:400;text-transform:none;letter-spacing:0">(navigation inverse)</span>','#f0883e');
+    html+=secTitle(_L('Références entrantes ← <span style="font-weight:400;text-transform:none;letter-spacing:0">(navigation inverse)</span>'),'#f0883e');
     const byAttr={};
     incoming.forEach(inc=>{ const key=inc.from.typeName+'.'+inc.attrKey; (byAttr[key]=byAttr[key]||[]).push(inc.from); });
     Object.entries(byAttr).forEach(([key,els])=>{
@@ -77,13 +77,13 @@ function capOpenDetail(id){
 
   // Owner
   if(parent){
-    html+=secTitle('Owner (parent)','#a78bfa');
+    html+=secTitle(_L('Owner (parent)'),'#a78bfa');
     html+=`<div>${elLink(parent)}</div>`;
   }
 
   // Owned elements
   if(children.length){
-    html+=secTitle(`Owned elements (${children.length})`,'#58a6ff');
+    html+=secTitle(_L(`Owned elements (${children.length})`),'#58a6ff');
     Object.entries(childrenByType).sort().forEach(([t,els])=>{
       html+=`<div style="margin-bottom:6px;"><span style="font-family:monospace;font-size:10px;color:var(--c-dim);">${capEsc(t)} (${els.length})</span><div style="margin-top:2px;">${els.map(elLink).join('')}</div></div>`;
     });

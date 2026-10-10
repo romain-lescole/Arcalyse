@@ -1,5 +1,12 @@
 'use strict';
 
+/** Libellé affiché : renvoie le texte français tel quel. Au build anglais (node build.js --lang en), l'argument
+ * de chaque _L('…') est remplacé par sa traduction (docs/i18n/LISEZMOI.md) : ne l'utiliser qu'autour d'un
+ * littéral affiché, jamais autour d'une valeur comparée ou servant de clé. */
+function _L(s){ return s; }
+/** Langue de l'interface ('fr', ou 'en' dans la version anglaise produite par le build). */
+const CAP_LANG='fr';
+
 /** Relation Map en lecture seule (Arcalyse est un outil de lecture et d'analyse) : arborescence (renommage, ajout,
  * suppression, glisser-déposer, collage de liste, menu contextuel), 📝 Propriétés, menu contextuel du graphe
  * (modifier, créer une relation, créer un enfant) et panneau des critères (nouveau / modifier / supprimer un type

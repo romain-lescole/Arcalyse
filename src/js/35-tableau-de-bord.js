@@ -6,14 +6,14 @@ const CAP_DASH_PAL={light:['#2a78d6','#eb6834','#1baf7a','#eda100','#e87ba4','#0
 const CAP_DASH_AK={sys:'#3fb950',act:'#58a6ff',mix:'#a371f7',none:'#8b949e'};
 /** Représentations proposées selon la forme de l'indicateur : [clé, libellé, largeur, hauteur par défaut]. */
 const CAP_DASH_VIZ={
-  n:[['kpi','Indicateur chiffré',1,1]],
-  pct:[['kpi','Indicateur chiffré',1,1],['gauge','Jauge',1,2]],
-  series:[['hbar','Barres horizontales',2,2],['bar','Barres verticales',2,2],['donut','Anneau',2,2],['table','Tableau',2,2],['kpi','Total',1,1]],
-  multi:[['stack','Barres empilées',2,2],['group','Barres groupées',2,2],['table','Tableau',2,2]],
-  table:[['table','Tableau',4,2]],
-  text:[['text','Texte libre',2,1]]};
+  n:[['kpi',_L('Indicateur chiffré'),1,1]],
+  pct:[['kpi',_L('Indicateur chiffré'),1,1],['gauge',_L('Jauge'),1,2]],
+  series:[['hbar',_L('Barres horizontales'),2,2],['bar',_L('Barres verticales'),2,2],['donut',_L('Anneau'),2,2],['table',_L('Tableau'),2,2],['kpi',_L('Total'),1,1]],
+  multi:[['stack',_L('Barres empilées'),2,2],['group',_L('Barres groupées'),2,2],['table',_L('Tableau'),2,2]],
+  table:[['table',_L('Tableau'),4,2]],
+  text:[['text',_L('Texte libre'),2,1]]};
 /** Libellés courts des formes d'indicateurs (badges du catalogue). */
-const CAP_DASH_KIND={n:'nombre',pct:'%',series:'répartition',multi:'croisé',table:'liste',text:'texte'};
+const CAP_DASH_KIND={n:_L('nombre'),pct:'%',series:_L('répartition'),multi:_L('croisé'),table:_L('liste'),text:_L('texte')};
 
 /** Couleur de la i-ème série dans la palette du thème courant (au-delà de 8 : gris « Autres »).
  * @param {number} i - Rang de la série
@@ -50,137 +50,137 @@ function capDashCatalog(){
   const natural=cats=>({cats,order:'natural'});
 
   // Modèle
-  add('Modèle','mdl.n','Éléments du modèle','n',()=>({n:capAllElements.length}));
-  add('Modèle','mdl.layer','Éléments du modèle par couche','series',()=>natural([...CAP_ANA_LAYERS,'Shared'].map(k=>({l:k==='Shared'?'Transverse':k,v:capAllElements.filter(e=>e.layer===k).length,c:LC(k)})).filter(x=>x.v)));
-  add('Modèle','mdl.types','Types d\'éléments les plus représentés','series',()=>({cats:capDashCount(capAllElements,e=>capAnaHuman(e.typeName))}));
-  add('Modèle','mdl.rels','Relations Capella par type','series',()=>{ const L=capLinksData||(capLinksData=capComputeLinks()); return {cats:CAP_LINK_SECTIONS.map(s=>({l:s.humanLabel,v:(L[s.key]||[]).length})).filter(x=>x.v).sort((a,b)=>b.v-a.v)}; });
+  add(_L('Modèle'),'mdl.n',_L('Éléments du modèle'),'n',()=>({n:capAllElements.length}));
+  add(_L('Modèle'),'mdl.layer',_L('Éléments du modèle par couche'),'series',()=>natural([...CAP_ANA_LAYERS,'Shared'].map(k=>({l:k==='Shared'?_L('Transverse'):k,v:capAllElements.filter(e=>e.layer===k).length,c:LC(k)})).filter(x=>x.v)));
+  add(_L('Modèle'),'mdl.types',_L('Types d\'éléments les plus représentés'),'series',()=>({cats:capDashCount(capAllElements,e=>capAnaHuman(e.typeName))}));
+  add(_L('Modèle'),'mdl.rels',_L('Relations Capella par type'),'series',()=>{ const L=capLinksData||(capLinksData=capComputeLinks()); return {cats:CAP_LINK_SECTIONS.map(s=>({l:s.humanLabel,v:(L[s.key]||[]).length})).filter(x=>x.v).sort((a,b)=>b.v-a.v)}; });
 
   // Fonctions : indicateurs par couche
   const IND=[
     {k:'n', l:'nombre', kind:'n', f:fs=>fs.length},
-    {k:'leaf', l:'feuilles', kind:'n', f:fs=>leaves(fs).length},
-    {k:'depth', l:'profondeur maximale', kind:'n', f:fs=>fs.reduce((m,f)=>Math.max(m,f.depth),0)},
-    {k:'desc', l:'taux de description', kind:'pct', f:fs=>capDashPct(fs.filter(f=>f.parentId),f=>f.desc), d:'Fonctions (hors racine) ayant une description'},
-    {k:'alloc', l:'feuilles allouées', kind:'pct', f:fs=>capDashPct(leaves(fs),f=>f.alloc.length)},
-    {k:'fe', l:'feuilles avec échanges', kind:'pct', f:fs=>capDashPct(leaves(fs),f=>f.fesIn.length+f.fesOut.length)},
-    {k:'trace', l:'feuilles tracées', kind:'pct', f:fs=>capDashPct(leaves(fs),f=>f.realizes.length||f.realizedBy.length), d:'Feuilles qui réalisent ou sont réalisées par une autre couche'},
-    {k:'chain', l:'feuilles dans une chaîne', kind:'pct', f:fs=>capDashPct(leaves(fs),f=>f.chains.length)},
-    {k:'cap', l:'feuilles dans une capacité', kind:'pct', f:fs=>capDashPct(leaves(fs),f=>f.caps.length)},
-    {k:'nq', l:'noms conformes', kind:'pct', f:fs=>capDashPct(fs.filter(f=>f.parentId),f=>!capFnNQ(f).issues.length), d:'Règles de ✍ Qualité des noms'}];
-  IND.forEach(ind=>add('Fonctions','fn.L.'+ind.k,`Fonctions — ${ind.l} (comparaison des couches)`,'series',()=>({pct:ind.kind==='pct',order:'natural',
+    {k:'leaf', l:_L('feuilles'), kind:'n', f:fs=>leaves(fs).length},
+    {k:'depth', l:_L('profondeur maximale'), kind:'n', f:fs=>fs.reduce((m,f)=>Math.max(m,f.depth),0)},
+    {k:'desc', l:_L('taux de description'), kind:'pct', f:fs=>capDashPct(fs.filter(f=>f.parentId),f=>f.desc), d:_L('Fonctions (hors racine) ayant une description')},
+    {k:'alloc', l:_L('feuilles allouées'), kind:'pct', f:fs=>capDashPct(leaves(fs),f=>f.alloc.length)},
+    {k:'fe', l:_L('feuilles avec échanges'), kind:'pct', f:fs=>capDashPct(leaves(fs),f=>f.fesIn.length+f.fesOut.length)},
+    {k:'trace', l:_L('feuilles tracées'), kind:'pct', f:fs=>capDashPct(leaves(fs),f=>f.realizes.length||f.realizedBy.length), d:_L('Feuilles qui réalisent ou sont réalisées par une autre couche')},
+    {k:'chain', l:_L('feuilles dans une chaîne'), kind:'pct', f:fs=>capDashPct(leaves(fs),f=>f.chains.length)},
+    {k:'cap', l:_L('feuilles dans une capacité'), kind:'pct', f:fs=>capDashPct(leaves(fs),f=>f.caps.length)},
+    {k:'nq', l:_L('noms conformes'), kind:'pct', f:fs=>capDashPct(fs.filter(f=>f.parentId),f=>!capFnNQ(f).issues.length), d:_L('Règles de ✍ Qualité des noms')}];
+  IND.forEach(ind=>add(_L('Fonctions'),'fn.L.'+ind.k,_L(`Fonctions — ${ind.l} (comparaison des couches)`),'series',()=>({pct:ind.kind==='pct',order:'natural',
     cats:layers.map(k=>{ const r=ind.f(fnsOf(k)); if(r==null) return null; return ind.kind==='pct'?{l:k,v:r.v,c:LC(k),tip:`${r.num} / ${r.den}`}:{l:k,v:r,c:LC(k)}; }).filter(Boolean)}),ind.d));
-  const AKL=[['sys','Système'],['act','Acteurs'],['mix','Système + acteur'],['none','Non allouées']];
-  add('Fonctions','fn.ak','Fonctions — nature de l\'allocation des feuilles, par couche','multi',()=>({cats:layers,
+  const AKL=[['sys',_L('Système')],['act',_L('Acteurs')],['mix',_L('Système + acteur')],['none',_L('Non allouées')]];
+  add(_L('Fonctions'),'fn.ak',_L('Fonctions — nature de l\'allocation des feuilles, par couche'),'multi',()=>({cats:layers,
     series:AKL.map(([x,l])=>({l,c:CAP_DASH_AK[x],vals:layers.map(k=>leaves(fnsOf(k)).filter(f=>capFnAllocKind(f)===x).length)})).filter(s=>s.vals.some(v=>v))}));
-  const NQL={ing:'Forme en -ing en tête',noun:'Nom d\'action en tête',noverb:'Pas de verbe en tête',vague:'Verbe vague',case:'Minuscule en tête',space:'Espaces superflus',punct:'Ponctuation finale',long:'Nom trop long',short:'Un seul mot'};
-  add('Fonctions','fn.nq','Fonctions — problèmes de nommage par nature','series',()=>({cats:capDashCount(F.list.filter(f=>f.parentId),f=>capFnNQ(f).issues.map(i=>NQL[i.code]||i.code))}));
-  add('Fonctions','fn.top','Fonctions les plus connectées','table',()=>({cols:['Couche','N°','Fonction','Échanges'],
+  const NQL={ing:_L('Forme en -ing en tête'),noun:_L('Nom d\'action en tête'),noverb:_L('Pas de verbe en tête'),vague:_L('Verbe vague'),case:_L('Minuscule en tête'),space:_L('Espaces superflus'),punct:_L('Ponctuation finale'),long:_L('Nom trop long'),short:_L('Un seul mot')};
+  add(_L('Fonctions'),'fn.nq',_L('Fonctions — problèmes de nommage par nature'),'series',()=>({cats:capDashCount(F.list.filter(f=>f.parentId),f=>capFnNQ(f).issues.map(i=>NQL[i.code]||i.code))}));
+  add(_L('Fonctions'),'fn.top',_L('Fonctions les plus connectées'),'table',()=>({cols:[_L('Couche'),'N°',_L('Fonction'),_L('Échanges')],
     rows:F.list.filter(f=>f.fesIn.length+f.fesOut.length).sort((a,b)=>(b.fesIn.length+b.fesOut.length)-(a.fesIn.length+a.fesOut.length)).slice(0,30).map(f=>[f.layer,f.num,f.name,f.fesIn.length+f.fesOut.length])}));
   layers.forEach(k=>{
-    const g='Fonctions '+k;
-    IND.forEach(ind=>add(g,`fn.${k}.${ind.k}`,`Fonctions ${k} — ${ind.l}`,ind.kind,()=>{ const r=ind.f(fnsOf(k)); return ind.kind==='pct'?r:{n:r}; },ind.d));
-    add(g,`fn.${k}.ak`,`Fonctions ${k} — nature de l'allocation (feuilles)`,'series',()=>natural(AKL.map(([x,l])=>({l,v:leaves(fnsOf(k)).filter(f=>capFnAllocKind(f)===x).length,c:CAP_DASH_AK[x]})).filter(x=>x.v)));
-    add(g,`fn.${k}.who`,`Fonctions ${k} — par allocataire`,'series',()=>({cats:capDashCount(fnsOf(k),f=>f.alloc.map(a=>(a.actor?'👤 ':'')+a.name))}));
-    if(k==='LA'||k==='PA') add(g,`fn.${k}.sub`,`Fonctions ${k} — par sous-système`,'series',()=>({cats:capDashCount(fnsOf(k),f=>[...new Set(capFnSubsystems(f).map(p=>p.split(' › ')[0]))])}),'Premier niveau sous le système');
-    add(g,`fn.${k}.lvl`,`Fonctions ${k} — par niveau de profondeur`,'series',()=>{ const m=new Map(); fnsOf(k).forEach(f=>m.set(f.depth,(m.get(f.depth)||0)+1)); return natural([...m].sort((a,b)=>a[0]-b[0]).map(([d,v])=>({l:'Niveau '+d,v}))); });
+    const g=_L('Fonctions ')+k;
+    IND.forEach(ind=>add(g,`fn.${k}.${ind.k}`,_L(`Fonctions ${k} — ${ind.l}`),ind.kind,()=>{ const r=ind.f(fnsOf(k)); return ind.kind==='pct'?r:{n:r}; },ind.d));
+    add(g,`fn.${k}.ak`,_L(`Fonctions ${k} — nature de l'allocation (feuilles)`),'series',()=>natural(AKL.map(([x,l])=>({l,v:leaves(fnsOf(k)).filter(f=>capFnAllocKind(f)===x).length,c:CAP_DASH_AK[x]})).filter(x=>x.v)));
+    add(g,`fn.${k}.who`,_L(`Fonctions ${k} — par allocataire`),'series',()=>({cats:capDashCount(fnsOf(k),f=>f.alloc.map(a=>(a.actor?'👤 ':'')+a.name))}));
+    if(k==='LA'||k==='PA') add(g,`fn.${k}.sub`,_L(`Fonctions ${k} — par sous-système`),'series',()=>({cats:capDashCount(fnsOf(k),f=>[...new Set(capFnSubsystems(f).map(p=>p.split(' › ')[0]))])}),_L('Premier niveau sous le système'));
+    add(g,`fn.${k}.lvl`,_L(`Fonctions ${k} — par niveau de profondeur`),'series',()=>{ const m=new Map(); fnsOf(k).forEach(f=>m.set(f.depth,(m.get(f.depth)||0)+1)); return natural([...m].sort((a,b)=>a[0]-b[0]).map(([d,v])=>({l:_L('Niveau ')+d,v}))); });
   });
 
   // Chaînes
   const CH=()=>capChainsData||(capChainsData=capComputeChains());
-  add('Chaînes','ch.n','Nombre de chaînes','n',()=>({n:CH().length, sub:`dont ${CH().filter(capChainIsEmpty).length} vide(s)`}));
-  add('Chaînes','ch.type','Chaînes par type','series',()=>natural(Object.keys(CAP_CHAIN_LABELS).map(t=>({l:CAP_CHAIN_LABELS[t],v:CH().filter(c=>c.type===t).length,c:CAP_CHAIN_COLORS[t]})).filter(x=>x.v)));
-  add('Chaînes','ch.layer','Chaînes par couche','series',()=>natural(CAP_CHAIN_LAYER_ORDER.map(k=>({l:k==='?'?'Non classées':k,v:CH().filter(c=>c.layer===k).length,c:LC(k)})).filter(x=>x.v)));
-  add('Chaînes','ch.empty','Chaînes vides / non vides','series',()=>natural([{l:'Non vides',v:CH().filter(c=>!capChainIsEmpty(c)).length,c:'#3fb950'},{l:'Vides',v:CH().filter(capChainIsEmpty).length,c:'#8b949e'}].filter(x=>x.v)));
-  add('Chaînes','ch.full','Chaînes non vides','pct',()=>capDashPct(CH(),c=>!capChainIsEmpty(c)));
-  add('Chaînes','ch.avg','Étapes par chaîne (moyenne)','n',()=>{ const ne=CH().filter(c=>!capChainIsEmpty(c)); return ne.length?{n:+(ne.reduce((s,c)=>s+c.graph.nodes.length,0)/ne.length).toFixed(1),sub:'chaînes non vides'}:null; });
-  add('Chaînes','ch.kind','Étapes des chaînes par nature d\'allocation','series',()=>{ const all=CH().flatMap(c=>c.type==='PhysicalPath'?[]:c.graph.nodes);
-    return natural([['system','Système','sys'],['actor','Acteurs','act'],['none','Non allouées','none']].map(([k,l,c])=>({l,v:all.filter(n=>n.kind===k).length,c:CAP_DASH_AK[c]})).filter(x=>x.v)); });
-  add('Chaînes','ch.top','Chaînes les plus longues','table',()=>({cols:['Chaîne','Type','Couche','Étapes','Échanges'],
+  add(_L('Chaînes'),'ch.n',_L('Nombre de chaînes'),'n',()=>({n:CH().length, sub:_L(`dont ${CH().filter(capChainIsEmpty).length} vide(s)`)}));
+  add(_L('Chaînes'),'ch.type',_L('Chaînes par type'),'series',()=>natural(Object.keys(CAP_CHAIN_LABELS).map(t=>({l:CAP_CHAIN_LABELS[t],v:CH().filter(c=>c.type===t).length,c:CAP_CHAIN_COLORS[t]})).filter(x=>x.v)));
+  add(_L('Chaînes'),'ch.layer',_L('Chaînes par couche'),'series',()=>natural(CAP_CHAIN_LAYER_ORDER.map(k=>({l:k==='?'?_L('Non classées'):k,v:CH().filter(c=>c.layer===k).length,c:LC(k)})).filter(x=>x.v)));
+  add(_L('Chaînes'),'ch.empty',_L('Chaînes vides / non vides'),'series',()=>natural([{l:_L('Non vides'),v:CH().filter(c=>!capChainIsEmpty(c)).length,c:'#3fb950'},{l:_L('Vides'),v:CH().filter(capChainIsEmpty).length,c:'#8b949e'}].filter(x=>x.v)));
+  add(_L('Chaînes'),'ch.full',_L('Chaînes non vides'),'pct',()=>capDashPct(CH(),c=>!capChainIsEmpty(c)));
+  add(_L('Chaînes'),'ch.avg',_L('Étapes par chaîne (moyenne)'),'n',()=>{ const ne=CH().filter(c=>!capChainIsEmpty(c)); return ne.length?{n:+(ne.reduce((s,c)=>s+c.graph.nodes.length,0)/ne.length).toFixed(1),sub:_L('chaînes non vides')}:null; });
+  add(_L('Chaînes'),'ch.kind',_L('Étapes des chaînes par nature d\'allocation'),'series',()=>{ const all=CH().flatMap(c=>c.type==='PhysicalPath'?[]:c.graph.nodes);
+    return natural([['system',_L('Système'),'sys'],['actor',_L('Acteurs'),'act'],['none',_L('Non allouées'),'none']].map(([k,l,c])=>({l,v:all.filter(n=>n.kind===k).length,c:CAP_DASH_AK[c]})).filter(x=>x.v)); });
+  add(_L('Chaînes'),'ch.top',_L('Chaînes les plus longues'),'table',()=>({cols:[_L('Chaîne'),'Type',_L('Couche'),_L('Étapes'),_L('Échanges')],
     rows:[...CH()].sort((a,b)=>b.graph.nodes.length-a.graph.nodes.length).slice(0,30).map(c=>[c.name,CAP_CHAIN_LABELS[c.type]||c.type,c.layer,c.graph.nodes.length,c.graph.edges.length])}));
 
   // Component Exchanges
   const CE=()=>_capAnaCache.dashCE||(_capAnaCache.dashCE=capComputeCompExchanges());
-  const DIRL={fwd:'→ Orienté',rev:'← Inversé',bi:'⇄ Bidirectionnel',unset:'? Non orienté'};
-  add('Component Exchanges','ce.n','Nombre de Component Exchanges','n',()=>({n:CE().length}));
-  add('Component Exchanges','ce.kind','Component Exchanges par kind','series',()=>({cats:capDashCount(CE(),x=>x.kind||'UNSET')}));
-  add('Component Exchanges','ce.dir','Sens des Component Exchanges','series',()=>({cats:capDashCount(CE(),x=>x.warn?'⚠ Incohérent':DIRL[x.dir]||x.dir)}));
-  add('Component Exchanges','ce.layer','Component Exchanges par couche','series',()=>natural(CAP_ANA_LAYERS.map(k=>({l:k,v:CE().filter(x=>x.layer===k).length,c:LC(k)})).filter(x=>x.v)));
-  add('Component Exchanges','ce.fe','Component Exchanges avec FE alloué','pct',()=>capDashPct(CE(),x=>x.fes.length));
-  add('Component Exchanges','ce.orph','Ports de composant orphelins','n',()=>({n:(CE().allPorts||[]).filter(p=>!p.connected).length,sub:'ComponentPort sans exchange'}));
-  add('Component Exchanges','ce.papl','CE de couche PA sans Physical Link','n',()=>({n:CE().filter(x=>x.layer==='PA'&&x.kind!=='DELEGATION'&&!x.pls.length).length}));
-  add('Component Exchanges','ce.comp','Component Exchanges par composant','series',()=>({cats:capDashCount(CE(),x=>[...new Set([x.src.pcName,x.tgt.pcName])])}));
+  const DIRL={fwd:_L('→ Orienté'),rev:_L('← Inversé'),bi:_L('⇄ Bidirectionnel'),unset:_L('? Non orienté')};
+  add(_L('Component Exchanges'),'ce.n',_L('Nombre de Component Exchanges'),'n',()=>({n:CE().length}));
+  add(_L('Component Exchanges'),'ce.kind',_L('Component Exchanges par kind'),'series',()=>({cats:capDashCount(CE(),x=>x.kind||'UNSET')}));
+  add(_L('Component Exchanges'),'ce.dir',_L('Sens des Component Exchanges'),'series',()=>({cats:capDashCount(CE(),x=>x.warn?_L('⚠ Incohérent'):DIRL[x.dir]||x.dir)}));
+  add(_L('Component Exchanges'),'ce.layer',_L('Component Exchanges par couche'),'series',()=>natural(CAP_ANA_LAYERS.map(k=>({l:k,v:CE().filter(x=>x.layer===k).length,c:LC(k)})).filter(x=>x.v)));
+  add(_L('Component Exchanges'),'ce.fe',_L('Component Exchanges avec FE alloué'),'pct',()=>capDashPct(CE(),x=>x.fes.length));
+  add(_L('Component Exchanges'),'ce.orph',_L('Ports de composant orphelins'),'n',()=>({n:(CE().allPorts||[]).filter(p=>!p.connected).length,sub:_L('ComponentPort sans exchange')}));
+  add(_L('Component Exchanges'),'ce.papl',_L('CE de couche PA sans Physical Link'),'n',()=>({n:CE().filter(x=>x.layer==='PA'&&x.kind!=='DELEGATION'&&!x.pls.length).length}));
+  add(_L('Component Exchanges'),'ce.comp',_L('Component Exchanges par composant'),'series',()=>({cats:capDashCount(CE(),x=>[...new Set([x.src.pcName,x.tgt.pcName])])}));
 
   // Physical Links
   const PL=()=>_capAnaCache.dashPL||(_capAnaCache.dashPL=capComputePhysLinks());
-  add('Physical Links','pl.n','Nombre de Physical Links','n',()=>({n:PL().length}));
-  add('Physical Links','pl.layer','Physical Links par couche','series',()=>natural(CAP_ANA_LAYERS.map(k=>({l:k,v:PL().filter(x=>x.layer===k).length,c:LC(k)})).filter(x=>x.v)));
-  add('Physical Links','pl.ce','Physical Links portant un CE','pct',()=>capDashPct(PL(),x=>x.ces.length));
-  add('Physical Links','pl.orph','Ports physiques sans lien','n',()=>({n:(PL().allPorts||[]).filter(p=>!p.connected).length}));
-  add('Physical Links','pl.nocp','Ports physiques sans Component Port','n',()=>({n:(PL().allPorts||[]).filter(p=>!(p.cps||[]).length).length}));
-  add('Physical Links','pl.comp','Physical Links par composant','series',()=>({cats:capDashCount(PL(),x=>[...new Set([x.src.pcName,x.tgt.pcName])])}));
+  add(_L('Physical Links'),'pl.n',_L('Nombre de Physical Links'),'n',()=>({n:PL().length}));
+  add(_L('Physical Links'),'pl.layer',_L('Physical Links par couche'),'series',()=>natural(CAP_ANA_LAYERS.map(k=>({l:k,v:PL().filter(x=>x.layer===k).length,c:LC(k)})).filter(x=>x.v)));
+  add(_L('Physical Links'),'pl.ce',_L('Physical Links portant un CE'),'pct',()=>capDashPct(PL(),x=>x.ces.length));
+  add(_L('Physical Links'),'pl.orph',_L('Ports physiques sans lien'),'n',()=>({n:(PL().allPorts||[]).filter(p=>!p.connected).length}));
+  add(_L('Physical Links'),'pl.nocp',_L('Ports physiques sans Component Port'),'n',()=>({n:(PL().allPorts||[]).filter(p=>!(p.cps||[]).length).length}));
+  add(_L('Physical Links'),'pl.comp',_L('Physical Links par composant'),'series',()=>({cats:capDashCount(PL(),x=>[...new Set([x.src.pcName,x.tgt.pcName])])}));
 
   // Ports
   const PT=()=>capComputePortLinks();
-  add('Ports','pt.fp','Function Ports alloués à un Component Port','pct',()=>capDashPct(Object.values(PT().fps||{}),p=>p.cps.length));
-  add('Ports','pt.cp','Component Ports (PA) alloués à un port physique','pct',()=>capDashPct(Object.values(PT().cps||{}).filter(p=>p.layer==='PA'),p=>(p.pps||[]).length));
-  add('Ports','pt.pp','Ports physiques portant un Component Port','pct',()=>capDashPct(Object.values(PT().pps||{}),p=>p.cps.length));
+  add(_L('Ports'),'pt.fp',_L('Function Ports alloués à un Component Port'),'pct',()=>capDashPct(Object.values(PT().fps||{}),p=>p.cps.length));
+  add(_L('Ports'),'pt.cp',_L('Component Ports (PA) alloués à un port physique'),'pct',()=>capDashPct(Object.values(PT().cps||{}).filter(p=>p.layer==='PA'),p=>(p.pps||[]).length));
+  add(_L('Ports'),'pt.pp',_L('Ports physiques portant un Component Port'),'pct',()=>capDashPct(Object.values(PT().pps||{}),p=>p.cps.length));
 
   // Traçabilité
   const TR=()=>capComputeTrace(false,true), COV=()=>_capAnaCache.dashCov||(_capAnaCache.dashCov=capTraceCoverage(TR()));
-  add('Traçabilité','tr.n','Liens de réalisation','n',()=>({n:TR().links.length}));
-  add('Traçabilité','tr.tab','Couverture de traçabilité (▼ réalisés · ▲ réalisants)','table',()=>{ const cells=COV(), pas=[...new Set(cells.map(c=>c.hi+'→'+c.lo))];
+  add(_L('Traçabilité'),'tr.n',_L('Liens de réalisation'),'n',()=>({n:TR().links.length}));
+  add(_L('Traçabilité'),'tr.tab',_L('Couverture de traçabilité (▼ réalisés · ▲ réalisants)'),'table',()=>{ const cells=COV(), pas=[...new Set(cells.map(c=>c.hi+'→'+c.lo))];
     const used=pas.filter(p=>cells.some(c=>c.hi+'→'+c.lo===p&&c.used)); if(!used.length) return null;
     const P=(a,b)=>a.length?Math.round(100*a.length/b.length)+' %':'—';
-    return {cols:['Catégorie',...used],rows:CAP_TRACE_CATS.filter(k=>cells.some(c=>c.cat===k.k&&c.used)).map(k=>[k.label,...used.map(p=>{ const c=cells.find(x=>x.cat===k.k&&x.hi+'→'+x.lo===p); return c&&c.used?`▼ ${P(c.upOk,c.upAll)} · ▲ ${P(c.loOk,c.loAll)}`:'—'; })])}; });
+    return {cols:[_L('Catégorie'),...used],rows:CAP_TRACE_CATS.filter(k=>cells.some(c=>c.cat===k.k&&c.used)).map(k=>[k.label,...used.map(p=>{ const c=cells.find(x=>x.cat===k.k&&x.hi+'→'+x.lo===p); return c&&c.used?`▼ ${P(c.upOk,c.upAll)} · ▲ ${P(c.loOk,c.loAll)}`:'—'; })])}; });
   try{
     const cells=COV();
     CAP_TRACE_CATS.filter(k=>cells.some(c=>c.cat===k.k&&c.used)).forEach(k=>{
-      const mk=(dir,lab)=>add('Traçabilité',`tr.${dir}.${k.k}`,`Traçabilité — ${k.label} : % ${lab} par passage`,'series',()=>({pct:true,order:'natural',cats:COV().filter(c=>c.cat===k.k&&c.used).map(c=>{
+      const mk=(dir,lab)=>add(_L('Traçabilité'),`tr.${dir}.${k.k}`,_L(`Traçabilité — ${k.label} : % ${lab} par passage`),'series',()=>({pct:true,order:'natural',cats:COV().filter(c=>c.cat===k.k&&c.used).map(c=>{
         const a=dir==='dn'?c.upOk:c.loOk, b=dir==='dn'?c.upAll:c.loAll; return b.length?{l:c.hi+'→'+c.lo,v:Math.round(100*a.length/b.length),tip:`${a.length} / ${b.length}`,c:LC(dir==='dn'?c.hi:c.lo)}:null; }).filter(Boolean)}),
-        dir==='dn'?'Éléments de la couche haute réalisés par la couche basse':'Éléments de la couche basse qui réalisent la couche haute');
-      mk('dn','réalisés ▼'); mk('up','réalisants ▲');
+        dir==='dn'?_L('Éléments de la couche haute réalisés par la couche basse'):_L('Éléments de la couche basse qui réalisent la couche haute'));
+      mk('dn',_L('réalisés ▼')); mk('up',_L('réalisants ▲'));
     });
   }catch(e){ console.warn('Tableau de bord : traçabilité indisponible',e); }
 
   // Capacités & missions
   const CP=()=>capComputeCapabilities(), nonMis=()=>CP().filter(c=>c.type!=='Mission');
-  add('Capacités','cap.n','Capacités et missions','n',()=>({n:CP().length}));
-  add('Capacités','cap.type','Capacités par type','series',()=>({cats:capDashCount(CP(),c=>capAnaHuman(c.type))}));
-  add('Capacités','cap.layer','Capacités par couche','series',()=>natural(CAP_ANA_LAYERS.map(k=>({l:k,v:CP().filter(c=>c.layer===k).length,c:LC(k)})).filter(x=>x.v)));
-  add('Capacités','cap.fn','Capacités décrites par des fonctions ou chaînes','pct',()=>capDashPct(nonMis(),c=>c.fns.length||c.chains.length));
-  add('Capacités','cap.chk','Contrôles des capacités','series',()=>({cats:[
-    {l:'Sans fonction ni chaîne',v:nonMis().filter(c=>!c.fns.length&&!c.chains.length).length},
-    {l:'Sans acteur ni composant',v:CP().filter(c=>!c.actors.length).length},
-    {l:'Sans scénario',v:nonMis().filter(c=>!c.scen.length).length},
-    {l:'Missions sans capacité',v:CP().filter(c=>c.type==='Mission'&&!c.exploits.length).length}].filter(x=>x.v)}));
+  add(_L('Capacités'),'cap.n',_L('Capacités et missions'),'n',()=>({n:CP().length}));
+  add(_L('Capacités'),'cap.type',_L('Capacités par type'),'series',()=>({cats:capDashCount(CP(),c=>capAnaHuman(c.type))}));
+  add(_L('Capacités'),'cap.layer',_L('Capacités par couche'),'series',()=>natural(CAP_ANA_LAYERS.map(k=>({l:k,v:CP().filter(c=>c.layer===k).length,c:LC(k)})).filter(x=>x.v)));
+  add(_L('Capacités'),'cap.fn',_L('Capacités décrites par des fonctions ou chaînes'),'pct',()=>capDashPct(nonMis(),c=>c.fns.length||c.chains.length));
+  add(_L('Capacités'),'cap.chk',_L('Contrôles des capacités'),'series',()=>({cats:[
+    {l:_L('Sans fonction ni chaîne'),v:nonMis().filter(c=>!c.fns.length&&!c.chains.length).length},
+    {l:_L('Sans acteur ni composant'),v:CP().filter(c=>!c.actors.length).length},
+    {l:_L('Sans scénario'),v:nonMis().filter(c=>!c.scen.length).length},
+    {l:_L('Missions sans capacité'),v:CP().filter(c=>c.type==='Mission'&&!c.exploits.length).length}].filter(x=>x.v)}));
 
   // Modes & états
   const SM=()=>capComputeStates(), real=sm=>sm.states.filter(s=>!s.pseudo&&!s.final);
-  add('Modes & états','sm.n','Machines à états','n',()=>({n:SM().sms.length,sub:`${SM().sms.reduce((s,m)=>s+real(m).length,0)} états/modes · ${SM().sms.reduce((s,m)=>s+m.trans.length,0)} transitions`}));
-  add('Modes & états','sm.owner','États et modes par machine','series',()=>({cats:SM().sms.map(m=>({l:m.owner&&m.owner.name?m.owner.name:m.name,v:real(m).length})).filter(x=>x.v).sort((a,b)=>b.v-a.v)}));
-  add('Modes & états','sm.chk','Contrôles des machines à états','series',()=>{ const t={noInit:0,unreach:0,deadEnd:0,noTrig:0}; SM().sms.forEach(m=>{ const c=capStateChecks(m); Object.keys(t).forEach(k=>t[k]+=c[k].length); });
-    return {cats:[{l:'Régions sans état initial',v:t.noInit},{l:'États inatteignables',v:t.unreach},{l:'États sans issue',v:t.deadEnd},{l:'Transitions sans déclencheur',v:t.noTrig}].filter(x=>x.v)}; });
+  add(_L('Modes & états'),'sm.n',_L('Machines à états'),'n',()=>({n:SM().sms.length,sub:_L(`${SM().sms.reduce((s,m)=>s+real(m).length,0)} états/modes · ${SM().sms.reduce((s,m)=>s+m.trans.length,0)} transitions`)}));
+  add(_L('Modes & états'),'sm.owner',_L('États et modes par machine'),'series',()=>({cats:SM().sms.map(m=>({l:m.owner&&m.owner.name?m.owner.name:m.name,v:real(m).length})).filter(x=>x.v).sort((a,b)=>b.v-a.v)}));
+  add(_L('Modes & états'),'sm.chk',_L('Contrôles des machines à états'),'series',()=>{ const t={noInit:0,unreach:0,deadEnd:0,noTrig:0}; SM().sms.forEach(m=>{ const c=capStateChecks(m); Object.keys(t).forEach(k=>t[k]+=c[k].length); });
+    return {cats:[{l:_L('Régions sans état initial'),v:t.noInit},{l:_L('États inatteignables'),v:t.unreach},{l:_L('États sans issue'),v:t.deadEnd},{l:_L('Transitions sans déclencheur'),v:t.noTrig}].filter(x=>x.v)}; });
 
   // Contrôles
   const secs=s=>({cats:s.map(x=>({l:x.title,v:(x.items||[]).length})).filter(x=>x.v).sort((a,b)=>b.v-a.v)});
-  add('Contrôles','chk.fn','Contrôles des fonctions','series',()=>secs(capFnChecks(F,'all')));
-  add('Contrôles','chk.pt','Contrôles des ports','series',()=>secs(capPortsDiagSections(PT())));
-  add('Contrôles','chk.ce','Contrôles des Component Exchanges','series',()=>({cats:[
-    {l:'Sans Functional Exchange',v:CE().filter(x=>!x.fes.length).length},{l:'Ports orphelins',v:(CE().allPorts||[]).filter(p=>!p.connected).length},
-    {l:'Orientations incohérentes',v:CE().filter(x=>x.warn).length},{l:'Non orientés',v:CE().filter(x=>x.dir==='unset').length},
-    {l:'PA sans Physical Link',v:CE().filter(x=>x.layer==='PA'&&x.kind!=='DELEGATION'&&!x.pls.length).length}].filter(x=>x.v)}));
-  add('Contrôles','chk.pl','Contrôles des Physical Links','series',()=>({cats:[
-    {l:'Sans Component Exchange',v:PL().filter(x=>!x.ces.length).length},{l:'Ports physiques sans lien',v:(PL().allPorts||[]).filter(p=>!p.connected).length},
-    {l:'Ports physiques sans Component Port',v:(PL().allPorts||[]).filter(p=>!(p.cps||[]).length).length},{l:'CE (PA) non alloués',v:(PL().unallocCEs||[]).length}].filter(x=>x.v)}));
-  add('Contrôles','chk.sum','Synthèse des contrôles par domaine','series',()=>{ const tot=id=>{ const m=C.find(x=>x.id===id), v=m&&capDashValue(m); return v?v.cats.reduce((s,c)=>s+c.v,0):0; };
-    return {cats:[['Fonctions','chk.fn'],['Ports','chk.pt'],['Component Exchanges','chk.ce'],['Physical Links','chk.pl'],['Capacités','cap.chk'],['Modes & états','sm.chk'],['Exigences','rq.chk'],['Propriétés','pv.chk'],['Données & interfaces','dm.chk'],['Contraintes','ct.chk']].map(([l,id])=>({l,v:tot(id)})).filter(x=>x.v).sort((a,b)=>b.v-a.v)}; },'Nombre total de constats par domaine');
+  add(_L('Contrôles'),'chk.fn',_L('Contrôles des fonctions'),'series',()=>secs(capFnChecks(F,'all')));
+  add(_L('Contrôles'),'chk.pt',_L('Contrôles des ports'),'series',()=>secs(capPortsDiagSections(PT())));
+  add(_L('Contrôles'),'chk.ce',_L('Contrôles des Component Exchanges'),'series',()=>({cats:[
+    {l:_L('Sans Functional Exchange'),v:CE().filter(x=>!x.fes.length).length},{l:_L('Ports orphelins'),v:(CE().allPorts||[]).filter(p=>!p.connected).length},
+    {l:_L('Orientations incohérentes'),v:CE().filter(x=>x.warn).length},{l:_L('Non orientés'),v:CE().filter(x=>x.dir==='unset').length},
+    {l:_L('PA sans Physical Link'),v:CE().filter(x=>x.layer==='PA'&&x.kind!=='DELEGATION'&&!x.pls.length).length}].filter(x=>x.v)}));
+  add(_L('Contrôles'),'chk.pl',_L('Contrôles des Physical Links'),'series',()=>({cats:[
+    {l:_L('Sans Component Exchange'),v:PL().filter(x=>!x.ces.length).length},{l:_L('Ports physiques sans lien'),v:(PL().allPorts||[]).filter(p=>!p.connected).length},
+    {l:_L('Ports physiques sans Component Port'),v:(PL().allPorts||[]).filter(p=>!(p.cps||[]).length).length},{l:_L('CE (PA) non alloués'),v:(PL().unallocCEs||[]).length}].filter(x=>x.v)}));
+  add(_L('Contrôles'),'chk.sum',_L('Synthèse des contrôles par domaine'),'series',()=>{ const tot=id=>{ const m=C.find(x=>x.id===id), v=m&&capDashValue(m); return v?v.cats.reduce((s,c)=>s+c.v,0):0; };
+    return {cats:[[_L('Fonctions'),'chk.fn'],[_L('Ports'),'chk.pt'],[_L('Component Exchanges'),'chk.ce'],[_L('Physical Links'),'chk.pl'],[_L('Capacités'),'cap.chk'],[_L('Modes & états'),'sm.chk'],[_L('Exigences'),'rq.chk'],[_L('Propriétés'),'pv.chk'],[_L('Données & interfaces'),'dm.chk'],[_L('Contraintes'),'ct.chk']].map(([l,id])=>({l,v:tot(id)})).filter(x=>x.v).sort((a,b)=>b.v-a.v)}; },_L('Nombre total de constats par domaine'));
 
   capXtDashCatalog(add, LC);
   capFexDashCatalog(add, LC);
   capCbDashCatalog(add, LC);
   capScDashCatalog(add, LC);
 
-  add('Mise en page','txt','Texte libre (titre, commentaire)','text',()=>({}));
+  add(_L('Mise en page'),'txt',_L('Texte libre (titre, commentaire)'),'text',()=>({}));
   return _capAnaCache.dashCat=C;
 }
 /** Valeur (mise en cache) d'un indicateur du catalogue ; null si le modèle ne contient pas la donnée.
@@ -205,7 +205,7 @@ function capDashCut(s,n){ s=String(s); return capEsc(s.length>n?s.slice(0,Math.m
  * @param {number} v - Pourcentage
  * @returns {{c:string,i:string,l:string}} Couleur, icône, libellé
  */
-function capDashLevel(v){ return v>=90?{c:'#3fb950',i:'✔',l:'bon'}:v>=50?{c:'#d29922',i:'▲',l:'à surveiller'}:{c:'#f85149',i:'✖',l:'faible'}; }
+function capDashLevel(v){ return v>=90?{c:'#3fb950',i:'✔',l:_L('bon')}:v>=50?{c:'#d29922',i:'▲',l:_L('à surveiller')}:{c:'#f85149',i:'✖',l:_L('faible')}; }
 /** Prépare les catégories d'une répartition : tri, limite d'affichage et regroupement en « Autres ».
  * @param {object} val - Valeur {cats, order, pct}
  * @param {object} w - Élément du tableau de bord (top, sort)
@@ -215,7 +215,7 @@ function capDashCats(val,w){
   let cats=val.cats.map(c=>({...c}));
   if((w.sort||(val.order==='natural'?'natural':'value'))==='value') cats.sort((a,b)=>b.v-a.v);
   const top=+w.top||0;
-  if(top&&cats.length>top){ const rest=cats.slice(top); cats=cats.slice(0,top); if(!val.pct) cats.push({l:`Autres (${rest.length})`,v:rest.reduce((s,c)=>s+c.v,0),c:'#8b949e',other:true}); }
+  if(top&&cats.length>top){ const rest=cats.slice(top); cats=cats.slice(0,top); if(!val.pct) cats.push({l:_L(`Autres (${rest.length})`),v:rest.reduce((s,c)=>s+c.v,0),c:'#8b949e',other:true}); }
   return cats;
 }
 /** Dessine le contenu d'un élément du tableau de bord.
@@ -226,9 +226,9 @@ function capDashCats(val,w){
  * @returns {string} HTML / SVG
  */
 function capDashDraw(w,m,W,H){
-  if(w.v==='text') return `<div class="dash-txt${(w.txt||'').length<90&&!(w.txt||'').includes('\n')?' dash-h':''}">${capEsc(w.txt||'')||'<span class="ana-dim">Texte vide — ⚙ pour le modifier.</span>'}</div>`;
-  if(!m) return '<div class="dash-empty">Indicateur indisponible pour ce modèle.</div>';
-  const val=capDashValue(m); if(!val) return '<div class="dash-empty">Aucune donnée dans ce modèle.</div>';
+  if(w.v==='text') return `<div class="dash-txt${(w.txt||'').length<90&&!(w.txt||'').includes('\n')?' dash-h':''}">${capEsc(w.txt||'')||_L('<span class="ana-dim">Texte vide — ⚙ pour le modifier.</span>')}</div>`;
+  if(!m) return _L('<div class="dash-empty">Indicateur indisponible pour ce modèle.</div>');
+  const val=capDashValue(m); if(!val) return _L('<div class="dash-empty">Aucune donnée dans ce modèle.</div>');
   const esc=capEsc, dim='var(--c-dim)', txt='var(--c-text)', surf='var(--c-bg2)';
   const fmt=(v,pct)=>pct?v+' %':(+v).toLocaleString('fr-FR');
   W=Math.max(120,W); H=Math.max(60,H);
@@ -247,15 +247,15 @@ function capDashDraw(w,m,W,H){
     let cols, rows;
     if(m.kind==='table'){ cols=val.cols; rows=val.rows; }
     else if(m.kind==='multi'){ cols=['',...val.series.map(s=>s.l)]; rows=val.cats.map((c,i)=>[c,...val.series.map(s=>s.vals[i])]); }
-    else { const cats=capDashCats(val,w), tot=val.cats.reduce((s,c)=>s+c.v,0); cols=['Catégorie',val.pct?'Taux':'Nombre',...(val.pct?['Détail']:['Part'])]; rows=cats.map(c=>[c.l,fmt(c.v,val.pct),val.pct?(c.tip||''):(tot?Math.round(100*c.v/tot)+' %':'')]); }
+    else { const cats=capDashCats(val,w), tot=val.cats.reduce((s,c)=>s+c.v,0); cols=[_L('Catégorie'),val.pct?_L('Taux'):_L('Nombre'),...(val.pct?[_L('Détail')]:['Part'])]; rows=cats.map(c=>[c.l,fmt(c.v,val.pct),val.pct?(c.tip||''):(tot?Math.round(100*c.v/tot)+' %':'')]); }
     const RH=19, all=Math.floor((H-RH)/RH), fit=rows.length>all?Math.max(1,Math.floor((H-RH-16)/RH)):rows.length, more=rows.length-fit; rows=rows.slice(0,fit);
     const len=cols.map((c,i)=>Math.min(40,Math.max(3,String(c).length*0.8,...rows.map(r=>String(r[i]??'').length)))), lt=len.reduce((s,x)=>s+x,0);
-    return `<table class="dash-tbl"><colgroup>${len.map(x=>`<col style="width:${(100*x/lt).toFixed(1)}%">`).join('')}</colgroup><thead><tr>${cols.map(c=>`<th title="${esc(c)}">${esc(c)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((x,i)=>`<td title="${esc(x)}"${i&&typeof x==='number'?' style="text-align:right"':''}>${esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table>${more?`<div class="dash-more">… et ${more} autre(s) ligne(s) — agrandir le cadre pour tout voir</div>`:''}`;
+    return `<table class="dash-tbl"><colgroup>${len.map(x=>`<col style="width:${(100*x/lt).toFixed(1)}%">`).join('')}</colgroup><thead><tr>${cols.map(c=>`<th title="${esc(c)}">${esc(c)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((x,i)=>`<td title="${esc(x)}"${i&&typeof x==='number'?' style="text-align:right"':''}>${esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table>${more?_L(`<div class="dash-more">… et ${more} autre(s) ligne(s) — agrandir le cadre pour tout voir</div>`):''}`;
   }
   if(m.kind==='series'){
     const cats=capDashCats(val,w), tot=val.cats.reduce((s,c)=>s+c.v,0), one=!cats.some(c=>c.c&&!c.other);
     const col=(c,i)=>c.c||(one?capDashColor(0):capDashColor(i));
-    if(w.v==='kpi') return `<div class="dash-kpi"><b>${fmt(tot)}</b><span>${val.cats.length} catégorie(s)</span></div>`;
+    if(w.v==='kpi') return _L(`<div class="dash-kpi"><b>${fmt(tot)}</b><span>${val.cats.length} catégorie(s)</span></div>`);
     if(w.v==='donut'){
       const r=Math.max(24,Math.min(H,W*0.45)/2-4), sw=Math.max(10,r*0.38); let a0=-Math.PI/2; const arcs=[];
       cats.forEach((c,i)=>{ const frac=tot?c.v/tot:0; if(!frac) return; const a1=a0+frac*2*Math.PI, big=a1-a0>Math.PI?1:0, rr=r-sw/2;
@@ -268,7 +268,7 @@ function capDashDraw(w,m,W,H){
     const max=val.pct?100:Math.max(1,...cats.map(c=>c.v));
     if(w.v==='bar'){
       let vc=cats; const maxB=Math.max(2,Math.floor(W/22));
-      if(vc.length>maxB){ const rest=vc.slice(maxB-1); vc=vc.slice(0,maxB-1); if(!val.pct) vc.push({l:`Autres (${rest.length})`,v:rest.reduce((s,c)=>s+c.v,0),c:'#8b949e',other:true}); }
+      if(vc.length>maxB){ const rest=vc.slice(maxB-1); vc=vc.slice(0,maxB-1); if(!val.pct) vc.push({l:_L(`Autres (${rest.length})`),v:rest.reduce((s,c)=>s+c.v,0),c:'#8b949e',other:true}); }
       if(vc!==cats){ cats.length=0; cats.push(...vc); } const max=val.pct?100:Math.max(1,...cats.map(c=>c.v));
       const n=cats.length, bw=Math.min(60,(W-10)/n), ch=H-34, x0=(W-bw*n)/2;
       return `<svg width="${W}" height="${H}" role="img"><line x1="0" x2="${W}" y1="${ch+12}" y2="${ch+12}" stroke="var(--c-border)"/>${cats.map((c,i)=>{ const h=Math.max(c.v?2:0,ch*c.v/max), x=x0+i*bw+2;
@@ -277,7 +277,7 @@ function capDashDraw(w,m,W,H){
           <text x="${x+(bw-4)/2}" y="${ch+26}" text-anchor="middle" style="font-size:10px;fill:${dim}">${capDashCut(c.l,Math.max(3,Math.floor(bw/6)))}</text></g>`; }).join('')}</svg>`;
     }
     let hc=cats; const maxRows=Math.max(1,Math.floor(H/14));
-    if(hc.length>maxRows){ const rest=hc.slice(maxRows-1); hc=hc.slice(0,maxRows-1); if(!val.pct) hc.push({l:`Autres (${rest.length})`,v:rest.reduce((s,c)=>s+c.v,0),c:'#8b949e',other:true}); }
+    if(hc.length>maxRows){ const rest=hc.slice(maxRows-1); hc=hc.slice(0,maxRows-1); if(!val.pct) hc.push({l:_L(`Autres (${rest.length})`),v:rest.reduce((s,c)=>s+c.v,0),c:'#8b949e',other:true}); }
     const rh=Math.min(24,H/hc.length), fs=Math.max(9,Math.min(11,rh-4)), lw=Math.min(W*0.42,200), bmax=Math.max(10,W-lw-56), hmax=val.pct?100:Math.max(1,...hc.map(c=>c.v));
     return `<svg width="${W}" height="${Math.floor(hc.length*rh)}" role="img">${hc.map((c,i)=>{ const y=i*rh, bwid=Math.max(c.v?2:0,bmax*c.v/hmax), ty=y+rh/2+fs/2-1;
       return `<g class="dash-mk"><title>${esc(c.l)} : ${fmt(c.v,val.pct)}${c.tip?' ('+esc(c.tip)+')':''}</title>
@@ -320,13 +320,13 @@ function capDashUid(){ return 'd'+Date.now().toString(36)+Math.random().toString
 function capDashExample(){
   const cat=capDashCatalog(), has=id=>cat.some(m=>m.id===id), W=(m,v,w,h,o)=>({id:capDashUid(),m,v,w,h,...(o||{})});
   const F=capComputeFunctions(), main=['SA','LA','PA','OA'].find(k=>F.list.some(f=>f.layer===k));
-  const ws=[W('txt','text',4,1,{txt:'Synthèse du modèle — '+((cap_xmlDoc&&cap_xmlDoc.documentElement.getAttribute('name'))||'Capella')}),
-    W('mdl.n','kpi',1,1),W('fn.L.n','kpi',1,1,{t:'Fonctions (toutes couches)'}),W('ch.n','kpi',1,1),W('ce.n','kpi',1,1),
+  const ws=[W('txt','text',4,1,{txt:_L('Synthèse du modèle — ')+((cap_xmlDoc&&cap_xmlDoc.documentElement.getAttribute('name'))||_L('Capella'))}),
+    W('mdl.n','kpi',1,1),W('fn.L.n','kpi',1,1,{t:_L('Fonctions (toutes couches)')}),W('ch.n','kpi',1,1),W('ce.n','kpi',1,1),
     W('mdl.layer','bar',2,2),W('fn.ak','stack',2,2),
     W('fn.L.desc','bar',2,2),W('ch.empty','donut',2,2),
     main&&W(`fn.${main}.alloc`,'gauge',1,2),main&&W(`fn.${main}.trace`,'gauge',1,2),W('ce.dir','donut',2,2),
     W('chk.sum','hbar',2,2),W('tr.tab','table',2,2)].filter(x=>x&&(x.m==='txt'||has(x.m)));
-  return {id:capDashUid(), name:'Synthèse du modèle', cols:4, widgets:ws};
+  return {id:capDashUid(), name:_L('Synthèse du modèle'), cols:4, widgets:ws};
 }
 
 /** Vue « 📐 Tableau de bord » : tableaux de bord personnalisés (indicateurs, graphiques, tableaux, textes),
@@ -346,15 +346,15 @@ function capRenderDashboard(box){
   const esc=capEsc, cols=dash.cols||4;
   const rerender=()=>capRenderDashboard(box), save=()=>{ capDashSave(); };
   const titleOf=w=>w.t||(w.v==='text'?'':(byId[w.m]||{}).l||w.m);
-  box.innerHTML=`<div class="dash-tabs">${S.list.map(d=>`<div class="dash-tab${d.id===dash.id?' active':''}" data-dtab="${esc(d.id)}" title="${esc(d.name)} — double-clic pour renommer"><span class="dash-tab-n">${esc(d.name)}</span>${d.id===dash.id?'<span class="dash-tab-ren" data-dren title="Renommer la page">✎</span>':''}</div>`).join('')}<button class="dash-tab dash-tab-add" id="dash-new" title="Nouvelle page de tableau de bord">＋</button></div>
+  box.innerHTML=_L(`<div class="dash-tabs">${S.list.map(d=>_L(`<div class="dash-tab${d.id===dash.id?' active':''}" data-dtab="${esc(d.id)}" title="${esc(d.name)} — double-clic pour renommer"><span class="dash-tab-n">${esc(d.name)}</span>${d.id===dash.id?_L('<span class="dash-tab-ren" data-dren title="Renommer la page">✎</span>'):''}</div>`)).join('')}<button class="dash-tab dash-tab-add" id="dash-new" title="Nouvelle page de tableau de bord">＋</button></div>
     <div class="phl-filter-bar" style="flex-wrap:wrap;margin-bottom:8px;gap:6px">
-      <span class="tb-grp"><button class="cap-lf-btn${st.edit?' active':''}" id="dash-edit" title="Ajouter, configurer, déplacer et redimensionner les éléments">${st.edit?'✔ Terminer':'✏ Modifier'}</button></span>
-      ${st.edit?`<span class="tb-grp" title="Contenu"><button class="cap-lf-btn" id="dash-add" style="border-color:var(--c-accent);color:var(--c-accent)">＋ Ajouter un élément</button></span>
+      <span class="tb-grp"><button class="cap-lf-btn${st.edit?' active':''}" id="dash-edit" title="Ajouter, configurer, déplacer et redimensionner les éléments">${st.edit?_L('✔ Terminer'):_L('✏ Modifier')}</button></span>
+      ${st.edit?_L(`<span class="tb-grp" title="Contenu"><button class="cap-lf-btn" id="dash-add" style="border-color:var(--c-accent);color:var(--c-accent)">＋ Ajouter un élément</button></span>
         <span class="tb-grp" title="Mise en page"><input id="dash-name" class="phl-filter-input" value="${esc(dash.name)}" title="Nom du tableau de bord" style="width:170px">
-        <select id="dash-cols" class="phl-filter-input" title="Nombre de colonnes de la grille">${[3,4,6].map(n=>`<option value="${n}"${n===cols?' selected':''}>${n} colonnes</option>`).join('')}</select></span>
+        <select id="dash-cols" class="phl-filter-input" title="Nombre de colonnes de la grille">${[3,4,6].map(n=>_L(`<option value="${n}"${n===cols?' selected':''}>${n} colonnes</option>`)).join('')}</select></span>
         <span class="tb-grp" title="Gestion des pages"><button class="cap-lf-btn" id="dash-dup" title="Dupliquer ce tableau de bord">⧉ Dupliquer</button>
         <button class="cap-lf-btn" id="dash-ex" title="Ajouter un tableau de bord d'exemple">✨ Exemple</button>
-        <button class="cap-lf-btn" id="dash-del" title="Supprimer ce tableau de bord"${S.list.length<2?' disabled':''}>🗑 Supprimer</button></span>`:''}
+        <button class="cap-lf-btn" id="dash-del" title="Supprimer ce tableau de bord"${S.list.length<2?' disabled':''}>🗑 Supprimer</button></span>`):''}
       <span class="tb-grp" style="margin-left:auto" title="Impression">
         <select id="dash-orient" class="phl-filter-input" style="width:auto" title="Orientation de la page A4"><option value="portrait"${st.orient!=='landscape'?' selected':''}>A4 portrait</option><option value="landscape"${st.orient==='landscape'?' selected':''}>A4 paysage</option></select>
         <button class="phl-export-btn" id="dash-print" title="Imprimer au format A4 (ou enregistrer en PDF depuis la fenêtre d'impression)">🖨 Imprimer</button></span>
@@ -363,15 +363,15 @@ function capRenderDashboard(box){
         <button class="phl-export-btn" id="dash-json" title="Exporter la disposition (pour la réutiliser sur un autre modèle)">⬇ JSON</button>
         <button class="phl-export-btn" id="dash-imp" title="Importer une disposition exportée">⬆ JSON</button><input type="file" id="dash-file" accept=".json" style="display:none"></span>
     </div>
-    ${st.edit?'<p class="ana-help">Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d\'un élément pour en insérer un avant lui · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML.</p>':''}
+    ${st.edit?_L('<p class="ana-help">Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d\'un élément pour en insérer un avant lui · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML.</p>'):''}
     <div class="dash-scroll" data-fill="6"><div class="dash-grid${st.edit?' dash-edit':''}" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">
       ${dash.widgets.map(w=>`<div class="dash-w" data-wid="${esc(w.id)}" style="grid-column:span ${Math.min(cols,w.w||1)};grid-row:span ${w.h||1}">
         <div class="dash-wh${!st.edit&&w.v==='text'&&!w.t?' dash-wh-none':''}"${st.edit?' draggable="true"':''}>${st.edit?'<span class="ana-dim" style="cursor:grab">⠿</span>':''}<span class="dash-wt" title="${esc(titleOf(w))}">${esc(titleOf(w))}</span>
           ${st.edit?'<span class="dash-wa"><button data-wcfg title="Configurer">⚙</button><button data-wdup title="Dupliquer">⧉</button><button data-wdel title="Retirer">✕</button></span>':''}</div>
-        <div class="dash-wb"></div>${st.edit?'<div class="dash-rz" title="Glisser pour redimensionner"></div><button class="dash-ins" data-ins title="Insérer un élément ici">＋</button>':''}</div>`).join('')}
-      ${st.edit&&dash.widgets.length?'<button class="dash-add-tile" data-add-end title="Ajouter un élément à la fin">＋ Ajouter un élément</button>':''}
-      ${!dash.widgets.length?`<div class="dash-empty" style="grid-column:1/-1;height:200px;border:1px dashed var(--c-border);border-radius:8px">Tableau de bord vide. ${st.edit?'Cliquez sur « ＋ Ajouter un élément ».':'Cliquez sur « ✏ Modifier » pour ajouter des indicateurs.'}</div>`:''}
-    </div></div>`;
+        <div class="dash-wb"></div>${st.edit?_L('<div class="dash-rz" title="Glisser pour redimensionner"></div><button class="dash-ins" data-ins title="Insérer un élément ici">＋</button>'):''}</div>`).join('')}
+      ${st.edit&&dash.widgets.length?_L('<button class="dash-add-tile" data-add-end title="Ajouter un élément à la fin">＋ Ajouter un élément</button>'):''}
+      ${!dash.widgets.length?_L(`<div class="dash-empty" style="grid-column:1/-1;height:200px;border:1px dashed var(--c-border);border-radius:8px">Tableau de bord vide. ${st.edit?_L('Cliquez sur « ＋ Ajouter un élément ».'):_L('Cliquez sur « ✏ Modifier » pour ajouter des indicateurs.')}</div>`):''}
+    </div></div>`);
   capFillHeight(box);
   const grid=box.querySelector('.dash-grid');
   box.scrollTop=boxTop; box.querySelector('.dash-scroll').scrollTop=scTop;
@@ -385,7 +385,7 @@ function capRenderDashboard(box){
   // Barre d'outils
   /** Renommage d'une page dans son onglet : Entrée ou sortie du champ = valider, Échap = annuler. */
   const renameTab=tab=>{ const d=S.list.find(x=>x.id===tab.dataset.dtab); if(!d||tab.querySelector('input')) return;
-    tab.innerHTML=`<input class="dash-tab-in" value="${esc(d.name)}" title="Nom de la page">`;
+    tab.innerHTML=_L(`<input class="dash-tab-in" value="${esc(d.name)}" title="Nom de la page">`);
     const inp=tab.querySelector('input'); let done=false; inp.focus(); inp.select();
     const end=ok=>{ if(done) return; done=true; if(ok){ d.name=inp.value.trim()||d.name; save(); } rerender(); };
     inp.onkeydown=e=>{ e.stopPropagation(); if(e.key==='Enter') end(true); else if(e.key==='Escape') end(false); };
@@ -396,29 +396,29 @@ function capRenderDashboard(box){
   box.querySelector('[data-dren]')?.addEventListener('click',e=>{ e.stopPropagation(); renameTab(e.target.closest('[data-dtab]')); });
   box.querySelector('#dash-edit').onclick=()=>{ st.edit=!st.edit; rerender(); };
   box.querySelector('#dash-add')?.addEventListener('click',()=>capDashEditor(dash,null,()=>{ save(); rerender(); }));
-  box.querySelector('#dash-name')?.addEventListener('change',e=>{ dash.name=e.target.value.trim()||'Tableau de bord'; save(); rerender(); });
+  box.querySelector('#dash-name')?.addEventListener('change',e=>{ dash.name=e.target.value.trim()||_L('Tableau de bord'); save(); rerender(); });
   box.querySelector('#dash-cols')?.addEventListener('change',e=>{ dash.cols=+e.target.value; save(); rerender(); });
-  box.querySelector('#dash-new').onclick=()=>{ const d={id:capDashUid(),name:'Page '+(S.list.length+1),cols:4,widgets:[]}; S.list.push(d); S.cur=d.id; st.edit=true; save(); rerender(); };
-  box.querySelector('#dash-dup')?.addEventListener('click',()=>{ const d=JSON.parse(JSON.stringify(dash)); d.id=capDashUid(); d.name+=' (copie)'; d.widgets.forEach(w=>w.id=capDashUid()); S.list.push(d); S.cur=d.id; save(); rerender(); });
+  box.querySelector('#dash-new').onclick=()=>{ const d={id:capDashUid(),name:_L('Page ')+(S.list.length+1),cols:4,widgets:[]}; S.list.push(d); S.cur=d.id; st.edit=true; save(); rerender(); };
+  box.querySelector('#dash-dup')?.addEventListener('click',()=>{ const d=JSON.parse(JSON.stringify(dash)); d.id=capDashUid(); d.name+=_L(' (copie)'); d.widgets.forEach(w=>w.id=capDashUid()); S.list.push(d); S.cur=d.id; save(); rerender(); });
   box.querySelector('#dash-ex')?.addEventListener('click',()=>{ const d=capDashExample(); S.list.push(d); S.cur=d.id; save(); rerender(); });
-  box.querySelector('#dash-del')?.addEventListener('click',()=>{ if(S.list.length<2||!confirm(`Supprimer le tableau de bord « ${dash.name} » ?`)) return; S.list=S.list.filter(d=>d!==dash); S.cur=S.list[0].id; save(); rerender(); });
+  box.querySelector('#dash-del')?.addEventListener('click',()=>{ if(S.list.length<2||!confirm(_L(`Supprimer le tableau de bord « ${dash.name} » ?`))) return; S.list=S.list.filter(d=>d!==dash); S.cur=S.list[0].id; save(); rerender(); });
   box.querySelector('#dash-orient').onchange=e=>{ st.orient=e.target.value; };
   box.querySelector('#dash-print').onclick=()=>capDashPrint(dash, byId, st.orient||'portrait');
-  box.querySelector('#dash-json').onclick=()=>capDownloadBlob(new Blob([JSON.stringify({capellaDashboard:1,...dash},null,2)],{type:'application/json'}),(dash.name.replace(/[^\w\-]+/g,'_')||'tableau-de-bord')+'.json');
+  box.querySelector('#dash-json').onclick=()=>capDownloadBlob(new Blob([JSON.stringify({capellaDashboard:1,...dash},null,2)],{type:'application/json'}),(dash.name.replace(/[^\w\-]+/g,'_')||_L('tableau-de-bord'))+'.json');
   box.querySelector('#dash-imp').onclick=()=>box.querySelector('#dash-file').click();
   box.querySelector('#dash-file').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader();
     r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!Array.isArray(d.widgets)) throw new Error('format');
-      const n={id:capDashUid(),name:d.name||'Tableau importé',cols:d.cols||4,widgets:d.widgets.map(w=>({...w,id:capDashUid()}))}; S.list.push(n); S.cur=n.id; save(); rerender();
-    }catch(err){ alert('Fichier de tableau de bord invalide.'); } }; r.readAsText(f); };
+      const n={id:capDashUid(),name:d.name||_L('Tableau importé'),cols:d.cols||4,widgets:d.widgets.map(w=>({...w,id:capDashUid()}))}; S.list.push(n); S.cur=n.id; save(); rerender();
+    }catch(err){ alert(_L('Fichier de tableau de bord invalide.')); } }; r.readAsText(f); };
   box.querySelector('#dash-html').onclick=()=>{
     const css=`.dash-grid{display:grid;gap:10px;grid-auto-rows:120px}.dash-w{background:var(--c-bg2);border:1px solid var(--c-border);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;break-inside:avoid}
       .dash-wh{padding:6px 10px 2px;font-size:12px;font-weight:600}.dash-wb{flex:1;padding:4px 10px 8px;overflow:hidden}.dash-kpi{display:flex;flex-direction:column;justify-content:center;height:100%}
       .dash-kpi b{font-size:30px;line-height:1.1}.dash-kpi span{font-size:11px;color:var(--c-dim)}.dash-st{font-size:10px;padding:0 6px;border-radius:8px;border:1px solid currentColor;margin-left:6px}
       .dash-leg{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:11px;color:var(--c-dim)}.dash-leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px}
       .dash-tbl{border-collapse:collapse;width:100%;font-size:11px}.dash-tbl th,.dash-tbl td{border-bottom:1px solid var(--c-border);padding:2px 6px;text-align:left}.dash-txt{font-size:15px;font-weight:600;white-space:pre-wrap}.dash-empty{color:var(--c-dim);font-size:12px}`;
-    const html=`<style>${css}</style><div class="dash-grid" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">${[...grid.querySelectorAll('.dash-w[data-wid]')].map(el=>{ const w=dash.widgets.find(x=>x.id===el.dataset.wid);
-      return `<div class="dash-w" style="grid-column:span ${Math.min(cols,w.w||1)};grid-row:span ${w.h||1}"><div class="dash-wh">${esc(titleOf(w))}</div><div class="dash-wb">${el.querySelector('.dash-wb').innerHTML}</div></div>`; }).join('')}</div>`;
-    capHtmlReport({title:'📐 '+dash.name, subtitle:`${dash.widgets.length} élément(s)`, tabs:[{key:'d',label:'Tableau de bord',html}], filename:(dash.name.replace(/[^\w\-]+/g,'_')||'tableau-de-bord')+'.html'});
+    const html=_L(`<style>${css}</style><div class="dash-grid" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">${[...grid.querySelectorAll('.dash-w[data-wid]')].map(el=>{ const w=dash.widgets.find(x=>x.id===el.dataset.wid);
+      return `<div class="dash-w" style="grid-column:span ${Math.min(cols,w.w||1)};grid-row:span ${w.h||1}"><div class="dash-wh">${esc(titleOf(w))}</div><div class="dash-wb">${el.querySelector('.dash-wb').innerHTML}</div></div>`; }).join('')}</div>`);
+    capHtmlReport({title:'📐 '+dash.name, subtitle:_L(`${dash.widgets.length} élément(s)`), tabs:[{key:'d',label:_L('Tableau de bord'),html}], filename:(dash.name.replace(/[^\w\-]+/g,'_')||_L('tableau-de-bord'))+'.html'});
   };
   if(!st.edit) return;
 
@@ -465,7 +465,7 @@ function capDashPrint(dash, byId, orient){
   const cols=dash.cols||4, gap=8, rowH=orient==='portrait'?112:104;
   const pageW=Math.floor(((orient==='portrait'?210:297)-20)*96/25.4);   // largeur utile en px CSS (marges 10 mm)
   const colW=(pageW-gap*(cols-1))/cols, esc=capEsc;
-  const project=(cap_xmlDoc&&cap_xmlDoc.documentElement.getAttribute('name'))||'Modèle Capella';
+  const project=(cap_xmlDoc&&cap_xmlDoc.documentElement.getAttribute('name'))||_L('Modèle Capella');
   const titleOf=w=>w.t||(w.v==='text'?'':(byId[w.m]||{}).l||w.m);
   const cells=dash.widgets.map(w=>{ const ww=Math.min(cols,w.w||1), hh=w.h||1, W=colW*ww+gap*(ww-1)-16, H=rowH*hh+gap*(hh-1)-(w.v==='text'&&!w.t?10:30);
     return `<div class="w" style="grid-column:span ${ww};grid-row:span ${hh}">${w.v==='text'&&!w.t?'':`<div class="h">${esc(titleOf(w))}</div>`}<div class="b">${capDashDraw(w,byId[w.m],W,H)}</div></div>`; }).join('');
@@ -503,41 +503,41 @@ function capDashEditor(dash,w0,done,at){
   const w=w0?JSON.parse(JSON.stringify(w0)):{id:capDashUid(),m:'',v:'',w:2,h:2,top:10};
   let q='';
   const ov=document.createElement('div'); ov.className='dash-modal';
-  ov.innerHTML=`<div class="dash-dlg"><div class="dash-cat"><div style="padding:10px 10px 4px"><b style="font-size:13px">${w0?'⚙ Configurer l\'élément':'＋ Ajouter un élément'}</b>
+  ov.innerHTML=_L(`<div class="dash-dlg"><div class="dash-cat"><div style="padding:10px 10px 4px"><b style="font-size:13px">${w0?_L('⚙ Configurer l\'élément'):_L('＋ Ajouter un élément')}</b>
       <input id="dash-q" class="phl-filter-input" placeholder="🔍 Rechercher un indicateur…" style="width:100%;margin-top:8px">
       <div style="display:flex;gap:4px;margin-top:6px"><button class="cap-lf-btn" id="dash-cat-open" title="Déplier toutes les catégories">⊞ Tout déplier</button><button class="cap-lf-btn" id="dash-cat-close" title="Replier toutes les catégories">⊟ Tout replier</button></div></div><div class="dash-cat-l"></div></div>
     <div class="dash-cfg"><div class="dash-form"></div><div class="dash-prev"><div class="dash-wh"><span class="dash-wt"></span><span class="ana-dim" style="font-weight:400">aperçu</span></div><div class="dash-wb"></div></div>
-      <div style="display:flex;gap:6px;justify-content:flex-end"><button class="cap-lf-btn" id="dash-cancel">Annuler</button><button class="cap-lf-btn" id="dash-ok" style="border-color:var(--c-accent);color:var(--c-accent)">${w0?'✔ Enregistrer':'＋ Ajouter'}</button></div></div></div>`;
+      <div style="display:flex;gap:6px;justify-content:flex-end"><button class="cap-lf-btn" id="dash-cancel">Annuler</button><button class="cap-lf-btn" id="dash-ok" style="border-color:var(--c-accent);color:var(--c-accent)">${w0?_L('✔ Enregistrer'):_L('＋ Ajouter')}</button></div></div></div>`);
   document.body.appendChild(ov);
   const L=ov.querySelector('.dash-cat-l'), form=ov.querySelector('.dash-form'), prev=ov.querySelector('.dash-prev');
   const close=()=>{ ov.remove(); document.removeEventListener('keydown',key); };
   const key=e=>{ if(e.key==='Escape') close(); };
   document.addEventListener('keydown',key);
   // Catégories dépliées : « Mise en page » et celle de l'élément configuré (toutes pendant une recherche)
-  const groups=[...new Set(cat.map(m=>m.g))].sort((a,b)=>(b==='Mise en page')-(a==='Mise en page'));
-  const open=new Set(['Mise en page', (cat.find(m=>m.id===w.m)||{}).g]);
+  const groups=[...new Set(cat.map(m=>m.g))].sort((a,b)=>(b===_L('Mise en page'))-(a===_L('Mise en page')));
+  const open=new Set([_L('Mise en page'), (cat.find(m=>m.id===w.m)||{}).g]);
   /** Liste du catalogue, filtrée par la recherche, groupée (« Mise en page » en premier) et repliable. */
   const list=()=>{ const ql=q.toLowerCase();
     L.innerHTML=groups.map(g=>{ const ms=cat.filter(m=>m.g===g&&(!ql||(m.l+' '+m.g+' '+m.d).toLowerCase().includes(ql))); if(!ms.length) return '';
       const op=!!ql||open.has(g);
-      return `<div class="dash-cat-g" data-g="${esc(g)}" title="${op?'Replier':'Déplier'} la catégorie"><span class="dash-cat-tog">${op?'▾':'▸'}</span>${esc(g)}<em>${ms.length}</em></div>`+(!op?'':ms.map(m=>`<div class="dash-cat-i${m.id===w.m?' sel':''}" data-m="${esc(m.id)}" title="${esc(m.d||m.l)}"><span>${esc(m.l)}</span><em>${CAP_DASH_KIND[m.kind]}</em></div>`).join('')); }).join('')||'<div class="ana-dim" style="padding:10px">Aucun indicateur.</div>';
+      return _L(`<div class="dash-cat-g" data-g="${esc(g)}" title="${op?_L('Replier'):_L('Déplier')} la catégorie"><span class="dash-cat-tog">${op?'▾':'▸'}</span>${esc(g)}<em>${ms.length}</em></div>`)+(!op?'':ms.map(m=>`<div class="dash-cat-i${m.id===w.m?' sel':''}" data-m="${esc(m.id)}" title="${esc(m.d||m.l)}"><span>${esc(m.l)}</span><em>${CAP_DASH_KIND[m.kind]}</em></div>`).join('')); }).join('')||_L('<div class="ana-dim" style="padding:10px">Aucun indicateur.</div>');
     L.querySelectorAll('[data-g]').forEach(el=>el.onclick=()=>{ const g=el.dataset.g; if(open.has(g)) open.delete(g); else open.add(g); list(); });
     L.querySelectorAll('[data-m]').forEach(el=>el.onclick=()=>{ const m=cat.find(x=>x.id===el.dataset.m), keep=w.m&&cat.find(x=>x.id===w.m)?.kind===m.kind;
       w.m=m.id; if(!keep){ const v=CAP_DASH_VIZ[m.kind][0]; w.v=v[0]; w.w=Math.min(cols,v[2]); w.h=v[3]; } list(); cfg(); }); };
   /** Formulaire de configuration et aperçu. */
   const cfg=()=>{
     const m=cat.find(x=>x.id===w.m);
-    if(!m){ form.innerHTML='<span class="ana-dim" style="grid-column:1/-1">Choisissez un indicateur dans la liste de gauche.</span>'; prev.style.visibility='hidden'; ov.querySelector('#dash-ok').disabled=true; return; }
+    if(!m){ form.innerHTML=_L('<span class="ana-dim" style="grid-column:1/-1">Choisissez un indicateur dans la liste de gauche.</span>'); prev.style.visibility='hidden'; ov.querySelector('#dash-ok').disabled=true; return; }
     prev.style.visibility=''; ov.querySelector('#dash-ok').disabled=false;
     const vz=CAP_DASH_VIZ[m.kind], ser=m.kind==='series'&&w.v!=='kpi';
-    form.innerHTML=`<label>Indicateur</label><b style="grid-column:2/-1">${esc(m.g)} › ${esc(m.l)}</b>
+    form.innerHTML=_L(`<label>Indicateur</label><b style="grid-column:2/-1">${esc(m.g)} › ${esc(m.l)}</b>
       <label>Titre</label><input id="dash-t" class="phl-filter-input" style="grid-column:2/-1" placeholder="${esc(m.l)}" value="${esc(w.t||'')}">
-      ${m.kind==='text'?`<label>Texte</label><textarea id="dash-txt" class="phl-filter-input" style="grid-column:2/-1;height:70px">${esc(w.txt||'')}</textarea>`:''}
+      ${m.kind==='text'?_L(`<label>Texte</label><textarea id="dash-txt" class="phl-filter-input" style="grid-column:2/-1;height:70px">${esc(w.txt||'')}</textarea>`):''}
       <label>Représentation</label><select id="dash-v" class="phl-filter-input">${vz.map(v=>`<option value="${v[0]}"${v[0]===w.v?' selected':''}>${v[1]}</option>`).join('')}</select>
-      <label>Taille</label><span><select id="dash-w" class="phl-filter-input">${Array.from({length:cols},(_,i)=>`<option value="${i+1}"${i+1===w.w?' selected':''}>${i+1} col.</option>`).join('')}</select>
-        <select id="dash-h" class="phl-filter-input">${[1,2,3,4,5,6].map(n=>`<option value="${n}"${n===w.h?' selected':''}>${n} ligne${n>1?'s':''}</option>`).join('')}</select></span>
-      ${ser?`<label>Catégories</label><select id="dash-top" class="phl-filter-input">${[[5,'5 premières'],[8,'8 premières'],[10,'10 premières'],[15,'15 premières'],[20,'20 premières'],[0,'Toutes']].map(([n,l])=>`<option value="${n}"${(+w.top||0)===n?' selected':''}>${l}</option>`).join('')}</select>
-        <label>Tri</label><select id="dash-sort" class="phl-filter-input"><option value="">Par défaut</option><option value="value"${w.sort==='value'?' selected':''}>Valeur décroissante</option><option value="natural"${w.sort==='natural'?' selected':''}>Ordre naturel</option></select>`:''}`;
+      <label>Taille</label><span><select id="dash-w" class="phl-filter-input">${Array.from({length:cols},(_,i)=>_L(`<option value="${i+1}"${i+1===w.w?' selected':''}>${i+1} col.</option>`)).join('')}</select>
+        <select id="dash-h" class="phl-filter-input">${[1,2,3,4,5,6].map(n=>_L(`<option value="${n}"${n===w.h?' selected':''}>${n} ligne${n>1?'s':''}</option>`)).join('')}</select></span>
+      ${ser?_L(`<label>Catégories</label><select id="dash-top" class="phl-filter-input">${[[5,_L('5 premières')],[8,_L('8 premières')],[10,_L('10 premières')],[15,_L('15 premières')],[20,_L('20 premières')],[0,_L('Toutes')]].map(([n,l])=>`<option value="${n}"${(+w.top||0)===n?' selected':''}>${l}</option>`).join('')}</select>
+        <label>Tri</label><select id="dash-sort" class="phl-filter-input"><option value="">Par défaut</option><option value="value"${w.sort==='value'?' selected':''}>Valeur décroissante</option><option value="natural"${w.sort==='natural'?' selected':''}>Ordre naturel</option></select>`):''}`);
     const upd=()=>{ w.t=ov.querySelector('#dash-t').value.trim(); w.v=ov.querySelector('#dash-v').value; w.w=+ov.querySelector('#dash-w').value; w.h=+ov.querySelector('#dash-h').value;
       const tp=ov.querySelector('#dash-top'); if(tp) w.top=+tp.value; const so=ov.querySelector('#dash-sort'); if(so) w.sort=so.value; const tx=ov.querySelector('#dash-txt'); if(tx) w.txt=tx.value; draw(); };
     form.querySelectorAll('input,select,textarea').forEach(el=>el.addEventListener(el.tagName==='SELECT'?'change':'input',()=>{ const ser0=ser; upd(); if(el.id==='dash-v'&&ser0!==(m.kind==='series'&&w.v!=='kpi')) cfg(); }));

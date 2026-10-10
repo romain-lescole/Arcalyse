@@ -18,7 +18,7 @@
 function capTableTabNew(name, from){
   return {
     id:'ttab-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),
-    name:name||'Vue 1',
+    name:name||_L('Vue 1'),
     visibleCols: from&&from.visibleCols ? [...from.visibleCols] : null,
     colFilters:{},
     colWidths: from ? {...(from.colWidths||{})} : {},
@@ -33,7 +33,7 @@ function capTableTabNew(name, from){
 /** Garantit l'existence d'au moins un onglet ; le premier reprend l'état courant du tableau. */
 function capTableTabsEnsure(){
   if (capTableTabs && capTableTabs.length) return;
-  capTableTabs=[capTableTabNew('Vue 1')]; capTableTabIdx=0;
+  capTableTabs=[capTableTabNew(_L('Vue 1'))]; capTableTabIdx=0;
   capTableSyncToTab();
 }
 
@@ -118,7 +118,7 @@ function capRenderTableTabs(){
   capTableTabs.forEach((tab, idx)=>{
     const el=document.createElement('div');
     el.className='cap-ttab'+(idx===capTableTabIdx?' active':'');
-    el.title='Clic : afficher · double-clic : renommer';
+    el.title=_L('Clic : afficher · double-clic : renommer');
     const nm=document.createElement('span'); nm.textContent=tab.name;
     nm.ondblclick=ev=>{
       ev.stopPropagation();
@@ -130,10 +130,10 @@ function capRenderTableTabs(){
     };
     el.appendChild(nm);
     if (capTableTabs.length>1) {
-      const x=document.createElement('span'); x.className='cap-ttab-close'; x.textContent='✕'; x.title='Fermer cet onglet';
+      const x=document.createElement('span'); x.className='cap-ttab-close'; x.textContent='✕'; x.title=_L('Fermer cet onglet');
       x.onclick=ev=>{
         ev.stopPropagation();
-        if (!confirm(`Fermer l'onglet « ${tab.name} » ?`)) return;
+        if (!confirm(_L(`Fermer l'onglet « ${tab.name} » ?`))) return;
         capTableSyncToTab();
         capTableTabs.splice(idx,1);
         if (capTableTabIdx>idx || capTableTabIdx>=capTableTabs.length) capTableTabIdx=Math.max(0,capTableTabIdx-1);
@@ -145,10 +145,10 @@ function capRenderTableTabs(){
     bar.appendChild(el);
   });
   const add=document.createElement('span'); add.className='cap-ttab-add'; add.textContent='+';
-  add.title='Nouvel onglet (copie des colonnes de la vue affichée)';
+  add.title=_L('Nouvel onglet (copie des colonnes de la vue affichée)');
   add.onclick=()=>{
     capTableSyncToTab();
-    capTableTabs.push(capTableTabNew('Vue '+(capTableTabs.length+1), capTableTabs[capTableTabIdx]));
+    capTableTabs.push(capTableTabNew(_L('Vue ')+(capTableTabs.length+1), capTableTabs[capTableTabIdx]));
     capTableTabSwitch(capTableTabs.length-1);
   };
   bar.appendChild(add);
@@ -218,7 +218,7 @@ function capTableRelValues(el, colKey){
 function capTableRelLabel(colKey){
   const p=capTableRelParse(colKey); if(!p) return colKey;
   const h=p.sec.humanLabel||p.sec.relType;
-  return p.dir==='out' ? `${h} → cibles` : `${h} ← sources`;
+  return p.dir==='out' ? _L(`${h} → cibles`) : _L(`${h} ← sources`);
 }
 
 /** Ajoute au menu ⊞ Colonnes les sections « Relations — … » (groupes de 🔗 Liens) : une entrée par
@@ -231,7 +231,7 @@ function capTableRelLabel(colKey){
  */
 function capTableRelPicker(listWrap, q, onToggle){
   const ix=capTableRelIndex(), vis=capTableVisibleCols||CAP_TABLE_BUILTIN_COLS;
-  const groups=[...CAP_LINK_GROUPS, {key:'', label:'Autres'}];
+  const groups=[...CAP_LINK_GROUPS, {key:'', label:_L('Autres')}];
   const known=new Set(CAP_LINK_GROUPS.map(g=>g.key));
   let any=false;
   groups.forEach(g=>{
@@ -240,15 +240,15 @@ function capTableRelPicker(listWrap, q, onToggle){
       return [s.humanLabel, s.relType, a, b, g.label].join(' ').toLowerCase().includes(q); });
     if (!shown.length) return;
     any=true;
-    const h=document.createElement('div'); h.className='cap-colpicker-section'; h.textContent='Relations — '+g.label;
+    const h=document.createElement('div'); h.className='cap-colpicker-section'; h.textContent=_L('Relations — ')+g.label;
     listWrap.appendChild(h);
     shown.forEach(s=>{
       const [st,tt]=capTableRelEnds(s);
       const it=document.createElement('div'); it.className='cap-cpr';
-      it.innerHTML=`<div class="cap-cpr-l"><span>${capEsc(s.humanLabel||s.relType)}</span><span class="cap-cpr-n" title="Nombre de liens dans le modèle">${ix[s.key].n}</span></div>`;
+      it.innerHTML=_L(`<div class="cap-cpr-l"><span>${capEsc(s.humanLabel||s.relType)}</span><span class="cap-cpr-n" title="Nombre de liens dans le modèle">${ix[s.key].n}</span></div>`);
       const d=document.createElement('div'); d.className='cap-cpr-d';
-      [['out', `→ cibles (${tt})`, `Colonne sur les lignes ${st} : les ${tt} liés`],
-       ['in',  `← sources (${st})`, `Colonne sur les lignes ${tt} : les ${st} liés`]].forEach(([dir,lab,tip])=>{
+      [['out', _L(`→ cibles (${tt})`), _L(`Colonne sur les lignes ${st} : les ${tt} liés`)],
+       ['in',  _L(`← sources (${st})`), _L(`Colonne sur les lignes ${tt} : les ${st} liés`)]].forEach(([dir,lab,tip])=>{
         const key='rel:'+s.key+':'+dir;
         const l=document.createElement('label'); l.className='cap-cpr-c'; l.title=tip;
         const cb=document.createElement('input'); cb.type='checkbox'; cb.checked=vis.includes(key);
@@ -342,7 +342,7 @@ function capTableCsv(){
   if (capTableDisplay.mode==='tree') {
     // Arbre : lignes dans l'ordre de l'arbre entièrement déplié, avec niveau et chemin des conteneurs
     const it=capTableTreeItems(capTableRows(), true).filter(x=>x.row);
-    capCsvDownload('tableau-'+nm+'.csv', ['Niveau','Chemin',...cols.map(capTableColLabel)],
+    capCsvDownload('tableau-'+nm+'.csv', [_L('Niveau'),_L('Chemin'),...cols.map(capTableColLabel)],
       it.map(x=>[x.depth, x.path.join(' › '), ...cols.map(c=>capTableGetVal(x.el,c))]));
     return;
   }
@@ -370,7 +370,7 @@ function capTableCfgSet(v){
     capTableTabs=v.tabs.map(t=>Object.assign(capTableTabNew(t.name), t));
     capTableTabIdx=Math.min(v.active||0, capTableTabs.length-1);
   } else {
-    capTableTabs=[Object.assign(capTableTabNew('Vue 1'), {visibleCols:v.visibleCols||null, colFilters:v.colFilters||{}, colWidths:v.colWidths||{}})];
+    capTableTabs=[Object.assign(capTableTabNew(_L('Vue 1')), {visibleCols:v.visibleCols||null, colFilters:v.colFilters||{}, colWidths:v.colWidths||{}})];
     capTableTabIdx=0;
   }
   capTableSyncFromTab();
@@ -403,7 +403,7 @@ function capTableTvTab(t, ok){
   Object.entries(t.filters||{}).forEach(([k,v])=>{ if(v&&ok(m(k))) f[m(k)]=v; });
   Object.entries(t.colWidths||{}).forEach(([k,v])=>{ if(ok(m(k))) w[m(k)]=v; });
   const s=t.sort&&t.sort.col&&ok(m(t.sort.col)) ? {col:m(t.sort.col), dir:t.sort.dir||1} : {col:null, dir:1};
-  return Object.assign(capTableTabNew(t.name||'Vue'), {visibleCols:vis.length?vis:null, colFilters:f, colWidths:w, sort:s});
+  return Object.assign(capTableTabNew(t.name||_L('Vue')), {visibleCols:vis.length?vis:null, colFilters:f, colWidths:w, sort:s});
 }
 
 /** Reprend les réglages de l'ancienne 📊 Table View (page enregistrée ou fichier ⚙) : ses onglets
@@ -423,7 +423,7 @@ function capTableImportTv(v){
   kept.forEach(c=>{ if(!capTableCustomCols.some(x=>x.key===c.key)) capTableCustomCols.push(c); });
   const keys=new Set(kept.map(c=>c.key));
   const ok=k=>!/^tvcustom_/.test(k) || keys.has(k);
-  tabs.forEach(t=>{ const nt=capTableTvTab(t, ok); nt.name=(t.name||'Vue')+' (Table View)'; capTableTabs.push(nt); });
+  tabs.forEach(t=>{ const nt=capTableTvTab(t, ok); nt.name=(t.name||_L('Vue'))+_L(' (Table View)'); capTableTabs.push(nt); });
   capTableSyncFromTab();
   return tabs.length;
 }
@@ -447,7 +447,7 @@ function capTableApplyViewFile(data){
     const kept=capTableTvCustom(data.customCols);
     kept.forEach(c=>{ if(!capTableCustomCols.some(x=>x.key===c.key)) capTableCustomCols.push(c); });
     const keys=new Set(kept.map(c=>c.key));
-    const t=capTableTvTab({name:'Vue', colOrder:data.colOrder, hiddenCols:data.hiddenCols, filters:data.filters, colWidths:data.colWidths}, k=>!/^tvcustom_/.test(k)||keys.has(k));
+    const t=capTableTvTab({name:_L('Vue'), colOrder:data.colOrder, hiddenCols:data.hiddenCols, filters:data.filters, colWidths:data.colWidths}, k=>!/^tvcustom_/.test(k)||keys.has(k));
     capTableVisibleCols=t.visibleCols; capTableColFilters=t.colFilters; capTableColWidths=t.colWidths; capTableSort={col:null, dir:1};
     capTableMultiValDisplay=data.multiValDisplay||capTableMultiValDisplay;
     return true;
@@ -487,9 +487,9 @@ function capTableScopeSet(){
  */
 function capTableScopeLabel(){
   const ids=(capTableScope&&capTableScope.ids)||[];
-  if (!ids.length) return 'tout le modèle';
-  if (ids.length===1) { const e=capGetElementById_(ids[0]); return e ? (e.attrs.name||e.typeName) : '1 élément'; }
-  return ids.length+' éléments';
+  if (!ids.length) return _L('tout le modèle');
+  if (ids.length===1) { const e=capGetElementById_(ids[0]); return e ? (e.attrs.name||e.typeName) : _L('1 élément'); }
+  return ids.length+_L(' éléments');
 }
 
 /** Bouton « 🎯 Portée » de la barre du tableau (info-bulle : éléments choisis et mode).
@@ -498,11 +498,11 @@ function capTableScopeLabel(){
 function capTableScopeButton(){
   const ids=(capTableScope&&capTableScope.ids)||[];
   const b=document.createElement('div'); b.className='tbtn'+(ids.length?' active':'');
-  b.textContent='🎯 Portée : '+capTableScopeLabel();
+  b.textContent=_L('🎯 Portée : ')+capTableScopeLabel();
   b.title=ids.length
-    ? 'Lignes limitées au contenu ('+(capTableScope.direct?'directement contenu':'à tous les niveaux')+') de :\n'
-      + ids.map(id=>{ const e=capGetElementById_(id); return '• '+(e?(e.attrs.name||'(sans nom)')+' ['+((CAP_HUMAN_NAMES[e.typeName]||{}).h||e.typeName)+']':id); }).join('\n')
-    : 'Portée de l\'onglet : limiter les lignes aux éléments contenus dans des paquetages, composants… choisis (vide = tout le modèle)';
+    ? _L('Lignes limitées au contenu (')+(capTableScope.direct?_L('directement contenu'):_L('à tous les niveaux'))+_L(') de :\n')
+      + ids.map(id=>{ const e=capGetElementById_(id); return '• '+(e?(e.attrs.name||_L('(sans nom)'))+' ['+((CAP_HUMAN_NAMES[e.typeName]||{}).h||e.typeName)+']':id); }).join('\n')
+    : _L('Portée de l\'onglet : limiter les lignes aux éléments contenus dans des paquetages, composants… choisis (vide = tout le modèle)');
   b.onclick=()=>capTableScopeDialog();
   return b;
 }
@@ -516,7 +516,7 @@ function capTableScopeDialog(){
   if (!ov) { ov=document.createElement('div'); ov.id='cap-scope-ov'; document.body.appendChild(ov);
     ov.addEventListener('click',e=>{ if(e.target===ov) ov.style.display='none'; }); }
   const tab=capTableTabs&&capTableTabs[capTableTabIdx];
-  ov.innerHTML=`<div class="cw-d-box" style="max-width:640px">
+  ov.innerHTML=_L(`<div class="cw-d-box" style="max-width:640px">
     <div class="cw-d-hdr"><b>🎯 Portée de l'onglet « ${capEsc(tab?tab.name:'')} »</b><button class="cap-lf-btn" data-c="x">✕</button></div>
     <div class="cw-d-body">
       <div class="cw-d-sub">Les lignes du tableau sont les éléments des <b>types cochés</b> (menu de gauche) <b>contenus</b> dans les éléments choisis ici. Sans élément choisi : tout le modèle. Les filtres de colonnes s'appliquent ensuite.</div>
@@ -529,14 +529,14 @@ function capTableScopeDialog(){
         <span class="tb-grp" title="Affichage"><button class="phl-toggle-btn" data-scm="tree" title="Arbre du modèle ; avec une recherche : résultats et leurs conteneurs (grisés)">🌳 Arbre</button><button class="phl-toggle-btn" data-scm="list" title="Liste à plat triée par nom, avec le chemin des conteneurs (300 lignes au plus)">☰ Liste</button></span></div>
       <div class="cap-sc-tree"></div>
     </div>
-    <div class="cw-d-ftr"><button class="cap-lf-btn" data-c="clr">Vider la portée (tout le modèle)</button><span style="flex:1"></span><button class="phl-export-btn" data-c="x">Fermer</button></div></div>`;
+    <div class="cw-d-ftr"><button class="cap-lf-btn" data-c="clr">Vider la portée (tout le modèle)</button><span style="flex:1"></span><button class="phl-export-btn" data-c="x">Fermer</button></div></div>`);
   ov.style.display='flex';
   const apply=()=>{ _capScopeMemo=null; capPage=0; capTableSyncToTab(); capRenderTable(); drawSel(); };
   const drawSel=()=>{
     const box=ov.querySelector('.cap-sc-sel'), ids=capTableScope.ids;
     box.innerHTML=ids.length ? ids.map(id=>{ const e=capGetElementById_(id);
-      return `<span class="cap-sc-chip" title="${capEsc(e?((CAP_HUMAN_NAMES[e.typeName]||{}).h||e.typeName):id)}">${capEsc(e?(e.attrs.name||'(sans nom)'):id)}<b data-rm="${capEsc(id)}" title="Retirer">✕</b></span>`; }).join('')
-      : '<span class="ana-dim">Aucun élément choisi : tout le modèle.</span>';
+      return `<span class="cap-sc-chip" title="${capEsc(e?((CAP_HUMAN_NAMES[e.typeName]||{}).h||e.typeName):id)}">${capEsc(e?(e.attrs.name||_L('(sans nom)')):id)}<b data-rm="${capEsc(id)}" title="Retirer">✕</b></span>`; }).join('')
+      : _L('<span class="ana-dim">Aucun élément choisi : tout le modèle.</span>');
     box.querySelectorAll('[data-rm]').forEach(x=>x.onclick=()=>{ capTableScope.ids=capTableScope.ids.filter(i=>i!==x.dataset.rm); apply(); drawTree(); });
   };
   const toggle=(id,on)=>{ const s=new Set(capTableScope.ids); if(on) s.add(id); else s.delete(id); capTableScope.ids=[...s]; apply(); };
@@ -545,14 +545,14 @@ function capTableScopeDialog(){
   const row=(n,depth,hasKids,opt={})=>{
     const lv=CAP_LAYERS[n.layer]||{color:'var(--c-dim)'};
     const tog=!hasKids?'':opt.fixed?'▼':(isOpen(n.id,depth)?'▼':'▶');
-    return `<div class="cap-sc-row${opt.dim?' dim':''}" style="padding-left:${6+depth*14}px"${opt.dim?' title="Conteneur affiché pour situer les résultats (ne correspond pas à la recherche)"':''}>
+    return `<div class="cap-sc-row${opt.dim?' dim':''}" style="padding-left:${6+depth*14}px"${opt.dim?_L(' title="Conteneur affiché pour situer les résultats (ne correspond pas à la recherche)"'):''}>
       <span class="cap-sc-tog"${hasKids&&!opt.fixed?` data-tog="${capEsc(n.id)}" data-d="${depth}"`:''}>${tog}</span>
       <input type="checkbox" data-id="${capEsc(n.id)}"${capTableScope.ids.includes(n.id)?' checked':''}>
       <span class="cap-sc-t" style="color:${lv.color}">${capEsc((CAP_HUMAN_NAMES[n.typeName]||{}).h||n.typeName)}</span>
-      <span class="cap-sc-n">${capEsc(n.name||'(sans nom)')}</span>${opt.path?`<span class="cap-sc-p" title="${capEsc(opt.path)}">${capEsc(opt.path)}</span>`:''}</div>`;
+      <span class="cap-sc-n">${capEsc(n.name||_L('(sans nom)'))}</span>${opt.path?`<span class="cap-sc-p" title="${capEsc(opt.path)}">${capEsc(opt.path)}</span>`:''}</div>`;
   };
   const MAX=300;   // résultats affichés au plus (liste, ou résultats de recherche en arbre)
-  const more=(n,what)=>`<div class="ana-dim" style="padding:6px 10px">… ${n} autre(s) ${what}(s) non affiché(s) : précisez la recherche.</div>`;
+  const more=(n,what)=>_L(`<div class="ana-dim" style="padding:6px 10px">… ${n} autre(s) ${what}(s) non affiché(s) : précisez la recherche.</div>`);
   const drawTree=()=>{
     const host=ov.querySelector('.cap-sc-tree'); let h='';
     const q=_capScopeQ.trim().toLowerCase();
@@ -568,8 +568,8 @@ function capTableScopeDialog(){
         while (p && k<12) { const x=capGetElementById_(p); if (x) out.unshift(x.attrs.name||x.typeName); p=parentOf[p]; k++; }
         return out.length>3 ? '… › '+out.slice(-3).join(' › ') : out.join(' › '); };
       h=all.slice(0,MAX).map(e=>row({id:e.id, name:e.attrs.name, typeName:e.typeName, layer:e.layer},0,false,{path:path(e)})).join('')
-        +(all.length>MAX?more(all.length-MAX, q?'résultat':'élément'):'')
-        +(all.length?'':'<div class="ana-dim" style="padding:6px 10px">Aucun élément ne correspond.</div>');
+        +(all.length>MAX?more(all.length-MAX, q?_L('résultat'):_L('élément')):'')
+        +(all.length?'':_L('<div class="ana-dim" style="padding:6px 10px">Aucun élément ne correspond.</div>'));
     } else if (q) {
       // Arbre filtré : résultats et leurs conteneurs (grisés s'ils ne correspondent pas), tout déplié
       const shown=new Set(hits.slice(0,MAX).map(e=>e.id)), keep=new Set(shown);
@@ -578,7 +578,7 @@ function capTableScopeDialog(){
         if (n.typeName!=='Project') h+=row(n,d,kids.length,{dim:!shown.has(n.id), fixed:true});
         kids.forEach(c=>walk(c, n.typeName==='Project'?d:d+1)); };
       if (capTreeData) walk(capTreeData,0);
-      h+=(hits.length>MAX?more(hits.length-MAX,'résultat'):'')+(hits.length?'':'<div class="ana-dim" style="padding:6px 10px">Aucun élément ne correspond.</div>');
+      h+=(hits.length>MAX?more(hits.length-MAX,_L('résultat')):'')+(hits.length?'':_L('<div class="ana-dim" style="padding:6px 10px">Aucun élément ne correspond.</div>'));
     } else {
       // Arbre du modèle (nœuds ayant un contenu), déplié à la demande
       const walk=(n,d)=>{ const kids=(n.children||[]).filter(c=>c.children&&c.children.length);
@@ -661,31 +661,31 @@ function capTableTreeControls(tb){
   const D=capTableDisplay, g=document.createElement('span'); g.className='tb-grp'; g.style.position='relative';
   const btn=(lab,tip,on,fn)=>{ const b=document.createElement('button'); b.className='phl-toggle-btn'+(on?' active':''); b.textContent=lab; b.title=tip; b.onclick=fn; return b; };
   const set=(fn,keep)=>ev=>{ if(ev) ev.stopPropagation(); fn(); _capTreeMenuOpen=!!keep; capPage=0; capTableSyncToTab(); capRenderTable(); };
-  g.appendChild(btn('☰ Lignes','Une ligne par élément',D.mode!=='tree',set(()=>{ D.mode='rows'; })));
-  g.appendChild(btn('🌳 Arbre','Lignes rangées sous leurs conteneurs (avec une portée : à partir des éléments de portée)',D.mode==='tree',set(()=>{ D.mode='tree'; })));
+  g.appendChild(btn(_L('☰ Lignes'),_L('Une ligne par élément'),D.mode!=='tree',set(()=>{ D.mode='rows'; })));
+  g.appendChild(btn(_L('🌳 Arbre'),_L('Lignes rangées sous leurs conteneurs (avec une portée : à partir des éléments de portée)'),D.mode==='tree',set(()=>{ D.mode='tree'; })));
   tb.appendChild(g);
   if(D.mode!=='tree') return;
   // Menu ▾ des options de l'arbre
-  const arr=btn('▾','Options de l\'arbre : conteneurs, déplier, réduire, niveaux',false,ev=>{ ev.stopPropagation(); _capTreeMenuOpen=!_capTreeMenuOpen; menu.classList.toggle('open',_capTreeMenuOpen); });
+  const arr=btn('▾',_L('Options de l\'arbre : conteneurs, déplier, réduire, niveaux'),false,ev=>{ ev.stopPropagation(); _capTreeMenuOpen=!_capTreeMenuOpen; menu.classList.toggle('open',_capTreeMenuOpen); });
   g.appendChild(arr);
   const menu=document.createElement('div'); menu.className='cap-colpicker-menu cap-tmenu'+(_capTreeMenuOpen?' open':'');
   menu.onclick=ev=>ev.stopPropagation();
   const sec=t=>{ const d=document.createElement('div'); d.className='cap-colpicker-section'; d.textContent=t; menu.appendChild(d); };
   const opt=(lab,tip,on,fn)=>{ const d=document.createElement('label'); d.className='cap-colpicker-item'; d.title=tip;
     const r=document.createElement('input'); r.type='radio'; r.name='cap-tmenu-c'; r.checked=on; r.onchange=fn; d.appendChild(r); d.appendChild(document.createTextNode(lab)); menu.appendChild(d); };
-  sec('Conteneurs');
-  opt('Compact','Chaque ligne sous son plus proche ancêtre qui est lui-même une ligne (sans les paquetages et conteneurs intermédiaires)',D.cont!=='grey',set(()=>{ D.cont='compact'; },true));
-  opt('Conteneurs grisés','Les paquetages et conteneurs intermédiaires sont affichés, grisés et sans valeurs',D.cont==='grey',set(()=>{ D.cont='grey'; },true));
-  sec('Dépliage');
+  sec(_L('Conteneurs'));
+  opt(_L('Compact'),_L('Chaque ligne sous son plus proche ancêtre qui est lui-même une ligne (sans les paquetages et conteneurs intermédiaires)'),D.cont!=='grey',set(()=>{ D.cont='compact'; },true));
+  opt(_L('Conteneurs grisés'),_L('Les paquetages et conteneurs intermédiaires sont affichés, grisés et sans valeurs'),D.cont==='grey',set(()=>{ D.cont='grey'; },true));
+  sec(_L('Dépliage'));
   const row=document.createElement('div'); row.className='cap-tmenu-row';
   const lv=(lab,tip,n)=>{ const b=document.createElement('button'); b.className='tbtn'; b.textContent=lab; b.title=tip; b.onclick=set(()=>{ D.level=n; D.open={}; },true); row.appendChild(b); };
-  lv('⊞ Tout déplier','Déplier tout l\'arbre',999);
-  lv('⊟ Tout réduire','Replier toutes les lignes (les conteneurs restent ouverts jusqu\'aux premières lignes)',0);
+  lv(_L('⊞ Tout déplier'),_L('Déplier tout l\'arbre'),999);
+  lv(_L('⊟ Tout réduire'),_L('Replier toutes les lignes (les conteneurs restent ouverts jusqu\'aux premières lignes)'),0);
   menu.appendChild(row);
   const row2=document.createElement('div'); row2.className='cap-tmenu-row';
-  const l=document.createElement('span'); l.className='tb-grp-l'; l.textContent='Niveau'; row2.appendChild(l);
+  const l=document.createElement('span'); l.className='tb-grp-l'; l.textContent=_L('Niveau'); row2.appendChild(l);
   [1,2,3].forEach(n=>{ const b=document.createElement('button'); b.className='tbtn'+(D.level===n&&!Object.keys(D.open).length?' active':''); b.textContent=String(n);
-    b.title='Déplier jusqu\'au niveau '+n+' de lignes (les conteneurs ne comptent pas)'; b.onclick=set(()=>{ D.level=n; D.open={}; },true); row2.appendChild(b); });
+    b.title=_L('Déplier jusqu\'au niveau ')+n+_L(' de lignes (les conteneurs ne comptent pas)'); b.onclick=set(()=>{ D.level=n; D.open={}; },true); row2.appendChild(b); });
   menu.appendChild(row2);
   g.appendChild(menu);
   // Fermeture au clic en dehors du menu
@@ -719,7 +719,7 @@ var _capTSelWired=false;    // écouteurs globaux (clavier, souris) posés une f
 function capTSelUpd(){
   const n=_capTSel.size, b=document.getElementById('cap-t-copy'), s=document.getElementById('cap-t-selc');
   if(b) b.disabled=!n;
-  if(s) s.textContent=n?`${n} cellule${n>1?'s':''} sélectionnée${n>1?'s':''}`:'aucune sélection';
+  if(s) s.textContent=n?_L(`${n} cellule${n>1?'s':''} sélectionnée${n>1?'s':''}`):_L('aucune sélection');
 }
 
 /** Repeint les cellules sélectionnées du tableau. */
@@ -744,15 +744,15 @@ function capTSelCopy(){
     return capTableGetValArray(it.el,col).filter(v=>v!=='').map(v=>String(v).replace(/[\t\r\n]+/g,' ')).join('\n'); };   // un élément par ligne
   const grid=rs.map(r=>cs.map(c=>_capTSel.has(r+':'+c)?val(r,c):''));
   // Texte tabulé + tableau HTML : une cellule à plusieurs éléments reste une cellule, un élément par ligne (52)
-  capClipCopy(grid,()=>{ const s=document.getElementById('cap-t-selc'); if(s){ s.textContent=`✔ ${_capTSel.size} cellule(s) copiée(s)`; setTimeout(capTSelUpd,1500); } });
+  capClipCopy(grid,()=>{ const s=document.getElementById('cap-t-selc'); if(s){ s.textContent=_L(`✔ ${_capTSel.size} cellule(s) copiée(s)`); setTimeout(capTSelUpd,1500); } });
 }
 
 /** Bouton 📋 Copier et compteur de sélection pour la barre du tableau.
  * @returns {HTMLElement} Groupe de commandes
  */
 function capTSelControls(){
-  const g=document.createElement('span'); g.className='tb-grp'; g.title='Sélection de cellules : clic, clic-glisser, Ctrl+clic, Maj+clic ; Ctrl+C pour copier ; double-clic sur une ligne : détail';
-  g.innerHTML=`<button class="cap-lf-btn" id="cap-t-copy" disabled title="Copier les cellules sélectionnées (collage dans Excel / Word) — aussi Ctrl+C">📋 Copier</button><span class="ana-dim" id="cap-t-selc" style="font-size:11px">aucune sélection</span>`;
+  const g=document.createElement('span'); g.className='tb-grp'; g.title=_L('Sélection de cellules : clic, clic-glisser, Ctrl+clic, Maj+clic ; Ctrl+C pour copier ; double-clic sur une ligne : détail');
+  g.innerHTML=_L(`<button class="cap-lf-btn" id="cap-t-copy" disabled title="Copier les cellules sélectionnées (collage dans Excel / Word) — aussi Ctrl+C">📋 Copier</button><span class="ana-dim" id="cap-t-selc" style="font-size:11px">aucune sélection</span>`);
   g.querySelector('#cap-t-copy').onclick=()=>capTSelCopy();
   return g;
 }

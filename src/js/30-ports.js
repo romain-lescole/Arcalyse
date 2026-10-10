@@ -10,7 +10,7 @@ var _capPortsCache=null; // (var : lu avant sa déclaration au rechargement) ré
  */
 function capOrientBadge(o){
   const os=CAP_ORIENT_STYLE[o]||CAP_ORIENT_STYLE.UNSET;
-  return `<span title="${os.t}" style="font-size:8px;font-weight:700;padding:1px 4px;border-radius:3px;border:1px solid ${os.c};color:${os.c};margin-left:4px;white-space:nowrap;${o==='UNSET'?'opacity:.6;':''}">${o==='INOUT'?'⇄ INOUT':o}</span>`;
+  return `<span title="${os.t}" style="font-size:8px;font-weight:700;padding:1px 4px;border-radius:3px;border:1px solid ${os.c};color:${os.c};margin-left:4px;white-space:nowrap;${o==='UNSET'?'opacity:.6;':''}">${o==='INOUT'?_L('⇄ INOUT'):o}</span>`;
 }
 
 /** Collecte tous les ports du modèle et leurs liens d'allocation et d'échange :
@@ -116,7 +116,7 @@ function capPortsDiagSections(d){
     const ce=ceById[ceId]; if(!ce) return;
     const cePorts=[...closure(ce.src),...closure(ce.tgt)];
     const miss=[['source',fe.src],['cible',fe.tgt]].filter(([,fid])=>d.fps[fid]&&!d.fps[fid].cps.some(c=>cePorts.includes(c))).map(([k])=>k);
-    if(miss.length) feCe.push(`<tr><td>${L(fe.id,fe.name,'font-weight:600')}</td><td>${L(ce.id,ce.name)}</td><td>Port ${miss.join(' et ')} du FE non alloué aux ports du CE</td></tr>`);
+    if(miss.length) feCe.push(_L(`<tr><td>${L(fe.id,fe.name,'font-weight:600')}</td><td>${L(ce.id,ce.name)}</td><td>Port ${miss.join(_L(' et '))} du FE non alloué aux ports du CE</td></tr>`));
   }));
   // CE alloué à un PL : chaque port du CE doit être alloué à l'un des ports physiques du PL
   const cePl=[];
@@ -124,21 +124,21 @@ function capPortsDiagSections(d){
   d.ces.forEach(ce=>(d.ceToPL[ce.id]||[]).forEach(plId=>{
     const pl=plById[plId]; if(!pl) return;
     const miss=[['source',ce.src],['cible',ce.tgt]].filter(([,cid])=>d.cps[cid]&&!closure(cid).some(c=>d.cps[c]&&d.cps[c].pps.some(p=>pl.ends.includes(p)))).map(([k])=>k);
-    if(miss.length) cePl.push(`<tr><td>${L(ce.id,ce.name,'font-weight:600')}</td><td>${L(pl.id,pl.name)}</td><td>Port ${miss.join(' et ')} du CE non alloué aux ports physiques du lien</td></tr>`);
+    if(miss.length) cePl.push(_L(`<tr><td>${L(ce.id,ce.name,'font-weight:600')}</td><td>${L(pl.id,pl.name)}</td><td>Port ${miss.join(_L(' et '))} du CE non alloué aux ports physiques du lien</td></tr>`));
   }));
   return [
-    {icon:'ƒ', title:'Function Ports non alloués alors que la fonction est allouée à un composant qui a des ports',
-      tip:`Aucune PortAllocation · ${fps.filter(fp=>!fp.cps.length&&!fp.compHasCP).length} autres ports non alloués ignorés (fonction non allouée ou composant sans ports)`, cols:['Fonction ⬦ Port','Couche'],
+    {icon:'ƒ', title:_L('Function Ports non alloués alors que la fonction est allouée à un composant qui a des ports'),
+      tip:_L(`Aucune PortAllocation · ${fps.filter(fp=>!fp.cps.length&&!fp.compHasCP).length} autres ports non alloués ignorés (fonction non allouée ou composant sans ports)`), cols:[_L('Fonction ⬦ Port'),_L('Couche')],
       items:fps.filter(fp=>!fp.cps.length&&fp.compHasCP).map(fp=>`<tr><td>${fpCell(fp)}</td><td>${fp.layer}</td></tr>`)},
-    {icon:'⬦', title:'Component Ports sans Function Port alloué', tip:'Port de composant sans comportement associé', cols:['Composant ⬦ Port','Couche'],
+    {icon:'⬦', title:_L('Component Ports sans Function Port alloué'), tip:_L('Port de composant sans comportement associé'), cols:[_L('Composant ⬦ Port'),_L('Couche')],
       items:cps.filter(cp=>!cp.fps.length).map(cp=>`<tr><td>${cpCell(cp)}</td><td>${cp.layer}</td></tr>`)},
-    {icon:'🔌', title:'Component Ports (PA) non alloués à un Physical Port', tip:'Aucune ComponentPortAllocation', cols:['Composant ⬦ Port'],
+    {icon:'🔌', title:_L('Component Ports (PA) non alloués à un Physical Port'), tip:_L('Aucune ComponentPortAllocation'), cols:[_L('Composant ⬦ Port')],
       items:cps.filter(cp=>cp.layer==='PA'&&!cp.pps.length).map(cp=>`<tr><td>${cpCell(cp)}</td></tr>`)},
-    {icon:'◌', title:'Physical Ports sans Component Port alloué', tip:'Port physique sans port logique porté', cols:['Composant ⬦ Port physique'],
+    {icon:'◌', title:_L('Physical Ports sans Component Port alloué'), tip:_L('Port physique sans port logique porté'), cols:[_L('Composant ⬦ Port physique')],
       items:pps.filter(pp=>!pp.cps.length).map(pp=>`<tr><td>${ppCell(pp)}</td></tr>`)},
-    {icon:'⇆', title:'Sens incohérent Function Port / Component Port', tip:'Sortie de fonction sur port IN, ou entrée sur port OUT', cols:['Function Port','Component Port'], items:dirBad},
-    {icon:'∦', title:'Functional Exchange ↔ Component Exchange : ports non alignés', tip:'Les ports du FE doivent être alloués aux ports du CE qui le porte', cols:['Functional Exchange','Component Exchange','Écart'], items:feCe},
-    {icon:'∦', title:'Component Exchange ↔ Physical Link : ports non alignés', tip:'Les ports du CE doivent être alloués aux ports physiques du lien qui le porte', cols:['Component Exchange','Physical Link','Écart'], items:cePl},
+    {icon:'⇆', title:_L('Sens incohérent Function Port / Component Port'), tip:_L('Sortie de fonction sur port IN, ou entrée sur port OUT'), cols:[_L('Function Port'),_L('Component Port')], items:dirBad},
+    {icon:'∦', title:_L('Functional Exchange ↔ Component Exchange : ports non alignés'), tip:_L('Les ports du FE doivent être alloués aux ports du CE qui le porte'), cols:[_L('Functional Exchange'),_L('Component Exchange'),_L('Écart')], items:feCe},
+    {icon:'∦', title:_L('Component Exchange ↔ Physical Link : ports non alignés'), tip:_L('Les ports du CE doivent être alloués aux ports physiques du lien qui le porte'), cols:[_L('Component Exchange'),_L('Physical Link'),_L('Écart')], items:cePl},
   ];
 }
 
@@ -170,23 +170,23 @@ function capRenderPorts(){
 
   /** Table de traçabilité (limitée à MAX lignes à l'écran ; l'export CSV contient tout). */
   function buildTrace(rows){
-    if(!rows.length) return '<div class="phl-empty">Aucun port ne correspond au filtre.</div>';
+    if(!rows.length) return _L('<div class="phl-empty">Aucun port ne correspond au filtre.</div>');
     const body=rows.slice(0,MAX).map(r=>`<tr class="${r.incomplete?'prt-inc':''}">
       <td>${capChainLayerBadge(r.layer)}</td>
       <td>${r.fp?L(r.fp.ownId,r.fp.ownName,'font-weight:600'):'<span class="prt-miss">∅</span>'}</td>
       <td>${r.fp?L(r.fp.id,r.fp.name)+capOrientBadge(r.fp.dir):''}</td>
       <td>${r.fp?xList(r.fp.fes,''):''}</td>
-      <td>${r.cp?L(r.cp.ownId,r.cp.ownName,'font-weight:600'):'<span class="prt-miss">∅ non alloué</span>'}</td>
+      <td>${r.cp?L(r.cp.ownId,r.cp.ownName,'font-weight:600'):_L('<span class="prt-miss">∅ non alloué</span>')}</td>
       <td>${r.cp?L(r.cp.id,r.cp.name)+capOrientBadge(r.cp.orient):''}</td>
       <td>${r.cp?xList(r.cp.ces,'↔'):''}</td>
       <td>${r.ppl.length?r.ppl.map(p=>`<div>${L(p.ownId,p.ownName,'font-weight:600')} ⬦ ${L(p.id,p.name)}</div>`).join(''):(r.cp&&r.cp.layer==='PA'?'<span class="prt-miss">∅</span>':'<span style="color:var(--c-dim)">—</span>')}</td>
       <td>${r.ppl.length?xList(r.ppl.flatMap(p=>p.pls),'↔'):''}</td>
     </tr>`).join('');
-    return `<div class="prt-wrap"><table class="prt-t"><thead><tr>
+    return _L(`<div class="prt-wrap"><table class="prt-t"><thead><tr>
       <th>Couche</th><th>Fonction</th><th>Function Port</th><th>Functional Exchanges</th>
       <th>Composant</th><th>Component Port</th><th>Component Exchanges</th><th>Physical Port</th><th>Physical Links</th>
     </tr></thead><tbody>${body}</tbody></table></div>
-    ${rows.length>MAX?`<div class="cap-mx-hint">Affichage limité aux ${MAX} premières lignes sur ${rows.length} — affinez le filtre ou exportez en CSV.</div>`:''}`;
+    ${rows.length>MAX?_L(`<div class="cap-mx-hint">Affichage limité aux ${MAX} premières lignes sur ${rows.length} — affinez le filtre ou exportez en CSV.</div>`):''}`);
   }
 
   /** Cartes par composant : ports physiques (et ComponentPorts portés), ComponentPorts (et FunctionPorts alloués). */
@@ -198,29 +198,29 @@ function capRenderPorts(){
     Object.values(d.pps).forEach(pp=>get(pp.ownId,pp.ownName,pp.ownType,pp.layer).pps.push(pp));
     const list=Object.values(comps).filter(c=>(st.layer==='all'||c.layer===st.layer)&&(!q||c.name.toLowerCase().includes(q)))
       .sort((a,b)=>a.name.localeCompare(b.name,'fr'));
-    if(!list.length) return '<div class="phl-empty">Aucun composant ne correspond au filtre.</div>';
+    if(!list.length) return _L('<div class="phl-empty">Aucun composant ne correspond au filtre.</div>');
     return list.map(c=>{
       const ppRows=c.pps.map(pp=>`<div class="phl-link-row"><span style="min-width:18px">🔌</span>${L(pp.id,pp.name,'font-weight:600;min-width:140px')}
         <span style="color:var(--c-dim);margin:0 8px">porte</span>
-        <span>${pp.cps.map(i=>d.cps[i]).filter(Boolean).map(cp=>`${capEsc(cp.ownName)} ⬦ ${L(cp.id,cp.name)}${capOrientBadge(cp.orient)}`).join(' · ')||'<span class="prt-miss">∅ aucun Component Port</span>'}</span>
-        <span style="margin-left:auto;font-size:10px;color:var(--c-dim)">${pp.pls.map(p=>capEsc(p.name)).join(', ')||'∅ lien'}</span></div>`).join('');
+        <span>${pp.cps.map(i=>d.cps[i]).filter(Boolean).map(cp=>`${capEsc(cp.ownName)} ⬦ ${L(cp.id,cp.name)}${capOrientBadge(cp.orient)}`).join(' · ')||_L('<span class="prt-miss">∅ aucun Component Port</span>')}</span>
+        <span style="margin-left:auto;font-size:10px;color:var(--c-dim)">${pp.pls.map(p=>capEsc(p.name)).join(', ')||_L('∅ lien')}</span></div>`).join('');
       const cpRows=c.cps.map(cp=>{
         const f=cp.fps.map(i=>d.fps[i]).filter(Boolean);
         return `<div class="phl-link-row"><span style="min-width:18px">⬦</span>${L(cp.id,cp.name,'font-weight:600;min-width:140px')}${capOrientBadge(cp.orient)}
         <span style="color:var(--c-dim);margin:0 8px">←</span>
-        <span>${f.map(fp=>`${capEsc(fp.ownName)} ⬦ ${L(fp.id,fp.name)}${capOrientBadge(fp.dir)}`).join(' · ')||'<span class="prt-miss">∅ aucun Function Port</span>'}</span>
+        <span>${f.map(fp=>`${capEsc(fp.ownName)} ⬦ ${L(fp.id,fp.name)}${capOrientBadge(fp.dir)}`).join(' · ')||_L('<span class="prt-miss">∅ aucun Function Port</span>')}</span>
         <span style="margin-left:auto;font-size:10px;color:var(--c-dim)">${cp.pps.length?'🔌 '+cp.pps.map(i=>d.pps[i]?capEsc(d.pps[i].name):'?').join(', '):''}${cp.ces.length?' · ↔ '+cp.ces.length+' CE':''}</span></div>`;
       }).join('');
       const issues=c.cps.filter(cp=>!cp.fps.length||(cp.layer==='PA'&&!cp.pps.length)).length+c.pps.filter(pp=>!pp.cps.length).length;
-      return `<div class="phl-comp-card">
+      return _L(`<div class="phl-comp-card">
         <div class="phl-comp-hdr" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open');this.querySelector('.phl-comp-toggle').classList.toggle('open')">
           ${capChainLayerBadge(c.layer)}
           <span class="phl-comp-title">${L(c.id,c.name)}</span>
-          <span class="phl-comp-cnt">${c.pps.length?c.pps.length+' port(s) physique(s) · ':''}${c.cps.length} component port(s)${issues?` · <b style="color:var(--c-warn,#e3b341)">⚠ ${issues}</b>`:''}</span>
+          <span class="phl-comp-cnt">${c.pps.length?c.pps.length+_L(' port(s) physique(s) · '):''}${c.cps.length} component port(s)${issues?` · <b style="color:var(--c-warn,#e3b341)">⚠ ${issues}</b>`:''}</span>
           <span class="phl-comp-toggle">▶</span>
         </div>
-        <div class="phl-comp-body">${ppRows?`<div class="prt-sec">Ports physiques → Component Ports alloués</div>${ppRows}`:''}${cpRows?`<div class="prt-sec">Component Ports ← Function Ports alloués</div>${cpRows}`:''}</div>
-      </div>`;
+        <div class="phl-comp-body">${ppRows?_L(`<div class="prt-sec">Ports physiques → Component Ports alloués</div>${ppRows}`):''}${cpRows?_L(`<div class="prt-sec">Component Ports ← Function Ports alloués</div>${cpRows}`):''}</div>
+      </div>`);
     }).join('');
   }
 
@@ -234,10 +234,10 @@ function capRenderPorts(){
   function update(){
     const main=container.querySelector('#prt-main'); if(main) main.innerHTML=content();
     const ctr=container.querySelector('#prt-counter');
-    if(ctr) ctr.textContent=st.view==='trace'?`${filteredRows().length}/${allRows.length} lignes`:'';
+    if(ctr) ctr.textContent=st.view==='trace'?_L(`${filteredRows().length}/${allRows.length} lignes`):'';
   }
   const nFp=Object.keys(d.fps).length, nCp=Object.keys(d.cps).length, nPp=Object.keys(d.pps).length;
-  container.innerHTML=`
+  container.innerHTML=_L(`
     <div class="phl-toggle-bar">
       <button class="phl-toggle-btn${st.view==='trace'?' active':''}" data-pv="trace" title="Une ligne par Function Port ↔ Component Port ↔ Physical Port">≡ Traçabilité</button>
       <button class="phl-toggle-btn${st.view==='comp'?' active':''}" data-pv="comp" title="Ports regroupés par composant">▣ Par composant</button>
@@ -245,14 +245,14 @@ function capRenderPorts(){
       <span style="font-size:11px;color:var(--c-dim);margin-left:10px">ƒ ${nFp} function ports · ⬦ ${nCp} component ports · 🔌 ${nPp} physical ports</span>
       <span id="prt-counter" style="font-size:11px;color:var(--c-dim);font-family:monospace;margin-left:auto"></span>
     </div>
-    ${st.view!=='diag'?`<div class="phl-filter-bar" style="margin-bottom:8px;flex-wrap:wrap">
+    ${st.view!=='diag'?_L(`<div class="phl-filter-bar" style="margin-bottom:8px;flex-wrap:wrap">
       <button class="cap-lf-btn${st.layer==='all'?' active':''}" data-ly="all">Toutes couches</button>
-      ${layers.map(k=>`<button class="cap-lf-btn${st.layer===k?' active':''}" data-ly="${k}">${k==='?'?'Non classé':k}</button>`).join('')}
+      ${layers.map(k=>`<button class="cap-lf-btn${st.layer===k?' active':''}" data-ly="${k}">${k==='?'?_L('Non classé'):k}</button>`).join('')}
       <input id="prt-q" type="text" class="phl-filter-input" placeholder="🔍 Fonction, composant, port, échange…" value="${capEsc(st.q)}" style="width:240px;margin-left:8px">
-      ${st.view==='trace'?`<label class="cap-chx-opt"><input type="checkbox" id="prt-inc"${st.incomplete?' checked':''}> Seulement les chaînes incomplètes</label>`:''}
+      ${st.view==='trace'?_L(`<label class="cap-chx-opt"><input type="checkbox" id="prt-inc"${st.incomplete?' checked':''}> Seulement les chaînes incomplètes</label>`):''}
       <div style="margin-left:auto"><button class="phl-export-btn" id="prt-csv">⬇ CSV</button></div>
-    </div>`:`<div class="phl-filter-bar" style="margin-bottom:8px"><div style="margin-left:auto"><button class="phl-export-btn" id="prt-csv">⬇ CSV</button></div></div>`}
-    <div id="prt-main"></div>`;
+    </div>`):_L(`<div class="phl-filter-bar" style="margin-bottom:8px"><div style="margin-left:auto"><button class="phl-export-btn" id="prt-csv">⬇ CSV</button></div></div>`)}
+    <div id="prt-main"></div>`);
   update();
   container.querySelectorAll('[data-pv]').forEach(b=>b.addEventListener('click',()=>{ st.view=b.dataset.pv; capRenderPorts(); }));
   container.querySelectorAll('[data-ly]').forEach(b=>b.addEventListener('click',()=>{ st.layer=b.dataset.ly; capRenderPorts(); }));
@@ -263,14 +263,14 @@ function capRenderPorts(){
       const rows=[]; capPortsDiagSections(d).forEach(sec=>sec.items.forEach(h=>{
         const tmp=document.createElement('tr'); tmp.innerHTML=h.replace(/^<tr>|<\/tr>$/g,'');
         rows.push([sec.title,...[...tmp.children].map(td=>td.textContent.replace(/\s+/g,' ').trim())]); }));
-      capCsvDownload('controles-ports.csv',['Contrôle','Élément','Détail','Complément'],rows); return;
+      capCsvDownload(_L('controles-ports.csv'),[_L('Contrôle'),_L('Élément'),_L('Détail'),_L('Complément')],rows); return;
     }
     // Export enrichi (53) : chaque colonne d'élément porte ses identifiants
     const fx=a=>capCx(a.map(x=>`${x.name} (${x.other})`).join(', '), a.map(x=>x.id));
-    capCsvExport('tracabilite-ports.csv',
-      ['Couche','Fonction','Function Port','Direction','Functional Exchanges','Composant','Component Port','Orientation','Component Exchanges','Physical Ports','Physical Links','Incomplet'],
+    capCsvExport(_L('tracabilite-ports.csv'),
+      [_L('Couche'),_L('Fonction'),_L('Function Port'),_L('Direction'),_L('Functional Exchanges'),_L('Composant'),_L('Component Port'),_L('Orientation'),_L('Component Exchanges'),_L('Physical Ports'),_L('Physical Links'),_L('Incomplet')],
       filteredRows().map(r=>[r.layer, r.fp?capCx(r.fp.ownName,r.fp.ownId):'', r.fp?capCx(r.fp.name,r.fp.id):'', r.fp?r.fp.dir:'', r.fp?fx(r.fp.fes):'',
         r.cp?capCx(r.cp.ownName,r.cp.ownId):'', r.cp?capCx(r.cp.name,r.cp.id):'', r.cp?r.cp.orient:'', r.cp?fx(r.cp.ces):'',
-        capCx(r.ppl.map(p=>p.ownName+' ⬦ '+p.name).join(', '), r.ppl.map(p=>p.id)), fx(r.ppl.flatMap(p=>p.pls)), r.incomplete?'oui':'']));
+        capCx(r.ppl.map(p=>p.ownName+' ⬦ '+p.name).join(', '), r.ppl.map(p=>p.id)), fx(r.ppl.flatMap(p=>p.pls)), r.incomplete?_L('oui'):'']));
   });
 }

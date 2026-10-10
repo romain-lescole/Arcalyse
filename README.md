@@ -88,6 +88,7 @@ Choisissez parmi des dizaines d'indicateurs (nombre d'éléments, allocation des
 1. **Récupérez le fichier HTML** :
    - version livrée, prête à l'emploi : **[`livraison/arcalyse-fr.html`](livraison/)** (bouton « Download raw file » sur GitHub) ;
    - ou version de développement, construite à partir des sources : `node build.js` produit **`dist/arcalyse-fr.html`**.
+   - *English version*: `node build.js --lang en` produit **`dist/arcalyse-en.html`** (interface, aide et exports en anglais).
 2. **Ouvrez-le** dans un navigateur récent (testé sous Google Chrome version 155), même sans réseau.
 3. **Glissez-déposez** votre fichier `.capella` (ou cliquez sur 📂 Parcourir…). C'est tout.
 

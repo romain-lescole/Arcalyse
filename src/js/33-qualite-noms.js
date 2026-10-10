@@ -39,15 +39,15 @@ function capNameQuality(name){
   const enVerb=CAP_EN_VERBS.has(lw);
   let verb=!refuse.has(lw)&&(custom.has(lw)||enVerb||frVerb);
   if(!verb){
-    if(/ing$/.test(lw)&&lw.length>5) issues.push({code:'ing', label:`« ${first} » : forme en -ing — préférer la forme de base (ex. « ${first.replace(/ing$/i,'')}… »)`});
-    else if(/(tion|sion|ment|age|ance|ence)$/.test(lw)||['gestion','contrôle','suivi','affichage','calcul','traitement','management','control'].includes(lw)) issues.push({code:'noun', label:`« ${first} » : nom d'action en tête — préférer un verbe (${lang==='FR'?'infinitif':'forme de base'})`});
-    else issues.push({code:'noverb', label:`« ${first} » : le nom ne commence pas par un verbe ${lang==='FR'?'à l\'infinitif':'(forme de base)'}`});
-  } else if(CAP_VAGUE_VERBS.has(lw)) issues.push({code:'vague', label:`« ${first} » : verbe peu précis`});
-  if(first&&first[0]!==first[0].toUpperCase()) issues.push({code:'case', label:'Minuscule en tête'});
-  if(raw!==n||/\s{2,}/.test(raw)) issues.push({code:'space', label:'Espaces superflus'});
-  if(/[.;:!?]$/.test(n)) issues.push({code:'punct', label:'Ponctuation finale'});
-  if(n.length>70||words.length>9) issues.push({code:'long', label:`Nom long (${words.length} mots, ${n.length} car.)`});
-  if(words.length===1) issues.push({code:'short', label:'Un seul mot : objet de l\'action absent'});
+    if(/ing$/.test(lw)&&lw.length>5) issues.push({code:'ing', label:_L(`« ${first} » : forme en -ing — préférer la forme de base (ex. « ${first.replace(/ing$/i,'')}… »)`)});
+    else if(/(tion|sion|ment|age|ance|ence)$/.test(lw)||['gestion','contrôle','suivi','affichage','calcul','traitement','management','control'].includes(lw)) issues.push({code:'noun', label:_L(`« ${first} » : nom d'action en tête — préférer un verbe (${lang==='FR'?'infinitif':_L('forme de base')})`)});
+    else issues.push({code:'noverb', label:_L(`« ${first} » : le nom ne commence pas par un verbe ${lang==='FR'?_L('à l\'infinitif'):_L('(forme de base)')}`)});
+  } else if(CAP_VAGUE_VERBS.has(lw)) issues.push({code:'vague', label:_L(`« ${first} » : verbe peu précis`)});
+  if(first&&first[0]!==first[0].toUpperCase()) issues.push({code:'case', label:_L('Minuscule en tête')});
+  if(raw!==n||/\s{2,}/.test(raw)) issues.push({code:'space', label:_L('Espaces superflus')});
+  if(/[.;:!?]$/.test(n)) issues.push({code:'punct', label:_L('Ponctuation finale')});
+  if(n.length>70||words.length>9) issues.push({code:'long', label:_L(`Nom long (${words.length} mots, ${n.length} car.)`)});
+  if(words.length===1) issues.push({code:'short', label:_L('Un seul mot : objet de l\'action absent')});
   return {lang, verb, issues};
 }
 

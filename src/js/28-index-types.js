@@ -18,7 +18,7 @@ function capRenderIndex(){
   const toolbar=document.createElement('div');
   toolbar.style.cssText='display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--c-border);flex-shrink:0;';
   const searchInp=document.createElement('input'); searchInp.className='inp';
-  searchInp.placeholder='🔍 Rechercher par type, nom humain ou description…'; searchInp.value=_capIndexSearch;
+  searchInp.placeholder=_L('🔍 Rechercher par type, nom humain ou description…'); searchInp.value=_capIndexSearch;
   searchInp.style.cssText='flex:1;max-width:360px;font-size:12px;padding:5px 10px;';
   searchInp.oninput=()=>{ _capIndexSearch=searchInp.value; capRenderIndexBody(); };
   toolbar.appendChild(searchInp);
@@ -50,7 +50,7 @@ function capRenderIndexBody(){
     {key:'type', label:'Type', width:220},
     {key:'humanType', label:'Human Type', width:220},
     {key:'count', label:'Nb', width:60},
-    {key:'description', label:'Description', width:0}, // 0 = prend le reste
+    {key:'description', label:_L('Description'), width:0}, // 0 = prend le reste
   ];
 
   thead.innerHTML='';
@@ -90,7 +90,7 @@ function capRenderIndexBody(){
   });
 
   const countSpan=document.getElementById('cap-index-count');
-  if (countSpan) countSpan.textContent = `${rows.length} type(s)`;
+  if (countSpan) countSpan.textContent = _L(`${rows.length} type(s)`);
 
   tbody.innerHTML='';
   rows.forEach(r=>{

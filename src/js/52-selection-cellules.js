@@ -57,7 +57,7 @@ function capCsPaint(){
   if(!pill){ pill=document.createElement('div'); pill.id='cap-cs-pill'; document.body.appendChild(pill);
     pill.addEventListener('mousedown',e=>e.stopPropagation()); }
   const n=_capCs.cells.size;
-  pill.innerHTML=`<span class="cap-cs-n">${n} cellule${n>1?'s':''}</span><button class="cap-lf-btn" data-cs="copy" title="Copier les cellules sélectionnées (Ctrl+C) — une cellule à plusieurs éléments garde un élément par ligne">📋 Copier</button><button class="cap-lf-btn" data-cs="all" title="Copier tout le tableau : en-têtes et lignes visibles (après filtres)">Copier le tableau</button><button class="cap-lf-btn" data-cs="x" title="Effacer la sélection (Échap)">✕</button>`;
+  pill.innerHTML=_L(`<span class="cap-cs-n">${n} cellule${n>1?'s':''}</span><button class="cap-lf-btn" data-cs="copy" title="Copier les cellules sélectionnées (Ctrl+C) — une cellule à plusieurs éléments garde un élément par ligne">📋 Copier</button><button class="cap-lf-btn" data-cs="all" title="Copier tout le tableau : en-têtes et lignes visibles (après filtres)">Copier le tableau</button><button class="cap-lf-btn" data-cs="x" title="Effacer la sélection (Échap)">✕</button>`);
   pill.querySelector('[data-cs="copy"]').onclick=()=>capCsCopy(false);
   pill.querySelector('[data-cs="all"]').onclick=()=>capCsCopy(true);
   pill.querySelector('[data-cs="x"]').onclick=()=>capCsClear();
@@ -89,7 +89,7 @@ function capCsCopy(all){
     const cs=[...new Set(cells.map(x=>x[1]))].sort((a,b)=>a-b);
     grid=rs.map(r=>cs.map(c=>_capCs.cells.has(r+':'+c)&&t.rows[r].cells[c]?capCsText(t.rows[r].cells[c]):''));
   }
-  capClipCopy(grid,()=>{ const n=document.querySelector('#cap-cs-pill .cap-cs-n'); if(n) n.textContent=all?'✔ tableau copié':`✔ ${_capCs.cells.size} cellule(s) copiée(s)`; });
+  capClipCopy(grid,()=>{ const n=document.querySelector('#cap-cs-pill .cap-cs-n'); if(n) n.textContent=all?_L('✔ tableau copié'):_L(`✔ ${_capCs.cells.size} cellule(s) copiée(s)`); });
 }
 
 /** Rectangle de cellules entre deux positions. @param {number[]} a @param {number[]} b @returns {Set<string>} */

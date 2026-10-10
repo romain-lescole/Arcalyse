@@ -6,6 +6,7 @@
  *
  * Installation (une seule fois) :  npm install --save-dev playwright  puis  npx playwright install chromium
  * Lancement :                      node tests/smoke.js [chemin/vers/modele.capella]
+ * Version anglaise :               node tests/smoke.js --en [modele]  (après node build.js --lang en)
  * (par défaut : premier fichier .capella trouvé dans tests/models/)
  */
 'use strict';
@@ -14,10 +15,11 @@ let chromium; try { ({ chromium } = require('playwright')); }
 catch (e) { console.error('Playwright absent : npm install --save-dev playwright && npx playwright install chromium'); process.exit(2); }
 
 const ROOT = path.join(__dirname, '..');
-const page = path.join(ROOT, 'dist', 'arcalyse-fr.html');
+const args = process.argv.slice(2), EN = args.includes('--en');
+const page = path.join(ROOT, 'dist', EN ? 'arcalyse-en.html' : 'arcalyse-fr.html');
 const models = path.join(__dirname, 'models');
-const model = process.argv[2] || (fs.existsSync(models) ? fs.readdirSync(models).filter(f => f.endsWith('.capella')).map(f => path.join(models, f))[0] : null);
-if (!fs.existsSync(page)) { console.error('Lancez d\'abord : node build.js'); process.exit(2); }
+const model = args.find(a => !a.startsWith('--')) || (fs.existsSync(models) ? fs.readdirSync(models).filter(f => f.endsWith('.capella')).map(f => path.join(models, f))[0] : null);
+if (!fs.existsSync(page)) { console.error('Lancez d\'abord : node build.js' + (EN ? ' --lang en' : '')); process.exit(2); }
 if (!model) { console.error('Aucun modèle : placez un .capella dans tests/models/ ou passez-le en argument'); process.exit(2); }
 
 (async () => {

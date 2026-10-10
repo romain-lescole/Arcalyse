@@ -162,22 +162,22 @@ function positionFloat(ev) {
 /** Affiche le formulaire d'édition inline d'un élément existant. */
 function showFloatEdit(ev, el, idx) {
   hideCtxMenu(); hideTip();
-  document.getElementById('float-title').textContent='Modifier l\'élément';
+  document.getElementById('float-title').textContent=_L('Modifier l\'élément');
   const allTypes=[...new Set([...Object.keys(TCFG),...MODEL.elements.map(e=>e.type)])];
   const typeOpts=allTypes.map(t=>`<option value="${t}"${el.type===t?' selected':''}>${t}</option>`).join('');
   const pkgOpts =MODEL.elements.filter(e=>e.type==='Package').map(p=>`<option value="${p.name}"${el.pkg===p.name?' selected':''}>${p.name}</option>`).join('');
-  document.getElementById('float-body').innerHTML=`
+  document.getElementById('float-body').innerHTML=_L(`
     <div class="frow"><label>Nom</label>
       <input id="fl-name" value="${el.name.replace(/"/g,'&quot;')}"></div>
     <div class="frow"><label>Type</label>
       <select id="fl-type">${typeOpts}</select></div>
     <div class="frow"><label>Paquetage</label>
-      <select id="fl-pkg">${pkgOpts}</select></div>`;
+      <select id="fl-pkg">${pkgOpts}</select></div>`);
   floatSaveAction=()=>{
     const name=document.getElementById('fl-name').value.trim();
     const type=document.getElementById('fl-type').value;
     const pkg =document.getElementById('fl-pkg').value;
-    if (!name){ alert('Le nom ne peut pas être vide.'); return; }
+    if (!name){ alert(_L('Le nom ne peut pas être vide.')); return; }
     MODEL.elements[idx]={...MODEL.elements[idx], name, type, pkg};
     floatPanel.style.display='none';
     onModelChanged();
@@ -188,13 +188,13 @@ function showFloatEdit(ev, el, idx) {
 /** Affiche le formulaire de création d'une relation depuis un élément source. */
 function showFloatRelation(ev, sourceId) {
   hideCtxMenu(); hideTip();
-  document.getElementById('float-title').textContent='Créer une relation';
+  document.getElementById('float-title').textContent=_L('Créer une relation');
   const srcEl=MODEL.elements.find(e=>e.id===sourceId);
   const elOpts=MODEL.elements
     .filter(e=>e.id!==sourceId)
     .map(e=>`<option value="${e.id}">${e.name}</option>`).join('');
   const typeOpts=Object.keys(RCFG).map(t=>`<option value="${t}">${t}</option>`).join('');
-  document.getElementById('float-body').innerHTML=`
+  document.getElementById('float-body').innerHTML=_L(`
     <div class="frow"><label>Source</label>
       <span style="font-size:12px;color:var(--c-text)">${srcEl?.name||sourceId}</span></div>
     <div class="frow"><label>Type</label>
@@ -202,12 +202,12 @@ function showFloatRelation(ev, sourceId) {
     <div class="frow"><label>Cible</label>
       <select id="fl-rel-tgt">${elOpts}</select></div>
     <div class="frow"><label>Nom (opt.)</label>
-      <input id="fl-rel-name" placeholder="ex: uses"></div>`;
+      <input id="fl-rel-name" placeholder="ex: uses"></div>`);
   floatSaveAction=()=>{
     const type=document.getElementById('fl-rel-type').value;
     const tgt =document.getElementById('fl-rel-tgt').value;
     const name=document.getElementById('fl-rel-name').value.trim();
-    if (!tgt){ alert('Veuillez sélectionner une cible.'); return; }
+    if (!tgt){ alert(_L('Veuillez sélectionner une cible.')); return; }
     MODEL.relations.push({id:'r_'+Date.now(), src:sourceId, tgt, type, name});
     floatPanel.style.display='none';
     onModelChanged();
@@ -219,13 +219,13 @@ function showFloatRelation(ev, sourceId) {
 /** Affiche le formulaire de création d'un élément enfant. */
 function showFloatNewChild(ev, parentId) {
   hideCtxMenu(); hideTip();
-  document.getElementById('float-title').textContent='Créer un élément enfant';
+  document.getElementById('float-title').textContent=_L('Créer un élément enfant');
   const parentEl=MODEL.elements.find(e=>e.id===parentId);
   const typeOpts=[...new Set([...Object.keys(TCFG),...MODEL.elements.map(e=>e.type)])]
     .map(t=>`<option value="${t}">${t}</option>`).join('');
   const pkgOpts =MODEL.elements.filter(e=>e.type==='Package').map(p=>`<option value="${p.name}">${p.name}</option>`).join('');
   const relOpts =Object.keys(RCFG).map(t=>`<option value="${t}">${t}</option>`).join('');
-  document.getElementById('float-body').innerHTML=`
+  document.getElementById('float-body').innerHTML=_L(`
     <div class="frow"><label>Parent</label>
       <span style="font-size:12px;color:var(--c-text)">${parentEl?.name||parentId}</span></div>
     <div class="frow"><label>Nom enfant</label>
@@ -235,13 +235,13 @@ function showFloatNewChild(ev, parentId) {
     <div class="frow"><label>Paquetage</label>
       <select id="fl-ch-pkg">${pkgOpts}</select></div>
     <div class="frow"><label>Relation</label>
-      <select id="fl-ch-rel">${relOpts}</select></div>`;
+      <select id="fl-ch-rel">${relOpts}</select></div>`);
   floatSaveAction=()=>{
     const name=document.getElementById('fl-ch-name').value.trim();
     const type=document.getElementById('fl-ch-type').value;
     const pkg =document.getElementById('fl-ch-pkg').value;
     const rel =document.getElementById('fl-ch-rel').value;
-    if (!name){ alert('Le nom ne peut pas être vide.'); return; }
+    if (!name){ alert(_L('Le nom ne peut pas être vide.')); return; }
     const newId='el_'+Date.now();
     MODEL.elements.push({id:newId, name, type, pkg});
     MODEL.relations.push({id:'r_'+Date.now(), src:parentId, tgt:newId, type:rel, name});
@@ -258,11 +258,11 @@ function showFloatNewChild(ev, parentId) {
 /** Affiche le formulaire de création d'un nouvel élément. */
 function showFloatNewElement(ev) {
   hideCtxMenu(); hideTip();
-  document.getElementById('float-title').textContent='Créer un nouvel élément';
+  document.getElementById('float-title').textContent=_L('Créer un nouvel élément');
   const typeOpts=[...new Set([...Object.keys(TCFG),...MODEL.elements.map(e=>e.type)])]
     .map(t=>`<option value="${t}">${t}</option>`).join('');
   const pkgOpts=MODEL.elements.filter(e=>e.type==='Package').map(p=>`<option value="${p.name}">${p.name}</option>`).join('');
-  document.getElementById('float-body').innerHTML=`
+  document.getElementById('float-body').innerHTML=_L(`
     <div class="frow"><label>Nom</label>
       <input id="fl-ne-name" placeholder="Nom de l'élément"></div>
     <div class="frow"><label>Type</label>
@@ -270,12 +270,12 @@ function showFloatNewElement(ev) {
     <div class="frow"><label>Paquetage</label>
       <select id="fl-ne-pkg">${pkgOpts}</select></div>
     <div style="font-size:10px;color:var(--c-dim);margin-top:2px">
-      L'élément créé deviendra automatiquement le contexte de la carte.</div>`;
+      L'élément créé deviendra automatiquement le contexte de la carte.</div>`);
   floatSaveAction=()=>{
     const name=document.getElementById('fl-ne-name').value.trim();
     const type=document.getElementById('fl-ne-type').value;
     const pkg =document.getElementById('fl-ne-pkg').value;
-    if (!name){ alert('Le nom ne peut pas être vide.'); return; }
+    if (!name){ alert(_L('Le nom ne peut pas être vide.')); return; }
     const newId='el_'+Date.now();
     MODEL.elements.push({id:newId, name, type, pkg});
     floatPanel.style.display='none';
@@ -322,7 +322,7 @@ let exportPending = null; // {format, dpi} en attente de confirmation
 function openExportModal(format) {
   exportPending = { format };
   document.getElementById('export-title').textContent =
-    format==='png' ? '🖼 Exporter en PNG' : format==='jpeg' ? '📷 Exporter en JPEG' : '📐 Exporter en SVG';
+    format==='png' ? _L('🖼 Exporter en PNG') : format==='jpeg' ? _L('📷 Exporter en JPEG') : _L('📐 Exporter en SVG');
   updateExportInfo();
   document.getElementById('export-ov').classList.add('open');
 }
@@ -330,10 +330,10 @@ function openExportModal(format) {
  */
 function updateExportInfo() {
   const b = getContentBounds();
-  if (!b) { document.getElementById('export-size-info').textContent='Aucun contenu'; return; }
+  if (!b) { document.getElementById('export-size-info').textContent=_L('Aucun contenu'); return; }
   const dpi = parseInt(document.querySelector('.dpi-btn.active')?.dataset.dpi||2);
   const w=Math.round(b.w*dpi), h=Math.round(b.h*dpi);
-  document.getElementById('export-size-info').textContent = `Dimensions : ${w}×${h} px`;
+  document.getElementById('export-size-info').textContent = _L(`Dimensions : ${w}×${h} px`);
 }
 document.querySelectorAll('.dpi-btn').forEach(btn=>{
   btn.onclick=()=>{
@@ -361,7 +361,7 @@ document.getElementById('export-confirm').onclick=()=>{
  */
 function exportContent(format, dpi=2) {
   const bounds = getContentBounds();
-  if (!bounds) { alert('Rien à exporter.'); return; }
+  if (!bounds) { alert(_L('Rien à exporter.')); return; }
 
   const {x0, y0, w, h} = bounds;
 
@@ -421,7 +421,7 @@ function exportContent(format, dpi=2) {
     }
     a.click();
   };
-  img.onerror=()=>{ URL.revokeObjectURL(url); alert('Erreur lors de l\'export.'); };
+  img.onerror=()=>{ URL.revokeObjectURL(url); alert(_L('Erreur lors de l\'export.')); };
   img.src=url;
 }
 
@@ -455,7 +455,7 @@ function updateInfo() {
   const uniq=new Set(nodes.map(n=>n.data.eid)).size;
   const ctxName=MODEL.elements.find(e=>e.id===S.ctx)?.name||S.ctx;
   document.getElementById('info-txt').textContent=
-    `Contexte : ${ctxName}  |  Nœuds : ${nodes.length}  |  Éléments uniques : ${uniq}  |  Profondeur : ${S.depth}`;
+    _L(`Contexte : ${ctxName}  |  Nœuds : ${nodes.length}  |  Éléments uniques : ${uniq}  |  Profondeur : ${S.depth}`);
 }
 
 /** Coche ou décoche tous les filtres de types d'éléments du panneau gauche.

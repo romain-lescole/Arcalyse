@@ -22,7 +22,7 @@ function capCx(v, ids){ return {v:v==null?'':String(v), ids:(Array.isArray(ids)?
 function capCxList(list){ list=list||[]; return capCx(list.map(x=>x.name).join(', '), list.map(x=>x.id)); }
 
 /** Informations ajoutables de base (clé, libellé). */
-var CAP_CSVX_INFOS=[['id','ID'],['type','Type'],['htype','Type lisible'],['layer','Couche'],['owner','Owner'],['opath','Chemin des owners'],['desc','Description'],['summary','Summary']];
+var CAP_CSVX_INFOS=[['id','ID'],['type','Type'],['htype',_L('Type lisible')],['layer',_L('Couche')],['owner',_L('Owner')],['opath',_L('Chemin des owners')],['desc',_L('Description')],['summary',_L('Summary')]];
 
 /** Owner (plus proche ancêtre qui est un élément du modèle) d'un élément.
  * @param {string} id @returns {object|null} Élément capAllElements */
@@ -68,7 +68,7 @@ function capCsvxInfo(id, key){
 function capCsvxInfoLabel(key){
   const b=CAP_CSVX_INFOS.find(x=>x[0]===key); if(b) return b[1];
   if(key.startsWith('attr:')) return key.slice(5);
-  if(key.startsWith('path:')){ const c=capTableCustomCols.find(x=>x.key===key.slice(5)); return c?c.label:'(colonne supprimée)'; }
+  if(key.startsWith('path:')){ const c=capTableCustomCols.find(x=>x.key===key.slice(5)); return c?c.label:_L('(colonne supprimée)'); }
   return key;
 }
 
@@ -116,23 +116,23 @@ function capCsvExport(name, header, rows){
   const draw=()=>{
     const drop=new Set(cfg.drop);
     const nCols=capCsvxBuild(name, header, []).header.length;
-    ov.innerHTML=`<div class="cw-d-box" style="max-width:760px">
+    ov.innerHTML=_L(`<div class="cw-d-box" style="max-width:760px">
       <div class="cw-d-hdr"><b>⬇ Export CSV — ${capEsc(name)}</b><button class="cap-lf-btn" data-c="x">✕</button></div>
       <div class="cw-d-body">
         <div class="cw-d-sub">Décochez les colonnes à retirer. Pour une colonne qui désigne des éléments du modèle, ajoutez des informations sur ces éléments : elles seront insérées juste à côté. Vos choix sont retenus pour cet export.</div>
         ${header.map((h,i)=>{ const E=ent[i], sel=new Set(cfg.add[h]||[]);
           const chip=(k,l,t)=>`<label class="cap-csvx-c${sel.has(k)?' on':''}"${t?` title="${capEsc(t)}"`:''}><input type="checkbox" data-add="${i}" data-k="${capEsc(k)}"${sel.has(k)?' checked':''}${drop.has(h)?' disabled':''}> ${capEsc(l)}</label>`;
           return `<div class="cap-csvx-row${drop.has(h)?' off':''}">
-            <label class="cap-csvx-h"><input type="checkbox" data-col="${i}"${drop.has(h)?'':' checked'}> <b>${capEsc(h)}</b>${E?` <span class="ana-dim">· ${E.n} élément(s) : ${capEsc(E.types.slice(0,3).map(t=>(CAP_HUMAN_NAMES[t]||{}).h||t).join(', '))}${E.types.length>3?'…':''}</span>`:''}</label>
+            <label class="cap-csvx-h"><input type="checkbox" data-col="${i}"${drop.has(h)?'':' checked'}> <b>${capEsc(h)}</b>${E?_L(` <span class="ana-dim">· ${E.n} élément(s) : ${capEsc(E.types.slice(0,3).map(t=>(CAP_HUMAN_NAMES[t]||{}).h||t).join(', '))}${E.types.length>3?'…':''}</span>`):''}</label>
             ${E?`<div class="cap-csvx-adds">${CAP_CSVX_INFOS.map(([k,l])=>chip(k,l)).join('')}
-              ${E.paths.map(c=>chip('path:'+c.key,'✨ '+c.label,'Colonne par chemin du ▤ Tableau')).join('')}
-              ${[...sel].filter(k=>k.startsWith('attr:')).map(k=>chip(k,k.slice(5),'Attribut Capella')).join('')}
-              ${E.attrs.length?`<select class="cap-csvx-attr" data-attr="${i}"${drop.has(h)?' disabled':''}><option value="">＋ Attribut…</option>${E.attrs.filter(a=>!sel.has('attr:'+a)).map(a=>`<option>${capEsc(a)}</option>`).join('')}</select>`:''}</div>`:''}
+              ${E.paths.map(c=>chip('path:'+c.key,'✨ '+c.label,_L('Colonne par chemin du ▤ Tableau'))).join('')}
+              ${[...sel].filter(k=>k.startsWith('attr:')).map(k=>chip(k,k.slice(5),_L('Attribut Capella'))).join('')}
+              ${E.attrs.length?_L(`<select class="cap-csvx-attr" data-attr="${i}"${drop.has(h)?' disabled':''}><option value="">＋ Attribut…</option>${E.attrs.filter(a=>!sel.has('attr:'+a)).map(a=>`<option>${capEsc(a)}</option>`).join('')}</select>`):''}</div>`:''}
           </div>`; }).join('')}
       </div>
       <div class="cw-d-ftr"><button class="cap-lf-btn" data-c="reset" title="Revenir aux colonnes de base, sans information ajoutée">↺ Colonnes de base</button>
         <span class="ana-dim">${nCols} colonne(s), ${rows.length} ligne(s)</span><span style="flex:1"></span>
-        <button class="cap-lf-btn" data-c="x">Annuler</button><button class="phl-export-btn" data-c="ok">⬇ Télécharger</button></div></div>`;
+        <button class="cap-lf-btn" data-c="x">Annuler</button><button class="phl-export-btn" data-c="ok">⬇ Télécharger</button></div></div>`);
     ov.querySelectorAll('[data-c="x"]').forEach(b=>b.onclick=()=>{ ov.style.display='none'; });
     ov.querySelector('[data-c="reset"]').onclick=()=>{ cfg.drop=[]; cfg.add={}; draw(); };
     ov.querySelector('[data-c="ok"]').onclick=()=>{

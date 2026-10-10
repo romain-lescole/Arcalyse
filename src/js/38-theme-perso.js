@@ -5,16 +5,16 @@
    ═══════════════════════════════════════════════════════════════════════ */
 /** Variables de couleur personnalisables : [variable CSS, libellé, groupe]. */
 const CAP_THEME_FIELDS=[
-  ['--c-bg','Fond principal','Fonds'],['--c-bg2','Panneaux et cartes','Fonds'],
-  ['--c-bg3','Champs, en-têtes, survol','Fonds'],['--c-bg4','Fond secondaire','Fonds'],
-  ['--c-text','Texte','Textes et traits'],['--c-dim','Texte secondaire','Textes et traits'],
-  ['--c-accent','Accent (liens, sélection, boutons actifs)','Textes et traits'],['--c-border','Bordures','Textes et traits'],
-  ['--c-ok','Statut conforme','Statuts'],['--c-warn','Statut à surveiller','Statuts'],['--c-err','Statut en erreur','Statuts'],
-  ['--c-ctx','Contexte / surbrillance','Relation Map'],['--c-node-bg','Fond des nœuds','Relation Map'],
-  ['--c-node-txt','Texte des nœuds','Relation Map'],['--c-node-hdr','En-tête des nœuds','Relation Map'],['--c-shadow','Ombres','Relation Map']];
+  ['--c-bg',_L('Fond principal'),_L('Fonds')],['--c-bg2',_L('Panneaux et cartes'),_L('Fonds')],
+  ['--c-bg3',_L('Champs, en-têtes, survol'),_L('Fonds')],['--c-bg4',_L('Fond secondaire'),_L('Fonds')],
+  ['--c-text',_L('Texte'),_L('Textes et traits')],['--c-dim',_L('Texte secondaire'),_L('Textes et traits')],
+  ['--c-accent',_L('Accent (liens, sélection, boutons actifs)'),_L('Textes et traits')],['--c-border',_L('Bordures'),_L('Textes et traits')],
+  ['--c-ok',_L('Statut conforme'),_L('Statuts')],['--c-warn',_L('Statut à surveiller'),_L('Statuts')],['--c-err',_L('Statut en erreur'),_L('Statuts')],
+  ['--c-ctx',_L('Contexte / surbrillance'),_L('Relation Map')],['--c-node-bg',_L('Fond des nœuds'),_L('Relation Map')],
+  ['--c-node-txt',_L('Texte des nœuds'),_L('Relation Map')],['--c-node-hdr',_L('En-tête des nœuds'),_L('Relation Map')],['--c-shadow',_L('Ombres'),_L('Relation Map')]];
 /** Couches ARCADIA dont la couleur est personnalisable : [clé CAP_LAYERS, libellé]. */
-const CAP_THEME_LAYERS=[['OA','OA — Operational Analysis'],['SA','SA — System Analysis'],['LA','LA — Logical Architecture'],
-  ['PA','PA — Physical Architecture'],['EPBS','EPBS'],['Shared','Transverse']];
+const CAP_THEME_LAYERS=[['OA',_L('OA — Operational Analysis')],['SA',_L('SA — System Analysis')],['LA',_L('LA — Logical Architecture')],
+  ['PA',_L('PA — Physical Architecture')],['EPBS','EPBS'],['Shared',_L('Transverse')]];
 var _capThemeReady=false;     // vrai une fois ce module chargé (CAP_LAYERS disponible)
 var _capLayerDefaults=null;   // couleurs d'origine des couches, restaurées hors thème personnalisé
 /* Stockage : un bloc JSON dans la page, conservé par la 💾 Page HTML */
@@ -33,7 +33,7 @@ function capThemeRegister(){
     const bg=capParseColor(capThemeStore.css['--c-bg']);
     THEMES.custom={css:{...capThemeStore.css}, light:!!bg&&capLuminance(bg)>0.35, layers:capThemeStore.layers||null};
     if(sel&&!opt){ opt=document.createElement('option'); opt.value='custom'; sel.appendChild(opt); }
-    if(opt) opt.textContent='🎨 Personnalisé';
+    if(opt) opt.textContent=_L('🎨 Personnalisé');
   } else { delete THEMES.custom; if(opt) opt.remove(); }
 }
 /** Couleurs d'origine des couches ARCADIA (mémorisées au premier appel). */
@@ -66,7 +66,7 @@ function capThemeEditor(){
   const hex=v=>{ const p=capParseColor(v); return p?capHex(p):'#000000'; };
   const row=(k,l,v)=>`<label class="thm-row"><span>${esc(l)}</span><input type="color" data-k="${esc(k)}" value="${hex(v)}"><input class="phl-filter-input thm-txt" data-t="${esc(k)}" value="${esc(v)}" title="Toute couleur CSS : #rrggbb, rgb(), rgba()"></label>`;
   const ov=document.createElement('div'); ov.className='dash-modal';
-  ov.innerHTML=`<div class="thm-dlg"><div class="thm-hd"><b style="font-size:13px">🎨 Thème personnalisé</b>
+  ov.innerHTML=_L(`<div class="thm-dlg"><div class="thm-hd"><b style="font-size:13px">🎨 Thème personnalisé</b>
       <span class="tb-grp" style="margin-left:auto" title="Remplacer toutes les couleurs par celles d'un thème existant"><span class="tb-grp-l">Partir de</span>
       <select id="thm-base" class="phl-filter-input" style="width:auto"><option value="">—</option>${[...sel.options].filter(o=>o.value!=='custom').map(o=>`<option value="${o.value}">${esc(o.textContent)}</option>`).join('')}</select></span></div>
     <div class="thm-body"></div>
@@ -74,21 +74,21 @@ function capThemeEditor(){
       <span style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap">
       <button class="phl-export-btn" id="thm-exp" style="margin-left:0" title="Exporter ce thème (pour le réutiliser ailleurs)">⬇ JSON</button>
       <button class="phl-export-btn" id="thm-imp" style="margin-left:0" title="Importer un thème exporté">⬆ JSON</button><input type="file" id="thm-file" accept=".json" style="display:none">
-      ${THEMES.custom?'<button class="cap-lf-btn" id="thm-del" title="Supprimer le thème personnalisé">🗑 Supprimer</button>':''}
+      ${THEMES.custom?_L('<button class="cap-lf-btn" id="thm-del" title="Supprimer le thème personnalisé">🗑 Supprimer</button>'):''}
       <button class="cap-lf-btn" id="thm-cancel">Annuler</button>
-      <button class="cap-lf-btn" id="thm-ok" style="border-color:var(--c-accent);color:var(--c-accent)">✔ Enregistrer et appliquer</button></span></div></div>`;
+      <button class="cap-lf-btn" id="thm-ok" style="border-color:var(--c-accent);color:var(--c-accent)">✔ Enregistrer et appliquer</button></span></div></div>`);
   document.body.appendChild(ov);
   const body=ov.querySelector('.thm-body');
   /** Construit la grille des couleurs. */
   const fill=()=>{ let g0='';
     body.innerHTML=CAP_THEME_FIELDS.map(([k,l,g])=>{ const h=g!==g0?`<div class="thm-g">${esc(g)}</div>`:''; g0=g; return h+row(k,l,css[k]); }).join('')
-      +`<div class="thm-g">Couches ARCADIA <span style="text-transform:none;font-weight:400">(appliquées à l'enregistrement)</span></div>`
+      +_L(`<div class="thm-g">Couches ARCADIA <span style="text-transform:none;font-weight:400">(appliquées à l'enregistrement)</span></div>`)
       +CAP_THEME_LAYERS.map(([k,l])=>row('L:'+k,l,layers[k])).join('');
     wire(); };
   /** Aperçu en direct : variables posées sur la racine ; contrastes principaux affichés. */
   const preview=()=>{ Object.entries(css).forEach(([k,v])=>root.style.setProperty(k,v));
     const P=capParseColor, b2=P(css['--c-bg2']), t=P(css['--c-text']), d=P(css['--c-dim']);
-    ov.querySelector('#thm-ctr').textContent=b2&&t&&d?`Contraste sur les panneaux : texte ${capContrast(t,b2).toFixed(1)} · secondaire ${capContrast(d,b2).toFixed(1)} (lisible à partir de 4,5)`:''; };
+    ov.querySelector('#thm-ctr').textContent=b2&&t&&d?_L(`Contraste sur les panneaux : texte ${capContrast(t,b2).toFixed(1)} · secondaire ${capContrast(d,b2).toFixed(1)} (lisible à partir de 4,5)`):''; };
   /** Mémorise une valeur (variable CSS ou couche « L:… »). */
   const set=(k,v)=>{ if(k.startsWith('L:')) layers[k.slice(2)]=v; else { css[k]=v; preview(); } };
   /** Branche les champs : sélecteur de couleur (garde l'opacité éventuelle) et saisie libre. */
@@ -108,14 +108,14 @@ function capThemeEditor(){
     capThemeStore={css:{...css}, layers:{...layers}, active:true}; capThemeSave(); capThemeRegister();
     close(); sel.value='custom'; applyTheme('custom');
     if(typeof currentMode!=='undefined'&&currentMode==='capella') capRenderCurrentView(); };
-  ov.querySelector('#thm-del')?.addEventListener('click',()=>{ if(!confirm('Supprimer le thème personnalisé ?')) return;
+  ov.querySelector('#thm-del')?.addEventListener('click',()=>{ if(!confirm(_L('Supprimer le thème personnalisé ?'))) return;
     capThemeStore=null; capThemeSave(); capThemeRegister(); close();
     const to=prev==='custom'?'dark':prev; sel.value=to; applyTheme(to); });
-  ov.querySelector('#thm-exp').onclick=()=>capDownloadBlob(new Blob([JSON.stringify({capellaTheme:1,css,layers},null,2)],{type:'application/json'}),'theme-personnalise.json');
+  ov.querySelector('#thm-exp').onclick=()=>capDownloadBlob(new Blob([JSON.stringify({capellaTheme:1,css,layers},null,2)],{type:'application/json'}),_L('theme-personnalise.json'));
   ov.querySelector('#thm-imp').onclick=()=>ov.querySelector('#thm-file').click();
   ov.querySelector('#thm-file').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader();
     r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d||typeof d.css!=='object') throw new Error('format');
-      css={...css,...d.css}; layers={...layers,...(d.layers||{})}; fill(); preview(); }catch(err){ alert('Fichier de thème invalide.'); } }; r.readAsText(f); };
+      css={...css,...d.css}; layers={...layers,...(d.layers||{})}; fill(); preview(); }catch(err){ alert(_L('Fichier de thème invalide.')); } }; r.readAsText(f); };
   fill(); preview();
 }
 

@@ -11,7 +11,7 @@ Application **autonome, fonctionnant hors ligne**, qui charge un fichier `.capel
 5. **Lecture ciblée** : chercher avec `grep`/recherche dans `src/js/` ou consulter `docs/INDEX-FONCTIONS.md`, puis lire seulement les lignes utiles. Ne pas lire un module entier sans nécessité.
 6. **Vérification par défaut = `node build.js`** (syntaxe de chaque module). Test navigateur (`node tests/smoke.js`) seulement si l'utilisateur le demande ou après un gros changement transversal. **Pas de capture d'écran** sauf demande.
 7. Ne rien supprimer ou renommer de visible sans le signaler. Ne pas committer sans demande ; proposer un message de commit en fin de tâche.
-8. **Textes** : l'interface est en français ; tout libellé affiché reste écrit en clair dans le code (pas de clés). Après des changements de libellés, régénérer l'inventaire `node tools/textes.js` (ou `--en`). Pour l'anglais, suivre `docs/i18n/LISEZMOI.md` (démarche `_L()` + traduction au build, pièges connus) — ne pas improviser une autre méthode.
+8. **Textes** : l'interface est en français ; tout libellé affiché reste écrit en clair dans le code (pas de clés), **enveloppé par `_L('…')`** (jamais une valeur comparée ou une clé). La version anglaise est produite au build (`node build.js --lang en`) : tout texte nouveau ou modifié doit être traduit dans `src/i18n/en-dictionnaire.json` (le build liste les manquants dans `dist/arcalyse-en-manquants.txt`), et l'aide dans `src/html/aide.en.html`. Démarche, outils et pièges : `docs/i18n/LISEZMOI.md` — ne pas improviser une autre méthode. Après des changements de libellés, régénérer l'inventaire `node tools/textes.js --en`.
 9. **Ne jamais modifier `livraison/`** sauf si l'utilisateur demande explicitement une livraison (`node build.js --livraison`).
 10. Après ajout/déplacement de fonctions : `node tools/index.js` (régénère l'index). Après un changement visible : mettre à jour l'aide `src/html/aide.html`. Décision technique notable : une ligne dans `docs/NOTES-TECHNIQUES.md`.
 
@@ -29,8 +29,9 @@ Application **autonome, fonctionnant hors ligne**, qui charge un fichier `.capel
 | `src/css/styles.css` | Styles et variables de thème (`--c-*`, statuts `--c-warn/ok/err`), surcharges `html[data-theme=…]` |
 | `src/css/aide.css` | Styles de la fenêtre d'aide |
 | `src/html/interface.html` | Barres d'outils, panneaux, écran d'accueil, vues Capella Data (conteneurs `#cap-view-*`), modales |
-| `src/html/aide.html` | Aide utilisateur (onglets `ht-*`) |
-| `js/01-donnees-config.js` | `RM_RO` (Relation Map en lecture seule), `CAP_HUMAN_NAMES` (noms lisibles + descriptions des types), `MODEL`, `RCFG`, `TCFG`, `MODES` |
+| `src/html/aide.html` | Aide utilisateur (onglets `ht-*`) ; version anglaise `src/html/aide.en.html` (à tenir à jour) |
+| `src/i18n/en-dictionnaire.json` | Traductions anglaises (`code`, `interface`, `types`) utilisées par `node build.js --lang en` |
+| `js/01-donnees-config.js` | `_L` (libellé affiché, traduit au build anglais), `CAP_LANG`, `RM_RO` (Relation Map en lecture seule), `CAP_HUMAN_NAMES` (noms lisibles + descriptions des types), `MODEL`, `RCFG`, `TCFG`, `MODES` |
 | `js/02-themes.js` | `THEMES`, `applyTheme`, `capIsLight`, `capInk`, `capTextOn`, `applyMode` |
 | `js/03…07-rm-*.js` | **Relation Map** (graphe D3) : état `S`, SVG/zoom, marqueurs, arbre, rendu `render`, vue chaîne, interactions, export image, légende, panneau gauche (critères) |
 | `js/08-editeur-modele.js` | Modale d'édition (éléments, relations, paquetages) |
@@ -70,7 +71,7 @@ Application **autonome, fonctionnant hors ligne**, qui charge un fichier `.capel
 | `js/45-comparaison-rapport.js` | ⚖ Rapport de comparaison : 8 catégories `CAP_DR_CATS`, familles `CAP_DR_FAMS`, rattachement technique `capDrBuild`, niveaux et formats (`capDrRichHtml`, `capDrText`, `capDrTable`, `capDrMarkdown`), copie `capDrClipboard`, vue `capDrRender` |
 | `js/44-functional-exchange.js` | ƒ⇆ Functional Exchange : `capComputeFunctionalExchanges`, `capFexChecks`, indicateurs `capFexDashCatalog`, vue `capRenderFunctionalExchange` (Ligne, Fonction, Blocs à pins façon Capella, Matrice ≤ 100, Contrôles ; pagination par 100) ; même moteur pour 🟨 Operational Analysis (`capRenderFunctionalExchange('OA')`, vue `oav`) |
 
-Textes : inventaire **`docs/TEXTES.md`** ; traduction : **`docs/i18n/`**. Détails fonctionnels et pièges connus : **`docs/NOTES-TECHNIQUES.md`** (à lire quand on touche une zone). Liste des fonctions par module : **`docs/INDEX-FONCTIONS.md`**.
+Textes : inventaire **`docs/TEXTES.md`** ; traduction : **`docs/i18n/LISEZMOI.md`** (outils `tools/i18n*.js`). Détails fonctionnels et pièges connus : **`docs/NOTES-TECHNIQUES.md`** (à lire quand on touche une zone). Liste des fonctions par module : **`docs/INDEX-FONCTIONS.md`**.
 
 ## Conventions utiles
 
@@ -88,10 +89,12 @@ Textes : inventaire **`docs/TEXTES.md`** ; traduction : **`docs/i18n/`**. Détai
 node build.js                 # assemble dist/arcalyse-fr.html (avec repères @@BEGIN/@@END) + contrôles
 node build.js --no-markers    # version sans repères (livraison « propre », identique octet pour octet à l'original découpé)
 node build.js --livraison     # version livrée, sans repères → livraison/arcalyse-fr.html (versionnée ; sur demande explicite uniquement)
+node build.js --lang en       # version anglaise → dist/arcalyse-en.html (+ textes manquants : dist/arcalyse-en-manquants.txt) ; avec --livraison : livraison/arcalyse-en.html
+node tools/i18n-restants.js   # libellés français non enveloppés par _L (--envelopper pour les envelopper) ; tools/i18n-coherence.js : valeurs comparées
 node tools/index.js           # régénère docs/INDEX-FONCTIONS.md
 node tools/textes.js [--en]   # inventaire de tous les textes affichés → docs/TEXTES.md + docs/textes.csv (colonne anglaise avec --en)
 node tools/split.js f.html    # réimporte dans src/ un fichier assemblé AVEC repères (modifié ailleurs) ; --dry pour simuler
-node tests/smoke.js [m.capella]   # test navigateur hors ligne (nécessite : npm i -D playwright && npx playwright install chromium)
+node tests/smoke.js [--en] [m.capella]   # test navigateur hors ligne (--en : version anglaise) (nécessite : npm i -D playwright && npx playwright install chromium)
 ```
 Modèle de test : `tests/models/In-Flight_Entertainment_System.capella` (exemple public Capella ; d'autres modèles doivent fonctionner — aucun calcul ne doit supposer un modèle particulier).
 
@@ -100,7 +103,7 @@ Modèle de test : `tests/models/In-Flight_Entertainment_System.capella` (exemple
 - **README.md = vitrine utilisateur** (présentation, captures `docs/captures/*.png`, démarrage, licence). Ne pas y remettre de consignes de développement : elles sont ici. Après un changement visible important, proposer de refaire les captures (modèle IFE, thème Clair, 1440×860).
 - **Fichier HTML** : `dist/arcalyse-fr.html` (build de travail, non versionné) ; `livraison/arcalyse-fr.html` (version livrée, versionnée).
 - **Livrer une version** (sur demande explicite) : mettre à jour `CAP_APP_VERSION` (50-a-propos.js), puis
-  `node build.js --livraison` → `git add livraison` → `git commit -m "Livraison vX.Y"` → `git tag vX.Y` → `git push` + `git push --tags`.
+  `node build.js --livraison` (et `node build.js --lang en --livraison` pour l'anglais) → `git add livraison` → `git commit -m "Livraison vX.Y"` → `git tag vX.Y` → `git push` + `git push --tags`.
 - **Réimporter un fichier modifié ailleurs** (ex. conversation Claude.ai, fichier construit AVEC repères) : `node tools/split.js f.html --dry` (simulation), puis sans `--dry`, puis `node build.js` et `git diff`.
 - **Test navigateur** : `npm i -D playwright && npx playwright install chromium`, puis `node tests/smoke.js [modèle]` (charge le modèle, parcourt toutes les vues, signale les erreurs JS).
 - **Erreurs du build** : `✖ Syntaxe JS — src/js/xx.js:123` → corriger à cet endroit ; `Ressource externe interdite` → retirer l'URL (l'application doit rester hors ligne).

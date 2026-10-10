@@ -11,10 +11,10 @@ function rmChainBanner(chain){
   if(!b){ b=document.createElement('div'); b.id='rm-chain-banner'; document.getElementById('graph').appendChild(b); }
   if(!chain){ b.style.display='none'; return; }
   const lay=capChainLayout(chain.graph);
-  b.innerHTML=`<span class="rmcb-t">⚡ ${capEsc(CAP_CHAIN_LABELS[chain.type]||chain.type)}</span> <b>${capEsc(chain.name)}</b>
-    <span class="rmcb-m">${chain.graph.nodes.length} ${chain.type==='PhysicalPath'?'composants':'fonctions'} · ${chain.graph.edges.length} échanges · ${lay.entries.length} entrée(s) · ${lay.exits.length} sortie(s)</span>
+  b.innerHTML=_L(`<span class="rmcb-t">⚡ ${capEsc(CAP_CHAIN_LABELS[chain.type]||chain.type)}</span> <b>${capEsc(chain.name)}</b>
+    <span class="rmcb-m">${chain.graph.nodes.length} ${chain.type==='PhysicalPath'?_L('composants'):_L('fonctions')} · ${chain.graph.edges.length} échanges · ${lay.entries.length} entrée(s) · ${lay.exits.length} sortie(s)</span>
     <span class="rmcb-leg"><i style="background:#58a6ff"></i>acteur <i style="background:#4dd880"></i>système <i style="background:#8b949e"></i>non alloué</span>
-    <button id="rm-chain-close" title="Revenir à la Relation Map">✕ Quitter la chaîne</button>`;
+    <button id="rm-chain-close" title="Revenir à la Relation Map">✕ Quitter la chaîne</button>`);
   b.style.display='flex';
   b.querySelector('#rm-chain-close').onclick=()=>{ S.chainView=null; rmChainBanner(null); rebuildTree(); setTimeout(()=>fitView(true),80); };
 }
@@ -80,8 +80,8 @@ function renderChainView(C){
   // Nœuds
   g.nodes.forEach(n=>{
     const p=pos[n.id]; if(!p) return;
-    const el={id:n.refId, name:n.name, type:n.elemType, pkg:n.owner?'alloué à '+n.owner:''};
-    const tcfg=TCFG[n.elemType]||TCFG[n.elemType+' (BEHAVIOR)']||TCFG[n.elemType+' (NODE)']||{color:'#7f849c',abbr:(n.elemType||'???').slice(0,3).toUpperCase()};
+    const el={id:n.refId, name:n.name, type:n.elemType, pkg:n.owner?_L('alloué à ')+n.owner:''};
+    const tcfg=TCFG[n.elemType]||TCFG[n.elemType+_L(' (BEHAVIOR)')]||TCFG[n.elemType+_L(' (NODE)')]||{color:'#7f849c',abbr:(n.elemType||'???').slice(0,3).toUpperCase()};
     const grp=gN.append('g').attr('class','ng cv-n').attr('data-id',n.id).attr('transform',`translate(${p.x-W_N/2},${p.y-H_N/2})`);
     const io=ent.has(n.id)||ext.has(n.id), kc=KIND[n.kind]||KIND.none, sel=S.selNode===n.id;
     let label=n.name; if(S.cutNames&&label.length>S.cutLen) label=label.slice(0,S.cutLen)+'…';
@@ -98,7 +98,7 @@ function renderChainView(C){
       grp.append('text').attr('x',7).attr('y',NHH-5).attr('fill',capInk(tcfg.color)).attr('font-size',10).attr('font-weight',700).attr('pointer-events','none')
         .text(hdr.length>24?hdr.slice(0,23)+'…':hdr);
       if(io) grp.append('text').attr('x',NW-5).attr('y',NHH-5).attr('text-anchor','end').attr('fill',capInk(tcfg.color)).attr('font-size',8).attr('font-weight',800).attr('pointer-events','none')
-        .text(ent.has(n.id)&&ext.has(n.id)?'E/S':ent.has(n.id)?'ENTRÉE':'SORTIE');
+        .text(ent.has(n.id)&&ext.has(n.id)?_L('E/S'):ent.has(n.id)?_L('ENTRÉE'):_L('SORTIE'));
       const bodyH=NH-NHH, fs=lines.length===1?12:lines.length===2?11:10;
       lines.forEach((ln,i)=>grp.append('text').attr('x',NW/2+2).attr('y',NHH+bodyH*(i+1)/(lines.length+1)+2).attr('text-anchor','middle').attr('dominant-baseline','central')
         .attr('fill',C.nodeTxt).attr('font-size',fs).attr('pointer-events','none').text(ln));
@@ -115,7 +115,7 @@ function renderChainView(C){
   defs.append('marker').attr('id','cv-arr').attr('viewBox','0 -5 10 10').attr('refX',9).attr('refY',0).attr('markerWidth',8).attr('markerHeight',8).attr('orient','auto')
     .append('path').attr('d','M0,-4L9,0L0,4').attr('fill','none').attr('stroke',EC).attr('stroke-width',1.8);
   S._chainBounds={x0:bounds.x0-(dir!=='TB'?0:0), x1:bounds.x1+(backK&&dir==='TB'?40+backK*16:0), y0:bounds.y0, y1:bounds.y1+(backK&&dir!=='TB'?40+backK*16:0)};
-  document.getElementById('info-txt').textContent=`Chaîne : ${chain.name}  |  ${g.nodes.length} nœuds  |  ${g.edges.length} échanges  |  ${lay.entries.length} entrée(s) · ${lay.exits.length} sortie(s)`;
+  document.getElementById('info-txt').textContent=_L(`Chaîne : ${chain.name}  |  ${g.nodes.length} nœuds  |  ${g.edges.length} échanges  |  ${lay.entries.length} entrée(s) · ${lay.exits.length} sortie(s)`);
   updateLegend();
 }
 

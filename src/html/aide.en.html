@@ -1,0 +1,387 @@
+<!-- ════════════════════════  HELP MODAL (English version of aide.html — keep in sync)  ════════════════════════ -->
+<div id="help-ov" style="position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:4000;
+     display:none;align-items:center;justify-content:center">
+  <div style="background:var(--c-bg);border:1px solid var(--c-border);border-radius:8px;
+       width:860px;max-width:96vw;max-height:90vh;display:flex;flex-direction:column;
+       box-shadow:0 8px 32px rgba(0,0,0,.6)">
+    <!-- Header -->
+    <div style="display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--c-border);flex-shrink:0">
+      <span style="font-weight:700;font-size:14px">📖 Help — Relation Map · Capella</span>
+      <button id="help-close" style="background:none;border:none;color:var(--c-dim);cursor:pointer;font-size:20px;line-height:1;margin-left:auto">✕</button>
+    </div>
+    <!-- Tab bar -->
+    <div class="hp-tabs" id="help-tabs">
+      <button class="htab active" data-ht="start">🚀 Getting started</button>
+      <button class="htab" data-ht="ui">🧭 Interface</button>
+      <button class="htab" data-ht="rm">🗺 Relation Map</button>
+      <button class="htab" data-ht="tv">▤ Table</button>
+      <button class="htab" data-ht="cap">🔷 Capella views</button>
+      <button class="htab" data-ht="chains">⚡ Chains</button>
+      <button class="htab" data-ht="itf">🔌 Interfaces & ports</button>
+      <button class="htab" data-ht="ana">ƒ Functions · 🔬 Analyses</button>
+      <button class="htab" data-ht="usecase">🧪 Use case</button>
+    </div>
+    <!-- Content -->
+    <div class="hp" id="help-body">
+
+      <!-- ── GETTING STARTED ── -->
+      <div id="ht-start" class="ht-panel">
+        <h2>Arcalyse — your Capella model, inside and out</h2>
+        <p class="hp-lead">Standalone application (a single HTML file) to <b>explore, analyse, check and export</b> a Capella / ARCADIA model without opening Capella. The <code>.capella</code> file is read locally in the browser.</p>
+        <h3>Opening a model</h3>
+        <ol>
+          <li>Drag and drop a <code>.capella</code> file <b>anywhere in the window</b>, or click <b>📂 Browse…</b> on the home screen (or <b>📁 File › 🔷 Open a Capella model</b>).</li>
+          <li>The model is analysed, then the <b>🧭 Explorer › ▦ Cards</b> view opens automatically.</li>
+          <li>To change model, simply drop another file (it replaces the displayed model).</li>
+          <li>For a <b>new version of the same model</b>: <b>📁 File › 🔄 Load a model update</b> shows the delta first, then updates after confirmation (see 🔄 Watch).</li>
+        </ol>
+        <p class="hp-note">First time? On the home screen, <b>🚀 Getting started</b> shows where to open your file, then resumes once the model is loaded to show where to find the help and tutorials. <b>? Help ▾ › 🎓 Guided tour</b> presents each area of the interface step by step (more complete with a loaded model). In each view, <b>? Help ▾ › 🎯 Tour of this view</b> presents its menus and what they do.</p>
+        <p class="hp-note">Only the semantic <code>.capella</code> file is read. <code>.aird</code> (diagrams) and <code>.afm</code> files are refused: they do not contain the model elements.</p>
+        <h3>The main areas</h3>
+        <div class="hp-grid">
+          <div class="hp-card"><b>🗺 Relation Map</b><span>Interactive graph centred on an element and its neighbours, filterable by types and relations.</span></div>
+          <div class="hp-card"><b>▤ Table</b><span>All model elements in a table: view tabs, attribute, relation and path columns, sort, filters, CSV export.</span></div>
+          <div class="hp-card"><b>🔷 Capella views</b><span>Dedicated analysis views: explorer (tree, cards, index), links, chains, interfaces, ports, index.</span></div>
+        </div>
+        <h3>Saving and sharing</h3>
+        <p class="hp-note">⚠ When a model is loaded, the browser asks for confirmation before leaving the page (← Back button, closing the tab): otherwise the work in progress would be lost. Remember to 💾 Save.</p>
+        <p><b>💾 Save</b> (Ctrl+S) writes the page directly to a file chosen once, then overwrites it at each save, without going through downloads (Edge / Chrome; elsewhere, the page is downloaded). Shift+click or Ctrl+Shift+S: save as. <b>💾 HTML page</b> downloads the page. In both cases, the whole application is saved <b>with the embedded model</b>. When this file is opened, the model reloads by itself: handy to freeze a state or share an analysis with someone who does not have Capella.</p>
+        <p>The saved page contains: the <b>model</b>, the <b>view bar</b> (menus, pins), the <b>dashboards</b>, the ▤ Table <b>tabs and columns</b> (path columns, filters, widths, sort), the <b>theme</b> and the <b>naming rules</b>. Not kept: the version loaded for ⚖ Comparison and the filters of the other views.</p>
+        <p><b>📁 File › ⚙ Save the interface and views</b>: the same settings <b>without the model</b>, in a <code>.json</code> file (parts of your choice); <b>⚙ Load an interface and views</b> applies them again, for example with another model or a new version of the page.</p>
+        <h3>Offline operation</h3>
+        <p>The application <b>works without a connection</b>: all resources are embedded in the file, including the <code>D3.js v7.9.0</code> graphics library (ISC licence). Exports (PDF, ZIP, PNG, SVG, CSV, HTML) are generated in the browser, without any external library, and the HTML reports produced are standalone too. A saved <b>💾 HTML page</b> remains usable offline.</p>
+      </div>
+
+      <!-- ── INTERFACE ── -->
+      <div id="ht-ui" class="ht-panel" style="display:none">
+        <h2>Toolbar</h2>
+        <h3>Level 1 — always visible</h3>
+        <table class="hp-t">
+          <tr><td>🗺</td><td>Relation Map.</td></tr>
+          <tr><td>🧭 ▾ · ▤ · 📡 ▾ · ⚡ · ƒ · 🔬 ▾ · 📐 · ☰</td><td>Capella views, at the same level as the modes and always visible (with no model loaded, they invite you to load one): ▾ menus and pinned views, set up with ☰ (see the Capella views tab). One click switches directly to the corresponding view, from any mode.</td></tr>
+          <tr><td>📁 File ▾</td><td>🔷 <b>Open a Capella model</b>: replaces the displayed model. 🔄 <b>Load a model update</b>: compares another file with the displayed model, shows the delta and updates after confirmation; if fewer than half of the elements are shared, a warning says it may not be the same project. 💾 <b>Save</b> (Ctrl+S) / Save as… (Ctrl+Shift+S) / 🌐 Download the HTML page: standalone page containing the model, the view bar, the dashboards, the ▤ Table tabs and columns, the theme and the naming rules. ⚙ <b>Save / Load the interface and views</b>: the same settings without the model, in a .json file, parts of your choice, to reuse them with another model.</td></tr>
+          <tr><td>💾</td><td>Direct save (Ctrl+S; Shift+click or Ctrl+Shift+S: save as).</td></tr>
+          <tr><td>🔄 Watch ▾</td><td>New versions of the .capella file (see below).</td></tr>
+          <tr><td>🎨 Theme ▾</td><td>Dark (default), Office 2007, Light, Navy, Nature, Contrast. Views are redrawn with suitable colours; in a light theme (Office 2007, Light or light custom), coloured texts are automatically darkened to stay readable.</td></tr>
+          <tr><td>🎨 Theme › Customize…</td><td>Custom theme: all colours (backgrounds, texts, accent, borders, statuses, Relation Map, ARCADIA layers), live preview, “Start from” an existing theme, displayed text contrast, ⬇ / ⬆ JSON. It then appears as “🎨 Custom” in the list and is kept in the saved page.</td></tr>
+          <tr><td>🖼 Export ▾</td><td>Image of the Relation Map graph: PNG, JPEG or SVG (2nd Relation Map bar).</td></tr>
+          <tr><td>? Help ▾</td><td>📖 Full help: this documentation; 🎯 Tour of this view: presentation of the menus and commands of the displayed view (Relation Map, each Capella view; model loaded); 🎓 Guided tour: step-by-step discovery of the interface (highlighted area, rest of the screen darkened; ◀ Previous / Next ▶ or the arrow keys, ✕ or Esc to quit). Both are also available from the home screen. ℹ About: version, author, licence (GNU GPL v3), contact, third-party components (D3.js licence), technical information to copy for an issue report (including the test browser: Google Chrome version 155).</td></tr>
+        </table>
+        <h3>Level 2 — Relation Map commands</h3>
+        <p>Displayed only in 🗺 Relation Map mode.</p>
+        <table class="hp-t">
+          <tr><td>＋ / － / ⊡ Fit</td><td>Zoom in, zoom out, fit to window.</td></tr>
+          <tr><td>↓ Open all / ↑ Close all</td><td>Expands or collapses all the graph nodes.</td></tr>
+          <tr><td># Nums</td><td>Numbers on the relations.</td></tr>
+          <tr><td>◉ Legend</td><td>Legend of the types and relations.</td></tr>
+          <tr><td>⌁ Relations</td><td>Relation names on the edges.</td></tr>
+          <tr><td>✂ Names</td><td>Cuts names that are too long.</td></tr>
+          <tr><td>⊙ Unique</td><td>Unique display mode (when offered).</td></tr>
+          <tr><td>⬡ Compact</td><td>Shrunk nodes.</td></tr>
+        </table>
+        <h3>Keyboard shortcuts</h3>
+        <table class="hp-t">
+          <tr><td>Ctrl + / Ctrl −</td><td>Zoom in / out (also Ctrl + mouse wheel).</td></tr>
+          <tr><td>Ctrl W</td><td>Fit the view.</td></tr>
+          <tr><td>Ctrl K</td><td>Go to a view: search by name in the ☰ menu (Enter to open).</td></tr>
+          <tr><td>Esc</td><td>Closes the open window or menu.</td></tr>
+          <tr><td>Ctrl/Cmd + click, Shift + click</td><td>Multiple selection in the tree.</td></tr>
+          <tr><td>Ctrl V</td><td>Pastes a list (text or Excel) under the element selected in the tree.</td></tr>
+        </table>
+      </div>
+
+      <!-- ── RELATION MAP ── -->
+      <div id="ht-rm" class="ht-panel" style="display:none">
+        <h2>🗺 Relation Map</h2>
+        <p class="hp-lead">Graph centred on a context element: its neighbours are displayed up to the chosen depth, according to the selected Capella relations (function → component allocation, exchanges, physical links, chains…).</p>
+        <p class="hp-note">At the bottom of the window, the <b>status bar</b> recalls the context element, the number of nodes and unique elements displayed and the depth; it only appears in the Relation Map. 🎯 Tour of this view picks a context element if there is none yet, to show a graph.</p>
+        <h3>Graph interactions</h3>
+        <table class="hp-t">
+          <tr><td>Click on a node</td><td>Selects the element and shows its properties.</td></tr>
+          <tr><td>Double-click</td><td>Makes this node the new context.</td></tr>
+          <tr><td>Right-click</td><td>Context menu: set as context, expand / collapse, hide the element.</td></tr>
+          <tr><td>Drag the background · mouse wheel</td><td>Pan and zoom.</td></tr>
+        </table>
+        <h3>Left panel</h3>
+        <table class="hp-t">
+          <tr><td>Tree</td><td>Model elements having at least one relation, at their place in the hierarchy (chains included). Text filter with highlighting. Click = recentres the graph. Multiple selection (Ctrl/Shift). <b>Read-only</b>: the Relation Map does not modify the model — neither in the tree and 📝 Properties (renaming, adding, deleting, moving, pasting a list), nor through the right-click on the graph, nor in the criteria (new, edit or delete a type or a relation criterion). Colours and check boxes can still be set. Arcalyse is a reading and analysis tool.</td></tr>
+          <tr><td>Layout & depth</td><td>→ LR, ↓ TB, ← RL, ◉ radial, ⚡ zigzag (for reading sequences); neighbourhood depth 1 to 10.</td></tr>
+          <tr><td>Relation criteria</td><td>Check / uncheck the displayed Capella relation types (groups can be checked as a whole).</td></tr>
+          <tr><td>Element types</td><td>Filter of the displayed types, colours by ARCADIA layer.</td></tr>
+          <tr><td>Properties</td><td>Attributes of the selected element.</td></tr>
+        </table>
+        <h3>Showing a chain in the graph</h3>
+        <p>Click a chain (⚡) in the tree, or the <b>🗺</b> button of the ⚡ Chains view: the Relation Map switches to <b>chain view</b>, which shows the complete graph — <b>several inputs, several outputs, branches and loops</b> — arranged in layers according to the chosen layout (→ LR, ↓ TB, ← RL). Blue edging = carried by an actor, green = by the system, grey = unallocated; INPUT / OUTPUT badge; edges labelled with the exchange. A banner summarises the chain; <b>✕ Leave chain</b>, a double-click on a node or a click in the tree go back to the Relation Map.</p>
+        <h3>Reading the graph</h3>
+        <p>Hovering a node: its direct neighbours stay highlighted, the rest fades. Each node's banner carries the readable name of its type. The <b>Element types</b> panel only lists the types present in the tree, sorted by ARCADIA layer, with their number of elements.</p>
+        <h3>ARCADIA colours</h3>
+        <p><span class="hp-chip" style="--c:#3b82f6">OA</span> Operational Analysis · <span class="hp-chip" style="--c:#22c55e">SA</span> System Analysis · <span class="hp-chip" style="--c:#eab308">LA</span> Logical Architecture · <span class="hp-chip" style="--c:#a855f7">PA</span> Physical Architecture (PC NODE, PC BEHAVIOR) · <span class="hp-chip" style="--c:#ef4444">EPBS</span> Configuration items.</p>
+      </div>
+
+      <!-- ── ▤ TABLE ── -->
+      <div id="ht-tv" class="ht-panel" style="display:none">
+        <h2>▤ Table</h2>
+        <p class="hp-lead">Table of <b>all the model elements</b>, one per row, opened with the <b>▤ Table</b> button of the bar. Rows follow the types checked in the sidebar (expanded layers); a <b>double-click</b> on a row opens the detail panel. No global search or layer filter here: each column's <i>Filter…</i> fields replace them.</p>
+        <h3>View tabs</h3>
+        <p>Each tab keeps its own view: <b>checked element types</b>, <b>🎯 scope</b> (independent of the other views and tabs), <b>displayed columns and their order</b>, filters, widths and sort. A new tab has <b>no type checked</b>: check those to list in the sidebar. <b>+</b> adds a tab (copy of the columns of the displayed view, no type checked), <b>double-click</b> renames it, <b>✕</b> closes it. Tabs are saved with the 💾 HTML page and in the ⚙ interface file.</p>
+        <h3>Columns, sort, filters</h3>
+        <table class="hp-t">
+          <tr><td>🎯 Scope</td><td>Optional tab criterion: rows are limited to the elements <b>contained</b> in chosen elements (package, layer, component, function…). The window shows the chosen elements (✕ to remove), the mode — <b>content at all levels</b> or <b>directly contained only</b> —, the model tree (▶ expand, box to add) and a search by name or type. <b>🌳 Tree</b> display: with a search, results appear in their containers, greyed when they do not match themselves (they can be checked too). <b>☰ List</b> display: flat list sorted by name, with the container path, limited to 300 rows (refine the search beyond that). With no chosen element: the whole model. A tab's rows = checked types ∩ scope, then column filters; the counter recalls the scope.</td></tr>
+          <tr><td>☰ Rows · 🌳 Tree</td><td>Tab display. <b>🌳 Tree</b>: rows are placed under their containers (with a 🎯 scope, starting from the scope elements); ▶ / ▼ in the first column. The <b>▾</b> menu next to 🌳 Tree groups the options: <b>Compact</b> (default: each row directly under its closest ancestor that is itself a row, e.g. components and sub-components, without packages) or <b>Greyed containers</b> (intermediate packages and containers shown, greyed and without values); <b>⊞ Expand all</b>, <b>⊟ Collapse all</b>, <b>Level 1 · 2 · 3</b> (containers do not count). The order of elements at the same level follows the sort; ⬇ CSV adds the <b>Level</b> and <b>Path</b> columns.</td></tr>
+          <tr><td>📋 Copy</td><td>Cell selection as in ƒ Functions › 📋 Table: <b>click</b> a cell, <b>click-drag</b> for a rectangle, <b>Ctrl+click</b> to add / remove, <b>Shift+click</b> to extend. <b>Ctrl+C</b> or 📋 Copy: to paste into Excel or Word; a cell with several elements stays a single cell, with <b>one element per line</b> (whatever ≡ Inline / ☰ Stacked). Esc or a click outside the table clears the selection.</td></tr>
+          <tr><td>✎ Rename</td><td>On the header of a path column: ✎ replaces the title with an input field (Enter to confirm, Esc to cancel).</td></tr>
+          <tr><td>⊞ Columns</td><td>Checks the displayed columns, by section: <b>computed columns</b> (Name, ID, Owner and Owned element shown by default; Layer, Type, Human Type), <b>path columns</b> (✏ edit, ✕ delete), <b>XML file attributes</b> and <b>relations</b>. 🔍 field to search a column.</td></tr>
+          <tr><td>Relations</td><td>The relations of the 🔗 Links view, grouped (breakdown, allocation, exchanges, realization, capabilities, chains), with their number of links. Two boxes per relation: <b>→ targets</b> (the elements the row points to, e.g. functions realized by a component) and <b>← sources</b> (the elements pointing to the row, e.g. the component realizing a function).</td></tr>
+          <tr><td>Headers</td><td><b>Click</b>: sort ▲ ascending, ▼ descending, then no sort (empty cells at the bottom). <b>Drag</b> a header onto another: changes the column order. Right edge: width. <i>Filter…</i> field: filters the column.</td></tr>
+          <tr><td>≡ Inline / ☰ Stacked</td><td>Multi-value cells: comma-separated, or one per line.</td></tr>
+          <tr><td>⬇ CSV</td><td>Exports the displayed columns, for all filtered rows (all pages), in sort order.</td></tr>
+          <tr><td>💾 Save view · 📂 Load view</td><td>Saves the view of the displayed tab to a <code>.json</code> file, or loads it back.</td></tr>
+          <tr><td>↺ Reset</td><td>Goes back to the initial columns, order, widths and sort, with no filter (displayed tab).</td></tr>
+        </table>
+        <h3>✨ Path column (metachain)</h3>
+        <p>Adds a computed column which, for each element of the table, <b>follows a path of relations</b> in the model and shows what it finds at the end. Examples: the functions allocated to each component, the components connected to a component through its ports, the name of the package owning a requirement.</p>
+        <p><b>Building the path</b>: choose the <b>start type</b> (only its rows will be filled), then, at each step, the <b>relation to follow</b>; the type of the next step is deduced automatically. The last step can read a <b>value</b> (Name, ID, attribute); otherwise, the cell shows the names of the reached elements. The choices offered depend on the loaded model:</p>
+        <table class="hp-t">
+          <tr><td>Name · ID · Type · Human Type · attributes</td><td>Displayed value (end of the path).</td></tr>
+          <tr><td>Owner [Type]</td><td>First owning element of the chosen type.</td></tr>
+          <tr><td>Owned element [Type]</td><td>Directly contained elements of the chosen type (e.g. a component's ports).</td></tr>
+          <tr><td>Capella relations</td><td>Allocation, realization, involvement… in both directions.</td></tr>
+          <tr><td>attribute → Type</td><td>Element designated by an attribute (<code>source</code>, <code>target</code>, <code>involved</code>…).</td></tr>
+          <tr><td>← incoming reference</td><td>Elements designating this one (reverse direction).</td></tr>
+          <tr><td>via [Type] → [Type]</td><td>Going through an intermediate element (e.g. port → Physical Link → opposite port).</td></tr>
+        </table>
+        <p><b>👁 Live preview</b>: choose a <b>sample element</b> of the start type (🔍 filter, list, <b>Next ▸</b> to go to the next element whose cell would be filled). The preview shows the elements reached at each step, the step where the path stops if it finds nothing, the final content of the cell and the number of elements for which it will be filled.</p>
+        <p><b>+ Add a step</b> · <b>✕</b> deletes a step and the following ones · <b>✏</b> (⊞ Columns menu) edits an existing column · the preview updates at each change.</p>
+      </div>
+
+      <!-- ── CAPELLA DATA ── -->
+      <div id="ht-cap" class="ht-panel" style="display:none">
+        <h2>🔷 Capella views</h2>
+        <h3>View bar (at the top)</h3>
+        <p><b>📋 Copying cells</b> (all view tables, except matrices): <b>click-drag</b> for a rectangle, <b>Ctrl+click</b> to add / remove a cell, <b>Shift+click</b> to extend; a simple click also selects the cell, unless it or its row already has a click action (link, row opening a detail): the click then keeps its action. A pill appears near the selection: <b>📋 Copy</b> (also Ctrl+C), <b>Copy the table</b> (headers and visible rows, after filters), ✕. Pasting into Excel or Word: multi-line cells stay a single cell. Esc or a click outside the table clears the selection.</p>
+        <table class="hp-t">
+          <tr><td>▾ Menus</td><td><b>🧭 Explorer</b> (Tree, Cards, Type index), <b>📡 Flows & interfaces</b> (⚡ Chains, ƒ⇆ Functional Exchange, 🟨 Operational Analysis, 🧱 System Component, 🧱 Logical Component, 🔀 Behavior Exchange, 🔌 Physical Link, 🎬 Scenarios, 🧩 Ports, 🔗 Links), <b>🔬 Analyses</b> (all sub-views). A click on the name reopens the menu's last view; the ▾ arrow shows the list.</td></tr>
+          <tr><td>📌 Pin</td><td>In a menu, 📌 places the view as a direct button in the bar (by default: ▤ Table, ⚡ Chains, 🎬 Scenarios, 📐 Dashboard); a second click removes it.</td></tr>
+          <tr><td>☰ (Ctrl K)</td><td>All views: search (type then Enter, ↑ ↓ arrows), boxes to show or hide each menu, pins, ↺ Restore the default bar. A hidden view remains accessible here. The setting is saved with the 💾 HTML page.</td></tr>
+        </table>
+        <table class="hp-t">
+          <tr><td>🧭 Explorer</td><td>Three tabs: 🌳 Tree, ▦ Cards and 📖 Type index (detailed below); the menu reopens the last tab used. The type sidebar is only shown in the Explorer and the ▤ Table.</td></tr>
+          <tr><td>🧭 Explorer › 🌳 Tree</td><td>Complete model tree (types checked in the sidebar); own bar: 🔍 search by name or type, <b>🌳 Tree</b> (results stay in their containers, greyed when they do not match themselves) or <b>☰ List</b> (flat, sorted by name, with the container path, 300 rows at most), ⊞ Expand all / ⊟ Collapse all, Level 1 · 2 · 3, ⬇ JSON. Click an element: detail panel.</td></tr>
+          <tr><td>🧭 Explorer › ▦ Cards</td><td>Elements grouped by ARCADIA layer, layer filters and search.</td></tr>
+          <tr><td>▤ Table</td><td>Direct button of the bar: paged table with view tabs, attribute, relation and path columns, sort, filters, CSV export (▤ Table tab of this help).</td></tr>
+          <tr><td>🔗 Links</td><td>Extracted Capella relations (34 types: breakdowns, allocations, functional / component exchanges / physical links, exchanged items, cross-layer realizations, chains, capabilities). Bar: text search, filters by group (click the group name) or by relation, ID columns on demand, CSV export of the displayed rows; relations absent from the model are listed in a tooltip. Click a name: detail panel.</td></tr>
+          <tr><td>⚡ Chains</td><td>Functional chains, operational processes and physical paths: diagrams, tables and exports (⚡ Chains tab).</td></tr>
+          <tr><td>ƒ⇆ Functional Exchange · 🧱 System / Logical Component · 🔀 Behavior Exchange · 🔌 Physical Link · 🧩 Ports</td><td>Interface analysis and consistency checks (🔌 Interfaces & ports tab).</td></tr>
+          <tr><td>🔬 Analyses › ƒ Functions</td><td>Functions layer by layer: hierarchy, table, traceability, metrics, checks, file (ƒ Functions · 🔬 Analyses tab).</td></tr>
+          <tr><td>🔬 Analyses</td><td>Cross-layer traceability, capabilities & missions, modes & states, comparison of two versions (🔬 Analyses tab).</td></tr>
+          <tr><td>🔄 Watch</td><td>Detection of new versions of the .capella file, delta of the changes and update after confirmation.</td></tr>
+          <tr><td>🧭 Explorer › 📖 Type index</td><td>Glossary of the types present: technical type, Human Type, count, description.</td></tr>
+        </table>
+        <h3>Detail panel</h3>
+        <p>A click on a name (almost everywhere) opens the detail panel: Human Type and description, attributes, <b>outgoing references</b>, <b>incoming references</b> (what points to this element?), owner and owned elements. Everything is clickable to navigate step by step.</p>
+      </div>
+
+      <!-- ── CHAINS ── -->
+      <div id="ht-chains" class="ht-panel" style="display:none">
+        <h2>⚡ Chains</h2>
+        <p class="hp-lead"><code>FunctionalChain</code>, <code>OperationalProcess</code> and <code>PhysicalPath</code> are rebuilt as a <b>graph</b>: several inputs, several outputs, branches and loops are kept.</p>
+        <h3>Filters and sub-views</h3>
+        <p>Filter by type and by layer (OA, SA, LA, PA, EPBS), and by content: <b>All / Non-empty / Empty</b> (empty chain = no function or exchange involved). <b>▦ Diagrams</b>: one card per chain. <b>🗺 Relation Map view</b>: interactive graph (LR / TB / RL / radial / zigzag layouts, ⬡ Compact, ✂ Names) and injection into the main Relation Map.</p>
+        <h3>Content of a card</h3>
+        <ul>
+          <li>Top-down diagram, Capella style: <span class="hp-chip" style="--c:#4a4aa8">blue</span> carried by an actor, <span class="hp-chip" style="--c:#1f6b1f">green</span> carried by the system, <span class="hp-chip" style="--c:#8a8a8a">grey</span> unallocated; operational processes (OA) in Capella colours: <span class="hp-chip" style="--c:#6b4f2a">yellow activities</span>, brown arrows; thick border = input or output.</li>
+          <li><b>Involved functions</b>: flow order, type, allocation component, input/output role, number of incoming/outgoing exchanges.</li>
+          <li><b>Involved Functional Exchanges</b>: numbered source → target, Exchange Items, carrying Component Exchange. For a physical path: components, Physical Links and allocated CEs.</li>
+          <li>Buttons 🖼 PNG · 📐 SVG · 📋 Copy (paste into Word/PowerPoint) · ⬇ CSV.</li>
+        </ul>
+        <h3>Batch export</h3>
+        <p>Check cards (or <b>All</b>). With no selection, all the displayed chains are exported. Options:</p>
+        <table class="hp-t">
+          <tr><td>Frame</td><td>Frame and tab at the top left: <code>[FC]</code>, <code>[OP]</code> or <code>[PP]</code> + name, band in the layer colour.</td></tr>
+          <tr><td>Title block</td><td>Bottom right: project, diagram, type, layer, content, date and file, sheet number.</td></tr>
+          <tr><td>Legend · Description</td><td>Colour legend; Capella description of the chain.</td></tr>
+          <tr><td>Appendices</td><td>PDF: appendix sheet(s) after each diagram (inputs/outputs, functions, exchanges), paginated. ZIP: one CSV per chain.</td></tr>
+          <tr><td>×1 · ×2 · ×3</td><td>Resolution of PNG and PDF images.</td></tr>
+        </table>
+        <p><b>📄 PDF</b>: contents page, one sheet per chain (A4, oriented automatically), navigation bookmarks. <b>🗜 ZIP PNG / ZIP SVG</b>: individual numbered images. <b>🌐 HTML</b>: tabbed standalone report (Contents with links, vector Diagrams + tables), with built-in search.</p>
+      </div>
+
+      <!-- ── INTERFACES ── -->
+      <div id="ht-itf" class="ht-panel" style="display:none">
+        <h2>🔌 Interfaces & ports</h2>
+        <p><b>⬇ Enriched CSV</b> (📡 Flows & interfaces: Functional Exchange, Operational Analysis, System / Logical Component, Behavior Exchange, Physical Link, Ports, Links; 🔬 Analyses: ƒ Functions, traceability, capabilities, modes & states, requirements, properties, data & interfaces, constraints): before the download, the “Export columns” window lets you <b>remove columns</b> and, for each column referring to model elements (function, port, exchange, component…), <b>add information</b> inserted right next to it: ID, type, readable type, layer, owner, owner path, description, summary, any Capella attribute (＋ Attribute…) and the ▤ Table ✨ path columns whose start type matches. The choices are kept for each export and saved with the 💾 HTML page and the ⚙ file; ↺ Base columns goes back to the original export.</p>
+        <p class="hp-lead">Interface views of the <b>📡 Flows & interfaces</b> menu, from functional to physical, in tab order: <b>ƒ⇆ Functional Exchange</b>, <b>🟨 Operational Analysis</b>, <b>🧱 System Component</b>, <b>🧱 Logical Component</b>, <b>🔀 Behavior Exchange</b>, <b>🔌 Physical Link</b>, <b>🎬 Scenarios</b>, then <b>🧩 Ports</b>. Each opens in <b>◧ Blocks view</b> (Capella-style rendering, navigation from one block to another) and also offers Line / Component (or Function) views, an <b>▦ N² matrix</b> (click a cell = list of the exchanges) and a <b>🩺 Checks</b> report. In ƒ⇆, each block shows in small print, at the top, what it belongs to: allocation component or actor (click: its block in the view of its layer) or, failing that, its parent function (click: its block). In the dark theme, a tip recalls that the Blocks view is more readable, and closer to Capella, with the Office 2007 or Light theme. Command bars stay visible at the top when scrolling the view (likewise in ⚡ Chains, ƒ Functions and 🔬 Analyses). As in ƒ Functions, the commands of each bar are framed by category (tabs, views, filters and fields, exports). In the 🔬 Analyses and ƒ Functions › ⛓ Traceability tables, the column names and the filter row also stay visible when scrolling.</p>
+        <p><b>HTML exports</b> (🔀 and 🔌): <b>⬇ HTML</b> = the displayed view; <b>⬇ HTML (all views)</b> = tabbed report Line view / Component view / Matrix / Checks, filters applied, with search and clickable matrix. The files are standalone and use the colours of the current theme.</p>
+        <p class="hp-note">Split by layer: <b>🧱 System Component</b> (SA) and <b>🧱 Logical Component</b> (LA) for the components and their Component Exchanges; <b>🔀 Behavior Exchange</b> for the PA-layer Component Exchanges between <b>Behavior</b> Physical Components; <b>🔌 Physical Link</b> for the links between <b>Node</b> Physical Components.</p>
+        <h3>ƒ⇆ Functional Exchange</h3>
+        <p>Exchanges between functions (all layers), same organisation as 🧱 Logical Component, with a layer filter (OA, SA, LA, PA) and an <b>Allocation</b> filter as in ƒ Functions (🧩 System, 👤 Actors, ∅ Unallocated; double-click: only this one) and the <b>All allocation targets</b> list of the layer (actors, then system and subsystems as a tree, sub-components included; in OA: operational entities and actors); in the exchange views, an exchange is kept if either of its two functions matches:</p>
+        <table class="hp-t">
+          <tr><td>◧ Blocks view</td><td>Default view. Each function drawn <b>as in Capella</b>: rounded box with the function name, <b>green</b> if allocated to the system, <b>blue</b> if allocated to an actor, <b>grey</b> if unallocated (or parent function); input pins (green) on the left and output pins (orange) on the right with the port name; next to each pin, the exchange and the remote function (several exchanges on the same pin: listed one below the other, centred on the pin). <b>Click on the remote function</b>: shows its block (changing page and relaxing filters if needed), <b>↩ Back</b> returns to the starting block; click on a block title: detail panel. Pale pin: unconnected port; dotted pin: exchange connected directly to the function, without port (normal for OA activities). “with ports or exchanges” option (unchecked by default) to hide parent functions.</td></tr>
+          <tr><td>≡ Line view</td><td>Source function, output pin <span class="fex-pin fex-pin-out">▶</span> and port → exchange → input pin <span class="fex-pin fex-pin-in">▶</span> and port, target function; Exchange Items (▤), Component Exchanges allocating it (🔀), chains (⚡).</td></tr>
+          <tr><td>▣ Function view</td><td>One card per function: received (←) and sent (→) exchanges.</td></tr>
+
+          <tr><td>▦ Matrix</td><td>Function × function (row = source, column = target), limited to <b>100 functions</b> to stay responsive (the most connected); filter by layer or function to see the others.</td></tr>
+          <tr><td>🩺 Checks</td><td>Orphan ports, exchanges without Exchange Item, leaf functions without exchange, parent functions carrying ports, exchanges without port (except OA), LA / PA exchanges not allocated to a Component Exchange.</td></tr>
+        </table>
+        <p>The Line, Function and Blocks views are <b>paged by 100</b> (◀ ▶) to stay responsive on models with several thousand functions; CSV and HTML exports cover the whole filtered result.</p>
+        <h3>🎬 Scenarios</h3>
+        <p>Sequence diagrams of Capella scenarios — <b>ES</b> (Exchange Scenario), <b>FS</b> (Functional Scenario), <b>OES</b> / <b>OAS</b> in OA, <b>IS</b> (Interface Scenario) — redrawn from the .capella file alone. On the left, the list sorted by layer then by capability (layer, type filters, search); on the right, the diagram: lifelines (light blue = actor, blue = component, green = function, grey = entity), messages with, for ES, their exchange context in braces, activation bars, functions (green rectangles), states (light grey ellipses) and modes (dark grey), combined fragments (ALT, OPT, LOOP, PAR…) with their guards, “ref” references to another scenario (click: open it). Click an element: its details. Lifeline names stay visible at the top when scrolling; scrolling with the bars, the mouse wheel (Shift + wheel: horizontal) or by click-dragging the diagram background. Zoom − / +, PNG / SVG exports and image copy. <b>🩺 Checks</b>: empty scenarios, messages without exchange, lifelines without represented element, scenarios outside any capability, missing references. The detail panel of a scenario or a capability also offers 🎬 to open the diagram.</p>
+        <p class="hp-note">The order of events is that of the model; spacing is computed (the layout drawn in Capella is in the .aird file, which is not read): the content is faithful, not the pixel position.</p>
+        <h3>🟨 Operational Analysis</h3>
+        <p>Operational activities (OA layer) and their interactions, in the spirit of Capella OAIB diagrams. <b>◧ Blocks view</b> (default): yellow rounded blocks with the OA pictogram, incoming interactions on the left and outgoing on the right (click a remote activity: go to its block), carrying entity or actor in small print at the top of the block (click: its details). Also <b>≡ Line view</b>, <b>▣ Activity view</b>, <b>▦ Matrix</b> activity × activity and <b>🩺 Checks</b>. Filters: activity, interaction or Exchange Item, allocation (🏢 Entities, 👤 Actors, unallocated, or a specific entity / actor). CSV exports of the interactions and HTML reports.</p>
+        <h3>🧱 System Component · 🧱 Logical Component</h3>
+        <p>Two identical views (same code, same colours): <b>🧱 System Component</b> for the <b>SA</b> layer, <b>🧱 Logical Component</b> for the <b>LA</b> layer; components with their <b>Component Ports</b> and <b>Component Exchanges</b>, same logic as ƒ⇆ Functional Exchange:</p>
+        <table class="hp-t">
+          <tr><td>◧ Blocks view</td><td>Default view. Each component drawn <b>as in Capella</b>: <b>blue</b> for the system, <b>light blue</b> for an actor; number of allocated functions (ƒ) and sub-components (⧉). Ports according to their orientation: <span class="cb-port cb-port-UNSET"></span> UNSET, <span class="cb-port">&gt;</span> IN (chevron pointing inwards, on the left), <span class="cb-port">&gt;</span> OUT (pointing outwards, on the right), <span class="cb-port"></span> INOUT; INOUT and UNSET go on the less loaded side. Next to each port: the exchange, its direction (from / to / ⇄) and the remote component (several exchanges on the same port: listed one below the other, centred on the port); <b>click on the remote component</b>: shows its block, ↩ Back. Pale port: not connected.</td></tr>
+          <tr><td>▣ Component view</td><td>One card per component: sent (→), received (←), bidirectional (⇄) or unoriented exchanges, with ports, exchange and remote component (click: go to its card).</td></tr>
+          <tr><td>ƒ Allocated functions</td><td>“ƒ n functions ▾” under a block's name expands the list of allocated functions (numbered, with a filter beyond 12 and a scrolling area for long lists); <b>click a function</b>: shows its block in ƒ⇆ Functional Exchange. Also in 🔀 Behavior Exchange and 🔌 Physical Link.</td></tr>
+          <tr><td>≡ Line view · ▦ Matrix</td><td>One Component Exchange per row; component × component matrix (100 components at most).</td></tr>
+          <tr><td>🩺 Checks</td><td>Orphan ports, connected ports without orientation, inconsistent orientations, leaf components without port or without allocated function.</td></tr>
+          <tr><td>Filters</td><td>Component, exchange, <b>Nature</b> (🧩 System, 👤 Actors; double-click: only these), <b>All components</b> (one component and its sub-components), “with ports” (unchecked by default: check it to hide components without port). Pages of 100.</td></tr>
+        </table>
+        <h3>🔀 Behavior Exchange (formerly Component Exchange)</h3>
+        <p>Scope: <b>PA</b>-layer Component Exchanges whose two ends are <b>Behavior</b> Physical Components (no Node). The number kept out of the model total is recalled at the top of the view.</p>
+        <p>Scope: exchanges between Physical Components Behavior, and between a Behavior and an actor (most often a node) connected to it; these actors appear with only their relevant ports.</p>
+        <p><b>◧ Blocks view</b> (default): Physical Components Behavior drawn as in 🧱 Logical Component (blue = system, light blue = actor; UNSET / IN / OUT / INOUT ports; clickable exchanges and remote components; expandable allocated functions). The other views (Line, Component, Matrix, Checks) are unchanged.</p>
+        <p>Orientation of <code>ComponentPort</code>s: <span class="hp-chip" style="--c:#8b949e">UNSET</span> (attribute absent) · <span class="hp-chip" style="--c:#f0883e">IN</span> · <span class="hp-chip" style="--c:#3fb950">OUT</span> · <span class="hp-chip" style="--c:#a371f7">⇄ INOUT</span>. The <b>actual direction</b> is deduced from the two ports:</p>
+        <table class="hp-t">
+          <tr><td>→ Oriented / ← Reversed</td><td>An IN or OUT port sets the direction (source → target or the reverse).</td></tr>
+          <tr><td>⇄ Bidirectional</td><td>INOUT port(s) with no other constraint.</td></tr>
+          <tr><td>? Unoriented</td><td>Two UNSET ports: unknown direction (dotted line).</td></tr>
+          <tr><td>⚠ Inconsistent</td><td>OUT→OUT or IN→IN — except for a <code>DELEGATION</code>, where the direction is deduced from the parent / child nesting.</td></tr>
+        </table>
+        <p>Each exchange shows its <b>kind</b> (ASSEMBLY, DELEGATION, FLOW), its <b>allocated FEs</b> (ƒ), its <b>Exchange Items</b> (▤) and its carrying <b>Physical Links</b> (🔌). Checks: CE without FE, orphan ports, inconsistent orientations, unoriented CEs, PA-layer CEs not allocated to a physical link.</p>
+        <h3>🔌 Physical Link</h3>
+        <p>Links between physical components (and actors) through their <code>PhysicalPort</code>s. For each link: the <b>allocated Component Exchanges</b> (⇢) and, on each port, an <b>n CP</b> badge showing the allocated Component Ports. In the title blocks (here as in 🔀 Component Exchange), long lists are folded after 4 items: click <b>+N others</b> to expand them. Filters with / without CE. Checks: links without CE, physical ports not connected or without Component Port, unallocated PA-layer CEs.</p>
+        <p><b>◧ Blocks view</b> (default): each node (Physical Component Node) drawn as in Capella: <b>yellow</b> for a system node, <b>light blue</b> for an actor node; <b>physical ports</b> as yellow squares; next to each port, the Physical Link (⇄) and the remote node, clickable to go to its block. Nature filters (🖥 Nodes, 👤 Actors) and sub-components.</p>
+        <h3>🧩 Ports</h3>
+        <p><b>Function Port ↔ Component Port ↔ Physical Port</b> traceability, rebuilt from the <code>PortAllocation</code>s and <code>ComponentPortAllocation</code>s.</p>
+        <table class="hp-t">
+          <tr><td>≡ Traceability</td><td>One row per Function Port / Component Port with FE, CE, physical ports and links. Layer, text, “incomplete chains” filters. CSV export.</td></tr>
+          <tr><td>▣ By component</td><td>Physical ports → carried Component Ports; Component Ports ← allocated Function Ports.</td></tr>
+          <tr><td>🩺 Checks</td><td>Unallocated ports at each level; inconsistent direction between function port and component port; <b>FE ↔ CE alignment</b> (the FE ports must be allocated to the ports of the CE carrying it) and <b>CE ↔ PL</b> (same with the physical ports). Delegations are followed step by step.</td></tr>
+        </table>
+      </div>
+
+      <!-- ── ANALYSES ── -->
+      <div id="ht-ana" class="ht-panel" style="display:none">
+        <h2>ƒ Functions and 🔬 Analyses</h2>
+        <p class="hp-note">Results are kept in memory; <b>↻ Recompute</b> refreshes them. Checks are only computed when the 🩺 Checks tab is opened.</p>
+        <p class="hp-note"><b>Tables</b>: under each header, a <b>Filter…</b> field per column (several words: all required; <code>!word</code>: exclude); the number of displayed rows is shown above, with ✕ clear. Dragging the right edge of a header sets the column width (double-click: automatic width). Filters and widths are kept when the view is redrawn. A table wider than the view has a <b>horizontal scroll bar</b> stuck to the bottom of the screen while it is visible (also Shift + mouse wheel).</p>
+        <p class="hp-lead">Cross-cutting analyses computed from what the open model contains: a topic absent from the model (no state machine, no capabilities…) is simply reported as empty, and the checks only cover the practices actually used. The tabs and commands of each sub-view are framed by category (views, filters, exports), as in ƒ Functions.</p>
+        <h3>ƒ Functions (first tab of 🔬 Analyses)</h3>
+        <p>OA activities and SA / LA / PA functions, layer by layer, with their <b>descriptions highlighted</b>.</p>
+        <p><b>Allocation filter</b> (🌳 Hierarchy and 📋 Table): <span class="hp-chip" style="--c:#3fb950">🧩 System</span> <span class="hp-chip" style="--c:#58a6ff">👤 Actors</span> <span class="hp-chip" style="--c:#8b949e">∅ Unallocated</span>, with the number of functions of each kind. Click = show / hide, double-click = only this kind (double-click again: show all). Each function carries an edging of the corresponding colour (double edging if allocated both to the system and to an actor); in the tree, parent functions kept for the hierarchy are faded. “Allocation kind” column in the table and exports.</p>
+        <p><b>Allocation target</b> (list next to the filter): a specific actor, or the system and its subsystems as an indented tree (white-box LA / PA layers), with the number of functions; a subsystem includes its sub-components. ✕ removes the filter. In white box, the “Subsystem” column gives the path of the enclosing components (full path on hover).</p>
+        <table class="hp-t">
+          <tr><td>🌳 Hierarchy</td><td>Numbered tree (1, 1.1, 1.2…) with badges: allocation, exchanges ⇄, realizes ⬆ / realized by ⬇, missing description. “Descriptions” option to read them in the tree. Click a function: <b>sheet</b> on the right (path, description, summary, sub-functions, allocation, ports, incoming and outgoing exchanges, chains, capabilities, states, traceability tree upwards and downwards). The sheet links navigate from one function or layer to another. The ⋮ separator between the tree and the sheet can be dragged to adjust the widths (double-click: default widths).</td></tr>
+          <tr><td>📋 Table</td><td>One row per function, indented (<b>Flat</b> option without indentation); resizable columns (header edge), sortable (click), filterable by text (field under the header) or <b>by values as in Excel</b> (▼: sort, search, check boxes with counts; a multi-value column is split) and hideable (⊞ Columns); full descriptions as an option; quick filters; number of functions shown / total. <b>Cell selection</b>: click-drag, Ctrl+click, Shift+click, then 📋 Copy or Ctrl+C (paste into Excel or Word; Esc clears). CSV and 🌐 HTML exports (current columns, widths, filters and sort).</td></tr>
+          <tr><td>⛓ Traceability</td><td>OA → SA → LA → PA paths going through the chosen layer, with descriptions; ∅ = break.</td></tr>
+          <tr><td>📊 Metrics</td><td>◂ collapses a layer (it moves to the left of the labels, ▸ to expand it); only expanded layers are exported: 🌐 HTML of the indicator table, high-definition 🖼 PNG or 📋 image copy for a presentation. Layer comparison: count, leaves, depth, description, allocation, exchange and traceability rates, coverage by chains and capabilities; breakdown by level; most connected functions.</td></tr>
+          <tr><td>✍ Name quality</td><td>Offline: verb first (infinitive in French, base form in English — built-in list of about 1,000 verbs), -ing form or action noun first, vague verbs, capital letter, spaces, punctuation, length, minority language in the layer. “Name quality” column and “Name to review” filter in the table, indicator in the metrics. ⚙ Naming rules: accepted domain verbs and false verbs, kept in the 💾 HTML page.</td></tr>
+          <tr><td>🩺 Checks</td><td>Name quality (above), missing or too short descriptions, TODO/TBD/NOT DONE markers, duplicates, missing or multiple allocations or allocations on a parent function, leaves without exchange, exchanges on parent functions, unused ports, traceability breaks.</td></tr>
+          <tr><td>📄 Functional file</td><td>HTML report: one tab per layer, one numbered section per function (description, allocation, inputs / outputs, realizations, chains, capabilities), plus metrics and checks. Printable.</td></tr>
+        </table>
+        <h3>🧬 Cross-layer traceability</h3>
+        <p>Uses all the <code>…Realization</code> links (functions, components, exchanges, ports, capabilities, chains, scenarios, states, data, configuration items) and, as an option, the transition <code>TransfoLink</code>s.</p>
+        <table class="hp-t">
+          <tr><td>▦ Coverage</td><td>By category and OA→SA→LA→PA→EPBS transition: <b>▼ realized</b> (upper elements realized by the lower layer) and <b>▲ realizing</b> (lower elements realizing the upper layer), in % with colour code. Click a cell: untraced elements.</td></tr>
+          <tr><td>⛓ Paths</td><td>One row per traceability path, one column per layer (e.g. OA activity → SA function → LA function → PA function).</td></tr>
+          <tr><td>🔗 Links</td><td>Filterable list of all the realization links.</td></tr>
+          <tr><td>Leaf functions</td><td>Ignores parent functions (containers), which are generally not realized.</td></tr>
+        </table>
+        <h3>🎯 Capabilities & missions</h3>
+        <p>Operational capabilities, system capabilities, Capability Realizations (LA/PA) and missions: functions, chains, involved actors/components (including via Part for older versions), scenarios, inclusions, missions exploiting them, realizations between layers.</p>
+        <table class="hp-t">
+          <tr><td>▣ Cards</td><td>One card per capability or mission, grouped by layer.</td></tr>
+          <tr><td>▦ Matrix</td><td>Capabilities × actors/components, × functions, × chains, or missions × capabilities.</td></tr>
+          <tr><td>🩺 Checks</td><td>Capabilities without function or chain, without actor, without scenario, not realized lower down, not exploited by a mission; empty missions; leaf functions outside any capability.</td></tr>
+        </table>
+        <h3>🔁 Modes & states</h3>
+        <table class="hp-t">
+          <tr><td>◈ State machines</td><td>By component: diagram (blue states, yellow modes, ● initial, ◉ final, ◆ choice; transitions labelled <i>trigger [guard] / effect</i>), tables of states (entry / do / exit, available functions) and transitions.</td></tr>
+          <tr><td>▦ Functions × states</td><td>Availability of functions in each state or mode (<code>availableInStates</code>).</td></tr>
+          <tr><td>🩺 Checks</td><td>Regions without initial state, unreachable states, dead-end states, transitions without trigger or guard, functions never available.</td></tr>
+        </table>
+        <h3>🔄 Watching the .capella file (updates)</h3>
+        <p>The <b>🔄 Watch</b> button (next to 📁 File) detects that a new version of the loaded file has been saved (by Capella) and offers to update the display. <b>Nothing is applied without your confirmation.</b></p>
+        <table class="hp-t">
+          <tr><td>Detection</td><td>Automatic, to be checked in the 🔄 Watch menu (off by default; every 10 s, 30 s, 1 min or 5 min), when coming back to the window, or manual (🔍 Check now). A notification shows the number of elements ➕ added, ➖ deleted, ✎ modified, ↪ moved; the button badge shows the number of pending saves.</td></tr>
+          <tr><td>Delta</td><td>🔍 View the delta: filterable list, property-by-property detail (before / after), summary by layer, CSV export, or opening in ⚖ Version comparison.</td></tr>
+          <tr><td>Several saves</td><td>The <b>cumulated</b> delta (displayed model → last save) is the one that will be applied; each detected save is also listed with its own delta (compared with the previous one). If the file goes back to the displayed version, the proposal disappears.</td></tr>
+          <tr><td>After the update</td><td>The current view is kept. 🕘 Session update history (delta of each); ⚖ comparison with the version before the last update or with the opening version.</td></tr>
+          <tr><td>From another file</td><td><b>📁 File › 🔄 Load a model update</b>: choose the new file; the same delta is shown before confirmation, and this file becomes the watched one. If <b>fewer than 50% of the elements</b> are shared with the displayed model, a warning says it may not be the same project, and the update asks for confirmation.</td></tr>
+          <tr><td>Browser</td><td>Edge / Chrome: open the model through 📁 File › 🔷 Open or by drag and drop for direct access (automatic re-read). Otherwise (other browser, saved HTML page), the change is reported when possible and the file must be selected again (📂).</td></tr>
+        </table>
+        <h3>⚖ Version comparison</h3>
+        <p>Load another version of the same model (by default the <b>old</b> one; ⇄ to swap). Elements are matched by identifier and the changes sorted into <b>8 categories</b>:</p>
+        <table class="hp-t">
+          <tr><td>➕ Creation · ➖ Deletion</td><td>With the container; contained elements (ports of a deleted function…) are attached: “with 2 contained elements”.</td></tr>
+          <tr><td>✏ Renaming</td><td>Old name → new name.</td></tr>
+          <tr><td>📝 Description</td><td>Description or summary modified (differences in formatting only are ignored).</td></tr>
+          <tr><td>⚙ Properties</td><td>Attributes (kind, nature, orientation…), property values.</td></tr>
+          <tr><td>🔗 Links</td><td>References added (+) or removed (−): allocations, realizations, Exchange Items…</td></tr>
+          <tr><td>↪ Move · 🔁 Type</td><td>Change of owner; change of the element type.</td></tr>
+        </table>
+        <table class="hp-t">
+          <tr><td>Levels</td><td><b>Summary</b> (counts by category, layer and family) · <b>Simple</b> (one sentence per change) · <b>Detailed</b> (each property before → after) · <b>Full</b> (+ identifier, technical type, path).</td></tr>
+          <tr><td>Presets</td><td>📰 Release notes (Simple) · 🔍 Review (Detailed) · 🧾 Audit (Full, technical elements not grouped).</td></tr>
+          <tr><td>Filters</td><td>Categories, layers, type families, search; grouping by category, layer, family or parent element. <b>Attach technical elements to their element</b> (checked by default): allocations, realizations, involvements… appear as 🔗 links of the element concerned rather than as separate elements.</td></tr>
+          <tr><td>Excluding a row</td><td>Uncheck it: it stays visible (struck through) but disappears from the copy and exports; ↺ include all again.</td></tr>
+          <tr><td>📋 Copy</td><td>Copies exactly what is displayed, in the chosen format: <b>formatted</b> (Word, Outlook, Teams, OneNote: headings, lists, tables), <b>plain text</b>, <b>Excel table</b> (one row per change) or <b>Markdown</b>.</td></tr>
+          <tr><td>Exports</td><td>⬇ CSV, ⬇ standalone HTML, 🖨 Print (or PDF).</td></tr>
+        </table>
+        <h3>📑 Requirements</h3>
+        <p><b>Requirements Viewpoint</b> requirements (identifier, text, attributes, incoming / outgoing Capella relations and relations between requirements) and basic <b>Capella requirements</b> (SystemUserRequirement…, RequirementsTrace traces). Filters: family, type, attribute value, linked to the model or not.</p>
+        <table class="hp-t">
+          <tr><td>📋 List</td><td>ID, name, folder, text, attributes, linked elements (with their layer) and linked requirements.</td></tr>
+          <tr><td>▦ Coverage</td><td>Number of elements linked to each requirement, by ARCADIA layer.</td></tr>
+          <tr><td>🩺 Checks</td><td>Requirements linked to no element, without text, without identifier, duplicate identifiers, relations to a missing element; leaf functions and components without requirement (only in the layers where other elements have some).</td></tr>
+        </table>
+        <h3>🏷 Properties (PVMT)</h3>
+        <p>Properties of the PVMT extensions (domains, groups, properties and units) and simple properties set on the elements. ○ = default value never entered.</p>
+        <table class="hp-t">
+          <tr><td>▦ Grid by group</td><td>One row per element, one column per group property; total of the numeric properties.</td></tr>
+          <tr><td>Σ Summary</td><td>By property: sum, minimum, maximum and average of the numeric values, or breakdown of the values.</td></tr>
+          <tr><td>📖 Definitions</td><td>Defined groups, classes and architectures they apply to, filled-in and missing elements.</td></tr>
+          <tr><td>🩺 Checks</td><td>Elements targeted by a group but not filled in, values left at default, groups without a link to their definition.</td></tr>
+        </table>
+        <h3>🗃 Data & interfaces</h3>
+        <table class="hp-t">
+          <tr><td>📦 Exchange Items</td><td>Mechanism, elements (name: type [cardinality]), Functional / Component Exchanges carrying them, interfaces allocating them.</td></tr>
+          <tr><td>🔌 Interfaces</td><td>Allocated Exchange Items, ports providing or requiring them, components using or implementing them.</td></tr>
+          <tr><td>🧱 Classes & types</td><td>Classes (typed properties), enumerations (literals), physical quantities (unit), inheritance and uses; predefined types as an option.</td></tr>
+          <tr><td>🩺 Checks</td><td>Exchange Items not carried or without content, Functional Exchanges without Exchange Item, empty or unused interfaces, Exchange Items of an FE missing from the interfaces of the carrying CE's ports, types never used.</td></tr>
+        </table>
+        <h3>⛓ Constraints</h3>
+        <p>All the constraints: role (guard, pre / post-condition), expression (text links are replaced by the name of the cited element), language, constrained elements, owner. Checks: empty constraints or without expression, missing cited elements, without constrained element, duplicates.</p>
+        <p class="hp-note">An element's detail panel also shows its linked requirements, its properties and its constraints. The corresponding indicators are in the 📐 Dashboard catalogue.</p>
+        <h3>📐 Dashboard (separate tab, next to 🔬 Analyses)</h3>
+        <p>Build your own dashboards from <b>all the computed indicators</b> (≈ 130 on a complete model): model, functions (by layer and layer comparison, allocation, allocation targets, subsystems, naming), chains, Component Exchanges, Physical Links, ports, traceability, capabilities, modes & states, requirements, properties, data & interfaces, constraints, checks. A sample dashboard is created the first time it is displayed.</p>
+        <table class="hp-t">
+          <tr><td>✏ Edit</td><td>Switches to editing: <b>＋ Add an item</b> (catalogue with search and collapsible categories, “Layout” first, live preview), ＋ when hovering an item to insert one before it, “＋ Add an item” tile at the end of the page, ⚙ configure, ⧉ duplicate, ✕ remove. The view keeps its scroll position during the changes.</td></tr>
+          <tr><td>Charts</td><td>Figure, gauge (green ≥ 90%, orange ≥ 50%, red otherwise), horizontal or vertical bars, donut, stacked or grouped bars, table, free text (titles, comments). Number of categories displayed (the rest is grouped as “Others”) and sort can be set.</td></tr>
+          <tr><td>Layout</td><td>Drag an item by its title to move it; bottom-right corner to resize it (snapped to the 3, 4 or 6 column grid).</td></tr>
+          <tr><td>Several pages</td><td>One tab per dashboard page; the <b>＋</b> tab adds an empty page. Double-click a tab (or ✎ on the active tab) to rename it. While editing: ⧉ Duplicate, ✨ Example, 🗑 Delete. Dashboards are kept in the 💾 HTML page.</td></tr>
+          <tr><td>Printing</td><td>🖨 Print in <b>A4 portrait</b> (default) or landscape format: items are redrawn at page size, in light colours, with a header (name, model, date). “Save as PDF” in the print window to get a PDF.</td></tr>
+          <tr><td>Exports</td><td>🌐 Standalone HTML (as displayed); ⬇ / ⬆ JSON to reuse a layout on another model.</td></tr>
+        </table>
+      </div>
+
+      <!-- ── USE CASE ── -->
+      <div id="ht-usecase" class="ht-panel" style="display:none">
+        <h2>🧪 Use case — reviewing a Capella model</h2>
+        <ol class="hp-steps">
+          <li><b>Load</b> the <code>.capella</code> file (drag and drop). Look at <b>🧭 Explorer › 📖 Type index</b> to see what the model is made of.</li>
+          <li><b>Browse</b> with 🧭 Explorer (▦ Cards and 🌳 Tree); open the detail panel to follow incoming and outgoing references.</li>
+          <li><b>Analyse a neighbourhood</b> in 🗺 Relation Map: choose a component in the tree, set depth, layout and criteria.</li>
+          <li><b>Review the chains</b> in ⚡ Chains: inputs/outputs, unallocated functions (grey), exchanges without carrying CE.</li>
+          <li><b>Check the interfaces</b>: 🧱 System / Logical Component (Capella-style blocks with ports, orphan or unoriented ports), 🔀 Behavior Exchange (PA), ƒ⇆ Functional Exchange (functions as Capella-style blocks with pins, orphan ports, exchanges without Exchange Item), 🔌 Physical Link (links without CE), 🧩 Ports (FE ↔ CE ↔ PL alignment).</li>
+          <li><b>Measure maturity</b> in 🔬 Analyses: traceability coverage between layers, uncovered capabilities, incomplete state machines; <b>compare</b> with the previous version of the model (⚖ 📰 Release notes or 🔍 Review report, to copy into Word or Outlook) to prepare a review.</li>
+          <li><b>Produce a deliverable</b>: PDF of the chains with appendices, CSV of the checks and tables, HTML reports; or <b>💾 HTML page</b> to share the whole analysis.</li>
+        </ol>
+      </div>
+
+    </div><!-- /help-body -->
+  </div>
+</div>

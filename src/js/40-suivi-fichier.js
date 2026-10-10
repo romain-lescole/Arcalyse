@@ -56,8 +56,8 @@ function capWatchLite(diff){
 
 /** Pastilles ➕ ➖ ✎ ↪ d'un comptage. @param {object} c - Comptage capWatchCounts @returns {string} HTML */
 function capWatchChips(c){
-  if(!c.total) return '<span class="ana-dim">aucune différence</span>';
-  return [['add','➕','var(--c-ok,#3fb950)','ajouté(s)'],['del','➖','var(--c-err,#f85149)','supprimé(s)'],['mod','✎','var(--c-warn,#e3b341)','modifié(s)'],['mov','↪','#58a6ff','déplacé(s)']]
+  if(!c.total) return _L('<span class="ana-dim">aucune différence</span>');
+  return [['add','➕','var(--c-ok,#3fb950)',_L('ajouté(s)')],['del','➖','var(--c-err,#f85149)',_L('supprimé(s)')],['mod','✎','var(--c-warn,#e3b341)',_L('modifié(s)')],['mov','↪','#58a6ff',_L('déplacé(s)')]]
     .filter(([k])=>c[k]).map(([k,i,col,l])=>`<span class="cw-chip" style="color:${col}" title="${c[k]} ${l}">${i} ${c[k]}</span>`).join(' ');
 }
 
@@ -112,7 +112,7 @@ function capPickCapellaFile(){
  */
 function capWatchPickerFailed(input, welcome){
   try{ input.click(); }catch(e){}
-  const msg='Le sélecteur de fichiers de ce navigateur est indisponible : cliquez de nouveau pour choisir le fichier, ou glissez-le dans la fenêtre.';
+  const msg=_L('Le sélecteur de fichiers de ce navigateur est indisponible : cliquez de nouveau pour choisir le fichier, ou glissez-le dans la fenêtre.');
   if(welcome){ capShowWelcome(true); capWelcomeStatus(msg,'err'); } else capWatchFlash(msg);
 }
 
@@ -125,7 +125,7 @@ async function capWatchPick(){
   if(!window.showOpenFilePicker||_capPickerKo) return {input:true};
   const t0=Date.now();
   try{
-    const [h]=await window.showOpenFilePicker({types:[{description:'Modèle Capella',accept:{'application/xml':['.capella','.melodymodeller','.xml']}}]});
+    const [h]=await window.showOpenFilePicker({types:[{description:_L('Modèle Capella'),accept:{'application/xml':['.capella','.melodymodeller','.xml']}}]});
     return {file:await h.getFile(), handle:h};
   }catch(e){
     if(e&&e.name==='AbortError'&&Date.now()-t0>400) return null;   // fenêtre fermée par l'utilisateur
@@ -172,18 +172,18 @@ async function capWatchCheck(manual){
       return;
     }
     if(_capWatch.state&&_capWatch.state!=='stale'){ _capWatch.state=''; if(!_capWatch.pending) capWatchNote(false); }
-    if(r.same){ if(manual) capWatchFlash('✔ Le fichier n\'a pas changé'); return; }
+    if(r.same){ if(manual) capWatchFlash(_L('✔ Le fichier n\'a pas changé')); return; }
     _capWatch.diskMtime=r.mtime; _capWatch.diskSize=r.size;
     const h=capWatchHash(r.text);
     if(h===_capWatch.diskHash&&(_capWatch.pending||h===_capWatch.shownHash)){
-      if(manual) capWatchFlash(_capWatch.pending?'Aucun nouvel enregistrement depuis la dernière détection':'✔ Le fichier n\'a pas changé');
+      if(manual) capWatchFlash(_capWatch.pending?_L('Aucun nouvel enregistrement depuis la dernière détection'):_L('✔ Le fichier n\'a pas changé'));
       if(manual&&_capWatch.pending){ _capWatch.dismissed=false; capWatchNote(true); }
       return;
     }
     _capWatch.diskHash=h;
     if(h===_capWatch.shownHash){   // revenu à la version affichée (annulation dans Capella…)
       if(_capWatch.pending){ _capWatch.pending=null; capWatchNote(false); capWatchModalRefresh(); }
-      if(manual) capWatchFlash('✔ Le fichier correspond au modèle affiché');
+      if(manual) capWatchFlash(_L('✔ Le fichier correspond au modèle affiché'));
       return;
     }
     capWatchRegister(r.text, h, r.mtime, manual);
@@ -204,7 +204,7 @@ function capWatchRegister(text, hash, mtime, manual){
   if(doc.querySelector('parsererror')){
     // Enregistrement probablement en cours : on réessaiera au prochain passage
     _capWatch.diskHash=''; _capWatch.diskMtime=0;
-    if(manual) capWatchFlash('⚠ Fichier illisible pour l\'instant (enregistrement en cours ?) — réessayez');
+    if(manual) capWatchFlash(_L('⚠ Fichier illisible pour l\'instant (enregistrement en cours ?) — réessayez'));
     return;
   }
   const curIdx=_capWatch.shownIdx||(_capWatch.shownIdx=capDiffIndex(cap_xmlDoc));
@@ -215,7 +215,7 @@ function capWatchRegister(text, hash, mtime, manual){
     // Réenregistrement sans changement d'élément : la version affichée est déjà à jour
     _capWatch.shownHash=hash; _capWatch.shownMtime=mtime; _capWatch.pending=null;
     capWatchNote(false); capWatchModalRefresh();
-    capWatchFlash('Fichier réenregistré — aucune différence de contenu');
+    capWatchFlash(_L('Fichier réenregistré — aucune différence de contenu'));
     return;
   }
   const step=p?capDiffCompute(p.idx,newIdx):diff;
@@ -245,7 +245,7 @@ function capWatchCommon(A, B){
  */
 function capWatchSuspectHtml(p){
   if(!p||p.common==null||p.common>=CAP_WATCH_SAME_MIN) return '';
-  return `<div class="cw-suspect">⚠ Seuls <b>${Math.round(p.common*100)} %</b> des éléments sont communs avec le modèle affiché : ce n'est peut-être <b>pas le même projet</b>. Vérifiez le delta avant de mettre à jour.</div>`;
+  return _L(`<div class="cw-suspect">⚠ Seuls <b>${Math.round(p.common*100)} %</b> des éléments sont communs avec le modèle affiché : ce n'est peut-être <b>pas le même projet</b>. Vérifiez le delta avant de mettre à jour.</div>`);
 }
 
 /** Choisit manuellement la nouvelle version du fichier (accès limité, page sauvegardée, fichier déplacé) :
@@ -259,13 +259,13 @@ async function capWatchPickNewVersion(){
   adopt(r.file, r.handle);
   /** Adopte le fichier choisi comme source et le compare au modèle affiché. */
   async function adopt(f, h){
-    if(_capWatch.name&&f.name!==_capWatch.name&&!confirm(`Le fichier choisi (« ${f.name} ») n'a pas le même nom que le modèle affiché (« ${_capWatch.name} »).\nLe comparer quand même ?`)) return;
-    let text; try{ text=await f.text(); }catch(e){ alert('Impossible de lire « '+f.name+' ».'); return; }
+    if(_capWatch.name&&f.name!==_capWatch.name&&!confirm(_L(`Le fichier choisi (« ${f.name} ») n'a pas le même nom que le modèle affiché (« ${_capWatch.name} »).\nLe comparer quand même ?`))) return;
+    let text; try{ text=await f.text(); }catch(e){ alert(_L('Impossible de lire « ')+f.name+' ».'); return; }
     Object.assign(_capWatch,{handle:h, file:f, name:f.name, state:'', diskMtime:f.lastModified, diskSize:f.size, lastCheck:Date.now()});
     if(!_capWatch.origDoc){ _capWatch.origDoc=cap_xmlDoc; _capWatch.origAt=Date.now(); }
     capWatchArm();
     const hash=capWatchHash(text);
-    if(hash===_capWatch.shownHash){ _capWatch.diskHash=hash; capWatchNote(false); capWatchFlash('✔ Le fichier correspond au modèle affiché'); capWatchUpdateUi(); return; }
+    if(hash===_capWatch.shownHash){ _capWatch.diskHash=hash; capWatchNote(false); capWatchFlash(_L('✔ Le fichier correspond au modèle affiché')); capWatchUpdateUi(); return; }
     if(_capWatch.pending&&hash===_capWatch.pending.hash){ _capWatch.diskHash=hash; _capWatch.dismissed=false; capWatchNote(true); capWatchUpdateUi(); return; }
     _capWatch.diskHash=hash;
     capWatchRegister(text, hash, f.lastModified, true);
@@ -277,12 +277,12 @@ async function capWatchPickNewVersion(){
  * et place la version précédente dans ⚖ Comparaison de versions (sauf si l'utilisateur y a chargé sa propre version). */
 function capWatchApply(){
   const p=_capWatch.pending; if(!p) return;
-  if(p.common!=null&&p.common<CAP_WATCH_SAME_MIN&&!confirm(`Seuls ${Math.round(p.common*100)} % des éléments sont communs avec le modèle affiché : ce n'est peut-être pas le même projet.\n\nRemplacer quand même le modèle affiché par cette version ?`)) return;
+  if(p.common!=null&&p.common<CAP_WATCH_SAME_MIN&&!confirm(_L(`Seuls ${Math.round(p.common*100)} % des éléments sont communs avec le modèle affiché : ce n'est peut-être pas le même projet.\n\nRemplacer quand même le modèle affiché par cette version ?`))) return;
   const prev=cap_xmlDoc, prevName=capCurrentFileName, mode=currentMode;
   const name=_capWatch.name||capCurrentFileName;
   try{ capApplyXmlDoc(p.doc, name); }
   catch(e){
-    alert('Mise à jour impossible : '+e.message+'\nLe modèle précédent est conservé.');
+    alert(_L('Mise à jour impossible : ')+e.message+_L('\nLe modèle précédent est conservé.'));
     try{ capApplyXmlDoc(prev, prevName); }catch(_){}
     return;
   }
@@ -292,10 +292,10 @@ function capWatchApply(){
   _capWatch.history=_capWatch.history.slice(0,30);
   Object.assign(_capWatch,{prevDoc:prev, shownHash:p.hash, shownMtime:p.mtime, shownAt:at, shownIdx:p.idx, pending:null, dismissed:false});
   if(!capDiffDoc||capDiffDoc===_capWatch.diffDoc){
-    capDiffDoc=prev; capDiffName=`${name} — avant la mise à jour de ${capWatchTime(at)}`; capDiffSwap=false; _capWatch.diffDoc=prev;
+    capDiffDoc=prev; capDiffName=_L(`${name} — avant la mise à jour de ${capWatchTime(at)}`); capDiffSwap=false; _capWatch.diffDoc=prev;
   }
   capWatchNote(false); capWatchModalClose(); capWatchUpdateUi();
-  capWatchFlash(`✔ Modèle mis à jour (${p.counts.total} différence(s))`);
+  capWatchFlash(_L(`✔ Modèle mis à jour (${p.counts.total} différence(s))`));
 }
 
 /** Ouvre ⚖ Comparaison de versions (🔬 Analyses) sur deux versions connues du suivi.
@@ -304,9 +304,9 @@ function capWatchApply(){
 function capWatchOpenCompare(what){
   const name=_capWatch.name||capCurrentFileName;
   let doc, label, swap;
-  if(what==='pending'&&_capWatch.pending){ doc=_capWatch.pending.doc; label=`${name} — sur le disque (${capWatchDate(_capWatch.pending.mtime)}), non appliquée`; swap=true; }
-  else if(what==='last'&&_capWatch.prevDoc){ doc=_capWatch.prevDoc; label=`${name} — avant la mise à jour de ${capWatchTime(_capWatch.history[0]&&_capWatch.history[0].at)}`; swap=false; }
-  else if(what==='orig'&&_capWatch.origDoc&&_capWatch.origDoc!==cap_xmlDoc){ doc=_capWatch.origDoc; label=`${name} — version d'ouverture (${capWatchTime(_capWatch.origAt)})`; swap=false; }
+  if(what==='pending'&&_capWatch.pending){ doc=_capWatch.pending.doc; label=_L(`${name} — sur le disque (${capWatchDate(_capWatch.pending.mtime)}), non appliquée`); swap=true; }
+  else if(what==='last'&&_capWatch.prevDoc){ doc=_capWatch.prevDoc; label=_L(`${name} — avant la mise à jour de ${capWatchTime(_capWatch.history[0]&&_capWatch.history[0].at)}`); swap=false; }
+  else if(what==='orig'&&_capWatch.origDoc&&_capWatch.origDoc!==cap_xmlDoc){ doc=_capWatch.origDoc; label=_L(`${name} — version d'ouverture (${capWatchTime(_capWatch.origAt)})`); swap=false; }
   else return;
   capDiffDoc=doc; capDiffName=label; capDiffSwap=swap; _capWatch.diffDoc=doc;
   if(_capAnaCache) delete _capAnaCache.diff;
@@ -328,9 +328,9 @@ function capWatchUpdateUi(){
     badge.style.display=badge.textContent?'':'none';
   }
   b.classList.toggle('cw-busy',_capWatch.busy);
-  b.title=p?`${p.versions.length} enregistrement(s) détecté(s) — ${p.counts.total} différence(s) avec le modèle affiché`
-    :st==='stale'?'Le fichier a été modifié : resélectionnez-le pour voir le delta'
-    :'Suivi du fichier .capella : vérifier les mises à jour, delta, historique';
+  b.title=p?_L(`${p.versions.length} enregistrement(s) détecté(s) — ${p.counts.total} différence(s) avec le modèle affiché`)
+    :st==='stale'?_L('Le fichier a été modifié : resélectionnez-le pour voir le delta')
+    :_L('Suivi du fichier .capella : vérifier les mises à jour, delta, historique');
   if(document.getElementById('cap-watch-dd')?.style.display==='block') capWatchMenuRender();
 }
 
@@ -351,17 +351,17 @@ function capWatchNote(show){
   let html;
   if(p){
     const nv=p.versions.length;
-    html=`<div class="cw-n-t">🔄 Nouvelle version du modèle</div>
-      <div class="cw-n-s">« ${name} » — ${nv>1?`<b>${nv} enregistrements</b> détectés depuis ${capWatchTime(p.first)}, dernier à ${capWatchTime(p.versions[nv-1].at)}`:`enregistré le ${capWatchDate(p.mtime)}`}</div>
+    html=_L(`<div class="cw-n-t">🔄 Nouvelle version du modèle</div>
+      <div class="cw-n-s">« ${name} » — ${nv>1?_L(`<b>${nv} enregistrements</b> détectés depuis ${capWatchTime(p.first)}, dernier à ${capWatchTime(p.versions[nv-1].at)}`):_L(`enregistré le ${capWatchDate(p.mtime)}`)}</div>
       <div class="cw-n-c">${capWatchChips(p.counts)} <span class="ana-dim">par rapport au modèle affiché</span></div>${capWatchSuspectHtml(p)}
-      <div class="cw-n-b"><button class="cap-lf-btn" data-cw="delta">🔍 Voir le delta</button><button class="phl-export-btn" data-cw="apply">✔ Mettre à jour</button><button class="cap-lf-btn" data-cw="later">Plus tard</button></div>`;
+      <div class="cw-n-b"><button class="cap-lf-btn" data-cw="delta">🔍 Voir le delta</button><button class="phl-export-btn" data-cw="apply">✔ Mettre à jour</button><button class="cap-lf-btn" data-cw="later">Plus tard</button></div>`);
   } else {
-    const msg={stale:'a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta.',
-      missing:'est introuvable (déplacé, renommé ou supprimé). Choisissez le fichier à suivre.',
-      denied:'n\'est plus accessible (autorisation refusée). Choisissez de nouveau le fichier à suivre.'}[st];
-    html=`<div class="cw-n-t">🔄 ${st==='stale'?'Modèle modifié sur le disque':'Fichier suivi indisponible'}</div>
+    const msg={stale:_L('a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta.'),
+      missing:_L('est introuvable (déplacé, renommé ou supprimé). Choisissez le fichier à suivre.'),
+      denied:_L('n\'est plus accessible (autorisation refusée). Choisissez de nouveau le fichier à suivre.')}[st];
+    html=_L(`<div class="cw-n-t">🔄 ${st==='stale'?_L('Modèle modifié sur le disque'):_L('Fichier suivi indisponible')}</div>
       <div class="cw-n-s">« ${name} » ${msg}</div>
-      <div class="cw-n-b"><button class="phl-export-btn" data-cw="pick">📂 Choisir le fichier…</button><button class="cap-lf-btn" data-cw="later">Plus tard</button></div>`;
+      <div class="cw-n-b"><button class="phl-export-btn" data-cw="pick">📂 Choisir le fichier…</button><button class="cap-lf-btn" data-cw="later">Plus tard</button></div>`);
   }
   n.innerHTML=html; n.style.display='block';
   n.querySelectorAll('[data-cw]').forEach(b=>b.onclick=()=>{
@@ -385,15 +385,15 @@ function capWatchMenu(show){
 function capWatchMenuRender(){
   const dd=document.getElementById('cap-watch-dd'); if(!dd) return;
   const w=_capWatch, p=w.pending, src=w.handle||w.file;
-  const acc=w.handle?'accès direct — relecture automatique':w.file?'accès limité — modification signalée, fichier à resélectionner':'aucun fichier suivi (page sauvegardée)';
-  const per=[[10,'10 s'],[30,'30 s'],[60,'1 min'],[300,'5 min']];
-  dd.innerHTML=`<div class="cw-m-info"><b>${capEsc(w.name||capCurrentFileName||'—')}</b><br>${acc}<br>
-      Affiché : fichier du ${capWatchDate(w.shownMtime)}${src?`<br>Dernière vérification : ${w.busy?'en cours…':capWatchTime(w.lastCheck)}`:''}</div>
-    <div class="ctx-i" data-wm="check">🔍 ${src?'Vérifier maintenant':'Choisir le fichier à comparer…'}</div>
-    ${p?`<div class="ctx-i" data-wm="delta">📋 Voir le delta en attente (${p.versions.length} enreg., ${p.counts.total} diff.)</div>
-      <div class="ctx-i" data-wm="apply">✔ Mettre à jour l'affichage</div>`:''}
+  const acc=w.handle?_L('accès direct — relecture automatique'):w.file?_L('accès limité — modification signalée, fichier à resélectionner'):_L('aucun fichier suivi (page sauvegardée)');
+  const per=[[10,'10 s'],[30,'30 s'],[60,_L('1 min')],[300,_L('5 min')]];
+  dd.innerHTML=_L(`<div class="cw-m-info"><b>${capEsc(w.name||capCurrentFileName||'—')}</b><br>${acc}<br>
+      Affiché : fichier du ${capWatchDate(w.shownMtime)}${src?_L(`<br>Dernière vérification : ${w.busy?_L('en cours…'):capWatchTime(w.lastCheck)}`):''}</div>
+    <div class="ctx-i" data-wm="check">🔍 ${src?_L('Vérifier maintenant'):_L('Choisir le fichier à comparer…')}</div>
+    ${p?_L(`<div class="ctx-i" data-wm="delta">📋 Voir le delta en attente (${p.versions.length} enreg., ${p.counts.total} diff.)</div>
+      <div class="ctx-i" data-wm="apply">✔ Mettre à jour l'affichage</div>`):''}
     <div class="cw-m-sep"></div>
-    <label class="cw-m-opt" title="${src?'':'Disponible quand un fichier .capella est suivi'}"><input type="checkbox" data-wm="auto"${w.auto?' checked':''}${src?'':' disabled'}> Détecter les nouvelles versions toutes les
+    <label class="cw-m-opt" title="${src?'':_L('Disponible quand un fichier .capella est suivi')}"><input type="checkbox" data-wm="auto"${w.auto?' checked':''}${src?'':' disabled'}> Détecter les nouvelles versions toutes les
       <select data-wm="period">${per.map(([v,l])=>`<option value="${v}"${w.period===v?' selected':''}>${l}</option>`).join('')}</select></label>
     <label class="cw-m-opt"><input type="checkbox" data-wm="focus"${w.onFocus?' checked':''}${src?'':' disabled'}> Vérifier au retour dans la fenêtre</label>
     <div class="cw-m-hint">Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée.</div>
@@ -401,7 +401,7 @@ function capWatchMenuRender(){
     <div class="ctx-i${w.history.length?'':' cw-off'}" data-wm="hist">🕘 Historique des mises à jour (${w.history.length})</div>
     <div class="ctx-i${w.prevDoc?'':' cw-off'}" data-wm="last">⚖ Comparer avec la version avant la dernière mise à jour</div>
     <div class="ctx-i${w.origDoc&&w.origDoc!==cap_xmlDoc?'':' cw-off'}" data-wm="orig">⚖ Comparer avec la version d'ouverture</div>
-    ${src?'<div class="ctx-i" data-wm="pick">📂 Suivre un autre fichier (nouvelle version)…</div>':''}`;
+    ${src?_L('<div class="ctx-i" data-wm="pick">📂 Suivre un autre fichier (nouvelle version)…</div>'):''}`);
   dd.querySelectorAll('.ctx-i[data-wm]').forEach(el=>el.onclick=()=>{
     if(el.classList.contains('cw-off')) return;
     const a=el.dataset.wm; capWatchMenu(false);
@@ -442,15 +442,15 @@ function capWatchShowDelta(what){
   const diff=st.sel==='cumul'?(isP?p.diff:hx.diff):versions[st.sel].step;
   const counts=capWatchCounts(diff);
   const head=isP
-    ?`Modèle affiché : fichier du <b>${capWatchDate(w.shownMtime)}</b> &nbsp;→&nbsp; sur le disque : fichier du <b>${capWatchDate(p.mtime)}</b>${capWatchSuspectHtml(p)}`
-    :`Mise à jour appliquée à <b>${capWatchTime(hx.at)}</b> : fichier du ${capWatchDate(hx.from)} → ${capWatchDate(hx.mtime)}${hx.saves>1?` (${hx.saves} enregistrements cumulés)`:''}`;
+    ?_L(`Modèle affiché : fichier du <b>${capWatchDate(w.shownMtime)}</b> &nbsp;→&nbsp; sur le disque : fichier du <b>${capWatchDate(p.mtime)}</b>${capWatchSuspectHtml(p)}`)
+    :_L(`Mise à jour appliquée à <b>${capWatchTime(hx.at)}</b> : fichier du ${capWatchDate(hx.from)} → ${capWatchDate(hx.mtime)}${hx.saves>1?_L(` (${hx.saves} enregistrements cumulés)`):''}`);
   // Plusieurs enregistrements : cumul (appliqué) + chaque enregistrement pas à pas
-  const timeline=versions.length>1?`<div class="cw-d-sec">Enregistrements détectés avant validation : le delta <b>cumulé</b> est celui qui sera appliqué ; chaque ligne montre ce qu'a changé un enregistrement par rapport au précédent.</div>
+  const timeline=versions.length>1?_L(`<div class="cw-d-sec">Enregistrements détectés avant validation : le delta <b>cumulé</b> est celui qui sera appliqué ; chaque ligne montre ce qu'a changé un enregistrement par rapport au précédent.</div>
     <table class="ana-t cw-d-tl"><tr><th></th><th>Détecté à</th><th>Fichier du</th><th>Changements</th></tr>
       <tr class="cw-d-v${st.sel==='cumul'?' sel':''}" data-v="cumul"><td>Σ</td><td colspan="2"><b>Cumul</b> — modèle affiché → dernier enregistrement</td><td>${capWatchChips(p.counts)}</td></tr>
       ${versions.map((v,i)=>`<tr class="cw-d-v${st.sel===i?' sel':''}" data-v="${i}"><td>${i+1}</td><td>${capWatchTime(v.at)}</td><td>${capWatchDate(v.mtime)}</td><td>${capWatchChips(v.counts)}</td></tr>`).join('')}
-    </table>`:'';
-  const ST={add:{i:'➕',l:'Ajouté',c:'var(--c-ok,#3fb950)'}, del:{i:'➖',l:'Supprimé',c:'var(--c-err,#f85149)'}, mod:{i:'✎',l:'Modifié',c:'var(--c-warn,#e3b341)'}};
+    </table>`):'';
+  const ST={add:{i:'➕',l:_L('Ajouté'),c:'var(--c-ok,#3fb950)'}, del:{i:'➖',l:_L('Supprimé'),c:'var(--c-err,#f85149)'}, mod:{i:'✎',l:_L('Modifié'),c:'var(--c-warn,#e3b341)'}};
   const q=st.q.trim().toLowerCase();
   const rows=diff.filter(d=>(st.status==='all'||(st.status==='mov'?d.moved:d.status===st.status))&&(!q||((d.e.name||'')+' '+d.e.type+' '+capAnaHuman(d.e.type)).toLowerCase().includes(q)))
     .sort((a,b)=>CAP_CHAIN_LAYER_ORDER.indexOf(a.e.layer)-CAP_CHAIN_LAYER_ORDER.indexOf(b.e.layer)||a.e.type.localeCompare(b.e.type)||(a.e.name||'').localeCompare(b.e.name||'','fr'));
@@ -463,32 +463,32 @@ function capWatchShowDelta(what){
     const s=ST[d.status], k=d.e.id+d.status, open=st.open.has(k);
     return `<tr class="ana-df-row" data-k="${capEsc(k)}"><td style="color:${s.c};white-space:nowrap">${s.i} ${s.l}${d.moved?' <span style="color:#58a6ff">↪</span>':''}</td>
       <td>${capChainLayerBadge(d.e.layer)}</td><td class="ana-dim">${capEsc(capAnaHuman(d.e.type))}</td><td>${capEsc(d.e.name||'('+capAnaHuman(d.e.type)+')')}</td>
-      <td class="ana-dim">${d.changes.length?`${d.changes.length} changement(s) ${open?'▾':'▸'}`:''}</td></tr>
-      ${open&&d.changes.length?`<tr class="ana-df-det"><td colspan="5"><table class="ana-t"><tr><th>Propriété</th><th>Avant</th><th>Après</th></tr>
-        ${d.changes.map(c=>`<tr><td><b>${capEsc(c.k)}</b></td><td class="ana-old">${capEsc(String(c.a).slice(0,600))||'<i>vide</i>'}</td><td class="ana-new">${capEsc(String(c.b).slice(0,600))||'<i>vide</i>'}</td></tr>`).join('')}</table></td></tr>`:''}`;
+      <td class="ana-dim">${d.changes.length?_L(`${d.changes.length} changement(s) ${open?'▾':'▸'}`):''}</td></tr>
+      ${open&&d.changes.length?_L(`<tr class="ana-df-det"><td colspan="5"><table class="ana-t"><tr><th>Propriété</th><th>Avant</th><th>Après</th></tr>
+        ${d.changes.map(c=>`<tr><td><b>${capEsc(c.k)}</b></td><td class="ana-old">${capEsc(String(c.a).slice(0,600))||'<i>vide</i>'}</td><td class="ana-new">${capEsc(String(c.b).slice(0,600))||'<i>vide</i>'}</td></tr>`).join('')}</table></td></tr>`):''}`;
   }).join('');
   const cnt=k=>k==='all'?counts.total:counts[k];
-  ov.innerHTML=`<div class="cw-d-box">
-    <div class="cw-d-hdr"><b>🔄 ${isP?'Delta des modifications':'Mise à jour du '+capWatchTime(hx.at)} — « ${name} »</b><button class="cap-lf-btn" data-d="close" title="Fermer">✕</button></div>
+  ov.innerHTML=_L(`<div class="cw-d-box">
+    <div class="cw-d-hdr"><b>🔄 ${isP?_L('Delta des modifications'):_L('Mise à jour du ')+capWatchTime(hx.at)} — « ${name} »</b><button class="cap-lf-btn" data-d="close" title="Fermer">✕</button></div>
     <div class="cw-d-body">
       <div class="cw-d-sub">${head}</div>
       ${timeline}
-      ${layers.length?`<div class="cw-d-sec">${st.sel==='cumul'?'':`<b>Enregistrement ${st.sel+1}</b> — `}Par couche : ${layers.map(k=>`${capChainLayerBadge(k)} ${capWatchChips({...byL[k],mov:0,total:1})}`).join(' &nbsp; ')}</div>`:''}
+      ${layers.length?_L(`<div class="cw-d-sec">${st.sel==='cumul'?'':_L(`<b>Enregistrement ${st.sel+1}</b> — `)}Par couche : ${layers.map(k=>`${capChainLayerBadge(k)} ${capWatchChips({...byL[k],mov:0,total:1})}`).join(' &nbsp; ')}</div>`):''}
       <div class="phl-filter-bar" style="flex-wrap:wrap;margin:6px 0">
-        ${[['all','Tous'],['add','➕ Ajoutés'],['del','➖ Supprimés'],['mod','✎ Modifiés'],['mov','↪ Déplacés']].map(([k,l])=>`<button class="cap-lf-btn${st.status===k?' active':''}" data-dfs="${k}">${l} (${cnt(k)})</button>`).join('')}
+        ${[['all',_L('Tous')],['add',_L('➕ Ajoutés')],['del',_L('➖ Supprimés')],['mod',_L('✎ Modifiés')],['mov',_L('↪ Déplacés')]].map(([k,l])=>`<button class="cap-lf-btn${st.status===k?' active':''}" data-dfs="${k}">${l} (${cnt(k)})</button>`).join('')}
         <input class="phl-filter-input" data-d="q" placeholder="🔍 Nom ou type…" value="${capEsc(st.q)}" style="width:170px">
       </div>
-      ${rows.length?`<table class="ana-t ana-df"><tr><th>Statut</th><th>Couche</th><th>Type</th><th>Élément</th><th>Détail</th></tr>${list}</table>
-        ${rows.length>MAX?`<div class="cap-mx-hint">${MAX} lignes affichées sur ${rows.length} — filtrez, exportez en CSV ou ouvrez ⚖ Comparaison.</div>`:''}`
-        :'<div class="phl-empty">Aucune différence pour ce filtre.</div>'}
+      ${rows.length?_L(`<table class="ana-t ana-df"><tr><th>Statut</th><th>Couche</th><th>Type</th><th>Élément</th><th>Détail</th></tr>${list}</table>
+        ${rows.length>MAX?_L(`<div class="cap-mx-hint">${MAX} lignes affichées sur ${rows.length} — filtrez, exportez en CSV ou ouvrez ⚖ Comparaison.</div>`):''}`)
+        :_L('<div class="phl-empty">Aucune différence pour ce filtre.</div>')}
     </div>
     <div class="cw-d-ftr">
       <button class="phl-export-btn" data-d="csv">⬇ CSV</button>
-      ${isP?'<button class="cap-lf-btn" data-d="cmp" title="Analyse complète (filtres par couche et type, synthèse) dans 🔬 Analyses">⚖ Ouvrir dans Comparaison de versions</button>'
-        :(what===0&&w.prevDoc?'<button class="cap-lf-btn" data-d="cmpl">⚖ Ouvrir dans Comparaison de versions</button>':'')}
+      ${isP?_L('<button class="cap-lf-btn" data-d="cmp" title="Analyse complète (filtres par couche et type, synthèse) dans 🔬 Analyses">⚖ Ouvrir dans Comparaison de versions</button>')
+        :(what===0&&w.prevDoc?_L('<button class="cap-lf-btn" data-d="cmpl">⚖ Ouvrir dans Comparaison de versions</button>'):'')}
       <span style="flex:1"></span>
-      ${isP?'<button class="cap-lf-btn" data-d="later">Plus tard</button><button class="phl-export-btn cw-d-apply" data-d="apply">✔ Mettre à jour l\'affichage</button>':'<button class="cap-lf-btn" data-d="close">Fermer</button>'}
-    </div></div>`;
+      ${isP?_L('<button class="cap-lf-btn" data-d="later">Plus tard</button><button class="phl-export-btn cw-d-apply" data-d="apply">✔ Mettre à jour l\'affichage</button>'):_L('<button class="cap-lf-btn" data-d="close">Fermer</button>')}
+    </div></div>`);
   ov.style.display='flex';
   const re=()=>capWatchShowDelta(what);
   ov.querySelectorAll('[data-d="close"]').forEach(b=>b.onclick=capWatchModalClose);
@@ -502,10 +502,10 @@ function capWatchShowDelta(what){
   let deb; ov.querySelector('[data-d="q"]').oninput=e=>{ st.q=e.target.value; clearTimeout(deb); deb=setTimeout(()=>{ const pos=e.target.selectionStart; re(); const i=ov.querySelector('[data-d="q"]'); i.focus(); i.setSelectionRange(pos,pos); },250); };
   ov.querySelector('[data-d="csv"]').onclick=()=>{
     const out=[]; (ov._rows||[]).forEach(d=>{
-      const base=[{add:'Ajouté',del:'Supprimé',mod:'Modifié'}[d.status]+(d.moved?' (déplacé)':''), d.e.layer, capAnaHuman(d.e.type), d.e.name, d.e.id];
+      const base=[{add:_L('Ajouté'),del:_L('Supprimé'),mod:_L('Modifié')}[d.status]+(d.moved?_L(' (déplacé)'):''), d.e.layer, capAnaHuman(d.e.type), d.e.name, d.e.id];
       if(!d.changes.length) out.push([...base,'','','']); else d.changes.forEach(c=>out.push([...base,c.k,c.a,c.b]));
     });
-    capCsvDownload('delta-mise-a-jour.csv',['Statut','Couche','Type','Élément','ID','Propriété','Avant','Après'],out);
+    capCsvDownload(_L('delta-mise-a-jour.csv'),[_L('Statut'),_L('Couche'),'Type',_L('Élément'),'ID',_L('Propriété'),_L('Avant'),_L('Après')],out);
   };
 }
 
@@ -514,15 +514,15 @@ function capWatchShowHistory(){
   const ov=document.getElementById('cap-watch-ov'); if(!ov) return;
   const w=_capWatch;
   ov._what=null;
-  ov.innerHTML=`<div class="cw-d-box" style="max-width:720px">
+  ov.innerHTML=_L(`<div class="cw-d-box" style="max-width:720px">
     <div class="cw-d-hdr"><b>🕘 Historique des mises à jour — « ${capEsc(w.name||capCurrentFileName)} »</b><button class="cap-lf-btn" data-d="close">✕</button></div>
     <div class="cw-d-body">
       <div class="cw-d-sub">Ouvert à ${capWatchTime(w.origAt)}. Cliquez sur une mise à jour pour voir son delta.</div>
-      ${w.history.length?`<table class="ana-t cw-d-tl"><tr><th>Appliquée à</th><th>Fichier du</th><th>Enreg.</th><th>Changements</th></tr>
-        ${w.history.map((h,i)=>`<tr class="cw-d-v" data-h="${i}"><td>${capWatchTime(h.at)}</td><td>${capWatchDate(h.mtime)}</td><td>${h.saves}</td><td>${capWatchChips(h.counts)}</td></tr>`).join('')}</table>`
-        :'<div class="phl-empty">Aucune mise à jour appliquée depuis l\'ouverture du modèle.</div>'}
+      ${w.history.length?_L(`<table class="ana-t cw-d-tl"><tr><th>Appliquée à</th><th>Fichier du</th><th>Enreg.</th><th>Changements</th></tr>
+        ${w.history.map((h,i)=>`<tr class="cw-d-v" data-h="${i}"><td>${capWatchTime(h.at)}</td><td>${capWatchDate(h.mtime)}</td><td>${h.saves}</td><td>${capWatchChips(h.counts)}</td></tr>`).join('')}</table>`)
+        :_L('<div class="phl-empty">Aucune mise à jour appliquée depuis l\'ouverture du modèle.</div>')}
     </div>
-    <div class="cw-d-ftr">${w.origDoc&&w.origDoc!==cap_xmlDoc?'<button class="cap-lf-btn" data-d="orig">⚖ Delta cumulé depuis l\'ouverture</button>':''}<span style="flex:1"></span><button class="cap-lf-btn" data-d="close">Fermer</button></div></div>`;
+    <div class="cw-d-ftr">${w.origDoc&&w.origDoc!==cap_xmlDoc?_L('<button class="cap-lf-btn" data-d="orig">⚖ Delta cumulé depuis l\'ouverture</button>'):''}<span style="flex:1"></span><button class="cap-lf-btn" data-d="close">Fermer</button></div></div>`);
   ov.style.display='flex';
   ov.querySelectorAll('[data-d="close"]').forEach(b=>b.onclick=capWatchModalClose);
   ov.querySelector('[data-d="orig"]')?.addEventListener('click',()=>capWatchOpenCompare('orig'));

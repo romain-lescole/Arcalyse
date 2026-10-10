@@ -68,7 +68,7 @@ function capGetFiltered(){
 /** Rend la vue Cartes : cartes groupées par couche ARCADIA, filtrées. */
 function capRenderCards(){
   const filtered=capGetFiltered();
-  const rc=document.getElementById('cap-result-count'); if(rc)rc.textContent=`${filtered.length} élément(s) affiché(s)`;
+  const rc=document.getElementById('cap-result-count'); if(rc)rc.textContent=_L(`${filtered.length} élément(s) affiché(s)`);
   const container=document.getElementById('cap-view-cards'); if(!container) return;
   const grouped={};
   for(const el of filtered)(grouped[el.layer]=grouped[el.layer]||[]).push(el);
@@ -77,7 +77,7 @@ function capRenderCards(){
     const items=grouped[lk]; if(!items?.length) continue;
     const cards=items.map(el=>{
       const name=el.attrs.name||'';
-      const nm=name?`<span class="cap-card-name">${capEsc(name)}</span>`:`<span class="cap-card-name unnamed">—sans nom—</span>`;
+      const nm=name?`<span class="cap-card-name">${capEsc(name)}</span>`:_L(`<span class="cap-card-name unnamed">—sans nom—</span>`);
       const pills=[]; if(el.id)pills.push(`<span class="cap-meta-pill">id:${capEsc(el.id.slice(0,16))}</span>`);
       ['kind','nature','direction','visibility'].forEach(k=>{if(el.attrs[k])pills.push(`<span class="cap-meta-pill">${k}:${capEsc(el.attrs[k])}</span>`);});
       return`<div class="cap-card" onclick="capOpenDetail('${capEsc(el.id)}')">
@@ -87,7 +87,7 @@ function capRenderCards(){
     }).join('');
     html+=`<div class="cap-layer-section"><div class="cap-layer-hdr"><span class="cap-layer-badge" style="color:${lv.color}">${lk}</span><span style="font-size:12px;font-weight:600;">${lv.label}</span><span style="margin-left:auto;font-size:11px;color:var(--c-dim);font-family:monospace;">${items.length}</span></div><div class="cap-cards-grid">${cards}</div></div>`;
   }
-  container.innerHTML=html||'<div style="text-align:center;padding:40px;color:var(--c-dim)">Aucun résultat</div>';
+  container.innerHTML=html||_L('<div style="text-align:center;padding:40px;color:var(--c-dim)">Aucun résultat</div>');
 }
 
 // ── Table ──
@@ -280,7 +280,7 @@ function capGetOwnerProperties(metaclass){
   });
   [...ancestorTypesSeen].sort().forEach(ownerType=>{
     const human=(CAP_HUMAN_NAMES[ownerType]||{}).h||ownerType;
-    props.push({key:'owner:'+ownerType, label:`Owner [${human}]`, kind:'owner', ownerType, resultType:ownerType});
+    props.push({key:'owner:'+ownerType, label:_L(`Owner [${human}]`), kind:'owner', ownerType, resultType:ownerType});
   });
   return props;
 }
@@ -347,7 +347,7 @@ function capGetMetachainProperties(metaclass){
     Object.keys(e.attrs||{}).forEach(k=>{ if(k!=='name' && !refAttrKeys.has(k)) literalAttrKeys.add(k); });
   });
   [...literalAttrKeys].sort().forEach(k=>{
-    props.push({key:'value:attr:'+k, label:`Attribut « ${k} »`, kind:'value', valueKind:'attr', attrKey:k, isTerminal:true});
+    props.push({key:'value:attr:'+k, label:_L(`Attribut « ${k} »`), kind:'value', valueKind:'attr', attrKey:k, isTerminal:true});
   });
 
   // 0bis) Owner — remplace l'ancien "Parent" générique par une famille de Properties typées,
@@ -369,7 +369,7 @@ function capGetMetachainProperties(metaclass){
   });
   [...childTypesSeen].sort().forEach(ct=>{
     const human=(CAP_HUMAN_NAMES[ct]||{}).h||ct;
-    props.push({key:'owned:'+ct, label:`Owned element [${human}]`, kind:'owned', resultType:ct, childFilterType:ct});
+    props.push({key:'owned:'+ct, label:_L(`Owned element [${human}]`), kind:'owned', resultType:ct, childFilterType:ct});
   });
 
   // 1bis) Navigation "via élément intermédiaire" — détecte les types X (différents du metaclass
@@ -575,7 +575,7 @@ function capTableGetVal(el, colKey){
 
 /** Libellé humain affiché en en-tête pour une colonne donnée. */
 function capTableColLabel(colKey){
-  const builtinLabels={layer:'Couche',typeName:'Type',humanType:'Human Type',name:'Name',id:'ID',parent:'Owner',ownedElement:'Owned element'};
+  const builtinLabels={layer:_L('Couche'),typeName:'Type',humanType:'Human Type',name:'Name',id:'ID',parent:_L('Owner'),ownedElement:'Owned element'};
   if (builtinLabels[colKey]) return builtinLabels[colKey];
   if (colKey.startsWith('rel:')) return capTableRelLabel(colKey);
   const custom = capTableCustomCols.find(c=>c.key===colKey);
@@ -594,7 +594,7 @@ function capBuildTableToolbar(){
   const picker=document.createElement('div'); picker.style.cssText='position:relative;';
   const btn=document.createElement('div'); btn.className='tbtn';
   const visCols = capTableVisibleCols || CAP_TABLE_BUILTIN_COLS;
-  btn.textContent=`⊞ Colonnes (${visCols.length})  ▾`;
+  btn.textContent=_L(`⊞ Colonnes (${visCols.length})  ▾`);
   picker.appendChild(btn);
 
   const menu=document.createElement('div'); menu.className='cap-colpicker-menu';
@@ -604,7 +604,7 @@ function capBuildTableToolbar(){
   // attributs bruts) par nom de colonne, sans jamais fermer le menu.
   const searchWrap=document.createElement('div'); searchWrap.style.cssText='padding:6px 10px;';
   const searchInp=document.createElement('input'); searchInp.className='inp';
-  searchInp.placeholder='🔍 Rechercher une colonne…'; searchInp.value=_capColPickerSearch;
+  searchInp.placeholder=_L('🔍 Rechercher une colonne…'); searchInp.value=_capColPickerSearch;
   searchInp.style.cssText='width:100%;box-sizing:border-box;font-size:11px;padding:4px 7px;';
   searchInp.onclick=ev=>ev.stopPropagation();
   searchInp.oninput=()=>{ _capColPickerSearch=searchInp.value; capRefreshColPickerList(); };
@@ -636,8 +636,8 @@ function capBuildTableToolbar(){
 
   // Icône dédiée "Colonne personnalisée" — ouvre le panneau latéral de construction
   // multi-étapes (metachain navigation), plutôt qu'un mini-formulaire dans ce menu.
-  const customBtn=document.createElement('div'); customBtn.className='tbtn'; customBtn.title='Créer une colonne calculée en suivant un chemin de relations (metachain), avec aperçu en direct';
-  customBtn.textContent='✨ Colonne par chemin';
+  const customBtn=document.createElement('div'); customBtn.className='tbtn'; customBtn.title=_L('Créer une colonne calculée en suivant un chemin de relations (metachain), avec aperçu en direct');
+  customBtn.textContent=_L('✨ Colonne par chemin');
   customBtn.onclick=()=>capOpenCustomColPanel();
   tb.appendChild(customBtn);
 
@@ -649,8 +649,8 @@ function capBuildTableToolbar(){
   // Bascule d'affichage pour les cellules à valeurs multiples : en ligne (virgules) ou
   // empilées verticalement (une valeur par ligne, comme pour Owned element).
   const displayToggle=document.createElement('div'); displayToggle.className='tbtn';
-  displayToggle.title='Bascule l\'affichage des cellules à plusieurs valeurs';
-  displayToggle.textContent = capTableMultiValDisplay==='inline' ? '≡ En ligne' : '☰ Empilé';
+  displayToggle.title=_L('Bascule l\'affichage des cellules à plusieurs valeurs');
+  displayToggle.textContent = capTableMultiValDisplay==='inline' ? _L('≡ En ligne') : _L('☰ Empilé');
   displayToggle.onclick=()=>{
     capTableMultiValDisplay = capTableMultiValDisplay==='inline' ? 'stacked' : 'inline';
     capRenderTable();
@@ -662,26 +662,26 @@ function capBuildTableToolbar(){
 
   // Export CSV des colonnes affichées (toutes les lignes filtrées, dans l'ordre du tri)
   const csvBtn=document.createElement('div'); csvBtn.className='tbtn';
-  csvBtn.title='Exporter en CSV les colonnes affichées, pour toutes les lignes filtrées (ordre du tri)';
-  csvBtn.textContent='⬇ CSV';
+  csvBtn.title=_L('Exporter en CSV les colonnes affichées, pour toutes les lignes filtrées (ordre du tri)');
+  csvBtn.textContent=_L('⬇ CSV');
   csvBtn.onclick=()=>capTableCsv();
   tb.appendChild(csvBtn);
 
   // Bouton sauvegarder/charger la vue tableau (colonnes + metachains + filtres + largeurs)
-  const saveBtn=document.createElement('div'); saveBtn.className='tbtn'; saveBtn.title='Sauvegarder la vue de cet onglet (colonnes, colonnes par chemin, filtres, largeurs, tri) dans un fichier';
-  saveBtn.textContent='💾 Sauver vue';
+  const saveBtn=document.createElement('div'); saveBtn.className='tbtn'; saveBtn.title=_L('Sauvegarder la vue de cet onglet (colonnes, colonnes par chemin, filtres, largeurs, tri) dans un fichier');
+  saveBtn.textContent=_L('💾 Sauver vue');
   saveBtn.onclick=()=>capSaveTableView();
   tb.appendChild(saveBtn);
 
-  const loadBtn=document.createElement('div'); loadBtn.className='tbtn'; loadBtn.title='Charger une vue tableau sauvegardée';
-  loadBtn.textContent='📂 Charger vue';
+  const loadBtn=document.createElement('div'); loadBtn.className='tbtn'; loadBtn.title=_L('Charger une vue tableau sauvegardée');
+  loadBtn.textContent=_L('📂 Charger vue');
   loadBtn.onclick=()=>document.getElementById('cap-table-view-input').click();
   tb.appendChild(loadBtn);
 
   // Bouton de réinitialisation (colonnes, largeurs, filtres)
   const resetBtn=document.createElement('div'); resetBtn.className='tbtn';
-  resetBtn.textContent='↺ Réinitialiser';
-  resetBtn.title='Revenir aux colonnes, à l\'ordre, aux largeurs et au tri de départ, sans filtre (onglet affiché)';
+  resetBtn.textContent=_L('↺ Réinitialiser');
+  resetBtn.title=_L('Revenir aux colonnes, à l\'ordre, aux largeurs et au tri de départ, sans filtre (onglet affiché)');
   resetBtn.onclick=()=>{
     capTableVisibleCols=null; capTableColWidths={}; capTableColFilters={}; capTableSort={col:null, dir:1};
     capRenderTable();
@@ -716,13 +716,13 @@ function capRefreshColPickerList(){
     const lbl=document.createElement('span'); lbl.textContent=label; lbl.style.flex='1';
     item.appendChild(cb); item.appendChild(lbl);
     if (editable) {
-      const edit=document.createElement('span'); edit.textContent='✏'; edit.title='Modifier le metachain de cette colonne';
+      const edit=document.createElement('span'); edit.textContent='✏'; edit.title=_L('Modifier le metachain de cette colonne');
       edit.style.cssText='cursor:pointer;color:var(--c-dim);font-size:10px;padding:0 3px;';
       edit.onclick=(ev)=>{ ev.stopPropagation(); capOpenCustomColPanel(colKey); };
       item.appendChild(edit);
     }
     if (removable) {
-      const del=document.createElement('span'); del.textContent='✕'; del.title='Supprimer cette colonne personnalisée';
+      const del=document.createElement('span'); del.textContent='✕'; del.title=_L('Supprimer cette colonne personnalisée');
       del.style.cssText='cursor:pointer;color:var(--c-dim);font-size:10px;padding:0 3px;';
       del.onclick=(ev)=>{
         ev.stopPropagation();
@@ -744,23 +744,23 @@ function capRefreshColPickerList(){
     // Ne reconstruit QUE le tableau (pas la toolbar / le menu) pour garder le menu ouvert
     capRenderTableBodyOnly();
     const btnEl=document.querySelector('#cap-table-toolbar .tbtn');
-    if (btnEl) btnEl.textContent=`⊞ Colonnes (${(capTableVisibleCols||CAP_TABLE_BUILTIN_COLS).length})  ▾`;
+    if (btnEl) btnEl.textContent=_L(`⊞ Colonnes (${(capTableVisibleCols||CAP_TABLE_BUILTIN_COLS).length})  ▾`);
   }
 
   let any=false;
-  const sec1=addSection('Colonnes calculées');
-  if(addItem('name','Name'))any=true; if(addItem('id','ID'))any=true; if(addItem('parent','Owner'))any=true; if(addItem('ownedElement','Owned element'))any=true;
-  if(addItem('layer','Couche'))any=true; if(addItem('typeName','Type'))any=true; if(addItem('humanType','Human Type'))any=true;
+  const sec1=addSection(_L('Colonnes calculées'));
+  if(addItem('name','Name'))any=true; if(addItem('id','ID'))any=true; if(addItem('parent',_L('Owner')))any=true; if(addItem('ownedElement','Owned element'))any=true;
+  if(addItem('layer',_L('Couche')))any=true; if(addItem('typeName','Type'))any=true; if(addItem('humanType','Human Type'))any=true;
   if (!sec1.nextSibling || sec1.nextSibling.className!=='cap-colpicker-item') sec1.remove();
 
   if (capTableCustomCols.length) {
-    const sec2=addSection('Colonnes par chemin');
+    const sec2=addSection(_L('Colonnes par chemin'));
     let sec2any=false;
     capTableCustomCols.forEach(c=>{ if(addItem(c.key, c.label, true, true)) sec2any=true; });
     if (!sec2any) sec2.remove();
   }
 
-  const sec3=addSection('Attributs du fichier XML');
+  const sec3=addSection(_L('Attributs du fichier XML'));
   let sec3any=false;
   capGetAllRawAttrKeys().forEach(k=>{ if(addItem(k, k)) sec3any=true; });
   if (!sec3any) sec3.remove();
@@ -838,7 +838,7 @@ function capRenderCustomColStepRow(idx){
     const props=capGetMetachainProperties(step.metaclass);
     if (!props.length) {
       propEl.disabled=true;
-      propEl.innerHTML='<option>(aucune relation disponible)</option>';
+      propEl.innerHTML=_L('<option>(aucune relation disponible)</option>');
     } else {
       propEl.innerHTML=props.map(p=>`<option value="${capEsc(p.key)}">${capEsc(p.label)}</option>`).join('');
       if (step.property) {
@@ -856,7 +856,7 @@ function capRenderCustomColStepRow(idx){
     }
   }
 
-  const del=document.createElement('span'); del.className='cap-step-del'; del.textContent='✕'; del.title='Supprimer cette étape et les suivantes';
+  const del=document.createElement('span'); del.className='cap-step-del'; del.textContent='✕'; del.title=_L('Supprimer cette étape et les suivantes');
   del.style.marginTop='5px';
   del.onclick=()=>{ _capCustomColSteps=_capCustomColSteps.slice(0,idx); if(!_capCustomColSteps.length) _capCustomColSteps.push({metaclass:null,property:null}); capRenderCustomColPanel(); };
 
@@ -903,7 +903,7 @@ function capPpCapAdapter(){
   return {
     of:    t=>capAllElements.filter(e=>e.typeName===t),
     byId:  id=>capAllElements.find(e=>e.id===id),
-    name:  e=>e.attrs.name||'(sans nom)',
+    name:  e=>e.attrs.name||_L('(sans nom)'),
     type:  e=>e.typeName,
     typeLabel: t=>(CAP_HUMAN_NAMES[t]||{}).h||t,
     step:  capResolveStep,
@@ -953,12 +953,12 @@ function capPpRender(which, steps){
   const st=_capPpState[which];
   const t0 = steps[0] && steps[0].metaclass;
   host.innerHTML='';
-  const head=document.createElement('div'); head.className='cap-pp-h'; head.textContent='👁 Aperçu en direct';
+  const head=document.createElement('div'); head.className='cap-pp-h'; head.textContent=_L('👁 Aperçu en direct');
   host.appendChild(head);
-  if (!t0) { const p=document.createElement('div'); p.className='cap-pp-dim'; p.textContent='Choisissez un type de départ.'; host.appendChild(p); return; }
+  if (!t0) { const p=document.createElement('div'); p.className='cap-pp-dim'; p.textContent=_L('Choisissez un type de départ.'); host.appendChild(p); return; }
 
   const cands=ad.of(t0).slice().sort((a,b)=>ad.name(a).localeCompare(ad.name(b)));
-  if (!cands.length) { const p=document.createElement('div'); p.className='cap-pp-dim'; p.textContent='Aucun élément de ce type dans le modèle.'; host.appendChild(p); return; }
+  if (!cands.length) { const p=document.createElement('div'); p.className='cap-pp-dim'; p.textContent=_L('Aucun élément de ce type dans le modèle.'); host.appendChild(p); return; }
   const complete = steps.every(s=>s.property);
   // Nouveau type de départ, ou exemple automatique devenu vide après un changement du chemin :
   // on prend un exemple qui donne un résultat, si possible (un choix de l'utilisateur est conservé)
@@ -970,13 +970,13 @@ function capPpRender(which, steps){
   if (!st.id) st.id=cands[0].id;
 
   // ── Choix de l'exemple : recherche + liste + « exemple suivant » ──
-  const lab=document.createElement('div'); lab.className='cap-pp-dim'; lab.textContent=`Élément d'exemple (${ad.typeLabel(t0)}) :`;
+  const lab=document.createElement('div'); lab.className='cap-pp-dim'; lab.textContent=_L(`Élément d'exemple (${ad.typeLabel(t0)}) :`);
   host.appendChild(lab);
   const bar=document.createElement('div'); bar.className='cap-pp-bar';
-  const q=document.createElement('input'); q.className='inp'; q.placeholder='🔍 Filtrer…'; q.value=st.q;
+  const q=document.createElement('input'); q.className='inp'; q.placeholder=_L('🔍 Filtrer…'); q.value=st.q;
   const sel=document.createElement('select');
-  const next=document.createElement('div'); next.className='tbtn'; next.textContent='Suivant ▸';
-  next.title='Passer au prochain élément dont la cellule serait remplie';
+  const next=document.createElement('div'); next.className='tbtn'; next.textContent=_L('Suivant ▸');
+  next.title=_L('Passer au prochain élément dont la cellule serait remplie');
   bar.appendChild(q); bar.appendChild(sel); bar.appendChild(next);
   host.appendChild(bar);
   const body=document.createElement('div'); host.appendChild(body);
@@ -987,8 +987,8 @@ function capPpRender(which, steps){
     const shown=list.slice(0,CAP_PP_MAX_OPTS);
     if (st.id && !shown.some(c=>c.id===st.id)) { const cur=cands.find(c=>c.id===st.id); if (cur && !ql) shown.unshift(cur); }
     sel.innerHTML=shown.map(c=>`<option value="${capEsc(c.id)}">${capEsc(ad.name(c))}</option>`).join('')
-      + (list.length>shown.length ? `<option disabled>… ${list.length-shown.length} autre(s) : affinez le filtre</option>` : '');
-    if (!shown.length) sel.innerHTML='<option disabled>(aucun élément)</option>';
+      + (list.length>shown.length ? _L(`<option disabled>… ${list.length-shown.length} autre(s) : affinez le filtre</option>`) : '');
+    if (!shown.length) sel.innerHTML=_L('<option disabled>(aucun élément)</option>');
     else if (shown.some(c=>c.id===st.id)) sel.value=st.id;
     else { st.id=shown[0].id; sel.value=st.id; }
   };
@@ -1025,8 +1025,8 @@ function capPpRenderBody(body, el, steps, ad, cands, complete){
     for (const c of cands){ if (capPpHasResult(c, steps, ad)) ok++; n++; if (performance.now()-t1>120) break; }
     const cov=document.createElement('div'); cov.className='cap-pp-cov';
     cov.textContent = n<cands.length
-      ? `Cellule remplie pour ${ok} élément(s) sur les ${n} premiers testés (${cands.length} au total).`
-      : `Cellule remplie pour ${ok} élément(s) sur ${cands.length}.`;
+      ? _L(`Cellule remplie pour ${ok} élément(s) sur les ${n} premiers testés (${cands.length} au total).`)
+      : _L(`Cellule remplie pour ${ok} élément(s) sur ${cands.length}.`);
     if (!ok) cov.style.color='var(--c-warn,#e3b341)';
     body.appendChild(cov);
   }
@@ -1046,21 +1046,21 @@ function capPpRenderBody(body, el, steps, ad, cands, complete){
     h.innerHTML=(num?`<span class="cap-step-num">${num}</span>`:'')+`<span>${title}</span>`;
     b.appendChild(h); body.appendChild(b); return b;
   };
-  block(0, `Départ : <b>${capEsc(ad.typeLabel(ad.type(el)))}</b>`).appendChild(chips([el]));
+  block(0, _L(`Départ : <b>${capEsc(ad.typeLabel(ad.type(el)))}</b>`)).appendChild(chips([el]));
   const levels=capPpTrace(el, steps, ad);
   let stopped=false;
   levels.forEach((lv,i)=>{
     const s=steps[i];
-    const pl = s.property ? s.property.label : '(à choisir)';
+    const pl = s.property ? s.property.label : _L('(à choisir)');
     const b=block(i+1, `↓ ${capEsc(pl)}`);
     if (stopped || !s.property) { b.classList.add('off'); return; }
     if (lv.values) {
       const v=document.createElement('div'); v.className='cap-pp-dim';
-      v.textContent = lv.values.length ? `${lv.values.length} valeur(s) lue(s)` : 'Aucune valeur.';
+      v.textContent = lv.values.length ? _L(`${lv.values.length} valeur(s) lue(s)`) : _L('Aucune valeur.');
       b.appendChild(v);
     } else if (!lv.elems.length) {
       const v=document.createElement('div'); v.className='cap-pp-dim'; v.style.color='var(--c-warn,#e3b341)';
-      v.textContent='∅ Aucun élément atteint : le chemin s\'arrête ici pour cet exemple.';
+      v.textContent=_L('∅ Aucun élément atteint : le chemin s\'arrête ici pour cet exemple.');
       b.appendChild(v); stopped=true;
     } else {
       const types=[...new Set(lv.elems.map(ad.type))].map(ad.typeLabel).join(', ');
@@ -1072,9 +1072,9 @@ function capPpRenderBody(body, el, steps, ad, cands, complete){
   const res=document.createElement('div'); res.className='cap-pp-res';
   const last=levels[levels.length-1];
   const vals = !complete ? null : (last && last.values) ? last.values : (last ? last.elems.map(ad.name) : []);
-  res.innerHTML='<div class="cap-pp-st"><span>▣ Cellule dans le tableau</span></div>';
+  res.innerHTML=_L('<div class="cap-pp-st"><span>▣ Cellule dans le tableau</span></div>');
   const cell=document.createElement('div'); cell.className='cap-pp-cell';
-  cell.textContent = vals===null ? 'Chemin incomplet.' : (vals.length ? vals.join(', ') : '(vide)');
+  cell.textContent = vals===null ? _L('Chemin incomplet.') : (vals.length ? vals.join(', ') : _L('(vide)'));
   if (!vals || !vals.length) cell.classList.add('empty');
   res.appendChild(cell); body.appendChild(res);
 }
@@ -1100,9 +1100,9 @@ function capOpenCustomColPanel(editKey){
     if (nameInp) nameInp.value='';
   }
   const titleEl=document.getElementById('cap-customcol-title');
-  if (titleEl) titleEl.textContent = existing ? `✨ Modifier « ${existing.label} »` : '✨ Colonne par chemin';
+  if (titleEl) titleEl.textContent = existing ? _L(`✨ Modifier « ${existing.label} »`) : _L('✨ Colonne par chemin');
   const createBtn=document.getElementById('cap-customcol-create');
-  if (createBtn) createBtn.textContent = existing ? 'Enregistrer les modifications' : 'Créer la colonne';
+  if (createBtn) createBtn.textContent = existing ? _L('Enregistrer les modifications') : _L('Créer la colonne');
   capRenderCustomColPanel();
   document.getElementById('cap-customcol-overlay').style.display='block';
   const panel=document.getElementById('cap-customcol-panel');
@@ -1125,8 +1125,8 @@ document.getElementById('cap-customcol-addstep')?.addEventListener('click',()=>{
   capRenderCustomColPanel();
 });
 document.getElementById('cap-customcol-create')?.addEventListener('click',()=>{
-  if (!_capCustomColSteps.length || !_capCustomColSteps[0].metaclass) { alert('Choisissez au moins un type de départ et une relation ou une valeur.'); return; }
-  if (_capCustomColSteps.some(s=>!s.property)) { alert('Chaque étape doit avoir une relation ou une valeur sélectionnée.'); return; }
+  if (!_capCustomColSteps.length || !_capCustomColSteps[0].metaclass) { alert(_L('Choisissez au moins un type de départ et une relation ou une valeur.')); return; }
+  if (_capCustomColSteps.some(s=>!s.property)) { alert(_L('Chaque étape doit avoir une relation ou une valeur sélectionnée.')); return; }
   const nameInp=document.getElementById('cap-customcol-name');
   const stepsLabel=_capCustomColSteps.map(s=>s.property.label.replace(' →','').replace('← ','')).join(' → ');
   const label = nameInp.value.trim() || stepsLabel;
@@ -1177,9 +1177,9 @@ function capSaveTableView(){
 function capLoadTableView(jsonText){
   let data;
   try { data = JSON.parse(jsonText); }
-  catch(e) { alert('Fichier invalide : JSON illisible.'); return; }
+  catch(e) { alert(_L('Fichier invalide : JSON illisible.')); return; }
   // Vue du tableau, ou vue de l'ancienne 📊 Table View (convertie) : appliquée à l'onglet affiché
-  if (!capTableApplyViewFile(data)) { alert('Ce fichier ne semble pas être une vue de tableau valide.'); return; }
+  if (!capTableApplyViewFile(data)) { alert(_L('Ce fichier ne semble pas être une vue de tableau valide.')); return; }
   capRenderTable();
 }
 document.getElementById('cap-table-view-input')?.addEventListener('change', ev=>{
@@ -1213,7 +1213,7 @@ function capRenderTableBodyOnly(){
   // 🌳 Arbre : lignes rangées sous leurs conteneurs (nœuds dépliés seulement) ; sinon une ligne par élément
   const tree=capTableDisplay.mode==='tree';
   const items=tree ? capTableTreeItems(filtered) : filtered.map(el=>({el, row:true, depth:0, kids:0}));
-  const rc=document.getElementById('cap-result-count'); if(rc)rc.textContent=`${filtered.length} élément(s)`+(tree?` · 🌳 arbre (${items.length} ligne(s) affichée(s))`:'')+(capTableScope.ids.length?` · 🎯 portée : ${capTableScopeLabel()}`:'');
+  const rc=document.getElementById('cap-result-count'); if(rc)rc.textContent=_L(`${filtered.length} élément(s)`)+(tree?_L(` · 🌳 arbre (${items.length} ligne(s) affichée(s))`):'')+(capTableScope.ids.length?_L(` · 🎯 portée : ${capTableScopeLabel()}`):'');
   const total=items.length,start=capPage*capPageSize,end=Math.min(start+capPageSize,total),slice=items.slice(start,end);
   const table=document.getElementById('cap-table');
   const thead=document.getElementById('cap-table-head'); const tbody=document.getElementById('cap-table-body');
@@ -1227,9 +1227,9 @@ function capRenderTableBodyOnly(){
     const label=capTableColLabel(colKey);
     const ico=capTableSort.col===colKey ? (capTableSort.dir===1?'▲':'▼') : '⇅';
     const isPath=capTableCustomCols.some(c=>c.key===colKey);
-    th.innerHTML=`<div class="th-inner"><span class="th-l">${capEsc(label)}</span>${isPath?'<span class="th-ren" title="Renommer cette colonne">✎</span>':''}<span class="th-sort${capTableSort.col===colKey?' on':''}">${ico}</span></div>`;
+    th.innerHTML=`<div class="th-inner"><span class="th-l">${capEsc(label)}</span>${isPath?_L('<span class="th-ren" title="Renommer cette colonne">✎</span>'):''}<span class="th-sort${capTableSort.col===colKey?' on':''}">${ico}</span></div>`;
     if (isPath) th.querySelector('.th-ren').onclick=ev=>{ ev.stopPropagation(); capTableColRename(th, colKey); };
-    th.title=`${label}${label!==colKey?' ('+colKey+')':''}\nClic : trier · glisser : déplacer la colonne · bord droit : largeur`;
+    th.title=_L(`${label}${label!==colKey?' ('+colKey+')':''}\nClic : trier · glisser : déplacer la colonne · bord droit : largeur`);
     th.onclick=ev=>{ if(_capColResizing||ev.target.closest('.cap-col-resizer')) return; capTableSortCycle(colKey); };
     capTableColDnD(th, colKey, thead);
     hrow.appendChild(th);
@@ -1245,7 +1245,7 @@ function capRenderTableBodyOnly(){
   cols.forEach(colKey=>{
     const th=document.createElement('th');
     const inp=document.createElement('input');
-    inp.type='text'; inp.placeholder='Filtrer…';
+    inp.type='text'; inp.placeholder=_L('Filtrer…');
     inp.value=capTableColFilters[colKey]||'';
     inp.onclick=ev=>ev.stopPropagation();
     inp.oninput=()=>{ capTableColFilters[colKey]=inp.value; capPage=0; capRenderTableBodyOnly(); };
@@ -1267,7 +1267,7 @@ function capRenderTableBodyOnly(){
     // Onglet vide : un nouvel onglet n'a aucun type coché
     const tr=document.createElement('tr'), td=document.createElement('td');
     td.colSpan=cols.length; td.className='cap-table-empty';
-    td.textContent = capEnabledTypes.size ? 'Aucun élément ne correspond aux filtres.' : 'Aucun type coché pour cet onglet : cochez des types d\'éléments dans le menu de gauche.';
+    td.textContent = capEnabledTypes.size ? _L('Aucun élément ne correspond aux filtres.') : _L('Aucun type coché pour cet onglet : cochez des types d\'éléments dans le menu de gauche.');
     tr.appendChild(td); tbody.appendChild(tr);
   }
   slice.forEach(it=>{
@@ -1288,7 +1288,7 @@ function capRenderTableBodyOnly(){
         td.appendChild(ind); td.appendChild(tg);
         const txt=document.createElement('span'); txt.className='cap-ttree-txt';
         const v=it.row ? capTableGetValArray(el,colKey).filter(x=>x!=='').join(', ') : (el.attrs.name||el.typeName);
-        txt.textContent=v; td.title=it.row?v:`${el.attrs.name||''} — ${(CAP_HUMAN_NAMES[el.typeName]||{}).h||el.typeName} (conteneur)`;
+        txt.textContent=v; td.title=it.row?v:_L(`${el.attrs.name||''} — ${(CAP_HUMAN_NAMES[el.typeName]||{}).h||el.typeName} (conteneur)`);
         if (!it.row) { const ty=document.createElement('span'); ty.className='cap-ttree-ty'; ty.textContent=(CAP_HUMAN_NAMES[el.typeName]||{}).h||el.typeName; txt.appendChild(ty); }
         td.appendChild(txt); tr.appendChild(td); return;
       }
@@ -1314,7 +1314,7 @@ function capRenderTableBodyOnly(){
 
   capTSelWire(tbody, slice);   // 📋 sélection de cellules et copie
   const pg=document.getElementById('cap-pagination'); if(pg) pg.style.display='flex';
-  const pi=document.getElementById('cap-page-info'); if(pi)pi.textContent=`${start+1}–${end} sur ${total}`;
+  const pi=document.getElementById('cap-page-info'); if(pi)pi.textContent=_L(`${start+1}–${end} sur ${total}`);
   const pb=document.getElementById('cap-btn-prev'); if(pb)pb.disabled=capPage===0;
   const nb=document.getElementById('cap-btn-next'); if(nb)nb.disabled=end>=total;
 }
@@ -1329,12 +1329,12 @@ const CAP_TREE_LIST_MAX=300; // lignes au plus en ☰ Liste
 function capRenderTree(){
   const container=document.getElementById('cap-view-tree'); if(!container) return;
   if(!document.getElementById('cap-tree-bar')){
-    container.innerHTML=`<div id="cap-tree-bar" class="cap-tree-bar">
+    container.innerHTML=_L(`<div id="cap-tree-bar" class="cap-tree-bar">
       <input class="inp" id="cap-tree-q" placeholder="🔍 Chercher (nom ou type)…">
       <span class="tb-grp" title="Affichage"><button class="phl-toggle-btn" data-tv="tree" title="Arbre ; avec une recherche : résultats dans leurs conteneurs, grisés s'ils ne correspondent pas">🌳 Arbre</button><button class="phl-toggle-btn" data-tv="list" title="Liste à plat triée par nom, avec le chemin des conteneurs (${CAP_TREE_LIST_MAX} lignes au plus)">☰ Liste</button></span>
       <span class="tb-grp" data-tree-only><button class="tbtn" data-ta="open">⊞ Tout déplier</button><button class="tbtn" data-ta="close">⊟ Tout réduire</button><span class="tb-grp-l">Niveau</span><button class="tbtn" data-lvl="1" title="Déplier jusqu'au niveau 1">1</button><button class="tbtn" data-lvl="2" title="Déplier jusqu'au niveau 2">2</button><button class="tbtn" data-lvl="3" title="Déplier jusqu'au niveau 3">3</button></span>
       <button class="tbtn" data-ta="json" title="Exporter les éléments des types cochés en JSON">⬇ JSON</button>
-      <span class="ana-fn-cnt" id="cap-tree-cnt"></span></div><div id="cap-tree-body"></div>`;
+      <span class="ana-fn-cnt" id="cap-tree-cnt"></span></div><div id="cap-tree-body"></div>`);
     const q=document.getElementById('cap-tree-q'); q.value=capTreeFilter;
     q.oninput=()=>{ capTreeFilter=q.value; capRenderTreeBody(); };
     container.querySelectorAll('[data-tv]').forEach(b=>b.onclick=()=>{ capTreeView=b.dataset.tv; capRenderTreeBody(); });
@@ -1379,7 +1379,7 @@ function capRenderTreeBody(){
     (n.children||[]).forEach(c=>walk(c,p));
   };
   walk(capTreeData,[]);
-  if(cnt) cnt.textContent=filter?`${items.length} résultat(s)`:`${items.length} élément(s)`;
+  if(cnt) cnt.textContent=filter?_L(`${items.length} résultat(s)`):_L(`${items.length} élément(s)`);
   if(capTreeView==='list'){
     items.sort((a,b)=>(a.n.name||'').localeCompare(b.n.name||'','fr'));
     items.slice(0,CAP_TREE_LIST_MAX).forEach(({n,path})=>{
@@ -1394,12 +1394,12 @@ function capRenderTreeBody(){
       body.appendChild(row);
     });
     if(items.length>CAP_TREE_LIST_MAX){ const m=document.createElement('div'); m.className='ana-dim'; m.style.padding='8px';
-      m.textContent=`… ${items.length-CAP_TREE_LIST_MAX} autre(s) élément(s) non affiché(s) : précisez la recherche.`; body.appendChild(m); }
-    if(!items.length){ const m=document.createElement('div'); m.className='ana-dim'; m.style.padding='8px'; m.textContent='Aucun élément ne correspond.'; body.appendChild(m); }
+      m.textContent=_L(`… ${items.length-CAP_TREE_LIST_MAX} autre(s) élément(s) non affiché(s) : précisez la recherche.`); body.appendChild(m); }
+    if(!items.length){ const m=document.createElement('div'); m.className='ana-dim'; m.style.padding='8px'; m.textContent=_L('Aucun élément ne correspond.'); body.appendChild(m); }
     return;
   }
   capRenderTreeNode(capTreeData,body,0,filter);
-  if(filter&&!items.length){ const m=document.createElement('div'); m.className='ana-dim'; m.style.padding='8px'; m.textContent='Aucun élément ne correspond.'; body.appendChild(m); }
+  if(filter&&!items.length){ const m=document.createElement('div'); m.className='ana-dim'; m.style.padding='8px'; m.textContent=_L('Aucun élément ne correspond.'); body.appendChild(m); }
 }
 /** Rend récursivement un nœud de l'arborescence Capella.
  * @param node Nœud capTreeData @param container Élément DOM parent

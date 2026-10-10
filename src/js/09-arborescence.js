@@ -45,7 +45,7 @@ function buildPropertiesPanel() {
   const el=S.propEl?MODEL.elements.find(e=>e.id===S.propEl):null;
   if (!el) {
     const ph=document.createElement('div'); ph.className='prop-empty';
-    ph.textContent='Sélectionnez un élément dans l\'arborescence ou la carte.';
+    ph.textContent=_L('Sélectionnez un élément dans l\'arborescence ou la carte.');
     body.appendChild(ph); return;
   }
 
@@ -60,7 +60,7 @@ function buildPropertiesPanel() {
    */
   function editableText(value, onCommit) {
     const span=document.createElement('span'); span.className='prop-val';
-    span.textContent=value; span.title='Double-clic pour modifier'; span.style.cursor='text';
+    span.textContent=value; span.title=_L('Double-clic pour modifier'); span.style.cursor='text';
     span.ondblclick=()=>{
       const inp=document.createElement('input'); inp.className='prop-val-edit'; inp.value=value;
       span.replaceWith(inp); inp.focus(); inp.select();
@@ -78,12 +78,12 @@ function buildPropertiesPanel() {
   const nmSpan=RM_RO ? Object.assign(document.createElement('span'),{className:'prop-val',textContent:el.name}) : editableText(el.name, v=>{ arboRenameEl(el,v); });
   const nmWrap=document.createElement('span'); nmWrap.style.cssText='display:flex;align-items:center;flex:1;min-width:0';
   nmWrap.appendChild(nmIcon); nmWrap.appendChild(nmSpan);
-  propRow('Nom', nmWrap);
+  propRow(_L('Nom'), nmWrap);
 
   // ID (lecture seule, copiable)
   const idSpan=document.createElement('span'); idSpan.className='prop-val';
   idSpan.style.cssText+='font-size:10px;color:var(--c-dim);cursor:pointer';
-  idSpan.textContent=el.id; idSpan.title='Cliquer pour copier';
+  idSpan.textContent=el.id; idSpan.title=_L('Cliquer pour copier');
   idSpan.onclick=()=>{ navigator.clipboard?.writeText(el.id); idSpan.style.color='var(--c-accent)'; setTimeout(()=>idSpan.style.color='',800); };
   propRow('ID', idSpan);
 
@@ -104,22 +104,22 @@ function buildPropertiesPanel() {
   if (el._capella || RM_RO) {
     const parEl = el.parentEl ? MODEL.elements.find(e=>e.id===el.parentEl) : null;
     const parSpan=document.createElement('span'); parSpan.className='prop-val';
-    parSpan.textContent = parEl ? (typeIcon(parEl.type)+' '+parEl.name) : '— racine';
+    parSpan.textContent = parEl ? (typeIcon(parEl.type)+' '+parEl.name) : _L('— racine');
     parSpan.style.cssText+='color:var(--c-dim)';
     propRow('Parent', parSpan);
   } else {
     const parSel=document.createElement('select'); parSel.className='inp prop-val-edit';
-    const oRoot=document.createElement('option'); oRoot.value='racine'; oRoot.textContent='— racine';
+    const oRoot=document.createElement('option'); oRoot.value='racine'; oRoot.textContent=_L('— racine');
     if (!el.parentEl) oRoot.selected=true; parSel.appendChild(oRoot);
     const pkgEls=MODEL.elements.filter(e=>e.type==='Package'&&e.id!==el.id);
     if (pkgEls.length) {
-      const gp=document.createElement('optgroup'); gp.label='📂 Packages';
+      const gp=document.createElement('optgroup'); gp.label=_L('📂 Packages');
       pkgEls.forEach(pe=>{ const o=document.createElement('option'); o.value='el:'+pe.id; o.textContent='📂 '+pe.name; if(el.parentEl===pe.id) o.selected=true; gp.appendChild(o); });
       parSel.appendChild(gp);
     }
     const nonPkg=MODEL.elements.filter(e=>e.type!=='Package'&&e.id!==el.id);
     if (nonPkg.length) {
-      const ge=document.createElement('optgroup'); ge.label='Éléments';
+      const ge=document.createElement('optgroup'); ge.label=_L('Éléments');
       nonPkg.forEach(e=>{ const o=document.createElement('option'); o.value='el:'+e.id; o.textContent=typeIcon(e.type)+' '+e.name; if(el.parentEl===e.id) o.selected=true; ge.appendChild(o); });
       parSel.appendChild(ge);
     }
@@ -137,7 +137,7 @@ function buildPropertiesPanel() {
       sep.style.cssText='height:1px;background:var(--c-border);margin:8px 0';
       body.appendChild(sep);
       const hdr=document.createElement('div');
-      hdr.textContent='Attributs Capella';
+      hdr.textContent=_L('Attributs Capella');
       hdr.style.cssText='font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--c-dim);margin-bottom:4px';
       body.appendChild(hdr);
       Object.entries({layer:capEl.layer, fullType:capEl.fullType, ...capEl.attrs}).forEach(([k,v])=>{
@@ -295,14 +295,14 @@ function buildArbo() {
     const acts=document.createElement('span'); acts.className='arbo-acts';
     if (RM_RO) { /* lecture seule : pas d'action d'édition */ }
     else if (isPkg) {
-      acts.appendChild(mkAct('✎','Renommer', ()=>_arboInlineRename(nm, v=>arboRenameEl(el,v))));
-      acts.appendChild(mkAct('📂+','Ajouter un sous-package', ()=>arboAddPkg(el.id)));
-      acts.appendChild(mkAct('+el','Ajouter un élément',      ()=>arboAddEl(el.id, null)));
-      acts.appendChild(mkAct('✕','Supprimer ce package',      ()=>arboDeleteEl(el.id)));
+      acts.appendChild(mkAct('✎',_L('Renommer'), ()=>_arboInlineRename(nm, v=>arboRenameEl(el,v))));
+      acts.appendChild(mkAct('📂+',_L('Ajouter un sous-package'), ()=>arboAddPkg(el.id)));
+      acts.appendChild(mkAct('+el',_L('Ajouter un élément'),      ()=>arboAddEl(el.id, null)));
+      acts.appendChild(mkAct('✕',_L('Supprimer ce package'),      ()=>arboDeleteEl(el.id)));
     } else {
-      acts.appendChild(mkAct('✎','Renommer', ()=>_arboInlineRename(nm, v=>arboRenameEl(el,v))));
-      acts.appendChild(mkAct('+','Ajouter un sous-élément', ()=>arboAddEl(null, el.id)));
-      acts.appendChild(mkAct('✕','Supprimer',              ()=>arboDeleteEl(el.id)));
+      acts.appendChild(mkAct('✎',_L('Renommer'), ()=>_arboInlineRename(nm, v=>arboRenameEl(el,v))));
+      acts.appendChild(mkAct('+',_L('Ajouter un sous-élément'), ()=>arboAddEl(null, el.id)));
+      acts.appendChild(mkAct('✕',_L('Supprimer'),              ()=>arboDeleteEl(el.id)));
     }
     row.appendChild(acts);
 
@@ -355,7 +355,7 @@ function buildArbo() {
 
   if (!RM_RO) {
     const addRoot=document.createElement('div');
-    addRoot.className='add-btn'; addRoot.textContent='📂 Nouveau package racine';
+    addRoot.className='add-btn'; addRoot.textContent=_L('📂 Nouveau package racine');
     addRoot.onclick=()=>arboAddPkg(null);
     body.appendChild(addRoot);
   }
@@ -384,8 +384,8 @@ function arboRenameEl(el, newName) {
 
 /** Crée un nouveau package (type='Package') enfant d'un élément existant. */
 function arboAddPkg(parentElId) {
-  let name='Nouveau package', i=1;
-  while(MODEL.elements.some(e=>e.type==='Package'&&e.name===name)) name='Nouveau package '+i++;
+  let name=_L('Nouveau package'), i=1;
+  while(MODEL.elements.some(e=>e.type==='Package'&&e.name===name)) name=_L('Nouveau package ')+i++;
   const id='pkg-'+Date.now();
   const parentEl=parentElId?MODEL.elements.find(e=>e.id===parentElId):null;
   const el={id, name, type:'Package', pkg:parentEl?parentEl.name:name};
@@ -403,7 +403,7 @@ function arboAddEl(pkgElId, parentElId) {
   const parentEl=parentElId?MODEL.elements.find(e=>e.id===parentElId):null;
   const pkgEl=pkgElId?MODEL.elements.find(e=>e.id===pkgElId):null;
   const pkg=(pkgEl?.name||parentEl?.pkg||'');
-  const el={id, name:'Nouvel élément', type, pkg};
+  const el={id, name:_L('Nouvel élément'), type, pkg};
   const actualParent=parentElId||pkgElId;
   if(actualParent) { el.parentEl=actualParent; arboCollapsed.delete('el:'+actualParent); }
   MODEL.elements.push(el);
@@ -415,7 +415,7 @@ function arboAddEl(pkgElId, parentElId) {
 function arboDeleteEl(elId) {
   const el=MODEL.elements.find(e=>e.id===elId); if(!el) return;
   const kids=MODEL.elements.filter(e=>e.parentEl===elId);
-  if(kids.length){ if(!confirm(`"${el.name}" contient ${kids.length} enfant(s). Supprimer ?`)) return; }
+  if(kids.length){ if(!confirm(_L(`"${el.name}" contient ${kids.length} enfant(s). Supprimer ?`))) return; }
   /** Supprime récursivement un élément et toute sa descendance du modèle.
    */
   function delRec(id) {
@@ -438,7 +438,7 @@ function arboUpdateMselBar(){
   const cnt=document.getElementById('arbo-msel-count');
   if(arboMultiSel.size>1){
     bar.style.display='flex';
-    if(cnt) cnt.textContent=RM_RO ? `${arboMultiSel.size} éléments sélectionnés` : `${arboMultiSel.size} éléments sélectionnés — glisser pour déplacer le groupe`;
+    if(cnt) cnt.textContent=RM_RO ? _L(`${arboMultiSel.size} éléments sélectionnés`) : _L(`${arboMultiSel.size} éléments sélectionnés — glisser pour déplacer le groupe`);
   } else bar.style.display='none';
 }
 
@@ -453,7 +453,7 @@ function arboMoveEls(srcIds, tgtId){
   const isDescendantOfSel=el=>{ let cur=byId(el.parentEl); let d=0; while(cur&&d<50){ if(set.has(cur.id)) return true; cur=byId(cur.parentEl); d++; } return false; };
   const roots=[...set].map(byId).filter(Boolean).filter(el=>!isDescendantOfSel(el));
   // La cible ne doit être ni dans la sélection ni descendante d'une racine déplacée (cycle)
-  for(const r of roots){ let cur=tgt; let d=0; while(cur&&d<50){ if(cur.id===r.id){ alert('Déplacement impossible : la cible est à l\'intérieur de la sélection.'); return; } cur=byId(cur.parentEl); d++; } }
+  for(const r of roots){ let cur=tgt; let d=0; while(cur&&d<50){ if(cur.id===r.id){ alert(_L('Déplacement impossible : la cible est à l\'intérieur de la sélection.')); return; } cur=byId(cur.parentEl); d++; } }
   /** Remonte la hiérarchie pour retrouver le nom du package conteneur d'un élément.
    */
   function findPkg(id){ const e=byId(id); if(!e) return ''; if(e.type==='Package') return e.name; return e.pkg||findPkg(e.parentEl); }
@@ -534,19 +534,19 @@ function arboShowCtxMenu(ev, el){
   // ── Coller la liste (uniquement si sélection unique) ──
   if(selIds.length===1){
     const pasteItem=document.createElement('div'); pasteItem.className='acm-item';
-    pasteItem.textContent='📋 Coller la liste ici (1 ligne = 1 élément)';
+    pasteItem.textContent=_L('📋 Coller la liste ici (1 ligne = 1 élément)');
     pasteItem.onclick=()=>{
       menu.style.display='none';
       if(!navigator.clipboard||!navigator.clipboard.readText){
-        alert("Lecture du presse-papier non disponible dans ce navigateur — utilisez Ctrl+V sur l'élément sélectionné.");
+        alert(_L("Lecture du presse-papier non disponible dans ce navigateur — utilisez Ctrl+V sur l'élément sélectionné."));
         return;
       }
       navigator.clipboard.readText().then(text=>{
         const names=arboParseClipboardList(text);
-        if(!names.length){ alert('Le presse-papier ne contient aucune ligne de texte exploitable.'); return; }
+        if(!names.length){ alert(_L('Le presse-papier ne contient aucune ligne de texte exploitable.')); return; }
         arboPasteListInto(selIds[0], names);
       }).catch(()=>{
-        alert("Accès au presse-papier refusé — utilisez Ctrl+V sur l'élément sélectionné.");
+        alert(_L("Accès au presse-papier refusé — utilisez Ctrl+V sur l'élément sélectionné."));
       });
     };
     menu.appendChild(pasteItem);
@@ -556,13 +556,13 @@ function arboShowCtxMenu(ev, el){
   const convertibleIds=selIds.filter(id=>{ const e=MODEL.elements.find(x=>x.id===id); return e && e.type!=='Package'; });
   if(convertibleIds.length){
     const convItem=document.createElement('div'); convItem.className='acm-item'; convItem.style.position='relative';
-    convItem.innerHTML=`<span style="display:flex;align-items:center;justify-content:space-between;gap:10px;"><span>🔄 Convert to…${convertibleIds.length>1?` <span style="color:var(--c-dim);font-size:10px">(${convertibleIds.length} élts)</span>`:''}</span><span style="color:var(--c-dim);">▶</span></span>`;
+    convItem.innerHTML=_L(`<span style="display:flex;align-items:center;justify-content:space-between;gap:10px;"><span>🔄 Convert to…${convertibleIds.length>1?_L(` <span style="color:var(--c-dim);font-size:10px">(${convertibleIds.length} élts)</span>`):''}</span><span style="color:var(--c-dim);">▶</span></span>`);
 
     const sub=document.createElement('div');
     sub.style.cssText='position:absolute;top:-5px;left:100%;margin-left:2px;background:var(--c-bg3);border:1px solid var(--c-border);border-radius:7px;box-shadow:0 6px 18px rgba(0,0,0,.35);min-width:230px;max-height:340px;display:none;flex-direction:column;overflow:hidden;z-index:501;';
     const searchWrap=document.createElement('div'); searchWrap.style.cssText='padding:6px;border-bottom:1px solid var(--c-border);';
     const search=document.createElement('input'); search.className='inp';
-    search.placeholder='🔍 Filtrer les types…'; search.style.cssText='width:100%;font-size:11px;padding:4px 8px;box-sizing:border-box;';
+    search.placeholder=_L('🔍 Filtrer les types…'); search.style.cssText='width:100%;font-size:11px;padding:4px 8px;box-sizing:border-box;';
     search.onclick=e=>e.stopPropagation();
     searchWrap.appendChild(search); sub.appendChild(searchWrap);
     const list=document.createElement('div'); list.style.cssText='overflow-y:auto;flex:1;padding:4px 0;'; sub.appendChild(list);
@@ -577,7 +577,7 @@ function arboShowCtxMenu(ev, el){
       list.innerHTML='';
       const ql=(q||'').trim().toLowerCase();
       const filtered=allTypes.filter(t=>!ql||t.toLowerCase().includes(ql));
-      if(!filtered.length){ const none=document.createElement('div'); none.className='acm-dim'; none.textContent='Aucun type ne correspond.'; list.appendChild(none); return; }
+      if(!filtered.length){ const none=document.createElement('div'); none.className='acm-dim'; none.textContent=_L('Aucun type ne correspond.'); list.appendChild(none); return; }
       filtered.forEach(t=>{
         const it=document.createElement('div'); it.className='acm-item';
         it.style.cssText='display:flex;align-items:center;gap:7px;';
@@ -609,7 +609,7 @@ function arboShowCtxMenu(ev, el){
 
   if(selIds.length===1){
     const hint=document.createElement('div'); hint.className='acm-dim';
-    hint.textContent="Astuce : Ctrl+V fonctionne aussi sur l'élément sélectionné.";
+    hint.textContent=_L("Astuce : Ctrl+V fonctionne aussi sur l'élément sélectionné.");
     menu.appendChild(hint);
   }
 

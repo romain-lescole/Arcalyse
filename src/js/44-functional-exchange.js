@@ -16,7 +16,7 @@ var _capFexGo=null;   // fonction à afficher à la prochaine ouverture de la vu
  */
 function capBlkThemeHint(){
   if(capIsLight()) return '';
-  return `<div class="ana-dim" style="font-size:11px;margin:2px 0 6px;">💡 Les blocs sont plus lisibles, et plus proches du rendu Capella, avec le thème <b>Office 2007</b> ou <b>Clair</b> (menu 🎨 Thème ▾).</div>`;
+  return _L(`<div class="ana-dim" style="font-size:11px;margin:2px 0 6px;">💡 Les blocs sont plus lisibles, et plus proches du rendu Capella, avec le thème <b>Office 2007</b> ou <b>Clair</b> (menu 🎨 Thème ▾).</div>`);
 }
 
 /** Géométrie d'un côté de bloc (Vues Blocs) : une ligne par pin ou port, plus haute quand il a plusieurs
@@ -97,22 +97,22 @@ function capFexChecks(layer){
   const fes=X.list.filter(inL), fns=X.fns.filter(inL);
   const fl=(id,n)=>`<span class="cex-det" style="cursor:pointer" onclick="capOpenDetailById('${capEsc(id)}')">${capEsc(n)}</span>`;
   const exRow=x=>`<tr><td>#${x.num}</td><td>${fl(x.id,x.name)}</td><td>${fl(x.src.fnId,x.src.fnName)}</td><td>${fl(x.tgt.fnId,x.tgt.fnName)}</td><td>${x.layer}</td></tr>`;
-  const exCols=['N°','Functional Exchange','Fonction source','Fonction cible','Couche'];
+  const exCols=['N°',_L('Functional Exchange'),_L('Fonction source'),_L('Fonction cible'),_L('Couche')];
   const orphan=[]; fns.forEach(f=>[...f.ins.map(p=>({...p,dir:'IN'})),...f.outs.map(p=>({...p,dir:'OUT'}))].forEach(p=>{ if(!(X.portFes[p.id]||[]).length) orphan.push({f,p}); }));
   const leafNoFe=fns.filter(f=>f.leaf&&f.parentId&&!f.fesIn.length&&!f.fesOut.length);
   const parentPorts=fns.filter(f=>!f.leaf&&(f.ins.length||f.outs.length));
   const noPort=fes.filter(x=>x.layer!=='OA'&&(!x.src.portId||!x.tgt.portId));   // en OA, les échanges relient directement les activités
   const sec=[
-    {icon:'⭘', title:'Ports de fonction orphelins (sans échange)', tip:'Function Port défini mais relié à aucun Functional Exchange', cols:['Fonction','Port','Sens','Couche'],
-      items:orphan.map(o=>`<tr><td>${fl(o.f.id,o.f.name)}</td><td>${fl(o.p.id,o.p.name)}</td><td>${o.p.dir==='IN'?'▶ entrée':'sortie ▶'}</td><td>${o.f.layer}</td></tr>`)},
-    {icon:'∅', title:'Échanges sans Exchange Item', tip:'Aucun Exchange Item porté (exchangedItems)', cols:exCols, items:fes.filter(x=>!x.items.length).map(exRow)},
-    {icon:'ƒ', title:'Fonctions feuilles sans aucun échange', tip:'Fonction sans sous-fonction, ni entrée ni sortie', cols:['N°','Fonction','Couche'],
+    {icon:'⭘', title:_L('Ports de fonction orphelins (sans échange)'), tip:_L('Function Port défini mais relié à aucun Functional Exchange'), cols:[_L('Fonction'),_L('Port'),_L('Sens'),_L('Couche')],
+      items:orphan.map(o=>`<tr><td>${fl(o.f.id,o.f.name)}</td><td>${fl(o.p.id,o.p.name)}</td><td>${o.p.dir==='IN'?_L('▶ entrée'):_L('sortie ▶')}</td><td>${o.f.layer}</td></tr>`)},
+    {icon:'∅', title:_L('Échanges sans Exchange Item'), tip:_L('Aucun Exchange Item porté (exchangedItems)'), cols:exCols, items:fes.filter(x=>!x.items.length).map(exRow)},
+    {icon:'ƒ', title:_L('Fonctions feuilles sans aucun échange'), tip:_L('Fonction sans sous-fonction, ni entrée ni sortie'), cols:['N°',_L('Fonction'),_L('Couche')],
       items:leafNoFe.map(f=>`<tr><td>${capEsc(f.num)}</td><td>${fl(f.id,f.name)}</td><td>${f.layer}</td></tr>`)},
-    {icon:'▣', title:'Fonctions mères portant des ports', tip:'Bonne pratique Capella : les ports et échanges sont portés par les fonctions feuilles', cols:['N°','Fonction','Ports','Couche'],
+    {icon:'▣', title:_L('Fonctions mères portant des ports'), tip:_L('Bonne pratique Capella : les ports et échanges sont portés par les fonctions feuilles'), cols:['N°',_L('Fonction'),_L('Ports'),_L('Couche')],
       items:parentPorts.map(f=>`<tr><td>${capEsc(f.num)}</td><td>${fl(f.id,f.name)}</td><td>${f.ins.length} ▶ / ${f.outs.length} ▶</td><td>${f.layer}</td></tr>`)}
   ];
-  if(noPort.length) sec.push({icon:'⚠', title:'Échanges reliés directement à une fonction (sans port)', tip:'Source ou cible sans Function Port (hors OA, où c\'est la règle)', cols:exCols, items:noPort.map(exRow)});
-  if(X.ceUsed) sec.push({icon:'🔀', title:'Échanges LA / PA non alloués à un Component Exchange', tip:'Aucune ComponentExchangeFunctionalExchangeAllocation (le modèle en utilise ailleurs)', cols:exCols,
+  if(noPort.length) sec.push({icon:'⚠', title:_L('Échanges reliés directement à une fonction (sans port)'), tip:_L('Source ou cible sans Function Port (hors OA, où c\'est la règle)'), cols:exCols, items:noPort.map(exRow)});
+  if(X.ceUsed) sec.push({icon:'🔀', title:_L('Échanges LA / PA non alloués à un Component Exchange'), tip:_L('Aucune ComponentExchangeFunctionalExchangeAllocation (le modèle en utilise ailleurs)'), cols:exCols,
     items:fes.filter(x=>(x.layer==='LA'||x.layer==='PA')&&!x.ces.length&&x.src.fnId!==x.tgt.fnId).map(exRow)});
   return sec;
 }
@@ -123,10 +123,10 @@ function capFexChecks(layer){
  */
 function capFexDashCatalog(add, LC){
   const X=()=>capComputeFunctionalExchanges();
-  add('Functional Exchange','fex.n','Functional Exchanges — nombre','n',()=>({n:X().list.length, sub:`${X().fns.filter(f=>f.ins.length||f.outs.length).length} fonction(s) avec ports`}));
-  add('Functional Exchange','fex.layer','Functional Exchanges — par couche','series',()=>({order:'natural',cats:CAP_ANA_LAYERS.map(k=>({l:k,v:X().list.filter(x=>x.layer===k).length,c:LC(k)})).filter(c=>c.v)}));
-  add('Functional Exchange','fex.items','Functional Exchanges — avec Exchange Item','pct',()=>capDashPct(X().list,x=>x.items.length));
-  add('Functional Exchange','fex.chk','Functional Exchanges — contrôles','series',()=>({cats:capFexChecks().map(s=>({l:s.title,v:s.items.length})).filter(c=>c.v).sort((a,b)=>b.v-a.v)}));
+  add(_L('Functional Exchange'),'fex.n',_L('Functional Exchanges — nombre'),'n',()=>({n:X().list.length, sub:_L(`${X().fns.filter(f=>f.ins.length||f.outs.length).length} fonction(s) avec ports`)}));
+  add(_L('Functional Exchange'),'fex.layer',_L('Functional Exchanges — par couche'),'series',()=>({order:'natural',cats:CAP_ANA_LAYERS.map(k=>({l:k,v:X().list.filter(x=>x.layer===k).length,c:LC(k)})).filter(c=>c.v)}));
+  add(_L('Functional Exchange'),'fex.items',_L('Functional Exchanges — avec Exchange Item'),'pct',()=>capDashPct(X().list,x=>x.items.length));
+  add(_L('Functional Exchange'),'fex.chk',_L('Functional Exchanges — contrôles'),'series',()=>({cats:capFexChecks().map(s=>({l:s.title,v:s.items.length})).filter(c=>c.v).sort((a,b)=>b.v-a.v)}));
 }
 
 /** Rend la vue ƒ⇆ Functional Exchange (barre, filtres, contenu paginé, exports). */
@@ -141,8 +141,8 @@ function capRenderFunctionalExchange(mode){
   if(OAV) st.layer='OA';
   const keepView=()=>{ if(OAV) _capOavView=st.view; else _capFexView=st.view; };
   /** Vocabulaire : activités / entités en OA, fonctions / système sinon. */
-  const W=OAV?{fns:'activités', Fns:'Activités', fn:'activité', Fn:'Activité'}:{fns:'fonctions', Fns:'Fonctions', fn:'fonction', Fn:'Fonction'};
-  const AKL=k=>OAV&&k==='sys'?{i:'🏢',l:'Entités',tip:'Activités allouées à une entité opérationnelle (non acteur)'}:CAP_FN_AK[k];
+  const W=OAV?{fns:_L('activités'), Fns:_L('Activités'), fn:_L('activité'), Fn:_L('Activité')}:{fns:_L('fonctions'), Fns:_L('Fonctions'), fn:_L('fonction'), Fn:_L('Fonction')};
+  const AKL=k=>OAV&&k==='sys'?{i:'🏢',l:_L('Entités'),tip:_L('Activités allouées à une entité opérationnelle (non acteur)')}:CAP_FN_AK[k];
   const isLight=capIsLight();
   const LAYER_C={OA:'#f0883e',SA:'#4dd880',LA:'#58a6ff',PA:'#e3b341'};
   const fnColor=L=>isLight?({OA:'#a04d00',SA:'#1a7a3a',LA:'#1a4f8a',PA:'#7a6500'}[L]||'#555'):(LAYER_C[L]||'#8b949e');
@@ -179,11 +179,11 @@ function capRenderFunctionalExchange(mode){
     const opt=(o,d,ic)=>`<option value="${capEsc(o.id)}"${st.who===o.id?' selected':''}>${'\u00a0\u00a0'.repeat(d)}${ic} ${capEsc(pre(o)+o.name)} (${o.fns.size})</option>`;
     const tree=(id,d)=>{ const o=who.comp.get(id); return opt(o,d,d?'└':(oa?'🏢':'🧩'))+[...(who.kids.get(id)||[])].sort((a,b)=>who.comp.get(a).name.localeCompare(who.comp.get(b).name)).map(k=>tree(k,d+1)).join(''); };
     const acts=[...who.act.values()].sort((a,b)=>a.name.localeCompare(b.name));
-    return `<select id="fex-who" class="phl-filter-input" style="max-width:230px${st.who?';border-color:var(--c-accent)':''}" title="Fonctions allouées à ${oa?'une entité ou un acteur opérationnel':'un acteur, ou au système / à un sous-système'} (sous-composants compris)">
-      <option value="">${oa?'Toutes les entités et acteurs':'Tous les allocataires'}</option>
-      ${acts.length?`<optgroup label="👤 ${oa?'Acteurs opérationnels':'Acteurs'}">${acts.map(o=>opt(o,0,'👤')).join('')}</optgroup>`:''}
-      ${who.comp.size?`<optgroup label="${oa?'🏢 Entités':'🧩 Système / sous-systèmes'}">${[...who.roots].map(r=>tree(r,0)).join('')}</optgroup>`:''}
-    </select>${st.who?'<button class="cap-lf-btn" id="fex-who-x" title="Retirer le filtre d\'allocataire">✕</button>':''}`;
+    return _L(`<select id="fex-who" class="phl-filter-input" style="max-width:230px${st.who?';border-color:var(--c-accent)':''}" title="Fonctions allouées à ${oa?_L('une entité ou un acteur opérationnel'):_L('un acteur, ou au système / à un sous-système')} (sous-composants compris)">
+      <option value="">${oa?_L('Toutes les entités et acteurs'):_L('Tous les allocataires')}</option>
+      ${acts.length?`<optgroup label="👤 ${oa?_L('Acteurs opérationnels'):_L('Acteurs')}">${acts.map(o=>opt(o,0,'👤')).join('')}</optgroup>`:''}
+      ${who.comp.size?`<optgroup label="${oa?_L('🏢 Entités'):_L('🧩 Système / sous-systèmes')}">${[...who.roots].map(r=>tree(r,0)).join('')}</optgroup>`:''}
+    </select>${st.who?_L('<button class="cap-lf-btn" id="fex-who-x" title="Retirer le filtre d\'allocataire">✕</button>'):''}`);
   };
   /** Échanges retenus par les filtres. */
   function getFiltered(){
@@ -211,14 +211,14 @@ function capRenderFunctionalExchange(mode){
     });
   }
   /** Pin d'un port façon Capella (entrée verte, sortie orange). */
-  const pin=(dir,orphan)=>`<span class="fex-pin fex-pin-${dir==='IN'?'in':'out'}${orphan?' fex-pin-orphan':''}" title="${dir==='IN'?'Function Input Port':'Function Output Port'}${orphan?' — non connecté':''}">▶</span>`;
+  const pin=(dir,orphan)=>`<span class="fex-pin fex-pin-${dir==='IN'?'in':'out'}${orphan?' fex-pin-orphan':''}" title="${dir==='IN'?_L('Function Input Port'):_L('Function Output Port')}${orphan?_L(' — non connecté'):''}">▶</span>`;
   /** Ligne d'informations secondaires d'un échange (Exchange Items, Component Exchanges, chaînes). */
   function infoLine(x){
     const parts=[];
     if(x.items.length) parts.push(`<span title="Exchange Items">▤ ${capFoldList(x.items.map(i=>det(i.id,i.name)))}</span>`);
-    else parts.push(`<span title="Aucun Exchange Item" style="color:var(--c-warn,#e3b341)">∅ Item</span>`);
-    if(x.ces.length) parts.push(`<span title="Component Exchanges qui allouent cet échange">🔀 ${capFoldList(x.ces.map(c=>det(c.id,c.name)))}</span>`);
-    if(x.chains.length) parts.push(`<span title="Chaînes fonctionnelles">⚡ ${capFoldList(x.chains.map(c=>det(c.id,c.name)))}</span>`);
+    else parts.push(_L(`<span title="Aucun Exchange Item" style="color:var(--c-warn,#e3b341)">∅ Item</span>`));
+    if(x.ces.length) parts.push(_L(`<span title="Component Exchanges qui allouent cet échange">🔀 ${capFoldList(x.ces.map(c=>det(c.id,c.name)))}</span>`));
+    if(x.chains.length) parts.push(_L(`<span title="Chaînes fonctionnelles">⚡ ${capFoldList(x.chains.map(c=>det(c.id,c.name)))}</span>`));
     return `<div style="font-size:11.5px;color:var(--c-dim);display:flex;flex-wrap:wrap;gap:2px 10px;justify-content:center;max-width:100%;">${parts.join('')}</div>`;
   }
 
@@ -229,7 +229,7 @@ function capRenderFunctionalExchange(mode){
       return `<div class="phl-line" data-lid="${capEsc(x.id)}">
         <div class="phl-cell phl-cell-pc" style="--phl-c:${sc}">
           ${det(x.src.fnId,fnLabel(x.src.fnNum,x.src.fnName),`color:${capTextOn(sc)}`,'phl-pc-name')}
-          <span class="phl-port-name">${x.src.portId?pin('OUT')+' '+capEsc(x.src.portName):'<i>sans port</i>'}</span>
+          <span class="phl-port-name">${x.src.portId?pin('OUT')+' '+capEsc(x.src.portName):_L('<i>sans port</i>')}</span>
         </div>
         <div class="phl-cell phl-cell-link" style="padding:6px 14px;gap:2px;">
           <span style="font-size:11.5px;color:var(--c-dim);font-family:monospace;">#${x.num} · ${x.layer}</span>
@@ -243,7 +243,7 @@ function capRenderFunctionalExchange(mode){
         </div>
         <div class="phl-cell phl-cell-pc phl-cell-r" style="--phl-c:${tc}">
           ${det(x.tgt.fnId,fnLabel(x.tgt.fnNum,x.tgt.fnName),`color:${capTextOn(tc)}`,'phl-pc-name')}
-          <span class="phl-port-name">${x.tgt.portId?pin('IN')+' '+capEsc(x.tgt.portName):'<i>sans port</i>'}</span>
+          <span class="phl-port-name">${x.tgt.portId?pin('IN')+' '+capEsc(x.tgt.portName):_L('<i>sans port</i>')}</span>
         </div>
       </div>`;
     }).join('');
@@ -263,22 +263,22 @@ function capRenderFunctionalExchange(mode){
   }
   /** Vue Fonction : une carte dépliable par fonction. */
   function buildCards(groups, open){
-    const R={out:{a:'→',c:'#f0883e',l:'ÉMET →',t:'Sortie — la fonction émet l\'échange'},in:{a:'←',c:'#4dd880',l:'← REÇOIT',t:'Entrée — la fonction reçoit l\'échange'}};
+    const R={out:{a:'→',c:'#f0883e',l:_L('ÉMET →'),t:_L('Sortie — la fonction émet l\'échange')},in:{a:'←',c:'#4dd880',l:_L('← REÇOIT'),t:_L('Entrée — la fonction reçoit l\'échange')}};
     return groups.map(g=>{
       const c=fnColor(g.layer), nOut=g.rows.filter(r=>r.role==='out').length, nIn=g.rows.length-nOut;
       const rows=g.rows.map(({x,role,me,other})=>{ const r=R[role], oc=fnColor(other.layer);
         return `<div class="phl-link-row">
           <span style="font-size:10px;color:var(--c-dim);font-family:monospace;min-width:28px;">#${x.num}</span>
           <span title="${r.t}" style="font-size:9px;font-weight:700;color:${r.c};min-width:58px;">${r.l}</span>
-          <span class="phl-lr-port-src">${me.portId?pin(role==='out'?'OUT':'IN')+' '+capEsc(me.portName):'<i>sans port</i>'}</span>
+          <span class="phl-lr-port-src">${me.portId?pin(role==='out'?'OUT':'IN')+' '+capEsc(me.portName):_L('<i>sans port</i>')}</span>
           <span class="phl-lr-arrow" style="color:${r.c};font-weight:700;">${r.a}</span>
-          <span class="phl-lr-link" style="background:${lc(x)};color:#fff;border-color:${lc(x)};cursor:pointer;" title="${capEsc(x.items.map(i=>i.name).join(', ')||'Aucun Exchange Item')}" onclick="event.stopPropagation();capOpenDetailById('${capEsc(x.id)}')">${capEsc(x.name)}</span>
+          <span class="phl-lr-link" style="background:${lc(x)};color:#fff;border-color:${lc(x)};cursor:pointer;" title="${capEsc(x.items.map(i=>i.name).join(', ')||_L('Aucun Exchange Item'))}" onclick="event.stopPropagation();capOpenDetailById('${capEsc(x.id)}')">${capEsc(x.name)}</span>
           <span class="phl-lr-arrow" style="color:${r.c};font-weight:700;">${r.a}</span>
-          <span class="phl-lr-port-tgt">${other.portId?pin(role==='out'?'IN':'OUT')+' '+capEsc(other.portName):'<i>sans port</i>'}</span>
+          <span class="phl-lr-port-tgt">${other.portId?pin(role==='out'?'IN':'OUT')+' '+capEsc(other.portName):_L('<i>sans port</i>')}</span>
           ${det(other.fnId,fnLabel(other.fnNum,other.fnName),`color:${oc}`,'phl-lr-comp-tgt')}
         </div>`; }).join('');
       const o=open?' open':'';
-      return `<div class="phl-comp-card">
+      return _L(`<div class="phl-comp-card">
         <div class="phl-comp-hdr${o}" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open');this.querySelector('.phl-comp-toggle').classList.toggle('open')">
           <span class="phl-comp-badge" style="background:${c};color:${capInk(c)}">${capEsc(capAnaHuman(g.type))}</span>
           <span class="phl-comp-title" style="color:${capTextOn(c)}">${capEsc(fnLabel(g.num,g.name))}</span>
@@ -286,7 +286,7 @@ function capRenderFunctionalExchange(mode){
           <span class="phl-comp-toggle${o}">▶</span>
         </div>
         <div class="phl-comp-body${o}">${rows}</div>
-      </div>`;
+      </div>`);
     }).join('');
   }
 
@@ -304,19 +304,19 @@ function capRenderFunctionalExchange(mode){
       const gIn=capBlkRows(ins.map(e=>e.xs.length)), gOut=capBlkRows(outs.map(e=>e.xs.length));
       const side=(list,dir)=>list.map((e,i)=>{
         const items=e.xs.map(x=>{ const o=dir==='IN'?x.src:x.tgt;
-          return `${det(x.id,x.name,`color:${lc(x)};font-weight:600`)} <span class="fex-dim">${dir==='IN'?'de':'vers'}</span> <span class="fex-go" data-go="${capEsc(o.fnId)}" title="Aller au bloc de cette fonction" style="color:${capTextOn(AKC[akOf(o.fnId)])}">${capEsc(fnLabel(o.fnNum,o.fnName))}</span>`; });
-        const tip=[e.real?e.name:'(échange relié directement à la fonction, sans port)',...e.xs.map(x=>{ const o=dir==='IN'?x.src:x.tgt; return `${x.name} ${dir==='IN'?'de':'vers'} ${o.fnName}`; })].join('\n');
-        return capBlkSide(items,'<span class="fex-dim"><i>non connecté</i></span>',(dir==='IN'?gIn:gOut).hs[i],tip);
+          return _L(`${det(x.id,x.name,`color:${lc(x)};font-weight:600`)} <span class="fex-dim">${dir==='IN'?_L('de'):_L('vers')}</span> <span class="fex-go" data-go="${capEsc(o.fnId)}" title="Aller au bloc de cette fonction" style="color:${capTextOn(AKC[akOf(o.fnId)])}">${capEsc(fnLabel(o.fnNum,o.fnName))}</span>`); });
+        const tip=[e.real?e.name:_L('(échange relié directement à la fonction, sans port)'),...e.xs.map(x=>{ const o=dir==='IN'?x.src:x.tgt; return `${x.name} ${dir==='IN'?_L('de'):_L('vers')} ${o.fnName}`; })].join('\n');
+        return capBlkSide(items,_L('<span class="fex-dim"><i>non connecté</i></span>'),(dir==='IN'?gIn:gOut).hs[i],tip);
       }).join('');
-      const pins=(list,dir)=>list.map((e,i)=>`<span class="fex-bpin" style="top:${(dir==='IN'?gIn:gOut).tops[i]}px">${e.real?pin(dir,!e.xs.length):`<span class="fex-pin fex-pin-${dir==='IN'?'in':'out'} fex-pin-virt" title="Échange relié directement à la fonction (sans port)">▶</span>`}<span class="fex-pname">${capEsc(e.name)}</span></span>`).join('');
-      const ak=akOf(f.id), akT={sys:'allouée au système',act:'allouée à un acteur',none:f.leaf?'non allouée':'fonction mère (non allouée)'}[ak];
+      const pins=(list,dir)=>list.map((e,i)=>`<span class="fex-bpin" style="top:${(dir==='IN'?gIn:gOut).tops[i]}px">${e.real?pin(dir,!e.xs.length):_L(`<span class="fex-pin fex-pin-${dir==='IN'?'in':'out'} fex-pin-virt" title="Échange relié directement à la fonction (sans port)">▶</span>`)}<span class="fex-pname">${capEsc(e.name)}</span></span>`).join('');
+      const ak=akOf(f.id), akT={sys:_L('allouée au système'),act:_L('allouée à un acteur'),none:f.leaf?_L('non allouée'):_L('fonction mère (non allouée)')}[ak];
       return `<div class="fex-blk" data-fn="${capEsc(f.id)}" style="--fex-h:${Math.max(74,44+Math.max(gIn.total,gOut.total))}px">
         <div class="fex-side fex-side-in">${side(ins,'IN')}</div>
         <div class="fex-box fex-k-${ak}" data-layer="${f.layer}" title="${capEsc(capAnaHuman(f.type))} — ${f.layer} — ${akT}${f.alloc.length?' : '+capEsc(f.alloc.map(a=>a.name).join(', ')):''}">
           <div class="fex-box-t">${OAV?'<span class="fex-oa-ic">OA</span>':''}${det(f.id,fnLabel(f.num,f.name))}</div>
           ${attachHtml(f)}
           <div class="fex-pins-in">${pins(ins,'IN')}</div><div class="fex-pins-out">${pins(outs,'OUT')}</div>
-          ${!ins.length&&!outs.length?'<div class="fex-box-empty">aucun port ni échange</div>':''}
+          ${!ins.length&&!outs.length?_L('<div class="fex-box-empty">aucun port ni échange</div>'):''}
         </div>
         <div class="fex-side fex-side-out">${side(outs,'OUT')}</div>
       </div>`;
@@ -327,9 +327,9 @@ function capRenderFunctionalExchange(mode){
    * (clic : leur bloc dans la vue de leur couche), sinon la fonction mère (clic : son bloc).
    * @param {object} f - Fonction @returns {string} HTML */
   function attachHtml(f){
-    if(f.alloc.length) return `<div class="fex-att">${f.alloc.map(a=>`<span class="fex-att-go" data-comp="${capEsc(a.id)}" title="Allouée à « ${capEsc(a.name)} » — clic : son bloc">${a.actor?'👤':'▣'} ${capEsc(a.name)}</span>`).join(' · ')}</div>`;
+    if(f.alloc.length) return `<div class="fex-att">${f.alloc.map(a=>_L(`<span class="fex-att-go" data-comp="${capEsc(a.id)}" title="Allouée à « ${capEsc(a.name)} » — clic : son bloc">${a.actor?'👤':'▣'} ${capEsc(a.name)}</span>`)).join(' · ')}</div>`;
     const pf=f.parentId&&X.fnById[f.parentId];
-    return pf?`<div class="fex-att"><span class="fex-dim">dans</span> <span class="fex-att-go" data-go="${capEsc(pf.id)}" title="Fonction mère — clic : son bloc">ƒ ${capEsc(fnLabel(pf.num,pf.name))}</span></div>`:'';
+    return pf?_L(`<div class="fex-att"><span class="fex-dim">dans</span> <span class="fex-att-go" data-go="${capEsc(pf.id)}" title="Fonction mère — clic : son bloc">ƒ ${capEsc(fnLabel(pf.num,pf.name))}</span></div>`):'';
   }
 
   /** Matrice fonction × fonction (CAP_FEX_MX_MAX fonctions au plus, les plus connectées). */
@@ -338,11 +338,11 @@ function capRenderFunctionalExchange(mode){
     const ids=Object.keys(deg); let keep=null, note='';
     if(ids.length>CAP_FEX_MX_MAX){
       keep=new Set(ids.sort((a,b)=>deg[b]-deg[a]).slice(0,CAP_FEX_MX_MAX));
-      note=`<div class="cap-mx-hint">⚠ ${ids.length} fonctions : pour rester fluide, la matrice en affiche ${CAP_FEX_MX_MAX} (les plus connectées). Filtrez par couche ou par fonction pour voir les autres.</div>`;
+      note=_L(`<div class="cap-mx-hint">⚠ ${ids.length} fonctions : pour rester fluide, la matrice en affiche ${CAP_FEX_MX_MAX} (les plus connectées). Filtrez par couche ou par fonction pour voir les autres.</div>`);
     }
     const L=list.filter(x=>!keep||(keep.has(x.src.fnId)&&keep.has(x.tgt.fnId))).map(x=>({x, dir:'fwd',
       src:{pcId:x.src.fnId, pcName:fnLabel(x.src.fnNum,x.src.fnName), layer:x.src.layer}, tgt:{pcId:x.tgt.fnId, pcName:fnLabel(x.tgt.fnNum,x.tgt.fnName), layer:x.tgt.layer}}));
-    const mx=capMatrixBuild(L,{directed:true, unit:'échanges', noun:'fonctions', corner:'Source ↓ / Cible →', colorOf:e=>capTextOn(fnColor(e.layer))});
+    const mx=capMatrixBuild(L,{directed:true, unit:_L('échanges'), noun:_L('fonctions'), corner:_L('Source ↓ / Cible →'), colorOf:e=>capTextOn(fnColor(e.layer))});
     container._fexCells=mx.cells;
     return note+mx.html;
   }
@@ -352,9 +352,9 @@ function capRenderFunctionalExchange(mode){
     const pages=Math.max(1,Math.ceil(items.length/CAP_FEX_PAGE));
     if(st.page>=pages) st.page=pages-1;
     const from=st.page*CAP_FEX_PAGE, slice=items.slice(from,from+CAP_FEX_PAGE);
-    const bar=pages>1?`<div class="fex-pager"><button class="cap-lf-btn" data-pg="-1"${st.page?'':' disabled'}>◀</button>
+    const bar=pages>1?_L(`<div class="fex-pager"><button class="cap-lf-btn" data-pg="-1"${st.page?'':' disabled'}>◀</button>
       <span>${unit} ${from+1}–${from+slice.length} sur ${items.length} · page ${st.page+1} / ${pages}</span>
-      <button class="cap-lf-btn" data-pg="1"${st.page<pages-1?'':' disabled'}>▶</button></div>`:'';
+      <button class="cap-lf-btn" data-pg="1"${st.page<pages-1?'':' disabled'}>▶</button></div>`):'';
     return {slice, bar};
   }
 
@@ -364,13 +364,13 @@ function capRenderFunctionalExchange(mode){
     if(view==='diag') return capDiagHtml(capFexChecks(st.layer));
     if(view==='block'){
       const fns=getFns();
-      if(!fns.length) return '<div class="phl-empty">Aucune fonction ne correspond au filtre.</div>';
+      if(!fns.length) return _L('<div class="phl-empty">Aucune fonction ne correspond au filtre.</div>');
       if(all) return buildBlocks(fns);
       const p=paged(fns,W.Fns), bf=st.back&&X.fnById[st.back];
-      const back=bf?`<div class="fex-backbar"><button class="cap-lf-btn" id="fex-back" title="Revenir au bloc d'où vous venez">↩ Revenir à « ${capEsc(fnLabel(bf.num,bf.name))} »</button></div>`:'';
+      const back=bf?_L(`<div class="fex-backbar"><button class="cap-lf-btn" id="fex-back" title="Revenir au bloc d'où vous venez">↩ Revenir à « ${capEsc(fnLabel(bf.num,bf.name))} »</button></div>`):'';
       return capBlkThemeHint()+back+p.bar+buildBlocks(p.slice)+p.bar;
     }
-    if(!list.length) return '<div class="phl-empty">Aucun functional exchange ne correspond au filtre.</div>';
+    if(!list.length) return _L('<div class="phl-empty">Aucun functional exchange ne correspond au filtre.</div>');
     if(view==='matrix') return buildMatrix(list);
     if(view==='card'){
       const groups=groupByFn(list);
@@ -378,7 +378,7 @@ function capRenderFunctionalExchange(mode){
       const p=paged(groups,W.Fns); return p.bar+buildCards(p.slice)+p.bar;
     }
     if(all) return buildLines(list);
-    const p=paged(list,'Échanges'); return p.bar+buildLines(p.slice)+p.bar;
+    const p=paged(list,_L('Échanges')); return p.bar+buildLines(p.slice)+p.bar;
   }
 
   /** Affiche le bloc d'une fonction (Vue Blocs) : change de page si besoin, relâche les filtres qui la masquent,
@@ -416,7 +416,7 @@ function capRenderFunctionalExchange(mode){
 
   /** Texte du compteur (échanges ou fonctions selon la vue). */
   function counterText(f){
-    return st.view==='block'?`${getFns().length}/${X.fns.length} ${W.fns}`:`${f.length}/${allLinks.length} échange${allLinks.length>1?'s':''}`;
+    return st.view==='block'?`${getFns().length}/${X.fns.length} ${W.fns}`:_L(`${f.length}/${allLinks.length} échange${allLinks.length>1?'s':''}`);
   }
   /** Rafraîchit le contenu et le compteur sans reconstruire la barre. */
   function updateContent(){
@@ -430,27 +430,27 @@ function capRenderFunctionalExchange(mode){
   /** Rapport HTML autonome : vue courante, ou toutes les vues en onglets (filtres appliqués, sans pagination). */
   function exportHtml(all){
     const f=getFiltered();
-    const VIEWS=[['block','◧ Vue Blocs'],['line','≡ Vue Ligne'],['card',`▣ Vue ${W.Fn}`],['matrix','▦ Matrice'],['diag','🩺 Contrôles']];
+    const VIEWS=[['block',_L('◧ Vue Blocs')],['line',_L('≡ Vue Ligne')],['card',_L(`▣ Vue ${W.Fn}`)],['matrix',_L('▦ Matrice')],['diag',_L('🩺 Contrôles')]];
     const keys=all?VIEWS.map(v=>v[0]):[st.view];
     const tabs=VIEWS.filter(v=>keys.includes(v[0])||(v[0]==='line'&&keys.includes('matrix'))).map(([k,label])=>({key:k,label,html:buildContent(f,k)}));
     const cells={}; Object.entries(container._fexCells||{}).forEach(([k,ls])=>cells[k]=ls.map(l=>l.x.id));
-    const fi=[st.layer!=='all'&&`couche ${st.layer}`, akOn()&&'allocation : '+[...st.ak].map(k=>CAP_FN_AK[k].l).join(' + '), st.who&&`allocataire « ${((who.act.get(st.who)||who.comp.get(st.who)||{}).name||'')} »`,st.fnFilter&&`fonction « ${st.fnFilter} »`,st.nameFilter&&`échange « ${st.nameFilter} »`].filter(Boolean).join(', ');
-    capHtmlReport({title:OAV?'🟨 Operational Analysis — activités et interactions':'ƒ⇆ Functional Exchanges', subtitle:`${f.length}/${allLinks.length} échanges${fi?' · filtres : '+fi:''}`, tabs, active:st.view, cells,
-      filename:(OAV?'operational-analysis':'functional-exchanges')+(all?'-rapport.html':`-${st.view}.html`)});
+    const fi=[st.layer!=='all'&&_L(`couche ${st.layer}`), akOn()&&_L('allocation : ')+[...st.ak].map(k=>CAP_FN_AK[k].l).join(' + '), st.who&&_L(`allocataire « ${((who.act.get(st.who)||who.comp.get(st.who)||{}).name||'')} »`),st.fnFilter&&_L(`fonction « ${st.fnFilter} »`),st.nameFilter&&_L(`échange « ${st.nameFilter} »`)].filter(Boolean).join(', ');
+    capHtmlReport({title:OAV?_L('🟨 Operational Analysis — activités et interactions'):_L('ƒ⇆ Functional Exchanges'), subtitle:_L(`${f.length}/${allLinks.length} échanges${fi?_L(' · filtres : ')+fi:''}`), tabs, active:st.view, cells,
+      filename:(OAV?'operational-analysis':'functional-exchanges')+(all?_L('-rapport.html'):`-${st.view}.html`)});
   }
 
   /** Export CSV enrichi (53) : un échange par ligne (ou une ligne par port en Vue Blocs). */
   function exportCsv(){
     if(st.view==='block'&&!OAV){   // en OA, pas de ports : export des interactions
-      const rows=[]; getFns().forEach(f=>[...f.ins.map(p=>({p,d:'Entrée'})),...f.outs.map(p=>({p,d:'Sortie'}))].forEach(({p,d})=>{
+      const rows=[]; getFns().forEach(f=>[...f.ins.map(p=>({p,d:_L('Entrée')})),...f.outs.map(p=>({p,d:_L('Sortie')}))].forEach(({p,d})=>{
         const xs=X.portFes[p.id]||[];
         if(!xs.length) rows.push([f.layer,f.num,capCx(f.name,f.id),d,capCx(p.name,p.id),'','','']);
-        xs.forEach(x=>{ const o=d==='Entrée'?x.src:x.tgt; rows.push([f.layer,f.num,capCx(f.name,f.id),d,capCx(p.name,p.id),capCx(x.name,x.id),capCx(o.fnName,o.fnId),capCx(o.portName,o.portId)]); });
+        xs.forEach(x=>{ const o=d===_L('Entrée')?x.src:x.tgt; rows.push([f.layer,f.num,capCx(f.name,f.id),d,capCx(p.name,p.id),capCx(x.name,x.id),capCx(o.fnName,o.fnId),capCx(o.portName,o.portId)]); });
       }));
-      capCsvExport('functional-exchanges-ports.csv',['Couche','N°','Fonction','Sens','Port','Functional Exchange','Fonction distante','Port distant'],rows);
+      capCsvExport('functional-exchanges-ports.csv',[_L('Couche'),'N°',_L('Fonction'),_L('Sens'),_L('Port'),_L('Functional Exchange'),_L('Fonction distante'),_L('Port distant')],rows);
       return;
     }
-    capCsvExport(OAV?'operational-interactions.csv':'functional-exchanges.csv',['N°','Couche','Fonction source','Port source','Functional Exchange','Port cible','Fonction cible','Exchange Items','Component Exchanges','Chaînes'],
+    capCsvExport(OAV?'operational-interactions.csv':'functional-exchanges.csv',['N°',_L('Couche'),_L('Fonction source'),_L('Port source'),_L('Functional Exchange'),_L('Port cible'),_L('Fonction cible'),_L('Exchange Items'),_L('Component Exchanges'),_L('Chaînes')],
       getFiltered().map(x=>[x.num,x.layer,capCx(x.src.fnName,x.src.fnId),capCx(x.src.portName,x.src.portId),capCx(x.name,x.id),capCx(x.tgt.portName,x.tgt.portId),capCx(x.tgt.fnName,x.tgt.fnId),capCxList(x.items),capCxList(x.ces),capCxList(x.chains)]));
   }
 
@@ -460,33 +460,33 @@ function capRenderFunctionalExchange(mode){
     who=whoCompute();
     if(st.who&&!who.act.has(st.who)&&!who.comp.has(st.who)) st.who='';   // allocataire absent de la couche choisie
     const f=getFiltered();
-    const V=[['block','◧ Vue Blocs',OAV?'Activités opérationnelles dessinées comme dans Capella (jaune), interactions entrantes à gauche, sortantes à droite ; entité ou acteur porteur en haut du bloc (clic : son détail)':'Fonctions dessinées comme dans Capella : pins d\'entrée (verts) à gauche, de sortie (orange) à droite ; vert = système, bleu = acteur, gris = non allouée'],
-      ['line','≡ Vue Ligne',`Un échange par ligne : ${W.fn} source ▶ échange ▶ ${W.fn} cible`],['card',`▣ Vue ${W.Fn}`,`Échanges regroupés par ${W.fn}`],
-      ['matrix','▦ Matrice','Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus'],['diag','🩺 Contrôles','Ports orphelins, échanges sans Exchange Item, fonctions sans échange…']];
-    container.innerHTML=`
+    const V=[['block',_L('◧ Vue Blocs'),OAV?_L('Activités opérationnelles dessinées comme dans Capella (jaune), interactions entrantes à gauche, sortantes à droite ; entité ou acteur porteur en haut du bloc (clic : son détail)'):_L('Fonctions dessinées comme dans Capella : pins d\'entrée (verts) à gauche, de sortie (orange) à droite ; vert = système, bleu = acteur, gris = non allouée')],
+      ['line',_L('≡ Vue Ligne'),_L(`Un échange par ligne : ${W.fn} source ▶ échange ▶ ${W.fn} cible`)],['card',_L(`▣ Vue ${W.Fn}`),_L(`Échanges regroupés par ${W.fn}`)],
+      ['matrix',_L('▦ Matrice'),_L('Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus')],['diag',_L('🩺 Contrôles'),_L('Ports orphelins, échanges sans Exchange Item, fonctions sans échange…')]];
+    container.innerHTML=_L(`
       <div class="phl-toggle-bar">
         ${V.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}
         <span id="fex-counter" style="font-size:11px;color:var(--c-dim);font-family:monospace;">${counterText(f)}</span>
         <span style="display:flex;gap:4px;margin-left:12px;flex-wrap:wrap;">
-          ${OAV?'':[['all','Toutes',allLinks.length],...layersPresent.map(k=>[k,k,allLinks.filter(x=>x.layer===k).length])]
-            .map(([k,lab,n])=>`<button class="cap-lf-btn fex-layer-btn${st.layer===k?' active':''}" data-ly="${k}" title="Échanges de la couche">${lab} (${n})</button>`).join('')}
+          ${OAV?'':[['all',_L('Toutes'),allLinks.length],...layersPresent.map(k=>[k,k,allLinks.filter(x=>x.layer===k).length])]
+            .map(([k,lab,n])=>_L(`<button class="cap-lf-btn fex-layer-btn${st.layer===k?' active':''}" data-ly="${k}" title="Échanges de la couche">${lab} (${n})</button>`)).join('')}
         </span>
       </div>
       <div class="phl-filter-bar" style="margin-bottom:8px;">
-        <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;">${OAV?'🟨 Activité :':'ƒ Fonction :'}</span>
+        <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;">${OAV?_L('🟨 Activité :'):_L('ƒ Fonction :')}</span>
         <input id="fex-fn-input" type="text" class="phl-filter-input" placeholder="Filtrer par ${W.fn}…" value="${capEsc(st.fnFilter)}" style="width:200px;">
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;margin-left:8px;">🔍 Échange :</span>
         <input id="fex-name-input" type="text" class="phl-filter-input" placeholder="Échange ou Exchange Item…" value="${capEsc(st.nameFilter)}" style="width:200px;">
-        ${st.view==='block'?`<label style="font-size:11px;color:var(--c-dim);display:flex;align-items:center;gap:4px;margin-left:8px;" title="Masquer les fonctions sans port ni échange (fonctions mères le plus souvent)"><input type="checkbox" id="fex-withports"${st.withPorts?' checked':''}> avec ports ou échanges</label>`:''}
+        ${st.view==='block'?_L(`<label style="font-size:11px;color:var(--c-dim);display:flex;align-items:center;gap:4px;margin-left:8px;" title="Masquer les fonctions sans port ni échange (fonctions mères le plus souvent)"><input type="checkbox" id="fex-withports"${st.withPorts?' checked':''}> avec ports ou échanges</label>`):''}
         ${(()=>{ const base=X.fns.filter(fn=>(st.layer==='all'||fn.layer===st.layer)&&!(st.view==='block'&&st.withPorts&&!fn.ins.length&&!fn.outs.length&&!fn.fesIn.length&&!fn.fesOut.length)&&whoFn(fn.id)), n=k=>base.filter(fn=>akOf(fn.id)===k).length;
-          return `<span class="tb-grp ana-ak" style="margin-left:8px" title="Clic : afficher / masquer · double-clic : uniquement celle-ci (ou tout réafficher)${st.view==='block'?'':' — un échange est gardé si l\'une de ses deux fonctions correspond'}"><span class="tb-grp-l">Allocation</span>${['sys','act','none'].map(k=>`<label class="ana-ak-chip${st.ak.has(k)?' on':''}" style="--c:${CAP_FN_AK[k].c}" title="${AKL(k).tip} — double-clic : uniquement celles-ci"><input type="checkbox" data-fak="${k}"${st.ak.has(k)?' checked':''}>${AKL(k).i} ${AKL(k).l} <b>${n(k)}</b></label>`).join('')}${whoSelect()}</span>`; })()}
+          return _L(`<span class="tb-grp ana-ak" style="margin-left:8px" title="Clic : afficher / masquer · double-clic : uniquement celle-ci (ou tout réafficher)${st.view==='block'?'':_L(' — un échange est gardé si l\'une de ses deux fonctions correspond')}"><span class="tb-grp-l">Allocation</span>${['sys','act','none'].map(k=>_L(`<label class="ana-ak-chip${st.ak.has(k)?' on':''}" style="--c:${CAP_FN_AK[k].c}" title="${AKL(k).tip} — double-clic : uniquement celles-ci"><input type="checkbox" data-fak="${k}"${st.ak.has(k)?' checked':''}>${AKL(k).i} ${AKL(k).l} <b>${n(k)}</b></label>`)).join('')}${whoSelect()}</span>`); })()}
         <div style="margin-left:auto;display:flex;gap:6px;">
           <button class="phl-export-btn" id="fex-exp-csv">⬇ CSV</button>
           <button class="phl-export-btn" id="fex-exp-html" title="Rapport HTML de la vue affichée (toutes les pages)">⬇ HTML</button>
           <button class="phl-export-btn" id="fex-exp-html-all" title="Rapport HTML à onglets : toutes les vues">⬇ HTML (toutes les vues)</button>
         </div>
       </div>
-      <div id="fex-main">${buildContent(f)}</div>`;
+      <div id="fex-main">${buildContent(f)}</div>`);
     container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.addEventListener('click',()=>{ st.view=b.dataset.pv; st.page=0; render(); }));
     container.querySelectorAll('.fex-layer-btn').forEach(b=>b.addEventListener('click',()=>{ st.layer=b.dataset.ly; st.page=0; render(); }));
     container.querySelector('#fex-withports')?.addEventListener('change',e=>{ st.withPorts=e.target.checked; st.page=0; render(); });

@@ -10,11 +10,11 @@
 var CAP_CB_PAGE=100, CAP_CB_MX_MAX=100;
 var _capCbView={LA:'block', SA:'block'};
 /** Vues 🧱 par couche : conteneur, clé de vue (barre), libellé. */
-var CAP_CB_LAYERS={LA:{view:'cblk', box:'cap-view-cblk', l:'🧱 Logical Component', what:'Logical Components', scope:'Couche LA', lw:'Component Exchanges'},
-                   SA:{view:'csys', box:'cap-view-csys', l:'🧱 System Component', what:'System Components', scope:'Couche SA', lw:'Component Exchanges'},
+var CAP_CB_LAYERS={LA:{view:'cblk', box:'cap-view-cblk', l:_L('🧱 Logical Component'), what:_L('Logical Components'), scope:_L('Couche LA'), lw:_L('Component Exchanges')},
+                   SA:{view:'csys', box:'cap-view-csys', l:_L('🧱 System Component'), what:_L('System Components'), scope:_L('Couche SA'), lw:_L('Component Exchanges')},
                    // Vues Blocs intégrées : 🔀 Behavior Exchange (PA, Behavior) et 🔌 Physical Link (PA, nœuds)
-                   PB:{l:'🔀 Behavior Exchange', what:'Physical Components Behavior et acteurs reliés', scope:'Couche PA · Behavior', lw:'Component Exchanges', only:true},
-                   PN:{l:'🔌 Physical Link', what:'Physical Components Node', scope:'Couche PA · Nodes', lw:'Physical Links', only:true}};
+                   PB:{l:_L('🔀 Behavior Exchange'), what:_L('Physical Components Behavior et acteurs reliés'), scope:_L('Couche PA · Behavior'), lw:_L('Component Exchanges'), only:true},
+                   PN:{l:_L('🔌 Physical Link'), what:_L('Physical Components Node'), scope:_L('Couche PA · Nodes'), lw:_L('Physical Links'), only:true}};
 var _capCbGo=null;   // {L, id} : composant à afficher à la prochaine ouverture d'une Vue Blocs (depuis une autre vue)
 
 /** Ouvre le bloc d'un composant dans la Vue Blocs de sa couche (🧱 System / Logical Component, 🔀 Behavior Exchange,
@@ -70,16 +70,16 @@ function capCbChecks(layer){
   const unset=[]; cs.forEach(c=>c.ports.forEach(p=>{ if(p.orient==='UNSET'&&(C.portLinks[p.id]||[]).length) unset.push({c,p}); }));
   const leaf=c=>!c.children.length;
   return [
-    {icon:'⭘', title:'Ports de composant orphelins (sans Component Exchange)', tip:'Component Port défini mais relié à aucun échange', cols:['Composant','Port','Orientation','Couche'],
+    {icon:'⭘', title:_L('Ports de composant orphelins (sans Component Exchange)'), tip:_L('Component Port défini mais relié à aucun échange'), cols:[_L('Composant'),_L('Port'),_L('Orientation'),_L('Couche')],
       items:orphan.map(o=>`<tr><td>${fl(o.c.id,o.c.name)}</td><td>${fl(o.p.id,o.p.name)}</td><td>${o.p.orient}</td><td>${o.c.layer}</td></tr>`)},
-    {icon:'?', title:'Ports connectés sans orientation (UNSET)', tip:'Le sens du flux n\'est pas défini sur le port', cols:['Composant','Port','Couche'],
+    {icon:'?', title:_L('Ports connectés sans orientation (UNSET)'), tip:_L('Le sens du flux n\'est pas défini sur le port'), cols:[_L('Composant'),_L('Port'),_L('Couche')],
       items:unset.map(o=>`<tr><td>${fl(o.c.id,o.c.name)}</td><td>${fl(o.p.id,o.p.name)}</td><td>${o.c.layer}</td></tr>`)},
-    {icon:'⚠', title:'Échanges aux orientations incohérentes', tip:'OUT → OUT ou IN → IN hors délégation', cols:['Component Exchange','Source','Cible','Couche'],
+    {icon:'⚠', title:_L('Échanges aux orientations incohérentes'), tip:_L('OUT → OUT ou IN → IN hors délégation'), cols:[_L('Component Exchange'),_L('Source'),_L('Cible'),_L('Couche')],
       items:ls.filter(l=>l.warn).map(l=>`<tr><td>${fl(l.linkId,l.linkName)}</td><td>${fl(l.src.pcId,l.src.pcName)} ⬦ ${capEsc(l.src.portName)}</td><td>${fl(l.tgt.pcId,l.tgt.pcName)} ⬦ ${capEsc(l.tgt.portName)}</td><td>${l.layer}</td></tr>`)},
-    {icon:'∅', title:'Composants feuilles sans port', tip:'Composant sans sous-composant et sans Component Port (hors acteurs)', cols:['Composant','Couche'],
+    {icon:'∅', title:_L('Composants feuilles sans port'), tip:_L('Composant sans sous-composant et sans Component Port (hors acteurs)'), cols:[_L('Composant'),_L('Couche')],
       items:cs.filter(c=>leaf(c)&&!c.actor&&!c.ports.length).map(c=>`<tr><td>${fl(c.id,c.name)}</td><td>${c.layer}</td></tr>`)},
-    {icon:'ƒ', title:'Composants feuilles sans fonction allouée', tip:'Composant sans sous-composant à qui aucune fonction n\'est allouée', cols:['Composant','Nature','Couche'],
-      items:cs.filter(c=>leaf(c)&&!c.fns.length).map(c=>`<tr><td>${fl(c.id,c.name)}</td><td>${c.actor?'Acteur':'Système'}</td><td>${c.layer}</td></tr>`)}
+    {icon:'ƒ', title:_L('Composants feuilles sans fonction allouée'), tip:_L('Composant sans sous-composant à qui aucune fonction n\'est allouée'), cols:[_L('Composant'),_L('Nature'),_L('Couche')],
+      items:cs.filter(c=>leaf(c)&&!c.fns.length).map(c=>`<tr><td>${fl(c.id,c.name)}</td><td>${c.actor?_L('Acteur'):_L('Système')}</td><td>${c.layer}</td></tr>`)}
   ];
 }
 
@@ -91,9 +91,9 @@ function capCbDashCatalog(add, LC){
   const C=()=>capComputeComponentBlocks();
   Object.entries(CAP_CB_LAYERS).forEach(([L,V])=>{
     const cs=()=>C().comps.filter(c=>c.layer===L), g=V.l.replace('🧱 ','');
-    add(g,'cb.n.'+L,`${V.what} — nombre`,'n',()=>({n:cs().length, sub:`dont ${cs().filter(c=>c.actor).length} acteur(s)`}));
-    add(g,'cb.ports.'+L,`${V.what} — ports connectés`,'pct',()=>capDashPct(cs().flatMap(c=>c.ports),p=>(C().portLinks[p.id]||[]).length),'Component Ports reliés à au moins un Component Exchange');
-    add(g,'cb.chk.'+L,`${V.what} — contrôles`,'series',()=>({cats:capCbChecks(L).map(s=>({l:s.title,v:s.items.length})).filter(c=>c.v).sort((a,b)=>b.v-a.v)}));
+    add(g,'cb.n.'+L,_L(`${V.what} — nombre`),'n',()=>({n:cs().length, sub:_L(`dont ${cs().filter(c=>c.actor).length} acteur(s)`)}));
+    add(g,'cb.ports.'+L,_L(`${V.what} — ports connectés`),'pct',()=>capDashPct(cs().flatMap(c=>c.ports),p=>(C().portLinks[p.id]||[]).length),_L('Component Ports reliés à au moins un Component Exchange'));
+    add(g,'cb.chk.'+L,_L(`${V.what} — contrôles`),'series',()=>({cats:capCbChecks(L).map(s=>({l:s.title,v:s.items.length})).filter(c=>c.v).sort((a,b)=>b.v-a.v)}));
   });
 }
 
@@ -132,7 +132,7 @@ function capRenderComponentBlocks(L, host, holder){
   if(!holder._cb) holder._cb={view:V0.only?'block':_capCbView[L], layer:L, name:'', ex:'', withPorts:false,   // « avec ports » décoché par défaut : tous les composants affichés
     page:0, nk:new Set(['sys','act','node']), under:'', back:null, fnOpen:new Set()};
   const st=holder._cb; st.layer=L; if(!st.fnOpen) st.fnOpen=new Set(); if(V0.only) st.view='block';
-  const NK={sys:{i:'🧩',l:'Système',c:'#58a6ff',tip:'Composants du système'},act:{i:'👤',l:'Acteurs',c:'#7fd8ff',tip:'Acteurs externes'},node:{i:'🖥',l:'Nœuds',c:'#e3b341',tip:'Nœud'}};
+  const NK={sys:{i:'🧩',l:_L('Système'),c:'#58a6ff',tip:_L('Composants du système')},act:{i:'👤',l:_L('Acteurs'),c:'#7fd8ff',tip:_L('Acteurs externes')},node:{i:'🖥',l:_L('Nœuds'),c:'#e3b341',tip:_L('Nœud')}};
   const LINK_COLORS=['#0ea5e9','#f97316','#22c55e','#a855f7','#ef4444','#eab308','#06b6d4','#ec4899','#84cc16','#6366f1','#14b8a6'];
   const lnum={}; allLinks.forEach((l,i)=>lnum[l.linkId]=i+1);
   const lc=l=>LINK_COLORS[(lnum[l.linkId]||0)%LINK_COLORS.length];
@@ -169,12 +169,12 @@ function capRenderComponentBlocks(L, host, holder){
   /** Port façon Capella : UNSET plein, IN / OUT avec chevron orienté selon le côté, INOUT vide.
    * @param {string} o - Orientation @param {'L'|'R'} side - Côté du bloc @param {boolean} orphan - Non connecté */
   const port=(o,side,orphan)=>{
-    if(o==='PP') return `<span class="cb-port cb-port-PP${orphan?' cb-port-orphan':''}" title="Physical Port${orphan?' — non connecté':''}"></span>`;
+    if(o==='PP') return _L(`<span class="cb-port cb-port-PP${orphan?' cb-port-orphan':''}" title="Physical Port${orphan?_L(' — non connecté'):''}"></span>`);
     const ch=o==='IN'?(side==='L'?'&gt;':'&lt;'):o==='OUT'?(side==='L'?'&lt;':'&gt;'):'';
-    return `<span class="cb-port cb-port-${o}${orphan?' cb-port-orphan':''}" title="${CAP_ORIENT_STYLE[o]?CAP_ORIENT_STYLE[o].t:o}${orphan?' — non connecté':''}">${ch}</span>`;
+    return `<span class="cb-port cb-port-${o}${orphan?' cb-port-orphan':''}" title="${CAP_ORIENT_STYLE[o]?CAP_ORIENT_STYLE[o].t:o}${orphan?_L(' — non connecté'):''}">${ch}</span>`;
   };
   /** Sens d'un échange vu depuis un port : de / vers / ⇄ / — . */
-  const roleOf=(l,pid)=>{ const src=l.src.portId===pid; return l.dir==='bi'?'⇄':l.dir==='unset'?'—':((l.dir==='fwd')===src?'vers':'de'); };
+  const roleOf=(l,pid)=>{ const src=l.src.portId===pid; return l.dir==='bi'?'⇄':l.dir==='unset'?'—':((l.dir==='fwd')===src?_L('vers'):_L('de')); };
 
   /** Vue Blocs : chaque composant avec ses ports répartis à gauche (IN) et à droite (OUT), INOUT / UNSET du côté le moins chargé. */
   function buildBlocks(cs){
@@ -186,9 +186,9 @@ function capRenderComponentBlocks(L, host, holder){
       const side=(list,g)=>list.map((p,i)=>{
         const ls=C.portLinks[p.id]||[];
         const items=ls.map(l=>{ const o=l.src.portId===p.id?l.tgt:l.src;
-          return `${det(l.linkId,l.linkName,`color:${lc(l)};font-weight:600`)} <span class="fex-dim">${roleOf(l,p.id)}</span> <span class="fex-go" data-go="${capEsc(o.pcId)}" title="Aller au bloc de ce composant" style="color:${capTextOn(NK[kindOf(o.pcId)].c)}">${capEsc(o.pcName)}</span>`; });
+          return _L(`${det(l.linkId,l.linkName,`color:${lc(l)};font-weight:600`)} <span class="fex-dim">${roleOf(l,p.id)}</span> <span class="fex-go" data-go="${capEsc(o.pcId)}" title="Aller au bloc de ce composant" style="color:${capTextOn(NK[kindOf(o.pcId)].c)}">${capEsc(o.pcName)}</span>`); });
         const tip=[`${p.name} (${p.orient})`,...ls.map(l=>{ const o=l.src.portId===p.id?l.tgt:l.src; return `${l.linkName} ${roleOf(l,p.id)} ${o.pcName}`; })].join('\n');
-        return capBlkSide(items,'<span class="fex-dim"><i>non connecté</i></span>',g.hs[i],tip);
+        return capBlkSide(items,_L('<span class="fex-dim"><i>non connecté</i></span>'),g.hs[i],tip);
       }).join('');
       const pins=(list,s)=>list.map((p,i)=>`<span class="fex-bpin" style="top:${(s==='L'?gL:gR).tops[i]}px">${port(p.orient,s,!(C.portLinks[p.id]||[]).length)}<span class="fex-pname">${capEsc(p.name)}</span></span>`).join('');
       const fnTip=c.fns.map(f=>f.name).join('\n');
@@ -196,12 +196,12 @@ function capRenderComponentBlocks(L, host, holder){
       const tl=Math.ceil(String(c.name||'').length/22), minH=22+tl*17+(c.fns.length?18:0)+(!c.ports.length?16:0);
       return `<div class="fex-blk" data-fn="${capEsc(c.id)}" style="--fex-h:${Math.max(74,minH,44+Math.max(gL.total,gR.total))}px">
         <div class="fex-side fex-side-in">${side(L,gL)}</div>
-        <div class="fex-box cb-box cb-k-${c.kind}" title="${capEsc(capAnaHuman(c.type))} — ${c.layer}${c.actor?' — acteur':''}${c.nature?' — '+c.nature:''}">
+        <div class="fex-box cb-box cb-k-${c.kind}" title="${capEsc(capAnaHuman(c.type))} — ${c.layer}${c.actor?_L(' — acteur'):''}${c.nature?' — '+c.nature:''}">
           <div class="fex-box-t"><span class="cb-ic">${c.actor?'👤':c.kind==='node'?'🖥':'▣'}</span> ${det(c.id,c.name)}</div>
           <div class="fex-pins-in">${pins(L,'L')}</div><div class="fex-pins-out">${pins(R,'R')}</div>
-          ${c.fns.length?`<div class="cb-fns" data-fnl="${capEsc(c.id)}" title="Afficher / masquer les fonctions allouées (clic sur une fonction : son bloc dans ƒ⇆ Functional Exchange)">ƒ ${c.fns.length} fonction${c.fns.length>1?'s':''} ${st.fnOpen.has(c.id)?'▴':'▾'}</div>`:''}
-          ${c.children.length?`<div class="cb-kids" title="${c.children.length} sous-composant(s) : ${capEsc(c.children.map(k=>C.byId[k].name).join(', '))}">⧉ ${c.children.length}</div>`:''}
-          ${!c.ports.length?'<div class="fex-box-empty">aucun port</div>':''}
+          ${c.fns.length?_L(`<div class="cb-fns" data-fnl="${capEsc(c.id)}" title="Afficher / masquer les fonctions allouées (clic sur une fonction : son bloc dans ƒ⇆ Functional Exchange)">ƒ ${c.fns.length} fonction${c.fns.length>1?'s':''} ${st.fnOpen.has(c.id)?'▴':'▾'}</div>`):''}
+          ${c.children.length?_L(`<div class="cb-kids" title="${c.children.length} sous-composant(s) : ${capEsc(c.children.map(k=>C.byId[k].name).join(', '))}">⧉ ${c.children.length}</div>`):''}
+          ${!c.ports.length?_L('<div class="fex-box-empty">aucun port</div>'):''}
         </div>
         <div class="fex-side fex-side-out">${side(R,gR)}</div>
         ${st.fnOpen.has(c.id)?fnListHtml(c):''}
@@ -213,11 +213,11 @@ function capRenderComponentBlocks(L, host, holder){
   function fnListHtml(c){
     const F=capComputeFunctions(), cmp=new Intl.Collator(undefined,{numeric:true}).compare;
     const fs=c.fns.map(x=>F.byId[x.id]||x).sort((a,b)=>cmp(String(a.num||''),String(b.num||''))||String(a.name).localeCompare(b.name));
-    return `<div class="cb-fnlist" data-fnlist="${capEsc(c.id)}">
+    return _L(`<div class="cb-fnlist" data-fnlist="${capEsc(c.id)}">
       <div class="cb-fnhead">ƒ ${fs.length} fonction${fs.length>1?'s':''} allouée${fs.length>1?'s':''} à « ${capEsc(c.name)} » <span class="fex-dim">— clic : son bloc dans ƒ⇆ Functional Exchange</span></div>
-      ${fs.length>12?'<input class="phl-filter-input cb-fnq" placeholder="🔍 Filtrer les fonctions…" style="width:100%;margin:4px 0">':''}
-      <div class="cb-fnitems">${fs.map(f=>`<div class="cb-fn" data-fexfn="${capEsc(f.id)}" title="Ouvrir ce bloc dans ƒ⇆ Functional Exchange">ƒ ${f.num&&f.num!=='?'?'['+capEsc(f.num)+'] ':''}${capEsc(f.name)}${f.layer?` <span class="fex-dim">${f.layer}</span>`:''}</div>`).join('')}</div>
-    </div>`;
+      ${fs.length>12?_L('<input class="phl-filter-input cb-fnq" placeholder="🔍 Filtrer les fonctions…" style="width:100%;margin:4px 0">'):''}
+      <div class="cb-fnitems">${fs.map(f=>_L(`<div class="cb-fn" data-fexfn="${capEsc(f.id)}" title="Ouvrir ce bloc dans ƒ⇆ Functional Exchange">ƒ ${f.num&&f.num!=='?'?'['+capEsc(f.num)+'] ':''}${capEsc(f.name)}${f.layer?` <span class="fex-dim">${f.layer}</span>`:''}</div>`)).join('')}</div>
+    </div>`);
   }
   /** Branche une liste de fonctions dépliée (filtre, clic vers ƒ⇆ Functional Exchange). @param {HTMLElement} el */
   function wireFnList(el){
@@ -245,14 +245,14 @@ function capRenderComponentBlocks(L, host, holder){
   /** Vue Composant : une carte par composant, avec ses échanges (émis, reçus, bidirectionnels, non orientés).
    * @param {object[]} cs - Composants @param {boolean} [open] - Cartes dépliées (rapports) */
   function buildCards(cs, open){
-    const R={out:{a:'→',c:'#4dd880',l:'ÉMET →',t:'Émission'},in:{a:'←',c:'#f0883e',l:'← REÇOIT',t:'Réception'},bi:{a:'⇄',c:'#a371f7',l:'⇄ ÉCHANGE',t:'Bidirectionnel'},unset:{a:'—',c:'#8b949e',l:'? N.O.',t:'Non orienté'}};
+    const R={out:{a:'→',c:'#4dd880',l:_L('ÉMET →'),t:_L('Émission')},in:{a:'←',c:'#f0883e',l:_L('← REÇOIT'),t:_L('Réception')},bi:{a:'⇄',c:'#a371f7',l:_L('⇄ ÉCHANGE'),t:_L('Bidirectionnel')},unset:{a:'—',c:'#8b949e',l:'? N.O.',t:_L('Non orienté')}};
     return cs.map(c=>{
       const rows=[]; c.ports.forEach(p=>(C.portLinks[p.id]||[]).forEach(l=>rows.push({l,p})));
-      const role=(l,pid)=>{ const r=roleOf(l,pid); return r==='vers'?'out':r==='de'?'in':r==='⇄'?'bi':'unset'; };
+      const role=(l,pid)=>{ const r=roleOf(l,pid); return r===_L('vers')?'out':r===_L('de')?'in':r==='⇄'?'bi':'unset'; };
       const cnt={out:0,in:0,bi:0,unset:0}; rows.forEach(x=>cnt[role(x.l,x.p.id)]++);
       const col=NK[c.kind].c, o=open||st.openCard===c.id?' open':'';
       const body=rows.length?rows.map(({l,p})=>{ const rr=R[role(l,p.id)], ot=l.src.portId===p.id?l.tgt:l.src, op=l.src.portId===p.id?l.tgt.portOrient:l.src.portOrient;
-        return `<div class="phl-link-row">
+        return _L(`<div class="phl-link-row">
           <span style="font-size:10px;color:var(--c-dim);font-family:monospace;min-width:28px;">#${lnum[l.linkId]}</span>
           <span title="${rr.t}" style="font-size:9px;font-weight:700;color:${rr.c};min-width:58px;">${rr.l}</span>
           <span class="phl-lr-port-src">${port(p.orient,'R',false)} ${capEsc(p.name)}</span>
@@ -262,17 +262,17 @@ function capRenderComponentBlocks(L, host, holder){
           <span class="phl-lr-port-tgt">${port(op,'L',false)} ${capEsc(ot.portName)}</span>
           <span class="fex-go phl-lr-comp-tgt" data-go="${capEsc(ot.pcId)}" title="Aller à ce composant" style="color:${capTextOn(NK[kindOf(ot.pcId)].c)}">${capEsc(ot.pcName)}</span>
           ${l.warn?`<span title="⚠ ${capEsc(l.warn)}" style="color:var(--c-warn,#e3b341)">⚠</span>`:''}
-        </div>`; }).join(''):'<div class="phl-link-row fex-dim"><i>Aucun Component Exchange</i></div>';
+        </div>`); }).join(''):_L('<div class="phl-link-row fex-dim"><i>Aucun Component Exchange</i></div>');
       const cntTxt=[cnt.out&&`${cnt.out} →`,cnt.in&&`${cnt.in} ←`,cnt.bi&&`${cnt.bi} ⇄`,cnt.unset&&`${cnt.unset} ?`].filter(Boolean).join(' · ');
-      return `<div class="phl-comp-card" data-cid="${capEsc(c.id)}">
+      return _L(`<div class="phl-comp-card" data-cid="${capEsc(c.id)}">
         <div class="phl-comp-hdr${o}" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open');this.querySelector('.phl-comp-toggle').classList.toggle('open')">
-          <span class="phl-comp-badge" style="background:${col};color:${capInk(col)}">${c.actor?'👤 Acteur':'🧩 '+capEsc(capAnaHuman(c.type))}</span>
+          <span class="phl-comp-badge" style="background:${col};color:${capInk(col)}">${c.actor?_L('👤 Acteur'):'🧩 '+capEsc(capAnaHuman(c.type))}</span>
           <span class="phl-comp-title" style="color:${capTextOn(col)}">${capEsc(c.name)}</span>
           <span class="phl-comp-cnt" title="émis · reçus · bidirectionnels · non orientés">${rows.length} exchange${rows.length>1?'s':''}${cntTxt?` (${cntTxt})`:''} · ${c.ports.length} port${c.ports.length>1?'s':''}${c.fns.length?` · ƒ ${c.fns.length}`:''}</span>
           <span class="phl-comp-toggle${o}">▶</span>
         </div>
         <div class="phl-comp-body${o}">${body}</div>
-      </div>`;
+      </div>`);
     }).join('');
   }
 
@@ -280,7 +280,7 @@ function capRenderComponentBlocks(L, host, holder){
   function paged(items, unit){
     const pages=Math.max(1,Math.ceil(items.length/CAP_CB_PAGE)); if(st.page>=pages) st.page=pages-1;
     const from=st.page*CAP_CB_PAGE, slice=items.slice(from,from+CAP_CB_PAGE);
-    const bar=pages>1?`<div class="fex-pager"><button class="cap-lf-btn" data-pg="-1"${st.page?'':' disabled'}>◀</button><span>${unit} ${from+1}–${from+slice.length} sur ${items.length} · page ${st.page+1} / ${pages}</span><button class="cap-lf-btn" data-pg="1"${st.page<pages-1?'':' disabled'}>▶</button></div>`:'';
+    const bar=pages>1?_L(`<div class="fex-pager"><button class="cap-lf-btn" data-pg="-1"${st.page?'':' disabled'}>◀</button><span>${unit} ${from+1}–${from+slice.length} sur ${items.length} · page ${st.page+1} / ${pages}</span><button class="cap-lf-btn" data-pg="1"${st.page<pages-1?'':' disabled'}>▶</button></div>`):'';
     return {slice, bar};
   }
 
@@ -289,29 +289,29 @@ function capRenderComponentBlocks(L, host, holder){
     const view=forceView||st.view, all=!!forceView;
     if(view==='diag') return capDiagHtml(capCbChecks(L));
     if(view==='card'){
-      const cs=getComps(); if(!cs.length) return '<div class="phl-empty">Aucun composant ne correspond au filtre.</div>';
+      const cs=getComps(); if(!cs.length) return _L('<div class="phl-empty">Aucun composant ne correspond au filtre.</div>');
       if(all) return buildCards(cs,true);
-      const p=paged(cs,'Composants'), bc=st.back&&C.byId[st.back];
-      const back=bc?`<div class="fex-backbar"><button class="cap-lf-btn" id="cb-back">↩ Revenir à « ${capEsc(bc.name)} »</button></div>`:'';
+      const p=paged(cs,_L('Composants')), bc=st.back&&C.byId[st.back];
+      const back=bc?_L(`<div class="fex-backbar"><button class="cap-lf-btn" id="cb-back">↩ Revenir à « ${capEsc(bc.name)} »</button></div>`):'';
       return back+p.bar+buildCards(p.slice)+p.bar;
     }
     if(view==='block'){
-      const cs=getComps(); if(!cs.length) return '<div class="phl-empty">Aucun composant ne correspond au filtre.</div>';
+      const cs=getComps(); if(!cs.length) return _L('<div class="phl-empty">Aucun composant ne correspond au filtre.</div>');
       if(all) return buildBlocks(cs);
-      const p=paged(cs,'Composants'), bc=st.back&&C.byId[st.back];
-      const back=bc?`<div class="fex-backbar"><button class="cap-lf-btn" id="cb-back">↩ Revenir à « ${capEsc(bc.name)} »</button></div>`:'';
+      const p=paged(cs,_L('Composants')), bc=st.back&&C.byId[st.back];
+      const back=bc?_L(`<div class="fex-backbar"><button class="cap-lf-btn" id="cb-back">↩ Revenir à « ${capEsc(bc.name)} »</button></div>`):'';
       return capBlkThemeHint()+back+p.bar+buildBlocks(p.slice)+p.bar;
     }
-    const ls=getLinks(); if(!ls.length) return '<div class="phl-empty">Aucun Component Exchange ne correspond au filtre.</div>';
+    const ls=getLinks(); if(!ls.length) return _L('<div class="phl-empty">Aucun Component Exchange ne correspond au filtre.</div>');
     if(view==='matrix'){
       const deg={}; ls.forEach(l=>{ deg[l.src.pcId]=(deg[l.src.pcId]||0)+1; deg[l.tgt.pcId]=(deg[l.tgt.pcId]||0)+1; });
       const ids=Object.keys(deg); let keep=null, note='';
-      if(ids.length>CAP_CB_MX_MAX){ keep=new Set(ids.sort((a,b)=>deg[b]-deg[a]).slice(0,CAP_CB_MX_MAX)); note=`<div class="cap-mx-hint">⚠ ${ids.length} composants : pour rester fluide, la matrice en affiche ${CAP_CB_MX_MAX} (les plus connectés). Filtrez pour voir les autres.</div>`; }
+      if(ids.length>CAP_CB_MX_MAX){ keep=new Set(ids.sort((a,b)=>deg[b]-deg[a]).slice(0,CAP_CB_MX_MAX)); note=_L(`<div class="cap-mx-hint">⚠ ${ids.length} composants : pour rester fluide, la matrice en affiche ${CAP_CB_MX_MAX} (les plus connectés). Filtrez pour voir les autres.</div>`); }
       const mx=capMatrixBuild(ls.filter(l=>!keep||(keep.has(l.src.pcId)&&keep.has(l.tgt.pcId))),{directed:true, unit:'exchanges', colorOf:e=>capTextOn(NK[kindOf(e.pcId)].c)});
       container._cbCells=mx.cells; return note+mx.html;
     }
     if(all) return buildLines(ls);
-    const p=paged(ls,'Échanges'); return p.bar+buildLines(p.slice)+p.bar;
+    const p=paged(ls,_L('Échanges')); return p.bar+buildLines(p.slice)+p.bar;
   }
 
   /** Affiche le bloc d'un composant (page, filtres relâchés si besoin) ; ↩ ramène au bloc de départ.
@@ -344,7 +344,7 @@ function capRenderComponentBlocks(L, host, holder){
     }));
   }
   /** Texte du compteur. */
-  const counterText=()=>(st.view==='block'||st.view==='card')?`${getComps().length}/${C.comps.length} composants`:`${getLinks().length}/${allLinks.length} exchanges`;
+  const counterText=()=>(st.view==='block'||st.view==='card')?_L(`${getComps().length}/${C.comps.length} composants`):`${getLinks().length}/${allLinks.length} exchanges`;
   /** Rafraîchit le contenu et le compteur. */
   function updateContent(){
     _capCbView[L]=st.view;
@@ -360,28 +360,28 @@ function capRenderComponentBlocks(L, host, holder){
     const roots=cs.filter(c=>!c.parent||!cs.some(x=>x.id===c.parent));
     const opt=(c,d)=>`<option value="${capEsc(c.id)}"${st.under===c.id?' selected':''}>${'\u00a0\u00a0'.repeat(d)}${d?'└':'▣'} ${capEsc(c.name)} (${c.children.length})</option>`+
       c.children.map(k=>C.byId[k]).filter(k=>k&&k.children.length).sort((a,b)=>a.name.localeCompare(b.name)).map(k=>opt(k,d+1)).join('');
-    return `<select id="cb-under" class="phl-filter-input" style="max-width:230px${st.under?';border-color:var(--c-accent)':''}" title="Un composant et ses sous-composants"><option value="">Tous les composants</option>${roots.map(r=>opt(r,0)).join('')}</select>${st.under?'<button class="cap-lf-btn" id="cb-under-x" title="Retirer ce filtre">✕</button>':''}`;
+    return _L(`<select id="cb-under" class="phl-filter-input" style="max-width:230px${st.under?';border-color:var(--c-accent)':''}" title="Un composant et ses sous-composants"><option value="">Tous les composants</option>${roots.map(r=>opt(r,0)).join('')}</select>${st.under?'<button class="cap-lf-btn" id="cb-under-x" title="Retirer ce filtre">✕</button>':''}`);
   }
 
   /** Rapport HTML autonome (vue courante ou toutes les vues). */
   function exportHtml(all){
-    const VIEWS=[['block','◧ Vue Blocs'],['card','▣ Vue Composant'],['line','≡ Vue Ligne'],['matrix','▦ Matrice'],['diag','🩺 Contrôles']].filter(v=>!V0.only||v[0]==='block');
+    const VIEWS=[['block',_L('◧ Vue Blocs')],['card',_L('▣ Vue Composant')],['line',_L('≡ Vue Ligne')],['matrix',_L('▦ Matrice')],['diag',_L('🩺 Contrôles')]].filter(v=>!V0.only||v[0]==='block');
     const keys=all?VIEWS.map(v=>v[0]):[st.view];
     const tabs=VIEWS.filter(v=>keys.includes(v[0])||(v[0]==='line'&&keys.includes('matrix'))).map(([k,label])=>({key:k,label,html:buildContent(k)}));
     const cells={}; Object.entries(container._cbCells||{}).forEach(([k,ls])=>cells[k]=ls.map(l=>l.linkId));
     const fn=V0.what.toLowerCase().replace(/\s+/g,'-');
-    capHtmlReport({title:V0.l+(V0.only?' — Vue Blocs':''), subtitle:`${getComps().length} composants · ${getLinks().length} ${V0.lw} · ${V0.scope}`, tabs, active:st.view, cells,
-      filename:all?`${fn}-rapport.html`:`${fn}-${st.view}.html`});
+    capHtmlReport({title:V0.l+(V0.only?_L(' — Vue Blocs'):''), subtitle:_L(`${getComps().length} composants · ${getLinks().length} ${V0.lw} · ${V0.scope}`), tabs, active:st.view, cells,
+      filename:all?_L(`${fn}-rapport.html`):`${fn}-${st.view}.html`});
   }
   /** Export CSV enrichi (53) : une ligne par port (Vue Blocs) ou par échange. */
   function exportCsv(){
     if(st.view==='block'){
       const rows=[]; getComps().forEach(c=>c.ports.forEach(p=>{ const ls=C.portLinks[p.id]||[];
-        if(!ls.length) rows.push([c.layer,capCx(c.name,c.id),c.actor?'Acteur':c.kind==='node'?'Nœud':'Système',capCx(p.name,p.id),p.orient,'','','']);
-        ls.forEach(l=>{ const o=l.src.portId===p.id?l.tgt:l.src; rows.push([c.layer,capCx(c.name,c.id),c.actor?'Acteur':c.kind==='node'?'Nœud':'Système',capCx(p.name,p.id),p.orient,capCx(l.linkName,l.linkId),roleOf(l,p.id),capCx(o.pcName,o.pcId)]); }); }));
-      capCsvExport(V0.what.toLowerCase().replace(/\s+/g,'-')+'-ports.csv',['Couche','Composant','Nature','Port','Orientation',V0.lw.replace(/s$/,''),'Sens','Composant distant'],rows); return;
+        if(!ls.length) rows.push([c.layer,capCx(c.name,c.id),c.actor?_L('Acteur'):c.kind==='node'?_L('Nœud'):_L('Système'),capCx(p.name,p.id),p.orient,'','','']);
+        ls.forEach(l=>{ const o=l.src.portId===p.id?l.tgt:l.src; rows.push([c.layer,capCx(c.name,c.id),c.actor?_L('Acteur'):c.kind==='node'?_L('Nœud'):_L('Système'),capCx(p.name,p.id),p.orient,capCx(l.linkName,l.linkId),roleOf(l,p.id),capCx(o.pcName,o.pcId)]); }); }));
+      capCsvExport(V0.what.toLowerCase().replace(/\s+/g,'-')+'-ports.csv',[_L('Couche'),_L('Composant'),_L('Nature'),_L('Port'),_L('Orientation'),V0.lw.replace(/s$/,''),_L('Sens'),_L('Composant distant')],rows); return;
     }
-    capCsvExport(V0.what.toLowerCase().replace(/\s+/g,'-')+'-echanges.csv',['N°','Couche','Composant source','Port source','Orientation source','Component Exchange','Kind','Port cible','Orientation cible','Composant cible','Functional Exchanges'],
+    capCsvExport(V0.what.toLowerCase().replace(/\s+/g,'-')+_L('-echanges.csv'),['N°',_L('Couche'),_L('Composant source'),_L('Port source'),_L('Orientation source'),_L('Component Exchange'),_L('Kind'),_L('Port cible'),_L('Orientation cible'),_L('Composant cible'),_L('Functional Exchanges')],
       getLinks().map(l=>[lnum[l.linkId],l.layer,capCx(l.src.pcName,l.src.pcId),capCx(l.src.portName,l.src.portId),l.src.portOrient,capCx(l.linkName,l.linkId),l.kind,capCx(l.tgt.portName,l.tgt.portId),l.tgt.portOrient,capCx(l.tgt.pcName,l.tgt.pcId),capCxList(l.fes)]));
   }
 
@@ -389,15 +389,15 @@ function capRenderComponentBlocks(L, host, holder){
   function render(){
     _capCbView[L]=st.view;
     if(st.under&&!inScope.has(st.under)) st.under='';
-    if(!C.comps.length){ container.innerHTML=`<div class="phl-empty">Aucun ${V0.what.replace(/s\b/,'')} dans ce modèle (${V0.scope}).</div>`; return; }
-    const V=[['block','◧ Vue Blocs','Composants dessinés comme dans Capella : ports UNSET (plein), IN, OUT (chevrons) et INOUT (vide) ; bleu = système, bleu clair = acteur'],
-      ['card','▣ Vue Composant','Une carte par composant avec ses échanges émis, reçus, bidirectionnels ou non orientés'],
-      ['line','≡ Vue Ligne','Un Component Exchange par ligne'],['matrix','▦ Matrice','Composant × composant (100 composants au plus)'],['diag','🩺 Contrôles','Ports orphelins ou sans orientation, échanges incohérents, composants sans port ou sans fonction']];
+    if(!C.comps.length){ container.innerHTML=_L(`<div class="phl-empty">Aucun ${V0.what.replace(/s\b/,'')} dans ce modèle (${V0.scope}).</div>`); return; }
+    const V=[['block',_L('◧ Vue Blocs'),_L('Composants dessinés comme dans Capella : ports UNSET (plein), IN, OUT (chevrons) et INOUT (vide) ; bleu = système, bleu clair = acteur')],
+      ['card',_L('▣ Vue Composant'),_L('Une carte par composant avec ses échanges émis, reçus, bidirectionnels ou non orientés')],
+      ['line',_L('≡ Vue Ligne'),_L('Un Component Exchange par ligne')],['matrix',_L('▦ Matrice'),_L('Composant × composant (100 composants au plus)')],['diag',_L('🩺 Contrôles'),_L('Ports orphelins ou sans orientation, échanges incohérents, composants sans port ou sans fonction')]];
     const pv=st.view==='block'||st.view==='card';
     const base=C.comps.filter(c=>underOk(c.id)&&!(pv&&st.withPorts&&!c.ports.length));
     const kinds=['sys','node','act'].filter(k=>C.comps.some(c=>c.kind===k));
     const Vs=V0.only?V.filter(v=>v[0]==='block'):V;
-    container.innerHTML=`${V0.only?'':`
+    container.innerHTML=_L(`${V0.only?'':`
       <div class="phl-toggle-bar">
         ${Vs.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}
         <span id="cb-counter" style="font-size:11px;color:var(--c-dim);font-family:monospace;">${counterText()}</span>
@@ -407,17 +407,17 @@ function capRenderComponentBlocks(L, host, holder){
         ${V0.only?`<span id="cb-counter" style="font-size:11px;color:var(--c-dim);font-family:monospace;margin-right:8px" title="${V0.scope} · ${C.comps.length} ${V0.what} · ${allLinks.length} ${V0.lw}">${counterText()}</span>`:''}
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;">🧱 Composant :</span>
         <input id="cb-name" type="text" class="phl-filter-input" placeholder="Filtrer par composant…" value="${capEsc(st.name)}" style="width:180px;">
-        <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;margin-left:8px;">🔍 ${L==='PN'?'Lien':'Échange'} :</span>
+        <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;margin-left:8px;">🔍 ${L==='PN'?_L('Lien'):_L('Échange')} :</span>
         <input id="cb-ex" type="text" class="phl-filter-input" placeholder="${V0.lw.replace(/s$/,'')}…" value="${capEsc(st.ex)}" style="width:170px;">
-        ${pv?`<label style="font-size:11px;color:var(--c-dim);display:flex;align-items:center;gap:4px;margin-left:8px;" title="Masquer les composants sans port (conteneurs le plus souvent)"><input type="checkbox" id="cb-withports"${st.withPorts?' checked':''}> avec ports</label>`:''}
-        <span class="tb-grp ana-ak" style="margin-left:8px" title="Clic : afficher / masquer · double-clic : uniquement celle-ci"><span class="tb-grp-l">Nature</span>${kinds.map(k=>`<label class="ana-ak-chip${st.nk.has(k)?' on':''}" style="--c:${NK[k].c}" title="${NK[k].tip} — double-clic : uniquement ceux-ci"><input type="checkbox" data-nk="${k}"${st.nk.has(k)?' checked':''}>${NK[k].i} ${NK[k].l} <b>${base.filter(c=>c.kind===k).length}</b></label>`).join('')}${underSelect()}</span>
+        ${pv?_L(`<label style="font-size:11px;color:var(--c-dim);display:flex;align-items:center;gap:4px;margin-left:8px;" title="Masquer les composants sans port (conteneurs le plus souvent)"><input type="checkbox" id="cb-withports"${st.withPorts?' checked':''}> avec ports</label>`):''}
+        <span class="tb-grp ana-ak" style="margin-left:8px" title="Clic : afficher / masquer · double-clic : uniquement celle-ci"><span class="tb-grp-l">Nature</span>${kinds.map(k=>_L(`<label class="ana-ak-chip${st.nk.has(k)?' on':''}" style="--c:${NK[k].c}" title="${NK[k].tip} — double-clic : uniquement ceux-ci"><input type="checkbox" data-nk="${k}"${st.nk.has(k)?' checked':''}>${NK[k].i} ${NK[k].l} <b>${base.filter(c=>c.kind===k).length}</b></label>`)).join('')}${underSelect()}</span>
         <div style="margin-left:auto;display:flex;gap:6px;">
           <button class="phl-export-btn" id="cb-csv">⬇ CSV</button>
           <button class="phl-export-btn" id="cb-html" title="Rapport HTML de la vue affichée (toutes les pages)">⬇ HTML</button>
           <button class="phl-export-btn" id="cb-html-all" title="Rapport HTML à onglets : toutes les vues">⬇ HTML (toutes les vues)</button>
         </div>
       </div>
-      <div id="cb-main">${buildContent()}</div>`;
+      <div id="cb-main">${buildContent()}</div>`);
     container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.addEventListener('click',()=>{ st.view=b.dataset.pv; st.page=0; render(); }));
     container.querySelector('#cb-withports')?.addEventListener('change',e=>{ st.withPorts=e.target.checked; st.page=0; render(); });
     container.querySelectorAll('[data-nk]').forEach(cb=>{

@@ -61,7 +61,7 @@ function capRenderCompExchange(){
                    SystemActor:'#7a6500', LogicalActor:'#7a6500', PhysicalActor:'#7a6500'};
     return (isLight?light:dark)[type] || (isLight?'#7c28d8':'#c084fc');
   };
-  const projectName=(cap_xmlDoc&&cap_xmlDoc.documentElement)?(cap_xmlDoc.documentElement.getAttribute('name')||'Capella Project'):'Capella Project';
+  const projectName=(cap_xmlDoc&&cap_xmlDoc.documentElement)?(cap_xmlDoc.documentElement.getAttribute('name')||_L('Capella Project')):_L('Capella Project');
 
   /** Retourne les liens/exchanges filtrés selon les critères de recherche saisis.
    */
@@ -88,11 +88,11 @@ function capRenderCompExchange(){
    */
   function orientBadge(o){
     const os=CAP_ORIENT_STYLE[o]||CAP_ORIENT_STYLE.UNSET;
-    return `<span title="${os.t}" style="font-size:10px;font-weight:700;padding:1px 4px;border-radius:3px;border:1px solid ${os.c};color:${os.c};vertical-align:middle;margin-left:4px;${o==='UNSET'?'opacity:.6;':''}">${o==='INOUT'?'⇄ INOUT':o}</span>`;
+    return `<span title="${os.t}" style="font-size:10px;font-weight:700;padding:1px 4px;border-radius:3px;border:1px solid ${os.c};color:${os.c};vertical-align:middle;margin-left:4px;${o==='UNSET'?'opacity:.6;':''}">${o==='INOUT'?_L('⇄ INOUT'):o}</span>`;
   }
   /** Badge du kind de l'exchange (ASSEMBLY, DELEGATION, FLOW ; rien si UNSET). */
   function kindBadge(k){
-    return k&&k!=='UNSET'?`<span title="Kind du Component Exchange" style="font-size:10px;font-weight:700;padding:1px 4px;border-radius:3px;background:var(--c-bg3);border:1px solid var(--c-border);color:var(--c-dim);">${capEsc(k)}</span>`:'';
+    return k&&k!=='UNSET'?_L(`<span title="Kind du Component Exchange" style="font-size:10px;font-weight:700;padding:1px 4px;border-radius:3px;background:var(--c-bg3);border:1px solid var(--c-border);color:var(--c-dim);">${capEsc(k)}</span>`):'';
   }
   /** Icône d'alerte (incohérence d'orientation). */
   function warnIcon(l){ return l.warn?`<span title="⚠ ${capEsc(l.warn)}" style="color:var(--c-warn,#e3b341);font-size:12px;cursor:help;">⚠</span>`:''; }
@@ -101,10 +101,10 @@ function capRenderCompExchange(){
   /** Ligne d'informations secondaires : FE alloués, Exchange Items, Physical Links porteurs. */
   function infoLine(l){
     const parts=[];
-    if(l.fes.length) parts.push(`<span title="Functional Exchanges alloués">ƒ ${capFoldList(l.fes.map(f=>detLink(f.id,f.name)))}</span>`);
-    if(l.items.length) parts.push(`<span title="Exchange Items transportés">▤ ${capFoldList(l.items.map(i=>detLink(i.id,i.name)))}</span>`);
-    if(l.pls.length) parts.push(`<span title="Physical Links porteurs">🔌 ${capFoldList(l.pls.map(pl=>detLink(pl.id,pl.name)))}</span>`);
-    if(!l.fes.length) parts.push(`<span title="Aucun Functional Exchange alloué à cet exchange" style="color:var(--c-warn,#e3b341)">∅ FE</span>`);
+    if(l.fes.length) parts.push(_L(`<span title="Functional Exchanges alloués">ƒ ${capFoldList(l.fes.map(f=>detLink(f.id,f.name)))}</span>`));
+    if(l.items.length) parts.push(_L(`<span title="Exchange Items transportés">▤ ${capFoldList(l.items.map(i=>detLink(i.id,i.name)))}</span>`));
+    if(l.pls.length) parts.push(_L(`<span title="Physical Links porteurs">🔌 ${capFoldList(l.pls.map(pl=>detLink(pl.id,pl.name)))}</span>`));
+    if(!l.fes.length) parts.push(_L(`<span title="Aucun Functional Exchange alloué à cet exchange" style="color:var(--c-warn,#e3b341)">∅ FE</span>`));
     return parts.length?`<div style="font-size:11.5px;color:var(--c-dim);display:flex;flex-wrap:wrap;gap:2px 10px;justify-content:center;max-width:100%;">${parts.join('')}</div>`:'';
   }
 
@@ -113,7 +113,7 @@ function capRenderCompExchange(){
   function buildContent(filtered, forceView){
     const view=forceView||st.view;
     if(view==='diag') return buildDiag(filtered);
-    if(!filtered.length) return '<div class="phl-empty">Aucun component exchange ne correspond au filtre.</div>';
+    if(!filtered.length) return _L('<div class="phl-empty">Aucun component exchange ne correspond au filtre.</div>');
     if(view==='matrix'){
       const mx=capMatrixBuild(filtered,{directed:true, unit:'exchanges', colorOf:e=>compColor(e.pcType,e.pcNature,e.pcId)});
       container._cexCells=mx.cells; return mx.html;
@@ -126,8 +126,8 @@ function capRenderCompExchange(){
         const dash=l.dir==='unset'?`background:repeating-linear-gradient(90deg,${lc.bg} 0 4px,transparent 4px 7px);`:`background:${lc.bg};`;
         const arrL=(l.dir==='rev'||l.dir==='bi')?`<span style="font-size:14px;line-height:1;color:${lc.bg};margin-right:-2px;">◀</span>`:'';
         const arrR=(l.dir==='fwd'||l.dir==='bi')?`<span style="font-size:14px;line-height:1;color:${lc.bg};margin-left:-2px;">▶</span>`:'';
-        const tip=l.dir==='rev'?`${l.tgt.pcName} → ${l.src.pcName}`:l.dir==='bi'?`${l.src.pcName} ⇄ ${l.tgt.pcName}`:l.dir==='unset'?'Sens non défini':`${l.src.pcName} → ${l.tgt.pcName}`;
-        return`<div class="phl-line">
+        const tip=l.dir==='rev'?`${l.tgt.pcName} → ${l.src.pcName}`:l.dir==='bi'?`${l.src.pcName} ⇄ ${l.tgt.pcName}`:l.dir==='unset'?_L('Sens non défini'):`${l.src.pcName} → ${l.tgt.pcName}`;
+        return _L(`<div class="phl-line">
           <div class="phl-cell phl-cell-pc" style="--phl-c:${sc}">
             ${detLink(l.src.pcId,l.src.pcName,`color:${capTextOn(sc)}`).replace('class="cex-det"','class="cex-det phl-pc-name"')}
             <span class="phl-port-name">⬦ ${capEsc(l.src.portName)}${orientBadge(l.src.portOrient)}</span>
@@ -147,7 +147,7 @@ function capRenderCompExchange(){
             ${detLink(l.tgt.pcId,l.tgt.pcName,`color:${capTextOn(tc)}`).replace('class="cex-det"','class="cex-det phl-pc-name"')}
             <span class="phl-port-name">⬦ ${capEsc(l.tgt.portName)}${orientBadge(l.tgt.portOrient)}</span>
           </div>
-        </div>`;
+        </div>`);
       }).join('');
     } else {
       const byPC={};
@@ -163,10 +163,10 @@ function capRenderCompExchange(){
         add(l.src,l.tgt,true); add(l.tgt,l.src,false);
       });
       const ROLE={
-        out:  {arrow:'→', color:'#4dd880', label:'ÉMET →',   tip:'Émission — ce composant envoie le signal'},
-        in:   {arrow:'←', color:'#f0883e', label:'← REÇOIT', tip:'Réception — ce composant reçoit le signal'},
-        bi:   {arrow:'⇄', color:'#a371f7', label:'⇄ ÉCHANGE',tip:'Bidirectionnel — port INOUT'},
-        unset:{arrow:'—', color:'#8b949e', label:'? N.O.',   tip:'Non orienté — aucun port IN/OUT/INOUT'},
+        out:  {arrow:'→', color:'#4dd880', label:_L('ÉMET →'),   tip:_L('Émission — ce composant envoie le signal')},
+        in:   {arrow:'←', color:'#f0883e', label:_L('← REÇOIT'), tip:_L('Réception — ce composant reçoit le signal')},
+        bi:   {arrow:'⇄', color:'#a371f7', label:_L('⇄ ÉCHANGE'),tip:_L('Bidirectionnel — port INOUT')},
+        unset:{arrow:'—', color:'#8b949e', label:'? N.O.',   tip:_L('Non orienté — aucun port IN/OUT/INOUT')},
       };
       return Object.values(byPC).map(pc=>{
         const c=compColor(pc.pcType,pc.nature,pc.pcId);
@@ -182,16 +182,16 @@ function capRenderCompExchange(){
             <span style="font-size:11px;font-weight:600;color:${c};min-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${capEsc(lk.pcSrc||pc.pcName)}">${capEsc(lk.pcSrc||pc.pcName)}</span>
             <span class="phl-lr-port-src">⬦ ${capEsc(lk.portSrc)}${orientBadge(lk.orSrc)}</span>
             <span class="phl-lr-arrow" style="color:${R.color};font-weight:700;">${R.arrow}</span>
-            <span class="phl-lr-link" style="background:${lc.bg};color:${lc.fg};border-color:${lc.bg};cursor:pointer;" title="${capEsc([l.kind!=='UNSET'?l.kind:'',l.fes.length?'FE : '+l.fes.map(f=>f.name).join(', '):'',l.items.length?'Items : '+l.items.map(i=>i.name).join(', '):'',l.pls.length?'PL : '+l.pls.map(p=>p.name).join(', '):''].filter(Boolean).join('\n'))}" onclick="event.stopPropagation();capOpenDetailById('${capEsc(l.linkId)}')">${capEsc(l.linkName)}</span>
+            <span class="phl-lr-link" style="background:${lc.bg};color:${lc.fg};border-color:${lc.bg};cursor:pointer;" title="${capEsc([l.kind!=='UNSET'?l.kind:'',l.fes.length?'FE : '+l.fes.map(f=>f.name).join(', '):'',l.items.length?_L('Items : ')+l.items.map(i=>i.name).join(', '):'',l.pls.length?'PL : '+l.pls.map(p=>p.name).join(', '):''].filter(Boolean).join('\n'))}" onclick="event.stopPropagation();capOpenDetailById('${capEsc(l.linkId)}')">${capEsc(l.linkName)}</span>
             <span class="phl-lr-arrow" style="color:${R.color};font-weight:700;">${R.arrow}</span>
             <span class="phl-lr-port-tgt">⬦ ${capEsc(lk.portTgt)}${orientBadge(lk.orTgt)}</span>
             ${detLink(lk.pcTgtId,lk.pcTgt,`color:${tc}`).replace('class="cex-det"','class="cex-det phl-lr-comp-tgt"')}
             ${warnIcon(l)}
           </div>`;
         }).join('');
-        const humanType=CB.byId[pc.pcId]&&CB.byId[pc.pcId].actor?'Acteur':((CAP_HUMAN_NAMES[pc.pcType]||{}).h||pc.pcType);
+        const humanType=CB.byId[pc.pcId]&&CB.byId[pc.pcId].actor?_L('Acteur'):((CAP_HUMAN_NAMES[pc.pcType]||{}).h||pc.pcType);
         const cntTxt=[cnt.out&&`${cnt.out} →`,cnt.in&&`${cnt.in} ←`,cnt.bi&&`${cnt.bi} ⇄`,cnt.unset&&`${cnt.unset} ?`].filter(Boolean).join(' · ');
-        return`<div class="phl-comp-card">
+        return _L(`<div class="phl-comp-card">
           <div class="phl-comp-hdr" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open');this.querySelector('.phl-comp-toggle').classList.toggle('open')">
             <span class="phl-comp-badge" style="background:${c};color:${capInk(c)}">${capEsc(humanType)}</span>
             <span class="phl-comp-title" style="color:${c}">${capEsc(pc.pcName)}</span>
@@ -199,7 +199,7 @@ function capRenderCompExchange(){
             <span class="phl-comp-toggle">▶</span>
           </div>
           <div class="phl-comp-body">${rows}</div>
-        </div>`;
+        </div>`);
       }).join('');
     }
   }
@@ -210,16 +210,16 @@ function capRenderCompExchange(){
    */
   function buildDiag(filtered){
     const exRow=l=>`<tr><td>#${linkNumMap[l.linkId]||''}</td><td>${detLink(l.linkId,l.linkName,'font-weight:600')}</td><td>${detLink(l.src.pcId,l.src.pcName)} <span style="color:var(--c-dim)">⬦ ${capEsc(l.src.portName)}</span>${orientBadge(l.src.portOrient)}</td><td>${detLink(l.tgt.pcId,l.tgt.pcName)} <span style="color:var(--c-dim)">⬦ ${capEsc(l.tgt.portName)}</span>${orientBadge(l.tgt.portOrient)}</td><td>${l.layer}</td></tr>`;
-    const exCols=['N°','Component Exchange','Source','Cible','Couche'];
+    const exCols=['N°',_L('Component Exchange'),_L('Source'),_L('Cible'),_L('Couche')];
     const ports=(allLinks.allPorts||[]).filter(p=>!p.connected)
       .filter(p=>!st.nodeFilter.trim()||p.pcName.toLowerCase().includes(st.nodeFilter.trim().toLowerCase()));
     return capDiagHtml([
-      {icon:'∅', title:'Exchanges sans Functional Exchange alloué', tip:'Aucune ComponentExchangeFunctionalExchangeAllocation', cols:exCols, items:filtered.filter(l=>!l.fes.length).map(exRow)},
-      {icon:'⭘', title:'Ports orphelins (ComponentPort sans exchange)', tip:'Port défini sur un composant mais relié à aucun Component Exchange', cols:['Composant','Port','Orientation','Couche'],
+      {icon:'∅', title:_L('Exchanges sans Functional Exchange alloué'), tip:_L('Aucune ComponentExchangeFunctionalExchangeAllocation'), cols:exCols, items:filtered.filter(l=>!l.fes.length).map(exRow)},
+      {icon:'⭘', title:_L('Ports orphelins (ComponentPort sans exchange)'), tip:_L('Port défini sur un composant mais relié à aucun Component Exchange'), cols:[_L('Composant'),_L('Port'),_L('Orientation'),_L('Couche')],
         items:ports.map(p=>`<tr><td>${detLink(p.pcId,p.pcName,'font-weight:600')}</td><td>${detLink(p.portId,p.portName)}</td><td>${orientBadge(p.orient)}</td><td>${p.layer}</td></tr>`)},
-      {icon:'⚠', title:'Orientations de ports incohérentes', tip:'OUT→OUT ou IN→IN hors délégation', cols:exCols, items:filtered.filter(l=>l.warn).map(exRow)},
-      {icon:'?', title:'Exchanges non orientés', tip:'Les deux ports sont UNSET : le sens du flux est inconnu', cols:exCols, items:filtered.filter(l=>l.dir==='unset').map(exRow)},
-      {icon:'🔌', title:'Exchanges de couche PA non alloués à un Physical Link', tip:'Aucune ComponentExchangeAllocation depuis un PhysicalLink', cols:exCols, items:filtered.filter(l=>l.layer==='PA'&&!l.pls.length&&l.kind!=='DELEGATION').map(exRow)},
+      {icon:'⚠', title:_L('Orientations de ports incohérentes'), tip:_L('OUT→OUT ou IN→IN hors délégation'), cols:exCols, items:filtered.filter(l=>l.warn).map(exRow)},
+      {icon:'?', title:_L('Exchanges non orientés'), tip:_L('Les deux ports sont UNSET : le sens du flux est inconnu'), cols:exCols, items:filtered.filter(l=>l.dir==='unset').map(exRow)},
+      {icon:'🔌', title:_L('Exchanges de couche PA non alloués à un Physical Link'), tip:_L('Aucune ComponentExchangeAllocation depuis un PhysicalLink'), cols:exCols, items:filtered.filter(l=>l.layer==='PA'&&!l.pls.length&&l.kind!=='DELEGATION').map(exRow)},
     ]);
   }
 
@@ -228,16 +228,16 @@ function capRenderCompExchange(){
    */
   function exportHtml(all){
     const f=getFiltered();
-    const VIEWS=[['line','≡ Vue Ligne'],['card','▣ Vue Composant'],['matrix','▦ Matrice'],['diag','🩺 Contrôles']];
+    const VIEWS=[['line',_L('≡ Vue Ligne')],['card',_L('▣ Vue Composant')],['matrix',_L('▦ Matrice')],['diag',_L('🩺 Contrôles')]];
     const keys=all?VIEWS.map(v=>v[0]):[st.view];
     // Vue Ligne : une ligne par exchange marquée data-lid (utilisée par la matrice du rapport)
     const lineHtml=f.length?f.map(l=>`<div data-lid="${capEsc(l.linkId)}">${buildContent([l],'line')}</div>`).join(''):buildContent(f,'line');
     const tabs=VIEWS.filter(v=>keys.includes(v[0])||(v[0]==='line'&&keys.includes('matrix'))).map(([k,label])=>({key:k,label,
       html:k==='line'?lineHtml:k==='card'?buildContent(f,'card').replace(/class="phl-comp-(hdr|body|toggle)"/g,'class="phl-comp-$1 open"'):buildContent(f,k)}));
     const cells={}; Object.entries(container._cexCells||{}).forEach(([k,ls])=>cells[k]=ls.map(l=>l.linkId));
-    const fi=[st.nodeFilter&&`composant « ${st.nodeFilter} »`,st.nameFilter&&`exchange « ${st.nameFilter} »`,st.dirFilter!=='all'&&`sens ${st.dirFilter}`,st.kindFilter!=='all'&&`kind ${st.kindFilter}`].filter(Boolean).join(', ');
-    capHtmlReport({title:'🔀 Behavior Exchanges (PA)', subtitle:`${f.length}/${allLinks.length} exchanges${fi?' · filtres : '+fi:''}`, tabs, active:st.view, cells,
-      filename:all?'component-exchanges-rapport.html':`component-exchanges-${st.view}.html`});
+    const fi=[st.nodeFilter&&_L(`composant « ${st.nodeFilter} »`),st.nameFilter&&_L(`exchange « ${st.nameFilter} »`),st.dirFilter!=='all'&&`sens ${st.dirFilter}`,st.kindFilter!=='all'&&`kind ${st.kindFilter}`].filter(Boolean).join(', ');
+    capHtmlReport({title:_L('🔀 Behavior Exchanges (PA)'), subtitle:`${f.length}/${allLinks.length} exchanges${fi?_L(' · filtres : ')+fi:''}`, tabs, active:st.view, cells,
+      filename:all?_L('component-exchanges-rapport.html'):`component-exchanges-${st.view}.html`});
   }
 
   /** Branche les interactions du contenu courant (clic sur une cellule de la matrice → liste des exchanges). */
@@ -263,20 +263,20 @@ function capRenderCompExchange(){
     container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.classList.toggle('active',b.dataset.pv===st.view));
   }
 
-  const CEX_VIEWS=[['block','◧ Vue Blocs','Composants Behavior dessinés comme dans Capella (bleu = système, bleu clair = acteur), ports UNSET / IN / OUT / INOUT'],['line','≡ Vue Ligne',''],['card','▣ Vue Composant',''],['matrix','▦ Matrice','Matrice N² composant × composant'],['diag','🩺 Contrôles','Ports orphelins, exchanges sans FE, orientations incohérentes…']];
+  const CEX_VIEWS=[['block',_L('◧ Vue Blocs'),_L('Composants Behavior dessinés comme dans Capella (bleu = système, bleu clair = acteur), ports UNSET / IN / OUT / INOUT')],['line',_L('≡ Vue Ligne'),''],['card',_L('▣ Vue Composant'),''],['matrix',_L('▦ Matrice'),_L('Matrice N² composant × composant')],['diag',_L('🩺 Contrôles'),_L('Ports orphelins, exchanges sans FE, orientations incohérentes…')]];
   /** Construit et affiche l'intégralité de la vue (barre d'outils, filtres, contenu, écouteurs).
    */
   function render(){
     _capCompExView=st.view;
     const filtered=getFiltered();
     if(st.view==='block'){   // ◧ Vue Blocs : rendu commun aux vues 🧱 (47-composants.js), mêmes couleurs que 🧱 Logical Component
-      container.innerHTML=`<div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Component Exchanges de la couche <b>PA</b> entre <b>Physical Components Behavior</b>, ou entre un Behavior et un <b>acteur</b> (nœud) qui lui est relié (${allLinks.length} sur ${allLinks.total} dans le modèle).</div>
-        <div class="phl-toggle-bar">${CEX_VIEWS.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}</div><div id="cex-blk"></div>`;
+      container.innerHTML=_L(`<div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Component Exchanges de la couche <b>PA</b> entre <b>Physical Components Behavior</b>, ou entre un Behavior et un <b>acteur</b> (nœud) qui lui est relié (${allLinks.length} sur ${allLinks.total} dans le modèle).</div>
+        <div class="phl-toggle-bar">${CEX_VIEWS.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}</div><div id="cex-blk"></div>`);
       container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.addEventListener('click',()=>{ st.view=b.dataset.pv; render(); }));
       capRenderComponentBlocks('PB', container.querySelector('#cex-blk'), container);
       return;
     }
-    container.innerHTML=`
+    container.innerHTML=_L(`
       <div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Component Exchanges de la couche <b>PA</b> entre <b>Physical Components Behavior</b>, ou entre un Behavior et un <b>acteur</b> (nœud) qui lui est relié (${allLinks.length} sur ${allLinks.total} dans le modèle). Les échanges SA et LA sont dans 🧱 System Component et 🧱 Logical Component ; les liens entre nœuds dans 🔌 Physical Link.</div>
       <div class="phl-toggle-bar">
         <button class="phl-toggle-btn" data-pv="block" title="${CEX_VIEWS[0][2]}">◧ Vue Blocs</button>
@@ -286,15 +286,15 @@ function capRenderCompExchange(){
         <button class="phl-toggle-btn${st.view==='diag'?' active':''}" data-pv="diag" title="Ports orphelins, exchanges sans FE, orientations incohérentes…">🩺 Contrôles</button>
         <span id="cex-counter" style="font-size:11px;color:var(--c-dim);font-family:monospace;">${filtered.length}/${allLinks.length} exchange${allLinks.length>1?'s':''}</span>
         <span style="display:flex;gap:4px;margin-left:12px;flex-wrap:wrap;">
-          ${[['all','Tous',allLinks.length,'Tous les sens'],
+          ${[['all',_L('Tous'),allLinks.length,_L('Tous les sens')],
              ...Object.entries(CAP_CEX_DIRS).map(([k,d])=>[k,d.label,allLinks.filter(l=>l.dir===k).length,d.tip]),
-             ['warn','⚠ Incohérents',allLinks.filter(l=>l.warn).length,'Orientations de ports incohérentes (OUT→OUT, IN→IN hors délégation)']]
+             ['warn',_L('⚠ Incohérents'),allLinks.filter(l=>l.warn).length,_L('Orientations de ports incohérentes (OUT→OUT, IN→IN hors délégation)')]]
             .filter(([k,,n])=>k==='all'||n>0)
             .map(([k,lab,n,tip])=>`<button class="cap-lf-btn cex-dir-btn${st.dirFilter===k?' active':''}" data-dir="${k}" title="${tip}">${lab} (${n})</button>`).join('')}
         </span>
-        ${kindsPresent.length>1||kindsPresent[0]!=='UNSET'?`<select id="cex-kind-sel" class="phl-filter-input" style="margin-left:auto;width:auto;" title="Filtrer par kind">
+        ${kindsPresent.length>1||kindsPresent[0]!=='UNSET'?_L(`<select id="cex-kind-sel" class="phl-filter-input" style="margin-left:auto;width:auto;" title="Filtrer par kind">
           <option value="all">Tous kinds</option>${kindsPresent.map(k=>`<option value="${k}"${st.kindFilter===k?' selected':''}>${k}</option>`).join('')}
-        </select>`:''}
+        </select>`):''}
       </div>
       <div class="phl-filter-bar" style="margin-bottom:8px;">
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;">🖥 Composant :</span>
@@ -307,7 +307,7 @@ function capRenderCompExchange(){
           <button class="phl-export-btn" id="cex-exp-html-all" title="Rapport HTML à onglets : Vue Ligne, Vue Composant, Matrice, Contrôles">⬇ HTML (toutes les vues)</button>
         </div>
       </div>
-      <div id="cex-main">${buildContent(filtered)}</div>`;
+      <div id="cex-main">${buildContent(filtered)}</div>`);
 
     container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.addEventListener('click',()=>{
       st.view=b.dataset.pv; render();
@@ -332,16 +332,16 @@ function capRenderCompExchange(){
     container.querySelector('#cex-exp-csv')?.addEventListener('click',()=>{
       const f=getFiltered();
       if(st.view!=='card'){
-        capCsvExport('component-exchanges.csv',['N° Exchange','Composant Source','Port Source','Orientation Source','Component Exchange','Kind','Sens','Port Cible','Orientation Cible','Composant Cible','Functional Exchanges','Exchange Items','Physical Links','Alerte'],
+        capCsvExport('component-exchanges.csv',[_L('N° Exchange'),_L('Composant Source'),_L('Port Source'),_L('Orientation Source'),_L('Component Exchange'),_L('Kind'),_L('Sens'),_L('Port Cible'),_L('Orientation Cible'),_L('Composant Cible'),_L('Functional Exchanges'),_L('Exchange Items'),_L('Physical Links'),_L('Alerte')],
           f.map(l=>[linkNumMap[l.linkId]||'',capCx(l.src.pcName,l.src.pcId),capCx(l.src.portName,l.src.portId),l.src.portOrient,capCx(l.linkName,l.linkId),l.kind,CAP_CEX_DIRS[l.dir].label,capCx(l.tgt.portName,l.tgt.portId),l.tgt.portOrient,capCx(l.tgt.pcName,l.tgt.pcId),
             capCxList(l.fes),capCxList(l.items),capCxList(l.pls),l.warn]));
       } else {
         const rows=[], seen=new Set();
         f.forEach(l=>{ if(seen.has(l.linkId)) return; seen.add(l.linkId); const n=linkNumMap[l.linkId]||'';
-          const role=isSrc=>l.dir==='bi'?'⇄ Bidirectionnel':l.dir==='unset'?'? Non orienté':((l.dir==='fwd')===isSrc?'Émission →':'← Réception');
+          const role=isSrc=>l.dir==='bi'?_L('⇄ Bidirectionnel'):l.dir==='unset'?_L('? Non orienté'):((l.dir==='fwd')===isSrc?_L('Émission →'):_L('← Réception'));
           rows.push([n,role(true),capCx(l.src.pcName,l.src.pcId),capCx(l.src.portName,l.src.portId),l.src.portOrient,capCx(l.linkName,l.linkId),l.kind,capCx(l.tgt.portName,l.tgt.portId),l.tgt.portOrient,capCx(l.tgt.pcName,l.tgt.pcId)]);
           rows.push([n,role(false),capCx(l.tgt.pcName,l.tgt.pcId),capCx(l.tgt.portName,l.tgt.portId),l.tgt.portOrient,capCx(l.linkName,l.linkId),l.kind,capCx(l.src.portName,l.src.portId),l.src.portOrient,capCx(l.src.pcName,l.src.pcId)]); });
-        capCsvExport('component-exchanges-sens.csv',['N° Exchange','Sens','Composant','Port','Orientation','Component Exchange','Kind','Port distant','Orientation distante','Composant distant'],rows);
+        capCsvExport(_L('component-exchanges-sens.csv'),[_L('N° Exchange'),_L('Sens'),_L('Composant'),_L('Port'),_L('Orientation'),_L('Component Exchange'),_L('Kind'),_L('Port distant'),_L('Orientation distante'),_L('Composant distant')],rows);
       }
     });
 

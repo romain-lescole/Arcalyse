@@ -7,12 +7,12 @@
  * Les réglages de l'ancienne 📊 Table View (partie « tv ») sont convertis en onglets du tableau (capTableImportTv).
  */
 var CAP_CFG_PARTS=[
-  ['toolbar','☰ Barre des vues','menus affichés, vues épinglées'],
-  ['dash',   '📐 Tableaux de bord','pages, indicateurs, disposition'],
-  ['table',  '▤ Tableau','onglets de vues, colonnes affichées, colonnes par chemin, tri, filtres, largeurs'],
-  ['csv',    '⬇ Exports CSV','colonnes retirées ou ajoutées (ID, owner, attributs…) pour chaque export'],
-  ['theme',  '🎨 Thème','thème choisi et thème personnalisé'],
-  ['names',  '🔤 Règles de nommage','verbes acceptés, mots refusés']
+  ['toolbar',_L('☰ Barre des vues'),_L('menus affichés, vues épinglées')],
+  ['dash',   _L('📐 Tableaux de bord'),_L('pages, indicateurs, disposition')],
+  ['table',  _L('▤ Tableau'),_L('onglets de vues, colonnes affichées, colonnes par chemin, tri, filtres, largeurs')],
+  ['csv',    _L('⬇ Exports CSV'),_L('colonnes retirées ou ajoutées (ID, owner, attributs…) pour chaque export')],
+  ['theme',  _L('🎨 Thème'),_L('thème choisi et thème personnalisé')],
+  ['names',  _L('🔤 Règles de nommage'),_L('verbes acceptés, mots refusés')]
 ];
 
 /** Sérialise en JSON en conservant les ensembles (Set). @param {*} o @returns {string} */
@@ -89,20 +89,20 @@ function capCfgDialog(mode, data){
     ov.addEventListener('click',e=>{ if(e.target===ov) ov.style.display='none'; }); }
   // Un fichier d'une version antérieure peut contenir la partie « tv » (📊 Table View) : rattachée au ▤ Tableau
   const parts=mode==='load'?CAP_CFG_PARTS.filter(([k])=>data.parts&&(data.parts[k]!=null||(k==='table'&&data.parts.tv!=null))):CAP_CFG_PARTS;
-  const nb=k=>k==='dash'?(()=>{ const d=mode==='load'?data.parts.dash:capDashStore; const n=d&&d.list?d.list.length:0; return ` <span class="ana-dim">(${n} page${n>1?'s':''})</span>`; })()
+  const nb=k=>k==='dash'?(()=>{ const d=mode==='load'?data.parts.dash:capDashStore; const n=d&&d.list?d.list.length:0; return _L(` <span class="ana-dim">(${n} page${n>1?'s':''})</span>`); })()
     :k==='table'?(()=>{ const t=(mode==='load'?data.parts.table:capCfgGet('table'))||{}, o=(t.tabs||[]).length||1, n=(t.customCols||[]).length;
-      const tv=mode==='load'&&data.parts.tv?` + anciens onglets 📊 Table View`:'';
-      return ` <span class="ana-dim">(${o} onglet${o>1?'s':''}${n?`, ${n} colonne${n>1?'s':''} par chemin`:''}${tv})</span>`; })():'';
-  ov.innerHTML=`<div class="cw-d-box" style="max-width:560px">
-    <div class="cw-d-hdr"><b>${mode==='save'?'⚙ Enregistrer l\'interface et les vues':'⚙ Charger une interface et des vues'}</b><button class="cap-lf-btn" data-c="x">✕</button></div>
+      const tv=mode==='load'&&data.parts.tv?_L(` + anciens onglets 📊 Table View`):'';
+      return _L(` <span class="ana-dim">(${o} onglet${o>1?'s':''}${n?_L(`, ${n} colonne${n>1?'s':''} par chemin`):''}${tv})</span>`); })():'';
+  ov.innerHTML=_L(`<div class="cw-d-box" style="max-width:560px">
+    <div class="cw-d-hdr"><b>${mode==='save'?_L('⚙ Enregistrer l\'interface et les vues'):_L('⚙ Charger une interface et des vues')}</b><button class="cap-lf-btn" data-c="x">✕</button></div>
     <div class="cw-d-body">
-      <div class="cw-d-sub">${mode==='save'?'Fichier <b>.json</b> sans le modèle : à recharger avec un autre modèle ou une nouvelle version de la page.'
-        :`Fichier enregistré le <b>${capEsc(data.date||'—')}</b>. Les parties cochées remplaceront les réglages actuels.`}</div>
+      <div class="cw-d-sub">${mode==='save'?_L('Fichier <b>.json</b> sans le modèle : à recharger avec un autre modèle ou une nouvelle version de la page.')
+        :_L(`Fichier enregistré le <b>${capEsc(data.date||'—')}</b>. Les parties cochées remplaceront les réglages actuels.`)}</div>
       ${parts.length?parts.map(([k,l,t])=>`<label class="cfg-part"><input type="checkbox" data-k="${k}" checked> <span><b>${l}</b>${nb(k)}<br><span class="ana-dim">${t}</span></span></label>`).join('')
-        :'<div class="phl-empty">Ce fichier ne contient aucun réglage reconnu.</div>'}
+        :_L('<div class="phl-empty">Ce fichier ne contient aucun réglage reconnu.</div>')}
     </div>
     <div class="cw-d-ftr"><span style="flex:1"></span><button class="cap-lf-btn" data-c="x">Annuler</button>
-      ${parts.length?`<button class="phl-export-btn" data-c="ok">${mode==='save'?'💾 Enregistrer':'📂 Appliquer'}</button>`:''}</div></div>`;
+      ${parts.length?`<button class="phl-export-btn" data-c="ok">${mode==='save'?_L('💾 Enregistrer'):_L('📂 Appliquer')}</button>`:''}</div></div>`);
   ov.style.display='flex';
   ov.querySelectorAll('[data-c="x"]').forEach(b=>b.onclick=()=>{ ov.style.display='none'; });
   ov.querySelector('[data-c="ok"]')?.addEventListener('click',()=>{
@@ -112,10 +112,10 @@ function capCfgDialog(mode, data){
     if(mode==='save'){
       const out={type:'capella-interface', version:1, date:new Date().toLocaleString('fr-FR'), parts:{}};
       keys.forEach(k=>out.parts[k]=capCfgGet(k));
-      capDownloadBlob(new Blob([capCfgSer(out)],{type:'application/json'}),'interface-et-vues.json');
+      capDownloadBlob(new Blob([capCfgSer(out)],{type:'application/json'}),_L('interface-et-vues.json'));
     } else {
-      keys.forEach(k=>{ try{ if(data.parts[k]!=null) capCfgSet(k,data.parts[k]); if(k==='table'&&data.parts.tv) capCfgSet('tv',data.parts.tv); }catch(e){ console.error(e); alert('Réglage « '+k+' » non appliqué : '+e.message); } });
-      if(typeof capWatchFlash==='function') capWatchFlash(`✔ ${keys.length} réglage(s) appliqué(s)`);
+      keys.forEach(k=>{ try{ if(data.parts[k]!=null) capCfgSet(k,data.parts[k]); if(k==='table'&&data.parts.tv) capCfgSet('tv',data.parts.tv); }catch(e){ console.error(e); alert(_L('Réglage « ')+k+_L(' » non appliqué : ')+e.message); } });
+      if(typeof capWatchFlash==='function') capWatchFlash(_L(`✔ ${keys.length} réglage(s) appliqué(s)`));
     }
   });
 }
@@ -126,8 +126,8 @@ function capCfgLoadFile(){
   inp.onchange=()=>{
     const f=inp.files[0]; if(!f) return;
     f.text().then(t=>{
-      let o; try{ o=capCfgRev(t); }catch(e){ alert('Fichier illisible : JSON invalide.'); return; }
-      if(!o||o.type!=='capella-interface'||!o.parts){ alert('Ce fichier n\'est pas un fichier « interface et vues » d\'Arcalyse.'); return; }
+      let o; try{ o=capCfgRev(t); }catch(e){ alert(_L('Fichier illisible : JSON invalide.')); return; }
+      if(!o||o.type!=='capella-interface'||!o.parts){ alert(_L('Ce fichier n\'est pas un fichier « interface et vues » d\'Arcalyse.')); return; }
       capCfgDialog('load',o);
     });
   };
@@ -136,7 +136,7 @@ function capCfgLoadFile(){
 
 /** Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi). */
 function capCfgLoadUpdate(){
-  if(!capLoaded){ alert('Ouvrez d\'abord un modèle Capella : la mise à jour se compare au modèle affiché.'); return; }
+  if(!capLoaded){ alert(_L('Ouvrez d\'abord un modèle Capella : la mise à jour se compare au modèle affiché.')); return; }
   capWatchPickNewVersion();
 }
 

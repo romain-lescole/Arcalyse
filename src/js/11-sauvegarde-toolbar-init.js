@@ -44,7 +44,7 @@ function loadJSON(file) {
       document.getElementById('dep-inp').value=S.depth;
       document.querySelectorAll('.lbtn').forEach(b=>b.classList.toggle('active',b.dataset.l===S.layout));
       onModelChanged();
-    } catch(err){ alert('Erreur : '+err.message); }
+    } catch(err){ alert(_L('Erreur : ')+err.message); }
   };
   reader.readAsText(file);
 }

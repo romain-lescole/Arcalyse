@@ -45,7 +45,7 @@ function capHtmlReport(o){
   const cs=getComputedStyle(document.documentElement);
   const vars=['--c-bg','--c-bg2','--c-bg3','--c-bg4','--c-border','--c-text','--c-dim','--c-accent','--c-warn','--c-ok','--c-err']
     .map(v=>`${v}:${cs.getPropertyValue(v).trim()||'inherit'}`).join(';');
-  const project=(cap_xmlDoc&&cap_xmlDoc.documentElement&&cap_xmlDoc.documentElement.getAttribute('name'))||'Projet Capella';
+  const project=(cap_xmlDoc&&cap_xmlDoc.documentElement&&cap_xmlDoc.documentElement.getAttribute('name'))||_L('Projet Capella');
   const tabs=o.tabs.filter(t=>t.html!=null);
   const active=tabs.some(t=>t.key===o.active)?o.active:tabs[0].key;
   const html=`<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -70,9 +70,9 @@ ${capReportCss()}
 <header><h1>${capEsc(o.title)} — ${capEsc(project)}</h1>
 <p class="sub">${new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'})}${capCurrentFileName?' · '+capEsc(capCurrentFileName):''}${o.subtitle?' · '+capEsc(o.subtitle):''}</p>
 <div class="rtabs">${tabs.length>1?tabs.map(t=>`<button class="rtab${t.key===active?' on':''}" data-t="${t.key}">${capEsc(t.label)}</button>`).join(''):''}
-<input class="rsearch" id="rq" placeholder="🔍 Filtrer le contenu…"></div></header>
+<input class="rsearch" id="rq" placeholder="${_L('🔍 Filtrer le contenu…')}"></div></header>
 <main>${tabs.map(t=>`<section class="rpanel${t.key===active?' on':''}" id="p-${t.key}">${capReportClean(t.html)}</section>`).join('')}</main>
-<div class="rfoot">Rapport généré par Relation Map · Capella — fichier autonome, aucune ressource externe.</div>
+<div class="rfoot">${_L('Rapport généré par Relation Map · Capella — fichier autonome, aucune ressource externe.')}</div>
 <script>
 (function(){
   var cells=${JSON.stringify(o.cells||{})};

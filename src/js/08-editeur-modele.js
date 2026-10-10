@@ -38,16 +38,16 @@ function renderModalTab(tab) {
 /** Rend l'onglet « Chaînes » de la modale : liste des chaînes de relations définies.
  */
 function renderChainsTab(body){
-  if(!capChainsForModal||!capChainsForModal.length){body.innerHTML='<div style="color:var(--c-dim);padding:20px;font-style:italic">Aucune chaîne — chargez un fichier .capella</div>';return;}
+  if(!capChainsForModal||!capChainsForModal.length){body.innerHTML=_L('<div style="color:var(--c-dim);padding:20px;font-style:italic">Aucune chaîne — chargez un fichier .capella</div>');return;}
   const CAP_CHAIN_COLORS_LOCAL={FunctionalChain:'#22c55e',OperationalProcess:'#3b82f6',PhysicalPath:'#f97316'};
-  const CAP_CHAIN_LABELS_LOCAL={FunctionalChain:'Chaîne fonctionnelle',OperationalProcess:'Processus opérationnel',PhysicalPath:'Chemin physique'};
+  const CAP_CHAIN_LABELS_LOCAL={FunctionalChain:_L('Chaîne fonctionnelle'),OperationalProcess:_L('Processus opérationnel'),PhysicalPath:_L('Chemin physique')};
   for(const chain of capChainsForModal){
     const color=CAP_CHAIN_COLORS_LOCAL[chain.type]||'#a78bfa';
     const card=document.createElement('div');
     card.style.cssText='background:var(--c-bg3);border:1px solid var(--c-border);border-radius:7px;margin-bottom:10px;overflow:hidden;';
     const hdr=document.createElement('div');
     hdr.style.cssText='padding:8px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;';
-    hdr.innerHTML=`<span style="font-size:10px;font-weight:700;padding:2px 6px;border-radius:3px;color:${color};background:${color}22;">${CAP_CHAIN_LABELS_LOCAL[chain.type]||chain.type}</span><span style="font-size:12px;font-weight:600;">${capEsc(chain.name)}</span><span style="margin-left:auto;font-size:10px;color:var(--c-dim);font-family:monospace;">${chain.steps.filter(s=>s.type!=='link').length} étapes</span><span style="font-size:9px;color:var(--c-dim);">▶</span>`;
+    hdr.innerHTML=_L(`<span style="font-size:10px;font-weight:700;padding:2px 6px;border-radius:3px;color:${color};background:${color}22;">${CAP_CHAIN_LABELS_LOCAL[chain.type]||chain.type}</span><span style="font-size:12px;font-weight:600;">${capEsc(chain.name)}</span><span style="margin-left:auto;font-size:10px;color:var(--c-dim);font-family:monospace;">${chain.steps.filter(s=>s.type!=='link').length} étapes</span><span style="font-size:9px;color:var(--c-dim);">▶</span>`);
     const bdy=document.createElement('div'); bdy.style.cssText='display:none;padding:10px 12px;border-top:1px solid var(--c-border);';
     let stepNum=0;
     chain.steps.forEach(step=>{
@@ -75,7 +75,7 @@ function renderElementsTab(body) {
 
   // En-têtes
   const hrow=document.createElement('tr');
-  ['Nom','Type','Paquetage','Actions'].forEach(h=>{
+  [_L('Nom'),'Type',_L('Paquetage'),_L('Actions')].forEach(h=>{
     const th=document.createElement('th'); th.textContent=h; hrow.appendChild(th);
   });
   thead.appendChild(hrow);
@@ -87,7 +87,7 @@ function renderElementsTab(body) {
     if (pair) {
       const [key]=pair;
       const inp=document.createElement('input'); inp.className='modal-filter-inp';
-      inp.placeholder='Filtrer…'; inp.value=modalElFilters[key]||'';
+      inp.placeholder=_L('Filtrer…'); inp.value=modalElFilters[key]||'';
       inp.onclick=ev=>ev.stopPropagation();
       inp.oninput=()=>{ modalElFilters[key]=inp.value; applyElFilter(); };
       th.appendChild(inp);
@@ -140,7 +140,7 @@ function renderElementsTab(body) {
   });
 
   const addBtn=document.createElement('div'); addBtn.className='add-btn';
-  addBtn.textContent='+ Ajouter un élément';
+  addBtn.textContent=_L('+ Ajouter un élément');
   addBtn.onclick=()=>showElementForm(body,null,-1);
   body.appendChild(addBtn);
   const fz=document.createElement('div'); fz.id='edit-form'; body.appendChild(fz);
@@ -155,26 +155,26 @@ function showElementForm(body,el,idx){
   const allTypes=[...new Set([...Object.keys(TCFG),...MODEL.elements.map(e=>e.type)])];
   const typeOpts=allTypes.map(t=>`<option value="${t}"${el?.type===t?' selected':''}>${t}</option>`).join('');
   const pkgOpts=MODEL.elements.filter(e=>e.type==='Package').map(p=>`<option value="${p.name}"${el?.pkg===p.name?' selected':''}>${p.name}</option>`).join('');
-  form.innerHTML=`<h4>${isNew?'Nouvel élément':'Modifier'}</h4>
+  form.innerHTML=_L(`<h4>${isNew?_L('Nouvel élément'):_L('Modifier')}</h4>
     <div class="frow"><label>Nom</label><input id="f-el-name" value="${el?.name.replace(/"/g,'&quot;')||''}"></div>
     <div class="frow"><label>Type</label>
       <select id="f-el-type">${typeOpts}<option value="__new__">+ Nouveau type…</option></select></div>
     <div class="frow" id="f-custom-row" style="display:none"><label>Nouveau type</label><input id="f-el-custom"></div>
     <div class="frow"><label>Paquetage</label><select id="f-el-pkg">${pkgOpts}</select></div>
     <div class="fbtns"><button class="fbtn-cancel" id="f-el-cancel">Annuler</button>
-                       <button class="fbtn-save"   id="f-el-save">${isNew?'Créer':'Sauvegarder'}</button></div>`;
+                       <button class="fbtn-save"   id="f-el-save">${isNew?_L('Créer'):_L('Sauvegarder')}</button></div>`);
   form.querySelector('#f-el-type').onchange=function(){ form.querySelector('#f-custom-row').style.display=this.value==='__new__'?'':'none'; };
   form.querySelector('#f-el-cancel').onclick=()=>{ form.style.display='none'; };
   form.querySelector('#f-el-save').onclick=()=>{
     let type=form.querySelector('#f-el-type').value;
     if (type==='__new__') {
       type=form.querySelector('#f-el-custom').value.trim();
-      if (!type){ alert('Saisir un type.'); return; }
+      if (!type){ alert(_L('Saisir un type.')); return; }
       if (!TCFG[type]) TCFG[type]={color:`hsl(${Math.random()*360|0},55%,60%)`,abbr:type.slice(0,3).toUpperCase()};
     }
     const name=form.querySelector('#f-el-name').value.trim();
     const pkg =form.querySelector('#f-el-pkg').value;
-    if (!name){ alert('Nom vide.'); return; }
+    if (!name){ alert(_L('Nom vide.')); return; }
     if (isNew) MODEL.elements.push({id:'el_'+Date.now(),name,type,pkg});
     else MODEL.elements[idx]={...MODEL.elements[idx],name,type,pkg};
     onModelChanged();
@@ -185,7 +185,7 @@ function showElementForm(body,el,idx){
 function deleteElement(idx){
   const el=MODEL.elements[idx];
   const deps=MODEL.relations.filter(r=>r.src===el.id||r.tgt===el.id);
-  if (!confirm(`Supprimer "${el.name}" ?${deps.length?` (${deps.length} relation(s) liée(s))`:''}`)) return;
+  if (!confirm(_L(`Supprimer "${el.name}" ?${deps.length?_L(` (${deps.length} relation(s) liée(s))`):''}`))) return;
   MODEL.relations=MODEL.relations.filter(r=>r.src!==el.id&&r.tgt!==el.id);
   MODEL.elements.splice(idx,1);
   if (S.ctx===el.id&&MODEL.elements.length>0) S.ctx=MODEL.elements[0].id;
@@ -204,7 +204,7 @@ function renderRelationsTab(body) {
 
   // En-têtes
   const hrow=document.createElement('tr');
-  ['Source','Type','Cible','Nom',''].forEach(h=>{
+  [_L('Source'),'Type',_L('Cible'),_L('Nom'),''].forEach(h=>{
     const th=document.createElement('th'); th.textContent=h; hrow.appendChild(th);
   });
   thead.appendChild(hrow);
@@ -216,7 +216,7 @@ function renderRelationsTab(body) {
     if (pair) {
       const [key]=pair;
       const inp=document.createElement('input'); inp.className='modal-filter-inp';
-      inp.placeholder='Filtrer…'; inp.value=modalRelFilters[key]||'';
+      inp.placeholder=_L('Filtrer…'); inp.value=modalRelFilters[key]||'';
       inp.onclick=ev=>ev.stopPropagation();
       inp.oninput=()=>{ modalRelFilters[key]=inp.value; applyRelFilter(); };
       th.appendChild(inp);
@@ -269,11 +269,11 @@ function renderRelationsTab(body) {
   });
 
   const addBtn=document.createElement('div'); addBtn.className='add-btn';
-  addBtn.textContent='+ Ajouter une relation'; addBtn.onclick=()=>showRelForm(body,null,-1);
+  addBtn.textContent=_L('+ Ajouter une relation'); addBtn.onclick=()=>showRelForm(body,null,-1);
   body.appendChild(addBtn);
   const fz=document.createElement('div'); fz.id='edit-form'; body.appendChild(fz);
   body.querySelectorAll('.edit-rel').forEach(b=>b.onclick=()=>showRelForm(body,MODEL.relations[+b.dataset.i],+b.dataset.i));
-  body.querySelectorAll('.del-rel').forEach(b=>b.onclick=()=>{ if(confirm('Supprimer ?')){ MODEL.relations.splice(+b.dataset.i,1); onModelChanged(); } });
+  body.querySelectorAll('.del-rel').forEach(b=>b.onclick=()=>{ if(confirm(_L('Supprimer ?'))){ MODEL.relations.splice(+b.dataset.i,1); onModelChanged(); } });
 }
 /** Affiche le formulaire de création/édition d'une relation dans la modale.
  */
@@ -283,18 +283,18 @@ function showRelForm(body,rel,idx){
   const elO=MODEL.elements.map(e=>`<option value="${e.id}"${rel?.src===e.id?' selected':''}>${e.name}</option>`).join('');
   const elO2=MODEL.elements.map(e=>`<option value="${e.id}"${rel?.tgt===e.id?' selected':''}>${e.name}</option>`).join('');
   const rtO=Object.keys(RCFG).map(t=>`<option value="${t}"${rel?.type===t?' selected':''}>${t}</option>`).join('');
-  form.innerHTML=`<h4>${isNew?'Nouvelle relation':'Modifier'}</h4>
+  form.innerHTML=_L(`<h4>${isNew?_L('Nouvelle relation'):_L('Modifier')}</h4>
     <div class="frow"><label>Source</label><select id="f-r-src">${elO}</select></div>
     <div class="frow"><label>Type</label><select id="f-r-type">${rtO}</select></div>
     <div class="frow"><label>Cible</label><select id="f-r-tgt">${elO2}</select></div>
     <div class="frow"><label>Nom</label><input id="f-r-name" value="${rel?.name||''}" placeholder="ex: contains"></div>
     <div class="fbtns"><button class="fbtn-cancel" id="f-r-cancel">Annuler</button>
-                       <button class="fbtn-save" id="f-r-save">${isNew?'Créer':'Sauvegarder'}</button></div>`;
+                       <button class="fbtn-save" id="f-r-save">${isNew?_L('Créer'):_L('Sauvegarder')}</button></div>`);
   form.querySelector('#f-r-cancel').onclick=()=>{ form.style.display='none'; };
   form.querySelector('#f-r-save').onclick=()=>{
     const src=form.querySelector('#f-r-src').value, tgt=form.querySelector('#f-r-tgt').value;
     const type=form.querySelector('#f-r-type').value, name=form.querySelector('#f-r-name').value.trim();
-    if (src===tgt){ alert('Source = Cible impossible.'); return; }
+    if (src===tgt){ alert(_L('Source = Cible impossible.')); return; }
     if (isNew) MODEL.relations.push({id:'r_'+Date.now(),src,tgt,type,name});
     else MODEL.relations[idx]={...MODEL.relations[idx],src,tgt,type,name};
     onModelChanged();
@@ -316,8 +316,8 @@ function renderPackagesTab(body) {
     body.appendChild(row);
   });
   const addRow=document.createElement('div'); addRow.style.cssText='display:flex;gap:8px;margin-top:12px';
-  addRow.innerHTML=`<input class="inp" id="new-pkg-inp" placeholder="Nouveau paquetage" style="flex:1">
-    <button class="fbtn-save" id="new-pkg-btn">Ajouter</button>`;
+  addRow.innerHTML=_L(`<input class="inp" id="new-pkg-inp" placeholder="Nouveau paquetage" style="flex:1">
+    <button class="fbtn-save" id="new-pkg-btn">Ajouter</button>`);
   body.appendChild(addRow);
   body.querySelector('#new-pkg-btn').onclick=()=>{
     const v=body.querySelector('#new-pkg-inp').value.trim();
@@ -328,7 +328,7 @@ function renderPackagesTab(body) {
   };
   body.querySelectorAll('.del-pkg').forEach(b=>b.onclick=()=>{
     const pe=MODEL.elements.find(e=>e.id===b.dataset.id);
-    if (!pe||!confirm(`Supprimer le paquetage "${pe.name}" ?`)) return;
+    if (!pe||!confirm(_L(`Supprimer le paquetage "${pe.name}" ?`))) return;
     arboDeleteEl(pe.id);
   });
 }
@@ -344,7 +344,7 @@ function showEditRelCriteriaForm(container, afterRow, typeName, cfg) {
   const sel = (opts, cur) => opts.map(([v,l])=>`<option value="${v}"${cur===v?' selected':''}>${l}</option>`).join('');
   const f=document.createElement('div'); f.className='inline-form';
   f.style.cssText='background:var(--c-bg3);border:1px solid var(--c-border);border-radius:5px;padding:8px;margin-top:4px';
-  f.innerHTML=`
+  f.innerHTML=_L(`
     <div style="font-size:10px;font-weight:700;color:var(--c-dim);margin-bottom:6px;text-transform:uppercase">Modifier : ${typeName}</div>
     <div class="frow">
       <label>Couleur</label>
@@ -355,24 +355,24 @@ function showEditRelCriteriaForm(container, afterRow, typeName, cfg) {
     </div>
     <div class="frow"><label>Tirets</label>
       <select id="erc-dash">${sel([
-        ['','— Plein'],['6,3','– – Tirets'],['9,4','— — Longs'],
-        ['3,3','··· Points'],['4,2','- - Fins'],['8,3','—— Espacés']
+        ['',_L('— Plein')],['6,3',_L('– – Tirets')],['9,4',_L('— — Longs')],
+        ['3,3',_L('··· Points')],['4,2',_L('- - Fins')],['8,3',_L('—— Espacés')]
       ], cfg.dash)}</select>
     </div>
     <div class="frow"><label>Terminaison</label>
       <select id="erc-end">${sel([
-        ['filled','▶  Flèche pleine'],['chevron','>  Flèche simple'],
-        ['open','⊳  Triangle creux'],['none','—  Aucune']
+        ['filled',_L('▶  Flèche pleine')],['chevron',_L('>  Flèche simple')],
+        ['open',_L('⊳  Triangle creux')],['none',_L('—  Aucune')]
       ], endVal)}</select>
     </div>
     <div class="frow"><label>Départ</label>
       <select id="erc-start">${sel([
-        ['none','—  Aucun'],['diamond','◆  Losange plein'],
-        ['hollowDiamond','◇  Losange creux'],['circle','⊕  Cercle ⊕']
+        ['none',_L('—  Aucun')],['diamond',_L('◆  Losange plein')],
+        ['hollowDiamond',_L('◇  Losange creux')],['circle',_L('⊕  Cercle ⊕')]
       ], startVal)}</select>
     </div>
     <div class="fbtns"><button class="fbtn-cancel" id="erc-cancel">Annuler</button>
-                       <button class="fbtn-save"   id="erc-save">Appliquer</button></div>`;
+                       <button class="fbtn-save"   id="erc-save">Appliquer</button></div>`);
   afterRow.insertAdjacentElement('afterend', f);
   const pal=f.querySelector('#erc-palette');
   COLOR_PALETTE.slice(0,12).forEach(c=>{
@@ -405,7 +405,7 @@ function showNewRelCriteriaForm(container) {
   const color=nextColor();
   const f=document.createElement('div'); f.className='inline-form';
   f.style.cssText='background:var(--c-bg3);border:1px solid var(--c-border);border-radius:5px;padding:8px;margin-top:6px';
-  f.innerHTML=`
+  f.innerHTML=_L(`
     <div style="font-size:10px;font-weight:700;color:var(--c-dim);margin-bottom:6px;text-transform:uppercase">Nouveau critère</div>
     <div class="frow"><label>Nom</label><input id="nrc-name" placeholder="ex: Implémente"></div>
     <div class="frow">
@@ -442,7 +442,7 @@ function showNewRelCriteriaForm(container) {
       </select>
     </div>
     <div class="fbtns"><button class="fbtn-cancel" id="nrc-cancel">Annuler</button>
-                       <button class="fbtn-save" id="nrc-save">Créer</button></div>`;
+                       <button class="fbtn-save" id="nrc-save">Créer</button></div>`);
   container.appendChild(f);
   // Palette de couleurs rapides
   const pal=f.querySelector('#nrc-palette');
@@ -455,8 +455,8 @@ function showNewRelCriteriaForm(container) {
   f.querySelector('#nrc-cancel').onclick=()=>f.remove();
   f.querySelector('#nrc-save').onclick=()=>{
     const name=f.querySelector('#nrc-name').value.trim();
-    if (!name){ alert('Nom requis.'); return; }
-    if (RCFG[name]){ alert('Ce critère existe déjà.'); return; }
+    if (!name){ alert(_L('Nom requis.')); return; }
+    if (RCFG[name]){ alert(_L('Ce critère existe déjà.')); return; }
     const endVal  = f.querySelector('#nrc-end').value;
     const startVal= f.querySelector('#nrc-start').value;
     RCFG[name]={
@@ -483,7 +483,7 @@ function showEditTypeForm(container, afterRow, typeName, cfg) {
   const ICONS=['🧱','⚙','◆','◻','📋','📂','🔷','🔶','🔌','◈','▣','⬡'];
   const f=document.createElement('div'); f.className='inline-form';
   f.style.cssText='background:var(--c-bg3);border:1px solid var(--c-border);border-radius:5px;padding:8px;margin-top:4px';
-  f.innerHTML=`
+  f.innerHTML=_L(`
     <div style="font-size:10px;font-weight:700;color:var(--c-dim);margin-bottom:6px;text-transform:uppercase">Modifier : ${typeName}</div>
     <div class="frow">
       <label>Couleur</label>
@@ -497,7 +497,7 @@ function showEditTypeForm(container, afterRow, typeName, cfg) {
       <div id="etp-icons" style="display:flex;gap:4px;flex-wrap:wrap;flex:1"></div>
     </div>
     <div class="fbtns"><button class="fbtn-cancel" id="etp-cancel">Annuler</button>
-                       <button class="fbtn-save" id="etp-save">Appliquer</button></div>`;
+                       <button class="fbtn-save" id="etp-save">Appliquer</button></div>`);
   afterRow.insertAdjacentElement('afterend', f);
   const pal=f.querySelector('#etp-palette');
   COLOR_PALETTE.slice(0,12).forEach(c=>{
@@ -532,7 +532,7 @@ function showNewTypeForm(container) {
   const color=nextColor();
   const f=document.createElement('div'); f.className='inline-form';
   f.style.cssText='background:var(--c-bg3);border:1px solid var(--c-border);border-radius:5px;padding:8px;margin-top:6px';
-  f.innerHTML=`
+  f.innerHTML=_L(`
     <div style="font-size:10px;font-weight:700;color:var(--c-dim);margin-bottom:6px;text-transform:uppercase">Nouveau type</div>
     <div class="frow"><label>Nom</label><input id="ntp-name" placeholder="ex: Acteur"></div>
     <div class="frow"><label>Abrév.</label><input id="ntp-abbr" placeholder="3 car." maxlength="4" style="width:48px;flex:none"></div>
@@ -544,7 +544,7 @@ function showNewTypeForm(container) {
       </div>
     </div>
     <div class="fbtns"><button class="fbtn-cancel" id="ntp-cancel">Annuler</button>
-                       <button class="fbtn-save" id="ntp-save">Créer</button></div>`;
+                       <button class="fbtn-save" id="ntp-save">Créer</button></div>`);
   container.appendChild(f);
   // Abbréviation auto à partir du nom
   f.querySelector('#ntp-name').oninput=function(){
@@ -564,8 +564,8 @@ function showNewTypeForm(container) {
   f.querySelector('#ntp-save').onclick=()=>{
     const name=f.querySelector('#ntp-name').value.trim();
     const abbr=(f.querySelector('#ntp-abbr').value.trim()||name.slice(0,3)).toUpperCase();
-    if (!name){ alert('Nom requis.'); return; }
-    if (TCFG[name]){ alert('Ce type existe déjà.'); return; }
+    if (!name){ alert(_L('Nom requis.')); return; }
+    if (TCFG[name]){ alert(_L('Ce type existe déjà.')); return; }
     TCFG[name]={color:f.querySelector('#ntp-color').value, abbr};
     S.typF[name]=true;
     f.remove(); onModelChanged();

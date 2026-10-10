@@ -1,16 +1,16 @@
 // ── Chains ──
 const CAP_CHAIN_COLORS={FunctionalChain:'#22c55e',OperationalProcess:'#3b82f6',PhysicalPath:'#f97316'};
-const CAP_CHAIN_LABELS={FunctionalChain:'Chaîne fonctionnelle',OperationalProcess:'Processus opérationnel',PhysicalPath:'Chemin physique'};
+const CAP_CHAIN_LABELS={FunctionalChain:_L('Chaîne fonctionnelle'),OperationalProcess:_L('Processus opérationnel'),PhysicalPath:_L('Chemin physique')};
 const CAP_ACTOR_TYPES=new Set(['SystemActor','LogicalActor','PhysicalActor','OperationalActor']);
 const CAP_CHAIN_ARCH={OperationalAnalysis:'OA',SystemAnalysis:'SA',LogicalArchitecture:'LA',PhysicalArchitecture:'PA',EPBSArchitecture:'EPBS'};
 /** Couleurs des boîtes, reprises des diagrammes Capella : bleu = élément porté par un acteur,
  * vert = élément porté par le système étudié, gris = élément non alloué ; jaune = activité opérationnelle
  * (processus opérationnels OA, quelle que soit l'entité qui la porte, comme dans Capella). */
 const CAP_CHAIN_KIND={
-  actor:  {fill:'#c5e6fb', stroke:'#4a4aa8', label:'Acteur',     rm:'#58a6ff'},
-  system: {fill:'#c6ffa4', stroke:'#1f6b1f', label:'Système',    rm:'#4dd880'},
-  none:   {fill:'#eeeeee', stroke:'#8a8a8a', label:'Non alloué', rm:'#8b949e'},
-  oa:     {fill:'#f8dc7c', stroke:'#6b4f2a', label:'Activité opérationnelle', rm:'#e3b341'},
+  actor:  {fill:'#c5e6fb', stroke:'#4a4aa8', label:_L('Acteur'),     rm:'#58a6ff'},
+  system: {fill:'#c6ffa4', stroke:'#1f6b1f', label:_L('Système'),    rm:'#4dd880'},
+  none:   {fill:'#eeeeee', stroke:'#8a8a8a', label:_L('Non alloué'), rm:'#8b949e'},
+  oa:     {fill:'#f8dc7c', stroke:'#6b4f2a', label:_L('Activité opérationnelle'), rm:'#e3b341'},
 };
 let capChainsSubView='diagram';   // 'diagram' (cartes + diagrammes) | 'map' (vue Relation Map)
 let capChainsSelectedId=null;     // chaîne affichée dans la vue Relation Map
@@ -267,7 +267,7 @@ function capWrapLines(s, max, maxLines){
  * @returns {string} Balisage SVG
  */
 function capChainDiagramSvg(chain){
-  const g=chain.graph; if(!g||!g.nodes.length) return '<div style="padding:16px;color:#666">Chaîne vide.</div>';
+  const g=chain.graph; if(!g||!g.nodes.length) return _L('<div style="padding:16px;color:#666">Chaîne vide.</div>');
   const lay=capChainLayout(g);
   const byId={}; g.nodes.forEach(n=>byId[n.id]=n);
   const W=200, H=66, DW=14, GX=46, PAD=24;
@@ -358,14 +358,14 @@ function capChainDiagramSvg(chain){
     const lines=capWrapLines(n.name,26,3);
     const ty0=yy+H/2-(lines.length-1)*8+4;
     const icon=chain.type==='PhysicalPath'?'C':'F';
-    const tip=`${n.name} — ${n.elemType}${n.owner?' · alloué à '+n.owner:''}${entrySet.has(n.id)?' · ENTRÉE':''}${exitSet.has(n.id)?' · SORTIE':''}`;
+    const tip=`${n.name} — ${n.elemType}${n.owner?_L(' · alloué à ')+n.owner:''}${entrySet.has(n.id)?_L(' · ENTRÉE'):''}${exitSet.has(n.id)?_L(' · SORTIE'):''}`;
     nodesSvg+=`<g class="ccn" data-ref="${capEsc(n.refId)}" style="cursor:${n.refId?'pointer':'default'}">
       <title>${capEsc(tip)}</title>
       <rect x="${x}" y="${yy}" width="${W}" height="${H}" fill="${k.fill}" stroke="${k.stroke}" stroke-width="${entrySet.has(n.id)||exitSet.has(n.id)?2.4:1.4}"/>
       ${OA?`<ellipse cx="${x+16}" cy="${yy+H/2}" rx="10" ry="7" fill="#f5a623" stroke="#7a4a00"/><text x="${x+16}" y="${yy+H/2+3}" text-anchor="middle" font-size="7.5" font-weight="700" fill="#3a2200">OA</text>`
         :`<circle cx="${x+15}" cy="${yy+H/2}" r="7" fill="#e8f5d8" stroke="#5a7d3a"/><text x="${x+15}" y="${yy+H/2+3.5}" text-anchor="middle" font-size="9" font-weight="700" fill="#2f5d1a">${icon}</text>`}
       ${lines.map((l,i)=>`<text x="${x+W/2+8}" y="${ty0+i*16}" text-anchor="middle" font-size="12.5" fill="#111">${capEsc(l)}</text>`).join('')}
-      ${entrySet.has(n.id)?`<text x="${x+W-4}" y="${yy+11}" text-anchor="end" font-size="8.5" font-weight="700" fill="${k.stroke}">ENTRÉE</text>`:''}
+      ${entrySet.has(n.id)?_L(`<text x="${x+W-4}" y="${yy+11}" text-anchor="end" font-size="8.5" font-weight="700" fill="${k.stroke}">ENTRÉE</text>`):''}
       ${exitSet.has(n.id)?`<text x="${x+W-4}" y="${yy+H-4}" text-anchor="end" font-size="8.5" font-weight="700" fill="${k.stroke}">SORTIE</text>`:''}
     </g>`;
   });
@@ -395,7 +395,7 @@ function capChainEmptyOk(c){ return capChainsEmptyFilter==='all'||(capChainsEmpt
 const CAP_CHAIN_LAYER_ORDER=['OA','SA','LA','PA','EPBS','?'];
 /** Libellé et couleurs d'une catégorie ARCADIA de chaîne ('?' = non classée). */
 function capChainLayerInfo(k){
-  return CAP_LAYERS[k]||{label:'Non classée', color:'#8b949e', bg:'rgba(139,148,158,.15)'};
+  return CAP_LAYERS[k]||{label:_L('Non classée'), color:'#8b949e', bg:'rgba(139,148,158,.15)'};
 }
 /** Badge coloré de catégorie ARCADIA (OA, SA, LA, PA…). */
 function capChainLayerBadge(k){
@@ -414,10 +414,10 @@ function capRenderChains(){
   const cntE=k=>capChainsData.filter(c=>(capChainsFilter==='all'||c.type===capChainsFilter)&&(capChainsLayerFilter==='all'||c.layer===capChainsLayerFilter)&&(k==='all'||(k==='empty')===capChainIsEmpty(c))).length;
   const layersPresent=CAP_CHAIN_LAYER_ORDER.filter(k=>capChainsData.some(c=>c.layer===k));
   const nShown=capChainsFiltered().length;
-  const bar=`<div class="cap-lf-bar" style="flex-wrap:wrap;gap:6px">
+  const bar=_L(`<div class="cap-lf-bar" style="flex-wrap:wrap;gap:6px">
       <span class="tb-grp" title="Type"><button class="cap-lf-btn${capChainsFilter==='all'?' active':''}" data-cf="all">Tous types (${cntT('all')})</button>
       ${typeKeys.map(k=>`<button class="cap-lf-btn${capChainsFilter===k?' active':''}" data-cf="${k}">${CAP_CHAIN_LABELS[k]} (${cntT(k)})</button>`).join('')}</span>
-      <span class="ana-fn-cnt" title="Chaînes affichées après filtres / total">${nShown===capChainsData.length?`${nShown} chaîne(s)`:`<b>${nShown}</b> / ${capChainsData.length} chaîne(s)`}</span>
+      <span class="ana-fn-cnt" title="Chaînes affichées après filtres / total">${nShown===capChainsData.length?_L(`${nShown} chaîne(s)`):_L(`<b>${nShown}</b> / ${capChainsData.length} chaîne(s)`)}</span>
       <span class="tb-grp" style="margin-left:auto" title="Présentation">
         <button class="cap-lf-btn${capChainsSubView==='diagram'?' active':''}" data-sv="diagram" title="Cartes dépliables avec le diagramme de chaque chaîne">▦ Diagrammes</button>
         <button class="cap-lf-btn${capChainsSubView==='map'?' active':''}" data-sv="map" title="Graphe interactif dans le style de la Relation Map">🗺 Vue Relation Map</button>
@@ -426,11 +426,11 @@ function capRenderChains(){
     <div class="cap-lf-bar" style="flex-wrap:wrap;margin-top:-4px;gap:6px">
       <span class="tb-grp" title="Catégorie ARCADIA"><button class="cap-lf-btn${capChainsLayerFilter==='all'?' active':''}" data-lf="all">Toutes catégories (${cntL('all')})</button>
       ${layersPresent.map(k=>{const lv=capChainLayerInfo(k);
-        return `<button class="cap-lf-btn${capChainsLayerFilter===k?' active':''}" data-lf="${k}" title="${capEsc(lv.label)}" style="${capChainsLayerFilter===k?`border-color:${lv.color};color:${lv.color}`:''}">${k==='?'?'Non classées':k} (${cntL(k)})</button>`;}).join('')}</span>
+        return `<button class="cap-lf-btn${capChainsLayerFilter===k?' active':''}" data-lf="${k}" title="${capEsc(lv.label)}" style="${capChainsLayerFilter===k?`border-color:${lv.color};color:${lv.color}`:''}">${k==='?'?_L('Non classées'):k} (${cntL(k)})</button>`;}).join('')}</span>
       <span class="tb-grp" style="margin-left:auto" title="Chaîne vide : aucune fonction (ou composant) ni échange impliqué"><span class="tb-grp-l">Contenu</span>
-        ${[['all','Toutes'],['full','Non vides'],['empty','Vides']].map(([k,l])=>`<button class="cap-lf-btn${capChainsEmptyFilter===k?' active':''}" data-ef="${k}"${k==='empty'&&cntE('empty')?' style="color:var(--c-warn,#e3b341)"':''}>${l} (${cntE(k)})</button>`).join('')}</span>
+        ${[['all',_L('Toutes')],['full',_L('Non vides')],['empty',_L('Vides')]].map(([k,l])=>`<button class="cap-lf-btn${capChainsEmptyFilter===k?' active':''}" data-ef="${k}"${k==='empty'&&cntE('empty')?' style="color:var(--c-warn,#e3b341)"':''}>${l} (${cntE(k)})</button>`).join('')}</span>
       <span class="tb-grp" title="Tri des chaînes par nombre de fonctions (composants pour les Physical Paths)"><span class="tb-grp-l">Tri</span>
-        ${[['model','Ordre du modèle'],['fn-desc','Fonctions ↓'],['fn-asc','Fonctions ↑']].map(([k,l])=>`<button class="cap-lf-btn${capChainsSort===k?' active':''}" data-chsort="${k}">${l}</button>`).join('')}</span>
+        ${[['model',_L('Ordre du modèle')],['fn-desc',_L('Fonctions ↓')],['fn-asc',_L('Fonctions ↑')]].map(([k,l])=>`<button class="cap-lf-btn${capChainsSort===k?' active':''}" data-chsort="${k}">${l}</button>`).join('')}</span>
     </div>
     <div class="cap-chain-legend">
       <span><i style="background:${CAP_CHAIN_KIND.actor.fill};border-color:${CAP_CHAIN_KIND.actor.stroke}"></i>Porté par un acteur</span>
@@ -438,7 +438,7 @@ function capRenderChains(){
       <span><i style="background:${CAP_CHAIN_KIND.none.fill};border-color:${CAP_CHAIN_KIND.none.stroke}"></i>Non alloué</span>
       <span><i style="background:${CAP_CHAIN_KIND.oa.fill};border-color:${CAP_CHAIN_KIND.oa.stroke}"></i>Activité opérationnelle (processus OA)</span>
       <span>Bordure épaisse = entrée / sortie de la chaîne · flèches dans le sens réel des échanges</span>
-    </div>`;
+    </div>`);
   if(capChainsSubView==='map'){ container.innerHTML=bar+'<div id="cap-chainmap-wrap"></div>'; capRenderChainMap(); }
   else { container.innerHTML=bar+capChainExportBar()+capRenderChainCards(); capWireChainCards(container); capWireChainExport(container); }
   container.querySelectorAll('[data-cf]').forEach(btn=>btn.addEventListener('click',()=>{capChainsFilter=btn.dataset.cf||'all';capRenderChains();}));
@@ -452,27 +452,27 @@ function capRenderChains(){
  * (le diagramme est généré à l'ouverture de la carte). */
 function capRenderChainCards(){
   const filtered=capChainsFiltered();
-  if(!filtered.length) return '<div style="color:var(--c-dim);padding:40px;text-align:center">Aucune chaîne.</div>';
+  if(!filtered.length) return _L('<div style="color:var(--c-dim);padding:40px;text-align:center">Aucune chaîne.</div>');
   return CAP_CHAIN_LAYER_ORDER.map(lk=>{
     const grp=filtered.filter(c=>c.layer===lk); if(!grp.length) return '';
     const lv=capChainLayerInfo(lk);
-    return `<div class="cap-chain-lhdr" style="border-color:${lv.color}">${capChainLayerBadge(lk)}<span>${capEsc(lv.label)}</span><span class="cap-chain-lcnt">${grp.length} chaîne${grp.length>1?'s':''}</span></div>`+
+    return _L(`<div class="cap-chain-lhdr" style="border-color:${lv.color}">${capChainLayerBadge(lk)}<span>${capEsc(lv.label)}</span><span class="cap-chain-lcnt">${grp.length} chaîne${grp.length>1?'s':''}</span></div>`)+
     grp.map(chain=>{
       const color=CAP_CHAIN_COLORS[chain.type]||'#a78bfa', label=CAP_CHAIN_LABELS[chain.type]||chain.type;
       const g=chain.graph||{nodes:[],edges:[]};
       const lay=capChainLayout(g);
       const multi=lay.entries.length>1||lay.exits.length>1;
-      return `<div class="cap-chain-card" data-chain="${capEsc(chain.id)}">
+      return _L(`<div class="cap-chain-card" data-chain="${capEsc(chain.id)}">
         <div class="cap-chain-hdr">
           <input type="checkbox" class="cap-chx-sel" data-id="${capEsc(chain.id)}" title="Sélectionner pour l'export groupé"${capChainsSelection.has(chain.id)?' checked':''}>
           ${capChainLayerBadge(chain.layer)}
           <span class="cap-type-badge" style="color:${color};background:${color}22">${capEsc(label)}</span>
           <span class="cap-chain-title">${capEsc(chain.name)}</span>
-          <span class="cap-chain-meta">${g.nodes.length} ${chain.type==='PhysicalPath'?'composants':'fonctions'} · ${g.edges.length} échanges · ${lay.entries.length} entrée${lay.entries.length>1?'s':''} · ${lay.exits.length} sortie${lay.exits.length>1?'s':''}${multi?' <b style="color:var(--c-accent)">⑂ ramifiée</b>':''}</span>
+          <span class="cap-chain-meta">${g.nodes.length} ${chain.type==='PhysicalPath'?_L('composants'):_L('fonctions')} · ${g.edges.length} échanges · ${lay.entries.length} entrée${lay.entries.length>1?'s':''} · ${lay.exits.length} sortie${lay.exits.length>1?'s':''}${multi?_L(' <b style="color:var(--c-accent)">⑂ ramifiée</b>'):''}</span>
           <span class="cap-chain-tog">▶</span>
         </div>
         <div class="cap-chain-body"></div>
-      </div>`;
+      </div>`);
     }).join('');
   }).join('');
 }
@@ -494,7 +494,7 @@ function capChainCardBody(chain){
   const eRows=t.fes.map(e=>`<tr><td class="num">${e.num}</td><td>${ref(e.refId,e.name)}</td><td><span class="num">${e.srcNum}.</span> ${capEsc(e.src)}</td>
       <td style="color:#1a6e2e">⟶</td><td><span class="num">${e.tgtNum}.</span> ${capEsc(e.tgt)}</td>
       ${t.isPath?`<td>${capEsc(e.alloc||'—')}</td>`:`<td>${capEsc(e.items||'—')}</td><td>${capEsc(e.alloc||'—')}</td>`}</tr>`).join('');
-  return `<div class="cap-chain-io">
+  return _L(`<div class="cap-chain-io">
       <div><b>Entrées</b> ${lay.entries.map(id=>pill(byId[id])).join(' ')||'—'}</div>
       <div><b>Sorties</b> ${lay.exits.map(id=>pill(byId[id])).join(' ')||'—'}</div>
       <div style="margin-left:auto;display:flex;gap:4px">
@@ -507,11 +507,11 @@ function capChainCardBody(chain){
     </div>
     <div class="cap-chain-diagram">${capChainDiagramSvg(chain)}</div>
     <div class="cap-chain-tables">
-      <details class="cap-chain-xdet" open><summary>${t.isPath?'Composants impliqués':'Fonctions impliquées'} (${t.funcs.length})</summary>
-        <table class="cap-chain-xtable cap-chain-ft"><tr><th>N°</th><th>${t.isPath?'Composant':'Fonction'}</th><th>Type</th><th>Alloué à</th><th>Rôle</th><th title="Échanges entrants">Entr.</th><th title="Échanges sortants">Sort.</th></tr>${fRows}</table></details>
-      <details class="cap-chain-xdet" open><summary>${t.isPath?'Physical Links impliqués':'Functional Exchanges impliqués'} (${t.fes.length})</summary>
-        ${eRows?`<table class="cap-chain-xtable cap-chain-ft"><tr><th>N°</th><th>${t.isPath?'Physical Link':'Functional Exchange'}</th><th>Source</th><th></th><th>Cible</th>${t.isPath?'<th>Component Exchanges alloués</th>':'<th>Exchange Items</th><th>CE porteur</th>'}</tr>${eRows}</table>`:'<div style="color:var(--c-dim);padding:6px">—</div>'}</details>
-    </div>`;
+      <details class="cap-chain-xdet" open><summary>${t.isPath?_L('Composants impliqués'):_L('Fonctions impliquées')} (${t.funcs.length})</summary>
+        <table class="cap-chain-xtable cap-chain-ft"><tr><th>N°</th><th>${t.isPath?_L('Composant'):_L('Fonction')}</th><th>Type</th><th>Alloué à</th><th>Rôle</th><th title="Échanges entrants">Entr.</th><th title="Échanges sortants">Sort.</th></tr>${fRows}</table></details>
+      <details class="cap-chain-xdet" open><summary>${t.isPath?_L('Physical Links impliqués'):_L('Functional Exchanges impliqués')} (${t.fes.length})</summary>
+        ${eRows?_L(`<table class="cap-chain-xtable cap-chain-ft"><tr><th>N°</th><th>${t.isPath?_L('Physical Link'):_L('Functional Exchange')}</th><th>Source</th><th></th><th>Cible</th>${t.isPath?_L('<th>Component Exchanges alloués</th>'):_L('<th>Exchange Items</th><th>CE porteur</th>')}</tr>${eRows}</table>`):'<div style="color:var(--c-dim);padding:6px">—</div>'}</details>
+    </div>`);
 }
 
 /** Attache l'ouverture/fermeture des cartes (rendu paresseux du diagramme) et la navigation. */

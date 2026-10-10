@@ -34,13 +34,13 @@ function capTfEnhance(t){
   const st=_capTfState[key]||(_capTfState[key]={f:[],w:[]});
   // Ligne de filtres
   const fr=document.createElement('tr'); fr.className='cap-tf-row';
-  fr.innerHTML=[...Array(n)].map((_,i)=>`<th><input type="text" data-tf="${i}" placeholder="Filtrer…" title="Filtrer cette colonne (plusieurs mots : tous requis ; « ! » en tête : exclure)" value="${capEsc(st.f[i]||'')}"></th>`).join('');
+  fr.innerHTML=[...Array(n)].map((_,i)=>_L(`<th><input type="text" data-tf="${i}" placeholder="Filtrer…" title="Filtrer cette colonne (plusieurs mots : tous requis ; « ! » en tête : exclure)" value="${capEsc(st.f[i]||'')}"></th>`)).join('');
   head.after(fr);
   fr.addEventListener('input',e=>{ const i=+e.target.dataset.tf; st.f[i]=e.target.value; capTfFilter(t,st); });
   // Poignées de redimensionnement
   [...head.cells].forEach((th,i)=>{
     th.style.position='relative';
-    const h=document.createElement('span'); h.className='cap-tf-rz'; h.title='Glisser pour régler la largeur de la colonne (double-clic : largeur automatique)';
+    const h=document.createElement('span'); h.className='cap-tf-rz'; h.title=_L('Glisser pour régler la largeur de la colonne (double-clic : largeur automatique)');
     h.addEventListener('click',e=>e.stopPropagation());
     h.addEventListener('dblclick',e=>{ e.stopPropagation(); st.w=[]; t.classList.remove('cap-tf-fixed'); t.style.width='';
       [...head.cells].forEach(c=>c.style.width=''); });
@@ -85,7 +85,7 @@ function capTfScrollWrap(t){
  */
 function capTfHBar(w,t){
   const bar=document.createElement('div'); bar.className='cap-tf-hbar';
-  bar.title='Défilement horizontal du tableau';
+  bar.title=_L('Défilement horizontal du tableau');
   const inner=document.createElement('div'); bar.appendChild(inner);
   w.after(bar);
   bar.addEventListener('scroll',()=>{ if(w.scrollLeft!==bar.scrollLeft) w.scrollLeft=bar.scrollLeft; });
@@ -138,7 +138,7 @@ function capTfFilter(t,st){
   if(!cnt){ cnt=t._tfCnt=document.createElement('div'); cnt.className='cap-tf-cnt'; (t.parentElement.style.overflow==='auto'||t.parentElement.classList.contains('cap-tf-scroll')?t.parentElement:t).before(cnt); }
   const on=tests.some(Boolean);
   cnt.style.display=on?'':'none';
-  cnt.innerHTML=on?`🔍 ${vis} / ${tot} ligne${tot>1?'s':''} <span class="cap-tf-clr" title="Effacer les filtres de ce tableau">✕ effacer</span>`:'';
+  cnt.innerHTML=on?_L(`🔍 ${vis} / ${tot} ligne${tot>1?'s':''} <span class="cap-tf-clr" title="Effacer les filtres de ce tableau">✕ effacer</span>`):'';
   const clr=cnt.querySelector('.cap-tf-clr');
   if(clr) clr.onclick=()=>{ st.f=[]; t.querySelectorAll('.cap-tf-row input').forEach(i=>i.value=''); capTfFilter(t,st); };
 }

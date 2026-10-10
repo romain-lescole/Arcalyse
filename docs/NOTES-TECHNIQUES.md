@@ -8,7 +8,7 @@ Historique : ce document reprend le fichier « CONSIGNES » utilisé avant le d�
 - Application autonome qui charge un `.capella` (XML) localement ; **version Capella uniquement** (pas de SysML, pas d'exemple intégré).
 - Fonctionne **hors ligne** : aucune ressource externe. **D3.js v7.9.0 embarqué** (`src/vendor/d3.min.js`, issu de `npm pack d3@7.9.0` → `package/dist/d3.min.js`).
 - Livrable : `dist/arcalyse-fr.html` (~1,15 Mo, dont D3 ~280 Ko), produit par `node build.js`.
-- Une ancienne version bilingue FR/EN (mécanisme `_L()` + `I18N_EN`, rechargement via `window.name`) existe hors de ce dépôt ; elle n'est plus maintenue. Le projet actuel est **français uniquement**.
+- Version anglaise : `node build.js --lang en` → `dist/arcalyse-en.html` (§ 11). Une ancienne version bilingue FR/EN à bascule dans la page (`I18N_EN`, rechargement via `window.name`) existe hors de ce dépôt ; elle n'est plus maintenue. Les sources restent en français ; l'anglais est produit au build.
 
 ## 2. Tests
 
@@ -99,7 +99,7 @@ Chaînes de navigation Metaclass → Property (✨ Colonne par chemin).
 - Hauteur « jusqu'en bas » : attribut `data-fill` + `capFillHeight()` (appelé après rendu et au redimensionnement).
 - Thèmes : `capIsLight()` pour les thèmes clairs (light, office2007) ; `html[data-theme=…]` pour les styles propres à un thème.
 - Hiérarchie ƒ Fonctions : séparateur glissable `.ana-fn-rsz` entre arbre et fiche (largeur gardée dans `st.splitW`, double-clic = défaut).
-- ƒ Fonctions : filtre « Allocation » (puces 🧩 Système / 👤 Acteurs / ∅ Non allouées, `st.ak`, double-clic = solo) sur Hiérarchie et Tableau ; nature calculée par `capFnAllocKind(f)` ('sys'|'act'|'mix'|'none'|'parent'), libellés/couleurs `CAP_FN_AK` ; liserés `.ak-*`, colonne `akind`. Liste « Allocataire » (`st.who`, sous-composants inclus) construite depuis `alloc[].anc` (ancêtres calculés par `capCompAncestors` : imbrication XML puis Parts) ; colonne `subsys` (`capFnSubsystems`) masquée automatiquement en boîte noire. Version de travail courante : `arcalyse-fr.html` (français seul, sans i18n).
+- ƒ Fonctions : filtre « Allocation » (puces 🧩 Système / 👤 Acteurs / ∅ Non allouées, `st.ak`, double-clic = solo) sur Hiérarchie et Tableau ; nature calculée par `capFnAllocKind(f)` ('sys'|'act'|'mix'|'none'|'parent'), libellés/couleurs `CAP_FN_AK` ; liserés `.ak-*`, colonne `akind`. Liste « Allocataire » (`st.who`, sous-composants inclus) construite depuis `alloc[].anc` (ancêtres calculés par `capCompAncestors` : imbrication XML puis Parts) ; colonne `subsys` (`capFnSubsystems`) masquée automatiquement en boîte noire. Version de travail courante : `arcalyse-fr.html` (version anglaise produite au build, § 11).
 - Chaînes : filtre de contenu `capChainsEmptyFilter` ('all'|'full'|'empty'), `capChainIsEmpty(c)` (graphe sans nœud ni arête), appliqué dans `capChainsFiltered` et dans les compteurs.
 - 📐 Tableau de bord (Analyses › `dash`, `capRenderDashboard`) : catalogue `capDashCatalog()` (entrées {g,id,l,kind:'n'|'pct'|'series'|'multi'|'table'|'text',f}), valeurs `capDashValue` en cache dans `_capAnaCache` ; rendu SVG `capDashDraw(w,m,W,H)` aux dimensions réelles ; palette `CAP_DASH_PAL` (ordre fixe, clair/sombre) ; représentations `CAP_DASH_VIZ` ; éditeur `capDashEditor` ; stockage `capDashStore` dans `<script id="cap-dashboards" type="application/json">` (repris par la 💾 Page HTML). **Tout nouvel indicateur d'analyse doit être ajouté au catalogue**, avec un libellé qui nomme le sujet (« Fonctions SA — … », « Traçabilité — … »). Le rendu doit tenir dans le cadre (`.dash-wb` en `overflow:hidden`) : lignes/barres en surplus regroupées en « Autres », tableaux tronqués avec « … et N autre(s) ligne(s) » ; test automatique de débordement sur toutes les combinaisons indicateur × représentation × taille.
 - Vue 🔗 Liens : boutons et en-têtes avec `humanLabel` (+ nombre), relations absentes masquées ; types techniques (`relType`) en infobulle et en pastilles.
@@ -152,7 +152,7 @@ Chaînes de navigation Metaclass → Property (✨ Colonne par chemin).
 
 - [x] Aide (?) réécrite pour la version Capella (onglets : Démarrage, Interface, Relation Map, Table View, Capella Data, Chaînes, Interfaces & ports, Analyses, Cas d'usage) ; `openHelpModal(tab)` ouvre un onglet précis ; bouton ❓ Aide + lien sur l'écran d'accueil (`#cw-help`, `#cw-help-link`).
 - [x] D3 v7.9.0 ré-embarqué ; aide mise à jour (🚀 Démarrage › Sécurité et fonctionnement hors ligne). Vérifié dans Chromium en mode hors ligne : aucune requête réseau, page sauvegardée comprise.
-- [x] Version anglaise + sélecteur 🌐 FR/EN (§ 11).
+- [x] Version anglaise produite au build (`node build.js --lang en`, § 11).
 - [ ] Mettre à jour le catalogue des fonctions (Excel/Word) si besoin : il date d'avant les derniers chantiers.
 
 ## 10. Relations Relation Map (`CAP_LINK_SECTIONS`)
@@ -162,12 +162,11 @@ Chaînes de navigation Metaclass → Property (✨ Colonne par chemin).
 - Panneau Critères : relations Capella sans occurrence non listées, compteur par relation.
 
 
-## 11. Langue FR / EN
+## 11. Langue FR / EN (version anglaise produite au build)
 
-- Langue source : **français**. `capLang` ('fr'|'en') est lu dans `window.name` (état `{capRM:1, capLang,…}`), sinon `html[data-lang]`, sinon 'fr'. Bloc « 0. LANGUE » en tête du script applicatif.
-- Libellés du script : `_L('texte français')` → `I18N_EN` (≈ 860 entrées). **Toute nouvelle chaîne affichée** doit passer par `_L(...)` et être ajoutée à `I18N_EN`. Nom `_L` (et non `L`, déjà utilisé localement pour `capDetLink`). Ne jamais envelopper une valeur servant de clé ou de comparaison.
-- Pluriels : ne pas ajouter de « s » aux adjectifs en anglais (`capLang!=='en'?'s':''`).
-- HTML statique : `capI18nStatic(root)` traduit textes, `title`, `placeholder` via `CAP_STATIC_EN`, dans les deux sens (page sauvegardée dans l'autre langue). Nouveau texte statique → ajouter à `CAP_STATIC_EN`.
-- Aide : `<template id="help-fr">` et `<template id="help-en">` copiés dans `#help-body` au démarrage (`capI18nInit`). Modifier **les deux** gabarits.
-- Descriptions de types en anglais : `CAP_HUMAN_DESC_EN` (surcharge `CAP_HUMAN_NAMES[t].d`).
-- Changement de langue : `capSetLang(l)` sérialise le modèle, le mode, la vue et le thème dans `window.name` puis recharge ; `capI18nRestore()` recharge le modèle (`window.capSkipEmbedded` empêche le bootstrap de page sauvegardée de charger son propre XML). Testé avec le modèle ×12 (18 Mo) : ~7 s.
+- Langue source : **français**. Pas de bascule dans la page : `node build.js --lang en` produit une version anglaise distincte, `dist/arcalyse-en.html` (démarche et outils : `docs/i18n/LISEZMOI.md`). L'ancien mécanisme à l'exécution (`capLang`, `I18N_EN`, `window.name`, sélecteur 🌐) n'existe plus.
+- Libellés du script : `_L('texte français')` (fonction identité, module 01) ; au build anglais, `tools/i18n.js` (`translateCode`) remplace l'argument de chaque `_L` par sa traduction (`src/i18n/en-dictionnaire.json`, partie `code`) : littéral entier, sinon morceau par morceau (texte entre balises, attributs `title` / `placeholder` / `alt` / `aria-label`, bouts entre deux `${…}`), `${…}` notés `{0}`, `{1}`… dans les clés. Les `_L` imbriqués dans un gabarit sont traduits aussi ; les guillemets « » restés hors traduction deviennent “ ”.
+- Valeurs internes : un libellé enveloppé qui est aussi comparé doit l'être des deux côtés (`d===_L('Entrée')`, `r===_L('vers')`) ; `node tools/i18n-coherence.js` le vérifie. Les clés techniques (`relType` des relations, ids d'indicateurs, sélecteurs, polices, PDF) ne sont jamais enveloppées.
+- `interface.html` : traduit en entier au build (dictionnaires `interface` puis `code`) ; aide : `src/html/aide.en.html` remplace `aide.html` (**à tenir à jour avec l'aide française**) ; descriptions des types : partie `types` (surcharge `CAP_HUMAN_NAMES[t].d`) ; `CAP_LANG` vaut `'en'`, dates `toLocale…String('fr-FR')` → `'en-GB'`, `<html lang="en">` dans les rapports produits.
+- Pluriels et accords : la traduction d'un motif peut omettre un `{n}` (ex. « {0} cellule{1} sélectionnée{2} » → « {0} cell{1} selected ») ; ne pas ajouter de « s » aux adjectifs anglais.
+- Qualité des noms : la vérification reste bilingue (verbes français et anglais) quelle que soit la langue de l'interface. Contenus saisis par l'utilisateur (tableaux de bord, règles, noms d'onglets) : gardent leur langue. Réglages enregistrés par nom de colonne (exports CSV) : propres à chaque langue.

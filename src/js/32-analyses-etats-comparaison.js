@@ -40,7 +40,7 @@ function capComputeStates(){
       }
     };
     walk(sm,null,null);
-    sms.push({id:capXId(sm), name:capXName(sm)||'State Machine', owner:capAnaEl(owner), layer:capArchLayerOf(sm), states, trans});
+    sms.push({id:capXId(sm), name:capXName(sm)||_L('State Machine'), owner:capAnaEl(owner), layer:capArchLayerOf(sm), states, trans});
   });
   return _capAnaCache.states={sms, avail, usesAvail};
 }
@@ -72,7 +72,7 @@ function capStateChecks(sm){
  * @returns {string} Balisage SVG
  */
 function capStateDiagramSvg(sm){
-  if(!sm.states.length) return '<div class="ana-dim" style="padding:10px">Machine vide.</div>';
+  if(!sm.states.length) return _L('<div class="ana-dim" style="padding:10px">Machine vide.</div>');
   const nodes=sm.states.map(s=>({id:s.id})), ids=new Set(sm.states.map(s=>s.id));
   const edges=sm.trans.filter(t=>ids.has(t.src)&&ids.has(t.tgt)&&t.src!==t.tgt).map(t=>({srcId:t.src,tgtId:t.tgt,t}));
   const lay=capChainLayout({nodes,edges});
@@ -110,7 +110,7 @@ function capStateDiagramSvg(sm){
   let ns='';
   sm.states.forEach(s=>{
     const x=cx[s.id], y=cy[s.id]; if(x==null) return;
-    const tip=`${s.name} — ${capAnaHuman(s.type)}${s.parent?' · dans '+s.parent:''}${s.fns.length?' · '+s.fns.length+' fonction(s) disponible(s)':''}`;
+    const tip=`${s.name} — ${capAnaHuman(s.type)}${s.parent?_L(' · dans ')+s.parent:''}${s.fns.length?' · '+s.fns.length+_L(' fonction(s) disponible(s)'):''}`;
     let shape;
     if(s.type==='InitialPseudoState') shape=`<circle cx="${x}" cy="${y}" r="9" fill="#222"/>`;
     else if(s.final||s.type==='TerminatePseudoState') shape=`<circle cx="${x}" cy="${y}" r="11" fill="#fff" stroke="#222" stroke-width="1.5"/><circle cx="${x}" cy="${y}" r="6" fill="#222"/>`;
@@ -141,13 +141,13 @@ function capRenderStates(box){
   const layers=CAP_ANA_LAYERS.filter(k=>sms.some(s=>s.layer===k));
   const shown=sms.filter(s=>st.layer==='all'||s.layer===st.layer);
   let body='';
-  if(!sms.length) body='<div class="phl-empty">Aucune machine à états dans ce modèle.</div>';
+  if(!sms.length) body=_L('<div class="phl-empty">Aucune machine à états dans ce modèle.</div>');
   else if(st.view==='diag'){
     body=shown.map(sm=>{
       const ck=capStateChecks(sm), nIss=ck.noInit.length+ck.unreach.length+ck.deadEnd.length+ck.noTrig.length;
       const real=sm.states.filter(s=>!s.pseudo&&!s.final);
       const nameOf=id=>(sm.states.find(s=>s.id===id)||{}).name||'?';
-      return `<div class="phl-comp-card" data-sm="${capEsc(sm.id)}"><div class="phl-comp-hdr sm-hdr">
+      return _L(`<div class="phl-comp-card" data-sm="${capEsc(sm.id)}"><div class="phl-comp-hdr sm-hdr">
         ${capChainLayerBadge(sm.layer)}<span class="phl-comp-title">${sm.owner?L(sm.owner.id,sm.owner.name):''} <span class="ana-dim">›</span> ${L(sm.id,sm.name)}</span>
         <span class="phl-comp-cnt">${real.filter(s=>s.type==='Mode').length} mode(s) · ${real.filter(s=>s.type!=='Mode').length} état(s) · ${sm.trans.length} transition(s)${nIss?` · <b style="color:var(--c-warn,#e3b341)">⚠ ${nIss}</b>`:''}</span>
         <span class="phl-comp-toggle">▶</span></div>
@@ -157,7 +157,7 @@ function capRenderStates(box){
               ${real.map(s=>`<tr><td>${L(s.id,s.name)}</td><td>${capEsc(capAnaHuman(s.type))}</td><td>${capEsc(s.parent||'—')}</td><td>${[s.entry.length?'entry: '+s.entry.join(', '):'',s.doAct.length?'do: '+s.doAct.join(', '):'',s.exit.length?'exit: '+s.exit.join(', '):''].filter(Boolean).map(capEsc).join('<br>')||'—'}</td><td>${s.fns.map(f=>L(f.id,f.name)).join(', ')||'—'}</td></tr>`).join('')}</table></details>
             <details class="cap-chain-xdet" open><summary>Transitions (${sm.trans.length})</summary><table class="cap-chain-xtable cap-chain-ft"><tr><th>Source</th><th></th><th>Cible</th><th>Déclencheur</th><th>Garde</th><th>Effet</th></tr>
               ${sm.trans.map(t=>`<tr><td>${capEsc(nameOf(t.src))}</td><td>→</td><td>${capEsc(nameOf(t.tgt))}</td><td>${capEsc(t.triggers.join(', ')||t.trigDesc||'—')}</td><td>${capEsc(t.guard||'—')}</td><td>${capEsc(t.effect.join(', ')||'—')}</td></tr>`).join('')}</table></details>
-          </div></div></div>`;
+          </div></div></div>`);
     }).join('');
   } else if(st.view==='matrix'){
     // Disponibilité des fonctions par état / mode (attribut availableInStates)
@@ -165,10 +165,10 @@ function capRenderStates(box){
     const fnMap={}; cols.forEach(c=>c.fns.forEach(f=>fnMap[f.id]=f));
     const rows=Object.values(fnMap).sort((a,b)=>a.layer.localeCompare(b.layer)||a.name.localeCompare(b.name,'fr'));
     box._smMx={rows,cols};
-    body=rows.length?`<p class="ana-help">Fonctions disponibles dans chaque état ou mode (attribut <code>availableInStates</code>).</p><div class="cap-mx-wrap"><table class="cap-mx"><thead><tr><th class="cap-mx-corner">Fonction ↓ / État →</th>
+    body=rows.length?_L(`<p class="ana-help">Fonctions disponibles dans chaque état ou mode (attribut <code>availableInStates</code>).</p><div class="cap-mx-wrap"><table class="cap-mx"><thead><tr><th class="cap-mx-corner">Fonction ↓ / État →</th>
       ${cols.map(c=>`<th class="cap-mx-col" title="${capEsc((c.sm.owner?c.sm.owner.name+' › ':'')+c.name)}"><div>${capEsc(c.name)}</div></th>`).join('')}</tr></thead><tbody>
       ${rows.map(f=>`<tr><th class="cap-mx-row" title="${capEsc(f.name)}">${capChainLayerBadge(f.layer)} ${capEsc(f.name)}</th>${cols.map(c=>c.fns.some(x=>x.id===f.id)?'<td class="ana-dot">●</td>':'<td></td>').join('')}</tr>`).join('')}
-      </tbody></table></div>`:'<div class="phl-empty">Aucune fonction n\'utilise la disponibilité par état (availableInStates) dans ce modèle.</div>';
+      </tbody></table></div>`):_L('<div class="phl-empty">Aucune fonction n\'utilise la disponibilité par état (availableInStates) dans ce modèle.</div>');
   } else {
     const rows=[]; const add=(arr,sm,fmt)=>arr.forEach(x=>rows.push(fmt(x,sm)));
     const all={noInit:[],unreach:[],deadEnd:[],noTrig:[]};
@@ -181,23 +181,23 @@ function capRenderStates(box){
     const d=capComputeTrace(false,true);
     const never=d.els.filter(e=>e.cat==='fn'&&usesAvail.has(e.layer)&&!availIds.has(e.id));
     body=capDiagHtml([
-      {icon:'●', title:'Régions sans état initial', tip:'Région de plusieurs états sans InitialPseudoState', cols:['Machine','Premier état de la région'], items:all.noInit.map(sRow)},
-      {icon:'⛔', title:'États ou modes inatteignables', tip:'Aucune transition entrante depuis un autre état', cols:['Machine','État'], items:all.unreach.map(sRow)},
-      {icon:'⤓', title:'États ou modes sans transition sortante', tip:'Peut être voulu (état terminal) : à vérifier', cols:['Machine','État'], items:all.deadEnd.map(sRow)},
-      {icon:'⚡', title:'Transitions sans déclencheur, description ni garde', cols:['Machine','Transition'],
+      {icon:'●', title:_L('Régions sans état initial'), tip:_L('Région de plusieurs états sans InitialPseudoState'), cols:[_L('Machine'),_L('Premier état de la région')], items:all.noInit.map(sRow)},
+      {icon:'⛔', title:_L('États ou modes inatteignables'), tip:_L('Aucune transition entrante depuis un autre état'), cols:[_L('Machine'),_L('État')], items:all.unreach.map(sRow)},
+      {icon:'⤓', title:_L('États ou modes sans transition sortante'), tip:_L('Peut être voulu (état terminal) : à vérifier'), cols:[_L('Machine'),_L('État')], items:all.deadEnd.map(sRow)},
+      {icon:'⚡', title:_L('Transitions sans déclencheur, description ni garde'), cols:[_L('Machine'),_L('Transition')],
         items:all.noTrig.map(({x,sm})=>`<tr><td>${smCell(sm)}</td><td>${capEsc(nameIn(sm,x.src))} → ${capEsc(nameIn(sm,x.tgt))}</td></tr>`)},
-      {icon:'ƒ', title:'Fonctions feuilles disponibles dans aucun état', tip:'Couches qui utilisent availableInStates', cols:['Fonction','Couche'],
+      {icon:'ƒ', title:_L('Fonctions feuilles disponibles dans aucun état'), tip:_L('Couches qui utilisent availableInStates'), cols:[_L('Fonction'),_L('Couche')],
         items:never.map(e=>`<tr><td>${L(e.id,e.name)}</td><td>${e.layer}</td></tr>`)},
     ]);
   }
-  box.innerHTML=`<div class="phl-filter-bar" style="flex-wrap:wrap;margin-bottom:8px">
+  box.innerHTML=_L(`<div class="phl-filter-bar" style="flex-wrap:wrap;margin-bottom:8px">
       <button class="cap-lf-btn${st.view==='diag'?' active':''}" data-smv="diag">◈ Machines à états (${sms.length})</button>
       <button class="cap-lf-btn${st.view==='matrix'?' active':''}" data-smv="matrix">▦ Fonctions × états</button>
       <button class="cap-lf-btn${st.view==='checks'?' active':''}" data-smv="checks">🩺 Contrôles</button>
       <span class="tsep"></span><button class="cap-lf-btn${st.layer==='all'?' active':''}" data-sml="all">Toutes</button>
       ${layers.map(k=>`<button class="cap-lf-btn${st.layer===k?' active':''}" data-sml="${k}">${k}</button>`).join('')}
       <button class="phl-export-btn" id="ana-sm-csv" style="margin-left:auto">⬇ CSV</button>
-    </div>${body}`;
+    </div>${body}`);
   box.querySelectorAll('[data-smv]').forEach(b=>b.onclick=()=>{ st.view=b.dataset.smv; capRenderStates(box); });
   box.querySelectorAll('[data-sml]').forEach(b=>b.onclick=()=>{ st.layer=b.dataset.sml; capRenderStates(box); });
   box.querySelectorAll('.sm-hdr').forEach(h=>h.onclick=()=>{
@@ -208,11 +208,11 @@ function capRenderStates(box){
   });
   box.querySelector('#ana-sm-csv').onclick=()=>{
     if(st.view==='matrix'&&box._smMx){ const {rows,cols}=box._smMx;
-      capCsvExport('fonctions-x-etats.csv',['Couche','Fonction',...cols.map(c=>(c.sm.owner?c.sm.owner.name+' › ':'')+c.name)],rows.map(f=>[f.layer,capCx(f.name,f.id),...cols.map(c=>c.fns.some(x=>x.id===f.id)?'X':'')]));
+      capCsvExport(_L('fonctions-x-etats.csv'),[_L('Couche'),_L('Fonction'),...cols.map(c=>(c.sm.owner?c.sm.owner.name+' › ':'')+c.name)],rows.map(f=>[f.layer,capCx(f.name,f.id),...cols.map(c=>c.fns.some(x=>x.id===f.id)?'X':'')]));
     } else {
       const rows=[]; shown.forEach(sm=>{ const nameOf=id=>(sm.states.find(s=>s.id===id)||{}).name||'?';
         sm.trans.forEach(t=>rows.push([sm.layer,sm.owner?capCx(sm.owner.name,sm.owner.id):'',capCx(sm.name,sm.id),capCx(nameOf(t.src),t.src),capCx(nameOf(t.tgt),t.tgt),t.triggers.join(', ')||t.trigDesc,t.guard,t.effect.join(', ')])); });
-      capCsvExport('transitions.csv',['Couche','Propriétaire','Machine','Source','Cible','Déclencheur','Garde','Effet'],rows);
+      capCsvExport('transitions.csv',[_L('Couche'),_L('Propriétaire'),_L('Machine'),_L('Source'),_L('Cible'),_L('Déclencheur'),_L('Garde'),_L('Effet')],rows);
     }
   };
 }
@@ -272,9 +272,9 @@ function capDiffCompute(A, B){
       }
       changes.push(c);
     });
-    if(a.content!==b.content) changes.push({k:'contenu', a:a.content.replace(/<[^>]+>/g,' ').trim(), b:b.content.replace(/<[^>]+>/g,' ').trim()});
+    if(a.content!==b.content) changes.push({k:_L('contenu'), a:a.content.replace(/<[^>]+>/g,' ').trim(), b:b.content.replace(/<[^>]+>/g,' ').trim()});
     const moved=a.parent!==b.parent;
-    if(moved) changes.push({k:'propriétaire', a:A[a.parent]?(A[a.parent].name||A[a.parent].type):a.parent, b:B[b.parent]?(B[b.parent].name||B[b.parent].type):b.parent});
+    if(moved) changes.push({k:_L('propriétaire'), a:A[a.parent]?(A[a.parent].name||A[a.parent].type):a.parent, b:B[b.parent]?(B[b.parent].name||B[b.parent].type):b.parent});
     if(changes.length) out.push({status:'mod', e:b, changes, moved});
   });
   return out;
@@ -285,16 +285,16 @@ function capDiffCompute(A, B){
  * @param {HTMLElement} box - Conteneur
  */
 function capRenderDiff(box){
-  const cur=capCurrentFileName||'modèle chargé';
+  const cur=capCurrentFileName||_L('modèle chargé');
   const oldName=capDiffSwap?cur:capDiffName, newName=capDiffSwap?capDiffName:cur;
-  const head=`<div class="ana-diff-head">
+  const head=_L(`<div class="ana-diff-head">
       <div class="ana-diff-file"><span class="ana-dim">Ancienne version (référence)</span><b>${capEsc(oldName||'—')}</b></div>
       <button class="cap-lf-btn" id="ana-df-swap" title="Inverser ancienne / nouvelle"${capDiffDoc?'':' disabled'}>⇄</button>
       <div class="ana-diff-file"><span class="ana-dim">Nouvelle version</span><b>${capEsc(newName||'—')}</b></div>
-      <label class="cw-btn ana-diff-load">📂 ${capDiffDoc?'Changer la version à comparer…':'Charger une autre version (.capella)…'}<input type="file" id="ana-df-file"${capIsMobile()?'':' accept=".capella,.melodymodeller,.xml"'} style="display:none"></label>
-    </div>`;
+      <label class="cw-btn ana-diff-load">📂 ${capDiffDoc?_L('Changer la version à comparer…'):_L('Charger une autre version (.capella)…')}<input type="file" id="ana-df-file"${capIsMobile()?'':' accept=".capella,.melodymodeller,.xml"'} style="display:none"></label>
+    </div>`);
   if(!capDiffDoc){
-    box.innerHTML=head+`<div class="phl-empty">Chargez une autre version du même modèle (par défaut considérée comme l'<b>ancienne</b> version ; ⇄ pour inverser).<br>Les éléments sont appariés par identifiant ; le rapport classe les changements en créations, suppressions, renommages, descriptions, propriétés, liens, déplacements et changements de type, du plus synthétique au plus complet, et se copie dans Word, Outlook, Teams ou Excel.</div>`;
+    box.innerHTML=head+_L(`<div class="phl-empty">Chargez une autre version du même modèle (par défaut considérée comme l'<b>ancienne</b> version ; ⇄ pour inverser).<br>Les éléments sont appariés par identifiant ; le rapport classe les changements en créations, suppressions, renommages, descriptions, propriétés, liens, déplacements et changements de type, du plus synthétique au plus complet, et se copie dans Word, Outlook, Teams ou Excel.</div>`);
     wire(); return;
   }
   if(!_capAnaCache.diff||_capAnaCache.diffSwap!==capDiffSwap){
@@ -314,7 +314,7 @@ function capRenderDiff(box){
       const file=e.target.files[0]; if(!file) return;
       const r=new FileReader();
       r.onload=ev=>{ const doc=new DOMParser().parseFromString(ev.target.result,'application/xml');
-        if(doc.querySelector('parsererror')){ alert('Fichier XML invalide'); return; }
+        if(doc.querySelector('parsererror')){ alert(_L('Fichier XML invalide')); return; }
         capDiffDoc=doc; capDiffName=file.name; delete _capAnaCache.diff; if(box._drState) box._drState.ex.clear(); capRenderDiff(box); };
       r.readAsText(file);
     });

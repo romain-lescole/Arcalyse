@@ -8,17 +8,17 @@ var _capAnaCache={};             // caches de calcul (var : remis à zéro au ch
 const CAP_ANA_LAYERS=['OA','SA','LA','PA','EPBS'];
 /** Catégories d'éléments pour la traçabilité, reconnues par le nom de type (toutes versions de Capella). */
 const CAP_TRACE_CATS=[
-  {k:'fn',   label:'Fonctions / activités', test:t=>/(Function|Activity)$/.test(t)},
-  {k:'comp', label:'Composants / acteurs',  test:t=>/(Component|Entity|Actor|ConfigurationItem)$/.test(t)},
-  {k:'fe',   label:'Functional Exchanges',  test:t=>t==='FunctionalExchange'||t==='Interaction'},
-  {k:'ce',   label:'Component Exchanges',   test:t=>t==='ComponentExchange'||t==='CommunicationMean'},
-  {k:'pl',   label:'Physical Links',        test:t=>t==='PhysicalLink'},
-  {k:'port', label:'Ports',                 test:t=>/Port$/.test(t)},
-  {k:'cap',  label:'Capacités / missions',  test:t=>/(Capability|CapabilityRealization|Mission)$/.test(t)},
-  {k:'chain',label:'Chaînes / processus',   test:t=>t==='FunctionalChain'||t==='OperationalProcess'||t==='PhysicalPath'},
-  {k:'scen', label:'Scénarios',             test:t=>t==='Scenario'},
-  {k:'state',label:'États, modes, transitions', test:t=>/(State|Mode)$/.test(t)||t==='StateTransition'},
-  {k:'data', label:'Données / Exchange Items', test:t=>/^(Class|ExchangeItem|Enumeration|DataType|NumericType|StringType|BooleanType|PhysicalQuantity|Collection|Union)$/.test(t)},
+  {k:'fn',   label:_L('Fonctions / activités'), test:t=>/(Function|Activity)$/.test(t)},
+  {k:'comp', label:_L('Composants / acteurs'),  test:t=>/(Component|Entity|Actor|ConfigurationItem)$/.test(t)},
+  {k:'fe',   label:_L('Functional Exchanges'),  test:t=>t==='FunctionalExchange'||t==='Interaction'},
+  {k:'ce',   label:_L('Component Exchanges'),   test:t=>t==='ComponentExchange'||t==='CommunicationMean'},
+  {k:'pl',   label:_L('Physical Links'),        test:t=>t==='PhysicalLink'},
+  {k:'port', label:_L('Ports'),                 test:t=>/Port$/.test(t)},
+  {k:'cap',  label:_L('Capacités / missions'),  test:t=>/(Capability|CapabilityRealization|Mission)$/.test(t)},
+  {k:'chain',label:_L('Chaînes / processus'),   test:t=>t==='FunctionalChain'||t==='OperationalProcess'||t==='PhysicalPath'},
+  {k:'scen', label:_L('Scénarios'),             test:t=>t==='Scenario'},
+  {k:'state',label:_L('États, modes, transitions'), test:t=>/(State|Mode)$/.test(t)||t==='StateTransition'},
+  {k:'data', label:_L('Données / Exchange Items'), test:t=>/^(Class|ExchangeItem|Enumeration|DataType|NumericType|StringType|BooleanType|PhysicalQuantity|Collection|Union)$/.test(t)},
 ];
 /** Catégorie de traçabilité d'un type Capella (ou null).
  * @param {string} t - Nom de type
@@ -141,12 +141,12 @@ function capRenderTrace(box){
     const cells=capTraceCoverage(d);
     const pairs=CAP_ANA_LAYERS.slice(0,-1).map((h,i)=>[h,CAP_ANA_LAYERS[i+1]]);
     const cats=CAP_TRACE_CATS.filter(c=>cells.some(x=>x.cat===c.k&&x.used));
-    body=`<p class="ana-help">Pour chaque passage de couche : <b>▼ réalisés</b> = éléments de la couche haute réalisés par au moins un élément de la couche basse ; <b>▲ réalisants</b> = éléments de la couche basse qui réalisent un élément de la couche haute. Cliquez une cellule pour lister les éléments non tracés.</p>
-    ${cats.length?`<table class="ana-t ana-cov"><tr><th>Catégorie</th>${pairs.map(([h,l])=>`<th>${capChainLayerBadge(h)} → ${capChainLayerBadge(l)}</th>`).join('')}</tr>
+    body=_L(`<p class="ana-help">Pour chaque passage de couche : <b>▼ réalisés</b> = éléments de la couche haute réalisés par au moins un élément de la couche basse ; <b>▲ réalisants</b> = éléments de la couche basse qui réalisent un élément de la couche haute. Cliquez une cellule pour lister les éléments non tracés.</p>
+    ${cats.length?_L(`<table class="ana-t ana-cov"><tr><th>Catégorie</th>${pairs.map(([h,l])=>`<th>${capChainLayerBadge(h)} → ${capChainLayerBadge(l)}</th>`).join('')}</tr>
     ${cats.map(c=>`<tr><td><b>${capEsc(c.label)}</b></td>${pairs.map(([h,l])=>{ const x=cells.find(y=>y.cat===c.k&&y.hi===h);
       return x&&x.used?`<td class="ana-cell${st.sel===c.k+'|'+h?' sel':''}" data-cell="${c.k}|${h}"><div>▼ ${bar(x.upOk.length,x.upAll.length)}</div><div>▲ ${bar(x.loOk.length,x.loAll.length)}</div></td>`:'<td class="ana-na">—</td>'; }).join('')}</tr>`).join('')}
-    </table>`:'<div class="phl-empty">Aucun lien de réalisation entre couches dans ce modèle.</div>'}
-    <div id="ana-tr-detail"></div>`;
+    </table>`):_L('<div class="phl-empty">Aucun lien de réalisation entre couches dans ce modèle.</div>')}
+    <div id="ana-tr-detail"></div>`);
   } else if(st.view==='paths'){
     const rows=capTracePaths(d, st.cat, 3000);
     const q=st.q.trim().toLowerCase();
@@ -155,16 +155,16 @@ function capRenderTrace(box){
     box._trRows=f; box._trCols=cols;
     body=`<table class="ana-t"><tr>${cols.map(k=>`<th>${capChainLayerBadge(k)} ${capEsc(capChainLayerInfo(k).label)}</th>`).join('')}</tr>
       ${f.slice(0,800).map(r=>`<tr>${cols.map(k=>`<td>${(r[k]||[]).map(e=>L(e.id,e.name)+` <span class="ana-dim">${capEsc(capAnaHuman(e.type))}</span>`).join('<br>')||'<span class="ana-miss">∅</span>'}</td>`).join('')}</tr>`).join('')}
-    </table>${f.length>800?`<div class="cap-mx-hint">800 lignes affichées sur ${f.length} — export CSV pour tout voir.</div>`:''}${rows.length>=3000?'<div class="cap-mx-hint">Calcul limité à 3000 chemins.</div>':''}`;
+    </table>${f.length>800?_L(`<div class="cap-mx-hint">800 lignes affichées sur ${f.length} — export CSV pour tout voir.</div>`):''}${rows.length>=3000?_L('<div class="cap-mx-hint">Calcul limité à 3000 chemins.</div>'):''}`;
   } else {
     const q=st.q.trim().toLowerCase();
     const f=d.links.filter(l=>!q||(l.src.name+' '+l.tgt.name+' '+l.type).toLowerCase().includes(q));
     box._trLinks=f;
-    body=`<table class="ana-t"><tr><th>Type de lien</th><th>Réalisant (bas)</th><th>Type</th><th></th><th>Réalisé (haut)</th><th>Type</th></tr>
+    body=_L(`<table class="ana-t"><tr><th>Type de lien</th><th>Réalisant (bas)</th><th>Type</th><th></th><th>Réalisé (haut)</th><th>Type</th></tr>
       ${f.slice(0,1000).map(l=>`<tr><td class="ana-dim">${capEsc(l.type)}</td><td>${capChainLayerBadge(l.src.layer)} ${L(l.src.id,l.src.name)}</td><td class="ana-dim">${capEsc(capAnaHuman(l.src.type))}</td><td>→</td><td>${capChainLayerBadge(l.tgt.layer)} ${L(l.tgt.id,l.tgt.name)}</td><td class="ana-dim">${capEsc(capAnaHuman(l.tgt.type))}</td></tr>`).join('')}
-    </table>${f.length>1000?`<div class="cap-mx-hint">1000 liens affichés sur ${f.length} — export CSV pour tout voir.</div>`:''}`;
+    </table>${f.length>1000?_L(`<div class="cap-mx-hint">1000 liens affichés sur ${f.length} — export CSV pour tout voir.</div>`):''}`);
   }
-  box.innerHTML=`<div class="phl-filter-bar" style="flex-wrap:wrap;margin-bottom:8px">
+  box.innerHTML=_L(`<div class="phl-filter-bar" style="flex-wrap:wrap;margin-bottom:8px">
       <button class="cap-lf-btn${st.view==='cov'?' active':''}" data-trv="cov">▦ Couverture</button>
       <button class="cap-lf-btn${st.view==='paths'?' active':''}" data-trv="paths">⛓ Chemins de traçabilité</button>
       <button class="cap-lf-btn${st.view==='links'?' active':''}" data-trv="links">🔗 Liens (${d.links.length})</button>
@@ -173,7 +173,7 @@ function capRenderTrace(box){
       <label class="cap-chx-opt" title="Les fonctions mères (conteneurs) sont ignorées"><input type="checkbox" id="ana-tr-leaf"${st.leaf?' checked':''}> Fonctions feuilles</label>
       <label class="cap-chx-opt" title="Liens générés par les transitions automatiques de Capella"><input type="checkbox" id="ana-tr-transfo"${st.transfo?' checked':''}> Inclure les TransfoLink</label>
       <button class="phl-export-btn" id="ana-tr-csv" style="margin-left:auto">⬇ CSV</button>
-    </div>${body}`;
+    </div>${body}`);
   box.querySelectorAll('[data-trv]').forEach(b=>b.onclick=()=>{ st.view=b.dataset.trv; capRenderTrace(box); });
   box.querySelector('#ana-tr-cat')?.addEventListener('change',e=>{ st.cat=e.target.value; capRenderTrace(box); });
   let deb; box.querySelector('#ana-tr-q')?.addEventListener('input',e=>{ st.q=e.target.value; clearTimeout(deb); deb=setTimeout(()=>{ const p=e.target.selectionStart; capRenderTrace(box); const i=box.querySelector('#ana-tr-q'); i.focus(); i.setSelectionRange(p,p); },250); });
@@ -183,23 +183,23 @@ function capRenderTrace(box){
   const showCell=key=>{
     const [cat,hi]=key.split('|'); const x=capTraceCoverage(d).find(y=>y.cat===cat&&y.hi===hi); if(!x) return;
     const miss=x.upAll.filter(e=>!x.upOk.includes(e)), orph=x.loAll.filter(e=>!x.loOk.includes(e));
-    const li=a=>a.length?a.sort((p,q)=>p.name.localeCompare(q.name,'fr')).map(e=>`<div>${L(e.id,e.name)} <span class="ana-dim">${capEsc(capAnaHuman(e.type))}</span></div>`).join(''):'<div class="cap-diag-ok">✔ RAS</div>';
-    box.querySelector('#ana-tr-detail').innerHTML=`<div class="ana-cols">
+    const li=a=>a.length?a.sort((p,q)=>p.name.localeCompare(q.name,'fr')).map(e=>`<div>${L(e.id,e.name)} <span class="ana-dim">${capEsc(capAnaHuman(e.type))}</span></div>`).join(''):_L('<div class="cap-diag-ok">✔ RAS</div>');
+    box.querySelector('#ana-tr-detail').innerHTML=_L(`<div class="ana-cols">
       <div><h4>▼ ${capEsc(catLabel(cat))} ${hi} non réalisés en ${x.lo} (${miss.length})</h4>${li(miss)}</div>
-      <div><h4>▲ ${capEsc(catLabel(cat))} ${x.lo} ne réalisant rien en ${hi} (${orph.length})</h4>${li(orph)}</div></div>`;
+      <div><h4>▲ ${capEsc(catLabel(cat))} ${x.lo} ne réalisant rien en ${hi} (${orph.length})</h4>${li(orph)}</div></div>`);
   };
   box.querySelectorAll('.ana-cell').forEach(td=>td.onclick=()=>{ st.sel=td.dataset.cell; box.querySelectorAll('.ana-cell.sel').forEach(x=>x.classList.remove('sel')); td.classList.add('sel'); showCell(st.sel); });
   if(st.view==='cov'&&st.sel) showCell(st.sel);
   box.querySelector('#ana-tr-csv').onclick=()=>{
     if(st.view==='cov'){
       const rows=[]; capTraceCoverage(d).filter(x=>x.used).forEach(x=>{
-        x.upAll.forEach(e=>rows.push([catLabel(x.cat),`${x.hi}→${x.lo}`,'haut',capCx(e.name,e.id),capAnaHuman(e.type),x.upOk.includes(e)?'réalisé':'NON réalisé']));
-        x.loAll.forEach(e=>rows.push([catLabel(x.cat),`${x.hi}→${x.lo}`,'bas',capCx(e.name,e.id),capAnaHuman(e.type),x.loOk.includes(e)?'réalisant':'ne réalise rien']));
+        x.upAll.forEach(e=>rows.push([catLabel(x.cat),`${x.hi}→${x.lo}`,_L('haut'),capCx(e.name,e.id),capAnaHuman(e.type),x.upOk.includes(e)?_L('réalisé'):_L('NON réalisé')]));
+        x.loAll.forEach(e=>rows.push([catLabel(x.cat),`${x.hi}→${x.lo}`,_L('bas'),capCx(e.name,e.id),capAnaHuman(e.type),x.loOk.includes(e)?_L('réalisant'):_L('ne réalise rien')]));
       });
-      capCsvExport('tracabilite-couverture.csv',['Catégorie','Passage','Niveau','Élément','Type','Statut'],rows);
+      capCsvExport(_L('tracabilite-couverture.csv'),[_L('Catégorie'),_L('Passage'),_L('Niveau'),_L('Élément'),'Type',_L('Statut')],rows);
     } else if(st.view==='paths'){
-      capCsvExport(`tracabilite-chemins-${st.cat}.csv`,box._trCols,box._trRows.map(r=>box._trCols.map(k=>capCx((r[k]||[]).map(e=>e.name).join(' | '),(r[k]||[]).map(e=>e.id)))));
-    } else capCsvExport('tracabilite-liens.csv',['Type de lien','Couche réalisant','Réalisant','Type','Couche réalisé','Réalisé','Type'],
+      capCsvExport(_L(`tracabilite-chemins-${st.cat}.csv`),box._trCols,box._trRows.map(r=>box._trCols.map(k=>capCx((r[k]||[]).map(e=>e.name).join(' | '),(r[k]||[]).map(e=>e.id)))));
+    } else capCsvExport(_L('tracabilite-liens.csv'),[_L('Type de lien'),_L('Couche réalisant'),_L('Réalisant'),'Type',_L('Couche réalisé'),_L('Réalisé'),'Type'],
       box._trLinks.map(l=>[l.type,l.src.layer,capCx(l.src.name,l.src.id),capAnaHuman(l.src.type),l.tgt.layer,capCx(l.tgt.name,l.tgt.id),capAnaHuman(l.tgt.type)]));
   };
 }
@@ -258,40 +258,40 @@ function capRenderCapabilities(box){
   const list=(arr,empty)=>arr.length?arr.map(e=>`${L(e.id,e.name)}${e.rel?` <span class="ana-dim">(${capEsc(e.rel)})</span>`:''}`).join(', '):`<span class="ana-miss">${empty||'—'}</span>`;
   const icon=t=>t==='Mission'?'🎯':t==='OperationalCapability'?'🧭':t==='CapabilityRealization'?'🛠':'⭐';
   let body='';
-  if(!caps.length) body='<div class="phl-empty">Aucune capacité ni mission dans ce modèle.</div>';
+  if(!caps.length) body=_L('<div class="phl-empty">Aucune capacité ni mission dans ce modèle.</div>');
   else if(st.view==='cards'){
     body=CAP_ANA_LAYERS.map(lk=>{
       const g=shown.filter(c=>c.layer===lk).sort((a,b)=>(a.type==='Mission'?0:1)-(b.type==='Mission'?0:1)||a.name.localeCompare(b.name,'fr')); if(!g.length) return '';
       return `<div class="cap-chain-lhdr" style="border-color:${capChainLayerInfo(lk).color}">${capChainLayerBadge(lk)}<span>${capEsc(capChainLayerInfo(lk).label)}</span><span class="cap-chain-lcnt">${g.length}</span></div>`+
-      g.map(c=>`<div class="phl-comp-card"><div class="phl-comp-hdr" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open');this.querySelector('.phl-comp-toggle').classList.toggle('open')">
+      g.map(c=>_L(`<div class="phl-comp-card"><div class="phl-comp-hdr" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open');this.querySelector('.phl-comp-toggle').classList.toggle('open')">
           <span>${icon(c.type)}</span><span class="phl-comp-title">${L(c.id,c.name)}</span>
-          <span class="phl-comp-cnt">${capEsc(capAnaHuman(c.type))} · ${c.type==='Mission'?`${c.exploits.length} capacité(s) · `:`${c.fns.length} fonction(s) · ${c.chains.length} chaîne(s) · ${c.scen.length} scénario(s) · `}${c.actors.length} acteur(s)/composant(s)</span>
+          <span class="phl-comp-cnt">${capEsc(capAnaHuman(c.type))} · ${c.type==='Mission'?_L(`${c.exploits.length} capacité(s) · `):_L(`${c.fns.length} fonction(s) · ${c.chains.length} chaîne(s) · ${c.scen.length} scénario(s) · `)}${c.actors.length} acteur(s)/composant(s)</span>
           <span class="phl-comp-toggle">▶</span></div>
         <div class="phl-comp-body"><table class="ana-t ana-kv">
-          ${c.type==='Mission'?`<tr><td>Capacités exploitées</td><td>${list(c.exploits,'∅ aucune')}</td></tr>`:`
-          <tr><td>Fonctions impliquées</td><td>${list(c.fns,'∅ aucune')}</td></tr>
+          ${c.type==='Mission'?_L(`<tr><td>Capacités exploitées</td><td>${list(c.exploits,_L('∅ aucune'))}</td></tr>`):_L(`
+          <tr><td>Fonctions impliquées</td><td>${list(c.fns,_L('∅ aucune'))}</td></tr>
           <tr><td>Chaînes impliquées</td><td>${list(c.chains)}</td></tr>
           <tr><td>Scénarios</td><td>${list(c.scen)}</td></tr>
           <tr><td>Inclut / étend / spécialise</td><td>${list(c.includes)}</td></tr>
           <tr><td>Exploitée par les missions</td><td>${list(c.missions)}</td></tr>
           <tr><td>Réalise (couche haute)</td><td>${list(c.realizes)}</td></tr>
-          <tr><td>Réalisée par (couche basse)</td><td>${list(c.realizedBy)}</td></tr>`}
-          <tr><td>Acteurs / composants impliqués</td><td>${list(c.actors,'∅ aucun')}</td></tr>
-          ${c.others.length?`<tr><td>Autres implications</td><td>${list(c.others)}</td></tr>`:''}
-        </table></div></div>`).join('');
-    }).join('')||'<div class="phl-empty">Aucune capacité ne correspond au filtre.</div>';
+          <tr><td>Réalisée par (couche basse)</td><td>${list(c.realizedBy)}</td></tr>`)}
+          <tr><td>Acteurs / composants impliqués</td><td>${list(c.actors,_L('∅ aucun'))}</td></tr>
+          ${c.others.length?_L(`<tr><td>Autres implications</td><td>${list(c.others)}</td></tr>`):''}
+        </table></div></div>`)).join('');
+    }).join('')||_L('<div class="phl-empty">Aucune capacité ne correspond au filtre.</div>');
   } else if(st.view==='matrix'){
     const rows=shown.filter(c=>c.type!=='Mission'||st.mx==='actors'||st.mx==='exploits');
     const key=st.mx;
     const colsMap={}; rows.forEach(c=>(c[key]||[]).forEach(e=>colsMap[e.id]=e));
     const cols=Object.values(colsMap).sort((a,b)=>a.name.localeCompare(b.name,'fr'));
     box._cpMx={rows,cols,key};
-    body=rows.length&&cols.length?`<div class="cap-mx-wrap"><table class="cap-mx"><thead><tr><th class="cap-mx-corner">Capacité ↓ / ${key==='actors'?'Acteur-composant':key==='fns'?'Fonction':key==='chains'?'Chaîne':'Capacité'} →</th>
+    body=rows.length&&cols.length?_L(`<div class="cap-mx-wrap"><table class="cap-mx"><thead><tr><th class="cap-mx-corner">Capacité ↓ / ${key==='actors'?_L('Acteur-composant'):key==='fns'?_L('Fonction'):key==='chains'?_L('Chaîne'):_L('Capacité')} →</th>
       ${cols.map(c=>`<th class="cap-mx-col" title="${capEsc(c.name)}"><div>${capEsc(c.name)}</div></th>`).join('')}<th class="cap-mx-col"><div><b>Σ</b></div></th></tr></thead><tbody>
       ${rows.map(r=>{ const ids=new Set((r[key]||[]).map(e=>e.id));
         return `<tr><th class="cap-mx-row" title="${capEsc(r.name)}">${capChainLayerBadge(r.layer)} ${capEsc(r.name)}</th>${cols.map(c=>ids.has(c.id)?'<td class="ana-dot">●</td>':'<td></td>').join('')}<td class="cap-mx-tot">${ids.size||''}</td></tr>`; }).join('')}
       <tr><th class="cap-mx-row">Σ</th>${cols.map(c=>`<td class="cap-mx-tot">${rows.filter(r=>(r[key]||[]).some(e=>e.id===c.id)).length}</td>`).join('')}<td></td></tr>
-      </tbody></table></div>`:'<div class="phl-empty">Rien à croiser pour ce filtre.</div>';
+      </tbody></table></div>`):_L('<div class="phl-empty">Rien à croiser pour ce filtre.</div>');
   } else {
     // Contrôles : uniquement ce que le modèle utilise (une couche sans implications de fonctions n'est pas signalée)
     const nonMis=caps.filter(c=>c.type!=='Mission');
@@ -303,29 +303,29 @@ function capRenderCapabilities(box){
     const involved=new Set(nonMis.flatMap(c=>c.fns.map(f=>f.id)));
     const orphanFns=d.els.filter(e=>e.cat==='fn'&&layersWithFnInv.has(e.layer)&&!involved.has(e.id));
     body=capDiagHtml([
-      {icon:'ƒ', title:'Capacités sans fonction ni chaîne impliquée', tip:'Rien ne décrit le comportement attendu', cols:['Capacité','Type'], items:nonMis.filter(c=>!c.fns.length&&!c.chains.length).map(row)},
-      {icon:'👤', title:'Capacités / missions sans acteur ni composant impliqué', cols:['Élément','Type'], items:caps.filter(c=>!c.actors.length).map(row)},
-      {icon:'🎬', title:'Capacités sans scénario', tip:'Aucun scénario pour illustrer la capacité', cols:['Capacité','Type'], items:nonMis.filter(c=>!c.scen.length).map(row)},
-      {icon:'⬇', title:'Capacités non réalisées à la couche inférieure', tip:'Seulement si la couche inférieure contient des capacités', cols:['Capacité','Type'],
+      {icon:'ƒ', title:_L('Capacités sans fonction ni chaîne impliquée'), tip:_L('Rien ne décrit le comportement attendu'), cols:[_L('Capacité'),'Type'], items:nonMis.filter(c=>!c.fns.length&&!c.chains.length).map(row)},
+      {icon:'👤', title:_L('Capacités / missions sans acteur ni composant impliqué'), cols:[_L('Élément'),'Type'], items:caps.filter(c=>!c.actors.length).map(row)},
+      {icon:'🎬', title:_L('Capacités sans scénario'), tip:_L('Aucun scénario pour illustrer la capacité'), cols:[_L('Capacité'),'Type'], items:nonMis.filter(c=>!c.scen.length).map(row)},
+      {icon:'⬇', title:_L('Capacités non réalisées à la couche inférieure'), tip:_L('Seulement si la couche inférieure contient des capacités'), cols:[_L('Capacité'),'Type'],
         items:nonMis.filter(c=>layersWithCaps.has(lowerOf(c.layer))&&!c.realizedBy.length).map(row)},
-      {icon:'🎯', title:'Capacités système non exploitées par une mission', tip:'Seulement si le modèle contient des missions', cols:['Capacité','Type'],
+      {icon:'🎯', title:_L('Capacités système non exploitées par une mission'), tip:_L('Seulement si le modèle contient des missions'), cols:[_L('Capacité'),'Type'],
         items:caps.some(c=>c.type==='Mission')?nonMis.filter(c=>c.type==='Capability'&&!c.missions.length).map(row):[]},
-      {icon:'🎯', title:'Missions sans capacité exploitée', cols:['Mission','Type'], items:caps.filter(c=>c.type==='Mission'&&!c.exploits.length).map(row)},
-      {icon:'∅', title:'Fonctions feuilles impliquées dans aucune capacité', tip:'Couches où des capacités impliquent déjà des fonctions', cols:['Fonction','Type'],
+      {icon:'🎯', title:_L('Missions sans capacité exploitée'), cols:['Mission','Type'], items:caps.filter(c=>c.type==='Mission'&&!c.exploits.length).map(row)},
+      {icon:'∅', title:_L('Fonctions feuilles impliquées dans aucune capacité'), tip:_L('Couches où des capacités impliquent déjà des fonctions'), cols:[_L('Fonction'),'Type'],
         items:orphanFns.sort((a,b)=>a.layer.localeCompare(b.layer)||a.name.localeCompare(b.name,'fr')).map(row)},
     ]);
   }
-  box.innerHTML=`<div class="phl-filter-bar" style="flex-wrap:wrap;margin-bottom:8px">
+  box.innerHTML=_L(`<div class="phl-filter-bar" style="flex-wrap:wrap;margin-bottom:8px">
       <button class="cap-lf-btn${st.view==='cards'?' active':''}" data-cpv="cards">▣ Cartes</button>
       <button class="cap-lf-btn${st.view==='matrix'?' active':''}" data-cpv="matrix">▦ Matrice</button>
       <button class="cap-lf-btn${st.view==='diag'?' active':''}" data-cpv="diag">🩺 Contrôles</button>
-      ${st.view!=='diag'?`<span class="tsep"></span><button class="cap-lf-btn${st.layer==='all'?' active':''}" data-cpl="all">Toutes (${caps.length})</button>
-      ${layers.map(k=>`<button class="cap-lf-btn${st.layer===k?' active':''}" data-cpl="${k}">${k} (${caps.filter(c=>c.layer===k).length})</button>`).join('')}`:''}
+      ${st.view!=='diag'?_L(`<span class="tsep"></span><button class="cap-lf-btn${st.layer==='all'?' active':''}" data-cpl="all">Toutes (${caps.length})</button>
+      ${layers.map(k=>`<button class="cap-lf-btn${st.layer===k?' active':''}" data-cpl="${k}">${k} (${caps.filter(c=>c.layer===k).length})</button>`).join('')}`):''}
       ${st.view==='matrix'?`<select id="ana-cp-mx" class="phl-filter-input" style="width:auto">
-        ${[['actors','× Acteurs / composants'],['fns','× Fonctions'],['chains','× Chaînes'],['exploits','Missions × capacités']].map(([k,l])=>`<option value="${k}"${st.mx===k?' selected':''}>${l}</option>`).join('')}</select>`:''}
-      ${st.view==='cards'?`<input id="ana-cp-q" class="phl-filter-input" placeholder="🔍 Capacité…" value="${capEsc(st.q)}" style="width:180px">`:''}
+        ${[['actors',_L('× Acteurs / composants')],['fns',_L('× Fonctions')],['chains',_L('× Chaînes')],['exploits',_L('Missions × capacités')]].map(([k,l])=>`<option value="${k}"${st.mx===k?' selected':''}>${l}</option>`).join('')}</select>`:''}
+      ${st.view==='cards'?_L(`<input id="ana-cp-q" class="phl-filter-input" placeholder="🔍 Capacité…" value="${capEsc(st.q)}" style="width:180px">`):''}
       <button class="phl-export-btn" id="ana-cp-csv" style="margin-left:auto">⬇ CSV</button>
-    </div>${body}`;
+    </div>${body}`);
   box.querySelectorAll('[data-cpv]').forEach(b=>b.onclick=()=>{ st.view=b.dataset.cpv; capRenderCapabilities(box); });
   box.querySelectorAll('[data-cpl]').forEach(b=>b.onclick=()=>{ st.layer=b.dataset.cpl; capRenderCapabilities(box); });
   box.querySelector('#ana-cp-mx')?.addEventListener('change',e=>{ st.mx=e.target.value; capRenderCapabilities(box); });
@@ -333,8 +333,8 @@ function capRenderCapabilities(box){
   box.querySelector('#ana-cp-csv').onclick=()=>{
     const n=a=>capCxList(a);   // export enrichi (53)
     if(st.view==='matrix'&&box._cpMx){ const {rows,cols,key}=box._cpMx;
-      capCsvExport(`capacites-matrice-${key}.csv`,['Couche','Capacité',...cols.map(c=>c.name)],rows.map(r=>{ const ids=new Set((r[key]||[]).map(e=>e.id)); return [r.layer,capCx(r.name,r.id),...cols.map(c=>ids.has(c.id)?'X':'')]; }));
-    } else capCsvExport('capacites.csv',['Couche','Type','Nom','Fonctions','Chaînes','Acteurs / composants','Scénarios','Inclusions','Missions','Réalise','Réalisée par','Capacités exploitées'],
+      capCsvExport(_L(`capacites-matrice-${key}.csv`),[_L('Couche'),_L('Capacité'),...cols.map(c=>c.name)],rows.map(r=>{ const ids=new Set((r[key]||[]).map(e=>e.id)); return [r.layer,capCx(r.name,r.id),...cols.map(c=>ids.has(c.id)?'X':'')]; }));
+    } else capCsvExport(_L('capacites.csv'),[_L('Couche'),'Type',_L('Nom'),_L('Fonctions'),_L('Chaînes'),_L('Acteurs / composants'),_L('Scénarios'),_L('Inclusions'),_L('Missions'),_L('Réalise'),_L('Réalisée par'),_L('Capacités exploitées')],
       caps.map(c=>[c.layer,capAnaHuman(c.type),capCx(c.name,c.id),n(c.fns),n(c.chains),n(c.actors),n(c.scen),n(c.includes),n(c.missions),n(c.realizes),n(c.realizedBy),n(c.exploits)]));
   };
 }

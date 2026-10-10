@@ -55,7 +55,7 @@ function capMatrixBuild(links, opts){
   });
   const max=Math.max(1,...Object.values(cells).map(v=>v.length));
   const th=c=>`<span style="color:${opts.colorOf(c)}">${capEsc(c.pcName)}</span>`;
-  let h=`<div class="cap-mx-wrap"><table class="cap-mx"><thead><tr><th class="cap-mx-corner">${opts.corner||(opts.directed?'Émetteur ↓ / Récepteur →':'Composant')}</th>`;
+  let h=`<div class="cap-mx-wrap"><table class="cap-mx"><thead><tr><th class="cap-mx-corner">${opts.corner||(opts.directed?_L('Émetteur ↓ / Récepteur →'):_L('Composant'))}</th>`;
   list.forEach(c=>{ h+=`<th class="cap-mx-col" title="${capEsc(c.pcName)}"><div>${th(c)}</div></th>`; });
   h+='<th class="cap-mx-col"><div><b>Σ</b></div></th></tr></thead><tbody>';
   list.forEach((r,i)=>{
@@ -69,7 +69,7 @@ function capMatrixBuild(links, opts){
     });
     h+=`<td class="cap-mx-tot">${tot||''}</td></tr>`;
   });
-  h+=`</tbody></table></div><div class="cap-mx-hint">${list.length} ${opts.noun||'composants'} · cliquez une cellule pour lister les ${opts.unit}</div><div class="cap-mx-detail"></div>`;
+  h+=_L(`</tbody></table></div><div class="cap-mx-hint">${list.length} ${opts.noun||_L('composants')} · cliquez une cellule pour lister les ${opts.unit}</div><div class="cap-mx-detail"></div>`);
   return {html:h, cells};
 }
 
@@ -82,7 +82,7 @@ function capFoldList(items, max){
   max=max||4;
   if(items.length<=max+1) return items.join(', ');
   const rest=items.length-max;
-  return `${items.slice(0,max).join(', ')}<span class="cap-fold-more" style="display:none">, ${items.slice(max).join(', ')}</span> <span class="cap-fold-btn" data-n="${rest}" title="Afficher / masquer les ${rest} autres" onclick="event.stopPropagation();const m=this.previousElementSibling,o=m.style.display==='none';m.style.display=o?'':'none';this.textContent=o?'▴ réduire':'+'+this.dataset.n+' autres';">+${rest} autres</span>`;
+  return _L(`${items.slice(0,max).join(', ')}<span class="cap-fold-more" style="display:none">, ${items.slice(max).join(', ')}</span> <span class="cap-fold-btn" data-n="${rest}" title="Afficher / masquer les ${rest} autres" onclick="event.stopPropagation();const m=this.previousElementSibling,o=m.style.display==='none';m.style.display=o?'':'none';this.textContent=o?'▴ réduire':'+'+this.dataset.n+' autres';">+${rest} autres</span>`);
 }
 
 /** Rend un rapport de contrôles : sections repliables avec compteur et niveau (ok / avertissement).
@@ -91,12 +91,12 @@ function capFoldList(items, max){
  */
 function capDiagHtml(sections){
   const total=sections.reduce((s,x)=>s+x.items.length,0);
-  return `<div class="cap-diag-sum">${total?`⚠ ${total} point${total>1?'s':''} à vérifier`:'✔ Aucune anomalie détectée'}</div>`+
+  return `<div class="cap-diag-sum">${total?_L(`⚠ ${total} point${total>1?'s':''} à vérifier`):_L('✔ Aucune anomalie détectée')}</div>`+
     sections.map(s=>`<details class="cap-diag"${s.items.length&&s.items.length<=30?' open':''}>
       <summary><span class="cap-diag-ico">${s.icon}</span><b>${capEsc(s.title)}</b>
         <span class="cap-diag-cnt ${s.items.length?'warn':'ok'}">${s.items.length}</span>
         <span class="cap-diag-tip">${capEsc(s.tip||'')}</span></summary>
-      ${s.items.length?`<table class="cap-diag-t">${s.cols?`<tr>${s.cols.map(c=>`<th>${capEsc(c)}</th>`).join('')}</tr>`:''}${s.items.join('')}</table>`:'<div class="cap-diag-ok">✔ RAS</div>'}
+      ${s.items.length?`<table class="cap-diag-t">${s.cols?`<tr>${s.cols.map(c=>`<th>${capEsc(c)}</th>`).join('')}</tr>`:''}${s.items.join('')}</table>`:_L('<div class="cap-diag-ok">✔ RAS</div>')}
     </details>`).join('');
 }
 
@@ -115,17 +115,17 @@ function capDetLink(id, label, style){
 const CAP_PORT_ORIENTS=['UNSET','IN','OUT','INOUT'];
 /** Style d'affichage de chaque orientation de port (couleur, libellé, info-bulle). */
 const CAP_ORIENT_STYLE={
-  IN:   {c:'#f0883e', t:'Port d\'entrée (IN)'},
-  OUT:  {c:'#3fb950', t:'Port de sortie (OUT)'},
-  INOUT:{c:'#a371f7', t:'Port bidirectionnel (INOUT)'},
-  UNSET:{c:'#8b949e', t:'Orientation non définie (UNSET)'},
+  IN:   {c:'#f0883e', t:_L('Port d\'entrée (IN)')},
+  OUT:  {c:'#3fb950', t:_L('Port de sortie (OUT)')},
+  INOUT:{c:'#a371f7', t:_L('Port bidirectionnel (INOUT)')},
+  UNSET:{c:'#8b949e', t:_L('Orientation non définie (UNSET)')},
 };
 /** Libellés des sens effectifs d'un Component Exchange. */
 const CAP_CEX_DIRS={
-  fwd:  {label:'→ Orienté',        tip:'Sens source → cible'},
-  rev:  {label:'← Inversé',        tip:'Sens cible → source (déduit des orientations de ports)'},
-  bi:   {label:'⇄ Bidirectionnel', tip:'Échange dans les deux sens (port INOUT)'},
-  unset:{label:'? Non orienté',    tip:'Aucun port orienté : sens inconnu'},
+  fwd:  {label:_L('→ Orienté'),        tip:_L('Sens source → cible')},
+  rev:  {label:_L('← Inversé'),        tip:_L('Sens cible → source (déduit des orientations de ports)')},
+  bi:   {label:_L('⇄ Bidirectionnel'), tip:_L('Échange dans les deux sens (port INOUT)')},
+  unset:{label:_L('? Non orienté'),    tip:_L('Aucun port orienté : sens inconnu')},
 };
 
 /** Normalise l'orientation d'un port Capella : attribut absent (valeur par défaut EMF) → 'UNSET'.
@@ -154,8 +154,8 @@ function capCexDirection(o1,o2,kind,nest){
     if(nest==='tgtParent') return {dir:o1==='IN'?'rev':'fwd',warn:''};
     return {dir:'fwd',warn:''};
   }
-  if(o1==='OUT'&&o2==='OUT') return {dir:'fwd',warn:'Deux ports OUT reliés'};
-  if(o1==='IN'&&o2==='IN')   return {dir:'fwd',warn:'Deux ports IN reliés'};
+  if(o1==='OUT'&&o2==='OUT') return {dir:'fwd',warn:_L('Deux ports OUT reliés')};
+  if(o1==='IN'&&o2==='IN')   return {dir:'fwd',warn:_L('Deux ports IN reliés')};
   if(o1==='OUT'||o2==='IN')  return {dir:'fwd',warn:''};
   if(o1==='IN'||o2==='OUT')  return {dir:'rev',warn:''};
   if(o1==='INOUT'||o2==='INOUT') return {dir:'bi',warn:''};

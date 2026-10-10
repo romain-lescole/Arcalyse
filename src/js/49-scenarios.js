@@ -8,8 +8,8 @@
 var _capScSel=null;                 // scénario affiché
 var _capScState={q:'', layer:'all', kind:'all', view:'diagram', zoom:1};
 /** Types de scénarios Capella (attribut kind) : sigle et libellé. */
-var CAP_SC_KINDS={DATA_FLOW:{s:'ES',l:'Exchange Scenario'}, FUNCTIONAL:{s:'FS',l:'Functional Scenario'}, INTERACTION:{s:'ES',l:'Interaction Scenario'},
-  INTERFACE:{s:'IS',l:'Interface Scenario'}, UNSET:{s:'SC',l:'Scénario'}};
+var CAP_SC_KINDS={DATA_FLOW:{s:'ES',l:_L('Exchange Scenario')}, FUNCTIONAL:{s:'FS',l:_L('Functional Scenario')}, INTERACTION:{s:'ES',l:_L('Interaction Scenario')},
+  INTERFACE:{s:'IS',l:_L('Interface Scenario')}, UNSET:{s:'SC',l:_L('Scénario')}};
 /** Couleurs façon Capella (diagramme sur fond blanc dans tous les thèmes). */
 var CAP_SC_COL={
   actor:{f:'#c6e6ff', s:'#4a4aa8', t:'#111'}, sys:{f:'#96b1da', s:'#4a4aa8', t:'#111'}, node:{f:'#fffbb4', s:'#8a6d00', t:'#111'},
@@ -50,7 +50,7 @@ function capComputeScenarios(){
     const msgs=kids('ownedMessages');
     const msgOps=msgs.map(m=>{ const se=res(m.getAttribute('sendingEnd')), ev=se&&res(se.getAttribute('event')); return ev&&res(ev.getAttribute('operation')); });
     const tl=kids('ownedTimeLapses');
-    list.push({id:capXId(el), name:capXName(el)||'(sans nom)', kind, ks:capScKindShort(kind,layer), layer, el,
+    list.push({id:capXId(el), name:capXName(el)||_L('(sans nom)'), kind, ks:capScKindShort(kind,layer), layer, el,
       capId:cap?capXId(cap):'', capName:cap?(capXName(cap)||''):'', capType:cap?capTName(cap):'',
       roles, nMsg:msgs.length, nNoEx:msgOps.filter(o=>!o).length,
       nFrag:tl.filter(t=>capTName(t)==='CombinedFragment').length, nRef:tl.filter(t=>capTName(t)==='InteractionUse').length,
@@ -207,11 +207,11 @@ function capScenarioSvg(sc){
         if(g) out+=`<text x="${x1+(i>0?8:lw+8)}" y="${(i>0?yo:y1)+14}" font-size="11" fill="#333">[${e(g)}]</text>`; });
       out+='</g>';
     } else {
-      out+=`<g class="sc-iu" data-sc="${e(b.c.scId)}" style="cursor:${b.c.scId?'pointer':'default'}"><title>Référence au scénario ${e(b.c.name)}${b.c.scId?' — clic : l\'ouvrir':''}</title>
+      out+=_L(`<g class="sc-iu" data-sc="${e(b.c.scId)}" style="cursor:${b.c.scId?'pointer':'default'}"><title>Référence au scénario ${e(b.c.name)}${b.c.scId?_L(' — clic : l\'ouvrir'):''}</title>
         <rect x="${x1}" y="${y1}" width="${x2-x1}" height="${y2-y1}" fill="#fff" stroke="${C.frag}" stroke-width="1.3"/>
         <path d="M${x1},${y1} H${x1+34} V${y1+12} L${x1+26},${y1+20} H${x1} Z" fill="#fff" stroke="${C.frag}"/>
         <text x="${x1+6}" y="${y1+14}" font-size="11">ref</text>
-        <text x="${(x1+x2)/2}" y="${(y1+y2)/2+5}" font-size="12.5" text-anchor="middle" fill="#1a4f8a" text-decoration="underline">${e(b.c.name)}</text></g>`;
+        <text x="${(x1+x2)/2}" y="${(y1+y2)/2+5}" font-size="12.5" text-anchor="middle" fill="#1a4f8a" text-decoration="underline">${e(b.c.name)}</text></g>`);
     }
   });
   // Lignes de vie
@@ -222,7 +222,7 @@ function capScenarioSvg(sc){
     out+=ref(r.refId, `<rect x="${x-w/2}" y="${L.head}" width="${w}" height="46" fill="${c.f}" stroke="${c.s}" stroke-width="1.4"/>
       <g transform="translate(${x-w/2+10},${L.head+15})" stroke="#111" fill="none" stroke-width="1.6"><path d="M5,0 V16 M1,0 H9 M0,9 H4 M7,9 H12 M10,6 L13,9 L10,12"/></g>
       ${lines.map((l,k)=>`<text x="${x+8}" y="${L.head+23+(k-(lines.length-1)/2)*14+4}" font-size="12.5" text-anchor="middle" fill="${c.t}">${e(l)}</text>`).join('')}`,
-      `${r.name} — ${r.refType||'?'} (clic : détail)`);
+      _L(`${r.name} — ${r.refType||'?'} (clic : détail)`));
   });
   // Exécutions (barres), avec décalage si imbriquées sur la même ligne de vie
   const ex=L.execs.map(x=>({...x, r:roleOfFrag(x.st), y1:yOf(x.st), y2:yOf(x.fi)})).filter(x=>x.r!==undefined&&x.y1!==undefined&&x.y2!==undefined);
@@ -234,10 +234,10 @@ function capScenarioSvg(sc){
     const c=C[s.k], x=X[r], yb=y2===undefined?y1+30:y2, lines=capScWrap(s.name,24), w=Math.min(190,Math.max(90,capScTextW(lines[0],12)+30));
     if(s.k==='fbox'||s.k==='abox'){ const h=Math.max(34,Math.min(yb-y1,lines.length*15+12)), ty=y1+h/2-(lines.length-1)*7.5+4;
       out+=ref(s.refId,`<rect x="${x-w/2}" y="${y1}" width="${w}" height="${h}" fill="${c.f}" stroke="${c.s}" stroke-width="1.3"/>
-        ${lines.map((l,k)=>`<text x="${x}" y="${ty+k*15}" font-size="12" text-anchor="middle" fill="${c.t}">${e(l)}</text>`).join('')}`, `${s.name} — fonction (clic : détail)`);
+        ${lines.map((l,k)=>`<text x="${x}" y="${ty+k*15}" font-size="12" text-anchor="middle" fill="${c.t}">${e(l)}</text>`).join('')}`, _L(`${s.name} — fonction (clic : détail)`));
     } else { const h=Math.max(26,Math.min(yb-y1,lines.length*15+12)), cy=y1+h/2;
       out+=ref(s.refId,`<ellipse cx="${x}" cy="${cy}" rx="${w/2}" ry="${h/2}" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/>
-        ${lines.map((l,k)=>`<text x="${x}" y="${cy-(lines.length-1)*7.5+4+k*15}" font-size="12" text-anchor="middle" fill="${c.t}">${e(l)}</text>`).join('')}`, `${s.name} — ${s.k==='mode'?'mode':'état'} (clic : détail)`);
+        ${lines.map((l,k)=>`<text x="${x}" y="${cy-(lines.length-1)*7.5+4+k*15}" font-size="12" text-anchor="middle" fill="${c.t}">${e(l)}</text>`).join('')}`, _L(`${s.name} — ${s.k==='mode'?'mode':_L('état')} (clic : détail)`));
     }
   });
   // Messages
@@ -268,16 +268,16 @@ function capScChecks(){
   const S=capComputeScenarios().list, {res}=capAnaCtx();
   const fl=(id,n)=>`<span class="cex-det" style="cursor:pointer" onclick="capOpenDetailById('${capEsc(id)}')">${capEsc(n)}</span>`;
   const row=(s,extra)=>`<tr><td>${s.layer}</td><td>${s.ks}</td><td>${fl(s.id,s.name)}</td><td>${s.capName?fl(s.capId,s.capName):'—'}</td><td>${extra}</td></tr>`;
-  const cols=['Couche','Type','Scénario','Capacité','Détail'];
-  const noRef=S.flatMap(s=>s.roles.filter(r=>!r.refId).map(r=>row(s,`ligne de vie « ${capEsc(r.name)} »`)));
+  const cols=[_L('Couche'),'Type',_L('Scénario'),_L('Capacité'),_L('Détail')];
+  const noRef=S.flatMap(s=>s.roles.filter(r=>!r.refId).map(r=>row(s,_L(`ligne de vie « ${capEsc(r.name)} »`))));
   return [
-    {icon:'∅', title:'Scénarios vides (aucun message)', tip:'Scénario sans SequenceMessage', cols, items:S.filter(s=>!s.nMsg).map(s=>row(s,`${s.roles.length} ligne(s) de vie`))},
-    {icon:'⇢', title:'Messages sans échange', tip:'SequenceMessage dont l\'événement n\'invoque aucun échange (Functional / Component Exchange…)', cols, items:S.filter(s=>s.nNoEx).map(s=>row(s,`${s.nNoEx} message(s)`))},
-    {icon:'?', title:'Lignes de vie sans élément représenté', tip:'InstanceRole sans representedInstance résolu', cols, items:noRef},
-    {icon:'🎯', title:'Scénarios hors capacité', tip:'Scénario qui n\'est pas rangé sous une capacité ou une réalisation de capacité', cols,
+    {icon:'∅', title:_L('Scénarios vides (aucun message)'), tip:_L('Scénario sans SequenceMessage'), cols, items:S.filter(s=>!s.nMsg).map(s=>row(s,_L(`${s.roles.length} ligne(s) de vie`)))},
+    {icon:'⇢', title:_L('Messages sans échange'), tip:_L('SequenceMessage dont l\'événement n\'invoque aucun échange (Functional / Component Exchange…)'), cols, items:S.filter(s=>s.nNoEx).map(s=>row(s,_L(`${s.nNoEx} message(s)`)))},
+    {icon:'?', title:_L('Lignes de vie sans élément représenté'), tip:_L('InstanceRole sans representedInstance résolu'), cols, items:noRef},
+    {icon:'🎯', title:_L('Scénarios hors capacité'), tip:_L('Scénario qui n\'est pas rangé sous une capacité ou une réalisation de capacité'), cols,
       items:S.filter(s=>!/Capability/.test(s.capType)).map(s=>row(s,capEsc(s.capType||'—')))},
-    {icon:'↗', title:'Références vers un scénario introuvable', tip:'InteractionUse sans referencedScenario résolu', cols,
-      items:S.filter(s=>s.nRef>s.refs.length).map(s=>row(s,`${s.nRef-s.refs.length} référence(s)`))}
+    {icon:'↗', title:_L('Références vers un scénario introuvable'), tip:_L('InteractionUse sans referencedScenario résolu'), cols,
+      items:S.filter(s=>s.nRef>s.refs.length).map(s=>row(s,_L(`${s.nRef-s.refs.length} référence(s)`)))}
   ];
 }
 
@@ -285,10 +285,10 @@ function capScChecks(){
  * @param {Function} add - Ajout d'un indicateur @param {Function} LC - Couleur d'une couche */
 function capScDashCatalog(add, LC){
   const S=()=>capComputeScenarios().list;
-  add('Scénarios','sc.n','Scénarios — nombre','n',()=>({n:S().length, sub:`${S().reduce((t,s)=>t+s.nMsg,0)} message(s)`}));
-  add('Scénarios','sc.layer','Scénarios — par couche','series',()=>({order:'natural',cats:CAP_ANA_LAYERS.map(k=>({l:k,v:S().filter(s=>s.layer===k).length,c:LC(k)})).filter(c=>c.v)}));
-  add('Scénarios','sc.kind','Scénarios — par type','series',()=>{ const m={}; S().forEach(s=>m[s.ks]=(m[s.ks]||0)+1); return {cats:Object.entries(m).map(([l,v])=>({l,v})).sort((a,b)=>b.v-a.v)}; });
-  add('Scénarios','sc.chk','Scénarios — contrôles','series',()=>({cats:capScChecks().map(s=>({l:s.title,v:s.items.length})).filter(c=>c.v).sort((a,b)=>b.v-a.v)}));
+  add(_L('Scénarios'),'sc.n',_L('Scénarios — nombre'),'n',()=>({n:S().length, sub:_L(`${S().reduce((t,s)=>t+s.nMsg,0)} message(s)`)}));
+  add(_L('Scénarios'),'sc.layer',_L('Scénarios — par couche'),'series',()=>({order:'natural',cats:CAP_ANA_LAYERS.map(k=>({l:k,v:S().filter(s=>s.layer===k).length,c:LC(k)})).filter(c=>c.v)}));
+  add(_L('Scénarios'),'sc.kind',_L('Scénarios — par type'),'series',()=>{ const m={}; S().forEach(s=>m[s.ks]=(m[s.ks]||0)+1); return {cats:Object.entries(m).map(([l,v])=>({l,v})).sort((a,b)=>b.v-a.v)}; });
+  add(_L('Scénarios'),'sc.chk',_L('Scénarios — contrôles'),'series',()=>({cats:capScChecks().map(s=>({l:s.title,v:s.items.length})).filter(c=>c.v).sort((a,b)=>b.v-a.v)}));
 }
 
 /** Ouvre un scénario dans la vue 🎬 Scénarios. @param {string} id */
@@ -301,9 +301,9 @@ function capScExport(fmt){
   if(fmt==='svg'){ capDownloadBlob(new Blob([svg],{type:'image/svg+xml'}), base+'.svg'); return; }
   capSvgToCanvas(svg,w,h,2).then(c=>capCanvasBlob(c,'image/png')).then(b=>{
     if(fmt==='png') capDownloadBlob(b, base+'.png');
-    else if(navigator.clipboard&&window.ClipboardItem) navigator.clipboard.write([new ClipboardItem({'image/png':b})]).then(()=>{ if(typeof capWatchFlash==='function') capWatchFlash('✔ Diagramme copié'); },()=>alert('Copie impossible dans ce navigateur.'));
-    else alert('Copie d\'image non disponible dans ce navigateur.');
-  }).catch(err=>alert('Export impossible : '+err.message));
+    else if(navigator.clipboard&&window.ClipboardItem) navigator.clipboard.write([new ClipboardItem({'image/png':b})]).then(()=>{ if(typeof capWatchFlash==='function') capWatchFlash(_L('✔ Diagramme copié')); },()=>alert(_L('Copie impossible dans ce navigateur.')));
+    else alert(_L('Copie d\'image non disponible dans ce navigateur.'));
+  }).catch(err=>alert(_L('Export impossible : ')+err.message));
 }
 
 /** Ajuste la hauteur de la liste et du diagramme au bas réel de la vue (la barre d'état ne doit pas masquer
@@ -332,36 +332,36 @@ window.addEventListener('resize',()=>capScFit(document.getElementById('cap-view-
 function capRenderScenarios(){
   const box=document.getElementById('cap-view-scen'); if(!box) return;
   const S=capComputeScenarios(), st=_capScState, e=capEsc;
-  if(!S.list.length){ box.innerHTML='<div class="phl-empty">Ce modèle ne contient aucun scénario (Scenario).</div>'; return; }
+  if(!S.list.length){ box.innerHTML=_L('<div class="phl-empty">Ce modèle ne contient aucun scénario (Scenario).</div>'); return; }
   if(!_capScSel||!S.byId[_capScSel]) _capScSel=(S.list.find(s=>s.nMsg)||S.list[0]).id;
   const layers=CAP_ANA_LAYERS.filter(k=>S.list.some(s=>s.layer===k)), kinds=[...new Set(S.list.map(s=>s.ks))];
   const q=st.q.trim().toLowerCase();
   const vis=S.list.filter(s=>(st.layer==='all'||s.layer===st.layer)&&(st.kind==='all'||s.ks===st.kind)&&(!q||(s.name+' '+s.capName+' '+s.roles.map(r=>r.name).join(' ')).toLowerCase().includes(q)));
   // Liste groupée par couche puis capacité
   const groups=new Map(); vis.forEach(s=>{ const k=s.layer+'\u0001'+(s.capName||'—'); if(!groups.has(k)) groups.set(k,{layer:s.layer,cap:s.capName||'—',capId:s.capId,items:[]}); groups.get(k).items.push(s); });
-  const listHtml=[...groups.values()].map(g=>`<div class="sc-grp"><span class="cap-type-badge">${g.layer}</span> <span class="sc-cap"${g.capId?` data-det="${e(g.capId)}" title="Capacité — clic : détail"`:''}>🎯 ${e(g.cap)}</span></div>`+
+  const listHtml=[...groups.values()].map(g=>`<div class="sc-grp"><span class="cap-type-badge">${g.layer}</span> <span class="sc-cap"${g.capId?_L(` data-det="${e(g.capId)}" title="Capacité — clic : détail"`):''}>🎯 ${e(g.cap)}</span></div>`+
     g.items.map(s=>`<div class="sc-item${s.id===_capScSel?' on':''}" data-sc="${e(s.id)}" title="${e(s.name)}"><span class="sc-k">${s.ks}</span> ${e(s.name)} <span class="sc-n">${s.nMsg} msg</span></div>`).join('')).join('')
-    ||'<div class="phl-empty">Aucun scénario ne correspond au filtre.</div>';
+    ||_L('<div class="phl-empty">Aucun scénario ne correspond au filtre.</div>');
   const sc=S.byId[_capScSel];
   let main='';
   if(st.view==='diag') main=capDiagHtml(capScChecks());
   else {
     const D=capScenarioSvg(sc);
-    main=`<div class="sc-head"><span class="sc-k">${sc.ks}</span> <b class="cex-det" data-det="${e(sc.id)}" style="cursor:pointer">${e(sc.name)}</b>
-        <span class="ana-dim">· ${e((CAP_SC_KINDS[sc.kind]||CAP_SC_KINDS.UNSET).l)} · ${sc.layer} · ${sc.roles.length} ligne(s) de vie · ${sc.nMsg} message(s)${sc.nFrag?` · ${sc.nFrag} fragment(s)`:''}${sc.nRef?` · ${sc.nRef} référence(s)`:''}</span>
+    main=_L(`<div class="sc-head"><span class="sc-k">${sc.ks}</span> <b class="cex-det" data-det="${e(sc.id)}" style="cursor:pointer">${e(sc.name)}</b>
+        <span class="ana-dim">· ${e((CAP_SC_KINDS[sc.kind]||CAP_SC_KINDS.UNSET).l)} · ${sc.layer} · ${sc.roles.length} ligne(s) de vie · ${sc.nMsg} message(s)${sc.nFrag?_L(` · ${sc.nFrag} fragment(s)`):''}${sc.nRef?_L(` · ${sc.nRef} référence(s)`):''}</span>
         ${sc.capName?`<span class="ana-dim">· 🎯 <span class="cex-det" data-det="${e(sc.capId)}" style="cursor:pointer">${e(sc.capName)}</span></span>`:''}</div>
       <div class="sc-scroll"><div class="sc-band" style="width:${D.w*st.zoom}px">${sc.roles.map((r,i)=>`<span style="left:${D.L.X[i]*st.zoom}px;background:${(CAP_SC_COL[r.nat]||CAP_SC_COL.sys).f}">${e(r.name)}</span>`).join('')}</div>
-        <div class="sc-svg" style="width:${D.w*st.zoom}px">${D.svg.replace('<svg ',`<svg style="width:${D.w*st.zoom}px;height:${D.h*st.zoom}px" `)}</div></div>`;
+        <div class="sc-svg" style="width:${D.w*st.zoom}px">${D.svg.replace('<svg ',`<svg style="width:${D.w*st.zoom}px;height:${D.h*st.zoom}px" `)}</div></div>`);
   }
-  box.innerHTML=`<div class="phl-filter-bar">
-      <span class="tb-grp">${[['diagram','🎬 Diagramme'],['diag','🩺 Contrôles']].map(([k,l])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-scv="${k}">${l}</button>`).join('')}</span>
-      <span class="tb-grp"><span class="tb-grp-l">Couche</span>${[['all','Toutes'],...layers.map(k=>[k,k])].map(([k,l])=>`<button class="cap-lf-btn${st.layer===k?' active':''}" data-scl="${k}">${l} (${k==='all'?S.list.length:S.list.filter(s=>s.layer===k).length})</button>`).join('')}</span>
-      <span class="tb-grp"><span class="tb-grp-l">Type</span>${[['all','Tous'],...kinds.map(k=>[k,k])].map(([k,l])=>`<button class="cap-lf-btn${st.kind===k?' active':''}" data-sck="${k}" title="${k==='ES'?'Exchange Scenario':k==='FS'?'Functional Scenario':k==='OES'?'Operational Entity Scenario':k==='OAS'?'Operational Activity Scenario':k==='IS'?'Interface Scenario':'Tous les types'}">${l}</button>`).join('')}</span>
+  box.innerHTML=_L(`<div class="phl-filter-bar">
+      <span class="tb-grp">${[['diagram',_L('🎬 Diagramme')],['diag',_L('🩺 Contrôles')]].map(([k,l])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-scv="${k}">${l}</button>`).join('')}</span>
+      <span class="tb-grp"><span class="tb-grp-l">Couche</span>${[['all',_L('Toutes')],...layers.map(k=>[k,k])].map(([k,l])=>`<button class="cap-lf-btn${st.layer===k?' active':''}" data-scl="${k}">${l} (${k==='all'?S.list.length:S.list.filter(s=>s.layer===k).length})</button>`).join('')}</span>
+      <span class="tb-grp"><span class="tb-grp-l">Type</span>${[['all',_L('Tous')],...kinds.map(k=>[k,k])].map(([k,l])=>`<button class="cap-lf-btn${st.kind===k?' active':''}" data-sck="${k}" title="${k==='ES'?_L('Exchange Scenario'):k==='FS'?_L('Functional Scenario'):k==='OES'?_L('Operational Entity Scenario'):k==='OAS'?_L('Operational Activity Scenario'):k==='IS'?_L('Interface Scenario'):_L('Tous les types')}">${l}</button>`).join('')}</span>
       <span class="tb-grp"><input id="sc-q" class="phl-filter-input" placeholder="🔍 Scénario, capacité, ligne de vie…" value="${e(st.q)}" style="width:220px"><span class="ana-fn-cnt">${vis.length} / ${S.list.length}</span></span>
-      ${st.view==='diagram'?`<span class="tb-grp" style="margin-left:auto"><button class="cap-lf-btn" data-scz="-1" title="Réduire">−</button><button class="cap-lf-btn" data-scz="0" title="Taille réelle">${Math.round(st.zoom*100)} %</button><button class="cap-lf-btn" data-scz="1" title="Agrandir">+</button></span>
-      <span class="tb-grp"><button class="phl-export-btn" data-sce="png">⬇ PNG</button><button class="phl-export-btn" data-sce="svg">⬇ SVG</button><button class="phl-export-btn" data-sce="clip" title="Copier l'image dans le presse-papiers">📋 Copier</button></span>`:''}
+      ${st.view==='diagram'?_L(`<span class="tb-grp" style="margin-left:auto"><button class="cap-lf-btn" data-scz="-1" title="Réduire">−</button><button class="cap-lf-btn" data-scz="0" title="Taille réelle">${Math.round(st.zoom*100)} %</button><button class="cap-lf-btn" data-scz="1" title="Agrandir">+</button></span>
+      <span class="tb-grp"><button class="phl-export-btn" data-sce="png">⬇ PNG</button><button class="phl-export-btn" data-sce="svg">⬇ SVG</button><button class="phl-export-btn" data-sce="clip" title="Copier l'image dans le presse-papiers">📋 Copier</button></span>`):''}
     </div>
-    <div class="sc-split"><div class="sc-list">${listHtml}</div><div class="sc-main">${main}</div></div>`;
+    <div class="sc-split"><div class="sc-list">${listHtml}</div><div class="sc-main">${main}</div></div>`);
   // Écouteurs
   box.querySelectorAll('[data-scv]').forEach(b=>b.onclick=()=>{ st.view=b.dataset.scv; capRenderScenarios(); });
   box.querySelectorAll('[data-scl]').forEach(b=>b.onclick=()=>{ st.layer=b.dataset.scl; capRenderScenarios(); });

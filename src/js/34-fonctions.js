@@ -117,7 +117,7 @@ function capFnMetrics(F, L){
 function capFnChecks(F, layer){
   const fs=F.list.filter(f=>layer==='all'||f.layer===layer), L=capDetLink;
   const row=(f,extra)=>`<tr><td>${capChainLayerBadge(f.layer)} <span class="ana-dim">${f.num}</span> ${L(f.id,f.name)}</td><td class="ana-dim">${capEsc(extra||capAnaHuman(f.type))}</td></tr>`;
-  const cols=['Fonction','Détail'];
+  const cols=[_L('Fonction'),_L('Détail')];
   const layerUses=(k,pred)=>F.list.some(f=>f.layer===k&&pred(f));
   const lowerOf=k=>CAP_ANA_LAYERS[CAP_ANA_LAYERS.indexOf(k)+1];
   const dup={}; fs.forEach(f=>{ const k=f.layer+'|'+f.name.trim().toLowerCase(); (dup[k]=dup[k]||[]).push(f); });
@@ -127,29 +127,29 @@ function capFnChecks(F, layer){
   const langCount={}; fs.filter(f=>f.parentId).forEach(f=>{ const k=f.layer; langCount[k]=langCount[k]||{FR:0,EN:0}; langCount[k][nq(f).lang]++; });
   const minority=f=>{ const c=langCount[f.layer]; if(!c||!f.parentId) return false; const l=nq(f).lang, o=l==='FR'?'EN':'FR'; return c[l]<c[o]&&c[l]/(c[l]+c[o])<0.3; };
   const nqSecs=[
-    {icon:'✍', title:'Noms ne commençant pas par un verbe', tip:'Infinitif en français (« Afficher… »), forme de base en anglais (« Display… »)', cols, items:fs.filter(f=>has(f,['noverb','ing','noun']).length).map(f=>row(f,has(f,['noverb','ing','noun'])[0].label))},
-    {icon:'≈', title:'Verbes peu précis en tête du nom', tip:'Gérer, traiter, effectuer, manage, handle, process…', cols, items:fs.filter(f=>has(f,['vague']).length).map(f=>row(f,has(f,['vague'])[0].label))},
-    {icon:'Aa', title:'Présentation des noms', tip:'Minuscule en tête, espaces superflus, ponctuation finale', cols, items:fs.filter(f=>has(f,['case','space','punct']).length).map(f=>row(f,has(f,['case','space','punct']).map(i=>i.label).join(' · ')))},
-    {icon:'↔', title:'Noms trop longs ou d\'un seul mot', cols, items:fs.filter(f=>has(f,['long','short']).length).map(f=>row(f,has(f,['long','short']).map(i=>i.label).join(' · ')))},
-    {icon:'🌐', title:'Langue minoritaire dans la couche', tip:'Nom dans une autre langue que la majorité des fonctions de sa couche', cols, items:fs.filter(minority).map(f=>row(f,`Langue détectée : ${nq(f).lang}`))},
+    {icon:'✍', title:_L('Noms ne commençant pas par un verbe'), tip:_L('Infinitif en français (« Afficher… »), forme de base en anglais (« Display… »)'), cols, items:fs.filter(f=>has(f,['noverb','ing','noun']).length).map(f=>row(f,has(f,['noverb','ing','noun'])[0].label))},
+    {icon:'≈', title:_L('Verbes peu précis en tête du nom'), tip:_L('Gérer, traiter, effectuer, manage, handle, process…'), cols, items:fs.filter(f=>has(f,['vague']).length).map(f=>row(f,has(f,['vague'])[0].label))},
+    {icon:'Aa', title:_L('Présentation des noms'), tip:_L('Minuscule en tête, espaces superflus, ponctuation finale'), cols, items:fs.filter(f=>has(f,['case','space','punct']).length).map(f=>row(f,has(f,['case','space','punct']).map(i=>i.label).join(' · ')))},
+    {icon:'↔', title:_L('Noms trop longs ou d\'un seul mot'), cols, items:fs.filter(f=>has(f,['long','short']).length).map(f=>row(f,has(f,['long','short']).map(i=>i.label).join(' · ')))},
+    {icon:'🌐', title:_L('Langue minoritaire dans la couche'), tip:_L('Nom dans une autre langue que la majorité des fonctions de sa couche'), cols, items:fs.filter(minority).map(f=>row(f,_L(`Langue détectée : ${nq(f).lang}`)))},
   ];
   return [
     ...nqSecs,
-    {icon:'📝', title:'Fonctions sans description', cols, items:fs.filter(f=>!f.desc&&f.parentId).map(f=>row(f))},
-    {icon:'✎', title:'Descriptions trop courtes ou identiques au nom', tip:'Moins de 20 caractères, ou répète le nom', cols,
+    {icon:'📝', title:_L('Fonctions sans description'), cols, items:fs.filter(f=>!f.desc&&f.parentId).map(f=>row(f))},
+    {icon:'✎', title:_L('Descriptions trop courtes ou identiques au nom'), tip:_L('Moins de 20 caractères, ou répète le nom'), cols,
       items:fs.filter(f=>f.desc&&(f.desc.length<20||f.desc.trim().toLowerCase()===f.name.trim().toLowerCase())).map(f=>row(f,`« ${f.desc.slice(0,60)} »`))},
-    {icon:'⚑', title:'Marqueurs de travail en cours (TODO, TBD, NOT DONE…)', cols, items:fs.filter(f=>todo.test(f.name)||todo.test(f.desc)).map(f=>row(f,f.status||''))},
-    {icon:'≡', title:'Noms en double dans une même couche', cols, items:Object.values(dup).filter(a=>a.length>1).flat().map(f=>row(f,`${dup[f.layer+'|'+f.name.trim().toLowerCase()].length} occurrences`))},
-    {icon:'🧩', title:'Fonctions feuilles non allouées', tip:'Couches où des allocations existent', cols,
+    {icon:'⚑', title:_L('Marqueurs de travail en cours (TODO, TBD, NOT DONE…)'), cols, items:fs.filter(f=>todo.test(f.name)||todo.test(f.desc)).map(f=>row(f,f.status||''))},
+    {icon:'≡', title:_L('Noms en double dans une même couche'), cols, items:Object.values(dup).filter(a=>a.length>1).flat().map(f=>row(f,`${dup[f.layer+'|'+f.name.trim().toLowerCase()].length} occurrences`))},
+    {icon:'🧩', title:_L('Fonctions feuilles non allouées'), tip:_L('Couches où des allocations existent'), cols,
       items:fs.filter(f=>f.leaf&&!f.alloc.length&&layerUses(f.layer,g=>g.alloc.length)).map(f=>row(f))},
-    {icon:'⧉', title:'Fonctions allouées à plusieurs composants', cols, items:fs.filter(f=>f.alloc.length>1).map(f=>row(f,f.alloc.map(a=>a.name).join(', ')))},
-    {icon:'⬆', title:'Fonctions mères allouées', tip:'L\'allocation porte en principe sur les feuilles', cols, items:fs.filter(f=>!f.leaf&&f.alloc.length).map(f=>row(f,f.alloc.map(a=>a.name).join(', ')))},
-    {icon:'⇄', title:'Fonctions feuilles sans aucun échange', cols, items:fs.filter(f=>f.leaf&&f.parentId&&!f.fesIn.length&&!f.fesOut.length&&layerUses(f.layer,g=>g.fesOut.length)).map(f=>row(f))},
-    {icon:'⇶', title:'Échanges portés par des fonctions mères', tip:'Les échanges relient en principe des feuilles', cols, items:fs.filter(f=>!f.leaf&&(f.fesIn.length||f.fesOut.length)).map(f=>row(f,`${f.fesIn.length} entrant(s), ${f.fesOut.length} sortant(s)`))},
-    {icon:'◌', title:'Ports de fonction sans échange', cols, items:fs.filter(f=>f.unused.length).map(f=>row(f,f.unused.map(p=>p.name).join(', ')))},
-    {icon:'⬇', title:'Fonctions feuilles non réalisées à la couche inférieure', tip:'Seulement si la couche inférieure réalise déjà des fonctions', cols,
+    {icon:'⧉', title:_L('Fonctions allouées à plusieurs composants'), cols, items:fs.filter(f=>f.alloc.length>1).map(f=>row(f,f.alloc.map(a=>a.name).join(', ')))},
+    {icon:'⬆', title:_L('Fonctions mères allouées'), tip:_L('L\'allocation porte en principe sur les feuilles'), cols, items:fs.filter(f=>!f.leaf&&f.alloc.length).map(f=>row(f,f.alloc.map(a=>a.name).join(', ')))},
+    {icon:'⇄', title:_L('Fonctions feuilles sans aucun échange'), cols, items:fs.filter(f=>f.leaf&&f.parentId&&!f.fesIn.length&&!f.fesOut.length&&layerUses(f.layer,g=>g.fesOut.length)).map(f=>row(f))},
+    {icon:'⇶', title:_L('Échanges portés par des fonctions mères'), tip:_L('Les échanges relient en principe des feuilles'), cols, items:fs.filter(f=>!f.leaf&&(f.fesIn.length||f.fesOut.length)).map(f=>row(f,_L(`${f.fesIn.length} entrant(s), ${f.fesOut.length} sortant(s)`)))},
+    {icon:'◌', title:_L('Ports de fonction sans échange'), cols, items:fs.filter(f=>f.unused.length).map(f=>row(f,f.unused.map(p=>p.name).join(', ')))},
+    {icon:'⬇', title:_L('Fonctions feuilles non réalisées à la couche inférieure'), tip:_L('Seulement si la couche inférieure réalise déjà des fonctions'), cols,
       items:fs.filter(f=>f.leaf&&f.parentId&&lowerOf(f.layer)&&layerUses(lowerOf(f.layer),g=>g.realizes.length)&&!f.realizedBy.length).map(f=>row(f))},
-    {icon:'⬆', title:'Fonctions feuilles ne réalisant rien à la couche supérieure', tip:'Seulement si la couche réalise déjà des fonctions', cols,
+    {icon:'⬆', title:_L('Fonctions feuilles ne réalisant rien à la couche supérieure'), tip:_L('Seulement si la couche réalise déjà des fonctions'), cols,
       items:fs.filter(f=>f.leaf&&f.layer!=='OA'&&layerUses(f.layer,g=>g.realizes.length)&&!f.realizes.length).map(f=>row(f))},
   ];
 }
@@ -179,10 +179,10 @@ function capFnSubsystems(f){
 }
 /** Libellés, icônes et couleurs des natures d'allocation (filtre, liserés, colonne du tableau). */
 const CAP_FN_AK={
-  sys:{i:'🧩',l:'Système',t:'Système',c:'#3fb950',tip:'Allouées à un composant du système (en OA : à une entité non acteur)'},
-  act:{i:'👤',l:'Acteurs',t:'Acteur',c:'#58a6ff',tip:'Allouées à un acteur externe'},
-  none:{i:'∅',l:'Non allouées',t:'Non allouée',c:'#8b949e',tip:'Fonctions feuilles allouées à aucun composant ni acteur'},
-  mix:{t:'Système + acteur',c:'#58a6ff'}, parent:{t:'— (fonction mère)',c:'var(--c-border)'}};
+  sys:{i:'🧩',l:_L('Système'),t:_L('Système'),c:'#3fb950',tip:_L('Allouées à un composant du système (en OA : à une entité non acteur)')},
+  act:{i:'👤',l:_L('Acteurs'),t:_L('Acteur'),c:'#58a6ff',tip:_L('Allouées à un acteur externe')},
+  none:{i:'∅',l:_L('Non allouées'),t:_L('Non allouée'),c:'#8b949e',tip:_L('Fonctions feuilles allouées à aucun composant ni acteur')},
+  mix:{t:_L('Système + acteur'),c:'#58a6ff'}, parent:{t:_L('— (fonction mère)'),c:'var(--c-border)'}};
 
 /** Rend la vue ƒ Fonctions dans son conteneur : hiérarchie, tableau façon Excel, traçabilité, métriques,
  * contrôles et dossier fonctionnel, avec les filtres de couche, d'allocation et de recherche.
@@ -192,7 +192,7 @@ function capRenderFunctions(box){
   const F=capComputeFunctions(), L=capDetLink;
   const layers=CAP_ANA_LAYERS.filter(k=>F.list.some(f=>f.layer===k));
   const st=box._fn=box._fn||{view:'tree', layer:layers.includes('SA')?'SA':(layers[0]||'all'), q:'', desc:true, sel:null, open:new Set(), flt:'all', init:false};
-  if(!F.list.length){ box.innerHTML='<div class="phl-empty">Aucune fonction dans ce modèle.</div>'; return; }
+  if(!F.list.length){ box.innerHTML=_L('<div class="phl-empty">Aucune fonction dans ce modèle.</div>'); return; }
   if(!st.init){ F.list.filter(f=>f.depth<1).forEach(f=>st.open.add(f.id)); st.init=true; }
   if(!st.ak) st.ak=new Set(['sys','act','none']);
   const akOn=st.ak.size<3;
@@ -224,39 +224,39 @@ function capRenderFunctions(box){
     const opt=(o,d,ic)=>`<option value="${esc(o.id)}"${st.who===o.id?' selected':''}>${'\u00a0\u00a0'.repeat(d)}${ic} ${esc(pre(o)+o.name)} (${o.fns.size})</option>`;
     const tree=(id,d)=>{ const o=who.comp.get(id); return opt(o,d,d?'└':'🧩')+[...(who.kids.get(id)||[])].sort((a,b)=>who.comp.get(a).name.localeCompare(who.comp.get(b).name)).map(k=>tree(k,d+1)).join(''); };
     const acts=[...who.act.values()].sort((a,b)=>a.name.localeCompare(b.name));
-    return `<select id="ana-fn-who" class="phl-filter-input" style="max-width:230px${st.who?';border-color:var(--c-accent)':''}" title="Fonctions allouées à un acteur, ou au système / à un sous-système (sous-composants compris)">
+    return _L(`<select id="ana-fn-who" class="phl-filter-input" style="max-width:230px${st.who?';border-color:var(--c-accent)':''}" title="Fonctions allouées à un acteur, ou au système / à un sous-système (sous-composants compris)">
       <option value="">Tous les allocataires</option>
       ${acts.length?`<optgroup label="👤 Acteurs">${acts.map(o=>opt(o,0,'👤')).join('')}</optgroup>`:''}
       ${who.comp.size?`<optgroup label="🧩 Système / sous-systèmes">${[...who.roots].map(r=>tree(r,0)).join('')}</optgroup>`:''}
-    </select>${st.who?'<button class="cap-lf-btn" id="ana-fn-who-x" title="Retirer le filtre d\'allocataire">✕</button>':''}`;
+    </select>${st.who?_L('<button class="cap-lf-btn" id="ana-fn-who-x" title="Retirer le filtre d\'allocataire">✕</button>'):''}`);
   };
 
   /** Fiche détaillée d'une fonction (description mise en avant, contexte, échanges, traçabilité récursive). */
   function fiche(f){
-    if(!f) return '<div class="ana-dim" style="padding:20px">Sélectionnez une fonction dans l\'arbre pour afficher sa fiche.</div>';
+    if(!f) return _L('<div class="ana-dim" style="padding:20px">Sélectionnez une fonction dans l\'arbre pour afficher sa fiche.</div>');
     const path=[]; for(let p=F.byId[f.parentId]; p; p=F.byId[p.parentId]) path.unshift(p);
     const chainUp=id=>{ const g=F.byId[id]; return `<li>${capChainLayerBadge(g.layer)} ${fnLink(g.id)}${g.realizes.length?`<ul>${g.realizes.map(chainUp).join('')}</ul>`:''}</li>`; };
     const chainDown=id=>{ const g=F.byId[id]; return `<li>${capChainLayerBadge(g.layer)} ${fnLink(g.id)}${g.alloc.length?` <span class="ana-dim">→ ${esc(g.alloc.map(a=>a.name).join(', '))}</span>`:''}${g.realizedBy.length?`<ul>${g.realizedBy.map(chainDown).join('')}</ul>`:''}</li>`; };
-    const fe=(arr,dir)=>arr.length?arr.map(x=>`<div>${dir} ${L(x.id,x.name)} <span class="ana-dim">${dir==='←'?'de':'vers'} ${x.other?fnLink(x.other):'?'}</span></div>`).join(''):'<span class="ana-dim">—</span>';
-    return `<div class="ana-fn-crumb">${capChainLayerBadge(f.layer)} ${path.map(p=>fnLink(p.id)).join(' › ')}${path.length?' ›':''}</div>
+    const fe=(arr,dir)=>arr.length?arr.map(x=>`<div>${dir} ${L(x.id,x.name)} <span class="ana-dim">${dir==='←'?_L('de'):_L('vers')} ${x.other?fnLink(x.other):'?'}</span></div>`).join(''):'<span class="ana-dim">—</span>';
+    return _L(`<div class="ana-fn-crumb">${capChainLayerBadge(f.layer)} ${path.map(p=>fnLink(p.id)).join(' › ')}${path.length?' ›':''}</div>
       <h3 class="ana-fn-title"><span class="ana-dim">${f.num}</span> ${esc(f.name)} ${kindB(f)} <span class="ana-dim" style="font-size:11px">${esc(capAnaHuman(f.type))}</span> ${L(f.id,'🔎')}</h3>
-      ${f.status?`<div class="ana-dim">Statut : <b>${esc(f.status)}</b></div>`:''}
-      <div class="ana-fn-desc${f.desc?'':' empty'}">${f.desc?esc(f.desc):'Aucune description.'}</div>
-      ${f.summary?`<div class="ana-dim" style="margin:-4px 0 8px"><b>Résumé :</b> ${esc(f.summary)}</div>`:''}
+      ${f.status?_L(`<div class="ana-dim">Statut : <b>${esc(f.status)}</b></div>`):''}
+      <div class="ana-fn-desc${f.desc?'':' empty'}">${f.desc?esc(f.desc):_L('Aucune description.')}</div>
+      ${f.summary?_L(`<div class="ana-dim" style="margin:-4px 0 8px"><b>Résumé :</b> ${esc(f.summary)}</div>`):''}
       <table class="ana-t ana-kv">
-        <tr><td>Sous-fonctions (${f.children.length})</td><td>${f.children.map(id=>fnLink(id)).join(' · ')||'<span class="ana-dim">— feuille</span>'}</td></tr>
+        <tr><td>Sous-fonctions (${f.children.length})</td><td>${f.children.map(id=>fnLink(id)).join(' · ')||_L('<span class="ana-dim">— feuille</span>')}</td></tr>
         <tr><td>Allouée à</td><td>${(()=>{ const k=capFnAllocKind(f); return k==='parent'?'':`<span class="ana-ak-tag" style="--c:${CAP_FN_AK[k].c}">${CAP_FN_AK[k].t}</span> `; })()}${f.alloc.map(a=>`${a.actor?'👤 ':''}${L(a.id,a.name)}`).join(', ')||`<span class="${f.leaf?'ana-miss':'ana-dim'}">∅</span>`}</td></tr>
-        <tr><td>Ports</td><td>${f.ins.length} entrée(s) · ${f.outs.length} sortie(s)${f.unused.length?` · <span class="ana-miss">sans échange : ${esc(f.unused.map(p=>p.name).join(', '))}</span>`:''}</td></tr>
+        <tr><td>Ports</td><td>${f.ins.length} entrée(s) · ${f.outs.length} sortie(s)${f.unused.length?_L(` · <span class="ana-miss">sans échange : ${esc(f.unused.map(p=>p.name).join(', '))}</span>`):''}</td></tr>
         <tr><td>Échanges entrants (${f.fesIn.length})</td><td>${fe(f.fesIn,'←')}</td></tr>
         <tr><td>Échanges sortants (${f.fesOut.length})</td><td>${fe(f.fesOut,'→')}</td></tr>
         <tr><td>Chaînes</td><td>${f.chains.map(c=>L(c.id,c.name)).join(', ')||'<span class="ana-dim">—</span>'}</td></tr>
         <tr><td>Capacités</td><td>${f.caps.map(c=>L(c.id,c.name)).join(', ')||'<span class="ana-dim">—</span>'}</td></tr>
-        ${f.states.length?`<tr><td>Disponible dans</td><td>${esc(f.states.join(', '))}</td></tr>`:''}
+        ${f.states.length?_L(`<tr><td>Disponible dans</td><td>${esc(f.states.join(', '))}</td></tr>`):''}
       </table>
       <div class="ana-cols">
         <div><h4>⬆ Réalise (couches supérieures)</h4>${f.realizes.length?`<ul class="ana-fn-tree">${f.realizes.map(chainUp).join('')}</ul>`:'<span class="ana-dim">—</span>'}</div>
         <div><h4>⬇ Réalisée par (couches inférieures)</h4>${f.realizedBy.length?`<ul class="ana-fn-tree">${f.realizedBy.map(chainDown).join('')}</ul>`:'<span class="ana-dim">—</span>'}</div>
-      </div>`;
+      </div>`);
   }
 
   /** Arbre hiérarchique (recherche : correspondances + ancêtres, dépliés automatiquement). */
@@ -264,18 +264,18 @@ function capRenderFunctions(box){
     let keep=null;
     let hit=null;
     if(q||akOn||st.who){ keep=new Set(); hit=new Set(); inLayer.filter(f=>match(f)&&akMatch(f)).forEach(f=>{ hit.add(f.id); for(let p=f; p; p=F.byId[p.parentId]) keep.add(p.id); }); }
-    if(keep&&!keep.size) return '<div class="phl-empty">Aucune fonction ne correspond aux filtres.</div>';
+    if(keep&&!keep.size) return _L('<div class="phl-empty">Aucune fonction ne correspond aux filtres.</div>');
     const node=id=>{
       const f=F.byId[id]; if(keep&&!keep.has(id)) return '';
       const open=keep?true:st.open.has(id);
       const nFe=f.fesIn.length+f.fesOut.length;
       const badges=[
-        f.alloc.length?`<span class="ana-fn-b" title="Allouée à : ${esc(f.alloc.map(a=>(a.actor?'acteur ':'')+[...a.anc.map(x=>x.name),a.name].join(' › ')).join('\n'))}">${f.alloc.some(a=>!a.actor)?'🧩':'👤'} ${esc(f.alloc.map(a=>a.name).join(', '))}</span>`:(f.leaf?'<span class="ana-fn-b warn" title="Fonction feuille allouée à aucun composant">🧩 non allouée</span>':''),
-        nFe?`<span class="ana-fn-b" title="Functional Exchanges entrants / sortants">échanges ← ${f.fesIn.length} · → ${f.fesOut.length}</span>`:'',
-        f.realizes.length?`<span class="ana-fn-b" title="Fonctions de la couche supérieure réalisées : ${esc(f.realizes.map(id=>F.byId[id].name).join(', '))}">⬆ réalise ${f.realizes.length}</span>`:'',
-        f.realizedBy.length?`<span class="ana-fn-b" title="Fonctions de la couche inférieure qui la réalisent : ${esc(f.realizedBy.map(id=>F.byId[id].name).join(', '))}">⬇ réalisée par ${f.realizedBy.length}</span>`:'',
-        !f.desc&&f.parentId?'<span class="ana-fn-b warn" title="Aucune description">sans description</span>':'',
-        (()=>{ const q=capFnNQ(f); return q.issues.length?`<span class="ana-fn-b warn" title="${esc(q.issues.map(i=>i.label).join('\n'))}">nom à revoir</span>`:''; })()].join('');
+        f.alloc.length?_L(`<span class="ana-fn-b" title="Allouée à : ${esc(f.alloc.map(a=>(a.actor?_L('acteur '):'')+[...a.anc.map(x=>x.name),a.name].join(' › ')).join('\n'))}">${f.alloc.some(a=>!a.actor)?'🧩':'👤'} ${esc(f.alloc.map(a=>a.name).join(', '))}</span>`):(f.leaf?_L('<span class="ana-fn-b warn" title="Fonction feuille allouée à aucun composant">🧩 non allouée</span>'):''),
+        nFe?_L(`<span class="ana-fn-b" title="Functional Exchanges entrants / sortants">échanges ← ${f.fesIn.length} · → ${f.fesOut.length}</span>`):'',
+        f.realizes.length?_L(`<span class="ana-fn-b" title="Fonctions de la couche supérieure réalisées : ${esc(f.realizes.map(id=>F.byId[id].name).join(', '))}">⬆ réalise ${f.realizes.length}</span>`):'',
+        f.realizedBy.length?_L(`<span class="ana-fn-b" title="Fonctions de la couche inférieure qui la réalisent : ${esc(f.realizedBy.map(id=>F.byId[id].name).join(', '))}">⬇ réalisée par ${f.realizedBy.length}</span>`):'',
+        !f.desc&&f.parentId?_L('<span class="ana-fn-b warn" title="Aucune description">sans description</span>'):'',
+        (()=>{ const q=capFnNQ(f); return q.issues.length?_L(`<span class="ana-fn-b warn" title="${esc(q.issues.map(i=>i.label).join('\n'))}">nom à revoir</span>`):''; })()].join('');
       return `<li><div class="ana-fn-node ak-${capFnAllocKind(f)}${hit&&!hit.has(id)?' ana-fn-off':''}${st.sel===id?' sel':''}" data-sel="${esc(id)}">
           <span class="ana-fn-tog" data-tog="${esc(id)}">${f.leaf?'·':open?'▾':'▸'}</span><span class="ana-dim">${f.num}</span>
           <span class="ana-fn-name">${esc(f.name)}</span>${kindB(f)}${badges}</div>
@@ -289,23 +289,23 @@ function capRenderFunctions(box){
   /** Définition des colonnes du tableau des fonctions : libellé explicite, largeur par défaut, valeur (tri/filtre) et rendu. */
   const COLS=[
     {k:'num',   l:'N°', w:78, v:f=>f.layer+' '+f.num, h:f=>`${capChainLayerBadge(f.layer)} <span class="ana-dim">${f.num}</span>`},
-    {k:'name',  l:'Fonction', w:240, v:f=>f.name, h:f=>`<span style="padding-left:${st.flat?0:f.depth*12}px">${fnLink(f.id)}</span>${f.leaf?'':` <span class="ana-dim" title="${f.children.length} sous-fonction(s)">▸${f.children.length}</span>`}`},
+    {k:'name',  l:_L('Fonction'), w:240, v:f=>f.name, h:f=>`<span style="padding-left:${st.flat?0:f.depth*12}px">${fnLink(f.id)}</span>${f.leaf?'':_L(` <span class="ana-dim" title="${f.children.length} sous-fonction(s)">▸${f.children.length}</span>`)}`},
     {k:'type',  l:'Type', w:130, v:f=>capAnaHuman(f.type)+(f.kind!=='FUNCTION'?' · '+f.kind:''), h:f=>`<span class="ana-dim">${esc(capAnaHuman(f.type))}${f.kind!=='FUNCTION'?' · '+esc(f.kind):''}</span>`},
-    {k:'nq',    l:'Qualité du nom', w:210, v:f=>{ const q=capFnNQ(f); return q.root?'':q.issues.length?q.issues.map(i=>i.label).join(' · '):'OK'; },
-      h:f=>{ const q=capFnNQ(f); if(q.root) return '<span class="ana-dim">racine</span>'; return q.issues.length?`<span class="ana-miss" title="${esc(q.issues.map(i=>i.label).join('\n'))}">⚠ ${esc(q.issues[0].label)}${q.issues.length>1?` (+${q.issues.length-1})`:''}</span>`:'<span style="color:var(--c-ok,#3fb950)">✔ conforme</span>'; }},
-    {k:'desc',  l:'Description', w:440, v:f=>f.desc, h:f=>f.desc?`<div class="ana-fn-dtxt${st.full?' full':''}" title="${st.full?'':esc(f.desc)}">${esc(f.desc)}</div>`:'<span class="ana-miss">∅ aucune description</span>'},
-    {multi:1, k:'alloc', l:'Allouée à (composant)', w:170, v:f=>f.alloc.map(a=>a.name).join(', '), h:f=>f.alloc.length?esc(f.alloc.map(a=>a.name).join(', ')):(f.leaf?'<span class="ana-miss">∅ non allouée</span>':'')},
-    {multi:1, k:'subsys', l:'Sous-système', w:150, v:f=>capFnSubsystems(f).join(', '), h:f=>`<span title="${esc(f.alloc.filter(a=>!a.actor).map(a=>[...a.anc.map(x=>x.name),a.name].join(' › ')).join('\n'))}">${esc(capFnSubsystems(f).join(', '))}</span>`},
-    {k:'akind', l:'Nature de l\'allocation', w:120, v:f=>CAP_FN_AK[capFnAllocKind(f)].t, h:f=>{ const k=capFnAllocKind(f); return k==='parent'?'<span class="ana-dim">— mère</span>':`<span class="ana-ak-tag" style="--c:${CAP_FN_AK[k].c}">${CAP_FN_AK[k].t}</span>`; }},
-    {k:'fe',    l:'Échanges (entrants / sortants)', w:130, v:f=>f.fesIn.length+f.fesOut.length, csv:f=>`${f.fesIn.length} entrant(s) / ${f.fesOut.length} sortant(s)`,
-      h:f=>(f.fesIn.length||f.fesOut.length)?`<span title="${esc(['Entrants : '+(f.fesIn.map(x=>x.name).join(', ')||'—'),'Sortants : '+(f.fesOut.map(x=>x.name).join(', ')||'—')].join('\n'))}">← ${f.fesIn.length} entr. · → ${f.fesOut.length} sort.</span>`:'<span class="ana-dim">—</span>'},
-    {multi:1, k:'up',    l:'Réalise (couche supérieure)', w:190, v:f=>f.realizes.map(id=>F.byId[id].name).join(', '), h:f=>f.realizes.map(id=>fnLink(id)).join(', ')||'<span class="ana-dim">—</span>'},
-    {multi:1, k:'down',  l:'Réalisée par (couche inférieure)', w:190, v:f=>f.realizedBy.map(id=>F.byId[id].name).join(', '), h:f=>f.realizedBy.map(id=>fnLink(id)).join(', ')||'<span class="ana-dim">—</span>'},
-    {multi:1, k:'chains',l:'Chaînes fonctionnelles', w:160, v:f=>f.chains.map(c=>c.name).join(', '), h:f=>`<span class="ana-dim">${esc(f.chains.map(c=>c.name).join(', '))}</span>`},
-    {multi:1, k:'caps',  l:'Capacités', w:160, v:f=>f.caps.map(c=>c.name).join(', '), h:f=>`<span class="ana-dim">${esc(f.caps.map(c=>c.name).join(', '))}</span>`},
-    {k:'depth', l:'Niveau', w:70, v:f=>f.depth, h:f=>String(f.depth)},
-    {k:'status',l:'Statut', w:110, v:f=>f.status, h:f=>esc(f.status)},
-    {multi:1, k:'states',l:'Disponible dans (états)', w:160, v:f=>f.states.join(', '), h:f=>`<span class="ana-dim">${esc(f.states.join(', '))}</span>`},
+    {k:'nq',    l:_L('Qualité du nom'), w:210, v:f=>{ const q=capFnNQ(f); return q.root?'':q.issues.length?q.issues.map(i=>i.label).join(' · '):'OK'; },
+      h:f=>{ const q=capFnNQ(f); if(q.root) return '<span class="ana-dim">racine</span>'; return q.issues.length?`<span class="ana-miss" title="${esc(q.issues.map(i=>i.label).join('\n'))}">⚠ ${esc(q.issues[0].label)}${q.issues.length>1?` (+${q.issues.length-1})`:''}</span>`:_L('<span style="color:var(--c-ok,#3fb950)">✔ conforme</span>'); }},
+    {k:'desc',  l:_L('Description'), w:440, v:f=>f.desc, h:f=>f.desc?`<div class="ana-fn-dtxt${st.full?' full':''}" title="${st.full?'':esc(f.desc)}">${esc(f.desc)}</div>`:_L('<span class="ana-miss">∅ aucune description</span>')},
+    {multi:1, k:'alloc', l:_L('Allouée à (composant)'), w:170, v:f=>f.alloc.map(a=>a.name).join(', '), h:f=>f.alloc.length?esc(f.alloc.map(a=>a.name).join(', ')):(f.leaf?_L('<span class="ana-miss">∅ non allouée</span>'):'')},
+    {multi:1, k:'subsys', l:_L('Sous-système'), w:150, v:f=>capFnSubsystems(f).join(', '), h:f=>`<span title="${esc(f.alloc.filter(a=>!a.actor).map(a=>[...a.anc.map(x=>x.name),a.name].join(' › ')).join('\n'))}">${esc(capFnSubsystems(f).join(', '))}</span>`},
+    {k:'akind', l:_L('Nature de l\'allocation'), w:120, v:f=>CAP_FN_AK[capFnAllocKind(f)].t, h:f=>{ const k=capFnAllocKind(f); return k==='parent'?_L('<span class="ana-dim">— mère</span>'):`<span class="ana-ak-tag" style="--c:${CAP_FN_AK[k].c}">${CAP_FN_AK[k].t}</span>`; }},
+    {k:'fe',    l:_L('Échanges (entrants / sortants)'), w:130, v:f=>f.fesIn.length+f.fesOut.length, csv:f=>_L(`${f.fesIn.length} entrant(s) / ${f.fesOut.length} sortant(s)`),
+      h:f=>(f.fesIn.length||f.fesOut.length)?_L(`<span title="${esc([_L('Entrants : ')+(f.fesIn.map(x=>x.name).join(', ')||'—'),_L('Sortants : ')+(f.fesOut.map(x=>x.name).join(', ')||'—')].join('\n'))}">← ${f.fesIn.length} entr. · → ${f.fesOut.length} sort.</span>`):'<span class="ana-dim">—</span>'},
+    {multi:1, k:'up',    l:_L('Réalise (couche supérieure)'), w:190, v:f=>f.realizes.map(id=>F.byId[id].name).join(', '), h:f=>f.realizes.map(id=>fnLink(id)).join(', ')||'<span class="ana-dim">—</span>'},
+    {multi:1, k:'down',  l:_L('Réalisée par (couche inférieure)'), w:190, v:f=>f.realizedBy.map(id=>F.byId[id].name).join(', '), h:f=>f.realizedBy.map(id=>fnLink(id)).join(', ')||'<span class="ana-dim">—</span>'},
+    {multi:1, k:'chains',l:_L('Chaînes fonctionnelles'), w:160, v:f=>f.chains.map(c=>c.name).join(', '), h:f=>`<span class="ana-dim">${esc(f.chains.map(c=>c.name).join(', '))}</span>`},
+    {multi:1, k:'caps',  l:_L('Capacités'), w:160, v:f=>f.caps.map(c=>c.name).join(', '), h:f=>`<span class="ana-dim">${esc(f.caps.map(c=>c.name).join(', '))}</span>`},
+    {k:'depth', l:_L('Niveau'), w:70, v:f=>f.depth, h:f=>String(f.depth)},
+    {k:'status',l:_L('Statut'), w:110, v:f=>f.status, h:f=>esc(f.status)},
+    {multi:1, k:'states',l:_L('Disponible dans (états)'), w:160, v:f=>f.states.join(', '), h:f=>`<span class="ana-dim">${esc(f.states.join(', '))}</span>`},
   ];
   if(!st.colW) st.colW={}; if(!st.colF) st.colF={}; if(!st.sort) st.sort={k:'num',d:1}; if(!st.hide) st.hide=new Set(['depth','status','states']);
   const hasSub=inLayer.some(f=>capFnSubsystems(f).length); // colonne « Sous-système » seulement en boîte blanche
@@ -334,7 +334,7 @@ function capRenderFunctions(box){
     const base=inLayer.filter(match).filter(akMatch);
     st.selC=new Set();
     const nVF=Object.values(st.colV).filter(Boolean).length+Object.values(st.colF).filter(v=>v&&v.trim()).length;
-    return `<div class="phl-filter-bar" style="margin-bottom:6px;flex-wrap:wrap;gap:6px"><span class="tb-grp" title="Filtres rapides">${[['all','Toutes'],['leaf','Feuilles'],['badname','Nom à revoir'],['nodesc','Sans description'],['noalloc','Feuilles non allouées'],['notrace','Feuilles non tracées']]
+    return _L(`<div class="phl-filter-bar" style="margin-bottom:6px;flex-wrap:wrap;gap:6px"><span class="tb-grp" title="Filtres rapides">${[['all',_L('Toutes')],['leaf',_L('Feuilles')],['badname',_L('Nom à revoir')],['nodesc',_L('Sans description')],['noalloc',_L('Feuilles non allouées')],['notrace',_L('Feuilles non tracées')]]
         .map(([k,l])=>`<button class="cap-lf-btn${st.flt===k?' active':''}" data-flt="${k}">${l} (${base.filter(QF[k]).length})</button>`).join('')}</span>
       <span class="tb-grp" title="Affichage"><span style="position:relative"><button class="cap-lf-btn" id="ana-fn-cols">⊞ Colonnes ▾</button>
         <div class="ana-colmenu" id="ana-fn-colmenu" style="display:${st.colMenu?'block':'none'}">${COLS.map(c=>`<label><input type="checkbox" data-colv="${c.k}"${st.hide.has(c.k)?'':' checked'}${c.k==='name'?' disabled':''}> ${esc(c.l)}</label>`).join('')}</div></span>
@@ -343,15 +343,15 @@ function capRenderFunctions(box){
       <button class="cap-lf-btn" id="ana-fn-reset" title="Largeurs par défaut, tous les filtres de colonnes effacés, tri par numéro">↺ Réinitialiser${nVF?` (${nVF} filtre${nVF>1?'s':''})`:''}</button></span>
       <span class="tb-grp" title="Sélection de cellules : clic-glisser, Ctrl+clic, Maj+clic ; Ctrl+C pour copier"><button class="cap-lf-btn" id="ana-fn-copy" disabled title="Copier les cellules sélectionnées (collage dans Excel / Word) — aussi Ctrl+C">📋 Copier</button><span class="ana-dim" id="ana-fn-selc" style="font-size:11px">aucune sélection</span></span>
       <span class="tb-grp" title="Export"><button class="phl-export-btn" id="ana-fn-thtml" title="Tableau en HTML autonome : colonnes visibles, largeurs, filtres et tri actuels, descriptions complètes">🌐 HTML (tableau)</button></span>
-      <span class="ana-fn-cnt" id="ana-fn-count" style="margin-left:auto" title="Fonctions affichées après filtres / fonctions de la couche">${rows.length===inLayer.length?`${rows.length} fonction(s)`:`<b>${rows.length}</b> / ${inLayer.length} fonction(s)`}</span></div>
+      <span class="ana-fn-cnt" id="ana-fn-count" style="margin-left:auto" title="Fonctions affichées après filtres / fonctions de la couche">${rows.length===inLayer.length?_L(`${rows.length} fonction(s)`):_L(`<b>${rows.length}</b> / ${inLayer.length} fonction(s)`)}</span></div>
       <div class="prt-wrap ana-fnt-wrap" data-fill="6"><table class="prt-t ana-fnt" style="width:${total}px;min-width:100%"><colgroup>${vc.map(c=>`<col data-k="${c.k}" style="width:${W(c)}px">`).join('')}</colgroup>
-      <thead><tr>${vc.map(c=>`<th data-sort="${c.k}" title="Trier par « ${esc(c.l)} »">${esc(c.l)}${st.sort.k===c.k?(st.sort.d>0?' ▲':' ▼'):''}<span class="ana-vf${st.colV[c.k]?' on':''}" data-vf="${c.k}" title="Filtrer par valeurs (comme dans Excel)">▼</span><span class="ana-rsz" data-rsz="${c.k}" title="Glisser pour redimensionner"></span></th>`).join('')}</tr>
+      <thead><tr>${vc.map(c=>_L(`<th data-sort="${c.k}" title="Trier par « ${esc(c.l)} »">${esc(c.l)}${st.sort.k===c.k?(st.sort.d>0?' ▲':' ▼'):''}<span class="ana-vf${st.colV[c.k]?' on':''}" data-vf="${c.k}" title="Filtrer par valeurs (comme dans Excel)">▼</span><span class="ana-rsz" data-rsz="${c.k}" title="Glisser pour redimensionner"></span></th>`)).join('')}</tr>
       <tr class="ana-frow">${vc.map(c=>`<th><input data-cf="${c.k}" placeholder="filtrer…" value="${esc(st.colF[c.k]||'')}"></th>`).join('')}</tr></thead>
-      <tbody>${tbodyHtml(rows)}</tbody></table></div>${rows.length>1500?`<div class="cap-mx-hint">1500 lignes affichées sur ${rows.length}.</div>`:''}`;
+      <tbody>${tbodyHtml(rows)}</tbody></table></div>${rows.length>1500?_L(`<div class="cap-mx-hint">1500 lignes affichées sur ${rows.length}.</div>`):''}`);
   }
   /** Met à jour le compteur de cellules sélectionnées et l'état du bouton 📋 Copier. */
   function updSel(){ const n=st.selC?st.selC.size:0, b=box.querySelector('#ana-fn-copy'), s=box.querySelector('#ana-fn-selc');
-    if(b) b.disabled=!n; if(s) s.textContent=n?`${n} cellule${n>1?'s':''} sélectionnée${n>1?'s':''}`:'aucune sélection'; }
+    if(b) b.disabled=!n; if(s) s.textContent=n?_L(`${n} cellule${n>1?'s':''} sélectionnée${n>1?'s':''}`):_L('aucune sélection'); }
   /** Copie les cellules sélectionnées dans le presse-papiers (texte tabulé : une ligne par ligne du tableau). */
   function copySel(){
     if(!st.selC||!st.selC.size) return;
@@ -359,7 +359,7 @@ function capRenderFunctions(box){
     const rs=[...new Set(cells.map(x=>x[0]))].sort((a,b)=>a-b), cs=[...new Set(cells.map(x=>x[1]))].sort((a,b)=>a-b);
     const grid=rs.map(r=>cs.map(c=>{ if(!st.selC.has(r+':'+c)) return ''; const col=vc[c], f=rows[r]; return f&&col?String((col.csv||col.v)(f)).replace(/[\t\r]+/g,' '):''; }));
     // Texte tabulé + tableau HTML (52) : les retours à la ligne restent dans la cellule
-    capClipCopy(grid,()=>{ const s=box.querySelector('#ana-fn-selc'); if(s){ s.textContent=`✔ ${st.selC.size} cellule(s) copiée(s)`; setTimeout(updSel,1500); } });
+    capClipCopy(grid,()=>{ const s=box.querySelector('#ana-fn-selc'); if(s){ s.textContent=_L(`✔ ${st.selC.size} cellule(s) copiée(s)`); setTimeout(updSel,1500); } });
   }
   /** Filtre par valeurs d'une colonne, à la manière d'Excel : tri, recherche, cases à cocher avec effectifs.
    * @param {string} k - Clé de la colonne
@@ -374,17 +374,17 @@ function capRenderFunctions(box){
     const vals=[...cnt.keys()].sort((a,b)=>a===''?1:b===''?-1:num?(+a)-(+b):a.localeCompare(b,'fr',{numeric:true}));
     const sel=new Set(saved?vals.filter(v=>saved.has(v)):vals); let q='';
     const dd=document.createElement('div'); dd.className='ana-vfdd';
-    dd.innerHTML=`<button class="ana-vf-it" data-s="1">↑ Trier de A à Z</button><button class="ana-vf-it" data-s="-1">↓ Trier de Z à A</button>
+    dd.innerHTML=_L(`<button class="ana-vf-it" data-s="1">↑ Trier de A à Z</button><button class="ana-vf-it" data-s="-1">↓ Trier de Z à A</button>
       <button class="ana-vf-it" data-clr${saved?'':' disabled'}>✕ Effacer le filtre de « ${esc(c.l)} »</button><hr>
       <input class="phl-filter-input ana-vf-q" placeholder="🔍 Rechercher…"><div class="ana-vf-list"></div>
-      <div class="ana-vf-ft"><span class="ana-dim ana-vf-n"></span><button class="cap-lf-btn" data-ok style="border-color:var(--c-accent);color:var(--c-accent)">OK</button><button class="cap-lf-btn" data-cancel>Annuler</button></div>`;
+      <div class="ana-vf-ft"><span class="ana-dim ana-vf-n"></span><button class="cap-lf-btn" data-ok style="border-color:var(--c-accent);color:var(--c-accent)">OK</button><button class="cap-lf-btn" data-cancel>Annuler</button></div>`);
     document.body.appendChild(dd);
     const r=el.getBoundingClientRect(); dd.style.left=Math.max(4,Math.min(window.innerWidth-dd.offsetWidth-8,r.left-8))+'px'; dd.style.top=Math.min(window.innerHeight-dd.offsetHeight-8,r.bottom+4)+'px';
     const list=dd.querySelector('.ana-vf-list');
-    const vis=()=>vals.filter(v=>!q||(v===''?'(vides)':v).toLowerCase().includes(q)).slice(0,2000);
+    const vis=()=>vals.filter(v=>!q||(v===''?_L('(vides)'):v).toLowerCase().includes(q)).slice(0,2000);
     const draw=()=>{ const vs=vis(), all=vs.length&&vs.every(v=>sel.has(v));
-      list.innerHTML=`<label class="ana-vf-row"><input type="checkbox" data-all${all?' checked':''}> <b>(Tout sélectionner${q?' — résultats':''})</b></label>`+
-        vs.map((v,i)=>`<label class="ana-vf-row" title="${esc(v)}"><input type="checkbox" data-i="${i}"${sel.has(v)?' checked':''}> <span>${v===''?'<i class="ana-dim">(Vides)</i>':esc(v)}</span><em>${cnt.get(v)}</em></label>`).join('');
+      list.innerHTML=_L(`<label class="ana-vf-row"><input type="checkbox" data-all${all?' checked':''}> <b>(Tout sélectionner${q?_L(' — résultats'):''})</b></label>`)+
+        vs.map((v,i)=>`<label class="ana-vf-row" title="${esc(v)}"><input type="checkbox" data-i="${i}"${sel.has(v)?' checked':''}> <span>${v===''?_L('<i class="ana-dim">(Vides)</i>'):esc(v)}</span><em>${cnt.get(v)}</em></label>`).join('');
       dd.querySelector('.ana-vf-n').textContent=`${sel.size} / ${vals.length}`;
       list.querySelector('[data-all]').onchange=e=>{ vs.forEach(v=>e.target.checked?sel.add(v):sel.delete(v)); draw(); };
       list.querySelectorAll('[data-i]').forEach(cb=>cb.onchange=()=>{ const v=vs[+cb.dataset.i]; cb.checked?sel.add(v):sel.delete(v); dd.querySelector('.ana-vf-n').textContent=`${sel.size} / ${vals.length}`; }); };
@@ -412,7 +412,7 @@ function capRenderFunctions(box){
     let deb;
     tbl.querySelectorAll('[data-cf]').forEach(inp=>inp.oninput=()=>{ st.colF[inp.dataset.cf]=inp.value; clearTimeout(deb); deb=setTimeout(()=>{
       const rows=tableRows(); box._fnRows=rows; tbl.querySelector('tbody').innerHTML=tbodyHtml(rows);
-      const cnt=box.querySelector('#ana-fn-count'); if(cnt) cnt.innerHTML=rows.length===inLayer.length?`${rows.length} fonction(s)`:`<b>${rows.length}</b> / ${inLayer.length} fonction(s)`;
+      const cnt=box.querySelector('#ana-fn-count'); if(cnt) cnt.innerHTML=rows.length===inLayer.length?_L(`${rows.length} fonction(s)`):_L(`<b>${rows.length}</b> / ${inLayer.length} fonction(s)`);
       st.selC=new Set(); updSel(); wireGo(tbl); },200); });
     box.querySelector('#ana-fn-cols').onclick=ev=>{ ev.stopPropagation(); st.colMenu=!st.colMenu; box.querySelector('#ana-fn-colmenu').style.display=st.colMenu?'block':'none'; };
     box.querySelectorAll('[data-colv]').forEach(cb=>cb.onchange=()=>{ if(cb.checked) st.hide.delete(cb.dataset.colv); else st.hide.add(cb.dataset.colv); rerender(); });
@@ -448,14 +448,14 @@ function capRenderFunctions(box){
     document.addEventListener('keydown',box._fnKey);
     box.querySelector('#ana-fn-thtml').onclick=()=>{
       const rows=tableRows(), vc=visCols(), W=c=>st.colW[c.k]||c.w, full0=st.full; st.full=true;
-      const fi=[st.layer!=='all'&&'couche '+st.layer, akOn&&'allocation : '+[...st.ak].map(k=>CAP_FN_AK[k].l).join(' + '), st.who&&'allocataire « '+((who.act.get(st.who)||who.comp.get(st.who)||{}).name||'')+' » (sous-composants compris)', st.flt!=='all'&&box.querySelector(`[data-flt="${st.flt}"]`)?.textContent.replace(/\s*\(\d+\)$/,''), st.q&&`recherche « ${st.q} »`,
+      const fi=[st.layer!=='all'&&_L('couche ')+st.layer, akOn&&_L('allocation : ')+[...st.ak].map(k=>CAP_FN_AK[k].l).join(' + '), st.who&&_L('allocataire « ')+((who.act.get(st.who)||who.comp.get(st.who)||{}).name||'')+_L(' » (sous-composants compris)'), st.flt!=='all'&&box.querySelector(`[data-flt="${st.flt}"]`)?.textContent.replace(/\s*\(\d+\)$/,''), st.q&&_L(`recherche « ${st.q} »`),
         ...Object.entries(st.colF).filter(([,v])=>v&&v.trim()).map(([k,v])=>`${(COLS.find(c=>c.k===k)||{}).l} « ${v} »`),
-        ...Object.entries(st.colV).filter(([,s])=>s).map(([k,s])=>`${(COLS.find(c=>c.k===k)||{}).l} ∈ {${[...s].slice(0,5).map(x=>x||'(vides)').join(', ')}${s.size>5?'…':''}}`)].filter(Boolean).join(', ');
+        ...Object.entries(st.colV).filter(([,s])=>s).map(([k,s])=>`${(COLS.find(c=>c.k===k)||{}).l} ∈ {${[...s].slice(0,5).map(x=>x||_L('(vides)')).join(', ')}${s.size>5?'…':''}}`)].filter(Boolean).join(', ');
       const html=`<div class="prt-wrap" style="max-height:none"><table class="prt-t ana-fnt" style="width:${vc.reduce((s,c)=>s+W(c),0)}px"><colgroup>${vc.map(c=>`<col style="width:${W(c)}px">`).join('')}</colgroup>
         <thead><tr>${vc.map(c=>`<th>${esc(c.l)}</th>`).join('')}</tr></thead><tbody>${rows.map(f=>`<tr>${vc.map(c=>`<td>${c.h(f)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`
         .replace(/<a class="ana-fn-go"[^>]*>([^<]*)<\/a>/g,'$1');
       st.full=full0;
-      capHtmlReport({title:'ƒ Fonctions — tableau', subtitle:`${rows.length} fonction(s)${fi?' · filtres : '+fi:''}`, tabs:[{key:'t',label:'Tableau',html}], filename:'fonctions-tableau.html'});
+      capHtmlReport({title:_L('ƒ Fonctions — tableau'), subtitle:_L(`${rows.length} fonction(s)${fi?_L(' · filtres : ')+fi:''}`), tabs:[{key:'t',label:_L('Tableau'),html}], filename:_L('fonctions-tableau.html')});
     };
   }
 
@@ -471,25 +471,25 @@ function capRenderFunctions(box){
     const shown=rows.filter(r=>(st.layer==='all'||(r[st.layer]||[]).length)&&(!q||CAP_ANA_LAYERS.some(k=>(r[k]||[]).some(match))));
     const cols=CAP_ANA_LAYERS.filter(k=>rows.some(r=>r[k])); box._fnTrace={rows:shown, cols};
     const cell=f=>`<div>${fnLink(f.id)} <span class="ana-dim">${f.num}</span>${st.desc&&f.desc?`<div class="ana-fn-dsc">${esc(f.desc.slice(0,220))}${f.desc.length>220?'…':''}</div>`:''}</div>`;
-    return `<p class="ana-help">Chaque ligne suit une fonction de sa couche la plus haute jusqu'aux fonctions qui la réalisent. ∅ = rupture de traçabilité.</p>
+    return _L(`<p class="ana-help">Chaque ligne suit une fonction de sa couche la plus haute jusqu'aux fonctions qui la réalisent. ∅ = rupture de traçabilité.</p>
       <table class="ana-t"><tr>${cols.map(k=>`<th>${capChainLayerBadge(k)} ${esc(capChainLayerInfo(k).label)}</th>`).join('')}</tr>
       ${shown.slice(0,800).map(r=>`<tr>${cols.map(k=>`<td>${(r[k]||[]).map(cell).join('')||'<span class="ana-miss">∅</span>'}</td>`).join('')}</tr>`).join('')}</table>
-      ${shown.length>800?`<div class="cap-mx-hint">800 lignes affichées sur ${shown.length} — export CSV pour tout voir.</div>`:''}`;
+      ${shown.length>800?_L(`<div class="cap-mx-hint">800 lignes affichées sur ${shown.length} — export CSV pour tout voir.</div>`):''}`);
   }
 
   /** Indicateurs par couche sous forme de données : {label, get(m) → {v} (valeur) | {a,b} (ratio) | {na:true}}. */
   const MET_ROWS=[
-    ['Fonctions',m=>({v:m.n})],['Fonctions feuilles (sans sous-fonction)',m=>({v:m.leaves})],['Profondeur maximale de la hiérarchie',m=>({v:m.maxDepth})],
-    ['Sous-fonctions par fonction mère (moyenne)',m=>({v:m.avgChildren.toFixed(1)})],['Functional Exchanges',m=>({v:m.fe})],
-    ['Fonctions avec description',m=>({a:m.withDesc,b:m.n})],['Noms commençant par un verbe',m=>({a:m.verbNames,b:m.named})],['Feuilles allouées à un composant',m=>({a:m.leavesAlloc,b:m.leaves})],['Feuilles reliées par au moins un échange',m=>({a:m.leavesFe,b:m.leaves})],
-    ['Feuilles réalisées à la couche inférieure',m=>m.realizedDown==null?{na:true}:{a:m.realizedDown,b:m.leaves}],['Feuilles réalisant une fonction de la couche supérieure',m=>m.realizingUp==null?{na:true}:{a:m.realizingUp,b:m.leaves}],
-    ['Feuilles impliquées dans une chaîne',m=>({a:m.inChain,b:m.leaves})],['Feuilles impliquées dans une capacité',m=>({a:m.inCap,b:m.leaves})],['Fonctions allouées à plusieurs composants',m=>({v:m.multiAlloc})]];
+    [_L('Fonctions'),m=>({v:m.n})],[_L('Fonctions feuilles (sans sous-fonction)'),m=>({v:m.leaves})],[_L('Profondeur maximale de la hiérarchie'),m=>({v:m.maxDepth})],
+    [_L('Sous-fonctions par fonction mère (moyenne)'),m=>({v:m.avgChildren.toFixed(1)})],[_L('Functional Exchanges'),m=>({v:m.fe})],
+    [_L('Fonctions avec description'),m=>({a:m.withDesc,b:m.n})],[_L('Noms commençant par un verbe'),m=>({a:m.verbNames,b:m.named})],[_L('Feuilles allouées à un composant'),m=>({a:m.leavesAlloc,b:m.leaves})],[_L('Feuilles reliées par au moins un échange'),m=>({a:m.leavesFe,b:m.leaves})],
+    [_L('Feuilles réalisées à la couche inférieure'),m=>m.realizedDown==null?{na:true}:{a:m.realizedDown,b:m.leaves}],[_L('Feuilles réalisant une fonction de la couche supérieure'),m=>m.realizingUp==null?{na:true}:{a:m.realizingUp,b:m.leaves}],
+    [_L('Feuilles impliquées dans une chaîne'),m=>({a:m.inChain,b:m.leaves})],[_L('Feuilles impliquées dans une capacité'),m=>({a:m.inCap,b:m.leaves})],[_L('Fonctions allouées à plusieurs composants'),m=>({v:m.multiAlloc})]];
   /** Couleur d'un pourcentage (vert ≥ 90 %, orange ≥ 50 %, rouge sinon). */
   const pctColor=p=>p>=90?'#3fb950':p>=50?'#e3b341':'#f85149';
   /** Texte d'une valeur d'indicateur (pour info-bulle, CSV, image). */
   const metTxt=x=>x.na?'n/a':x.a!=null?`${x.b?Math.round(100*x.a/x.b):0} % (${x.a}/${x.b})`:String(x.v);
   /** Rendu HTML d'une valeur d'indicateur. */
-  const metHtml=x=>{ if(x.na) return '<span class="ana-dim" title="La couche voisine ne contient aucun lien de réalisation">n/a</span>';
+  const metHtml=x=>{ if(x.na) return _L('<span class="ana-dim" title="La couche voisine ne contient aucun lien de réalisation">n/a</span>');
     if(x.a==null) return `<b>${x.v}</b>`; const p=x.b?Math.round(100*x.a/x.b):0;
     return `<div class="ana-cell-m"><div class="ana-bar"><i style="width:${p}%;background:${pctColor(p)}"></i></div><b>${p}%</b><span class="ana-dim">${x.a}/${x.b}</span></div>`; };
 
@@ -504,29 +504,29 @@ function capRenderFunctions(box){
     const colL=layers.filter(k=>!forExport&&st.mcol.has(k)), openL=layers.filter(k=>!st.mcol.has(k)||(forExport&&!onlyMain));
     const expL=forExport&&onlyMain?layers.filter(k=>!st.mcol.has(k)):openL;
     const strip=(k,tip)=>`<td class="ana-colx" title="${esc(tip)}"></td>`;
-    const headOpen=(k,withLabel)=>`<th>${forExport?'':`<span class="ana-mcol" data-mcol="${k}" title="Réduire la couche ${k} (elle passe à gauche)">◂</span> `}${capChainLayerBadge(k)}${withLabel?' '+esc(capChainLayerInfo(k).label):''}</th>`;
-    const headCol=k=>`<th class="ana-colx"><span class="ana-mcol" data-mcol="${k}" title="Déplier la couche ${k}">▸</span><div class="ana-colx-l">${k}</div></th>`;
+    const headOpen=(k,withLabel)=>`<th>${forExport?'':_L(`<span class="ana-mcol" data-mcol="${k}" title="Réduire la couche ${k} (elle passe à gauche)">◂</span> `)}${capChainLayerBadge(k)}${withLabel?' '+esc(capChainLayerInfo(k).label):''}</th>`;
+    const headCol=k=>_L(`<th class="ana-colx"><span class="ana-mcol" data-mcol="${k}" title="Déplier la couche ${k}">▸</span><div class="ana-colx-l">${k}</div></th>`);
     const maxD=Math.max(...layers.map(k=>M[k].maxDepth)), maxC=Math.max(...layers.flatMap(k=>Object.values(M[k].depths)));
-    const main=`<table class="ana-t ana-met"><tr>${colL.map(headCol).join('')}<th>Indicateur</th>${expL.map(k=>headOpen(k,true)).join('')}</tr>
-      ${MET_ROWS.map(([l,g])=>`<tr>${colL.map(k=>strip(k,k+' : '+metTxt(g(M[k])))).join('')}<td>${l}</td>${expL.map(k=>`<td>${metHtml(g(M[k]))}</td>`).join('')}</tr>`).join('')}</table>`;
+    const main=_L(`<table class="ana-t ana-met"><tr>${colL.map(headCol).join('')}<th>Indicateur</th>${expL.map(k=>headOpen(k,true)).join('')}</tr>
+      ${MET_ROWS.map(([l,g])=>`<tr>${colL.map(k=>strip(k,k+' : '+metTxt(g(M[k])))).join('')}<td>${l}</td>${expL.map(k=>`<td>${metHtml(g(M[k]))}</td>`).join('')}</tr>`).join('')}</table>`);
     if(onlyMain) return main;
     const anyCol=colL.length>0;
-    return `${forExport?'':`<div class="phl-filter-bar" style="margin-bottom:6px;flex-wrap:wrap"><span class="ana-dim">◂ dans l'en-tête : réduire une couche (elle passe à gauche, ▸ pour la déplier). Les exports ne gardent que les couches dépliées.</span>
-        ${anyCol?'<button class="cap-lf-btn" id="ana-fn-mall">⇔ Tout déplier</button>':''}
+    return _L(`${forExport?'':_L(`<div class="phl-filter-bar" style="margin-bottom:6px;flex-wrap:wrap"><span class="ana-dim">◂ dans l'en-tête : réduire une couche (elle passe à gauche, ▸ pour la déplier). Les exports ne gardent que les couches dépliées.</span>
+        ${anyCol?_L('<button class="cap-lf-btn" id="ana-fn-mall">⇔ Tout déplier</button>'):''}
         <span style="margin-left:auto;display:flex;gap:4px">
           <button class="phl-export-btn" id="ana-met-html" title="Tableau des indicateurs seul, en HTML autonome (couches dépliées)">🌐 HTML (indicateurs)</button>
           <button class="phl-export-btn" id="ana-met-png" title="Image PNG haute définition du tableau des indicateurs, pour une présentation">🖼 PNG</button>
           <button class="phl-export-btn" id="ana-met-clip" title="Copier l'image du tableau (coller dans PowerPoint, Word…)">📋 Copier l'image</button>
-        </span></div>`}
+        </span></div>`)}
       ${main}
       <p class="ana-help">n/a : la couche voisine ne contient aucun lien de réalisation, l'indicateur n'aurait pas de sens.</p>
       <h4 style="margin:14px 0 6px">Répartition des fonctions par niveau de profondeur</h4>
       <table class="ana-t ana-met"><tr>${colL.map(headCol).join('')}<th>Niveau</th>${openL.map(k=>headOpen(k,false)).join('')}</tr>
-      ${[...Array(maxD+1).keys()].map(d=>`<tr>${colL.map(k=>strip(k,`${k} · niveau ${d} : ${M[k].depths[d]||0}`)).join('')}<td>${d}${d===0?' (racine)':''}</td>${openL.map(k=>{ const v=M[k].depths[d]||0;
-        return `<td><div class="ana-cell-m" title="${k} · niveau ${d} : ${v} fonction(s)"><div class="ana-hbar" style="width:${Math.round(90*v/maxC)}px"></div><span>${v||''}</span></div></td>`; }).join('')}</tr>`).join('')}</table>
+      ${[...Array(maxD+1).keys()].map(d=>`<tr>${colL.map(k=>strip(k,_L(`${k} · niveau ${d} : ${M[k].depths[d]||0}`))).join('')}<td>${d}${d===0?_L(' (racine)'):''}</td>${openL.map(k=>{ const v=M[k].depths[d]||0;
+        return _L(`<td><div class="ana-cell-m" title="${k} · niveau ${d} : ${v} fonction(s)"><div class="ana-hbar" style="width:${Math.round(90*v/maxC)}px"></div><span>${v||''}</span></div></td>`); }).join('')}</tr>`).join('')}</table>
       <h4 style="margin:14px 0 6px">Fonctions les plus connectées (échanges entrants + sortants)</h4>
       <table class="ana-t ana-met"><tr>${colL.map(headCol).join('')}${openL.map(k=>headOpen(k,false)).join('')}</tr><tr>
-      ${colL.map(k=>strip(k,k+' : '+M[k].top.map(f=>f.name).join(', '))).join('')}${openL.map(k=>`<td>${M[k].top.map(f=>`<div>${fnLink(f.id)} <span class="ana-dim">← ${f.fesIn.length} · → ${f.fesOut.length}</span></div>`).join('')||'<span class="ana-dim">—</span>'}</td>`).join('')}</tr></table>`;
+      ${colL.map(k=>strip(k,k+' : '+M[k].top.map(f=>f.name).join(', '))).join('')}${openL.map(k=>`<td>${M[k].top.map(f=>`<div>${fnLink(f.id)} <span class="ana-dim">← ${f.fesIn.length} · → ${f.fesOut.length}</span></div>`).join('')||'<span class="ana-dim">—</span>'}</td>`).join('')}</tr></table>`);
   }
 
   /** Dessine le tableau des indicateurs (couches dépliées) sur un canvas haute définition, fond blanc, pour une présentation.
@@ -538,8 +538,8 @@ function capRenderFunctions(box){
     const W=W0+CW*L.length+40, H=TOP+RH*(MET_ROWS.length+1)+46;
     const c=document.createElement('canvas'); c.width=W*S; c.height=H*S; const x=c.getContext('2d'); x.scale(S,S);
     x.fillStyle='#fff'; x.fillRect(0,0,W,H);
-    const project=(cap_xmlDoc&&cap_xmlDoc.documentElement&&cap_xmlDoc.documentElement.getAttribute('name'))||'Projet Capella';
-    x.fillStyle='#111'; x.font=`700 20px ${FT}`; x.fillText('Métriques des fonctions par couche', 20, 34);
+    const project=(cap_xmlDoc&&cap_xmlDoc.documentElement&&cap_xmlDoc.documentElement.getAttribute('name'))||_L('Projet Capella');
+    x.fillStyle='#111'; x.font=`700 20px ${FT}`; x.fillText(_L('Métriques des fonctions par couche'), 20, 34);
     x.fillStyle='#666'; x.font=`13px ${FT}`; x.fillText(`${project}${capCurrentFileName?' · '+capCurrentFileName:''} · ${new Date().toLocaleDateString('fr-FR')}`, 20, 56);
     // En-tête
     let y=TOP; x.fillStyle='#eef1f4'; x.fillRect(20,y-RH+8,W-40,RH);
@@ -558,33 +558,33 @@ function capRenderFunctions(box){
         x.fillStyle='#888'; x.font=`11px ${FT}`; x.fillText(`${v.a}/${v.b}`,cx+110,y-6); });
       x.strokeStyle='#e1e4e8'; x.lineWidth=1; x.beginPath(); x.moveTo(20,y+8); x.lineTo(W-20,y+8); x.stroke();
     });
-    x.fillStyle='#999'; x.font=`11px ${FT}`; x.fillText('n/a : couche voisine sans lien de réalisation · vert ≥ 90 %, orange ≥ 50 %, rouge < 50 %', 20, H-16);
+    x.fillStyle='#999'; x.font=`11px ${FT}`; x.fillText(_L('n/a : couche voisine sans lien de réalisation · vert ≥ 90 %, orange ≥ 50 %, rouge < 50 %'), 20, H-16);
     return c;
   }
 
   let body;
-  if(st.view==='tree') body=`<div class="ana-fn-split" style="grid-template-columns:${st.splitW||'minmax(320px,1fr)'} 7px minmax(300px,1.1fr)"><div class="ana-fn-left" data-fill="6">${tree()}</div><div class="ana-fn-rsz" title="Glisser pour ajuster la largeur des deux panneaux (double-clic : largeurs par défaut)"></div><div class="ana-fn-right" data-fill="6">${fiche(F.byId[st.sel])}</div></div>`;
+  if(st.view==='tree') body=_L(`<div class="ana-fn-split" style="grid-template-columns:${st.splitW||'minmax(320px,1fr)'} 7px minmax(300px,1.1fr)"><div class="ana-fn-left" data-fill="6">${tree()}</div><div class="ana-fn-rsz" title="Glisser pour ajuster la largeur des deux panneaux (double-clic : largeurs par défaut)"></div><div class="ana-fn-right" data-fill="6">${fiche(F.byId[st.sel])}</div></div>`);
   else if(st.view==='table') body=table();
   else if(st.view==='trace') body=trace();
   else if(st.view==='metrics') body=metrics();
-  else body=`<details class="cap-chain-xdet" style="margin-bottom:10px"><summary>⚙ Règles de nommage personnalisées</summary>
+  else body=_L(`<details class="cap-chain-xdet" style="margin-bottom:10px"><summary>⚙ Règles de nommage personnalisées</summary>
       <p class="ana-help">Complète les listes intégrées (≈ 1 000 verbes anglais, verbes français en -er/-ir/-re/-oir). Un mot par ligne ou séparés par des virgules. Conservées dans la 💾 Page HTML.</p>
       <div class="ana-cols"><div><h4>Verbes métier acceptés en tête</h4><textarea id="ana-nr-verbs" class="ana-nr">${esc((capNameRules.verbs||[]).join('\n'))}</textarea></div>
       <div><h4>Mots refusés en tête (faux verbes)</h4><textarea id="ana-nr-refuse" class="ana-nr">${esc((capNameRules.refuse||[]).join('\n'))}</textarea></div></div>
-      <button class="cap-lf-btn" id="ana-nr-apply">✔ Appliquer</button></details>`+capDiagHtml(capFnChecks(F, st.layer));
+      <button class="cap-lf-btn" id="ana-nr-apply">✔ Appliquer</button></details>`)+capDiagHtml(capFnChecks(F, st.layer));
   const shownN=(q||akOn||st.who)?inLayer.filter(f=>match(f)&&akMatch(f)).length:inLayer.length;
-  box.innerHTML=`<div class="phl-filter-bar" style="flex-wrap:wrap;margin-bottom:8px;gap:6px">
-      <span class="tb-grp" title="Vue">${[['tree','🌳 Hiérarchie'],['table','📋 Tableau'],['trace','⛓ Traçabilité'],['metrics','📊 Métriques'],['checks','🩺 Contrôles']].map(([k,l])=>`<button class="cap-lf-btn${st.view===k?' active':''}" data-fv="${k}">${l}</button>`).join('')}</span>
-      ${st.view!=='metrics'?`<span class="tb-grp" title="Couche">${layers.map(k=>`<button class="cap-lf-btn${st.layer===k?' active':''}" data-fl="${k}">${k} (${F.list.filter(f=>f.layer===k).length})</button>`).join('')}<button class="cap-lf-btn${st.layer==='all'?' active':''}" data-fl="all">Toutes</button></span>`:''}
-      ${['tree','table','trace'].includes(st.view)?`<span class="tb-grp" title="Recherche et affichage"><input id="ana-fn-q" class="phl-filter-input" placeholder="🔍 Nom ou description…" value="${esc(st.q)}" style="width:190px">
-        ${['tree','trace'].includes(st.view)?`<label class="cap-chx-opt"><input type="checkbox" id="ana-fn-desc"${st.desc?' checked':''}> Descriptions</label>`:''}
-        ${st.view==='tree'?'<button class="cap-lf-btn" id="ana-fn-exp" title="Tout déplier">⊞</button><button class="cap-lf-btn" id="ana-fn-col" title="Tout replier">⊟</button>':''}</span>`:''}
+  box.innerHTML=_L(`<div class="phl-filter-bar" style="flex-wrap:wrap;margin-bottom:8px;gap:6px">
+      <span class="tb-grp" title="Vue">${[['tree',_L('🌳 Hiérarchie')],['table',_L('📋 Tableau')],['trace',_L('⛓ Traçabilité')],['metrics',_L('📊 Métriques')],['checks',_L('🩺 Contrôles')]].map(([k,l])=>`<button class="cap-lf-btn${st.view===k?' active':''}" data-fv="${k}">${l}</button>`).join('')}</span>
+      ${st.view!=='metrics'?_L(`<span class="tb-grp" title="Couche">${layers.map(k=>`<button class="cap-lf-btn${st.layer===k?' active':''}" data-fl="${k}">${k} (${F.list.filter(f=>f.layer===k).length})</button>`).join('')}<button class="cap-lf-btn${st.layer==='all'?' active':''}" data-fl="all">Toutes</button></span>`):''}
+      ${['tree','table','trace'].includes(st.view)?_L(`<span class="tb-grp" title="Recherche et affichage"><input id="ana-fn-q" class="phl-filter-input" placeholder="🔍 Nom ou description…" value="${esc(st.q)}" style="width:190px">
+        ${['tree','trace'].includes(st.view)?_L(`<label class="cap-chx-opt"><input type="checkbox" id="ana-fn-desc"${st.desc?' checked':''}> Descriptions</label>`):''}
+        ${st.view==='tree'?_L('<button class="cap-lf-btn" id="ana-fn-exp" title="Tout déplier">⊞</button><button class="cap-lf-btn" id="ana-fn-col" title="Tout replier">⊟</button>'):''}</span>`):''}
       ${['tree','table'].includes(st.view)?(()=>{ const base=inLayer.filter(match).filter(whoMatch), n=k=>base.filter(f=>{ const x=capFnAllocKind(f); return x===k||(x==='mix'&&k!=='none'); }).length;
-        return `<span class="tb-grp ana-ak" title="Clic : afficher / masquer · double-clic : uniquement celle-ci (ou tout réafficher)"><span class="tb-grp-l">Allocation</span>${['sys','act','none'].map(k=>`<label class="ana-ak-chip${st.ak.has(k)?' on':''}" style="--c:${CAP_FN_AK[k].c}" title="${CAP_FN_AK[k].tip} — double-clic : uniquement celles-ci"><input type="checkbox" data-ak="${k}"${st.ak.has(k)?' checked':''}>${CAP_FN_AK[k].i} ${CAP_FN_AK[k].l} <b>${n(k)}</b></label>`).join('')}${whoSelect()}</span>`; })():''}
-      ${st.view==='tree'?`<span class="ana-fn-cnt" title="Fonctions affichées après filtres / fonctions de la couche">${shownN===inLayer.length?`${inLayer.length} fonction(s)`:`<b>${shownN}</b> / ${inLayer.length} fonction(s)`}</span>`:''}
+        return _L(`<span class="tb-grp ana-ak" title="Clic : afficher / masquer · double-clic : uniquement celle-ci (ou tout réafficher)"><span class="tb-grp-l">Allocation</span>${['sys','act','none'].map(k=>_L(`<label class="ana-ak-chip${st.ak.has(k)?' on':''}" style="--c:${CAP_FN_AK[k].c}" title="${CAP_FN_AK[k].tip} — double-clic : uniquement celles-ci"><input type="checkbox" data-ak="${k}"${st.ak.has(k)?' checked':''}>${CAP_FN_AK[k].i} ${CAP_FN_AK[k].l} <b>${n(k)}</b></label>`)).join('')}${whoSelect()}</span>`); })():''}
+      ${st.view==='tree'?_L(`<span class="ana-fn-cnt" title="Fonctions affichées après filtres / fonctions de la couche">${shownN===inLayer.length?_L(`${inLayer.length} fonction(s)`):_L(`<b>${shownN}</b> / ${inLayer.length} fonction(s)`)}</span>`):''}
       <span class="tb-grp" style="margin-left:auto" title="Exports"><button class="phl-export-btn" id="ana-fn-csv">⬇ CSV</button>
       <button class="phl-export-btn" id="ana-fn-html" title="Dossier fonctionnel HTML : une section numérotée par fonction (description, allocation, échanges, traçabilité), un onglet par couche, plus métriques et contrôles">📄 Dossier fonctionnel</button></span>
-    </div>${body}`;
+    </div>${body}`);
   capFillHeight(box);
   // Curseur entre l'arbre et la fiche
   box.querySelector('.ana-fn-rsz')?.addEventListener('mousedown',ev=>{
@@ -627,24 +627,24 @@ function capRenderFunctions(box){
     capSaveNameRules({verbs:list('#ana-nr-verbs'), refuse:list('#ana-nr-refuse')}); rerender(); });
   box.querySelector('#ana-met-html')?.addEventListener('click',()=>{
     const kept=layers.filter(k=>!st.mcol.has(k));
-    capHtmlReport({title:'📊 Métriques des fonctions', subtitle:`couches : ${kept.join(', ')}`, tabs:[{key:'m',label:'Indicateurs',
-      html:metrics(true,true)+'<p class="ana-help" style="margin-top:8px">n/a : la couche voisine ne contient aucun lien de réalisation · vert ≥ 90 %, orange ≥ 50 %, rouge &lt; 50 %.</p>'}], filename:'fonctions-metriques.html'}); });
-  box.querySelector('#ana-met-png')?.addEventListener('click',()=>metricsCanvas().toBlob(b=>capDownloadBlob(b,'fonctions-metriques.png'),'image/png'));
+    capHtmlReport({title:_L('📊 Métriques des fonctions'), subtitle:_L(`couches : ${kept.join(', ')}`), tabs:[{key:'m',label:_L('Indicateurs'),
+      html:metrics(true,true)+_L('<p class="ana-help" style="margin-top:8px">n/a : la couche voisine ne contient aucun lien de réalisation · vert ≥ 90 %, orange ≥ 50 %, rouge &lt; 50 %.</p>')}], filename:_L('fonctions-metriques.html')}); });
+  box.querySelector('#ana-met-png')?.addEventListener('click',()=>metricsCanvas().toBlob(b=>capDownloadBlob(b,_L('fonctions-metriques.png')),'image/png'));
   box.querySelector('#ana-met-clip')?.addEventListener('click',()=>metricsCanvas().toBlob(async b=>{
     const btn=box.querySelector('#ana-met-clip');
-    try{ await navigator.clipboard.write([new ClipboardItem({'image/png':b})]); btn.textContent='✔ Image copiée'; }
-    catch(e){ btn.textContent='⚠ Copie refusée — utilisez PNG'; }
-    setTimeout(()=>{ btn.textContent='📋 Copier l\'image'; },2500); },'image/png'));
+    try{ await navigator.clipboard.write([new ClipboardItem({'image/png':b})]); btn.textContent=_L('✔ Image copiée'); }
+    catch(e){ btn.textContent=_L('⚠ Copie refusée — utilisez PNG'); }
+    setTimeout(()=>{ btn.textContent=_L('📋 Copier l\'image'); },2500); },'image/png'));
   box.querySelectorAll('[data-mcol]').forEach(b=>b.onclick=()=>{ const k=b.dataset.mcol; if(st.mcol.has(k)) st.mcol.delete(k); else st.mcol.add(k); rerender(); });
   box.querySelector('#ana-fn-csv').onclick=()=>{
     if(st.view==='trace'&&box._fnTrace){ const {rows,cols}=box._fnTrace;
-      capCsvExport('fonctions-tracabilite.csv',cols,rows.map(r=>cols.map(k=>capCx((r[k]||[]).map(f=>f.num+' '+f.name).join(' | '),(r[k]||[]).map(f=>f.id))))); return; }
+      capCsvExport(_L('fonctions-tracabilite.csv'),cols,rows.map(r=>cols.map(k=>capCx((r[k]||[]).map(f=>f.num+' '+f.name).join(' | '),(r[k]||[]).map(f=>f.id))))); return; }
     if(st.view==='checks'){ const rows=[]; capFnChecks(F,st.layer).forEach(sec=>sec.items.forEach(h=>{ const tr=document.createElement('tr'); tr.innerHTML=h.replace(/^<tr>|<\/tr>$/g,''); rows.push([sec.title,...[...tr.children].map(td=>td.textContent.trim())]); }));
-      capCsvDownload('fonctions-controles.csv',['Contrôle','Fonction','Détail'],rows); return; }
-    if(st.view==='table'){ const vc=visCols(); capCsvExport('fonctions-tableau.csv',vc.map(c=>c.l),(box._fnRows||[]).map(f=>vc.map(c=>c.k==='name'?capCx((c.csv||c.v)(f),f.id):(c.csv||c.v)(f)))); return; }
+      capCsvDownload(_L('fonctions-controles.csv'),[_L('Contrôle'),_L('Fonction'),_L('Détail')],rows); return; }
+    if(st.view==='table'){ const vc=visCols(); capCsvExport(_L('fonctions-tableau.csv'),vc.map(c=>c.l),(box._fnRows||[]).map(f=>vc.map(c=>c.k==='name'?capCx((c.csv||c.v)(f),f.id):(c.csv||c.v)(f)))); return; }
     const n=ids=>capCx(ids.map(id=>F.byId[id]?F.byId[id].name:'').join(', '),ids);   // export enrichi (53)
-    capCsvExport('fonctions.csv',['Couche','N°','Fonction','Type','Kind','Profondeur','Feuille','Parent','Sous-fonctions','Allouée à','Nature de l\'allocation','Échanges entrants','Échanges sortants','Réalise','Réalisée par','Chaînes','Capacités','États','Statut','Description'],
-      inLayer.filter(f=>st.view!=='tree'||akMatch(f)).map(f=>[f.layer,f.num,capCx(f.name,f.id),capAnaHuman(f.type),f.kind,f.depth,f.leaf?'oui':'non',F.byId[f.parentId]?capCx(F.byId[f.parentId].name,f.parentId):'',f.children.length,capCxList(f.alloc),CAP_FN_AK[capFnAllocKind(f)].t,
+    capCsvExport(_L('fonctions.csv'),[_L('Couche'),'N°',_L('Fonction'),'Type',_L('Kind'),_L('Profondeur'),_L('Feuille'),'Parent',_L('Sous-fonctions'),_L('Allouée à'),_L('Nature de l\'allocation'),_L('Échanges entrants'),_L('Échanges sortants'),_L('Réalise'),_L('Réalisée par'),_L('Chaînes'),_L('Capacités'),_L('États'),_L('Statut'),_L('Description')],
+      inLayer.filter(f=>st.view!=='tree'||akMatch(f)).map(f=>[f.layer,f.num,capCx(f.name,f.id),capAnaHuman(f.type),f.kind,f.depth,f.leaf?_L('oui'):_L('non'),F.byId[f.parentId]?capCx(F.byId[f.parentId].name,f.parentId):'',f.children.length,capCxList(f.alloc),CAP_FN_AK[capFnAllocKind(f)].t,
         capCxList(f.fesIn),capCxList(f.fesOut),n(f.realizes),n(f.realizedBy),capCxList(f.chains),capCxList(f.caps),f.states.join(', '),f.status,f.desc]));
   };
   box.querySelector('#ana-fn-html').onclick=()=>capFnDossierHtml(F, metrics(true,false));
@@ -659,22 +659,22 @@ function capFnDossierHtml(F, metricsHtml){
   const esc=capEsc, name=id=>F.byId[id]?`${F.byId[id].layer} ${F.byId[id].num} ${F.byId[id].name}`:'';
   const layers=CAP_ANA_LAYERS.filter(k=>F.list.some(f=>f.layer===k));
   const sec=f=>`<div class="ana-fd" style="margin-left:${f.depth*18}px">
-    <div class="ana-fd-h"><span class="ana-dim">${f.num}</span> <b>${esc(f.name)}</b> <span class="ana-dim">${esc(capAnaHuman(f.type))}${f.kind!=='FUNCTION'?' · '+esc(f.kind):''}${f.leaf?'':' · '+f.children.length+' sous-fonction(s)'}</span></div>
-    ${f.desc?`<div class="ana-fn-desc">${esc(f.desc)}</div>`:'<div class="ana-fn-desc empty">Aucune description.</div>'}
+    <div class="ana-fd-h"><span class="ana-dim">${f.num}</span> <b>${esc(f.name)}</b> <span class="ana-dim">${esc(capAnaHuman(f.type))}${f.kind!=='FUNCTION'?' · '+esc(f.kind):''}${f.leaf?'':' · '+f.children.length+_L(' sous-fonction(s)')}</span></div>
+    ${f.desc?`<div class="ana-fn-desc">${esc(f.desc)}</div>`:_L('<div class="ana-fn-desc empty">Aucune description.</div>')}
     <div class="ana-fd-m">${[
-      f.alloc.length&&`<b>Allouée à</b> ${esc(f.alloc.map(a=>a.name).join(', '))}`,
-      f.fesIn.length&&`<b>Entrées</b> ${esc(f.fesIn.map(x=>x.name+(x.other&&F.byId[x.other]?' ← '+F.byId[x.other].name:'')).join(' ; '))}`,
-      f.fesOut.length&&`<b>Sorties</b> ${esc(f.fesOut.map(x=>x.name+(x.other&&F.byId[x.other]?' → '+F.byId[x.other].name:'')).join(' ; '))}`,
-      f.realizes.length&&`<b>Réalise</b> ${esc(f.realizes.map(name).join(' ; '))}`,
-      f.realizedBy.length&&`<b>Réalisée par</b> ${esc(f.realizedBy.map(name).join(' ; '))}`,
-      f.chains.length&&`<b>Chaînes</b> ${esc(f.chains.map(c=>c.name).join(', '))}`,
-      f.caps.length&&`<b>Capacités</b> ${esc(f.caps.map(c=>c.name).join(', '))}`,
-      f.states.length&&`<b>Disponible dans</b> ${esc(f.states.join(', '))}`].filter(Boolean).join('<br>')}</div></div>`;
+      f.alloc.length&&_L(`<b>Allouée à</b> ${esc(f.alloc.map(a=>a.name).join(', '))}`),
+      f.fesIn.length&&_L(`<b>Entrées</b> ${esc(f.fesIn.map(x=>x.name+(x.other&&F.byId[x.other]?' ← '+F.byId[x.other].name:'')).join(' ; '))}`),
+      f.fesOut.length&&_L(`<b>Sorties</b> ${esc(f.fesOut.map(x=>x.name+(x.other&&F.byId[x.other]?' → '+F.byId[x.other].name:'')).join(' ; '))}`),
+      f.realizes.length&&_L(`<b>Réalise</b> ${esc(f.realizes.map(name).join(' ; '))}`),
+      f.realizedBy.length&&_L(`<b>Réalisée par</b> ${esc(f.realizedBy.map(name).join(' ; '))}`),
+      f.chains.length&&_L(`<b>Chaînes</b> ${esc(f.chains.map(c=>c.name).join(', '))}`),
+      f.caps.length&&_L(`<b>Capacités</b> ${esc(f.caps.map(c=>c.name).join(', '))}`),
+      f.states.length&&_L(`<b>Disponible dans</b> ${esc(f.states.join(', '))}`)].filter(Boolean).join('<br>')}</div></div>`;
   const tabs=layers.map(k=>({key:k, label:`${k} — ${capChainLayerInfo(k).label}`, html:F.list.filter(f=>f.layer===k).map(sec).join('')}));
-  tabs.push({key:'met',label:'📊 Métriques',html:metricsHtml.replace(/<a class="ana-fn-go"[^>]*>([^<]*)<\/a>/g,'$1')});
-  tabs.push({key:'chk',label:'🩺 Contrôles',html:capDiagHtml(capFnChecks(F,'all'))});
-  const project=(cap_xmlDoc&&cap_xmlDoc.documentElement&&cap_xmlDoc.documentElement.getAttribute('name'))||'Capella';
-  capHtmlReport({title:'ƒ Dossier fonctionnel', subtitle:`${F.list.length} fonctions`, tabs, active:layers.includes('SA')?'SA':layers[0], filename:`${capSafeFileName(project)} - dossier fonctionnel.html`});
+  tabs.push({key:'met',label:_L('📊 Métriques'),html:metricsHtml.replace(/<a class="ana-fn-go"[^>]*>([^<]*)<\/a>/g,'$1')});
+  tabs.push({key:'chk',label:_L('🩺 Contrôles'),html:capDiagHtml(capFnChecks(F,'all'))});
+  const project=(cap_xmlDoc&&cap_xmlDoc.documentElement&&cap_xmlDoc.documentElement.getAttribute('name'))||_L('Capella');
+  capHtmlReport({title:_L('ƒ Dossier fonctionnel'), subtitle:_L(`${F.list.length} fonctions`), tabs, active:layers.includes('SA')?'SA':layers[0], filename:_L(`${capSafeFileName(project)} - dossier fonctionnel.html`)});
 }
 
 /** Ajuste la hauteur des éléments marqués data-fill pour qu'ils occupent la fenêtre jusqu'en bas.
@@ -690,7 +690,7 @@ function capFillHeight(root){
 window.addEventListener('resize',()=>capFillHeight());
 
 /** Sous-vues de 🔬 Analyses (onglets) ; « fns » ouvre la vue ƒ Fonctions, qui garde son propre conteneur. */
-var CAP_ANA_SUBS=[['fns','ƒ Fonctions'],['trace','🧬 Traçabilité inter-couches'],['caps','🎯 Capacités & missions'],['states','🔁 Modes & états'],['diff','⚖ Comparaison de versions'],['reqs','📑 Exigences'],['pvmt','🏷 Propriétés'],['data','🗃 Données & interfaces'],['cts','⛓ Contraintes']];
+var CAP_ANA_SUBS=[['fns',_L('ƒ Fonctions')],['trace',_L('🧬 Traçabilité inter-couches')],['caps',_L('🎯 Capacités & missions')],['states',_L('🔁 Modes & états')],['diff',_L('⚖ Comparaison de versions')],['reqs',_L('📑 Exigences')],['pvmt',_L('🏷 Propriétés')],['data',_L('🗃 Données & interfaces')],['cts',_L('⛓ Contraintes')]];
 
 /** Onglets des sous-vues de 🔬 Analyses (communs à la vue 🔬 Analyses et à la vue ƒ Fonctions).
  * @returns {string} HTML des boutons (attribut data-an)
@@ -726,8 +726,8 @@ function capRenderAnalyses(){
   const c=document.getElementById('cap-view-analyses'); if(!c) return;
   if(capAnaSub==='fns') capAnaSub='trace';   // ƒ Fonctions : vue à part
   if(!c._built){
-    c.innerHTML=`<div class="phl-toggle-bar">${capAnaTabsHtml()}
-      <button class="phl-export-btn" id="ana-recalc" style="margin-left:auto" title="Vider les résultats et recalculer l'analyse affichée">↻ Recalculer</button></div><div id="ana-box"></div>`;
+    c.innerHTML=_L(`<div class="phl-toggle-bar">${capAnaTabsHtml()}
+      <button class="phl-export-btn" id="ana-recalc" style="margin-left:auto" title="Vider les résultats et recalculer l'analyse affichée">↻ Recalculer</button></div><div id="ana-box"></div>`);
     c.querySelectorAll('[data-an]').forEach(b=>b.onclick=()=>capAnaTabOpen(b.dataset.an));
     c.querySelector('#ana-recalc').onclick=()=>{
       // Vide les résultats en mémoire et relance la sous-vue affichée

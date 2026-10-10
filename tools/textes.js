@@ -5,7 +5,7 @@
  *
  *   node tools/textes.js           → docs/TEXTES.md  (lisible, groupé par fichier, avec numéros de ligne)
  *                                     docs/textes.csv (même contenu, à ouvrir dans Excel : filtres, tri)
- *   node tools/textes.js --en      → ajoute la colonne « anglais » d'après docs/i18n/en-dictionnaire.json
+ *   node tools/textes.js --en      → ajoute la colonne « anglais » d'après src/i18n/en-dictionnaire.json (même recherche que le build anglais)
  *                                     et liste à part les textes sans traduction
  *
  * Sources analysées : src/js/*.js (chaînes et gabarits du code), src/html/interface.html (textes,
@@ -17,6 +17,7 @@
 'use strict';
 const fs = require('fs'), path = require('path');
 const acorn = require('./lib/acorn.js');
+const { patternOf } = require('./i18n.js');
 const ROOT = path.join(__dirname, '..'), SRC = path.join(ROOT, 'src');
 const withEn = process.argv.includes('--en');
 
@@ -63,8 +64,8 @@ for (const f of fs.readdirSync(path.join(SRC, 'js')).filter(x => x.endsWith('.js
   let ast; try { ast = acorn.parse(code, { ecmaVersion: 'latest', locations: true, allowReturnOutsideFunction: true }); }
   catch (e) { console.error(`✖ ${f} : ${e.message} (lancer node build.js)`); process.exit(1); }
   const seen = new Set();
-  const push = (node, raw) => { const t = visible(raw); if (!t) return; const k = node.loc.start.line + '|' + t; if (seen.has(k)) return; seen.add(k);
-    rows.push({ file: 'js/' + f, line: node.loc.start.line, text: t, raw }); };
+  const push = (node, raw, free) => { const t = visible(raw); if (!t) return; const k = node.loc.start.line + '|' + t; if (seen.has(k)) return; seen.add(k);
+    rows.push({ file: 'js/' + f, line: node.loc.start.line, text: t, raw, free }); };
   // Descriptions des types Capella (CAP_HUMAN_NAMES) : une ligne par type, clé « type:Nom »
   ast.body.forEach(st => (st.declarations || []).forEach(d => { if (d.id && d.id.name === 'CAP_HUMAN_NAMES' && d.init && d.init.type === 'ObjectExpression')
     d.init.properties.forEach(pr => { const k = pr.key.value || pr.key.name, dp = (pr.value.properties || []).find(x => (x.key.value || x.key.name) === 'd');
@@ -73,8 +74,10 @@ for (const f of fs.readdirSync(path.join(SRC, 'js')).filter(x => x.endsWith('.js
     if (!n || typeof n.type !== 'string') return;
     if (n.type === 'VariableDeclarator' && n.id && DATA_DECL.has(n.id.name)) return;
     const p = parents[parents.length - 1];
-    if (n.type === 'Literal' && typeof n.value === 'string' && !technical(n, p)) push(n, n.value);
-    if (n.type === 'TemplateLiteral' && !technical(n, p)) n.quasis.forEach(q => push(q, q.value.cooked || ''));
+    // free : littéral qui n'est pas l'argument d'un _L (le build anglais ne le traduit pas)
+    const free = !(p && p.type === 'CallExpression' && p.callee.type === 'Identifier' && p.callee.name === '_L');
+    if (n.type === 'Literal' && typeof n.value === 'string' && !technical(n, p)) push(n, n.value, free);
+    if (n.type === 'TemplateLiteral' && !technical(n, p)) { const pat = patternOf(n); n.quasis.forEach(q => { const k = rows.length; push(q, q.value.cooked || '', free); if (rows.length > k) rows[k].pat = pat; }); }
     for (const k in n) { if (k === 'loc') continue; const v = n[k];
       if (Array.isArray(v)) v.forEach(c => c && typeof c.type === 'string' && walk(c, [...parents, n]));
       else if (v && typeof v.type === 'string') walk(v, [...parents, n]); }
@@ -91,12 +94,16 @@ ui.forEach((l, i) => {
 rows.sort((a, b) => a.file.localeCompare(b.file) || a.line - b.line);
 // Traduction anglaise (facultatif)
 let en = null;
-if (withEn) { const p = path.join(ROOT, 'docs', 'i18n', 'en-dictionnaire.json');
+if (withEn) { const p = path.join(SRC, 'i18n', 'en-dictionnaire.json');
   en = fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, 'utf8')) : {};
-  const flat = Object.assign({}, en.code || {}, en.interface || {});
+  const { translatePattern } = require('./i18n.js');
+  const code = en.code || {}, flat = Object.assign({}, code, en.interface || {});
   const FR = /[àâçéèêëîïôûùüœ]|\b(le|la|les|des|une?|du|de|et|dans|pour|avec|vers|entre)\b/i;
+  // même recherche que le build anglais (tools/i18n.js) : littéral entier, puis morceaux
   rows.forEach(r => { if (r.type) { r.en = (en.types || {})[r.type] || (FR.test(r.text.replace(/^\[[^\]]*\]\s*/, '')) ? '' : '(déjà en anglais)'); return; }
-    const v = flat[r.raw] ?? flat[r.raw.trim()] ?? flat[r.text]; r.en = v == null ? '' : (visible(v) || v); }); }
+    if (r.free) { r.en = FR.test(r.text) ? '' : '(inchangé, hors _L)'; return; }
+    const t = translatePattern(r.pat != null ? r.pat : r.raw, r.file.startsWith('html/') ? flat : code);
+    r.en = t.missing.length ? '' : (visible(t.text.replace(/\{\d+\}/g, '…')) || t.text); }); }
 
 // Sorties
 const esc = s => String(s).replace(/\|/g, '\\|');

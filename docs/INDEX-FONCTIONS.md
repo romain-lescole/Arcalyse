@@ -1,13 +1,15 @@
 # Index des fonctions (généré par `node tools/index.js` — ne pas modifier à la main)
 
-## 01-donnees-config.js — 48 lignes
+## 01-donnees-config.js — 55 lignes
 
-- `RM_RO` (l. 7) — Relation Map en lecture seule (Arcalyse est un outil de lecture et d'analyse) : arborescence (renommage, ajout,
-- `CAP_HUMAN_NAMES` (l. 15) — Table de correspondance type Capella → {nom humain (h), description (d)}.
-- `MODEL` (l. 17)
-- `RCFG` (l. 30)
-- `TCFG` (l. 31)
-- `MODES` (l. 43)
+- `_L` (l. 6) — Libellé affiché : renvoie le texte français tel quel. Au build anglais (node build.js --lang en), l'argument
+- `CAP_LANG` (l. 8) — Langue de l'interface ('fr', ou 'en' dans la version anglaise produite par le build).
+- `RM_RO` (l. 14) — Relation Map en lecture seule (Arcalyse est un outil de lecture et d'analyse) : arborescence (renommage, ajout,
+- `CAP_HUMAN_NAMES` (l. 22) — Table de correspondance type Capella → {nom humain (h), description (d)}.
+- `MODEL` (l. 24)
+- `RCFG` (l. 37)
+- `TCFG` (l. 38)
+- `MODES` (l. 50)
 
 ## 02-themes.js — 307 lignes
 

@@ -40,16 +40,16 @@ function capChainFramedSvg(chain, opts){
   const descH=descLines.length?descLines.length*14+8:0;
   // Statistiques pour le cartouche
   const g=chain.graph||{nodes:[],edges:[]}; const lay=capChainLayout(g);
-  const project=(cap_xmlDoc&&cap_xmlDoc.documentElement&&cap_xmlDoc.documentElement.getAttribute('name'))||'Projet Capella';
+  const project=(cap_xmlDoc&&cap_xmlDoc.documentElement&&cap_xmlDoc.documentElement.getAttribute('name'))||_L('Projet Capella');
   const tbRows=[
-    ['Projet', project],
-    ['Diagramme', chain.name],
+    [_L('Projet'), project],
+    [_L('Diagramme'), chain.name],
     ['Type', CAP_CHAIN_LABELS[chain.type]||chain.type],
-    ['Couche', chain.layer==='?'?'Non classée':`${chain.layer} — ${lv.label}`],
-    ['Contenu', `${g.nodes.length} ${chain.type==='PhysicalPath'?'composants':'fonctions'} · ${g.edges.length} échanges · ${lay.entries.length} E / ${lay.exits.length} S`],
-    ['Date', new Date().toLocaleDateString('fr-FR')+(capCurrentFileName?' · '+capCurrentFileName:'')],
+    [_L('Couche'), chain.layer==='?'?_L('Non classée'):`${chain.layer} — ${lv.label}`],
+    [_L('Contenu'), _L(`${g.nodes.length} ${chain.type==='PhysicalPath'?_L('composants'):_L('fonctions')} · ${g.edges.length} échanges · ${lay.entries.length} E / ${lay.exits.length} S`)],
+    [_L('Date'), new Date().toLocaleDateString('fr-FR')+(capCurrentFileName?' · '+capCurrentFileName:'')],
   ];
-  if(opts.pageLabel) tbRows.push(['Planche', opts.pageLabel]);
+  if(opts.pageLabel) tbRows.push([_L('Planche'), opts.pageLabel]);
   const tbKW=70, tbVW=Math.min(340, Math.max(170, ...tbRows.map(r=>capTextW(r[1],10.5)+12))), tbRH=16;
   const tbW=opts.titleBlock?tbKW+tbVW:0, tbH=opts.titleBlock?tbRows.length*tbRH:0;
   const legW=opts.legend?430:0, legH=opts.legend?20:0;
@@ -78,11 +78,11 @@ function capChainFramedSvg(chain, opts){
   if(opts.legend){
     const K=CAP_CHAIN_KIND; let lx=M+4;
     const ly2=H-M-legH+4; // légende alignée en bas à gauche
-    [['actor','Acteur'],['system','Système'],['none','Non alloué']].forEach(([k,lab])=>{
+    [['actor',_L('Acteur')],['system',_L('Système')],['none',_L('Non alloué')]].forEach(([k,lab])=>{
       out+=`<rect x="${lx}" y="${ly2}" width="18" height="11" fill="${K[k].fill}" stroke="${K[k].stroke}"/><text x="${lx+23}" y="${ly2+9.5}" font-size="10.5" fill="#333">${lab}</text>`;
       lx+=28+capTextW(lab,10.5)+14;
     });
-    out+=`<text x="${lx}" y="${ly2+9.5}" font-size="10.5" fill="#555">Bordure épaisse = entrée / sortie</text>`;
+    out+=_L(`<text x="${lx}" y="${ly2+9.5}" font-size="10.5" fill="#555">Bordure épaisse = entrée / sortie</text>`);
   }
   if(opts.titleBlock){
     const tx=W-M-tbW, ty=H-M-tbH;
@@ -117,7 +117,7 @@ function capSvgToCanvas(svg, w, h, scale){
       const ctx=c.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,c.width,c.height);
       ctx.drawImage(img,0,0,c.width,c.height); resolve(c);
     };
-    img.onerror=()=>reject(new Error('Rendu SVG impossible'));
+    img.onerror=()=>reject(new Error(_L('Rendu SVG impossible')));
     img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
   });
 }
@@ -151,8 +151,8 @@ async function capChainExportOne(chain, fmt){
   const c=await capSvgToCanvas(f.svg, f.w, f.h, capChainExportOpts.scale);
   const blob=await capCanvasBlob(c,'image/png');
   if(fmt==='clip'){
-    try{ await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]); capChainExportStatus('📋 Image copiée dans le presse-papiers'); }
-    catch(e){ capChainExportStatus('⚠ Copie refusée par le navigateur — utilisez PNG'); }
+    try{ await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]); capChainExportStatus(_L('📋 Image copiée dans le presse-papiers')); }
+    catch(e){ capChainExportStatus(_L('⚠ Copie refusée par le navigateur — utilisez PNG')); }
     return;
   }
   capDownloadBlob(blob, base+'.png');
@@ -278,7 +278,7 @@ function capChainTables(chain){
   const edges=g.edges.filter(e=>byId[e.srcId]&&byId[e.tgtId]);
   const funcs=order.map((id,i)=>{ const n=byId[id];
     return {num:i+1, id, refId:n.refId, name:n.name, type:(CAP_HUMAN_NAMES[n.elemType]||{}).h||n.elemType, owner:n.owner||'', kind:n.kind,
-      role:ent.has(id)&&ext.has(id)?'Entrée / Sortie':ent.has(id)?'Entrée':ext.has(id)?'Sortie':'—',
+      role:ent.has(id)&&ext.has(id)?_L('Entrée / Sortie'):ent.has(id)?_L('Entrée'):ext.has(id)?_L('Sortie'):'—',
       nIn:edges.filter(e=>e.tgtId===id).length, nOut:edges.filter(e=>e.srcId===id).length}; });
   const numOf={}; funcs.forEach(f=>numOf[f.id]=f.num);
   const fes=edges.slice().sort((a,b)=>numOf[a.srcId]-numOf[b.srcId]||numOf[a.tgtId]-numOf[b.tgtId]).map((e,i)=>({
@@ -295,9 +295,9 @@ function capChainCsvText(chain){
   const t=capChainTables(chain), esc=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
   const line=a=>a.map(esc).join(';');
   const out=[line([chain.name, CAP_CHAIN_LABELS[chain.type]||chain.type, chain.layer]), '',
-    line([t.isPath?'N° composant':'N° fonction', t.isPath?'Composant':'Fonction','Type','Alloué à','Rôle','Entrants','Sortants']),
+    line([t.isPath?_L('N° composant'):_L('N° fonction'), t.isPath?_L('Composant'):_L('Fonction'),'Type',_L('Alloué à'),_L('Rôle'),_L('Entrants'),_L('Sortants')]),
     ...t.funcs.map(f=>line([f.num,f.name,f.type,f.owner,f.role,f.nIn,f.nOut])), '',
-    line(['N° échange', t.isPath?'Physical Link':'Functional Exchange','De (N°)','Source','Vers (N°)','Cible', t.isPath?'Component Exchanges alloués':'Exchange Items', t.isPath?'':'Component Exchange porteur']),
+    line([_L('N° échange'), t.isPath?_L('Physical Link'):_L('Functional Exchange'),'De (N°)',_L('Source'),_L('Vers (N°)'),_L('Cible'), t.isPath?_L('Component Exchanges alloués'):_L('Exchange Items'), t.isPath?'':_L('Component Exchange porteur')]),
     ...t.fes.map(e=>line([e.num,e.name,e.srcNum,e.src,e.tgtNum,e.tgt,t.isPath?e.alloc:e.items,t.isPath?'':e.alloc]))];
   return '\uFEFF'+out.join('\n');
 }
@@ -314,13 +314,13 @@ function capChainAnnexPages(chain, draw, labels){
   const t=capChainTables(chain);
   const kind=n=>n?(CAP_CHAIN_KIND[n.kind]||CAP_CHAIN_KIND.none):CAP_CHAIN_KIND.none;
   const blocks=[
-    {heading:'Entrées / Sorties', cols:[{l:'Rôle',w:.12},{l:t.isPath?'Composant':'Fonction',w:.5},{l:'Alloué à',w:.38}],
-      rows:[...t.entries.map(n=>['Entrée',n.name,n.owner||'—',kind(n)]),...t.exits.map(n=>['Sortie',n.name,n.owner||'—',kind(n)])]},
-    {heading:t.isPath?'Composants impliqués':'Fonctions impliquées', cols:[{l:'N°',w:.05},{l:t.isPath?'Composant':'Fonction',w:.33},{l:'Type',w:.18},{l:'Alloué à',w:.22},{l:'Rôle',w:.1},{l:'Entr.',w:.06},{l:'Sort.',w:.06}],
+    {heading:_L('Entrées / Sorties'), cols:[{l:_L('Rôle'),w:.12},{l:t.isPath?_L('Composant'):_L('Fonction'),w:.5},{l:_L('Alloué à'),w:.38}],
+      rows:[...t.entries.map(n=>[_L('Entrée'),n.name,n.owner||'—',kind(n)]),...t.exits.map(n=>[_L('Sortie'),n.name,n.owner||'—',kind(n)])]},
+    {heading:t.isPath?_L('Composants impliqués'):_L('Fonctions impliquées'), cols:[{l:'N°',w:.05},{l:t.isPath?_L('Composant'):_L('Fonction'),w:.33},{l:'Type',w:.18},{l:_L('Alloué à'),w:.22},{l:_L('Rôle'),w:.1},{l:_L('Entr.'),w:.06},{l:_L('Sort.'),w:.06}],
       rows:t.funcs.map(f=>[f.num,f.name,f.type,f.owner||'—',f.role,f.nIn,f.nOut,CAP_CHAIN_KIND[f.kind]||CAP_CHAIN_KIND.none])},
-    {heading:t.isPath?'Physical Links impliqués':'Functional Exchanges impliqués', cols:t.isPath
-      ?[{l:'N°',w:.05},{l:'Physical Link',w:.25},{l:'Source',w:.22},{l:'Cible',w:.22},{l:'Component Exchanges alloués',w:.26}]
-      :[{l:'N°',w:.05},{l:'Functional Exchange',w:.22},{l:'Source',w:.17},{l:'Cible',w:.17},{l:'Exchange Items',w:.2},{l:'CE porteur',w:.19}],
+    {heading:t.isPath?_L('Physical Links impliqués'):_L('Functional Exchanges impliqués'), cols:t.isPath
+      ?[{l:'N°',w:.05},{l:_L('Physical Link'),w:.25},{l:_L('Source'),w:.22},{l:_L('Cible'),w:.22},{l:_L('Component Exchanges alloués'),w:.26}]
+      :[{l:'N°',w:.05},{l:_L('Functional Exchange'),w:.22},{l:_L('Source'),w:.17},{l:_L('Cible'),w:.17},{l:_L('Exchange Items'),w:.2},{l:_L('CE porteur'),w:.19}],
       rows:t.fes.map(e=>t.isPath?[e.num,e.name,`${e.srcNum}. ${e.src}`,`${e.tgtNum}. ${e.tgt}`,e.alloc||'—']
                                 :[e.num,e.name,`${e.srcNum}. ${e.src}`,`${e.tgtNum}. ${e.tgt}`,e.items||'—',e.alloc||'—'])},
   ];
@@ -333,7 +333,7 @@ function capChainAnnexPages(chain, draw, labels){
     pages[pages.length-1].push({op:'th', y, cols:b.cols}); y+=RH+2;
     if(!b.rows.length){ pages[pages.length-1].push({op:'empty', y}); y+=RH; }
     b.rows.forEach((r,i)=>{
-      if(y+RH>BOT){ newPage(); pages[pages.length-1].push({op:'h', y, text:b.heading+' (suite)'}); y+=44; pages[pages.length-1].push({op:'th', y, cols:b.cols}); y+=RH+2; }
+      if(y+RH>BOT){ newPage(); pages[pages.length-1].push({op:'h', y, text:b.heading+_L(' (suite)')}); y+=44; pages[pages.length-1].push({op:'th', y, cols:b.cols}); y+=RH+2; }
       pages[pages.length-1].push({op:'tr', y, cols:b.cols, row:r, odd:i%2}); y+=RH;
     });
     y+=30;
@@ -346,8 +346,8 @@ function capChainAnnexPages(chain, draw, labels){
     const x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,W,H);
     x.strokeStyle='#3a3a3a'; x.lineWidth=2; x.strokeRect(30,30,W-60,H-60);
     x.fillStyle=capChainLayerInfo(chain.layer).color; x.fillRect(30,30,10,80);
-    x.fillStyle='#111'; x.font=`700 30px ${F}`; x.fillText('Annexe — '+tag, X0, 85);
-    x.font=`17px ${F}`; x.fillStyle='#666'; x.fillText(`${CAP_CHAIN_LABELS[chain.type]||chain.type} · ${chain.layer==='?'?'Non classée':chain.layer} · ${t.funcs.length} ${t.isPath?'composants':'fonctions'} · ${t.fes.length} échanges`, X0, 115);
+    x.fillStyle='#111'; x.font=`700 30px ${F}`; x.fillText(_L('Annexe — ')+tag, X0, 85);
+    x.font=`17px ${F}`; x.fillStyle='#666'; x.fillText(_L(`${CAP_CHAIN_LABELS[chain.type]||chain.type} · ${chain.layer==='?'?_L('Non classée'):chain.layer} · ${t.funcs.length} ${t.isPath?_L('composants'):_L('fonctions')} · ${t.fes.length} échanges`), X0, 115);
     /** Texte tronqué à une largeur maximale (ellipse). */
     const fit=(s,w)=>{ s=String(s??''); if(x.measureText(s).width<=w) return s; while(s.length>1&&x.measureText(s+'…').width>w) s=s.slice(0,-1); return s+'…'; };
     ops.forEach(o=>{
@@ -372,7 +372,7 @@ function capChainAnnexPages(chain, draw, labels){
     });
     x.fillStyle='#888'; x.font=`14px ${F}`;
     x.fillText(`${(cap_xmlDoc&&cap_xmlDoc.documentElement&&cap_xmlDoc.documentElement.getAttribute('name'))||''}${capCurrentFileName?' · '+capCurrentFileName:''}`, X0, H-45);
-    const lab=(labels&&labels[pi])||`${pi+1} / ${pages.length}`; x.textAlign='right'; x.fillText('Planche '+lab, X1, H-45); x.textAlign='left';
+    const lab=(labels&&labels[pi])||`${pi+1} / ${pages.length}`; x.textAlign='right'; x.fillText(_L('Planche ')+lab, X1, H-45); x.textAlign='left';
     return c;
   });
 }
@@ -385,13 +385,13 @@ function capChainAnnexPages(chain, draw, labels){
 function capChainPdfCover(chains, starts){
   const W=1754, H=1240, c=document.createElement('canvas'); c.width=W; c.height=H;
   const x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,W,H);
-  const project=(cap_xmlDoc&&cap_xmlDoc.documentElement&&cap_xmlDoc.documentElement.getAttribute('name'))||'Projet Capella';
+  const project=(cap_xmlDoc&&cap_xmlDoc.documentElement&&cap_xmlDoc.documentElement.getAttribute('name'))||_L('Projet Capella');
   x.strokeStyle='#3a3a3a'; x.lineWidth=3; x.strokeRect(30,30,W-60,H-60);
-  x.fillStyle='#111'; x.font='700 44px Segoe UI, Arial, sans-serif'; x.fillText('Diagrammes de chaînes', 80, 130);
+  x.fillStyle='#111'; x.font='700 44px Segoe UI, Arial, sans-serif'; x.fillText(_L('Diagrammes de chaînes'), 80, 130);
   x.font='28px Segoe UI, Arial, sans-serif'; x.fillStyle='#444';
   x.fillText(`${project}${capCurrentFileName?' — '+capCurrentFileName:''}`, 80, 180);
   x.fillText(`${new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'})} · ${chains.length} planche${chains.length>1?'s':''}`, 80, 222);
-  x.font='700 24px Segoe UI, Arial, sans-serif'; x.fillStyle='#111'; x.fillText('Sommaire', 80, 300);
+  x.font='700 24px Segoe UI, Arial, sans-serif'; x.fillStyle='#111'; x.fillText(_L('Sommaire'), 80, 300);
   const perCol=Math.floor((H-400)/34), cols=Math.min(3, Math.ceil(chains.length/perCol)||1), colW=(W-160)/cols;
   x.font='20px Segoe UI, Arial, sans-serif';
   chains.slice(0, perCol*3).forEach((ch,i)=>{
@@ -403,7 +403,7 @@ function capChainPdfCover(chains, starts){
     while(x.measureText(t).width>colW-80 && t.length>4) t=t.slice(0,-2)+'…';
     x.fillText(t, cx+52, cy);
   });
-  if(chains.length>perCol*3){ x.fillStyle='#666'; x.fillText(`… et ${chains.length-perCol*3} autres (voir les signets du PDF)`, 80, H-70); }
+  if(chains.length>perCol*3){ x.fillStyle='#666'; x.fillText(_L(`… et ${chains.length-perCol*3} autres (voir les signets du PDF)`), 80, H-70); }
   return c;
 }
 
@@ -413,9 +413,9 @@ function capChainPdfCover(chains, starts){
  * @param {string} fmt - 'pdf' | 'zip-png' | 'zip-svg'
  */
 async function capChainExportBatch(fmt){
-  const list=capChainExportTargets(); if(!list.length){ capChainExportStatus('Aucune chaîne à exporter.'); return; }
+  const list=capChainExportTargets(); if(!list.length){ capChainExportStatus(_L('Aucune chaîne à exporter.')); return; }
   if(fmt==='html'){ capChainExportHtml(list); return; }
-  const project=(cap_xmlDoc&&cap_xmlDoc.documentElement&&cap_xmlDoc.documentElement.getAttribute('name'))||'Capella';
+  const project=(cap_xmlDoc&&cap_xmlDoc.documentElement&&cap_xmlDoc.documentElement.getAttribute('name'))||_L('Capella');
   const annex=capChainExportOpts.annex;
   const enc=new TextEncoder(); const files=[], pages=[];
   /** Encode un canvas en JPEG (octets) pour le PDF. */
@@ -426,7 +426,7 @@ async function capChainExportBatch(fmt){
     if(fmt==='pdf') list.forEach((ch,i)=>{ starts[i]=total+1; annexN[i]=annex?capChainAnnexPages(ch,false):0; total+=1+annexN[i]; });
     if(fmt==='pdf'){
       const cov=capChainPdfCover(list, starts);
-      pages.push({jpeg:await jpg(cov), iw:cov.width, ih:cov.height, pw:842, ph:595, title:'Sommaire'});
+      pages.push({jpeg:await jpg(cov), iw:cov.width, ih:cov.height, pw:842, ph:595, title:_L('Sommaire')});
     }
     for(let i=0;i<list.length;i++){
       const ch=list[i];
@@ -443,14 +443,14 @@ async function capChainExportBatch(fmt){
       if(annexN[i]){
         const labels=[...Array(annexN[i])].map((_,k)=>`${starts[i]+1+k} / ${total}`);
         const cvs=capChainAnnexPages(ch,true,labels);
-        for(let k=0;k<cvs.length;k++) pages.push({jpeg:await jpg(cvs[k]), iw:cvs[k].width, ih:cvs[k].height, pw:842, ph:595, title:`${title} — annexe${cvs.length>1?' '+(k+1):''}`});
+        for(let k=0;k<cvs.length;k++) pages.push({jpeg:await jpg(cvs[k]), iw:cvs[k].width, ih:cvs[k].height, pw:842, ph:595, title:_L(`${title} — annexe${cvs.length>1?' '+(k+1):''}`)});
       }
     }
     const stamp=new Date().toISOString().slice(0,10);
-    if(fmt==='pdf') capDownloadBlob(capPdfBuild(pages, `Chaînes — ${project}`), `${capSafeFileName(project)} - chaines - ${stamp}.pdf`);
-    else capDownloadBlob(capZipBuild(files), `${capSafeFileName(project)} - chaines ${fmt==='zip-svg'?'SVG':'PNG'} - ${stamp}.zip`);
-    capChainExportStatus(`✔ ${list.length} chaîne${list.length>1?'s':''} exportée${list.length>1?'s':''}${fmt==='pdf'?` (${total} pages)`:''}`);
-  }catch(e){ console.error(e); capChainExportStatus('⚠ Échec de l\'export : '+e.message); }
+    if(fmt==='pdf') capDownloadBlob(capPdfBuild(pages, _L(`Chaînes — ${project}`)), _L(`${capSafeFileName(project)} - chaines - ${stamp}.pdf`));
+    else capDownloadBlob(capZipBuild(files), _L(`${capSafeFileName(project)} - chaines ${fmt==='zip-svg'?'SVG':'PNG'} - ${stamp}.zip`));
+    capChainExportStatus(_L(`✔ ${list.length} chaîne${list.length>1?'s':''} exportée${list.length>1?'s':''}${fmt==='pdf'?_L(` (${total} pages)`):''}`));
+  }catch(e){ console.error(e); capChainExportStatus(_L('⚠ Échec de l\'export : ')+e.message); }
 }
 
 /** Rapport HTML autonome des chaînes (sans la vue Relation Map) : onglet Sommaire (tableau avec liens)
@@ -458,17 +458,17 @@ async function capChainExportBatch(fmt){
  * @param {object[]} list - Chaînes à exporter
  */
 function capChainExportHtml(list){
-  capChainExportStatus(`⏳ Rapport HTML (${list.length} chaînes)…`);
+  capChainExportStatus(_L(`⏳ Rapport HTML (${list.length} chaînes)…`));
   const rows=list.map((c,i)=>{ const t=capChainTables(c);
     return `<tr><td class="num">${i+1}</td><td>${capChainLayerBadge(c.layer)}</td><td>${capEsc(CAP_CHAIN_LABELS[c.type]||c.type)}</td>
       <td><a href="#ch-${i}" onclick="document.querySelector('.rtab[data-t=diag]')&&document.querySelector('.rtab[data-t=diag]').click()" style="color:var(--c-accent)">${capEsc(c.name)}</a></td>
       <td class="num">${t.funcs.length}</td><td class="num">${t.fes.length}</td><td class="num">${t.entries.length}</td><td class="num">${t.exits.length}</td></tr>`; }).join('');
-  const summary=`<table class="cap-chain-xtable cap-chain-ft"><tr><th>N°</th><th>Couche</th><th>Type</th><th>Chaîne</th><th>${list.some(c=>c.type==='PhysicalPath')?'Fonctions / composants':'Fonctions'}</th><th>Échanges</th><th>Entrées</th><th>Sorties</th></tr>${rows}</table>`;
-  const legend=`<div class="cap-chain-legend">
+  const summary=_L(`<table class="cap-chain-xtable cap-chain-ft"><tr><th>N°</th><th>Couche</th><th>Type</th><th>Chaîne</th><th>${list.some(c=>c.type==='PhysicalPath')?_L('Fonctions / composants'):_L('Fonctions')}</th><th>Échanges</th><th>Entrées</th><th>Sorties</th></tr>${rows}</table>`);
+  const legend=_L(`<div class="cap-chain-legend">
       <span><i style="background:${CAP_CHAIN_KIND.actor.fill};border-color:${CAP_CHAIN_KIND.actor.stroke}"></i>Porté par un acteur</span>
       <span><i style="background:${CAP_CHAIN_KIND.system.fill};border-color:${CAP_CHAIN_KIND.system.stroke}"></i>Porté par le système</span>
       <span><i style="background:${CAP_CHAIN_KIND.none.fill};border-color:${CAP_CHAIN_KIND.none.stroke}"></i>Non alloué</span>
-      <span>Bordure épaisse = entrée / sortie</span></div>`;
+      <span>Bordure épaisse = entrée / sortie</span></div>`);
   const cards=CAP_CHAIN_LAYER_ORDER.map(lk=>{
     const grp=list.map((c,i)=>({c,i})).filter(x=>x.c.layer===lk); if(!grp.length) return '';
     const lv=capChainLayerInfo(lk);
@@ -480,11 +480,11 @@ function capChainExportHtml(list){
             <span class="cap-chain-title">${i+1}. ${capEsc(c.name)}</span><span class="cap-chain-tog open">▶</span></div>
           <div class="cap-chain-body open">${c.desc?`<p style="font-style:italic;color:var(--c-dim);margin:0 0 8px">${capEsc(c.desc)}</p>`:''}${capChainCardBody(c)}</div></div>`; }).join('');
   }).join('');
-  const project=(cap_xmlDoc&&cap_xmlDoc.documentElement&&cap_xmlDoc.documentElement.getAttribute('name'))||'Capella';
-  capHtmlReport({title:'⚡ Chaînes', subtitle:`${list.length} chaîne${list.length>1?'s':''}`, active:'sum',
-    tabs:[{key:'sum',label:'📋 Sommaire',html:summary},{key:'diag',label:'▦ Diagrammes',html:legend+cards}],
-    filename:`${capSafeFileName(project)} - chaines.html`});
-  capChainExportStatus(`✔ Rapport HTML : ${list.length} chaîne${list.length>1?'s':''}`);
+  const project=(cap_xmlDoc&&cap_xmlDoc.documentElement&&cap_xmlDoc.documentElement.getAttribute('name'))||_L('Capella');
+  capHtmlReport({title:_L('⚡ Chaînes'), subtitle:_L(`${list.length} chaîne${list.length>1?'s':''}`), active:'sum',
+    tabs:[{key:'sum',label:_L('📋 Sommaire'),html:summary},{key:'diag',label:_L('▦ Diagrammes'),html:legend+cards}],
+    filename:_L(`${capSafeFileName(project)} - chaines.html`)});
+  capChainExportStatus(_L(`✔ Rapport HTML : ${list.length} chaîne${list.length>1?'s':''}`));
 }
 
 /** Barre d'export de la sous-vue Diagrammes : sélection, options de mise en page, exports groupés.
@@ -494,15 +494,15 @@ function capChainExportBar(){
   const f=capChainsFiltered(); const nSel=f.filter(c=>capChainsSelection.has(c.id)).length;
   const o=capChainExportOpts;
   const chk=(k,lab,tip)=>`<label class="cap-chx-opt" title="${tip}"><input type="checkbox" data-chx-opt="${k}"${o[k]?' checked':''}> ${lab}</label>`;
-  return `<div class="cap-lf-bar cap-chx-bar" style="flex-wrap:wrap;align-items:center;margin-top:-4px">
+  return _L(`<div class="cap-lf-bar cap-chx-bar" style="flex-wrap:wrap;align-items:center;margin-top:-4px">
     <label class="cap-chx-opt" title="Tout cocher / décocher (chaînes affichées)"><input type="checkbox" id="cap-chx-all"${nSel&&nSel===f.length?' checked':''}> Tout</label>
-    <span id="cap-chx-count" style="font-size:11px;color:var(--c-dim)">${nSel?`${nSel} sélectionnée${nSel>1?'s':''}`:`aucune sélection → export des ${f.length} affichées`}</span>
+    <span id="cap-chx-count" style="font-size:11px;color:var(--c-dim)">${nSel?_L(`${nSel} sélectionnée${nSel>1?'s':''}`):_L(`aucune sélection → export des ${f.length} affichées`)}</span>
     <span class="tsep"></span>
-    ${chk('frame','Cadre','Cadre et onglet [FC] Nom en haut à gauche')}
-    ${chk('titleBlock','Cartouche','Cartouche technique en bas à droite (projet, type, couche, date…)')}
-    ${chk('legend','Légende','Légende des couleurs en bas à gauche')}
-    ${chk('desc','Description','Description Capella de la chaîne sous l\'onglet')}
-    ${chk('annex','Annexes','PDF : planche(s) d\'annexe après chaque diagramme (entrées/sorties, fonctions, échanges) · ZIP : CSV par chaîne')}
+    ${chk('frame',_L('Cadre'),_L('Cadre et onglet [FC] Nom en haut à gauche'))}
+    ${chk('titleBlock',_L('Cartouche'),_L('Cartouche technique en bas à droite (projet, type, couche, date…)'))}
+    ${chk('legend',_L('Légende'),_L('Légende des couleurs en bas à gauche'))}
+    ${chk('desc',_L('Description'),_L('Description Capella de la chaîne sous l\'onglet'))}
+    ${chk('annex',_L('Annexes'),_L('PDF : planche(s) d\'annexe après chaque diagramme (entrées/sorties, fonctions, échanges) · ZIP : CSV par chaîne'))}
     <select id="cap-chx-scale" class="phl-filter-input" style="width:auto" title="Résolution des images PNG / PDF">
       ${[1,2,3].map(v=>`<option value="${v}"${o.scale===v?' selected':''}>×${v}</option>`).join('')}
     </select>
@@ -513,7 +513,7 @@ function capChainExportBar(){
       <button class="cap-lf-btn" data-chx-batch="zip-svg" title="Archive ZIP des images SVG (vectoriel)">🗜 ZIP SVG</button>
       <button class="cap-lf-btn" data-chx-batch="html" title="Rapport HTML autonome : sommaire + diagrammes et tables de chaque chaîne (vectoriel, recherche intégrée)">🌐 HTML</button>
     </span>
-  </div>`;
+  </div>`);
 }
 
 /** Branche les contrôles de la barre d'export et les cases à cocher des cartes.
@@ -540,7 +540,7 @@ function capWireChainExport(container){
 function capChainExportRefreshCount(container){
   const f=capChainsFiltered(); const nSel=f.filter(c=>capChainsSelection.has(c.id)).length;
   const cnt=container.querySelector('#cap-chx-count');
-  if(cnt) cnt.textContent=nSel?`${nSel} sélectionnée${nSel>1?'s':''}`:`aucune sélection → export des ${f.length} affichées`;
+  if(cnt) cnt.textContent=nSel?_L(`${nSel} sélectionnée${nSel>1?'s':''}`):_L(`aucune sélection → export des ${f.length} affichées`);
   const all=container.querySelector('#cap-chx-all');
   if(all){ all.checked=nSel>0&&nSel===f.length; all.indeterminate=nSel>0&&nSel<f.length; }
 }
@@ -551,14 +551,14 @@ function capChainExportRefreshCount(container){
 function capRenderChainMap(){
   const wrap=document.getElementById('cap-chainmap-wrap'); if(!wrap) return;
   const list=capChainsFiltered();
-  if(!list.length){ wrap.innerHTML='<div style="color:var(--c-dim);padding:40px;text-align:center;width:100%">Aucune chaîne.</div>'; return; }
+  if(!list.length){ wrap.innerHTML=_L('<div style="color:var(--c-dim);padding:40px;text-align:center;width:100%">Aucune chaîne.</div>'); return; }
   if(!list.find(c=>c.id===capChainsSelectedId)){
     const br=list.find(c=>{const l=capChainLayout(c.graph); return l.entries.length>1||l.exits.length>1;});
     capChainsSelectedId=(br||list[0]).id;
   }
   const o=capChainMapOpts;
-  const LAYOUTS=[['LR','→ LR','Gauche → droite'],['TB','↓ TB','Haut → bas'],['RL','← RL','Droite → gauche'],['radial','◉ Rad','Radiale : couches en anneaux'],['zigzag','⚡ Zig','Zigzag : couches en lignes serpentines']];
-  wrap.innerHTML=`<div class="ccm-side">
+  const LAYOUTS=[['LR','→ LR',_L('Gauche → droite')],['TB','↓ TB',_L('Haut → bas')],['RL','← RL',_L('Droite → gauche')],['radial',_L('◉ Rad'),_L('Radiale : couches en anneaux')],['zigzag',_L('⚡ Zig'),_L('Zigzag : couches en lignes serpentines')]];
+  wrap.innerHTML=_L(`<div class="ccm-side">
       <input class="inp ccm-search" placeholder="🔍 Rechercher une chaîne…" value="${capEsc(capChainsSearch)}">
       <div class="ccm-list"></div>
     </div>
@@ -576,7 +576,7 @@ function capRenderChainMap(){
         </span>
       </div>
       <svg class="ccm-svg"></svg>
-    </div>`;
+    </div>`);
 
   // ── Liste groupée par catégorie ARCADIA ──
   const listEl=wrap.querySelector('.ccm-list');
@@ -591,7 +591,7 @@ function capRenderChainMap(){
           return `<div class="ccm-item${c.id===capChainsSelectedId?' active':''}" data-id="${capEsc(c.id)}" title="${capEsc(CAP_CHAIN_LABELS[c.type])} — ${capEsc(c.name)}">
             <span class="ccm-dot" style="background:${color}"></span><span class="ccm-name">${capEsc(c.name)}</span>
             <span class="ccm-io">${l.entries.length}→${l.exits.length}</span></div>`;}).join('');
-    }).join('') || '<div style="color:var(--c-dim);padding:10px;font-size:11px">Aucun résultat.</div>';
+    }).join('') || _L('<div style="color:var(--c-dim);padding:10px;font-size:11px">Aucun résultat.</div>');
     listEl.querySelectorAll('.ccm-item').forEach(it=>it.addEventListener('click',()=>{capChainsSelectedId=it.dataset.id; renderList(); drawGraph();}));
   };
   wrap.querySelector('.ccm-search').addEventListener('input',e=>{capChainsSearch=e.target.value; renderList();});
@@ -620,7 +620,7 @@ function capRenderChainMap(){
 
     const g=chain.graph, lay=capChainLayout(g);
     if(!g.nodes.length){
-      root.append('text').attr('text-anchor','middle').text('Chaîne vide : aucune fonction impliquée dans le modèle')
+      root.append('text').attr('text-anchor','middle').text(_L('Chaîne vide : aucune fonction impliquée dans le modèle'))
         .style('font-size','14px').style('fill','var(--c-dim)');
       fit(); return;
     }
@@ -758,7 +758,7 @@ function capRenderChainMap(){
       }
       const path=gl.append('path').attr('d',d).attr('fill','none').style('stroke','var(--c-accent)')
         .attr('stroke-width',1.6).attr('stroke-dasharray',r.back?'6,4':null).attr('marker-end',`url(#${uid}-a)`).attr('opacity',.85);
-      path.append('title').text(`${byId[e.srcId].name} → ${e.name||''} → ${byId[e.tgtId].name}${r.back?' (retour)':''}`);
+      path.append('title').text(`${byId[e.srcId].name} → ${e.name||''} → ${byId[e.tgtId].name}${r.back?_L(' (retour)'):''}`);
       if(e.name){
         // Branches issues d'une même fonction : étiquettes décalées le long de l'arête
         const sib=r.back?[]:(outs[e.srcId]||[]), si=sib.indexOf(ri);
@@ -776,7 +776,7 @@ function capRenderChainMap(){
       const io=entrySet.has(n.id)||exitSet.has(n.id);
       const node=gn.append('g').attr('transform',`translate(${p.x-W/2},${p.y-H/2})`).style('cursor',n.refId?'pointer':'default')
         .on('click',()=>{ if(n.refId) capOpenDetail(n.refId); });
-      node.append('title').text(`${n.name} — ${n.elemType}${n.owner?' · alloué à '+n.owner:''}${entrySet.has(n.id)?' · ENTRÉE':''}${exitSet.has(n.id)?' · SORTIE':''}`);
+      node.append('title').text(`${n.name} — ${n.elemType}${n.owner?_L(' · alloué à ')+n.owner:''}${entrySet.has(n.id)?_L(' · ENTRÉE'):''}${exitSet.has(n.id)?_L(' · SORTIE'):''}`);
       if(o.compact){
         // Pilule colorée, nom seul (comme le mode Compact de la Relation Map)
         node.append('rect').attr('width',W).attr('height',H).attr('rx',H/2).style('fill',k.rm)
@@ -788,7 +788,7 @@ function capRenderChainMap(){
       node.append('rect').attr('width',W).attr('height',H).attr('rx',7).style('fill','var(--c-node-bg)')
         .style('stroke',k.rm).attr('stroke-width',io?2.6:1.4);
       node.append('path').attr('d',`M0,7 Q0,0 7,0 H${W-7} Q${W},0 ${W},7 V19 H0 Z`).style('fill',k.rm).attr('opacity',.9);
-      const tags=[entrySet.has(n.id)?'▶ ENTRÉE':'', exitSet.has(n.id)?'SORTIE ■':''].filter(Boolean).join('  ');
+      const tags=[entrySet.has(n.id)?_L('▶ ENTRÉE'):'', exitSet.has(n.id)?_L('SORTIE ■'):''].filter(Boolean).join('  ');
       const ownerTxt=n.owner||k.label;
       node.append('text').attr('x',7).attr('y',13.5).text(o.cut&&ownerTxt.length>cutLen?ownerTxt.slice(0,cutLen)+'…':ownerTxt.slice(0,28))
         .style('font-size','9.5px').style('font-weight','700').style('fill','#10131a');
