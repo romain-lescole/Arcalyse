@@ -208,11 +208,11 @@ function capRenderStates(box){
   });
   box.querySelector('#ana-sm-csv').onclick=()=>{
     if(st.view==='matrix'&&box._smMx){ const {rows,cols}=box._smMx;
-      capCsvDownload('fonctions-x-etats.csv',['Couche','Fonction',...cols.map(c=>(c.sm.owner?c.sm.owner.name+' › ':'')+c.name)],rows.map(f=>[f.layer,f.name,...cols.map(c=>c.fns.some(x=>x.id===f.id)?'X':'')]));
+      capCsvExport('fonctions-x-etats.csv',['Couche','Fonction',...cols.map(c=>(c.sm.owner?c.sm.owner.name+' › ':'')+c.name)],rows.map(f=>[f.layer,capCx(f.name,f.id),...cols.map(c=>c.fns.some(x=>x.id===f.id)?'X':'')]));
     } else {
       const rows=[]; shown.forEach(sm=>{ const nameOf=id=>(sm.states.find(s=>s.id===id)||{}).name||'?';
-        sm.trans.forEach(t=>rows.push([sm.layer,sm.owner?sm.owner.name:'',sm.name,nameOf(t.src),nameOf(t.tgt),t.triggers.join(', ')||t.trigDesc,t.guard,t.effect.join(', ')])); });
-      capCsvDownload('transitions.csv',['Couche','Propriétaire','Machine','Source','Cible','Déclencheur','Garde','Effet'],rows);
+        sm.trans.forEach(t=>rows.push([sm.layer,sm.owner?capCx(sm.owner.name,sm.owner.id):'',capCx(sm.name,sm.id),capCx(nameOf(t.src),t.src),capCx(nameOf(t.tgt),t.tgt),t.triggers.join(', ')||t.trigDesc,t.guard,t.effect.join(', ')])); });
+      capCsvExport('transitions.csv',['Couche','Propriétaire','Machine','Source','Cible','Déclencheur','Garde','Effet'],rows);
     }
   };
 }

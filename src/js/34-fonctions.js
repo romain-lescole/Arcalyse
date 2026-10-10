@@ -638,14 +638,14 @@ function capRenderFunctions(box){
   box.querySelectorAll('[data-mcol]').forEach(b=>b.onclick=()=>{ const k=b.dataset.mcol; if(st.mcol.has(k)) st.mcol.delete(k); else st.mcol.add(k); rerender(); });
   box.querySelector('#ana-fn-csv').onclick=()=>{
     if(st.view==='trace'&&box._fnTrace){ const {rows,cols}=box._fnTrace;
-      capCsvDownload('fonctions-tracabilite.csv',cols,rows.map(r=>cols.map(k=>(r[k]||[]).map(f=>f.num+' '+f.name).join(' | ')))); return; }
+      capCsvExport('fonctions-tracabilite.csv',cols,rows.map(r=>cols.map(k=>capCx((r[k]||[]).map(f=>f.num+' '+f.name).join(' | '),(r[k]||[]).map(f=>f.id))))); return; }
     if(st.view==='checks'){ const rows=[]; capFnChecks(F,st.layer).forEach(sec=>sec.items.forEach(h=>{ const tr=document.createElement('tr'); tr.innerHTML=h.replace(/^<tr>|<\/tr>$/g,''); rows.push([sec.title,...[...tr.children].map(td=>td.textContent.trim())]); }));
       capCsvDownload('fonctions-controles.csv',['Contrôle','Fonction','Détail'],rows); return; }
-    if(st.view==='table'){ const vc=visCols(); capCsvDownload('fonctions-tableau.csv',vc.map(c=>c.l),(box._fnRows||[]).map(f=>vc.map(c=>(c.csv||c.v)(f)))); return; }
-    const n=ids=>ids.map(id=>F.byId[id]?F.byId[id].name:'').join(', ');
-    capCsvDownload('fonctions.csv',['Couche','N°','Fonction','Type','Kind','Profondeur','Feuille','Parent','Sous-fonctions','Allouée à','Nature de l\'allocation','Échanges entrants','Échanges sortants','Réalise','Réalisée par','Chaînes','Capacités','États','Statut','Description'],
-      inLayer.filter(f=>st.view!=='tree'||akMatch(f)).map(f=>[f.layer,f.num,f.name,capAnaHuman(f.type),f.kind,f.depth,f.leaf?'oui':'non',F.byId[f.parentId]?F.byId[f.parentId].name:'',f.children.length,f.alloc.map(a=>a.name).join(', '),CAP_FN_AK[capFnAllocKind(f)].t,
-        f.fesIn.map(x=>x.name).join(', '),f.fesOut.map(x=>x.name).join(', '),n(f.realizes),n(f.realizedBy),f.chains.map(c=>c.name).join(', '),f.caps.map(c=>c.name).join(', '),f.states.join(', '),f.status,f.desc]));
+    if(st.view==='table'){ const vc=visCols(); capCsvExport('fonctions-tableau.csv',vc.map(c=>c.l),(box._fnRows||[]).map(f=>vc.map(c=>c.k==='name'?capCx((c.csv||c.v)(f),f.id):(c.csv||c.v)(f)))); return; }
+    const n=ids=>capCx(ids.map(id=>F.byId[id]?F.byId[id].name:'').join(', '),ids);   // export enrichi (53)
+    capCsvExport('fonctions.csv',['Couche','N°','Fonction','Type','Kind','Profondeur','Feuille','Parent','Sous-fonctions','Allouée à','Nature de l\'allocation','Échanges entrants','Échanges sortants','Réalise','Réalisée par','Chaînes','Capacités','États','Statut','Description'],
+      inLayer.filter(f=>st.view!=='tree'||akMatch(f)).map(f=>[f.layer,f.num,capCx(f.name,f.id),capAnaHuman(f.type),f.kind,f.depth,f.leaf?'oui':'non',F.byId[f.parentId]?capCx(F.byId[f.parentId].name,f.parentId):'',f.children.length,capCxList(f.alloc),CAP_FN_AK[capFnAllocKind(f)].t,
+        capCxList(f.fesIn),capCxList(f.fesOut),n(f.realizes),n(f.realizedBy),capCxList(f.chains),capCxList(f.caps),f.states.join(', '),f.status,f.desc]));
   };
   box.querySelector('#ana-fn-html').onclick=()=>capFnDossierHtml(F, metrics(true,false));
 }

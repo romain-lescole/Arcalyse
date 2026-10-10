@@ -234,8 +234,8 @@ function capRenderRequirements(box){
       ${capXtSelect('kind',[['','Tous les types'],...kinds.map(k=>[k,k])],st.kind)}
       ${attrOpts.length?capXtSelect('attr',[['','Tous les attributs'],...attrOpts],st.attr):''}
       ${capXtSelect('cov',[['','Liées ou non'],['yes','Liées au modèle'],['no','Non liées']],st.cov)}`:''), cnt)+body;
-  capXtBind(box, st, capRenderRequirements, ()=>capCsvDownload('exigences.csv',['ID','Exigence','Famille','Type','Dossier','Texte',...attrDefs,'Éléments liés','Couches','Exigences liées'],
-    shown.map(r=>[r.ident,r.name,r.src,r.kind,r.path,r.text,...attrDefs.map(d=>r.attrs[d]||''),r.links.map(e=>e.name).join(', '),[...new Set(r.links.map(e=>e.layer))].join(', '),r.rels.map(e=>e.name).join(', ')])));
+  capXtBind(box, st, capRenderRequirements, ()=>capCsvExport('exigences.csv',['ID','Exigence','Famille','Type','Dossier','Texte',...attrDefs,'Éléments liés','Couches','Exigences liées'],
+    shown.map(r=>[r.ident,capCx(r.name,r.id),r.src,r.kind,r.path,r.text,...attrDefs.map(d=>r.attrs[d]||''),capCxList(r.links),[...new Set(r.links.map(e=>e.layer))].join(', '),capCxList(r.rels)])));
 }
 
 /* ── 2. 🏷 PROPRIÉTÉS (PVMT) ────────────────────────────────────── */
@@ -350,6 +350,7 @@ function capRenderPvmt(box){
     const all=Object.values(els), shown=all.filter(x=>(st.layer==='all'||x.el.layer===st.layer)&&capXtHas(q,x.el.name,...Object.values(x.p).map(v=>v.value)));
     cnt=`${shown.length} / ${all.length}`;
     header=['Couche','Élément','Type',...props]; rows=shown.map(x=>[x.el.layer,x.el.name,capAnaHuman(x.el.type),...props.map(p=>x.p[p]?x.p[p].value:'')]);
+    st._csvRows=shown.map((x,i)=>{ const r=rows[i].slice(); r[1]=capCx(x.el.name,x.el.id); return r; });   // export enrichi (53)
     // Totaux des propriétés numériques
     const tot=props.map(p=>{ const ns=shown.map(x=>x.p[p]).filter(v=>v&&v.kind==='num'&&v.num!=null); return ns.length?`<b>Σ ${+ns.reduce((s,v)=>s+v.num,0).toFixed(3)}</b>`:''; });
     body=capXtTable(['Couche','Élément','Type',...props.map(capEsc)], shown.map(x=>[capChainLayerBadge(x.el.layer), capDetLink(x.el.id,x.el.name,'font-weight:600'),
@@ -378,7 +379,7 @@ function capRenderPvmt(box){
     (st.view!=='diag'?` ${capXtSearch(st.q,st.view==='grid'?'Élément, valeur…':'Groupe, propriété…')}`:''), cnt, st.view!=='diag')+
     (st.view==='grid'?'<p class="ana-help">Une ligne par élément, une colonne par propriété du groupe. ○ = valeur par défaut jamais saisie.</p>':'')+body;
   if(st.view==='grid'&&st._all&&st.layer!=='all'&&!st._all.some(x=>x.el.layer===st.layer)){ st.layer='all'; return capRenderPvmt(box); }
-  capXtBind(box, st, capRenderPvmt, ()=>capCsvDownload(`proprietes-${st.view}.csv`, header, rows));
+  capXtBind(box, st, capRenderPvmt, ()=>capCsvExport(`proprietes-${st.view}.csv`, header, st.view==='grid'&&st._csvRows?st._csvRows:rows));
 }
 
 /* ── 3. 🗃 DONNÉES & INTERFACES ──────────────────────────────────── */
@@ -479,7 +480,7 @@ function capRenderDataModel(box){
     src=D.eis; const shown=src.filter(e=>byL(e)&&capXtHas(q,e.name,...e.elems.map(x=>x.name+' '+x.type)));
     cnt=`${shown.length} / ${src.length}`;
     header=['Couche','Exchange Item','Mécanisme','Éléments','Functional Exchanges','Component Exchanges','Interfaces'];
-    rows=shown.map(e=>[e.layer,e.name,e.mech,e.elems.map(x=>`${x.name} : ${x.type}${x.card}`).join(', '),e.fes.map(x=>x.name).join(', '),e.ces.map(x=>x.name).join(', '),e.itfs.map(x=>x.name).join(', ')]);
+    rows=shown.map(e=>[e.layer,capCx(e.name,e.id),e.mech,e.elems.map(x=>`${x.name} : ${x.type}${x.card}`).join(', '),capCxList(e.fes),capCxList(e.ces),capCxList(e.itfs)]);
     body=capXtTable(header, shown.map(e=>[capChainLayerBadge(e.layer), capDetLink(e.id,e.name,'font-weight:600'), `<span class="ana-dim">${capEsc(e.mech)}</span>`,
       e.elems.length?capFoldList(e.elems.map(x=>`${capDetLink(x.id,x.name)} <span class="ana-dim">: ${x.typeId?capDetLink(x.typeId,x.type):'?'}${capEsc(x.card)}</span>`)):'<span class="ana-dim">—</span>',
       capXtLinks(e.fes), capXtLinks(e.ces), capXtLinks(e.itfs)]));
@@ -487,7 +488,7 @@ function capRenderDataModel(box){
     src=D.itfs; const shown=src.filter(i=>byL(i)&&capXtHas(q,i.name,...i.items.map(x=>x.name)));
     cnt=`${shown.length} / ${src.length}`;
     header=['Couche','Interface','Exchange Items','Fournie par','Requise par','Utilisée / implémentée par'];
-    rows=shown.map(i=>[i.layer,i.name,i.items.map(x=>x.name).join(', '),i.provided.map(x=>x.name).join(', '),i.required.map(x=>x.name).join(', '),i.users.map(x=>x.name).join(', ')]);
+    rows=shown.map(i=>[i.layer,capCx(i.name,i.id),capCxList(i.items),capCxList(i.provided),capCxList(i.required),capCxList(i.users)]);
     body=capXtTable(header, shown.map(i=>[capChainLayerBadge(i.layer), capDetLink(i.id,i.name,'font-weight:600'), i.items.length?capXtLinks(i.items):'<span class="ana-miss">∅ aucun</span>',
       capXtLinks(i.provided), capXtLinks(i.required), capXtLinks(i.users)]), 'Aucune interface dans ce modèle.');
   } else if(st.view==='types'){
@@ -495,7 +496,7 @@ function capRenderDataModel(box){
     cnt=`${shown.length} / ${src.length}`;
     header=['Couche','Type','Nature','Contenu','Hérite de','Utilisé par'];
     const content=y=>y.feats.length?y.feats.join(', '):y.lits.length?y.lits.join(', '):y.unit?'unité : '+y.unit:'';
-    rows=shown.map(y=>[y.layer,y.name,y.kind,content(y),y.sup.map(x=>x.name).join(', '),y.usedBy.map(x=>x.name).join(', ')]);
+    rows=shown.map(y=>[y.layer,capCx(y.name,y.id),y.kind,content(y),capCxList(y.sup),capCxList(y.usedBy)]);
     body=capXtTable(header, shown.map(y=>[capChainLayerBadge(y.layer), capDetLink(y.id,y.name,'font-weight:600'), `<span class="ana-dim">${capEsc(y.kind)}</span>`,
       y.feats.length?capFoldList(y.feats.map(capEsc),6):y.lits.length?capFoldList(y.lits.map(capEsc),6):capEsc(y.unit?'unité : '+y.unit:'')||'<span class="ana-dim">—</span>',
       capXtLinks(y.sup), capXtLinks(y.usedBy)]), 'Aucun type de données dans ce modèle.');
@@ -504,7 +505,7 @@ function capRenderDataModel(box){
     (st.view!=='diag'?capXtLayerBtns(src,st.layer)+` ${capXtSearch(st.q,'Nom, contenu…')}`+
       (st.view==='types'?` <label class="ana-dim" style="display:inline-flex;gap:4px;align-items:center"><input type="checkbox" data-xc="pre"${st.pre?' checked':''}> types prédéfinis</label>`:''):''), cnt, st.view!=='diag')+body;
   if(st.layer!=='all'&&!src.some(x=>x.layer===st.layer)&&st.view!=='diag'){ st.layer='all'; return capRenderDataModel(box); }
-  capXtBind(box, st, capRenderDataModel, ()=>capCsvDownload(`donnees-${st.view}.csv`, header, rows));
+  capXtBind(box, st, capRenderDataModel, ()=>capCsvExport(`donnees-${st.view}.csv`, header, rows));
 }
 
 /* ── 4. ⛓ CONTRAINTES ───────────────────────────────────────────── */
@@ -565,13 +566,13 @@ function capRenderConstraints(box){
   const q=st.q.trim().toLowerCase();
   const shown=list.filter(c=>(st.layer==='all'||c.layer===st.layer)&&capXtHas(q,c.name,c.text,(c.owner||{}).name,...c.on.map(e=>e.name)));
   const header=['Couche','Contrainte','Rôle','Expression','Langage','Porte sur','Possédée par'];
-  const rows=shown.map(c=>[c.layer,c.name,c.role,c.text,c.lang,c.on.map(e=>e.name).join(', '),(c.owner||{}).name||'']);
+  const rows=shown.map(c=>[c.layer,capCx(c.name,c.id),c.role,c.text,c.lang,capCxList(c.on),c.owner?capCx(c.owner.name,c.owner.id):'']);   // export enrichi (53)
   const body=st.view==='list'?capXtTable(header, shown.map(c=>[capChainLayerBadge(c.layer), capDetLink(c.id,c.name||'(sans nom)','font-weight:600'), `<span class="ana-dim">${capEsc(c.role)}</span>`,
       capXtShort(c.text,300), `<span class="ana-dim">${capEsc(c.lang)}</span>`, capXtLinks(c.on,true), c.owner?capDetLink(c.owner.id,c.owner.name):'—']))
     :capDiagHtml(capCtChecks());
   box.innerHTML=capXtBar(capXtViewBtns([['list','📋 Liste'],['diag','🩺 Contrôles']],st.view)+
     (st.view==='list'?capXtLayerBtns(list,st.layer)+` ${capXtSearch(st.q,'Nom, expression, élément…')}`:''), st.view==='list'?`${shown.length} / ${list.length}`:'', st.view==='list')+body;
-  capXtBind(box, st, capRenderConstraints, ()=>capCsvDownload('contraintes.csv', header, rows));
+  capXtBind(box, st, capRenderConstraints, ()=>capCsvExport('contraintes.csv', header, rows));
 }
 
 /* ── Panneau de détail et tableau de bord ───────────────────────── */

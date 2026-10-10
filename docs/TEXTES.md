@@ -2247,172 +2247,172 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 352 | Couche |
 | 352 | Élément |
 | 352 | Type |
-| 355 | Couche |
-| 355 | Élément |
-| 355 | Type |
-| 356 | Total |
-| 361 | Groupe |
-| 361 | Propriété |
-| 361 | Valeurs |
-| 361 | Non saisies |
-| 361 | Synthèse |
-| 363 | · min |
-| 363 | · max |
-| 363 | · moy. |
-| 364 | (vide) |
-| 366 | propriété(s) |
-| 369 | Domaine |
-| 369 | Groupe |
-| 369 | S'applique à |
-| 369 | Architectures |
-| 369 | Propriétés |
-| 369 | Éléments renseignés |
-| 369 | Éléments manquants |
-| 373 | (avec condition) |
-| 374 | Aucune définition PVMT dans ce modèle. |
-| 376 | ▦ Grille par groupe |
-| 376 | Σ Synthèse |
-| 376 | 📖 Définitions |
-| 376 | 🩺 Contrôles |
-| 378 | Élément, valeur… |
-| 378 | Groupe, propriété… |
-| 379 | Une ligne par élément, une colonne par propriété du groupe. ○ = valeur par défaut jamais saisie. |
-| 428 | implémente |
-| 432 | spécialisé par |
-| 459 | Exchange Items portés par aucun échange ni interface |
-| 459 | Exchange Item |
-| 459 | Type |
-| 460 | Exchange Items sans élément (contenu non décrit) |
-| 460 | Seulement si le modèle décrit le contenu d'autres Exchange Items |
+| 356 | Couche |
+| 356 | Élément |
+| 356 | Type |
+| 357 | Total |
+| 362 | Groupe |
+| 362 | Propriété |
+| 362 | Valeurs |
+| 362 | Non saisies |
+| 362 | Synthèse |
+| 364 | · min |
+| 364 | · max |
+| 364 | · moy. |
+| 365 | (vide) |
+| 367 | propriété(s) |
+| 370 | Domaine |
+| 370 | Groupe |
+| 370 | S'applique à |
+| 370 | Architectures |
+| 370 | Propriétés |
+| 370 | Éléments renseignés |
+| 370 | Éléments manquants |
+| 374 | (avec condition) |
+| 375 | Aucune définition PVMT dans ce modèle. |
+| 377 | ▦ Grille par groupe |
+| 377 | Σ Synthèse |
+| 377 | 📖 Définitions |
+| 377 | 🩺 Contrôles |
+| 379 | Élément, valeur… |
+| 379 | Groupe, propriété… |
+| 380 | Une ligne par élément, une colonne par propriété du groupe. ○ = valeur par défaut jamais saisie. |
+| 429 | implémente |
+| 433 | spécialisé par |
+| 460 | Exchange Items portés par aucun échange ni interface |
 | 460 | Exchange Item |
 | 460 | Type |
-| 461 | Functional Exchanges sans Exchange Item |
-| 461 | Couches où d'autres FE portent déjà des Exchange Items |
-| 461 | Functional Exchange |
+| 461 | Exchange Items sans élément (contenu non décrit) |
+| 461 | Seulement si le modèle décrit le contenu d'autres Exchange Items |
+| 461 | Exchange Item |
 | 461 | Type |
-| 462 | Interfaces sans Exchange Item alloué |
-| 462 | Interface |
+| 462 | Functional Exchanges sans Exchange Item |
+| 462 | Couches où d'autres FE portent déjà des Exchange Items |
+| 462 | Functional Exchange |
 | 462 | Type |
-| 463 | Interfaces ni fournies, ni requises, ni utilisées |
+| 463 | Interfaces sans Exchange Item alloué |
 | 463 | Interface |
 | 463 | Type |
-| 464 | Exchange Items d'un FE absents des interfaces des ports du CE porteur |
-| 464 | Seulement pour les CE dont les ports déclarent des interfaces |
-| 464 | Component Exchange |
-| 464 | Functional Exchange |
-| 464 | Exchange Item manquant |
-| 465 | Classes et types de données jamais utilisés |
-| 465 | Hors types prédéfinis |
-| 465 | Type |
-| 465 | Nature |
-| 475 | Aucun Exchange Item, interface ni type de données dans ce modèle. |
-| 481 | Couche |
-| 481 | Exchange Item |
-| 481 | Mécanisme |
-| 481 | Éléments |
-| 481 | Functional Exchanges |
-| 481 | Component Exchanges |
-| 481 | Interfaces |
-| 489 | Couche |
-| 489 | Interface |
-| 489 | Exchange Items |
-| 489 | Fournie par |
-| 489 | Requise par |
-| 489 | Utilisée / implémentée par |
-| 491 | ∅ aucun |
-| 492 | Aucune interface dans ce modèle. |
-| 496 | Couche |
-| 496 | Type |
-| 496 | Nature |
-| 496 | Contenu |
-| 496 | Hérite de |
-| 496 | Utilisé par |
-| 497 | unité : |
-| 500 | unité : |
-| 501 | Aucun type de données dans ce modèle. |
-| 503 | 📦 Exchange Items |
-| 503 | 🔌 Interfaces |
-| 503 | 🧱 Classes & types |
-| 503 | 🩺 Contrôles |
-| 504 | Nom, contenu… |
-| 505 | types prédéfinis |
-| 519 | pré-condition |
-| 532 | texte lié |
-| 546 | (sans nom) |
-| 547 | Contrainte |
-| 547 | Possédée par |
-| 550 | Contraintes vides (ni nom ni expression) |
-| 551 | Contraintes sans expression |
-| 551 | Seul le nom porte l'information |
-| 552 | Expressions citant un élément introuvable |
-| 552 | Lien de texte vers un élément supprimé |
-| 553 | Contraintes sans élément contraint explicite |
-| 554 | Contraintes en double sur un même élément |
-| 564 | Aucune contrainte dans ce modèle. |
-| 567 | Couche |
-| 567 | Contrainte |
-| 567 | Rôle |
-| 567 | Expression |
-| 567 | Langage |
-| 567 | Porte sur |
-| 567 | Possédée par |
-| 569 | (sans nom) |
-| 572 | 📋 Liste |
-| 572 | 🩺 Contrôles |
-| 573 | Nom, expression, élément… |
-| 590 | Exigence |
-| 590 | Type |
-| 591 | Texte |
-| 592 | Éléments liés |
-| 593 | Exigences liées |
-| 595 | Exigences liées ( |
-| 597 | Propriétés ( |
-| 599 | Contraintes ( |
-| 599 | (sans nom) |
-| 602 | message(s) |
-| 603 | Diagramme de séquence |
-| 604 | Scénarios ( |
-| 606 | Détail étendu indisponible |
-| 616 | Exigences — nombre |
-| 616 | liée(s) au modèle |
-| 617 | rq.cov |
-| 617 | Exigences — liées au modèle |
-| 618 | rq.kind |
-| 618 | Exigences — par type |
-| 619 | rq.layer |
-| 619 | Exigences — couches des éléments liés |
-| 619 | Hors couche |
-| 619 | Nombre d'exigences liées à au moins un élément de la couche |
-| 620 | rq.chk |
-| 620 | Exigences — contrôles |
-| 621 | Exigences — par « |
-| 621 | (non renseigné) |
-| 623 | Propriétés — valeurs appliquées |
-| 623 | élément(s) |
-| 624 | pv.set |
-| 624 | Propriétés — valeurs saisies |
-| 624 | Valeurs différentes de la valeur par défaut |
-| 625 | pv.grp |
-| 625 | Propriétés — éléments par groupe |
-| 626 | pv.chk |
-| 626 | Propriétés — contrôles |
-| 628 | pv.sum. |
-| 628 | Propriétés — Σ « |
-| 629 | élément(s) |
-| 631 | Données — Exchange Items |
-| 631 | interface(s) · |
-| 631 | type(s) |
-| 632 | dm.used |
-| 632 | Données — Exchange Items portés par un échange |
-| 633 | Données — Functional Exchanges avec Exchange Item, par couche |
-| 635 | dm.chk |
-| 635 | Données & interfaces — contrôles |
-| 637 | Contraintes — nombre |
-| 638 | ct.layer |
-| 638 | Contraintes — par couche |
-| 638 | Hors couche |
-| 639 | ct.chk |
-| 639 | Contraintes — contrôles |
+| 464 | Interfaces ni fournies, ni requises, ni utilisées |
+| 464 | Interface |
+| 464 | Type |
+| 465 | Exchange Items d'un FE absents des interfaces des ports du CE porteur |
+| 465 | Seulement pour les CE dont les ports déclarent des interfaces |
+| 465 | Component Exchange |
+| 465 | Functional Exchange |
+| 465 | Exchange Item manquant |
+| 466 | Classes et types de données jamais utilisés |
+| 466 | Hors types prédéfinis |
+| 466 | Type |
+| 466 | Nature |
+| 476 | Aucun Exchange Item, interface ni type de données dans ce modèle. |
+| 482 | Couche |
+| 482 | Exchange Item |
+| 482 | Mécanisme |
+| 482 | Éléments |
+| 482 | Functional Exchanges |
+| 482 | Component Exchanges |
+| 482 | Interfaces |
+| 490 | Couche |
+| 490 | Interface |
+| 490 | Exchange Items |
+| 490 | Fournie par |
+| 490 | Requise par |
+| 490 | Utilisée / implémentée par |
+| 492 | ∅ aucun |
+| 493 | Aucune interface dans ce modèle. |
+| 497 | Couche |
+| 497 | Type |
+| 497 | Nature |
+| 497 | Contenu |
+| 497 | Hérite de |
+| 497 | Utilisé par |
+| 498 | unité : |
+| 501 | unité : |
+| 502 | Aucun type de données dans ce modèle. |
+| 504 | 📦 Exchange Items |
+| 504 | 🔌 Interfaces |
+| 504 | 🧱 Classes & types |
+| 504 | 🩺 Contrôles |
+| 505 | Nom, contenu… |
+| 506 | types prédéfinis |
+| 520 | pré-condition |
+| 533 | texte lié |
+| 547 | (sans nom) |
+| 548 | Contrainte |
+| 548 | Possédée par |
+| 551 | Contraintes vides (ni nom ni expression) |
+| 552 | Contraintes sans expression |
+| 552 | Seul le nom porte l'information |
+| 553 | Expressions citant un élément introuvable |
+| 553 | Lien de texte vers un élément supprimé |
+| 554 | Contraintes sans élément contraint explicite |
+| 555 | Contraintes en double sur un même élément |
+| 565 | Aucune contrainte dans ce modèle. |
+| 568 | Couche |
+| 568 | Contrainte |
+| 568 | Rôle |
+| 568 | Expression |
+| 568 | Langage |
+| 568 | Porte sur |
+| 568 | Possédée par |
+| 570 | (sans nom) |
+| 573 | 📋 Liste |
+| 573 | 🩺 Contrôles |
+| 574 | Nom, expression, élément… |
+| 591 | Exigence |
+| 591 | Type |
+| 592 | Texte |
+| 593 | Éléments liés |
+| 594 | Exigences liées |
+| 596 | Exigences liées ( |
+| 598 | Propriétés ( |
+| 600 | Contraintes ( |
+| 600 | (sans nom) |
+| 603 | message(s) |
+| 604 | Diagramme de séquence |
+| 605 | Scénarios ( |
+| 607 | Détail étendu indisponible |
+| 617 | Exigences — nombre |
+| 617 | liée(s) au modèle |
+| 618 | rq.cov |
+| 618 | Exigences — liées au modèle |
+| 619 | rq.kind |
+| 619 | Exigences — par type |
+| 620 | rq.layer |
+| 620 | Exigences — couches des éléments liés |
+| 620 | Hors couche |
+| 620 | Nombre d'exigences liées à au moins un élément de la couche |
+| 621 | rq.chk |
+| 621 | Exigences — contrôles |
+| 622 | Exigences — par « |
+| 622 | (non renseigné) |
+| 624 | Propriétés — valeurs appliquées |
+| 624 | élément(s) |
+| 625 | pv.set |
+| 625 | Propriétés — valeurs saisies |
+| 625 | Valeurs différentes de la valeur par défaut |
+| 626 | pv.grp |
+| 626 | Propriétés — éléments par groupe |
+| 627 | pv.chk |
+| 627 | Propriétés — contrôles |
+| 629 | pv.sum. |
+| 629 | Propriétés — Σ « |
+| 630 | élément(s) |
+| 632 | Données — Exchange Items |
+| 632 | interface(s) · |
+| 632 | type(s) |
+| 633 | dm.used |
+| 633 | Données — Exchange Items portés par un échange |
+| 634 | Données — Functional Exchanges avec Exchange Item, par couche |
+| 636 | dm.chk |
+| 636 | Données & interfaces — contrôles |
+| 638 | Contraintes — nombre |
+| 639 | ct.layer |
+| 639 | Contraintes — par couche |
+| 639 | Hors couche |
+| 640 | ct.chk |
+| 640 | Contraintes — contrôles |
 
 ## js/40-suivi-fichier.js
 

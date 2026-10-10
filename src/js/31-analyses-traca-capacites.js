@@ -193,14 +193,14 @@ function capRenderTrace(box){
   box.querySelector('#ana-tr-csv').onclick=()=>{
     if(st.view==='cov'){
       const rows=[]; capTraceCoverage(d).filter(x=>x.used).forEach(x=>{
-        x.upAll.forEach(e=>rows.push([catLabel(x.cat),`${x.hi}→${x.lo}`,'haut',e.name,capAnaHuman(e.type),x.upOk.includes(e)?'réalisé':'NON réalisé']));
-        x.loAll.forEach(e=>rows.push([catLabel(x.cat),`${x.hi}→${x.lo}`,'bas',e.name,capAnaHuman(e.type),x.loOk.includes(e)?'réalisant':'ne réalise rien']));
+        x.upAll.forEach(e=>rows.push([catLabel(x.cat),`${x.hi}→${x.lo}`,'haut',capCx(e.name,e.id),capAnaHuman(e.type),x.upOk.includes(e)?'réalisé':'NON réalisé']));
+        x.loAll.forEach(e=>rows.push([catLabel(x.cat),`${x.hi}→${x.lo}`,'bas',capCx(e.name,e.id),capAnaHuman(e.type),x.loOk.includes(e)?'réalisant':'ne réalise rien']));
       });
-      capCsvDownload('tracabilite-couverture.csv',['Catégorie','Passage','Niveau','Élément','Type','Statut'],rows);
+      capCsvExport('tracabilite-couverture.csv',['Catégorie','Passage','Niveau','Élément','Type','Statut'],rows);
     } else if(st.view==='paths'){
-      capCsvDownload(`tracabilite-chemins-${st.cat}.csv`,box._trCols,box._trRows.map(r=>box._trCols.map(k=>(r[k]||[]).map(e=>e.name).join(' | '))));
-    } else capCsvDownload('tracabilite-liens.csv',['Type de lien','Couche réalisant','Réalisant','Type','Couche réalisé','Réalisé','Type'],
-      box._trLinks.map(l=>[l.type,l.src.layer,l.src.name,capAnaHuman(l.src.type),l.tgt.layer,l.tgt.name,capAnaHuman(l.tgt.type)]));
+      capCsvExport(`tracabilite-chemins-${st.cat}.csv`,box._trCols,box._trRows.map(r=>box._trCols.map(k=>capCx((r[k]||[]).map(e=>e.name).join(' | '),(r[k]||[]).map(e=>e.id)))));
+    } else capCsvExport('tracabilite-liens.csv',['Type de lien','Couche réalisant','Réalisant','Type','Couche réalisé','Réalisé','Type'],
+      box._trLinks.map(l=>[l.type,l.src.layer,capCx(l.src.name,l.src.id),capAnaHuman(l.src.type),l.tgt.layer,capCx(l.tgt.name,l.tgt.id),capAnaHuman(l.tgt.type)]));
   };
 }
 /* ── 2. CAPACITÉS & MISSIONS ────────────────────────────────────── */
@@ -331,10 +331,10 @@ function capRenderCapabilities(box){
   box.querySelector('#ana-cp-mx')?.addEventListener('change',e=>{ st.mx=e.target.value; capRenderCapabilities(box); });
   let deb; box.querySelector('#ana-cp-q')?.addEventListener('input',e=>{ st.q=e.target.value; clearTimeout(deb); deb=setTimeout(()=>{ const p=e.target.selectionStart; capRenderCapabilities(box); const i=box.querySelector('#ana-cp-q'); i.focus(); i.setSelectionRange(p,p); },250); });
   box.querySelector('#ana-cp-csv').onclick=()=>{
-    const n=a=>a.map(e=>e.name).join(', ');
+    const n=a=>capCxList(a);   // export enrichi (53)
     if(st.view==='matrix'&&box._cpMx){ const {rows,cols,key}=box._cpMx;
-      capCsvDownload(`capacites-matrice-${key}.csv`,['Couche','Capacité',...cols.map(c=>c.name)],rows.map(r=>{ const ids=new Set((r[key]||[]).map(e=>e.id)); return [r.layer,r.name,...cols.map(c=>ids.has(c.id)?'X':'')]; }));
-    } else capCsvDownload('capacites.csv',['Couche','Type','Nom','Fonctions','Chaînes','Acteurs / composants','Scénarios','Inclusions','Missions','Réalise','Réalisée par','Capacités exploitées'],
-      caps.map(c=>[c.layer,capAnaHuman(c.type),c.name,n(c.fns),n(c.chains),n(c.actors),n(c.scen),n(c.includes),n(c.missions),n(c.realizes),n(c.realizedBy),n(c.exploits)]));
+      capCsvExport(`capacites-matrice-${key}.csv`,['Couche','Capacité',...cols.map(c=>c.name)],rows.map(r=>{ const ids=new Set((r[key]||[]).map(e=>e.id)); return [r.layer,capCx(r.name,r.id),...cols.map(c=>ids.has(c.id)?'X':'')]; }));
+    } else capCsvExport('capacites.csv',['Couche','Type','Nom','Fonctions','Chaînes','Acteurs / composants','Scénarios','Inclusions','Missions','Réalise','Réalisée par','Capacités exploitées'],
+      caps.map(c=>[c.layer,capAnaHuman(c.type),capCx(c.name,c.id),n(c.fns),n(c.chains),n(c.actors),n(c.scen),n(c.includes),n(c.missions),n(c.realizes),n(c.realizedBy),n(c.exploits)]));
   };
 }

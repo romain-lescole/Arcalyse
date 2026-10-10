@@ -421,7 +421,7 @@
 - `capThemeLayersApply` (l. 48) — Applique les couleurs de couches du thème personnalisé (ou celles d'origine pour un autre thème)
 - `capThemeEditor` (l. 59) — Ouvre l'éditeur du thème personnalisé : toutes les couleurs regroupées (fonds, textes, statuts,
 
-## 39-exigences-donnees.js — 641 lignes
+## 39-exigences-donnees.js — 642 lignes
 
 - `capXtPlain` (l. 14) — Convertit un texte riche (HTML des exigences, linkedText) en texte brut.
 - `capXtShort` (l. 25) — Texte tronqué avec info-bulle portant le texte complet.
@@ -447,15 +447,15 @@
 - `capPvMissing` (l. 306) — Éléments auxquels un groupe PVMT s'applique (classes et architectures déclarées) sans l'avoir reçu.
 - `capPvChecks` (l. 320) — Sections de contrôle des propriétés PVMT (réutilisées par le tableau de bord).
 - `capRenderPvmt` (l. 336) — Rend la sous-vue 🏷 Propriétés : grille par groupe (une colonne par propriété), synthèse, définitions, contrôles.
-- `CAP_DM_TYPES` (l. 386)
-- `capComputeDataModel` (l. 392) — Calcule le modèle de données : Exchange Items (éléments, échanges et interfaces qui les portent),
-- `capDmChecks` (l. 443) — Sections de contrôle du modèle de données et des interfaces (réutilisées par le tableau de bord).
-- `capRenderDataModel` (l. 472) — Rend la sous-vue 🗃 Données & interfaces : Exchange Items, interfaces, classes et types, contrôles.
-- `capComputeConstraints` (l. 515) — Calcule les contraintes : expression (liens linkedText résolus), langage, éléments contraints, propriétaire.
-- `capCtChecks` (l. 544) — Sections de contrôle des contraintes (réutilisées par le tableau de bord).
-- `capRenderConstraints` (l. 561) — Rend la sous-vue ⛓ Contraintes : liste filtrable et contrôles.
-- `capXtDetail` (l. 584) — Sections supplémentaires du panneau de détail : exigences liées, propriétés, contraintes.
-- `capXtDashCatalog` (l. 613) — Ajoute au catalogue du tableau de bord les indicateurs Exigences, Propriétés, Données & interfaces, Contraintes.
+- `CAP_DM_TYPES` (l. 387)
+- `capComputeDataModel` (l. 393) — Calcule le modèle de données : Exchange Items (éléments, échanges et interfaces qui les portent),
+- `capDmChecks` (l. 444) — Sections de contrôle du modèle de données et des interfaces (réutilisées par le tableau de bord).
+- `capRenderDataModel` (l. 473) — Rend la sous-vue 🗃 Données & interfaces : Exchange Items, interfaces, classes et types, contrôles.
+- `capComputeConstraints` (l. 516) — Calcule les contraintes : expression (liens linkedText résolus), langage, éléments contraints, propriétaire.
+- `capCtChecks` (l. 545) — Sections de contrôle des contraintes (réutilisées par le tableau de bord).
+- `capRenderConstraints` (l. 562) — Rend la sous-vue ⛓ Contraintes : liste filtrable et contrôles.
+- `capXtDetail` (l. 585) — Sections supplémentaires du panneau de détail : exigences liées, propriétés, contraintes.
+- `capXtDashCatalog` (l. 614) — Ajoute au catalogue du tableau de bord les indicateurs Exigences, Propriétés, Données & interfaces, Contraintes.
 
 ## 40-suivi-fichier.js — 546 lignes
 
