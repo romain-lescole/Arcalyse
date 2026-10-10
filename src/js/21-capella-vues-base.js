@@ -110,7 +110,8 @@ let capTableColFilters = {};      // { colKey: texte de filtre }
 let capTableMultiValDisplay = 'inline'; // 'inline' (en ligne, virgules) | 'stacked' (empilé verticalement)
 let capTableCustomCols = [];      // [{key, label, steps:[{kind, relKey?, direction?, filterType?}]}]
 let capTableSort = {col:null, dir:1}; // tri de l'onglet actif (dir : 1 croissant, -1 décroissant)
-let capTableScope = {ids:[], direct:false}; // 🎯 portée de l'onglet actif : contenu des éléments choisis (vide = tout le modèle)
+let capTableScope = {ids:[], direct:false};
+let capTableDisplay = {mode:'rows', cont:'grey', level:2, open:{}}; // ☰ Lignes / 🌳 Arbre de l'onglet actif (51-tableau.js) // 🎯 portée de l'onglet actif : contenu des éléments choisis (vide = tout le modèle)
 let capTableTabs = null;          // onglets de vues [{id, name, visibleCols, colFilters, colWidths, sort}] (51-tableau.js)
 let capTableTabIdx = 0;           // index de l'onglet actif
 let _capColResizing = false;      // redimensionnement de colonne en cours (évite un tri ou un déplacement au relâchement)
@@ -642,6 +643,8 @@ function capBuildTableToolbar(){
 
   // 🎯 Portée de l'onglet (51-tableau.js)
   tb.appendChild(capTableScopeButton());
+  // ☰ Lignes / 🌳 Arbre (+ conteneurs, déplier, niveaux)
+  capTableTreeControls(tb);
 
   // Bascule d'affichage pour les cellules à valeurs multiples : en ligne (virgules) ou
   // empilées verticalement (une valeur par ligne, comme pour Owned element).
@@ -1204,8 +1207,11 @@ function capRenderTableBodyOnly(){
   // Lignes filtrées (types, couche, recherche, filtres par colonne) puis triées (51-tableau.js)
   const filtered=capTableRows();
 
-  const rc=document.getElementById('cap-result-count'); if(rc)rc.textContent=`${filtered.length} élément(s)`+(capTableScope.ids.length?` · 🎯 portée : ${capTableScopeLabel()}`:'');
-  const total=filtered.length,start=capPage*capPageSize,end=Math.min(start+capPageSize,total),slice=filtered.slice(start,end);
+  // 🌳 Arbre : lignes rangées sous leurs conteneurs (nœuds dépliés seulement) ; sinon une ligne par élément
+  const tree=capTableDisplay.mode==='tree';
+  const items=tree ? capTableTreeItems(filtered) : filtered.map(el=>({el, row:true, depth:0, kids:0}));
+  const rc=document.getElementById('cap-result-count'); if(rc)rc.textContent=`${filtered.length} élément(s)`+(tree?` · 🌳 arbre (${items.length} ligne(s) affichée(s))`:'')+(capTableScope.ids.length?` · 🎯 portée : ${capTableScopeLabel()}`:'');
+  const total=items.length,start=capPage*capPageSize,end=Math.min(start+capPageSize,total),slice=items.slice(start,end);
   const table=document.getElementById('cap-table');
   const thead=document.getElementById('cap-table-head'); const tbody=document.getElementById('cap-table-body');
   if(!thead||!tbody) return;
@@ -1259,13 +1265,29 @@ function capRenderTableBodyOnly(){
     td.textContent = capEnabledTypes.size ? 'Aucun élément ne correspond aux filtres.' : 'Aucun type coché pour cet onglet : cochez des types d\'éléments dans le menu de gauche.';
     tr.appendChild(td); tbody.appendChild(tr);
   }
-  slice.forEach(el=>{
+  slice.forEach(it=>{
+    const el=it.el;
     const lv=CAP_LAYERS[el.layer]||{color:'#8b949e'};
     const tr=document.createElement('tr');
     tr.style.cursor='pointer';
+    if (!it.row) tr.className='cap-trow-ctr';   // 🌳 conteneur affiché pour la structure (pas une ligne)
     tr.onclick=()=>capOpenDetail(el.id);
-    cols.forEach(colKey=>{
+    cols.forEach((colKey,ci)=>{
       const td=document.createElement('td');
+      if (tree && ci===0) {
+        // 1re colonne en arbre : retrait, ▶/▼, et nom pour un conteneur
+        td.classList.add('cap-ttree-td');
+        const ind=document.createElement('span'); ind.className='cap-ttree-ind'; ind.style.width=(it.depth*16)+'px';
+        const tg=document.createElement('span'); tg.className='cap-ttree-tog'; tg.textContent=it.kids?(it.open?'▼':'▶'):'';
+        if (it.kids) tg.onclick=ev=>{ ev.stopPropagation(); capTableTreeToggle(el.id, !it.open); };
+        td.appendChild(ind); td.appendChild(tg);
+        const txt=document.createElement('span'); txt.className='cap-ttree-txt';
+        const v=it.row ? capTableGetValArray(el,colKey).filter(x=>x!=='').join(', ') : (el.attrs.name||el.typeName);
+        txt.textContent=v; td.title=it.row?v:`${el.attrs.name||''} — ${(CAP_HUMAN_NAMES[el.typeName]||{}).h||el.typeName} (conteneur)`;
+        if (!it.row) { const ty=document.createElement('span'); ty.className='cap-ttree-ty'; ty.textContent=(CAP_HUMAN_NAMES[el.typeName]||{}).h||el.typeName; txt.appendChild(ty); }
+        td.appendChild(txt); tr.appendChild(td); return;
+      }
+      if (!it.row) { tr.appendChild(td); return; }   // conteneur : pas de valeurs
       const valArr=capTableGetValArray(el,colKey).filter(v=>v!=='');
       const val=valArr.join(', ');
       if (colKey==='layer') { td.innerHTML=`<span style="color:${lv.color};font-family:monospace;font-size:11px;font-weight:700;">${capEsc(val)}</span>`; }
@@ -1304,7 +1326,7 @@ function capRenderTree(){
     container.innerHTML=`<div id="cap-tree-bar" class="cap-tree-bar">
       <input class="inp" id="cap-tree-q" placeholder="🔍 Chercher (nom ou type)…">
       <span class="tb-grp" title="Affichage"><button class="phl-toggle-btn" data-tv="tree" title="Arbre ; avec une recherche : résultats dans leurs conteneurs, grisés s'ils ne correspondent pas">🌳 Arbre</button><button class="phl-toggle-btn" data-tv="list" title="Liste à plat triée par nom, avec le chemin des conteneurs (${CAP_TREE_LIST_MAX} lignes au plus)">☰ Liste</button></span>
-      <span class="tb-grp" data-tree-only><button class="tbtn" data-ta="open">⊞ Déplier</button><button class="tbtn" data-ta="close">⊟ Réduire</button></span>
+      <span class="tb-grp" data-tree-only><button class="tbtn" data-ta="open">⊞ Tout déplier</button><button class="tbtn" data-ta="close">⊟ Tout réduire</button><span class="tb-grp-l">Niveau</span><button class="tbtn" data-lvl="1" title="Déplier jusqu'au niveau 1">1</button><button class="tbtn" data-lvl="2" title="Déplier jusqu'au niveau 2">2</button><button class="tbtn" data-lvl="3" title="Déplier jusqu'au niveau 3">3</button></span>
       <button class="tbtn" data-ta="json" title="Exporter les éléments des types cochés en JSON">⬇ JSON</button>
       <span class="ana-fn-cnt" id="cap-tree-cnt"></span></div><div id="cap-tree-body"></div>`;
     const q=document.getElementById('cap-tree-q'); q.value=capTreeFilter;
@@ -1313,8 +1335,22 @@ function capRenderTree(){
     container.querySelector('[data-ta="open"]').onclick=()=>document.getElementById('cap-expand-all')?.click();
     container.querySelector('[data-ta="close"]').onclick=()=>document.getElementById('cap-collapse-all')?.click();
     container.querySelector('[data-ta="json"]').onclick=()=>document.getElementById('cap-exp-json')?.click();
+    container.querySelectorAll('[data-lvl]').forEach(b=>b.onclick=()=>capTreeExpandLevel(+b.dataset.lvl));
   }
   capRenderTreeBody();
+}
+
+/** Déplie l'arbre de 🌳 Arborescence jusqu'à un niveau donné et replie le reste.
+ * @param {number} n - Nombre de niveaux dépliés (1 = enfants de la racine visibles)
+ */
+function capTreeExpandLevel(n){
+  const body=document.getElementById('cap-tree-body'); if(!body) return;
+  body.querySelectorAll('.cap-tree-children').forEach(ch=>{
+    let d=0, p=ch.parentElement;
+    while(p&&p!==body){ if(p.classList.contains('cap-tree-children')) d++; p=p.parentElement; }
+    const open=d<n; ch.classList.toggle('open',open);
+    const tog=ch.previousElementSibling&&ch.previousElementSibling.querySelector('.cap-tree-tog'); if(tog) tog.classList.toggle('open',open);
+  });
 }
 
 /** Rend le contenu de 🌳 Arborescence selon l'affichage : arbre (avec une recherche : résultats et leurs

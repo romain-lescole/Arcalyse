@@ -13,7 +13,7 @@
 /** Crée un onglet de vue du tableau.
  * @param {string} name - Nom de l'onglet
  * @param {object} [from] - Onglet dont on copie les colonnes et largeurs (nouvel onglet = copie de la vue, sans type coché)
- * @returns {object} {id, name, visibleCols, colFilters, colWidths, sort, types, scope}
+ * @returns {object} {id, name, visibleCols, colFilters, colWidths, sort, types, scope, display}
  */
 function capTableTabNew(name, from){
   return {
@@ -25,7 +25,8 @@ function capTableTabNew(name, from){
     sort:{col:null, dir:1},
     // Types cochés propres à l'onglet : aucun pour un nouvel onglet ; null = reprendre ceux des autres vues
     types: from ? [] : null,
-    scope:{ids:[], direct:false}   // 🎯 portée : vide = tout le modèle
+    scope:{ids:[], direct:false},  // 🎯 portée : vide = tout le modèle
+    display:{mode:'rows', cont:'grey', level:2, open:{}}   // ☰ Lignes / 🌳 Arbre
   };
 }
 
@@ -39,7 +40,7 @@ function capTableTabsEnsure(){
 /** Copie l'état de travail du tableau (colonnes, filtres, largeurs, tri) dans l'onglet actif. */
 function capTableSyncToTab(){
   const t=capTableTabs&&capTableTabs[capTableTabIdx]; if(!t) return;
-  t.visibleCols=capTableVisibleCols; t.colFilters=capTableColFilters; t.colWidths=capTableColWidths; t.sort=capTableSort; t.scope=capTableScope;
+  t.visibleCols=capTableVisibleCols; t.colFilters=capTableColFilters; t.colWidths=capTableColWidths; t.sort=capTableSort; t.scope=capTableScope; t.display=capTableDisplay;
   if (_capTableTypesOn) t.types=[...capEnabledTypes];
 }
 
@@ -49,6 +50,8 @@ function capTableSyncFromTab(){
   capTableVisibleCols=t.visibleCols||null; capTableColFilters=t.colFilters||{};
   capTableColWidths=t.colWidths||{}; capTableSort=t.sort||{col:null, dir:1};
   capTableScope=t.scope&&Array.isArray(t.scope.ids) ? t.scope : (t.scope={ids:[], direct:false});
+  capTableDisplay=t.display&&t.display.mode ? t.display : (t.display={mode:'rows', cont:'grey', level:2, open:{}});
+  if(!capTableDisplay.open) capTableDisplay.open={};
   if (_capTableTypesOn) { capTableTypesLoad(); capTableSidebar(); }
 }
 
@@ -330,11 +333,19 @@ function capTableColDnD(th, colKey, thead){
   };
 }
 
-/** Exporte en CSV les colonnes affichées, pour toutes les lignes filtrées (dans l'ordre du tri). */
+/** Exporte en CSV les colonnes affichées, pour toutes les lignes filtrées (dans l'ordre du tri ; en 🌳 arbre :
+ * ordre de l'arbre déplié, avec les colonnes Niveau et Chemin). */
 function capTableCsv(){
   const cols=capTableVisibleCols||CAP_TABLE_BUILTIN_COLS;
   const tab=capTableTabs&&capTableTabs[capTableTabIdx];
   const nm=(tab?tab.name:'tableau').replace(/[^\w\-àâäéèêëîïôöùûüç ]+/gi,'').trim().replace(/\s+/g,'-')||'tableau';
+  if (capTableDisplay.mode==='tree') {
+    // Arbre : lignes dans l'ordre de l'arbre entièrement déplié, avec niveau et chemin des conteneurs
+    const it=capTableTreeItems(capTableRows(), true).filter(x=>x.row);
+    capCsvDownload('tableau-'+nm+'.csv', ['Niveau','Chemin',...cols.map(capTableColLabel)],
+      it.map(x=>[x.depth, x.path.join(' › '), ...cols.map(c=>capTableGetVal(x.el,c))]));
+    return;
+  }
   capCsvDownload('tableau-'+nm+'.csv', cols.map(capTableColLabel), capTableRows().map(el=>cols.map(c=>capTableGetVal(el,c))));
 }
 
@@ -585,4 +596,91 @@ function capTableScopeDialog(){
   ov.querySelectorAll('[data-c="x"]').forEach(b=>b.onclick=()=>{ ov.style.display='none'; });
   ov.querySelector('[data-c="clr"]').onclick=()=>{ capTableScope.ids=[]; apply(); drawTree(); };
   drawSel(); drawTree();
+}
+
+/* ── 🌳 Affichage en arbre ─────────────────────────────────────────────────────
+ * Affichage par onglet : ☰ Lignes (liste) ou 🌳 Arbre. En arbre, les lignes (types ∩ portée ∩ filtres)
+ * sont rangées sous leurs conteneurs : « grisés » (conteneurs intermédiaires affichés sans valeurs) ou
+ * « compact » (chaque ligne sous son plus proche ancêtre qui est lui-même une ligne). Avec une portée,
+ * l'arbre part des éléments de portée. L'ordre des frères suit l'ordre des lignes (donc le tri).
+ * État : capTableDisplay = {mode:'rows'|'tree', cont:'grey'|'compact', level, open:{id:bool}} (déclaré dans 21). */
+
+/** Construit la structure de l'arbre du tableau à partir des lignes (dans leur ordre).
+ * @param {object[]} rows - Lignes filtrées et triées (capTableRows)
+ * @returns {{roots:string[], kids:Object<string,string[]>, rowSet:Set<string>}} Racines, enfants par id, lignes
+ */
+function capTableTreeBuild(rows){
+  const {parentOf}=capGetParentIndex(), rowSet=new Set(rows.map(e=>e.id));
+  const scope=new Set((capTableScope&&capTableScope.ids)||[]);
+  const compact=capTableDisplay.cont==='compact';
+  const roots=[], kids={}, seen=new Set();
+  const add=(par,id)=>{ if(seen.has(id)) return; seen.add(id); if(par==null) roots.push(id); else (kids[par]=kids[par]||[]).push(id); };
+  rows.forEach(el=>{
+    // Chaîne des ancêtres retenus (du plus haut au plus proche), arrêtée à la portée
+    const chain=[]; let p=parentOf[el.id], k=0;
+    while(p && k<200){
+      const pe=capGetElementById_(p);
+      if(pe && pe.typeName!=='Project' && (!compact || rowSet.has(p))) chain.unshift(p);
+      if(scope.has(p)) break;
+      p=parentOf[p]; k++;
+    }
+    if(scope.size && !chain.length) { add(null, el.id); return; }
+    let par=null;
+    chain.forEach(id=>{ add(par,id); par=id; });
+    add(par, el.id);
+  });
+  return {roots, kids, rowSet};
+}
+
+/** Éléments à afficher en arbre, à plat, dans l'ordre (seulement les nœuds dépliés, sauf si all).
+ * @param {object[]} rows - Lignes filtrées et triées
+ * @param {boolean} [all] - Tout déplier (export CSV)
+ * @returns {Array<{el:object, depth:number, kids:number, row:boolean, open:boolean, path:string[]}>} Éléments affichés
+ */
+function capTableTreeItems(rows, all){
+  const {roots, kids, rowSet}=capTableTreeBuild(rows), out=[], D=capTableDisplay;
+  // Les conteneurs (non-lignes) sont dépliés par défaut ; le niveau compte seulement les lignes (rd = rang de ligne)
+  const walk=(id,depth,rd,path)=>{
+    const el=capGetElementById_(id); if(!el) return;
+    const row=rowSet.has(id), ch=kids[id]||[];
+    const open=all || (D.open[id]!==undefined ? D.open[id] : (!row || rd<D.level));
+    out.push({el, depth, kids:ch.length, row, open, path});
+    if(open) ch.forEach(c=>walk(c, depth+1, rd+(row?1:0), [...path, el.attrs.name||el.typeName]));
+  };
+  roots.forEach(r=>walk(r,0,0,[]));
+  return out;
+}
+
+/** Ajoute à la barre du tableau les commandes d'affichage : ☰ Lignes / 🌳 Arbre, et en arbre :
+ * conteneurs grisés / compact, ⊞ Tout déplier, ⊟ Tout réduire, Niveau 1 · 2 · 3.
+ * @param {HTMLElement} tb - Barre du tableau
+ */
+function capTableTreeControls(tb){
+  const D=capTableDisplay, g=document.createElement('span'); g.className='tb-grp';
+  const btn=(lab,tip,on,fn)=>{ const b=document.createElement('button'); b.className='phl-toggle-btn'+(on?' active':''); b.textContent=lab; b.title=tip; b.onclick=fn; return b; };
+  const set=fn=>()=>{ fn(); capPage=0; capTableSyncToTab(); capRenderTable(); };
+  g.appendChild(btn('☰ Lignes','Une ligne par élément',D.mode!=='tree',set(()=>{ D.mode='rows'; })));
+  g.appendChild(btn('🌳 Arbre','Lignes rangées sous leurs conteneurs (avec une portée : à partir des éléments de portée)',D.mode==='tree',set(()=>{ D.mode='tree'; })));
+  tb.appendChild(g);
+  if(D.mode!=='tree') return;
+  const g2=document.createElement('span'); g2.className='tb-grp';
+  g2.appendChild(btn('Conteneurs grisés','Les conteneurs intermédiaires sont affichés, grisés et sans valeurs',D.cont!=='compact',set(()=>{ D.cont='grey'; })));
+  g2.appendChild(btn('Compact','Chaque ligne sous son plus proche ancêtre qui est lui-même une ligne (sans les paquetages et conteneurs intermédiaires)',D.cont==='compact',set(()=>{ D.cont='compact'; })));
+  tb.appendChild(g2);
+  const g3=document.createElement('span'); g3.className='tb-grp';
+  const lv=(lab,tip,n)=>{ const b=document.createElement('button'); b.className='tbtn'; b.textContent=lab; b.title=tip; b.onclick=set(()=>{ D.level=n; D.open={}; }); return b; };
+  g3.appendChild(lv('⊞ Tout déplier','Déplier tout l\'arbre',999));
+  g3.appendChild(lv('⊟ Tout réduire','Replier toutes les lignes (les conteneurs restent ouverts jusqu\'aux premières lignes)',0));
+  const l=document.createElement('span'); l.className='tb-grp-l'; l.textContent='Niveau'; g3.appendChild(l);
+  [1,2,3].forEach(n=>g3.appendChild(lv(String(n),'Déplier jusqu\'au niveau '+n+' de lignes (les conteneurs ne comptent pas)',n)));
+  tb.appendChild(g3);
+}
+
+/** Déplie ou replie un nœud de l'arbre du tableau.
+ * @param {string} id - Identifiant du nœud
+ * @param {boolean} open - État voulu
+ */
+function capTableTreeToggle(id, open){
+  capTableDisplay.open[id]=open;
+  capRenderTableBodyOnly();
 }
