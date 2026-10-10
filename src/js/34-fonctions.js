@@ -357,10 +357,9 @@ function capRenderFunctions(box){
     if(!st.selC||!st.selC.size) return;
     const vc=visCols(), rows=box._fnRows||[], cells=[...st.selC].map(k=>k.split(':').map(Number));
     const rs=[...new Set(cells.map(x=>x[0]))].sort((a,b)=>a-b), cs=[...new Set(cells.map(x=>x[1]))].sort((a,b)=>a-b);
-    const txt=rs.map(r=>cs.map(c=>{ if(!st.selC.has(r+':'+c)) return ''; const col=vc[c], f=rows[r]; return f&&col?String((col.csv||col.v)(f)).replace(/[\t\n\r]+/g,' '):''; }).join('\t')).join('\n');
-    const done=()=>{ const s=box.querySelector('#ana-fn-selc'); if(s){ s.textContent=`✔ ${st.selC.size} cellule(s) copiée(s)`; setTimeout(updSel,1500); } };
-    const fb=()=>{ const ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(e){} ta.remove(); done(); };
-    if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done,fb); else fb();
+    const grid=rs.map(r=>cs.map(c=>{ if(!st.selC.has(r+':'+c)) return ''; const col=vc[c], f=rows[r]; return f&&col?String((col.csv||col.v)(f)).replace(/[\t\r]+/g,' '):''; }));
+    // Texte tabulé + tableau HTML (52) : les retours à la ligne restent dans la cellule
+    capClipCopy(grid,()=>{ const s=box.querySelector('#ana-fn-selc'); if(s){ s.textContent=`✔ ${st.selC.size} cellule(s) copiée(s)`; setTimeout(updSel,1500); } });
   }
   /** Filtre par valeurs d'une colonne, à la manière d'Excel : tri, recherche, cases à cocher avec effectifs.
    * @param {string} k - Clé de la colonne

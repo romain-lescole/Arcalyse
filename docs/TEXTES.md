@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3335 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3339 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -1578,127 +1578,127 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 350 | 1500 lignes affichées sur |
 | 354 | sélectionnée |
 | 354 | aucune sélection |
-| 361 | cellule(s) copiée(s) |
-| 378 | ↑ Trier de A à Z ↓ Trier de Z à A |
-| 379 | ✕ Effacer le filtre de « |
-| 379 | » OK Annuler |
-| 385 | (vides) |
-| 387 | (Tout sélectionner |
-| 387 | — résultats |
-| 388 | (Vides) |
-| 416 | fonction(s) |
-| 452 | allocation : |
-| 452 | allocataire « |
-| 452 | » (sous-composants compris) |
-| 452 | recherche « |
-| 454 | (vides) |
-| 459 | ƒ Fonctions — tableau |
-| 459 | fonction(s) |
-| 459 | · filtres : |
-| 459 | Tableau |
-| 475 | Chaque ligne suit une fonction de sa couche la plus haute jusqu'aux fonctions qui la réalisent. ∅ = rupture de traçabilité. |
-| 478 | 800 lignes affichées sur |
-| 478 | — export CSV pour tout voir. |
-| 483 | Fonctions |
-| 483 | Fonctions feuilles (sans sous-fonction) |
-| 483 | Profondeur maximale de la hiérarchie |
-| 484 | Sous-fonctions par fonction mère (moyenne) |
-| 484 | Functional Exchanges |
-| 485 | Fonctions avec description |
-| 485 | Noms commençant par un verbe |
-| 485 | Feuilles allouées à un composant |
-| 485 | Feuilles reliées par au moins un échange |
-| 486 | Feuilles réalisées à la couche inférieure |
-| 486 | Feuilles réalisant une fonction de la couche supérieure |
-| 487 | Feuilles impliquées dans une chaîne |
-| 487 | Feuilles impliquées dans une capacité |
-| 487 | Fonctions allouées à plusieurs composants |
-| 508 | (elle passe à gauche)" ◂ |
-| 511 | Indicateur |
-| 515 | ◂ dans l'en-tête : réduire une couche (elle passe à gauche, ▸ pour la déplier). Les exports ne gardent que les couches dépliées. |
-| 516 | 🌐 HTML (indicateurs) 🖼 PNG 📋 Copier l'image |
-| 516 | ⇔ Tout déplier |
-| 522 | n/a : la couche voisine ne contient aucun lien de réalisation, l'indicateur n'aurait pas de sens. Répartition des fonctions par niveau de profondeur |
-| 525 | Niveau |
+| 362 | cellule(s) copiée(s) |
+| 377 | ↑ Trier de A à Z ↓ Trier de Z à A |
+| 378 | ✕ Effacer le filtre de « |
+| 378 | » OK Annuler |
+| 384 | (vides) |
+| 386 | (Tout sélectionner |
+| 386 | — résultats |
+| 387 | (Vides) |
+| 415 | fonction(s) |
+| 451 | allocation : |
+| 451 | allocataire « |
+| 451 | » (sous-composants compris) |
+| 451 | recherche « |
+| 453 | (vides) |
+| 458 | ƒ Fonctions — tableau |
+| 458 | fonction(s) |
+| 458 | · filtres : |
+| 458 | Tableau |
+| 474 | Chaque ligne suit une fonction de sa couche la plus haute jusqu'aux fonctions qui la réalisent. ∅ = rupture de traçabilité. |
+| 477 | 800 lignes affichées sur |
+| 477 | — export CSV pour tout voir. |
+| 482 | Fonctions |
+| 482 | Fonctions feuilles (sans sous-fonction) |
+| 482 | Profondeur maximale de la hiérarchie |
+| 483 | Sous-fonctions par fonction mère (moyenne) |
+| 483 | Functional Exchanges |
+| 484 | Fonctions avec description |
+| 484 | Noms commençant par un verbe |
+| 484 | Feuilles allouées à un composant |
+| 484 | Feuilles reliées par au moins un échange |
+| 485 | Feuilles réalisées à la couche inférieure |
+| 485 | Feuilles réalisant une fonction de la couche supérieure |
+| 486 | Feuilles impliquées dans une chaîne |
+| 486 | Feuilles impliquées dans une capacité |
+| 486 | Fonctions allouées à plusieurs composants |
+| 507 | (elle passe à gauche)" ◂ |
+| 510 | Indicateur |
+| 514 | ◂ dans l'en-tête : réduire une couche (elle passe à gauche, ▸ pour la déplier). Les exports ne gardent que les couches dépliées. |
+| 515 | 🌐 HTML (indicateurs) 🖼 PNG 📋 Copier l'image |
+| 515 | ⇔ Tout déplier |
+| 521 | n/a : la couche voisine ne contient aucun lien de réalisation, l'indicateur n'aurait pas de sens. Répartition des fonctions par niveau de profondeur |
+| 524 | Niveau |
+| 525 | · niveau |
+| 525 | (racine) |
+| 526 | Fonctions les plus connectées (échanges entrants + sortants) |
 | 526 | · niveau |
-| 526 | (racine) |
-| 527 | Fonctions les plus connectées (échanges entrants + sortants) |
-| 527 | · niveau |
-| 527 | fonction(s) |
-| 538 | Segoe UI, Arial, sans-serif |
-| 542 | Projet Capella |
-| 543 | Métriques des fonctions par couche |
-| 554 | italic 12px |
-| 562 | n/a : couche voisine sans lien de réalisation · vert ≥ 90 %, orange ≥ 50 %, rouge 50 % |
-| 567 | 7px minmax(300px,1.1fr) |
-| 567 | minmax(320px,1fr) |
-| 571 | ⚙ Règles de nommage personnalisées Complète les listes intégrées (≈ 1 000 verbes anglais, verbes français en -er/-ir/-re/-oir). Un mot par ligne ou séparés par des virgules. Conservées dans la 💾 Page HTML. Verbes métier acceptés en tête |
-| 573 | Mots refusés en tête (faux verbes) |
-| 574 | ✔ Appliquer |
-| 578 | 🌳 Hiérarchie |
-| 578 | 📋 Tableau |
-| 578 | ⛓ Traçabilité |
-| 578 | 📊 Métriques |
-| 578 | 🩺 Contrôles |
-| 579 | Toutes |
-| 581 | Descriptions |
-| 584 | Allocation |
-| 584 | — double-clic : uniquement celles-ci |
-| 585 | ⬇ CSV 📄 Dossier fonctionnel |
-| 585 | fonction(s) |
-| 595 | px 7px minmax(300px,1.1fr) |
-| 631 | 📊 Métriques des fonctions |
-| 631 | couches : |
-| 631 | Indicateurs |
-| 636 | ✔ Image copiée |
-| 637 | ⚠ Copie refusée — utilisez PNG |
-| 638 | 📋 Copier l'image |
-| 644 | Contrôle |
-| 644 | Fonction |
-| 644 | Détail |
-| 647 | Couche |
-| 647 | Fonction |
-| 647 | Type |
-| 647 | Kind |
-| 647 | Profondeur |
-| 647 | Feuille |
-| 647 | Parent |
-| 647 | Allouée à |
-| 647 | Nature de l'allocation |
-| 647 | Échanges entrants |
-| 647 | Échanges sortants |
-| 647 | Réalise |
-| 647 | Réalisée par |
-| 647 | Chaînes |
-| 647 | Capacités |
-| 647 | États |
-| 647 | Statut |
-| 647 | Description |
-| 663 | sous-fonction(s) |
-| 664 | Aucune description. |
-| 666 | Allouée à |
-| 667 | Entrées |
-| 668 | Sorties |
-| 669 | Réalise |
-| 670 | Réalisée par |
-| 671 | Chaînes |
-| 672 | Capacités |
-| 673 | Disponible dans |
-| 675 | 📊 Métriques |
-| 676 | 🩺 Contrôles |
-| 677 | Capella |
-| 678 | ƒ Dossier fonctionnel |
-| 678 | - dossier fonctionnel.html |
-| 694 | ƒ Fonctions |
-| 694 | 🧬 Traçabilité inter-couches |
-| 694 | 🎯 Capacités & missions |
-| 694 | 🔁 Modes & états |
-| 694 | ⚖ Comparaison de versions |
-| 694 | 📑 Exigences |
-| 694 | 🏷 Propriétés |
-| 694 | 🗃 Données & interfaces |
-| 694 | ⛓ Contraintes |
-| 730 | ↻ Recalculer |
+| 526 | fonction(s) |
+| 537 | Segoe UI, Arial, sans-serif |
+| 541 | Projet Capella |
+| 542 | Métriques des fonctions par couche |
+| 553 | italic 12px |
+| 561 | n/a : couche voisine sans lien de réalisation · vert ≥ 90 %, orange ≥ 50 %, rouge 50 % |
+| 566 | 7px minmax(300px,1.1fr) |
+| 566 | minmax(320px,1fr) |
+| 570 | ⚙ Règles de nommage personnalisées Complète les listes intégrées (≈ 1 000 verbes anglais, verbes français en -er/-ir/-re/-oir). Un mot par ligne ou séparés par des virgules. Conservées dans la 💾 Page HTML. Verbes métier acceptés en tête |
+| 572 | Mots refusés en tête (faux verbes) |
+| 573 | ✔ Appliquer |
+| 577 | 🌳 Hiérarchie |
+| 577 | 📋 Tableau |
+| 577 | ⛓ Traçabilité |
+| 577 | 📊 Métriques |
+| 577 | 🩺 Contrôles |
+| 578 | Toutes |
+| 580 | Descriptions |
+| 583 | Allocation |
+| 583 | — double-clic : uniquement celles-ci |
+| 584 | ⬇ CSV 📄 Dossier fonctionnel |
+| 584 | fonction(s) |
+| 594 | px 7px minmax(300px,1.1fr) |
+| 630 | 📊 Métriques des fonctions |
+| 630 | couches : |
+| 630 | Indicateurs |
+| 635 | ✔ Image copiée |
+| 636 | ⚠ Copie refusée — utilisez PNG |
+| 637 | 📋 Copier l'image |
+| 643 | Contrôle |
+| 643 | Fonction |
+| 643 | Détail |
+| 646 | Couche |
+| 646 | Fonction |
+| 646 | Type |
+| 646 | Kind |
+| 646 | Profondeur |
+| 646 | Feuille |
+| 646 | Parent |
+| 646 | Allouée à |
+| 646 | Nature de l'allocation |
+| 646 | Échanges entrants |
+| 646 | Échanges sortants |
+| 646 | Réalise |
+| 646 | Réalisée par |
+| 646 | Chaînes |
+| 646 | Capacités |
+| 646 | États |
+| 646 | Statut |
+| 646 | Description |
+| 662 | sous-fonction(s) |
+| 663 | Aucune description. |
+| 665 | Allouée à |
+| 666 | Entrées |
+| 667 | Sorties |
+| 668 | Réalise |
+| 669 | Réalisée par |
+| 670 | Chaînes |
+| 671 | Capacités |
+| 672 | Disponible dans |
+| 674 | 📊 Métriques |
+| 675 | 🩺 Contrôles |
+| 676 | Capella |
+| 677 | ƒ Dossier fonctionnel |
+| 677 | - dossier fonctionnel.html |
+| 693 | ƒ Fonctions |
+| 693 | 🧬 Traçabilité inter-couches |
+| 693 | 🎯 Capacités & missions |
+| 693 | 🔁 Modes & états |
+| 693 | ⚖ Comparaison de versions |
+| 693 | 📑 Exigences |
+| 693 | 🏷 Propriétés |
+| 693 | 🗃 Données & interfaces |
+| 693 | ⛓ Contraintes |
+| 729 | ↻ Recalculer |
 
 ## js/35-tableau-de-bord.js
 
@@ -3541,5 +3541,14 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 688 | de lignes (les conteneurs ne comptent pas) |
 | 722 | sélectionnée |
 | 722 | aucune sélection |
-| 745 | cellule(s) copiée(s) |
+| 747 | cellule(s) copiée(s) |
 | 755 | 📋 Copier aucune sélection |
+
+## js/52-selection-cellules.js
+
+| Ligne | Texte |
+|---:|---|
+| 12 | #cap-table, .ana-fnt, .cap-mx, .ana-kv, .fex-box-t, .dash-tbl, .rmcb-t |
+| 58 | 📋 Copier Copier le tableau ✕ |
+| 90 | ✔ tableau copié |
+| 90 | cellule(s) copiée(s) |

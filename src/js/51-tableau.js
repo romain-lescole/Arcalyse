@@ -733,18 +733,18 @@ function capTSelPaint(){
 /** Efface la sélection de cellules. */
 function capTSelClear(){ if(!_capTSel.size) return; _capTSel=new Set(); capTSelPaint(); }
 
-/** Copie les cellules sélectionnées (texte tabulé, une ligne par ligne du tableau, cases vides conservées). */
+/** Copie les cellules sélectionnées (une ligne par ligne du tableau, cases vides conservées ; cellule à plusieurs
+ * éléments : un élément par ligne, dans la même cellule une fois collée dans Excel / Word). */
 function capTSelCopy(){
   if(!_capTSel.size) return;
   const cols=capTableVisibleCols||CAP_TABLE_BUILTIN_COLS, cells=[..._capTSel].map(k=>k.split(':').map(Number));
   const rs=[...new Set(cells.map(x=>x[0]))].sort((a,b)=>a-b), cs=[...new Set(cells.map(x=>x[1]))].sort((a,b)=>a-b);
   const val=(r,c)=>{ const it=_capTSelItems[r], col=cols[c]; if(!it||!col) return '';
     if(!it.row) return c===0 ? (it.el.attrs.name||it.el.typeName) : '';   // conteneur de l'arbre : nom seulement
-    return capTableGetVal(it.el,col).replace(/[\t\n\r]+/g,' '); };
-  const txt=rs.map(r=>cs.map(c=>_capTSel.has(r+':'+c)?val(r,c):'').join('\t')).join('\n');
-  const done=()=>{ const s=document.getElementById('cap-t-selc'); if(s){ s.textContent=`✔ ${_capTSel.size} cellule(s) copiée(s)`; setTimeout(capTSelUpd,1500); } };
-  const fb=()=>{ const ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(e){} ta.remove(); done(); };
-  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done,fb); else fb();
+    return capTableGetValArray(it.el,col).filter(v=>v!=='').map(v=>String(v).replace(/[\t\r\n]+/g,' ')).join('\n'); };   // un élément par ligne
+  const grid=rs.map(r=>cs.map(c=>_capTSel.has(r+':'+c)?val(r,c):''));
+  // Texte tabulé + tableau HTML : une cellule à plusieurs éléments reste une cellule, un élément par ligne (52)
+  capClipCopy(grid,()=>{ const s=document.getElementById('cap-t-selc'); if(s){ s.textContent=`✔ ${_capTSel.size} cellule(s) copiée(s)`; setTimeout(capTSelUpd,1500); } });
 }
 
 /** Bouton 📋 Copier et compteur de sélection pour la barre du tableau.

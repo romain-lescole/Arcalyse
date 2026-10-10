@@ -358,7 +358,7 @@
 - `capNameQuality` (l. 29) — Analyse la qualité rédactionnelle d'un nom de fonction : verbe en tête (infinitif en français, forme de base en anglais),
 - `capFnNQ` (l. 58) — Diagnostic de nom d'une fonction, mis en cache (recalculé si les règles personnalisées changent). Fonctions racines ignorées.
 
-## 34-fonctions.js — 749 lignes
+## 34-fonctions.js — 748 lignes
 
 - `capIsCompEl` (l. 3) — Indique si un élément XML est un composant, une entité ou un acteur (porteur d'allocations).
 - `capCompAncestors` (l. 11) — Chaîne des composants englobants d'un composant, de la racine (le système) au parent direct.
@@ -370,13 +370,13 @@
 - `capFnSubsystems` (l. 176) — Sous-systèmes d'une fonction : chemin des composants englobants sous le système (« A › B »),
 - `CAP_FN_AK` (l. 181) — Libellés, icônes et couleurs des natures d'allocation (filtre, liserés, colonne du tableau).
 - `capRenderFunctions` (l. 191) — Rend la vue ƒ Fonctions dans son conteneur : hiérarchie, tableau façon Excel, traçabilité, métriques,
-- `capFnDossierHtml` (l. 659) — Dossier fonctionnel HTML autonome : un onglet par couche (sections numérotées et indentées : description,
-- `capFillHeight` (l. 684) — Ajuste la hauteur des éléments marqués data-fill pour qu'ils occupent la fenêtre jusqu'en bas.
-- `CAP_ANA_SUBS` (l. 694) — Sous-vues de 🔬 Analyses (onglets) ; « fns » ouvre la vue ƒ Fonctions, qui garde son propre conteneur.
-- `capAnaTabsHtml` (l. 699) — Onglets des sous-vues de 🔬 Analyses (communs à la vue 🔬 Analyses et à la vue ƒ Fonctions).
-- `capAnaTabOpen` (l. 706) — Ouvre une sous-vue de 🔬 Analyses depuis ses onglets (ƒ Fonctions : vue à part).
-- `capRenderFunctionsView` (l. 715) — Vue « ƒ Fonctions » (onglet de 🔬 Analyses) : hiérarchie, tableau,
-- `capRenderAnalyses` (l. 726) — Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage.
+- `capFnDossierHtml` (l. 658) — Dossier fonctionnel HTML autonome : un onglet par couche (sections numérotées et indentées : description,
+- `capFillHeight` (l. 683) — Ajuste la hauteur des éléments marqués data-fill pour qu'ils occupent la fenêtre jusqu'en bas.
+- `CAP_ANA_SUBS` (l. 693) — Sous-vues de 🔬 Analyses (onglets) ; « fns » ouvre la vue ƒ Fonctions, qui garde son propre conteneur.
+- `capAnaTabsHtml` (l. 698) — Onglets des sous-vues de 🔬 Analyses (communs à la vue 🔬 Analyses et à la vue ƒ Fonctions).
+- `capAnaTabOpen` (l. 705) — Ouvre une sous-vue de 🔬 Analyses depuis ses onglets (ƒ Fonctions : vue à part).
+- `capRenderFunctionsView` (l. 714) — Vue « ƒ Fonctions » (onglet de 🔬 Analyses) : hiérarchie, tableau,
+- `capRenderAnalyses` (l. 725) — Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage.
 
 ## 35-tableau-de-bord.js — 560 lignes
 
@@ -692,7 +692,20 @@
 - `capTSelUpd` (l. 719) — Met à jour le compteur de sélection et le bouton 📋 Copier de la barre du tableau.
 - `capTSelPaint` (l. 726) — Repeint les cellules sélectionnées du tableau.
 - `capTSelClear` (l. 734) — Efface la sélection de cellules.
-- `capTSelCopy` (l. 737) — Copie les cellules sélectionnées (texte tabulé, une ligne par ligne du tableau, cases vides conservées).
+- `capTSelCopy` (l. 738) — Copie les cellules sélectionnées (une ligne par ligne du tableau, cases vides conservées ; cellule à plusieurs
 - `capTSelControls` (l. 753) — Bouton 📋 Copier et compteur de sélection pour la barre du tableau.
 - `capTSelWire` (l. 764) — Branche la sélection de cellules sur le corps du tableau qui vient d'être rendu.
 - `capTableColRename` (l. 797) — Renomme une colonne par chemin depuis son en-tête (champ de saisie à la place du libellé).
+
+## 52-selection-cellules.js — 135 lignes
+
+- `CAP_CS_EXCL` (l. 12)
+- `capClipCopy` (l. 20) — Copie une grille de cellules dans le presse-papiers : texte tabulé (cellules multi-lignes entre guillemets)
+- `capCsTable` (l. 38) — Tableau éligible à la sélection pour un élément cliqué (ou null).
+- `capCsPos` (l. 46) — Position « ligne:colonne » d'une cellule dans son tableau. @param {HTMLTableCellElement} td @returns {number[]}
+- `capCsPaint` (l. 49) — Repeint la sélection et place la pastille près de la dernière cellule.
+- `capCsClear` (l. 70) — Efface la sélection de cellules des vues.
+- `capCsText` (l. 74) — Texte d'une cellule pour la copie (retours à la ligne des éléments empilés conservés).
+- `capCsCopy` (l. 79) — Copie la sélection, ou tout le tableau (en-têtes et lignes visibles).
+- `capCsRect` (l. 94) — Rectangle de cellules entre deux positions. @param {number[]} a @param {number[]} b @returns {Set<string>}
+- `capCsClickable` (l. 98) — La cellule (ou sa ligne) a-t-elle déjà une action au clic ? (lien, bouton, curseur main)
