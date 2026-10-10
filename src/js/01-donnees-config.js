@@ -1,5 +1,11 @@
 'use strict';
 
+/** Relation Map en lecture seule (Arcalyse est un outil de lecture et d'analyse) : arborescence (renommage, ajout,
+ * suppression, glisser-déposer, collage de liste, menu contextuel), 📝 Propriétés, menu contextuel du graphe
+ * (modifier, créer une relation, créer un enfant) et panneau des critères (nouveau / modifier / supprimer un type
+ * ou un critère de relation) sont désactivés. Le code d'édition est conservé : false pour le réactiver. */
+var RM_RO=true;
+
 /* ═══════════════════════════════════════════════════════════════════════
    1. DONNÉES DU MODÈLE
    ═══════════════════════════════════════════════════════════════════════ */

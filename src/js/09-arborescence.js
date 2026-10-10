@@ -2,11 +2,6 @@
    17b. ARBORESCENCE  (hiérarchie basée sur parentEl ; packages = type Package)
    ═══════════════════════════════════════════════════════════════════════ */
 /** Retourne l'icône associée à un type d'élément (définie dans TCFG). @param {string} t */
-/** Arborescence de la Relation Map en lecture seule (outil d'analyse) : pas de renommage, d'ajout, de suppression,
- * de déplacement (glisser-déposer), de collage de liste, de menu contextuel d'édition ni de champs modifiables
- * dans 📝 Propriétés. Sélection, dépliage, recherche et navigation restent disponibles. */
-var RM_ARBO_RO=true;
-
 function typeIcon(t){ return (TCFG[t]||{}).icon||'◻'; }
 
 // Migre MODEL.packages vers des éléments de type Package (run once at startup)
@@ -80,7 +75,7 @@ function buildPropertiesPanel() {
   nmIcon.style.cssText='font-size:13px;margin-right:3px;flex-shrink:0';
   nmIcon.textContent=typeIcon(el.type);
   nmIcon.style.color=(TCFG[el.type]||{}).color||'var(--c-dim)';
-  const nmSpan=RM_ARBO_RO ? Object.assign(document.createElement('span'),{className:'prop-val',textContent:el.name}) : editableText(el.name, v=>{ arboRenameEl(el,v); });
+  const nmSpan=RM_RO ? Object.assign(document.createElement('span'),{className:'prop-val',textContent:el.name}) : editableText(el.name, v=>{ arboRenameEl(el,v); });
   const nmWrap=document.createElement('span'); nmWrap.style.cssText='display:flex;align-items:center;flex:1;min-width:0';
   nmWrap.appendChild(nmIcon); nmWrap.appendChild(nmSpan);
   propRow('Nom', nmWrap);
@@ -93,7 +88,7 @@ function buildPropertiesPanel() {
   propRow('ID', idSpan);
 
   // Type — éditable (menu déroulant) pour les éléments natifs, lecture seule pour les éléments Capella
-  if (el._capella || RM_ARBO_RO) {
+  if (el._capella || RM_RO) {
     const typSpan=document.createElement('span'); typSpan.className='prop-val';
     typSpan.textContent = typeIcon(el.type)+' '+el.type;
     typSpan.style.cssText+='color:var(--c-dim)';
@@ -106,7 +101,7 @@ function buildPropertiesPanel() {
   }
 
   // Parent — éditable (menu déroulant) pour les éléments natifs, lecture seule pour les éléments Capella
-  if (el._capella || RM_ARBO_RO) {
+  if (el._capella || RM_RO) {
     const parEl = el.parentEl ? MODEL.elements.find(e=>e.id===el.parentEl) : null;
     const parSpan=document.createElement('span'); parSpan.className='prop-val';
     parSpan.textContent = parEl ? (typeIcon(parEl.type)+' '+parEl.name) : '— racine';
@@ -160,7 +155,7 @@ function buildPropertiesPanel() {
   if (MODEL.customAttrs && MODEL.customAttrs.length) {
     MODEL.customAttrs.forEach(attr=>{
       const cur=(el.attributes||{})[attr]||'';
-      if (RM_ARBO_RO) { const sp=document.createElement('span'); sp.className='prop-val'; sp.textContent=cur||'—'; propRow(attr, sp); return; }
+      if (RM_RO) { const sp=document.createElement('span'); sp.className='prop-val'; sp.textContent=cur||'—'; propRow(attr, sp); return; }
       const inp=document.createElement('input'); inp.className='prop-val-edit'; inp.value=cur;
       inp.placeholder='—';
       const commit=()=>{ if(!el.attributes) el.attributes={}; el.attributes[attr]=inp.value; };
@@ -266,7 +261,7 @@ function buildArbo() {
     row.className='arbo-row'+(S.ctx===el.id?' arbo-sel':'')+(arboMultiSel.has(el.id)?' arbo-msel':'');
     row.style.paddingLeft=(depth*14+2)+'px';
     _arboVisibleOrder.push(el.id);
-    if (!RM_ARBO_RO) {   // lecture seule : ni glisser-déposer ni menu contextuel d'édition
+    if (!RM_RO) {   // lecture seule : ni glisser-déposer ni menu contextuel d'édition
       applyDnD(row, el);
       row.oncontextmenu=ev=>{ ev.preventDefault(); ev.stopPropagation(); arboShowCtxMenu(ev, el); };
     }
@@ -294,11 +289,11 @@ function buildArbo() {
       }
       nm.innerHTML=result;
     } else { nm.textContent=el.name; }
-    if (!RM_ARBO_RO) nm.ondblclick=ev=>{ev.stopPropagation(); _arboInlineRename(nm, v=>arboRenameEl(el,v));};
+    if (!RM_RO) nm.ondblclick=ev=>{ev.stopPropagation(); _arboInlineRename(nm, v=>arboRenameEl(el,v));};
     row.appendChild(nm);
 
     const acts=document.createElement('span'); acts.className='arbo-acts';
-    if (RM_ARBO_RO) { /* lecture seule : pas d'action d'édition */ }
+    if (RM_RO) { /* lecture seule : pas d'action d'édition */ }
     else if (isPkg) {
       acts.appendChild(mkAct('✎','Renommer', ()=>_arboInlineRename(nm, v=>arboRenameEl(el,v))));
       acts.appendChild(mkAct('📂+','Ajouter un sous-package', ()=>arboAddPkg(el.id)));
@@ -358,7 +353,7 @@ function buildArbo() {
 
   MODEL.elements.filter(e=>!e.parentEl).forEach(e=>renderNode(e,0,body));
 
-  if (!RM_ARBO_RO) {
+  if (!RM_RO) {
     const addRoot=document.createElement('div');
     addRoot.className='add-btn'; addRoot.textContent='📂 Nouveau package racine';
     addRoot.onclick=()=>arboAddPkg(null);
@@ -443,7 +438,7 @@ function arboUpdateMselBar(){
   const cnt=document.getElementById('arbo-msel-count');
   if(arboMultiSel.size>1){
     bar.style.display='flex';
-    if(cnt) cnt.textContent=RM_ARBO_RO ? `${arboMultiSel.size} éléments sélectionnés` : `${arboMultiSel.size} éléments sélectionnés — glisser pour déplacer le groupe`;
+    if(cnt) cnt.textContent=RM_RO ? `${arboMultiSel.size} éléments sélectionnés` : `${arboMultiSel.size} éléments sélectionnés — glisser pour déplacer le groupe`;
   } else bar.style.display='none';
 }
 
@@ -630,7 +625,7 @@ function arboShowCtxMenu(ev, el){
 
 // ── Ctrl+V global : colle la liste du presse-papier sous l'unique élément sélectionné ──
 document.addEventListener('paste', ev=>{
-  if (RM_ARBO_RO) return;   // arborescence en lecture seule
+  if (RM_RO) return;   // arborescence en lecture seule
   const t=ev.target;
   if (t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable)) return; // saisie en cours ailleurs
   if (arboMultiSel.size!==1) return; // exige UN et UN SEUL élément sélectionné

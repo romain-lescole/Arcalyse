@@ -30,7 +30,7 @@ Application **autonome et 100 % hors ligne** qui charge un fichier `.capella` (X
 | `src/css/aide.css` | Styles de la fenêtre d'aide |
 | `src/html/interface.html` | Barres d'outils, panneaux, écran d'accueil, vues Capella Data (conteneurs `#cap-view-*`), modales |
 | `src/html/aide.html` | Aide utilisateur (onglets `ht-*`) |
-| `js/01-donnees-config.js` | `CAP_HUMAN_NAMES` (noms lisibles + descriptions des types), `MODEL`, `RCFG`, `TCFG`, `MODES` |
+| `js/01-donnees-config.js` | `RM_RO` (Relation Map en lecture seule), `CAP_HUMAN_NAMES` (noms lisibles + descriptions des types), `MODEL`, `RCFG`, `TCFG`, `MODES` |
 | `js/02-themes.js` | `THEMES`, `applyTheme`, `capIsLight`, `capInk`, `capTextOn`, `applyMode` |
 | `js/03…07-rm-*.js` | **Relation Map** (graphe D3) : état `S`, SVG/zoom, marqueurs, arbre, rendu `render`, vue chaîne, interactions, export image, légende, panneau gauche (critères) |
 | `js/08-editeur-modele.js` | Modale d'édition (éléments, relations, paquetages) |

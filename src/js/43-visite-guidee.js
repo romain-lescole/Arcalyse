@@ -121,7 +121,7 @@ var CAP_TOUR_VIEWS={
     {s:'#sec-props', t:'📝 Propriétés',
      x:'Attributs de l\'élément sélectionné dans le graphe.'},
     {s:'#graph', t:'🕸 Graphe',
-     x:'<b>Clic</b> sur un nœud : sélection et propriétés · <b>double-clic</b> : il devient le contexte · <b>clic droit</b> : menu (éditer, masquer, relation…) · <b>survol</b> : ses voisins restent en évidence.'},
+     x:'<b>Clic</b> sur un nœud : sélection et propriétés · <b>double-clic</b> : il devient le contexte · <b>clic droit</b> : menu (contexte, développer, réduire, masquer) · <b>survol</b> : ses voisins restent en évidence.'},
     {s:'#legend', t:'◉ Légende', x:'Couleurs des types et des relations affichés.'},
     {s:'#panel-close-btn', t:'◀ Panneau', x:'Réduit le panneau de gauche pour agrandir le graphe ; ▶ le rouvre.'}
   ]},

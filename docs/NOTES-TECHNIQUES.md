@@ -77,7 +77,7 @@ Chaînes de navigation Metaclass → Property (✨ Colonne par chemin).
 
 ## 7. Arborescence (panneau gauche)
 
-- **Lecture seule** (`RM_ARBO_RO=true`, 09) : renommage, ✎ / + / ✕, « Nouveau package racine », glisser-déposer, menu contextuel (coller une liste, Convert to…), Ctrl+V et champs modifiables de 📝 Propriétés désactivés. Le code d'édition est conservé : remettre `false` pour le retrouver.
+- **Lecture seule** (`RM_RO=true`, 01) : arborescence (renommage, ✎ / + / ✕, « Nouveau package racine », glisser-déposer, menu contextuel coller une liste / Convert to…, Ctrl+V), champs de 📝 Propriétés, menu contextuel du graphe (`cx-edit`, `cx-new-rel`, `cx-new-child`, masqués dans 06) et critères (07 : « + Nouveau critère / type », ✏ et ✕) désactivés ; couleurs et cases à cocher conservées. Le code d'édition est conservé : remettre `false` pour le retrouver.
 
 - Repliée par défaut au chargement (seul le paquetage projet est ouvert) — `capApplyPanelOnLoad`.
 

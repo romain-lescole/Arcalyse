@@ -34,7 +34,7 @@ function buildPanel() {
     if (cfg.label) nm.title = t; // tooltip = nom technique réel (ex: "PC NODE→PC NODE")
     row.appendChild(cb); row.appendChild(sw); row.appendChild(nm);
     if (cfg._capella) { const n=MODEL.relations.filter(r=>r.type===t).length; const c=document.createElement('span'); c.className='typ-cnt'; c.textContent=n; c.title=`${n} relation(s) de ce type`; row.appendChild(c); }
-    if (!readOnly) {
+    if (!readOnly && !RM_RO) {   // RM_RO : ni modification ni suppression de critère
       const icoStyle='cursor:pointer;color:var(--c-dim);font-size:10px;flex-shrink:0;padding:0 2px';
       const edit=document.createElement('span'); edit.textContent='✏'; edit.title='Modifier ce critère'; edit.style.cssText=icoStyle;
       edit.onclick=()=>showEditRelCriteriaForm(rb, row, t, cfg);
@@ -79,6 +79,7 @@ function buildPanel() {
   const addRel=document.createElement('div'); addRel.className='add-btn';
   addRel.textContent='+ Nouveau critère de relation';
   addRel.onclick=()=>showNewRelCriteriaForm(rb);
+  if (RM_RO) addRel.style.display='none';   // lecture seule
   rb.appendChild(addRel);
 
   // ── Types d'éléments ────────────────────────────────────────────────────
@@ -151,7 +152,7 @@ function buildPanel() {
     row.dataset.searchKey = (displayLabel + ' ' + t).toLowerCase();
     if (S.typSearch && !row.dataset.searchKey.includes(S.typSearch)) row.style.display='none';
     row.appendChild(cb); row.appendChild(sw); row.appendChild(nm); if (nm._cnt) row.appendChild(nm._cnt);
-    if (!readOnly) {
+    if (!readOnly && !RM_RO) {   // RM_RO : ni modification ni suppression de type
       const icoS='cursor:pointer;color:var(--c-dim);font-size:10px;flex-shrink:0;padding:0 2px';
       const edit=document.createElement('span'); edit.textContent='✏'; edit.title='Modifier ce type'; edit.style.cssText=icoS; edit.onclick=()=>showEditTypeForm(tb,row,t,cfg);
       const del=document.createElement('span'); del.textContent='✕'; del.title='Supprimer ce type'; del.style.cssText=icoS; del.onclick=()=>{ const used=MODEL.elements.filter(e=>e.type===t); if(used.length>0){alert(`Ce type est utilisé par ${used.length} élément(s).`);return;} if(!confirm(`Supprimer le type "${t}" ?`)) return; delete TCFG[t]; delete S.typF[t]; onModelChanged(); };
@@ -207,6 +208,7 @@ function buildPanel() {
   const addTyp=document.createElement('div'); addTyp.className='add-btn';
   addTyp.textContent="+ Nouveau type d'élément";
   addTyp.onclick=()=>showNewTypeForm(tb);
+  if (RM_RO) addTyp.style.display='none';   // lecture seule
   tb.appendChild(addTyp);
   }
 

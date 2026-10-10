@@ -108,6 +108,8 @@ function hideCtxMenu(){ ctxMenuEl.style.display='none'; ctxNode=null; }
 document.addEventListener('click', hideCtxMenu);
 
 // ── Gestionnaires menu contextuel ──
+// Lecture seule (RM_RO, 01) : les commandes de modification du modèle sont masquées (et leur séparateur)
+if (RM_RO) ['cx-edit','cx-new-rel','cx-new-child'].forEach(id=>{ const el=document.getElementById(id); if(el){ el.style.display='none'; const s=el.parentElement&&el.parentElement.querySelector('.ctx-s'); if(s) s.style.display='none'; } });
 document.getElementById('cx-ctx').onclick      = ()=>{ if(ctxNode) setCtx(ctxNode.eid); };
 document.getElementById('cx-exp').onclick      = ()=>{ if(ctxNode&&!ctxNode.children?.length) toggleNode(ctxNode); };
 document.getElementById('cx-col').onclick      = ()=>{ if(ctxNode?.children?.length) toggleNode(ctxNode); };

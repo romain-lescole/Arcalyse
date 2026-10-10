@@ -1,12 +1,13 @@
 # Index des fonctions (généré par `node tools/index.js` — ne pas modifier à la main)
 
-## 01-donnees-config.js — 42 lignes
+## 01-donnees-config.js — 48 lignes
 
-- `CAP_HUMAN_NAMES` (l. 9) — Table de correspondance type Capella → {nom humain (h), description (d)}.
-- `MODEL` (l. 11)
-- `RCFG` (l. 24)
-- `TCFG` (l. 25)
-- `MODES` (l. 37)
+- `RM_RO` (l. 7) — Relation Map en lecture seule (Arcalyse est un outil de lecture et d'analyse) : arborescence (renommage, ajout,
+- `CAP_HUMAN_NAMES` (l. 15) — Table de correspondance type Capella → {nom humain (h), description (d)}.
+- `MODEL` (l. 17)
+- `RCFG` (l. 30)
+- `TCFG` (l. 31)
+- `MODES` (l. 43)
 
 ## 02-themes.js — 307 lignes
 
@@ -50,7 +51,7 @@
 - `renderChainView` (l. 27) — Rendu de la vue chaîne : disposition en couches (capChainLayout) orientée selon la disposition choisie
 - `rmHighlight` (l. 126) — Met en évidence un nœud et ses voisins directs (les autres sont estompés) ; null pour tout rétablir.
 
-## 06-rm-interactions-export.js — 473 lignes
+## 06-rm-interactions-export.js — 475 lignes
 
 - `toggleNode` (l. 7) — Ouvre/ferme un nœud (affiche/masque ses enfants dans le graphe). @param node Nœud D3
 - `expandAllNodes` (l. 14) — Développe récursivement tous les nœuds à partir de `node`.
@@ -63,24 +64,24 @@
 - `hideTip` (l. 95) — Masque l'infobulle flottante du graphe.
 - `showCtxMenu` (l. 100) — Affiche le menu contextuel (clic droit) sur un nœud du graphe.
 - `hideCtxMenu` (l. 107) — Masque le menu contextuel du graphe.
-- `positionFloat` (l. 149) — Positionne le panneau flottant d'édition près du curseur.
-- `showFloatEdit` (l. 161) — Affiche le formulaire d'édition inline d'un élément existant.
-- `showFloatRelation` (l. 187) — Affiche le formulaire de création d'une relation depuis un élément source.
-- `showFloatNewChild` (l. 218) — Affiche le formulaire de création d'un élément enfant.
-- `showFloatNewElement` (l. 257) — Affiche le formulaire de création d'un nouvel élément.
-- `getContentBounds` (l. 295) — Calcule les dimensions réelles du contenu SVG (bounding box de tous les nœuds).
-- `openExportModal` (l. 320) — Ouvre le modal d'export image. @param {string} format - 'png'|'jpeg'|'svg'
-- `updateExportInfo` (l. 329) — Met à jour le libellé d'information affiché dans le menu Export (dimensions/format prévus).
-- `exportContent` (l. 360) — Exporte le graphe en image. Gère PNG (canvas), JPEG (canvas) et SVG (inline).
-- `updateLegend` (l. 430) — Met à jour la légende des types et relations affichée dans le panneau gauche.
-- `updateInfo` (l. 450) — Met à jour le compteur d'éléments/relations affiché en bas du panneau.
-- `typSelectAll` (l. 461) — Coche ou décoche tous les filtres de types d'éléments du panneau gauche.
-- `relSelectAll` (l. 469) — Coche ou décoche tous les filtres de types de relations du panneau gauche.
+- `positionFloat` (l. 151) — Positionne le panneau flottant d'édition près du curseur.
+- `showFloatEdit` (l. 163) — Affiche le formulaire d'édition inline d'un élément existant.
+- `showFloatRelation` (l. 189) — Affiche le formulaire de création d'une relation depuis un élément source.
+- `showFloatNewChild` (l. 220) — Affiche le formulaire de création d'un élément enfant.
+- `showFloatNewElement` (l. 259) — Affiche le formulaire de création d'un nouvel élément.
+- `getContentBounds` (l. 297) — Calcule les dimensions réelles du contenu SVG (bounding box de tous les nœuds).
+- `openExportModal` (l. 322) — Ouvre le modal d'export image. @param {string} format - 'png'|'jpeg'|'svg'
+- `updateExportInfo` (l. 331) — Met à jour le libellé d'information affiché dans le menu Export (dimensions/format prévus).
+- `exportContent` (l. 362) — Exporte le graphe en image. Gère PNG (canvas), JPEG (canvas) et SVG (inline).
+- `updateLegend` (l. 432) — Met à jour la légende des types et relations affichée dans le panneau gauche.
+- `updateInfo` (l. 452) — Met à jour le compteur d'éléments/relations affiché en bas du panneau.
+- `typSelectAll` (l. 463) — Coche ou décoche tous les filtres de types d'éléments du panneau gauche.
+- `relSelectAll` (l. 471) — Coche ou décoche tous les filtres de types de relations du panneau gauche.
 
-## 07-rm-panneau-criteres.js — 251 lignes
+## 07-rm-panneau-criteres.js — 253 lignes
 
 - `buildPanel` (l. 7) — Reconstruit entièrement le panneau gauche : critères de relation, types d'éléments.
-- `capShowChainInMap` (l. 239) — Visualise une chaîne fonctionnelle dans la Relation Map en préservant ses ramifications
+- `capShowChainInMap` (l. 241) — Visualise une chaîne fonctionnelle dans la Relation Map en préservant ses ramifications
 
 ## 08-editeur-modele.js — 573 lignes
 
@@ -99,29 +100,29 @@
 - `showEditTypeForm` (l. 481) — Affiche un mini-formulaire inline dans la section "Types d'éléments"
 - `showNewTypeForm` (l. 530) — Affiche le formulaire de création d'un nouveau type d'élément.
 
-## 09-arborescence.js — 704 lignes
+## 09-arborescence.js — 712 lignes
 
 - `typeIcon` (l. 5) — Retourne l'icône associée à un type d'élément (définie dans TCFG). @param {string} t
 - `migratePkgsToElements` (l. 11) — Migre l'ancien format packages[] vers le nouveau format elements[] avec type='Package'.
 - `buildPropertiesPanel` (l. 41) — Remplit le panneau Propriétés avec les attributs de l'élément sélectionné (S.propEl).
-- `_arboInlineRename` (l. 170) — Active le renommage en place d'un nœud de l'arborescence (Entrée valide, Échap annule).
-- `buildArbo` (l. 185) — Construit l'arborescence gauche à partir de MODEL.elements.
-- `arboExpandAll` (l. 359) — Développe tous les nœuds de l'arborescence gauche.
-- `arboCollapseAll` (l. 362) — Réduit tous les nœuds de l'arborescence gauche au premier niveau.
-- `arboRenameEl` (l. 368) — Renomme un élément dans MODEL et met à jour l'arbo et le graphe.
-- `arboAddPkg` (l. 379) — Crée un nouveau package (type='Package') enfant d'un élément existant.
-- `arboAddEl` (l. 393) — Crée un nouvel élément enfant dans l'arborescence.
-- `arboDeleteEl` (l. 408) — Supprime un élément et toutes ses relations de MODEL, puis met à jour l'UI.
-- `arboClearMultiSel` (l. 426) — Vide la sélection multiple de l'arborescence et met à jour l'affichage.
-- `arboUpdateMselBar` (l. 429) — Met à jour la barre de compteur de sélection multiple sous l'en-tête Arborescence.
-- `arboMoveEls` (l. 441) — Déplace un GROUPE d'éléments vers un nouvel owner en conservant la hiérarchie interne :
-- `arboParseClipboardList` (l. 469) — Découpe un texte de presse-papier en liste de noms : une ligne = un élément.
-- `arboPasteListInto` (l. 477) — Crée une liste d'éléments enfants sous un owner (un nom par ligne du presse-papier).
-- `arboConvertSelectedType` (l. 497) — Change le type de tous les éléments d'un ensemble d'ids (hors packages).
-- `arboShowCtxMenu` (l. 516) — Affiche le menu contextuel (clic droit) d'un élément de l'arborescence.
-- `arboMoveEl` (l. 638) — Déplace un élément unique vers un nouvel owner par glisser-déposer : met à jour
-- `rmSetElemVal` (l. 664) — Écrit une valeur dans un champ d'un élément du modèle de la Relation Map (nom, type, parent,
-- `onModelChanged` (l. 700) — Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel.
+- `_arboInlineRename` (l. 171) — Active le renommage en place d'un nœud de l'arborescence (Entrée valide, Échap annule).
+- `buildArbo` (l. 186) — Construit l'arborescence gauche à partir de MODEL.elements.
+- `arboExpandAll` (l. 366) — Développe tous les nœuds de l'arborescence gauche.
+- `arboCollapseAll` (l. 369) — Réduit tous les nœuds de l'arborescence gauche au premier niveau.
+- `arboRenameEl` (l. 375) — Renomme un élément dans MODEL et met à jour l'arbo et le graphe.
+- `arboAddPkg` (l. 386) — Crée un nouveau package (type='Package') enfant d'un élément existant.
+- `arboAddEl` (l. 400) — Crée un nouvel élément enfant dans l'arborescence.
+- `arboDeleteEl` (l. 415) — Supprime un élément et toutes ses relations de MODEL, puis met à jour l'UI.
+- `arboClearMultiSel` (l. 433) — Vide la sélection multiple de l'arborescence et met à jour l'affichage.
+- `arboUpdateMselBar` (l. 436) — Met à jour la barre de compteur de sélection multiple sous l'en-tête Arborescence.
+- `arboMoveEls` (l. 448) — Déplace un GROUPE d'éléments vers un nouvel owner en conservant la hiérarchie interne :
+- `arboParseClipboardList` (l. 476) — Découpe un texte de presse-papier en liste de noms : une ligne = un élément.
+- `arboPasteListInto` (l. 484) — Crée une liste d'éléments enfants sous un owner (un nom par ligne du presse-papier).
+- `arboConvertSelectedType` (l. 504) — Change le type de tous les éléments d'un ensemble d'ids (hors packages).
+- `arboShowCtxMenu` (l. 523) — Affiche le menu contextuel (clic droit) d'un élément de l'arborescence.
+- `arboMoveEl` (l. 646) — Déplace un élément unique vers un nouvel owner par glisser-déposer : met à jour
+- `rmSetElemVal` (l. 672) — Écrit une valeur dans un champ d'un élément du modèle de la Relation Map (nom, type, parent,
+- `onModelChanged` (l. 708) — Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel.
 
 ## 11-sauvegarde-toolbar-init.js — 263 lignes
 

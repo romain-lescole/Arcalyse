@@ -150,142 +150,142 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte |
 |---:|---|
-| 9 | [AbstractCapabilityInclude] Inclusion d'une Capability dans une autre (référence via 'included'). |
-| 9 | [AbstractCapabilityRealization] Lien de traçabilité entre une Capability et une Capability/OperationalCapability de la couche supérieure qu'elle réalise. |
-| 9 | [AbstractFunctionAbstractCapabilityInvolvement] Implication d'une Function dans une Capability (référence via 'involved'). |
-| 9 | [AbstractStateRealization] Lien de traçabilité entre un State/Mode et le State/Mode de la couche supérieure qu'il réalise. |
-| 9 | [ActivityAllocation] Allocation d'une OperationalActivity vers un Role qui la réalise. Lié au concept de Role, exclu de l'API Python4Capella. |
-| 9 | [BooleanPropertyValue] Variante typée booléenne de PropertyValue. CONFIRME la limitation PV-001: le métamodèle technique réel utilise des types distincts par nature de valeur (BooleanPropertyValue, et probablement StringPropertyValue/IntegerPropertyValue/FloatPropertyValue/EnumerationPropertyValue non observés dans les échantillons), alors que Python4Capella les unifie sous un seul type PropertyValue. |
-| 9 | [Capability] The ability of the system to supply a service contributing to fulfilling one or more Missions. A Capability represents a system usage context. It is characterized by a set of Functional Chains and Scenarios it references. |
-| 9 | [CapabilityExploitation] Lien entre une Capability et une autre Capability qu'elle exploite (référence via attribut 'capability'). |
-| 9 | [CapabilityInvolvement] Implication d'un Actor/Component dans une Capability qui l'exploite (référence via 'involved'). |
-| 9 | [CapabilityPkg] A package to contain Capabilities |
-| 9 | [CapabilityRealization] The implementation of the system Capabilities in Logical Architecture and Physical Architecture |
-| 9 | [CapabilityRealizationInvolvement] Implication d'un Component dans une CapabilityRealization (qui contribue à réaliser la capability). |
-| 9 | [CapabilityRealizationPkg] A package to contain CapabilityRealizations |
-| 9 | [CatalogElement] Élément de catalogue REC/RPL générique (add-on Requirement/RE). Voir REC et RPL dans le document Python4Capella pour la sémantique métier équivalente. |
-| 9 | [CatalogElementLink] Lien entre un REC (origin) et ses RPL (replicas), exprime la relation de réplication. |
-| 9 | [CatalogElementPkg] A package to structure the definition of REC / RPL elements |
-| 9 | [ChangeEvent] An event defined by WHEN something occurs |
-| 9 | [ChoicePseudoState] Pseudo-état de choix (branchement conditionnel) dans une StateMachine/Region. |
-| 9 | [Collection] Type de données représentant une collection (liste/ensemble) d'éléments d'un type donné. Equivalent Python4Capella: Collection (sous-type de DataType). |
-| 9 | [CombinedFragment] The identification of a specific operator (ALT, OPT, LOOP...) in the sequence of a scenario |
-| 9 | [CommunicationMean] Describes the media between the Operational Entities / Actors to support the Operational Interactions |
-| 9 | [CompliancyDefinition] The type of compliancy which have to be respected by the RPL regarding its REC definition. Default list of compliancies is: |
-| 9 | [CompliancyDefinitionPkg] A package to contain CompliancyDefinitions |
-| 9 | [ComponentExchange] Represent the interactions between Logical / Behavioral Components. Exchanges connects Component Ports. |
-| 9 | [ComponentExchangeAllocation] Allocation d'un ComponentExchange vers un élément de couche différente. |
-| 9 | [ComponentExchangeFunctionalExchangeAllocation] A regroupement of FunctionalExchanges for graphical simplification of diagrams |
-| 9 | [ComponentFunctionalAllocation] A regroupement of FunctionalExchanges for graphical simplification of diagrams |
-| 9 | [ComponentPort] A port on a BehavioralComponent defining a logical interaction point |
-| 9 | [ComponentPortAllocation] Allocation d'un ComponentPort vers un élément de couche différente. |
-| 9 | [ComponentRealization] Lien de traçabilité (sourceElement/targetElement) entre un Component et le Component de la couche supérieure qu'il réalise (ex: PhysicalComponent réalise LogicalComponent). |
-| 9 | [ConceptPkg] Package contenant les Concepts (Operational Analysis), notion non documentée dans le Python4Capella Simplified Metamodel (absente du document source). |
-| 9 | [ConfigurationItem] System part to be acquired or produced, in as many copies as the physical architecture requires |
-| 9 | [ConfigurationItemPkg] A package to contain ConfigurationItems |
-| 9 | [Constraint] A generic constraint which can be defined on Capella elements |
-| 9 | [ControlNode] Nœud de contrôle dans une FunctionalChain (AND/OR/ITERATE), pilote le flux de la chaîne. Exclu de l'API Python4Capella (mentionné explicitement comme exclusion dans le Foreword du document Python4Capella). |
-| 9 | [DeepHistoryPseudoState] Pseudo-état d'historique profond dans une StateMachine/Region. |
-| 9 | [EPBSArchitecture] The element containing all definitions from the End-Product Breakdown Structure. |
-| 9 | [Entity] Entité au niveau Operational Analysis. Si actor='true', représente un OperationalActor. |
-| 9 | [EntityOperationalCapabilityInvolvement] Implication d'une Entity dans une OperationalCapability. |
-| 9 | [EntityPkg] A package to define Operational entities / actors |
-| 9 | [EnumerationPropertyLiteral] A value defined in an EnumerationPropertyType |
-| 9 | [EnumerationPropertyType] The definition of an Enumeration to type a PropertyValue |
-| 9 | [EventReceiptOperation] Opération de réception d'un événement dans un Scenario. |
-| 9 | [EventSentOperation] Opération d'émission d'un événement dans un Scenario (lié à un SequenceMessage). |
-| 9 | [ExchangeCategory] A regroupement of FunctionalExchanges for graphical simplification of diagrams |
-| 9 | [ExchangeItem] Ordered set of references to elements carried together during an interaction or exchange between functions, components and actors. The elements are carried simultaneously, in the same conditions, with the same non-functional properties. The “elements” are called data |
-| 9 | [ExchangeItemAllocation] The involvement of an ExchangeItem by an Interface. |
-| 9 | [ExchangeItemElement] A part of the information contained by an ExchangeItem |
-| 9 | [Execution] Période d'exécution d'une InstanceRole dans un Scenario (barre verticale du diagramme de séquence). |
-| 9 | [ExecutionEnd] Fragment marquant la fin d'une Execution dans un Scenario. |
-| 9 | [ExecutionEvent] Événement déclenchant une Execution dans un Scenario. |
-| 9 | [FinalState] État final d'une Region/StateMachine. |
-| 9 | [FragmentEnd] Extrémité d'un fragment combiné (CombinedFragment) dans un Scenario. |
-| 9 | [FunctionInputPort] An FunctionInputPort defines what a Function is requiring |
-| 9 | [FunctionOutputPort] A FunctionOutputPort defines what a Function is capable of producing |
-| 9 | [FunctionRealization] Lien de traçabilité entre une Function et la Function de la couche supérieure qu'elle réalise. |
-| 9 | [FunctionalChain] Describe the system behaviour in a particular usage context with references towards Functions and Functional Exchanges |
-| 9 | [FunctionalChainAbstractCapabilityInvolvement] Implication d'une FunctionalChain dans une Capability. |
-| 9 | [FunctionalChainInvolvementFunction] Implication d'une Function dans une FunctionalChain (étape de la chaîne). Référence la Function via l'attribut 'involved'. |
-| 9 | [FunctionalChainInvolvementLink] Implication d'un FunctionalExchange dans une FunctionalChain, avec source/target précisant l'ordre topologique de parcours dans la chaîne. |
-| 9 | [FunctionalChainRealization] Lien de traçabilité entre une FunctionalChain et la FunctionalChain/OperationalProcess de la couche supérieure qu'elle réalise. |
-| 9 | [FunctionalChainReference] Référence à une FunctionalChain depuis l'intérieur d'une autre FunctionalChain (chaînes imbriquées). |
-| 9 | [FunctionalExchange] A functional exchange represents a dependency between a source function and a target one. Exchanges connect Function Ports, which specify what a Function is capable of producing or is requiring. |
-| 9 | [FunctionalExchangeRealization] Lien de traçabilité entre un FunctionalExchange et celui de la couche supérieure qu'il réalise. |
-| 9 | [Generalization] Lien de généralisation/spécialisation (héritage) entre deux Class (sub/super). |
-| 9 | [GenericTrace] Lien de traçabilité générique entre deux éléments quelconques, sans sémantique de réalisation inter-couches (contrairement à TransfoLink qui sert plutôt aux traces de transformation). Exclu de l'API Python4Capella ('Generic Traces' explicitement listées comme exclusion dans le Foreword). |
-| 9 | [InformationRealization] Lien de traçabilité entre une Class/ExchangeItem et celle de la couche supérieure qu'elle réalise. |
-| 9 | [InitialPseudoState] Pseudo-état initial (point d'entrée) d'une Region. |
-| 9 | [InstanceRole] The involvement of an element (function, system, component or actor) in a scenario |
-| 9 | [InteractionOperand] Opérande d'un CombinedFragment (ex: branche d'un ALT) dans un Scenario. |
-| 9 | [InteractionState] État/activité représenté dans un Scenario, lié à une Function ou un State (relatedAbstractFunction/relatedAbstractState). |
-| 9 | [InteractionUse] Référence à un autre Scenario inclus dans le Scenario courant. |
-| 9 | [Interface] The definition of ExchangeItems which can be send / received by a ComponentPort |
-| 9 | [InterfacePkg] A package to contain Interfaces |
-| 9 | [KeyValue] Paire clé-valeur utilisée pour des métadonnées/extensions (ex: stockage de paramètres PVMT ou autres add-ons). |
-| 9 | [LiteralBooleanValue] Valeur littérale booléenne (true/false) utilisée comme literal d'une Enumeration ou valeur par défaut d'une Property. |
-| 9 | [LogicalArchitecture] The element containing all definitions from the Logical Architecture. |
-| 9 | [LogicalArchitectureRealization] Lien de traçabilité entre la PhysicalArchitecture et la LogicalArchitecture qu'elle réalise. |
-| 9 | [LogicalComponent] Logical Components are the artefacts enabling a notional decomposition of the system as a "white box", independently from any technological solutions, but dealing with major system decomposition constraints |
-| 9 | [LogicalComponentPkg] A package to contain the LogicalSystem, LogicalComponents and LogicalActors |
-| 9 | [LogicalFunction] The definition of a Function in the Logical Architecture |
-| 9 | [LogicalFunctionPkg] A package to contain LogicalFunctions |
-| 9 | [MessageEnd] Extrémité (début ou fin) d'un SequenceMessage dans un Scenario. |
-| 9 | [Mission] High-level goal to which the System should contribute. To be fulfilled, a Mission should use a number of system Functions regrouped within one or more Capabilities |
-| 9 | [MissionInvolvement] Implication d'une Capability dans une Mission (référence via 'involved'). |
-| 9 | [MissionPkg] A package to contain Missions |
-| 9 | [Mode] A Mode is a behavior expected from the system, an Actor or a component in chosen conditions |
-| 9 | [ModelInformation] Métadonnées techniques du modèle (informations de version, d'origine). |
-| 9 | [OpaqueExpression] Expression libre (texte) utilisée comme valeur calculée, typiquement pour exprimer une borne min/max non-littérale ou une condition. |
-| 9 | [OperationalActivity] Process step or action/operation/service performed by an Operational entity / actor and likely to influence the system definition or usage. Implementing operational activities generally produces elements of interactions expected by other activities |
-| 9 | [OperationalActivityPkg] A package to contain OperationalActivity |
-| 9 | [OperationalAnalysis] The element containing all definitions from the Operational Analysis. |
-| 9 | [OperationalAnalysisRealization] Lien de traçabilité entre la SystemAnalysis et l'OperationalAnalysis qu'elle réalise. |
-| 9 | [OperationalCapability] An operational capability is an ability, expected of one or more operational entities / actors. An operational capability is characterized by a set of operational processes and scenarios |
-| 9 | [OperationalCapabilityPkg] A package to contain OperationalCapabilities |
-| 9 | [OperationalProcess] An operational process is used to describe a particular context for performing operational activities to contribute to one or more operational capabilities |
-| 9 | [Part] Instance/rôle d'un composant (Component) dans le contexte de son composant parent. Référence la définition réelle via l'attribut abstractType='#<id>'. C'est le mécanisme central de containment hiérarchique visible dans le Project Explorer Capella (voir section instantiation_pattern). |
-| 9 | [PartDeploymentLink] Lien de déploiement: un Part (deployedElement) est déployé sur un autre Part (location). Utilisé pour le déploiement logiciel/matériel en Physical Architecture. |
-| 9 | [PhysicalArchitecture] The element containing all definitions from the Physical Architecture. |
-| 9 | [PhysicalArchitectureRealization] Lien de traçabilité entre l'EPBSArchitecture et la PhysicalArchitecture qu'elle réalise. |
-| 9 | [PhysicalArtifactRealization] Lien de traçabilité entre un ConfigurationItem (EPBS) et le PhysicalComponent (PA) qu'il réalise. |
-| 9 | [PhysicalComponent] A generic Physical Component which can be either a BehaviorPC or a NodePC |
-| 9 | [PhysicalComponentPkg] A package to contain the PhysicalSystem, PhysicalComponents and PhysicalActors |
-| 9 | [PhysicalFunction] The definition of a Function in the Physical Architecture |
-| 9 | [PhysicalFunctionPkg] A package to contain PhysicalFunctions |
-| 9 | [PhysicalLink] Means of communication, transport or routing between two Node components, used as a support for behavioral exchanges |
-| 9 | [PhysicalPath] Set of Physical Links defining a continuous path likely to route one or more behavioral exchanges |
-| 9 | [PhysicalPathInvolvement] Implication d'un PhysicalLink dans un PhysicalPath, avec chaînage via nextInvolvements pour exprimer l'ordre topologique du chemin physique. |
-| 9 | [PhysicalPort] A port on a Node component defining a physical interaction point |
-| 9 | [PortAllocation] The definition of ExchangeItems which can be send / received by a ComponentPort |
-| 9 | [PortRealization] Lien de traçabilité entre un port (Function/Component) et celui de la couche supérieure qu'il réalise. |
-| 9 | [PropertyValueGroup] Regroupement de plusieurs PropertyValue sous un même groupe nommé (ex: regroupement par thème/add-on). Documenté dans le Word doc sous PropertyValueGroup. |
-| 9 | [PropertyValuePkg] Package conteneur de PropertyValue/PropertyValueGroup/EnumerationPropertyType, rattaché à un PropertyValuePkgContainer (ex: SystemEngineering, ou tout CapellaElement supportant les extensions). |
-| 9 | [RecCatalog] The root package which contains the REC / RPL definitions |
-| 9 | [Region] A region is an orthogonal part of either a composite state or a state machine. |
-| 9 | [Role] Rôle opérationnel (ex: 'Common Role: Non functional constraints engineering'), assignable à des Entity/OperationalActivity. Exclu de l'API Python4Capella ('Roles in the Operational Analysis' explicitement listé comme exclusion dans le Foreword). |
-| 9 | [RoleAllocation] Allocation d'un Role vers l'Entity qui l'assume (sourceElement=Entity probable, targetElement=Role). Exclu de l'API Python4Capella. |
-| 9 | [RolePkg] Package contenant les Roles de l'Operational Analysis. Exclu de l'API Python4Capella (mentionné explicitement: 'Roles in the Operational Analysis' sont exclus). |
-| 9 | [Scenario] A scenario of use of the system defined by a specific sequence |
-| 9 | [ScenarioRealization] Lien de traçabilité entre un Scenario et celui de la couche supérieure qu'il réalise. |
-| 9 | [SequenceLink] Lien conditionnel entre deux ControlNodes dans une FunctionalChain. Exclu de l'API Python4Capella. |
-| 9 | [SequenceMessage] An exchange between InstanceRole performed in the frame of a scenario |
-| 9 | [State] A State is a context undergone by the system, an actor or a component in specific circumstances (for example imposed by the environment) |
-| 9 | [StateFragment] The call of a function or mode / state by an InstanceRole in the context of a scenario |
-| 9 | [StateMachine] State Machine is a way to define some of the expected behavior of the System, a Component or an external Actor |
-| 9 | [StateTransition] A possible transition between 2 modes or 2 states |
-| 9 | [StateTransitionRealization] Lien de traçabilité entre une StateTransition et celle de la couche supérieure qu'elle réalise. |
-| 9 | [SystemAnalysis] The element containing all definitions from the System Analysis. |
-| 9 | [SystemAnalysisRealization] Lien de traçabilité entre la LogicalArchitecture et la SystemAnalysis qu'elle réalise. |
-| 9 | [SystemComponent] Composant au niveau System Analysis. Si l'attribut actor='true', représente un Actor du système (équivalent Python4Capella: SystemActor). Sans cet attribut sur l'élément racine du package, représente le System lui-même (équivalent Python4Capella: System). |
-| 9 | [SystemComponentPkg] A package to contain the System and the Actors |
-| 9 | [SystemEngineering] The main element in the definition of a Capella model. Contains the perspectives of the Arcadia methodology |
-| 9 | [SystemFunction] The definition of a Function in the System Analysis |
-| 9 | [SystemFunctionPkg] A package to contain SystemFunctions |
-| 39 | Composition |
-| 39 | Block |
+| 15 | [AbstractCapabilityInclude] Inclusion d'une Capability dans une autre (référence via 'included'). |
+| 15 | [AbstractCapabilityRealization] Lien de traçabilité entre une Capability et une Capability/OperationalCapability de la couche supérieure qu'elle réalise. |
+| 15 | [AbstractFunctionAbstractCapabilityInvolvement] Implication d'une Function dans une Capability (référence via 'involved'). |
+| 15 | [AbstractStateRealization] Lien de traçabilité entre un State/Mode et le State/Mode de la couche supérieure qu'il réalise. |
+| 15 | [ActivityAllocation] Allocation d'une OperationalActivity vers un Role qui la réalise. Lié au concept de Role, exclu de l'API Python4Capella. |
+| 15 | [BooleanPropertyValue] Variante typée booléenne de PropertyValue. CONFIRME la limitation PV-001: le métamodèle technique réel utilise des types distincts par nature de valeur (BooleanPropertyValue, et probablement StringPropertyValue/IntegerPropertyValue/FloatPropertyValue/EnumerationPropertyValue non observés dans les échantillons), alors que Python4Capella les unifie sous un seul type PropertyValue. |
+| 15 | [Capability] The ability of the system to supply a service contributing to fulfilling one or more Missions. A Capability represents a system usage context. It is characterized by a set of Functional Chains and Scenarios it references. |
+| 15 | [CapabilityExploitation] Lien entre une Capability et une autre Capability qu'elle exploite (référence via attribut 'capability'). |
+| 15 | [CapabilityInvolvement] Implication d'un Actor/Component dans une Capability qui l'exploite (référence via 'involved'). |
+| 15 | [CapabilityPkg] A package to contain Capabilities |
+| 15 | [CapabilityRealization] The implementation of the system Capabilities in Logical Architecture and Physical Architecture |
+| 15 | [CapabilityRealizationInvolvement] Implication d'un Component dans une CapabilityRealization (qui contribue à réaliser la capability). |
+| 15 | [CapabilityRealizationPkg] A package to contain CapabilityRealizations |
+| 15 | [CatalogElement] Élément de catalogue REC/RPL générique (add-on Requirement/RE). Voir REC et RPL dans le document Python4Capella pour la sémantique métier équivalente. |
+| 15 | [CatalogElementLink] Lien entre un REC (origin) et ses RPL (replicas), exprime la relation de réplication. |
+| 15 | [CatalogElementPkg] A package to structure the definition of REC / RPL elements |
+| 15 | [ChangeEvent] An event defined by WHEN something occurs |
+| 15 | [ChoicePseudoState] Pseudo-état de choix (branchement conditionnel) dans une StateMachine/Region. |
+| 15 | [Collection] Type de données représentant une collection (liste/ensemble) d'éléments d'un type donné. Equivalent Python4Capella: Collection (sous-type de DataType). |
+| 15 | [CombinedFragment] The identification of a specific operator (ALT, OPT, LOOP...) in the sequence of a scenario |
+| 15 | [CommunicationMean] Describes the media between the Operational Entities / Actors to support the Operational Interactions |
+| 15 | [CompliancyDefinition] The type of compliancy which have to be respected by the RPL regarding its REC definition. Default list of compliancies is: |
+| 15 | [CompliancyDefinitionPkg] A package to contain CompliancyDefinitions |
+| 15 | [ComponentExchange] Represent the interactions between Logical / Behavioral Components. Exchanges connects Component Ports. |
+| 15 | [ComponentExchangeAllocation] Allocation d'un ComponentExchange vers un élément de couche différente. |
+| 15 | [ComponentExchangeFunctionalExchangeAllocation] A regroupement of FunctionalExchanges for graphical simplification of diagrams |
+| 15 | [ComponentFunctionalAllocation] A regroupement of FunctionalExchanges for graphical simplification of diagrams |
+| 15 | [ComponentPort] A port on a BehavioralComponent defining a logical interaction point |
+| 15 | [ComponentPortAllocation] Allocation d'un ComponentPort vers un élément de couche différente. |
+| 15 | [ComponentRealization] Lien de traçabilité (sourceElement/targetElement) entre un Component et le Component de la couche supérieure qu'il réalise (ex: PhysicalComponent réalise LogicalComponent). |
+| 15 | [ConceptPkg] Package contenant les Concepts (Operational Analysis), notion non documentée dans le Python4Capella Simplified Metamodel (absente du document source). |
+| 15 | [ConfigurationItem] System part to be acquired or produced, in as many copies as the physical architecture requires |
+| 15 | [ConfigurationItemPkg] A package to contain ConfigurationItems |
+| 15 | [Constraint] A generic constraint which can be defined on Capella elements |
+| 15 | [ControlNode] Nœud de contrôle dans une FunctionalChain (AND/OR/ITERATE), pilote le flux de la chaîne. Exclu de l'API Python4Capella (mentionné explicitement comme exclusion dans le Foreword du document Python4Capella). |
+| 15 | [DeepHistoryPseudoState] Pseudo-état d'historique profond dans une StateMachine/Region. |
+| 15 | [EPBSArchitecture] The element containing all definitions from the End-Product Breakdown Structure. |
+| 15 | [Entity] Entité au niveau Operational Analysis. Si actor='true', représente un OperationalActor. |
+| 15 | [EntityOperationalCapabilityInvolvement] Implication d'une Entity dans une OperationalCapability. |
+| 15 | [EntityPkg] A package to define Operational entities / actors |
+| 15 | [EnumerationPropertyLiteral] A value defined in an EnumerationPropertyType |
+| 15 | [EnumerationPropertyType] The definition of an Enumeration to type a PropertyValue |
+| 15 | [EventReceiptOperation] Opération de réception d'un événement dans un Scenario. |
+| 15 | [EventSentOperation] Opération d'émission d'un événement dans un Scenario (lié à un SequenceMessage). |
+| 15 | [ExchangeCategory] A regroupement of FunctionalExchanges for graphical simplification of diagrams |
+| 15 | [ExchangeItem] Ordered set of references to elements carried together during an interaction or exchange between functions, components and actors. The elements are carried simultaneously, in the same conditions, with the same non-functional properties. The “elements” are called data |
+| 15 | [ExchangeItemAllocation] The involvement of an ExchangeItem by an Interface. |
+| 15 | [ExchangeItemElement] A part of the information contained by an ExchangeItem |
+| 15 | [Execution] Période d'exécution d'une InstanceRole dans un Scenario (barre verticale du diagramme de séquence). |
+| 15 | [ExecutionEnd] Fragment marquant la fin d'une Execution dans un Scenario. |
+| 15 | [ExecutionEvent] Événement déclenchant une Execution dans un Scenario. |
+| 15 | [FinalState] État final d'une Region/StateMachine. |
+| 15 | [FragmentEnd] Extrémité d'un fragment combiné (CombinedFragment) dans un Scenario. |
+| 15 | [FunctionInputPort] An FunctionInputPort defines what a Function is requiring |
+| 15 | [FunctionOutputPort] A FunctionOutputPort defines what a Function is capable of producing |
+| 15 | [FunctionRealization] Lien de traçabilité entre une Function et la Function de la couche supérieure qu'elle réalise. |
+| 15 | [FunctionalChain] Describe the system behaviour in a particular usage context with references towards Functions and Functional Exchanges |
+| 15 | [FunctionalChainAbstractCapabilityInvolvement] Implication d'une FunctionalChain dans une Capability. |
+| 15 | [FunctionalChainInvolvementFunction] Implication d'une Function dans une FunctionalChain (étape de la chaîne). Référence la Function via l'attribut 'involved'. |
+| 15 | [FunctionalChainInvolvementLink] Implication d'un FunctionalExchange dans une FunctionalChain, avec source/target précisant l'ordre topologique de parcours dans la chaîne. |
+| 15 | [FunctionalChainRealization] Lien de traçabilité entre une FunctionalChain et la FunctionalChain/OperationalProcess de la couche supérieure qu'elle réalise. |
+| 15 | [FunctionalChainReference] Référence à une FunctionalChain depuis l'intérieur d'une autre FunctionalChain (chaînes imbriquées). |
+| 15 | [FunctionalExchange] A functional exchange represents a dependency between a source function and a target one. Exchanges connect Function Ports, which specify what a Function is capable of producing or is requiring. |
+| 15 | [FunctionalExchangeRealization] Lien de traçabilité entre un FunctionalExchange et celui de la couche supérieure qu'il réalise. |
+| 15 | [Generalization] Lien de généralisation/spécialisation (héritage) entre deux Class (sub/super). |
+| 15 | [GenericTrace] Lien de traçabilité générique entre deux éléments quelconques, sans sémantique de réalisation inter-couches (contrairement à TransfoLink qui sert plutôt aux traces de transformation). Exclu de l'API Python4Capella ('Generic Traces' explicitement listées comme exclusion dans le Foreword). |
+| 15 | [InformationRealization] Lien de traçabilité entre une Class/ExchangeItem et celle de la couche supérieure qu'elle réalise. |
+| 15 | [InitialPseudoState] Pseudo-état initial (point d'entrée) d'une Region. |
+| 15 | [InstanceRole] The involvement of an element (function, system, component or actor) in a scenario |
+| 15 | [InteractionOperand] Opérande d'un CombinedFragment (ex: branche d'un ALT) dans un Scenario. |
+| 15 | [InteractionState] État/activité représenté dans un Scenario, lié à une Function ou un State (relatedAbstractFunction/relatedAbstractState). |
+| 15 | [InteractionUse] Référence à un autre Scenario inclus dans le Scenario courant. |
+| 15 | [Interface] The definition of ExchangeItems which can be send / received by a ComponentPort |
+| 15 | [InterfacePkg] A package to contain Interfaces |
+| 15 | [KeyValue] Paire clé-valeur utilisée pour des métadonnées/extensions (ex: stockage de paramètres PVMT ou autres add-ons). |
+| 15 | [LiteralBooleanValue] Valeur littérale booléenne (true/false) utilisée comme literal d'une Enumeration ou valeur par défaut d'une Property. |
+| 15 | [LogicalArchitecture] The element containing all definitions from the Logical Architecture. |
+| 15 | [LogicalArchitectureRealization] Lien de traçabilité entre la PhysicalArchitecture et la LogicalArchitecture qu'elle réalise. |
+| 15 | [LogicalComponent] Logical Components are the artefacts enabling a notional decomposition of the system as a "white box", independently from any technological solutions, but dealing with major system decomposition constraints |
+| 15 | [LogicalComponentPkg] A package to contain the LogicalSystem, LogicalComponents and LogicalActors |
+| 15 | [LogicalFunction] The definition of a Function in the Logical Architecture |
+| 15 | [LogicalFunctionPkg] A package to contain LogicalFunctions |
+| 15 | [MessageEnd] Extrémité (début ou fin) d'un SequenceMessage dans un Scenario. |
+| 15 | [Mission] High-level goal to which the System should contribute. To be fulfilled, a Mission should use a number of system Functions regrouped within one or more Capabilities |
+| 15 | [MissionInvolvement] Implication d'une Capability dans une Mission (référence via 'involved'). |
+| 15 | [MissionPkg] A package to contain Missions |
+| 15 | [Mode] A Mode is a behavior expected from the system, an Actor or a component in chosen conditions |
+| 15 | [ModelInformation] Métadonnées techniques du modèle (informations de version, d'origine). |
+| 15 | [OpaqueExpression] Expression libre (texte) utilisée comme valeur calculée, typiquement pour exprimer une borne min/max non-littérale ou une condition. |
+| 15 | [OperationalActivity] Process step or action/operation/service performed by an Operational entity / actor and likely to influence the system definition or usage. Implementing operational activities generally produces elements of interactions expected by other activities |
+| 15 | [OperationalActivityPkg] A package to contain OperationalActivity |
+| 15 | [OperationalAnalysis] The element containing all definitions from the Operational Analysis. |
+| 15 | [OperationalAnalysisRealization] Lien de traçabilité entre la SystemAnalysis et l'OperationalAnalysis qu'elle réalise. |
+| 15 | [OperationalCapability] An operational capability is an ability, expected of one or more operational entities / actors. An operational capability is characterized by a set of operational processes and scenarios |
+| 15 | [OperationalCapabilityPkg] A package to contain OperationalCapabilities |
+| 15 | [OperationalProcess] An operational process is used to describe a particular context for performing operational activities to contribute to one or more operational capabilities |
+| 15 | [Part] Instance/rôle d'un composant (Component) dans le contexte de son composant parent. Référence la définition réelle via l'attribut abstractType='#<id>'. C'est le mécanisme central de containment hiérarchique visible dans le Project Explorer Capella (voir section instantiation_pattern). |
+| 15 | [PartDeploymentLink] Lien de déploiement: un Part (deployedElement) est déployé sur un autre Part (location). Utilisé pour le déploiement logiciel/matériel en Physical Architecture. |
+| 15 | [PhysicalArchitecture] The element containing all definitions from the Physical Architecture. |
+| 15 | [PhysicalArchitectureRealization] Lien de traçabilité entre l'EPBSArchitecture et la PhysicalArchitecture qu'elle réalise. |
+| 15 | [PhysicalArtifactRealization] Lien de traçabilité entre un ConfigurationItem (EPBS) et le PhysicalComponent (PA) qu'il réalise. |
+| 15 | [PhysicalComponent] A generic Physical Component which can be either a BehaviorPC or a NodePC |
+| 15 | [PhysicalComponentPkg] A package to contain the PhysicalSystem, PhysicalComponents and PhysicalActors |
+| 15 | [PhysicalFunction] The definition of a Function in the Physical Architecture |
+| 15 | [PhysicalFunctionPkg] A package to contain PhysicalFunctions |
+| 15 | [PhysicalLink] Means of communication, transport or routing between two Node components, used as a support for behavioral exchanges |
+| 15 | [PhysicalPath] Set of Physical Links defining a continuous path likely to route one or more behavioral exchanges |
+| 15 | [PhysicalPathInvolvement] Implication d'un PhysicalLink dans un PhysicalPath, avec chaînage via nextInvolvements pour exprimer l'ordre topologique du chemin physique. |
+| 15 | [PhysicalPort] A port on a Node component defining a physical interaction point |
+| 15 | [PortAllocation] The definition of ExchangeItems which can be send / received by a ComponentPort |
+| 15 | [PortRealization] Lien de traçabilité entre un port (Function/Component) et celui de la couche supérieure qu'il réalise. |
+| 15 | [PropertyValueGroup] Regroupement de plusieurs PropertyValue sous un même groupe nommé (ex: regroupement par thème/add-on). Documenté dans le Word doc sous PropertyValueGroup. |
+| 15 | [PropertyValuePkg] Package conteneur de PropertyValue/PropertyValueGroup/EnumerationPropertyType, rattaché à un PropertyValuePkgContainer (ex: SystemEngineering, ou tout CapellaElement supportant les extensions). |
+| 15 | [RecCatalog] The root package which contains the REC / RPL definitions |
+| 15 | [Region] A region is an orthogonal part of either a composite state or a state machine. |
+| 15 | [Role] Rôle opérationnel (ex: 'Common Role: Non functional constraints engineering'), assignable à des Entity/OperationalActivity. Exclu de l'API Python4Capella ('Roles in the Operational Analysis' explicitement listé comme exclusion dans le Foreword). |
+| 15 | [RoleAllocation] Allocation d'un Role vers l'Entity qui l'assume (sourceElement=Entity probable, targetElement=Role). Exclu de l'API Python4Capella. |
+| 15 | [RolePkg] Package contenant les Roles de l'Operational Analysis. Exclu de l'API Python4Capella (mentionné explicitement: 'Roles in the Operational Analysis' sont exclus). |
+| 15 | [Scenario] A scenario of use of the system defined by a specific sequence |
+| 15 | [ScenarioRealization] Lien de traçabilité entre un Scenario et celui de la couche supérieure qu'il réalise. |
+| 15 | [SequenceLink] Lien conditionnel entre deux ControlNodes dans une FunctionalChain. Exclu de l'API Python4Capella. |
+| 15 | [SequenceMessage] An exchange between InstanceRole performed in the frame of a scenario |
+| 15 | [State] A State is a context undergone by the system, an actor or a component in specific circumstances (for example imposed by the environment) |
+| 15 | [StateFragment] The call of a function or mode / state by an InstanceRole in the context of a scenario |
+| 15 | [StateMachine] State Machine is a way to define some of the expected behavior of the System, a Component or an external Actor |
+| 15 | [StateTransition] A possible transition between 2 modes or 2 states |
+| 15 | [StateTransitionRealization] Lien de traçabilité entre une StateTransition et celle de la couche supérieure qu'elle réalise. |
+| 15 | [SystemAnalysis] The element containing all definitions from the System Analysis. |
+| 15 | [SystemAnalysisRealization] Lien de traçabilité entre la LogicalArchitecture et la SystemAnalysis qu'elle réalise. |
+| 15 | [SystemComponent] Composant au niveau System Analysis. Si l'attribut actor='true', représente un Actor du système (équivalent Python4Capella: SystemActor). Sans cet attribut sur l'élément racine du package, représente le System lui-même (équivalent Python4Capella: System). |
+| 15 | [SystemComponentPkg] A package to contain the System and the Actors |
+| 15 | [SystemEngineering] The main element in the definition of a Capella model. Contains the perspectives of the Arcadia methodology |
+| 15 | [SystemFunction] The definition of a Function in the System Analysis |
+| 15 | [SystemFunctionPkg] A package to contain SystemFunctions |
+| 45 | Composition |
+| 45 | Block |
 
 ## js/04-rm-arbre-rendu.js
 
@@ -318,41 +318,41 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte |
 |---:|---|
-| 163 | Modifier l'élément |
-| 167 | Nom |
-| 169 | Type |
-| 171 | Paquetage |
-| 178 | Le nom ne peut pas être vide. |
-| 189 | Créer une relation |
-| 195 | Source |
-| 197 | Type |
-| 199 | Cible |
-| 201 | Nom (opt.) |
-| 208 | Veuillez sélectionner une cible. |
-| 220 | Créer un élément enfant |
-| 226 | Parent |
-| 228 | Nom enfant Type |
-| 232 | Paquetage |
-| 234 | Relation |
-| 242 | Le nom ne peut pas être vide. |
-| 259 | Créer un nouvel élément |
-| 263 | Nom Type |
-| 267 | Paquetage |
-| 269 | L'élément créé deviendra automatiquement le contexte de la carte. |
-| 276 | Le nom ne peut pas être vide. |
-| 323 | 🖼 Exporter en PNG |
-| 323 | 📷 Exporter en JPEG |
-| 323 | 📐 Exporter en SVG |
-| 331 | Aucun contenu |
-| 334 | Dimensions : |
-| 362 | Rien à exporter. |
-| 374 | translate( |
-| 414 | relation-map.jpg |
-| 422 | Erreur lors de l'export. |
-| 456 | Contexte : |
-| 456 | \| Nœuds : |
-| 456 | \| Éléments uniques : |
-| 456 | \| Profondeur : |
+| 165 | Modifier l'élément |
+| 169 | Nom |
+| 171 | Type |
+| 173 | Paquetage |
+| 180 | Le nom ne peut pas être vide. |
+| 191 | Créer une relation |
+| 197 | Source |
+| 199 | Type |
+| 201 | Cible |
+| 203 | Nom (opt.) |
+| 210 | Veuillez sélectionner une cible. |
+| 222 | Créer un élément enfant |
+| 228 | Parent |
+| 230 | Nom enfant Type |
+| 234 | Paquetage |
+| 236 | Relation |
+| 244 | Le nom ne peut pas être vide. |
+| 261 | Créer un nouvel élément |
+| 265 | Nom Type |
+| 269 | Paquetage |
+| 271 | L'élément créé deviendra automatiquement le contexte de la carte. |
+| 278 | Le nom ne peut pas être vide. |
+| 325 | 🖼 Exporter en PNG |
+| 325 | 📷 Exporter en JPEG |
+| 325 | 📐 Exporter en SVG |
+| 333 | Aucun contenu |
+| 336 | Dimensions : |
+| 364 | Rien à exporter. |
+| 376 | translate( |
+| 416 | relation-map.jpg |
+| 424 | Erreur lors de l'export. |
+| 458 | Contexte : |
+| 458 | \| Nœuds : |
+| 458 | \| Éléments uniques : |
+| 458 | \| Profondeur : |
 
 ## js/07-rm-panneau-criteres.js
 
@@ -381,26 +381,26 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 54 | rotate(-90deg) |
 | 66 | rotate(-90deg) |
 | 80 | + Nouveau critère de relation |
-| 87 | Block |
-| 87 | Component |
-| 87 | Class |
-| 87 | Interface |
-| 87 | Requirement |
-| 87 | Package |
-| 106 | 🔍 Filtrer les types… |
-| 134 | Changer la couleur |
-| 141 | Physical Component |
-| 145 | élément(s) de ce type dans l'arborescence |
-| 156 | Modifier ce type |
-| 157 | Supprimer ce type |
-| 157 | Ce type est utilisé par |
-| 157 | élément(s). |
-| 157 | Supprimer le type |
-| 185 | rotate(-90deg) |
-| 195 | var(--c-dim) |
-| 199 | 🔷 Capella |
-| 208 | + Nouveau type d'élément |
-| 243 | Cette chaîne ne contient aucune étape à visualiser. |
+| 88 | Block |
+| 88 | Component |
+| 88 | Class |
+| 88 | Interface |
+| 88 | Requirement |
+| 88 | Package |
+| 107 | 🔍 Filtrer les types… |
+| 135 | Changer la couleur |
+| 142 | Physical Component |
+| 146 | élément(s) de ce type dans l'arborescence |
+| 157 | Modifier ce type |
+| 158 | Supprimer ce type |
+| 158 | Ce type est utilisé par |
+| 158 | élément(s). |
+| 158 | Supprimer le type |
+| 186 | rotate(-90deg) |
+| 196 | var(--c-dim) |
+| 200 | 🔷 Capella |
+| 209 | + Nouveau type d'élément |
+| 245 | Cette chaîne ne contient aucune étape à visualiser. |
 
 ## js/08-editeur-modele.js
 
@@ -490,59 +490,59 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte |
 |---:|---|
-| 26 | Package |
-| 53 | Sélectionnez un élément dans l'arborescence ou la carte. |
-| 68 | Double-clic pour modifier |
-| 82 | var(--c-dim) |
-| 86 | Nom |
-| 91 | Cliquer pour copier |
-| 92 | var(--c-accent) |
+| 21 | Package |
+| 48 | Sélectionnez un élément dans l'arborescence ou la carte. |
+| 63 | Double-clic pour modifier |
+| 77 | var(--c-dim) |
+| 81 | Nom |
+| 86 | Cliquer pour copier |
+| 87 | var(--c-accent) |
+| 95 | Type |
+| 97 | inp prop-val-edit |
 | 100 | Type |
-| 102 | inp prop-val-edit |
-| 105 | Type |
+| 107 | — racine |
+| 109 | Parent |
+| 111 | inp prop-val-edit |
 | 112 | — racine |
-| 114 | Parent |
-| 116 | inp prop-val-edit |
-| 117 | — racine |
-| 121 | 📂 Packages |
-| 127 | Éléments |
-| 131 | Parent |
-| 132 | Parent |
-| 145 | Attributs Capella |
-| 281 | var(--c-dim) |
+| 116 | 📂 Packages |
+| 122 | Éléments |
+| 126 | Parent |
+| 127 | Parent |
+| 140 | Attributs Capella |
+| 276 | var(--c-dim) |
+| 298 | Renommer |
+| 299 | Ajouter un sous-package |
+| 300 | Ajouter un élément |
+| 301 | Supprimer ce package |
 | 303 | Renommer |
-| 304 | Ajouter un sous-package |
-| 305 | Ajouter un élément |
-| 306 | Supprimer ce package |
-| 308 | Renommer |
-| 309 | Ajouter un sous-élément |
-| 310 | Supprimer |
-| 363 | 📂 Nouveau package racine |
-| 392 | Nouveau package |
-| 393 | Nouveau package |
-| 396 | Package |
-| 407 | Block |
-| 411 | Nouvel élément |
-| 415 | Containment |
-| 423 | enfant(s). Supprimer ? |
-| 446 | éléments sélectionnés |
-| 446 | éléments sélectionnés — glisser pour déplacer le groupe |
-| 461 | Déplacement impossible : la cible est à l'intérieur de la sélection. |
-| 472 | Containment |
-| 492 | Block |
-| 500 | Containment |
-| 542 | 📋 Coller la liste ici (1 ligne = 1 élément) |
-| 546 | Lecture du presse-papier non disponible dans ce navigateur — utilisez Ctrl+V sur l'élément sélectionné. |
-| 551 | Le presse-papier ne contient aucune ligne de texte exploitable. |
-| 554 | Accès au presse-papier refusé — utilisez Ctrl+V sur l'élément sélectionné. |
-| 564 | 🔄 Convert to… |
-| 564 | élts) |
-| 570 | 🔍 Filtrer les types… |
-| 585 | Aucun type ne correspond. |
-| 590 | var(--c-dim) |
-| 617 | Astuce : Ctrl+V fonctionne aussi sur l'élément sélectionné. |
-| 665 | Containment |
-| 703 | Containment |
+| 304 | Ajouter un sous-élément |
+| 305 | Supprimer |
+| 358 | 📂 Nouveau package racine |
+| 387 | Nouveau package |
+| 388 | Nouveau package |
+| 391 | Package |
+| 402 | Block |
+| 406 | Nouvel élément |
+| 410 | Containment |
+| 418 | enfant(s). Supprimer ? |
+| 441 | éléments sélectionnés |
+| 441 | éléments sélectionnés — glisser pour déplacer le groupe |
+| 456 | Déplacement impossible : la cible est à l'intérieur de la sélection. |
+| 467 | Containment |
+| 487 | Block |
+| 495 | Containment |
+| 537 | 📋 Coller la liste ici (1 ligne = 1 élément) |
+| 541 | Lecture du presse-papier non disponible dans ce navigateur — utilisez Ctrl+V sur l'élément sélectionné. |
+| 546 | Le presse-papier ne contient aucune ligne de texte exploitable. |
+| 549 | Accès au presse-papier refusé — utilisez Ctrl+V sur l'élément sélectionné. |
+| 559 | 🔄 Convert to… |
+| 559 | élts) |
+| 565 | 🔍 Filtrer les types… |
+| 580 | Aucun type ne correspond. |
+| 585 | var(--c-dim) |
+| 612 | Astuce : Ctrl+V fonctionne aussi sur l'élément sélectionné. |
+| 660 | Containment |
+| 698 | Containment |
 
 ## js/11-sauvegarde-toolbar-init.js
 
@@ -2656,7 +2656,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 121 | 📝 Propriétés |
 | 122 | Attributs de l'élément sélectionné dans le graphe. |
 | 123 | 🕸 Graphe |
-| 124 | Clic sur un nœud : sélection et propriétés · double-clic : il devient le contexte · clic droit : menu (éditer, masquer, relation…) · survol : ses voisins restent en évidence. |
+| 124 | Clic sur un nœud : sélection et propriétés · double-clic : il devient le contexte · clic droit : menu (contexte, développer, réduire, masquer) · survol : ses voisins restent en évidence. |
 | 125 | ◉ Légende |
 | 125 | Couleurs des types et des relations affichés. |
 | 126 | ◀ Panneau |
