@@ -121,7 +121,7 @@
 - `arboShowCtxMenu` (l. 518) — Affiche le menu contextuel (clic droit) d'un élément de l'arborescence.
 - `arboMoveEl` (l. 640) — Déplace un élément unique vers un nouvel owner par glisser-déposer : met à jour
 
-## 10-table-view.js — 1402 lignes
+## 10-table-view.js — 1404 lignes
 
 - `tvNewTabState` (l. 6) — Construit un objet d'état vierge pour un nouvel onglet de Table View.
 - `tvActiveTab` (l. 28) — Retourne l'objet d'état de l'onglet actuellement actif.
@@ -146,12 +146,12 @@
 - `tvResolveMetachain` (l. 469) — Exécute une chaîne de Properties (metachain) à partir d'un élément MODEL.elements.
 - `tvRenderCustomColStepRow` (l. 498) — Rend une étape (ligne) de l'éditeur de colonne Metachain : sélecteur de Metaclass,
 - `tvRenderCustomColPanel` (l. 552) — Rend l'intégralité du panneau latéral d'édition d'une colonne Metachain
-- `tvOpenCustomColPanel` (l. 572) — Ouvre le panneau latéral de création/édition d'une colonne Metachain.
-- `tvCloseCustomColPanel` (l. 595) — Ferme le panneau latéral d'édition de colonne Metachain et réinitialise son état.
-- `tvSaveTableView` (l. 629) — Sauvegarde la configuration de la vue Table View active (colonnes, ordre, largeurs,
-- `tvLoadTableView` (l. 651) — Charge une configuration de vue Table View sauvegardée et l'applique à l'onglet actif.
-- `buildTableView` (l. 679) — Construit intégralement la vue Table View : barre d'outils, menu de sélection des
-- `onModelChanged` (l. 1398) — Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel.
+- `tvOpenCustomColPanel` (l. 573) — Ouvre le panneau latéral de création/édition d'une colonne Metachain.
+- `tvCloseCustomColPanel` (l. 597) — Ferme le panneau latéral d'édition de colonne Metachain et réinitialise son état.
+- `tvSaveTableView` (l. 631) — Sauvegarde la configuration de la vue Table View active (colonnes, ordre, largeurs,
+- `tvLoadTableView` (l. 653) — Charge une configuration de vue Table View sauvegardée et l'applique à l'onglet actif.
+- `buildTableView` (l. 681) — Construit intégralement la vue Table View : barre d'outils, menu de sélection des
+- `onModelChanged` (l. 1400) — Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel.
 
 ## 11-sauvegarde-toolbar-init.js — 264 lignes
 
@@ -199,7 +199,7 @@
 - `capRenderCurrentView` (l. 736) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
 - `capUpdateStatChips` (l. 808) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
-## 21-capella-vues-base.js — 1119 lignes
+## 21-capella-vues-base.js — 1328 lignes
 
 - `capRenderSidebar` (l. 5) — Rend la sidebar Capella : liste des types par couche avec cases à cocher.
 - `capGetFiltered` (l. 57) — Retourne capAllElements filtré par types activés, couche et texte de recherche.
@@ -226,14 +226,22 @@
 - `capApplyColResize` (l. 743) — Ajoute une poignée de redimensionnement sur le bord droit d'un <th> du tableau Capella.
 - `capRenderCustomColStepRow` (l. 771) — Construit une ligne du metachain : <select> Metaclass + <select> Property + suppression.
 - `capRenderCustomColPanel` (l. 837) — Reconstruit entièrement le panneau : recalcule le metaclass imposé de chaque ligne à partir
-- `capOpenCustomColPanel` (l. 864) — Ouvre le panneau latéral de construction de colonne personnalisée (Metachain Navigation).
-- `capCloseCustomColPanel` (l. 888) — Ferme le panneau latéral d'édition de colonne Metachain de la vue Tableau.
-- `capSaveTableView` (l. 929) — Sérialise la configuration actuelle de la vue Tableau Capella (colonnes visibles, colonnes
-- `capLoadTableView` (l. 948) — Charge une configuration de vue Tableau Capella précédemment sauvegardée et l'applique.
-- `capRenderTable` (l. 971) — Rend intégralement la vue Tableau Capella : barre d'outils (colonnes, colonne perso,
-- `capRenderTableBodyOnly` (l. 979) — Reconstruit uniquement le <thead>/<tbody> du tableau Capella (pas la toolbar ni le menu
-- `capRenderTree` (l. 1069) — Rend la vue Arborescence Capella (hiérarchie XML complète).
-- `capRenderTreeNode` (l. 1080) — Rend récursivement un nœud de l'arborescence Capella.
+- `CAP_PP_MAX_CHIPS` (l. 864)
+- `CAP_PP_MAX_OPTS` (l. 865)
+- `capPpCapAdapter` (l. 870) — Adaptateur de l'aperçu pour le 📋 Tableau Capella (capAllElements, moteur cap…).
+- `capPpTvAdapter` (l. 885) — Adaptateur de l'aperçu pour la 📊 Table View (tvAllRows, moteur tv…).
+- `capPpTrace` (l. 904) — Déroule le chemin pas à pas depuis un élément, en gardant chaque niveau intermédiaire
+- `capPpHasResult` (l. 923) — Indique si un élément donne un résultat non vide pour le chemin (cellule remplie).
+- `capPpRender` (l. 933) — Rend la zone « 👁 Aperçu en direct » d'un panneau de colonne par chemin : choix de
+- `capPpRenderBody` (l. 1001) — Rend le corps de l'aperçu : remplissage estimé sur le type de départ, puis le chemin
+- `capOpenCustomColPanel` (l. 1072) — Ouvre le panneau latéral de construction de colonne personnalisée (Metachain Navigation).
+- `capCloseCustomColPanel` (l. 1097) — Ferme le panneau latéral d'édition de colonne Metachain de la vue Tableau.
+- `capSaveTableView` (l. 1138) — Sérialise la configuration actuelle de la vue Tableau Capella (colonnes visibles, colonnes
+- `capLoadTableView` (l. 1157) — Charge une configuration de vue Tableau Capella précédemment sauvegardée et l'applique.
+- `capRenderTable` (l. 1180) — Rend intégralement la vue Tableau Capella : barre d'outils (colonnes, colonne perso,
+- `capRenderTableBodyOnly` (l. 1188) — Reconstruit uniquement le <thead>/<tbody> du tableau Capella (pas la toolbar ni le menu
+- `capRenderTree` (l. 1278) — Rend la vue Arborescence Capella (hiérarchie XML complète).
+- `capRenderTreeNode` (l. 1289) — Rend récursivement un nœud de l'arborescence Capella.
 
 ## 22-capella-liens.js — 280 lignes
 

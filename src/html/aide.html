@@ -40,7 +40,7 @@
         <h3>Les trois modes</h3>
         <div class="hp-grid">
           <div class="hp-card"><b>🗺 Relation Map</b><span>Graphe interactif centré sur un élément et ses voisins, filtrable par types et relations.</span></div>
-          <div class="hp-card"><b>📊 Table View</b><span>Tableau de tous les éléments du fichier, avec colonnes calculées (Metachain).</span></div>
+          <div class="hp-card"><b>📊 Table View</b><span>Tableau de tous les éléments du fichier, avec colonnes calculées par chemin de relations.</span></div>
           <div class="hp-card"><b>🔷 Vues Capella</b><span>Vues d'analyse dédiées : explorateur (arborescence, cartes, tableau, index), liens, chaînes, interfaces, ports, index.</span></div>
         </div>
         <h3>Sauvegarder et partager</h3>
@@ -122,18 +122,20 @@
       <div id="ht-tv" class="ht-panel" style="display:none">
         <h2>📊 Table View</h2>
         <p class="hp-lead">Tableau de <b>tous les éléments du fichier</b> (pas seulement ceux de l'arborescence), avec onglets, filtres par colonne et export CSV. Le menu <b>⊞ Colonnes</b> choisit les attributs affichés.</p>
-        <h3>✨ Colonnes personnalisées — Metachain</h3>
-        <p>Construisez une colonne calculée en enchaînant des étapes <b>Metaclass → Property</b>, à la manière du Metachain Navigation de MagicDraw. Les Properties proposées sont calculées à partir des données réellement présentes :</p>
+        <h3>✨ Colonne par chemin (metachain)</h3>
+        <p>Ajoute une colonne calculée qui, pour chaque élément du tableau, <b>suit un chemin de relations</b> dans le modèle et affiche ce qu'elle trouve au bout. Exemples : les fonctions allouées à chaque composant, les composants reliés à un composant par ses ports, le nom du paquetage propriétaire d'une exigence.</p>
+        <p><b>Construire le chemin</b> : choisir le <b>type de départ</b> (seules ses lignes seront remplies), puis, à chaque étape, la <b>relation à suivre</b> ; le type de l'étape suivante est déduit automatiquement. La dernière étape peut lire une <b>valeur</b> (Name, ID, attribut) ; sinon, la cellule affiche le nom des éléments atteints. Les choix proposés dépendent du modèle chargé :</p>
         <table class="hp-t">
-          <tr><td>Name · ID · Type · Human Type · attributs</td><td>Valeurs terminales (fin de chaîne).</td></tr>
-          <tr><td>Owner [Type]</td><td>Premier ancêtre du type choisi.</td></tr>
-          <tr><td>Owned element [Type]</td><td>Enfants directs du type choisi (ex. les ports d'un composant).</td></tr>
+          <tr><td>Name · ID · Type · Human Type · attributs</td><td>Valeur affichée (fin du chemin).</td></tr>
+          <tr><td>Owner [Type]</td><td>Premier élément propriétaire du type choisi.</td></tr>
+          <tr><td>Owned element [Type]</td><td>Éléments contenus directement, du type choisi (ex. les ports d'un composant).</td></tr>
           <tr><td>Relations Capella</td><td>Allocation, réalisation, implication… dans les deux sens.</td></tr>
-          <tr><td>attribut → Type</td><td>Référence sortante (<code>source</code>, <code>target</code>, <code>involved</code>…).</td></tr>
-          <tr><td>← référence entrante</td><td>Éléments qui pointent vers celui-ci (navigation inverse).</td></tr>
+          <tr><td>attribut → Type</td><td>Élément désigné par un attribut (<code>source</code>, <code>target</code>, <code>involved</code>…).</td></tr>
+          <tr><td>← référence entrante</td><td>Éléments qui désignent celui-ci (sens inverse).</td></tr>
           <tr><td>via [Type] → [Type]</td><td>Passage par un élément intermédiaire (ex. port → Physical Link → port opposé).</td></tr>
         </table>
-        <p><b>+ Insert</b> ajoute une étape · <b>✕</b> supprime une étape et les suivantes · <b>≡ En ligne / ☰ Empilé</b> pour les cellules à plusieurs valeurs · <b>💾 Sauver vue / 📂 Charger vue</b> exporte et recharge toute la configuration en JSON.</p>
+        <p><b>👁 Aperçu en direct</b> : choisissez un <b>élément d'exemple</b> du type de départ (filtre 🔍, liste, <b>Suivant ▸</b> pour passer au prochain élément dont la cellule serait remplie). L'aperçu montre les éléments atteints à chaque étape, l'étape où le chemin s'arrête s'il ne trouve rien, le contenu final de la cellule et le nombre d'éléments pour lesquels elle sera remplie.</p>
+        <p><b>+ Ajouter une étape</b> · <b>✕</b> supprime une étape et les suivantes · <b>✏</b> (menu ⊞ Colonnes) modifie une colonne existante · <b>≡ En ligne / ☰ Empilé</b> pour les cellules à plusieurs valeurs · <b>💾 Sauver vue / 📂 Charger vue</b> exporte et recharge toute la configuration en JSON.</p>
       </div>
 
       <!-- ── CAPELLA DATA ── -->
@@ -149,7 +151,7 @@
           <tr><td>🧭 Explorateur</td><td>Quatre onglets : 🌳 Arborescence, ▦ Cartes, 📋 Tableau et 📖 Index des types (détaillés ci-dessous) ; le menu rouvre le dernier onglet utilisé. La barre latérale des types n'est affichée que dans l'Explorateur.</td></tr>
           <tr><td>🧭 Explorateur › 🌳 Arborescence</td><td>Arbre complet du modèle ; déplier / replier.</td></tr>
           <tr><td>🧭 Explorateur › ▦ Cartes</td><td>Éléments groupés par couche ARCADIA, filtres de couche et recherche.</td></tr>
-          <tr><td>🧭 Explorateur › 📋 Tableau</td><td>Tableau paginé : colonnes paramétrables et redimensionnables, filtres par colonne, colonnes Metachain (voir Table View), export CSV/JSON, sauvegarde de vue.</td></tr>
+          <tr><td>🧭 Explorateur › 📋 Tableau</td><td>Tableau paginé : colonnes paramétrables et redimensionnables, filtres par colonne, colonnes par chemin de relations (voir Table View), export CSV/JSON, sauvegarde de vue.</td></tr>
           <tr><td>🔗 Liens</td><td>Relations Capella extraites (34 types : décompositions, allocations, échanges fonctionnels / de composants / liens physiques, éléments échangés, réalisations inter-couches, chaînes, capacités). Barre : recherche texte, filtres par groupe (clic sur le nom du groupe) ou par relation, colonnes d'ID à la demande, export CSV des lignes affichées ; les relations absentes du modèle sont listées en infobulle. Clic sur un nom : panneau de détail.</td></tr>
           <tr><td>⚡ Chaînes</td><td>Chaînes fonctionnelles, processus opérationnels et chemins physiques : diagrammes, tables et exports (onglet ⚡ Chaînes).</td></tr>
           <tr><td>ƒ⇆ Functional Exchange · 🧱 System / Logical Component · 🔀 Behavior Exchange · 🔌 Physical Link · 🧩 Ports</td><td>Analyse des interfaces et contrôles de cohérence (onglet 🔌 Interfaces & ports).</td></tr>

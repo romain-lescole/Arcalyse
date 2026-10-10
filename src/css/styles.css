@@ -456,6 +456,26 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
   border:1px solid var(--c-border);border-radius:4px;color:var(--c-text);outline:none;min-width:0;}
 .cap-step-del{cursor:pointer;color:var(--c-dim);font-size:11px;flex-shrink:0;padding:0 2px;}
 .cap-step-del:hover{color:#f38ba8;}
+.cap-pp{border:1px solid var(--c-border);border-radius:6px;background:var(--c-bg);padding:9px 10px;margin-bottom:14px;font-size:11px;}
+.cap-pp-h{font-weight:700;font-size:12px;margin-bottom:6px;color:var(--c-text);}
+.cap-pp-dim{color:var(--c-dim);font-size:10.5px;}
+.cap-pp-bar{display:flex;gap:5px;align-items:center;margin:4px 0 8px;}
+.cap-pp-bar .inp{width:90px;flex-shrink:0;font-size:11px;padding:3px 6px;}
+.cap-pp-bar select{flex:1;min-width:0;font-size:11px;padding:3px 5px;background:var(--c-bg2);
+  border:1px solid var(--c-border);border-radius:4px;color:var(--c-text);}
+.cap-pp-bar .tbtn{flex-shrink:0;font-size:11px;padding:3px 8px;}
+.cap-pp-cov{font-size:10.5px;color:var(--c-ok,#3fb950);margin-bottom:6px;}
+.cap-pp-step{border-left:2px solid var(--c-accent);padding:2px 0 5px 8px;margin-left:8px;}
+.cap-pp-step.off{opacity:.4;}
+.cap-pp-st{display:flex;align-items:center;gap:6px;color:var(--c-text);margin-bottom:3px;}
+.cap-pp-st .cap-step-num{width:15px;height:15px;font-size:9px;}
+.cap-pp-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px;}
+.cap-pp-chip{background:var(--c-bg3);border:1px solid var(--c-border);border-radius:10px;padding:1px 8px;
+  max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--c-text);}
+.cap-pp-res{margin-top:6px;border-top:1px dashed var(--c-border);padding-top:6px;}
+.cap-pp-cell{background:var(--c-bg2);border:1px solid var(--c-accent);border-radius:4px;padding:5px 7px;
+  color:var(--c-text);word-break:break-word;}
+.cap-pp-cell.empty{border-color:var(--c-border);color:var(--c-dim);font-style:italic;}
 
 /* Cap sidebar layer group */
 .cap-layer-grp-hdr{display:flex;align-items:center;gap:6px;padding:6px 10px 5px;

@@ -48,6 +48,7 @@ Historique : ce document reprend le fichier « CONSIGNES » utilisé avant le d�
 Chaînes de navigation Metaclass → Property, façon MagicDraw.
 
 - **Tableau Capella** : `capGetMetachainProperties`, `capResolveStep`, `capResolveMetachain`, `capExtractValue`. Types de propriétés : terminales (Name, ID, Type, Human Type, attributs), `owner`, `owned`, `via` (intermédiaire), relations Capella, `attr` (référence sortante), `incoming` (référence entrante).
+- **✨ Colonne par chemin — 👁 Aperçu en direct** (21, commun aux deux vues) : `capPpRender(which, steps)` avec un adaptateur (`capPpCapAdapter` / `capPpTvAdapter`) ; `capPpTrace` rejoue le chemin pas à pas avec la même logique que `capResolveMetachain` / `tvResolveMetachain` (à garder alignés). L'exemple est choisi automatiquement parmi les éléments donnant un résultat tant que l'utilisateur n'en a pas choisi un (`_capPpState[which].auto`) ; le taux de remplissage est borné à 120 ms de calcul.
 - **Table View** : équivalents préfixés `tv…`, calculés sur le jeu complet `tvAllRows()` (tous les éléments du fichier, pas seulement ceux injectés dans l'arborescence) ; attributs via `tvRowAttrs(el)`.
 
 ## 6. Vue ⚡ Chaînes (dernier chantier)

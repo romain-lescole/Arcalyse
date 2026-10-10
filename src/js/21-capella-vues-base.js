@@ -628,8 +628,8 @@ function capBuildTableToolbar(){
 
   // Icône dédiée "Colonne personnalisée" — ouvre le panneau latéral de construction
   // multi-étapes (metachain navigation), plutôt qu'un mini-formulaire dans ce menu.
-  const customBtn=document.createElement('div'); customBtn.className='tbtn'; customBtn.title='Créer une colonne personnalisée (navigation multi-étapes)';
-  customBtn.textContent='✨ Colonne perso';
+  const customBtn=document.createElement('div'); customBtn.className='tbtn'; customBtn.title='Créer une colonne calculée en suivant un chemin de relations (metachain), avec aperçu en direct';
+  customBtn.textContent='✨ Colonne par chemin';
   customBtn.onclick=()=>capOpenCustomColPanel();
   tb.appendChild(customBtn);
 
@@ -806,7 +806,7 @@ function capRenderCustomColStepRow(idx){
     const props=capGetMetachainProperties(step.metaclass);
     if (!props.length) {
       propEl.disabled=true;
-      propEl.innerHTML='<option>(aucune property disponible)</option>';
+      propEl.innerHTML='<option>(aucune relation disponible)</option>';
     } else {
       propEl.innerHTML=props.map(p=>`<option value="${capEsc(p.key)}">${capEsc(p.label)}</option>`).join('');
       if (step.property) {
@@ -852,6 +852,214 @@ function capRenderCustomColPanel(){
     addBtn.style.opacity = canAdd ? '1' : '.4';
     addBtn.style.pointerEvents = canAdd ? '' : 'none';
   }
+  capPpRender('cap', _capCustomColSteps);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   COLONNE PAR CHEMIN — Aperçu en direct (commun au 📋 Tableau et à la 📊 Table View)
+   On choisit un élément d'exemple du type de départ ; l'aperçu montre, étape par
+   étape, les éléments atteints puis la valeur qui apparaîtra dans la cellule.
+   Chaque vue fournit un « adaptateur » (accès à ses éléments et à son moteur).
+   ═══════════════════════════════════════════════════════════════════════ */
+const CAP_PP_MAX_CHIPS = 12;   // éléments affichés par étape avant « +N »
+const CAP_PP_MAX_OPTS  = 400;  // options proposées dans la liste des exemples
+const _capPpState = {cap:{type:null,id:null,q:'',auto:true}, tv:{type:null,id:null,q:'',auto:true}}; // exemple par vue (auto = pas encore choisi par l'utilisateur)
+
+/** Adaptateur de l'aperçu pour le 📋 Tableau Capella (capAllElements, moteur cap…).
+ * @returns {object} Fonctions d'accès aux éléments et au moteur de chemin */
+function capPpCapAdapter(){
+  return {
+    of:    t=>capAllElements.filter(e=>e.typeName===t),
+    byId:  id=>capAllElements.find(e=>e.id===id),
+    name:  e=>e.attrs.name||'(sans nom)',
+    type:  e=>e.typeName,
+    typeLabel: t=>(CAP_HUMAN_NAMES[t]||{}).h||t,
+    step:  capResolveStep,
+    value: capExtractValue,
+    resolve: capResolveMetachain,
+  };
+}
+
+/** Adaptateur de l'aperçu pour la 📊 Table View (tvAllRows, moteur tv…).
+ * @returns {object} Fonctions d'accès aux éléments et au moteur de chemin */
+function capPpTvAdapter(){
+  return {
+    of:    t=>tvAllRows().filter(e=>e.type===t),
+    byId:  id=>tvAllRows().find(e=>e.id===id),
+    name:  e=>e.name||'(sans nom)',
+    type:  e=>e.type,
+    typeLabel: t=>t,
+    step:  tvResolveStep,
+    value: tvExtractValue,
+    resolve: tvResolveMetachain,
+  };
+}
+
+/** Déroule le chemin pas à pas depuis un élément, en gardant chaque niveau intermédiaire
+ * (même logique que capResolveMetachain / tvResolveMetachain).
+ * @param {object} el - Élément de départ
+ * @param {Array} steps - Étapes {metaclass, property}
+ * @param {object} ad - Adaptateur de la vue
+ * @returns {Array<{elems:Array|null, values:string[]|null}>} Un niveau par étape */
+function capPpTrace(el, steps, ad){
+  let current=[el];
+  return steps.map((s,i)=>{
+    if (!s.property) { current=[]; return {elems:[], values:null}; }
+    if (i===steps.length-1 && s.property.isTerminal) {
+      return {elems:null, values:current.map(c=>ad.value(c, s.property)).filter(v=>v!=='')};
+    }
+    const next=[];
+    current.forEach(c=>ad.step(c, s.property).forEach(r=>{ if(!next.includes(r)) next.push(r); }));
+    current=next;
+    return {elems:next, values:null};
+  });
+}
+
+/** Indique si un élément donne un résultat non vide pour le chemin (cellule remplie).
+ * @param {object} el - Élément de départ
+ * @param {Array} steps - Étapes du chemin
+ * @param {object} ad - Adaptateur de la vue
+ * @returns {boolean} Vrai si la cellule serait remplie */
+function capPpHasResult(el, steps, ad){
+  try { return ad.resolve(el, steps).length>0; } catch(e){ return false; }
+}
+
+/** Rend la zone « 👁 Aperçu en direct » d'un panneau de colonne par chemin : choix de
+ * l'élément d'exemple (recherche, liste, exemple suivant donnant un résultat), taux de
+ * remplissage estimé, puis le chemin parcouru étape par étape et le contenu de la cellule.
+ * @param {string} which - 'cap' (📋 Tableau) ou 'tv' (📊 Table View)
+ * @param {Array} steps - Étapes en cours d'édition
+ */
+function capPpRender(which, steps){
+  const host=document.getElementById(which+'-customcol-preview'); if (!host) return;
+  const ad = which==='tv' ? capPpTvAdapter() : capPpCapAdapter();
+  const st=_capPpState[which];
+  const t0 = steps[0] && steps[0].metaclass;
+  host.innerHTML='';
+  const head=document.createElement('div'); head.className='cap-pp-h'; head.textContent='👁 Aperçu en direct';
+  host.appendChild(head);
+  if (!t0) { const p=document.createElement('div'); p.className='cap-pp-dim'; p.textContent='Choisissez un type de départ.'; host.appendChild(p); return; }
+
+  const cands=ad.of(t0).slice().sort((a,b)=>ad.name(a).localeCompare(ad.name(b)));
+  if (!cands.length) { const p=document.createElement('div'); p.className='cap-pp-dim'; p.textContent='Aucun élément de ce type dans le modèle.'; host.appendChild(p); return; }
+  const complete = steps.every(s=>s.property);
+  // Nouveau type de départ, ou exemple automatique devenu vide après un changement du chemin :
+  // on prend un exemple qui donne un résultat, si possible (un choix de l'utilisateur est conservé)
+  if (st.type!==t0 || !cands.some(c=>c.id===st.id)) { st.type=t0; st.q=''; st.auto=true; st.id=null; }
+  if (st.auto && complete && (!st.id || !capPpHasResult(ad.byId(st.id), steps, ad))) {
+    const ok=cands.slice(0,500).find(c=>capPpHasResult(c, steps, ad));
+    st.id=(ok||cands.find(c=>c.id===st.id)||cands[0]).id;
+  }
+  if (!st.id) st.id=cands[0].id;
+
+  // ── Choix de l'exemple : recherche + liste + « exemple suivant » ──
+  const lab=document.createElement('div'); lab.className='cap-pp-dim'; lab.textContent=`Élément d'exemple (${ad.typeLabel(t0)}) :`;
+  host.appendChild(lab);
+  const bar=document.createElement('div'); bar.className='cap-pp-bar';
+  const q=document.createElement('input'); q.className='inp'; q.placeholder='🔍 Filtrer…'; q.value=st.q;
+  const sel=document.createElement('select');
+  const next=document.createElement('div'); next.className='tbtn'; next.textContent='Suivant ▸';
+  next.title='Passer au prochain élément dont la cellule serait remplie';
+  bar.appendChild(q); bar.appendChild(sel); bar.appendChild(next);
+  host.appendChild(bar);
+  const body=document.createElement('div'); host.appendChild(body);
+
+  const fillSel=()=>{
+    const ql=st.q.trim().toLowerCase();
+    const list=ql ? cands.filter(c=>ad.name(c).toLowerCase().includes(ql)) : cands;
+    const shown=list.slice(0,CAP_PP_MAX_OPTS);
+    if (st.id && !shown.some(c=>c.id===st.id)) { const cur=cands.find(c=>c.id===st.id); if (cur && !ql) shown.unshift(cur); }
+    sel.innerHTML=shown.map(c=>`<option value="${capEsc(c.id)}">${capEsc(ad.name(c))}</option>`).join('')
+      + (list.length>shown.length ? `<option disabled>… ${list.length-shown.length} autre(s) : affinez le filtre</option>` : '');
+    if (!shown.length) sel.innerHTML='<option disabled>(aucun élément)</option>';
+    else if (shown.some(c=>c.id===st.id)) sel.value=st.id;
+    else { st.id=shown[0].id; sel.value=st.id; }
+  };
+  const draw=()=>capPpRenderBody(body, cands.find(c=>c.id===st.id), steps, ad, cands, complete);
+  q.oninput=()=>{ st.q=q.value; fillSel(); draw(); };
+  sel.onchange=()=>{ st.id=sel.value; st.auto=false; draw(); };
+  next.onclick=()=>{
+    if (!complete) return;
+    const i=cands.findIndex(c=>c.id===st.id);
+    for (let k=1;k<=cands.length;k++){
+      const c=cands[(i+k)%cands.length];
+      if (capPpHasResult(c, steps, ad)) { st.id=c.id; st.auto=false; st.q=''; q.value=''; fillSel(); draw(); return; }
+    }
+  };
+  fillSel(); draw();
+}
+
+/** Rend le corps de l'aperçu : remplissage estimé sur le type de départ, puis le chemin
+ * parcouru depuis l'élément d'exemple (éléments atteints à chaque étape) et la cellule finale.
+ * @param {HTMLElement} body - Conteneur à remplir
+ * @param {object} el - Élément d'exemple
+ * @param {Array} steps - Étapes du chemin
+ * @param {object} ad - Adaptateur de la vue
+ * @param {Array} cands - Éléments du type de départ
+ * @param {boolean} complete - Toutes les étapes ont-elles une relation ou une valeur ?
+ */
+function capPpRenderBody(body, el, steps, ad, cands, complete){
+  body.innerHTML='';
+  if (!el) return;
+  // Remplissage estimé : nombre d'éléments du type de départ dont la cellule serait remplie
+  // (calcul borné dans le temps pour rester fluide sur un gros modèle)
+  if (complete) {
+    const t1=performance.now(); let n=0, ok=0;
+    for (const c of cands){ if (capPpHasResult(c, steps, ad)) ok++; n++; if (performance.now()-t1>120) break; }
+    const cov=document.createElement('div'); cov.className='cap-pp-cov';
+    cov.textContent = n<cands.length
+      ? `Cellule remplie pour ${ok} élément(s) sur les ${n} premiers testés (${cands.length} au total).`
+      : `Cellule remplie pour ${ok} élément(s) sur ${cands.length}.`;
+    if (!ok) cov.style.color='var(--c-warn,#e3b341)';
+    body.appendChild(cov);
+  }
+  const chips=(elems)=>{
+    const w=document.createElement('div'); w.className='cap-pp-chips';
+    elems.slice(0,CAP_PP_MAX_CHIPS).forEach(e=>{
+      const c=document.createElement('span'); c.className='cap-pp-chip';
+      c.textContent=ad.name(e); c.title=ad.typeLabel(ad.type(e))+' · '+(e.id||'');
+      w.appendChild(c);
+    });
+    if (elems.length>CAP_PP_MAX_CHIPS) { const m=document.createElement('span'); m.className='cap-pp-dim'; m.textContent=`+${elems.length-CAP_PP_MAX_CHIPS}`; w.appendChild(m); }
+    return w;
+  };
+  const block=(num, title)=>{
+    const b=document.createElement('div'); b.className='cap-pp-step';
+    const h=document.createElement('div'); h.className='cap-pp-st';
+    h.innerHTML=(num?`<span class="cap-step-num">${num}</span>`:'')+`<span>${title}</span>`;
+    b.appendChild(h); body.appendChild(b); return b;
+  };
+  block(0, `Départ : <b>${capEsc(ad.typeLabel(ad.type(el)))}</b>`).appendChild(chips([el]));
+  const levels=capPpTrace(el, steps, ad);
+  let stopped=false;
+  levels.forEach((lv,i)=>{
+    const s=steps[i];
+    const pl = s.property ? s.property.label : '(à choisir)';
+    const b=block(i+1, `↓ ${capEsc(pl)}`);
+    if (stopped || !s.property) { b.classList.add('off'); return; }
+    if (lv.values) {
+      const v=document.createElement('div'); v.className='cap-pp-dim';
+      v.textContent = lv.values.length ? `${lv.values.length} valeur(s) lue(s)` : 'Aucune valeur.';
+      b.appendChild(v);
+    } else if (!lv.elems.length) {
+      const v=document.createElement('div'); v.className='cap-pp-dim'; v.style.color='var(--c-warn,#e3b341)';
+      v.textContent='∅ Aucun élément atteint : le chemin s\'arrête ici pour cet exemple.';
+      b.appendChild(v); stopped=true;
+    } else {
+      const types=[...new Set(lv.elems.map(ad.type))].map(ad.typeLabel).join(', ');
+      const v=document.createElement('div'); v.className='cap-pp-dim'; v.textContent=`${lv.elems.length} × ${types}`;
+      b.appendChild(v); b.appendChild(chips(lv.elems));
+    }
+  });
+  // Cellule finale, telle qu'elle apparaîtra dans le tableau
+  const res=document.createElement('div'); res.className='cap-pp-res';
+  const last=levels[levels.length-1];
+  const vals = !complete ? null : (last && last.values) ? last.values : (last ? last.elems.map(ad.name) : []);
+  res.innerHTML='<div class="cap-pp-st"><span>▣ Cellule dans le tableau</span></div>';
+  const cell=document.createElement('div'); cell.className='cap-pp-cell';
+  cell.textContent = vals===null ? 'Chemin incomplet.' : (vals.length ? vals.join(', ') : '(vide)');
+  if (!vals || !vals.length) cell.classList.add('empty');
+  res.appendChild(cell); body.appendChild(res);
 }
 
 let _capCustomColEditKey = null; // clé de la colonne perso en cours d'édition, ou null = création
@@ -863,6 +1071,7 @@ let _capCustomColEditKey = null; // clé de la colonne perso en cours d'édition
  */
 function capOpenCustomColPanel(editKey){
   _capCustomColEditKey = editKey || null;
+  _capPpState.cap = {type:null, id:null, q:'', auto:true}; // l'aperçu repart d'un exemple qui donne un résultat
   const existing = editKey ? capTableCustomCols.find(c=>c.key===editKey) : null;
   const nameInp=document.getElementById('cap-customcol-name');
   if (existing) {
@@ -874,7 +1083,7 @@ function capOpenCustomColPanel(editKey){
     if (nameInp) nameInp.value='';
   }
   const titleEl=document.getElementById('cap-customcol-title');
-  if (titleEl) titleEl.textContent = existing ? `✨ Modifier « ${existing.label} »` : '✨ Colonne personnalisée — Metachain Navigation';
+  if (titleEl) titleEl.textContent = existing ? `✨ Modifier « ${existing.label} »` : '✨ Colonne par chemin';
   const createBtn=document.getElementById('cap-customcol-create');
   if (createBtn) createBtn.textContent = existing ? 'Enregistrer les modifications' : 'Créer la colonne';
   capRenderCustomColPanel();
@@ -899,8 +1108,8 @@ document.getElementById('cap-customcol-addstep')?.addEventListener('click',()=>{
   capRenderCustomColPanel();
 });
 document.getElementById('cap-customcol-create')?.addEventListener('click',()=>{
-  if (!_capCustomColSteps.length || !_capCustomColSteps[0].metaclass) { alert('Choisissez au moins un Metaclass et une Property.'); return; }
-  if (_capCustomColSteps.some(s=>!s.property)) { alert('Chaque étape doit avoir une Property sélectionnée.'); return; }
+  if (!_capCustomColSteps.length || !_capCustomColSteps[0].metaclass) { alert('Choisissez au moins un type de départ et une relation ou une valeur.'); return; }
+  if (_capCustomColSteps.some(s=>!s.property)) { alert('Chaque étape doit avoir une relation ou une valeur sélectionnée.'); return; }
   const nameInp=document.getElementById('cap-customcol-name');
   const stepsLabel=_capCustomColSteps.map(s=>s.property.label.replace(' →','').replace('← ','')).join(' → ');
   const label = nameInp.value.trim() || stepsLabel;

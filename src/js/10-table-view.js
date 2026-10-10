@@ -525,7 +525,7 @@ function tvRenderCustomColStepRow(idx){
   } else {
     const props=tvGetMetachainProperties(step.metaclass);
     if (!props.length) {
-      propEl.disabled=true; propEl.innerHTML='<option>(aucune property disponible)</option>';
+      propEl.disabled=true; propEl.innerHTML='<option>(aucune relation disponible)</option>';
     } else {
       propEl.innerHTML=props.map(p=>`<option value="${capEsc(p.key)}">${capEsc(p.label)}</option>`).join('');
       if (step.property) { const cur=props.find(p=>p.key===step.property.key); if (cur) propEl.value=cur.key; }
@@ -564,6 +564,7 @@ function tvRenderCustomColPanel(){
     addBtn.style.opacity = canAdd ? '1' : '.4';
     addBtn.style.pointerEvents = canAdd ? '' : 'none';
   }
+  capPpRender('tv', _tvCustomColSteps);
 }
 /** Ouvre le panneau latéral de création/édition d'une colonne Metachain.
  * Sans argument : création d'une nouvelle colonne. Avec editKey : édition en place.
@@ -571,6 +572,7 @@ function tvRenderCustomColPanel(){
  */
 function tvOpenCustomColPanel(editKey){
   _tvCustomColEditKey = editKey || null;
+  _capPpState.tv = {type:null, id:null, q:'', auto:true}; // l'aperçu repart d'un exemple qui donne un résultat
   const existing = editKey ? tvCustomCols.find(c=>c.key===editKey) : null;
   const nameInp=document.getElementById('tv-customcol-name');
   if (existing) {
@@ -581,7 +583,7 @@ function tvOpenCustomColPanel(editKey){
     if (nameInp) nameInp.value='';
   }
   const titleEl=document.getElementById('tv-customcol-title');
-  if (titleEl) titleEl.textContent = existing ? `✨ Modifier « ${existing.label} »` : '✨ Colonne personnalisée — Metachain Navigation';
+  if (titleEl) titleEl.textContent = existing ? `✨ Modifier « ${existing.label} »` : '✨ Colonne par chemin';
   const createBtn=document.getElementById('tv-customcol-create');
   if (createBtn) createBtn.textContent = existing ? 'Enregistrer les modifications' : 'Créer la colonne';
   tvRenderCustomColPanel();
@@ -606,8 +608,8 @@ document.getElementById('tv-customcol-addstep')?.addEventListener('click',()=>{
   tvRenderCustomColPanel();
 });
 document.getElementById('tv-customcol-create')?.addEventListener('click',()=>{
-  if (!_tvCustomColSteps.length || !_tvCustomColSteps[0].metaclass) { alert('Choisissez au moins un Metaclass et une Property.'); return; }
-  if (_tvCustomColSteps.some(s=>!s.property)) { alert('Chaque étape doit avoir une Property sélectionnée.'); return; }
+  if (!_tvCustomColSteps.length || !_tvCustomColSteps[0].metaclass) { alert('Choisissez au moins un type de départ et une relation ou une valeur.'); return; }
+  if (_tvCustomColSteps.some(s=>!s.property)) { alert('Chaque étape doit avoir une relation ou une valeur sélectionnée.'); return; }
   const nameInp=document.getElementById('tv-customcol-name');
   const stepsLabel=_tvCustomColSteps.map(s=>s.property.label.replace(' →','').replace('← ','')).join(' → ');
   const label = nameInp.value.trim() || stepsLabel;
@@ -1050,8 +1052,8 @@ function buildTableView() {
   renderMergedList();
 
   // Icône dédiée "Colonne personnalisée" — ouvre le panneau latéral Metachain Navigation
-  const tvCustomBtn=document.createElement('div'); tvCustomBtn.className='tv-btn'; tvCustomBtn.title='Créer une colonne personnalisée (navigation multi-étapes)';
-  tvCustomBtn.textContent='✨ Colonne perso';
+  const tvCustomBtn=document.createElement('div'); tvCustomBtn.className='tv-btn'; tvCustomBtn.title='Créer une colonne calculée en suivant un chemin de relations (metachain), avec aperçu en direct';
+  tvCustomBtn.textContent='✨ Colonne par chemin';
   tvCustomBtn.onclick=()=>tvOpenCustomColPanel();
   tb.appendChild(tvCustomBtn);
 

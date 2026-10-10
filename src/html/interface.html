@@ -209,23 +209,23 @@
        background:var(--c-bg2);border-left:1px solid var(--c-border);z-index:401;
        box-shadow:-8px 0 24px rgba(0,0,0,.4);transition:right .25s ease;overflow-y:auto;padding:18px;">
     <div style="display:flex;align-items:center;margin-bottom:14px;">
-      <span id="tv-customcol-title" style="font-weight:700;font-size:14px;">✨ Colonne personnalisée — Metachain Navigation</span>
+      <span id="tv-customcol-title" style="font-weight:700;font-size:14px;">✨ Colonne par chemin</span>
       <span id="tv-customcol-close" style="margin-left:auto;cursor:pointer;color:var(--c-dim);font-size:18px;line-height:1;">×</span>
     </div>
     <p style="font-size:11px;color:var(--c-dim);margin-bottom:12px;">
-      Chaque ligne du metachain associe un <strong style="color:var(--c-text)">Metaclass</strong> (le type d'élément
-      à cette étape) à une <strong style="color:var(--c-text)">Property</strong> (un attribut/relation à suivre,
-      ou une valeur terminale comme <em>Name</em>, <em>ID</em> ou un attribut précis qui arrête la chaîne).
-      Le Metaclass de la 1ʳᵉ ligne est le type de départ ; à partir de la 2ᵉ ligne, il est imposé par le résultat
-      de la Property précédente.
+      Le chemin (metachain) part de chaque élément du <strong style="color:var(--c-text)">type de départ</strong> et suit,
+        étape par étape, une <strong style="color:var(--c-text)">relation</strong> (allocation, propriétaire, élément contenu, port relié…).
+        La dernière étape peut lire une <strong style="color:var(--c-text)">valeur</strong> (Name, ID, attribut) à afficher dans la cellule.
+        À partir de la 2ᵉ étape, le type est imposé par le résultat de l'étape précédente.
     </p>
     <div style="display:flex;gap:6px;padding:4px 0 6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--c-dim);">
-      <span style="flex:1;">Metaclass or Stereotype</span>
-      <span style="flex:1;">Property</span>
+      <span style="flex:1;">Type d'élément</span>
+      <span style="flex:1;">Relation ou valeur</span>
       <span style="width:16px;"></span>
     </div>
     <div id="tv-customcol-steps"></div>
-    <div id="tv-customcol-addstep" class="add-btn" style="margin-bottom:14px;">+ Insert (nouvelle étape)</div>
+    <div id="tv-customcol-addstep" class="add-btn" style="margin-bottom:14px;">+ Ajouter une étape</div>
+    <div id="tv-customcol-preview" class="cap-pp"></div>
     <div style="border-top:1px solid var(--c-border);padding-top:12px;">
       <div style="font-size:11px;color:var(--c-dim);margin-bottom:4px;">Nom de la colonne</div>
       <input id="tv-customcol-name" type="text" class="inp" style="width:100%;box-sizing:border-box;margin-bottom:14px;" placeholder="ex: Functions of Component">
@@ -413,31 +413,31 @@
       </div>
     </div>
 
-    <!-- Panneau latéral : constructeur de colonne personnalisée — navigation Metachain
-         (modèle MagicDraw : chaque étape = un Metaclass + une Property) -->
+    <!-- Panneau latéral : constructeur de colonne par chemin (metachain) :
+         chaque étape = un type d'élément + une relation à suivre ou une valeur à lire -->
     <input type="file" id="cap-table-view-input" accept=".json" style="display:none">
     <div id="cap-customcol-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:400;"></div>
     <div id="cap-customcol-panel" style="display:none;position:fixed;top:0;right:-460px;width:440px;height:100%;
          background:var(--c-bg2);border-left:1px solid var(--c-border);z-index:401;
          box-shadow:-8px 0 24px rgba(0,0,0,.4);transition:right .25s ease;overflow-y:auto;padding:18px;">
       <div style="display:flex;align-items:center;margin-bottom:14px;">
-        <span id="cap-customcol-title" style="font-weight:700;font-size:14px;">✨ Colonne personnalisée — Metachain Navigation</span>
+        <span id="cap-customcol-title" style="font-weight:700;font-size:14px;">✨ Colonne par chemin</span>
         <span id="cap-customcol-close" style="margin-left:auto;cursor:pointer;color:var(--c-dim);font-size:18px;line-height:1;">×</span>
       </div>
       <p style="font-size:11px;color:var(--c-dim);margin-bottom:12px;">
-        Chaque ligne du metachain associe un <strong style="color:var(--c-text)">Metaclass</strong> (le type d'élément
-        à cette étape) à une <strong style="color:var(--c-text)">Property</strong> (un attribut/relation à suivre,
-        ou une valeur terminale comme <em>Name</em>, <em>ID</em> ou un attribut précis qui arrête la chaîne).
-        Le Metaclass de la 1ʳᵉ ligne est le type de départ ; à partir de la 2ᵉ ligne, il est imposé par le résultat
-        de la Property précédente.
+        Le chemin (metachain) part de chaque élément du <strong style="color:var(--c-text)">type de départ</strong> et suit,
+        étape par étape, une <strong style="color:var(--c-text)">relation</strong> (allocation, propriétaire, élément contenu, port relié…).
+        La dernière étape peut lire une <strong style="color:var(--c-text)">valeur</strong> (Name, ID, attribut) à afficher dans la cellule.
+        À partir de la 2ᵉ étape, le type est imposé par le résultat de l'étape précédente.
       </p>
       <div style="display:flex;gap:6px;padding:4px 0 6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--c-dim);">
-        <span style="flex:1;">Metaclass or Stereotype</span>
-        <span style="flex:1;">Property</span>
+        <span style="flex:1;">Type d'élément</span>
+        <span style="flex:1;">Relation ou valeur</span>
         <span style="width:16px;"></span>
       </div>
       <div id="cap-customcol-steps"></div>
-      <div id="cap-customcol-addstep" class="add-btn" style="margin-bottom:14px;">+ Insert (nouvelle étape)</div>
+      <div id="cap-customcol-addstep" class="add-btn" style="margin-bottom:14px;">+ Ajouter une étape</div>
+      <div id="cap-customcol-preview" class="cap-pp"></div>
       <div style="border-top:1px solid var(--c-border);padding-top:12px;">
         <div style="font-size:11px;color:var(--c-dim);margin-bottom:4px;">Nom de la colonne</div>
         <input id="cap-customcol-name" type="text" class="inp" style="width:100%;box-sizing:border-box;margin-bottom:14px;" placeholder="ex: Functions of Component">

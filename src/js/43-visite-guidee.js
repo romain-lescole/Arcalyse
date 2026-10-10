@@ -130,7 +130,7 @@ var CAP_TOUR_VIEWS={
     {s:'#tv-tabbar', t:'🗂 Onglets', x:'Chaque onglet garde son propre tableau (types, colonnes, filtres). <b>+</b> ajoute un onglet ; double-clic pour le renommer.'},
     {s:'#sec-cap-typ', t:'🔷 Type d\'élément', x:'Choisissez les types d\'éléments listés dans le tableau, groupés par couche ARCADIA.'},
     {s:'#tv-toolbar', t:'🧰 Commandes du tableau',
-     x:'<b>⊞ Colonnes</b> choisit les attributs affichés, <b>✨ Colonne perso</b> crée une colonne calculée (Metachain), <b>≡ En ligne</b> / ☰ Empilé règle les cellules à plusieurs valeurs, <b>💾 Sauver vue</b> / <b>📂 Charger vue</b> exportent la configuration en JSON.'},
+     x:'<b>⊞ Colonnes</b> choisit les attributs affichés, <b>✨ Colonne par chemin</b> crée une colonne calculée en suivant des relations (metachain), avec aperçu en direct sur un élément, <b>≡ En ligne</b> / ☰ Empilé règle les cellules à plusieurs valeurs, <b>💾 Sauver vue</b> / <b>📂 Charger vue</b> exportent la configuration en JSON.'},
     {s:'#tv-table thead', t:'↕ En-têtes', x:'Clic sur un titre pour trier ; le champ sous chaque titre filtre la colonne.'},
     {s:'#tv-table tbody', t:'📋 Lignes', x:'Un élément par ligne. Le nombre d\'éléments affichés est indiqué dans la barre du tableau.'}
   ]},
@@ -142,7 +142,7 @@ var CAP_TOUR_VIEWS={
     {s:'#cap-view-tree', t:'🌳 Arborescence', x:'Hiérarchie du modèle comme dans Capella. ▶ déplie un nœud ; clic sur un élément pour ouvrir son détail.'}]},
   table:{l:'📋 Tableau', steps:[...CAP_TOUR_EXPLORE,
     {s:'#cap-table-toolbar', t:'🧰 Commandes du tableau',
-     x:'<b>⊞ Colonnes</b> choisit les colonnes, <b>✨ Colonne perso</b> en calcule une (Metachain), <b>≡ En ligne</b> règle les cellules multiples, <b>💾 Sauver vue</b> / <b>📂 Charger vue</b> gardent la configuration, <b>↺ Réinitialiser</b> revient au départ.'},
+     x:'<b>⊞ Colonnes</b> choisit les colonnes, <b>✨ Colonne par chemin</b> en calcule une en suivant des relations (metachain), <b>≡ En ligne</b> règle les cellules multiples, <b>💾 Sauver vue</b> / <b>📂 Charger vue</b> gardent la configuration, <b>↺ Réinitialiser</b> revient au départ.'},
     {s:'#cap-table-head', t:'↕ En-têtes', x:'Clic sur un titre pour trier ; le champ <i>Filtrer…</i> sous chaque titre filtre la colonne. Les bords des colonnes se tirent pour les redimensionner.'},
     {s:'#cap-pagination', t:'📄 Pages', x:'Navigation de page en page et nombre de lignes par page.'}]},
   index:{l:'📖 Index des types', steps:[CAP_TOUR_EXPLORE[0],
