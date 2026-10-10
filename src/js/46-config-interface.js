@@ -10,6 +10,7 @@ var CAP_CFG_PARTS=[
   ['toolbar','☰ Barre des vues','menus affichés, vues épinglées'],
   ['dash',   '📐 Tableaux de bord','pages, indicateurs, disposition'],
   ['table',  '▤ Tableau','onglets de vues, colonnes affichées, colonnes par chemin, tri, filtres, largeurs'],
+  ['csv',    '⬇ Exports CSV','colonnes retirées ou ajoutées (ID, owner, attributs…) pour chaque export'],
   ['theme',  '🎨 Thème','thème choisi et thème personnalisé'],
   ['names',  '🔤 Règles de nommage','verbes acceptés, mots refusés']
 ];
@@ -27,6 +28,7 @@ function capCfgGet(k){
   if(k==='toolbar') return _capNav;
   if(k==='dash') return capDashStore;
   if(k==='table') return capTableCfgGet();
+  if(k==='csv') return _capCsvCfg;
   if(k==='theme') return {current:currentTheme, custom:capThemeStore};
   if(k==='names') return capNameRules;
   return null;
@@ -44,6 +46,7 @@ function capCfgSet(k, v){
     capTableCfgSet(v);
     if(capLoaded&&capCurrentView==='table') capRenderTable();
   }
+  else if(k==='csv'){ if(typeof v==='object') _capCsvCfg=v; }
   else if(k==='tv'){   // ancienne 📊 Table View : onglets convertis en onglets du ▤ Tableau
     capTableImportTv(v);
     if(capLoaded&&capCurrentView==='table') capRenderTable();
@@ -61,7 +64,7 @@ function capCfgSet(k, v){
 function capCfgStoreViews(){
   let el=document.getElementById('cap-ui-views');
   if(!el){ el=document.createElement('script'); el.type='application/json'; el.id='cap-ui-views'; document.head.appendChild(el); }
-  el.textContent=capCfgSer({table:capCfgGet('table'), theme:currentTheme}).replace(/</g,'\\u003c');
+  el.textContent=capCfgSer({table:capCfgGet('table'), csv:_capCsvCfg, theme:currentTheme}).replace(/</g,'\\u003c');
 }
 
 /** Réapplique à l'ouverture de la page les vues mémorisées par capCfgStoreViews. */
@@ -70,6 +73,7 @@ function capCfgRestoreViews(){
   try{
     const o=capCfgRev(el.textContent);
     if(o.table) capCfgSet('table',o.table);
+    if(o.csv) capCfgSet('csv',o.csv);
     if(o.tv) capCfgSet('tv',o.tv);   // page enregistrée par une version qui avait la 📊 Table View
     if(o.theme) capCfgSet('theme',{current:o.theme});
   }catch(e){ console.warn('Vues enregistrées illisibles :',e); }

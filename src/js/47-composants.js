@@ -373,16 +373,16 @@ function capRenderComponentBlocks(L, host, holder){
     capHtmlReport({title:V0.l+(V0.only?' — Vue Blocs':''), subtitle:`${getComps().length} composants · ${getLinks().length} ${V0.lw} · ${V0.scope}`, tabs, active:st.view, cells,
       filename:all?`${fn}-rapport.html`:`${fn}-${st.view}.html`});
   }
-  /** Export CSV : une ligne par port (Vue Blocs) ou par échange. */
+  /** Export CSV enrichi (53) : une ligne par port (Vue Blocs) ou par échange. */
   function exportCsv(){
     if(st.view==='block'){
       const rows=[]; getComps().forEach(c=>c.ports.forEach(p=>{ const ls=C.portLinks[p.id]||[];
-        if(!ls.length) rows.push([c.layer,c.name,c.actor?'Acteur':c.kind==='node'?'Nœud':'Système',p.name,p.orient,'','','']);
-        ls.forEach(l=>{ const o=l.src.portId===p.id?l.tgt:l.src; rows.push([c.layer,c.name,c.actor?'Acteur':c.kind==='node'?'Nœud':'Système',p.name,p.orient,l.linkName,roleOf(l,p.id),o.pcName]); }); }));
-      capCsvDownload(V0.what.toLowerCase().replace(/\s+/g,'-')+'-ports.csv',['Couche','Composant','Nature','Port','Orientation',V0.lw.replace(/s$/,''),'Sens','Composant distant'],rows); return;
+        if(!ls.length) rows.push([c.layer,capCx(c.name,c.id),c.actor?'Acteur':c.kind==='node'?'Nœud':'Système',capCx(p.name,p.id),p.orient,'','','']);
+        ls.forEach(l=>{ const o=l.src.portId===p.id?l.tgt:l.src; rows.push([c.layer,capCx(c.name,c.id),c.actor?'Acteur':c.kind==='node'?'Nœud':'Système',capCx(p.name,p.id),p.orient,capCx(l.linkName,l.linkId),roleOf(l,p.id),capCx(o.pcName,o.pcId)]); }); }));
+      capCsvExport(V0.what.toLowerCase().replace(/\s+/g,'-')+'-ports.csv',['Couche','Composant','Nature','Port','Orientation',V0.lw.replace(/s$/,''),'Sens','Composant distant'],rows); return;
     }
-    capCsvDownload(V0.what.toLowerCase().replace(/\s+/g,'-')+'-echanges.csv',['N°','Couche','Composant source','Port source','Orientation source','Component Exchange','Kind','Port cible','Orientation cible','Composant cible','Functional Exchanges'],
-      getLinks().map(l=>[lnum[l.linkId],l.layer,l.src.pcName,l.src.portName,l.src.portOrient,l.linkName,l.kind,l.tgt.portName,l.tgt.portOrient,l.tgt.pcName,l.fes.map(f=>f.name).join(', ')]));
+    capCsvExport(V0.what.toLowerCase().replace(/\s+/g,'-')+'-echanges.csv',['N°','Couche','Composant source','Port source','Orientation source','Component Exchange','Kind','Port cible','Orientation cible','Composant cible','Functional Exchanges'],
+      getLinks().map(l=>[lnum[l.linkId],l.layer,capCx(l.src.pcName,l.src.pcId),capCx(l.src.portName,l.src.portId),l.src.portOrient,capCx(l.linkName,l.linkId),l.kind,capCx(l.tgt.portName,l.tgt.portId),l.tgt.portOrient,capCx(l.tgt.pcName,l.tgt.pcId),capCxList(l.fes)]));
   }
 
   /** Construit toute la vue. */

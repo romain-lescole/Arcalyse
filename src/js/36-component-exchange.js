@@ -79,9 +79,6 @@ function capRenderCompExchange(){
     });
   }
 
-  /** Échappe une valeur pour l'export CSV (guillemets doublés, encadrement).
-   */
-  function csvEsc(s){ return '"'+String(s||'').replace(/"/g,'""')+'"'; }
 
   /** Construit le HTML du contenu de la vue selon le mode actif (Ligne ou Composant).
    */
@@ -331,28 +328,21 @@ function capRenderCompExchange(){
       clearTimeout(debTimer); debTimer=setTimeout(updateContent, 150);
     });
 
+    // CSV enrichi (53) : colonnes à retirer, ID / owner / attributs à ajouter
     container.querySelector('#cex-exp-csv')?.addEventListener('click',()=>{
       const f=getFiltered();
-      let csv;
       if(st.view!=='card'){
-        csv='N° Exchange;Composant Source;Port Source;Orientation Source;Component Exchange;Kind;Sens;Port Cible;Orientation Cible;Composant Cible;Functional Exchanges;Exchange Items;Physical Links;Alerte\n';
-        csv+=f.map(l=>[linkNumMap[l.linkId]||'',l.src.pcName,l.src.portName,l.src.portOrient,l.linkName,l.kind,CAP_CEX_DIRS[l.dir].label,l.tgt.portName,l.tgt.portOrient,l.tgt.pcName,
-          l.fes.map(x=>x.name).join(', '),l.items.map(x=>x.name).join(', '),l.pls.map(x=>x.name).join(', '),l.warn].map(csvEsc).join(';')).join('\n');
+        capCsvExport('component-exchanges.csv',['N° Exchange','Composant Source','Port Source','Orientation Source','Component Exchange','Kind','Sens','Port Cible','Orientation Cible','Composant Cible','Functional Exchanges','Exchange Items','Physical Links','Alerte'],
+          f.map(l=>[linkNumMap[l.linkId]||'',capCx(l.src.pcName,l.src.pcId),capCx(l.src.portName,l.src.portId),l.src.portOrient,capCx(l.linkName,l.linkId),l.kind,CAP_CEX_DIRS[l.dir].label,capCx(l.tgt.portName,l.tgt.portId),l.tgt.portOrient,capCx(l.tgt.pcName,l.tgt.pcId),
+            capCxList(l.fes),capCxList(l.items),capCxList(l.pls),l.warn]));
       } else {
-        csv='N° Exchange;Sens;Composant;Port;Orientation;Component Exchange;Kind;Port distant;Orientation distante;Composant distant\n';
-        const seen=new Set();
-        f.forEach(l=>{
-          if(!seen.has(l.linkId)){
-            seen.add(l.linkId);
-            const n=csvEsc(linkNumMap[l.linkId]||'');
-            const role=isSrc=>l.dir==='bi'?'⇄ Bidirectionnel':l.dir==='unset'?'? Non orienté':((l.dir==='fwd')===isSrc?'Émission →':'← Réception');
-            csv+=`${n};${csvEsc(role(true))};${csvEsc(l.src.pcName)};${csvEsc(l.src.portName)};${csvEsc(l.src.portOrient)};${csvEsc(l.linkName)};${csvEsc(l.kind)};${csvEsc(l.tgt.portName)};${csvEsc(l.tgt.portOrient)};${csvEsc(l.tgt.pcName)}\n`;
-            csv+=`${n};${csvEsc(role(false))};${csvEsc(l.tgt.pcName)};${csvEsc(l.tgt.portName)};${csvEsc(l.tgt.portOrient)};${csvEsc(l.linkName)};${csvEsc(l.kind)};${csvEsc(l.src.portName)};${csvEsc(l.src.portOrient)};${csvEsc(l.src.pcName)}\n`;
-          }
-        });
+        const rows=[], seen=new Set();
+        f.forEach(l=>{ if(seen.has(l.linkId)) return; seen.add(l.linkId); const n=linkNumMap[l.linkId]||'';
+          const role=isSrc=>l.dir==='bi'?'⇄ Bidirectionnel':l.dir==='unset'?'? Non orienté':((l.dir==='fwd')===isSrc?'Émission →':'← Réception');
+          rows.push([n,role(true),capCx(l.src.pcName,l.src.pcId),capCx(l.src.portName,l.src.portId),l.src.portOrient,capCx(l.linkName,l.linkId),l.kind,capCx(l.tgt.portName,l.tgt.portId),l.tgt.portOrient,capCx(l.tgt.pcName,l.tgt.pcId)]);
+          rows.push([n,role(false),capCx(l.tgt.pcName,l.tgt.pcId),capCx(l.tgt.portName,l.tgt.portId),l.tgt.portOrient,capCx(l.linkName,l.linkId),l.kind,capCx(l.src.portName,l.src.portId),l.src.portOrient,capCx(l.src.pcName,l.src.pcId)]); });
+        capCsvExport('component-exchanges-sens.csv',['N° Exchange','Sens','Composant','Port','Orientation','Component Exchange','Kind','Port distant','Orientation distante','Composant distant'],rows);
       }
-      const blob=new Blob(['\uFEFF'+csv],{type:'text/csv'});
-      const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='component-exchanges.csv';a.click();URL.revokeObjectURL(a.href);
     });
 
     container.querySelector('#cex-exp-html')?.addEventListener('click',()=>exportHtml(false));

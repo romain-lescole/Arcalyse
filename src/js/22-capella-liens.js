@@ -273,7 +273,8 @@ function capRenderLinks(){
   container.querySelector('.cap-lf-ids').addEventListener('change',e=>{capLinksShowIds=e.target.checked;renderBody();});
   container.querySelector('.cap-lf-csv').addEventListener('click',()=>{
     const out=[];
-    shown().forEach(sec=>rowsOf(sec).forEach(r=>out.push([sec.humanLabel||sec.relType,r.src.name,r.src.type||'',r.src.id||'',r.via?r.via.name:'',r.tgt.name,r.tgt.type||'',r.tgt.id||''])));
-    capCsvDownload('liens-capella.csv',['Relation','Source','Type source','ID source','Via','Cible','Type cible','ID cible'],out);
+    // Export enrichi (53) : source, via et cible portent leurs identifiants (owner, attributs… ajoutables)
+    shown().forEach(sec=>rowsOf(sec).forEach(r=>out.push([sec.humanLabel||sec.relType,capCx(r.src.name,r.src.id),r.src.type||'',r.src.id||'',r.via?capCx(r.via.name,r.via.id):'',capCx(r.tgt.name,r.tgt.id),r.tgt.type||'',r.tgt.id||''])));
+    capCsvExport('liens-capella.csv',['Relation','Source','Type source','ID source','Via','Cible','Type cible','ID cible'],out);
   });
 }

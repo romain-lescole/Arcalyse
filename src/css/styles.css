@@ -219,6 +219,15 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
 .cap-ttab-close:hover{opacity:1;color:var(--c-err,#f85149)}
 .cap-ttab-add{padding:5px 10px;font-size:14px;color:var(--c-dim);cursor:pointer;border-radius:5px;line-height:1}
 .cap-ttab-add:hover{color:var(--c-text);background:var(--c-bg3)}
+/* ⬇ Export CSV enrichi (53) */
+.cap-csvx-row{padding:6px 4px 7px;border-bottom:1px solid color-mix(in srgb,var(--c-border) 60%,transparent);}
+.cap-csvx-row.off .cap-csvx-h b{color:var(--c-dim);text-decoration:line-through;}
+.cap-csvx-h{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--c-text);cursor:pointer;}
+.cap-csvx-adds{display:flex;flex-wrap:wrap;gap:4px 6px;margin:5px 0 0 22px;align-items:center;}
+.cap-csvx-c{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--c-dim);border:1px solid var(--c-border);border-radius:11px;padding:1px 8px 1px 5px;cursor:pointer;}
+.cap-csvx-c.on{color:var(--c-text);border-color:var(--c-accent);background:color-mix(in srgb,var(--c-accent) 12%,transparent);}
+.cap-csvx-c input{margin:0;accent-color:var(--c-accent);}
+.cap-csvx-attr{font-size:11px;padding:1px 4px;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:4px;color:var(--c-text);max-width:180px;}
 /* 🎯 Portée de l'onglet (fenêtre) */
 .cap-sc-sel{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;font-size:12px;}
 .cap-sc-chip{display:inline-flex;align-items:center;gap:6px;background:var(--c-bg3);border:1px solid var(--c-accent);border-radius:12px;padding:2px 4px 2px 10px;color:var(--c-text);}
@@ -1161,7 +1170,7 @@ html[data-tone="light"] .fex-pname{color:#2a5a2a;}
 .ab-ver{font-size:12px;color:var(--c-accent);margin:2px 0 4px;}
 .ab-mono{font-family:monospace;user-select:all;}
 .ab-lic{white-space:pre-wrap;font-size:10.5px;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:5px;padding:8px;margin:6px 0 0;max-height:180px;overflow:auto;}
-#cap-scope-ov,#cap-cfg-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
+#cap-csvx-ov,#cap-scope-ov,#cap-cfg-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
 .cfg-part{display:flex;gap:8px;align-items:flex-start;padding:6px 4px;border-bottom:1px solid var(--c-border);font-size:12.5px;cursor:pointer;}
 .cfg-part input{margin-top:3px;}
 

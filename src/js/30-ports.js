@@ -265,11 +265,12 @@ function capRenderPorts(){
         rows.push([sec.title,...[...tmp.children].map(td=>td.textContent.replace(/\s+/g,' ').trim())]); }));
       capCsvDownload('controles-ports.csv',['Contrôle','Élément','Détail','Complément'],rows); return;
     }
-    const fx=a=>a.map(x=>`${x.name} (${x.other})`).join(', ');
-    capCsvDownload('tracabilite-ports.csv',
+    // Export enrichi (53) : chaque colonne d'élément porte ses identifiants
+    const fx=a=>capCx(a.map(x=>`${x.name} (${x.other})`).join(', '), a.map(x=>x.id));
+    capCsvExport('tracabilite-ports.csv',
       ['Couche','Fonction','Function Port','Direction','Functional Exchanges','Composant','Component Port','Orientation','Component Exchanges','Physical Ports','Physical Links','Incomplet'],
-      filteredRows().map(r=>[r.layer, r.fp?r.fp.ownName:'', r.fp?r.fp.name:'', r.fp?r.fp.dir:'', r.fp?fx(r.fp.fes):'',
-        r.cp?r.cp.ownName:'', r.cp?r.cp.name:'', r.cp?r.cp.orient:'', r.cp?fx(r.cp.ces):'',
-        r.ppl.map(p=>p.ownName+' ⬦ '+p.name).join(', '), fx(r.ppl.flatMap(p=>p.pls)), r.incomplete?'oui':'']));
+      filteredRows().map(r=>[r.layer, r.fp?capCx(r.fp.ownName,r.fp.ownId):'', r.fp?capCx(r.fp.name,r.fp.id):'', r.fp?r.fp.dir:'', r.fp?fx(r.fp.fes):'',
+        r.cp?capCx(r.cp.ownName,r.cp.ownId):'', r.cp?capCx(r.cp.name,r.cp.id):'', r.cp?r.cp.orient:'', r.cp?fx(r.cp.ces):'',
+        capCx(r.ppl.map(p=>p.ownName+' ⬦ '+p.name).join(', '), r.ppl.map(p=>p.id)), fx(r.ppl.flatMap(p=>p.pls)), r.incomplete?'oui':'']));
   });
 }

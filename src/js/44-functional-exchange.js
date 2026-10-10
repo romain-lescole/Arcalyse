@@ -439,19 +439,19 @@ function capRenderFunctionalExchange(mode){
       filename:(OAV?'operational-analysis':'functional-exchanges')+(all?'-rapport.html':`-${st.view}.html`)});
   }
 
-  /** Export CSV : un échange par ligne (ou une ligne par port en Vue Blocs). */
+  /** Export CSV enrichi (53) : un échange par ligne (ou une ligne par port en Vue Blocs). */
   function exportCsv(){
     if(st.view==='block'&&!OAV){   // en OA, pas de ports : export des interactions
       const rows=[]; getFns().forEach(f=>[...f.ins.map(p=>({p,d:'Entrée'})),...f.outs.map(p=>({p,d:'Sortie'}))].forEach(({p,d})=>{
         const xs=X.portFes[p.id]||[];
-        if(!xs.length) rows.push([f.layer,f.num,f.name,d,p.name,'','','']);
-        xs.forEach(x=>{ const o=d==='Entrée'?x.src:x.tgt; rows.push([f.layer,f.num,f.name,d,p.name,x.name,o.fnName,o.portName]); });
+        if(!xs.length) rows.push([f.layer,f.num,capCx(f.name,f.id),d,capCx(p.name,p.id),'','','']);
+        xs.forEach(x=>{ const o=d==='Entrée'?x.src:x.tgt; rows.push([f.layer,f.num,capCx(f.name,f.id),d,capCx(p.name,p.id),capCx(x.name,x.id),capCx(o.fnName,o.fnId),capCx(o.portName,o.portId)]); });
       }));
-      capCsvDownload('functional-exchanges-ports.csv',['Couche','N°','Fonction','Sens','Port','Functional Exchange','Fonction distante','Port distant'],rows);
+      capCsvExport('functional-exchanges-ports.csv',['Couche','N°','Fonction','Sens','Port','Functional Exchange','Fonction distante','Port distant'],rows);
       return;
     }
-    capCsvDownload(OAV?'operational-interactions.csv':'functional-exchanges.csv',['N°','Couche','Fonction source','Port source','Functional Exchange','Port cible','Fonction cible','Exchange Items','Component Exchanges','Chaînes'],
-      getFiltered().map(x=>[x.num,x.layer,x.src.fnName,x.src.portName,x.name,x.tgt.portName,x.tgt.fnName,x.items.map(i=>i.name).join(', '),x.ces.map(c=>c.name).join(', '),x.chains.map(c=>c.name).join(', ')]));
+    capCsvExport(OAV?'operational-interactions.csv':'functional-exchanges.csv',['N°','Couche','Fonction source','Port source','Functional Exchange','Port cible','Fonction cible','Exchange Items','Component Exchanges','Chaînes'],
+      getFiltered().map(x=>[x.num,x.layer,capCx(x.src.fnName,x.src.fnId),capCx(x.src.portName,x.src.portId),capCx(x.name,x.id),capCx(x.tgt.portName,x.tgt.portId),capCx(x.tgt.fnName,x.tgt.fnId),capCxList(x.items),capCxList(x.ces),capCxList(x.chains)]));
   }
 
   /** Construit toute la vue (barre, filtres, contenu, écouteurs). */

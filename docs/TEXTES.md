@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3341 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3400 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -820,14 +820,14 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 258 | Via |
 | 258 | ID cible |
 | 266 | Aucun lien. |
-| 277 | Relation |
-| 277 | Source |
-| 277 | Type source |
-| 277 | ID source |
-| 277 | Via |
-| 277 | Cible |
-| 277 | Type cible |
-| 277 | ID cible |
+| 278 | Relation |
+| 278 | Source |
+| 278 | Type source |
+| 278 | ID source |
+| 278 | Via |
+| 278 | Cible |
+| 278 | Type cible |
+| 278 | ID cible |
 
 ## js/23-chaines.js
 
@@ -1129,58 +1129,74 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | Ligne | Texte |
 |---:|---|
 | 44 | Capella Project |
-| 83 | ComponentPorts alloués : |
-| 97 | Physical Links sans Component Exchange alloué |
-| 97 | Le lien ne transporte aucun échange |
-| 97 | Physical Link |
-| 97 | Extrémité 1 |
-| 97 | Extrémité 2 |
-| 99 | Ports physiques orphelins (sans Physical Link) |
-| 99 | PhysicalPort relié à aucun lien |
-| 99 | Composant |
-| 99 | Port physique |
-| 99 | ComponentPorts alloués |
-| 100 | Ports physiques sans ComponentPort alloué |
-| 100 | Aucune ComponentPortAllocation |
-| 100 | Composant |
-| 100 | Port physique |
-| 100 | ComponentPorts alloués |
-| 101 | Component Exchanges (PA) non alloués à un Physical Link |
-| 101 | Hors délégations |
-| 101 | Component Exchange |
-| 108 | Aucun lien physique ne correspond au filtre. |
-| 154 | Component Exchanges alloués : |
-| 154 | Aucun Component Exchange alloué |
-| 158 | var(--c-dim) |
-| 179 | ≡ Vue Ligne |
-| 179 | ▣ Vue Composant |
-| 179 | ▦ Matrice |
-| 179 | 🩺 Contrôles |
-| 185 | composant « |
-| 185 | lien « |
-| 185 | avec CE |
-| 185 | sans CE |
-| 186 | 🔌 Physical Links |
-| 186 | · filtres : |
-| 221 | ◧ Vue Blocs |
-| 221 | ≡ Vue Ligne |
-| 221 | ▣ Vue Composant |
-| 221 | ▦ Matrice |
-| 221 | Matrice N² composant × composant |
-| 221 | 🩺 Contrôles |
-| 221 | Liens sans CE, ports orphelins, CE non alloués… |
-| 223 | Périmètre : Physical Links de la couche PA entre Physical Components Node (nœuds du système en jaune, nœuds acteurs en bleu clair). |
-| 231 | ◧ Vue Blocs |
-| 232 | ≡ Vue Ligne |
-| 233 | ▣ Vue Composant |
-| 234 | ▦ Matrice |
-| 235 | 🩺 Contrôles |
-| 238 | Tous |
-| 238 | ⇢ Avec CE |
-| 238 | ∅ Sans CE |
-| 239 | 🖥 Composant : |
-| 244 | 🔍 Lien : |
-| 246 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 80 | ComponentPorts alloués : |
+| 94 | Physical Links sans Component Exchange alloué |
+| 94 | Le lien ne transporte aucun échange |
+| 94 | Physical Link |
+| 94 | Extrémité 1 |
+| 94 | Extrémité 2 |
+| 96 | Ports physiques orphelins (sans Physical Link) |
+| 96 | PhysicalPort relié à aucun lien |
+| 96 | Composant |
+| 96 | Port physique |
+| 96 | ComponentPorts alloués |
+| 97 | Ports physiques sans ComponentPort alloué |
+| 97 | Aucune ComponentPortAllocation |
+| 97 | Composant |
+| 97 | Port physique |
+| 97 | ComponentPorts alloués |
+| 98 | Component Exchanges (PA) non alloués à un Physical Link |
+| 98 | Hors délégations |
+| 98 | Component Exchange |
+| 105 | Aucun lien physique ne correspond au filtre. |
+| 151 | Component Exchanges alloués : |
+| 151 | Aucun Component Exchange alloué |
+| 155 | var(--c-dim) |
+| 176 | ≡ Vue Ligne |
+| 176 | ▣ Vue Composant |
+| 176 | ▦ Matrice |
+| 176 | 🩺 Contrôles |
+| 182 | composant « |
+| 182 | lien « |
+| 182 | avec CE |
+| 182 | sans CE |
+| 183 | 🔌 Physical Links |
+| 183 | · filtres : |
+| 218 | ◧ Vue Blocs |
+| 218 | ≡ Vue Ligne |
+| 218 | ▣ Vue Composant |
+| 218 | ▦ Matrice |
+| 218 | Matrice N² composant × composant |
+| 218 | 🩺 Contrôles |
+| 218 | Liens sans CE, ports orphelins, CE non alloués… |
+| 220 | Périmètre : Physical Links de la couche PA entre Physical Components Node (nœuds du système en jaune, nœuds acteurs en bleu clair). |
+| 228 | ◧ Vue Blocs |
+| 229 | ≡ Vue Ligne |
+| 230 | ▣ Vue Composant |
+| 231 | ▦ Matrice |
+| 232 | 🩺 Contrôles |
+| 235 | Tous |
+| 235 | ⇢ Avec CE |
+| 235 | ∅ Sans CE |
+| 236 | 🖥 Composant : |
+| 241 | 🔍 Lien : |
+| 243 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 276 | N° Lien |
+| 276 | Composant 1 |
+| 276 | Port Composant 1 |
+| 276 | ComponentPorts alloués 1 |
+| 276 | Lien Physique |
+| 276 | Component Exchanges alloués |
+| 276 | Port Composant 2 |
+| 276 | ComponentPorts alloués 2 |
+| 276 | Composant 2 |
+| 276 | Couche |
+| 284 | N° Lien |
+| 284 | Source |
+| 284 | Port Source |
+| 284 | Lien Physique |
+| 284 | Port Cible |
+| 284 | Destination |
 
 ## js/30-ports.js
 
@@ -1249,18 +1265,18 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 266 | Élément |
 | 266 | Détail |
 | 266 | Complément |
-| 270 | Couche |
-| 270 | Fonction |
-| 270 | Function Port |
-| 270 | Direction |
-| 270 | Functional Exchanges |
-| 270 | Composant |
-| 270 | Component Port |
-| 270 | Orientation |
-| 270 | Component Exchanges |
-| 270 | Physical Ports |
-| 270 | Physical Links |
-| 270 | Incomplet |
+| 271 | Couche |
+| 271 | Fonction |
+| 271 | Function Port |
+| 271 | Direction |
+| 271 | Functional Exchanges |
+| 271 | Composant |
+| 271 | Component Port |
+| 271 | Orientation |
+| 271 | Component Exchanges |
+| 271 | Physical Ports |
+| 271 | Physical Links |
+| 271 | Incomplet |
 
 ## js/31-analyses-traca-capacites.js
 
@@ -1997,72 +2013,96 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | Ligne | Texte |
 |---:|---|
 | 64 | Capella Project |
-| 94 | ⇄ INOUT |
-| 119 | Aucun component exchange ne correspond au filtre. |
-| 132 | Sens non défini |
-| 169 | ÉMET → |
-| 169 | Émission — ce composant envoie le signal |
-| 170 | ← REÇOIT |
-| 170 | Réception — ce composant reçoit le signal |
-| 171 | ⇄ ÉCHANGE |
-| 171 | Bidirectionnel — port INOUT |
-| 172 | Non orienté — aucun port IN/OUT/INOUT |
-| 188 | Items : |
-| 195 | Acteur |
-| 216 | Component Exchange |
-| 216 | Source |
-| 216 | Cible |
-| 216 | Couche |
-| 220 | Exchanges sans Functional Exchange alloué |
-| 220 | Aucune ComponentExchangeFunctionalExchangeAllocation |
-| 221 | Ports orphelins (ComponentPort sans exchange) |
-| 221 | Port défini sur un composant mais relié à aucun Component Exchange |
-| 221 | Composant |
-| 221 | Port |
-| 221 | Orientation |
-| 221 | Couche |
-| 223 | Orientations de ports incohérentes |
-| 223 | OUT→OUT ou IN→IN hors délégation |
-| 224 | Exchanges non orientés |
-| 224 | Les deux ports sont UNSET : le sens du flux est inconnu |
-| 225 | Exchanges de couche PA non alloués à un Physical Link |
-| 225 | Aucune ComponentExchangeAllocation depuis un PhysicalLink |
-| 234 | ≡ Vue Ligne |
-| 234 | ▣ Vue Composant |
-| 234 | ▦ Matrice |
-| 234 | 🩺 Contrôles |
-| 241 | composant « |
-| 241 | exchange « |
-| 242 | 🔀 Behavior Exchanges (PA) |
-| 242 | · filtres : |
-| 269 | ◧ Vue Blocs |
-| 269 | Composants Behavior dessinés comme dans Capella (bleu = système, bleu clair = acteur), ports UNSET / IN / OUT / INOUT |
-| 269 | ≡ Vue Ligne |
-| 269 | ▣ Vue Composant |
-| 269 | ▦ Matrice |
-| 269 | Matrice N² composant × composant |
-| 269 | 🩺 Contrôles |
-| 269 | Ports orphelins, exchanges sans FE, orientations incohérentes… |
-| 276 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( |
-| 276 | dans le modèle). |
-| 282 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( |
-| 285 | ◧ Vue Blocs |
-| 286 | ≡ Vue Ligne |
-| 287 | ▣ Vue Composant |
-| 288 | ▦ Matrice |
-| 289 | 🩺 Contrôles |
-| 292 | Tous |
-| 292 | Tous les sens |
-| 294 | ⚠ Incohérents |
-| 294 | Orientations de ports incohérentes (OUT→OUT, IN→IN hors délégation) |
-| 298 | Tous kinds |
-| 300 | 🖥 Composant : |
-| 304 | 🔍 Exchange : |
-| 306 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
-| 348 | ⇄ Bidirectionnel |
-| 348 | ? Non orienté |
-| 348 | Émission → |
-| 348 | ← Réception |
+| 91 | ⇄ INOUT |
+| 116 | Aucun component exchange ne correspond au filtre. |
+| 129 | Sens non défini |
+| 166 | ÉMET → |
+| 166 | Émission — ce composant envoie le signal |
+| 167 | ← REÇOIT |
+| 167 | Réception — ce composant reçoit le signal |
+| 168 | ⇄ ÉCHANGE |
+| 168 | Bidirectionnel — port INOUT |
+| 169 | Non orienté — aucun port IN/OUT/INOUT |
+| 185 | Items : |
+| 192 | Acteur |
+| 213 | Component Exchange |
+| 213 | Source |
+| 213 | Cible |
+| 213 | Couche |
+| 217 | Exchanges sans Functional Exchange alloué |
+| 217 | Aucune ComponentExchangeFunctionalExchangeAllocation |
+| 218 | Ports orphelins (ComponentPort sans exchange) |
+| 218 | Port défini sur un composant mais relié à aucun Component Exchange |
+| 218 | Composant |
+| 218 | Port |
+| 218 | Orientation |
+| 218 | Couche |
+| 220 | Orientations de ports incohérentes |
+| 220 | OUT→OUT ou IN→IN hors délégation |
+| 221 | Exchanges non orientés |
+| 221 | Les deux ports sont UNSET : le sens du flux est inconnu |
+| 222 | Exchanges de couche PA non alloués à un Physical Link |
+| 222 | Aucune ComponentExchangeAllocation depuis un PhysicalLink |
+| 231 | ≡ Vue Ligne |
+| 231 | ▣ Vue Composant |
+| 231 | ▦ Matrice |
+| 231 | 🩺 Contrôles |
+| 238 | composant « |
+| 238 | exchange « |
+| 239 | 🔀 Behavior Exchanges (PA) |
+| 239 | · filtres : |
+| 266 | ◧ Vue Blocs |
+| 266 | Composants Behavior dessinés comme dans Capella (bleu = système, bleu clair = acteur), ports UNSET / IN / OUT / INOUT |
+| 266 | ≡ Vue Ligne |
+| 266 | ▣ Vue Composant |
+| 266 | ▦ Matrice |
+| 266 | Matrice N² composant × composant |
+| 266 | 🩺 Contrôles |
+| 266 | Ports orphelins, exchanges sans FE, orientations incohérentes… |
+| 273 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( |
+| 273 | dans le modèle). |
+| 279 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( |
+| 282 | ◧ Vue Blocs |
+| 283 | ≡ Vue Ligne |
+| 284 | ▣ Vue Composant |
+| 285 | ▦ Matrice |
+| 286 | 🩺 Contrôles |
+| 289 | Tous |
+| 289 | Tous les sens |
+| 291 | ⚠ Incohérents |
+| 291 | Orientations de ports incohérentes (OUT→OUT, IN→IN hors délégation) |
+| 295 | Tous kinds |
+| 297 | 🖥 Composant : |
+| 301 | 🔍 Exchange : |
+| 303 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) |
+| 335 | N° Exchange |
+| 335 | Composant Source |
+| 335 | Port Source |
+| 335 | Orientation Source |
+| 335 | Component Exchange |
+| 335 | Kind |
+| 335 | Sens |
+| 335 | Port Cible |
+| 335 | Orientation Cible |
+| 335 | Composant Cible |
+| 335 | Functional Exchanges |
+| 335 | Exchange Items |
+| 335 | Physical Links |
+| 335 | Alerte |
+| 341 | ⇄ Bidirectionnel |
+| 341 | ? Non orienté |
+| 341 | Émission → |
+| 341 | ← Réception |
+| 344 | N° Exchange |
+| 344 | Sens |
+| 344 | Composant |
+| 344 | Port |
+| 344 | Orientation |
+| 344 | Component Exchange |
+| 344 | Kind |
+| 344 | Port distant |
+| 344 | Orientation distante |
+| 344 | Composant distant |
 
 ## js/37-capella-cablage.js
 
@@ -3203,28 +3243,30 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 11 | pages, indicateurs, disposition |
 | 12 | ▤ Tableau |
 | 12 | onglets de vues, colonnes affichées, colonnes par chemin, tri, filtres, largeurs |
-| 13 | 🎨 Thème |
-| 13 | thème choisi et thème personnalisé |
-| 14 | 🔤 Règles de nommage |
-| 14 | verbes acceptés, mots refusés |
-| 75 | Vues enregistrées illisibles : |
-| 90 | + anciens onglets 📊 Table View |
-| 91 | par chemin |
-| 93 | ⚙ Enregistrer l'interface et les vues |
-| 93 | ⚙ Charger une interface et des vues |
-| 95 | Fichier .json sans le modèle : à recharger avec un autre modèle ou une nouvelle version de la page. |
-| 96 | Fichier enregistré le |
-| 96 | . Les parties cochées remplaceront les réglages actuels. |
-| 98 | Annuler |
-| 98 | Ce fichier ne contient aucun réglage reconnu. |
-| 101 | 💾 Enregistrer |
-| 101 | 📂 Appliquer |
-| 113 | Réglage « |
-| 113 | » non appliqué : |
-| 114 | réglage(s) appliqué(s) |
-| 125 | Fichier illisible : JSON invalide. |
-| 126 | Ce fichier n'est pas un fichier « interface et vues » d'Arcalyse. |
-| 135 | Ouvrez d'abord un modèle Capella : la mise à jour se compare au modèle affiché. |
+| 13 | ⬇ Exports CSV |
+| 13 | colonnes retirées ou ajoutées (ID, owner, attributs…) pour chaque export |
+| 14 | 🎨 Thème |
+| 14 | thème choisi et thème personnalisé |
+| 15 | 🔤 Règles de nommage |
+| 15 | verbes acceptés, mots refusés |
+| 79 | Vues enregistrées illisibles : |
+| 94 | + anciens onglets 📊 Table View |
+| 95 | par chemin |
+| 97 | ⚙ Enregistrer l'interface et les vues |
+| 97 | ⚙ Charger une interface et des vues |
+| 99 | Fichier .json sans le modèle : à recharger avec un autre modèle ou une nouvelle version de la page. |
+| 100 | Fichier enregistré le |
+| 100 | . Les parties cochées remplaceront les réglages actuels. |
+| 102 | Annuler |
+| 102 | Ce fichier ne contient aucun réglage reconnu. |
+| 105 | 💾 Enregistrer |
+| 105 | 📂 Appliquer |
+| 117 | Réglage « |
+| 117 | » non appliqué : |
+| 118 | réglage(s) appliqué(s) |
+| 129 | Fichier illisible : JSON invalide. |
+| 130 | Ce fichier n'est pas un fichier « interface et vues » d'Arcalyse. |
+| 139 | Ouvrez d'abord un modèle Capella : la mise à jour se compare au modèle affiché. |
 
 ## js/47-composants.js
 
@@ -3554,3 +3596,25 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 60 | 📋 Copier Copier le tableau ✕ |
 | 92 | ✔ tableau copié |
 | 92 | cellule(s) copiée(s) |
+
+## js/53-export-enrichi.js
+
+| Ligne | Texte |
+|---:|---|
+| 25 | Type |
+| 25 | Type lisible |
+| 25 | Couche |
+| 25 | Owner |
+| 25 | Chemin des owners |
+| 25 | Description |
+| 25 | Summary |
+| 71 | (colonne supprimée) |
+| 119 | ⬇ Export CSV — |
+| 120 | ✕ Décochez les colonnes à retirer. Pour une colonne qui désigne des éléments du modèle, ajoutez des informations sur ces éléments : elles seront insérées juste à côté. Vos choix sont retenus pour cet export. |
+| 126 | élément(s) : |
+| 128 | Colonne par chemin du ▤ Tableau |
+| 129 | Attribut Capella |
+| 130 | ＋ Attribut… |
+| 131 | ↺ Colonnes de base |
+| 134 | colonne(s), |
+| 134 | ligne(s) Annuler ⬇ Télécharger |

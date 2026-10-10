@@ -67,9 +67,6 @@ function capRenderPhysLink(){
     });
   }
 
-  /** Échappe une valeur pour l'export CSV (guillemets doublés, encadrement).
-   */
-  function csvEsc(s){ return '"'+String(s||'').replace(/"/g,'""')+'"'; }
 
   // ── Build content HTML (links only, no filter bar) ──
   /** Construit le HTML des liens physiques selon le mode actif : vue Ligne (une ligne par
@@ -270,30 +267,22 @@ function capRenderPhysLink(){
       clearTimeout(debTimer); debTimer=setTimeout(updateContent, 150);
     });
 
-    // ── CSV export ──
+    // ── CSV export (enrichi, 53 : colonnes à retirer, ID / owner / attributs à ajouter) ──
     container.querySelector('#phl-exp-csv')?.addEventListener('click',()=>{
       const f=getFiltered();
-      let csv;
       if(st.view!=='card'){
-        // Line view: one row per link, columns renamed
-        const cpTxt=e=>e.cps.map(c=>`${c.compName} ⬦ ${c.name} (${c.orient})`).join(', ');
-        csv='N° Lien;Composant 1;Port Composant 1;ComponentPorts alloués 1;Lien Physique;Component Exchanges alloués;Port Composant 2;ComponentPorts alloués 2;Composant 2;Couche\n';
-        csv+=f.map(l=>[linkNumMap[l.linkId]||'',l.src.pcName,l.src.portName,cpTxt(l.src),l.linkName,l.ces.map(c=>c.name).join(', '),l.tgt.portName,cpTxt(l.tgt),l.tgt.pcName,l.layer].map(csvEsc).join(';')).join('\n');
+        // Vue en lignes : une ligne par lien
+        const cpCell=e=>capCx(e.cps.map(c=>`${c.compName} ⬦ ${c.name} (${c.orient})`).join(', '), e.cps.map(c=>c.id));
+        capCsvExport('physical-links.csv',['N° Lien','Composant 1','Port Composant 1','ComponentPorts alloués 1','Lien Physique','Component Exchanges alloués','Port Composant 2','ComponentPorts alloués 2','Composant 2','Couche'],
+          f.map(l=>[linkNumMap[l.linkId]||'',capCx(l.src.pcName,l.src.pcId),capCx(l.src.portName,l.src.portId),cpCell(l.src),capCx(l.linkName,l.linkId),capCxList(l.ces),capCx(l.tgt.portName,l.tgt.portId),cpCell(l.tgt),capCx(l.tgt.pcName,l.tgt.pcId),l.layer]));
       } else {
-        // Card view: two rows per link (both directions), same link number
-        csv='N° Lien;Source;Port Source;Lien Physique;Port Cible;Destination\n';
-        const seen=new Set();
-        f.forEach(l=>{
-          if(!seen.has(l.linkId)){
-            seen.add(l.linkId);
-            const n=csvEsc(linkNumMap[l.linkId]||'');
-            csv+=`${n};${csvEsc(l.src.pcName)};${csvEsc(l.src.portName)};${csvEsc(l.linkName)};${csvEsc(l.tgt.portName)};${csvEsc(l.tgt.pcName)}\n`;
-            csv+=`${n};${csvEsc(l.tgt.pcName)};${csvEsc(l.tgt.portName)};${csvEsc(l.linkName)};${csvEsc(l.src.portName)};${csvEsc(l.src.pcName)}\n`;
-          }
-        });
+        // Vue en cartes : deux lignes par lien (les deux sens), même numéro
+        const rows=[], seen=new Set();
+        f.forEach(l=>{ if(seen.has(l.linkId)) return; seen.add(l.linkId); const n=linkNumMap[l.linkId]||'';
+          rows.push([n,capCx(l.src.pcName,l.src.pcId),capCx(l.src.portName,l.src.portId),capCx(l.linkName,l.linkId),capCx(l.tgt.portName,l.tgt.portId),capCx(l.tgt.pcName,l.tgt.pcId)]);
+          rows.push([n,capCx(l.tgt.pcName,l.tgt.pcId),capCx(l.tgt.portName,l.tgt.portId),capCx(l.linkName,l.linkId),capCx(l.src.portName,l.src.portId),capCx(l.src.pcName,l.src.pcId)]); });
+        capCsvExport('physical-links-sens.csv',['N° Lien','Source','Port Source','Lien Physique','Port Cible','Destination'],rows);
       }
-      const blob=new Blob(['\uFEFF'+csv],{type:'text/csv'});
-      const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='physical-links.csv';a.click();URL.revokeObjectURL(a.href);
     });
 
     // ── HTML export ──

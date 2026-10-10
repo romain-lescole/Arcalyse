@@ -216,7 +216,7 @@
 - `capRenderTreeBody` (l. 1364) — Rend le contenu de 🌳 Arborescence selon l'affichage : arbre (avec une recherche : résultats et leurs
 - `capRenderTreeNode` (l. 1408) — Rend récursivement un nœud de l'arborescence Capella.
 
-## 22-capella-liens.js — 280 lignes
+## 22-capella-liens.js — 281 lignes
 
 - `CAP_LINK_SECTIONS` (l. 2)
 - `CAP_LINK_GROUPS` (l. 41) — Groupes de relations affichés dans la barre de la vue 🔗 Liens (ordre d'affichage).
@@ -311,11 +311,11 @@
 - `capRenderIndex` (l. 14) — Construit la vue « Index des types » : barre de recherche, en-têtes triables et
 - `capRenderIndexBody` (l. 45) — Rend les lignes de l'Index des types : un type Capella distinct par ligne
 
-## 29-physical-link.js — 305 lignes
+## 29-physical-link.js — 294 lignes
 
 - `capRenderPhysLink` (l. 4) — Rend la vue Physical Link avec deux modes (≡ Ligne / ▣ Composant),
 
-## 30-ports.js — 275 lignes
+## 30-ports.js — 276 lignes
 
 - `capOrientBadge` (l. 11) — Badge d'orientation / de direction d'un port (IN, OUT, INOUT, UNSET), version globale.
 - `capComputePortLinks` (l. 22) — Collecte tous les ports du modèle et leurs liens d'allocation et d'échange :
@@ -401,7 +401,7 @@
 - `capDashPrint` (l. 464) — Imprime un tableau de bord au format A4 : les éléments sont redessinés à la taille de la page
 - `capDashEditor` (l. 501) — Fenêtre d'ajout ou de configuration d'un élément : catalogue des indicateurs (recherche, groupes),
 
-## 36-component-exchange.js — 366 lignes
+## 36-component-exchange.js — 356 lignes
 
 - `capAnaReset` (l. 2) — Réinitialise caches et états de la vue Analyses (appelé au chargement d'un nouveau modèle).
 - `capBehaviorExchanges` (l. 11) — Component Exchanges du périmètre de la vue 🔀 Behavior Exchange : couche PA, entre Physical Components
@@ -584,18 +584,18 @@
 - `capDrClipboard` (l. 297) — Copie dans le presse-papiers (HTML mis en forme + texte brut ; repli par sélection si l'API est refusée).
 - `capDrRender` (l. 327) — Rend le rapport de comparaison dans un conteneur (barre de réglages, filtres, rapport, copie et exports).
 
-## 46-config-interface.js — 140 lignes
+## 46-config-interface.js — 144 lignes
 
 - `CAP_CFG_PARTS` (l. 9)
-- `capCfgSer` (l. 18) — Sérialise en JSON en conservant les ensembles (Set). @param {*} o @returns {string}
-- `capCfgRev` (l. 20) — Relit un JSON produit par capCfgSer (ensembles reconstitués). @param {string} t @returns {*}
-- `capCfgGet` (l. 26) — État courant d'une partie de l'interface.
-- `capCfgSet` (l. 39) — Applique une partie de configuration à l'interface (et la mémorise dans la page).
-- `capCfgStoreViews` (l. 61) — Écrit dans la page (bloc JSON « cap-ui-views ») ce que les autres blocs ne conservent pas encore :
-- `capCfgRestoreViews` (l. 68) — Réapplique à l'ouverture de la page les vues mémorisées par capCfgStoreViews.
-- `capCfgDialog` (l. 82) — Fenêtre de choix des parties à enregistrer ou à charger.
-- `capCfgLoadFile` (l. 120) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
-- `capCfgLoadUpdate` (l. 134) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
+- `capCfgSer` (l. 19) — Sérialise en JSON en conservant les ensembles (Set). @param {*} o @returns {string}
+- `capCfgRev` (l. 21) — Relit un JSON produit par capCfgSer (ensembles reconstitués). @param {string} t @returns {*}
+- `capCfgGet` (l. 27) — État courant d'une partie de l'interface.
+- `capCfgSet` (l. 41) — Applique une partie de configuration à l'interface (et la mémorise dans la page).
+- `capCfgStoreViews` (l. 64) — Écrit dans la page (bloc JSON « cap-ui-views ») ce que les autres blocs ne conservent pas encore :
+- `capCfgRestoreViews` (l. 71) — Réapplique à l'ouverture de la page les vues mémorisées par capCfgStoreViews.
+- `capCfgDialog` (l. 86) — Fenêtre de choix des parties à enregistrer ou à charger.
+- `capCfgLoadFile` (l. 124) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
+- `capCfgLoadUpdate` (l. 138) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
 
 ## 47-composants.js — 439 lignes
 
@@ -698,15 +698,28 @@
 - `capTSelWire` (l. 764) — Branche la sélection de cellules sur le corps du tableau qui vient d'être rendu.
 - `capTableColRename` (l. 797) — Renomme une colonne par chemin depuis son en-tête (champ de saisie à la place du libellé).
 
-## 52-selection-cellules.js — 135 lignes
+## 52-selection-cellules.js — 137 lignes
 
 - `CAP_CS_EXCL` (l. 12)
-- `capClipCopy` (l. 20) — Copie une grille de cellules dans le presse-papiers : texte tabulé (cellules multi-lignes entre guillemets)
-- `capCsTable` (l. 38) — Tableau éligible à la sélection pour un élément cliqué (ou null).
-- `capCsPos` (l. 46) — Position « ligne:colonne » d'une cellule dans son tableau. @param {HTMLTableCellElement} td @returns {number[]}
-- `capCsPaint` (l. 49) — Repeint la sélection et place la pastille près de la dernière cellule.
-- `capCsClear` (l. 70) — Efface la sélection de cellules des vues.
-- `capCsText` (l. 74) — Texte d'une cellule pour la copie (retours à la ligne des éléments empilés conservés).
-- `capCsCopy` (l. 79) — Copie la sélection, ou tout le tableau (en-têtes et lignes visibles).
-- `capCsRect` (l. 94) — Rectangle de cellules entre deux positions. @param {number[]} a @param {number[]} b @returns {Set<string>}
-- `capCsClickable` (l. 98) — La cellule (ou sa ligne) a-t-elle déjà une action au clic ? (lien, bouton, curseur main)
+- `capClipCopy` (l. 20) — Copie une grille de cellules dans le presse-papiers : texte tabulé sans guillemets (éditeurs de texte, champs)
+- `capCsTable` (l. 40) — Tableau éligible à la sélection pour un élément cliqué (ou null).
+- `capCsPos` (l. 48) — Position « ligne:colonne » d'une cellule dans son tableau. @param {HTMLTableCellElement} td @returns {number[]}
+- `capCsPaint` (l. 51) — Repeint la sélection et place la pastille près de la dernière cellule.
+- `capCsClear` (l. 72) — Efface la sélection de cellules des vues.
+- `capCsText` (l. 76) — Texte d'une cellule pour la copie (retours à la ligne des éléments empilés conservés).
+- `capCsCopy` (l. 81) — Copie la sélection, ou tout le tableau (en-têtes et lignes visibles).
+- `capCsRect` (l. 96) — Rectangle de cellules entre deux positions. @param {number[]} a @param {number[]} b @returns {Set<string>}
+- `capCsClickable` (l. 100) — La cellule (ou sa ligne) a-t-elle déjà une action au clic ? (lien, bouton, curseur main)
+
+## 53-export-enrichi.js — 153 lignes
+
+- `capCx` (l. 16) — Cellule « élément » d'un export enrichi.
+- `capCxList` (l. 22) — Cellule « élément » à partir d'une liste d'objets {id, name} (noms séparés par des virgules).
+- `CAP_CSVX_INFOS` (l. 25) — Informations ajoutables de base (clé, libellé).
+- `capCsvxOwner` (l. 29) — Owner (plus proche ancêtre qui est un élément du modèle) d'un élément.
+- `capCsvxPlain` (l. 37) — Texte brut d'une description Capella (HTML retiré, sans exécuter quoi que ce soit).
+- `capCsvxInfo` (l. 47) — Valeur d'une information pour un élément.
+- `capCsvxInfoLabel` (l. 68) — Libellé d'une clé d'information (pour l'en-tête « Colonne — information »).
+- `capCsvxText` (l. 77) — Texte d'une cellule (élément ou texte).
+- `capCsvxBuild` (l. 85) — Construit l'en-tête et les lignes finales d'un export selon les choix enregistrés.
+- `capCsvExport` (l. 102) — Export CSV enrichi : ouvre la fenêtre « Colonnes de l'export » puis télécharge le fichier.
