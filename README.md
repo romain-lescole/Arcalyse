@@ -4,9 +4,9 @@
 
 ### *Votre modèle Capella, sous toutes ses coutures.*
 
-**Explorer, contrôler et comprendre un modèle Capella / ARCADIA — dans un seul fichier HTML, 100 % hors ligne.**
+**Explorer, contrôler et comprendre un modèle Capella / ARCADIA — dans un seul fichier HTML.**
 
-Aucune installation · aucun serveur · aucune donnée transmise · fonctionne sur un PC sécurisé sans réseau
+Aucune installation · aucun serveur · fonctionne hors ligne
 
 ![Écran d'accueil](docs/captures/00-accueil.png)
 
@@ -19,7 +19,7 @@ Aucune installation · aucun serveur · aucune donnée transmise · fonctionne s
 Un modèle Capella grossit vite : des centaines de fonctions, d'échanges, de composants, de ports, réparties sur cinq couches. Dans l'atelier, chaque diagramme n'en montre qu'un morceau. **Arcalyse lit directement le fichier `.capella`** et vous donne, en quelques secondes, une vue d'ensemble, des vues façon Capella et des contrôles de cohérence — sans ouvrir Capella, sans rien installer.
 
 - 📂 **Glissez-déposez** votre `.capella` : le modèle est analysé dans le navigateur, sur votre poste.
-- 🔒 **Hors ligne absolu** : un seul fichier HTML autonome (bibliothèque D3 embarquée), aucune requête réseau. Idéal pour les environnements sensibles.
+- 🔌 **Hors ligne** : un seul fichier HTML autonome (bibliothèque D3 embarquée), utilisable sans connexion.
 - 🧭 **Toutes les couches ARCADIA** : OA, SA, LA, PA, EPBS — fonctions, composants, échanges, chaînes, scénarios, exigences, propriétés.
 - 🩺 **Des contrôles prêts à l'emploi** : éléments non alloués, ports non connectés, traçabilité incomplète, noms à revoir…
 - 📤 **Exports partout** : CSV, PNG, SVG, PDF, rapports HTML autonomes, tableaux de bord imprimables en A4.

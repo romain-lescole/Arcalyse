@@ -3456,8 +3456,8 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 27 | non disponible (rechargement manuel) |
 | 28 | Modèle chargé |
 | 28 | éléments |
-| 29 | Réseau |
-| 29 | 100 % hors ligne : aucune donnée transmise |
+| 29 | Fonctionnement |
+| 29 | hors ligne (ressources intégrées au fichier) |
 | 39 | ℹ À propos ✕ 🔷 |
 | 42 | Version |
 | 43 | Explorateur et analyseur hors ligne de modèles Capella / ARCADIA : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML. Auteur et licence Auteur © |
@@ -3551,6 +3551,6 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | Ligne | Texte |
 |---:|---|
 | 12 | #cap-table, .ana-fnt, .cap-mx, .ana-kv, .fex-box-t, .dash-tbl, .rmcb-t |
-| 58 | 📋 Copier Copier le tableau ✕ |
-| 90 | ✔ tableau copié |
-| 90 | cellule(s) copiée(s) |
+| 60 | 📋 Copier Copier le tableau ✕ |
+| 92 | ✔ tableau copié |
+| 92 | cellule(s) copiée(s) |

@@ -26,7 +26,7 @@ function capAboutTech(){
     ['Navigateur de test', 'Google Chrome version 155'],
     ['Accès direct au fichier (🔄 Suivi)', 'showOpenFilePicker' in window?'disponible':'non disponible (rechargement manuel)'],
     ['Modèle chargé', capLoaded?`${capCurrentFileName||'—'} · ${(typeof capAllElements!=='undefined'?capAllElements.length:0).toLocaleString('fr-FR')} éléments`:'aucun'],
-    ['Réseau', '100 % hors ligne : aucune donnée transmise']
+    ['Fonctionnement', 'hors ligne (ressources intégrées au fichier)']
   ];
 }
 
