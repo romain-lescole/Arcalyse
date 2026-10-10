@@ -657,6 +657,9 @@ function capBuildTableToolbar(){
   };
   tb.appendChild(displayToggle);
 
+  // 📋 Sélection de cellules et copie (51-tableau.js)
+  tb.appendChild(capTSelControls());
+
   // Export CSV des colonnes affichées (toutes les lignes filtrées, dans l'ordre du tri)
   const csvBtn=document.createElement('div'); csvBtn.className='tbtn';
   csvBtn.title='Exporter en CSV les colonnes affichées, pour toutes les lignes filtrées (ordre du tri)';
@@ -1223,7 +1226,9 @@ function capRenderTableBodyOnly(){
     const th=document.createElement('th');
     const label=capTableColLabel(colKey);
     const ico=capTableSort.col===colKey ? (capTableSort.dir===1?'▲':'▼') : '⇅';
-    th.innerHTML=`<div class="th-inner"><span class="th-l">${capEsc(label)}</span><span class="th-sort${capTableSort.col===colKey?' on':''}">${ico}</span></div>`;
+    const isPath=capTableCustomCols.some(c=>c.key===colKey);
+    th.innerHTML=`<div class="th-inner"><span class="th-l">${capEsc(label)}</span>${isPath?'<span class="th-ren" title="Renommer cette colonne">✎</span>':''}<span class="th-sort${capTableSort.col===colKey?' on':''}">${ico}</span></div>`;
+    if (isPath) th.querySelector('.th-ren').onclick=ev=>{ ev.stopPropagation(); capTableColRename(th, colKey); };
     th.title=`${label}${label!==colKey?' ('+colKey+')':''}\nClic : trier · glisser : déplacer la colonne · bord droit : largeur`;
     th.onclick=ev=>{ if(_capColResizing||ev.target.closest('.cap-col-resizer')) return; capTableSortCycle(colKey); };
     capTableColDnD(th, colKey, thead);
@@ -1271,7 +1276,7 @@ function capRenderTableBodyOnly(){
     const tr=document.createElement('tr');
     tr.style.cursor='pointer';
     if (!it.row) tr.className='cap-trow-ctr';   // 🌳 conteneur affiché pour la structure (pas une ligne)
-    tr.onclick=()=>capOpenDetail(el.id);
+    tr.ondblclick=()=>capOpenDetail(el.id);   // clic = sélection de cellules (51-tableau.js), double-clic = détail
     cols.forEach((colKey,ci)=>{
       const td=document.createElement('td');
       if (tree && ci===0) {
@@ -1307,6 +1312,7 @@ function capRenderTableBodyOnly(){
     tbody.appendChild(tr);
   });
 
+  capTSelWire(tbody, slice);   // 📋 sélection de cellules et copie
   const pg=document.getElementById('cap-pagination'); if(pg) pg.style.display='flex';
   const pi=document.getElementById('cap-page-info'); if(pi)pi.textContent=`${start+1}–${end} sur ${total}`;
   const pb=document.getElementById('cap-btn-prev'); if(pb)pb.disabled=capPage===0;

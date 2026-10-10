@@ -436,6 +436,10 @@ function capRenderFunctions(box){
     tb.addEventListener('mouseover',e=>{ if(!dragging) return; const td=e.target.closest('td'); if(td) { st.selC=new Set([...base0,...rect(anchor,pos(td))]); paint(); } });
     if(box._fnMU) document.removeEventListener('mouseup',box._fnMU);
     box._fnMU=()=>{ dragging=false; }; document.addEventListener('mouseup',box._fnMU);
+    // Clic en dehors du tableau (ou de 📋 Copier) : la sélection est effacée, Ctrl+C ne copie plus d'anciennes cellules
+    if(box._fnMD) document.removeEventListener('mousedown',box._fnMD);
+    box._fnMD=e=>{ if(!st.selC||!st.selC.size||!tb.isConnected) return; if(tb.contains(e.target)||e.target.closest('#ana-fn-copy')) return; st.selC=new Set(); paint(); };
+    document.addEventListener('mousedown',box._fnMD);
     box.querySelector('#ana-fn-copy').onclick=()=>copySel();
     if(box._fnKey) document.removeEventListener('keydown',box._fnKey);
     box._fnKey=e=>{ if(!box.isConnected||!box.offsetParent||!st.selC||!st.selC.size||st.view!=='table') return;

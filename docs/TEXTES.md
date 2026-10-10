@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3331 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3335 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -652,79 +652,79 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 652 | Bascule l'affichage des cellules à plusieurs valeurs |
 | 653 | ≡ En ligne |
 | 653 | ☰ Empilé |
-| 662 | Exporter en CSV les colonnes affichées, pour toutes les lignes filtrées (ordre du tri) |
-| 663 | ⬇ CSV |
-| 668 | Sauvegarder la vue de cet onglet (colonnes, colonnes par chemin, filtres, largeurs, tri) dans un fichier |
-| 669 | 💾 Sauver vue |
-| 673 | Charger une vue tableau sauvegardée |
-| 674 | 📂 Charger vue |
-| 680 | ↺ Réinitialiser |
-| 681 | Revenir aux colonnes, à l'ordre, aux largeurs et au tri de départ, sans filtre (onglet affiché) |
-| 716 | Modifier le metachain de cette colonne |
-| 722 | Supprimer cette colonne personnalisée |
-| 744 | ⊞ Colonnes ( |
-| 748 | Colonnes calculées |
-| 749 | Name |
-| 749 | Owner |
-| 749 | Owned element |
-| 750 | Couche |
-| 750 | Type |
-| 750 | Human Type |
-| 754 | Colonnes par chemin |
-| 760 | Attributs du fichier XML |
-| 838 | (aucune relation disponible) |
-| 856 | Supprimer cette étape et les suivantes |
-| 903 | (sans nom) |
-| 953 | 👁 Aperçu en direct |
-| 955 | Choisissez un type de départ. |
-| 958 | Aucun élément de ce type dans le modèle. |
-| 970 | Élément d'exemple ( |
-| 973 | 🔍 Filtrer… |
-| 975 | Suivant ▸ |
-| 976 | Passer au prochain élément dont la cellule serait remplie |
-| 987 | autre(s) : affinez le filtre |
-| 988 | (aucun élément) |
-| 1025 | Cellule remplie pour |
-| 1025 | élément(s) sur les |
-| 1025 | premiers testés ( |
-| 1025 | au total). |
-| 1026 | Cellule remplie pour |
-| 1026 | élément(s) sur |
-| 1027 | var(--c-warn,#e3b341) |
-| 1046 | Départ : |
-| 1051 | (à choisir) |
-| 1056 | valeur(s) lue(s) |
-| 1056 | Aucune valeur. |
-| 1059 | var(--c-warn,#e3b341) |
-| 1060 | ∅ Aucun élément atteint : le chemin s'arrête ici pour cet exemple. |
-| 1072 | ▣ Cellule dans le tableau |
-| 1074 | Chemin incomplet. |
-| 1074 | (vide) |
-| 1100 | ✨ Modifier « |
-| 1100 | ✨ Colonne par chemin |
-| 1102 | Enregistrer les modifications |
-| 1102 | Créer la colonne |
-| 1125 | Choisissez au moins un type de départ et une relation ou une valeur. |
-| 1126 | Chaque étape doit avoir une relation ou une valeur sélectionnée. |
-| 1177 | Fichier invalide : JSON illisible. |
-| 1179 | Ce fichier ne semble pas être une vue de tableau valide. |
-| 1213 | élément(s) |
-| 1213 | · 🌳 arbre ( |
-| 1213 | ligne(s) affichée(s)) |
-| 1213 | · 🎯 portée : |
-| 1227 | Clic : trier · glisser : déplacer la colonne · bord droit : largeur |
-| 1243 | Filtrer… |
-| 1265 | Aucun élément ne correspond aux filtres. |
-| 1265 | Aucun type coché pour cet onglet : cochez des types d'éléments dans le menu de gauche. |
-| 1286 | (conteneur) |
-| 1326 | 🌳 Arbre |
-| 1328 | lignes au plus)" ☰ Liste ⊞ Tout déplier ⊟ Tout réduire Niveau 1 2 3 ⬇ JSON |
-| 1376 | résultat(s) |
-| 1376 | élément(s) |
-| 1381 | cap-tree-row cap-tree-lrow |
-| 1391 | autre(s) élément(s) non affiché(s) : précisez la recherche. |
-| 1392 | Aucun élément ne correspond. |
-| 1396 | Aucun élément ne correspond. |
+| 665 | Exporter en CSV les colonnes affichées, pour toutes les lignes filtrées (ordre du tri) |
+| 666 | ⬇ CSV |
+| 671 | Sauvegarder la vue de cet onglet (colonnes, colonnes par chemin, filtres, largeurs, tri) dans un fichier |
+| 672 | 💾 Sauver vue |
+| 676 | Charger une vue tableau sauvegardée |
+| 677 | 📂 Charger vue |
+| 683 | ↺ Réinitialiser |
+| 684 | Revenir aux colonnes, à l'ordre, aux largeurs et au tri de départ, sans filtre (onglet affiché) |
+| 719 | Modifier le metachain de cette colonne |
+| 725 | Supprimer cette colonne personnalisée |
+| 747 | ⊞ Colonnes ( |
+| 751 | Colonnes calculées |
+| 752 | Name |
+| 752 | Owner |
+| 752 | Owned element |
+| 753 | Couche |
+| 753 | Type |
+| 753 | Human Type |
+| 757 | Colonnes par chemin |
+| 763 | Attributs du fichier XML |
+| 841 | (aucune relation disponible) |
+| 859 | Supprimer cette étape et les suivantes |
+| 906 | (sans nom) |
+| 956 | 👁 Aperçu en direct |
+| 958 | Choisissez un type de départ. |
+| 961 | Aucun élément de ce type dans le modèle. |
+| 973 | Élément d'exemple ( |
+| 976 | 🔍 Filtrer… |
+| 978 | Suivant ▸ |
+| 979 | Passer au prochain élément dont la cellule serait remplie |
+| 990 | autre(s) : affinez le filtre |
+| 991 | (aucun élément) |
+| 1028 | Cellule remplie pour |
+| 1028 | élément(s) sur les |
+| 1028 | premiers testés ( |
+| 1028 | au total). |
+| 1029 | Cellule remplie pour |
+| 1029 | élément(s) sur |
+| 1030 | var(--c-warn,#e3b341) |
+| 1049 | Départ : |
+| 1054 | (à choisir) |
+| 1059 | valeur(s) lue(s) |
+| 1059 | Aucune valeur. |
+| 1062 | var(--c-warn,#e3b341) |
+| 1063 | ∅ Aucun élément atteint : le chemin s'arrête ici pour cet exemple. |
+| 1075 | ▣ Cellule dans le tableau |
+| 1077 | Chemin incomplet. |
+| 1077 | (vide) |
+| 1103 | ✨ Modifier « |
+| 1103 | ✨ Colonne par chemin |
+| 1105 | Enregistrer les modifications |
+| 1105 | Créer la colonne |
+| 1128 | Choisissez au moins un type de départ et une relation ou une valeur. |
+| 1129 | Chaque étape doit avoir une relation ou une valeur sélectionnée. |
+| 1180 | Fichier invalide : JSON illisible. |
+| 1182 | Ce fichier ne semble pas être une vue de tableau valide. |
+| 1216 | élément(s) |
+| 1216 | · 🌳 arbre ( |
+| 1216 | ligne(s) affichée(s)) |
+| 1216 | · 🎯 portée : |
+| 1232 | Clic : trier · glisser : déplacer la colonne · bord droit : largeur |
+| 1248 | Filtrer… |
+| 1270 | Aucun élément ne correspond aux filtres. |
+| 1270 | Aucun type coché pour cet onglet : cochez des types d'éléments dans le menu de gauche. |
+| 1291 | (conteneur) |
+| 1332 | 🌳 Arbre |
+| 1334 | lignes au plus)" ☰ Liste ⊞ Tout déplier ⊟ Tout réduire Niveau 1 2 3 ⬇ JSON |
+| 1382 | résultat(s) |
+| 1382 | élément(s) |
+| 1387 | cap-tree-row cap-tree-lrow |
+| 1397 | autre(s) élément(s) non affiché(s) : précisez la recherche. |
+| 1398 | Aucun élément ne correspond. |
+| 1402 | Aucun élément ne correspond. |
 
 ## js/22-capella-liens.js
 
@@ -1587,118 +1587,118 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 387 | — résultats |
 | 388 | (Vides) |
 | 416 | fonction(s) |
-| 448 | allocation : |
-| 448 | allocataire « |
-| 448 | » (sous-composants compris) |
-| 448 | recherche « |
-| 450 | (vides) |
-| 455 | ƒ Fonctions — tableau |
-| 455 | fonction(s) |
-| 455 | · filtres : |
-| 455 | Tableau |
-| 471 | Chaque ligne suit une fonction de sa couche la plus haute jusqu'aux fonctions qui la réalisent. ∅ = rupture de traçabilité. |
-| 474 | 800 lignes affichées sur |
-| 474 | — export CSV pour tout voir. |
-| 479 | Fonctions |
-| 479 | Fonctions feuilles (sans sous-fonction) |
-| 479 | Profondeur maximale de la hiérarchie |
-| 480 | Sous-fonctions par fonction mère (moyenne) |
-| 480 | Functional Exchanges |
-| 481 | Fonctions avec description |
-| 481 | Noms commençant par un verbe |
-| 481 | Feuilles allouées à un composant |
-| 481 | Feuilles reliées par au moins un échange |
-| 482 | Feuilles réalisées à la couche inférieure |
-| 482 | Feuilles réalisant une fonction de la couche supérieure |
-| 483 | Feuilles impliquées dans une chaîne |
-| 483 | Feuilles impliquées dans une capacité |
-| 483 | Fonctions allouées à plusieurs composants |
-| 504 | (elle passe à gauche)" ◂ |
-| 507 | Indicateur |
-| 511 | ◂ dans l'en-tête : réduire une couche (elle passe à gauche, ▸ pour la déplier). Les exports ne gardent que les couches dépliées. |
-| 512 | 🌐 HTML (indicateurs) 🖼 PNG 📋 Copier l'image |
-| 512 | ⇔ Tout déplier |
-| 518 | n/a : la couche voisine ne contient aucun lien de réalisation, l'indicateur n'aurait pas de sens. Répartition des fonctions par niveau de profondeur |
-| 521 | Niveau |
-| 522 | · niveau |
-| 522 | (racine) |
-| 523 | Fonctions les plus connectées (échanges entrants + sortants) |
-| 523 | · niveau |
-| 523 | fonction(s) |
-| 534 | Segoe UI, Arial, sans-serif |
-| 538 | Projet Capella |
-| 539 | Métriques des fonctions par couche |
-| 550 | italic 12px |
-| 558 | n/a : couche voisine sans lien de réalisation · vert ≥ 90 %, orange ≥ 50 %, rouge 50 % |
-| 563 | 7px minmax(300px,1.1fr) |
-| 563 | minmax(320px,1fr) |
-| 567 | ⚙ Règles de nommage personnalisées Complète les listes intégrées (≈ 1 000 verbes anglais, verbes français en -er/-ir/-re/-oir). Un mot par ligne ou séparés par des virgules. Conservées dans la 💾 Page HTML. Verbes métier acceptés en tête |
-| 569 | Mots refusés en tête (faux verbes) |
-| 570 | ✔ Appliquer |
-| 574 | 🌳 Hiérarchie |
-| 574 | 📋 Tableau |
-| 574 | ⛓ Traçabilité |
-| 574 | 📊 Métriques |
-| 574 | 🩺 Contrôles |
-| 575 | Toutes |
-| 577 | Descriptions |
-| 580 | Allocation |
-| 580 | — double-clic : uniquement celles-ci |
-| 581 | ⬇ CSV 📄 Dossier fonctionnel |
-| 581 | fonction(s) |
-| 591 | px 7px minmax(300px,1.1fr) |
-| 627 | 📊 Métriques des fonctions |
-| 627 | couches : |
-| 627 | Indicateurs |
-| 632 | ✔ Image copiée |
-| 633 | ⚠ Copie refusée — utilisez PNG |
-| 634 | 📋 Copier l'image |
-| 640 | Contrôle |
-| 640 | Fonction |
-| 640 | Détail |
-| 643 | Couche |
-| 643 | Fonction |
-| 643 | Type |
-| 643 | Kind |
-| 643 | Profondeur |
-| 643 | Feuille |
-| 643 | Parent |
-| 643 | Allouée à |
-| 643 | Nature de l'allocation |
-| 643 | Échanges entrants |
-| 643 | Échanges sortants |
-| 643 | Réalise |
-| 643 | Réalisée par |
-| 643 | Chaînes |
-| 643 | Capacités |
-| 643 | États |
-| 643 | Statut |
-| 643 | Description |
-| 659 | sous-fonction(s) |
-| 660 | Aucune description. |
-| 662 | Allouée à |
-| 663 | Entrées |
-| 664 | Sorties |
-| 665 | Réalise |
-| 666 | Réalisée par |
-| 667 | Chaînes |
-| 668 | Capacités |
-| 669 | Disponible dans |
-| 671 | 📊 Métriques |
-| 672 | 🩺 Contrôles |
-| 673 | Capella |
-| 674 | ƒ Dossier fonctionnel |
-| 674 | - dossier fonctionnel.html |
-| 690 | ƒ Fonctions |
-| 690 | 🧬 Traçabilité inter-couches |
-| 690 | 🎯 Capacités & missions |
-| 690 | 🔁 Modes & états |
-| 690 | ⚖ Comparaison de versions |
-| 690 | 📑 Exigences |
-| 690 | 🏷 Propriétés |
-| 690 | 🗃 Données & interfaces |
-| 690 | ⛓ Contraintes |
-| 726 | ↻ Recalculer |
+| 452 | allocation : |
+| 452 | allocataire « |
+| 452 | » (sous-composants compris) |
+| 452 | recherche « |
+| 454 | (vides) |
+| 459 | ƒ Fonctions — tableau |
+| 459 | fonction(s) |
+| 459 | · filtres : |
+| 459 | Tableau |
+| 475 | Chaque ligne suit une fonction de sa couche la plus haute jusqu'aux fonctions qui la réalisent. ∅ = rupture de traçabilité. |
+| 478 | 800 lignes affichées sur |
+| 478 | — export CSV pour tout voir. |
+| 483 | Fonctions |
+| 483 | Fonctions feuilles (sans sous-fonction) |
+| 483 | Profondeur maximale de la hiérarchie |
+| 484 | Sous-fonctions par fonction mère (moyenne) |
+| 484 | Functional Exchanges |
+| 485 | Fonctions avec description |
+| 485 | Noms commençant par un verbe |
+| 485 | Feuilles allouées à un composant |
+| 485 | Feuilles reliées par au moins un échange |
+| 486 | Feuilles réalisées à la couche inférieure |
+| 486 | Feuilles réalisant une fonction de la couche supérieure |
+| 487 | Feuilles impliquées dans une chaîne |
+| 487 | Feuilles impliquées dans une capacité |
+| 487 | Fonctions allouées à plusieurs composants |
+| 508 | (elle passe à gauche)" ◂ |
+| 511 | Indicateur |
+| 515 | ◂ dans l'en-tête : réduire une couche (elle passe à gauche, ▸ pour la déplier). Les exports ne gardent que les couches dépliées. |
+| 516 | 🌐 HTML (indicateurs) 🖼 PNG 📋 Copier l'image |
+| 516 | ⇔ Tout déplier |
+| 522 | n/a : la couche voisine ne contient aucun lien de réalisation, l'indicateur n'aurait pas de sens. Répartition des fonctions par niveau de profondeur |
+| 525 | Niveau |
+| 526 | · niveau |
+| 526 | (racine) |
+| 527 | Fonctions les plus connectées (échanges entrants + sortants) |
+| 527 | · niveau |
+| 527 | fonction(s) |
+| 538 | Segoe UI, Arial, sans-serif |
+| 542 | Projet Capella |
+| 543 | Métriques des fonctions par couche |
+| 554 | italic 12px |
+| 562 | n/a : couche voisine sans lien de réalisation · vert ≥ 90 %, orange ≥ 50 %, rouge 50 % |
+| 567 | 7px minmax(300px,1.1fr) |
+| 567 | minmax(320px,1fr) |
+| 571 | ⚙ Règles de nommage personnalisées Complète les listes intégrées (≈ 1 000 verbes anglais, verbes français en -er/-ir/-re/-oir). Un mot par ligne ou séparés par des virgules. Conservées dans la 💾 Page HTML. Verbes métier acceptés en tête |
+| 573 | Mots refusés en tête (faux verbes) |
+| 574 | ✔ Appliquer |
+| 578 | 🌳 Hiérarchie |
+| 578 | 📋 Tableau |
+| 578 | ⛓ Traçabilité |
+| 578 | 📊 Métriques |
+| 578 | 🩺 Contrôles |
+| 579 | Toutes |
+| 581 | Descriptions |
+| 584 | Allocation |
+| 584 | — double-clic : uniquement celles-ci |
+| 585 | ⬇ CSV 📄 Dossier fonctionnel |
+| 585 | fonction(s) |
+| 595 | px 7px minmax(300px,1.1fr) |
+| 631 | 📊 Métriques des fonctions |
+| 631 | couches : |
+| 631 | Indicateurs |
+| 636 | ✔ Image copiée |
+| 637 | ⚠ Copie refusée — utilisez PNG |
+| 638 | 📋 Copier l'image |
+| 644 | Contrôle |
+| 644 | Fonction |
+| 644 | Détail |
+| 647 | Couche |
+| 647 | Fonction |
+| 647 | Type |
+| 647 | Kind |
+| 647 | Profondeur |
+| 647 | Feuille |
+| 647 | Parent |
+| 647 | Allouée à |
+| 647 | Nature de l'allocation |
+| 647 | Échanges entrants |
+| 647 | Échanges sortants |
+| 647 | Réalise |
+| 647 | Réalisée par |
+| 647 | Chaînes |
+| 647 | Capacités |
+| 647 | États |
+| 647 | Statut |
+| 647 | Description |
+| 663 | sous-fonction(s) |
+| 664 | Aucune description. |
+| 666 | Allouée à |
+| 667 | Entrées |
+| 668 | Sorties |
+| 669 | Réalise |
+| 670 | Réalisée par |
+| 671 | Chaînes |
+| 672 | Capacités |
+| 673 | Disponible dans |
+| 675 | 📊 Métriques |
+| 676 | 🩺 Contrôles |
+| 677 | Capella |
+| 678 | ƒ Dossier fonctionnel |
+| 678 | - dossier fonctionnel.html |
+| 694 | ƒ Fonctions |
+| 694 | 🧬 Traçabilité inter-couches |
+| 694 | 🎯 Capacités & missions |
+| 694 | 🔁 Modes & états |
+| 694 | ⚖ Comparaison de versions |
+| 694 | 📑 Exigences |
+| 694 | 🏷 Propriétés |
+| 694 | 🗃 Données & interfaces |
+| 694 | ⛓ Contraintes |
+| 730 | ↻ Recalculer |
 
 ## js/35-tableau-de-bord.js
 
@@ -3539,3 +3539,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 686 | Niveau |
 | 688 | Déplier jusqu'au niveau |
 | 688 | de lignes (les conteneurs ne comptent pas) |
+| 722 | sélectionnée |
+| 722 | aucune sélection |
+| 745 | cellule(s) copiée(s) |
+| 755 | 📋 Copier aucune sélection |

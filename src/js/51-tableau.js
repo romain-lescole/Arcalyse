@@ -706,3 +706,103 @@ function capTableTreeToggle(id, open){
   capTableDisplay.open[id]=open;
   capRenderTableBodyOnly();
 }
+
+/* ── 📋 Sélection de cellules et copie (comme ƒ Fonctions › 📋 Tableau) ─────────
+ * Clic : une cellule · clic-glisser : un rectangle · Ctrl+clic : ajouter / retirer · Maj+clic : étendre ;
+ * Ctrl+C ou 📋 Copier : texte tabulé (collage dans Excel / Word) ; Échap ou clic hors du tableau : effacer.
+ * Double-clic sur une ligne : panneau de détail. La sélection porte sur la page affichée (effacée à chaque rendu). */
+var _capTSel=new Set();     // cellules sélectionnées « ligne:colonne » (indices dans le corps affiché)
+var _capTSelItems=[];       // éléments des lignes affichées (pour retrouver les valeurs à copier)
+var _capTSelWired=false;    // écouteurs globaux (clavier, souris) posés une fois
+
+/** Met à jour le compteur de sélection et le bouton 📋 Copier de la barre du tableau. */
+function capTSelUpd(){
+  const n=_capTSel.size, b=document.getElementById('cap-t-copy'), s=document.getElementById('cap-t-selc');
+  if(b) b.disabled=!n;
+  if(s) s.textContent=n?`${n} cellule${n>1?'s':''} sélectionnée${n>1?'s':''}`:'aucune sélection';
+}
+
+/** Repeint les cellules sélectionnées du tableau. */
+function capTSelPaint(){
+  const tb=document.getElementById('cap-table-body'); if(!tb) return;
+  tb.querySelectorAll('td.sel').forEach(td=>td.classList.remove('sel'));
+  _capTSel.forEach(k=>{ const [r,c]=k.split(':').map(Number); tb.children[r]?.children[c]?.classList.add('sel'); });
+  capTSelUpd();
+}
+
+/** Efface la sélection de cellules. */
+function capTSelClear(){ if(!_capTSel.size) return; _capTSel=new Set(); capTSelPaint(); }
+
+/** Copie les cellules sélectionnées (texte tabulé, une ligne par ligne du tableau, cases vides conservées). */
+function capTSelCopy(){
+  if(!_capTSel.size) return;
+  const cols=capTableVisibleCols||CAP_TABLE_BUILTIN_COLS, cells=[..._capTSel].map(k=>k.split(':').map(Number));
+  const rs=[...new Set(cells.map(x=>x[0]))].sort((a,b)=>a-b), cs=[...new Set(cells.map(x=>x[1]))].sort((a,b)=>a-b);
+  const val=(r,c)=>{ const it=_capTSelItems[r], col=cols[c]; if(!it||!col) return '';
+    if(!it.row) return c===0 ? (it.el.attrs.name||it.el.typeName) : '';   // conteneur de l'arbre : nom seulement
+    return capTableGetVal(it.el,col).replace(/[\t\n\r]+/g,' '); };
+  const txt=rs.map(r=>cs.map(c=>_capTSel.has(r+':'+c)?val(r,c):'').join('\t')).join('\n');
+  const done=()=>{ const s=document.getElementById('cap-t-selc'); if(s){ s.textContent=`✔ ${_capTSel.size} cellule(s) copiée(s)`; setTimeout(capTSelUpd,1500); } };
+  const fb=()=>{ const ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(e){} ta.remove(); done(); };
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done,fb); else fb();
+}
+
+/** Bouton 📋 Copier et compteur de sélection pour la barre du tableau.
+ * @returns {HTMLElement} Groupe de commandes
+ */
+function capTSelControls(){
+  const g=document.createElement('span'); g.className='tb-grp'; g.title='Sélection de cellules : clic, clic-glisser, Ctrl+clic, Maj+clic ; Ctrl+C pour copier ; double-clic sur une ligne : détail';
+  g.innerHTML=`<button class="cap-lf-btn" id="cap-t-copy" disabled title="Copier les cellules sélectionnées (collage dans Excel / Word) — aussi Ctrl+C">📋 Copier</button><span class="ana-dim" id="cap-t-selc" style="font-size:11px">aucune sélection</span>`;
+  g.querySelector('#cap-t-copy').onclick=()=>capTSelCopy();
+  return g;
+}
+
+/** Branche la sélection de cellules sur le corps du tableau qui vient d'être rendu.
+ * @param {HTMLElement} tb - Corps du tableau (#cap-table-body)
+ * @param {object[]} items - Éléments des lignes affichées ({el, row})
+ */
+function capTSelWire(tb, items){
+  _capTSel=new Set(); _capTSelItems=items; capTSelUpd();
+  let anchor=null, dragging=false, base0=new Set();
+  const pos=td=>[[...tb.children].indexOf(td.parentElement), td.cellIndex];
+  const rect=(a,b)=>{ const s=new Set(); for(let r=Math.min(a[0],b[0]);r<=Math.max(a[0],b[0]);r++) for(let c=Math.min(a[1],b[1]);c<=Math.max(a[1],b[1]);c++) s.add(r+':'+c); return s; };
+  tb.onmousedown=e=>{
+    const td=e.target.closest('td'); if(!td||e.button!==0||td.classList.contains('cap-table-empty')||e.target.closest('.cap-ttree-tog')) return;
+    e.preventDefault(); const p=pos(td), mod=e.ctrlKey||e.metaKey;
+    if(e.shiftKey&&anchor) _capTSel=new Set([...(mod?_capTSel:[]),...rect(anchor,p)]);
+    else if(mod){ const k=p.join(':'); if(_capTSel.has(k)) _capTSel.delete(k); else _capTSel.add(k); anchor=p; base0=new Set(_capTSel); dragging=true; }
+    else { anchor=p; base0=new Set(); _capTSel=new Set([p.join(':')]); dragging=true; }
+    capTSelPaint();
+  };
+  tb.onmouseover=e=>{ if(!dragging) return; const td=e.target.closest('td'); if(td&&!td.classList.contains('cap-table-empty')){ _capTSel=new Set([...base0,...rect(anchor,pos(td))]); capTSelPaint(); } };
+  tb._capUp=()=>{ dragging=false; };
+  if(_capTSelWired) return;
+  _capTSelWired=true;
+  document.addEventListener('mouseup',()=>{ const b=document.getElementById('cap-table-body'); if(b&&b._capUp) b._capUp(); });
+  // Clic en dehors du tableau (ou de 📋 Copier) : la sélection est effacée
+  document.addEventListener('mousedown',e=>{ if(!_capTSel.size) return; const b=document.getElementById('cap-table-body');
+    if(b&&b.contains(e.target)) return; if(e.target.closest&&e.target.closest('#cap-t-copy')) return; capTSelClear(); });
+  document.addEventListener('keydown',e=>{
+    if(!_capTSel.size||currentMode!=='capella'||capCurrentView!=='table') return;
+    if(/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement||{}).tagName||'')) return;
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='c'){ e.preventDefault(); capTSelCopy(); }
+    else if(e.key==='Escape') capTSelClear();
+  });
+}
+
+/** Renomme une colonne par chemin depuis son en-tête (champ de saisie à la place du libellé).
+ * @param {HTMLElement} th - En-tête de la colonne
+ * @param {string} colKey - Clé de la colonne par chemin
+ */
+function capTableColRename(th, colKey){
+  const c=capTableCustomCols.find(x=>x.key===colKey); if(!c) return;
+  const lab=th.querySelector('.th-l'); if(!lab) return;
+  const inp=document.createElement('input'); inp.className='cap-th-rename'; inp.value=c.label;
+  th.draggable=false;
+  ['mousedown','click','dblclick'].forEach(t=>inp.addEventListener(t,ev=>ev.stopPropagation()));
+  lab.replaceWith(inp); inp.focus(); inp.select();
+  let done=false;
+  const end=ok=>{ if(done) return; done=true; if(ok&&inp.value.trim()) c.label=inp.value.trim(); capRenderTable(); };
+  inp.onkeydown=e=>{ if(e.key==='Enter') end(true); if(e.key==='Escape') end(false); };
+  inp.onblur=()=>end(true);
+}

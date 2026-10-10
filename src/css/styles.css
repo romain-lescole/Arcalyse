@@ -863,6 +863,12 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
 .ana-fn-cnt b{color:var(--c-accent);}
 /* ── Tableau ƒ Fonctions : sélection de cellules et filtre par valeurs ── */
 .ana-fnt tbody td{user-select:none;}
+#cap-table tbody td{user-select:none;}
+#cap-table tbody td.sel{background:color-mix(in srgb,var(--c-accent) 20%,transparent)!important;box-shadow:inset 0 0 0 1px var(--c-accent);}
+html[data-tone="light"] #cap-table tbody td.sel{background:color-mix(in srgb,var(--c-accent) 12%,var(--c-bg2))!important;}
+#cap-table th .th-ren{font-size:11px;opacity:.5;cursor:pointer;flex-shrink:0;padding:0 2px;}
+#cap-table th .th-ren:hover{opacity:1;color:var(--c-accent);}
+#cap-table th input.cap-th-rename{flex:1;min-width:0;font-size:11px;padding:2px 5px;background:var(--c-bg2);border:1px solid var(--c-accent);border-radius:3px;color:var(--c-text);text-transform:none;letter-spacing:0;font-weight:400;}
 .ana-fnt tbody td.sel{background:color-mix(in srgb,var(--c-accent) 20%,transparent)!important;box-shadow:inset 0 0 0 1px var(--c-accent);}
 .ana-fnt thead tr:first-child th{padding-right:24px;}
 .ana-vf{position:absolute;right:8px;top:50%;transform:translateY(-50%);z-index:2;display:inline-block;padding:0 3px;font-size:9px;color:var(--c-dim);border:1px solid transparent;border-radius:3px;cursor:pointer;}

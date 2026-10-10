@@ -169,7 +169,7 @@
 - `capRenderCurrentView` (l. 737) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
 - `capUpdateStatChips` (l. 809) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
-## 21-capella-vues-base.js — 1443 lignes
+## 21-capella-vues-base.js — 1449 lignes
 
 - `capRenderSidebar` (l. 5) — Rend la sidebar Capella : liste des types par couche avec cases à cocher.
 - `capGetFiltered` (l. 57) — Retourne capAllElements filtré par types activés, couche et texte de recherche.
@@ -192,28 +192,28 @@
 - `capTableGetVal` (l. 572) — Retourne la valeur d'une colonne sous forme de string unique (jointe par ', ' si plusieurs
 - `capTableColLabel` (l. 577) — Libellé humain affiché en en-tête pour une colonne donnée.
 - `capBuildTableToolbar` (l. 590) — Construit la barre d'outils au-dessus du tableau Capella : bouton de sélection des
-- `capRefreshColPickerList` (l. 692) — Reconstruit uniquement la liste interne du menu ⊞ Colonnes (#cap-colpicker-list),
-- `capApplyColResize` (l. 770) — Ajoute une poignée de redimensionnement sur le bord droit d'un <th> du tableau Capella.
-- `capRenderCustomColStepRow` (l. 800) — Construit une ligne du metachain : <select> Metaclass + <select> Property + suppression.
-- `capRenderCustomColPanel` (l. 866) — Reconstruit entièrement le panneau : recalcule le metaclass imposé de chaque ligne à partir
-- `CAP_PP_MAX_CHIPS` (l. 893)
-- `CAP_PP_MAX_OPTS` (l. 894)
-- `capPpCapAdapter` (l. 899) — Adaptateur de l'aperçu pour le ▤ Tableau Capella (capAllElements, moteur cap…).
-- `capPpTrace` (l. 918) — Déroule le chemin pas à pas depuis un élément, en gardant chaque niveau intermédiaire
-- `capPpHasResult` (l. 937) — Indique si un élément donne un résultat non vide pour le chemin (cellule remplie).
-- `capPpRender` (l. 947) — Rend la zone « 👁 Aperçu en direct » d'un panneau de colonne par chemin : choix de
-- `capPpRenderBody` (l. 1015) — Rend le corps de l'aperçu : remplissage estimé sur le type de départ, puis le chemin
-- `capOpenCustomColPanel` (l. 1086) — Ouvre le panneau latéral de construction de colonne personnalisée (Metachain Navigation).
-- `capCloseCustomColPanel` (l. 1111) — Ferme le panneau latéral d'édition de colonne Metachain de la vue Tableau.
-- `capSaveTableView` (l. 1152) — Sérialise la configuration actuelle de la vue Tableau Capella (colonnes visibles, colonnes
-- `capLoadTableView` (l. 1174) — Charge une configuration de vue Tableau Capella précédemment sauvegardée et l'applique.
-- `capRenderTable` (l. 1193) — Rend intégralement la vue Tableau Capella : barre d'outils (colonnes, colonne perso,
-- `capRenderTableBodyOnly` (l. 1202) — Reconstruit uniquement le <thead>/<tbody> du tableau Capella (pas la toolbar ni le menu
-- `CAP_TREE_LIST_MAX` (l. 1319)
-- `capRenderTree` (l. 1323) — Rend la vue Arborescence : barre propre (recherche, 🌳 Arbre / ☰ Liste, déplier, réduire, JSON) créée
-- `capTreeExpandLevel` (l. 1346) — Déplie l'arbre de 🌳 Arborescence jusqu'à un niveau donné et replie le reste.
-- `capRenderTreeBody` (l. 1358) — Rend le contenu de 🌳 Arborescence selon l'affichage : arbre (avec une recherche : résultats et leurs
-- `capRenderTreeNode` (l. 1402) — Rend récursivement un nœud de l'arborescence Capella.
+- `capRefreshColPickerList` (l. 695) — Reconstruit uniquement la liste interne du menu ⊞ Colonnes (#cap-colpicker-list),
+- `capApplyColResize` (l. 773) — Ajoute une poignée de redimensionnement sur le bord droit d'un <th> du tableau Capella.
+- `capRenderCustomColStepRow` (l. 803) — Construit une ligne du metachain : <select> Metaclass + <select> Property + suppression.
+- `capRenderCustomColPanel` (l. 869) — Reconstruit entièrement le panneau : recalcule le metaclass imposé de chaque ligne à partir
+- `CAP_PP_MAX_CHIPS` (l. 896)
+- `CAP_PP_MAX_OPTS` (l. 897)
+- `capPpCapAdapter` (l. 902) — Adaptateur de l'aperçu pour le ▤ Tableau Capella (capAllElements, moteur cap…).
+- `capPpTrace` (l. 921) — Déroule le chemin pas à pas depuis un élément, en gardant chaque niveau intermédiaire
+- `capPpHasResult` (l. 940) — Indique si un élément donne un résultat non vide pour le chemin (cellule remplie).
+- `capPpRender` (l. 950) — Rend la zone « 👁 Aperçu en direct » d'un panneau de colonne par chemin : choix de
+- `capPpRenderBody` (l. 1018) — Rend le corps de l'aperçu : remplissage estimé sur le type de départ, puis le chemin
+- `capOpenCustomColPanel` (l. 1089) — Ouvre le panneau latéral de construction de colonne personnalisée (Metachain Navigation).
+- `capCloseCustomColPanel` (l. 1114) — Ferme le panneau latéral d'édition de colonne Metachain de la vue Tableau.
+- `capSaveTableView` (l. 1155) — Sérialise la configuration actuelle de la vue Tableau Capella (colonnes visibles, colonnes
+- `capLoadTableView` (l. 1177) — Charge une configuration de vue Tableau Capella précédemment sauvegardée et l'applique.
+- `capRenderTable` (l. 1196) — Rend intégralement la vue Tableau Capella : barre d'outils (colonnes, colonne perso,
+- `capRenderTableBodyOnly` (l. 1205) — Reconstruit uniquement le <thead>/<tbody> du tableau Capella (pas la toolbar ni le menu
+- `CAP_TREE_LIST_MAX` (l. 1325)
+- `capRenderTree` (l. 1329) — Rend la vue Arborescence : barre propre (recherche, 🌳 Arbre / ☰ Liste, déplier, réduire, JSON) créée
+- `capTreeExpandLevel` (l. 1352) — Déplie l'arbre de 🌳 Arborescence jusqu'à un niveau donné et replie le reste.
+- `capRenderTreeBody` (l. 1364) — Rend le contenu de 🌳 Arborescence selon l'affichage : arbre (avec une recherche : résultats et leurs
+- `capRenderTreeNode` (l. 1408) — Rend récursivement un nœud de l'arborescence Capella.
 
 ## 22-capella-liens.js — 280 lignes
 
@@ -358,7 +358,7 @@
 - `capNameQuality` (l. 29) — Analyse la qualité rédactionnelle d'un nom de fonction : verbe en tête (infinitif en français, forme de base en anglais),
 - `capFnNQ` (l. 58) — Diagnostic de nom d'une fonction, mis en cache (recalculé si les règles personnalisées changent). Fonctions racines ignorées.
 
-## 34-fonctions.js — 745 lignes
+## 34-fonctions.js — 749 lignes
 
 - `capIsCompEl` (l. 3) — Indique si un élément XML est un composant, une entité ou un acteur (porteur d'allocations).
 - `capCompAncestors` (l. 11) — Chaîne des composants englobants d'un composant, de la racine (le système) au parent direct.
@@ -370,13 +370,13 @@
 - `capFnSubsystems` (l. 176) — Sous-systèmes d'une fonction : chemin des composants englobants sous le système (« A › B »),
 - `CAP_FN_AK` (l. 181) — Libellés, icônes et couleurs des natures d'allocation (filtre, liserés, colonne du tableau).
 - `capRenderFunctions` (l. 191) — Rend la vue ƒ Fonctions dans son conteneur : hiérarchie, tableau façon Excel, traçabilité, métriques,
-- `capFnDossierHtml` (l. 655) — Dossier fonctionnel HTML autonome : un onglet par couche (sections numérotées et indentées : description,
-- `capFillHeight` (l. 680) — Ajuste la hauteur des éléments marqués data-fill pour qu'ils occupent la fenêtre jusqu'en bas.
-- `CAP_ANA_SUBS` (l. 690) — Sous-vues de 🔬 Analyses (onglets) ; « fns » ouvre la vue ƒ Fonctions, qui garde son propre conteneur.
-- `capAnaTabsHtml` (l. 695) — Onglets des sous-vues de 🔬 Analyses (communs à la vue 🔬 Analyses et à la vue ƒ Fonctions).
-- `capAnaTabOpen` (l. 702) — Ouvre une sous-vue de 🔬 Analyses depuis ses onglets (ƒ Fonctions : vue à part).
-- `capRenderFunctionsView` (l. 711) — Vue « ƒ Fonctions » (onglet de 🔬 Analyses) : hiérarchie, tableau,
-- `capRenderAnalyses` (l. 722) — Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage.
+- `capFnDossierHtml` (l. 659) — Dossier fonctionnel HTML autonome : un onglet par couche (sections numérotées et indentées : description,
+- `capFillHeight` (l. 684) — Ajuste la hauteur des éléments marqués data-fill pour qu'ils occupent la fenêtre jusqu'en bas.
+- `CAP_ANA_SUBS` (l. 694) — Sous-vues de 🔬 Analyses (onglets) ; « fns » ouvre la vue ƒ Fonctions, qui garde son propre conteneur.
+- `capAnaTabsHtml` (l. 699) — Onglets des sous-vues de 🔬 Analyses (communs à la vue 🔬 Analyses et à la vue ƒ Fonctions).
+- `capAnaTabOpen` (l. 706) — Ouvre une sous-vue de 🔬 Analyses depuis ses onglets (ƒ Fonctions : vue à part).
+- `capRenderFunctionsView` (l. 715) — Vue « ƒ Fonctions » (onglet de 🔬 Analyses) : hiérarchie, tableau,
+- `capRenderAnalyses` (l. 726) — Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage.
 
 ## 35-tableau-de-bord.js — 560 lignes
 
@@ -653,7 +653,7 @@
 - `capAboutTech` (l. 19) — Informations techniques (version, navigateur, accès direct aux fichiers, modèle chargé), pour un signalement.
 - `capAboutOpen` (l. 34) — Ouvre la fenêtre « À propos ».
 
-## 51-tableau.js — 709 lignes
+## 51-tableau.js — 809 lignes
 
 - `capTableTabNew` (l. 18) — Crée un onglet de vue du tableau.
 - `capTableTabsEnsure` (l. 34) — Garantit l'existence d'au moins un onglet ; le premier reprend l'état courant du tableau.
@@ -689,3 +689,10 @@
 - `capTableTreeItems` (l. 640) — Éléments à afficher en arbre, à plat, dans l'ordre (seulement les nœuds dépliés, sauf si all).
 - `capTableTreeControls` (l. 660) — Ajoute à la barre du tableau les commandes d'affichage : ☰ Lignes / 🌳 Arbre, et en arbre un menu ▾
 - `capTableTreeToggle` (l. 705) — Déplie ou replie un nœud de l'arbre du tableau.
+- `capTSelUpd` (l. 719) — Met à jour le compteur de sélection et le bouton 📋 Copier de la barre du tableau.
+- `capTSelPaint` (l. 726) — Repeint les cellules sélectionnées du tableau.
+- `capTSelClear` (l. 734) — Efface la sélection de cellules.
+- `capTSelCopy` (l. 737) — Copie les cellules sélectionnées (texte tabulé, une ligne par ligne du tableau, cases vides conservées).
+- `capTSelControls` (l. 753) — Bouton 📋 Copier et compteur de sélection pour la barre du tableau.
+- `capTSelWire` (l. 764) — Branche la sélection de cellules sur le corps du tableau qui vient d'être rendu.
+- `capTableColRename` (l. 797) — Renomme une colonne par chemin depuis son en-tête (champ de saisie à la place du libellé).
