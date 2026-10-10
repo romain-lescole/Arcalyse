@@ -653,7 +653,7 @@
 - `capAboutTech` (l. 19) — Informations techniques (version, navigateur, accès direct aux fichiers, modèle chargé), pour un signalement.
 - `capAboutOpen` (l. 34) — Ouvre la fenêtre « À propos ».
 
-## 51-tableau.js — 687 lignes
+## 51-tableau.js — 709 lignes
 
 - `capTableTabNew` (l. 18) — Crée un onglet de vue du tableau.
 - `capTableTabsEnsure` (l. 34) — Garantit l'existence d'au moins un onglet ; le premier reprend l'état courant du tableau.
@@ -687,5 +687,5 @@
 - `capTableScopeDialog` (l. 514) — Ouvre la fenêtre 🎯 Portée de l'onglet : éléments choisis (✕ pour retirer), mode (à tous les niveaux /
 - `capTableTreeBuild` (l. 612) — Construit la structure de l'arbre du tableau à partir des lignes (dans leur ordre).
 - `capTableTreeItems` (l. 640) — Éléments à afficher en arbre, à plat, dans l'ordre (seulement les nœuds dépliés, sauf si all).
-- `capTableTreeControls` (l. 658) — Ajoute à la barre du tableau les commandes d'affichage : ☰ Lignes / 🌳 Arbre, et en arbre :
-- `capTableTreeToggle` (l. 683) — Déplie ou replie un nœud de l'arbre du tableau.
+- `capTableTreeControls` (l. 660) — Ajoute à la barre du tableau les commandes d'affichage : ☰ Lignes / 🌳 Arbre, et en arbre un menu ▾
+- `capTableTreeToggle` (l. 705) — Déplie ou replie un nœud de l'arbre du tableau.

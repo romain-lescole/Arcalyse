@@ -26,7 +26,7 @@ function capTableTabNew(name, from){
     // Types cochés propres à l'onglet : aucun pour un nouvel onglet ; null = reprendre ceux des autres vues
     types: from ? [] : null,
     scope:{ids:[], direct:false},  // 🎯 portée : vide = tout le modèle
-    display:{mode:'rows', cont:'grey', level:2, open:{}}   // ☰ Lignes / 🌳 Arbre
+    display:{mode:'rows', cont:'compact', level:2, open:{}}   // ☰ Lignes / 🌳 Arbre
   };
 }
 
@@ -50,7 +50,7 @@ function capTableSyncFromTab(){
   capTableVisibleCols=t.visibleCols||null; capTableColFilters=t.colFilters||{};
   capTableColWidths=t.colWidths||{}; capTableSort=t.sort||{col:null, dir:1};
   capTableScope=t.scope&&Array.isArray(t.scope.ids) ? t.scope : (t.scope={ids:[], direct:false});
-  capTableDisplay=t.display&&t.display.mode ? t.display : (t.display={mode:'rows', cont:'grey', level:2, open:{}});
+  capTableDisplay=t.display&&t.display.mode ? t.display : (t.display={mode:'rows', cont:'compact', level:2, open:{}});
   if(!capTableDisplay.open) capTableDisplay.open={};
   if (_capTableTypesOn) { capTableTypesLoad(); capTableSidebar(); }
 }
@@ -651,29 +651,51 @@ function capTableTreeItems(rows, all){
   return out;
 }
 
-/** Ajoute à la barre du tableau les commandes d'affichage : ☰ Lignes / 🌳 Arbre, et en arbre :
- * conteneurs grisés / compact, ⊞ Tout déplier, ⊟ Tout réduire, Niveau 1 · 2 · 3.
+var _capTreeMenuOpen=false;   // menu 🌳 ▾ du tableau ouvert (reste ouvert après un changement d'option)
+
+/** Ajoute à la barre du tableau les commandes d'affichage : ☰ Lignes / 🌳 Arbre, et en arbre un menu ▾
+ * (conteneurs : compact / grisés, ⊞ Tout déplier, ⊟ Tout réduire, Niveau 1 · 2 · 3) pour garder la barre sur une ligne.
  * @param {HTMLElement} tb - Barre du tableau
  */
 function capTableTreeControls(tb){
-  const D=capTableDisplay, g=document.createElement('span'); g.className='tb-grp';
+  const D=capTableDisplay, g=document.createElement('span'); g.className='tb-grp'; g.style.position='relative';
   const btn=(lab,tip,on,fn)=>{ const b=document.createElement('button'); b.className='phl-toggle-btn'+(on?' active':''); b.textContent=lab; b.title=tip; b.onclick=fn; return b; };
-  const set=fn=>()=>{ fn(); capPage=0; capTableSyncToTab(); capRenderTable(); };
+  const set=(fn,keep)=>ev=>{ if(ev) ev.stopPropagation(); fn(); _capTreeMenuOpen=!!keep; capPage=0; capTableSyncToTab(); capRenderTable(); };
   g.appendChild(btn('☰ Lignes','Une ligne par élément',D.mode!=='tree',set(()=>{ D.mode='rows'; })));
   g.appendChild(btn('🌳 Arbre','Lignes rangées sous leurs conteneurs (avec une portée : à partir des éléments de portée)',D.mode==='tree',set(()=>{ D.mode='tree'; })));
   tb.appendChild(g);
   if(D.mode!=='tree') return;
-  const g2=document.createElement('span'); g2.className='tb-grp';
-  g2.appendChild(btn('Conteneurs grisés','Les conteneurs intermédiaires sont affichés, grisés et sans valeurs',D.cont!=='compact',set(()=>{ D.cont='grey'; })));
-  g2.appendChild(btn('Compact','Chaque ligne sous son plus proche ancêtre qui est lui-même une ligne (sans les paquetages et conteneurs intermédiaires)',D.cont==='compact',set(()=>{ D.cont='compact'; })));
-  tb.appendChild(g2);
-  const g3=document.createElement('span'); g3.className='tb-grp';
-  const lv=(lab,tip,n)=>{ const b=document.createElement('button'); b.className='tbtn'; b.textContent=lab; b.title=tip; b.onclick=set(()=>{ D.level=n; D.open={}; }); return b; };
-  g3.appendChild(lv('⊞ Tout déplier','Déplier tout l\'arbre',999));
-  g3.appendChild(lv('⊟ Tout réduire','Replier toutes les lignes (les conteneurs restent ouverts jusqu\'aux premières lignes)',0));
-  const l=document.createElement('span'); l.className='tb-grp-l'; l.textContent='Niveau'; g3.appendChild(l);
-  [1,2,3].forEach(n=>g3.appendChild(lv(String(n),'Déplier jusqu\'au niveau '+n+' de lignes (les conteneurs ne comptent pas)',n)));
-  tb.appendChild(g3);
+  // Menu ▾ des options de l'arbre
+  const arr=btn('▾','Options de l\'arbre : conteneurs, déplier, réduire, niveaux',false,ev=>{ ev.stopPropagation(); _capTreeMenuOpen=!_capTreeMenuOpen; menu.classList.toggle('open',_capTreeMenuOpen); });
+  g.appendChild(arr);
+  const menu=document.createElement('div'); menu.className='cap-colpicker-menu cap-tmenu'+(_capTreeMenuOpen?' open':'');
+  menu.onclick=ev=>ev.stopPropagation();
+  const sec=t=>{ const d=document.createElement('div'); d.className='cap-colpicker-section'; d.textContent=t; menu.appendChild(d); };
+  const opt=(lab,tip,on,fn)=>{ const d=document.createElement('label'); d.className='cap-colpicker-item'; d.title=tip;
+    const r=document.createElement('input'); r.type='radio'; r.name='cap-tmenu-c'; r.checked=on; r.onchange=fn; d.appendChild(r); d.appendChild(document.createTextNode(lab)); menu.appendChild(d); };
+  sec('Conteneurs');
+  opt('Compact','Chaque ligne sous son plus proche ancêtre qui est lui-même une ligne (sans les paquetages et conteneurs intermédiaires)',D.cont!=='grey',set(()=>{ D.cont='compact'; },true));
+  opt('Conteneurs grisés','Les paquetages et conteneurs intermédiaires sont affichés, grisés et sans valeurs',D.cont==='grey',set(()=>{ D.cont='grey'; },true));
+  sec('Dépliage');
+  const row=document.createElement('div'); row.className='cap-tmenu-row';
+  const lv=(lab,tip,n)=>{ const b=document.createElement('button'); b.className='tbtn'; b.textContent=lab; b.title=tip; b.onclick=set(()=>{ D.level=n; D.open={}; },true); row.appendChild(b); };
+  lv('⊞ Tout déplier','Déplier tout l\'arbre',999);
+  lv('⊟ Tout réduire','Replier toutes les lignes (les conteneurs restent ouverts jusqu\'aux premières lignes)',0);
+  menu.appendChild(row);
+  const row2=document.createElement('div'); row2.className='cap-tmenu-row';
+  const l=document.createElement('span'); l.className='tb-grp-l'; l.textContent='Niveau'; row2.appendChild(l);
+  [1,2,3].forEach(n=>{ const b=document.createElement('button'); b.className='tbtn'+(D.level===n&&!Object.keys(D.open).length?' active':''); b.textContent=String(n);
+    b.title='Déplier jusqu\'au niveau '+n+' de lignes (les conteneurs ne comptent pas)'; b.onclick=set(()=>{ D.level=n; D.open={}; },true); row2.appendChild(b); });
+  menu.appendChild(row2);
+  g.appendChild(menu);
+  // Fermeture au clic en dehors du menu
+  if(_capTreeMenuOpen) setTimeout(()=>{
+    const close=e=>{ if(menu.isConnected&&menu.contains(e.target)) return; _capTreeMenuOpen=false; menu.classList.remove('open'); document.removeEventListener('click',close); };
+    document.addEventListener('click',close);
+  },0);
+  arr.addEventListener('click',()=>{ if(_capTreeMenuOpen) setTimeout(()=>{
+    const close=e=>{ if(menu.contains(e.target)) return; _capTreeMenuOpen=false; menu.classList.remove('open'); document.removeEventListener('click',close); };
+    document.addEventListener('click',close); },0); });
 }
 
 /** Déplie ou replie un nœud de l'arbre du tableau.

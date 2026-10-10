@@ -85,7 +85,7 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.click('#cap-table-toolbar >> text=🎯 Portée'); await p.locator('.cap-sc-row input').nth(1).check();
     if (!await p.evaluate(() => capTableScope.ids.length)) throw new Error('portée non appliquée');
     await p.click('#cap-scope-ov [data-c="clr"]'); await p.click('#cap-scope-ov .cw-d-ftr [data-c="x"]');
-    await p.click('#cap-table-toolbar >> text=🌳 Arbre'); await p.click('#cap-table-toolbar >> text=Compact'); await p.click('#cap-table-toolbar >> text=⊞ Tout déplier');
+    await p.click('#cap-table-toolbar >> text=🌳 Arbre'); await p.click('#cap-table-toolbar button[title^="Options de l\'arbre"]'); await p.click('.cap-tmenu >> text=Conteneurs grisés'); await p.click('.cap-tmenu >> text=⊞ Tout déplier');
     if (!await p.evaluate(() => document.querySelectorAll('#cap-table-body .cap-ttree-td').length)) throw new Error('affichage en arbre vide');
     await p.click('#cap-table-toolbar >> text=☰ Lignes'); });
   await step('tableau de bord : tous les indicateurs', async () => {

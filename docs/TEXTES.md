@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3328 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3331 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -2669,7 +2669,6 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 135 | Types d'éléments listés dans le tableau, propres à l'onglet affiché (indépendants des autres vues et des autres onglets). Un nouvel onglet n'a aucun type coché. |
 | 137 | 🗂 Onglets |
 | 138 | 🧰 Commandes du tableau |
-| 139 | ⊞ Colonnes choisit les colonnes : calculées, par chemin, attributs du fichier et relations (→ cibles / ← sources). 🎯 Portée limite les lignes au contenu d'éléments choisis (paquetages, couches, composants…). ☰ Lignes / 🌳 Arbre : en arbre, les lignes sont rangées sous leurs conteneurs (grisés ou compact), avec déplier / réduire / niveaux. ✨ Colonne par chemin en calcule une en suivant des relations (metachain), avec aperçu en direct. ≡ En ligne règle les cellules multiples, ⬇ CSV exporte les colonnes affichées, 💾 Sauver vue / 📂 Charger vue gardent la configuration de l'onglet, ↺ Réinitialiser revient au départ. |
 | 140 | ↕ En-têtes |
 | 141 | 📄 Pages |
 | 141 | Navigation de page en page et nombre de lignes par page. |
@@ -3521,18 +3520,22 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 572 | Aucun élément ne correspond. |
 | 581 | résultat |
 | 581 | Aucun élément ne correspond. |
-| 662 | ☰ Lignes |
-| 662 | Une ligne par élément |
-| 663 | 🌳 Arbre |
-| 663 | Lignes rangées sous leurs conteneurs (avec une portée : à partir des éléments de portée) |
-| 667 | Conteneurs grisés |
-| 667 | Les conteneurs intermédiaires sont affichés, grisés et sans valeurs |
-| 668 | Compact |
-| 668 | Chaque ligne sous son plus proche ancêtre qui est lui-même une ligne (sans les paquetages et conteneurs intermédiaires) |
-| 672 | ⊞ Tout déplier |
-| 672 | Déplier tout l'arbre |
-| 673 | ⊟ Tout réduire |
-| 673 | Replier toutes les lignes (les conteneurs restent ouverts jusqu'aux premières lignes) |
-| 674 | Niveau |
-| 675 | Déplier jusqu'au niveau |
-| 675 | de lignes (les conteneurs ne comptent pas) |
+| 664 | ☰ Lignes |
+| 664 | Une ligne par élément |
+| 665 | 🌳 Arbre |
+| 665 | Lignes rangées sous leurs conteneurs (avec une portée : à partir des éléments de portée) |
+| 669 | Options de l'arbre : conteneurs, déplier, réduire, niveaux |
+| 671 | cap-colpicker-menu cap-tmenu |
+| 676 | Conteneurs |
+| 677 | Compact |
+| 677 | Chaque ligne sous son plus proche ancêtre qui est lui-même une ligne (sans les paquetages et conteneurs intermédiaires) |
+| 678 | Conteneurs grisés |
+| 678 | Les paquetages et conteneurs intermédiaires sont affichés, grisés et sans valeurs |
+| 679 | Dépliage |
+| 682 | ⊞ Tout déplier |
+| 682 | Déplier tout l'arbre |
+| 683 | ⊟ Tout réduire |
+| 683 | Replier toutes les lignes (les conteneurs restent ouverts jusqu'aux premières lignes) |
+| 686 | Niveau |
+| 688 | Déplier jusqu'au niveau |
+| 688 | de lignes (les conteneurs ne comptent pas) |

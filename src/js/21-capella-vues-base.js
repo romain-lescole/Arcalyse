@@ -110,8 +110,8 @@ let capTableColFilters = {};      // { colKey: texte de filtre }
 let capTableMultiValDisplay = 'inline'; // 'inline' (en ligne, virgules) | 'stacked' (empilé verticalement)
 let capTableCustomCols = [];      // [{key, label, steps:[{kind, relKey?, direction?, filterType?}]}]
 let capTableSort = {col:null, dir:1}; // tri de l'onglet actif (dir : 1 croissant, -1 décroissant)
-let capTableScope = {ids:[], direct:false};
-let capTableDisplay = {mode:'rows', cont:'grey', level:2, open:{}}; // ☰ Lignes / 🌳 Arbre de l'onglet actif (51-tableau.js) // 🎯 portée de l'onglet actif : contenu des éléments choisis (vide = tout le modèle)
+let capTableScope = {ids:[], direct:false}; // 🎯 portée de l'onglet actif : contenu des éléments choisis (vide = tout le modèle)
+let capTableDisplay = {mode:'rows', cont:'compact', level:2, open:{}}; // ☰ Lignes / 🌳 Arbre de l'onglet actif (51-tableau.js)
 let capTableTabs = null;          // onglets de vues [{id, name, visibleCols, colFilters, colWidths, sort}] (51-tableau.js)
 let capTableTabIdx = 0;           // index de l'onglet actif
 let _capColResizing = false;      // redimensionnement de colonne en cours (évite un tri ou un déplacement au relâchement)
