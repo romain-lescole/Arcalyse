@@ -77,6 +77,8 @@ Chaînes de navigation Metaclass → Property (✨ Colonne par chemin).
 
 ## 7. Arborescence (panneau gauche)
 
+- **Lecture seule** (`RM_ARBO_RO=true`, 09) : renommage, ✎ / + / ✕, « Nouveau package racine », glisser-déposer, menu contextuel (coller une liste, Convert to…), Ctrl+V et champs modifiables de 📝 Propriétés désactivés. Le code d'édition est conservé : remettre `false` pour le retrouver.
+
 - Repliée par défaut au chargement (seul le paquetage projet est ouvert) — `capApplyPanelOnLoad`.
 
 - Sélection multiple : Ctrl/Cmd+clic, Maj+clic (`arboMultiSel`) ; glisser-déposer de groupe en conservant la hiérarchie (`arboMoveEls`).

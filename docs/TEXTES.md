@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3339 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3341 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -490,57 +490,59 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte |
 |---:|---|
-| 21 | Package |
-| 48 | Sélectionnez un élément dans l'arborescence ou la carte. |
-| 63 | Double-clic pour modifier |
-| 77 | var(--c-dim) |
-| 81 | Nom |
-| 86 | Cliquer pour copier |
-| 87 | var(--c-accent) |
-| 95 | Type |
-| 97 | inp prop-val-edit |
+| 26 | Package |
+| 53 | Sélectionnez un élément dans l'arborescence ou la carte. |
+| 68 | Double-clic pour modifier |
+| 82 | var(--c-dim) |
+| 86 | Nom |
+| 91 | Cliquer pour copier |
+| 92 | var(--c-accent) |
 | 100 | Type |
-| 107 | — racine |
-| 109 | Parent |
-| 111 | inp prop-val-edit |
+| 102 | inp prop-val-edit |
+| 105 | Type |
 | 112 | — racine |
-| 116 | 📂 Packages |
-| 122 | Éléments |
-| 126 | Parent |
-| 127 | Parent |
-| 140 | Attributs Capella |
-| 273 | var(--c-dim) |
-| 293 | Renommer |
-| 295 | Ajouter un sous-package |
-| 296 | Ajouter un élément |
-| 297 | Supprimer ce package |
-| 299 | Ajouter un sous-élément |
-| 300 | Supprimer |
-| 352 | 📂 Nouveau package racine |
-| 380 | Nouveau package |
-| 381 | Nouveau package |
-| 384 | Package |
-| 395 | Block |
-| 399 | Nouvel élément |
-| 403 | Containment |
-| 411 | enfant(s). Supprimer ? |
-| 434 | éléments sélectionnés — glisser pour déplacer le groupe |
-| 449 | Déplacement impossible : la cible est à l'intérieur de la sélection. |
-| 460 | Containment |
-| 480 | Block |
-| 488 | Containment |
-| 530 | 📋 Coller la liste ici (1 ligne = 1 élément) |
-| 534 | Lecture du presse-papier non disponible dans ce navigateur — utilisez Ctrl+V sur l'élément sélectionné. |
-| 539 | Le presse-papier ne contient aucune ligne de texte exploitable. |
-| 542 | Accès au presse-papier refusé — utilisez Ctrl+V sur l'élément sélectionné. |
-| 552 | 🔄 Convert to… |
-| 552 | élts) |
-| 558 | 🔍 Filtrer les types… |
-| 573 | Aucun type ne correspond. |
-| 578 | var(--c-dim) |
-| 605 | Astuce : Ctrl+V fonctionne aussi sur l'élément sélectionné. |
-| 652 | Containment |
-| 690 | Containment |
+| 114 | Parent |
+| 116 | inp prop-val-edit |
+| 117 | — racine |
+| 121 | 📂 Packages |
+| 127 | Éléments |
+| 131 | Parent |
+| 132 | Parent |
+| 145 | Attributs Capella |
+| 281 | var(--c-dim) |
+| 303 | Renommer |
+| 304 | Ajouter un sous-package |
+| 305 | Ajouter un élément |
+| 306 | Supprimer ce package |
+| 308 | Renommer |
+| 309 | Ajouter un sous-élément |
+| 310 | Supprimer |
+| 363 | 📂 Nouveau package racine |
+| 392 | Nouveau package |
+| 393 | Nouveau package |
+| 396 | Package |
+| 407 | Block |
+| 411 | Nouvel élément |
+| 415 | Containment |
+| 423 | enfant(s). Supprimer ? |
+| 446 | éléments sélectionnés |
+| 446 | éléments sélectionnés — glisser pour déplacer le groupe |
+| 461 | Déplacement impossible : la cible est à l'intérieur de la sélection. |
+| 472 | Containment |
+| 492 | Block |
+| 500 | Containment |
+| 542 | 📋 Coller la liste ici (1 ligne = 1 élément) |
+| 546 | Lecture du presse-papier non disponible dans ce navigateur — utilisez Ctrl+V sur l'élément sélectionné. |
+| 551 | Le presse-papier ne contient aucune ligne de texte exploitable. |
+| 554 | Accès au presse-papier refusé — utilisez Ctrl+V sur l'élément sélectionné. |
+| 564 | 🔄 Convert to… |
+| 564 | élts) |
+| 570 | 🔍 Filtrer les types… |
+| 585 | Aucun type ne correspond. |
+| 590 | var(--c-dim) |
+| 617 | Astuce : Ctrl+V fonctionne aussi sur l'élément sélectionné. |
+| 665 | Containment |
+| 703 | Containment |
 
 ## js/11-sauvegarde-toolbar-init.js
 
