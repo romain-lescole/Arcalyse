@@ -226,7 +226,10 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
 .cap-sc-chip b:hover{color:var(--c-err,#f85149);}
 .cap-sc-mode{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;margin-bottom:8px;color:var(--c-text);}
 .cap-sc-mode label{display:flex;align-items:center;gap:5px;cursor:pointer;}
-.cap-sc-q{width:100%;box-sizing:border-box;margin-bottom:6px;}
+.cap-sc-bar{display:flex;gap:8px;align-items:center;margin-bottom:6px;}
+.cap-sc-q{flex:1;min-width:0;box-sizing:border-box;}
+.cap-sc-row.dim .cap-sc-n,.cap-sc-row.dim .cap-sc-t{opacity:.45;}
+.cap-sc-p{margin-left:auto;padding-left:10px;font-size:10px;color:var(--c-dim);overflow:hidden;text-overflow:ellipsis;max-width:45%;}
 .cap-sc-tree{border:1px solid var(--c-border);border-radius:6px;max-height:50vh;overflow:auto;padding:4px 0;background:var(--c-bg2);}
 .cap-sc-row{display:flex;align-items:center;gap:6px;padding:2px 8px;font-size:12px;white-space:nowrap;}
 .cap-sc-row:hover{background:var(--c-bg3);}

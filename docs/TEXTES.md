@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3296 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3301 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -3484,23 +3484,28 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 415 | Vue |
 | 415 | (Table View) |
 | 439 | Vue |
-| 478 | tout le modèle |
-| 479 | 1 élément |
-| 480 | éléments |
-| 489 | 🎯 Portée : |
-| 491 | Lignes limitées au contenu ( |
-| 491 | directement contenu |
-| 491 | à tous les niveaux |
-| 492 | (sans nom) |
-| 493 | Portée de l'onglet : limiter les lignes aux éléments contenus dans des paquetages, composants… choisis (vide = tout le modèle) |
-| 506 | 🎯 Portée de l'onglet « |
-| 507 | » ✕ Les lignes du tableau sont les éléments des types cochés (menu de gauche) contenus dans les éléments choisis ici. Sans élément choisi : tout le modèle. Les filtres de colonnes s'appliquent ensuite. |
-| 512 | Contenu à tous les niveaux |
-| 513 | Directement contenu seulement |
-| 515 | Vider la portée (tout le modèle) Fermer |
-| 524 | (sans nom) |
-| 525 | Aucun élément choisi : tout le modèle. |
-| 531 | var(--c-dim) |
-| 536 | (sans nom) |
-| 546 | autre(s) : précisez la recherche. |
-| 547 | Aucun élément ne correspond. |
+| 479 | tout le modèle |
+| 480 | 1 élément |
+| 481 | éléments |
+| 490 | 🎯 Portée : |
+| 492 | Lignes limitées au contenu ( |
+| 492 | directement contenu |
+| 492 | à tous les niveaux |
+| 493 | (sans nom) |
+| 494 | Portée de l'onglet : limiter les lignes aux éléments contenus dans des paquetages, composants… choisis (vide = tout le modèle) |
+| 508 | 🎯 Portée de l'onglet « |
+| 509 | » ✕ Les lignes du tableau sont les éléments des types cochés (menu de gauche) contenus dans les éléments choisis ici. Sans élément choisi : tout le modèle. Les filtres de colonnes s'appliquent ensuite. |
+| 514 | Contenu à tous les niveaux |
+| 515 | Directement contenu seulement |
+| 517 | 🌳 Arbre ☰ Liste Vider la portée (tout le modèle) Fermer |
+| 527 | (sans nom) |
+| 528 | Aucun élément choisi : tout le modèle. |
+| 535 | var(--c-dim) |
+| 541 | (sans nom) |
+| 544 | autre(s) |
+| 544 | (s) non affiché(s) : précisez la recherche. |
+| 560 | résultat |
+| 560 | élément |
+| 561 | Aucun élément ne correspond. |
+| 570 | résultat |
+| 570 | Aucun élément ne correspond. |

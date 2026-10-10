@@ -452,6 +452,7 @@ function capTableApplyViewFile(data){
 var _capScopeMemo=null;   // ensemble des ids en portée, recalculé quand la portée ou le modèle change
 var _capScopeOpen={};     // nœuds dépliés dans l'arbre de la fenêtre 🎯 Portée
 var _capScopeQ='';        // recherche dans la fenêtre 🎯 Portée
+var _capScopeView='tree'; // affichage de la fenêtre 🎯 Portée : 'tree' (arbre) ou 'list' (liste à plat)
 
 /** Ensemble des identifiants des éléments en portée (contenu des éléments choisis).
  * @returns {Set<string>|null} Identifiants, ou null si la portée est vide (tout le modèle)
@@ -497,6 +498,7 @@ function capTableScopeButton(){
 
 /** Ouvre la fenêtre 🎯 Portée de l'onglet : éléments choisis (✕ pour retirer), mode (à tous les niveaux /
  * directement contenus), arbre du modèle (▶ déplier, case = ajouter / retirer) et recherche par nom ou type.
+ * Affichage 🌳 Arbre (avec une recherche : résultats et leurs conteneurs grisés) ou ☰ Liste (≤ 300 lignes).
  * Chaque changement s'applique immédiatement au tableau. */
 function capTableScopeDialog(){
   let ov=document.getElementById('cap-scope-ov');
@@ -512,7 +514,8 @@ function capTableScopeDialog(){
         <label><input type="radio" name="cap-sc-m" value="rec"${capTableScope.direct?'':' checked'}> Contenu à tous les niveaux</label>
         <label><input type="radio" name="cap-sc-m" value="dir"${capTableScope.direct?' checked':''}> Directement contenu seulement</label>
       </div>
-      <input class="inp cap-sc-q" placeholder="🔍 Chercher un élément (nom ou type)…" value="${capEsc(_capScopeQ)}">
+      <div class="cap-sc-bar"><input class="inp cap-sc-q" placeholder="🔍 Chercher un élément (nom ou type)…" value="${capEsc(_capScopeQ)}">
+        <span class="tb-grp" title="Affichage"><button class="phl-toggle-btn" data-scm="tree" title="Arbre du modèle ; avec une recherche : résultats et leurs conteneurs (grisés)">🌳 Arbre</button><button class="phl-toggle-btn" data-scm="list" title="Liste à plat triée par nom, avec le chemin des conteneurs (300 lignes au plus)">☰ Liste</button></span></div>
       <div class="cap-sc-tree"></div>
     </div>
     <div class="cw-d-ftr"><button class="cap-lf-btn" data-c="clr">Vider la portée (tout le modèle)</button><span style="flex:1"></span><button class="phl-export-btn" data-c="x">Fermer</button></div></div>`;
@@ -527,24 +530,44 @@ function capTableScopeDialog(){
   };
   const toggle=(id,on)=>{ const s=new Set(capTableScope.ids); if(on) s.add(id); else s.delete(id); capTableScope.ids=[...s]; apply(); };
   const isOpen=(id,depth)=>_capScopeOpen[id]!==undefined ? _capScopeOpen[id] : depth===0;   // 1er niveau déplié au départ
-  const row=(n,depth,hasKids)=>{
+  // opt : {dim:conteneur affiché seulement pour situer un résultat, fixed:pas de ▶/▼ cliquable (recherche), path:chemin des conteneurs (liste)}
+  const row=(n,depth,hasKids,opt={})=>{
     const lv=CAP_LAYERS[n.layer]||{color:'var(--c-dim)'};
-    return `<div class="cap-sc-row" style="padding-left:${6+depth*14}px">
-      <span class="cap-sc-tog" data-tog="${capEsc(n.id)}" data-d="${depth}">${hasKids?(isOpen(n.id,depth)?'▼':'▶'):''}</span>
+    const tog=!hasKids?'':opt.fixed?'▼':(isOpen(n.id,depth)?'▼':'▶');
+    return `<div class="cap-sc-row${opt.dim?' dim':''}" style="padding-left:${6+depth*14}px"${opt.dim?' title="Conteneur affiché pour situer les résultats (ne correspond pas à la recherche)"':''}>
+      <span class="cap-sc-tog"${hasKids&&!opt.fixed?` data-tog="${capEsc(n.id)}" data-d="${depth}"`:''}>${tog}</span>
       <input type="checkbox" data-id="${capEsc(n.id)}"${capTableScope.ids.includes(n.id)?' checked':''}>
       <span class="cap-sc-t" style="color:${lv.color}">${capEsc((CAP_HUMAN_NAMES[n.typeName]||{}).h||n.typeName)}</span>
-      <span class="cap-sc-n">${capEsc(n.name||'(sans nom)')}</span></div>`;
+      <span class="cap-sc-n">${capEsc(n.name||'(sans nom)')}</span>${opt.path?`<span class="cap-sc-p" title="${capEsc(opt.path)}">${capEsc(opt.path)}</span>`:''}</div>`;
   };
+  const MAX=300;   // résultats affichés au plus (liste, ou résultats de recherche en arbre)
+  const more=(n,what)=>`<div class="ana-dim" style="padding:6px 10px">… ${n} autre(s) ${what}(s) non affiché(s) : précisez la recherche.</div>`;
   const drawTree=()=>{
     const host=ov.querySelector('.cap-sc-tree'); let h='';
     const q=_capScopeQ.trim().toLowerCase();
-    if (q) {
-      // Recherche : liste à plat des éléments qui ont un contenu (seuls utiles comme portée)
-      const {childrenOf}=capGetParentIndex();
-      const hits=capAllElements.filter(e=>(childrenOf[e.id]||[]).length && ((e.attrs.name||'')+' '+e.typeName+' '+((CAP_HUMAN_NAMES[e.typeName]||{}).h||'')).toLowerCase().includes(q));
-      h=hits.slice(0,300).map(e=>row({id:e.id, name:e.attrs.name, typeName:e.typeName, layer:e.layer},0,false)).join('')
-        +(hits.length>300?`<div class="ana-dim" style="padding:6px">… ${hits.length-300} autre(s) : précisez la recherche.</div>`:'')
-        +(hits.length?'':'<div class="ana-dim" style="padding:6px">Aucun élément ne correspond.</div>');
+    const {childrenOf, parentOf}=capGetParentIndex();
+    ov.querySelectorAll('[data-scm]').forEach(b=>b.classList.toggle('active', b.dataset.scm===_capScopeView));
+    // Seuls les éléments qui ont un contenu sont utiles comme portée
+    const match=e=>((e.attrs.name||'')+' '+e.typeName+' '+((CAP_HUMAN_NAMES[e.typeName]||{}).h||'')).toLowerCase().includes(q);
+    const hits=q ? capAllElements.filter(e=>(childrenOf[e.id]||[]).length && match(e)) : null;
+    if (_capScopeView==='list') {
+      // Liste à plat, triée par nom, avec le chemin des conteneurs ; bornée à MAX lignes
+      const all=(hits||capAllElements.filter(e=>(childrenOf[e.id]||[]).length)).slice().sort((a,b)=>(a.attrs.name||'').localeCompare(b.attrs.name||'','fr'));
+      const path=e=>{ const out=[]; let p=parentOf[e.id], k=0;
+        while (p && k<12) { const x=capGetElementById_(p); if (x) out.unshift(x.attrs.name||x.typeName); p=parentOf[p]; k++; }
+        return out.length>3 ? '… › '+out.slice(-3).join(' › ') : out.join(' › '); };
+      h=all.slice(0,MAX).map(e=>row({id:e.id, name:e.attrs.name, typeName:e.typeName, layer:e.layer},0,false,{path:path(e)})).join('')
+        +(all.length>MAX?more(all.length-MAX, q?'résultat':'élément'):'')
+        +(all.length?'':'<div class="ana-dim" style="padding:6px 10px">Aucun élément ne correspond.</div>');
+    } else if (q) {
+      // Arbre filtré : résultats et leurs conteneurs (grisés s'ils ne correspondent pas), tout déplié
+      const shown=new Set(hits.slice(0,MAX).map(e=>e.id)), keep=new Set(shown);
+      shown.forEach(id=>{ let p=parentOf[id]; while (p && !keep.has(p)) { keep.add(p); p=parentOf[p]; } });
+      const walk=(n,d)=>{ const kids=(n.children||[]).filter(c=>c.children&&c.children.length&&keep.has(c.id));
+        if (n.typeName!=='Project') h+=row(n,d,kids.length,{dim:!shown.has(n.id), fixed:true});
+        kids.forEach(c=>walk(c, n.typeName==='Project'?d:d+1)); };
+      if (capTreeData) walk(capTreeData,0);
+      h+=(hits.length>MAX?more(hits.length-MAX,'résultat'):'')+(hits.length?'':'<div class="ana-dim" style="padding:6px 10px">Aucun élément ne correspond.</div>');
     } else {
       // Arbre du modèle (nœuds ayant un contenu), déplié à la demande
       const walk=(n,d)=>{ const kids=(n.children||[]).filter(c=>c.children&&c.children.length);
@@ -556,6 +579,7 @@ function capTableScopeDialog(){
     host.querySelectorAll('[data-tog]').forEach(t=>t.onclick=()=>{ const id=t.dataset.tog, d=+t.dataset.d; _capScopeOpen[id]=!isOpen(id,d); drawTree(); });
     host.querySelectorAll('input[data-id]').forEach(cb=>cb.onchange=()=>toggle(cb.dataset.id, cb.checked));
   };
+  ov.querySelectorAll('[data-scm]').forEach(b=>b.onclick=()=>{ _capScopeView=b.dataset.scm; drawTree(); });
   ov.querySelector('.cap-sc-q').oninput=e=>{ _capScopeQ=e.target.value; drawTree(); };
   ov.querySelectorAll('input[name="cap-sc-m"]').forEach(r=>r.onchange=()=>{ capTableScope.direct=r.value==='dir'; apply(); });
   ov.querySelectorAll('[data-c="x"]').forEach(b=>b.onclick=()=>{ ov.style.display='none'; });

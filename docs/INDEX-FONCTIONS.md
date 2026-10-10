@@ -650,7 +650,7 @@
 - `capAboutTech` (l. 19) — Informations techniques (version, navigateur, accès direct aux fichiers, modèle chargé), pour un signalement.
 - `capAboutOpen` (l. 34) — Ouvre la fenêtre « À propos ».
 
-## 51-tableau.js — 565 lignes
+## 51-tableau.js — 589 lignes
 
 - `capTableTabNew` (l. 18) — Crée un onglet de vue du tableau.
 - `capTableTabsEnsure` (l. 33) — Garantit l'existence d'au moins un onglet ; le premier reprend l'état courant du tableau.
@@ -678,7 +678,7 @@
 - `capTableTvTab` (l. 384) — Convertit un onglet (ou une vue .json) de l'ancienne Table View en onglet du tableau.
 - `capTableImportTv` (l. 404) — Reprend les réglages de l'ancienne 📊 Table View (page enregistrée ou fichier ⚙) : ses onglets
 - `capTableApplyViewFile` (l. 425) — Applique un fichier 📂 Charger vue à l'onglet actif : vue du tableau (« capella-table-view »)
-- `capTableScopeSet` (l. 459) — Ensemble des identifiants des éléments en portée (contenu des éléments choisis).
-- `capTableScopeLabel` (l. 476) — Libellé court de la portée pour le bouton de la barre du tableau.
-- `capTableScopeButton` (l. 486) — Bouton « 🎯 Portée » de la barre du tableau (info-bulle : éléments choisis et mode).
-- `capTableScopeDialog` (l. 501) — Ouvre la fenêtre 🎯 Portée de l'onglet : éléments choisis (✕ pour retirer), mode (à tous les niveaux /
+- `capTableScopeSet` (l. 460) — Ensemble des identifiants des éléments en portée (contenu des éléments choisis).
+- `capTableScopeLabel` (l. 477) — Libellé court de la portée pour le bouton de la barre du tableau.
+- `capTableScopeButton` (l. 487) — Bouton « 🎯 Portée » de la barre du tableau (info-bulle : éléments choisis et mode).
+- `capTableScopeDialog` (l. 503) — Ouvre la fenêtre 🎯 Portée de l'onglet : éléments choisis (✕ pour retirer), mode (à tous les niveaux /
