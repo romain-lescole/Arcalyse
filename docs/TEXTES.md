@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js` — 3275 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js` — 3296 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -631,88 +631,89 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 71 | élément(s) affiché(s) |
 | 80 | —sans nom— |
 | 90 | Aucun résultat |
-| 281 | Owner [ |
-| 336 | Name |
-| 338 | Type |
-| 339 | Human Type |
-| 348 | Attribut « |
-| 370 | Owned element [ |
-| 392 | :fwd: |
-| 399 | :rev: |
-| 576 | Couche |
-| 576 | Type |
-| 576 | Human Type |
-| 576 | Name |
-| 576 | Owner |
-| 576 | Owned element |
-| 595 | ⊞ Colonnes ( |
-| 605 | 🔍 Rechercher une colonne… |
-| 637 | Créer une colonne calculée en suivant un chemin de relations (metachain), avec aperçu en direct |
-| 638 | ✨ Colonne par chemin |
-| 645 | Bascule l'affichage des cellules à plusieurs valeurs |
-| 646 | ≡ En ligne |
-| 646 | ☰ Empilé |
-| 655 | Exporter en CSV les colonnes affichées, pour toutes les lignes filtrées (ordre du tri) |
-| 656 | ⬇ CSV |
-| 661 | Sauvegarder la vue de cet onglet (colonnes, colonnes par chemin, filtres, largeurs, tri) dans un fichier |
-| 662 | 💾 Sauver vue |
-| 666 | Charger une vue tableau sauvegardée |
-| 667 | 📂 Charger vue |
-| 673 | ↺ Réinitialiser |
-| 674 | Revenir aux colonnes, à l'ordre, aux largeurs et au tri de départ, sans filtre (onglet affiché) |
-| 709 | Modifier le metachain de cette colonne |
-| 715 | Supprimer cette colonne personnalisée |
-| 737 | ⊞ Colonnes ( |
-| 741 | Colonnes calculées |
-| 742 | Name |
-| 742 | Owner |
-| 742 | Owned element |
-| 743 | Couche |
-| 743 | Type |
-| 743 | Human Type |
-| 747 | Colonnes par chemin |
-| 753 | Attributs du fichier XML |
-| 831 | (aucune relation disponible) |
-| 849 | Supprimer cette étape et les suivantes |
-| 896 | (sans nom) |
-| 946 | 👁 Aperçu en direct |
-| 948 | Choisissez un type de départ. |
-| 951 | Aucun élément de ce type dans le modèle. |
-| 963 | Élément d'exemple ( |
-| 966 | 🔍 Filtrer… |
-| 968 | Suivant ▸ |
-| 969 | Passer au prochain élément dont la cellule serait remplie |
-| 980 | autre(s) : affinez le filtre |
-| 981 | (aucun élément) |
-| 1018 | Cellule remplie pour |
-| 1018 | élément(s) sur les |
-| 1018 | premiers testés ( |
-| 1018 | au total). |
-| 1019 | Cellule remplie pour |
-| 1019 | élément(s) sur |
-| 1020 | var(--c-warn,#e3b341) |
-| 1039 | Départ : |
-| 1044 | (à choisir) |
-| 1049 | valeur(s) lue(s) |
-| 1049 | Aucune valeur. |
-| 1052 | var(--c-warn,#e3b341) |
-| 1053 | ∅ Aucun élément atteint : le chemin s'arrête ici pour cet exemple. |
-| 1065 | ▣ Cellule dans le tableau |
-| 1067 | Chemin incomplet. |
-| 1067 | (vide) |
-| 1093 | ✨ Modifier « |
-| 1093 | ✨ Colonne par chemin |
-| 1095 | Enregistrer les modifications |
-| 1095 | Créer la colonne |
-| 1118 | Choisissez au moins un type de départ et une relation ou une valeur. |
-| 1119 | Chaque étape doit avoir une relation ou une valeur sélectionnée. |
-| 1169 | Fichier invalide : JSON illisible. |
-| 1171 | Ce fichier ne semble pas être une vue de tableau valide. |
-| 1202 | élément(s) |
-| 1216 | Clic : trier · glisser : déplacer la colonne · bord droit : largeur |
-| 1232 | Filtrer… |
-| 1254 | Aucun élément ne correspond aux filtres. |
-| 1254 | Aucun type coché pour cet onglet : cochez des types d'éléments dans le menu de gauche. |
+| 282 | Owner [ |
+| 337 | Name |
+| 339 | Type |
+| 340 | Human Type |
+| 349 | Attribut « |
+| 371 | Owned element [ |
+| 393 | :fwd: |
+| 400 | :rev: |
+| 577 | Couche |
+| 577 | Type |
+| 577 | Human Type |
+| 577 | Name |
+| 577 | Owner |
+| 577 | Owned element |
+| 596 | ⊞ Colonnes ( |
+| 606 | 🔍 Rechercher une colonne… |
+| 638 | Créer une colonne calculée en suivant un chemin de relations (metachain), avec aperçu en direct |
+| 639 | ✨ Colonne par chemin |
+| 649 | Bascule l'affichage des cellules à plusieurs valeurs |
+| 650 | ≡ En ligne |
+| 650 | ☰ Empilé |
+| 659 | Exporter en CSV les colonnes affichées, pour toutes les lignes filtrées (ordre du tri) |
+| 660 | ⬇ CSV |
+| 665 | Sauvegarder la vue de cet onglet (colonnes, colonnes par chemin, filtres, largeurs, tri) dans un fichier |
+| 666 | 💾 Sauver vue |
+| 670 | Charger une vue tableau sauvegardée |
+| 671 | 📂 Charger vue |
+| 677 | ↺ Réinitialiser |
+| 678 | Revenir aux colonnes, à l'ordre, aux largeurs et au tri de départ, sans filtre (onglet affiché) |
+| 713 | Modifier le metachain de cette colonne |
+| 719 | Supprimer cette colonne personnalisée |
+| 741 | ⊞ Colonnes ( |
+| 745 | Colonnes calculées |
+| 746 | Name |
+| 746 | Owner |
+| 746 | Owned element |
+| 747 | Couche |
+| 747 | Type |
+| 747 | Human Type |
+| 751 | Colonnes par chemin |
+| 757 | Attributs du fichier XML |
+| 835 | (aucune relation disponible) |
+| 853 | Supprimer cette étape et les suivantes |
+| 900 | (sans nom) |
+| 950 | 👁 Aperçu en direct |
+| 952 | Choisissez un type de départ. |
+| 955 | Aucun élément de ce type dans le modèle. |
+| 967 | Élément d'exemple ( |
+| 970 | 🔍 Filtrer… |
+| 972 | Suivant ▸ |
+| 973 | Passer au prochain élément dont la cellule serait remplie |
+| 984 | autre(s) : affinez le filtre |
+| 985 | (aucun élément) |
+| 1022 | Cellule remplie pour |
+| 1022 | élément(s) sur les |
+| 1022 | premiers testés ( |
+| 1022 | au total). |
+| 1023 | Cellule remplie pour |
+| 1023 | élément(s) sur |
+| 1024 | var(--c-warn,#e3b341) |
+| 1043 | Départ : |
+| 1048 | (à choisir) |
+| 1053 | valeur(s) lue(s) |
+| 1053 | Aucune valeur. |
+| 1056 | var(--c-warn,#e3b341) |
+| 1057 | ∅ Aucun élément atteint : le chemin s'arrête ici pour cet exemple. |
+| 1069 | ▣ Cellule dans le tableau |
+| 1071 | Chemin incomplet. |
+| 1071 | (vide) |
+| 1097 | ✨ Modifier « |
+| 1097 | ✨ Colonne par chemin |
+| 1099 | Enregistrer les modifications |
+| 1099 | Créer la colonne |
+| 1122 | Choisissez au moins un type de départ et une relation ou une valeur. |
+| 1123 | Chaque étape doit avoir une relation ou une valeur sélectionnée. |
+| 1174 | Fichier invalide : JSON illisible. |
+| 1176 | Ce fichier ne semble pas être une vue de tableau valide. |
+| 1207 | élément(s) |
+| 1207 | · 🎯 portée : |
+| 1221 | Clic : trier · glisser : déplacer la colonne · bord droit : largeur |
+| 1237 | Filtrer… |
+| 1259 | Aucun élément ne correspond aux filtres. |
+| 1259 | Aucun type coché pour cet onglet : cochez des types d'éléments dans le menu de gauche. |
 
 ## js/22-capella-liens.js
 
@@ -2658,7 +2659,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 135 | Types d'éléments listés dans le tableau, propres à l'onglet affiché (indépendants des autres vues et des autres onglets). Un nouvel onglet n'a aucun type coché. |
 | 137 | 🗂 Onglets |
 | 138 | 🧰 Commandes du tableau |
-| 139 | ⊞ Colonnes choisit les colonnes : calculées, par chemin, attributs du fichier et relations (→ cibles / ← sources). ✨ Colonne par chemin en calcule une en suivant des relations (metachain), avec aperçu en direct. ≡ En ligne règle les cellules multiples, ⬇ CSV exporte les colonnes affichées, 💾 Sauver vue / 📂 Charger vue gardent la configuration de l'onglet, ↺ Réinitialiser revient au départ. |
+| 139 | ⊞ Colonnes choisit les colonnes : calculées, par chemin, attributs du fichier et relations (→ cibles / ← sources). 🎯 Portée limite les lignes au contenu d'éléments choisis (paquetages, couches, composants…). ✨ Colonne par chemin en calcule une en suivant des relations (metachain), avec aperçu en direct. ≡ En ligne règle les cellules multiples, ⬇ CSV exporte les colonnes affichées, 💾 Sauver vue / 📂 Charger vue gardent la configuration de l'onglet, ↺ Réinitialiser revient au départ. |
 | 140 | ↕ En-têtes |
 | 141 | 📄 Pages |
 | 141 | Navigation de page en page et nombre de lignes par page. |
@@ -3460,26 +3461,46 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | Ligne | Texte |
 |---:|---|
 | 21 | Vue 1 |
-| 34 | Vue 1 |
-| 116 | Clic : afficher · double-clic : renommer |
-| 128 | Fermer cet onglet |
-| 131 | Fermer l'onglet « |
-| 143 | Nouvel onglet (copie des colonnes de la vue affichée) |
-| 146 | Vue |
-| 216 | → cibles |
-| 216 | ← sources |
-| 229 | Autres |
-| 238 | Relations — |
-| 245 | → cibles ( |
-| 245 | Colonne sur les lignes |
-| 245 | : les |
-| 245 | liés |
-| 246 | ← sources ( |
-| 246 | Colonne sur les lignes |
-| 246 | : les |
-| 246 | liés |
-| 359 | Vue 1 |
-| 392 | Vue |
-| 412 | Vue |
-| 412 | (Table View) |
-| 435 | Vue |
+| 35 | Vue 1 |
+| 118 | Clic : afficher · double-clic : renommer |
+| 130 | Fermer cet onglet |
+| 133 | Fermer l'onglet « |
+| 145 | Nouvel onglet (copie des colonnes de la vue affichée) |
+| 148 | Vue |
+| 218 | → cibles |
+| 218 | ← sources |
+| 231 | Autres |
+| 240 | Relations — |
+| 247 | → cibles ( |
+| 247 | Colonne sur les lignes |
+| 247 | : les |
+| 247 | liés |
+| 248 | ← sources ( |
+| 248 | Colonne sur les lignes |
+| 248 | : les |
+| 248 | liés |
+| 362 | Vue 1 |
+| 395 | Vue |
+| 415 | Vue |
+| 415 | (Table View) |
+| 439 | Vue |
+| 478 | tout le modèle |
+| 479 | 1 élément |
+| 480 | éléments |
+| 489 | 🎯 Portée : |
+| 491 | Lignes limitées au contenu ( |
+| 491 | directement contenu |
+| 491 | à tous les niveaux |
+| 492 | (sans nom) |
+| 493 | Portée de l'onglet : limiter les lignes aux éléments contenus dans des paquetages, composants… choisis (vide = tout le modèle) |
+| 506 | 🎯 Portée de l'onglet « |
+| 507 | » ✕ Les lignes du tableau sont les éléments des types cochés (menu de gauche) contenus dans les éléments choisis ici. Sans élément choisi : tout le modèle. Les filtres de colonnes s'appliquent ensuite. |
+| 512 | Contenu à tous les niveaux |
+| 513 | Directement contenu seulement |
+| 515 | Vider la portée (tout le modèle) Fermer |
+| 524 | (sans nom) |
+| 525 | Aucun élément choisi : tout le modèle. |
+| 531 | var(--c-dim) |
+| 536 | (sans nom) |
+| 546 | autre(s) : précisez la recherche. |
+| 547 | Aucun élément ne correspond. |

@@ -81,7 +81,10 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
       capTableVisibleCols.push('rel:' + s.key + ':out'); capRenderTableBodyOnly();
       return [...document.querySelectorAll('#cap-table-body tr')].length; });
     if (!n) throw new Error('tableau vide après ajout d\'une colonne de relation');
-    await p.dragAndDrop('#cap-table-head tr:first-child th:nth-child(1)', '#cap-table-head tr:first-child th:nth-child(3)'); });
+    await p.dragAndDrop('#cap-table-head tr:first-child th:nth-child(1)', '#cap-table-head tr:first-child th:nth-child(3)');
+    await p.click('#cap-table-toolbar >> text=🎯 Portée'); await p.locator('.cap-sc-row input').nth(1).check();
+    if (!await p.evaluate(() => capTableScope.ids.length)) throw new Error('portée non appliquée');
+    await p.click('#cap-scope-ov [data-c="clr"]'); await p.click('#cap-scope-ov .cw-d-ftr [data-c="x"]'); });
   await step('tableau de bord : tous les indicateurs', async () => {
     await p.click('#cap-v-dashboard');   // bouton épinglé par défaut
     const r = await p.evaluate(() => { const bad = []; capDashCatalog().forEach(m => CAP_DASH_VIZ[m.kind].forEach(([v]) => {

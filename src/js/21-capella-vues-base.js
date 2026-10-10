@@ -96,7 +96,7 @@ function capRenderCards(){
    Remplace l'ancienne liste fixe CAP_TABLE_COLS par un système complet :
    - Toutes les colonnes "attribut brut" réellement présentes dans le XML chargé
    - Colonnes calculées : Human Type, Parent, Owned element
-   - Colonnes personnalisées combinées (façon Metachain Navigation MagicDraw) :
+   - Colonnes par chemin (metachain : suite d'étapes type d'élément → relation ou valeur) :
      ex. "Owned element [PhysicalPort]" = liste des enfants directs filtrés par type
    ═══════════════════════════════════════════════════════════════════════ */
 
@@ -110,6 +110,7 @@ let capTableColFilters = {};      // { colKey: texte de filtre }
 let capTableMultiValDisplay = 'inline'; // 'inline' (en ligne, virgules) | 'stacked' (empilé verticalement)
 let capTableCustomCols = [];      // [{key, label, steps:[{kind, relKey?, direction?, filterType?}]}]
 let capTableSort = {col:null, dir:1}; // tri de l'onglet actif (dir : 1 croissant, -1 décroissant)
+let capTableScope = {ids:[], direct:false}; // 🎯 portée de l'onglet actif : contenu des éléments choisis (vide = tout le modèle)
 let capTableTabs = null;          // onglets de vues [{id, name, visibleCols, colFilters, colWidths, sort}] (51-tableau.js)
 let capTableTabIdx = 0;           // index de l'onglet actif
 let _capColResizing = false;      // redimensionnement de colonne en cours (évite un tri ou un déplacement au relâchement)
@@ -160,8 +161,8 @@ function capGetMetachainMetaclasses(){
 }
 
 /** Retourne la liste des "Property" disponibles pour un Metaclass donné, calculée à partir
- * des données réellement observées dans le fichier chargé (comme dans MagicDraw, où les
- * propriétés proposées dépendent du metaclass sélectionné à l'étape précédente) :
+ * des données réellement observées dans le fichier chargé (les propriétés proposées dépendent
+ * du metaclass sélectionné à l'étape précédente) :
  * - "Owned element [SousType]" pour chaque type d'enfant direct effectivement observé
  * - une entrée par relation Capella où ce metaclass apparaît comme source ou cible
  * @returns {Array} [{key, label, kind:'owned'|'rel', resultType, relKey?, direction?}]
@@ -331,8 +332,8 @@ function capGetMetachainProperties(metaclass){
   const {childrenOf} = capGetParentIndex();
 
   // 0) Propriétés terminales — n'avancent pas dans le metachain, elles extraient une valeur
-  //    simple de l'élément atteint à cette étape (comme dans MagicDraw où la dernière ligne
-  //    sélectionne souvent "Name" plutôt qu'une navigation supplémentaire).
+  //    simple de l'élément atteint à cette étape (la dernière étape lit souvent "Name"
+  //    plutôt que de naviguer plus loin).
   props.push({key:'value:name', label:'Name', kind:'value', valueKind:'name', isTerminal:true});
   props.push({key:'value:id', label:'ID', kind:'value', valueKind:'id', isTerminal:true});
   props.push({key:'value:type', label:'Type', kind:'value', valueKind:'type', isTerminal:true});
@@ -503,11 +504,11 @@ function capExtractValue(el, prop){
 }
 
 /** Exécute une chaîne de Properties (metachain) à partir d'un élément. Le 1er pas n'est
- * exécuté que si le type de l'élément correspond au Metaclass de l'étape 1 (cohérence avec
- * le modèle MagicDraw où chaque ligne contraint le metaclass d'entrée).
+ * exécuté que si le type de l'élément correspond au Metaclass de l'étape 1 (chaque étape
+ * contraint le metaclass d'entrée).
  * Si la DERNIÈRE étape est une property terminale (Name, ID, Type, attribut...), le résultat
- * est une liste de VALEURS (strings) plutôt que d'éléments — comme dans MagicDraw où la
- * dernière ligne du metachain sélectionne typiquement une valeur simple à afficher.
+ * est une liste de VALEURS (strings) plutôt que d'éléments : la dernière étape du chemin
+ * sélectionne typiquement une valeur simple à afficher.
  * @returns {Array} éléments capAllElements OU valeurs string selon la dernière étape. */
 function capResolveMetachain(el, steps){
   if (!steps.length) return [];
@@ -638,6 +639,9 @@ function capBuildTableToolbar(){
   customBtn.textContent='✨ Colonne par chemin';
   customBtn.onclick=()=>capOpenCustomColPanel();
   tb.appendChild(customBtn);
+
+  // 🎯 Portée de l'onglet (51-tableau.js)
+  tb.appendChild(capTableScopeButton());
 
   // Bascule d'affichage pour les cellules à valeurs multiples : en ligne (virgules) ou
   // empilées verticalement (une valeur par ligne, comme pour Owned element).
@@ -779,11 +783,11 @@ function capApplyColResize(th, colKey, table){
 
 /* ═══════════════════════════════════════════════════════════════════════
    CAP TABLE — Panneau latéral : constructeur de colonne personnalisée
-   "Metachain Navigation" (modèle MagicDraw/Cameo) : chaque étape (ligne)
+   « colonne par chemin » (metachain) : chaque étape (ligne)
    associe un Metaclass (type d'élément) à une Property (attribut/relation
    à suivre). Le Metaclass de la 1ʳᵉ ligne est le point de départ ; à partir
    de la 2ᵉ ligne, il est imposé par le type résultant de la Property
-   précédente — exactement comme dans la boîte de dialogue MagicDraw.
+   précédente.
    ═══════════════════════════════════════════════════════════════════════ */
 let _capCustomColSteps = []; // [{metaclass, property}] — état du panneau ouvert ; property peut être null tant que non choisie
 
@@ -1146,6 +1150,7 @@ function capSaveTableView(){
   const data = {
     type: 'capella-table-view',
     version: 2,
+    scope: capTableScope,
     name: (capTableTabs&&capTableTabs[capTableTabIdx]||{}).name,
     sort: capTableSort,
     visibleCols: capTableVisibleCols || CAP_TABLE_BUILTIN_COLS,
@@ -1199,7 +1204,7 @@ function capRenderTableBodyOnly(){
   // Lignes filtrées (types, couche, recherche, filtres par colonne) puis triées (51-tableau.js)
   const filtered=capTableRows();
 
-  const rc=document.getElementById('cap-result-count'); if(rc)rc.textContent=`${filtered.length} élément(s)`;
+  const rc=document.getElementById('cap-result-count'); if(rc)rc.textContent=`${filtered.length} élément(s)`+(capTableScope.ids.length?` · 🎯 portée : ${capTableScopeLabel()}`:'');
   const total=filtered.length,start=capPage*capPageSize,end=Math.min(start+capPageSize,total),slice=filtered.slice(start,end);
   const table=document.getElementById('cap-table');
   const thead=document.getElementById('cap-table-head'); const tbody=document.getElementById('cap-table-body');
