@@ -1,11 +1,11 @@
 # CLAUDE.md — Arcalyse
 
-Application **autonome et 100 % hors ligne** qui charge un fichier `.capella` (XML Capella / ARCADIA) dans le navigateur pour l'explorer, l'analyser, le contrôler et l'exporter. Le livrable est **un seul fichier HTML** (`dist/arcalyse-fr.html`) utilisé sur un **PC sécurisé sans réseau**. Les sources sont découpées dans `src/` et réassemblées par `build.js`.
+Application **autonome, fonctionnant hors ligne**, qui charge un fichier `.capella` (XML Capella / ARCADIA) dans le navigateur pour l'explorer, l'analyser, le contrôler et l'exporter. Le livrable est **un seul fichier HTML** (`dist/arcalyse-fr.html`) utilisable sans connexion. Les sources sont découpées dans `src/` et réassemblées par `build.js`.
 
 ## Règles impératives
 
 1. **Ne jamais modifier `dist/`** : on modifie `src/`, puis on lance `node build.js`. Le build doit afficher `✔` ; s'il refuse (syntaxe, `</script>` non échappé, ressource externe), corriger avant de rendre la main.
-2. **Hors ligne absolu** : aucune ressource externe (CDN, police, image distante, `fetch` réseau). D3 v7.9.0 est embarqué dans `src/vendor/d3.min.js` — **ne jamais le lire ni le modifier** (≈ 280 Ko).
+2. **Hors ligne** : aucune ressource externe (CDN, police, image distante, `fetch` réseau). D3 v7.9.0 est embarqué dans `src/vendor/d3.min.js` — **ne jamais le lire ni le modifier** (≈ 280 Ko).
 3. **Français partout** : interface, messages, commentaires, et **JSDoc en français pour toute nouvelle fonction** (couverture actuelle 100 %).
 4. **Réponses courtes**, en français : ce qui a changé, en quelques lignes.
 5. **Lecture ciblée** : chercher avec `grep`/recherche dans `src/js/` ou consulter `docs/INDEX-FONCTIONS.md`, puis lire seulement les lignes utiles. Ne pas lire un module entier sans nécessité.

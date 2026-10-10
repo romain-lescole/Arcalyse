@@ -6,7 +6,7 @@ Historique : ce document reprend le fichier « CONSIGNES » utilisé avant le d�
 ## 1. Le projet
 
 - Application autonome qui charge un `.capella` (XML) localement ; **version Capella uniquement** (pas de SysML, pas d'exemple intégré).
-- Utilisée sur **PC sécurisé** : aucune communication réseau. **D3.js v7.9.0 embarqué** (`src/vendor/d3.min.js`, issu de `npm pack d3@7.9.0` → `package/dist/d3.min.js`).
+- Fonctionne **hors ligne** : aucune ressource externe. **D3.js v7.9.0 embarqué** (`src/vendor/d3.min.js`, issu de `npm pack d3@7.9.0` → `package/dist/d3.min.js`).
 - Livrable : `dist/arcalyse-fr.html` (~1,15 Mo, dont D3 ~280 Ko), produit par `node build.js`.
 - Une ancienne version bilingue FR/EN (mécanisme `_L()` + `I18N_EN`, rechargement via `window.name`) existe hors de ce dépôt ; elle n'est plus maintenue. Le projet actuel est **français uniquement**.
 
