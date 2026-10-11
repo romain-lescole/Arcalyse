@@ -37,6 +37,12 @@ function capBuildPageHtml(){
   capCfgStoreViews();   // ▤ Tableau (onglets) et thème choisi mémorisés dans la page (46-config-interface.js)
   // Clone le document actuel tel quel
   const doc = document.documentElement.cloneNode(true);
+  // Sans les fenêtres créées à l'exécution (placées après le script principal) : recréées à la réouverture, elles
+  // feraient doublon (et resteraient dans l'ancienne langue dans la version multilingue). Scripts (données JSON) et styles gardés.
+  const live = [...document.body.children], cloned = [...doc.querySelector('body').children];
+  const main = live.findIndex(e => e.tagName === 'SCRIPT' && !e.id && !e.type && e.textContent.includes('function capBuildPageHtml'));
+  if (main >= 0 && cloned.length === live.length)
+    live.forEach((e, i) => { if (i > main && !/^(SCRIPT|STYLE|LINK|TEMPLATE)$/.test(e.tagName)) cloned[i].remove(); });
 
   // Retire tout bootstrap résiduel d'une sauvegarde précédente, pour éviter les doublons
   // si on sauvegarde plusieurs fois de suite un fichier déjà sauvegardé.

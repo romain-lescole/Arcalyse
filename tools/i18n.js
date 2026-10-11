@@ -129,9 +129,11 @@ function patternOf(a) {
 
 /**
  * Remplace, dans le code d'un module, l'argument de chaque _L('…') / _L(`…`) par sa traduction.
+ * Avec multi = true (version multilingue) : l'argument devient (CAP_LANG==='en'?anglais:français),
+ * une seule des deux branches étant évaluée.
  * Renvoie { code, missing:[{key, line, file}], count }. Les _L imbriqués dans un gabarit sont traduits aussi.
  */
-function translateCode(code, dict, file) {
+function translateCode(code, dict, file, multi) {
   const calls = lCalls(parse(code)).sort((a, b) => a.start - b.start);
   const missing = [];
   let count = 0;
@@ -151,9 +153,13 @@ function translateCode(code, dict, file) {
     const r = translatePattern(patternOf(a), dict);
     r.text = r.text.replace(/«(\s|&nbsp;)?/g, '“').replace(/(\s|&nbsp;)?»/g, '”');   // guillemets restés hors traduction
     r.missing.forEach(k => missing.push({ key: k, line: a.loc.start.line, file }));
-    if (a.type === 'Literal') { const t = r.text.replace(/\u0001/g, '{'); return t === a.value ? code.slice(a.start, a.end) : jsString(t); }
+    if (a.type === 'Literal') { const t = r.text.replace(/\u0001/g, '{'); if (t === a.value) return code.slice(a.start, a.end);
+      return multi ? `(CAP_LANG==='en'?${jsString(t)}:${code.slice(a.start, a.end)})` : jsString(t); }
     const exprs = a.expressions.map(e => rewrite(e.start, e.end));
-    return '`' + r.text.replace(/\{(\d+)\}/g, (m, n) => exprs[+n] != null ? '${' + exprs[+n] + '}' : m).replace(/\u0001/g, '{') + '`';
+    const en = '`' + r.text.replace(/\{(\d+)\}/g, (m, n) => exprs[+n] != null ? '${' + exprs[+n] + '}' : m).replace(/\u0001/g, '{') + '`';
+    if (!multi) return en;
+    const fr = '`' + a.quasis.map((q, i) => q.value.raw + (i < exprs.length ? '${' + exprs[i] + '}' : '')).join('') + '`';
+    return en === fr ? fr : `(CAP_LANG==='en'?${en}:${fr})`;
   }
   return { code: rewrite(0, code.length), missing, count };
 }

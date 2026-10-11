@@ -6,7 +6,11 @@ Les sources sont **en français**. La version anglaise est **produite au build**
 node build.js --lang en               # → dist/arcalyse-en.html (+ dist/arcalyse-en-manquants.txt s'il reste des textes à traduire)
 node build.js --lang en --livraison   # → livraison/arcalyse-en.html (sur demande explicite uniquement)
 node tests/smoke.js --en              # test navigateur de la version anglaise
+node build.js --lang multi            # → dist/arcalyse-multi.html : français + anglais dans un seul fichier, bascule 🌐
+node tests/smoke.js --multi [--fr]    # test navigateur de la version multilingue (anglais par défaut)
 ```
+
+**Version multilingue** (`--lang multi`) : chaque `_L` devient `(CAP_LANG==='en'?anglais:français)` ; l'interface et l'aide des deux langues sont dans deux `<template>`, et un petit script (`cap-lang-boot`) insère celle de la langue choisie avant le script principal : `?lang=fr|en` dans l'adresse, sinon langue de la page enregistrée, sinon langue du navigateur. Le bouton 🌐 (barre et écran d'accueil, ajouté par le build) recharge la page dans l'autre langue en transmettant le modèle chargé par `window.name` (rechargé par `cap-lang-restore`).
 
 ## Ce qui existe
 

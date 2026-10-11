@@ -568,62 +568,62 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 15 | Generalization | (inchangé, hors _L) |
 | 15 | Part | (inchangé, hors _L) |
 | 15 | Execution | (inchangé, hors _L) |
-| 125 | Page HTML | HTML page |
-| 127 | Enregistrer dans « | Save to “…” (Ctrl+S) — Shift+click or Ctrl+Shift+S: save as |
-| 127 | » (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous | Save to “…” (Ctrl+S) — Shift+click or Ctrl+Shift+S: save as |
-| 128 | ✔ Enregistré | ✔ Saved |
-| 132 | Enregistrement direct impossible ( | Direct save not possible ( |
-| 132 | ). La page va être téléchargée à la place. | ). The page will be downloaded instead. |
-| 170 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. | “…” is a representation/metadata file: drop the project's .capella file. |
-| 174 | » n'est pas un fichier Capella (.capella attendu). | “…” is not a Capella file (.capella expected). |
-| 177 | Chargement de « | Loading “…”… |
-| 180 | Impossible de lire « | Cannot read “…”. |
-| 186 | XML invalide | Invalid XML |
-| 192 | Erreur de chargement : | Loading error: |
-| 211 | Aucun élément Capella reconnu dans ce fichier | No Capella element recognised in this file |
-| 237 | Ouvrir un autre modèle Capella | Open another Capella model |
-| 238 | Modèle actuel : | Current model: … Drop a new file .capella to replace it. |
-| 238 | Déposez un nouveau fichier .capella pour le remplacer. | Current model: … Drop a new file .capella to replace it. |
-| 306 | Shared | (inchangé, hors _L) |
-| 325 | Project | (inchangé, hors _L) |
-| 383 | Composition | (inchangé, hors _L) |
-| 383 | Aggregation | (inchangé, hors _L) |
-| 383 | Association | (inchangé, hors _L) |
-| 383 | Containment | (inchangé, hors _L) |
-| 383 | Generalization | (inchangé, hors _L) |
-| 383 | Realization | (inchangé, hors _L) |
-| 383 | Dependency | (inchangé, hors _L) |
-| 383 | Usage | (inchangé, hors _L) |
-| 383 | Abstraction | (inchangé, hors _L) |
-| 383 | Refine | (inchangé, hors _L) |
-| 383 | Trace | (inchangé, hors _L) |
-| 383 | Satisfy | (inchangé, hors _L) |
-| 383 | Verify | (inchangé, hors _L) |
-| 383 | Copy | (inchangé, hors _L) |
-| 383 | Allocation | (inchangé, hors _L) |
-| 384 | Block | (inchangé, hors _L) |
-| 384 | Component | (inchangé, hors _L) |
-| 384 | Class | (inchangé, hors _L) |
-| 384 | Interface | (inchangé, hors _L) |
-| 384 | Requirement | (inchangé, hors _L) |
-| 384 | Package | (inchangé, hors _L) |
-| 387 | Aggregation | (inchangé, hors _L) |
-| 387 | Association | (inchangé, hors _L) |
-| 387 | Containment | (inchangé, hors _L) |
-| 387 | Generalization | (inchangé, hors _L) |
-| 387 | Realization | (inchangé, hors _L) |
-| 387 | Dependency | (inchangé, hors _L) |
-| 387 | Usage | (inchangé, hors _L) |
-| 387 | Abstraction | (inchangé, hors _L) |
-| 387 | Refine | (inchangé, hors _L) |
-| 387 | Trace | (inchangé, hors _L) |
-| 387 | Satisfy | (inchangé, hors _L) |
-| 387 | Verify | (inchangé, hors _L) |
-| 387 | Copy | (inchangé, hors _L) |
-| 387 | Allocation | (inchangé, hors _L) |
-| 505 | PhysicalComponent (NODE) | (inchangé, hors _L) |
-| 506 | PhysicalComponent (BEHAVIOR) | (inchangé, hors _L) |
-| 745 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella | 🔷 Load a .capella file via 📁 File › 🔷 Open a Capella model |
+| 131 | Page HTML | HTML page |
+| 133 | Enregistrer dans « | Save to “…” (Ctrl+S) — Shift+click or Ctrl+Shift+S: save as |
+| 133 | » (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous | Save to “…” (Ctrl+S) — Shift+click or Ctrl+Shift+S: save as |
+| 134 | ✔ Enregistré | ✔ Saved |
+| 138 | Enregistrement direct impossible ( | Direct save not possible ( |
+| 138 | ). La page va être téléchargée à la place. | ). The page will be downloaded instead. |
+| 176 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. | “…” is a representation/metadata file: drop the project's .capella file. |
+| 180 | » n'est pas un fichier Capella (.capella attendu). | “…” is not a Capella file (.capella expected). |
+| 183 | Chargement de « | Loading “…”… |
+| 186 | Impossible de lire « | Cannot read “…”. |
+| 192 | XML invalide | Invalid XML |
+| 198 | Erreur de chargement : | Loading error: |
+| 217 | Aucun élément Capella reconnu dans ce fichier | No Capella element recognised in this file |
+| 243 | Ouvrir un autre modèle Capella | Open another Capella model |
+| 244 | Modèle actuel : | Current model: … Drop a new file .capella to replace it. |
+| 244 | Déposez un nouveau fichier .capella pour le remplacer. | Current model: … Drop a new file .capella to replace it. |
+| 312 | Shared | (inchangé, hors _L) |
+| 331 | Project | (inchangé, hors _L) |
+| 389 | Composition | (inchangé, hors _L) |
+| 389 | Aggregation | (inchangé, hors _L) |
+| 389 | Association | (inchangé, hors _L) |
+| 389 | Containment | (inchangé, hors _L) |
+| 389 | Generalization | (inchangé, hors _L) |
+| 389 | Realization | (inchangé, hors _L) |
+| 389 | Dependency | (inchangé, hors _L) |
+| 389 | Usage | (inchangé, hors _L) |
+| 389 | Abstraction | (inchangé, hors _L) |
+| 389 | Refine | (inchangé, hors _L) |
+| 389 | Trace | (inchangé, hors _L) |
+| 389 | Satisfy | (inchangé, hors _L) |
+| 389 | Verify | (inchangé, hors _L) |
+| 389 | Copy | (inchangé, hors _L) |
+| 389 | Allocation | (inchangé, hors _L) |
+| 390 | Block | (inchangé, hors _L) |
+| 390 | Component | (inchangé, hors _L) |
+| 390 | Class | (inchangé, hors _L) |
+| 390 | Interface | (inchangé, hors _L) |
+| 390 | Requirement | (inchangé, hors _L) |
+| 390 | Package | (inchangé, hors _L) |
+| 393 | Aggregation | (inchangé, hors _L) |
+| 393 | Association | (inchangé, hors _L) |
+| 393 | Containment | (inchangé, hors _L) |
+| 393 | Generalization | (inchangé, hors _L) |
+| 393 | Realization | (inchangé, hors _L) |
+| 393 | Dependency | (inchangé, hors _L) |
+| 393 | Usage | (inchangé, hors _L) |
+| 393 | Abstraction | (inchangé, hors _L) |
+| 393 | Refine | (inchangé, hors _L) |
+| 393 | Trace | (inchangé, hors _L) |
+| 393 | Satisfy | (inchangé, hors _L) |
+| 393 | Verify | (inchangé, hors _L) |
+| 393 | Copy | (inchangé, hors _L) |
+| 393 | Allocation | (inchangé, hors _L) |
+| 511 | PhysicalComponent (NODE) | (inchangé, hors _L) |
+| 512 | PhysicalComponent (BEHAVIOR) | (inchangé, hors _L) |
+| 751 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella | 🔷 Load a .capella file via 📁 File › 🔷 Open a Capella model |
 
 ## js/21-capella-vues-base.js
 

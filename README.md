@@ -88,8 +88,8 @@ Choose among dozens of indicators (number of elements, function allocation, desc
 ## Getting started
 
 1. **Get the HTML file**:
-   - English version, built from the sources: `node build.js --lang en` produces **`dist/arcalyse-en.html`** (interface, help and exports in English);
-   - French version: delivered, ready to use, in **[`livraison/arcalyse-fr.html`](livraison/)** (“Download raw file” button on GitHub), or built with `node build.js` → **`dist/arcalyse-fr.html`**.
+   - delivered, ready to use, in **[`livraison/`](livraison/)** (“Download raw file” button on GitHub): **`arcalyse-en.html`** (English), **`arcalyse-fr.html`** (French) or **`arcalyse-multi.html`** (both languages, 🌐 switch; browser language by default);
+   - or built from the sources: `node build.js --lang en` → `dist/arcalyse-en.html`, `node build.js` → `dist/arcalyse-fr.html`, `node build.js --lang multi` → `dist/arcalyse-multi.html`.
 2. **Open it** in a recent browser (tested with Google Chrome version 155), even without a network.
 3. **Drag and drop** your `.capella` file (or click 📂 Browse…). That's it.
 
@@ -178,9 +178,8 @@ Choisissez parmi des dizaines d'indicateurs (nombre d'éléments, allocation des
 ## Démarrer
 
 1. **Récupérez le fichier HTML** :
-   - version livrée, prête à l'emploi : **[`livraison/arcalyse-fr.html`](livraison/)** (bouton « Download raw file » sur GitHub) ;
-   - ou version de développement, construite à partir des sources : `node build.js` produit **`dist/arcalyse-fr.html`** ;
-   - version anglaise : `node build.js --lang en` produit **`dist/arcalyse-en.html`** (interface, aide et exports en anglais).
+   - version livrée, prête à l'emploi, dans **[`livraison/`](livraison/)** (bouton « Download raw file » sur GitHub) : **`arcalyse-fr.html`** (français), **`arcalyse-en.html`** (anglais) ou **`arcalyse-multi.html`** (les deux langues, bascule 🌐 ; langue du navigateur par défaut) ;
+   - ou version de développement, construite à partir des sources : `node build.js` → `dist/arcalyse-fr.html`, `node build.js --lang en` → `dist/arcalyse-en.html`, `node build.js --lang multi` → `dist/arcalyse-multi.html`.
 2. **Ouvrez-le** dans un navigateur récent (testé sous Google Chrome version 155), même sans réseau.
 3. **Glissez-déposez** votre fichier `.capella` (ou cliquez sur 📂 Parcourir…). C'est tout.
 

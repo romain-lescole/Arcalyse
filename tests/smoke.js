@@ -7,6 +7,7 @@
  * Installation (une seule fois) :  npm install --save-dev playwright  puis  npx playwright install chromium
  * Lancement :                      node tests/smoke.js [chemin/vers/modele.capella]
  * Version anglaise :               node tests/smoke.js --en [modele]  (après node build.js --lang en)
+ * Version multilingue :            node tests/smoke.js --multi [--fr] [modele]  (après node build.js --lang multi ; anglais par défaut)
  * (par défaut : premier fichier .capella trouvé dans tests/models/)
  */
 'use strict';
@@ -15,11 +16,11 @@ let chromium; try { ({ chromium } = require('playwright')); }
 catch (e) { console.error('Playwright absent : npm install --save-dev playwright && npx playwright install chromium'); process.exit(2); }
 
 const ROOT = path.join(__dirname, '..');
-const args = process.argv.slice(2), EN = args.includes('--en');
-const page = path.join(ROOT, 'dist', EN ? 'arcalyse-en.html' : 'arcalyse-fr.html');
+const args = process.argv.slice(2), EN = args.includes('--en'), MULTI = args.includes('--multi');
+const page = path.join(ROOT, 'dist', MULTI ? 'arcalyse-multi.html' : EN ? 'arcalyse-en.html' : 'arcalyse-fr.html');
 const models = path.join(__dirname, 'models');
 const model = args.find(a => !a.startsWith('--')) || (fs.existsSync(models) ? fs.readdirSync(models).filter(f => f.endsWith('.capella')).map(f => path.join(models, f))[0] : null);
-if (!fs.existsSync(page)) { console.error('Lancez d\'abord : node build.js' + (EN ? ' --lang en' : '')); process.exit(2); }
+if (!fs.existsSync(page)) { console.error('Lancez d\'abord : node build.js' + (MULTI ? ' --lang multi' : EN ? ' --lang en' : '')); process.exit(2); }
 if (!model) { console.error('Aucun modèle : placez un .capella dans tests/models/ ou passez-le en argument'); process.exit(2); }
 
 (async () => {
@@ -28,7 +29,7 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
   const p = await ctx.newPage();
   const errs = []; p.on('pageerror', e => errs.push(e.message));
   p.on('dialog', d => d.dismiss());
-  await p.goto('file://' + page.replace(/\\/g, '/').replace(/^([A-Za-z]):/, '/$1:'));
+  await p.goto('file://' + page.replace(/\\/g, '/').replace(/^([A-Za-z]):/, '/$1:') + (MULTI ? '?lang=' + (args.includes('--fr') ? 'fr' : 'en') : ''));
   await p.setInputFiles('#capella-file-input', model);
   await p.waitForFunction(() => typeof capLoaded !== 'undefined' && capLoaded, null, { timeout: 180000 });
   const step = async (label, fn) => { const n = errs.length; try { await fn(); } catch (e) { errs.push(label + ' : ' + e.message); } await p.waitForTimeout(250); console.log((errs.length > n ? '✖ ' : '✔ ') + label); };
