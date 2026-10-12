@@ -1247,8 +1247,12 @@ function capRenderTableBodyOnly(){
     const inp=document.createElement('input');
     inp.type='text'; inp.placeholder=_L('Filtrer…');
     inp.value=capTableColFilters[colKey]||'';
+    inp.dataset.col=colKey;
     inp.onclick=ev=>ev.stopPropagation();
-    inp.oninput=()=>{ capTableColFilters[colKey]=inp.value; capPage=0; capRenderTableBodyOnly(); };
+    // L'en-tête est reconstruit à chaque frappe : le champ recréé de la même colonne reprend le focus et le curseur
+    inp.oninput=()=>{ capTableColFilters[colKey]=inp.value; capPage=0; const p=inp.selectionStart; capRenderTableBodyOnly();
+      const ni=[...document.querySelectorAll('#cap-table-head .cap-filter-row input')].find(x=>x.dataset.col===colKey);
+      if(ni){ ni.focus(); ni.setSelectionRange(p,p); } };
     th.appendChild(inp);
     frow.appendChild(th);
   });
