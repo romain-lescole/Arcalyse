@@ -89,8 +89,11 @@ function capOpenDetail(id){
     });
   }
 
-  document.getElementById('cap-detail-content').innerHTML=html;
-  const det=document.getElementById('cap-detail');
+  // En Relation Map, le détail s'affiche dans son propre panneau à droite du graphe (06)
+  const inRm = currentMode!=='capella' && document.getElementById('rm-detail');
+  if (inRm) { S.propEl=id; _rmDetailOn=true; }
+  document.getElementById(inRm?'rm-detail-content':'cap-detail-content').innerHTML=html;
+  const det=document.getElementById(inRm?'rm-detail':'cap-detail');
   if(det){ det.style.display='flex'; }
 }
 /** Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella. */

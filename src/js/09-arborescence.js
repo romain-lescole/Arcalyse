@@ -37,8 +37,13 @@ function migratePkgsToElements() {
   MODEL.packages=[]; MODEL.pkgParent={};
 }
 
-/** Remplit le panneau Propriétés avec les attributs de l'élément sélectionné (S.propEl). */
-function buildPropertiesPanel() {
+/** Rafraîchit les propriétés de l'élément sélectionné (S.propEl) : le panneau 🔎 Détail de la
+ * Relation Map suit la sélection tant qu'il est ouvert. */
+function buildPropertiesPanel() { rmDetailFollow(); }
+
+/** Remplit #props-body (dans le panneau 🔎 Détail) avec les propriétés de l'élément sélectionné
+ * (S.propEl) : utilisé pour les éléments hors modèle Capella. */
+function rmPropsRender() {
   const body=document.getElementById('props-body');
   if (!body) return;
   body.innerHTML='';
@@ -264,7 +269,7 @@ function buildArbo() {
     if (!RM_RO) {   // lecture seule : ni glisser-déposer ni menu contextuel d'édition
       applyDnD(row, el);
       row.oncontextmenu=ev=>{ ev.preventDefault(); ev.stopPropagation(); arboShowCtxMenu(ev, el); };
-    }
+    } else row.oncontextmenu=ev=>{ ev.preventDefault(); ev.stopPropagation(); arboShowRoCtxMenu(ev, el); };
 
     const tog=document.createElement('span'); tog.className='arbo-tog';
     tog.textContent=kids.length?(coll?'▶':'▾'):'';
@@ -514,6 +519,24 @@ function arboConvertSelectedType(ids, newType){
     if(!(newType in S.typF)) S.typF[newType]=true;
     onModelChanged();
   }
+}
+
+/** Menu contextuel (clic droit) d'un élément de l'arborescence en lecture seule :
+ * 🔎 Détail et ⊙ Définir comme contexte.
+ * @param {MouseEvent} ev - Événement du clic droit (position du menu)
+ * @param {object} el - Élément du modèle visé
+ */
+function arboShowRoCtxMenu(ev, el){
+  const menu=document.getElementById('arbo-ctx-menu'); if(!menu) return;
+  menu.innerHTML='';
+  const item=(txt, fn)=>{ const it=document.createElement('div'); it.className='acm-item'; it.textContent=txt;
+    it.onclick=()=>{ menu.style.display='none'; fn(); }; menu.appendChild(it); };
+  item(_L('🔎 Détail'), ()=>rmDetailOpen(el.id));
+  if (el.type!=='Package' && !el._capChain) item(_L('⊙ Définir comme contexte'), ()=>setCtx(el.id));
+  menu.style.display='block';
+  const mw=menu.offsetWidth||180, mh=menu.offsetHeight||60;
+  menu.style.left=Math.min(ev.clientX, window.innerWidth-mw-8)+'px';
+  menu.style.top=Math.min(ev.clientY, window.innerHeight-mh-8)+'px';
 }
 
 /** Affiche le menu contextuel (clic droit) d'un élément de l'arborescence.

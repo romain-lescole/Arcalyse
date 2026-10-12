@@ -53,7 +53,7 @@
 - `renderChainView` (l. 27) — Rendu de la vue chaîne : disposition en couches (capChainLayout) orientée selon la disposition choisie
 - `rmHighlight` (l. 126) — Met en évidence un nœud et ses voisins directs (les autres sont estompés) ; null pour tout rétablir.
 
-## 06-rm-interactions-export.js — 475 lignes
+## 06-rm-interactions-export.js — 512 lignes
 
 - `toggleNode` (l. 7) — Ouvre/ferme un nœud (affiche/masque ses enfants dans le graphe). @param node Nœud D3
 - `expandAllNodes` (l. 14) — Développe récursivement tous les nœuds à partir de `node`.
@@ -66,19 +66,22 @@
 - `hideTip` (l. 95) — Masque l'infobulle flottante du graphe.
 - `showCtxMenu` (l. 100) — Affiche le menu contextuel (clic droit) sur un nœud du graphe.
 - `hideCtxMenu` (l. 107) — Masque le menu contextuel du graphe.
-- `positionFloat` (l. 151) — Positionne le panneau flottant d'édition près du curseur.
-- `showFloatEdit` (l. 163) — Affiche le formulaire d'édition inline d'un élément existant.
-- `showFloatRelation` (l. 189) — Affiche le formulaire de création d'une relation depuis un élément source.
-- `showFloatNewChild` (l. 220) — Affiche le formulaire de création d'un élément enfant.
-- `showFloatNewElement` (l. 259) — Affiche le formulaire de création d'un nouvel élément.
-- `getContentBounds` (l. 297) — Calcule les dimensions réelles du contenu SVG (bounding box de tous les nœuds).
-- `openExportModal` (l. 322) — Ouvre le modal d'export image. @param {string} format - 'png'|'jpeg'|'svg'
-- `updateExportInfo` (l. 331) — Met à jour le libellé d'information affiché dans le menu Export (dimensions/format prévus).
-- `exportContent` (l. 362) — Exporte le graphe en image. Gère PNG (canvas), JPEG (canvas) et SVG (inline).
-- `updateLegend` (l. 432) — Met à jour la légende des types et relations affichée dans le panneau gauche.
-- `updateInfo` (l. 452) — Met à jour le compteur d'éléments/relations affiché en bas du panneau.
-- `typSelectAll` (l. 463) — Coche ou décoche tous les filtres de types d'éléments du panneau gauche.
-- `relSelectAll` (l. 471) — Coche ou décoche tous les filtres de types de relations du panneau gauche.
+- `positionFloat` (l. 153) — Positionne le panneau flottant d'édition près du curseur.
+- `showFloatEdit` (l. 165) — Affiche le formulaire d'édition inline d'un élément existant.
+- `showFloatRelation` (l. 191) — Affiche le formulaire de création d'une relation depuis un élément source.
+- `showFloatNewChild` (l. 222) — Affiche le formulaire de création d'un élément enfant.
+- `showFloatNewElement` (l. 261) — Affiche le formulaire de création d'un nouvel élément.
+- `getContentBounds` (l. 299) — Calcule les dimensions réelles du contenu SVG (bounding box de tous les nœuds).
+- `openExportModal` (l. 324) — Ouvre le modal d'export image. @param {string} format - 'png'|'jpeg'|'svg'
+- `updateExportInfo` (l. 333) — Met à jour le libellé d'information affiché dans le menu Export (dimensions/format prévus).
+- `exportContent` (l. 364) — Exporte le graphe en image. Gère PNG (canvas), JPEG (canvas) et SVG (inline).
+- `updateLegend` (l. 435) — Met à jour la légende du graphe : seulement les relations réellement affichées, avec leur
+- `rmDetailOpen` (l. 469) — Ouvre le panneau de détail de la Relation Map sur un élément : détail Capella complet
+- `rmDetailClose` (l. 478) — Ferme le panneau de détail de la Relation Map.
+- `rmDetailFollow` (l. 483) — Le panneau de détail suit la sélection (S.propEl) tant qu'il est ouvert, en Relation Map.
+- `updateInfo` (l. 489) — Met à jour le compteur d'éléments/relations affiché en bas du panneau.
+- `typSelectAll` (l. 500) — Coche ou décoche tous les filtres de types d'éléments du panneau gauche.
+- `relSelectAll` (l. 508) — Coche ou décoche tous les filtres de types de relations du panneau gauche.
 
 ## 07-rm-panneau-criteres.js — 253 lignes
 
@@ -102,37 +105,40 @@
 - `showEditTypeForm` (l. 481) — Affiche un mini-formulaire inline dans la section "Types d'éléments"
 - `showNewTypeForm` (l. 530) — Affiche le formulaire de création d'un nouveau type d'élément.
 
-## 09-arborescence.js — 712 lignes
+## 09-arborescence.js — 735 lignes
 
 - `typeIcon` (l. 5) — Retourne l'icône associée à un type d'élément (définie dans TCFG). @param {string} t
 - `migratePkgsToElements` (l. 11) — Migre l'ancien format packages[] vers le nouveau format elements[] avec type='Package'.
-- `buildPropertiesPanel` (l. 41) — Remplit le panneau Propriétés avec les attributs de l'élément sélectionné (S.propEl).
-- `_arboInlineRename` (l. 171) — Active le renommage en place d'un nœud de l'arborescence (Entrée valide, Échap annule).
-- `buildArbo` (l. 186) — Construit l'arborescence gauche à partir de MODEL.elements.
-- `arboExpandAll` (l. 366) — Développe tous les nœuds de l'arborescence gauche.
-- `arboCollapseAll` (l. 369) — Réduit tous les nœuds de l'arborescence gauche au premier niveau.
-- `arboRenameEl` (l. 375) — Renomme un élément dans MODEL et met à jour l'arbo et le graphe.
-- `arboAddPkg` (l. 386) — Crée un nouveau package (type='Package') enfant d'un élément existant.
-- `arboAddEl` (l. 400) — Crée un nouvel élément enfant dans l'arborescence.
-- `arboDeleteEl` (l. 415) — Supprime un élément et toutes ses relations de MODEL, puis met à jour l'UI.
-- `arboClearMultiSel` (l. 433) — Vide la sélection multiple de l'arborescence et met à jour l'affichage.
-- `arboUpdateMselBar` (l. 436) — Met à jour la barre de compteur de sélection multiple sous l'en-tête Arborescence.
-- `arboMoveEls` (l. 448) — Déplace un GROUPE d'éléments vers un nouvel owner en conservant la hiérarchie interne :
-- `arboParseClipboardList` (l. 476) — Découpe un texte de presse-papier en liste de noms : une ligne = un élément.
-- `arboPasteListInto` (l. 484) — Crée une liste d'éléments enfants sous un owner (un nom par ligne du presse-papier).
-- `arboConvertSelectedType` (l. 504) — Change le type de tous les éléments d'un ensemble d'ids (hors packages).
-- `arboShowCtxMenu` (l. 523) — Affiche le menu contextuel (clic droit) d'un élément de l'arborescence.
-- `arboMoveEl` (l. 646) — Déplace un élément unique vers un nouvel owner par glisser-déposer : met à jour
-- `rmSetElemVal` (l. 672) — Écrit une valeur dans un champ d'un élément du modèle de la Relation Map (nom, type, parent,
-- `onModelChanged` (l. 708) — Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel.
+- `buildPropertiesPanel` (l. 42) — Rafraîchit les propriétés de l'élément sélectionné (S.propEl) : le panneau 🔎 Détail de la
+- `rmPropsRender` (l. 46) — Remplit #props-body (dans le panneau 🔎 Détail) avec les propriétés de l'élément sélectionné
+- `_arboInlineRename` (l. 176) — Active le renommage en place d'un nœud de l'arborescence (Entrée valide, Échap annule).
+- `buildArbo` (l. 191) — Construit l'arborescence gauche à partir de MODEL.elements.
+- `arboExpandAll` (l. 371) — Développe tous les nœuds de l'arborescence gauche.
+- `arboCollapseAll` (l. 374) — Réduit tous les nœuds de l'arborescence gauche au premier niveau.
+- `arboRenameEl` (l. 380) — Renomme un élément dans MODEL et met à jour l'arbo et le graphe.
+- `arboAddPkg` (l. 391) — Crée un nouveau package (type='Package') enfant d'un élément existant.
+- `arboAddEl` (l. 405) — Crée un nouvel élément enfant dans l'arborescence.
+- `arboDeleteEl` (l. 420) — Supprime un élément et toutes ses relations de MODEL, puis met à jour l'UI.
+- `arboClearMultiSel` (l. 438) — Vide la sélection multiple de l'arborescence et met à jour l'affichage.
+- `arboUpdateMselBar` (l. 441) — Met à jour la barre de compteur de sélection multiple sous l'en-tête Arborescence.
+- `arboMoveEls` (l. 453) — Déplace un GROUPE d'éléments vers un nouvel owner en conservant la hiérarchie interne :
+- `arboParseClipboardList` (l. 481) — Découpe un texte de presse-papier en liste de noms : une ligne = un élément.
+- `arboPasteListInto` (l. 489) — Crée une liste d'éléments enfants sous un owner (un nom par ligne du presse-papier).
+- `arboConvertSelectedType` (l. 509) — Change le type de tous les éléments d'un ensemble d'ids (hors packages).
+- `arboShowRoCtxMenu` (l. 529) — Menu contextuel (clic droit) d'un élément de l'arborescence en lecture seule :
+- `arboShowCtxMenu` (l. 546) — Affiche le menu contextuel (clic droit) d'un élément de l'arborescence.
+- `arboMoveEl` (l. 669) — Déplace un élément unique vers un nouvel owner par glisser-déposer : met à jour
+- `rmSetElemVal` (l. 695) — Écrit une valeur dans un champ d'un élément du modèle de la Relation Map (nom, type, parent,
+- `onModelChanged` (l. 731) — Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel.
 
-## 11-sauvegarde-toolbar-init.js — 263 lignes
+## 11-sauvegarde-toolbar-init.js — 272 lignes
 
 - `saveJSON` (l. 5) — Sérialise MODEL, RCFG, TCFG et S en JSON et télécharge le fichier.
 - `loadJSON` (l. 19) — Charge un fichier JSON et restaure l'état complet de l'application.
 - `applyDepth` (l. 106) — Applique la profondeur d'exploration du graphe (bornée entre 1 et 10),
-- `openHelpModal` (l. 149) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
-- `positionOverlay` (l. 245) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
+- `rmLayoutLabel` (l. 118) — Affiche la disposition courante (S.layout) sur le bouton du menu Disposition de la barre 2.
+- `openHelpModal` (l. 158) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
+- `positionOverlay` (l. 254) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
 
 ## 20-capella-chargement.js — 824 lignes
 
@@ -279,13 +285,13 @@
 - `capChainExportRefreshCount` (l. 540) — Met à jour le compteur de sélection et la case « Tout » sans re-rendre les cartes (garde les cartes ouvertes).
 - `capRenderChainMap` (l. 551) — Rend la sous-vue « Relation Map » : liste des chaînes groupée par catégorie ARCADIA à gauche,
 
-## 25-panneau-detail.js — 189 lignes
+## 25-panneau-detail.js — 192 lignes
 
 - `capOpenDetail` (l. 5) — Ouvre le panneau de détail (colonne droite de l'overlay) pour un élément Capella.
-- `capOpenDetailNode` (l. 97) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
-- `CAP_ELEM_VIEWS` (l. 105)
-- `capUpdateToolbarForView` (l. 111) — Met à jour les boutons actifs et les groupes de contrôles visibles
-- `capShowView` (l. 143) — Affiche une vue Capella (bascule en mode capella si besoin).
+- `capOpenDetailNode` (l. 100) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
+- `CAP_ELEM_VIEWS` (l. 108)
+- `capUpdateToolbarForView` (l. 114) — Met à jour les boutons actifs et les groupes de contrôles visibles
+- `capShowView` (l. 146) — Affiche une vue Capella (bascule en mode capella si besoin).
 
 ## 26-rapports-html.js — 101 lignes
 
@@ -524,7 +530,7 @@
 - `capTfFilter` (l. 127) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
 - `capTfWatch` (l. 149) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
 
-## 43-visite-guidee.js — 450 lignes
+## 43-visite-guidee.js — 448 lignes
 
 - `CAP_TOUR_STEPS` (l. 12) — Étapes de la visite générale : s = sélecteur CSS de la zone (toutes les correspondances visibles sont encadrées
 - `CAP_TOUR_EXPLORE` (l. 57) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
@@ -532,23 +538,23 @@
 - `CAP_TOUR_ANA_TXT` (l. 75) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
 - `capTourRmCtx` (l. 88) — Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
 - `CAP_TOUR_VIEWS` (l. 102) — Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
-- `CAP_TOUR_START` (l. 243) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
-- `CAP_TOUR_AFTER` (l. 256) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
-- `capTourCtxKey` (l. 273) — Clé de la vue affichée pour les visites contextuelles.
-- `capTourCtx` (l. 281) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
-- `capTourEls` (l. 289) — Éléments affichés désignés par le sélecteur d'une étape.
-- `capTourVisible` (l. 300) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
-- `capTourStart` (l. 310) — Lance une visite guidée depuis sa première étape.
-- `capTourStartView` (l. 331) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
-- `capTourGo` (l. 339) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
-- `capTourPos` (l. 359) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
-- `capTourRenderPop` (l. 366) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
-- `capTourPlace` (l. 378) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
-- `capTourKey` (l. 410) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
-- `capTourEnd` (l. 419) — Quitte la visite guidée et retire la mise en évidence.
-- `capTourHelpMenu` (l. 426) — Ouvre le menu ? Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
-- `capTourStartHere` (l. 433) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
-- `capTourResumeAfterLoad` (l. 440) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
+- `CAP_TOUR_START` (l. 241) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
+- `CAP_TOUR_AFTER` (l. 254) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
+- `capTourCtxKey` (l. 271) — Clé de la vue affichée pour les visites contextuelles.
+- `capTourCtx` (l. 279) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
+- `capTourEls` (l. 287) — Éléments affichés désignés par le sélecteur d'une étape.
+- `capTourVisible` (l. 298) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
+- `capTourStart` (l. 308) — Lance une visite guidée depuis sa première étape.
+- `capTourStartView` (l. 329) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
+- `capTourGo` (l. 337) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
+- `capTourPos` (l. 357) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
+- `capTourRenderPop` (l. 364) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
+- `capTourPlace` (l. 376) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
+- `capTourKey` (l. 408) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
+- `capTourEnd` (l. 417) — Quitte la visite guidée et retire la mise en évidence.
+- `capTourHelpMenu` (l. 424) — Ouvre le menu ? Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
+- `capTourStartHere` (l. 431) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
+- `capTourResumeAfterLoad` (l. 438) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
 
 ## 44-functional-exchange.js — 512 lignes
 

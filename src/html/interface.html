@@ -54,6 +54,22 @@
   <div class="tbtn" id="b-ea">↓ Ouvrir tout</div>
   <div class="tbtn" id="b-ca">↑ Fermer tout</div>
   <div class="tsep"></div>
+  <span class="tb-grp" id="rm-tb-depth" title="Profondeur de voisinage (1 à 10)"><span class="tb-grp-l">Profondeur</span>
+    <div class="tbtn" id="b-dm" style="padding:2px 7px">−</div>
+    <input class="inp" type="number" id="dep-inp" min="1" max="10" value="3" style="width:44px;text-align:center;padding:2px 4px">
+    <div class="tbtn" id="b-dp" style="padding:2px 7px">+</div>
+  </span>
+  <div style="position:relative;" id="b-lay-wrap">
+    <div class="tbtn" id="b-lay-menu" title="Disposition du graphe">→ LR ▾</div>
+    <div id="b-lay-dd" class="rm-dd">
+      <div class="ctx-i lbtn active" data-l="LR">→ LR — de gauche à droite</div>
+      <div class="ctx-i lbtn" data-l="TB">↓ TB — de haut en bas</div>
+      <div class="ctx-i lbtn" data-l="RL">← RL — de droite à gauche</div>
+      <div class="ctx-i lbtn" data-l="radial">◉ Radiale</div>
+      <div class="ctx-i lbtn" data-l="zigzag" title="Zigzag 7:3 — séquence en grille">⚡ Zigzag</div>
+    </div>
+  </div>
+  <div class="tsep"></div>
   <div class="tbtn" id="b-num"># Nums</div>
   <div class="tbtn active" id="b-leg">◉ Légende</div>
   <div class="tbtn active" id="b-rln">⌁ Relations</div>
@@ -119,28 +135,9 @@
                       border-radius:6px;color:var(--c-text);font-size:11px;outline:none;box-sizing:border-box;"
                oninput="buildArbo()">
       </div>
-      <div class="sec-body" id="arbo-body" style="padding:4px 6px;max-height:45vh;overflow-y:auto"></div>
+      <div class="sec-body" id="arbo-body" style="padding:4px 6px;overflow-y:auto"></div>
     </div>
     <div id="arbo-ctx-menu"></div>
-    <div class="sec" id="sec-disposition">
-      <div class="sec-hdr"><span>Disposition &amp; Profondeur</span><span class="chv">▾</span></div>
-      <div class="sec-body">
-        <div style="font-size:11px;color:var(--c-dim);margin-bottom:3px">Profondeur</div>
-        <div class="depth-row">
-          <div class="tbtn" id="b-dm" style="padding:3px 8px">−</div>
-          <input class="inp" type="number" id="dep-inp" min="1" max="10" value="3">
-          <div class="tbtn" id="b-dp" style="padding:3px 8px">+</div>
-        </div>
-        <div style="font-size:11px;color:var(--c-dim);margin:10px 0 3px">Disposition</div>
-        <div class="layout-row">
-          <div class="lbtn active" data-l="LR">→ LR</div>
-          <div class="lbtn" data-l="TB">↓ TB</div>
-          <div class="lbtn" data-l="RL">← RL</div>
-          <div class="lbtn" data-l="radial">◉ Rad</div>
-          <div class="lbtn" data-l="zigzag" title="Zigzag 7:3 — séquence en grille">⚡ Zig</div>
-        </div>
-      </div>
-    </div>
     <div class="sec" style="display:none">
       <div class="sec-hdr"><span>Contexte</span><span class="chv">▾</span></div>
       <div class="sec-body">
@@ -177,10 +174,6 @@
       <div class="sec-hdr"><span>Portée (Paquetages)</span><span class="chv">▾</span></div>
       <div class="sec-body" id="scp-body"></div>
     </div>
-    <div class="sec" id="sec-props">
-      <div class="sec-hdr"><span>Propriétés</span><span class="chv">▾</span></div>
-      <div class="sec-body" id="props-body" style="padding:6px 8px"></div>
-    </div>
     </div><!-- /panel-inner -->
   </div><!-- /panel -->
   <div id="panel-resize-bar"></div>
@@ -195,7 +188,12 @@
         <g id="g-nodes"></g>
       </g>
     </svg>
-    <div id="legend"><h3>Légende</h3><div id="leg-body"></div></div>
+    <div id="legend"><h3 id="leg-hdr" title="Replier / déplier la légende"><span id="leg-title">Légende</span><span class="chv">▾</span></h3><div id="leg-body"></div></div>
+  </div>
+  <!-- Panneau de détail de la Relation Map (clic droit › 🔎 Détail) -->
+  <div id="rm-detail" style="display:none">
+    <button id="rm-detail-close" type="button" title="Fermer le détail">×</button>
+    <div id="rm-detail-content"></div>
   </div>
 </div><!-- /main -->
 
@@ -206,6 +204,8 @@
 
 <!-- ════════════════════════  MENU CONTEXTUEL  ════════════════════════ -->
 <div id="ctxmenu">
+  <div class="ctx-i" id="cx-detail">🔎 Détail</div>
+  <div class="ctx-s"></div>
   <div class="ctx-i" id="cx-edit">✏ Modifier l'élément</div>
   <div class="ctx-i" id="cx-new-rel">→ Créer une relation vers…</div>
   <div class="ctx-i" id="cx-new-child">✦ Créer un élément enfant</div>

@@ -42,7 +42,7 @@ function loadJSON(file) {
       S.pkgF=Object.fromEntries(MODEL.elements.filter(e=>e.type==='Package').map(e=>[e.name,true]));
       S.hidden.clear();
       document.getElementById('dep-inp').value=S.depth;
-      document.querySelectorAll('.lbtn').forEach(b=>b.classList.toggle('active',b.dataset.l===S.layout));
+      document.querySelectorAll('.lbtn').forEach(b=>b.classList.toggle('active',b.dataset.l===S.layout)); rmLayoutLabel();
       onModelChanged();
     } catch(err){ alert(_L('Erreur : ')+err.message); }
   };
@@ -110,8 +110,17 @@ document.getElementById('dep-inp').onchange= ev=>applyDepth(parseInt(ev.target.v
 
 document.querySelectorAll('.lbtn').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('.lbtn').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active'); S.layout=b.dataset.l; render(); setTimeout(()=>fitView(true),80);
+  b.classList.add('active'); S.layout=b.dataset.l; rmLayoutLabel();
+  document.getElementById('b-lay-dd').classList.remove('open');
+  render(); setTimeout(()=>fitView(true),80);
 });
+/** Affiche la disposition courante (S.layout) sur le bouton du menu Disposition de la barre 2. */
+function rmLayoutLabel(){
+  const b=document.getElementById('b-lay-menu'); if(!b) return;
+  b.textContent={LR:'→ LR', TB:'↓ TB', RL:'← RL', radial:_L('◉ Radiale'), zigzag:_L('⚡ Zigzag')}[S.layout]+' ▾';
+}
+document.getElementById('b-lay-menu').onclick=ev=>{ ev.stopPropagation(); document.getElementById('b-lay-dd').classList.toggle('open'); };
+document.addEventListener('click', ev=>{ if(!ev.target.closest('#b-lay-wrap')) document.getElementById('b-lay-dd').classList.remove('open'); });
 
 // Sélecteur de mode
 // Mode buttons wiring

@@ -109,7 +109,9 @@ document.addEventListener('click', hideCtxMenu);
 
 // ── Gestionnaires menu contextuel ──
 // Lecture seule (RM_RO, 01) : les commandes de modification du modèle sont masquées (et leur séparateur)
-if (RM_RO) ['cx-edit','cx-new-rel','cx-new-child'].forEach(id=>{ const el=document.getElementById(id); if(el){ el.style.display='none'; const s=el.parentElement&&el.parentElement.querySelector('.ctx-s'); if(s) s.style.display='none'; } });
+if (RM_RO) { ['cx-edit','cx-new-rel','cx-new-child'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='none'; });
+  const s=document.getElementById('cx-new-child')?.nextElementSibling; if(s&&s.classList.contains('ctx-s')) s.style.display='none'; }
+document.getElementById('cx-detail').onclick   = ()=>{ if(ctxNode) rmDetailOpen(ctxNode.eid); };
 document.getElementById('cx-ctx').onclick      = ()=>{ if(ctxNode) setCtx(ctxNode.eid); };
 document.getElementById('cx-exp').onclick      = ()=>{ if(ctxNode&&!ctxNode.children?.length) toggleNode(ctxNode); };
 document.getElementById('cx-col').onclick      = ()=>{ if(ctxNode?.children?.length) toggleNode(ctxNode); };
@@ -428,10 +430,14 @@ function exportContent(format, dpi=2) {
 /* ═══════════════════════════════════════════════════════════════════════
    15. LÉGENDE & BARRE D'INFO
    ═══════════════════════════════════════════════════════════════════════ */
-/** Met à jour la légende des types et relations affichée dans le panneau gauche. */
+/** Met à jour la légende du graphe : seulement les relations réellement affichées, avec leur
+ * nombre (les plus fréquentes d'abord). Le titre replie ou déplie la légende (S.legColl). */
 function updateLegend() {
   const c=document.getElementById('leg-body'); c.innerHTML='';
-  Object.entries(RCFG).filter(([t])=>S.relF[t]).forEach(([t,cfg])=>{
+  const cnt={};
+  if (!S.chainView && d3Root) d3Root.links().forEach(l=>{ const r=l.target.data.pRel; if(r) cnt[r.type]=(cnt[r.type]||0)+1; });
+  const types=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]);
+  types.map(t=>[t, RCFG[t]||{color:'#7f849c'}]).forEach(([t,cfg])=>{
     const item=document.createElement('div'); item.className='leg-item';
     const s=document.createElementNS('http://www.w3.org/2000/svg','svg');
     s.setAttribute('width','28'); s.setAttribute('height','12');
@@ -443,10 +449,41 @@ function updateLegend() {
     const sp=document.createElement('span');
     sp.textContent = cfg.label || t; // nom humain si défini (relations Capella), sinon clé technique
     if (cfg.label) sp.title = t; // tooltip = nom technique réel
-    item.appendChild(s); item.appendChild(sp); c.appendChild(item);
+    const n=document.createElement('span'); n.className='leg-n'; n.textContent=cnt[t];
+    item.appendChild(s); item.appendChild(sp); item.appendChild(n); c.appendChild(item);
   });
-  document.getElementById('legend').style.display=S.showLegend?'':'none';
+  if (!types.length) { const e=document.createElement('div'); e.className='leg-empty'; e.textContent=S.chainView?_L('Vue chaîne : les arêtes sont les échanges.'):_L('Aucune relation affichée.'); c.appendChild(e); }
+  document.getElementById('leg-title').textContent=_L(`Légende (${types.length})`);
+  const lg=document.getElementById('legend');
+  lg.classList.toggle('leg-coll', !!S.legColl);
+  lg.style.display=S.showLegend?'':'none';
 }
+document.getElementById('leg-hdr').onclick=()=>{ S.legColl=!S.legColl; updateLegend(); };
+
+/* ── Panneau 🔎 Détail de la Relation Map (à droite) ── */
+let _rmDetailOn=false; // le panneau a été ouvert (clic droit › Détail) et pas refermé
+/** Ouvre le panneau de détail de la Relation Map sur un élément : détail Capella complet
+ * (comme dans les vues Capella) ou, pour un élément hors modèle Capella, ses propriétés.
+ * @param {string} id - Identifiant de l'élément
+ */
+function rmDetailOpen(id){
+  const det=document.getElementById('rm-detail'), box=document.getElementById('rm-detail-content');
+  if (!id || !det || !box) return;
+  S.propEl=id; _rmDetailOn=true;
+  if (capGetElementById_(id)) { capOpenDetail(id); return; }
+  box.innerHTML='<div id="props-body"></div>'; rmPropsRender();
+  det.style.display='flex';
+}
+/** Ferme le panneau de détail de la Relation Map. */
+function rmDetailClose(){
+  _rmDetailOn=false;
+  const det=document.getElementById('rm-detail'); if (det) det.style.display='none';
+}
+/** Le panneau de détail suit la sélection (S.propEl) tant qu'il est ouvert, en Relation Map. */
+function rmDetailFollow(){
+  if (_rmDetailOn && S.propEl && currentMode!=='capella') rmDetailOpen(S.propEl);
+}
+document.getElementById('rm-detail-close').onclick=rmDetailClose;
 
 /** Met à jour le compteur d'éléments/relations affiché en bas du panneau. */
 function updateInfo() {

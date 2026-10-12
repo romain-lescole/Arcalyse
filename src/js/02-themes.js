@@ -273,8 +273,8 @@ function applyMode(mode) {
   document.getElementById('graph').style.display         = isGraph ? '' : 'none';
   const capOv = document.getElementById('capella-overlay');
   if(capOv) { if(isCapella) capOv.classList.add('cap-visible'); else capOv.classList.remove('cap-visible'); }
-  document.getElementById('sec-disposition').style.display = isCapella ? 'none' : '';
-  document.querySelector('#sec-props .sec-hdr')?.classList.toggle('coll', isCapella);
+  // Panneau 🔎 Détail de la Relation Map : masqué dans les vues Capella, rouvert au retour s'il l'était
+  const rmDet=document.getElementById('rm-detail'); if(rmDet) rmDet.style.display = (!isCapella && _rmDetailOn) ? 'flex' : 'none';
   document.querySelector('#sec-typ .sec-hdr')?.classList.toggle('coll', !isCapella);
   // Hide whole left panel in capella mode
   document.getElementById('panel').style.display = isCapella ? 'none' : '';

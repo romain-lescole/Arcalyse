@@ -73,8 +73,10 @@
         <table class="hp-t">
           <tr><td>＋ / － / ⊡ Fit</td><td>Zoom in, zoom out, fit to window.</td></tr>
           <tr><td>↓ Open all / ↑ Close all</td><td>Expands or collapses all the graph nodes.</td></tr>
+          <tr><td>Depth − n +</td><td>Neighbourhood depth around the context element (1 to 10).</td></tr>
+          <tr><td>→ LR ▾ (layout)</td><td>Graph layout menu: → LR, ↓ TB, ← RL, ◉ radial, ⚡ zigzag (for reading sequences); the button shows the current layout.</td></tr>
           <tr><td># Nums</td><td>Numbers on the relations.</td></tr>
-          <tr><td>◉ Legend</td><td>Legend of the types and relations.</td></tr>
+          <tr><td>◉ Legend</td><td>Shows or hides the legend: only the relations present in the displayed graph, with their count; a click on its title collapses it.</td></tr>
           <tr><td>⌁ Relations</td><td>Relation names on the edges.</td></tr>
           <tr><td>✂ Names</td><td>Cuts names that are too long.</td></tr>
           <tr><td>⊙ Unique</td><td>Unique display mode (when offered).</td></tr>
@@ -98,18 +100,16 @@
         <p class="hp-note">At the bottom of the window, the <b>status bar</b> recalls the context element, the number of nodes and unique elements displayed and the depth; it only appears in the Relation Map. 🎯 Tour of this view picks a context element if there is none yet, to show a graph.</p>
         <h3>Graph interactions</h3>
         <table class="hp-t">
-          <tr><td>Click on a node</td><td>Selects the element and shows its properties.</td></tr>
+          <tr><td>Click on a node</td><td>Selects the element (the 🔎 Detail panel, when open, follows the selection).</td></tr>
           <tr><td>Double-click</td><td>Makes this node the new context.</td></tr>
-          <tr><td>Right-click</td><td>Context menu: set as context, expand / collapse, hide the element.</td></tr>
+          <tr><td>Right-click</td><td>Context menu: <b>🔎 Detail</b> (panel on the right of the graph: attributes, outgoing and incoming references, requirements, owner, owned elements — clickable links; × to close it), set as context, expand / collapse, hide the element. Also in the tree: 🔎 Detail, set as context.</td></tr>
           <tr><td>Drag the background · mouse wheel</td><td>Pan and zoom.</td></tr>
         </table>
         <h3>Left panel</h3>
         <table class="hp-t">
-          <tr><td>Tree</td><td>Model elements having at least one relation, at their place in the hierarchy (chains included). Text filter with highlighting. Click = recentres the graph. Multiple selection (Ctrl/Shift). <b>Read-only</b>: the Relation Map does not modify the model — neither in the tree and 📝 Properties (renaming, adding, deleting, moving, pasting a list), nor through the right-click on the graph, nor in the criteria (new, edit or delete a type or a relation criterion). Colours and check boxes can still be set. Arcalyse is a reading and analysis tool.</td></tr>
-          <tr><td>Layout & depth</td><td>→ LR, ↓ TB, ← RL, ◉ radial, ⚡ zigzag (for reading sequences); neighbourhood depth 1 to 10.</td></tr>
+          <tr><td>Tree</td><td>Model elements having at least one relation, at their place in the hierarchy (chains included). Text filter with highlighting. Click = recentres the graph. Multiple selection (Ctrl/Shift). Takes the whole free height of the panel. <b>Read-only</b>: the Relation Map does not modify the model — neither in the tree and 🔎 Detail (renaming, adding, deleting, moving, pasting a list), nor through the right-click on the graph, nor in the criteria (new, edit or delete a type or a relation criterion). Colours and check boxes can still be set. Arcalyse is a reading and analysis tool.</td></tr>
           <tr><td>Relation criteria</td><td>Check / uncheck the displayed Capella relation types (groups can be checked as a whole).</td></tr>
           <tr><td>Element types</td><td>Filter of the displayed types, colours by ARCADIA layer.</td></tr>
-          <tr><td>Properties</td><td>Attributes of the selected element.</td></tr>
         </table>
         <h3>Showing a chain in the graph</h3>
         <p>Click a chain (⚡) in the tree, or the <b>🗺</b> button of the ⚡ Chains view: the Relation Map switches to <b>chain view</b>, which shows the complete graph — <b>several inputs, several outputs, branches and loops</b> — arranged in layers according to the chosen layout (→ LR, ↓ TB, ← RL). Blue edging = carried by an actor, green = by the system, grey = unallocated; INPUT / OUTPUT badge; edges labelled with the exchange. A banner summarises the chain; <b>✕ Leave chain</b>, a double-click on a node or a click in the tree go back to the Relation Map.</p>
