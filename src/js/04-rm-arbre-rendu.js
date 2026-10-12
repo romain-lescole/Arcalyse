@@ -5,46 +5,52 @@
    ═══════════════════════════════════════════════════════════════════════ */
 /** Construit la structure d'arbre D3 hiérarchique à partir de MODEL.elements
  * en appliquant les filtres actifs (typF, relF, ctx, depth, hidden).
+ * Parcours en largeur : un élément est d'abord rencontré à sa plus faible distance du contexte.
+ * - Relations en double (même cible, même type) fusionnées en une seule arête (relN = nombre).
+ * - ⊙ Unique (S.singleNode) : un élément n'est déployé qu'une fois ; ses autres occurrences
+ *   restent affichées, grisées et non dépliées (isRef, marqueur ↺).
  * @returns {object} Hiérarchie D3 prête au rendu
  */
 function buildTreeData() {
   uidSeq = 0;
-  const eMap      = new Map(MODEL.elements.map(e => [e.id, e]));
-  const globalSeen = new Set();
-
-  /** Construit récursivement un nœud de l'arbre de données du graphe (profondeur, ancêtres, relation parente) pour buildTreeData.
-   */
-  function makeNode(eid, depth, ancestors, parentRel) {
-    const el = eMap.get(eid);
-    if (!el || S.hidden.has(eid) || !S.typF[el.type]) return null;
-    if (S.singleNode && globalSeen.has(eid)) return null;
-    if (S.singleNode) globalSeen.add(eid);
-
-    const node = { uid:uidSeq++, eid, el, pRel:parentRel, children:[], _saved:null, hasMore:false };
-
-    // Association est bidirectionnelle ; toutes les autres relations sont dirigées (src→tgt uniquement)
-    const rels = MODEL.relations.filter(r => {
-      if (!S.relF[r.type]) return false;
-      return r.type === 'Association' ? (r.src===eid||r.tgt===eid) : r.src===eid;
+  const eMap = new Map(MODEL.elements.map(e => [e.id, e]));
+  const visible = eid => { const el=eMap.get(eid); return el && !S.hidden.has(eid) && S.typF[el.type] ? el : null; };
+  // Association est bidirectionnelle ; toutes les autres relations sont dirigées (src→tgt uniquement)
+  const nextOf = (r, eid) => r.type==='Association' ? (r.src===eid ? r.tgt : r.src) : r.tgt;
+  /** Relations sortantes actives d'un élément, regroupées par (cible, type) : [{r, next, n}]. */
+  const relsOf = eid => {
+    const groups=new Map();
+    MODEL.relations.forEach(r=>{
+      if (!S.relF[r.type]) return;
+      if (r.type==='Association' ? (r.src!==eid && r.tgt!==eid) : r.src!==eid) return;
+      const next=nextOf(r, eid), k=next+'\u0000'+r.type;
+      const g=groups.get(k); if (g) g.n++; else groups.set(k, {r, next, n:1});
     });
-    const nextOf = r => r.type==='Association' ? (r.src===eid ? r.tgt : r.src) : r.tgt;
-    const forward = rels.filter(r => !ancestors.has(nextOf(r)));
+    return [...groups.values()];
+  };
+  const mk = (eid, el, pRel, relN) => ({ uid:uidSeq++, eid, el, pRel, relN, children:[], _saved:null, hasMore:false, isRef:false });
 
+  const rootEl = visible(S.ctx); if (!rootEl) return null;
+  const root = mk(S.ctx, rootEl, null, 1);
+  const expanded = new Set();
+  const queue = [{node:root, depth:S.depth, anc:new Set([S.ctx])}];
+  for (let qi=0; qi<queue.length; qi++) {
+    const {node, depth, anc} = queue[qi];
+    if (S.singleNode && expanded.has(node.eid)) { node.isRef=true; continue; }
+    expanded.add(node.eid);
+    const forward = relsOf(node.eid).filter(x => !anc.has(x.next));
     if (depth > 0) {
-      const next = new Set([...ancestors, eid]);
-      forward.forEach(r => {
-        const c = makeNode(nextOf(r), depth-1, next, r);
-        if (c) node.children.push(c);
+      const next = new Set([...anc, node.eid]);
+      forward.forEach(x => {
+        const el=visible(x.next); if (!el) return;
+        const c=mk(x.next, el, x.r, x.n); node.children.push(c);
+        queue.push({node:c, depth:depth-1, anc:next});
       });
     } else {
-      node.hasMore = forward.some(r => {
-        const nb = eMap.get(nextOf(r));
-        return nb && S.typF[nb.type] && !S.hidden.has(nb.id);
-      });
+      node.hasMore = forward.some(x => visible(x.next));
     }
-    return node;
   }
-  return makeNode(S.ctx, S.depth, new Set([S.ctx]), null);
+  return root;
 }
 
 /** Reconstruit l'arbre D3 et redessine le graphe. Point d'entrée principal
@@ -226,7 +232,7 @@ function render() {
           .attr('pointer-events','none')
           // Priorité : nom de la relation elle-même (ex: nom du FunctionalExchange pour une
           // chaîne fonctionnelle) > nom humain du type (relations Capella) > clé technique brute
-          .text(`«${rel.name || cfg.label || rel.type}»`);
+          .text(`«${rel.name || cfg.label || rel.type}»`+(d.target.data.relN>1?` ×${d.target.data.relN}`:''));
     });
 
   // ── Nœuds ──────────────────────────────────────────────────────────────
@@ -241,6 +247,7 @@ function render() {
       const el=d.data.el;
       const tcfg=TCFG[el.type]||{color:'#7f849c',abbr:el.type.slice(0,3).toUpperCase()};
       const isSel=S.selNode===d.data.uid, isCtx=el.id===S.ctx;
+      g.attr('opacity', d.data.isRef ? .45 : null); // ↺ occurrence déjà déployée ailleurs (⊙ Unique)
 
       // ── Label & lignes de texte ───────────────────────────────────────
       let label=el.name;
@@ -309,13 +316,21 @@ function render() {
             .attr('font-size',9).attr('pointer-events','none').text('•••');
       }
 
+      if (d.data.isRef)
+        g.append('text').attr('x',4).attr('y',H_N-4).attr('fill',S.compact?'rgba(0,0,0,0.6)':C.dim)
+          .attr('font-size',S.compact?9:11).attr('font-weight',700).attr('pointer-events','none').text('↺');
+
       // Zone de capture des événements (taille fixe W_N × H_N)
       g.append('rect').attr('width',W_N).attr('height',H_N).attr('rx',5)
         .attr('fill','transparent')
-        .on('mouseenter', ev=>{ showTip(ev,el); rmHighlight(d.data.uid,false); })
+        .on('mouseenter', ev=>{ showTip(ev,el,d.data.isRef?_L('↺ déjà déployé ailleurs — clic : aller à la première occurrence'):''); rmHighlight(d.data.uid,false); })
         .on('mousemove',  ev=>moveTip(ev))
         .on('mouseleave', ()=>{ hideTip(); rmHighlight(null,false); })
-        .on('click',       ev=>{ ev.stopPropagation(); S.selNode=d.data.uid; S.propEl=el.id; buildPropertiesPanel(); render(); })
+        .on('click',       ev=>{ ev.stopPropagation();
+          // ↺ : sélectionne la première occurrence (celle qui est déployée) et centre la vue dessus
+          const first = d.data.isRef ? allNodes.find(n=>n.data.eid===el.id && !n.data.isRef) : null;
+          S.selNode=(first||d).data.uid; S.propEl=el.id; buildPropertiesPanel(); render();
+          if (first) svg.transition().duration(400).call(zoomBeh.translateTo, nx(first), ny(first)); })
         .on('dblclick',    ev=>{ ev.stopPropagation(); setCtx(el.id); })
         .on('contextmenu', ev=>{ ev.preventDefault();  showCtxMenu(ev,d.data); });
 

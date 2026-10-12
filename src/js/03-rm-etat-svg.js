@@ -10,7 +10,7 @@ const S = {
   showRelNames: true,
   cutNames:   false,   // noms complets par défaut (retour à la ligne sur 3 lignes) ; ✂ Noms pour couper
   cutLen:     16,
-  singleNode: false,
+  singleNode: true,   // ⊙ Unique : chaque élément déployé une seule fois (autres occurrences ↺)
   compact:    false,
   relF: Object.fromEntries(Object.keys(RCFG).map(t => [t, true])),
   typF: Object.fromEntries(Object.keys(TCFG).map(t => [t, true])),

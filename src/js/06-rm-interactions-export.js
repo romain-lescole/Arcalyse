@@ -82,9 +82,9 @@ function layoutFns() {
    ═══════════════════════════════════════════════════════════════════════ */
 const tipEl=document.getElementById('tip');
 /** Affiche l'infobulle de survol d'un nœud. @param ev MouseEvent @param el Élément MODEL */
-function showTip(ev,el){
+function showTip(ev,el,note){
   document.getElementById('tt-n').textContent=el.name;
-  document.getElementById('tt-s').textContent=[(TCFG[el.type]||{}).label||el.type, el.pkg].filter(Boolean).join('  ·  ');
+  document.getElementById('tt-s').textContent=[(TCFG[el.type]||{}).label||el.type, el.pkg, note].filter(Boolean).join('  ·  ');
   tipEl.style.display='block'; moveTip(ev);
 }
 /** Repositionne l'infobulle flottante à la position du curseur lors du survol.

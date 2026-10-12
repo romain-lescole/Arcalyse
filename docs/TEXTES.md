@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 3493 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 3494 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -297,9 +297,10 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 68 | px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif | (inchangé, hors _L) |
-| 238 | translate( | (inchangé, hors _L) |
-| 325 | translate( | (inchangé, hors _L) |
+| 74 | px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif | (inchangé, hors _L) |
+| 244 | translate( | (inchangé, hors _L) |
+| 326 | ↺ déjà déployé ailleurs — clic : aller à la première occurrence | ↺ already expanded elsewhere — click: go to the first occurrence |
+| 340 | translate( | (inchangé, hors _L) |
 
 ## js/05-rm-vue-chaine.js
 
@@ -2766,9 +2767,9 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 106 | ＋ / － zooment (Ctrl++ / Ctrl+-), ⊡ Fit ajuste le graphe à la fenêtre (Ctrl+W). La molette zoome aussi et le fond se déplace à la souris. | ＋ / － zoom (Ctrl++ / Ctrl+-), ⊡ Fit fits the graph to the window (Ctrl+W). The mouse wheel also zooms and the background can be dragged with the mouse. |
 | 107 | ↕ Ouvrir / fermer tout | ↕ Open / close all |
 | 108 | Déplie ou replie tous les nœuds du graphe d'un coup. | Expands or collapses all the graph nodes in one go. |
-| 109 | #b-num,#b-leg,#b-rln,#b-cut,#b-compact | (inchangé, hors _L) |
+| 109 | #b-num,#b-leg,#b-rln,#b-cut,#b-single,#b-compact | (inchangé, hors _L) |
 | 109 | 👁 Affichage | 👁 Display |
-| 110 | # Nums numérote les relations, ◉ Légende affiche la légende, ⌁ Relations écrit le nom des relations sur les arêtes, ✂ Noms coupe les noms longs, ⬡ Compact réduit les nœuds. | # Nums numbers the relations, ◉ Legend shows the legend, ⌁ Relations writes the relation names on the edges, ✂ Names cuts long names, ⬡ Compact shrinks the nodes. |
+| 110 | # Nums numérote les relations, ◉ Légende affiche la légende, ⌁ Relations écrit le nom des relations sur les arêtes, ✂ Noms coupe les noms longs, ⊙ Unique ne déploie chaque élément qu'une fois (autres occurrences grisées ↺), ⬡ Compact réduit les nœuds. | # Nums numbers the relations, ◉ Legend shows the legend, ⌁ Relations writes the relation names on the edges, ✂ Names cuts long names, ⊙ Single expands each element only once (other occurrences greyed out ↺), ⬡ Compact shrinks the nodes. |
 | 111 | #rm-tb-depth,#b-lay-wrap | (inchangé, hors _L) |
 | 111 | 📐 Profondeur & disposition | 📐 Depth & layout |
 | 112 | Profondeur de voisinage (1 à 10) et menu de disposition du graphe : → LR, ↓ TB, ← RL, ◉ radiale, ⚡ zigzag. | Neighbourhood depth (1 to 10) and graph layout menu: → LR, ↓ TB, ← RL, ◉ radial, ⚡ zigzag. |

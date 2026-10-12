@@ -2467,7 +2467,11 @@
   "= 🔎 Détail ; le champ filtre la liste ; ⊞ / ⊟ déplient ou replient tout.": "= 🔎 Detail; the field filters the list; ⊞ / ⊟ expand or collapse everything.",
   "sur un nœud : sélection ·": "on a node: selection ·",
   ": menu (🔎 Détail à droite, contexte, développer, réduire, masquer) ·": ": menu (🔎 Detail on the right, context, expand, collapse, hide) ·",
-  "Relations présentes dans le graphe affiché et leur nombre ; un clic sur le titre replie ou déplie la légende.": "Relations present in the displayed graph and their count; a click on the title collapses or expands the legend."
+  "Relations présentes dans le graphe affiché et leur nombre ; un clic sur le titre replie ou déplie la légende.": "Relations present in the displayed graph and their count; a click on the title collapses or expands the legend.",
+  "Chaque élément n'est déployé qu'une fois : ses autres occurrences restent grisées et repliées (↺ ; clic = aller à la première)": "Each element is expanded only once: its other occurrences stay greyed out and collapsed (↺; click = go to the first one)",
+  "↺ déjà déployé ailleurs — clic : aller à la première occurrence": "↺ already expanded elsewhere — click: go to the first occurrence",
+  "⊙ Unique": "⊙ Single",
+  "ne déploie chaque élément qu'une fois (autres occurrences grisées ↺),": "expands each element only once (other occurrences greyed out ↺),"
  },
  "interface": {
   "🌳 Arborescence": "🌳 Tree",

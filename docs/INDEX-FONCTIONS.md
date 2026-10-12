@@ -38,14 +38,14 @@
 - `nextColor` (l. 38) — Retourne la prochaine couleur non encore utilisée dans TCFG ni RCFG.
 - `setupMarkers` (l. 66) — Crée/recrée les marqueurs SVG (flèches, diamants, cercles) pour chaque type de relation défini dans RCFG.
 
-## 04-rm-arbre-rendu.js — 339 lignes
+## 04-rm-arbre-rendu.js — 354 lignes
 
-- `buildTreeData` (l. 10) — Construit la structure d'arbre D3 hiérarchique à partir de MODEL.elements
-- `rebuildTree` (l. 53) — Reconstruit l'arbre D3 et redessine le graphe. Point d'entrée principal
-- `textW` (l. 67) — Mesure la largeur en pixels d'une chaîne de caractères dans une fonte donnée.
-- `wrapToNLines` (l. 80) — Découpe un texte en plusieurs lignes pour tenir dans une largeur max.
-- `computeNodeDims` (l. 106) — Calcule les dimensions (largeur, hauteur, lignes) d'un nœud selon son label et le mode compact.
-- `render` (l. 119) — Rendu principal D3 : calcule les positions (layout), dessine les arêtes et les nœuds.
+- `buildTreeData` (l. 14) — Construit la structure d'arbre D3 hiérarchique à partir de MODEL.elements
+- `rebuildTree` (l. 59) — Reconstruit l'arbre D3 et redessine le graphe. Point d'entrée principal
+- `textW` (l. 73) — Mesure la largeur en pixels d'une chaîne de caractères dans une fonte donnée.
+- `wrapToNLines` (l. 86) — Découpe un texte en plusieurs lignes pour tenir dans une largeur max.
+- `computeNodeDims` (l. 112) — Calcule les dimensions (largeur, hauteur, lignes) d'un nœud selon son label et le mode compact.
+- `render` (l. 125) — Rendu principal D3 : calcule les positions (layout), dessine les arêtes et les nœuds.
 
 ## 05-rm-vue-chaine.js — 137 lignes
 
