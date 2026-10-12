@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 3498 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 3520 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -61,100 +61,106 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 78 | Couper les noms longs  (infobulle) | Truncate long names |
 | 79 | ⊙ Unique | ⊙ Single |
 | 80 | ⬡ Compact | ⬡ Compact |
-| 84 | 🖼 Export ▾ | 🖼 Export ▾ |
-| 84 | Exporter image  (infobulle) | Export image |
-| 88 | 🖼 PNG | 🖼 PNG |
-| 89 | 📷 JPEG | 📷 JPEG |
-| 90 | 📐 SVG | 📐 SVG |
-| 99 | ❓ Aide | ❓ Help |
-| 99 | Aide et présentation des fonctionnalités  (infobulle) | Help and feature overview |
-| 100 | 🚀 Bien démarrer | 🚀 Getting started |
-| 100 | · ouvrir un modèle, puis trouver l'aide et les tutoriels | · open a model, then find the help and tutorials |
-| 100 | Visite guidée en deux temps : où ouvrir votre fichier .capella, puis, une fois le modèle chargé, où trouver l'aide et les tutoriels  (infobulle) | Two-step guided tour: where to open your .capella file, then, once the model is loaded, where to find the help and tutorials |
-| 101 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) | Click to browse, or drag and drop a .capella file |
-| 102 | Arcalyse | Arcalyse |
-| 102 | Votre modèle Capella, sous toutes ses coutures. | Your Capella model, inside and out. |
-| 103 | Ouvrir un modèle Capella | Open a Capella model |
-| 104 | Glissez-déposez votre fichier | Drag and drop your |
-| 104 | ou recherchez-le dans l'explorateur de fichiers. | or browse for it in the file explorer. |
-| 105 | 📂 Parcourir… | 📂 Browse… |
-| 107 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. | Accepted formats: .capella · .melodymodeller · .xml — the file is read locally, nothing is sent. |
-| 108 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités | 📖 What can be analysed? Discover the features |
-| 109 | 🎓 Visite guidée de l'interface | 🎓 Guided tour of the interface |
-| 110 | ℹ À propos | ℹ About |
-| 118 | Panneau | Panel |
-| 119 | Réduire le panneau  (infobulle) | Collapse the panel |
-| 122 | Arborescence | Tree |
-| 124 | Tout développer  (infobulle) | Expand all |
-| 126 | Tout réduire  (infobulle) | Collapse all |
-| 132 | ✕ vider | ✕ clear |
-| 132 | Vider la sélection  (infobulle) | Clear the selection |
-| 135 | 🔍 Filtrer l'arborescence…  (infobulle) | 🔍 Filter the tree… |
-| 144 | Contexte | Context |
-| 150 | ✚ Créer un nouvel élément | ✚ Create a new element |
-| 154 | Portée (Paquetages) | Scope (Packages) |
-| 160 | Ouvrir le panneau  (infobulle) | Open the panel |
-| 173 | ⚙ Filtres du graphe | ⚙ Graph filters |
-| 173 | Fermer (Échap)  (infobulle) | Close (Esc) |
-| 176 | Types d'éléments | Element types |
-| 177 | Tout sélectionner  (infobulle) | Select all |
-| 177 | Tout désélectionner  (infobulle) | Deselect all |
-| 181 | Critères de relation | Relation criteria |
-| 182 | Tout sélectionner  (infobulle) | Select all |
-| 182 | Tout désélectionner  (infobulle) | Deselect all |
-| 187 | Légende | Legend |
-| 187 | Replier / déplier la légende  (infobulle) | Collapse / expand the legend |
-| 191 | Fermer le détail  (infobulle) | Close the detail |
-| 196 | Prêt | Ready |
-| 203 | 🔎 Détail | 🔎 Detail |
-| 205 | ✏ Modifier l'élément | ✏ Edit the element |
-| 206 | → Créer une relation vers… | → Create a relation to… |
-| 207 | ✦ Créer un élément enfant | ✦ Create a child element |
-| 209 | ⊙ Définir comme contexte | ⊙ Set as context |
-| 210 | ↓ Développer | ↓ Expand |
-| 211 | ↑ Réduire | ↑ Collapse |
-| 213 | 👁 Masquer l'élément | 👁 Hide the element |
-| 221 | Annuler | Cancel |
-| 222 | Sauvegarder | Save |
-| 230 | ✏ Éditeur de modèle | ✏ Model editor |
-| 234 | Éléments ( | Elements ( |
-| 235 | Relations ( | Relations ( |
-| 236 | Paquetages ( | Packages ( |
-| 237 | Chaînes ( | Chains ( |
-| 246 | Exporter | Export |
-| 247 | Résolution : | Resolution: |
-| 249 | 1× Normal | 1× Normal |
-| 251 | 3× Ultra | 3× Ultra |
-| 252 | 4× Max | 4× Max |
-| 256 | Annuler | Cancel |
-| 257 | Exporter | Export |
-| 277 | Types d'éléments | Element types |
-| 278 | Filtrer les types…  (infobulle) | Filter types… |
-| 283 | Tout cocher | Check all |
-| 285 | Aucun | None |
-| 287 | Défaut | Default |
-| 296 | Glisser pour redimensionner  (infobulle) | Drag to resize |
-| 304 | 🌳 Arborescence | 🌳 Tree |
-| 305 | ▦ Cartes | ▦ Cards |
-| 306 | 📖 Index des types | 📖 Type index |
-| 317 | Rechercher…  (infobulle) | Search… |
-| 321 | Tous | All |
-| 327 | Tranv. | Shared |
-| 329 | ⬇ CSV | ⬇ CSV |
-| 333 | ⊞ Déplier | ⊞ Expand |
-| 334 | ⊟ Réduire | ⊟ Collapse |
-| 336 | ⬇ JSON | ⬇ JSON |
-| 354 | ← Préc. | ← Prev. |
-| 356 | Suiv. → | Next → |
-| 374 | ✨ Colonne par chemin | ✨ Path column |
-| 378 | type de départ | start type |
-| 384 | Type d'élément | Element type |
-| 385 | Relation ou valeur | Relation or value |
-| 389 | + Ajouter une étape | + Add a step |
-| 392 | Nom de la colonne | Column name |
-| 393 | ex: Functions of Component  (infobulle) | e.g. Functions of Component |
-| 394 | Créer la colonne | Create the column |
-| 416 | Aucun élément ne correspond. | No matching element. |
+| 84 | ⬇ Export ▾ | ⬇ Export ▾ |
+| 84 | Exporter le graphe : image ou données (CSV)  (infobulle) | Export the graph: image or data (CSV) |
+| 88 | Image | Image |
+| 89 | 🖼 PNG | 🖼 PNG |
+| 90 | 📷 JPEG | 📷 JPEG |
+| 91 | 📐 SVG | 📐 SVG |
+| 92 | Données (CSV) | Data (CSV) |
+| 93 | ▦ Arbre par niveaux… | ▦ Tree by levels… |
+| 93 | Une colonne par niveau (et par relation) : le graphe déplié de gauche à droite  (infobulle) | One column per level (and per relation): the graph unfolded from left to right |
+| 94 | ⇄ Relations affichées… | ⇄ Displayed relations… |
+| 94 | Une ligne par arête affichée : source, relation, cible, nombre, profondeur, chemin  (infobulle) | One row per displayed edge: source, relation, target, count, depth, path |
+| 103 | ❓ Aide | ❓ Help |
+| 103 | Aide et présentation des fonctionnalités  (infobulle) | Help and feature overview |
+| 104 | 🚀 Bien démarrer | 🚀 Getting started |
+| 104 | · ouvrir un modèle, puis trouver l'aide et les tutoriels | · open a model, then find the help and tutorials |
+| 104 | Visite guidée en deux temps : où ouvrir votre fichier .capella, puis, une fois le modèle chargé, où trouver l'aide et les tutoriels  (infobulle) | Two-step guided tour: where to open your .capella file, then, once the model is loaded, where to find the help and tutorials |
+| 105 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) | Click to browse, or drag and drop a .capella file |
+| 106 | Arcalyse | Arcalyse |
+| 106 | Votre modèle Capella, sous toutes ses coutures. | Your Capella model, inside and out. |
+| 107 | Ouvrir un modèle Capella | Open a Capella model |
+| 108 | Glissez-déposez votre fichier | Drag and drop your |
+| 108 | ou recherchez-le dans l'explorateur de fichiers. | or browse for it in the file explorer. |
+| 109 | 📂 Parcourir… | 📂 Browse… |
+| 111 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. | Accepted formats: .capella · .melodymodeller · .xml — the file is read locally, nothing is sent. |
+| 112 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités | 📖 What can be analysed? Discover the features |
+| 113 | 🎓 Visite guidée de l'interface | 🎓 Guided tour of the interface |
+| 114 | ℹ À propos | ℹ About |
+| 122 | Panneau | Panel |
+| 123 | Réduire le panneau  (infobulle) | Collapse the panel |
+| 126 | Arborescence | Tree |
+| 128 | Tout développer  (infobulle) | Expand all |
+| 130 | Tout réduire  (infobulle) | Collapse all |
+| 136 | ✕ vider | ✕ clear |
+| 136 | Vider la sélection  (infobulle) | Clear the selection |
+| 139 | 🔍 Filtrer l'arborescence…  (infobulle) | 🔍 Filter the tree… |
+| 148 | Contexte | Context |
+| 154 | ✚ Créer un nouvel élément | ✚ Create a new element |
+| 158 | Portée (Paquetages) | Scope (Packages) |
+| 164 | Ouvrir le panneau  (infobulle) | Open the panel |
+| 177 | ⚙ Filtres du graphe | ⚙ Graph filters |
+| 177 | Fermer (Échap)  (infobulle) | Close (Esc) |
+| 180 | Types d'éléments | Element types |
+| 181 | Tout sélectionner  (infobulle) | Select all |
+| 181 | Tout désélectionner  (infobulle) | Deselect all |
+| 185 | Critères de relation | Relation criteria |
+| 186 | Tout sélectionner  (infobulle) | Select all |
+| 186 | Tout désélectionner  (infobulle) | Deselect all |
+| 191 | Légende | Legend |
+| 191 | Replier / déplier la légende  (infobulle) | Collapse / expand the legend |
+| 195 | Fermer le détail  (infobulle) | Close the detail |
+| 200 | Prêt | Ready |
+| 207 | 🔎 Détail | 🔎 Detail |
+| 209 | ✏ Modifier l'élément | ✏ Edit the element |
+| 210 | → Créer une relation vers… | → Create a relation to… |
+| 211 | ✦ Créer un élément enfant | ✦ Create a child element |
+| 213 | ⊙ Définir comme contexte | ⊙ Set as context |
+| 214 | ↓ Développer | ↓ Expand |
+| 215 | ↑ Réduire | ↑ Collapse |
+| 217 | 👁 Masquer l'élément | 👁 Hide the element |
+| 225 | Annuler | Cancel |
+| 226 | Sauvegarder | Save |
+| 234 | ✏ Éditeur de modèle | ✏ Model editor |
+| 238 | Éléments ( | Elements ( |
+| 239 | Relations ( | Relations ( |
+| 240 | Paquetages ( | Packages ( |
+| 241 | Chaînes ( | Chains ( |
+| 250 | Exporter | Export |
+| 251 | Résolution : | Resolution: |
+| 253 | 1× Normal | 1× Normal |
+| 255 | 3× Ultra | 3× Ultra |
+| 256 | 4× Max | 4× Max |
+| 260 | Annuler | Cancel |
+| 261 | Exporter | Export |
+| 281 | Types d'éléments | Element types |
+| 282 | Filtrer les types…  (infobulle) | Filter types… |
+| 287 | Tout cocher | Check all |
+| 289 | Aucun | None |
+| 291 | Défaut | Default |
+| 300 | Glisser pour redimensionner  (infobulle) | Drag to resize |
+| 308 | 🌳 Arborescence | 🌳 Tree |
+| 309 | ▦ Cartes | ▦ Cards |
+| 310 | 📖 Index des types | 📖 Type index |
+| 321 | Rechercher…  (infobulle) | Search… |
+| 325 | Tous | All |
+| 331 | Tranv. | Shared |
+| 333 | ⬇ CSV | ⬇ CSV |
+| 337 | ⊞ Déplier | ⊞ Expand |
+| 338 | ⊟ Réduire | ⊟ Collapse |
+| 340 | ⬇ JSON | ⬇ JSON |
+| 358 | ← Préc. | ← Prev. |
+| 360 | Suiv. → | Next → |
+| 378 | ✨ Colonne par chemin | ✨ Path column |
+| 382 | type de départ | start type |
+| 388 | Type d'élément | Element type |
+| 389 | Relation ou valeur | Relation or value |
+| 393 | + Ajouter une étape | + Add a step |
+| 396 | Nom de la colonne | Column name |
+| 397 | ex: Functions of Component  (infobulle) | e.g. Functions of Component |
+| 398 | Créer la colonne | Create the column |
+| 420 | Aucun élément ne correspond. | No matching element. |
 
 ## js/01-donnees-config.js
 
@@ -360,13 +366,29 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 378 | translate( | (inchangé, hors _L) |
 | 418 | relation-map.jpg | (inchangé, hors _L) |
 | 426 | Erreur lors de l'export. | Error during export. |
-| 455 | Vue chaîne : les arêtes sont les échanges. | Chain view: the edges are the exchanges. |
-| 455 | Aucune relation affichée. | No relation displayed. |
-| 456 | Légende ( | Legend (…) |
-| 495 | Contexte : | Context: … \| Nodes: … \| Unique elements: … \| Depth: … |
-| 495 | \| Nœuds : | Context: … \| Nodes: … \| Unique elements: … \| Depth: … |
-| 495 | \| Éléments uniques : | Context: … \| Nodes: … \| Unique elements: … \| Depth: … |
-| 495 | \| Profondeur : | Context: … \| Nodes: … \| Unique elements: … \| Depth: … |
+| 447 | Aucun graphe affiché : choisissez un élément de contexte. | No graph displayed: choose a context element. |
+| 455 | L'arbre par niveaux n'existe pas en vue chaîne : utilisez « ⇄ Relations affichées », ou quittez la chaîne. | The tree by levels does not exist in chain view: use “⇄ Displayed relations”, or leave the chain. |
+| 460 | ⬇ Arbre par niveaux (CSV) ✕ Le graphe affiché, déplié de gauche à droite : le contexte dans la première colonne, puis une colonne par niveau et par relation. Un élément et son premier voisin sont sur la même ligne, les voisins suivants en dessous. Les nœuds repliés, masqués ou filtrés ne sont pas exportés. | ⬇ Tree by levels (CSV) ✕ The displayed graph, unfolded from left to right: the context in the first column, then one column per level and per relation. An element and its first neighbour are on the same row, the next neighbours below. Collapsed, hidden or filtered nodes are not exported. Relation in a separate column A “Relation” column + an element column per level: fixed number of columns, handy when many relations are checked. Repeat the parent cells Parents are written again on each row (filters and pivot tables in Excel); unchecked: empty cells, easier to read. Cancel Continue ▸ |
+| 464 | Relation dans une colonne à part Une colonne « Relation » + une colonne d'éléments par niveau : nombre de colonnes fixe, pratique quand beaucoup de relations sont cochées. | ⬇ Tree by levels (CSV) ✕ The displayed graph, unfolded from left to right: the context in the first column, then one column per level and per relation. An element and its first neighbour are on the same row, the next neighbours below. Collapsed, hidden or filtered nodes are not exported. Relation in a separate column A “Relation” column + an element column per level: fixed number of columns, handy when many relations are checked. Repeat the parent cells Parents are written again on each row (filters and pivot tables in Excel); unchecked: empty cells, easier to read. Cancel Continue ▸ |
+| 484 | Contexte | Context |
+| 485 | Relation N | Relation N… |
+| 493 | Contexte | Context |
+| 519 | Source | Source |
+| 519 | Échange | Exchange |
+| 519 | Cible | Target |
+| 527 | Source | Source |
+| 527 | Relation | Relation |
+| 527 | Cible | Target |
+| 527 | Nombre | Count |
+| 527 | Profondeur | Depth |
+| 527 | Chemin depuis le contexte | Path from the context |
+| 555 | Vue chaîne : les arêtes sont les échanges. | Chain view: the edges are the exchanges. |
+| 555 | Aucune relation affichée. | No relation displayed. |
+| 556 | Légende ( | Legend (…) |
+| 595 | Contexte : | Context: … \| Nodes: … \| Unique elements: … \| Depth: … |
+| 595 | \| Nœuds : | Context: … \| Nodes: … \| Unique elements: … \| Depth: … |
+| 595 | \| Éléments uniques : | Context: … \| Nodes: … \| Unique elements: … \| Depth: … |
+| 595 | \| Profondeur : | Context: … \| Nodes: … \| Unique elements: … \| Depth: … |
 
 ## js/07-rm-panneau-criteres.js
 
@@ -567,12 +589,12 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | Ligne | Texte | Anglais |
 |---:|---|---|
 | 47 | Erreur : | Error: |
-| 120 | ◉ Radiale | ◉ Radial |
-| 120 | ⚡ Zigzag | ⚡ Zigzag |
-| 148 | var(--c-bg3) | (inchangé, hors _L) |
-| 148 | var(--c-dim) | (inchangé, hors _L) |
-| 150 | var(--c-bg2) | (inchangé, hors _L) |
-| 150 | var(--c-text) | (inchangé, hors _L) |
+| 122 | ◉ Radiale | ◉ Radial |
+| 122 | ⚡ Zigzag | ⚡ Zigzag |
+| 150 | var(--c-bg3) | (inchangé, hors _L) |
+| 150 | var(--c-dim) | (inchangé, hors _L) |
+| 152 | var(--c-bg2) | (inchangé, hors _L) |
+| 152 | var(--c-text) | (inchangé, hors _L) |
 
 ## js/20-capella-chargement.js
 
@@ -2779,8 +2801,8 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 111 | #rm-tb-depth,#b-lay-wrap | (inchangé, hors _L) |
 | 111 | 📐 Profondeur & disposition | 📐 Depth & layout |
 | 112 | Profondeur de voisinage (1 à 10) et menu de disposition du graphe : → LR, ↓ TB, ← RL, ◉ radiale, ⚡ zigzag. | Neighbourhood depth (1 to 10) and graph layout menu: → LR, ↓ TB, ← RL, ◉ radial, ⚡ zigzag. |
-| 113 | 🖼 Export | 🖼 Export |
-| 114 | Enregistre le graphe en image PNG , JPEG ou SVG . | Saves the graph as an image PNG , JPEG or SVG . |
+| 113 | ⬇ Export | ⬇ Export |
+| 114 | Enregistre le graphe en image PNG , JPEG ou SVG , ou ses données en CSV : ▦ Arbre par niveaux (une colonne par niveau et par relation) ou ⇄ Relations affichées (une ligne par arête). | Saves the graph as an image PNG , JPEG or SVG , or its data as CSV: ▦ Tree by levels (one column per level and per relation) or ⇄ Displayed relations (one row per edge). |
 | 115 | 🌳 Arborescence | 🌳 Tree |
 | 117 | ⚙ Filtres | ⚙ Filters |
 | 119 | 🕸 Graphe | 🕸 Graph |

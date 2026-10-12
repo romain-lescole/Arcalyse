@@ -81,13 +81,17 @@
   <div class="tsep"></div>
   <!-- PNG/JPEG/SVG → dropdown (Relation Map uniquement) -->
   <div style="position:relative;" id="b-exp-wrap">
-    <div class="tbtn" id="b-exp-menu" title="Exporter image">🖼 Export ▾</div>
+    <div class="tbtn" id="b-exp-menu" title="Exporter le graphe : image ou données (CSV)">⬇ Export ▾</div>
     <div id="b-exp-dd" style="display:none;position:absolute;top:calc(100% + 4px);left:0;z-index:500;
          background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;
          min-width:140px;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;">
+      <div class="rm-dd-l">Image</div>
       <div class="ctx-i" id="b-expng">🖼 PNG</div>
       <div class="ctx-i" id="b-expjpg">📷 JPEG</div>
       <div class="ctx-i" id="b-exsvg">📐 SVG</div>
+      <div class="rm-dd-l">Données (CSV)</div>
+      <div class="ctx-i" id="b-excsv-tree" title="Une colonne par niveau (et par relation) : le graphe déplié de gauche à droite">▦ Arbre par niveaux…</div>
+      <div class="ctx-i" id="b-excsv-rel" title="Une ligne par arête affichée : source, relation, cible, nombre, profondeur, chemin">⇄ Relations affichées…</div>
     </div>
   </div>
 </div>

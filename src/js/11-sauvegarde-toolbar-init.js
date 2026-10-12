@@ -78,6 +78,8 @@ document.getElementById('b-load').onclick  = ()=>{ document.getElementById('b-ed
 document.getElementById('b-expng').onclick  = ()=>{ document.getElementById('b-exp-dd').style.display='none'; openExportModal('png'); };
 document.getElementById('b-expjpg').onclick = ()=>{ document.getElementById('b-exp-dd').style.display='none'; openExportModal('jpeg'); };
 document.getElementById('b-exsvg').onclick  = ()=>{ document.getElementById('b-exp-dd').style.display='none'; openExportModal('svg'); };
+document.getElementById('b-excsv-tree').onclick = ()=>{ document.getElementById('b-exp-dd').style.display='none'; rmCsvTreeDialog(); };
+document.getElementById('b-excsv-rel').onclick  = ()=>{ document.getElementById('b-exp-dd').style.display='none'; rmCsvRelations(); };
 // Dropdown toggle for Edit menu
 document.getElementById('b-edit-menu')?.addEventListener('click',e=>{
   e.stopPropagation();

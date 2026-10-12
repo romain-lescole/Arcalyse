@@ -427,6 +427,106 @@ function exportContent(format, dpi=2) {
   img.src=url;
 }
 
+/* ── ⬇ Export CSV de la vue rendue (arbre par niveaux, relations affichées) ── */
+/** Cellule « élément » d'un nœud affiché : nom, « ×n » si relations fusionnées, « ↺ » si occurrence déjà déployée.
+ * @param {object} d - Nœud de la hiérarchie D3 affichée
+ * @returns {{v:string, ids:string[]}} Cellule pour capCsvExport
+ */
+function rmCsvCell(d){
+  const n=d.data; let v=n.el.name;
+  if (n.relN>1) v+=` ×${n.relN}`;
+  if (n.isRef) v+=' ↺';
+  return capCx(v, n.eid);
+}
+/** Libellé lisible d'un type de relation de la Relation Map. @param {string} t @returns {string} */
+function rmRelLabel(t){ return (RCFG[t]||{}).label || t; }
+/** Vérifie qu'un graphe est affiché (hors vue chaîne) avant un export CSV.
+ * @returns {boolean} Vrai si l'export peut se faire */
+function rmCsvReady(){
+  if (S.chainView) return true;
+  if (!d3Root || !treeData) { alert(_L('Aucun graphe affiché : choisissez un élément de contexte.')); return false; }
+  return true;
+}
+
+/** Fenêtre d'options du CSV « Arbre par niveaux » (choix retenus avec ceux des exports : _capCsvCfg),
+ * puis fenêtre « Colonnes de l'export ». */
+function rmCsvTreeDialog(){
+  if (!rmCsvReady()) return;
+  if (S.chainView) { alert(_L('L\'arbre par niveaux n\'existe pas en vue chaîne : utilisez « ⇄ Relations affichées », ou quittez la chaîne.')); return; }
+  const cfg=_capCsvCfg['relation-map-arbre.csv']=_capCsvCfg['relation-map-arbre.csv']||{drop:[], add:{}};
+  let ov=document.getElementById('rm-csv-ov');
+  if (!ov) { ov=document.createElement('div'); ov.id='rm-csv-ov'; document.body.appendChild(ov);
+    ov.addEventListener('click',e=>{ if(e.target===ov) ov.style.display='none'; }); }
+  ov.innerHTML=_L(`<div class="cw-d-box" style="max-width:560px">
+    <div class="cw-d-hdr"><b>⬇ Arbre par niveaux (CSV)</b><button class="cap-lf-btn" data-c="x">✕</button></div>
+    <div class="cw-d-body">
+      <div class="cw-d-sub">Le graphe affiché, déplié de gauche à droite : le contexte dans la première colonne, puis une colonne par niveau et par relation. Un élément et son premier voisin sont sur la même ligne, les voisins suivants en dessous. Les nœuds repliés, masqués ou filtrés ne sont pas exportés.</div>
+      <label class="rm-csv-opt"><input type="checkbox" data-o="relCol"${cfg.relCol?' checked':''}><span><b>Relation dans une colonne à part</b><small>Une colonne « Relation » + une colonne d'éléments par niveau : nombre de colonnes fixe, pratique quand beaucoup de relations sont cochées.</small></span></label>
+      <label class="rm-csv-opt"><input type="checkbox" data-o="repeat"${cfg.repeat?' checked':''}><span><b>Répéter les cellules des parents</b><small>Les parents sont réécrits sur chaque ligne (filtres et tableaux croisés dans Excel) ; décoché : cellules vides, plus lisible.</small></span></label>
+    </div>
+    <div class="cw-d-ftr"><span style="flex:1"></span><button class="cap-lf-btn" data-c="x">Annuler</button><button class="phl-export-btn" data-c="ok">Continuer ▸</button></div></div>`);
+  ov.querySelectorAll('[data-c="x"]').forEach(b=>b.onclick=()=>{ ov.style.display='none'; });
+  ov.querySelectorAll('[data-o]').forEach(cb=>cb.onchange=()=>{ cfg[cb.dataset.o]=cb.checked; });
+  ov.querySelector('[data-c="ok"]').onclick=()=>{ ov.style.display='none'; rmCsvTree(cfg); };
+  ov.style.display='flex';
+}
+
+/** CSV « Arbre par niveaux » du graphe affiché : contexte, puis une colonne par (niveau, relation)
+ * — ou, avec relCol, une colonne « Relation Nn » + « Nn » par niveau. Une ligne par feuille ;
+ * le premier voisin d'un élément est sur sa ligne.
+ * @param {{relCol:boolean, repeat:boolean}} opts - Options choisies
+ */
+function rmCsvTree(opts){
+  const nodes=d3Root.descendants();
+  const SEP='\u0000';
+  let header, colOf, relColOf=null;
+  if (opts.relCol) {
+    header=[_L('Contexte')];
+    for (let l=1; l<=d3Root.height; l++) header.push(_L(`Relation N${l}`), `N${l}`);
+    colOf=d=>d.depth?2*d.depth:0; relColOf=d=>2*d.depth-1;
+  } else {
+    // Colonnes rangées par niveau, puis par relation (la plus fréquente d'abord, comme la légende)
+    const tot={}, keys=new Set();
+    nodes.forEach(d=>{ if(!d.depth) return; const t=d.data.pRel.type; tot[t]=(tot[t]||0)+1; keys.add(d.depth+SEP+t); });
+    const order=[...keys].sort((a,b)=>{ const [la,ta]=a.split(SEP), [lb,tb]=b.split(SEP); return la-lb || tot[tb]-tot[ta] || ta.localeCompare(tb); });
+    const idx={}; order.forEach((k,i)=>idx[k]=i+1);
+    header=[_L('Contexte'), ...order.map(k=>{ const [l,t]=k.split(SEP); return `N${l} · ${rmRelLabel(t)}`; })];
+    colOf=d=>d.depth?idx[d.depth+SEP+d.data.pRel.type]:0;
+  }
+  const rows=[], written=new Set();
+  const walk=(d, path)=>{
+    const p=[...path, d];
+    if (d.children && d.children.length) { d.children.forEach(c=>walk(c, p)); return; }
+    const row=new Array(header.length).fill('');
+    p.forEach(n=>{
+      if (!opts.repeat && written.has(n)) return;
+      written.add(n);
+      row[colOf(n)]=rmCsvCell(n);
+      if (relColOf && n.depth) row[relColOf(n)]=rmRelLabel(n.data.pRel.type);
+    });
+    rows.push(row);
+  };
+  walk(d3Root, []);
+  capCsvExport('relation-map-arbre.csv', header, rows);
+}
+
+/** CSV « Relations affichées » : une ligne par arête du graphe affiché (ou par échange en vue chaîne). */
+function rmCsvRelations(){
+  if (!rmCsvReady()) return;
+  if (S.chainView) {
+    const g=S.chainView.graph, byId={}; g.nodes.forEach(n=>byId[n.id]=n);
+    const cell=n=>n?capCx(n.name, n.refId):'';
+    capCsvExport('relation-map-chaine.csv', [_L('Source'), _L('Échange'), _L('Cible')],
+      g.edges.map(e=>[cell(byId[e.srcId]), e.name||'', cell(byId[e.tgtId])]));
+    return;
+  }
+  const pathOf=d=>d.ancestors().reverse().map(a=>a.data.el.name).join(' › ');
+  const rows=d3Root.links().map(l=>[rmCsvCell(l.source), rmRelLabel(l.target.data.pRel.type), rmCsvCell(l.target),
+    l.target.data.relN||1, l.target.depth, pathOf(l.target)]);
+  capCsvExport('relation-map-relations.csv',
+    [_L('Source'), _L('Relation'), _L('Cible'), _L('Nombre'), _L('Profondeur'), _L('Chemin depuis le contexte')], rows);
+}
+
 /* ═══════════════════════════════════════════════════════════════════════
    15. LÉGENDE & BARRE D'INFO
    ═══════════════════════════════════════════════════════════════════════ */

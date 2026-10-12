@@ -77,6 +77,8 @@ Chaînes de navigation Metaclass → Property (✨ Colonne par chemin).
 
 - **Relation Map — étape 2, tiroir ⚙ Filtres** (oct. 2026) : `#rm-filters` (dans `#graph`, au-dessus du SVG) remplace les sections Critères de relation / Types d'éléments du panneau gauche ; les conteneurs `#typ-body` et `#rel-body` (ids conservés, remplis par `buildPanel`) sont ses deux colonnes. Recherche des relations `S.relSearch` + `rmFiltersSearch`, compteurs `rmFiltersCount` (colonnes et bouton `#b-filters`), ouverture `rmFiltersToggle` (bouton, ×, Échap).
 
+- **Relation Map — étape 3, export CSV** (oct. 2026) : menu ⬇ Export ▾ (barre 2) en deux parties Image / Données. `rmCsvTree` (« ▦ Arbre par niveaux ») parcourt `d3Root` (nœuds affichés seulement) : une ligne par feuille, colonnes (niveau, relation) triées par niveau puis fréquence, ou `relCol` (« Relation Nn » + « Nn ») ; `repeat` répète les parents. Options dans `rmCsvTreeDialog`, retenues dans `_capCsvCfg['relation-map-arbre.csv']` (enregistrées avec la partie ⚙ csv). `rmCsvRelations` : une ligne par `d3Root.links()` (vue chaîne : arêtes de `S.chainView.graph`). Les deux passent par `capCsvExport` (cellules `rmCsvCell` : « ×n », « ↺ »).
+
 ## 6 bis. Vue chaîne de la Relation Map
 
 - `capShowChainInMap(chain)` → `S.chainView` ; `render()` délègue à `renderChainView` (couches `capChainLayout`, LR/TB/RL), bandeau `rmChainBanner`, surbrillance `rmHighlight`, cadrage `S._chainBounds` dans `fitView`. `setCtx` quitte la vue chaîne. Plus d'éléments temporaires `_capViz`.

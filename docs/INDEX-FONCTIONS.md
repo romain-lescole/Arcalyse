@@ -53,7 +53,7 @@
 - `renderChainView` (l. 27) — Rendu de la vue chaîne : disposition en couches (capChainLayout) orientée selon la disposition choisie
 - `rmHighlight` (l. 126) — Met en évidence un nœud et ses voisins directs (les autres sont estompés) ; null pour tout rétablir.
 
-## 06-rm-interactions-export.js — 512 lignes
+## 06-rm-interactions-export.js — 612 lignes
 
 - `toggleNode` (l. 7) — Ouvre/ferme un nœud (affiche/masque ses enfants dans le graphe). @param node Nœud D3
 - `expandAllNodes` (l. 14) — Développe récursivement tous les nœuds à partir de `node`.
@@ -75,13 +75,19 @@
 - `openExportModal` (l. 324) — Ouvre le modal d'export image. @param {string} format - 'png'|'jpeg'|'svg'
 - `updateExportInfo` (l. 333) — Met à jour le libellé d'information affiché dans le menu Export (dimensions/format prévus).
 - `exportContent` (l. 364) — Exporte le graphe en image. Gère PNG (canvas), JPEG (canvas) et SVG (inline).
-- `updateLegend` (l. 435) — Met à jour la légende du graphe : seulement les relations réellement affichées, avec leur
-- `rmDetailOpen` (l. 469) — Ouvre le panneau de détail de la Relation Map sur un élément : détail Capella complet
-- `rmDetailClose` (l. 478) — Ferme le panneau de détail de la Relation Map.
-- `rmDetailFollow` (l. 483) — Le panneau de détail suit la sélection (S.propEl) tant qu'il est ouvert, en Relation Map.
-- `updateInfo` (l. 489) — Met à jour le compteur d'éléments/relations affiché en bas du panneau.
-- `typSelectAll` (l. 500) — Coche ou décoche tous les filtres de types d'éléments du panneau gauche.
-- `relSelectAll` (l. 508) — Coche ou décoche tous les filtres de types de relations du panneau gauche.
+- `rmCsvCell` (l. 435) — Cellule « élément » d'un nœud affiché : nom, « ×n » si relations fusionnées, « ↺ » si occurrence déjà déployée.
+- `rmRelLabel` (l. 442) — Libellé lisible d'un type de relation de la Relation Map. @param {string} t @returns {string}
+- `rmCsvReady` (l. 445) — Vérifie qu'un graphe est affiché (hors vue chaîne) avant un export CSV.
+- `rmCsvTreeDialog` (l. 453) — Fenêtre d'options du CSV « Arbre par niveaux » (choix retenus avec ceux des exports : _capCsvCfg),
+- `rmCsvTree` (l. 479) — CSV « Arbre par niveaux » du graphe affiché : contexte, puis une colonne par (niveau, relation)
+- `rmCsvRelations` (l. 514) — CSV « Relations affichées » : une ligne par arête du graphe affiché (ou par échange en vue chaîne).
+- `updateLegend` (l. 535) — Met à jour la légende du graphe : seulement les relations réellement affichées, avec leur
+- `rmDetailOpen` (l. 569) — Ouvre le panneau de détail de la Relation Map sur un élément : détail Capella complet
+- `rmDetailClose` (l. 578) — Ferme le panneau de détail de la Relation Map.
+- `rmDetailFollow` (l. 583) — Le panneau de détail suit la sélection (S.propEl) tant qu'il est ouvert, en Relation Map.
+- `updateInfo` (l. 589) — Met à jour le compteur d'éléments/relations affiché en bas du panneau.
+- `typSelectAll` (l. 600) — Coche ou décoche tous les filtres de types d'éléments du panneau gauche.
+- `relSelectAll` (l. 608) — Coche ou décoche tous les filtres de types de relations du panneau gauche.
 
 ## 07-rm-panneau-criteres.js — 298 lignes
 
@@ -134,14 +140,14 @@
 - `rmSetElemVal` (l. 695) — Écrit une valeur dans un champ d'un élément du modèle de la Relation Map (nom, type, parent,
 - `onModelChanged` (l. 731) — Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel.
 
-## 11-sauvegarde-toolbar-init.js — 272 lignes
+## 11-sauvegarde-toolbar-init.js — 274 lignes
 
 - `saveJSON` (l. 5) — Sérialise MODEL, RCFG, TCFG et S en JSON et télécharge le fichier.
 - `loadJSON` (l. 19) — Charge un fichier JSON et restaure l'état complet de l'application.
-- `applyDepth` (l. 106) — Applique la profondeur d'exploration du graphe (bornée entre 1 et 10),
-- `rmLayoutLabel` (l. 118) — Affiche la disposition courante (S.layout) sur le bouton du menu Disposition de la barre 2.
-- `openHelpModal` (l. 158) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
-- `positionOverlay` (l. 254) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
+- `applyDepth` (l. 108) — Applique la profondeur d'exploration du graphe (bornée entre 1 et 10),
+- `rmLayoutLabel` (l. 120) — Affiche la disposition courante (S.layout) sur le bouton du menu Disposition de la barre 2.
+- `openHelpModal` (l. 160) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
+- `positionOverlay` (l. 256) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
 
 ## 20-capella-chargement.js — 824 lignes
 
