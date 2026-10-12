@@ -182,6 +182,31 @@ function capGetElementById_(id){
   }
   return _capElementByIdCache.map[id];
 }
+let _capRefIndexCache = null;
+/** Index des références portées par un attribut : pour les éléments d'un type donné, associe
+ * chaque ID référencé par l'attribut aux éléments qui le référencent. Mémoïsé par type et
+ * attribut (recalculé si le modèle change) : évite de reparcourir tout le modèle à chaque pas
+ * « ← entrant » ou « via » de la colonne par chemin.
+ * @param {string} type - Type des éléments porteurs de l'attribut
+ * @param {string} attrKey - Nom de l'attribut XML
+ * @returns {Map<string, object[]>} ID référencé → éléments porteurs (sans doublon)
+ */
+function capRefIndex_(type, attrKey){
+  if (!_capRefIndexCache || _capRefIndexCache._src!==capAllElements || _capRefIndexCache._n!==capAllElements.length)
+    _capRefIndexCache={_src:capAllElements, _n:capAllElements.length, maps:{}};
+  const k=type+'\u0000'+attrKey;
+  let m=_capRefIndexCache.maps[k];
+  if (!m) {
+    m=new Map();
+    capAllElements.forEach(e=>{
+      if (e.typeName!==type) return;
+      const raw=e.attrs[attrKey]; if (!raw) return;
+      new Set(capParseAttrRefs_(raw)).forEach(id=>{ let l=m.get(id); if(!l) m.set(id, l=[]); l.push(e); });
+    });
+    _capRefIndexCache.maps[k]=m;
+  }
+  return m;
+}
 /** Découpe la valeur brute d'un attribut XML en liste d'IDs candidats (gère les attributs
  * multi-valeurs séparés par espace, ex: 'involved', 'navigableMembers', 'exchangedItems'). */
 function capParseAttrRefs_(rawVal){
@@ -271,7 +296,7 @@ function capGetOwnerProperties(metaclass){
     let curId = parentOf[e.id];
     let depth = 0;
     while (curId && depth < 30) { // garde-fou anti-boucle
-      const cur = capAllElements.find(c=>c.id===curId);
+      const cur = capGetElementById_(curId);
       if (!cur) break;
       ancestorTypesSeen.add(cur.typeName);
       curId = parentOf[cur.id];
@@ -329,6 +354,20 @@ function capGetIncomingRefProperties(metaclass){
  * @returns {object[]} Propriétés proposées dans le sélecteur Metachain
  */
 function capGetMetachainProperties(metaclass){
+  if (!capLinksData) capLinksData=capComputeLinks();
+  // Mémoïsé par type : la liste est redemandée pour chaque étape à chaque redessin du panneau
+  const c=_capMcPropsCache;
+  if (!c || c._src!==capAllElements || c._n!==capAllElements.length || c._links!==capLinksData)
+    _capMcPropsCache={_src:capAllElements, _n:capAllElements.length, _links:capLinksData, byType:{}};
+  return _capMcPropsCache.byType[metaclass] || (_capMcPropsCache.byType[metaclass]=capComputeMetachainProperties_(metaclass));
+}
+let _capMcPropsCache = null;
+
+/** Calcule (sans cache) les Properties navigables depuis un Metaclass — voir capGetMetachainProperties.
+ * @param {string} metaclass - Type d'élément de départ
+ * @returns {object[]} Propriétés proposées dans le sélecteur Metachain
+ */
+function capComputeMetachainProperties_(metaclass){
   const props=[];
   const {childrenOf} = capGetParentIndex();
 
@@ -363,7 +402,7 @@ function capGetMetachainProperties(metaclass){
   const childTypesSeen = new Set();
   capAllElements.filter(e=>e.typeName===metaclass).forEach(e=>{
     (childrenOf[e.id]||[]).forEach(cid=>{
-      const c=capAllElements.find(x=>x.id===cid);
+      const c=capGetElementById_(cid);
       if (c) childTypesSeen.add(c.typeName);
     });
   });
@@ -450,13 +489,7 @@ function capResolveStep(el, prop){
   if (prop.kind==='incoming') {
     // Référence entrante : trouve tous les éléments de fromType dont l'attribut fromAttrKey
     // référence l'élément courant (navigation inverse — la relation est portée par l'autre bout).
-    const out=[];
-    capAllElements.forEach(cand=>{
-      if (cand.typeName!==prop.fromType) return;
-      const raw=cand.attrs[prop.fromAttrKey]; if(!raw) return;
-      if (capParseAttrRefs_(raw).includes(el.id)) out.push(cand);
-    });
-    return out;
+    return (capRefIndex_(prop.fromType, prop.fromAttrKey).get(el.id)||[]).slice();
   }
   if (prop.kind==='owner') {
     // Remonte la chaîne d'ancêtres (containment) jusqu'au premier de type ownerType
@@ -464,7 +497,7 @@ function capResolveStep(el, prop){
     let curId = parentOf[el.id];
     let depth = 0;
     while (curId && depth < 30) {
-      const cur = capAllElements.find(c=>c.id===curId);
+      const cur = capGetElementById_(curId);
       if (!cur) break;
       if (cur.typeName===prop.ownerType) return [cur];
       curId = parentOf[cur.id];
@@ -476,12 +509,10 @@ function capResolveStep(el, prop){
     // Trouve tous les éléments "intermédiaires" (viaType) qui référencent CET élément (el)
     // via leur attribut multi-valeurs, puis retourne les AUTRES éléments référencés par ce
     // même intermédiaire et qui sont du resultType attendu (typiquement === metaclass de départ).
-    const intermediates = capAllElements.filter(e=>e.typeName===prop.viaType);
+    const intermediates = capRefIndex_(prop.viaType, prop.viaAttrKey).get(el.id)||[];
     const out=[];
     intermediates.forEach(via=>{
-      const raw = via.attrs[prop.viaAttrKey]; if (!raw) return;
-      const refIds = capParseAttrRefs_(raw);
-      if (!refIds.includes(el.id)) return; // cet intermédiaire ne concerne pas notre élément
+      const refIds = capParseAttrRefs_(via.attrs[prop.viaAttrKey]);
       refIds.forEach(refId=>{
         if (refId===el.id) return; // exclut l'élément de départ lui-même
         const target=capGetElementById_(refId);
