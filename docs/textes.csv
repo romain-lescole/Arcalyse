@@ -52,7 +52,7 @@
 "html/interface.html";"82";"· ouvrir un modèle, puis trouver l'aide et les tutoriels";"· open a model, then find the help and tutorials"
 "html/interface.html";"82";"Visite guidée en deux temps : où ouvrir votre fichier .capella, puis, une fois le modèle chargé, où trouver l'aide et les tutoriels  (infobulle)";"Two-step guided tour: where to open your .capella file, then, once the model is loaded, where to find the help and tutorials"
 "html/interface.html";"83";"Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle)";"Click to browse, or drag and drop a .capella file"
-"html/interface.html";"84";"🔷 Arcalyse";"🔷 Arcalyse"
+"html/interface.html";"84";"Arcalyse";"Arcalyse"
 "html/interface.html";"84";"Votre modèle Capella, sous toutes ses coutures.";"Your Capella model, inside and out."
 "html/interface.html";"85";"Ouvrir un modèle Capella";"Open a Capella model"
 "html/interface.html";"86";"Glissez-déposez votre fichier";"Drag and drop your"
@@ -3633,152 +3633,152 @@
 "js/50-a-propos.js";"28";"éléments";"… · … elements"
 "js/50-a-propos.js";"29";"Fonctionnement";"Operation"
 "js/50-a-propos.js";"29";"hors ligne (ressources intégrées au fichier)";"offline (resources embedded in the file)"
-"js/50-a-propos.js";"39";"ℹ À propos ✕ 🔷";"<div class=""cw-d-box ab-box"">
+"js/50-a-propos.js";"53";"ℹ À propos ✕";"<div class=""cw-d-box ab-box"">
     <div class=""cw-d-hdr""><b>ℹ About</b><button class=""cap-lf-btn"" data-c=""x"">✕</button></div>
     <div class=""cw-d-body"">
-      <div class=""ab-id""><div class=""ab-logo"">🔷</div><div><div class=""ab-name"">{0}</div><div class=""ab-slogan"">{1}</div>
-        <div class=""ab-ver"">Version {2} · {3}</div>
+      <div class=""ab-id""><div class=""ab-logo"">{0}</div><div><div class=""ab-name"">{1}</div><div class=""ab-slogan"">{2}</div>
+        <div class=""ab-ver"">Version {3} · {4}</div>
         <div class=""ana-dim"">Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file.</div></div></div>
       <h4>Author and licence</h4>
       <table class=""ana-t ana-kv"">
-        <tr><td>Author</td><td>© {4} {5} — creator and rights holder</td></tr>
+        <tr><td>Author</td><td>© {5} {6} — creator and rights holder</td></tr>
         <tr><td>Licence</td><td><b>GNU General Public License version 3</b> (GPLv3) — free software: use (including commercial), study, modification and redistribution allowed; any modified version that is redistributed must be under GPLv3, with its source code. Provided <b>without any warranty</b>.<br><span class=""ana-dim"">Full text: gnu.org/licenses/gpl-3.0 (LICENSE file of the repository)</span></td></tr>
-        <tr><td>Contact</td><td>Source code, issues and contributions: <a class=""ab-mono"" href=""https://{6}"" target=""_blank"" rel=""noopener"">{7}</a></td></tr>
+        <tr><td>Contact</td><td>Source code, issues and contributions: <a class=""ab-mono"" href=""https://{7}"" target=""_blank"" rel=""noopener"">{8}</a></td></tr>
         <tr><td>Development</td><td>Developed with the help of Claude Code (Anthropic).</td></tr>
       </table>
       <h4>Third-party components and trademarks</h4>
       <table class=""ana-t ana-kv"">
         <tr><td>D3.js v7.9.0</td><td>Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock.
-          <details><summary class=""ana-dim"">Licence text</summary><pre class=""ab-lic"">{8}</pre></details></td></tr>
+          <details><summary class=""ana-dim"">Licence text</summary><pre class=""ab-lic"">{9}</pre></details></td></tr>
         <tr><td>Capella, ARCADIA</td><td>Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated.</td></tr>
         <tr><td>Test models</td><td>Capella samples “In-Flight Entertainment System” (<a href=""https://github.com/dbinfrago/Capella-IFE-sample"" target=""_blank"" rel=""noopener"">github.com/dbinfrago/Capella-IFE-sample</a>) and “AIDA” (<a href=""https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture"" target=""_blank"" rel=""noopener"">sahara.irt-saintexupery.com/AIDA/AIDAArchitecture</a>).</td></tr>
       </table>
       <h4>Technical information</h4>
-      <table class=""ana-t ana-kv"">{9}</table>
+      <table class=""ana-t ana-kv"">{10}</table>
     </div>
     <div class=""cw-d-ftr""><button class=""cap-lf-btn"" data-c=""copy"" title=""Copy version, browser and model, to attach to an issue"">📋 Copy the info</button><span style=""flex:1""></span><button class=""phl-export-btn"" data-c=""x"">Close</button></div></div>"
-"js/50-a-propos.js";"42";"Version";"<div class=""cw-d-box ab-box"">
+"js/50-a-propos.js";"56";"Version";"<div class=""cw-d-box ab-box"">
     <div class=""cw-d-hdr""><b>ℹ About</b><button class=""cap-lf-btn"" data-c=""x"">✕</button></div>
     <div class=""cw-d-body"">
-      <div class=""ab-id""><div class=""ab-logo"">🔷</div><div><div class=""ab-name"">{0}</div><div class=""ab-slogan"">{1}</div>
-        <div class=""ab-ver"">Version {2} · {3}</div>
+      <div class=""ab-id""><div class=""ab-logo"">{0}</div><div><div class=""ab-name"">{1}</div><div class=""ab-slogan"">{2}</div>
+        <div class=""ab-ver"">Version {3} · {4}</div>
         <div class=""ana-dim"">Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file.</div></div></div>
       <h4>Author and licence</h4>
       <table class=""ana-t ana-kv"">
-        <tr><td>Author</td><td>© {4} {5} — creator and rights holder</td></tr>
+        <tr><td>Author</td><td>© {5} {6} — creator and rights holder</td></tr>
         <tr><td>Licence</td><td><b>GNU General Public License version 3</b> (GPLv3) — free software: use (including commercial), study, modification and redistribution allowed; any modified version that is redistributed must be under GPLv3, with its source code. Provided <b>without any warranty</b>.<br><span class=""ana-dim"">Full text: gnu.org/licenses/gpl-3.0 (LICENSE file of the repository)</span></td></tr>
-        <tr><td>Contact</td><td>Source code, issues and contributions: <a class=""ab-mono"" href=""https://{6}"" target=""_blank"" rel=""noopener"">{7}</a></td></tr>
+        <tr><td>Contact</td><td>Source code, issues and contributions: <a class=""ab-mono"" href=""https://{7}"" target=""_blank"" rel=""noopener"">{8}</a></td></tr>
         <tr><td>Development</td><td>Developed with the help of Claude Code (Anthropic).</td></tr>
       </table>
       <h4>Third-party components and trademarks</h4>
       <table class=""ana-t ana-kv"">
         <tr><td>D3.js v7.9.0</td><td>Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock.
-          <details><summary class=""ana-dim"">Licence text</summary><pre class=""ab-lic"">{8}</pre></details></td></tr>
+          <details><summary class=""ana-dim"">Licence text</summary><pre class=""ab-lic"">{9}</pre></details></td></tr>
         <tr><td>Capella, ARCADIA</td><td>Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated.</td></tr>
         <tr><td>Test models</td><td>Capella samples “In-Flight Entertainment System” (<a href=""https://github.com/dbinfrago/Capella-IFE-sample"" target=""_blank"" rel=""noopener"">github.com/dbinfrago/Capella-IFE-sample</a>) and “AIDA” (<a href=""https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture"" target=""_blank"" rel=""noopener"">sahara.irt-saintexupery.com/AIDA/AIDAArchitecture</a>).</td></tr>
       </table>
       <h4>Technical information</h4>
-      <table class=""ana-t ana-kv"">{9}</table>
+      <table class=""ana-t ana-kv"">{10}</table>
     </div>
     <div class=""cw-d-ftr""><button class=""cap-lf-btn"" data-c=""copy"" title=""Copy version, browser and model, to attach to an issue"">📋 Copy the info</button><span style=""flex:1""></span><button class=""phl-export-btn"" data-c=""x"">Close</button></div></div>"
-"js/50-a-propos.js";"43";"Explorateur et analyseur hors ligne de modèles Capella / ARCADIA : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML. Auteur et licence Auteur ©";"<div class=""cw-d-box ab-box"">
+"js/50-a-propos.js";"57";"Explorateur et analyseur hors ligne de modèles Capella / ARCADIA : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML. Auteur et licence Auteur ©";"<div class=""cw-d-box ab-box"">
     <div class=""cw-d-hdr""><b>ℹ About</b><button class=""cap-lf-btn"" data-c=""x"">✕</button></div>
     <div class=""cw-d-body"">
-      <div class=""ab-id""><div class=""ab-logo"">🔷</div><div><div class=""ab-name"">{0}</div><div class=""ab-slogan"">{1}</div>
-        <div class=""ab-ver"">Version {2} · {3}</div>
+      <div class=""ab-id""><div class=""ab-logo"">{0}</div><div><div class=""ab-name"">{1}</div><div class=""ab-slogan"">{2}</div>
+        <div class=""ab-ver"">Version {3} · {4}</div>
         <div class=""ana-dim"">Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file.</div></div></div>
       <h4>Author and licence</h4>
       <table class=""ana-t ana-kv"">
-        <tr><td>Author</td><td>© {4} {5} — creator and rights holder</td></tr>
+        <tr><td>Author</td><td>© {5} {6} — creator and rights holder</td></tr>
         <tr><td>Licence</td><td><b>GNU General Public License version 3</b> (GPLv3) — free software: use (including commercial), study, modification and redistribution allowed; any modified version that is redistributed must be under GPLv3, with its source code. Provided <b>without any warranty</b>.<br><span class=""ana-dim"">Full text: gnu.org/licenses/gpl-3.0 (LICENSE file of the repository)</span></td></tr>
-        <tr><td>Contact</td><td>Source code, issues and contributions: <a class=""ab-mono"" href=""https://{6}"" target=""_blank"" rel=""noopener"">{7}</a></td></tr>
+        <tr><td>Contact</td><td>Source code, issues and contributions: <a class=""ab-mono"" href=""https://{7}"" target=""_blank"" rel=""noopener"">{8}</a></td></tr>
         <tr><td>Development</td><td>Developed with the help of Claude Code (Anthropic).</td></tr>
       </table>
       <h4>Third-party components and trademarks</h4>
       <table class=""ana-t ana-kv"">
         <tr><td>D3.js v7.9.0</td><td>Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock.
-          <details><summary class=""ana-dim"">Licence text</summary><pre class=""ab-lic"">{8}</pre></details></td></tr>
+          <details><summary class=""ana-dim"">Licence text</summary><pre class=""ab-lic"">{9}</pre></details></td></tr>
         <tr><td>Capella, ARCADIA</td><td>Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated.</td></tr>
         <tr><td>Test models</td><td>Capella samples “In-Flight Entertainment System” (<a href=""https://github.com/dbinfrago/Capella-IFE-sample"" target=""_blank"" rel=""noopener"">github.com/dbinfrago/Capella-IFE-sample</a>) and “AIDA” (<a href=""https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture"" target=""_blank"" rel=""noopener"">sahara.irt-saintexupery.com/AIDA/AIDAArchitecture</a>).</td></tr>
       </table>
       <h4>Technical information</h4>
-      <table class=""ana-t ana-kv"">{9}</table>
+      <table class=""ana-t ana-kv"">{10}</table>
     </div>
     <div class=""cw-d-ftr""><button class=""cap-lf-btn"" data-c=""copy"" title=""Copy version, browser and model, to attach to an issue"">📋 Copy the info</button><span style=""flex:1""></span><button class=""phl-export-btn"" data-c=""x"">Close</button></div></div>"
-"js/50-a-propos.js";"49";"Développement Développé avec l'aide de Claude Code (Anthropic). Composants tiers et marques D3.js v7.9.0 Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock. Texte de la licence";"<div class=""cw-d-box ab-box"">
+"js/50-a-propos.js";"63";"Développement Développé avec l'aide de Claude Code (Anthropic). Composants tiers et marques D3.js v7.9.0 Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock. Texte de la licence";"<div class=""cw-d-box ab-box"">
     <div class=""cw-d-hdr""><b>ℹ About</b><button class=""cap-lf-btn"" data-c=""x"">✕</button></div>
     <div class=""cw-d-body"">
-      <div class=""ab-id""><div class=""ab-logo"">🔷</div><div><div class=""ab-name"">{0}</div><div class=""ab-slogan"">{1}</div>
-        <div class=""ab-ver"">Version {2} · {3}</div>
+      <div class=""ab-id""><div class=""ab-logo"">{0}</div><div><div class=""ab-name"">{1}</div><div class=""ab-slogan"">{2}</div>
+        <div class=""ab-ver"">Version {3} · {4}</div>
         <div class=""ana-dim"">Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file.</div></div></div>
       <h4>Author and licence</h4>
       <table class=""ana-t ana-kv"">
-        <tr><td>Author</td><td>© {4} {5} — creator and rights holder</td></tr>
+        <tr><td>Author</td><td>© {5} {6} — creator and rights holder</td></tr>
         <tr><td>Licence</td><td><b>GNU General Public License version 3</b> (GPLv3) — free software: use (including commercial), study, modification and redistribution allowed; any modified version that is redistributed must be under GPLv3, with its source code. Provided <b>without any warranty</b>.<br><span class=""ana-dim"">Full text: gnu.org/licenses/gpl-3.0 (LICENSE file of the repository)</span></td></tr>
-        <tr><td>Contact</td><td>Source code, issues and contributions: <a class=""ab-mono"" href=""https://{6}"" target=""_blank"" rel=""noopener"">{7}</a></td></tr>
+        <tr><td>Contact</td><td>Source code, issues and contributions: <a class=""ab-mono"" href=""https://{7}"" target=""_blank"" rel=""noopener"">{8}</a></td></tr>
         <tr><td>Development</td><td>Developed with the help of Claude Code (Anthropic).</td></tr>
       </table>
       <h4>Third-party components and trademarks</h4>
       <table class=""ana-t ana-kv"">
         <tr><td>D3.js v7.9.0</td><td>Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock.
-          <details><summary class=""ana-dim"">Licence text</summary><pre class=""ab-lic"">{8}</pre></details></td></tr>
+          <details><summary class=""ana-dim"">Licence text</summary><pre class=""ab-lic"">{9}</pre></details></td></tr>
         <tr><td>Capella, ARCADIA</td><td>Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated.</td></tr>
         <tr><td>Test models</td><td>Capella samples “In-Flight Entertainment System” (<a href=""https://github.com/dbinfrago/Capella-IFE-sample"" target=""_blank"" rel=""noopener"">github.com/dbinfrago/Capella-IFE-sample</a>) and “AIDA” (<a href=""https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture"" target=""_blank"" rel=""noopener"">sahara.irt-saintexupery.com/AIDA/AIDAArchitecture</a>).</td></tr>
       </table>
       <h4>Technical information</h4>
-      <table class=""ana-t ana-kv"">{9}</table>
+      <table class=""ana-t ana-kv"">{10}</table>
     </div>
     <div class=""cw-d-ftr""><button class=""cap-lf-btn"" data-c=""copy"" title=""Copy version, browser and model, to attach to an issue"">📋 Copy the info</button><span style=""flex:1""></span><button class=""phl-export-btn"" data-c=""x"">Close</button></div></div>"
-"js/50-a-propos.js";"55";"Capella, ARCADIA Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié. Modèles de test Exemples Capella « In-Flight Entertainment System » ( github.com/dbinfrago/Capella-IFE-sample ) et « AIDA » ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Informations techniques";"<div class=""cw-d-box ab-box"">
+"js/50-a-propos.js";"69";"Capella, ARCADIA Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié. Modèles de test Exemples Capella « In-Flight Entertainment System » ( github.com/dbinfrago/Capella-IFE-sample ) et « AIDA » ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Informations techniques";"<div class=""cw-d-box ab-box"">
     <div class=""cw-d-hdr""><b>ℹ About</b><button class=""cap-lf-btn"" data-c=""x"">✕</button></div>
     <div class=""cw-d-body"">
-      <div class=""ab-id""><div class=""ab-logo"">🔷</div><div><div class=""ab-name"">{0}</div><div class=""ab-slogan"">{1}</div>
-        <div class=""ab-ver"">Version {2} · {3}</div>
+      <div class=""ab-id""><div class=""ab-logo"">{0}</div><div><div class=""ab-name"">{1}</div><div class=""ab-slogan"">{2}</div>
+        <div class=""ab-ver"">Version {3} · {4}</div>
         <div class=""ana-dim"">Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file.</div></div></div>
       <h4>Author and licence</h4>
       <table class=""ana-t ana-kv"">
-        <tr><td>Author</td><td>© {4} {5} — creator and rights holder</td></tr>
+        <tr><td>Author</td><td>© {5} {6} — creator and rights holder</td></tr>
         <tr><td>Licence</td><td><b>GNU General Public License version 3</b> (GPLv3) — free software: use (including commercial), study, modification and redistribution allowed; any modified version that is redistributed must be under GPLv3, with its source code. Provided <b>without any warranty</b>.<br><span class=""ana-dim"">Full text: gnu.org/licenses/gpl-3.0 (LICENSE file of the repository)</span></td></tr>
-        <tr><td>Contact</td><td>Source code, issues and contributions: <a class=""ab-mono"" href=""https://{6}"" target=""_blank"" rel=""noopener"">{7}</a></td></tr>
+        <tr><td>Contact</td><td>Source code, issues and contributions: <a class=""ab-mono"" href=""https://{7}"" target=""_blank"" rel=""noopener"">{8}</a></td></tr>
         <tr><td>Development</td><td>Developed with the help of Claude Code (Anthropic).</td></tr>
       </table>
       <h4>Third-party components and trademarks</h4>
       <table class=""ana-t ana-kv"">
         <tr><td>D3.js v7.9.0</td><td>Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock.
-          <details><summary class=""ana-dim"">Licence text</summary><pre class=""ab-lic"">{8}</pre></details></td></tr>
+          <details><summary class=""ana-dim"">Licence text</summary><pre class=""ab-lic"">{9}</pre></details></td></tr>
         <tr><td>Capella, ARCADIA</td><td>Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated.</td></tr>
         <tr><td>Test models</td><td>Capella samples “In-Flight Entertainment System” (<a href=""https://github.com/dbinfrago/Capella-IFE-sample"" target=""_blank"" rel=""noopener"">github.com/dbinfrago/Capella-IFE-sample</a>) and “AIDA” (<a href=""https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture"" target=""_blank"" rel=""noopener"">sahara.irt-saintexupery.com/AIDA/AIDAArchitecture</a>).</td></tr>
       </table>
       <h4>Technical information</h4>
-      <table class=""ana-t ana-kv"">{9}</table>
+      <table class=""ana-t ana-kv"">{10}</table>
     </div>
     <div class=""cw-d-ftr""><button class=""cap-lf-btn"" data-c=""copy"" title=""Copy version, browser and model, to attach to an issue"">📋 Copy the info</button><span style=""flex:1""></span><button class=""phl-export-btn"" data-c=""x"">Close</button></div></div>"
-"js/50-a-propos.js";"60";"📋 Copier les infos Fermer";"<div class=""cw-d-box ab-box"">
+"js/50-a-propos.js";"74";"📋 Copier les infos Fermer";"<div class=""cw-d-box ab-box"">
     <div class=""cw-d-hdr""><b>ℹ About</b><button class=""cap-lf-btn"" data-c=""x"">✕</button></div>
     <div class=""cw-d-body"">
-      <div class=""ab-id""><div class=""ab-logo"">🔷</div><div><div class=""ab-name"">{0}</div><div class=""ab-slogan"">{1}</div>
-        <div class=""ab-ver"">Version {2} · {3}</div>
+      <div class=""ab-id""><div class=""ab-logo"">{0}</div><div><div class=""ab-name"">{1}</div><div class=""ab-slogan"">{2}</div>
+        <div class=""ab-ver"">Version {3} · {4}</div>
         <div class=""ana-dim"">Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file.</div></div></div>
       <h4>Author and licence</h4>
       <table class=""ana-t ana-kv"">
-        <tr><td>Author</td><td>© {4} {5} — creator and rights holder</td></tr>
+        <tr><td>Author</td><td>© {5} {6} — creator and rights holder</td></tr>
         <tr><td>Licence</td><td><b>GNU General Public License version 3</b> (GPLv3) — free software: use (including commercial), study, modification and redistribution allowed; any modified version that is redistributed must be under GPLv3, with its source code. Provided <b>without any warranty</b>.<br><span class=""ana-dim"">Full text: gnu.org/licenses/gpl-3.0 (LICENSE file of the repository)</span></td></tr>
-        <tr><td>Contact</td><td>Source code, issues and contributions: <a class=""ab-mono"" href=""https://{6}"" target=""_blank"" rel=""noopener"">{7}</a></td></tr>
+        <tr><td>Contact</td><td>Source code, issues and contributions: <a class=""ab-mono"" href=""https://{7}"" target=""_blank"" rel=""noopener"">{8}</a></td></tr>
         <tr><td>Development</td><td>Developed with the help of Claude Code (Anthropic).</td></tr>
       </table>
       <h4>Third-party components and trademarks</h4>
       <table class=""ana-t ana-kv"">
         <tr><td>D3.js v7.9.0</td><td>Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock.
-          <details><summary class=""ana-dim"">Licence text</summary><pre class=""ab-lic"">{8}</pre></details></td></tr>
+          <details><summary class=""ana-dim"">Licence text</summary><pre class=""ab-lic"">{9}</pre></details></td></tr>
         <tr><td>Capella, ARCADIA</td><td>Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated.</td></tr>
         <tr><td>Test models</td><td>Capella samples “In-Flight Entertainment System” (<a href=""https://github.com/dbinfrago/Capella-IFE-sample"" target=""_blank"" rel=""noopener"">github.com/dbinfrago/Capella-IFE-sample</a>) and “AIDA” (<a href=""https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture"" target=""_blank"" rel=""noopener"">sahara.irt-saintexupery.com/AIDA/AIDAArchitecture</a>).</td></tr>
       </table>
       <h4>Technical information</h4>
-      <table class=""ana-t ana-kv"">{9}</table>
+      <table class=""ana-t ana-kv"">{10}</table>
     </div>
     <div class=""cw-d-ftr""><button class=""cap-lf-btn"" data-c=""copy"" title=""Copy version, browser and model, to attach to an issue"">📋 Copy the info</button><span style=""flex:1""></span><button class=""phl-export-btn"" data-c=""x"">Close</button></div></div>"
-"js/50-a-propos.js";"67";"✔ Informations copiées";"✔ Information copied"
-"js/50-a-propos.js";"67";"Copiez les informations :";"Copy the information:"
+"js/50-a-propos.js";"81";"✔ Informations copiées";"✔ Information copied"
+"js/50-a-propos.js";"81";"Copiez les informations :";"Copy the information:"
 "js/51-tableau.js";"21";"Vue 1";"View 1"
 "js/51-tableau.js";"36";"Vue 1";"View 1"
 "js/51-tableau.js";"121";"Clic : afficher · double-clic : renommer";"Click: show · double-click: rename"

@@ -30,6 +30,20 @@ function capAboutTech(){
   ];
 }
 
+/**
+ * Logo d'Arcalyse (proposition B : la lettre « A » dessinée en graphe, nœuds aux couleurs des couches ARCADIA).
+ * Les traits suivent la couleur du texte (currentColor).
+ * @param {number} taille - côté du carré, en pixels
+ * @returns {string} balise SVG
+ */
+function capLogoSvg(taille){
+  return `<svg class="cap-logo" width="${taille}" height="${taille}" viewBox="0 0 100 100" aria-hidden="true">`
+    +'<g stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none" opacity=".85"><path d="M50 16L20 84M50 16L80 84"/>'
+    +'<path d="M32 58Q50 40 68 58" stroke="#5aa2e8" stroke-width="6"/></g>'
+    +'<circle cx="50" cy="16" r="9" fill="#f0a35e"/><circle cx="20" cy="84" r="9" fill="#4fc3a1"/><circle cx="80" cy="84" r="9" fill="#e8c84f"/>'
+    +'<circle cx="32" cy="58" r="5" fill="#5aa2e8"/><circle cx="68" cy="58" r="5" fill="#5aa2e8"/></svg>';
+}
+
 /** Ouvre la fenêtre « À propos ». */
 function capAboutOpen(){
   let ov=document.getElementById('cap-about-ov');
@@ -39,7 +53,7 @@ function capAboutOpen(){
   ov.innerHTML=_L(`<div class="cw-d-box ab-box">
     <div class="cw-d-hdr"><b>ℹ À propos</b><button class="cap-lf-btn" data-c="x">✕</button></div>
     <div class="cw-d-body">
-      <div class="ab-id"><div class="ab-logo">🔷</div><div><div class="ab-name">${e(CAP_APP_NAME)}</div><div class="ab-slogan">${e(CAP_APP_SLOGAN)}</div>
+      <div class="ab-id"><div class="ab-logo">${capLogoSvg(56)}</div><div><div class="ab-name">${e(CAP_APP_NAME)}</div><div class="ab-slogan">${e(CAP_APP_SLOGAN)}</div>
         <div class="ab-ver">Version ${e(CAP_APP_VERSION)} · ${e(tech[1][1])}</div>
         <div class="ana-dim">Explorateur et analyseur hors ligne de modèles Capella / ARCADIA : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML.</div></div></div>
       <h4>Auteur et licence</h4>

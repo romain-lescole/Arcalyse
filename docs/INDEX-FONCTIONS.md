@@ -134,7 +134,7 @@
 - `openHelpModal` (l. 149) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
 - `positionOverlay` (l. 245) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
 
-## 20-capella-chargement.js — 818 lignes
+## 20-capella-chargement.js — 824 lignes
 
 - `CAP_LAYERS` (l. 4)
 - `CAP_NS_LAYER` (l. 12)
@@ -144,33 +144,33 @@
 - `CAP_PKG_TYPES` (l. 16)
 - `CAP_TYPE_ICON` (l. 17)
 - `capBuildPageHtml` (l. 36) — Construit le HTML de la page actuelle (tout le HTML/CSS/JS de l'application), fichier
-- `capPageFileName` (l. 104) — Nom de fichier proposé pour la page sauvegardée.
-- `capSaveFullPage` (l. 106) — Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur).
-- `capSavePageDirect` (l. 120) — Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
-- `capEsc` (l. 150) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
-- `capLoadFile` (l. 166) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
-- `capApplyXmlDoc` (l. 206) — Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
-- `capShowWelcome` (l. 231) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
-- `capWelcomeStatus` (l. 242) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
-- `capUpdateWelcome` (l. 248) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
-- `XSI_NS` (l. 290)
-- `capXType` (l. 292) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
-- `capTName` (l. 294) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
-- `capXId` (l. 296) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
-- `capXName` (l. 298) — Lit l'attribut 'name' d'un élément XML Capella.
-- `capResolveLayer` (l. 303) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
-- `capGetAttrs` (l. 309) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
-- `capBuildTree` (l. 320) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
-- `capRunBulk` (l. 346) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
-- `capBuildTypeRegistry` (l. 356) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
-- `capApplyPanelOnLoad` (l. 376) — Appelée après le chargement Capella : configure le panneau gauche RM.
-- `capInjectToArbo` (l. 448) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
-- `capInjectCapellaRelsToCriteria` (l. 552) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
-- `capInjectLinksToModel` (l. 593) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
-- `capFilterArboToLinked` (l. 637) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
-- `capInjectChainsToModal` (l. 676) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
-- `capRenderCurrentView` (l. 737) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
-- `capUpdateStatChips` (l. 809) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
+- `capPageFileName` (l. 110) — Nom de fichier proposé pour la page sauvegardée.
+- `capSaveFullPage` (l. 112) — Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur).
+- `capSavePageDirect` (l. 126) — Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
+- `capEsc` (l. 156) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
+- `capLoadFile` (l. 172) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
+- `capApplyXmlDoc` (l. 212) — Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
+- `capShowWelcome` (l. 237) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
+- `capWelcomeStatus` (l. 248) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
+- `capUpdateWelcome` (l. 254) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
+- `XSI_NS` (l. 296)
+- `capXType` (l. 298) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
+- `capTName` (l. 300) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
+- `capXId` (l. 302) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
+- `capXName` (l. 304) — Lit l'attribut 'name' d'un élément XML Capella.
+- `capResolveLayer` (l. 309) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
+- `capGetAttrs` (l. 315) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
+- `capBuildTree` (l. 326) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
+- `capRunBulk` (l. 352) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
+- `capBuildTypeRegistry` (l. 362) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
+- `capApplyPanelOnLoad` (l. 382) — Appelée après le chargement Capella : configure le panneau gauche RM.
+- `capInjectToArbo` (l. 454) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
+- `capInjectCapellaRelsToCriteria` (l. 558) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
+- `capInjectLinksToModel` (l. 599) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
+- `capFilterArboToLinked` (l. 643) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
+- `capInjectChainsToModal` (l. 682) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
+- `capRenderCurrentView` (l. 743) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
+- `capUpdateStatChips` (l. 815) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
 ## 21-capella-vues-base.js — 1449 lignes
 
@@ -645,7 +645,7 @@
 - `capScPan` (l. 319) — Déplacement du diagramme par cliquer-glisser (en plus des barres de défilement, de la molette et de Maj + molette).
 - `capRenderScenarios` (l. 332) — Rend la vue 🎬 Scénarios : liste filtrable à gauche, diagramme de séquence (ou contrôles) à droite.
 
-## 50-a-propos.js — 73 lignes
+## 50-a-propos.js — 87 lignes
 
 - `CAP_APP_VERSION` (l. 5)
 - `CAP_APP_AUTHOR` (l. 6)
@@ -654,7 +654,8 @@
 - `CAP_APP_REPO` (l. 9)
 - `CAP_D3_LICENSE` (l. 11) — Texte de la licence ISC de D3.js (reproduction obligatoire).
 - `capAboutTech` (l. 19) — Informations techniques (version, navigateur, accès direct aux fichiers, modèle chargé), pour un signalement.
-- `capAboutOpen` (l. 34) — Ouvre la fenêtre « À propos ».
+- `capLogoSvg` (l. 39) — Logo d'Arcalyse (proposition B : la lettre « A » dessinée en graphe, nœuds aux couleurs des couches ARCADIA).
+- `capAboutOpen` (l. 48) — Ouvre la fenêtre « À propos ».
 
 ## 51-tableau.js — 809 lignes
 
