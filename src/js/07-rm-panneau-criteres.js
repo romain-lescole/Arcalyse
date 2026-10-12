@@ -16,6 +16,12 @@ function buildPanel() {
 
   // ── Relations ──────────────────────────────────────────────────────────
   const rb=document.getElementById('rel-body'); rb.innerHTML='';
+  // Recherche dans les critères de relation (texte conservé dans S.relSearch entre deux reconstructions)
+  if (!('relSearch' in S)) S.relSearch='';
+  const relQ=document.createElement('input'); relQ.type='text'; relQ.className='rmf-q';
+  relQ.placeholder=_L('🔍 Filtrer les relations…'); relQ.value=S.relSearch;
+  relQ.oninput=()=>{ S.relSearch=relQ.value.trim().toLowerCase(); rmFiltersSearch(rb, S.relSearch); };
+  const relQw=document.createElement('div'); relQw.style.cssText='padding:2px 0 6px;'; relQw.appendChild(relQ); rb.appendChild(relQw);
   const mCfg=MODES[currentMode==='PBS'?'PBS':currentMode]==='capella'?null:MODES[currentMode==='PBS'?'PBS':currentMode];
   const _mCfg=MODES[currentMode];
 
@@ -32,6 +38,7 @@ function buildPanel() {
     const nm=document.createElement('span'); nm.className='rname';
     nm.textContent = cfg.label || t; // nom humain si défini (relations Capella), sinon clé technique
     if (cfg.label) nm.title = t; // tooltip = nom technique réel (ex: "PC NODE→PC NODE")
+    row.dataset.searchKey = ((cfg.label||'')+' '+t).toLowerCase();
     row.appendChild(cb); row.appendChild(sw); row.appendChild(nm);
     if (cfg._capella) { const n=MODEL.relations.filter(r=>r.type===t).length; const c=document.createElement('span'); c.className='typ-cnt'; c.textContent=n; c.title=_L(`${n} relation(s) de ce type`); row.appendChild(c); }
     if (!readOnly && !RM_RO) {   // RM_RO : ni modification ni suppression de critère
@@ -52,7 +59,7 @@ function buildPanel() {
   const sysmlBody=document.createElement('div'); sysmlBody.style.cssText='overflow:hidden;';
   let sysmlColl=false;
   sysmlHdr.querySelector('.rel-grp-hdr').onclick=()=>{ sysmlColl=!sysmlColl; sysmlBody.style.maxHeight=sysmlColl?'0':(sysmlBody.scrollHeight+200)+'px'; sysmlHdr.querySelector('.grp-arr').style.transform=sysmlColl?'rotate(-90deg)':''; };
-  sysmlBody.style.maxHeight='2000px';
+  sysmlBody.style.maxHeight='2000px'; sysmlBody.dataset.grpBody='1';
   Object.entries(RCFG).filter(([t])=>SYSML_RELS_SET.has(t)).forEach(([t,cfg])=>sysmlBody.appendChild(makeRelRow(t,cfg,false)));
   if (sysmlBody.children.length) { rb.appendChild(sysmlHdr); rb.appendChild(sysmlBody); }
 
@@ -64,7 +71,7 @@ function buildPanel() {
     const capBody=document.createElement('div'); capBody.style.cssText='overflow:hidden;';
     let capColl=false;
     capHdr.querySelector('.rel-grp-hdr').onclick=()=>{ capColl=!capColl; capBody.style.maxHeight=capColl?'0':(capBody.scrollHeight+200)+'px'; capHdr.querySelector('.grp-arr').style.transform=capColl?'rotate(-90deg)':''; };
-    capBody.style.maxHeight='2000px';
+    capBody.style.maxHeight='2000px'; capBody.dataset.grpBody='1';
     capRelEntries.forEach(([t,cfg])=>capBody.appendChild(makeRelRow(t,cfg,true)));
     rb.appendChild(capHdr); rb.appendChild(capBody);
   }
@@ -81,6 +88,7 @@ function buildPanel() {
   addRel.onclick=()=>showNewRelCriteriaForm(rb);
   if (RM_RO) addRel.style.display='none';   // lecture seule
   rb.appendChild(addRel);
+  if (S.relSearch) rmFiltersSearch(rb, S.relSearch);
 
   // ── Types d'éléments ────────────────────────────────────────────────────
   {
@@ -224,6 +232,7 @@ function buildPanel() {
     row.appendChild(cb); row.appendChild(nm); sb.appendChild(row);
   });
 
+  rmFiltersCount();
   buildArbo();
   // Register chain click handler (called from arbo when a chain element is clicked)
   window._capChainClickHandler=(elId)=>{
@@ -232,6 +241,42 @@ function buildPanel() {
     capShowChainInMap(chain);
   };
 }
+
+/* ── ⚙ Filtres : tiroir au-dessus du graphe (types d'éléments | critères de relation) ── */
+/** Filtre en direct les lignes d'une colonne du tiroir ⚙ Filtres par leur clé de recherche,
+ * et masque les groupes devenus vides.
+ * @param {HTMLElement} box - Conteneur de la colonne (#rel-body ou #typ-body)
+ * @param {string} q - Texte recherché, en minuscules
+ */
+function rmFiltersSearch(box, q){
+  box.querySelectorAll('.row[data-search-key]').forEach(row=>{ row.style.display=(!q||row.dataset.searchKey.includes(q))?'':'none'; });
+  box.querySelectorAll('[data-grp-body]').forEach(body=>{
+    const any=[...body.querySelectorAll('.row[data-search-key]')].some(r=>r.style.display!=='none');
+    if (body.previousElementSibling) body.previousElementSibling.style.display=any?'':'none';
+    body.style.display=any?'':'none';
+  });
+}
+/** Met à jour les compteurs « cochés / total » du tiroir ⚙ Filtres et de son bouton (barre 2). */
+function rmFiltersCount(){
+  const cnt=id=>{ const cbs=[...document.querySelectorAll(`#${id} .row input[type=checkbox][data-type]`)]; return [cbs.filter(c=>c.checked).length, cbs.length]; };
+  const [ta,tt]=cnt('typ-body'), [ra,rt]=cnt('rel-body');
+  const set=(id,txt)=>{ const e=document.getElementById(id); if(e) e.textContent=txt; };
+  set('rmf-typ-n', `${ta}/${tt}`); set('rmf-rel-n', `${ra}/${rt}`);
+  set('b-filters-n', _L(`${ta}/${tt} types · ${ra}/${rt} relations`));
+}
+/** Ouvre ou ferme le tiroir ⚙ Filtres.
+ * @param {boolean} [open] - État voulu (bascule si omis)
+ */
+function rmFiltersToggle(open){
+  const d=document.getElementById('rm-filters'); if(!d) return;
+  const on = open===undefined ? d.style.display==='none' : open;
+  d.style.display=on?'flex':'none';
+  document.getElementById('b-filters')?.classList.toggle('active', on);
+}
+document.getElementById('b-filters').onclick=()=>rmFiltersToggle();
+document.getElementById('rm-filters-close').onclick=()=>rmFiltersToggle(false);
+// Les cases cochées dans le tiroir mettent à jour les compteurs
+document.getElementById('rm-filters').addEventListener('change', ()=>rmFiltersCount());
 
 /** Visualise une chaîne fonctionnelle dans la Relation Map en préservant ses ramifications
  * réelles (un même élément peut avoir plusieurs liens sortants et/ou entrants — cf. chain.graph

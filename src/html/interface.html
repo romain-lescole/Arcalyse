@@ -51,6 +51,8 @@
   <div class="tbtn" id="b-zo"  title="Zoom arrière (Ctrl+-)">－</div>
   <div class="tbtn" id="b-fit" title="Ajuster (Ctrl+W)">⊡ Fit</div>
   <div class="tsep"></div>
+  <div class="tbtn" id="b-filters" title="Types d'éléments et critères de relation affichés dans le graphe">⚙ Filtres <span id="b-filters-n" class="rm-filters-n"></span></div>
+  <div class="tsep"></div>
   <div class="tbtn" id="b-ea">↓ Ouvrir tout</div>
   <div class="tbtn" id="b-ca">↑ Fermer tout</div>
   <div class="tsep"></div>
@@ -148,28 +150,6 @@
         <div id="b-new-ctx-el" class="add-btn" style="margin-top:8px">✚ Créer un nouvel élément</div>
       </div>
     </div>
-    <div class="sec" id="sec-rel">
-      <div class="sec-hdr coll"><span>Critères de relation</span>
-        <span style="display:flex;align-items:center;gap:2px;margin-left:auto;margin-right:4px">
-          <span title="Tout sélectionner"   onclick="event.stopPropagation();relSelectAll(true)"
-                style="cursor:pointer;font-size:13px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">☑</span>
-          <span title="Tout désélectionner" onclick="event.stopPropagation();relSelectAll(false)"
-                style="cursor:pointer;font-size:13px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">☐</span>
-        </span>
-        <span class="chv">▾</span></div>
-      <div class="sec-body" id="rel-body"></div>
-    </div>
-    <div class="sec" id="sec-typ">
-      <div class="sec-hdr coll"><span id="sec-typ-label">Types d'éléments</span>
-        <span style="display:flex;align-items:center;gap:2px;margin-left:auto;margin-right:4px">
-          <span title="Tout sélectionner"   onclick="event.stopPropagation();typSelectAll(true)"
-                style="cursor:pointer;font-size:13px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">☑</span>
-          <span title="Tout désélectionner" onclick="event.stopPropagation();typSelectAll(false)"
-                style="cursor:pointer;font-size:13px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">☐</span>
-        </span>
-        <span class="chv">▾</span></div>
-      <div class="sec-body" id="typ-body"></div>
-    </div>
     <div class="sec" style="display:none">
       <div class="sec-hdr"><span>Portée (Paquetages)</span><span class="chv">▾</span></div>
       <div class="sec-body" id="scp-body"></div>
@@ -188,6 +168,22 @@
         <g id="g-nodes"></g>
       </g>
     </svg>
+    <!-- ⚙ Filtres : tiroir au-dessus du graphe (types d'éléments | critères de relation) -->
+    <div id="rm-filters" style="display:none">
+      <div class="rmf-head"><span>⚙ Filtres du graphe</span><button id="rm-filters-close" type="button" title="Fermer (Échap)">×</button></div>
+      <div class="rmf-cols">
+        <div class="rmf-col" id="sec-typ">
+          <div class="rmf-col-h"><span id="sec-typ-label">Types d'éléments</span><span id="rmf-typ-n" class="rm-filters-n"></span>
+            <span class="rmf-acts"><span title="Tout sélectionner" onclick="typSelectAll(true)" style="cursor:pointer;font-size:13px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">☑</span><span title="Tout désélectionner" onclick="typSelectAll(false)" style="cursor:pointer;font-size:13px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">☐</span></span></div>
+          <div class="rmf-body" id="typ-body"></div>
+        </div>
+        <div class="rmf-col" id="sec-rel">
+          <div class="rmf-col-h"><span>Critères de relation</span><span id="rmf-rel-n" class="rm-filters-n"></span>
+            <span class="rmf-acts"><span title="Tout sélectionner" onclick="relSelectAll(true)" style="cursor:pointer;font-size:13px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">☑</span><span title="Tout désélectionner" onclick="relSelectAll(false)" style="cursor:pointer;font-size:13px;color:var(--c-dim);padding:0 2px;line-height:1" onmouseover="this.style.color='var(--c-text)'" onmouseout="this.style.color='var(--c-dim)'">☐</span></span></div>
+          <div class="rmf-body" id="rel-body"></div>
+        </div>
+      </div>
+    </div>
     <div id="legend"><h3 id="leg-hdr" title="Replier / déplier la légende"><span id="leg-title">Légende</span><span class="chv">▾</span></h3><div id="leg-body"></div></div>
   </div>
   <!-- Panneau de détail de la Relation Map (clic droit › 🔎 Détail) -->

@@ -75,6 +75,8 @@ Chaînes de navigation Metaclass → Property (✨ Colonne par chemin).
 
 - **Relation Map — arbre sans redéploiement** (oct. 2026) : `buildTreeData` parcourt en largeur (un élément est rencontré à sa plus courte distance du contexte) ; relations actives regroupées par (cible, type) → une seule arête, `relN` = nombre (« ×n » sur l'étiquette) ; ⊙ Unique (`S.singleNode`, actif par défaut, bouton `#b-single` réaffiché) : une occurrence déjà déployée devient `isRef` (grisée, ↺, non dépliée ; clic = sélection de la première occurrence + `zoomBeh.translateTo`). Pas de vraie boucle possible : les ancêtres du chemin sont toujours exclus ; l'effet « boucle » venait des redéploiements (IFE, Cabin Terminal, profondeur 5 : 245 nœuds pour 55 éléments → 108 avec ⊙ Unique).
 
+- **Relation Map — étape 2, tiroir ⚙ Filtres** (oct. 2026) : `#rm-filters` (dans `#graph`, au-dessus du SVG) remplace les sections Critères de relation / Types d'éléments du panneau gauche ; les conteneurs `#typ-body` et `#rel-body` (ids conservés, remplis par `buildPanel`) sont ses deux colonnes. Recherche des relations `S.relSearch` + `rmFiltersSearch`, compteurs `rmFiltersCount` (colonnes et bouton `#b-filters`), ouverture `rmFiltersToggle` (bouton, ×, Échap).
+
 ## 6 bis. Vue chaîne de la Relation Map
 
 - `capShowChainInMap(chain)` → `S.chainView` ; `render()` délègue à `renderChainView` (couches `capChainLayout`, LR/TB/RL), bandeau `rmChainBanner`, surbrillance `rmHighlight`, cadrage `S._chainBounds` dans `fitView`. `setCtx` quitte la vue chaîne. Plus d'éléments temporaires `_capViz`.

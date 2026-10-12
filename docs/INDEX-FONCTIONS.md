@@ -11,7 +11,7 @@
 - `TCFG` (l. 38)
 - `MODES` (l. 50)
 
-## 02-themes.js — 307 lignes
+## 02-themes.js — 302 lignes
 
 - `THEMES` (l. 6)
 - `capInk` (l. 57) — Couleur de texte lisible sur un fond donné : noir ou blanc, selon le meilleur contraste (WCAG).
@@ -30,7 +30,7 @@
 - `capContrastCss` (l. 156) — Génère, pour le thème clair courant, des règles qui foncent les couleurs de texte fixes des feuilles
 - `applyTheme` (l. 198) — Applique le thème visuel global (dark/light/dracula/solarized/nord).
 - `applyMode` (l. 243) — Bascule entre les modes d'affichage : default (Relation Map), PBS, capella.
-- `tv` (l. 305) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
+- `tv` (l. 300) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
 
 ## 03-rm-etat-svg.js — 121 lignes
 
@@ -83,10 +83,13 @@
 - `typSelectAll` (l. 500) — Coche ou décoche tous les filtres de types d'éléments du panneau gauche.
 - `relSelectAll` (l. 508) — Coche ou décoche tous les filtres de types de relations du panneau gauche.
 
-## 07-rm-panneau-criteres.js — 253 lignes
+## 07-rm-panneau-criteres.js — 298 lignes
 
 - `buildPanel` (l. 7) — Reconstruit entièrement le panneau gauche : critères de relation, types d'éléments.
-- `capShowChainInMap` (l. 241) — Visualise une chaîne fonctionnelle dans la Relation Map en préservant ses ramifications
+- `rmFiltersSearch` (l. 251) — Filtre en direct les lignes d'une colonne du tiroir ⚙ Filtres par leur clé de recherche,
+- `rmFiltersCount` (l. 260) — Met à jour les compteurs « cochés / total » du tiroir ⚙ Filtres et de son bouton (barre 2).
+- `rmFiltersToggle` (l. 270) — Ouvre ou ferme le tiroir ⚙ Filtres.
+- `capShowChainInMap` (l. 286) — Visualise une chaîne fonctionnelle dans la Relation Map en préservant ses ramifications
 
 ## 08-editeur-modele.js — 573 lignes
 
@@ -530,7 +533,7 @@
 - `capTfFilter` (l. 127) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
 - `capTfWatch` (l. 149) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
 
-## 43-visite-guidee.js — 448 lignes
+## 43-visite-guidee.js — 446 lignes
 
 - `CAP_TOUR_STEPS` (l. 12) — Étapes de la visite générale : s = sélecteur CSS de la zone (toutes les correspondances visibles sont encadrées
 - `CAP_TOUR_EXPLORE` (l. 57) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
@@ -538,23 +541,23 @@
 - `CAP_TOUR_ANA_TXT` (l. 75) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
 - `capTourRmCtx` (l. 88) — Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
 - `CAP_TOUR_VIEWS` (l. 102) — Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
-- `CAP_TOUR_START` (l. 241) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
-- `CAP_TOUR_AFTER` (l. 254) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
-- `capTourCtxKey` (l. 271) — Clé de la vue affichée pour les visites contextuelles.
-- `capTourCtx` (l. 279) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
-- `capTourEls` (l. 287) — Éléments affichés désignés par le sélecteur d'une étape.
-- `capTourVisible` (l. 298) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
-- `capTourStart` (l. 308) — Lance une visite guidée depuis sa première étape.
-- `capTourStartView` (l. 329) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
-- `capTourGo` (l. 337) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
-- `capTourPos` (l. 357) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
-- `capTourRenderPop` (l. 364) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
-- `capTourPlace` (l. 376) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
-- `capTourKey` (l. 408) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
-- `capTourEnd` (l. 417) — Quitte la visite guidée et retire la mise en évidence.
-- `capTourHelpMenu` (l. 424) — Ouvre le menu ? Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
-- `capTourStartHere` (l. 431) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
-- `capTourResumeAfterLoad` (l. 438) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
+- `CAP_TOUR_START` (l. 239) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
+- `CAP_TOUR_AFTER` (l. 252) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
+- `capTourCtxKey` (l. 269) — Clé de la vue affichée pour les visites contextuelles.
+- `capTourCtx` (l. 277) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
+- `capTourEls` (l. 285) — Éléments affichés désignés par le sélecteur d'une étape.
+- `capTourVisible` (l. 296) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
+- `capTourStart` (l. 306) — Lance une visite guidée depuis sa première étape.
+- `capTourStartView` (l. 327) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
+- `capTourGo` (l. 335) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
+- `capTourPos` (l. 355) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
+- `capTourRenderPop` (l. 362) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
+- `capTourPlace` (l. 374) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
+- `capTourKey` (l. 406) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
+- `capTourEnd` (l. 415) — Quitte la visite guidée et retire la mise en évidence.
+- `capTourHelpMenu` (l. 422) — Ouvre le menu ? Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
+- `capTourStartHere` (l. 429) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
+- `capTourResumeAfterLoad` (l. 436) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
 
 ## 44-functional-exchange.js — 512 lignes
 

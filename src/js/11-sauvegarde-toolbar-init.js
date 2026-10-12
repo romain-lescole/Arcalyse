@@ -227,7 +227,7 @@ document.addEventListener('keydown', ev=>{
   if (ev.ctrlKey&&ev.key==='-'){  ev.preventDefault(); svg.transition().duration(200).call(zoomBeh.scaleBy,1/1.4); }
   if (ev.ctrlKey&&ev.key==='w'){  ev.preventDefault(); fitView(true); }
   if (ev.key==='Escape'){
-    S.selNode=null; render();
+    S.selNode=null; render(); rmFiltersToggle(false);
     floatPanel.style.display='none';
     document.getElementById('modal-ov').classList.remove('open');
     document.getElementById('export-ov').classList.remove('open');

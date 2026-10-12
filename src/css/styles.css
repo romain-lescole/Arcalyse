@@ -286,6 +286,27 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
 .rm-dd .ctx-i.lbtn:hover{background:var(--c-bg3)}
 .rm-dd .ctx-i.lbtn.active{color:var(--c-accent);font-weight:600}
 
+/* ── Relation Map : tiroir ⚙ Filtres (types | relations) au-dessus du graphe ── */
+#rm-filters{position:absolute;top:8px;left:8px;z-index:20;width:min(760px,calc(100% - 16px));max-height:calc(100% - 16px);
+            flex-direction:column;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:8px;
+            box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.rmf-head{display:flex;align-items:center;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--c-border);
+          font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--c-dim)}
+.rmf-head button{background:none;border:none;color:var(--c-dim);cursor:pointer;font-size:18px;line-height:1}
+.rmf-head button:hover{color:var(--c-text)}
+.rmf-cols{display:flex;min-height:0;flex:1}
+.rmf-col{flex:1 1 50%;min-width:0;display:flex;flex-direction:column;min-height:0}
+.rmf-col+.rmf-col{border-left:1px solid var(--c-border)}
+.rmf-col-h{display:flex;align-items:center;gap:6px;padding:6px 10px;font-size:10px;font-weight:700;text-transform:uppercase;
+           letter-spacing:.06em;color:var(--c-dim);border-bottom:1px solid var(--c-border)}
+.rmf-acts{margin-left:auto;display:flex;gap:2px}
+.rmf-body{overflow-y:auto;padding:6px 10px;min-height:0;flex:1;max-height:62vh}
+.rmf-q{width:100%;padding:4px 8px;background:var(--c-bg3);border:1px solid var(--c-border);border-radius:6px;
+       color:var(--c-text);font-size:11px;outline:none;box-sizing:border-box}
+.rm-filters-n{font-weight:400;letter-spacing:0;text-transform:none;color:var(--c-dim);font-size:10px}
+#b-filters.active{border-color:var(--c-accent);color:var(--c-accent)}
+@media (max-width:640px){ .rmf-cols{flex-direction:column} .rmf-col+.rmf-col{border-left:none;border-top:1px solid var(--c-border)} }
+
 /* ── Relation Map : panneau de détail à droite (clic droit › 🔎 Détail) ── */
 #rm-detail{width:var(--rm-detail-w,340px);flex-shrink:0;border-left:1px solid var(--c-border);background:var(--c-bg2);
            overflow-y:auto;padding:16px;flex-direction:column;position:relative}

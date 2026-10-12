@@ -2471,7 +2471,18 @@
   "Chaque élément n'est déployé qu'une fois : ses autres occurrences restent grisées et repliées (↺ ; clic = aller à la première)": "Each element is expanded only once: its other occurrences stay greyed out and collapsed (↺; click = go to the first one)",
   "↺ déjà déployé ailleurs — clic : aller à la première occurrence": "↺ already expanded elsewhere — click: go to the first occurrence",
   "⊙ Unique": "⊙ Single",
-  "ne déploie chaque élément qu'une fois (autres occurrences grisées ↺),": "expands each element only once (other occurrences greyed out ↺),"
+  "ne déploie chaque élément qu'une fois (autres occurrences grisées ↺),": "expands each element only once (other occurrences greyed out ↺),",
+  "Types d'éléments et critères de relation affichés dans le graphe": "Element types and relation criteria displayed in the graph",
+  "⚙ Filtres": "⚙ Filters",
+  "⚙ Filtres du graphe": "⚙ Graph filters",
+  "Fermer (Échap)": "Close (Esc)",
+  "🔍 Filtrer les relations…": "🔍 Filter relations…",
+  "{0}/{1} types · {2}/{3} relations": "{0}/{1} types · {2}/{3} relations",
+  "Ouvre le tiroir des filtres au-dessus du graphe : à gauche les": "Opens the filter drawer above the graph: on the left the",
+  "types d'éléments": "element types",
+  "(couleur de leur couche ARCADIA), à droite les": "(colour of their ARCADIA layer), on the right the",
+  "critères de relation": "relation criteria",
+  "à suivre ; recherche, ☑ / ☐ tout cocher ou décocher, compteurs cochés / total. × ou Échap le referme.": "to follow; search, ☑ / ☐ check or uncheck all, checked / total counters. × or Esc closes it."
  },
  "interface": {
   "🌳 Arborescence": "🌳 Tree",

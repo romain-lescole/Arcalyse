@@ -275,7 +275,6 @@ function applyMode(mode) {
   if(capOv) { if(isCapella) capOv.classList.add('cap-visible'); else capOv.classList.remove('cap-visible'); }
   // Panneau 🔎 Détail de la Relation Map : masqué dans les vues Capella, rouvert au retour s'il l'était
   const rmDet=document.getElementById('rm-detail'); if(rmDet) rmDet.style.display = (!isCapella && _rmDetailOn) ? 'flex' : 'none';
-  document.querySelector('#sec-typ .sec-hdr')?.classList.toggle('coll', !isCapella);
   // Hide whole left panel in capella mode
   document.getElementById('panel').style.display = isCapella ? 'none' : '';
   document.getElementById('panel-resize-bar').style.display = isCapella ? 'none' : '';
@@ -294,10 +293,6 @@ function applyMode(mode) {
     Object.keys(S.typF).forEach(t => S.typF[t] = true);
   }
   buildPanel(); setupMarkers(); rebuildTree();
-  const relHdr = document.getElementById('rel-body').previousElementSibling;
-  const typHdr = document.getElementById('typ-body').previousElementSibling;
-  if (cfg) { relHdr.classList.remove('coll'); typHdr.classList.remove('coll'); }
-  else      { relHdr.classList.add('coll');    typHdr.classList.add('coll'); }
 }
 
 /** Retourne la valeur d'une variable CSS de thème. */
