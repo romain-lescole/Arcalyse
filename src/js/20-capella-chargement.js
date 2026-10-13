@@ -173,7 +173,7 @@ document.getElementById('capella-file-input').addEventListener('change',e=>{
 function capLoadFile(f, handle){
   const name=(f&&f.name)||'';
   const ext=(name.split('.').pop()||'').toLowerCase();
-  if (ext==='aird' && capDiagDispo()) { capDiagLoadAird(f); return; }   // 🗺 Diagrammes du projet
+  if (ext==='aird' && capDiagDispo()) { capDiagLoadAird(f); return; }   // 🔲 Diagrammes Capella du projet
   if (ext==='aird' || ext==='afm') {
     capWelcomeStatus(_L(`« ${name} » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet.`),'err');
     capShowWelcome(true); return;

@@ -184,7 +184,7 @@ Chaînes de navigation Metaclass → Property (✨ Colonne par chemin).
 - Qualité des noms : la vérification reste bilingue (verbes français et anglais) quelle que soit la langue de l'interface. Contenus saisis par l'utilisateur (tableaux de bord, règles, noms d'onglets) : gardent leur langue. Réglages enregistrés par nom de colonne (exports CSV) : propres à chaque langue.
 - Logo (proposition B, « A » en graphe) : SVG en ligne, `capLogoSvg(taille)` (50) pour l'À propos, copie statique dans l'écran d'accueil (interface.html) et favicon en data URI (index.html) — couleurs fixes des couches, traits en currentColor.
 
-## 🗺 Diagrammes (visionneuse d'Arcature)
+## 🔲 Diagrammes Capella (visionneuse d'Arcature)
 
 - Les diagrammes du projet (`.aird`) sont dessinés par la **visionneuse d'Arcature** (projet frère, même auteur, GPL v3) : `src/vendor/arcature-visionneuse.js` et `arcature-visionneuse-en.js`, produits dans Arcature par `node build.js --visionneuse` et `node build.js --visionneuse --lang en` (`dist/`), copiés ici **sans modification** (comme D3 : ne pas les éditer à la main, les remplacer). Le build d'Arcalyse insère la version de la langue construite ; la version multilingue embarque les deux et choisit au chargement (`data-lang`).
 - La visionneuse n'expose que `window.ArcatureVisionneuse` (tout le reste est enfermé dans une fonction ; styles préfixés `.arcv`, couleurs prises dans les variables `--c-…` d'Arcalyse). Elle lit le modèle à partir du texte XML (`XMLSerializer` sur `cap_xmlDoc`, transmis une fois par modèle) et le `.aird` ; lecture seule.

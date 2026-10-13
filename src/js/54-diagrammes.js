@@ -3,7 +3,7 @@
    ───────────────────────────────────────────────────────────────────────
    La visionneuse (src/vendor/arcature-visionneuse*.js, produite par Arcature : node build.js --visionneuse)
    n'expose que window.ArcatureVisionneuse ; elle lit le modèle (texte du .capella) et le .aird, en lecture seule.
-   Ici : chargement du .aird, vue 🗺 Diagrammes, section « Diagrammes » du panneau de détail.
+   Ici : chargement du .aird, vue 🔲 Diagrammes Capella, section « Diagrammes » du panneau de détail.
    Clic sur un élément d'un diagramme → panneau de détail de l'élément.
    ═══════════════════════════════════════════════════════════════════════ */
 
@@ -71,7 +71,7 @@ function capDiagSync() {
   if (info) info.textContent = _capDiag.airdCharge ? '' : _L('Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre.');
 }
 
-/** Rendu de la vue 🗺 Diagrammes. */
+/** Rendu de la vue 🔲 Diagrammes Capella. */
 function capRenderDiagrams() {
   const box = document.getElementById('cap-view-diag');
   if (!capDiagDispo()) {
@@ -84,7 +84,7 @@ function capRenderDiagrams() {
 }
 
 /**
- * Ouvre un diagramme dans la vue 🗺 Diagrammes et y met un élément en évidence.
+ * Ouvre un diagramme dans la vue 🔲 Diagrammes Capella et y met un élément en évidence.
  * @param {string} uid - identifiant de la représentation (.aird)
  * @param {string} [id] - élément du modèle à centrer
  */

@@ -75,7 +75,7 @@ function capOpenDetail(id){
   // Exigences, propriétés (PVMT) et contraintes de l'élément
   html+=capXtDetail(el.id, secTitle);
 
-  // 🗺 Diagrammes du projet (.aird) où l'élément est représenté
+  // 🔲 Diagrammes Capella du projet (.aird) où l'élément est représenté
   if(typeof capDiagDetail==='function') html+=capDiagDetail(el.id, secTitle);
 
   // Owner

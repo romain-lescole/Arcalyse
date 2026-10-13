@@ -18,7 +18,7 @@ var CAP_NAV_ITEMS=[
   {k:'cblk',      l:_L('🧱 Logical Component'), g:'flux', t:_L('Logical Components (LA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles')},
   {k:'compex',    l:_L('🔀 Behavior Exchange'), g:'flux', t:_L('Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange)')},
   {k:'physlink',  l:_L('🔌 Physical Link'),     g:'flux'},
-  {k:'diag',      l:_L('🗺 Diagrammes'),       g:'flux', t:_L('Diagrammes Capella du projet (.aird), dessinés comme dans Capella : liste, recherche, mini-carte, filtres, chaînes, exports ; clic sur un élément → son détail')},
+  {k:'diag',      l:_L('🔲 Diagrammes Capella'),       g:'flux', t:_L('Diagrammes Capella du projet (.aird), dessinés comme dans Capella : liste, recherche, mini-carte, filtres, chaînes, exports ; clic sur un élément → son détail')},
   {k:'scen',      l:_L('🎬 Scénarios'),        g:'flux', t:_L('Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références')},
   {k:'ports',     l:_L('🧩 Ports'),             g:'flux', t:_L('Traçabilité Function Port ↔ Component Port ↔ Physical Port')},
   {k:'links',     l:_L('🔗 Liens'),             g:'flux', t:_L('Relations entre les éléments du modèle')},

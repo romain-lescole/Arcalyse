@@ -2730,7 +2730,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 19 | 🔀 Behavior Exchange | 🔀 Behavior Exchange |
 | 19 | Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange) | PA-layer Component Exchanges between Physical Components Behavior, and with connected actors (formerly 🔀 Component Exchange) |
 | 20 | 🔌 Physical Link | 🔌 Physical Link |
-| 21 | 🗺 Diagrammes | 🗺 Diagrams |
+| 21 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
 | 22 | 🎬 Scénarios | 🎬 Scenarios |
 | 22 | Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références | Sequence diagrams of Capella scenarios (ES, FS, OES, OAS, IS): lifelines, messages, executions, states, modes and functions, combined fragments, references |
 | 23 | 🧩 Ports | 🧩 Ports |

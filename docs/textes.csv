@@ -2809,7 +2809,7 @@
 "js/41-barre-vues.js";"19";"🔀 Behavior Exchange";"🔀 Behavior Exchange"
 "js/41-barre-vues.js";"19";"Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange)";"PA-layer Component Exchanges between Physical Components Behavior, and with connected actors (formerly 🔀 Component Exchange)"
 "js/41-barre-vues.js";"20";"🔌 Physical Link";"🔌 Physical Link"
-"js/41-barre-vues.js";"21";"🗺 Diagrammes";"🗺 Diagrams"
+"js/41-barre-vues.js";"21";"🔲 Diagrammes Capella";"🔲 Capella diagrams"
 "js/41-barre-vues.js";"22";"🎬 Scénarios";"🎬 Scenarios"
 "js/41-barre-vues.js";"22";"Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références";"Sequence diagrams of Capella scenarios (ES, FS, OES, OAS, IS): lifelines, messages, executions, states, modes and functions, combined fragments, references"
 "js/41-barre-vues.js";"23";"🧩 Ports";"🧩 Ports"
