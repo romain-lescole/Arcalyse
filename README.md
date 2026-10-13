@@ -72,6 +72,8 @@ Load the project's **`.aird`** file (or open the **📁 project folder**: the `.
 
 ![Capella diagrams — explorer by layer › type, diagram and minimap](docs/captures/11-diagrammes.png)
 
+![Capella diagrams — clicking an element highlights it with its neighbours and opens its attributes and the diagrams where it appears](docs/captures/13-diagrammes-detail.png)
+
 ![Capella diagrams — export of several diagrams as sheets](docs/captures/12-diagrammes-export.png)
 
 ### 🔬 Analyse and check
@@ -173,6 +175,8 @@ Chargez le fichier **`.aird`** du projet (ou ouvrez le **📁 dossier du projet*
 - **export de plusieurs diagrammes à la fois** en **planches** encadrées : en-tête (couche, sigle, nom, type), description Capella et élément représenté, cartouche (projet, couche, contenu, sources, date, numéro de planche), annexe des éléments représentés — en **PDF** (sommaire, signets ; alerte si le fichier risque d'être lourd), **ZIP PNG / SVG** (un dossier par couche, un CSV d'annexe par diagramme) ou **rapport HTML** autonome, avec aperçu en direct.
 
 ![Diagrammes Capella — explorateur par couche › type, diagramme et mini-carte](docs/captures/11-diagrammes.png)
+
+![Diagrammes Capella — clic sur un élément : mis en surbrillance avec ses voisins, ses attributs et les diagrammes où il figure s'affichent](docs/captures/13-diagrammes-detail.png)
 
 ![Diagrammes Capella — export de plusieurs diagrammes en planches](docs/captures/12-diagrammes-export.png)
 
