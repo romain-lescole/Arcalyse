@@ -33,8 +33,26 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
   await p.setInputFiles('#capella-file-input', model);
   await p.waitForFunction(() => typeof capLoaded !== 'undefined' && capLoaded, null, { timeout: 180000 });
   const step = async (label, fn) => { const n = errs.length; try { await fn(); } catch (e) { errs.push(label + ' : ' + e.message); } await p.waitForTimeout(250); console.log((errs.length > n ? '✖ ' : '✔ ') + label); };
-  for (const v of ['tree', 'cards', 'table', 'links', 'chains', 'physlink', 'compex', 'ports', 'fex', 'oav', 'csys', 'cblk', 'scen', 'functions', 'analyses', 'dashboard', 'index'])
+  for (const v of ['tree', 'cards', 'table', 'links', 'chains', 'physlink', 'compex', 'ports', 'fex', 'oav', 'csys', 'cblk', 'scen', 'diag', 'functions', 'analyses', 'dashboard', 'index'])
     await step('vue ' + v, () => p.evaluate(k => capNavOpen(k), v));
+  // 🗺 Diagrammes : .aird du modèle (s'il accompagne le modèle dans tests/models, compressé) ; détail → diagramme → clic → détail
+  const airdGz = model.replace(/\.capella$/i, '.aird.gz');
+  if (fs.existsSync(airdGz)) await step('diagrammes : .aird, détail → diagramme, clic → détail', async () => {
+    const aird = path.join(require('os').tmpdir(), path.basename(airdGz, '.gz'));
+    fs.writeFileSync(aird, require('zlib').gunzipSync(fs.readFileSync(airdGz)));
+    await p.evaluate(() => capNavOpen('diag'));
+    await p.setInputFiles('#cdg-fichier', aird);
+    await p.waitForFunction(() => document.querySelectorAll('#diag-liste li[data-diag]').length > 10, null, { timeout: 60000 });
+    // Panneau de détail d'une fonction : section « Diagrammes », lien vers un diagramme où elle est dessinée
+    const id = await p.evaluate(() => { const e = capAllElements.find(x => x.attrs.name === 'Manage Video and Audio Diffusion'); capOpenDetail(e.id); return e.id; });
+    const lien = await p.$('#cap-detail-content .cdg-lien');
+    if (!lien) throw new Error('section « Diagrammes » absente du panneau de détail');
+    await lien.click(); await p.waitForTimeout(300);
+    if (!(await p.$(`#vd-svg .vd-sel[data-sem="${id}"]`))) throw new Error('élément non mis en évidence dans le diagramme ouvert');
+    await p.evaluate(() => capOpenDetail(capAllElements.find(x => x.attrs.name === 'Root System Function').id));
+    await p.click(`#vd-svg .vd-f[data-sem="${id}"]`); await p.waitForTimeout(300);
+    if (!(await p.textContent('#cap-detail-content')).includes('Manage Video and Audio Diffusion')) throw new Error('clic dans le diagramme : détail de l\'élément non affiché');
+  });
   await step('barre : menu, épingle, Ctrl+K', async () => {
     await p.click('#cap-v-analyses .cap-nav-arr'); await p.click('#cap-nav-dd [data-open="ana:reqs"]');
     await p.click('#cap-v-analyses .cap-nav-arr'); await p.click('#cap-nav-dd [data-pin="ana:reqs"]'); await p.click('#cap-v-ana-reqs');

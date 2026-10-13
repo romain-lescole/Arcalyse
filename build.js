@@ -141,6 +141,10 @@ const errors = [], warnings = [];
 let tplTxt = fs.readFileSync(path.join(SRC, 'index.html'), 'utf8').replace(/\r\n/g, '\n');
 if (EN) tplTxt = tplTxt.replace('<html lang="fr">', '<html lang="en">').replace('@@INCLUDE html/aide.html@@', '@@INCLUDE html/aide.en.html@@')
   .replace(/<title>[^<]*<\/title>/, `<title>${EN_TITLE}</title>`);
+// Visionneuse de diagrammes d'Arcature : version de la langue construite (les deux en multilingue, choisie au chargement)
+if (EN) tplTxt = tplTxt.replace('@@INCLUDE vendor/arcature-visionneuse.js@@', '@@INCLUDE vendor/arcature-visionneuse-en.js@@');
+if (MULTI) tplTxt = tplTxt.replace(/^@@INCLUDE vendor\/arcature-visionneuse\.js@@$/m,
+  "if(document.documentElement.getAttribute('data-lang')==='en'){\n@@INCLUDE vendor/arcature-visionneuse-en.js@@\n}else{\n@@INCLUDE vendor/arcature-visionneuse.js@@\n}");
 if (MULTI) tplTxt = tplTxt.replace(/^@@INCLUDE html\/aide\.html@@$/m, '').replace(/<\/body>\s*<\/html>\s*$/, MULTI_RESTORE + '\n</body>\n</html>\n');
 const tpl = tplTxt.split('\n');
 const included = [];

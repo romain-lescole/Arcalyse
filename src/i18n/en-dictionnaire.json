@@ -2528,7 +2528,15 @@
   "({0} vue{1})": "({0} view{1})",
   "🗂 Vues": "🗂 Views",
   "Onglets de vues, comme dans ▤ Tableau : chacun retient contexte, profondeur, disposition, filtres et affichage.": "View tabs, as in ▤ Table: each one keeps context, depth, layout, filters and display.",
-  "crée une copie, une vue vide ou un préréglage (🧱 Structure, ƒ Fonctionnel, 🔌 Interfaces, 🧬 Traçabilité) ; double-clic pour renommer ; 💾 / 📂 enregistrent ou ouvrent une vue.": "creates a copy, an empty view or a preset (🧱 Structure, ƒ Functional, 🔌 Interfaces, 🧬 Traceability); double-click to rename; 💾 / 📂 save or open a view."
+  "crée une copie, une vue vide ou un préréglage (🧱 Structure, ƒ Fonctionnel, 🔌 Interfaces, 🧬 Traçabilité) ; double-clic pour renommer ; 💾 / 📂 enregistrent ou ouvrent une vue.": "creates a copy, an empty view or a preset (🧱 Structure, ƒ Functional, 🔌 Interfaces, 🧬 Traceability); double-click to rename; 💾 / 📂 save or open a view.",
+  "🗺 Diagrammes": "🗺 Diagrams",
+  "Diagrammes Capella du projet (.aird), dessinés comme dans Capella : liste, recherche, mini-carte, filtres, chaînes, exports ; clic sur un élément → son détail": "Capella diagrams of the project (.aird), drawn as in Capella: list, search, minimap, filters, chains, exports; click an element → its details",
+  "Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrammes, scénarios, ports, liens": "Chains, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrams, scenarios, ports, links",
+  "Diagrammes « {0} » gardés : déposez maintenant le fichier .capella du projet.": "Diagrams “{0}” kept: now drop the project's .capella file.",
+  "📂 Ouvrir le .aird…": "📂 Open the .aird…",
+  "Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre.": "Open the project's .aird file (next to the .capella), or drop it on the window.",
+  "Visionneuse de diagrammes absente de cette page.": "Diagram viewer missing from this page.",
+  "Diagrammes ({0})": "Diagrams ({0})"
  },
  "interface": {
   "🌳 Arborescence": "🌳 Tree",

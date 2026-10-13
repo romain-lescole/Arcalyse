@@ -140,7 +140,7 @@
 - `rmSetElemVal` (l. 695) — Écrit une valeur dans un champ d'un élément du modèle de la Relation Map (nom, type, parent,
 - `onModelChanged` (l. 731) — Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel.
 
-## 10-rm-vues.js — 261 lignes
+## 10-rm-vues.js — 262 lignes
 
 - `RM_VIEW_FLAGS` (l. 12) — Options d'affichage retenues dans une vue (clé de S → bouton de la barre 2).
 - `RM_VIEW_PRESETS` (l. 15) — Préréglages proposés par le menu ＋ : relations cochées (clés relType de CAP_LINK_SECTIONS).
@@ -150,16 +150,16 @@
 - `rmViewSyncToolbar` (l. 64) — Met les boutons de la barre 2 (options, profondeur, disposition) en accord avec S.
 - `rmViewRestoreFilters` (l. 73) — Recopie dans S les filtres (types, relations) et les éléments masqués de l'onglet actif —
 - `rmViewApply` (l. 84) — Applique une vue à la Relation Map : réglages, filtres, graphe, nœuds repliés, chaîne et zoom.
-- `rmViewNewTab` (l. 115) — Crée un onglet.
-- `rmViewSelect` (l. 120) — Affiche un onglet (après avoir enregistré l'onglet quitté). @param {number} i - Indice
-- `rmViewAdd` (l. 130) — Ajoute un onglet et l'affiche.
-- `rmViewClose` (l. 151) — Ferme un onglet (au moins un onglet reste). @param {number} i - Indice
-- `rmViewsRender` (l. 162) — Dessine la barre d'onglets des vues (#rm-tabs).
-- `rmViewSave` (l. 195) — Télécharge la vue affichée dans un fichier .json (💾 Sauver vue).
-- `rmViewLoadFile` (l. 208) — Charge une vue enregistrée (📂 Charger vue) : elle s'ouvre dans un nouvel onglet.
-- `rmViewsOnModelLoad` (l. 224) — Après le chargement d'un modèle : crée la première vue, ou réapplique la vue active (vues gardées).
-- `rmViewsCfgGet` (l. 236) — État des vues pour la 💾 Page HTML et le fichier ⚙ Interface et vues.
-- `rmViewsCfgSet` (l. 240) — Remplace les vues par celles d'une configuration (page enregistrée ou fichier ⚙).
+- `rmViewNewTab` (l. 116) — Crée un onglet.
+- `rmViewSelect` (l. 121) — Affiche un onglet (après avoir enregistré l'onglet quitté). @param {number} i - Indice
+- `rmViewAdd` (l. 131) — Ajoute un onglet et l'affiche.
+- `rmViewClose` (l. 152) — Ferme un onglet (au moins un onglet reste). @param {number} i - Indice
+- `rmViewsRender` (l. 163) — Dessine la barre d'onglets des vues (#rm-tabs).
+- `rmViewSave` (l. 196) — Télécharge la vue affichée dans un fichier .json (💾 Sauver vue).
+- `rmViewLoadFile` (l. 209) — Charge une vue enregistrée (📂 Charger vue) : elle s'ouvre dans un nouvel onglet.
+- `rmViewsOnModelLoad` (l. 225) — Après le chargement d'un modèle : crée la première vue, ou réapplique la vue active (vues gardées).
+- `rmViewsCfgGet` (l. 237) — État des vues pour la 💾 Page HTML et le fichier ⚙ Interface et vues.
+- `rmViewsCfgSet` (l. 241) — Remplace les vues par celles d'une configuration (page enregistrée ou fichier ⚙).
 
 ## 11-sauvegarde-toolbar-init.js — 274 lignes
 
@@ -170,7 +170,7 @@
 - `openHelpModal` (l. 160) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
 - `positionOverlay` (l. 256) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
 
-## 20-capella-chargement.js — 826 lignes
+## 20-capella-chargement.js — 837 lignes
 
 - `CAP_LAYERS` (l. 4)
 - `CAP_NS_LAYER` (l. 12)
@@ -185,28 +185,28 @@
 - `capSavePageDirect` (l. 127) — Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
 - `capEsc` (l. 157) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
 - `capLoadFile` (l. 173) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
-- `capApplyXmlDoc` (l. 213) — Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
-- `capShowWelcome` (l. 239) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
-- `capWelcomeStatus` (l. 250) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
-- `capUpdateWelcome` (l. 256) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
-- `XSI_NS` (l. 298)
-- `capXType` (l. 300) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
-- `capTName` (l. 302) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
-- `capXId` (l. 304) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
-- `capXName` (l. 306) — Lit l'attribut 'name' d'un élément XML Capella.
-- `capResolveLayer` (l. 311) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
-- `capGetAttrs` (l. 317) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
-- `capBuildTree` (l. 328) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
-- `capRunBulk` (l. 354) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
-- `capBuildTypeRegistry` (l. 364) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
-- `capApplyPanelOnLoad` (l. 384) — Appelée après le chargement Capella : configure le panneau gauche RM.
-- `capInjectToArbo` (l. 456) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
-- `capInjectCapellaRelsToCriteria` (l. 560) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
-- `capInjectLinksToModel` (l. 601) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
-- `capFilterArboToLinked` (l. 645) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
-- `capInjectChainsToModal` (l. 684) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
-- `capRenderCurrentView` (l. 745) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
-- `capUpdateStatChips` (l. 817) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
+- `capApplyXmlDoc` (l. 214) — Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
+- `capShowWelcome` (l. 240) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
+- `capWelcomeStatus` (l. 251) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
+- `capUpdateWelcome` (l. 257) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
+- `XSI_NS` (l. 303)
+- `capXType` (l. 305) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
+- `capTName` (l. 307) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
+- `capXId` (l. 309) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
+- `capXName` (l. 311) — Lit l'attribut 'name' d'un élément XML Capella.
+- `capResolveLayer` (l. 316) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
+- `capGetAttrs` (l. 322) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
+- `capBuildTree` (l. 333) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
+- `capRunBulk` (l. 359) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
+- `capBuildTypeRegistry` (l. 369) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
+- `capApplyPanelOnLoad` (l. 389) — Appelée après le chargement Capella : configure le panneau gauche RM.
+- `capInjectToArbo` (l. 464) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
+- `capInjectCapellaRelsToCriteria` (l. 568) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
+- `capInjectLinksToModel` (l. 609) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
+- `capFilterArboToLinked` (l. 653) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
+- `capInjectChainsToModal` (l. 692) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
+- `capRenderCurrentView` (l. 753) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
+- `capUpdateStatChips` (l. 828) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
 ## 21-capella-vues-base.js — 1484 lignes
 
@@ -315,13 +315,13 @@
 - `capChainExportRefreshCount` (l. 540) — Met à jour le compteur de sélection et la case « Tout » sans re-rendre les cartes (garde les cartes ouvertes).
 - `capRenderChainMap` (l. 551) — Rend la sous-vue « Relation Map » : liste des chaînes groupée par catégorie ARCADIA à gauche,
 
-## 25-panneau-detail.js — 192 lignes
+## 25-panneau-detail.js — 195 lignes
 
 - `capOpenDetail` (l. 5) — Ouvre le panneau de détail (colonne droite de l'overlay) pour un élément Capella.
-- `capOpenDetailNode` (l. 100) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
-- `CAP_ELEM_VIEWS` (l. 108)
-- `capUpdateToolbarForView` (l. 114) — Met à jour les boutons actifs et les groupes de contrôles visibles
-- `capShowView` (l. 146) — Affiche une vue Capella (bascule en mode capella si besoin).
+- `capOpenDetailNode` (l. 103) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
+- `CAP_ELEM_VIEWS` (l. 111)
+- `capUpdateToolbarForView` (l. 117) — Met à jour les boutons actifs et les groupes de contrôles visibles
+- `capShowView` (l. 149) — Affiche une vue Capella (bascule en mode capella si besoin).
 
 ## 26-rapports-html.js — 101 lignes
 
@@ -530,23 +530,23 @@
 - `capWatchShowDelta` (l. 433) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 513) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 293 lignes
+## 41-barre-vues.js — 294 lignes
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
-- `CAP_NAV_GROUPS` (l. 36) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
-- `CAP_NAV_DEFAULT` (l. 44) — Réglage par défaut : tous les menus affichés, ▤ Tableau, ⚡ Chaînes, 🎬 Scénarios et 📐 Tableau de bord en boutons directs
-- `capNavMigrate` (l. 54) — Met à jour un réglage de barre enregistré avant l'arrivée du bouton ▤ Tableau (ancienne 📊 Table View
-- `capNavSave` (l. 60) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
-- `capNavCurKey` (l. 70) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
-- `capNavOpen` (l. 78) — Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
-- `capNavGroupOpen` (l. 88) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
-- `capNavFluxTabs` (l. 98) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
-- `capNavRender` (l. 108) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
-- `capNavSync` (l. 131) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
-- `capNavClose` (l. 146) — Ferme le menu déroulant de la barre des vues.
-- `capNavRow` (l. 155) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
-- `capNavMenu` (l. 165) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
-- `capNavMenuFill` (l. 212) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+- `CAP_NAV_GROUPS` (l. 37) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
+- `CAP_NAV_DEFAULT` (l. 45) — Réglage par défaut : tous les menus affichés, ▤ Tableau, ⚡ Chaînes, 🎬 Scénarios et 📐 Tableau de bord en boutons directs
+- `capNavMigrate` (l. 55) — Met à jour un réglage de barre enregistré avant l'arrivée du bouton ▤ Tableau (ancienne 📊 Table View
+- `capNavSave` (l. 61) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capNavCurKey` (l. 71) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
+- `capNavOpen` (l. 79) — Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
+- `capNavGroupOpen` (l. 89) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
+- `capNavFluxTabs` (l. 99) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
+- `capNavRender` (l. 109) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
+- `capNavSync` (l. 132) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
+- `capNavClose` (l. 147) — Ferme le menu déroulant de la barre des vues.
+- `capNavRow` (l. 156) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
+- `capNavMenu` (l. 166) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
+- `capNavMenuFill` (l. 213) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
 
 ## 42-tableaux-analyses.js — 154 lignes
 
@@ -764,3 +764,14 @@
 - `capCsvxText` (l. 77) — Texte d'une cellule (élément ou texte).
 - `capCsvxBuild` (l. 85) — Construit l'en-tête et les lignes finales d'un export selon les choix enregistrés.
 - `capCsvExport` (l. 102) — Export CSV enrichi : ouvre la fenêtre « Colonnes de l'export » puis télécharge le fichier.
+
+## 54-diagrammes.js — 111 lignes
+
+- `capDiagDispo` (l. 14) — @returns {boolean} vrai si la visionneuse d'Arcature est embarquée dans la page
+- `capDiagLoadAird` (l. 20) — Charge un fichier .aird (diagrammes du projet). Sans modèle chargé, il est gardé en attente du .capella.
+- `capDiagEnsure` (l. 37) — Crée la visionneuse dans la vue (une fois) : barre « Ouvrir le .aird… », hôte de la visionneuse.
+- `capDiagFit` (l. 51) — Ajuste la hauteur de la visionneuse à la fenêtre.
+- `capDiagSync` (l. 58) — Transmet à la visionneuse le modèle courant (texte XML) et le .aird en attente, si besoin.
+- `capRenderDiagrams` (l. 75) — Rendu de la vue 🗺 Diagrammes.
+- `capDiagOpen` (l. 91) — Ouvre un diagramme dans la vue 🗺 Diagrammes et y met un élément en évidence.
+- `capDiagDetail` (l. 102) — Section « Diagrammes » du panneau de détail : représentations de l'élément et diagrammes où il est dessiné.
