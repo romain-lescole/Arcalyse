@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 3586 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 3682 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -2755,25 +2755,25 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 39 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrammes, scénarios, ports, liens | Chains, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrams, scenarios, ports, links |
 | 41 | 🔬 Analyses | 🔬 Analyses |
 | 41 | Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes | Functions, cross-layer traceability, capabilities & missions, modes & states, version comparison, requirements, properties, data & interfaces, constraints |
-| 141 | Vue affichée : | Displayed view: |
-| 159 | Retirer de la barre | Remove from the bar |
-| 159 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
-| 222 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme and the naming rules. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 222 | Ctrl+S | Ctrl+S |
-| 223 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme and the naming rules. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 223 | Ctrl+Maj+S | Ctrl+Maj+S |
-| 234 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
-| 236 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
-| 237 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
-| 238 | ℹ À propos | ℹ About |
-| 244 | 🎨 Personnaliser… | 🎨 Customize… |
-| 248 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
-| 253 | 🗺 Relation Map | 🗺 Relation Map |
-| 256 | Aucune vue ne correspond. | No view matches. |
-| 262 | Menu | … ▾ menu in the bar |
-| 262 | ▾ dans la barre | … ▾ menu in the bar |
-| 263 | Autres vues | Other views |
-| 266 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | ↺ Restore the default bar 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
+| 142 | Vue affichée : | Displayed view: |
+| 160 | Retirer de la barre | Remove from the bar |
+| 160 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
+| 223 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme and the naming rules. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 223 | Ctrl+S | Ctrl+S |
+| 224 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme and the naming rules. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 224 | Ctrl+Maj+S | Ctrl+Maj+S |
+| 235 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
+| 237 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
+| 238 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
+| 239 | ℹ À propos | ℹ About |
+| 245 | 🎨 Personnaliser… | 🎨 Customize… |
+| 249 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
+| 254 | 🗺 Relation Map | 🗺 Relation Map |
+| 257 | Aucune vue ne correspond. | No view matches. |
+| 263 | Menu | … ▾ menu in the bar |
+| 263 | ▾ dans la barre | … ▾ menu in the bar |
+| 264 | Autres vues | Other views |
+| 267 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | ↺ Restore the default bar 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
 
 ## js/42-tableaux-analyses.js
 
@@ -3807,13 +3807,109 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 22 | Impossible de lire « | Cannot read “…”. |
-| 26 | Diagrammes « | Diagrams “…” kept: now drop the project's .capella file. |
-| 26 | » gardés : déposez maintenant le fichier .capella du projet. | Diagrams “…” kept: now drop the project's .capella file. |
-| 40 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
-| 71 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
-| 78 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
-| 109 | Diagrammes ( | Diagrams (…) |
+| 28 | Impossible de lire « | Cannot read “…”. |
+| 32 | Diagrammes « | Diagrams “…” kept: now drop the project's .capella file. |
+| 32 | » gardés : déposez maintenant le fichier .capella du projet. | Diagrams “…” kept: now drop the project's .capella file. |
+| 49 | Diagrammes Capella (.aird) | Capella diagrams (.aird) |
+| 65 | Ce navigateur ne permet pas de lire un dossier : utilisez 📂 Ouvrir le .aird… ou déposez le fichier. | This browser cannot read a folder: use 📂 Open the .aird… or drop the file. |
+| 69 | Dossier inaccessible : | Folder not accessible: |
+| 84 | Lecture du dossier impossible : | Cannot read the folder: |
+| 122 | Choisir le fichier .aird (le sélecteur s'ouvre dans le dossier du .capella quand le navigateur le permet) | Choose the .aird file (the picker opens in the .capella folder when the browser allows it) |
+| 122 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 123 | Désigner une fois le dossier du projet : ses fichiers .aird sont listés ici et s'ouvrent d'un clic | Point to the project folder once: its .aird files are listed here and open with one click |
+| 123 | 📁 Dossier du projet… | 📁 Project folder… |
+| 125 | diagramme(s) | … diagram(s) |
+| 126 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
+| 128 | Exporter plusieurs diagrammes en planches (en-tête, cartouche) : PDF, ZIP PNG / SVG, rapport HTML | Export several diagrams as sheets (header, title block): PDF, PNG / SVG ZIP, HTML report |
+| 128 | ⬇ Exporter… | ⬇ Export… |
+| 159 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
+| 173 | Autres | Others |
+| 244 | Aucun .aird chargé. | No .aird loaded. |
+| 244 | 📂 Ouvrir le .aird… s'ouvre dans le dossier du .capella (Edge / Chrome). | 📂 Open the .aird… opens in the .capella folder (Edge / Chrome). |
+| 245 | 📁 Dossier du projet… : désignez le dossier une fois, ses .aird deviennent cliquables. | 📁 Project folder…: point to the folder once, its .aird files become clickable. |
+| 253 | Cocher / décocher le groupe | Check / uncheck the group |
+| 275 | Filtrer (nom, type, sigle, couche)… | Filter (name, type, acronym, layer)… |
+| 276 | Classement de la liste | List grouping |
+| 276 | Couche › type | Layer › type |
+| 276 | Couche | Layer |
+| 276 | Type de diagramme | Diagram type |
+| 276 | Nom (A → Z) | Name (A → Z) |
+| 277 | Tout déplier | Expand all |
+| 277 | Tout replier | Collapse all |
+| 279 | sélectionné(s) pour l'export | … selected for export |
+| 279 | diagramme(s) — cochez pour exporter | … diagram(s) — check to export |
+| 280 | Aucun diagramme ne correspond. | No matching diagram. |
+| 308 | Lecture impossible : | Cannot read: |
+| 358 | Diagrammes ( | Diagrams (…) |
+| 380 | export SVG de la visionneuse introuvable | viewer SVG export not found |
+| 386 | diagramme vide ou non exportable | empty or non-exportable diagram |
+| 407 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
+| 408 | Projet Capella | Capella project |
+| 415 | Projet | Project |
+| 415 | Couche | Layer |
+| 416 | Diagramme | Diagram |
+| 416 | Contenu | Content |
+| 416 | élément(s) | … element(s) |
+| 417 | Type | (inchangé, hors _L) |
+| 417 | Date | Date |
+| 418 | Sources | Sources |
+| 418 | Planche | Sheet |
+| 431 | ) scale( | (inchangé, hors _L) |
+| 440 | ) scale( | (inchangé, hors _L) |
+| 441 | Arcalyse · planche générée le | Arcalyse · sheet generated on … |
+| 457 | ) scale( | (inchangé, hors _L) |
+| 484 | ⬇ Exporter des diagrammes | ⬇ Export diagrams |
+| 486 | Diagrammes | Diagrams |
+| 487 | Cochés dans la liste | Checked in the list |
+| 487 | Affichés (filtre en cours) | Displayed (current filter) |
+| 487 | Tous | All |
+| 488 | Mise en page | Layout |
+| 489 | Cadre et en-tête | Frame and header |
+| 489 | Cadre, bandeau de couche, sigle, nom et type du diagramme | Frame, layer band, acronym, name and type of the diagram |
+| 490 | Cartouche | Title block |
+| 490 | Cartouche technique en bas à droite : projet, diagramme, type, couche, contenu, sources, date, planche | Technical title block at the bottom right: project, diagram, type, layer, content, sources, date, sheet |
+| 491 | Sommaire | Contents |
+| 491 | PDF : page de sommaire par couche et type · HTML : onglet Sommaire | PDF: contents page by layer and type · HTML: Contents tab |
+| 492 | Résolution des images PNG / PDF | Resolution of PNG / PDF images |
+| 492 | Résolution | Resolution |
+| 493 | Format | Format |
+| 495 | 📄 PDF | (inchangé, hors _L) |
+| 495 | Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets | One PDF: contents, one sheet per diagram (A4, oriented automatically), bookmarks |
+| 496 | 🗜 ZIP PNG | (inchangé, hors _L) |
+| 496 | Archive ZIP des planches en PNG, un dossier par couche | ZIP archive of the sheets as PNG, one folder per layer |
+| 497 | 🗜 ZIP SVG | (inchangé, hors _L) |
+| 497 | Archive ZIP des planches en SVG (vectoriel), un dossier par couche | ZIP archive of the sheets as SVG (vector), one folder per layer |
+| 498 | 🌐 HTML | (inchangé, hors _L) |
+| 498 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
+| 501 | Aperçu de la planche | Sheet preview |
+| 502 | Fermer | Close |
+| 517 | Aucun diagramme. | No diagram. |
+| 534 | Projet Capella | Capella project |
+| 544 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 544 | Diagrammes Capella | Capella diagrams |
+| 545 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 548 | planche(s) | … sheet(s) |
+| 556 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 557 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 562 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 563 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 580 | Aucun diagramme à exporter. | No diagram to export. |
+| 581 | Capella | (inchangé, hors _L) |
+| 590 | Sommaire | Contents |
+| 596 | Autres | (inchangé, hors _L) |
+| 605 | Diagrammes — | Diagrams — … |
+| 608 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
+| 608 | pages) | (… pages) |
+| 609 | ⚠ Échec de l'export : | ⚠ Export failed: |
+| 627 | Type | (inchangé, hors _L) |
+| 627 | Couche | Layer |
+| 627 | Sigle | Acronym |
+| 627 | Diagramme | Diagram |
+| 627 | Éléments | Elements |
+| 648 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
+| 648 | diagramme(s) | … diagram(s) |
+| 649 | 📋 Sommaire | 📋 Contents |
+| 649 | 🔲 Planches | 🔲 Sheets |
 
 ## Textes sans traduction anglaise (5)
 

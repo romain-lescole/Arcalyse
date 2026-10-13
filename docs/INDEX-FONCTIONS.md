@@ -530,23 +530,23 @@
 - `capWatchShowDelta` (l. 433) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 513) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 294 lignes
+## 41-barre-vues.js — 295 lignes
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
 - `CAP_NAV_GROUPS` (l. 37) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
-- `CAP_NAV_DEFAULT` (l. 45) — Réglage par défaut : tous les menus affichés, ▤ Tableau, ⚡ Chaînes, 🎬 Scénarios et 📐 Tableau de bord en boutons directs
+- `CAP_NAV_DEFAULT` (l. 45) — Réglage par défaut : tous les menus affichés, ▤ Tableau, ⚡ Chaînes, 🔲 Diagrammes Capella, 🎬 Scénarios et 📐 Tableau de bord
 - `capNavMigrate` (l. 55) — Met à jour un réglage de barre enregistré avant l'arrivée du bouton ▤ Tableau (ancienne 📊 Table View
-- `capNavSave` (l. 61) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
-- `capNavCurKey` (l. 71) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
-- `capNavOpen` (l. 79) — Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
-- `capNavGroupOpen` (l. 89) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
-- `capNavFluxTabs` (l. 99) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
-- `capNavRender` (l. 109) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
-- `capNavSync` (l. 132) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
-- `capNavClose` (l. 147) — Ferme le menu déroulant de la barre des vues.
-- `capNavRow` (l. 156) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
-- `capNavMenu` (l. 166) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
-- `capNavMenuFill` (l. 213) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+- `capNavSave` (l. 62) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capNavCurKey` (l. 72) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
+- `capNavOpen` (l. 80) — Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
+- `capNavGroupOpen` (l. 90) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
+- `capNavFluxTabs` (l. 100) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
+- `capNavRender` (l. 110) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
+- `capNavSync` (l. 133) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
+- `capNavClose` (l. 148) — Ferme le menu déroulant de la barre des vues.
+- `capNavRow` (l. 157) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
+- `capNavMenu` (l. 167) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
+- `capNavMenuFill` (l. 214) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
 
 ## 42-tableaux-analyses.js — 154 lignes
 
@@ -765,13 +765,39 @@
 - `capCsvxBuild` (l. 85) — Construit l'en-tête et les lignes finales d'un export selon les choix enregistrés.
 - `capCsvExport` (l. 102) — Export CSV enrichi : ouvre la fenêtre « Colonnes de l'export » puis télécharge le fichier.
 
-## 54-diagrammes.js — 111 lignes
+## 54-diagrammes.js — 652 lignes
 
-- `capDiagDispo` (l. 14) — @returns {boolean} vrai si la visionneuse d'Arcature est embarquée dans la page
-- `capDiagLoadAird` (l. 20) — Charge un fichier .aird (diagrammes du projet). Sans modèle chargé, il est gardé en attente du .capella.
-- `capDiagEnsure` (l. 37) — Crée la visionneuse dans la vue (une fois) : barre « Ouvrir le .aird… », hôte de la visionneuse.
-- `capDiagFit` (l. 51) — Ajuste la hauteur de la visionneuse à la fenêtre.
-- `capDiagSync` (l. 58) — Transmet à la visionneuse le modèle courant (texte XML) et le .aird en attente, si besoin.
-- `capRenderDiagrams` (l. 75) — Rendu de la vue 🗺 Diagrammes.
-- `capDiagOpen` (l. 91) — Ouvre un diagramme dans la vue 🗺 Diagrammes et y met un élément en évidence.
-- `capDiagDetail` (l. 102) — Section « Diagrammes » du panneau de détail : représentations de l'élément et diagrammes où il est dessiné.
+- `CAP_DIAG_COUCHES` (l. 17) — Ordre des couches ARCADIA dans la liste et les exports.
+- `capDiagDispo` (l. 20) — @returns {boolean} vrai si la visionneuse d'Arcature est embarquée dans la page
+- `capDiagLoadAird` (l. 26) — Charge un fichier .aird (diagrammes du projet). Sans modèle chargé, il est gardé en attente du .capella.
+- `capDiagPickAird` (l. 46) — 📂 Ouvrir le .aird : sélecteur à accès direct ouvert dans le dossier du .capella (Edge/Chrome,
+- `capDiagPickDossier` (l. 64) — 📁 Dossier du projet : le navigateur ne laisse pas lire les fichiers voisins du .capella sans autorisation ;
+- `capDiagScanDossier` (l. 74) — Relit le dossier du projet (2 niveaux) et liste ses fichiers .aird ; celui du nom du .capella vient en premier.
+- `capDiagMsg` (l. 92) — Affiche un message bref dans la barre de la vue. @param {string} t - Texte
+- `capDiagEnsure` (l. 95) — Crée la vue (une fois) : barre (ouvrir, dossier, export), liste classée à gauche, hôte de la visionneuse.
+- `capDiagBarre` (l. 118) — Barre du haut : 📂 Ouvrir le .aird…, 📁 Dossier du projet…, .aird trouvés (cliquables), ⬇ Exporter…
+- `capDiagFit` (l. 132) — Ajuste la hauteur de la vue à la fenêtre.
+- `capDiagSync` (l. 139) — Transmet à la visionneuse le modèle courant (texte XML) et le .aird en attente, si besoin.
+- `capRenderDiagrams` (l. 156) — Rendu de la vue 🔲 Diagrammes Capella.
+- `capDiagReps` (l. 170) — @returns {object[]} représentations du .aird chargé ({uid, nom, type, sigle, genre, couche})
+- `capDiagCouche` (l. 173) — Libellé et couleur d'une couche ARCADIA. @param {string} c - OA, SA, LA, PA, EPBS… @returns {{label:string,color:string,bg:string}}
+- `capDiagRang` (l. 176) — Rang d'une couche pour le tri. @param {string} c - Couche @returns {number}
+- `capDiagIcones` (l. 179) — Icône de chaque diagramme, reprise de la liste (masquée) de la visionneuse. @returns {Map<string,string>} uid → SVG
+- `capDiagFiltrees` (l. 188) — Représentations filtrées par la recherche (nom, type, sigle, couche). @returns {object[]}
+- `capDiagGroupes` (l. 199) — Regroupe les représentations selon le classement choisi.
+- `capDiagOuvert` (l. 234) — Un groupe est-il ouvert ? Couches ouvertes, types repliés par défaut ; tout est ouvert pendant une recherche.
+- `capDiagListe` (l. 241) — Rend la liste classée (panneau gauche).
+- `capDiagMarquerActif` (l. 286) — Met en évidence le diagramme ouvert dans la liste.
+- `capDiagRepsGroupe` (l. 295) — Représentations d'un groupe de la liste (selon la clé).
+- `capDiagClic` (l. 302) — Clics de la vue : barre (ouvrir, dossier, .aird trouvés, export), groupes repliables, diagrammes. @param {MouseEvent} e
+- `capDiagChange` (l. 325) — Cases à cocher (diagramme, groupe, tout) et choix du classement. @param {Event} e
+- `capDiagOpen` (l. 340) — Ouvre un diagramme dans la vue 🔲 Diagrammes Capella et y met un élément en évidence.
+- `capDiagDetail` (l. 351) — Section « Diagrammes » du panneau de détail : représentations de l'élément et diagrammes où il est dessiné.
+- `capDiagSvg` (l. 369) — SVG autonome d'un diagramme, tel que l'exporte la visionneuse (menu ⬇ Exporter › SVG) :
+- `capDiagPlanche` (l. 399) — Planche d'un diagramme : cadre, en-tête (couche, sigle, nom, type), diagramme centré, cartouche technique
+- `capDiagCibles` (l. 467) — Diagrammes visés par l'export, dans l'ordre de la liste (couche, type, nom).
+- `capDiagExportDialog` (l. 474) — Fenêtre « Exporter des diagrammes » : portée, mise en page, aperçu de la planche, formats.
+- `capDiagApercu` (l. 513) — Aperçu de la planche du premier diagramme visé (diagramme ouvert s'il en fait partie).
+- `capDiagPdfSommaire` (l. 532) — Page de sommaire du PDF (paysage A4) : projet, date, nombre de planches, liste par couche et type avec numéros de page.
+- `capDiagExport` (l. 577) — Export groupé des diagrammes en planches.
+- `capDiagExportHtml` (l. 622) — Rapport HTML autonome : onglet Sommaire (tableau avec liens) et onglet Planches
