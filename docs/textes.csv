@@ -2841,7 +2841,8 @@
 "js/41-barre-vues.js";"144";"Vue affichée :";"Displayed view:"
 "js/41-barre-vues.js";"162";"Retirer de la barre";"Remove from the bar"
 "js/41-barre-vues.js";"162";"Épingler dans la barre (bouton direct)";"Pin to the bar (direct button)"
-"js/41-barre-vues.js";"225";"💾 Enregistrer sous…";"<div class=""ctx-i"" data-act=""open"" title=""Replaces the displayed model with another .capella file"">🔷 Open a Capella model…</div>
+"js/41-barre-vues.js";"226";"💾 Enregistrer sous…";"<div class=""ctx-i"" data-act=""open"" title=""Replaces the displayed model with another .capella file"">🔷 Open a Capella model…</div>
+      <div class=""ctx-i"" data-act=""folder"" title=""Opens the project folder: the .capella and its diagrams (.aird) are loaded together"">📁 Open the project folder…</div>
       <div class=""ctx-i"" data-act=""update"" title=""Compares another .capella file with the displayed model, shows the delta, then updates the display after confirmation"">🔄 Load a model update…</div>
       <div class=""cap-nav-hint"">Update: delta shown before confirmation; warning if the two files seem to be different projects.</div>
       <div class=""cw-m-sep""></div>
@@ -2853,8 +2854,9 @@
       <div class=""ctx-i"" data-act=""cfgsave"" title="".json file without the model: bar, dashboards, ▤ Table, theme, naming rules (your choice)"">⚙ Save the interface and views…</div>
       <div class=""ctx-i"" data-act=""cfgload"" title=""Applies an interface .json file (parts of your choice)"">⚙ Load an interface and views…</div>
       <div class=""cap-nav-hint"">To reuse your settings with another model or a new version of the page.</div>"
-"js/41-barre-vues.js";"225";"Ctrl+S";"Ctrl+S"
-"js/41-barre-vues.js";"226";"🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page.";"<div class=""ctx-i"" data-act=""open"" title=""Replaces the displayed model with another .capella file"">🔷 Open a Capella model…</div>
+"js/41-barre-vues.js";"226";"Ctrl+S";"Ctrl+S"
+"js/41-barre-vues.js";"227";"🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page.";"<div class=""ctx-i"" data-act=""open"" title=""Replaces the displayed model with another .capella file"">🔷 Open a Capella model…</div>
+      <div class=""ctx-i"" data-act=""folder"" title=""Opens the project folder: the .capella and its diagrams (.aird) are loaded together"">📁 Open the project folder…</div>
       <div class=""ctx-i"" data-act=""update"" title=""Compares another .capella file with the displayed model, shows the delta, then updates the display after confirmation"">🔄 Load a model update…</div>
       <div class=""cap-nav-hint"">Update: delta shown before confirmation; warning if the two files seem to be different projects.</div>
       <div class=""cw-m-sep""></div>
@@ -2866,19 +2868,19 @@
       <div class=""ctx-i"" data-act=""cfgsave"" title="".json file without the model: bar, dashboards, ▤ Table, theme, naming rules (your choice)"">⚙ Save the interface and views…</div>
       <div class=""ctx-i"" data-act=""cfgload"" title=""Applies an interface .json file (parts of your choice)"">⚙ Load an interface and views…</div>
       <div class=""cap-nav-hint"">To reuse your settings with another model or a new version of the page.</div>"
-"js/41-barre-vues.js";"226";"Ctrl+Maj+S";"Ctrl+Maj+S"
-"js/41-barre-vues.js";"237";"📖 Aide complète 🎓 Visite guidée";"📖 Full help 🎓 Guided tour"
-"js/41-barre-vues.js";"239";"🎯 Visite de cette vue";"🎯 Tour of this view …"
-"js/41-barre-vues.js";"240";"🎯 Chargez un modèle pour la visite de chaque vue.";"🎯 Load a model for the tour of each view."
-"js/41-barre-vues.js";"241";"ℹ À propos";"ℹ About"
-"js/41-barre-vues.js";"247";"🎨 Personnaliser…";"🎨 Customize…"
-"js/41-barre-vues.js";"251";"📌 épingle une vue en bouton direct dans la barre.";"📌 pins a view as a direct button in the bar."
-"js/41-barre-vues.js";"256";"🗺 Relation Map";"🗺 Relation Map"
-"js/41-barre-vues.js";"259";"Aucune vue ne correspond.";"No view matches."
-"js/41-barre-vues.js";"265";"Menu";"… ▾ menu in the bar"
-"js/41-barre-vues.js";"265";"▾ dans la barre";"… ▾ menu in the bar"
-"js/41-barre-vues.js";"266";"Autres vues";"Other views"
-"js/41-barre-vues.js";"269";"↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML.";"↺ Restore the default bar 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page."
+"js/41-barre-vues.js";"227";"Ctrl+Maj+S";"Ctrl+Maj+S"
+"js/41-barre-vues.js";"238";"📖 Aide complète 🎓 Visite guidée";"📖 Full help 🎓 Guided tour"
+"js/41-barre-vues.js";"240";"🎯 Visite de cette vue";"🎯 Tour of this view …"
+"js/41-barre-vues.js";"241";"🎯 Chargez un modèle pour la visite de chaque vue.";"🎯 Load a model for the tour of each view."
+"js/41-barre-vues.js";"242";"ℹ À propos";"ℹ About"
+"js/41-barre-vues.js";"248";"🎨 Personnaliser…";"🎨 Customize…"
+"js/41-barre-vues.js";"252";"📌 épingle une vue en bouton direct dans la barre.";"📌 pins a view as a direct button in the bar."
+"js/41-barre-vues.js";"257";"🗺 Relation Map";"🗺 Relation Map"
+"js/41-barre-vues.js";"260";"Aucune vue ne correspond.";"No view matches."
+"js/41-barre-vues.js";"266";"Menu";"… ▾ menu in the bar"
+"js/41-barre-vues.js";"266";"▾ dans la barre";"… ▾ menu in the bar"
+"js/41-barre-vues.js";"267";"Autres vues";"Other views"
+"js/41-barre-vues.js";"270";"↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML.";"↺ Restore the default bar 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page."
 "js/42-tableaux-analyses.js";"43";"Glisser pour régler la largeur de la colonne (double-clic : largeur automatique)";"Drag to set the column width (double-click: automatic width)"
 "js/42-tableaux-analyses.js";"88";"Défilement horizontal du tableau";"Horizontal table scroll"
 "js/42-tableaux-analyses.js";"141";"✕ effacer";"🔍 … / … row… ✕ clear"

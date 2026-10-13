@@ -179,7 +179,7 @@ function capNavMenu(g, anchor){
       const th=e.target.closest('[data-thm]');
       if(th){ capNavClose(); const sel=document.getElementById('theme-sel'); sel.value=th.dataset.thm; sel.dispatchEvent(new Event('change')); return; }
       const a=e.target.closest('[data-act]');
-      if(a){ capNavClose(); ({open:()=>capPickCapellaFile(), save:()=>capSavePageDirect(false), saveas:()=>capSavePageDirect(true),
+      if(a){ capNavClose(); ({open:()=>capPickCapellaFile(), folder:()=>capOpenProjectFolder(), save:()=>capSavePageDirect(false), saveas:()=>capSavePageDirect(true),
         page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor(), update:()=>capCfgLoadUpdate(), cfgsave:()=>capCfgDialog('save'), cfgload:()=>capCfgLoadFile(),
         help:()=>openHelpModal(), tour:()=>capTourStart(), tourview:()=>capTourStartView(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
       if(e.target.closest('[data-reset]')){ _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); capNavSave(); capNavRender(); capNavMenuFill(); }
@@ -219,6 +219,7 @@ function capNavMenuFill(){
   if(g==='file'){
     const sc=s=>` <span class="cap-nav-g">${s}</span>`;
     res.innerHTML=_L(`<div class="ctx-i" data-act="open" title="Remplace le modèle affiché par un autre fichier .capella">🔷 Ouvrir un modèle Capella…</div>
+      <div class="ctx-i" data-act="folder" title="Ouvre le dossier du projet : le .capella et ses diagrammes (.aird) sont chargés ensemble">📁 Ouvrir le dossier du projet…</div>
       <div class="ctx-i" data-act="update" title="Compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour l'affichage après validation">🔄 Charger une mise à jour du modèle…</div>
       <div class="cap-nav-hint">Mise à jour : delta affiché avant validation ; alerte si les deux fichiers semblent être des projets différents.</div>
       <div class="cw-m-sep"></div>

@@ -2762,22 +2762,22 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 144 | Vue affichée : | Displayed view: |
 | 162 | Retirer de la barre | Remove from the bar |
 | 162 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
-| 225 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme and the naming rules. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 225 | Ctrl+S | Ctrl+S |
-| 226 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme and the naming rules. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 226 | Ctrl+Maj+S | Ctrl+Maj+S |
-| 237 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
-| 239 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
-| 240 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
-| 241 | ℹ À propos | ℹ About |
-| 247 | 🎨 Personnaliser… | 🎨 Customize… |
-| 251 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
-| 256 | 🗺 Relation Map | 🗺 Relation Map |
-| 259 | Aucune vue ne correspond. | No view matches. |
-| 265 | Menu | … ▾ menu in the bar |
-| 265 | ▾ dans la barre | … ▾ menu in the bar |
-| 266 | Autres vues | Other views |
-| 269 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | ↺ Restore the default bar 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
+| 226 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme and the naming rules. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 226 | Ctrl+S | Ctrl+S |
+| 227 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme and the naming rules. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 227 | Ctrl+Maj+S | Ctrl+Maj+S |
+| 238 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
+| 240 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
+| 241 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
+| 242 | ℹ À propos | ℹ About |
+| 248 | 🎨 Personnaliser… | 🎨 Customize… |
+| 252 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
+| 257 | 🗺 Relation Map | 🗺 Relation Map |
+| 260 | Aucune vue ne correspond. | No view matches. |
+| 266 | Menu | … ▾ menu in the bar |
+| 266 | ▾ dans la barre | … ▾ menu in the bar |
+| 267 | Autres vues | Other views |
+| 270 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | ↺ Restore the default bar 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
 
 ## js/42-tableaux-analyses.js
 

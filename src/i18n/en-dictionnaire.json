@@ -2652,7 +2652,9 @@
   "Le PDF fera environ {0} Mo ({1} pages).\\n\\nPour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…).\\n\\nContinuer quand même ?": "The PDF will be about {0} MB ({1} pages).\\n\\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\\n\\nContinue anyway?",
   "Export annulé : PDF estimé à {0} Mo.": "Export cancelled: PDF estimated at {0} MB.",
   "Lancer l'export dans le format choisi": "Start the export in the chosen format",
-  ": en-tête, description, cartouche, annexe des éléments représentés. PDF (sommaire, signets ; alerte si le fichier risque d'être lourd), ZIP PNG / SVG ou rapport HTML, avec aperçu ; choisissez le format puis": ": header, description, title block, appendix of represented elements. PDF (contents, bookmarks; warning if the file may be heavy), PNG / SVG ZIP or HTML report, with preview; choose the format, then"
+  ": en-tête, description, cartouche, annexe des éléments représentés. PDF (sommaire, signets ; alerte si le fichier risque d'être lourd), ZIP PNG / SVG ou rapport HTML, avec aperçu ; choisissez le format puis": ": header, description, title block, appendix of represented elements. PDF (contents, bookmarks; warning if the file may be heavy), PNG / SVG ZIP or HTML report, with preview; choose the format, then",
+  "Ouvre le dossier du projet : le .capella et ses diagrammes (.aird) sont chargés ensemble": "Opens the project folder: the .capella and its diagrams (.aird) are loaded together",
+  "📁 Ouvrir le dossier du projet…": "📁 Open the project folder…"
  },
  "interface": {
   "🌳 Arborescence": "🌳 Tree",
