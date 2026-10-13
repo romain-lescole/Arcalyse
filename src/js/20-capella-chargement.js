@@ -382,10 +382,13 @@ function capBuildTypeRegistry(){
  * - Reconstruit panel, markers, arbo, graphe
  */
 function capApplyPanelOnLoad(){
-  // Arborescence Relation Map repliée par défaut : seuls les éléments racines (SystemEngineering…) restent ouverts
+  // Arborescence Relation Map repliée par défaut : les éléments racines (SystemEngineering…) et leurs enfants
+  // directs (couches OA, SA, LA, PA…) restent ouverts
   arboCollapsed.clear();
   { const parents=new Set(MODEL.elements.map(e=>e.parentEl).filter(Boolean));
-    MODEL.elements.forEach(e=>{ if(e._capella&&e.parentEl&&parents.has(e.id)) arboCollapsed.add('el:'+e.id); });
+    const byId=new Map(MODEL.elements.map(e=>[e.id,e]));
+    const level1=e=>{ const p=byId.get(e.parentEl); return p && !p.parentEl; };
+    MODEL.elements.forEach(e=>{ if(e._capella&&e.parentEl&&parents.has(e.id)&&!level1(e)) arboCollapsed.add('el:'+e.id); });
     // Icône dossier pour SystemEngineering, même si le type avait été enregistré auparavant avec une autre icône
     if(TCFG['SystemEngineering']) TCFG['SystemEngineering'].icon='📂'; }
   const SYSML_RELS_SET=new Set(['Composition','Aggregation','Association','DirectedAssociation','Containment','Generalization','Realization','Dependency','Usage','Abstraction','Refine','Trace','Satisfy','Verify','DeriveReqt','Copy','Allocation']);

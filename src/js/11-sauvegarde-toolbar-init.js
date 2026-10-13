@@ -170,7 +170,7 @@ function openHelpModal(tab) {
   const openTab  = document.getElementById('panel-open-tab');
   const closeBtn = document.getElementById('panel-close-btn');
   const resizeBar= document.getElementById('panel-resize-bar');
-  let panelW = 255; // largeur courante en px
+  let panelW = 300; // largeur courante en px (par défaut : 300, comme --panel-w dans styles.css)
 
   /** Réduit le panneau latéral gauche à une largeur nulle et affiche l'onglet de réouverture.
    */

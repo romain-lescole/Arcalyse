@@ -92,7 +92,8 @@ function rmViewApply(v){
     Object.keys(S.typF).forEach(t=>{ S.typF[t] = v.typF && (t in v.typF) ? v.typF[t] : true; });
     S.hidden=new Set((v.hidden||[]).filter(id=>ids.has(id)));
     S.ctx = v.ctx && ids.has(v.ctx) ? v.ctx : null;
-    S.selNode=null;
+    S.selNode=null; S.propEl=S.ctx;
+    arboMultiSel.clear();   // la sélection de l'arborescence est propre à la vue quittée
     if (S.chainView) { S.chainView=null; rmChainBanner(null); }
     rmViewSyncToolbar();
     buildPanel(); setupMarkers(); rebuildTree();
