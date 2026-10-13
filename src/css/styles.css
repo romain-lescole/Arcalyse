@@ -1324,6 +1324,16 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
 .cdg-ico{display:inline-flex;flex:none}
 .cdg-nom{flex:1;min-width:0}
 .cdg-sigle-g{color:var(--c-text)}
+.cdg-info-b{flex:none;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;font-size:11px;color:var(--c-dim);visibility:hidden}
+.cdg-it:hover .cdg-info-b,.cdg-it.actif .cdg-info-b{visibility:visible}
+.cdg-info-b:hover{background:var(--c-accent);color:var(--c-bg)}
+.cdg-det-t{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:16px 0 6px}
+.cdg-det-tab{width:100%;border-collapse:collapse}
+.cdg-det-k{color:var(--c-dim);font-family:monospace;font-size:11px;padding:5px 10px 5px 0;width:100px;border-bottom:1px solid var(--c-border);vertical-align:top}
+.cdg-det-v{color:var(--c-text);word-break:break-all;font-size:12px;padding:5px 0;border-bottom:1px solid var(--c-border)}
+.cdg-det-desc{font-size:12px;line-height:1.5;white-space:pre-wrap}
+.cdg-det-el{cursor:pointer;display:inline-flex;align-items:center;gap:5px;padding:2px 6px;border-radius:4px;border:1px solid var(--c-border);margin:2px 3px 2px 0;font-size:11px;background:var(--c-bg2);color:var(--c-text)}
+.cdg-det-el:hover{border-color:var(--c-accent)}
 .cdg-aide{padding:12px;color:var(--c-dim);font-size:12px;line-height:1.5}
 .cw-choix{display:flex;flex-direction:column;gap:4px;margin-top:8px;align-items:center}
 .cw-choix-b{font-size:12px;padding:4px 12px;border:1px solid var(--c-border);border-radius:6px;background:var(--c-bg3);color:var(--c-text);cursor:pointer}

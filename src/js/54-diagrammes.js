@@ -195,8 +195,9 @@ function capDiagBarre() {
   const n = _capDiag.sel.size;
   const exp = _capDiag.airdCharge ? `<span class="tb-grp"><button class="tbtn" id="cdg-export" title="${_L('Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML')}">${_L('⬇ Exporter…')}${n ? ` <span class="cdg-nb">${n}</span>` : ''}</button>` +
     `<button class="tbtn${_capDiag.choix ? ' active' : ''}" id="cdg-choix" title="${_L('Choisir les diagrammes à exporter : cases à cocher dans l\'explorateur')}">${_capDiag.choix ? _L('☑ Terminer la sélection') : _L('☐ Sélectionner…')}</button></span>` : '';
+  const infos = _capDiag.airdCharge ? `<button class="tbtn" id="cdg-infos" title="${_L('Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés')}">${_L('ℹ Infos')}</button>` : '';
   b.innerHTML = `<span class="tb-grp"><button class="tbtn" id="cdg-ouvrir" title="${_L('Choisir le fichier .aird (le sélecteur s\'ouvre dans le dossier du .capella quand le navigateur le permet)')}">${_L('📂 Ouvrir le .aird…')}</button>` +
-    `</span>` + exp +
+    infos + `</span>` + exp +
     `<span id="cdg-info" class="cdg-info">${_capDiag.airdCharge ? capEsc(_capDiag.nomAird) + ' — ' + _L(`${_capDiag.nbReps} diagramme(s)`) :
       _L('Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre.')}</span>` +
     `<span id="cdg-statut" class="cdg-info"></span>`;
@@ -334,7 +335,7 @@ function capDiagListe() {
     return `<div class="cdg-it${r.uid === _capDiag.actif ? ' actif' : ''}" data-uid="${capEsc(r.uid)}" title="${capEsc(r.type)} · ${capEsc(lv.label)}">` +
       (_capDiag.choix ? `<input type="checkbox" class="cdg-sel" data-uid="${capEsc(r.uid)}"${S.has(r.uid) ? ' checked' : ''}>` : '') +
       `<span class="cdg-ico">${ico.get(r.uid) || ''}</span><span class="cdg-sigle" style="color:${lv.color};background:${lv.bg}">${capEsc(_capDiag.classement === 'type' ? r.couche || '—' : r.sigle)}</span>` +
-      `<span class="cdg-nom">${capEsc(nom)}</span></div>`; };
+      `<span class="cdg-nom">${capEsc(nom)}</span><span class="cdg-info-b" data-info="${capEsc(r.uid)}" title="${_L('Informations du diagramme (panneau de détail)')}">ℹ</span></div>`; };
   /** Bloc d'un groupe (en-tête repliable + contenu). */
   const bloc = (g, niveau) => {
     if (g.plat) return g.reps.map(ligne).join('');
@@ -396,6 +397,9 @@ function capDiagClic(e) {
   }
   const gh = t.closest('[data-tog]');
   if (gh) { const k = _capDiag.classement + '|' + gh.dataset.tog; if (_capDiag.bascule.has(k)) _capDiag.bascule.delete(k); else _capDiag.bascule.add(k); capDiagListe(); return; }
+  const inf = t.closest('[data-info]');
+  if (inf) { capDiagInfo(inf.dataset.info); return; }
+  if (t.closest('#cdg-infos')) { if (_capDiag.actif) capDiagInfo(_capDiag.actif); return; }
   const it = t.closest('.cdg-it');
   if (it) { _capDiag.actif = it.dataset.uid; capDiagMarquerActif(); _capDiag.vis.ouvrir(it.dataset.uid); capDiagCarte(); }
 }
@@ -419,6 +423,44 @@ function capDiagChange(e) {
 function capDiagOpen(uid, id) {
   capNavOpen('diag');
   if (_capDiag.vis) { _capDiag.actif = uid; _capDiag.vis.ouvrir(uid, id); capDiagMarquerActif(); }
+}
+
+/**
+ * Panneau de détail d'un diagramme (comme pour un élément du modèle) : type, couche, sigle, nature, identifiant,
+ * dernière modification, fichier, description Capella, élément représenté, éléments affichés groupés par type
+ * (cliquables) et éléments liés. Le diagramme est ouvert s'il ne l'est pas, pour lire ses éléments.
+ * @param {string} uid - Représentation
+ */
+async function capDiagInfo(uid) {
+  const r = capDiagReps().find(x => x.uid === uid); if (!r) return;
+  if (_capDiag.actif !== uid) { capDiagOpen(uid); await new Promise(res => requestAnimationFrame(() => requestAnimationFrame(res))); }
+  const lv = capDiagCouche(r.couche), m = capDiagMeta(uid), esc = capEsc;
+  const ids = r.genre === 'tableau' ? [] : [...new Set([...document.querySelectorAll('#vd-svg [data-sem]')].map(e => e.getAttribute('data-sem')))];
+  const els = ids.map(id => capGetElementById_(id)).filter(Boolean);
+  const lien = e => { const c = capDiagCouche(e.layer);
+    return `<span class="cap-det-link cdg-det-el" onclick="capOpenDetail('${esc(e.id)}')"><span style="color:${c.color};font-size:9px;font-weight:700">${esc(e.typeName)}</span><span>${esc(e.attrs.name || e.id.slice(0, 12))}</span></span>`; };
+  const titre = (t, c) => `<div class="cdg-det-t" style="color:${c || 'var(--c-dim)'}">${t}</div>`;
+  const ligne = (k, v) => v ? `<tr><td class="cdg-det-k">${esc(k)}</td><td class="cdg-det-v">${esc(v)}</td></tr>` : '';
+  const genres = { diagramme: _L('Diagramme'), sequence: _L('Diagramme de séquence'), tableau: _L('Tableau') };
+  let h = `<span class="cap-type-badge" style="color:${lv.color};background:${lv.bg};display:inline-block;margin-bottom:6px">${esc(r.sigle)} · ${esc(r.type)}</span>` +
+    `<div style="font-size:11px;color:var(--c-accent);font-weight:600;margin-bottom:2px;">${_L('🔲 Diagramme Capella')}</div>` +
+    `<h3 style="font-size:14px;font-weight:600;margin-bottom:10px;word-break:break-word">${esc(r.nom)}</h3>` +
+    `<button class="cap-lf-btn" onclick="capDiagOpen('${esc(uid)}')">${_L('🔲 Afficher le diagramme')}</button>`;
+  h += titre(_L('Attributs')) + `<table class="cdg-det-tab">` + ligne(_L('Type'), r.type) + ligne(_L('Sigle'), r.sigle) +
+    ligne(_L('Couche'), `${r.couche || '—'} — ${lv.label}`) + ligne(_L('Nature'), genres[r.genre] || r.genre) +
+    ligne(_L('Éléments'), r.genre === 'tableau' ? '' : String(els.length)) +
+    ligne(_L('Modifié le'), m.modif ? m.modif.toLocaleString('fr-FR') : '') + ligne(_L('Fichier'), _capDiag.nomAird) + ligne('uid', uid) + `</table>`;
+  if (m.desc) h += titre('Description') + `<div class="cdg-det-desc">${esc(m.desc)}</div>`;
+  if (m.cible) { const e = capGetElementById_(m.cible.id); if (e) h += titre(_L('Élément représenté'), '#a78bfa') + `<div>${lien(e)}</div>`; }
+  if (els.length) {
+    const parType = {}; els.forEach(e => { (parType[e.typeName] = parType[e.typeName] || []).push(e); });
+    h += titre(_L(`Éléments affichés (${els.length})`), '#58a6ff') + Object.entries(parType).sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]))
+      .map(([t, l]) => `<div style="margin-bottom:6px"><span class="cdg-det-k">${esc((CAP_HUMAN_NAMES[t] || {}).h || t)} (${l.length})</span><div style="margin-top:2px">` +
+        l.sort((a, b) => String(a.attrs.name || '').localeCompare(String(b.attrs.name || ''))).slice(0, 200).map(lien).join('') + `</div></div>`).join('');
+  }
+  const box = document.getElementById('cap-detail-content'), det = document.getElementById('cap-detail');
+  if (box) box.innerHTML = h;
+  if (det) det.style.display = 'flex';
 }
 
 /**
@@ -566,7 +608,7 @@ function capDiagTexte(s) {
 /**
  * Description et élément représenté d'un diagramme, lus dans le .aird (DRepresentationDescriptor : documentation, target).
  * @param {string} uid - Représentation
- * @returns {{desc:string, cible:?{id:string,nom:string,type:string}}} métadonnées
+ * @returns {{desc:string, modif:?Date, cible:?{id:string,nom:string,type:string}}} métadonnées (modif : changeId du descripteur, s'il est une date)
  */
 function capDiagMeta(uid) {
   if (!_capDiag.meta) {
@@ -575,12 +617,12 @@ function capDiagMeta(uid) {
     let x;
     while ((x = re.exec(_capDiag.texteAird))) {
       const u = att(x[1], 'uid'); if (!u) continue;
-      m.set(u, { doc: att(x[1], 'documentation'), cible: ((x[3] || '').match(/<target\b[^>]*href="[^"#]*#([^"]+)"/) || [])[1] || '' });
+      m.set(u, { doc: att(x[1], 'documentation'), modif: +att(x[1], 'changeId') || 0, cible: ((x[3] || '').match(/<target\b[^>]*href="[^"#]*#([^"]+)"/) || [])[1] || '' });
     }
     _capDiag.meta = m;
   }
   const r = _capDiag.meta.get(uid) || { doc: '', cible: '' }, e = r.cible && capGetElementById_(r.cible);
-  return { desc: capDiagTexte(r.doc), cible: e ? { id: e.id, nom: e.attrs.name || e.id, type: (CAP_HUMAN_NAMES[e.typeName] || {}).h || e.typeName } : null };
+  return { desc: capDiagTexte(r.doc), modif: r.modif > 1e12 && r.modif < 4e12 ? new Date(r.modif) : null, cible: e ? { id: e.id, nom: e.attrs.name || e.id, type: (CAP_HUMAN_NAMES[e.typeName] || {}).h || e.typeName } : null };
 }
 
 /**

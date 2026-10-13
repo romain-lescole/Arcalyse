@@ -2654,7 +2654,15 @@
   "Lancer l'export dans le format choisi": "Start the export in the chosen format",
   ": en-tête, description, cartouche, annexe des éléments représentés. PDF (sommaire, signets ; alerte si le fichier risque d'être lourd), ZIP PNG / SVG ou rapport HTML, avec aperçu ; choisissez le format puis": ": header, description, title block, appendix of represented elements. PDF (contents, bookmarks; warning if the file may be heavy), PNG / SVG ZIP or HTML report, with preview; choose the format, then",
   "Ouvre le dossier du projet : le .capella et ses diagrammes (.aird) sont chargés ensemble": "Opens the project folder: the .capella and its diagrams (.aird) are loaded together",
-  "📁 Ouvrir le dossier du projet…": "📁 Open the project folder…"
+  "📁 Ouvrir le dossier du projet…": "📁 Open the project folder…",
+  "Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés": "Information on the open diagram in the details panel: type, layer, description, represented element, displayed elements",
+  "ℹ Infos": "ℹ Info",
+  "Informations du diagramme (panneau de détail)": "Diagram information (details panel)",
+  "🔲 Diagramme Capella": "🔲 Capella diagram",
+  "🔲 Afficher le diagramme": "🔲 Show the diagram",
+  "Modifié le": "Modified on",
+  "Éléments affichés ({0})": "Displayed elements ({0})",
+  "Le panneau de détail présente le diagramme ouvert : type, couche, date de modification, description, élément représenté et éléments affichés (cliquables). Aussi par ℹ au survol d'un diagramme de l'explorateur.": "The details panel presents the open diagram: type, layer, modification date, description, represented element and displayed elements (clickable). Also with ℹ when hovering a diagram in the explorer."
  },
  "interface": {
   "🌳 Arborescence": "🌳 Tree",
