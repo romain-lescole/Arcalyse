@@ -41,8 +41,8 @@ var CAP_NAV_GROUPS=[
   {g:'ana',     id:'cap-v-analyses', l:_L('🔬 Analyses'),          t:_L('Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes')}
 ];
 /** Réglage par défaut : tous les menus affichés, 🔲 Diagrammes Capella (en tête, à côté de 🗺 Relation Map), ▤ Tableau, ⚡ Chaînes,
- * 🎬 Scénarios et 📐 Tableau de bord en boutons directs (tbl, diag : marques d'un réglage qui connaît ces boutons, voir capNavMigrate). */
-var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['table','chains','diag','scen','dashboard'], tbl:1, diag:1};
+ * et 📐 Tableau de bord en boutons directs ; 🎬 Scénarios reste dans le menu 📡 Flux & interfaces (tbl, diag : marques d'un réglage qui connaît ces boutons, voir capNavMigrate). */
+var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['table','chains','diag','dashboard'], tbl:1, diag:1};
 var _capNav=(()=>{ try{ const el=document.getElementById('cap-toolbar'); const o=el&&JSON.parse(el.textContent);
   if(o&&o.groups&&Array.isArray(o.pins)) return capNavMigrate(o); }catch(e){} return JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); })();
 var _capNavLast={explore:'cards', flux:'chains', ana:'ana:trace'};   // dernière sous-vue ouverte par menu

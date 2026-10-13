@@ -54,6 +54,9 @@ function capOpenDetail(id){
   html+=secTitle(_L('Attributs'));
   html+=`<table style="width:100%;border-collapse:collapse">${literalRows.map(([k,v])=>`<tr><td style="color:var(--c-dim);font-family:monospace;font-size:11px;padding:5px 0;width:100px;padding-right:10px;border-bottom:1px solid var(--c-border);vertical-align:top;">${capEsc(k)}</td><td style="color:var(--c-text);word-break:break-all;font-size:12px;padding:5px 0;border-bottom:1px solid var(--c-border);">${capEsc(String(v).slice(0,400))}</td></tr>`).join('')}</table>`;
 
+  // 🔲 Diagrammes Capella du projet (.aird) où l'élément est représenté : juste après les attributs
+  if(typeof capDiagDetail==='function') html+=capDiagDetail(el.id, secTitle);
+
   // Références sortantes (attributs → autres éléments, cliquables)
   if(outgoingRefs.length){
     html+=secTitle(_L('Références sortantes →'),'#4dd880');
@@ -74,9 +77,6 @@ function capOpenDetail(id){
 
   // Exigences, propriétés (PVMT) et contraintes de l'élément
   html+=capXtDetail(el.id, secTitle);
-
-  // 🔲 Diagrammes Capella du projet (.aird) où l'élément est représenté
-  if(typeof capDiagDetail==='function') html+=capDiagDetail(el.id, secTitle);
 
   // Owner
   if(parent){
