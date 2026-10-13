@@ -36,6 +36,7 @@ Application **autonome, fonctionnant hors ligne**, qui charge un fichier `.capel
 | `js/03…07-rm-*.js` | **Relation Map** (graphe D3) : état `S`, SVG/zoom, marqueurs, arbre, rendu `render`, vue chaîne, interactions, export image, légende, panneau gauche (critères) |
 | `js/08-editeur-modele.js` | Modale d'édition (éléments, relations, paquetages) |
 | `js/09-arborescence.js` | Arborescence du panneau gauche (`buildArbo`, sélection multiple, collage), `rmSetElemVal`, `onModelChanged` |
+| `js/10-rm-vues.js` | 🗂 Vues de la Relation Map : onglets `rmViews` (capture `rmViewCapture`, application `rmViewApply`, enregistrement `rmViewSync` en fin de `render()`), préréglages `RM_VIEW_PRESETS`, 💾 / 📂 vue (`rmViewSave`, `rmViewLoadFile`), partie ⚙ `rm` (`rmViewsCfgGet`/`rmViewsCfgSet`) |
 | `js/11-sauvegarde-toolbar-init.js` | Sauvegarde/chargement JSON, gestionnaires de la barre, raccourcis, initialisation (`applyTheme('dark')`) |
 | `js/20-capella-chargement.js` | Moteur Capella : `capLoadFile`, parsing XML, `capBuildTree`, registre des types, injection dans la Relation Map, `capSaveFullPage`, écran d'accueil |
 | `js/21-capella-vues-base.js` | Barre latérale, ▦ Cartes, ▤ Tableau (colonnes, ✨ colonne par chemin : moteur Metachain `cap…`, aperçu en direct `capPp…`), 🌳 Arborescence |

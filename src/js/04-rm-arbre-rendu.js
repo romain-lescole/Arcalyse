@@ -351,4 +351,5 @@ function render() {
 
   updateInfo();
   updateLegend();
+  rmViewSync();   // 🗂 vue active (10-rm-vues.js)
 }

@@ -96,6 +96,19 @@
   </div>
 </div>
 
+<!-- 🗂 Onglets des vues de la Relation Map (10-rm-vues.js) -->
+<div id="rm-tabs">
+  <div id="rm-tabs-list"></div>
+  <div style="position:relative" id="rm-tab-add-wrap">
+    <div class="rm-tab-add" id="rm-tab-add" title="Nouvelle vue : copie de la vue affichée, vue vide ou préréglage">＋ ▾</div>
+    <div id="rm-tab-add-dd" class="rm-dd"></div>
+  </div>
+  <span style="flex:1"></span>
+  <div class="tbtn" id="rm-view-save" title="Enregistrer la vue affichée dans un fichier (.json)">💾 Sauver vue</div>
+  <div class="tbtn" id="rm-view-load" title="Ouvrir une vue enregistrée dans un nouvel onglet">📂 Charger vue</div>
+  <input type="file" id="rm-view-input" accept=".json" style="display:none">
+</div>
+
 <!-- ════════════════════════  MAIN  ════════════════════════ -->
 <div id="main">
   <!-- Écran d'accueil : ouverture d'un fichier Capella (glisser-déposer ou explorateur) -->

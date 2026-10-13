@@ -87,6 +87,7 @@ function capBuildPageHtml(){
         capInjectChainsToModal();
         capApplyPanelOnLoad();
       });
+      if (typeof rmViewsOnModelLoad === 'function') rmViewsOnModelLoad();
       capLoaded = true;
       capCurrentFileName = xmlEl.getAttribute('data-name') || '';
       applyMode('capella');
@@ -224,6 +225,7 @@ function capApplyXmlDoc(doc, name){
     capInjectChainsToModal();
     capApplyPanelOnLoad();
   });
+  rmViewsOnModelLoad();   // 🗂 vues de la Relation Map (10-rm-vues.js)
   capLoaded=true;
   capCurrentFileName=name;
   applyMode('capella');

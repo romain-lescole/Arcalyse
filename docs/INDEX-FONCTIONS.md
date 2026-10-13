@@ -11,7 +11,7 @@
 - `TCFG` (l. 38)
 - `MODES` (l. 50)
 
-## 02-themes.js — 302 lignes
+## 02-themes.js — 304 lignes
 
 - `THEMES` (l. 6)
 - `capInk` (l. 57) — Couleur de texte lisible sur un fond donné : noir ou blanc, selon le meilleur contraste (WCAG).
@@ -30,7 +30,7 @@
 - `capContrastCss` (l. 156) — Génère, pour le thème clair courant, des règles qui foncent les couleurs de texte fixes des feuilles
 - `applyTheme` (l. 198) — Applique le thème visuel global (dark/light/dracula/solarized/nord).
 - `applyMode` (l. 243) — Bascule entre les modes d'affichage : default (Relation Map), PBS, capella.
-- `tv` (l. 300) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
+- `tv` (l. 302) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
 
 ## 03-rm-etat-svg.js — 121 lignes
 
@@ -38,7 +38,7 @@
 - `nextColor` (l. 38) — Retourne la prochaine couleur non encore utilisée dans TCFG ni RCFG.
 - `setupMarkers` (l. 66) — Crée/recrée les marqueurs SVG (flèches, diamants, cercles) pour chaque type de relation défini dans RCFG.
 
-## 04-rm-arbre-rendu.js — 354 lignes
+## 04-rm-arbre-rendu.js — 355 lignes
 
 - `buildTreeData` (l. 14) — Construit la structure d'arbre D3 hiérarchique à partir de MODEL.elements
 - `rebuildTree` (l. 59) — Reconstruit l'arbre D3 et redessine le graphe. Point d'entrée principal
@@ -140,6 +140,27 @@
 - `rmSetElemVal` (l. 695) — Écrit une valeur dans un champ d'un élément du modèle de la Relation Map (nom, type, parent,
 - `onModelChanged` (l. 731) — Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel.
 
+## 10-rm-vues.js — 261 lignes
+
+- `RM_VIEW_FLAGS` (l. 12) — Options d'affichage retenues dans une vue (clé de S → bouton de la barre 2).
+- `RM_VIEW_PRESETS` (l. 15) — Préréglages proposés par le menu ＋ : relations cochées (clés relType de CAP_LINK_SECTIONS).
+- `rmViewCapture` (l. 31) — Capture l'état affiché de la Relation Map (contenu d'une vue).
+- `rmViewAutoName` (l. 46) — Nom automatique d'une vue : élément de contexte (et sa couche) ou chaîne affichée.
+- `rmViewSync` (l. 56) — Enregistre l'état affiché dans l'onglet actif (appelé à la fin de render() et après un zoom).
+- `rmViewSyncToolbar` (l. 64) — Met les boutons de la barre 2 (options, profondeur, disposition) en accord avec S.
+- `rmViewRestoreFilters` (l. 73) — Recopie dans S les filtres (types, relations) et les éléments masqués de l'onglet actif —
+- `rmViewApply` (l. 84) — Applique une vue à la Relation Map : réglages, filtres, graphe, nœuds repliés, chaîne et zoom.
+- `rmViewNewTab` (l. 115) — Crée un onglet.
+- `rmViewSelect` (l. 120) — Affiche un onglet (après avoir enregistré l'onglet quitté). @param {number} i - Indice
+- `rmViewAdd` (l. 130) — Ajoute un onglet et l'affiche.
+- `rmViewClose` (l. 151) — Ferme un onglet (au moins un onglet reste). @param {number} i - Indice
+- `rmViewsRender` (l. 162) — Dessine la barre d'onglets des vues (#rm-tabs).
+- `rmViewSave` (l. 195) — Télécharge la vue affichée dans un fichier .json (💾 Sauver vue).
+- `rmViewLoadFile` (l. 208) — Charge une vue enregistrée (📂 Charger vue) : elle s'ouvre dans un nouvel onglet.
+- `rmViewsOnModelLoad` (l. 224) — Après le chargement d'un modèle : crée la première vue, ou réapplique la vue active (vues gardées).
+- `rmViewsCfgGet` (l. 236) — État des vues pour la 💾 Page HTML et le fichier ⚙ Interface et vues.
+- `rmViewsCfgSet` (l. 240) — Remplace les vues par celles d'une configuration (page enregistrée ou fichier ⚙).
+
 ## 11-sauvegarde-toolbar-init.js — 274 lignes
 
 - `saveJSON` (l. 5) — Sérialise MODEL, RCFG, TCFG et S en JSON et télécharge le fichier.
@@ -149,7 +170,7 @@
 - `openHelpModal` (l. 160) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
 - `positionOverlay` (l. 256) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
 
-## 20-capella-chargement.js — 824 lignes
+## 20-capella-chargement.js — 826 lignes
 
 - `CAP_LAYERS` (l. 4)
 - `CAP_NS_LAYER` (l. 12)
@@ -159,33 +180,33 @@
 - `CAP_PKG_TYPES` (l. 16)
 - `CAP_TYPE_ICON` (l. 17)
 - `capBuildPageHtml` (l. 36) — Construit le HTML de la page actuelle (tout le HTML/CSS/JS de l'application), fichier
-- `capPageFileName` (l. 110) — Nom de fichier proposé pour la page sauvegardée.
-- `capSaveFullPage` (l. 112) — Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur).
-- `capSavePageDirect` (l. 126) — Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
-- `capEsc` (l. 156) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
-- `capLoadFile` (l. 172) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
-- `capApplyXmlDoc` (l. 212) — Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
-- `capShowWelcome` (l. 237) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
-- `capWelcomeStatus` (l. 248) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
-- `capUpdateWelcome` (l. 254) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
-- `XSI_NS` (l. 296)
-- `capXType` (l. 298) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
-- `capTName` (l. 300) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
-- `capXId` (l. 302) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
-- `capXName` (l. 304) — Lit l'attribut 'name' d'un élément XML Capella.
-- `capResolveLayer` (l. 309) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
-- `capGetAttrs` (l. 315) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
-- `capBuildTree` (l. 326) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
-- `capRunBulk` (l. 352) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
-- `capBuildTypeRegistry` (l. 362) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
-- `capApplyPanelOnLoad` (l. 382) — Appelée après le chargement Capella : configure le panneau gauche RM.
-- `capInjectToArbo` (l. 454) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
-- `capInjectCapellaRelsToCriteria` (l. 558) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
-- `capInjectLinksToModel` (l. 599) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
-- `capFilterArboToLinked` (l. 643) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
-- `capInjectChainsToModal` (l. 682) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
-- `capRenderCurrentView` (l. 743) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
-- `capUpdateStatChips` (l. 815) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
+- `capPageFileName` (l. 111) — Nom de fichier proposé pour la page sauvegardée.
+- `capSaveFullPage` (l. 113) — Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur).
+- `capSavePageDirect` (l. 127) — Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
+- `capEsc` (l. 157) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
+- `capLoadFile` (l. 173) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
+- `capApplyXmlDoc` (l. 213) — Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
+- `capShowWelcome` (l. 239) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
+- `capWelcomeStatus` (l. 250) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
+- `capUpdateWelcome` (l. 256) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
+- `XSI_NS` (l. 298)
+- `capXType` (l. 300) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
+- `capTName` (l. 302) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
+- `capXId` (l. 304) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
+- `capXName` (l. 306) — Lit l'attribut 'name' d'un élément XML Capella.
+- `capResolveLayer` (l. 311) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
+- `capGetAttrs` (l. 317) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
+- `capBuildTree` (l. 328) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
+- `capRunBulk` (l. 354) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
+- `capBuildTypeRegistry` (l. 364) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
+- `capApplyPanelOnLoad` (l. 384) — Appelée après le chargement Capella : configure le panneau gauche RM.
+- `capInjectToArbo` (l. 456) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
+- `capInjectCapellaRelsToCriteria` (l. 560) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
+- `capInjectLinksToModel` (l. 601) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
+- `capFilterArboToLinked` (l. 645) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
+- `capInjectChainsToModal` (l. 684) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
+- `capRenderCurrentView` (l. 745) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
+- `capUpdateStatChips` (l. 817) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
 ## 21-capella-vues-base.js — 1484 lignes
 
@@ -539,7 +560,7 @@
 - `capTfFilter` (l. 127) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
 - `capTfWatch` (l. 149) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
 
-## 43-visite-guidee.js — 446 lignes
+## 43-visite-guidee.js — 448 lignes
 
 - `CAP_TOUR_STEPS` (l. 12) — Étapes de la visite générale : s = sélecteur CSS de la zone (toutes les correspondances visibles sont encadrées
 - `CAP_TOUR_EXPLORE` (l. 57) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
@@ -547,23 +568,23 @@
 - `CAP_TOUR_ANA_TXT` (l. 75) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
 - `capTourRmCtx` (l. 88) — Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
 - `CAP_TOUR_VIEWS` (l. 102) — Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
-- `CAP_TOUR_START` (l. 239) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
-- `CAP_TOUR_AFTER` (l. 252) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
-- `capTourCtxKey` (l. 269) — Clé de la vue affichée pour les visites contextuelles.
-- `capTourCtx` (l. 277) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
-- `capTourEls` (l. 285) — Éléments affichés désignés par le sélecteur d'une étape.
-- `capTourVisible` (l. 296) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
-- `capTourStart` (l. 306) — Lance une visite guidée depuis sa première étape.
-- `capTourStartView` (l. 327) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
-- `capTourGo` (l. 335) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
-- `capTourPos` (l. 355) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
-- `capTourRenderPop` (l. 362) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
-- `capTourPlace` (l. 374) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
-- `capTourKey` (l. 406) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
-- `capTourEnd` (l. 415) — Quitte la visite guidée et retire la mise en évidence.
-- `capTourHelpMenu` (l. 422) — Ouvre le menu ? Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
-- `capTourStartHere` (l. 429) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
-- `capTourResumeAfterLoad` (l. 436) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
+- `CAP_TOUR_START` (l. 241) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
+- `CAP_TOUR_AFTER` (l. 254) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
+- `capTourCtxKey` (l. 271) — Clé de la vue affichée pour les visites contextuelles.
+- `capTourCtx` (l. 279) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
+- `capTourEls` (l. 287) — Éléments affichés désignés par le sélecteur d'une étape.
+- `capTourVisible` (l. 298) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
+- `capTourStart` (l. 308) — Lance une visite guidée depuis sa première étape.
+- `capTourStartView` (l. 329) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
+- `capTourGo` (l. 337) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
+- `capTourPos` (l. 357) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
+- `capTourRenderPop` (l. 364) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
+- `capTourPlace` (l. 376) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
+- `capTourKey` (l. 408) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
+- `capTourEnd` (l. 417) — Quitte la visite guidée et retire la mise en évidence.
+- `capTourHelpMenu` (l. 424) — Ouvre le menu ? Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
+- `capTourStartHere` (l. 431) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
+- `capTourResumeAfterLoad` (l. 438) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
 
 ## 44-functional-exchange.js — 512 lignes
 
@@ -603,18 +624,18 @@
 - `capDrClipboard` (l. 297) — Copie dans le presse-papiers (HTML mis en forme + texte brut ; repli par sélection si l'API est refusée).
 - `capDrRender` (l. 327) — Rend le rapport de comparaison dans un conteneur (barre de réglages, filtres, rapport, copie et exports).
 
-## 46-config-interface.js — 144 lignes
+## 46-config-interface.js — 149 lignes
 
 - `CAP_CFG_PARTS` (l. 9)
-- `capCfgSer` (l. 19) — Sérialise en JSON en conservant les ensembles (Set). @param {*} o @returns {string}
-- `capCfgRev` (l. 21) — Relit un JSON produit par capCfgSer (ensembles reconstitués). @param {string} t @returns {*}
-- `capCfgGet` (l. 27) — État courant d'une partie de l'interface.
-- `capCfgSet` (l. 41) — Applique une partie de configuration à l'interface (et la mémorise dans la page).
-- `capCfgStoreViews` (l. 64) — Écrit dans la page (bloc JSON « cap-ui-views ») ce que les autres blocs ne conservent pas encore :
-- `capCfgRestoreViews` (l. 71) — Réapplique à l'ouverture de la page les vues mémorisées par capCfgStoreViews.
-- `capCfgDialog` (l. 86) — Fenêtre de choix des parties à enregistrer ou à charger.
-- `capCfgLoadFile` (l. 124) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
-- `capCfgLoadUpdate` (l. 138) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
+- `capCfgSer` (l. 20) — Sérialise en JSON en conservant les ensembles (Set). @param {*} o @returns {string}
+- `capCfgRev` (l. 22) — Relit un JSON produit par capCfgSer (ensembles reconstitués). @param {string} t @returns {*}
+- `capCfgGet` (l. 28) — État courant d'une partie de l'interface.
+- `capCfgSet` (l. 43) — Applique une partie de configuration à l'interface (et la mémorise dans la page).
+- `capCfgStoreViews` (l. 67) — Écrit dans la page (bloc JSON « cap-ui-views ») ce que les autres blocs ne conservent pas encore :
+- `capCfgRestoreViews` (l. 74) — Réapplique à l'ouverture de la page les vues mémorisées par capCfgStoreViews.
+- `capCfgDialog` (l. 90) — Fenêtre de choix des parties à enregistrer ou à charger.
+- `capCfgLoadFile` (l. 129) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
+- `capCfgLoadUpdate` (l. 143) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
 
 ## 47-composants.js — 439 lignes
 

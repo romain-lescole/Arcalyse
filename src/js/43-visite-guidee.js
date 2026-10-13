@@ -114,6 +114,8 @@ var CAP_TOUR_VIEWS={
      x:_L('Enregistre le graphe en image <b>PNG</b>, <b>JPEG</b> ou <b>SVG</b>, ou ses données en CSV : <b>▦ Arbre par niveaux</b> (une colonne par niveau et par relation) ou <b>⇄ Relations affichées</b> (une ligne par arête).')},
     {s:'#sec-arbo', t:_L('🌳 Arborescence'),
      x:_L('Éléments du modèle qui ont au moins une relation, à leur place hiérarchique (chaînes comprises). <b>Clic</b> = recentrer le graphe sur l\'élément ; <b>clic droit</b> = 🔎 Détail ; le champ filtre la liste ; ⊞ / ⊟ déplient ou replient tout.')},
+    {s:'#rm-tabs', t:_L('🗂 Vues'),
+     x:_L('Onglets de vues, comme dans ▤ Tableau : chacun retient contexte, profondeur, disposition, filtres et affichage. <b>＋</b> crée une copie, une vue vide ou un préréglage (🧱 Structure, ƒ Fonctionnel, 🔌 Interfaces, 🧬 Traçabilité) ; double-clic pour renommer ; 💾 / 📂 enregistrent ou ouvrent une vue.')},
     {s:'#b-filters', t:_L('⚙ Filtres'),
      x:_L('Ouvre le tiroir des filtres au-dessus du graphe : à gauche les <b>types d\'éléments</b> (couleur de leur couche ARCADIA), à droite les <b>critères de relation</b> à suivre ; recherche, ☑ / ☐ tout cocher ou décocher, compteurs cochés / total. × ou Échap le referme.')},
     {s:'#graph', t:_L('🕸 Graphe'),

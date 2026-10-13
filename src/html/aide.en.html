@@ -101,6 +101,14 @@
         <h2>🗺 Relation Map</h2>
         <p class="hp-lead">Graph centred on a context element: its neighbours are displayed up to the chosen depth, according to the selected Capella relations (function → component allocation, exchanges, physical links, chains…).</p>
         <p class="hp-note">At the bottom of the window, the <b>status bar</b> recalls the context element, the number of nodes and unique elements displayed and the depth; it only appears in the Relation Map. 🎯 Tour of this view picks a context element if there is none yet, to show a graph.</p>
+        <h3>🗂 Views (tabs)</h3>
+        <p>Below the 2nd bar, a tab bar <b>View 1 · View 2 · ＋</b>, as in ▤ Table. Each view keeps the context element, the depth, the layout, the checked types and relations (⚙ Filters), the display options (# Nums, ⌁ Relations, ✂ Names, ⊙ Single, ⬡ Compact, legend), the hidden elements, the nodes collapsed by hand, the zoom and the displayed chain. Every change is recorded in the active view, without a “Save” button; colours stay common to all views.</p>
+        <table class="hp-t">
+          <tr><td>Tab</td><td>Click: show the view · double-click: rename (an emptied name becomes automatic again) · ✕: close · drag: reorder. Until it is renamed, a view is named after its context, e.g. “Cabin Terminal (LA)”. ⚠: context element missing from the loaded model (choose another one).</td></tr>
+          <tr><td>＋ ▾</td><td><b>Copy of the displayed view</b>, <b>empty view</b> (initial settings, same context) or a <b>preset</b> that checks only some relations: 🧱 Structure (breakdowns, deployment), ƒ Functional (sub-functions, allocations, functional exchanges, chains), 🔌 Interfaces (component exchanges, physical links, ports, exchanged items), 🧬 Traceability (realizations between layers, capabilities), ⚡ All.</td></tr>
+          <tr><td>💾 Save view · 📂 Load view</td><td>Saves the displayed view to a .json file; loading opens it in a new tab.</td></tr>
+        </table>
+        <p class="hp-note">Views are saved in the 💾 HTML page and in the ⚙ Interface and views file (“🗺 Relation Map” part). They are kept when another model is loaded.</p>
         <h3>Graph interactions</h3>
         <table class="hp-t">
           <tr><td>Click on a node</td><td>Selects the element (the 🔎 Detail panel, when open, follows the selection).</td></tr>

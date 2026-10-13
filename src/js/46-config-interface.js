@@ -10,6 +10,7 @@ var CAP_CFG_PARTS=[
   ['toolbar',_L('☰ Barre des vues'),_L('menus affichés, vues épinglées')],
   ['dash',   _L('📐 Tableaux de bord'),_L('pages, indicateurs, disposition')],
   ['table',  _L('▤ Tableau'),_L('onglets de vues, colonnes affichées, colonnes par chemin, tri, filtres, largeurs')],
+  ['rm',     _L('🗺 Relation Map'),_L('onglets de vues : contexte, profondeur, disposition, filtres, affichage')],
   ['csv',    _L('⬇ Exports CSV'),_L('colonnes retirées ou ajoutées (ID, owner, attributs…) pour chaque export')],
   ['theme',  _L('🎨 Thème'),_L('thème choisi et thème personnalisé')],
   ['names',  _L('🔤 Règles de nommage'),_L('verbes acceptés, mots refusés')]
@@ -29,6 +30,7 @@ function capCfgGet(k){
   if(k==='dash') return capDashStore;
   if(k==='table') return capTableCfgGet();
   if(k==='csv') return _capCsvCfg;
+  if(k==='rm') return rmViewsCfgGet();
   if(k==='theme') return {current:currentTheme, custom:capThemeStore};
   if(k==='names') return capNameRules;
   return null;
@@ -47,6 +49,7 @@ function capCfgSet(k, v){
     if(capLoaded&&capCurrentView==='table') capRenderTable();
   }
   else if(k==='csv'){ if(typeof v==='object') _capCsvCfg=v; }
+  else if(k==='rm') rmViewsCfgSet(v);
   else if(k==='tv'){   // ancienne 📊 Table View : onglets convertis en onglets du ▤ Tableau
     capTableImportTv(v);
     if(capLoaded&&capCurrentView==='table') capRenderTable();
@@ -64,7 +67,7 @@ function capCfgSet(k, v){
 function capCfgStoreViews(){
   let el=document.getElementById('cap-ui-views');
   if(!el){ el=document.createElement('script'); el.type='application/json'; el.id='cap-ui-views'; document.head.appendChild(el); }
-  el.textContent=capCfgSer({table:capCfgGet('table'), csv:_capCsvCfg, theme:currentTheme}).replace(/</g,'\\u003c');
+  el.textContent=capCfgSer({table:capCfgGet('table'), csv:_capCsvCfg, rm:rmViewsCfgGet(), theme:currentTheme}).replace(/</g,'\\u003c');
 }
 
 /** Réapplique à l'ouverture de la page les vues mémorisées par capCfgStoreViews. */
@@ -74,6 +77,7 @@ function capCfgRestoreViews(){
     const o=capCfgRev(el.textContent);
     if(o.table) capCfgSet('table',o.table);
     if(o.csv) capCfgSet('csv',o.csv);
+    if(o.rm) capCfgSet('rm',o.rm);
     if(o.tv) capCfgSet('tv',o.tv);   // page enregistrée par une version qui avait la 📊 Table View
     if(o.theme) capCfgSet('theme',{current:o.theme});
   }catch(e){ console.warn('Vues enregistrées illisibles :',e); }
@@ -92,7 +96,8 @@ function capCfgDialog(mode, data){
   const nb=k=>k==='dash'?(()=>{ const d=mode==='load'?data.parts.dash:capDashStore; const n=d&&d.list?d.list.length:0; return _L(` <span class="ana-dim">(${n} page${n>1?'s':''})</span>`); })()
     :k==='table'?(()=>{ const t=(mode==='load'?data.parts.table:capCfgGet('table'))||{}, o=(t.tabs||[]).length||1, n=(t.customCols||[]).length;
       const tv=mode==='load'&&data.parts.tv?_L(` + anciens onglets 📊 Table View`):'';
-      return _L(` <span class="ana-dim">(${o} onglet${o>1?'s':''}${n?_L(`, ${n} colonne${n>1?'s':''} par chemin`):''}${tv})</span>`); })():'';
+      return _L(` <span class="ana-dim">(${o} onglet${o>1?'s':''}${n?_L(`, ${n} colonne${n>1?'s':''} par chemin`):''}${tv})</span>`); })()
+    :k==='rm'?(()=>{ const r=(mode==='load'?data.parts.rm:capCfgGet('rm'))||{}, o=(r.tabs||[]).length; return _L(` <span class="ana-dim">(${o} vue${o>1?'s':''})</span>`); })():'';
   ov.innerHTML=_L(`<div class="cw-d-box" style="max-width:560px">
     <div class="cw-d-hdr"><b>${mode==='save'?_L('⚙ Enregistrer l\'interface et les vues'):_L('⚙ Charger une interface et des vues')}</b><button class="cap-lf-btn" data-c="x">✕</button></div>
     <div class="cw-d-body">

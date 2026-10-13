@@ -258,6 +258,7 @@ function applyMode(mode) {
   // Deuxième niveau de toolbar (commandes Relation Map) : visible uniquement en mode graphe
   const tb2=document.getElementById('toolbar2');
   if(tb2) tb2.style.display=isGraph?'flex':'none';
+  const rmTabs=document.getElementById('rm-tabs'); if(rmTabs) rmTabs.style.display=isGraph?'flex':'none';
   // Barre d'état (contexte, nœuds, profondeur) : propre à la Relation Map
   const ib=document.getElementById('infobar'); if(ib) ib.style.display=isGraph?'':'none';
   // Menu d'export d'image masqué dans les vues Capella
@@ -292,6 +293,7 @@ function applyMode(mode) {
     Object.keys(S.relF).forEach(t => S.relF[t] = true);
     Object.keys(S.typF).forEach(t => S.typF[t] = true);
   }
+  if (!cfg) rmViewRestoreFilters();   // 🗂 les filtres de la vue active sont conservés (10-rm-vues.js)
   buildPanel(); setupMarkers(); rebuildTree();
 }
 
