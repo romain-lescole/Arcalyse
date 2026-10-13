@@ -27,6 +27,7 @@ A Capella model grows fast: hundreds of functions, exchanges, components and por
 - 📂 **Drag and drop** your `.capella` file: the model is analysed in the browser, on your computer.
 - 🔌 **Offline**: a single standalone HTML file (D3 library embedded), usable without a connection.
 - 🧭 **All ARCADIA layers**: OA, SA, LA, PA, EPBS — functions, components, exchanges, chains, scenarios, requirements, properties.
+- 🔲 **Capella diagrams**: with the project's `.aird`, the diagrams are drawn as in Capella, browsable and exportable as sheets (PDF, ZIP, HTML).
 - 🩺 **Ready-to-use checks**: unallocated elements, unconnected ports, incomplete traceability, names to review…
 - 📤 **Exports everywhere**: CSV, PNG, SVG, PDF, standalone HTML reports, dashboards printable in A4.
 - 🔄 **File watch**: Arcalyse detects new versions of the `.capella` file and shows what changed.
@@ -62,6 +63,17 @@ Sequence diagrams (ES, FS, OES, OAS, IS) are redrawn: lifelines, messages, execu
 
 ![Scenarios](docs/captures/05-scenarios.png)
 
+### 🔲 Open the Capella diagrams
+Load the project's **`.aird`** file (or open the **📁 project folder**: the `.capella` and its diagrams are loaded together) and the **Capella diagrams** are drawn as in Capella — architecture, breakdown, data flow, class, mode & state, scenario diagrams… — read-only, without Capella installed:
+- an **explorer** grouped by layer (OA, SA, LA, PA, EPBS) and, if you wish, by diagram type (OA › OAB…), with collapsible groups, filter and adjustable width;
+- zoom, search in the diagram, **minimap** below the explorer (or inside the diagram), highlighting of a functional chain or physical path, filters (ports, labels, exchange categories);
+- **click an element** to open its details; conversely, the details panel lists the diagrams where the element appears and opens them centred on it;
+- **export of several diagrams at once** as framed **sheets**: header (layer, acronym, name, type), Capella description and represented element, title block (project, layer, content, sources, date, sheet number), appendix of the represented elements — as **PDF** (contents, bookmarks; warning if the file may be heavy), **PNG / SVG ZIP** (one folder per layer, one appendix CSV per diagram) or standalone **HTML report**, with a live preview.
+
+![Capella diagrams — explorer by layer › type, diagram and minimap](docs/captures/11-diagrammes.png)
+
+![Capella diagrams — export of several diagrams as sheets](docs/captures/12-diagrammes-export.png)
+
 ### 🔬 Analyse and check
 - **ƒ Functions**: hierarchy with descriptions, Excel-style table (value filters, copy), allocation to the system or to actors, cross-layer traceability, metrics, **name quality** (action verbs in French and English, customisable rules) and printable **functional file**.
 - **🧬 Cross-layer traceability**: OA → SA → LA → PA → EPBS realization rates by category, at a glance, and the list of untraced elements.
@@ -91,7 +103,7 @@ Choose among dozens of indicators (number of elements, function allocation, desc
    - delivered, ready to use, in **[`livraison/`](livraison/)** (“Download raw file” button on GitHub): **`arcalyse-en.html`** (English), **`arcalyse-fr.html`** (French) or **`arcalyse-multi.html`** (both languages, 🌐 switch; browser language by default);
    - or built from the sources: `node build.js --lang en` → `dist/arcalyse-en.html`, `node build.js` → `dist/arcalyse-fr.html`, `node build.js --lang multi` → `dist/arcalyse-multi.html`.
 2. **Open it** in a recent browser (tested with Google Chrome version 155), even without a network.
-3. **Drag and drop** your `.capella` file (or click 📂 Browse…). That's it.
+3. **Drag and drop** your `.capella` file (or click 📂 .capella file…), or open the 📁 project folder to load the diagrams (`.aird`) as well. That's it.
 
 > To try it without a model of your own: the public samples [In-Flight Entertainment System](https://github.com/dbinfrago/Capella-IFE-sample) and [AIDA](https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture) are in `tests/models/` (under their own licences, EPL 2.0 and CC BY-SA 4.0: see [`tests/models/LISEZMOI.md`](tests/models/LISEZMOI.md)).
 
@@ -117,6 +129,7 @@ Un modèle Capella grossit vite : des centaines de fonctions, d'échanges, de co
 - 📂 **Glissez-déposez** votre `.capella` : le modèle est analysé dans le navigateur, sur votre poste.
 - 🔌 **Hors ligne** : un seul fichier HTML autonome (bibliothèque D3 embarquée), utilisable sans connexion.
 - 🧭 **Toutes les couches ARCADIA** : OA, SA, LA, PA, EPBS — fonctions, composants, échanges, chaînes, scénarios, exigences, propriétés.
+- 🔲 **Diagrammes Capella** : avec le `.aird` du projet, les diagrammes sont dessinés comme dans Capella, consultables et exportables en planches (PDF, ZIP, HTML).
 - 🩺 **Des contrôles prêts à l'emploi** : éléments non alloués, ports non connectés, traçabilité incomplète, noms à revoir…
 - 📤 **Exports partout** : CSV, PNG, SVG, PDF, rapports HTML autonomes, tableaux de bord imprimables en A4.
 - 🔄 **Suivi du fichier** : Arcalyse détecte les nouvelles versions du `.capella` et montre ce qui a changé.
@@ -152,6 +165,17 @@ Les diagrammes de séquence (ES, FS, OES, OAS, IS) sont redessinés : lignes de 
 
 ![Scénarios](docs/captures/05-scenarios.png)
 
+### 🔲 Ouvrir les diagrammes Capella
+Chargez le fichier **`.aird`** du projet (ou ouvrez le **📁 dossier du projet** : le `.capella` et ses diagrammes sont chargés ensemble) et les **diagrammes Capella** sont dessinés comme dans Capella — architecture, décomposition, flux de données, classes, modes et états, scénarios… — en lecture seule, sans Capella installé :
+- un **explorateur** classé par couche (OA, SA, LA, PA, EPBS) et, au choix, par type de diagramme (OA › OAB…), avec groupes repliables, filtre et largeur réglable ;
+- zoom, recherche dans le diagramme, **mini-carte** sous l'explorateur (ou dans le diagramme), mise en évidence d'une chaîne fonctionnelle ou d'un chemin physique, filtres (ports, étiquettes, catégories d'échanges) ;
+- **clic sur un élément** : son panneau de détail ; à l'inverse, le panneau de détail liste les diagrammes où l'élément figure et les ouvre centrés sur lui ;
+- **export de plusieurs diagrammes à la fois** en **planches** encadrées : en-tête (couche, sigle, nom, type), description Capella et élément représenté, cartouche (projet, couche, contenu, sources, date, numéro de planche), annexe des éléments représentés — en **PDF** (sommaire, signets ; alerte si le fichier risque d'être lourd), **ZIP PNG / SVG** (un dossier par couche, un CSV d'annexe par diagramme) ou **rapport HTML** autonome, avec aperçu en direct.
+
+![Diagrammes Capella — explorateur par couche › type, diagramme et mini-carte](docs/captures/11-diagrammes.png)
+
+![Diagrammes Capella — export de plusieurs diagrammes en planches](docs/captures/12-diagrammes-export.png)
+
 ### 🔬 Analyser et contrôler
 - **ƒ Fonctions** : hiérarchie avec descriptions, tableau façon Excel (filtres par valeur, copie), allocation au système ou aux acteurs, traçabilité entre couches, métriques, **qualité des noms** (verbes d'action en français et en anglais, règles personnalisables) et **dossier fonctionnel** imprimable.
 - **🧬 Traçabilité inter-couches** : taux de réalisation OA → SA → LA → PA → EPBS par catégorie, en un coup d'œil, et la liste des éléments non tracés.
@@ -181,7 +205,7 @@ Choisissez parmi des dizaines d'indicateurs (nombre d'éléments, allocation des
    - version livrée, prête à l'emploi, dans **[`livraison/`](livraison/)** (bouton « Download raw file » sur GitHub) : **`arcalyse-fr.html`** (français), **`arcalyse-en.html`** (anglais) ou **`arcalyse-multi.html`** (les deux langues, bascule 🌐 ; langue du navigateur par défaut) ;
    - ou version de développement, construite à partir des sources : `node build.js` → `dist/arcalyse-fr.html`, `node build.js --lang en` → `dist/arcalyse-en.html`, `node build.js --lang multi` → `dist/arcalyse-multi.html`.
 2. **Ouvrez-le** dans un navigateur récent (testé sous Google Chrome version 155), même sans réseau.
-3. **Glissez-déposez** votre fichier `.capella` (ou cliquez sur 📂 Parcourir…). C'est tout.
+3. **Glissez-déposez** votre fichier `.capella` (ou cliquez sur 📂 Fichier .capella…), ou ouvrez le 📁 dossier du projet pour charger aussi les diagrammes (`.aird`). C'est tout.
 
 > Pour essayer sans modèle à vous : les exemples publics [In-Flight Entertainment System](https://github.com/dbinfrago/Capella-IFE-sample) et [AIDA](https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture) sont dans `tests/models/` (sous leurs propres licences, EPL 2.0 et CC BY-SA 4.0 : voir [`tests/models/LISEZMOI.md`](tests/models/LISEZMOI.md)).
 
