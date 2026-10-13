@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 3749 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 3751 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -3938,45 +3938,47 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 689 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
 | 692 | Aperçu de la planche | Sheet preview |
 | 693 | Fermer | Close |
-| 708 | Aucun diagramme. | No diagram. |
-| 725 | Projet Capella | Capella project |
-| 735 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 735 | Diagrammes Capella | Capella diagrams |
-| 736 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 739 | planche(s) | … sheet(s) |
-| 747 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 748 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 753 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 754 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 792 | Aucun diagramme à exporter. | No diagram to export. |
-| 793 | Capella | (inchangé, hors _L) |
-| 808 | aucun diagramme exportable | no exportable diagram |
-| 818 | Le PDF fera environ | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
-| 818 | pages). Pour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…). Continuer quand même ? | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
-| 819 | Export annulé : PDF estimé à | Export cancelled: PDF estimated at … MB. |
-| 822 | Sommaire | Contents |
-| 826 | Planche | Sheet |
-| 828 | Autres | Others |
-| 829 | - annexe | - appendix |
-| 842 | Diagrammes — | Diagrams — … |
-| 845 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
-| 845 | pages) | (… pages) |
-| 846 | ignoré(s) : | — … skipped: |
-| 847 | ⚠ Échec de l'export : | ⚠ Export failed: |
-| 866 | Type | (inchangé, hors _L) |
-| 866 | Couche | Layer |
-| 866 | Sigle | Acronym |
-| 866 | Diagramme | Diagram |
-| 866 | Éléments | Elements |
-| 877 | Type | (inchangé, hors _L) |
-| 877 | Annexe | Appendix |
-| 877 | élément(s) représenté(s) | … represented element(s) |
-| 877 | Élément | Element |
-| 877 | Couche | Layer |
-| 891 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
-| 891 | diagramme(s) | … diagram(s) |
-| 892 | 📋 Sommaire | 📋 Contents |
-| 892 | 🔲 Planches | 🔲 Sheets |
+| 694 | Lancer l'export dans le format choisi | Start the export in the chosen format |
+| 694 | ⬇ Exporter | ⬇ Export |
+| 712 | Aucun diagramme. | No diagram. |
+| 729 | Projet Capella | Capella project |
+| 739 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 739 | Diagrammes Capella | Capella diagrams |
+| 740 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 743 | planche(s) | … sheet(s) |
+| 751 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 752 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 757 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 758 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 796 | Aucun diagramme à exporter. | No diagram to export. |
+| 797 | Capella | (inchangé, hors _L) |
+| 812 | aucun diagramme exportable | no exportable diagram |
+| 822 | Le PDF fera environ | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
+| 822 | pages). Pour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…). Continuer quand même ? | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
+| 823 | Export annulé : PDF estimé à | Export cancelled: PDF estimated at … MB. |
+| 826 | Sommaire | Contents |
+| 830 | Planche | Sheet |
+| 832 | Autres | Others |
+| 833 | - annexe | - appendix |
+| 846 | Diagrammes — | Diagrams — … |
+| 849 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
+| 849 | pages) | (… pages) |
+| 850 | ignoré(s) : | — … skipped: |
+| 851 | ⚠ Échec de l'export : | ⚠ Export failed: |
+| 870 | Type | (inchangé, hors _L) |
+| 870 | Couche | Layer |
+| 870 | Sigle | Acronym |
+| 870 | Diagramme | Diagram |
+| 870 | Éléments | Elements |
+| 881 | Type | (inchangé, hors _L) |
+| 881 | Annexe | Appendix |
+| 881 | élément(s) représenté(s) | … represented element(s) |
+| 881 | Élément | Element |
+| 881 | Couche | Layer |
+| 895 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
+| 895 | diagramme(s) | … diagram(s) |
+| 896 | 📋 Sommaire | 📋 Contents |
+| 896 | 🔲 Planches | 🔲 Sheets |
 
 ## Textes sans traduction anglaise (5)
 

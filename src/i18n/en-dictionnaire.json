@@ -2623,7 +2623,6 @@
   "⬇ Exporter": "⬇ Export",
   "Plusieurs diagrammes à la fois en": "Several diagrams at once as",
   "planches": "sheets",
-  ": en-tête, description, cartouche, annexe des éléments représentés. PDF (sommaire, signets ; alerte si le fichier risque d'être lourd), ZIP PNG / SVG ou rapport HTML, avec aperçu.": ": header, description, title block, appendix of represented elements. PDF (contents, bookmarks; warning if the file may be heavy), PNG / SVG ZIP or HTML report, with preview.",
   "☐ Sélectionner": "☐ Select",
   "Affiche les cases à cocher de l'explorateur pour choisir les diagrammes à exporter (un par un, par groupe ou tous). Sans sélection, l'export porte sur les diagrammes affichés.": "Shows the explorer checkboxes to choose the diagrams to export (one by one, by group or all). Without a selection, the export covers the displayed diagrams.",
   "🔍 Filtre et classement": "🔍 Filter and grouping",
@@ -2651,7 +2650,9 @@
   "{0} modèles dans ce dossier : choisissez celui à ouvrir.": "{0} models in this folder: choose the one to open.",
   "Ou, depuis l'écran d'accueil, 📁 Dossier du projet… : le .capella et ses diagrammes sont chargés ensemble.": "Or, from the home screen, 📁 Project folder…: the .capella and its diagrams are loaded together.",
   "Le PDF fera environ {0} Mo ({1} pages).\\n\\nPour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…).\\n\\nContinuer quand même ?": "The PDF will be about {0} MB ({1} pages).\\n\\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\\n\\nContinue anyway?",
-  "Export annulé : PDF estimé à {0} Mo.": "Export cancelled: PDF estimated at {0} MB."
+  "Export annulé : PDF estimé à {0} Mo.": "Export cancelled: PDF estimated at {0} MB.",
+  "Lancer l'export dans le format choisi": "Start the export in the chosen format",
+  ": en-tête, description, cartouche, annexe des éléments représentés. PDF (sommaire, signets ; alerte si le fichier risque d'être lourd), ZIP PNG / SVG ou rapport HTML, avec aperçu ; choisissez le format puis": ": header, description, title block, appendix of represented elements. PDF (contents, bookmarks; warning if the file may be heavy), PNG / SVG ZIP or HTML report, with preview; choose the format, then"
  },
  "interface": {
   "🌳 Arborescence": "🌳 Tree",

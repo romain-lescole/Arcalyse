@@ -13,7 +13,7 @@
 const _capDiag = { vis: null, texteAird: '', nomAird: '', airdCharge: false, modele: null, nbReps: 0,
   classement: 'couche', bascule: new Set(), sel: new Set(), choix: false, filtre: '', actif: '', icones: null, meta: null,
   largeur: 330, carte: 'panneau', carteReduite: false,
-  exportOpts: { portee: 'sel', cadre: true, cartouche: true, desc: true, annexe: true, sommaire: true, scale: 2 } };
+  exportOpts: { fmt: 'pdf', portee: 'sel', cadre: true, cartouche: true, desc: true, annexe: true, sommaire: true, scale: 2 } };
 /** Ordre des couches ARCADIA dans la liste et les exports. */
 const CAP_DIAG_COUCHES = ['OA', 'SA', 'LA', 'PA', 'EPBS'];
 
@@ -206,7 +206,7 @@ function capDiagBarre() {
 function capDiagFit() {
   const c = document.querySelector('#cap-view-diag .cdg-corps');
   if (!c) return;
-  const bas = Math.min(window.innerHeight, document.getElementById('cap-view-diag').getBoundingClientRect().bottom);   // barre d'état en dessous
+  const bas = Math.min(window.innerHeight, document.getElementById('cap-view-diag').getBoundingClientRect().bottom);   // bas de la surimpression
   c.style.height = Math.max(320, bas - c.getBoundingClientRect().top) + 'px';
 }
 
@@ -683,20 +683,24 @@ function capDiagExportDialog() {
       <label class="cdg-x-opt" title="${_L('Résolution des images PNG / PDF')}">${_L('Résolution')} <select id="cdg-x-scale">${[1, 2, 3].map(v => `<option value="${v}"${o.scale === v ? ' selected' : ''}>×${v}</option>`).join('')}</select></label>
       <div class="cdg-x-tit">${_L('Format')}</div>
       <div class="cdg-x-fmts">
-        <button class="cap-lf-btn" data-fmt="pdf" title="${_L('Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets')}">📄 PDF</button>
-        <button class="cap-lf-btn" data-fmt="zip-png" title="${_L('Archive ZIP des planches en PNG, un dossier par couche')}">🗜 ZIP PNG</button>
-        <button class="cap-lf-btn" data-fmt="zip-svg" title="${_L('Archive ZIP des planches en SVG (vectoriel), un dossier par couche')}">🗜 ZIP SVG</button>
-        <button class="cap-lf-btn" data-fmt="html" title="${_L('Rapport HTML autonome : sommaire et planches classées par couche et type, repliables')}">🌐 HTML</button>
+        <button class="cap-lf-btn${o.fmt === 'pdf' ? ' active' : ''}" data-fmt="pdf" title="${_L('Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets')}">📄 PDF</button>
+        <button class="cap-lf-btn${o.fmt === 'zip-png' ? ' active' : ''}" data-fmt="zip-png" title="${_L('Archive ZIP des planches en PNG, un dossier par couche')}">🗜 ZIP PNG</button>
+        <button class="cap-lf-btn${o.fmt === 'zip-svg' ? ' active' : ''}" data-fmt="zip-svg" title="${_L('Archive ZIP des planches en SVG (vectoriel), un dossier par couche')}">🗜 ZIP SVG</button>
+        <button class="cap-lf-btn${o.fmt === 'html' ? ' active' : ''}" data-fmt="html" title="${_L('Rapport HTML autonome : sommaire et planches classées par couche et type, repliables')}">🌐 HTML</button>
       </div>
       <div id="cdg-x-statut" class="cdg-info"></div>
     </div><div class="cdg-x-droite"><div class="cdg-x-tit">${_L('Aperçu de la planche')}</div><div id="cdg-x-apercu" class="cdg-x-apercu"></div></div></div>
-    <div class="cw-d-ftr"><span style="flex:1"></span><button class="cap-lf-btn" data-c="x">${_L('Fermer')}</button></div></div>`;
+    <div class="cw-d-ftr"><span style="flex:1"></span><button class="cap-lf-btn" data-c="x">${_L('Fermer')}</button>` +
+    `<button class="phl-export-btn" id="cdg-x-go" title="${_L('Lancer l\'export dans le format choisi')}">${_L('⬇ Exporter')}</button></div></div>`;
   ov.style.display = 'flex';
   ov.querySelectorAll('[data-c="x"]').forEach(b => b.onclick = () => { ov.style.display = 'none'; });
   ov.querySelectorAll('[name="cdg-portee"]').forEach(r => r.onchange = () => { o.portee = r.value; capDiagApercu(); });
   ov.querySelectorAll('[data-xo]').forEach(c => c.onchange = () => { o[c.dataset.xo] = c.checked; capDiagApercu(); });
   ov.querySelector('#cdg-x-scale').onchange = e => { o.scale = +e.target.value; };
-  ov.querySelectorAll('[data-fmt]').forEach(b => b.onclick = () => capDiagExport(b.dataset.fmt));
+  ov.querySelectorAll('[data-fmt]').forEach(b => b.onclick = () => {
+    o.fmt = b.dataset.fmt; ov.querySelectorAll('[data-fmt]').forEach(x => x.classList.toggle('active', x === b));
+  });
+  ov.querySelector('#cdg-x-go').onclick = () => capDiagExport(o.fmt);
   capDiagApercu();
 }
 
@@ -794,7 +798,7 @@ async function capDiagExport(fmt) {
   const date = new Date().toISOString().slice(0, 10), retour = _capDiag.actif;
   const enc = new TextEncoder(), fichiers = [], pdf = [];
   const jpg = async (c, q) => new Uint8Array(await (await capCanvasBlob(c, 'image/jpeg', q || 0.92)).arrayBuffer());
-  document.querySelectorAll('#cdg-export-ov [data-fmt]').forEach(b => { b.disabled = true; });
+  document.querySelectorAll('#cdg-export-ov [data-fmt],#cdg-x-go').forEach(b => { b.disabled = true; });
   try {
     // 1. Capture des diagrammes et de leurs éléments
     const items = [], echecs = [];
@@ -846,7 +850,7 @@ async function capDiagExport(fmt) {
       (echecs.length ? _L(` — ${echecs.length} ignoré(s) : `) + echecs.join(', ') : ''));
   } catch (e) { console.error(e); st(_L('⚠ Échec de l\'export : ') + e.message); }
   finally {
-    document.querySelectorAll('#cdg-export-ov [data-fmt]').forEach(b => { b.disabled = false; });
+    document.querySelectorAll('#cdg-export-ov [data-fmt],#cdg-x-go').forEach(b => { b.disabled = false; });
     if (retour) { _capDiag.vis.ouvrir(retour); _capDiag.actif = retour; capDiagMarquerActif(); }
   }
 }

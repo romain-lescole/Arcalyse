@@ -445,7 +445,7 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
 .dpi-btn.active{border-color:var(--c-accent);color:var(--c-accent);background:var(--c-bg4)}
 
 /* ── Capella overlay styles ── */
-#capella-overlay{display:none;position:fixed;inset:0;top:0;bottom:25px;
+#capella-overlay{display:none;position:fixed;inset:0;top:0;bottom:0;
   background:var(--c-bg);z-index:50;flex-direction:row;}
 #capella-overlay.cap-visible{display:flex!important;}
 
