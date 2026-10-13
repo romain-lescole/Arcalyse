@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 3482 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 3490 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -144,7 +144,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 396 | Nom de la colonne | Column name |
 | 397 | ex: Functions of Component  (infobulle) | e.g. Functions of Component |
 | 398 | Créer la colonne | Create the column |
-| 420 | Aucun élément ne correspond. | No matching element. |
+| 421 | Aucun élément ne correspond. | No matching element. |
 
 ## js/01-donnees-config.js
 
@@ -574,56 +574,56 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 134 | ✔ Enregistré | ✔ Saved |
 | 138 | Enregistrement direct impossible ( | Direct save not possible ( |
 | 138 | ). La page va être téléchargée à la place. | ). The page will be downloaded instead. |
-| 176 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. | “…” is a representation/metadata file: drop the project's .capella file. |
-| 180 | » n'est pas un fichier Capella (.capella attendu). | “…” is not a Capella file (.capella expected). |
-| 183 | Chargement de « | Loading “…”… |
-| 186 | Impossible de lire « | Cannot read “…”. |
-| 192 | XML invalide | Invalid XML |
-| 198 | Erreur de chargement : | Loading error: |
-| 217 | Aucun élément Capella reconnu dans ce fichier | No Capella element recognised in this file |
-| 243 | Ouvrir un autre modèle Capella | Open another Capella model |
-| 244 | Modèle actuel : | Current model: … Drop a new file .capella to replace it. |
-| 244 | Déposez un nouveau fichier .capella pour le remplacer. | Current model: … Drop a new file .capella to replace it. |
-| 312 | Shared | (inchangé, hors _L) |
-| 331 | Project | (inchangé, hors _L) |
-| 389 | Composition | (inchangé, hors _L) |
-| 389 | Aggregation | (inchangé, hors _L) |
-| 389 | Association | (inchangé, hors _L) |
-| 389 | Containment | (inchangé, hors _L) |
-| 389 | Generalization | (inchangé, hors _L) |
-| 389 | Realization | (inchangé, hors _L) |
-| 389 | Dependency | (inchangé, hors _L) |
-| 389 | Usage | (inchangé, hors _L) |
-| 389 | Abstraction | (inchangé, hors _L) |
-| 389 | Refine | (inchangé, hors _L) |
-| 389 | Trace | (inchangé, hors _L) |
-| 389 | Satisfy | (inchangé, hors _L) |
-| 389 | Verify | (inchangé, hors _L) |
-| 389 | Copy | (inchangé, hors _L) |
-| 389 | Allocation | (inchangé, hors _L) |
-| 390 | Block | (inchangé, hors _L) |
-| 390 | Component | (inchangé, hors _L) |
-| 390 | Class | (inchangé, hors _L) |
-| 390 | Interface | (inchangé, hors _L) |
-| 390 | Requirement | (inchangé, hors _L) |
-| 390 | Package | (inchangé, hors _L) |
-| 393 | Aggregation | (inchangé, hors _L) |
-| 393 | Association | (inchangé, hors _L) |
-| 393 | Containment | (inchangé, hors _L) |
-| 393 | Generalization | (inchangé, hors _L) |
-| 393 | Realization | (inchangé, hors _L) |
-| 393 | Dependency | (inchangé, hors _L) |
-| 393 | Usage | (inchangé, hors _L) |
-| 393 | Abstraction | (inchangé, hors _L) |
-| 393 | Refine | (inchangé, hors _L) |
-| 393 | Trace | (inchangé, hors _L) |
-| 393 | Satisfy | (inchangé, hors _L) |
-| 393 | Verify | (inchangé, hors _L) |
-| 393 | Copy | (inchangé, hors _L) |
-| 393 | Allocation | (inchangé, hors _L) |
-| 511 | PhysicalComponent (NODE) | (inchangé, hors _L) |
-| 512 | PhysicalComponent (BEHAVIOR) | (inchangé, hors _L) |
-| 751 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella | 🔷 Load a .capella file via 📁 File › 🔷 Open a Capella model |
+| 177 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. | “…” is a representation/metadata file: drop the project's .capella file. |
+| 181 | » n'est pas un fichier Capella (.capella attendu). | “…” is not a Capella file (.capella expected). |
+| 184 | Chargement de « | Loading “…”… |
+| 187 | Impossible de lire « | Cannot read “…”. |
+| 193 | XML invalide | Invalid XML |
+| 199 | Erreur de chargement : | Loading error: |
+| 218 | Aucun élément Capella reconnu dans ce fichier | No Capella element recognised in this file |
+| 244 | Ouvrir un autre modèle Capella | Open another Capella model |
+| 245 | Modèle actuel : | Current model: … Drop a new file .capella to replace it. |
+| 245 | Déposez un nouveau fichier .capella pour le remplacer. | Current model: … Drop a new file .capella to replace it. |
+| 317 | Shared | (inchangé, hors _L) |
+| 336 | Project | (inchangé, hors _L) |
+| 394 | Composition | (inchangé, hors _L) |
+| 394 | Aggregation | (inchangé, hors _L) |
+| 394 | Association | (inchangé, hors _L) |
+| 394 | Containment | (inchangé, hors _L) |
+| 394 | Generalization | (inchangé, hors _L) |
+| 394 | Realization | (inchangé, hors _L) |
+| 394 | Dependency | (inchangé, hors _L) |
+| 394 | Usage | (inchangé, hors _L) |
+| 394 | Abstraction | (inchangé, hors _L) |
+| 394 | Refine | (inchangé, hors _L) |
+| 394 | Trace | (inchangé, hors _L) |
+| 394 | Satisfy | (inchangé, hors _L) |
+| 394 | Verify | (inchangé, hors _L) |
+| 394 | Copy | (inchangé, hors _L) |
+| 394 | Allocation | (inchangé, hors _L) |
+| 395 | Block | (inchangé, hors _L) |
+| 395 | Component | (inchangé, hors _L) |
+| 395 | Class | (inchangé, hors _L) |
+| 395 | Interface | (inchangé, hors _L) |
+| 395 | Requirement | (inchangé, hors _L) |
+| 395 | Package | (inchangé, hors _L) |
+| 398 | Aggregation | (inchangé, hors _L) |
+| 398 | Association | (inchangé, hors _L) |
+| 398 | Containment | (inchangé, hors _L) |
+| 398 | Generalization | (inchangé, hors _L) |
+| 398 | Realization | (inchangé, hors _L) |
+| 398 | Dependency | (inchangé, hors _L) |
+| 398 | Usage | (inchangé, hors _L) |
+| 398 | Abstraction | (inchangé, hors _L) |
+| 398 | Refine | (inchangé, hors _L) |
+| 398 | Trace | (inchangé, hors _L) |
+| 398 | Satisfy | (inchangé, hors _L) |
+| 398 | Verify | (inchangé, hors _L) |
+| 398 | Copy | (inchangé, hors _L) |
+| 398 | Allocation | (inchangé, hors _L) |
+| 516 | PhysicalComponent (NODE) | (inchangé, hors _L) |
+| 517 | PhysicalComponent (BEHAVIOR) | (inchangé, hors _L) |
+| 756 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella | 🔷 Load a .capella file via 📁 File › 🔷 Open a Capella model |
 
 ## js/21-capella-vues-base.js
 
@@ -1079,8 +1079,8 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 54 | Attributs | Attributes |
 | 59 | Références sortantes → | Outgoing references → |
 | 67 | Références entrantes ← (navigation inverse) | Incoming references ← (reverse navigation) |
-| 80 | Owner (parent) | Owner (parent) |
-| 86 | Owned elements ( | Owned elements (…) |
+| 83 | Owner (parent) | Owner (parent) |
+| 89 | Owned elements ( | Owned elements (…) |
 
 ## js/26-rapports-html.js
 
@@ -2628,49 +2628,50 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 19 | 🔀 Behavior Exchange | 🔀 Behavior Exchange |
 | 19 | Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange) | PA-layer Component Exchanges between Physical Components Behavior, and with connected actors (formerly 🔀 Component Exchange) |
 | 20 | 🔌 Physical Link | 🔌 Physical Link |
-| 21 | 🎬 Scénarios | 🎬 Scenarios |
-| 21 | Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références | Sequence diagrams of Capella scenarios (ES, FS, OES, OAS, IS): lifelines, messages, executions, states, modes and functions, combined fragments, references |
-| 22 | 🧩 Ports | 🧩 Ports |
-| 22 | Traçabilité Function Port ↔ Component Port ↔ Physical Port | Function Port ↔ Component Port ↔ Physical Port traceability |
-| 23 | 🔗 Liens | 🔗 Links |
-| 23 | Relations entre les éléments du modèle | Relations between model elements |
-| 24 | ƒ Fonctions | ƒ Functions |
-| 24 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier | Functions: hierarchy, table, traceability, metrics, checks, file |
-| 25 | 🧬 Traçabilité inter-couches | 🧬 Cross-layer traceability |
-| 26 | 🎯 Capacités & missions | 🎯 Capabilities & missions |
-| 27 | 🔁 Modes & états | 🔁 Modes & states |
-| 28 | ⚖ Comparaison de versions | ⚖ Version comparison |
-| 29 | 📑 Exigences | 📑 Requirements |
-| 30 | 🏷 Propriétés | 🏷 Properties |
-| 31 | 🗃 Données & interfaces | 🗃 Data & interfaces |
-| 32 | ⛓ Contraintes | ⛓ Constraints |
-| 33 | 📐 Tableau de bord | 📐 Dashboard |
-| 33 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux | Custom dashboards: indicators, charts, tables |
-| 37 | 🧭 Explorateur | 🧭 Explorer |
-| 37 | Explorer le modèle : arborescence, cartes, index des types | Explore the model: tree, cards, type index |
-| 38 | 📡 Flux & interfaces | 📡 Flows & interfaces |
-| 38 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, scénarios, ports, liens | Chains, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, scenarios, ports, links |
-| 40 | 🔬 Analyses | 🔬 Analyses |
-| 40 | Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes | Functions, cross-layer traceability, capabilities & missions, modes & states, version comparison, requirements, properties, data & interfaces, constraints |
-| 140 | Vue affichée : | Displayed view: |
-| 158 | Retirer de la barre | Remove from the bar |
-| 158 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
-| 221 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme and the naming rules. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 221 | Ctrl+S | Ctrl+S |
-| 222 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme and the naming rules. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 222 | Ctrl+Maj+S | Ctrl+Maj+S |
-| 233 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
-| 235 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
-| 236 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
-| 237 | ℹ À propos | ℹ About |
-| 243 | 🎨 Personnaliser… | 🎨 Customize… |
-| 247 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
-| 252 | 🗺 Relation Map | 🗺 Relation Map |
-| 255 | Aucune vue ne correspond. | No view matches. |
-| 261 | Menu | … ▾ menu in the bar |
-| 261 | ▾ dans la barre | … ▾ menu in the bar |
-| 262 | Autres vues | Other views |
-| 265 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | ↺ Restore the default bar 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
+| 21 | 🗺 Diagrammes | 🗺 Diagrams |
+| 22 | 🎬 Scénarios | 🎬 Scenarios |
+| 22 | Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références | Sequence diagrams of Capella scenarios (ES, FS, OES, OAS, IS): lifelines, messages, executions, states, modes and functions, combined fragments, references |
+| 23 | 🧩 Ports | 🧩 Ports |
+| 23 | Traçabilité Function Port ↔ Component Port ↔ Physical Port | Function Port ↔ Component Port ↔ Physical Port traceability |
+| 24 | 🔗 Liens | 🔗 Links |
+| 24 | Relations entre les éléments du modèle | Relations between model elements |
+| 25 | ƒ Fonctions | ƒ Functions |
+| 25 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier | Functions: hierarchy, table, traceability, metrics, checks, file |
+| 26 | 🧬 Traçabilité inter-couches | 🧬 Cross-layer traceability |
+| 27 | 🎯 Capacités & missions | 🎯 Capabilities & missions |
+| 28 | 🔁 Modes & états | 🔁 Modes & states |
+| 29 | ⚖ Comparaison de versions | ⚖ Version comparison |
+| 30 | 📑 Exigences | 📑 Requirements |
+| 31 | 🏷 Propriétés | 🏷 Properties |
+| 32 | 🗃 Données & interfaces | 🗃 Data & interfaces |
+| 33 | ⛓ Contraintes | ⛓ Constraints |
+| 34 | 📐 Tableau de bord | 📐 Dashboard |
+| 34 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux | Custom dashboards: indicators, charts, tables |
+| 38 | 🧭 Explorateur | 🧭 Explorer |
+| 38 | Explorer le modèle : arborescence, cartes, index des types | Explore the model: tree, cards, type index |
+| 39 | 📡 Flux & interfaces | 📡 Flows & interfaces |
+| 39 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrammes, scénarios, ports, liens | Chains, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrams, scenarios, ports, links |
+| 41 | 🔬 Analyses | 🔬 Analyses |
+| 41 | Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes | Functions, cross-layer traceability, capabilities & missions, modes & states, version comparison, requirements, properties, data & interfaces, constraints |
+| 141 | Vue affichée : | Displayed view: |
+| 159 | Retirer de la barre | Remove from the bar |
+| 159 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
+| 222 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme and the naming rules. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 222 | Ctrl+S | Ctrl+S |
+| 223 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème et les règles de nommage. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme and the naming rules. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 223 | Ctrl+Maj+S | Ctrl+Maj+S |
+| 234 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
+| 236 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
+| 237 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
+| 238 | ℹ À propos | ℹ About |
+| 244 | 🎨 Personnaliser… | 🎨 Customize… |
+| 248 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
+| 253 | 🗺 Relation Map | 🗺 Relation Map |
+| 256 | Aucune vue ne correspond. | No view matches. |
+| 262 | Menu | … ▾ menu in the bar |
+| 262 | ▾ dans la barre | … ▾ menu in the bar |
+| 263 | Autres vues | Other views |
+| 266 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | ↺ Restore the default bar 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
 
 ## js/42-tableaux-analyses.js
 
@@ -3700,6 +3701,18 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 131 | ↺ Colonnes de base | ⬇ CSV export — … ✕ Uncheck the columns to remove. For a column that refers to model elements, add information on those elements: it will be inserted right next to it. Your choices are kept for this export. … ↺ Base columns … column(s), … row(s) Cancel ⬇ Download |
 | 134 | colonne(s), | ⬇ CSV export — … ✕ Uncheck the columns to remove. For a column that refers to model elements, add information on those elements: it will be inserted right next to it. Your choices are kept for this export. … ↺ Base columns … column(s), … row(s) Cancel ⬇ Download |
 | 134 | ligne(s) Annuler ⬇ Télécharger | ⬇ CSV export — … ✕ Uncheck the columns to remove. For a column that refers to model elements, add information on those elements: it will be inserted right next to it. Your choices are kept for this export. … ↺ Base columns … column(s), … row(s) Cancel ⬇ Download |
+
+## js/54-diagrammes.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 22 | Impossible de lire « | Cannot read “…”. |
+| 26 | Diagrammes « | Diagrams “…” kept: now drop the project's .capella file. |
+| 26 | » gardés : déposez maintenant le fichier .capella du projet. | Diagrams “…” kept: now drop the project's .capella file. |
+| 40 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 71 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
+| 78 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
+| 109 | Diagrammes ( | Diagrams (…) |
 
 ## Textes sans traduction anglaise (5)
 

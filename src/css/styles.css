@@ -1205,3 +1205,11 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
 .fex-side-in .fex-pl-txt{text-align:right;}
 .fex-side-in .fex-pl-multi .fex-pl-txt{border-right:1.5px solid var(--c-dim);padding-right:6px;}
 .fex-side-out .fex-pl-multi .fex-pl-txt{border-left:1.5px solid var(--c-dim);padding-left:6px;}
+
+/* ── 🗺 Diagrammes (visionneuse d'Arcature, styles propres préfixés .arcv) ── */
+.cdg-barre{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.cdg-info{font-size:12px;color:var(--c-dim)}
+.cdg-hote{min-height:320px}
+.cdg-vide{text-align:center;padding:60px;color:var(--c-dim)}
+.cdg-lien{display:flex;align-items:center;gap:6px}
+.cdg-sigle{font-size:9px;font-weight:700;padding:0 4px;border-radius:3px;background:var(--c-bg3);color:var(--c-dim)}

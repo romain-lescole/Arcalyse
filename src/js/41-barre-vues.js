@@ -18,6 +18,7 @@ var CAP_NAV_ITEMS=[
   {k:'cblk',      l:_L('🧱 Logical Component'), g:'flux', t:_L('Logical Components (LA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles')},
   {k:'compex',    l:_L('🔀 Behavior Exchange'), g:'flux', t:_L('Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange)')},
   {k:'physlink',  l:_L('🔌 Physical Link'),     g:'flux'},
+  {k:'diag',      l:_L('🗺 Diagrammes'),       g:'flux', t:_L('Diagrammes Capella du projet (.aird), dessinés comme dans Capella : liste, recherche, mini-carte, filtres, chaînes, exports ; clic sur un élément → son détail')},
   {k:'scen',      l:_L('🎬 Scénarios'),        g:'flux', t:_L('Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références')},
   {k:'ports',     l:_L('🧩 Ports'),             g:'flux', t:_L('Traçabilité Function Port ↔ Component Port ↔ Physical Port')},
   {k:'links',     l:_L('🔗 Liens'),             g:'flux', t:_L('Relations entre les éléments du modèle')},
@@ -35,7 +36,7 @@ var CAP_NAV_ITEMS=[
 /** Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton). */
 var CAP_NAV_GROUPS=[
   {g:'explore', id:'cap-v-elements', l:_L('🧭 Explorateur'),       t:_L('Explorer le modèle : arborescence, cartes, index des types')},
-  {g:'flux',    id:'cap-v-flux',     l:_L('📡 Flux & interfaces'), t:_L('Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, scénarios, ports, liens')},
+  {g:'flux',    id:'cap-v-flux',     l:_L('📡 Flux & interfaces'), t:_L('Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrammes, scénarios, ports, liens')},
   {g:'',        id:'',               l:'',                     t:''},   // place des vues sans menu
   {g:'ana',     id:'cap-v-analyses', l:_L('🔬 Analyses'),          t:_L('Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes')}
 ];

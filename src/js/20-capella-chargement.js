@@ -172,6 +172,7 @@ document.getElementById('capella-file-input').addEventListener('change',e=>{
 function capLoadFile(f, handle){
   const name=(f&&f.name)||'';
   const ext=(name.split('.').pop()||'').toLowerCase();
+  if (ext==='aird' && capDiagDispo()) { capDiagLoadAird(f); return; }   // 🗺 Diagrammes du projet
   if (ext==='aird' || ext==='afm') {
     capWelcomeStatus(_L(`« ${name} » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet.`),'err');
     capShowWelcome(true); return;
@@ -279,6 +280,10 @@ function capUpdateWelcome(){ capShowWelcome(!capLoaded); }
   window.addEventListener('drop',ev=>{
     if(!hasFiles(ev)) return;
     ev.preventDefault(); depth=0; zone.classList.remove('cw-drag');
+    // Plusieurs fichiers (ex. .capella + .aird) : le modèle d'abord, puis les diagrammes
+    const tous=[...(ev.dataTransfer.files||[])];
+    const aird=tous.find(x=>/\.aird$/i.test(x.name)), mod=tous.find(x=>!/\.aird$/i.test(x.name));
+    if(aird && mod && tous.length>1){ capLoadFile(mod); capDiagLoadAird(aird); return; }
     const f=ev.dataTransfer.files&&ev.dataTransfer.files[0];
     // Edge/Chrome : récupère aussi l'accès au fichier (à demander pendant l'événement) pour le 🔄 suivi
     const it=ev.dataTransfer.items&&ev.dataTransfer.items[0];
@@ -741,7 +746,7 @@ function capInjectChainsToModal(){
  * Met à jour les boutons de vue et les compteurs de stats.
  */
 function capRenderCurrentView(){
-  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-links','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-fex','cap-view-cblk','cap-view-csys','cap-view-oav','cap-view-scen','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-index'].forEach(id=>{
+  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-links','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-fex','cap-view-cblk','cap-view-csys','cap-view-oav','cap-view-scen','cap-view-diag','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-index'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
   const pg=document.getElementById('cap-pagination'); if(pg) pg.style.display='none';
@@ -783,6 +788,9 @@ function capRenderCurrentView(){
   } else if(capCurrentView==='scen'){
     document.getElementById('cap-view-scen').style.display='block';
     capRenderScenarios();
+  } else if(capCurrentView==='diag'){
+    document.getElementById('cap-view-diag').style.display='block';
+    capRenderDiagrams();
   } else if(capCurrentView==='oav'){
     document.getElementById('cap-view-oav').style.display='block';
     capRenderFunctionalExchange('OA');
