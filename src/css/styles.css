@@ -1292,7 +1292,18 @@ html[data-tone="light"] .cb-box .fex-box-t{color:#111;}
 /* La liste de la visionneuse est remplacée par la liste classée d'Arcalyse (#cdg-gauche) */
 #cdg-hote .arcv{grid-template-columns:1fr!important}
 #cdg-hote .arcv-gauche{display:none!important}
-.cdg-gauche{width:330px;flex:none;display:flex;flex-direction:column;border:1px solid var(--c-border);border-radius:6px;background:var(--c-bg2);min-height:0}
+.cdg-gauche{flex:none;display:flex;flex-direction:column;gap:6px;min-height:0;min-width:200px}
+.cdg-liste{flex:1;display:flex;flex-direction:column;min-height:0;border:1px solid var(--c-border);border-radius:6px;background:var(--c-bg2)}
+.cdg-split{flex:none;width:6px;margin:0 -3px;cursor:col-resize;border-radius:3px;z-index:2}
+.cdg-split:hover,.cdg-split.on{background:var(--c-accent);opacity:.6}
+.cdg-carte-zone{flex:none;border:1px solid var(--c-border);border-radius:6px;background:var(--c-bg2)}
+.cdg-carte-zone:empty{display:none}
+.cdg-carte-tete{display:flex;align-items:center;gap:6px;padding:4px 6px;font-size:12px}
+.cdg-carte-tog{display:flex;align-items:center;gap:4px;cursor:pointer;user-select:none}
+.cdg-carte-corps{padding:0 6px 6px}
+.cdg-carte-corps[hidden]{display:none}
+#cdg-carte-corps #vd-carte{position:static;display:block;width:100%;height:170px;background:#fff;border:1px solid var(--c-border);border-radius:6px;cursor:crosshair}
+#cdg-carte-corps #vd-carte .vd-carte-vue{fill:color-mix(in srgb,var(--c-accent) 14%,transparent);stroke:var(--c-accent);vector-effect:non-scaling-stroke;stroke-width:1.5px}
 .cdg-outils{padding:6px;border-bottom:1px solid var(--c-border);display:flex;flex-direction:column;gap:5px}
 .cdg-outils input[type=search]{width:100%;padding:4px 8px;border:1px solid var(--c-border);border-radius:5px;background:var(--c-bg);color:var(--c-text)}
 .cdg-outils select{flex:1;padding:3px 5px;border:1px solid var(--c-border);border-radius:5px;background:var(--c-bg);color:var(--c-text)}

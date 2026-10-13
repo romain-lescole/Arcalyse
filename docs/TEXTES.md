@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 3682 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 3723 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -3807,109 +3807,150 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 28 | Impossible de lire « | Cannot read “…”. |
-| 32 | Diagrammes « | Diagrams “…” kept: now drop the project's .capella file. |
-| 32 | » gardés : déposez maintenant le fichier .capella du projet. | Diagrams “…” kept: now drop the project's .capella file. |
-| 49 | Diagrammes Capella (.aird) | Capella diagrams (.aird) |
-| 65 | Ce navigateur ne permet pas de lire un dossier : utilisez 📂 Ouvrir le .aird… ou déposez le fichier. | This browser cannot read a folder: use 📂 Open the .aird… or drop the file. |
-| 69 | Dossier inaccessible : | Folder not accessible: |
-| 84 | Lecture du dossier impossible : | Cannot read the folder: |
-| 122 | Choisir le fichier .aird (le sélecteur s'ouvre dans le dossier du .capella quand le navigateur le permet) | Choose the .aird file (the picker opens in the .capella folder when the browser allows it) |
-| 122 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
-| 123 | Désigner une fois le dossier du projet : ses fichiers .aird sont listés ici et s'ouvrent d'un clic | Point to the project folder once: its .aird files are listed here and open with one click |
-| 123 | 📁 Dossier du projet… | 📁 Project folder… |
-| 125 | diagramme(s) | … diagram(s) |
-| 126 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
-| 128 | Exporter plusieurs diagrammes en planches (en-tête, cartouche) : PDF, ZIP PNG / SVG, rapport HTML | Export several diagrams as sheets (header, title block): PDF, PNG / SVG ZIP, HTML report |
-| 128 | ⬇ Exporter… | ⬇ Export… |
-| 159 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
-| 173 | Autres | Others |
-| 244 | Aucun .aird chargé. | No .aird loaded. |
-| 244 | 📂 Ouvrir le .aird… s'ouvre dans le dossier du .capella (Edge / Chrome). | 📂 Open the .aird… opens in the .capella folder (Edge / Chrome). |
-| 245 | 📁 Dossier du projet… : désignez le dossier une fois, ses .aird deviennent cliquables. | 📁 Project folder…: point to the folder once, its .aird files become clickable. |
-| 253 | Cocher / décocher le groupe | Check / uncheck the group |
-| 275 | Filtrer (nom, type, sigle, couche)… | Filter (name, type, acronym, layer)… |
-| 276 | Classement de la liste | List grouping |
-| 276 | Couche › type | Layer › type |
-| 276 | Couche | Layer |
-| 276 | Type de diagramme | Diagram type |
-| 276 | Nom (A → Z) | Name (A → Z) |
-| 277 | Tout déplier | Expand all |
-| 277 | Tout replier | Collapse all |
-| 279 | sélectionné(s) pour l'export | … selected for export |
-| 279 | diagramme(s) — cochez pour exporter | … diagram(s) — check to export |
-| 280 | Aucun diagramme ne correspond. | No matching diagram. |
-| 308 | Lecture impossible : | Cannot read: |
-| 358 | Diagrammes ( | Diagrams (…) |
-| 380 | export SVG de la visionneuse introuvable | viewer SVG export not found |
-| 386 | diagramme vide ou non exportable | empty or non-exportable diagram |
-| 407 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
-| 408 | Projet Capella | Capella project |
-| 415 | Projet | Project |
-| 415 | Couche | Layer |
-| 416 | Diagramme | Diagram |
-| 416 | Contenu | Content |
-| 416 | élément(s) | … element(s) |
-| 417 | Type | (inchangé, hors _L) |
-| 417 | Date | Date |
-| 418 | Sources | Sources |
-| 418 | Planche | Sheet |
-| 431 | ) scale( | (inchangé, hors _L) |
-| 440 | ) scale( | (inchangé, hors _L) |
-| 441 | Arcalyse · planche générée le | Arcalyse · sheet generated on … |
-| 457 | ) scale( | (inchangé, hors _L) |
-| 484 | ⬇ Exporter des diagrammes | ⬇ Export diagrams |
-| 486 | Diagrammes | Diagrams |
-| 487 | Cochés dans la liste | Checked in the list |
-| 487 | Affichés (filtre en cours) | Displayed (current filter) |
-| 487 | Tous | All |
-| 488 | Mise en page | Layout |
-| 489 | Cadre et en-tête | Frame and header |
-| 489 | Cadre, bandeau de couche, sigle, nom et type du diagramme | Frame, layer band, acronym, name and type of the diagram |
-| 490 | Cartouche | Title block |
-| 490 | Cartouche technique en bas à droite : projet, diagramme, type, couche, contenu, sources, date, planche | Technical title block at the bottom right: project, diagram, type, layer, content, sources, date, sheet |
-| 491 | Sommaire | Contents |
-| 491 | PDF : page de sommaire par couche et type · HTML : onglet Sommaire | PDF: contents page by layer and type · HTML: Contents tab |
-| 492 | Résolution des images PNG / PDF | Resolution of PNG / PDF images |
-| 492 | Résolution | Resolution |
-| 493 | Format | Format |
-| 495 | 📄 PDF | (inchangé, hors _L) |
-| 495 | Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets | One PDF: contents, one sheet per diagram (A4, oriented automatically), bookmarks |
-| 496 | 🗜 ZIP PNG | (inchangé, hors _L) |
-| 496 | Archive ZIP des planches en PNG, un dossier par couche | ZIP archive of the sheets as PNG, one folder per layer |
-| 497 | 🗜 ZIP SVG | (inchangé, hors _L) |
-| 497 | Archive ZIP des planches en SVG (vectoriel), un dossier par couche | ZIP archive of the sheets as SVG (vector), one folder per layer |
-| 498 | 🌐 HTML | (inchangé, hors _L) |
-| 498 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
-| 501 | Aperçu de la planche | Sheet preview |
-| 502 | Fermer | Close |
-| 517 | Aucun diagramme. | No diagram. |
-| 534 | Projet Capella | Capella project |
-| 544 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 544 | Diagrammes Capella | Capella diagrams |
-| 545 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 548 | planche(s) | … sheet(s) |
-| 556 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 557 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 562 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 563 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 580 | Aucun diagramme à exporter. | No diagram to export. |
-| 581 | Capella | (inchangé, hors _L) |
-| 590 | Sommaire | Contents |
-| 596 | Autres | (inchangé, hors _L) |
-| 605 | Diagrammes — | Diagrams — … |
-| 608 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
-| 608 | pages) | (… pages) |
-| 609 | ⚠ Échec de l'export : | ⚠ Export failed: |
-| 627 | Type | (inchangé, hors _L) |
-| 627 | Couche | Layer |
-| 627 | Sigle | Acronym |
-| 627 | Diagramme | Diagram |
-| 627 | Éléments | Elements |
-| 648 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
-| 648 | diagramme(s) | … diagram(s) |
-| 649 | 📋 Sommaire | 📋 Contents |
-| 649 | 🔲 Planches | 🔲 Sheets |
+| 29 | Impossible de lire « | Cannot read “…”. |
+| 33 | Diagrammes « | Diagrams “…” kept: now drop the project's .capella file. |
+| 33 | » gardés : déposez maintenant le fichier .capella du projet. | Diagrams “…” kept: now drop the project's .capella file. |
+| 50 | Diagrammes Capella (.aird) | Capella diagrams (.aird) |
+| 66 | Ce navigateur ne permet pas de lire un dossier : utilisez 📂 Ouvrir le .aird… ou déposez le fichier. | This browser cannot read a folder: use 📂 Open the .aird… or drop the file. |
+| 70 | Dossier inaccessible : | Folder not accessible: |
+| 85 | Lecture du dossier impossible : | Cannot read the folder: |
+| 102 | Glisser pour régler la largeur de l'explorateur | Drag to adjust the width of the explorer |
+| 150 | ▣ Carte | ▣ Map |
+| 151 | Afficher la carte dans le diagramme | Show the map in the diagram |
+| 152 | ▣ Carte | ▣ Map |
+| 152 | dans le diagramme | in the diagram |
+| 153 | Afficher la carte sous l'explorateur | Show the map below the explorer |
+| 171 | Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML | Export several diagrams as sheets (header, description, title block, appendix): PDF, PNG / SVG ZIP, HTML report |
+| 171 | ⬇ Exporter… | ⬇ Export… |
+| 172 | Choisir les diagrammes à exporter : cases à cocher dans l'explorateur | Choose the diagrams to export: checkboxes in the explorer |
+| 172 | ☑ Terminer la sélection | ☑ Finish selection |
+| 172 | ☐ Sélectionner… | ☐ Select… |
+| 173 | Choisir le fichier .aird (le sélecteur s'ouvre dans le dossier du .capella quand le navigateur le permet) | Choose the .aird file (the picker opens in the .capella folder when the browser allows it) |
+| 173 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 174 | Désigner une fois le dossier du projet : ses fichiers .aird sont listés ici et s'ouvrent d'un clic | Point to the project folder once: its .aird files are listed here and open with one click |
+| 174 | 📁 Dossier du projet… | 📁 Project folder… |
+| 176 | diagramme(s) | … diagram(s) |
+| 177 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
+| 211 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
+| 225 | Autres | Others |
+| 296 | Aucun .aird chargé. | No .aird loaded. |
+| 296 | 📂 Ouvrir le .aird… s'ouvre dans le dossier du .capella (Edge / Chrome). | 📂 Open the .aird… opens in the .capella folder (Edge / Chrome). |
+| 297 | 📁 Dossier du projet… : désignez le dossier une fois, ses .aird deviennent cliquables. | 📁 Project folder…: point to the folder once, its .aird files become clickable. |
+| 305 | Cocher / décocher le groupe | Check / uncheck the group |
+| 327 | Filtrer (nom, type, sigle, couche)… | Filter (name, type, acronym, layer)… |
+| 328 | Classement de la liste | List grouping |
+| 328 | Couche › type | Layer › type |
+| 328 | Couche | Layer |
+| 328 | Type de diagramme | Diagram type |
+| 328 | Nom (A → Z) | Name (A → Z) |
+| 329 | Tout déplier | Expand all |
+| 329 | Tout replier | Collapse all |
+| 330 | sélectionné(s) pour l'export | … selected for export |
+| 330 | diagramme(s) | … diagram(s) |
+| 332 | sélectionné(s) pour l'export | … selected for export |
+| 332 | diagramme(s) — cochez pour exporter | … diagram(s) — check to export |
+| 333 | Aucun diagramme ne correspond. | No matching diagram. |
+| 365 | Lecture impossible : | Cannot read: |
+| 415 | Diagrammes ( | Diagrams (…) |
+| 438 | export SVG de la visionneuse introuvable | viewer SVG export not found |
+| 445 | diagramme vide ou non exportable | empty or non-exportable diagram |
+| 466 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
+| 467 | Projet Capella | Capella project |
+| 474 | Projet | Project |
+| 474 | Couche | Layer |
+| 475 | Diagramme | Diagram |
+| 475 | Contenu | Content |
+| 475 | élément(s) | … element(s) |
+| 476 | Type | (inchangé, hors _L) |
+| 476 | Date | Date |
+| 477 | Sources | Sources |
+| 477 | Planche | Sheet |
+| 495 | ) scale( | (inchangé, hors _L) |
+| 504 | Élément représenté | Represented element |
+| 506 | ) scale( | (inchangé, hors _L) |
+| 510 | ) scale( | (inchangé, hors _L) |
+| 511 | Arcalyse · planche générée le | Arcalyse · sheet generated on … |
+| 527 | ) scale( | (inchangé, hors _L) |
+| 584 | Élément représenté | Represented element |
+| 584 | Description | (inchangé, hors _L) |
+| 585 | Élément | Element |
+| 585 | Type | (inchangé, hors _L) |
+| 585 | Couche | Layer |
+| 600 | Élément | Element |
+| 600 | Type | (inchangé, hors _L) |
+| 600 | Couche | Layer |
+| 606 | 700 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 607 | 700 28px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 609 | 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 610 | élément(s) représenté(s) | … represented element(s) |
+| 610 | Planche | Sheet |
+| 611 | 700 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 614 | 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 651 | ⬇ Exporter des diagrammes | ⬇ Export diagrams |
+| 653 | Diagrammes | Diagrams |
+| 654 | Cochés dans la liste | Checked in the list |
+| 654 | Affichés (filtre en cours) | Displayed (current filter) |
+| 654 | Tous | All |
+| 655 | Mise en page | Layout |
+| 656 | Cadre et en-tête | Frame and header |
+| 656 | Cadre, bandeau de couche, sigle, nom et type du diagramme | Frame, layer band, acronym, name and type of the diagram |
+| 657 | Cartouche | Title block |
+| 657 | Cartouche technique en bas à droite : projet, diagramme, type, couche, contenu, sources, date, planche | Technical title block at the bottom right: project, diagram, type, layer, content, sources, date, sheet |
+| 658 | Description | Description |
+| 658 | Description Capella du diagramme et élément représenté, sous l'en-tête | Capella description of the diagram and represented element, below the header |
+| 659 | Annexes | Appendices |
+| 659 | Éléments représentés dans chaque diagramme : PDF, page(s) d'annexe après la planche · ZIP, un CSV par diagramme · HTML, tableau repliable | Elements represented in each diagram: PDF, appendix page(s) after the sheet · ZIP, one CSV per diagram · HTML, collapsible table |
+| 660 | Sommaire | Contents |
+| 660 | PDF : page de sommaire par couche et type · HTML : onglet Sommaire | PDF: contents page by layer and type · HTML: Contents tab |
+| 661 | Résolution des images PNG / PDF | Resolution of PNG / PDF images |
+| 661 | Résolution | Resolution |
+| 662 | Format | Format |
+| 664 | 📄 PDF | (inchangé, hors _L) |
+| 664 | Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets | One PDF: contents, one sheet per diagram (A4, oriented automatically), bookmarks |
+| 665 | 🗜 ZIP PNG | (inchangé, hors _L) |
+| 665 | Archive ZIP des planches en PNG, un dossier par couche | ZIP archive of the sheets as PNG, one folder per layer |
+| 666 | 🗜 ZIP SVG | (inchangé, hors _L) |
+| 666 | Archive ZIP des planches en SVG (vectoriel), un dossier par couche | ZIP archive of the sheets as SVG (vector), one folder per layer |
+| 667 | 🌐 HTML | (inchangé, hors _L) |
+| 667 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
+| 670 | Aperçu de la planche | Sheet preview |
+| 671 | Fermer | Close |
+| 686 | Aucun diagramme. | No diagram. |
+| 703 | Projet Capella | Capella project |
+| 713 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 713 | Diagrammes Capella | Capella diagrams |
+| 714 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 717 | planche(s) | … sheet(s) |
+| 725 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 726 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 731 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 732 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 750 | Aucun diagramme à exporter. | No diagram to export. |
+| 751 | Capella | (inchangé, hors _L) |
+| 766 | aucun diagramme exportable | no exportable diagram |
+| 772 | Sommaire | Contents |
+| 776 | Planche | Sheet |
+| 779 | Autres | Others |
+| 780 | - annexe | - appendix |
+| 793 | Diagrammes — | Diagrams — … |
+| 796 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
+| 796 | pages) | (… pages) |
+| 797 | ignoré(s) : | — … skipped: |
+| 798 | ⚠ Échec de l'export : | ⚠ Export failed: |
+| 817 | Type | (inchangé, hors _L) |
+| 817 | Couche | Layer |
+| 817 | Sigle | Acronym |
+| 817 | Diagramme | Diagram |
+| 817 | Éléments | Elements |
+| 828 | Type | (inchangé, hors _L) |
+| 828 | Annexe | Appendix |
+| 828 | élément(s) représenté(s) | … represented element(s) |
+| 828 | Élément | Element |
+| 828 | Couche | Layer |
+| 842 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
+| 842 | diagramme(s) | … diagram(s) |
+| 843 | 📋 Sommaire | 📋 Contents |
+| 843 | 🔲 Planches | 🔲 Sheets |
 
 ## Textes sans traduction anglaise (5)
 
