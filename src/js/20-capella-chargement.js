@@ -260,6 +260,16 @@ function capUpdateWelcome(){ capShowWelcome(!capLoaded); }
   const zone=document.getElementById('cap-drop-zone');
   const browse=()=>capPickCapellaFile();
   document.getElementById('cw-browse').addEventListener('click',ev=>{ ev.stopPropagation(); browse(); });
+  // 📁 Dossier du projet : .capella et .aird chargés ensemble (54-diagrammes.js)
+  document.getElementById('cw-folder').addEventListener('click',ev=>{ ev.stopPropagation(); capOpenProjectFolder(); });
+  const fin=document.getElementById('cw-folder-input');
+  fin.addEventListener('click',ev=>ev.stopPropagation());
+  fin.addEventListener('change',()=>{
+    const l=[...fin.files].map(f=>{ const p=(f.webkitRelativePath||f.name).split('/'); return {nom:f.name, chemin:p.slice(1).join('/')||f.name, lire:()=>Promise.resolve(f), h:null}; })
+      .filter(f=>f.chemin.split('/').length<=2);
+    fin.value='';
+    if(l.length) capProjectFromFiles(l);
+  });
   zone.addEventListener('click',browse);
   // Clic hors de la zone quand un modèle est chargé : referme la surimpression
   document.getElementById('cap-welcome').addEventListener('click',ev=>{
@@ -292,8 +302,9 @@ function capUpdateWelcome(){ capShowWelcome(!capLoaded); }
     let hp=null;
     try{ if(it&&it.getAsFileSystemHandle) hp=Promise.race([it.getAsFileSystemHandle(), new Promise(r=>setTimeout(()=>r(null),1500))]).catch(()=>null); }catch(e){ hp=null; }
     if(!f){ if(capLoaded) capShowWelcome(false); return; }
-    // Le chargement ne dépend jamais de l'accès direct : sans lui, le fichier est chargé quand même
-    if(hp) hp.then(h=>capLoadFile(f, h&&h.kind==='file'?h:null)); else capLoadFile(f);
+    // Le chargement ne dépend jamais de l'accès direct : sans lui, le fichier est chargé quand même ;
+    // un dossier déposé (Edge/Chrome) est lu comme 📁 Dossier du projet
+    if(hp) hp.then(h=>{ if(h&&h.kind==='directory') capProjectScanDir(h); else capLoadFile(f, h&&h.kind==='file'?h:null); }); else capLoadFile(f);
   });
   capUpdateWelcome();
   window.addEventListener('load',capUpdateWelcome); // après un éventuel amorçage de page sauvegardée

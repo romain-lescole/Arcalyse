@@ -3,16 +3,16 @@
    ───────────────────────────────────────────────────────────────────────
    La visionneuse (src/vendor/arcature-visionneuse*.js, produite par Arcature : node build.js --visionneuse)
    n'expose que window.ArcatureVisionneuse ; elle lit le modèle (texte du .capella) et le .aird, en lecture seule.
-   Ici : chargement du .aird (sélecteur ouvert dans le dossier du .capella, 📁 dossier du projet lu une fois),
+   Ici : chargement du .aird (sélecteur ouvert dans le dossier du .capella ; 📁 dossier du projet depuis l'écran d'accueil),
    liste classée (couche › type de diagramme, repliable, cases à cocher) à la place de celle de la visionneuse,
    export groupé en planches (en-tête, cartouche) : PDF, ZIP PNG / SVG, rapport HTML ;
    section « Diagrammes » du panneau de détail. Clic sur un élément d'un diagramme → panneau de détail de l'élément.
    ═══════════════════════════════════════════════════════════════════════ */
 
-/** État de la vue : visionneuse, .aird en attente ou chargé, modèle transmis, liste classée, sélection, dossier du projet. */
+/** État de la vue : visionneuse, .aird en attente ou chargé, modèle transmis, liste classée, sélection, largeur, carte, options d'export. */
 const _capDiag = { vis: null, texteAird: '', nomAird: '', airdCharge: false, modele: null, nbReps: 0,
   classement: 'couche', bascule: new Set(), sel: new Set(), choix: false, filtre: '', actif: '', icones: null, meta: null,
-  largeur: 330, carte: 'panneau', carteReduite: false, dossier: null, airds: [],
+  largeur: 330, carte: 'panneau', carteReduite: false,
   exportOpts: { portee: 'sel', cadre: true, cartouche: true, desc: true, annexe: true, sommaire: true, scale: 2 } };
 /** Ordre des couches ARCADIA dans la liste et les exports. */
 const CAP_DIAG_COUCHES = ['OA', 'SA', 'LA', 'PA', 'EPBS'];
@@ -58,41 +58,66 @@ async function capDiagPickAird() {
 }
 
 /**
- * 📁 Dossier du projet : le navigateur ne laisse pas lire les fichiers voisins du .capella sans autorisation ;
- * l'utilisateur désigne une fois le dossier (sélecteur ouvert à côté du .capella), ses .aird sont listés
- * et deviennent cliquables. Le dossier est relu à chaque chargement de modèle pendant la session.
+ * 📁 Dossier du projet (écran d'accueil) : charge ensemble le modèle .capella et ses diagrammes .aird.
+ * Le dossier est lu sur 2 niveaux ; s'il contient plusieurs modèles, le choix est proposé dans l'écran d'accueil.
+ * Edge/Chrome : sélecteur de dossier (l'accès direct au .capella permet le 🔄 suivi) ; sinon sélecteur classique de dossier.
  */
-async function capDiagPickDossier() {
-  if (!window.showDirectoryPicker) { capDiagMsg(_L('Ce navigateur ne permet pas de lire un dossier : utilisez 📂 Ouvrir le .aird… ou déposez le fichier.')); return; }
-  const o = { id: 'arcalyse-projet', mode: 'read' };
-  if (typeof _capWatch !== 'undefined' && _capWatch.handle) o.startIn = _capWatch.handle;
-  try { _capDiag.dossier = await window.showDirectoryPicker(o); }
-  catch (e) { if (!e || e.name !== 'AbortError') capDiagMsg(_L('Dossier inaccessible : ') + (e && e.message || e)); return; }
-  await capDiagScanDossier();
+async function capOpenProjectFolder() {
+  if (!window.showDirectoryPicker || (typeof _capPickerKo !== 'undefined' && _capPickerKo)) { document.getElementById('cw-folder-input').click(); return; }
+  let d;
+  try { d = await window.showDirectoryPicker({ id: 'arcalyse-projet', mode: 'read' }); }
+  catch (e) { if (!e || e.name !== 'AbortError') document.getElementById('cw-folder-input').click(); return; }
+  capProjectScanDir(d);
 }
 
-/** Relit le dossier du projet (2 niveaux) et liste ses fichiers .aird ; celui du nom du .capella vient en premier. */
-async function capDiagScanDossier() {
-  const d = _capDiag.dossier; if (!d) return;
-  const out = [];
+/**
+ * Lit un dossier du projet (sélecteur ou dossier déposé) sur 2 niveaux et charge le modèle et ses diagrammes.
+ * @param {FileSystemDirectoryHandle} d - Dossier
+ */
+async function capProjectScanDir(d) {
+  const fichiers = [];
   /** Parcourt un dossier jusqu'à la profondeur donnée. */
   const scan = async (dir, chemin, prof) => {
     for await (const [nom, h] of dir.entries()) {
-      if (h.kind === 'file' && /\.aird$/i.test(nom)) out.push({ nom, chemin: chemin + nom, h });
+      if (h.kind === 'file' && /\.(capella|melodymodeller|aird)$/i.test(nom)) fichiers.push({ nom, chemin: chemin + nom, h });
       else if (h.kind === 'directory' && prof > 0 && !nom.startsWith('.')) await scan(h, chemin + nom + '/', prof - 1);
     }
   };
-  try { await scan(d, '', 1); } catch (e) { capDiagMsg(_L('Lecture du dossier impossible : ') + (e && e.message || e)); }
-  const base = String(capCurrentFileName || '').replace(/\.[^.]+$/, '').toLowerCase();
-  out.sort((a, b) => (b.nom.toLowerCase() === base + '.aird') - (a.nom.toLowerCase() === base + '.aird') || a.chemin.localeCompare(b.chemin));
-  _capDiag.airds = out;
-  capDiagBarre();
+  try { await scan(d, '', 1); } catch (e) { capWelcomeStatus(_L('Lecture du dossier impossible : ') + (e && e.message || e), 'err'); capShowWelcome(true); return; }
+  capProjectFromFiles(fichiers.map(f => ({ nom: f.nom, chemin: f.chemin, lire: () => f.h.getFile(), h: f.h })));
+}
+
+/**
+ * Charge un projet à partir des fichiers d'un dossier : le .capella (choisi dans l'écran d'accueil s'il y en a plusieurs)
+ * puis le .aird du même nom (ou du même dossier, ou le seul présent).
+ * @param {{nom:string, chemin:string, lire:function():Promise<File>, h:?FileSystemFileHandle}[]} fichiers - Fichiers trouvés
+ */
+function capProjectFromFiles(fichiers) {
+  const mods = fichiers.filter(f => /\.(capella|melodymodeller)$/i.test(f.nom)).sort((a, b) => a.chemin.split('/').length - b.chemin.split('/').length || a.chemin.localeCompare(b.chemin));
+  const airds = fichiers.filter(f => /\.aird$/i.test(f.nom));
+  capShowWelcome(true);
+  if (!mods.length) { capWelcomeStatus(_L('Aucun fichier .capella dans ce dossier (ni dans ses sous-dossiers).'), 'err'); return; }
+  /** Charge un modèle et son .aird. */
+  const charger = async m => {
+    const base = m.nom.replace(/\.[^.]+$/, '').toLowerCase(), dossier = m.chemin.slice(0, m.chemin.length - m.nom.length);
+    const a = airds.find(x => x.nom.toLowerCase() === base + '.aird') || airds.find(x => x.chemin.startsWith(dossier) && !x.chemin.slice(dossier.length).includes('/')) || (airds.length === 1 ? airds[0] : null);
+    try {
+      const f = await m.lire(), fa = a ? await a.lire() : null;
+      _capDiag.texteAird = fa ? await fa.text() : ''; _capDiag.nomAird = fa ? fa.name : ''; _capDiag.airdCharge = false;
+      capLoadFile(f, m.h || null);
+    } catch (e) { capWelcomeStatus(_L('Lecture impossible : ') + (e && e.message || e), 'err'); }
+  };
+  if (mods.length === 1) { charger(mods[0]); return; }
+  const st = document.getElementById('cw-status');
+  capWelcomeStatus(_L(`${mods.length} modèles dans ce dossier : choisissez celui à ouvrir.`), '');
+  st.insertAdjacentHTML('beforeend', `<div class="cw-choix">${mods.map((m, i) => `<button type="button" class="cw-choix-b" data-mod="${i}">🔷 ${capEsc(m.chemin)}</button>`).join('')}</div>`);
+  st.querySelectorAll('[data-mod]').forEach(b => b.addEventListener('click', ev => { ev.stopPropagation(); charger(mods[+b.dataset.mod]); }));
 }
 
 /** Affiche un message bref dans la barre de la vue. @param {string} t - Texte */
 function capDiagMsg(t) { const s = document.getElementById('cdg-statut'); if (s) s.textContent = t; }
 
-/** Crée la vue (une fois) : barre (ouvrir, dossier, export), liste classée à gauche, hôte de la visionneuse. */
+/** Crée la vue (une fois) : barre (ouvrir, export, sélection), liste classée à gauche, hôte de la visionneuse. */
 function capDiagEnsure() {
   const box = document.getElementById('cap-view-diag');
   if (_capDiag.vis || !box || !capDiagDispo()) return;
@@ -117,6 +142,7 @@ function capDiagEnsure() {
   }).observe(liste, { subtree: true, attributes: true, attributeFilter: ['class'], childList: true });
   window.addEventListener('resize', () => { if (capCurrentView === 'diag') capDiagFit(); });
   capDiagSplit(document.getElementById('cdg-split'));
+  if (window.ResizeObserver) new ResizeObserver(() => { if (capCurrentView === 'diag') capDiagFit(); }).observe(document.getElementById('cdg-barre'));
 }
 
 /**
@@ -163,16 +189,14 @@ function capDiagCarte() {
   }
 }
 
-/** Barre du haut : 📂 Ouvrir le .aird…, 📁 Dossier du projet…, .aird trouvés (cliquables), ⬇ Exporter… */
+/** Barre du haut : 📂 Ouvrir le .aird…, ⬇ Exporter…, ☐ Sélectionner…, fichier chargé. */
 function capDiagBarre() {
   const b = document.getElementById('cdg-barre'); if (!b) return;
   const n = _capDiag.sel.size;
-  const puces = _capDiag.airds.map((a, i) => `<button class="cdg-puce${a.nom === _capDiag.nomAird && _capDiag.airdCharge ? ' on' : ''}" data-aird="${i}" title="${capEsc(a.chemin)}">🔲 ${capEsc(a.chemin)}</button>`).join('');
   const exp = _capDiag.airdCharge ? `<span class="tb-grp"><button class="tbtn" id="cdg-export" title="${_L('Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML')}">${_L('⬇ Exporter…')}${n ? ` <span class="cdg-nb">${n}</span>` : ''}</button>` +
     `<button class="tbtn${_capDiag.choix ? ' active' : ''}" id="cdg-choix" title="${_L('Choisir les diagrammes à exporter : cases à cocher dans l\'explorateur')}">${_capDiag.choix ? _L('☑ Terminer la sélection') : _L('☐ Sélectionner…')}</button></span>` : '';
   b.innerHTML = `<span class="tb-grp"><button class="tbtn" id="cdg-ouvrir" title="${_L('Choisir le fichier .aird (le sélecteur s\'ouvre dans le dossier du .capella quand le navigateur le permet)')}">${_L('📂 Ouvrir le .aird…')}</button>` +
-    (window.showDirectoryPicker ? `<button class="tbtn" id="cdg-dossier" title="${_L('Désigner une fois le dossier du projet : ses fichiers .aird sont listés ici et s\'ouvrent d\'un clic')}">${_L('📁 Dossier du projet…')}</button>` : '') + `</span>` + exp +
-    (puces ? `<span class="cdg-puces">${puces}</span>` : '') +
+    `</span>` + exp +
     `<span id="cdg-info" class="cdg-info">${_capDiag.airdCharge ? capEsc(_capDiag.nomAird) + ' — ' + _L(`${_capDiag.nbReps} diagramme(s)`) :
       _L('Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre.')}</span>` +
     `<span id="cdg-statut" class="cdg-info"></span>`;
@@ -183,7 +207,7 @@ function capDiagFit() {
   const c = document.querySelector('#cap-view-diag .cdg-corps');
   if (!c) return;
   const bas = Math.min(window.innerHeight, document.getElementById('cap-view-diag').getBoundingClientRect().bottom);   // barre d'état en dessous
-  c.style.height = Math.max(320, bas - c.getBoundingClientRect().top - 6) + 'px';
+  c.style.height = Math.max(320, bas - c.getBoundingClientRect().top) + 'px';
 }
 
 /** Transmet à la visionneuse le modèle courant (texte XML) et le .aird en attente, si besoin. */
@@ -193,7 +217,8 @@ function capDiagSync() {
   if (_capDiag.modele !== cap_xmlDoc && cap_xmlDoc) {
     v.chargerModele(new XMLSerializer().serializeToString(cap_xmlDoc), capCurrentFileName);
     _capDiag.modele = cap_xmlDoc;
-    if (_capDiag.dossier) capDiagScanDossier();
+    if (_capDiag.texteAird) _capDiag.airdCharge = false;   // diagrammes relus avec le nouveau modèle
+    else if (_capDiag.airdCharge) { _capDiag.airdCharge = false; try { v.fermer(); } catch (e) {} }   // nouveau modèle sans .aird
   }
   if (_capDiag.texteAird && !_capDiag.airdCharge) {
     _capDiag.nbReps = v.chargerAird(_capDiag.texteAird, _capDiag.nomAird);
@@ -294,7 +319,7 @@ function capDiagListe() {
   const box = document.getElementById('cdg-liste'); if (!box) return;
   if (!_capDiag.airdCharge) {
     box.innerHTML = `<div class="cdg-aide">${_L('Aucun .aird chargé.')}<br><br>${_L('📂 Ouvrir le .aird… s\'ouvre dans le dossier du .capella (Edge / Chrome).')}<br>` +
-      (window.showDirectoryPicker ? _L('📁 Dossier du projet… : désignez le dossier une fois, ses .aird deviennent cliquables.') : '') + `</div>`;
+      _L('Ou, depuis l\'écran d\'accueil, 📁 Dossier du projet… : le .capella et ses diagrammes sont chargés ensemble.') + `</div>`;
     return;
   }
   const reps = capDiagFiltrees(), ico = capDiagIcones(), S = _capDiag.sel;
@@ -351,18 +376,15 @@ function capDiagRepsGroupe(cle) {
   return tous;
 }
 
-/** Clics de la vue : barre (ouvrir, dossier, .aird trouvés, export), groupes repliables, diagrammes. @param {MouseEvent} e */
+/** Clics de la vue : barre (ouvrir, export, sélection), carte, groupes repliables, diagrammes. @param {MouseEvent} e */
 function capDiagClic(e) {
   const t = e.target;
   if (t.closest('#cdg-ouvrir')) { capDiagPickAird(); return; }
-  if (t.closest('#cdg-dossier')) { capDiagPickDossier(); return; }
   if (t.closest('#cdg-export')) { capDiagExportDialog(); return; }
   if (t.closest('#cdg-choix')) { _capDiag.choix = !_capDiag.choix; capDiagBarre(); capDiagListe(); return; }
   const ca = t.closest('[data-carte]');
   if (ca) { _capDiag.carte = ca.dataset.carte; capDiagCarte(); return; }
   if (t.closest('[data-carte-tog]')) { _capDiag.carteReduite = !_capDiag.carteReduite; capDiagCarte(); return; }
-  const pa = t.closest('[data-aird]');
-  if (pa) { const a = _capDiag.airds[+pa.dataset.aird]; if (a) a.h.getFile().then(capDiagLoadAird).catch(err => capDiagMsg(_L('Lecture impossible : ') + err.message)); return; }
   if (t.matches('input[type=checkbox]')) return;   // traité par capDiagChange
   const tout = t.closest('[data-tout]');
   if (tout) {
@@ -739,6 +761,26 @@ function capDiagPdfSommaire(l, pages) {
   return out;
 }
 
+/** Seuil (Mo) au-delà duquel l'export PDF demande confirmation. */
+const CAP_DIAG_PDF_ALERTE = 40;
+
+/**
+ * Taille estimée du PDF, d'après la surface des planches rastérisées (même bornes que capSvgToCanvas)
+ * et le nombre de pages d'annexe et de sommaire (coefficients mesurés sur des modèles réels, JPEG 0,92 / 0,8).
+ * @param {object[]} items - Diagrammes ({p:{w,h}, nAnx})
+ * @param {number} scale - Résolution choisie
+ * @param {number} nSom - Pages de sommaire
+ * @returns {number} taille estimée en Mo
+ */
+function capDiagPdfEstimation(items, scale, nSom) {
+  let o = nSom * 170e3;
+  items.forEach(it => {
+    const w = it.p.w, h = it.p.h, k = Math.max(0.5, Math.min(scale || 2, 8000 / Math.max(w, h), Math.sqrt(40e6 / (w * h))));
+    o += w * h * k * k * 0.075 + it.nAnx * 170e3;
+  });
+  return o / 1048576;
+}
+
 /**
  * Export groupé des diagrammes en planches : capture de tous les diagrammes, puis pagination
  * (sommaire, planche, pages d'annexe) et écriture du format choisi.
@@ -751,7 +793,7 @@ async function capDiagExport(fmt) {
   const projet = (cap_xmlDoc && cap_xmlDoc.documentElement && cap_xmlDoc.documentElement.getAttribute('name')) || 'Capella';
   const date = new Date().toISOString().slice(0, 10), retour = _capDiag.actif;
   const enc = new TextEncoder(), fichiers = [], pdf = [];
-  const jpg = async c => new Uint8Array(await (await capCanvasBlob(c, 'image/jpeg', 0.92)).arrayBuffer());
+  const jpg = async (c, q) => new Uint8Array(await (await capCanvasBlob(c, 'image/jpeg', q || 0.92)).arrayBuffer());
   document.querySelectorAll('#cdg-export-ov [data-fmt]').forEach(b => { b.disabled = true; });
   try {
     // 1. Capture des diagrammes et de leurs éléments
@@ -769,13 +811,20 @@ async function capDiagExport(fmt) {
     const nSom = fmt === 'pdf' && o.sommaire ? Math.max(1, Math.ceil((l.length + new Set(l.map(r => r.couche)).size) / 60)) : 0;
     let total = nSom;
     items.forEach(it => { it.page = total + 1; it.nAnx = fmt === 'pdf' && o.annexe && it.el.length ? Math.ceil(it.el.length / CAP_DIAG_ANX) : 0; total += 1 + it.nAnx; });
-    if (nSom) for (const c of capDiagPdfSommaire(l, items.map(it => it.page))) pdf.push({ jpeg: await jpg(c), iw: c.width, ih: c.height, pw: 842, ph: 595, title: _L('Sommaire') });
+    items.forEach((it, i) => { it.p = capDiagPlanche(it.r, it.svg, { planche: fmt === 'pdf' ? `${it.page} / ${total}` : `${i + 1} / ${l.length}` }); });
+    // PDF lourd : estimation (dimensions réelles des planches) et confirmation au-delà du seuil
+    if (fmt === 'pdf') {
+      const mo = capDiagPdfEstimation(items, o.scale, nSom);
+      if (mo > CAP_DIAG_PDF_ALERTE && !confirm(_L(`Le PDF fera environ ${Math.round(mo)} Mo (${total} pages).\n\nPour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…).\n\nContinuer quand même ?`))) {
+        st(_L(`Export annulé : PDF estimé à ${Math.round(mo)} Mo.`)); return;
+      }
+    }
+    if (nSom) for (const c of capDiagPdfSommaire(l, items.map(it => it.page))) pdf.push({ jpeg: await jpg(c, 0.8), iw: c.width, ih: c.height, pw: 842, ph: 595, title: _L('Sommaire') });
     // 3. Planches
     for (let i = 0; i < items.length; i++) {
       const it = items[i], r = it.r;
       st(`⏳ ${_L('Planche')} ${i + 1}/${items.length} — ${r.nom}`);
       await new Promise(res => setTimeout(res, 0));
-      it.p = capDiagPlanche(r, it.svg, { planche: fmt === 'pdf' ? `${it.page} / ${total}` : `${i + 1} / ${l.length}` });
       const base = `${r.couche || _L('Autres')}/${String(i + 1).padStart(3, '0')} - ${capSafeFileName(r.nom)}`;
       if (fmt !== 'pdf' && fmt !== 'html' && o.annexe) fichiers.push({ name: base + _L(' - annexe') + '.csv', data: enc.encode(capDiagAnnexeCsv(r, it.el)) });
       if (fmt === 'zip-svg') { fichiers.push({ name: base + '.svg', data: enc.encode(it.p.svg) }); continue; }
@@ -786,7 +835,7 @@ async function capDiagExport(fmt) {
       pdf.push({ jpeg: await jpg(c), iw: c.width, ih: c.height, pw: pays ? 842 : 595, ph: pays ? 595 : 842, title: titre });
       if (it.nAnx) {
         const cvs = capDiagAnnexePages(r, it.el, [...Array(it.nAnx)].map((_, k) => `${it.page + 1 + k} / ${total}`));
-        for (let k = 0; k < cvs.length; k++) pdf.push({ jpeg: await jpg(cvs[k]), iw: cvs[k].width, ih: cvs[k].height, pw: 842, ph: 595, title: `${titre} — ${_L('annexe')}${cvs.length > 1 ? ' ' + (k + 1) : ''}` });
+        for (let k = 0; k < cvs.length; k++) pdf.push({ jpeg: await jpg(cvs[k], 0.8), iw: cvs[k].width, ih: cvs[k].height, pw: 842, ph: 595, title: `${titre} — ${_L('annexe')}${cvs.length > 1 ? ' ' + (k + 1) : ''}` });
       }
     }
     const racine = `${capSafeFileName(projet)} - ${_L('diagrammes')}`;

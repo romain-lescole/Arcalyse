@@ -40,8 +40,8 @@ var CAP_NAV_GROUPS=[
   {g:'',        id:'',               l:'',                     t:''},   // place des vues sans menu
   {g:'ana',     id:'cap-v-analyses', l:_L('🔬 Analyses'),          t:_L('Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes')}
 ];
-/** Réglage par défaut : tous les menus affichés, ▤ Tableau, ⚡ Chaînes, 🔲 Diagrammes Capella, 🎬 Scénarios et 📐 Tableau de bord
- * en boutons directs (tbl, diag : marques d'un réglage qui connaît ces boutons, voir capNavMigrate). */
+/** Réglage par défaut : tous les menus affichés, 🔲 Diagrammes Capella (en tête, à côté de 🗺 Relation Map), ▤ Tableau, ⚡ Chaînes,
+ * 🎬 Scénarios et 📐 Tableau de bord en boutons directs (tbl, diag : marques d'un réglage qui connaît ces boutons, voir capNavMigrate). */
 var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['table','chains','diag','scen','dashboard'], tbl:1, diag:1};
 var _capNav=(()=>{ try{ const el=document.getElementById('cap-toolbar'); const o=el&&JSON.parse(el.textContent);
   if(o&&o.groups&&Array.isArray(o.pins)) return capNavMigrate(o); }catch(e){} return JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); })();
@@ -115,10 +115,12 @@ function capNavRender(){
   CAP_NAV_GROUPS.forEach(G=>{
     if(G.g&&_capNav.groups[G.g]!==false)
       h+=_L(`<div class="tbtn cap-nav-grp" id="${G.id}" data-g="${G.g}" title="${G.t}">${G.l}<span class="cap-nav-arr" data-dd="${G.g}" title="Choisir une vue">▾</span></div>`);
-    CAP_NAV_ITEMS.filter(i=>i.g===G.g&&_capNav.pins.includes(i.k)&&i.k!=='table').forEach(i=>h+=pin(i.k));
+    CAP_NAV_ITEMS.filter(i=>i.g===G.g&&_capNav.pins.includes(i.k)&&i.k!=='table'&&i.k!=='diag').forEach(i=>h+=pin(i.k));
     // ▤ Tableau : juste après le menu 🧭 Explorateur
     if(G.g==='explore'&&_capNav.pins.includes('table')) h+=pin('table');
   });
+  // 🔲 Diagrammes Capella : en tête, juste après le bouton 🗺 Relation Map
+  if(_capNav.pins.includes('diag')) h=pin('diag')+h;
   // Vues épinglées sans menu placées après le dernier groupe (📐 Tableau de bord)
   h=h.replace(pin('dashboard'),'');
   if(_capNav.pins.includes('dashboard')) h+=pin('dashboard');
