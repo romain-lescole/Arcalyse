@@ -69,21 +69,46 @@ function capGetFiltered(){
 }
 
 // ── Cards ──
-/** Nombre maximal de cartes affichées (au-delà, la page devient lente) : préciser la recherche ou les filtres. */
+/** Nombre de cartes par page (une page plus longue rend l'affichage lent). */
 const CAP_CARDS_MAX=500;
-/** Rend la vue Cartes : cartes groupées par couche ARCADIA, filtrées, CAP_CARDS_MAX au plus. */
+/** Page courante de ▦ Cartes et signature des filtres qui l'ont produite (changement de filtre → page 1). */
+let _capCardsPg={page:0, sig:''};
+/**
+ * Barre de pages de ▦ Cartes : ◀ précédente, numéro de page, éléments affichés, suivante ▶.
+ * @param {number} page - Page courante (à partir de 0)
+ * @param {number} nb - Nombre de pages
+ * @param {number} total - Nombre d'éléments filtrés
+ * @returns {string} HTML ('' s'il n'y a qu'une page)
+ */
+function capCardsPager(page, nb, total){
+  if(nb<=1) return '';
+  const de=page*CAP_CARDS_MAX+1, a=Math.min(total,(page+1)*CAP_CARDS_MAX);
+  const bt=(p,l,t,off)=>`<button class="tbtn" data-cpg="${p}"${off?' disabled':''} title="${t}">${l}</button>`;
+  return `<div class="cap-cards-pg">${bt(0,'⏮',_L('Première page'),page===0)}${bt(page-1,_L('◀ Préc.'),_L('Page précédente'),page===0)}`+
+    `<span>${_L(`Page ${page+1} / ${nb} — éléments ${de} à ${a} sur ${total}`)}</span>`+
+    `${bt(page+1,_L('Suiv. ▶'),_L('Page suivante'),page>=nb-1)}${bt(nb-1,'⏭',_L('Dernière page'),page>=nb-1)}</div>`;
+}
+/** Rend la vue Cartes : cartes groupées par couche ARCADIA, filtrées, par pages de CAP_CARDS_MAX. */
 function capRenderCards(){
-  const filtered=capGetFiltered(), trop=filtered.length>CAP_CARDS_MAX;
-  const rc=document.getElementById('cap-result-count');
-  if(rc)rc.textContent=trop?_L(`${CAP_CARDS_MAX} premiers éléments affichés sur ${filtered.length} — précisez la recherche, la couche ou les types`):_L(`${filtered.length} élément(s) affiché(s)`);
-  let reste=CAP_CARDS_MAX;
   const container=document.getElementById('cap-view-cards'); if(!container) return;
-  const grouped={};
-  for(const el of filtered)(grouped[el.layer]=grouped[el.layer]||[]).push(el);
-  let html='';
+  if(!container._pg){ container._pg=true;
+    container.addEventListener('click',e=>{ const b=e.target.closest('[data-cpg]'); if(!b||b.disabled) return;
+      _capCardsPg.page=+b.dataset.cpg; capRenderCards(); container.scrollTop=0; }); }
+  // Éléments dans l'ordre des couches, puis découpés en pages
+  const ordre=Object.keys(CAP_LAYERS), filtered=capGetFiltered().slice().sort((x,y)=>ordre.indexOf(x.layer)-ordre.indexOf(y.layer));
+  const sig=filtered.length+'|'+capSearch+'|'+capCurrentLayer+'|'+(filtered[0]||{}).id;
+  if(sig!==_capCardsPg.sig){ _capCardsPg={page:0, sig}; }
+  const nb=Math.max(1,Math.ceil(filtered.length/CAP_CARDS_MAX)), page=Math.min(_capCardsPg.page,nb-1);
+  const vue=filtered.slice(page*CAP_CARDS_MAX,(page+1)*CAP_CARDS_MAX);
+  const rc=document.getElementById('cap-result-count');
+  if(rc)rc.textContent=nb>1?_L(`${filtered.length} élément(s) — page ${page+1} / ${nb}`):_L(`${filtered.length} élément(s) affiché(s)`);
+  const parCouche={}, grouped={};
+  for(const el of filtered) parCouche[el.layer]=(parCouche[el.layer]||0)+1;
+  for(const el of vue)(grouped[el.layer]=grouped[el.layer]||[]).push(el);
+  const pager=capCardsPager(page,nb,filtered.length);
+  let html=pager;
   for(const[lk,lv]of Object.entries(CAP_LAYERS)){
-    const tous=grouped[lk]; if(!tous?.length||reste<=0) continue;
-    const items=tous.slice(0,reste); reste-=items.length;
+    const items=grouped[lk]; if(!items?.length) continue;
     const cards=items.map(el=>{
       const name=el.attrs.name||'';
       const nm=name?`<span class="cap-card-name">${capEsc(name)}</span>`:_L(`<span class="cap-card-name unnamed">—sans nom—</span>`);
@@ -94,10 +119,11 @@ function capRenderCards(){
         ${pills.length?`<div class="cap-meta">${pills.join('')}</div>`:''}
       </div>`;
     }).join('');
-    html+=`<div class="cap-layer-section"><div class="cap-layer-hdr"><span class="cap-layer-badge" style="color:${lv.color}">${lk}</span><span style="font-size:12px;font-weight:600;">${lv.label}</span><span style="margin-left:auto;font-size:11px;color:var(--c-dim);font-family:monospace;">${items.length<tous.length?items.length+' / '+tous.length:items.length}</span></div><div class="cap-cards-grid">${cards}</div></div>`;
+    const n=parCouche[lk];
+    html+=`<div class="cap-layer-section"><div class="cap-layer-hdr"><span class="cap-layer-badge" style="color:${lv.color}">${lk}</span><span style="font-size:12px;font-weight:600;">${lv.label}</span><span style="margin-left:auto;font-size:11px;color:var(--c-dim);font-family:monospace;">${items.length<n?items.length+' / '+n:n}</span></div><div class="cap-cards-grid">${cards}</div></div>`;
   }
-  if(trop) html+=_L(`<div class="ana-dim" style="text-align:center;padding:14px">… ${filtered.length-CAP_CARDS_MAX} autre(s) élément(s) non affiché(s) : précisez la recherche, la couche ou les types (▤ Tableau pour tout parcourir).</div>`);
-  container.innerHTML=html||_L('<div style="text-align:center;padding:40px;color:var(--c-dim)">Aucun résultat</div>');
+  if(vue.length) html+=pager;
+  container.innerHTML=vue.length?html:_L('<div style="text-align:center;padding:40px;color:var(--c-dim)">Aucun résultat</div>');
 }
 
 // ── Table ──

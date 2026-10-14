@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 4085 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 4091 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -746,106 +746,112 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | Ligne | Texte | Anglais |
 |---:|---|---|
 | 14 | Shared | (inchangé, hors _L) |
-| 78 | premiers éléments affichés sur | First … elements shown out of … — refine the search, the layer or the types |
-| 78 | — précisez la recherche, la couche ou les types | First … elements shown out of … — refine the search, the layer or the types |
-| 78 | élément(s) affiché(s) | … element(s) shown |
-| 89 | —sans nom— | —unnamed— |
-| 99 | autre(s) élément(s) non affiché(s) : précisez la recherche, la couche ou les types (▤ Tableau pour tout parcourir). | … … other element(s) not shown: refine the search, the layer or the types (▤ Table to browse them all). |
-| 100 | Aucun résultat | No result |
-| 318 | Owner [ | Owner […] |
-| 387 | Name | (inchangé, hors _L) |
-| 389 | Type | (inchangé, hors _L) |
-| 390 | Human Type | (inchangé, hors _L) |
-| 399 | Attribut « | Attribute “…” |
-| 421 | Owned element [ | Owned element […] |
-| 443 | :fwd: | (inchangé, hors _L) |
-| 450 | :rev: | (inchangé, hors _L) |
-| 621 | Couche | Layer |
-| 621 | Type | (inchangé, hors _L) |
-| 621 | Human Type | (inchangé, hors _L) |
-| 621 | Name | (inchangé, hors _L) |
-| 621 | Owner | Owner |
-| 621 | Owned element | (inchangé, hors _L) |
-| 640 | ⊞ Colonnes ( | ⊞ Columns (…) ▾ |
-| 650 | 🔍 Rechercher une colonne… | 🔍 Search a column… |
-| 682 | Créer une colonne calculée en suivant un chemin de relations (metachain), avec aperçu en direct | Create a computed column by following a path of relations (metachain), with live preview |
-| 683 | ✨ Colonne par chemin | ✨ Path column |
-| 695 | Bascule l'affichage des cellules à plusieurs valeurs | Toggle the display of multi-valued cells |
-| 696 | ≡ En ligne | ≡ Inline |
-| 696 | ☰ Empilé | ☰ Stacked |
-| 708 | Exporter en CSV les colonnes affichées, pour toutes les lignes filtrées (ordre du tri) | Export the displayed columns to CSV, for all filtered rows (sort order) |
-| 709 | ⬇ CSV | ⬇ CSV |
-| 714 | Sauvegarder la vue de cet onglet (colonnes, colonnes par chemin, filtres, largeurs, tri) dans un fichier | Save this tab's view (columns, path columns, filters, widths, sort) to a file |
-| 715 | 💾 Sauver vue | 💾 Save view |
-| 719 | Charger une vue tableau sauvegardée | Load a saved table view |
-| 720 | 📂 Charger vue | 📂 Load view |
-| 726 | ↺ Réinitialiser | ↺ Reset |
-| 727 | Revenir aux colonnes, à l'ordre, aux largeurs et au tri de départ, sans filtre (onglet affiché) | Go back to the initial columns, order, widths and sort, with no filter (current tab) |
-| 762 | Modifier le metachain de cette colonne | Edit the metachain of this column |
-| 768 | Supprimer cette colonne personnalisée | Delete this custom column |
-| 790 | ⊞ Colonnes ( | ⊞ Columns (…) ▾ |
-| 794 | Colonnes calculées | Computed columns |
-| 795 | Name | (inchangé, hors _L) |
-| 795 | Owner | Owner |
-| 795 | Owned element | (inchangé, hors _L) |
-| 796 | Couche | Layer |
-| 796 | Type | (inchangé, hors _L) |
-| 796 | Human Type | (inchangé, hors _L) |
-| 800 | Colonnes par chemin | Path columns |
-| 806 | Attributs du fichier XML | XML file attributes |
-| 884 | (aucune relation disponible) | (no relation available) |
-| 902 | Supprimer cette étape et les suivantes | Delete this step and the following ones |
-| 949 | (sans nom) | (unnamed) |
-| 999 | 👁 Aperçu en direct | 👁 Live preview |
-| 1001 | Choisissez un type de départ. | Choose a start type. |
-| 1004 | Aucun élément de ce type dans le modèle. | No element of this type in the model. |
-| 1016 | Élément d'exemple ( | Sample element (…): |
-| 1019 | 🔍 Filtrer… | 🔍 Filter… |
-| 1021 | Suivant ▸ | Next ▸ |
-| 1022 | Passer au prochain élément dont la cellule serait remplie | Go to the next element whose cell would be filled |
-| 1033 | autre(s) : affinez le filtre | … … more: refine the filter |
-| 1034 | (aucun élément) | (no element) |
-| 1071 | Cellule remplie pour | Cell filled for … element(s) out of the first … tested (… in total). |
-| 1071 | élément(s) sur les | Cell filled for … element(s) out of the first … tested (… in total). |
-| 1071 | premiers testés ( | Cell filled for … element(s) out of the first … tested (… in total). |
-| 1071 | au total). | Cell filled for … element(s) out of the first … tested (… in total). |
-| 1072 | Cellule remplie pour | Cell filled for … element(s) out of …. |
-| 1072 | élément(s) sur | Cell filled for … element(s) out of …. |
-| 1073 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
-| 1092 | Départ : | Start: … |
-| 1097 | (à choisir) | (to be chosen) |
-| 1102 | valeur(s) lue(s) | … value(s) read |
-| 1102 | Aucune valeur. | No value. |
-| 1105 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
-| 1106 | ∅ Aucun élément atteint : le chemin s'arrête ici pour cet exemple. | ∅ No element reached: the path stops here for this sample. |
-| 1118 | ▣ Cellule dans le tableau | ▣ Cell in the table |
-| 1120 | Chemin incomplet. | Incomplete path. |
-| 1120 | (vide) | (empty) |
-| 1146 | ✨ Modifier « | ✨ Edit “…” |
-| 1146 | ✨ Colonne par chemin | ✨ Path column |
-| 1148 | Enregistrer les modifications | Save changes |
-| 1148 | Créer la colonne | Create the column |
-| 1171 | Choisissez au moins un type de départ et une relation ou une valeur. | Choose at least one start type and one relation or value. |
-| 1172 | Chaque étape doit avoir une relation ou une valeur sélectionnée. | Each step must have a relation or a value selected. |
-| 1223 | Fichier invalide : JSON illisible. | Invalid file: unreadable JSON. |
-| 1225 | Ce fichier ne semble pas être une vue de tableau valide. | This file does not look like a valid table view. |
-| 1259 | élément(s) | … element(s) |
-| 1259 | · 🌳 arbre ( | · 🌳 tree (… row(s) shown) |
-| 1259 | ligne(s) affichée(s)) | · 🌳 tree (… row(s) shown) |
-| 1259 | · 🎯 portée : | · 🎯 scope: … |
-| 1275 | Clic : trier · glisser : déplacer la colonne · bord droit : largeur | ……\nClick: sort · drag: move the column · right edge: width |
-| 1291 | Filtrer… | Filter… |
-| 1317 | Aucun élément ne correspond aux filtres. | No element matches the filters. |
-| 1317 | Aucun type coché pour cet onglet : cochez des types d'éléments dans le menu de gauche. | No type checked for this tab: check element types in the left menu. |
-| 1338 | (conteneur) | … — … (container) |
-| 1379 | 🌳 Arbre | 🌳 Tree ☰ List ⊞ Expand all ⊟ Collapse all Level 1 2 3 ⬇ JSON |
-| 1381 | lignes au plus)" ☰ Liste ⊞ Tout déplier ⊟ Tout réduire Niveau 1 2 3 ⬇ JSON | 🌳 Tree ☰ List ⊞ Expand all ⊟ Collapse all Level 1 2 3 ⬇ JSON |
-| 1429 | résultat(s) | … result(s) |
-| 1429 | élément(s) | … element(s) |
-| 1434 | cap-tree-row cap-tree-lrow | (inchangé, hors _L) |
-| 1445 | autre(s) élément(s) non affiché(s) : précisez la recherche. | … … more element(s) not shown: refine the search. |
-| 1446 | Aucun élément ne correspond. | No element matches. |
-| 1450 | Aucun élément ne correspond. | No element matches. |
+| 87 | Première page | First page |
+| 87 | ◀ Préc. | ◀ Prev. |
+| 87 | Page précédente | Previous page |
+| 88 | Page | Page … / … — elements … to … of … |
+| 88 | — éléments | Page … / … — elements … to … of … |
+| 89 | Suiv. ▶ | Next ▶ |
+| 89 | Page suivante | Next page |
+| 89 | Dernière page | Last page |
+| 104 | élément(s) — page | … element(s) — page … / … |
+| 104 | élément(s) affiché(s) | … element(s) shown |
+| 114 | —sans nom— | —unnamed— |
+| 126 | Aucun résultat | No result |
+| 344 | Owner [ | Owner […] |
+| 413 | Name | (inchangé, hors _L) |
+| 415 | Type | (inchangé, hors _L) |
+| 416 | Human Type | (inchangé, hors _L) |
+| 425 | Attribut « | Attribute “…” |
+| 447 | Owned element [ | Owned element […] |
+| 469 | :fwd: | (inchangé, hors _L) |
+| 476 | :rev: | (inchangé, hors _L) |
+| 647 | Couche | Layer |
+| 647 | Type | (inchangé, hors _L) |
+| 647 | Human Type | (inchangé, hors _L) |
+| 647 | Name | (inchangé, hors _L) |
+| 647 | Owner | Owner |
+| 647 | Owned element | (inchangé, hors _L) |
+| 666 | ⊞ Colonnes ( | ⊞ Columns (…) ▾ |
+| 676 | 🔍 Rechercher une colonne… | 🔍 Search a column… |
+| 708 | Créer une colonne calculée en suivant un chemin de relations (metachain), avec aperçu en direct | Create a computed column by following a path of relations (metachain), with live preview |
+| 709 | ✨ Colonne par chemin | ✨ Path column |
+| 721 | Bascule l'affichage des cellules à plusieurs valeurs | Toggle the display of multi-valued cells |
+| 722 | ≡ En ligne | ≡ Inline |
+| 722 | ☰ Empilé | ☰ Stacked |
+| 734 | Exporter en CSV les colonnes affichées, pour toutes les lignes filtrées (ordre du tri) | Export the displayed columns to CSV, for all filtered rows (sort order) |
+| 735 | ⬇ CSV | ⬇ CSV |
+| 740 | Sauvegarder la vue de cet onglet (colonnes, colonnes par chemin, filtres, largeurs, tri) dans un fichier | Save this tab's view (columns, path columns, filters, widths, sort) to a file |
+| 741 | 💾 Sauver vue | 💾 Save view |
+| 745 | Charger une vue tableau sauvegardée | Load a saved table view |
+| 746 | 📂 Charger vue | 📂 Load view |
+| 752 | ↺ Réinitialiser | ↺ Reset |
+| 753 | Revenir aux colonnes, à l'ordre, aux largeurs et au tri de départ, sans filtre (onglet affiché) | Go back to the initial columns, order, widths and sort, with no filter (current tab) |
+| 788 | Modifier le metachain de cette colonne | Edit the metachain of this column |
+| 794 | Supprimer cette colonne personnalisée | Delete this custom column |
+| 816 | ⊞ Colonnes ( | ⊞ Columns (…) ▾ |
+| 820 | Colonnes calculées | Computed columns |
+| 821 | Name | (inchangé, hors _L) |
+| 821 | Owner | Owner |
+| 821 | Owned element | (inchangé, hors _L) |
+| 822 | Couche | Layer |
+| 822 | Type | (inchangé, hors _L) |
+| 822 | Human Type | (inchangé, hors _L) |
+| 826 | Colonnes par chemin | Path columns |
+| 832 | Attributs du fichier XML | XML file attributes |
+| 910 | (aucune relation disponible) | (no relation available) |
+| 928 | Supprimer cette étape et les suivantes | Delete this step and the following ones |
+| 975 | (sans nom) | (unnamed) |
+| 1025 | 👁 Aperçu en direct | 👁 Live preview |
+| 1027 | Choisissez un type de départ. | Choose a start type. |
+| 1030 | Aucun élément de ce type dans le modèle. | No element of this type in the model. |
+| 1042 | Élément d'exemple ( | Sample element (…): |
+| 1045 | 🔍 Filtrer… | 🔍 Filter… |
+| 1047 | Suivant ▸ | Next ▸ |
+| 1048 | Passer au prochain élément dont la cellule serait remplie | Go to the next element whose cell would be filled |
+| 1059 | autre(s) : affinez le filtre | … … more: refine the filter |
+| 1060 | (aucun élément) | (no element) |
+| 1097 | Cellule remplie pour | Cell filled for … element(s) out of the first … tested (… in total). |
+| 1097 | élément(s) sur les | Cell filled for … element(s) out of the first … tested (… in total). |
+| 1097 | premiers testés ( | Cell filled for … element(s) out of the first … tested (… in total). |
+| 1097 | au total). | Cell filled for … element(s) out of the first … tested (… in total). |
+| 1098 | Cellule remplie pour | Cell filled for … element(s) out of …. |
+| 1098 | élément(s) sur | Cell filled for … element(s) out of …. |
+| 1099 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
+| 1118 | Départ : | Start: … |
+| 1123 | (à choisir) | (to be chosen) |
+| 1128 | valeur(s) lue(s) | … value(s) read |
+| 1128 | Aucune valeur. | No value. |
+| 1131 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
+| 1132 | ∅ Aucun élément atteint : le chemin s'arrête ici pour cet exemple. | ∅ No element reached: the path stops here for this sample. |
+| 1144 | ▣ Cellule dans le tableau | ▣ Cell in the table |
+| 1146 | Chemin incomplet. | Incomplete path. |
+| 1146 | (vide) | (empty) |
+| 1172 | ✨ Modifier « | ✨ Edit “…” |
+| 1172 | ✨ Colonne par chemin | ✨ Path column |
+| 1174 | Enregistrer les modifications | Save changes |
+| 1174 | Créer la colonne | Create the column |
+| 1197 | Choisissez au moins un type de départ et une relation ou une valeur. | Choose at least one start type and one relation or value. |
+| 1198 | Chaque étape doit avoir une relation ou une valeur sélectionnée. | Each step must have a relation or a value selected. |
+| 1249 | Fichier invalide : JSON illisible. | Invalid file: unreadable JSON. |
+| 1251 | Ce fichier ne semble pas être une vue de tableau valide. | This file does not look like a valid table view. |
+| 1285 | élément(s) | … element(s) |
+| 1285 | · 🌳 arbre ( | · 🌳 tree (… row(s) shown) |
+| 1285 | ligne(s) affichée(s)) | · 🌳 tree (… row(s) shown) |
+| 1285 | · 🎯 portée : | · 🎯 scope: … |
+| 1301 | Clic : trier · glisser : déplacer la colonne · bord droit : largeur | ……\nClick: sort · drag: move the column · right edge: width |
+| 1317 | Filtrer… | Filter… |
+| 1343 | Aucun élément ne correspond aux filtres. | No element matches the filters. |
+| 1343 | Aucun type coché pour cet onglet : cochez des types d'éléments dans le menu de gauche. | No type checked for this tab: check element types in the left menu. |
+| 1364 | (conteneur) | … — … (container) |
+| 1405 | 🌳 Arbre | 🌳 Tree ☰ List ⊞ Expand all ⊟ Collapse all Level 1 2 3 ⬇ JSON |
+| 1407 | lignes au plus)" ☰ Liste ⊞ Tout déplier ⊟ Tout réduire Niveau 1 2 3 ⬇ JSON | 🌳 Tree ☰ List ⊞ Expand all ⊟ Collapse all Level 1 2 3 ⬇ JSON |
+| 1455 | résultat(s) | … result(s) |
+| 1455 | élément(s) | … element(s) |
+| 1460 | cap-tree-row cap-tree-lrow | (inchangé, hors _L) |
+| 1471 | autre(s) élément(s) non affiché(s) : précisez la recherche. | … … more element(s) not shown: refine the search. |
+| 1472 | Aucun élément ne correspond. | No element matches. |
+| 1476 | Aucun élément ne correspond. | No element matches. |
 
 ## js/22-capella-liens.js
 

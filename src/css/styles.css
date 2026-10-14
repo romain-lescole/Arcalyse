@@ -1526,3 +1526,5 @@ svg.ico{flex-shrink:0;vertical-align:-3px;}
 .crv-tg svg.ico,.crv-ed-tg svg.ico,.crv-ctx-t svg.ico,#crv-ed-res svg.ico{margin-right:3px;}
 html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,255,.9)) drop-shadow(0 0 .6px rgba(255,255,255,.6));}
 .arbo-icon.arbo-svg{display:inline-flex;align-items:center;}
+.cap-cards-pg{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 0;font-size:12px;color:var(--c-dim);}
+.cap-cards-pg .tbtn[disabled]{opacity:.4;cursor:default;}
