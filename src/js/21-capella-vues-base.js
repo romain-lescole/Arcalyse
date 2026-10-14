@@ -1,9 +1,11 @@
 // ── Sidebar ──
 /** Rend la sidebar Capella : liste des types par couche avec cases à cocher.
- * @param {string} filterStr - Filtre texte sur les noms de types
+ * @param {string} [filterStr] - Filtre texte sur les noms de types (par défaut : le texte saisi dans « Filtrer les types… »,
+ *   pour que le filtre ne saute pas quand la liste est redessinée, par exemple après avoir coché un type)
  */
-function capRenderSidebar(filterStr=''){
-  const q=filterStr.toLowerCase();
+function capRenderSidebar(filterStr){
+  if(filterStr==null) filterStr=(document.getElementById('cap-type-search')||{}).value||'';
+  const q=String(filterStr).toLowerCase();
   const list=document.getElementById('cap-type-list'); if(!list) return;
   list.innerHTML='';
   const byLayer={};
