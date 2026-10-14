@@ -49,6 +49,16 @@ Load the project's **`.aird`** file (or open the **📁 project folder**: the `.
 
 ![Capella diagrams — export of several diagrams as sheets](docs/captures/12-diagrammes-export.png)
 
+### 🗺 Navigate the model relations
+The **Relation Map** graph centres the view on an element and expands its neighbours down to the chosen depth: breakdowns, allocations, exchanges, cross-layer realizations. Horizontal, vertical or radial layouts; zoom, filters by relation and type; image export.
+
+![Relation Map](docs/captures/01-relation-map.png)
+
+### ✨ Compute columns along relation paths
+In the **▤ Table**, a **path column** follows, for each row, a sequence of model relations and shows what it finds at the end: the functions realized by each component, the components connected through their ports and physical links, the package owning a requirement… You choose the start type then, step by step, the relation to follow (allocation, realization, owner, contained element, reference, going through an intermediate element) and finally the value to display. A **live preview** shows, on a sample element, the path followed and the cell content, as well as the number of rows that will be filled. Columns can be sorted, filtered, copied to Excel and exported to CSV; they are saved with the view.
+
+![Path column — components connected by their physical links, with the live preview](docs/captures/10-colonne-par-chemin.png)
+
 ### 💬 Review the model
 A **💬 Review** button opens a review panel: comments on the model, on its elements and on the diagrams, followed up from one version of the model to the next.
 - **Comment anywhere**: from the details panel (the element, its name, its description or any attribute), by **right-click** on an element in the views (blocks, tables, lists), or on a diagram: drag the **📝 Review note** onto it, or right-click an element or an empty area. Notes form a **layer independent of the `.aird`**: they follow the zoom, can be moved and resized, and are linked to diagram elements by **drawing a line** from the note to them.
@@ -60,16 +70,6 @@ A **💬 Review** button opens a review panel: comments on the model, on its ele
 ![Review — notes on a diagram, linked to its elements, and the comment list](docs/captures/14-revue.png)
 
 ![Review — check after a model update: before / now, validate or keep open](docs/captures/15-revue-verifier.png)
-
-### 🗺 Navigate the model relations
-The **Relation Map** graph centres the view on an element and expands its neighbours down to the chosen depth: breakdowns, allocations, exchanges, cross-layer realizations. Horizontal, vertical or radial layouts; zoom, filters by relation and type; image export.
-
-![Relation Map](docs/captures/01-relation-map.png)
-
-### ✨ Compute columns along relation paths
-In the **▤ Table**, a **path column** follows, for each row, a sequence of model relations and shows what it finds at the end: the functions realized by each component, the components connected through their ports and physical links, the package owning a requirement… You choose the start type then, step by step, the relation to follow (allocation, realization, owner, contained element, reference, going through an intermediate element) and finally the value to display. A **live preview** shows, on a sample element, the path followed and the cell content, as well as the number of rows that will be filled. Columns can be sorted, filtered, copied to Excel and exported to CSV; they are saved with the view.
-
-![Path column — components connected by their physical links, with the live preview](docs/captures/10-colonne-par-chemin.png)
 
 ### ⚡ Read functional chains
 Each functional chain, operational process or physical path is redrawn, with its inputs / outputs, the involved functions, their allocation and the exchanges. Filters by type, layer and content; PDF, PNG, SVG, ZIP or HTML export of all chains at once.
@@ -170,6 +170,16 @@ Chargez le fichier **`.aird`** du projet (ou ouvrez le **📁 dossier du projet*
 
 ![Diagrammes Capella — export de plusieurs diagrammes en planches](docs/captures/12-diagrammes-export.png)
 
+### 🗺 Naviguer dans les relations du modèle
+Le graphe **Relation Map** centre la vue sur un élément et déplie ses voisins jusqu'à la profondeur voulue : décompositions, allocations, échanges, réalisations entre couches. Dispositions horizontale, verticale, radiale ; zoom, filtres par relation et par type ; export image.
+
+![Relation Map](docs/captures/01-relation-map.png)
+
+### ✨ Calculer des colonnes par chemin de relations
+Dans le **▤ Tableau**, une **colonne par chemin** suit, pour chaque ligne, une suite de relations du modèle et affiche ce qu'elle trouve au bout : les fonctions réalisées par chaque composant, les composants reliés par leurs ports et liens physiques, le paquetage propriétaire d'une exigence… On choisit le type de départ puis, étape par étape, la relation à suivre (allocation, réalisation, propriétaire, élément contenu, référence, passage par un élément intermédiaire) et enfin la valeur à afficher. Un **aperçu en direct** montre, sur un élément d'exemple, le chemin parcouru et le contenu de la cellule, ainsi que le nombre de lignes qui seront remplies. Les colonnes se trient, se filtrent, se copient vers Excel et s'exportent en CSV ; elles sont enregistrées avec la vue.
+
+![Colonne par chemin — composants reliés par leurs liens physiques, avec l'aperçu en direct](docs/captures/10-colonne-par-chemin.png)
+
 ### 💬 Relire le modèle
 Un bouton **💬 Revue** ouvre un panneau de revue : des commentaires sur le modèle, ses éléments et les diagrammes, suivis d'une version du modèle à l'autre.
 - **Commenter partout** : depuis le panneau de détail (l'élément, son nom, sa description ou un attribut), par **clic droit** sur un élément dans les vues (blocs, tableaux, listes), ou sur un diagramme : glissez la **📝 Note de revue**, ou clic droit sur un élément ou dans un espace vide. Les notes forment un **calque indépendant du `.aird`** : elles suivent le zoom, se déplacent, se redimensionnent et se lient aux éléments du diagramme en **traçant un trait** de la note vers eux.
@@ -181,16 +191,6 @@ Un bouton **💬 Revue** ouvre un panneau de revue : des commentaires sur le mod
 ![Revue — notes sur un diagramme, liées à ses éléments, et liste des commentaires](docs/captures/14-revue.png)
 
 ![Revue — vérification après une mise à jour du modèle : avant / maintenant, valider ou garder ouvert](docs/captures/15-revue-verifier.png)
-
-### 🗺 Naviguer dans les relations du modèle
-Le graphe **Relation Map** centre la vue sur un élément et déplie ses voisins jusqu'à la profondeur voulue : décompositions, allocations, échanges, réalisations entre couches. Dispositions horizontale, verticale, radiale ; zoom, filtres par relation et par type ; export image.
-
-![Relation Map](docs/captures/01-relation-map.png)
-
-### ✨ Calculer des colonnes par chemin de relations
-Dans le **▤ Tableau**, une **colonne par chemin** suit, pour chaque ligne, une suite de relations du modèle et affiche ce qu'elle trouve au bout : les fonctions réalisées par chaque composant, les composants reliés par leurs ports et liens physiques, le paquetage propriétaire d'une exigence… On choisit le type de départ puis, étape par étape, la relation à suivre (allocation, réalisation, propriétaire, élément contenu, référence, passage par un élément intermédiaire) et enfin la valeur à afficher. Un **aperçu en direct** montre, sur un élément d'exemple, le chemin parcouru et le contenu de la cellule, ainsi que le nombre de lignes qui seront remplies. Les colonnes se trient, se filtrent, se copient vers Excel et s'exportent en CSV ; elles sont enregistrées avec la vue.
-
-![Colonne par chemin — composants reliés par leurs liens physiques, avec l'aperçu en direct](docs/captures/10-colonne-par-chemin.png)
 
 ### ⚡ Lire les chaînes fonctionnelles
 Chaque chaîne fonctionnelle, processus opérationnel ou chemin physique est redessiné, avec ses entrées / sorties, les fonctions impliquées, leur allocation et les échanges. Filtres par type, couche et contenu ; export PDF, PNG, SVG, ZIP ou HTML de toutes les chaînes d'un coup.
