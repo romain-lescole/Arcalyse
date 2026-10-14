@@ -53,6 +53,23 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.click(`#vd-svg .vd-f[data-sem="${id}"]`); await p.waitForTimeout(300);
     if (!(await p.textContent('#cap-detail-content')).includes('Manage Video and Audio Diffusion')) throw new Error('clic dans le diagramme : détail de l\'élément non affiché');
   });
+  // 💬 Revue : commentaire depuis le panneau de détail, note sur un diagramme, onglets du panneau, rapport
+  await step('revue : commentaire, note de diagramme, vérification, rapport', async () => {
+    await p.evaluate(() => { const e = capAllElements.find(x => x.attrs.name === 'Manage Video and Audio Diffusion') || capAllElements.find(x => x.attrs.name && x.layer === 'SA') || capAllElements.find(x => x.attrs.name); capOpenDetail(e.id); });
+    await p.click('#cap-detail-content .crv-det-bar button');
+    await p.fill('#crv-ed-text', 'smoke'); await p.click('#crv-ov [data-ok]');
+    if (await p.evaluate(() => _capRev.comments.length) < 1) throw new Error('commentaire non enregistré');
+    if (!(await p.$('#cap-detail-content .crv-det-c'))) throw new Error('section « Commentaires de revue » absente du panneau de détail');
+    if (await p.evaluate(() => typeof capDiagReps === 'function' && capDiagReps().length > 0)) {
+      await p.evaluate(() => { const r = capDiagReps().find(x => x.genre !== 'tableau'); capDiagOpen(r.uid); }); await p.waitForTimeout(300);
+      await p.evaluate(() => { const n = [...document.querySelectorAll('#vd-svg [data-sem]')].find(x => capGetElementById_(x.getAttribute('data-sem')));
+        const r = n.getBoundingClientRect(); capRevDiagNoteAt(r.left, r.top, n.getAttribute('data-sem')); });
+      await p.fill('#crv-ed-text', 'note smoke'); await p.click('#crv-ov [data-ok]'); await p.waitForTimeout(200);
+      if (!(await p.$('#crv-layer .crv-note'))) throw new Error('note absente du calque du diagramme');
+    }
+    for (const t of ['list', 'check', 'report', 'cfg']) await p.evaluate(k => capRevToggle(true, k), t);
+    await p.evaluate(() => { capRevReportList(); capRevSynthese(_capRev.comments); _capRev.comments = []; _capRev.seq = 0; capRevSave(); capRevToggle(false); });
+  });
   await step('barre : menu, épingle, Ctrl+K', async () => {
     await p.click('#cap-v-analyses .cap-nav-arr'); await p.click('#cap-nav-dd [data-open="ana:reqs"]');
     await p.click('#cap-v-analyses .cap-nav-arr'); await p.click('#cap-nav-dd [data-pin="ana:reqs"]'); await p.click('#cap-v-ana-reqs');

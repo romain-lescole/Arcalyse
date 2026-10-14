@@ -594,6 +594,8 @@ function capTableGetValArray(el, colKey){
     // (dernière étape terminale : Name, ID, Type, attribut...) — on gère les deux cas.
     return results.map(r=> (typeof r==='string') ? r : (r.attrs.name||r.typeName));
   }
+  // Description Capella (HTML) : texte lisible, sans balises
+  if (colKey==='description') return [capHtmlToText(el.attrs.description||'')];
   // Sinon : attribut brut du XML (toujours une valeur unique)
   return [el.attrs[colKey]||''];
 }

@@ -92,6 +92,7 @@ function capBuildPageHtml(){
       capCurrentFileName = xmlEl.getAttribute('data-name') || '';
       applyMode('capella');
       if (typeof capUpdateWelcome === 'function') capUpdateWelcome();
+      if (typeof capRevOnModelLoad === 'function') capRevOnModelLoad();
     } catch (err) {
       console.error('Erreur au rechargement du fichier Capella embarqué :', err);
     }
@@ -117,6 +118,7 @@ function capSaveFullPage(){
   a.download = capPageFileName();
   a.click();
   URL.revokeObjectURL(a.href);
+  if(typeof capRevMarkSaved==='function') capRevMarkSaved();
 }
 let _capSaveHandle=null;   // fichier choisi pour l'enregistrement direct (valable pour la session)
 /** Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
@@ -125,7 +127,7 @@ let _capSaveHandle=null;   // fichier choisi pour l'enregistrement direct (valab
  * @param {boolean} [saveAs] - true : redemander l'emplacement (« Enregistrer sous »)
  */
 async function capSavePageDirect(saveAs){
-  if(!window.showSaveFilePicker){ capSaveFullPage(); return; }
+  if(!window.showSaveFilePicker){ capSaveFullPage(); return true; }
   const btn=document.getElementById('b-save-direct');
   try{
     if(saveAs||!_capSaveHandle) _capSaveHandle=await window.showSaveFilePicker({suggestedName:capPageFileName(),
@@ -133,11 +135,14 @@ async function capSavePageDirect(saveAs){
     const w=await _capSaveHandle.createWritable(); await w.write(capBuildPageHtml()); await w.close();
     if(btn){ btn.title=_L(`Enregistrer dans « ${_capSaveHandle.name} » (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous`);
       const t=btn.textContent; btn.textContent=_L('✔ Enregistré'); setTimeout(()=>{ btn.textContent=t; },1500); }
+    if(typeof capRevMarkSaved==='function') capRevMarkSaved();
+    return true;
   }catch(e){
-    if(e&&e.name==='AbortError') return;   // fenêtre annulée par l'utilisateur
+    if(e&&e.name==='AbortError') return false;   // fenêtre annulée par l'utilisateur
     console.error(e); _capSaveHandle=null;
     alert(_L('Enregistrement direct impossible (')+(e&&e.message||e)+_L(').\nLa page va être téléchargée à la place.'));
     capSaveFullPage();
+    return true;
   }
 }
 // Avertissement avant de quitter la page (bouton ← Précédent, fermeture de l'onglet, autre adresse) quand un modèle
@@ -169,8 +174,9 @@ document.getElementById('capella-file-input').addEventListener('change',e=>{
  * relations, liens, chaînes, panneaux) et bascule sur la vue Capella Data.
  * @param {File} f - Fichier choisi ou déposé
  * @param {FileSystemFileHandle} [handle] - Accès au fichier sur disque (Edge/Chrome), pour le 🔄 suivi des mises à jour
+ * @param {boolean} [confirme] - true : remplacement du modèle affiché déjà accepté (pas de nouvelle question)
  */
-function capLoadFile(f, handle){
+function capLoadFile(f, handle, confirme){
   const name=(f&&f.name)||'';
   const ext=(name.split('.').pop()||'').toLowerCase();
   if (ext==='aird' && capDiagDispo()) { capDiagLoadAird(f); return; }   // 🔲 Diagrammes Capella du projet
@@ -182,6 +188,8 @@ function capLoadFile(f, handle){
     capWelcomeStatus(_L(`« ${name} » n'est pas un fichier Capella (.capella attendu).`),'err');
     capShowWelcome(true); return;
   }
+  // Un modèle est déjà affiché : avertir que le travail non enregistré sera perdu
+  if (capLoaded && !confirme) { capReplaceConfirm(name).then(ok=>{ if(ok) capLoadFile(f, handle, true); else capShowWelcome(false); }); return; }
   capWelcomeStatus(_L(`Chargement de « ${name} »…`),'busy');
   capShowWelcome(true);
   const reader=new FileReader();
@@ -231,6 +239,39 @@ function capApplyXmlDoc(doc, name){
   capCurrentFileName=name;
   applyMode('capella');
   if(typeof capTourResumeAfterLoad==='function') capTourResumeAfterLoad();   // 🚀 Bien démarrer : 2e temps
+  if(typeof capRevOnModelLoad==='function') capRevOnModelLoad();   // 💬 Revue : commentaires à vérifier sur ce modèle
+}
+
+/**
+ * Demande confirmation avant de remplacer le modèle affiché par un autre fichier : le travail non enregistré
+ * (vues, filtres, réglages, tableaux de bord, commentaires de revue modifiés) serait perdu à la fermeture de la page.
+ * Propose d'enregistrer d'abord la page (💾) ; rappelle 🔄 Charger une mise à jour pour une nouvelle version du même modèle.
+ * @param {string} name - Fichier à ouvrir
+ * @returns {Promise<boolean>} true : ouvrir le fichier
+ */
+function capReplaceConfirm(name){
+  return new Promise(resolve=>{
+    let ov=document.getElementById('cap-replace-ov');
+    if(!ov){ ov=document.createElement('div'); ov.id='cap-replace-ov'; document.body.appendChild(ov); }
+    const rev=typeof capRevUnsavedCount==='function'?capRevUnsavedCount():0;
+    ov.innerHTML=_L(`<div class="cw-d-box" style="max-width:600px">
+      <div class="cw-d-hdr"><b>⚠ Ouvrir un autre modèle ?</b><button class="cap-lf-btn" data-c="no">✕</button></div>
+      <div class="cw-d-body">
+        <div class="cw-d-sub">Modèle affiché : <b>${capEsc(capCurrentFileName||'—')}</b><br>Fichier à ouvrir : <b>${capEsc(name)}</b></div>
+        <p style="font-size:12.5px;margin:8px 0">Le modèle affiché va être remplacé. <b>Tout le travail qui n'a pas été enregistré dans la page</b> (vues et onglets, tableaux de bord, réglages, version de ⚖ Comparaison…) risque d'être perdu.</p>`)+
+        (rev?_L(`<p style="font-size:12.5px;margin:8px 0;color:var(--c-warn,#e3b341)">💬 ${rev} commentaire(s) de revue modifié(s) depuis le dernier enregistrement : ils restent dans la page ouverte (et seront vérifiés sur le nouveau modèle), mais seront perdus si elle est fermée sans être enregistrée. Vous pouvez aussi les exporter (💬 Revue › ⚙ Réglages › ⬇ Exporter).</p>`):'')+
+        _L(`<p class="ana-dim" style="font-size:11.5px;margin:8px 0">Nouvelle version du même modèle ? Préférez 📁 Fichier › 🔄 Charger une mise à jour du modèle : le delta est affiché et la version précédente reste disponible pour ⚖ Comparaison.</p>
+      </div>
+      <div class="cw-d-ftr"><span style="flex:1"></span><button class="cap-lf-btn" data-c="no">Annuler</button>
+        <button class="cap-lf-btn" data-c="go">Ouvrir sans enregistrer</button>
+        <button class="phl-export-btn" data-c="save" style="margin-left:0">💾 Enregistrer la page, puis ouvrir</button></div></div>`);
+    ov.style.display='flex';
+    const fin=v=>{ ov.style.display='none'; resolve(v); };
+    ov.onclick=e=>{ if(e.target===ov) fin(false); };
+    ov.querySelectorAll('[data-c="no"]').forEach(b=>b.onclick=()=>fin(false));
+    ov.querySelector('[data-c="go"]').onclick=()=>fin(true);
+    ov.querySelector('[data-c="save"]').onclick=async()=>{ ov.style.display='none'; const ok=await capSavePageDirect(false); resolve(ok!==false); };
+  });
 }
 
 /* ── Écran d'accueil & glisser-déposer ─────────────────────────────────── */
@@ -244,7 +285,8 @@ function capShowWelcome(show){
   const t=document.getElementById('cw-title'), s=document.getElementById('cw-sub');
   if (capLoaded) {
     if(t) t.textContent=_L('Ouvrir un autre modèle Capella');
-    if(s) s.innerHTML=_L(`Modèle actuel : <strong>${capEsc(capCurrentFileName||'—')}</strong><br>Déposez un nouveau fichier <strong>.capella</strong> pour le remplacer.`);
+    if(s) s.innerHTML=_L(`Modèle actuel : <strong>${capEsc(capCurrentFileName||'—')}</strong><br>Déposez un nouveau fichier <strong>.capella</strong> pour le remplacer.`)+
+      _L(`<div class="cw-warn">⚠ Le travail non enregistré sur le modèle actuel sera perdu : enregistrez d'abord la page (💾, Ctrl+S). Pour une nouvelle version du même modèle, préférez 📁 Fichier › 🔄 Charger une mise à jour du modèle.</div>`);
   }
 }
 /** Affiche un message d'état (chargement, erreur) dans la zone de dépôt. */
@@ -295,7 +337,7 @@ function capUpdateWelcome(){ capShowWelcome(!capLoaded); }
     // Plusieurs fichiers (ex. .capella + .aird) : le modèle d'abord, puis les diagrammes
     const tous=[...(ev.dataTransfer.files||[])];
     const aird=tous.find(x=>/\.aird$/i.test(x.name)), mod=tous.find(x=>!/\.aird$/i.test(x.name));
-    if(aird && mod && tous.length>1){ capLoadFile(mod); capDiagLoadAird(aird); return; }
+    if(aird && mod && tous.length>1){ capReplaceConfirm(mod.name).then(ok=>{ if(!ok){ capShowWelcome(false); return; } capLoadFile(mod, null, true); capDiagLoadAird(aird); }); return; }
     const f=ev.dataTransfer.files&&ev.dataTransfer.files[0];
     // Edge/Chrome : récupère aussi l'accès au fichier (à demander pendant l'événement) pour le 🔄 suivi
     const it=ev.dataTransfer.items&&ev.dataTransfer.items[0];

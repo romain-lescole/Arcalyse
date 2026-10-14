@@ -19,6 +19,7 @@
       <button class="htab" data-ht="chains">⚡ Chaînes</button>
       <button class="htab" data-ht="itf">🔌 Interfaces & ports</button>
       <button class="htab" data-ht="ana">ƒ Fonctions · 🔬 Analyses</button>
+      <button class="htab" data-ht="review">💬 Revue</button>
       <button class="htab" data-ht="usecase">🧪 Cas d'usage</button>
     </div>
     <!-- Content -->
@@ -59,7 +60,7 @@
         <table class="hp-t">
           <tr><td>🗺</td><td>Relation Map.</td></tr>
           <tr><td>🧭 ▾ · ▤ · 📡 ▾ · ⚡ · ƒ · 🔬 ▾ · 📐 · ☰</td><td>Vues Capella, au même niveau que les modes et toujours visibles (sans modèle chargé, elles invitent à en charger un) : menus ▾ et vues épinglées, réglables par ☰ (voir l'onglet Vues Capella). Un clic bascule directement sur la vue correspondante, depuis n'importe quel mode.</td></tr>
-          <tr><td>📁 Fichier ▾</td><td>🔷 <b>Ouvrir un modèle Capella</b> : remplace le modèle affiché. 🔄 <b>Charger une mise à jour du modèle</b> : compare un autre fichier au modèle affiché, montre le delta et met à jour après validation ; si moins de la moitié des éléments sont communs, une alerte signale que ce n'est peut-être pas le même projet. 💾 <b>Enregistrer</b> (Ctrl+S) / Enregistrer sous… (Ctrl+Maj+S) / 🌐 Télécharger la page HTML : page autonome contenant le modèle, la barre des vues, les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème et les règles de nommage. ⚙ <b>Enregistrer / Charger l'interface et les vues</b> : les mêmes réglages sans le modèle, dans un fichier .json, au choix des parties, pour les réutiliser avec un autre modèle.</td></tr>
+          <tr><td>📁 Fichier ▾</td><td>🔷 <b>Ouvrir un modèle Capella</b> : remplace le modèle affiché. 🔄 <b>Charger une mise à jour du modèle</b> : compare un autre fichier au modèle affiché, montre le delta et met à jour après validation ; si moins de la moitié des éléments sont communs, une alerte signale que ce n'est peut-être pas le même projet. 💾 <b>Enregistrer</b> (Ctrl+S) / Enregistrer sous… (Ctrl+Maj+S) / 🌐 Télécharger la page HTML : page autonome contenant le modèle, la barre des vues, les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Si un modèle est déjà ouvert, une confirmation rappelle que le travail non enregistré sera perdu et propose d'enregistrer d'abord. ⚙ <b>Enregistrer / Charger l'interface et les vues</b> : les mêmes réglages sans le modèle, dans un fichier .json, au choix des parties, pour les réutiliser avec un autre modèle.</td></tr>
           <tr><td>💾</td><td>Enregistrement direct (Ctrl+S ; Maj+clic ou Ctrl+Maj+S : enregistrer sous).</td></tr>
           <tr><td>🔄 Suivi ▾</td><td>Nouvelles versions du fichier .capella (voir plus bas).</td></tr>
           <tr><td>🎨 Thème ▾</td><td>Sombre (par défaut), Office 2007, Clair, Marine, Nature, Contraste. Les vues se redessinent avec des couleurs adaptées ; en thème clair (Office 2007, Clair ou personnalisé clair), les textes colorés sont automatiquement foncés pour rester lisibles.</td></tr>
@@ -189,7 +190,7 @@
           <tr><td>🧭 Explorateur › 📖 Index des types</td><td>Glossaire des types présents : type technique, Human Type, nombre, description.</td></tr>
         </table>
         <h3>Panneau de détail</h3>
-        <p>Un clic sur un nom (presque partout) ouvre le panneau de détail : Human Type et description, attributs, <b>références sortantes</b>, <b>références entrantes</b> (qui pointe vers cet élément ?), propriétaire et éléments possédés. Tout y est cliquable pour naviguer de proche en proche.</p>
+        <p>Un clic sur un nom (presque partout) ouvre le panneau de détail : Human Type et description du type, <b>description</b> de l'élément mise en forme comme dans Capella (bouton <b>‹/› HTML</b> : son code d'origine ; liens vers d'autres éléments cliquables), boutons <b>💬</b> de la revue, attributs, <b>références sortantes</b>, <b>références entrantes</b> (qui pointe vers cet élément ?), propriétaire et éléments possédés. Tout y est cliquable pour naviguer de proche en proche.</p>
       </div>
 
       <!-- ── CHAÎNES ── -->
@@ -377,6 +378,30 @@
           <tr><td>Impression</td><td>🖨 Imprimer au format <b>A4 portrait</b> (par défaut) ou paysage : les éléments sont redessinés à la taille de la page, en couleurs claires, avec en-tête (nom, modèle, date). « Enregistrer au format PDF » dans la fenêtre d'impression pour obtenir un PDF.</td></tr>
           <tr><td>Exports</td><td>🌐 HTML autonome (tel qu'affiché) ; ⬇ / ⬆ JSON pour réutiliser une disposition sur un autre modèle.</td></tr>
         </table>
+      </div>
+
+      <!-- ── REVUE ── -->
+      <div id="ht-review" class="ht-panel" style="display:none">
+        <h2>💬 Revue — commentaires sur le modèle et les diagrammes</h2>
+        <p class="hp-lead">Le bouton <b>💬 Revue</b> de la barre ouvre le panneau de revue (à droite). Son badge compte les commentaires non clos ; <b>⚠ n</b> signale des commentaires à vérifier après une mise à jour du modèle.</p>
+        <h3>Commenter</h3>
+        <table class="hp-t">
+          <tr><td>Panneau de détail</td><td><b>💬 Commenter</b> (l'élément), <b>💬 le nom</b>, <b>💬 la description</b> sous le nom de l'élément ; un <b>💬</b> apparaît au survol de chaque attribut. La section <b>💬 Commentaires de revue</b> liste ceux qui portent sur l'élément.</td></tr>
+          <tr><td>Clic droit</td><td>Sur un élément dans les vues (blocs, cartes, tableaux, listes, liens du panneau de détail, diagrammes) : commenter l'élément, son nom ou sa description, voir ses commentaires.</td></tr>
+          <tr><td>🔲 Diagrammes Capella</td><td><b>📝 Note</b> : glissez-la sur le diagramme (déposée sur un élément, elle lui est liée) ou cliquez pour la poser au centre ; clic droit sur un élément › <b>📝 Note sur le diagramme ici</b>. Les notes forment un <b>calque</b> indépendant du .aird (bouton <b>💬 Calque</b>) : elles suivent le zoom, se déplacent par leur en-tête, se redimensionnent par le coin, se réduisent en pastille (▁). <b>🔗</b> : cliquez les éléments du diagramme à lier ou délier (Échap pour terminer) ; les éléments liés sont encadrés et reliés à la note.</td></tr>
+          <tr><td>✚ Nouveau</td><td>Dans le panneau 💬 Revue : commentaire sur l'élément affiché dans le panneau de détail, ou commentaire général ; des éléments s'ajoutent dans l'éditeur (recherche par nom ou type).</td></tr>
+        </table>
+        <h3>Champs</h3>
+        <p>Seul le <b>texte</b> est demandé. Facultatifs : titre, <b>criticité</b> (Information, Mineure, Majeure, Bloquante), catégorie (Question, Remarque, Erreur, Amélioration), <b>statut</b> (Ouvert, En cours, Corrigé à vérifier, Validé, Rejeté), auteur (pré-rempli par <b>⚙ Réglages › Votre nom</b>), <b>échéance</b>, <b>responsables</b> (participants déclarés dans ⚙ Réglages, ou ajoutés dans l'éditeur), étiquettes. La date de création est notée automatiquement, ainsi que la partie commentée de chaque élément (élément entier, nom, description ou autre attribut). Les champs proposés se choisissent dans ⚙ Réglages. Chaque commentaire peut recevoir des <b>réponses</b>. Ctrl+Entrée enregistre.</p>
+        <h3>Onglets du panneau</h3>
+        <table class="hp-t">
+          <tr><td>💬 Commentaires</td><td>Recherche, filtres (statut, criticité, personne, portée : diagramme ouvert, élément du panneau de détail, en retard, qui me sont attribués), tri. Clic sur une carte : texte complet, réponses, statut, ✔ Valider, 🗑. ➜ va à la note du diagramme ou à l'élément.</td></tr>
+          <tr><td>🔁 Vérifier</td><td>Après un nouveau chargement ou une 🔄 mise à jour du modèle : commentaires non clos dont la valeur commentée a <b>changé</b> (avant / maintenant) ou dont l'élément a <b>disparu</b>, et commentaires « Corrigé, à vérifier ». <b>✔ Valider</b> clôt le commentaire (date et vérificateur notés) ; <b>↻ Garder ouvert</b> prend la version actuelle comme nouvelle référence.</td></tr>
+          <tr><td>📄 Rapport</td><td>Synthèse statut × criticité ; <b>📄 Rapport HTML</b> autonome et imprimable (groupé par statut, criticité, responsable ou élément, réponses en option, état de chaque commentaire par rapport au modèle chargé) ; <b>⬇ CSV</b>.</td></tr>
+          <tr><td>⚙ Réglages</td><td>Votre nom, participants, champs proposés, affichage (calque des diagrammes, notes closes, marque 💬 des éléments commentés dans les vues), export / import.</td></tr>
+        </table>
+        <h3>Enregistrement</h3>
+        <p>Les commentaires sont enregistrés <b>dans la page</b> (💾 Enregistrer, Ctrl+S). <b>⚙ Réglages › ⬇ Exporter (.json)</b> les garde hors de la page (sauvegarde, envoi) ; <b>📂 Importer / fusionner</b> réunit les revues de plusieurs relecteurs (nouveaux commentaires ajoutés, version la plus récente gardée pour les autres, réponses réunies). Les commentaires restent quand un autre modèle est ouvert : ils sont alors vérifiés sur ce modèle.</p>
       </div>
 
       <!-- ── CAS D'USAGE ── -->

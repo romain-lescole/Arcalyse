@@ -19,6 +19,7 @@
       <button class="htab" data-ht="chains">⚡ Chains</button>
       <button class="htab" data-ht="itf">🔌 Interfaces & ports</button>
       <button class="htab" data-ht="ana">ƒ Functions · 🔬 Analyses</button>
+      <button class="htab" data-ht="review">💬 Review</button>
       <button class="htab" data-ht="usecase">🧪 Use case</button>
     </div>
     <!-- Content -->
@@ -59,7 +60,7 @@
         <table class="hp-t">
           <tr><td>🗺</td><td>Relation Map.</td></tr>
           <tr><td>🧭 ▾ · ▤ · 📡 ▾ · ⚡ · ƒ · 🔬 ▾ · 📐 · ☰</td><td>Capella views, at the same level as the modes and always visible (with no model loaded, they invite you to load one): ▾ menus and pinned views, set up with ☰ (see the Capella views tab). One click switches directly to the corresponding view, from any mode.</td></tr>
-          <tr><td>📁 File ▾</td><td>🔷 <b>Open a Capella model</b>: replaces the displayed model. 🔄 <b>Load a model update</b>: compares another file with the displayed model, shows the delta and updates after confirmation; if fewer than half of the elements are shared, a warning says it may not be the same project. 💾 <b>Save</b> (Ctrl+S) / Save as… (Ctrl+Shift+S) / 🌐 Download the HTML page: standalone page containing the model, the view bar, the dashboards, the ▤ Table tabs and columns, the theme and the naming rules. ⚙ <b>Save / Load the interface and views</b>: the same settings without the model, in a .json file, parts of your choice, to reuse them with another model.</td></tr>
+          <tr><td>📁 File ▾</td><td>🔷 <b>Open a Capella model</b>: replaces the displayed model. 🔄 <b>Load a model update</b>: compares another file with the displayed model, shows the delta and updates after confirmation; if fewer than half of the elements are shared, a warning says it may not be the same project. 💾 <b>Save</b> (Ctrl+S) / Save as… (Ctrl+Shift+S) / 🌐 Download the HTML page: standalone page containing the model, the view bar, the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. If a model is already open, a confirmation reminds that unsaved work will be lost and offers to save first. ⚙ <b>Save / Load the interface and views</b>: the same settings without the model, in a .json file, parts of your choice, to reuse them with another model.</td></tr>
           <tr><td>💾</td><td>Direct save (Ctrl+S; Shift+click or Ctrl+Shift+S: save as).</td></tr>
           <tr><td>🔄 Watch ▾</td><td>New versions of the .capella file (see below).</td></tr>
           <tr><td>🎨 Theme ▾</td><td>Dark (default), Office 2007, Light, Navy, Nature, Contrast. Views are redrawn with suitable colours; in a light theme (Office 2007, Light or light custom), coloured texts are automatically darkened to stay readable.</td></tr>
@@ -189,7 +190,7 @@
           <tr><td>🧭 Explorer › 📖 Type index</td><td>Glossary of the types present: technical type, Human Type, count, description.</td></tr>
         </table>
         <h3>Detail panel</h3>
-        <p>A click on a name (almost everywhere) opens the detail panel: Human Type and description, attributes, <b>outgoing references</b>, <b>incoming references</b> (what points to this element?), owner and owned elements. Everything is clickable to navigate step by step.</p>
+        <p>A click on a name (almost everywhere) opens the detail panel: Human Type and type description, element <b>description</b> formatted as in Capella (<b>‹/› HTML</b> button: its original code; links to other elements are clickable), <b>💬</b> review buttons, attributes, <b>outgoing references</b>, <b>incoming references</b> (what points to this element?), owner and owned elements. Everything is clickable to navigate step by step.</p>
       </div>
 
       <!-- ── CHAINS ── -->
@@ -377,6 +378,30 @@
           <tr><td>Printing</td><td>🖨 Print in <b>A4 portrait</b> (default) or landscape format: items are redrawn at page size, in light colours, with a header (name, model, date). “Save as PDF” in the print window to get a PDF.</td></tr>
           <tr><td>Exports</td><td>🌐 Standalone HTML (as displayed); ⬇ / ⬆ JSON to reuse a layout on another model.</td></tr>
         </table>
+      </div>
+
+      <!-- ── REVIEW ── -->
+      <div id="ht-review" class="ht-panel" style="display:none">
+        <h2>💬 Review — comments on the model and diagrams</h2>
+        <p class="hp-lead">The <b>💬 Review</b> button of the bar opens the review panel (on the right). Its badge counts open comments; <b>⚠ n</b> flags comments to check after a model update.</p>
+        <h3>Commenting</h3>
+        <table class="hp-t">
+          <tr><td>Detail panel</td><td><b>💬 Comment</b> (the element), <b>💬 the name</b>, <b>💬 the description</b> below the element name; a <b>💬</b> appears when hovering each attribute. The <b>💬 Review comments</b> section lists those concerning the element.</td></tr>
+          <tr><td>Right-click</td><td>On an element in the views (blocks, cards, tables, lists, detail panel links, diagrams): comment on the element, its name or its description, see its comments.</td></tr>
+          <tr><td>🔲 Capella Diagrams</td><td><b>📝 Note</b>: drag it onto the diagram (dropped on an element, it is linked to it) or click to place it in the centre; right-click an element › <b>📝 Note on the diagram here</b>. Notes form a <b>layer</b> independent of the .aird (<b>💬 Layer</b> button): they follow the zoom, move by their header, resize by the corner, collapse to a dot (▁). <b>🔗</b>: click the diagram elements to link or unlink (Esc to finish); linked elements are framed and connected to the note.</td></tr>
+          <tr><td>✚ New</td><td>In the 💬 Review panel: comment on the element shown in the detail panel, or general comment; elements can be added in the editor (search by name or type).</td></tr>
+        </table>
+        <h3>Fields</h3>
+        <p>Only the <b>text</b> is required. Optional: title, <b>severity</b> (Information, Minor, Major, Blocking), category (Question, Remark, Error, Improvement), <b>status</b> (Open, In progress, Fixed to be checked, Validated, Rejected), author (pre-filled from <b>⚙ Settings › Your name</b>), <b>due date</b>, <b>assignees</b> (participants declared in ⚙ Settings, or added in the editor), tags. The creation date is recorded automatically, as well as the commented part of each element (whole element, name, description or another attribute). The offered fields are chosen in ⚙ Settings. Each comment can receive <b>replies</b>. Ctrl+Enter saves.</p>
+        <h3>Panel tabs</h3>
+        <table class="hp-t">
+          <tr><td>💬 Comments</td><td>Search, filters (status, severity, person, scope: open diagram, detail panel element, overdue, assigned to me), sorting. Click a card: full text, replies, status, ✔ Validate, 🗑. ➜ goes to the diagram note or to the element.</td></tr>
+          <tr><td>🔁 Check</td><td>After a new load or a 🔄 model update: open comments whose commented value has <b>changed</b> (before / now) or whose element has <b>disappeared</b>, and comments “Fixed, to be checked”. <b>✔ Validate</b> closes the comment (date and checker recorded); <b>↻ Keep open</b> takes the current version as the new reference.</td></tr>
+          <tr><td>📄 Report</td><td>Status × severity summary; standalone, printable <b>📄 HTML report</b> (grouped by status, severity, assignee or element, optional replies, status of each comment against the loaded model); <b>⬇ CSV</b>.</td></tr>
+          <tr><td>⚙ Settings</td><td>Your name, participants, offered fields, display (diagram layer, closed notes, 💬 mark of commented elements in the views), export / import.</td></tr>
+        </table>
+        <h3>Saving</h3>
+        <p>Comments are saved <b>in the page</b> (💾 Save, Ctrl+S). <b>⚙ Settings › ⬇ Export (.json)</b> keeps them outside the page (backup, sending); <b>📂 Import / merge</b> combines the reviews of several reviewers (new comments added, most recent version kept for the others, replies combined). Comments remain when another model is opened: they are then checked against that model.</p>
       </div>
 
       <!-- ── USE CASE ── -->

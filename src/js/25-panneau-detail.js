@@ -18,6 +18,7 @@ function capOpenDetail(id){
       const resolved=refs.map(r=>capGetElementById_(r)).filter(Boolean);
       if(resolved.length){ outgoingRefs.push({attrKey:k, targets:resolved}); return; }
     }
+    if(k==='description') return;   // affichée à part, mise en forme (section « Description »)
     literalRows.push([k,v]);
   });
 
@@ -49,10 +50,15 @@ function capOpenDetail(id){
   if(human.h) html+=`<div style="font-size:11px;color:var(--c-accent);font-weight:600;margin-bottom:2px;">${capEsc(human.h)}</div>`;
   if(human.d) html+=`<div style="font-size:11px;color:var(--c-dim);margin-bottom:8px;line-height:1.5;">${capEsc(human.d)}</div>`;
   html+=`<h3 style="font-size:14px;font-weight:600;margin-bottom:10px;word-break:break-word">${capEsc(name)}</h3>`;
+  // 💬 Revue : commenter l'élément, son nom, sa description (55-revue.js)
+  if(typeof capRevDetailHead==='function') html+=capRevDetailHead(el);
+
+  // Description Capella (HTML) : affichée mise en forme (balises filtrées), ou son code HTML d'origine
+  if(el.attrs.description) html+=capDescSection(el.id, el.attrs.description, secTitle);
 
   // Attributs littéraux
   html+=secTitle(_L('Attributs'));
-  html+=`<table style="width:100%;border-collapse:collapse">${literalRows.map(([k,v])=>`<tr><td style="color:var(--c-dim);font-family:monospace;font-size:11px;padding:5px 0;width:100px;padding-right:10px;border-bottom:1px solid var(--c-border);vertical-align:top;">${capEsc(k)}</td><td style="color:var(--c-text);word-break:break-all;font-size:12px;padding:5px 0;border-bottom:1px solid var(--c-border);">${capEsc(String(v).slice(0,400))}</td></tr>`).join('')}</table>`;
+  html+=`<table style="width:100%;border-collapse:collapse">${literalRows.map(([k,v])=>`<tr><td style="color:var(--c-dim);font-family:monospace;font-size:11px;padding:5px 0;width:100px;padding-right:10px;border-bottom:1px solid var(--c-border);vertical-align:top;">${capEsc(k)}</td><td style="color:var(--c-text);word-break:break-all;font-size:12px;padding:5px 0;border-bottom:1px solid var(--c-border);">${capEsc(String(v).slice(0,400))}${typeof capRevAttrBtn==='function'?capRevAttrBtn(el.id,k):''}</td></tr>`).join('')}</table>`;
 
   // 🔲 Diagrammes Capella du projet (.aird) où l'élément est représenté : juste après les attributs
   if(typeof capDiagDetail==='function') html+=capDiagDetail(el.id, secTitle);
@@ -78,6 +84,9 @@ function capOpenDetail(id){
   // Exigences, propriétés (PVMT) et contraintes de l'élément
   html+=capXtDetail(el.id, secTitle);
 
+  // 💬 Commentaires de revue portant sur l'élément
+  if(typeof capRevDetailSection==='function') html+=capRevDetailSection(el.id, secTitle);
+
   // Owner
   if(parent){
     html+=secTitle(_L('Owner (parent)'),'#a78bfa');
@@ -98,6 +107,76 @@ function capOpenDetail(id){
   document.getElementById(inRm?'rm-detail-content':'cap-detail-content').innerHTML=html;
   const det=document.getElementById(inRm?'rm-detail':'cap-detail');
   if(det){ det.style.display='flex'; }
+}
+/** Balises gardées dans une description Capella mise en forme (les autres sont remplacées par leur contenu). */
+const CAP_DESC_TAGS=new Set(['P','BR','B','STRONG','I','EM','U','S','STRIKE','DEL','INS','SUB','SUP','SPAN','DIV','UL','OL','LI','TABLE','THEAD','TBODY','TFOOT','TR','TD','TH','CAPTION',
+  'H1','H2','H3','H4','H5','H6','PRE','CODE','BLOCKQUOTE','A','FONT','HR','IMG','SMALL','BIG','DL','DT','DD','CENTER']);
+/** Propriétés de style gardées (les couleurs de texte sont adaptées au thème ; fonds, positions et images retirés). */
+const CAP_DESC_CSS=['font-weight','font-style','text-decoration','text-align','vertical-align','list-style-type','color','margin-left','padding-left','white-space'];
+/**
+ * Description Capella (HTML) prête à afficher : balises et attributs filtrés (aucun script, aucun gestionnaire
+ * d'événement, aucune ressource externe), liens Capella « hlink:// » vers les éléments du modèle rendus cliquables,
+ * couleurs de texte adaptées au thème, images limitées aux images intégrées (data:).
+ * @param {string} html - Description HTML (attribut description du .capella)
+ * @returns {string} HTML sûr
+ */
+function capSafeHtml(html){
+  if(!html) return '';
+  const doc=new DOMParser().parseFromString(String(html),'text/html');   // DOMParser n'exécute aucun script
+  const nettoie=n=>{
+    [...n.childNodes].forEach(c=>{
+      if(c.nodeType===3) return;
+      if(c.nodeType!==1){ c.remove(); return; }
+      const tag=c.tagName;
+      if(['SCRIPT','STYLE','IFRAME','OBJECT','EMBED','LINK','META','FORM','INPUT','BUTTON','TEXTAREA','SELECT','SVG','MATH','TEMPLATE','NOSCRIPT'].includes(tag)){ c.remove(); return; }
+      nettoie(c);
+      if(!CAP_DESC_TAGS.has(tag)){ c.replaceWith(...c.childNodes); return; }
+      const href=tag==='A'?(c.getAttribute('href')||''):'', src=tag==='IMG'?(c.getAttribute('src')||''):'';
+      const st=c.getAttribute('style')||'', col=tag==='FONT'?(c.getAttribute('color')||''):'';
+      const span=c.getAttribute('colspan'), rspan=c.getAttribute('rowspan'), alt=c.getAttribute('alt')||'';
+      [...c.attributes].forEach(a=>c.removeAttribute(a.name));
+      const css=st.split(';').map(x=>x.split(':')).filter(([p,v])=>p&&v&&CAP_DESC_CSS.includes(p.trim().toLowerCase())&&!/url\(|expression|javascript/i.test(v))
+        .map(([p,v])=>{ p=p.trim().toLowerCase(); v=v.trim(); return p==='color'?p+':'+capTextOn(v):p+':'+v; });
+      if(col) css.push('color:'+capTextOn(col));
+      if(css.length) c.setAttribute('style',css.join(';'));
+      if(span) c.setAttribute('colspan',span); if(rspan) c.setAttribute('rowspan',rspan);
+      if(tag==='A'){
+        const m=/^hlink:\/\/(.+)$/i.exec(href);
+        if(m){ const s=doc.createElement('span'); s.className='cap-desc-hlink'; s.dataset.hlink=decodeURIComponent(m[1]); s.setAttribute('onclick','capOpenDetailById(this.dataset.hlink)');
+          s.title=_L('Ouvrir le détail de l\'élément référencé'); s.append(...c.childNodes); c.replaceWith(s); }
+        else if(/^(https?:|mailto:)/i.test(href)){ c.setAttribute('href',href); c.setAttribute('target','_blank'); c.setAttribute('rel','noopener noreferrer'); c.title=href; }
+      }
+      if(tag==='IMG'){
+        if(/^data:image\/(png|jpe?g|gif|webp|bmp);/i.test(src)){ c.setAttribute('src',src); if(alt) c.setAttribute('alt',alt); }
+        else c.replaceWith(doc.createTextNode(_L(`[image : ${alt||src.split(/[\\/]/).pop()||'?'}]`)));
+      }
+    });
+  };
+  nettoie(doc.body);
+  return doc.body.innerHTML;
+}
+/**
+ * Section « Description » du panneau de détail : la description mise en forme (aperçu), avec une bascule
+ * vers son code HTML d'origine (tel qu'enregistré par Capella).
+ * @param {string} id - Élément décrit
+ * @param {string} desc - Description HTML
+ * @param {function(string,string):string} secTitle - Titre de section du panneau
+ * @returns {string} HTML
+ */
+function capDescSection(id, desc, secTitle){
+  const html=/<[a-z!\/]/i.test(desc)||/&[a-z#0-9]+;/i.test(desc);
+  const bt=(m,l,t)=>`<button class="cap-desc-tg${m==='v'?' on':''}" data-m="${m}" title="${t}" onclick="capDescToggle(this)">${l}</button>`;
+  const rev=typeof capRevAttrBtn==='function'?capRevAttrBtn(id,'description'):'';
+  return secTitle(_L('Description')+(html?`<span class="cap-desc-tgs">${bt('v',_L('Aperçu'),_L('Description mise en forme comme dans Capella'))}${bt('s',_L('‹/› HTML'),_L('Code HTML d\'origine de la description'))}</span>`:'')+rev)+
+    `<div class="cap-desc cap-desc-v">${html?capSafeHtml(desc):capEsc(desc).replace(/\n/g,'<br>')}</div>`+
+    (html?`<pre class="cap-desc cap-desc-s" style="display:none">${capEsc(desc)}</pre>`:'');
+}
+/** Bascule Aperçu / code HTML d'une section « Description ». @param {HTMLElement} b - Bouton cliqué */
+function capDescToggle(b){
+  const box=b.closest('div'), s=b.dataset.m==='s';
+  box.querySelectorAll('.cap-desc-tg').forEach(x=>x.classList.toggle('on',x===b));
+  let n=box.nextElementSibling;
+  for(; n&&n.classList.contains('cap-desc'); n=n.nextElementSibling) n.style.display=n.classList.contains('cap-desc-s')===s?'':'none';
 }
 /** Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella. */
 function capOpenDetailNode(node){

@@ -99,12 +99,13 @@ function capProjectFromFiles(fichiers) {
   if (!mods.length) { capWelcomeStatus(_L('Aucun fichier .capella dans ce dossier (ni dans ses sous-dossiers).'), 'err'); return; }
   /** Charge un modèle et son .aird. */
   const charger = async m => {
+    if (capLoaded && !(await capReplaceConfirm(m.nom))) { capShowWelcome(false); return; }
     const base = m.nom.replace(/\.[^.]+$/, '').toLowerCase(), dossier = m.chemin.slice(0, m.chemin.length - m.nom.length);
     const a = airds.find(x => x.nom.toLowerCase() === base + '.aird') || airds.find(x => x.chemin.startsWith(dossier) && !x.chemin.slice(dossier.length).includes('/')) || (airds.length === 1 ? airds[0] : null);
     try {
       const f = await m.lire(), fa = a ? await a.lire() : null;
       _capDiag.texteAird = fa ? await fa.text() : ''; _capDiag.nomAird = fa ? fa.name : ''; _capDiag.airdCharge = false;
-      capLoadFile(f, m.h || null);
+      capLoadFile(f, m.h || null, true);
     } catch (e) { capWelcomeStatus(_L('Lecture impossible : ') + (e && e.message || e), 'err'); }
   };
   if (mods.length === 1) { charger(mods[0]); return; }
@@ -197,7 +198,7 @@ function capDiagBarre() {
     `<button class="tbtn${_capDiag.choix ? ' active' : ''}" id="cdg-choix" title="${_L('Choisir les diagrammes à exporter : cases à cocher dans l\'explorateur')}">${_capDiag.choix ? _L('☑ Terminer la sélection') : _L('☐ Sélectionner…')}</button></span>` : '';
   const infos = _capDiag.airdCharge ? `<button class="tbtn" id="cdg-infos" title="${_L('Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés')}">${_L('ℹ Infos')}</button>` : '';
   b.innerHTML = `<span class="tb-grp"><button class="tbtn" id="cdg-ouvrir" title="${_L('Choisir le fichier .aird (le sélecteur s\'ouvre dans le dossier du .capella quand le navigateur le permet)')}">${_L('📂 Ouvrir le .aird…')}</button>` +
-    infos + `</span>` + exp +
+    infos + `</span>` + exp + (typeof capRevDiagBar === 'function' ? capRevDiagBar() : '') +
     `<span id="cdg-info" class="cdg-info">${_capDiag.airdCharge ? capEsc(_capDiag.nomAird) + ' — ' + _L(`${_capDiag.nbReps} diagramme(s)`) :
       _L('Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre.')}</span>` +
     `<span id="cdg-statut" class="cdg-info"></span>`;
