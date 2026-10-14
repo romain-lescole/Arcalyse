@@ -33,7 +33,7 @@ const _capIco = { doc: null, cache: new Map() };
  */
 function capIco(id, taille) {
   const A = window.ArcatureVisionneuse;
-  if (!id || !capLoaded || !A || typeof A.icone !== 'function') return '';
+  if (!id || !cap_xmlDoc || !A || typeof A.icone !== 'function') return '';   // cap_xmlDoc : aussi pendant le chargement (arborescence de la Relation Map)
   if (_capIco.doc !== cap_xmlDoc) {
     _capIco.cache.clear(); _capIco.doc = cap_xmlDoc;
     try { capDiagEnsure(); if (_capDiag.vis && _capDiag.modele !== cap_xmlDoc) capDiagSync(); } catch (e) { console.error(e); }

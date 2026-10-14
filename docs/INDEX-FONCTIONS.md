@@ -114,31 +114,32 @@
 - `showEditTypeForm` (l. 481) — Affiche un mini-formulaire inline dans la section "Types d'éléments"
 - `showNewTypeForm` (l. 530) — Affiche le formulaire de création d'un nouveau type d'élément.
 
-## 09-arborescence.js — 735 lignes
+## 09-arborescence.js — 746 lignes
 
 - `typeIcon` (l. 5) — Retourne l'icône associée à un type d'élément (définie dans TCFG). @param {string} t
-- `migratePkgsToElements` (l. 11) — Migre l'ancien format packages[] vers le nouveau format elements[] avec type='Package'.
-- `buildPropertiesPanel` (l. 42) — Rafraîchit les propriétés de l'élément sélectionné (S.propEl) : le panneau 🔎 Détail de la
-- `rmPropsRender` (l. 46) — Remplit #props-body (dans le panneau 🔎 Détail) avec les propriétés de l'élément sélectionné
-- `_arboInlineRename` (l. 176) — Active le renommage en place d'un nœud de l'arborescence (Entrée valide, Échap annule).
-- `buildArbo` (l. 191) — Construit l'arborescence gauche à partir de MODEL.elements.
-- `arboExpandAll` (l. 371) — Développe tous les nœuds de l'arborescence gauche.
-- `arboCollapseAll` (l. 374) — Réduit tous les nœuds de l'arborescence gauche au premier niveau.
-- `arboRenameEl` (l. 380) — Renomme un élément dans MODEL et met à jour l'arbo et le graphe.
-- `arboAddPkg` (l. 391) — Crée un nouveau package (type='Package') enfant d'un élément existant.
-- `arboAddEl` (l. 405) — Crée un nouvel élément enfant dans l'arborescence.
-- `arboDeleteEl` (l. 420) — Supprime un élément et toutes ses relations de MODEL, puis met à jour l'UI.
-- `arboClearMultiSel` (l. 438) — Vide la sélection multiple de l'arborescence et met à jour l'affichage.
-- `arboUpdateMselBar` (l. 441) — Met à jour la barre de compteur de sélection multiple sous l'en-tête Arborescence.
-- `arboMoveEls` (l. 453) — Déplace un GROUPE d'éléments vers un nouvel owner en conservant la hiérarchie interne :
-- `arboParseClipboardList` (l. 481) — Découpe un texte de presse-papier en liste de noms : une ligne = un élément.
-- `arboPasteListInto` (l. 489) — Crée une liste d'éléments enfants sous un owner (un nom par ligne du presse-papier).
-- `arboConvertSelectedType` (l. 509) — Change le type de tous les éléments d'un ensemble d'ids (hors packages).
-- `arboShowRoCtxMenu` (l. 529) — Menu contextuel (clic droit) d'un élément de l'arborescence en lecture seule :
-- `arboShowCtxMenu` (l. 546) — Affiche le menu contextuel (clic droit) d'un élément de l'arborescence.
-- `arboMoveEl` (l. 669) — Déplace un élément unique vers un nouvel owner par glisser-déposer : met à jour
-- `rmSetElemVal` (l. 695) — Écrit une valeur dans un champ d'un élément du modèle de la Relation Map (nom, type, parent,
-- `onModelChanged` (l. 731) — Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel.
+- `arboIcone` (l. 13) — Remplit l'icône d'un élément de la Relation Map : icône façon Capella (visionneuse d'Arcature, capIco) pour un
+- `migratePkgsToElements` (l. 24) — Migre l'ancien format packages[] vers le nouveau format elements[] avec type='Package'.
+- `buildPropertiesPanel` (l. 55) — Rafraîchit les propriétés de l'élément sélectionné (S.propEl) : le panneau 🔎 Détail de la
+- `rmPropsRender` (l. 59) — Remplit #props-body (dans le panneau 🔎 Détail) avec les propriétés de l'élément sélectionné
+- `_arboInlineRename` (l. 188) — Active le renommage en place d'un nœud de l'arborescence (Entrée valide, Échap annule).
+- `buildArbo` (l. 203) — Construit l'arborescence gauche à partir de MODEL.elements.
+- `arboExpandAll` (l. 382) — Développe tous les nœuds de l'arborescence gauche.
+- `arboCollapseAll` (l. 385) — Réduit tous les nœuds de l'arborescence gauche au premier niveau.
+- `arboRenameEl` (l. 391) — Renomme un élément dans MODEL et met à jour l'arbo et le graphe.
+- `arboAddPkg` (l. 402) — Crée un nouveau package (type='Package') enfant d'un élément existant.
+- `arboAddEl` (l. 416) — Crée un nouvel élément enfant dans l'arborescence.
+- `arboDeleteEl` (l. 431) — Supprime un élément et toutes ses relations de MODEL, puis met à jour l'UI.
+- `arboClearMultiSel` (l. 449) — Vide la sélection multiple de l'arborescence et met à jour l'affichage.
+- `arboUpdateMselBar` (l. 452) — Met à jour la barre de compteur de sélection multiple sous l'en-tête Arborescence.
+- `arboMoveEls` (l. 464) — Déplace un GROUPE d'éléments vers un nouvel owner en conservant la hiérarchie interne :
+- `arboParseClipboardList` (l. 492) — Découpe un texte de presse-papier en liste de noms : une ligne = un élément.
+- `arboPasteListInto` (l. 500) — Crée une liste d'éléments enfants sous un owner (un nom par ligne du presse-papier).
+- `arboConvertSelectedType` (l. 520) — Change le type de tous les éléments d'un ensemble d'ids (hors packages).
+- `arboShowRoCtxMenu` (l. 540) — Menu contextuel (clic droit) d'un élément de l'arborescence en lecture seule :
+- `arboShowCtxMenu` (l. 557) — Affiche le menu contextuel (clic droit) d'un élément de l'arborescence.
+- `arboMoveEl` (l. 680) — Déplace un élément unique vers un nouvel owner par glisser-déposer : met à jour
+- `rmSetElemVal` (l. 706) — Écrit une valeur dans un champ d'un élément du modèle de la Relation Map (nom, type, parent,
+- `onModelChanged` (l. 742) — Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel.
 
 ## 10-rm-vues.js — 262 lignes
 

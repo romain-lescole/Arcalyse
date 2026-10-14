@@ -3,6 +3,19 @@
    ═══════════════════════════════════════════════════════════════════════ */
 /** Retourne l'icône associée à un type d'élément (définie dans TCFG). @param {string} t */
 function typeIcon(t){ return (TCFG[t]||{}).icon||'◻'; }
+/**
+ * Remplit l'icône d'un élément de la Relation Map : icône façon Capella (visionneuse d'Arcature, capIco) pour un
+ * élément venu du modèle Capella, sinon symbole du type (typeIcon) dans sa couleur.
+ * @param {HTMLElement} span - Conteneur de l'icône
+ * @param {object} el - Élément de MODEL
+ * @param {number} [taille] - Côté en pixels (14 par défaut)
+ */
+function arboIcone(span, el, taille){
+  const svg=typeof capIco==='function'&&el&&el._capella?capIco(el.id, taille||14):'';
+  if(svg){ span.innerHTML=svg; span.classList.add('arbo-svg'); return; }
+  span.textContent=typeIcon(el.type);
+  span.style.color=(TCFG[el.type]||{}).color||'var(--c-dim)';
+}
 
 // Migre MODEL.packages vers des éléments de type Package (run once at startup)
 /** Migre l'ancien format packages[] vers le nouveau format elements[] avec type='Package'.
@@ -78,8 +91,7 @@ function rmPropsRender() {
   // Nom (double-clic pour modifier)
   const nmIcon=document.createElement('span');
   nmIcon.style.cssText='font-size:13px;margin-right:3px;flex-shrink:0';
-  nmIcon.textContent=typeIcon(el.type);
-  nmIcon.style.color=(TCFG[el.type]||{}).color||'var(--c-dim)';
+  arboIcone(nmIcon, el, 15);
   const nmSpan=RM_RO ? Object.assign(document.createElement('span'),{className:'prop-val',textContent:el.name}) : editableText(el.name, v=>{ arboRenameEl(el,v); });
   const nmWrap=document.createElement('span'); nmWrap.style.cssText='display:flex;align-items:center;flex:1;min-width:0';
   nmWrap.appendChild(nmIcon); nmWrap.appendChild(nmSpan);
@@ -277,8 +289,7 @@ function buildArbo() {
     row.appendChild(tog);
 
     const icon=document.createElement('span'); icon.className='arbo-icon';
-    icon.textContent=typeIcon(el.type);
-    icon.style.color=(TCFG[el.type]||{}).color||'var(--c-dim)';
+    arboIcone(icon, el);
     row.appendChild(icon);
 
     const nm=document.createElement('span'); nm.className='arbo-name'+(isPkg?' pkg-name':'');

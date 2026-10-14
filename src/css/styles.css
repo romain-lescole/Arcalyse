@@ -1525,3 +1525,4 @@ svg.ico{flex-shrink:0;vertical-align:-3px;}
 .cap-type-ico{display:inline-flex;align-items:center;width:14px;margin-right:4px;flex-shrink:0;}
 .crv-tg svg.ico,.crv-ed-tg svg.ico,.crv-ctx-t svg.ico,#crv-ed-res svg.ico{margin-right:3px;}
 html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,255,.9)) drop-shadow(0 0 .6px rgba(255,255,255,.6));}
+.arbo-icon.arbo-svg{display:inline-flex;align-items:center;}
