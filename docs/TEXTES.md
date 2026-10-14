@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 4061 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 4079 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -682,62 +682,65 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 137 | ✔ Enregistré | ✔ Saved |
 | 143 | Enregistrement direct impossible ( | Direct save not possible ( |
 | 143 | ). La page va être téléchargée à la place. | ). The page will be downloaded instead. |
-| 184 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. | “…” is a representation/metadata file: drop the project's .capella file. |
-| 188 | » n'est pas un fichier Capella (.capella attendu). | “…” is not a Capella file (.capella expected). |
-| 193 | Chargement de « | Loading “…”… |
-| 196 | Impossible de lire « | Cannot read “…”. |
-| 202 | XML invalide | Invalid XML |
-| 208 | Erreur de chargement : | Loading error: |
-| 227 | Aucun élément Capella reconnu dans ce fichier | No Capella element recognised in this file |
-| 257 | ⚠ Ouvrir un autre modèle ? ✕ Modèle affiché : | ⚠ Open another model? ✕ Displayed model: … File to open: … The displayed model will be replaced. All work not saved in the page (views and tabs, dashboards, settings, ⚖ Comparison version…) may be lost. |
-| 260 | Fichier à ouvrir : | ⚠ Open another model? ✕ Displayed model: … File to open: … The displayed model will be replaced. All work not saved in the page (views and tabs, dashboards, settings, ⚖ Comparison version…) may be lost. |
-| 260 | Le modèle affiché va être remplacé. Tout le travail qui n'a pas été enregistré dans la page (vues et onglets, tableaux de bord, réglages, version de ⚖ Comparaison…) risque d'être perdu. | ⚠ Open another model? ✕ Displayed model: … File to open: … The displayed model will be replaced. All work not saved in the page (views and tabs, dashboards, settings, ⚖ Comparison version…) may be lost. |
-| 262 | commentaire(s) de revue modifié(s) depuis le dernier enregistrement : ils restent dans la page ouverte (et seront vérifiés sur le nouveau modèle), mais seront perdus si elle est fermée sans être enregistrée. Vous pouvez aussi les exporter (💬 Revue › ⚙ Réglages › ⬇ Exporter). | 💬 … review comment(s) changed since the last save: they stay in the open page (and will be checked against the new model), but will be lost if it is closed without saving. You can also export them (💬 Review › ⚙ Settings › ⬇ Export). |
-| 263 | Nouvelle version du même modèle ? Préférez 📁 Fichier › 🔄 Charger une mise à jour du modèle : le delta est affiché et la version précédente reste disponible pour ⚖ Comparaison. Annuler Ouvrir sans enregistrer 💾 Enregistrer la page, puis ouvrir | New version of the same model? Prefer 📁 File › 🔄 Load a model update: the delta is shown and the previous version stays available for ⚖ Comparison. Cancel Open without saving 💾 Save the page, then open |
-| 287 | Ouvrir un autre modèle Capella | Open another Capella model |
-| 288 | Modèle actuel : | Current model: … Drop a new file .capella to replace it. |
-| 288 | Déposez un nouveau fichier .capella pour le remplacer. | Current model: … Drop a new file .capella to replace it. |
-| 289 | ⚠ Le travail non enregistré sur le modèle actuel sera perdu : enregistrez d'abord la page (💾, Ctrl+S). Pour une nouvelle version du même modèle, préférez 📁 Fichier › 🔄 Charger une mise à jour du modèle. | ⚠ Unsaved work on the current model will be lost: save the page first (💾, Ctrl+S). For a new version of the same model, prefer 📁 File › 🔄 Load a model update. |
-| 372 | Shared | (inchangé, hors _L) |
-| 391 | Project | (inchangé, hors _L) |
-| 452 | Composition | (inchangé, hors _L) |
-| 452 | Aggregation | (inchangé, hors _L) |
-| 452 | Association | (inchangé, hors _L) |
-| 452 | Containment | (inchangé, hors _L) |
-| 452 | Generalization | (inchangé, hors _L) |
-| 452 | Realization | (inchangé, hors _L) |
-| 452 | Dependency | (inchangé, hors _L) |
-| 452 | Usage | (inchangé, hors _L) |
-| 452 | Abstraction | (inchangé, hors _L) |
-| 452 | Refine | (inchangé, hors _L) |
-| 452 | Trace | (inchangé, hors _L) |
-| 452 | Satisfy | (inchangé, hors _L) |
-| 452 | Verify | (inchangé, hors _L) |
-| 452 | Copy | (inchangé, hors _L) |
-| 452 | Allocation | (inchangé, hors _L) |
-| 453 | Block | (inchangé, hors _L) |
-| 453 | Component | (inchangé, hors _L) |
-| 453 | Class | (inchangé, hors _L) |
-| 453 | Interface | (inchangé, hors _L) |
-| 453 | Requirement | (inchangé, hors _L) |
-| 453 | Package | (inchangé, hors _L) |
-| 456 | Aggregation | (inchangé, hors _L) |
-| 456 | Association | (inchangé, hors _L) |
-| 456 | Containment | (inchangé, hors _L) |
-| 456 | Generalization | (inchangé, hors _L) |
-| 456 | Realization | (inchangé, hors _L) |
-| 456 | Dependency | (inchangé, hors _L) |
-| 456 | Usage | (inchangé, hors _L) |
-| 456 | Abstraction | (inchangé, hors _L) |
-| 456 | Refine | (inchangé, hors _L) |
-| 456 | Trace | (inchangé, hors _L) |
-| 456 | Satisfy | (inchangé, hors _L) |
-| 456 | Verify | (inchangé, hors _L) |
-| 456 | Copy | (inchangé, hors _L) |
-| 456 | Allocation | (inchangé, hors _L) |
-| 574 | PhysicalComponent (NODE) | (inchangé, hors _L) |
-| 575 | PhysicalComponent (BEHAVIOR) | (inchangé, hors _L) |
-| 814 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella | 🔷 Load a .capella file via 📁 File › 🔷 Open a Capella model |
+| 185 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. | “…” is a representation/metadata file: drop the project's .capella file. |
+| 189 | » n'est pas un fichier Capella (.capella attendu). | “…” is not a Capella file (.capella expected). |
+| 194 | Chargement de « | Loading “…”… |
+| 197 | Impossible de lire « | Cannot read “…”. |
+| 203 | XML invalide | Invalid XML |
+| 209 | Erreur de chargement : | Loading error: |
+| 228 | Aucun élément Capella reconnu dans ce fichier | No Capella element recognised in this file |
+| 260 | ⚠ Ouvrir un autre modèle ? ✕ Modèle affiché : | ⚠ Open another model? ✕ Displayed model: … |
+| 264 | Fichier à ouvrir : | File to open: … |
+| 265 | Le modèle affiché va être remplacé. Tout le travail qui n'a pas été enregistré dans la page (vues et onglets, tableaux de bord, réglages, version de ⚖ Comparaison…) risque d'être perdu. | The displayed model will be replaced. All work not saved in the page (views and tabs, dashboards, settings, ⚖ Comparison version…) may be lost. |
+| 266 | commentaire(s) de revue modifié(s) depuis le dernier enregistrement : ils restent dans la page ouverte (et seront vérifiés sur le nouveau modèle), mais seront perdus si elle est fermée sans être enregistrée. Vous pouvez aussi les exporter (💬 Revue › 💾 Revue ▾ › ⬇ Exporter). | 💬 … review comment(s) changed since the last save: they stay in the open page (and will be checked against the new model), but will be lost if it is closed without saving. You can also export them (💬 Review › 💾 Review ▾ › ⬇ Export). |
+| 267 | Nouvelle version du même modèle ? Préférez 📁 Fichier › 🔄 Charger une mise à jour du modèle : le delta est affiché et la version précédente reste disponible pour ⚖ Comparaison. Annuler 💾 Enregistrer la page | New version of the same model? Prefer 📁 File › 🔄 Load a model update: the delta is shown and the previous version stays available for ⚖ Comparison. Cancel 💾 Save the page |
+| 271 | Ouvrir le fichier | Open the file |
+| 271 | 📂 Choisir le fichier .capella… | 📂 Choose the .capella file… |
+| 278 | ✔ Page enregistrée | ✔ Page saved |
+| 296 | Ouvrir un autre modèle Capella | Open another Capella model |
+| 297 | Modèle actuel : | Current model: … Drop a new file .capella to replace it. |
+| 297 | Déposez un nouveau fichier .capella pour le remplacer. | Current model: … Drop a new file .capella to replace it. |
+| 298 | ⚠ Le travail non enregistré sur le modèle actuel sera perdu : enregistrez d'abord la page (💾, Ctrl+S). Pour une nouvelle version du même modèle, préférez 📁 Fichier › 🔄 Charger une mise à jour du modèle. | ⚠ Unsaved work on the current model will be lost: save the page first (💾, Ctrl+S). For a new version of the same model, prefer 📁 File › 🔄 Load a model update. |
+| 381 | Shared | (inchangé, hors _L) |
+| 400 | Project | (inchangé, hors _L) |
+| 461 | Composition | (inchangé, hors _L) |
+| 461 | Aggregation | (inchangé, hors _L) |
+| 461 | Association | (inchangé, hors _L) |
+| 461 | Containment | (inchangé, hors _L) |
+| 461 | Generalization | (inchangé, hors _L) |
+| 461 | Realization | (inchangé, hors _L) |
+| 461 | Dependency | (inchangé, hors _L) |
+| 461 | Usage | (inchangé, hors _L) |
+| 461 | Abstraction | (inchangé, hors _L) |
+| 461 | Refine | (inchangé, hors _L) |
+| 461 | Trace | (inchangé, hors _L) |
+| 461 | Satisfy | (inchangé, hors _L) |
+| 461 | Verify | (inchangé, hors _L) |
+| 461 | Copy | (inchangé, hors _L) |
+| 461 | Allocation | (inchangé, hors _L) |
+| 462 | Block | (inchangé, hors _L) |
+| 462 | Component | (inchangé, hors _L) |
+| 462 | Class | (inchangé, hors _L) |
+| 462 | Interface | (inchangé, hors _L) |
+| 462 | Requirement | (inchangé, hors _L) |
+| 462 | Package | (inchangé, hors _L) |
+| 465 | Aggregation | (inchangé, hors _L) |
+| 465 | Association | (inchangé, hors _L) |
+| 465 | Containment | (inchangé, hors _L) |
+| 465 | Generalization | (inchangé, hors _L) |
+| 465 | Realization | (inchangé, hors _L) |
+| 465 | Dependency | (inchangé, hors _L) |
+| 465 | Usage | (inchangé, hors _L) |
+| 465 | Abstraction | (inchangé, hors _L) |
+| 465 | Refine | (inchangé, hors _L) |
+| 465 | Trace | (inchangé, hors _L) |
+| 465 | Satisfy | (inchangé, hors _L) |
+| 465 | Verify | (inchangé, hors _L) |
+| 465 | Copy | (inchangé, hors _L) |
+| 465 | Allocation | (inchangé, hors _L) |
+| 583 | PhysicalComponent (NODE) | (inchangé, hors _L) |
+| 584 | PhysicalComponent (BEHAVIOR) | (inchangé, hors _L) |
+| 823 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella | 🔷 Load a .capella file via 📁 File › 🔷 Open a Capella model |
 
 ## js/21-capella-vues-base.js
 
@@ -2620,118 +2623,118 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 60 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
 | 60 | modifié(s) | modified |
 | 60 | déplacé(s) | moved |
-| 115 | Le sélecteur de fichiers de ce navigateur est indisponible : cliquez de nouveau pour choisir le fichier, ou glissez-le dans la fenêtre. | This browser's file picker is unavailable: click again to choose the file, or drag it into the window. |
-| 128 | Modèle Capella | Capella model |
-| 132 | Sélecteur à accès direct indisponible : | ❌ |
-| 175 | ✔ Le fichier n'a pas changé | ✔ The file has not changed |
-| 179 | Aucun nouvel enregistrement depuis la dernière détection | No new save since the last detection |
-| 179 | ✔ Le fichier n'a pas changé | ✔ The file has not changed |
-| 186 | ✔ Le fichier correspond au modèle affiché | ✔ The file matches the displayed model |
-| 207 | ⚠ Fichier illisible pour l'instant (enregistrement en cours ?) — réessayez | ⚠ File unreadable for now (save in progress?) — try again |
-| 218 | Fichier réenregistré — aucune différence de contenu | File saved again — no content difference |
-| 248 | ⚠ Seuls | ⚠ Only … % of the elements are shared with the displayed model: it may not be the same project . Check the delta before updating. |
-| 248 | % des éléments sont communs avec le modèle affiché : ce n'est peut-être pas le même projet . Vérifiez le delta avant de mettre à jour. | ⚠ Only … % of the elements are shared with the displayed model: it may not be the same project . Check the delta before updating. |
-| 262 | Le fichier choisi (« | The chosen file (“…”) does not have the same name as the displayed model (“…”).\nCompare it anyway? |
-| 262 | ») n'a pas le même nom que le modèle affiché (« | The chosen file (“…”) does not have the same name as the displayed model (“…”).\nCompare it anyway? |
-| 262 | »). Le comparer quand même ? | The chosen file (“…”) does not have the same name as the displayed model (“…”).\nCompare it anyway? |
-| 263 | Impossible de lire « | Cannot read “ |
-| 268 | ✔ Le fichier correspond au modèle affiché | ✔ The file matches the displayed model |
-| 280 | Seuls | Only …% of the elements are shared with the displayed model: it may not be the same project.\n\nReplace the displayed model with this version anyway? |
-| 280 | % des éléments sont communs avec le modèle affiché : ce n'est peut-être pas le même projet. Remplacer quand même le modèle affiché par cette version ? | Only …% of the elements are shared with the displayed model: it may not be the same project.\n\nReplace the displayed model with this version anyway? |
-| 285 | Mise à jour impossible : | Update failed: |
-| 285 | Le modèle précédent est conservé. | The previous model is kept. |
-| 295 | — avant la mise à jour de | … — before the … update |
-| 298 | ✔ Modèle mis à jour ( | ✔ Model updated (… difference(s)) |
-| 298 | différence(s)) | ✔ Model updated (… difference(s)) |
-| 307 | — sur le disque ( | … — on disk (…), not applied |
-| 307 | ), non appliquée | … — on disk (…), not applied |
-| 308 | — avant la mise à jour de | … — before the … update |
-| 309 | — version d'ouverture ( | … — opening version (…) |
-| 331 | enregistrement(s) détecté(s) — | … save(s) detected — … difference(s) with the displayed model |
-| 331 | différence(s) avec le modèle affiché | … save(s) detected — … difference(s) with the displayed model |
-| 332 | Le fichier a été modifié : resélectionnez-le pour voir le delta | The file has changed: select it again to see the delta |
-| 333 | Suivi du fichier .capella : vérifier les mises à jour, delta, historique | Watch the .capella file: check for updates, delta, history |
-| 354 | 🔄 Nouvelle version du modèle « | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
-| 355 | enregistrements détectés depuis | … saves detected since …, last at … |
-| 355 | , dernier à | … saves detected since …, last at … |
-| 355 | enregistré le | saved on … |
-| 356 | par rapport au modèle affiché | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
-| 356 | 🔍 Voir le delta ✔ Mettre à jour Plus tard | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
-| 359 | a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta. | has changed on disk, but the browser cannot read it again directly. Select it again to see the delta. |
-| 360 | est introuvable (déplacé, renommé ou supprimé). Choisissez le fichier à suivre. | cannot be found (moved, renamed or deleted). Choose the file to watch. |
-| 361 | n'est plus accessible (autorisation refusée). Choisissez de nouveau le fichier à suivre. | is no longer accessible (permission denied). Choose the file to watch again. |
-| 362 | Modèle modifié sur le disque | Model changed on disk |
-| 362 | Fichier suivi indisponible | Watched file unavailable |
-| 363 | 📂 Choisir le fichier… Plus tard | 🔄 … « … » … 📂 Choose the file… Later |
-| 388 | accès direct — relecture automatique | direct access — automatic re-read |
-| 388 | accès limité — modification signalée, fichier à resélectionner | limited access — change reported, file to select again |
-| 388 | aucun fichier suivi (page sauvegardée) | no watched file (saved page) |
-| 389 | 1 min | 1 min |
-| 389 | 5 min | 5 min |
-| 390 | Affiché : fichier du | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 391 | Dernière vérification : | Last check: … |
-| 391 | en cours… | in progress… |
-| 392 | Vérifier maintenant | Check now |
-| 392 | Choisir le fichier à comparer… | Choose the file to compare… |
-| 393 | 📋 Voir le delta en attente ( | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
-| 393 | enreg., | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
-| 393 | diff.) ✔ Mettre à jour l'affichage | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
-| 396 | Détecter les nouvelles versions toutes les | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 396 | Disponible quand un fichier .capella est suivi | Available when a .capella file is watched |
-| 398 | Vérifier au retour dans la fenêtre Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée. | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 401 | 🕘 Historique des mises à jour ( | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 402 | ⚖ Comparer avec la version avant la dernière mise à jour | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 403 | ⚖ Comparer avec la version d'ouverture | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 404 | 📂 Suivre un autre fichier (nouvelle version)… | 📂 Watch another file (new version)… |
-| 445 | Modèle affiché : fichier du | Displayed model: file of {0} &nbsp;→&nbsp; on disk: file of {1} {2} |
-| 446 | Mise à jour appliquée à | Update applied at … : file of … → …… |
-| 446 | : fichier du | Update applied at … : file of … → …… |
-| 446 | enregistrements cumulés) | (… cumulated saves) |
-| 450 | Σ Cumul — modèle affiché → dernier enregistrement | Saves detected before confirmation: the delta cumulated is the one that will be applied; each row shows what a save changed compared with the previous one. Detected at File of Changes Σ Cumulated — displayed model → last save {1} {2} |
-| 453 | Ajouté | Added |
-| 453 | var(--c-ok,#3fb950) | (inchangé, hors _L) |
-| 453 | Supprimé | Deleted |
-| 453 | var(--c-err,#f85149) | (inchangé, hors _L) |
-| 453 | Modifié | Modified |
-| 453 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
-| 466 | changement(s) | … change(s) … |
-| 467 | Propriété Avant Après | Property Before After … |
-| 472 | Delta des modifications | Delta of the changes |
-| 472 | Mise à jour du | Update of |
-| 476 | Par couche : | …By layer: … |
-| 476 | Enregistrement | Save … — |
-| 478 | Tous | All |
-| 478 | ➕ Ajoutés | ➕ Added |
-| 478 | ➖ Supprimés | ➖ Deleted |
-| 478 | ✎ Modifiés | ✎ Modified |
-| 478 | ↪ Déplacés | ↪ Moved |
-| 481 | Statut Couche Type Élément Détail | Status Layer Type Element Detail … … |
-| 482 | lignes affichées sur | … rows shown out of … — filter, export to CSV or open ⚖ Comparison. |
-| 482 | — filtrez, exportez en CSV ou ouvrez ⚖ Comparaison. | … rows shown out of … — filter, export to CSV or open ⚖ Comparison. |
-| 483 | ⬇ CSV | 🔄 … — « … » ✕ … … … … … ⬇ CSV … … |
-| 483 | Aucune différence pour ce filtre. | No difference for this filter. |
-| 487 | ⚖ Ouvrir dans Comparaison de versions | ⚖ Open in Version comparison |
-| 488 | ⚖ Ouvrir dans Comparaison de versions | ⚖ Open in Version comparison |
-| 490 | Plus tard ✔ Mettre à jour l'affichage | Later ✔ Update the display |
-| 490 | Fermer | Close |
-| 505 | Ajouté | Added |
-| 505 | Supprimé | Deleted |
-| 505 | Modifié | Modified |
-| 505 | (déplacé) | (moved) |
-| 508 | Statut | Status |
-| 508 | Couche | Layer |
-| 508 | Type | (inchangé, hors _L) |
-| 508 | Élément | Element |
-| 508 | Propriété | Property |
-| 508 | Avant | Before |
-| 508 | Après | After |
-| 517 | 🕘 Historique des mises à jour — « | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
-| 518 | » ✕ Ouvert à | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
-| 520 | . Cliquez sur une mise à jour pour voir son delta. | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
-| 521 | Appliquée à Fichier du Enreg. Changements | Applied at File of Saves Changes … |
-| 523 | Aucune mise à jour appliquée depuis l'ouverture du modèle. | No update applied since the model was opened. |
-| 525 | Fermer | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
-| 525 | ⚖ Delta cumulé depuis l'ouverture | ⚖ Cumulated delta since opening |
+| 121 | Le sélecteur de fichiers de ce navigateur est indisponible : cliquez de nouveau pour choisir le fichier, ou glissez-le dans la fenêtre. | This browser's file picker is unavailable: click again to choose the file, or drag it into the window. |
+| 134 | Modèle Capella | Capella model |
+| 138 | Sélecteur à accès direct indisponible : | ❌ |
+| 181 | ✔ Le fichier n'a pas changé | ✔ The file has not changed |
+| 185 | Aucun nouvel enregistrement depuis la dernière détection | No new save since the last detection |
+| 185 | ✔ Le fichier n'a pas changé | ✔ The file has not changed |
+| 192 | ✔ Le fichier correspond au modèle affiché | ✔ The file matches the displayed model |
+| 213 | ⚠ Fichier illisible pour l'instant (enregistrement en cours ?) — réessayez | ⚠ File unreadable for now (save in progress?) — try again |
+| 224 | Fichier réenregistré — aucune différence de contenu | File saved again — no content difference |
+| 254 | ⚠ Seuls | ⚠ Only … % of the elements are shared with the displayed model: it may not be the same project . Check the delta before updating. |
+| 254 | % des éléments sont communs avec le modèle affiché : ce n'est peut-être pas le même projet . Vérifiez le delta avant de mettre à jour. | ⚠ Only … % of the elements are shared with the displayed model: it may not be the same project . Check the delta before updating. |
+| 268 | Le fichier choisi (« | The chosen file (“…”) does not have the same name as the displayed model (“…”).\nCompare it anyway? |
+| 268 | ») n'a pas le même nom que le modèle affiché (« | The chosen file (“…”) does not have the same name as the displayed model (“…”).\nCompare it anyway? |
+| 268 | »). Le comparer quand même ? | The chosen file (“…”) does not have the same name as the displayed model (“…”).\nCompare it anyway? |
+| 269 | Impossible de lire « | Cannot read “ |
+| 274 | ✔ Le fichier correspond au modèle affiché | ✔ The file matches the displayed model |
+| 286 | Seuls | Only …% of the elements are shared with the displayed model: it may not be the same project.\n\nReplace the displayed model with this version anyway? |
+| 286 | % des éléments sont communs avec le modèle affiché : ce n'est peut-être pas le même projet. Remplacer quand même le modèle affiché par cette version ? | Only …% of the elements are shared with the displayed model: it may not be the same project.\n\nReplace the displayed model with this version anyway? |
+| 291 | Mise à jour impossible : | Update failed: |
+| 291 | Le modèle précédent est conservé. | The previous model is kept. |
+| 301 | — avant la mise à jour de | … — before the … update |
+| 304 | ✔ Modèle mis à jour ( | ✔ Model updated (… difference(s)) |
+| 304 | différence(s)) | ✔ Model updated (… difference(s)) |
+| 313 | — sur le disque ( | … — on disk (…), not applied |
+| 313 | ), non appliquée | … — on disk (…), not applied |
+| 314 | — avant la mise à jour de | … — before the … update |
+| 315 | — version d'ouverture ( | … — opening version (…) |
+| 337 | enregistrement(s) détecté(s) — | … save(s) detected — … difference(s) with the displayed model |
+| 337 | différence(s) avec le modèle affiché | … save(s) detected — … difference(s) with the displayed model |
+| 338 | Le fichier a été modifié : resélectionnez-le pour voir le delta | The file has changed: select it again to see the delta |
+| 339 | Suivi du fichier .capella : vérifier les mises à jour, delta, historique | Watch the .capella file: check for updates, delta, history |
+| 360 | 🔄 Nouvelle version du modèle « | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
+| 361 | enregistrements détectés depuis | … saves detected since …, last at … |
+| 361 | , dernier à | … saves detected since …, last at … |
+| 361 | enregistré le | saved on … |
+| 362 | par rapport au modèle affiché | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
+| 362 | 🔍 Voir le delta ✔ Mettre à jour Plus tard | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
+| 365 | a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta. | has changed on disk, but the browser cannot read it again directly. Select it again to see the delta. |
+| 366 | est introuvable (déplacé, renommé ou supprimé). Choisissez le fichier à suivre. | cannot be found (moved, renamed or deleted). Choose the file to watch. |
+| 367 | n'est plus accessible (autorisation refusée). Choisissez de nouveau le fichier à suivre. | is no longer accessible (permission denied). Choose the file to watch again. |
+| 368 | Modèle modifié sur le disque | Model changed on disk |
+| 368 | Fichier suivi indisponible | Watched file unavailable |
+| 369 | 📂 Choisir le fichier… Plus tard | 🔄 … « … » … 📂 Choose the file… Later |
+| 394 | accès direct — relecture automatique | direct access — automatic re-read |
+| 394 | accès limité — modification signalée, fichier à resélectionner | limited access — change reported, file to select again |
+| 394 | aucun fichier suivi (page sauvegardée) | no watched file (saved page) |
+| 395 | 1 min | 1 min |
+| 395 | 5 min | 5 min |
+| 396 | Affiché : fichier du | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 397 | Dernière vérification : | Last check: … |
+| 397 | en cours… | in progress… |
+| 398 | Vérifier maintenant | Check now |
+| 398 | Choisir le fichier à comparer… | Choose the file to compare… |
+| 399 | 📋 Voir le delta en attente ( | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
+| 399 | enreg., | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
+| 399 | diff.) ✔ Mettre à jour l'affichage | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
+| 402 | Détecter les nouvelles versions toutes les | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 402 | Disponible quand un fichier .capella est suivi | Available when a .capella file is watched |
+| 404 | Vérifier au retour dans la fenêtre Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée. | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 407 | 🕘 Historique des mises à jour ( | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 408 | ⚖ Comparer avec la version avant la dernière mise à jour | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 409 | ⚖ Comparer avec la version d'ouverture | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 410 | 📂 Suivre un autre fichier (nouvelle version)… | 📂 Watch another file (new version)… |
+| 451 | Modèle affiché : fichier du | Displayed model: file of {0} &nbsp;→&nbsp; on disk: file of {1} {2} |
+| 452 | Mise à jour appliquée à | Update applied at … : file of … → …… |
+| 452 | : fichier du | Update applied at … : file of … → …… |
+| 452 | enregistrements cumulés) | (… cumulated saves) |
+| 456 | Σ Cumul — modèle affiché → dernier enregistrement | Saves detected before confirmation: the delta cumulated is the one that will be applied; each row shows what a save changed compared with the previous one. Detected at File of Changes Σ Cumulated — displayed model → last save {1} {2} |
+| 459 | Ajouté | Added |
+| 459 | var(--c-ok,#3fb950) | (inchangé, hors _L) |
+| 459 | Supprimé | Deleted |
+| 459 | var(--c-err,#f85149) | (inchangé, hors _L) |
+| 459 | Modifié | Modified |
+| 459 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
+| 472 | changement(s) | … change(s) … |
+| 473 | Propriété Avant Après | Property Before After … |
+| 478 | Delta des modifications | Delta of the changes |
+| 478 | Mise à jour du | Update of |
+| 482 | Par couche : | …By layer: … |
+| 482 | Enregistrement | Save … — |
+| 484 | Tous | All |
+| 484 | ➕ Ajoutés | ➕ Added |
+| 484 | ➖ Supprimés | ➖ Deleted |
+| 484 | ✎ Modifiés | ✎ Modified |
+| 484 | ↪ Déplacés | ↪ Moved |
+| 487 | Statut Couche Type Élément Détail | Status Layer Type Element Detail … … |
+| 488 | lignes affichées sur | … rows shown out of … — filter, export to CSV or open ⚖ Comparison. |
+| 488 | — filtrez, exportez en CSV ou ouvrez ⚖ Comparaison. | … rows shown out of … — filter, export to CSV or open ⚖ Comparison. |
+| 489 | ⬇ CSV | 🔄 … — « … » ✕ … … … … … ⬇ CSV … … |
+| 489 | Aucune différence pour ce filtre. | No difference for this filter. |
+| 493 | ⚖ Ouvrir dans Comparaison de versions | ⚖ Open in Version comparison |
+| 494 | ⚖ Ouvrir dans Comparaison de versions | ⚖ Open in Version comparison |
+| 496 | Plus tard ✔ Mettre à jour l'affichage | Later ✔ Update the display |
+| 496 | Fermer | Close |
+| 511 | Ajouté | Added |
+| 511 | Supprimé | Deleted |
+| 511 | Modifié | Modified |
+| 511 | (déplacé) | (moved) |
+| 514 | Statut | Status |
+| 514 | Couche | Layer |
+| 514 | Type | (inchangé, hors _L) |
+| 514 | Élément | Element |
+| 514 | Propriété | Property |
+| 514 | Avant | Before |
+| 514 | Après | After |
+| 523 | 🕘 Historique des mises à jour — « | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
+| 524 | » ✕ Ouvert à | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
+| 526 | . Cliquez sur une mise à jour pour voir son delta. | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
+| 527 | Appliquée à Fichier du Enreg. Changements | Applied at File of Saves Changes … |
+| 529 | Aucune mise à jour appliquée depuis l'ouverture du modèle. | No update applied since the model was opened. |
+| 531 | Fermer | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
+| 531 | ⚖ Delta cumulé depuis l'ouverture | ⚖ Cumulated delta since opening |
 
 ## js/41-barre-vues.js
 
@@ -3855,169 +3858,171 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 33 | Diagrammes « | Diagrams “…” kept: now drop the project's .capella file. |
 | 33 | » gardés : déposez maintenant le fichier .capella du projet. | Diagrams “…” kept: now drop the project's .capella file. |
 | 50 | Diagrammes Capella (.aird) | Capella diagrams (.aird) |
-| 86 | Lecture du dossier impossible : | Cannot read the folder: |
-| 99 | Aucun fichier .capella dans ce dossier (ni dans ses sous-dossiers). | No .capella file in this folder (nor in its subfolders). |
-| 109 | Lecture impossible : | Cannot read: |
-| 113 | modèles dans ce dossier : choisissez celui à ouvrir. | … models in this folder: choose the one to open. |
-| 128 | Glisser pour régler la largeur de l'explorateur | Drag to adjust the width of the explorer |
-| 177 | ▣ Carte | ▣ Map |
-| 178 | Afficher la carte dans le diagramme | Show the map in the diagram |
-| 179 | ▣ Carte | ▣ Map |
-| 179 | dans le diagramme | in the diagram |
-| 180 | Afficher la carte sous l'explorateur | Show the map below the explorer |
-| 197 | Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML | Export several diagrams as sheets (header, description, title block, appendix): PDF, PNG / SVG ZIP, HTML report |
-| 197 | ⬇ Exporter… | ⬇ Export… |
-| 198 | Choisir les diagrammes à exporter : cases à cocher dans l'explorateur | Choose the diagrams to export: checkboxes in the explorer |
-| 198 | ☑ Terminer la sélection | ☑ Finish selection |
-| 198 | ☐ Sélectionner… | ☐ Select… |
-| 199 | Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés | Information on the open diagram in the details panel: type, layer, description, represented element, displayed elements |
-| 199 | ℹ Infos | ℹ Info |
-| 200 | Choisir le fichier .aird (le sélecteur s'ouvre dans le dossier du .capella quand le navigateur le permet) | Choose the .aird file (the picker opens in the .capella folder when the browser allows it) |
-| 200 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
-| 202 | diagramme(s) | … diagram(s) |
-| 203 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
-| 238 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
-| 252 | Autres | Others |
-| 323 | Aucun .aird chargé. | No .aird loaded. |
-| 323 | 📂 Ouvrir le .aird… s'ouvre dans le dossier du .capella (Edge / Chrome). | 📂 Open the .aird… opens in the .capella folder (Edge / Chrome). |
-| 324 | Ou, depuis l'écran d'accueil, 📁 Dossier du projet… : le .capella et ses diagrammes sont chargés ensemble. | Or, from the home screen, 📁 Project folder…: the .capella and its diagrams are loaded together. |
-| 332 | Cocher / décocher le groupe | Check / uncheck the group |
-| 339 | Informations du diagramme (panneau de détail) | Diagram information (details panel) |
-| 354 | Filtrer (nom, type, sigle, couche)… | Filter (name, type, acronym, layer)… |
-| 355 | Classement de la liste | List grouping |
-| 355 | Couche › type | Layer › type |
-| 355 | Couche | Layer |
-| 355 | Type de diagramme | Diagram type |
-| 355 | Nom (A → Z) | Name (A → Z) |
-| 356 | Tout déplier | Expand all |
-| 356 | Tout replier | Collapse all |
-| 357 | sélectionné(s) pour l'export | … selected for export |
-| 357 | diagramme(s) | … diagram(s) |
-| 359 | sélectionné(s) pour l'export | … selected for export |
-| 359 | diagramme(s) — cochez pour exporter | … diagram(s) — check to export |
-| 360 | Aucun diagramme ne correspond. | No matching diagram. |
-| 443 | var(--c-dim) | (inchangé, hors _L) |
-| 445 | Diagramme | Diagram |
-| 445 | Diagramme de séquence | Sequence diagram |
-| 445 | Tableau | Table |
-| 447 | 🔲 Diagramme Capella | 🔲 Capella diagram |
-| 449 | 🔲 Afficher le diagramme | 🔲 Show the diagram |
-| 450 | Attributs | Attributes |
-| 450 | Type | Type |
-| 450 | Sigle | Acronym |
-| 451 | Couche | Layer |
-| 451 | Nature | Nature |
-| 452 | Éléments | Elements |
-| 453 | Modifié le | Modified on |
-| 453 | Fichier | File |
-| 454 | Description | (inchangé, hors _L) |
-| 455 | Élément représenté | Represented element |
-| 458 | Éléments affichés ( | Displayed elements (…) |
-| 480 | Diagrammes ( | Diagrams (…) |
-| 503 | export SVG de la visionneuse introuvable | viewer SVG export not found |
-| 510 | diagramme vide ou non exportable | empty or non-exportable diagram |
-| 531 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
-| 532 | Projet Capella | Capella project |
-| 539 | Projet | Project |
-| 539 | Couche | Layer |
-| 540 | Diagramme | Diagram |
-| 540 | Contenu | Content |
-| 540 | élément(s) | … element(s) |
-| 541 | Type | (inchangé, hors _L) |
-| 541 | Date | Date |
-| 542 | Sources | Sources |
-| 542 | Planche | Sheet |
-| 560 | ) scale( | (inchangé, hors _L) |
-| 569 | Élément représenté | Represented element |
-| 571 | ) scale( | (inchangé, hors _L) |
-| 575 | ) scale( | (inchangé, hors _L) |
-| 576 | Arcalyse · planche générée le | Arcalyse · sheet generated on … |
-| 592 | ) scale( | (inchangé, hors _L) |
-| 649 | Élément représenté | Represented element |
-| 649 | Description | (inchangé, hors _L) |
-| 650 | Élément | Element |
-| 650 | Type | (inchangé, hors _L) |
-| 650 | Couche | Layer |
-| 665 | Élément | Element |
-| 665 | Type | (inchangé, hors _L) |
-| 665 | Couche | Layer |
-| 671 | 700 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 672 | 700 28px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 674 | 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 675 | élément(s) représenté(s) | … represented element(s) |
-| 675 | Planche | Sheet |
-| 676 | 700 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 679 | 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 716 | ⬇ Exporter des diagrammes | ⬇ Export diagrams |
-| 718 | Diagrammes | Diagrams |
-| 719 | Cochés dans la liste | Checked in the list |
-| 719 | Affichés (filtre en cours) | Displayed (current filter) |
-| 719 | Tous | All |
-| 720 | Mise en page | Layout |
-| 721 | Cadre et en-tête | Frame and header |
-| 721 | Cadre, bandeau de couche, sigle, nom et type du diagramme | Frame, layer band, acronym, name and type of the diagram |
-| 722 | Cartouche | Title block |
-| 722 | Cartouche technique en bas à droite : projet, diagramme, type, couche, contenu, sources, date, planche | Technical title block at the bottom right: project, diagram, type, layer, content, sources, date, sheet |
-| 723 | Description | Description |
-| 723 | Description Capella du diagramme et élément représenté, sous l'en-tête | Capella description of the diagram and represented element, below the header |
-| 724 | Annexes | Appendices |
-| 724 | Éléments représentés dans chaque diagramme : PDF, page(s) d'annexe après la planche · ZIP, un CSV par diagramme · HTML, tableau repliable | Elements represented in each diagram: PDF, appendix page(s) after the sheet · ZIP, one CSV per diagram · HTML, collapsible table |
-| 725 | Sommaire | Contents |
-| 725 | PDF : page de sommaire par couche et type · HTML : onglet Sommaire | PDF: contents page by layer and type · HTML: Contents tab |
-| 726 | Résolution des images PNG / PDF | Resolution of PNG / PDF images |
-| 726 | Résolution | Resolution |
-| 727 | Format | Format |
-| 729 | 📄 PDF | (inchangé, hors _L) |
-| 729 | Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets | One PDF: contents, one sheet per diagram (A4, oriented automatically), bookmarks |
-| 730 | 🗜 ZIP PNG | (inchangé, hors _L) |
-| 730 | Archive ZIP des planches en PNG, un dossier par couche | ZIP archive of the sheets as PNG, one folder per layer |
-| 731 | 🗜 ZIP SVG | (inchangé, hors _L) |
-| 731 | Archive ZIP des planches en SVG (vectoriel), un dossier par couche | ZIP archive of the sheets as SVG (vector), one folder per layer |
-| 732 | 🌐 HTML | (inchangé, hors _L) |
-| 732 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
-| 735 | Aperçu de la planche | Sheet preview |
-| 736 | Fermer | Close |
-| 737 | Lancer l'export dans le format choisi | Start the export in the chosen format |
-| 737 | ⬇ Exporter | ⬇ Export |
-| 755 | Aucun diagramme. | No diagram. |
-| 772 | Projet Capella | Capella project |
-| 782 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 782 | Diagrammes Capella | Capella diagrams |
-| 783 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 786 | planche(s) | … sheet(s) |
-| 794 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 795 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 800 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 801 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 839 | Aucun diagramme à exporter. | No diagram to export. |
-| 840 | Capella | (inchangé, hors _L) |
-| 855 | aucun diagramme exportable | no exportable diagram |
-| 865 | Le PDF fera environ | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
-| 865 | pages). Pour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…). Continuer quand même ? | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
-| 866 | Export annulé : PDF estimé à | Export cancelled: PDF estimated at … MB. |
-| 869 | Sommaire | Contents |
-| 873 | Planche | Sheet |
-| 875 | Autres | Others |
-| 876 | - annexe | - appendix |
-| 889 | Diagrammes — | Diagrams — … |
-| 892 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
-| 892 | pages) | (… pages) |
-| 893 | ignoré(s) : | — … skipped: |
-| 894 | ⚠ Échec de l'export : | ⚠ Export failed: |
-| 913 | Type | (inchangé, hors _L) |
-| 913 | Couche | Layer |
-| 913 | Sigle | Acronym |
-| 913 | Diagramme | Diagram |
-| 913 | Éléments | Elements |
-| 924 | Type | (inchangé, hors _L) |
-| 924 | Annexe | Appendix |
-| 924 | élément(s) représenté(s) | … represented element(s) |
-| 924 | Élément | Element |
-| 924 | Couche | Layer |
-| 938 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
-| 938 | diagramme(s) | … diagram(s) |
-| 939 | 📋 Sommaire | 📋 Contents |
-| 939 | 🔲 Planches | 🔲 Sheets |
+| 90 | Lecture du dossier impossible : | Cannot read the folder: |
+| 103 | Aucun fichier .capella dans ce dossier (ni dans ses sous-dossiers). | No .capella file in this folder (nor in its subfolders). |
+| 113 | Lecture impossible : | Cannot read: |
+| 117 | modèles dans ce dossier : choisissez celui à ouvrir. | … models in this folder: choose the one to open. |
+| 132 | Glisser pour régler la largeur de l'explorateur | Drag to adjust the width of the explorer |
+| 181 | ▣ Carte | ▣ Map |
+| 182 | Afficher la carte dans le diagramme | Show the map in the diagram |
+| 183 | ▣ Carte | ▣ Map |
+| 183 | dans le diagramme | in the diagram |
+| 184 | Afficher la carte sous l'explorateur | Show the map below the explorer |
+| 201 | Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML | Export several diagrams as sheets (header, description, title block, appendix): PDF, PNG / SVG ZIP, HTML report |
+| 201 | ⬇ Exporter… | ⬇ Export… |
+| 202 | Choisir les diagrammes à exporter : cases à cocher dans l'explorateur | Choose the diagrams to export: checkboxes in the explorer |
+| 202 | ☑ Terminer la sélection | ☑ Finish selection |
+| 202 | ☐ Sélectionner… | ☐ Select… |
+| 203 | Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés | Information on the open diagram in the details panel: type, layer, description, represented element, displayed elements |
+| 203 | ℹ Infos | ℹ Info |
+| 204 | Choisir le fichier .aird (le sélecteur s'ouvre dans le dossier du .capella quand le navigateur le permet) | Choose the .aird file (the picker opens in the .capella folder when the browser allows it) |
+| 204 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 206 | diagramme(s) | … diagram(s) |
+| 207 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
+| 248 | vd-barre cdg-vd-l2 | (inchangé, hors _L) |
+| 287 | Mettre en évidence une chaîne fonctionnelle ou un chemin physique dessiné dans ce diagramme | Highlight a functional chain or physical path drawn in this diagram |
+| 294 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
+| 308 | Autres | Others |
+| 379 | Aucun .aird chargé. | No .aird loaded. |
+| 379 | 📂 Ouvrir le .aird… s'ouvre dans le dossier du .capella (Edge / Chrome). | 📂 Open the .aird… opens in the .capella folder (Edge / Chrome). |
+| 380 | Ou, depuis l'écran d'accueil, 📁 Dossier du projet… : le .capella et ses diagrammes sont chargés ensemble. | Or, from the home screen, 📁 Project folder…: the .capella and its diagrams are loaded together. |
+| 388 | Cocher / décocher le groupe | Check / uncheck the group |
+| 395 | Informations du diagramme (panneau de détail) | Diagram information (details panel) |
+| 410 | Filtrer (nom, type, sigle, couche)… | Filter (name, type, acronym, layer)… |
+| 411 | Classement de la liste | List grouping |
+| 411 | Couche › type | Layer › type |
+| 411 | Couche | Layer |
+| 411 | Type de diagramme | Diagram type |
+| 411 | Nom (A → Z) | Name (A → Z) |
+| 412 | Tout déplier | Expand all |
+| 412 | Tout replier | Collapse all |
+| 413 | sélectionné(s) pour l'export | … selected for export |
+| 413 | diagramme(s) | … diagram(s) |
+| 415 | sélectionné(s) pour l'export | … selected for export |
+| 415 | diagramme(s) — cochez pour exporter | … diagram(s) — check to export |
+| 416 | Aucun diagramme ne correspond. | No matching diagram. |
+| 499 | var(--c-dim) | (inchangé, hors _L) |
+| 501 | Diagramme | Diagram |
+| 501 | Diagramme de séquence | Sequence diagram |
+| 501 | Tableau | Table |
+| 503 | 🔲 Diagramme Capella | 🔲 Capella diagram |
+| 505 | 🔲 Afficher le diagramme | 🔲 Show the diagram |
+| 506 | Attributs | Attributes |
+| 506 | Type | Type |
+| 506 | Sigle | Acronym |
+| 507 | Couche | Layer |
+| 507 | Nature | Nature |
+| 508 | Éléments | Elements |
+| 509 | Modifié le | Modified on |
+| 509 | Fichier | File |
+| 510 | Description | (inchangé, hors _L) |
+| 511 | Élément représenté | Represented element |
+| 514 | Éléments affichés ( | Displayed elements (…) |
+| 536 | Diagrammes ( | Diagrams (…) |
+| 559 | export SVG de la visionneuse introuvable | viewer SVG export not found |
+| 566 | diagramme vide ou non exportable | empty or non-exportable diagram |
+| 587 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
+| 588 | Projet Capella | Capella project |
+| 595 | Projet | Project |
+| 595 | Couche | Layer |
+| 596 | Diagramme | Diagram |
+| 596 | Contenu | Content |
+| 596 | élément(s) | … element(s) |
+| 597 | Type | (inchangé, hors _L) |
+| 597 | Date | Date |
+| 598 | Sources | Sources |
+| 598 | Planche | Sheet |
+| 616 | ) scale( | (inchangé, hors _L) |
+| 625 | Élément représenté | Represented element |
+| 627 | ) scale( | (inchangé, hors _L) |
+| 631 | ) scale( | (inchangé, hors _L) |
+| 632 | Arcalyse · planche générée le | Arcalyse · sheet generated on … |
+| 648 | ) scale( | (inchangé, hors _L) |
+| 705 | Élément représenté | Represented element |
+| 705 | Description | (inchangé, hors _L) |
+| 706 | Élément | Element |
+| 706 | Type | (inchangé, hors _L) |
+| 706 | Couche | Layer |
+| 721 | Élément | Element |
+| 721 | Type | (inchangé, hors _L) |
+| 721 | Couche | Layer |
+| 727 | 700 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 728 | 700 28px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 730 | 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 731 | élément(s) représenté(s) | … represented element(s) |
+| 731 | Planche | Sheet |
+| 732 | 700 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 735 | 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 772 | ⬇ Exporter des diagrammes | ⬇ Export diagrams |
+| 774 | Diagrammes | Diagrams |
+| 775 | Cochés dans la liste | Checked in the list |
+| 775 | Affichés (filtre en cours) | Displayed (current filter) |
+| 775 | Tous | All |
+| 776 | Mise en page | Layout |
+| 777 | Cadre et en-tête | Frame and header |
+| 777 | Cadre, bandeau de couche, sigle, nom et type du diagramme | Frame, layer band, acronym, name and type of the diagram |
+| 778 | Cartouche | Title block |
+| 778 | Cartouche technique en bas à droite : projet, diagramme, type, couche, contenu, sources, date, planche | Technical title block at the bottom right: project, diagram, type, layer, content, sources, date, sheet |
+| 779 | Description | Description |
+| 779 | Description Capella du diagramme et élément représenté, sous l'en-tête | Capella description of the diagram and represented element, below the header |
+| 780 | Annexes | Appendices |
+| 780 | Éléments représentés dans chaque diagramme : PDF, page(s) d'annexe après la planche · ZIP, un CSV par diagramme · HTML, tableau repliable | Elements represented in each diagram: PDF, appendix page(s) after the sheet · ZIP, one CSV per diagram · HTML, collapsible table |
+| 781 | Sommaire | Contents |
+| 781 | PDF : page de sommaire par couche et type · HTML : onglet Sommaire | PDF: contents page by layer and type · HTML: Contents tab |
+| 782 | Résolution des images PNG / PDF | Resolution of PNG / PDF images |
+| 782 | Résolution | Resolution |
+| 783 | Format | Format |
+| 785 | 📄 PDF | (inchangé, hors _L) |
+| 785 | Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets | One PDF: contents, one sheet per diagram (A4, oriented automatically), bookmarks |
+| 786 | 🗜 ZIP PNG | (inchangé, hors _L) |
+| 786 | Archive ZIP des planches en PNG, un dossier par couche | ZIP archive of the sheets as PNG, one folder per layer |
+| 787 | 🗜 ZIP SVG | (inchangé, hors _L) |
+| 787 | Archive ZIP des planches en SVG (vectoriel), un dossier par couche | ZIP archive of the sheets as SVG (vector), one folder per layer |
+| 788 | 🌐 HTML | (inchangé, hors _L) |
+| 788 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
+| 791 | Aperçu de la planche | Sheet preview |
+| 792 | Fermer | Close |
+| 793 | Lancer l'export dans le format choisi | Start the export in the chosen format |
+| 793 | ⬇ Exporter | ⬇ Export |
+| 811 | Aucun diagramme. | No diagram. |
+| 828 | Projet Capella | Capella project |
+| 838 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 838 | Diagrammes Capella | Capella diagrams |
+| 839 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 842 | planche(s) | … sheet(s) |
+| 850 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 851 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 856 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 857 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 895 | Aucun diagramme à exporter. | No diagram to export. |
+| 896 | Capella | (inchangé, hors _L) |
+| 911 | aucun diagramme exportable | no exportable diagram |
+| 921 | Le PDF fera environ | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
+| 921 | pages). Pour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…). Continuer quand même ? | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
+| 922 | Export annulé : PDF estimé à | Export cancelled: PDF estimated at … MB. |
+| 925 | Sommaire | Contents |
+| 929 | Planche | Sheet |
+| 931 | Autres | Others |
+| 932 | - annexe | - appendix |
+| 945 | Diagrammes — | Diagrams — … |
+| 948 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
+| 948 | pages) | (… pages) |
+| 949 | ignoré(s) : | — … skipped: |
+| 950 | ⚠ Échec de l'export : | ⚠ Export failed: |
+| 969 | Type | (inchangé, hors _L) |
+| 969 | Couche | Layer |
+| 969 | Sigle | Acronym |
+| 969 | Diagramme | Diagram |
+| 969 | Éléments | Elements |
+| 980 | Type | (inchangé, hors _L) |
+| 980 | Annexe | Appendix |
+| 980 | élément(s) représenté(s) | … represented element(s) |
+| 980 | Élément | Element |
+| 980 | Couche | Layer |
+| 994 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
+| 994 | diagramme(s) | … diagram(s) |
+| 995 | 📋 Sommaire | 📋 Contents |
+| 995 | 🔲 Planches | 🔲 Sheets |
 
 ## js/55-revue.js
 
@@ -4040,265 +4045,278 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 62 | Élément | Element |
 | 62 | Nom | Name |
 | 62 | Description | Description |
-| 199 | 💬 Revue : | 💬 Review: … comment(s) concern changed or deleted elements — 💬 Review › 🔁 Check |
-| 199 | commentaire(s) portent sur des éléments modifiés ou supprimés — 💬 Revue › 🔁 Vérifier | 💬 Review: … comment(s) concern changed or deleted elements — 💬 Review › 🔁 Check |
-| 200 | commentaire(s) de la page viennent d'un autre projet Capella (non vérifiés sur ce modèle) | 💬 … comment(s) in the page come from another Capella project (not checked against this model) |
-| 211 | commentaire(s) non clos | … open comment(s) |
-| 211 | à vérifier | — … to check |
-| 241 | 💬 Revue | 💬 Review |
-| 242 | Nouveau commentaire (sur l'élément affiché dans le panneau de détail, s'il y en a un) | New comment (on the element shown in the detail panel, if any) |
-| 242 | ✚ Nouveau | ✚ New |
-| 243 | Fermer | Close |
-| 244 | 💬 Commentaires | 💬 Comments … |
-| 244 | Liste des commentaires, filtres et recherche | Comment list, filters and search |
-| 245 | 🔁 Vérifier | 🔁 Check |
-| 245 | Commentaires dont l'élément a changé ou disparu depuis le commentaire, ou marqués « Corrigé, à vérifier » | Comments whose element has changed or disappeared since the comment, or marked “Fixed, to be checked” |
-| 246 | 📄 Rapport | 📄 Report |
-| 246 | Synthèse, rapport HTML, CSV | Summary, HTML report, CSV |
-| 246 | ⚙ Réglages | ⚙ Settings |
-| 246 | Votre nom, participants, champs proposés, calque des diagrammes, export / import | Your name, participants, offered fields, diagram layer, export / import |
-| 285 | 🔍 Texte, élément, personne, #n… | 🔍 Text, element, person, #n… |
-| 286 | Statut | Status |
-| 286 | Non clos | Not closed |
-| 286 | Tous les statuts | All statuses |
-| 287 | Criticité | Severity |
-| 287 | Toute criticité | Any severity |
-| 288 | Auteur ou responsable | Author or assignee |
-| 288 | Toute personne | Anyone |
-| 289 | Portée | Scope |
-| 289 | Partout | Everywhere |
-| 289 | Projet chargé | Loaded project |
-| 289 | Diagramme ouvert | Open diagram |
-| 289 | Élément du panneau de détail | Element of the detail panel |
-| 289 | En retard | Overdue |
-| 289 | Qui me sont attribués | Assigned to me |
-| 290 | Tri | Sort |
-| 290 | Plus récents | Most recent |
-| 290 | Criticité | Severity |
-| 290 | Échéance | Due date |
-| 290 | Statut | Status |
-| 293 | Aucun commentaire ne correspond aux filtres. | No comment matches the filters. |
-| 303 | ⚠ modifié | ⚠ changed |
-| 304 | ⚠ supprimé | ⚠ deleted |
-| 306 | : il n'est pas comparé au modèle chargé" ⧉ autre projet | ⧉ other project |
-| 307 | (sans texte) | (no text) |
-| 309 | Échéance | Due date |
-| 310 | Responsables | Assignees |
-| 316 | Aller à la cible (diagramme ou élément) | Go to the target (diagram or element) |
-| 316 | Modifier | Edit |
-| 320 | ✔ Vérifié le | ✔ Checked on …… |
-| 322 | Répondre… | Reply… |
-| 322 | ↩ Répondre | ↩ Reply |
-| 323 | Changer le statut | Change the status |
-| 324 | La correction a été vérifiée : le commentaire est clos | The fix has been checked: the comment is closed |
-| 324 | ✔ Valider | ✔ Validate |
-| 325 | Supprimer le commentaire | Delete the comment |
-| 335 | Note sur le diagramme | Note on the diagram |
-| 359 | Supprimer le commentaire # | Delete comment #…? |
-| 399 | Ce commentaire est posé sur un diagramme : ouvrez le .aird du projet dans 🔲 Diagrammes Capella pour voir la note. | This comment is placed on a diagram: open the project's .aird in 🔲 Capella Diagrams to see the note. |
-| 440 | Partie commentée | Commented part |
-| 440 | Retirer | Remove |
-| 441 | Aucun élément : commentaire général (ou ajoutez un élément ci-dessous). | No element: general comment (or add an element below). |
-| 445 | 💬 Commentaire # | 💬 Comment #… |
-| 445 | 💬 Nouveau commentaire | 💬 New comment |
-| 447 | Titre | Title |
-| 447 | (facultatif) | (optional) |
-| 448 | Commentaire | Comment |
-| 448 | Remarque, question, correction attendue… | Remark, question, expected correction… |
-| 449 | Criticité | Severity |
-| 450 | Catégorie | Category |
-| 452 | Statut | Status |
-| 453 | Auteur | Author |
-| 453 | Votre nom | Your name |
-| 454 | Échéance | Due date |
-| 456 | Responsables | Assignees |
-| 457 | + Ajouter une personne | + Add a person |
-| 458 | Étiquettes | Tags |
-| 458 | (séparées par des virgules) | (comma-separated) |
-| 459 | Éléments commentés | Commented elements |
-| 460 | + Ajouter un élément (nom ou type)… | + Add an element (name or type)… |
-| 461 | 🔲 Note sur le diagramme « | 🔲 Note on the diagram “…” |
-| 461 | retirer la note du diagramme | remove the note from the diagram |
-| 462 | Créé le | Created on ……… |
-| 462 | sur « | on “{0}” |
-| 462 | · modifié le | · modified on … |
-| 464 | 🗑 Supprimer | 🗑 Delete |
-| 465 | Annuler | Cancel |
-| 465 | ✔ Enregistrer | ✔ Save |
-| 476 | Supprimer le commentaire # | Delete comment #…? |
-| 489 | Aucun élément. | No element. |
-| 519 | ✔ Commentaire # | ✔ Comment #… saved — 💬 Review for the list |
-| 519 | enregistré — 💬 Revue pour la liste | ✔ Comment #… saved — 💬 Review for the list |
-| 534 | Commenter cet élément (revue) | Comment on this element (review) |
-| 534 | 💬 Commenter | 💬 Comment |
-| 535 | Commenter le nom de cet élément | Comment on the name of this element |
-| 535 | 💬 le nom | 💬 the name |
-| 536 | Commenter la description de cet élément | Comment on the description of this element |
-| 536 | 💬 la description | 💬 the description |
-| 537 | Commentaires non clos sur cet élément | Open comments on this element |
-| 537 | ouvert(s) | 💬 … open |
-| 546 | ,field: | (inchangé, hors _L) |
-| 546 | Commenter cet attribut (revue) | Comment on this attribute (review) |
-| 567 | 💬 Commentaires de revue ( | 💬 Review comments (…) |
-| 569 | Afficher dans 💬 Revue | Show in 💬 Review |
-| 618 | 📝 Note sur le diagramme ici, liée à l'élément | 📝 Note on the diagram here, linked to the element |
-| 619 | 💬 Commenter l'élément | 💬 Comment on the element |
-| 620 | 💬 Commenter son nom | 💬 Comment on its name |
-| 621 | 💬 Commenter sa description | 💬 Comment on its description |
-| 622 | 📄 Voir ses commentaires ( | 📄 See its comments (…) |
-| 623 | 🔍 Détail de l'élément | 🔍 Element details |
-| 661 | Glisser sur le diagramme pour poser une note de revue (déposée sur un élément : elle lui est liée) — clic : note au centre | Drag onto the diagram to place a review note (dropped on an element: linked to it) — click: note in the centre |
-| 661 | 📝 Note | 📝 Note |
-| 662 | Afficher ou masquer le calque des commentaires (indépendant du .aird) | Show or hide the comment layer (independent of the .aird) |
-| 662 | 💬 Calque | 💬 Layer |
-| 713 | Ouvrez d'abord un diagramme (les tableaux du .aird ne portent pas de notes). | Open a diagram first (.aird tables cannot hold notes). |
-| 762 | Délier « | Unlink “…” from the note |
-| 762 | » de la note | Unlink “…” from the note |
-| 768 | Lier / délier des éléments du diagramme (clic sur les éléments, Échap pour terminer) | Link / unlink diagram elements (click the elements, Esc to finish) |
-| 769 | Modifier | Edit |
-| 769 | Réduire en pastille | Collapse to a dot |
-| 771 | Tirer un trait jusqu'à un élément du diagramme pour le lier à la note (vers un élément déjà lié : le délier) | Draw a line to a diagram element to link it to the note (to an already linked element: unlink it) |
-| 772 | Redimensionner | Resize |
-| 776 | 🔗 Cliquez les éléments du diagramme à lier à la note # | 🔗 Click the diagram elements to link to note #… (click again: unlink) |
-| 776 | (nouveau clic : délier) | 🔗 Click the diagram elements to link to note #… (click again: unlink) |
-| 776 | ✔ Terminer | ✔ Done |
-| 818 | var(--c-accent) | (inchangé, hors _L) |
-| 819 | var(--c-accent) | (inchangé, hors _L) |
-| 867 | élément supprimé du modèle | element deleted from the model |
-| 868 | inchangé | unchanged |
-| 870 | Au moment du commentaire | At the time of the comment |
-| 871 | Maintenant | Now |
-| 875 | Attributs modifiés : | Changed attributes: … |
-| 876 | · éléments contenus : | · contained elements: … → … |
-| 876 | Références ou contenu modifiés | References or content changed |
-| 880 | Chargez un modèle : les commentaires sont comparés au modèle chargé. | Load a model: comments are compared with the loaded model. |
-| 882 | Commentaires non clos dont la valeur commentée a changé ou dont l'élément a disparu depuis le commentaire (nouveau fichier, 🔄 mise à jour), et commentaires marqués « Corrigé, à vérifier » . Pour chacun : ✔ Valider si la correction est faite (le commentaire est clos), ou ↻ Garder ouvert (la version actuelle devient la référence). | Open comments whose commented value has changed or whose element has disappeared since the comment (new file, 🔄 update), and comments marked “Fixed, to be checked” . For each one: ✔ Validate if the fix is done (the comment is closed), or ↻ Keep open (the current version becomes the reference). |
-| 883 | ✔ Rien à vérifier : aucun commentaire ouvert ne porte sur un élément modifié. | ✔ Nothing to check: no open comment concerns a changed element. |
-| 884 | commentaire(s) à vérifier | … comment(s) to check |
-| 884 | Valider tous les commentaires de cette liste | Validate all comments in this list |
-| 884 | ✔ Tout valider | ✔ Validate all |
-| 889 | Aller à la cible | Go to the target |
-| 889 | Modifier | Edit |
-| 891 | La correction a été faite : statut Validé | The fix has been made: status Validated |
-| 891 | ✔ Valider | ✔ Validate |
-| 892 | La modification ne règle pas le commentaire : il reste ouvert, la version actuelle devient la référence | The change does not resolve the comment: it stays open, the current version becomes the reference |
-| 892 | ↻ Garder ouvert | ↻ Keep open |
-| 897 | Valider les | Validate the … comment(s) in the list? |
-| 897 | commentaire(s) de la liste ? | Validate the … comment(s) in the list? |
-| 910 | Total | Total |
-| 912 | Total | Total |
-| 918 | Commentaires | Comments |
-| 918 | de la liste (filtres de 💬 Commentaires) | from the list (filters of 💬 Comments) |
-| 919 | Regrouper par | Group by |
-| 919 | criticité | severity |
-| 919 | élément | element |
-| 920 | réponses | replies |
-| 922 | commentaire(s) · | … comment(s) · … overdue · … on changed elements |
-| 922 | en retard · | … comment(s) · … overdue · … on changed elements |
-| 922 | sur des éléments modifiés | … comment(s) · … overdue · … on changed elements |
-| 923 | Rapport HTML autonome (imprimable) : synthèse, commentaires groupés, cibles, état par rapport au modèle chargé | Standalone HTML report (printable): summary, grouped comments, targets, status against the loaded model |
-| 923 | 📄 Rapport HTML | 📄 HTML report |
-| 924 | Une ligne par commentaire (tableur) | One row per comment (spreadsheet) |
-| 924 | ⬇ CSV | ⬇ CSV |
-| 936 | (non attribué) | (unassigned) |
-| 937 | (commentaire général) | (general comment) |
-| 943 | Aucun commentaire à mettre dans le rapport. | No comment to put in the report. |
-| 944 | ⚠ modifié | ⚠ changed |
-| 944 | ⚠ supprimé | ⚠ deleted |
-| 944 | inchangé | unchanged |
-| 949 | ✔ Vérifié le | ✔ Checked on …… |
-| 952 | Criticité | Severity |
-| 952 | Statut | Status |
-| 952 | Commentaire | Comment |
-| 952 | Cibles | Targets |
-| 952 | Auteur | Author |
-| 952 | Échéance | Due date |
-| 952 | Responsables | Assignees |
-| 952 | Modèle | Model |
-| 954 | Rapport de revue | Review report |
-| 959 | 💬 Rapport de revue | 💬 Review report |
-| 959 | Modèle : | Model: … · … comment(s) · issued on …… |
-| 959 | commentaire(s) · édité le | Model: … · … comment(s) · issued on …… |
-| 960 | Synthèse | Summary |
-| 960 | Produit par Arcalyse — colonne « Modèle » : état de la valeur commentée dans le modèle chargé lors de l'édition du rapport. | Produced by Arcalyse — “Model” column: status of the commented value in the model loaded when the report was issued. |
-| 966 | Titre | Title |
-| 966 | Commentaire | Comment |
-| 966 | Criticité | Severity |
-| 966 | Catégorie | Category |
-| 966 | Statut | Status |
-| 966 | Auteur | Author |
-| 966 | Créé le | Created on |
-| 966 | Échéance | Due date |
-| 966 | Responsables | Assignees |
-| 966 | Étiquettes | Tags |
-| 966 | Éléments | Elements |
-| 966 | Champs | Fields |
-| 966 | Diagramme | Diagram |
-| 966 | État dans le modèle | Status in the model |
-| 966 | Réponses | Replies |
-| 966 | Vérifié le | Checked on |
-| 966 | Vérifié par | Checked by |
-| 969 | modifié | modified |
-| 969 | supprimé | deleted |
-| 969 | inchangé | unchanged |
-| 978 | Titre | Title |
-| 978 | Criticité | Severity |
-| 978 | Catégorie | Category |
-| 978 | Échéance | Due date |
-| 978 | Responsables | Assignees |
-| 978 | Étiquettes | Tags |
-| 980 | Votre nom | Your name |
-| 980 | Auteur des nouveaux commentaires | Author of new comments |
-| 981 | Participants | Participants |
-| 981 | (proposés comme auteurs et responsables) | (offered as authors and assignees) |
-| 982 | Retirer | Remove |
-| 982 | Aucun participant. | No participant. |
-| 983 | Nom, initiales ou équipe | Name, initials or team |
-| 983 | ✚ Ajouter | ✚ Add |
-| 984 | Champs proposés dans l'éditeur | Fields offered in the editor |
-| 986 | Affichage | Display |
-| 987 | Calque des commentaires sur les diagrammes | Comment layer on diagrams |
-| 987 | Montrer aussi les notes closes sur les diagrammes | Also show closed notes on diagrams |
-| 988 | Marquer d'un 💬 les éléments commentés dans les vues | Mark commented elements with 💬 in the views |
-| 988 | Blocs, cartes et noms cliquables des éléments qui ont des commentaires non clos | Blocks, cards and clickable names of elements with open comments |
-| 989 | Enregistrement | Saving |
-| 990 | Les commentaires sont enregistrés dans la page : 💾 Enregistrer (Ctrl+S) les conserve avec le modèle. Exportez-les en .json pour les garder hors de la page, les transmettre, ou fusionner les revues de plusieurs relecteurs (l'import ajoute les nouveaux commentaires et garde la version la plus récente des autres). | Comments are saved in the page : 💾 Save (Ctrl+S) keeps them with the model. Export them as .json to keep them outside the page, share them, or merge the reviews of several reviewers (import adds new comments and keeps the most recent version of the others). |
-| 991 | ⬇ Exporter (.json) | ⬇ Export (.json) |
-| 991 | 📂 Importer / fusionner… | 📂 Import / merge… |
-| 992 | Supprimer tous les commentaires de la page | Delete all comments from the page |
-| 992 | 🗑 Tout supprimer | 🗑 Delete all |
-| 993 | commentaire(s) modifié(s) depuis le dernier enregistrement ou export. | … comment(s) changed since the last save or export. |
-| 1005 | Supprimer les | Delete the … comment(s) from the page? (Export them first to keep them.) |
-| 1005 | commentaire(s) de la page ? (Exportez-les d'abord pour les garder.) | Delete the … comment(s) from the page? (Export them first to keep them.) |
-| 1019 | Fichier illisible (JSON attendu). | Unreadable file (JSON expected). |
-| 1020 | Ce fichier n'est pas une revue Arcalyse. | This file is not an Arcalyse review. |
-| 1027 | ✔ Revue importée : | ✔ Review imported: … added, … updated, … already present |
-| 1027 | ajouté(s), | ✔ Review imported: … added, … updated, … already present |
-| 1027 | mis à jour, | ✔ Review imported: … added, … updated, … already present |
-| 1027 | déjà présent(s) | ✔ Review imported: … added, … updated, … already present |
-| 1028 | — modèle non vérifié (aucun modèle chargé) | — model not checked (no model loaded) |
-| 1047 | Les identifiants de projet diffèrent, mais les éléments commentés sont bien dans le modèle chargé : sans doute une copie du même projet. | The project identifiers differ, but the commented elements are in the loaded model: probably a copy of the same project. |
-| 1048 | Cette revue porte sur un autre projet Capella : ses commentaires ne correspondront pas aux éléments du modèle chargé (ils seront marqués « autre projet » et non vérifiés). | This review concerns another Capella project : its comments will not match the elements of the loaded model (they will be marked “other project” and not checked). |
-| 1049 | Trop peu d'éléments commentés ( | Too few commented elements (…) to conclude, and not all of them are in the loaded model: check that this is the right model (or a version where these elements were deleted). |
-| 1049 | ) pour conclure, et tous ne sont pas dans le modèle chargé : vérifiez qu'il s'agit du bon modèle (ou d'une version où ces éléments ont été supprimés). | Too few commented elements (…) to conclude, and not all of them are in the loaded model: check that this is the right model (or a version where these elements were deleted). |
-| 1050 | Cette revue ne contient que des commentaires généraux et n'indique pas son projet : impossible de vérifier le modèle. | This review only contains general comments and does not state its project: the model cannot be checked. |
-| 1055 | ⚠ Cette revue porte-t-elle sur ce modèle ? | ⚠ Does this review concern this model? |
-| 1057 | Revue importée | Imported review |
-| 1057 | Modèle chargé | Loaded model |
-| 1058 | Fichier | File |
-| 1058 | revue faite sur « | review made on “…” |
-| 1059 | Projet Capella | Capella project |
-| 1060 | Éléments commentés | Commented elements |
-| 1060 | élément(s) | … element(s) |
-| 1060 | retrouvé(s) ( | … found (… %) |
-| 1062 | commentaire(s) dans le fichier. | … comment(s) in the file. |
-| 1063 | Annuler | Cancel |
-| 1064 | Importer quand même | Import anyway |
+| 200 | 💬 Revue : | 💬 Review: … comment(s) concern changed or deleted elements — 💬 Review › 🔁 Check |
+| 200 | commentaire(s) portent sur des éléments modifiés ou supprimés — 💬 Revue › 🔁 Vérifier | 💬 Review: … comment(s) concern changed or deleted elements — 💬 Review › 🔁 Check |
+| 201 | commentaire(s) de la page viennent d'un autre projet Capella (non vérifiés sur ce modèle) | 💬 … comment(s) in the page come from another Capella project (not checked against this model) |
+| 212 | commentaire(s) non clos | … open comment(s) |
+| 212 | à vérifier | — … to check |
+| 260 | width=560,height=860 | (inchangé, hors _L) |
+| 261 | Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez. | The browser blocked the window: allow pop-ups for this page, then try again. |
+| 264 | 💬 Revue | 💬 Review |
+| 264 | Arcalyse | (inchangé, hors _L) |
+| 296 | 💬 Revue | 💬 Review |
+| 297 | Nouveau commentaire (sur l'élément affiché dans le panneau de détail, s'il y en a un) | New comment (on the element shown in the detail panel, if any) |
+| 297 | ✚ Nouveau | ✚ New |
+| 298 | Exporter ou importer les commentaires (.json) | Export or import the comments (.json) |
+| 298 | 💾 Revue ▾ | 💾 Review ▾ |
+| 298 | Commentaires modifiés depuis le dernier enregistrement ou export | Comments changed since the last save or export |
+| 300 | Les commentaires sont enregistrés dans la page : 💾 Enregistrer (Ctrl+S) les conserve avec le modèle. | Comments are saved in the page : 💾 Save (Ctrl+S) keeps them with the model. |
+| 301 | ⬇ Exporter les commentaires (.json) | ⬇ Export the comments (.json) |
+| 301 | 📂 Importer / fusionner une revue (.json)… | 📂 Import / merge a review (.json)… |
+| 302 | L'export garde la revue hors de la page, pour la transmettre ou réunir celles de plusieurs relecteurs (l'import ajoute les nouveaux commentaires et garde la version la plus récente des autres). | Export keeps the review outside the page, to share it or combine those of several reviewers (import adds new comments and keeps the most recent version of the others). |
+| 303 | commentaire(s) modifié(s) depuis le dernier enregistrement ou export. | … comment(s) changed since the last save or export. |
+| 304 | Ramener le panneau dans la page | Bring the panel back into the page |
+| 304 | Ouvrir le panneau dans une fenêtre séparée (par exemple sur un autre écran) | Open the panel in a separate window (for example on another screen) |
+| 305 | Fermer | Close |
+| 306 | 💬 Commentaires | 💬 Comments … |
+| 306 | Liste des commentaires, filtres et recherche | Comment list, filters and search |
+| 307 | 🔁 Vérifier | 🔁 Check |
+| 307 | Commentaires dont l'élément a changé ou disparu depuis le commentaire, ou marqués « Corrigé, à vérifier » | Comments whose element has changed or disappeared since the comment, or marked “Fixed, to be checked” |
+| 308 | 📄 Rapport | 📄 Report |
+| 308 | Synthèse, rapport HTML, CSV | Summary, HTML report, CSV |
+| 308 | ⚙ Réglages | ⚙ Settings |
+| 308 | Votre nom, participants, champs proposés, affichage | Your name, participants, offered fields, display |
+| 312 | 💬 Revue | 💬 Review |
+| 312 | Arcalyse | (inchangé, hors _L) |
+| 348 | 🔍 Texte, élément, personne, #n… | 🔍 Text, element, person, #n… |
+| 349 | Statut | Status |
+| 349 | Non clos | Not closed |
+| 349 | Tous les statuts | All statuses |
+| 350 | Criticité | Severity |
+| 350 | Toute criticité | Any severity |
+| 351 | Auteur ou responsable | Author or assignee |
+| 351 | Toute personne | Anyone |
+| 352 | Portée | Scope |
+| 352 | Partout | Everywhere |
+| 352 | Projet chargé | Loaded project |
+| 352 | Diagramme ouvert | Open diagram |
+| 352 | Élément du panneau de détail | Element of the detail panel |
+| 352 | En retard | Overdue |
+| 352 | Qui me sont attribués | Assigned to me |
+| 353 | Tri | Sort |
+| 353 | Plus récents | Most recent |
+| 353 | Criticité | Severity |
+| 353 | Échéance | Due date |
+| 353 | Statut | Status |
+| 356 | Aucun commentaire ne correspond aux filtres. | No comment matches the filters. |
+| 366 | ⚠ modifié | ⚠ changed |
+| 367 | ⚠ supprimé | ⚠ deleted |
+| 369 | : il n'est pas comparé au modèle chargé" ⧉ autre projet | ⧉ other project |
+| 370 | (sans texte) | (no text) |
+| 372 | Échéance | Due date |
+| 373 | Responsables | Assignees |
+| 379 | Aller à la cible (diagramme ou élément) | Go to the target (diagram or element) |
+| 379 | Modifier | Edit |
+| 383 | ✔ Vérifié le | ✔ Checked on …… |
+| 385 | Répondre… | Reply… |
+| 385 | ↩ Répondre | ↩ Reply |
+| 386 | Changer le statut | Change the status |
+| 387 | La correction a été vérifiée : le commentaire est clos | The fix has been checked: the comment is closed |
+| 387 | ✔ Valider | ✔ Validate |
+| 388 | Supprimer le commentaire | Delete the comment |
+| 398 | Note sur le diagramme | Note on the diagram |
+| 425 | Supprimer le commentaire # | Delete comment #…? |
+| 465 | Ce commentaire est posé sur un diagramme : ouvrez le .aird du projet dans 🔲 Diagrammes Capella pour voir la note. | This comment is placed on a diagram: open the project's .aird in 🔲 Capella Diagrams to see the note. |
+| 507 | Partie commentée | Commented part |
+| 507 | Retirer | Remove |
+| 508 | Aucun élément : commentaire général (ou ajoutez un élément ci-dessous). | No element: general comment (or add an element below). |
+| 512 | 💬 Commentaire # | 💬 Comment #… |
+| 512 | 💬 Nouveau commentaire | 💬 New comment |
+| 514 | Titre | Title |
+| 514 | (facultatif) | (optional) |
+| 515 | Commentaire | Comment |
+| 515 | Remarque, question, correction attendue… | Remark, question, expected correction… |
+| 516 | Criticité | Severity |
+| 517 | Catégorie | Category |
+| 519 | Statut | Status |
+| 520 | Auteur | Author |
+| 520 | Votre nom | Your name |
+| 521 | Échéance | Due date |
+| 523 | Responsables | Assignees |
+| 524 | + Ajouter une personne | + Add a person |
+| 525 | Étiquettes | Tags |
+| 525 | (séparées par des virgules) | (comma-separated) |
+| 526 | Éléments commentés | Commented elements |
+| 527 | + Ajouter un élément (nom ou type)… | + Add an element (name or type)… |
+| 528 | 🔲 Note sur le diagramme « | 🔲 Note on the diagram “…” |
+| 528 | retirer la note du diagramme | remove the note from the diagram |
+| 529 | Créé le | Created on ……… |
+| 529 | sur « | on “{0}” |
+| 529 | · modifié le | · modified on … |
+| 531 | 🗑 Supprimer | 🗑 Delete |
+| 532 | Annuler | Cancel |
+| 532 | ✔ Enregistrer | ✔ Save |
+| 543 | Supprimer le commentaire # | Delete comment #…? |
+| 556 | Aucun élément. | No element. |
+| 586 | ✔ Commentaire # | ✔ Comment #… saved — 💬 Review for the list |
+| 586 | enregistré — 💬 Revue pour la liste | ✔ Comment #… saved — 💬 Review for the list |
+| 601 | Commenter cet élément (revue) | Comment on this element (review) |
+| 601 | 💬 Commenter | 💬 Comment |
+| 602 | Commenter le nom de cet élément | Comment on the name of this element |
+| 602 | 💬 le nom | 💬 the name |
+| 603 | Commenter la description de cet élément | Comment on the description of this element |
+| 603 | 💬 la description | 💬 the description |
+| 604 | Commentaires non clos sur cet élément | Open comments on this element |
+| 604 | ouvert(s) | 💬 … open |
+| 613 | ,field: | (inchangé, hors _L) |
+| 613 | Commenter cet attribut (revue) | Comment on this attribute (review) |
+| 634 | 💬 Commentaires de revue ( | 💬 Review comments (…) |
+| 636 | Afficher dans 💬 Revue | Show in 💬 Review |
+| 685 | 📝 Note sur le diagramme ici, liée à l'élément | 📝 Note on the diagram here, linked to the element |
+| 686 | 💬 Commenter l'élément | 💬 Comment on the element |
+| 687 | 💬 Commenter son nom | 💬 Comment on its name |
+| 688 | 💬 Commenter sa description | 💬 Comment on its description |
+| 689 | 📄 Voir ses commentaires ( | 📄 See its comments (…) |
+| 690 | 🔍 Détail de l'élément | 🔍 Element details |
+| 728 | Note de revue : glissez-la sur le diagramme (déposée sur un élément, elle lui est liée) ou cliquez pour la poser au centre. Les notes forment un calque indépendant du .aird. | Review note: drag it onto the diagram (dropped on an element, it is linked to it) or click to place it in the centre. Notes form a layer independent of the .aird. |
+| 728 | 📝 Note de revue | 📝 Review note |
+| 729 | Afficher ou masquer le calque des notes de revue (indépendant du .aird) | Show or hide the review note layer (independent of the .aird) |
+| 729 | 💬 Calque | 💬 Layer |
+| 780 | Ouvrez d'abord un diagramme (les tableaux du .aird ne portent pas de notes). | Open a diagram first (.aird tables cannot hold notes). |
+| 830 | Délier « | Unlink “…” from the note |
+| 830 | » de la note | Unlink “…” from the note |
+| 836 | Lier / délier des éléments du diagramme (clic sur les éléments, Échap pour terminer) | Link / unlink diagram elements (click the elements, Esc to finish) |
+| 837 | Modifier | Edit |
+| 837 | Réduire en pastille | Collapse to a dot |
+| 839 | Tirer un trait jusqu'à un élément du diagramme pour le lier à la note (vers un élément déjà lié : le délier) | Draw a line to a diagram element to link it to the note (to an already linked element: unlink it) |
+| 840 | Redimensionner | Resize |
+| 844 | 🔗 Cliquez les éléments du diagramme à lier à la note # | 🔗 Click the diagram elements to link to note #… (click again: unlink) |
+| 844 | (nouveau clic : délier) | 🔗 Click the diagram elements to link to note #… (click again: unlink) |
+| 844 | ✔ Terminer | ✔ Done |
+| 886 | var(--c-accent) | (inchangé, hors _L) |
+| 887 | var(--c-accent) | (inchangé, hors _L) |
+| 935 | élément supprimé du modèle | element deleted from the model |
+| 936 | inchangé | unchanged |
+| 938 | Au moment du commentaire | At the time of the comment |
+| 939 | Maintenant | Now |
+| 943 | Attributs modifiés : | Changed attributes: … |
+| 944 | · éléments contenus : | · contained elements: … → … |
+| 944 | Références ou contenu modifiés | References or content changed |
+| 948 | Chargez un modèle : les commentaires sont comparés au modèle chargé. | Load a model: comments are compared with the loaded model. |
+| 950 | Commentaires non clos dont la valeur commentée a changé ou dont l'élément a disparu depuis le commentaire (nouveau fichier, 🔄 mise à jour), et commentaires marqués « Corrigé, à vérifier » . Pour chacun : ✔ Valider si la correction est faite (le commentaire est clos), ou ↻ Garder ouvert (la version actuelle devient la référence). | Open comments whose commented value has changed or whose element has disappeared since the comment (new file, 🔄 update), and comments marked “Fixed, to be checked” . For each one: ✔ Validate if the fix is done (the comment is closed), or ↻ Keep open (the current version becomes the reference). |
+| 951 | ✔ Rien à vérifier : aucun commentaire ouvert ne porte sur un élément modifié. | ✔ Nothing to check: no open comment concerns a changed element. |
+| 952 | commentaire(s) à vérifier | … comment(s) to check |
+| 952 | Valider tous les commentaires de cette liste | Validate all comments in this list |
+| 952 | ✔ Tout valider | ✔ Validate all |
+| 957 | Aller à la cible | Go to the target |
+| 957 | Modifier | Edit |
+| 959 | La correction a été faite : statut Validé | The fix has been made: status Validated |
+| 959 | ✔ Valider | ✔ Validate |
+| 960 | La modification ne règle pas le commentaire : il reste ouvert, la version actuelle devient la référence | The change does not resolve the comment: it stays open, the current version becomes the reference |
+| 960 | ↻ Garder ouvert | ↻ Keep open |
+| 965 | Valider les | Validate the … comment(s) in the list? |
+| 965 | commentaire(s) de la liste ? | Validate the … comment(s) in the list? |
+| 978 | Total | Total |
+| 980 | Total | Total |
+| 986 | Commentaires | Comments |
+| 986 | de la liste (filtres de 💬 Commentaires) | from the list (filters of 💬 Comments) |
+| 987 | Regrouper par | Group by |
+| 987 | criticité | severity |
+| 987 | élément | element |
+| 988 | réponses | replies |
+| 990 | commentaire(s) · | … comment(s) · … overdue · … on changed elements |
+| 990 | en retard · | … comment(s) · … overdue · … on changed elements |
+| 990 | sur des éléments modifiés | … comment(s) · … overdue · … on changed elements |
+| 991 | Rapport HTML autonome (imprimable) : synthèse, commentaires groupés, cibles, état par rapport au modèle chargé | Standalone HTML report (printable): summary, grouped comments, targets, status against the loaded model |
+| 991 | 📄 Rapport HTML | 📄 HTML report |
+| 992 | Une ligne par commentaire (tableur) | One row per comment (spreadsheet) |
+| 992 | ⬇ CSV | ⬇ CSV |
+| 1004 | (non attribué) | (unassigned) |
+| 1005 | (commentaire général) | (general comment) |
+| 1011 | Aucun commentaire à mettre dans le rapport. | No comment to put in the report. |
+| 1012 | ⚠ modifié | ⚠ changed |
+| 1012 | ⚠ supprimé | ⚠ deleted |
+| 1012 | inchangé | unchanged |
+| 1017 | ✔ Vérifié le | ✔ Checked on …… |
+| 1020 | Criticité | Severity |
+| 1020 | Statut | Status |
+| 1020 | Commentaire | Comment |
+| 1020 | Cibles | Targets |
+| 1020 | Auteur | Author |
+| 1020 | Échéance | Due date |
+| 1020 | Responsables | Assignees |
+| 1020 | Modèle | Model |
+| 1022 | Rapport de revue | Review report |
+| 1027 | 💬 Rapport de revue | 💬 Review report |
+| 1027 | Modèle : | Model: … · … comment(s) · issued on …… |
+| 1027 | commentaire(s) · édité le | Model: … · … comment(s) · issued on …… |
+| 1028 | Synthèse | Summary |
+| 1028 | Produit par Arcalyse — colonne « Modèle » : état de la valeur commentée dans le modèle chargé lors de l'édition du rapport. | Produced by Arcalyse — “Model” column: status of the commented value in the model loaded when the report was issued. |
+| 1034 | Titre | Title |
+| 1034 | Commentaire | Comment |
+| 1034 | Criticité | Severity |
+| 1034 | Catégorie | Category |
+| 1034 | Statut | Status |
+| 1034 | Auteur | Author |
+| 1034 | Créé le | Created on |
+| 1034 | Échéance | Due date |
+| 1034 | Responsables | Assignees |
+| 1034 | Étiquettes | Tags |
+| 1034 | Éléments | Elements |
+| 1034 | Champs | Fields |
+| 1034 | Diagramme | Diagram |
+| 1034 | État dans le modèle | Status in the model |
+| 1034 | Réponses | Replies |
+| 1034 | Vérifié le | Checked on |
+| 1034 | Vérifié par | Checked by |
+| 1037 | modifié | modified |
+| 1037 | supprimé | deleted |
+| 1037 | inchangé | unchanged |
+| 1046 | Titre | Title |
+| 1046 | Criticité | Severity |
+| 1046 | Catégorie | Category |
+| 1046 | Échéance | Due date |
+| 1046 | Responsables | Assignees |
+| 1046 | Étiquettes | Tags |
+| 1048 | Votre nom | Your name |
+| 1048 | Auteur des nouveaux commentaires | Author of new comments |
+| 1049 | Participants | Participants |
+| 1049 | (proposés comme auteurs et responsables) | (offered as authors and assignees) |
+| 1050 | Retirer | Remove |
+| 1050 | Aucun participant. | No participant. |
+| 1051 | Nom, initiales ou équipe | Name, initials or team |
+| 1051 | ✚ Ajouter | ✚ Add |
+| 1052 | Champs proposés dans l'éditeur | Fields offered in the editor |
+| 1054 | Affichage | Display |
+| 1055 | Calque des commentaires sur les diagrammes | Comment layer on diagrams |
+| 1055 | Montrer aussi les notes closes sur les diagrammes | Also show closed notes on diagrams |
+| 1056 | Marquer d'un 💬 les éléments commentés dans les vues | Mark commented elements with 💬 in the views |
+| 1056 | Blocs, cartes et noms cliquables des éléments qui ont des commentaires non clos | Blocks, cards and clickable names of elements with open comments |
+| 1057 | Données | Data |
+| 1058 | Export et import des commentaires : bouton 💾 Revue ▾ en haut du panneau. | Export and import of comments: 💾 Review ▾ button at the top of the panel. |
+| 1059 | Supprimer tous les commentaires de la page | Delete all comments from the page |
+| 1059 | 🗑 Tout supprimer | 🗑 Delete all |
+| 1071 | Supprimer les | Delete the … comment(s) from the page? (Export them first to keep them.) |
+| 1071 | commentaire(s) de la page ? (Exportez-les d'abord pour les garder.) | Delete the … comment(s) from the page? (Export them first to keep them.) |
+| 1085 | Fichier illisible (JSON attendu). | Unreadable file (JSON expected). |
+| 1086 | Ce fichier n'est pas une revue Arcalyse. | This file is not an Arcalyse review. |
+| 1093 | ✔ Revue importée : | ✔ Review imported: … added, … updated, … already present |
+| 1093 | ajouté(s), | ✔ Review imported: … added, … updated, … already present |
+| 1093 | mis à jour, | ✔ Review imported: … added, … updated, … already present |
+| 1093 | déjà présent(s) | ✔ Review imported: … added, … updated, … already present |
+| 1094 | — modèle non vérifié (aucun modèle chargé) | — model not checked (no model loaded) |
+| 1113 | Les identifiants de projet diffèrent, mais les éléments commentés sont bien dans le modèle chargé : sans doute une copie du même projet. | The project identifiers differ, but the commented elements are in the loaded model: probably a copy of the same project. |
+| 1114 | Cette revue porte sur un autre projet Capella : ses commentaires ne correspondront pas aux éléments du modèle chargé (ils seront marqués « autre projet » et non vérifiés). | This review concerns another Capella project : its comments will not match the elements of the loaded model (they will be marked “other project” and not checked). |
+| 1115 | Trop peu d'éléments commentés ( | Too few commented elements (…) to conclude, and not all of them are in the loaded model: check that this is the right model (or a version where these elements were deleted). |
+| 1115 | ) pour conclure, et tous ne sont pas dans le modèle chargé : vérifiez qu'il s'agit du bon modèle (ou d'une version où ces éléments ont été supprimés). | Too few commented elements (…) to conclude, and not all of them are in the loaded model: check that this is the right model (or a version where these elements were deleted). |
+| 1116 | Cette revue ne contient que des commentaires généraux et n'indique pas son projet : impossible de vérifier le modèle. | This review only contains general comments and does not state its project: the model cannot be checked. |
+| 1121 | ⚠ Cette revue porte-t-elle sur ce modèle ? | ⚠ Does this review concern this model? |
+| 1123 | Revue importée | Imported review |
+| 1123 | Modèle chargé | Loaded model |
+| 1124 | Fichier | File |
+| 1124 | revue faite sur « | review made on “…” |
+| 1125 | Projet Capella | Capella project |
+| 1126 | Éléments commentés | Commented elements |
+| 1126 | élément(s) | … element(s) |
+| 1126 | retrouvé(s) ( | … found (… %) |
+| 1128 | commentaire(s) dans le fichier. | … comment(s) in the file. |
+| 1129 | Annuler | Cancel |
+| 1130 | Importer quand même | Import anyway |
 
 ## Textes sans traduction anglaise (5)
 
 - `js/33-qualite-noms.js:43` — contrôle
 - `js/35-tableau-de-bord.js:143` — Tableau de bord : traçabilité indisponible
 - `js/39-exigences-donnees.js:607` — Détail étendu indisponible
-- `js/40-suivi-fichier.js:132` — Sélecteur à accès direct indisponible :
+- `js/40-suivi-fichier.js:138` — Sélecteur à accès direct indisponible :
 - `js/46-config-interface.js:83` — Vues enregistrées illisibles :

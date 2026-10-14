@@ -61,12 +61,16 @@ async function capDiagPickAird() {
  * 📁 Dossier du projet (écran d'accueil) : charge ensemble le modèle .capella et ses diagrammes .aird.
  * Le dossier est lu sur 2 niveaux ; s'il contient plusieurs modèles, le choix est proposé dans l'écran d'accueil.
  * Edge/Chrome : sélecteur de dossier (l'accès direct au .capella permet le 🔄 suivi) ; sinon sélecteur classique de dossier.
+ * @param {boolean} [confirme] - true : remplacement du modèle affiché déjà accepté
  */
-async function capOpenProjectFolder() {
+async function capOpenProjectFolder(confirme) {
+  // Un modèle est déjà affiché : avertissement (travail non enregistré) avant l'ouverture du sélecteur de dossier
+  if (capLoaded && !confirme) { if (await capReplaceConfirm('')) capOpenProjectFolder(true); return; }
+  _capReplaceOk = capLoaded ? Date.now() : 0;
   if (!window.showDirectoryPicker || (typeof _capPickerKo !== 'undefined' && _capPickerKo)) { document.getElementById('cw-folder-input').click(); return; }
   let d;
   try { d = await window.showDirectoryPicker({ id: 'arcalyse-projet', mode: 'read' }); }
-  catch (e) { if (!e || e.name !== 'AbortError') document.getElementById('cw-folder-input').click(); return; }
+  catch (e) { if (!e || e.name !== 'AbortError') document.getElementById('cw-folder-input').click(); else _capReplaceOk = 0; return; }
   capProjectScanDir(d);
 }
 
@@ -99,7 +103,7 @@ function capProjectFromFiles(fichiers) {
   if (!mods.length) { capWelcomeStatus(_L('Aucun fichier .capella dans ce dossier (ni dans ses sous-dossiers).'), 'err'); return; }
   /** Charge un modèle et son .aird. */
   const charger = async m => {
-    if (capLoaded && !(await capReplaceConfirm(m.nom))) { capShowWelcome(false); return; }
+    if (capLoaded && !capReplacePreOk() && !(await capReplaceConfirm(m.nom))) { capShowWelcome(false); return; }
     const base = m.nom.replace(/\.[^.]+$/, '').toLowerCase(), dossier = m.chemin.slice(0, m.chemin.length - m.nom.length);
     const a = airds.find(x => x.nom.toLowerCase() === base + '.aird') || airds.find(x => x.chemin.startsWith(dossier) && !x.chemin.slice(dossier.length).includes('/')) || (airds.length === 1 ? airds[0] : null);
     try {
@@ -198,7 +202,7 @@ function capDiagBarre() {
     `<button class="tbtn${_capDiag.choix ? ' active' : ''}" id="cdg-choix" title="${_L('Choisir les diagrammes à exporter : cases à cocher dans l\'explorateur')}">${_capDiag.choix ? _L('☑ Terminer la sélection') : _L('☐ Sélectionner…')}</button></span>` : '';
   const infos = _capDiag.airdCharge ? `<button class="tbtn" id="cdg-infos" title="${_L('Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés')}">${_L('ℹ Infos')}</button>` : '';
   b.innerHTML = `<span class="tb-grp"><button class="tbtn" id="cdg-ouvrir" title="${_L('Choisir le fichier .aird (le sélecteur s\'ouvre dans le dossier du .capella quand le navigateur le permet)')}">${_L('📂 Ouvrir le .aird…')}</button>` +
-    infos + `</span>` + exp + (typeof capRevDiagBar === 'function' ? capRevDiagBar() : '') +
+    infos + `</span>` + exp +
     `<span id="cdg-info" class="cdg-info">${_capDiag.airdCharge ? capEsc(_capDiag.nomAird) + ' — ' + _L(`${_capDiag.nbReps} diagramme(s)`) :
       _L('Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre.')}</span>` +
     `<span id="cdg-statut" class="cdg-info"></span>`;
@@ -229,6 +233,58 @@ function capDiagSync() {
   capDiagBarre();
   capDiagListe();
   capDiagCarte();
+  capDiagBarreVd();
+}
+
+/**
+ * Réorganise la barre de la visionneuse au-dessus du diagramme, pour qu'elle ne bouge plus d'un diagramme à l'autre :
+ * ligne 1 = identité du diagramme (retour, icône, sigle, nom tronqué, élément représenté) puis thème, export, ✕ ;
+ * ligne 2 = outils à largeur fixe (recherche, 📝 note de revue et calque, chaînes, filtres, zoom, carte, mise en page). Le bouton ⌒ Ponts est masqué. Les commandes sont déplacées telles quelles (leurs écouteurs suivent).
+ * Appelée à chaque synchronisation ; sans effet après la première fois.
+ */
+function capDiagBarreVd() {
+  const l1 = document.querySelector('#vue-diagramme > .vd-barre:not(#vd-outils)');
+  if (!l1 || document.getElementById('cdg-vd-l2')) { capDiagRevSlot(); return; }
+  const l2 = document.createElement('div'); l2.id = 'cdg-vd-l2'; l2.className = 'vd-barre cdg-vd-l2';
+  l1.classList.add('cdg-vd-l1'); l1.after(l2);
+  const prendre = sel => { const e = typeof sel === 'string' ? l1.querySelector(sel) : sel; if (e) l2.appendChild(e); return e; };
+  const sep = () => { const x = document.createElement('span'); x.className = 'cdg-vd-sep'; l2.appendChild(x); };
+  const ch = prendre('.vd-chercher'), tr = document.getElementById('vd-trouves');
+  if (ch && tr) ch.appendChild(tr);   // nombre de résultats après ▲ ▼ : pas de vide entre le champ et ses flèches
+  const rev = document.createElement('span'); rev.id = 'cdg-crv'; rev.className = 'cdg-crv'; l2.appendChild(rev);
+  sep(); prendre('#vd-chaine'); prendre(document.getElementById('vd-filtres-bt') && document.getElementById('vd-filtres-bt').parentElement);
+  sep(); ['#vd-moins', '#vd-zoom', '#vd-plus', '#vd-ajuster', '#vd-reel', '#vd-zoom-choix', '#vd-carte-bt'].forEach(prendre);
+  const ressort = document.createElement('span'); ressort.className = 'ressort'; ressort.style.flex = '1'; l2.appendChild(ressort);
+  prendre('#vd-edition'); prendre('#vd-tableau-info');
+  // Thème et export : à droite de la ligne 1, avant ✕ (le nom du diagramme est tronqué pour leur laisser la place)
+  const fermer = document.getElementById('vd-fermer'), exp = document.getElementById('vd-export-bt');
+  [document.getElementById('vd-theme'), exp && exp.parentElement].forEach(e => { if (e && fermer && fermer.parentElement === l1) l1.insertBefore(e, fermer); });
+  const ponts = document.getElementById('vd-ponts'); if (ponts) ponts.style.display = 'none';
+  // Chaînes et chemins : seulement ceux dessinés dans le diagramme ouvert (liste remplie par la visionneuse à chaque ouverture)
+  let raf = 0;
+  new MutationObserver(ms => { if (ms.every(m => m.target.closest && m.target.closest('#crv-layer'))) return; cancelAnimationFrame(raf); raf = requestAnimationFrame(capDiagChainesFiltre); })
+    .observe(document.getElementById('vue-diagramme'), { subtree: true, childList: true });
+  capDiagRevSlot(); capDiagChainesFiltre();
+}
+
+/** Remplit l'emplacement de la revue (📝 Note de revue, 💬 Calque) à côté de la recherche du diagramme. */
+function capDiagRevSlot() {
+  const r = document.getElementById('cdg-crv');
+  if (r && typeof capRevDiagBar === 'function') r.innerHTML = capRevDiagBar();
+}
+
+/**
+ * Liste « Chaînes et chemins » : ne garde que les chaînes fonctionnelles et chemins physiques dessinés dans
+ * le diagramme ouvert (forme rattachée à la chaîne dans le SVG) ; liste masquée s'il n'y en a aucun.
+ */
+function capDiagChainesFiltre() {
+  const sel = document.getElementById('vd-chaine'), svg = document.getElementById('vd-svg');
+  if (!sel || !svg) return;
+  let n = 0;
+  [...sel.options].forEach(o => { if (!o.value) return; const vu = !!svg.querySelector(`[data-sem="${CSS.escape(o.value)}"]`); o.hidden = !vu; o.disabled = !vu; if (vu) n++; });
+  if (sel.selectedOptions[0] && sel.selectedOptions[0].hidden) sel.value = '';
+  sel.style.visibility = n ? '' : 'hidden';
+  sel.title = n ? _L('Mettre en évidence une chaîne fonctionnelle ou un chemin physique dessiné dans ce diagramme') : '';
 }
 
 /** Rendu de la vue 🔲 Diagrammes Capella. */

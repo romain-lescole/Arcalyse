@@ -81,6 +81,7 @@ function capRevSave(id){
 /** Rafraîchit tout ce qui montre la revue : badge, panneau, calque du diagramme, marques des vues. */
 function capRevRefresh(){
   capRevBadge(); capRevRender(); capRevLayerDraw(); capRevMarkSchedule();
+  if(typeof capDiagRevSlot==='function') capDiagRevSlot();   // 📝 Note de revue / 💬 Calque (n) au-dessus du diagramme
   // Panneau de détail ouvert : section « Commentaires » et compteur sous le nom
   document.querySelectorAll('#crv-det-sec').forEach(sec=>{
     const id=sec.dataset.el, el=capLoaded&&capGetElementById_(id); if(!el||!_capRevUi.secTitle) return;
@@ -211,42 +212,104 @@ function capRevBadge(){
   b.title=_L(`${n} commentaire(s) non clos`)+(k?_L(` — ${k} à vérifier`):'');
 }
 /**
- * Ouvre ou ferme le panneau 💬 Revue.
+ * Ouvre ou ferme le panneau 💬 Revue (dans la page, ou dans sa fenêtre séparée si elle est ouverte : elle passe alors au premier plan).
  * @param {boolean} [open] - Forcer l'état (sinon bascule)
  * @param {string} [tab] - Onglet à afficher : list, check, report, cfg
  */
 function capRevToggle(open, tab){
-  _capRevUi.open=open==null?!_capRevUi.open:!!open;
   if(tab) _capRevUi.tab=tab;
-  let p=document.getElementById('crv-panel');
-  if(!p){
-    p=document.createElement('div'); p.id='crv-panel'; document.body.appendChild(p);
-    p.addEventListener('click', capRevPanelClick);
-    p.addEventListener('input', capRevPanelInput);
-    p.addEventListener('change', capRevPanelChange);
-  }
+  const w=capRevPop();
+  if(w){ _capRevUi.open=true; capRevRender(); if(open!==false) w.focus(); else w.close(); return; }
+  _capRevUi.open=open==null?!_capRevUi.open:!!open;
+  const p=capRevPanel();
   const tb=document.getElementById('toolbar');
   p.style.top=(tb?Math.round(tb.getBoundingClientRect().bottom):40)+'px';
   p.style.display=_capRevUi.open?'flex':'none';
   document.getElementById('b-review')?.classList.toggle('active',_capRevUi.open);
   capRevRender();
 }
+/** @returns {HTMLElement} panneau 💬 Revue (créé au premier appel ; il peut se trouver dans la fenêtre séparée) */
+function capRevPanel(){
+  let p=_capRevUi.panel;
+  if(!p){
+    p=_capRevUi.panel=document.createElement('div'); p.id='crv-panel'; document.body.appendChild(p);
+    p.addEventListener('click', capRevPanelClick);
+    p.addEventListener('input', capRevPanelInput);
+    p.addEventListener('change', capRevPanelChange);
+  }
+  return p;
+}
+/** @returns {Window|null} fenêtre séparée de la revue, si elle est ouverte */
+function capRevPop(){ const w=_capRevUi.win; return w&&!w.closed?w:null; }
+/** @returns {Document} document où l'utilisateur travaille sur la revue : la fenêtre séparée si elle a le focus, sinon la page */
+function capRevDoc(){ const w=capRevPop(); return w&&w.document.hasFocus()?w.document:document; }
+/** @param {string} id @returns {HTMLElement|null} élément du panneau (page ou fenêtre séparée) */
+function capRevQ(id){ const p=_capRevUi.panel; return p?p.ownerDocument.getElementById(id):null; }
+/** @param {string} msg @returns {boolean} confirmation demandée dans la fenêtre où l'on travaille */
+function capRevConfirm(msg){ return capRevDoc().defaultView.confirm(msg); }
+/** @param {string} msg - Message affiché dans la fenêtre où l'on travaille */
+function capRevAlert(msg){ capRevDoc().defaultView.alert(msg); }
+
+/**
+ * ⧉ Ouvre le panneau 💬 Revue dans une fenêtre séparée (à placer sur un autre écran). La fenêtre dépend de la page :
+ * même script, mêmes données ; le panneau y est déplacé avec ses écouteurs, les styles et le thème sont recopiés.
+ * La fermer ramène le panneau dans la page.
+ */
+function capRevPopOut(){
+  if(capRevPop()){ capRevPop().focus(); return; }
+  const w=window.open('', 'arcalyse-revue', 'width=560,height=860');
+  if(!w){ alert(_L('Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez.')); return; }
+  const D=w.document;
+  D.open(); D.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title></title></head><body class="crv-pop-body"></body></html>'); D.close();
+  D.title=_L('💬 Revue')+' — '+(capCurrentFileName||'Arcalyse');
+  document.querySelectorAll('style').forEach(st=>D.head.appendChild(D.importNode(st,true)));
+  capRevPopTheme(w);
+  const p=capRevPanel(); D.body.appendChild(D.adoptNode(p));
+  p.classList.add('crv-pop'); p.style.display='flex';
+  _capRevUi.win=w; _capRevUi.open=true;
+  w.addEventListener('pagehide',capRevPopBack);
+  w.addEventListener('keydown',e=>{ if(e.ctrlKey&&!e.altKey&&(e.key==='s'||e.key==='S')){ e.preventDefault(); capSavePageDirect(e.shiftKey); } });
+  document.getElementById('b-review')?.classList.add('active');
+  capRevRender();
+}
+/** Recopie le thème de la page (attributs et variables de couleur de <html>) dans la fenêtre séparée. @param {Window} w */
+function capRevPopTheme(w){
+  const a=document.documentElement, b=w.document.documentElement;
+  ['data-theme','data-tone','style','lang'].forEach(k=>{ const v=a.getAttribute(k); if(v==null) b.removeAttribute(k); else b.setAttribute(k,v); });
+}
+/** Fenêtre séparée fermée : le panneau revient (fermé) dans la page. */
+function capRevPopBack(){
+  const p=_capRevUi.panel;
+  if(p&&p.ownerDocument!==document) document.body.appendChild(document.adoptNode(p));
+  if(p){ p.classList.remove('crv-pop'); p.style.display='none'; }
+  _capRevUi.win=null; _capRevUi.open=false; _capRevUi.dd=false;
+  document.getElementById('b-review')?.classList.remove('active');
+}
 /** Affiche le contenu du panneau 💬 Revue (onglet courant). */
 function capRevRender(){
-  const p=document.getElementById('crv-panel'); if(!p||!_capRevUi.open) return;
-  const u=_capRevUi, nOpen=_capRev.comments.filter(c=>!capRevClosed(c)).length, nChk=capLoaded?capRevToCheck().length:0;
+  const p=_capRevUi.panel; if(!p||!_capRevUi.open) return;
+  const D=p.ownerDocument, pop=!!capRevPop();
+  const u=_capRevUi, nOpen=_capRev.comments.filter(c=>!capRevClosed(c)).length, nChk=capLoaded?capRevToCheck().length:0, nNon=capRevUnsavedCount();
   const tab=(k,l,t)=>`<button class="crv-tab${u.tab===k?' on':''}" data-tab="${k}" title="${t}">${l}</button>`;
-  const keep=document.activeElement&&p.contains(document.activeElement)?document.activeElement.id:'';
-  const pos=(document.getElementById('crv-body')||{}).scrollTop||0;
+  const keep=D.activeElement&&p.contains(D.activeElement)?D.activeElement.id:'';
+  const pos=(D.getElementById('crv-body')||{}).scrollTop||0;
   p.innerHTML=`<div class="crv-hdr"><b>${_L('💬 Revue')}</b><span class="ana-dim">${capEsc(capCurrentFileName||'')}</span><span style="flex:1"></span>`+
     `<button class="cap-lf-btn" data-a="new" title="${_L('Nouveau commentaire (sur l\'élément affiché dans le panneau de détail, s\'il y en a un)')}">${_L('✚ Nouveau')}</button>`+
-    `<button class="cap-lf-btn" data-a="close" title="${_L('Fermer')}">✕</button></div>`+
+    `<span class="crv-dd-a"><button class="cap-lf-btn${u.dd?' active':''}" data-a="dd" title="${_L('Exporter ou importer les commentaires (.json)')}">${_L('💾 Revue ▾')}${nNon?` <span class="crv-n crv-warn" title="${_L('Commentaires modifiés depuis le dernier enregistrement ou export')}">${nNon}</span>`:''}</button>`+
+    (u.dd?`<div class="crv-dd">`+
+      _L(`<div class="crv-dd-h">Les commentaires sont enregistrés <b>dans la page</b> : 💾 Enregistrer (Ctrl+S) les conserve avec le modèle.</div>`)+
+      `<div class="ctx-i" data-a="export">${_L('⬇ Exporter les commentaires (.json)')}</div><div class="ctx-i" data-a="import">${_L('📂 Importer / fusionner une revue (.json)…')}</div>`+
+      _L(`<div class="crv-dd-h">L'export garde la revue hors de la page, pour la transmettre ou réunir celles de plusieurs relecteurs (l'import ajoute les nouveaux commentaires et garde la version la plus récente des autres).</div>`)+
+      (nNon?`<div class="crv-dd-h" style="color:var(--c-warn,#e3b341)">${_L(`${nNon} commentaire(s) modifié(s) depuis le dernier enregistrement ou export.`)}</div>`:'')+`</div>`:'')+`</span>`+
+    `<button class="cap-lf-btn" data-a="pop" title="${pop?_L('Ramener le panneau dans la page'):_L('Ouvrir le panneau dans une fenêtre séparée (par exemple sur un autre écran)')}">${pop?'⧈':'⧉'}</button>`+
+    (pop?'':`<button class="cap-lf-btn" data-a="close" title="${_L('Fermer')}">✕</button>`)+`</div>`+
     `<div class="crv-tabs">${tab('list',_L(`💬 Commentaires <span class="crv-n">${nOpen}</span>`),_L('Liste des commentaires, filtres et recherche'))}`+
     tab('check',_L(`🔁 Vérifier`)+(nChk?` <span class="crv-n crv-warn">${nChk}</span>`:''),_L('Commentaires dont l\'élément a changé ou disparu depuis le commentaire, ou marqués « Corrigé, à vérifier »'))+
-    tab('report',_L('📄 Rapport'),_L('Synthèse, rapport HTML, CSV'))+tab('cfg',_L('⚙ Réglages'),_L('Votre nom, participants, champs proposés, calque des diagrammes, export / import'))+`</div>`+
+    tab('report',_L('📄 Rapport'),_L('Synthèse, rapport HTML, CSV'))+tab('cfg',_L('⚙ Réglages'),_L('Votre nom, participants, champs proposés, affichage'))+`</div>`+
     `<div class="crv-body" id="crv-body">${u.tab==='check'?capRevCheckHtml():u.tab==='report'?capRevReportTab():u.tab==='cfg'?capRevCfgHtml():capRevListHtml()}</div>`;
-  const b=document.getElementById('crv-body'); if(b) b.scrollTop=pos;
-  if(keep){ const k=document.getElementById(keep); if(k){ k.focus(); if(k.setSelectionRange&&k.type==='text'){ const n=k.value.length; k.setSelectionRange(n,n); } } }
+  const b=D.getElementById('crv-body'); if(b) b.scrollTop=pos;
+  if(keep){ const k=D.getElementById(keep); if(k){ k.focus(); if(k.setSelectionRange&&k.type==='text'){ const n=k.value.length; k.setSelectionRange(n,n); } } }
+  if(pop) D.title=_L('💬 Revue')+' — '+(capCurrentFileName||'Arcalyse');
 }
 
 /** Personnes connues : participants, auteurs et responsables des commentaires. @returns {string[]} */
@@ -345,6 +408,9 @@ function capRevPanelClick(e){
   const a=t.closest('[data-a]'); if(!a||a.tagName==='SELECT') return;
   const card=t.closest('[data-c]'), c=card?capRevGet(card.dataset.c):null, act=a.dataset.a;
   if(act==='close'){ capRevToggle(false); return; }
+  if(act==='dd'){ _capRevUi.dd=!_capRevUi.dd; capRevRender(); return; }
+  if(act==='pop'){ if(capRevPop()) capRevPop().close(); else capRevPopOut(); return; }
+  if(act==='export'||act==='import') _capRevUi.dd=false;
   if(act==='new'){ capRevNew(u.elId&&capGetElementById_(u.elId)?[{id:u.elId}]:[]); return; }
   if(act==='person-add'||act==='person-del'||act==='export'||act==='import'||act==='clear'||act==='me-save'){ capRevCfgAction(act, a); return; }
   if(act==='report-html'){ capRevReportHtml(); return; }
@@ -356,9 +422,9 @@ function capRevPanelClick(e){
   else if(act==='go') capRevGoto(c);
   else if(act==='validate') capRevValidate(c);
   else if(act==='reopen'){ capRevResnap(c); capRevSave(c.id); }
-  else if(act==='del'){ if(confirm(_L(`Supprimer le commentaire #${c.num} ?`))){ _capRev.comments=_capRev.comments.filter(x=>x!==c); capRevSave(); } }
+  else if(act==='del'){ if(capRevConfirm(_L(`Supprimer le commentaire #${c.num} ?`))){ _capRev.comments=_capRev.comments.filter(x=>x!==c); capRevSave(); } }
   else if(act==='reply'){
-    const ta=document.getElementById('crv-rep-'+c.id), txt=ta&&ta.value.trim(); if(!txt) return;
+    const ta=capRevQ('crv-rep-'+c.id), txt=ta&&ta.value.trim(); if(!txt) return;
     (c.replies=c.replies||[]).push({author:_capRev.me||'', date:new Date().toISOString(), text:txt});
     c.updated=new Date().toISOString(); capRevSave(c.id);
   }
@@ -396,7 +462,7 @@ function capRevGoto(c){
   }
   const t=(c.targets||[]).find(x=>capLoaded&&capGetElementById_(x.id));
   if(t){ capOpenDetailById(t.id); return; }
-  if(c.diag) alert(_L('Ce commentaire est posé sur un diagramme : ouvrez le .aird du projet dans 🔲 Diagrammes Capella pour voir la note.'));
+  if(c.diag) capRevAlert(_L('Ce commentaire est posé sur un diagramme : ouvrez le .aird du projet dans 🔲 Diagrammes Capella pour voir la note.'));
 }
 /** Valide un commentaire (correction vérifiée) : statut Validé, date et vérificateur. @param {object} c */
 function capRevValidate(c){
@@ -425,12 +491,13 @@ function capRevNew(cibles, diag){ capRevEdit(null, {targets:cibles||[], diag:dia
  */
 function capRevEdit(id, preset){
   const c0=id?capRevGet(id):null; if(id&&!c0) return;
-  const F=_capRev.fields, esc=capEsc;
+  const F=_capRev.fields, esc=capEsc, D=capRevDoc();
   // Brouillon : copie modifiable (les empreintes des cibles existantes sont gardées)
   const d=c0?JSON.parse(JSON.stringify(c0)):{title:'', text:'', crit:'', cat:'', status:'open', author:_capRev.me||'', due:'', assignees:[], tags:[],
     targets:(preset.targets||[]).map(t=>capRevTarget(t.id,t.field)).filter(Boolean), diag:preset.diag||null};
-  let ov=document.getElementById('crv-ov');
-  if(!ov){ ov=document.createElement('div'); ov.id='crv-ov'; document.body.appendChild(ov); }
+  ['assignees','tags','targets'].forEach(k=>{ if(!Array.isArray(d[k])) d[k]=[]; });   // commentaire importé incomplet
+  let ov=D.getElementById('crv-ov');
+  if(!ov){ ov=D.createElement('div'); ov.id='crv-ov'; D.body.appendChild(ov); }
   const people=()=>[...new Set([...capRevPeople(), ...d.assignees])].sort((a,b)=>a.localeCompare(b));
   const champs=t=>{ const el=capLoaded&&capGetElementById_(t.id); const ks=['', 'name', 'description', ...(el?Object.keys(el.attrs).filter(k=>!['id','name','description'].includes(k)&&!capParseAttrRefs_(String(el.attrs[k])).some(r=>capGetElementById_(r))):[])];
     if(!ks.includes(t.field)) ks.push(t.field);
@@ -470,10 +537,10 @@ function capRevEdit(id, preset){
     const t=e.target;
     if(t===ov||t.closest('[data-x]')){ fermer(); return; }
     const p=t.closest('[data-pers]'); if(p){ const k=p.dataset.pers; d.assignees=d.assignees.includes(k)?d.assignees.filter(x=>x!==k):[...d.assignees,k]; p.classList.toggle('on'); return; }
-    const td=t.closest('[data-tdel]'); if(td){ d.targets.splice(+td.dataset.tdel,1); document.getElementById('crv-ed-tgs').innerHTML=ciblesHtml(); return; }
+    const td=t.closest('[data-tdel]'); if(td){ d.targets.splice(+td.dataset.tdel,1); D.getElementById('crv-ed-tgs').innerHTML=ciblesHtml(); return; }
     const ad=t.closest('[data-add]'); if(ad){ if(!d.targets.some(x=>x.id===ad.dataset.add)){ const n=capRevTarget(ad.dataset.add,''); if(n) d.targets.push(n); }
-      document.getElementById('crv-ed-tgs').innerHTML=ciblesHtml(); document.getElementById('crv-ed-res').innerHTML=''; document.getElementById('crv-ed-find').value=''; return; }
-    if(t.closest('[data-del]')){ if(confirm(_L(`Supprimer le commentaire #${c0.num} ?`))){ _capRev.comments=_capRev.comments.filter(x=>x!==c0); fermer(); capRevSave(); } return; }
+      D.getElementById('crv-ed-tgs').innerHTML=ciblesHtml(); D.getElementById('crv-ed-res').innerHTML=''; D.getElementById('crv-ed-find').value=''; return; }
+    if(t.closest('[data-del]')){ if(D.defaultView.confirm(_L(`Supprimer le commentaire #${c0.num} ?`))){ _capRev.comments=_capRev.comments.filter(x=>x!==c0); fermer(); capRevSave(); } return; }
     if(t.closest('[data-ok]')) enregistrer();
   };
   ov.onchange=e=>{
@@ -483,7 +550,7 @@ function capRevEdit(id, preset){
   };
   ov.oninput=e=>{
     if(e.target.id!=='crv-ed-find') return;
-    const q=e.target.value.trim().toLowerCase(), res=document.getElementById('crv-ed-res');
+    const q=e.target.value.trim().toLowerCase(), res=D.getElementById('crv-ed-res');
     if(q.length<2){ res.innerHTML=''; return; }
     const hits=capAllElements.filter(x=>(x.attrs.name||'').toLowerCase().includes(q)||x.typeName.toLowerCase().includes(q)).slice(0,12);
     res.innerHTML=hits.map(x=>`<div class="ctx-i" data-add="${esc(x.id)}"><span style="color:${(CAP_LAYERS[x.layer]||{}).color||'#8b949e'};font-size:9px;font-weight:700">${esc(x.layer)}</span> ${esc(x.attrs.name||'—')} <span class="ana-dim">${esc(x.typeName)}</span></div>`).join('')||_L('<div class="ana-dim">Aucun élément.</div>');
@@ -494,20 +561,20 @@ function capRevEdit(id, preset){
     if(e.key==='Enter'&&e.target.id==='crv-ed-pers-new'){ e.preventDefault(); const v=e.target.value.trim(); if(!v) return;
       if(!_capRev.people.includes(v)) _capRev.people.push(v);
       if(!d.assignees.includes(v)) d.assignees.push(v);
-      e.target.value=''; document.getElementById('crv-ed-pers').innerHTML=persHtml(); }
+      e.target.value=''; D.getElementById('crv-ed-pers').innerHTML=persHtml(); }
   };
   /** Enregistre le brouillon dans la revue. */
   function enregistrer(){
-    const v=k=>{ const x=document.getElementById(k); return x?x.value.trim():null; };
+    const v=k=>{ const x=D.getElementById(k); return x?x.value.trim():null; };
     const text=v('crv-ed-text');
-    if(!text&&!(v('crv-ed-title'))){ const ta=document.getElementById('crv-ed-text'); ta.classList.add('crv-req'); ta.focus(); return; }
+    if(!text&&!(v('crv-ed-title'))){ const ta=D.getElementById('crv-ed-text'); ta.classList.add('crv-req'); ta.focus(); return; }
     d.text=text; if(F.title) d.title=v('crv-ed-title');
     const r=n=>{ const x=ov.querySelector(`input[name="${n}"]:checked`); return x?x.value:''; };
     if(F.crit) d.crit=r('crv-crit'); if(F.cat) d.cat=r('crv-cat');
     d.status=v('crv-ed-status')||'open'; d.author=v('crv-ed-author')||'';
     if(F.due) d.due=v('crv-ed-due')||'';
     if(F.tags) d.tags=(v('crv-ed-tags')||'').split(',').map(s=>s.trim()).filter(Boolean);
-    if(document.getElementById('crv-ed-nodiag')?.checked) d.diag=null;
+    if(D.getElementById('crv-ed-nodiag')?.checked) d.diag=null;
     if(d.author&&!_capRev.me) _capRev.me=d.author;   // le premier auteur saisi devient l'auteur par défaut
     if(d.author&&!_capRev.people.includes(d.author)) _capRev.people.push(d.author);
     const now=new Date().toISOString();
@@ -518,7 +585,7 @@ function capRevEdit(id, preset){
     fermer(); capRevSave(c.id);
     if(typeof capWatchFlash==='function') capWatchFlash(_L(`✔ Commentaire #${c.num} enregistré — 💬 Revue pour la liste`));
   }
-  setTimeout(()=>document.getElementById('crv-ed-text')?.focus(),30);
+  setTimeout(()=>D.getElementById('crv-ed-text')?.focus(),30);
 }
 
 /* ── Panneau de détail : boutons et section « Commentaires » ────────────── */
@@ -658,8 +725,8 @@ function capRevDiagBar(){
   setTimeout(capRevLayerEnsure,0);
   if(!_capDiag.airdCharge) return '';
   const uid=capRevDiagUid(), n=uid?_capRev.comments.filter(c=>c.diag&&c.diag.uid===uid).length:0;
-  return `<span class="tb-grp"><span class="tbtn crv-drag" id="cdg-crv-note" draggable="true" title="${_L('Glisser sur le diagramme pour poser une note de revue (déposée sur un élément : elle lui est liée) — clic : note au centre')}">${_L('📝 Note')}</span>`+
-    `<button class="tbtn${_capRev.layer?' active':''}" id="cdg-crv-layer" title="${_L('Afficher ou masquer le calque des commentaires (indépendant du .aird)')}">${_L(`💬 Calque`)}${n?` <span class="cdg-nb">${n}</span>`:''}</button></span>`;
+  return `<span class="crv-drag" id="cdg-crv-note" draggable="true" title="${_L('Note de revue : glissez-la sur le diagramme (déposée sur un élément, elle lui est liée) ou cliquez pour la poser au centre. Les notes forment un calque indépendant du .aird.')}"><span class="crv-drag-h">⠿</span>${_L('📝 Note de revue')}</span>`+
+    `<button class="bt bt-petit${_capRev.layer?' actif':''}" id="cdg-crv-layer" title="${_L('Afficher ou masquer le calque des notes de revue (indépendant du .aird)')}">${_L('💬 Calque')} <span class="cdg-nb">${n}</span></button>`;
 }
 /** Installe (une fois) le calque des commentaires au-dessus du diagramme et ses écouteurs. */
 function capRevLayerEnsure(){
@@ -668,7 +735,7 @@ function capRevLayerEnsure(){
   if(!box._crv){
     box._crv=true;
     box.addEventListener('click',e=>{
-      if(e.target.closest('#cdg-crv-layer')){ _capRev.layer=!_capRev.layer; capRevSave(); if(typeof capDiagBarre==='function') capDiagBarre(); return; }
+      if(e.target.closest('#cdg-crv-layer')){ _capRev.layer=!_capRev.layer; capRevSave(); return; }
       if(e.target.closest('#cdg-crv-note')) capRevDiagNoteAt(null,null,'');
     });
     box.addEventListener('dragstart',e=>{ if(e.target.id==='cdg-crv-note'){ e.dataTransfer.setData('application/x-arcalyse-note','1'); e.dataTransfer.effectAllowed='copy'; } });
@@ -744,6 +811,7 @@ function capRevLayerDraw(){
   const L=document.getElementById('crv-layer'), svg=document.getElementById('vd-svg'), zone=document.getElementById('vd-zone');
   if(!L||!svg||!zone) return;
   const uid=capRevDiagUid(), u=_capRevUi;
+  const nb=document.querySelector('#cdg-crv-layer .cdg-nb'); if(nb) nb.textContent=uid?_capRev.comments.filter(c=>c.diag&&c.diag.uid===uid).length:0;
   const list=uid&&_capRev.layer?_capRev.comments.filter(c=>c.diag&&c.diag.uid===uid&&(_capRev.layerDone||!capRevClosed(c)||c.id===u.link)):[];
   const m=svg.getScreenCTM(), sr=svg.getBoundingClientRect();
   if(!list.length||!m||!sr.width){ if(L.innerHTML) L.innerHTML=''; return; }
@@ -894,7 +962,7 @@ function capRevCheckHtml(){
 }
 /** Valide tous les commentaires à vérifier (après confirmation). */
 function capRevCheckAll(){
-  const l=capRevToCheck(); if(!l.length||!confirm(_L(`Valider les ${l.length} commentaire(s) de la liste ?`))) return;
+  const l=capRevToCheck(); if(!l.length||!capRevConfirm(_L(`Valider les ${l.length} commentaire(s) de la liste ?`))) return;
   l.forEach(c=>{ c.status='done'; c.updated=new Date().toISOString(); c.verif={date:c.updated, by:_capRev.me||''}; capRevResnap(c); _capRevUnsaved.add(c.id); });
   capRevSave();
 }
@@ -940,7 +1008,7 @@ function capRevGroupes(l){
 /** Télécharge le rapport HTML autonome de la revue. */
 function capRevReportHtml(){
   const l=capRevReportList(), esc=capEsc;
-  if(!l.length){ alert(_L('Aucun commentaire à mettre dans le rapport.')); return; }
+  if(!l.length){ capRevAlert(_L('Aucun commentaire à mettre dans le rapport.')); return; }
   const etat=c=>{ const s=capRevState(c); return s==='changed'?_L('⚠ modifié'):s==='deleted'?_L('⚠ supprimé'):s==='same'?_L('inchangé'):''; };
   const ligne=c=>{ const st=capRevSt(c), cr=capRevCr(c);
     return `<tr class="${capRevClosed(c)?'clos':''}"><td><b>#${c.num}</b></td><td>${c.crit?`<span class="crit" style="background:${cr.c};color:${capInk(cr.c)}">${cr.l}</span>`:''}</td><td>${st.i} ${st.l}</td>`+
@@ -986,11 +1054,9 @@ function capRevCfgHtml(){
     `<div class="crv-sec">${_L('Affichage')}</div><div class="crv-opts">`+
     ck('layer',_L('Calque des commentaires sur les diagrammes'))+ck('layerDone',_L('Montrer aussi les notes closes sur les diagrammes'))+
     ck('mark',_L('Marquer d\'un 💬 les éléments commentés dans les vues'),_L('Blocs, cartes et noms cliquables des éléments qui ont des commentaires non clos'))+`</div>`+
-    `<div class="crv-sec">${_L('Enregistrement')}</div>`+
-    _L(`<div class="crv-help">Les commentaires sont enregistrés <b>dans la page</b> : 💾 Enregistrer (Ctrl+S) les conserve avec le modèle. Exportez-les en <b>.json</b> pour les garder hors de la page, les transmettre, ou <b>fusionner</b> les revues de plusieurs relecteurs (l'import ajoute les nouveaux commentaires et garde la version la plus récente des autres).</div>`)+
-    `<div class="crv-filters"><button class="phl-export-btn" data-a="export" style="margin-left:0">${_L('⬇ Exporter (.json)')}</button><button class="phl-export-btn" data-a="import" style="margin-left:0">${_L('📂 Importer / fusionner…')}</button>`+
-    `<span style="flex:1"></span><button class="cap-lf-btn" data-a="clear" title="${_L('Supprimer tous les commentaires de la page')}">${_L('🗑 Tout supprimer')}</button></div>`+
-    (capRevUnsavedCount()?`<div class="crv-meta" style="color:var(--c-warn,#e3b341)">${_L(`${capRevUnsavedCount()} commentaire(s) modifié(s) depuis le dernier enregistrement ou export.`)}</div>`:'');
+    `<div class="crv-sec">${_L('Données')}</div>`+
+    `<div class="crv-help">${_L('Export et import des commentaires : bouton 💾 Revue ▾ en haut du panneau.')}</div>`+
+    `<div class="crv-filters"><button class="cap-lf-btn" data-a="clear" title="${_L('Supprimer tous les commentaires de la page')}">${_L('🗑 Tout supprimer')}</button></div>`;
 }
 /**
  * Actions de l'onglet ⚙ Réglages : participants, export, import, suppression.
@@ -998,11 +1064,11 @@ function capRevCfgHtml(){
  * @param {HTMLElement} b - Bouton cliqué
  */
 function capRevCfgAction(act, b){
-  if(act==='person-add'){ const i=document.getElementById('crv-person'), v=i&&i.value.trim(); if(v&&!_capRev.people.includes(v)){ _capRev.people.push(v); capRevSave(); } return; }
+  if(act==='person-add'){ const i=capRevQ('crv-person'), v=i&&i.value.trim(); if(v&&!_capRev.people.includes(v)){ _capRev.people.push(v); capRevSave(); } return; }
   if(act==='person-del'){ _capRev.people=_capRev.people.filter(p=>p!==b.dataset.p); capRevSave(); return; }
   if(act==='export'){ capRevExport(); return; }
   if(act==='import'){ capRevImport(); return; }
-  if(act==='clear'){ if(_capRev.comments.length&&confirm(_L(`Supprimer les ${_capRev.comments.length} commentaire(s) de la page ? (Exportez-les d'abord pour les garder.)`))){ _capRev.comments=[]; _capRev.seq=0; capRevSave(); } }
+  if(act==='clear'){ if(_capRev.comments.length&&capRevConfirm(_L(`Supprimer les ${_capRev.comments.length} commentaire(s) de la page ? (Exportez-les d'abord pour les garder.)`))){ _capRev.comments=[]; _capRev.seq=0; capRevSave(); } }
 }
 /** Exporte la revue (participants et commentaires) dans un fichier .json réutilisable. */
 function capRevExport(){
@@ -1013,11 +1079,11 @@ function capRevExport(){
 }
 /** Importe un fichier .json de revue et le fusionne avec les commentaires de la page. */
 function capRevImport(){
-  const inp=document.createElement('input'); inp.type='file'; if(!capIsMobile()) inp.accept='.json';
+  const D=capRevDoc(), inp=D.createElement('input'); inp.type='file'; if(!capIsMobile()) inp.accept='.json';
   inp.onchange=()=>{ const f=inp.files[0]; if(!f) return;
     f.text().then(t=>{
-      let d; try{ d=JSON.parse(t); }catch(e){ alert(_L('Fichier illisible (JSON attendu).')); return; }
-      if(!d||d.type!=='arcalyse-revue'||!Array.isArray(d.comments)){ alert(_L('Ce fichier n\'est pas une revue Arcalyse.')); return; }
+      let d; try{ d=JSON.parse(t); }catch(e){ D.defaultView.alert(_L('Fichier illisible (JSON attendu).')); return; }
+      if(!d||d.type!=='arcalyse-revue'||!Array.isArray(d.comments)){ D.defaultView.alert(_L('Ce fichier n\'est pas une revue Arcalyse.')); return; }
       const m=capRevMatch(d.comments, d.project||'');
       const fusion=()=>{
         // Même projet (ou copie reconnue par ses éléments) : les commentaires sont rattachés au projet chargé
@@ -1041,7 +1107,7 @@ function capRevImport(){
  * @param {function} fusion - Import confirmé
  */
 function capRevImportConfirm(d, fichier, m, fusion){
-  const esc=capEsc, court=s=>s?esc(String(s).slice(0,8))+'…':'—';
+  const D=capRevDoc(), esc=capEsc, court=s=>s?esc(String(s).slice(0,8))+'…':'—';
   const pct=m.ids?Math.round(m.pct*100):0;
   const avis={
     copy:_L('Les identifiants de projet diffèrent, mais les éléments commentés sont bien dans le modèle chargé : sans doute une copie du même projet.'),
@@ -1049,8 +1115,8 @@ function capRevImportConfirm(d, fichier, m, fusion){
     doubt:m.ids?_L(`Trop peu d'éléments commentés (${m.ids}) pour conclure, et tous ne sont pas dans le modèle chargé : vérifiez qu'il s'agit du bon modèle (ou d'une version où ces éléments ont été supprimés).`)
       :_L('Cette revue ne contient que des commentaires généraux et n\'indique pas son projet : impossible de vérifier le modèle.')}[m.verdict]||'';
   const ligne=(k,a,b)=>`<tr><td class="ana-dim">${k}</td><td>${a}</td><td>${b}</td></tr>`;
-  let ov=document.getElementById('crv-ov');
-  if(!ov){ ov=document.createElement('div'); ov.id='crv-ov'; document.body.appendChild(ov); }
+  let ov=D.getElementById('crv-ov');
+  if(!ov){ ov=D.createElement('div'); ov.id='crv-ov'; D.body.appendChild(ov); }
   ov.innerHTML=`<div class="cw-d-box" style="max-width:620px">
     <div class="cw-d-hdr"><b>${_L('⚠ Cette revue porte-t-elle sur ce modèle ?')}</b><button class="cap-lf-btn" data-x="1">✕</button></div>
     <div class="cw-d-body">
@@ -1100,6 +1166,8 @@ function capRevMerge(d){
   document.addEventListener('contextmenu',capRevContext);
   const root=document.getElementById('cap-content');
   if(root) new MutationObserver(()=>{ if(_capRev.mark&&_capRev.comments.length) capRevMarkSchedule(); }).observe(root,{childList:true, subtree:true});
-  window.addEventListener('resize',()=>{ if(_capRevUi.open) capRevToggle(true); });
+  window.addEventListener('resize',()=>{ if(_capRevUi.open&&!capRevPop()) capRevToggle(true); });
+  window.addEventListener('pagehide',()=>{ const w=capRevPop(); if(w) w.close(); });   // la fenêtre séparée ne vit qu'avec la page
+  new MutationObserver(()=>{ const w=capRevPop(); if(w) capRevPopTheme(w); }).observe(document.documentElement,{attributes:true, attributeFilter:['data-theme','data-tone','style']});
   capRevBadge();
 })();

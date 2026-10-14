@@ -95,13 +95,19 @@ let _capPickerKo=capIsMobile();   // sélecteur à accès direct refusé une foi
 if(_capPickerKo) ['capella-file-input','cap-watch-input','ana-df-file'].forEach(id=>document.getElementById(id)?.removeAttribute('accept'));
 
 /** Ouvre un fichier Capella à charger : sélecteur avec accès direct (Edge/Chrome, permet le 🔄 suivi),
- * sinon sélecteur de fichier classique. Le choix est fait sans attendre, pour garder l'autorisation du clic. */
-function capPickCapellaFile(){
+ * sinon sélecteur de fichier classique. Le choix est fait sans attendre, pour garder l'autorisation du clic.
+ * Un modèle est déjà affiché : l'avertissement (travail non enregistré) passe AVANT l'ouverture du sélecteur,
+ * qui s'ouvre ensuite au clic sur « Choisir le fichier .capella… ».
+ * @param {boolean} [confirme] - true : remplacement déjà accepté
+ */
+function capPickCapellaFile(confirme){
+  if(capLoaded&&!confirme){ capReplaceConfirm('').then(ok=>{ if(ok) capPickCapellaFile(true); }); return; }
+  _capReplaceOk=capLoaded?Date.now():0;
   if(!window.showOpenFilePicker||_capPickerKo){ document.getElementById('capella-file-input').click(); return; }
   capWatchPick().then(r=>{
-    if(!r) return;
+    if(!r){ _capReplaceOk=0; return; }
     if(r.input){ capWatchPickerFailed(document.getElementById('capella-file-input'), true); return; }
-    capLoadFile(r.file, r.handle);
+    capLoadFile(r.file, r.handle, capReplacePreOk());
   });
 }
 

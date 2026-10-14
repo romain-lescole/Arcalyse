@@ -163,9 +163,10 @@ function capEsc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;
 
 // ── File loading ──
 document.getElementById('b-capella-load').addEventListener('click',()=>capPickCapellaFile());
+document.getElementById('capella-file-input').addEventListener('cancel',()=>{ _capReplaceOk=0; });
 document.getElementById('capella-file-input').addEventListener('change',e=>{
   const f=e.target.files[0]; if(!f) return;
-  capLoadFile(f);
+  capLoadFile(f, null, capReplacePreOk());
   e.target.value=''; // permet de recharger le même fichier
 });
 
@@ -245,9 +246,11 @@ function capApplyXmlDoc(doc, name){
 /**
  * Demande confirmation avant de remplacer le modèle affiché par un autre fichier : le travail non enregistré
  * (vues, filtres, réglages, tableaux de bord, commentaires de revue modifiés) serait perdu à la fermeture de la page.
- * Propose d'enregistrer d'abord la page (💾) ; rappelle 🔄 Charger une mise à jour pour une nouvelle version du même modèle.
- * @param {string} name - Fichier à ouvrir
- * @returns {Promise<boolean>} true : ouvrir le fichier
+ * Appelée AVANT l'ouverture du sélecteur de fichier (name vide) ou après un dépôt de fichier (name connu).
+ * 💾 Enregistrer la page garde la fenêtre ouverte (un nouveau clic ouvre ensuite le sélecteur, ce que le navigateur
+ * exige) ; rappelle 🔄 Charger une mise à jour pour une nouvelle version du même modèle.
+ * @param {string} [name] - Fichier à ouvrir ('' : pas encore choisi)
+ * @returns {Promise<boolean>} true : continuer (ouvrir le sélecteur ou le fichier)
  */
 function capReplaceConfirm(name){
   return new Promise(resolve=>{
@@ -257,22 +260,28 @@ function capReplaceConfirm(name){
     ov.innerHTML=_L(`<div class="cw-d-box" style="max-width:600px">
       <div class="cw-d-hdr"><b>⚠ Ouvrir un autre modèle ?</b><button class="cap-lf-btn" data-c="no">✕</button></div>
       <div class="cw-d-body">
-        <div class="cw-d-sub">Modèle affiché : <b>${capEsc(capCurrentFileName||'—')}</b><br>Fichier à ouvrir : <b>${capEsc(name)}</b></div>
-        <p style="font-size:12.5px;margin:8px 0">Le modèle affiché va être remplacé. <b>Tout le travail qui n'a pas été enregistré dans la page</b> (vues et onglets, tableaux de bord, réglages, version de ⚖ Comparaison…) risque d'être perdu.</p>`)+
-        (rev?_L(`<p style="font-size:12.5px;margin:8px 0;color:var(--c-warn,#e3b341)">💬 ${rev} commentaire(s) de revue modifié(s) depuis le dernier enregistrement : ils restent dans la page ouverte (et seront vérifiés sur le nouveau modèle), mais seront perdus si elle est fermée sans être enregistrée. Vous pouvez aussi les exporter (💬 Revue › ⚙ Réglages › ⬇ Exporter).</p>`):'')+
+        <div class="cw-d-sub">Modèle affiché : <b>${capEsc(capCurrentFileName||'—')}</b></div>`)+
+        (name?_L(`<div class="cw-d-sub">Fichier à ouvrir : <b>${capEsc(name)}</b></div>`):'')+
+        _L(`<p style="font-size:12.5px;margin:8px 0">Le modèle affiché va être remplacé. <b>Tout le travail qui n'a pas été enregistré dans la page</b> (vues et onglets, tableaux de bord, réglages, version de ⚖ Comparaison…) risque d'être perdu.</p>`)+
+        (rev?_L(`<p style="font-size:12.5px;margin:8px 0;color:var(--c-warn,#e3b341)">💬 ${rev} commentaire(s) de revue modifié(s) depuis le dernier enregistrement : ils restent dans la page ouverte (et seront vérifiés sur le nouveau modèle), mais seront perdus si elle est fermée sans être enregistrée. Vous pouvez aussi les exporter (💬 Revue › 💾 Revue ▾ › ⬇ Exporter).</p>`):'')+
         _L(`<p class="ana-dim" style="font-size:11.5px;margin:8px 0">Nouvelle version du même modèle ? Préférez 📁 Fichier › 🔄 Charger une mise à jour du modèle : le delta est affiché et la version précédente reste disponible pour ⚖ Comparaison.</p>
       </div>
       <div class="cw-d-ftr"><span style="flex:1"></span><button class="cap-lf-btn" data-c="no">Annuler</button>
-        <button class="cap-lf-btn" data-c="go">Ouvrir sans enregistrer</button>
-        <button class="phl-export-btn" data-c="save" style="margin-left:0">💾 Enregistrer la page, puis ouvrir</button></div></div>`);
+        <button class="cap-lf-btn" data-c="save">💾 Enregistrer la page</button>`)+
+        `<button class="phl-export-btn" data-c="go" style="margin-left:0">${name?_L('Ouvrir le fichier'):_L('📂 Choisir le fichier .capella…')}</button></div></div>`;
     ov.style.display='flex';
     const fin=v=>{ ov.style.display='none'; resolve(v); };
     ov.onclick=e=>{ if(e.target===ov) fin(false); };
     ov.querySelectorAll('[data-c="no"]').forEach(b=>b.onclick=()=>fin(false));
     ov.querySelector('[data-c="go"]').onclick=()=>fin(true);
-    ov.querySelector('[data-c="save"]').onclick=async()=>{ ov.style.display='none'; const ok=await capSavePageDirect(false); resolve(ok!==false); };
+    ov.querySelector('[data-c="save"]').onclick=async e=>{ const b=e.currentTarget;
+      if(await capSavePageDirect(false)!==false){ b.textContent=_L('✔ Page enregistrée'); b.disabled=true; ov.querySelector('[data-c="go"]').focus(); } };
   });
 }
+/** Horodatage d'une confirmation donnée avant l'ouverture du sélecteur de fichier (capReplaceConfirm). */
+let _capReplaceOk=0;
+/** @returns {boolean} vrai si le remplacement du modèle vient d'être confirmé avant le sélecteur (la confirmation est consommée) */
+function capReplacePreOk(){ const ok=Date.now()-_capReplaceOk<600000; _capReplaceOk=0; return ok; }
 
 /* ── Écran d'accueil & glisser-déposer ─────────────────────────────────── */
 let capCurrentFileName='';
