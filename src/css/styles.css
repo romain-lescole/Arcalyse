@@ -1512,3 +1512,8 @@ body.crv-pop-body{margin:0;background:var(--c-bg);color:var(--c-text);font-famil
 .crv-hdr .cap-lf-btn{white-space:nowrap;}
 #vue-diagramme .cdg-vd-l1 .vd-chercher{flex:0 0 auto;margin-right:6px;}
 .cdg-crv{margin-left:0;}
+.crv-hdr > b{white-space:nowrap;}
+/* Ligne 1 étroite (panneau de détail ouvert) : la recherche rétrécit avant le nom du diagramme */
+#vue-diagramme .cdg-vd-l1 .vd-chercher{flex:0 1 auto;min-width:0;}
+#vue-diagramme .cdg-vd-l1 #vd-chercher{flex:0 1 230px;min-width:90px;}
+#vue-diagramme .cdg-vd-l1 #vd-nom{min-width:120px;}

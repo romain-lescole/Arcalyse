@@ -28,11 +28,38 @@ A Capella model grows fast: hundreds of functions, exchanges, components and por
 - 🔌 **Offline**: a single standalone HTML file (D3 library embedded), usable without a connection.
 - 🧭 **All ARCADIA layers**: OA, SA, LA, PA, EPBS — functions, components, exchanges, chains, scenarios, requirements, properties.
 - 🔲 **Capella diagrams**: with the project's `.aird`, the diagrams are drawn as in Capella, browsable and exportable as sheets (PDF, ZIP, HTML).
+- 💬 **Review**: comments and notes on the elements and the diagrams, severity, assignees, due dates, check after each new version of the model, report.
 - 🩺 **Ready-to-use checks**: unallocated elements, unconnected ports, incomplete traceability, names to review…
 - 📤 **Exports everywhere**: CSV, PNG, SVG, PDF, standalone HTML reports, dashboards printable in A4.
 - 🔄 **File watch**: Arcalyse detects new versions of the `.capella` file and shows what changed.
 
 ## What you can do
+
+### 🔲 Open the Capella diagrams
+Load the project's **`.aird`** file (or open the **📁 project folder**: the `.capella` and its diagrams are loaded together) and the **Capella diagrams** are drawn as in Capella — architecture, breakdown, data flow, class, mode & state, scenario diagrams… — read-only, without Capella installed:
+- an **explorer** grouped by layer (OA, SA, LA, PA, EPBS) and, if you wish, by diagram type (OA › OAB…), with collapsible groups, filter and adjustable width;
+- a **steady toolbar** on two rows (the diagram name, search, theme and export; then review notes, chains, filters, zoom, minimap), which no longer moves from one diagram to the next;
+- zoom, search in the diagram, **minimap** below the explorer (or inside the diagram), highlighting of a functional chain or physical path (only those **drawn in the diagram** are offered), filters (ports, labels, exchange categories);
+- **click an element** to open its details; conversely, the details panel lists the diagrams where the element appears and opens them centred on it;
+- **export of several diagrams at once** as framed **sheets**: header (layer, acronym, name, type), Capella description and represented element, title block (project, layer, content, sources, date, sheet number), appendix of the represented elements — as **PDF** (contents, bookmarks; warning if the file may be heavy), **PNG / SVG ZIP** (one folder per layer, one appendix CSV per diagram) or standalone **HTML report**, with a live preview.
+
+![Capella diagrams — explorer by layer › type, diagram on its two-row toolbar and minimap](docs/captures/11-diagrammes.png)
+
+![Capella diagrams — clicking an element highlights it with its neighbours and opens its attributes and the diagrams where it appears](docs/captures/13-diagrammes-detail.png)
+
+![Capella diagrams — export of several diagrams as sheets](docs/captures/12-diagrammes-export.png)
+
+### 💬 Review the model
+A **💬 Review** button opens a review panel: comments on the model, on its elements and on the diagrams, followed up from one version of the model to the next.
+- **Comment anywhere**: from the details panel (the element, its name, its description or any attribute), by **right-click** on an element in the views (blocks, tables, lists), or on a diagram: drag the **📝 Review note** onto it, or right-click an element or an empty area. Notes form a **layer independent of the `.aird`**: they follow the zoom, can be moved and resized, and are linked to diagram elements by **drawing a line** from the note to them.
+- **Optional fields**: only the text is required; severity (Information → Blocking), category, status (Open, In progress, Fixed to be checked, Validated, Rejected), author, creation date, due date, assignees, tags, replies.
+- **🔁 Check after an update**: the commented value is recorded; when a new version of the model is loaded, the comments whose element has changed (before / now) or disappeared are listed, to **validate** them or keep them open.
+- **📄 Report**: status × severity summary, standalone printable HTML report, CSV.
+- **Saved in the page** (💾) and **exportable to `.json`**, to share a review or **merge** those of several reviewers; on import, Arcalyse checks that the review concerns the loaded Capella project. The panel can also be opened in a **separate window** (another screen).
+
+![Review — notes on a diagram, linked to its elements, and the comment list](docs/captures/14-revue.png)
+
+![Review — check after a model update: before / now, validate or keep open](docs/captures/15-revue-verifier.png)
 
 ### 🗺 Navigate the model relations
 The **Relation Map** graph centres the view on an element and expands its neighbours down to the chosen depth: breakdowns, allocations, exchanges, cross-layer realizations. Horizontal, vertical or radial layouts; zoom, filters by relation and type; image export.
@@ -63,19 +90,6 @@ Sequence diagrams (ES, FS, OES, OAS, IS) are redrawn: lifelines, messages, execu
 
 ![Scenarios](docs/captures/05-scenarios.png)
 
-### 🔲 Open the Capella diagrams
-Load the project's **`.aird`** file (or open the **📁 project folder**: the `.capella` and its diagrams are loaded together) and the **Capella diagrams** are drawn as in Capella — architecture, breakdown, data flow, class, mode & state, scenario diagrams… — read-only, without Capella installed:
-- an **explorer** grouped by layer (OA, SA, LA, PA, EPBS) and, if you wish, by diagram type (OA › OAB…), with collapsible groups, filter and adjustable width;
-- zoom, search in the diagram, **minimap** below the explorer (or inside the diagram), highlighting of a functional chain or physical path, filters (ports, labels, exchange categories);
-- **click an element** to open its details; conversely, the details panel lists the diagrams where the element appears and opens them centred on it;
-- **export of several diagrams at once** as framed **sheets**: header (layer, acronym, name, type), Capella description and represented element, title block (project, layer, content, sources, date, sheet number), appendix of the represented elements — as **PDF** (contents, bookmarks; warning if the file may be heavy), **PNG / SVG ZIP** (one folder per layer, one appendix CSV per diagram) or standalone **HTML report**, with a live preview.
-
-![Capella diagrams — explorer by layer › type, diagram and minimap](docs/captures/11-diagrammes.png)
-
-![Capella diagrams — clicking an element highlights it with its neighbours and opens its attributes and the diagrams where it appears](docs/captures/13-diagrammes-detail.png)
-
-![Capella diagrams — export of several diagrams as sheets](docs/captures/12-diagrammes-export.png)
-
 ### 🔬 Analyse and check
 - **ƒ Functions**: hierarchy with descriptions, Excel-style table (value filters, copy), allocation to the system or to actors, cross-layer traceability, metrics, **name quality** (action verbs in French and English, customisable rules) and printable **functional file**.
 - **🧬 Cross-layer traceability**: OA → SA → LA → PA → EPBS realization rates by category, at a glance, and the list of untraced elements.
@@ -93,11 +107,14 @@ Choose among dozens of indicators (number of elements, function allocation, desc
 
 ### And also
 - 🧭 **Explorer**: tree, cards by layer, ARCADIA type index.
+- 🔍 **Details panel**: attributes, references in both directions, diagrams of the element, and its Capella **description formatted as in Capella** (links to other elements clickable, original HTML code on demand).
 - 🔗 **Links**: all the model relations, filterable and exportable.
 - ▤ **Table**: all elements in a table, with view tabs, relation columns and computed path columns (live preview), sort, filters and CSV export.
 - 🎨 **Themes**: Dark, Light, Office 2007, high contrast, and your own custom theme.
 - 🎓 **Guided tour** and built-in help, for each view.
-- 💾 **HTML page**: save the application with your model, your dashboards and your settings, in a single file to share.
+- 💾 **HTML page**: save the application with your model, your dashboards, your review comments and your settings, in a single file to share. Before another model replaces the displayed one, Arcalyse warns that unsaved work would be lost and offers to save first.
+
+![Details panel — Capella description formatted as in Capella, review buttons](docs/captures/16-description.png)
 
 ## Getting started
 
@@ -132,11 +149,38 @@ Un modèle Capella grossit vite : des centaines de fonctions, d'échanges, de co
 - 🔌 **Hors ligne** : un seul fichier HTML autonome (bibliothèque D3 embarquée), utilisable sans connexion.
 - 🧭 **Toutes les couches ARCADIA** : OA, SA, LA, PA, EPBS — fonctions, composants, échanges, chaînes, scénarios, exigences, propriétés.
 - 🔲 **Diagrammes Capella** : avec le `.aird` du projet, les diagrammes sont dessinés comme dans Capella, consultables et exportables en planches (PDF, ZIP, HTML).
+- 💬 **Revue** : commentaires et notes sur les éléments et les diagrammes, criticité, responsables, échéances, vérification à chaque nouvelle version du modèle, rapport.
 - 🩺 **Des contrôles prêts à l'emploi** : éléments non alloués, ports non connectés, traçabilité incomplète, noms à revoir…
 - 📤 **Exports partout** : CSV, PNG, SVG, PDF, rapports HTML autonomes, tableaux de bord imprimables en A4.
 - 🔄 **Suivi du fichier** : Arcalyse détecte les nouvelles versions du `.capella` et montre ce qui a changé.
 
 ## Ce que vous pouvez faire
+
+### 🔲 Ouvrir les diagrammes Capella
+Chargez le fichier **`.aird`** du projet (ou ouvrez le **📁 dossier du projet** : le `.capella` et ses diagrammes sont chargés ensemble) et les **diagrammes Capella** sont dessinés comme dans Capella — architecture, décomposition, flux de données, classes, modes et états, scénarios… — en lecture seule, sans Capella installé :
+- un **explorateur** classé par couche (OA, SA, LA, PA, EPBS) et, au choix, par type de diagramme (OA › OAB…), avec groupes repliables, filtre et largeur réglable ;
+- une **barre stable** sur deux lignes (nom du diagramme, recherche, thème et export ; puis notes de revue, chaînes, filtres, zoom, mini-carte), qui ne bouge plus d'un diagramme à l'autre ;
+- zoom, recherche dans le diagramme, **mini-carte** sous l'explorateur (ou dans le diagramme), mise en évidence d'une chaîne fonctionnelle ou d'un chemin physique (seuls ceux **dessinés dans le diagramme** sont proposés), filtres (ports, étiquettes, catégories d'échanges) ;
+- **clic sur un élément** : son panneau de détail ; à l'inverse, le panneau de détail liste les diagrammes où l'élément figure et les ouvre centrés sur lui ;
+- **export de plusieurs diagrammes à la fois** en **planches** encadrées : en-tête (couche, sigle, nom, type), description Capella et élément représenté, cartouche (projet, couche, contenu, sources, date, numéro de planche), annexe des éléments représentés — en **PDF** (sommaire, signets ; alerte si le fichier risque d'être lourd), **ZIP PNG / SVG** (un dossier par couche, un CSV d'annexe par diagramme) ou **rapport HTML** autonome, avec aperçu en direct.
+
+![Diagrammes Capella — explorateur par couche › type, diagramme avec sa barre sur deux lignes et mini-carte](docs/captures/11-diagrammes.png)
+
+![Diagrammes Capella — clic sur un élément : mis en surbrillance avec ses voisins, ses attributs et les diagrammes où il figure s'affichent](docs/captures/13-diagrammes-detail.png)
+
+![Diagrammes Capella — export de plusieurs diagrammes en planches](docs/captures/12-diagrammes-export.png)
+
+### 💬 Relire le modèle
+Un bouton **💬 Revue** ouvre un panneau de revue : des commentaires sur le modèle, ses éléments et les diagrammes, suivis d'une version du modèle à l'autre.
+- **Commenter partout** : depuis le panneau de détail (l'élément, son nom, sa description ou un attribut), par **clic droit** sur un élément dans les vues (blocs, tableaux, listes), ou sur un diagramme : glissez la **📝 Note de revue**, ou clic droit sur un élément ou dans un espace vide. Les notes forment un **calque indépendant du `.aird`** : elles suivent le zoom, se déplacent, se redimensionnent et se lient aux éléments du diagramme en **traçant un trait** de la note vers eux.
+- **Champs facultatifs** : seul le texte est demandé ; criticité (Information → Bloquante), catégorie, statut (Ouvert, En cours, Corrigé à vérifier, Validé, Rejeté), auteur, date de création, échéance, responsables, étiquettes, réponses.
+- **🔁 Vérifier après une mise à jour** : la valeur commentée est mémorisée ; au chargement d'une nouvelle version du modèle, les commentaires dont l'élément a changé (avant / maintenant) ou disparu sont listés, pour les **valider** ou les garder ouverts.
+- **📄 Rapport** : synthèse statut × criticité, rapport HTML autonome et imprimable, CSV.
+- **Enregistrés dans la page** (💾) et **exportables en `.json`**, pour transmettre une revue ou **fusionner** celles de plusieurs relecteurs ; à l'import, Arcalyse vérifie qu'elle porte sur le projet Capella chargé. Le panneau s'ouvre aussi dans une **fenêtre séparée** (autre écran).
+
+![Revue — notes sur un diagramme, liées à ses éléments, et liste des commentaires](docs/captures/14-revue.png)
+
+![Revue — vérification après une mise à jour du modèle : avant / maintenant, valider ou garder ouvert](docs/captures/15-revue-verifier.png)
 
 ### 🗺 Naviguer dans les relations du modèle
 Le graphe **Relation Map** centre la vue sur un élément et déplie ses voisins jusqu'à la profondeur voulue : décompositions, allocations, échanges, réalisations entre couches. Dispositions horizontale, verticale, radiale ; zoom, filtres par relation et par type ; export image.
@@ -167,19 +211,6 @@ Les diagrammes de séquence (ES, FS, OES, OAS, IS) sont redessinés : lignes de 
 
 ![Scénarios](docs/captures/05-scenarios.png)
 
-### 🔲 Ouvrir les diagrammes Capella
-Chargez le fichier **`.aird`** du projet (ou ouvrez le **📁 dossier du projet** : le `.capella` et ses diagrammes sont chargés ensemble) et les **diagrammes Capella** sont dessinés comme dans Capella — architecture, décomposition, flux de données, classes, modes et états, scénarios… — en lecture seule, sans Capella installé :
-- un **explorateur** classé par couche (OA, SA, LA, PA, EPBS) et, au choix, par type de diagramme (OA › OAB…), avec groupes repliables, filtre et largeur réglable ;
-- zoom, recherche dans le diagramme, **mini-carte** sous l'explorateur (ou dans le diagramme), mise en évidence d'une chaîne fonctionnelle ou d'un chemin physique, filtres (ports, étiquettes, catégories d'échanges) ;
-- **clic sur un élément** : son panneau de détail ; à l'inverse, le panneau de détail liste les diagrammes où l'élément figure et les ouvre centrés sur lui ;
-- **export de plusieurs diagrammes à la fois** en **planches** encadrées : en-tête (couche, sigle, nom, type), description Capella et élément représenté, cartouche (projet, couche, contenu, sources, date, numéro de planche), annexe des éléments représentés — en **PDF** (sommaire, signets ; alerte si le fichier risque d'être lourd), **ZIP PNG / SVG** (un dossier par couche, un CSV d'annexe par diagramme) ou **rapport HTML** autonome, avec aperçu en direct.
-
-![Diagrammes Capella — explorateur par couche › type, diagramme et mini-carte](docs/captures/11-diagrammes.png)
-
-![Diagrammes Capella — clic sur un élément : mis en surbrillance avec ses voisins, ses attributs et les diagrammes où il figure s'affichent](docs/captures/13-diagrammes-detail.png)
-
-![Diagrammes Capella — export de plusieurs diagrammes en planches](docs/captures/12-diagrammes-export.png)
-
 ### 🔬 Analyser et contrôler
 - **ƒ Fonctions** : hiérarchie avec descriptions, tableau façon Excel (filtres par valeur, copie), allocation au système ou aux acteurs, traçabilité entre couches, métriques, **qualité des noms** (verbes d'action en français et en anglais, règles personnalisables) et **dossier fonctionnel** imprimable.
 - **🧬 Traçabilité inter-couches** : taux de réalisation OA → SA → LA → PA → EPBS par catégorie, en un coup d'œil, et la liste des éléments non tracés.
@@ -197,11 +228,14 @@ Choisissez parmi des dizaines d'indicateurs (nombre d'éléments, allocation des
 
 ### Et aussi
 - 🧭 **Explorateur** : arborescence, cartes par couche, index des types ARCADIA.
+- 🔍 **Panneau de détail** : attributs, références dans les deux sens, diagrammes de l'élément, et sa **description Capella mise en forme comme dans Capella** (liens vers d'autres éléments cliquables, code HTML d'origine à la demande).
 - 🔗 **Liens** : toutes les relations du modèle, filtrables et exportables.
 - ▤ **Tableau** : tous les éléments en tableau, avec onglets de vues, colonnes de relations et colonnes calculées par chemin (aperçu en direct), tri, filtres et export CSV.
 - 🎨 **Thèmes** : Sombre, Clair, Office 2007, contraste élevé, et votre thème personnalisé.
 - 🎓 **Visite guidée** et aide intégrée, pour chaque vue.
-- 💾 **Page HTML** : enregistrez l'application avec votre modèle, vos tableaux de bord et vos réglages, en un seul fichier à transmettre.
+- 💾 **Page HTML** : enregistrez l'application avec votre modèle, vos tableaux de bord, vos commentaires de revue et vos réglages, en un seul fichier à transmettre. Avant qu'un autre modèle remplace celui affiché, Arcalyse prévient que le travail non enregistré serait perdu et propose d'enregistrer d'abord.
+
+![Panneau de détail — description Capella mise en forme comme dans Capella, boutons de revue](docs/captures/16-description.png)
 
 ## Démarrer
 
