@@ -238,8 +238,9 @@ function capDiagSync() {
 
 /**
  * Réorganise la barre de la visionneuse au-dessus du diagramme, pour qu'elle ne bouge plus d'un diagramme à l'autre :
- * ligne 1 = identité du diagramme (retour, icône, sigle, nom tronqué, élément représenté) puis thème, export, ✕ ;
- * ligne 2 = outils à largeur fixe (recherche, 📝 note de revue et calque, chaînes, filtres, zoom, carte, mise en page). Le bouton ⌒ Ponts est masqué. Les commandes sont déplacées telles quelles (leurs écouteurs suivent).
+ * ligne 1 = identité du diagramme (retour, icône, sigle, nom tronqué) puis recherche (champ, ▲ ▼), thème, export, ✕ ;
+ * ligne 2 = outils à largeur fixe (📝 note de revue et calque, chaînes, filtres, zoom, carte, mise en page).
+ * Masqués : le bouton ⌒ Ponts et l'élément représenté (#vd-cible, visible dans ℹ Infos). Les commandes sont déplacées telles quelles (leurs écouteurs suivent).
  * Appelée à chaque synchronisation ; sans effet après la première fois.
  */
 function capDiagBarreVd() {
@@ -249,7 +250,7 @@ function capDiagBarreVd() {
   l1.classList.add('cdg-vd-l1'); l1.after(l2);
   const prendre = sel => { const e = typeof sel === 'string' ? l1.querySelector(sel) : sel; if (e) l2.appendChild(e); return e; };
   const sep = () => { const x = document.createElement('span'); x.className = 'cdg-vd-sep'; l2.appendChild(x); };
-  const ch = prendre('.vd-chercher'), tr = document.getElementById('vd-trouves');
+  const ch = l1.querySelector('.vd-chercher'), tr = document.getElementById('vd-trouves');
   if (ch && tr) ch.appendChild(tr);   // nombre de résultats après ▲ ▼ : pas de vide entre le champ et ses flèches
   const rev = document.createElement('span'); rev.id = 'cdg-crv'; rev.className = 'cdg-crv'; l2.appendChild(rev);
   sep(); prendre('#vd-chaine'); prendre(document.getElementById('vd-filtres-bt') && document.getElementById('vd-filtres-bt').parentElement);
@@ -257,8 +258,10 @@ function capDiagBarreVd() {
   const ressort = document.createElement('span'); ressort.className = 'ressort'; ressort.style.flex = '1'; l2.appendChild(ressort);
   prendre('#vd-edition'); prendre('#vd-tableau-info');
   // Thème et export : à droite de la ligne 1, avant ✕ (le nom du diagramme est tronqué pour leur laisser la place)
+  // Recherche (champ, ▲ ▼, résultats) à droite de la ligne 1, avant le thème : position fixe quel que soit le nom du diagramme
   const fermer = document.getElementById('vd-fermer'), exp = document.getElementById('vd-export-bt');
-  [document.getElementById('vd-theme'), exp && exp.parentElement].forEach(e => { if (e && fermer && fermer.parentElement === l1) l1.insertBefore(e, fermer); });
+  [ch, document.getElementById('vd-theme'), exp && exp.parentElement].forEach(e => { if (e && fermer && fermer.parentElement === l1) l1.insertBefore(e, fermer); });
+  const cible = document.getElementById('vd-cible'); if (cible) cible.style.display = 'none';   // élément représenté : déjà dans ℹ Infos
   const ponts = document.getElementById('vd-ponts'); if (ponts) ponts.style.display = 'none';
   // Chaînes et chemins : seulement ceux dessinés dans le diagramme ouvert (liste remplie par la visionneuse à chaque ouverture)
   let raf = 0;

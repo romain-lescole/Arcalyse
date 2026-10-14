@@ -1490,9 +1490,9 @@ html[data-tone="light"] .crv-late{color:#cf222e;}
 #vue-diagramme .cdg-vd-l1 #vd-cible{flex:0 1 auto;min-width:0;max-width:35%;overflow:hidden;white-space:nowrap;}
 #vue-diagramme .cdg-vd-l1 > .ressort{flex:1 1 0;min-width:8px;}
 #vue-diagramme .cdg-vd-l2{flex-wrap:wrap;gap:4px;row-gap:4px;}
-#vue-diagramme .cdg-vd-l2 .vd-chercher{display:inline-flex;align-items:center;gap:3px;margin:0;padding:0;}
-#vue-diagramme .cdg-vd-l2 #vd-chercher{width:200px;margin:0;}
-#vue-diagramme .cdg-vd-l2 #vd-trouves{display:inline-block;min-width:34px;text-align:left;font-size:11px;margin:0;}
+#vue-diagramme .cdg-vd-l1 .vd-chercher{display:inline-flex;align-items:center;gap:3px;margin:0;padding:0;}
+#vue-diagramme .cdg-vd-l1 #vd-chercher{width:230px;margin:0;}
+#vue-diagramme .cdg-vd-l1 #vd-trouves{display:inline-block;min-width:34px;text-align:left;font-size:11px;margin:0;}
 #vue-diagramme .cdg-vd-l2 #vd-chaine{width:190px;}
 #vue-diagramme .cdg-vd-l2 #vd-zoom{display:inline-block;width:42px;text-align:center;}
 .cdg-vd-sep{width:1px;align-self:stretch;margin:2px 4px;background:var(--c-border);}
@@ -1510,3 +1510,8 @@ html[data-tone="light"] .crv-late{color:#cf222e;}
 body.crv-pop-body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:'Segoe UI',system-ui,sans-serif;overflow:hidden;}
 #crv-panel.crv-pop{position:static;width:auto;height:100vh;border:0;box-shadow:none;}
 .crv-hdr .cap-lf-btn{white-space:nowrap;}
+#vue-diagramme .cdg-vd-l1 .vd-chercher{flex:0 0 auto;margin-right:6px;}
+.cdg-crv{margin-left:0;}
+/* ⧩ Filtres de la visionneuse : menu plus grand (plus large, plus haut, texte un peu plus grand) */
+#vue-diagramme #vd-filtres{min-width:380px;max-height:calc(100vh - 190px);font-size:13px;padding:8px 10px;}
+#vue-diagramme #vd-filtres label{padding:2px 0;}
