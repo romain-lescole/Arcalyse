@@ -664,34 +664,49 @@ function capRevElementAt(n){
   return null;
 }
 /**
- * Menu du clic droit sur un élément des vues : commenter l'élément, son nom, sa description ; dans un diagramme,
- * poser une note liée à l'élément à l'endroit du clic ; voir ses commentaires.
+ * Menu du clic droit dans les vues : sur un élément, commenter l'élément, son nom, sa description, voir ses commentaires.
+ * Dans un diagramme (sur un élément ou dans un espace vide), les commentaires sont toujours rattachés au diagramme :
+ * une note de revue est posée à l'endroit du clic (liée à l'élément s'il y en a un).
  * @param {MouseEvent} e
  */
 function capRevContext(e){
   if(e.defaultPrevented||!capLoaded||e.ctrlKey||e.shiftKey) return;
   if(!e.target.closest('#cap-content,#cap-detail-content,#rm-detail-content')) return;
-  if(e.target.closest('input,textarea,select,.crv-note')) return;
-  const el=capRevElementAt(e.target); if(!el) return;
+  if(e.target.closest('input,textarea,select,.crv-note,.crv-linkbar')) return;
+  const svg=document.getElementById('vd-svg'), zone=document.getElementById('vd-zone');
+  const uid=capRevDiagUid(), inDiag=!!(uid&&zone&&zone.contains(e.target)&&svg&&svg.getBoundingClientRect().width);
+  const el=capRevElementAt(e.target); if(!el&&!inDiag) return;
   e.preventDefault();
-  const esc=capEsc, id=esc(el.id), n=_capRev.comments.filter(c=>(c.targets||[]).some(t=>t.id===el.id)).length;
-  const svg=document.getElementById('vd-svg'), inDiag=svg&&svg.contains(e.target)&&capRevDiagUid();
+  const esc=capEsc, id=el?esc(el.id):'', x=e.clientX, y=e.clientY;
   let m=document.getElementById('crv-ctx');
   if(!m){ m=document.createElement('div'); m.id='crv-ctx'; document.body.appendChild(m);
     document.addEventListener('mousedown',ev=>{ if(!ev.target.closest('#crv-ctx')) m.style.display='none'; });
     m.addEventListener('click',()=>{ m.style.display='none'; }); }
-  m._pt={x:e.clientX, y:e.clientY};
-  m.innerHTML=`<div class="crv-ctx-t">${esc(el.attrs.name||el.typeName)} <span class="ana-dim">${esc(el.typeName)}</span></div>`+
-    (inDiag?`<div class="ctx-i" onclick="capRevDiagNoteAt(${e.clientX+24},${e.clientY-140},'${id}')">${_L('📝 Note sur le diagramme ici, liée à l\'élément')}</div>`:'')+
+  // Dans un diagramme : note posée à côté de l'élément (ou au point cliqué dans un espace vide)
+  const note=(f,l)=>`<div class="ctx-i" onclick="capRevDiagNoteAt(${el?x+24:x},${el?y-140:y},'${id}','${f}')">${l}</div>`;
+  let h;
+  if(inDiag){
+    const rep=capDiagReps().find(r=>r.uid===uid)||{}, nd=_capRev.comments.filter(c=>c.diag&&c.diag.uid===uid).length;
+    h=el?`<div class="crv-ctx-t">${esc(el.attrs.name||el.typeName)} <span class="ana-dim">${esc(el.typeName)}</span></div>`+
+        note('',_L('📝 Note de revue ici, liée à l\'élément'))+note('name',_L('📝 Note sur son nom'))+
+        (el.attrs.description?note('description',_L('📝 Note sur sa description')):'')
+      :`<div class="crv-ctx-t">🔲 ${esc(rep.nom||'')}</div>`+note('',_L('📝 Note de revue ici'));
+    if(nd) h+=`<div class="ctx-i" onclick="capRevShowDiag()">${_L(`📄 Notes de ce diagramme (${nd})`)}</div>`;
+  } else h=`<div class="crv-ctx-t">${esc(el.attrs.name||el.typeName)} <span class="ana-dim">${esc(el.typeName)}</span></div>`+
     `<div class="ctx-i" onclick="capRevNew([{id:'${id}',field:''}])">${_L('💬 Commenter l\'élément')}</div>`+
     `<div class="ctx-i" onclick="capRevNew([{id:'${id}',field:'name'}])">${_L('💬 Commenter son nom')}</div>`+
-    (el.attrs.description?`<div class="ctx-i" onclick="capRevNew([{id:'${id}',field:'description'}])">${_L('💬 Commenter sa description')}</div>`:'')+
-    (n?`<div class="ctx-i" onclick="capRevShowFor('${id}')">${_L(`📄 Voir ses commentaires (${n})`)}</div>`:'')+
-    `<div class="ctx-i" onclick="capOpenDetailById('${id}')">${_L('🔍 Détail de l\'élément')}</div>`;
-  m.style.display='block';
+    (el.attrs.description?`<div class="ctx-i" onclick="capRevNew([{id:'${id}',field:'description'}])">${_L('💬 Commenter sa description')}</div>`:'');
+  if(el){
+    const n=_capRev.comments.filter(c=>(c.targets||[]).some(t=>t.id===el.id)).length;
+    h+=(n?`<div class="ctx-i" onclick="capRevShowFor('${id}')">${_L(`📄 Voir ses commentaires (${n})`)}</div>`:'')+
+      `<div class="ctx-i" onclick="capOpenDetailById('${id}')">${_L('🔍 Détail de l\'élément')}</div>`;
+  }
+  m.innerHTML=h; m.style.display='block';
   const r=m.getBoundingClientRect();
-  m.style.left=Math.min(e.clientX, innerWidth-r.width-8)+'px'; m.style.top=Math.min(e.clientY, innerHeight-r.height-8)+'px';
+  m.style.left=Math.min(x, innerWidth-r.width-8)+'px'; m.style.top=Math.min(y, innerHeight-r.height-8)+'px';
 }
+/** Ouvre 💬 Revue sur les notes du diagramme ouvert. */
+function capRevShowDiag(){ Object.assign(_capRevUi,{tab:'list', q:'', st:'all', crit:'', who:'', scope:'diag'}); capRevToggle(true); }
 
 /* ── Marques des éléments commentés dans les vues ──────────────────────── */
 
@@ -774,8 +789,9 @@ function capRevLayerEnsure(){
  * @param {number|null} x - Abscisse écran
  * @param {number|null} y - Ordonnée écran
  * @param {string} [id] - Élément lié
+ * @param {string} [field] - Partie commentée de l'élément ('' : élément entier, 'name', 'description')
  */
-function capRevDiagNoteAt(x, y, id){
+function capRevDiagNoteAt(x, y, id, field){
   const svg=document.getElementById('vd-svg'), uid=capRevDiagUid(), m=svg&&svg.getScreenCTM();
   if(!uid||!m||!svg.getBoundingClientRect().width){ alert(_L('Ouvrez d\'abord un diagramme (les tableaux du .aird ne portent pas de notes).')); return; }
   const r=svg.getBoundingClientRect();
@@ -783,7 +799,7 @@ function capRevDiagNoteAt(x, y, id){
   const p=new DOMPoint(x,y).matrixTransform(m.inverse()), k=m.a||1;
   const rep=capDiagReps().find(z=>z.uid===uid)||{};
   if(!_capRev.layer){ _capRev.layer=true; capRevSave(); }
-  capRevNew(id?[{id, field:''}]:[], {uid, nom:rep.nom||'', x:Math.round(p.x), y:Math.round(p.y), w:Math.round(200/k), h:Math.round(110/k)});
+  capRevNew(id?[{id, field:field||''}]:[], {uid, nom:rep.nom||'', x:Math.round(p.x), y:Math.round(p.y), w:Math.round(200/k), h:Math.round(110/k)});
 }
 /**
  * Boîte d'un élément du diagramme en coordonnées du diagramme (union de ses formes dessinées).

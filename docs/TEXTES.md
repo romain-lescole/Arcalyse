@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 4079 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 4083 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -4162,156 +4162,160 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 613 | Commenter cet attribut (revue) | Comment on this attribute (review) |
 | 634 | 💬 Commentaires de revue ( | 💬 Review comments (…) |
 | 636 | Afficher dans 💬 Revue | Show in 💬 Review |
-| 685 | 📝 Note sur le diagramme ici, liée à l'élément | 📝 Note on the diagram here, linked to the element |
-| 686 | 💬 Commenter l'élément | 💬 Comment on the element |
-| 687 | 💬 Commenter son nom | 💬 Comment on its name |
-| 688 | 💬 Commenter sa description | 💬 Comment on its description |
-| 689 | 📄 Voir ses commentaires ( | 📄 See its comments (…) |
-| 690 | 🔍 Détail de l'élément | 🔍 Element details |
-| 728 | Note de revue : glissez-la sur le diagramme (déposée sur un élément, elle lui est liée) ou cliquez pour la poser au centre. Les notes forment un calque indépendant du .aird. | Review note: drag it onto the diagram (dropped on an element, it is linked to it) or click to place it in the centre. Notes form a layer independent of the .aird. |
-| 728 | 📝 Note de revue | 📝 Review note |
-| 729 | Afficher ou masquer le calque des notes de revue (indépendant du .aird) | Show or hide the review note layer (independent of the .aird) |
-| 729 | 💬 Calque | 💬 Layer |
-| 780 | Ouvrez d'abord un diagramme (les tableaux du .aird ne portent pas de notes). | Open a diagram first (.aird tables cannot hold notes). |
-| 830 | Délier « | Unlink “…” from the note |
-| 830 | » de la note | Unlink “…” from the note |
-| 836 | Lier / délier des éléments du diagramme (clic sur les éléments, Échap pour terminer) | Link / unlink diagram elements (click the elements, Esc to finish) |
-| 837 | Modifier | Edit |
-| 837 | Réduire en pastille | Collapse to a dot |
-| 839 | Tirer un trait jusqu'à un élément du diagramme pour le lier à la note (vers un élément déjà lié : le délier) | Draw a line to a diagram element to link it to the note (to an already linked element: unlink it) |
-| 840 | Redimensionner | Resize |
-| 844 | 🔗 Cliquez les éléments du diagramme à lier à la note # | 🔗 Click the diagram elements to link to note #… (click again: unlink) |
-| 844 | (nouveau clic : délier) | 🔗 Click the diagram elements to link to note #… (click again: unlink) |
-| 844 | ✔ Terminer | ✔ Done |
-| 886 | var(--c-accent) | (inchangé, hors _L) |
-| 887 | var(--c-accent) | (inchangé, hors _L) |
-| 935 | élément supprimé du modèle | element deleted from the model |
-| 936 | inchangé | unchanged |
-| 938 | Au moment du commentaire | At the time of the comment |
-| 939 | Maintenant | Now |
-| 943 | Attributs modifiés : | Changed attributes: … |
-| 944 | · éléments contenus : | · contained elements: … → … |
-| 944 | Références ou contenu modifiés | References or content changed |
-| 948 | Chargez un modèle : les commentaires sont comparés au modèle chargé. | Load a model: comments are compared with the loaded model. |
-| 950 | Commentaires non clos dont la valeur commentée a changé ou dont l'élément a disparu depuis le commentaire (nouveau fichier, 🔄 mise à jour), et commentaires marqués « Corrigé, à vérifier » . Pour chacun : ✔ Valider si la correction est faite (le commentaire est clos), ou ↻ Garder ouvert (la version actuelle devient la référence). | Open comments whose commented value has changed or whose element has disappeared since the comment (new file, 🔄 update), and comments marked “Fixed, to be checked” . For each one: ✔ Validate if the fix is done (the comment is closed), or ↻ Keep open (the current version becomes the reference). |
-| 951 | ✔ Rien à vérifier : aucun commentaire ouvert ne porte sur un élément modifié. | ✔ Nothing to check: no open comment concerns a changed element. |
-| 952 | commentaire(s) à vérifier | … comment(s) to check |
-| 952 | Valider tous les commentaires de cette liste | Validate all comments in this list |
-| 952 | ✔ Tout valider | ✔ Validate all |
-| 957 | Aller à la cible | Go to the target |
-| 957 | Modifier | Edit |
-| 959 | La correction a été faite : statut Validé | The fix has been made: status Validated |
-| 959 | ✔ Valider | ✔ Validate |
-| 960 | La modification ne règle pas le commentaire : il reste ouvert, la version actuelle devient la référence | The change does not resolve the comment: it stays open, the current version becomes the reference |
-| 960 | ↻ Garder ouvert | ↻ Keep open |
-| 965 | Valider les | Validate the … comment(s) in the list? |
-| 965 | commentaire(s) de la liste ? | Validate the … comment(s) in the list? |
-| 978 | Total | Total |
-| 980 | Total | Total |
-| 986 | Commentaires | Comments |
-| 986 | de la liste (filtres de 💬 Commentaires) | from the list (filters of 💬 Comments) |
-| 987 | Regrouper par | Group by |
-| 987 | criticité | severity |
-| 987 | élément | element |
-| 988 | réponses | replies |
-| 990 | commentaire(s) · | … comment(s) · … overdue · … on changed elements |
-| 990 | en retard · | … comment(s) · … overdue · … on changed elements |
-| 990 | sur des éléments modifiés | … comment(s) · … overdue · … on changed elements |
-| 991 | Rapport HTML autonome (imprimable) : synthèse, commentaires groupés, cibles, état par rapport au modèle chargé | Standalone HTML report (printable): summary, grouped comments, targets, status against the loaded model |
-| 991 | 📄 Rapport HTML | 📄 HTML report |
-| 992 | Une ligne par commentaire (tableur) | One row per comment (spreadsheet) |
-| 992 | ⬇ CSV | ⬇ CSV |
-| 1004 | (non attribué) | (unassigned) |
-| 1005 | (commentaire général) | (general comment) |
-| 1011 | Aucun commentaire à mettre dans le rapport. | No comment to put in the report. |
-| 1012 | ⚠ modifié | ⚠ changed |
-| 1012 | ⚠ supprimé | ⚠ deleted |
-| 1012 | inchangé | unchanged |
-| 1017 | ✔ Vérifié le | ✔ Checked on …… |
-| 1020 | Criticité | Severity |
-| 1020 | Statut | Status |
-| 1020 | Commentaire | Comment |
-| 1020 | Cibles | Targets |
-| 1020 | Auteur | Author |
-| 1020 | Échéance | Due date |
-| 1020 | Responsables | Assignees |
-| 1020 | Modèle | Model |
-| 1022 | Rapport de revue | Review report |
-| 1027 | 💬 Rapport de revue | 💬 Review report |
-| 1027 | Modèle : | Model: … · … comment(s) · issued on …… |
-| 1027 | commentaire(s) · édité le | Model: … · … comment(s) · issued on …… |
-| 1028 | Synthèse | Summary |
-| 1028 | Produit par Arcalyse — colonne « Modèle » : état de la valeur commentée dans le modèle chargé lors de l'édition du rapport. | Produced by Arcalyse — “Model” column: status of the commented value in the model loaded when the report was issued. |
-| 1034 | Titre | Title |
-| 1034 | Commentaire | Comment |
-| 1034 | Criticité | Severity |
-| 1034 | Catégorie | Category |
-| 1034 | Statut | Status |
-| 1034 | Auteur | Author |
-| 1034 | Créé le | Created on |
-| 1034 | Échéance | Due date |
-| 1034 | Responsables | Assignees |
-| 1034 | Étiquettes | Tags |
-| 1034 | Éléments | Elements |
-| 1034 | Champs | Fields |
-| 1034 | Diagramme | Diagram |
-| 1034 | État dans le modèle | Status in the model |
-| 1034 | Réponses | Replies |
-| 1034 | Vérifié le | Checked on |
-| 1034 | Vérifié par | Checked by |
-| 1037 | modifié | modified |
-| 1037 | supprimé | deleted |
-| 1037 | inchangé | unchanged |
-| 1046 | Titre | Title |
-| 1046 | Criticité | Severity |
-| 1046 | Catégorie | Category |
-| 1046 | Échéance | Due date |
-| 1046 | Responsables | Assignees |
-| 1046 | Étiquettes | Tags |
-| 1048 | Votre nom | Your name |
-| 1048 | Auteur des nouveaux commentaires | Author of new comments |
-| 1049 | Participants | Participants |
-| 1049 | (proposés comme auteurs et responsables) | (offered as authors and assignees) |
-| 1050 | Retirer | Remove |
-| 1050 | Aucun participant. | No participant. |
-| 1051 | Nom, initiales ou équipe | Name, initials or team |
-| 1051 | ✚ Ajouter | ✚ Add |
-| 1052 | Champs proposés dans l'éditeur | Fields offered in the editor |
-| 1054 | Affichage | Display |
-| 1055 | Calque des commentaires sur les diagrammes | Comment layer on diagrams |
-| 1055 | Montrer aussi les notes closes sur les diagrammes | Also show closed notes on diagrams |
-| 1056 | Marquer d'un 💬 les éléments commentés dans les vues | Mark commented elements with 💬 in the views |
-| 1056 | Blocs, cartes et noms cliquables des éléments qui ont des commentaires non clos | Blocks, cards and clickable names of elements with open comments |
-| 1057 | Données | Data |
-| 1058 | Export et import des commentaires : bouton 💾 Revue ▾ en haut du panneau. | Export and import of comments: 💾 Review ▾ button at the top of the panel. |
-| 1059 | Supprimer tous les commentaires de la page | Delete all comments from the page |
-| 1059 | 🗑 Tout supprimer | 🗑 Delete all |
-| 1071 | Supprimer les | Delete the … comment(s) from the page? (Export them first to keep them.) |
-| 1071 | commentaire(s) de la page ? (Exportez-les d'abord pour les garder.) | Delete the … comment(s) from the page? (Export them first to keep them.) |
-| 1085 | Fichier illisible (JSON attendu). | Unreadable file (JSON expected). |
-| 1086 | Ce fichier n'est pas une revue Arcalyse. | This file is not an Arcalyse review. |
-| 1093 | ✔ Revue importée : | ✔ Review imported: … added, … updated, … already present |
-| 1093 | ajouté(s), | ✔ Review imported: … added, … updated, … already present |
-| 1093 | mis à jour, | ✔ Review imported: … added, … updated, … already present |
-| 1093 | déjà présent(s) | ✔ Review imported: … added, … updated, … already present |
-| 1094 | — modèle non vérifié (aucun modèle chargé) | — model not checked (no model loaded) |
-| 1113 | Les identifiants de projet diffèrent, mais les éléments commentés sont bien dans le modèle chargé : sans doute une copie du même projet. | The project identifiers differ, but the commented elements are in the loaded model: probably a copy of the same project. |
-| 1114 | Cette revue porte sur un autre projet Capella : ses commentaires ne correspondront pas aux éléments du modèle chargé (ils seront marqués « autre projet » et non vérifiés). | This review concerns another Capella project : its comments will not match the elements of the loaded model (they will be marked “other project” and not checked). |
-| 1115 | Trop peu d'éléments commentés ( | Too few commented elements (…) to conclude, and not all of them are in the loaded model: check that this is the right model (or a version where these elements were deleted). |
-| 1115 | ) pour conclure, et tous ne sont pas dans le modèle chargé : vérifiez qu'il s'agit du bon modèle (ou d'une version où ces éléments ont été supprimés). | Too few commented elements (…) to conclude, and not all of them are in the loaded model: check that this is the right model (or a version where these elements were deleted). |
-| 1116 | Cette revue ne contient que des commentaires généraux et n'indique pas son projet : impossible de vérifier le modèle. | This review only contains general comments and does not state its project: the model cannot be checked. |
-| 1121 | ⚠ Cette revue porte-t-elle sur ce modèle ? | ⚠ Does this review concern this model? |
-| 1123 | Revue importée | Imported review |
-| 1123 | Modèle chargé | Loaded model |
-| 1124 | Fichier | File |
-| 1124 | revue faite sur « | review made on “…” |
-| 1125 | Projet Capella | Capella project |
-| 1126 | Éléments commentés | Commented elements |
-| 1126 | élément(s) | … element(s) |
-| 1126 | retrouvé(s) ( | … found (… %) |
-| 1128 | commentaire(s) dans le fichier. | … comment(s) in the file. |
-| 1129 | Annuler | Cancel |
-| 1130 | Importer quand même | Import anyway |
+| 691 | 📝 Note de revue ici, liée à l'élément | 📝 Review note here, linked to the element |
+| 691 | 📝 Note sur son nom | 📝 Note on its name |
+| 692 | 📝 Note sur sa description | 📝 Note on its description |
+| 693 | 📝 Note de revue ici | 📝 Review note here |
+| 694 | 📄 Notes de ce diagramme ( | 📄 Notes of this diagram (…) |
+| 696 | 💬 Commenter l'élément | 💬 Comment on the element |
+| 697 | 💬 Commenter son nom | 💬 Comment on its name |
+| 698 | 💬 Commenter sa description | 💬 Comment on its description |
+| 701 | 📄 Voir ses commentaires ( | 📄 See its comments (…) |
+| 702 | 🔍 Détail de l'élément | 🔍 Element details |
+| 743 | Note de revue : glissez-la sur le diagramme (déposée sur un élément, elle lui est liée) ou cliquez pour la poser au centre. Les notes forment un calque indépendant du .aird. | Review note: drag it onto the diagram (dropped on an element, it is linked to it) or click to place it in the centre. Notes form a layer independent of the .aird. |
+| 743 | 📝 Note de revue | 📝 Review note |
+| 744 | Afficher ou masquer le calque des notes de revue (indépendant du .aird) | Show or hide the review note layer (independent of the .aird) |
+| 744 | 💬 Calque | 💬 Layer |
+| 796 | Ouvrez d'abord un diagramme (les tableaux du .aird ne portent pas de notes). | Open a diagram first (.aird tables cannot hold notes). |
+| 846 | Délier « | Unlink “…” from the note |
+| 846 | » de la note | Unlink “…” from the note |
+| 852 | Lier / délier des éléments du diagramme (clic sur les éléments, Échap pour terminer) | Link / unlink diagram elements (click the elements, Esc to finish) |
+| 853 | Modifier | Edit |
+| 853 | Réduire en pastille | Collapse to a dot |
+| 855 | Tirer un trait jusqu'à un élément du diagramme pour le lier à la note (vers un élément déjà lié : le délier) | Draw a line to a diagram element to link it to the note (to an already linked element: unlink it) |
+| 856 | Redimensionner | Resize |
+| 860 | 🔗 Cliquez les éléments du diagramme à lier à la note # | 🔗 Click the diagram elements to link to note #… (click again: unlink) |
+| 860 | (nouveau clic : délier) | 🔗 Click the diagram elements to link to note #… (click again: unlink) |
+| 860 | ✔ Terminer | ✔ Done |
+| 902 | var(--c-accent) | (inchangé, hors _L) |
+| 903 | var(--c-accent) | (inchangé, hors _L) |
+| 951 | élément supprimé du modèle | element deleted from the model |
+| 952 | inchangé | unchanged |
+| 954 | Au moment du commentaire | At the time of the comment |
+| 955 | Maintenant | Now |
+| 959 | Attributs modifiés : | Changed attributes: … |
+| 960 | · éléments contenus : | · contained elements: … → … |
+| 960 | Références ou contenu modifiés | References or content changed |
+| 964 | Chargez un modèle : les commentaires sont comparés au modèle chargé. | Load a model: comments are compared with the loaded model. |
+| 966 | Commentaires non clos dont la valeur commentée a changé ou dont l'élément a disparu depuis le commentaire (nouveau fichier, 🔄 mise à jour), et commentaires marqués « Corrigé, à vérifier » . Pour chacun : ✔ Valider si la correction est faite (le commentaire est clos), ou ↻ Garder ouvert (la version actuelle devient la référence). | Open comments whose commented value has changed or whose element has disappeared since the comment (new file, 🔄 update), and comments marked “Fixed, to be checked” . For each one: ✔ Validate if the fix is done (the comment is closed), or ↻ Keep open (the current version becomes the reference). |
+| 967 | ✔ Rien à vérifier : aucun commentaire ouvert ne porte sur un élément modifié. | ✔ Nothing to check: no open comment concerns a changed element. |
+| 968 | commentaire(s) à vérifier | … comment(s) to check |
+| 968 | Valider tous les commentaires de cette liste | Validate all comments in this list |
+| 968 | ✔ Tout valider | ✔ Validate all |
+| 973 | Aller à la cible | Go to the target |
+| 973 | Modifier | Edit |
+| 975 | La correction a été faite : statut Validé | The fix has been made: status Validated |
+| 975 | ✔ Valider | ✔ Validate |
+| 976 | La modification ne règle pas le commentaire : il reste ouvert, la version actuelle devient la référence | The change does not resolve the comment: it stays open, the current version becomes the reference |
+| 976 | ↻ Garder ouvert | ↻ Keep open |
+| 981 | Valider les | Validate the … comment(s) in the list? |
+| 981 | commentaire(s) de la liste ? | Validate the … comment(s) in the list? |
+| 994 | Total | Total |
+| 996 | Total | Total |
+| 1002 | Commentaires | Comments |
+| 1002 | de la liste (filtres de 💬 Commentaires) | from the list (filters of 💬 Comments) |
+| 1003 | Regrouper par | Group by |
+| 1003 | criticité | severity |
+| 1003 | élément | element |
+| 1004 | réponses | replies |
+| 1006 | commentaire(s) · | … comment(s) · … overdue · … on changed elements |
+| 1006 | en retard · | … comment(s) · … overdue · … on changed elements |
+| 1006 | sur des éléments modifiés | … comment(s) · … overdue · … on changed elements |
+| 1007 | Rapport HTML autonome (imprimable) : synthèse, commentaires groupés, cibles, état par rapport au modèle chargé | Standalone HTML report (printable): summary, grouped comments, targets, status against the loaded model |
+| 1007 | 📄 Rapport HTML | 📄 HTML report |
+| 1008 | Une ligne par commentaire (tableur) | One row per comment (spreadsheet) |
+| 1008 | ⬇ CSV | ⬇ CSV |
+| 1020 | (non attribué) | (unassigned) |
+| 1021 | (commentaire général) | (general comment) |
+| 1027 | Aucun commentaire à mettre dans le rapport. | No comment to put in the report. |
+| 1028 | ⚠ modifié | ⚠ changed |
+| 1028 | ⚠ supprimé | ⚠ deleted |
+| 1028 | inchangé | unchanged |
+| 1033 | ✔ Vérifié le | ✔ Checked on …… |
+| 1036 | Criticité | Severity |
+| 1036 | Statut | Status |
+| 1036 | Commentaire | Comment |
+| 1036 | Cibles | Targets |
+| 1036 | Auteur | Author |
+| 1036 | Échéance | Due date |
+| 1036 | Responsables | Assignees |
+| 1036 | Modèle | Model |
+| 1038 | Rapport de revue | Review report |
+| 1043 | 💬 Rapport de revue | 💬 Review report |
+| 1043 | Modèle : | Model: … · … comment(s) · issued on …… |
+| 1043 | commentaire(s) · édité le | Model: … · … comment(s) · issued on …… |
+| 1044 | Synthèse | Summary |
+| 1044 | Produit par Arcalyse — colonne « Modèle » : état de la valeur commentée dans le modèle chargé lors de l'édition du rapport. | Produced by Arcalyse — “Model” column: status of the commented value in the model loaded when the report was issued. |
+| 1050 | Titre | Title |
+| 1050 | Commentaire | Comment |
+| 1050 | Criticité | Severity |
+| 1050 | Catégorie | Category |
+| 1050 | Statut | Status |
+| 1050 | Auteur | Author |
+| 1050 | Créé le | Created on |
+| 1050 | Échéance | Due date |
+| 1050 | Responsables | Assignees |
+| 1050 | Étiquettes | Tags |
+| 1050 | Éléments | Elements |
+| 1050 | Champs | Fields |
+| 1050 | Diagramme | Diagram |
+| 1050 | État dans le modèle | Status in the model |
+| 1050 | Réponses | Replies |
+| 1050 | Vérifié le | Checked on |
+| 1050 | Vérifié par | Checked by |
+| 1053 | modifié | modified |
+| 1053 | supprimé | deleted |
+| 1053 | inchangé | unchanged |
+| 1062 | Titre | Title |
+| 1062 | Criticité | Severity |
+| 1062 | Catégorie | Category |
+| 1062 | Échéance | Due date |
+| 1062 | Responsables | Assignees |
+| 1062 | Étiquettes | Tags |
+| 1064 | Votre nom | Your name |
+| 1064 | Auteur des nouveaux commentaires | Author of new comments |
+| 1065 | Participants | Participants |
+| 1065 | (proposés comme auteurs et responsables) | (offered as authors and assignees) |
+| 1066 | Retirer | Remove |
+| 1066 | Aucun participant. | No participant. |
+| 1067 | Nom, initiales ou équipe | Name, initials or team |
+| 1067 | ✚ Ajouter | ✚ Add |
+| 1068 | Champs proposés dans l'éditeur | Fields offered in the editor |
+| 1070 | Affichage | Display |
+| 1071 | Calque des commentaires sur les diagrammes | Comment layer on diagrams |
+| 1071 | Montrer aussi les notes closes sur les diagrammes | Also show closed notes on diagrams |
+| 1072 | Marquer d'un 💬 les éléments commentés dans les vues | Mark commented elements with 💬 in the views |
+| 1072 | Blocs, cartes et noms cliquables des éléments qui ont des commentaires non clos | Blocks, cards and clickable names of elements with open comments |
+| 1073 | Données | Data |
+| 1074 | Export et import des commentaires : bouton 💾 Revue ▾ en haut du panneau. | Export and import of comments: 💾 Review ▾ button at the top of the panel. |
+| 1075 | Supprimer tous les commentaires de la page | Delete all comments from the page |
+| 1075 | 🗑 Tout supprimer | 🗑 Delete all |
+| 1087 | Supprimer les | Delete the … comment(s) from the page? (Export them first to keep them.) |
+| 1087 | commentaire(s) de la page ? (Exportez-les d'abord pour les garder.) | Delete the … comment(s) from the page? (Export them first to keep them.) |
+| 1101 | Fichier illisible (JSON attendu). | Unreadable file (JSON expected). |
+| 1102 | Ce fichier n'est pas une revue Arcalyse. | This file is not an Arcalyse review. |
+| 1109 | ✔ Revue importée : | ✔ Review imported: … added, … updated, … already present |
+| 1109 | ajouté(s), | ✔ Review imported: … added, … updated, … already present |
+| 1109 | mis à jour, | ✔ Review imported: … added, … updated, … already present |
+| 1109 | déjà présent(s) | ✔ Review imported: … added, … updated, … already present |
+| 1110 | — modèle non vérifié (aucun modèle chargé) | — model not checked (no model loaded) |
+| 1129 | Les identifiants de projet diffèrent, mais les éléments commentés sont bien dans le modèle chargé : sans doute une copie du même projet. | The project identifiers differ, but the commented elements are in the loaded model: probably a copy of the same project. |
+| 1130 | Cette revue porte sur un autre projet Capella : ses commentaires ne correspondront pas aux éléments du modèle chargé (ils seront marqués « autre projet » et non vérifiés). | This review concerns another Capella project : its comments will not match the elements of the loaded model (they will be marked “other project” and not checked). |
+| 1131 | Trop peu d'éléments commentés ( | Too few commented elements (…) to conclude, and not all of them are in the loaded model: check that this is the right model (or a version where these elements were deleted). |
+| 1131 | ) pour conclure, et tous ne sont pas dans le modèle chargé : vérifiez qu'il s'agit du bon modèle (ou d'une version où ces éléments ont été supprimés). | Too few commented elements (…) to conclude, and not all of them are in the loaded model: check that this is the right model (or a version where these elements were deleted). |
+| 1132 | Cette revue ne contient que des commentaires généraux et n'indique pas son projet : impossible de vérifier le modèle. | This review only contains general comments and does not state its project: the model cannot be checked. |
+| 1137 | ⚠ Cette revue porte-t-elle sur ce modèle ? | ⚠ Does this review concern this model? |
+| 1139 | Revue importée | Imported review |
+| 1139 | Modèle chargé | Loaded model |
+| 1140 | Fichier | File |
+| 1140 | revue faite sur « | review made on “…” |
+| 1141 | Projet Capella | Capella project |
+| 1142 | Éléments commentés | Commented elements |
+| 1142 | élément(s) | … element(s) |
+| 1142 | retrouvé(s) ( | … found (… %) |
+| 1144 | commentaire(s) dans le fichier. | … comment(s) in the file. |
+| 1145 | Annuler | Cancel |
+| 1146 | Importer quand même | Import anyway |
 
 ## Textes sans traduction anglaise (5)
 
