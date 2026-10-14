@@ -1512,6 +1512,3 @@ body.crv-pop-body{margin:0;background:var(--c-bg);color:var(--c-text);font-famil
 .crv-hdr .cap-lf-btn{white-space:nowrap;}
 #vue-diagramme .cdg-vd-l1 .vd-chercher{flex:0 0 auto;margin-right:6px;}
 .cdg-crv{margin-left:0;}
-/* ⧩ Filtres de la visionneuse : menu plus grand (plus large, plus haut, texte un peu plus grand) */
-#vue-diagramme #vd-filtres{min-width:380px;max-height:calc(100vh - 190px);font-size:13px;padding:8px 10px;}
-#vue-diagramme #vd-filtres label{padding:2px 0;}
