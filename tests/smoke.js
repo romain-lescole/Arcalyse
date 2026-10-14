@@ -66,6 +66,13 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
         const r = n.getBoundingClientRect(); capRevDiagNoteAt(r.left, r.top, n.getAttribute('data-sem')); });
       await p.fill('#crv-ed-text', 'note smoke'); await p.click('#crv-ov [data-ok]'); await p.waitForTimeout(200);
       if (!(await p.$('#crv-layer .crv-note'))) throw new Error('note absente du calque du diagramme');
+      // Trait tiré de la poignée ● de la note vers un autre élément : il est lié à la note
+      const [h, t] = await p.evaluate(() => { const c = _capRev.comments[_capRev.comments.length - 1], ids = new Set(c.targets.map(x => x.id));
+        const n = [...document.querySelectorAll('#vd-svg .vd-f[data-sem]')].find(x => !ids.has(x.getAttribute('data-sem')) && capGetElementById_(x.getAttribute('data-sem')) && x.getBoundingClientRect().width > 20);
+        const a = document.querySelector('#crv-layer .crv-note-ln').getBoundingClientRect(), b = n.getBoundingClientRect();
+        return [{ x: a.x + a.width / 2, y: a.y + a.height / 2 }, { x: b.x + 6, y: b.y + b.height / 2 }]; });
+      await p.mouse.move(h.x, h.y); await p.mouse.down(); await p.mouse.move(t.x, t.y, { steps: 6 }); await p.mouse.up(); await p.waitForTimeout(200);
+      if (await p.evaluate(() => _capRev.comments[_capRev.comments.length - 1].targets.length) < 2) throw new Error('trait vers un élément : lien non créé');
     }
     for (const t of ['list', 'check', 'report', 'cfg']) await p.evaluate(k => capRevToggle(true, k), t);
     await p.evaluate(() => { capRevReportList(); capRevSynthese(_capRev.comments); _capRev.comments = []; _capRev.seq = 0; capRevSave(); capRevToggle(false); });

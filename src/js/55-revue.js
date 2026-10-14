@@ -644,10 +644,7 @@ function capRevLayerEnsure(){
     const s=e.target.closest&&e.target.closest('#vd-svg [data-sem]'); if(!s) return;
     e.stopPropagation(); e.preventDefault();
     if(e.type!=='click') return;
-    const c=capRevGet(_capRevUi.link), id=s.getAttribute('data-sem'); if(!c) return;
-    if((c.targets||[]).some(t=>t.id===id)) c.targets=c.targets.filter(t=>t.id!==id);
-    else { const t=capRevTarget(id,''); if(t) (c.targets=c.targets||[]).push(t); }
-    c.updated=new Date().toISOString(); capRevSave(c.id);
+    capRevToggleTarget(_capRevUi.link, s.getAttribute('data-sem'));
   };
   ['click','dblclick','pointerdown','mousedown'].forEach(t=>zone.addEventListener(t,lier,true));
   document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&_capRevUi.link){ _capRevUi.link=''; capRevLayerDraw(); } });
@@ -712,8 +709,11 @@ function capRevLayerDraw(){
     const w=mini?28/m.a:d.w, h=mini?28/m.a:d.h, cx=d.x+w/2, cy=d.y+h/2;
     (c.targets||[]).forEach(t=>{
       const b=capRevDiagBox(svg,inv,t.id); if(!b) return;
-      liens+=`<rect x="${b.x-3}" y="${b.y-3}" width="${b.w+6}" height="${b.h+6}" rx="3" fill="none" stroke="${col}" stroke-width="2" stroke-dasharray="5 3" vector-effect="non-scaling-stroke"/>`+
-        `<line x1="${cx}" y1="${cy}" x2="${b.x+b.w/2}" y2="${b.y+b.h/2}" stroke="${col}" stroke-width="1.5" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"/>`;
+      liens+=`<rect x="${b.x-3}" y="${b.y-3}" width="${b.w+6}" height="${b.h+6}" rx="3" fill="none" stroke="${col}" stroke-width="2.5" stroke-dasharray="6 3" vector-effect="non-scaling-stroke"/>`+
+        `<line x1="${cx}" y1="${cy}" x2="${b.x+b.w/2}" y2="${b.y+b.h/2}" stroke="rgba(0,0,0,.35)" stroke-width="4" vector-effect="non-scaling-stroke"/>`+
+        `<line x1="${cx}" y1="${cy}" x2="${b.x+b.w/2}" y2="${b.y+b.h/2}" stroke="${col}" stroke-width="2.2" stroke-dasharray="7 3" vector-effect="non-scaling-stroke"/>`+
+        `<circle class="crv-unlink" data-unlink="${esc(c.id)}" data-t="${esc(t.id)}" cx="${(cx+b.x+b.w/2)/2}" cy="${(cy+b.y+b.h/2)/2}" r="${6/m.a}" fill="${col}" stroke="#fff" stroke-width="1.5" vector-effect="non-scaling-stroke">`+
+        `<title>${esc(_L(`Délier « ${t.name||t.id} » de la note`))}</title></circle>`;
     });
     const titre=c.title||'', texte=c.text||'';
     notes+=mini?`<div class="crv-note crv-mini${u.link===c.id?' crv-linking':''}" data-c="${esc(c.id)}" style="left:${d.x}px;top:${d.y}px;width:${w}px;height:${h}px;--crv-c:${col};font-size:${12/m.a}px" title="${esc('#'+c.num+' '+(titre||texte).slice(0,200))}"><span data-n="max">${c.num}</span></div>`
@@ -722,6 +722,7 @@ function capRevLayerDraw(){
       `<span style="flex:1"></span><span class="crv-nb" data-n="link" title="${_L('Lier / délier des éléments du diagramme (clic sur les éléments, Échap pour terminer)')}">🔗</span>`+
       `<span class="crv-nb" data-n="edit" title="${_L('Modifier')}">✎</span><span class="crv-nb" data-n="min" title="${_L('Réduire en pastille')}">▁</span></div>`+
       `<div class="crv-note-b" data-n="edit2">${titre?`<b>${esc(titre)}</b><br>`:''}${esc(texte)}${(c.assignees||[]).length?`<div class="crv-note-m">👥 ${esc(c.assignees.join(', '))}</div>`:''}</div>`+
+      `<div class="crv-note-ln" data-n="line" title="${_L('Tirer un trait jusqu\'à un élément du diagramme pour le lier à la note (vers un élément déjà lié : le délier)')}"></div>`+
       `<div class="crv-note-rz" data-n="size" title="${_L('Redimensionner')}"></div></div>`;
   });
   const lk=u.link&&capRevGet(u.link);
@@ -731,6 +732,7 @@ function capRevLayerDraw(){
     L.addEventListener('pointerdown',capRevNoteDown);
     ['click','dblclick','mousedown','wheel'].forEach(t=>L.addEventListener(t,e=>{ if(e.target.closest('.crv-note,.crv-linkbar')&&t!=='wheel') e.stopPropagation(); }));
     L.addEventListener('click',capRevNoteClick);
+    L.addEventListener('click',e=>{ const u=e.target.closest('[data-unlink]'); if(!u) return; e.stopPropagation(); capRevToggleTarget(u.dataset.unlink, u.dataset.t); });
     L.addEventListener('dblclick',e=>{ const n=e.target.closest('.crv-note'); if(n&&e.target.closest('[data-n="edit2"]')) capRevEdit(n.dataset.c); });
   }
 }
@@ -744,13 +746,54 @@ function capRevNoteClick(e){
   else if(a==='edit') capRevEdit(c.id);
   else if(a==='min'){ c.diag.min=true; capRevSave(c.id); }
 }
-/** Glisser une note (en-tête ou pastille) ou la redimensionner (coin). @param {PointerEvent} e */
+/**
+ * Lie un élément à un commentaire, ou le délie s'il l'était déjà.
+ * @param {string} cid - Commentaire
+ * @param {string} id - Élément du modèle
+ */
+function capRevToggleTarget(cid, id){
+  const c=capRevGet(cid); if(!c||!id) return;
+  if((c.targets||[]).some(t=>t.id===id)) c.targets=c.targets.filter(t=>t.id!==id);
+  else { const t=capRevTarget(id,''); if(!t) return; (c.targets=c.targets||[]).push(t); }
+  c.updated=new Date().toISOString(); capRevSave(c.id);
+}
+/**
+ * Trait tiré depuis la poignée ● d'une note : suit le pointeur (élément visé en surbrillance) ;
+ * relâché sur un élément du diagramme, il le lie à la note (ou le délie s'il l'était).
+ * @param {PointerEvent} e - Appui sur la poignée
+ * @param {HTMLElement} n - Note
+ * @param {object} c - Commentaire
+ * @param {DOMMatrix} m - Matrice écran du SVG de la visionneuse
+ */
+function capRevNoteLine(e, n, c, m){
+  const d=c.diag, inv=m.inverse(), x1=d.x+d.w, y1=d.y+d.h/2, NS='http://www.w3.org/2000/svg';
+  const links=document.querySelector('#crv-layer .crv-links'); if(!links) return;
+  const ln=document.createElementNS(NS,'line'), cadre=document.createElementNS(NS,'rect');
+  [['x1',x1],['y1',y1],['x2',x1],['y2',y1],['stroke','var(--c-accent)'],['stroke-width','2.5'],['vector-effect','non-scaling-stroke']].forEach(([k,v])=>ln.setAttribute(k,v));
+  [['fill','none'],['stroke','var(--c-accent)'],['stroke-width','3'],['rx','3'],['vector-effect','non-scaling-stroke'],['visibility','hidden']].forEach(([k,v])=>cadre.setAttribute(k,v));
+  links.append(cadre, ln);
+  const cible=ev=>{ const s=document.elementsFromPoint(ev.clientX,ev.clientY).map(x=>x.closest&&x.closest('#vd-svg [data-sem]')).find(Boolean);
+    return s&&capGetElementById_(s.getAttribute('data-sem'))?s.getAttribute('data-sem'):''; };
+  const bouge=ev=>{
+    const p=new DOMPoint(ev.clientX,ev.clientY).matrixTransform(inv); ln.setAttribute('x2',p.x); ln.setAttribute('y2',p.y);
+    const id=cible(ev), b=id&&capRevDiagBox(document.getElementById('vd-svg'),inv,id);
+    if(b){ cadre.setAttribute('x',b.x-4); cadre.setAttribute('y',b.y-4); cadre.setAttribute('width',b.w+8); cadre.setAttribute('height',b.h+8); }
+    cadre.setAttribute('visibility',b?'visible':'hidden');
+  };
+  const fin=ev=>{ n.removeEventListener('pointermove',bouge); n.removeEventListener('pointerup',fin); n.removeEventListener('pointercancel',fin);
+    ln.remove(); cadre.remove();
+    if(ev.type==='pointerup'){ const id=cible(ev); if(id) capRevToggleTarget(c.id,id); } };
+  n.setPointerCapture(e.pointerId);
+  n.addEventListener('pointermove',bouge); n.addEventListener('pointerup',fin); n.addEventListener('pointercancel',fin);
+}
+/** Glisser une note (en-tête ou pastille), la redimensionner (coin) ou tirer un trait vers un élément (poignée ●). @param {PointerEvent} e */
 function capRevNoteDown(e){
-  const h=e.target.closest('[data-n="move"],[data-n="size"],[data-n="max"]'), n=e.target.closest('.crv-note');
+  const h=e.target.closest('[data-n="move"],[data-n="size"],[data-n="max"],[data-n="line"]'), n=e.target.closest('.crv-note');
   if(!n||!h||e.button!==0) return;
   if(e.target.closest('.crv-nb')) return;
   e.stopPropagation(); e.preventDefault();
   const c=capRevGet(n.dataset.c), svg=document.getElementById('vd-svg'), m=svg&&svg.getScreenCTM(); if(!c||!m) return;
+  if(h.dataset.n==='line'){ capRevNoteLine(e, n, c, m); return; }
   const d=c.diag, x0=e.clientX, y0=e.clientY, o={x:d.x, y:d.y, w:d.w, h:d.h}, size=h.dataset.n==='size';
   n._moved=false; n.setPointerCapture(e.pointerId);
   const bouge=ev=>{

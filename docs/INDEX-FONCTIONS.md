@@ -820,7 +820,7 @@
 - `capDiagExport` (l. 836) — Export groupé des diagrammes en planches : capture de tous les diagrammes, puis pagination
 - `capDiagExportHtml` (l. 907) — Rapport HTML autonome : onglet Sommaire (tableau avec liens) et onglet Planches
 
-## 55-revue.js — 973 lignes
+## 55-revue.js — 1016 lignes
 
 - `capRevNorm` (l. 27) — Complète des données de revue (lues dans la page ou un fichier) avec les valeurs par défaut.
 - `capRevStatuts` (l. 36) — @returns {object[]} statuts d'un commentaire {k, l, c, i} (k : valeur enregistrée)
@@ -877,22 +877,24 @@
 - `capRevDiagUid` (l. 605) — @returns {string} identifiant du diagramme ouvert dans la visionneuse ('' sinon)
 - `capRevDiagBar` (l. 611) — Commandes de la revue dans la barre de 🔲 Diagrammes Capella : 📝 Note (à glisser sur le diagramme) et
 - `capRevLayerEnsure` (l. 619) — Installe (une fois) le calque des commentaires au-dessus du diagramme et ses écouteurs.
-- `capRevDiagNoteAt` (l. 668) — Pose une note de revue sur le diagramme ouvert, à un point de l'écran (centre de la vue par défaut),
-- `capRevDiagBox` (l. 685) — Boîte d'un élément du diagramme en coordonnées du diagramme (union de ses formes dessinées).
-- `capRevLayerDraw` (l. 700) — Dessine les notes du diagramme ouvert sur le calque : un plan qui suit le zoom et le déplacement
-- `capRevNoteClick` (l. 738) — Boutons d'une note du calque : lier, modifier, réduire / agrandir. @param {MouseEvent} e
-- `capRevNoteDown` (l. 748) — Glisser une note (en-tête ou pastille) ou la redimensionner (coin). @param {PointerEvent} e
-- `capRevDiffHtml` (l. 776) — Différence entre la valeur commentée et le modèle chargé, pour une cible.
-- `capRevCheckHtml` (l. 790) — Onglet 🔁 Vérifier. @returns {string} HTML
-- `capRevCheckAll` (l. 807) — Valide tous les commentaires à vérifier (après confirmation).
-- `capRevReportList` (l. 816) — @returns {object[]} commentaires du rapport (ceux de la liste filtrée, ou tous)
-- `capRevSynthese` (l. 818) — Tableau croisé statut × criticité. @param {object[]} l - Commentaires @returns {string} HTML
-- `capRevReportTab` (l. 826) — Onglet 📄 Rapport : synthèse et exports. @returns {string} HTML
-- `capRevGroupes` (l. 842) — Groupes du rapport selon le regroupement choisi.
-- `capRevReportHtml` (l. 852) — Télécharge le rapport HTML autonome de la revue.
-- `capRevCsv` (l. 875) — Télécharge les commentaires du rapport en CSV (une ligne par commentaire).
-- `capRevCfgHtml` (l. 887) — Onglet ⚙ Réglages. @returns {string} HTML
-- `capRevCfgAction` (l. 911) — Actions de l'onglet ⚙ Réglages : participants, export, import, suppression.
-- `capRevExport` (l. 919) — Exporte la revue (participants et commentaires) dans un fichier .json réutilisable.
-- `capRevImport` (l. 926) — Importe un fichier .json de revue et le fusionne avec les commentaires de la page.
-- `capRevMerge` (l. 945) — Fusionne une revue importée : nouveaux commentaires ajoutés (renumérotés si leur numéro est pris),
+- `capRevDiagNoteAt` (l. 665) — Pose une note de revue sur le diagramme ouvert, à un point de l'écran (centre de la vue par défaut),
+- `capRevDiagBox` (l. 682) — Boîte d'un élément du diagramme en coordonnées du diagramme (union de ses formes dessinées).
+- `capRevLayerDraw` (l. 697) — Dessine les notes du diagramme ouvert sur le calque : un plan qui suit le zoom et le déplacement
+- `capRevNoteClick` (l. 740) — Boutons d'une note du calque : lier, modifier, réduire / agrandir. @param {MouseEvent} e
+- `capRevToggleTarget` (l. 754) — Lie un élément à un commentaire, ou le délie s'il l'était déjà.
+- `capRevNoteLine` (l. 768) — Trait tiré depuis la poignée ● d'une note : suit le pointeur (élément visé en surbrillance) ;
+- `capRevNoteDown` (l. 790) — Glisser une note (en-tête ou pastille), la redimensionner (coin) ou tirer un trait vers un élément (poignée ●). @param {PointerEvent} e
+- `capRevDiffHtml` (l. 819) — Différence entre la valeur commentée et le modèle chargé, pour une cible.
+- `capRevCheckHtml` (l. 833) — Onglet 🔁 Vérifier. @returns {string} HTML
+- `capRevCheckAll` (l. 850) — Valide tous les commentaires à vérifier (après confirmation).
+- `capRevReportList` (l. 859) — @returns {object[]} commentaires du rapport (ceux de la liste filtrée, ou tous)
+- `capRevSynthese` (l. 861) — Tableau croisé statut × criticité. @param {object[]} l - Commentaires @returns {string} HTML
+- `capRevReportTab` (l. 869) — Onglet 📄 Rapport : synthèse et exports. @returns {string} HTML
+- `capRevGroupes` (l. 885) — Groupes du rapport selon le regroupement choisi.
+- `capRevReportHtml` (l. 895) — Télécharge le rapport HTML autonome de la revue.
+- `capRevCsv` (l. 918) — Télécharge les commentaires du rapport en CSV (une ligne par commentaire).
+- `capRevCfgHtml` (l. 930) — Onglet ⚙ Réglages. @returns {string} HTML
+- `capRevCfgAction` (l. 954) — Actions de l'onglet ⚙ Réglages : participants, export, import, suppression.
+- `capRevExport` (l. 962) — Exporte la revue (participants et commentaires) dans un fichier .json réutilisable.
+- `capRevImport` (l. 969) — Importe un fichier .json de revue et le fusionne avec les commentaires de la page.
+- `capRevMerge` (l. 988) — Fusionne une revue importée : nouveaux commentaires ajoutés (renumérotés si leur numéro est pris),
