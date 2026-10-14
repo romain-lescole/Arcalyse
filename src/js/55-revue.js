@@ -394,7 +394,7 @@ function capRevTargetsHtml(c){
   const esc=capEsc;
   const t=(c.targets||[]).map(x=>{ const s=capRevTargetState(x), lv=CAP_LAYERS[x.layer]||{color:'#8b949e'};
     return `<span class="crv-tg${s==='deleted'?' crv-tg-del':s==='changed'?' crv-tg-chg':''}" data-open="${esc(x.id)}" title="${esc(x.type)}${x.field?' — '+esc(capRevFieldLabel(x.field)):''}">`+
-      `<span style="color:${lv.color};font-size:9px;font-weight:700">${esc(x.layer||'')}</span> ${esc(x.name||x.id.slice(0,12))}${x.field?` <i>· ${esc(capRevFieldLabel(x.field))}</i>`:''}</span>`; }).join('');
+      `${capIco(x.id,13)||capIcoType(x.type,13)}<span style="color:${lv.color};font-size:9px;font-weight:700">${esc(x.layer||'')}</span> ${esc(x.name||x.id.slice(0,12))}${x.field?` <i>· ${esc(capRevFieldLabel(x.field))}</i>`:''}</span>`; }).join('');
   const d=c.diag?`<span class="crv-tg crv-tg-diag" data-diag="${esc(c.diag.uid)}" title="${_L('Note sur le diagramme')}">🔲 ${esc(c.diag.nom||c.diag.uid)}</span>`:'';
   return t||d?`<div class="crv-tgs">${d}${t}</div>`:'';
 }
@@ -503,7 +503,7 @@ function capRevEdit(id, preset){
     if(!ks.includes(t.field)) ks.push(t.field);
     return ks.map(k=>`<option value="${esc(k)}"${k===t.field?' selected':''}>${esc(capRevFieldLabel(k))}</option>`).join(''); };
   const ciblesHtml=()=>d.targets.map((t,i)=>{ const lv=CAP_LAYERS[t.layer]||{color:'#8b949e'};
-      return `<div class="crv-ed-tg"><span style="color:${lv.color};font-size:9px;font-weight:700">${esc(t.layer||'')}</span> <b>${esc(t.name||t.id)}</b> <span class="ana-dim">${esc(t.type)}</span>`+
+      return `<div class="crv-ed-tg">${capIco(t.id,14)||capIcoType(t.type,14)}<span style="color:${lv.color};font-size:9px;font-weight:700">${esc(t.layer||'')}</span> <b>${esc(t.name||t.id)}</b> <span class="ana-dim">${esc(t.type)}</span>`+
         `<span style="flex:1"></span><select data-tf="${i}" title="${_L('Partie commentée')}">${champs(t)}</select><button class="crv-ib" data-tdel="${i}" title="${_L('Retirer')}">✕</button></div>`; }).join('')||
     _L('<div class="ana-dim">Aucun élément : commentaire général (ou ajoutez un élément ci-dessous).</div>');
   const persHtml=()=>people().map(p=>`<span class="crv-chip${d.assignees.includes(p)?' on':''}" data-pers="${esc(p)}">${esc(p)}</span>`).join('');
@@ -553,7 +553,7 @@ function capRevEdit(id, preset){
     const q=e.target.value.trim().toLowerCase(), res=D.getElementById('crv-ed-res');
     if(q.length<2){ res.innerHTML=''; return; }
     const hits=capAllElements.filter(x=>(x.attrs.name||'').toLowerCase().includes(q)||x.typeName.toLowerCase().includes(q)).slice(0,12);
-    res.innerHTML=hits.map(x=>`<div class="ctx-i" data-add="${esc(x.id)}"><span style="color:${(CAP_LAYERS[x.layer]||{}).color||'#8b949e'};font-size:9px;font-weight:700">${esc(x.layer)}</span> ${esc(x.attrs.name||'—')} <span class="ana-dim">${esc(x.typeName)}</span></div>`).join('')||_L('<div class="ana-dim">Aucun élément.</div>');
+    res.innerHTML=hits.map(x=>`<div class="ctx-i" data-add="${esc(x.id)}">${capIco(x.id,14)}<span style="color:${(CAP_LAYERS[x.layer]||{}).color||'#8b949e'};font-size:9px;font-weight:700">${esc(x.layer)}</span> ${esc(x.attrs.name||'—')} <span class="ana-dim">${esc(x.typeName)}</span></div>`).join('')||_L('<div class="ana-dim">Aucun élément.</div>');
   };
   ov.onkeydown=e=>{
     if(e.key==='Escape'){ fermer(); return; }
@@ -687,12 +687,12 @@ function capRevContext(e){
   let h;
   if(inDiag){
     const rep=capDiagReps().find(r=>r.uid===uid)||{}, nd=_capRev.comments.filter(c=>c.diag&&c.diag.uid===uid).length;
-    h=el?`<div class="crv-ctx-t">${esc(el.attrs.name||el.typeName)} <span class="ana-dim">${esc(el.typeName)}</span></div>`+
+    h=el?`<div class="crv-ctx-t">${capIco(el.id,14)}${esc(el.attrs.name||el.typeName)} <span class="ana-dim">${esc(el.typeName)}</span></div>`+
         note('',_L('📝 Note de revue ici, liée à l\'élément'))+note('name',_L('📝 Note sur son nom'))+
         (el.attrs.description?note('description',_L('📝 Note sur sa description')):'')
       :`<div class="crv-ctx-t">🔲 ${esc(rep.nom||'')}</div>`+note('',_L('📝 Note de revue ici'));
     if(nd) h+=`<div class="ctx-i" onclick="capRevShowDiag()">${_L(`📄 Notes de ce diagramme (${nd})`)}</div>`;
-  } else h=`<div class="crv-ctx-t">${esc(el.attrs.name||el.typeName)} <span class="ana-dim">${esc(el.typeName)}</span></div>`+
+  } else h=`<div class="crv-ctx-t">${capIco(el.id,14)}${esc(el.attrs.name||el.typeName)} <span class="ana-dim">${esc(el.typeName)}</span></div>`+
     `<div class="ctx-i" onclick="capRevNew([{id:'${id}',field:''}])">${_L('💬 Commenter l\'élément')}</div>`+
     `<div class="ctx-i" onclick="capRevNew([{id:'${id}',field:'name'}])">${_L('💬 Commenter son nom')}</div>`+
     (el.attrs.description?`<div class="ctx-i" onclick="capRevNew([{id:'${id}',field:'description'}])">${_L('💬 Commenter sa description')}</div>`:'');

@@ -5077,6 +5077,7 @@ const ARCV_CSS = ".arcv *{box-sizing:border-box;margin:0;padding:0}\n.arcv butto
      representations()                                     → [{ uid, nom, type, sigle, genre, couche }]
      diagrammesDe(id)                                      → { cibles, presences } : représentations d'un élément
      ouvrir(uid, [id])  choisir(id)  fermer()  theme('capella' | 'clair' | 'sombre')
+     icone(id, [taille]) / iconeType(type, [taille])        → icône SVG d'un élément (variante comme Capella) ou d'un type
    ARCV_GABARIT (HTML) et ARCV_CSS (styles préfixés par .arcv) sont produits par node build.js --visionneuse.
    ═══════════════════════════════════════════════════════════════════════ */
 
@@ -5206,7 +5207,28 @@ const ArcatureVisionneuse = {
    * Thème du dessin.
    * @param {string} t « capella », « clair » ou « sombre »
    */
-  theme(t) { vdChoisirTheme(t); }
+  theme(t) { vdChoisirTheme(t); },
+
+  /**
+   * Icône d'un élément du modèle chargé, choisie comme dans Capella (acteur, humain, nature, genre de fonction,
+   * mécanisme d'élément échangé…, surcouches comprises) ; à défaut, icône de son type.
+   * @param {string} id identifiant de l'élément du modèle
+   * @param {number} [taille] côté en pixels (16 par défaut)
+   * @returns {string} élément <svg> autonome, ou '' (élément inconnu ou sans dessin)
+   */
+  icone(id, taille) {
+    const el = ARC.doc && ARC.doc.parId.get(id);
+    if (!el) return '';
+    return icoSvgSeul(icoVariante(el, ARC.doc), taille) || icoSvgSeul(icoVarianteType(modType(el)), taille);
+  },
+
+  /**
+   * Icône d'un type d'élément (sans variante), utilisable sans modèle chargé.
+   * @param {string} type type court (« SystemFunction »)
+   * @param {number} [taille] côté en pixels (16 par défaut)
+   * @returns {string} élément <svg> autonome, ou ''
+   */
+  iconeType(type, taille) { return icoSvgSeul(icoVarianteType(type), taille); }
 };
 
 window.ArcatureVisionneuse = ArcatureVisionneuse;

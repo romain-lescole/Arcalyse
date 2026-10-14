@@ -20,6 +20,44 @@ const CAP_DIAG_COUCHES = ['OA', 'SA', 'LA', 'PA', 'EPBS'];
 /** @returns {boolean} vrai si la visionneuse d'Arcature est embarquée dans la page */
 function capDiagDispo() { return typeof window.ArcatureVisionneuse === 'object'; }
 
+/* ── Icônes des éléments (dessins façon Capella d'Arcature) ────────────── */
+
+/** Icônes déjà calculées (clé « id|taille »), pour le modèle `doc`. */
+const _capIco = { doc: null, cache: new Map() };
+/**
+ * Icône d'un élément du modèle, comme dans Capella (variante selon acteur, humain, nature, genre de fonction…),
+ * fournie par la visionneuse d'Arcature (API icone). Le modèle lui est transmis au premier appel.
+ * @param {string} id - Élément du modèle
+ * @param {number} [taille] - Côté en pixels (14 par défaut)
+ * @returns {string} élément <svg>, ou '' (visionneuse absente, élément inconnu ou sans dessin)
+ */
+function capIco(id, taille) {
+  const A = window.ArcatureVisionneuse;
+  if (!id || !capLoaded || !A || typeof A.icone !== 'function') return '';
+  if (_capIco.doc !== cap_xmlDoc) {
+    _capIco.cache.clear(); _capIco.doc = cap_xmlDoc;
+    try { capDiagEnsure(); if (_capDiag.vis && _capDiag.modele !== cap_xmlDoc) capDiagSync(); } catch (e) { console.error(e); }
+  }
+  const k = id + '|' + (taille || 14);
+  let s = _capIco.cache.get(k);
+  if (s == null) { try { s = A.icone(id, taille || 14) || ''; } catch (e) { s = ''; } _capIco.cache.set(k, s); }
+  return s;
+}
+/**
+ * Icône d'un type d'élément (sans variante), sans modèle chargé.
+ * @param {string} type - Type court (« SystemFunction »)
+ * @param {number} [taille] - Côté en pixels (14 par défaut)
+ * @returns {string} élément <svg>, ou ''
+ */
+function capIcoType(type, taille) {
+  const A = window.ArcatureVisionneuse;
+  if (!type || !A || typeof A.iconeType !== 'function') return '';
+  const k = '@' + type + '|' + (taille || 14);
+  let s = _capIco.cache.get(k);
+  if (s == null) { try { s = A.iconeType(type, taille || 14) || ''; } catch (e) { s = ''; } _capIco.cache.set(k, s); }
+  return s;
+}
+
 /**
  * Charge un fichier .aird (diagrammes du projet). Sans modèle chargé, il est gardé en attente du .capella.
  * @param {File} f - fichier .aird
@@ -498,7 +536,7 @@ async function capDiagInfo(uid) {
   const ids = r.genre === 'tableau' ? [] : [...new Set([...document.querySelectorAll('#vd-svg [data-sem]')].map(e => e.getAttribute('data-sem')))];
   const els = ids.map(id => capGetElementById_(id)).filter(Boolean);
   const lien = e => { const c = capDiagCouche(e.layer);
-    return `<span class="cap-det-link cdg-det-el" onclick="capOpenDetail('${esc(e.id)}')"><span style="color:${c.color};font-size:9px;font-weight:700">${esc(e.typeName)}</span><span>${esc(e.attrs.name || e.id.slice(0, 12))}</span></span>`; };
+    return `<span class="cap-det-link cdg-det-el" onclick="capOpenDetail('${esc(e.id)}')">${capIco(e.id, 13)}<span style="color:${c.color};font-size:9px;font-weight:700">${esc(e.typeName)}</span><span>${esc(e.attrs.name || e.id.slice(0, 12))}</span></span>`; };
   const titre = (t, c) => `<div class="cdg-det-t" style="color:${c || 'var(--c-dim)'}">${t}</div>`;
   const ligne = (k, v) => v ? `<tr><td class="cdg-det-k">${esc(k)}</td><td class="cdg-det-v">${esc(v)}</td></tr>` : '';
   const genres = { diagramme: _L('Diagramme'), sequence: _L('Diagramme de séquence'), tableau: _L('Tableau') };

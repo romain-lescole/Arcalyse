@@ -42,14 +42,14 @@ function capOpenDetail(id){
   // ── Helpers HTML ──
   const elLink=e=>{
     const elv=CAP_LAYERS[e.layer]||{color:'#8b949e',bg:'rgba(139,148,158,.1)'};
-    return `<span class="cap-det-link" onclick="capOpenDetail('${capEsc(e.id)}')" style="cursor:pointer;display:inline-flex;align-items:center;gap:5px;padding:2px 6px;border-radius:4px;border:1px solid var(--c-border);margin:2px 3px 2px 0;font-size:11px;background:var(--c-bg2);" onmouseenter="this.style.borderColor='var(--c-accent)'" onmouseleave="this.style.borderColor='var(--c-border)'"><span style="color:${elv.color};font-size:9px;font-weight:700">${capEsc(e.typeName)}</span><span style="color:var(--c-text)">${capEsc(e.attrs.name||e.id.slice(0,12))}</span></span>`;
+    return `<span class="cap-det-link" onclick="capOpenDetail('${capEsc(e.id)}')" style="cursor:pointer;display:inline-flex;align-items:center;gap:5px;padding:2px 6px;border-radius:4px;border:1px solid var(--c-border);margin:2px 3px 2px 0;font-size:11px;background:var(--c-bg2);" onmouseenter="this.style.borderColor='var(--c-accent)'" onmouseleave="this.style.borderColor='var(--c-border)'">${capIco(e.id,13)}<span style="color:${elv.color};font-size:9px;font-weight:700">${capEsc(e.typeName)}</span><span style="color:var(--c-text)">${capEsc(e.attrs.name||e.id.slice(0,12))}</span></span>`;
   };
   const secTitle=(txt,color)=>`<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:${color||'var(--c-dim)'};margin:16px 0 6px;">${txt}</div>`;
 
   let html=`<span class="cap-type-badge" style="color:${lv.color};background:${lv.bg};display:inline-block;margin-bottom:6px">${capEsc(el.typeName)}</span>`;
   if(human.h) html+=`<div style="font-size:11px;color:var(--c-accent);font-weight:600;margin-bottom:2px;">${capEsc(human.h)}</div>`;
   if(human.d) html+=`<div style="font-size:11px;color:var(--c-dim);margin-bottom:8px;line-height:1.5;">${capEsc(human.d)}</div>`;
-  html+=`<h3 style="font-size:14px;font-weight:600;margin-bottom:10px;word-break:break-word">${capEsc(name)}</h3>`;
+  html+=`<h3 style="font-size:14px;font-weight:600;margin-bottom:10px;word-break:break-word;display:flex;align-items:center;gap:6px">${capIco(el.id,20)}<span>${capEsc(name)}</span></h3>`;
   // 💬 Revue : commenter l'élément, son nom, sa description (55-revue.js)
   if(typeof capRevDetailHead==='function') html+=capRevDetailHead(el);
 

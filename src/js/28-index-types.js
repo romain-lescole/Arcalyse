@@ -99,7 +99,7 @@ function capRenderIndexBody(){
     tr.onmouseenter=()=>tr.style.background='var(--c-bg3)';
     tr.onmouseleave=()=>tr.style.background='';
     const tdType=document.createElement('td');
-    tdType.innerHTML=`<span class="cap-type-badge" style="color:${lv.color};background:${lv.bg}">${capEsc(r.type)}</span>`;
+    tdType.innerHTML=`${capIcoType(r.type,14)}<span class="cap-type-badge" style="color:${lv.color};background:${lv.bg}">${capEsc(r.type)}</span>`;
     tdType.style.cssText='padding:6px 11px;border:1px solid var(--c-border);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
     const tdHuman=document.createElement('td'); tdHuman.textContent=r.humanType||'—';
     tdHuman.style.cssText='padding:6px 11px;border:1px solid var(--c-border);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;';

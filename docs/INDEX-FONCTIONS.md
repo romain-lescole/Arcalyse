@@ -210,53 +210,53 @@
 - `capRenderCurrentView` (l. 815) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
 - `capUpdateStatChips` (l. 890) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
-## 21-capella-vues-base.js — 1488 lignes
+## 21-capella-vues-base.js — 1493 lignes
 
 - `capRenderSidebar` (l. 6) — Rend la sidebar Capella : liste des types par couche avec cases à cocher.
-- `capGetFiltered` (l. 59) — Retourne capAllElements filtré par types activés, couche et texte de recherche.
-- `capRenderCards` (l. 71) — Rend la vue Cartes : cartes groupées par couche ARCADIA, filtrées.
-- `CAP_TABLE_BUILTIN_COLS` (l. 106) — Colonnes affichées par défaut (Name en premier ; Couche, Type et Human Type restent proposées dans ⊞ Colonnes).
-- `capGetAllRawAttrKeys` (l. 123) — Calcule dynamiquement la liste de TOUS les noms d'attributs présents dans capAllElements
-- `capGetParentIndex` (l. 136) — Construit l'index de containment du modèle Capella depuis le XML brut :
-- `capGetMetachainMetaclasses` (l. 159) — Retourne la liste des "Metaclass" (types Capella) disponibles au démarrage d'une étape :
-- `capGetElementById_` (l. 180) — Retrouve un élément Capella par son identifiant XML. S'appuie sur un index id → élément
-- `capRefIndex_` (l. 196) — Index des références portées par un attribut : pour les éléments d'un type donné, associe
-- `capParseAttrRefs_` (l. 214) — Découpe la valeur brute d'un attribut XML en liste d'IDs candidats (gère les attributs
-- `capGetAttrRefProperties` (l. 222) — Détecte, pour un Metaclass donné, les attributs XML bruts dont la valeur référence
-- `capGetViaIntermediateProperties` (l. 255) — Détecte le pattern "navigation via élément intermédiaire" : un type X (différent du
-- `capGetOwnerProperties` (l. 293) — Détecte tous les types d'ANCÊTRES réellement rencontrés en remontant le containment XML
-- `capGetIncomingRefProperties` (l. 323) — Détecte les RÉFÉRENCES ENTRANTES : pour un metaclass M, trouve tous les types X dont un
-- `capGetMetachainProperties` (l. 358) — Retourne toutes les Properties navigables depuis un Metaclass : valeurs terminales,
-- `capComputeMetachainProperties_` (l. 372) — Calcule (sans cache) les Properties navigables depuis un Metaclass — voir capGetMetachainProperties.
-- `capResolveStep` (l. 463) — Exécute UN pas de navigation (une Property) à partir d'un élément capAllElements donné.
-- `capExtractValue` (l. 531) — Extrait une valeur terminale "simple" d'un élément capAllElements (Name, ID, Type,
-- `capResolveMetachain` (l. 547) — Exécute une chaîne de Properties (metachain) à partir d'un élément. Le 1er pas n'est
-- `capTableGetValArray` (l. 571) — Retourne TOUJOURS un tableau de valeurs pour une colonne donnée (même les colonnes à valeur
-- `capTableGetVal` (l. 607) — Retourne la valeur d'une colonne sous forme de string unique (jointe par ', ' si plusieurs
-- `capTableColLabel` (l. 612) — Libellé humain affiché en en-tête pour une colonne donnée.
-- `capBuildTableToolbar` (l. 625) — Construit la barre d'outils au-dessus du tableau Capella : bouton de sélection des
-- `capRefreshColPickerList` (l. 730) — Reconstruit uniquement la liste interne du menu ⊞ Colonnes (#cap-colpicker-list),
-- `capApplyColResize` (l. 808) — Ajoute une poignée de redimensionnement sur le bord droit d'un <th> du tableau Capella.
-- `capRenderCustomColStepRow` (l. 838) — Construit une ligne du metachain : <select> Metaclass + <select> Property + suppression.
-- `capRenderCustomColPanel` (l. 904) — Reconstruit entièrement le panneau : recalcule le metaclass imposé de chaque ligne à partir
-- `CAP_PP_MAX_CHIPS` (l. 931)
-- `CAP_PP_MAX_OPTS` (l. 932)
-- `capPpCapAdapter` (l. 937) — Adaptateur de l'aperçu pour le ▤ Tableau Capella (capAllElements, moteur cap…).
-- `capPpTrace` (l. 956) — Déroule le chemin pas à pas depuis un élément, en gardant chaque niveau intermédiaire
-- `capPpHasResult` (l. 975) — Indique si un élément donne un résultat non vide pour le chemin (cellule remplie).
-- `capPpRender` (l. 985) — Rend la zone « 👁 Aperçu en direct » d'un panneau de colonne par chemin : choix de
-- `capPpRenderBody` (l. 1053) — Rend le corps de l'aperçu : remplissage estimé sur le type de départ, puis le chemin
-- `capOpenCustomColPanel` (l. 1124) — Ouvre le panneau latéral de construction de colonne personnalisée (Metachain Navigation).
-- `capCloseCustomColPanel` (l. 1149) — Ferme le panneau latéral d'édition de colonne Metachain de la vue Tableau.
-- `capSaveTableView` (l. 1190) — Sérialise la configuration actuelle de la vue Tableau Capella (colonnes visibles, colonnes
-- `capLoadTableView` (l. 1212) — Charge une configuration de vue Tableau Capella précédemment sauvegardée et l'applique.
-- `capRenderTable` (l. 1231) — Rend intégralement la vue Tableau Capella : barre d'outils (colonnes, colonne perso,
-- `capRenderTableBodyOnly` (l. 1240) — Reconstruit uniquement le <thead>/<tbody> du tableau Capella (pas la toolbar ni le menu
-- `CAP_TREE_LIST_MAX` (l. 1364)
-- `capRenderTree` (l. 1368) — Rend la vue Arborescence : barre propre (recherche, 🌳 Arbre / ☰ Liste, déplier, réduire, JSON) créée
-- `capTreeExpandLevel` (l. 1391) — Déplie l'arbre de 🌳 Arborescence jusqu'à un niveau donné et replie le reste.
-- `capRenderTreeBody` (l. 1403) — Rend le contenu de 🌳 Arborescence selon l'affichage : arbre (avec une recherche : résultats et leurs
-- `capRenderTreeNode` (l. 1447) — Rend récursivement un nœud de l'arborescence Capella.
+- `capGetFiltered` (l. 61) — Retourne capAllElements filtré par types activés, couche et texte de recherche.
+- `capRenderCards` (l. 73) — Rend la vue Cartes : cartes groupées par couche ARCADIA, filtrées.
+- `CAP_TABLE_BUILTIN_COLS` (l. 108) — Colonnes affichées par défaut (Name en premier ; Couche, Type et Human Type restent proposées dans ⊞ Colonnes).
+- `capGetAllRawAttrKeys` (l. 125) — Calcule dynamiquement la liste de TOUS les noms d'attributs présents dans capAllElements
+- `capGetParentIndex` (l. 138) — Construit l'index de containment du modèle Capella depuis le XML brut :
+- `capGetMetachainMetaclasses` (l. 161) — Retourne la liste des "Metaclass" (types Capella) disponibles au démarrage d'une étape :
+- `capGetElementById_` (l. 182) — Retrouve un élément Capella par son identifiant XML. S'appuie sur un index id → élément
+- `capRefIndex_` (l. 198) — Index des références portées par un attribut : pour les éléments d'un type donné, associe
+- `capParseAttrRefs_` (l. 216) — Découpe la valeur brute d'un attribut XML en liste d'IDs candidats (gère les attributs
+- `capGetAttrRefProperties` (l. 224) — Détecte, pour un Metaclass donné, les attributs XML bruts dont la valeur référence
+- `capGetViaIntermediateProperties` (l. 257) — Détecte le pattern "navigation via élément intermédiaire" : un type X (différent du
+- `capGetOwnerProperties` (l. 295) — Détecte tous les types d'ANCÊTRES réellement rencontrés en remontant le containment XML
+- `capGetIncomingRefProperties` (l. 325) — Détecte les RÉFÉRENCES ENTRANTES : pour un metaclass M, trouve tous les types X dont un
+- `capGetMetachainProperties` (l. 360) — Retourne toutes les Properties navigables depuis un Metaclass : valeurs terminales,
+- `capComputeMetachainProperties_` (l. 374) — Calcule (sans cache) les Properties navigables depuis un Metaclass — voir capGetMetachainProperties.
+- `capResolveStep` (l. 465) — Exécute UN pas de navigation (une Property) à partir d'un élément capAllElements donné.
+- `capExtractValue` (l. 533) — Extrait une valeur terminale "simple" d'un élément capAllElements (Name, ID, Type,
+- `capResolveMetachain` (l. 549) — Exécute une chaîne de Properties (metachain) à partir d'un élément. Le 1er pas n'est
+- `capTableGetValArray` (l. 573) — Retourne TOUJOURS un tableau de valeurs pour une colonne donnée (même les colonnes à valeur
+- `capTableGetVal` (l. 609) — Retourne la valeur d'une colonne sous forme de string unique (jointe par ', ' si plusieurs
+- `capTableColLabel` (l. 614) — Libellé humain affiché en en-tête pour une colonne donnée.
+- `capBuildTableToolbar` (l. 627) — Construit la barre d'outils au-dessus du tableau Capella : bouton de sélection des
+- `capRefreshColPickerList` (l. 732) — Reconstruit uniquement la liste interne du menu ⊞ Colonnes (#cap-colpicker-list),
+- `capApplyColResize` (l. 810) — Ajoute une poignée de redimensionnement sur le bord droit d'un <th> du tableau Capella.
+- `capRenderCustomColStepRow` (l. 840) — Construit une ligne du metachain : <select> Metaclass + <select> Property + suppression.
+- `capRenderCustomColPanel` (l. 906) — Reconstruit entièrement le panneau : recalcule le metaclass imposé de chaque ligne à partir
+- `CAP_PP_MAX_CHIPS` (l. 933)
+- `CAP_PP_MAX_OPTS` (l. 934)
+- `capPpCapAdapter` (l. 939) — Adaptateur de l'aperçu pour le ▤ Tableau Capella (capAllElements, moteur cap…).
+- `capPpTrace` (l. 958) — Déroule le chemin pas à pas depuis un élément, en gardant chaque niveau intermédiaire
+- `capPpHasResult` (l. 977) — Indique si un élément donne un résultat non vide pour le chemin (cellule remplie).
+- `capPpRender` (l. 987) — Rend la zone « 👁 Aperçu en direct » d'un panneau de colonne par chemin : choix de
+- `capPpRenderBody` (l. 1055) — Rend le corps de l'aperçu : remplissage estimé sur le type de départ, puis le chemin
+- `capOpenCustomColPanel` (l. 1126) — Ouvre le panneau latéral de construction de colonne personnalisée (Metachain Navigation).
+- `capCloseCustomColPanel` (l. 1151) — Ferme le panneau latéral d'édition de colonne Metachain de la vue Tableau.
+- `capSaveTableView` (l. 1192) — Sérialise la configuration actuelle de la vue Tableau Capella (colonnes visibles, colonnes
+- `capLoadTableView` (l. 1214) — Charge une configuration de vue Tableau Capella précédemment sauvegardée et l'applique.
+- `capRenderTable` (l. 1233) — Rend intégralement la vue Tableau Capella : barre d'outils (colonnes, colonne perso,
+- `capRenderTableBodyOnly` (l. 1242) — Reconstruit uniquement le <thead>/<tbody> du tableau Capella (pas la toolbar ni le menu
+- `CAP_TREE_LIST_MAX` (l. 1366)
+- `capRenderTree` (l. 1370) — Rend la vue Arborescence : barre propre (recherche, 🌳 Arbre / ☰ Liste, déplier, réduire, JSON) créée
+- `capTreeExpandLevel` (l. 1393) — Déplie l'arbre de 🌳 Arborescence jusqu'à un niveau donné et replie le reste.
+- `capRenderTreeBody` (l. 1405) — Rend le contenu de 🌳 Arborescence selon l'affichage : arbre (avec une recherche : résultats et leurs
+- `capRenderTreeNode` (l. 1450) — Rend récursivement un nœud de l'arborescence Capella.
 
 ## 22-capella-liens.js — 281 lignes
 
@@ -772,57 +772,59 @@
 - `capCsvxBuild` (l. 85) — Construit l'en-tête et les lignes finales d'un export selon les choix enregistrés.
 - `capCsvExport` (l. 102) — Export CSV enrichi : ouvre la fenêtre « Colonnes de l'export » puis télécharge le fichier.
 
-## 54-diagrammes.js — 998 lignes
+## 54-diagrammes.js — 1039 lignes
 
 - `CAP_DIAG_COUCHES` (l. 18) — Ordre des couches ARCADIA dans la liste et les exports.
 - `capDiagDispo` (l. 21) — @returns {boolean} vrai si la visionneuse d'Arcature est embarquée dans la page
-- `capDiagLoadAird` (l. 27) — Charge un fichier .aird (diagrammes du projet). Sans modèle chargé, il est gardé en attente du .capella.
-- `capDiagPickAird` (l. 47) — 📂 Ouvrir le .aird : sélecteur à accès direct ouvert dans le dossier du .capella (Edge/Chrome,
-- `capOpenProjectFolder` (l. 66) — 📁 Dossier du projet (écran d'accueil) : charge ensemble le modèle .capella et ses diagrammes .aird.
-- `capProjectScanDir` (l. 81) — Lit un dossier du projet (sélecteur ou dossier déposé) sur 2 niveaux et charge le modèle et ses diagrammes.
-- `capProjectFromFiles` (l. 99) — Charge un projet à partir des fichiers d'un dossier : le .capella (choisi dans l'écran d'accueil s'il y en a plusieurs)
-- `capDiagMsg` (l. 123) — Affiche un message bref dans la barre de la vue. @param {string} t - Texte
-- `capDiagEnsure` (l. 126) — Crée la vue (une fois) : barre (ouvrir, export, sélection), liste classée à gauche, hôte de la visionneuse.
-- `capDiagSplit` (l. 157) — Séparateur entre l'explorateur et le diagramme : glisser pour régler la largeur de l'explorateur.
-- `capDiagCarte` (l. 174) — ▣ Carte (mini-carte de la visionneuse) : sous l'explorateur (repliable) ou dans le diagramme, comme dans la visionneuse.
-- `capDiagBarre` (l. 198) — Barre du haut : 📂 Ouvrir le .aird…, ⬇ Exporter…, ☐ Sélectionner…, fichier chargé.
-- `capDiagFit` (l. 212) — Ajuste la hauteur de la vue à la fenêtre.
-- `capDiagSync` (l. 220) — Transmet à la visionneuse le modèle courant (texte XML) et le .aird en attente, si besoin.
-- `capDiagBarreVd` (l. 245) — Réorganise la barre de la visionneuse au-dessus du diagramme, pour qu'elle ne bouge plus d'un diagramme à l'autre :
-- `capDiagRevSlot` (l. 271) — Remplit l'emplacement de la revue (📝 Note de revue, 💬 Calque) à côté de la recherche du diagramme.
-- `capDiagChainesFiltre` (l. 280) — Liste « Chaînes et chemins » : ne garde que les chaînes fonctionnelles et chemins physiques dessinés dans
-- `capRenderDiagrams` (l. 291) — Rendu de la vue 🔲 Diagrammes Capella.
-- `capDiagReps` (l. 305) — @returns {object[]} représentations du .aird chargé ({uid, nom, type, sigle, genre, couche})
-- `capDiagCouche` (l. 308) — Libellé et couleur d'une couche ARCADIA. @param {string} c - OA, SA, LA, PA, EPBS… @returns {{label:string,color:string,bg:string}}
-- `capDiagRang` (l. 311) — Rang d'une couche pour le tri. @param {string} c - Couche @returns {number}
-- `capDiagIcones` (l. 314) — Icône de chaque diagramme, reprise de la liste (masquée) de la visionneuse. @returns {Map<string,string>} uid → SVG
-- `capDiagFiltrees` (l. 323) — Représentations filtrées par la recherche (nom, type, sigle, couche). @returns {object[]}
-- `capDiagGroupes` (l. 334) — Regroupe les représentations selon le classement choisi.
-- `capDiagOuvert` (l. 369) — Un groupe est-il ouvert ? Couches ouvertes, types repliés par défaut ; tout est ouvert pendant une recherche.
-- `capDiagListe` (l. 376) — Rend la liste classée (panneau gauche).
-- `capDiagMarquerActif` (l. 422) — Met en évidence le diagramme ouvert dans la liste.
-- `capDiagRepsGroupe` (l. 431) — Représentations d'un groupe de la liste (selon la clé).
-- `capDiagClic` (l. 438) — Clics de la vue : barre (ouvrir, export, sélection), carte, groupes repliables, diagrammes. @param {MouseEvent} e
-- `capDiagChange` (l. 465) — Cases à cocher (diagramme, groupe, tout) et choix du classement. @param {Event} e
-- `capDiagOpen` (l. 480) — Ouvre un diagramme dans la vue 🔲 Diagrammes Capella et y met un élément en évidence.
-- `capDiagInfo` (l. 491) — Panneau de détail d'un diagramme (comme pour un élément du modèle) : type, couche, sigle, nature, identifiant,
-- `capDiagDetail` (l. 529) — Section « Diagrammes » du panneau de détail : représentations de l'élément et diagrammes où il est dessiné.
-- `capDiagSvg` (l. 547) — SVG autonome d'un diagramme, tel que l'exporte la visionneuse (menu ⬇ Exporter › SVG) :
-- `capDiagPlanche` (l. 579) — Planche d'un diagramme : cadre, en-tête (couche, sigle, nom, type), diagramme centré, cartouche technique
-- `capDiagTexte` (l. 658) — Texte brut d'une description Capella (attribut XML contenant du HTML).
-- `capDiagMeta` (l. 670) — Description et élément représenté d'un diagramme, lus dans le .aird (DRepresentationDescriptor : documentation, target).
-- `capDiagElements` (l. 690) — Annexe d'un diagramme : éléments du modèle représentés (attributs data-sem du SVG), triés par couche, type et nom.
-- `capDiagAnnexeCsv` (l. 703) — Annexe au format CSV (séparateur ;, BOM) : en-tête du diagramme, description, puis éléments représentés.
-- `CAP_DIAG_ANX` (l. 710) — Lignes d'annexe par page PDF.
-- `capDiagAnnexePages` (l. 719) — Pages d'annexe du PDF (A4 paysage) : tableau des éléments représentés.
-- `capDiagCibles` (l. 755) — Diagrammes visés par l'export, dans l'ordre de la liste (couche, type, nom).
-- `capDiagExportDialog` (l. 762) — Fenêtre « Exporter des diagrammes » : portée, mise en page, aperçu de la planche, formats.
-- `capDiagApercu` (l. 807) — Aperçu de la planche du premier diagramme visé (diagramme ouvert s'il en fait partie).
-- `capDiagPdfSommaire` (l. 826) — Page de sommaire du PDF (paysage A4) : projet, date, nombre de planches, liste par couche et type avec numéros de page.
-- `CAP_DIAG_PDF_ALERTE` (l. 868) — Seuil (Mo) au-delà duquel l'export PDF demande confirmation.
-- `capDiagPdfEstimation` (l. 878) — Taille estimée du PDF, d'après la surface des planches rastérisées (même bornes que capSvgToCanvas)
-- `capDiagExport` (l. 892) — Export groupé des diagrammes en planches : capture de tous les diagrammes, puis pagination
-- `capDiagExportHtml` (l. 963) — Rapport HTML autonome : onglet Sommaire (tableau avec liens) et onglet Planches
+- `capIco` (l. 34) — Icône d'un élément du modèle, comme dans Capella (variante selon acteur, humain, nature, genre de fonction…),
+- `capIcoType` (l. 52) — Icône d'un type d'élément (sans variante), sans modèle chargé.
+- `capDiagLoadAird` (l. 65) — Charge un fichier .aird (diagrammes du projet). Sans modèle chargé, il est gardé en attente du .capella.
+- `capDiagPickAird` (l. 85) — 📂 Ouvrir le .aird : sélecteur à accès direct ouvert dans le dossier du .capella (Edge/Chrome,
+- `capOpenProjectFolder` (l. 104) — 📁 Dossier du projet (écran d'accueil) : charge ensemble le modèle .capella et ses diagrammes .aird.
+- `capProjectScanDir` (l. 119) — Lit un dossier du projet (sélecteur ou dossier déposé) sur 2 niveaux et charge le modèle et ses diagrammes.
+- `capProjectFromFiles` (l. 137) — Charge un projet à partir des fichiers d'un dossier : le .capella (choisi dans l'écran d'accueil s'il y en a plusieurs)
+- `capDiagMsg` (l. 161) — Affiche un message bref dans la barre de la vue. @param {string} t - Texte
+- `capDiagEnsure` (l. 164) — Crée la vue (une fois) : barre (ouvrir, export, sélection), liste classée à gauche, hôte de la visionneuse.
+- `capDiagSplit` (l. 195) — Séparateur entre l'explorateur et le diagramme : glisser pour régler la largeur de l'explorateur.
+- `capDiagCarte` (l. 212) — ▣ Carte (mini-carte de la visionneuse) : sous l'explorateur (repliable) ou dans le diagramme, comme dans la visionneuse.
+- `capDiagBarre` (l. 236) — Barre du haut : 📂 Ouvrir le .aird…, ⬇ Exporter…, ☐ Sélectionner…, fichier chargé.
+- `capDiagFit` (l. 250) — Ajuste la hauteur de la vue à la fenêtre.
+- `capDiagSync` (l. 258) — Transmet à la visionneuse le modèle courant (texte XML) et le .aird en attente, si besoin.
+- `capDiagBarreVd` (l. 284) — Réorganise la barre de la visionneuse au-dessus du diagramme, pour qu'elle ne bouge plus d'un diagramme à l'autre :
+- `capDiagRevSlot` (l. 312) — Remplit l'emplacement de la revue (📝 Note de revue, 💬 Calque) à côté de la recherche du diagramme.
+- `capDiagChainesFiltre` (l. 321) — Liste « Chaînes et chemins » : ne garde que les chaînes fonctionnelles et chemins physiques dessinés dans
+- `capRenderDiagrams` (l. 332) — Rendu de la vue 🔲 Diagrammes Capella.
+- `capDiagReps` (l. 346) — @returns {object[]} représentations du .aird chargé ({uid, nom, type, sigle, genre, couche})
+- `capDiagCouche` (l. 349) — Libellé et couleur d'une couche ARCADIA. @param {string} c - OA, SA, LA, PA, EPBS… @returns {{label:string,color:string,bg:string}}
+- `capDiagRang` (l. 352) — Rang d'une couche pour le tri. @param {string} c - Couche @returns {number}
+- `capDiagIcones` (l. 355) — Icône de chaque diagramme, reprise de la liste (masquée) de la visionneuse. @returns {Map<string,string>} uid → SVG
+- `capDiagFiltrees` (l. 364) — Représentations filtrées par la recherche (nom, type, sigle, couche). @returns {object[]}
+- `capDiagGroupes` (l. 375) — Regroupe les représentations selon le classement choisi.
+- `capDiagOuvert` (l. 410) — Un groupe est-il ouvert ? Couches ouvertes, types repliés par défaut ; tout est ouvert pendant une recherche.
+- `capDiagListe` (l. 417) — Rend la liste classée (panneau gauche).
+- `capDiagMarquerActif` (l. 463) — Met en évidence le diagramme ouvert dans la liste.
+- `capDiagRepsGroupe` (l. 472) — Représentations d'un groupe de la liste (selon la clé).
+- `capDiagClic` (l. 479) — Clics de la vue : barre (ouvrir, export, sélection), carte, groupes repliables, diagrammes. @param {MouseEvent} e
+- `capDiagChange` (l. 506) — Cases à cocher (diagramme, groupe, tout) et choix du classement. @param {Event} e
+- `capDiagOpen` (l. 521) — Ouvre un diagramme dans la vue 🔲 Diagrammes Capella et y met un élément en évidence.
+- `capDiagInfo` (l. 532) — Panneau de détail d'un diagramme (comme pour un élément du modèle) : type, couche, sigle, nature, identifiant,
+- `capDiagDetail` (l. 570) — Section « Diagrammes » du panneau de détail : représentations de l'élément et diagrammes où il est dessiné.
+- `capDiagSvg` (l. 588) — SVG autonome d'un diagramme, tel que l'exporte la visionneuse (menu ⬇ Exporter › SVG) :
+- `capDiagPlanche` (l. 620) — Planche d'un diagramme : cadre, en-tête (couche, sigle, nom, type), diagramme centré, cartouche technique
+- `capDiagTexte` (l. 699) — Texte brut d'une description Capella (attribut XML contenant du HTML).
+- `capDiagMeta` (l. 711) — Description et élément représenté d'un diagramme, lus dans le .aird (DRepresentationDescriptor : documentation, target).
+- `capDiagElements` (l. 731) — Annexe d'un diagramme : éléments du modèle représentés (attributs data-sem du SVG), triés par couche, type et nom.
+- `capDiagAnnexeCsv` (l. 744) — Annexe au format CSV (séparateur ;, BOM) : en-tête du diagramme, description, puis éléments représentés.
+- `CAP_DIAG_ANX` (l. 751) — Lignes d'annexe par page PDF.
+- `capDiagAnnexePages` (l. 760) — Pages d'annexe du PDF (A4 paysage) : tableau des éléments représentés.
+- `capDiagCibles` (l. 796) — Diagrammes visés par l'export, dans l'ordre de la liste (couche, type, nom).
+- `capDiagExportDialog` (l. 803) — Fenêtre « Exporter des diagrammes » : portée, mise en page, aperçu de la planche, formats.
+- `capDiagApercu` (l. 848) — Aperçu de la planche du premier diagramme visé (diagramme ouvert s'il en fait partie).
+- `capDiagPdfSommaire` (l. 867) — Page de sommaire du PDF (paysage A4) : projet, date, nombre de planches, liste par couche et type avec numéros de page.
+- `CAP_DIAG_PDF_ALERTE` (l. 909) — Seuil (Mo) au-delà duquel l'export PDF demande confirmation.
+- `capDiagPdfEstimation` (l. 919) — Taille estimée du PDF, d'après la surface des planches rastérisées (même bornes que capSvgToCanvas)
+- `capDiagExport` (l. 933) — Export groupé des diagrammes en planches : capture de tous les diagrammes, puis pagination
+- `capDiagExportHtml` (l. 1004) — Rapport HTML autonome : onglet Sommaire (tableau avec liens) et onglet Planches
 
 ## 55-revue.js — 1190 lignes
 

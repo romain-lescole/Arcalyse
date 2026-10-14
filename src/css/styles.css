@@ -1517,3 +1517,11 @@ body.crv-pop-body{margin:0;background:var(--c-bg);color:var(--c-text);font-famil
 #vue-diagramme .cdg-vd-l1 .vd-chercher{flex:0 1 auto;min-width:0;}
 #vue-diagramme .cdg-vd-l1 #vd-chercher{flex:0 1 230px;min-width:90px;}
 #vue-diagramme .cdg-vd-l1 #vd-nom{min-width:120px;}
+
+/* Icônes des éléments façon Capella (visionneuse d'Arcature : capIco / capIcoType) */
+svg.ico{flex-shrink:0;vertical-align:-3px;}
+.cap-card-top svg.ico{margin-right:2px;}
+.cap-tree-icon.cap-tree-svg{background:none;width:auto;height:auto;padding:0;display:inline-flex;align-items:center;}
+.cap-type-ico{display:inline-flex;align-items:center;width:14px;margin-right:4px;flex-shrink:0;}
+.crv-tg svg.ico,.crv-ed-tg svg.ico,.crv-ctx-t svg.ico,#crv-ed-res svg.ico{margin-right:3px;}
+html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,255,.9)) drop-shadow(0 0 .6px rgba(255,255,255,.6));}
