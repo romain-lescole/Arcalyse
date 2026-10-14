@@ -1397,6 +1397,7 @@ textarea.crv-in{resize:vertical;}
 .crv-st{font-size:11px;font-weight:600;}
 .crv-chg{color:var(--c-warn,#e3b341);font-size:11px;font-weight:600;}
 .crv-chg.crv-del{color:#f85149;}
+.crv-chg.crv-other{color:var(--c-dim);}
 html[data-tone="light"] .crv-chg.crv-del{color:#cf222e;}
 .crv-title{margin:3px 0 2px;cursor:pointer;font-weight:600;word-break:break-word;}
 .crv-meta{color:var(--c-dim);font-size:11px;line-height:1.5;}

@@ -401,7 +401,9 @@
           <tr><td>⚙ Réglages</td><td>Votre nom, participants, champs proposés, affichage (calque des diagrammes, notes closes, marque 💬 des éléments commentés dans les vues), export / import.</td></tr>
         </table>
         <h3>Enregistrement</h3>
-        <p>Les commentaires sont enregistrés <b>dans la page</b> (💾 Enregistrer, Ctrl+S). <b>⚙ Réglages › ⬇ Exporter (.json)</b> les garde hors de la page (sauvegarde, envoi) ; <b>📂 Importer / fusionner</b> réunit les revues de plusieurs relecteurs (nouveaux commentaires ajoutés, version la plus récente gardée pour les autres, réponses réunies). Les commentaires restent quand un autre modèle est ouvert : ils sont alors vérifiés sur ce modèle.</p>
+        <p>Les commentaires sont enregistrés <b>dans la page</b> (💾 Enregistrer, Ctrl+S). <b>⚙ Réglages › ⬇ Exporter (.json)</b> les garde hors de la page (sauvegarde, envoi) ; <b>📂 Importer / fusionner</b> réunit les revues de plusieurs relecteurs (nouveaux commentaires ajoutés, version la plus récente gardée pour les autres, réponses réunies). Les commentaires restent quand un autre modèle est ouvert.</p>
+        <h3>Bon modèle ?</h3>
+        <p>Chaque commentaire et chaque export notent l'<b>identifiant du projet Capella</b> (élément racine <i>Project</i> du .capella : identifiant unique créé avec le projet, conservé d'une version à l'autre). À l'import, la revue est comparée au modèle chargé : même identifiant de projet → import direct ; sinon, part des <b>éléments commentés</b> retrouvés dans le modèle (identifiants eux aussi uniques et stables). Avec <b>moins de 5 éléments</b> commentés, cette part ne suffit pas : l'import est direct seulement si tous sont retrouvés, sinon une fenêtre compare les deux côtés (fichier, projet, éléments retrouvés) et propose <b>Importer quand même</b> ou Annuler. Un projet copié garde ses identifiants d'éléments : il est reconnu comme copie. Les commentaires d'un autre projet sont marqués <b>⧉ autre projet</b> et ne sont pas vérifiés (portée <b>Projet chargé</b> dans la liste pour les masquer).</p>
       </div>
 
       <!-- ── CAS D'USAGE ── -->

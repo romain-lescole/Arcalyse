@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 4040 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 4061 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -743,104 +743,104 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 12 | Shared | (inchangé, hors _L) |
-| 71 | élément(s) affiché(s) | … element(s) shown |
-| 80 | —sans nom— | —unnamed— |
-| 90 | Aucun résultat | No result |
-| 308 | Owner [ | Owner […] |
-| 377 | Name | (inchangé, hors _L) |
-| 379 | Type | (inchangé, hors _L) |
-| 380 | Human Type | (inchangé, hors _L) |
-| 389 | Attribut « | Attribute “…” |
-| 411 | Owned element [ | Owned element […] |
-| 433 | :fwd: | (inchangé, hors _L) |
-| 440 | :rev: | (inchangé, hors _L) |
-| 611 | Couche | Layer |
-| 611 | Type | (inchangé, hors _L) |
-| 611 | Human Type | (inchangé, hors _L) |
-| 611 | Name | (inchangé, hors _L) |
-| 611 | Owner | Owner |
-| 611 | Owned element | (inchangé, hors _L) |
-| 630 | ⊞ Colonnes ( | ⊞ Columns (…) ▾ |
-| 640 | 🔍 Rechercher une colonne… | 🔍 Search a column… |
-| 672 | Créer une colonne calculée en suivant un chemin de relations (metachain), avec aperçu en direct | Create a computed column by following a path of relations (metachain), with live preview |
-| 673 | ✨ Colonne par chemin | ✨ Path column |
-| 685 | Bascule l'affichage des cellules à plusieurs valeurs | Toggle the display of multi-valued cells |
-| 686 | ≡ En ligne | ≡ Inline |
-| 686 | ☰ Empilé | ☰ Stacked |
-| 698 | Exporter en CSV les colonnes affichées, pour toutes les lignes filtrées (ordre du tri) | Export the displayed columns to CSV, for all filtered rows (sort order) |
-| 699 | ⬇ CSV | ⬇ CSV |
-| 704 | Sauvegarder la vue de cet onglet (colonnes, colonnes par chemin, filtres, largeurs, tri) dans un fichier | Save this tab's view (columns, path columns, filters, widths, sort) to a file |
-| 705 | 💾 Sauver vue | 💾 Save view |
-| 709 | Charger une vue tableau sauvegardée | Load a saved table view |
-| 710 | 📂 Charger vue | 📂 Load view |
-| 716 | ↺ Réinitialiser | ↺ Reset |
-| 717 | Revenir aux colonnes, à l'ordre, aux largeurs et au tri de départ, sans filtre (onglet affiché) | Go back to the initial columns, order, widths and sort, with no filter (current tab) |
-| 752 | Modifier le metachain de cette colonne | Edit the metachain of this column |
-| 758 | Supprimer cette colonne personnalisée | Delete this custom column |
-| 780 | ⊞ Colonnes ( | ⊞ Columns (…) ▾ |
-| 784 | Colonnes calculées | Computed columns |
-| 785 | Name | (inchangé, hors _L) |
-| 785 | Owner | Owner |
-| 785 | Owned element | (inchangé, hors _L) |
-| 786 | Couche | Layer |
-| 786 | Type | (inchangé, hors _L) |
-| 786 | Human Type | (inchangé, hors _L) |
-| 790 | Colonnes par chemin | Path columns |
-| 796 | Attributs du fichier XML | XML file attributes |
-| 874 | (aucune relation disponible) | (no relation available) |
-| 892 | Supprimer cette étape et les suivantes | Delete this step and the following ones |
-| 939 | (sans nom) | (unnamed) |
-| 989 | 👁 Aperçu en direct | 👁 Live preview |
-| 991 | Choisissez un type de départ. | Choose a start type. |
-| 994 | Aucun élément de ce type dans le modèle. | No element of this type in the model. |
-| 1006 | Élément d'exemple ( | Sample element (…): |
-| 1009 | 🔍 Filtrer… | 🔍 Filter… |
-| 1011 | Suivant ▸ | Next ▸ |
-| 1012 | Passer au prochain élément dont la cellule serait remplie | Go to the next element whose cell would be filled |
-| 1023 | autre(s) : affinez le filtre | … … more: refine the filter |
-| 1024 | (aucun élément) | (no element) |
-| 1061 | Cellule remplie pour | Cell filled for … element(s) out of the first … tested (… in total). |
-| 1061 | élément(s) sur les | Cell filled for … element(s) out of the first … tested (… in total). |
-| 1061 | premiers testés ( | Cell filled for … element(s) out of the first … tested (… in total). |
-| 1061 | au total). | Cell filled for … element(s) out of the first … tested (… in total). |
-| 1062 | Cellule remplie pour | Cell filled for … element(s) out of …. |
-| 1062 | élément(s) sur | Cell filled for … element(s) out of …. |
-| 1063 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
-| 1082 | Départ : | Start: … |
-| 1087 | (à choisir) | (to be chosen) |
-| 1092 | valeur(s) lue(s) | … value(s) read |
-| 1092 | Aucune valeur. | No value. |
-| 1095 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
-| 1096 | ∅ Aucun élément atteint : le chemin s'arrête ici pour cet exemple. | ∅ No element reached: the path stops here for this sample. |
-| 1108 | ▣ Cellule dans le tableau | ▣ Cell in the table |
-| 1110 | Chemin incomplet. | Incomplete path. |
-| 1110 | (vide) | (empty) |
-| 1136 | ✨ Modifier « | ✨ Edit “…” |
-| 1136 | ✨ Colonne par chemin | ✨ Path column |
-| 1138 | Enregistrer les modifications | Save changes |
-| 1138 | Créer la colonne | Create the column |
-| 1161 | Choisissez au moins un type de départ et une relation ou une valeur. | Choose at least one start type and one relation or value. |
-| 1162 | Chaque étape doit avoir une relation ou une valeur sélectionnée. | Each step must have a relation or a value selected. |
-| 1213 | Fichier invalide : JSON illisible. | Invalid file: unreadable JSON. |
-| 1215 | Ce fichier ne semble pas être une vue de tableau valide. | This file does not look like a valid table view. |
-| 1249 | élément(s) | … element(s) |
-| 1249 | · 🌳 arbre ( | · 🌳 tree (… row(s) shown) |
-| 1249 | ligne(s) affichée(s)) | · 🌳 tree (… row(s) shown) |
-| 1249 | · 🎯 portée : | · 🎯 scope: … |
-| 1265 | Clic : trier · glisser : déplacer la colonne · bord droit : largeur | ……\nClick: sort · drag: move the column · right edge: width |
-| 1281 | Filtrer… | Filter… |
-| 1307 | Aucun élément ne correspond aux filtres. | No element matches the filters. |
-| 1307 | Aucun type coché pour cet onglet : cochez des types d'éléments dans le menu de gauche. | No type checked for this tab: check element types in the left menu. |
-| 1328 | (conteneur) | … — … (container) |
-| 1369 | 🌳 Arbre | 🌳 Tree ☰ List ⊞ Expand all ⊟ Collapse all Level 1 2 3 ⬇ JSON |
-| 1371 | lignes au plus)" ☰ Liste ⊞ Tout déplier ⊟ Tout réduire Niveau 1 2 3 ⬇ JSON | 🌳 Tree ☰ List ⊞ Expand all ⊟ Collapse all Level 1 2 3 ⬇ JSON |
-| 1419 | résultat(s) | … result(s) |
-| 1419 | élément(s) | … element(s) |
-| 1424 | cap-tree-row cap-tree-lrow | (inchangé, hors _L) |
-| 1434 | autre(s) élément(s) non affiché(s) : précisez la recherche. | … … more element(s) not shown: refine the search. |
-| 1435 | Aucun élément ne correspond. | No element matches. |
-| 1439 | Aucun élément ne correspond. | No element matches. |
+| 14 | Shared | (inchangé, hors _L) |
+| 73 | élément(s) affiché(s) | … element(s) shown |
+| 82 | —sans nom— | —unnamed— |
+| 92 | Aucun résultat | No result |
+| 310 | Owner [ | Owner […] |
+| 379 | Name | (inchangé, hors _L) |
+| 381 | Type | (inchangé, hors _L) |
+| 382 | Human Type | (inchangé, hors _L) |
+| 391 | Attribut « | Attribute “…” |
+| 413 | Owned element [ | Owned element […] |
+| 435 | :fwd: | (inchangé, hors _L) |
+| 442 | :rev: | (inchangé, hors _L) |
+| 613 | Couche | Layer |
+| 613 | Type | (inchangé, hors _L) |
+| 613 | Human Type | (inchangé, hors _L) |
+| 613 | Name | (inchangé, hors _L) |
+| 613 | Owner | Owner |
+| 613 | Owned element | (inchangé, hors _L) |
+| 632 | ⊞ Colonnes ( | ⊞ Columns (…) ▾ |
+| 642 | 🔍 Rechercher une colonne… | 🔍 Search a column… |
+| 674 | Créer une colonne calculée en suivant un chemin de relations (metachain), avec aperçu en direct | Create a computed column by following a path of relations (metachain), with live preview |
+| 675 | ✨ Colonne par chemin | ✨ Path column |
+| 687 | Bascule l'affichage des cellules à plusieurs valeurs | Toggle the display of multi-valued cells |
+| 688 | ≡ En ligne | ≡ Inline |
+| 688 | ☰ Empilé | ☰ Stacked |
+| 700 | Exporter en CSV les colonnes affichées, pour toutes les lignes filtrées (ordre du tri) | Export the displayed columns to CSV, for all filtered rows (sort order) |
+| 701 | ⬇ CSV | ⬇ CSV |
+| 706 | Sauvegarder la vue de cet onglet (colonnes, colonnes par chemin, filtres, largeurs, tri) dans un fichier | Save this tab's view (columns, path columns, filters, widths, sort) to a file |
+| 707 | 💾 Sauver vue | 💾 Save view |
+| 711 | Charger une vue tableau sauvegardée | Load a saved table view |
+| 712 | 📂 Charger vue | 📂 Load view |
+| 718 | ↺ Réinitialiser | ↺ Reset |
+| 719 | Revenir aux colonnes, à l'ordre, aux largeurs et au tri de départ, sans filtre (onglet affiché) | Go back to the initial columns, order, widths and sort, with no filter (current tab) |
+| 754 | Modifier le metachain de cette colonne | Edit the metachain of this column |
+| 760 | Supprimer cette colonne personnalisée | Delete this custom column |
+| 782 | ⊞ Colonnes ( | ⊞ Columns (…) ▾ |
+| 786 | Colonnes calculées | Computed columns |
+| 787 | Name | (inchangé, hors _L) |
+| 787 | Owner | Owner |
+| 787 | Owned element | (inchangé, hors _L) |
+| 788 | Couche | Layer |
+| 788 | Type | (inchangé, hors _L) |
+| 788 | Human Type | (inchangé, hors _L) |
+| 792 | Colonnes par chemin | Path columns |
+| 798 | Attributs du fichier XML | XML file attributes |
+| 876 | (aucune relation disponible) | (no relation available) |
+| 894 | Supprimer cette étape et les suivantes | Delete this step and the following ones |
+| 941 | (sans nom) | (unnamed) |
+| 991 | 👁 Aperçu en direct | 👁 Live preview |
+| 993 | Choisissez un type de départ. | Choose a start type. |
+| 996 | Aucun élément de ce type dans le modèle. | No element of this type in the model. |
+| 1008 | Élément d'exemple ( | Sample element (…): |
+| 1011 | 🔍 Filtrer… | 🔍 Filter… |
+| 1013 | Suivant ▸ | Next ▸ |
+| 1014 | Passer au prochain élément dont la cellule serait remplie | Go to the next element whose cell would be filled |
+| 1025 | autre(s) : affinez le filtre | … … more: refine the filter |
+| 1026 | (aucun élément) | (no element) |
+| 1063 | Cellule remplie pour | Cell filled for … element(s) out of the first … tested (… in total). |
+| 1063 | élément(s) sur les | Cell filled for … element(s) out of the first … tested (… in total). |
+| 1063 | premiers testés ( | Cell filled for … element(s) out of the first … tested (… in total). |
+| 1063 | au total). | Cell filled for … element(s) out of the first … tested (… in total). |
+| 1064 | Cellule remplie pour | Cell filled for … element(s) out of …. |
+| 1064 | élément(s) sur | Cell filled for … element(s) out of …. |
+| 1065 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
+| 1084 | Départ : | Start: … |
+| 1089 | (à choisir) | (to be chosen) |
+| 1094 | valeur(s) lue(s) | … value(s) read |
+| 1094 | Aucune valeur. | No value. |
+| 1097 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
+| 1098 | ∅ Aucun élément atteint : le chemin s'arrête ici pour cet exemple. | ∅ No element reached: the path stops here for this sample. |
+| 1110 | ▣ Cellule dans le tableau | ▣ Cell in the table |
+| 1112 | Chemin incomplet. | Incomplete path. |
+| 1112 | (vide) | (empty) |
+| 1138 | ✨ Modifier « | ✨ Edit “…” |
+| 1138 | ✨ Colonne par chemin | ✨ Path column |
+| 1140 | Enregistrer les modifications | Save changes |
+| 1140 | Créer la colonne | Create the column |
+| 1163 | Choisissez au moins un type de départ et une relation ou une valeur. | Choose at least one start type and one relation or value. |
+| 1164 | Chaque étape doit avoir une relation ou une valeur sélectionnée. | Each step must have a relation or a value selected. |
+| 1215 | Fichier invalide : JSON illisible. | Invalid file: unreadable JSON. |
+| 1217 | Ce fichier ne semble pas être une vue de tableau valide. | This file does not look like a valid table view. |
+| 1251 | élément(s) | … element(s) |
+| 1251 | · 🌳 arbre ( | · 🌳 tree (… row(s) shown) |
+| 1251 | ligne(s) affichée(s)) | · 🌳 tree (… row(s) shown) |
+| 1251 | · 🎯 portée : | · 🎯 scope: … |
+| 1267 | Clic : trier · glisser : déplacer la colonne · bord droit : largeur | ……\nClick: sort · drag: move the column · right edge: width |
+| 1283 | Filtrer… | Filter… |
+| 1309 | Aucun élément ne correspond aux filtres. | No element matches the filters. |
+| 1309 | Aucun type coché pour cet onglet : cochez des types d'éléments dans le menu de gauche. | No type checked for this tab: check element types in the left menu. |
+| 1330 | (conteneur) | … — … (container) |
+| 1371 | 🌳 Arbre | 🌳 Tree ☰ List ⊞ Expand all ⊟ Collapse all Level 1 2 3 ⬇ JSON |
+| 1373 | lignes au plus)" ☰ Liste ⊞ Tout déplier ⊟ Tout réduire Niveau 1 2 3 ⬇ JSON | 🌳 Tree ☰ List ⊞ Expand all ⊟ Collapse all Level 1 2 3 ⬇ JSON |
+| 1421 | résultat(s) | … result(s) |
+| 1421 | élément(s) | … element(s) |
+| 1426 | cap-tree-row cap-tree-lrow | (inchangé, hors _L) |
+| 1436 | autre(s) élément(s) non affiché(s) : précisez la recherche. | … … more element(s) not shown: refine the search. |
+| 1437 | Aucun élément ne correspond. | No element matches. |
+| 1441 | Aucun élément ne correspond. | No element matches. |
 
 ## js/22-capella-liens.js
 
@@ -4040,239 +4040,260 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 62 | Élément | Element |
 | 62 | Nom | Name |
 | 62 | Description | Description |
-| 157 | 💬 Revue : | 💬 Review: … comment(s) concern changed or deleted elements — 💬 Review › 🔁 Check |
-| 157 | commentaire(s) portent sur des éléments modifiés ou supprimés — 💬 Revue › 🔁 Vérifier | 💬 Review: … comment(s) concern changed or deleted elements — 💬 Review › 🔁 Check |
-| 167 | commentaire(s) non clos | … open comment(s) |
-| 167 | à vérifier | — … to check |
-| 197 | 💬 Revue | 💬 Review |
-| 198 | Nouveau commentaire (sur l'élément affiché dans le panneau de détail, s'il y en a un) | New comment (on the element shown in the detail panel, if any) |
-| 198 | ✚ Nouveau | ✚ New |
-| 199 | Fermer | Close |
-| 200 | 💬 Commentaires | 💬 Comments … |
-| 200 | Liste des commentaires, filtres et recherche | Comment list, filters and search |
-| 201 | 🔁 Vérifier | 🔁 Check |
-| 201 | Commentaires dont l'élément a changé ou disparu depuis le commentaire, ou marqués « Corrigé, à vérifier » | Comments whose element has changed or disappeared since the comment, or marked “Fixed, to be checked” |
-| 202 | 📄 Rapport | 📄 Report |
-| 202 | Synthèse, rapport HTML, CSV | Summary, HTML report, CSV |
-| 202 | ⚙ Réglages | ⚙ Settings |
-| 202 | Votre nom, participants, champs proposés, calque des diagrammes, export / import | Your name, participants, offered fields, diagram layer, export / import |
-| 240 | 🔍 Texte, élément, personne, #n… | 🔍 Text, element, person, #n… |
-| 241 | Statut | Status |
-| 241 | Non clos | Not closed |
-| 241 | Tous les statuts | All statuses |
-| 242 | Criticité | Severity |
-| 242 | Toute criticité | Any severity |
-| 243 | Auteur ou responsable | Author or assignee |
-| 243 | Toute personne | Anyone |
-| 244 | Portée | Scope |
-| 244 | Partout | Everywhere |
-| 244 | Diagramme ouvert | Open diagram |
-| 244 | Élément du panneau de détail | Element of the detail panel |
-| 244 | En retard | Overdue |
-| 244 | Qui me sont attribués | Assigned to me |
-| 245 | Tri | Sort |
-| 245 | Plus récents | Most recent |
-| 245 | Criticité | Severity |
-| 245 | Échéance | Due date |
-| 245 | Statut | Status |
-| 248 | Aucun commentaire ne correspond aux filtres. | No comment matches the filters. |
-| 258 | ⚠ modifié | ⚠ changed |
-| 259 | ⚠ supprimé | ⚠ deleted |
-| 261 | (sans texte) | (no text) |
-| 263 | Échéance | Due date |
-| 264 | Responsables | Assignees |
-| 270 | Aller à la cible (diagramme ou élément) | Go to the target (diagram or element) |
-| 270 | Modifier | Edit |
-| 274 | ✔ Vérifié le | ✔ Checked on …… |
-| 276 | Répondre… | Reply… |
-| 276 | ↩ Répondre | ↩ Reply |
-| 277 | Changer le statut | Change the status |
-| 278 | La correction a été vérifiée : le commentaire est clos | The fix has been checked: the comment is closed |
-| 278 | ✔ Valider | ✔ Validate |
-| 279 | Supprimer le commentaire | Delete the comment |
-| 289 | Note sur le diagramme | Note on the diagram |
-| 313 | Supprimer le commentaire # | Delete comment #…? |
-| 353 | Ce commentaire est posé sur un diagramme : ouvrez le .aird du projet dans 🔲 Diagrammes Capella pour voir la note. | This comment is placed on a diagram: open the project's .aird in 🔲 Capella Diagrams to see the note. |
-| 394 | Partie commentée | Commented part |
-| 394 | Retirer | Remove |
-| 395 | Aucun élément : commentaire général (ou ajoutez un élément ci-dessous). | No element: general comment (or add an element below). |
-| 399 | 💬 Commentaire # | 💬 Comment #… |
-| 399 | 💬 Nouveau commentaire | 💬 New comment |
-| 401 | Titre | Title |
-| 401 | (facultatif) | (optional) |
-| 402 | Commentaire | Comment |
-| 402 | Remarque, question, correction attendue… | Remark, question, expected correction… |
-| 403 | Criticité | Severity |
-| 404 | Catégorie | Category |
-| 406 | Statut | Status |
-| 407 | Auteur | Author |
-| 407 | Votre nom | Your name |
-| 408 | Échéance | Due date |
-| 410 | Responsables | Assignees |
-| 411 | + Ajouter une personne | + Add a person |
-| 412 | Étiquettes | Tags |
-| 412 | (séparées par des virgules) | (comma-separated) |
-| 413 | Éléments commentés | Commented elements |
-| 414 | + Ajouter un élément (nom ou type)… | + Add an element (name or type)… |
-| 415 | 🔲 Note sur le diagramme « | 🔲 Note on the diagram “…” |
-| 415 | retirer la note du diagramme | remove the note from the diagram |
-| 416 | Créé le | Created on ……… |
-| 416 | sur « | on “{0}” |
-| 416 | · modifié le | · modified on … |
-| 418 | 🗑 Supprimer | 🗑 Delete |
-| 419 | Annuler | Cancel |
-| 419 | ✔ Enregistrer | ✔ Save |
-| 430 | Supprimer le commentaire # | Delete comment #…? |
-| 443 | Aucun élément. | No element. |
-| 473 | ✔ Commentaire # | ✔ Comment #… saved — 💬 Review for the list |
-| 473 | enregistré — 💬 Revue pour la liste | ✔ Comment #… saved — 💬 Review for the list |
-| 488 | Commenter cet élément (revue) | Comment on this element (review) |
-| 488 | 💬 Commenter | 💬 Comment |
-| 489 | Commenter le nom de cet élément | Comment on the name of this element |
-| 489 | 💬 le nom | 💬 the name |
-| 490 | Commenter la description de cet élément | Comment on the description of this element |
-| 490 | 💬 la description | 💬 the description |
-| 491 | Commentaires non clos sur cet élément | Open comments on this element |
-| 491 | ouvert(s) | 💬 … open |
-| 500 | ,field: | (inchangé, hors _L) |
-| 500 | Commenter cet attribut (revue) | Comment on this attribute (review) |
-| 521 | 💬 Commentaires de revue ( | 💬 Review comments (…) |
-| 523 | Afficher dans 💬 Revue | Show in 💬 Review |
-| 572 | 📝 Note sur le diagramme ici, liée à l'élément | 📝 Note on the diagram here, linked to the element |
-| 573 | 💬 Commenter l'élément | 💬 Comment on the element |
-| 574 | 💬 Commenter son nom | 💬 Comment on its name |
-| 575 | 💬 Commenter sa description | 💬 Comment on its description |
-| 576 | 📄 Voir ses commentaires ( | 📄 See its comments (…) |
-| 577 | 🔍 Détail de l'élément | 🔍 Element details |
-| 615 | Glisser sur le diagramme pour poser une note de revue (déposée sur un élément : elle lui est liée) — clic : note au centre | Drag onto the diagram to place a review note (dropped on an element: linked to it) — click: note in the centre |
-| 615 | 📝 Note | 📝 Note |
-| 616 | Afficher ou masquer le calque des commentaires (indépendant du .aird) | Show or hide the comment layer (independent of the .aird) |
-| 616 | 💬 Calque | 💬 Layer |
-| 667 | Ouvrez d'abord un diagramme (les tableaux du .aird ne portent pas de notes). | Open a diagram first (.aird tables cannot hold notes). |
-| 716 | Délier « | Unlink “…” from the note |
-| 716 | » de la note | Unlink “…” from the note |
-| 722 | Lier / délier des éléments du diagramme (clic sur les éléments, Échap pour terminer) | Link / unlink diagram elements (click the elements, Esc to finish) |
-| 723 | Modifier | Edit |
-| 723 | Réduire en pastille | Collapse to a dot |
-| 725 | Tirer un trait jusqu'à un élément du diagramme pour le lier à la note (vers un élément déjà lié : le délier) | Draw a line to a diagram element to link it to the note (to an already linked element: unlink it) |
-| 726 | Redimensionner | Resize |
-| 730 | 🔗 Cliquez les éléments du diagramme à lier à la note # | 🔗 Click the diagram elements to link to note #… (click again: unlink) |
-| 730 | (nouveau clic : délier) | 🔗 Click the diagram elements to link to note #… (click again: unlink) |
-| 730 | ✔ Terminer | ✔ Done |
-| 772 | var(--c-accent) | (inchangé, hors _L) |
-| 773 | var(--c-accent) | (inchangé, hors _L) |
-| 821 | élément supprimé du modèle | element deleted from the model |
-| 822 | inchangé | unchanged |
-| 824 | Au moment du commentaire | At the time of the comment |
-| 825 | Maintenant | Now |
-| 829 | Attributs modifiés : | Changed attributes: … |
-| 830 | · éléments contenus : | · contained elements: … → … |
-| 830 | Références ou contenu modifiés | References or content changed |
-| 834 | Chargez un modèle : les commentaires sont comparés au modèle chargé. | Load a model: comments are compared with the loaded model. |
-| 836 | Commentaires non clos dont la valeur commentée a changé ou dont l'élément a disparu depuis le commentaire (nouveau fichier, 🔄 mise à jour), et commentaires marqués « Corrigé, à vérifier » . Pour chacun : ✔ Valider si la correction est faite (le commentaire est clos), ou ↻ Garder ouvert (la version actuelle devient la référence). | Open comments whose commented value has changed or whose element has disappeared since the comment (new file, 🔄 update), and comments marked “Fixed, to be checked” . For each one: ✔ Validate if the fix is done (the comment is closed), or ↻ Keep open (the current version becomes the reference). |
-| 837 | ✔ Rien à vérifier : aucun commentaire ouvert ne porte sur un élément modifié. | ✔ Nothing to check: no open comment concerns a changed element. |
-| 838 | commentaire(s) à vérifier | … comment(s) to check |
-| 838 | Valider tous les commentaires de cette liste | Validate all comments in this list |
-| 838 | ✔ Tout valider | ✔ Validate all |
-| 843 | Aller à la cible | Go to the target |
-| 843 | Modifier | Edit |
-| 845 | La correction a été faite : statut Validé | The fix has been made: status Validated |
-| 845 | ✔ Valider | ✔ Validate |
-| 846 | La modification ne règle pas le commentaire : il reste ouvert, la version actuelle devient la référence | The change does not resolve the comment: it stays open, the current version becomes the reference |
-| 846 | ↻ Garder ouvert | ↻ Keep open |
-| 851 | Valider les | Validate the … comment(s) in the list? |
-| 851 | commentaire(s) de la liste ? | Validate the … comment(s) in the list? |
-| 864 | Total | Total |
-| 866 | Total | Total |
-| 872 | Commentaires | Comments |
-| 872 | de la liste (filtres de 💬 Commentaires) | from the list (filters of 💬 Comments) |
-| 873 | Regrouper par | Group by |
-| 873 | criticité | severity |
-| 873 | élément | element |
-| 874 | réponses | replies |
-| 876 | commentaire(s) · | … comment(s) · … overdue · … on changed elements |
-| 876 | en retard · | … comment(s) · … overdue · … on changed elements |
-| 876 | sur des éléments modifiés | … comment(s) · … overdue · … on changed elements |
-| 877 | Rapport HTML autonome (imprimable) : synthèse, commentaires groupés, cibles, état par rapport au modèle chargé | Standalone HTML report (printable): summary, grouped comments, targets, status against the loaded model |
-| 877 | 📄 Rapport HTML | 📄 HTML report |
-| 878 | Une ligne par commentaire (tableur) | One row per comment (spreadsheet) |
-| 878 | ⬇ CSV | ⬇ CSV |
-| 890 | (non attribué) | (unassigned) |
-| 891 | (commentaire général) | (general comment) |
-| 897 | Aucun commentaire à mettre dans le rapport. | No comment to put in the report. |
-| 898 | ⚠ modifié | ⚠ changed |
-| 898 | ⚠ supprimé | ⚠ deleted |
-| 898 | inchangé | unchanged |
-| 903 | ✔ Vérifié le | ✔ Checked on …… |
-| 906 | Criticité | Severity |
-| 906 | Statut | Status |
-| 906 | Commentaire | Comment |
-| 906 | Cibles | Targets |
-| 906 | Auteur | Author |
-| 906 | Échéance | Due date |
-| 906 | Responsables | Assignees |
-| 906 | Modèle | Model |
-| 908 | Rapport de revue | Review report |
-| 913 | 💬 Rapport de revue | 💬 Review report |
-| 913 | Modèle : | Model: … · … comment(s) · issued on …… |
-| 913 | commentaire(s) · édité le | Model: … · … comment(s) · issued on …… |
-| 914 | Synthèse | Summary |
-| 914 | Produit par Arcalyse — colonne « Modèle » : état de la valeur commentée dans le modèle chargé lors de l'édition du rapport. | Produced by Arcalyse — “Model” column: status of the commented value in the model loaded when the report was issued. |
-| 920 | Titre | Title |
-| 920 | Commentaire | Comment |
-| 920 | Criticité | Severity |
-| 920 | Catégorie | Category |
-| 920 | Statut | Status |
-| 920 | Auteur | Author |
-| 920 | Créé le | Created on |
-| 920 | Échéance | Due date |
-| 920 | Responsables | Assignees |
-| 920 | Étiquettes | Tags |
-| 920 | Éléments | Elements |
-| 920 | Champs | Fields |
-| 920 | Diagramme | Diagram |
-| 920 | État dans le modèle | Status in the model |
-| 920 | Réponses | Replies |
-| 920 | Vérifié le | Checked on |
-| 920 | Vérifié par | Checked by |
-| 923 | modifié | modified |
-| 923 | supprimé | deleted |
-| 923 | inchangé | unchanged |
-| 932 | Titre | Title |
-| 932 | Criticité | Severity |
-| 932 | Catégorie | Category |
-| 932 | Échéance | Due date |
-| 932 | Responsables | Assignees |
-| 932 | Étiquettes | Tags |
-| 934 | Votre nom | Your name |
-| 934 | Auteur des nouveaux commentaires | Author of new comments |
-| 935 | Participants | Participants |
-| 935 | (proposés comme auteurs et responsables) | (offered as authors and assignees) |
-| 936 | Retirer | Remove |
-| 936 | Aucun participant. | No participant. |
-| 937 | Nom, initiales ou équipe | Name, initials or team |
-| 937 | ✚ Ajouter | ✚ Add |
-| 938 | Champs proposés dans l'éditeur | Fields offered in the editor |
-| 940 | Affichage | Display |
-| 941 | Calque des commentaires sur les diagrammes | Comment layer on diagrams |
-| 941 | Montrer aussi les notes closes sur les diagrammes | Also show closed notes on diagrams |
-| 942 | Marquer d'un 💬 les éléments commentés dans les vues | Mark commented elements with 💬 in the views |
-| 942 | Blocs, cartes et noms cliquables des éléments qui ont des commentaires non clos | Blocks, cards and clickable names of elements with open comments |
-| 943 | Enregistrement | Saving |
-| 944 | Les commentaires sont enregistrés dans la page : 💾 Enregistrer (Ctrl+S) les conserve avec le modèle. Exportez-les en .json pour les garder hors de la page, les transmettre, ou fusionner les revues de plusieurs relecteurs (l'import ajoute les nouveaux commentaires et garde la version la plus récente des autres). | Comments are saved in the page : 💾 Save (Ctrl+S) keeps them with the model. Export them as .json to keep them outside the page, share them, or merge the reviews of several reviewers (import adds new comments and keeps the most recent version of the others). |
-| 945 | ⬇ Exporter (.json) | ⬇ Export (.json) |
-| 945 | 📂 Importer / fusionner… | 📂 Import / merge… |
-| 946 | Supprimer tous les commentaires de la page | Delete all comments from the page |
-| 946 | 🗑 Tout supprimer | 🗑 Delete all |
-| 947 | commentaire(s) modifié(s) depuis le dernier enregistrement ou export. | … comment(s) changed since the last save or export. |
-| 959 | Supprimer les | Delete the … comment(s) from the page? (Export them first to keep them.) |
-| 959 | commentaire(s) de la page ? (Exportez-les d'abord pour les garder.) | Delete the … comment(s) from the page? (Export them first to keep them.) |
-| 973 | Fichier illisible (JSON attendu). | Unreadable file (JSON expected). |
-| 974 | Ce fichier n'est pas une revue Arcalyse. | This file is not an Arcalyse review. |
-| 977 | ✔ Revue importée : | ✔ Review imported: … added, … updated, … already present |
-| 977 | ajouté(s), | ✔ Review imported: … added, … updated, … already present |
-| 977 | mis à jour, | ✔ Review imported: … added, … updated, … already present |
-| 977 | déjà présent(s) | ✔ Review imported: … added, … updated, … already present |
+| 199 | 💬 Revue : | 💬 Review: … comment(s) concern changed or deleted elements — 💬 Review › 🔁 Check |
+| 199 | commentaire(s) portent sur des éléments modifiés ou supprimés — 💬 Revue › 🔁 Vérifier | 💬 Review: … comment(s) concern changed or deleted elements — 💬 Review › 🔁 Check |
+| 200 | commentaire(s) de la page viennent d'un autre projet Capella (non vérifiés sur ce modèle) | 💬 … comment(s) in the page come from another Capella project (not checked against this model) |
+| 211 | commentaire(s) non clos | … open comment(s) |
+| 211 | à vérifier | — … to check |
+| 241 | 💬 Revue | 💬 Review |
+| 242 | Nouveau commentaire (sur l'élément affiché dans le panneau de détail, s'il y en a un) | New comment (on the element shown in the detail panel, if any) |
+| 242 | ✚ Nouveau | ✚ New |
+| 243 | Fermer | Close |
+| 244 | 💬 Commentaires | 💬 Comments … |
+| 244 | Liste des commentaires, filtres et recherche | Comment list, filters and search |
+| 245 | 🔁 Vérifier | 🔁 Check |
+| 245 | Commentaires dont l'élément a changé ou disparu depuis le commentaire, ou marqués « Corrigé, à vérifier » | Comments whose element has changed or disappeared since the comment, or marked “Fixed, to be checked” |
+| 246 | 📄 Rapport | 📄 Report |
+| 246 | Synthèse, rapport HTML, CSV | Summary, HTML report, CSV |
+| 246 | ⚙ Réglages | ⚙ Settings |
+| 246 | Votre nom, participants, champs proposés, calque des diagrammes, export / import | Your name, participants, offered fields, diagram layer, export / import |
+| 285 | 🔍 Texte, élément, personne, #n… | 🔍 Text, element, person, #n… |
+| 286 | Statut | Status |
+| 286 | Non clos | Not closed |
+| 286 | Tous les statuts | All statuses |
+| 287 | Criticité | Severity |
+| 287 | Toute criticité | Any severity |
+| 288 | Auteur ou responsable | Author or assignee |
+| 288 | Toute personne | Anyone |
+| 289 | Portée | Scope |
+| 289 | Partout | Everywhere |
+| 289 | Projet chargé | Loaded project |
+| 289 | Diagramme ouvert | Open diagram |
+| 289 | Élément du panneau de détail | Element of the detail panel |
+| 289 | En retard | Overdue |
+| 289 | Qui me sont attribués | Assigned to me |
+| 290 | Tri | Sort |
+| 290 | Plus récents | Most recent |
+| 290 | Criticité | Severity |
+| 290 | Échéance | Due date |
+| 290 | Statut | Status |
+| 293 | Aucun commentaire ne correspond aux filtres. | No comment matches the filters. |
+| 303 | ⚠ modifié | ⚠ changed |
+| 304 | ⚠ supprimé | ⚠ deleted |
+| 306 | : il n'est pas comparé au modèle chargé" ⧉ autre projet | ⧉ other project |
+| 307 | (sans texte) | (no text) |
+| 309 | Échéance | Due date |
+| 310 | Responsables | Assignees |
+| 316 | Aller à la cible (diagramme ou élément) | Go to the target (diagram or element) |
+| 316 | Modifier | Edit |
+| 320 | ✔ Vérifié le | ✔ Checked on …… |
+| 322 | Répondre… | Reply… |
+| 322 | ↩ Répondre | ↩ Reply |
+| 323 | Changer le statut | Change the status |
+| 324 | La correction a été vérifiée : le commentaire est clos | The fix has been checked: the comment is closed |
+| 324 | ✔ Valider | ✔ Validate |
+| 325 | Supprimer le commentaire | Delete the comment |
+| 335 | Note sur le diagramme | Note on the diagram |
+| 359 | Supprimer le commentaire # | Delete comment #…? |
+| 399 | Ce commentaire est posé sur un diagramme : ouvrez le .aird du projet dans 🔲 Diagrammes Capella pour voir la note. | This comment is placed on a diagram: open the project's .aird in 🔲 Capella Diagrams to see the note. |
+| 440 | Partie commentée | Commented part |
+| 440 | Retirer | Remove |
+| 441 | Aucun élément : commentaire général (ou ajoutez un élément ci-dessous). | No element: general comment (or add an element below). |
+| 445 | 💬 Commentaire # | 💬 Comment #… |
+| 445 | 💬 Nouveau commentaire | 💬 New comment |
+| 447 | Titre | Title |
+| 447 | (facultatif) | (optional) |
+| 448 | Commentaire | Comment |
+| 448 | Remarque, question, correction attendue… | Remark, question, expected correction… |
+| 449 | Criticité | Severity |
+| 450 | Catégorie | Category |
+| 452 | Statut | Status |
+| 453 | Auteur | Author |
+| 453 | Votre nom | Your name |
+| 454 | Échéance | Due date |
+| 456 | Responsables | Assignees |
+| 457 | + Ajouter une personne | + Add a person |
+| 458 | Étiquettes | Tags |
+| 458 | (séparées par des virgules) | (comma-separated) |
+| 459 | Éléments commentés | Commented elements |
+| 460 | + Ajouter un élément (nom ou type)… | + Add an element (name or type)… |
+| 461 | 🔲 Note sur le diagramme « | 🔲 Note on the diagram “…” |
+| 461 | retirer la note du diagramme | remove the note from the diagram |
+| 462 | Créé le | Created on ……… |
+| 462 | sur « | on “{0}” |
+| 462 | · modifié le | · modified on … |
+| 464 | 🗑 Supprimer | 🗑 Delete |
+| 465 | Annuler | Cancel |
+| 465 | ✔ Enregistrer | ✔ Save |
+| 476 | Supprimer le commentaire # | Delete comment #…? |
+| 489 | Aucun élément. | No element. |
+| 519 | ✔ Commentaire # | ✔ Comment #… saved — 💬 Review for the list |
+| 519 | enregistré — 💬 Revue pour la liste | ✔ Comment #… saved — 💬 Review for the list |
+| 534 | Commenter cet élément (revue) | Comment on this element (review) |
+| 534 | 💬 Commenter | 💬 Comment |
+| 535 | Commenter le nom de cet élément | Comment on the name of this element |
+| 535 | 💬 le nom | 💬 the name |
+| 536 | Commenter la description de cet élément | Comment on the description of this element |
+| 536 | 💬 la description | 💬 the description |
+| 537 | Commentaires non clos sur cet élément | Open comments on this element |
+| 537 | ouvert(s) | 💬 … open |
+| 546 | ,field: | (inchangé, hors _L) |
+| 546 | Commenter cet attribut (revue) | Comment on this attribute (review) |
+| 567 | 💬 Commentaires de revue ( | 💬 Review comments (…) |
+| 569 | Afficher dans 💬 Revue | Show in 💬 Review |
+| 618 | 📝 Note sur le diagramme ici, liée à l'élément | 📝 Note on the diagram here, linked to the element |
+| 619 | 💬 Commenter l'élément | 💬 Comment on the element |
+| 620 | 💬 Commenter son nom | 💬 Comment on its name |
+| 621 | 💬 Commenter sa description | 💬 Comment on its description |
+| 622 | 📄 Voir ses commentaires ( | 📄 See its comments (…) |
+| 623 | 🔍 Détail de l'élément | 🔍 Element details |
+| 661 | Glisser sur le diagramme pour poser une note de revue (déposée sur un élément : elle lui est liée) — clic : note au centre | Drag onto the diagram to place a review note (dropped on an element: linked to it) — click: note in the centre |
+| 661 | 📝 Note | 📝 Note |
+| 662 | Afficher ou masquer le calque des commentaires (indépendant du .aird) | Show or hide the comment layer (independent of the .aird) |
+| 662 | 💬 Calque | 💬 Layer |
+| 713 | Ouvrez d'abord un diagramme (les tableaux du .aird ne portent pas de notes). | Open a diagram first (.aird tables cannot hold notes). |
+| 762 | Délier « | Unlink “…” from the note |
+| 762 | » de la note | Unlink “…” from the note |
+| 768 | Lier / délier des éléments du diagramme (clic sur les éléments, Échap pour terminer) | Link / unlink diagram elements (click the elements, Esc to finish) |
+| 769 | Modifier | Edit |
+| 769 | Réduire en pastille | Collapse to a dot |
+| 771 | Tirer un trait jusqu'à un élément du diagramme pour le lier à la note (vers un élément déjà lié : le délier) | Draw a line to a diagram element to link it to the note (to an already linked element: unlink it) |
+| 772 | Redimensionner | Resize |
+| 776 | 🔗 Cliquez les éléments du diagramme à lier à la note # | 🔗 Click the diagram elements to link to note #… (click again: unlink) |
+| 776 | (nouveau clic : délier) | 🔗 Click the diagram elements to link to note #… (click again: unlink) |
+| 776 | ✔ Terminer | ✔ Done |
+| 818 | var(--c-accent) | (inchangé, hors _L) |
+| 819 | var(--c-accent) | (inchangé, hors _L) |
+| 867 | élément supprimé du modèle | element deleted from the model |
+| 868 | inchangé | unchanged |
+| 870 | Au moment du commentaire | At the time of the comment |
+| 871 | Maintenant | Now |
+| 875 | Attributs modifiés : | Changed attributes: … |
+| 876 | · éléments contenus : | · contained elements: … → … |
+| 876 | Références ou contenu modifiés | References or content changed |
+| 880 | Chargez un modèle : les commentaires sont comparés au modèle chargé. | Load a model: comments are compared with the loaded model. |
+| 882 | Commentaires non clos dont la valeur commentée a changé ou dont l'élément a disparu depuis le commentaire (nouveau fichier, 🔄 mise à jour), et commentaires marqués « Corrigé, à vérifier » . Pour chacun : ✔ Valider si la correction est faite (le commentaire est clos), ou ↻ Garder ouvert (la version actuelle devient la référence). | Open comments whose commented value has changed or whose element has disappeared since the comment (new file, 🔄 update), and comments marked “Fixed, to be checked” . For each one: ✔ Validate if the fix is done (the comment is closed), or ↻ Keep open (the current version becomes the reference). |
+| 883 | ✔ Rien à vérifier : aucun commentaire ouvert ne porte sur un élément modifié. | ✔ Nothing to check: no open comment concerns a changed element. |
+| 884 | commentaire(s) à vérifier | … comment(s) to check |
+| 884 | Valider tous les commentaires de cette liste | Validate all comments in this list |
+| 884 | ✔ Tout valider | ✔ Validate all |
+| 889 | Aller à la cible | Go to the target |
+| 889 | Modifier | Edit |
+| 891 | La correction a été faite : statut Validé | The fix has been made: status Validated |
+| 891 | ✔ Valider | ✔ Validate |
+| 892 | La modification ne règle pas le commentaire : il reste ouvert, la version actuelle devient la référence | The change does not resolve the comment: it stays open, the current version becomes the reference |
+| 892 | ↻ Garder ouvert | ↻ Keep open |
+| 897 | Valider les | Validate the … comment(s) in the list? |
+| 897 | commentaire(s) de la liste ? | Validate the … comment(s) in the list? |
+| 910 | Total | Total |
+| 912 | Total | Total |
+| 918 | Commentaires | Comments |
+| 918 | de la liste (filtres de 💬 Commentaires) | from the list (filters of 💬 Comments) |
+| 919 | Regrouper par | Group by |
+| 919 | criticité | severity |
+| 919 | élément | element |
+| 920 | réponses | replies |
+| 922 | commentaire(s) · | … comment(s) · … overdue · … on changed elements |
+| 922 | en retard · | … comment(s) · … overdue · … on changed elements |
+| 922 | sur des éléments modifiés | … comment(s) · … overdue · … on changed elements |
+| 923 | Rapport HTML autonome (imprimable) : synthèse, commentaires groupés, cibles, état par rapport au modèle chargé | Standalone HTML report (printable): summary, grouped comments, targets, status against the loaded model |
+| 923 | 📄 Rapport HTML | 📄 HTML report |
+| 924 | Une ligne par commentaire (tableur) | One row per comment (spreadsheet) |
+| 924 | ⬇ CSV | ⬇ CSV |
+| 936 | (non attribué) | (unassigned) |
+| 937 | (commentaire général) | (general comment) |
+| 943 | Aucun commentaire à mettre dans le rapport. | No comment to put in the report. |
+| 944 | ⚠ modifié | ⚠ changed |
+| 944 | ⚠ supprimé | ⚠ deleted |
+| 944 | inchangé | unchanged |
+| 949 | ✔ Vérifié le | ✔ Checked on …… |
+| 952 | Criticité | Severity |
+| 952 | Statut | Status |
+| 952 | Commentaire | Comment |
+| 952 | Cibles | Targets |
+| 952 | Auteur | Author |
+| 952 | Échéance | Due date |
+| 952 | Responsables | Assignees |
+| 952 | Modèle | Model |
+| 954 | Rapport de revue | Review report |
+| 959 | 💬 Rapport de revue | 💬 Review report |
+| 959 | Modèle : | Model: … · … comment(s) · issued on …… |
+| 959 | commentaire(s) · édité le | Model: … · … comment(s) · issued on …… |
+| 960 | Synthèse | Summary |
+| 960 | Produit par Arcalyse — colonne « Modèle » : état de la valeur commentée dans le modèle chargé lors de l'édition du rapport. | Produced by Arcalyse — “Model” column: status of the commented value in the model loaded when the report was issued. |
+| 966 | Titre | Title |
+| 966 | Commentaire | Comment |
+| 966 | Criticité | Severity |
+| 966 | Catégorie | Category |
+| 966 | Statut | Status |
+| 966 | Auteur | Author |
+| 966 | Créé le | Created on |
+| 966 | Échéance | Due date |
+| 966 | Responsables | Assignees |
+| 966 | Étiquettes | Tags |
+| 966 | Éléments | Elements |
+| 966 | Champs | Fields |
+| 966 | Diagramme | Diagram |
+| 966 | État dans le modèle | Status in the model |
+| 966 | Réponses | Replies |
+| 966 | Vérifié le | Checked on |
+| 966 | Vérifié par | Checked by |
+| 969 | modifié | modified |
+| 969 | supprimé | deleted |
+| 969 | inchangé | unchanged |
+| 978 | Titre | Title |
+| 978 | Criticité | Severity |
+| 978 | Catégorie | Category |
+| 978 | Échéance | Due date |
+| 978 | Responsables | Assignees |
+| 978 | Étiquettes | Tags |
+| 980 | Votre nom | Your name |
+| 980 | Auteur des nouveaux commentaires | Author of new comments |
+| 981 | Participants | Participants |
+| 981 | (proposés comme auteurs et responsables) | (offered as authors and assignees) |
+| 982 | Retirer | Remove |
+| 982 | Aucun participant. | No participant. |
+| 983 | Nom, initiales ou équipe | Name, initials or team |
+| 983 | ✚ Ajouter | ✚ Add |
+| 984 | Champs proposés dans l'éditeur | Fields offered in the editor |
+| 986 | Affichage | Display |
+| 987 | Calque des commentaires sur les diagrammes | Comment layer on diagrams |
+| 987 | Montrer aussi les notes closes sur les diagrammes | Also show closed notes on diagrams |
+| 988 | Marquer d'un 💬 les éléments commentés dans les vues | Mark commented elements with 💬 in the views |
+| 988 | Blocs, cartes et noms cliquables des éléments qui ont des commentaires non clos | Blocks, cards and clickable names of elements with open comments |
+| 989 | Enregistrement | Saving |
+| 990 | Les commentaires sont enregistrés dans la page : 💾 Enregistrer (Ctrl+S) les conserve avec le modèle. Exportez-les en .json pour les garder hors de la page, les transmettre, ou fusionner les revues de plusieurs relecteurs (l'import ajoute les nouveaux commentaires et garde la version la plus récente des autres). | Comments are saved in the page : 💾 Save (Ctrl+S) keeps them with the model. Export them as .json to keep them outside the page, share them, or merge the reviews of several reviewers (import adds new comments and keeps the most recent version of the others). |
+| 991 | ⬇ Exporter (.json) | ⬇ Export (.json) |
+| 991 | 📂 Importer / fusionner… | 📂 Import / merge… |
+| 992 | Supprimer tous les commentaires de la page | Delete all comments from the page |
+| 992 | 🗑 Tout supprimer | 🗑 Delete all |
+| 993 | commentaire(s) modifié(s) depuis le dernier enregistrement ou export. | … comment(s) changed since the last save or export. |
+| 1005 | Supprimer les | Delete the … comment(s) from the page? (Export them first to keep them.) |
+| 1005 | commentaire(s) de la page ? (Exportez-les d'abord pour les garder.) | Delete the … comment(s) from the page? (Export them first to keep them.) |
+| 1019 | Fichier illisible (JSON attendu). | Unreadable file (JSON expected). |
+| 1020 | Ce fichier n'est pas une revue Arcalyse. | This file is not an Arcalyse review. |
+| 1027 | ✔ Revue importée : | ✔ Review imported: … added, … updated, … already present |
+| 1027 | ajouté(s), | ✔ Review imported: … added, … updated, … already present |
+| 1027 | mis à jour, | ✔ Review imported: … added, … updated, … already present |
+| 1027 | déjà présent(s) | ✔ Review imported: … added, … updated, … already present |
+| 1028 | — modèle non vérifié (aucun modèle chargé) | — model not checked (no model loaded) |
+| 1047 | Les identifiants de projet diffèrent, mais les éléments commentés sont bien dans le modèle chargé : sans doute une copie du même projet. | The project identifiers differ, but the commented elements are in the loaded model: probably a copy of the same project. |
+| 1048 | Cette revue porte sur un autre projet Capella : ses commentaires ne correspondront pas aux éléments du modèle chargé (ils seront marqués « autre projet » et non vérifiés). | This review concerns another Capella project : its comments will not match the elements of the loaded model (they will be marked “other project” and not checked). |
+| 1049 | Trop peu d'éléments commentés ( | Too few commented elements (…) to conclude, and not all of them are in the loaded model: check that this is the right model (or a version where these elements were deleted). |
+| 1049 | ) pour conclure, et tous ne sont pas dans le modèle chargé : vérifiez qu'il s'agit du bon modèle (ou d'une version où ces éléments ont été supprimés). | Too few commented elements (…) to conclude, and not all of them are in the loaded model: check that this is the right model (or a version where these elements were deleted). |
+| 1050 | Cette revue ne contient que des commentaires généraux et n'indique pas son projet : impossible de vérifier le modèle. | This review only contains general comments and does not state its project: the model cannot be checked. |
+| 1055 | ⚠ Cette revue porte-t-elle sur ce modèle ? | ⚠ Does this review concern this model? |
+| 1057 | Revue importée | Imported review |
+| 1057 | Modèle chargé | Loaded model |
+| 1058 | Fichier | File |
+| 1058 | revue faite sur « | review made on “…” |
+| 1059 | Projet Capella | Capella project |
+| 1060 | Éléments commentés | Commented elements |
+| 1060 | élément(s) | … element(s) |
+| 1060 | retrouvé(s) ( | … found (… %) |
+| 1062 | commentaire(s) dans le fichier. | … comment(s) in the file. |
+| 1063 | Annuler | Cancel |
+| 1064 | Importer quand même | Import anyway |
 
 ## Textes sans traduction anglaise (5)
 

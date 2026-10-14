@@ -401,7 +401,9 @@
           <tr><td>⚙ Settings</td><td>Your name, participants, offered fields, display (diagram layer, closed notes, 💬 mark of commented elements in the views), export / import.</td></tr>
         </table>
         <h3>Saving</h3>
-        <p>Comments are saved <b>in the page</b> (💾 Save, Ctrl+S). <b>⚙ Settings › ⬇ Export (.json)</b> keeps them outside the page (backup, sending); <b>📂 Import / merge</b> combines the reviews of several reviewers (new comments added, most recent version kept for the others, replies combined). Comments remain when another model is opened: they are then checked against that model.</p>
+        <p>Comments are saved <b>in the page</b> (💾 Save, Ctrl+S). <b>⚙ Settings › ⬇ Export (.json)</b> keeps them outside the page (backup, sending); <b>📂 Import / merge</b> combines the reviews of several reviewers (new comments added, most recent version kept for the others, replies combined). Comments remain when another model is opened.</p>
+        <h3>Right model?</h3>
+        <p>Each comment and each export records the <b>Capella project identifier</b> (root <i>Project</i> element of the .capella: unique identifier created with the project, kept from one version to the next). On import, the review is compared with the loaded model: same project identifier → direct import; otherwise, share of the <b>commented elements</b> found in the model (identifiers that are also unique and stable). With <b>fewer than 5</b> commented elements, this share is not enough: the import is direct only if all are found, otherwise a window compares both sides (file, project, elements found) and offers <b>Import anyway</b> or Cancel. A copied project keeps its element identifiers: it is recognised as a copy. Comments from another project are marked <b>⧉ other project</b> and are not checked (<b>Loaded project</b> scope in the list to hide them).</p>
       </div>
 
       <!-- ── USE CASE ── -->

@@ -148,13 +148,57 @@ function capRevState(c){
   return r;
 }
 /** @returns {object[]} commentaires non clos dont une cible a changé ou disparu, ou marqués « Corrigé, à vérifier » */
-function capRevToCheck(){ return _capRev.comments.filter(c=>!capRevClosed(c)&&(c.status==='fixed'||['changed','deleted'].includes(capRevState(c)))); }
+function capRevToCheck(){ return _capRev.comments.filter(c=>!capRevClosed(c)&&!capRevOtherProject(c)&&(c.status==='fixed'||['changed','deleted'].includes(capRevState(c)))); }
 
-/** Après le chargement d'un modèle : rafraîchit la revue et signale les commentaires à vérifier. */
+/* ── Projet Capella : à quel modèle appartient une revue ? ──────────────── */
+
+/** @returns {string} identifiant (UUID) de l'élément racine Project du modèle chargé ('' sans modèle) */
+function capRevProjectId(){ const r=capLoaded&&typeof cap_xmlDoc!=='undefined'&&cap_xmlDoc&&cap_xmlDoc.documentElement; return r?capXId(r):''; }
+/** @returns {string} nom du Project du modèle chargé */
+function capRevProjectName(){ const r=capLoaded&&cap_xmlDoc&&cap_xmlDoc.documentElement; return r?r.getAttribute('name')||'':''; }
+/** @param {object} c - Commentaire @returns {boolean} vrai si le commentaire a été posé sur un autre projet que celui chargé */
+function capRevOtherProject(c){ const p=capRevProjectId(); return !!(c.project&&p&&c.project!==p); }
+/**
+ * Compare une revue (ou des commentaires) au modèle chargé. Critères, dans l'ordre :
+ * 1. identifiant du Project racine (UUID créé avec le projet Capella, conservé d'une version à l'autre) ;
+ * 2. part des éléments commentés présents dans le modèle (identifiants uniques, stables entre versions) —
+ *    sur peu d'éléments (moins de CAP_REV_MIN_ELTS) la part seule ne permet pas de conclure ;
+ * 3. nom du fichier, à titre indicatif.
+ * @param {object[]} comments - Commentaires
+ * @param {string} [project] - Identifiant de projet déclaré par la revue (export), sinon celui des commentaires
+ * @returns {{verdict:string, pid:string, proj:string, ids:number, found:number, pct:number}}
+ *   verdict : 'same' (même projet), 'copy' (autre identifiant de projet mais mêmes éléments : copie du projet ?),
+ *   'probable' (peu d'éléments, tous retrouvés), 'doubt' (peu d'éléments, pas tous retrouvés, ou aucun élément),
+ *   'different' (autre projet), 'nomodel' (aucun modèle chargé)
+ */
+function capRevMatch(comments, project){
+  const pid=capRevProjectId();
+  const ps=[...new Set(comments.map(c=>c.project).filter(Boolean))];
+  const proj=project||(ps.length===1?ps[0]:'');
+  const ids=[...new Set(comments.flatMap(c=>(c.targets||[]).map(t=>t.id)))];
+  const found=pid?ids.filter(id=>capGetElementById_(id)).length:0, pct=ids.length?found/ids.length:0;
+  const r={pid, proj, ids:ids.length, found, pct, verdict:''};
+  if(!pid) r.verdict='nomodel';
+  else if(proj&&proj===pid) r.verdict='same';
+  else if(proj&&found>=Math.min(CAP_REV_MIN_ELTS,ids.length)&&pct>=0.5) r.verdict='copy';
+  else if(proj) r.verdict='different';
+  else if(ids.length>=CAP_REV_MIN_ELTS) r.verdict=pct>=0.5?'same':'different';
+  else r.verdict=ids.length&&found===ids.length?'probable':'doubt';
+  return r;
+}
+/** En dessous de ce nombre d'éléments commentés, la part retrouvée dans le modèle ne suffit pas à conclure. */
+const CAP_REV_MIN_ELTS=5;
+
+/** Après le chargement d'un modèle : rattache au projet les anciens commentaires qui n'en avaient pas,
+ * rafraîchit la revue, signale les commentaires à vérifier et ceux qui viennent d'un autre projet. */
 function capRevOnModelLoad(){
+  const pid=capRevProjectId();
+  if(pid) _capRev.comments.forEach(c=>{ if(!c.project&&(c.targets||[]).length){ const f=c.targets.filter(t=>capGetElementById_(t.id)).length; if(f&&f>=c.targets.length/2) c.project=pid; } });
   capRevRefresh();
-  const n=capRevToCheck().filter(c=>capRevState(c)!=='same').length;
-  if(n&&typeof capWatchFlash==='function') setTimeout(()=>capWatchFlash(_L(`💬 Revue : ${n} commentaire(s) portent sur des éléments modifiés ou supprimés — 💬 Revue › 🔁 Vérifier`)),600);
+  const n=capRevToCheck().filter(c=>capRevState(c)!=='same').length, autres=_capRev.comments.filter(capRevOtherProject).length;
+  const msg=[n?_L(`💬 Revue : ${n} commentaire(s) portent sur des éléments modifiés ou supprimés — 💬 Revue › 🔁 Vérifier`):'',
+    autres?_L(`💬 ${autres} commentaire(s) de la page viennent d'un autre projet Capella (non vérifiés sur ce modèle)`):''].filter(Boolean).join(' · ');
+  if(msg&&typeof capWatchFlash==='function') setTimeout(()=>capWatchFlash(msg),600);
 }
 
 /* ── Bouton de la barre et panneau ─────────────────────────────────────── */
@@ -224,6 +268,7 @@ function capRevFiltered(){
     if(u.scope==='diag'&&!(c.diag&&c.diag.uid===uid)) return false;
     if(u.scope==='el'&&!(c.targets||[]).some(t=>t.id===u.elId)) return false;
     if(u.scope==='late'&&!capRevLate(c)) return false;
+    if(u.scope==='proj'&&capRevOtherProject(c)) return false;
     if(u.scope==='mine'&&!(c.assignees||[]).includes(_capRev.me)) return false;
     if(q){ const txt=norm(['#'+c.num,c.title,c.text,c.author,(c.assignees||[]).join(' '),(c.tags||[]).join(' '),(c.targets||[]).map(t=>t.name+' '+t.type).join(' '),c.diag?c.diag.nom:'',(c.replies||[]).map(r=>r.text).join(' ')].join(' '));
       if(!q.split(/\s+/).every(w=>txt.includes(w))) return false; }
@@ -241,7 +286,7 @@ function capRevListHtml(){
     `<select id="crv-st" title="${_L('Statut')}">${opt('notclosed',_L('Non clos'),u.st)}${opt('all',_L('Tous les statuts'),u.st)}${capRevStatuts().map(s=>opt(s.k,s.i+' '+s.l,u.st)).join('')}</select>`+
     `<select id="crv-crit" title="${_L('Criticité')}">${opt('',_L('Toute criticité'),u.crit)}${capRevCrits().filter(c=>c.k).map(c=>opt(c.k,c.l,u.crit)).join('')}</select>`+
     `<select id="crv-who" title="${_L('Auteur ou responsable')}">${opt('',_L('Toute personne'),u.who)}${people.map(p=>opt(p,esc(p),u.who)).join('')}</select>`+
-    `<select id="crv-scope" title="${_L('Portée')}">${opt('all',_L('Partout'),u.scope)}${opt('diag',_L('Diagramme ouvert'),u.scope)}${opt('el',_L('Élément du panneau de détail'),u.scope)}${opt('late',_L('En retard'),u.scope)}${_capRev.me?opt('mine',_L('Qui me sont attribués'),u.scope):''}</select>`+
+    `<select id="crv-scope" title="${_L('Portée')}">${opt('all',_L('Partout'),u.scope)}${capLoaded?opt('proj',_L('Projet chargé'),u.scope):''}${opt('diag',_L('Diagramme ouvert'),u.scope)}${opt('el',_L('Élément du panneau de détail'),u.scope)}${opt('late',_L('En retard'),u.scope)}${_capRev.me?opt('mine',_L('Qui me sont attribués'),u.scope):''}</select>`+
     `<select id="crv-sort" title="${_L('Tri')}">${opt('num',_L('Plus récents'),u.sort)}${opt('crit',_L('Criticité'),u.sort)}${opt('due',_L('Échéance'),u.sort)}${opt('status',_L('Statut'),u.sort)}</select>`+
     `<span class="ana-dim">${_L(`${list.length} / ${_capRev.comments.length}`)}</span></div>`;
   if(!_capRev.comments.length) return h+_L(`<div class="crv-empty"><b>Aucun commentaire pour l'instant.</b><br><br>Pour commenter :<br>• <b>✚ Nouveau</b> ci-dessus ;<br>• dans le <b>panneau de détail</b> d'un élément : 💬 Commenter, ou 💬 à côté du nom, de la description, d'un attribut ;<br>• <b>clic droit</b> sur un élément dans les vues (blocs, tableaux, listes, diagrammes) ;<br>• dans <b>🔲 Diagrammes Capella</b> : glissez <b>📝 Note</b> sur le diagramme (sur un élément pour le lier).</div>`);
@@ -258,6 +303,7 @@ function capRevCardHtml(c){
   const stateTag=state==='changed'?_L('<span class="crv-chg" title="La valeur commentée a changé depuis le commentaire">⚠ modifié</span>')
     :state==='deleted'?_L('<span class="crv-chg crv-del" title="Un élément commenté n\'existe plus dans le modèle chargé">⚠ supprimé</span>'):'';
   const cat=(capRevCats().find(x=>x.k===c.cat)||{}).l;
+  const autre=capRevOtherProject(c)?_L(`<span class="crv-chg crv-other" title="Commentaire posé sur un autre projet Capella${c.model?' (« '+esc(c.model)+' »)':''} : il n'est pas comparé au modèle chargé">⧉ autre projet</span>`):'';
   const titre=c.title||String(c.text||'').split('\n')[0].slice(0,120)||_L('(sans texte)');
   const meta=[c.author?'👤 '+esc(c.author):'', '🕓 '+capRevDate(c.created),
     c.due?`<span class="${capRevLate(c)?'crv-late':''}" title="${_L('Échéance')}">⏰ ${capRevDate(c.due)}</span>`:'',
@@ -266,7 +312,7 @@ function capRevCardHtml(c){
   let h=`<div class="crv-card${open?' open':''}${capRevClosed(c)?' closed':''}" data-c="${esc(c.id)}" style="--crv-c:${cr.c}">`+
     `<div class="crv-card-h" data-a="exp"><span class="crv-num">#${c.num}</span>`+
     (c.crit?`<span class="crv-crit" style="background:${cr.c};color:${capInk(cr.c)}">${cr.l}</span>`:'')+
-    `<span class="crv-st" style="color:${capTextOn(st.c)}">${st.i} ${st.l}</span>${cat&&c.cat?`<span class="ana-dim">${cat}</span>`:''}${stateTag}<span style="flex:1"></span>`+
+    `<span class="crv-st" style="color:${capTextOn(st.c)}">${st.i} ${st.l}</span>${cat&&c.cat?`<span class="ana-dim">${cat}</span>`:''}${autre||stateTag}<span style="flex:1"></span>`+
     `<button class="crv-ib" data-a="go" title="${_L('Aller à la cible (diagramme ou élément)')}">➜</button><button class="crv-ib" data-a="edit" title="${_L('Modifier')}">✎</button></div>`+
     `<div class="crv-title" data-a="exp">${esc(titre)}</div><div class="crv-meta">${meta}</div>`+capRevTargetsHtml(c);
   if(open){
@@ -467,7 +513,7 @@ function capRevEdit(id, preset){
     const now=new Date().toISOString();
     if(d.status==='done'&&(!c0||c0.status!=='done')) d.verif={date:now, by:_capRev.me||d.author||''};
     if(c0){ Object.assign(c0, d, {updated:now}); fermer(); capRevSave(c0.id); return; }
-    const c=Object.assign(d, {id:capRevUid(), num:++_capRev.seq, created:now, updated:now, model:capCurrentFileName||'', view:capCurrentView||'', replies:[]});
+    const c=Object.assign(d, {id:capRevUid(), num:++_capRev.seq, created:now, updated:now, model:capCurrentFileName||'', project:capRevProjectId(), view:capCurrentView||'', replies:[]});
     _capRev.comments.push(c); _capRevUi.exp.add(c.id);
     fermer(); capRevSave(c.id);
     if(typeof capWatchFlash==='function') capWatchFlash(_L(`✔ Commentaire #${c.num} enregistré — 💬 Revue pour la liste`));
@@ -960,7 +1006,7 @@ function capRevCfgAction(act, b){
 }
 /** Exporte la revue (participants et commentaires) dans un fichier .json réutilisable. */
 function capRevExport(){
-  const out={type:'arcalyse-revue', version:1, date:new Date().toISOString(), model:capCurrentFileName||'', people:_capRev.people, seq:_capRev.seq, comments:_capRev.comments};
+  const out={type:'arcalyse-revue', version:1, date:new Date().toISOString(), model:capCurrentFileName||'', project:capRevProjectId(), projectName:capRevProjectName(), people:_capRev.people, seq:_capRev.seq, comments:_capRev.comments};
   const base=(capCurrentFileName||'modele').replace(/\.[^.]+$/,'');
   capDownloadBlob(new Blob([JSON.stringify(out,null,1)],{type:'application/json'}), base+_L('-revue.json'));
   _capRevUnsaved.clear(); capRevRender();
@@ -972,12 +1018,55 @@ function capRevImport(){
     f.text().then(t=>{
       let d; try{ d=JSON.parse(t); }catch(e){ alert(_L('Fichier illisible (JSON attendu).')); return; }
       if(!d||d.type!=='arcalyse-revue'||!Array.isArray(d.comments)){ alert(_L('Ce fichier n\'est pas une revue Arcalyse.')); return; }
-      const r=capRevMerge(d);
-      capRevSave(); capRevToggle(true,'list');
-      if(typeof capWatchFlash==='function') capWatchFlash(_L(`✔ Revue importée : ${r.added} ajouté(s), ${r.updated} mis à jour, ${r.same} déjà présent(s)`));
+      const m=capRevMatch(d.comments, d.project||'');
+      const fusion=()=>{
+        // Même projet (ou copie reconnue par ses éléments) : les commentaires sont rattachés au projet chargé
+        if(['same','probable','copy'].includes(m.verdict)) d.comments.forEach(c=>{ if(c&&(!c.project||m.verdict==='copy')) c.project=m.pid; });
+        const r=capRevMerge(d);
+        capRevSave(); capRevToggle(true,'list');
+        if(typeof capWatchFlash==='function') capWatchFlash(_L(`✔ Revue importée : ${r.added} ajouté(s), ${r.updated} mis à jour, ${r.same} déjà présent(s)`)+
+          (m.verdict==='nomodel'?_L(' — modèle non vérifié (aucun modèle chargé)'):''));
+      };
+      if(['same','probable','nomodel'].includes(m.verdict)) fusion(); else capRevImportConfirm(d, f.name, m, fusion);
     });
   };
   inp.click();
+}
+/**
+ * Fenêtre d'avertissement avant d'importer une revue qui ne semble pas porter sur le modèle chargé :
+ * fichiers et projets comparés, éléments commentés retrouvés, conclusion ; Importer quand même / Annuler.
+ * @param {object} d - Revue importée
+ * @param {string} fichier - Nom du fichier .json
+ * @param {object} m - Résultat de capRevMatch
+ * @param {function} fusion - Import confirmé
+ */
+function capRevImportConfirm(d, fichier, m, fusion){
+  const esc=capEsc, court=s=>s?esc(String(s).slice(0,8))+'…':'—';
+  const pct=m.ids?Math.round(m.pct*100):0;
+  const avis={
+    copy:_L('Les identifiants de projet diffèrent, mais les éléments commentés sont bien dans le modèle chargé : sans doute une copie du même projet.'),
+    different:_L('Cette revue porte sur un <b>autre projet Capella</b> : ses commentaires ne correspondront pas aux éléments du modèle chargé (ils seront marqués « autre projet » et non vérifiés).'),
+    doubt:m.ids?_L(`Trop peu d'éléments commentés (${m.ids}) pour conclure, et tous ne sont pas dans le modèle chargé : vérifiez qu'il s'agit du bon modèle (ou d'une version où ces éléments ont été supprimés).`)
+      :_L('Cette revue ne contient que des commentaires généraux et n\'indique pas son projet : impossible de vérifier le modèle.')}[m.verdict]||'';
+  const ligne=(k,a,b)=>`<tr><td class="ana-dim">${k}</td><td>${a}</td><td>${b}</td></tr>`;
+  let ov=document.getElementById('crv-ov');
+  if(!ov){ ov=document.createElement('div'); ov.id='crv-ov'; document.body.appendChild(ov); }
+  ov.innerHTML=`<div class="cw-d-box" style="max-width:620px">
+    <div class="cw-d-hdr"><b>${_L('⚠ Cette revue porte-t-elle sur ce modèle ?')}</b><button class="cap-lf-btn" data-x="1">✕</button></div>
+    <div class="cw-d-body">
+      <table class="crv-syn" style="margin-bottom:10px"><tr><th></th><th>${_L('Revue importée')}</th><th>${_L('Modèle chargé')}</th></tr>`+
+      ligne(_L('Fichier'), esc(fichier)+(d.model?`<br><span class="ana-dim">${_L(`revue faite sur « ${esc(d.model)} »`)}</span>`:''), esc(capCurrentFileName||'—'))+
+      ligne(_L('Projet Capella'), esc(d.projectName||'—')+`<br><span class="ana-dim">${court(m.proj)}</span>`, esc(capRevProjectName()||'—')+`<br><span class="ana-dim">${court(m.pid)}</span>`)+
+      ligne(_L('Éléments commentés'), _L(`${m.ids} élément(s)`), _L(`${m.found} retrouvé(s) (${pct} %)`))+
+      `</table><p style="font-size:12.5px;margin:6px 0">${avis}</p>
+      <p class="ana-dim" style="font-size:11.5px">${_L(`${d.comments.length} commentaire(s) dans le fichier.`)}</p></div>
+    <div class="cw-d-ftr"><span style="flex:1"></span><button class="cap-lf-btn" data-x="1">${_L('Annuler')}</button>
+      <button class="phl-export-btn" data-ok="1" style="margin-left:0">${_L('Importer quand même')}</button></div></div>`;
+  ov.style.display='flex';
+  const fermer=()=>{ ov.style.display='none'; ov.innerHTML=''; };
+  ov.onclick=e=>{ if(e.target===ov||e.target.closest('[data-x]')) fermer(); else if(e.target.closest('[data-ok]')){ fermer(); fusion(); } };
+  ov.onchange=ov.oninput=null;
+  ov.onkeydown=e=>{ if(e.key==='Escape') fermer(); };
 }
 /**
  * Fusionne une revue importée : nouveaux commentaires ajoutés (renumérotés si leur numéro est pris),
@@ -990,6 +1079,7 @@ function capRevMerge(d){
   (d.people||[]).forEach(p=>{ if(p&&!_capRev.people.includes(p)) _capRev.people.push(p); });
   d.comments.forEach(c=>{
     if(!c||!c.id) return;
+    if(!c.project&&d.project) c.project=d.project;   // revue exportée avec son projet
     const cur=capRevGet(c.id);
     if(!cur){
       if(!c.num||_capRev.comments.some(x=>x.num===c.num)) c.num=_capRev.seq+1;
