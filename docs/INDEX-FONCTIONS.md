@@ -211,53 +211,54 @@
 - `capRenderCurrentView` (l. 815) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
 - `capUpdateStatChips` (l. 890) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
-## 21-capella-vues-base.js — 1493 lignes
+## 21-capella-vues-base.js — 1499 lignes
 
 - `capRenderSidebar` (l. 6) — Rend la sidebar Capella : liste des types par couche avec cases à cocher.
 - `capGetFiltered` (l. 61) — Retourne capAllElements filtré par types activés, couche et texte de recherche.
-- `capRenderCards` (l. 73) — Rend la vue Cartes : cartes groupées par couche ARCADIA, filtrées.
-- `CAP_TABLE_BUILTIN_COLS` (l. 108) — Colonnes affichées par défaut (Name en premier ; Couche, Type et Human Type restent proposées dans ⊞ Colonnes).
-- `capGetAllRawAttrKeys` (l. 125) — Calcule dynamiquement la liste de TOUS les noms d'attributs présents dans capAllElements
-- `capGetParentIndex` (l. 138) — Construit l'index de containment du modèle Capella depuis le XML brut :
-- `capGetMetachainMetaclasses` (l. 161) — Retourne la liste des "Metaclass" (types Capella) disponibles au démarrage d'une étape :
-- `capGetElementById_` (l. 182) — Retrouve un élément Capella par son identifiant XML. S'appuie sur un index id → élément
-- `capRefIndex_` (l. 198) — Index des références portées par un attribut : pour les éléments d'un type donné, associe
-- `capParseAttrRefs_` (l. 216) — Découpe la valeur brute d'un attribut XML en liste d'IDs candidats (gère les attributs
-- `capGetAttrRefProperties` (l. 224) — Détecte, pour un Metaclass donné, les attributs XML bruts dont la valeur référence
-- `capGetViaIntermediateProperties` (l. 257) — Détecte le pattern "navigation via élément intermédiaire" : un type X (différent du
-- `capGetOwnerProperties` (l. 295) — Détecte tous les types d'ANCÊTRES réellement rencontrés en remontant le containment XML
-- `capGetIncomingRefProperties` (l. 325) — Détecte les RÉFÉRENCES ENTRANTES : pour un metaclass M, trouve tous les types X dont un
-- `capGetMetachainProperties` (l. 360) — Retourne toutes les Properties navigables depuis un Metaclass : valeurs terminales,
-- `capComputeMetachainProperties_` (l. 374) — Calcule (sans cache) les Properties navigables depuis un Metaclass — voir capGetMetachainProperties.
-- `capResolveStep` (l. 465) — Exécute UN pas de navigation (une Property) à partir d'un élément capAllElements donné.
-- `capExtractValue` (l. 533) — Extrait une valeur terminale "simple" d'un élément capAllElements (Name, ID, Type,
-- `capResolveMetachain` (l. 549) — Exécute une chaîne de Properties (metachain) à partir d'un élément. Le 1er pas n'est
-- `capTableGetValArray` (l. 573) — Retourne TOUJOURS un tableau de valeurs pour une colonne donnée (même les colonnes à valeur
-- `capTableGetVal` (l. 609) — Retourne la valeur d'une colonne sous forme de string unique (jointe par ', ' si plusieurs
-- `capTableColLabel` (l. 614) — Libellé humain affiché en en-tête pour une colonne donnée.
-- `capBuildTableToolbar` (l. 627) — Construit la barre d'outils au-dessus du tableau Capella : bouton de sélection des
-- `capRefreshColPickerList` (l. 732) — Reconstruit uniquement la liste interne du menu ⊞ Colonnes (#cap-colpicker-list),
-- `capApplyColResize` (l. 810) — Ajoute une poignée de redimensionnement sur le bord droit d'un <th> du tableau Capella.
-- `capRenderCustomColStepRow` (l. 840) — Construit une ligne du metachain : <select> Metaclass + <select> Property + suppression.
-- `capRenderCustomColPanel` (l. 906) — Reconstruit entièrement le panneau : recalcule le metaclass imposé de chaque ligne à partir
-- `CAP_PP_MAX_CHIPS` (l. 933)
-- `CAP_PP_MAX_OPTS` (l. 934)
-- `capPpCapAdapter` (l. 939) — Adaptateur de l'aperçu pour le ▤ Tableau Capella (capAllElements, moteur cap…).
-- `capPpTrace` (l. 958) — Déroule le chemin pas à pas depuis un élément, en gardant chaque niveau intermédiaire
-- `capPpHasResult` (l. 977) — Indique si un élément donne un résultat non vide pour le chemin (cellule remplie).
-- `capPpRender` (l. 987) — Rend la zone « 👁 Aperçu en direct » d'un panneau de colonne par chemin : choix de
-- `capPpRenderBody` (l. 1055) — Rend le corps de l'aperçu : remplissage estimé sur le type de départ, puis le chemin
-- `capOpenCustomColPanel` (l. 1126) — Ouvre le panneau latéral de construction de colonne personnalisée (Metachain Navigation).
-- `capCloseCustomColPanel` (l. 1151) — Ferme le panneau latéral d'édition de colonne Metachain de la vue Tableau.
-- `capSaveTableView` (l. 1192) — Sérialise la configuration actuelle de la vue Tableau Capella (colonnes visibles, colonnes
-- `capLoadTableView` (l. 1214) — Charge une configuration de vue Tableau Capella précédemment sauvegardée et l'applique.
-- `capRenderTable` (l. 1233) — Rend intégralement la vue Tableau Capella : barre d'outils (colonnes, colonne perso,
-- `capRenderTableBodyOnly` (l. 1242) — Reconstruit uniquement le <thead>/<tbody> du tableau Capella (pas la toolbar ni le menu
-- `CAP_TREE_LIST_MAX` (l. 1366)
-- `capRenderTree` (l. 1370) — Rend la vue Arborescence : barre propre (recherche, 🌳 Arbre / ☰ Liste, déplier, réduire, JSON) créée
-- `capTreeExpandLevel` (l. 1393) — Déplie l'arbre de 🌳 Arborescence jusqu'à un niveau donné et replie le reste.
-- `capRenderTreeBody` (l. 1405) — Rend le contenu de 🌳 Arborescence selon l'affichage : arbre (avec une recherche : résultats et leurs
-- `capRenderTreeNode` (l. 1450) — Rend récursivement un nœud de l'arborescence Capella.
+- `CAP_CARDS_MAX` (l. 73) — Nombre maximal de cartes affichées (au-delà, la page devient lente) : préciser la recherche ou les filtres.
+- `capRenderCards` (l. 75) — Rend la vue Cartes : cartes groupées par couche ARCADIA, filtrées, CAP_CARDS_MAX au plus.
+- `CAP_TABLE_BUILTIN_COLS` (l. 114) — Colonnes affichées par défaut (Name en premier ; Couche, Type et Human Type restent proposées dans ⊞ Colonnes).
+- `capGetAllRawAttrKeys` (l. 131) — Calcule dynamiquement la liste de TOUS les noms d'attributs présents dans capAllElements
+- `capGetParentIndex` (l. 144) — Construit l'index de containment du modèle Capella depuis le XML brut :
+- `capGetMetachainMetaclasses` (l. 167) — Retourne la liste des "Metaclass" (types Capella) disponibles au démarrage d'une étape :
+- `capGetElementById_` (l. 188) — Retrouve un élément Capella par son identifiant XML. S'appuie sur un index id → élément
+- `capRefIndex_` (l. 204) — Index des références portées par un attribut : pour les éléments d'un type donné, associe
+- `capParseAttrRefs_` (l. 222) — Découpe la valeur brute d'un attribut XML en liste d'IDs candidats (gère les attributs
+- `capGetAttrRefProperties` (l. 230) — Détecte, pour un Metaclass donné, les attributs XML bruts dont la valeur référence
+- `capGetViaIntermediateProperties` (l. 263) — Détecte le pattern "navigation via élément intermédiaire" : un type X (différent du
+- `capGetOwnerProperties` (l. 301) — Détecte tous les types d'ANCÊTRES réellement rencontrés en remontant le containment XML
+- `capGetIncomingRefProperties` (l. 331) — Détecte les RÉFÉRENCES ENTRANTES : pour un metaclass M, trouve tous les types X dont un
+- `capGetMetachainProperties` (l. 366) — Retourne toutes les Properties navigables depuis un Metaclass : valeurs terminales,
+- `capComputeMetachainProperties_` (l. 380) — Calcule (sans cache) les Properties navigables depuis un Metaclass — voir capGetMetachainProperties.
+- `capResolveStep` (l. 471) — Exécute UN pas de navigation (une Property) à partir d'un élément capAllElements donné.
+- `capExtractValue` (l. 539) — Extrait une valeur terminale "simple" d'un élément capAllElements (Name, ID, Type,
+- `capResolveMetachain` (l. 555) — Exécute une chaîne de Properties (metachain) à partir d'un élément. Le 1er pas n'est
+- `capTableGetValArray` (l. 579) — Retourne TOUJOURS un tableau de valeurs pour une colonne donnée (même les colonnes à valeur
+- `capTableGetVal` (l. 615) — Retourne la valeur d'une colonne sous forme de string unique (jointe par ', ' si plusieurs
+- `capTableColLabel` (l. 620) — Libellé humain affiché en en-tête pour une colonne donnée.
+- `capBuildTableToolbar` (l. 633) — Construit la barre d'outils au-dessus du tableau Capella : bouton de sélection des
+- `capRefreshColPickerList` (l. 738) — Reconstruit uniquement la liste interne du menu ⊞ Colonnes (#cap-colpicker-list),
+- `capApplyColResize` (l. 816) — Ajoute une poignée de redimensionnement sur le bord droit d'un <th> du tableau Capella.
+- `capRenderCustomColStepRow` (l. 846) — Construit une ligne du metachain : <select> Metaclass + <select> Property + suppression.
+- `capRenderCustomColPanel` (l. 912) — Reconstruit entièrement le panneau : recalcule le metaclass imposé de chaque ligne à partir
+- `CAP_PP_MAX_CHIPS` (l. 939)
+- `CAP_PP_MAX_OPTS` (l. 940)
+- `capPpCapAdapter` (l. 945) — Adaptateur de l'aperçu pour le ▤ Tableau Capella (capAllElements, moteur cap…).
+- `capPpTrace` (l. 964) — Déroule le chemin pas à pas depuis un élément, en gardant chaque niveau intermédiaire
+- `capPpHasResult` (l. 983) — Indique si un élément donne un résultat non vide pour le chemin (cellule remplie).
+- `capPpRender` (l. 993) — Rend la zone « 👁 Aperçu en direct » d'un panneau de colonne par chemin : choix de
+- `capPpRenderBody` (l. 1061) — Rend le corps de l'aperçu : remplissage estimé sur le type de départ, puis le chemin
+- `capOpenCustomColPanel` (l. 1132) — Ouvre le panneau latéral de construction de colonne personnalisée (Metachain Navigation).
+- `capCloseCustomColPanel` (l. 1157) — Ferme le panneau latéral d'édition de colonne Metachain de la vue Tableau.
+- `capSaveTableView` (l. 1198) — Sérialise la configuration actuelle de la vue Tableau Capella (colonnes visibles, colonnes
+- `capLoadTableView` (l. 1220) — Charge une configuration de vue Tableau Capella précédemment sauvegardée et l'applique.
+- `capRenderTable` (l. 1239) — Rend intégralement la vue Tableau Capella : barre d'outils (colonnes, colonne perso,
+- `capRenderTableBodyOnly` (l. 1248) — Reconstruit uniquement le <thead>/<tbody> du tableau Capella (pas la toolbar ni le menu
+- `CAP_TREE_LIST_MAX` (l. 1372)
+- `capRenderTree` (l. 1376) — Rend la vue Arborescence : barre propre (recherche, 🌳 Arbre / ☰ Liste, déplier, réduire, JSON) créée
+- `capTreeExpandLevel` (l. 1399) — Déplie l'arbre de 🌳 Arborescence jusqu'à un niveau donné et replie le reste.
+- `capRenderTreeBody` (l. 1411) — Rend le contenu de 🌳 Arborescence selon l'affichage : arbre (avec une recherche : résultats et leurs
+- `capRenderTreeNode` (l. 1456) — Rend récursivement un nœud de l'arborescence Capella.
 
 ## 22-capella-liens.js — 281 lignes
 

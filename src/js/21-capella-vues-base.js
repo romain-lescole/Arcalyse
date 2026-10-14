@@ -69,16 +69,21 @@ function capGetFiltered(){
 }
 
 // ── Cards ──
-/** Rend la vue Cartes : cartes groupées par couche ARCADIA, filtrées. */
+/** Nombre maximal de cartes affichées (au-delà, la page devient lente) : préciser la recherche ou les filtres. */
+const CAP_CARDS_MAX=500;
+/** Rend la vue Cartes : cartes groupées par couche ARCADIA, filtrées, CAP_CARDS_MAX au plus. */
 function capRenderCards(){
-  const filtered=capGetFiltered();
-  const rc=document.getElementById('cap-result-count'); if(rc)rc.textContent=_L(`${filtered.length} élément(s) affiché(s)`);
+  const filtered=capGetFiltered(), trop=filtered.length>CAP_CARDS_MAX;
+  const rc=document.getElementById('cap-result-count');
+  if(rc)rc.textContent=trop?_L(`${CAP_CARDS_MAX} premiers éléments affichés sur ${filtered.length} — précisez la recherche, la couche ou les types`):_L(`${filtered.length} élément(s) affiché(s)`);
+  let reste=CAP_CARDS_MAX;
   const container=document.getElementById('cap-view-cards'); if(!container) return;
   const grouped={};
   for(const el of filtered)(grouped[el.layer]=grouped[el.layer]||[]).push(el);
   let html='';
   for(const[lk,lv]of Object.entries(CAP_LAYERS)){
-    const items=grouped[lk]; if(!items?.length) continue;
+    const tous=grouped[lk]; if(!tous?.length||reste<=0) continue;
+    const items=tous.slice(0,reste); reste-=items.length;
     const cards=items.map(el=>{
       const name=el.attrs.name||'';
       const nm=name?`<span class="cap-card-name">${capEsc(name)}</span>`:_L(`<span class="cap-card-name unnamed">—sans nom—</span>`);
@@ -89,8 +94,9 @@ function capRenderCards(){
         ${pills.length?`<div class="cap-meta">${pills.join('')}</div>`:''}
       </div>`;
     }).join('');
-    html+=`<div class="cap-layer-section"><div class="cap-layer-hdr"><span class="cap-layer-badge" style="color:${lv.color}">${lk}</span><span style="font-size:12px;font-weight:600;">${lv.label}</span><span style="margin-left:auto;font-size:11px;color:var(--c-dim);font-family:monospace;">${items.length}</span></div><div class="cap-cards-grid">${cards}</div></div>`;
+    html+=`<div class="cap-layer-section"><div class="cap-layer-hdr"><span class="cap-layer-badge" style="color:${lv.color}">${lk}</span><span style="font-size:12px;font-weight:600;">${lv.label}</span><span style="margin-left:auto;font-size:11px;color:var(--c-dim);font-family:monospace;">${items.length<tous.length?items.length+' / '+tous.length:items.length}</span></div><div class="cap-cards-grid">${cards}</div></div>`;
   }
+  if(trop) html+=_L(`<div class="ana-dim" style="text-align:center;padding:14px">… ${filtered.length-CAP_CARDS_MAX} autre(s) élément(s) non affiché(s) : précisez la recherche, la couche ou les types (▤ Tableau pour tout parcourir).</div>`);
   container.innerHTML=html||_L('<div style="text-align:center;padding:40px;color:var(--c-dim)">Aucun résultat</div>');
 }
 

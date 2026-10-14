@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 4083 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 4085 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -539,61 +539,60 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 21 | Package | (inchangé, hors _L) |
-| 53 | Sélectionnez un élément dans l'arborescence ou la carte. | Select an element in the tree or on the map. |
-| 68 | Double-clic pour modifier | Double-click to edit |
-| 82 | var(--c-dim) | (inchangé, hors _L) |
-| 86 | Nom | Name |
-| 91 | Cliquer pour copier | Click to copy |
-| 92 | var(--c-accent) | (inchangé, hors _L) |
-| 100 | Type | (inchangé, hors _L) |
-| 102 | inp prop-val-edit | (inchangé, hors _L) |
-| 105 | Type | (inchangé, hors _L) |
-| 112 | — racine | — root |
-| 114 | Parent | (inchangé, hors _L) |
-| 116 | inp prop-val-edit | (inchangé, hors _L) |
-| 117 | — racine | — root |
-| 121 | 📂 Packages | 📂 Packages |
-| 127 | Éléments | Elements |
-| 131 | Parent | (inchangé, hors _L) |
-| 132 | Parent | (inchangé, hors _L) |
-| 145 | Attributs Capella | Capella attributes |
-| 281 | var(--c-dim) | (inchangé, hors _L) |
-| 303 | Renommer | Rename |
-| 304 | Ajouter un sous-package | Add a sub-package |
-| 305 | Ajouter un élément | Add an element |
-| 306 | Supprimer ce package | Delete this package |
-| 308 | Renommer | Rename |
-| 309 | Ajouter un sous-élément | Add a sub-element |
-| 310 | Supprimer | Delete |
-| 363 | 📂 Nouveau package racine | 📂 New root package |
-| 392 | Nouveau package | New package |
-| 393 | Nouveau package | New package |
-| 396 | Package | (inchangé, hors _L) |
-| 407 | Block | (inchangé, hors _L) |
-| 411 | Nouvel élément | New element |
-| 415 | Containment | (inchangé, hors _L) |
-| 423 | enfant(s). Supprimer ? | …" contains … child(ren). Delete? |
-| 446 | éléments sélectionnés | … elements selected |
-| 446 | éléments sélectionnés — glisser pour déplacer le groupe | … elements selected — drag to move the group |
-| 461 | Déplacement impossible : la cible est à l'intérieur de la sélection. | Cannot move: the target is inside the selection. |
-| 472 | Containment | (inchangé, hors _L) |
-| 492 | Block | (inchangé, hors _L) |
-| 500 | Containment | (inchangé, hors _L) |
-| 534 | 🔎 Détail | 🔎 Detail |
-| 535 | ⊙ Définir comme contexte | ⊙ Set as context |
-| 560 | 📋 Coller la liste ici (1 ligne = 1 élément) | 📋 Paste the list here (1 line = 1 element) |
-| 564 | Lecture du presse-papier non disponible dans ce navigateur — utilisez Ctrl+V sur l'élément sélectionné. | Clipboard reading is not available in this browser — use Ctrl+V on the selected element. |
-| 569 | Le presse-papier ne contient aucune ligne de texte exploitable. | The clipboard contains no usable line of text. |
-| 572 | Accès au presse-papier refusé — utilisez Ctrl+V sur l'élément sélectionné. | Clipboard access denied — use Ctrl+V on the selected element. |
-| 582 | 🔄 Convert to… | 🔄 Convert to…… ▶ |
-| 582 | élts) | (… elts) |
-| 588 | 🔍 Filtrer les types… | 🔍 Filter types… |
-| 603 | Aucun type ne correspond. | No matching type. |
-| 608 | var(--c-dim) | (inchangé, hors _L) |
-| 635 | Astuce : Ctrl+V fonctionne aussi sur l'élément sélectionné. | Tip: Ctrl+V also works on the selected element. |
-| 683 | Containment | (inchangé, hors _L) |
-| 721 | Containment | (inchangé, hors _L) |
+| 17 | var(--c-dim) | (inchangé, hors _L) |
+| 34 | Package | (inchangé, hors _L) |
+| 66 | Sélectionnez un élément dans l'arborescence ou la carte. | Select an element in the tree or on the map. |
+| 81 | Double-clic pour modifier | Double-click to edit |
+| 98 | Nom | Name |
+| 103 | Cliquer pour copier | Click to copy |
+| 104 | var(--c-accent) | (inchangé, hors _L) |
+| 112 | Type | (inchangé, hors _L) |
+| 114 | inp prop-val-edit | (inchangé, hors _L) |
+| 117 | Type | (inchangé, hors _L) |
+| 124 | — racine | — root |
+| 126 | Parent | (inchangé, hors _L) |
+| 128 | inp prop-val-edit | (inchangé, hors _L) |
+| 129 | — racine | — root |
+| 133 | 📂 Packages | 📂 Packages |
+| 139 | Éléments | Elements |
+| 143 | Parent | (inchangé, hors _L) |
+| 144 | Parent | (inchangé, hors _L) |
+| 157 | Attributs Capella | Capella attributes |
+| 314 | Renommer | Rename |
+| 315 | Ajouter un sous-package | Add a sub-package |
+| 316 | Ajouter un élément | Add an element |
+| 317 | Supprimer ce package | Delete this package |
+| 319 | Renommer | Rename |
+| 320 | Ajouter un sous-élément | Add a sub-element |
+| 321 | Supprimer | Delete |
+| 374 | 📂 Nouveau package racine | 📂 New root package |
+| 403 | Nouveau package | New package |
+| 404 | Nouveau package | New package |
+| 407 | Package | (inchangé, hors _L) |
+| 418 | Block | (inchangé, hors _L) |
+| 422 | Nouvel élément | New element |
+| 426 | Containment | (inchangé, hors _L) |
+| 434 | enfant(s). Supprimer ? | …" contains … child(ren). Delete? |
+| 457 | éléments sélectionnés | … elements selected |
+| 457 | éléments sélectionnés — glisser pour déplacer le groupe | … elements selected — drag to move the group |
+| 472 | Déplacement impossible : la cible est à l'intérieur de la sélection. | Cannot move: the target is inside the selection. |
+| 483 | Containment | (inchangé, hors _L) |
+| 503 | Block | (inchangé, hors _L) |
+| 511 | Containment | (inchangé, hors _L) |
+| 545 | 🔎 Détail | 🔎 Detail |
+| 546 | ⊙ Définir comme contexte | ⊙ Set as context |
+| 571 | 📋 Coller la liste ici (1 ligne = 1 élément) | 📋 Paste the list here (1 line = 1 element) |
+| 575 | Lecture du presse-papier non disponible dans ce navigateur — utilisez Ctrl+V sur l'élément sélectionné. | Clipboard reading is not available in this browser — use Ctrl+V on the selected element. |
+| 580 | Le presse-papier ne contient aucune ligne de texte exploitable. | The clipboard contains no usable line of text. |
+| 583 | Accès au presse-papier refusé — utilisez Ctrl+V sur l'élément sélectionné. | Clipboard access denied — use Ctrl+V on the selected element. |
+| 593 | 🔄 Convert to… | 🔄 Convert to…… ▶ |
+| 593 | élts) | (… elts) |
+| 599 | 🔍 Filtrer les types… | 🔍 Filter types… |
+| 614 | Aucun type ne correspond. | No matching type. |
+| 619 | var(--c-dim) | (inchangé, hors _L) |
+| 646 | Astuce : Ctrl+V fonctionne aussi sur l'élément sélectionné. | Tip: Ctrl+V also works on the selected element. |
+| 694 | Containment | (inchangé, hors _L) |
+| 732 | Containment | (inchangé, hors _L) |
 
 ## js/10-rm-vues.js
 
@@ -747,103 +746,106 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | Ligne | Texte | Anglais |
 |---:|---|---|
 | 14 | Shared | (inchangé, hors _L) |
-| 73 | élément(s) affiché(s) | … element(s) shown |
-| 82 | —sans nom— | —unnamed— |
-| 92 | Aucun résultat | No result |
-| 310 | Owner [ | Owner […] |
-| 379 | Name | (inchangé, hors _L) |
-| 381 | Type | (inchangé, hors _L) |
-| 382 | Human Type | (inchangé, hors _L) |
-| 391 | Attribut « | Attribute “…” |
-| 413 | Owned element [ | Owned element […] |
-| 435 | :fwd: | (inchangé, hors _L) |
-| 442 | :rev: | (inchangé, hors _L) |
-| 613 | Couche | Layer |
-| 613 | Type | (inchangé, hors _L) |
-| 613 | Human Type | (inchangé, hors _L) |
-| 613 | Name | (inchangé, hors _L) |
-| 613 | Owner | Owner |
-| 613 | Owned element | (inchangé, hors _L) |
-| 632 | ⊞ Colonnes ( | ⊞ Columns (…) ▾ |
-| 642 | 🔍 Rechercher une colonne… | 🔍 Search a column… |
-| 674 | Créer une colonne calculée en suivant un chemin de relations (metachain), avec aperçu en direct | Create a computed column by following a path of relations (metachain), with live preview |
-| 675 | ✨ Colonne par chemin | ✨ Path column |
-| 687 | Bascule l'affichage des cellules à plusieurs valeurs | Toggle the display of multi-valued cells |
-| 688 | ≡ En ligne | ≡ Inline |
-| 688 | ☰ Empilé | ☰ Stacked |
-| 700 | Exporter en CSV les colonnes affichées, pour toutes les lignes filtrées (ordre du tri) | Export the displayed columns to CSV, for all filtered rows (sort order) |
-| 701 | ⬇ CSV | ⬇ CSV |
-| 706 | Sauvegarder la vue de cet onglet (colonnes, colonnes par chemin, filtres, largeurs, tri) dans un fichier | Save this tab's view (columns, path columns, filters, widths, sort) to a file |
-| 707 | 💾 Sauver vue | 💾 Save view |
-| 711 | Charger une vue tableau sauvegardée | Load a saved table view |
-| 712 | 📂 Charger vue | 📂 Load view |
-| 718 | ↺ Réinitialiser | ↺ Reset |
-| 719 | Revenir aux colonnes, à l'ordre, aux largeurs et au tri de départ, sans filtre (onglet affiché) | Go back to the initial columns, order, widths and sort, with no filter (current tab) |
-| 754 | Modifier le metachain de cette colonne | Edit the metachain of this column |
-| 760 | Supprimer cette colonne personnalisée | Delete this custom column |
-| 782 | ⊞ Colonnes ( | ⊞ Columns (…) ▾ |
-| 786 | Colonnes calculées | Computed columns |
-| 787 | Name | (inchangé, hors _L) |
-| 787 | Owner | Owner |
-| 787 | Owned element | (inchangé, hors _L) |
-| 788 | Couche | Layer |
-| 788 | Type | (inchangé, hors _L) |
-| 788 | Human Type | (inchangé, hors _L) |
-| 792 | Colonnes par chemin | Path columns |
-| 798 | Attributs du fichier XML | XML file attributes |
-| 876 | (aucune relation disponible) | (no relation available) |
-| 894 | Supprimer cette étape et les suivantes | Delete this step and the following ones |
-| 941 | (sans nom) | (unnamed) |
-| 991 | 👁 Aperçu en direct | 👁 Live preview |
-| 993 | Choisissez un type de départ. | Choose a start type. |
-| 996 | Aucun élément de ce type dans le modèle. | No element of this type in the model. |
-| 1008 | Élément d'exemple ( | Sample element (…): |
-| 1011 | 🔍 Filtrer… | 🔍 Filter… |
-| 1013 | Suivant ▸ | Next ▸ |
-| 1014 | Passer au prochain élément dont la cellule serait remplie | Go to the next element whose cell would be filled |
-| 1025 | autre(s) : affinez le filtre | … … more: refine the filter |
-| 1026 | (aucun élément) | (no element) |
-| 1063 | Cellule remplie pour | Cell filled for … element(s) out of the first … tested (… in total). |
-| 1063 | élément(s) sur les | Cell filled for … element(s) out of the first … tested (… in total). |
-| 1063 | premiers testés ( | Cell filled for … element(s) out of the first … tested (… in total). |
-| 1063 | au total). | Cell filled for … element(s) out of the first … tested (… in total). |
-| 1064 | Cellule remplie pour | Cell filled for … element(s) out of …. |
-| 1064 | élément(s) sur | Cell filled for … element(s) out of …. |
-| 1065 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
-| 1084 | Départ : | Start: … |
-| 1089 | (à choisir) | (to be chosen) |
-| 1094 | valeur(s) lue(s) | … value(s) read |
-| 1094 | Aucune valeur. | No value. |
-| 1097 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
-| 1098 | ∅ Aucun élément atteint : le chemin s'arrête ici pour cet exemple. | ∅ No element reached: the path stops here for this sample. |
-| 1110 | ▣ Cellule dans le tableau | ▣ Cell in the table |
-| 1112 | Chemin incomplet. | Incomplete path. |
-| 1112 | (vide) | (empty) |
-| 1138 | ✨ Modifier « | ✨ Edit “…” |
-| 1138 | ✨ Colonne par chemin | ✨ Path column |
-| 1140 | Enregistrer les modifications | Save changes |
-| 1140 | Créer la colonne | Create the column |
-| 1163 | Choisissez au moins un type de départ et une relation ou une valeur. | Choose at least one start type and one relation or value. |
-| 1164 | Chaque étape doit avoir une relation ou une valeur sélectionnée. | Each step must have a relation or a value selected. |
-| 1215 | Fichier invalide : JSON illisible. | Invalid file: unreadable JSON. |
-| 1217 | Ce fichier ne semble pas être une vue de tableau valide. | This file does not look like a valid table view. |
-| 1251 | élément(s) | … element(s) |
-| 1251 | · 🌳 arbre ( | · 🌳 tree (… row(s) shown) |
-| 1251 | ligne(s) affichée(s)) | · 🌳 tree (… row(s) shown) |
-| 1251 | · 🎯 portée : | · 🎯 scope: … |
-| 1267 | Clic : trier · glisser : déplacer la colonne · bord droit : largeur | ……\nClick: sort · drag: move the column · right edge: width |
-| 1283 | Filtrer… | Filter… |
-| 1309 | Aucun élément ne correspond aux filtres. | No element matches the filters. |
-| 1309 | Aucun type coché pour cet onglet : cochez des types d'éléments dans le menu de gauche. | No type checked for this tab: check element types in the left menu. |
-| 1330 | (conteneur) | … — … (container) |
-| 1371 | 🌳 Arbre | 🌳 Tree ☰ List ⊞ Expand all ⊟ Collapse all Level 1 2 3 ⬇ JSON |
-| 1373 | lignes au plus)" ☰ Liste ⊞ Tout déplier ⊟ Tout réduire Niveau 1 2 3 ⬇ JSON | 🌳 Tree ☰ List ⊞ Expand all ⊟ Collapse all Level 1 2 3 ⬇ JSON |
-| 1421 | résultat(s) | … result(s) |
-| 1421 | élément(s) | … element(s) |
-| 1426 | cap-tree-row cap-tree-lrow | (inchangé, hors _L) |
-| 1436 | autre(s) élément(s) non affiché(s) : précisez la recherche. | … … more element(s) not shown: refine the search. |
-| 1437 | Aucun élément ne correspond. | No element matches. |
-| 1441 | Aucun élément ne correspond. | No element matches. |
+| 78 | premiers éléments affichés sur | First … elements shown out of … — refine the search, the layer or the types |
+| 78 | — précisez la recherche, la couche ou les types | First … elements shown out of … — refine the search, the layer or the types |
+| 78 | élément(s) affiché(s) | … element(s) shown |
+| 89 | —sans nom— | —unnamed— |
+| 99 | autre(s) élément(s) non affiché(s) : précisez la recherche, la couche ou les types (▤ Tableau pour tout parcourir). | … … other element(s) not shown: refine the search, the layer or the types (▤ Table to browse them all). |
+| 100 | Aucun résultat | No result |
+| 318 | Owner [ | Owner […] |
+| 387 | Name | (inchangé, hors _L) |
+| 389 | Type | (inchangé, hors _L) |
+| 390 | Human Type | (inchangé, hors _L) |
+| 399 | Attribut « | Attribute “…” |
+| 421 | Owned element [ | Owned element […] |
+| 443 | :fwd: | (inchangé, hors _L) |
+| 450 | :rev: | (inchangé, hors _L) |
+| 621 | Couche | Layer |
+| 621 | Type | (inchangé, hors _L) |
+| 621 | Human Type | (inchangé, hors _L) |
+| 621 | Name | (inchangé, hors _L) |
+| 621 | Owner | Owner |
+| 621 | Owned element | (inchangé, hors _L) |
+| 640 | ⊞ Colonnes ( | ⊞ Columns (…) ▾ |
+| 650 | 🔍 Rechercher une colonne… | 🔍 Search a column… |
+| 682 | Créer une colonne calculée en suivant un chemin de relations (metachain), avec aperçu en direct | Create a computed column by following a path of relations (metachain), with live preview |
+| 683 | ✨ Colonne par chemin | ✨ Path column |
+| 695 | Bascule l'affichage des cellules à plusieurs valeurs | Toggle the display of multi-valued cells |
+| 696 | ≡ En ligne | ≡ Inline |
+| 696 | ☰ Empilé | ☰ Stacked |
+| 708 | Exporter en CSV les colonnes affichées, pour toutes les lignes filtrées (ordre du tri) | Export the displayed columns to CSV, for all filtered rows (sort order) |
+| 709 | ⬇ CSV | ⬇ CSV |
+| 714 | Sauvegarder la vue de cet onglet (colonnes, colonnes par chemin, filtres, largeurs, tri) dans un fichier | Save this tab's view (columns, path columns, filters, widths, sort) to a file |
+| 715 | 💾 Sauver vue | 💾 Save view |
+| 719 | Charger une vue tableau sauvegardée | Load a saved table view |
+| 720 | 📂 Charger vue | 📂 Load view |
+| 726 | ↺ Réinitialiser | ↺ Reset |
+| 727 | Revenir aux colonnes, à l'ordre, aux largeurs et au tri de départ, sans filtre (onglet affiché) | Go back to the initial columns, order, widths and sort, with no filter (current tab) |
+| 762 | Modifier le metachain de cette colonne | Edit the metachain of this column |
+| 768 | Supprimer cette colonne personnalisée | Delete this custom column |
+| 790 | ⊞ Colonnes ( | ⊞ Columns (…) ▾ |
+| 794 | Colonnes calculées | Computed columns |
+| 795 | Name | (inchangé, hors _L) |
+| 795 | Owner | Owner |
+| 795 | Owned element | (inchangé, hors _L) |
+| 796 | Couche | Layer |
+| 796 | Type | (inchangé, hors _L) |
+| 796 | Human Type | (inchangé, hors _L) |
+| 800 | Colonnes par chemin | Path columns |
+| 806 | Attributs du fichier XML | XML file attributes |
+| 884 | (aucune relation disponible) | (no relation available) |
+| 902 | Supprimer cette étape et les suivantes | Delete this step and the following ones |
+| 949 | (sans nom) | (unnamed) |
+| 999 | 👁 Aperçu en direct | 👁 Live preview |
+| 1001 | Choisissez un type de départ. | Choose a start type. |
+| 1004 | Aucun élément de ce type dans le modèle. | No element of this type in the model. |
+| 1016 | Élément d'exemple ( | Sample element (…): |
+| 1019 | 🔍 Filtrer… | 🔍 Filter… |
+| 1021 | Suivant ▸ | Next ▸ |
+| 1022 | Passer au prochain élément dont la cellule serait remplie | Go to the next element whose cell would be filled |
+| 1033 | autre(s) : affinez le filtre | … … more: refine the filter |
+| 1034 | (aucun élément) | (no element) |
+| 1071 | Cellule remplie pour | Cell filled for … element(s) out of the first … tested (… in total). |
+| 1071 | élément(s) sur les | Cell filled for … element(s) out of the first … tested (… in total). |
+| 1071 | premiers testés ( | Cell filled for … element(s) out of the first … tested (… in total). |
+| 1071 | au total). | Cell filled for … element(s) out of the first … tested (… in total). |
+| 1072 | Cellule remplie pour | Cell filled for … element(s) out of …. |
+| 1072 | élément(s) sur | Cell filled for … element(s) out of …. |
+| 1073 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
+| 1092 | Départ : | Start: … |
+| 1097 | (à choisir) | (to be chosen) |
+| 1102 | valeur(s) lue(s) | … value(s) read |
+| 1102 | Aucune valeur. | No value. |
+| 1105 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
+| 1106 | ∅ Aucun élément atteint : le chemin s'arrête ici pour cet exemple. | ∅ No element reached: the path stops here for this sample. |
+| 1118 | ▣ Cellule dans le tableau | ▣ Cell in the table |
+| 1120 | Chemin incomplet. | Incomplete path. |
+| 1120 | (vide) | (empty) |
+| 1146 | ✨ Modifier « | ✨ Edit “…” |
+| 1146 | ✨ Colonne par chemin | ✨ Path column |
+| 1148 | Enregistrer les modifications | Save changes |
+| 1148 | Créer la colonne | Create the column |
+| 1171 | Choisissez au moins un type de départ et une relation ou une valeur. | Choose at least one start type and one relation or value. |
+| 1172 | Chaque étape doit avoir une relation ou une valeur sélectionnée. | Each step must have a relation or a value selected. |
+| 1223 | Fichier invalide : JSON illisible. | Invalid file: unreadable JSON. |
+| 1225 | Ce fichier ne semble pas être une vue de tableau valide. | This file does not look like a valid table view. |
+| 1259 | élément(s) | … element(s) |
+| 1259 | · 🌳 arbre ( | · 🌳 tree (… row(s) shown) |
+| 1259 | ligne(s) affichée(s)) | · 🌳 tree (… row(s) shown) |
+| 1259 | · 🎯 portée : | · 🎯 scope: … |
+| 1275 | Clic : trier · glisser : déplacer la colonne · bord droit : largeur | ……\nClick: sort · drag: move the column · right edge: width |
+| 1291 | Filtrer… | Filter… |
+| 1317 | Aucun élément ne correspond aux filtres. | No element matches the filters. |
+| 1317 | Aucun type coché pour cet onglet : cochez des types d'éléments dans le menu de gauche. | No type checked for this tab: check element types in the left menu. |
+| 1338 | (conteneur) | … — … (container) |
+| 1379 | 🌳 Arbre | 🌳 Tree ☰ List ⊞ Expand all ⊟ Collapse all Level 1 2 3 ⬇ JSON |
+| 1381 | lignes au plus)" ☰ Liste ⊞ Tout déplier ⊟ Tout réduire Niveau 1 2 3 ⬇ JSON | 🌳 Tree ☰ List ⊞ Expand all ⊟ Collapse all Level 1 2 3 ⬇ JSON |
+| 1429 | résultat(s) | … result(s) |
+| 1429 | élément(s) | … element(s) |
+| 1434 | cap-tree-row cap-tree-lrow | (inchangé, hors _L) |
+| 1445 | autre(s) élément(s) non affiché(s) : précisez la recherche. | … … more element(s) not shown: refine the search. |
+| 1446 | Aucun élément ne correspond. | No element matches. |
+| 1450 | Aucun élément ne correspond. | No element matches. |
 
 ## js/22-capella-liens.js
 
@@ -3854,175 +3856,175 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 29 | Impossible de lire « | Cannot read “…”. |
-| 33 | Diagrammes « | Diagrams “…” kept: now drop the project's .capella file. |
-| 33 | » gardés : déposez maintenant le fichier .capella du projet. | Diagrams “…” kept: now drop the project's .capella file. |
-| 50 | Diagrammes Capella (.aird) | Capella diagrams (.aird) |
-| 90 | Lecture du dossier impossible : | Cannot read the folder: |
-| 103 | Aucun fichier .capella dans ce dossier (ni dans ses sous-dossiers). | No .capella file in this folder (nor in its subfolders). |
-| 113 | Lecture impossible : | Cannot read: |
-| 117 | modèles dans ce dossier : choisissez celui à ouvrir. | … models in this folder: choose the one to open. |
-| 132 | Glisser pour régler la largeur de l'explorateur | Drag to adjust the width of the explorer |
-| 181 | ▣ Carte | ▣ Map |
-| 182 | Afficher la carte dans le diagramme | Show the map in the diagram |
-| 183 | ▣ Carte | ▣ Map |
-| 183 | dans le diagramme | in the diagram |
-| 184 | Afficher la carte sous l'explorateur | Show the map below the explorer |
-| 201 | Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML | Export several diagrams as sheets (header, description, title block, appendix): PDF, PNG / SVG ZIP, HTML report |
-| 201 | ⬇ Exporter… | ⬇ Export… |
-| 202 | Choisir les diagrammes à exporter : cases à cocher dans l'explorateur | Choose the diagrams to export: checkboxes in the explorer |
-| 202 | ☑ Terminer la sélection | ☑ Finish selection |
-| 202 | ☐ Sélectionner… | ☐ Select… |
-| 203 | Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés | Information on the open diagram in the details panel: type, layer, description, represented element, displayed elements |
-| 203 | ℹ Infos | ℹ Info |
-| 204 | Choisir le fichier .aird (le sélecteur s'ouvre dans le dossier du .capella quand le navigateur le permet) | Choose the .aird file (the picker opens in the .capella folder when the browser allows it) |
-| 204 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
-| 206 | diagramme(s) | … diagram(s) |
-| 207 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
-| 248 | vd-barre cdg-vd-l2 | (inchangé, hors _L) |
-| 287 | Mettre en évidence une chaîne fonctionnelle ou un chemin physique dessiné dans ce diagramme | Highlight a functional chain or physical path drawn in this diagram |
-| 294 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
-| 308 | Autres | Others |
-| 379 | Aucun .aird chargé. | No .aird loaded. |
-| 379 | 📂 Ouvrir le .aird… s'ouvre dans le dossier du .capella (Edge / Chrome). | 📂 Open the .aird… opens in the .capella folder (Edge / Chrome). |
-| 380 | Ou, depuis l'écran d'accueil, 📁 Dossier du projet… : le .capella et ses diagrammes sont chargés ensemble. | Or, from the home screen, 📁 Project folder…: the .capella and its diagrams are loaded together. |
-| 388 | Cocher / décocher le groupe | Check / uncheck the group |
-| 395 | Informations du diagramme (panneau de détail) | Diagram information (details panel) |
-| 410 | Filtrer (nom, type, sigle, couche)… | Filter (name, type, acronym, layer)… |
-| 411 | Classement de la liste | List grouping |
-| 411 | Couche › type | Layer › type |
-| 411 | Couche | Layer |
-| 411 | Type de diagramme | Diagram type |
-| 411 | Nom (A → Z) | Name (A → Z) |
-| 412 | Tout déplier | Expand all |
-| 412 | Tout replier | Collapse all |
-| 413 | sélectionné(s) pour l'export | … selected for export |
-| 413 | diagramme(s) | … diagram(s) |
-| 415 | sélectionné(s) pour l'export | … selected for export |
-| 415 | diagramme(s) — cochez pour exporter | … diagram(s) — check to export |
-| 416 | Aucun diagramme ne correspond. | No matching diagram. |
-| 499 | var(--c-dim) | (inchangé, hors _L) |
-| 501 | Diagramme | Diagram |
-| 501 | Diagramme de séquence | Sequence diagram |
-| 501 | Tableau | Table |
-| 503 | 🔲 Diagramme Capella | 🔲 Capella diagram |
-| 505 | 🔲 Afficher le diagramme | 🔲 Show the diagram |
-| 506 | Attributs | Attributes |
-| 506 | Type | Type |
-| 506 | Sigle | Acronym |
-| 507 | Couche | Layer |
-| 507 | Nature | Nature |
-| 508 | Éléments | Elements |
-| 509 | Modifié le | Modified on |
-| 509 | Fichier | File |
-| 510 | Description | (inchangé, hors _L) |
-| 511 | Élément représenté | Represented element |
-| 514 | Éléments affichés ( | Displayed elements (…) |
-| 536 | Diagrammes ( | Diagrams (…) |
-| 559 | export SVG de la visionneuse introuvable | viewer SVG export not found |
-| 566 | diagramme vide ou non exportable | empty or non-exportable diagram |
-| 587 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
-| 588 | Projet Capella | Capella project |
-| 595 | Projet | Project |
-| 595 | Couche | Layer |
-| 596 | Diagramme | Diagram |
-| 596 | Contenu | Content |
-| 596 | élément(s) | … element(s) |
-| 597 | Type | (inchangé, hors _L) |
-| 597 | Date | Date |
-| 598 | Sources | Sources |
-| 598 | Planche | Sheet |
-| 616 | ) scale( | (inchangé, hors _L) |
-| 625 | Élément représenté | Represented element |
-| 627 | ) scale( | (inchangé, hors _L) |
-| 631 | ) scale( | (inchangé, hors _L) |
-| 632 | Arcalyse · planche générée le | Arcalyse · sheet generated on … |
-| 648 | ) scale( | (inchangé, hors _L) |
-| 705 | Élément représenté | Represented element |
-| 705 | Description | (inchangé, hors _L) |
-| 706 | Élément | Element |
-| 706 | Type | (inchangé, hors _L) |
-| 706 | Couche | Layer |
-| 721 | Élément | Element |
-| 721 | Type | (inchangé, hors _L) |
-| 721 | Couche | Layer |
-| 727 | 700 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 728 | 700 28px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 730 | 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 731 | élément(s) représenté(s) | … represented element(s) |
-| 731 | Planche | Sheet |
-| 732 | 700 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 735 | 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 772 | ⬇ Exporter des diagrammes | ⬇ Export diagrams |
-| 774 | Diagrammes | Diagrams |
-| 775 | Cochés dans la liste | Checked in the list |
-| 775 | Affichés (filtre en cours) | Displayed (current filter) |
-| 775 | Tous | All |
-| 776 | Mise en page | Layout |
-| 777 | Cadre et en-tête | Frame and header |
-| 777 | Cadre, bandeau de couche, sigle, nom et type du diagramme | Frame, layer band, acronym, name and type of the diagram |
-| 778 | Cartouche | Title block |
-| 778 | Cartouche technique en bas à droite : projet, diagramme, type, couche, contenu, sources, date, planche | Technical title block at the bottom right: project, diagram, type, layer, content, sources, date, sheet |
-| 779 | Description | Description |
-| 779 | Description Capella du diagramme et élément représenté, sous l'en-tête | Capella description of the diagram and represented element, below the header |
-| 780 | Annexes | Appendices |
-| 780 | Éléments représentés dans chaque diagramme : PDF, page(s) d'annexe après la planche · ZIP, un CSV par diagramme · HTML, tableau repliable | Elements represented in each diagram: PDF, appendix page(s) after the sheet · ZIP, one CSV per diagram · HTML, collapsible table |
-| 781 | Sommaire | Contents |
-| 781 | PDF : page de sommaire par couche et type · HTML : onglet Sommaire | PDF: contents page by layer and type · HTML: Contents tab |
-| 782 | Résolution des images PNG / PDF | Resolution of PNG / PDF images |
-| 782 | Résolution | Resolution |
-| 783 | Format | Format |
-| 785 | 📄 PDF | (inchangé, hors _L) |
-| 785 | Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets | One PDF: contents, one sheet per diagram (A4, oriented automatically), bookmarks |
-| 786 | 🗜 ZIP PNG | (inchangé, hors _L) |
-| 786 | Archive ZIP des planches en PNG, un dossier par couche | ZIP archive of the sheets as PNG, one folder per layer |
-| 787 | 🗜 ZIP SVG | (inchangé, hors _L) |
-| 787 | Archive ZIP des planches en SVG (vectoriel), un dossier par couche | ZIP archive of the sheets as SVG (vector), one folder per layer |
-| 788 | 🌐 HTML | (inchangé, hors _L) |
-| 788 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
-| 791 | Aperçu de la planche | Sheet preview |
-| 792 | Fermer | Close |
-| 793 | Lancer l'export dans le format choisi | Start the export in the chosen format |
-| 793 | ⬇ Exporter | ⬇ Export |
-| 811 | Aucun diagramme. | No diagram. |
-| 828 | Projet Capella | Capella project |
-| 838 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 838 | Diagrammes Capella | Capella diagrams |
-| 839 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 842 | planche(s) | … sheet(s) |
-| 850 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 851 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 856 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 857 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 895 | Aucun diagramme à exporter. | No diagram to export. |
-| 896 | Capella | (inchangé, hors _L) |
-| 911 | aucun diagramme exportable | no exportable diagram |
-| 921 | Le PDF fera environ | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
-| 921 | pages). Pour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…). Continuer quand même ? | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
-| 922 | Export annulé : PDF estimé à | Export cancelled: PDF estimated at … MB. |
-| 925 | Sommaire | Contents |
-| 929 | Planche | Sheet |
-| 931 | Autres | Others |
-| 932 | - annexe | - appendix |
-| 945 | Diagrammes — | Diagrams — … |
-| 948 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
-| 948 | pages) | (… pages) |
-| 949 | ignoré(s) : | — … skipped: |
-| 950 | ⚠ Échec de l'export : | ⚠ Export failed: |
-| 969 | Type | (inchangé, hors _L) |
-| 969 | Couche | Layer |
-| 969 | Sigle | Acronym |
-| 969 | Diagramme | Diagram |
-| 969 | Éléments | Elements |
-| 980 | Type | (inchangé, hors _L) |
-| 980 | Annexe | Appendix |
-| 980 | élément(s) représenté(s) | … represented element(s) |
-| 980 | Élément | Element |
-| 980 | Couche | Layer |
-| 994 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
-| 994 | diagramme(s) | … diagram(s) |
-| 995 | 📋 Sommaire | 📋 Contents |
-| 995 | 🔲 Planches | 🔲 Sheets |
+| 67 | Impossible de lire « | Cannot read “…”. |
+| 71 | Diagrammes « | Diagrams “…” kept: now drop the project's .capella file. |
+| 71 | » gardés : déposez maintenant le fichier .capella du projet. | Diagrams “…” kept: now drop the project's .capella file. |
+| 88 | Diagrammes Capella (.aird) | Capella diagrams (.aird) |
+| 128 | Lecture du dossier impossible : | Cannot read the folder: |
+| 141 | Aucun fichier .capella dans ce dossier (ni dans ses sous-dossiers). | No .capella file in this folder (nor in its subfolders). |
+| 151 | Lecture impossible : | Cannot read: |
+| 155 | modèles dans ce dossier : choisissez celui à ouvrir. | … models in this folder: choose the one to open. |
+| 170 | Glisser pour régler la largeur de l'explorateur | Drag to adjust the width of the explorer |
+| 219 | ▣ Carte | ▣ Map |
+| 220 | Afficher la carte dans le diagramme | Show the map in the diagram |
+| 221 | ▣ Carte | ▣ Map |
+| 221 | dans le diagramme | in the diagram |
+| 222 | Afficher la carte sous l'explorateur | Show the map below the explorer |
+| 239 | Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML | Export several diagrams as sheets (header, description, title block, appendix): PDF, PNG / SVG ZIP, HTML report |
+| 239 | ⬇ Exporter… | ⬇ Export… |
+| 240 | Choisir les diagrammes à exporter : cases à cocher dans l'explorateur | Choose the diagrams to export: checkboxes in the explorer |
+| 240 | ☑ Terminer la sélection | ☑ Finish selection |
+| 240 | ☐ Sélectionner… | ☐ Select… |
+| 241 | Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés | Information on the open diagram in the details panel: type, layer, description, represented element, displayed elements |
+| 241 | ℹ Infos | ℹ Info |
+| 242 | Choisir le fichier .aird (le sélecteur s'ouvre dans le dossier du .capella quand le navigateur le permet) | Choose the .aird file (the picker opens in the .capella folder when the browser allows it) |
+| 242 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 244 | diagramme(s) | … diagram(s) |
+| 245 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
+| 287 | vd-barre cdg-vd-l2 | (inchangé, hors _L) |
+| 328 | Mettre en évidence une chaîne fonctionnelle ou un chemin physique dessiné dans ce diagramme | Highlight a functional chain or physical path drawn in this diagram |
+| 335 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
+| 349 | Autres | Others |
+| 420 | Aucun .aird chargé. | No .aird loaded. |
+| 420 | 📂 Ouvrir le .aird… s'ouvre dans le dossier du .capella (Edge / Chrome). | 📂 Open the .aird… opens in the .capella folder (Edge / Chrome). |
+| 421 | Ou, depuis l'écran d'accueil, 📁 Dossier du projet… : le .capella et ses diagrammes sont chargés ensemble. | Or, from the home screen, 📁 Project folder…: the .capella and its diagrams are loaded together. |
+| 429 | Cocher / décocher le groupe | Check / uncheck the group |
+| 436 | Informations du diagramme (panneau de détail) | Diagram information (details panel) |
+| 451 | Filtrer (nom, type, sigle, couche)… | Filter (name, type, acronym, layer)… |
+| 452 | Classement de la liste | List grouping |
+| 452 | Couche › type | Layer › type |
+| 452 | Couche | Layer |
+| 452 | Type de diagramme | Diagram type |
+| 452 | Nom (A → Z) | Name (A → Z) |
+| 453 | Tout déplier | Expand all |
+| 453 | Tout replier | Collapse all |
+| 454 | sélectionné(s) pour l'export | … selected for export |
+| 454 | diagramme(s) | … diagram(s) |
+| 456 | sélectionné(s) pour l'export | … selected for export |
+| 456 | diagramme(s) — cochez pour exporter | … diagram(s) — check to export |
+| 457 | Aucun diagramme ne correspond. | No matching diagram. |
+| 540 | var(--c-dim) | (inchangé, hors _L) |
+| 542 | Diagramme | Diagram |
+| 542 | Diagramme de séquence | Sequence diagram |
+| 542 | Tableau | Table |
+| 544 | 🔲 Diagramme Capella | 🔲 Capella diagram |
+| 546 | 🔲 Afficher le diagramme | 🔲 Show the diagram |
+| 547 | Attributs | Attributes |
+| 547 | Type | Type |
+| 547 | Sigle | Acronym |
+| 548 | Couche | Layer |
+| 548 | Nature | Nature |
+| 549 | Éléments | Elements |
+| 550 | Modifié le | Modified on |
+| 550 | Fichier | File |
+| 551 | Description | (inchangé, hors _L) |
+| 552 | Élément représenté | Represented element |
+| 555 | Éléments affichés ( | Displayed elements (…) |
+| 577 | Diagrammes ( | Diagrams (…) |
+| 600 | export SVG de la visionneuse introuvable | viewer SVG export not found |
+| 607 | diagramme vide ou non exportable | empty or non-exportable diagram |
+| 628 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
+| 629 | Projet Capella | Capella project |
+| 636 | Projet | Project |
+| 636 | Couche | Layer |
+| 637 | Diagramme | Diagram |
+| 637 | Contenu | Content |
+| 637 | élément(s) | … element(s) |
+| 638 | Type | (inchangé, hors _L) |
+| 638 | Date | Date |
+| 639 | Sources | Sources |
+| 639 | Planche | Sheet |
+| 657 | ) scale( | (inchangé, hors _L) |
+| 666 | Élément représenté | Represented element |
+| 668 | ) scale( | (inchangé, hors _L) |
+| 672 | ) scale( | (inchangé, hors _L) |
+| 673 | Arcalyse · planche générée le | Arcalyse · sheet generated on … |
+| 689 | ) scale( | (inchangé, hors _L) |
+| 746 | Élément représenté | Represented element |
+| 746 | Description | (inchangé, hors _L) |
+| 747 | Élément | Element |
+| 747 | Type | (inchangé, hors _L) |
+| 747 | Couche | Layer |
+| 762 | Élément | Element |
+| 762 | Type | (inchangé, hors _L) |
+| 762 | Couche | Layer |
+| 768 | 700 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 769 | 700 28px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 771 | 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 772 | élément(s) représenté(s) | … represented element(s) |
+| 772 | Planche | Sheet |
+| 773 | 700 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 776 | 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 813 | ⬇ Exporter des diagrammes | ⬇ Export diagrams |
+| 815 | Diagrammes | Diagrams |
+| 816 | Cochés dans la liste | Checked in the list |
+| 816 | Affichés (filtre en cours) | Displayed (current filter) |
+| 816 | Tous | All |
+| 817 | Mise en page | Layout |
+| 818 | Cadre et en-tête | Frame and header |
+| 818 | Cadre, bandeau de couche, sigle, nom et type du diagramme | Frame, layer band, acronym, name and type of the diagram |
+| 819 | Cartouche | Title block |
+| 819 | Cartouche technique en bas à droite : projet, diagramme, type, couche, contenu, sources, date, planche | Technical title block at the bottom right: project, diagram, type, layer, content, sources, date, sheet |
+| 820 | Description | Description |
+| 820 | Description Capella du diagramme et élément représenté, sous l'en-tête | Capella description of the diagram and represented element, below the header |
+| 821 | Annexes | Appendices |
+| 821 | Éléments représentés dans chaque diagramme : PDF, page(s) d'annexe après la planche · ZIP, un CSV par diagramme · HTML, tableau repliable | Elements represented in each diagram: PDF, appendix page(s) after the sheet · ZIP, one CSV per diagram · HTML, collapsible table |
+| 822 | Sommaire | Contents |
+| 822 | PDF : page de sommaire par couche et type · HTML : onglet Sommaire | PDF: contents page by layer and type · HTML: Contents tab |
+| 823 | Résolution des images PNG / PDF | Resolution of PNG / PDF images |
+| 823 | Résolution | Resolution |
+| 824 | Format | Format |
+| 826 | 📄 PDF | (inchangé, hors _L) |
+| 826 | Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets | One PDF: contents, one sheet per diagram (A4, oriented automatically), bookmarks |
+| 827 | 🗜 ZIP PNG | (inchangé, hors _L) |
+| 827 | Archive ZIP des planches en PNG, un dossier par couche | ZIP archive of the sheets as PNG, one folder per layer |
+| 828 | 🗜 ZIP SVG | (inchangé, hors _L) |
+| 828 | Archive ZIP des planches en SVG (vectoriel), un dossier par couche | ZIP archive of the sheets as SVG (vector), one folder per layer |
+| 829 | 🌐 HTML | (inchangé, hors _L) |
+| 829 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
+| 832 | Aperçu de la planche | Sheet preview |
+| 833 | Fermer | Close |
+| 834 | Lancer l'export dans le format choisi | Start the export in the chosen format |
+| 834 | ⬇ Exporter | ⬇ Export |
+| 852 | Aucun diagramme. | No diagram. |
+| 869 | Projet Capella | Capella project |
+| 879 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 879 | Diagrammes Capella | Capella diagrams |
+| 880 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 883 | planche(s) | … sheet(s) |
+| 891 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 892 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 897 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 898 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 936 | Aucun diagramme à exporter. | No diagram to export. |
+| 937 | Capella | (inchangé, hors _L) |
+| 952 | aucun diagramme exportable | no exportable diagram |
+| 962 | Le PDF fera environ | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
+| 962 | pages). Pour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…). Continuer quand même ? | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
+| 963 | Export annulé : PDF estimé à | Export cancelled: PDF estimated at … MB. |
+| 966 | Sommaire | Contents |
+| 970 | Planche | Sheet |
+| 972 | Autres | Others |
+| 973 | - annexe | - appendix |
+| 986 | Diagrammes — | Diagrams — … |
+| 989 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
+| 989 | pages) | (… pages) |
+| 990 | ignoré(s) : | — … skipped: |
+| 991 | ⚠ Échec de l'export : | ⚠ Export failed: |
+| 1010 | Type | (inchangé, hors _L) |
+| 1010 | Couche | Layer |
+| 1010 | Sigle | Acronym |
+| 1010 | Diagramme | Diagram |
+| 1010 | Éléments | Elements |
+| 1021 | Type | (inchangé, hors _L) |
+| 1021 | Annexe | Appendix |
+| 1021 | élément(s) représenté(s) | … represented element(s) |
+| 1021 | Élément | Element |
+| 1021 | Couche | Layer |
+| 1035 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
+| 1035 | diagramme(s) | … diagram(s) |
+| 1036 | 📋 Sommaire | 📋 Contents |
+| 1036 | 🔲 Planches | 🔲 Sheets |
 
 ## js/55-revue.js
 
