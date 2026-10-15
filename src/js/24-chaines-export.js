@@ -571,6 +571,7 @@ function capRenderChainMap(){
           <button class="cap-lf-btn${o.cut?' active':''}" data-act="cut" title="Tronque les noms à ${(S&&S.cutLen)||16} caractères (nom complet au survol)">✂ Noms</button>
         </span>
         <span class="ccm-tgroup">
+          <button class="cap-lf-btn" data-act="info" title="Informations de la chaîne affichée dans le panneau de détail : type, couche, fonctions, échanges, entrées et sorties, porteurs, capacités, description">ℹ Infos</button>
           <button class="cap-lf-btn" data-act="fit">⊡ Ajuster</button>
           <button class="cap-lf-btn" data-act="rm" title="Injecte la chaîne dans la Relation Map principale">↗ Relation Map principale</button>
         </span>
@@ -807,6 +808,7 @@ function capRenderChainMap(){
   wrap.querySelector('[data-act="compact"]').addEventListener('click',e=>{ o.compact=!o.compact; e.currentTarget.classList.toggle('active',o.compact); drawGraph(); });
   wrap.querySelector('[data-act="cut"]').addEventListener('click',e=>{ o.cut=!o.cut; e.currentTarget.classList.toggle('active',o.cut); drawGraph(); });
   wrap.querySelector('[data-act="fit"]').addEventListener('click',fit);
+  wrap.querySelector('[data-act="info"]').addEventListener('click',()=>{ const chain=list.find(c=>c.id===capChainsSelectedId); if(chain) capChainInfo(chain); });
   wrap.querySelector('[data-act="rm"]').addEventListener('click',()=>{
     const chain=list.find(c=>c.id===capChainsSelectedId); if(chain) capShowChainInMap(chain);
   });

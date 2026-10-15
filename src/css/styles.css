@@ -1652,3 +1652,58 @@ html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,2
 .dg-b{display:inline-block;border:1px solid;border-radius:9px;padding:0 6px;font-size:11px;margin:1px 2px 1px 0;white-space:nowrap;}
 .dg-det td{background:var(--c-bg2);}
 .dg-el{margin:4px 0 8px;font-size:12px;}
+/* 🏠 Accueil : disposition des cartes, galerie des check-lists, fenêtres séparées, formes du tableau blanc */
+.hm-dispo{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px;}
+.hm-card h3{display:flex;align-items:center;gap:6px;}
+.hm-card-dispo{outline:1px dashed var(--c-accent);cursor:grab;}
+.hm-grip{cursor:grab;color:var(--c-dim);font-size:15px;}
+.hm-cb{cursor:pointer;padding:0 5px;border-radius:4px;color:var(--c-dim);font-size:12px;}
+.hm-cb:hover{background:var(--c-bg4);color:var(--c-text);}
+@media (max-width:760px){.hm-grid>.hm-card{grid-column:auto!important;}}
+.hm-pop-b{cursor:pointer;padding:0 4px;border-radius:4px;color:var(--c-dim);flex-shrink:0;}
+.hm-pop-b:hover{background:var(--c-bg4);color:var(--c-accent);}
+.hm-docs-new .hm-quick-b{margin:0;font-weight:600;color:var(--c-text);border-color:var(--c-accent);}
+.hm-gal h2{font-size:14px;margin:14px 0 8px;color:var(--c-text);}
+.hm-gal h2:first-child{margin-top:0;}
+.hm-gal-q{background:var(--c-bg2);border:1px solid var(--c-border);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:6px;}
+.hm-gal-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;}
+.hm-gal-c{display:flex;flex-direction:column;gap:4px;padding:9px 11px;border:1px solid var(--c-border);border-radius:8px;background:var(--c-bg2);cursor:pointer;font-size:12.5px;}
+.hm-gal-c:hover{border-color:var(--c-accent);background:var(--c-bg3);}
+.hm-gal-c .ana-dim{font-size:11.5px;line-height:1.35;}
+.hm-pop-body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;height:100vh;overflow:hidden;}
+.hm-pop{display:flex;flex-direction:column;height:100vh;}
+.hm-pop .hm-body{flex:1;min-height:0;}
+.hm-pop .hm-doc{padding:12px 16px 30px;}
+.hm-pop-place{display:flex;align-items:center;justify-content:center;text-align:center;}
+.hm-wb-titre{font-size:13px;margin-right:6px;}
+.hm-wb-tip{margin:0 0 4px;}
+.hm-tool{min-width:30px;font-size:13px;}
+.hm-wb-in.hm-drawing{cursor:crosshair;}
+.hm-draw{position:absolute;border:1.5px dashed var(--c-accent);background:color-mix(in srgb,var(--c-accent) 8%,transparent);pointer-events:none;}
+.hm-shape{pointer-events:none;}
+.hm-shape .hm-shape-svg{display:block;overflow:visible;}
+.hm-shape .hm-hit{pointer-events:stroke;cursor:move;}
+.hm-shape .hm-hit-f{pointer-events:visiblePainted;}
+.hm-shape-a{position:absolute;top:-16px;right:-4px;display:flex;gap:2px;pointer-events:auto;}
+.hm-shape:hover .hm-it-x,.hm-sel .hm-it-x{opacity:1;}
+.hm-shape .hm-it-x{background:var(--c-bg2);border-radius:3px;}
+.hm-rz{position:absolute;right:-5px;bottom:-5px;width:10px;height:10px;border:1.5px solid var(--c-accent);background:var(--c-bg);border-radius:2px;cursor:nwse-resize;pointer-events:auto;opacity:0;}
+.hm-shape:hover .hm-rz,.hm-sel .hm-rz{opacity:1;}
+.hm-sel{outline:1.5px dashed var(--c-accent);outline-offset:3px;}
+.hm-txt.hm-txt-libre{background:transparent;border:1px dashed transparent;box-shadow:none;}
+.hm-txt.hm-txt-libre:hover,.hm-txt.hm-txt-libre.hm-sel{border-color:var(--c-border);}
+.hm-txt-libre .hm-it-h{background:transparent;height:12px;}
+.hm-txt-libre:hover .hm-it-h{background:color-mix(in srgb,var(--hm-c) 35%,transparent);}
+.hm-txt-libre .hm-txt-b{color:var(--hm-c);font-weight:600;font-size:15px;padding-top:0;}
+.hm-pal-tip{border-top:1px solid var(--c-border);margin-top:4px;padding:6px 8px;}
+#cdg-gauche .cdg-it[draggable="true"],#cap-view-cards .cap-card[draggable="true"]{cursor:grab;}
+/* 🏠 Projet : six cartes sur deux lignes (4 colonnes), accès rapide en tête ; ☑ listes de création */
+.hm-main>.hm-grid{grid-template-columns:repeat(4,minmax(0,1fr));}
+@media (max-width:1150px){.hm-main>.hm-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:760px){.hm-main>.hm-grid{grid-template-columns:1fr;}}
+.hm-dispo .hm-quick{display:flex;flex-wrap:wrap;gap:4px;flex:1 1 0;min-width:0;}
+.hm-dispo .hm-quick .cap-lf-btn{padding:3px 8px;font-size:11.5px;}
+.hm-lien{color:var(--c-accent);text-decoration:none;}
+.hm-lien:hover{text-decoration:underline;}
+.hm-new-l{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:600;color:var(--c-text);}
+.hm-new-l select{font-weight:normal;}

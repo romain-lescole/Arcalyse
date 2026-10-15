@@ -34,6 +34,7 @@
         <ol>
           <li>Drag and drop a <code>.capella</code> file <b>anywhere in the window</b>, or click <b>📂 .capella file…</b> on the home screen (or <b>📁 File › 🔷 Open a Capella model</b>). <b>📁 Project folder…</b> (or <b>📁 File › 📁 Open the project folder…</b>, or a dropped folder, in Edge / Chrome) loads the .capella and its .aird diagrams together; if it contains several models, you choose which one.</li>
           <li>The model is analysed, then the project <b>🏠 Home</b> view opens automatically (information, checklists, review plans, whiteboards).</li>
+          <li><b>⚡ Chains</b> is no longer pinned by default: it is in the <b>📡 Flows & interfaces</b> menu (📌 in ☰ to pin it again).</li>
           <li>To change model, simply drop another file (it replaces the displayed model).</li>
           <li>For a <b>new version of the same model</b>: <b>📁 File › 🔄 Load a model update</b> shows the delta first, then updates after confirmation (see 🔄 Watch).</li>
           <li><b>New version of Arcalyse</b>: <b>📄 Work project (.html)…</b> on the welcome screen (or <b>📁 File › 📄 Open a work project</b>, or the page dropped on the window) carries over a page saved with an earlier version (2.1 or later): model, diagrams, review, home, dashboards, ▤ Table, views, bar, theme, naming rules, as you choose. The page is not executed: only its data is read. Under Edge / Chrome, Ctrl+S can then rewrite the same file, now in the new version.</li>
@@ -199,6 +200,7 @@
       <!-- ── CHAINS ── -->
       <div id="ht-chains" class="ht-panel" style="display:none">
         <h2>⚡ Chains</h2>
+        <p class="hp-note"><b>📡 Flows & interfaces</b> menu (📌 in ☰ for a direct button). <b>ℹ Info</b> (Relation Map view bar, or unfolded card) shows the chain information in the detail panel: type, layer, number of functions (components) and exchanges, inputs, outputs, owners, capabilities involving it, description; 🔎 opens the full detail of the element.</p>
         <p class="hp-lead"><code>FunctionalChain</code>, <code>OperationalProcess</code> and <code>PhysicalPath</code> are rebuilt as a <b>graph</b>: several inputs, several outputs, branches and loops are kept.</p>
         <h3>Filters and sub-views</h3>
         <p>Filter by type and by layer (OA, SA, LA, PA, EPBS), and by content: <b>All / Non-empty / Empty</b> (empty chain = no function or exchange involved). <b>▦ Diagrams</b>: one card per chain. <b>🗺 Relation Map view</b>: interactive graph (LR / TB / RL / radial / zigzag layouts, ⬡ Compact, ✂ Names) and injection into the main Relation Map.</p>
@@ -404,7 +406,7 @@
           <tr><td>🔁 Check</td><td>After a new load or a 🔄 model update: open comments whose commented value has <b>changed</b> (before / now) or whose element has <b>disappeared</b>, and comments “Fixed, to be checked”. <b>✔ Validate</b> closes the comment (date and checker recorded); <b>↻ Keep open</b> takes the current version as the new reference.</td></tr>
           <tr><td>📄 Report</td><td>Status × severity summary; standalone, printable <b>📄 HTML report</b> (grouped by status, severity, assignee or element, optional replies, status of each comment against the loaded model); <b>⬇ CSV</b>.</td></tr>
           <tr><td>⚙ Settings</td><td>Your name, participants, offered fields, display (diagram layer, closed notes, 💬 mark of commented elements in the views), 🗑 Delete all.</td></tr>
-          <tr><td>💾 Review ▾ · ⧉</td><td>At the top of the panel: <b>⬇ Export</b> and <b>📂 Import / merge</b> the comments (.json, or reviewed targeted review page .html), <b>📤 Targeted review</b>, with the number of unsaved comments. <b>⧉</b> opens the panel in a <b>separate window</b> (on another screen, for example; allow pop-ups) linked to the page: closing it (or ⧈) brings it back into the page.</td></tr>
+          <tr><td>💾 Review ▾ · ⧉</td><td>At the top of the panel: <b>⬇ Export</b> and <b>📂 Import / merge</b> the comments (.json, or reviewed targeted review page .html), <b>📤 Targeted review</b>, with the number of unsaved comments. <b>🎓</b> starts the guided tour of the panel (also <b>? Help ▾ › 💬 Review tour</b>). <b>⧉</b> opens the panel in a <b>separate window</b> (on another screen, for example; allow pop-ups) linked to the page: closing it (or ⧈) brings it back into the page.</td></tr>
         </table>
         <h3>Saving</h3>
         <p>Comments are saved <b>in the page</b> (💾 Save, Ctrl+S). <b>💾 Review ▾ › ⬇ Export (.json)</b> keeps them outside the page (backup, sending); <b>📂 Import / merge</b> combines the reviews of several reviewers (new comments added, most recent version kept for the others, replies combined). Comments remain when another model is opened.</p>
@@ -421,18 +423,29 @@
         <h2>🏠 Project home</h2>
         <p class="hp-lead">View shown when a model or a project is opened (<b>🏠 Home</b> button, at the far left of the bar). Everything entered there is saved <b>in the page</b> (💾).</p>
         <h3>🏠 Project</h3>
-        <p>Capella project, file, <b>Capella version</b> (read from the file), loaded diagrams, number of elements; editable <b>📝 project sheet</b> (purpose, phase / milestone, version, owner, team, notes); model content per layer (main types), diagrams per layer; <b>💬 review</b> status (not closed, by criticality, to check, overdue); progress of checklists and review plans; model updates of the session; quick access to the views.</p>
+        <p>At the top, <b>quick access</b> to the views. Then six <b>cards</b> on two rows: <b>🔷 Project</b> (Capella project, file, <b>Capella version</b> read from the file, loaded diagrams and their number per layer — click the name: 🔲 Capella Diagrams —, number of elements, last model update and 🔄 to load one); editable <b>📝 project sheet</b> (purpose, phase / milestone, version, owner, team, notes); <b>shortcuts</b> to checklists and review plans (progress) and whiteboards (⧉: separate window); model content per layer; <b>💬 review</b> status.</p>
+        <p><b>⚙ Arrange the cards</b> (like a dashboard, on a single page): drag a card by <b>⠿</b> onto another to place it before, <b>⇔</b> switches its width between 1 and 2 columns, <b>✕</b> hides it (<b>＋</b> to show it again), <b>↺</b> restores the default layout. The layout is saved in the page.</p>
         <h3>☑ Checklists & review plans</h3>
-        <p><b>✚ Checklist…</b>: empty or from a template (✔ Model quality, OA, SA, LA, PA reviews). Sections and items to check, with owner and <b>💬 finding</b>; Enter adds an item; ↑ ↓ 🗑 on hover. <b>Drag and drop</b> from the <b>📎</b> palette (on the right: search for diagrams and elements): onto an item, it is linked to it (clickable chip: diagram or detail panel); onto “✚ Item”, it creates a linked item.</p>
+        <p>On the left, the <b>☑ New checklist</b> list: “Empty (to fill in)” (the cursor is placed on the first item; <b>Enter</b> adds the next item) or a <b>template</b> (Model quality, OA, SA, LA, PA reviews); the <b>📋 New review plan</b> list: empty plan or with the checkpoints of a template; <b>📂 Import…</b> a checklist saved as .json. From 🏠 Project, <b>⚡ Quick checklist</b> also creates an empty list. Sections and items to check, with owner and <b>💬 finding</b>; Enter adds an item; ↑ ↓ 🗑 on hover. <b>Drag and drop</b> from the <b>📎</b> palette (on the right: search for diagrams and elements): onto an item, it is linked to it (clickable chip: diagram or detail panel); onto “✚ Item”, it creates a linked item.</p>
         <p><b>✚ Review plan…</b> offers a review plan format:</p>
         <table class="hp-t">
           <tr><td>Header</td><td>Review purpose, milestone / type (SRR, PDR, internal review…), date, place, moderator, status (in preparation, in progress, completed), <b>decision</b> (accepted, with reservations, rejected, postponed), participants and roles, reference documents.</td></tr>
           <tr><td>Scope</td><td>Reviewed diagrams and elements (dragged from 📎); number of open review comments on this scope; <b>📤 Targeted review of the scope</b> (page to send to reviewers, see 💬 Review).</td></tr>
           <tr><td>Sections</td><td>1. Entry criteria · 2. Checkpoints (taken from the chosen template: OA, SA, LA, PA, quality) · 3. Exit criteria · 4. Actions and decisions (owner, due date).</td></tr>
         </table>
-        <p><b>⬇ HTML</b>: printable document (with, for a plan, the review comments on the scope); <b>💾 .json</b> / <b>📂 Import…</b>: reuse a checklist or a plan in another project; ⧉ duplicate (boxes unchecked).</p>
+        <p><b>⬇ HTML</b>: printable document (with, for a plan, the review comments on the scope); <b>💾 .json</b> / <b>📂 Import…</b>: reuse a checklist or a plan in another project; ⧉ (header) duplicate (boxes unchecked).</p>
+        <h3>⧉ Separate windows and drag and drop from the views</h3>
+        <p>The <b>⧉</b> of a checklist, a plan (left list, 🏠 Project card) or a whiteboard (bar, card) opens it in <b>its own window</b> (on another screen, for example; allow pop-ups), linked to the page: changes show on both sides. The view shows a reminder (⧉ Show the window, ⧈ Bring back here).</p>
+        <p>Meanwhile, <b>drag</b> into that window: a diagram from the <b>🔲 Capella Diagrams</b> list, a card or a tree row from <b>🧭 Explorer</b>, a chain from <b>⚡ Chains</b> (list of the Relation Map view or header of a card). On a checklist: onto an item, onto “✚ Item” or onto the scope of a plan; on a whiteboard: it becomes a clickable icon. Within the view itself, the 📎 palette on the right is the source.</p>
         <h3>🧾 Whiteboards</h3>
-        <p>Free pages (tabs, ✚ new page, double-click to rename). <b>Double-click</b> on the board or <b>✚ Text</b>: text note (color of your choice, moved by its band, resized by the corner). Diagrams and elements dragged from <b>📎</b> appear as <b>clickable icons</b> (diagram opened, or detail panel of the element) and can be moved with the mouse. An element deleted from the model or a diagram not loaded (.aird) is greyed out.</p>
+        <p>Free pages (tabs, ✚ new page, double-click to rename, ⧉ separate window). Tools:</p>
+        <table class="hp-t">
+          <tr><td>↖ Selection</td><td>Click an object: select it (dotted frame); drag: move it; <b>Del</b>: remove it. <b>Double-click</b> in an empty area: new note.</td></tr>
+          <tr><td>🗒 Note · T Text</td><td>Click on the board: colored note (moved by its band, resized by the corner) or free text without background.</td></tr>
+          <tr><td>▭ ◯ ╱ →</td><td>Rectangle, ellipse (Shift: square, circle), line, arrow: <b>drag</b> on the board. Corner ▫: resize; ⇅: reverse the direction of a line. Unfilled shapes let you click what they surround.</td></tr>
+          <tr><td>Colors · ◼ Filled / ◻ Outline</td><td>For new objects and for the selected object.</td></tr>
+        </table>
+        <p>Diagrams and elements dragged from <b>📎</b> (or from the views, board in a separate window) appear as <b>clickable icons</b> (diagram opened, or detail panel of the element). An element deleted from the model or a diagram not loaded (.aird) is greyed out.</p>
       </div>
 
       <!-- ── USE CASE ── -->
