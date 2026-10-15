@@ -245,6 +245,8 @@ Choisissez parmi des dizaines d'indicateurs (nombre d'éléments, allocation des
 2. **Ouvrez-le** dans un navigateur récent (testé sous Google Chrome version 155), même sans réseau.
 3. **Glissez-déposez** votre fichier `.capella` (ou cliquez sur 📂 Fichier .capella…), ou ouvrez le 📁 dossier du projet pour charger aussi les diagrammes (`.aird`). C'est tout.
 
+> 📘 **Guide d'utilisation complet**, menu par menu, avec captures d'écran : [`docs/GUIDE-UTILISATION.md`](docs/GUIDE-UTILISATION.md).
+
 > Pour essayer sans modèle à vous : les exemples publics [In-Flight Entertainment System](https://github.com/dbinfrago/Capella-IFE-sample) et [AIDA](https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture) sont dans `tests/models/` (sous leurs propres licences, EPL 2.0 et CC BY-SA 4.0 : voir [`tests/models/LISEZMOI.md`](tests/models/LISEZMOI.md)).
 
 ## Licence

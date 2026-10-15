@@ -102,6 +102,7 @@ node tools/i18n-restants.js   # libellés français non enveloppés par _L (--en
 node tools/index.js           # régénère docs/INDEX-FONCTIONS.md
 node tools/textes.js [--en]   # inventaire de tous les textes affichés → docs/TEXTES.md + docs/textes.csv (colonne anglaise avec --en)
 node tools/split.js f.html    # réimporte dans src/ un fichier assemblé AVEC repères (modifié ailleurs) ; --dry pour simuler
+node tools/guide-captures.js [partie…]   # captures du guide d'utilisation docs/GUIDE-UTILISATION.md → docs/guide/img/ (Playwright, après node build.js)
 node tests/smoke.js [--en | --multi [--fr]] [m.capella]   # test navigateur hors ligne (--en : version anglaise ; --multi : multilingue) (nécessite : npm i -D playwright && npx playwright install chromium)
 ```
 Modèle de test : `tests/models/In-Flight_Entertainment_System.capella` (exemple public Capella ; d'autres modèles doivent fonctionner — aucun calcul ne doit supposer un modèle particulier).
