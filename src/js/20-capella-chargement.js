@@ -22,7 +22,7 @@ const CAP_TYPE_ICON={OperationalAnalysis:'OA',SystemAnalysis:'SA',LogicalArchite
 let capAllElements=[], capTreeData=null, cap_xmlDoc=null;
 let capTypeRegistry={}, capEnabledTypes=new Set();
 let capCollapsedGroups=new Set();   // couches repliées dans la barre latérale des types (toutes dépliées au départ)
-let capCurrentView='cards', capCurrentLayer='all', capSearch='', capPage=0, capPageSize=100;
+let capCurrentView='home', capCurrentLayer='all', capSearch='', capPage=0, capPageSize=100;
 let capLinksData=null, capChainsData=null, capLinksFilter='all', capChainsFilter='all';
 let capTreeFilter='';
 let capLoaded=false;
@@ -48,6 +48,7 @@ function capBuildPageHtml(){
   // si on sauvegarde plusieurs fois de suite un fichier déjà sauvegardé.
   const oldXml = doc.querySelector('#cap-embedded-xml'); if (oldXml) oldXml.remove();
   const oldBoot = doc.querySelector('#cap-embedded-bootstrap'); if (oldBoot) oldBoot.remove();
+  const oldAird = doc.querySelector('#cap-embedded-aird'); if (oldAird) oldAird.remove();
 
   if (capLoaded && cap_xmlDoc) {
     // Sérialise le document XML Capella tel qu'il a été chargé
@@ -59,6 +60,16 @@ function capBuildPageHtml(){
     xmlScript.dataset.name = capCurrentFileName || '';   // nom du fichier .capella, repris à la réouverture
     xmlScript.textContent = xmlText;
     doc.querySelector('body').appendChild(xmlScript);
+
+    // Diagrammes du projet (.aird chargé) : repris à la réouverture de la page (🔲 Diagrammes Capella, 🏠 Accueil)
+    if (typeof _capDiag !== 'undefined' && _capDiag.texteAird) {
+      const airdScript = document.createElement('script');
+      airdScript.id = 'cap-embedded-aird';
+      airdScript.type = 'application/xml';
+      airdScript.dataset.name = _capDiag.nomAird || '';
+      airdScript.textContent = _capDiag.texteAird;
+      doc.querySelector('body').appendChild(airdScript);
+    }
 
     const bootScript = document.createElement('script');
     bootScript.id = 'cap-embedded-bootstrap';
@@ -78,6 +89,8 @@ function capBuildPageHtml(){
       capAllElements = [];
       capTreeData = capBuildTree(doc.documentElement, new Set());
       if (!capAllElements.length) throw new Error('Aucun élément reconnu');
+      var airdEl = document.getElementById('cap-embedded-aird');
+      if (airdEl && typeof capDiagSetAird === 'function') capDiagSetAird(airdEl.textContent, airdEl.getAttribute('data-name') || '', null, 0);
       capBuildTypeRegistry();
       capRunBulk(()=>{ // un seul rendu du panneau et de l'arborescence à la fin
         capInjectToArbo();
@@ -108,8 +121,8 @@ function capBuildPageHtml(){
   const pre=[...document.childNodes].filter(n=>n.nodeType===8).map(n=>'<!--'+n.data+'-->\n').join('');
   return '<!DOCTYPE html>\n' + pre + doc.outerHTML;
 }
-/** Nom de fichier proposé pour la page sauvegardée. */
-function capPageFileName(){ return capLoaded ? _L('arcalyse-avec-modele.html') : 'arcalyse.html'; }
+/** Nom de fichier proposé pour la page sauvegardée (celui de la page de projet ouverte, s'il y en a une). */
+function capPageFileName(){ return capLoaded ? (typeof _capProjetPage!=='undefined'&&_capProjetPage.nom||_L('arcalyse-avec-modele.html')) : 'arcalyse.html'; }
 /** Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur). */
 function capSaveFullPage(){
   const blob = new Blob([capBuildPageHtml()], {type:'text/html'});
@@ -180,7 +193,8 @@ document.getElementById('capella-file-input').addEventListener('change',e=>{
 function capLoadFile(f, handle, confirme){
   const name=(f&&f.name)||'';
   const ext=(name.split('.').pop()||'').toLowerCase();
-  if (ext==='aird' && capDiagDispo()) { capDiagLoadAird(f); return; }   // 🔲 Diagrammes Capella du projet
+  if (ext==='aird' && capDiagDispo()) { capDiagLoadAird(f, handle); return; }   // 🔲 Diagrammes Capella du projet
+  if (ext==='html' || ext==='htm') { capProjetPageOuvrir(f, handle, confirme); return; }   // 📄 projet de travail (page HTML enregistrée)
   if (ext==='aird' || ext==='afm') {
     capWelcomeStatus(_L(`« ${name} » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet.`),'err');
     capShowWelcome(true); return;
@@ -191,6 +205,8 @@ function capLoadFile(f, handle, confirme){
   }
   // Un modèle est déjà affiché : avertir que le travail non enregistré sera perdu
   if (capLoaded && !confirme) { capReplaceConfirm(name).then(ok=>{ if(ok) capLoadFile(f, handle, true); else capShowWelcome(false); }); return; }
+  // Diagrammes (.aird) d'un autre modèle : retirés (ceux fournis avec ce modèle sont gardés)
+  const airdRetire=typeof capDiagAvantNouveauModele==='function'?capDiagAvantNouveauModele():'';
   capWelcomeStatus(_L(`Chargement de « ${name} »…`),'busy');
   capShowWelcome(true);
   const reader=new FileReader();
@@ -201,10 +217,13 @@ function capLoadFile(f, handle, confirme){
       try{
         const doc=new DOMParser().parseFromString(ev.target.result,'application/xml');
         if(doc.querySelector('parsererror')) throw new Error(_L('XML invalide'));
+        capCurrentView='home';   // 🏠 Accueil : vue affichée à l'ouverture d'un modèle
+        if(typeof _capProjetPage!=='undefined') _capProjetPage.nom='';
         capApplyXmlDoc(doc, name);
         capWatchSetSource(f, handle||null, ev.target.result);
         capWelcomeStatus('','');
         capShowWelcome(false);
+        if(airdRetire&&typeof capWatchFlash==='function') setTimeout(()=>capWatchFlash(_L(`🔲 Diagrammes de l'ancien modèle (« ${airdRetire} ») retirés : ouvrez le .aird de ce modèle dans 🔲 Diagrammes Capella`)),700);
       }catch(err){
         capWelcomeStatus(_L('Erreur de chargement : ')+err.message,'err');
         capShowWelcome(true);
@@ -313,6 +332,8 @@ function capUpdateWelcome(){ capShowWelcome(!capLoaded); }
   document.getElementById('cw-browse').addEventListener('click',ev=>{ ev.stopPropagation(); browse(); });
   // 📁 Dossier du projet : .capella et .aird chargés ensemble (54-diagrammes.js)
   document.getElementById('cw-folder').addEventListener('click',ev=>{ ev.stopPropagation(); capOpenProjectFolder(); });
+  // 📄 Projet de travail : page HTML enregistrée (même par une version antérieure), reprise dans cette version (57-projet-page.js)
+  document.getElementById('cw-projet').addEventListener('click',ev=>{ ev.stopPropagation(); capProjetPagePick(); });
   const fin=document.getElementById('cw-folder-input');
   fin.addEventListener('click',ev=>ev.stopPropagation());
   fin.addEventListener('change',()=>{
@@ -345,8 +366,10 @@ function capUpdateWelcome(){ capShowWelcome(!capLoaded); }
     ev.preventDefault(); depth=0; zone.classList.remove('cw-drag');
     // Plusieurs fichiers (ex. .capella + .aird) : le modèle d'abord, puis les diagrammes
     const tous=[...(ev.dataTransfer.files||[])];
-    const aird=tous.find(x=>/\.aird$/i.test(x.name)), mod=tous.find(x=>!/\.aird$/i.test(x.name));
-    if(aird && mod && tous.length>1){ capReplaceConfirm(mod.name).then(ok=>{ if(!ok){ capShowWelcome(false); return; } capLoadFile(mod, null, true); capDiagLoadAird(aird); }); return; }
+    const aird=tous.find(x=>/\.aird$/i.test(x.name)), mod=tous.find(x=>/\.(capella|melodymodeller|xml)$/i.test(x.name));
+    if(aird && mod && tous.length>1){ const go=()=>{ capLoadFile(mod, null, true); capDiagLoadAird(aird, null, true); };
+      if(!capLoaded){ go(); return; }
+      capReplaceConfirm(mod.name).then(ok=>{ if(!ok){ capShowWelcome(false); return; } go(); }); return; }
     const f=ev.dataTransfer.files&&ev.dataTransfer.files[0];
     // Edge/Chrome : récupère aussi l'accès au fichier (à demander pendant l'événement) pour le 🔄 suivi
     const it=ev.dataTransfer.items&&ev.dataTransfer.items[0];
@@ -813,7 +836,7 @@ function capInjectChainsToModal(){
  * Met à jour les boutons de vue et les compteurs de stats.
  */
 function capRenderCurrentView(){
-  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-links','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-fex','cap-view-cblk','cap-view-csys','cap-view-oav','cap-view-scen','cap-view-diag','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-index'].forEach(id=>{
+  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-links','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-fex','cap-view-cblk','cap-view-csys','cap-view-oav','cap-view-scen','cap-view-diag','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-index','cap-view-home'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
   const pg=document.getElementById('cap-pagination'); if(pg) pg.style.display='none';
@@ -828,7 +851,10 @@ function capRenderCurrentView(){
   capUpdateToolbarForView(capCurrentView);
   capUpdateStatChips();
 
-  if(capCurrentView==='tree'){
+  if(capCurrentView==='home'){
+    const hv=document.getElementById('cap-view-home'); hv.style.display='flex';
+    capRenderHome(hv);
+  } else if(capCurrentView==='tree'){
     document.getElementById('cap-view-tree').style.display='block';
     capRenderTree();
   } else if(capCurrentView==='cards'){

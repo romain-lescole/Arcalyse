@@ -298,7 +298,8 @@ function capRevRender(){
     `<span class="crv-dd-a"><button class="cap-lf-btn${u.dd?' active':''}" data-a="dd" title="${_L('Exporter ou importer les commentaires (.json)')}">${_L('💾 Revue ▾')}${nNon?` <span class="crv-n crv-warn" title="${_L('Commentaires modifiés depuis le dernier enregistrement ou export')}">${nNon}</span>`:''}</button>`+
     (u.dd?`<div class="crv-dd">`+
       _L(`<div class="crv-dd-h">Les commentaires sont enregistrés <b>dans la page</b> : 💾 Enregistrer (Ctrl+S) les conserve avec le modèle.</div>`)+
-      `<div class="ctx-i" data-a="export">${_L('⬇ Exporter les commentaires (.json)')}</div><div class="ctx-i" data-a="import">${_L('📂 Importer / fusionner une revue (.json)…')}</div>`+
+      `<div class="ctx-i" data-a="export">${_L('⬇ Exporter les commentaires (.json)')}</div><div class="ctx-i" data-a="import">${_L('📂 Importer / fusionner une revue (.json ou page de revue ciblée .html)…')}</div>`+
+      `<div class="ctx-i" data-a="cible" title="${_L('Page HTML autonome à envoyer aux relecteurs : ils répondent aux commentaires choisis et en ajoutent ; leurs réponses se réimportent ici')}">${_L('📤 Revue ciblée (page HTML à faire relire)…')}</div>`+
       _L(`<div class="crv-dd-h">L'export garde la revue hors de la page, pour la transmettre ou réunir celles de plusieurs relecteurs (l'import ajoute les nouveaux commentaires et garde la version la plus récente des autres).</div>`)+
       (nNon?`<div class="crv-dd-h" style="color:var(--c-warn,#e3b341)">${_L(`${nNon} commentaire(s) modifié(s) depuis le dernier enregistrement ou export.`)}</div>`:'')+`</div>`:'')+`</span>`+
     `<button class="cap-lf-btn" data-a="pop" title="${pop?_L('Ramener le panneau dans la page'):_L('Ouvrir le panneau dans une fenêtre séparée (par exemple sur un autre écran)')}">${pop?'⧈':'⧉'}</button>`+
@@ -381,7 +382,7 @@ function capRevCardHtml(c){
   if(open){
     if(c.title||String(c.text||'').includes('\n')||String(c.text||'').length>120) h+=`<div class="crv-text">${esc(c.text||'')}</div>`;
     if(c.verif) h+=`<div class="crv-meta">${_L(`✔ Vérifié le ${capRevDateTime(c.verif.date)}${c.verif.by?_L(' par ')+esc(c.verif.by):''}`)}</div>`;
-    (c.replies||[]).forEach(r=>{ h+=`<div class="crv-reply"><div class="crv-meta">↩ ${esc(r.author||'?')} · ${capRevDateTime(r.date)}</div>${esc(r.text)}</div>`; });
+    (c.replies||[]).forEach(r=>{ h+=`<div class="crv-reply"><div class="crv-meta">↩ ${esc(r.author||'?')} · ${capRevDateTime(r.date)}${r.avis?` · <b>${capRevAvis(r)}</b>`:''}</div>${esc(r.text)}</div>`; });
     h+=`<div class="crv-reply-f"><textarea id="crv-rep-${esc(c.id)}" rows="2" placeholder="${_L('Répondre…')}"></textarea><button class="cap-lf-btn" data-a="reply">${_L('↩ Répondre')}</button></div>`+
       `<div class="crv-acts"><select data-a="status" title="${_L('Changer le statut')}">${capRevStatuts().map(s=>`<option value="${s.k}"${s.k===c.status?' selected':''}>${s.i} ${s.l}</option>`).join('')}</select>`+
       (!capRevClosed(c)?`<button class="cap-lf-btn" data-a="validate" title="${_L('La correction a été vérifiée : le commentaire est clos')}">${_L('✔ Valider')}</button>`:'')+
@@ -410,7 +411,8 @@ function capRevPanelClick(e){
   if(act==='close'){ capRevToggle(false); return; }
   if(act==='dd'){ _capRevUi.dd=!_capRevUi.dd; capRevRender(); return; }
   if(act==='pop'){ if(capRevPop()) capRevPop().close(); else capRevPopOut(); return; }
-  if(act==='export'||act==='import') _capRevUi.dd=false;
+  if(act==='export'||act==='import'||act==='cible') _capRevUi.dd=false;
+  if(act==='cible'){ capRevRender(); capRevCibleeDialog(); return; }
   if(act==='new'){ capRevNew(u.elId&&capGetElementById_(u.elId)?[{id:u.elId}]:[]); return; }
   if(act==='person-add'||act==='person-del'||act==='export'||act==='import'||act==='clear'||act==='me-save'){ capRevCfgAction(act, a); return; }
   if(act==='report-html'){ capRevReportHtml(); return; }
@@ -1005,7 +1007,8 @@ function capRevReportTab(){
     capRevSynthese(l)+
     `<div class="crv-meta" style="margin:6px 0 10px">${_L(`${l.length} commentaire(s) · ${late} en retard · ${chk} sur des éléments modifiés`)}</div>`+
     `<div class="crv-filters"><button class="phl-export-btn" data-a="report-html" style="margin-left:0" title="${_L('Rapport HTML autonome (imprimable) : synthèse, commentaires groupés, cibles, état par rapport au modèle chargé')}">${_L('📄 Rapport HTML')}</button>`+
-    `<button class="phl-export-btn" data-a="report-csv" style="margin-left:0" title="${_L('Une ligne par commentaire (tableur)')}">${_L('⬇ CSV')}</button></div>`;
+    `<button class="phl-export-btn" data-a="report-csv" style="margin-left:0" title="${_L('Une ligne par commentaire (tableur)')}">${_L('⬇ CSV')}</button>`+
+    `<button class="phl-export-btn" data-a="cible" style="margin-left:0" title="${_L('Page HTML autonome à envoyer aux relecteurs : ils répondent aux commentaires choisis et en ajoutent ; leurs réponses se réimportent (💾 Revue ▾ › 📂 Importer / fusionner)')}">${_L('📤 Revue ciblée…')}</button></div>`;
 }
 /**
  * Groupes du rapport selon le regroupement choisi.
@@ -1029,7 +1032,7 @@ function capRevReportHtml(){
   const ligne=c=>{ const st=capRevSt(c), cr=capRevCr(c);
     return `<tr class="${capRevClosed(c)?'clos':''}"><td><b>#${c.num}</b></td><td>${c.crit?`<span class="crit" style="background:${cr.c};color:${capInk(cr.c)}">${cr.l}</span>`:''}</td><td>${st.i} ${st.l}</td>`+
       `<td>${c.title?`<b>${esc(c.title)}</b><br>`:''}<span class="txt">${esc(c.text||'')}</span>`+
-      (_capRevUi.reponses&&(c.replies||[]).length?c.replies.map(r=>`<div class="rep">↩ <b>${esc(r.author||'?')}</b> (${capRevDateTime(r.date)}) : ${esc(r.text)}</div>`).join(''):'')+
+      (_capRevUi.reponses&&(c.replies||[]).length?c.replies.map(r=>`<div class="rep">↩ <b>${esc(r.author||'?')}</b> (${capRevDateTime(r.date)})${r.avis?' '+capRevAvis(r):''} : ${esc(r.text)}</div>`).join(''):'')+
       (c.verif?`<div class="rep">${_L(`✔ Vérifié le ${capRevDateTime(c.verif.date)}${c.verif.by?_L(' par ')+esc(c.verif.by):''}`)}</div>`:'')+`</td>`+
       `<td>${(c.targets||[]).map(t=>`${esc(t.name||t.id)} <span class="dim">${esc(t.type)}${t.field?' · '+esc(capRevFieldLabel(t.field)):''}</span>`).join('<br>')}${c.diag?`<br>🔲 ${esc(c.diag.nom||'')}`:''}</td>`+
       `<td>${esc(c.author||'')}<br><span class="dim">${capRevDate(c.created)}</span></td><td class="${capRevLate(c)?'late':''}">${capRevDate(c.due)}</td><td>${esc((c.assignees||[]).join(', '))}</td><td>${etat(c)}</td></tr>`; };
@@ -1093,12 +1096,17 @@ function capRevExport(){
   capDownloadBlob(new Blob([JSON.stringify(out,null,1)],{type:'application/json'}), base+_L('-revue.json'));
   _capRevUnsaved.clear(); capRevRender();
 }
-/** Importe un fichier .json de revue et le fusionne avec les commentaires de la page. */
+/** Importe un fichier .json de revue, ou une page de 📤 revue ciblée relue (.html), et la fusionne avec les commentaires de la page. */
 function capRevImport(){
-  const D=capRevDoc(), inp=D.createElement('input'); inp.type='file'; if(!capIsMobile()) inp.accept='.json';
+  const D=capRevDoc(), inp=D.createElement('input'); inp.type='file'; if(!capIsMobile()) inp.accept='.json,.html,.htm';
   inp.onchange=()=>{ const f=inp.files[0]; if(!f) return;
     f.text().then(t=>{
-      let d; try{ d=JSON.parse(t); }catch(e){ D.defaultView.alert(_L('Fichier illisible (JSON attendu).')); return; }
+      let d;
+      if(/^\s*</.test(t)){   // page de revue ciblée relue
+        const rc=capRevCibleeLire(t);
+        if(!rc){ D.defaultView.alert(_L('Cette page n\'est pas une revue ciblée Arcalyse.')); return; }
+        d=capRevCibleeVersRevue(rc);
+      } else { try{ d=JSON.parse(t); }catch(e){ D.defaultView.alert(_L('Fichier illisible (JSON attendu).')); return; } }
       if(!d||d.type!=='arcalyse-revue'||!Array.isArray(d.comments)){ D.defaultView.alert(_L('Ce fichier n\'est pas une revue Arcalyse.')); return; }
       const m=capRevMatch(d.comments, d.project||'');
       const fusion=()=>{
@@ -1167,7 +1175,7 @@ function capRevMerge(d){
       if(!c.num||_capRev.comments.some(x=>x.num===c.num)) c.num=_capRev.seq+1;
       _capRev.seq=Math.max(_capRev.seq,c.num); _capRev.comments.push(c); _capRevUnsaved.add(c.id); r.added++; return;
     }
-    const rep=[...(cur.replies||[])]; (c.replies||[]).forEach(x=>{ if(!rep.some(y=>y.date===x.date&&y.text===x.text)) rep.push(x); });
+    const rep=[...(cur.replies||[])]; (c.replies||[]).forEach(x=>{ if(!rep.some(y=>y.date===x.date&&y.text===x.text&&(y.author||'')===(x.author||''))) rep.push(x); });
     rep.sort((a,b)=>String(a.date).localeCompare(String(b.date)));
     if(String(c.updated||'')>String(cur.updated||'')){ const num=cur.num; Object.assign(cur,c,{num, replies:rep}); r.updated++; _capRevUnsaved.add(cur.id); }
     else if(rep.length>(cur.replies||[]).length){ cur.replies=rep; r.updated++; _capRevUnsaved.add(cur.id); }

@@ -7,6 +7,7 @@
 /** Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
  * g = groupe (menu déroulant ; '' = vue sans menu), t = info-bulle. */
 var CAP_NAV_ITEMS=[
+  {k:'home',      l:_L('🏠 Accueil'),           g:'',     t:_L('Accueil du projet : informations, check-lists, plans de revue, tableaux blancs (texte, diagrammes et éléments cliquables)')},
   {k:'tree',      l:_L('🌳 Arborescence'),      g:'explore'},
   {k:'cards',     l:_L('▦ Cartes'),             g:'explore'},
   {k:'table',     l:_L('▤ Tableau'),            g:'',     t:_L('Tableau de tous les éléments du modèle : onglets de vues, colonnes d\'attributs, de relations et par chemin, tri, filtres, export CSV')},
@@ -42,7 +43,7 @@ var CAP_NAV_GROUPS=[
 ];
 /** Réglage par défaut : tous les menus affichés, 🔲 Diagrammes Capella (en tête, à côté de 🗺 Relation Map), ▤ Tableau, ⚡ Chaînes,
  * et 📐 Tableau de bord en boutons directs ; 🎬 Scénarios reste dans le menu 📡 Flux & interfaces (tbl, diag : marques d'un réglage qui connaît ces boutons, voir capNavMigrate). */
-var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['table','chains','diag','dashboard'], tbl:1, diag:1};
+var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['home','table','chains','diag','dashboard'], tbl:1, diag:1, home:1};
 var _capNav=(()=>{ try{ const el=document.getElementById('cap-toolbar'); const o=el&&JSON.parse(el.textContent);
   if(o&&o.groups&&Array.isArray(o.pins)) return capNavMigrate(o); }catch(e){} return JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); })();
 var _capNavLast={explore:'cards', flux:'chains', ana:'ana:trace'};   // dernière sous-vue ouverte par menu
@@ -55,6 +56,7 @@ var _capNavLast={explore:'cards', flux:'chains', ana:'ana:trace'};   // dernièr
 function capNavMigrate(o){
   if(!o.tbl){ o.tbl=1; if(!o.pins.includes('table')) o.pins.unshift('table'); }
   if(!o.diag){ o.diag=1; if(!o.pins.includes('diag')){ const i=o.pins.indexOf('chains'); o.pins.splice(i<0?o.pins.length:i+1, 0, 'diag'); } }
+  if(!o.home){ o.home=1; if(!o.pins.includes('home')) o.pins.unshift('home'); }   // 🏠 Accueil (version 2.2)
   return o;
 }
 
@@ -121,6 +123,9 @@ function capNavRender(){
   });
   // 🔲 Diagrammes Capella : en tête, juste après le bouton 🗺 Relation Map
   if(_capNav.pins.includes('diag')) h=pin('diag')+h;
+  // 🏠 Accueil : tout à gauche, avant 🗺 Relation Map
+  h=h.replace(pin('home'),'');
+  const home=document.getElementById('cap-tb-home'); if(home) home.innerHTML=_capNav.pins.includes('home')?pin('home'):'';
   // Vues épinglées sans menu placées après le dernier groupe (📐 Tableau de bord)
   h=h.replace(pin('dashboard'),'');
   if(_capNav.pins.includes('dashboard')) h+=pin('dashboard');
@@ -136,7 +141,7 @@ function capNavSync(force){
   if(typeof _capNav==='undefined') return;   // appelé avant le chargement de ce module
   const cur=capNavCurKey(force), it=CAP_NAV_ITEMS.find(i=>i.k===cur);
   if(it&&it.g) _capNavLast[it.g]=cur;
-  document.querySelectorAll('#cap-tb-views [data-open]').forEach(b=>b.classList.toggle('active',b.dataset.open===cur));
+  document.querySelectorAll('#cap-tb-views [data-open],#cap-tb-home [data-open]').forEach(b=>b.classList.toggle('active',b.dataset.open===cur));
   document.querySelectorAll('#cap-tb-views .cap-nav-grp').forEach(b=>{
     const on=!!it&&it.g===b.dataset.g&&!_capNav.pins.includes(cur);
     b.classList.toggle('active',on);
@@ -179,7 +184,7 @@ function capNavMenu(g, anchor){
       const th=e.target.closest('[data-thm]');
       if(th){ capNavClose(); const sel=document.getElementById('theme-sel'); sel.value=th.dataset.thm; sel.dispatchEvent(new Event('change')); return; }
       const a=e.target.closest('[data-act]');
-      if(a){ capNavClose(); ({open:()=>capPickCapellaFile(), folder:()=>capOpenProjectFolder(), save:()=>capSavePageDirect(false), saveas:()=>capSavePageDirect(true),
+      if(a){ capNavClose(); ({open:()=>capPickCapellaFile(), folder:()=>capOpenProjectFolder(), projet:()=>capProjetPagePick(), save:()=>capSavePageDirect(false), saveas:()=>capSavePageDirect(true),
         page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor(), update:()=>capCfgLoadUpdate(), cfgsave:()=>capCfgDialog('save'), cfgload:()=>capCfgLoadFile(),
         help:()=>openHelpModal(), tour:()=>capTourStart(), tourview:()=>capTourStartView(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
       if(e.target.closest('[data-reset]')){ _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); capNavSave(); capNavRender(); capNavMenuFill(); }
@@ -220,13 +225,15 @@ function capNavMenuFill(){
     const sc=s=>` <span class="cap-nav-g">${s}</span>`;
     res.innerHTML=_L(`<div class="ctx-i" data-act="open" title="Remplace le modèle affiché par un autre fichier .capella">🔷 Ouvrir un modèle Capella…</div>
       <div class="ctx-i" data-act="folder" title="Ouvre le dossier du projet : le .capella et ses diagrammes (.aird) sont chargés ensemble">📁 Ouvrir le dossier du projet…</div>
+      <div class="ctx-i" data-act="projet" title="Reprend un projet de travail enregistré en page HTML (💾), même par une version précédente d'Arcalyse (à partir de la 2.1) : modèle, diagrammes, revue, accueil, vues et réglages">📄 Ouvrir un projet de travail (page HTML)…</div>
+      <div class="cap-nav-hint">Nouvelle version d'Arcalyse ? Ouvrez-y la page de votre projet enregistrée avec l'ancienne : tout le travail est repris.</div>
       <div class="ctx-i" data-act="update" title="Compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour l'affichage après validation">🔄 Charger une mise à jour du modèle…</div>
-      <div class="cap-nav-hint">Mise à jour : delta affiché avant validation ; alerte si les deux fichiers semblent être des projets différents.</div>
+      <div class="cap-nav-hint">Mise à jour : delta affiché avant validation ; alerte si les deux fichiers semblent être des projets différents. Diagrammes chargés : le .aird est relu s'il a été ouvert avec un accès direct (dossier du projet), sinon le .aird à jour est demandé.</div>
       <div class="cw-m-sep"></div>
       <div class="ctx-i" data-act="save" title="Page HTML autonome : modèle + interface et vues">💾 Enregistrer${sc(_L('Ctrl+S'))}</div>
       <div class="ctx-i" data-act="saveas">💾 Enregistrer sous…${sc(_L('Ctrl+Maj+S'))}</div>
       <div class="ctx-i" data-act="page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome">🌐 Télécharger la page HTML</div>
-      <div class="cap-nav-hint">La page HTML enregistrée contient : <b>le modèle chargé</b>, la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue.<br>Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues.</div>
+      <div class="cap-nav-hint">La page HTML enregistrée contient : <b>le modèle chargé</b> et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue.<br>Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues.</div>
       <div class="cw-m-sep"></div>
       <div class="ctx-i" data-act="cfgsave" title="Fichier .json sans le modèle : barre, tableaux de bord, ▤ Tableau, thème, règles de nommage (au choix)">⚙ Enregistrer l'interface et les vues…</div>
       <div class="ctx-i" data-act="cfgload" title="Applique un fichier .json d'interface (au choix des parties)">⚙ Charger une interface et des vues…</div>
@@ -275,6 +282,7 @@ function capNavMenuFill(){
 // Câblage : clics de la barre (délégation), fermeture du menu, raccourci Ctrl+K
 (function(){
   const box=document.getElementById('cap-tb-views'); if(!box) return;
+  document.getElementById('cap-tb-home')?.addEventListener('click',e=>{ const o=e.target.closest('[data-open]'); if(o) capNavOpen(o.dataset.open); });
   box.addEventListener('click',e=>{
     const dd=e.target.closest('[data-dd]'); if(dd){ e.stopPropagation(); capNavMenu(dd.dataset.dd, dd.closest('.cap-nav-grp')); return; }
     const grp=e.target.closest('.cap-nav-grp'); if(grp){ capNavGroupOpen(grp.dataset.g); return; }

@@ -11,6 +11,7 @@
 
 /** État de la vue : visionneuse, .aird en attente ou chargé, modèle transmis, liste classée, sélection, largeur, carte, options d'export. */
 const _capDiag = { vis: null, texteAird: '', nomAird: '', airdCharge: false, modele: null, nbReps: 0,
+  attente: false, poignee: null, dateAird: 0,   // .aird fourni pour le modèle à venir ; accès direct au fichier (relecture après 🔄 mise à jour) ; date du fichier lu
   classement: 'couche', bascule: new Set(), sel: new Set(), choix: false, filtre: '', actif: '', icones: null, meta: null,
   largeur: 330, carte: 'panneau', carteReduite: false,
   exportOpts: { fmt: 'pdf', portee: 'sel', cadre: true, cartouche: true, desc: true, annexe: true, sommaire: true, scale: 2 } };
@@ -59,15 +60,20 @@ function capIcoType(type, taille) {
 }
 
 /**
- * Charge un fichier .aird (diagrammes du projet). Sans modèle chargé, il est gardé en attente du .capella.
+ * Charge un fichier .aird (diagrammes du projet). Sans modèle chargé (ou s'il accompagne un .capella en cours
+ * de chargement), il est gardé en attente du .capella.
  * @param {File} f - fichier .aird
+ * @param {?FileSystemFileHandle} [h] - Accès direct au fichier (Edge/Chrome) : relu après une 🔄 mise à jour du modèle
+ * @param {boolean} [attente] - true : le .aird va avec le modèle en cours de chargement (pas d'ouverture de la vue)
  */
-function capDiagLoadAird(f) {
+function capDiagLoadAird(f, h, attente) {
   const r = new FileReader();
   r.onerror = () => capWelcomeStatus(_L(`Impossible de lire « ${f.name} ».`), 'err');
   r.onload = ev => {
-    _capDiag.texteAird = ev.target.result; _capDiag.nomAird = f.name; _capDiag.airdCharge = false;
+    capDiagSetAird(ev.target.result, f.name, h || null, f.lastModified);
+    if (attente) return;
     if (!capLoaded) {
+      _capDiag.attente = true;
       capWelcomeStatus(_L(`Diagrammes « ${f.name} » gardés : déposez maintenant le fichier .capella du projet.`), '');
       capShowWelcome(true);
       return;
@@ -76,6 +82,101 @@ function capDiagLoadAird(f) {
     capNavOpen('diag');
   };
   r.readAsText(f, 'UTF-8');
+}
+
+/**
+ * Mémorise le texte d'un .aird (les diagrammes seront relus par la visionneuse à la prochaine synchronisation).
+ * @param {string} texte - Contenu du .aird ('' : aucun)
+ * @param {string} nom - Nom du fichier
+ * @param {?FileSystemFileHandle} poignee - Accès direct au fichier, ou null
+ * @param {number} [date] - Date de modification du fichier lu
+ */
+function capDiagSetAird(texte, nom, poignee, date) {
+  if (!texte && _capDiag.airdCharge && _capDiag.vis) { try { _capDiag.vis.fermer(); } catch (e) {} }   // diagrammes retirés : la visionneuse se vide
+  Object.assign(_capDiag, { texteAird: texte || '', nomAird: texte ? nom || '' : '', poignee: texte ? poignee : null, dateAird: date || 0, airdCharge: false, meta: null });
+}
+
+/**
+ * Un autre modèle remplace le modèle affiché : les diagrammes de l'ancien modèle (.aird) ne lui correspondent pas,
+ * ils sont retirés — sauf s'ils ont été fournis avec le nouveau modèle (dossier du projet, dépôt .capella + .aird, page de projet).
+ * @returns {string} nom du .aird retiré ('' si aucun)
+ */
+function capDiagAvantNouveauModele() {
+  const nom = _capDiag.texteAird && !_capDiag.attente ? _capDiag.nomAird : '';
+  if (nom) capDiagSetAird('', '', null, 0);
+  _capDiag.attente = false;
+  return nom;
+}
+
+/**
+ * Après une 🔄 mise à jour du modèle (même projet, nouvelle version du .capella) : les diagrammes chargés viennent
+ * de l'ancien .aird. Avec un accès direct au .aird (dossier du projet, 📂 Ouvrir le .aird sous Edge/Chrome), il est
+ * relu sur le disque : nouvelle version reprise automatiquement. Sinon, ou si le .aird n'a pas changé alors que des
+ * éléments qu'il montre ont disparu du modèle, une fenêtre propose de choisir le .aird à jour, de garder l'ancien ou de le retirer.
+ */
+async function capDiagApresMaj() {
+  if (!_capDiag.texteAird) return;   // .capella seul : rien à faire
+  let relu = false, inchange = false;
+  if (_capDiag.poignee) {
+    try {
+      const f = await _capDiag.poignee.getFile();
+      if (f.lastModified !== _capDiag.dateAird || f.size !== _capDiag.texteAird.length) {
+        const t = await f.text();
+        if (t !== _capDiag.texteAird) { capDiagSetAird(t, f.name, _capDiag.poignee, f.lastModified); relu = true; }
+        else inchange = true;
+      } else inchange = true;
+    } catch (e) { console.warn('Relecture du .aird impossible :', e); }
+  }
+  const manquants = capDiagRefsManquantes();
+  if (relu) {
+    if (capCurrentView === 'diag') capRenderDiagrams();
+    if (typeof capWatchFlash === 'function') setTimeout(() => capWatchFlash(_L(`🔲 Diagrammes relus : « ${_capDiag.nomAird} » a aussi été mis à jour sur le disque`)), 900);
+    return;
+  }
+  if (inchange && !manquants) return;   // .aird inchangé et toujours cohérent avec le modèle : rien à signaler
+  capDiagMajDialogue(inchange, manquants);
+}
+
+/**
+ * Nombre d'éléments du modèle montrés par le .aird chargé (références « fichier#id ») qui n'existent plus dans le modèle affiché.
+ * @returns {number} références orphelines (0 sans .aird)
+ */
+function capDiagRefsManquantes() {
+  if (!_capDiag.texteAird || !capLoaded) return 0;
+  const ids = new Set(), re = /href="[^"#]*\.(?:capella|melodymodeller)#([^"]+)"/g;
+  let x; while ((x = re.exec(_capDiag.texteAird))) ids.add(x[1]);
+  let n = 0; ids.forEach(id => { if (!capGetElementById_(id)) n++; });
+  return n;
+}
+
+/**
+ * Fenêtre affichée après une 🔄 mise à jour du modèle quand les diagrammes (.aird) peuvent ne plus correspondre :
+ * 📂 choisir le .aird à jour, garder les diagrammes actuels, ou les retirer.
+ * @param {boolean} inchange - true : le .aird a été relu et n'a pas changé sur le disque
+ * @param {number} manquants - Éléments montrés par les diagrammes et absents du nouveau modèle
+ */
+function capDiagMajDialogue(inchange, manquants) {
+  let ov = document.getElementById('cdg-maj-ov');
+  if (!ov) { ov = document.createElement('div'); ov.id = 'cdg-maj-ov'; ov.className = 'cdg-maj-ov'; document.body.appendChild(ov); }
+  ov.innerHTML = `<div class="cw-d-box" style="max-width:560px">
+    <div class="cw-d-hdr"><b>${_L('🔲 Diagrammes : le .aird est-il à jour ?')}</b><button class="cap-lf-btn" data-c="garder">✕</button></div>
+    <div class="cw-d-body">
+      <p style="font-size:12.5px;margin:6px 0">${_L(`Le modèle vient d'être mis à jour, mais les diagrammes affichés viennent de « <b>${capEsc(_capDiag.nomAird)}</b> », lu avant la mise à jour.`)}</p>` +
+      (inchange ? `<p style="font-size:12.5px;margin:6px 0">${_L('Ce fichier n\'a pas changé sur le disque : le projet n\'a peut-être pas encore été enregistré dans Capella.')}</p>` : '') +
+      (manquants ? `<p style="font-size:12.5px;margin:6px 0;color:var(--c-warn,#e3b341)">${_L(`⚠ ${manquants} élément(s) montré(s) par ces diagrammes n'existent plus dans le modèle mis à jour.`)}</p>` : '') +
+      `<p class="ana-dim" style="font-size:11.5px;margin:6px 0">${_L('Capella enregistre le .capella et le .aird ensemble : pour des diagrammes fidèles, ouvrez le .aird de la même version.')}</p>
+    </div>
+    <div class="cw-d-ftr"><button class="cap-lf-btn" data-c="retirer" title="${_L('Retirer les diagrammes de la page (🔲 Diagrammes Capella vide)')}">${_L('🗑 Retirer les diagrammes')}</button><span style="flex:1"></span>
+      <button class="cap-lf-btn" data-c="garder">${_L('Garder ces diagrammes')}</button>
+      <button class="phl-export-btn" data-c="ouvrir" style="margin-left:0">${_L('📂 Choisir le .aird à jour…')}</button></div></div>`;
+  ov.style.display = 'flex';
+  ov.onclick = e => {
+    const b = e.target.closest('[data-c]'); if (!b && e.target !== ov) return;
+    ov.style.display = 'none';
+    const c = b ? b.dataset.c : 'garder';
+    if (c === 'ouvrir') capDiagPickAird();
+    else if (c === 'retirer') { capDiagSetAird('', '', null, 0); capDiagSync(); if (capCurrentView === 'diag') capRenderDiagrams(); }
+  };
 }
 
 /**
@@ -89,7 +190,7 @@ async function capDiagPickAird() {
   if (typeof _capWatch !== 'undefined' && _capWatch.handle) o.startIn = _capWatch.handle;
   try {
     const [h] = await window.showOpenFilePicker(o);
-    capDiagLoadAird(await h.getFile());
+    capDiagLoadAird(await h.getFile(), h);
   } catch (e) {
     if (!e || e.name !== 'AbortError') inp.click();
   }
@@ -146,7 +247,8 @@ function capProjectFromFiles(fichiers) {
     const a = airds.find(x => x.nom.toLowerCase() === base + '.aird') || airds.find(x => x.chemin.startsWith(dossier) && !x.chemin.slice(dossier.length).includes('/')) || (airds.length === 1 ? airds[0] : null);
     try {
       const f = await m.lire(), fa = a ? await a.lire() : null;
-      _capDiag.texteAird = fa ? await fa.text() : ''; _capDiag.nomAird = fa ? fa.name : ''; _capDiag.airdCharge = false;
+      capDiagSetAird(fa ? await fa.text() : '', fa ? fa.name : '', a && a.h || null, fa ? fa.lastModified : 0);
+      _capDiag.attente = true;   // diagrammes du modèle qui va être chargé (ne pas les retirer comme ceux d'un ancien modèle)
       capLoadFile(f, m.h || null, true);
     } catch (e) { capWelcomeStatus(_L('Lecture impossible : ') + (e && e.message || e), 'err'); }
   };

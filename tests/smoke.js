@@ -33,7 +33,7 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
   await p.setInputFiles('#capella-file-input', model);
   await p.waitForFunction(() => typeof capLoaded !== 'undefined' && capLoaded, null, { timeout: 180000 });
   const step = async (label, fn) => { const n = errs.length; try { await fn(); } catch (e) { errs.push(label + ' : ' + e.message); } await p.waitForTimeout(250); console.log((errs.length > n ? '✖ ' : '✔ ') + label); };
-  for (const v of ['tree', 'cards', 'table', 'links', 'chains', 'physlink', 'compex', 'ports', 'fex', 'oav', 'csys', 'cblk', 'scen', 'diag', 'functions', 'analyses', 'dashboard', 'index'])
+  for (const v of ['home', 'tree', 'cards', 'table', 'links', 'chains', 'physlink', 'compex', 'ports', 'fex', 'oav', 'csys', 'cblk', 'scen', 'diag', 'functions', 'analyses', 'dashboard', 'index'])
     await step('vue ' + v, () => p.evaluate(k => capNavOpen(k), v));
   // 🗺 Diagrammes : .aird du modèle (s'il accompagne le modèle dans tests/models, compressé) ; détail → diagramme → clic → détail
   const airdGz = model.replace(/\.capella$/i, '.aird.gz');

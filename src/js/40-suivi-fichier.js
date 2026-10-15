@@ -302,6 +302,7 @@ function capWatchApply(){
   }
   capWatchNote(false); capWatchModalClose(); capWatchUpdateUi();
   capWatchFlash(_L(`✔ Modèle mis à jour (${p.counts.total} différence(s))`));
+  if(typeof capDiagApresMaj==='function') capDiagApresMaj();   // 🔲 diagrammes (.aird) : relus ou à choisir pour cette version
 }
 
 /** Ouvre ⚖ Comparaison de versions (🔬 Analyses) sur deux versions connues du suivi.
