@@ -1457,7 +1457,7 @@ function capRenderTreeBody(){
     items.sort((a,b)=>(a.n.name||'').localeCompare(b.n.name||'','fr'));
     items.slice(0,CAP_TREE_LIST_MAX).forEach(({n,path})=>{
       const lv=n.layer?CAP_LAYERS[n.layer]:null, color=lv?lv.color:'#8b949e', bg=lv?lv.bg:'rgba(139,148,158,.1)';
-      const row=document.createElement('div'); row.className='cap-tree-row cap-tree-lrow';
+      const row=document.createElement('div'); row.className='cap-tree-row cap-tree-lrow'; row.dataset.id=n.id;   // glissable vers 🏠 Accueil, clic droit 💬
       const pth=path.length>3?'… › '+path.slice(-3).join(' › '):path.join(' › ');
       const svg=capIco(n.id,16);
       row.innerHTML=(svg?`<span class="cap-tree-icon cap-tree-svg">${svg}</span>`:`<span class="cap-tree-icon" style="background:${bg};color:${color}">${capEsc(CAP_TYPE_ICON[n.typeName]||n.typeName.slice(0,2).toLowerCase())}</span>`)
@@ -1502,6 +1502,7 @@ function capRenderTreeNode(node,container,depth,filter){
   const nodeEl=document.createElement('div'); nodeEl.className='';
   const row=document.createElement('div'); row.className='cap-tree-row'+(filter?(matchSelf?' cap-hl':' cap-dim'):'');   // recherche : conteneurs grisés s'ils ne correspondent pas
   row.style.paddingLeft=(depth*16+4)+'px';
+  if(node.id&&node.id!=='cap-root') row.dataset.id=node.id;   // glissable vers 🏠 Accueil (tableau blanc, check-list), clic droit 💬
   const tog=document.createElement('span'); tog.className='cap-tree-tog'+(hasCh?'':' leaf'); tog.textContent=hasCh?'▶':'';
   const icon=document.createElement('span'); icon.className='cap-tree-icon';
   const svg=node.id&&node.id!=='cap-root'?capIco(node.id,16):'';   // icône façon Capella (visionneuse d'Arcature), sinon sigle

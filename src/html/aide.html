@@ -34,6 +34,7 @@
         <ol>
           <li>Glissez-déposez un fichier <code>.capella</code> <b>n'importe où dans la fenêtre</b>, ou cliquez <b>📂 Fichier .capella…</b> sur l'écran d'accueil (ou <b>📁 Fichier › 🔷 Ouvrir un modèle Capella</b>). <b>📁 Dossier du projet…</b> (ou <b>📁 Fichier › 📁 Ouvrir le dossier du projet…</b>, ou un dossier déposé, sous Edge / Chrome) charge ensemble le .capella et ses diagrammes .aird ; s'il contient plusieurs modèles, vous choisissez lequel.</li>
           <li>Le modèle est analysé puis la vue <b>🏠 Accueil</b> du projet s'ouvre automatiquement (informations, check-lists, plans de revue, tableaux blancs).</li>
+          <li><b>⚡ Chaînes</b> n'est plus épinglé par défaut : il est dans le menu <b>📡 Flux & interfaces</b> (📌 dans ☰ pour l'épingler de nouveau).</li>
           <li>Pour changer de modèle, redéposez simplement un autre fichier (il remplace le modèle affiché).</li>
           <li>Pour une <b>nouvelle version du même modèle</b> : <b>📁 Fichier › 🔄 Charger une mise à jour du modèle</b> montre d'abord le delta, puis met à jour après validation (voir 🔄 Suivi).</li>
           <li><b>Nouvelle version d'Arcalyse</b> : <b>📄 Projet de travail (.html)…</b> sur l'écran d'accueil (ou <b>📁 Fichier › 📄 Ouvrir un projet de travail</b>, ou la page déposée sur la fenêtre) reprend une page enregistrée avec une version précédente (à partir de la 2.1) : modèle, diagrammes, revue, accueil, tableaux de bord, ▤ Tableau, vues, barre, thème, règles de nommage, au choix. La page n'est pas exécutée : seules ses données sont lues. Sous Edge / Chrome, Ctrl+S peut ensuite réécrire le même fichier, désormais dans la nouvelle version.</li>
@@ -199,6 +200,7 @@
       <!-- ── CHAÎNES ── -->
       <div id="ht-chains" class="ht-panel" style="display:none">
         <h2>⚡ Chaînes</h2>
+        <p class="hp-note">Menu <b>📡 Flux & interfaces</b> (📌 dans ☰ pour un bouton direct). <b>ℹ Infos</b> (barre de la vue Relation Map, ou carte dépliée) affiche dans le panneau de détail les informations de la chaîne : type, couche, nombre de fonctions (composants) et d'échanges, entrées, sorties, porteurs, capacités qui l'impliquent, description ; 🔎 ouvre le détail complet de l'élément.</p>
         <p class="hp-lead"><code>FunctionalChain</code>, <code>OperationalProcess</code> et <code>PhysicalPath</code> sont reconstruits sous forme de <b>graphe</b> : plusieurs entrées, plusieurs sorties, ramifications et boucles sont conservées.</p>
         <h3>Filtres et sous-vues</h3>
         <p>Filtre par type et par couche (OA, SA, LA, PA, EPBS), et par contenu : <b>Toutes / Non vides / Vides</b> (chaîne vide = aucune fonction ni échange impliqué). <b>▦ Diagrammes</b> : une carte par chaîne. <b>🗺 Vue Relation Map</b> : graphe interactif (dispositions LR / TB / RL / radiale / zigzag, ⬡ Compact, ✂ Noms) et injection dans la Relation Map principale.</p>
@@ -421,18 +423,29 @@
         <h2>🏠 Accueil du projet</h2>
         <p class="hp-lead">Vue affichée à l'ouverture d'un modèle ou d'un projet (bouton <b>🏠 Accueil</b>, tout à gauche de la barre). Tout ce qui y est saisi est enregistré <b>dans la page</b> (💾).</p>
         <h3>🏠 Projet</h3>
-        <p>Projet Capella, fichier, <b>version de Capella</b> (lue dans le fichier), diagrammes chargés, nombre d'éléments ; <b>📝 fiche projet</b> modifiable (objet, phase / jalon, version, responsable, équipe, notes) ; contenu du modèle par couche (types principaux), diagrammes par couche ; état de la <b>💬 revue</b> (non clos, par criticité, à vérifier, en retard) ; avancement des check-lists et plans de revue ; mises à jour du modèle de la session ; accès rapide aux vues.</p>
+        <p>Des <b>cartes</b> : projet Capella, fichier, <b>version de Capella</b> (lue dans le fichier), diagrammes chargés, nombre d'éléments ; <b>📝 fiche projet</b> modifiable (objet, phase / jalon, version, responsable, équipe, notes) ; <b>raccourcis</b> des check-lists et plans de revue (avancement) et des tableaux blancs (⧉ : fenêtre séparée) ; contenu du modèle par couche, diagrammes par couche ; état de la <b>💬 revue</b> ; mises à jour du modèle de la session ; accès rapide aux vues.</p>
+        <p><b>⚙ Disposer les cartes</b> (comme un tableau de bord, sur une seule page) : glissez une carte par <b>⠿</b> sur une autre pour la placer avant elle, <b>⇔</b> passe sa largeur de 1 à 2 colonnes, <b>✕</b> la masque (<b>＋</b> pour la réafficher), <b>↺</b> revient à la disposition par défaut. La disposition est enregistrée dans la page.</p>
         <h3>☑ Check-lists & plans de revue</h3>
-        <p><b>✚ Check-list…</b> : vide ou à partir d'un modèle (✔ Qualité du modèle, revues OA, SA, LA, PA). Sections et points à cocher, avec responsable et <b>💬 constat</b> ; Entrée ajoute un point ; ↑ ↓ 🗑 au survol. <b>Glisser-déposer</b> depuis la palette <b>📎</b> (à droite : recherche de diagrammes et d'éléments) : sur un point, il y est lié (pastille cliquable : diagramme ou panneau de détail) ; sur « ✚ Point », il crée un point lié.</p>
+        <p><b>⚡ Check-list rapide</b> (dans l'onglet ou sur la carte de 🏠 Projet) : une liste est créée et le curseur est sur le premier point ; <b>Entrée</b> ajoute le point suivant. <b>✚ Nouveau…</b> ouvre la galerie : <b>coller une liste</b> (un point par ligne, tirets et numéros retirés), partir d'un <b>modèle</b> (✔ Qualité du modèle, revues OA, SA, LA, PA) ou créer un <b>📋 plan de revue</b>. Sections et points à cocher, avec responsable et <b>💬 constat</b> ; Entrée ajoute un point ; ↑ ↓ 🗑 au survol. <b>Glisser-déposer</b> depuis la palette <b>📎</b> (à droite : recherche de diagrammes et d'éléments) : sur un point, il y est lié (pastille cliquable : diagramme ou panneau de détail) ; sur « ✚ Point », il crée un point lié.</p>
         <p><b>✚ Plan de revue…</b> propose un format de plan de revue :</p>
         <table class="hp-t">
           <tr><td>En-tête</td><td>Objet de la revue, jalon / type (SRR, PDR, revue interne…), date, lieu, animateur, statut (en préparation, en cours, terminée), <b>décision</b> (acceptée, avec réserves, refusée, reportée), participants et rôles, documents de référence.</td></tr>
           <tr><td>Périmètre</td><td>Diagrammes et éléments revus (glissés depuis 📎) ; nombre de commentaires de revue non clos sur ce périmètre ; <b>📤 Revue ciblée du périmètre</b> (page à envoyer aux relecteurs, voir 💬 Revue).</td></tr>
           <tr><td>Sections</td><td>1. Critères d'entrée · 2. Points de contrôle (repris du modèle choisi : OA, SA, LA, PA, qualité) · 3. Critères de sortie · 4. Actions et décisions (responsable, échéance).</td></tr>
         </table>
-        <p><b>⬇ HTML</b> : document imprimable (avec, pour un plan, les commentaires de revue du périmètre) ; <b>💾 .json</b> / <b>📂 Importer…</b> : réutiliser une check-list ou un plan dans un autre projet ; ⧉ dupliquer (cases décochées).</p>
+        <p><b>⬇ HTML</b> : document imprimable (avec, pour un plan, les commentaires de revue du périmètre) ; <b>💾 .json</b> / <b>📂 Importer…</b> : réutiliser une check-list ou un plan dans un autre projet ; ⧉ (en-tête) dupliquer (cases décochées).</p>
+        <h3>⧉ Fenêtres séparées et glisser-déposer depuis les vues</h3>
+        <p>Le <b>⧉</b> d'une check-list, d'un plan (liste de gauche, carte de 🏠 Projet) ou d'un tableau blanc (barre, carte) l'ouvre dans <b>sa propre fenêtre</b> (par exemple sur un autre écran ; autoriser les fenêtres surgissantes), liée à la page : les modifications se voient des deux côtés. La vue montre un rappel (⧉ Afficher la fenêtre, ⧈ Ramener ici).</p>
+        <p>Pendant ce temps, <b>glissez</b> dans cette fenêtre : un diagramme de la liste de <b>🔲 Diagrammes Capella</b>, une carte ou une ligne de l'arborescence de <b>🧭 Explorateur</b>, une chaîne de <b>⚡ Chaînes</b> (liste de la vue Relation Map ou en-tête d'une carte). Sur une check-list : sur un point, sur « ✚ Point » ou sur le périmètre d'un plan ; sur un tableau blanc : il devient une icône cliquable. Dans la vue elle-même, la palette 📎 à droite sert de source.</p>
         <h3>🧾 Tableaux blancs</h3>
-        <p>Pages libres (onglets, ✚ nouvelle page, double-clic pour renommer). <b>Double-clic</b> sur le tableau ou <b>✚ Texte</b> : note de texte (couleur au choix, déplacée par son bandeau, redimensionnée par le coin). Diagrammes et éléments glissés depuis <b>📎</b> apparaissent en <b>icônes cliquables</b> (diagramme ouvert, ou panneau de détail de l'élément) et se déplacent à la souris. Un élément supprimé du modèle ou un diagramme non chargé (.aird) est grisé.</p>
+        <p>Pages libres (onglets, ✚ nouvelle page, double-clic pour renommer, ⧉ fenêtre séparée). Outils :</p>
+        <table class="hp-t">
+          <tr><td>↖ Sélection</td><td>Clic sur un objet : le sélectionner (cadre pointillé) ; glisser : le déplacer ; <b>Suppr</b> : le retirer. <b>Double-clic</b> dans le vide : nouvelle note.</td></tr>
+          <tr><td>🗒 Note · T Texte</td><td>Clic sur le tableau : note colorée (déplacée par son bandeau, redimensionnée par le coin) ou texte libre sans fond.</td></tr>
+          <tr><td>▭ ◯ ╱ →</td><td>Rectangle, ellipse (Maj : carré, cercle), trait, flèche : <b>glissez</b> sur le tableau. Coin ▫ : redimensionner ; ⇅ : inverser le sens d'un trait. Les formes non remplies laissent cliquer ce qu'elles entourent.</td></tr>
+          <tr><td>Couleurs · ◼ Rempli / ◻ Contour</td><td>Pour les nouveaux objets et pour l'objet sélectionné.</td></tr>
+        </table>
+        <p>Diagrammes et éléments glissés depuis <b>📎</b> (ou depuis les vues, tableau en fenêtre séparée) apparaissent en <b>icônes cliquables</b> (diagramme ouvert, ou panneau de détail de l'élément). Un élément supprimé du modèle ou un diagramme non chargé (.aird) est grisé.</p>
       </div>
 
       <!-- ── CAS D'USAGE ── -->

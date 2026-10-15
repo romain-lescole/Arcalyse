@@ -502,6 +502,7 @@ function capChainCardBody(chain){
         <button class="cap-lf-btn" data-chx-one="svg" title="Image SVG vectorielle encadrée">📐 SVG</button>
         <button class="cap-lf-btn" data-chx-one="clip" title="Copier l'image dans le presse-papiers (coller dans Word, PowerPoint…)">📋 Copier</button>
         <button class="cap-lf-btn" data-chx-one="csv" title="Tables des fonctions et des échanges (CSV)">⬇ CSV</button>
+        <button class="cap-lf-btn" data-chx-info="1" title="Informations de la chaîne dans le panneau de détail">ℹ Infos</button>
         <button class="cap-lf-btn" data-open-map="${capEsc(chain.id)}">🗺 Ouvrir en vue Relation Map</button>
       </div>
     </div>
@@ -512,6 +513,41 @@ function capChainCardBody(chain){
       <details class="cap-chain-xdet" open><summary>${t.isPath?_L('Physical Links impliqués'):_L('Functional Exchanges impliqués')} (${t.fes.length})</summary>
         ${eRows?_L(`<table class="cap-chain-xtable cap-chain-ft"><tr><th>N°</th><th>${t.isPath?_L('Physical Link'):_L('Functional Exchange')}</th><th>Source</th><th></th><th>Cible</th>${t.isPath?_L('<th>Component Exchanges alloués</th>'):_L('<th>Exchange Items</th><th>CE porteur</th>')}</tr>${eRows}</table>`):'<div style="color:var(--c-dim);padding:6px">—</div>'}</details>
     </div>`);
+}
+
+/**
+ * ℹ Infos d'une chaîne dans le panneau de détail (comme pour un diagramme) : type, couche, nombre de fonctions
+ * (composants) et d'échanges, entrées, sorties, porteurs, capacités qui l'impliquent, description, et lien vers
+ * le détail complet de l'élément du modèle.
+ * @param {object} chain - Chaîne (capComputeChains)
+ */
+function capChainInfo(chain){
+  const esc=capEsc, t=capChainTables(chain), lv=capChainLayerInfo(chain.layer), col=CAP_CHAIN_COLORS[chain.type]||'#a78bfa', el=capGetElementById_(chain.id);
+  const titre=(x,c)=>`<div class="cdg-det-t" style="color:${c||'var(--c-dim)'}">${x}</div>`;
+  const ligne=(k,v)=>v!==''&&v!=null?`<tr><td class="cdg-det-k">${esc(k)}</td><td class="cdg-det-v">${esc(String(v))}</td></tr>`:'';
+  const lien=(id,nom,type)=>id?`<span class="cap-det-link cdg-det-el" onclick="capOpenDetailById('${esc(id)}')">${capIco(id,13)}<span style="font-size:9px;font-weight:700;color:var(--c-dim)">${esc(type||'')}</span><span>${esc(nom||'—')}</span></span>`
+    :`<span class="cdg-det-el ana-dim">${esc(nom||'—')}</span>`;
+  const porteurs=[...new Set(t.funcs.map(f=>f.owner).filter(Boolean))];
+  const pid=capGetParentIndex().parentOf, caps=[...new Set((capRefIndex_('FunctionalChainAbstractCapabilityInvolvement','involved').get(chain.id)||[]).map(x=>pid[x.id]).filter(Boolean))].map(id=>capGetElementById_(id)).filter(Boolean);
+  const desc=el?capHtmlToText(el.attrs.description||''):'';
+  let h=`<span class="cap-type-badge" style="color:${col};background:${col}22;display:inline-block;margin-bottom:6px">${esc(CAP_CHAIN_LABELS[chain.type]||chain.type)}</span> ${capChainLayerBadge(chain.layer)}`+
+    `<div style="font-size:11px;color:var(--c-accent);font-weight:600;margin-bottom:2px;">${_L('⚡ Chaîne')}</div>`+
+    `<h3 style="font-size:14px;font-weight:600;margin-bottom:10px;word-break:break-word">${esc(chain.name)}</h3>`+
+    `<div class="hm-row" style="margin:0 0 6px">${el?`<button class="cap-lf-btn" onclick="capOpenDetail('${esc(chain.id)}')">${_L('🔎 Détail complet de l\'élément')}</button>`:''}`+
+    `<button class="cap-lf-btn" onclick="capChainsSelectedId='${esc(chain.id)}';capChainsSubView='map';capNavOpen('chains')">${_L('🗺 Vue Relation Map')}</button></div>`;
+  h+=titre(_L('Attributs'))+`<table class="cdg-det-tab">`+ligne(_L('Type'),CAP_CHAIN_LABELS[chain.type]||chain.type)+ligne(_L('Couche'),`${chain.layer} — ${lv.label}`)+
+    ligne(t.isPath?_L('Composants'):_L('Fonctions'),t.funcs.length)+ligne(t.isPath?_L('Physical Links'):_L('Échanges'),t.fes.length)+
+    ligne(_L('Entrées'),t.entries.length)+ligne(_L('Sorties'),t.exits.length)+ligne(_L('Porteurs'),porteurs.length)+ligne('id',chain.id)+`</table>`;
+  if(desc) h+=titre(_L('Description'))+`<div class="cdg-det-desc">${esc(desc)}</div>`;
+  if(caps.length) h+=titre(_L(`Capacités qui l'impliquent (${caps.length})`),'#a78bfa')+`<div>${caps.map(c=>lien(c.id,c.attrs.name,(CAP_HUMAN_NAMES[c.typeName]||{}).h||c.typeName)).join('')}</div>`;
+  const io=(l,x)=>l.length?titre(x,'#58a6ff')+`<div>${l.map(n=>lien(n.refId,n.name,'')).join('')}</div>`:'';
+  h+=io(t.entries,_L(`Entrées (${t.entries.length})`))+io(t.exits,_L(`Sorties (${t.exits.length})`));
+  if(porteurs.length) h+=titre(_L(`Porteurs (${porteurs.length})`))+`<div class="cdg-det-desc">${esc(porteurs.join(' · '))}</div>`;
+  h+=titre(t.isPath?_L(`Composants (${t.funcs.length})`):_L(`Fonctions (${t.funcs.length})`),'#3fb950')+`<div>${t.funcs.map(f=>lien(f.refId,f.num+'. '+f.name,f.type)).join('')}</div>`;
+  if(t.fes.length) h+=titre(t.isPath?_L(`Physical Links (${t.fes.length})`):_L(`Échanges (${t.fes.length})`),'#e3b341')+`<div>${t.fes.map(e=>lien(e.refId,e.name,`${e.srcNum} → ${e.tgtNum}`)).join('')}</div>`;
+  const box=document.getElementById('cap-detail-content'), det=document.getElementById('cap-detail');
+  if(box) box.innerHTML=h;
+  if(det) det.style.display='flex';
 }
 
 /** Attache l'ouverture/fermeture des cartes (rendu paresseux du diagramme) et la navigation. */
@@ -527,6 +563,7 @@ function capWireChainCards(container){
         body.querySelectorAll('.cap-chain-tables [data-ref], .cap-chain-io [data-ref]').forEach(n=>n.addEventListener('click',ev=>{ ev.stopPropagation(); capOpenDetailById(n.dataset.ref); }));
         body.querySelectorAll('[data-chx-one]').forEach(b=>b.addEventListener('click',ev=>{
           ev.stopPropagation(); capChainExportOne(chain, b.dataset.chxOne).catch(e=>capChainExportStatus('⚠ '+e.message)); }));
+        body.querySelector('[data-chx-info]')?.addEventListener('click',ev=>{ ev.stopPropagation(); capChainInfo(chain); });
         body.querySelector('[data-open-map]')?.addEventListener('click',ev=>{
           ev.stopPropagation(); capChainsSelectedId=ev.currentTarget.dataset.openMap; capChainsSubView='map'; capRenderChains(); });
       }

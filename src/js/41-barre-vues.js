@@ -41,9 +41,10 @@ var CAP_NAV_GROUPS=[
   {g:'',        id:'',               l:'',                     t:''},   // place des vues sans menu
   {g:'ana',     id:'cap-v-analyses', l:_L('🔬 Analyses'),          t:_L('Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes')}
 ];
-/** Réglage par défaut : tous les menus affichés, 🔲 Diagrammes Capella (en tête, à côté de 🗺 Relation Map), ▤ Tableau, ⚡ Chaînes,
- * et 📐 Tableau de bord en boutons directs ; 🎬 Scénarios reste dans le menu 📡 Flux & interfaces (tbl, diag : marques d'un réglage qui connaît ces boutons, voir capNavMigrate). */
-var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['home','table','chains','diag','dashboard'], tbl:1, diag:1, home:1};
+/** Réglage par défaut : tous les menus affichés, 🏠 Accueil (tout à gauche), 🔲 Diagrammes Capella (en tête, à côté de 🗺 Relation Map), ▤ Tableau
+ * et 📐 Tableau de bord en boutons directs ; ⚡ Chaînes et 🎬 Scénarios restent dans le menu 📡 Flux & interfaces
+ * (tbl, diag, home, ch : marques d'un réglage qui connaît ces changements, voir capNavMigrate). */
+var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['home','table','diag','dashboard'], tbl:1, diag:1, home:1, ch:1};
 var _capNav=(()=>{ try{ const el=document.getElementById('cap-toolbar'); const o=el&&JSON.parse(el.textContent);
   if(o&&o.groups&&Array.isArray(o.pins)) return capNavMigrate(o); }catch(e){} return JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); })();
 var _capNavLast={explore:'cards', flux:'chains', ana:'ana:trace'};   // dernière sous-vue ouverte par menu
@@ -57,6 +58,7 @@ function capNavMigrate(o){
   if(!o.tbl){ o.tbl=1; if(!o.pins.includes('table')) o.pins.unshift('table'); }
   if(!o.diag){ o.diag=1; if(!o.pins.includes('diag')){ const i=o.pins.indexOf('chains'); o.pins.splice(i<0?o.pins.length:i+1, 0, 'diag'); } }
   if(!o.home){ o.home=1; if(!o.pins.includes('home')) o.pins.unshift('home'); }   // 🏠 Accueil (version 2.2)
+  if(!o.ch){ o.ch=1; o.pins=o.pins.filter(k=>k!=='chains'); }   // ⚡ Chaînes : dans le menu 📡 Flux & interfaces par défaut (version 2.2, une fois ; réépinglable)
   return o;
 }
 

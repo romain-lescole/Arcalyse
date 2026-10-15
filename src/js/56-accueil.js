@@ -2,20 +2,23 @@
    🏠 ACCUEIL — page d'accueil du projet (vue affichée à l'ouverture d'un modèle ou d'un projet)
    ───────────────────────────────────────────────────────────────────────
    Trois onglets :
-   • 🏠 Projet : informations (projet Capella, fichiers, version de Capella), fiche projet modifiable, contenu du modèle,
-     diagrammes, revue, check-lists et plans de revue, mises à jour du modèle, accès rapide aux vues ;
-   • ☑ Check-lists & plans de revue : listes à cocher par sections, points liés à des diagrammes ou des éléments
-     (glisser-déposer depuis la palette 📎), modèles ARCADIA ; plans de revue (objet, jalon, participants, périmètre,
-     critères d'entrée, points de contrôle, critères de sortie, actions) ; export HTML imprimable, .json réutilisable ;
-   • 🧾 Tableaux blancs : pages libres (façon bloc-notes) où l'on écrit du texte et dépose des diagrammes ou des
-     éléments, affichés en icônes cliquables (clic → diagramme ou panneau de détail).
+   • 🏠 Projet : cartes réorganisables (⚙ Disposer : ordre par glisser-déposer, largeur, cartes masquées) —
+     informations (projet Capella, fichiers, version de Capella), fiche projet modifiable, raccourcis des check-lists
+     et des tableaux blancs, contenu du modèle, diagrammes, revue, mises à jour du modèle, accès rapide aux vues ;
+   • ☑ Check-lists & plans de revue : ⚡ check-list rapide, galerie de modèles ARCADIA et de plans de revue ; listes à
+     cocher par sections, points liés à des diagrammes ou des éléments (glisser-déposer depuis la palette 📎) ; plans
+     de revue (objet, jalon, participants, périmètre, critères d'entrée, points de contrôle, critères de sortie,
+     actions) ; export HTML imprimable, .json réutilisable ;
+   • 🧾 Tableaux blancs (60-accueil-tableau-blanc.js) : notes, texte, formes, diagrammes et éléments en icônes cliquables.
+   Check-lists, plans et tableaux blancs s'ouvrent aussi dans une fenêtre séparée (⧉, 60).
    Stockage : bloc JSON « cap-home » de la page (repris par la 💾 Page HTML et par 📄 Ouvrir un projet de travail).
    ═══════════════════════════════════════════════════════════════════════ */
 
 /** Données de l'accueil : fiche projet, check-lists et plans de revue (docs), tableaux blancs (boards). */
 var _capHome = capHomeNorm((()=>{ try{ const el=document.getElementById('cap-home'); return el?JSON.parse(el.textContent):null; }catch(e){ return null; } })());
-/** État de l'affichage (non enregistré) : onglet, document et page de tableau blanc ouverts, recherche de la palette, couleur des notes. */
-const _capHomeUi = { tab:'projet', doc:'', board:'', q:'', col:'#e3b341', notes:new Set() };
+/** État de l'affichage (non enregistré) : onglet, document et page de tableau blanc ouverts, galerie de création, recherche de la palette,
+ * outil, couleur, remplissage et objet sélectionné du tableau blanc, constats dépliés, disposition des cartes en cours. */
+const _capHomeUi = { tab:'projet', doc:'', board:'', galerie:false, q:'', tool:'sel', col:'#e3b341', fill:false, sel:'', notes:new Set(), dispo:false };
 /** Type de données glissées (référence vers un diagramme ou un élément). */
 const CAP_HOME_DND='application/x-arcalyse-ref';
 /** Couleurs proposées pour les notes du tableau blanc. */
@@ -24,7 +27,7 @@ const CAP_HOME_COULEURS=['#e3b341','#58a6ff','#3fb950','#f0883e','#a78bfa','#f85
 /**
  * Complète des données d'accueil (lues dans la page ou un fichier) avec les valeurs par défaut.
  * @param {object} [d] - Données lues
- * @returns {object} {v, fiche, docs, boards}
+ * @returns {object} {v, fiche, docs, boards, cartes}
  */
 function capHomeNorm(d){
   d=d||{};
@@ -32,7 +35,9 @@ function capHomeNorm(d){
   docs.forEach(x=>{ x.head=x.head||{}; if(!Array.isArray(x.head.perim)) x.head.perim=[];
     x.sections=(x.sections||[]).map(s=>Object.assign({titre:'', items:[]}, s)); x.sections.forEach(s=>{ s.items=(s.items||[]).map(i=>Object.assign({txt:'', ok:false, refs:[]}, i)); }); });
   const boards=(Array.isArray(d.boards)?d.boards:[]).filter(b=>b&&b.id).map(b=>Object.assign({titre:'', items:[]}, b));
-  return { v:1, fiche:Object.assign({objet:'', phase:'', version:'', resp:'', equipe:'', notes:''}, d.fiche||{}), docs, boards };
+  const c=d.cartes||{};
+  return { v:1, fiche:Object.assign({objet:'', phase:'', version:'', resp:'', equipe:'', notes:''}, d.fiche||{}), docs, boards,
+    cartes:{ordre:Array.isArray(c.ordre)?c.ordre:[], masques:Array.isArray(c.masques)?c.masques:[], larges:c.larges&&typeof c.larges==='object'?c.larges:{}} };
 }
 /** Identifiant unique (point, section, document, note). @returns {string} */
 function capHomeUid(){ return 'h'+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
@@ -51,7 +56,8 @@ function capHomeSaveLater(){ clearTimeout(_capHomeSaveT); _capHomeSaveT=setTimeo
  * @param {object} d - Données lues dans une page enregistrée
  */
 function capHomeSetData(d){
-  _capHome=capHomeNorm(d); Object.assign(_capHomeUi,{doc:'', board:''}); capHomeSave();
+  _capHomePops.forEach(w=>{ try{ w.close(); }catch(_){} }); _capHomePops.clear();
+  _capHome=capHomeNorm(d); Object.assign(_capHomeUi,{doc:'', board:'', sel:''}); capHomeSave();
   if(capLoaded&&capCurrentView==='home') capRenderHome(document.getElementById('cap-view-home'));
 }
 
@@ -123,7 +129,7 @@ function capHomeRefOpen(ref){
 /* ── Vue ───────────────────────────────────────────────────────────────── */
 
 /**
- * Affiche la vue 🏠 Accueil.
+ * Affiche la vue 🏠 Accueil (et rafraîchit les check-lists et tableaux blancs ouverts dans une fenêtre séparée).
  * @param {HTMLElement} box - Conteneur #cap-view-home
  */
 function capRenderHome(box){
@@ -132,12 +138,15 @@ function capRenderHome(box){
   const u=_capHomeUi, nd=_capHome.docs.length, nb=_capHome.boards.length;
   const tab=(k,l,t)=>`<button class="phl-toggle-btn${u.tab===k?' active':''}" data-tab="${k}" title="${t}">${l}</button>`;
   const pos=(box.querySelector('.hm-main')||{}).scrollTop||0;
+  let corps;
+  if(u.tab==='docs') corps=capHomeDocsHtml()+capHomePaletteHtml();
+  else if(u.tab==='board') corps=capHomeBoardHtml(capHomeCurBoard())+capHomePaletteHtml();
+  else corps=capHomeProjetHtml();
   box.innerHTML=`<div class="hm-bar"><span class="tb-grp">${tab('projet',_L('🏠 Projet'),_L('Informations du projet, fiche, contenu du modèle, revue, accès rapide'))}`+
     tab('docs',_L(`☑ Check-lists & plans de revue`)+(nd?` <span class="hm-n">${nd}</span>`:''),_L('Listes à cocher et plans de revue, liés à des diagrammes et des éléments'))+
-    tab('board',_L(`🧾 Tableaux blancs`)+(nb?` <span class="hm-n">${nb}</span>`:''),_L('Pages libres : texte, diagrammes et éléments en icônes cliquables'))+`</span>`+
+    tab('board',_L(`🧾 Tableaux blancs`)+(nb?` <span class="hm-n">${nb}</span>`:''),_L('Pages libres : texte, formes, diagrammes et éléments en icônes cliquables'))+`</span>`+
     `<span class="hm-bar-t">${capEsc(capRevProjectName()||capCurrentFileName||'')}</span></div>`+
-    `<div class="hm-body">${u.tab==='docs'?capHomeDocsHtml():u.tab==='board'?capHomeBoardHtml():capHomeProjetHtml()}`+
-    (u.tab==='projet'?'':capHomePaletteHtml())+`</div>`;
+    `<div class="hm-body">${corps}</div>`;
   const m=box.querySelector('.hm-main'); if(m) m.scrollTop=pos;
   if(u.tab==='board') capHomeBoardAfter(box);
 }
@@ -165,53 +174,72 @@ function capHomeProgress(d){ let ok=0, n=0; d.sections.forEach(s=>s.items.forEac
 /** Barre d'avancement. @param {{ok:number,n:number}} p @returns {string} HTML */
 function capHomeBar(p){ const pc=p.n?Math.round(p.ok*100/p.n):0; return `<span class="hm-prog" title="${_L(`${p.ok} / ${p.n} point(s) cochés`)}"><span style="width:${pc}%"></span></span><span class="hm-prog-t">${p.ok}/${p.n}</span>`; }
 
-/** Onglet 🏠 Projet. @returns {string} HTML */
-function capHomeProjetHtml(){
+/**
+ * Cartes de l'onglet 🏠 Projet, dans l'ordre par défaut : k = clé, l = titre, w = largeur par défaut (1 ou 2 colonnes),
+ * f = contenu HTML.
+ * @returns {{k:string, l:string, w:number, f:function():string}[]}
+ */
+function capHomeCartes(){
   const esc=capEsc, F=_capHome.fiche, lig=(k,v)=>v?`<tr><td class="ana-dim">${k}</td><td>${v}</td></tr>`:'';
-  const reps=capHomeReps(), cv=capHomeCapellaVersion();
-  const carte=(t,c,cls)=>`<section class="hm-card${cls?' '+cls:''}"><h3>${t}</h3>${c}</section>`;
-  // Projet
-  let h=carte(_L('🔷 Projet'),`<table class="hm-kv">`+lig(_L('Projet Capella'),`<b>${esc(capRevProjectName()||'—')}</b>`)+lig(_L('Modèle'),esc(capCurrentFileName||'—'))+
-    lig(_L('Version de Capella'),esc(cv))+lig(_L('Diagrammes'),_capDiag&&_capDiag.texteAird?esc(_capDiag.nomAird)+(reps.length?' · '+_L(`${reps.length} diagramme(s)`):''):`<span class="ana-dim">${_L('aucun .aird chargé')}</span> <button class="cap-lf-btn" data-a="aird">${_L('📂 Ouvrir le .aird…')}</button>`)+
+  const pop=(kind,id)=>`<span class="hm-pop-b" data-a="pop" data-kind="${kind}" data-id="${id}" title="${_L('Ouvrir dans une fenêtre séparée (par exemple sur un autre écran)')}">⧉</span>`;
+  return [
+  {k:'projet', l:_L('🔷 Projet'), w:1, f:()=>{ const reps=capHomeReps();
+    return `<table class="hm-kv">`+lig(_L('Projet Capella'),`<b>${esc(capRevProjectName()||'—')}</b>`)+lig(_L('Modèle'),esc(capCurrentFileName||'—'))+
+    lig(_L('Version de Capella'),esc(capHomeCapellaVersion()))+lig(_L('Diagrammes'),_capDiag&&_capDiag.texteAird?esc(_capDiag.nomAird)+(reps.length?' · '+_L(`${reps.length} diagramme(s)`):''):`<span class="ana-dim">${_L('aucun .aird chargé')}</span> <button class="cap-lf-btn" data-a="aird">${_L('📂 Ouvrir le .aird…')}</button>`)+
     lig(_L('Page de projet'),typeof _capProjetPage!=='undefined'&&_capProjetPage.nom?esc(_capProjetPage.nom):'')+
-    lig(_L('Éléments'),String(capAllElements.length))+lig(_L('Arcalyse'),esc(CAP_APP_VERSION))+`</table>`);
-  // Fiche projet (modifiable)
-  const champ=(k,l,ph,ta)=>`<label class="hm-f"><span>${l}</span>${ta?`<textarea data-ff="${k}" rows="3" placeholder="${ph}">${esc(F[k])}</textarea>`:`<input data-ff="${k}" value="${esc(F[k])}" placeholder="${ph}">`}</label>`;
-  h+=carte(_L('📝 Fiche projet'),champ('objet',_L('Objet'),_L('Système étudié, but du modèle'),true)+
-    `<div class="hm-f2">${champ('phase',_L('Phase / jalon'),_L('ex. SRR, PDR, CDR'))}${champ('version',_L('Version du modèle'),_L('ex. V1.2'))}</div>`+
-    `<div class="hm-f2">${champ('resp',_L('Responsable'),_L('Nom'))}${champ('equipe',_L('Équipe'),_L('Noms, rôles'))}</div>`+
-    champ('notes',_L('Notes'),_L('Hypothèses, liens, informations utiles…'),true),'hm-card-w');
-  // Contenu du modèle
-  const C=capHomeCouches();
-  h+=carte(_L('🧩 Contenu du modèle'),`<div class="hm-layers">${C.map(c=>{ const lv=CAP_LAYERS[c.k];
+    lig(_L('Éléments'),String(capAllElements.length))+lig(_L('Arcalyse'),esc(CAP_APP_VERSION))+`</table>`; }},
+  {k:'fiche', l:_L('📝 Fiche projet'), w:2, f:()=>{
+    const champ=(k,l,ph,ta)=>`<label class="hm-f"><span>${l}</span>${ta?`<textarea data-ff="${k}" rows="3" placeholder="${ph}">${esc(F[k])}</textarea>`:`<input data-ff="${k}" value="${esc(F[k])}" placeholder="${ph}">`}</label>`;
+    return champ('objet',_L('Objet'),_L('Système étudié, but du modèle'),true)+
+      `<div class="hm-f2">${champ('phase',_L('Phase / jalon'),_L('ex. SRR, PDR, CDR'))}${champ('version',_L('Version du modèle'),_L('ex. V1.2'))}</div>`+
+      `<div class="hm-f2">${champ('resp',_L('Responsable'),_L('Nom'))}${champ('equipe',_L('Équipe'),_L('Noms, rôles'))}</div>`+
+      champ('notes',_L('Notes'),_L('Hypothèses, liens, informations utiles…'),true); }},
+  {k:'docs', l:_L('☑ Check-lists & plans de revue'), w:1, f:()=>(_capHome.docs.length?`<div class="hm-dl">${_capHome.docs.map(d=>`<div class="hm-dl-i" data-doc="${d.id}"><span>${d.kind==='plan'?'📋':'☑'} ${esc(d.titre||_L('(sans titre)'))}${d.kind==='plan'&&d.head.date?` <span class="ana-dim">${esc(capRevDate(d.head.date))}</span>`:''}</span>${capHomeBar(capHomeProgress(d))}${pop('doc',d.id)}</div>`).join('')}</div>`
+      :`<div class="ana-dim">${_L('Aucune check-list ni plan de revue.')}</div>`)+
+    `<div class="hm-row"><button class="cap-lf-btn" data-a="quick" title="${_L('Crée une check-list vide et place le curseur sur le premier point')}">${_L('⚡ Check-list rapide')}</button><button class="cap-lf-btn" data-a="gal" title="${_L('Check-lists à partir d\'un modèle, plans de revue')}">${_L('✚ Nouveau…')}</button></div>`},
+  {k:'boards', l:_L('🧾 Tableaux blancs'), w:1, f:()=>(_capHome.boards.length?`<div class="hm-dl">${_capHome.boards.map(b=>`<div class="hm-dl-i" data-board-open="${b.id}"><span>🧾 ${esc(b.titre||_L('(sans titre)'))} <span class="ana-dim">${_L(`${b.items.length} objet(s)`)}</span></span>${pop('board',b.id)}</div>`).join('')}</div>`
+      :`<div class="ana-dim">${_L('Aucun tableau blanc.')}</div>`)+
+    `<div class="hm-row"><button class="cap-lf-btn" data-a="b-new">${_L('✚ Nouveau tableau blanc')}</button></div>`},
+  {k:'contenu', l:_L('🧩 Contenu du modèle'), w:2, f:()=>`<div class="hm-layers">${capHomeCouches().map(c=>{ const lv=CAP_LAYERS[c.k];
     return `<div class="hm-layer" style="--hm-c:${lv.color}"><div class="hm-layer-h"><b style="color:${lv.color}">${c.k}</b> <span class="ana-dim">${esc(lv.label)}</span><span style="flex:1"></span><b>${c.n}</b></div>`+
-      c.types.map(([t,n])=>`<div class="hm-layer-t"><span>${capIcoType(t,12)} ${esc((CAP_HUMAN_NAMES[t]||{}).h||t)}</span><span>${n}</span></div>`).join('')+`</div>`; }).join('')}</div>`,'hm-card-w');
-  // Diagrammes par couche
-  if(reps.length){
+      c.types.map(([t,n])=>`<div class="hm-layer-t"><span>${capIcoType(t,12)} ${esc((CAP_HUMAN_NAMES[t]||{}).h||t)}</span><span>${n}</span></div>`).join('')+`</div>`; }).join('')}</div>`},
+  {k:'diag', l:_L('🔲 Diagrammes'), w:1, f:()=>{ const reps=capHomeReps(); if(!reps.length) return `<div class="ana-dim">${_L('aucun .aird chargé')}</div><button class="cap-lf-btn" data-a="aird">${_L('📂 Ouvrir le .aird…')}</button>`;
     const par={}; reps.forEach(r=>{ par[r.couche||'—']=(par[r.couche||'—']||0)+1; });
-    h+=carte(_L('🔲 Diagrammes'),`<div class="hm-chips">${Object.entries(par).sort((a,b)=>capDiagRang(a[0])-capDiagRang(b[0])).map(([k,n])=>{ const lv=capDiagCouche(k);
-      return `<span class="hm-stat" style="color:${lv.color}"><b>${esc(k)}</b> ${n}</span>`; }).join('')}</div><button class="cap-lf-btn" data-nav="diag">${_L('🔲 Ouvrir les diagrammes')}</button>`);
-  }
-  // Revue
-  const cs=_capRev.comments, ouv=cs.filter(c=>!capRevClosed(c)), chk=capRevToCheck().length, late=cs.filter(capRevLate).length;
-  h+=carte(_L('💬 Revue'),(cs.length?`<div class="hm-chips"><span class="hm-stat"><b>${ouv.length}</b> ${_L('non clos')}</span>`+
-    capRevCrits().filter(c=>c.k).map(c=>{ const n=ouv.filter(x=>x.crit===c.k).length; return n?`<span class="hm-stat" style="color:${capTextOn(c.c)}"><b>${n}</b> ${c.l}</span>`:''; }).join('')+
-    (chk?`<span class="hm-stat" style="color:var(--c-warn,#e3b341)"><b>${chk}</b> ${_L('à vérifier')}</span>`:'')+(late?`<span class="hm-stat" style="color:var(--c-err,#f85149)"><b>${late}</b> ${_L('en retard')}</span>`:'')+
-    `<span class="hm-stat ana-dim">${_L(`${cs.length} au total`)}</span></div>`:`<div class="ana-dim">${_L('Aucun commentaire de revue.')}</div>`)+
-    `<div class="hm-row"><button class="cap-lf-btn" data-a="rev">${_L('💬 Ouvrir la revue')}</button>${cs.length?`<button class="cap-lf-btn" data-a="rev-cible" title="${_L('Page HTML à envoyer aux relecteurs : ils répondent aux commentaires choisis, puis leurs réponses sont réimportées ici')}">${_L('📤 Revue ciblée…')}</button>`:''}</div>`);
-  // Check-lists et plans de revue
-  h+=carte(_L('☑ Check-lists & plans de revue'),(_capHome.docs.length?`<div class="hm-dl">${_capHome.docs.map(d=>`<div class="hm-dl-i" data-doc="${d.id}"><span>${d.kind==='plan'?'📋':'☑'} ${esc(d.titre||_L('(sans titre)'))}${d.kind==='plan'&&d.head.date?` <span class="ana-dim">${esc(capRevDate(d.head.date))}</span>`:''}</span>${capHomeBar(capHomeProgress(d))}</div>`).join('')}</div>`
-    :`<div class="ana-dim">${_L('Aucune check-list ni plan de revue.')}</div>`)+
-    `<div class="hm-row"><button class="cap-lf-btn" data-a="go-docs">${_L('☑ Check-lists & plans de revue')}</button><button class="cap-lf-btn" data-a="go-board">${_L('🧾 Tableaux blancs')}</button></div>`);
-  // Mises à jour du modèle
-  const H=typeof _capWatch!=='undefined'?_capWatch.history:[];
-  h+=carte(_L('🔄 Mises à jour'),(H.length?`<table class="hm-kv">${H.slice(0,5).map(x=>`<tr><td class="ana-dim">${capWatchDate(x.at)}</td><td>${capWatchChips(x.counts)||_L('aucune différence')}</td></tr>`).join('')}</table>`
-    :`<div class="ana-dim">${_L('Aucune mise à jour du modèle depuis son ouverture.')}</div>`)+
-    `<div class="hm-row"><button class="cap-lf-btn" data-a="update" title="${_L('Compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour après validation')}">${_L('🔄 Charger une mise à jour…')}</button></div>`);
-  // Accès rapide
-  const nav=k=>{ const it=CAP_NAV_ITEMS.find(i=>i.k===k); return it?`<button class="cap-lf-btn" data-nav="${k}" title="${it.t||''}">${it.l}</button>`:''; };
-  h+=carte(_L('🚀 Accès rapide'),`<div class="hm-quick">${['diag','table','tree','functions','fex','csys','cblk','scen','ana:trace','ana:diff','dashboard'].map(nav).join('')}</div>`);
-  return `<div class="hm-main hm-grid">${h}</div>`;
+    return `<div class="hm-chips">${Object.entries(par).sort((a,b)=>capDiagRang(a[0])-capDiagRang(b[0])).map(([k,n])=>{ const lv=capDiagCouche(k);
+      return `<span class="hm-stat" style="color:${lv.color}"><b>${esc(k)}</b> ${n}</span>`; }).join('')}</div><button class="cap-lf-btn" data-nav="diag">${_L('🔲 Ouvrir les diagrammes')}</button>`; }},
+  {k:'revue', l:_L('💬 Revue'), w:1, f:()=>{ const cs=_capRev.comments, ouv=cs.filter(c=>!capRevClosed(c)), chk=capRevToCheck().length, late=cs.filter(capRevLate).length;
+    return (cs.length?`<div class="hm-chips"><span class="hm-stat"><b>${ouv.length}</b> ${_L('non clos')}</span>`+
+      capRevCrits().filter(c=>c.k).map(c=>{ const n=ouv.filter(x=>x.crit===c.k).length; return n?`<span class="hm-stat" style="color:${capTextOn(c.c)}"><b>${n}</b> ${c.l}</span>`:''; }).join('')+
+      (chk?`<span class="hm-stat" style="color:var(--c-warn,#e3b341)"><b>${chk}</b> ${_L('à vérifier')}</span>`:'')+(late?`<span class="hm-stat" style="color:var(--c-err,#f85149)"><b>${late}</b> ${_L('en retard')}</span>`:'')+
+      `<span class="hm-stat ana-dim">${_L(`${cs.length} au total`)}</span></div>`:`<div class="ana-dim">${_L('Aucun commentaire de revue.')}</div>`)+
+      `<div class="hm-row"><button class="cap-lf-btn" data-a="rev">${_L('💬 Ouvrir la revue')}</button>${cs.length?`<button class="cap-lf-btn" data-a="rev-cible" title="${_L('Page HTML à envoyer aux relecteurs : ils répondent aux commentaires choisis, puis leurs réponses sont réimportées ici')}">${_L('📤 Revue ciblée…')}</button>`:''}</div>`; }},
+  {k:'maj', l:_L('🔄 Mises à jour'), w:1, f:()=>{ const H=typeof _capWatch!=='undefined'?_capWatch.history:[];
+    return (H.length?`<table class="hm-kv">${H.slice(0,5).map(x=>`<tr><td class="ana-dim">${capWatchDate(x.at)}</td><td>${capWatchChips(x.counts)||_L('aucune différence')}</td></tr>`).join('')}</table>`
+      :`<div class="ana-dim">${_L('Aucune mise à jour du modèle depuis son ouverture.')}</div>`)+
+      `<div class="hm-row"><button class="cap-lf-btn" data-a="update" title="${_L('Compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour après validation')}">${_L('🔄 Charger une mise à jour…')}</button></div>`; }},
+  {k:'rapide', l:_L('🚀 Accès rapide'), w:1, f:()=>{ const nav=k=>{ const it=CAP_NAV_ITEMS.find(i=>i.k===k); return it?`<button class="cap-lf-btn" data-nav="${k}" title="${it.t||''}">${it.l}</button>`:''; };
+    return `<div class="hm-quick">${['diag','table','tree','chains','functions','fex','csys','cblk','scen','ana:trace','ana:diff','dashboard'].map(nav).join('')}</div>`; }} ];
+}
+/** @returns {string[]} clés des cartes affichées, dans l'ordre choisi (cartes nouvelles ajoutées à la fin) */
+function capHomeCartesOrdre(){
+  const C=_capHome.cartes, ks=capHomeCartes().map(c=>c.k);
+  return [...C.ordre.filter(k=>ks.includes(k)), ...ks.filter(k=>!C.ordre.includes(k))].filter(k=>!C.masques.includes(k));
+}
+
+/** Onglet 🏠 Projet : cartes (ordre, largeur et cartes masquées réglables par ⚙ Disposer). @returns {string} HTML */
+function capHomeProjetHtml(){
+  const u=_capHomeUi, C=_capHome.cartes, all=capHomeCartes(), esc=capEsc;
+  let bar=`<div class="hm-dispo"><button class="cap-lf-btn${u.dispo?' active':''}" data-a="dispo" title="${_L('Réorganiser la page : glisser les cartes, largeur, cartes masquées')}">${u.dispo?_L('✔ Terminer la disposition'):_L('⚙ Disposer les cartes')}</button>`;
+  if(u.dispo) bar+=`<span class="hm-drop-hint">${_L('Glissez une carte par ⠿ sur une autre pour la placer avant elle ; ⇔ largeur ; ✕ masquer.')}</span>`+
+    (C.masques.length?`<span class="ana-dim">${_L('Masquées :')}</span>`+C.masques.map(k=>{ const c=all.find(x=>x.k===k); return c?`<button class="cap-lf-btn" data-a="carte-show" data-k="${k}">＋ ${c.l}</button>`:''; }).join(''):'')+
+    `<button class="cap-lf-btn" data-a="cartes-reset">${_L('↺ Disposition par défaut')}</button>`;
+  bar+=`</div>`;
+  const h=capHomeCartesOrdre().map(k=>{ const c=all.find(x=>x.k===k), w=C.larges[k]||c.w;
+    let corps=''; try{ corps=c.f(); }catch(e){ console.error(e); corps=`<div class="ana-dim">${esc(e.message)}</div>`; }
+    return `<section class="hm-card${u.dispo?' hm-card-dispo':''}" data-carte="${k}" style="grid-column:span ${w}"${u.dispo?' draggable="true"':''}>`+
+      `<h3>${u.dispo?`<span class="hm-grip" title="${_L('Glisser pour déplacer')}">⠿</span>`:''}${c.l}`+
+      (u.dispo?`<span style="flex:1"></span><span class="hm-cb" data-a="carte-wide" data-k="${k}" title="${_L('Largeur : 1 ou 2 colonnes')}">⇔</span><span class="hm-cb" data-a="carte-hide" data-k="${k}" title="${_L('Masquer la carte')}">✕</span>`:'')+`</h3>${corps}</section>`; }).join('');
+  return `<div class="hm-main">${bar}<div class="hm-grid">${h}</div></div>`;
 }
 
 /* ── Onglet ☑ Check-lists & plans de revue ─────────────────────────────── */
@@ -257,19 +285,49 @@ function capHomeNewDoc(kind, mk){
   _capHome.docs.push(d); _capHomeUi.doc=d.id; capHomeSave();
 }
 
-/** Onglet ☑ Check-lists & plans de revue : liste des documents, document ouvert. @returns {string} HTML */
+/**
+ * ⚡ Check-list rapide : une section, un point par ligne (au moins un point vide), puis ouverture.
+ * @param {string} [titre] - Titre ('' : « Check-list du <date> »)
+ * @param {string} [lignes] - Points, un par ligne
+ * @returns {object} check-list créée
+ */
+function capHomeQuickDoc(titre, lignes){
+  const pts=String(lignes||'').split(/\r?\n/).map(s=>s.replace(/^\s*(?:[-*•☐☑✔]|\d+[.)])\s*/,'').trim()).filter(Boolean);
+  const d={id:capHomeUid(), kind:'list', titre:(titre||'').trim()||_L(`Check-list du ${new Date().toLocaleDateString('fr-FR')}`), created:new Date().toISOString(), head:{perim:[]},
+    sections:[{id:capHomeUid(), titre:_L('Points'), items:(pts.length?pts:['']).map(x=>({id:capHomeUid(), txt:x, ok:false, refs:[]}))}]};
+  _capHome.docs.push(d); Object.assign(_capHomeUi,{doc:d.id, galerie:false, tab:'docs'}); capHomeSave();
+  return d;
+}
+
+/** Onglet ☑ Check-lists & plans de revue : liste des documents, galerie de création ou document ouvert. @returns {string} HTML */
 function capHomeDocsHtml(){
   const u=_capHomeUi, esc=capEsc;
   if(!_capHome.docs.some(d=>d.id===u.doc)) u.doc=_capHome.docs.length?_capHome.docs[0].id:'';
-  const M=capHomeModeles();
+  const galerie=u.galerie||!_capHome.docs.length;
   const liste=`<aside class="hm-docs"><div class="hm-docs-new">`+
-    `<select data-new="list" title="${_L('Nouvelle check-list : vide ou à partir d\'un modèle')}"><option value="">${_L('✚ Check-list…')}</option>${M.map(m=>`<option value="${m.k}">${m.l}</option>`).join('')}</select>`+
-    `<select data-new="plan" title="${_L('Nouveau plan de revue : objet, jalon, participants, périmètre, critères d\'entrée et de sortie, points de contrôle, actions')}"><option value="">${_L('✚ Plan de revue…')}</option>${M.map(m=>`<option value="${m.k}">${m.k==='vide'?_L('📋 Plan vide'):_L('📋 Plan — ')+m.l.replace(/^\S+\s/,'')}</option>`).join('')}</select>`+
+    `<button class="phl-export-btn hm-quick-b" data-a="quick" title="${_L('Crée une check-list vide et place le curseur sur le premier point (Entrée : point suivant)')}">${_L('⚡ Check-list rapide')}</button>`+
+    `<button class="cap-lf-btn${galerie?' active':''}" data-a="gal" title="${_L('Check-lists à partir d\'un modèle, plans de revue, check-list à coller')}">${_L('✚ Nouveau… (modèles, plan de revue)')}</button>`+
     `<button class="cap-lf-btn" data-a="doc-import" title="${_L('Importer une check-list ou un plan enregistré en .json (autre projet)')}">${_L('📂 Importer…')}</button></div>`+
-    (_capHome.docs.length?_capHome.docs.map(d=>`<div class="hm-docs-i${d.id===u.doc?' on':''}" data-doc="${d.id}"><span class="hm-docs-n">${d.kind==='plan'?'📋':'☑'} ${esc(d.titre||_L('(sans titre)'))}</span>${capHomeBar(capHomeProgress(d))}</div>`).join('')
-      :`<div class="hm-empty">${_L('Créez une check-list ou un plan de revue (listes ci-dessus).<br><br>Glissez ensuite des diagrammes et des éléments depuis la palette 📎 à droite sur les points.')}</div>`)+`</aside>`;
+    _capHome.docs.map(d=>`<div class="hm-docs-i${d.id===u.doc&&!galerie?' on':''}" data-doc="${d.id}"><span class="hm-docs-n">${d.kind==='plan'?'📋':'☑'} ${esc(d.titre||_L('(sans titre)'))}</span>${capHomeBar(capHomeProgress(d))}`+
+      `<span class="hm-pop-b" data-a="pop" data-kind="doc" data-id="${d.id}" title="${_L('Ouvrir dans une fenêtre séparée (par exemple sur un autre écran)')}">⧉</span></div>`).join('')+`</aside>`;
   const d=_capHome.docs.find(x=>x.id===u.doc);
-  return `<div class="hm-main hm-docs-w">${liste}<div class="hm-doc">${d?capHomeDocHtml(d):''}</div></div>`;
+  const main=galerie?capHomeGalerieHtml():d?(capHomePopWin('doc',d.id)?capHomePopPlace('doc',d):`<div class="hm-doc" data-docid="${d.id}">${capHomeDocHtml(d)}</div>`):'';
+  return `<div class="hm-main hm-docs-w">${liste}${main}</div>`;
+}
+
+/** Galerie de création : check-list rapide (points collés), modèles de check-lists, plans de revue. @returns {string} HTML */
+function capHomeGalerieHtml(){
+  const M=capHomeModeles().filter(m=>m.k!=='vide'), n=m=>m.s.reduce((t,s)=>t+s[1].length,0);
+  const carte=(kind,m,titre,desc)=>`<div class="hm-gal-c" data-a="new" data-kind="${kind}" data-m="${m.k}" title="${_L('Créer')}"><b>${titre}</b><span class="ana-dim">${desc}</span></div>`;
+  return `<div class="hm-doc hm-gal">`+
+    `<h2>${_L('⚡ Check-list rapide')}</h2><div class="hm-gal-q">`+
+    `<input class="hm-gal-t" placeholder="${_L('Titre (facultatif) — ex. Points à vérifier avant la revue')}">`+
+    `<textarea class="hm-gal-l" rows="5" placeholder="${_L('Un point par ligne (vous pouvez coller une liste : tirets et numéros sont retirés). Vide : une check-list avec un premier point à remplir.')}"></textarea>`+
+    `<div class="hm-row"><button class="phl-export-btn" data-a="quick-create" style="margin-left:0">${_L('✚ Créer la check-list')}</button>`+
+    `<span class="hm-drop-hint">${_L('Ensuite : Entrée ajoute un point, glissez des diagrammes et des éléments (📎) sur les points, ⧉ ouvre la liste dans une fenêtre séparée.')}</span></div></div>`+
+    `<h2>${_L('☑ Check-list à partir d\'un modèle')}</h2><div class="hm-gal-g">${M.map(m=>carte('list',m,m.l,_L(`${n(m)} point(s) · `)+m.s.map(s=>s[0]).join(' · '))).join('')}</div>`+
+    `<h2>${_L('📋 Plan de revue')}</h2><p class="hm-drop-hint">${_L('En-tête (objet, jalon, date, lieu, animateur, statut, décision, participants et rôles, documents), périmètre (diagrammes et éléments glissés), puis 1. Critères d\'entrée · 2. Points de contrôle · 3. Critères de sortie · 4. Actions et décisions.')}</p>`+
+    `<div class="hm-gal-g">${carte('plan',{k:'vide'},_L('📋 Plan vide'),_L('Points de contrôle à écrire'))}${M.map(m=>carte('plan',m,_L('📋 Plan — ')+m.l.replace(/^\S+\s/,''),_L(`${n(m)} point(s) de contrôle`))).join('')}</div></div>`;
 }
 
 /**
@@ -317,8 +375,6 @@ function capHomeDocHtml(d){
   });
   return h+`<div class="hm-row"><button class="cap-lf-btn" data-a="sec-add">${_L('✚ Section')}</button></div>`;
 }
-/** @returns {object|undefined} document ouvert */
-function capHomeCurDoc(){ return _capHome.docs.find(d=>d.id===_capHomeUi.doc); }
 /**
  * Identifiants du périmètre d'un plan : éléments et diagrammes du périmètre et des points.
  * @param {object} d - Plan
@@ -381,67 +437,14 @@ function capHomeDocImport(){
   inp.click();
 }
 
-/* ── Onglet 🧾 Tableaux blancs ─────────────────────────────────────────── */
-
-/** @returns {object|undefined} page de tableau blanc ouverte */
-function capHomeCurBoard(){ return _capHome.boards.find(b=>b.id===_capHomeUi.board); }
-
-/** Onglet 🧾 Tableaux blancs : pages, outils, plan de travail. @returns {string} HTML */
-function capHomeBoardHtml(){
-  const u=_capHomeUi, esc=capEsc;
-  if(!_capHome.boards.length){ _capHome.boards.push({id:capHomeUid(), titre:_L('Page 1'), items:[]}); capHomeSave(); }
-  if(!capHomeCurBoard()) u.board=_capHome.boards[0].id;
-  const B=capHomeCurBoard();
-  let W=2400, Hh=1600; B.items.forEach(it=>{ W=Math.max(W,(it.x||0)+(it.w||200)+400); Hh=Math.max(Hh,(it.y||0)+(it.h||120)+400); });
-  const items=B.items.map(it=>{
-    if(it.k==='ref'){ const r=it.ref, ok=capHomeRefOk(r), lv=CAP_LAYERS[r.couche]||{color:'#8b949e'};
-      return `<div class="hm-it hm-ref${ok?'':' hm-miss'}" data-it="${it.id}" data-mv="1" style="left:${it.x}px;top:${it.y}px" title="${esc(capHomeRefType(r))} — ${ok?_L('clic : ouvrir'):(r.k==='diag'?_L('diagramme non chargé (.aird)'):_L('absent du modèle chargé'))}">`+
-        `<span class="hm-ref-i">${capHomeRefIco(r,30)}</span><span class="hm-ref-n">${esc(capHomeRefNom(r))}</span><span class="hm-ref-t"><b style="color:${lv.color}">${esc(r.couche||'')}</b> ${esc(capHomeRefType(r))}</span>`+
-        `<span class="hm-it-x" data-a="bi-del" title="${_L('Retirer du tableau')}">✕</span></div>`; }
-    return `<div class="hm-it hm-txt" data-it="${it.id}" style="left:${it.x}px;top:${it.y}px;width:${it.w||220}px;height:${it.h||110}px;--hm-c:${it.col||'#e3b341'}">`+
-      `<div class="hm-it-h" data-mv="1" title="${_L('Glisser pour déplacer')}"><span class="hm-it-x" data-a="bi-del" title="${_L('Supprimer la note')}">✕</span></div>`+
-      `<div class="hm-txt-b" contenteditable="true" spellcheck="true" data-bt="1">${esc(it.txt||'')}</div></div>`;
-  }).join('');
-  return `<div class="hm-main hm-wb-w"><div class="hm-wb-bar"><span class="tb-grp">${_capHome.boards.map(b=>`<button class="phl-toggle-btn${b.id===u.board?' active':''}" data-board="${b.id}" title="${_L('Double-clic : renommer')}">${esc(b.titre||_L('(sans titre)'))}</button>`).join('')}`+
-    `<button class="cap-lf-btn" data-a="b-add" title="${_L('Nouvelle page')}">✚</button></span>`+
-    `<span class="tb-grp"><button class="cap-lf-btn" data-a="b-txt" title="${_L('Ajouter une note de texte (ou double-clic sur le tableau)')}">${_L('✚ Texte')}</button>`+
-    CAP_HOME_COULEURS.map(c=>`<span class="hm-col${c===u.col?' on':''}" data-col="${c}" style="background:${c}" title="${_L('Couleur des nouvelles notes')}"></span>`).join('')+`</span>`+
-    `<span class="tb-grp"><button class="cap-lf-btn" data-a="b-ren" title="${_L('Renommer la page')}">✎</button><button class="cap-lf-btn" data-a="b-del" title="${_L('Supprimer la page')}">🗑</button></span>`+
-    `<span class="hm-drop-hint">${_L('Double-clic : note · glissez des diagrammes et des éléments depuis la palette 📎 · clic sur une icône : l\'ouvrir')}</span></div>`+
-    `<div class="hm-wb" id="hm-wb"><div class="hm-wb-in" data-drop="board" style="width:${W}px;height:${Hh}px">${items}</div></div></div>`;
-}
-/** Après le rendu du tableau blanc : hauteur jusqu'en bas, suivi de la taille des notes (redimensionnement). @param {HTMLElement} box */
-function capHomeBoardAfter(box){
-  const wb=box.querySelector('#hm-wb'); if(!wb) return;
-  const fit=()=>{ wb.style.height=Math.max(260, window.innerHeight-wb.getBoundingClientRect().top-8)+'px'; };
-  fit(); requestAnimationFrame(fit);
-  if(window.ResizeObserver){
-    if(_capHomeUi.ro) _capHomeUi.ro.disconnect();
-    _capHomeUi.ro=new ResizeObserver(es=>{ const B=capHomeCurBoard(); if(!B) return; let ch=false;
-      es.forEach(e=>{ const n=e.target, it=B.items.find(x=>x.id===n.dataset.it); if(!it) return;
-        const w=n.offsetWidth, h=n.offsetHeight; if(w&&h&&(w!==it.w||h!==it.h)){ it.w=w; it.h=h; ch=true; } });
-      if(ch) capHomeSaveLater(); });
-    box.querySelectorAll('.hm-txt').forEach(n=>_capHomeUi.ro.observe(n));
-  }
-}
-/**
- * Ajoute un objet sur la page de tableau blanc ouverte.
- * @param {object} it - {k:'txt'|'ref', x, y, …}
- * @param {boolean} [edit] - true : placer le curseur dans la note créée
- */
-function capHomeBoardAdd(it, edit){
-  const B=capHomeCurBoard(); if(!B) return;
-  it.id=capHomeUid(); B.items.push(it); capHomeSave(); capHomeRender();
-  if(edit) setTimeout(()=>{ const n=document.querySelector(`#cap-view-home .hm-it[data-it="${it.id}"] .hm-txt-b`); if(n) n.focus(); },0);
-}
-
 /* ── Palette 📎 : diagrammes et éléments à glisser ─────────────────────── */
 
-/** Palette à droite (onglets check-lists et tableaux blancs) : recherche, diagrammes, éléments. @returns {string} HTML */
+/** Palette à droite (check-lists, tableaux blancs, fenêtres séparées) : recherche, diagrammes, éléments. @returns {string} HTML */
 function capHomePaletteHtml(){
   return `<aside class="hm-pal"><div class="hm-pal-h">${_L('📎 Glisser-déposer')}</div>`+
-    `<input id="hm-pal-q" class="phl-filter-input" placeholder="${_L('🔍 Diagramme ou élément…')}" value="${capEsc(_capHomeUi.q)}">`+
-    `<div class="hm-pal-l" id="hm-pal-l">${capHomePaletteList()}</div></aside>`;
+    `<input class="phl-filter-input hm-pal-q" placeholder="${_L('🔍 Diagramme ou élément…')}" value="${capEsc(_capHomeUi.q)}">`+
+    `<div class="hm-pal-l">${capHomePaletteList()}</div>`+
+    `<div class="hm-pal-e hm-pal-tip">${_L('Astuce : ouvrez une check-list ou un tableau blanc dans une fenêtre séparée (⧉) pour y glisser aussi des diagrammes depuis 🔲 Diagrammes Capella et des éléments depuis 🧭 Explorateur ou ⚡ Chaînes.')}</div></aside>`;
 }
 /** Résultats de la palette : diagrammes (filtrés), éléments dont le nom contient la recherche. @returns {string} HTML */
 function capHomePaletteList(){
@@ -462,24 +465,48 @@ function capHomePaletteList(){
 
 /* ── Événements ────────────────────────────────────────────────────────── */
 
-/** Réaffiche la vue 🏠 Accueil si elle est affichée. */
-function capHomeRender(){ if(capCurrentView==='home'&&currentMode==='capella') capRenderHome(document.getElementById('cap-view-home')); }
+/** Réaffiche la vue 🏠 Accueil si elle est affichée, et les fenêtres séparées ouvertes. */
+function capHomeRender(){
+  if(capCurrentView==='home'&&currentMode==='capella') capRenderHome(document.getElementById('cap-view-home'));
+  capHomePopsRender();
+}
+/**
+ * Check-list ou plan concerné par un élément de l'interface (vue ou fenêtre séparée).
+ * @param {Element} [el] - Élément cliqué ou saisi
+ * @returns {object|undefined} document
+ */
+function capHomeDocOf(el){ const n=el&&el.closest&&el.closest('[data-docid]'); return _capHome.docs.find(d=>d.id===(n?n.dataset.docid:_capHomeUi.doc)); }
+/** @returns {object|undefined} document ouvert dans l'onglet ☑ */
+function capHomeCurDoc(){ return _capHome.docs.find(d=>d.id===_capHomeUi.doc); }
+/**
+ * Fenêtre d'un élément de l'interface (la page, ou une fenêtre séparée) : boîtes de dialogue au bon endroit.
+ * @param {Element} [el] @returns {Window}
+ */
+function capHomeWin(el){ return el&&el.ownerDocument&&el.ownerDocument.defaultView||window; }
+/**
+ * Premier élément correspondant au sélecteur, dans la page ou les fenêtres séparées (curseur placé après un rendu).
+ * @param {string} sel - Sélecteur CSS
+ * @returns {Element|null}
+ */
+function capHomeFind(sel){
+  for(const D of [document, ...capHomePopDocs()]){ const n=D.querySelector(sel); if(n) return n; }
+  return null;
+}
 
 /**
- * Branche (une fois) les écouteurs de la vue : clics, saisies, glisser-déposer, déplacement des objets du tableau blanc.
- * @param {HTMLElement} box - Conteneur de la vue
+ * Branche (une fois) les écouteurs d'un conteneur (vue ou fenêtre séparée) : clics, saisies, glisser-déposer,
+ * dessin et déplacement des objets du tableau blanc, disposition des cartes.
+ * @param {HTMLElement} box - Conteneur
  */
 function capHomeWire(box){
   if(box._hm) return; box._hm=true;
   box.addEventListener('click',capHomeClick);
   box.addEventListener('input',capHomeInput);
   box.addEventListener('change',capHomeChange);
-  box.addEventListener('dblclick',e=>{
-    const bt=e.target.closest('[data-board]'); if(bt){ const B=_capHome.boards.find(b=>b.id===bt.dataset.board); const t=B&&prompt(_L('Nom de la page :'),B.titre); if(t!=null&&B){ B.titre=t.trim(); capHomeSave(); capHomeRender(); } return; }
-    if(e.target.classList.contains('hm-wb-in')){ const r=e.target.getBoundingClientRect();
-      capHomeBoardAdd({k:'txt', x:Math.max(0,Math.round(e.clientX-r.left-20)), y:Math.max(0,Math.round(e.clientY-r.top-14)), w:220, h:110, txt:'', col:_capHomeUi.col}, true); }
-  });
+  box.addEventListener('dblclick',capHomeBoardDbl);
   box.addEventListener('dragstart',e=>{
+    const k=e.target.closest&&e.target.closest('.hm-card-dispo');
+    if(k){ e.dataTransfer.setData(CAP_HOME_CARTE, k.dataset.carte); e.dataTransfer.effectAllowed='move'; return; }
     const r=e.target.closest&&e.target.closest('[data-ref]'); if(!r) return;
     e.dataTransfer.setData(CAP_HOME_DND, r.dataset.ref);
     try{ e.dataTransfer.setData('text/plain', JSON.parse(r.dataset.ref).nom||''); }catch(_){}
@@ -487,21 +514,39 @@ function capHomeWire(box){
   });
   const cible=e=>e.target.closest&&e.target.closest('[data-drop]');
   box.addEventListener('dragover',e=>{
-    const z=cible(e), ty=[...(e.dataTransfer.types||[])]; if(!z||!(ty.includes(CAP_HOME_DND)||ty.includes('text/plain'))) return;
+    const ty=[...(e.dataTransfer.types||[])];
+    if(ty.includes(CAP_HOME_CARTE)){ const c=e.target.closest&&e.target.closest('[data-carte]'); if(c){ e.preventDefault(); e.dataTransfer.dropEffect='move'; } return; }
+    const z=cible(e); if(!z||!(ty.includes(CAP_HOME_DND)||ty.includes('text/plain'))) return;
     e.preventDefault(); e.dataTransfer.dropEffect='copy';
     box.querySelectorAll('.hm-over').forEach(x=>{ if(x!==z) x.classList.remove('hm-over'); }); z.classList.add('hm-over');
   });
   box.addEventListener('dragleave',e=>{ const z=cible(e); if(z&&!z.contains(e.relatedTarget)) z.classList.remove('hm-over'); });
   box.addEventListener('drop',e=>{
+    const ck=e.dataTransfer.getData(CAP_HOME_CARTE);
+    if(ck){ const c=e.target.closest('[data-carte]'); e.preventDefault(); if(c&&c.dataset.carte!==ck) capHomeCarteMove(ck, c.dataset.carte); return; }
     const z=cible(e); if(!z) return;
-    e.preventDefault(); z.classList.remove('hm-over');
+    e.preventDefault(); e.stopPropagation(); z.classList.remove('hm-over');
     let ref=null; try{ ref=JSON.parse(e.dataTransfer.getData(CAP_HOME_DND)||'null'); }catch(_){}
     const txt=ref?'':(e.dataTransfer.getData('text/plain')||'').trim();
     if(!ref&&!txt) return;
     capHomeDrop(z, ref, txt, e);
   });
   box.addEventListener('pointerdown',capHomeBoardDown);
-  box.addEventListener('keydown',e=>{ if(e.key==='Enter'&&e.target.matches('.hm-item-t')){ e.preventDefault(); const it=e.target.closest('[data-i]'); capHomeItemAdd(it&&it.closest('[data-s]').dataset.s, it&&it.dataset.i); } });
+  box.addEventListener('keydown',e=>{
+    if(e.key==='Enter'&&e.target.matches('.hm-item-t')){ e.preventDefault(); const it=e.target.closest('[data-i]'); capHomeItemAdd(capHomeDocOf(it), it&&it.closest('[data-s]').dataset.s, it&&it.dataset.i); }
+  });
+}
+/** Type de données glissées pour réordonner les cartes de 🏠 Projet. */
+const CAP_HOME_CARTE='application/x-arcalyse-carte';
+/**
+ * Place une carte de 🏠 Projet avant une autre.
+ * @param {string} k - Carte déplacée
+ * @param {string} avant - Carte devant laquelle la placer
+ */
+function capHomeCarteMove(k, avant){
+  const o=capHomeCartesOrdre().filter(x=>x!==k), i=o.indexOf(avant);
+  o.splice(i<0?o.length:i, 0, k); _capHome.cartes.ordre=[...o, ..._capHome.cartes.masques];
+  capHomeSave(); capHomeRender();
 }
 /**
  * Dépôt d'une référence (ou d'un texte) sur une zone : périmètre, point, section, tableau blanc.
@@ -511,9 +556,9 @@ function capHomeWire(box){
  * @param {DragEvent} e - Événement
  */
 function capHomeDrop(z, ref, txt, e){
-  const k=z.dataset.drop, d=capHomeCurDoc(), has=(l,r)=>l.some(x=>x.k===r.k&&x.id===r.id);
-  if(k==='board'){ const r=z.getBoundingClientRect(), x=Math.max(0,Math.round(e.clientX-r.left-20)), y=Math.max(0,Math.round(e.clientY-r.top-20));
-    capHomeBoardAdd(ref?{k:'ref', x, y, ref}:{k:'txt', x, y, w:220, h:110, txt, col:_capHomeUi.col}); return; }
+  const k=z.dataset.drop, d=capHomeDocOf(z), has=(l,r)=>l.some(x=>x.k===r.k&&x.id===r.id);
+  if(k==='board'){ const B=capHomeBoardOf(z), r=z.getBoundingClientRect(), x=Math.max(0,Math.round(e.clientX-r.left-20)), y=Math.max(0,Math.round(e.clientY-r.top-20));
+    capHomeBoardAdd(B, ref?{k:'ref', x, y, ref}:{k:'txt', x, y, w:220, h:110, txt, col:_capHomeUi.col}); return; }
   if(!d) return;
   if(k==='perim'){ if(ref&&!has(d.head.perim,ref)) d.head.perim.push(ref); }
   else if(k==='item'){ const s=d.sections.find(s=>s.id===z.closest('[data-s]').dataset.s), i=s&&s.items.find(i=>i.id===z.dataset.i); if(!i) return;
@@ -524,34 +569,37 @@ function capHomeDrop(z, ref, txt, e){
 }
 /**
  * Ajoute un point à une section (après un point donné, sinon à la fin) et y place le curseur.
+ * @param {object} d - Check-list ou plan
  * @param {string} sid - Section
  * @param {string} [after] - Point après lequel insérer
  */
-function capHomeItemAdd(sid, after){
-  const d=capHomeCurDoc(), s=d&&d.sections.find(x=>x.id===sid); if(!s) return;
+function capHomeItemAdd(d, sid, after){
+  const s=d&&d.sections.find(x=>x.id===sid); if(!s) return;
   const it={id:capHomeUid(), txt:'', ok:false, refs:[]}, i=s.items.findIndex(x=>x.id===after);
   s.items.splice(i<0?s.items.length:i+1, 0, it); capHomeSave(); capHomeRender();
-  const n=document.querySelector(`#cap-view-home [data-i="${it.id}"] .hm-item-t`); if(n) n.focus();
+  const n=capHomeFind(`[data-i="${it.id}"] .hm-item-t`); if(n) n.focus();
 }
 /** Déplace un objet d'une liste d'un cran. @param {Array} l @param {number} i @param {number} dir - -1 / +1 */
 function capHomeMove(l, i, dir){ const j=i+dir; if(i<0||j<0||j>=l.length) return; [l[i],l[j]]=[l[j],l[i]]; }
 
-/** Clics de la vue (délégation). @param {MouseEvent} e */
+/** Clics de la vue et des fenêtres séparées (délégation). @param {MouseEvent} e */
 function capHomeClick(e){
-  const t=e.target, u=_capHomeUi;
+  const t=e.target, u=_capHomeUi, W=capHomeWin(t);
   const tab=t.closest('[data-tab]'); if(tab){ u.tab=tab.dataset.tab; capHomeRender(); return; }
   const nav=t.closest('[data-nav]'); if(nav){ capNavOpen(nav.dataset.nav); return; }
   const rm=t.closest('[data-rm]');
-  if(rm){ e.stopPropagation(); const d=capHomeCurDoc(); if(!d) return; const [w,n]=rm.dataset.rm.split(':');
+  if(rm){ e.stopPropagation(); const d=capHomeDocOf(rm); if(!d) return; const [w,n]=rm.dataset.rm.split(':');
     if(w==='p') d.head.perim.splice(+n,1); else { const it=t.closest('[data-i]'), s=it&&d.sections.find(s=>s.id===it.closest('[data-s]').dataset.s), i=s&&s.items.find(x=>x.id===it.dataset.i); if(i) i.refs.splice(+n,1); }
     capHomeSave(); capHomeRender(); return; }
+  const a0=t.closest('[data-a]');
+  if(a0&&a0.dataset.a==='pop'){ e.stopPropagation(); capHomePopOpen(a0.dataset.kind, a0.dataset.id); return; }
   const go=t.closest('[data-go]'); if(go){ try{ capHomeRefOpen(JSON.parse(go.dataset.go)); }catch(_){} return; }
   const pal=t.closest('.hm-pal-i'); if(pal){ try{ capHomeRefOpen(JSON.parse(pal.dataset.ref)); }catch(_){} return; }
-  const dl=t.closest('[data-doc]'); if(dl){ u.doc=dl.dataset.doc; u.tab='docs'; capHomeRender(); return; }
-  const bd=t.closest('[data-board]'); if(bd){ u.board=bd.dataset.board; capHomeRender(); return; }
-  const col=t.closest('[data-col]'); if(col){ u.col=col.dataset.col; capHomeRender(); return; }
-  const a=t.closest('[data-a]'); if(!a) return;
-  const act=a.dataset.a, d=capHomeCurDoc(), B=capHomeCurBoard();
+  const dl=t.closest('[data-doc]'); if(dl){ Object.assign(u,{doc:dl.dataset.doc, tab:'docs', galerie:false}); capHomeRender(); return; }
+  const bo=t.closest('[data-board-open]'); if(bo){ Object.assign(u,{board:bo.dataset.boardOpen, tab:'board'}); capHomeRender(); return; }
+  if(capHomeBoardClick(e)) return;   // tableau blanc : pages, outils, couleurs, sélection (60)
+  const a=a0; if(!a) return;
+  const act=a.dataset.a, d=capHomeDocOf(a);
   const sEl=t.closest('[data-s]'), s=d&&sEl&&d.sections.find(x=>x.id===sEl.dataset.s);
   const iEl=t.closest('[data-i]'), ii=s&&iEl?s.items.findIndex(x=>x.id===iEl.dataset.i):-1;
   switch(act){
@@ -559,26 +607,29 @@ function capHomeClick(e){
     case 'rev': capRevToggle(true,'list'); return;
     case 'rev-cible': capRevCibleeDialog(); return;
     case 'update': capCfgLoadUpdate(); return;
-    case 'go-docs': u.tab='docs'; break;
-    case 'go-board': u.tab='board'; break;
+    case 'dispo': u.dispo=!u.dispo; break;
+    case 'carte-hide': if(!_capHome.cartes.masques.includes(a.dataset.k)) _capHome.cartes.masques.push(a.dataset.k); break;
+    case 'carte-show': _capHome.cartes.masques=_capHome.cartes.masques.filter(k=>k!==a.dataset.k); break;
+    case 'carte-wide': { const c=capHomeCartes().find(x=>x.k===a.dataset.k), w=_capHome.cartes.larges[a.dataset.k]||c.w; _capHome.cartes.larges[a.dataset.k]=w===2?1:2; break; }
+    case 'cartes-reset': _capHome.cartes={ordre:[], masques:[], larges:{}}; break;
+    case 'quick': { const nd=capHomeQuickDoc(); capHomeRender(); const n=capHomeFind(`[data-docid="${nd.id}"] .hm-item-t`); if(n) n.focus(); return; }
+    case 'quick-create': { const g=t.closest('.hm-gal'), nd=capHomeQuickDoc(g.querySelector('.hm-gal-t').value, g.querySelector('.hm-gal-l').value); capHomeRender();
+      const n=capHomeFind(`[data-docid="${nd.id}"] .hm-item-t`); if(n&&!n.value) n.focus(); return; }
+    case 'gal': Object.assign(u,{galerie:!(u.galerie&&_capHome.docs.length), tab:'docs'}); break;
+    case 'new': capHomeNewDoc(a.dataset.kind, a.dataset.m); Object.assign(u,{galerie:false, tab:'docs'}); break;
     case 'doc-import': capHomeDocImport(); return;
     case 'doc-html': if(d) capHomeDocExport(d); return;
     case 'doc-json': if(d) capDownloadBlob(new Blob([JSON.stringify({type:'arcalyse-checklist', version:1, date:new Date().toISOString(), docs:[d]},null,1)],{type:'application/json'}), (d.titre||'check-list').replace(/[^\p{L}\p{N}\-]+/gu,'_')+'.json'); return;
     case 'doc-dup': if(d){ const c=JSON.parse(JSON.stringify(d)); c.id=capHomeUid(); c.titre=d.titre+_L(' (copie)'); c.sections.forEach(x=>{ x.id=capHomeUid(); x.items.forEach(i=>{ i.id=capHomeUid(); i.ok=false; }); }); _capHome.docs.push(c); u.doc=c.id; } break;
-    case 'doc-del': if(d&&confirm(_L(`Supprimer « ${d.titre||_L('(sans titre)')} » ?`))){ _capHome.docs=_capHome.docs.filter(x=>x!==d); u.doc=''; } else return; break;
+    case 'doc-del': if(d&&W.confirm(_L(`Supprimer « ${d.titre||_L('(sans titre)')} » ?`))){ capHomePopClose('doc',d.id); _capHome.docs=_capHome.docs.filter(x=>x!==d); if(u.doc===d.id) u.doc=''; } else return; break;
     case 'doc-revue': if(d){ const ids=capHomePerimIds(d); capRevCibleeDialog({titre:d.titre, consignes:d.head.objet||'', echeance:d.head.date||'', filtre:c=>capHomeComPerim(c,ids)}); } return;
     case 'sec-add': if(d) d.sections.push({id:capHomeUid(), titre:_L('Nouvelle section'), items:[]}); break;
     case 'sec-up': case 'sec-down': if(s) capHomeMove(d.sections, d.sections.indexOf(s), act==='sec-up'?-1:1); break;
-    case 'sec-del': if(s&&(!s.items.length||confirm(_L(`Supprimer la section « ${s.titre} » et ses ${s.items.length} point(s) ?`)))) d.sections=d.sections.filter(x=>x!==s); else return; break;
-    case 'it-add': if(s) capHomeItemAdd(s.id); return;
+    case 'sec-del': if(s&&(!s.items.length||W.confirm(_L(`Supprimer la section « ${s.titre} » et ses ${s.items.length} point(s) ?`)))) d.sections=d.sections.filter(x=>x!==s); else return; break;
+    case 'it-add': if(s) capHomeItemAdd(d, s.id); return;
     case 'it-up': case 'it-down': if(ii>=0) capHomeMove(s.items, ii, act==='it-up'?-1:1); break;
     case 'it-del': if(ii>=0) s.items.splice(ii,1); break;
     case 'it-note': if(ii>=0){ const id=s.items[ii].id; if(u.notes.has(id)&&!s.items[ii].note) u.notes.delete(id); else u.notes.add(id); } break;
-    case 'b-add': { const b={id:capHomeUid(), titre:_L(`Page ${_capHome.boards.length+1}`), items:[]}; _capHome.boards.push(b); u.board=b.id; break; }
-    case 'b-ren': { const n=B&&prompt(_L('Nom de la page :'),B.titre); if(n==null) return; B.titre=n.trim(); break; }
-    case 'b-del': if(B&&(!B.items.length||confirm(_L(`Supprimer la page « ${B.titre} » et ses ${B.items.length} objet(s) ?`)))){ _capHome.boards=_capHome.boards.filter(x=>x!==B); u.board=''; } else return; break;
-    case 'b-txt': { const wb=document.getElementById('hm-wb'); capHomeBoardAdd({k:'txt', x:(wb?wb.scrollLeft:0)+40, y:(wb?wb.scrollTop:0)+40, w:220, h:110, txt:'', col:u.col}, true); return; }
-    case 'bi-del': { const n=t.closest('[data-it]'); if(B&&n) B.items=B.items.filter(x=>x.id!==n.dataset.it); break; }
     default: return;
   }
   capHomeSave(); capHomeRender();
@@ -586,10 +637,10 @@ function capHomeClick(e){
 /** Saisie : fiche projet, titres, champs du plan, points, notes du tableau blanc, recherche de la palette. @param {Event} e */
 function capHomeInput(e){
   const t=e.target;
-  if(t.id==='hm-pal-q'){ _capHomeUi.q=t.value; const l=document.getElementById('hm-pal-l'); if(l) l.innerHTML=capHomePaletteList(); return; }
+  if(t.classList.contains('hm-pal-q')){ _capHomeUi.q=t.value; const l=t.closest('.hm-pal').querySelector('.hm-pal-l'); if(l) l.innerHTML=capHomePaletteList(); return; }
   if(t.dataset.ff){ _capHome.fiche[t.dataset.ff]=t.value; capHomeSaveLater(); return; }
-  if(t.dataset.bt){ const B=capHomeCurBoard(), it=B&&B.items.find(x=>x.id===t.closest('[data-it]').dataset.it); if(it){ it.txt=t.innerText; capHomeSaveLater(); } return; }
-  const d=capHomeCurDoc(); if(!d) return;
+  if(t.dataset.bt){ const B=capHomeBoardOf(t), it=B&&B.items.find(x=>x.id===t.closest('[data-it]').dataset.it); if(it){ it.txt=t.innerText; capHomeSaveLater(); } return; }
+  const d=capHomeDocOf(t); if(!d) return;
   if(t.dataset.df){ d[t.dataset.df]=t.value; const n=document.querySelector(`#cap-view-home .hm-docs-i[data-doc="${d.id}"] .hm-docs-n`); if(n) n.textContent=(d.kind==='plan'?'📋 ':'☑ ')+(t.value||_L('(sans titre)')); capHomeSaveLater(); return; }
   if(t.dataset.hf&&t.tagName!=='SELECT'){ d.head[t.dataset.hf]=t.value; capHomeSaveLater(); return; }
   const s=d.sections.find(x=>x.id===(t.closest('[data-s]')||{dataset:{}}).dataset.s); if(!s) return;
@@ -597,29 +648,10 @@ function capHomeInput(e){
   const i=s.items.find(x=>x.id===(t.closest('[data-i]')||{dataset:{}}).dataset.i);
   if(i&&t.dataset.if&&t.type!=='checkbox'){ i[t.dataset.if]=t.value; capHomeSaveLater(); }
 }
-/** Listes et cases : nouveau document, champs du plan, case d'un point. @param {Event} e */
+/** Listes et cases : champs du plan, case d'un point. @param {Event} e */
 function capHomeChange(e){
-  const t=e.target, d=capHomeCurDoc();
-  if(t.dataset.new){ if(t.value) capHomeNewDoc(t.dataset.new, t.value); capHomeRender(); return; }
+  const t=e.target, d=capHomeDocOf(t);
   if(d&&t.dataset.hf&&t.tagName==='SELECT'){ d.head[t.dataset.hf]=t.value; capHomeSave(); return; }
   if(d&&t.dataset.if==='ok'){ const s=d.sections.find(x=>x.id===t.closest('[data-s]').dataset.s), i=s&&s.items.find(x=>x.id===t.closest('[data-i]').dataset.i);
     if(i){ i.ok=t.checked; if(t.checked) i.okDate=new Date().toISOString(); capHomeSave(); capHomeRender(); } }
-}
-/**
- * Tableau blanc : déplacement d'un objet (poignée d'une note, icône d'un diagramme ou d'un élément) ;
- * un clic sans déplacement sur une icône l'ouvre.
- * @param {PointerEvent} e
- */
-function capHomeBoardDown(e){
-  const h=e.target.closest('[data-mv]'); if(!h||e.button!==0||e.target.closest('[data-a]')) return;
-  const n=h.closest('.hm-it'), B=capHomeCurBoard(), it=B&&B.items.find(x=>x.id===n.dataset.it); if(!it) return;
-  e.preventDefault(); h.setPointerCapture(e.pointerId);
-  const x0=e.clientX, y0=e.clientY, ix=it.x, iy=it.y; let bouge=false;
-  n.parentElement.appendChild(n);   // au premier plan
-  const mv=ev=>{ const dx=ev.clientX-x0, dy=ev.clientY-y0; if(!bouge&&Math.abs(dx)+Math.abs(dy)<4) return; bouge=true;
-    n.classList.add('hm-moving'); n.style.left=Math.max(0,ix+dx)+'px'; n.style.top=Math.max(0,iy+dy)+'px'; };
-  const up=ev=>{ h.removeEventListener('pointermove',mv); h.removeEventListener('pointerup',up); n.classList.remove('hm-moving');
-    if(bouge){ it.x=Math.max(0,Math.round(ix+ev.clientX-x0)); it.y=Math.max(0,Math.round(iy+ev.clientY-y0)); B.items=B.items.filter(x=>x!==it).concat(it); capHomeSave(); }
-    else if(it.k==='ref') capHomeRefOpen(it.ref); };
-  h.addEventListener('pointermove',mv); h.addEventListener('pointerup',up);
 }
