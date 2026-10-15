@@ -288,6 +288,9 @@ PARTS.chaines = async () => {
   await p.evaluate(() => { const c = [...document.querySelectorAll('#cap-view-chains .cap-chain-card')].find(c => /Watch Imposed Video/.test(c.textContent)); c.id = 'guide-card'; c.scrollIntoView(); });
   await wait(300);
   await tall(async () => { await p.evaluate(() => document.getElementById('guide-card').scrollIntoView()); await wait(300); await shot('40-chaines-carte', { sel: '#guide-card', pad: 4 }); }, 1500);
+  await p.click('#guide-card [data-chx-info]').catch(() => {}); await wait(700);
+  await shot('40-chaines-infos', { sel: '#cap-detail', pad: 0 });
+  await p.evaluate(() => { const d = document.getElementById('cap-detail'); if (d) d.style.display = 'none'; });
   await top();
   await p.click('#cap-view-chains >> text=🗺 Vue Relation Map'); await wait(1500);
   await shot('40-chaines-vue-rm');
@@ -450,16 +453,32 @@ PARTS.revue = async () => {
 PARTS.home = async () => {
   await view('home'); await top();
   await shot('05-home-projet');
+  await p.click('#cap-view-home [data-a="dispo"]'); await wait(500);
+  await shot('05-home-disposer');
+  await p.click('#cap-view-home [data-a="dispo"]'); await wait(400);
   await p.locator('#cap-view-home button:visible', { hasText: 'Check-lists & plans' }).first().click(); await wait(500);
   await p.selectOption('#cap-view-home [data-new="list"]', { index: 2 }); await wait(600);
   await p.locator('#cap-view-home .hm-item input[type=checkbox]').nth(0).check(); await p.locator('#cap-view-home .hm-item input[type=checkbox]').nth(1).check(); await wait(300);
   await shot('05-home-checklist');
+  await shot('05-home-nouveau', { sel: '#cap-view-home .hm-docs-new', pad: 6 });
   await p.selectOption('#cap-view-home [data-new="plan"]', { index: 3 }); await wait(600);
   await shot('05-home-plan');
   await p.locator('#cap-view-home button:visible', { hasText: 'Tableaux blancs' }).first().click(); await wait(500);
-  await p.locator('#cap-view-home button', { hasText: 'Texte' }).first().click().catch(() => {}); await wait(500);
-  await p.keyboard.type('Points à revoir avec l\'équipe système'); await wait(300);
+  const zone = async () => (await p.$('#cap-view-home .hm-wb')).boundingBox();
+  const z = await zone();
+  await p.click('#cap-view-home [data-tool="note"]'); await p.mouse.click(z.x + 60, z.y + 60); await wait(400);
+  await p.keyboard.type('Points à revoir avec l\'équipe système'); await wait(200);
+  await p.click('#cap-view-home [data-tool="rect"]');
+  await p.mouse.move(z.x + 380, z.y + 50); await p.mouse.down(); await p.mouse.move(z.x + 620, z.y + 200, { steps: 6 }); await p.mouse.up(); await wait(300);
+  await p.click('#cap-view-home [data-tool="ellipse"]');
+  await p.mouse.move(z.x + 420, z.y + 260); await p.mouse.down(); await p.mouse.move(z.x + 600, z.y + 360, { steps: 6 }); await p.mouse.up(); await wait(300);
+  await p.click('#cap-view-home [data-tool="arrow"]');
+  await p.mouse.move(z.x + 290, z.y + 110); await p.mouse.down(); await p.mouse.move(z.x + 375, z.y + 120, { steps: 6 }); await p.mouse.up(); await wait(300);
+  await p.click('#cap-view-home [data-tool="text"]'); await p.mouse.click(z.x + 400, z.y + 400); await wait(300);
+  await p.keyboard.type('Interfaces cabine'); await wait(200);
+  await p.click('#cap-view-home [data-tool="sel"]'); await p.mouse.click(z.x + 700, z.y + 500); await wait(300);
   await shot('05-home-tableau-blanc');
+  await shot('05-home-tb-barre', { sel: '#cap-view-home .hm-wb-bar', pad: 4 });
 };
 
 /** Thème personnalisé, interface et vues, À propos, aide, visites guidées. */
@@ -479,6 +498,9 @@ PARTS.divers = async () => {
   await view('fex'); await p.evaluate(() => capTourStartView()); await wait(800);
   await shot('98-visite-vue');
   await esc(); await p.evaluate(() => { if (typeof capTourEnd === 'function') capTourEnd(); }); await wait(300);
+  await p.evaluate(() => capTourRevue()); await wait(900);
+  await shot('98-visite-revue');
+  await esc(); await p.evaluate(() => { if (typeof capTourEnd === 'function') capTourEnd(); capRevToggle(false); }); await wait(300);
   await p.click('#b-help', { force: true }); await wait(300); await shot('01-menu-aide', { sel: ['#b-help', '#cap-nav-dd'], pad: 8 }); await esc();
 };
 
@@ -506,7 +528,7 @@ PARTS.aida = async () => {
 PARTS.interface = async () => {
   await view('home'); await top();
   await shot('01-barre-principale', { sel: '#toolbar', pad: 0 });
-  const tb = ['#cap-tb-home .tbtn', '#mode-rm', '[data-open="diag"]', '#cap-v-elements', '[data-open="table"]', '#cap-v-flux', '[data-open="chains"]',
+  const tb = ['#cap-tb-home .tbtn', '#mode-rm', '[data-open="diag"]', '#cap-v-elements', '[data-open="table"]', '#cap-v-flux',
     '#cap-v-analyses', '[data-open="dashboard"]', '#cap-nav-cfg', '#b-file-menu', '#b-save-direct', '#b-cap-watch', '#b-review', '#b-theme-menu', '#b-help'];
   await marks(tb, 'tr');
   await shot('01-barre-principale-reperes', { sel: '#toolbar', pad: 2 });
