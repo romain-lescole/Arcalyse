@@ -1697,3 +1697,13 @@ html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,2
 .hm-txt-libre .hm-txt-b{color:var(--hm-c);font-weight:600;font-size:15px;padding-top:0;}
 .hm-pal-tip{border-top:1px solid var(--c-border);margin-top:4px;padding:6px 8px;}
 #cdg-gauche .cdg-it[draggable="true"],#cap-view-cards .cap-card[draggable="true"]{cursor:grab;}
+/* 🏠 Projet : six cartes sur deux lignes (4 colonnes), accès rapide en tête ; ☑ listes de création */
+.hm-main>.hm-grid{grid-template-columns:repeat(4,minmax(0,1fr));}
+@media (max-width:1150px){.hm-main>.hm-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:760px){.hm-main>.hm-grid{grid-template-columns:1fr;}}
+.hm-dispo .hm-quick{display:flex;flex-wrap:wrap;gap:4px;flex:1 1 0;min-width:0;}
+.hm-dispo .hm-quick .cap-lf-btn{padding:3px 8px;font-size:11.5px;}
+.hm-lien{color:var(--c-accent);text-decoration:none;}
+.hm-lien:hover{text-decoration:underline;}
+.hm-new-l{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:600;color:var(--c-text);}
+.hm-new-l select{font-weight:normal;}

@@ -2,11 +2,11 @@
    🏠 ACCUEIL — page d'accueil du projet (vue affichée à l'ouverture d'un modèle ou d'un projet)
    ───────────────────────────────────────────────────────────────────────
    Trois onglets :
-   • 🏠 Projet : cartes réorganisables (⚙ Disposer : ordre par glisser-déposer, largeur, cartes masquées) —
-     informations (projet Capella, fichiers, version de Capella), fiche projet modifiable, raccourcis des check-lists
-     et des tableaux blancs, contenu du modèle, diagrammes, revue, mises à jour du modèle, accès rapide aux vues ;
-   • ☑ Check-lists & plans de revue : ⚡ check-list rapide, galerie de modèles ARCADIA et de plans de revue ; listes à
-     cocher par sections, points liés à des diagrammes ou des éléments (glisser-déposer depuis la palette 📎) ; plans
+   • 🏠 Projet : accès rapide aux vues, puis six cartes sur deux lignes, réorganisables (⚙ Disposer : ordre par
+     glisser-déposer, largeur, cartes masquées) — projet (fichiers, version de Capella, diagrammes, mises à jour),
+     fiche projet modifiable, raccourcis des check-lists et des tableaux blancs, contenu du modèle, revue ;
+   • ☑ Check-lists & plans de revue : listes « Nouvelle check-list » et « Nouveau plan de revue » (vide ou modèle
+     ARCADIA), import .json ; listes à cocher par sections, points liés à des diagrammes ou des éléments (glisser-déposer depuis la palette 📎) ; plans
      de revue (objet, jalon, participants, périmètre, critères d'entrée, points de contrôle, critères de sortie,
      actions) ; export HTML imprimable, .json réutilisable ;
    • 🧾 Tableaux blancs (60-accueil-tableau-blanc.js) : notes, texte, formes, diagrammes et éléments en icônes cliquables.
@@ -16,9 +16,9 @@
 
 /** Données de l'accueil : fiche projet, check-lists et plans de revue (docs), tableaux blancs (boards). */
 var _capHome = capHomeNorm((()=>{ try{ const el=document.getElementById('cap-home'); return el?JSON.parse(el.textContent):null; }catch(e){ return null; } })());
-/** État de l'affichage (non enregistré) : onglet, document et page de tableau blanc ouverts, galerie de création, recherche de la palette,
+/** État de l'affichage (non enregistré) : onglet, document et page de tableau blanc ouverts, recherche de la palette,
  * outil, couleur, remplissage et objet sélectionné du tableau blanc, constats dépliés, disposition des cartes en cours. */
-const _capHomeUi = { tab:'projet', doc:'', board:'', galerie:false, q:'', tool:'sel', col:'#e3b341', fill:false, sel:'', notes:new Set(), dispo:false };
+const _capHomeUi = { tab:'projet', doc:'', board:'', q:'', tool:'sel', col:'#e3b341', fill:false, sel:'', notes:new Set(), dispo:false };
 /** Type de données glissées (référence vers un diagramme ou un élément). */
 const CAP_HOME_DND='application/x-arcalyse-ref';
 /** Couleurs proposées pour les notes du tableau blanc. */
@@ -183,11 +183,16 @@ function capHomeCartes(){
   const esc=capEsc, F=_capHome.fiche, lig=(k,v)=>v?`<tr><td class="ana-dim">${k}</td><td>${v}</td></tr>`:'';
   const pop=(kind,id)=>`<span class="hm-pop-b" data-a="pop" data-kind="${kind}" data-id="${id}" title="${_L('Ouvrir dans une fenêtre séparée (par exemple sur un autre écran)')}">⧉</span>`;
   return [
-  {k:'projet', l:_L('🔷 Projet'), w:1, f:()=>{ const reps=capHomeReps();
+  {k:'projet', l:_L('🔷 Projet'), w:1, f:()=>{ const reps=capHomeReps(), H=typeof _capWatch!=='undefined'?_capWatch.history:[];
+    const par={}; reps.forEach(r=>{ par[r.couche||'—']=(par[r.couche||'—']||0)+1; });
+    const diag=_capDiag&&_capDiag.texteAird?`<a href="#" class="hm-lien" data-nav="diag" title="${_L('🔲 Ouvrir les diagrammes')}">${esc(_capDiag.nomAird)}</a>`+(reps.length?' · '+_L(`${reps.length} diagramme(s)`)+
+        `<div class="hm-chips">${Object.entries(par).sort((a,b)=>capDiagRang(a[0])-capDiagRang(b[0])).map(([k,n])=>`<span class="hm-stat" style="color:${capDiagCouche(k).color}"><b>${esc(k)}</b> ${n}</span>`).join('')}</div>`:'')
+      :`<span class="ana-dim">${_L('aucun .aird chargé')}</span> <button class="cap-lf-btn" data-a="aird">${_L('📂 Ouvrir le .aird…')}</button>`;
+    const maj=(H.length?`${capWatchDate(H[0].at)} ${capWatchChips(H[0].counts)||_L('aucune différence')}${H.length>1?` <span class="ana-dim">${_L(`(${H.length} dans la session)`)}</span>`:''}`:`<span class="ana-dim">${_L('aucune depuis l\'ouverture')}</span>`)+
+      ` <button class="cap-lf-btn" data-a="update" title="${_L('Compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour après validation')}">🔄</button>`;
     return `<table class="hm-kv">`+lig(_L('Projet Capella'),`<b>${esc(capRevProjectName()||'—')}</b>`)+lig(_L('Modèle'),esc(capCurrentFileName||'—'))+
-    lig(_L('Version de Capella'),esc(capHomeCapellaVersion()))+lig(_L('Diagrammes'),_capDiag&&_capDiag.texteAird?esc(_capDiag.nomAird)+(reps.length?' · '+_L(`${reps.length} diagramme(s)`):''):`<span class="ana-dim">${_L('aucun .aird chargé')}</span> <button class="cap-lf-btn" data-a="aird">${_L('📂 Ouvrir le .aird…')}</button>`)+
-    lig(_L('Page de projet'),typeof _capProjetPage!=='undefined'&&_capProjetPage.nom?esc(_capProjetPage.nom):'')+
-    lig(_L('Éléments'),String(capAllElements.length))+lig(_L('Arcalyse'),esc(CAP_APP_VERSION))+`</table>`; }},
+    lig(_L('Version de Capella'),esc(capHomeCapellaVersion()))+lig(_L('Diagrammes'),diag)+lig(_L('Éléments'),String(capAllElements.length))+
+    lig(_L('Mise à jour'),maj)+lig(_L('Page de projet'),typeof _capProjetPage!=='undefined'&&_capProjetPage.nom?esc(_capProjetPage.nom):'')+lig(_L('Arcalyse'),esc(CAP_APP_VERSION))+`</table>`; }},
   {k:'fiche', l:_L('📝 Fiche projet'), w:2, f:()=>{
     const champ=(k,l,ph,ta)=>`<label class="hm-f"><span>${l}</span>${ta?`<textarea data-ff="${k}" rows="3" placeholder="${ph}">${esc(F[k])}</textarea>`:`<input data-ff="${k}" value="${esc(F[k])}" placeholder="${ph}">`}</label>`;
     return champ('objet',_L('Objet'),_L('Système étudié, but du modèle'),true)+
@@ -196,29 +201,19 @@ function capHomeCartes(){
       champ('notes',_L('Notes'),_L('Hypothèses, liens, informations utiles…'),true); }},
   {k:'docs', l:_L('☑ Check-lists & plans de revue'), w:1, f:()=>(_capHome.docs.length?`<div class="hm-dl">${_capHome.docs.map(d=>`<div class="hm-dl-i" data-doc="${d.id}"><span>${d.kind==='plan'?'📋':'☑'} ${esc(d.titre||_L('(sans titre)'))}${d.kind==='plan'&&d.head.date?` <span class="ana-dim">${esc(capRevDate(d.head.date))}</span>`:''}</span>${capHomeBar(capHomeProgress(d))}${pop('doc',d.id)}</div>`).join('')}</div>`
       :`<div class="ana-dim">${_L('Aucune check-list ni plan de revue.')}</div>`)+
-    `<div class="hm-row"><button class="cap-lf-btn" data-a="quick" title="${_L('Crée une check-list vide et place le curseur sur le premier point')}">${_L('⚡ Check-list rapide')}</button><button class="cap-lf-btn" data-a="gal" title="${_L('Check-lists à partir d\'un modèle, plans de revue')}">${_L('✚ Nouveau…')}</button></div>`},
+    `<div class="hm-row"><button class="cap-lf-btn" data-a="quick" title="${_L('Crée une check-list vide et place le curseur sur le premier point')}">${_L('⚡ Check-list rapide')}</button><button class="cap-lf-btn" data-a="go-docs" title="${_L('Nouvelle check-list à partir d\'un modèle, nouveau plan de revue')}">${_L('☑ Modèles et plans de revue')}</button></div>`},
   {k:'boards', l:_L('🧾 Tableaux blancs'), w:1, f:()=>(_capHome.boards.length?`<div class="hm-dl">${_capHome.boards.map(b=>`<div class="hm-dl-i" data-board-open="${b.id}"><span>🧾 ${esc(b.titre||_L('(sans titre)'))} <span class="ana-dim">${_L(`${b.items.length} objet(s)`)}</span></span>${pop('board',b.id)}</div>`).join('')}</div>`
       :`<div class="ana-dim">${_L('Aucun tableau blanc.')}</div>`)+
     `<div class="hm-row"><button class="cap-lf-btn" data-a="b-new">${_L('✚ Nouveau tableau blanc')}</button></div>`},
   {k:'contenu', l:_L('🧩 Contenu du modèle'), w:2, f:()=>`<div class="hm-layers">${capHomeCouches().map(c=>{ const lv=CAP_LAYERS[c.k];
     return `<div class="hm-layer" style="--hm-c:${lv.color}"><div class="hm-layer-h"><b style="color:${lv.color}">${c.k}</b> <span class="ana-dim">${esc(lv.label)}</span><span style="flex:1"></span><b>${c.n}</b></div>`+
       c.types.map(([t,n])=>`<div class="hm-layer-t"><span>${capIcoType(t,12)} ${esc((CAP_HUMAN_NAMES[t]||{}).h||t)}</span><span>${n}</span></div>`).join('')+`</div>`; }).join('')}</div>`},
-  {k:'diag', l:_L('🔲 Diagrammes'), w:1, f:()=>{ const reps=capHomeReps(); if(!reps.length) return `<div class="ana-dim">${_L('aucun .aird chargé')}</div><button class="cap-lf-btn" data-a="aird">${_L('📂 Ouvrir le .aird…')}</button>`;
-    const par={}; reps.forEach(r=>{ par[r.couche||'—']=(par[r.couche||'—']||0)+1; });
-    return `<div class="hm-chips">${Object.entries(par).sort((a,b)=>capDiagRang(a[0])-capDiagRang(b[0])).map(([k,n])=>{ const lv=capDiagCouche(k);
-      return `<span class="hm-stat" style="color:${lv.color}"><b>${esc(k)}</b> ${n}</span>`; }).join('')}</div><button class="cap-lf-btn" data-nav="diag">${_L('🔲 Ouvrir les diagrammes')}</button>`; }},
   {k:'revue', l:_L('💬 Revue'), w:1, f:()=>{ const cs=_capRev.comments, ouv=cs.filter(c=>!capRevClosed(c)), chk=capRevToCheck().length, late=cs.filter(capRevLate).length;
     return (cs.length?`<div class="hm-chips"><span class="hm-stat"><b>${ouv.length}</b> ${_L('non clos')}</span>`+
       capRevCrits().filter(c=>c.k).map(c=>{ const n=ouv.filter(x=>x.crit===c.k).length; return n?`<span class="hm-stat" style="color:${capTextOn(c.c)}"><b>${n}</b> ${c.l}</span>`:''; }).join('')+
       (chk?`<span class="hm-stat" style="color:var(--c-warn,#e3b341)"><b>${chk}</b> ${_L('à vérifier')}</span>`:'')+(late?`<span class="hm-stat" style="color:var(--c-err,#f85149)"><b>${late}</b> ${_L('en retard')}</span>`:'')+
       `<span class="hm-stat ana-dim">${_L(`${cs.length} au total`)}</span></div>`:`<div class="ana-dim">${_L('Aucun commentaire de revue.')}</div>`)+
-      `<div class="hm-row"><button class="cap-lf-btn" data-a="rev">${_L('💬 Ouvrir la revue')}</button>${cs.length?`<button class="cap-lf-btn" data-a="rev-cible" title="${_L('Page HTML à envoyer aux relecteurs : ils répondent aux commentaires choisis, puis leurs réponses sont réimportées ici')}">${_L('📤 Revue ciblée…')}</button>`:''}</div>`; }},
-  {k:'maj', l:_L('🔄 Mises à jour'), w:1, f:()=>{ const H=typeof _capWatch!=='undefined'?_capWatch.history:[];
-    return (H.length?`<table class="hm-kv">${H.slice(0,5).map(x=>`<tr><td class="ana-dim">${capWatchDate(x.at)}</td><td>${capWatchChips(x.counts)||_L('aucune différence')}</td></tr>`).join('')}</table>`
-      :`<div class="ana-dim">${_L('Aucune mise à jour du modèle depuis son ouverture.')}</div>`)+
-      `<div class="hm-row"><button class="cap-lf-btn" data-a="update" title="${_L('Compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour après validation')}">${_L('🔄 Charger une mise à jour…')}</button></div>`; }},
-  {k:'rapide', l:_L('🚀 Accès rapide'), w:1, f:()=>{ const nav=k=>{ const it=CAP_NAV_ITEMS.find(i=>i.k===k); return it?`<button class="cap-lf-btn" data-nav="${k}" title="${it.t||''}">${it.l}</button>`:''; };
-    return `<div class="hm-quick">${['diag','table','tree','chains','functions','fex','csys','cblk','scen','ana:trace','ana:diff','dashboard'].map(nav).join('')}</div>`; }} ];
+      `<div class="hm-row"><button class="cap-lf-btn" data-a="rev">${_L('💬 Ouvrir la revue')}</button>${cs.length?`<button class="cap-lf-btn" data-a="rev-cible" title="${_L('Page HTML à envoyer aux relecteurs : ils répondent aux commentaires choisis, puis leurs réponses sont réimportées ici')}">${_L('📤 Revue ciblée…')}</button>`:''}</div>`; }} ];
 }
 /** @returns {string[]} clés des cartes affichées, dans l'ordre choisi (cartes nouvelles ajoutées à la fin) */
 function capHomeCartesOrdre(){
@@ -229,8 +224,10 @@ function capHomeCartesOrdre(){
 /** Onglet 🏠 Projet : cartes (ordre, largeur et cartes masquées réglables par ⚙ Disposer). @returns {string} HTML */
 function capHomeProjetHtml(){
   const u=_capHomeUi, C=_capHome.cartes, all=capHomeCartes(), esc=capEsc;
-  let bar=`<div class="hm-dispo"><button class="cap-lf-btn${u.dispo?' active':''}" data-a="dispo" title="${_L('Réorganiser la page : glisser les cartes, largeur, cartes masquées')}">${u.dispo?_L('✔ Terminer la disposition'):_L('⚙ Disposer les cartes')}</button>`;
-  if(u.dispo) bar+=`<span class="hm-drop-hint">${_L('Glissez une carte par ⠿ sur une autre pour la placer avant elle ; ⇔ largeur ; ✕ masquer.')}</span>`+
+  const nav=k=>{ const it=CAP_NAV_ITEMS.find(i=>i.k===k); return it?`<button class="cap-lf-btn" data-nav="${k}" title="${it.t||''}">${it.l}</button>`:''; };
+  let bar=`<div class="hm-dispo"><span class="hm-quick" title="${_L('Accès rapide aux vues')}">${['diag','table','tree','chains','functions','fex','csys','cblk','scen','ana:trace','ana:diff','dashboard'].map(nav).join('')}</span>`+
+    `<span style="flex:1"></span><button class="cap-lf-btn${u.dispo?' active':''}" data-a="dispo" title="${_L('Réorganiser la page : glisser les cartes, largeur, cartes masquées')}">${u.dispo?_L('✔ Terminer la disposition'):_L('⚙ Disposer les cartes')}</button>`;
+  if(u.dispo) bar+=`</div><div class="hm-dispo"><span class="hm-drop-hint">${_L('Glissez une carte par ⠿ sur une autre pour la placer avant elle ; ⇔ largeur ; ✕ masquer.')}</span>`+
     (C.masques.length?`<span class="ana-dim">${_L('Masquées :')}</span>`+C.masques.map(k=>{ const c=all.find(x=>x.k===k); return c?`<button class="cap-lf-btn" data-a="carte-show" data-k="${k}">＋ ${c.l}</button>`:''; }).join(''):'')+
     `<button class="cap-lf-btn" data-a="cartes-reset">${_L('↺ Disposition par défaut')}</button>`;
   bar+=`</div>`;
@@ -268,6 +265,7 @@ function capHomeModeles(){ return [
  * Crée une check-list ou un plan de revue et l'ouvre.
  * @param {'list'|'plan'} kind - Check-list ou plan de revue
  * @param {string} mk - Modèle (capHomeModeles) : points proposés (points de contrôle pour un plan)
+ * @returns {object} document créé
  */
 function capHomeNewDoc(kind, mk){
   const M=capHomeModeles().find(x=>x.k===mk)||capHomeModeles()[0];
@@ -281,8 +279,9 @@ function capHomeNewDoc(kind, mk){
         sec(_L('2. Points de contrôle'),pts),
         sec(_L('3. Critères de sortie'),[_L('Aucun commentaire bloquant ouvert'),_L('Commentaires majeurs traités ou planifiés'),_L('Décision de revue prononcée et diffusée')]),
         sec(_L('4. Actions et décisions'),[])]};
-  } else d={id:capHomeUid(), kind:'list', titre:M.k==='vide'?_L('Nouvelle check-list'):M.l.replace(/^\S+\s/,''), created:new Date().toISOString(), head:{perim:[]}, sections:M.s.map(s=>sec(s[0],s[1]))};
+  } else d={id:capHomeUid(), kind:'list', titre:M.k==='vide'?_L('Nouvelle check-list'):M.l.replace(/^\S+\s/,''), created:new Date().toISOString(), head:{perim:[]}, sections:M.s.map(s=>sec(s[0],s[1].length?s[1]:['']))};
   _capHome.docs.push(d); _capHomeUi.doc=d.id; capHomeSave();
+  return d;
 }
 
 /**
@@ -295,39 +294,27 @@ function capHomeQuickDoc(titre, lignes){
   const pts=String(lignes||'').split(/\r?\n/).map(s=>s.replace(/^\s*(?:[-*•☐☑✔]|\d+[.)])\s*/,'').trim()).filter(Boolean);
   const d={id:capHomeUid(), kind:'list', titre:(titre||'').trim()||_L(`Check-list du ${new Date().toLocaleDateString('fr-FR')}`), created:new Date().toISOString(), head:{perim:[]},
     sections:[{id:capHomeUid(), titre:_L('Points'), items:(pts.length?pts:['']).map(x=>({id:capHomeUid(), txt:x, ok:false, refs:[]}))}]};
-  _capHome.docs.push(d); Object.assign(_capHomeUi,{doc:d.id, galerie:false, tab:'docs'}); capHomeSave();
+  _capHome.docs.push(d); Object.assign(_capHomeUi,{doc:d.id, tab:'docs'}); capHomeSave();
   return d;
 }
 
-/** Onglet ☑ Check-lists & plans de revue : liste des documents, galerie de création ou document ouvert. @returns {string} HTML */
+/** Onglet ☑ Check-lists & plans de revue : création (listes « Nouvelle check-list », « Nouveau plan de revue »), import,
+ * liste des documents, document ouvert. @returns {string} HTML */
 function capHomeDocsHtml(){
-  const u=_capHomeUi, esc=capEsc;
+  const u=_capHomeUi, esc=capEsc, M=capHomeModeles(), nom=m=>m.l.replace(/^\S+\s/,'');
   if(!_capHome.docs.some(d=>d.id===u.doc)) u.doc=_capHome.docs.length?_capHome.docs[0].id:'';
-  const galerie=u.galerie||!_capHome.docs.length;
   const liste=`<aside class="hm-docs"><div class="hm-docs-new">`+
-    `<button class="phl-export-btn hm-quick-b" data-a="quick" title="${_L('Crée une check-list vide et place le curseur sur le premier point (Entrée : point suivant)')}">${_L('⚡ Check-list rapide')}</button>`+
-    `<button class="cap-lf-btn${galerie?' active':''}" data-a="gal" title="${_L('Check-lists à partir d\'un modèle, plans de revue, check-list à coller')}">${_L('✚ Nouveau… (modèles, plan de revue)')}</button>`+
+    `<label class="hm-new-l">${_L('☑ Nouvelle check-list')}<select data-new="list" title="${_L('Crée une check-list : vide (à remplir) ou à partir d\'un modèle ARCADIA')}">`+
+      `<option value="" selected disabled>${_L('Choisir un modèle…')}</option>${M.map(m=>`<option value="${m.k}">${m.k==='vide'?_L('Vide (à remplir)'):esc(nom(m))}</option>`).join('')}</select></label>`+
+    `<label class="hm-new-l">${_L('📋 Nouveau plan de revue')}<select data-new="plan" title="${_L('Crée un plan de revue : objet, jalon, participants, périmètre, critères d\'entrée et de sortie, points de contrôle, actions')}">`+
+      `<option value="" selected disabled>${_L('Choisir les points de contrôle…')}</option>${M.map(m=>`<option value="${m.k}">${m.k==='vide'?_L('Plan vide (points à écrire)'):esc(nom(m))}</option>`).join('')}</select></label>`+
     `<button class="cap-lf-btn" data-a="doc-import" title="${_L('Importer une check-list ou un plan enregistré en .json (autre projet)')}">${_L('📂 Importer…')}</button></div>`+
-    _capHome.docs.map(d=>`<div class="hm-docs-i${d.id===u.doc&&!galerie?' on':''}" data-doc="${d.id}"><span class="hm-docs-n">${d.kind==='plan'?'📋':'☑'} ${esc(d.titre||_L('(sans titre)'))}</span>${capHomeBar(capHomeProgress(d))}`+
-      `<span class="hm-pop-b" data-a="pop" data-kind="doc" data-id="${d.id}" title="${_L('Ouvrir dans une fenêtre séparée (par exemple sur un autre écran)')}">⧉</span></div>`).join('')+`</aside>`;
+    (_capHome.docs.length?_capHome.docs.map(d=>`<div class="hm-docs-i${d.id===u.doc?' on':''}" data-doc="${d.id}"><span class="hm-docs-n">${d.kind==='plan'?'📋':'☑'} ${esc(d.titre||_L('(sans titre)'))}</span>${capHomeBar(capHomeProgress(d))}`+
+      `<span class="hm-pop-b" data-a="pop" data-kind="doc" data-id="${d.id}" title="${_L('Ouvrir dans une fenêtre séparée (par exemple sur un autre écran)')}">⧉</span></div>`).join('')
+      :`<div class="hm-empty">${_L('Créez une check-list ou un plan de revue avec les listes ci-dessus.<br><br>Glissez ensuite des diagrammes et des éléments depuis la palette 📎 à droite sur les points.')}</div>`)+`</aside>`;
   const d=_capHome.docs.find(x=>x.id===u.doc);
-  const main=galerie?capHomeGalerieHtml():d?(capHomePopWin('doc',d.id)?capHomePopPlace('doc',d):`<div class="hm-doc" data-docid="${d.id}">${capHomeDocHtml(d)}</div>`):'';
+  const main=d?(capHomePopWin('doc',d.id)?capHomePopPlace('doc',d):`<div class="hm-doc" data-docid="${d.id}">${capHomeDocHtml(d)}</div>`):'';
   return `<div class="hm-main hm-docs-w">${liste}${main}</div>`;
-}
-
-/** Galerie de création : check-list rapide (points collés), modèles de check-lists, plans de revue. @returns {string} HTML */
-function capHomeGalerieHtml(){
-  const M=capHomeModeles().filter(m=>m.k!=='vide'), n=m=>m.s.reduce((t,s)=>t+s[1].length,0);
-  const carte=(kind,m,titre,desc)=>`<div class="hm-gal-c" data-a="new" data-kind="${kind}" data-m="${m.k}" title="${_L('Créer')}"><b>${titre}</b><span class="ana-dim">${desc}</span></div>`;
-  return `<div class="hm-doc hm-gal">`+
-    `<h2>${_L('⚡ Check-list rapide')}</h2><div class="hm-gal-q">`+
-    `<input class="hm-gal-t" placeholder="${_L('Titre (facultatif) — ex. Points à vérifier avant la revue')}">`+
-    `<textarea class="hm-gal-l" rows="5" placeholder="${_L('Un point par ligne (vous pouvez coller une liste : tirets et numéros sont retirés). Vide : une check-list avec un premier point à remplir.')}"></textarea>`+
-    `<div class="hm-row"><button class="phl-export-btn" data-a="quick-create" style="margin-left:0">${_L('✚ Créer la check-list')}</button>`+
-    `<span class="hm-drop-hint">${_L('Ensuite : Entrée ajoute un point, glissez des diagrammes et des éléments (📎) sur les points, ⧉ ouvre la liste dans une fenêtre séparée.')}</span></div></div>`+
-    `<h2>${_L('☑ Check-list à partir d\'un modèle')}</h2><div class="hm-gal-g">${M.map(m=>carte('list',m,m.l,_L(`${n(m)} point(s) · `)+m.s.map(s=>s[0]).join(' · '))).join('')}</div>`+
-    `<h2>${_L('📋 Plan de revue')}</h2><p class="hm-drop-hint">${_L('En-tête (objet, jalon, date, lieu, animateur, statut, décision, participants et rôles, documents), périmètre (diagrammes et éléments glissés), puis 1. Critères d\'entrée · 2. Points de contrôle · 3. Critères de sortie · 4. Actions et décisions.')}</p>`+
-    `<div class="hm-gal-g">${carte('plan',{k:'vide'},_L('📋 Plan vide'),_L('Points de contrôle à écrire'))}${M.map(m=>carte('plan',m,_L('📋 Plan — ')+m.l.replace(/^\S+\s/,''),_L(`${n(m)} point(s) de contrôle`))).join('')}</div></div>`;
 }
 
 /**
@@ -595,7 +582,7 @@ function capHomeClick(e){
   if(a0&&a0.dataset.a==='pop'){ e.stopPropagation(); capHomePopOpen(a0.dataset.kind, a0.dataset.id); return; }
   const go=t.closest('[data-go]'); if(go){ try{ capHomeRefOpen(JSON.parse(go.dataset.go)); }catch(_){} return; }
   const pal=t.closest('.hm-pal-i'); if(pal){ try{ capHomeRefOpen(JSON.parse(pal.dataset.ref)); }catch(_){} return; }
-  const dl=t.closest('[data-doc]'); if(dl){ Object.assign(u,{doc:dl.dataset.doc, tab:'docs', galerie:false}); capHomeRender(); return; }
+  const dl=t.closest('[data-doc]'); if(dl){ Object.assign(u,{doc:dl.dataset.doc, tab:'docs'}); capHomeRender(); return; }
   const bo=t.closest('[data-board-open]'); if(bo){ Object.assign(u,{board:bo.dataset.boardOpen, tab:'board'}); capHomeRender(); return; }
   if(capHomeBoardClick(e)) return;   // tableau blanc : pages, outils, couleurs, sélection (60)
   const a=a0; if(!a) return;
@@ -613,10 +600,7 @@ function capHomeClick(e){
     case 'carte-wide': { const c=capHomeCartes().find(x=>x.k===a.dataset.k), w=_capHome.cartes.larges[a.dataset.k]||c.w; _capHome.cartes.larges[a.dataset.k]=w===2?1:2; break; }
     case 'cartes-reset': _capHome.cartes={ordre:[], masques:[], larges:{}}; break;
     case 'quick': { const nd=capHomeQuickDoc(); capHomeRender(); const n=capHomeFind(`[data-docid="${nd.id}"] .hm-item-t`); if(n) n.focus(); return; }
-    case 'quick-create': { const g=t.closest('.hm-gal'), nd=capHomeQuickDoc(g.querySelector('.hm-gal-t').value, g.querySelector('.hm-gal-l').value); capHomeRender();
-      const n=capHomeFind(`[data-docid="${nd.id}"] .hm-item-t`); if(n&&!n.value) n.focus(); return; }
-    case 'gal': Object.assign(u,{galerie:!(u.galerie&&_capHome.docs.length), tab:'docs'}); break;
-    case 'new': capHomeNewDoc(a.dataset.kind, a.dataset.m); Object.assign(u,{galerie:false, tab:'docs'}); break;
+    case 'go-docs': u.tab='docs'; break;
     case 'doc-import': capHomeDocImport(); return;
     case 'doc-html': if(d) capHomeDocExport(d); return;
     case 'doc-json': if(d) capDownloadBlob(new Blob([JSON.stringify({type:'arcalyse-checklist', version:1, date:new Date().toISOString(), docs:[d]},null,1)],{type:'application/json'}), (d.titre||'check-list').replace(/[^\p{L}\p{N}\-]+/gu,'_')+'.json'); return;
@@ -648,9 +632,11 @@ function capHomeInput(e){
   const i=s.items.find(x=>x.id===(t.closest('[data-i]')||{dataset:{}}).dataset.i);
   if(i&&t.dataset.if&&t.type!=='checkbox'){ i[t.dataset.if]=t.value; capHomeSaveLater(); }
 }
-/** Listes et cases : champs du plan, case d'un point. @param {Event} e */
+/** Listes et cases : création d'une check-list ou d'un plan, champs du plan, case d'un point. @param {Event} e */
 function capHomeChange(e){
   const t=e.target, d=capHomeDocOf(t);
+  if(t.dataset.new){ const v=t.value; if(!v) return; const nd=capHomeNewDoc(t.dataset.new, v); capHomeRender();
+    if(nd.kind==='list'&&v==='vide'){ const n=capHomeFind(`[data-docid="${nd.id}"] .hm-item-t`); if(n) n.focus(); } return; }
   if(d&&t.dataset.hf&&t.tagName==='SELECT'){ d.head[t.dataset.hf]=t.value; capHomeSave(); return; }
   if(d&&t.dataset.if==='ok'){ const s=d.sections.find(x=>x.id===t.closest('[data-s]').dataset.s), i=s&&s.items.find(x=>x.id===t.closest('[data-i]').dataset.i);
     if(i){ i.ok=t.checked; if(t.checked) i.okDate=new Date().toISOString(); capHomeSave(); capHomeRender(); } }

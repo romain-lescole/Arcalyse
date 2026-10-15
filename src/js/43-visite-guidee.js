@@ -157,10 +157,12 @@ var CAP_TOUR_VIEWS={
   home:{l:_L('🏠 Accueil'), steps:[
     {pre:()=>capTourHome('projet'), t:_L('🏠 Accueil'), x:_L('La page d\'accueil du projet, ouverte au chargement d\'un modèle ou d\'un projet. Tout ce qui y est saisi est enregistré dans la page (💾).')},
     {s:'#cap-view-home .hm-bar .tb-grp', t:_L('🗂 Trois onglets'), x:_L('<b>🏠 Projet</b> (informations), <b>☑ Check-lists & plans de revue</b>, <b>🧾 Tableaux blancs</b>.')},
+    {s:'#cap-view-home .hm-quick', t:_L('🚀 Accès rapide'), x:_L('Les vues les plus utilisées, en un clic.')},
     {s:'#cap-view-home [data-a="dispo"]', t:_L('⚙ Disposer les cartes'), x:_L('Réorganisez la page comme un tableau de bord : glissez une carte par ⠿ sur une autre, ⇔ change sa largeur, ✕ la masque (＋ pour la réafficher), ↺ revient à la disposition par défaut.')},
     {s:'#cap-view-home [data-carte="fiche"]', t:_L('📝 Fiche projet'), x:_L('Objet, phase, version, responsable, équipe, notes : à remplir librement.')},
     {s:'#cap-view-home [data-carte="docs"],#cap-view-home [data-carte="boards"]', t:_L('☑ 🧾 Raccourcis'), x:_L('Vos check-lists, plans de revue et tableaux blancs : clic pour les ouvrir, ⧉ pour les ouvrir dans une fenêtre séparée ; <b>⚡ Check-list rapide</b> en crée une tout de suite.')},
-    {pre:()=>capTourHome('docs'), s:'#cap-view-home .hm-docs-new', t:_L('✚ Créer une check-list'), x:_L('<b>⚡ Check-list rapide</b> : une liste vide, curseur sur le premier point (Entrée : point suivant). <b>✚ Nouveau…</b> : coller une liste, partir d\'un modèle ARCADIA (qualité, revues OA, SA, LA, PA) ou créer un <b>📋 plan de revue</b>.')},
+    {s:'#cap-view-home [data-carte="projet"]', t:_L('🔷 Projet'), x:_L('Fichiers, version de Capella, diagrammes chargés (par couche ; clic sur le nom : 🔲 Diagrammes Capella), dernière mise à jour du modèle (🔄 : en charger une).')},
+    {pre:()=>capTourHome('docs'), s:'#cap-view-home .hm-docs-new', t:_L('✚ Créer une check-list'), x:_L('<b>☑ Nouvelle check-list</b> : choisissez « Vide (à remplir) » (curseur sur le premier point, Entrée : point suivant) ou un modèle ARCADIA (qualité, revues OA, SA, LA, PA). <b>📋 Nouveau plan de revue</b> : vide ou avec les points de contrôle d\'un modèle. <b>📂 Importer…</b> : une check-list enregistrée en .json.')},
     {s:'#cap-view-home .hm-pal', t:_L('📎 Glisser-déposer'), x:_L('Cherchez un diagramme ou un élément et glissez-le sur un point (il y est lié), sur « ✚ Point » (nouveau point lié), sur le périmètre d\'un plan ou sur un tableau blanc. Clic : l\'ouvrir.')},
     {s:'#cap-view-home .hm-docs-i [data-a="pop"]', one:true, t:_L('⧉ Fenêtre séparée'), x:_L('Ouvre la check-list dans sa propre fenêtre (autre écran) : vous pouvez alors y glisser des diagrammes depuis 🔲 Diagrammes Capella et des éléments depuis 🧭 Explorateur ou ⚡ Chaînes.')},
     {pre:()=>capTourHome('board'), s:'#cap-view-home .hm-tool', t:_L('🧰 Outils du tableau blanc'), x:_L('↖ sélection et déplacement · 🗒 note · T texte libre · ▭ rectangle · ◯ ellipse (Maj : cercle) · ╱ trait · → flèche : glissez sur le tableau pour dessiner.')},
@@ -307,7 +309,7 @@ var _capTour=null;   // visite en cours : {i, steps} ou null
  * Visite de 🏠 Accueil : affiche l'onglet présenté par l'étape.
  * @param {string} tab - 'projet' | 'docs' | 'board'
  */
-function capTourHome(tab){ Object.assign(_capHomeUi,{tab, galerie:false, dispo:false}); if(tab==='docs'&&!_capHome.docs.length) _capHomeUi.galerie=true; capHomeRender(); }
+function capTourHome(tab){ Object.assign(_capHomeUi,{tab, dispo:false}); capHomeRender(); }
 
 /** Clé de la vue affichée pour les visites contextuelles.
  * @returns {string} '@rm' ou vue Capella (capCurrentView)
