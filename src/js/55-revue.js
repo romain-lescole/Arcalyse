@@ -302,6 +302,7 @@ function capRevRender(){
       `<div class="ctx-i" data-a="cible" title="${_L('Page HTML autonome à envoyer aux relecteurs : ils répondent aux commentaires choisis et en ajoutent ; leurs réponses se réimportent ici')}">${_L('📤 Revue ciblée (page HTML à faire relire)…')}</div>`+
       _L(`<div class="crv-dd-h">L'export garde la revue hors de la page, pour la transmettre ou réunir celles de plusieurs relecteurs (l'import ajoute les nouveaux commentaires et garde la version la plus récente des autres).</div>`)+
       (nNon?`<div class="crv-dd-h" style="color:var(--c-warn,#e3b341)">${_L(`${nNon} commentaire(s) modifié(s) depuis le dernier enregistrement ou export.`)}</div>`:'')+`</div>`:'')+`</span>`+
+    `<button class="cap-lf-btn" data-a="tour" title="${_L('Visite guidée du panneau 💬 Revue')}">🎓</button>`+
     `<button class="cap-lf-btn" data-a="pop" title="${pop?_L('Ramener le panneau dans la page'):_L('Ouvrir le panneau dans une fenêtre séparée (par exemple sur un autre écran)')}">${pop?'⧈':'⧉'}</button>`+
     (pop?'':`<button class="cap-lf-btn" data-a="close" title="${_L('Fermer')}">✕</button>`)+`</div>`+
     `<div class="crv-tabs">${tab('list',_L(`💬 Commentaires <span class="crv-n">${nOpen}</span>`),_L('Liste des commentaires, filtres et recherche'))}`+
@@ -411,6 +412,7 @@ function capRevPanelClick(e){
   if(act==='close'){ capRevToggle(false); return; }
   if(act==='dd'){ _capRevUi.dd=!_capRevUi.dd; capRevRender(); return; }
   if(act==='pop'){ if(capRevPop()) capRevPop().close(); else capRevPopOut(); return; }
+  if(act==='tour'){ capTourRevue(); return; }
   if(act==='export'||act==='import'||act==='cible') _capRevUi.dd=false;
   if(act==='cible'){ capRevRender(); capRevCibleeDialog(); return; }
   if(act==='new'){ capRevNew(u.elId&&capGetElementById_(u.elId)?[{id:u.elId}]:[]); return; }

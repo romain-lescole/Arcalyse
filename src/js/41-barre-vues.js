@@ -188,7 +188,7 @@ function capNavMenu(g, anchor){
       const a=e.target.closest('[data-act]');
       if(a){ capNavClose(); ({open:()=>capPickCapellaFile(), folder:()=>capOpenProjectFolder(), projet:()=>capProjetPagePick(), save:()=>capSavePageDirect(false), saveas:()=>capSavePageDirect(true),
         page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor(), update:()=>capCfgLoadUpdate(), cfgsave:()=>capCfgDialog('save'), cfgload:()=>capCfgLoadFile(),
-        help:()=>openHelpModal(), tour:()=>capTourStart(), tourview:()=>capTourStartView(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
+        help:()=>openHelpModal(), tour:()=>capTourStart(), tourview:()=>capTourStartView(), tourrev:()=>capTourRevue(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
       if(e.target.closest('[data-reset]')){ _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); capNavSave(); capNavRender(); capNavMenuFill(); }
     });
     dd.addEventListener('change',e=>{
@@ -248,6 +248,7 @@ function capNavMenuFill(){
       <div class="ctx-i" data-act="tour" title="Découvrir l'interface pas à pas">🎓 Visite guidée</div>`)+
       (v?_L(`<div class="ctx-i" data-act="tourview" title="Présente les menus et les commandes de la vue affichée">🎯 Visite de cette vue <span class="cap-nav-g">${v.l}</span></div>`)
         :_L(`<div class="cap-nav-hint">🎯 Chargez un modèle pour la visite de chaque vue.</div>`))+
+      _L(`<div class="ctx-i" data-act="tourrev" title="Présente le panneau 💬 Revue : commentaires, vérification, rapport, revue ciblée, fenêtre séparée">💬 Visite de la revue</div>`)+
       _L(`<div class="cw-m-sep"></div><div class="ctx-i" data-act="about" title="Version, auteur, licence, composants tiers, informations techniques">ℹ À propos</div>`);
     return;
   }

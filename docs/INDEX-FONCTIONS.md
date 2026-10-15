@@ -541,7 +541,7 @@
 - `capWatchShowDelta` (l. 440) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 520) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 308 lignes
+## 41-barre-vues.js — 309 lignes
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
 - `CAP_NAV_GROUPS` (l. 38) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
@@ -571,32 +571,35 @@
 - `capTfFilter` (l. 127) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
 - `capTfWatch` (l. 149) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
 
-## 43-visite-guidee.js — 494 lignes
+## 43-visite-guidee.js — 518 lignes
 
 - `CAP_TOUR_STEPS` (l. 12) — Étapes de la visite générale : s = sélecteur CSS de la zone (toutes les correspondances visibles sont encadrées
-- `CAP_TOUR_EXPLORE` (l. 64) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
-- `CAP_TOUR_FLUX` (l. 79) — Étapes communes aux vues de 📡 Flux & interfaces (onglets de navigation).
-- `CAP_TOUR_ANA_TXT` (l. 82) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
-- `capTourRmCtx` (l. 95) — Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
-- `CAP_TOUR_VIEWS` (l. 109) — Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
-- `CAP_TOUR_START` (l. 275) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
-- `CAP_TOUR_AFTER` (l. 292) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
-- `capTourHome` (l. 312) — Visite de 🏠 Accueil : affiche l'onglet présenté par l'étape.
-- `capTourCtxKey` (l. 317) — Clé de la vue affichée pour les visites contextuelles.
-- `capTourCtx` (l. 325) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
-- `capTourEls` (l. 333) — Éléments affichés désignés par le sélecteur d'une étape.
-- `capTourVisible` (l. 344) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
-- `capTourStart` (l. 354) — Lance une visite guidée depuis sa première étape.
-- `capTourStartView` (l. 375) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
-- `capTourGo` (l. 383) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
-- `capTourPos` (l. 403) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
-- `capTourRenderPop` (l. 410) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
-- `capTourPlace` (l. 422) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
-- `capTourKey` (l. 454) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
-- `capTourEnd` (l. 463) — Quitte la visite guidée et retire la mise en évidence.
-- `capTourHelpMenu` (l. 470) — Ouvre le menu ? Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
-- `capTourStartHere` (l. 477) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
-- `capTourResumeAfterLoad` (l. 484) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
+- `CAP_TOUR_EXPLORE` (l. 66) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
+- `CAP_TOUR_FLUX` (l. 81) — Étapes communes aux vues de 📡 Flux & interfaces (onglets de navigation).
+- `CAP_TOUR_ANA_TXT` (l. 84) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
+- `capTourRmCtx` (l. 97) — Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
+- `CAP_TOUR_VIEWS` (l. 111) — Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
+- `CAP_TOUR_START` (l. 278) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
+- `CAP_TOUR_AFTER` (l. 295) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
+- `CAP_TOUR_REVUE` (l. 312) — Visite du panneau 💬 Revue (ce n'est pas une vue : lancée par 🎓 dans le panneau ou par ? Aide ▾ → 💬 Visite de la revue).
+- `capTourRev` (l. 328) — Visite de 💬 Revue : panneau ouvert dans la page (ramené s'il est dans sa fenêtre séparée) sur l'onglet présenté.
+- `capTourRevue` (l. 330) — Lance la visite de 💬 Revue.
+- `capTourHome` (l. 336) — Visite de 🏠 Accueil : affiche l'onglet présenté par l'étape.
+- `capTourCtxKey` (l. 341) — Clé de la vue affichée pour les visites contextuelles.
+- `capTourCtx` (l. 349) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
+- `capTourEls` (l. 357) — Éléments affichés désignés par le sélecteur d'une étape.
+- `capTourVisible` (l. 368) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
+- `capTourStart` (l. 378) — Lance une visite guidée depuis sa première étape.
+- `capTourStartView` (l. 399) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
+- `capTourGo` (l. 407) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
+- `capTourPos` (l. 427) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
+- `capTourRenderPop` (l. 434) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
+- `capTourPlace` (l. 446) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
+- `capTourKey` (l. 478) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
+- `capTourEnd` (l. 487) — Quitte la visite guidée et retire la mise en évidence.
+- `capTourHelpMenu` (l. 494) — Ouvre le menu ? Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
+- `capTourStartHere` (l. 501) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
+- `capTourResumeAfterLoad` (l. 508) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
 
 ## 44-functional-exchange.js — 512 lignes
 
@@ -836,7 +839,7 @@
 - `capDiagExport` (l. 1037) — Export groupé des diagrammes en planches : capture de tous les diagrammes, puis pagination
 - `capDiagExportHtml` (l. 1108) — Rapport HTML autonome : onglet Sommaire (tableau avec liens) et onglet Planches
 
-## 55-revue.js — 1198 lignes
+## 55-revue.js — 1200 lignes
 
 - `capRevNorm` (l. 27) — Complète des données de revue (lues dans la page ou un fichier) avec les valeurs par défaut.
 - `capRevStatuts` (l. 36) — @returns {object[]} statuts d'un commentaire {k, l, c, i} (k : valeur enregistrée)
@@ -879,57 +882,57 @@
 - `capRevPopTheme` (l. 276) — Recopie le thème de la page (attributs et variables de couleur de <html>) dans la fenêtre séparée. @param {Window} w
 - `capRevPopBack` (l. 281) — Fenêtre séparée fermée : le panneau revient (fermé) dans la page.
 - `capRevRender` (l. 289) — Affiche le contenu du panneau 💬 Revue (onglet courant).
-- `capRevPeople` (l. 317) — Personnes connues : participants, auteurs et responsables des commentaires. @returns {string[]}
-- `capRevFiltered` (l. 323) — @returns {object[]} commentaires de l'onglet 💬 Commentaires, filtrés et triés
-- `capRevListHtml` (l. 345) — Onglet 💬 Commentaires : filtres et cartes. @returns {string} HTML
-- `capRevCardHtml` (l. 365) — Carte d'un commentaire (repliée : en-tête, titre, méta ; dépliée : texte complet, réponses, actions).
-- `capRevTargetsHtml` (l. 394) — Pastilles des cibles d'un commentaire (élément + champ, diagramme), cliquables. @param {object} c @returns {string} HTML
-- `capRevPanelClick` (l. 404) — Clics du panneau (délégation). @param {MouseEvent} e
-- `capRevPanelInput` (l. 435) — Saisie dans le panneau : recherche, réglages. @param {Event} e
-- `capRevPanelChange` (l. 440) — Listes et cases du panneau : filtres, statut d'un commentaire, réglages. @param {Event} e
-- `capRevGet` (l. 452) — @param {string} id @returns {object|undefined} commentaire
-- `capRevGoto` (l. 459) — Montre la cible d'un commentaire : sa note dans le diagramme (s'il a été posé sur un diagramme et que le .aird
-- `capRevValidate` (l. 470) — Valide un commentaire (correction vérifiée) : statut Validé, date et vérificateur. @param {object} c
-- `capRevResnap` (l. 475) — Prend la version actuelle du modèle comme nouvelle référence des cibles d'un commentaire. @param {object} c
-- `capRevNew` (l. 486) — Nouveau commentaire : ouvre l'éditeur avec ses cibles (et sa note de diagramme) déjà renseignées.
-- `capRevEdit` (l. 494) — Éditeur d'un commentaire (fenêtre) : texte (seul champ obligatoire), titre, criticité, catégorie, statut,
-- `capRevDetailHead` (l. 600) — Boutons 💬 du panneau de détail, sous le nom de l'élément : commenter l'élément, son nom, sa description.
-- `capRevAttrBtn` (l. 614) — Petit bouton 💬 d'un attribut du panneau de détail (visible au survol) : commenter cet attribut.
-- `capRevDetailSection` (l. 623) — Section « Commentaires » du panneau de détail : commentaires portant sur l'élément.
-- `capRevDetailSectionIn` (l. 633) — Contenu de la section « Commentaires » du panneau de détail.
-- `capRevShow` (l. 642) — Ouvre 💬 Revue sur un commentaire (déplié). @param {string} id
-- `capRevShowFor` (l. 648) — Ouvre 💬 Revue sur les commentaires d'un élément. @param {string} id
-- `CAP_REV_ID_ATTRS` (l. 653) — Attributs portant l'identifiant d'un élément du modèle dans les vues (blocs, tableaux, listes, diagrammes).
-- `capRevElementAt` (l. 660) — Élément du modèle désigné par un nœud de l'interface (lui ou un de ses parents) : attribut d'identifiant
-- `capRevContext` (l. 674) — Menu du clic droit dans les vues : sur un élément, commenter l'élément, son nom, sa description, voir ses commentaires.
-- `capRevShowDiag` (l. 711) — Ouvre 💬 Revue sur les notes du diagramme ouvert.
-- `capRevMarkSchedule` (l. 717) — Programme la mise à jour des marques 💬 (après un rendu de vue).
-- `capRevMark` (l. 719) — Marque d'un 💬 les blocs, cartes et noms cliquables des éléments qui ont des commentaires non clos.
-- `capRevDiagUid` (l. 735) — @returns {string} identifiant du diagramme ouvert dans la visionneuse ('' sinon)
-- `capRevDiagBar` (l. 741) — Commandes de la revue dans la barre de 🔲 Diagrammes Capella : 📝 Note (à glisser sur le diagramme) et
-- `capRevLayerEnsure` (l. 749) — Installe (une fois) le calque des commentaires au-dessus du diagramme et ses écouteurs.
-- `capRevDiagNoteAt` (l. 796) — Pose une note de revue sur le diagramme ouvert, à un point de l'écran (centre de la vue par défaut),
-- `capRevDiagBox` (l. 813) — Boîte d'un élément du diagramme en coordonnées du diagramme (union de ses formes dessinées).
-- `capRevLayerDraw` (l. 828) — Dessine les notes du diagramme ouvert sur le calque : un plan qui suit le zoom et le déplacement
-- `capRevNoteClick` (l. 872) — Boutons d'une note du calque : lier, modifier, réduire / agrandir. @param {MouseEvent} e
-- `capRevToggleTarget` (l. 886) — Lie un élément à un commentaire, ou le délie s'il l'était déjà.
-- `capRevNoteLine` (l. 900) — Trait tiré depuis la poignée ● d'une note : suit le pointeur (élément visé en surbrillance) ;
-- `capRevNoteDown` (l. 922) — Glisser une note (en-tête ou pastille), la redimensionner (coin) ou tirer un trait vers un élément (poignée ●). @param {PointerEvent} e
-- `capRevDiffHtml` (l. 951) — Différence entre la valeur commentée et le modèle chargé, pour une cible.
-- `capRevCheckHtml` (l. 965) — Onglet 🔁 Vérifier. @returns {string} HTML
-- `capRevCheckAll` (l. 982) — Valide tous les commentaires à vérifier (après confirmation).
-- `capRevReportList` (l. 991) — @returns {object[]} commentaires du rapport (ceux de la liste filtrée, ou tous)
-- `capRevSynthese` (l. 993) — Tableau croisé statut × criticité. @param {object[]} l - Commentaires @returns {string} HTML
-- `capRevReportTab` (l. 1001) — Onglet 📄 Rapport : synthèse et exports. @returns {string} HTML
-- `capRevGroupes` (l. 1018) — Groupes du rapport selon le regroupement choisi.
-- `capRevReportHtml` (l. 1028) — Télécharge le rapport HTML autonome de la revue.
-- `capRevCsv` (l. 1051) — Télécharge les commentaires du rapport en CSV (une ligne par commentaire).
-- `capRevCfgHtml` (l. 1063) — Onglet ⚙ Réglages. @returns {string} HTML
-- `capRevCfgAction` (l. 1085) — Actions de l'onglet ⚙ Réglages : participants, export, import, suppression.
-- `capRevExport` (l. 1093) — Exporte la revue (participants et commentaires) dans un fichier .json réutilisable.
-- `capRevImport` (l. 1100) — Importe un fichier .json de revue, ou une page de 📤 revue ciblée relue (.html), et la fusionne avec les commentaires de la page.
-- `capRevImportConfirm` (l. 1133) — Fenêtre d'avertissement avant d'importer une revue qui ne semble pas porter sur le modèle chargé :
-- `capRevMerge` (l. 1167) — Fusionne une revue importée : nouveaux commentaires ajoutés (renumérotés si leur numéro est pris),
+- `capRevPeople` (l. 318) — Personnes connues : participants, auteurs et responsables des commentaires. @returns {string[]}
+- `capRevFiltered` (l. 324) — @returns {object[]} commentaires de l'onglet 💬 Commentaires, filtrés et triés
+- `capRevListHtml` (l. 346) — Onglet 💬 Commentaires : filtres et cartes. @returns {string} HTML
+- `capRevCardHtml` (l. 366) — Carte d'un commentaire (repliée : en-tête, titre, méta ; dépliée : texte complet, réponses, actions).
+- `capRevTargetsHtml` (l. 395) — Pastilles des cibles d'un commentaire (élément + champ, diagramme), cliquables. @param {object} c @returns {string} HTML
+- `capRevPanelClick` (l. 405) — Clics du panneau (délégation). @param {MouseEvent} e
+- `capRevPanelInput` (l. 437) — Saisie dans le panneau : recherche, réglages. @param {Event} e
+- `capRevPanelChange` (l. 442) — Listes et cases du panneau : filtres, statut d'un commentaire, réglages. @param {Event} e
+- `capRevGet` (l. 454) — @param {string} id @returns {object|undefined} commentaire
+- `capRevGoto` (l. 461) — Montre la cible d'un commentaire : sa note dans le diagramme (s'il a été posé sur un diagramme et que le .aird
+- `capRevValidate` (l. 472) — Valide un commentaire (correction vérifiée) : statut Validé, date et vérificateur. @param {object} c
+- `capRevResnap` (l. 477) — Prend la version actuelle du modèle comme nouvelle référence des cibles d'un commentaire. @param {object} c
+- `capRevNew` (l. 488) — Nouveau commentaire : ouvre l'éditeur avec ses cibles (et sa note de diagramme) déjà renseignées.
+- `capRevEdit` (l. 496) — Éditeur d'un commentaire (fenêtre) : texte (seul champ obligatoire), titre, criticité, catégorie, statut,
+- `capRevDetailHead` (l. 602) — Boutons 💬 du panneau de détail, sous le nom de l'élément : commenter l'élément, son nom, sa description.
+- `capRevAttrBtn` (l. 616) — Petit bouton 💬 d'un attribut du panneau de détail (visible au survol) : commenter cet attribut.
+- `capRevDetailSection` (l. 625) — Section « Commentaires » du panneau de détail : commentaires portant sur l'élément.
+- `capRevDetailSectionIn` (l. 635) — Contenu de la section « Commentaires » du panneau de détail.
+- `capRevShow` (l. 644) — Ouvre 💬 Revue sur un commentaire (déplié). @param {string} id
+- `capRevShowFor` (l. 650) — Ouvre 💬 Revue sur les commentaires d'un élément. @param {string} id
+- `CAP_REV_ID_ATTRS` (l. 655) — Attributs portant l'identifiant d'un élément du modèle dans les vues (blocs, tableaux, listes, diagrammes).
+- `capRevElementAt` (l. 662) — Élément du modèle désigné par un nœud de l'interface (lui ou un de ses parents) : attribut d'identifiant
+- `capRevContext` (l. 676) — Menu du clic droit dans les vues : sur un élément, commenter l'élément, son nom, sa description, voir ses commentaires.
+- `capRevShowDiag` (l. 713) — Ouvre 💬 Revue sur les notes du diagramme ouvert.
+- `capRevMarkSchedule` (l. 719) — Programme la mise à jour des marques 💬 (après un rendu de vue).
+- `capRevMark` (l. 721) — Marque d'un 💬 les blocs, cartes et noms cliquables des éléments qui ont des commentaires non clos.
+- `capRevDiagUid` (l. 737) — @returns {string} identifiant du diagramme ouvert dans la visionneuse ('' sinon)
+- `capRevDiagBar` (l. 743) — Commandes de la revue dans la barre de 🔲 Diagrammes Capella : 📝 Note (à glisser sur le diagramme) et
+- `capRevLayerEnsure` (l. 751) — Installe (une fois) le calque des commentaires au-dessus du diagramme et ses écouteurs.
+- `capRevDiagNoteAt` (l. 798) — Pose une note de revue sur le diagramme ouvert, à un point de l'écran (centre de la vue par défaut),
+- `capRevDiagBox` (l. 815) — Boîte d'un élément du diagramme en coordonnées du diagramme (union de ses formes dessinées).
+- `capRevLayerDraw` (l. 830) — Dessine les notes du diagramme ouvert sur le calque : un plan qui suit le zoom et le déplacement
+- `capRevNoteClick` (l. 874) — Boutons d'une note du calque : lier, modifier, réduire / agrandir. @param {MouseEvent} e
+- `capRevToggleTarget` (l. 888) — Lie un élément à un commentaire, ou le délie s'il l'était déjà.
+- `capRevNoteLine` (l. 902) — Trait tiré depuis la poignée ● d'une note : suit le pointeur (élément visé en surbrillance) ;
+- `capRevNoteDown` (l. 924) — Glisser une note (en-tête ou pastille), la redimensionner (coin) ou tirer un trait vers un élément (poignée ●). @param {PointerEvent} e
+- `capRevDiffHtml` (l. 953) — Différence entre la valeur commentée et le modèle chargé, pour une cible.
+- `capRevCheckHtml` (l. 967) — Onglet 🔁 Vérifier. @returns {string} HTML
+- `capRevCheckAll` (l. 984) — Valide tous les commentaires à vérifier (après confirmation).
+- `capRevReportList` (l. 993) — @returns {object[]} commentaires du rapport (ceux de la liste filtrée, ou tous)
+- `capRevSynthese` (l. 995) — Tableau croisé statut × criticité. @param {object[]} l - Commentaires @returns {string} HTML
+- `capRevReportTab` (l. 1003) — Onglet 📄 Rapport : synthèse et exports. @returns {string} HTML
+- `capRevGroupes` (l. 1020) — Groupes du rapport selon le regroupement choisi.
+- `capRevReportHtml` (l. 1030) — Télécharge le rapport HTML autonome de la revue.
+- `capRevCsv` (l. 1053) — Télécharge les commentaires du rapport en CSV (une ligne par commentaire).
+- `capRevCfgHtml` (l. 1065) — Onglet ⚙ Réglages. @returns {string} HTML
+- `capRevCfgAction` (l. 1087) — Actions de l'onglet ⚙ Réglages : participants, export, import, suppression.
+- `capRevExport` (l. 1095) — Exporte la revue (participants et commentaires) dans un fichier .json réutilisable.
+- `capRevImport` (l. 1102) — Importe un fichier .json de revue, ou une page de 📤 revue ciblée relue (.html), et la fusionne avec les commentaires de la page.
+- `capRevImportConfirm` (l. 1135) — Fenêtre d'avertissement avant d'importer une revue qui ne semble pas porter sur le modèle chargé :
+- `capRevMerge` (l. 1169) — Fusionne une revue importée : nouveaux commentaires ajoutés (renumérotés si leur numéro est pris),
 
 ## 56-accueil.js — 644 lignes
 

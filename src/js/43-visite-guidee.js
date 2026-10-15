@@ -53,6 +53,8 @@ var CAP_TOUR_STEPS=[
    x:_L('Enregistre directement la page avec le modèle chargé (<b>Ctrl+S</b>) ; Maj+clic pour « Enregistrer sous ».')},
   {s:'#b-cap-watch', m:'loaded', t:_L('🔄 Suivi du fichier'),
    x:_L('Détecte les nouvelles versions du fichier .capella et montre ce qui a changé (delta, historique).')},
+  {s:'#b-review', t:_L('💬 Revue'),
+   x:_L('Commentaires de revue sur le modèle et les diagrammes, vérification après mise à jour, rapport, revue ciblée à faire relire. Le panneau s\'ouvre à droite ; <b>⧉</b> l\'ouvre dans une fenêtre séparée ; <b>🎓</b> (ou <b>? Aide ▾ → 💬 Visite de la revue</b>) le présente pas à pas.')},
   {s:'#b-theme-menu', t:_L('🎨 Thème'),
    x:_L('Choisissez un thème clair ou sombre, ou créez votre propre thème personnalisé.')},
   {s:'#b-help', t:_L('? Aide'),
@@ -162,12 +164,13 @@ var CAP_TOUR_VIEWS={
     {s:'#cap-view-home [data-carte="fiche"]', t:_L('📝 Fiche projet'), x:_L('Objet, phase, version, responsable, équipe, notes : à remplir librement.')},
     {s:'#cap-view-home [data-carte="docs"],#cap-view-home [data-carte="boards"]', t:_L('☑ 🧾 Raccourcis'), x:_L('Vos check-lists, plans de revue et tableaux blancs : clic pour les ouvrir, ⧉ pour les ouvrir dans une fenêtre séparée ; <b>⚡ Check-list rapide</b> en crée une tout de suite.')},
     {s:'#cap-view-home [data-carte="projet"]', t:_L('🔷 Projet'), x:_L('Fichiers, version de Capella, diagrammes chargés (par couche ; clic sur le nom : 🔲 Diagrammes Capella), dernière mise à jour du modèle (🔄 : en charger une).')},
-    {pre:()=>capTourHome('docs'), s:'#cap-view-home .hm-docs-new', t:_L('✚ Créer une check-list'), x:_L('<b>☑ Nouvelle check-list</b> : choisissez « Vide (à remplir) » (curseur sur le premier point, Entrée : point suivant) ou un modèle ARCADIA (qualité, revues OA, SA, LA, PA). <b>📋 Nouveau plan de revue</b> : vide ou avec les points de contrôle d\'un modèle. <b>📂 Importer…</b> : une check-list enregistrée en .json.')},
+    {pre:()=>capTourHome('docs'), s:'#cap-view-home .hm-docs-new', t:_L('✚ Créer une check-list'), x:_L('<b>☑ Nouvelle check-list</b> : choisissez « Vide (à remplir) » (curseur sur le premier point, Entrée : point suivant) ou un modèle ARCADIA (qualité, revues OA, SA, LA, PA). <b>📋 Nouveau plan de revue</b> : vide ou avec les points de contrôle d\'un modèle. <b>📂 Importer…</b> : une check-list enregistrée en .json. Le <b>⧉</b> à droite de chaque check-list l\'ouvre dans une fenêtre séparée.')},
     {s:'#cap-view-home .hm-pal', t:_L('📎 Glisser-déposer'), x:_L('Cherchez un diagramme ou un élément et glissez-le sur un point (il y est lié), sur « ✚ Point » (nouveau point lié), sur le périmètre d\'un plan ou sur un tableau blanc. Clic : l\'ouvrir.')},
     {s:'#cap-view-home .hm-docs-i [data-a="pop"]', one:true, t:_L('⧉ Fenêtre séparée'), x:_L('Ouvre la check-list dans sa propre fenêtre (autre écran) : vous pouvez alors y glisser des diagrammes depuis 🔲 Diagrammes Capella et des éléments depuis 🧭 Explorateur ou ⚡ Chaînes.')},
     {pre:()=>capTourHome('board'), s:'#cap-view-home .hm-tool', t:_L('🧰 Outils du tableau blanc'), x:_L('↖ sélection et déplacement · 🗒 note · T texte libre · ▭ rectangle · ◯ ellipse (Maj : cercle) · ╱ trait · → flèche : glissez sur le tableau pour dessiner.')},
     {s:'#cap-view-home .hm-col,#cap-view-home [data-a="b-fill"]', t:_L('🎨 Couleur et remplissage'), x:_L('Pour les nouveaux objets et pour l\'objet sélectionné. Suppr retire l\'objet sélectionné.')},
-    {s:'#cap-view-home .hm-wb', t:_L('🧾 Tableau'), x:_L('Double-clic : note. Les diagrammes et éléments déposés deviennent des icônes cliquables. ⧉ (barre) ouvre la page dans une fenêtre séparée.')}]},
+    {s:'#cap-view-home .hm-wb', t:_L('🧾 Tableau'), x:_L('Double-clic : note. Les diagrammes et éléments déposés deviennent des icônes cliquables.')},
+    {s:'#cap-view-home .hm-wb-bar [data-a="pop"]', t:_L('⧉ Tableau dans une fenêtre séparée'), x:_L('Ouvre la page du tableau blanc dans sa propre fenêtre (autre écran) : vous pouvez alors y glisser des diagrammes depuis la liste de 🔲 Diagrammes Capella et des éléments depuis 🧭 Explorateur ou ⚡ Chaînes. Les check-lists et plans de revue s\'ouvrent de la même façon (⧉).')}]},
   chains:{l:_L('⚡ Chaînes'), steps:[
     {t:_L('⚡ Chaînes'), x:_L('Chaînes fonctionnelles, processus opérationnels et chemins physiques du modèle, avec leur diagramme.')},
     {s:'#cap-view-chains [data-cf]', t:_L('🏷 Type'), x:_L('Filtre par type de chaîne.')},
@@ -304,6 +307,27 @@ var CAP_TOUR_AFTER=[
 var _capTourResume=false;   // vrai : reprendre « Bien démarrer » (2e temps) au prochain chargement de modèle
 
 var _capTour=null;   // visite en cours : {i, steps} ou null
+
+/** Visite du panneau 💬 Revue (ce n'est pas une vue : lancée par 🎓 dans le panneau ou par ? Aide ▾ → 💬 Visite de la revue). */
+var CAP_TOUR_REVUE=[
+  {pre:()=>capTourRev('list'), t:_L('💬 Revue'), x:_L('Commentaires de revue sur le modèle et les diagrammes : qui commente quoi, criticité, statut, échéance, réponses. Ils sont enregistrés dans la page (💾).')},
+  {s:'#b-review', t:_L('💬 Bouton Revue'), x:_L('Ouvre ou ferme le panneau. Son badge compte les commentaires non clos ; <b>⚠ n</b> signale des commentaires à vérifier après une mise à jour du modèle.')},
+  {s:'#crv-panel .crv-tabs', t:_L('🗂 Onglets'), x:_L('<b>💬 Commentaires</b> (liste, filtres) · <b>🔁 Vérifier</b> (après une mise à jour) · <b>📄 Rapport</b> · <b>⚙ Réglages</b>.')},
+  {s:'#crv-panel [data-a="new"]', t:_L('✚ Nouveau commentaire'), x:_L('Sur l\'élément du panneau de détail, ou commentaire général. Seul le texte est obligatoire. On commente aussi par <b>clic droit</b> sur un élément dans les vues, depuis le <b>panneau de détail</b> (💬 à côté du nom, de la description, des attributs) et par <b>📝 Note de revue</b> sur un diagramme.')},
+  {s:'#crv-panel .crv-filters', one:true, t:_L('🔍 Recherche et filtres'), x:_L('Texte, statut, criticité, personne, portée (diagramme ouvert, élément du panneau de détail, en retard, qui me sont attribués), tri. Clic sur une carte : texte complet, réponses, statut.')},
+  {s:'#crv-panel [data-a="dd"]', t:_L('💾 Revue ▾'), x:_L('<b>⬇ Exporter</b> les commentaires (.json), <b>📂 Importer / fusionner</b> une revue (.json ou page de revue ciblée relue), <b>📤 Revue ciblée</b> : page HTML à faire relire par d\'autres personnes.')},
+  {s:'#crv-panel [data-a="pop"]', t:_L('⧉ Fenêtre séparée'), x:_L('Ouvre le panneau dans sa propre fenêtre (par exemple sur un autre écran), liée à la page ; la fermer (ou ⧈) le ramène dans la page. Autorisez les fenêtres surgissantes.')},
+  {pre:()=>capTourRev('check'), s:'#crv-body', t:_L('🔁 Vérifier'), x:_L('Après un nouveau chargement ou une 🔄 mise à jour : commentaires dont la valeur commentée a changé (avant / maintenant) ou dont l\'élément a disparu. ✔ Valider clôt le commentaire ; ↻ Garder ouvert prend la version actuelle comme référence.')},
+  {pre:()=>capTourRev('report'), s:'#crv-body', t:_L('📄 Rapport'), x:_L('Synthèse statut × criticité, <b>📄 Rapport HTML</b> imprimable, <b>⬇ CSV</b>, et <b>📤 Revue ciblée</b> : les relecteurs répondent dans une page autonome, leurs réponses se réimportent ici.')},
+  {pre:()=>capTourRev('cfg'), s:'#crv-body', t:_L('⚙ Réglages'), x:_L('Votre nom (auteur des commentaires), participants, champs proposés dans l\'éditeur, calque des notes sur les diagrammes, marque 💬 des éléments commentés.')},
+  {pre:()=>capTourRev('list'), t:_L('✅ À vous'), x:_L('Cette visite se relance par <b>🎓</b> en haut du panneau ou par <b>? Aide ▾ → 💬 Visite de la revue</b>. L\'aide complète a un onglet 💬 Revue.')} ];
+/**
+ * Visite de 💬 Revue : panneau ouvert dans la page (ramené s'il est dans sa fenêtre séparée) sur l'onglet présenté.
+ * @param {string} tab - 'list' | 'check' | 'report' | 'cfg'
+ */
+function capTourRev(tab){ const w=capRevPop(); if(w){ w.removeEventListener('pagehide',capRevPopBack); capRevPopBack(); w.close(); } _capRevUi.dd=false; capRevToggle(true, tab); }
+/** Lance la visite de 💬 Revue. */
+function capTourRevue(){ capTourRev('list'); capTourStart(CAP_TOUR_REVUE); }
 
 /**
  * Visite de 🏠 Accueil : affiche l'onglet présenté par l'étape.
