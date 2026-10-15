@@ -10,6 +10,8 @@ No installation · no server · works offline
 
 **[English](#english)** · **[Français](#français)**
 
+📘 **[User guide / Guide d'utilisation](docs/GUIDE-UTILISATION.md)** — menu by menu, with screenshots · menu par menu, avec captures d'écran
+
 ![Home screen](docs/captures/00-accueil.png)
 
 </div>
