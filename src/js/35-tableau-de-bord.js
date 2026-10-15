@@ -179,6 +179,7 @@ function capDashCatalog(){
   capFexDashCatalog(add, LC);
   capCbDashCatalog(add, LC);
   capScDashCatalog(add, LC);
+  capDgDashCatalog(add, LC);
 
   add(_L('Mise en page'),'txt',_L('Texte libre (titre, commentaire)'),'text',()=>({}));
   return _capAnaCache.dashCat=C;

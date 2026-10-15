@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 4502 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 4577 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -1600,7 +1600,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 292 | ⇄ Nouvelle version | Old version (reference) … ⇄ New version … 📂 … |
 | 294 | Changer la version à comparer… | Change the version to compare… |
 | 294 | Charger une autre version (.capella)… | Load another version (.capella)… |
-| 317 | Fichier XML invalide | Invalid XML file |
+| 318 | Fichier XML invalide | Invalid XML file |
 
 ## js/33-qualite-noms.js
 
@@ -2117,87 +2117,87 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 176 | Contraintes | Constraints |
 | 176 | ct.chk | (inchangé, hors _L) |
 | 176 | Nombre total de constats par domaine | Total number of findings by domain |
-| 183 | Mise en page | Layout |
-| 183 | Texte libre (titre, commentaire) | Free text (title, comment) |
-| 192 | Indicateur | (inchangé, hors _L) |
-| 208 | à surveiller | to watch |
-| 218 | Autres ( | Others (…) |
-| 229 | Texte vide — ⚙ pour le modifier. | Empty text — ⚙ to edit it. |
-| 230 | Indicateur indisponible pour ce modèle. | Indicator not available for this model. |
-| 231 | Aucune donnée dans ce modèle. | No data in this model. |
-| 232 | var(--c-dim) | (inchangé, hors _L) |
-| 232 | var(--c-text) | (inchangé, hors _L) |
-| 232 | var(--c-bg2) | (inchangé, hors _L) |
-| 250 | Catégorie | Category |
-| 250 | Taux | Rate |
-| 250 | Nombre | Count |
-| 250 | Détail | Detail |
-| 250 | Part | (inchangé, hors _L) |
-| 253 | autre(s) ligne(s) — agrandir le cadre pour tout voir | … and … more row(s) — enlarge the frame to see everything |
-| 258 | catégorie(s) | … … category(ies) |
-| 271 | Autres ( | Others (…) |
-| 280 | Autres ( | Others (…) |
-| 323 | Synthèse du modèle — | Model summary — |
-| 323 | Capella | Capella |
-| 324 | mdl.n | (inchangé, hors _L) |
-| 324 | Fonctions (toutes couches) | Functions (all layers) |
-| 325 | mdl.layer | (inchangé, hors _L) |
-| 326 | fn.L.desc | (inchangé, hors _L) |
-| 326 | ch.empty | (inchangé, hors _L) |
-| 327 | ce.dir | (inchangé, hors _L) |
-| 328 | chk.sum | (inchangé, hors _L) |
-| 328 | tr.tab | (inchangé, hors _L) |
-| 329 | Synthèse du modèle | Model summary |
-| 349 | — double-clic pour renommer | {3} {4} |
-| 351 | ✔ Terminer | ✔ Done |
-| 351 | ✏ Modifier | ✏ Edit |
-| 352 | ＋ Ajouter un élément | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 354 | ⧉ Dupliquer ✨ Exemple | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 357 | 🗑 Supprimer | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 366 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. | Drag an item by its title to move it · bottom-right corner to resize it · ＋ to the left of an item to insert one before it · ⚙ configure · ⧉ duplicate · ✕ remove. Dashboards are kept in the 💾 HTML page. |
-| 367 | ,minmax(0,1fr)) | … ＋ … … A4 portrait A4 landscape 🖨 Print 🌐 HTML ⬇ JSON ⬆ JSON … … … … |
-| 372 | ＋ Ajouter un élément | ＋ Add an item |
-| 373 | Tableau de bord vide. | Empty dashboard. … |
-| 373 | Cliquez sur « ＋ Ajouter un élément ». | Click “＋ Add an item”. |
-| 373 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. | Click “✏ Edit” to add indicators. |
-| 399 | Tableau de bord | Dashboard |
-| 401 | Page | Page |
-| 402 | (copie) | (copy) |
-| 404 | Supprimer le tableau de bord « | Delete the dashboard “…”? |
-| 411 | Tableau importé | Imported dashboard |
-| 412 | Fichier de tableau de bord invalide. | Invalid dashboard file. |
-| 419 | ,minmax(0,1fr)) | {0} {2} |
-| 421 | élément(s) | … element(s) |
-| 421 | Tableau de bord | Dashboard |
-| 468 | Modèle Capella | Capella model |
-| 506 | ⊞ Tout déplier ⊟ Tout replier aperçu Annuler | … ⊞ Expand all ⊟ Collapse all preview Cancel … |
-| 506 | ⚙ Configurer l'élément | ⚙ Configure the item |
-| 506 | ＋ Ajouter un élément | ＋ Add an item |
-| 510 | ✔ Enregistrer | ✔ Save |
-| 510 | ＋ Ajouter | ＋ Add |
-| 517 | Mise en page | Layout |
+| 184 | Mise en page | Layout |
+| 184 | Texte libre (titre, commentaire) | Free text (title, comment) |
+| 193 | Indicateur | (inchangé, hors _L) |
+| 209 | à surveiller | to watch |
+| 219 | Autres ( | Others (…) |
+| 230 | Texte vide — ⚙ pour le modifier. | Empty text — ⚙ to edit it. |
+| 231 | Indicateur indisponible pour ce modèle. | Indicator not available for this model. |
+| 232 | Aucune donnée dans ce modèle. | No data in this model. |
+| 233 | var(--c-dim) | (inchangé, hors _L) |
+| 233 | var(--c-text) | (inchangé, hors _L) |
+| 233 | var(--c-bg2) | (inchangé, hors _L) |
+| 251 | Catégorie | Category |
+| 251 | Taux | Rate |
+| 251 | Nombre | Count |
+| 251 | Détail | Detail |
+| 251 | Part | (inchangé, hors _L) |
+| 254 | autre(s) ligne(s) — agrandir le cadre pour tout voir | … and … more row(s) — enlarge the frame to see everything |
+| 259 | catégorie(s) | … … category(ies) |
+| 272 | Autres ( | Others (…) |
+| 281 | Autres ( | Others (…) |
+| 324 | Synthèse du modèle — | Model summary — |
+| 324 | Capella | Capella |
+| 325 | mdl.n | (inchangé, hors _L) |
+| 325 | Fonctions (toutes couches) | Functions (all layers) |
+| 326 | mdl.layer | (inchangé, hors _L) |
+| 327 | fn.L.desc | (inchangé, hors _L) |
+| 327 | ch.empty | (inchangé, hors _L) |
+| 328 | ce.dir | (inchangé, hors _L) |
+| 329 | chk.sum | (inchangé, hors _L) |
+| 329 | tr.tab | (inchangé, hors _L) |
+| 330 | Synthèse du modèle | Model summary |
+| 350 | — double-clic pour renommer | {3} {4} |
+| 352 | ✔ Terminer | ✔ Done |
+| 352 | ✏ Modifier | ✏ Edit |
+| 353 | ＋ Ajouter un élément | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 355 | ⧉ Dupliquer ✨ Exemple | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 358 | 🗑 Supprimer | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 367 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. | Drag an item by its title to move it · bottom-right corner to resize it · ＋ to the left of an item to insert one before it · ⚙ configure · ⧉ duplicate · ✕ remove. Dashboards are kept in the 💾 HTML page. |
+| 368 | ,minmax(0,1fr)) | … ＋ … … A4 portrait A4 landscape 🖨 Print 🌐 HTML ⬇ JSON ⬆ JSON … … … … |
+| 373 | ＋ Ajouter un élément | ＋ Add an item |
+| 374 | Tableau de bord vide. | Empty dashboard. … |
+| 374 | Cliquez sur « ＋ Ajouter un élément ». | Click “＋ Add an item”. |
+| 374 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. | Click “✏ Edit” to add indicators. |
+| 400 | Tableau de bord | Dashboard |
+| 402 | Page | Page |
+| 403 | (copie) | (copy) |
+| 405 | Supprimer le tableau de bord « | Delete the dashboard “…”? |
+| 412 | Tableau importé | Imported dashboard |
+| 413 | Fichier de tableau de bord invalide. | Invalid dashboard file. |
+| 420 | ,minmax(0,1fr)) | {0} {2} |
+| 422 | élément(s) | … element(s) |
+| 422 | Tableau de bord | Dashboard |
+| 469 | Modèle Capella | Capella model |
+| 507 | ⊞ Tout déplier ⊟ Tout replier aperçu Annuler | … ⊞ Expand all ⊟ Collapse all preview Cancel … |
+| 507 | ⚙ Configurer l'élément | ⚙ Configure the item |
+| 507 | ＋ Ajouter un élément | ＋ Add an item |
+| 511 | ✔ Enregistrer | ✔ Save |
+| 511 | ＋ Ajouter | ＋ Add |
 | 518 | Mise en page | Layout |
-| 523 | la catégorie | {2} {3} {4} |
-| 523 | Replier | Collapse |
-| 523 | Déplier | Expand |
-| 523 | Aucun indicateur. | No indicator. |
-| 530 | Choisissez un indicateur dans la liste de gauche. | Choose an indicator in the left list. |
-| 533 | Indicateur | Indicator … › … Title … Chart … Size … … … |
-| 533 | Titre | Indicator … › … Title … Chart … Size … … … |
-| 535 | Représentation | Indicator … › … Title … Chart … Size … … … |
-| 535 | Texte | Text … |
-| 536 | Taille | Indicator … › … Title … Chart … Size … … … |
-| 537 | col. | … col. |
-| 539 | Catégories | Categories … Sort Default Descending value Natural order |
-| 539 | Tri Par défaut | Categories … Sort Default Descending value Natural order |
-| 539 | 5 premières | Top 5 |
-| 539 | 8 premières | Top 8 |
-| 539 | 10 premières | Top 10 |
-| 539 | 15 premières | Top 15 |
-| 539 | 20 premières | Top 20 |
-| 539 | Toutes | All |
-| 540 | Valeur décroissante | Categories … Sort Default Descending value Natural order |
-| 540 | Ordre naturel | Categories … Sort Default Descending value Natural order |
+| 519 | Mise en page | Layout |
+| 524 | la catégorie | {2} {3} {4} |
+| 524 | Replier | Collapse |
+| 524 | Déplier | Expand |
+| 524 | Aucun indicateur. | No indicator. |
+| 531 | Choisissez un indicateur dans la liste de gauche. | Choose an indicator in the left list. |
+| 534 | Indicateur | Indicator … › … Title … Chart … Size … … … |
+| 534 | Titre | Indicator … › … Title … Chart … Size … … … |
+| 536 | Représentation | Indicator … › … Title … Chart … Size … … … |
+| 536 | Texte | Text … |
+| 537 | Taille | Indicator … › … Title … Chart … Size … … … |
+| 538 | col. | … col. |
+| 540 | Catégories | Categories … Sort Default Descending value Natural order |
+| 540 | Tri Par défaut | Categories … Sort Default Descending value Natural order |
+| 540 | 5 premières | Top 5 |
+| 540 | 8 premières | Top 8 |
+| 540 | 10 premières | Top 10 |
+| 540 | 15 premières | Top 15 |
+| 540 | 20 premières | Top 20 |
+| 540 | Toutes | All |
+| 541 | Valeur décroissante | Categories … Sort Default Descending value Natural order |
+| 541 | Ordre naturel | Categories … Sort Default Descending value Natural order |
 
 ## js/36-component-exchange.js
 
@@ -3837,7 +3837,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 12 | #cap-table, .ana-fnt, .cap-mx, .ana-kv, .fex-box-t, .dash-tbl, .rmcb-t | (inchangé, hors _L) |
+| 12 | #cap-table, .ana-fnt, .cap-mx, .ana-kv, .fex-box-t, .dash-tbl, .rmcb-t, .dg-t | (inchangé, hors _L) |
 | 60 | 📋 Copier Copier le tableau ✕ | … cell… 📋 Copy Copy the table ✕ |
 | 92 | ✔ tableau copié | ✔ table copied |
 | 92 | cellule(s) copiée(s) | ✔ … cell(s) copied |
@@ -3871,185 +3871,186 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 71 | Impossible de lire « | Cannot read “…”. |
 | 77 | Diagrammes « | Diagrams “…” kept: now drop the project's .capella file. |
 | 77 | » gardés : déposez maintenant le fichier .capella du projet. | Diagrams “…” kept: now drop the project's .capella file. |
-| 128 | Relecture du .aird impossible : | ❌ |
-| 133 | 🔲 Diagrammes relus : « | 🔲 Diagrams re-read: “…” was also updated on disk |
-| 133 | » a aussi été mis à jour sur le disque | 🔲 Diagrams re-read: “…” was also updated on disk |
-| 162 | 🔲 Diagrammes : le .aird est-il à jour ? | 🔲 Diagrams: is the .aird up to date? |
-| 164 | Le modèle vient d'être mis à jour, mais les diagrammes affichés viennent de « | The model has just been updated, but the displayed diagrams come from “ … ”, read before the update. |
-| 164 | », lu avant la mise à jour. | The model has just been updated, but the displayed diagrams come from “ … ”, read before the update. |
-| 165 | Ce fichier n'a pas changé sur le disque : le projet n'a peut-être pas encore été enregistré dans Capella. | This file has not changed on disk: the project may not have been saved in Capella yet. |
-| 166 | élément(s) montré(s) par ces diagrammes n'existent plus dans le modèle mis à jour. | ⚠ … element(s) shown by these diagrams no longer exist in the updated model. |
-| 167 | Capella enregistre le .capella et le .aird ensemble : pour des diagrammes fidèles, ouvrez le .aird de la même version. | Capella saves the .capella and the .aird together: for accurate diagrams, open the .aird of the same version. |
-| 169 | Retirer les diagrammes de la page (🔲 Diagrammes Capella vide) | Remove the diagrams from the page (🔲 Capella Diagrams empty) |
-| 169 | 🗑 Retirer les diagrammes | 🗑 Remove the diagrams |
-| 170 | Garder ces diagrammes | Keep these diagrams |
-| 171 | 📂 Choisir le .aird à jour… | 📂 Choose the up-to-date .aird… |
-| 189 | Diagrammes Capella (.aird) | Capella diagrams (.aird) |
-| 229 | Lecture du dossier impossible : | Cannot read the folder: |
-| 242 | Aucun fichier .capella dans ce dossier (ni dans ses sous-dossiers). | No .capella file in this folder (nor in its subfolders). |
-| 253 | Lecture impossible : | Cannot read: |
-| 257 | modèles dans ce dossier : choisissez celui à ouvrir. | … models in this folder: choose the one to open. |
-| 272 | Glisser pour régler la largeur de l'explorateur | Drag to adjust the width of the explorer |
-| 321 | ▣ Carte | ▣ Map |
-| 322 | Afficher la carte dans le diagramme | Show the map in the diagram |
+| 130 | Relecture du .aird impossible : | ❌ |
+| 135 | 🔲 Diagrammes relus : « | 🔲 Diagrams re-read: “…” was also updated on disk — changes: ⚖ Version comparison › 🔲 Diagrams |
+| 135 | » a aussi été mis à jour sur le disque — changements : ⚖ Comparaison de versions › 🔲 Diagrammes | 🔲 Diagrams re-read: “…” was also updated on disk — changes: ⚖ Version comparison › 🔲 Diagrams |
+| 164 | 🔲 Diagrammes : le .aird est-il à jour ? | 🔲 Diagrams: is the .aird up to date? |
+| 166 | Le modèle vient d'être mis à jour, mais les diagrammes affichés viennent de « | The model has just been updated, but the displayed diagrams come from “ … ”, read before the update. |
+| 166 | », lu avant la mise à jour. | The model has just been updated, but the displayed diagrams come from “ … ”, read before the update. |
+| 167 | Ce fichier n'a pas changé sur le disque : le projet n'a peut-être pas encore été enregistré dans Capella. | This file has not changed on disk: the project may not have been saved in Capella yet. |
+| 168 | élément(s) montré(s) par ces diagrammes n'existent plus dans le modèle mis à jour. | ⚠ … element(s) shown by these diagrams no longer exist in the updated model. |
+| 169 | Capella enregistre le .capella et le .aird ensemble : pour des diagrammes fidèles, ouvrez le .aird de la même version. | Capella saves the .capella and the .aird together: for accurate diagrams, open the .aird of the same version. |
+| 169 | Le .aird actuel servira alors de référence pour ⚖ Comparaison de versions › 🔲 Diagrammes. | The current .aird will then be the reference for ⚖ Version comparison › 🔲 Diagrams. |
+| 171 | Retirer les diagrammes de la page (🔲 Diagrammes Capella vide) | Remove the diagrams from the page (🔲 Capella Diagrams empty) |
+| 171 | 🗑 Retirer les diagrammes | 🗑 Remove the diagrams |
+| 172 | Garder ces diagrammes | Keep these diagrams |
+| 173 | 📂 Choisir le .aird à jour… | 📂 Choose the up-to-date .aird… |
+| 191 | Diagrammes Capella (.aird) | Capella diagrams (.aird) |
+| 231 | Lecture du dossier impossible : | Cannot read the folder: |
+| 244 | Aucun fichier .capella dans ce dossier (ni dans ses sous-dossiers). | No .capella file in this folder (nor in its subfolders). |
+| 255 | Lecture impossible : | Cannot read: |
+| 259 | modèles dans ce dossier : choisissez celui à ouvrir. | … models in this folder: choose the one to open. |
+| 274 | Glisser pour régler la largeur de l'explorateur | Drag to adjust the width of the explorer |
 | 323 | ▣ Carte | ▣ Map |
-| 323 | dans le diagramme | in the diagram |
-| 324 | Afficher la carte sous l'explorateur | Show the map below the explorer |
-| 341 | Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML | Export several diagrams as sheets (header, description, title block, appendix): PDF, PNG / SVG ZIP, HTML report |
-| 341 | ⬇ Exporter… | ⬇ Export… |
-| 342 | Choisir les diagrammes à exporter : cases à cocher dans l'explorateur | Choose the diagrams to export: checkboxes in the explorer |
-| 342 | ☑ Terminer la sélection | ☑ Finish selection |
-| 342 | ☐ Sélectionner… | ☐ Select… |
-| 343 | Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés | Information on the open diagram in the details panel: type, layer, description, represented element, displayed elements |
-| 343 | ℹ Infos | ℹ Info |
-| 344 | Choisir le fichier .aird (le sélecteur s'ouvre dans le dossier du .capella quand le navigateur le permet) | Choose the .aird file (the picker opens in the .capella folder when the browser allows it) |
-| 344 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
-| 346 | diagramme(s) | … diagram(s) |
-| 347 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
-| 389 | vd-barre cdg-vd-l2 | (inchangé, hors _L) |
-| 430 | Mettre en évidence une chaîne fonctionnelle ou un chemin physique dessiné dans ce diagramme | Highlight a functional chain or physical path drawn in this diagram |
-| 437 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
-| 451 | Autres | Others |
-| 522 | Aucun .aird chargé. | No .aird loaded. |
-| 522 | 📂 Ouvrir le .aird… s'ouvre dans le dossier du .capella (Edge / Chrome). | 📂 Open the .aird… opens in the .capella folder (Edge / Chrome). |
-| 523 | Ou, depuis l'écran d'accueil, 📁 Dossier du projet… : le .capella et ses diagrammes sont chargés ensemble. | Or, from the home screen, 📁 Project folder…: the .capella and its diagrams are loaded together. |
-| 531 | Cocher / décocher le groupe | Check / uncheck the group |
-| 538 | Informations du diagramme (panneau de détail) | Diagram information (details panel) |
-| 553 | Filtrer (nom, type, sigle, couche)… | Filter (name, type, acronym, layer)… |
-| 554 | Classement de la liste | List grouping |
-| 554 | Couche › type | Layer › type |
-| 554 | Couche | Layer |
-| 554 | Type de diagramme | Diagram type |
-| 554 | Nom (A → Z) | Name (A → Z) |
-| 555 | Tout déplier | Expand all |
-| 555 | Tout replier | Collapse all |
-| 556 | sélectionné(s) pour l'export | … selected for export |
-| 556 | diagramme(s) | … diagram(s) |
+| 324 | Afficher la carte dans le diagramme | Show the map in the diagram |
+| 325 | ▣ Carte | ▣ Map |
+| 325 | dans le diagramme | in the diagram |
+| 326 | Afficher la carte sous l'explorateur | Show the map below the explorer |
+| 343 | Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML | Export several diagrams as sheets (header, description, title block, appendix): PDF, PNG / SVG ZIP, HTML report |
+| 343 | ⬇ Exporter… | ⬇ Export… |
+| 344 | Choisir les diagrammes à exporter : cases à cocher dans l'explorateur | Choose the diagrams to export: checkboxes in the explorer |
+| 344 | ☑ Terminer la sélection | ☑ Finish selection |
+| 344 | ☐ Sélectionner… | ☐ Select… |
+| 345 | Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés | Information on the open diagram in the details panel: type, layer, description, represented element, displayed elements |
+| 345 | ℹ Infos | ℹ Info |
+| 346 | Choisir le fichier .aird (le sélecteur s'ouvre dans le dossier du .capella quand le navigateur le permet) | Choose the .aird file (the picker opens in the .capella folder when the browser allows it) |
+| 346 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 348 | diagramme(s) | … diagram(s) |
+| 349 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
+| 391 | vd-barre cdg-vd-l2 | (inchangé, hors _L) |
+| 432 | Mettre en évidence une chaîne fonctionnelle ou un chemin physique dessiné dans ce diagramme | Highlight a functional chain or physical path drawn in this diagram |
+| 439 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
+| 453 | Autres | Others |
+| 524 | Aucun .aird chargé. | No .aird loaded. |
+| 524 | 📂 Ouvrir le .aird… s'ouvre dans le dossier du .capella (Edge / Chrome). | 📂 Open the .aird… opens in the .capella folder (Edge / Chrome). |
+| 525 | Ou, depuis l'écran d'accueil, 📁 Dossier du projet… : le .capella et ses diagrammes sont chargés ensemble. | Or, from the home screen, 📁 Project folder…: the .capella and its diagrams are loaded together. |
+| 533 | Cocher / décocher le groupe | Check / uncheck the group |
+| 540 | Informations du diagramme (panneau de détail) | Diagram information (details panel) |
+| 555 | Filtrer (nom, type, sigle, couche)… | Filter (name, type, acronym, layer)… |
+| 556 | Classement de la liste | List grouping |
+| 556 | Couche › type | Layer › type |
+| 556 | Couche | Layer |
+| 556 | Type de diagramme | Diagram type |
+| 556 | Nom (A → Z) | Name (A → Z) |
+| 557 | Tout déplier | Expand all |
+| 557 | Tout replier | Collapse all |
 | 558 | sélectionné(s) pour l'export | … selected for export |
-| 558 | diagramme(s) — cochez pour exporter | … diagram(s) — check to export |
-| 559 | Aucun diagramme ne correspond. | No matching diagram. |
-| 642 | var(--c-dim) | (inchangé, hors _L) |
-| 644 | Diagramme | Diagram |
-| 644 | Diagramme de séquence | Sequence diagram |
-| 644 | Tableau | Table |
-| 646 | 🔲 Diagramme Capella | 🔲 Capella diagram |
-| 648 | 🔲 Afficher le diagramme | 🔲 Show the diagram |
-| 649 | Attributs | Attributes |
-| 649 | Type | Type |
-| 649 | Sigle | Acronym |
-| 650 | Couche | Layer |
-| 650 | Nature | Nature |
-| 651 | Éléments | Elements |
-| 652 | Modifié le | Modified on |
-| 652 | Fichier | File |
-| 653 | Description | (inchangé, hors _L) |
-| 654 | Élément représenté | Represented element |
-| 657 | Éléments affichés ( | Displayed elements (…) |
-| 679 | Diagrammes ( | Diagrams (…) |
-| 702 | export SVG de la visionneuse introuvable | viewer SVG export not found |
-| 709 | diagramme vide ou non exportable | empty or non-exportable diagram |
-| 730 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
-| 731 | Projet Capella | Capella project |
-| 738 | Projet | Project |
-| 738 | Couche | Layer |
-| 739 | Diagramme | Diagram |
-| 739 | Contenu | Content |
-| 739 | élément(s) | … element(s) |
-| 740 | Type | (inchangé, hors _L) |
-| 740 | Date | Date |
-| 741 | Sources | Sources |
-| 741 | Planche | Sheet |
-| 759 | ) scale( | (inchangé, hors _L) |
-| 768 | Élément représenté | Represented element |
-| 770 | ) scale( | (inchangé, hors _L) |
-| 774 | ) scale( | (inchangé, hors _L) |
-| 775 | Arcalyse · planche générée le | Arcalyse · sheet generated on … |
-| 791 | ) scale( | (inchangé, hors _L) |
-| 848 | Élément représenté | Represented element |
-| 848 | Description | (inchangé, hors _L) |
-| 849 | Élément | Element |
-| 849 | Type | (inchangé, hors _L) |
-| 849 | Couche | Layer |
-| 864 | Élément | Element |
-| 864 | Type | (inchangé, hors _L) |
-| 864 | Couche | Layer |
-| 870 | 700 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 871 | 700 28px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 873 | 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 874 | élément(s) représenté(s) | … represented element(s) |
-| 874 | Planche | Sheet |
-| 875 | 700 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 878 | 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 915 | ⬇ Exporter des diagrammes | ⬇ Export diagrams |
-| 917 | Diagrammes | Diagrams |
-| 918 | Cochés dans la liste | Checked in the list |
-| 918 | Affichés (filtre en cours) | Displayed (current filter) |
-| 918 | Tous | All |
-| 919 | Mise en page | Layout |
-| 920 | Cadre et en-tête | Frame and header |
-| 920 | Cadre, bandeau de couche, sigle, nom et type du diagramme | Frame, layer band, acronym, name and type of the diagram |
-| 921 | Cartouche | Title block |
-| 921 | Cartouche technique en bas à droite : projet, diagramme, type, couche, contenu, sources, date, planche | Technical title block at the bottom right: project, diagram, type, layer, content, sources, date, sheet |
-| 922 | Description | Description |
-| 922 | Description Capella du diagramme et élément représenté, sous l'en-tête | Capella description of the diagram and represented element, below the header |
-| 923 | Annexes | Appendices |
-| 923 | Éléments représentés dans chaque diagramme : PDF, page(s) d'annexe après la planche · ZIP, un CSV par diagramme · HTML, tableau repliable | Elements represented in each diagram: PDF, appendix page(s) after the sheet · ZIP, one CSV per diagram · HTML, collapsible table |
-| 924 | Sommaire | Contents |
-| 924 | PDF : page de sommaire par couche et type · HTML : onglet Sommaire | PDF: contents page by layer and type · HTML: Contents tab |
-| 925 | Résolution des images PNG / PDF | Resolution of PNG / PDF images |
-| 925 | Résolution | Resolution |
-| 926 | Format | Format |
-| 928 | 📄 PDF | (inchangé, hors _L) |
-| 928 | Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets | One PDF: contents, one sheet per diagram (A4, oriented automatically), bookmarks |
-| 929 | 🗜 ZIP PNG | (inchangé, hors _L) |
-| 929 | Archive ZIP des planches en PNG, un dossier par couche | ZIP archive of the sheets as PNG, one folder per layer |
-| 930 | 🗜 ZIP SVG | (inchangé, hors _L) |
-| 930 | Archive ZIP des planches en SVG (vectoriel), un dossier par couche | ZIP archive of the sheets as SVG (vector), one folder per layer |
-| 931 | 🌐 HTML | (inchangé, hors _L) |
-| 931 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
-| 934 | Aperçu de la planche | Sheet preview |
-| 935 | Fermer | Close |
-| 936 | Lancer l'export dans le format choisi | Start the export in the chosen format |
-| 936 | ⬇ Exporter | ⬇ Export |
-| 954 | Aucun diagramme. | No diagram. |
-| 971 | Projet Capella | Capella project |
-| 981 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 981 | Diagrammes Capella | Capella diagrams |
-| 982 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 985 | planche(s) | … sheet(s) |
-| 993 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 994 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 999 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1000 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1038 | Aucun diagramme à exporter. | No diagram to export. |
-| 1039 | Capella | (inchangé, hors _L) |
-| 1054 | aucun diagramme exportable | no exportable diagram |
-| 1064 | Le PDF fera environ | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
-| 1064 | pages). Pour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…). Continuer quand même ? | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
-| 1065 | Export annulé : PDF estimé à | Export cancelled: PDF estimated at … MB. |
-| 1068 | Sommaire | Contents |
-| 1072 | Planche | Sheet |
-| 1074 | Autres | Others |
-| 1075 | - annexe | - appendix |
-| 1088 | Diagrammes — | Diagrams — … |
-| 1091 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
-| 1091 | pages) | (… pages) |
-| 1092 | ignoré(s) : | — … skipped: |
-| 1093 | ⚠ Échec de l'export : | ⚠ Export failed: |
-| 1112 | Type | (inchangé, hors _L) |
-| 1112 | Couche | Layer |
-| 1112 | Sigle | Acronym |
-| 1112 | Diagramme | Diagram |
-| 1112 | Éléments | Elements |
-| 1123 | Type | (inchangé, hors _L) |
-| 1123 | Annexe | Appendix |
-| 1123 | élément(s) représenté(s) | … represented element(s) |
-| 1123 | Élément | Element |
-| 1123 | Couche | Layer |
-| 1137 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
-| 1137 | diagramme(s) | … diagram(s) |
-| 1138 | 📋 Sommaire | 📋 Contents |
-| 1138 | 🔲 Planches | 🔲 Sheets |
+| 558 | diagramme(s) | … diagram(s) |
+| 560 | sélectionné(s) pour l'export | … selected for export |
+| 560 | diagramme(s) — cochez pour exporter | … diagram(s) — check to export |
+| 561 | Aucun diagramme ne correspond. | No matching diagram. |
+| 644 | var(--c-dim) | (inchangé, hors _L) |
+| 646 | Diagramme | Diagram |
+| 646 | Diagramme de séquence | Sequence diagram |
+| 646 | Tableau | Table |
+| 648 | 🔲 Diagramme Capella | 🔲 Capella diagram |
+| 650 | 🔲 Afficher le diagramme | 🔲 Show the diagram |
+| 651 | Attributs | Attributes |
+| 651 | Type | Type |
+| 651 | Sigle | Acronym |
+| 652 | Couche | Layer |
+| 652 | Nature | Nature |
+| 653 | Éléments | Elements |
+| 654 | Modifié le | Modified on |
+| 654 | Fichier | File |
+| 655 | Description | (inchangé, hors _L) |
+| 656 | Élément représenté | Represented element |
+| 659 | Éléments affichés ( | Displayed elements (…) |
+| 681 | Diagrammes ( | Diagrams (…) |
+| 704 | export SVG de la visionneuse introuvable | viewer SVG export not found |
+| 711 | diagramme vide ou non exportable | empty or non-exportable diagram |
+| 732 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
+| 733 | Projet Capella | Capella project |
+| 740 | Projet | Project |
+| 740 | Couche | Layer |
+| 741 | Diagramme | Diagram |
+| 741 | Contenu | Content |
+| 741 | élément(s) | … element(s) |
+| 742 | Type | (inchangé, hors _L) |
+| 742 | Date | Date |
+| 743 | Sources | Sources |
+| 743 | Planche | Sheet |
+| 761 | ) scale( | (inchangé, hors _L) |
+| 770 | Élément représenté | Represented element |
+| 772 | ) scale( | (inchangé, hors _L) |
+| 776 | ) scale( | (inchangé, hors _L) |
+| 777 | Arcalyse · planche générée le | Arcalyse · sheet generated on … |
+| 793 | ) scale( | (inchangé, hors _L) |
+| 850 | Élément représenté | Represented element |
+| 850 | Description | (inchangé, hors _L) |
+| 851 | Élément | Element |
+| 851 | Type | (inchangé, hors _L) |
+| 851 | Couche | Layer |
+| 866 | Élément | Element |
+| 866 | Type | (inchangé, hors _L) |
+| 866 | Couche | Layer |
+| 872 | 700 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 873 | 700 28px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 875 | 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 876 | élément(s) représenté(s) | … represented element(s) |
+| 876 | Planche | Sheet |
+| 877 | 700 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 880 | 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 917 | ⬇ Exporter des diagrammes | ⬇ Export diagrams |
+| 919 | Diagrammes | Diagrams |
+| 920 | Cochés dans la liste | Checked in the list |
+| 920 | Affichés (filtre en cours) | Displayed (current filter) |
+| 920 | Tous | All |
+| 921 | Mise en page | Layout |
+| 922 | Cadre et en-tête | Frame and header |
+| 922 | Cadre, bandeau de couche, sigle, nom et type du diagramme | Frame, layer band, acronym, name and type of the diagram |
+| 923 | Cartouche | Title block |
+| 923 | Cartouche technique en bas à droite : projet, diagramme, type, couche, contenu, sources, date, planche | Technical title block at the bottom right: project, diagram, type, layer, content, sources, date, sheet |
+| 924 | Description | Description |
+| 924 | Description Capella du diagramme et élément représenté, sous l'en-tête | Capella description of the diagram and represented element, below the header |
+| 925 | Annexes | Appendices |
+| 925 | Éléments représentés dans chaque diagramme : PDF, page(s) d'annexe après la planche · ZIP, un CSV par diagramme · HTML, tableau repliable | Elements represented in each diagram: PDF, appendix page(s) after the sheet · ZIP, one CSV per diagram · HTML, collapsible table |
+| 926 | Sommaire | Contents |
+| 926 | PDF : page de sommaire par couche et type · HTML : onglet Sommaire | PDF: contents page by layer and type · HTML: Contents tab |
+| 927 | Résolution des images PNG / PDF | Resolution of PNG / PDF images |
+| 927 | Résolution | Resolution |
+| 928 | Format | Format |
+| 930 | 📄 PDF | (inchangé, hors _L) |
+| 930 | Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets | One PDF: contents, one sheet per diagram (A4, oriented automatically), bookmarks |
+| 931 | 🗜 ZIP PNG | (inchangé, hors _L) |
+| 931 | Archive ZIP des planches en PNG, un dossier par couche | ZIP archive of the sheets as PNG, one folder per layer |
+| 932 | 🗜 ZIP SVG | (inchangé, hors _L) |
+| 932 | Archive ZIP des planches en SVG (vectoriel), un dossier par couche | ZIP archive of the sheets as SVG (vector), one folder per layer |
+| 933 | 🌐 HTML | (inchangé, hors _L) |
+| 933 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
+| 936 | Aperçu de la planche | Sheet preview |
+| 937 | Fermer | Close |
+| 938 | Lancer l'export dans le format choisi | Start the export in the chosen format |
+| 938 | ⬇ Exporter | ⬇ Export |
+| 956 | Aucun diagramme. | No diagram. |
+| 973 | Projet Capella | Capella project |
+| 983 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 983 | Diagrammes Capella | Capella diagrams |
+| 984 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 987 | planche(s) | … sheet(s) |
+| 995 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 996 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1001 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1002 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1040 | Aucun diagramme à exporter. | No diagram to export. |
+| 1041 | Capella | (inchangé, hors _L) |
+| 1056 | aucun diagramme exportable | no exportable diagram |
+| 1066 | Le PDF fera environ | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
+| 1066 | pages). Pour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…). Continuer quand même ? | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
+| 1067 | Export annulé : PDF estimé à | Export cancelled: PDF estimated at … MB. |
+| 1070 | Sommaire | Contents |
+| 1074 | Planche | Sheet |
+| 1076 | Autres | Others |
+| 1077 | - annexe | - appendix |
+| 1090 | Diagrammes — | Diagrams — … |
+| 1093 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
+| 1093 | pages) | (… pages) |
+| 1094 | ignoré(s) : | — … skipped: |
+| 1095 | ⚠ Échec de l'export : | ⚠ Export failed: |
+| 1114 | Type | (inchangé, hors _L) |
+| 1114 | Couche | Layer |
+| 1114 | Sigle | Acronym |
+| 1114 | Diagramme | Diagram |
+| 1114 | Éléments | Elements |
+| 1125 | Type | (inchangé, hors _L) |
+| 1125 | Annexe | Appendix |
+| 1125 | élément(s) représenté(s) | … represented element(s) |
+| 1125 | Élément | Element |
+| 1125 | Couche | Layer |
+| 1139 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
+| 1139 | diagramme(s) | … diagram(s) |
+| 1140 | 📋 Sommaire | 📋 Contents |
+| 1140 | 🔲 Planches | 🔲 Sheets |
 
 ## js/55-revue.js
 
@@ -4751,6 +4752,85 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 150 | Répondez aux commentaires ci-dessous (avis et texte), ajoutez les vôtres, puis 💾 enregistrez la page et renvoyez-la à l'auteur. | Answer the comments below (opinion and text), add your own, then 💾 save the page and send it back to the author. |
 | 151 | Page produite par Arcalyse — elle fonctionne hors ligne, sans installation. | Page produced by Arcalyse — it works offline, without installation. |
 
+## js/59-comparaison-aird.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 60 | — avant | … — before … |
+| 123 | 🔷 Modèle | 🔷 Model |
+| 123 | Différences entre les deux versions du .capella | Differences between the two versions of the .capella |
+| 124 | 🔲 Diagrammes | 🔲 Diagrams |
+| 128 | ➕ Nouveaux | ➕ New |
+| 128 | Diagrammes absents du .aird de référence | Diagrams missing from the reference .aird |
+| 128 | var(--c-ok,#3fb950) | (inchangé, hors _L) |
+| 129 | ➖ Supprimés | ➖ Deleted |
+| 129 | Diagrammes du .aird de référence absents du .aird chargé | Diagrams of the reference .aird missing from the loaded .aird |
+| 129 | var(--c-err,#f85149) | (inchangé, hors _L) |
+| 130 | ✎ Renommés | ✎ Renamed |
+| 130 | Nom du diagramme changé | Diagram name changed |
+| 131 | 🧩 Contenu modifié | 🧩 Content changed |
+| 131 | Éléments du modèle ajoutés au diagramme ou retirés | Model elements added to or removed from the diagram |
+| 131 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
+| 132 | 🎨 Mise en page / style | 🎨 Layout / style |
+| 132 | Mêmes éléments, mais positions, tailles, styles ou filtres modifiés | Same elements, but positions, sizes, styles or filters changed |
+| 133 | ⚠ Éléments absents du modèle | ⚠ Elements missing from the model |
+| 133 | Le diagramme montre des éléments qui n'existent pas dans le modèle chargé (.aird et .capella de versions différentes ?) | The diagram shows elements that do not exist in the loaded model (.aird and .capella from different versions?) |
+| 133 | var(--c-err,#f85149) | (inchangé, hors _L) |
+| 134 | 🔷 Touchés par le modèle | 🔷 Affected by the model |
+| 134 | Le diagramme montre des éléments ajoutés, supprimés ou modifiés entre les deux versions du modèle (onglet 🔷 Modèle) | The diagram shows elements added, deleted or modified between the two versions of the model (🔷 Model tab) |
+| 142 | .aird de référence (ancien) | Reference .aird (old) |
+| 143 | .aird chargé (nouveau) | Loaded .aird (new) |
+| 144 | 📂 Changer le .aird de référence… | 📂 Change the reference .aird… |
+| 144 | 📂 Charger un .aird de référence… | 📂 Load a reference .aird… |
+| 145 | Ne plus comparer à un .aird de référence | Stop comparing with a reference .aird |
+| 146 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 148 | Pas de .aird de référence : seuls les liens avec le modèle sont vérifiés. Chargez le .aird d'une version précédente pour voir les diagrammes ajoutés, supprimés, renommés ou modifiés. | No reference .aird: only the links with the model are checked. Load the .aird of a previous version to see the diagrams added, deleted, renamed or modified. |
+| 150 | diagramme(s) | diagram(s) |
+| 152 | inchangé(s) | … unchanged |
+| 154 | Diagrammes à regarder | Diagrams to look at |
+| 154 | Tous les diagrammes | All diagrams |
+| 155 | 🔍 Diagramme… | 🔍 Diagram… |
+| 156 | ⬇ CSV | ⬇ CSV |
+| 163 | Couche | Layer |
+| 163 | Diagramme | Diagram |
+| 163 | Type | Type |
+| 163 | État | State |
+| 163 | Éléments du modèle ajoutés au diagramme / retirés | Model elements added to the diagram / removed |
+| 163 | Éléments + / − | Elements + / − |
+| 166 | avant : | before: |
+| 167 | inchangé | unchanged |
+| 169 | Ouvrir le diagramme | Open the diagram |
+| 170 | ➕ Ajoutés au diagramme | ➕ Added to the diagram |
+| 170 | ➖ Retirés du diagramme | ➖ Removed from the diagram |
+| 170 | ⚠ Absents du modèle chargé | ⚠ Missing from the loaded model |
+| 170 | 🔷 Ajoutés, supprimés ou modifiés dans le modèle | 🔷 Added, deleted or modified in the model |
+| 171 | Aucun diagramme ne correspond. | No matching diagram. |
+| 199 | Ce fichier ne contient aucun diagramme Capella (.aird attendu). | This file contains no Capella diagram (.aird expected). |
+| 210 | Couche | Layer |
+| 210 | Diagramme | Diagram |
+| 210 | Ancien nom | Old name |
+| 210 | Type | Type |
+| 210 | État | State |
+| 210 | Ajoutés au diagramme | Added to the diagram |
+| 210 | Retirés du diagramme | Removed from the diagram |
+| 210 | Absents du modèle | Missing from the model |
+| 210 | Touchés par le modèle | Affected by the model |
+| 222 | Diagrammes | Diagrams |
+| 222 | Diagrammes — nombre | Diagrams — count |
+| 223 | Diagrammes | Diagrams |
+| 223 | dg.layer | (inchangé, hors _L) |
+| 223 | Diagrammes — par couche | Diagrams — by layer |
+| 224 | Autres | Others |
+| 225 | Diagrammes | Diagrams |
+| 225 | dg.orph | (inchangé, hors _L) |
+| 225 | Diagrammes — montrant des éléments absents du modèle | Diagrams — showing elements missing from the model |
+| 225 | élément(s) absent(s) | … missing element(s) |
+| 226 | Diagrammes du .aird chargé qui montrent des éléments inexistants dans le modèle (versions différentes ?) | Diagrams of the loaded .aird that show elements not existing in the model (different versions?) |
+| 227 | Diagrammes | Diagrams |
+| 227 | dg.cmp | (inchangé, hors _L) |
+| 227 | Diagrammes — changements depuis le .aird de référence | Diagrams — changes since the reference .aird |
+| 229 | Comparaison avec le .aird de référence (⚖ Comparaison de versions › 🔲 Diagrammes) | Comparison with the reference .aird (⚖ Version comparison › 🔲 Diagrams) |
+
 ## Textes sans traduction anglaise (7)
 
 - `js/33-qualite-noms.js:43` — contrôle
@@ -4758,5 +4838,5 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 - `js/39-exigences-donnees.js:607` — Détail étendu indisponible
 - `js/40-suivi-fichier.js:138` — Sélecteur à accès direct indisponible :
 - `js/46-config-interface.js:83` — Vues enregistrées illisibles :
-- `js/54-diagrammes.js:128` — Relecture du .aird impossible :
+- `js/54-diagrammes.js:130` — Relecture du .aird impossible :
 - `js/58-revue-ciblee.js:102` — Diagramme non exporté :

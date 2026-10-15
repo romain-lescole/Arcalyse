@@ -93,6 +93,7 @@ function capDiagLoadAird(f, h, attente) {
  */
 function capDiagSetAird(texte, nom, poignee, date) {
   if (!texte && _capDiag.airdCharge && _capDiag.vis) { try { _capDiag.vis.fermer(); } catch (e) {} }   // diagrammes retirés : la visionneuse se vide
+  if (texte && _capDiag.texteAird && texte !== _capDiag.texteAird && typeof capDgReferenceAuto === 'function') capDgReferenceAuto(_capDiag.texteAird, _capDiag.nomAird);   // ⚖ l'ancien .aird devient la référence
   Object.assign(_capDiag, { texteAird: texte || '', nomAird: texte ? nom || '' : '', poignee: texte ? poignee : null, dateAird: date || 0, airdCharge: false, meta: null });
 }
 
@@ -105,6 +106,7 @@ function capDiagAvantNouveauModele() {
   const nom = _capDiag.texteAird && !_capDiag.attente ? _capDiag.nomAird : '';
   if (nom) capDiagSetAird('', '', null, 0);
   _capDiag.attente = false;
+  if (typeof capDgReset === 'function') capDgReset();   // ⚖ référence de comparaison des diagrammes : propre à l'ancien modèle
   return nom;
 }
 
@@ -130,7 +132,7 @@ async function capDiagApresMaj() {
   const manquants = capDiagRefsManquantes();
   if (relu) {
     if (capCurrentView === 'diag') capRenderDiagrams();
-    if (typeof capWatchFlash === 'function') setTimeout(() => capWatchFlash(_L(`🔲 Diagrammes relus : « ${_capDiag.nomAird} » a aussi été mis à jour sur le disque`)), 900);
+    if (typeof capWatchFlash === 'function') setTimeout(() => capWatchFlash(_L(`🔲 Diagrammes relus : « ${_capDiag.nomAird} » a aussi été mis à jour sur le disque — changements : ⚖ Comparaison de versions › 🔲 Diagrammes`)), 900);
     return;
   }
   if (inchange && !manquants) return;   // .aird inchangé et toujours cohérent avec le modèle : rien à signaler
@@ -164,7 +166,7 @@ function capDiagMajDialogue(inchange, manquants) {
       <p style="font-size:12.5px;margin:6px 0">${_L(`Le modèle vient d'être mis à jour, mais les diagrammes affichés viennent de « <b>${capEsc(_capDiag.nomAird)}</b> », lu avant la mise à jour.`)}</p>` +
       (inchange ? `<p style="font-size:12.5px;margin:6px 0">${_L('Ce fichier n\'a pas changé sur le disque : le projet n\'a peut-être pas encore été enregistré dans Capella.')}</p>` : '') +
       (manquants ? `<p style="font-size:12.5px;margin:6px 0;color:var(--c-warn,#e3b341)">${_L(`⚠ ${manquants} élément(s) montré(s) par ces diagrammes n'existent plus dans le modèle mis à jour.`)}</p>` : '') +
-      `<p class="ana-dim" style="font-size:11.5px;margin:6px 0">${_L('Capella enregistre le .capella et le .aird ensemble : pour des diagrammes fidèles, ouvrez le .aird de la même version.')}</p>
+      `<p class="ana-dim" style="font-size:11.5px;margin:6px 0">${_L('Capella enregistre le .capella et le .aird ensemble : pour des diagrammes fidèles, ouvrez le .aird de la même version.')} ${_L('Le .aird actuel servira alors de référence pour ⚖ Comparaison de versions › 🔲 Diagrammes.')}</p>
     </div>
     <div class="cw-d-ftr"><button class="cap-lf-btn" data-c="retirer" title="${_L('Retirer les diagrammes de la page (🔲 Diagrammes Capella vide)')}">${_L('🗑 Retirer les diagrammes')}</button><span style="flex:1"></span>
       <button class="cap-lf-btn" data-c="garder">${_L('Garder ces diagrammes')}</button>

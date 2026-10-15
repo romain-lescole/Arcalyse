@@ -292,7 +292,8 @@ function capRenderDiff(box){
       <button class="cap-lf-btn" id="ana-df-swap" title="Inverser ancienne / nouvelle"${capDiffDoc?'':' disabled'}>⇄</button>
       <div class="ana-diff-file"><span class="ana-dim">Nouvelle version</span><b>${capEsc(newName||'—')}</b></div>
       <label class="cw-btn ana-diff-load">📂 ${capDiffDoc?_L('Changer la version à comparer…'):_L('Charger une autre version (.capella)…')}<input type="file" id="ana-df-file"${capIsMobile()?'':' accept=".capella,.melodymodeller,.xml"'} style="display:none"></label>
-    </div>`);
+    </div>`)+capDgOnglets();
+  if(_capDg.vue==='diag'){ box.innerHTML=head+'<div id="ana-dg"></div>'; capDgRender(box.querySelector('#ana-dg')); wire(); return; }   // 🔲 Diagrammes (59-comparaison-aird.js)
   if(!capDiffDoc){
     box.innerHTML=head+_L(`<div class="phl-empty">Chargez une autre version du même modèle (par défaut considérée comme l'<b>ancienne</b> version ; ⇄ pour inverser).<br>Les éléments sont appariés par identifiant ; le rapport classe les changements en créations, suppressions, renommages, descriptions, propriétés, liens, déplacements et changements de type, du plus synthétique au plus complet, et se copie dans Word, Outlook, Teams ou Excel.</div>`);
     wire(); return;
@@ -318,6 +319,7 @@ function capRenderDiff(box){
         capDiffDoc=doc; capDiffName=file.name; delete _capAnaCache.diff; if(box._drState) box._drState.ex.clear(); capRenderDiff(box); };
       r.readAsText(file);
     });
+    box.querySelectorAll('[data-dgv]').forEach(b=>b.addEventListener('click',()=>{ _capDg.vue=b.dataset.dgv; capRenderDiff(box); }));
     box.querySelector('#ana-df-swap')?.addEventListener('click',()=>{ capDiffSwap=!capDiffSwap; if(box._drState) box._drState.ex.clear(); capRenderDiff(box); });
   }
 }
