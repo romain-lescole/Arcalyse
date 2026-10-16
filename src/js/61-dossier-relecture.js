@@ -154,7 +154,7 @@ function capDosDepuisPlan(p){
 /** Onglet 📑 : liste des dossiers, dossier ouvert. @returns {string} HTML */
 function capDosOngletHtml(){
   const esc=capEsc, d=capDosCur();
-  const liste=`<aside class="hm-docs"><div class="hm-docs-new">`+
+  const liste=`<aside class="hm-docs"${capHomeLargeur('docs')}><div class="hm-docs-new">`+
     `<button class="cap-lf-btn" data-da="new" title="${_L('Nouveau dossier : chapitres, descriptions, diagrammes et texte libre à faire relire')}">${_L('📑 Nouveau dossier')}</button>`+
     `<div class="dos-rap" title="${_L('Dossier rempli à partir du modèle selon un plan type, entièrement modifiable ensuite')}"><div class="dos-rap-t">${_L('📘 Rapports automatiques')}</div>`+
       capDosGabarits().map(g=>`<button class="cap-lf-btn dos-rap-b" data-dos-gab="${g.k}" title="${esc(g.t)}">${esc(g.l.replace(/^\S+\s/,''))}</button>`).join('')+`</div>`+
@@ -164,7 +164,7 @@ function capDosOngletHtml(){
         `<span class="hm-pop-b" data-a="pop" data-kind="dos" data-id="${x.id}" title="${_L('Ouvrir dans une fenêtre séparée (par exemple sur un autre écran)')}">⧉</span></div>`; }).join('')
       :`<div class="hm-empty">${_L('Un dossier de relecture rassemble ce qu\'il faut faire relire, chapitre par chapitre : description d\'une capacité ou d\'une chaîne, ses diagrammes, d\'autres diagrammes en sous-chapitres, du texte libre.<br><br>Il s\'exporte en page HTML que les relecteurs commentent dans leur navigateur, ou en document Word ; leurs retours se réimportent ici.')}</div>`)+`</aside>`;
   const main=d?(capHomePopWin('dos',d.id)?capHomePopPlace('dos',d):`<div class="hm-doc dos-ed" data-dosid="${d.id}">${capDosHtml(d)}</div>`):'';
-  return `<div class="hm-main hm-docs-w">${liste.replace(/<\/aside>$/, d&&!capHomePopWin('dos',d.id)?capDosNavHtml(d)+'</aside>':'</aside>')}${main}</div>`;
+  return `<div class="hm-main hm-docs-w">${liste.replace(/<\/aside>$/, d&&!capHomePopWin('dos',d.id)?capDosNavHtml(d)+'</aside>':'</aside>')}${capHomeSplit('docs')}${main}</div>`;
 }
 /**
  * Volet de navigation du dossier ouvert : plan des chapitres numérotés (clic : aller au chapitre, en le dépliant),

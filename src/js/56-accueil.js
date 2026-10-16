@@ -37,7 +37,8 @@ function capHomeNorm(d){
   const boards=(Array.isArray(d.boards)?d.boards:[]).filter(b=>b&&b.id).map(b=>Object.assign({titre:'', items:[]}, b));
   const c=d.cartes||{};
   return { v:1, fiche:Object.assign({objet:'', phase:'', version:'', resp:'', equipe:'', notes:''}, d.fiche||{}), docs, boards, dossiers:capDosNorm(d.dossiers),
-    cartes:{ordre:Array.isArray(c.ordre)?c.ordre:[], masques:Array.isArray(c.masques)?c.masques:[], larges:c.larges&&typeof c.larges==='object'?c.larges:{}} };
+    cartes:{ordre:Array.isArray(c.ordre)?c.ordre:[], masques:Array.isArray(c.masques)?c.masques:[], larges:c.larges&&typeof c.larges==='object'?c.larges:{}},
+    largeurs:d.largeurs&&typeof d.largeurs==='object'?d.largeurs:{} };
 }
 /** Identifiant unique (point, section, document, note). @returns {string} */
 function capHomeUid(){ return 'h'+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
@@ -321,7 +322,7 @@ function capHomeQuickDoc(titre, lignes){
 function capHomeDocsHtml(){
   const u=_capHomeUi, esc=capEsc, M=capHomeModeles(), nom=m=>m.l.replace(/^\S+\s/,'');
   if(!_capHome.docs.some(d=>d.id===u.doc)) u.doc=_capHome.docs.length?_capHome.docs[0].id:'';
-  const liste=`<aside class="hm-docs"><div class="hm-docs-new">`+
+  const liste=`<aside class="hm-docs"${capHomeLargeur('docs')}><div class="hm-docs-new">`+
     `<label class="hm-new-l">${_L('☑ Nouvelle check-list')}<select data-new="list" title="${_L('Crée une check-list : vide (à remplir) ou à partir d\'un modèle ARCADIA')}">`+
       `<option value="" selected disabled>${_L('Choisir un modèle…')}</option>${M.map(m=>`<option value="${m.k}">${m.k==='vide'?_L('Vide (à remplir)'):esc(nom(m))}</option>`).join('')}</select></label>`+
     `<label class="hm-new-l">${_L('📋 Nouveau plan de revue')}<select data-new="plan" title="${_L('Crée un plan de revue : objet, jalon, participants, périmètre, critères d\'entrée et de sortie, points de contrôle, actions')}">`+
@@ -332,7 +333,7 @@ function capHomeDocsHtml(){
       :`<div class="hm-empty">${_L('Créez une check-list ou un plan de revue avec les listes ci-dessus.<br><br>Glissez ensuite des diagrammes et des éléments depuis la palette 📎 à droite sur les points.')}</div>`)+`</aside>`;
   const d=_capHome.docs.find(x=>x.id===u.doc);
   const main=d?(capHomePopWin('doc',d.id)?capHomePopPlace('doc',d):`<div class="hm-doc" data-docid="${d.id}">${capHomeDocHtml(d)}</div>`):'';
-  return `<div class="hm-main hm-docs-w">${liste}${main}</div>`;
+  return `<div class="hm-main hm-docs-w">${liste}${capHomeSplit('docs')}${main}</div>`;
 }
 
 /**
@@ -443,12 +444,44 @@ function capHomeDocImport(){
   inp.click();
 }
 
+/* ── Largeur réglable des volets (liste de gauche, palette 📎) ───────────── */
+
+/** Bornes de largeur des volets réglables (px). */
+const CAP_HOME_LARG={min:170, max:720};
+/**
+ * Attribut style de la largeur choisie pour un volet (rien : largeur par défaut).
+ * @param {string} k - 'docs' (liste de gauche) | 'pal' (palette 📎)
+ * @returns {string} attribut HTML
+ */
+function capHomeLargeur(k){ const w=_capHome.largeurs&&_capHome.largeurs[k]; return w?` style="width:${w}px"`:''; }
+/**
+ * Poignée de redimensionnement d'un volet, placée entre le volet et le document (double-clic : largeur par défaut).
+ * @param {string} k - 'docs' | 'pal'
+ * @returns {string} HTML
+ */
+function capHomeSplit(k){ return `<div class="hm-split hm-split-${k}" data-split="${k}" title="${_L('Glisser pour régler la largeur (double-clic : largeur par défaut)')}"></div>`; }
+/**
+ * Glisser la poignée d'un volet : la largeur suit la souris, puis elle est enregistrée dans la page.
+ * @param {PointerEvent} e
+ */
+function capHomeSplitDown(e){
+  const h=e.target.closest&&e.target.closest('[data-split]'); if(!h||e.button!==0) return;
+  e.preventDefault(); e.stopPropagation();
+  const k=h.dataset.split, aside=k==='pal'?h.nextElementSibling:h.previousElementSibling, x0=e.clientX, w0=aside.getBoundingClientRect().width, W=capHomeWin(h), D=W.document;
+  const borne=w=>Math.round(Math.max(CAP_HOME_LARG.min, Math.min(CAP_HOME_LARG.max, w)));
+  let w=w0; h.classList.add('on'); D.body.style.cursor='col-resize';
+  const mv=ev=>{ w=borne(k==='pal'?w0-(ev.clientX-x0):w0+(ev.clientX-x0)); aside.style.width=w+'px'; };
+  const up=()=>{ D.removeEventListener('pointermove',mv); D.removeEventListener('pointerup',up); D.body.style.cursor=''; h.classList.remove('on');
+    if(Math.abs(w-w0)>1){ _capHome.largeurs[k]=w; capHomeSave(); capHomeRender(); } };
+  D.addEventListener('pointermove',mv); D.addEventListener('pointerup',up);
+}
+
 /* ── Palette 📎 : diagrammes et éléments à glisser ─────────────────────── */
 
 /** Palette à droite (check-lists, tableaux blancs, fenêtres séparées) : recherche, diagrammes, éléments. @returns {string} HTML */
 function capHomePaletteHtml(){
   if(_capHomeUi.palPli) return `<aside class="hm-pal hm-pal-pli"><button class="cap-lf-btn" data-a="pal-pli" title="${_L('Afficher la palette 📎 Glisser-déposer')}">◂ 📎</button></aside>`;
-  return `<aside class="hm-pal"><div class="hm-pal-h"><span>${_L('📎 Glisser-déposer')}</span><button class="cap-lf-btn" data-a="pal-pli" title="${_L('Replier la palette (plus de place pour le document)')}">▸</button></div>`+
+  return capHomeSplit('pal')+`<aside class="hm-pal"${capHomeLargeur('pal')}><div class="hm-pal-h"><span>${_L('📎 Glisser-déposer')}</span><button class="cap-lf-btn" data-a="pal-pli" title="${_L('Replier la palette (plus de place pour le document)')}">▸</button></div>`+
     `<input class="phl-filter-input hm-pal-q" placeholder="${_L('🔍 Diagramme ou élément…')}" value="${capEsc(_capHomeUi.q)}">`+
     `<div class="hm-pal-l">${capHomePaletteList()}</div>`+
     `<div class="hm-pal-e hm-pal-tip">${_L('Astuce : ouvrez une check-list ou un tableau blanc dans une fenêtre séparée (⧉) pour y glisser aussi des diagrammes depuis 🔲 Diagrammes Capella et des éléments depuis 🧭 Explorateur ou ⚡ Chaînes.')}</div></aside>`;
@@ -539,6 +572,8 @@ function capHomeWire(box){
     capHomeDrop(z, ref, txt, e);
   });
   box.addEventListener('pointerdown',capHomeBoardDown);
+  box.addEventListener('pointerdown',capHomeSplitDown);
+  box.addEventListener('dblclick',e=>{ const h=e.target.closest&&e.target.closest('[data-split]'); if(h){ delete _capHome.largeurs[h.dataset.split]; capHomeSave(); capHomeRender(); } });
   box.addEventListener('keydown',e=>{
     if(e.key==='Enter'&&e.target.matches('.hm-item-t')){ e.preventDefault(); const it=e.target.closest('[data-i]'); capHomeItemAdd(capHomeDocOf(it), it&&it.closest('[data-s]').dataset.s, it&&it.dataset.i); }
   });

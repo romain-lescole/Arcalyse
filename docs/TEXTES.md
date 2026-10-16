@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 5243 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 5244 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -4497,273 +4497,274 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 103 | Diagramme | Diagram |
-| 112 | diagramme non chargé (.aird) | diagram not loaded (.aird) |
-| 112 | absent du modèle chargé | missing from the loaded model |
-| 114 | Retirer | Remove |
-| 123 | » : ouvrez le .aird du projet (🔲 Diagrammes Capella › 📂 Ouvrir le .aird) pour voir ce diagramme | 🔲 “…”: open the project's .aird (🔲 Capella Diagrams › 📂 Open the .aird) to see this diagram |
-| 126 | » n'existe plus dans le modèle chargé | “…” no longer exists in the loaded model |
-| 146 | 🏠 Projet | 🏠 Project |
-| 146 | Informations du projet, fiche, contenu du modèle, revue, accès rapide | Project information, sheet, model content, review, quick access |
-| 147 | ☑ Check-lists & plans de revue | ☑ Checklists & review plans |
-| 147 | Listes à cocher et plans de revue, liés à des diagrammes et des éléments | Checklists and review plans, linked to diagrams and elements |
-| 148 | 🧾 Tableaux blancs | 🧾 Whiteboards |
-| 148 | Pages libres : texte, formes, diagrammes et éléments en icônes cliquables | Free pages: text, shapes, diagrams and elements as clickable icons |
-| 149 | 📑 Dossiers de relecture | 📑 Review packages |
-| 186 | Shared | (inchangé, hors _L) |
-| 193 | point(s) cochés | … / … item(s) checked |
-| 202 | Ouvrir dans une fenêtre séparée (par exemple sur un autre écran) | Open in a separate window (on another screen, for example) |
-| 204 | 🔷 Projet | 🔷 Project |
-| 206 | 🔲 Ouvrir les diagrammes | 🔲 Open the diagrams |
-| 206 | diagramme(s) | … diagram(s) |
-| 208 | aucun .aird chargé | no .aird loaded |
-| 208 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
-| 209 | aucune différence | no difference |
-| 209 | dans la session) | (… in the session) |
-| 209 | aucune depuis l'ouverture | none since opening |
-| 210 | Compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour après validation | Compares another .capella file with the displayed model, shows the delta, then updates after validation |
-| 211 | Projet Capella | Capella project |
-| 211 | Modèle | Model |
-| 212 | Version de Capella | Capella version |
-| 212 | Diagrammes | Diagrams |
-| 212 | Éléments | Elements |
-| 213 | Mise à jour | Update |
-| 213 | Page de projet | Project page |
-| 213 | Arcalyse | Arcalyse |
-| 214 | 📝 Fiche projet | 📝 Project sheet |
-| 216 | Objet | Purpose |
-| 216 | Système étudié, but du modèle | System studied, purpose of the model |
-| 217 | Phase / jalon | Phase / milestone |
-| 217 | ex. SRR, PDR, CDR | e.g. SRR, PDR, CDR |
-| 217 | Version du modèle | Model version |
-| 218 | Responsable | Owner |
-| 218 | Nom | Name |
-| 218 | Équipe | Team |
-| 218 | Noms, rôles | Names, roles |
-| 219 | Notes | Notes |
-| 219 | Hypothèses, liens, informations utiles… | Assumptions, links, useful information… |
-| 220 | ☑ Check-lists & plans de revue | ☑ Checklists & review plans |
-| 220 | (sans titre) | (untitled) |
-| 221 | Aucune check-list ni plan de revue. | No checklist or review plan. |
-| 222 | Crée une check-list vide et place le curseur sur le premier point | Creates an empty checklist and puts the cursor on the first item |
-| 222 | ⚡ Check-list rapide | ⚡ Quick checklist |
-| 222 | Nouvelle check-list à partir d'un modèle, nouveau plan de revue | New checklist from a template, new review plan |
-| 222 | ☑ Modèles et plans de revue | ☑ Templates and review plans |
-| 223 | 🧾 Tableaux blancs | 🧾 Whiteboards |
-| 223 | (sans titre) | (untitled) |
-| 223 | objet(s) | … object(s) |
-| 224 | Aucun tableau blanc. | No whiteboard. |
-| 225 | ✚ Nouveau tableau blanc | ✚ New whiteboard |
-| 226 | 🧩 Contenu du modèle | 🧩 Model content |
-| 229 | 💬 Revue | 💬 Review |
-| 230 | non clos | not closed |
-| 232 | à vérifier | to check |
-| 232 | en retard | overdue |
-| 233 | au total | … in total |
-| 233 | Aucun commentaire de revue. | No review comment. |
-| 234 | 💬 Ouvrir la revue | 💬 Open the review |
-| 234 | Page HTML à envoyer aux relecteurs : ils répondent aux commentaires choisis, puis leurs réponses sont réimportées ici | HTML page to send to reviewers: they answer the chosen comments, then their answers are imported back here |
-| 234 | 📤 Faire relire des commentaires… | 📤 Have comments reviewed… |
-| 234 | 📑 Dossiers de relecture | 📑 Review packages |
-| 246 | Accès rapide aux vues | Quick access to the views |
-| 247 | Réorganiser la page : glisser les cartes, largeur, cartes masquées | Rearrange the page: drag cards, width, hidden cards |
-| 247 | ✔ Terminer la disposition | ✔ Finish arranging |
-| 247 | ⚙ Disposer les cartes | ⚙ Arrange the cards |
-| 249 | Masquées : | Hidden: |
-| 250 | ↺ Disposition par défaut | ↺ Default layout |
-| 255 | Glisser pour déplacer | Drag to move |
-| 256 | Largeur : 1 ou 2 colonnes | Width: 1 or 2 columns |
-| 256 | Masquer la carte | Hide the card |
-| 267 | ☐ Check-list vide | ☐ Empty checklist |
-| 267 | Points | Items |
-| 268 | ✔ Qualité du modèle | ✔ Model quality |
-| 269 | Nommage et descriptions | Naming and descriptions |
-| 269 | Les fonctions sont nommées par un verbe à l'infinitif + complément | Functions are named with a verb + object |
-| 269 | Pas de doublon de nom dans une même couche | No duplicate name within a layer |
-| 269 | Les éléments principaux ont une description | Main elements have a description |
-| 270 | Fonctions et échanges | Functions and exchanges |
-| 270 | Chaque fonction feuille est allouée à un composant ou un acteur | Each leaf function is allocated to a component or an actor |
-| 270 | Aucune fonction isolée (sans échange) | No isolated function (without exchange) |
-| 270 | Les échanges fonctionnels relient des ports de fonctions | Functional exchanges connect function ports |
-| 271 | Composants et interfaces | Components and interfaces |
-| 271 | Les échanges de composants portent des échanges fonctionnels | Component exchanges carry functional exchanges |
-| 271 | Les ports de composants sont orientés (IN / OUT / INOUT) | Component ports are oriented (IN / OUT / INOUT) |
-| 271 | Les interfaces et les Exchange Items sont définis | Interfaces and Exchange Items are defined |
-| 272 | Traçabilité | Traceability |
-| 272 | Les fonctions réalisent celles de la couche supérieure | Functions realize those of the upper layer |
-| 272 | Chaque capacité est couverte par des chaînes fonctionnelles ou des scénarios | Each capability is covered by functional chains or scenarios |
-| 272 | Les exigences sont tracées vers le modèle | Requirements are traced to the model |
-| 273 | 🟦 Revue OA (analyse opérationnelle) | 🟦 OA review (operational analysis) |
-| 274 | Points de contrôle OA | OA checkpoints |
-| 274 | Entités et acteurs opérationnels identifiés | Operational entities and actors identified |
-| 274 | Capacités opérationnelles décrites | Operational capabilities described |
-| 274 | Activités opérationnelles allouées aux entités | Operational activities allocated to entities |
-| 274 | Interactions entre activités définies | Interactions between activities defined |
-| 274 | Processus et scénarios opérationnels couvrant les capacités | Operational processes and scenarios covering the capabilities |
-| 275 | 🟩 Revue SA (analyse système) | 🟩 SA review (system analysis) |
-| 276 | Points de contrôle SA | SA checkpoints |
-| 276 | Missions et capacités du système définies | System missions and capabilities defined |
-| 276 | Acteurs externes identifiés | External actors identified |
-| 276 | Fonctions système allouées au système ou aux acteurs | System functions allocated to the system or to actors |
-| 276 | Échanges fonctionnels avec les acteurs | Functional exchanges with actors |
-| 276 | Chaînes fonctionnelles ou scénarios par capacité | Functional chains or scenarios per capability |
-| 276 | Modes et états du système | System modes and states |
-| 276 | Exigences système tracées | System requirements traced |
-| 276 | Traçabilité OA → SA | OA → SA traceability |
-| 277 | 🟨 Revue LA (architecture logique) | 🟨 LA review (logical architecture) |
-| 278 | Points de contrôle LA | LA checkpoints |
-| 278 | Décomposition en composants logiques justifiée | Breakdown into logical components justified |
-| 278 | Fonctions logiques allouées aux composants | Logical functions allocated to components |
-| 278 | Ports et échanges de composants | Component ports and exchanges |
-| 278 | Interfaces entre composants définies | Interfaces between components defined |
-| 278 | Scénarios d'échanges | Exchange scenarios |
-| 278 | Traçabilité SA → LA | SA → LA traceability |
-| 279 | 🟧 Revue PA (architecture physique) | 🟧 PA review (physical architecture) |
-| 280 | Points de contrôle PA | PA checkpoints |
-| 280 | Composants physiques de comportement et nœuds | Behavior physical components and nodes |
-| 280 | Déploiement des composants de comportement sur les nœuds | Deployment of behavior components on nodes |
-| 280 | Liens physiques et chemins physiques | Physical links and physical paths |
-| 280 | Échanges de composants alloués aux liens physiques | Component exchanges allocated to physical links |
-| 280 | Propriétés (PVMT) : masse, puissance, coûts… | Properties (PVMT): mass, power, costs… |
-| 280 | Traçabilité LA → PA | LA → PA traceability |
-| 294 | Plan de revue | Review plan |
-| 296 | 1. Critères d'entrée | 1. Entry criteria |
-| 296 | Version du modèle figée et diffusée aux relecteurs | Model version frozen and sent to reviewers |
-| 296 | Contrôles automatiques passés (ƒ Fonctions › Contrôles, qualité des noms) | Automatic checks passed (ƒ Functions › Checks, name quality) |
-| 296 | Commentaires de la revue précédente traités | Comments from the previous review handled |
-| 297 | 2. Points de contrôle | 2. Checkpoints |
-| 298 | 3. Critères de sortie | 3. Exit criteria |
-| 298 | Aucun commentaire bloquant ouvert | No open blocking comment |
-| 298 | Commentaires majeurs traités ou planifiés | Major comments handled or planned |
-| 298 | Décision de revue prononcée et diffusée | Review decision made and communicated |
-| 299 | 4. Actions et décisions | 4. Actions and decisions |
-| 300 | Nouvelle check-list | New checklist |
-| 313 | Check-list du | Checklist of … |
-| 314 | Points | Items |
-| 325 | ☑ Nouvelle check-list | ☑ New checklist |
-| 325 | Crée une check-list : vide (à remplir) ou à partir d'un modèle ARCADIA | Creates a checklist: empty (to fill in) or from an ARCADIA template |
-| 326 | Choisir un modèle… | Choose a template… |
-| 326 | Vide (à remplir) | Empty (to fill in) |
-| 327 | 📋 Nouveau plan de revue | 📋 New review plan |
-| 327 | Crée un plan de revue : objet, jalon, participants, périmètre, critères d'entrée et de sortie, points de contrôle, actions | Creates a review plan: purpose, milestone, participants, scope, entry and exit criteria, checkpoints, actions |
-| 328 | Choisir les points de contrôle… | Choose the checkpoints… |
-| 328 | Plan vide (points à écrire) | Empty plan (items to write) |
-| 329 | Importer une check-list ou un plan enregistré en .json (autre projet) | Import a checklist or a plan saved as .json (other project) |
-| 329 | 📂 Importer… | 📂 Import… |
-| 330 | (sans titre) | (untitled) |
-| 331 | Ouvrir dans une fenêtre séparée (par exemple sur un autre écran) | Open in a separate window (on another screen, for example) |
-| 332 | Créez une check-list ou un plan de revue avec les listes ci-dessus. Glissez ensuite des diagrammes et des éléments depuis la palette 📎 à droite sur les points. | Create a checklist or a review plan with the lists above. Then drag diagrams and elements from the 📎 palette on the right onto the items. |
-| 345 | 📋 Plan de revue | 📋 Review plan |
-| 345 | ☑ Check-list | ☑ Checklist |
-| 345 | Titre | Title |
-| 346 | Document HTML imprimable (points, cases, liens, commentaires de revue du périmètre) | Printable HTML document (items, boxes, links, review comments on the scope) |
-| 346 | ⬇ HTML | ⬇ HTML |
-| 347 | Enregistrer en .json pour le réutiliser dans un autre projet (📂 Importer…) | Save as .json to reuse it in another project (📂 Import…) |
-| 347 | 💾 .json | 💾 .json |
-| 348 | Dupliquer (cases décochées) | Duplicate (boxes unchecked) |
-| 348 | Supprimer | Delete |
-| 354 | Objet de la revue | Review purpose |
-| 354 | Ce qui est revu et pourquoi | What is reviewed and why |
-| 355 | Jalon / type | Milestone / type |
-| 355 | ex. PDR, revue interne | e.g. PDR, internal review |
-| 355 | Date | Date |
-| 355 | Lieu / visio | Place / video call |
-| 355 | Animateur | Moderator |
-| 355 | Nom | Name |
-| 356 | Statut | Status |
-| 356 | En préparation | In preparation |
-| 356 | En cours | In progress |
-| 356 | Terminée | Completed |
-| 357 | Décision | Decision |
-| 357 | Acceptée | Accepted |
-| 357 | Acceptée avec réserves | Accepted with reservations |
-| 357 | Refusée | Rejected |
-| 357 | Reportée | Postponed |
-| 358 | Participants et rôles | Participants and roles |
-| 358 | Un participant par ligne : nom — rôle (auteur, relecteur, expert, décideur…) | One participant per line: name — role (author, reviewer, expert, decision maker…) |
-| 359 | Documents de référence | Reference documents |
-| 359 | Spécifications, exigences, versions… | Specifications, requirements, versions… |
-| 360 | Périmètre : diagrammes et éléments revus | Scope: reviewed diagrams and elements |
-| 361 | Glissez ici des diagrammes et des éléments (palette 📎) | Drag diagrams and elements here (📎 palette) |
-| 362 | commentaire(s) non clos sur le périmètre | 💬 … open comment(s) on the scope |
-| 363 | 📤 Faire relire les commentaires du périmètre… | 📤 Have the scope's comments reviewed… |
-| 364 | Nouveau dossier de relecture : un chapitre par élément ou diagramme du périmètre (description, diagrammes) | New review package: one chapter per element or diagram of the scope (description, diagrams) |
-| 364 | 📑 Dossier de relecture du périmètre | 📑 Review package of the scope |
-| 368 | Section | Section |
-| 369 | Monter | Move up |
-| 369 | Descendre | Move down |
-| 369 | Supprimer la section | Delete the section |
-| 373 | Point à vérifier | Item to check |
-| 374 | Qui | Who |
-| 374 | Responsable | Owner |
-| 375 | Échéance | Due date |
-| 376 | Constat, remarque | Finding, remark |
-| 376 | Monter | Move up |
-| 376 | Descendre | Move down |
-| 376 | Supprimer le point | Delete the item |
-| 378 | Constat, remarque… | Finding, remark… |
-| 380 | ✚ Point | ✚ Item |
-| 380 | ou glissez ici un diagramme ou un élément : nouveau point lié | or drag a diagram or an element here: new linked item |
-| 382 | ✚ Section | ✚ Section |
-| 404 | En préparation | In preparation |
-| 404 | En cours | In progress |
-| 404 | Terminée | Completed |
-| 404 | Acceptée | Accepted |
-| 404 | Acceptée avec réserves | Accepted with reservations |
-| 404 | Refusée | Rejected |
-| 404 | Reportée | Postponed |
-| 405 | Projet : | Project: … · model … · …/… item(s) checked · generated on … |
-| 405 | · modèle | Project: … · model … · …/… item(s) checked · generated on … |
-| 405 | point(s) cochés · édité le | Project: … · model … · …/… item(s) checked · generated on … |
-| 408 | Objet | Purpose |
-| 408 | Jalon / type | Milestone / type |
-| 408 | Date | Date |
-| 408 | Lieu / visio | Place / video call |
-| 409 | Animateur | Moderator |
-| 409 | Statut | Status |
-| 409 | Décision | Decision |
-| 409 | Participants et rôles | Participants and roles |
-| 410 | Documents de référence | Reference documents |
-| 410 | Périmètre | Scope |
-| 412 | 💬 Commentaires de revue sur le périmètre | 💬 Review comments on the scope |
-| 412 | Statut | Status |
-| 412 | Criticité | Severity |
-| 412 | Commentaire | Comment |
-| 412 | Responsables | Assignees |
-| 416 | Point | Item |
-| 416 | Liens | Links |
-| 416 | Qui | Who |
-| 416 | Échéance | Due date |
-| 424 | Produit par Arcalyse | Produced by Arcalyse |
-| 433 | Fichier illisible (JSON attendu). | Unreadable file (JSON expected). |
-| 435 | Ce fichier n'est pas une check-list Arcalyse. | This file is not an Arcalyse checklist. |
-| 440 | check-list(s) importée(s) | ✔ … checklist(s) imported |
-| 450 | Afficher la palette 📎 Glisser-déposer | Show the 📎 Drag and drop palette |
-| 451 | 📎 Glisser-déposer | 📎 Drag and drop |
-| 451 | Replier la palette (plus de place pour le document) | Collapse the palette (more room for the document) |
-| 452 | 🔍 Diagramme ou élément… | 🔍 Diagram or element… |
-| 454 | Astuce : ouvrez une check-list ou un tableau blanc dans une fenêtre séparée (⧉) pour y glisser aussi des diagrammes depuis 🔲 Diagrammes Capella et des éléments depuis 🧭 Explorateur ou ⚡ Chaînes. | Tip: open a checklist or a whiteboard in a separate window (⧉) to also drag into it diagrams from 🔲 Capella Diagrams and elements from 🧭 Explorer or ⚡ Chains. |
-| 461 | glisser, ou clic pour ouvrir | drag, or click to open |
-| 462 | 🔲 Diagrammes | 🔲 Diagrams |
-| 464 | Aucun .aird chargé. | No .aird loaded. |
-| 464 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
-| 466 | autre(s) : précisez la recherche | … … more: refine the search |
-| 466 | Aucun diagramme ne correspond. | No matching diagram. |
-| 467 | 🧩 Éléments | 🧩 Elements |
-| 468 | Tapez au moins 2 lettres du nom d'un élément. | Type at least 2 letters of an element name. |
-| 470 | autre(s) : précisez la recherche | … … more: refine the search |
-| 470 | Aucun élément ne correspond. | No element matches. |
-| 588 | ] .hm-item-t | (inchangé, hors _L) |
-| 624 | ] .hm-item-t | (inchangé, hors _L) |
-| 632 | (copie) | (copy) |
-| 633 | Supprimer « | Delete “…”? |
-| 633 | (sans titre) | (untitled) |
-| 635 | Nouvelle section | New section |
-| 637 | Supprimer la section « | Delete the section “…” and its … item(s)? |
-| 637 | » et ses | Delete the section “…” and its … item(s)? |
-| 637 | point(s) ? | Delete the section “…” and its … item(s)? |
-| 654 | (sans titre) | (untitled) |
-| 666 | ] .hm-item-t | (inchangé, hors _L) |
+| 104 | Diagramme | Diagram |
+| 113 | diagramme non chargé (.aird) | diagram not loaded (.aird) |
+| 113 | absent du modèle chargé | missing from the loaded model |
+| 115 | Retirer | Remove |
+| 124 | » : ouvrez le .aird du projet (🔲 Diagrammes Capella › 📂 Ouvrir le .aird) pour voir ce diagramme | 🔲 “…”: open the project's .aird (🔲 Capella Diagrams › 📂 Open the .aird) to see this diagram |
+| 127 | » n'existe plus dans le modèle chargé | “…” no longer exists in the loaded model |
+| 147 | 🏠 Projet | 🏠 Project |
+| 147 | Informations du projet, fiche, contenu du modèle, revue, accès rapide | Project information, sheet, model content, review, quick access |
+| 148 | ☑ Check-lists & plans de revue | ☑ Checklists & review plans |
+| 148 | Listes à cocher et plans de revue, liés à des diagrammes et des éléments | Checklists and review plans, linked to diagrams and elements |
+| 149 | 🧾 Tableaux blancs | 🧾 Whiteboards |
+| 149 | Pages libres : texte, formes, diagrammes et éléments en icônes cliquables | Free pages: text, shapes, diagrams and elements as clickable icons |
+| 150 | 📑 Dossiers de relecture | 📑 Review packages |
+| 187 | Shared | (inchangé, hors _L) |
+| 194 | point(s) cochés | … / … item(s) checked |
+| 203 | Ouvrir dans une fenêtre séparée (par exemple sur un autre écran) | Open in a separate window (on another screen, for example) |
+| 205 | 🔷 Projet | 🔷 Project |
+| 207 | 🔲 Ouvrir les diagrammes | 🔲 Open the diagrams |
+| 207 | diagramme(s) | … diagram(s) |
+| 209 | aucun .aird chargé | no .aird loaded |
+| 209 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 210 | aucune différence | no difference |
+| 210 | dans la session) | (… in the session) |
+| 210 | aucune depuis l'ouverture | none since opening |
+| 211 | Compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour après validation | Compares another .capella file with the displayed model, shows the delta, then updates after validation |
+| 212 | Projet Capella | Capella project |
+| 212 | Modèle | Model |
+| 213 | Version de Capella | Capella version |
+| 213 | Diagrammes | Diagrams |
+| 213 | Éléments | Elements |
+| 214 | Mise à jour | Update |
+| 214 | Page de projet | Project page |
+| 214 | Arcalyse | Arcalyse |
+| 215 | 📝 Fiche projet | 📝 Project sheet |
+| 217 | Objet | Purpose |
+| 217 | Système étudié, but du modèle | System studied, purpose of the model |
+| 218 | Phase / jalon | Phase / milestone |
+| 218 | ex. SRR, PDR, CDR | e.g. SRR, PDR, CDR |
+| 218 | Version du modèle | Model version |
+| 219 | Responsable | Owner |
+| 219 | Nom | Name |
+| 219 | Équipe | Team |
+| 219 | Noms, rôles | Names, roles |
+| 220 | Notes | Notes |
+| 220 | Hypothèses, liens, informations utiles… | Assumptions, links, useful information… |
+| 221 | ☑ Check-lists & plans de revue | ☑ Checklists & review plans |
+| 221 | (sans titre) | (untitled) |
+| 222 | Aucune check-list ni plan de revue. | No checklist or review plan. |
+| 223 | Crée une check-list vide et place le curseur sur le premier point | Creates an empty checklist and puts the cursor on the first item |
+| 223 | ⚡ Check-list rapide | ⚡ Quick checklist |
+| 223 | Nouvelle check-list à partir d'un modèle, nouveau plan de revue | New checklist from a template, new review plan |
+| 223 | ☑ Modèles et plans de revue | ☑ Templates and review plans |
+| 224 | 🧾 Tableaux blancs | 🧾 Whiteboards |
+| 224 | (sans titre) | (untitled) |
+| 224 | objet(s) | … object(s) |
+| 225 | Aucun tableau blanc. | No whiteboard. |
+| 226 | ✚ Nouveau tableau blanc | ✚ New whiteboard |
+| 227 | 🧩 Contenu du modèle | 🧩 Model content |
+| 230 | 💬 Revue | 💬 Review |
+| 231 | non clos | not closed |
+| 233 | à vérifier | to check |
+| 233 | en retard | overdue |
+| 234 | au total | … in total |
+| 234 | Aucun commentaire de revue. | No review comment. |
+| 235 | 💬 Ouvrir la revue | 💬 Open the review |
+| 235 | Page HTML à envoyer aux relecteurs : ils répondent aux commentaires choisis, puis leurs réponses sont réimportées ici | HTML page to send to reviewers: they answer the chosen comments, then their answers are imported back here |
+| 235 | 📤 Faire relire des commentaires… | 📤 Have comments reviewed… |
+| 235 | 📑 Dossiers de relecture | 📑 Review packages |
+| 247 | Accès rapide aux vues | Quick access to the views |
+| 248 | Réorganiser la page : glisser les cartes, largeur, cartes masquées | Rearrange the page: drag cards, width, hidden cards |
+| 248 | ✔ Terminer la disposition | ✔ Finish arranging |
+| 248 | ⚙ Disposer les cartes | ⚙ Arrange the cards |
+| 250 | Masquées : | Hidden: |
+| 251 | ↺ Disposition par défaut | ↺ Default layout |
+| 256 | Glisser pour déplacer | Drag to move |
+| 257 | Largeur : 1 ou 2 colonnes | Width: 1 or 2 columns |
+| 257 | Masquer la carte | Hide the card |
+| 268 | ☐ Check-list vide | ☐ Empty checklist |
+| 268 | Points | Items |
+| 269 | ✔ Qualité du modèle | ✔ Model quality |
+| 270 | Nommage et descriptions | Naming and descriptions |
+| 270 | Les fonctions sont nommées par un verbe à l'infinitif + complément | Functions are named with a verb + object |
+| 270 | Pas de doublon de nom dans une même couche | No duplicate name within a layer |
+| 270 | Les éléments principaux ont une description | Main elements have a description |
+| 271 | Fonctions et échanges | Functions and exchanges |
+| 271 | Chaque fonction feuille est allouée à un composant ou un acteur | Each leaf function is allocated to a component or an actor |
+| 271 | Aucune fonction isolée (sans échange) | No isolated function (without exchange) |
+| 271 | Les échanges fonctionnels relient des ports de fonctions | Functional exchanges connect function ports |
+| 272 | Composants et interfaces | Components and interfaces |
+| 272 | Les échanges de composants portent des échanges fonctionnels | Component exchanges carry functional exchanges |
+| 272 | Les ports de composants sont orientés (IN / OUT / INOUT) | Component ports are oriented (IN / OUT / INOUT) |
+| 272 | Les interfaces et les Exchange Items sont définis | Interfaces and Exchange Items are defined |
+| 273 | Traçabilité | Traceability |
+| 273 | Les fonctions réalisent celles de la couche supérieure | Functions realize those of the upper layer |
+| 273 | Chaque capacité est couverte par des chaînes fonctionnelles ou des scénarios | Each capability is covered by functional chains or scenarios |
+| 273 | Les exigences sont tracées vers le modèle | Requirements are traced to the model |
+| 274 | 🟦 Revue OA (analyse opérationnelle) | 🟦 OA review (operational analysis) |
+| 275 | Points de contrôle OA | OA checkpoints |
+| 275 | Entités et acteurs opérationnels identifiés | Operational entities and actors identified |
+| 275 | Capacités opérationnelles décrites | Operational capabilities described |
+| 275 | Activités opérationnelles allouées aux entités | Operational activities allocated to entities |
+| 275 | Interactions entre activités définies | Interactions between activities defined |
+| 275 | Processus et scénarios opérationnels couvrant les capacités | Operational processes and scenarios covering the capabilities |
+| 276 | 🟩 Revue SA (analyse système) | 🟩 SA review (system analysis) |
+| 277 | Points de contrôle SA | SA checkpoints |
+| 277 | Missions et capacités du système définies | System missions and capabilities defined |
+| 277 | Acteurs externes identifiés | External actors identified |
+| 277 | Fonctions système allouées au système ou aux acteurs | System functions allocated to the system or to actors |
+| 277 | Échanges fonctionnels avec les acteurs | Functional exchanges with actors |
+| 277 | Chaînes fonctionnelles ou scénarios par capacité | Functional chains or scenarios per capability |
+| 277 | Modes et états du système | System modes and states |
+| 277 | Exigences système tracées | System requirements traced |
+| 277 | Traçabilité OA → SA | OA → SA traceability |
+| 278 | 🟨 Revue LA (architecture logique) | 🟨 LA review (logical architecture) |
+| 279 | Points de contrôle LA | LA checkpoints |
+| 279 | Décomposition en composants logiques justifiée | Breakdown into logical components justified |
+| 279 | Fonctions logiques allouées aux composants | Logical functions allocated to components |
+| 279 | Ports et échanges de composants | Component ports and exchanges |
+| 279 | Interfaces entre composants définies | Interfaces between components defined |
+| 279 | Scénarios d'échanges | Exchange scenarios |
+| 279 | Traçabilité SA → LA | SA → LA traceability |
+| 280 | 🟧 Revue PA (architecture physique) | 🟧 PA review (physical architecture) |
+| 281 | Points de contrôle PA | PA checkpoints |
+| 281 | Composants physiques de comportement et nœuds | Behavior physical components and nodes |
+| 281 | Déploiement des composants de comportement sur les nœuds | Deployment of behavior components on nodes |
+| 281 | Liens physiques et chemins physiques | Physical links and physical paths |
+| 281 | Échanges de composants alloués aux liens physiques | Component exchanges allocated to physical links |
+| 281 | Propriétés (PVMT) : masse, puissance, coûts… | Properties (PVMT): mass, power, costs… |
+| 281 | Traçabilité LA → PA | LA → PA traceability |
+| 295 | Plan de revue | Review plan |
+| 297 | 1. Critères d'entrée | 1. Entry criteria |
+| 297 | Version du modèle figée et diffusée aux relecteurs | Model version frozen and sent to reviewers |
+| 297 | Contrôles automatiques passés (ƒ Fonctions › Contrôles, qualité des noms) | Automatic checks passed (ƒ Functions › Checks, name quality) |
+| 297 | Commentaires de la revue précédente traités | Comments from the previous review handled |
+| 298 | 2. Points de contrôle | 2. Checkpoints |
+| 299 | 3. Critères de sortie | 3. Exit criteria |
+| 299 | Aucun commentaire bloquant ouvert | No open blocking comment |
+| 299 | Commentaires majeurs traités ou planifiés | Major comments handled or planned |
+| 299 | Décision de revue prononcée et diffusée | Review decision made and communicated |
+| 300 | 4. Actions et décisions | 4. Actions and decisions |
+| 301 | Nouvelle check-list | New checklist |
+| 314 | Check-list du | Checklist of … |
+| 315 | Points | Items |
+| 326 | ☑ Nouvelle check-list | ☑ New checklist |
+| 326 | Crée une check-list : vide (à remplir) ou à partir d'un modèle ARCADIA | Creates a checklist: empty (to fill in) or from an ARCADIA template |
+| 327 | Choisir un modèle… | Choose a template… |
+| 327 | Vide (à remplir) | Empty (to fill in) |
+| 328 | 📋 Nouveau plan de revue | 📋 New review plan |
+| 328 | Crée un plan de revue : objet, jalon, participants, périmètre, critères d'entrée et de sortie, points de contrôle, actions | Creates a review plan: purpose, milestone, participants, scope, entry and exit criteria, checkpoints, actions |
+| 329 | Choisir les points de contrôle… | Choose the checkpoints… |
+| 329 | Plan vide (points à écrire) | Empty plan (items to write) |
+| 330 | Importer une check-list ou un plan enregistré en .json (autre projet) | Import a checklist or a plan saved as .json (other project) |
+| 330 | 📂 Importer… | 📂 Import… |
+| 331 | (sans titre) | (untitled) |
+| 332 | Ouvrir dans une fenêtre séparée (par exemple sur un autre écran) | Open in a separate window (on another screen, for example) |
+| 333 | Créez une check-list ou un plan de revue avec les listes ci-dessus. Glissez ensuite des diagrammes et des éléments depuis la palette 📎 à droite sur les points. | Create a checklist or a review plan with the lists above. Then drag diagrams and elements from the 📎 palette on the right onto the items. |
+| 346 | 📋 Plan de revue | 📋 Review plan |
+| 346 | ☑ Check-list | ☑ Checklist |
+| 346 | Titre | Title |
+| 347 | Document HTML imprimable (points, cases, liens, commentaires de revue du périmètre) | Printable HTML document (items, boxes, links, review comments on the scope) |
+| 347 | ⬇ HTML | ⬇ HTML |
+| 348 | Enregistrer en .json pour le réutiliser dans un autre projet (📂 Importer…) | Save as .json to reuse it in another project (📂 Import…) |
+| 348 | 💾 .json | 💾 .json |
+| 349 | Dupliquer (cases décochées) | Duplicate (boxes unchecked) |
+| 349 | Supprimer | Delete |
+| 355 | Objet de la revue | Review purpose |
+| 355 | Ce qui est revu et pourquoi | What is reviewed and why |
+| 356 | Jalon / type | Milestone / type |
+| 356 | ex. PDR, revue interne | e.g. PDR, internal review |
+| 356 | Date | Date |
+| 356 | Lieu / visio | Place / video call |
+| 356 | Animateur | Moderator |
+| 356 | Nom | Name |
+| 357 | Statut | Status |
+| 357 | En préparation | In preparation |
+| 357 | En cours | In progress |
+| 357 | Terminée | Completed |
+| 358 | Décision | Decision |
+| 358 | Acceptée | Accepted |
+| 358 | Acceptée avec réserves | Accepted with reservations |
+| 358 | Refusée | Rejected |
+| 358 | Reportée | Postponed |
+| 359 | Participants et rôles | Participants and roles |
+| 359 | Un participant par ligne : nom — rôle (auteur, relecteur, expert, décideur…) | One participant per line: name — role (author, reviewer, expert, decision maker…) |
+| 360 | Documents de référence | Reference documents |
+| 360 | Spécifications, exigences, versions… | Specifications, requirements, versions… |
+| 361 | Périmètre : diagrammes et éléments revus | Scope: reviewed diagrams and elements |
+| 362 | Glissez ici des diagrammes et des éléments (palette 📎) | Drag diagrams and elements here (📎 palette) |
+| 363 | commentaire(s) non clos sur le périmètre | 💬 … open comment(s) on the scope |
+| 364 | 📤 Faire relire les commentaires du périmètre… | 📤 Have the scope's comments reviewed… |
+| 365 | Nouveau dossier de relecture : un chapitre par élément ou diagramme du périmètre (description, diagrammes) | New review package: one chapter per element or diagram of the scope (description, diagrams) |
+| 365 | 📑 Dossier de relecture du périmètre | 📑 Review package of the scope |
+| 369 | Section | Section |
+| 370 | Monter | Move up |
+| 370 | Descendre | Move down |
+| 370 | Supprimer la section | Delete the section |
+| 374 | Point à vérifier | Item to check |
+| 375 | Qui | Who |
+| 375 | Responsable | Owner |
+| 376 | Échéance | Due date |
+| 377 | Constat, remarque | Finding, remark |
+| 377 | Monter | Move up |
+| 377 | Descendre | Move down |
+| 377 | Supprimer le point | Delete the item |
+| 379 | Constat, remarque… | Finding, remark… |
+| 381 | ✚ Point | ✚ Item |
+| 381 | ou glissez ici un diagramme ou un élément : nouveau point lié | or drag a diagram or an element here: new linked item |
+| 383 | ✚ Section | ✚ Section |
+| 405 | En préparation | In preparation |
+| 405 | En cours | In progress |
+| 405 | Terminée | Completed |
+| 405 | Acceptée | Accepted |
+| 405 | Acceptée avec réserves | Accepted with reservations |
+| 405 | Refusée | Rejected |
+| 405 | Reportée | Postponed |
+| 406 | Projet : | Project: … · model … · …/… item(s) checked · generated on … |
+| 406 | · modèle | Project: … · model … · …/… item(s) checked · generated on … |
+| 406 | point(s) cochés · édité le | Project: … · model … · …/… item(s) checked · generated on … |
+| 409 | Objet | Purpose |
+| 409 | Jalon / type | Milestone / type |
+| 409 | Date | Date |
+| 409 | Lieu / visio | Place / video call |
+| 410 | Animateur | Moderator |
+| 410 | Statut | Status |
+| 410 | Décision | Decision |
+| 410 | Participants et rôles | Participants and roles |
+| 411 | Documents de référence | Reference documents |
+| 411 | Périmètre | Scope |
+| 413 | 💬 Commentaires de revue sur le périmètre | 💬 Review comments on the scope |
+| 413 | Statut | Status |
+| 413 | Criticité | Severity |
+| 413 | Commentaire | Comment |
+| 413 | Responsables | Assignees |
+| 417 | Point | Item |
+| 417 | Liens | Links |
+| 417 | Qui | Who |
+| 417 | Échéance | Due date |
+| 425 | Produit par Arcalyse | Produced by Arcalyse |
+| 434 | Fichier illisible (JSON attendu). | Unreadable file (JSON expected). |
+| 436 | Ce fichier n'est pas une check-list Arcalyse. | This file is not an Arcalyse checklist. |
+| 441 | check-list(s) importée(s) | ✔ … checklist(s) imported |
+| 462 | Glisser pour régler la largeur (double-clic : largeur par défaut) | Drag to adjust the width (double-click: default width) |
+| 483 | Afficher la palette 📎 Glisser-déposer | Show the 📎 Drag and drop palette |
+| 484 | 📎 Glisser-déposer | 📎 Drag and drop |
+| 484 | Replier la palette (plus de place pour le document) | Collapse the palette (more room for the document) |
+| 485 | 🔍 Diagramme ou élément… | 🔍 Diagram or element… |
+| 487 | Astuce : ouvrez une check-list ou un tableau blanc dans une fenêtre séparée (⧉) pour y glisser aussi des diagrammes depuis 🔲 Diagrammes Capella et des éléments depuis 🧭 Explorateur ou ⚡ Chaînes. | Tip: open a checklist or a whiteboard in a separate window (⧉) to also drag into it diagrams from 🔲 Capella Diagrams and elements from 🧭 Explorer or ⚡ Chains. |
+| 494 | glisser, ou clic pour ouvrir | drag, or click to open |
+| 495 | 🔲 Diagrammes | 🔲 Diagrams |
+| 497 | Aucun .aird chargé. | No .aird loaded. |
+| 497 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 499 | autre(s) : précisez la recherche | … … more: refine the search |
+| 499 | Aucun diagramme ne correspond. | No matching diagram. |
+| 500 | 🧩 Éléments | 🧩 Elements |
+| 501 | Tapez au moins 2 lettres du nom d'un élément. | Type at least 2 letters of an element name. |
+| 503 | autre(s) : précisez la recherche | … … more: refine the search |
+| 503 | Aucun élément ne correspond. | No element matches. |
+| 623 | ] .hm-item-t | (inchangé, hors _L) |
+| 659 | ] .hm-item-t | (inchangé, hors _L) |
+| 667 | (copie) | (copy) |
+| 668 | Supprimer « | Delete “…”? |
+| 668 | (sans titre) | (untitled) |
+| 670 | Nouvelle section | New section |
+| 672 | Supprimer la section « | Delete the section “…” and its … item(s)? |
+| 672 | » et ses | Delete the section “…” and its … item(s)? |
+| 672 | point(s) ? | Delete the section “…” and its … item(s)? |
+| 689 | (sans titre) | (untitled) |
+| 701 | ] .hm-item-t | (inchangé, hors _L) |
 
 ## js/57-projet-page.js
 
