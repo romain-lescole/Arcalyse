@@ -34,7 +34,7 @@ function capRevCibleeDialog(o){
   if(!ov){ ov=D.createElement('div'); ov.id='crv-ov'; D.body.appendChild(ov); }
   const diagOk=typeof _capDiag!=='undefined'&&_capDiag.airdCharge;
   ov.innerHTML=`<div class="cw-d-box" style="max-width:680px">
-    <div class="cw-d-hdr"><b>${_L('📤 Revue ciblée : page HTML à faire relire')}</b><button class="cap-lf-btn" data-x="1">✕</button></div>
+    <div class="cw-d-hdr"><b>${_L('📤 Faire relire des commentaires : page HTML')}</b><button class="cap-lf-btn" data-x="1">✕</button></div>
     <div class="cw-d-body">
       <div class="crv-help">${_L('Les relecteurs ouvrent la page dans leur navigateur (sans Arcalyse, hors ligne), répondent aux commentaires et en ajoutent, puis vous renvoient la page enregistrée (ou leurs réponses en .json). Réimport : 💬 Revue › 💾 Revue ▾ › 📂 Importer / fusionner.')}</div>
       <label class="crv-lbl">${_L('Titre')}<input id="crv-rc-titre" class="crv-in" value="${esc(o.titre||_L('Revue ciblée')+' — '+(capRevProjectName()||capCurrentFileName||''))}"></label>

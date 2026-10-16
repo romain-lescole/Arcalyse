@@ -839,7 +839,7 @@
 - `capDiagExport` (l. 1037) — Export groupé des diagrammes en planches : capture de tous les diagrammes, puis pagination
 - `capDiagExportHtml` (l. 1108) — Rapport HTML autonome : onglet Sommaire (tableau avec liens) et onglet Planches
 
-## 55-revue.js — 1200 lignes
+## 55-revue.js — 1201 lignes
 
 - `capRevNorm` (l. 27) — Complète des données de revue (lues dans la page ou un fichier) avec les valeurs par défaut.
 - `capRevStatuts` (l. 36) — @returns {object[]} statuts d'un commentaire {k, l, c, i} (k : valeur enregistrée)
@@ -931,10 +931,10 @@
 - `capRevCfgAction` (l. 1087) — Actions de l'onglet ⚙ Réglages : participants, export, import, suppression.
 - `capRevExport` (l. 1095) — Exporte la revue (participants et commentaires) dans un fichier .json réutilisable.
 - `capRevImport` (l. 1102) — Importe un fichier .json de revue, ou une page de 📤 revue ciblée relue (.html), et la fusionne avec les commentaires de la page.
-- `capRevImportConfirm` (l. 1135) — Fenêtre d'avertissement avant d'importer une revue qui ne semble pas porter sur le modèle chargé :
-- `capRevMerge` (l. 1169) — Fusionne une revue importée : nouveaux commentaires ajoutés (renumérotés si leur numéro est pris),
+- `capRevImportConfirm` (l. 1136) — Fenêtre d'avertissement avant d'importer une revue qui ne semble pas porter sur le modèle chargé :
+- `capRevMerge` (l. 1170) — Fusionne une revue importée : nouveaux commentaires ajoutés (renumérotés si leur numéro est pris),
 
-## 56-accueil.js — 644 lignes
+## 56-accueil.js — 653 lignes
 
 - `CAP_HOME_DND` (l. 23) — Type de données glissées (référence vers un diagramme ou un élément).
 - `CAP_HOME_COULEURS` (l. 25) — Couleurs proposées pour les notes du tableau blanc.
@@ -953,38 +953,38 @@
 - `capHomeChip` (l. 110) — Pastille d'une référence (dans un point de check-list ou le périmètre d'un plan), cliquable, avec ✕ pour la retirer.
 - `capHomeRefOpen` (l. 120) — Ouvre la cible d'une référence : diagramme (🔲 Diagrammes Capella) ou panneau de détail de l'élément.
 - `capRenderHome` (l. 135) — Affiche la vue 🏠 Accueil (et rafraîchit les check-lists et tableaux blancs ouverts dans une fenêtre séparée).
-- `capHomeCapellaVersion` (l. 157) — @returns {string} version de Capella du modèle, lue dans les espaces de noms du fichier ('' si inconnue)
-- `capHomeCouches` (l. 166) — Contenu du modèle par couche : nombre d'éléments et types principaux (hors types techniques et paquetages).
-- `capHomeProgress` (l. 173) — @param {object} d - Check-list ou plan @returns {{ok:number, n:number}} points cochés / points
-- `capHomeBar` (l. 175) — Barre d'avancement. @param {{ok:number,n:number}} p @returns {string} HTML
-- `capHomeCartes` (l. 182) — Cartes de l'onglet 🏠 Projet, dans l'ordre par défaut : k = clé, l = titre, w = largeur par défaut (1 ou 2 colonnes),
-- `capHomeCartesOrdre` (l. 219) — @returns {string[]} clés des cartes affichées, dans l'ordre choisi (cartes nouvelles ajoutées à la fin)
-- `capHomeProjetHtml` (l. 225) — Onglet 🏠 Projet : cartes (ordre, largeur et cartes masquées réglables par ⚙ Disposer). @returns {string} HTML
-- `capHomeModeles` (l. 248) — Modèles de check-lists (ARCADIA) : sections et points proposés.
-- `capHomeNewDoc` (l. 270) — Crée une check-list ou un plan de revue et l'ouvre.
-- `capHomeQuickDoc` (l. 293) — ⚡ Check-list rapide : une section, un point par ligne (au moins un point vide), puis ouverture.
-- `capHomeDocsHtml` (l. 303) — Onglet ☑ Check-lists & plans de revue : création (listes « Nouvelle check-list », « Nouveau plan de revue »), import,
-- `capHomeDocHtml` (l. 325) — Document ouvert : en-tête (titre, avancement, actions), champs du plan de revue, sections et points.
-- `capHomePerimIds` (l. 370) — Identifiants du périmètre d'un plan : éléments et diagrammes du périmètre et des points.
-- `capHomeComPerim` (l. 376) — @param {object} c - Commentaire de revue @param {{el:Set,diag:Set}} ids - Périmètre @returns {boolean} vrai si le commentaire porte sur le p
-- `capHomeDocExport` (l. 382) — Document HTML imprimable d'une check-list ou d'un plan de revue.
-- `capHomeDocImport` (l. 410) — Importe une check-list ou un plan de revue enregistré en .json (💾 .json).
-- `capHomePaletteHtml` (l. 430) — Palette à droite (check-lists, tableaux blancs, fenêtres séparées) : recherche, diagrammes, éléments. @returns {string} HTML
-- `capHomePaletteList` (l. 437) — Résultats de la palette : diagrammes (filtrés), éléments dont le nom contient la recherche. @returns {string} HTML
-- `capHomeRender` (l. 456) — Réaffiche la vue 🏠 Accueil si elle est affichée, et les fenêtres séparées ouvertes.
-- `capHomeDocOf` (l. 465) — Check-list ou plan concerné par un élément de l'interface (vue ou fenêtre séparée).
-- `capHomeCurDoc` (l. 467) — @returns {object|undefined} document ouvert dans l'onglet ☑
-- `capHomeWin` (l. 472) — Fenêtre d'un élément de l'interface (la page, ou une fenêtre séparée) : boîtes de dialogue au bon endroit.
-- `capHomeFind` (l. 478) — Premier élément correspondant au sélecteur, dans la page ou les fenêtres séparées (curseur placé après un rendu).
-- `capHomeWire` (l. 488) — Branche (une fois) les écouteurs d'un conteneur (vue ou fenêtre séparée) : clics, saisies, glisser-déposer,
-- `CAP_HOME_CARTE` (l. 527) — Type de données glissées pour réordonner les cartes de 🏠 Projet.
-- `capHomeCarteMove` (l. 533) — Place une carte de 🏠 Projet avant une autre.
-- `capHomeDrop` (l. 545) — Dépôt d'une référence (ou d'un texte) sur une zone : périmètre, point, section, tableau blanc.
-- `capHomeItemAdd` (l. 563) — Ajoute un point à une section (après un point donné, sinon à la fin) et y place le curseur.
-- `capHomeMove` (l. 570) — Déplace un objet d'une liste d'un cran. @param {Array} l @param {number} i @param {number} dir - -1 / +1
-- `capHomeClick` (l. 573) — Clics de la vue et des fenêtres séparées (délégation). @param {MouseEvent} e
-- `capHomeInput` (l. 622) — Saisie : fiche projet, titres, champs du plan, points, notes du tableau blanc, recherche de la palette. @param {Event} e
-- `capHomeChange` (l. 636) — Listes et cases : création d'une check-list ou d'un plan, champs du plan, case d'un point. @param {Event} e
+- `capHomeCapellaVersion` (l. 159) — @returns {string} version de Capella du modèle, lue dans les espaces de noms du fichier ('' si inconnue)
+- `capHomeCouches` (l. 168) — Contenu du modèle par couche : nombre d'éléments et types principaux (hors types techniques et paquetages).
+- `capHomeProgress` (l. 175) — @param {object} d - Check-list ou plan @returns {{ok:number, n:number}} points cochés / points
+- `capHomeBar` (l. 177) — Barre d'avancement. @param {{ok:number,n:number}} p @returns {string} HTML
+- `capHomeCartes` (l. 184) — Cartes de l'onglet 🏠 Projet, dans l'ordre par défaut : k = clé, l = titre, w = largeur par défaut (1 ou 2 colonnes),
+- `capHomeCartesOrdre` (l. 221) — @returns {string[]} clés des cartes affichées, dans l'ordre choisi (cartes nouvelles ajoutées à la fin)
+- `capHomeProjetHtml` (l. 227) — Onglet 🏠 Projet : cartes (ordre, largeur et cartes masquées réglables par ⚙ Disposer). @returns {string} HTML
+- `capHomeModeles` (l. 250) — Modèles de check-lists (ARCADIA) : sections et points proposés.
+- `capHomeNewDoc` (l. 272) — Crée une check-list ou un plan de revue et l'ouvre.
+- `capHomeQuickDoc` (l. 295) — ⚡ Check-list rapide : une section, un point par ligne (au moins un point vide), puis ouverture.
+- `capHomeDocsHtml` (l. 305) — Onglet ☑ Check-lists & plans de revue : création (listes « Nouvelle check-list », « Nouveau plan de revue »), import,
+- `capHomeDocHtml` (l. 327) — Document ouvert : en-tête (titre, avancement, actions), champs du plan de revue, sections et points.
+- `capHomePerimIds` (l. 373) — Identifiants du périmètre d'un plan : éléments et diagrammes du périmètre et des points.
+- `capHomeComPerim` (l. 379) — @param {object} c - Commentaire de revue @param {{el:Set,diag:Set}} ids - Périmètre @returns {boolean} vrai si le commentaire porte sur le p
+- `capHomeDocExport` (l. 385) — Document HTML imprimable d'une check-list ou d'un plan de revue.
+- `capHomeDocImport` (l. 413) — Importe une check-list ou un plan de revue enregistré en .json (💾 .json).
+- `capHomePaletteHtml` (l. 433) — Palette à droite (check-lists, tableaux blancs, fenêtres séparées) : recherche, diagrammes, éléments. @returns {string} HTML
+- `capHomePaletteList` (l. 440) — Résultats de la palette : diagrammes (filtrés), éléments dont le nom contient la recherche. @returns {string} HTML
+- `capHomeRender` (l. 459) — Réaffiche la vue 🏠 Accueil si elle est affichée, et les fenêtres séparées ouvertes.
+- `capHomeDocOf` (l. 468) — Check-list ou plan concerné par un élément de l'interface (vue ou fenêtre séparée).
+- `capHomeCurDoc` (l. 470) — @returns {object|undefined} document ouvert dans l'onglet ☑
+- `capHomeWin` (l. 475) — Fenêtre d'un élément de l'interface (la page, ou une fenêtre séparée) : boîtes de dialogue au bon endroit.
+- `capHomeFind` (l. 481) — Premier élément correspondant au sélecteur, dans la page ou les fenêtres séparées (curseur placé après un rendu).
+- `capHomeWire` (l. 491) — Branche (une fois) les écouteurs d'un conteneur (vue ou fenêtre séparée) : clics, saisies, glisser-déposer,
+- `CAP_HOME_CARTE` (l. 530) — Type de données glissées pour réordonner les cartes de 🏠 Projet.
+- `capHomeCarteMove` (l. 536) — Place une carte de 🏠 Projet avant une autre.
+- `capHomeDrop` (l. 548) — Dépôt d'une référence (ou d'un texte) sur une zone : périmètre, point, section, tableau blanc.
+- `capHomeItemAdd` (l. 567) — Ajoute un point à une section (après un point donné, sinon à la fin) et y place le curseur.
+- `capHomeMove` (l. 574) — Déplace un objet d'une liste d'un cran. @param {Array} l @param {number} i @param {number} dir - -1 / +1
+- `capHomeClick` (l. 577) — Clics de la vue et des fenêtres séparées (délégation). @param {MouseEvent} e
+- `capHomeInput` (l. 629) — Saisie : fiche projet, titres, champs du plan, points, notes du tableau blanc, recherche de la palette. @param {Event} e
+- `capHomeChange` (l. 644) — Listes et cases : création d'une check-list ou d'un plan, champs du plan, case d'un point. @param {Event} e
 
 ## 57-projet-page.js — 205 lignes
 
@@ -1067,3 +1067,72 @@
 - `capHomePopsRender` (l. 276) — Réaffiche le contenu des fenêtres séparées ouvertes (ferme celles dont la check-list ou la page a été supprimée).
 - `CAP_HOME_SOURCES` (l. 292) — Éléments des vues qui peuvent être glissés vers une check-list ou un tableau blanc.
 - `capHomeDragRef` (l. 298) — Référence portée par un élément glissable d'une vue (diagramme de la liste, élément de l'Explorateur, chaîne).
+
+## 61-dossier-relecture.js — 825 lignes
+
+- `capDosNorm` (l. 23) — Complète la liste des dossiers lue dans la page (valeurs par défaut, blocs normalisés).
+- `capDosCur` (l. 29) — @returns {object|undefined} dossier ouvert dans l'onglet 📑
+- `capDosTrouve` (l. 37) — Bloc d'un dossier et sa place : liste qui le contient, rang, chapitre parent.
+- `capDosParcours` (l. 51) — Parcourt les blocs d'un dossier dans l'ordre du document.
+- `capDosBlocDe` (l. 61) — Bloc visé par un retour (« id » ou « id.d » pour la description d'un chapitre).
+- `capDosNouveau` (l. 79) — Crée un dossier et l'ouvre.
+- `capDosDiagsDe` (l. 90) — Diagrammes dont un élément est l'élément représenté (cible du diagramme dans le .aird).
+- `capDosNomDiag` (l. 96) — Nom d'un diagramme sans le préfixe de son type (« [LAB] … »). @param {string} n @returns {string}
+- `capDosChapDe` (l. 104) — Chapitre créé à partir d'une référence glissée : élément (titre, description, diagrammes dont il est l'élément représenté)
+- `capDosBlocDeRef` (l. 118) — Bloc créé à partir d'une référence glissée dans un chapitre : diagramme, élément (avec sa description) ou texte libre.
+- `capDosDepuisPlan` (l. 126) — Crée un dossier à partir d'un plan de revue : un chapitre par élément ou diagramme du périmètre.
+- `capDosOngletHtml` (l. 136) — Onglet 📑 : liste des dossiers, dossier ouvert. @returns {string} HTML
+- `capDosHtml` (l. 151) — Dossier ouvert : en-tête (titre, exports, réimport), consignes, retours, plan du dossier.
+- `capDosListeHtml` (l. 182) — Blocs d'une liste (chapitres numérotés, imbriqués).
+- `capDosActs` (l. 187) — Actions d'un bloc (monter, descendre, sortir du chapitre, entrer dans le chapitre précédent, supprimer). @returns {string} HTML
+- `capDosBadge` (l. 198) — Pastille du nombre de retours d'un bloc (clic : afficher les retours).
+- `capDosRetoursHtml` (l. 203) — Retours d'un bloc, s'ils sont dépliés. @param {object} d @param {string} bid @returns {string} HTML
+- `capDosApercu` (l. 211) — Aperçu de la description d'un élément (3 lignes).
+- `capDosChapHtml` (l. 227) — Chapitre : numéro, titre, élément associé, description, retours, contenu (blocs et sous-chapitres), zone de dépôt.
+- `capDosBlocHtml` (l. 249) — Bloc d'un chapitre : texte libre, élément (avec sa description) ou diagramme (description, éléments représentés).
+- `capDosRetourHtml` (l. 269) — Un retour de relecteur : type, criticité, auteur, date, extrait commenté, texte ; commentaire de 💬 Revue créé.
+- `capDosRetoursTousHtml` (l. 281) — Tous les retours du dossier, dans l'ordre du document. @param {object} d @returns {string} HTML
+- `capDosTypes` (l. 288) — @returns {object[]} types de retour {k, l} proposés aux relecteurs
+- `capDosClick` (l. 299) — Clics de l'onglet 📑 (délégation depuis capHomeClick).
+- `capDosFocus` (l. 332) — Place le curseur dans le titre (chapitre) ou le texte (bloc) qui vient d'être créé. @param {string} id - Bloc
+- `capDosInput` (l. 338) — Saisies de l'onglet 📑 : champs du dossier, titres, textes ; cases (description, éléments représentés).
+- `capDosDrop` (l. 355) — Dépôt d'une référence ou d'un texte dans le dossier ouvert.
+- `capDosDiagSvgs` (l. 378) — SVG des diagrammes d'une liste (la vue 🔲 Diagrammes Capella est ouverte le temps de l'export, puis la vue précédente rétablie).
+- `capDosContenu` (l. 398) — Contenu du dossier prêt à exporter : chapitres numérotés, descriptions (texte), éléments, diagrammes (SVG, dimensions,
+- `capDosExport` (l. 425) — Exporte le dossier : page HTML à commenter ou document Word.
+- `capDosB64` (l. 441) — Base64 d'un texte UTF-8 (SVG embarqué dans la page). @param {string} s @returns {string}
+- `capDosPage` (l. 455) — Page HTML autonome (hors ligne) du dossier : sommaire, chapitres numérotés, figures, commentaires par bloc,
+- `$` (l. 506)
+- `esc` (l. 507)
+- `dt` (l. 508)
+- `find` (l. 509)
+- `uid` (l. 510)
+- `ink` (l. 511)
+- `me` (l. 512)
+- `mark` (l. 513)
+- `chaps` (l. 514)
+- `counts` (l. 515)
+- `btn` (l. 517)
+- `zone` (l. 518)
+- `com` (l. 519)
+- `opts` (l. 523)
+- `formHtml` (l. 524)
+- `upd` (l. 527)
+- `updAll` (l. 530)
+- `para` (l. 531)
+- `node` (l. 532)
+- `toc` (l. 548)
+- `render` (l. 549)
+- `needMe` (l. 558)
+- `dl` (l. 576)
+- `base` (l. 577)
+- `capDosDocx` (l. 600) — Document Word du dossier : page de titre (projet, auteur, consignes, mode d'emploi), sommaire, chapitres en styles
+- `capDosUnzip` (l. 702) — Lit les fichiers d'une archive ZIP (méthodes « stored » et « deflate », décompression native du navigateur).
+- `capDosXmlTexte` (l. 722) — Décode les entités XML d'un texte. @param {string} s @returns {string}
+- `capDosWText` (l. 724) — Texte des runs d'un fragment WordprocessingML (paragraphes séparés par un saut de ligne). @param {string} xml @param {string} [tag] - 't' ou
+- `capDosLireDocx` (l. 735) — Retours d'un document Word commenté : commentaires (rattachés au dernier signet « arc_… » qui les précède) et
+- `capDosLireFichier` (l. 764) — Lit un fichier de retours : page HTML enregistrée par un relecteur, .json de ses retours, ou .docx commenté.
+- `capDosLirePage` (l. 773) — @param {string} texte - Code HTML @returns {object|null} données de la page de relecture (sans l'exécuter)
+- `capDosImporter` (l. 778) — Choisit et importe un ou plusieurs fichiers de retours (page HTML, .json, .docx).
+- `capDosFusion` (l. 789) — Rattache des retours lus à leur dossier (même identifiant ; sinon dossier recréé depuis la page, ou dossier ouvert
+- `capDosVersRevue` (l. 810) — Verse les retours non encore traités dans 💬 Revue : un commentaire par retour, cible = élément du bloc

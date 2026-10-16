@@ -36,7 +36,7 @@ function capHomeNorm(d){
     x.sections=(x.sections||[]).map(s=>Object.assign({titre:'', items:[]}, s)); x.sections.forEach(s=>{ s.items=(s.items||[]).map(i=>Object.assign({txt:'', ok:false, refs:[]}, i)); }); });
   const boards=(Array.isArray(d.boards)?d.boards:[]).filter(b=>b&&b.id).map(b=>Object.assign({titre:'', items:[]}, b));
   const c=d.cartes||{};
-  return { v:1, fiche:Object.assign({objet:'', phase:'', version:'', resp:'', equipe:'', notes:''}, d.fiche||{}), docs, boards,
+  return { v:1, fiche:Object.assign({objet:'', phase:'', version:'', resp:'', equipe:'', notes:''}, d.fiche||{}), docs, boards, dossiers:capDosNorm(d.dossiers),
     cartes:{ordre:Array.isArray(c.ordre)?c.ordre:[], masques:Array.isArray(c.masques)?c.masques:[], larges:c.larges&&typeof c.larges==='object'?c.larges:{}} };
 }
 /** Identifiant unique (point, section, document, note). @returns {string} */
@@ -141,10 +141,12 @@ function capRenderHome(box){
   let corps;
   if(u.tab==='docs') corps=capHomeDocsHtml()+capHomePaletteHtml();
   else if(u.tab==='board') corps=capHomeBoardHtml(capHomeCurBoard())+capHomePaletteHtml();
+  else if(u.tab==='dos') corps=capDosOngletHtml()+capHomePaletteHtml();
   else corps=capHomeProjetHtml();
   box.innerHTML=`<div class="hm-bar"><span class="tb-grp">${tab('projet',_L('🏠 Projet'),_L('Informations du projet, fiche, contenu du modèle, revue, accès rapide'))}`+
     tab('docs',_L(`☑ Check-lists & plans de revue`)+(nd?` <span class="hm-n">${nd}</span>`:''),_L('Listes à cocher et plans de revue, liés à des diagrammes et des éléments'))+
-    tab('board',_L(`🧾 Tableaux blancs`)+(nb?` <span class="hm-n">${nb}</span>`:''),_L('Pages libres : texte, formes, diagrammes et éléments en icônes cliquables'))+`</span>`+
+    tab('board',_L(`🧾 Tableaux blancs`)+(nb?` <span class="hm-n">${nb}</span>`:''),_L('Pages libres : texte, formes, diagrammes et éléments en icônes cliquables'))+
+    tab('dos',_L(`📑 Dossiers de relecture`)+(_capHome.dossiers.length?` <span class="hm-n">${_capHome.dossiers.length}</span>`:''),_L('Documents chapitrés à faire relire : descriptions, diagrammes, texte libre ; export HTML à commenter ou Word, réimport des retours'))+`</span>`+
     `<span class="hm-bar-t">${capEsc(capRevProjectName()||capCurrentFileName||'')}</span></div>`+
     `<div class="hm-body">${corps}</div>`;
   const m=box.querySelector('.hm-main'); if(m) m.scrollTop=pos;
@@ -213,7 +215,7 @@ function capHomeCartes(){
       capRevCrits().filter(c=>c.k).map(c=>{ const n=ouv.filter(x=>x.crit===c.k).length; return n?`<span class="hm-stat" style="color:${capTextOn(c.c)}"><b>${n}</b> ${c.l}</span>`:''; }).join('')+
       (chk?`<span class="hm-stat" style="color:var(--c-warn,#e3b341)"><b>${chk}</b> ${_L('à vérifier')}</span>`:'')+(late?`<span class="hm-stat" style="color:var(--c-err,#f85149)"><b>${late}</b> ${_L('en retard')}</span>`:'')+
       `<span class="hm-stat ana-dim">${_L(`${cs.length} au total`)}</span></div>`:`<div class="ana-dim">${_L('Aucun commentaire de revue.')}</div>`)+
-      `<div class="hm-row"><button class="cap-lf-btn" data-a="rev">${_L('💬 Ouvrir la revue')}</button>${cs.length?`<button class="cap-lf-btn" data-a="rev-cible" title="${_L('Page HTML à envoyer aux relecteurs : ils répondent aux commentaires choisis, puis leurs réponses sont réimportées ici')}">${_L('📤 Revue ciblée…')}</button>`:''}</div>`; }} ];
+      `<div class="hm-row"><button class="cap-lf-btn" data-a="rev">${_L('💬 Ouvrir la revue')}</button>${cs.length?`<button class="cap-lf-btn" data-a="rev-cible" title="${_L('Page HTML à envoyer aux relecteurs : ils répondent aux commentaires choisis, puis leurs réponses sont réimportées ici')}">${_L('📤 Faire relire des commentaires…')}</button>`:''}<button class="cap-lf-btn" data-a="go-dos" title="${_L('Document chapitré à faire relire : descriptions, diagrammes, texte libre ; export HTML à commenter ou Word')}">${_L('📑 Dossiers de relecture')}</button></div>`; }} ];
 }
 /** @returns {string[]} clés des cartes affichées, dans l'ordre choisi (cartes nouvelles ajoutées à la fin) */
 function capHomeCartesOrdre(){
@@ -342,7 +344,8 @@ function capHomeDocHtml(d){
       `<div class="hm-f hm-f-w"><span>${_L('Périmètre : diagrammes et éléments revus')}</span><div class="hm-drop hm-perim" data-drop="perim">${H.perim.map((r,i)=>capHomeChip(r,'p:'+i)).join('')}`+
       `<span class="hm-drop-hint">${_L('Glissez ici des diagrammes et des éléments (palette 📎)')}</span></div></div>`+
       `<div class="hm-row"><span class="ana-dim">${_L(`💬 ${nc} commentaire(s) non clos sur le périmètre`)}</span>`+
-      `<button class="cap-lf-btn" data-a="doc-revue" title="${_L('Page HTML à envoyer aux relecteurs, avec les commentaires de revue du périmètre ; leurs réponses se réimportent dans 💬 Revue')}">${_L('📤 Revue ciblée du périmètre…')}</button></div></div>`;
+      `<button class="cap-lf-btn" data-a="doc-revue" title="${_L('Page HTML à envoyer aux relecteurs, avec les commentaires de revue du périmètre ; leurs réponses se réimportent dans 💬 Revue')}">${_L('📤 Faire relire les commentaires du périmètre…')}</button>`+
+      `<button class="cap-lf-btn" data-a="doc-dos" title="${_L('Nouveau dossier de relecture : un chapitre par élément ou diagramme du périmètre (description, diagrammes)')}">${_L('📑 Dossier de relecture du périmètre')}</button></div></div>`;
   }
   d.sections.forEach((s,si)=>{
     const p={ok:s.items.filter(i=>i.ok).length, n:s.items.length};
@@ -544,6 +547,7 @@ function capHomeCarteMove(k, avant){
  */
 function capHomeDrop(z, ref, txt, e){
   const k=z.dataset.drop, d=capHomeDocOf(z), has=(l,r)=>l.some(x=>x.k===r.k&&x.id===r.id);
+  if(k.startsWith('dos-')){ capDosDrop(z, ref, txt); return; }   // 📑 dossier de relecture (61)
   if(k==='board'){ const B=capHomeBoardOf(z), r=z.getBoundingClientRect(), x=Math.max(0,Math.round(e.clientX-r.left-20)), y=Math.max(0,Math.round(e.clientY-r.top-20));
     capHomeBoardAdd(B, ref?{k:'ref', x, y, ref}:{k:'txt', x, y, w:220, h:110, txt, col:_capHomeUi.col}); return; }
   if(!d) return;
@@ -585,6 +589,7 @@ function capHomeClick(e){
   const dl=t.closest('[data-doc]'); if(dl){ Object.assign(u,{doc:dl.dataset.doc, tab:'docs'}); capHomeRender(); return; }
   const bo=t.closest('[data-board-open]'); if(bo){ Object.assign(u,{board:bo.dataset.boardOpen, tab:'board'}); capHomeRender(); return; }
   if(capHomeBoardClick(e)) return;   // tableau blanc : pages, outils, couleurs, sélection (60)
+  if(capDosClick(e)) return;         // 📑 dossiers de relecture (61)
   const a=a0; if(!a) return;
   const act=a.dataset.a, d=capHomeDocOf(a);
   const sEl=t.closest('[data-s]'), s=d&&sEl&&d.sections.find(x=>x.id===sEl.dataset.s);
@@ -601,6 +606,8 @@ function capHomeClick(e){
     case 'cartes-reset': _capHome.cartes={ordre:[], masques:[], larges:{}}; break;
     case 'quick': { const nd=capHomeQuickDoc(); capHomeRender(); const n=capHomeFind(`[data-docid="${nd.id}"] .hm-item-t`); if(n) n.focus(); return; }
     case 'go-docs': u.tab='docs'; break;
+    case 'go-dos': u.tab='dos'; break;
+    case 'doc-dos': if(d) capDosDepuisPlan(d); return;
     case 'doc-import': capHomeDocImport(); return;
     case 'doc-html': if(d) capHomeDocExport(d); return;
     case 'doc-json': if(d) capDownloadBlob(new Blob([JSON.stringify({type:'arcalyse-checklist', version:1, date:new Date().toISOString(), docs:[d]},null,1)],{type:'application/json'}), (d.titre||'check-list').replace(/[^\p{L}\p{N}\-]+/gu,'_')+'.json'); return;
@@ -622,6 +629,7 @@ function capHomeClick(e){
 function capHomeInput(e){
   const t=e.target;
   if(t.classList.contains('hm-pal-q')){ _capHomeUi.q=t.value; const l=t.closest('.hm-pal').querySelector('.hm-pal-l'); if(l) l.innerHTML=capHomePaletteList(); return; }
+  if(capDosInput(e)) return;   // 📑 dossier de relecture (61)
   if(t.dataset.ff){ _capHome.fiche[t.dataset.ff]=t.value; capHomeSaveLater(); return; }
   if(t.dataset.bt){ const B=capHomeBoardOf(t), it=B&&B.items.find(x=>x.id===t.closest('[data-it]').dataset.it); if(it){ it.txt=t.innerText; capHomeSaveLater(); } return; }
   const d=capHomeDocOf(t); if(!d) return;
@@ -635,6 +643,7 @@ function capHomeInput(e){
 /** Listes et cases : création d'une check-list ou d'un plan, champs du plan, case d'un point. @param {Event} e */
 function capHomeChange(e){
   const t=e.target, d=capHomeDocOf(t);
+  if(capDosInput(e)) return;   // 📑 dossier de relecture (61)
   if(t.dataset.new){ const v=t.value; if(!v) return; const nd=capHomeNewDoc(t.dataset.new, v); capHomeRender();
     if(nd.kind==='list'&&v==='vide'){ const n=capHomeFind(`[data-docid="${nd.id}"] .hm-item-t`); if(n) n.focus(); } return; }
   if(d&&t.dataset.hf&&t.tagName==='SELECT'){ d.head[t.dataset.hf]=t.value; capHomeSave(); return; }

@@ -16,4 +16,5 @@ Produire un document chapitré automatiquement à partir d'un **modèle de docum
 - **Éditeur** visuel du modèle de document, sur le principe de 📐 Tableau de bord (catalogue de blocs, aperçu).
 - Briques déjà disponibles : capture SVG des diagrammes, description et élément représenté (`capDiagSvg`, `capDiagMeta`, `capDiagElements`, 54), `capHtmlReport` (26), `capPdfBuild` / `capZipBuild` (24), calculs des vues 📡 et 🔬.
 - À décider avant de commencer : désignation robuste des diagrammes (règles plutôt que noms exacts), format cible prioritaire (Word ou HTML/PDF), liste des tableaux de la V1.
+- Fait en partie (oct. 2026) : 📑 Dossiers de relecture (61) — chapitres, descriptions, diagrammes, texte libre, sortie HTML et Word (.docx) avec réimport des commentaires. Reste : désignation des diagrammes par règles, tableaux issus des calculs, réutilisation d'un modèle de document d'une version à l'autre.
 - Estimation : V1 (modèle JSON + règles + description + quelques tableaux + HTML) ≈ une grosse séance ; éditeur ≈ une séance ; export Word ≈ une à deux séances.

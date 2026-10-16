@@ -299,7 +299,7 @@ function capRevRender(){
     (u.dd?`<div class="crv-dd">`+
       _L(`<div class="crv-dd-h">Les commentaires sont enregistrés <b>dans la page</b> : 💾 Enregistrer (Ctrl+S) les conserve avec le modèle.</div>`)+
       `<div class="ctx-i" data-a="export">${_L('⬇ Exporter les commentaires (.json)')}</div><div class="ctx-i" data-a="import">${_L('📂 Importer / fusionner une revue (.json ou page de revue ciblée .html)…')}</div>`+
-      `<div class="ctx-i" data-a="cible" title="${_L('Page HTML autonome à envoyer aux relecteurs : ils répondent aux commentaires choisis et en ajoutent ; leurs réponses se réimportent ici')}">${_L('📤 Revue ciblée (page HTML à faire relire)…')}</div>`+
+      `<div class="ctx-i" data-a="cible" title="${_L('Page HTML autonome à envoyer aux relecteurs : ils répondent aux commentaires choisis et en ajoutent ; leurs réponses se réimportent ici')}">${_L('📤 Faire relire des commentaires (page HTML)…')}</div>`+
       _L(`<div class="crv-dd-h">L'export garde la revue hors de la page, pour la transmettre ou réunir celles de plusieurs relecteurs (l'import ajoute les nouveaux commentaires et garde la version la plus récente des autres).</div>`)+
       (nNon?`<div class="crv-dd-h" style="color:var(--c-warn,#e3b341)">${_L(`${nNon} commentaire(s) modifié(s) depuis le dernier enregistrement ou export.`)}</div>`:'')+`</div>`:'')+`</span>`+
     `<button class="cap-lf-btn" data-a="tour" title="${_L('Visite guidée du panneau 💬 Revue')}">🎓</button>`+
@@ -1010,7 +1010,7 @@ function capRevReportTab(){
     `<div class="crv-meta" style="margin:6px 0 10px">${_L(`${l.length} commentaire(s) · ${late} en retard · ${chk} sur des éléments modifiés`)}</div>`+
     `<div class="crv-filters"><button class="phl-export-btn" data-a="report-html" style="margin-left:0" title="${_L('Rapport HTML autonome (imprimable) : synthèse, commentaires groupés, cibles, état par rapport au modèle chargé')}">${_L('📄 Rapport HTML')}</button>`+
     `<button class="phl-export-btn" data-a="report-csv" style="margin-left:0" title="${_L('Une ligne par commentaire (tableur)')}">${_L('⬇ CSV')}</button>`+
-    `<button class="phl-export-btn" data-a="cible" style="margin-left:0" title="${_L('Page HTML autonome à envoyer aux relecteurs : ils répondent aux commentaires choisis et en ajoutent ; leurs réponses se réimportent (💾 Revue ▾ › 📂 Importer / fusionner)')}">${_L('📤 Revue ciblée…')}</button></div>`;
+    `<button class="phl-export-btn" data-a="cible" style="margin-left:0" title="${_L('Page HTML autonome à envoyer aux relecteurs : ils répondent aux commentaires choisis et en ajoutent ; leurs réponses se réimportent (💾 Revue ▾ › 📂 Importer / fusionner)')}">${_L('📤 Faire relire des commentaires…')}</button></div>`;
 }
 /**
  * Groupes du rapport selon le regroupement choisi.
@@ -1105,6 +1105,7 @@ function capRevImport(){
     f.text().then(t=>{
       let d;
       if(/^\s*</.test(t)){   // page de revue ciblée relue
+        const dp=capDosLirePage(t); if(dp){ capDosFusion(dp, f.name); return; }   // page de 📑 dossier de relecture (61)
         const rc=capRevCibleeLire(t);
         if(!rc){ D.defaultView.alert(_L('Cette page n\'est pas une revue ciblée Arcalyse.')); return; }
         d=capRevCibleeVersRevue(rc);
