@@ -12,8 +12,8 @@
    Données : _capHome.dossiers (bloc « cap-home » de la page).
    ═══════════════════════════════════════════════════════════════════════ */
 
-/** État de l'affichage des dossiers (non enregistré) : dossier ouvert, chapitres repliés, retours dépliés. */
-const _capDosUi = { cur:'', plies:new Set(), ret:new Set(), tous:false };
+/** État de l'affichage des dossiers (non enregistré) : dossier ouvert, chapitres repliés, retours dépliés, tableaux d'éléments dépliés. */
+const _capDosUi = { cur:'', plies:new Set(), ret:new Set(), tous:false, listes:new Set() };
 
 /**
  * Complète la liste des dossiers lue dans la page (valeurs par défaut, blocs normalisés).
@@ -82,8 +82,8 @@ function capDosBlocDe(d, bid){
     return Object.assign(x, {champ:'el', elemId, libelle:'◆ '+(e?e.attrs.name||elemId:elemId)+_L(` (dans ${x.libelle})`)});
   }
   capDosParcours(d.blocs,(b,num)=>{ if(b.id!==id) return;
-    const lib=b.k==='chap'?(champ?_L(`Description de « ${b.titre} »`):b.titre):b.k==='txt'?_L('Texte'):b.k==='xlay'?capXlTitre(b.opts||{}):b.ref?capHomeRefNom(b.ref):'';
-    r={b, num, champ, libelle:(b.k==='diag'?'🔲 ':b.k==='el'?'◆ ':b.k==='xlay'?'🔗 ':'')+lib}; });
+    const lib=b.k==='chap'?(champ?_L(`Description de « ${b.titre} »`):b.titre):b.k==='txt'?_L('Texte'):b.k==='xlay'?capXlTitre(b.opts||{}):b.k==='liste'?(b.titre||_L('Tableau')):b.ref?capHomeRefNom(b.ref):'';
+    r={b, num, champ, libelle:(b.k==='diag'?'🔲 ':b.k==='el'?'◆ ':b.k==='xlay'?'🔗 ':b.k==='liste'?'▤ ':'')+lib}; });
   if(!r.b) r.libelle=_L('Bloc retiré du dossier');
   return r;
 }
@@ -156,6 +156,7 @@ function capDosOngletHtml(){
   const esc=capEsc, d=capDosCur();
   const liste=`<aside class="hm-docs"><div class="hm-docs-new">`+
     `<button class="cap-lf-btn" data-da="new" title="${_L('Nouveau dossier : chapitres, descriptions, diagrammes et texte libre à faire relire')}">${_L('📑 Nouveau dossier')}</button>`+
+    `<label class="hm-new-l">${_L('📘 Rapport automatique')}<select data-dos-gab title="${_L('Dossier rempli à partir du modèle selon un plan type, entièrement modifiable ensuite')}"><option value="" selected disabled>${_L('Choisir un plan type…')}</option>${capDosGabarits().map(g=>`<option value="${g.k}" title="${esc(g.t)}">${esc(g.l)}</option>`).join('')}</select></label>`+
     `<button class="cap-lf-btn" data-da="import" title="${_L('Réimporter les retours des relecteurs : page HTML enregistrée, .json ou document Word commenté (.docx)')}">${_L('📥 Réimporter des retours…')}</button></div>`+
     (_capHome.dossiers.length?_capHome.dossiers.map(x=>{ const n=x.retours.length;
       return `<div class="hm-docs-i${d&&x.id===d.id?' on':''}" data-dos-open="${x.id}"><span class="hm-docs-n">📑 ${esc(x.titre||_L('(sans titre)'))}</span>${n?`<span class="hm-n" title="${_L('Retours des relecteurs')}">💬 ${n}</span>`:''}`+
@@ -236,7 +237,7 @@ function capDosConvertir(f){
   if(b.k==='txt'){ const l=String(b.txt||'').split('\n'), reste=l.slice(1).join('\n').trim();
     c={id:b.id, k:'chap', titre:l[0].trim(), ref:null, desc:false, blocs:reste?[{id:capHomeUid(), k:'txt', txt:reste}]:[]}; }
   else if(b.k==='el') c={id:b.id, k:'chap', titre:capHomeRefNom(b.ref), ref:b.ref, desc:!!b.desc, blocs:[]};
-  else c={id:capHomeUid(), k:'chap', titre:b.k==='xlay'?capXlTitre(b.opts||{}):capDosNomDiag(b.ref.nom), ref:null, desc:false, blocs:[b]};
+  else c={id:capHomeUid(), k:'chap', titre:b.k==='xlay'?capXlTitre(b.opts||{}):b.k==='liste'?(b.titre||''):capDosNomDiag(b.ref.nom), ref:null, desc:false, blocs:[b]};
   f.l.splice(f.i, 1, c); return c.id;
 }
 /**
@@ -308,6 +309,9 @@ function capDosBlocHtml(d, b){
   let h=`<div class="dos-blk dos-k-${b.k}" data-b="${b.id}"><div class="dos-blk-h">`;
   if(b.k==='txt') h+=`<span class="dos-ico">¶</span><span class="dos-blk-l">${_L('Texte libre')}</span>`;
   else if(b.k==='el') h+=`<span class="dos-ico">◆</span>${capHomeChip(b.ref,'')}<label class="dos-opt"><input type="checkbox" data-bf="desc"${b.desc?' checked':''}> ${_L('Description')}</label>`;
+  else if(b.k==='liste') h+=`<span class="dos-ico">▤</span><input class="dos-liste-t" data-bf="titre" value="${esc(b.titre||'')}" placeholder="${_L('Titre du tableau')}">`+
+    `<span class="ana-dim">${_L(`${b.ids.length} élément(s)`)} · ${b.cols==='ech'?_L('échanges : source, cible, éléments échangés'):_L('nom, type, description')}</span>`+
+    `<button class="cap-lf-btn" data-da="liste-voir">${_capDosUi.listes.has(b.id)?_L('▴ Masquer'):_L('▾ Voir / modifier')}</button>`;
   else if(b.k==='xlay') h+=`<span class="dos-ico">🔗</span><span class="dos-blk-l">${esc(capXlTitre(b.opts||{}))}</span><button class="cap-lf-btn" data-da="xl-open" title="${_L('Ouvrir dans 🔬 Analyses › 🔗 Liens entre couches')}">${_L('🔗 Ouvrir')}</button>`;
   else { const ok=capHomeRefOk(b.ref);
     h+=`<span class="dos-ico">🔲</span>${capHomeChip(b.ref,'')}<label class="dos-opt" title="${_L('Description du diagramme (documentation dans Capella)')}"><input type="checkbox" data-bf="desc"${b.desc?' checked':''}> ${_L('Description')}</label>`+
@@ -315,6 +319,8 @@ function capDosBlocHtml(d, b){
       (ok?'':`<span class="ana-dim" title="${_L('Ouvrez le .aird du projet pour joindre ce diagramme aux exports')}">⚠ ${_L('.aird non chargé')}</span>`); }
   h+=capDosBadge(d, b.id)+capDosActs(false)+`</div>`;
   if(b.k==='txt') h+=`<textarea class="dos-txt" data-bf="txt" rows="${Math.min(12,Math.max(2,String(b.txt||'').split('\n').length+1))}" placeholder="${_L('Texte libre : contexte, question posée aux relecteurs…')}">${esc(b.txt||'')}</textarea>`;
+  else if(b.k==='liste'){ if(_capDosUi.listes.has(b.id)) h+=`<div class="dos-liste hm-drop" data-drop="dos-liste">${b.ids.map((id,i)=>{ const r=capHomeRefEl(id)||{k:'el', id, nom:id, type:'', couche:''};
+      return capHomeChip(r,'')+`<span class="hm-chip-x" data-da="liste-x" data-i="${i}" title="${_L('Retirer du tableau')}">✕</span>`; }).join('')}<span class="hm-drop-hint">${_L('Glissez ici des éléments pour les ajouter')}</span></div>`; }
   else if(b.desc) h+=capDosApercu(b.ref);
   return h+capDosRetoursHtml(d, b.id)+`</div>`;
 }
@@ -372,6 +378,8 @@ function capDosClick(e){
     case 'txt-add': if(d){ const b=capDosBlocDeRef(null,''), l=f&&f.b.k==='chap'?f.b.blocs:d.blocs; l.push(b); capHomeSave(); capHomeRender(); capDosFocus(b.id); } return true;
     case 'sub-add': if(f&&f.b.k==='chap'){ const c=capDosChapDe(null,''); f.b.blocs.push(c); u.plies.delete(f.b.id); capHomeSave(); capHomeRender(); capDosFocus(c.id); } return true;
     case 'xl-open': if(f&&f.b.opts){ Object.assign(_capXl, f.b.opts); capAnaSub='xlay'; capShowView('analyses'); } return true;
+    case 'liste-voir': if(f){ if(u.listes.has(f.b.id)) u.listes.delete(f.b.id); else u.listes.add(f.b.id); capHomeRender(); } return true;
+    case 'liste-x': if(f&&f.b.ids) f.b.ids.splice(+a.dataset.i,1); break;
     case 'conv': if(f){ const id=capDosConvertir(f); capHomeSave(); capHomeRender(); const n=capHomeFind(`.dos-ed [data-b="${id}"]`); if(n){ n.classList.add('dos-flash'); setTimeout(()=>n.classList.remove('dos-flash'),1200); } } return true;
     case 'pli': if(f){ if(u.plies.has(f.b.id)) u.plies.delete(f.b.id); else u.plies.add(f.b.id); capHomeRender(); } return true;
     case 'ref-x': if(f){ f.b.ref=null; f.b.desc=false; } break;
@@ -397,7 +405,9 @@ function capDosFocus(id){ const n=capHomeFind(`.dos-ed [data-b="${id}"] .dos-cha
  * @returns {boolean} vrai si traité
  */
 function capDosInput(e){
-  const t=e.target, ed=t.closest&&t.closest('.dos-ed'); if(!ed) return false;
+  const t=e.target;
+  if(t.dataset&&t.dataset.dosGab!=null){ if(e.type==='change'&&t.value){ capDosGenerer(t.value); } return true; }   // 📘 rapport automatique (63)
+  const ed=t.closest&&t.closest('.dos-ed'); if(!ed) return false;
   const d=_capHome.dossiers.find(x=>x.id===ed.dataset.dosid); if(!d) return true;
   if(t.dataset.dsf){ d[t.dataset.dsf]=t.value;
     if(t.dataset.dsf==='titre'){ const n=document.querySelector(`#cap-view-home [data-dos-open="${d.id}"] .hm-docs-n`); if(n) n.textContent='📑 '+(t.value||_L('(sans titre)')); }
@@ -419,6 +429,7 @@ function capDosDrop(z, ref, txt){
   if(k==='dos-new') d.blocs.push(capDosChapDe(ref, txt));
   else if(!f) return;
   else if(k==='dos-sub') f.b.blocs.push(capDosChapDe(ref, txt));
+  else if(k==='dos-liste'){ if(!ref||ref.k!=='el'||f.b.ids.includes(ref.id)) return; f.b.ids.push(ref.id); }
   else if(k==='dos-chap'&&(!ref||ref.k==='el')){
     if(ref){ f.b.ref=ref; f.b.desc=true; if(!f.b.titre) f.b.titre=capHomeRefNom(ref); }
     else f.b.titre=f.b.titre?f.b.titre+' '+txt:txt;
@@ -467,6 +478,8 @@ async function capDosContenu(d, st){
       if(b.k==='chap'){ n++; const num=(pre?pre+'.':'')+n, r=b.ref?info(b.ref):null;
         return {id:b.id, k:'chap', num, niv, titre:b.titre||(r&&r.nom)||'', ref:r?{nom:r.nom, type:r.type, couche:r.couche}:null, desc:b.desc&&r?r.desc:'', avecDesc:!!(b.desc&&r), enfants:conv(b.blocs, num, niv+1)}; }
       if(b.k==='txt') return {id:b.id, k:'txt', txt:b.txt||''};
+      if(b.k==='liste'){ const t=capDosListeLignes(b); b.elemsExp=t.rows.map(x=>x.id);   // lignes exportées (réimport Word)
+        return {id:b.id, k:'liste', titre:b.titre||'', head:t.head, rows:t.rows}; }
       if(b.k==='xlay'){ const r=capXlSvg(b.opts||{});   // 🔗 Liens entre couches, redessinés sur le modèle chargé
         return {id:b.id, k:'diag', fig:++fig, nom:capXlTitre(b.opts||{}), type:_L('Liens entre couches'), couche:'', desc:'', cible:'', svg:r.svg, w:r.w, h:r.h, elems:[]}; }
       if(b.k==='el'){ const r=info(b.ref); return {id:b.id, k:'el', nom:r.nom, type:r.type, couche:r.couche, desc:b.desc?r.desc:'', avecDesc:!!b.desc, absent:r.absent}; }
@@ -514,6 +527,33 @@ function capDosElemsReels(l){
     if(!e||!e.attrs.name||vus.has(e.id)) return; vus.add(e.id);
     out.push([e.attrs.name, (CAP_HUMAN_NAMES[e.typeName]||{}).h||e.typeName, e.layer||'', e.id]); });
   return out;
+}
+/**
+ * Élément au bout d'un échange : un port est remplacé par son propriétaire (fonction, composant), une Part par son type.
+ * @param {string} v - Valeur de l'attribut source ou target
+ * @returns {object|null} élément du modèle
+ */
+function capDosBout(v){
+  let e=capParseAttrRefs_(String(v||'')).map(capGetElementById_).find(Boolean); const P=capGetParentIndex().parentOf;
+  for(let i=0;e&&i<4;i++){
+    if(/Port$/.test(e.typeName)){ e=capGetElementById_(P[e.id])||e; continue; }
+    if(e.typeName==='Part'&&e.attrs.abstractType){ e=capParseAttrRefs_(String(e.attrs.abstractType)).map(capGetElementById_).find(Boolean)||e; }
+    break;
+  }
+  return e||null;
+}
+/**
+ * Lignes d'un tableau d'éléments, lues sur le modèle chargé : nom, type, description ; ou pour des échanges :
+ * échange, source, cible, éléments échangés.
+ * @param {object} b - Bloc {k:'liste', ids, cols:'desc'|'ech'}
+ * @returns {{head:string[], rows:{id:string, c:string[]}[]}}
+ */
+function capDosListeLignes(b){
+  const nom=e=>e?e.attrs.name||'':'—', noms=v=>capParseAttrRefs_(String(v||'')).map(capGetElementById_).filter(Boolean).map(x=>x.attrs.name||'').filter(Boolean).join(', ');
+  const els=(b.ids||[]).map(id=>capLoaded&&capGetElementById_(id)).filter(Boolean);
+  if(b.cols==='ech') return {head:[_L('Échange'), _L('Source'), _L('Cible'), _L('Éléments échangés')],
+    rows:els.map(e=>({id:e.id, c:[nom(e), nom(capDosBout(e.attrs.source)), nom(capDosBout(e.attrs.target)), noms(e.attrs.exchangedItems||e.attrs.convoyedInformations||'')]}))};
+  return {head:[_L('Élément'), 'Type', 'Description'], rows:els.map(e=>({id:e.id, c:[nom(e), (CAP_HUMAN_NAMES[e.typeName]||{}).h||e.typeName, capHtmlToText(e.attrs.description||'')]}))};
 }
 /** Base64 d'un texte UTF-8 (SVG embarqué dans la page). @param {string} s @returns {string} */
 function capDosB64(s){
@@ -563,7 +603,7 @@ section.chap{margin-top:18px}h2,h3,h4,h5{margin:16px 0 6px;scroll-margin-top:60p
 .el{border:1px solid #d0d7de;border-radius:6px;padding:6px 10px;margin:8px 0}.el .h{font-weight:600}.el .h span{font-weight:400;color:#57606a;font-size:12px;margin-left:6px}.el .d{white-space:pre-wrap;margin-top:4px}
 figure{margin:12px 0;border:1px solid #d0d7de;border-radius:6px;padding:8px}figure .img{overflow:auto;text-align:center;cursor:zoom-in}figure img{max-width:100%;height:auto}figure .img.z{cursor:zoom-out}figure .img.z img{max-width:none}
 figcaption{text-align:center;font-size:13px;color:#24292f;margin-top:6px}figcaption b{color:#0969da}.fd{white-space:pre-wrap;font-size:13px;color:#24292f;margin-top:6px}.fc{font-size:12px;color:#57606a;text-align:center}
-table{border-collapse:collapse;width:100%;font-size:12.5px;margin-top:6px}.ec{width:34px;text-align:center}.cbe{padding:0 5px;font-size:12px;opacity:.6}tr:hover .cbe{opacity:1}tr.cz td{border:0;padding:0}tr.cz .coms:empty{display:none}details.els summary{font-weight:600}th,td{border:1px solid #d0d7de;padding:3px 6px;text-align:left}th{background:#f6f8fa}details{margin-top:6px}summary{cursor:pointer;color:#0969da;font-size:12.5px}
+table{border-collapse:collapse;width:100%;font-size:12.5px;margin-top:6px}.ec{width:34px;text-align:center}.cbe{padding:0 5px;font-size:12px;opacity:.6}tr:hover .cbe{opacity:1}tr.cz td{border:0;padding:0}.lst .lt{font-weight:600;margin-top:10px}table.lstt td{vertical-align:top}table.lstt .ld{white-space:pre-wrap;font-size:12px;color:#24292f}tr.cz .coms:empty{display:none}details.els summary{font-weight:600}th,td{border:1px solid #d0d7de;padding:3px 6px;text-align:left}th{background:#f6f8fa}details{margin-top:6px}summary{cursor:pointer;color:#0969da;font-size:12.5px}
 .coms{margin:4px 0 8px 14px}.com{border:1px solid #d4a72c;background:#fff8c5;border-radius:6px;padding:5px 9px;margin:5px 0;font-size:13px}.com.other{border-color:#d0d7de;background:#f6f8fa}
 .com .h{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:#57606a}.com .h b{color:#1f2328}.com .x{font-style:italic;color:#57606a;margin-top:2px}.com .t{white-space:pre-wrap;margin-top:2px}
 .com .a{margin-left:auto}.com .a button{padding:0 6px;font-size:12px}.crit{padding:0 6px;border-radius:8px;font-size:11px}
@@ -614,6 +654,9 @@ function node(n){
     if(n.ref)s+='<div class="refl">'+esc(n.ref.type)+(n.ref.couche?' · '+esc(n.ref.couche):'')+'</div>';
     if(n.avecDesc)s+='<div class="blk desc">'+(n.desc?esc(n.desc):'<span class="nodesc">'+esc(T.nodesc)+'</span>')+btn(n.id+'.d')+'</div>'+zone(n.id+'.d');
     return s+n.enfants.map(node).join('')+'</section>';}
+  if(n.k==='liste')return '<div class="blk lst"><div class="lt">▤ '+esc(n.titre)+' <span style="color:#57606a;font-weight:400">('+n.rows.length+')</span></div>'+btn(n.id)+'</div>'+zone(n.id)+
+    '<table class="lstt"><tr>'+n.head.map(function(h){return '<th>'+esc(h)+'</th>';}).join('')+'<th></th></tr>'+n.rows.map(function(r){var b=n.id+'~'+r.id;
+      return '<tr>'+r.c.map(function(x,i){return '<td'+(i===r.c.length-1?' class="ld"':'')+'>'+esc(x)+'</td>';}).join('')+'<td class="ec"><button class="cbe" data-new="'+esc(b)+'" title="'+esc(T.comment)+'">💬</button></td></tr><tr class="cz"><td colspan="'+(n.head.length+1)+'">'+zone(b)+'</td></tr>';}).join('')+'</table>';
   if(n.k==='txt')return '<div class="blk txt">'+esc(n.txt)+btn(n.id)+'</div>'+zone(n.id);
   if(n.k==='el')return '<div class="blk el"><div class="h">◆ '+esc(n.nom)+'<span>'+esc(n.type)+(n.couche?' · '+esc(n.couche):'')+(n.absent?' · '+esc(T.absent):'')+'</span></div>'+
     (n.avecDesc?'<div class="d">'+(n.desc?esc(n.desc):'<span class="nodesc">'+esc(T.nodesc)+'</span>')+'</div>':'')+btn(n.id)+'</div>'+zone(n.id);
@@ -706,12 +749,18 @@ async function capDosDocx(data, st){
       return s;
     }
     if(n.k==='txt') return bm(n.id, texte(n.txt));
+    if(n.k==='liste'){
+      const B='<w:top w:val="single" w:sz="4" w:color="D0D7DE"/><w:left w:val="single" w:sz="4" w:color="D0D7DE"/><w:bottom w:val="single" w:sz="4" w:color="D0D7DE"/><w:right w:val="single" w:sz="4" w:color="D0D7DE"/><w:insideH w:val="single" w:sz="4" w:color="D0D7DE"/><w:insideV w:val="single" w:sz="4" w:color="D0D7DE"/>';
+      const cell=(t,h,b)=>`<w:tc><w:tcPr>${h?'<w:shd w:val="clear" w:color="auto" w:fill="F2F4F7"/>':''}</w:tcPr>${para(b?bm(b, run(t, (h?'<w:b/>':'')+'<w:sz w:val="18"/>')):run(t, (h?'<w:b/>':'')+'<w:sz w:val="18"/>'), '', '<w:spacing w:after="0"/>')}</w:tc>`;
+      return bm(n.id, para(run('▤ '+n.titre, '<w:b/>'), '', '<w:keepNext/>'))+(n.rows.length?`<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/><w:tblBorders>${B}</w:tblBorders></w:tblPr>`+
+        `<w:tr>${n.head.map(h=>cell(h,1)).join('')}</w:tr>`+n.rows.map((r,i)=>`<w:tr>${r.c.map((x,j)=>cell(x,0,j?null:n.id+'_e'+i)).join('')}</w:tr>`).join('')+`</w:tbl>`+para(''):para(run(_L('(aucun élément)'), '<w:i/>'+GRIS)));
+    }
     if(n.k==='el') return bm(n.id, para(run('◆ '+n.nom, '<w:b/>')+run('   '+n.type+(n.couche?' · '+n.couche:''), GRIS), '', '<w:keepNext/>')+
       (n.avecDesc?(n.desc?texte(n.desc, 'ArcDesc'):para(run(_L('(pas de description)'), '<w:i/>'+GRIS), 'ArcDesc')):''));
     let s='';
     if(n.svg){
       if(st) st(_L(`⏳ Image ${n.fig} — ${n.nom}`));
-      const c=await capSvgToCanvas(n.svg, n.w, n.h, 2), png=new Uint8Array(await (await capCanvasBlob(c,'image/png')).arrayBuffer());
+      const c=await capSvgToCanvas(n.svg, n.w, n.h, 1.5), png=new Uint8Array(await (await capCanvasBlob(c,'image/png')).arrayBuffer());
       images.push(png); const rid='rIdImg'+images.length, k=images.length;
       let cx=W, cy=Math.round(W*n.h/n.w); if(cy>HMAX){ cy=HMAX; cx=Math.round(HMAX*n.w/n.h); }
       s+=para(`<w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="${cx}" cy="${cy}"/><wp:docPr id="${k}" name="${x(_L('Figure'))} ${n.fig}"/>`+

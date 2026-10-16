@@ -116,6 +116,21 @@ function capXlSvg(o){
   return {svg, w:W, h:H, n:g.nodes.size, trop:g.trop};
 }
 
+/**
+ * Éléments du modèle qui peuvent servir de départ (catégorie de traçabilité, couche ARCADIA réelle), dont le nom contient un texte.
+ * @param {string} t - Texte cherché (minuscules)
+ * @param {number} max - Nombre maximal
+ * @returns {{id:string, name:string, type:string, layer:string}[]}
+ */
+function capXlChercher(t, max){
+  const {xmap}=capAnaCtx(), out=[];
+  for(const e of capAllElements){
+    if(!e.attrs.name||!String(e.attrs.name).toLowerCase().includes(t)||!capTraceCatOf(e.typeName)) continue;
+    const x=xmap[e.id], L=x?capArchLayerOf(x):''; if(!CAP_ANA_LAYERS.includes(L)) continue;
+    out.push({id:e.id, name:e.attrs.name, type:e.typeName, layer:L}); if(out.length>=max*3) break;
+  }
+  return out;
+}
 /** @returns {object} options de dessin de la vue (copie de l'état) */
 function capXlOpts(){ const u=_capXl; return {mode:u.mode, seed:u.seed, dir:u.dir, cat:u.cat, fnCh:u.fnCh}; }
 /** Titre d'un dessin. @param {object} o - Options @returns {string} */
@@ -158,7 +173,8 @@ function capRenderXlay(box){
   bar+=`<span class="tb-grp"><label class="xl-opt" title="${_L('Sous chaque chaîne, ses fonctions et leurs liens de réalisation')}"><input type="checkbox" id="xl-fn"${u.fnCh?' checked':''}> ${_L('Fonctions des chaînes')}</label>`+
     `<button class="cap-lf-btn" data-xl-z="-1" title="${_L('Réduire')}">−</button><button class="cap-lf-btn" data-xl-z="1" title="${_L('Agrandir')}">+</button></span>`+
     `<span class="tb-grp"><button class="phl-export-btn" data-xl-x="svg" style="margin-left:0">${_L('⬇ SVG')}</button><button class="phl-export-btn" data-xl-x="png" style="margin-left:0">${_L('🖼 PNG')}</button>`+
-    `<button class="phl-export-btn" data-xl-x="csv" style="margin-left:0">${_L('⬇ CSV')}</button><button class="phl-export-btn" data-xl-x="dos" style="margin-left:0" title="${_L('Ajoute ce dessin au 📑 dossier de relecture ouvert (redessiné à chaque export du dossier)')}">${_L('📑 Au dossier')}</button></span></div>`;
+    `<button class="phl-export-btn" data-xl-x="csv" style="margin-left:0">${_L('⬇ CSV')}</button><button class="phl-export-btn" data-xl-x="dos" style="margin-left:0" title="${_L('Ajoute ce dessin au 📑 dossier de relecture ouvert (redessiné à chaque export du dossier)')}">${_L('📑 Au dossier')}</button>`+
+    `<button class="phl-export-btn" data-xl-x="dash" style="margin-left:0" title="${_L('Ajoute ce dessin au 📐 tableau de bord affiché (redessiné sur le modèle chargé)')}">${_L('📐 Au tableau de bord')}</button></span></div>`;
   const o=capXlOpts();
   let corps;
   if(u.mode==='el'&&!seedEl) corps=`<div class="xl-vide">${_L('Choisissez un élément de départ (recherche ci-dessus), par exemple :')}<div class="xl-sugs">${capXlSuggestions().map(chip).join('')}</div></div>`;
@@ -187,9 +203,8 @@ function capXlWire(box){
   if(q) q.oninput=()=>{ u.q=q.value; const t=q.value.trim().toLowerCase();
     if(t.length<2){ res.innerHTML=''; return; }
     const d=capComputeTrace(false,false), lies=new Set(); d.links.forEach(l=>{ lies.add(l.src.id); lies.add(l.tgt.id); });
-    const l=capAllElements.filter(e=>e.attrs.name&&String(e.attrs.name).toLowerCase().includes(t)&&CAP_ANA_LAYERS.includes(e.layer)&&capTraceCatOf(e.typeName))
-      .sort((a,b)=>(lies.has(b.id)-lies.has(a.id))||String(a.attrs.name).localeCompare(b.attrs.name)).slice(0,40);
-    res.innerHTML=l.map(e=>`<div class="ctx-i" data-xl-seed="${capEsc(e.id)}">${capIco(e.id,14)}<b style="color:${(CAP_LAYERS[e.layer]||{}).color};font-size:10px">${capEsc(e.layer)}</b> ${capEsc(e.attrs.name)} <span class="ana-dim">${capEsc(capAnaHuman(e.typeName))}${lies.has(e.id)?'':_L(' · sans lien')}</span></div>`).join('')||`<div class="ana-dim" style="padding:4px 8px">${_L('Aucun élément.')}</div>`;
+    const l=capXlChercher(t, 40).sort((a,b)=>(lies.has(b.id)-lies.has(a.id))||String(a.name).localeCompare(b.name)).slice(0,40);
+    res.innerHTML=l.map(e=>`<div class="ctx-i" data-xl-seed="${capEsc(e.id)}">${capIco(e.id,14)}<b style="color:${(CAP_LAYERS[e.layer]||{}).color};font-size:10px">${capEsc(e.layer)}</b> ${capEsc(e.name)} <span class="ana-dim">${capEsc(capAnaHuman(e.type))}${lies.has(e.id)?'':_L(' · sans lien')}</span></div>`).join('')||`<div class="ana-dim" style="padding:4px 8px">${_L('Aucun élément.')}</div>`;
     res.querySelectorAll('[data-xl-seed]').forEach(b=>b.onclick=()=>{ Object.assign(u,{seed:b.dataset.xlSeed, q:''}); re(); });
   };
   box.querySelectorAll('[data-xl-x]').forEach(b=>b.onclick=()=>capXlExport(b.dataset.xlX).catch(e=>alert(e.message)));
@@ -205,7 +220,7 @@ function capXlWire(box){
 
 /**
  * Exporte le dessin affiché : SVG, PNG, CSV des liens, ou bloc dans le 📑 dossier de relecture ouvert.
- * @param {string} f - 'svg' | 'png' | 'csv' | 'dos'
+ * @param {string} f - 'svg' | 'png' | 'csv' | 'dos' | 'dash' (tableau de bord affiché)
  */
 async function capXlExport(f){
   const o=capXlOpts(), titre=capXlTitre(o), nom=capSafeFileName(titre);
@@ -215,6 +230,13 @@ async function capXlExport(f){
     const ref=o.mode==='el'?capHomeRefEl(o.seed):null;
     d.blocs.push({id:capHomeUid(), k:'chap', titre, ref:null, desc:false, blocs:[{id:capHomeUid(), k:'xlay', ref, opts:o}]});
     capHomeSave(); capWatchFlash(_L(`✔ Ajouté au dossier « ${d.titre} » (🏠 Accueil › 📑 Dossiers de relecture)`)); return;
+  }
+  if(f==='dash'){
+    if(o.mode==='el'&&!o.seed) return;
+    if(!capDashStore||!capDashStore.list||!capDashStore.list.length){ const d=capDashExample(); capDashStore={cur:d.id,list:[d]}; }
+    const d=capDashStore.list.find(x=>x.id===capDashStore.cur)||capDashStore.list[0];
+    d.widgets.push({id:capDashUid(), m:'xlay', v:'img', w:Math.min(d.cols||4,4), h:3, opts:o}); capDashSave();
+    capWatchFlash(_L(`✔ Ajouté au tableau de bord « ${d.name} » (📐 Tableau de bord)`)); return;
   }
   if(f==='csv'){ const g=capXlCompute(o);
     capCsvDownload(nom+'.csv', [_L('Élément qui réalise'), _L('Couche'), 'Type', _L('Lien'), _L('Élément réalisé'), _L('Couche'), 'Type'],

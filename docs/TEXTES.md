@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 4966 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 5173 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -1903,329 +1903,363 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 12 | Tableau | Table |
 | 13 | Tableau | Table |
 | 14 | Texte libre | Free text |
-| 16 | répartition | breakdown |
-| 16 | croisé | cross |
-| 53 | Modèle | Model |
-| 53 | mdl.n | (inchangé, hors _L) |
-| 53 | Éléments du modèle | Model elements |
-| 54 | Modèle | Model |
-| 54 | mdl.layer | (inchangé, hors _L) |
-| 54 | Éléments du modèle par couche | Model elements by layer |
-| 54 | Shared | (inchangé, hors _L) |
-| 54 | Transverse | Cross-layer |
+| 15 | Image du diagramme | Diagram image |
+| 16 | Image | Image |
+| 18 | répartition | breakdown |
+| 18 | croisé | cross |
 | 55 | Modèle | Model |
-| 55 | mdl.types | (inchangé, hors _L) |
-| 55 | Types d'éléments les plus représentés | Most frequent element types |
+| 55 | mdl.n | (inchangé, hors _L) |
+| 55 | Éléments du modèle | Model elements |
 | 56 | Modèle | Model |
-| 56 | mdl.rels | (inchangé, hors _L) |
-| 56 | Relations Capella par type | Capella relations by type |
-| 62 | profondeur maximale | maximum depth |
-| 63 | taux de description | description rate |
-| 63 | Fonctions (hors racine) ayant une description | Functions (root excluded) with a description |
-| 64 | feuilles allouées | allocated leaves |
-| 65 | feuilles avec échanges | leaves with exchanges |
-| 66 | feuilles tracées | traced leaves |
-| 66 | Feuilles qui réalisent ou sont réalisées par une autre couche | Leaves that realize or are realized by another layer |
-| 67 | feuilles dans une chaîne | leaves in a chain |
-| 68 | feuilles dans une capacité | leaves in a capability |
-| 69 | noms conformes | compliant names |
-| 69 | Règles de ✍ Qualité des noms | ✍ Name quality rules |
-| 70 | Fonctions | Functions |
-| 70 | Fonctions — | Functions — … (layer comparison) |
-| 70 | (comparaison des couches) | Functions — … (layer comparison) |
-| 72 | Système | System |
-| 72 | Acteurs | Actors |
-| 72 | Système + acteur | System + actor |
-| 72 | Non allouées | Unallocated |
-| 73 | Fonctions | Functions |
-| 73 | Fonctions — nature de l'allocation des feuilles, par couche | Functions — leaf allocation kind, by layer |
-| 75 | Forme en -ing en tête | -ing form first |
-| 75 | Nom d'action en tête | Action noun first |
-| 75 | Pas de verbe en tête | No verb first |
-| 75 | Verbe vague | Vague verb |
-| 75 | Minuscule en tête | Lowercase first letter |
-| 75 | Espaces superflus | Extra spaces |
-| 75 | Ponctuation finale | Trailing punctuation |
-| 75 | Nom trop long | Name too long |
-| 75 | Un seul mot | Single word |
-| 76 | Fonctions | Functions |
-| 76 | Fonctions — problèmes de nommage par nature | Functions — naming issues by kind |
-| 77 | Fonctions | Functions |
-| 77 | fn.top | (inchangé, hors _L) |
-| 77 | Fonctions les plus connectées | Most connected functions |
-| 77 | Couche | Layer |
-| 77 | Fonction | Function |
-| 77 | Échanges | Exchanges |
-| 80 | Fonctions | Functions |
-| 81 | Fonctions | Functions … — … |
-| 82 | Fonctions | Functions … — allocation kind (leaves) |
-| 82 | — nature de l'allocation (feuilles) | Functions … — allocation kind (leaves) |
-| 83 | Fonctions | Functions … — by allocation target |
-| 83 | — par allocataire | Functions … — by allocation target |
-| 84 | Fonctions | Functions … — by subsystem |
-| 84 | — par sous-système | Functions … — by subsystem |
-| 84 | Premier niveau sous le système | First level under the system |
-| 85 | Fonctions | Functions … — by depth level |
-| 85 | — par niveau de profondeur | Functions … — by depth level |
-| 85 | Niveau | Level |
-| 90 | Chaînes | Chains |
-| 90 | Nombre de chaînes | Number of chains |
-| 90 | vide(s) | of which … empty |
-| 91 | Chaînes | Chains |
-| 91 | ch.type | (inchangé, hors _L) |
-| 91 | Chaînes par type | Chains by type |
+| 56 | mdl.layer | (inchangé, hors _L) |
+| 56 | Éléments du modèle par couche | Model elements by layer |
+| 56 | Shared | (inchangé, hors _L) |
+| 56 | Transverse | Cross-layer |
+| 57 | Modèle | Model |
+| 57 | mdl.types | (inchangé, hors _L) |
+| 57 | Types d'éléments les plus représentés | Most frequent element types |
+| 58 | Modèle | Model |
+| 58 | mdl.rels | (inchangé, hors _L) |
+| 58 | Relations Capella par type | Capella relations by type |
+| 64 | profondeur maximale | maximum depth |
+| 65 | taux de description | description rate |
+| 65 | Fonctions (hors racine) ayant une description | Functions (root excluded) with a description |
+| 66 | feuilles allouées | allocated leaves |
+| 67 | feuilles avec échanges | leaves with exchanges |
+| 68 | feuilles tracées | traced leaves |
+| 68 | Feuilles qui réalisent ou sont réalisées par une autre couche | Leaves that realize or are realized by another layer |
+| 69 | feuilles dans une chaîne | leaves in a chain |
+| 70 | feuilles dans une capacité | leaves in a capability |
+| 71 | noms conformes | compliant names |
+| 71 | Règles de ✍ Qualité des noms | ✍ Name quality rules |
+| 72 | Fonctions | Functions |
+| 72 | Fonctions — | Functions — … (layer comparison) |
+| 72 | (comparaison des couches) | Functions — … (layer comparison) |
+| 74 | Système | System |
+| 74 | Acteurs | Actors |
+| 74 | Système + acteur | System + actor |
+| 74 | Non allouées | Unallocated |
+| 75 | Fonctions | Functions |
+| 75 | Fonctions — nature de l'allocation des feuilles, par couche | Functions — leaf allocation kind, by layer |
+| 77 | Forme en -ing en tête | -ing form first |
+| 77 | Nom d'action en tête | Action noun first |
+| 77 | Pas de verbe en tête | No verb first |
+| 77 | Verbe vague | Vague verb |
+| 77 | Minuscule en tête | Lowercase first letter |
+| 77 | Espaces superflus | Extra spaces |
+| 77 | Ponctuation finale | Trailing punctuation |
+| 77 | Nom trop long | Name too long |
+| 77 | Un seul mot | Single word |
+| 78 | Fonctions | Functions |
+| 78 | Fonctions — problèmes de nommage par nature | Functions — naming issues by kind |
+| 79 | Fonctions | Functions |
+| 79 | fn.top | (inchangé, hors _L) |
+| 79 | Fonctions les plus connectées | Most connected functions |
+| 79 | Couche | Layer |
+| 79 | Fonction | Function |
+| 79 | Échanges | Exchanges |
+| 82 | Fonctions | Functions |
+| 83 | Fonctions | Functions … — … |
+| 84 | Fonctions | Functions … — allocation kind (leaves) |
+| 84 | — nature de l'allocation (feuilles) | Functions … — allocation kind (leaves) |
+| 85 | Fonctions | Functions … — by allocation target |
+| 85 | — par allocataire | Functions … — by allocation target |
+| 86 | Fonctions | Functions … — by subsystem |
+| 86 | — par sous-système | Functions … — by subsystem |
+| 86 | Premier niveau sous le système | First level under the system |
+| 87 | Fonctions | Functions … — by depth level |
+| 87 | — par niveau de profondeur | Functions … — by depth level |
+| 87 | Niveau | Level |
 | 92 | Chaînes | Chains |
-| 92 | ch.layer | (inchangé, hors _L) |
-| 92 | Chaînes par couche | Chains by layer |
-| 92 | Non classées | Unclassified |
+| 92 | Nombre de chaînes | Number of chains |
+| 92 | vide(s) | of which … empty |
 | 93 | Chaînes | Chains |
-| 93 | ch.empty | (inchangé, hors _L) |
-| 93 | Chaînes vides / non vides | Empty / non-empty chains |
-| 93 | Non vides | Non-empty |
-| 93 | Vides | Empty |
+| 93 | ch.type | (inchangé, hors _L) |
+| 93 | Chaînes par type | Chains by type |
 | 94 | Chaînes | Chains |
-| 94 | ch.full | (inchangé, hors _L) |
-| 94 | Chaînes non vides | Non-empty chains |
+| 94 | ch.layer | (inchangé, hors _L) |
+| 94 | Chaînes par couche | Chains by layer |
+| 94 | Non classées | Unclassified |
 | 95 | Chaînes | Chains |
-| 95 | ch.avg | (inchangé, hors _L) |
-| 95 | Étapes par chaîne (moyenne) | Steps per chain (average) |
-| 95 | chaînes non vides | non-empty chains |
+| 95 | ch.empty | (inchangé, hors _L) |
+| 95 | Chaînes vides / non vides | Empty / non-empty chains |
+| 95 | Non vides | Non-empty |
+| 95 | Vides | Empty |
 | 96 | Chaînes | Chains |
-| 96 | ch.kind | (inchangé, hors _L) |
-| 96 | Étapes des chaînes par nature d'allocation | Chain steps by allocation kind |
-| 97 | Système | System |
-| 97 | Acteurs | Actors |
-| 97 | Non allouées | Unallocated |
+| 96 | ch.full | (inchangé, hors _L) |
+| 96 | Chaînes non vides | Non-empty chains |
+| 97 | Chaînes | Chains |
+| 97 | ch.avg | (inchangé, hors _L) |
+| 97 | Étapes par chaîne (moyenne) | Steps per chain (average) |
+| 97 | chaînes non vides | non-empty chains |
 | 98 | Chaînes | Chains |
-| 98 | ch.top | (inchangé, hors _L) |
-| 98 | Chaînes les plus longues | Longest chains |
-| 98 | Chaîne | Chain |
-| 98 | Type | (inchangé, hors _L) |
-| 98 | Couche | Layer |
-| 98 | Étapes | Steps |
-| 98 | Échanges | Exchanges |
-| 103 | → Orienté | → Oriented |
-| 103 | ← Inversé | ← Reversed |
-| 103 | ⇄ Bidirectionnel | ⇄ Bidirectional |
-| 103 | ? Non orienté | ? Not oriented |
-| 104 | Component Exchanges | Component Exchanges |
-| 104 | Nombre de Component Exchanges | Number of Component Exchanges |
-| 105 | Component Exchanges | Component Exchanges |
-| 105 | ce.kind | (inchangé, hors _L) |
-| 105 | Component Exchanges par kind | Component Exchanges by kind |
+| 98 | ch.kind | (inchangé, hors _L) |
+| 98 | Étapes des chaînes par nature d'allocation | Chain steps by allocation kind |
+| 99 | Système | System |
+| 99 | Acteurs | Actors |
+| 99 | Non allouées | Unallocated |
+| 100 | Chaînes | Chains |
+| 100 | ch.top | (inchangé, hors _L) |
+| 100 | Chaînes les plus longues | Longest chains |
+| 100 | Chaîne | Chain |
+| 100 | Type | (inchangé, hors _L) |
+| 100 | Couche | Layer |
+| 100 | Étapes | Steps |
+| 100 | Échanges | Exchanges |
+| 105 | → Orienté | → Oriented |
+| 105 | ← Inversé | ← Reversed |
+| 105 | ⇄ Bidirectionnel | ⇄ Bidirectional |
+| 105 | ? Non orienté | ? Not oriented |
 | 106 | Component Exchanges | Component Exchanges |
-| 106 | ce.dir | (inchangé, hors _L) |
-| 106 | Sens des Component Exchanges | Direction of Component Exchanges |
-| 106 | ⚠ Incohérent | ⚠ Inconsistent |
+| 106 | Nombre de Component Exchanges | Number of Component Exchanges |
 | 107 | Component Exchanges | Component Exchanges |
-| 107 | ce.layer | (inchangé, hors _L) |
-| 107 | Component Exchanges par couche | Component Exchanges by layer |
+| 107 | ce.kind | (inchangé, hors _L) |
+| 107 | Component Exchanges par kind | Component Exchanges by kind |
 | 108 | Component Exchanges | Component Exchanges |
-| 108 | Component Exchanges avec FE alloué | Component Exchanges with an allocated FE |
+| 108 | ce.dir | (inchangé, hors _L) |
+| 108 | Sens des Component Exchanges | Direction of Component Exchanges |
+| 108 | ⚠ Incohérent | ⚠ Inconsistent |
 | 109 | Component Exchanges | Component Exchanges |
-| 109 | ce.orph | (inchangé, hors _L) |
-| 109 | Ports de composant orphelins | Orphan component ports |
-| 109 | ComponentPort sans exchange | ComponentPort without exchange |
+| 109 | ce.layer | (inchangé, hors _L) |
+| 109 | Component Exchanges par couche | Component Exchanges by layer |
 | 110 | Component Exchanges | Component Exchanges |
-| 110 | ce.papl | (inchangé, hors _L) |
-| 110 | CE de couche PA sans Physical Link | PA-layer CE without Physical Link |
+| 110 | Component Exchanges avec FE alloué | Component Exchanges with an allocated FE |
 | 111 | Component Exchanges | Component Exchanges |
-| 111 | ce.comp | (inchangé, hors _L) |
-| 111 | Component Exchanges par composant | Component Exchanges by component |
-| 115 | Physical Links | Physical Links |
-| 115 | Nombre de Physical Links | Number of Physical Links |
-| 116 | Physical Links | Physical Links |
-| 116 | pl.layer | (inchangé, hors _L) |
-| 116 | Physical Links par couche | Physical Links by layer |
+| 111 | ce.orph | (inchangé, hors _L) |
+| 111 | Ports de composant orphelins | Orphan component ports |
+| 111 | ComponentPort sans exchange | ComponentPort without exchange |
+| 112 | Component Exchanges | Component Exchanges |
+| 112 | ce.papl | (inchangé, hors _L) |
+| 112 | CE de couche PA sans Physical Link | PA-layer CE without Physical Link |
+| 113 | Component Exchanges | Component Exchanges |
+| 113 | ce.comp | (inchangé, hors _L) |
+| 113 | Component Exchanges par composant | Component Exchanges by component |
 | 117 | Physical Links | Physical Links |
-| 117 | Physical Links portant un CE | Physical Links carrying a CE |
+| 117 | Nombre de Physical Links | Number of Physical Links |
 | 118 | Physical Links | Physical Links |
-| 118 | pl.orph | (inchangé, hors _L) |
-| 118 | Ports physiques sans lien | Physical ports without link |
+| 118 | pl.layer | (inchangé, hors _L) |
+| 118 | Physical Links par couche | Physical Links by layer |
 | 119 | Physical Links | Physical Links |
-| 119 | pl.nocp | (inchangé, hors _L) |
-| 119 | Ports physiques sans Component Port | Physical ports without Component Port |
+| 119 | Physical Links portant un CE | Physical Links carrying a CE |
 | 120 | Physical Links | Physical Links |
-| 120 | pl.comp | (inchangé, hors _L) |
-| 120 | Physical Links par composant | Physical Links by component |
-| 124 | Ports | Ports |
-| 124 | Function Ports alloués à un Component Port | Function Ports allocated to a Component Port |
-| 125 | Ports | Ports |
-| 125 | Component Ports (PA) alloués à un port physique | Component Ports (PA) allocated to a physical port |
+| 120 | pl.orph | (inchangé, hors _L) |
+| 120 | Ports physiques sans lien | Physical ports without link |
+| 121 | Physical Links | Physical Links |
+| 121 | pl.nocp | (inchangé, hors _L) |
+| 121 | Ports physiques sans Component Port | Physical ports without Component Port |
+| 122 | Physical Links | Physical Links |
+| 122 | pl.comp | (inchangé, hors _L) |
+| 122 | Physical Links par composant | Physical Links by component |
 | 126 | Ports | Ports |
-| 126 | Ports physiques portant un Component Port | Physical ports carrying a Component Port |
-| 130 | Traçabilité | Traceability |
-| 130 | Liens de réalisation | Realization links |
-| 131 | Traçabilité | Traceability |
-| 131 | tr.tab | (inchangé, hors _L) |
-| 131 | Couverture de traçabilité (▼ réalisés · ▲ réalisants) | Traceability coverage (▼ realized · ▲ realizing) |
-| 134 | Catégorie | Category |
-| 138 | Traçabilité | Traceability |
-| 138 | Traçabilité — | Traceability — …: % … per transition |
-| 138 | par passage | Traceability — …: % … per transition |
-| 140 | Éléments de la couche haute réalisés par la couche basse | Upper-layer elements realized by the lower layer |
-| 140 | Éléments de la couche basse qui réalisent la couche haute | Lower-layer elements realizing the upper layer |
-| 141 | réalisés ▼ | realized ▼ |
-| 141 | réalisants ▲ | realizing ▲ |
-| 143 | Tableau de bord : traçabilité indisponible | ❌ |
-| 147 | Capacités | Capabilities |
-| 147 | cap.n | (inchangé, hors _L) |
-| 147 | Capacités et missions | Capabilities and missions |
-| 148 | Capacités | Capabilities |
-| 148 | cap.type | (inchangé, hors _L) |
-| 148 | Capacités par type | Capabilities by type |
+| 126 | Function Ports alloués à un Component Port | Function Ports allocated to a Component Port |
+| 127 | Ports | Ports |
+| 127 | Component Ports (PA) alloués à un port physique | Component Ports (PA) allocated to a physical port |
+| 128 | Ports | Ports |
+| 128 | Ports physiques portant un Component Port | Physical ports carrying a Component Port |
+| 132 | Traçabilité | Traceability |
+| 132 | Liens de réalisation | Realization links |
+| 133 | Traçabilité | Traceability |
+| 133 | tr.tab | (inchangé, hors _L) |
+| 133 | Couverture de traçabilité (▼ réalisés · ▲ réalisants) | Traceability coverage (▼ realized · ▲ realizing) |
+| 136 | Catégorie | Category |
+| 140 | Traçabilité | Traceability |
+| 140 | Traçabilité — | Traceability — …: % … per transition |
+| 140 | par passage | Traceability — …: % … per transition |
+| 142 | Éléments de la couche haute réalisés par la couche basse | Upper-layer elements realized by the lower layer |
+| 142 | Éléments de la couche basse qui réalisent la couche haute | Lower-layer elements realizing the upper layer |
+| 143 | réalisés ▼ | realized ▼ |
+| 143 | réalisants ▲ | realizing ▲ |
+| 145 | Tableau de bord : traçabilité indisponible | ❌ |
 | 149 | Capacités | Capabilities |
-| 149 | cap.layer | (inchangé, hors _L) |
-| 149 | Capacités par couche | Capabilities by layer |
+| 149 | cap.n | (inchangé, hors _L) |
+| 149 | Capacités et missions | Capabilities and missions |
 | 150 | Capacités | Capabilities |
-| 150 | cap.fn | (inchangé, hors _L) |
-| 150 | Capacités décrites par des fonctions ou chaînes | Capabilities described by functions or chains |
+| 150 | cap.type | (inchangé, hors _L) |
+| 150 | Capacités par type | Capabilities by type |
 | 151 | Capacités | Capabilities |
-| 151 | cap.chk | (inchangé, hors _L) |
-| 151 | Contrôles des capacités | Capability checks |
-| 152 | Sans fonction ni chaîne | No function or chain |
-| 153 | Sans acteur ni composant | No actor or component |
-| 154 | Sans scénario | No scenario |
-| 155 | Missions sans capacité | Missions without capability |
-| 159 | Modes & états | Modes & states |
-| 159 | Machines à états | State machines |
-| 159 | états/modes · | … states/modes · … transitions |
-| 160 | Modes & états | Modes & states |
-| 160 | sm.owner | (inchangé, hors _L) |
-| 160 | États et modes par machine | States and modes by machine |
+| 151 | cap.layer | (inchangé, hors _L) |
+| 151 | Capacités par couche | Capabilities by layer |
+| 152 | Capacités | Capabilities |
+| 152 | cap.fn | (inchangé, hors _L) |
+| 152 | Capacités décrites par des fonctions ou chaînes | Capabilities described by functions or chains |
+| 153 | Capacités | Capabilities |
+| 153 | cap.chk | (inchangé, hors _L) |
+| 153 | Contrôles des capacités | Capability checks |
+| 154 | Sans fonction ni chaîne | No function or chain |
+| 155 | Sans acteur ni composant | No actor or component |
+| 156 | Sans scénario | No scenario |
+| 157 | Missions sans capacité | Missions without capability |
 | 161 | Modes & états | Modes & states |
-| 161 | sm.chk | (inchangé, hors _L) |
-| 161 | Contrôles des machines à états | State machine checks |
-| 162 | Régions sans état initial | Regions without initial state |
-| 162 | États inatteignables | Unreachable states |
-| 162 | États sans issue | Dead-end states |
-| 162 | Transitions sans déclencheur | Transitions without trigger |
-| 166 | Contrôles | Checks |
-| 166 | chk.fn | (inchangé, hors _L) |
-| 166 | Contrôles des fonctions | Function checks |
-| 167 | Contrôles | Checks |
-| 167 | chk.pt | (inchangé, hors _L) |
-| 167 | Contrôles des ports | Port checks |
+| 161 | Machines à états | State machines |
+| 161 | états/modes · | … states/modes · … transitions |
+| 162 | Modes & états | Modes & states |
+| 162 | sm.owner | (inchangé, hors _L) |
+| 162 | États et modes par machine | States and modes by machine |
+| 163 | Modes & états | Modes & states |
+| 163 | sm.chk | (inchangé, hors _L) |
+| 163 | Contrôles des machines à états | State machine checks |
+| 164 | Régions sans état initial | Regions without initial state |
+| 164 | États inatteignables | Unreachable states |
+| 164 | États sans issue | Dead-end states |
+| 164 | Transitions sans déclencheur | Transitions without trigger |
 | 168 | Contrôles | Checks |
-| 168 | chk.ce | (inchangé, hors _L) |
-| 168 | Contrôles des Component Exchanges | Component Exchange checks |
-| 169 | Sans Functional Exchange | No Functional Exchange |
-| 169 | Ports orphelins | Orphan ports |
-| 170 | Orientations incohérentes | Inconsistent orientations |
-| 170 | Non orientés | Unoriented |
-| 171 | PA sans Physical Link | PA without Physical Link |
-| 172 | Contrôles | Checks |
-| 172 | chk.pl | (inchangé, hors _L) |
-| 172 | Contrôles des Physical Links | Physical Link checks |
-| 173 | Sans Component Exchange | No Component Exchange |
-| 173 | Ports physiques sans lien | Physical ports without link |
-| 174 | Ports physiques sans Component Port | Physical ports without Component Port |
-| 174 | CE (PA) non alloués | Unallocated CEs (PA) |
-| 175 | Contrôles | Checks |
-| 175 | chk.sum | (inchangé, hors _L) |
-| 175 | Synthèse des contrôles par domaine | Summary of checks by domain |
-| 176 | Fonctions | Functions |
-| 176 | chk.fn | (inchangé, hors _L) |
-| 176 | Ports | Ports |
-| 176 | chk.pt | (inchangé, hors _L) |
-| 176 | Component Exchanges | Component Exchanges |
-| 176 | chk.ce | (inchangé, hors _L) |
-| 176 | Physical Links | Physical Links |
-| 176 | chk.pl | (inchangé, hors _L) |
-| 176 | Capacités | Capabilities |
-| 176 | cap.chk | (inchangé, hors _L) |
-| 176 | Modes & états | Modes & states |
-| 176 | sm.chk | (inchangé, hors _L) |
-| 176 | Exigences | Requirements |
-| 176 | rq.chk | (inchangé, hors _L) |
-| 176 | Propriétés | Properties |
-| 176 | pv.chk | (inchangé, hors _L) |
-| 176 | Données & interfaces | Data & interfaces |
-| 176 | dm.chk | (inchangé, hors _L) |
-| 176 | Contraintes | Constraints |
-| 176 | ct.chk | (inchangé, hors _L) |
-| 176 | Nombre total de constats par domaine | Total number of findings by domain |
-| 184 | Mise en page | Layout |
-| 184 | Texte libre (titre, commentaire) | Free text (title, comment) |
-| 193 | Indicateur | (inchangé, hors _L) |
-| 209 | à surveiller | to watch |
-| 219 | Autres ( | Others (…) |
-| 230 | Texte vide — ⚙ pour le modifier. | Empty text — ⚙ to edit it. |
-| 231 | Indicateur indisponible pour ce modèle. | Indicator not available for this model. |
-| 232 | Aucune donnée dans ce modèle. | No data in this model. |
-| 233 | var(--c-dim) | (inchangé, hors _L) |
-| 233 | var(--c-text) | (inchangé, hors _L) |
-| 233 | var(--c-bg2) | (inchangé, hors _L) |
-| 251 | Catégorie | Category |
-| 251 | Taux | Rate |
-| 251 | Nombre | Count |
-| 251 | Détail | Detail |
-| 251 | Part | (inchangé, hors _L) |
-| 254 | autre(s) ligne(s) — agrandir le cadre pour tout voir | … and … more row(s) — enlarge the frame to see everything |
-| 259 | catégorie(s) | … … category(ies) |
-| 272 | Autres ( | Others (…) |
-| 281 | Autres ( | Others (…) |
-| 324 | Synthèse du modèle — | Model summary — |
-| 324 | Capella | Capella |
-| 325 | mdl.n | (inchangé, hors _L) |
-| 325 | Fonctions (toutes couches) | Functions (all layers) |
-| 326 | mdl.layer | (inchangé, hors _L) |
-| 327 | fn.L.desc | (inchangé, hors _L) |
-| 327 | ch.empty | (inchangé, hors _L) |
-| 328 | ce.dir | (inchangé, hors _L) |
-| 329 | chk.sum | (inchangé, hors _L) |
-| 329 | tr.tab | (inchangé, hors _L) |
-| 330 | Synthèse du modèle | Model summary |
-| 350 | — double-clic pour renommer | {3} {4} |
-| 352 | ✔ Terminer | ✔ Done |
-| 352 | ✏ Modifier | ✏ Edit |
-| 353 | ＋ Ajouter un élément | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 355 | ⧉ Dupliquer ✨ Exemple | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 358 | 🗑 Supprimer | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 367 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. | Drag an item by its title to move it · bottom-right corner to resize it · ＋ to the left of an item to insert one before it · ⚙ configure · ⧉ duplicate · ✕ remove. Dashboards are kept in the 💾 HTML page. |
-| 368 | ,minmax(0,1fr)) | … ＋ … … A4 portrait A4 landscape 🖨 Print 🌐 HTML ⬇ JSON ⬆ JSON … … … … |
-| 373 | ＋ Ajouter un élément | ＋ Add an item |
-| 374 | Tableau de bord vide. | Empty dashboard. … |
-| 374 | Cliquez sur « ＋ Ajouter un élément ». | Click “＋ Add an item”. |
-| 374 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. | Click “✏ Edit” to add indicators. |
-| 400 | Tableau de bord | Dashboard |
-| 402 | Page | Page |
-| 403 | (copie) | (copy) |
-| 405 | Supprimer le tableau de bord « | Delete the dashboard “…”? |
-| 412 | Tableau importé | Imported dashboard |
-| 413 | Fichier de tableau de bord invalide. | Invalid dashboard file. |
-| 420 | ,minmax(0,1fr)) | {0} {2} |
-| 422 | élément(s) | … element(s) |
-| 422 | Tableau de bord | Dashboard |
-| 469 | Modèle Capella | Capella model |
-| 507 | ⊞ Tout déplier ⊟ Tout replier aperçu Annuler | … ⊞ Expand all ⊟ Collapse all preview Cancel … |
-| 507 | ⚙ Configurer l'élément | ⚙ Configure the item |
-| 507 | ＋ Ajouter un élément | ＋ Add an item |
-| 511 | ✔ Enregistrer | ✔ Save |
-| 511 | ＋ Ajouter | ＋ Add |
-| 518 | Mise en page | Layout |
-| 519 | Mise en page | Layout |
-| 524 | la catégorie | {2} {3} {4} |
-| 524 | Replier | Collapse |
-| 524 | Déplier | Expand |
-| 524 | Aucun indicateur. | No indicator. |
-| 531 | Choisissez un indicateur dans la liste de gauche. | Choose an indicator in the left list. |
-| 534 | Indicateur | Indicator … › … Title … Chart … Size … … … |
-| 534 | Titre | Indicator … › … Title … Chart … Size … … … |
-| 536 | Représentation | Indicator … › … Title … Chart … Size … … … |
-| 536 | Texte | Text … |
-| 537 | Taille | Indicator … › … Title … Chart … Size … … … |
-| 538 | col. | … col. |
-| 540 | Catégories | Categories … Sort Default Descending value Natural order |
-| 540 | Tri Par défaut | Categories … Sort Default Descending value Natural order |
-| 540 | 5 premières | Top 5 |
-| 540 | 8 premières | Top 8 |
-| 540 | 10 premières | Top 10 |
-| 540 | 15 premières | Top 15 |
-| 540 | 20 premières | Top 20 |
-| 540 | Toutes | All |
-| 541 | Valeur décroissante | Categories … Sort Default Descending value Natural order |
-| 541 | Ordre naturel | Categories … Sort Default Descending value Natural order |
+| 168 | chk.fn | (inchangé, hors _L) |
+| 168 | Contrôles des fonctions | Function checks |
+| 169 | Contrôles | Checks |
+| 169 | chk.pt | (inchangé, hors _L) |
+| 169 | Contrôles des ports | Port checks |
+| 170 | Contrôles | Checks |
+| 170 | chk.ce | (inchangé, hors _L) |
+| 170 | Contrôles des Component Exchanges | Component Exchange checks |
+| 171 | Sans Functional Exchange | No Functional Exchange |
+| 171 | Ports orphelins | Orphan ports |
+| 172 | Orientations incohérentes | Inconsistent orientations |
+| 172 | Non orientés | Unoriented |
+| 173 | PA sans Physical Link | PA without Physical Link |
+| 174 | Contrôles | Checks |
+| 174 | chk.pl | (inchangé, hors _L) |
+| 174 | Contrôles des Physical Links | Physical Link checks |
+| 175 | Sans Component Exchange | No Component Exchange |
+| 175 | Ports physiques sans lien | Physical ports without link |
+| 176 | Ports physiques sans Component Port | Physical ports without Component Port |
+| 176 | CE (PA) non alloués | Unallocated CEs (PA) |
+| 177 | Contrôles | Checks |
+| 177 | chk.sum | (inchangé, hors _L) |
+| 177 | Synthèse des contrôles par domaine | Summary of checks by domain |
+| 178 | Fonctions | Functions |
+| 178 | chk.fn | (inchangé, hors _L) |
+| 178 | Ports | Ports |
+| 178 | chk.pt | (inchangé, hors _L) |
+| 178 | Component Exchanges | Component Exchanges |
+| 178 | chk.ce | (inchangé, hors _L) |
+| 178 | Physical Links | Physical Links |
+| 178 | chk.pl | (inchangé, hors _L) |
+| 178 | Capacités | Capabilities |
+| 178 | cap.chk | (inchangé, hors _L) |
+| 178 | Modes & états | Modes & states |
+| 178 | sm.chk | (inchangé, hors _L) |
+| 178 | Exigences | Requirements |
+| 178 | rq.chk | (inchangé, hors _L) |
+| 178 | Propriétés | Properties |
+| 178 | pv.chk | (inchangé, hors _L) |
+| 178 | Données & interfaces | Data & interfaces |
+| 178 | dm.chk | (inchangé, hors _L) |
+| 178 | Contraintes | Constraints |
+| 178 | ct.chk | (inchangé, hors _L) |
+| 178 | Nombre total de constats par domaine | Total number of findings by domain |
+| 186 | Mise en page | Layout |
+| 186 | Texte libre (titre, commentaire) | Free text (title, comment) |
+| 187 | Diagrammes et vues | Diagrams and views |
+| 187 | 🔲 Diagramme Capella | 🔲 Capella diagram |
+| 188 | Diagrammes et vues | Diagrams and views |
+| 188 | 🔗 Liens entre couches | 🔗 Cross-layer links |
+| 197 | Indicateur | (inchangé, hors _L) |
+| 213 | à surveiller | to watch |
+| 223 | Autres ( | Others (…) |
+| 235 | Texte vide — ⚙ pour le modifier. | Empty text — ⚙ to edit it. |
+| 236 | Indicateur indisponible pour ce modèle. | Indicator not available for this model. |
+| 237 | Aucune donnée dans ce modèle. | No data in this model. |
+| 238 | var(--c-dim) | (inchangé, hors _L) |
+| 238 | var(--c-text) | (inchangé, hors _L) |
+| 238 | var(--c-bg2) | (inchangé, hors _L) |
+| 256 | Catégorie | Category |
+| 256 | Taux | Rate |
+| 256 | Nombre | Count |
+| 256 | Détail | Detail |
+| 256 | Part | (inchangé, hors _L) |
+| 259 | autre(s) ligne(s) — agrandir le cadre pour tout voir | … and … more row(s) — enlarge the frame to see everything |
+| 264 | catégorie(s) | … … category(ies) |
+| 277 | Autres ( | Others (…) |
+| 286 | Autres ( | Others (…) |
+| 329 | Synthèse du modèle — | Model summary — |
+| 329 | Capella | Capella |
+| 330 | mdl.n | (inchangé, hors _L) |
+| 330 | Fonctions (toutes couches) | Functions (all layers) |
+| 331 | mdl.layer | (inchangé, hors _L) |
+| 332 | fn.L.desc | (inchangé, hors _L) |
+| 332 | ch.empty | (inchangé, hors _L) |
+| 333 | ce.dir | (inchangé, hors _L) |
+| 334 | chk.sum | (inchangé, hors _L) |
+| 334 | tr.tab | (inchangé, hors _L) |
+| 335 | Synthèse du modèle | Model summary |
+| 361 | — double-clic pour renommer | {3} {4} |
+| 363 | ✔ Terminer | ✔ Done |
+| 363 | ✏ Modifier | ✏ Edit |
+| 364 | ＋ Ajouter un élément | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 366 | ⧉ Dupliquer ✨ Exemple | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 369 | 🗑 Supprimer | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 378 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer (panneau à gauche) · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. | Drag an item by its title to move it · bottom-right corner to resize it · ＋ on the left of an item to insert one before it · ⚙ configure (left panel) · ⧉ duplicate · ✕ remove. Dashboards are kept in the 💾 HTML Page. |
+| 379 | ,minmax(0,1fr)) | … ＋ … … A4 portrait A4 landscape 🖨 Print 🌐 HTML ⬇ JSON ⬆ JSON … … … … … |
+| 384 | ＋ Ajouter un élément | ＋ Add an item |
+| 385 | Tableau de bord vide. | Empty dashboard. … |
+| 385 | Cliquez sur « ＋ Ajouter un élément ». | Click “＋ Add an item”. |
+| 385 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. | Click “✏ Edit” to add indicators. |
+| 392 | Nouvel élément : choisissez un indicateur, un diagramme ou une vue dans le panneau de gauche. | New item: choose an indicator, a diagram or a view in the left panel. |
+| 411 | Tableau de bord | Dashboard |
+| 413 | Page | Page |
+| 414 | (copie) | (copy) |
+| 416 | Supprimer le tableau de bord « | Delete the dashboard “…”? |
+| 423 | Tableau importé | Imported dashboard |
+| 424 | Fichier de tableau de bord invalide. | Invalid dashboard file. |
+| 431 | ,minmax(0,1fr)) | {0} {2} |
+| 433 | élément(s) | … element(s) |
+| 433 | Tableau de bord | Dashboard |
+| 437 | Ouvrir | Open |
+| 485 | Modèle Capella | Capella model |
+| 529 | Choisissez un diagramme dans le panneau de gauche (le .aird du projet doit être ouvert). | Choose a diagram in the left panel (the project's .aird must be open). |
+| 532 | Choisissez l'élément de départ dans le panneau de gauche. | Choose the starting element in the left panel. |
+| 533 | Aucun modèle chargé. | No model loaded. |
+| 535 | Aucun lien de réalisation. | No realization link. |
+| 554 | Mise en page | Layout |
+| 554 | Diagrammes et vues | Diagrams and views |
+| 564 | ⚙ Configurer l'élément | ⚙ Configure the item |
+| 564 | ＋ Nouvel élément | ＋ New item |
+| 564 | Fermer sans enregistrer | Close without saving |
+| 566 | 🔍 Rechercher un indicateur… | 🔍 Search an indicator… |
+| 567 | Déplier toutes les catégories | Expand all categories |
+| 567 | ⊞ Tout déplier | ⊞ Expand all |
+| 567 | Replier toutes les catégories | Collapse all categories |
+| 567 | ⊟ Tout replier | ⊟ Collapse all |
+| 569 | Annuler | Cancel |
+| 569 | ✔ Enregistrer | ✔ Save |
+| 569 | ✔ Ajouter dans la grille | ✔ Add to the grid |
+| 576 | Aucun indicateur. | No indicator. |
+| 585 | Choisissez ci-dessous un indicateur, un diagramme ou une vue : il apparaît aussitôt dans la grille, à sa place. | Choose an indicator, a diagram or a view below: it appears at once in the grid, in its place. |
+| 587 | Taille | Size |
+| 587 | col. | … col. |
+| 589 | Élément | Element |
+| 590 | Titre | Title |
+| 593 | Diagramme | Diagram |
+| 593 | Reprendre l'image du diagramme dans le .aird chargé | Take the diagram image again from the loaded .aird |
+| 593 | ↻ Mettre à jour | ↻ Update |
+| 594 | 🔍 Choisir un diagramme… | 🔍 Choose a diagram… |
+| 595 | Aucun .aird chargé : | No .aird loaded: |
+| 595 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 598 | Mode | Mode |
+| 598 | À partir d'un élément | From an element |
+| 598 | Toute une catégorie | A whole category |
+| 599 | Catégorie | Category |
+| 600 | Départ | Start |
+| 600 | à choisir | to be chosen |
+| 600 | 🔍 Élément de départ… | 🔍 Starting element… |
+| 601 | Sens | Direction |
+| 601 | Réalisations vers le haut et vers le bas | Realizations upwards and downwards |
+| 601 | Tous les liens de proche en proche | All links, step by step |
+| 602 | Fonctions des chaînes | Chain functions |
+| 604 | Texte | Text |
+| 605 | Représentation | Chart |
+| 606 | Catégories | Categories |
+| 606 | 5 premières | Top 5 |
+| 606 | 8 premières | Top 8 |
+| 606 | 10 premières | Top 10 |
+| 606 | 15 premières | Top 15 |
+| 606 | 20 premières | Top 20 |
+| 606 | Toutes | All |
+| 607 | Tri | Sort |
+| 607 | Par défaut | Default |
+| 607 | Valeur décroissante | Descending value |
+| 607 | Ordre naturel | Natural order |
+| 616 | ⏳ Image du diagramme… | ⏳ Diagram image… |
 
 ## js/36-component-exchange.js
 
@@ -2807,6 +2841,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 26 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier | Functions: hierarchy, table, traceability, metrics, checks, file |
 | 27 | 🧬 Traçabilité inter-couches | 🧬 Cross-layer traceability |
 | 28 | 🔗 Liens entre couches | 🔗 Cross-layer links |
+| 28 | 🔗 Couches | 🔗 Layers |
 | 28 | Vue graphique des réalisations entre couches (OA → SA → LA → PA → EPBS) : fonctions, chaînes et leurs fonctions, capacités, composants… | Graphical view of the realizations between layers (OA → SA → LA → PA → EPBS): functions, chains and their functions, capabilities, components… |
 | 29 | 🎯 Capacités & missions | 🎯 Capabilities & missions |
 | 30 | 🔁 Modes & états | 🔁 Modes & states |
@@ -2823,26 +2858,26 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 41 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrammes, scénarios, ports, liens | Chains, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrams, scenarios, ports, links |
 | 43 | 🔬 Analyses | 🔬 Analyses |
 | 43 | Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes | Functions, cross-layer traceability, capabilities & missions, modes & states, version comparison, requirements, properties, data & interfaces, constraints |
-| 152 | Vue affichée : | Displayed view: |
-| 170 | Retirer de la barre | Remove from the bar |
-| 170 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
-| 236 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 236 | Ctrl+S | Ctrl+S |
-| 237 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 237 | Ctrl+Maj+S | Ctrl+Maj+S |
-| 248 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
-| 250 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
-| 251 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
-| 252 | 💬 Visite de la revue | 💬 Review tour |
-| 253 | ℹ À propos | ℹ About |
-| 259 | 🎨 Personnaliser… | 🎨 Customize… |
-| 263 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
-| 268 | 🗺 Relation Map | 🗺 Relation Map |
-| 271 | Aucune vue ne correspond. | No view matches. |
-| 277 | Menu | … ▾ menu in the bar |
-| 277 | ▾ dans la barre | … ▾ menu in the bar |
-| 278 | Autres vues | Other views |
-| 281 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | ↺ Restore the default bar 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
+| 153 | Vue affichée : | Displayed view: |
+| 171 | Retirer de la barre | Remove from the bar |
+| 171 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
+| 237 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 237 | Ctrl+S | Ctrl+S |
+| 238 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 238 | Ctrl+Maj+S | Ctrl+Maj+S |
+| 249 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
+| 251 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
+| 252 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
+| 253 | 💬 Visite de la revue | 💬 Review tour |
+| 254 | ℹ À propos | ℹ About |
+| 260 | 🎨 Personnaliser… | 🎨 Customize… |
+| 264 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
+| 269 | 🗺 Relation Map | 🗺 Relation Map |
+| 272 | Aucune vue ne correspond. | No view matches. |
+| 278 | Menu | … ▾ menu in the bar |
+| 278 | ▾ dans la barre | … ▾ menu in the bar |
+| 279 | Autres vues | Other views |
+| 282 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | ↺ Restore the default bar 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
 
 ## js/42-tableaux-analyses.js
 
@@ -5001,247 +5036,424 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 82 | (dans | (in {0}) |
 | 85 | Description de « | Description of “…” |
 | 85 | Texte | Text |
+| 85 | Tableau | Table |
 | 87 | Bloc retiré du dossier | Block removed from the package |
 | 99 | Dossier de relecture | Review package |
 | 158 | Nouveau dossier : chapitres, descriptions, diagrammes et texte libre à faire relire | New package: chapters, descriptions, diagrams and free text to have reviewed |
 | 158 | 📑 Nouveau dossier | 📑 New package |
-| 159 | Réimporter les retours des relecteurs : page HTML enregistrée, .json ou document Word commenté (.docx) | Re-import the reviewers' feedback: saved HTML page, .json or commented Word document (.docx) |
-| 159 | 📥 Réimporter des retours… | 📥 Re-import feedback… |
-| 161 | (sans titre) | (untitled) |
-| 161 | Retours des relecteurs | Reviewers' feedback |
-| 162 | Ouvrir dans une fenêtre séparée (par exemple sur un autre écran) | Open in a separate window (on another screen, for example) |
-| 175 | 📑 Dossier de relecture | 📑 Review package |
-| 175 | Titre | Title |
-| 176 | Page HTML autonome (hors ligne) : les relecteurs commentent chaque chapitre, description, diagramme ou texte, puis vous renvoient la page enregistrée | Standalone HTML page (offline): reviewers comment each chapter, description, diagram or text, then send you back the saved page |
-| 176 | 📤 Page HTML à commenter | 📤 HTML page to comment |
-| 177 | 📝 Word (.docx) | 📝 Word (.docx) |
-| 178 | Réimporter les retours des relecteurs : page HTML enregistrée, .json ou document Word commenté (.docx) | Re-import the reviewers' feedback: saved HTML page, .json or commented Word document (.docx) |
-| 178 | 📥 Réimporter… | 📥 Re-import… |
-| 179 | Dupliquer (sans les retours) | Duplicate (without the feedback) |
-| 179 | ⎘ Dupliquer | ⎘ Duplicate |
-| 179 | Supprimer | Delete |
-| 180 | Ouvrir dans une fenêtre séparée (par exemple sur un autre écran) | Open in a separate window (on another screen, for example) |
-| 181 | Consignes aux relecteurs | Instructions for reviewers |
-| 181 | Ce qu'il faut regarder, comment répondre… | What to look at, how to answer… |
-| 182 | Retour attendu le | Feedback expected by |
-| 183 | Auteur | Author |
-| 183 | Nom | Name |
-| 184 | chapitre(s) · | … chapter(s) · … diagram(s) |
-| 184 | diagramme(s) | … chapter(s) · … diagram(s) |
-| 185 | retour(s) de | 💬 … feedback item(s) from … reviewer(s) |
-| 185 | relecteur(s) | 💬 … feedback item(s) from … reviewer(s) |
-| 185 | Masquer les retours | Hide the feedback |
-| 185 | Voir tous les retours | Show all feedback |
-| 186 | Crée un commentaire de 💬 Revue pour chaque retour (cible : l'élément ou sa description), pour en suivre le traitement | Creates a 💬 Review comment for each feedback item (target: the element or its description), to track its handling |
-| 186 | 💬 Verser dans la Revue ( | 💬 Send to the Review (…) |
-| 189 | Commentaires généraux | General comments |
-| 191 | ✚ Chapitre | ✚ Chapter |
-| 191 | ✚ Texte | ✚ Text |
-| 192 | ou glissez ici un élément (capacité, chaîne fonctionnelle…) ou un diagramme : nouveau chapitre | or drop here an element (capability, functional chain…) or a diagram: new chapter |
-| 193 | Commencez par un chapitre : ✚ Chapitre (titre libre), ou glissez depuis la palette 📎 une capacité, une chaîne fonctionnelle ou tout autre élément : le chapitre reprend son nom, sa description et les diagrammes dont il est l'élément représenté. Dans un chapitre, glissez des diagrammes et des éléments (bloc), ou sur « sous-chapitre » pour les mettre dans un sous-chapitre. | Start with a chapter: ✚ Chapter (free title), or drag from the 📎 palette a capability, a functional chain or any other element: the chapter takes its name, its description and the diagrams whose represented element it is. In a chapter, drop diagrams and elements (block), or on “sub-chapter” to put them in a sub-chapter. |
-| 215 | ¶ En bloc | ¶ To block |
-| 216 | Convertir en chapitre numéroté | Convert to a numbered chapter |
-| 216 | § En chapitre | § To chapter |
-| 217 | Monter | Move up |
-| 217 | Descendre | Move down |
-| 218 | Sortir du chapitre (niveau supérieur) | Move out of the chapter (upper level) |
-| 218 | Mettre dans le chapitre précédent (niveau inférieur) | Move into the previous chapter (lower level) |
-| 219 | Retirer du dossier | Remove from the package |
-| 250 | Retours des relecteurs | Reviewers' feedback |
-| 271 | (diagramme sans description) | (diagram without description) |
-| 274 | (pas de description) | (no description) |
-| 287 | Déplier | Expand |
-| 287 | Replier | Collapse |
-| 288 | Titre du chapitre (ou glissez ici un élément) | Chapter title (or drop an element here) |
-| 289 | Retirer l'élément associé | Remove the associated element |
-| 290 | Reprendre la description de l'élément sous le titre | Show the element's description under the title |
-| 290 | Description | Description |
-| 293 | bloc(s) replié(s) | … collapsed block(s) |
-| 296 | ✚ Texte | ✚ Text |
-| 296 | glissez un diagramme ou un élément | drop a diagram or an element |
-| 297 | ✚ Sous-chapitre | ✚ Sub-chapter |
-| 297 | ou glissez-le ici | or drop it here |
-| 309 | Texte libre | Free text |
-| 310 | Description | Description |
-| 311 | Ouvrir dans 🔬 Analyses › 🔗 Liens entre couches | Open in 🔬 Analyses › 🔗 Cross-layer links |
-| 311 | 🔗 Ouvrir | 🔗 Open |
-| 313 | Description du diagramme (documentation dans Capella) | Diagram description (documentation in Capella) |
-| 313 | Description | Description |
-| 314 | Tableau des éléments représentés sous le diagramme | Table of the represented elements under the diagram |
-| 314 | Éléments représentés | Represented elements |
-| 315 | Ouvrez le .aird du projet pour joindre ce diagramme aux exports | Open the project's .aird to include this diagram in the exports |
-| 315 | .aird non chargé | .aird not loaded |
-| 317 | Texte libre : contexte, question posée aux relecteurs… | Free text: context, question to the reviewers… |
-| 332 | Anonyme | Anonymous |
-| 332 | · Word | (inchangé, hors _L) |
-| 334 | Ouvrir le commentaire dans 💬 Revue | Open the comment in 💬 Review |
-| 335 | Supprimer ce retour | Delete this feedback item |
-| 348 | — Type — | — Type — |
-| 348 | 💡 Remarque | 💡 Remark |
-| 348 | ❓ Question | ❓ Question |
-| 348 | ❌ Erreur | ❌ Error |
-| 349 | ✏ Proposition | ✏ Proposal |
-| 349 | 👍 D'accord | 👍 Agree |
-| 349 | ✏ Modification (Word) | ✏ Change (Word) |
-| 368 | (copie) | (copy) |
-| 370 | Supprimer le dossier « | Delete the package “…” and its … feedback item(s)? |
-| 370 | » et ses | Delete the package “…” and its … feedback item(s)? |
-| 370 | retour(s) ? | Delete the package “…” and its … feedback item(s)? |
-| 370 | (sans titre) | (untitled) |
-| 382 | Retirer le chapitre « | Remove the chapter “…” and its … block(s)? |
-| 382 | » et ses | Remove the chapter “…” and its … block(s)? |
-| 382 | bloc(s) ? | Remove the chapter “…” and its … block(s)? |
-| 385 | Supprimer ce retour ? | Delete this feedback item? |
-| 393 | ] .dos-txt | (inchangé, hors _L) |
-| 403 | (sans titre) | (untitled) |
-| 445 | ⏳ Diagramme | ⏳ Diagram …/… — … |
-| 446 | Diagramme non exporté : | ❌ |
-| 471 | Liens entre couches | Cross-layer links |
-| 489 | Le dossier est vide : ajoutez au moins un chapitre. | The package is empty: add at least one chapter. |
-| 494 | Dossier de relecture | Review package |
-| 498 | ✔ Document Word créé : les relecteurs le commentent (Révision › Nouveau commentaire), puis 📥 Réimporter le .docx commenté | ✔ Word document created: reviewers comment it (Review › New Comment), then 📥 Re-import the commented .docx |
-| 499 | ✔ Page de relecture créée : envoyez-la aux relecteurs, puis 📥 Réimporter la page qu'ils ont enregistrée | ✔ Review page created: send it to the reviewers, then 📥 Re-import the page they saved |
-| 500 | Export impossible : | Export failed: |
-| 534 | Relecteur | Reviewer |
-| 534 | Votre nom | Your name |
-| 534 | 💾 Enregistrer la page | 💾 Save the page |
-| 534 | ⬇ Retours .json | ⬇ Feedback .json |
-| 534 | 🖨 Imprimer | 🖨 Print |
-| 535 | ● modifications non enregistrées | ● unsaved changes |
-| 535 | ✔ Page enregistrée : renvoyez-la à l'auteur | ✔ Page saved: send it back to the author |
-| 535 | Indiquez d'abord votre nom (en haut de la page). | First enter your name (at the top of the page). |
-| 536 | Commenter ce passage | Comment on this passage |
-| 536 | Commentaires généraux | General comments |
-| 536 | 💬 Commentaire général | 💬 General comment |
-| 536 | Sommaire | Contents |
-| 536 | Consignes | Instructions |
-| 537 | Figure | Figure |
-| 537 | Relu | Reviewed |
-| 537 | commentaire(s) | comment(s) |
-| 537 | de vous | by you |
-| 537 | chapitre(s) relu(s) | chapter(s) reviewed |
-| 537 | Enregistrer | Save |
-| 537 | Annuler | Cancel |
-| 538 | Votre commentaire… | Your comment… |
-| 538 | Passage commenté | Commented passage |
-| 538 | Supprimer | Delete |
-| 538 | Modifier | Edit |
-| 538 | Supprimer ce commentaire ? | Delete this comment? |
-| 539 | Projet | Project |
-| 539 | Modèle | Model |
-| 539 | Auteur | Author |
-| 539 | Envoyé le | Sent on |
-| 539 | Retour attendu le | Feedback expected by |
-| 539 | Éléments représentés | Represented elements |
-| 540 | Élément représenté | Represented element |
-| 540 | cliquez pour les afficher et les commenter un par un | click to show them and comment on each one |
-| 540 | Description | Description |
-| 540 | (pas de description) | (no description) |
-| 540 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
-| 541 | absent du modèle | missing from the model |
-| 541 | Élément | Element |
-| 541 | Type | (inchangé, hors _L) |
-| 541 | Couche | Layer |
-| 542 | Cliquer pour agrandir / réduire | Click to enlarge / reduce |
-| 542 | Produit par Arcalyse | Produced by Arcalyse |
-| 543 | — Criticité — | — Severity — |
-| 690 | Projet | Project |
-| 690 | Modèle | Model |
-| 690 | Auteur | Author |
-| 690 | Envoyé le | Sent on |
-| 690 | Retour attendu le | Feedback expected by |
-| 693 | Consignes | Instructions |
-| 694 | Relecture : insérez des commentaires Word (Révision › Nouveau commentaire) sur les passages concernés, ou modifiez le texte en mode Suivi des modifications, puis renvoyez le fichier .docx. Chaque commentaire est rattaché au chapitre, à la description ou au diagramme commenté. | Review: insert Word comments (Review › New Comment) on the relevant passages, or edit the text with Track Changes on, then send the .docx file back. Each comment is attached to the commented chapter, description or diagram. |
-| 697 | Sommaire | Contents |
-| 702 | Heading | (inchangé, hors _L) |
-| 704 | (pas de description) | (no description) |
-| 710 | (pas de description) | (no description) |
-| 713 | ⏳ Image | ⏳ Image … — … |
-| 717 | Figure | Figure |
-| 720 | .png"/ | (inchangé, hors _L) |
-| 723 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
-| 724 | Figure | Figure |
-| 724 | Caption | (inchangé, hors _L) |
-| 725 | Élément représenté | Represented element |
-| 730 | Éléments représentés | Represented elements |
-| 732 | Élément | Element |
-| 732 | Type | (inchangé, hors _L) |
-| 732 | Couche | Layer |
-| 744 | Title | (inchangé, hors _L) |
+| 159 | 📘 Rapport automatique | 📘 Automatic report |
+| 159 | Dossier rempli à partir du modèle selon un plan type, entièrement modifiable ensuite | Package filled from the model according to a standard outline, fully editable afterwards |
+| 159 | Choisir un plan type… | Choose a standard outline… |
+| 160 | Réimporter les retours des relecteurs : page HTML enregistrée, .json ou document Word commenté (.docx) | Re-import the reviewers' feedback: saved HTML page, .json or commented Word document (.docx) |
+| 160 | 📥 Réimporter des retours… | 📥 Re-import feedback… |
+| 162 | (sans titre) | (untitled) |
+| 162 | Retours des relecteurs | Reviewers' feedback |
+| 163 | Ouvrir dans une fenêtre séparée (par exemple sur un autre écran) | Open in a separate window (on another screen, for example) |
+| 176 | 📑 Dossier de relecture | 📑 Review package |
+| 176 | Titre | Title |
+| 177 | Page HTML autonome (hors ligne) : les relecteurs commentent chaque chapitre, description, diagramme ou texte, puis vous renvoient la page enregistrée | Standalone HTML page (offline): reviewers comment each chapter, description, diagram or text, then send you back the saved page |
+| 177 | 📤 Page HTML à commenter | 📤 HTML page to comment |
+| 178 | 📝 Word (.docx) | 📝 Word (.docx) |
+| 179 | Réimporter les retours des relecteurs : page HTML enregistrée, .json ou document Word commenté (.docx) | Re-import the reviewers' feedback: saved HTML page, .json or commented Word document (.docx) |
+| 179 | 📥 Réimporter… | 📥 Re-import… |
+| 180 | Dupliquer (sans les retours) | Duplicate (without the feedback) |
+| 180 | ⎘ Dupliquer | ⎘ Duplicate |
+| 180 | Supprimer | Delete |
+| 181 | Ouvrir dans une fenêtre séparée (par exemple sur un autre écran) | Open in a separate window (on another screen, for example) |
+| 182 | Consignes aux relecteurs | Instructions for reviewers |
+| 182 | Ce qu'il faut regarder, comment répondre… | What to look at, how to answer… |
+| 183 | Retour attendu le | Feedback expected by |
+| 184 | Auteur | Author |
+| 184 | Nom | Name |
+| 185 | chapitre(s) · | … chapter(s) · … diagram(s) |
+| 185 | diagramme(s) | … chapter(s) · … diagram(s) |
+| 186 | retour(s) de | 💬 … feedback item(s) from … reviewer(s) |
+| 186 | relecteur(s) | 💬 … feedback item(s) from … reviewer(s) |
+| 186 | Masquer les retours | Hide the feedback |
+| 186 | Voir tous les retours | Show all feedback |
+| 187 | Crée un commentaire de 💬 Revue pour chaque retour (cible : l'élément ou sa description), pour en suivre le traitement | Creates a 💬 Review comment for each feedback item (target: the element or its description), to track its handling |
+| 187 | 💬 Verser dans la Revue ( | 💬 Send to the Review (…) |
+| 190 | Commentaires généraux | General comments |
+| 192 | ✚ Chapitre | ✚ Chapter |
+| 192 | ✚ Texte | ✚ Text |
+| 193 | ou glissez ici un élément (capacité, chaîne fonctionnelle…) ou un diagramme : nouveau chapitre | or drop here an element (capability, functional chain…) or a diagram: new chapter |
+| 194 | Commencez par un chapitre : ✚ Chapitre (titre libre), ou glissez depuis la palette 📎 une capacité, une chaîne fonctionnelle ou tout autre élément : le chapitre reprend son nom, sa description et les diagrammes dont il est l'élément représenté. Dans un chapitre, glissez des diagrammes et des éléments (bloc), ou sur « sous-chapitre » pour les mettre dans un sous-chapitre. | Start with a chapter: ✚ Chapter (free title), or drag from the 📎 palette a capability, a functional chain or any other element: the chapter takes its name, its description and the diagrams whose represented element it is. In a chapter, drop diagrams and elements (block), or on “sub-chapter” to put them in a sub-chapter. |
+| 216 | ¶ En bloc | ¶ To block |
+| 217 | Convertir en chapitre numéroté | Convert to a numbered chapter |
+| 217 | § En chapitre | § To chapter |
+| 218 | Monter | Move up |
+| 218 | Descendre | Move down |
+| 219 | Sortir du chapitre (niveau supérieur) | Move out of the chapter (upper level) |
+| 219 | Mettre dans le chapitre précédent (niveau inférieur) | Move into the previous chapter (lower level) |
+| 220 | Retirer du dossier | Remove from the package |
+| 251 | Retours des relecteurs | Reviewers' feedback |
+| 272 | (diagramme sans description) | (diagram without description) |
+| 275 | (pas de description) | (no description) |
+| 288 | Déplier | Expand |
+| 288 | Replier | Collapse |
+| 289 | Titre du chapitre (ou glissez ici un élément) | Chapter title (or drop an element here) |
+| 290 | Retirer l'élément associé | Remove the associated element |
+| 291 | Reprendre la description de l'élément sous le titre | Show the element's description under the title |
+| 291 | Description | Description |
+| 294 | bloc(s) replié(s) | … collapsed block(s) |
+| 297 | ✚ Texte | ✚ Text |
+| 297 | glissez un diagramme ou un élément | drop a diagram or an element |
+| 298 | ✚ Sous-chapitre | ✚ Sub-chapter |
+| 298 | ou glissez-le ici | or drop it here |
+| 310 | Texte libre | Free text |
+| 311 | Description | Description |
+| 312 | Titre du tableau | Table title |
+| 313 | élément(s) | … element(s) |
+| 313 | échanges : source, cible, éléments échangés | exchanges: source, target, exchanged items |
+| 313 | nom, type, description | name, type, description |
+| 314 | ▴ Masquer | ▴ Hide |
+| 314 | ▾ Voir / modifier | ▾ View / edit |
+| 315 | Ouvrir dans 🔬 Analyses › 🔗 Liens entre couches | Open in 🔬 Analyses › 🔗 Cross-layer links |
+| 315 | 🔗 Ouvrir | 🔗 Open |
+| 317 | Description du diagramme (documentation dans Capella) | Diagram description (documentation in Capella) |
+| 317 | Description | Description |
+| 318 | Tableau des éléments représentés sous le diagramme | Table of the represented elements under the diagram |
+| 318 | Éléments représentés | Represented elements |
+| 319 | Ouvrez le .aird du projet pour joindre ce diagramme aux exports | Open the project's .aird to include this diagram in the exports |
+| 319 | .aird non chargé | .aird not loaded |
+| 321 | Texte libre : contexte, question posée aux relecteurs… | Free text: context, question to the reviewers… |
+| 323 | Retirer du tableau | Remove from the board |
+| 323 | Glissez ici des éléments pour les ajouter | Drop elements here to add them |
+| 338 | Anonyme | Anonymous |
+| 338 | · Word | (inchangé, hors _L) |
+| 340 | Ouvrir le commentaire dans 💬 Revue | Open the comment in 💬 Review |
+| 341 | Supprimer ce retour | Delete this feedback item |
+| 354 | — Type — | — Type — |
+| 354 | 💡 Remarque | 💡 Remark |
+| 354 | ❓ Question | ❓ Question |
+| 354 | ❌ Erreur | ❌ Error |
+| 355 | ✏ Proposition | ✏ Proposal |
+| 355 | 👍 D'accord | 👍 Agree |
+| 355 | ✏ Modification (Word) | ✏ Change (Word) |
+| 374 | (copie) | (copy) |
+| 376 | Supprimer le dossier « | Delete the package “…” and its … feedback item(s)? |
+| 376 | » et ses | Delete the package “…” and its … feedback item(s)? |
+| 376 | retour(s) ? | Delete the package “…” and its … feedback item(s)? |
+| 376 | (sans titre) | (untitled) |
+| 390 | Retirer le chapitre « | Remove the chapter “…” and its … block(s)? |
+| 390 | » et ses | Remove the chapter “…” and its … block(s)? |
+| 390 | bloc(s) ? | Remove the chapter “…” and its … block(s)? |
+| 393 | Supprimer ce retour ? | Delete this feedback item? |
+| 401 | ] .dos-txt | (inchangé, hors _L) |
+| 413 | (sans titre) | (untitled) |
+| 456 | ⏳ Diagramme | ⏳ Diagram …/… — … |
+| 457 | Diagramme non exporté : | ❌ |
+| 484 | Liens entre couches | Cross-layer links |
+| 502 | Le dossier est vide : ajoutez au moins un chapitre. | The package is empty: add at least one chapter. |
+| 507 | Dossier de relecture | Review package |
+| 511 | ✔ Document Word créé : les relecteurs le commentent (Révision › Nouveau commentaire), puis 📥 Réimporter le .docx commenté | ✔ Word document created: reviewers comment it (Review › New Comment), then 📥 Re-import the commented .docx |
+| 512 | ✔ Page de relecture créée : envoyez-la aux relecteurs, puis 📥 Réimporter la page qu'ils ont enregistrée | ✔ Review page created: send it to the reviewers, then 📥 Re-import the page they saved |
+| 513 | Export impossible : | Export failed: |
+| 554 | Échange | Exchange |
+| 554 | Source | Source |
+| 554 | Cible | Target |
+| 554 | Éléments échangés | Exchanged items |
+| 556 | Élément | Element |
+| 556 | Type | (inchangé, hors _L) |
+| 556 | Description | (inchangé, hors _L) |
+| 574 | Relecteur | Reviewer |
+| 574 | Votre nom | Your name |
+| 574 | 💾 Enregistrer la page | 💾 Save the page |
+| 574 | ⬇ Retours .json | ⬇ Feedback .json |
+| 574 | 🖨 Imprimer | 🖨 Print |
+| 575 | ● modifications non enregistrées | ● unsaved changes |
+| 575 | ✔ Page enregistrée : renvoyez-la à l'auteur | ✔ Page saved: send it back to the author |
+| 575 | Indiquez d'abord votre nom (en haut de la page). | First enter your name (at the top of the page). |
+| 576 | Commenter ce passage | Comment on this passage |
+| 576 | Commentaires généraux | General comments |
+| 576 | 💬 Commentaire général | 💬 General comment |
+| 576 | Sommaire | Contents |
+| 576 | Consignes | Instructions |
+| 577 | Figure | Figure |
+| 577 | Relu | Reviewed |
+| 577 | commentaire(s) | comment(s) |
+| 577 | de vous | by you |
+| 577 | chapitre(s) relu(s) | chapter(s) reviewed |
+| 577 | Enregistrer | Save |
+| 577 | Annuler | Cancel |
+| 578 | Votre commentaire… | Your comment… |
+| 578 | Passage commenté | Commented passage |
+| 578 | Supprimer | Delete |
+| 578 | Modifier | Edit |
+| 578 | Supprimer ce commentaire ? | Delete this comment? |
+| 579 | Projet | Project |
+| 579 | Modèle | Model |
+| 579 | Auteur | Author |
+| 579 | Envoyé le | Sent on |
+| 579 | Retour attendu le | Feedback expected by |
+| 579 | Éléments représentés | Represented elements |
+| 580 | Élément représenté | Represented element |
+| 580 | cliquez pour les afficher et les commenter un par un | click to show them and comment on each one |
+| 580 | Description | Description |
+| 580 | (pas de description) | (no description) |
+| 580 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
+| 581 | absent du modèle | missing from the model |
+| 581 | Élément | Element |
+| 581 | Type | (inchangé, hors _L) |
+| 581 | Couche | Layer |
+| 582 | Cliquer pour agrandir / réduire | Click to enlarge / reduce |
+| 582 | Produit par Arcalyse | Produced by Arcalyse |
+| 583 | — Criticité — | — Severity — |
+| 733 | Projet | Project |
+| 733 | Modèle | Model |
+| 733 | Auteur | Author |
+| 733 | Envoyé le | Sent on |
+| 733 | Retour attendu le | Feedback expected by |
+| 736 | Consignes | Instructions |
+| 737 | Relecture : insérez des commentaires Word (Révision › Nouveau commentaire) sur les passages concernés, ou modifiez le texte en mode Suivi des modifications, puis renvoyez le fichier .docx. Chaque commentaire est rattaché au chapitre, à la description ou au diagramme commenté. | Review: insert Word comments (Review › New Comment) on the relevant passages, or edit the text with Track Changes on, then send the .docx file back. Each comment is attached to the commented chapter, description or diagram. |
+| 740 | Sommaire | Contents |
 | 745 | Heading | (inchangé, hors _L) |
-| 746 | TOC Heading | (inchangé, hors _L) |
-| 747 | Caption | (inchangé, hors _L) |
-| 748 | Arcalyse — Description | (inchangé, hors _L) |
-| 749 | Arcalyse — Consignes | (inchangé, hors _L) |
-| 750 | Arcalyse — Aide | (inchangé, hors _L) |
-| 754 | .png"/ | (inchangé, hors _L) |
-| 757 | [Content_Types].xml | (inchangé, hors _L) |
-| 766 | Arcalyse | (inchangé, hors _L) |
-| 768 | word/_rels/document.xml.rels | (inchangé, hors _L) |
-| 771 | word/media/image | (inchangé, hors _L) |
-| 786 | archive ZIP illisible | unreadable ZIP archive |
-| 796 | navigateur trop ancien pour lire un .docx | browser too old to read a .docx |
-| 818 | ce fichier n'est pas un document Word | this file is not a Word document |
-| 848 | cette page n'est pas un dossier de relecture Arcalyse | this page is not an Arcalyse review package |
-| 849 | fichier illisible (JSON attendu) | unreadable file (JSON expected) |
-| 850 | ce fichier n'est pas un retour de dossier de relecture | this file is not review package feedback |
-| 864 | .html,.htm,.json,.docx | (inchangé, hors _L) |
-| 881 | » : dossier d'origine introuvable dans ce projet. Rattacher ses retours au dossier ouvert « | “…”: original package not found in this project. Attach its feedback to the open package “…”? |
-| 894 | retour(s) ajouté(s) | ✔ …: … feedback item(s) added |
-| 894 | déjà présent(s) | , … already present |
-| 894 | commentaire(s) créé(s) dans 💬 Revue | — … comment(s) created in 💬 Review |
-| 913 | 📑 Dossier de relecture | 📑 Review package |
-| 918 | commentaire(s) créé(s) dans 💬 Revue | ✔ … comment(s) created in 💬 Review |
+| 747 | (pas de description) | (no description) |
+| 756 | (aucun élément) | (no element) |
+| 759 | (pas de description) | (no description) |
+| 762 | ⏳ Image | ⏳ Image … — … |
+| 766 | Figure | Figure |
+| 769 | .png"/ | (inchangé, hors _L) |
+| 772 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
+| 773 | Figure | Figure |
+| 773 | Caption | (inchangé, hors _L) |
+| 774 | Élément représenté | Represented element |
+| 779 | Éléments représentés | Represented elements |
+| 781 | Élément | Element |
+| 781 | Type | (inchangé, hors _L) |
+| 781 | Couche | Layer |
+| 793 | Title | (inchangé, hors _L) |
+| 794 | Heading | (inchangé, hors _L) |
+| 795 | TOC Heading | (inchangé, hors _L) |
+| 796 | Caption | (inchangé, hors _L) |
+| 797 | Arcalyse — Description | (inchangé, hors _L) |
+| 798 | Arcalyse — Consignes | (inchangé, hors _L) |
+| 799 | Arcalyse — Aide | (inchangé, hors _L) |
+| 803 | .png"/ | (inchangé, hors _L) |
+| 806 | [Content_Types].xml | (inchangé, hors _L) |
+| 815 | Arcalyse | (inchangé, hors _L) |
+| 817 | word/_rels/document.xml.rels | (inchangé, hors _L) |
+| 820 | word/media/image | (inchangé, hors _L) |
+| 835 | archive ZIP illisible | unreadable ZIP archive |
+| 845 | navigateur trop ancien pour lire un .docx | browser too old to read a .docx |
+| 867 | ce fichier n'est pas un document Word | this file is not a Word document |
+| 897 | cette page n'est pas un dossier de relecture Arcalyse | this page is not an Arcalyse review package |
+| 898 | fichier illisible (JSON attendu) | unreadable file (JSON expected) |
+| 899 | ce fichier n'est pas un retour de dossier de relecture | this file is not review package feedback |
+| 913 | .html,.htm,.json,.docx | (inchangé, hors _L) |
+| 930 | » : dossier d'origine introuvable dans ce projet. Rattacher ses retours au dossier ouvert « | “…”: original package not found in this project. Attach its feedback to the open package “…”? |
+| 943 | retour(s) ajouté(s) | ✔ …: … feedback item(s) added |
+| 943 | déjà présent(s) | , … already present |
+| 943 | commentaire(s) créé(s) dans 💬 Revue | — … comment(s) created in 💬 Review |
+| 962 | 📑 Dossier de relecture | 📑 Review package |
+| 967 | commentaire(s) créé(s) dans 💬 Revue | ✔ … comment(s) created in 💬 Review |
 
 ## js/62-liens-couches.js
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
 | 93 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
-| 123 | Liens entre couches — | Cross-layer links — |
-| 124 | Liens entre couches — | Cross-layer links — |
-| 153 | Liens d'un élément : ce qu'il réalise (couches supérieures) et ce qui le réalise (couches inférieures) | Links of an element: what it realizes (upper layers) and what realizes it (lower layers) |
-| 153 | ◎ À partir d'un élément | ◎ From an element |
-| 154 | Tous les liens entre éléments d'une catégorie | All links between elements of a category |
-| 154 | ▦ Toute une catégorie | ▦ A whole category |
-| 155 | 🔍 Élément de départ (fonction, chaîne, capacité…) | 🔍 Starting element (function, chain, capability…) |
-| 156 | Sens du parcours | Traversal direction |
-| 156 | Réalisations vers le haut et vers le bas | Realizations upwards and downwards |
-| 156 | Tous les liens de proche en proche | All links, step by step |
-| 158 | Sous chaque chaîne, ses fonctions et leurs liens de réalisation | Under each chain, its functions and their realization links |
-| 158 | Fonctions des chaînes | Chain functions |
-| 159 | Réduire | Zoom out |
-| 159 | Agrandir | Zoom in |
-| 160 | ⬇ SVG | ⬇ SVG |
-| 160 | 🖼 PNG | 🖼 PNG |
-| 161 | ⬇ CSV | ⬇ CSV |
-| 161 | Ajoute ce dessin au 📑 dossier de relecture ouvert (redessiné à chaque export du dossier) | Adds this drawing to the open 📑 review package (redrawn at each export of the package) |
-| 161 | 📑 Au dossier | 📑 To package |
-| 164 | Choisissez un élément de départ (recherche ci-dessus), par exemple : | Choose a starting element (search above), for example: |
-| 166 | Départ : | Start: |
-| 166 | élément(s) | … element(s) |
-| 166 | limité à | limited to … elements |
-| 166 | éléments | limited to … elements |
-| 167 | Flèche : réalise (vers la couche supérieure). Clic : détail · double-clic : repartir de l'élément · clic droit : commenter. | Arrow: realizes (towards the upper layer). Click: detail · double-click: start again from the element · right-click: comment. |
-| 169 | Aucun lien de réalisation pour cet élément. | No realization link for this element. |
-| 169 | Aucun lien de réalisation dans cette catégorie. | No realization link in this category. |
-| 192 | · sans lien | · no link |
-| 192 | Aucun élément. | No element. |
-| 217 | ✔ Ajouté au dossier « | ✔ Added to the package “…” (🏠 Home › 📑 Review packages) |
-| 217 | » (🏠 Accueil › 📑 Dossiers de relecture) | ✔ Added to the package “…” (🏠 Home › 📑 Review packages) |
-| 220 | Élément qui réalise | Realizing element |
-| 220 | Couche | Layer |
-| 220 | Type | (inchangé, hors _L) |
-| 220 | Lien | Link |
-| 220 | Élément réalisé | Realized element |
+| 138 | Liens entre couches — | Cross-layer links — |
+| 139 | Liens entre couches — | Cross-layer links — |
+| 168 | Liens d'un élément : ce qu'il réalise (couches supérieures) et ce qui le réalise (couches inférieures) | Links of an element: what it realizes (upper layers) and what realizes it (lower layers) |
+| 168 | ◎ À partir d'un élément | ◎ From an element |
+| 169 | Tous les liens entre éléments d'une catégorie | All links between elements of a category |
+| 169 | ▦ Toute une catégorie | ▦ A whole category |
+| 170 | 🔍 Élément de départ (fonction, chaîne, capacité…) | 🔍 Starting element (function, chain, capability…) |
+| 171 | Sens du parcours | Traversal direction |
+| 171 | Réalisations vers le haut et vers le bas | Realizations upwards and downwards |
+| 171 | Tous les liens de proche en proche | All links, step by step |
+| 173 | Sous chaque chaîne, ses fonctions et leurs liens de réalisation | Under each chain, its functions and their realization links |
+| 173 | Fonctions des chaînes | Chain functions |
+| 174 | Réduire | Zoom out |
+| 174 | Agrandir | Zoom in |
+| 175 | ⬇ SVG | ⬇ SVG |
+| 175 | 🖼 PNG | 🖼 PNG |
+| 176 | ⬇ CSV | ⬇ CSV |
+| 176 | Ajoute ce dessin au 📑 dossier de relecture ouvert (redessiné à chaque export du dossier) | Adds this drawing to the open 📑 review package (redrawn at each export of the package) |
+| 176 | 📑 Au dossier | 📑 To package |
+| 177 | Ajoute ce dessin au 📐 tableau de bord affiché (redessiné sur le modèle chargé) | Adds this drawing to the displayed 📐 dashboard (redrawn on the loaded model) |
+| 177 | 📐 Au tableau de bord | 📐 To dashboard |
+| 180 | Choisissez un élément de départ (recherche ci-dessus), par exemple : | Choose a starting element (search above), for example: |
+| 182 | Départ : | Start: |
+| 182 | élément(s) | … element(s) |
+| 182 | limité à | limited to … elements |
+| 182 | éléments | limited to … elements |
+| 183 | Flèche : réalise (vers la couche supérieure). Clic : détail · double-clic : repartir de l'élément · clic droit : commenter. | Arrow: realizes (towards the upper layer). Click: detail · double-click: start again from the element · right-click: comment. |
+| 185 | Aucun lien de réalisation pour cet élément. | No realization link for this element. |
+| 185 | Aucun lien de réalisation dans cette catégorie. | No realization link in this category. |
+| 207 | · sans lien | · no link |
+| 207 | Aucun élément. | No element. |
+| 232 | ✔ Ajouté au dossier « | ✔ Added to the package “…” (🏠 Home › 📑 Review packages) |
+| 232 | » (🏠 Accueil › 📑 Dossiers de relecture) | ✔ Added to the package “…” (🏠 Home › 📑 Review packages) |
+| 239 | ✔ Ajouté au tableau de bord « | ✔ Added to the dashboard “…” (📐 Dashboard) |
+| 239 | » (📐 Tableau de bord) | ✔ Added to the dashboard “…” (📐 Dashboard) |
+| 242 | Élément qui réalise | Realizing element |
+| 242 | Couche | Layer |
+| 242 | Type | (inchangé, hors _L) |
+| 242 | Lien | Link |
+| 242 | Élément réalisé | Realized element |
+
+## js/63-rapports-auto.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 18 | 📘 Spécification technique du système (boîte noire) | 📘 System technical specification (black box) |
+| 18 | Plan type STS : objet, domaine d'application, documents, terminologie, analyse fonctionnelle, exigences fonctionnelles par fonction système (entrées et sorties externes), interfaces externes, exigences opérationnelles, contraintes, vérification | STS outline: purpose, scope, documents, terminology, functional analysis, functional requirements per system function (external inputs and outputs), external interfaces, operational requirements, constraints, verification |
+| 19 | 📗 Dossier de conception du système (boîte blanche) | 📗 System design file (white box) |
+| 19 | Plan type DCS : conception fonctionnelle / logique (architecture, flux externes et internes, données, chaînes, séquences), conception organique (architecture physique, interfaces, allocation), constituants et exigences dérivées | Design file outline: functional / logical design (architecture, external and internal flows, data, chains, sequences), physical design (physical architecture, interfaces, allocation), constituents and derived requirements |
+| 43 | [À rédiger — | [To be written — …] |
+| 72 | Entrées externes | External inputs |
+| 72 | Entrées externes de « | External inputs of “…” |
+| 73 | Sorties externes | External outputs |
+| 73 | Sorties externes de « | External outputs of “…” |
+| 75 | exigences fonctionnelles et de performances associées à cette fonction | functional and performance requirements associated with this function |
+| 77 | Objet | Purpose |
+| 77 | objet du document, système concerné, phase du projet | purpose of the document, system concerned, project phase |
+| 78 | Domaine d'application | Scope |
+| 79 | Contexte de développement du système | System development context |
+| 79 | contexte, enjeux, parties prenantes | context, stakes, stakeholders |
+| 80 | Description générale du système | General description of the system |
+| 81 | Documents cités | Referenced documents |
+| 81 | Documents de référence | Reference documents |
+| 81 | liste des documents de référence | list of reference documents |
+| 81 | Documents applicables | Applicable documents |
+| 81 | liste des documents applicables | list of applicable documents |
+| 82 | Terminologie | Terminology |
+| 82 | Glossaire | Glossary |
+| 82 | termes et définitions | terms and definitions |
+| 82 | Sigles et acronymes | Abbreviations and acronyms |
+| 82 | sigles et acronymes | abbreviations and acronyms |
+| 83 | Analyse fonctionnelle | Functional analysis |
+| 83 | Missions | Missions |
+| 83 | Mission | (inchangé, hors _L) |
+| 83 | Capacités du système | System capabilities |
+| 83 | Capability | (inchangé, hors _L) |
+| 84 | Chaînes fonctionnelles | Functional chains |
+| 85 | Exigences | Requirements |
+| 86 | Exigences fonctionnelles et de performances associées | Functional requirements and associated performance |
+| 86 | aucune fonction allouée au système dans le modèle | no function allocated to the system in the model |
+| 87 | Exigences de performances | Performance requirements |
+| 87 | performances globales du système | overall system performance |
+| 88 | Exigences d'interfaces externes | External interface requirements |
+| 88 | Échanges entre le système et son environnement | Exchanges between the system and its environment |
+| 89 | Environnement | Environment |
+| 89 | Acteurs | Actors |
+| 90 | Entrées | Inputs |
+| 90 | Entrées du système | System inputs |
+| 91 | Sorties | Outputs |
+| 91 | Sorties du système | System outputs |
+| 92 | Exigences opérationnelles | Operational requirements |
+| 93 | Scénarios, profil de mission | Scenarios, mission profile |
+| 94 | Durée de vie | Lifetime |
+| 94 | durée de vie | lifetime |
+| 94 | Ergonomie et facteurs humains | Ergonomics and human factors |
+| 95 | Sûreté de fonctionnement | Dependability |
+| 95 | Sécurité | Safety |
+| 95 | sécurité | safety |
+| 95 | Fiabilité | Reliability |
+| 95 | fiabilité | reliability |
+| 95 | Maintenabilité | Maintainability |
+| 95 | maintenabilité | maintainability |
+| 95 | Disponibilité | Availability |
+| 95 | disponibilité | availability |
+| 96 | Qualité produit | Product quality |
+| 96 | qualité | quality |
+| 96 | Ressources du système | System resources |
+| 96 | Exigences documentaires | Documentation requirements |
+| 97 | Exigences de contraintes | Constraint requirements |
+| 97 | Réglementation | Regulations |
+| 97 | réglementation | regulations |
+| 97 | Masse et autres caractéristiques physiques | Mass and other physical characteristics |
+| 97 | masse, volume… | mass, volume… |
+| 98 | Conception et fabrication | Design and manufacturing |
+| 98 | études ou solutions imposées, matériaux, fabrication | imposed studies or solutions, materials, manufacturing |
+| 98 | Traçabilité et gestion de configuration | Traceability and configuration management |
+| 98 | traçabilité | traceability |
+| 99 | Transportabilité, stockage et conditionnement | Transportability, storage and packaging |
+| 99 | transport, stockage | transport, storage |
+| 99 | Flexibilité et évolution | Flexibility and evolution |
+| 99 | évolutions | evolutions |
+| 100 | Retrait de service | Withdrawal from service |
+| 100 | retrait de service | withdrawal from service |
+| 100 | Conditions d'environnement | Environmental conditions |
+| 100 | environnement climatique, mécanique… | climatic, mechanical environment… |
+| 101 | Exigences d'intégration, de vérification et de validation | Integration, verification and validation requirements |
+| 101 | méthodes de vérification, essais, recette | verification methods, tests, acceptance |
+| 126 | Objet | Purpose |
+| 126 | objet du document, système concerné, phase du projet | purpose of the document, system concerned, project phase |
+| 127 | Domaine d'application | Scope |
+| 127 | Description générale du projet | General description of the project |
+| 127 | projet, organisation, jalons | project, organisation, milestones |
+| 127 | Description générale du système | General description of the system |
+| 128 | Documents cités | Referenced documents |
+| 128 | Documents de référence | Reference documents |
+| 128 | liste des documents de référence | list of reference documents |
+| 128 | Documents applicables | Applicable documents |
+| 128 | liste des documents applicables | list of applicable documents |
+| 129 | Terminologie | Terminology |
+| 129 | Glossaire | Glossary |
+| 129 | termes et définitions | terms and definitions |
+| 129 | Sigles et acronymes | Abbreviations and acronyms |
+| 129 | sigles et acronymes | abbreviations and acronyms |
+| 130 | Conception fonctionnelle / logique | Functional / logical design |
+| 131 | Décomposition statique | Static breakdown |
+| 132 | Architecture fonctionnelle / logique | Functional / logical architecture |
+| 132 | Composants logiques | Logical components |
+| 133 | Flux externes | External flows |
+| 133 | Échanges fonctionnels avec l'extérieur | Functional exchanges with the outside |
+| 134 | Flux internes | Internal flows |
+| 134 | Échanges fonctionnels internes | Internal functional exchanges |
+| 135 | Données de paramétrage | Configuration data |
+| 135 | Éléments échangés | Exchanged items |
+| 135 | données de paramétrage | configuration data |
+| 136 | Analyse dynamique | Dynamic analysis |
+| 137 | Chaînes fonctionnelles | Functional chains |
+| 137 | aucune chaîne fonctionnelle en LA dans le modèle | no functional chain in LA in the model |
+| 138 | Diagrammes de séquences | Sequence diagrams |
+| 138 | scénarios logiques | logical scenarios |
+| 139 | Conception organique | Physical design |
+| 140 | Décomposition statique | Static breakdown |
+| 141 | Architecture physique | Physical architecture |
+| 141 | Composants physiques | Physical components |
+| 142 | Interfaces physiques externes | External physical interfaces |
+| 142 | Liens physiques avec l'extérieur | Physical links with the outside |
+| 143 | Interfaces physiques internes | Internal physical interfaces |
+| 143 | Liens physiques internes | Internal physical links |
+| 144 | Allocation de l'architecture fonctionnelle / logique | Allocation of the functional / logical architecture |
+| 144 | principes d'allocation | allocation principles |
+| 145 | Analyse dynamique | Dynamic analysis |
+| 146 | Flux physiques | Physical flows |
+| 146 | Chemins physiques | Physical paths |
+| 146 | Échanges entre composants | Component exchanges |
+| 147 | Diagrammes de séquences | Sequence diagrams |
+| 147 | scénarios physiques | physical scenarios |
+| 148 | Constituants de niveau inférieur | Lower-level constituents |
+| 148 | Constituants | Constituents |
+| 149 | Exigences dérivées | Derived requirements |
+| 150 | Exigences fonctionnelles | Functional requirements |
+| 150 | Fonctions allouées à « | Functions allocated to “…” |
+| 151 | Exigences de performances | Performance requirements |
+| 152 | Exigences d'interfaces externes | External interface requirements |
+| 152 | Liens physiques de « | Physical links of “…” |
+| 153 | Exigences opérationnelles | Operational requirements |
+| 153 | exigences opérationnelles | operational requirements |
+| 154 | Exigences de contraintes | Constraint requirements |
+| 155 | Exigences d'intégration, de vérification et de validation | Integration, verification and validation requirements |
+| 155 | vérification | verification |
+| 155 | aucun constituant physique dans le modèle | no physical constituent in the model |
+| 163 | Chargez d'abord un modèle. | Load a model first. |
+| 168 | Document produit automatiquement à partir du modèle, puis complété : relisez chaque chapitre et commentez ce qui est faux, manquant ou ambigu. | Document produced automatically from the model, then completed: read each chapter and comment on what is wrong, missing or ambiguous. |
+| 170 | créé : complétez les parties « [À rédiger — …] » | ✔ … created: complete the “[To be written — …]” parts |
+| 170 | — ouvrez le .aird du projet puis régénérez pour y avoir les diagrammes | — open the project's .aird then generate again to include the diagrams |
 
 ## Textes sans traduction anglaise (8)
 
 - `js/33-qualite-noms.js:43` — contrôle
-- `js/35-tableau-de-bord.js:143` — Tableau de bord : traçabilité indisponible
+- `js/35-tableau-de-bord.js:145` — Tableau de bord : traçabilité indisponible
 - `js/39-exigences-donnees.js:607` — Détail étendu indisponible
 - `js/40-suivi-fichier.js:138` — Sélecteur à accès direct indisponible :
 - `js/46-config-interface.js:83` — Vues enregistrées illisibles :
 - `js/54-diagrammes.js:130` — Relecture du .aird impossible :
 - `js/58-revue-ciblee.js:102` — Diagramme non exporté :
-- `js/61-dossier-relecture.js:446` — Diagramme non exporté :
+- `js/61-dossier-relecture.js:457` — Diagramme non exporté :

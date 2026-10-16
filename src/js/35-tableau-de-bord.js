@@ -11,9 +11,11 @@ const CAP_DASH_VIZ={
   series:[['hbar',_L('Barres horizontales'),2,2],['bar',_L('Barres verticales'),2,2],['donut',_L('Anneau'),2,2],['table',_L('Tableau'),2,2],['kpi',_L('Total'),1,1]],
   multi:[['stack',_L('Barres empilées'),2,2],['group',_L('Barres groupées'),2,2],['table',_L('Tableau'),2,2]],
   table:[['table',_L('Tableau'),4,2]],
-  text:[['text',_L('Texte libre'),2,1]]};
+  text:[['text',_L('Texte libre'),2,1]],
+  diag:[['img',_L('Image du diagramme'),2,3]],
+  xlay:[['img',_L('Image'),4,3]]};
 /** Libellés courts des formes d'indicateurs (badges du catalogue). */
-const CAP_DASH_KIND={n:_L('nombre'),pct:'%',series:_L('répartition'),multi:_L('croisé'),table:_L('liste'),text:_L('texte')};
+const CAP_DASH_KIND={n:_L('nombre'),pct:'%',series:_L('répartition'),multi:_L('croisé'),table:_L('liste'),text:_L('texte'),diag:_L('diagramme'),xlay:_L('vue')};
 
 /** Couleur de la i-ème série dans la palette du thème courant (au-delà de 8 : gris « Autres »).
  * @param {number} i - Rang de la série
@@ -182,6 +184,8 @@ function capDashCatalog(){
   capDgDashCatalog(add, LC);
 
   add(_L('Mise en page'),'txt',_L('Texte libre (titre, commentaire)'),'text',()=>({}));
+  add(_L('Diagrammes et vues'),'diag',_L('🔲 Diagramme Capella'),'diag',()=>({}));
+  add(_L('Diagrammes et vues'),'xlay',_L('🔗 Liens entre couches'),'xlay',()=>({}));
   return _capAnaCache.dashCat=C;
 }
 /** Valeur (mise en cache) d'un indicateur du catalogue ; null si le modèle ne contient pas la donnée.
@@ -227,6 +231,7 @@ function capDashCats(val,w){
  * @returns {string} HTML / SVG
  */
 function capDashDraw(w,m,W,H){
+  if(m&&(m.kind==='diag'||m.kind==='xlay')) return capDashImgDraw(w,m);
   if(w.v==='text') return `<div class="dash-txt${(w.txt||'').length<90&&!(w.txt||'').includes('\n')?' dash-h':''}">${capEsc(w.txt||'')||_L('<span class="ana-dim">Texte vide — ⚙ pour le modifier.</span>')}</div>`;
   if(!m) return _L('<div class="dash-empty">Indicateur indisponible pour ce modèle.</div>');
   const val=capDashValue(m); if(!val) return _L('<div class="dash-empty">Aucune donnée dans ce modèle.</div>');
@@ -346,7 +351,13 @@ function capRenderDashboard(box){
   const cat=capDashCatalog(), byId={}; cat.forEach(m=>byId[m.id]=m);
   const esc=capEsc, cols=dash.cols||4;
   const rerender=()=>capRenderDashboard(box), save=()=>{ capDashSave(); };
-  const titleOf=w=>w.t||(w.v==='text'?'':(byId[w.m]||{}).l||w.m);
+  const titleOf=w=>capDashTitre(w,byId[w.m]);
+  // Élément en cours d'ajout ou de configuration (panneau à gauche) : affiché tel quel dans la grille
+  if(st.side&&(!st.edit||st.side.dash!==dash.id)) st.side=null;
+  const sd=st.side, shown=dash.widgets.map(w=>sd&&sd.w0===w?sd.w:w);
+  if(sd&&!sd.w0) shown.splice(sd.at>=0?sd.at:shown.length, 0, sd.w);
+  const ouvrir=(w0,at)=>{ st.side={dash:dash.id, w0:w0||null, at:at==null?-1:at, q:'', open:null,
+    w:w0?JSON.parse(JSON.stringify(w0)):{id:capDashUid(),m:'',v:'',w:2,h:2,top:10}}; rerender(); };
   box.innerHTML=_L(`<div class="dash-tabs">${S.list.map(d=>_L(`<div class="dash-tab${d.id===dash.id?' active':''}" data-dtab="${esc(d.id)}" title="${esc(d.name)} — double-clic pour renommer"><span class="dash-tab-n">${esc(d.name)}</span>${d.id===dash.id?_L('<span class="dash-tab-ren" data-dren title="Renommer la page">✎</span>'):''}</div>`)).join('')}<button class="dash-tab dash-tab-add" id="dash-new" title="Nouvelle page de tableau de bord">＋</button></div>
     <div class="phl-filter-bar" style="flex-wrap:wrap;margin-bottom:8px;gap:6px">
       <span class="tb-grp"><button class="cap-lf-btn${st.edit?' active':''}" id="dash-edit" title="Ajouter, configurer, déplacer et redimensionner les éléments">${st.edit?_L('✔ Terminer'):_L('✏ Modifier')}</button></span>
@@ -364,21 +375,21 @@ function capRenderDashboard(box){
         <button class="phl-export-btn" id="dash-json" title="Exporter la disposition (pour la réutiliser sur un autre modèle)">⬇ JSON</button>
         <button class="phl-export-btn" id="dash-imp" title="Importer une disposition exportée">⬆ JSON</button><input type="file" id="dash-file" accept=".json" style="display:none"></span>
     </div>
-    ${st.edit?_L('<p class="ana-help">Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d\'un élément pour en insérer un avant lui · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML.</p>'):''}
-    <div class="dash-scroll" data-fill="6"><div class="dash-grid${st.edit?' dash-edit':''}" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">
-      ${dash.widgets.map(w=>`<div class="dash-w" data-wid="${esc(w.id)}" style="grid-column:span ${Math.min(cols,w.w||1)};grid-row:span ${w.h||1}">
+    ${st.edit?_L('<p class="ana-help">Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d\'un élément pour en insérer un avant lui · ⚙ configurer (panneau à gauche) · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML.</p>'):''}
+    <div class="dash-lay" data-fill="6">${sd?'<aside class="dash-side"></aside>':''}<div class="dash-scroll"><div class="dash-grid${st.edit?' dash-edit':''}" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">
+      ${shown.map(w=>`<div class="dash-w${sd&&sd.w===w?' dash-cur':''}" data-wid="${esc(w.id)}" style="grid-column:span ${Math.min(cols,w.w||1)};grid-row:span ${w.h||1}">
         <div class="dash-wh${!st.edit&&w.v==='text'&&!w.t?' dash-wh-none':''}"${st.edit?' draggable="true"':''}>${st.edit?'<span class="ana-dim" style="cursor:grab">⠿</span>':''}<span class="dash-wt" title="${esc(titleOf(w))}">${esc(titleOf(w))}</span>
           ${st.edit?'<span class="dash-wa"><button data-wcfg title="Configurer">⚙</button><button data-wdup title="Dupliquer">⧉</button><button data-wdel title="Retirer">✕</button></span>':''}</div>
         <div class="dash-wb"></div>${st.edit?_L('<div class="dash-rz" title="Glisser pour redimensionner"></div><button class="dash-ins" data-ins title="Insérer un élément ici">＋</button>'):''}</div>`).join('')}
       ${st.edit&&dash.widgets.length?_L('<button class="dash-add-tile" data-add-end title="Ajouter un élément à la fin">＋ Ajouter un élément</button>'):''}
-      ${!dash.widgets.length?_L(`<div class="dash-empty" style="grid-column:1/-1;height:200px;border:1px dashed var(--c-border);border-radius:8px">Tableau de bord vide. ${st.edit?_L('Cliquez sur « ＋ Ajouter un élément ».'):_L('Cliquez sur « ✏ Modifier » pour ajouter des indicateurs.')}</div>`):''}
-    </div></div>`);
+      ${!shown.length?_L(`<div class="dash-empty" style="grid-column:1/-1;height:200px;border:1px dashed var(--c-border);border-radius:8px">Tableau de bord vide. ${st.edit?_L('Cliquez sur « ＋ Ajouter un élément ».'):_L('Cliquez sur « ✏ Modifier » pour ajouter des indicateurs.')}</div>`):''}
+    </div></div></div>`);
   capFillHeight(box);
   const grid=box.querySelector('.dash-grid');
   box.scrollTop=boxTop; box.querySelector('.dash-scroll').scrollTop=scTop;
   /** Dessine le contenu de chaque élément aux dimensions réelles de son cadre. */
-  const paint=()=>grid.querySelectorAll('.dash-w[data-wid]').forEach(el=>{ const w=dash.widgets.find(x=>x.id===el.dataset.wid), b=el.querySelector('.dash-wb');
-    b.innerHTML=capDashDraw(w,byId[w.m],b.clientWidth-20,b.clientHeight-12); });
+  const paint=()=>grid.querySelectorAll('.dash-w[data-wid]').forEach(el=>{ const w=shown.find(x=>x.id===el.dataset.wid), b=el.querySelector('.dash-wb');
+    b.innerHTML=w.m?capDashDraw(w,byId[w.m],b.clientWidth-20,b.clientHeight-12):_L('<div class="dash-empty">Nouvel élément : choisissez un indicateur, un diagramme ou une vue dans le panneau de gauche.</div>'); });
   paint();
   if(box._dashRO) box._dashRO.disconnect();
   if(window.ResizeObserver){ let t, w0=grid.clientWidth; box._dashRO=new ResizeObserver(()=>{ if(Math.abs(grid.clientWidth-w0)<4) return; w0=grid.clientWidth; clearTimeout(t); t=setTimeout(paint,150); }); box._dashRO.observe(grid); }
@@ -396,7 +407,7 @@ function capRenderDashboard(box){
     b.ondblclick=()=>renameTab(b); });
   box.querySelector('[data-dren]')?.addEventListener('click',e=>{ e.stopPropagation(); renameTab(e.target.closest('[data-dtab]')); });
   box.querySelector('#dash-edit').onclick=()=>{ st.edit=!st.edit; rerender(); };
-  box.querySelector('#dash-add')?.addEventListener('click',()=>capDashEditor(dash,null,()=>{ save(); rerender(); }));
+  box.querySelector('#dash-add')?.addEventListener('click',()=>ouvrir(null));
   box.querySelector('#dash-name')?.addEventListener('change',e=>{ dash.name=e.target.value.trim()||_L('Tableau de bord'); save(); rerender(); });
   box.querySelector('#dash-cols')?.addEventListener('change',e=>{ dash.cols=+e.target.value; save(); rerender(); });
   box.querySelector('#dash-new').onclick=()=>{ const d={id:capDashUid(),name:_L('Page ')+(S.list.length+1),cols:4,widgets:[]}; S.list.push(d); S.cur=d.id; st.edit=true; save(); rerender(); };
@@ -421,15 +432,20 @@ function capRenderDashboard(box){
       return `<div class="dash-w" style="grid-column:span ${Math.min(cols,w.w||1)};grid-row:span ${w.h||1}"><div class="dash-wh">${esc(titleOf(w))}</div><div class="dash-wb">${el.querySelector('.dash-wb').innerHTML}</div></div>`; }).join('')}</div>`);
     capHtmlReport({title:'📐 '+dash.name, subtitle:_L(`${dash.widgets.length} élément(s)`), tabs:[{key:'d',label:_L('Tableau de bord'),html}], filename:(dash.name.replace(/[^\w\-]+/g,'_')||_L('tableau-de-bord'))+'.html'});
   };
+  // Diagrammes et vues : clic = ouvrir (hors modification)
+  if(!st.edit) grid.querySelectorAll('.dash-w[data-wid]').forEach(el=>{ const w=shown.find(x=>x.id===el.dataset.wid), b=el.querySelector('.dash-wb');
+    if(w&&(w.m==='diag'||w.m==='xlay')){ b.style.cursor='pointer'; b.title=_L('Ouvrir');
+      b.onclick=()=>{ if(w.m==='xlay'&&w.opts){ Object.assign(_capXl,w.opts); capAnaSub='xlay'; capShowView('analyses'); } else if(w.uid&&capHomeReps().some(r=>r.uid===w.uid)) capDiagOpen(w.uid); }; } });
   if(!st.edit) return;
+  if(sd) capDashSide(box.querySelector('.dash-side'), dash, st, grid, ()=>{ save(); rerender(); });
 
   // Édition : configurer, dupliquer, retirer
-  const wOf=el=>dash.widgets.find(x=>x.id===el.closest('.dash-w').dataset.wid);
-  grid.querySelectorAll('[data-wcfg]').forEach(b=>b.onclick=()=>capDashEditor(dash,wOf(b),()=>{ save(); rerender(); }));
-  grid.querySelectorAll('[data-wdup]').forEach(b=>b.onclick=()=>{ const w=wOf(b), c={...JSON.parse(JSON.stringify(w)),id:capDashUid()}; dash.widgets.splice(dash.widgets.indexOf(w)+1,0,c); save(); rerender(); });
-  grid.querySelectorAll('[data-ins]').forEach(b=>b.onclick=()=>capDashEditor(dash,null,()=>{ save(); rerender(); },dash.widgets.indexOf(wOf(b))));
-  grid.querySelector('[data-add-end]')?.addEventListener('click',()=>capDashEditor(dash,null,()=>{ save(); rerender(); }));
-  grid.querySelectorAll('[data-wdel]').forEach(b=>b.onclick=()=>{ const w=wOf(b); dash.widgets.splice(dash.widgets.indexOf(w),1); save(); rerender(); });
+  const wOf=el=>dash.widgets.find(x=>x.id===el.closest('.dash-w').dataset.wid)||(sd&&sd.w.id===el.closest('.dash-w').dataset.wid?(sd.w0||sd.w):null);
+  grid.querySelectorAll('[data-wcfg]').forEach(b=>b.onclick=()=>{ const w=wOf(b); if(w&&w!==(sd&&sd.w)) ouvrir(w); });
+  grid.querySelectorAll('[data-wdup]').forEach(b=>b.onclick=()=>{ const w=wOf(b); if(!w||dash.widgets.indexOf(w)<0) return; const c={...JSON.parse(JSON.stringify(w)),id:capDashUid()}; dash.widgets.splice(dash.widgets.indexOf(w)+1,0,c); save(); rerender(); });
+  grid.querySelectorAll('[data-ins]').forEach(b=>b.onclick=()=>{ const i=dash.widgets.indexOf(wOf(b)); ouvrir(null, i); });
+  grid.querySelector('[data-add-end]')?.addEventListener('click',()=>ouvrir(null));
+  grid.querySelectorAll('[data-wdel]').forEach(b=>b.onclick=()=>{ const w=wOf(b); if(sd&&(sd.w0===w||sd.w===w)) st.side=null; const i=dash.widgets.indexOf(w); if(i>=0) dash.widgets.splice(i,1); save(); rerender(); });
   // Glisser-déposer : insertion avant / après l'élément survolé
   let drag=null;
   grid.querySelectorAll('.dash-wh[draggable]').forEach(h=>{
@@ -467,7 +483,7 @@ function capDashPrint(dash, byId, orient){
   const pageW=Math.floor(((orient==='portrait'?210:297)-20)*96/25.4);   // largeur utile en px CSS (marges 10 mm)
   const colW=(pageW-gap*(cols-1))/cols, esc=capEsc;
   const project=(cap_xmlDoc&&cap_xmlDoc.documentElement.getAttribute('name'))||_L('Modèle Capella');
-  const titleOf=w=>w.t||(w.v==='text'?'':(byId[w.m]||{}).l||w.m);
+  const titleOf=w=>capDashTitre(w,byId[w.m]);
   const cells=dash.widgets.map(w=>{ const ww=Math.min(cols,w.w||1), hh=w.h||1, W=colW*ww+gap*(ww-1)-16, H=rowH*hh+gap*(hh-1)-(w.v==='text'&&!w.t?10:30);
     return `<div class="w" style="grid-column:span ${ww};grid-row:span ${hh}">${w.v==='text'&&!w.t?'':`<div class="h">${esc(titleOf(w))}</div>`}<div class="b">${capDashDraw(w,byId[w.m],W,H)}</div></div>`; }).join('');
   const css=`@page{size:A4 ${orient};margin:10mm}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -492,70 +508,142 @@ function capDashPrint(dash, byId, orient){
   fr.srcdoc=html;
 }
 
-/** Fenêtre d'ajout ou de configuration d'un élément : catalogue des indicateurs (recherche, groupes),
- * représentation, titre, taille, nombre de catégories, tri, aperçu en direct.
- * @param {object} dash - Tableau de bord
- * @param {object|null} w0 - Élément à configurer (null = ajout)
- * @param {Function} done - Rappel après validation
- * @param {number} [at] - Position d'insertion du nouvel élément (fin du tableau si absente)
+/** Titre affiché d'un élément du tableau de bord.
+ * @param {object} w - Élément
+ * @param {object} [m] - Indicateur du catalogue
+ * @returns {string} Titre
  */
-function capDashEditor(dash,w0,done,at){
-  const cat=capDashCatalog(), esc=capEsc, cols=dash.cols||4;
-  const w=w0?JSON.parse(JSON.stringify(w0)):{id:capDashUid(),m:'',v:'',w:2,h:2,top:10};
-  let q='';
-  const ov=document.createElement('div'); ov.className='dash-modal';
-  ov.innerHTML=_L(`<div class="dash-dlg"><div class="dash-cat"><div style="padding:10px 10px 4px"><b style="font-size:13px">${w0?_L('⚙ Configurer l\'élément'):_L('＋ Ajouter un élément')}</b>
-      <input id="dash-q" class="phl-filter-input" placeholder="🔍 Rechercher un indicateur…" style="width:100%;margin-top:8px">
-      <div style="display:flex;gap:4px;margin-top:6px"><button class="cap-lf-btn" id="dash-cat-open" title="Déplier toutes les catégories">⊞ Tout déplier</button><button class="cap-lf-btn" id="dash-cat-close" title="Replier toutes les catégories">⊟ Tout replier</button></div></div><div class="dash-cat-l"></div></div>
-    <div class="dash-cfg"><div class="dash-form"></div><div class="dash-prev"><div class="dash-wh"><span class="dash-wt"></span><span class="ana-dim" style="font-weight:400">aperçu</span></div><div class="dash-wb"></div></div>
-      <div style="display:flex;gap:6px;justify-content:flex-end"><button class="cap-lf-btn" id="dash-cancel">Annuler</button><button class="cap-lf-btn" id="dash-ok" style="border-color:var(--c-accent);color:var(--c-accent)">${w0?_L('✔ Enregistrer'):_L('＋ Ajouter')}</button></div></div></div>`);
-  document.body.appendChild(ov);
-  const L=ov.querySelector('.dash-cat-l'), form=ov.querySelector('.dash-form'), prev=ov.querySelector('.dash-prev');
-  const close=()=>{ ov.remove(); document.removeEventListener('keydown',key); };
-  const key=e=>{ if(e.key==='Escape') close(); };
-  document.addEventListener('keydown',key);
-  // Catégories dépliées : « Mise en page » et celle de l'élément configuré (toutes pendant une recherche)
-  const groups=[...new Set(cat.map(m=>m.g))].sort((a,b)=>(b===_L('Mise en page'))-(a===_L('Mise en page')));
-  const open=new Set([_L('Mise en page'), (cat.find(m=>m.id===w.m)||{}).g]);
-  /** Liste du catalogue, filtrée par la recherche, groupée (« Mise en page » en premier) et repliable. */
-  const list=()=>{ const ql=q.toLowerCase();
-    L.innerHTML=groups.map(g=>{ const ms=cat.filter(m=>m.g===g&&(!ql||(m.l+' '+m.g+' '+m.d).toLowerCase().includes(ql))); if(!ms.length) return '';
-      const op=!!ql||open.has(g);
-      return _L(`<div class="dash-cat-g" data-g="${esc(g)}" title="${op?_L('Replier'):_L('Déplier')} la catégorie"><span class="dash-cat-tog">${op?'▾':'▸'}</span>${esc(g)}<em>${ms.length}</em></div>`)+(!op?'':ms.map(m=>`<div class="dash-cat-i${m.id===w.m?' sel':''}" data-m="${esc(m.id)}" title="${esc(m.d||m.l)}"><span>${esc(m.l)}</span><em>${CAP_DASH_KIND[m.kind]}</em></div>`).join('')); }).join('')||_L('<div class="ana-dim" style="padding:10px">Aucun indicateur.</div>');
-    L.querySelectorAll('[data-g]').forEach(el=>el.onclick=()=>{ const g=el.dataset.g; if(open.has(g)) open.delete(g); else open.add(g); list(); });
-    L.querySelectorAll('[data-m]').forEach(el=>el.onclick=()=>{ const m=cat.find(x=>x.id===el.dataset.m), keep=w.m&&cat.find(x=>x.id===w.m)?.kind===m.kind;
-      w.m=m.id; if(!keep){ const v=CAP_DASH_VIZ[m.kind][0]; w.v=v[0]; w.w=Math.min(cols,v[2]); w.h=v[3]; } list(); cfg(); }); };
-  /** Formulaire de configuration et aperçu. */
+function capDashTitre(w,m){
+  return w.t||(w.v==='text'?'':w.m==='diag'?(w.nom||(m||{}).l||''):w.m==='xlay'&&w.opts?capXlTitre(w.opts):(m||{}).l||w.m||'');
+}
+/** Images base64 déjà calculées (diagrammes et vues des tableaux de bord). */
+const _capDashB64=new Map();
+/** Dessine un élément « image » : diagramme Capella (image enregistrée avec l'élément) ou 🔗 liens entre couches (redessinés sur le modèle chargé).
+ * @param {object} w - Élément {m:'diag', uid, nom, svg} ou {m:'xlay', opts}
+ * @param {object} m - Indicateur du catalogue
+ * @returns {string} HTML
+ */
+function capDashImgDraw(w,m){
+  let svg='';
+  if(m.kind==='diag'){
+    if(!w.svg) return _L('<div class="dash-empty">Choisissez un diagramme dans le panneau de gauche (le .aird du projet doit être ouvert).</div>');
+    svg=w.svg;
+  } else {
+    const o=w.opts; if(!o||(o.mode!=='cat'&&!o.seed)) return _L('<div class="dash-empty">Choisissez l\'élément de départ dans le panneau de gauche.</div>');
+    if(!capLoaded) return _L('<div class="dash-empty">Aucun modèle chargé.</div>');
+    const k='xl:'+JSON.stringify(o); if(!(k in _capAnaCache)) _capAnaCache[k]=capXlSvg(o).svg; svg=_capAnaCache[k];
+    if(!svg) return _L('<div class="dash-empty">Aucun lien de réalisation.</div>');
+  }
+  const k=(w.id||'')+':'+svg.length+':'+svg.slice(-40);
+  if(!_capDashB64.has(k)) _capDashB64.set(k, capDosB64(svg));
+  return `<img class="dash-img" alt="${capEsc(capDashTitre(w,m))}" src="data:image/svg+xml;base64,${_capDashB64.get(k)}">`;
+}
+
+/**
+ * Panneau de gauche du tableau de bord (mode ✏ Modifier) : ajout ou configuration d'un élément, affiché en direct
+ * dans la grille (cadre en pointillé). Réglages en haut (titre, représentation, taille, catégories, tri, texte ;
+ * diagramme à choisir ; départ des liens entre couches), catalogue déplié en dessous, ✔ / Annuler en bas.
+ * @param {HTMLElement} aside - Panneau
+ * @param {object} dash - Tableau de bord
+ * @param {object} st - État de la vue (st.side : {w brouillon, w0 élément configuré ou null, at, q, open})
+ * @param {HTMLElement} grid - Grille (pour redessiner l'élément en cours)
+ * @param {function} done - Enregistre et réaffiche le tableau de bord
+ */
+function capDashSide(aside, dash, st, grid, done){
+  const sd=st.side, w=sd.w, cat=capDashCatalog(), esc=capEsc, cols=dash.cols||4;
+  const rangG=g=>g===_L('Mise en page')?0:g===_L('Diagrammes et vues')?1:2;
+  const groups=[...new Set(cat.map(m=>m.g))].sort((a,b)=>rangG(a)-rangG(b));
+  if(!sd.open) sd.open=new Set(groups);   // catalogue déplié par défaut
+  const mOf=()=>cat.find(x=>x.id===w.m);
+  /** Redessine l'élément en cours dans la grille (taille, titre, contenu). */
+  const tile=()=>{ const el=grid.querySelector(`.dash-w[data-wid="${CSS.escape(w.id)}"]`); if(!el) return; const m=mOf();
+    el.style.gridColumn=`span ${Math.min(cols,w.w||1)}`; el.style.gridRow=`span ${w.h||1}`;
+    const t=el.querySelector('.dash-wt'); if(t) t.textContent=capDashTitre(w,m);
+    requestAnimationFrame(()=>{ const b=el.querySelector('.dash-wb'); b.innerHTML=m?capDashDraw(w,m,b.clientWidth-20,b.clientHeight-12):''; });
+    el.scrollIntoView({block:'nearest'}); };
+  aside.innerHTML=`<div class="dash-side-h"><b>${sd.w0?_L('⚙ Configurer l\'élément'):_L('＋ Nouvel élément')}</b><span style="flex:1"></span><button class="cap-lf-btn" data-sx title="${_L('Fermer sans enregistrer')}">✕</button></div>`+
+    `<div class="dash-form dash-side-form"></div>`+
+    `<div class="dash-side-cat"><input id="dash-q" class="phl-filter-input" placeholder="${_L('🔍 Rechercher un indicateur…')}" value="${esc(sd.q)}">`+
+      `<div class="dash-side-tog"><button class="cap-lf-btn" data-cat="1" title="${_L('Déplier toutes les catégories')}">${_L('⊞ Tout déplier')}</button><button class="cap-lf-btn" data-cat="0" title="${_L('Replier toutes les catégories')}">${_L('⊟ Tout replier')}</button></div>`+
+      `<div class="dash-cat-l"></div></div>`+
+    `<div class="dash-side-f"><button class="cap-lf-btn" data-sx>${_L('Annuler')}</button><button class="cap-lf-btn dash-side-ok" data-ok>${sd.w0?_L('✔ Enregistrer'):_L('✔ Ajouter dans la grille')}</button></div>`;
+  const L=aside.querySelector('.dash-cat-l'), form=aside.querySelector('.dash-side-form');
+  /** Catalogue filtré par la recherche, groupé et repliable. */
+  const list=()=>{ const ql=sd.q.toLowerCase();
+    L.innerHTML=groups.map(g=>{ const ms=cat.filter(m=>m.g===g&&(!ql||(m.l+' '+m.g+' '+(m.d||'')).toLowerCase().includes(ql))); if(!ms.length) return '';
+      const op=!!ql||sd.open.has(g);
+      return `<div class="dash-cat-g" data-g="${esc(g)}"><span class="dash-cat-tog">${op?'▾':'▸'}</span>${esc(g)}<em>${ms.length}</em></div>`+(!op?'':ms.map(m=>`<div class="dash-cat-i${m.id===w.m?' sel':''}" data-m="${esc(m.id)}" title="${esc(m.d||m.l)}"><span>${esc(m.l)}</span><em>${CAP_DASH_KIND[m.kind]}</em></div>`).join('')); }).join('')
+      ||_L('<div class="ana-dim" style="padding:10px">Aucun indicateur.</div>');
+    L.querySelectorAll('[data-g]').forEach(el=>el.onclick=()=>{ const g=el.dataset.g; if(sd.open.has(g)) sd.open.delete(g); else sd.open.add(g); list(); });
+    L.querySelectorAll('[data-m]').forEach(el=>el.onclick=()=>{ const m=cat.find(x=>x.id===el.dataset.m), keep=w.m&&(mOf()||{}).kind===m.kind;
+      w.m=m.id; if(!keep){ const v=CAP_DASH_VIZ[m.kind][0]; w.v=v[0]; w.w=Math.min(cols,v[2]); w.h=v[3]; }
+      if(m.kind==='xlay'&&!w.opts) w.opts=Object.assign(capXlOpts(),{seed:_capXl.seed||''});
+      list(); cfg(); tile(); }); };
+  /** Réglages de l'élément choisi. */
   const cfg=()=>{
-    const m=cat.find(x=>x.id===w.m);
-    if(!m){ form.innerHTML=_L('<span class="ana-dim" style="grid-column:1/-1">Choisissez un indicateur dans la liste de gauche.</span>'); prev.style.visibility='hidden'; ov.querySelector('#dash-ok').disabled=true; return; }
-    prev.style.visibility=''; ov.querySelector('#dash-ok').disabled=false;
+    const m=mOf(); aside.querySelector('[data-ok]').disabled=!m;
+    if(!m){ form.innerHTML=_L('<span class="ana-dim" style="grid-column:1/-1">Choisissez ci-dessous un indicateur, un diagramme ou une vue : il apparaît aussitôt dans la grille, à sa place.</span>'); return; }
     const vz=CAP_DASH_VIZ[m.kind], ser=m.kind==='series'&&w.v!=='kpi';
-    form.innerHTML=_L(`<label>Indicateur</label><b style="grid-column:2/-1">${esc(m.g)} › ${esc(m.l)}</b>
-      <label>Titre</label><input id="dash-t" class="phl-filter-input" style="grid-column:2/-1" placeholder="${esc(m.l)}" value="${esc(w.t||'')}">
-      ${m.kind==='text'?_L(`<label>Texte</label><textarea id="dash-txt" class="phl-filter-input" style="grid-column:2/-1;height:70px">${esc(w.txt||'')}</textarea>`):''}
-      <label>Représentation</label><select id="dash-v" class="phl-filter-input">${vz.map(v=>`<option value="${v[0]}"${v[0]===w.v?' selected':''}>${v[1]}</option>`).join('')}</select>
-      <label>Taille</label><span><select id="dash-w" class="phl-filter-input">${Array.from({length:cols},(_,i)=>_L(`<option value="${i+1}"${i+1===w.w?' selected':''}>${i+1} col.</option>`)).join('')}</select>
-        <select id="dash-h" class="phl-filter-input">${[1,2,3,4,5,6].map(n=>_L(`<option value="${n}"${n===w.h?' selected':''}>${n} ligne${n>1?'s':''}</option>`)).join('')}</select></span>
-      ${ser?_L(`<label>Catégories</label><select id="dash-top" class="phl-filter-input">${[[5,_L('5 premières')],[8,_L('8 premières')],[10,_L('10 premières')],[15,_L('15 premières')],[20,_L('20 premières')],[0,_L('Toutes')]].map(([n,l])=>`<option value="${n}"${(+w.top||0)===n?' selected':''}>${l}</option>`).join('')}</select>
-        <label>Tri</label><select id="dash-sort" class="phl-filter-input"><option value="">Par défaut</option><option value="value"${w.sort==='value'?' selected':''}>Valeur décroissante</option><option value="natural"${w.sort==='natural'?' selected':''}>Ordre naturel</option></select>`):''}`);
-    const upd=()=>{ w.t=ov.querySelector('#dash-t').value.trim(); w.v=ov.querySelector('#dash-v').value; w.w=+ov.querySelector('#dash-w').value; w.h=+ov.querySelector('#dash-h').value;
-      const tp=ov.querySelector('#dash-top'); if(tp) w.top=+tp.value; const so=ov.querySelector('#dash-sort'); if(so) w.sort=so.value; const tx=ov.querySelector('#dash-txt'); if(tx) w.txt=tx.value; draw(); };
-    form.querySelectorAll('input,select,textarea').forEach(el=>el.addEventListener(el.tagName==='SELECT'?'change':'input',()=>{ const ser0=ser; upd(); if(el.id==='dash-v'&&ser0!==(m.kind==='series'&&w.v!=='kpi')) cfg(); }));
-    draw();
+    const taille=`<label>${_L('Taille')}</label><span><select id="dash-w" class="phl-filter-input">${Array.from({length:cols},(_,i)=>`<option value="${i+1}"${i+1===w.w?' selected':''}>${_L(`${i+1} col.`)}</option>`).join('')}</select>
+        <select id="dash-h" class="phl-filter-input">${[1,2,3,4,5,6,7,8].map(n=>`<option value="${n}"${n===w.h?' selected':''}>${_L(`${n} ligne${n>1?'s':''}`)}</option>`).join('')}</select></span>`;
+    let h=`<label>${_L('Élément')}</label><b>${esc(m.g)} › ${esc(m.l)}</b>`+
+      `<label>${_L('Titre')}</label><input id="dash-t" class="phl-filter-input" placeholder="${esc(capDashTitre(Object.assign({},w,{t:''}),m))}" value="${esc(w.t||'')}">`;
+    if(m.kind==='diag'){
+      const reps=capHomeReps();
+      h+=`<label>${_L('Diagramme')}</label><span>${w.nom?`<b>${esc(w.nom)}</b> `:''}${w.uid?`<button class="cap-lf-btn" data-dref title="${_L('Reprendre l\'image du diagramme dans le .aird chargé')}">${_L('↻ Mettre à jour')}</button>`:''}</span>`+
+        (reps.length?`<label></label><span><input id="dash-dq" class="phl-filter-input" placeholder="${_L('🔍 Choisir un diagramme…')}" value="${esc(sd.dq||'')}"><div class="dash-dl"></div></span>`
+          :`<label></label><span class="ana-dim">${_L('Aucun .aird chargé :')} <button class="cap-lf-btn" data-aird>${_L('📂 Ouvrir le .aird…')}</button></span>`)+taille;
+    } else if(m.kind==='xlay'){
+      const o=w.opts, se=o.seed&&capLoaded&&capGetElementById_(o.seed);
+      h+=`<label>${_L('Mode')}</label><select id="dash-xm" class="phl-filter-input"><option value="el"${o.mode==='el'?' selected':''}>${_L('À partir d\'un élément')}</option><option value="cat"${o.mode==='cat'?' selected':''}>${_L('Toute une catégorie')}</option></select>`+
+        (o.mode==='cat'?`<label>${_L('Catégorie')}</label><select id="dash-xc" class="phl-filter-input">${CAP_TRACE_CATS.map(c=>`<option value="${c.k}"${o.cat===c.k?' selected':''}>${esc(c.label)}</option>`).join('')}</select>`
+          :`<label>${_L('Départ')}</label><span>${se?`<b>${esc(se.attrs.name||'')}</b>`:`<span class="ana-dim">${_L('à choisir')}</span>`}<input id="dash-xq" class="phl-filter-input" placeholder="${_L('🔍 Élément de départ…')}" value="${esc(sd.xq||'')}"><div class="dash-dl"></div></span>`+
+           `<label>${_L('Sens')}</label><select id="dash-xd" class="phl-filter-input"><option value="dir"${o.dir==='dir'?' selected':''}>${_L('Réalisations vers le haut et vers le bas')}</option><option value="all"${o.dir==='all'?' selected':''}>${_L('Tous les liens de proche en proche')}</option></select>`)+
+        `<label></label><label class="xl-opt"><input type="checkbox" id="dash-xf"${o.fnCh?' checked':''}> ${_L('Fonctions des chaînes')}</label>`+taille;
+    } else {
+      h+=(m.kind==='text'?`<label>${_L('Texte')}</label><textarea id="dash-txt" class="phl-filter-input" style="height:70px">${esc(w.txt||'')}</textarea>`:'')+
+        `<label>${_L('Représentation')}</label><select id="dash-v" class="phl-filter-input">${vz.map(v=>`<option value="${v[0]}"${v[0]===w.v?' selected':''}>${v[1]}</option>`).join('')}</select>`+taille+
+        (ser?`<label>${_L('Catégories')}</label><select id="dash-top" class="phl-filter-input">${[[5,_L('5 premières')],[8,_L('8 premières')],[10,_L('10 premières')],[15,_L('15 premières')],[20,_L('20 premières')],[0,_L('Toutes')]].map(([n,l])=>`<option value="${n}"${(+w.top||0)===n?' selected':''}>${l}</option>`).join('')}</select>`+
+          `<label>${_L('Tri')}</label><select id="dash-sort" class="phl-filter-input"><option value="">${_L('Par défaut')}</option><option value="value"${w.sort==='value'?' selected':''}>${_L('Valeur décroissante')}</option><option value="natural"${w.sort==='natural'?' selected':''}>${_L('Ordre naturel')}</option></select>`:'');
+    }
+    form.innerHTML=h;
+    const q=id=>form.querySelector('#'+id);
+    const upd=()=>{ w.t=q('dash-t').value.trim(); if(q('dash-v')) w.v=q('dash-v').value; if(q('dash-w')) w.w=+q('dash-w').value; if(q('dash-h')) w.h=+q('dash-h').value;
+      if(q('dash-top')) w.top=+q('dash-top').value; if(q('dash-sort')) w.sort=q('dash-sort').value; if(q('dash-txt')) w.txt=q('dash-txt').value; tile(); };
+    form.querySelectorAll('#dash-t,#dash-v,#dash-w,#dash-h,#dash-top,#dash-sort,#dash-txt').forEach(el=>el.addEventListener(el.tagName==='SELECT'?'change':'input',()=>{ const s0=ser; upd(); if(el.id==='dash-v'&&s0!==(m.kind==='series'&&w.v!=='kpi')) cfg(); }));
+    // Diagramme : choix dans la liste du .aird, image reprise par la visionneuse (vue 🔲 ouverte un instant)
+    const prendre=async uid=>{ const r=capHomeReps().find(x=>x.uid===uid); if(!r) return;
+      form.querySelector('.dash-dl')&&(form.querySelector('.dash-dl').innerHTML=`<div class="ana-dim">${_L('⏳ Image du diagramme…')}</div>`);
+      const svg=(await capDosDiagSvgs([uid]))[uid];
+      if(svg){ const p=capDiagPlanche(r, svg, {cadre:false, cartouche:false, desc:false}); Object.assign(w,{uid, nom:r.nom, svg:p.svg}); if(w.h<3) w.h=3; }
+      done(); };
+    const dq=q('dash-dq'), dl=form.querySelector('.dash-dl');
+    if(dq){ const lst=()=>{ const t=(sd.dq||'').toLowerCase(), l=capHomeReps().filter(r=>!t||(r.nom+' '+(r.sigle||'')).toLowerCase().includes(t)).slice(0,60);
+        dl.innerHTML=l.map(r=>`<div class="ctx-i" data-duid="${esc(r.uid)}"><b style="color:${(CAP_LAYERS[r.couche]||{}).color||'#8b949e'};font-size:10px">${esc(r.couche||'')}</b> ${esc(r.nom)}</div>`).join('');
+        dl.querySelectorAll('[data-duid]').forEach(x=>x.onclick=()=>prendre(x.dataset.duid)); };
+      dq.oninput=()=>{ sd.dq=dq.value; lst(); }; lst(); }
+    form.querySelector('[data-dref]')?.addEventListener('click',()=>prendre(w.uid));
+    form.querySelector('[data-aird]')?.addEventListener('click',()=>capDiagPickAird());
+    // Liens entre couches
+    const xo=w.opts, re=()=>{ cfg(); tile(); };
+    q('dash-xm')?.addEventListener('change',e=>{ xo.mode=e.target.value; re(); });
+    q('dash-xc')?.addEventListener('change',e=>{ xo.cat=e.target.value; re(); });
+    q('dash-xd')?.addEventListener('change',e=>{ xo.dir=e.target.value; re(); });
+    q('dash-xf')?.addEventListener('change',e=>{ xo.fnCh=e.target.checked; re(); });
+    const xq=q('dash-xq');
+    if(xq){ const lst=()=>{ const t=(sd.xq||'').trim().toLowerCase(); if(t.length<2){ dl.innerHTML=''; return; }
+        const l=capXlChercher(t, 40).slice(0,40);
+        dl.innerHTML=l.map(e=>`<div class="ctx-i" data-xs="${esc(e.id)}"><b style="color:${(CAP_LAYERS[e.layer]||{}).color};font-size:10px">${esc(e.layer)}</b> ${esc(e.name)} <span class="ana-dim">${esc(capAnaHuman(e.type))}</span></div>`).join('');
+        dl.querySelectorAll('[data-xs]').forEach(x=>x.onclick=()=>{ xo.seed=x.dataset.xs; sd.xq=''; re(); }); };
+      xq.oninput=()=>{ sd.xq=xq.value; lst(); }; lst(); }
   };
-  /** Aperçu de l'élément à sa taille réelle approximative (bornée par la fenêtre). */
-  const draw=()=>{ const m=cat.find(x=>x.id===w.m); if(!m) return;
-    ov.querySelector('.dash-prev .dash-wt').textContent=w.t||(m.kind==='text'?'':m.l);
-    const avail=prev.parentElement.clientWidth-34, colW=Math.min(300,avail/Math.max(1,w.w));
-    const b=prev.querySelector('.dash-wb'); b.style.width=Math.min(avail,colW*w.w)+'px'; b.style.height=(w.h*130-34)+'px';
-    b.innerHTML=capDashDraw(w,m,Math.min(avail,colW*w.w)-20,w.h*130-46); };
-  ov.querySelector('#dash-q').oninput=e=>{ q=e.target.value; list(); };
-  ov.querySelector('#dash-cat-open').onclick=()=>{ groups.forEach(g=>open.add(g)); list(); };
-  ov.querySelector('#dash-cat-close').onclick=()=>{ open.clear(); list(); };
-  ov.querySelector('#dash-cancel').onclick=close;
-  ov.addEventListener('mousedown',e=>{ if(e.target===ov) close(); });
-  ov.querySelector('#dash-ok').onclick=()=>{ if(!w.m) return; if(w0) Object.assign(w0,w); else if(at>=0) dash.widgets.splice(at,0,w); else dash.widgets.push(w); close(); done(); };
-  list(); cfg(); setTimeout(()=>ov.querySelector('#dash-q').focus(),0);
-  if(w.m) L.querySelector('.dash-cat-i.sel')?.scrollIntoView({block:'center'});
+  aside.querySelector('#dash-q').oninput=e=>{ sd.q=e.target.value; list(); };
+  aside.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{ if(b.dataset.cat==='1') groups.forEach(g=>sd.open.add(g)); else sd.open.clear(); list(); });
+  aside.querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{ st.side=null; done(); });
+  aside.querySelector('[data-ok]').onclick=()=>{ if(!w.m) return;
+    if(sd.w0) Object.assign(sd.w0,w); else if(sd.at>=0) dash.widgets.splice(sd.at,0,w); else dash.widgets.push(w);
+    st.side=null; done(); };
+  list(); cfg();
+  if(w.m) L.querySelector('.dash-cat-i.sel')?.scrollIntoView({block:'nearest'});
+  grid.querySelector('.dash-cur')?.scrollIntoView({block:'nearest'});
 }

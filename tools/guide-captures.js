@@ -375,10 +375,9 @@ PARTS.tableaubord = async () => {
   await p.click('#dash-edit'); await wait(500);
   await shot('80-dash-edition');
   await p.click('#dash-add'); await wait(800);
-  await p.locator('.dash-cat-g', { hasText: /Fonctions SA/i }).first().click().catch(() => {}); await wait(300);
   await p.locator('.dash-cat-i').nth(1).click().catch(() => {}); await wait(600);
-  await shot('80-dash-catalogue', { sel: '.dash-dlg', pad: 2 });
-  await esc(); await p.mouse.click(5, 890);
+  await shot('80-dash-catalogue');   // panneau latéral + élément en cours dans la grille
+  await p.click('.dash-side [data-sx]').catch(() => {});
   await p.click('#dash-edit').catch(() => {}); await wait(300);
 };
 
