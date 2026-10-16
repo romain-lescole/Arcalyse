@@ -74,9 +74,13 @@ function capDosParcours(l, f, pre, niv){
  * @returns {{b:?object, num:string, champ:string, libelle:string}}
  */
 function capDosBlocDe(d, bid){
-  const id=String(bid||'').replace(/\.d$/,''), champ=/\.d$/.test(bid||'')?'desc':'';
+  const [id0, elemId]=String(bid||'').split('~'), id=id0.replace(/\.d$/,''), champ=elemId?'el':/\.d$/.test(bid||'')?'desc':'';
   let r={b:null, num:'', champ, libelle:_L('Commentaire général')};
   if(!id) return r;
+  if(elemId){   // élément représenté d'un diagramme : « bloc~élément »
+    const e=capLoaded&&capGetElementById_(elemId), x=capDosBlocDe(d, id);
+    return Object.assign(x, {champ:'el', elemId, libelle:'◆ '+(e?e.attrs.name||elemId:elemId)+_L(` (dans ${x.libelle})`)});
+  }
   capDosParcours(d.blocs,(b,num)=>{ if(b.id!==id) return;
     const lib=b.k==='chap'?(champ?_L(`Description de « ${b.titre} »`):b.titre):b.k==='txt'?_L('Texte'):b.ref?capHomeRefNom(b.ref):'';
     r={b, num, champ, libelle:(b.k==='diag'?'🔲 ':b.k==='el'?'◆ ':'')+lib}; });
@@ -119,9 +123,9 @@ function capDosNomDiag(n){ return String(n||'').replace(/^\[[^\]]*\]\s*/,''); }
 function capDosChapDe(ref, txt){
   const c={id:capHomeUid(), k:'chap', titre:'', ref:null, desc:false, blocs:[]};
   if(!ref){ c.titre=txt||''; return c; }
-  if(ref.k==='diag'){ c.titre=capDosNomDiag(ref.nom); c.blocs.push({id:capHomeUid(), k:'diag', ref, desc:true, elems:false}); return c; }
+  if(ref.k==='diag'){ c.titre=capDosNomDiag(ref.nom); c.blocs.push({id:capHomeUid(), k:'diag', ref, desc:true, elems:true}); return c; }
   c.titre=capHomeRefNom(ref); c.ref=ref; c.desc=true;
-  capDosDiagsDe(ref.id).forEach(r=>c.blocs.push({id:capHomeUid(), k:'diag', ref:capHomeRefDiag(r), desc:true, elems:false}));
+  capDosDiagsDe(ref.id).forEach(r=>c.blocs.push({id:capHomeUid(), k:'diag', ref:capHomeRefDiag(r), desc:true, elems:true}));
   return c;
 }
 /**
@@ -132,7 +136,7 @@ function capDosChapDe(ref, txt){
  */
 function capDosBlocDeRef(ref, txt){
   if(!ref) return {id:capHomeUid(), k:'txt', txt:txt||''};
-  return ref.k==='diag'?{id:capHomeUid(), k:'diag', ref, desc:true, elems:false}:{id:capHomeUid(), k:'el', ref, desc:true};
+  return ref.k==='diag'?{id:capHomeUid(), k:'diag', ref, desc:true, elems:true}:{id:capHomeUid(), k:'el', ref, desc:true};
 }
 /**
  * Crée un dossier à partir d'un plan de revue : un chapitre par élément ou diagramme du périmètre.
@@ -242,13 +246,20 @@ function capDosConvertir(f){
  * @returns {string} HTML
  */
 function capDosBadge(d, bid){
-  const n=d.retours.filter(r=>r.bloc===bid).length;
+  const n=d.retours.filter(r=>capDosDuBloc(r, bid)).length;
   return n?`<span class="dos-badge${_capDosUi.ret.has(bid)?' on':''}" data-da="ret" data-bid="${capEsc(bid)}" title="${_L('Retours des relecteurs')}">💬 ${n}</span>`:'';
 }
 /** Retours d'un bloc, s'ils sont dépliés. @param {object} d @param {string} bid @returns {string} HTML */
 function capDosRetoursHtml(d, bid){
-  return _capDosUi.ret.has(bid)?`<div class="dos-rets">${d.retours.filter(r=>r.bloc===bid).map(r=>capDosRetourHtml(r)).join('')}</div>`:'';
+  return _capDosUi.ret.has(bid)?`<div class="dos-rets">${d.retours.filter(r=>capDosDuBloc(r, bid)).map(r=>capDosRetourHtml(r, String(r.bloc).includes('~')?capEsc(capDosBlocDe(d, r.bloc).libelle):'')).join('')}</div>`:'';
 }
+/**
+ * Vrai si un retour porte sur un bloc, ou sur un élément représenté de ce bloc (diagramme).
+ * @param {object} r - Retour
+ * @param {string} bid - Bloc (ou « id.d »)
+ * @returns {boolean}
+ */
+function capDosDuBloc(r, bid){ return r.bloc===bid||String(r.bloc||'').startsWith(bid+'~'); }
 /**
  * Aperçu de la description d'un élément (3 lignes).
  * @param {object} ref - Référence
@@ -327,7 +338,8 @@ function capDosRetourHtml(r, lieu){
 function capDosRetoursTousHtml(d){
   const ordre=new Map(); let i=0; ordre.set('',i++);
   capDosParcours(d.blocs,b=>{ ordre.set(b.id,i++); ordre.set(b.id+'.d',i++); });
-  const l=d.retours.slice().sort((a,b)=>(ordre.has(a.bloc)?ordre.get(a.bloc):1e9)-(ordre.has(b.bloc)?ordre.get(b.bloc):1e9)||String(a.date).localeCompare(b.date));
+  const rang=r=>{ const k=String(r.bloc||'').split('~')[0]; return ordre.has(k)?ordre.get(k):1e9; };
+  const l=d.retours.slice().sort((a,b)=>rang(a)-rang(b)||String(a.date).localeCompare(b.date));
   return `<div class="dos-tous">${l.map(r=>{ const x=capDosBlocDe(d, r.bloc); return capDosRetourHtml(r, capEsc((x.num?x.num+' ':'')+x.libelle)); }).join('')}</div>`;
 }
 /** @returns {object[]} types de retour {k, l} proposés aux relecteurs */
@@ -458,7 +470,7 @@ async function capDosContenu(d, st){
       const o={id:b.id, k:'diag', fig:++fig, nom:capDosNomDiag(rep?rep.nom:b.ref.nom), type:capHomeRefType(b.ref), couche:rep?rep.couche||'':b.ref.couche||'',
         desc:b.desc&&m?m.desc:'', cible:m&&m.cible?m.cible.nom+' ('+m.cible.type+')':'', svg:'', w:0, h:0, elems:[]};
       if(svg){ const p=capDiagPlanche(rep, svg, {cadre:false, cartouche:false, desc:false}); Object.assign(o,{svg:p.svg, w:p.w, h:p.h});
-        if(b.elems) o.elems=capDiagElements(svg).map(x=>[x.nom, x.type, x.couche]); }
+        if(b.elems){ o.elems=capDosElemsReels(capDiagElements(svg)); b.elemsExp=o.elems.map(x=>x[3]); } }
       return o;
     }); };
   return conv(d.blocs, '', 0);
@@ -474,7 +486,7 @@ async function capDosExport(d, fmt, btn){
   const st=m=>capWatchFlash(m);
   if(btn) btn.disabled=true;
   try{
-    const contenu=await capDosContenu(d, st);
+    const contenu=await capDosContenu(d, st); capHomeSave();   // elemsExp : éléments représentés exportés (réimport Word)
     const envoi={type:'arcalyse-dossier-relecture', version:1, id:d.id, envoi:capHomeUid(), titre:d.titre||_L('Dossier de relecture'), consignes:d.consignes||'',
       echeance:d.echeance||'', auteur:d.auteur||'', date:new Date().toISOString(), model:capCurrentFileName||'', project:capRevProjectId(), projectName:capRevProjectName(),
       source:JSON.parse(JSON.stringify({titre:d.titre, consignes:d.consignes, echeance:d.echeance, auteur:d.auteur, blocs:d.blocs})), contenu, relecteur:'', retours:[], relus:{}};
@@ -483,6 +495,21 @@ async function capDosExport(d, fmt, btn){
     else { capDownloadBlob(new Blob([capDosPage(envoi)],{type:'text/html'}), base+'.html'); st(_L('✔ Page de relecture créée : envoyez-la aux relecteurs, puis 📥 Réimporter la page qu\'ils ont enregistrée')); }
   }catch(e){ console.error(e); capHomeWin(btn).alert(_L('Export impossible : ')+(e&&e.message||e)); }
   finally{ if(btn) btn.disabled=false; }
+}
+/**
+ * Éléments représentés d'un diagramme, tels qu'un relecteur les reconnaît : une implication sans nom
+ * (fonction ou composant impliqué dans une chaîne, une capacité…) est remplacée par l'élément impliqué ;
+ * les éléments techniques sans nom sont écartés, les doublons fusionnés.
+ * @param {{id:string, nom:string, type:string, couche:string}[]} l - capDiagElements
+ * @returns {Array<string[]>} lignes [nom, type, couche, id]
+ */
+function capDosElemsReels(l){
+  const vus=new Set(), out=[];
+  l.forEach(x=>{ let e=capGetElementById_(x.id);
+    if(e&&!e.attrs.name&&e.attrs.involved){ const r=capParseAttrRefs_(String(e.attrs.involved)).map(capGetElementById_).find(Boolean); if(r) e=r; }
+    if(!e||!e.attrs.name||vus.has(e.id)) return; vus.add(e.id);
+    out.push([e.attrs.name, (CAP_HUMAN_NAMES[e.typeName]||{}).h||e.typeName, e.layer||'', e.id]); });
+  return out;
 }
 /** Base64 d'un texte UTF-8 (SVG embarqué dans la page). @param {string} s @returns {string} */
 function capDosB64(s){
@@ -506,7 +533,7 @@ function capDosPage(data){
     figure:_L('Figure'), relu:_L('Relu'), coms:_L('commentaire(s)'), mine:_L('de vous'), relus:_L('chapitre(s) relu(s)'), ok:_L('Enregistrer'), cancel:_L('Annuler'),
     placeholder:_L('Votre commentaire…'), extrait:_L('Passage commenté'), del:_L('Supprimer'), edit:_L('Modifier'), confirmDel:_L('Supprimer ce commentaire ?'),
     projet:_L('Projet'), modele:_L('Modèle'), auteur:_L('Auteur'), date:_L('Envoyé le'), echeance:_L('Retour attendu le'), elems:_L('Éléments représentés'),
-    cible:_L('Élément représenté'), desc:_L('Description'), nodesc:_L('(pas de description)'), nodiag:_L('Diagramme non joint (.aird non chargé lors de l\'export)'),
+    cible:_L('Élément représenté'), elemsAide:_L('cliquez pour les afficher et les commenter un par un'), desc:_L('Description'), nodesc:_L('(pas de description)'), nodiag:_L('Diagramme non joint (.aird non chargé lors de l\'export)'),
     absent:_L('absent du modèle'), elem:_L('Élément'), type:'Type', couche:_L('Couche'), aide:_L('Sélectionnez au besoin un passage, puis cliquez sur 💬 à droite du bloc pour le commenter. Enregistrez la page (💾) et renvoyez-la à l\'auteur ; elle peut passer d\'un relecteur à l\'autre.'),
     fileSuffix:_L('-relu'), zoom:_L('Cliquer pour agrandir / réduire'), produit:_L('Produit par Arcalyse')};
   const types=capDosTypes().filter(x=>x.k!=='modif'), crits=capRevCrits().filter(c=>['','minor','major','blocking'].includes(c.k)).map(c=>c.k?c:Object.assign({},c,{l:_L('— Criticité —')}));
@@ -532,7 +559,7 @@ section.chap{margin-top:18px}h2,h3,h4,h5{margin:16px 0 6px;scroll-margin-top:60p
 .el{border:1px solid #d0d7de;border-radius:6px;padding:6px 10px;margin:8px 0}.el .h{font-weight:600}.el .h span{font-weight:400;color:#57606a;font-size:12px;margin-left:6px}.el .d{white-space:pre-wrap;margin-top:4px}
 figure{margin:12px 0;border:1px solid #d0d7de;border-radius:6px;padding:8px}figure .img{overflow:auto;text-align:center;cursor:zoom-in}figure img{max-width:100%;height:auto}figure .img.z{cursor:zoom-out}figure .img.z img{max-width:none}
 figcaption{text-align:center;font-size:13px;color:#24292f;margin-top:6px}figcaption b{color:#0969da}.fd{white-space:pre-wrap;font-size:13px;color:#24292f;margin-top:6px}.fc{font-size:12px;color:#57606a;text-align:center}
-table{border-collapse:collapse;width:100%;font-size:12.5px;margin-top:6px}th,td{border:1px solid #d0d7de;padding:3px 6px;text-align:left}th{background:#f6f8fa}details{margin-top:6px}summary{cursor:pointer;color:#0969da;font-size:12.5px}
+table{border-collapse:collapse;width:100%;font-size:12.5px;margin-top:6px}.ec{width:34px;text-align:center}.cbe{padding:0 5px;font-size:12px;opacity:.6}tr:hover .cbe{opacity:1}tr.cz td{border:0;padding:0}tr.cz .coms:empty{display:none}details.els summary{font-weight:600}th,td{border:1px solid #d0d7de;padding:3px 6px;text-align:left}th{background:#f6f8fa}details{margin-top:6px}summary{cursor:pointer;color:#0969da;font-size:12.5px}
 .coms{margin:4px 0 8px 14px}.com{border:1px solid #d4a72c;background:#fff8c5;border-radius:6px;padding:5px 9px;margin:5px 0;font-size:13px}.com.other{border-color:#d0d7de;background:#f6f8fa}
 .com .h{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:#57606a}.com .h b{color:#1f2328}.com .x{font-style:italic;color:#57606a;margin-top:2px}.com .t{white-space:pre-wrap;margin-top:2px}
 .com .a{margin-left:auto}.com .a button{padding:0 6px;font-size:12px}.crit{padding:0 6px;border-radius:8px;font-size:11px}
@@ -589,8 +616,10 @@ function node(n){
   var f='<figure class="blk">'+(n.svg64?'<div class="img" title="'+esc(T.zoom)+'"><img alt="'+esc(n.nom)+'" src="data:image/svg+xml;base64,'+n.svg64+'"></div>':'<div class="fc">'+esc(T.nodiag)+'</div>')+
     '<figcaption><b>'+esc(T.figure)+' '+n.fig+'</b> — '+esc(n.nom)+' <span style="color:#57606a">('+esc(n.type)+')</span></figcaption>'+
     (n.cible?'<div class="fc">'+esc(T.cible)+' : '+esc(n.cible)+'</div>':'')+(n.desc?'<div class="fd">'+esc(n.desc)+'</div>':'');
-  if(n.elems&&n.elems.length)f+='<details><summary>'+esc(T.elems)+' ('+n.elems.length+')</summary><table><tr><th>'+esc(T.elem)+'</th><th>'+esc(T.type)+'</th><th>'+esc(T.couche)+'</th></tr>'+
-    n.elems.map(function(e){return '<tr><td>'+esc(e[0])+'</td><td>'+esc(e[1])+'</td><td>'+esc(e[2])+'</td></tr>';}).join('')+'</table></details>';
+  if(n.elems&&n.elems.length){var ouvert=D.retours.some(function(r){return String(r.bloc).indexOf(n.id+'~')===0;});
+    f+='<details class="els"'+(ouvert?' open':'')+'><summary>'+esc(T.elems)+' ('+n.elems.length+') — '+esc(T.elemsAide)+'</summary><table><tr><th>'+esc(T.elem)+'</th><th>'+esc(T.type)+'</th><th>'+esc(T.couche)+'</th><th></th></tr>'+
+    n.elems.map(function(e){var b=n.id+'~'+(e[3]||'');return '<tr><td>'+esc(e[0])+'</td><td>'+esc(e[1])+'</td><td>'+esc(e[2])+'</td><td class="ec">'+(e[3]?'<button class="cbe" data-new="'+esc(b)+'" title="'+esc(T.comment)+'">💬</button>':'')+'</td></tr>'+
+      (e[3]?'<tr class="cz"><td colspan="4">'+zone(b)+'</td></tr>':'');}).join('')+'</table></details>';}
   return f+btn(n.id)+'</figure>'+zone(n.id);}
 function toc(l){return l.filter(function(n){return n.k==='chap';}).map(function(n){return '<li class="n'+Math.min(n.niv,3)+'"><a href="#s-'+n.id+'">'+esc(n.num)+' '+esc(n.titre)+'</a></li>'+toc(n.enfants);}).join('');}
 function render(){
@@ -696,7 +725,8 @@ async function capDosDocx(data, st){
       const B='<w:top w:val="single" w:sz="4" w:color="D0D7DE"/><w:left w:val="single" w:sz="4" w:color="D0D7DE"/><w:bottom w:val="single" w:sz="4" w:color="D0D7DE"/><w:right w:val="single" w:sz="4" w:color="D0D7DE"/><w:insideH w:val="single" w:sz="4" w:color="D0D7DE"/><w:insideV w:val="single" w:sz="4" w:color="D0D7DE"/>';
       s+=para(run(_L('Éléments représentés')+` (${n.elems.length})`, '<w:b/><w:sz w:val="18"/>'))+`<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/><w:tblBorders>${B}</w:tblBorders></w:tblPr>`+
         `<w:tblGrid><w:gridCol w:w="4600"/><w:gridCol w:w="3000"/><w:gridCol w:w="1400"/></w:tblGrid>`+
-        `<w:tr>${cell(_L('Élément'),1)}${cell('Type',1)}${cell(_L('Couche'),1)}</w:tr>`+n.elems.map(e=>`<w:tr>${cell(e[0])}${cell(e[1])}${cell(e[2])}</w:tr>`).join('')+`</w:tbl>`+para('');
+        `<w:tr>${cell(_L('Élément'),1)}${cell('Type',1)}${cell(_L('Couche'),1)}</w:tr>`+
+        n.elems.map((e,i)=>`<w:tr><w:tc><w:tcPr/>${para(bm(n.id+'_e'+i, run(e[0], '<w:sz w:val="18"/>')), '', '<w:spacing w:after="0"/>')}</w:tc>${cell(e[1])}${cell(e[2])}</w:tr>`).join('')+`</w:tbl>`+para('');
     }
     return bm(n.id, s);
   };
@@ -783,7 +813,7 @@ async function capDosLireDocx(buf){
   const f=await capDosUnzip(buf, n=>n==='word/document.xml'||n==='word/comments.xml');
   const doc=f['word/document.xml']; if(!doc) throw new Error(_L('ce fichier n\'est pas un document Word'));
   const att=(a,k)=>{ const m=new RegExp('\\bw:'+k+'="([^"]*)"').exec(a||''); return m?capDosXmlTexte(m[1]):''; };
-  const blocDe=nom=>nom.replace(/_d$/,'.d');
+  const blocDe=nom=>nom.replace(/_d$/,'.d').replace(/_e(\d+)$/,'~#$1');   // description de chapitre ; ligne n du tableau des éléments représentés
   const coms={}; let m;
   const reC=/<w:comment\b([^>]*)>([\s\S]*?)<\/w:comment>/g;
   while((m=reC.exec(f['word/comments.xml']||''))) coms[att(m[1],'id')]={auteur:att(m[1],'author'), date:att(m[1],'date'), texte:capDosWText(m[2])};
@@ -850,6 +880,8 @@ function capDosFusion(o, nom, W){
   let n=0, deja=0;
   (o.retours||[]).forEach(r=>{ if(!r||!r.texte) return; if(vus.has(cle(r))){ deja++; return; }
     if(d.retours.some(x=>x.id===r.id)) r.id='w'+capHomeUid();
+    const m=/^(.*)~#(\d+)$/.exec(r.bloc||'');   // ligne du tableau Word → élément représenté exporté
+    if(m){ const f=capDosTrouve(d.blocs, m[1]), e=f&&f.b.elemsExp&&f.b.elemsExp[+m[2]]; r.bloc=e?m[1]+'~'+e:m[1]; }
     d.retours.push(Object.assign({bloc:'', type:'', crit:'', extrait:''}, r)); vus.add(cle(r)); n++; });
   Object.keys(o.relus||{}).forEach(k=>{ const l=d.relus[k]=d.relus[k]||[]; (o.relus[k]||[]).forEach(p=>{ if(!l.includes(p)) l.push(p); }); });
   const v=capDosVersRevue(d, true);
@@ -869,7 +901,8 @@ function capDosVersRevue(d, discret){
   const cat={remarque:'remark', question:'question', erreur:'error', proposition:'improvement', modif:'improvement', ok:'remark'};
   const cs=l.map(r=>{
     const x=capDosBlocDe(d, r.bloc), b=x.b; let cible=null;
-    if(b&&b.ref&&b.ref.k==='el') cible=capRevTarget(b.ref.id, (x.champ==='desc'||(b.k==='el'&&b.desc))?'description':'');
+    if(x.elemId) cible=capRevTarget(x.elemId,'');
+    else if(b&&b.ref&&b.ref.k==='el') cible=capRevTarget(b.ref.id, (x.champ==='desc'||(b.k==='el'&&b.desc))?'description':'');
     else if(b&&b.k==='diag'){ try{ const m=capHomeReps().length&&capDiagMeta(b.ref.id); if(m&&m.cible) cible=capRevTarget(m.cible.id,''); }catch(_){} }
     const titre=`📑 ${d.titre} › ${x.num?x.num+' ':''}${x.libelle}`.slice(0,200), now=r.date||new Date().toISOString();
     const c={id:capRevUid(), num:0, title:titre, text:(r.extrait?`« ${r.extrait} »\n`:'')+(r.texte||''), crit:r.crit||'', cat:cat[r.type]||'', status:'open',

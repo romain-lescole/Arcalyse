@@ -511,10 +511,13 @@ function capRevEdit(id, preset){
   const champs=t=>{ const el=capLoaded&&capGetElementById_(t.id); const ks=['', 'name', 'description', ...(el?Object.keys(el.attrs).filter(k=>!['id','name','description'].includes(k)&&!capParseAttrRefs_(String(el.attrs[k])).some(r=>capGetElementById_(r))):[])];
     if(!ks.includes(t.field)) ks.push(t.field);
     return ks.map(k=>`<option value="${esc(k)}"${k===t.field?' selected':''}>${esc(capRevFieldLabel(k))}</option>`).join(''); };
-  const ciblesHtml=()=>d.targets.map((t,i)=>{ const lv=CAP_LAYERS[t.layer]||{color:'#8b949e'};
+  const ciblesHtml=()=>(d.targets.map((t,i)=>{ const lv=CAP_LAYERS[t.layer]||{color:'#8b949e'};
       return `<div class="crv-ed-tg">${capIco(t.id,14)||capIcoType(t.type,14)}<span style="color:${lv.color};font-size:9px;font-weight:700">${esc(t.layer||'')}</span> <b>${esc(t.name||t.id)}</b> <span class="ana-dim">${esc(t.type)}</span>`+
         `<span style="flex:1"></span><select data-tf="${i}" title="${_L('Partie commentée')}">${champs(t)}</select><button class="crv-ib" data-tdel="${i}" title="${_L('Retirer')}">✕</button></div>`; }).join('')||
-    _L('<div class="ana-dim">Aucun élément : commentaire général (ou ajoutez un élément ci-dessous).</div>');
+    _L('<div class="ana-dim">Aucun élément : commentaire général (ou ajoutez un élément ci-dessous).</div>'))+
+    // Chaîne commentée : ses fonctions proposées en un clic
+    d.targets.filter(t=>capRevChainFns(t.id).length).map(t=>{ const l=capRevChainFns(t.id).filter(f=>!d.targets.some(x=>x.id===f.id));
+      return l.length?`<div class="crv-ed-sug"><span class="ana-dim">${_L(`⚡ Lier à des fonctions de « ${esc(t.name)} » :`)}</span> ${l.slice(0,40).map(f=>`<span class="crv-chip" data-add="${esc(f.id)}" title="${_L('Ajouter aux éléments commentés')}">＋ ${esc(f.nom)}</span>`).join('')}</div>`:''; }).join('');
   const persHtml=()=>people().map(p=>`<span class="crv-chip${d.assignees.includes(p)?' on':''}" data-pers="${esc(p)}">${esc(p)}</span>`).join('');
   const seg=(name,list,cur)=>list.map(x=>`<label class="crv-seg${x.k===cur?' on':''}"${x.c?` style="--crv-c:${x.c}"`:''}><input type="radio" name="${name}" value="${esc(x.k)}"${x.k===cur?' checked':''}>${x.l}</label>`).join('');
   ov.innerHTML=`<div class="cw-d-box" style="max-width:640px">
@@ -657,7 +660,27 @@ function capRevShowFor(id){ Object.assign(_capRevUi,{tab:'list', q:'', st:'notcl
 /* ── Clic droit dans les vues : commenter l'élément pointé ─────────────── */
 
 /** Attributs portant l'identifiant d'un élément du modèle dans les vues (blocs, tableaux, listes, diagrammes). */
-const CAP_REV_ID_ATTRS=['data-sem','data-fn','data-cid','data-id','data-ref','data-lid','data-comp','data-fexfn','data-go','data-open','data-sel','data-hlink'];
+const CAP_REV_ID_ATTRS=['data-sem','data-fn','data-cid','data-id','data-ref','data-lid','data-comp','data-fexfn','data-go','data-open','data-sel','data-hlink','data-chain'];
+/**
+ * Chaîne (⚡ Chaînes) dans laquelle se trouve un élément de l'interface : carte de chaîne ou graphe de la vue Relation Map des chaînes.
+ * @param {Element} n - Élément cliqué
+ * @returns {string} identifiant de la chaîne ('' hors chaîne)
+ */
+function capRevChainAt(n){
+  const c=n&&n.closest&&n.closest('.cap-chain-card[data-chain]'); if(c) return c.dataset.chain;
+  return n&&n.closest&&n.closest('#cap-chainmap-wrap')&&typeof capChainsSelectedId!=='undefined'&&capChainsSelectedId?capChainsSelectedId:'';
+}
+/**
+ * Fonctions (ou composants) d'une chaîne, pour les proposer comme éléments commentés.
+ * @param {string} id - Chaîne
+ * @returns {{id:string, nom:string}[]} éléments du modèle de la chaîne
+ */
+function capRevChainFns(id){
+  if(!capLoaded||typeof capComputeChains!=='function') return [];
+  if(!capChainsData) capChainsData=capComputeChains();
+  const c=capChainsData.find(x=>x.id===id), vus=new Set();
+  return c?(c.graph&&c.graph.nodes||[]).filter(n=>n.refId&&!vus.has(n.refId)&&vus.add(n.refId)).map(n=>({id:n.refId, nom:n.name})):[];
+}
 /**
  * Élément du modèle désigné par un nœud de l'interface (lui ou un de ses parents) : attribut d'identifiant
  * ou appel capOpenDetail('…') au clic.
@@ -701,10 +724,16 @@ function capRevContext(e){
         (el.attrs.description?note('description',_L('📝 Note sur sa description')):'')
       :`<div class="crv-ctx-t">🔲 ${esc(rep.nom||'')}</div>`+note('',_L('📝 Note de revue ici'));
     if(nd) h+=`<div class="ctx-i" onclick="capRevShowDiag()">${_L(`📄 Notes de ce diagramme (${nd})`)}</div>`;
-  } else h=`<div class="crv-ctx-t">${capIco(el.id,14)}${esc(el.attrs.name||el.typeName)} <span class="ana-dim">${esc(el.typeName)}</span></div>`+
-    `<div class="ctx-i" onclick="capRevNew([{id:'${id}',field:''}])">${_L('💬 Commenter l\'élément')}</div>`+
-    `<div class="ctx-i" onclick="capRevNew([{id:'${id}',field:'name'}])">${_L('💬 Commenter son nom')}</div>`+
-    (el.attrs.description?`<div class="ctx-i" onclick="capRevNew([{id:'${id}',field:'description'}])">${_L('💬 Commenter sa description')}</div>`:'');
+  } else {
+    // Dans une chaîne (carte ou graphe) : le commentaire d'une fonction est aussi rattaché à la chaîne
+    const chId=capRevChainAt(e.target), ch=chId&&chId!==el.id&&capGetElementById_(chId), plus=ch?`,{id:'${esc(chId)}',field:''}`:'';
+    h=`<div class="crv-ctx-t">${capIco(el.id,14)}${esc(el.attrs.name||el.typeName)} <span class="ana-dim">${esc(el.typeName)}</span></div>`+
+      (ch?`<div class="crv-ctx-t ana-dim" style="font-weight:400">${_L(`⚡ lié à la chaîne « ${esc(ch.attrs.name||'')} »`)}</div>`:'')+
+      `<div class="ctx-i" onclick="capRevNew([{id:'${id}',field:''}${plus}])">${_L('💬 Commenter l\'élément')}</div>`+
+      `<div class="ctx-i" onclick="capRevNew([{id:'${id}',field:'name'}${plus}])">${_L('💬 Commenter son nom')}</div>`+
+      (el.attrs.description?`<div class="ctx-i" onclick="capRevNew([{id:'${id}',field:'description'}${plus}])">${_L('💬 Commenter sa description')}</div>`:'')+
+      (ch?`<div class="ctx-i" onclick="capRevNew([{id:'${esc(chId)}',field:''}])">${_L('💬 Commenter la chaîne seule')}</div>`:'');
+  }
   if(el){
     const n=_capRev.comments.filter(c=>(c.targets||[]).some(t=>t.id===el.id)).length;
     h+=(n?`<div class="ctx-i" onclick="capRevShowFor('${id}')">${_L(`📄 Voir ses commentaires (${n})`)}</div>`:'')+
@@ -730,8 +759,8 @@ function capRevMark(){
   const ids=new Map();
   _capRev.comments.forEach(c=>{ if(!capRevClosed(c)) (c.targets||[]).forEach(t=>ids.set(t.id,(ids.get(t.id)||0)+1)); });
   if(!ids.size) return;
-  root.querySelectorAll('.fex-blk[data-fn],.cap-card[onclick],.cex-det[onclick],.cap-det-link[onclick]').forEach(x=>{
-    const id=x.dataset.fn||(/capOpenDetail(?:ById)?\('([^']+)'/.exec(x.getAttribute('onclick')||'')||[])[1];
+  root.querySelectorAll('.fex-blk[data-fn],.cap-card[onclick],.cex-det[onclick],.cap-det-link[onclick],.cap-chain-card[data-chain]').forEach(x=>{
+    const id=x.dataset.fn||x.dataset.chain||(/capOpenDetail(?:ById)?\('([^']+)'/.exec(x.getAttribute('onclick')||'')||[])[1];
     const n=id&&ids.get(id); if(n){ x.classList.add('crv-mk'); x.setAttribute('data-crv',n); }
   });
 }

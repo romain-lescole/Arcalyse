@@ -572,6 +572,7 @@ function capRenderChainMap(){
         </span>
         <span class="ccm-tgroup">
           <button class="cap-lf-btn" data-act="info" title="Informations de la chaîne affichée dans le panneau de détail : type, couche, fonctions, échanges, entrées et sorties, porteurs, capacités, description">ℹ Infos</button>
+          <button class="cap-lf-btn" data-act="rev" title="Commenter la chaîne affichée (💬 Revue). Clic droit sur une fonction du graphe : commentaire lié à la fonction et à la chaîne">💬 Commenter</button>
           <button class="cap-lf-btn" data-act="fit">⊡ Ajuster</button>
           <button class="cap-lf-btn" data-act="rm" title="Injecte la chaîne dans la Relation Map principale">↗ Relation Map principale</button>
         </span>
@@ -775,7 +776,7 @@ function capRenderChainMap(){
     g.nodes.forEach(n=>{
       const k=CAP_CHAIN_KIND[n.kind]||CAP_CHAIN_KIND.none, p=P[n.id];
       const io=entrySet.has(n.id)||exitSet.has(n.id);
-      const node=gn.append('g').attr('transform',`translate(${p.x-W/2},${p.y-H/2})`).style('cursor',n.refId?'pointer':'default')
+      const node=gn.append('g').attr('transform',`translate(${p.x-W/2},${p.y-H/2})`).attr('data-ref',n.refId||null).style('cursor',n.refId?'pointer':'default')
         .on('click',()=>{ if(n.refId) capOpenDetail(n.refId); });
       node.append('title').text(`${n.name} — ${n.elemType}${n.owner?_L(' · alloué à ')+n.owner:''}${entrySet.has(n.id)?_L(' · ENTRÉE'):''}${exitSet.has(n.id)?_L(' · SORTIE'):''}`);
       if(o.compact){
@@ -808,6 +809,7 @@ function capRenderChainMap(){
   wrap.querySelector('[data-act="compact"]').addEventListener('click',e=>{ o.compact=!o.compact; e.currentTarget.classList.toggle('active',o.compact); drawGraph(); });
   wrap.querySelector('[data-act="cut"]').addEventListener('click',e=>{ o.cut=!o.cut; e.currentTarget.classList.toggle('active',o.cut); drawGraph(); });
   wrap.querySelector('[data-act="fit"]').addEventListener('click',fit);
+  wrap.querySelector('[data-act="rev"]').addEventListener('click',()=>{ if(capChainsSelectedId) capRevNew([{id:capChainsSelectedId,field:''}]); });
   wrap.querySelector('[data-act="info"]').addEventListener('click',()=>{ const chain=list.find(c=>c.id===capChainsSelectedId); if(chain) capChainInfo(chain); });
   wrap.querySelector('[data-act="rm"]').addEventListener('click',()=>{
     const chain=list.find(c=>c.id===capChainsSelectedId); if(chain) capShowChainInMap(chain);

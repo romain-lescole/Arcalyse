@@ -503,6 +503,7 @@ function capChainCardBody(chain){
         <button class="cap-lf-btn" data-chx-one="clip" title="Copier l'image dans le presse-papiers (coller dans Word, PowerPoint…)">📋 Copier</button>
         <button class="cap-lf-btn" data-chx-one="csv" title="Tables des fonctions et des échanges (CSV)">⬇ CSV</button>
         <button class="cap-lf-btn" data-chx-info="1" title="Informations de la chaîne dans le panneau de détail">ℹ Infos</button>
+        <button class="cap-lf-btn" data-chx-rev="1" title="Commenter la chaîne (💬 Revue). Clic droit sur une fonction du diagramme : commentaire lié à la fonction et à la chaîne">💬 Commenter</button>
         <button class="cap-lf-btn" data-open-map="${capEsc(chain.id)}">🗺 Ouvrir en vue Relation Map</button>
       </div>
     </div>
@@ -534,7 +535,8 @@ function capChainInfo(chain){
     `<div style="font-size:11px;color:var(--c-accent);font-weight:600;margin-bottom:2px;">${_L('⚡ Chaîne')}</div>`+
     `<h3 style="font-size:14px;font-weight:600;margin-bottom:10px;word-break:break-word">${esc(chain.name)}</h3>`+
     `<div class="hm-row" style="margin:0 0 6px">${el?`<button class="cap-lf-btn" onclick="capOpenDetail('${esc(chain.id)}')">${_L('🔎 Détail complet de l\'élément')}</button>`:''}`+
-    `<button class="cap-lf-btn" onclick="capChainsSelectedId='${esc(chain.id)}';capChainsSubView='map';capNavOpen('chains')">${_L('🗺 Vue Relation Map')}</button></div>`;
+    `<button class="cap-lf-btn" onclick="capChainsSelectedId='${esc(chain.id)}';capChainsSubView='map';capNavOpen('chains')">${_L('🗺 Vue Relation Map')}</button>`+
+    `<button class="cap-lf-btn" onclick="capRevNew([{id:'${esc(chain.id)}',field:''}])" title="${_L('Commenter la chaîne (💬 Revue)')}">${_L('💬 Commenter')}</button></div>`;
   h+=titre(_L('Attributs'))+`<table class="cdg-det-tab">`+ligne(_L('Type'),CAP_CHAIN_LABELS[chain.type]||chain.type)+ligne(_L('Couche'),`${chain.layer} — ${lv.label}`)+
     ligne(t.isPath?_L('Composants'):_L('Fonctions'),t.funcs.length)+ligne(t.isPath?_L('Physical Links'):_L('Échanges'),t.fes.length)+
     ligne(_L('Entrées'),t.entries.length)+ligne(_L('Sorties'),t.exits.length)+ligne(_L('Porteurs'),porteurs.length)+ligne('id',chain.id)+`</table>`;
@@ -564,6 +566,7 @@ function capWireChainCards(container){
         body.querySelectorAll('[data-chx-one]').forEach(b=>b.addEventListener('click',ev=>{
           ev.stopPropagation(); capChainExportOne(chain, b.dataset.chxOne).catch(e=>capChainExportStatus('⚠ '+e.message)); }));
         body.querySelector('[data-chx-info]')?.addEventListener('click',ev=>{ ev.stopPropagation(); capChainInfo(chain); });
+        body.querySelector('[data-chx-rev]')?.addEventListener('click',ev=>{ ev.stopPropagation(); capRevNew([{id:chain.id,field:''}]); });
         body.querySelector('[data-open-map]')?.addEventListener('click',ev=>{
           ev.stopPropagation(); capChainsSelectedId=ev.currentTarget.dataset.openMap; capChainsSubView='map'; capRenderChains(); });
       }

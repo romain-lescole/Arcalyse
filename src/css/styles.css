@@ -1458,6 +1458,8 @@ html[data-tone="light"] .crv-late{color:#cf222e;}
 .fex-blk.crv-mk .fex-box{outline:2px dashed var(--c-warn,#e3b341);outline-offset:2px;}
 .fex-blk.crv-mk .fex-box-t::after,.cap-card.crv-mk .cap-card-name::after,.cex-det.crv-mk::after,.cap-det-link.crv-mk::after{content:' 💬';font-size:.85em;}
 .cap-card.crv-mk{border-color:var(--c-warn,#e3b341);}
+.cap-chain-card.crv-mk>.cap-chain-hdr .cap-chain-title::after{content:' 💬';font-size:.85em;}
+.crv-ed-sug{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin:6px 0 2px;font-size:12px;}
 /* Calque des diagrammes */
 .crv-drag{cursor:grab;user-select:none;}
 #crv-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:4;}
