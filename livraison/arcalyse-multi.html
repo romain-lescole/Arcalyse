@@ -2254,7 +2254,7 @@ html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,2
           <tr><td>🎨 Thème › Personnaliser…</td><td>Thème personnalisé : toutes les couleurs (fonds, textes, accent, bordures, statuts, Relation Map, couches ARCADIA), aperçu en direct, « Partir de » un thème existant, contraste du texte affiché, ⬇ / ⬆ JSON. Il apparaît ensuite comme « 🎨 Personnalisé » dans la liste et est conservé dans la page enregistrée.</td></tr>
           <tr><td>🌐 EN / FR</td><td>Version multilingue (<code>arcalyse-multi.html</code>) seulement : passe dans l'autre langue (bouton de la barre ou lien de l'écran d'accueil). La page est rechargée et le modèle chargé est conservé ; l'adresse <code>?lang=fr</code> ou <code>?lang=en</code> choisit aussi la langue. Sans choix, la langue du navigateur est utilisée.</td></tr>
           <tr><td>⬇ Export ▾</td><td>Export du graphe Relation Map (2e barre de la Relation Map) : <b>image</b> PNG, JPEG ou SVG, ou <b>données</b> CSV (voir ci-dessous).</td></tr>
-          <tr><td>? Aide ▾</td><td>📖 Aide complète : cette documentation ; 🎯 Visite de cette vue : présentation des menus et commandes de la vue affichée (Relation Map, chaque vue Capella ; modèle chargé) ; 🎓 Visite guidée : découverte de l'interface pas à pas (zone mise en évidence, reste de l'écran assombri ; ◀ Précédent / Suivant ▶ ou flèches du clavier, ✕ ou Échap pour quitter). Les deux sont aussi accessibles depuis l'écran d'accueil. ℹ À propos : version, auteur, licence (GNU GPL v3), contact, composants tiers (licence D3.js), informations techniques à copier pour un signalement (dont le navigateur de test : Google Chrome version 155).</td></tr>
+          <tr><td>? Aide ▾</td><td>📖 Aide complète : cette documentation ; 🎯 Visite de cette vue : présentation des menus et commandes de la vue affichée (Relation Map, chaque vue Capella ; modèle chargé) ; 🎓 Visite guidée : découverte de l'interface pas à pas (zone mise en évidence, reste de l'écran assombri ; ◀ Précédent / Suivant ▶ ou flèches du clavier, ✕ ou Échap pour quitter). Les deux sont aussi accessibles depuis l'écran d'accueil. ℹ À propos : version, auteur, licence (Apache 2.0), contact, composants tiers (licence D3.js), informations techniques à copier pour un signalement (dont le navigateur de test : Google Chrome version 155).</td></tr>
         </table>
         <h3>Niveau 2 — commandes de la Relation Map</h3>
         <p>Affiché uniquement en mode 🗺 Relation Map.</p>
@@ -3179,7 +3179,7 @@ html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,2
           <tr><td>🎨 Theme › Customize…</td><td>Custom theme: all colours (backgrounds, texts, accent, borders, statuses, Relation Map, ARCADIA layers), live preview, “Start from” an existing theme, displayed text contrast, ⬇ / ⬆ JSON. It then appears as “🎨 Custom” in the list and is kept in the saved page.</td></tr>
           <tr><td>🌐 FR / EN</td><td>Multilingual version (<code>arcalyse-multi.html</code>) only: switches to the other language (toolbar button or home screen link). The page is reloaded and the loaded model is kept; the <code>?lang=fr</code> or <code>?lang=en</code> address also selects the language. Without a choice, the browser language is used.</td></tr>
           <tr><td>⬇ Export ▾</td><td>Export of the Relation Map graph (2nd Relation Map bar): <b>image</b> PNG, JPEG or SVG, or CSV <b>data</b> (see below).</td></tr>
-          <tr><td>? Help ▾</td><td>📖 Full help: this documentation; 🎯 Tour of this view: presentation of the menus and commands of the displayed view (Relation Map, each Capella view; model loaded); 🎓 Guided tour: step-by-step discovery of the interface (highlighted area, rest of the screen darkened; ◀ Previous / Next ▶ or the arrow keys, ✕ or Esc to quit). Both are also available from the home screen. ℹ About: version, author, licence (GNU GPL v3), contact, third-party components (D3.js licence), technical information to copy for an issue report (including the test browser: Google Chrome version 155).</td></tr>
+          <tr><td>? Help ▾</td><td>📖 Full help: this documentation; 🎯 Tour of this view: presentation of the menus and commands of the displayed view (Relation Map, each Capella view; model loaded); 🎓 Guided tour: step-by-step discovery of the interface (highlighted area, rest of the screen darkened; ◀ Previous / Next ▶ or the arrow keys, ✕ or Esc to quit). Both are also available from the home screen. ℹ About: version, author, licence (Apache 2.0), contact, third-party components (D3.js licence), technical information to copy for an issue report (including the test browser: Google Chrome version 155).</td></tr>
         </table>
         <h3>Level 2 — Relation Map commands</h3>
         <p>Displayed only in 🗺 Relation Map mode.</p>
@@ -25838,12 +25838,12 @@ function capHomeDragRef(n){
 })();
 
 </script>
-<!-- Visionneuse de diagrammes d'Arcature (GPL v3, même auteur) : produite par « node build.js --visionneuse » dans Arcature,
+<!-- Visionneuse de diagrammes d'Arcature (Apache 2.0, même auteur) : produite par « node build.js --visionneuse » dans Arcature,
      copiée dans src/vendor/ ; le build choisit la langue (versions fr, en ; les deux pour la version multilingue) -->
 <script id="arcature-visionneuse">
 if(document.documentElement.getAttribute('data-lang')==='en'){
 /* Arcature — visionneuse de diagrammes Capella (en), assemblée par « node build.js --visionneuse ».
-   Licence GNU GPL v3. Expose window.ArcatureVisionneuse (voir src/visionneuse/socle-fin.js). */
+   Licence Apache 2.0. Expose window.ArcatureVisionneuse (voir src/visionneuse/socle-fin.js). */
 (function () {
 'use strict';
 /* ── src/js/01-config.js ── */
@@ -31080,7 +31080,7 @@ window.ArcatureVisionneuse = ArcatureVisionneuse;
 })();
 }else{
 /* Arcature — visionneuse de diagrammes Capella (fr), assemblée par « node build.js --visionneuse ».
-   Licence GNU GPL v3. Expose window.ArcatureVisionneuse (voir src/visionneuse/socle-fin.js). */
+   Licence Apache 2.0. Expose window.ArcatureVisionneuse (voir src/visionneuse/socle-fin.js). */
 (function () {
 'use strict';
 /* ── src/js/01-config.js ── */

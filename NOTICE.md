@@ -8,7 +8,7 @@ Ce programme est un logiciel libre, distribué selon les termes de l'**Apache Li
 Sauf obligation légale ou accord écrit, le logiciel est distribué « EN L'ÉTAT », **SANS GARANTIE NI CONDITION
 D'AUCUNE SORTE**, expresse ou implicite. Voir la licence pour les droits et limitations applicables.
 
-Historique des licences : jusqu'à la version 1.5 incluse, PolyForm Strict License 1.0.0 ; ensuite, jusqu'à la
+Historique des licences : jusqu'à la version 1.5 incluse, PolyForm Strict License 1.0.0 ; de la version 1.6 à la
 version 2.2 incluse, GNU General Public License version 3 ; à partir de la version 2.2.1, Apache License 2.0.
 
 ## Composants tiers
@@ -17,7 +17,7 @@ D3.js v7.9.0 (`src/vendor/d3.min.js`, embarqué dans le fichier livré) — lice
 La licence ISC est compatible avec l'Apache License 2.0 ; son texte est reproduit dans la fenêtre ℹ À propos.
 
 Visionneuse de diagrammes d'Arcature (`src/vendor/arcature-visionneuse*.js`, embarquée dans le fichier livré) —
-projet frère, même auteur et titulaire des droits ; ses en-têtes indiquent la GNU GPL v3.
+projet frère, même auteur et titulaire des droits, également sous Apache License 2.0.
 
 ## Modèles de test (`tests/models/`)
 

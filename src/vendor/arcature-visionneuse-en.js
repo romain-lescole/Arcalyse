@@ -1,5 +1,5 @@
 /* Arcature — visionneuse de diagrammes Capella (en), assemblée par « node build.js --visionneuse ».
-   Licence GNU GPL v3. Expose window.ArcatureVisionneuse (voir src/visionneuse/socle-fin.js). */
+   Licence Apache 2.0. Expose window.ArcatureVisionneuse (voir src/visionneuse/socle-fin.js). */
 (function () {
 'use strict';
 /* ── src/js/01-config.js ── */
