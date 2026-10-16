@@ -25,6 +25,7 @@ var CAP_NAV_ITEMS=[
   {k:'links',     l:_L('🔗 Liens'),             g:'flux', t:_L('Relations entre les éléments du modèle')},
   {k:'functions', l:_L('ƒ Fonctions'),          g:'ana',  t:_L('Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier')},
   {k:'ana:trace', l:_L('🧬 Traçabilité inter-couches'), g:'ana'},
+  {k:'ana:xlay',  l:_L('🔗 Liens entre couches'),       g:'ana', t:_L('Vue graphique des réalisations entre couches (OA → SA → LA → PA → EPBS) : fonctions, chaînes et leurs fonctions, capacités, composants…')},
   {k:'ana:caps',  l:_L('🎯 Capacités & missions'),     g:'ana'},
   {k:'ana:states',l:_L('🔁 Modes & états'),            g:'ana'},
   {k:'ana:diff',  l:_L('⚖ Comparaison de versions'),  g:'ana'},

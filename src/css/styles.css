@@ -1756,3 +1756,22 @@ html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,2
 .hm-pal.hm-pal-pli{width:auto;padding:8px 4px;align-items:center;}
 .crv-dos{cursor:pointer;color:var(--c-accent);}
 .crv-dos:hover{text-decoration:underline;}
+/* 🔗 Liens entre couches (62) */
+.xl-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 10px;}
+.xl-find{position:relative;}
+.xl-find .phl-filter-input{width:320px;}
+.xl-res{position:absolute;top:100%;left:0;z-index:30;min-width:380px;max-height:360px;overflow:auto;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.3);}
+.xl-res:empty{display:none;}
+.xl-opt{font-size:12px;color:var(--c-text);display:inline-flex;align-items:center;gap:4px;cursor:pointer;}
+.xl-info{padding:2px 12px 6px;font-size:12.5px;}
+.xl-scroll{overflow:auto;margin:0 10px 10px;border:1px solid var(--c-border);border-radius:6px;background:#fff;}
+.xl-svg svg{display:block;}
+.xl-svg .xl-n:hover rect:first-of-type{stroke-width:2.6;}
+.xl-svg svg.xl-hl .xl-e{opacity:.15;}
+.xl-svg svg.xl-hl .xl-n{opacity:.35;}
+.xl-svg svg.xl-hl .xl-e.on{opacity:1;stroke:#0969da;stroke-width:2.2;}
+.xl-svg svg.xl-hl .xl-n.on,.xl-svg svg.xl-hl .xl-n:hover{opacity:1;}
+.xl-vide{padding:30px 16px;color:var(--c-dim);font-size:13px;}
+.xl-sugs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.xl-sug{cursor:pointer;padding:3px 9px;border:1px solid var(--c-border);border-radius:12px;background:var(--c-bg2);color:var(--c-text);font-size:12px;}
+.xl-sug:hover{border-color:var(--c-accent);}

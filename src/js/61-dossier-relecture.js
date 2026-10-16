@@ -82,8 +82,8 @@ function capDosBlocDe(d, bid){
     return Object.assign(x, {champ:'el', elemId, libelle:'◆ '+(e?e.attrs.name||elemId:elemId)+_L(` (dans ${x.libelle})`)});
   }
   capDosParcours(d.blocs,(b,num)=>{ if(b.id!==id) return;
-    const lib=b.k==='chap'?(champ?_L(`Description de « ${b.titre} »`):b.titre):b.k==='txt'?_L('Texte'):b.ref?capHomeRefNom(b.ref):'';
-    r={b, num, champ, libelle:(b.k==='diag'?'🔲 ':b.k==='el'?'◆ ':'')+lib}; });
+    const lib=b.k==='chap'?(champ?_L(`Description de « ${b.titre} »`):b.titre):b.k==='txt'?_L('Texte'):b.k==='xlay'?capXlTitre(b.opts||{}):b.ref?capHomeRefNom(b.ref):'';
+    r={b, num, champ, libelle:(b.k==='diag'?'🔲 ':b.k==='el'?'◆ ':b.k==='xlay'?'🔗 ':'')+lib}; });
   if(!r.b) r.libelle=_L('Bloc retiré du dossier');
   return r;
 }
@@ -236,7 +236,7 @@ function capDosConvertir(f){
   if(b.k==='txt'){ const l=String(b.txt||'').split('\n'), reste=l.slice(1).join('\n').trim();
     c={id:b.id, k:'chap', titre:l[0].trim(), ref:null, desc:false, blocs:reste?[{id:capHomeUid(), k:'txt', txt:reste}]:[]}; }
   else if(b.k==='el') c={id:b.id, k:'chap', titre:capHomeRefNom(b.ref), ref:b.ref, desc:!!b.desc, blocs:[]};
-  else c={id:capHomeUid(), k:'chap', titre:capDosNomDiag(b.ref.nom), ref:null, desc:false, blocs:[b]};
+  else c={id:capHomeUid(), k:'chap', titre:b.k==='xlay'?capXlTitre(b.opts||{}):capDosNomDiag(b.ref.nom), ref:null, desc:false, blocs:[b]};
   f.l.splice(f.i, 1, c); return c.id;
 }
 /**
@@ -308,6 +308,7 @@ function capDosBlocHtml(d, b){
   let h=`<div class="dos-blk dos-k-${b.k}" data-b="${b.id}"><div class="dos-blk-h">`;
   if(b.k==='txt') h+=`<span class="dos-ico">¶</span><span class="dos-blk-l">${_L('Texte libre')}</span>`;
   else if(b.k==='el') h+=`<span class="dos-ico">◆</span>${capHomeChip(b.ref,'')}<label class="dos-opt"><input type="checkbox" data-bf="desc"${b.desc?' checked':''}> ${_L('Description')}</label>`;
+  else if(b.k==='xlay') h+=`<span class="dos-ico">🔗</span><span class="dos-blk-l">${esc(capXlTitre(b.opts||{}))}</span><button class="cap-lf-btn" data-da="xl-open" title="${_L('Ouvrir dans 🔬 Analyses › 🔗 Liens entre couches')}">${_L('🔗 Ouvrir')}</button>`;
   else { const ok=capHomeRefOk(b.ref);
     h+=`<span class="dos-ico">🔲</span>${capHomeChip(b.ref,'')}<label class="dos-opt" title="${_L('Description du diagramme (documentation dans Capella)')}"><input type="checkbox" data-bf="desc"${b.desc?' checked':''}> ${_L('Description')}</label>`+
       `<label class="dos-opt" title="${_L('Tableau des éléments représentés sous le diagramme')}"><input type="checkbox" data-bf="elems"${b.elems?' checked':''}> ${_L('Éléments représentés')}</label>`+
@@ -370,6 +371,7 @@ function capDosClick(e){
     case 'chap-add': if(d){ const c=capDosChapDe(null,''); d.blocs.push(c); capHomeSave(); capHomeRender(); capDosFocus(c.id); } return true;
     case 'txt-add': if(d){ const b=capDosBlocDeRef(null,''), l=f&&f.b.k==='chap'?f.b.blocs:d.blocs; l.push(b); capHomeSave(); capHomeRender(); capDosFocus(b.id); } return true;
     case 'sub-add': if(f&&f.b.k==='chap'){ const c=capDosChapDe(null,''); f.b.blocs.push(c); u.plies.delete(f.b.id); capHomeSave(); capHomeRender(); capDosFocus(c.id); } return true;
+    case 'xl-open': if(f&&f.b.opts){ Object.assign(_capXl, f.b.opts); capAnaSub='xlay'; capShowView('analyses'); } return true;
     case 'conv': if(f){ const id=capDosConvertir(f); capHomeSave(); capHomeRender(); const n=capHomeFind(`.dos-ed [data-b="${id}"]`); if(n){ n.classList.add('dos-flash'); setTimeout(()=>n.classList.remove('dos-flash'),1200); } } return true;
     case 'pli': if(f){ if(u.plies.has(f.b.id)) u.plies.delete(f.b.id); else u.plies.add(f.b.id); capHomeRender(); } return true;
     case 'ref-x': if(f){ f.b.ref=null; f.b.desc=false; } break;
@@ -465,6 +467,8 @@ async function capDosContenu(d, st){
       if(b.k==='chap'){ n++; const num=(pre?pre+'.':'')+n, r=b.ref?info(b.ref):null;
         return {id:b.id, k:'chap', num, niv, titre:b.titre||(r&&r.nom)||'', ref:r?{nom:r.nom, type:r.type, couche:r.couche}:null, desc:b.desc&&r?r.desc:'', avecDesc:!!(b.desc&&r), enfants:conv(b.blocs, num, niv+1)}; }
       if(b.k==='txt') return {id:b.id, k:'txt', txt:b.txt||''};
+      if(b.k==='xlay'){ const r=capXlSvg(b.opts||{});   // 🔗 Liens entre couches, redessinés sur le modèle chargé
+        return {id:b.id, k:'diag', fig:++fig, nom:capXlTitre(b.opts||{}), type:_L('Liens entre couches'), couche:'', desc:'', cible:'', svg:r.svg, w:r.w, h:r.h, elems:[]}; }
       if(b.k==='el'){ const r=info(b.ref); return {id:b.id, k:'el', nom:r.nom, type:r.type, couche:r.couche, desc:b.desc?r.desc:'', avecDesc:!!b.desc, absent:r.absent}; }
       const rep=reps.find(x=>x.uid===b.ref.id), svg=svgs[b.ref.id]||'', m=rep?capDiagMeta(rep.uid):null;
       const o={id:b.id, k:'diag', fig:++fig, nom:capDosNomDiag(rep?rep.nom:b.ref.nom), type:capHomeRefType(b.ref), couche:rep?rep.couche||'':b.ref.couche||'',

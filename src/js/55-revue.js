@@ -737,7 +737,8 @@ function capRevContext(e){
   if(el){
     const n=_capRev.comments.filter(c=>(c.targets||[]).some(t=>t.id===el.id)).length;
     h+=(n?`<div class="ctx-i" onclick="capRevShowFor('${id}')">${_L(`📄 Voir ses commentaires (${n})`)}</div>`:'')+
-      `<div class="ctx-i" onclick="capOpenDetailById('${id}')">${_L('🔍 Détail de l\'élément')}</div>`;
+      `<div class="ctx-i" onclick="capOpenDetailById('${id}')">${_L('🔍 Détail de l\'élément')}</div>`+
+      (typeof capTraceCatOf==='function'&&capTraceCatOf(el.typeName)?`<div class="ctx-i" onclick="capXlOpen('${id}')">${_L('🔗 Liens entre couches')}</div>`:'');
   }
   m.innerHTML=h; m.style.display='block';
   const r=m.getBoundingClientRect();
