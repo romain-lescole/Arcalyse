@@ -1,8 +1,8 @@
 /* ══ ℹ À PROPOS ══════════════════════════════════════════════════════════════════
- * Fenêtre « À propos » d'Arcalyse (menu ? Aide ▾) : identité et version, auteur, licence GNU GPL v3, contact,
+ * Fenêtre « À propos » d'Arcalyse (menu ? Aide ▾) : identité et version, auteur, licence Apache 2.0, contact,
  * composants tiers (D3.js, licence ISC à reproduire), marques citées, informations techniques copiables.
  */
-var CAP_APP_VERSION='2.2';   // à mettre à jour à chaque livraison (node build.js --livraison)
+var CAP_APP_VERSION='2.2.1';   // à mettre à jour à chaque livraison (node build.js --livraison)
 var CAP_APP_AUTHOR=_L('Romain Lescole');
 var CAP_APP_NAME=_L('Arcalyse');
 var CAP_APP_SLOGAN=_L('Votre modèle Capella, sous toutes ses coutures.');
@@ -59,7 +59,7 @@ function capAboutOpen(){
       <h4>Auteur et licence</h4>
       <table class="ana-t ana-kv">
         <tr><td>Auteur</td><td>© ${yr} ${e(CAP_APP_AUTHOR)} — créateur et titulaire des droits</td></tr>
-        <tr><td>Licence</td><td><b>GNU General Public License version 3</b> (GPLv3) — logiciel libre : utilisation (y compris commerciale), étude, modification et redistribution autorisées ; toute version modifiée redistribuée doit l'être sous GPLv3, avec son code source. Fourni <b>sans aucune garantie</b>.<br><span class="ana-dim">Texte complet : gnu.org/licenses/gpl-3.0 (fichier LICENSE du dépôt)</span></td></tr>
+        <tr><td>Licence</td><td><b>Apache License 2.0</b> — logiciel libre : utilisation (y compris commerciale), étude, modification et redistribution autorisées, à condition de conserver les avis de droit d'auteur et de licence et de signaler les fichiers modifiés. Fourni <b>sans aucune garantie</b>.<br><span class="ana-dim">Texte complet : apache.org/licenses/LICENSE-2.0 (fichier LICENSE du dépôt)</span></td></tr>
         <tr><td>Contact</td><td>Code source, signalements et contributions : <a class="ab-mono" href="https://${e(CAP_APP_REPO)}" target="_blank" rel="noopener">${e(CAP_APP_REPO)}</a></td></tr>
         <tr><td>Développement</td><td>Développé avec l'aide de Claude Code (Anthropic).</td></tr>
       </table>

@@ -2,18 +2,22 @@
 
 Copyright (C) 2026 Romain Lescole — https://github.com/romain-lescole/arcalyse
 
-Ce programme est un logiciel libre : vous pouvez le redistribuer et/ou le modifier selon les termes de la
-**GNU General Public License version 3** publiée par la Free Software Foundation (texte complet dans le fichier `LICENSE`).
+Ce programme est un logiciel libre, distribué selon les termes de l'**Apache License, Version 2.0**
+(texte complet dans le fichier `LICENSE`, ou https://www.apache.org/licenses/LICENSE-2.0).
 
-Ce programme est distribué dans l'espoir qu'il sera utile, mais **SANS AUCUNE GARANTIE** ; sans même la garantie
-implicite de QUALITÉ MARCHANDE ou d'ADÉQUATION À UN USAGE PARTICULIER. Voir la GNU General Public License pour plus de détails.
+Sauf obligation légale ou accord écrit, le logiciel est distribué « EN L'ÉTAT », **SANS GARANTIE NI CONDITION
+D'AUCUNE SORTE**, expresse ou implicite. Voir la licence pour les droits et limitations applicables.
 
-Les versions publiées avant le passage à la GPLv3 (jusqu'à la version 1.5 incluse) restent sous PolyForm Strict License 1.0.0.
+Historique des licences : jusqu'à la version 1.5 incluse, PolyForm Strict License 1.0.0 ; ensuite, jusqu'à la
+version 2.2 incluse, GNU General Public License version 3 ; à partir de la version 2.2.1, Apache License 2.0.
 
-## Composant tiers
+## Composants tiers
 
 D3.js v7.9.0 (`src/vendor/d3.min.js`, embarqué dans le fichier livré) — licence ISC, Copyright 2010-2023 Mike Bostock.
-La licence ISC est compatible avec la GPLv3 ; son texte est reproduit dans la fenêtre ℹ À propos.
+La licence ISC est compatible avec l'Apache License 2.0 ; son texte est reproduit dans la fenêtre ℹ À propos.
+
+Visionneuse de diagrammes d'Arcature (`src/vendor/arcature-visionneuse*.js`, embarquée dans le fichier livré) —
+projet frère, même auteur et titulaire des droits ; ses en-têtes indiquent la GNU GPL v3.
 
 ## Modèles de test (`tests/models/`)
 

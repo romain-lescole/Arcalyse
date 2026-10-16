@@ -117,7 +117,7 @@ function capBuildPageHtml(){
     doc.querySelector('body').appendChild(bootScript);
   }
 
-  // Commentaires placés avant <html> (avis de copyright et licence GPLv3) : à conserver
+  // Commentaires placés avant <html> (avis de copyright et licence Apache 2.0) : à conserver
   const pre=[...document.childNodes].filter(n=>n.nodeType===8).map(n=>'<!--'+n.data+'-->\n').join('');
   return '<!DOCTYPE html>\n' + pre + doc.outerHTML;
 }

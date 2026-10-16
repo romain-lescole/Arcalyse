@@ -148,7 +148,7 @@ Choose among dozens of indicators (number of elements, function allocation, desc
 
 ## Licence
 
-Arcalyse is free software, distributed under the **GNU General Public License version 3** — see [`LICENSE`](LICENSE) and [`NOTICE.md`](NOTICE.md).
+Arcalyse is free software, distributed under the **Apache License 2.0** — see [`LICENSE`](LICENSE) and [`NOTICE.md`](NOTICE.md).
 Copyright © 2026 Romain Lescole. Provided without any warranty.
 
 Capella and ARCADIA are trademarks of their respective owners (Eclipse Foundation, Thales). Arcalyse is an independent tool, compatible with Capella models: neither official nor affiliated.
@@ -289,7 +289,7 @@ Choisissez parmi des dizaines d'indicateurs (nombre d'éléments, allocation des
 
 ## Licence
 
-Arcalyse est un logiciel libre, distribué sous **GNU General Public License version 3** — voir [`LICENSE`](LICENSE) et [`NOTICE.md`](NOTICE.md).
+Arcalyse est un logiciel libre, distribué sous **Apache License 2.0** — voir [`LICENSE`](LICENSE) et [`NOTICE.md`](NOTICE.md).
 Copyright © 2026 Romain Lescole. Fourni sans aucune garantie.
 
 Capella et ARCADIA sont des marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Arcalyse est un outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié.

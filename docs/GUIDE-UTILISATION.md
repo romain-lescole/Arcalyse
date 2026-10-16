@@ -1266,7 +1266,7 @@ Ne sont **pas** conservés dans la page : la version chargée pour ⚖ Comparais
 | **🎯 Visite de cette vue** | Présente les menus et commandes de la vue affichée (modèle chargé). |
 | **💬 Visite de la revue** | Présente le panneau 💬 Revue pas à pas (aussi par 🎓 dans le panneau). |
 | **🎓 Visite guidée** | Découverte de l'interface pas à pas : zone mise en évidence, reste de l'écran assombri ; **◀ Précédent / Suivant ▶** ou flèches du clavier ; **✕** ou **Échap** pour quitter. |
-| **ℹ À propos** | Version, auteur, licence GNU GPL v3, contact, composants tiers (licence D3.js), **informations techniques** à copier pour signaler un problème. |
+| **ℹ À propos** | Version, auteur, licence Apache 2.0, contact, composants tiers (licence D3.js), **informations techniques** à copier pour signaler un problème. |
 
 <br clear="right">
 

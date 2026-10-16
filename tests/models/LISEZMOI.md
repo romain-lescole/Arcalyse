@@ -2,7 +2,7 @@
 
 Ces deux modèles Capella publics servent uniquement aux tests d'Arcalyse (`node tests/smoke.js`) et aux captures du README.
 Ils **ne font pas partie d'Arcalyse** : ils ne sont pas embarqués dans le fichier livré et restent sous leur propre licence,
-distincte de la GPLv3 du logiciel.
+distincte de la licence Apache 2.0 du logiciel.
 
 | Fichier | Origine | Auteur | Licence |
 |---|---|---|---|
