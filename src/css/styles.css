@@ -1743,3 +1743,14 @@ html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,2
 .dos-ret-rev{cursor:pointer;font-size:11px;padding:0 5px;border:1px solid var(--c-border);border-radius:8px;}
 .dos-ret-x{font-style:italic;color:var(--c-dim);margin-top:2px;}
 .dos-ret-t{white-space:pre-wrap;margin-top:2px;color:var(--c-text);}
+.dos-acts{display:inline-flex;gap:3px;margin-left:auto;flex-shrink:0;}
+.dos-acts button{min-width:30px;height:26px;padding:0 7px;font-size:15px;line-height:1;border:1px solid var(--c-border);border-radius:5px;background:var(--c-bg3);color:var(--c-text);cursor:pointer;}
+.dos-acts button[data-da="conv"]{font-size:12px;}
+.dos-acts button:hover{border-color:var(--c-accent);background:var(--c-bg4);}
+.dos-acts button[data-da="del-b"]:hover{border-color:var(--c-err,#f85149);}
+.dos-flash{outline:2px solid var(--c-accent);outline-offset:1px;}
+.hm-pal-h{display:flex;align-items:center;justify-content:space-between;gap:6px;}
+.hm-pal-h .cap-lf-btn{padding:0 7px;}
+.hm-pal.hm-pal-pli{width:auto;padding:8px 4px;align-items:center;}
+.crv-dos{cursor:pointer;color:var(--c-accent);}
+.crv-dos:hover{text-decoration:underline;}

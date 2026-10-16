@@ -300,8 +300,10 @@ function capRevRender(){
       _L(`<div class="crv-dd-h">Les commentaires sont enregistrés <b>dans la page</b> : 💾 Enregistrer (Ctrl+S) les conserve avec le modèle.</div>`)+
       `<div class="ctx-i" data-a="export">${_L('⬇ Exporter les commentaires (.json)')}</div><div class="ctx-i" data-a="import">${_L('📂 Importer / fusionner une revue (.json ou page de revue ciblée .html)…')}</div>`+
       `<div class="ctx-i" data-a="cible" title="${_L('Page HTML autonome à envoyer aux relecteurs : ils répondent aux commentaires choisis et en ajoutent ; leurs réponses se réimportent ici')}">${_L('📤 Faire relire des commentaires (page HTML)…')}</div>`+
+      `<div class="ctx-i" data-a="dossiers" title="${_L('Document chapitré à faire relire : descriptions, diagrammes, texte libre ; export HTML à commenter ou Word')}">${_L('📑 Dossiers de relecture…')}</div>`+
       _L(`<div class="crv-dd-h">L'export garde la revue hors de la page, pour la transmettre ou réunir celles de plusieurs relecteurs (l'import ajoute les nouveaux commentaires et garde la version la plus récente des autres).</div>`)+
       (nNon?`<div class="crv-dd-h" style="color:var(--c-warn,#e3b341)">${_L(`${nNon} commentaire(s) modifié(s) depuis le dernier enregistrement ou export.`)}</div>`:'')+`</div>`:'')+`</span>`+
+    `<button class="cap-lf-btn" data-a="dossiers" title="${_L('📑 Dossiers de relecture (🏠 Accueil) : document chapitré à faire relire, export HTML ou Word, réimport des retours')}">📑</button>`+
     `<button class="cap-lf-btn" data-a="tour" title="${_L('Visite guidée du panneau 💬 Revue')}">🎓</button>`+
     `<button class="cap-lf-btn" data-a="pop" title="${pop?_L('Ramener le panneau dans la page'):_L('Ouvrir le panneau dans une fenêtre séparée (par exemple sur un autre écran)')}">${pop?'⧈':'⧉'}</button>`+
     (pop?'':`<button class="cap-lf-btn" data-a="close" title="${_L('Fermer')}">✕</button>`)+`</div>`+
@@ -373,6 +375,7 @@ function capRevCardHtml(c){
   const meta=[c.author?'👤 '+esc(c.author):'', '🕓 '+capRevDate(c.created),
     c.due?`<span class="${capRevLate(c)?'crv-late':''}" title="${_L('Échéance')}">⏰ ${capRevDate(c.due)}</span>`:'',
     (c.assignees||[]).length?`<span title="${_L('Responsables')}">👥 ${esc(c.assignees.join(', '))}</span>`:'',
+    c.dossier?`<span class="crv-dos" data-a="dos-go" data-dos="${esc(c.dossier.id)}" title="${_L('Retour d\'un dossier de relecture : ouvrir le dossier')}">📑 ${esc(c.dossier.titre||'')}${c.dossier.num?' › '+esc(c.dossier.num):''}</span>`:'',
     (c.tags||[]).length?'🏷 '+esc(c.tags.join(', ')):'', (c.replies||[]).length?_L(`↩ ${c.replies.length}`):''].filter(Boolean).join(' · ');
   let h=`<div class="crv-card${open?' open':''}${capRevClosed(c)?' closed':''}" data-c="${esc(c.id)}" style="--crv-c:${cr.c}">`+
     `<div class="crv-card-h" data-a="exp"><span class="crv-num">#${c.num}</span>`+
@@ -415,6 +418,8 @@ function capRevPanelClick(e){
   if(act==='tour'){ capTourRevue(); return; }
   if(act==='export'||act==='import'||act==='cible') _capRevUi.dd=false;
   if(act==='cible'){ capRevRender(); capRevCibleeDialog(); return; }
+  if(act==='dossiers'){ u.dd=false; capRevRender(); capDosOuvrir(); return; }
+  if(act==='dos-go'){ capDosOuvrir(a.dataset.dos); return; }
   if(act==='new'){ capRevNew(u.elId&&capGetElementById_(u.elId)?[{id:u.elId}]:[]); return; }
   if(act==='person-add'||act==='person-del'||act==='export'||act==='import'||act==='clear'||act==='me-save'){ capRevCfgAction(act, a); return; }
   if(act==='report-html'){ capRevReportHtml(); return; }
@@ -1010,7 +1015,8 @@ function capRevReportTab(){
     `<div class="crv-meta" style="margin:6px 0 10px">${_L(`${l.length} commentaire(s) · ${late} en retard · ${chk} sur des éléments modifiés`)}</div>`+
     `<div class="crv-filters"><button class="phl-export-btn" data-a="report-html" style="margin-left:0" title="${_L('Rapport HTML autonome (imprimable) : synthèse, commentaires groupés, cibles, état par rapport au modèle chargé')}">${_L('📄 Rapport HTML')}</button>`+
     `<button class="phl-export-btn" data-a="report-csv" style="margin-left:0" title="${_L('Une ligne par commentaire (tableur)')}">${_L('⬇ CSV')}</button>`+
-    `<button class="phl-export-btn" data-a="cible" style="margin-left:0" title="${_L('Page HTML autonome à envoyer aux relecteurs : ils répondent aux commentaires choisis et en ajoutent ; leurs réponses se réimportent (💾 Revue ▾ › 📂 Importer / fusionner)')}">${_L('📤 Faire relire des commentaires…')}</button></div>`;
+    `<button class="phl-export-btn" data-a="cible" style="margin-left:0" title="${_L('Page HTML autonome à envoyer aux relecteurs : ils répondent aux commentaires choisis et en ajoutent ; leurs réponses se réimportent (💾 Revue ▾ › 📂 Importer / fusionner)')}">${_L('📤 Faire relire des commentaires…')}</button>`+
+    `<button class="phl-export-btn" data-a="dossiers" style="margin-left:0" title="${_L('Document chapitré à faire relire : descriptions, diagrammes, texte libre ; export HTML à commenter ou Word')}">${_L('📑 Dossiers de relecture…')}</button></div>`;
 }
 /**
  * Groupes du rapport selon le regroupement choisi.

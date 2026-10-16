@@ -431,7 +431,8 @@ function capHomeDocImport(){
 
 /** Palette à droite (check-lists, tableaux blancs, fenêtres séparées) : recherche, diagrammes, éléments. @returns {string} HTML */
 function capHomePaletteHtml(){
-  return `<aside class="hm-pal"><div class="hm-pal-h">${_L('📎 Glisser-déposer')}</div>`+
+  if(_capHomeUi.palPli) return `<aside class="hm-pal hm-pal-pli"><button class="cap-lf-btn" data-a="pal-pli" title="${_L('Afficher la palette 📎 Glisser-déposer')}">◂ 📎</button></aside>`;
+  return `<aside class="hm-pal"><div class="hm-pal-h"><span>${_L('📎 Glisser-déposer')}</span><button class="cap-lf-btn" data-a="pal-pli" title="${_L('Replier la palette (plus de place pour le document)')}">▸</button></div>`+
     `<input class="phl-filter-input hm-pal-q" placeholder="${_L('🔍 Diagramme ou élément…')}" value="${capEsc(_capHomeUi.q)}">`+
     `<div class="hm-pal-l">${capHomePaletteList()}</div>`+
     `<div class="hm-pal-e hm-pal-tip">${_L('Astuce : ouvrez une check-list ou un tableau blanc dans une fenêtre séparée (⧉) pour y glisser aussi des diagrammes depuis 🔲 Diagrammes Capella et des éléments depuis 🧭 Explorateur ou ⚡ Chaînes.')}</div></aside>`;
@@ -607,6 +608,7 @@ function capHomeClick(e){
     case 'quick': { const nd=capHomeQuickDoc(); capHomeRender(); const n=capHomeFind(`[data-docid="${nd.id}"] .hm-item-t`); if(n) n.focus(); return; }
     case 'go-docs': u.tab='docs'; break;
     case 'go-dos': u.tab='dos'; break;
+    case 'pal-pli': u.palPli=!u.palPli; capHomeRender(); return;
     case 'doc-dos': if(d) capDosDepuisPlan(d); return;
     case 'doc-import': capHomeDocImport(); return;
     case 'doc-html': if(d) capHomeDocExport(d); return;

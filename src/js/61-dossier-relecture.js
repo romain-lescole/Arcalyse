@@ -25,6 +25,21 @@ function capDosNorm(l){
   return (Array.isArray(l)?l:[]).filter(d=>d&&d.id).map(d=>Object.assign({titre:'', consignes:'', echeance:'', auteur:'', relus:{}}, d,
     {blocs:blocs(d.blocs), retours:Array.isArray(d.retours)?d.retours.filter(r=>r&&r.id):[]}));
 }
+/**
+ * Dossier concerné par un élément de l'interface (vue ou fenêtre séparée), sinon dossier ouvert dans l'onglet 📑.
+ * @param {Element} [el] - Élément cliqué ou saisi
+ * @returns {object|undefined} dossier
+ */
+function capDosOf(el){ const n=el&&el.closest&&el.closest('[data-dosid]'); return n?_capHome.dossiers.find(d=>d.id===n.dataset.dosid):capDosCur(); }
+/**
+ * Ouvre l'onglet 📑 Dossiers de relecture de 🏠 Accueil (depuis 💬 Revue, par exemple).
+ * @param {string} [id] - Dossier à ouvrir
+ */
+function capDosOuvrir(id){
+  if(id&&_capHome.dossiers.some(d=>d.id===id)) _capDosUi.cur=id;
+  _capHomeUi.tab='dos';
+  if(currentMode!=='capella'||capCurrentView!=='home') capNavOpen('home'); else capHomeRender();
+}
 /** @returns {object|undefined} dossier ouvert dans l'onglet 📑 */
 function capDosCur(){ const l=_capHome.dossiers; if(!l.some(d=>d.id===_capDosUi.cur)) _capDosUi.cur=l.length?l[0].id:''; return l.find(d=>d.id===_capDosUi.cur); }
 /**
@@ -139,9 +154,11 @@ function capDosOngletHtml(){
     `<button class="cap-lf-btn" data-da="new" title="${_L('Nouveau dossier : chapitres, descriptions, diagrammes et texte libre à faire relire')}">${_L('📑 Nouveau dossier')}</button>`+
     `<button class="cap-lf-btn" data-da="import" title="${_L('Réimporter les retours des relecteurs : page HTML enregistrée, .json ou document Word commenté (.docx)')}">${_L('📥 Réimporter des retours…')}</button></div>`+
     (_capHome.dossiers.length?_capHome.dossiers.map(x=>{ const n=x.retours.length;
-      return `<div class="hm-docs-i${d&&x.id===d.id?' on':''}" data-dos-open="${x.id}"><span class="hm-docs-n">📑 ${esc(x.titre||_L('(sans titre)'))}</span>${n?`<span class="hm-n" title="${_L('Retours des relecteurs')}">💬 ${n}</span>`:''}</div>`; }).join('')
+      return `<div class="hm-docs-i${d&&x.id===d.id?' on':''}" data-dos-open="${x.id}"><span class="hm-docs-n">📑 ${esc(x.titre||_L('(sans titre)'))}</span>${n?`<span class="hm-n" title="${_L('Retours des relecteurs')}">💬 ${n}</span>`:''}`+
+        `<span class="hm-pop-b" data-a="pop" data-kind="dos" data-id="${x.id}" title="${_L('Ouvrir dans une fenêtre séparée (par exemple sur un autre écran)')}">⧉</span></div>`; }).join('')
       :`<div class="hm-empty">${_L('Un dossier de relecture rassemble ce qu\'il faut faire relire, chapitre par chapitre : description d\'une capacité ou d\'une chaîne, ses diagrammes, d\'autres diagrammes en sous-chapitres, du texte libre.<br><br>Il s\'exporte en page HTML que les relecteurs commentent dans leur navigateur, ou en document Word ; leurs retours se réimportent ici.')}</div>`)+`</aside>`;
-  return `<div class="hm-main hm-docs-w">${liste}${d?`<div class="hm-doc dos-ed" data-dosid="${d.id}">${capDosHtml(d)}</div>`:''}</div>`;
+  const main=d?(capHomePopWin('dos',d.id)?capHomePopPlace('dos',d):`<div class="hm-doc dos-ed" data-dosid="${d.id}">${capDosHtml(d)}</div>`):'';
+  return `<div class="hm-main hm-docs-w">${liste}${main}</div>`;
 }
 /**
  * Dossier ouvert : en-tête (titre, exports, réimport), consignes, retours, plan du dossier.
@@ -155,7 +172,8 @@ function capDosHtml(d){
     `<span class="tb-grp"><button class="phl-export-btn" data-da="html" style="margin-left:0" title="${_L('Page HTML autonome (hors ligne) : les relecteurs commentent chaque chapitre, description, diagramme ou texte, puis vous renvoient la page enregistrée')}">${_L('📤 Page HTML à commenter')}</button>`+
     `<button class="cap-lf-btn" data-da="docx" title="${_L('Document Word (.docx) : les relecteurs le commentent avec les commentaires de Word (Révision › Nouveau commentaire) ; le .docx commenté se réimporte ici')}">${_L('📝 Word (.docx)')}</button>`+
     `<button class="cap-lf-btn" data-da="import" title="${_L('Réimporter les retours des relecteurs : page HTML enregistrée, .json ou document Word commenté (.docx)')}">${_L('📥 Réimporter…')}</button>`+
-    `<button class="cap-lf-btn" data-da="dup" title="${_L('Dupliquer (sans les retours)')}">⧉</button><button class="cap-lf-btn" data-da="del" title="${_L('Supprimer')}">🗑</button></span></div>`;
+    `<button class="cap-lf-btn" data-da="dup" title="${_L('Dupliquer (sans les retours)')}">${_L('⎘ Dupliquer')}</button><button class="cap-lf-btn" data-da="del" title="${_L('Supprimer')}">🗑</button>`+
+    (capHomePopWin('dos',d.id)?'':`<button class="cap-lf-btn" data-a="pop" data-kind="dos" data-id="${d.id}" title="${_L('Ouvrir dans une fenêtre séparée (par exemple sur un autre écran)')}">⧉</button>`)+`</span></div>`;
   h+=`<div class="hm-plan"><label class="hm-f hm-f-w"><span>${_L('Consignes aux relecteurs')}</span><textarea data-dsf="consignes" rows="2" placeholder="${_L('Ce qu\'il faut regarder, comment répondre…')}">${esc(d.consignes)}</textarea></label>`+
     `<div class="hm-f4"><label class="hm-f"><span>${_L('Retour attendu le')}</span><input type="date" data-dsf="echeance" value="${esc(d.echeance)}"></label>`+
     `<label class="hm-f"><span>${_L('Auteur')}</span><input data-dsf="auteur" value="${esc(d.auteur)}" placeholder="${_L('Nom')}"></label></div>`+
@@ -183,11 +201,39 @@ function capDosListeHtml(d, l, pre, niv){
   let n=0;
   return l.map(b=>{ if(b.k==='chap'){ n++; return capDosChapHtml(d, b, (pre?pre+'.':'')+n, niv); } return capDosBlocHtml(d, b); }).join('');
 }
-/** Actions d'un bloc (monter, descendre, sortir du chapitre, entrer dans le chapitre précédent, supprimer). @returns {string} HTML */
-function capDosActs(){
-  return `<span class="hm-acts"><span data-da="up" title="${_L('Monter')}">↑</span><span data-da="down" title="${_L('Descendre')}">↓</span>`+
-    `<span data-da="out" title="${_L('Sortir du chapitre (niveau supérieur)')}">⇤</span><span data-da="in" title="${_L('Mettre dans le chapitre précédent')}">⇥</span>`+
-    `<span data-da="del-b" title="${_L('Retirer du dossier')}">🗑</span></span>`;
+/**
+ * Actions d'un bloc ou d'un chapitre : convertir (chapitre numéroté ↔ bloc), monter, descendre, sortir du chapitre,
+ * entrer dans le chapitre précédent, supprimer.
+ * @param {boolean} chap - Vrai pour un chapitre
+ * @returns {string} HTML
+ */
+function capDosActs(chap){
+  return `<span class="dos-acts">`+(chap?`<button data-da="conv" title="${_L('Convertir en bloc non numéroté (texte, ou élément s\'il y en a un associé) ; son contenu remonte d\'un niveau')}">${_L('¶ En bloc')}</button>`
+      :`<button data-da="conv" title="${_L('Convertir en chapitre numéroté')}">${_L('§ En chapitre')}</button>`)+
+    `<button data-da="up" title="${_L('Monter')}">↑</button><button data-da="down" title="${_L('Descendre')}">↓</button>`+
+    `<button data-da="out" title="${_L('Sortir du chapitre (niveau supérieur)')}">⇤</button><button data-da="in" title="${_L('Mettre dans le chapitre précédent (niveau inférieur)')}">⇥</button>`+
+    `<button data-da="del-b" title="${_L('Retirer du dossier')}">🗑</button></span>`;
+}
+/**
+ * Convertit un bloc en chapitre numéroté, ou un chapitre en bloc (son contenu est placé à sa suite, au même niveau).
+ * Texte → chapitre titré par sa première ligne (le reste en texte dedans) ; élément → chapitre associé à l'élément ;
+ * diagramme → chapitre titré par le diagramme, qui y est placé. Chapitre → élément associé, sinon texte (son titre).
+ * L'identifiant est gardé pour que les retours restent rattachés.
+ * @param {{b:object, l:object[], i:number}} f - Bloc et sa place (capDosTrouve)
+ * @returns {string} identifiant du bloc à mettre en évidence
+ */
+function capDosConvertir(f){
+  const b=f.b;
+  if(b.k==='chap'){
+    const n=b.ref&&b.ref.k==='el'?{id:b.id, k:'el', ref:b.ref, desc:!!b.desc}:{id:b.id, k:'txt', txt:b.titre||''};
+    f.l.splice(f.i, 1, n, ...b.blocs); _capDosUi.plies.delete(b.id); return n.id;
+  }
+  let c;
+  if(b.k==='txt'){ const l=String(b.txt||'').split('\n'), reste=l.slice(1).join('\n').trim();
+    c={id:b.id, k:'chap', titre:l[0].trim(), ref:null, desc:false, blocs:reste?[{id:capHomeUid(), k:'txt', txt:reste}]:[]}; }
+  else if(b.k==='el') c={id:b.id, k:'chap', titre:capHomeRefNom(b.ref), ref:b.ref, desc:!!b.desc, blocs:[]};
+  else c={id:capHomeUid(), k:'chap', titre:capDosNomDiag(b.ref.nom), ref:null, desc:false, blocs:[b]};
+  f.l.splice(f.i, 1, c); return c.id;
 }
 /**
  * Pastille du nombre de retours d'un bloc (clic : afficher les retours).
@@ -231,7 +277,7 @@ function capDosChapHtml(d, c, num, niv){
     `<input class="dos-chap-t" data-bf="titre" value="${esc(c.titre)}" placeholder="${_L('Titre du chapitre (ou glissez ici un élément)')}">`+
     (c.ref?capHomeChip(c.ref,'')+`<span class="hm-chip-x" data-da="ref-x" title="${_L('Retirer l\'élément associé')}">✕</span>`+
       `<label class="dos-opt" title="${_L('Reprendre la description de l\'élément sous le titre')}"><input type="checkbox" data-bf="desc"${c.desc?' checked':''}> ${_L('Description')}</label>`:'')+
-    capDosBadge(d, c.id)+(c.ref&&c.desc?capDosBadge(d, c.id+'.d'):'')+capDosActs()+`</div>`;
+    capDosBadge(d, c.id)+(c.ref&&c.desc?capDosBadge(d, c.id+'.d'):'')+capDosActs(true)+`</div>`;
   h+=capDosRetoursHtml(d, c.id)+(c.ref&&c.desc?capDosRetoursHtml(d, c.id+'.d'):'');
   if(pli){ let n=0; capDosParcours(c.blocs,()=>n++); return h+`<div class="dos-plie">${_L(`${n} bloc(s) replié(s)`)}</div></div>`; }
   if(c.ref&&c.desc) h+=capDosApercu(c.ref);
@@ -255,7 +301,7 @@ function capDosBlocHtml(d, b){
     h+=`<span class="dos-ico">🔲</span>${capHomeChip(b.ref,'')}<label class="dos-opt" title="${_L('Description du diagramme (documentation dans Capella)')}"><input type="checkbox" data-bf="desc"${b.desc?' checked':''}> ${_L('Description')}</label>`+
       `<label class="dos-opt" title="${_L('Tableau des éléments représentés sous le diagramme')}"><input type="checkbox" data-bf="elems"${b.elems?' checked':''}> ${_L('Éléments représentés')}</label>`+
       (ok?'':`<span class="ana-dim" title="${_L('Ouvrez le .aird du projet pour joindre ce diagramme aux exports')}">⚠ ${_L('.aird non chargé')}</span>`); }
-  h+=capDosBadge(d, b.id)+capDosActs()+`</div>`;
+  h+=capDosBadge(d, b.id)+capDosActs(false)+`</div>`;
   if(b.k==='txt') h+=`<textarea class="dos-txt" data-bf="txt" rows="${Math.min(12,Math.max(2,String(b.txt||'').split('\n').length+1))}" placeholder="${_L('Texte libre : contexte, question posée aux relecteurs…')}">${esc(b.txt||'')}</textarea>`;
   else if(b.desc) h+=capDosApercu(b.ref);
   return h+capDosRetoursHtml(d, b.id)+`</div>`;
@@ -300,18 +346,19 @@ function capDosClick(e){
   const t=e.target, u=_capDosUi, W=capHomeWin(t);
   const o=t.closest('[data-dos-open]'); if(o){ u.cur=o.dataset.dosOpen; capHomeRender(); return true; }
   const a=t.closest('[data-da]'); if(!a) return false;
-  const act=a.dataset.da, d=capDosCur(), bEl=t.closest('[data-b]'), f=d&&bEl?capDosTrouve(d.blocs, bEl.dataset.b):null;
+  const act=a.dataset.da, d=capDosOf(a), bEl=t.closest('[data-b]'), f=d&&bEl?capDosTrouve(d.blocs, bEl.dataset.b):null;
   switch(act){
     case 'new': capDosNouveau(); break;
-    case 'import': capDosImporter(); return true;
+    case 'import': capDosImporter(W); return true;
     case 'html': if(d) capDosExport(d,'html',a); return true;
     case 'docx': if(d) capDosExport(d,'docx',a); return true;
     case 'dup': if(d){ const c=JSON.parse(JSON.stringify(d)); c.id=capHomeUid(); c.titre=d.titre+_L(' (copie)'); c.retours=[]; c.relus={};
       capDosParcours(c.blocs,b=>{ b.id=capHomeUid(); }); _capHome.dossiers.push(c); u.cur=c.id; } break;
-    case 'del': if(d&&W.confirm(_L(`Supprimer le dossier « ${d.titre||_L('(sans titre)')} » et ses ${d.retours.length} retour(s) ?`))) _capHome.dossiers=_capHome.dossiers.filter(x=>x!==d); else return true; break;
+    case 'del': if(d&&W.confirm(_L(`Supprimer le dossier « ${d.titre||_L('(sans titre)')} » et ses ${d.retours.length} retour(s) ?`))){ capHomePopClose('dos',d.id); _capHome.dossiers=_capHome.dossiers.filter(x=>x!==d); } else return true; break;
     case 'chap-add': if(d){ const c=capDosChapDe(null,''); d.blocs.push(c); capHomeSave(); capHomeRender(); capDosFocus(c.id); } return true;
     case 'txt-add': if(d){ const b=capDosBlocDeRef(null,''), l=f&&f.b.k==='chap'?f.b.blocs:d.blocs; l.push(b); capHomeSave(); capHomeRender(); capDosFocus(b.id); } return true;
     case 'sub-add': if(f&&f.b.k==='chap'){ const c=capDosChapDe(null,''); f.b.blocs.push(c); u.plies.delete(f.b.id); capHomeSave(); capHomeRender(); capDosFocus(c.id); } return true;
+    case 'conv': if(f){ const id=capDosConvertir(f); capHomeSave(); capHomeRender(); const n=capHomeFind(`.dos-ed [data-b="${id}"]`); if(n){ n.classList.add('dos-flash'); setTimeout(()=>n.classList.remove('dos-flash'),1200); } } return true;
     case 'pli': if(f){ if(u.plies.has(f.b.id)) u.plies.delete(f.b.id); else u.plies.add(f.b.id); capHomeRender(); } return true;
     case 'ref-x': if(f){ f.b.ref=null; f.b.desc=false; } break;
     case 'up': case 'down': if(f) capHomeMove(f.l, f.i, act==='up'?-1:1); break;
@@ -774,23 +821,30 @@ function capDosLirePage(texte){
   try{ const b=new DOMParser().parseFromString(texte,'text/html').getElementById('arcalyse-dossier-relecture'), d=b&&JSON.parse(b.textContent);
     return d&&d.type==='arcalyse-dossier-relecture'?d:null; }catch(e){ return null; }
 }
-/** Choisit et importe un ou plusieurs fichiers de retours (page HTML, .json, .docx). */
-function capDosImporter(){
-  const inp=document.createElement('input'); inp.type='file'; inp.multiple=true; if(!capIsMobile()) inp.accept='.html,.htm,.json,.docx';
-  inp.onchange=async()=>{ for(const f of inp.files){ try{ capDosFusion(await capDosLireFichier(f), f.name); }catch(e){ console.error(e); alert(f.name+' : '+(e&&e.message||e)); } } };
+/**
+ * Choisit et importe un ou plusieurs fichiers de retours (page HTML, .json, .docx).
+ * @param {Window} [W] - Fenêtre d'où part la demande (page ou fenêtre séparée)
+ */
+function capDosImporter(W){
+  W=W||window;
+  const inp=W.document.createElement('input'); inp.type='file'; inp.multiple=true; if(!capIsMobile()) inp.accept='.html,.htm,.json,.docx';
+  inp.onchange=async()=>{ for(const f of inp.files){ try{ capDosFusion(await capDosLireFichier(f), f.name, W); }catch(e){ console.error(e); W.alert(f.name+' : '+(e&&e.message||e)); } } };
   inp.click();
 }
 /**
  * Rattache des retours lus à leur dossier (même identifiant ; sinon dossier recréé depuis la page, ou dossier ouvert
  * après confirmation) ; retours déjà présents ignorés (même auteur, date et texte).
+ * Les nouveaux retours sont aussitôt versés dans 💬 Revue (étiquette « 📑 Dossier de relecture »).
  * @param {object} o - Données lues {id, source?, retours, relus}
  * @param {string} nom - Nom du fichier
+ * @param {Window} [W] - Fenêtre des confirmations
  */
-function capDosFusion(o, nom){
+function capDosFusion(o, nom, W){
+  W=W||window;
   let d=_capHome.dossiers.find(x=>x.id===o.id);
   if(!d&&o.source){ d=capDosNorm([Object.assign({}, o.source, {id:o.id||capHomeUid(), retours:[], relus:{}})])[0]; _capHome.dossiers.push(d); }
   if(!d){ const c=capDosCur();
-    if(!c||!confirm(_L(`« ${nom} » : dossier d'origine introuvable dans ce projet. Rattacher ses retours au dossier ouvert « ${c?c.titre:''} » ?`))) return;
+    if(!c||!W.confirm(_L(`« ${nom} » : dossier d'origine introuvable dans ce projet. Rattacher ses retours au dossier ouvert « ${c?c.titre:''} » ?`))) return;
     d=c; }
   const cle=r=>[r.auteur||'', r.date||'', (r.texte||'').trim()].join('|'), vus=new Set(d.retours.map(cle));
   let n=0, deja=0;
@@ -798,17 +852,20 @@ function capDosFusion(o, nom){
     if(d.retours.some(x=>x.id===r.id)) r.id='w'+capHomeUid();
     d.retours.push(Object.assign({bloc:'', type:'', crit:'', extrait:''}, r)); vus.add(cle(r)); n++; });
   Object.keys(o.relus||{}).forEach(k=>{ const l=d.relus[k]=d.relus[k]||[]; (o.relus[k]||[]).forEach(p=>{ if(!l.includes(p)) l.push(p); }); });
-  Object.assign(_capDosUi,{cur:d.id}); _capHomeUi.tab='dos'; capHomeSave();
-  if(capCurrentView!=='home') capNavOpen('home'); else capHomeRender();
-  capWatchFlash(_L(`✔ ${nom} : ${n} retour(s) ajouté(s)`)+(deja?_L(`, ${deja} déjà présent(s)`):''));
+  const v=capDosVersRevue(d, true);
+  capHomeSave();
+  if(!capHomePopWin('dos',d.id)) capDosOuvrir(d.id); else capHomeRender();
+  capWatchFlash(_L(`✔ ${nom} : ${n} retour(s) ajouté(s)`)+(deja?_L(`, ${deja} déjà présent(s)`):'')+(v?_L(` — ${v} commentaire(s) créé(s) dans 💬 Revue`):''));
 }
 /**
  * Verse les retours non encore traités dans 💬 Revue : un commentaire par retour, cible = élément du bloc
  * (sa description pour une description), élément représenté pour un diagramme.
  * @param {object} d - Dossier
+ * @param {boolean} [discret] - Sans message (réimport)
+ * @returns {number} nombre de commentaires créés
  */
-function capDosVersRevue(d){
-  const l=d.retours.filter(r=>!r.rev); if(!l.length) return;
+function capDosVersRevue(d, discret){
+  const l=d.retours.filter(r=>!r.rev); if(!l.length) return 0;
   const cat={remarque:'remark', question:'question', erreur:'error', proposition:'improvement', modif:'improvement', ok:'remark'};
   const cs=l.map(r=>{
     const x=capDosBlocDe(d, r.bloc), b=x.b; let cible=null;
@@ -816,9 +873,11 @@ function capDosVersRevue(d){
     else if(b&&b.k==='diag'){ try{ const m=capHomeReps().length&&capDiagMeta(b.ref.id); if(m&&m.cible) cible=capRevTarget(m.cible.id,''); }catch(_){} }
     const titre=`📑 ${d.titre} › ${x.num?x.num+' ':''}${x.libelle}`.slice(0,200), now=r.date||new Date().toISOString();
     const c={id:capRevUid(), num:0, title:titre, text:(r.extrait?`« ${r.extrait} »\n`:'')+(r.texte||''), crit:r.crit||'', cat:cat[r.type]||'', status:'open',
-      author:r.auteur||'', created:now, updated:now, due:'', assignees:[], tags:[_L('dossier de relecture')], targets:cible?[cible]:[], diag:null, replies:[], project:capRevProjectId()};
+      author:r.auteur||'', created:now, updated:now, due:'', assignees:[], tags:[_L('📑 Dossier de relecture'), d.titre||''].filter(Boolean), targets:cible?[cible]:[], diag:null, replies:[], project:capRevProjectId(),
+      dossier:{id:d.id, titre:d.titre||'', bloc:r.bloc||'', num:x.num||''}};
     r.rev=c.id; return c; });
   const res=capRevMerge({people:[...new Set(l.map(r=>r.auteur).filter(Boolean))], comments:cs});
   capRevSave(); capHomeSave(); capHomeRender();
-  capWatchFlash(_L(`✔ ${res.added} commentaire(s) créé(s) dans 💬 Revue`));
+  if(!discret) capWatchFlash(_L(`✔ ${res.added} commentaire(s) créé(s) dans 💬 Revue`));
+  return res.added;
 }

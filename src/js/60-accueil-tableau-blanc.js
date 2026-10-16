@@ -227,8 +227,14 @@ function capHomeBoardDown(e){
 
 /* ── ⧉ Fenêtres séparées ───────────────────────────────────────────────── */
 
-/** Fenêtres séparées ouvertes : « doc:id » ou « board:id » → fenêtre. */
+/** Fenêtres séparées ouvertes : « doc:id », « board:id » ou « dos:id » → fenêtre. */
 const _capHomePops=new Map();
+/**
+ * Liste des objets d'un type de fenêtre séparée.
+ * @param {string} kind - 'doc' (check-list, plan) | 'board' (tableau blanc) | 'dos' (dossier de relecture)
+ * @returns {object[]}
+ */
+function capHomePopListe(kind){ return kind==='doc'?_capHome.docs:kind==='dos'?_capHome.dossiers:_capHome.boards; }
 /**
  * Fenêtre séparée ouverte pour une check-list (doc) ou un tableau blanc (board).
  * @param {string} kind - 'doc' | 'board'
@@ -259,8 +265,8 @@ function capHomePopPlace(kind, o){
  */
 function capHomePopOpen(kind, id){
   const w0=capHomePopWin(kind,id); if(w0){ w0.focus(); return; }
-  const o=(kind==='doc'?_capHome.docs:_capHome.boards).find(x=>x.id===id); if(!o) return;
-  const w=window.open('', 'arcalyse-'+kind+'-'+id, kind==='doc'?'width=860,height=900':'width=1250,height=860');
+  const o=capHomePopListe(kind).find(x=>x.id===id); if(!o) return;
+  const w=window.open('', 'arcalyse-'+kind+'-'+id, kind==='board'?'width=1250,height=860':kind==='dos'?'width=1150,height=900':'width=860,height=900');
   if(!w){ alert(_L('Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez.')); return; }
   const D=w.document;
   D.open(); D.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title></title></head><body class="hm-pop-body"><div class="hm-pop"></div></body></html>'); D.close();
@@ -276,11 +282,13 @@ function capHomePopOpen(kind, id){
 function capHomePopsRender(){
   _capHomePops.forEach((w,key)=>{
     if(!w||w.closed){ _capHomePops.delete(key); return; }
-    const [kind,id]=key.split(':'), o=(kind==='doc'?_capHome.docs:_capHome.boards).find(x=>x.id===id), host=w.document.querySelector('.hm-pop');
+    const [kind,id]=key.split(':'), o=capHomePopListe(kind).find(x=>x.id===id), host=w.document.querySelector('.hm-pop');
     if(!o||!host){ w.close(); _capHomePops.delete(key); return; }
-    w.document.title=(kind==='doc'?(o.kind==='plan'?'📋 ':'☑ '):'🧾 ')+(o.titre||'')+' — Arcalyse';
+    w.document.title=(kind==='doc'?(o.kind==='plan'?'📋 ':'☑ '):kind==='dos'?'📑 ':'🧾 ')+(o.titre||'')+' — Arcalyse';
     const m=host.querySelector('.hm-main'), pos=m?m.scrollTop:0;
-    host.innerHTML=`<div class="hm-body">${kind==='doc'?`<div class="hm-main"><div class="hm-doc" data-docid="${id}">${capHomeDocHtml(o)}</div></div>`:capHomeBoardHtml(o,true)}${capHomePaletteHtml()}</div>`;
+    const corps=kind==='doc'?`<div class="hm-main"><div class="hm-doc" data-docid="${id}">${capHomeDocHtml(o)}</div></div>`
+      :kind==='dos'?`<div class="hm-main"><div class="hm-doc dos-ed" data-dosid="${id}">${capDosHtml(o)}</div></div>`:capHomeBoardHtml(o,true);
+    host.innerHTML=`<div class="hm-body">${corps}${capHomePaletteHtml()}</div>`;
     const m2=host.querySelector('.hm-main'); if(m2) m2.scrollTop=pos;
     if(kind==='board') capHomeBoardAfter(host);
   });
