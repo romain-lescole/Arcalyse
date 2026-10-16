@@ -156,14 +156,40 @@ function capDosOngletHtml(){
   const esc=capEsc, d=capDosCur();
   const liste=`<aside class="hm-docs"><div class="hm-docs-new">`+
     `<button class="cap-lf-btn" data-da="new" title="${_L('Nouveau dossier : chapitres, descriptions, diagrammes et texte libre à faire relire')}">${_L('📑 Nouveau dossier')}</button>`+
-    `<label class="hm-new-l">${_L('📘 Rapport automatique')}<select data-dos-gab title="${_L('Dossier rempli à partir du modèle selon un plan type, entièrement modifiable ensuite')}"><option value="" selected disabled>${_L('Choisir un plan type…')}</option>${capDosGabarits().map(g=>`<option value="${g.k}" title="${esc(g.t)}">${esc(g.l)}</option>`).join('')}</select></label>`+
+    `<div class="dos-rap" title="${_L('Dossier rempli à partir du modèle selon un plan type, entièrement modifiable ensuite')}"><div class="dos-rap-t">${_L('📘 Rapports automatiques')}</div>`+
+      capDosGabarits().map(g=>`<button class="cap-lf-btn dos-rap-b" data-dos-gab="${g.k}" title="${esc(g.t)}">${esc(g.l.replace(/^\S+\s/,''))}</button>`).join('')+`</div>`+
     `<button class="cap-lf-btn" data-da="import" title="${_L('Réimporter les retours des relecteurs : page HTML enregistrée, .json ou document Word commenté (.docx)')}">${_L('📥 Réimporter des retours…')}</button></div>`+
     (_capHome.dossiers.length?_capHome.dossiers.map(x=>{ const n=x.retours.length;
-      return `<div class="hm-docs-i${d&&x.id===d.id?' on':''}" data-dos-open="${x.id}"><span class="hm-docs-n">📑 ${esc(x.titre||_L('(sans titre)'))}</span>${n?`<span class="hm-n" title="${_L('Retours des relecteurs')}">💬 ${n}</span>`:''}`+
+      return `<div class="hm-docs-i${d&&x.id===d.id?' on':''}" data-dos-open="${x.id}"><span class="hm-docs-n">${x.gab==='dcs'?'📗':x.gab?'📘':'📑'} ${esc(x.titre||_L('(sans titre)'))}</span>${n?`<span class="hm-n" title="${_L('Retours des relecteurs')}">💬 ${n}</span>`:''}`+
         `<span class="hm-pop-b" data-a="pop" data-kind="dos" data-id="${x.id}" title="${_L('Ouvrir dans une fenêtre séparée (par exemple sur un autre écran)')}">⧉</span></div>`; }).join('')
       :`<div class="hm-empty">${_L('Un dossier de relecture rassemble ce qu\'il faut faire relire, chapitre par chapitre : description d\'une capacité ou d\'une chaîne, ses diagrammes, d\'autres diagrammes en sous-chapitres, du texte libre.<br><br>Il s\'exporte en page HTML que les relecteurs commentent dans leur navigateur, ou en document Word ; leurs retours se réimportent ici.')}</div>`)+`</aside>`;
   const main=d?(capHomePopWin('dos',d.id)?capHomePopPlace('dos',d):`<div class="hm-doc dos-ed" data-dosid="${d.id}">${capDosHtml(d)}</div>`):'';
-  return `<div class="hm-main hm-docs-w">${liste}${main}</div>`;
+  return `<div class="hm-main hm-docs-w">${liste.replace(/<\/aside>$/, d&&!capHomePopWin('dos',d.id)?capDosNavHtml(d)+'</aside>':'</aside>')}${main}</div>`;
+}
+/**
+ * Volet de navigation du dossier ouvert : plan des chapitres numérotés (clic : aller au chapitre, en le dépliant),
+ * tout replier / tout déplier.
+ * @param {object} d - Dossier
+ * @returns {string} HTML
+ */
+function capDosNavHtml(d){
+  const l=[]; capDosParcours(d.blocs,(b,num,niv)=>{ if(b.k==='chap') l.push({b, num, niv}); });
+  if(!l.length) return '';
+  return `<div class="dos-nav"><div class="dos-nav-h"><b>${_L('🧭 Plan')}</b><span style="flex:1"></span>`+
+    `<button class="cap-lf-btn" data-da="nav-pli" title="${_L('Replier tous les chapitres')}">⊟</button><button class="cap-lf-btn" data-da="nav-depli" title="${_L('Déplier tous les chapitres')}">⊞</button></div>`+
+    l.map(x=>`<div class="dos-nav-i" data-dos-nav="${x.b.id}" style="padding-left:${4+Math.min(x.niv,4)*12}px" title="${capEsc(x.b.titre||'')}"><span class="dos-num">${x.num}</span> ${capEsc(x.b.titre||_L('(sans titre)'))}${_capDosUi.plies.has(x.b.id)?' <span class="ana-dim">▸</span>':''}</div>`).join('')+`</div>`;
+}
+/**
+ * Va à un chapitre du dossier (volet de navigation) : déplie le chapitre et ses parents, puis le fait défiler en haut.
+ * @param {object} d - Dossier
+ * @param {string} id - Chapitre
+ */
+function capDosAller(d, id){
+  let f=capDosTrouve(d.blocs, id); if(!f) return;
+  _capDosUi.plies.delete(id); while(f&&f.parent){ _capDosUi.plies.delete(f.parent.id); f=capDosTrouve(d.blocs, f.parent.id); }
+  capHomeRender();
+  const n=capHomeFind(`.dos-ed [data-b="${id}"]`); if(!n) return;
+  n.scrollIntoView({block:'start'}); n.classList.add('dos-flash'); setTimeout(()=>n.classList.remove('dos-flash'),1200);
 }
 /**
  * Dossier ouvert : en-tête (titre, exports, réimport), consignes, retours, plan du dossier.
@@ -364,6 +390,8 @@ function capDosTypes(){ return [
 function capDosClick(e){
   const t=e.target, u=_capDosUi, W=capHomeWin(t);
   const o=t.closest('[data-dos-open]'); if(o){ u.cur=o.dataset.dosOpen; capHomeRender(); return true; }
+  const gb=t.closest('[data-dos-gab]'); if(gb){ capDosGenerer(gb.dataset.dosGab); return true; }   // 📘 rapport automatique (63)
+  const nv=t.closest('[data-dos-nav]'); if(nv){ const d=capDosCur(); if(d) capDosAller(d, nv.dataset.dosNav); return true; }
   const a=t.closest('[data-da]'); if(!a) return false;
   const act=a.dataset.da, d=capDosOf(a), bEl=t.closest('[data-b]'), f=d&&bEl?capDosTrouve(d.blocs, bEl.dataset.b):null;
   switch(act){
@@ -381,7 +409,8 @@ function capDosClick(e){
     case 'liste-voir': if(f){ if(u.listes.has(f.b.id)) u.listes.delete(f.b.id); else u.listes.add(f.b.id); capHomeRender(); } return true;
     case 'liste-x': if(f&&f.b.ids) f.b.ids.splice(+a.dataset.i,1); break;
     case 'conv': if(f){ const id=capDosConvertir(f); capHomeSave(); capHomeRender(); const n=capHomeFind(`.dos-ed [data-b="${id}"]`); if(n){ n.classList.add('dos-flash'); setTimeout(()=>n.classList.remove('dos-flash'),1200); } } return true;
-    case 'pli': if(f){ if(u.plies.has(f.b.id)) u.plies.delete(f.b.id); else u.plies.add(f.b.id); capHomeRender(); } return true;
+    case 'pli': if(f){ const y0=bEl.getBoundingClientRect().top; if(u.plies.has(f.b.id)) u.plies.delete(f.b.id); else u.plies.add(f.b.id); capHomeRender();
+      const n=capHomeFind(`.dos-ed [data-b="${f.b.id}"]`), sc=n&&n.closest('.hm-doc'); if(sc) sc.scrollTop+=n.getBoundingClientRect().top-y0; } return true;   // le chapitre reste à sa place à l'écran
     case 'ref-x': if(f){ f.b.ref=null; f.b.desc=false; } break;
     case 'up': case 'down': if(f) capHomeMove(f.l, f.i, act==='up'?-1:1); break;
     case 'out': if(f&&f.parent){ const p=capDosTrouve(d.blocs, f.parent.id); f.l.splice(f.i,1); p.l.splice(p.i+1,0,f.b); } break;
@@ -390,6 +419,8 @@ function capDosClick(e){
       if(n&&!W.confirm(_L(`Retirer le chapitre « ${f.b.titre} » et ses ${n} bloc(s) ?`))) return true; f.l.splice(f.i,1); } break;
     case 'ret': { const k=a.dataset.bid; if(u.ret.has(k)) u.ret.delete(k); else u.ret.add(k); capHomeRender(); return true; }
     case 'ret-tous': u.tous=!u.tous; capHomeRender(); return true;
+    case 'nav-pli': if(d){ capDosParcours(d.blocs,b=>{ if(b.k==='chap') u.plies.add(b.id); }); capHomeRender(); } return true;
+    case 'nav-depli': u.plies.clear(); capHomeRender(); return true;
     case 'ret-del': { const n=t.closest('[data-rid]'); if(d&&n&&W.confirm(_L('Supprimer ce retour ?'))) d.retours=d.retours.filter(r=>r.id!==n.dataset.rid); else return true; break; }
     case 'rev-go': capRevShow(a.dataset.cid); return true;
     case 'revue': if(d) capDosVersRevue(d); return true;
@@ -406,7 +437,6 @@ function capDosFocus(id){ const n=capHomeFind(`.dos-ed [data-b="${id}"] .dos-cha
  */
 function capDosInput(e){
   const t=e.target;
-  if(t.dataset&&t.dataset.dosGab!=null){ if(e.type==='change'&&t.value){ capDosGenerer(t.value); } return true; }   // 📘 rapport automatique (63)
   const ed=t.closest&&t.closest('.dos-ed'); if(!ed) return false;
   const d=_capHome.dossiers.find(x=>x.id===ed.dataset.dosid); if(!d) return true;
   if(t.dataset.dsf){ d[t.dataset.dsf]=t.value;
@@ -610,13 +640,14 @@ table{border-collapse:collapse;width:100%;font-size:12.5px;margin-top:6px}.ec{wi
 .form{border:1px solid #1f6feb;border-radius:6px;padding:8px;margin:6px 0;background:#f0f6ff}.form select{font:inherit;font-size:13px;padding:3px;border:1px solid #d0d7de;border-radius:6px;margin-right:6px}
 .form textarea{width:100%;min-height:70px;margin:6px 0;font:inherit;padding:6px;border:1px solid #d0d7de;border-radius:6px}.form .x{font-style:italic;color:#57606a;font-size:12.5px}
 .foot{margin-top:28px;color:#8c959f;font-size:11.5px}
-@media print{#bar,.cb,.relu,.form{display:none!important}body{background:#fff}#page{border:0;margin:0;padding:0;max-width:none}figure,.el,.com{break-inside:avoid}h2,h3,h4{break-after:avoid}}
+#side{display:none}@media (min-width:1400px){#side{display:block;position:fixed;top:64px;left:12px;width:calc((100vw - 1060px)/2);max-width:340px;bottom:12px;overflow:auto;font-size:12.5px;background:#fff;border:1px solid #d0d7de;border-radius:8px;padding:8px 10px}#side a.on{font-weight:700}}
+@media print{#bar,.cb,.relu,.form,#side{display:none!important}body{background:#fff}#page{border:0;margin:0;padding:0;max-width:none}figure,.el,.com{break-inside:avoid}h2,h3,h4{break-after:avoid}}
 @media (max-width:700px){#page{padding:14px;margin:0;border-radius:0}}
 </style>
 <script type="application/json" id="arcalyse-dossier-relecture">${json(d)}<\/script></head><body>
 <div id="bar"><b>📑</b><label>${T.relecteur} : <input id="me" placeholder="${capEsc(T.nom)}"></label><span id="cnt"></span><span class="sp"></span><span id="st"></span>
 <button id="b-print">${T.print}</button><button id="b-json">${T.json}</button><button id="b-save" class="pri">${T.save}</button></div>
-<div id="page"><div id="head"></div><div id="doc"></div><div class="foot">${T.produit}</div></div>
+<nav id="side"></nav><div id="page"><div id="head"></div><div id="doc"></div><div class="foot">${T.produit}</div></div>
 <script>(function(){
 var T=${json(T)}, TY=${json(types)}, CR=${json(crits)};
 var el=document.getElementById('arcalyse-dossier-relecture'), D=JSON.parse(el.textContent), dirty=false, form=null, selTxt='';
@@ -677,6 +708,7 @@ function render(){
     '<div class="box aide">'+esc(T.aide)+'</div>'+(t?'<nav><b>'+esc(T.sommaire)+'</b><ol>'+t+'</ol></nav>':'')+
     '<div class="blk" style="margin-top:12px"><b>'+esc(T.general)+'</b> <button data-new="">'+esc(T.generalAdd)+'</button></div>'+zone('');
   $('doc').innerHTML=D.contenu.map(node).join('');
+  $('side').innerHTML=t?'<b>'+esc(T.sommaire)+'</b><ol>'+t+'</ol>':'';
   $('me').value=D.relecteur||'';updAll();}
 function needMe(){if(me())return true;alert(T.noName);$('me').focus();return false;}
 document.addEventListener('mousedown',function(e){if(e.target.closest&&e.target.closest('[data-new]')){var s=window.getSelection();selTxt=s?String(s).replace(/\\s+/g,' ').trim().slice(0,600):'';}});
@@ -699,7 +731,7 @@ $('me').addEventListener('input',function(){D.relecteur=this.value;mark();updAll
 function dl(txt,type,name){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},500);}
 function base(){var r=/[^\\p{L}\\p{N}\\-]+/gu;return (D.titre||'dossier').replace(r,'_').slice(0,60)+(me()?'-'+me().replace(r,'_'):T.fileSuffix);}
 $('b-save').onclick=function(){if(!needMe())return;el.textContent=JSON.stringify(D).replace(/</g,'\\\\u003c');
-  var c=document.documentElement.cloneNode(true);['head','doc'].forEach(function(i){var n=c.querySelector('#'+i);if(n)n.innerHTML='';});
+  var c=document.documentElement.cloneNode(true);['head','doc','side'].forEach(function(i){var n=c.querySelector('#'+i);if(n)n.innerHTML='';});
   var st=c.querySelector('#st');if(st)st.innerHTML='';
   dl('<!DOCTYPE html>\\n'+c.outerHTML,'text/html',base()+'.html');dirty=false;$('st').innerHTML='<span class="msg">'+esc(T.saved)+'</span>';};
 $('b-json').onclick=function(){if(!needMe())return;dl(JSON.stringify({type:'arcalyse-dossier-retours',version:1,id:D.id,envoi:D.envoi,titre:D.titre,relecteur:me(),retours:D.retours,relus:D.relus},null,1),'application/json',base()+'.json');};

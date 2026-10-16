@@ -1792,4 +1792,14 @@ html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,2
 .dash-dl:empty{display:none;}
 .dash-w.dash-cur{outline:2px dashed var(--c-accent);outline-offset:2px;}
 .dash-img{width:100%;height:100%;object-fit:contain;display:block;background:#fff;border-radius:4px;}
+/* 📑 Dossiers : rapports automatiques, volet de navigation */
+.dos-rap{border:1px solid var(--c-border);border-radius:7px;padding:6px;display:flex;flex-direction:column;gap:4px;background:var(--c-bg2);}
+.dos-rap-t{font-size:12px;font-weight:700;color:var(--c-text);}
+.dos-rap-b{text-align:left;white-space:normal;line-height:1.3;}
+.dos-nav{margin-top:12px;border-top:1px solid var(--c-border);padding-top:8px;}
+.dos-nav-h{display:flex;align-items:center;gap:4px;margin-bottom:4px;font-size:12px;}
+.dos-nav-h .cap-lf-btn{padding:0 7px;}
+.dos-nav-i{font-size:12px;padding:2px 4px;border-radius:4px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--c-text);}
+.dos-nav-i:hover{background:var(--c-bg3);}
+.dos-nav-i .dos-num{font-weight:600;}
 

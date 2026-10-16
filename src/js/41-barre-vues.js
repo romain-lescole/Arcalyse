@@ -33,7 +33,8 @@ var CAP_NAV_ITEMS=[
   {k:'ana:pvmt',  l:_L('🏷 Propriétés'),              g:'ana'},
   {k:'ana:data',  l:_L('🗃 Données & interfaces'),     g:'ana'},
   {k:'ana:cts',   l:_L('⛓ Contraintes'),              g:'ana'},
-  {k:'dashboard', l:_L('📐 Tableau de bord'),   g:'',     t:_L('Tableaux de bord personnalisés : indicateurs, graphiques, tableaux')}
+  {k:'dashboard', l:_L('📐 Tableau de bord'),   g:'',     t:_L('Tableaux de bord personnalisés : indicateurs, graphiques, tableaux')},
+  {k:'home:rap',  l:_L('📘 Rapports automatiques'), p:_L('📘 Rapports'), g:'', t:_L('Rapports produits à partir du modèle selon un plan type (spécification boîte noire, dossier de conception boîte blanche), modifiables, exportables en HTML à commenter ou en Word (🏠 Accueil › 📑 Dossiers)')}
 ];
 /** Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton). */
 var CAP_NAV_GROUPS=[
@@ -45,7 +46,7 @@ var CAP_NAV_GROUPS=[
 /** Réglage par défaut : tous les menus affichés, 🏠 Accueil (tout à gauche), 🔲 Diagrammes Capella (en tête, à côté de 🗺 Relation Map), ▤ Tableau
  * et 📐 Tableau de bord en boutons directs ; ⚡ Chaînes et 🎬 Scénarios restent dans le menu 📡 Flux & interfaces
  * (tbl, diag, home, ch : marques d'un réglage qui connaît ces changements, voir capNavMigrate). */
-var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['home','table','diag','ana:xlay','dashboard'], tbl:1, diag:1, home:1, ch:1, xl:1};
+var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['home','table','diag','ana:xlay','dashboard','home:rap'], tbl:1, diag:1, home:1, ch:1, xl:1, rp:1};
 var _capNav=(()=>{ try{ const el=document.getElementById('cap-toolbar'); const o=el&&JSON.parse(el.textContent);
   if(o&&o.groups&&Array.isArray(o.pins)) return capNavMigrate(o); }catch(e){} return JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); })();
 var _capNavLast={explore:'cards', flux:'chains', ana:'ana:trace'};   // dernière sous-vue ouverte par menu
@@ -60,7 +61,8 @@ function capNavMigrate(o){
   if(!o.diag){ o.diag=1; if(!o.pins.includes('diag')){ const i=o.pins.indexOf('chains'); o.pins.splice(i<0?o.pins.length:i+1, 0, 'diag'); } }
   if(!o.home){ o.home=1; if(!o.pins.includes('home')) o.pins.unshift('home'); }   // 🏠 Accueil (version 2.2)
   if(!o.ch){ o.ch=1; o.pins=o.pins.filter(k=>k!=='chains'); }
-  if(!o.xl){ o.xl=1; if(!o.pins.includes('ana:xlay')){ const i=o.pins.indexOf('dashboard'); o.pins.splice(i<0?o.pins.length:i, 0, 'ana:xlay'); } }   // 🔗 Liens entre couches épinglé (une fois ; désépinglable)   // ⚡ Chaînes : dans le menu 📡 Flux & interfaces par défaut (version 2.2, une fois ; réépinglable)
+  if(!o.xl){ o.xl=1; if(!o.pins.includes('ana:xlay')){ const i=o.pins.indexOf('dashboard'); o.pins.splice(i<0?o.pins.length:i, 0, 'ana:xlay'); } }   // 🔗 Liens entre couches épinglé (une fois ; désépinglable)
+  if(!o.rp){ o.rp=1; if(!o.pins.includes('home:rap')){ const i=o.pins.indexOf('dashboard'); o.pins.splice(i<0?o.pins.length:i+1, 0, 'home:rap'); } }   // 📘 Rapports, à côté de 📐 Tableau de bord   // ⚡ Chaînes : dans le menu 📡 Flux & interfaces par défaut (version 2.2, une fois ; réépinglable)
   return o;
 }
 
@@ -77,6 +79,7 @@ function capNavSave(){
  */
 function capNavCurKey(force){
   if(!force&&currentMode!=='capella') return '';
+  if(capCurrentView==='home'&&typeof _capHomeUi!=='undefined'&&_capHomeUi.tab==='dos') return 'home:rap';   // 📑 Dossiers / 📘 Rapports
   return capCurrentView==='analyses'?'ana:'+capAnaSub:capCurrentView;
 }
 
@@ -86,6 +89,7 @@ function capNavCurKey(force){
 function capNavOpen(k){
   capNavClose();
   if(k==='@rm'){ document.getElementById('mode-rm')?.click(); return; }
+  if(k==='home:rap'){ capDosOuvrir(); return; }   // 📘 Rapports : onglet 📑 Dossiers de l'accueil
   if(k.startsWith('ana:')){ capAnaSub=k.slice(4); capShowView('analyses'); }
   else capShowView(k);
 }
@@ -131,8 +135,9 @@ function capNavRender(){
   h=h.replace(pin('home'),'');
   const home=document.getElementById('cap-tb-home'); if(home) home.innerHTML=_capNav.pins.includes('home')?pin('home'):'';
   // Vues épinglées sans menu placées après le dernier groupe (📐 Tableau de bord)
-  h=h.replace(pin('dashboard'),'');
+  h=h.replace(pin('dashboard'),'').replace(pin('home:rap'),'');
   if(_capNav.pins.includes('dashboard')) h+=pin('dashboard');
+  if(_capNav.pins.includes('home:rap')) h+=pin('home:rap');   // 📘 Rapports : à côté de 📐 Tableau de bord
   h+=_L(`<div class="tbtn" id="cap-nav-cfg" title="Toutes les vues, recherche (Ctrl+K) et réglage de la barre">☰</div>`);
   box.innerHTML=h;
   capNavSync();

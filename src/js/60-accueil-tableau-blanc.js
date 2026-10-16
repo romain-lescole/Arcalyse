@@ -285,11 +285,11 @@ function capHomePopsRender(){
     const [kind,id]=key.split(':'), o=capHomePopListe(kind).find(x=>x.id===id), host=w.document.querySelector('.hm-pop');
     if(!o||!host){ w.close(); _capHomePops.delete(key); return; }
     w.document.title=(kind==='doc'?(o.kind==='plan'?'📋 ':'☑ '):kind==='dos'?'📑 ':'🧾 ')+(o.titre||'')+' — Arcalyse';
-    const m=host.querySelector('.hm-main'), pos=m?m.scrollTop:0;
+    const pos=capHomeScrollGet(host);
     const corps=kind==='doc'?`<div class="hm-main"><div class="hm-doc" data-docid="${id}">${capHomeDocHtml(o)}</div></div>`
       :kind==='dos'?`<div class="hm-main"><div class="hm-doc dos-ed" data-dosid="${id}">${capDosHtml(o)}</div></div>`:capHomeBoardHtml(o,true);
     host.innerHTML=`<div class="hm-body">${corps}${capHomePaletteHtml()}</div>`;
-    const m2=host.querySelector('.hm-main'); if(m2) m2.scrollTop=pos;
+    capHomeScrollSet(host, pos);
     if(kind==='board') capHomeBoardAfter(host);
   });
 }

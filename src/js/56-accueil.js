@@ -137,7 +137,7 @@ function capRenderHome(box){
   capHomeWire(box);
   const u=_capHomeUi, nd=_capHome.docs.length, nb=_capHome.boards.length;
   const tab=(k,l,t)=>`<button class="phl-toggle-btn${u.tab===k?' active':''}" data-tab="${k}" title="${t}">${l}</button>`;
-  const pos=(box.querySelector('.hm-main')||{}).scrollTop||0;
+  const pos=capHomeScrollGet(box), cle=u.tab+':'+(u.tab==='dos'?_capDosUi.cur:u.tab==='docs'?u.doc:u.board);
   let corps;
   if(u.tab==='docs') corps=capHomeDocsHtml()+capHomePaletteHtml();
   else if(u.tab==='board') corps=capHomeBoardHtml(capHomeCurBoard())+capHomePaletteHtml();
@@ -149,9 +149,25 @@ function capRenderHome(box){
     tab('dos',_L(`📑 Dossiers de relecture`)+(_capHome.dossiers.length?` <span class="hm-n">${_capHome.dossiers.length}</span>`:''),_L('Documents chapitrés à faire relire : descriptions, diagrammes, texte libre ; export HTML à commenter ou Word, réimport des retours'))+`</span>`+
     `<span class="hm-bar-t">${capEsc(capRevProjectName()||capCurrentFileName||'')}</span></div>`+
     `<div class="hm-body">${corps}</div>`;
-  const m=box.querySelector('.hm-main'); if(m) m.scrollTop=pos;
+  if(box._hmCle===cle) capHomeScrollSet(box, pos); box._hmCle=cle;   // même onglet, même document : on reste où l'on était
+  if(typeof capNavSync==='function') capNavSync();
   if(u.tab==='board') capHomeBoardAfter(box);
 }
+
+/** Zones qui défilent dans l'accueil (vue ou fenêtre séparée) : page, liste de gauche, document ouvert. */
+const CAP_HOME_SCROLLS=['.hm-main','.hm-docs','.hm-doc'];
+/**
+ * Positions de défilement des zones de l'accueil, avant un nouveau rendu.
+ * @param {HTMLElement} box - Conteneur
+ * @returns {number[]} positions (dans l'ordre de CAP_HOME_SCROLLS)
+ */
+function capHomeScrollGet(box){ return CAP_HOME_SCROLLS.map(s=>{ const n=box.querySelector(s); return n?n.scrollTop:0; }); }
+/**
+ * Rétablit les positions de défilement après un rendu (plier un chapitre, cocher une case… ne ramène plus en haut).
+ * @param {HTMLElement} box - Conteneur
+ * @param {number[]} pos - capHomeScrollGet
+ */
+function capHomeScrollSet(box, pos){ CAP_HOME_SCROLLS.forEach((s,i)=>{ const n=box.querySelector(s); if(n&&pos[i]) n.scrollTop=pos[i]; }); }
 
 /* ── Onglet 🏠 Projet ──────────────────────────────────────────────────── */
 

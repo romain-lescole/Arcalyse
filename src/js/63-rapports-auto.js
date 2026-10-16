@@ -16,6 +16,7 @@
 /** @returns {{k:string, l:string, t:string}[]} plans types proposés (k : clé, l : libellé, t : description) */
 function capDosGabarits(){ return [
   {k:'sts', l:_L('📘 Spécification technique du système (boîte noire)'), t:_L('Plan type STS : objet, domaine d\'application, documents, terminologie, analyse fonctionnelle, exigences fonctionnelles par fonction système (entrées et sorties externes), interfaces externes, exigences opérationnelles, contraintes, vérification')},
+  {k:'sts2', l:_L('📘 Spécification technique du système (boîte noire, plan 2)'), t:_L('Plan type STS (exemple 2) : introduction, présentation du système (finalité, contexte, parties prenantes), exigences techniques (fonctionnelles, performances, interfaces fonctionnelles et physiques, opérationnelles et scénarios, contraintes, validation et certification)')},
   {k:'dcs', l:_L('📗 Dossier de conception du système (boîte blanche)'), t:_L('Plan type DCS : conception fonctionnelle / logique (architecture, flux externes et internes, données, chaînes, séquences), conception organique (architecture physique, interfaces, allocation), constituants et exigences dérivées')} ]; }
 
 /**
@@ -57,13 +58,14 @@ function capDosEchExt(F, f, sens){
 }
 
 /**
- * Plan type STS (boîte noire, couche SA).
+ * Éléments communs aux plans boîte noire (couche SA) : système, acteurs, fonctions du système, échanges avec l'extérieur,
+ * chapitre par fonction (description, entrées et sorties externes, diagrammes).
  * @param {object} o - capDosOutils()
- * @returns {object[]} chapitres
+ * @returns {object} {sys, acteurs, fns, elsDe, ceExt, feSys, chapFn}
  */
-function capDosPlanSts(o){
-  const {T, C, E, Lst, D, R, F}=o, sys=o.sys('SA');
-  const acteurs=o.comps('SA').filter(o.acteur), sysIds=new Set(o.comps('SA').filter(e=>!o.acteur(e)).map(e=>e.id));
+function capDosStsBase(o){
+  const {C, Lst, R, F}=o, sys=o.sys('SA');
+  const acteurs=o.comps('SA').filter(o.acteur);
   const fns=F.list.filter(f=>f.layer==='SA'&&f.alloc.some(a=>!a.actor)), fnEl=f=>capGetElementById_(f.id);
   const elsDe=(t,L)=>capAllElements.filter(e=>e.typeName===t&&o.couche(e)===L);
   const ceExt=elsDe('ComponentExchange','SA').filter(e=>{ const a=capDosBout(e.attrs.source), b=capDosBout(e.attrs.target); return a&&b&&(o.acteur(a)!==o.acteur(b)); });
@@ -73,6 +75,16 @@ function capDosPlanSts(o){
     C(_L('Sorties externes'), [Lst(_L(`Sorties externes de « ${f.name} »`), capDosEchExt(F,f,'out'), 'ech')]),
     ...capDosDiagsDe(f.id).slice(0,3).map(r=>({id:capHomeUid(), k:'diag', ref:capHomeRefDiag(r), desc:true, elems:false})),
     R(_L('exigences fonctionnelles et de performances associées à cette fonction'))], fnEl(f));
+  return {sys, acteurs, fns, elsDe, ceExt, feSys, chapFn};
+}
+
+/**
+ * Plan type STS (boîte noire, couche SA), exemple 1.
+ * @param {object} o - capDosOutils()
+ * @returns {object[]} chapitres
+ */
+function capDosPlanSts(o){
+  const {C, E, Lst, D, R}=o, {sys, acteurs, fns, elsDe, ceExt, feSys, chapFn}=capDosStsBase(o);
   return [
     C(_L('Objet'), [R(_L('objet du document, système concerné, phase du projet'))]),
     C(_L('Domaine d\'application'), [
@@ -99,6 +111,45 @@ function capDosPlanSts(o){
         C(_L('Transportabilité, stockage et conditionnement'),[R(_L('transport, stockage'))]), C(_L('Flexibilité et évolution'),[R(_L('évolutions'))]),
         C(_L('Retrait de service'),[R(_L('retrait de service'))]), C(_L('Conditions d\'environnement'),[R(_L('environnement climatique, mécanique…'))])]),
       C(_L('Exigences d\'intégration, de vérification et de validation'), [R(_L('méthodes de vérification, essais, recette'))])])];
+}
+
+/**
+ * Plan type STS (boîte noire, couche SA), exemple 2 : introduction, présentation du système, exigences techniques.
+ * @param {object} o - capDosOutils()
+ * @returns {object[]} chapitres
+ */
+function capDosPlanSts2(o){
+  const {C, E, Lst, D, R}=o, {sys, acteurs, fns, elsDe, ceExt, feSys, chapFn}=capDosStsBase(o);
+  const oa=capAllElements.filter(e=>/^(Entity|OperationalActor)$/.test(e.typeName)&&o.couche(e)==='OA');
+  const Rc=(titre, quoi)=>C(titre, [R(quoi)]);
+  return [
+    C(_L('Introduction'), [Rc(_L('Objet'), _L('objet du document, système concerné, phase du projet')),
+      Rc(_L('Documents (documents en référence, documents applicables)'), _L('documents en référence et documents applicables')),
+      Rc(_L('Terminologie'), _L('termes, sigles et acronymes'))]),
+    C(_L('Présentation du système'), [
+      C(_L('Finalité, mission et objectifs du système'), [E(sys), Lst(_L('Missions'), elsDe('Mission','SA')), Lst(_L('Capacités du système'), elsDe('Capability','SA')), ...D('SA',['MCB'],2)]),
+      C(_L('Contexte physique / organique et fonctionnel du système'), [...D('SA',['CC','SAB','CSA'],3), Lst(_L('Acteurs'), acteurs)]),
+      C(_L('Parties prenantes'), [Lst(_L('Entités et acteurs opérationnels'), oa), ...D('OA',['OEBD'],1), R(_L('parties prenantes'))])]),
+    C(_L('Exigences techniques'), [
+      C(_L('Exigences fonctionnelles'), fns.length?fns.slice(0,40).map(chapFn):[R(_L('aucune fonction allouée au système dans le modèle'))]),
+      Rc(_L('Exigences de performance'), _L('performances globales du système')),
+      C(_L('Exigences d\'interface'), [
+        C(_L('Interfaces fonctionnelles'), [Lst(_L('Entrées du système'), feSys('in'), 'ech'), Lst(_L('Sorties du système'), feSys('out'), 'ech')]),
+        C(_L('Interfaces physiques'), [Lst(_L('Échanges entre le système et son environnement'), ceExt, 'ech'), ...D('SA',['SAB'],1)])]),
+      C(_L('Exigences opérationnelles et scénarios opérationnels'), [
+        C(_L('Modes opérationnels et scénarios'), [...D('SA',['MSM'],3), ...D('SA',['ES','FS'],8), Lst(_L('Chaînes fonctionnelles'), elsDe('FunctionalChain','SA'))]),
+        Rc(_L('Exigences d\'ergonomie et de facteurs humains'), _L('ergonomie')),
+        Rc(_L('Exigences de sûreté de fonctionnement (sécurité, fiabilité, disponibilité, maintenabilité)'), _L('sûreté de fonctionnement')),
+        Rc(_L('Exigences de sécurité de l\'information'), _L('sécurité de l\'information')),
+        Rc(_L('Exigences d\'environnement opérationnel'), _L('environnement opérationnel')),
+        Rc(_L('Exigences de moyens'), _L('moyens')),
+        Rc(_L('Exigences de transport et de stockage'), _L('transport, stockage'))]),
+      C(_L('Contraintes'), [Rc(_L('Contraintes physiques'), _L('masse, volume…')), Rc(_L('Contraintes de conception et de réalisation'), _L('études ou solutions imposées, matériaux, fabrication')),
+        Rc(_L('Contraintes de réserve et d\'extension'), _L('réserves et extensions')), Rc(_L('Contraintes de mise en service'), _L('mise en service')),
+        Rc(_L('Contraintes de retrait de service'), _L('retrait de service')), Rc(_L('Contraintes de maintenance et de documentation'), _L('maintenance, documentation')),
+        Rc(_L('Contraintes de production'), _L('production')), Rc(_L('Contraintes de réglementation'), _L('réglementation')),
+        Rc(_L('Contraintes de coûts et de délai du produit'), _L('coûts, délais'))]),
+      Rc(_L('Exigences de validation et de certification'), _L('méthodes de validation, certification'))])];
 }
 
 /**
@@ -157,14 +208,15 @@ function capDosPlanDcs(o){
 
 /**
  * Crée un dossier selon un plan type, rempli à partir du modèle chargé, et l'ouvre.
- * @param {string} k - 'sts' | 'dcs'
+ * @param {string} k - 'sts' | 'sts2' | 'dcs'
  */
 function capDosGenerer(k){
   if(!capLoaded){ alert(_L('Chargez d\'abord un modèle.')); capHomeRender(); return; }
   const g=capDosGabarits().find(x=>x.k===k); if(!g) return;
   const o=capDosOutils(), projet=capRevProjectName()||capCurrentFileName||'';
   const d=capDosNouveau(g.l.replace(/^\S+\s/,'')+' — '+projet);
-  d.blocs=k==='sts'?capDosPlanSts(o):capDosPlanDcs(o);
+  d.blocs=k==='sts'?capDosPlanSts(o):k==='sts2'?capDosPlanSts2(o):capDosPlanDcs(o);
+  d.gab=k;
   d.consignes=_L('Document produit automatiquement à partir du modèle, puis complété : relisez chaque chapitre et commentez ce qui est faux, manquant ou ambigu.');
   capHomeSave(); capHomeRender();
   capWatchFlash(_L(`✔ ${g.l} créé : complétez les parties « [À rédiger — …] »`)+(o.reps.length?'':_L(' — ouvrez le .aird du projet puis régénérez pour y avoir les diagrammes')));
