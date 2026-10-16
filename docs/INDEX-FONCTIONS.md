@@ -171,7 +171,7 @@
 - `openHelpModal` (l. 160) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
 - `positionOverlay` (l. 256) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
 
-## 20-capella-chargement.js — 899 lignes
+## 20-capella-chargement.js — 931 lignes
 
 - `CAP_LAYERS` (l. 4)
 - `CAP_NS_LAYER` (l. 12)
@@ -181,35 +181,35 @@
 - `CAP_PKG_TYPES` (l. 16)
 - `CAP_TYPE_ICON` (l. 17)
 - `capBuildPageHtml` (l. 36) — Construit le HTML de la page actuelle (tout le HTML/CSS/JS de l'application), fichier
-- `capPageFileName` (l. 112) — Nom de fichier proposé pour la page sauvegardée.
-- `capSaveFullPage` (l. 114) — Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur).
-- `capSavePageDirect` (l. 129) — Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
-- `capEsc` (l. 162) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
-- `capLoadFile` (l. 180) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
-- `capApplyXmlDoc` (l. 223) — Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
-- `capReplaceConfirm` (l. 255) — Demande confirmation avant de remplacer le modèle affiché par un autre fichier : le travail non enregistré
-- `capReplacePreOk` (l. 284) — @returns {boolean} vrai si le remplacement du modèle vient d'être confirmé avant le sélecteur (la confirmation est consommée)
-- `capShowWelcome` (l. 290) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
-- `capWelcomeStatus` (l. 302) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
-- `capUpdateWelcome` (l. 308) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
-- `XSI_NS` (l. 365)
-- `capXType` (l. 367) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
-- `capTName` (l. 369) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
-- `capXId` (l. 371) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
-- `capXName` (l. 373) — Lit l'attribut 'name' d'un élément XML Capella.
-- `capResolveLayer` (l. 378) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
-- `capGetAttrs` (l. 384) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
-- `capBuildTree` (l. 395) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
-- `capRunBulk` (l. 421) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
-- `capBuildTypeRegistry` (l. 431) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
-- `capApplyPanelOnLoad` (l. 451) — Appelée après le chargement Capella : configure le panneau gauche RM.
-- `capInjectToArbo` (l. 526) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
-- `capInjectCapellaRelsToCriteria` (l. 630) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
-- `capInjectLinksToModel` (l. 671) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
-- `capFilterArboToLinked` (l. 715) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
-- `capInjectChainsToModal` (l. 754) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
-- `capRenderCurrentView` (l. 815) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
-- `capUpdateStatChips` (l. 890) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
+- `capPageFileName` (l. 123) — Nom de fichier proposé pour la page sauvegardée.
+- `capSaveFullPage` (l. 125) — Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur).
+- `capSavePageDirect` (l. 140) — Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
+- `capEsc` (l. 173) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
+- `capLoadFile` (l. 191) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
+- `capApplyXmlDoc` (l. 245) — Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
+- `capReplaceConfirm` (l. 279) — Demande confirmation avant de remplacer le modèle affiché par un autre fichier : le travail non enregistré
+- `capReplacePreOk` (l. 308) — @returns {boolean} vrai si le remplacement du modèle vient d'être confirmé avant le sélecteur (la confirmation est consommée)
+- `capShowWelcome` (l. 314) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
+- `capWelcomeStatus` (l. 326) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
+- `capUpdateWelcome` (l. 332) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
+- `XSI_NS` (l. 392)
+- `capXType` (l. 394) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
+- `capTName` (l. 396) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
+- `capXId` (l. 398) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
+- `capXName` (l. 400) — Lit l'attribut 'name' d'un élément XML Capella.
+- `capResolveLayer` (l. 405) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
+- `capGetAttrs` (l. 412) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
+- `capBuildTree` (l. 423) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
+- `capRunBulk` (l. 449) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
+- `capBuildTypeRegistry` (l. 459) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
+- `capApplyPanelOnLoad` (l. 479) — Appelée après le chargement Capella : configure le panneau gauche RM.
+- `capInjectToArbo` (l. 554) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
+- `capInjectCapellaRelsToCriteria` (l. 658) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
+- `capInjectLinksToModel` (l. 700) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
+- `capFilterArboToLinked` (l. 744) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
+- `capInjectChainsToModal` (l. 783) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
+- `capRenderCurrentView` (l. 844) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
+- `capUpdateStatChips` (l. 922) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
 ## 21-capella-vues-base.js — 1525 lignes
 
@@ -261,12 +261,12 @@
 - `capRenderTreeBody` (l. 1437) — Rend le contenu de 🌳 Arborescence selon l'affichage : arbre (avec une recherche : résultats et leurs
 - `capRenderTreeNode` (l. 1482) — Rend récursivement un nœud de l'arborescence Capella.
 
-## 22-capella-liens.js — 281 lignes
+## 22-capella-liens.js — 282 lignes
 
 - `CAP_LINK_SECTIONS` (l. 2)
 - `CAP_LINK_GROUPS` (l. 41) — Groupes de relations affichés dans la barre de la vue 🔗 Liens (ordre d'affichage).
 - `capComputeLinks` (l. 54) — Extrait et résout toutes les relations Capella depuis le XML :
-- `capRenderLinks` (l. 201) — Rend la vue Liens : barre (recherche, filtres groupés par famille de relations, export)
+- `capRenderLinks` (l. 202) — Rend la vue Liens : barre (recherche, filtres groupés par famille de relations, export)
 
 ## 23-chaines.js — 537 lignes
 
@@ -320,18 +320,18 @@
 - `capChainExportRefreshCount` (l. 540) — Met à jour le compteur de sélection et la case « Tout » sans re-rendre les cartes (garde les cartes ouvertes).
 - `capRenderChainMap` (l. 551) — Rend la sous-vue « Relation Map » : liste des chaînes groupée par catégorie ARCADIA à gauche,
 
-## 25-panneau-detail.js — 274 lignes
+## 25-panneau-detail.js — 276 lignes
 
 - `capOpenDetail` (l. 5) — Ouvre le panneau de détail (colonne droite de l'overlay) pour un élément Capella.
-- `CAP_DESC_TAGS` (l. 112) — Balises gardées dans une description Capella mise en forme (les autres sont remplacées par leur contenu).
-- `CAP_DESC_CSS` (l. 115) — Propriétés de style gardées (les couleurs de texte sont adaptées au thème ; fonds, positions et images retirés).
-- `capSafeHtml` (l. 123) — Description Capella (HTML) prête à afficher : balises et attributs filtrés (aucun script, aucun gestionnaire
-- `capDescSection` (l. 166) — Section « Description » du panneau de détail : la description mise en forme (aperçu), avec une bascule
-- `capDescToggle` (l. 175) — Bascule Aperçu / code HTML d'une section « Description ». @param {HTMLElement} b - Bouton cliqué
-- `capOpenDetailNode` (l. 182) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
-- `CAP_ELEM_VIEWS` (l. 190)
-- `capUpdateToolbarForView` (l. 196) — Met à jour les boutons actifs et les groupes de contrôles visibles
-- `capShowView` (l. 228) — Affiche une vue Capella (bascule en mode capella si besoin).
+- `CAP_DESC_TAGS` (l. 114) — Balises gardées dans une description Capella mise en forme (les autres sont remplacées par leur contenu).
+- `CAP_DESC_CSS` (l. 117) — Propriétés de style gardées (les couleurs de texte sont adaptées au thème ; fonds, positions et images retirés).
+- `capSafeHtml` (l. 125) — Description Capella (HTML) prête à afficher : balises et attributs filtrés (aucun script, aucun gestionnaire
+- `capDescSection` (l. 168) — Section « Description » du panneau de détail : la description mise en forme (aperçu), avec une bascule
+- `capDescToggle` (l. 177) — Bascule Aperçu / code HTML d'une section « Description ». @param {HTMLElement} b - Bouton cliqué
+- `capOpenDetailNode` (l. 184) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
+- `CAP_ELEM_VIEWS` (l. 192)
+- `capUpdateToolbarForView` (l. 198) — Met à jour les boutons actifs et les groupes de contrôles visibles
+- `capShowView` (l. 230) — Affiche une vue Capella (bascule en mode capella si besoin).
 
 ## 26-rapports-html.js — 101 lignes
 
@@ -339,22 +339,22 @@
 - `capReportClean` (l. 33) — Nettoie un fragment HTML de l'application pour un fichier autonome : retire les appels au panneau de détail
 - `capHtmlReport` (l. 44) — Construit et télécharge un rapport HTML autonome à onglets.
 
-## 27-interfaces-calculs.js — 325 lignes
+## 27-interfaces-calculs.js — 326 lignes
 
 - `capArchLayerOf` (l. 8) — Couche ARCADIA d'un élément XML, déduite de l'architecture qui le contient.
-- `capBuildIdMap` (l. 17) — Index id → élément XML, sur l'attribut plain « id » ET xmi:id (namespacé).
-- `capCsvDownload` (l. 31) — Télécharge un CSV (séparateur « ; », BOM UTF-8 pour Excel).
-- `capMatrixBuild` (l. 44) — Construit une matrice composant × composant (N² des interfaces).
-- `capFoldList` (l. 81) — Liste repliable d'éléments HTML séparés par des virgules : au-delà de `max`, le reste est masqué derrière « +N autres » (clic pour déplier /
-- `capDiagHtml` (l. 92) — Rend un rapport de contrôles : sections repliables avec compteur et niveau (ok / avertissement).
-- `capDetLink` (l. 109) — Lien HTML cliquable ouvrant le panneau de détail d'un élément Capella.
-- `CAP_PORT_ORIENTS` (l. 115) — Valeurs de l'attribut orientation d'un ComponentPort (OrientationPortKind).
-- `CAP_ORIENT_STYLE` (l. 117) — Style d'affichage de chaque orientation de port (couleur, libellé, info-bulle).
-- `CAP_CEX_DIRS` (l. 124) — Libellés des sens effectifs d'un Component Exchange.
-- `capNormOrient` (l. 135) — Normalise l'orientation d'un port Capella : attribut absent (valeur par défaut EMF) → 'UNSET'.
-- `capCexDirection` (l. 149) — Déduit le sens effectif d'un Component Exchange à partir des orientations de ses deux ports.
-- `capComputeCompExchanges` (l. 168) — Calcule les Component Exchanges : pour chaque ComponentExchange, résout source/target
-- `capComputePhysLinks` (l. 255) — Calcule les Physical Links du modèle : pour chaque PhysicalLink, résout les deux
+- `capBuildIdMap` (l. 18) — Index id → élément XML, sur l'attribut plain « id » ET xmi:id (namespacé).
+- `capCsvDownload` (l. 32) — Télécharge un CSV (séparateur « ; », BOM UTF-8 pour Excel).
+- `capMatrixBuild` (l. 45) — Construit une matrice composant × composant (N² des interfaces).
+- `capFoldList` (l. 82) — Liste repliable d'éléments HTML séparés par des virgules : au-delà de `max`, le reste est masqué derrière « +N autres » (clic pour déplier /
+- `capDiagHtml` (l. 93) — Rend un rapport de contrôles : sections repliables avec compteur et niveau (ok / avertissement).
+- `capDetLink` (l. 110) — Lien HTML cliquable ouvrant le panneau de détail d'un élément Capella.
+- `CAP_PORT_ORIENTS` (l. 116) — Valeurs de l'attribut orientation d'un ComponentPort (OrientationPortKind).
+- `CAP_ORIENT_STYLE` (l. 118) — Style d'affichage de chaque orientation de port (couleur, libellé, info-bulle).
+- `CAP_CEX_DIRS` (l. 125) — Libellés des sens effectifs d'un Component Exchange.
+- `capNormOrient` (l. 136) — Normalise l'orientation d'un port Capella : attribut absent (valeur par défaut EMF) → 'UNSET'.
+- `capCexDirection` (l. 150) — Déduit le sens effectif d'un Component Exchange à partir des orientations de ses deux ports.
+- `capComputeCompExchanges` (l. 169) — Calcule les Component Exchanges : pour chaque ComponentExchange, résout source/target
+- `capComputePhysLinks` (l. 256) — Calcule les Physical Links du modèle : pour chaque PhysicalLink, résout les deux
 
 ## 28-index-types.js — 113 lignes
 
@@ -409,7 +409,7 @@
 - `capNameQuality` (l. 29) — Analyse la qualité rédactionnelle d'un nom de fonction : verbe en tête (infinitif en français, forme de base en anglais),
 - `capFnNQ` (l. 58) — Diagnostic de nom d'une fonction, mis en cache (recalculé si les règles personnalisées changent). Fonctions racines ignorées.
 
-## 34-fonctions.js — 748 lignes
+## 34-fonctions.js — 751 lignes
 
 - `capIsCompEl` (l. 3) — Indique si un élément XML est un composant, une entité ou un acteur (porteur d'allocations).
 - `capCompAncestors` (l. 11) — Chaîne des composants englobants d'un composant, de la racine (le système) au parent direct.
@@ -429,7 +429,7 @@
 - `capRenderFunctionsView` (l. 714) — Vue « ƒ Fonctions » (onglet de 🔬 Analyses) : hiérarchie, tableau,
 - `capRenderAnalyses` (l. 725) — Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage.
 
-## 35-tableau-de-bord.js — 560 lignes
+## 35-tableau-de-bord.js — 568 lignes
 
 - `CAP_DASH_PAL` (l. 3) — Palette catégorielle à ordre fixe (contrôlée pour le daltonisme), déclinée pour thèmes clairs et sombres.
 - `CAP_DASH_AK` (l. 6) — Couleurs des natures d'allocation (identiques au filtre « Allocation » de ƒ Fonctions).
@@ -439,17 +439,17 @@
 - `capDashPct` (l. 28) — Taux arrondi d'éléments vérifiant un prédicat.
 - `capDashCount` (l. 34) — Compte les éléments par clé (une ou plusieurs clés par élément) et trie par effectif décroissant.
 - `capDashCatalog` (l. 44) — Catalogue de tous les indicateurs disponibles pour le modèle ouvert (fonctions, chaînes, interfaces,
-- `capDashValue` (l. 190) — Valeur (mise en cache) d'un indicateur du catalogue ; null si le modèle ne contient pas la donnée.
-- `capDashCut` (l. 203) — Échappe un texte et le tronque pour une étiquette de graphique.
-- `capDashLevel` (l. 208) — Niveau d'un pourcentage : bon (≥ 90), à surveiller (≥ 50), faible.
-- `capDashCats` (l. 214) — Prépare les catégories d'une répartition : tri, limite d'affichage et regroupement en « Autres ».
-- `capDashDraw` (l. 228) — Dessine le contenu d'un élément du tableau de bord.
-- `capDashSave` (l. 310) — Enregistre les tableaux de bord dans la page (bloc JSON repris par la 💾 Page HTML).
-- `capDashUid` (l. 316) — Identifiant court et unique pour un tableau de bord ou un élément.
-- `capDashExample` (l. 320) — Tableau de bord d'exemple adapté au modèle ouvert (synthèse de quelques indicateurs clés).
-- `capRenderDashboard` (l. 338) — Vue « 📐 Tableau de bord » : tableaux de bord personnalisés (indicateurs, graphiques, tableaux, textes),
-- `capDashPrint` (l. 464) — Imprime un tableau de bord au format A4 : les éléments sont redessinés à la taille de la page
-- `capDashEditor` (l. 501) — Fenêtre d'ajout ou de configuration d'un élément : catalogue des indicateurs (recherche, groupes),
+- `capDashValue` (l. 198) — Valeur (mise en cache) d'un indicateur du catalogue ; null si le modèle ne contient pas la donnée.
+- `capDashCut` (l. 211) — Échappe un texte et le tronque pour une étiquette de graphique.
+- `capDashLevel` (l. 216) — Niveau d'un pourcentage : bon (≥ 90), à surveiller (≥ 50), faible.
+- `capDashCats` (l. 222) — Prépare les catégories d'une répartition : tri, limite d'affichage et regroupement en « Autres ».
+- `capDashDraw` (l. 236) — Dessine le contenu d'un élément du tableau de bord.
+- `capDashSave` (l. 318) — Enregistre les tableaux de bord dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capDashUid` (l. 324) — Identifiant court et unique pour un tableau de bord ou un élément.
+- `capDashExample` (l. 328) — Tableau de bord d'exemple adapté au modèle ouvert (synthèse de quelques indicateurs clés).
+- `capRenderDashboard` (l. 346) — Vue « 📐 Tableau de bord » : tableaux de bord personnalisés (indicateurs, graphiques, tableaux, textes),
+- `capDashPrint` (l. 472) — Imprime un tableau de bord au format A4 : les éléments sont redessinés à la taille de la page
+- `capDashEditor` (l. 509) — Fenêtre d'ajout ou de configuration d'un élément : catalogue des indicateurs (recherche, groupes),
 
 ## 36-component-exchange.js — 356 lignes
 
@@ -461,15 +461,15 @@
 
 - `capOpenDetailById` (l. 7) — Ouvre le panneau de détail Capella pour un des deux IDs fournis (src ou tgt).
 
-## 38-theme-perso.js — 127 lignes
+## 38-theme-perso.js — 129 lignes
 
 - `CAP_THEME_FIELDS` (l. 7) — Variables de couleur personnalisables : [variable CSS, libellé, groupe].
 - `CAP_THEME_LAYERS` (l. 16) — Couches ARCADIA dont la couleur est personnalisable : [clé CAP_LAYERS, libellé].
 - `capThemeSave` (l. 24) — Enregistre le thème personnalisé dans la page (bloc JSON repris par la 💾 Page HTML).
 - `capThemeRegister` (l. 30) — Déclare (ou retire) le thème personnalisé dans THEMES et dans le sélecteur de thème.
 - `capThemeLayerDefaults` (l. 40) — Couleurs d'origine des couches ARCADIA (mémorisées au premier appel).
-- `capThemeLayersApply` (l. 48) — Applique les couleurs de couches du thème personnalisé (ou celles d'origine pour un autre thème)
-- `capThemeEditor` (l. 59) — Ouvre l'éditeur du thème personnalisé : toutes les couleurs regroupées (fonds, textes, statuts,
+- `capThemeLayersApply` (l. 50) — Applique les couleurs de couches du thème personnalisé (ou celles d'origine pour un autre thème)
+- `capThemeEditor` (l. 61) — Ouvre l'éditeur du thème personnalisé : toutes les couleurs regroupées (fonds, textes, statuts,
 
 ## 39-exigences-donnees.js — 642 lignes
 
@@ -540,23 +540,24 @@
 - `capWatchShowDelta` (l. 439) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 519) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 298 lignes
+## 41-barre-vues.js — 316 lignes
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
-- `CAP_NAV_GROUPS` (l. 37) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
-- `CAP_NAV_DEFAULT` (l. 45) — Réglage par défaut : tous les menus affichés, 🔲 Diagrammes Capella (en tête, à côté de 🗺 Relation Map), ▤ Tableau, ⚡ Chaînes,
-- `capNavMigrate` (l. 55) — Met à jour un réglage de barre enregistré avant l'arrivée du bouton ▤ Tableau (ancienne 📊 Table View
-- `capNavSave` (l. 62) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
-- `capNavCurKey` (l. 72) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
-- `capNavOpen` (l. 80) — Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
-- `capNavGroupOpen` (l. 90) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
-- `capNavFluxTabs` (l. 100) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
-- `capNavRender` (l. 110) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
-- `capNavSync` (l. 135) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
-- `capNavClose` (l. 150) — Ferme le menu déroulant de la barre des vues.
-- `capNavRow` (l. 159) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
-- `capNavMenu` (l. 169) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
-- `capNavMenuFill` (l. 216) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+- `CAP_NAV_GROUPS` (l. 46) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
+- `CAP_NAV_DEFAULT` (l. 55) — Réglage par défaut : tous les menus affichés, 🔲 Diagrammes Capella (en tête, à côté de 🗺 Relation Map), ▤ Tableau, ⚡ Chaînes,
+- `capNavMigrate` (l. 65) — Met à jour un réglage de barre enregistré avant l'arrivée du bouton ▤ Tableau (ancienne 📊 Table View
+- `capNavSave` (l. 72) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capNavCurKey` (l. 82) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
+- `capNavItems` (l. 89) — Vues du catalogue disponibles pour le format du modèle affiché (Capella ou ◇ SysML v2, voir capNavFmtOk).
+- `capNavOpen` (l. 94) — Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
+- `capNavGroupOpen` (l. 105) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
+- `capNavFluxTabs` (l. 115) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
+- `capNavRender` (l. 125) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
+- `capNavSync` (l. 152) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
+- `capNavClose` (l. 167) — Ferme le menu déroulant de la barre des vues.
+- `capNavRow` (l. 176) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
+- `capNavMenu` (l. 186) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
+- `capNavMenuFill` (l. 233) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
 
 ## 42-tableaux-analyses.js — 154 lignes
 
@@ -775,59 +776,59 @@
 - `capCsvxBuild` (l. 85) — Construit l'en-tête et les lignes finales d'un export selon les choix enregistrés.
 - `capCsvExport` (l. 102) — Export CSV enrichi : ouvre la fenêtre « Colonnes de l'export » puis télécharge le fichier.
 
-## 54-diagrammes.js — 1039 lignes
+## 54-diagrammes.js — 1058 lignes
 
 - `CAP_DIAG_COUCHES` (l. 18) — Ordre des couches ARCADIA dans la liste et les exports.
 - `capDiagDispo` (l. 21) — @returns {boolean} vrai si la visionneuse d'Arcature est embarquée dans la page
 - `capIco` (l. 34) — Icône d'un élément du modèle, comme dans Capella (variante selon acteur, humain, nature, genre de fonction…),
-- `capIcoType` (l. 52) — Icône d'un type d'élément (sans variante), sans modèle chargé.
-- `capDiagLoadAird` (l. 65) — Charge un fichier .aird (diagrammes du projet). Sans modèle chargé, il est gardé en attente du .capella.
-- `capDiagPickAird` (l. 85) — 📂 Ouvrir le .aird : sélecteur à accès direct ouvert dans le dossier du .capella (Edge/Chrome,
-- `capOpenProjectFolder` (l. 104) — 📁 Dossier du projet (écran d'accueil) : charge ensemble le modèle .capella et ses diagrammes .aird.
-- `capProjectScanDir` (l. 119) — Lit un dossier du projet (sélecteur ou dossier déposé) sur 2 niveaux et charge le modèle et ses diagrammes.
-- `capProjectFromFiles` (l. 137) — Charge un projet à partir des fichiers d'un dossier : le .capella (choisi dans l'écran d'accueil s'il y en a plusieurs)
-- `capDiagMsg` (l. 161) — Affiche un message bref dans la barre de la vue. @param {string} t - Texte
-- `capDiagEnsure` (l. 164) — Crée la vue (une fois) : barre (ouvrir, export, sélection), liste classée à gauche, hôte de la visionneuse.
-- `capDiagSplit` (l. 195) — Séparateur entre l'explorateur et le diagramme : glisser pour régler la largeur de l'explorateur.
-- `capDiagCarte` (l. 212) — ▣ Carte (mini-carte de la visionneuse) : sous l'explorateur (repliable) ou dans le diagramme, comme dans la visionneuse.
-- `capDiagBarre` (l. 236) — Barre du haut : 📂 Ouvrir le .aird…, ⬇ Exporter…, ☐ Sélectionner…, fichier chargé.
-- `capDiagFit` (l. 250) — Ajuste la hauteur de la vue à la fenêtre.
-- `capDiagSync` (l. 258) — Transmet à la visionneuse le modèle courant (texte XML) et le .aird en attente, si besoin.
-- `capDiagBarreVd` (l. 284) — Réorganise la barre de la visionneuse au-dessus du diagramme, pour qu'elle ne bouge plus d'un diagramme à l'autre :
-- `capDiagRevSlot` (l. 312) — Remplit l'emplacement de la revue (📝 Note de revue, 💬 Calque) à côté de la recherche du diagramme.
-- `capDiagChainesFiltre` (l. 321) — Liste « Chaînes et chemins » : ne garde que les chaînes fonctionnelles et chemins physiques dessinés dans
-- `capRenderDiagrams` (l. 332) — Rendu de la vue 🔲 Diagrammes Capella.
-- `capDiagReps` (l. 346) — @returns {object[]} représentations du .aird chargé ({uid, nom, type, sigle, genre, couche})
-- `capDiagCouche` (l. 349) — Libellé et couleur d'une couche ARCADIA. @param {string} c - OA, SA, LA, PA, EPBS… @returns {{label:string,color:string,bg:string}}
-- `capDiagRang` (l. 352) — Rang d'une couche pour le tri. @param {string} c - Couche @returns {number}
-- `capDiagIcones` (l. 355) — Icône de chaque diagramme, reprise de la liste (masquée) de la visionneuse. @returns {Map<string,string>} uid → SVG
-- `capDiagFiltrees` (l. 364) — Représentations filtrées par la recherche (nom, type, sigle, couche). @returns {object[]}
-- `capDiagGroupes` (l. 375) — Regroupe les représentations selon le classement choisi.
-- `capDiagOuvert` (l. 410) — Un groupe est-il ouvert ? Couches ouvertes, types repliés par défaut ; tout est ouvert pendant une recherche.
-- `capDiagListe` (l. 417) — Rend la liste classée (panneau gauche).
-- `capDiagMarquerActif` (l. 463) — Met en évidence le diagramme ouvert dans la liste.
-- `capDiagRepsGroupe` (l. 472) — Représentations d'un groupe de la liste (selon la clé).
-- `capDiagClic` (l. 479) — Clics de la vue : barre (ouvrir, export, sélection), carte, groupes repliables, diagrammes. @param {MouseEvent} e
-- `capDiagChange` (l. 506) — Cases à cocher (diagramme, groupe, tout) et choix du classement. @param {Event} e
-- `capDiagOpen` (l. 521) — Ouvre un diagramme dans la vue 🔲 Diagrammes Capella et y met un élément en évidence.
-- `capDiagInfo` (l. 532) — Panneau de détail d'un diagramme (comme pour un élément du modèle) : type, couche, sigle, nature, identifiant,
-- `capDiagDetail` (l. 570) — Section « Diagrammes » du panneau de détail : représentations de l'élément et diagrammes où il est dessiné.
-- `capDiagSvg` (l. 588) — SVG autonome d'un diagramme, tel que l'exporte la visionneuse (menu ⬇ Exporter › SVG) :
-- `capDiagPlanche` (l. 620) — Planche d'un diagramme : cadre, en-tête (couche, sigle, nom, type), diagramme centré, cartouche technique
-- `capDiagTexte` (l. 699) — Texte brut d'une description Capella (attribut XML contenant du HTML).
-- `capDiagMeta` (l. 711) — Description et élément représenté d'un diagramme, lus dans le .aird (DRepresentationDescriptor : documentation, target).
-- `capDiagElements` (l. 731) — Annexe d'un diagramme : éléments du modèle représentés (attributs data-sem du SVG), triés par couche, type et nom.
-- `capDiagAnnexeCsv` (l. 744) — Annexe au format CSV (séparateur ;, BOM) : en-tête du diagramme, description, puis éléments représentés.
-- `CAP_DIAG_ANX` (l. 751) — Lignes d'annexe par page PDF.
-- `capDiagAnnexePages` (l. 760) — Pages d'annexe du PDF (A4 paysage) : tableau des éléments représentés.
-- `capDiagCibles` (l. 796) — Diagrammes visés par l'export, dans l'ordre de la liste (couche, type, nom).
-- `capDiagExportDialog` (l. 803) — Fenêtre « Exporter des diagrammes » : portée, mise en page, aperçu de la planche, formats.
-- `capDiagApercu` (l. 848) — Aperçu de la planche du premier diagramme visé (diagramme ouvert s'il en fait partie).
-- `capDiagPdfSommaire` (l. 867) — Page de sommaire du PDF (paysage A4) : projet, date, nombre de planches, liste par couche et type avec numéros de page.
-- `CAP_DIAG_PDF_ALERTE` (l. 909) — Seuil (Mo) au-delà duquel l'export PDF demande confirmation.
-- `capDiagPdfEstimation` (l. 919) — Taille estimée du PDF, d'après la surface des planches rastérisées (même bornes que capSvgToCanvas)
-- `capDiagExport` (l. 933) — Export groupé des diagrammes en planches : capture de tous les diagrammes, puis pagination
-- `capDiagExportHtml` (l. 1004) — Rapport HTML autonome : onglet Sommaire (tableau avec liens) et onglet Planches
+- `capIcoType` (l. 53) — Icône d'un type d'élément (sans variante), sans modèle chargé.
+- `capDiagLoadAird` (l. 67) — Charge un fichier .aird (diagrammes du projet). Sans modèle chargé, il est gardé en attente du .capella.
+- `capDiagPickAird` (l. 87) — 📂 Ouvrir le .aird : sélecteur à accès direct ouvert dans le dossier du .capella (Edge/Chrome,
+- `capOpenProjectFolder` (l. 106) — 📁 Dossier du projet (écran d'accueil) : charge ensemble le modèle .capella et ses diagrammes .aird.
+- `capProjectScanDir` (l. 121) — Lit un dossier du projet (sélecteur ou dossier déposé) sur 2 niveaux et charge le modèle et ses diagrammes.
+- `capProjectFromFiles` (l. 142) — Charge un projet à partir des fichiers d'un dossier : le .capella (choisi dans l'écran d'accueil s'il y en a plusieurs)
+- `capDiagMsg` (l. 180) — Affiche un message bref dans la barre de la vue. @param {string} t - Texte
+- `capDiagEnsure` (l. 183) — Crée la vue (une fois) : barre (ouvrir, export, sélection), liste classée à gauche, hôte de la visionneuse.
+- `capDiagSplit` (l. 214) — Séparateur entre l'explorateur et le diagramme : glisser pour régler la largeur de l'explorateur.
+- `capDiagCarte` (l. 231) — ▣ Carte (mini-carte de la visionneuse) : sous l'explorateur (repliable) ou dans le diagramme, comme dans la visionneuse.
+- `capDiagBarre` (l. 255) — Barre du haut : 📂 Ouvrir le .aird…, ⬇ Exporter…, ☐ Sélectionner…, fichier chargé.
+- `capDiagFit` (l. 269) — Ajuste la hauteur de la vue à la fenêtre.
+- `capDiagSync` (l. 277) — Transmet à la visionneuse le modèle courant (texte XML) et le .aird en attente, si besoin.
+- `capDiagBarreVd` (l. 303) — Réorganise la barre de la visionneuse au-dessus du diagramme, pour qu'elle ne bouge plus d'un diagramme à l'autre :
+- `capDiagRevSlot` (l. 331) — Remplit l'emplacement de la revue (📝 Note de revue, 💬 Calque) à côté de la recherche du diagramme.
+- `capDiagChainesFiltre` (l. 340) — Liste « Chaînes et chemins » : ne garde que les chaînes fonctionnelles et chemins physiques dessinés dans
+- `capRenderDiagrams` (l. 351) — Rendu de la vue 🔲 Diagrammes Capella.
+- `capDiagReps` (l. 365) — @returns {object[]} représentations du .aird chargé ({uid, nom, type, sigle, genre, couche})
+- `capDiagCouche` (l. 368) — Libellé et couleur d'une couche ARCADIA. @param {string} c - OA, SA, LA, PA, EPBS… @returns {{label:string,color:string,bg:string}}
+- `capDiagRang` (l. 371) — Rang d'une couche pour le tri. @param {string} c - Couche @returns {number}
+- `capDiagIcones` (l. 374) — Icône de chaque diagramme, reprise de la liste (masquée) de la visionneuse. @returns {Map<string,string>} uid → SVG
+- `capDiagFiltrees` (l. 383) — Représentations filtrées par la recherche (nom, type, sigle, couche). @returns {object[]}
+- `capDiagGroupes` (l. 394) — Regroupe les représentations selon le classement choisi.
+- `capDiagOuvert` (l. 429) — Un groupe est-il ouvert ? Couches ouvertes, types repliés par défaut ; tout est ouvert pendant une recherche.
+- `capDiagListe` (l. 436) — Rend la liste classée (panneau gauche).
+- `capDiagMarquerActif` (l. 482) — Met en évidence le diagramme ouvert dans la liste.
+- `capDiagRepsGroupe` (l. 491) — Représentations d'un groupe de la liste (selon la clé).
+- `capDiagClic` (l. 498) — Clics de la vue : barre (ouvrir, export, sélection), carte, groupes repliables, diagrammes. @param {MouseEvent} e
+- `capDiagChange` (l. 525) — Cases à cocher (diagramme, groupe, tout) et choix du classement. @param {Event} e
+- `capDiagOpen` (l. 540) — Ouvre un diagramme dans la vue 🔲 Diagrammes Capella et y met un élément en évidence.
+- `capDiagInfo` (l. 551) — Panneau de détail d'un diagramme (comme pour un élément du modèle) : type, couche, sigle, nature, identifiant,
+- `capDiagDetail` (l. 589) — Section « Diagrammes » du panneau de détail : représentations de l'élément et diagrammes où il est dessiné.
+- `capDiagSvg` (l. 607) — SVG autonome d'un diagramme, tel que l'exporte la visionneuse (menu ⬇ Exporter › SVG) :
+- `capDiagPlanche` (l. 639) — Planche d'un diagramme : cadre, en-tête (couche, sigle, nom, type), diagramme centré, cartouche technique
+- `capDiagTexte` (l. 718) — Texte brut d'une description Capella (attribut XML contenant du HTML).
+- `capDiagMeta` (l. 730) — Description et élément représenté d'un diagramme, lus dans le .aird (DRepresentationDescriptor : documentation, target).
+- `capDiagElements` (l. 750) — Annexe d'un diagramme : éléments du modèle représentés (attributs data-sem du SVG), triés par couche, type et nom.
+- `capDiagAnnexeCsv` (l. 763) — Annexe au format CSV (séparateur ;, BOM) : en-tête du diagramme, description, puis éléments représentés.
+- `CAP_DIAG_ANX` (l. 770) — Lignes d'annexe par page PDF.
+- `capDiagAnnexePages` (l. 779) — Pages d'annexe du PDF (A4 paysage) : tableau des éléments représentés.
+- `capDiagCibles` (l. 815) — Diagrammes visés par l'export, dans l'ordre de la liste (couche, type, nom).
+- `capDiagExportDialog` (l. 822) — Fenêtre « Exporter des diagrammes » : portée, mise en page, aperçu de la planche, formats.
+- `capDiagApercu` (l. 867) — Aperçu de la planche du premier diagramme visé (diagramme ouvert s'il en fait partie).
+- `capDiagPdfSommaire` (l. 886) — Page de sommaire du PDF (paysage A4) : projet, date, nombre de planches, liste par couche et type avec numéros de page.
+- `CAP_DIAG_PDF_ALERTE` (l. 928) — Seuil (Mo) au-delà duquel l'export PDF demande confirmation.
+- `capDiagPdfEstimation` (l. 938) — Taille estimée du PDF, d'après la surface des planches rastérisées (même bornes que capSvgToCanvas)
+- `capDiagExport` (l. 952) — Export groupé des diagrammes en planches : capture de tous les diagrammes, puis pagination
+- `capDiagExportHtml` (l. 1023) — Rapport HTML autonome : onglet Sommaire (tableau avec liens) et onglet Planches
 
 ## 55-revue.js — 1190 lignes
 
@@ -923,3 +924,149 @@
 - `capRevImport` (l. 1097) — Importe un fichier .json de revue et le fusionne avec les commentaires de la page.
 - `capRevImportConfirm` (l. 1125) — Fenêtre d'avertissement avant d'importer une revue qui ne semble pas porter sur le modèle chargé :
 - `capRevMerge` (l. 1159) — Fusionne une revue importée : nouveaux commentaires ajoutés (renumérotés si leur numéro est pris),
+
+## 56-sysml-langage.js — 1119 lignes
+
+- `CAP_SY_KEYWORDS` (l. 9) — Mots réservés de SysML 2.0 (§8.2.2.1.2) : jamais utilisables comme nom simple.
+- `CAP_SY_SYMBOLS` (l. 16) — Symboles (KerML §8.2.2.7), du plus long au plus court : règle du plus long symbole possible.
+- `CAP_SY_KIND_KW` (l. 20) — Mot-clé d'élément → racine de la métaclasse (« Part » → PartDefinition / PartUsage).
+- `CAP_SY_PREFIX_KW` (l. 25) — Préfixes d'une déclaration (modificateurs) : ils précèdent le mot-clé de l'élément.
+- `CAP_SY_CLAUSE_KW` (l. 27) — Mots-clés introduisant une clause dans l'en-tête d'une déclaration (arrêtent une expression de valeur).
+- `CAP_SY_OCC_KINDS` (l. 29) — Éléments « comportementaux » d'un corps (cible ou source implicite d'une succession « then »).
+- `capSyLex` (l. 41) — Découpe un texte .sysml en lexèmes. Les notes (// et //* … *\/) sont ignorées ; les commentaires /* … *&#47; deviennent
+- `capSyCmtBody` (l. 106) — Corps d'un commentaire /* … *&#47; débarrassé des astérisques de début de ligne et des marges.
+- `capSyTokText` (l. 114) — Texte lisible d'une suite de lexèmes (expression, valeur, garde) : espaces placés comme dans la notation textuelle.
+- `capSyRefOf` (l. 131) — Référence écrite par une suite de lexèmes de nom qualifié (noms non restreints gardés sans apostrophes, comme capSyQName).
+- `capSyQuote` (l. 136) — Écrit un nom tel qu'il doit apparaître dans un texte SysML : entre apostrophes s'il n'est pas un nom simple ASCII ou s'il est réservé.
+- `capSyNew` (l. 147) — Crée un élément du graphe SysML.
+- `capSyParse` (l. 161) — Analyse un texte .sysml : renvoie la racine (espace de noms du fichier) et les diagnostics. Tolérante : en cas de
+- `capSyPeek` (l. 171) — Lexème courant (sans avancer). @param {object} P @param {number} [k] - Décalage
+- `capSyNext` (l. 173) — Lexème courant (puis avance). @param {object} P
+- `capSyIs` (l. 175) — Vrai si le lexème courant est le mot-clé ou le symbole v. @param {object} P @param {string} v @param {number} [k]
+- `capSyEat` (l. 177) — Consomme le mot-clé ou le symbole v s'il est présent. @param {object} P @param {string} v @returns {boolean}
+- `capSyErr` (l. 179) — Note une erreur de syntaxe au lexème courant. @param {object} P @param {string} msg @param {object} [tok]
+- `capSyBody` (l. 186) — Analyse un corps « { … } » (ou le fichier entier) : une suite de membres jusqu'à « } ».
+- `capSySkip` (l. 206) — Saute jusqu'au prochain « ; » (consommé) ou « } » (laissé), en sautant les corps « { … } » équilibrés.
+- `capSyQName` (l. 224) — Lit un nom qualifié ou une chaîne de features (« A::B », « a.b.c », « $::X », « ~T ») à partir du lexème courant.
+- `capSyMember` (l. 242) — Analyse un membre d'un corps : déclaration (définition ou usage), relation (import, alias, satisfy, connect, flow,
+- `capSyNameDecl` (l. 290) — Lit la déclaration de nom d'un élément : « <shortName> nom » (chacun facultatif).
+- `capSyImport` (l. 298) — Import « [visibilité] import [all] A::B | A::* | A::** | A::*::** [filtre] ; ».
+- `capSyAlias` (l. 314) — Alias « alias Nom for A::B ; ». @param {object} P @param {object} owner @param {string} vis @param {object} t
+- `capSyDependency` (l. 322) — Dépendance « dependency [nom] [from] A, B to C, D ; ». @param {object} P @param {object} owner @param {string} vis @param {object} t
+- `capSyMetadataUsage` (l. 336) — Usage de métadonnée « @Type [about …] { … } » ou « metadata [nom :] Type … ».
+- `capSyBalanced` (l. 348) — Lit une suite équilibrée « ( … ) » ou « [ … ] » (délimiteurs compris).
+- `capSyKeyword` (l. 366) — Traite le mot-clé (ou l'absence de mot-clé) d'une déclaration et crée l'élément correspondant.
+- `capSySimpleRef` (l. 541) — Vrai si le lexème courant commence une simple référence suivie de « ; » (« then done; », « perform a.b; »).
+- `capSyRefStart` (l. 550) — Vrai si le lexème courant commence une chaîne qualifiée (« a.b », « A::B ») : une référence et non un nom déclaré.
+- `capSyAhead` (l. 552) — Vrai si le mot-clé w apparaît dans l'en-tête courant, avant « ; » ou « { ». @param {object} P @param {string} w @returns {boolean}
+- `capSyHasThen` (l. 559) — Vrai si l'en-tête courant contient « then » avant « ; » ou « { » (transition abrégée). @param {object} P @returns {boolean}
+- `capSyCondSuccession` (l. 567) — Vrai si « if g then x ; » est une succession conditionnelle (après un nœud de décision) et non une action if.
+- `capSyInState` (l. 574) — Vrai si l'élément est un état (définition ou usage) : contexte des transitions abrégées. @param {object} el @returns {boolean}
+- `capSyUsageStart` (l. 577) — Vrai si le lexème courant commence un usage sans mot-clé (« x : T ; », « :>> m = 1 ; », « red ; »).
+- `capSySuccession` (l. 597) — Crée une succession entre deux membres d'un corps (« then », « first … then », « if g then x »).
+- `capSyTransitionTail` (l. 606) — Fin d'une transition : « [accept déclencheur [via p]] [if garde] [do effet] then cible ».
+- `capSyBindTail` (l. 622) — Fin d'un « bind a = b ». @param {object} P @param {object} el
+- `capSyActionTail` (l. 630) — Fin d'une action élémentaire (accept, send, assign, if, while, for…) : texte gardé, références utiles relevées, corps éventuel.
+- `capSyHeader` (l. 664) — En-tête générique d'une déclaration : « [<court>] [nom] [: T] [:> A] [:>> B] [::> C] [[m]] [= valeur] [clauses] » puis « ; » ou corps.
+- `capSyHeaderTail` (l. 679) — Suite d'un en-tête (relations, multiplicité, valeur, clauses) puis « ; » ou « { corps } ».
+- `capSyUntilClause` (l. 733) — Lit une expression jusqu'à « ; », « { », « } » ou un mot-clé de clause (au niveau 0 des parenthèses).
+- `capSyConnectEnds` (l. 749) — Extrémités d'une connexion : « a to b » ou « ( e1 ::> a, e2 ::> b, … ) ».
+- `capSyBuildModel` (l. 774) — Construit un modèle SysML à partir de plusieurs fichiers : analyse, effective des noms (redéfinitions), index des membres,
+- `capSyLibHas` (l. 808) — Vrai si un paquetage de la bibliothèque standard porte ce nom (index embarqué, 57-sysml-bibliotheque.js).
+- `capSyLibMembers` (l. 811) — Membres connus d'un paquetage de la bibliothèque standard (Set de noms), ou null.
+- `capSyGenerals` (l. 822) — Généraux d'un élément (types, spécialisations, sous-ensembles, redéfinitions, références) déjà résolus dans le projet.
+- `capSyLocal` (l. 837) — Recherche « locale » d'un nom dans un espace de noms : membres possédés, alias, membres hérités, imports.
+- `capSyHasLibGeneral` (l. 875) — Vrai si l'élément (ou l'un de ses généraux du projet) a un général dans la bibliothèque standard (ShapeItems::Box…) :
+- `capSyDeep` (l. 888) — Recherche récursive d'un nom dans toute la descendance d'un espace de noms (import « ::** »).
+- `capSyFeature` (l. 897) — Membre visible d'un élément, en suivant ses types (pour « a.b » : b est cherché parmi les membres de a et de ses types).
+- `capSyResolve` (l. 914) — Résout une référence écrite (« Moteur », « ISQ::mass », « moteurs.arbre », « $::A::B ») depuis un espace de noms.
+- `capSyResolveSelf` (l. 963) — Résout une référence portée par un élément depuis son propriétaire, en ignorant d'abord l'élément lui-même (une
+- `capSyResolveAll` (l. 969) — Résout toutes les références de tous les éléments, relie les successions implicites et note les références introuvables.
+- `capSyEl` (l. 991) — Élément du projet visé par une référence résolue, ou null. @param {object} r @returns {object|null}
+- `capSyRefLabel` (l. 995) — Libellé lisible d'une référence résolue ou non (nom qualifié de l'élément, nom de bibliothèque, texte écrit).
+- `capSyQualified` (l. 1004) — Nom qualifié d'un élément (« Paquetage::Partie::membre »), sans l'espace de noms du fichier.
+- `CAP_SY_TYPING` (l. 1011) — Métaclasses de définition acceptées comme type de chaque sorte d'usage (validate…UsageDefinition, clause 8.3).
+- `capSyChecks` (l. 1042) — Contrôles structurels (clause 8.3 et §6.5 du dossier) : doublons de noms, multiplicités, typage incompatible,
+- `capSySubKind` (l. 1065) — Vrai si une métaclasse de définition peut en spécialiser une autre (ex. InterfaceDefinition :> ConnectionDefinition).
+- `capSySpecializesEl` (l. 1076) — Vrai si la définition a spécialise b (directement ou non). @param {object} M @param {object} a @param {object} b @returns {boolean}
+- `capSyKindKeyword` (l. 1083) — Mot-clé SysML d'une métaclasse (« PartDefinition » → « part def »). @param {string} kind @returns {string}
+- `capSyDeclText` (l. 1093) — Déclaration d'un élément sur une ligne, en notation textuelle (lignes des compartiments, colonne « Déclaration »).
+
+## 57-sysml-bibliotheque.js — 108 lignes
+
+- `CAP_SY_LIB` (l. 8) — Paquetages de la bibliothèque standard → noms de leurs membres (séparés par des espaces ; « @P » : membres publics de P
+- `CAP_SY_LIB_FEATURES` (l. 107) — Membres des définitions des bases implicites (Parts::Part, Actions::Action, Occurrences::Occurrence…) : hérités par tout usage.
+
+## 58-sysml-modele.js — 529 lignes
+
+- `capFmt` (l. 15) — @returns {string} Format du modèle affiché ('capella' | 'sysml')
+- `CAP_SY_LAYERS` (l. 18) — Familles d'éléments SysML : elles jouent le rôle des couches ARCADIA (barre latérale, filtres, couleurs).
+- `capSyLayerOf` (l. 26) — Famille SysML d'une métaclasse (STR, BEH, REQ, ORG). @param {string} kind @returns {string}
+- `CAP_SY_HUMAN` (l. 35) — Noms lisibles et descriptions des métaclasses SysML (panneau de détail, ▤ Tableau, 📖 Index des types).
+- `CAP_SY_LINK_SECTIONS` (l. 118) — Relations SysML proposées dans 🔗 Liens, ▤ Tableau (colonnes de relations) et la 🗺 Relation Map (style rc des arêtes,
+- `CAP_SY_LINK_GROUPS` (l. 144) — Groupes de relations SysML (barre de 🔗 Liens, colonnes du ▤ Tableau).
+- `capFmtSet` (l. 160) — Change le format du modèle affiché : couches (CAP_LAYERS), relations (CAP_LINK_SECTIONS, CAP_LINK_GROUPS),
+- `capFmtLayerButtons` (l. 182) — Reconstruit les boutons de filtre par couche (▦ Cartes) selon les couches du format courant.
+- `capNavFmtOk` (l. 194) — Vrai si une vue du catalogue est disponible pour le format affiché (fmt : 'sysml', 'both' ; absent : Capella seul).
+- `capFmtOfDoc` (l. 201) — Format d'un document XML chargé (attribut arcalyse-format de la racine, posé par capSyToDoc).
+- `capSyHash` (l. 205) — Empreinte courte et stable d'un texte (FNV-1a sur 52 bits, en base 36) : identifiants des éléments SysML.
+- `capSyAssignIds` (l. 218) — Attribue un identifiant stable à chaque élément : empreinte du chemin qualifié (propriétaires, métaclasse, nom ;
+- `capSySynthName` (l. 251) — Libellé d'un élément anonyme : extrémités d'une connexion, d'une succession ou d'une transition (« arret → marche »),
+- `capSyDescHtml` (l. 265) — Description HTML d'un élément SysML (documentation, ou corps d'un commentaire), paragraphes conservés.
+- `capSyToDoc` (l. 281) — Convertit un modèle SysML en document XML pour le socle commun : un élément par membre (xsi:type « sysml:Métaclasse »),
+- `capSyTextToDoc` (l. 353) — Texte .sysml (un fichier) → document XML du socle commun (🔄 suivi du fichier, ⚖ Comparaison de versions).
+- `capTextToDoc` (l. 357) — Texte d'un fichier → document XML selon son extension (.sysml : conversion SysML ; sinon XML Capella).
+- `capSyLoadFiles` (l. 372) — Charge un projet SysML v2 (un ou plusieurs fichiers .sysml) : analyse, résolution, contrôles, conversion,
+- `capSyLoadFileList` (l. 387) — Lit des fichiers (File) .sysml et les charge comme un projet. @param {File[]} list - Fichiers @param {string} [name] - Nom du projet
+- `capSyLoadKpar` (l. 401) — Lit une archive de projet .kpar (KerML §10.3 : ZIP, .project.json, .meta.json, fichiers modèle) et charge ses fichiers
+- `capZipRead` (l. 420) — Lit les entrées d'une archive ZIP (répertoire central ; méthodes « stockée » et « deflate »).
+- `capSyComputeLinks` (l. 450) — Calcule les relations SysML du modèle affiché, au format de capComputeLinks : {clé → [{src, tgt, via?}]}.
+- `CAP_SY_ICO_TXT` (l. 496) — Lettres affichées dans l'icône de chaque sorte d'élément.
+- `capSyIcoKind` (l. 507) — Icône SVG d'une métaclasse SysML : dossier pour un paquetage, rectangle à coins droits (définition) ou arrondis (usage)
+- `capSyIco` (l. 518) — Icône SVG d'un élément SysML du modèle affiché (par identifiant). @param {string} id @param {number} [taille] @returns {string}
+- `capSyBoot` (l. 524) — Script d'amorçage d'une page enregistrée avec un modèle SysML : recharge les fichiers embarqués (bloc cap-embedded-sysml).
+
+## 59-sysml-vues.js — 800 lignes
+
+- `capSyRenderView` (l. 14) — Rend la vue ◇ SysML v2 : onglets des sous-vues puis la sous-vue choisie.
+- `capSyOpenOn` (l. 29) — Ouvre une sous-vue SysML centrée sur un élément (depuis le panneau de détail).
+- `capSyEls` (l. 40) — Éléments du modèle SysML affiché vérifiant un prédicat. @param {function(object):boolean} f @returns {object[]}
+- `capSyName` (l. 42) — Nom affiché d'un élément (nom, sinon mot-clé). @param {object} el @returns {string}
+- `capSyLink` (l. 44) — Lien cliquable vers le détail d'un élément SysML. @param {object} el @param {string} [txt] @returns {string} HTML
+- `capSyTextW` (l. 47) — Largeur d'un texte à la police des diagrammes (mesure par canvas, mémoïsée). @param {string} s @param {number} [fs] - Taille @param {boolean
+- `capSyCut` (l. 53) — Tronque un texte pour une ligne de diagramme. @param {string} s @param {number} [n] @returns {string}
+- `capSySelect` (l. 58) — Sélecteur d'élément (liste groupée par métaclasse) : renvoie le HTML d'un <select>.
+- `capSyMembersOf` (l. 68) — Membres « de structure » visibles d'un élément : possédés, puis hérités de ses types et généraux (préfixe ^),
+- `capSyCompartments` (l. 82) — Compartiments d'une boîte (notation §8.2.3.6) : attributs, ports, parties, objets, actions, états, contraintes, doc.
+- `capSySizeBox` (l. 100) — Calcule la taille d'une boîte de diagramme (en-tête « «mot-clé» nom : Type » et compartiments).
+- `capSyBoxSvg` (l. 112) — SVG d'une boîte de diagramme : rectangle à coins droits (définition) ou arrondis (usage), pointillé pour un usage
+- `capSyMarkers` (l. 132) — Définitions des marqueurs d'arêtes SysML v2 (§8.2.3, symboles bnf/images) : triangle creux (spécialisation),
+- `capSyLayout` (l. 154) — Mise en couches d'un graphe (inspirée de Sugiyama) : cycles rompus, rang = plus long chemin depuis les sources,
+- `capSyClip` (l. 191) — Point de sortie du segment centre(a) → p sur le bord du rectangle a. @param {object} a - {x,y,w,h} @param {number} px @param {number} py @re
+- `capSyEdgePath` (l. 201) — Tracé d'une arête entre deux boîtes : orthogonal (bas de la boîte haute → haut de la boîte basse) ou droit, rogné aux bords.
+- `capSyDiagram` (l. 217) — Hôte d'un diagramme : SVG avec zoom (molette), déplacement (glisser), ⊡ ajuster, ⬇ SVG / PNG ; clic sur une boîte → détail.
+- `capSySvgExport` (l. 243) — Exporte un diagramme en SVG ou PNG (variables de couleur du thème résolues, fond du thème).
+- `capSyBar` (l. 255) — Barre d'outils d'une sous-vue : HTML d'une ligne de commandes. @param {string} h - Contenu @returns {string}
+- `capSyGvNodeKind` (l. 260) — Vrai si l'élément est une définition ou un usage montré comme boîte dans la General View. @param {object} e @returns {boolean}
+- `capSyRenderGV` (l. 266) — ◇ General View : définitions et usages de la portée choisie, avec compartiments et relations (spécialisation, typage,
+- `capSyIvTree` (l. 339) — Arbre de l'Interconnection View : parties et ports imbriqués d'un élément (possédés, sinon ceux de son type).
+- `capSyPortDir` (l. 351) — Direction d'un port d'après les features de sa définition (toutes in : in, toutes out : out, sinon inout ; inversée si conjugué).
+- `capSyIvSize` (l. 361) — Taille (récursive) d'un nœud de l'Interconnection View : nom, ports sur les bords, enfants en grille.
+- `capSyIvPlace` (l. 383) — Place les nœuds (coordonnées absolues) et les ports sur les bords. @param {object} n @param {number} x @param {number} y
+- `capSyRenderIV` (l. 392) — ⧉ Interconnection View : parties imbriquées, ports sur les bords, connexions / interfaces / flux / liaisons entre eux.
+- `capSyBehMembers` (l. 456) — Membres comportementaux d'un élément (possédés, sinon ceux de son type). @param {object} el @param {RegExp} re @returns {object[]}
+- `capSyBehGraph` (l. 467) — Graphe d'un comportement : nœuds (actions ou états, nœuds de contrôle, début / fin), arêtes (successions, transitions, flux).
+- `capSyBehDraw` (l. 493) — Dessine un comportement (actions ou états) en couches : boîtes arrondies, losanges, barres, début / fin ; successions en
+- `capSyRenderAFV` (l. 538) — ⇢ Action Flow View d'une action (définition ou usage). @param {HTMLElement} body
+- `capSyRenderSTV` (l. 540) — ◎ State Transition View d'une machine à états (définition ou usage). @param {HTMLElement} body
+- `capSyRenderBeh` (l. 543) — Rendu commun des vues de comportement : choix de l'élément racine, puis dessin.
+- `capSyRequirements` (l. 563) — Exigences du modèle avec leur traçabilité : texte, sujet, contraintes, satisfaites par, vérifiées par.
+- `capSyRenderReq` (l. 579) — 📑 Exigences : tableau filtrable, couverture (satisfaites, vérifiées), export CSV. @param {HTMLElement} body
+- `capSyRenderGrid` (l. 608) — ▦ Grid View : matrice sources × cibles d'une relation SysML (satisfy, perform, allocate, typage…), export CSV.
+- `CAP_SY_CODES` (l. 634) — Libellés des codes de diagnostic SysML.
+- `capSyDiags` (l. 642) — Diagnostics à afficher : ceux de l'analyse (syntaxe, résolution, contrôles) et, en option, les remarques de qualité
+- `capSyRenderChk` (l. 656) — ✔ Contrôles : diagnostics filtrables (gravité, code, texte) ; clic sur la position → 🧾 Texte source. @param {HTMLElement} body
+- `capSyColorLine` (l. 689) — Colore une ligne de texte SysML (mots-clés, noms entre apostrophes, chaînes, nombres, commentaires et notes) et rend
+- `capSyRenderSrc` (l. 710) — 🧾 Texte source : fichiers .sysml numérotés et colorés, diagnostics en marge, noms déclarés cliquables ;
+- `capSyDetail` (l. 752) — Section ◇ SysML v2 du panneau de détail : déclaration en notation textuelle, position dans le texte source (lien vers
+- `capSyDashCatalog` (l. 786) — Ajoute les indicateurs SysML au catalogue du tableau de bord (35-tableau-de-bord.js).

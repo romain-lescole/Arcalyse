@@ -6,6 +6,7 @@
  * @returns {string} OA | SA | LA | PA | EPBS | '?'
  */
 function capArchLayerOf(el){
+  if(_capFmt==='sysml'||/^sysml:/.test(capXType(el))) return capSyLayerOf(capTName(el));   // ◇ SysML v2 : famille d'éléments
   for(let pe=el; pe; pe=pe.parentElement){ const lk=CAP_CHAIN_ARCH[capTName(pe)]; if(lk) return lk; }
   return '?';
 }

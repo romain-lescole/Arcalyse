@@ -52,6 +52,7 @@ const CAP_LINK_GROUPS=[
  * Retourne un objet {key → [{src:{name,id,type}, tgt:{name,id,type}}]}.
  */
 function capComputeLinks(){
+  if(_capFmt==='sysml') return capSyComputeLinks();   // ◇ SysML v2 (58-sysml-modele.js)
   if(!cap_xmlDoc) return {};
   const allNodes=[...cap_xmlDoc.getElementsByTagName('*')];
   const xmap={}; allNodes.forEach(el=>{const i=capXId(el);if(i)xmap[i]=el;});

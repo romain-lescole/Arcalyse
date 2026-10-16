@@ -32,6 +32,7 @@ const _capIco = { doc: null, cache: new Map() };
  * @returns {string} élément <svg>, ou '' (visionneuse absente, élément inconnu ou sans dessin)
  */
 function capIco(id, taille) {
+  if (_capFmt === 'sysml') return capSyIco(id, taille);   // ◇ SysML v2 : icônes de la notation (58-sysml-modele.js)
   const A = window.ArcatureVisionneuse;
   if (!id || !cap_xmlDoc || !A || typeof A.icone !== 'function') return '';   // cap_xmlDoc : aussi pendant le chargement (arborescence de la Relation Map)
   if (_capIco.doc !== cap_xmlDoc) {
@@ -50,6 +51,7 @@ function capIco(id, taille) {
  * @returns {string} élément <svg>, ou ''
  */
 function capIcoType(type, taille) {
+  if (_capFmt === 'sysml' && CAP_SY_HUMAN[type]) return capSyIcoKind(type, taille);
   const A = window.ArcatureVisionneuse;
   if (!type || !A || typeof A.iconeType !== 'function') return '';
   const k = '@' + type + '|' + (taille || 14);
@@ -121,24 +123,41 @@ async function capProjectScanDir(d) {
   /** Parcourt un dossier jusqu'à la profondeur donnée. */
   const scan = async (dir, chemin, prof) => {
     for await (const [nom, h] of dir.entries()) {
-      if (h.kind === 'file' && /\.(capella|melodymodeller|aird)$/i.test(nom)) fichiers.push({ nom, chemin: chemin + nom, h });
+      if (h.kind === 'file' && (/\.(capella|melodymodeller|aird)$/i.test(nom) && prof >= 2 || /\.(sysml|kpar)$/i.test(nom))) fichiers.push({ nom, chemin: chemin + nom, h });
       else if (h.kind === 'directory' && prof > 0 && !nom.startsWith('.')) await scan(h, chemin + nom + '/', prof - 1);
     }
   };
-  try { await scan(d, '', 1); } catch (e) { capWelcomeStatus(_L('Lecture du dossier impossible : ') + (e && e.message || e), 'err'); capShowWelcome(true); return; }
-  capProjectFromFiles(fichiers.map(f => ({ nom: f.nom, chemin: f.chemin, lire: () => f.h.getFile(), h: f.h })));
+  // .capella / .aird : dossier et sous-dossiers ; .sysml : jusqu'à 3 niveaux
+  try { await scan(d, '', 3); } catch (e) { capWelcomeStatus(_L('Lecture du dossier impossible : ') + (e && e.message || e), 'err'); capShowWelcome(true); return; }
+  capProjectFromFiles(fichiers.map(f => ({ nom: f.nom, chemin: f.chemin, lire: () => f.h.getFile(), h: f.h })), d.name);
 }
 
 /**
  * Charge un projet à partir des fichiers d'un dossier : le .capella (choisi dans l'écran d'accueil s'il y en a plusieurs)
  * puis le .aird du même nom (ou du même dossier, ou le seul présent).
+ * Sans .capella, les fichiers .sysml (ou une archive .kpar) forment un projet ◇ SysML v2.
  * @param {{nom:string, chemin:string, lire:function():Promise<File>, h:?FileSystemFileHandle}[]} fichiers - Fichiers trouvés
+ * @param {string} [racine] - Nom du dossier (nom du projet SysML)
  */
-function capProjectFromFiles(fichiers) {
+function capProjectFromFiles(fichiers, racine) {
   const mods = fichiers.filter(f => /\.(capella|melodymodeller)$/i.test(f.nom)).sort((a, b) => a.chemin.split('/').length - b.chemin.split('/').length || a.chemin.localeCompare(b.chemin));
   const airds = fichiers.filter(f => /\.aird$/i.test(f.nom));
   capShowWelcome(true);
-  if (!mods.length) { capWelcomeStatus(_L('Aucun fichier .capella dans ce dossier (ni dans ses sous-dossiers).'), 'err'); return; }
+  // ◇ SysML v2 : sans .capella, tous les fichiers .sysml du dossier forment le projet (ou l'archive .kpar seule)
+  const sys = fichiers.filter(f => /\.sysml$/i.test(f.nom)), kpar = fichiers.filter(f => /\.kpar$/i.test(f.nom));
+  if (!mods.length && (sys.length || kpar.length)) {
+    (async () => {
+      if (capLoaded && !capReplacePreOk() && !(await capReplaceConfirm(sys.length ? _L(`${sys.length} fichier(s) .sysml`) : kpar[0].nom))) { capShowWelcome(false); return; }
+      try {
+        if (!sys.length) { capSyLoadKpar(await kpar[0].lire()); return; }
+        capWelcomeStatus(_L(`Chargement de ${sys.length} fichier(s) SysML…`), 'busy');
+        const files = await Promise.all(sys.map(async f => ({ path: f.chemin, text: await (await f.lire()).text() })));
+        capSyLoadFiles(files, racine || _L('Projet SysML'), sys.length === 1 ? { file: await sys[0].lire(), handle: sys[0].h || null } : null);
+      } catch (e) { capWelcomeStatus(_L('Lecture impossible : ') + (e && e.message || e), 'err'); }
+    })();
+    return;
+  }
+  if (!mods.length) { capWelcomeStatus(_L('Aucun fichier .capella ni .sysml dans ce dossier (ni dans ses sous-dossiers).'), 'err'); return; }
   /** Charge un modèle et son .aird. */
   const charger = async m => {
     if (capLoaded && !capReplacePreOk() && !(await capReplaceConfirm(m.nom))) { capShowWelcome(false); return; }

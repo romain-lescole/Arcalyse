@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 4091 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 4743 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -84,18 +84,18 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 119 | 🚀 Bien démarrer | 🚀 Getting started |
 | 119 | · ouvrir un modèle, puis trouver l'aide et les tutoriels | · open a model, then find the help and tutorials |
 | 119 | Visite guidée en deux temps : où ouvrir votre fichier .capella, puis, une fois le modèle chargé, où trouver l'aide et les tutoriels  (infobulle) | Two-step guided tour: where to open your .capella file, then, once the model is loaded, where to find the help and tutorials |
-| 120 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) | Click to browse, or drag and drop a .capella file |
+| 120 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella ou .sysml  (infobulle) | Click to browse, or drag and drop a .capella or .sysml file |
 | 121 | Arcalyse | Arcalyse |
-| 121 | Votre modèle Capella, sous toutes ses coutures. | Your Capella model, inside and out. |
-| 122 | Ouvrir un modèle Capella | Open a Capella model |
+| 121 | Votre modèle Capella ou SysML v2, sous toutes ses coutures. | Your Capella or SysML v2 model, inside and out. |
+| 122 | Ouvrir un modèle Capella ou SysML v2 | Open a Capella or SysML v2 model |
 | 123 | Glissez-déposez votre fichier | Drag and drop your |
 | 123 | (ou le dossier du projet) ici | (or the project folder) here |
 | 123 | ou recherchez-le dans l'explorateur de fichiers. | or browse for it in the file explorer. |
-| 124 | 📂 Fichier .capella… | 📂 .capella file… |
-| 124 | Ouvrir le fichier .capella seul  (infobulle) | Open the .capella file alone |
+| 124 | 📂 Fichier .capella / .sysml… | 📂 .capella / .sysml file… |
+| 124 | Ouvrir un fichier : .capella, ou .sysml / .kpar (SysML v2)  (infobulle) | Open a file: .capella, or .sysml / .kpar (SysML v2) |
 | 125 | 📁 Dossier du projet… | 📁 Project folder… |
-| 125 | Ouvrir le dossier du projet : le .capella et ses diagrammes (.aird) sont chargés ensemble  (infobulle) | Open the project folder: the .capella and its diagrams (.aird) are loaded together |
-| 128 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. | Accepted formats: .capella · .melodymodeller · .xml — the file is read locally, nothing is sent. |
+| 125 | Ouvrir le dossier du projet : le .capella et ses diagrammes (.aird), ou tous les fichiers .sysml (SysML v2)  (infobulle) | Open the project folder: the .capella file and its diagrams (.aird), or all the .sysml files (SysML v2) |
+| 128 | Formats acceptés : .capella · .melodymodeller · .xml · SysML v2 : .sysml · .kpar — le fichier est lu localement, rien n'est envoyé. | Accepted formats: .capella · .melodymodeller · .xml · SysML v2: .sysml · .kpar — the file is read locally, nothing is sent. |
 | 129 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités | 📖 What can be analysed? Discover the features |
 | 130 | 🎓 Visite guidée de l'interface | 🎓 Guided tour of the interface |
 | 131 | ℹ À propos | ℹ About |
@@ -171,7 +171,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 413 | Nom de la colonne | Column name |
 | 414 | ex: Functions of Component  (infobulle) | e.g. Functions of Component |
 | 415 | Créer la colonne | Create the column |
-| 438 | Aucun élément ne correspond. | No matching element. |
+| 440 | Aucun élément ne correspond. | No matching element. |
 
 ## js/01-donnees-config.js
 
@@ -675,71 +675,76 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 15 | Generalization | (inchangé, hors _L) |
 | 15 | Part | (inchangé, hors _L) |
 | 15 | Execution | (inchangé, hors _L) |
-| 134 | Page HTML | HTML page |
-| 136 | Enregistrer dans « | Save to “…” (Ctrl+S) — Shift+click or Ctrl+Shift+S: save as |
-| 136 | » (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous | Save to “…” (Ctrl+S) — Shift+click or Ctrl+Shift+S: save as |
-| 137 | ✔ Enregistré | ✔ Saved |
-| 143 | Enregistrement direct impossible ( | Direct save not possible ( |
-| 143 | ). La page va être téléchargée à la place. | ). The page will be downloaded instead. |
-| 185 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. | “…” is a representation/metadata file: drop the project's .capella file. |
-| 189 | » n'est pas un fichier Capella (.capella attendu). | “…” is not a Capella file (.capella expected). |
-| 194 | Chargement de « | Loading “…”… |
-| 197 | Impossible de lire « | Cannot read “…”. |
-| 203 | XML invalide | Invalid XML |
-| 209 | Erreur de chargement : | Loading error: |
-| 228 | Aucun élément Capella reconnu dans ce fichier | No Capella element recognised in this file |
-| 260 | ⚠ Ouvrir un autre modèle ? ✕ Modèle affiché : | ⚠ Open another model? ✕ Displayed model: … |
-| 264 | Fichier à ouvrir : | File to open: … |
-| 265 | Le modèle affiché va être remplacé. Tout le travail qui n'a pas été enregistré dans la page (vues et onglets, tableaux de bord, réglages, version de ⚖ Comparaison…) risque d'être perdu. | The displayed model will be replaced. All work not saved in the page (views and tabs, dashboards, settings, ⚖ Comparison version…) may be lost. |
-| 266 | commentaire(s) de revue modifié(s) depuis le dernier enregistrement : ils restent dans la page ouverte (et seront vérifiés sur le nouveau modèle), mais seront perdus si elle est fermée sans être enregistrée. Vous pouvez aussi les exporter (💬 Revue › 💾 Revue ▾ › ⬇ Exporter). | 💬 … review comment(s) changed since the last save: they stay in the open page (and will be checked against the new model), but will be lost if it is closed without saving. You can also export them (💬 Review › 💾 Review ▾ › ⬇ Export). |
-| 267 | Nouvelle version du même modèle ? Préférez 📁 Fichier › 🔄 Charger une mise à jour du modèle : le delta est affiché et la version précédente reste disponible pour ⚖ Comparaison. Annuler 💾 Enregistrer la page | New version of the same model? Prefer 📁 File › 🔄 Load a model update: the delta is shown and the previous version stays available for ⚖ Comparison. Cancel 💾 Save the page |
-| 271 | Ouvrir le fichier | Open the file |
-| 271 | 📂 Choisir le fichier .capella… | 📂 Choose the .capella file… |
-| 278 | ✔ Page enregistrée | ✔ Page saved |
-| 296 | Ouvrir un autre modèle Capella | Open another Capella model |
-| 297 | Modèle actuel : | Current model: … Drop a new file .capella to replace it. |
-| 297 | Déposez un nouveau fichier .capella pour le remplacer. | Current model: … Drop a new file .capella to replace it. |
-| 298 | ⚠ Le travail non enregistré sur le modèle actuel sera perdu : enregistrez d'abord la page (💾, Ctrl+S). Pour une nouvelle version du même modèle, préférez 📁 Fichier › 🔄 Charger une mise à jour du modèle. | ⚠ Unsaved work on the current model will be lost: save the page first (💾, Ctrl+S). For a new version of the same model, prefer 📁 File › 🔄 Load a model update. |
-| 381 | Shared | (inchangé, hors _L) |
-| 400 | Project | (inchangé, hors _L) |
-| 461 | Composition | (inchangé, hors _L) |
-| 461 | Aggregation | (inchangé, hors _L) |
-| 461 | Association | (inchangé, hors _L) |
-| 461 | Containment | (inchangé, hors _L) |
-| 461 | Generalization | (inchangé, hors _L) |
-| 461 | Realization | (inchangé, hors _L) |
-| 461 | Dependency | (inchangé, hors _L) |
-| 461 | Usage | (inchangé, hors _L) |
-| 461 | Abstraction | (inchangé, hors _L) |
-| 461 | Refine | (inchangé, hors _L) |
-| 461 | Trace | (inchangé, hors _L) |
-| 461 | Satisfy | (inchangé, hors _L) |
-| 461 | Verify | (inchangé, hors _L) |
-| 461 | Copy | (inchangé, hors _L) |
-| 461 | Allocation | (inchangé, hors _L) |
-| 462 | Block | (inchangé, hors _L) |
-| 462 | Component | (inchangé, hors _L) |
-| 462 | Class | (inchangé, hors _L) |
-| 462 | Interface | (inchangé, hors _L) |
-| 462 | Requirement | (inchangé, hors _L) |
-| 462 | Package | (inchangé, hors _L) |
-| 465 | Aggregation | (inchangé, hors _L) |
-| 465 | Association | (inchangé, hors _L) |
-| 465 | Containment | (inchangé, hors _L) |
-| 465 | Generalization | (inchangé, hors _L) |
-| 465 | Realization | (inchangé, hors _L) |
-| 465 | Dependency | (inchangé, hors _L) |
-| 465 | Usage | (inchangé, hors _L) |
-| 465 | Abstraction | (inchangé, hors _L) |
-| 465 | Refine | (inchangé, hors _L) |
-| 465 | Trace | (inchangé, hors _L) |
-| 465 | Satisfy | (inchangé, hors _L) |
-| 465 | Verify | (inchangé, hors _L) |
-| 465 | Copy | (inchangé, hors _L) |
-| 465 | Allocation | (inchangé, hors _L) |
-| 583 | PhysicalComponent (NODE) | (inchangé, hors _L) |
-| 584 | PhysicalComponent (BEHAVIOR) | (inchangé, hors _L) |
-| 823 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella | 🔷 Load a .capella file via 📁 File › 🔷 Open a Capella model |
+| 145 | Page HTML | HTML page |
+| 147 | Enregistrer dans « | Save to “…” (Ctrl+S) — Shift+click or Ctrl+Shift+S: save as |
+| 147 | » (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous | Save to “…” (Ctrl+S) — Shift+click or Ctrl+Shift+S: save as |
+| 148 | ✔ Enregistré | ✔ Saved |
+| 154 | Enregistrement direct impossible ( | Direct save not possible ( |
+| 154 | ). La page va être téléchargée à la place. | ). The page will be downloaded instead. |
+| 199 | Chargement de « | Loading “…”… |
+| 202 | Erreur de chargement : | Loading error: |
+| 203 | Impossible de lire « | Cannot read “…”. |
+| 207 | » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet. | “…” is a representation/metadata file: drop the project's .capella file. |
+| 211 | » n'est ni un modèle Capella (.capella) ni un modèle SysML v2 (.sysml, .kpar). | “…” is neither a Capella model (.capella) nor a SysML v2 model (.sysml, .kpar). |
+| 216 | Chargement de « | Loading “…”… |
+| 219 | Impossible de lire « | Cannot read “…”. |
+| 225 | XML invalide | Invalid XML |
+| 231 | Erreur de chargement : | Loading error: |
+| 252 | Aucun élément SysML reconnu | No SysML element recognised |
+| 252 | Aucun élément Capella reconnu dans ce fichier | No Capella element recognised in this file |
+| 284 | ⚠ Ouvrir un autre modèle ? ✕ Modèle affiché : | ⚠ Open another model? ✕ Displayed model: … |
+| 288 | Fichier à ouvrir : | File to open: … |
+| 289 | Le modèle affiché va être remplacé. Tout le travail qui n'a pas été enregistré dans la page (vues et onglets, tableaux de bord, réglages, version de ⚖ Comparaison…) risque d'être perdu. | The displayed model will be replaced. All work not saved in the page (views and tabs, dashboards, settings, ⚖ Comparison version…) may be lost. |
+| 290 | commentaire(s) de revue modifié(s) depuis le dernier enregistrement : ils restent dans la page ouverte (et seront vérifiés sur le nouveau modèle), mais seront perdus si elle est fermée sans être enregistrée. Vous pouvez aussi les exporter (💬 Revue › 💾 Revue ▾ › ⬇ Exporter). | 💬 … review comment(s) changed since the last save: they stay in the open page (and will be checked against the new model), but will be lost if it is closed without saving. You can also export them (💬 Review › 💾 Review ▾ › ⬇ Export). |
+| 291 | Nouvelle version du même modèle ? Préférez 📁 Fichier › 🔄 Charger une mise à jour du modèle : le delta est affiché et la version précédente reste disponible pour ⚖ Comparaison. Annuler 💾 Enregistrer la page | New version of the same model? Prefer 📁 File › 🔄 Load a model update: the delta is shown and the previous version stays available for ⚖ Comparison. Cancel 💾 Save the page |
+| 295 | Ouvrir le fichier | Open the file |
+| 295 | 📂 Choisir le fichier .capella… | 📂 Choose the .capella file… |
+| 302 | ✔ Page enregistrée | ✔ Page saved |
+| 320 | Ouvrir un autre modèle | Open another model |
+| 321 | Modèle actuel : | Current model: … Drop a new file .capella or .sysml to replace it. |
+| 321 | Déposez un nouveau fichier .capella ou .sysml pour le remplacer. | Current model: … Drop a new file .capella or .sysml to replace it. |
+| 322 | ⚠ Le travail non enregistré sur le modèle actuel sera perdu : enregistrez d'abord la page (💾, Ctrl+S). Pour une nouvelle version du même modèle, préférez 📁 Fichier › 🔄 Charger une mise à jour du modèle. | ⚠ Unsaved work on the current model will be lost: save the page first (💾, Ctrl+S). For a new version of the same model, prefer 📁 File › 🔄 Load a model update. |
+| 374 | fichiers .sysml | … .sysml files |
+| 409 | Shared | (inchangé, hors _L) |
+| 428 | Project | (inchangé, hors _L) |
+| 489 | Composition | (inchangé, hors _L) |
+| 489 | Aggregation | (inchangé, hors _L) |
+| 489 | Association | (inchangé, hors _L) |
+| 489 | Containment | (inchangé, hors _L) |
+| 489 | Generalization | (inchangé, hors _L) |
+| 489 | Realization | (inchangé, hors _L) |
+| 489 | Dependency | (inchangé, hors _L) |
+| 489 | Usage | (inchangé, hors _L) |
+| 489 | Abstraction | (inchangé, hors _L) |
+| 489 | Refine | (inchangé, hors _L) |
+| 489 | Trace | (inchangé, hors _L) |
+| 489 | Satisfy | (inchangé, hors _L) |
+| 489 | Verify | (inchangé, hors _L) |
+| 489 | Copy | (inchangé, hors _L) |
+| 489 | Allocation | (inchangé, hors _L) |
+| 490 | Block | (inchangé, hors _L) |
+| 490 | Component | (inchangé, hors _L) |
+| 490 | Class | (inchangé, hors _L) |
+| 490 | Interface | (inchangé, hors _L) |
+| 490 | Requirement | (inchangé, hors _L) |
+| 490 | Package | (inchangé, hors _L) |
+| 493 | Aggregation | (inchangé, hors _L) |
+| 493 | Association | (inchangé, hors _L) |
+| 493 | Containment | (inchangé, hors _L) |
+| 493 | Generalization | (inchangé, hors _L) |
+| 493 | Realization | (inchangé, hors _L) |
+| 493 | Dependency | (inchangé, hors _L) |
+| 493 | Usage | (inchangé, hors _L) |
+| 493 | Abstraction | (inchangé, hors _L) |
+| 493 | Refine | (inchangé, hors _L) |
+| 493 | Trace | (inchangé, hors _L) |
+| 493 | Satisfy | (inchangé, hors _L) |
+| 493 | Verify | (inchangé, hors _L) |
+| 493 | Copy | (inchangé, hors _L) |
+| 493 | Allocation | (inchangé, hors _L) |
+| 611 | PhysicalComponent (NODE) | (inchangé, hors _L) |
+| 612 | PhysicalComponent (BEHAVIOR) | (inchangé, hors _L) |
+| 852 | 🔷 Chargez un fichier .capella ou .sysml via 📁 Fichier › 🔷 Ouvrir un modèle | 🔷 Load a .capella or .sysml file via 📁 File › 🔷 Open a model |
 
 ## js/21-capella-vues-base.js
 
@@ -935,24 +940,24 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 45 | Réalisation inter-couches | Cross-layer realization |
 | 46 | Capacités & missions | Capabilities & missions |
 | 47 | Chaînes | Chains |
-| 222 | Toutes les relations ( | All relations (…) ID ⬇ CSV … relation types present… … |
-| 225 | ID ⬇ CSV | All relations (…) ID ⬇ CSV … relation types present… … |
-| 227 | types de relations présents | All relations (…) ID ⬇ CSV … relation types present… … |
-| 227 | Relations non trouvées dans ce modèle : | Relations not found in this model: |
-| 256 | Source | … … → … … …… Source … … Target … … |
-| 258 | Cible | … … → … … …… Source … … Target … … |
-| 258 | ID source | Source ID |
-| 258 | Via | Via |
-| 258 | ID cible | Target ID |
-| 266 | Aucun lien. | No link. |
-| 278 | Relation | Relation |
-| 278 | Source | Source |
-| 278 | Type source | Source type |
-| 278 | ID source | Source ID |
-| 278 | Via | Via |
-| 278 | Cible | Target |
-| 278 | Type cible | Target type |
-| 278 | ID cible | Target ID |
+| 223 | Toutes les relations ( | All relations (…) ID ⬇ CSV … relation types present… … |
+| 226 | ID ⬇ CSV | All relations (…) ID ⬇ CSV … relation types present… … |
+| 228 | types de relations présents | All relations (…) ID ⬇ CSV … relation types present… … |
+| 228 | Relations non trouvées dans ce modèle : | Relations not found in this model: |
+| 257 | Source | … … → … … …… Source … … Target … … |
+| 259 | Cible | … … → … … …… Source … … Target … … |
+| 259 | ID source | Source ID |
+| 259 | Via | Via |
+| 259 | ID cible | Target ID |
+| 267 | Aucun lien. | No link. |
+| 279 | Relation | Relation |
+| 279 | Source | Source |
+| 279 | Type source | Source type |
+| 279 | ID source | Source ID |
+| 279 | Via | Via |
+| 279 | Cible | Target |
+| 279 | Type cible | Target type |
+| 279 | ID cible | Target ID |
 
 ## js/23-chaines.js
 
@@ -1201,20 +1206,20 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 |---:|---|---|
 | 8 | —sans nom— | —unnamed— |
 | 47 | var(--c-dim) | (inchangé, hors _L) |
-| 60 | Attributs | Attributes |
-| 68 | Références sortantes → | Outgoing references → |
-| 76 | Références entrantes ← (navigation inverse) | Incoming references ← (reverse navigation) |
-| 92 | Owner (parent) | Owner (parent) |
-| 98 | Owned elements ( | Owned elements (…) |
-| 145 | capOpenDetailById(this.dataset.hlink) | (inchangé, hors _L) |
-| 146 | Ouvrir le détail de l'élément référencé | Open the details of the referenced element |
-| 147 | noopener noreferrer | (inchangé, hors _L) |
-| 151 | [image : | [image: …] |
-| 170 | Description | Description |
-| 170 | Aperçu | Preview |
-| 170 | Description mise en forme comme dans Capella | Description formatted as in Capella |
-| 170 | ‹/› HTML | ‹/› HTML |
-| 170 | Code HTML d'origine de la description | Original HTML code of the description |
+| 62 | Attributs | Attributes |
+| 70 | Références sortantes → | Outgoing references → |
+| 78 | Références entrantes ← (navigation inverse) | Incoming references ← (reverse navigation) |
+| 94 | Owner (parent) | Owner (parent) |
+| 100 | Owned elements ( | Owned elements (…) |
+| 147 | capOpenDetailById(this.dataset.hlink) | (inchangé, hors _L) |
+| 148 | Ouvrir le détail de l'élément référencé | Open the details of the referenced element |
+| 149 | noopener noreferrer | (inchangé, hors _L) |
+| 153 | [image : | [image: …] |
+| 172 | Description | Description |
+| 172 | Aperçu | Preview |
+| 172 | Description mise en forme comme dans Capella | Description formatted as in Capella |
+| 172 | ‹/› HTML | ‹/› HTML |
+| 172 | Code HTML d'origine de la description | Original HTML code of the description |
 
 ## js/26-rapports-html.js
 
@@ -1228,26 +1233,26 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 58 | Émetteur ↓ / Récepteur → | Sender ↓ / Receiver → |
-| 58 | Composant | Component |
-| 72 | · cliquez une cellule pour lister les | … … · click a cell to list the … |
-| 94 | à vérifier | ⚠ … point… to check |
-| 94 | ✔ Aucune anomalie détectée | ✔ No anomaly detected |
-| 99 | ✔ RAS | ✔ Nothing to report |
-| 118 | Port d'entrée (IN) | Input port (IN) |
-| 119 | Port de sortie (OUT) | Output port (OUT) |
-| 120 | Port bidirectionnel (INOUT) | Bidirectional port (INOUT) |
-| 121 | Orientation non définie (UNSET) | Undefined orientation (UNSET) |
-| 125 | → Orienté | → Oriented |
-| 125 | Sens source → cible | Source → target direction |
-| 126 | ← Inversé | ← Reversed |
-| 126 | Sens cible → source (déduit des orientations de ports) | Target → source direction (deduced from port orientations) |
-| 127 | ⇄ Bidirectionnel | ⇄ Bidirectional |
-| 127 | Échange dans les deux sens (port INOUT) | Exchange in both directions (INOUT port) |
-| 128 | ? Non orienté | ? Not oriented |
-| 128 | Aucun port orienté : sens inconnu | No oriented port: unknown direction |
-| 157 | Deux ports OUT reliés | Two OUT ports connected |
-| 158 | Deux ports IN reliés | Two IN ports connected |
+| 59 | Émetteur ↓ / Récepteur → | Sender ↓ / Receiver → |
+| 59 | Composant | Component |
+| 73 | · cliquez une cellule pour lister les | … … · click a cell to list the … |
+| 95 | à vérifier | ⚠ … point… to check |
+| 95 | ✔ Aucune anomalie détectée | ✔ No anomaly detected |
+| 100 | ✔ RAS | ✔ Nothing to report |
+| 119 | Port d'entrée (IN) | Input port (IN) |
+| 120 | Port de sortie (OUT) | Output port (OUT) |
+| 121 | Port bidirectionnel (INOUT) | Bidirectional port (INOUT) |
+| 122 | Orientation non définie (UNSET) | Undefined orientation (UNSET) |
+| 126 | → Orienté | → Oriented |
+| 126 | Sens source → cible | Source → target direction |
+| 127 | ← Inversé | ← Reversed |
+| 127 | Sens cible → source (déduit des orientations de ports) | Target → source direction (deduced from port orientations) |
+| 128 | ⇄ Bidirectionnel | ⇄ Bidirectional |
+| 128 | Échange dans les deux sens (port INOUT) | Exchange in both directions (INOUT port) |
+| 129 | ? Non orienté | ? Not oriented |
+| 129 | Aucun port orienté : sens inconnu | No oriented port: unknown direction |
+| 158 | Deux ports OUT reliés | Two OUT ports connected |
+| 159 | Deux ports IN reliés | Two IN ports connected |
 
 ## js/28-index-types.js
 
@@ -1595,6 +1600,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 290 | Ancienne version (référence) | Old version (reference) … ⇄ New version … 📂 … |
 | 292 | ⇄ Nouvelle version | Old version (reference) … ⇄ New version … 📂 … |
 | 294 | Changer la version à comparer… | Change the version to compare… |
+| 294 | Charger une autre version (.sysml)… | Load another version (.sysml)… |
 | 294 | Charger une autre version (.capella)… | Load another version (.capella)… |
 | 317 | Fichier XML invalide | Invalid XML file |
 
@@ -1873,327 +1879,338 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 14 | Texte libre | Free text |
 | 16 | répartition | breakdown |
 | 16 | croisé | cross |
-| 53 | Modèle | Model |
-| 53 | mdl.n | (inchangé, hors _L) |
-| 53 | Éléments du modèle | Model elements |
-| 54 | Modèle | Model |
-| 54 | mdl.layer | (inchangé, hors _L) |
-| 54 | Éléments du modèle par couche | Model elements by layer |
-| 54 | Shared | (inchangé, hors _L) |
-| 54 | Transverse | Cross-layer |
-| 55 | Modèle | Model |
-| 55 | mdl.types | (inchangé, hors _L) |
-| 55 | Types d'éléments les plus représentés | Most frequent element types |
-| 56 | Modèle | Model |
-| 56 | mdl.rels | (inchangé, hors _L) |
-| 56 | Relations Capella par type | Capella relations by type |
-| 62 | profondeur maximale | maximum depth |
-| 63 | taux de description | description rate |
-| 63 | Fonctions (hors racine) ayant une description | Functions (root excluded) with a description |
-| 64 | feuilles allouées | allocated leaves |
-| 65 | feuilles avec échanges | leaves with exchanges |
-| 66 | feuilles tracées | traced leaves |
-| 66 | Feuilles qui réalisent ou sont réalisées par une autre couche | Leaves that realize or are realized by another layer |
-| 67 | feuilles dans une chaîne | leaves in a chain |
-| 68 | feuilles dans une capacité | leaves in a capability |
-| 69 | noms conformes | compliant names |
-| 69 | Règles de ✍ Qualité des noms | ✍ Name quality rules |
-| 70 | Fonctions | Functions |
-| 70 | Fonctions — | Functions — … (layer comparison) |
-| 70 | (comparaison des couches) | Functions — … (layer comparison) |
-| 72 | Système | System |
-| 72 | Acteurs | Actors |
-| 72 | Système + acteur | System + actor |
-| 72 | Non allouées | Unallocated |
-| 73 | Fonctions | Functions |
-| 73 | Fonctions — nature de l'allocation des feuilles, par couche | Functions — leaf allocation kind, by layer |
-| 75 | Forme en -ing en tête | -ing form first |
-| 75 | Nom d'action en tête | Action noun first |
-| 75 | Pas de verbe en tête | No verb first |
-| 75 | Verbe vague | Vague verb |
-| 75 | Minuscule en tête | Lowercase first letter |
-| 75 | Espaces superflus | Extra spaces |
-| 75 | Ponctuation finale | Trailing punctuation |
-| 75 | Nom trop long | Name too long |
-| 75 | Un seul mot | Single word |
-| 76 | Fonctions | Functions |
-| 76 | Fonctions — problèmes de nommage par nature | Functions — naming issues by kind |
-| 77 | Fonctions | Functions |
-| 77 | fn.top | (inchangé, hors _L) |
-| 77 | Fonctions les plus connectées | Most connected functions |
-| 77 | Couche | Layer |
-| 77 | Fonction | Function |
-| 77 | Échanges | Exchanges |
-| 80 | Fonctions | Functions |
-| 81 | Fonctions | Functions … — … |
-| 82 | Fonctions | Functions … — allocation kind (leaves) |
-| 82 | — nature de l'allocation (feuilles) | Functions … — allocation kind (leaves) |
-| 83 | Fonctions | Functions … — by allocation target |
-| 83 | — par allocataire | Functions … — by allocation target |
-| 84 | Fonctions | Functions … — by subsystem |
-| 84 | — par sous-système | Functions … — by subsystem |
-| 84 | Premier niveau sous le système | First level under the system |
-| 85 | Fonctions | Functions … — by depth level |
-| 85 | — par niveau de profondeur | Functions … — by depth level |
-| 85 | Niveau | Level |
-| 90 | Chaînes | Chains |
-| 90 | Nombre de chaînes | Number of chains |
-| 90 | vide(s) | of which … empty |
-| 91 | Chaînes | Chains |
-| 91 | ch.type | (inchangé, hors _L) |
-| 91 | Chaînes par type | Chains by type |
-| 92 | Chaînes | Chains |
-| 92 | ch.layer | (inchangé, hors _L) |
-| 92 | Chaînes par couche | Chains by layer |
-| 92 | Non classées | Unclassified |
-| 93 | Chaînes | Chains |
-| 93 | ch.empty | (inchangé, hors _L) |
-| 93 | Chaînes vides / non vides | Empty / non-empty chains |
-| 93 | Non vides | Non-empty |
-| 93 | Vides | Empty |
-| 94 | Chaînes | Chains |
-| 94 | ch.full | (inchangé, hors _L) |
-| 94 | Chaînes non vides | Non-empty chains |
-| 95 | Chaînes | Chains |
-| 95 | ch.avg | (inchangé, hors _L) |
-| 95 | Étapes par chaîne (moyenne) | Steps per chain (average) |
-| 95 | chaînes non vides | non-empty chains |
-| 96 | Chaînes | Chains |
-| 96 | ch.kind | (inchangé, hors _L) |
-| 96 | Étapes des chaînes par nature d'allocation | Chain steps by allocation kind |
-| 97 | Système | System |
-| 97 | Acteurs | Actors |
-| 97 | Non allouées | Unallocated |
+| 49 | Modèle | Model |
+| 49 | mdl.n | (inchangé, hors _L) |
+| 49 | Éléments du modèle | Model elements |
+| 50 | Modèle | Model |
+| 50 | mdl.types | (inchangé, hors _L) |
+| 50 | Types d'éléments les plus représentés | Most frequent element types |
+| 51 | Modèle | Model |
+| 51 | mdl.rels | (inchangé, hors _L) |
+| 51 | Relations SysML par type | SysML relations by type |
+| 53 | Mise en page | Layout |
+| 53 | Texte libre (titre, commentaire) | Free text (title, comment) |
+| 61 | Modèle | Model |
+| 61 | mdl.n | (inchangé, hors _L) |
+| 61 | Éléments du modèle | Model elements |
+| 62 | Modèle | Model |
+| 62 | mdl.layer | (inchangé, hors _L) |
+| 62 | Éléments du modèle par couche | Model elements by layer |
+| 62 | Shared | (inchangé, hors _L) |
+| 62 | Transverse | Cross-layer |
+| 63 | Modèle | Model |
+| 63 | mdl.types | (inchangé, hors _L) |
+| 63 | Types d'éléments les plus représentés | Most frequent element types |
+| 64 | Modèle | Model |
+| 64 | mdl.rels | (inchangé, hors _L) |
+| 64 | Relations Capella par type | Capella relations by type |
+| 70 | profondeur maximale | maximum depth |
+| 71 | taux de description | description rate |
+| 71 | Fonctions (hors racine) ayant une description | Functions (root excluded) with a description |
+| 72 | feuilles allouées | allocated leaves |
+| 73 | feuilles avec échanges | leaves with exchanges |
+| 74 | feuilles tracées | traced leaves |
+| 74 | Feuilles qui réalisent ou sont réalisées par une autre couche | Leaves that realize or are realized by another layer |
+| 75 | feuilles dans une chaîne | leaves in a chain |
+| 76 | feuilles dans une capacité | leaves in a capability |
+| 77 | noms conformes | compliant names |
+| 77 | Règles de ✍ Qualité des noms | ✍ Name quality rules |
+| 78 | Fonctions | Functions |
+| 78 | Fonctions — | Functions — … (layer comparison) |
+| 78 | (comparaison des couches) | Functions — … (layer comparison) |
+| 80 | Système | System |
+| 80 | Acteurs | Actors |
+| 80 | Système + acteur | System + actor |
+| 80 | Non allouées | Unallocated |
+| 81 | Fonctions | Functions |
+| 81 | Fonctions — nature de l'allocation des feuilles, par couche | Functions — leaf allocation kind, by layer |
+| 83 | Forme en -ing en tête | -ing form first |
+| 83 | Nom d'action en tête | Action noun first |
+| 83 | Pas de verbe en tête | No verb first |
+| 83 | Verbe vague | Vague verb |
+| 83 | Minuscule en tête | Lowercase first letter |
+| 83 | Espaces superflus | Extra spaces |
+| 83 | Ponctuation finale | Trailing punctuation |
+| 83 | Nom trop long | Name too long |
+| 83 | Un seul mot | Single word |
+| 84 | Fonctions | Functions |
+| 84 | Fonctions — problèmes de nommage par nature | Functions — naming issues by kind |
+| 85 | Fonctions | Functions |
+| 85 | fn.top | (inchangé, hors _L) |
+| 85 | Fonctions les plus connectées | Most connected functions |
+| 85 | Couche | Layer |
+| 85 | Fonction | Function |
+| 85 | Échanges | Exchanges |
+| 88 | Fonctions | Functions |
+| 89 | Fonctions | Functions … — … |
+| 90 | Fonctions | Functions … — allocation kind (leaves) |
+| 90 | — nature de l'allocation (feuilles) | Functions … — allocation kind (leaves) |
+| 91 | Fonctions | Functions … — by allocation target |
+| 91 | — par allocataire | Functions … — by allocation target |
+| 92 | Fonctions | Functions … — by subsystem |
+| 92 | — par sous-système | Functions … — by subsystem |
+| 92 | Premier niveau sous le système | First level under the system |
+| 93 | Fonctions | Functions … — by depth level |
+| 93 | — par niveau de profondeur | Functions … — by depth level |
+| 93 | Niveau | Level |
 | 98 | Chaînes | Chains |
-| 98 | ch.top | (inchangé, hors _L) |
-| 98 | Chaînes les plus longues | Longest chains |
-| 98 | Chaîne | Chain |
-| 98 | Type | (inchangé, hors _L) |
-| 98 | Couche | Layer |
-| 98 | Étapes | Steps |
-| 98 | Échanges | Exchanges |
-| 103 | → Orienté | → Oriented |
-| 103 | ← Inversé | ← Reversed |
-| 103 | ⇄ Bidirectionnel | ⇄ Bidirectional |
-| 103 | ? Non orienté | ? Not oriented |
-| 104 | Component Exchanges | Component Exchanges |
-| 104 | Nombre de Component Exchanges | Number of Component Exchanges |
-| 105 | Component Exchanges | Component Exchanges |
-| 105 | ce.kind | (inchangé, hors _L) |
-| 105 | Component Exchanges par kind | Component Exchanges by kind |
-| 106 | Component Exchanges | Component Exchanges |
-| 106 | ce.dir | (inchangé, hors _L) |
-| 106 | Sens des Component Exchanges | Direction of Component Exchanges |
-| 106 | ⚠ Incohérent | ⚠ Inconsistent |
-| 107 | Component Exchanges | Component Exchanges |
-| 107 | ce.layer | (inchangé, hors _L) |
-| 107 | Component Exchanges par couche | Component Exchanges by layer |
-| 108 | Component Exchanges | Component Exchanges |
-| 108 | Component Exchanges avec FE alloué | Component Exchanges with an allocated FE |
-| 109 | Component Exchanges | Component Exchanges |
-| 109 | ce.orph | (inchangé, hors _L) |
-| 109 | Ports de composant orphelins | Orphan component ports |
-| 109 | ComponentPort sans exchange | ComponentPort without exchange |
-| 110 | Component Exchanges | Component Exchanges |
-| 110 | ce.papl | (inchangé, hors _L) |
-| 110 | CE de couche PA sans Physical Link | PA-layer CE without Physical Link |
-| 111 | Component Exchanges | Component Exchanges |
-| 111 | ce.comp | (inchangé, hors _L) |
-| 111 | Component Exchanges par composant | Component Exchanges by component |
-| 115 | Physical Links | Physical Links |
-| 115 | Nombre de Physical Links | Number of Physical Links |
-| 116 | Physical Links | Physical Links |
-| 116 | pl.layer | (inchangé, hors _L) |
-| 116 | Physical Links par couche | Physical Links by layer |
-| 117 | Physical Links | Physical Links |
-| 117 | Physical Links portant un CE | Physical Links carrying a CE |
-| 118 | Physical Links | Physical Links |
-| 118 | pl.orph | (inchangé, hors _L) |
-| 118 | Ports physiques sans lien | Physical ports without link |
-| 119 | Physical Links | Physical Links |
-| 119 | pl.nocp | (inchangé, hors _L) |
-| 119 | Ports physiques sans Component Port | Physical ports without Component Port |
-| 120 | Physical Links | Physical Links |
-| 120 | pl.comp | (inchangé, hors _L) |
-| 120 | Physical Links par composant | Physical Links by component |
-| 124 | Ports | Ports |
-| 124 | Function Ports alloués à un Component Port | Function Ports allocated to a Component Port |
-| 125 | Ports | Ports |
-| 125 | Component Ports (PA) alloués à un port physique | Component Ports (PA) allocated to a physical port |
-| 126 | Ports | Ports |
-| 126 | Ports physiques portant un Component Port | Physical ports carrying a Component Port |
-| 130 | Traçabilité | Traceability |
-| 130 | Liens de réalisation | Realization links |
-| 131 | Traçabilité | Traceability |
-| 131 | tr.tab | (inchangé, hors _L) |
-| 131 | Couverture de traçabilité (▼ réalisés · ▲ réalisants) | Traceability coverage (▼ realized · ▲ realizing) |
-| 134 | Catégorie | Category |
+| 98 | Nombre de chaînes | Number of chains |
+| 98 | vide(s) | of which … empty |
+| 99 | Chaînes | Chains |
+| 99 | ch.type | (inchangé, hors _L) |
+| 99 | Chaînes par type | Chains by type |
+| 100 | Chaînes | Chains |
+| 100 | ch.layer | (inchangé, hors _L) |
+| 100 | Chaînes par couche | Chains by layer |
+| 100 | Non classées | Unclassified |
+| 101 | Chaînes | Chains |
+| 101 | ch.empty | (inchangé, hors _L) |
+| 101 | Chaînes vides / non vides | Empty / non-empty chains |
+| 101 | Non vides | Non-empty |
+| 101 | Vides | Empty |
+| 102 | Chaînes | Chains |
+| 102 | ch.full | (inchangé, hors _L) |
+| 102 | Chaînes non vides | Non-empty chains |
+| 103 | Chaînes | Chains |
+| 103 | ch.avg | (inchangé, hors _L) |
+| 103 | Étapes par chaîne (moyenne) | Steps per chain (average) |
+| 103 | chaînes non vides | non-empty chains |
+| 104 | Chaînes | Chains |
+| 104 | ch.kind | (inchangé, hors _L) |
+| 104 | Étapes des chaînes par nature d'allocation | Chain steps by allocation kind |
+| 105 | Système | System |
+| 105 | Acteurs | Actors |
+| 105 | Non allouées | Unallocated |
+| 106 | Chaînes | Chains |
+| 106 | ch.top | (inchangé, hors _L) |
+| 106 | Chaînes les plus longues | Longest chains |
+| 106 | Chaîne | Chain |
+| 106 | Type | (inchangé, hors _L) |
+| 106 | Couche | Layer |
+| 106 | Étapes | Steps |
+| 106 | Échanges | Exchanges |
+| 111 | → Orienté | → Oriented |
+| 111 | ← Inversé | ← Reversed |
+| 111 | ⇄ Bidirectionnel | ⇄ Bidirectional |
+| 111 | ? Non orienté | ? Not oriented |
+| 112 | Component Exchanges | Component Exchanges |
+| 112 | Nombre de Component Exchanges | Number of Component Exchanges |
+| 113 | Component Exchanges | Component Exchanges |
+| 113 | ce.kind | (inchangé, hors _L) |
+| 113 | Component Exchanges par kind | Component Exchanges by kind |
+| 114 | Component Exchanges | Component Exchanges |
+| 114 | ce.dir | (inchangé, hors _L) |
+| 114 | Sens des Component Exchanges | Direction of Component Exchanges |
+| 114 | ⚠ Incohérent | ⚠ Inconsistent |
+| 115 | Component Exchanges | Component Exchanges |
+| 115 | ce.layer | (inchangé, hors _L) |
+| 115 | Component Exchanges par couche | Component Exchanges by layer |
+| 116 | Component Exchanges | Component Exchanges |
+| 116 | Component Exchanges avec FE alloué | Component Exchanges with an allocated FE |
+| 117 | Component Exchanges | Component Exchanges |
+| 117 | ce.orph | (inchangé, hors _L) |
+| 117 | Ports de composant orphelins | Orphan component ports |
+| 117 | ComponentPort sans exchange | ComponentPort without exchange |
+| 118 | Component Exchanges | Component Exchanges |
+| 118 | ce.papl | (inchangé, hors _L) |
+| 118 | CE de couche PA sans Physical Link | PA-layer CE without Physical Link |
+| 119 | Component Exchanges | Component Exchanges |
+| 119 | ce.comp | (inchangé, hors _L) |
+| 119 | Component Exchanges par composant | Component Exchanges by component |
+| 123 | Physical Links | Physical Links |
+| 123 | Nombre de Physical Links | Number of Physical Links |
+| 124 | Physical Links | Physical Links |
+| 124 | pl.layer | (inchangé, hors _L) |
+| 124 | Physical Links par couche | Physical Links by layer |
+| 125 | Physical Links | Physical Links |
+| 125 | Physical Links portant un CE | Physical Links carrying a CE |
+| 126 | Physical Links | Physical Links |
+| 126 | pl.orph | (inchangé, hors _L) |
+| 126 | Ports physiques sans lien | Physical ports without link |
+| 127 | Physical Links | Physical Links |
+| 127 | pl.nocp | (inchangé, hors _L) |
+| 127 | Ports physiques sans Component Port | Physical ports without Component Port |
+| 128 | Physical Links | Physical Links |
+| 128 | pl.comp | (inchangé, hors _L) |
+| 128 | Physical Links par composant | Physical Links by component |
+| 132 | Ports | Ports |
+| 132 | Function Ports alloués à un Component Port | Function Ports allocated to a Component Port |
+| 133 | Ports | Ports |
+| 133 | Component Ports (PA) alloués à un port physique | Component Ports (PA) allocated to a physical port |
+| 134 | Ports | Ports |
+| 134 | Ports physiques portant un Component Port | Physical ports carrying a Component Port |
 | 138 | Traçabilité | Traceability |
-| 138 | Traçabilité — | Traceability — …: % … per transition |
-| 138 | par passage | Traceability — …: % … per transition |
-| 140 | Éléments de la couche haute réalisés par la couche basse | Upper-layer elements realized by the lower layer |
-| 140 | Éléments de la couche basse qui réalisent la couche haute | Lower-layer elements realizing the upper layer |
-| 141 | réalisés ▼ | realized ▼ |
-| 141 | réalisants ▲ | realizing ▲ |
-| 143 | Tableau de bord : traçabilité indisponible | ❌ |
-| 147 | Capacités | Capabilities |
-| 147 | cap.n | (inchangé, hors _L) |
-| 147 | Capacités et missions | Capabilities and missions |
-| 148 | Capacités | Capabilities |
-| 148 | cap.type | (inchangé, hors _L) |
-| 148 | Capacités par type | Capabilities by type |
-| 149 | Capacités | Capabilities |
-| 149 | cap.layer | (inchangé, hors _L) |
-| 149 | Capacités par couche | Capabilities by layer |
-| 150 | Capacités | Capabilities |
-| 150 | cap.fn | (inchangé, hors _L) |
-| 150 | Capacités décrites par des fonctions ou chaînes | Capabilities described by functions or chains |
-| 151 | Capacités | Capabilities |
-| 151 | cap.chk | (inchangé, hors _L) |
-| 151 | Contrôles des capacités | Capability checks |
-| 152 | Sans fonction ni chaîne | No function or chain |
-| 153 | Sans acteur ni composant | No actor or component |
-| 154 | Sans scénario | No scenario |
-| 155 | Missions sans capacité | Missions without capability |
-| 159 | Modes & états | Modes & states |
-| 159 | Machines à états | State machines |
-| 159 | états/modes · | … states/modes · … transitions |
-| 160 | Modes & états | Modes & states |
-| 160 | sm.owner | (inchangé, hors _L) |
-| 160 | États et modes par machine | States and modes by machine |
-| 161 | Modes & états | Modes & states |
-| 161 | sm.chk | (inchangé, hors _L) |
-| 161 | Contrôles des machines à états | State machine checks |
-| 162 | Régions sans état initial | Regions without initial state |
-| 162 | États inatteignables | Unreachable states |
-| 162 | États sans issue | Dead-end states |
-| 162 | Transitions sans déclencheur | Transitions without trigger |
-| 166 | Contrôles | Checks |
-| 166 | chk.fn | (inchangé, hors _L) |
-| 166 | Contrôles des fonctions | Function checks |
-| 167 | Contrôles | Checks |
-| 167 | chk.pt | (inchangé, hors _L) |
-| 167 | Contrôles des ports | Port checks |
-| 168 | Contrôles | Checks |
-| 168 | chk.ce | (inchangé, hors _L) |
-| 168 | Contrôles des Component Exchanges | Component Exchange checks |
-| 169 | Sans Functional Exchange | No Functional Exchange |
-| 169 | Ports orphelins | Orphan ports |
-| 170 | Orientations incohérentes | Inconsistent orientations |
-| 170 | Non orientés | Unoriented |
-| 171 | PA sans Physical Link | PA without Physical Link |
-| 172 | Contrôles | Checks |
-| 172 | chk.pl | (inchangé, hors _L) |
-| 172 | Contrôles des Physical Links | Physical Link checks |
-| 173 | Sans Component Exchange | No Component Exchange |
-| 173 | Ports physiques sans lien | Physical ports without link |
-| 174 | Ports physiques sans Component Port | Physical ports without Component Port |
-| 174 | CE (PA) non alloués | Unallocated CEs (PA) |
+| 138 | Liens de réalisation | Realization links |
+| 139 | Traçabilité | Traceability |
+| 139 | tr.tab | (inchangé, hors _L) |
+| 139 | Couverture de traçabilité (▼ réalisés · ▲ réalisants) | Traceability coverage (▼ realized · ▲ realizing) |
+| 142 | Catégorie | Category |
+| 146 | Traçabilité | Traceability |
+| 146 | Traçabilité — | Traceability — …: % … per transition |
+| 146 | par passage | Traceability — …: % … per transition |
+| 148 | Éléments de la couche haute réalisés par la couche basse | Upper-layer elements realized by the lower layer |
+| 148 | Éléments de la couche basse qui réalisent la couche haute | Lower-layer elements realizing the upper layer |
+| 149 | réalisés ▼ | realized ▼ |
+| 149 | réalisants ▲ | realizing ▲ |
+| 151 | Tableau de bord : traçabilité indisponible | ❌ |
+| 155 | Capacités | Capabilities |
+| 155 | cap.n | (inchangé, hors _L) |
+| 155 | Capacités et missions | Capabilities and missions |
+| 156 | Capacités | Capabilities |
+| 156 | cap.type | (inchangé, hors _L) |
+| 156 | Capacités par type | Capabilities by type |
+| 157 | Capacités | Capabilities |
+| 157 | cap.layer | (inchangé, hors _L) |
+| 157 | Capacités par couche | Capabilities by layer |
+| 158 | Capacités | Capabilities |
+| 158 | cap.fn | (inchangé, hors _L) |
+| 158 | Capacités décrites par des fonctions ou chaînes | Capabilities described by functions or chains |
+| 159 | Capacités | Capabilities |
+| 159 | cap.chk | (inchangé, hors _L) |
+| 159 | Contrôles des capacités | Capability checks |
+| 160 | Sans fonction ni chaîne | No function or chain |
+| 161 | Sans acteur ni composant | No actor or component |
+| 162 | Sans scénario | No scenario |
+| 163 | Missions sans capacité | Missions without capability |
+| 167 | Modes & états | Modes & states |
+| 167 | Machines à états | State machines |
+| 167 | états/modes · | … states/modes · … transitions |
+| 168 | Modes & états | Modes & states |
+| 168 | sm.owner | (inchangé, hors _L) |
+| 168 | États et modes par machine | States and modes by machine |
+| 169 | Modes & états | Modes & states |
+| 169 | sm.chk | (inchangé, hors _L) |
+| 169 | Contrôles des machines à états | State machine checks |
+| 170 | Régions sans état initial | Regions without initial state |
+| 170 | États inatteignables | Unreachable states |
+| 170 | États sans issue | Dead-end states |
+| 170 | Transitions sans déclencheur | Transitions without trigger |
+| 174 | Contrôles | Checks |
+| 174 | chk.fn | (inchangé, hors _L) |
+| 174 | Contrôles des fonctions | Function checks |
 | 175 | Contrôles | Checks |
-| 175 | chk.sum | (inchangé, hors _L) |
-| 175 | Synthèse des contrôles par domaine | Summary of checks by domain |
-| 176 | Fonctions | Functions |
-| 176 | chk.fn | (inchangé, hors _L) |
-| 176 | Ports | Ports |
-| 176 | chk.pt | (inchangé, hors _L) |
-| 176 | Component Exchanges | Component Exchanges |
+| 175 | chk.pt | (inchangé, hors _L) |
+| 175 | Contrôles des ports | Port checks |
+| 176 | Contrôles | Checks |
 | 176 | chk.ce | (inchangé, hors _L) |
-| 176 | Physical Links | Physical Links |
-| 176 | chk.pl | (inchangé, hors _L) |
-| 176 | Capacités | Capabilities |
-| 176 | cap.chk | (inchangé, hors _L) |
-| 176 | Modes & états | Modes & states |
-| 176 | sm.chk | (inchangé, hors _L) |
-| 176 | Exigences | Requirements |
-| 176 | rq.chk | (inchangé, hors _L) |
-| 176 | Propriétés | Properties |
-| 176 | pv.chk | (inchangé, hors _L) |
-| 176 | Données & interfaces | Data & interfaces |
-| 176 | dm.chk | (inchangé, hors _L) |
-| 176 | Contraintes | Constraints |
-| 176 | ct.chk | (inchangé, hors _L) |
-| 176 | Nombre total de constats par domaine | Total number of findings by domain |
-| 183 | Mise en page | Layout |
-| 183 | Texte libre (titre, commentaire) | Free text (title, comment) |
-| 192 | Indicateur | (inchangé, hors _L) |
-| 208 | à surveiller | to watch |
-| 218 | Autres ( | Others (…) |
-| 229 | Texte vide — ⚙ pour le modifier. | Empty text — ⚙ to edit it. |
-| 230 | Indicateur indisponible pour ce modèle. | Indicator not available for this model. |
-| 231 | Aucune donnée dans ce modèle. | No data in this model. |
-| 232 | var(--c-dim) | (inchangé, hors _L) |
-| 232 | var(--c-text) | (inchangé, hors _L) |
-| 232 | var(--c-bg2) | (inchangé, hors _L) |
-| 250 | Catégorie | Category |
-| 250 | Taux | Rate |
-| 250 | Nombre | Count |
-| 250 | Détail | Detail |
-| 250 | Part | (inchangé, hors _L) |
-| 253 | autre(s) ligne(s) — agrandir le cadre pour tout voir | … and … more row(s) — enlarge the frame to see everything |
-| 258 | catégorie(s) | … … category(ies) |
-| 271 | Autres ( | Others (…) |
-| 280 | Autres ( | Others (…) |
-| 323 | Synthèse du modèle — | Model summary — |
-| 323 | Capella | Capella |
-| 324 | mdl.n | (inchangé, hors _L) |
-| 324 | Fonctions (toutes couches) | Functions (all layers) |
-| 325 | mdl.layer | (inchangé, hors _L) |
-| 326 | fn.L.desc | (inchangé, hors _L) |
-| 326 | ch.empty | (inchangé, hors _L) |
-| 327 | ce.dir | (inchangé, hors _L) |
-| 328 | chk.sum | (inchangé, hors _L) |
-| 328 | tr.tab | (inchangé, hors _L) |
-| 329 | Synthèse du modèle | Model summary |
-| 349 | — double-clic pour renommer | {3} {4} |
-| 351 | ✔ Terminer | ✔ Done |
-| 351 | ✏ Modifier | ✏ Edit |
-| 352 | ＋ Ajouter un élément | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 354 | ⧉ Dupliquer ✨ Exemple | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 357 | 🗑 Supprimer | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 366 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. | Drag an item by its title to move it · bottom-right corner to resize it · ＋ to the left of an item to insert one before it · ⚙ configure · ⧉ duplicate · ✕ remove. Dashboards are kept in the 💾 HTML page. |
-| 367 | ,minmax(0,1fr)) | … ＋ … … A4 portrait A4 landscape 🖨 Print 🌐 HTML ⬇ JSON ⬆ JSON … … … … |
-| 372 | ＋ Ajouter un élément | ＋ Add an item |
-| 373 | Tableau de bord vide. | Empty dashboard. … |
-| 373 | Cliquez sur « ＋ Ajouter un élément ». | Click “＋ Add an item”. |
-| 373 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. | Click “✏ Edit” to add indicators. |
-| 399 | Tableau de bord | Dashboard |
-| 401 | Page | Page |
-| 402 | (copie) | (copy) |
-| 404 | Supprimer le tableau de bord « | Delete the dashboard “…”? |
-| 411 | Tableau importé | Imported dashboard |
-| 412 | Fichier de tableau de bord invalide. | Invalid dashboard file. |
-| 419 | ,minmax(0,1fr)) | {0} {2} |
-| 421 | élément(s) | … element(s) |
-| 421 | Tableau de bord | Dashboard |
-| 468 | Modèle Capella | Capella model |
-| 506 | ⊞ Tout déplier ⊟ Tout replier aperçu Annuler | … ⊞ Expand all ⊟ Collapse all preview Cancel … |
-| 506 | ⚙ Configurer l'élément | ⚙ Configure the item |
-| 506 | ＋ Ajouter un élément | ＋ Add an item |
-| 510 | ✔ Enregistrer | ✔ Save |
-| 510 | ＋ Ajouter | ＋ Add |
-| 517 | Mise en page | Layout |
-| 518 | Mise en page | Layout |
-| 523 | la catégorie | {2} {3} {4} |
-| 523 | Replier | Collapse |
-| 523 | Déplier | Expand |
-| 523 | Aucun indicateur. | No indicator. |
-| 530 | Choisissez un indicateur dans la liste de gauche. | Choose an indicator in the left list. |
-| 533 | Indicateur | Indicator … › … Title … Chart … Size … … … |
-| 533 | Titre | Indicator … › … Title … Chart … Size … … … |
-| 535 | Représentation | Indicator … › … Title … Chart … Size … … … |
-| 535 | Texte | Text … |
-| 536 | Taille | Indicator … › … Title … Chart … Size … … … |
-| 537 | col. | … col. |
-| 539 | Catégories | Categories … Sort Default Descending value Natural order |
-| 539 | Tri Par défaut | Categories … Sort Default Descending value Natural order |
-| 539 | 5 premières | Top 5 |
-| 539 | 8 premières | Top 8 |
-| 539 | 10 premières | Top 10 |
-| 539 | 15 premières | Top 15 |
-| 539 | 20 premières | Top 20 |
-| 539 | Toutes | All |
-| 540 | Valeur décroissante | Categories … Sort Default Descending value Natural order |
-| 540 | Ordre naturel | Categories … Sort Default Descending value Natural order |
+| 176 | Contrôles des Component Exchanges | Component Exchange checks |
+| 177 | Sans Functional Exchange | No Functional Exchange |
+| 177 | Ports orphelins | Orphan ports |
+| 178 | Orientations incohérentes | Inconsistent orientations |
+| 178 | Non orientés | Unoriented |
+| 179 | PA sans Physical Link | PA without Physical Link |
+| 180 | Contrôles | Checks |
+| 180 | chk.pl | (inchangé, hors _L) |
+| 180 | Contrôles des Physical Links | Physical Link checks |
+| 181 | Sans Component Exchange | No Component Exchange |
+| 181 | Ports physiques sans lien | Physical ports without link |
+| 182 | Ports physiques sans Component Port | Physical ports without Component Port |
+| 182 | CE (PA) non alloués | Unallocated CEs (PA) |
+| 183 | Contrôles | Checks |
+| 183 | chk.sum | (inchangé, hors _L) |
+| 183 | Synthèse des contrôles par domaine | Summary of checks by domain |
+| 184 | Fonctions | Functions |
+| 184 | chk.fn | (inchangé, hors _L) |
+| 184 | Ports | Ports |
+| 184 | chk.pt | (inchangé, hors _L) |
+| 184 | Component Exchanges | Component Exchanges |
+| 184 | chk.ce | (inchangé, hors _L) |
+| 184 | Physical Links | Physical Links |
+| 184 | chk.pl | (inchangé, hors _L) |
+| 184 | Capacités | Capabilities |
+| 184 | cap.chk | (inchangé, hors _L) |
+| 184 | Modes & états | Modes & states |
+| 184 | sm.chk | (inchangé, hors _L) |
+| 184 | Exigences | Requirements |
+| 184 | rq.chk | (inchangé, hors _L) |
+| 184 | Propriétés | Properties |
+| 184 | pv.chk | (inchangé, hors _L) |
+| 184 | Données & interfaces | Data & interfaces |
+| 184 | dm.chk | (inchangé, hors _L) |
+| 184 | Contraintes | Constraints |
+| 184 | ct.chk | (inchangé, hors _L) |
+| 184 | Nombre total de constats par domaine | Total number of findings by domain |
+| 191 | Mise en page | Layout |
+| 191 | Texte libre (titre, commentaire) | Free text (title, comment) |
+| 200 | Indicateur | (inchangé, hors _L) |
+| 216 | à surveiller | to watch |
+| 226 | Autres ( | Others (…) |
+| 237 | Texte vide — ⚙ pour le modifier. | Empty text — ⚙ to edit it. |
+| 238 | Indicateur indisponible pour ce modèle. | Indicator not available for this model. |
+| 239 | Aucune donnée dans ce modèle. | No data in this model. |
+| 240 | var(--c-dim) | (inchangé, hors _L) |
+| 240 | var(--c-text) | (inchangé, hors _L) |
+| 240 | var(--c-bg2) | (inchangé, hors _L) |
+| 258 | Catégorie | Category |
+| 258 | Taux | Rate |
+| 258 | Nombre | Count |
+| 258 | Détail | Detail |
+| 258 | Part | (inchangé, hors _L) |
+| 261 | autre(s) ligne(s) — agrandir le cadre pour tout voir | … and … more row(s) — enlarge the frame to see everything |
+| 266 | catégorie(s) | … … category(ies) |
+| 279 | Autres ( | Others (…) |
+| 288 | Autres ( | Others (…) |
+| 331 | Synthèse du modèle — | Model summary — |
+| 331 | Capella | Capella |
+| 332 | mdl.n | (inchangé, hors _L) |
+| 332 | Fonctions (toutes couches) | Functions (all layers) |
+| 333 | mdl.layer | (inchangé, hors _L) |
+| 334 | fn.L.desc | (inchangé, hors _L) |
+| 334 | ch.empty | (inchangé, hors _L) |
+| 335 | ce.dir | (inchangé, hors _L) |
+| 336 | chk.sum | (inchangé, hors _L) |
+| 336 | tr.tab | (inchangé, hors _L) |
+| 337 | Synthèse du modèle | Model summary |
+| 357 | — double-clic pour renommer | {3} {4} |
+| 359 | ✔ Terminer | ✔ Done |
+| 359 | ✏ Modifier | ✏ Edit |
+| 360 | ＋ Ajouter un élément | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 362 | ⧉ Dupliquer ✨ Exemple | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 365 | 🗑 Supprimer | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 374 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. | Drag an item by its title to move it · bottom-right corner to resize it · ＋ to the left of an item to insert one before it · ⚙ configure · ⧉ duplicate · ✕ remove. Dashboards are kept in the 💾 HTML page. |
+| 375 | ,minmax(0,1fr)) | … ＋ … … A4 portrait A4 landscape 🖨 Print 🌐 HTML ⬇ JSON ⬆ JSON … … … … |
+| 380 | ＋ Ajouter un élément | ＋ Add an item |
+| 381 | Tableau de bord vide. | Empty dashboard. … |
+| 381 | Cliquez sur « ＋ Ajouter un élément ». | Click “＋ Add an item”. |
+| 381 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. | Click “✏ Edit” to add indicators. |
+| 407 | Tableau de bord | Dashboard |
+| 409 | Page | Page |
+| 410 | (copie) | (copy) |
+| 412 | Supprimer le tableau de bord « | Delete the dashboard “…”? |
+| 419 | Tableau importé | Imported dashboard |
+| 420 | Fichier de tableau de bord invalide. | Invalid dashboard file. |
+| 427 | ,minmax(0,1fr)) | {0} {2} |
+| 429 | élément(s) | … element(s) |
+| 429 | Tableau de bord | Dashboard |
+| 476 | Modèle Capella | Capella model |
+| 514 | ⊞ Tout déplier ⊟ Tout replier aperçu Annuler | … ⊞ Expand all ⊟ Collapse all preview Cancel … |
+| 514 | ⚙ Configurer l'élément | ⚙ Configure the item |
+| 514 | ＋ Ajouter un élément | ＋ Add an item |
+| 518 | ✔ Enregistrer | ✔ Save |
+| 518 | ＋ Ajouter | ＋ Add |
+| 525 | Mise en page | Layout |
+| 526 | Mise en page | Layout |
+| 531 | la catégorie | {2} {3} {4} |
+| 531 | Replier | Collapse |
+| 531 | Déplier | Expand |
+| 531 | Aucun indicateur. | No indicator. |
+| 538 | Choisissez un indicateur dans la liste de gauche. | Choose an indicator in the left list. |
+| 541 | Indicateur | Indicator … › … Title … Chart … Size … … … |
+| 541 | Titre | Indicator … › … Title … Chart … Size … … … |
+| 543 | Représentation | Indicator … › … Title … Chart … Size … … … |
+| 543 | Texte | Text … |
+| 544 | Taille | Indicator … › … Title … Chart … Size … … … |
+| 545 | col. | … col. |
+| 547 | Catégories | Categories … Sort Default Descending value Natural order |
+| 547 | Tri Par défaut | Categories … Sort Default Descending value Natural order |
+| 547 | 5 premières | Top 5 |
+| 547 | 8 premières | Top 8 |
+| 547 | 10 premières | Top 10 |
+| 547 | 15 premières | Top 15 |
+| 547 | 20 premières | Top 20 |
+| 547 | Toutes | All |
+| 548 | Valeur décroissante | Categories … Sort Default Descending value Natural order |
+| 548 | Ordre naturel | Categories … Sort Default Descending value Natural order |
 
 ## js/36-component-exchange.js
 
@@ -2332,16 +2349,16 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 17 | Shared | (inchangé, hors _L) |
 | 17 | Transverse | Cross-layer |
 | 36 | 🎨 Personnalisé | 🎨 Custom |
-| 69 | 🎨 Thème personnalisé Partir de — | 🎨 Custom theme Start from — … ⬇ JSON ⬆ JSON … Cancel ✔ Save and apply |
-| 71 | ⬇ JSON ⬆ JSON | 🎨 Custom theme Start from — … ⬇ JSON ⬆ JSON … Cancel ✔ Save and apply |
-| 77 | Annuler ✔ Enregistrer et appliquer | 🎨 Custom theme Start from — … ⬇ JSON ⬆ JSON … Cancel ✔ Save and apply |
-| 77 | 🗑 Supprimer | 🗑 Delete |
-| 85 | Couches ARCADIA (appliquées à l'enregistrement) | ARCADIA layers (applied on save) |
-| 91 | Contraste sur les panneaux : texte | Contrast on panels: text … · secondary … (readable from 4.5) |
-| 91 | · secondaire | Contrast on panels: text … · secondary … (readable from 4.5) |
-| 91 | (lisible à partir de 4,5) | Contrast on panels: text … · secondary … (readable from 4.5) |
-| 111 | Supprimer le thème personnalisé ? | Delete the custom theme? |
-| 118 | Fichier de thème invalide. | Invalid theme file. |
+| 71 | 🎨 Thème personnalisé Partir de — | 🎨 Custom theme Start from — … ⬇ JSON ⬆ JSON … Cancel ✔ Save and apply |
+| 73 | ⬇ JSON ⬆ JSON | 🎨 Custom theme Start from — … ⬇ JSON ⬆ JSON … Cancel ✔ Save and apply |
+| 79 | Annuler ✔ Enregistrer et appliquer | 🎨 Custom theme Start from — … ⬇ JSON ⬆ JSON … Cancel ✔ Save and apply |
+| 79 | 🗑 Supprimer | 🗑 Delete |
+| 87 | Couches ARCADIA (appliquées à l'enregistrement) | ARCADIA layers (applied on save) |
+| 93 | Contraste sur les panneaux : texte | Contrast on panels: text … · secondary … (readable from 4.5) |
+| 93 | · secondaire | Contrast on panels: text … · secondary … (readable from 4.5) |
+| 93 | (lisible à partir de 4,5) | Contrast on panels: text … · secondary … (readable from 4.5) |
+| 113 | Supprimer le thème personnalisé ? | Delete the custom theme? |
+| 120 | Fichier de thème invalide. | Invalid theme file. |
 
 ## js/39-exigences-donnees.js
 
@@ -2633,11 +2650,13 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 60 | déplacé(s) | moved |
 | 121 | Le sélecteur de fichiers de ce navigateur est indisponible : cliquez de nouveau pour choisir le fichier, ou glissez-le dans la fenêtre. | This browser's file picker is unavailable: click again to choose the file, or drag it into the window. |
 | 134 | Modèle Capella | Capella model |
+| 134 | Modèle SysML v2 | SysML v2 model |
 | 138 | Sélecteur à accès direct indisponible : | ❌ |
 | 181 | ✔ Le fichier n'a pas changé | ✔ The file has not changed |
 | 185 | Aucun nouvel enregistrement depuis la dernière détection | No new save since the last detection |
 | 185 | ✔ Le fichier n'a pas changé | ✔ The file has not changed |
 | 192 | ✔ Le fichier correspond au modèle affiché | ✔ The file matches the displayed model |
+| 209 | model.sysml | (inchangé, hors _L) |
 | 213 | ⚠ Fichier illisible pour l'instant (enregistrement en cours ?) — réessayez | ⚠ File unreadable for now (save in progress?) — try again |
 | 224 | Fichier réenregistré — aucune différence de contenu | File saved again — no content difference |
 | 254 | ⚠ Seuls | ⚠ Only … % of the elements are shared with the displayed model: it may not be the same project . Check the delta before updating. |
@@ -2753,59 +2772,74 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 12 | ▤ Tableau | ▤ Table |
 | 12 | Tableau de tous les éléments du modèle : onglets de vues, colonnes d'attributs, de relations et par chemin, tri, filtres, export CSV | Table of all model elements: view tabs, attribute, relation and path columns, sort, filters, CSV export |
 | 13 | 📖 Index des types | 📖 Type index |
-| 14 | ⚡ Chaînes | ⚡ Chains |
-| 15 | ƒ⇆ Functional Exchange | ƒ⇆ Functional Exchange |
-| 15 | Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles | Exchanges between functions: rows, by function, Capella-style blocks with pins, matrix, checks |
-| 16 | 🟨 Operational Analysis | 🟨 Operational Analysis |
-| 17 | 🧱 System Component | 🧱 System Component |
-| 18 | 🧱 Logical Component | 🧱 Logical Component |
-| 19 | 🔀 Behavior Exchange | 🔀 Behavior Exchange |
-| 19 | Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange) | PA-layer Component Exchanges between Physical Components Behavior, and with connected actors (formerly 🔀 Component Exchange) |
-| 20 | 🔌 Physical Link | 🔌 Physical Link |
-| 21 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
-| 22 | 🎬 Scénarios | 🎬 Scenarios |
-| 22 | Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références | Sequence diagrams of Capella scenarios (ES, FS, OES, OAS, IS): lifelines, messages, executions, states, modes and functions, combined fragments, references |
-| 23 | 🧩 Ports | 🧩 Ports |
-| 23 | Traçabilité Function Port ↔ Component Port ↔ Physical Port | Function Port ↔ Component Port ↔ Physical Port traceability |
-| 24 | 🔗 Liens | 🔗 Links |
-| 24 | Relations entre les éléments du modèle | Relations between model elements |
-| 25 | ƒ Fonctions | ƒ Functions |
-| 25 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier | Functions: hierarchy, table, traceability, metrics, checks, file |
-| 26 | 🧬 Traçabilité inter-couches | 🧬 Cross-layer traceability |
-| 27 | 🎯 Capacités & missions | 🎯 Capabilities & missions |
-| 28 | 🔁 Modes & états | 🔁 Modes & states |
-| 29 | ⚖ Comparaison de versions | ⚖ Version comparison |
-| 30 | 📑 Exigences | 📑 Requirements |
-| 31 | 🏷 Propriétés | 🏷 Properties |
-| 32 | 🗃 Données & interfaces | 🗃 Data & interfaces |
-| 33 | ⛓ Contraintes | ⛓ Constraints |
-| 34 | 📐 Tableau de bord | 📐 Dashboard |
-| 34 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux | Custom dashboards: indicators, charts, tables |
-| 38 | 🧭 Explorateur | 🧭 Explorer |
-| 38 | Explorer le modèle : arborescence, cartes, index des types | Explore the model: tree, cards, type index |
-| 39 | 📡 Flux & interfaces | 📡 Flows & interfaces |
-| 39 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrammes, scénarios, ports, liens | Chains, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrams, scenarios, ports, links |
-| 41 | 🔬 Analyses | 🔬 Analyses |
-| 41 | Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes | Functions, cross-layer traceability, capabilities & missions, modes & states, version comparison, requirements, properties, data & interfaces, constraints |
-| 144 | Vue affichée : | Displayed view: |
-| 162 | Retirer de la barre | Remove from the bar |
-| 162 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
-| 226 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 226 | Ctrl+S | Ctrl+S |
-| 227 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 227 | Ctrl+Maj+S | Ctrl+Maj+S |
-| 238 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
-| 240 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
-| 241 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
-| 242 | ℹ À propos | ℹ About |
-| 248 | 🎨 Personnaliser… | 🎨 Customize… |
-| 252 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
-| 257 | 🗺 Relation Map | 🗺 Relation Map |
-| 260 | Aucune vue ne correspond. | No view matches. |
-| 266 | Menu | … ▾ menu in the bar |
-| 266 | ▾ dans la barre | … ▾ menu in the bar |
-| 267 | Autres vues | Other views |
-| 270 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | ↺ Restore the default bar 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
+| 15 | ◇ General View | ◇ General View |
+| 15 | Définitions et usages en notation SysML v2 (coins droits / arrondis, compartiments), spécialisations, typages, compositions | Definitions and usages in SysML v2 notation (square / rounded corners, compartments), specializations, typings, compositions |
+| 16 | ⧉ Interconnection View | ⧉ Interconnection View |
+| 16 | Parties imbriquées d'une partie ou d'une définition, ports sur les bords, connexions, interfaces et flux | Nested parts of a part or a definition, ports on the edges, connections, interfaces and flows |
+| 17 | ⇢ Action Flow View | ⇢ Action Flow View |
+| 17 | Sous-actions d'une action : début, fin, successions, décisions, fork / join, flux | Subactions of an action: start, done, successions, decisions, fork / join, flows |
+| 18 | ◎ State Transition View | ◎ State Transition View |
+| 18 | États d'une machine à états et transitions (déclencheur [garde] / effet) | States of a state machine and transitions (trigger [guard] / effect) |
+| 19 | 📑 Exigences SysML | 📑 SysML requirements |
+| 20 | ▦ Grid View | ▦ Grid View |
+| 20 | Matrice de relations entre deux ensembles d'éléments (satisfy, perform, allocate, typage…) | Relationship matrix between two sets of elements (satisfy, perform, allocate, typing…) |
+| 21 | ✔ Contrôles SysML | ✔ SysML checks |
+| 22 | 🧾 Texte source | 🧾 Source text |
+| 23 | ⚡ Chaînes | ⚡ Chains |
+| 24 | ƒ⇆ Functional Exchange | ƒ⇆ Functional Exchange |
+| 24 | Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles | Exchanges between functions: rows, by function, Capella-style blocks with pins, matrix, checks |
+| 25 | 🟨 Operational Analysis | 🟨 Operational Analysis |
+| 26 | 🧱 System Component | 🧱 System Component |
+| 27 | 🧱 Logical Component | 🧱 Logical Component |
+| 28 | 🔀 Behavior Exchange | 🔀 Behavior Exchange |
+| 28 | Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange) | PA-layer Component Exchanges between Physical Components Behavior, and with connected actors (formerly 🔀 Component Exchange) |
+| 29 | 🔌 Physical Link | 🔌 Physical Link |
+| 30 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
+| 31 | 🎬 Scénarios | 🎬 Scenarios |
+| 31 | Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références | Sequence diagrams of Capella scenarios (ES, FS, OES, OAS, IS): lifelines, messages, executions, states, modes and functions, combined fragments, references |
+| 32 | 🧩 Ports | 🧩 Ports |
+| 32 | Traçabilité Function Port ↔ Component Port ↔ Physical Port | Function Port ↔ Component Port ↔ Physical Port traceability |
+| 33 | 🔗 Liens | 🔗 Links |
+| 33 | Relations entre les éléments du modèle | Relations between model elements |
+| 34 | ƒ Fonctions | ƒ Functions |
+| 34 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier | Functions: hierarchy, table, traceability, metrics, checks, file |
+| 35 | 🧬 Traçabilité inter-couches | 🧬 Cross-layer traceability |
+| 36 | 🎯 Capacités & missions | 🎯 Capabilities & missions |
+| 37 | 🔁 Modes & états | 🔁 Modes & states |
+| 38 | ⚖ Comparaison de versions | ⚖ Version comparison |
+| 39 | 📑 Exigences | 📑 Requirements |
+| 40 | 🏷 Propriétés | 🏷 Properties |
+| 41 | 🗃 Données & interfaces | 🗃 Data & interfaces |
+| 42 | ⛓ Contraintes | ⛓ Constraints |
+| 43 | 📐 Tableau de bord | 📐 Dashboard |
+| 43 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux | Custom dashboards: indicators, charts, tables |
+| 47 | 🧭 Explorateur | 🧭 Explorer |
+| 47 | Explorer le modèle : arborescence, cartes, index des types | Explore the model: tree, cards, type index |
+| 48 | ◇ SysML v2 | ◇ SysML v2 |
+| 48 | Vues SysML v2 : General View, Interconnection View, Action Flow, State Transition, exigences, Grid View, contrôles, texte source | SysML v2 views: General View, Interconnection View, Action Flow, State Transition, requirements, Grid View, checks, source text |
+| 49 | 📡 Flux & interfaces | 📡 Flows & interfaces |
+| 49 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrammes, scénarios, ports, liens | Chains, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrams, scenarios, ports, links |
+| 51 | 🔬 Analyses | 🔬 Analyses |
+| 51 | Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes | Functions, cross-layer traceability, capabilities & missions, modes & states, version comparison, requirements, properties, data & interfaces, constraints |
+| 161 | Vue affichée : | Displayed view: |
+| 179 | Retirer de la barre | Remove from the bar |
+| 179 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
+| 243 | 💾 Enregistrer sous… | 🔷 Open a model (Capella or SysML v2)… 📁 Open the project folder… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 243 | Ctrl+S | Ctrl+S |
+| 244 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé , la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a model (Capella or SysML v2)… 📁 Open the project folder… 🔄 Load a model update… Update: delta shown before confirmation; warning if the two files seem to be different projects. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model , the view bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 244 | Ctrl+Maj+S | Ctrl+Maj+S |
+| 255 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
+| 257 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
+| 258 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
+| 259 | ℹ À propos | ℹ About |
+| 265 | 🎨 Personnaliser… | 🎨 Customize… |
+| 269 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
+| 274 | 🗺 Relation Map | 🗺 Relation Map |
+| 277 | Aucune vue ne correspond. | No view matches. |
+| 284 | Menu | … ▾ menu in the bar |
+| 284 | ▾ dans la barre | … ▾ menu in the bar |
+| 285 | Autres vues | Other views |
+| 288 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | ↺ Restore the default bar 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
 
 ## js/42-tableaux-analyses.js
 
@@ -3862,175 +3896,180 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 67 | Impossible de lire « | Cannot read “…”. |
-| 71 | Diagrammes « | Diagrams “…” kept: now drop the project's .capella file. |
-| 71 | » gardés : déposez maintenant le fichier .capella du projet. | Diagrams “…” kept: now drop the project's .capella file. |
-| 88 | Diagrammes Capella (.aird) | Capella diagrams (.aird) |
-| 128 | Lecture du dossier impossible : | Cannot read the folder: |
-| 141 | Aucun fichier .capella dans ce dossier (ni dans ses sous-dossiers). | No .capella file in this folder (nor in its subfolders). |
-| 151 | Lecture impossible : | Cannot read: |
-| 155 | modèles dans ce dossier : choisissez celui à ouvrir. | … models in this folder: choose the one to open. |
-| 170 | Glisser pour régler la largeur de l'explorateur | Drag to adjust the width of the explorer |
-| 219 | ▣ Carte | ▣ Map |
-| 220 | Afficher la carte dans le diagramme | Show the map in the diagram |
-| 221 | ▣ Carte | ▣ Map |
-| 221 | dans le diagramme | in the diagram |
-| 222 | Afficher la carte sous l'explorateur | Show the map below the explorer |
-| 239 | Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML | Export several diagrams as sheets (header, description, title block, appendix): PDF, PNG / SVG ZIP, HTML report |
-| 239 | ⬇ Exporter… | ⬇ Export… |
-| 240 | Choisir les diagrammes à exporter : cases à cocher dans l'explorateur | Choose the diagrams to export: checkboxes in the explorer |
-| 240 | ☑ Terminer la sélection | ☑ Finish selection |
-| 240 | ☐ Sélectionner… | ☐ Select… |
-| 241 | Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés | Information on the open diagram in the details panel: type, layer, description, represented element, displayed elements |
-| 241 | ℹ Infos | ℹ Info |
-| 242 | Choisir le fichier .aird (le sélecteur s'ouvre dans le dossier du .capella quand le navigateur le permet) | Choose the .aird file (the picker opens in the .capella folder when the browser allows it) |
-| 242 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
-| 244 | diagramme(s) | … diagram(s) |
-| 245 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
-| 287 | vd-barre cdg-vd-l2 | (inchangé, hors _L) |
-| 328 | Mettre en évidence une chaîne fonctionnelle ou un chemin physique dessiné dans ce diagramme | Highlight a functional chain or physical path drawn in this diagram |
-| 335 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
-| 349 | Autres | Others |
-| 420 | Aucun .aird chargé. | No .aird loaded. |
-| 420 | 📂 Ouvrir le .aird… s'ouvre dans le dossier du .capella (Edge / Chrome). | 📂 Open the .aird… opens in the .capella folder (Edge / Chrome). |
-| 421 | Ou, depuis l'écran d'accueil, 📁 Dossier du projet… : le .capella et ses diagrammes sont chargés ensemble. | Or, from the home screen, 📁 Project folder…: the .capella and its diagrams are loaded together. |
-| 429 | Cocher / décocher le groupe | Check / uncheck the group |
-| 436 | Informations du diagramme (panneau de détail) | Diagram information (details panel) |
-| 451 | Filtrer (nom, type, sigle, couche)… | Filter (name, type, acronym, layer)… |
-| 452 | Classement de la liste | List grouping |
-| 452 | Couche › type | Layer › type |
-| 452 | Couche | Layer |
-| 452 | Type de diagramme | Diagram type |
-| 452 | Nom (A → Z) | Name (A → Z) |
-| 453 | Tout déplier | Expand all |
-| 453 | Tout replier | Collapse all |
-| 454 | sélectionné(s) pour l'export | … selected for export |
-| 454 | diagramme(s) | … diagram(s) |
-| 456 | sélectionné(s) pour l'export | … selected for export |
-| 456 | diagramme(s) — cochez pour exporter | … diagram(s) — check to export |
-| 457 | Aucun diagramme ne correspond. | No matching diagram. |
-| 540 | var(--c-dim) | (inchangé, hors _L) |
-| 542 | Diagramme | Diagram |
-| 542 | Diagramme de séquence | Sequence diagram |
-| 542 | Tableau | Table |
-| 544 | 🔲 Diagramme Capella | 🔲 Capella diagram |
-| 546 | 🔲 Afficher le diagramme | 🔲 Show the diagram |
-| 547 | Attributs | Attributes |
-| 547 | Type | Type |
-| 547 | Sigle | Acronym |
-| 548 | Couche | Layer |
-| 548 | Nature | Nature |
-| 549 | Éléments | Elements |
-| 550 | Modifié le | Modified on |
-| 550 | Fichier | File |
-| 551 | Description | (inchangé, hors _L) |
-| 552 | Élément représenté | Represented element |
-| 555 | Éléments affichés ( | Displayed elements (…) |
-| 577 | Diagrammes ( | Diagrams (…) |
-| 600 | export SVG de la visionneuse introuvable | viewer SVG export not found |
-| 607 | diagramme vide ou non exportable | empty or non-exportable diagram |
-| 628 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
-| 629 | Projet Capella | Capella project |
-| 636 | Projet | Project |
-| 636 | Couche | Layer |
-| 637 | Diagramme | Diagram |
-| 637 | Contenu | Content |
-| 637 | élément(s) | … element(s) |
-| 638 | Type | (inchangé, hors _L) |
-| 638 | Date | Date |
-| 639 | Sources | Sources |
-| 639 | Planche | Sheet |
-| 657 | ) scale( | (inchangé, hors _L) |
-| 666 | Élément représenté | Represented element |
-| 668 | ) scale( | (inchangé, hors _L) |
-| 672 | ) scale( | (inchangé, hors _L) |
-| 673 | Arcalyse · planche générée le | Arcalyse · sheet generated on … |
-| 689 | ) scale( | (inchangé, hors _L) |
-| 746 | Élément représenté | Represented element |
-| 746 | Description | (inchangé, hors _L) |
-| 747 | Élément | Element |
-| 747 | Type | (inchangé, hors _L) |
-| 747 | Couche | Layer |
-| 762 | Élément | Element |
-| 762 | Type | (inchangé, hors _L) |
-| 762 | Couche | Layer |
-| 768 | 700 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 769 | 700 28px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 771 | 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 772 | élément(s) représenté(s) | … represented element(s) |
-| 772 | Planche | Sheet |
-| 773 | 700 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 776 | 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 813 | ⬇ Exporter des diagrammes | ⬇ Export diagrams |
-| 815 | Diagrammes | Diagrams |
-| 816 | Cochés dans la liste | Checked in the list |
-| 816 | Affichés (filtre en cours) | Displayed (current filter) |
-| 816 | Tous | All |
-| 817 | Mise en page | Layout |
-| 818 | Cadre et en-tête | Frame and header |
-| 818 | Cadre, bandeau de couche, sigle, nom et type du diagramme | Frame, layer band, acronym, name and type of the diagram |
-| 819 | Cartouche | Title block |
-| 819 | Cartouche technique en bas à droite : projet, diagramme, type, couche, contenu, sources, date, planche | Technical title block at the bottom right: project, diagram, type, layer, content, sources, date, sheet |
-| 820 | Description | Description |
-| 820 | Description Capella du diagramme et élément représenté, sous l'en-tête | Capella description of the diagram and represented element, below the header |
-| 821 | Annexes | Appendices |
-| 821 | Éléments représentés dans chaque diagramme : PDF, page(s) d'annexe après la planche · ZIP, un CSV par diagramme · HTML, tableau repliable | Elements represented in each diagram: PDF, appendix page(s) after the sheet · ZIP, one CSV per diagram · HTML, collapsible table |
-| 822 | Sommaire | Contents |
-| 822 | PDF : page de sommaire par couche et type · HTML : onglet Sommaire | PDF: contents page by layer and type · HTML: Contents tab |
-| 823 | Résolution des images PNG / PDF | Resolution of PNG / PDF images |
-| 823 | Résolution | Resolution |
-| 824 | Format | Format |
-| 826 | 📄 PDF | (inchangé, hors _L) |
-| 826 | Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets | One PDF: contents, one sheet per diagram (A4, oriented automatically), bookmarks |
-| 827 | 🗜 ZIP PNG | (inchangé, hors _L) |
-| 827 | Archive ZIP des planches en PNG, un dossier par couche | ZIP archive of the sheets as PNG, one folder per layer |
-| 828 | 🗜 ZIP SVG | (inchangé, hors _L) |
-| 828 | Archive ZIP des planches en SVG (vectoriel), un dossier par couche | ZIP archive of the sheets as SVG (vector), one folder per layer |
-| 829 | 🌐 HTML | (inchangé, hors _L) |
-| 829 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
-| 832 | Aperçu de la planche | Sheet preview |
-| 833 | Fermer | Close |
-| 834 | Lancer l'export dans le format choisi | Start the export in the chosen format |
-| 834 | ⬇ Exporter | ⬇ Export |
-| 852 | Aucun diagramme. | No diagram. |
-| 869 | Projet Capella | Capella project |
-| 879 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 879 | Diagrammes Capella | Capella diagrams |
-| 880 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 883 | planche(s) | … sheet(s) |
-| 891 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 892 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 897 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 898 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 936 | Aucun diagramme à exporter. | No diagram to export. |
-| 937 | Capella | (inchangé, hors _L) |
-| 952 | aucun diagramme exportable | no exportable diagram |
-| 962 | Le PDF fera environ | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
-| 962 | pages). Pour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…). Continuer quand même ? | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
-| 963 | Export annulé : PDF estimé à | Export cancelled: PDF estimated at … MB. |
-| 966 | Sommaire | Contents |
-| 970 | Planche | Sheet |
-| 972 | Autres | Others |
-| 973 | - annexe | - appendix |
-| 986 | Diagrammes — | Diagrams — … |
-| 989 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
-| 989 | pages) | (… pages) |
-| 990 | ignoré(s) : | — … skipped: |
-| 991 | ⚠ Échec de l'export : | ⚠ Export failed: |
-| 1010 | Type | (inchangé, hors _L) |
-| 1010 | Couche | Layer |
-| 1010 | Sigle | Acronym |
-| 1010 | Diagramme | Diagram |
-| 1010 | Éléments | Elements |
-| 1021 | Type | (inchangé, hors _L) |
-| 1021 | Annexe | Appendix |
-| 1021 | élément(s) représenté(s) | … represented element(s) |
-| 1021 | Élément | Element |
-| 1021 | Couche | Layer |
-| 1035 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
-| 1035 | diagramme(s) | … diagram(s) |
-| 1036 | 📋 Sommaire | 📋 Contents |
-| 1036 | 🔲 Planches | 🔲 Sheets |
+| 69 | Impossible de lire « | Cannot read “…”. |
+| 73 | Diagrammes « | Diagrams “…” kept: now drop the project's .capella file. |
+| 73 | » gardés : déposez maintenant le fichier .capella du projet. | Diagrams “…” kept: now drop the project's .capella file. |
+| 90 | Diagrammes Capella (.aird) | Capella diagrams (.aird) |
+| 131 | Lecture du dossier impossible : | Cannot read the folder: |
+| 150 | fichier(s) .sysml | … .sysml file(s) |
+| 153 | Chargement de | Loading … SysML file(s)… |
+| 153 | fichier(s) SysML… | Loading … SysML file(s)… |
+| 155 | Projet SysML | SysML project |
+| 156 | Lecture impossible : | Cannot read: |
+| 160 | Aucun fichier .capella ni .sysml dans ce dossier (ni dans ses sous-dossiers). | No .capella or .sysml file in this folder (nor in its subfolders). |
+| 170 | Lecture impossible : | Cannot read: |
+| 174 | modèles dans ce dossier : choisissez celui à ouvrir. | … models in this folder: choose the one to open. |
+| 189 | Glisser pour régler la largeur de l'explorateur | Drag to adjust the width of the explorer |
+| 238 | ▣ Carte | ▣ Map |
+| 239 | Afficher la carte dans le diagramme | Show the map in the diagram |
+| 240 | ▣ Carte | ▣ Map |
+| 240 | dans le diagramme | in the diagram |
+| 241 | Afficher la carte sous l'explorateur | Show the map below the explorer |
+| 258 | Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML | Export several diagrams as sheets (header, description, title block, appendix): PDF, PNG / SVG ZIP, HTML report |
+| 258 | ⬇ Exporter… | ⬇ Export… |
+| 259 | Choisir les diagrammes à exporter : cases à cocher dans l'explorateur | Choose the diagrams to export: checkboxes in the explorer |
+| 259 | ☑ Terminer la sélection | ☑ Finish selection |
+| 259 | ☐ Sélectionner… | ☐ Select… |
+| 260 | Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés | Information on the open diagram in the details panel: type, layer, description, represented element, displayed elements |
+| 260 | ℹ Infos | ℹ Info |
+| 261 | Choisir le fichier .aird (le sélecteur s'ouvre dans le dossier du .capella quand le navigateur le permet) | Choose the .aird file (the picker opens in the .capella folder when the browser allows it) |
+| 261 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 263 | diagramme(s) | … diagram(s) |
+| 264 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
+| 306 | vd-barre cdg-vd-l2 | (inchangé, hors _L) |
+| 347 | Mettre en évidence une chaîne fonctionnelle ou un chemin physique dessiné dans ce diagramme | Highlight a functional chain or physical path drawn in this diagram |
+| 354 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
+| 368 | Autres | Others |
+| 439 | Aucun .aird chargé. | No .aird loaded. |
+| 439 | 📂 Ouvrir le .aird… s'ouvre dans le dossier du .capella (Edge / Chrome). | 📂 Open the .aird… opens in the .capella folder (Edge / Chrome). |
+| 440 | Ou, depuis l'écran d'accueil, 📁 Dossier du projet… : le .capella et ses diagrammes sont chargés ensemble. | Or, from the home screen, 📁 Project folder…: the .capella and its diagrams are loaded together. |
+| 448 | Cocher / décocher le groupe | Check / uncheck the group |
+| 455 | Informations du diagramme (panneau de détail) | Diagram information (details panel) |
+| 470 | Filtrer (nom, type, sigle, couche)… | Filter (name, type, acronym, layer)… |
+| 471 | Classement de la liste | List grouping |
+| 471 | Couche › type | Layer › type |
+| 471 | Couche | Layer |
+| 471 | Type de diagramme | Diagram type |
+| 471 | Nom (A → Z) | Name (A → Z) |
+| 472 | Tout déplier | Expand all |
+| 472 | Tout replier | Collapse all |
+| 473 | sélectionné(s) pour l'export | … selected for export |
+| 473 | diagramme(s) | … diagram(s) |
+| 475 | sélectionné(s) pour l'export | … selected for export |
+| 475 | diagramme(s) — cochez pour exporter | … diagram(s) — check to export |
+| 476 | Aucun diagramme ne correspond. | No matching diagram. |
+| 559 | var(--c-dim) | (inchangé, hors _L) |
+| 561 | Diagramme | Diagram |
+| 561 | Diagramme de séquence | Sequence diagram |
+| 561 | Tableau | Table |
+| 563 | 🔲 Diagramme Capella | 🔲 Capella diagram |
+| 565 | 🔲 Afficher le diagramme | 🔲 Show the diagram |
+| 566 | Attributs | Attributes |
+| 566 | Type | Type |
+| 566 | Sigle | Acronym |
+| 567 | Couche | Layer |
+| 567 | Nature | Nature |
+| 568 | Éléments | Elements |
+| 569 | Modifié le | Modified on |
+| 569 | Fichier | File |
+| 570 | Description | (inchangé, hors _L) |
+| 571 | Élément représenté | Represented element |
+| 574 | Éléments affichés ( | Displayed elements (…) |
+| 596 | Diagrammes ( | Diagrams (…) |
+| 619 | export SVG de la visionneuse introuvable | viewer SVG export not found |
+| 626 | diagramme vide ou non exportable | empty or non-exportable diagram |
+| 647 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
+| 648 | Projet Capella | Capella project |
+| 655 | Projet | Project |
+| 655 | Couche | Layer |
+| 656 | Diagramme | Diagram |
+| 656 | Contenu | Content |
+| 656 | élément(s) | … element(s) |
+| 657 | Type | (inchangé, hors _L) |
+| 657 | Date | Date |
+| 658 | Sources | Sources |
+| 658 | Planche | Sheet |
+| 676 | ) scale( | (inchangé, hors _L) |
+| 685 | Élément représenté | Represented element |
+| 687 | ) scale( | (inchangé, hors _L) |
+| 691 | ) scale( | (inchangé, hors _L) |
+| 692 | Arcalyse · planche générée le | Arcalyse · sheet generated on … |
+| 708 | ) scale( | (inchangé, hors _L) |
+| 765 | Élément représenté | Represented element |
+| 765 | Description | (inchangé, hors _L) |
+| 766 | Élément | Element |
+| 766 | Type | (inchangé, hors _L) |
+| 766 | Couche | Layer |
+| 781 | Élément | Element |
+| 781 | Type | (inchangé, hors _L) |
+| 781 | Couche | Layer |
+| 787 | 700 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 788 | 700 28px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 790 | 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 791 | élément(s) représenté(s) | … represented element(s) |
+| 791 | Planche | Sheet |
+| 792 | 700 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 795 | 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 832 | ⬇ Exporter des diagrammes | ⬇ Export diagrams |
+| 834 | Diagrammes | Diagrams |
+| 835 | Cochés dans la liste | Checked in the list |
+| 835 | Affichés (filtre en cours) | Displayed (current filter) |
+| 835 | Tous | All |
+| 836 | Mise en page | Layout |
+| 837 | Cadre et en-tête | Frame and header |
+| 837 | Cadre, bandeau de couche, sigle, nom et type du diagramme | Frame, layer band, acronym, name and type of the diagram |
+| 838 | Cartouche | Title block |
+| 838 | Cartouche technique en bas à droite : projet, diagramme, type, couche, contenu, sources, date, planche | Technical title block at the bottom right: project, diagram, type, layer, content, sources, date, sheet |
+| 839 | Description | Description |
+| 839 | Description Capella du diagramme et élément représenté, sous l'en-tête | Capella description of the diagram and represented element, below the header |
+| 840 | Annexes | Appendices |
+| 840 | Éléments représentés dans chaque diagramme : PDF, page(s) d'annexe après la planche · ZIP, un CSV par diagramme · HTML, tableau repliable | Elements represented in each diagram: PDF, appendix page(s) after the sheet · ZIP, one CSV per diagram · HTML, collapsible table |
+| 841 | Sommaire | Contents |
+| 841 | PDF : page de sommaire par couche et type · HTML : onglet Sommaire | PDF: contents page by layer and type · HTML: Contents tab |
+| 842 | Résolution des images PNG / PDF | Resolution of PNG / PDF images |
+| 842 | Résolution | Resolution |
+| 843 | Format | Format |
+| 845 | 📄 PDF | (inchangé, hors _L) |
+| 845 | Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets | One PDF: contents, one sheet per diagram (A4, oriented automatically), bookmarks |
+| 846 | 🗜 ZIP PNG | (inchangé, hors _L) |
+| 846 | Archive ZIP des planches en PNG, un dossier par couche | ZIP archive of the sheets as PNG, one folder per layer |
+| 847 | 🗜 ZIP SVG | (inchangé, hors _L) |
+| 847 | Archive ZIP des planches en SVG (vectoriel), un dossier par couche | ZIP archive of the sheets as SVG (vector), one folder per layer |
+| 848 | 🌐 HTML | (inchangé, hors _L) |
+| 848 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
+| 851 | Aperçu de la planche | Sheet preview |
+| 852 | Fermer | Close |
+| 853 | Lancer l'export dans le format choisi | Start the export in the chosen format |
+| 853 | ⬇ Exporter | ⬇ Export |
+| 871 | Aucun diagramme. | No diagram. |
+| 888 | Projet Capella | Capella project |
+| 898 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 898 | Diagrammes Capella | Capella diagrams |
+| 899 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 902 | planche(s) | … sheet(s) |
+| 910 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 911 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 916 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 917 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 955 | Aucun diagramme à exporter. | No diagram to export. |
+| 956 | Capella | (inchangé, hors _L) |
+| 971 | aucun diagramme exportable | no exportable diagram |
+| 981 | Le PDF fera environ | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
+| 981 | pages). Pour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…). Continuer quand même ? | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
+| 982 | Export annulé : PDF estimé à | Export cancelled: PDF estimated at … MB. |
+| 985 | Sommaire | Contents |
+| 989 | Planche | Sheet |
+| 991 | Autres | Others |
+| 992 | - annexe | - appendix |
+| 1005 | Diagrammes — | Diagrams — … |
+| 1008 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
+| 1008 | pages) | (… pages) |
+| 1009 | ignoré(s) : | — … skipped: |
+| 1010 | ⚠ Échec de l'export : | ⚠ Export failed: |
+| 1029 | Type | (inchangé, hors _L) |
+| 1029 | Couche | Layer |
+| 1029 | Sigle | Acronym |
+| 1029 | Diagramme | Diagram |
+| 1029 | Éléments | Elements |
+| 1040 | Type | (inchangé, hors _L) |
+| 1040 | Annexe | Appendix |
+| 1040 | élément(s) représenté(s) | … represented element(s) |
+| 1040 | Élément | Element |
+| 1040 | Couche | Layer |
+| 1054 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
+| 1054 | diagramme(s) | … diagram(s) |
+| 1055 | 📋 Sommaire | 📋 Contents |
+| 1055 | 🔲 Planches | 🔲 Sheets |
 
 ## js/55-revue.js
 
@@ -4325,10 +4364,645 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 1145 | Annuler | Cancel |
 | 1146 | Importer quand même | Import anyway |
 
-## Textes sans traduction anglaise (5)
+## js/56-sysml-langage.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 9 | about abstract accept action actor after alias all allocate allocation analysis and as assert assign assume at attribute bind binding by calc case comment | (inchangé, hors _L) |
+| 10 | concern connect connection constant constraint crosses decide def default defined dependency derived do doc else end entry enum event exhibit exit expose | (inchangé, hors _L) |
+| 11 | false filter first flow for fork frame from hastype if implies import in include individual inout interface istype item join language library locale loop merge | (inchangé, hors _L) |
+| 12 | message meta metadata nonunique not null objective occurrence of or ordered out package parallel part perform port private protected public redefines ref | (inchangé, hors _L) |
+| 13 | references render rendering rep require requirement return satisfy send snapshot specializes stakeholder standard state subject subsets succession terminate then | (inchangé, hors _L) |
+| 14 | timeslice to transition true until use variant variation verification verify via view viewpoint when while xor | (inchangé, hors _L) |
+| 20 | Part | (inchangé, hors _L) |
+| 20 | Item | (inchangé, hors _L) |
+| 20 | Attribute | (inchangé, hors _L) |
+| 20 | Port | (inchangé, hors _L) |
+| 20 | Connection | (inchangé, hors _L) |
+| 20 | Interface | (inchangé, hors _L) |
+| 21 | Allocation | (inchangé, hors _L) |
+| 21 | Flow | (inchangé, hors _L) |
+| 21 | Action | (inchangé, hors _L) |
+| 21 | State | (inchangé, hors _L) |
+| 21 | Calculation | (inchangé, hors _L) |
+| 21 | Constraint | (inchangé, hors _L) |
+| 22 | Requirement | (inchangé, hors _L) |
+| 22 | Concern | (inchangé, hors _L) |
+| 22 | Case | (inchangé, hors _L) |
+| 22 | View | (inchangé, hors _L) |
+| 23 | Viewpoint | (inchangé, hors _L) |
+| 23 | Rendering | (inchangé, hors _L) |
+| 23 | Metadata | (inchangé, hors _L) |
+| 23 | Occurrence | (inchangé, hors _L) |
+| 23 | Enumeration | (inchangé, hors _L) |
+| 52 | Note multiligne //* non terminée | Unterminated multi-line note //* |
+| 56 | Commentaire /* non terminé | Unterminated comment /* |
+| 65 | Nom « | Name “{0}”: a basic name only accepts ASCII letters; write it between single quotes ('{1}') |
+| 73 | Nom « | Name “{0}”: a basic name only accepts ASCII letters; write it between single quotes ('{1}') |
+| 85 | Nom entre apostrophes non terminé | Unterminated quoted name |
+| 85 | Chaîne non terminée | Unterminated string |
+| 97 | Caractère inattendu « | Unexpected character “…” |
+| 164 | Namespace | (inchangé, hors _L) |
+| 197 | Analyse interrompue : | Parsing interrupted: |
+| 198 | Lexème inattendu « | Unexpected token “…” |
+| 244 | Comment | (inchangé, hors _L) |
+| 251 | Documentation | (inchangé, hors _L) |
+| 251 | Texte /* … */ attendu après doc | Text /* … */ expected after doc |
+| 252 | Comment | (inchangé, hors _L) |
+| 263 | Package | (inchangé, hors _L) |
+| 263 | library package | (inchangé, hors _L) |
+| 269 | Comment | (inchangé, hors _L) |
+| 300 | Import | (inchangé, hors _L) |
+| 301 | Import sans visibilité : écrire private, public ou protected (private retenu) | Import without visibility: write private, public or protected (private assumed) |
+| 316 | Alias | (inchangé, hors _L) |
+| 317 | « for » attendu dans l'alias | “for” expected in the alias |
+| 323 | Dependency | (inchangé, hors _L) |
+| 329 | « to » attendu dans la dépendance | “to” expected in the dependency |
+| 385 | @entry | (inchangé, hors _L) |
+| 426 | Expose | (inchangé, hors _L) |
+| 433 | assert constraint | (inchangé, hors _L) |
+| 445 | use case | (inchangé, hors _L) |
+| 484 | succession flow | (inchangé, hors _L) |
+| 500 | use case | (inchangé, hors _L) |
+| 502 | event occurrence | (inchangé, hors _L) |
+| 503 | Enumeration | (inchangé, hors _L) |
+| 506 | Occurrence | (inchangé, hors _L) |
+| 510 | Definition | (inchangé, hors _L) |
+| 510 | Usage | (inchangé, hors _L) |
+| 531 | Mot-clé « | Unexpected keyword “…” here |
+| 531 | » inattendu ici | Unexpected keyword “…” here |
+| 600 | @prev | (inchangé, hors _L) |
+| 722 | Comment | (inchangé, hors _L) |
+| 726 | Lexème inattendu « | Unexpected token “…” in the declaration |
+| 726 | » dans la déclaration | Unexpected token “…” in the declaration |
+| 972 | Nom « | Name “…” not found (perhaps defined in an imported package missing from the project) |
+| 972 | » introuvable (peut-être défini dans un paquetage importé absent du projet) | Name “…” not found (perhaps defined in an imported package missing from the project) |
+| 972 | » introuvable | Name “…” not found |
+| 1046 | Nom « | Name “…” declared … times in “…” |
+| 1046 | » déclaré | Name “…” declared … times in “…” |
+| 1046 | fois dans « | Name “…” declared … times in “…” |
+| 1048 | Multiplicité | Multiplicity …: the lower bound exceeds the upper bound |
+| 1048 | : la borne inférieure dépasse la borne supérieure | Multiplicity …: the lower bound exceeds the upper bound |
+| 1053 | » est typé par « | “…” is typed by “…”, which is not a definition (…) |
+| 1053 | », qui n'est pas une définition ( | “…” is typed by “…”, which is not a definition (…) |
+| 1054 | » typé par | … “…” typed by … “…”: incompatible type (expected: …) |
+| 1054 | » : type incompatible (attendu : | … “…” typed by … “…”: incompatible type (expected: …) |
+| 1057 | » spécialise | … “…” specializes … “…” (different metaclasses) |
+| 1057 | » (métaclasses différentes) | … “…” specializes … “…” (different metaclasses) |
+| 1059 | Port « | Port “…” declared directly in a package |
+| 1059 | » déclaré directement dans un paquetage | Port “…” declared directly in a package |
+| 1086 | use case | (inchangé, hors _L) |
+| 1087 | event occurrence | (inchangé, hors _L) |
+| 1109 | default = | (inchangé, hors _L) |
+
+## js/57-sysml-bibliotheque.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 8 | AcceptAction AcceptMessageAction Action AssignmentAction ControlAction DecisionAction DecisionTransitionAction ForLoopAction ForkAction IfThenAction IfThenElseAction JoinAction LoopAction MergeAction SendAction TerminateAction TransitionAction WhileLoopAction acceptActions actions assignmentActions forLoopActions ifThenActions ifThenElseActions loopActions sendActions terminateActions transitionActions whileLoopActions | (inchangé, hors _L) |
+| 9 | Allocation allocations | (inchangé, hors _L) |
+| 10 | AnalysisCase analysisCases | (inchangé, hors _L) |
+| 11 | ToolExecution ToolVariable | (inchangé, hors _L) |
+| 12 | AttributeValue attributeValues | (inchangé, hors _L) |
+| 13 | Anything DataValue dataValues exactlyOne naturals oneToMany things zeroOrOne zeroToMany | (inchangé, hors _L) |
+| 14 | != !== # , == === @ @@ ToString [ all as hastype istype meta | (inchangé, hors _L) |
+| 15 | & == ToBoolean ToString not xor \| @ScalarValues | (inchangé, hors _L) |
+| 16 | Calculation calculations | (inchangé, hors _L) |
+| 17 | Case cases | (inchangé, hors _L) |
+| 18 | Causation Multicausation causations causes effects multicausations | (inchangé, hors _L) |
+| 19 | CausationMetadata CausationSemanticMetadadata CauseMetadata EffectMetadata MulticausationSemanticMetadata causation cause effect multicausation @CausationConnections | (inchangé, hors _L) |
+| 20 | BasicClock BasicDurationOf BasicTimeOf Clock DurationOf TimeOf UniversalClockLife universalClock | (inchangé, hors _L) |
+| 21 | # == array# contains containsAll head isEmpty last notEmpty size tail @Collections | (inchangé, hors _L) |
+| 22 | Array Bag Collection KeyValuePair List Map OrderedCollection OrderedMap OrderedSet Set UniqueCollection | (inchangé, hors _L) |
+| 23 | * ** + - / == ToComplex ToString ^ abs arg i im isUnit isZero polar product re rect sum @ScalarValues | (inchangé, hors _L) |
+| 24 | BinaryConnection Connection binaryConnections connections | (inchangé, hors _L) |
+| 25 | ConstraintCheck assertedConstraintChecks constraintChecks negatedConstraintChecks | (inchangé, hors _L) |
+| 26 | . ?? allTrue and anyTrue collect exists forAll if implies maximize minimize or reduce reject select selectOne | (inchangé, hors _L) |
+| 27 | DecisionPerformance IfElsePerformance IfPerformance IfThenElsePerformance IfThenPerformance LoopPerformance MergePerformance | (inchangé, hors _L) |
+| 28 | % & * ** + - .. / = ^ max min not xor \| ~ | (inchangé, hors _L) |
+| 29 | Derivation derivations derivedRequirements originalRequirements | (inchangé, hors _L) |
+| 30 | BooleanEvaluationResultMonitorPerformance BooleanEvaluationResultToMonitorPerformance EvaluationResultMonitorPerformance FeatureAccessPerformance FeatureMonitorPerformance FeatureReadEvaluation FeatureReferencingPerformance FeatureWritePerformance | (inchangé, hors _L) |
+| 31 | Flow Message MessageAction SuccessionFlow flows messages successionFlows | (inchangé, hors _L) |
+| 32 | TemperatureDifferenceUnit TemperatureDifferenceValue temperatureDifference @ISQBase @ISQSpaceTime @ISQMechanics @ISQThermodynamics @ISQElectromagnetism @ISQLight @ISQAcoustics @ISQChemistryMolecular @ISQAtomicNuclear @ISQCharacteristicNumbers @ISQCondensedMatter @ISQInformation | (inchangé, hors _L) |
+| 33 | AcousticImpedanceUnit AcousticImpedanceValue CartesianSoundIntensity3dCoordinateFrame CartesianSoundIntensity3dVector CartesianSoundParticleAcceleration3dVector CartesianSoundParticleDisplacement3dVector CartesianSoundParticleVelocity3dVector CharacteristicImpedanceOfAMediumForLongitudinalWavesUnit CharacteristicImpedanceOfAMediumForLongitudinalWavesValue LogarithmicFrequencyRangeUnit LogarithmicFrequencyRangeValue SoundEnergyDensityUnit SoundEnergyDensityValue SoundExposureLevelUnit SoundExposureLevelValue SoundExposureUnit SoundExposureValue SoundIntensityUnit SoundIntensityValue SoundPowerLevelUnit SoundPowerLevelValue SoundPressureLevelUnit SoundPressureLevelValue acousticImpedance cartesianSoundIntensity3dVector cartesianSoundParticleAcceleration3dVector cartesianSoundParticleDisplacement3dVector cartesianSoundParticleVelocity3dVector characteristicImpedanceOfAMediumForLongitudinalWaves logarithmicFrequencyRange reverberationTime soundEnergy soundEnergyDensity soundExposure soundExposureLevel soundIntensity soundPower soundPowerLevel soundPressure soundPressureLevel staticPressure volumeFlowRate volumeVelocity | (inchangé, hors _L) |
+| 34 | AbsorbedDoseRateUnit AbsorbedDoseRateValue AbsorbedDoseUnit AbsorbedDoseValue ActivityConcentrationUnit ActivityConcentrationValue ActivityDensityUnit ActivityDensityValue AtomicAttenuationCoefficientUnit AtomicAttenuationCoefficientValue AverageEnergyLossPerElementaryChargeProducedUnit AverageEnergyLossPerElementaryChargeProducedValue AverageLogarithmicEnergyDecrementValue BindingFractionValue CartesianMagneticDipoleMoment3dCoordinateFrame CartesianMagneticDipoleMoment3dVector CartesianParticleCurrentDensity3dCoordinateFrame CartesianParticleCurrentDensity3dVector CartesianSpin3dCoordinateFrame CartesianSpin3dVector CartesianTotalAngularMomentum3dCoordinateFrame CartesianTotalAngularMomentum3dVector ChargeNumberValue DecayConstantUnit DecayConstantValue DiffusionCoefficientForParticleNumberDensityUnit DiffusionCoefficientForParticleNumberDensityValue DirectionAndEnergyDistributionOfCrossSectionUnit DirectionAndEnergyDistributionOfCrossSectionValue DirectionDistributionOfCrossSectionUnit DirectionDistributionOfCrossSectionValue DisintegrationConstantUnit DisintegrationConstantValue DoseEquivalentUnit DoseEquivalentValue EnergyDistributionOfCrossSectionUnit EnergyDistributionOfCrossSectionValue EnergyFluenceRateUnit EnergyFluenceRateValue EnergyFluenceUnit EnergyFluenceValue ExposureRateUnit ExposureRateValue ExposureUnit ExposureValue FastFissionFactorUnit FastFissionFactorValue GFactorOfNucleusOrNuclearParticleValue GyromagneticCoefficientOfTheElectronUnit GyromagneticCoefficientOfTheElectronValue GyromagneticCoefficientUnit GyromagneticCoefficientValue GyromagneticRatioOfTheElectronUnit GyromagneticRatioOfTheElectronValue GyromagneticRatioUnit GyromagneticRatioValue HartreeEnergyUnit HartreeEnergyValue InfiniteMultiplicationFactorUnit InfiniteMultiplicationFactorValue InternalConversionFactorValue IonDensityUnit IonDensityValue IonNumberDensityUnit IonNumberDensityValue KermaRateUnit KermaRateValue KermaUnit KermaValue LandeFactorValue LarmorFrequencyUnit LarmorFrequencyValue LethargyValue LinearAttenuationCoefficientForIonizingRadiationUnit LinearAttenuationCoefficientForIonizingRadiationValue LinearEnergyTransferUnit LinearEnergyTransferValue LinearIonizationUnit LinearIonizationValue LinearStoppingPowerUnit LinearStoppingPowerValue MacroscopicCrossSectionUnit MacroscopicCrossSectionValue MacroscopicTotalCrossSectionUnit MacroscopicTotalCrossSectionValue MagneticDipoleMomentUnit MagneticDipoleMomentValue MagnetogyricRatioOfTheElectronUnit MagnetogyricRatioOfTheElectronValue MagnetogyricRatioUnit MagnetogyricRatioValue MassAttenuationCoefficientForIonizingRadiationUnit MassAttenuationCoefficientForIonizingRadiationValue MassEnergyTransferCoefficientUnit MassEnergyTransferCoefficientValue MassStoppingPowerUnit MassStoppingPowerValue MassicActivityUnit MassicActivityValue MeanMassRangeUnit MeanMassRangeValue MobilityUnit MobilityValue MolarAttenuationCoefficientUnit MolarAttenuationCoefficientValue MultiplicationFactorUnit MultiplicationFactorValue NonLeakageProbabilityUnit NonLeakageProbabilityValue NuclearActivityUnit NuclearActivityValue NuclearQuadrupoleMomentUnit NuclearQuadrupoleMomentValue PackingFractionValue ParticleCurrentDensityUnit ParticleCurrentDensityValue ParticleEmissionRateUnit ParticleEmissionRateValue ParticleFluenceRateUnit ParticleFluenceRateValue ParticleFluenceUnit ParticleFluenceValue ParticleNumberDensityUnit ParticleNumberDensityValue ParticleSourceDensityUnit ParticleSourceDensityValue QualityFactorForIonizingRadiationUnit QualityFactorForIonizingRadiationValue QuantumNumberValue RecombinationCoefficientUnit RecombinationCoefficientValue RelativeMassDefectValue RelativeMassExcessValue ResonanceEscapeProbabilityValue RydbergConstantUnit RydbergConstantValue SlowingDownDensityUnit SlowingDownDensityValue SpecificActivityUnit SpecificActivityValue SpinUnit SpinValue SurfaceActivityDensityUnit SurfaceActivityDensityValue ThermalUtilizationFactorUnit ThermalUtilizationFactorValue TotalAngularMomentumUnit TotalAngularMomentumValue TotalIonizationValue TotalLinearStoppingPowerUnit TotalLinearStoppingPowerValue TotalMassStoppingPowerUnit TotalMassStoppingPowerValue VolumicActivityUnit VolumicActivityValue VolumicCrossSectionUnit VolumicCrossSectionValue VolumicTotalCrossSectionUnit VolumicTotalCrossSectionValue absorbedDose absorbedDoseRate activityConcentration activityDensity alphaDisintegrationEnergy atomicAttenuationCoefficient atomicMass atomicNumber averageEnergyLossPerElementaryChargeProduced averageLogarithmicEnergyDecrement betaDisintegrationEnergy bindingFraction bohrMagneton bohrRadius cartesianMagneticDipoleMoment3dVector cartesianParticleCurrentDensity3dVector cartesianSpin3dVector cartesianTotalAngularMomentum3dVector chargeNumber comptonWavelength crossSection cyclotronAngularFrequency decayConstant diffusionArea diffusionCoefficientForFluenceRate diffusionCoefficientForParticleNumberDensity diffusionLength directionAndEnergyDistributionOfCrossSection directionDistributionOfCrossSection disintegrationConstant doseEquivalent doseEquivalentRate electronRadius elementaryCharge energyDistributionOfCrossSection energyFluence energyFluenceRate energyImparted exposure exposureRate fastFissionFactor gFactorOfAtom gFactorOfNucleusOrNuclearParticle gyromagneticCoefficient gyromagneticCoefficientOfTheElectron gyromagneticRatio gyromagneticRatioOfTheElectron gyroradius halfLife halfValueThickness hartreeEnergy hyperfineStructureQuantumNumber infiniteMultiplicationFactor internalConversionFactor ionDensity ionNumberDensity ionizationNumber kerma kermaRate landeFactor larmorAngularFrequency larmorFrequency larmorRadius lethargy levelWidth linearAttenuationCoefficientForIonizingRadiation linearEnergyTransfer linearIonization linearStoppingPower macroscopicCrossSection macroscopicTotalCrossSection magneticDipoleMoment magneticQuantumNumber magnetogyricRatio magnetogyricRatioOfTheElectron massAttenuationCoefficientForIonizingRadiation massDefect massEnergyTransferCoefficient massExcess massNumber massStoppingPower massicActivity maximumBetaParticleEnergy meanDurationOfLife meanEnergyImparted meanFreePathForAtomicPhysics meanLifeTime meanLinearRange meanMassRange migrationArea migrationLength mobility molarAttenuationCoefficient multiplicationFactor neutronNumber neutronYieldPerAbsorption neutronYieldPerFission nonLeakageProbability nuclearActivity nuclearMagneton nuclearPrecessionAngularFrequency nuclearQuadrupoleMoment nuclearRadius nuclearSpinQuantumNumber nucleonNumber nuclidicMass orbitalAngularMomentumQuantumNumber packingFraction particleCurrentDensity particleEmissionRate particleFluence particleFluenceRate particleNumberDensity particleSourceDensity principalQuantumNumber properMass protonNumber qualityFactorForIonizingRadiation quantumNumber radiantEnergyForIonizingRadiation reactionEnergy reactorTimeConstant recombinationCoefficient relativeMassDefect relativeMassExcess resonanceEnergy resonanceEscapeProbability restEnergy restMass rydbergConstant slowingDownArea slowingDownDensity slowingDownLength specificActivity specificEnergyImparted spin spinQuantumNumber surfaceActivityDensity thermalUtilizationFactor totalAngularMomentum totalAngularMomentumQuantumNumber totalCrossSection totalIonization totalLinearStoppingPower totalMassStoppingPower unifiedAtomicMassConstant volumicActivity volumicCrossSection volumicTotalCrossSection | (inchangé, hors _L) |
+| 35 | AmountOfSubstanceUnit AmountOfSubstanceValue DurationUnit DurationValue ElectricCurrentUnit ElectricCurrentValue International System of Quantities LengthUnit LengthValue LuminousIntensityUnit LuminousIntensityValue MassUnit MassValue ThermodynamicTemperatureUnit ThermodynamicTemperatureValue amountOfSubstance duration electricCurrent isq length luminousIntensity mass thermodynamicTemperature | (inchangé, hors _L) |
+| 36 | AbsorptionNumberValue AlfvénNumberValue AmpèreNumberValue ArchimedesNumberValue ArrheniusNumberValue AtwoodNumberValue BagnoldNumberForSolidParticlesValue BagnoldNumberValue BatchelorNumberValue BejanNumberForEntropyValue BejanNumberForHeatTransferValue BejanNumberForMassTransferValue BejanNumberValue BinghamNumberValue BiotNumberForMassTransferValue BiotNumberValue BlakeNumberValue BodensteinNumberValue BoltzmannNumberValue BondNumberValue BrinkmanNumberValue CapillaryNumberValue CarnotNumberValue CauchyNumberValue CavitationNumberValue ChandrasekharNumberValue ClausiusNumberValue CompressibilityNumberValue CowlingNumberValue DarcyFrictionFactorValue DeanNumberValue DeborahNumberValue DynamicCapillaryNumberValue EckertNumberValue EkmanNumberValue ElasticityNumberValue ElectricFieldParameterValue EulerNumberValue ExpansionNumberValue FanningNumberValue FourierNumberForMassTransferValue FourierNumberValue FroudeNumberForHeatTransferValue FroudeNumberValue GalileiNumberValue GoertlerNumberValue GraetzNumberForMassTransferValue GraetzNumberValue GrashofMagneticNumberValue GrashofNumberForMassTransferValue GrashofNumberValue HagenNumberValue HallNumberValue HartmannNumberValue HeatTransferNumberValue HedströmNumberValue HookeNumberValue JFactorValue JouleMagneticNumberValue KnudsenNumberValue LagrangeNumberValue LandauGinzburgNumberValue LaplaceNumberValue LavalNumberValue LewisNumberValue LiftCoefficientValue LockhartMartinelliParameterValue LorentzNumberValue LundquistNumberValue MachNumberValue MagneticNumberValue MagneticPressureNumberValue MarangoniNumberValue MassTransferFactorValue MortonNumberValue NazeNumberValue NusseltElectricNumberValue NusseltNumberForMassTransferValue NusseltNumberValue OhnesorgeNumberValue PoiseuilleNumberValue PomerantsevNumberValue PowerNumberValue PrandtlMagneticNumberValue PrandtlNumberValue PécletNumberForMassTransferValue PécletNumberValue RayleighNumberValue ReechNumberValue ReynoldsElectricNumberValue ReynoldsMagneticNumberValue ReynoldsNumberValue RichardsonNumberValue RobertsNumberValue RossbyNumberValue SchmidtNumberValue SommerfeldNumberValue StantonNumberForMassTransferValue StantonNumberValue StarkNumberValue StefanNumberValue StokesNumberForDragValue StokesNumberForGravityValue StokesNumberForRotameterValue StokesNumberForVibratingParticlesValue StokesNumberValue StrouhalNumberValue StuartElectricalNumberValue StuartNumberValue TaylorNumberValue ThrustCoefficientValue WeberNumberValue WeissenbergNumberValue WomersleyNumberValue absorptionNumber aeroelasticityParameter alfvénNumber ampèreNumber archimedesNumber arrheniusNumber atwoodNumber bagnoldNumber bagnoldNumberForSolidParticles batchelorNumber bejanNumber bejanNumberForEntropy bejanNumberForHeatTransfer bejanNumberForMassTransfer binghamNumber biotNumber biotNumberForMassTransfer blakeNumber bodensteinNumber boltzmannNumber bondNumber brinkmanNumber capillaryNumber carnotNumber cauchyNumber cavitationNumber chandrasekharNumber clausiusNumber colburnNumber compressibilityNumber cowlingNumber darcyFrictionFactor deanNumber deborahNumber dulongNumber dynamicCapillaryNumber eckertNumber ekmanNumber elasticityNumber electricFieldParameter eulerMagneticNumber eulerNumber expansionNumber eötvösNumber fanningNumber fourierNumber fourierNumberForMassTransfer froudeNumber froudeNumberForHeatTransfer galileiNumber goertlerNumber goertlerParameter graetzNumber graetzNumberForMassTransfer grashofMagneticNumber grashofNumber grashofNumberForMassTransfer hagenNumber hallNumber hartmannNumber heatTransferFactor heatTransferNumber hedströmNumber hookeNumber jFactor jouleMagneticNumber kiebelNumber knudsenNumber kármanNumber lagrangeNumber landauGinzburgNumber laplaceNumber lavalNumber lewisNumber liftCoefficient lockhartMartinelliParameter lorentzNumber lundquistNumber machMagneticNumber machNumber magneticNumber magneticPressureNumber marangoniNumber massTransferFactor moodyFrictionFactor mortonNumber nazeNumber nusseltElectricNumber nusseltNumber nusseltNumberForMassTransfer ohnesorgeNumber plasticityNumber poiseuilleNumber pomerantsevNumber powerCoefficient powerNumber prandtlMagneticNumber prandtlNumber pécletNumber pécletNumberForMassTransfer rayleighNumber reechNumber reynoldsElectricNumber reynoldsMagneticNumber reynoldsNumber richardsonNumber robertsNumber rossbyNumber schmidtNumber sommerfeldNumber stantonNumber stantonNumberForMassTransfer starkNumber stefanNumber stokesNumber stokesNumberForDrag stokesNumberForGravity stokesNumberForRotameter stokesNumberForVibratingParticles strouhalNumber stuartElectricalNumber stuartNumber suratmanNumber taylorNumber thomsonNumber thrustCoefficient weberNumber weissenbergNumber womersleyNumber | ❌ |
+| 37 | AbsoluteActivityValue ActivityCoefficientValue ActivityFactorValue ActivityOfSoluteValue ActivityOfSolventValue AffinityOfAChemicalReactionUnit AffinityOfAChemicalReactionValue AmountOfSubstanceConcentrationUnit AmountOfSubstanceConcentrationValue AmountOfSubstanceFractionMoleFractionValue CanonicalPartitionFunctionValue ChemicalPotentialUnit ChemicalPotentialValue DegeneracyValue DegreeOfDissociationValue DiffusionCoefficientUnit DiffusionCoefficientValue ElectrolyticConductivityUnit ElectrolyticConductivityValue EquilibriumConstantOnConcentrationBasisUnit EquilibriumConstantOnConcentrationBasisValue EquilibriumConstantOnPressureBasisUnit EquilibriumConstantOnPressureBasisValue FugacityUnit FugacityValue GrandCanonicalPartitionFunctionValue IonicStrengthUnit IonicStrengthValue MassConcentrationUnit MassConcentrationValue MassFractionValue MolalityUnit MolalityValue MolarConductivityUnit MolarConductivityValue MolarEnthalpyUnit MolarEnthalpyValue MolarEntropyUnit MolarEntropyValue MolarGasConstantUnit MolarGasConstantValue MolarGibbsEnergyUnit MolarGibbsEnergyValue MolarHeatCapacityUnit MolarHeatCapacityValue MolarHelmholtzEnergyUnit MolarHelmholtzEnergyValue MolarInternalEnergyUnit MolarInternalEnergyValue MolarMassUnit MolarMassValue MolarOpticalRotatoryPowerUnit MolarOpticalRotatoryPowerValue MolarVolumeUnit MolarVolumeValue MolecularPartitionFunctionValue NumberOfMolesUnit NumberOfMolesValue OsmoticFactorOfSolventValue OsmoticPressureUnit OsmoticPressureValue PartialPressureUnit PartialPressureValue ParticleConcentrationUnit ParticleConcentrationValue RelativeAtomicMassValue SpecificOpticalRotatoryPowerUnit SpecificOpticalRotatoryPowerValue StandardAbsoluteActivityInMixtureValue StandardAbsoluteActivityInSolutionValue StandardAbsoluteActivityOfSolventValue StandardChemicalPotentialUnit StandardChemicalPotentialValue StandardEquilibriumConstantValue StoichiometricNumberOfSubstanceValue ThermalDiffusionCoefficientUnit ThermalDiffusionCoefficientValue ThermalDiffusionFactorValue ThermalDiffusionRatioValue TransportNumberOfTheIonBValue VolumeFractionUnit VolumeFractionValue absoluteActivity activityCoefficient activityFactor activityOfSolute activityOfSolvent affinityOfAChemicalReaction amountOfSubstanceConcentration amountOfSubstanceFractionMoleFraction angleOfOpticalRotation canonicalPartitionFunction chemicalPotential currentFractionOfTheIonB degeneracy degreeOfDissociation diffusionCoefficient dissociationFraction electrolyticConductivity enthalpyOfPhaseTransition equilibriumConstantOnConcentrationBasis equilibriumConstantOnPressureBasis extentOfReaction fugacity grandCanonicalPartitionFunction grandPartitionFunction ionicStrength latentHeatOfPhaseTransition massConcentration massFraction meanFreePath microcanonicalPartitionFunction molality molarConductivity molarEnthalpy molarEntropy molarGasConstant molarGibbsEnergy molarHeatCapacity molarHelmholtzEnergy molarInternalEnergy molarMass molarOpticalRotatoryPower molarVolume molecularConcentration molecularPartitionFunction numberOfEntities numberOfMoles osmoticCoefficientOfSolventA osmoticFactorOfSolvent osmoticPressure partialPressure particleConcentration partitionFunctionOfAMolecule relativeActivityOfSolute relativeActivityOfSolvent relativeAtomicMass specificOpticalRotatoryPower standardAbsoluteActivityInMixture standardAbsoluteActivityInSolution standardAbsoluteActivityOfSolvent standardAmountOfSubstanceConcentration standardChemicalPotential standardEquilibriumConstant statisticalWeightOfSubsystem stoichiometricNumberOfSubstance thermalDiffusionCoefficient thermalDiffusionFactor thermalDiffusionRatio thermodynamicEquilibriumConstant transportNumberOfTheIonB volumeFraction | (inchangé, hors _L) |
+| 38 | AcceptorDensityUnit AcceptorDensityValue AngularReciprocalLatticeVectorMagnitudeUnit AngularReciprocalLatticeVectorMagnitudeValue AtomicScatteringFactorValue CartesianAngularReciprocalLattice3dCoordinateFrame CartesianAngularReciprocalLattice3dVector CartesianBurgers3dVector CartesianDisplacement3dVector CartesianEquilibriumPosition3dVector CartesianFundamentalLattice3dVector CartesianFundamentalReciprocalLattice3dCoordinateFrame CartesianFundamentalReciprocalLattice3dVector CartesianLattice3dVector CartesianParticlePosition3dVector DebyeWallerFactorValue DensityOfVibrationalStatesUnit DensityOfVibrationalStatesValue DonorDensityUnit DonorDensityValue ElectronDensityUnit ElectronDensityValue EnergyDensityOfStatesUnit EnergyDensityOfStatesValue FundamentalReciprocalLatticeVectorMagnitudeUnit FundamentalReciprocalLatticeVectorMagnitudeValue GrüneisenParameterValue HallCoefficientUnit HallCoefficientValue HoleDensityUnit HoleDensityValue IntrinsicCarrierDensityUnit IntrinsicCarrierDensityValue LongRangeOrderParameterValue LorenzCoefficientUnit LorenzCoefficientValue MobilityRatioValue RichardsonConstantUnit RichardsonConstantValue SeebeckCoefficientForSubstancesAAndBUnit SeebeckCoefficientForSubstancesAAndBValue ShortRangeOrderParameterValue StructureFactorValue ThermodynamicGrüneisenParameterValue ThomsonCoefficientUnit ThomsonCoefficientValue acceptorDensity angularReciprocalLatticeVectorMagnitude angularRepetency angularWavenumber atomicScatteringFactor braggAngle carrierLifetime cartesianAngularReciprocalLattice3dVector cartesianBurgers3dVector cartesianDisplacement3dVector cartesianEquilibriumPosition3dVector cartesianFundamentalLattice3dVector cartesianFundamentalReciprocalLattice3dVector cartesianLattice3dVector cartesianParticlePosition3dVector coherenceLength curieTemperature debyeAngularFrequency debyeAngularRepetency debyeAngularWavenumber debyeTemperature debyeWallerFactor densityOfVibrationalStates diffusionLengthForCondensedMatterPhysics donorDensity effectiveMass electronAffinity electronDensity energyDensityOfStates exchangeIntegral fermiAngularRepetency fermiAngularWavenumber fermiEnergy fermiTemperature fundamentalReciprocalLatticeVectorMagnitude gapEnergy grüneisenParameter hallCoefficient holeDensity intrinsicCarrierDensity ionizationEnergy latticePlaneSpacing londonPenetrationDepth longRangeOrderParameter lorenzCoefficient lowerCriticalMagneticFluxDensity meanFreePathOfElectrons meanFreePathOfPhonons mobilityRatio néelTemperature peltierCoefficientForSubstancesAAndB relaxationTime residualResistivity richardsonConstant seebeckCoefficientForSubstancesAAndB shortRangeOrderParameter structureFactor superconductionTransitionTemperature superconductorEnergyGap thermodynamicCriticalMagneticFluxDensity thermodynamicGrüneisenParameter thermoelectricVoltageBetweenSubstancesAAndB thomsonCoefficient upperCriticalMagneticFluxDensity workFunction | ❌ |
+| 39 | AdmittanceUnit AdmittanceValue AreicElectricChargeUnit AreicElectricChargeValue CapacitanceUnit CapacitanceValue CartesianAreicElectricCurrent3dCoordinateFrame CartesianDisplacementCurrentDensity3dCoordinateFrame CartesianDisplacementCurrentDensity3dVector CartesianElectricCurrentDensity3dCoordinateFrame CartesianElectricCurrentDensity3dVector CartesianElectricDipoleMoment3dCoordinateFrame CartesianElectricDipoleMoment3dVector CartesianElectricDisplacement3dCoordinateFrame CartesianElectricFieldStrength3dCoordinateFrame CartesianElectricFieldStrength3dVector CartesianElectricFluxDensity3dCoordinateFrame CartesianElectricFluxDensity3dVector CartesianElectricPolarization3dCoordinateFrame CartesianElectricPolarization3dVector CartesianLinearElectricCurrentDensity3dCoordinateFrame CartesianLinearElectricCurrentDensity3dVector CartesianLineicElectricCurrent3dCoordinateFrame CartesianMagneticAreaMoment3dCoordinateFrame CartesianMagneticDipoleMoment3dCoordinateFrame CartesianMagneticDipoleMoment3dVector CartesianMagneticFieldStrength3dCoordinateFrame CartesianMagneticFieldStrength3dVector CartesianMagneticFluxDensity3dCoordinateFrame CartesianMagneticFluxDensity3dVector CartesianMagneticMoment3dCoordinateFrame CartesianMagneticMoment3dVector CartesianMagneticPolarization3dCoordinateFrame CartesianMagneticPolarization3dVector CartesianMagneticVectorPotential3dCoordinateFrame CartesianMagneticVectorPotential3dVector CartesianMagnetization3dCoordinateFrame CartesianMagnetization3dVector CartesianMagnetizingField3dCoordinateFrame CartesianPoynting3dCoordinateFrame CartesianPoynting3dVector CartesianTotalCurrentDensity3dCoordinateFrame CartesianTotalCurrentDensity3dVector CoercivityUnit CoercivityValue ComplexAdmittanceUnit ComplexAdmittanceValue ComplexImpedanceUnit ComplexImpedanceValue ConductanceUnit ConductanceValue ConductivityUnit ConductivityValue CouplingFactorValue DisplacementCurrentDensityUnit DisplacementCurrentDensityValue ElectricChargeDensityUnit ElectricChargeDensityValue ElectricChargeUnit ElectricChargeValue ElectricConstantUnit ElectricConstantValue ElectricCurrentDensityUnit ElectricCurrentDensityValue ElectricDipoleMomentUnit ElectricDipoleMomentValue ElectricFieldStrengthUnit ElectricFieldStrengthValue ElectricFluxDensityUnit ElectricFluxDensityValue ElectricFluxUnit ElectricFluxValue ElectricPolarizationUnit ElectricPolarizationValue ElectricPotentialDifferenceUnit ElectricPotentialDifferenceValue ElectricPotentialUnit ElectricPotentialValue ElectricSusceptibilityValue ElectromagneticEnergyDensityUnit ElectromagneticEnergyDensityValue ImpedanceUnit ImpedanceValue InductanceUnit InductanceValue LeakageFactorValue LightSpeedUnit LightSpeedValue LinearDensityOfElectricChargeUnit LinearDensityOfElectricChargeValue LinearElectricCurrentDensityUnit LinearElectricCurrentDensityValue LineicElectricChargeUnit LineicElectricChargeValue LinkedFluxUnit LinkedFluxValue LossFactorValue MagneticConstantUnit MagneticConstantValue MagneticDipoleMomentUnit MagneticDipoleMomentValue MagneticFieldStrengthUnit MagneticFieldStrengthValue MagneticFluxDensityUnit MagneticFluxDensityValue MagneticFluxUnit MagneticFluxValue MagneticMomentUnit MagneticMomentValue MagneticPolarizationUnit MagneticPolarizationValue MagneticSusceptibilityValue MagneticVectorPotentialUnit MagneticVectorPotentialValue MagnetizationUnit MagnetizationValue MagnetomotiveForceUnit MagnetomotiveForceValue ModulusOfAdmittanceUnit ModulusOfAdmittanceValue ModulusOfImpedanceUnit ModulusOfImpedanceValue PermeabilityOfVacuumUnit PermeabilityOfVacuumValue PermeabilityUnit PermeabilityValue PermeanceUnit PermeanceValue PermittivityOfVacuumUnit PermittivityOfVacuumValue PermittivityUnit PermittivityValue PhaseDifferenceUnit PhaseDifferenceValue PhaseSpeedOfElectromagneticWavesUnit PhaseSpeedOfElectromagneticWavesValue PowerFactorValue PoyntingVectorMagnitudeUnit PoyntingVectorMagnitudeValue QualityFactorValue ReactanceUnit ReactanceValue RelativePermeabilityValue RelativePermittivityValue ReluctanceUnit ReluctanceValue ResistanceToAlternatingCurrentUnit ResistanceToAlternatingCurrentValue ResistanceUnit ResistanceValue ResistivityUnit ResistivityValue SelfInductanceUnit SelfInductanceValue SourceTensionUnit SourceTensionValue SourceVoltageUnit SourceVoltageValue SpeedOfLightUnit SpeedOfLightValue SurfaceDensityOfElectricChargeUnit SurfaceDensityOfElectricChargeValue SusceptanceUnit SusceptanceValue TotalCurrentDensityUnit TotalCurrentDensityValue VolumicElectricChargeUnit VolumicElectricChargeValue VolumicElectromagneticEnergyUnit VolumicElectromagneticEnergyValue activeEnergy activePower admittance apparentPower areicElectricCharge capacitance cartesianAreicElectricCurrent3dVector cartesianDisplacementCurrentDensity3dVector cartesianElectricCurrentDensity3dVector cartesianElectricDipoleMoment3dVector cartesianElectricDisplacement3dVector cartesianElectricFieldStrength3dVector cartesianElectricFluxDensity3dVector cartesianElectricPolarization3dVector cartesianLinearElectricCurrentDensity3dVector cartesianLineicElectricCurrent3dVector cartesianMagneticAreaMoment3dVector cartesianMagneticDipoleMoment3dVector cartesianMagneticFieldStrength3dVector cartesianMagneticFluxDensity3dVector cartesianMagneticMoment3dVector cartesianMagneticPolarization3dVector cartesianMagneticVectorPotential3dVector cartesianMagnetization3dVector cartesianMagnetizingField3dVector cartesianPoynting3dVector cartesianTotalCurrentDensity3dVector coercivity complexAdmittance complexImpedance complexPower conductance conductanceForAlternatingCurrent conductivity couplingFactor currentLinkage displacementCurrent displacementCurrentDensity electricCharge electricChargeDensity electricConstant electricCurrentDensity electricCurrentPhasor electricDipoleMoment electricFieldStrength electricFlux electricFluxDensity electricPolarization electricPotential electricPotentialDifference electricPower electricSusceptibility electricTension electromagneticEnergyDensity impedance inductance instantaneousPower leakageFactor lightSpeed linearDensityOfElectricCharge linearElectricCurrentDensity lineicElectricCharge linkedFlux lossAngle lossFactor magneticConstant magneticDipoleMoment magneticFieldStrength magneticFlux magneticFluxDensity magneticMoment magneticPolarization magneticSusceptibility magneticTension magneticVectorPotential magnetization magnetomotiveForce modulusOfAdmittance modulusOfImpedance mutualInductance nonActivePower numberOfTurnsInAWinding permeability permeabilityOfVacuum permeance permittivity permittivityOfVacuum phaseDifference phaseSpeedOfElectromagneticWaves powerFactor poyntingVectorMagnitude qualityFactor reactance reactivePower relativePermeability relativePermittivity reluctance resistance resistanceToAlternatingCurrent resistivity scalarMagneticPotential selfInductance sourceTension sourceVoltage speedOfLight surfaceDensityOfElectricCharge susceptance totalCurrent totalCurrentDensity voltage voltagePhasor volumicElectricCharge volumicElectromagneticEnergy | (inchangé, hors _L) |
+| 40 | AverageConditionalInformationContentUnit AverageConditionalInformationContentValue AverageInformationRateUnit AverageInformationRateValue AverageTransinformationRateUnit AverageTransinformationRateValue BinaryDigitRateUnit BinaryDigitRateValue BitRateUnit BitRateValue CallIntensityUnit CallIntensityValue CallingRateUnit CallingRateValue ChannelCapacityPerCharacterUnit ChannelCapacityPerCharacterValue ChannelCapacityUnit ChannelCapacityValue ChannelTimeCapacityUnit ChannelTimeCapacityValue CharacterMeanEntropyUnit CharacterMeanEntropyValue CharacterMeanTransinformationContentUnit CharacterMeanTransinformationContentValue CompletedCallIntensityUnit CompletedCallIntensityValue ConditionalEntropyUnit ConditionalEntropyValue ConditionalInformationContentUnit ConditionalInformationContentValue DecisionContentValue EntropyForInformationScienceUnit EntropyForInformationScienceValue EquivalentBinaryDigitRateUnit EquivalentBinaryDigitRateValue EquivalentBinaryStorageCapacityUnit EquivalentBinaryStorageCapacityValue EquivalentBitRateUnit EquivalentBitRateValue EquivocationUnit EquivocationValue ErrorProbabilityValue InformationContentUnit InformationContentValue IrrelevanceUnit IrrelevanceValue JointInformationContentUnit JointInformationContentValue LineDigitRateUnit LineDigitRateValue LossProbabilityValue MaximumEntropyUnit MaximumEntropyValue MeanConditionalInformationContentUnit MeanConditionalInformationContentValue MeanQueueLengthValue MeanTransinformationContentUnit MeanTransinformationContentValue ModulationRateUnit ModulationRateValue RedundancyUnit RedundancyValue RelativeEntropyValue RelativeRedundancyValue StorageCapacityUnit StorageCapacityValue StorageSizeUnit StorageSizeValue TrafficCarriedIntensityUnit TrafficCarriedIntensityValue TrafficIntensityUnit TrafficIntensityValue TrafficLoadUnit TrafficLoadValue TrafficOfferedIntensityUnit TrafficOfferedIntensityValue TransferRateUnit TransferRateValue TransinformationContentUnit TransinformationContentValue WaitingProbabilityValue averageConditionalInformationContent averageInformationRate averageTransinformationRate binaryDigitRate bitPeriod bitRate callIntensity callingRate carrierPower channelCapacity channelCapacityPerCharacter channelTimeCapacity characterMeanEntropy characterMeanTransinformationContent clockFrequency clockRate completedCallIntensity conditionalEntropy conditionalInformationContent decisionContent entropyForInformationScience equivalentBinaryDigitRate equivalentBinaryStorageCapacity equivalentBitRate equivocation errorProbability hammingDistance informationContent irrelevance jointInformationContent lineDigitRate lossProbability maximumEntropy meanConditionalInformationContent meanQueueLength meanTransinformationContent modulationRate periodOfBinaryDigits periodOfDataElements quantizingDistortionRate redundancy relativeEntropy relativeRedundancy signalEnergyPerBinaryDigit storageCapacity storageSize trafficCarriedIntensity trafficIntensity trafficLoad trafficOfferedIntensity transferRate transinformationContent waitingProbability | (inchangé, hors _L) |
+| 41 | AbsorptanceValue ChromaticityCoordinatesInTheCie1931StandardColorimetricSystemValue ChromaticityCoordinatesInTheCie1964StandardColorimetricSystemValue CieColourMatchingFunctionsForTheCie1931StandardColorimetricObserverValue CieColourMatchingFunctionsForTheCie1964StandardColorimetricObserverValue EmissivityAtASpecifiedWavelengthValue EmissivityValue IlluminanceUnit IlluminanceValue IrradianceUnit IrradianceValue LightExposureUnit LightExposureValue LinearAbsorptionCoefficientUnit LinearAbsorptionCoefficientValue LinearAttenuationCoefficientUnit LinearAttenuationCoefficientValue LinearExtinctionCoefficientUnit LinearExtinctionCoefficientValue LuminanceFactorValue LuminanceUnit LuminanceValue LuminousAbsorptanceValue LuminousEfficacyOfASourceUnit LuminousEfficacyOfASourceValue LuminousEfficacyOfRadiationUnit LuminousEfficacyOfRadiationValue LuminousEfficiencyValue LuminousEnergyUnit LuminousEnergyValue LuminousExitanceUnit LuminousExitanceValue LuminousExposureUnit LuminousExposureValue LuminousFluxUnit LuminousFluxValue LuminousReflectanceValue LuminousTransmittanceValue MassAbsorptionCoefficientUnit MassAbsorptionCoefficientValue MassAttenuationCoefficientUnit MassAttenuationCoefficientValue MaximumLuminousEfficacyUnit MaximumLuminousEfficacyValue MolarAbsorptionCoefficientUnit MolarAbsorptionCoefficientValue NapierianAbsorbanceValue PhotonExitanceUnit PhotonExitanceValue PhotonExposureUnit PhotonExposureValue PhotonFluxUnit PhotonFluxValue PhotonIntensityUnit PhotonIntensityValue PhotonIrradianceUnit PhotonIrradianceValue PhotonNumberValue PhotonRadianceUnit PhotonRadianceValue QuantityOfIlluminationUnit QuantityOfIlluminationValue QuantityOfLightUnit QuantityOfLightValue RadianceFactorValue RadianceUnit RadianceValue RadiantEmittanceUnit RadiantEmittanceValue RadiantEnergyDensityUnit RadiantEnergyDensityValue RadiantExitanceUnit RadiantExitanceValue RadiantExposureUnit RadiantExposureValue RadiantFluxUnit RadiantFluxValue RadiantIntensityUnit RadiantIntensityValue RadiantPowerUnit RadiantPowerValue ReflectanceFactorValue ReflectanceValue RefractiveIndexValue SpectralIrradianceUnit SpectralIrradianceValue SpectralLuminousEfficacyUnit SpectralLuminousEfficacyValue SpectralLuminousEfficiencyValue SpectralRadianceUnit SpectralRadianceValue SpectralRadiantEnergyDensityInTermsOfWavelengthUnit SpectralRadiantEnergyDensityInTermsOfWavelengthValue SpectralRadiantEnergyDensityInTermsOfWavenumberUnit SpectralRadiantEnergyDensityInTermsOfWavenumberValue SpectralRadiantEnergyUnit SpectralRadiantEnergyValue SpectralRadiantExitanceUnit SpectralRadiantExitanceValue SpectralRadiantExposureUnit SpectralRadiantExposureValue SpectralRadiantFluxUnit SpectralRadiantFluxValue SpectralRadiantIntensityUnit SpectralRadiantIntensityValue SpectralRadiantPowerUnit SpectralRadiantPowerValue SpeedOfLightInAMediumUnit SpeedOfLightInAMediumValue TransmittanceOpticalDensityValue TransmittanceValue TristimulusValuesForTheCie1931StandardColorimetricObserverUnit TristimulusValuesForTheCie1931StandardColorimetricObserverValue TristimulusValuesForTheCie1964StandardColorimetricObserverUnit TristimulusValuesForTheCie1964StandardColorimetricObserverValue absorptance chromaticityCoordinatesInTheCie1931StandardColorimetricSystem chromaticityCoordinatesInTheCie1964StandardColorimetricSystem cieColourMatchingFunctionsForTheCie1931StandardColorimetricObserver cieColourMatchingFunctionsForTheCie1964StandardColorimetricObserver colourTemperature correlatedColourTemperature decadicAbsorbance emissivity emissivityAtASpecifiedWavelength illuminance irradiance lightExposure linearAbsorptionCoefficient linearAttenuationCoefficient linearExtinctionCoefficient luminance luminanceFactor luminousAbsorptance luminousEfficacyOfASource luminousEfficacyOfRadiation luminousEfficiency luminousEnergy luminousExitance luminousExposure luminousFlux luminousReflectance luminousTransmittance massAbsorptionCoefficient massAttenuationCoefficient maximumLuminousEfficacy molarAbsorptionCoefficient napierianAbsorbance numberOfPhotons opticalDensity photonEnergy photonExitance photonExposure photonFlux photonIntensity photonIrradiance photonNumber photonRadiance quantityOfIllumination quantityOfLight radiance radianceFactor radiantEmittance radiantEnergy radiantEnergyDensity radiantExitance radiantExposure radiantFlux radiantIntensity radiantPower reflectance reflectanceFactor refractiveIndex spectralIrradiance spectralLuminousEfficacy spectralLuminousEfficiency spectralRadiance spectralRadiantEnergy spectralRadiantEnergyDensityInTermsOfWavelength spectralRadiantEnergyDensityInTermsOfWavenumber spectralRadiantExitance spectralRadiantExposure spectralRadiantFlux spectralRadiantIntensity spectralRadiantPower speedOfLightInAMedium transmittance transmittanceDensity transmittanceOpticalDensity tristimulusValuesForTheCie1931StandardColorimetricObserver tristimulusValuesForTheCie1964StandardColorimetricObserver | (inchangé, hors _L) |
+| 42 | ActionQuantityUnit ActionQuantityValue AngularImpulseUnit AngularImpulseValue AngularMomentumUnit AngularMomentumValue BulkModulusUnit BulkModulusValue Cartesian3dMomentOfInertiaMeasurementReference Cartesian3dMomentOfInertiaTensor Cartesian3dStrainMeasurementReference Cartesian3dStrainTensor Cartesian3dStressMeasurementReference Cartesian3dStressTensor CartesianAngularImpulse3dCoordinateFrame CartesianAngularImpulse3dVector CartesianAngularMomentum3dCoordinateFrame CartesianAngularMomentum3dVector CartesianDragForce3dVector CartesianForce3dCoordinateFrame CartesianForce3dVector CartesianImpulse3dCoordinateFrame CartesianImpulse3dVector CartesianKineticFrictionForce3dVector CartesianMassFlow3dCoordinateFrame CartesianMassFlow3dVector CartesianMomentOfForce3dCoordinateFrame CartesianMomentOfForce3dVector CartesianMomentum3dCoordinateFrame CartesianMomentum3dVector CartesianRollingResistance3dVector CartesianStaticFrictionForce3dVector CartesianWeight3dVector CompressibilityUnit CompressibilityValue DensityUnit DensityValue DragCoefficientValue DynamicViscosityUnit DynamicViscosityValue ForceUnit ForceValue ImpulseUnit ImpulseValue KinematicViscosityUnit KinematicViscosityValue KineticFrictionFactorValue LinearDensityUnit LinearDensityValue LinearMassDensityUnit LinearMassDensityValue MassChangeRateUnit MassChangeRateValue MassDensityUnit MassDensityValue MassFlowRateUnit MassFlowRateValue MassFlowUnit MassFlowValue MechanicalEfficiencyValue ModulusOfCompressionUnit ModulusOfCompressionValue ModulusOfElasticityUnit ModulusOfElasticityValue ModulusOfRigidityUnit ModulusOfRigidityValue MomentOfForceUnit MomentOfForceValue MomentOfInertiaUnit MomentOfInertiaValue MomentumUnit MomentumValue NormalStressUnit NormalStressValue PoissonNumberValue PowerUnit PowerValue PressureUnit PressureValue RelativeLinearStrainValue RelativeMassDensityValue RelativeVolumeStrainValue RollingResistanceFactorValue SecondAxialMomentOfAreaUnit SecondAxialMomentOfAreaValue SecondPolarMomentOfAreaUnit SecondPolarMomentOfAreaValue SectionModulusUnit SectionModulusValue ShearModulusUnit ShearModulusValue ShearStrainValue ShearStressUnit ShearStressValue SpecificVolumeUnit SpecificVolumeValue StaticFrictionCoefficientValue StrainUnit StrainValue StressUnit StressValue SurfaceDensityUnit SurfaceDensityValue SurfaceMassDensityUnit SurfaceMassDensityValue SurfaceTensionUnit SurfaceTensionValue TorqueUnit TorqueValue ViscosityUnit ViscosityValue VolumeFlowRateUnit VolumeFlowRateValue YoungModulusUnit YoungModulusValue actionQuantity angularImpulse angularMomentum bulkModulus cartesianAngularImpulse3dVector cartesianAngularMomentum3dVector cartesianDragForce3dVector cartesianDynamicFrictionForce3dVector cartesianForce3dVector cartesianImpulse3dVector cartesianKineticFrictionForce3dVector cartesianMassFlow3dVector cartesianMomentOfForce3dVector cartesianMomentum3dVector cartesianRollingDrag3dVector cartesianRollingFrictionForce3dVector cartesianRollingResistance3dVector cartesianStaticFriction3dVector cartesianStaticFrictionForce3dVector cartesianWeight3dVector coefficientOfStaticFriction compressibility density dragCoefficient dragFactor dynamicFrictionFactor dynamicViscosity force gaugePressure impulse kinematicViscosity kineticEnergy kineticFrictionFactor linearDensity linearMassDensity massChangeRate massDensity massFlow massFlowRate mechanicalEfficiency mechanicalEnergy mechanicalPower mechanicalWork modulusOfCompression modulusOfElasticity modulusOfRigidity momentOfForce momentOfInertia momentOfInertiaTensor momentum normalStress poissonNumber potentialEnergy power pressure relativeDensity relativeLinearStrain relativeMassDensity relativeVolumeStrain rollingResistanceFactor secondAxialMomentOfArea secondPolarMomentOfArea sectionModulus shearModulus shearStrain shearStress specificVolume staticFrictionCoefficient staticFrictionFactor strain strainTensor stress stressTensor surfaceDensity surfaceMassDensity surfaceTension torque viscosity volumeFlowRate work youngModulus | (inchangé, hors _L) |
+| 43 | AccelerationUnit AccelerationValue AngularAccelerationUnit AngularAccelerationValue AngularFrequencyUnit AngularFrequencyValue AngularMeasureUnit AngularMeasureValue AngularRepetencyUnit AngularRepetencyValue AngularVelocityUnit AngularVelocityValue AngularWavenumberUnit AngularWavenumberValue AreaUnit AreaValue AttenuationUnit AttenuationValue CartesianAcceleration3dCoordinateFrame CartesianAcceleration3dVector CartesianAngularAcceleration3dCoordinateFrame CartesianAngularAcceleration3dVector CartesianAngularVelocity3dCoordinateFrame CartesianAngularVelocity3dVector CartesianDisplacement3dVector CartesianPosition3dVector CartesianSpatial3dCoordinateFrame CartesianVelocity3dCoordinateFrame CartesianVelocity3dVector CartesianWave3dVector CartesianWaveVector3dCoordinateFrame CurvatureUnit CurvatureValue CylindricalDisplacement3dVector CylindricalPosition3dVector CylindricalSpatial3dCoordinateFrame DampingCoefficientUnit DampingCoefficientValue Displacement3dVector ExtinctionUnit ExtinctionValue FrequencyUnit FrequencyValue LogarithmicDecrementValue PhaseCoefficientUnit PhaseCoefficientValue PhaseSpeedUnit PhaseSpeedValue PhaseVelocityUnit PhaseVelocityValue PlaneAngleUnit PlaneAngleValue PlanetaryPosition3dVector PlanetarySpatial3dCoordinateFrame Position3dVector PropagationCoefficientUnit PropagationCoefficientValue RepetencyUnit RepetencyValue SolidAngularMeasureUnit SolidAngularMeasureValue Spatial3dCoordinateFrame SpeedUnit SpeedValue SphericalDisplacement3dVector SphericalPosition3dVector SphericalSpatial3dCoordinateFrame TimeUnit TimeValue VolumeUnit VolumeValue WavenumberUnit WavenumberValue acceleration altitude angularAcceleration angularDisplacement angularFrequency angularMeasure angularRepetency angularVelocity angularWavenumber arcLength area attenuation breadth cartesianAcceleration3dVector cartesianAngularAcceleration3dVector cartesianAngularVelocity3dVector cartesianDisplacement3dVector cartesianPosition3dVector cartesianVelocity3dVector cartesianWave3dVector curvature cylindricalDisplacement3dVector cylindricalPosition3dVector dampingCoefficient depth diameter displacement3dVector distance extinction frequency groupSpeed groupVelocity height logarithmicDecrement pathLength period periodDuration phaseAngle phaseCoefficient phaseSpeed phaseVelocity planeAngle planetaryPosition3dVector position3dVector propagationCoefficient radialDistance radius radiusOfCurvature repetency rotation rotationalDisplacement rotationalFrequency solidAngularMeasure speed sphericalDisplacement3dVector sphericalPosition3dVector thickness time timeConstant universalCartesianSpatial3dCoordinateFrame volume wavelength wavenumber width | (inchangé, hors _L) |
+| 44 | CelsiusTemperatureUnit CelsiusTemperatureValue CoefficientOfHeatTransferUnit CoefficientOfHeatTransferValue CoefficientOfThermalInsulanceUnit CoefficientOfThermalInsulanceValue CubicExpansionCoefficientUnit CubicExpansionCoefficientValue DensityOfHeatFlowRateUnit DensityOfHeatFlowRateValue EnergyUnit EnergyValue EntropyUnit EntropyValue HeatCapacityUnit HeatCapacityValue HeatFlowRateUnit HeatFlowRateValue IsentropicCompressibilityUnit IsentropicCompressibilityValue IsentropicExponentValue IsothermalCompressibilityUnit IsothermalCompressibilityValue JouleThomsonCoefficientUnit JouleThomsonCoefficientValue LinearExpansionCoefficientUnit LinearExpansionCoefficientValue MassConcentrationOfWaterUnit MassConcentrationOfWaterValue MassConcentrationOfWaterVapourAbsoluteHumidityUnit MassConcentrationOfWaterVapourAbsoluteHumidityValue MassFractionOfDryMatterValue MassFractionOfWaterValue MassRatioOfWaterToDryMatterValue MassRatioOfWaterVapourToDryGasValue MassieuFunctionUnit MassieuFunctionValue MaximumThermalEfficiencyValue PlanckFunctionUnit PlanckFunctionValue PressureCoefficientUnit PressureCoefficientValue RatioOfSpecificHeatCapacitiesValue RelativeHumidityValue RelativeMassConcentrationOfVapourValue RelativeMassRatioOfVapourValue RelativePressureCoefficientUnit RelativePressureCoefficientValue SpecificEnergyUnit SpecificEnergyValue SpecificEnthalpyUnit SpecificEnthalpyValue SpecificEntropyUnit SpecificEntropyValue SpecificGasConstantUnit SpecificGasConstantValue SpecificHeatCapacityAtConstantPressureUnit SpecificHeatCapacityAtConstantPressureValue SpecificHeatCapacityAtConstantVolumeUnit SpecificHeatCapacityAtConstantVolumeValue SpecificHeatCapacityAtSaturatedVapourPressureUnit SpecificHeatCapacityAtSaturatedVapourPressureValue SpecificHeatCapacityUnit SpecificHeatCapacityValue SurfaceCoefficientOfHeatTransferUnit SurfaceCoefficientOfHeatTransferValue TemperatureUnit TemperatureValue ThermalConductanceUnit ThermalConductanceValue ThermalConductivityUnit ThermalConductivityValue ThermalDiffusivityUnit ThermalDiffusivityValue ThermalEfficiencyValue ThermalInsulanceUnit ThermalInsulanceValue ThermalResistanceUnit ThermalResistanceValue amountOfHeat celsiusTemperature coefficientOfHeatTransfer coefficientOfThermalInsulance cubicExpansionCoefficient densityOfHeatFlowRate dewPointTemperature energy enthalpy entropy gibbsEnergy gibbsFunction heat heatCapacity heatFlowRate helmholtzEnergy helmholtzFunction internalEnergy isentropicCompressibility isentropicExpansionFactor isentropicExponent isothermalCompressibility jouleThomsonCoefficient latentHeat linearExpansionCoefficient massConcentrationOfWater massConcentrationOfWaterVapourAbsoluteHumidity massFractionOfDryMatter massFractionOfWater massRatioOfWaterToDryMatter massRatioOfWaterVapourToDryGas massieuFunction maximumThermalEfficiency planckFunction pressureCoefficient ratioOfSpecificHeatCapacities relativeHumidity relativeMassConcentrationOfVapour relativeMassRatioOfVapour relativePressureCoefficient specificEnergy specificEnthalpy specificEntropy specificGasConstant specificGibbsEnergy specificGibbsFunction specificHeatCapacity specificHeatCapacityAtConstantPressure specificHeatCapacityAtConstantVolume specificHeatCapacityAtSaturatedVapourPressure specificHelmholtzEnergy specificHelmholtzFunction specificInternalEnergy specificThermodynamicEnergy surfaceCoefficientOfHeatTransfer temperature thermalConductance thermalConductivity thermalDiffusivity thermalEfficiency thermalInsulance thermalResistance thermodynamicEnergy | (inchangé, hors _L) |
+| 45 | Icon Image | (inchangé, hors _L) |
+| 46 | % * ** + - .. / = ToInteger ToNatural ToString ^ abs max min product sum @ScalarValues | (inchangé, hors _L) |
+| 47 | BinaryInterface Interface binaryInterfaces excludingOnce interfaces | (inchangé, hors _L) |
+| 48 | Item Touches items | (inchangé, hors _L) |
+| 49 | Core Kernel Root @KerML::Kernel | (inchangé, hors _L) |
+| 50 | Classifier Conjugation CrossSubsetting Differencing Disjoining EndFeatureMembership Feature FeatureChaining FeatureDirectionKind FeatureInverting FeatureMembership FeatureTyping Intersecting Multiplicity Redefinition ReferenceSubsetting Specialization Subclassification Subsetting Type TypeFeaturing Unioning @KerML::Root | (inchangé, hors _L) |
+| 51 | Association AssociationStructure Behavior BindingConnector BooleanExpression Class CollectExpression Connector ConstructorExpression DataType ElementFilterMembership Expression FeatureChainExpression FeatureReferenceExpression FeatureValue Flow FlowEnd Function IndexExpression InstantiationExpression Interaction Invariant InvocationExpression LibraryPackage LiteralBoolean LiteralExpression LiteralInfinity LiteralInteger LiteralRational LiteralString Metaclass MetadataAccessExpression MetadataFeature MultiplicityRange NullExpression OperatorExpression Package ParameterMembership PayloadFeature Predicate ResultExpressionMembership ReturnParameterMembership SelectExpression Step Structure Succession SuccessionFlow @KerML::Core | (inchangé, hors _L) |
+| 52 | AnnotatingElement Annotation Comment Dependency Documentation Element Import Membership MembershipImport Namespace NamespaceImport OwningMembership Relationship TextualRepresentation VisibilityKind | (inchangé, hors _L) |
+| 53 | BinaryLink Link SelfLink binaryLinks links selfLinks | (inchangé, hors _L) |
+| 54 | * ** / CoordinateFrame* CoordinateFrame/ ToString ^ | (inchangé, hors _L) |
+| 55 | 3dCoordinateFrame AffineTransformationMatrix3d ConversionByConvention ConversionByPrefix CoordinateFrame CoordinateFramePlacement CoordinateTransformation CountValue CyclicRatioScale DefinitionalQuantityValue DerivedUnit DimensionOneUnit DimensionOneValue IntervalScale LogarithmicScale MeasurementScale MeasurementUnit NullTransformation OrdinalScale QuantityValueMapping Rotation ScalarMeasurementReference SimpleUnit SystemOfUnits TensorMeasurementReference ThreeDCoordinateFrame Translation TranslationOrRotation TranslationRotationSequence UnitConversion UnitPowerFactor UnitPrefix VectorMeasurementReference VerifyUnitPowerFactors countQuantities dimensionOneQuantities nullTransformation one | (inchangé, hors _L) |
+| 56 | MetadataItem metadataItems | (inchangé, hors _L) |
+| 57 | Metaobject SemanticMetadata metaobjects | (inchangé, hors _L) |
+| 58 | Issue Rationale Refinement StatusInfo StatusKind refinement | (inchangé, hors _L) |
+| 59 | % * + / = ToNatural ToString max min @ScalarValues | (inchangé, hors _L) |
+| 60 | % * ** + - / = ^ abs isUnit isZero max min product product1 sum sum0 @ScalarValues | (inchangé, hors _L) |
+| 61 | BinaryLinkObject Body Curve LinkObject Object Point StructuredSpaceObject Surface binaryLinkObjects linkObjects objects | (inchangé, hors _L) |
+| 62 | ChangeMonitor ChangeSignal DefaultMonitorLife ObserveChange defaultMonitor | (inchangé, hors _L) |
+| 63 | === addNew addNewAt create destroy isDuring removeOld removeOldAt | (inchangé, hors _L) |
+| 64 | HappensBefore HappensDuring HappensJustBefore HappensLink HappensWhile IncomingTransferSort InnerSpaceOf InsideOf JustOutsideOf Life MatesWith Occurrence OutsideOf PortionOf SelfLink SelfSameLifeLink SnapshotOf SpaceLink SpaceShotOf SpaceSliceOf SurroundedBy TimeSliceOf Within WithinBoth Without earlierFirstIncomingTransferSort happensBeforeLinks occurrences | (inchangé, hors _L) |
+| 65 | MeasureOfEffectiveness MeasureOfPerformance measuresOfEffectiveness measuresOfPerformance moe mop | (inchangé, hors _L) |
+| 66 | Part parts | (inchangé, hors _L) |
+| 67 | BooleanEvaluation Evaluation InvolvedIn LiteralBooleanEvaluation LiteralEvaluation LiteralIntegerEvaluation LiteralRationalEvaluation LiteralStringEvaluation MetadataAccessEvaluation NullEvaluation Performance Performs booleanEvaluations constructorEvaluations evaluations falseEvaluations literalBooleanEvaluations literalEvaluations literalIntegerEvaluations literalRationalEvaluations literalStringEvaluations metadataAccessEvaluations nullEvaluations performances trueEvaluations | (inchangé, hors _L) |
+| 68 | Port ports | (inchangé, hors _L) |
+| 69 | 3dVectorQuantityValue QuantityDimension QuantityPowerFactor QuantityValue ScalarQuantityValue SystemOfQuantities TensorQuantityValue ThreeDVectorQuantityValue VectorQuantityValue quantities scalarQuantities tensorQuantities vectorQuantities | (inchangé, hors _L) |
+| 70 | * ** + - / = ConvertQuantity ToDimensionOneValue ToInteger ToRational ToReal ToString [ ^ abs floor isUnit isZero max min product round sqrt sum | (inchangé, hors _L) |
+| 71 | * ** + - / = ToInteger ToRational ToString ^ abs denom floor gcd max min numer product rat round sum @ScalarValues | (inchangé, hors _L) |
+| 72 | * ** + - / = ToInteger ToRational ToReal ToString ^ abs arg floor im max min product re round sqrt sum @ScalarValues | (inchangé, hors _L) |
+| 73 | DerivationMetadata DerivedRequirementMetadata OriginalRequirementMetadata derivation derive original @DerivationConnections | (inchangé, hors _L) |
+| 74 | ConcernCheck DesignConstraintCheck FunctionalRequirementCheck InterfaceRequirementCheck PerformanceRequirementCheck PhysicalRequirementCheck RequirementCheck RequirementConstraintCheck concernChecks notSatisfiedRequirementChecks requirementChecks satisfiedRequirementChecks | (inchangé, hors _L) |
+| 75 | Level LevelEnum Risk RiskLevel RiskLevelEnum | (inchangé, hors _L) |
+| 77 | atto centi deca deci exa exbi femto gibi giga hecto kibi kilo mebi mega micro milli nano pebi peta pico tebi tera yobi yocto yotta zebi zepto zetta | (inchangé, hors _L) |
+| 78 | Domain Interpolate Range Sample SamplePair SampledFunction interpolateLinear | (inchangé, hors _L) |
+| 79 | % & * ** + - .. / = ^ max min not xor \| ~ @ScalarValues | (inchangé, hors _L) |
+| 80 | Boolean Complex Integer Natural Number NumericalValue Positive Rational Real ScalarValue String | (inchangé, hors _L) |
+| 81 | # add addAt equals excludes excluding excludingAt head includes includesOnly including includingAt intersection isEmpty last notEmpty remove removeAt same size subsequence tail union | (inchangé, hors _L) |
+| 82 | Box Circle CircularCone CircularCylinder CircularDisc Cone ConeOrCylinder ConicSection ConicSurface Cuboid CuboidOrTriangularPrism Cylinder Disc EccentricCone EccentricCylinder Ellipse Ellipsoid Hyperbola Hyperboloid Line Parabola Paraboloid Path PlanarCurve PlanarSurface Polygon Polyhedron Pyramid Quadrilateral Rectangle RectangularCuboid RectangularPyramid RectangularToroid RightCircularCone RightCircularCylinder RightTriangle RightTriangularPrism Shell Sphere Tetrahedron Toroid Torus Triangle TriangularPrism Wedge baseLength baseWidth semiMajorAxis semiMinorAxis xoffset yoffset | (inchangé, hors _L) |
+| 83 | CartesianCurrentDisplacementOf CartesianCurrentPositionOf CartesianDisplacementOf CartesianPositionOf CartesianSpatialFrame CurrentDisplacementOf CurrentPositionOf DefaultFrameLife DisplacementOf PositionOf SpatialFrame defaultFrame | (inchangé, hors _L) |
+| 84 | CurrentDisplacementOf CurrentPositionOf DisplacementOf PositionOf SpatialItem | (inchangé, hors _L) |
+| 85 | ActionFlowView BrowserView GeneralView GeometryView GridView InterconnectionView SequenceView StateTransitionView afv bv gev grv gv iv stv sv @SysML | (inchangé, hors _L) |
+| 86 | StatePerformance StateTransitionPerformance | (inchangé, hors _L) |
+| 87 | ContinuousStateSpaceDynamics DiscreteStateSpaceDynamics GetDerivative GetDifference GetNextState GetOutput Input Integrate Output StateDerivative StateSpace StateSpaceDynamics StateSpaceEventDef StateSpaceItem ZeroCrossingEventDef | (inchangé, hors _L) |
+| 88 | StateAction StateTransitionAction stateActions | (inchangé, hors _L) |
+| 89 | + = Length Substring ToString @ScalarValues | (inchangé, hors _L) |
+| 90 | Systems @SysML::Systems | (inchangé, hors _L) |
+| 91 | AcceptActionUsage ActionDefinition ActionUsage ActorMembership AllocationDefinition AllocationUsage AnalysisCaseDefinition AnalysisCaseUsage AssertConstraintUsage AssignmentActionUsage AttributeDefinition AttributeUsage BindingConnectorAsUsage CalculationDefinition CalculationUsage CaseDefinition CaseUsage ConcernDefinition ConcernUsage ConjugatedPortDefinition ConjugatedPortTyping ConnectionDefinition ConnectionUsage ConnectorAsUsage ConstraintDefinition ConstraintUsage ControlNode DecisionNode Definition EnumerationDefinition EnumerationUsage EventOccurrenceUsage ExhibitStateUsage Expose FlowDefinition FlowUsage ForLoopActionUsage ForkNode FramedConcernMembership IfActionUsage IncludeUseCaseUsage InterfaceDefinition InterfaceUsage ItemDefinition ItemUsage JoinNode LoopActionUsage MembershipExpose MergeNode MetadataDefinition MetadataUsage NamespaceExpose ObjectiveMembership OccurrenceDefinition OccurrenceUsage PartDefinition PartUsage PerformActionUsage PortConjugation PortDefinition PortUsage PortionKind ReferenceUsage RenderingDefinition RenderingUsage RequirementConstraintKind RequirementConstraintMembership RequirementDefinition RequirementUsage RequirementVerificationMembership SatisfyRequirementUsage SendActionUsage StakeholderMembership StateDefinition StateSubactionKind StateSubactionMembership StateUsage SubjectMembership SuccessionAsUsage SuccessionFlowUsage TerminateActionUsage TransitionFeatureKind TransitionFeatureMembership TransitionUsage TriggerInvocationExpression TriggerKind Usage UseCaseDefinition UseCaseUsage VariantMembership VerificationCaseDefinition VerificationCaseUsage ViewDefinition ViewRenderingMembership ViewUsage ViewpointDefinition ViewpointUsage WhileLoopActionUsage @KerML::Kernel | (inchangé, hors _L) |
+| 92 | + - TensorScalarMult TensorScalarQuantityMult [ isUnitTensorQuantity isZeroTensorQuantity scalarQuantityTensorMult scalarTensorMult tensorTensorMult tensorVectorMult transform vectorTensorMult | (inchangé, hors _L) |
+| 93 | Clock Coordinated Universal Time Date DateTime DurationOf DurationUnit DurationValue Iso8601DateTime Iso8601DateTimeEncoding Iso8601DateTimeStructure TimeInstantValue TimeOf TimeOfDay TimeScale TimeUnit TimeValue UTC UtcTimeInstantValue convertIso8601DateTimeToStructure convertIso8601StructureToDateTime duration time timeInstant universalClock utcTimeInstant | (inchangé, hors _L) |
+| 94 | EvaluationFunction MaximizeObjective MinimizeObjective TradeStudy TradeStudyObjective | (inchangé, hors _L) |
+| 95 | AcceptPerformance FlowTransfer FlowTransferBefore MessageTransfer SendPerformance Transfer TransferBefore acceptPerformances flowTransfers flowTransfersBefore messageTransfers sendPerformances transfers transfersBefore | (inchangé, hors _L) |
+| 96 | NonStateTransitionPerformance TPCGuardConstraint TransitionPerformance | (inchangé, hors _L) |
+| 97 | Real UnitBoundedReal arccos arcsin arctan cos cot deg pi piPrecision rad sin tan | (inchangé, hors _L) |
+| 98 | TimeSignal TriggerAfter TriggerAt TriggerWhen @Clocks @Observation | (inchangé, hors _L) |
+| 99 | AT British thermal unit (39 °F) British thermal unit (59 °F) British thermal unit (60 °F) British thermal unit (IT) British thermal unit (IT) foot per hour square foot degree Fahrenheit British thermal unit (IT) inch per hour square foot degree Fahrenheit British thermal unit (IT) inch per second square foot degree Fahrenheit British thermal unit (IT) per degree Fahrenheit British thermal unit (IT) per degree Rankine British thermal unit (IT) per hour British thermal unit (IT) per hour square foot degree Fahrenheit British thermal unit (IT) per pound British thermal unit (IT) per pound degree Fahrenheit British thermal unit (IT) per pound degree Rankine British thermal unit (IT) per second British thermal unit (IT) per second square foot degree Fahrenheit British thermal unit (IT) per square foot hour British thermal unit (IT) per square foot second British thermal unit (mean) British thermal unit (th) British thermal unit (th) foot per hour square foot degree Fahrenheit British thermal unit (th) inch per hour square foot degree Fahrenheit British thermal unit (th) inch per second square foot degree Fahrenheit British thermal unit (th) per degree Fahrenheit British thermal unit (th) per degree Rankine British thermal unit (th) per hour British thermal unit (th) per hour square foot degree Fahrenheit British thermal unit (th) per minute British thermal unit (th) per pound British thermal unit (th) per pound degree Fahrenheit British thermal unit (th) per pound degree Rankine British thermal unit (th) per second British thermal unit (th) per second square foot degree Fahrenheit British thermal unit (th) per square foot hour British thermal unit (th) per square foot minute British thermal unit (th) per square foot second British thermal unit (th) per square inch second Btu Btu_39°F Btu_59°F Btu_60°F Btu_IT Btu_IT/(ft²⋅h) Btu_IT/(ft²⋅s) Btu_IT/(h⋅ft²⋅°F) Btu_IT/(lb⋅°F) Btu_IT/(lb⋅°R) Btu_IT/(s⋅ft²⋅°F) Btu_IT/h Btu_IT/lb Btu_IT/s Btu_IT/°F Btu_IT/°R Btu_IT⋅ft/(h⋅ft²⋅°F) Btu_IT⋅in/(h⋅ft²⋅°F) Btu_IT⋅in/(s⋅ft²⋅°F) Btu_mean Btu_th Btu_th/(ft²⋅h) Btu_th/(ft²⋅min) Btu_th/(ft²⋅s) Btu_th/(h⋅ft²⋅°F) Btu_th/(in²⋅s) Btu_th/(lb⋅°F) Btu_th/(lb⋅°R) Btu_th/(s⋅ft²⋅°F) Btu_th/h Btu_th/lb Btu_th/min Btu_th/s Btu_th/°F Btu_th/°R Btu_th⋅ft/(h⋅ft²⋅°F) Btu_th⋅in/(h⋅ft²⋅°F) Btu_th⋅in/(s⋅ft²⋅°F) NM W/in² acre (based on US survey foot) acre foot (based on US survey foot) barrel (for petroleum, 42 gallons (US)) bbl bu bushel (US) candela per square inch cd/in² ch chain (based on US survey foot) circular mil clo cord (128 ft^3) cubic foot cubic foot per minute cubic foot per second cubic inch cubic inch per minute cubic mile cubic yard cubic yard per minute cup (US) degree Fahrenheit (temperature difference) degree Fahrenheit hour per British thermal unit (IT) degree Fahrenheit hour per British thermal unit (th) degree Fahrenheit hour square foot per British thermal unit (IT) degree Fahrenheit hour square foot per British thermal unit (th) degree Fahrenheit second per British thermal unit (IT) degree Fahrenheit second per British thermal unit (th) degree Rankine degree fahrenheit (absolute temperature scale) drypt dryqt fathom (based on US survey foot) floz fluid ounce (US) foot foot (US survey) foot of mercury, conventional foot of water (39.2 °F) foot of water, conventional foot per hour foot per minute foot per second foot per second squared foot pound-force foot pound-force per hour foot pound-force per minute foot pound-force per second foot poundal foot to the fourth power footcandle footlambert ft ft/h ft/min ft/s ft/s² ftH2O ftHg ft² ft²/h ft²/s ft³ ft³/min ft³/s ft⁴ ft⋅lbf ft⋅lbf/h ft⋅lbf/min ft⋅lbf/s gal gal/d gal/min gallon (US) gallon (US) per day gallon (US) per minute (gpm) gi gill (US) gr gr/gal grain grain per gallon (US) horsepower (550 ft*lbf/s) horsepower (boiler) horsepower (electric) horsepower (water) hp hundredweight (long, 112 lb) hundredweight (short, 100 lb) in in/s in/s² inH2O inHg inch inch of mercury (32 °F) inch of mercury (60 °F) inch of mercury, conventional inch of water (39.2 °F) inch of water (60 °F) inch of water, conventional inch per second inch per second squared inch to the fourth power in² in³ in³/min in⁴ kip kip (1 kip = 1000 lbf) kip per square inch (ksi) kip/in² knot knot (nautical mile per hour) lb lb/(ft⋅h) lb/(ft⋅s) lb/ft lb/ft² lb/ft³ lb/gal lb/h lb/in lb/in² lb/in³ lb/min lb/s lb/yd lb/yd³ lbf lbf/ft lbf/ft² lbf/in lbf/in² lbf⋅ft lbf⋅ft/in lbf⋅in lbf⋅in/in lbf⋅s/ft² lbf⋅s/in² lb⋅ft² lb⋅in² liqpt liqqt lm/ft² lumen per square foot mi mi/h mi/min mi/s microinch mil mil (0.001 in) mile mile (based on US survey foot) mile per hour mile per minute mile per second mile, nautical mi² mi³ mph nmi ohm circular-mil per foot ounce (US fluid) ounce (avoirdupois) ounce (avoirdupois) per cubic inch ounce (avoirdupois) per gallon (US) ounce (avoirdupois) per square foot ounce (avoirdupois) per square inch ounce (avoirdupois) per square yard ounce (avoirdupois)-force ounce (avoirdupois)-force inch oz oz/ft² oz/gal oz/in² oz/in³ oz/yd² ozf ozf⋅in peck (US) pica pica (computer) (1/6 in) pica (printer′s) pint (US dry) pint (US liquid) pk point (computer) (1/72 in) point (printer′s) pound (avoirdupois) pound foot squared pound inch squared pound per cubic foot pound per cubic inch pound per cubic yard pound per foot pound per foot hour pound per foot second pound per gallon (US) pound per hour pound per inch pound per minute pound per second pound per square foot pound per square inch (not pound-force) pound per yard pound-force pound-force foot pound-force foot per inch pound-force inch pound-force inch per inch pound-force per foot pound-force per inch pound-force per square foot pound-force per square inch pound-force per square inch (psi) pound-force second per square foot pound-force second per square inch psi pt quad (10^15 Btu_IT) quart (US dry) quart (US liquid) rd rod (based on US survey foot) slug slug per cubic foot slug per foot second slug/(ft⋅s) slug/ft³ square foot square foot per hour square foot per second square inch square mile square mile (based on US survey foot) square yard tablespoon teaspoon therm (EC) therm (US) ton of refrigeration (12 000 Btu_IT/h) ton, assay ton, long (2240 lb) ton, long, per cubic yard ton, register ton, short (2000 lb) ton, short, per cubic yard ton, short, per hour ton-force (2000 lbf) unit pole watt per square inch yard yd yd² yd³ yd³/min °F °F_abs °F⋅h/Btu_IT °F⋅h/Btu_th °F⋅h⋅ft²/Btu_IT °F⋅h⋅ft²/Btu_th °F⋅s/Btu_IT °F⋅s/Btu_th °R @ISQ | (inchangé, hors _L) |
+| 100 | UseCase useCases | (inchangé, hors _L) |
+| 101 | * + - [ angle inner isUnitVectorQuantity isZeroVectorQuantity norm outer scalarQuantityVectorMult scalarVectorMult transform vectorScalarDiv vectorScalarMult vectorScalarQuantityDiv vectorScalarQuantityMult | (inchangé, hors _L) |
+| 102 | * + - CartesianThreeVectorOf CartesianVectorOf VectorOf angle cartesian+ cartesian- cartesian3DZeroVector cartesianAngle cartesianInner cartesianNorm cartesianScalarVectorMult cartesianVectorScalarMult cartesianZeroVector inner isCartesianZeroVector isZeroVector norm scalarVectorMult sum sum0 vectorScalarDiv vectorScalarMult @VectorValues | (inchangé, hors _L) |
+| 103 | CartesianThreeVectorValue CartesianVectorValue NumericalVectorValue ThreeVectorValue VectorValue | (inchangé, hors _L) |
+| 104 | PassIf VerdictKind VerificationCase VerificationMethod VerificationMethodKind verificationCases | (inchangé, hors _L) |
+| 105 | GraphicalRendering Rendering TabularRendering TextualRendering View ViewpointCheck asElementTable asInterconnectionDiagram asTextualNotation asTreeDiagram renderings viewpointChecks views | (inchangé, hors _L) |
+| 107 | AssignObservations SequenceFunctions StructuredCurve StructuredPoint StructuredSurface aState acceptSubactions acceptedMessage acceptedTransfer accepter actors analyze annotatedElement assignments assumptions baseType body boundingShapes cancelObservation changeObserver changeSignal checkedConstraints clock columnView concerns condition constraints controls currentTime dSelf decisionTransitions decisions delay delivering demo differencesOf dispatchScope doAction done duration earlierOccurrence edges effect elseClause enactedPerformances enclosedPerformances endShot entryAction envelopingShapes error exclusiveStates exhibitedStates exitAction faces fail falseValue forLoops forks genus happensDuring happensWhile ifSubactions ifTest immediatePredecessors immediateSuccessors includedUseCases incomingTransferSort incomingTransfers incomingTransfersToSelf inconclusive index initialization innerSpace innerSpaceDimension innerSpaceOccurrences insideOf inspect instant instantNum interfacingPorts intersectionsOf involvedObject involvedObjects involvingPerformance involvingPerformances isClosed isDispatch isInstant isMove isPassing isPush isRunToCompletion isSolid iterator joins justOutsideOfOccurrences kind laterOccurrence localClock loops matingOccurrences matingSpace matingSpaceToo merges middleTimeSlice monitor moving myselfSameLives o oSelf obj observations outerSpace outerSpaceDimension outgoingTransfers outgoingTransfersFromSelf outsideOfOccurrences ownedActions ownedPerformances ownedPorts ownedStates participant pass payload payloadNum performance performedActions performerObject performers portionOccurrence portionOf portionOfLife portionWithin portions position predecessors pushing receiver replacementValues requirementVerifications result runToCompletionScope sameLifeOccurrences sameThing seBeforeNum self self2 selfSameLives sendSubactions sender sending sentMessage sentTransfer separateOccurrence separateOccurrenceToo separateSpace separateSpaceToo seq shape shorterOccurrence signal signalClock signalCondition signalMonitor signalTime smallerOccurrence smallerSpace snapshotOccurrence snapshotOf snapshotWithin snapshots source sourceDataValue sourceEvent sourceOccurrence sourceOutputLink spaceBoundary spaceBoundaryOf spaceEnclosedOccurrences spaceInterior spaceInteriorOf spaceShotOccurrence spaceShotOf spaceShotWithin spaceShots spaceSliceOccurrence spaceSliceOf spaceSliceWithin spaceSlices spaceTimeCoincidentOccurrences spaceTimeEnclosedOccurrences spaceTimeEnclosedPoints stakeholders start startObservation startShot startTimeConstraint stateSequencing stateTransitions structuredSpaceBoundary structuredSpaceObjectCells subAnalysisCases subUseCases subVerificationCases subactions subcalculations subcases subitems subj subobjects suboccurrences subparts subperformances subports subrenderings subrequirements substates subviews successors superoccurrence surroundedByOccurrences surroundedSpace surroundingSpace t1 t1First t2 target targetDataValue targetEvent targetInputLink targetOccurrence teAfterNum terminateOccurrence terminateSubactions terminatedOccurrence test that thenClause this thisClock thisConnection thisMonitor thisOccurrence thisPerformance thisThing timeCoincidentOccurrences timeContinuityConstraint timeEnclosedOccurrences timeFlowConstraint timeInstant timeOrderingConstraint timeSignal timeSliceOccurrence timeSliceOf timeSliceWithin timeSlices touches touchesToo transfer transitionLinkSource transitions trueValue unionsOf untilTest value verdict vertices viewRendering viewpointConformance viewpointSatisfactions voids wait whileLoop whileLoops whileTest within withinBoth withoutOccurrences | (inchangé, hors _L) |
+
+## js/58-sysml-modele.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 19 | Structure | Structure |
+| 20 | Comportement | Behavior |
+| 21 | Exigences & cas | Requirements & cases |
+| 22 | Organisation | Organization |
+| 36 | Fichier (espace de noms racine) | File (root namespace) |
+| 36 | Racine d'un fichier .sysml : ses membres sont dans l'espace de noms global du projet. | Root of a .sysml file: its members are in the project's global namespace. |
+| 37 | Package | (inchangé, hors _L) |
+| 38 | Library Package | (inchangé, hors _L) |
+| 38 | Paquetage de bibliothèque (library package). | Library package. |
+| 39 | Import | (inchangé, hors _L) |
+| 40 | Alias | (inchangé, hors _L) |
+| 41 | Comment | (inchangé, hors _L) |
+| 41 | Commentaire /* … */ : élément du modèle qui annote son propriétaire (ou les éléments cités après about). | Comment /* … */: model element annotating its owner (or the elements listed after about). |
+| 42 | Metadata Usage | (inchangé, hors _L) |
+| 43 | Metadata Definition | (inchangé, hors _L) |
+| 43 | Définition de métadonnée (metadata def) : équivalent d'un stéréotype avec ses propriétés. | Metadata definition (metadata def): equivalent of a stereotype with its properties. |
+| 44 | Dependency | (inchangé, hors _L) |
+| 45 | Part Definition | (inchangé, hors _L) |
+| 45 | Définition de partie (part def) : type d'un élément de structure, équivalent du Block SysML v1. | Part definition (part def): type of a structural element, equivalent of the SysML v1 Block. |
+| 46 | Part Usage | (inchangé, hors _L) |
+| 46 | Partie (part) : utilisation d'une définition dans un contexte, équivalent de la part property SysML v1. | Part (part): use of a definition in a context, equivalent of the SysML v1 part property. |
+| 47 | Item Definition | (inchangé, hors _L) |
+| 47 | Définition d'objet échangé ou stocké (item def). | Definition of an item exchanged or stored (item def). |
+| 48 | Item Usage | (inchangé, hors _L) |
+| 48 | Objet échangé ou stocké (item). | Item exchanged or stored (item). |
+| 49 | Attribute Definition | (inchangé, hors _L) |
+| 49 | Définition de valeur (attribute def) : équivalent du value type. | Value definition (attribute def): equivalent of the value type. |
+| 50 | Attribute Usage | (inchangé, hors _L) |
+| 50 | Attribut (attribute) : propriété valuée, avec une valeur éventuelle (= 1800 [kg]). | Attribute (attribute): valued property, with an optional value (= 1800 [kg]). |
+| 51 | Enumeration Definition | (inchangé, hors _L) |
+| 51 | Énumération (enum def) et ses valeurs. | Enumeration (enum def) and its values. |
+| 52 | Enumeration Usage | (inchangé, hors _L) |
+| 52 | Valeur d'une énumération, ou attribut typé par une énumération. | Value of an enumeration, or attribute typed by an enumeration. |
+| 53 | Port Definition | (inchangé, hors _L) |
+| 53 | Définition de port (port def) : point d'interaction et ce qui y circule. | Port definition (port def): interaction point and what flows through it. |
+| 54 | Port Usage | (inchangé, hors _L) |
+| 55 | Connection Definition | (inchangé, hors _L) |
+| 55 | Définition de connexion (connection def) et de ses extrémités (end). | Connection definition (connection def) and its ends (end). |
+| 56 | Connection Usage | (inchangé, hors _L) |
+| 56 | Connexion entre parties ou ports (connection, connect a to b). | Connection between parts or ports (connection, connect a to b). |
+| 57 | Interface Definition | (inchangé, hors _L) |
+| 57 | Définition d'interface (interface def) : connexion entre ports. | Interface definition (interface def): connection between ports. |
+| 58 | Interface Usage | (inchangé, hors _L) |
+| 58 | Interface entre deux ports (interface : T connect a to b). | Interface between two ports (interface : T connect a to b). |
+| 59 | Allocation Definition | (inchangé, hors _L) |
+| 59 | Définition d'allocation (allocation def). | Allocation definition (allocation def). |
+| 60 | Allocation Usage | (inchangé, hors _L) |
+| 60 | Allocation d'un élément sur un autre (allocate a to b), par exemple une fonction sur un composant. | Allocation of an element to another (allocate a to b), for example a function to a component. |
+| 61 | Flow Definition | (inchangé, hors _L) |
+| 61 | Définition de flux (flow def). | Flow definition (flow def). |
+| 62 | Flow Usage | (inchangé, hors _L) |
+| 63 | Succession Flow Usage | (inchangé, hors _L) |
+| 63 | Flux avec succession : la cible commence après la fin de la source. | Flow with succession: the target starts after the end of the source. |
+| 64 | Action Definition | (inchangé, hors _L) |
+| 64 | Définition d'action (action def) : comportement, équivalent de l'activité SysML v1. | Action definition (action def): behavior, equivalent of the SysML v1 activity. |
+| 65 | Action Usage | (inchangé, hors _L) |
+| 65 | Action (action), éventuellement décomposée en sous-actions reliées par des successions. | Action (action), possibly decomposed into subactions linked by successions. |
+| 66 | Perform Action Usage | (inchangé, hors _L) |
+| 66 | Action réalisée par une partie (perform) : allocation fonctionnelle. | Action performed by a part (perform): functional allocation. |
+| 67 | State Definition | (inchangé, hors _L) |
+| 67 | Définition de machine à états (state def). | State machine definition (state def). |
+| 68 | State Usage | (inchangé, hors _L) |
+| 68 | État (state), avec ses actions entry / do / exit et ses sous-états. | State (state), with its entry / do / exit actions and its substates. |
+| 69 | Exhibit State Usage | (inchangé, hors _L) |
+| 69 | Machine à états présentée par une partie (exhibit state). | State machine exhibited by a part (exhibit state). |
+| 70 | State Action | (inchangé, hors _L) |
+| 70 | Action d'entrée, de séjour ou de sortie d'un état (entry / do / exit). | Entry, do or exit action of a state (entry / do / exit). |
+| 71 | Transition Usage | (inchangé, hors _L) |
+| 71 | Transition entre états : first source accept déclencheur if garde do effet then cible. | Transition between states: first source accept trigger if guard do effect then target. |
+| 72 | Succession | (inchangé, hors _L) |
+| 72 | Succession entre deux actions ou états (first a then b, then …). | Succession between two actions or states (first a then b, then …). |
+| 73 | Accept Action | (inchangé, hors _L) |
+| 73 | Attente d'un signal (accept S via port). | Wait for a signal (accept S via port). |
+| 74 | Send Action | (inchangé, hors _L) |
+| 74 | Envoi d'un signal (send S via port to cible). | Sending of a signal (send S via port to target). |
+| 75 | Assignment Action | (inchangé, hors _L) |
+| 75 | Affectation (assign x := valeur). | Assignment (assign x := value). |
+| 76 | If Action | (inchangé, hors _L) |
+| 77 | Loop Action | (inchangé, hors _L) |
+| 77 | Boucle (while / loop … until). | Loop (while / loop … until). |
+| 78 | For Loop Action | (inchangé, hors _L) |
+| 78 | Boucle sur une séquence (for x in …). | Loop over a sequence (for x in …). |
+| 79 | Terminate Action | (inchangé, hors _L) |
+| 79 | Fin d'une occurrence (terminate). | End of an occurrence (terminate). |
+| 80 | Fork | (inchangé, hors _L) |
+| 80 | Nœud de parallélisme (fork). | Parallelism node (fork). |
+| 80 | Join | (inchangé, hors _L) |
+| 80 | Nœud de synchronisation (join). | Synchronisation node (join). |
+| 81 | Merge | (inchangé, hors _L) |
+| 81 | Nœud de fusion (merge). | Merge node (merge). |
+| 81 | Decide | (inchangé, hors _L) |
+| 81 | Nœud de décision (decide), suivi de successions gardées (if … then …). | Decision node (decide), followed by guarded successions (if … then …). |
+| 82 | Calculation Definition | (inchangé, hors _L) |
+| 82 | Définition de calcul (calc def) : paramètres et expression du résultat. | Calculation definition (calc def): parameters and result expression. |
+| 83 | Calculation Usage | (inchangé, hors _L) |
+| 83 | Calcul (calc). | Calculation (calc). |
+| 84 | Constraint Definition | (inchangé, hors _L) |
+| 84 | Définition de contrainte (constraint def) : expression booléenne. | Constraint definition (constraint def): Boolean expression. |
+| 85 | Constraint Usage | (inchangé, hors _L) |
+| 85 | Contrainte (constraint, require / assume constraint dans une exigence). | Constraint (constraint, require / assume constraint in a requirement). |
+| 86 | Assert Constraint | (inchangé, hors _L) |
+| 86 | Contrainte affirmée (assert constraint) : doit être vraie. | Asserted constraint (assert constraint): must be true. |
+| 87 | Requirement Definition | (inchangé, hors _L) |
+| 87 | Définition d'exigence (requirement def) : identifiant court, texte (doc), sujet, contraintes. | Requirement definition (requirement def): short identifier, text (doc), subject, constraints. |
+| 88 | Requirement Usage | (inchangé, hors _L) |
+| 88 | Exigence (requirement), éventuellement typée par une définition d'exigence. | Requirement (requirement), possibly typed by a requirement definition. |
+| 89 | Satisfy | (inchangé, hors _L) |
+| 89 | Satisfaction d'une exigence par un élément (satisfy R by S). | Satisfaction of a requirement by an element (satisfy R by S). |
+| 90 | Verify | (inchangé, hors _L) |
+| 90 | Exigence vérifiée par un cas de vérification (verify R). | Requirement verified by a verification case (verify R). |
+| 91 | Concern Definition | (inchangé, hors _L) |
+| 91 | Définition de préoccupation (concern def). | Concern definition (concern def). |
+| 92 | Concern Usage | (inchangé, hors _L) |
+| 92 | Préoccupation (concern, frame concern). | Concern (concern, frame concern). |
+| 93 | Case Definition | (inchangé, hors _L) |
+| 93 | Définition de cas (case def). | Case definition (case def). |
+| 93 | Case Usage | (inchangé, hors _L) |
+| 93 | Cas (case). | Case (case). |
+| 94 | Analysis Case Definition | (inchangé, hors _L) |
+| 94 | Définition de cas d'analyse (analysis def). | Analysis case definition (analysis def). |
+| 95 | Analysis Case Usage | (inchangé, hors _L) |
+| 95 | Cas d'analyse (analysis). | Analysis case (analysis). |
+| 96 | Verification Case Definition | (inchangé, hors _L) |
+| 96 | Définition de cas de vérification (verification def). | Verification case definition (verification def). |
+| 97 | Verification Case Usage | (inchangé, hors _L) |
+| 97 | Cas de vérification (verification). | Verification case (verification). |
+| 98 | Use Case Definition | (inchangé, hors _L) |
+| 98 | Définition de cas d'utilisation (use case def) : sujet, acteurs, objectif. | Use case definition (use case def): subject, actors, objective. |
+| 99 | Use Case Usage | (inchangé, hors _L) |
+| 99 | Cas d'utilisation (use case). | Use case (use case). |
+| 100 | Include Use Case | (inchangé, hors _L) |
+| 100 | Cas d'utilisation inclus (include). | Included use case (include). |
+| 101 | View Definition | (inchangé, hors _L) |
+| 101 | Définition de vue (view def). | View definition (view def). |
+| 101 | View Usage | (inchangé, hors _L) |
+| 101 | Vue (view) : éléments exposés (expose) et rendu. | View (view): exposed elements (expose) and rendering. |
+| 102 | Viewpoint Definition | (inchangé, hors _L) |
+| 102 | Définition de point de vue (viewpoint def). | Viewpoint definition (viewpoint def). |
+| 102 | Viewpoint Usage | (inchangé, hors _L) |
+| 102 | Point de vue (viewpoint). | Viewpoint (viewpoint). |
+| 103 | Rendering Definition | (inchangé, hors _L) |
+| 103 | Définition de rendu (rendering def). | Rendering definition (rendering def). |
+| 103 | Rendering Usage | (inchangé, hors _L) |
+| 103 | Rendu d'une vue (render). | Rendering of a view (render). |
+| 104 | Expose | (inchangé, hors _L) |
+| 104 | Éléments exposés par une vue (expose A::*). | Elements exposed by a view (expose A::*). |
+| 105 | Occurrence Definition | (inchangé, hors _L) |
+| 105 | Définition d'occurrence (occurrence def, individual def). | Occurrence definition (occurrence def, individual def). |
+| 106 | Occurrence Usage | (inchangé, hors _L) |
+| 106 | Occurrence (occurrence, snapshot, timeslice). | Occurrence (occurrence, snapshot, timeslice). |
+| 107 | Event Occurrence | (inchangé, hors _L) |
+| 107 | Événement (event occurrence) : instant d'une occurrence. | Event (event occurrence): instant of an occurrence. |
+| 108 | Reference Usage | (inchangé, hors _L) |
+| 108 | Feature de référence (ref, sujet, paramètre in / out, extrémité end, feature sans mot-clé). | Reference feature (ref, subject, in / out parameter, end, feature without keyword). |
+| 109 | Binding | (inchangé, hors _L) |
+| 109 | Liaison d'égalité entre deux features (bind a = b). | Equality binding between two features (bind a = b). |
+| 110 | Filter | (inchangé, hors _L) |
+| 111 | Textual Representation | (inchangé, hors _L) |
+| 111 | Représentation textuelle dans un autre langage (rep language "…" /* … */). | Textual representation in another language (rep language "…" /* … */). |
+| 114 | Import | (inchangé, hors _L) |
+| 114 | Expose | (inchangé, hors _L) |
+| 114 | Comment | (inchangé, hors _L) |
+| 119 | SysML: usage→definition (:) | (inchangé, hors _L) |
+| 119 | Usage | (inchangé, hors _L) |
+| 119 | Definition | (inchangé, hors _L) |
+| 119 | Typage (usage → définition) | Typing (usage → definition) |
+| 120 | SysML: definition→definition (: ) | (inchangé, hors _L) |
+| 120 | Definition | (inchangé, hors _L) |
+| 120 | Spécialisation (définition → définition) | Specialization (definition → definition) |
+| 121 | SysML: usage→usage (: ) | (inchangé, hors _L) |
+| 121 | Usage | (inchangé, hors _L) |
+| 121 | Sous-ensemble (subsets) | Subsetting (subsets) |
+| 122 | SysML: redefinition (: ) | (inchangé, hors _L) |
+| 122 | Usage | (inchangé, hors _L) |
+| 122 | Redéfinition (redefines) | Redefinition (redefines) |
+| 123 | SysML: composite member | (inchangé, hors _L) |
+| 123 | Propriétaire | Owner |
+| 123 | Partie, port, objet | Part, port, item |
+| 123 | Composition (membre composite) | Composition (composite member) |
+| 124 | SysML: reference member (ref) | (inchangé, hors _L) |
+| 124 | Propriétaire | Owner |
+| 124 | Membre référence (ref) | Reference member (ref) |
+| 125 | SysML: connection / interface | (inchangé, hors _L) |
+| 125 | Extrémité | End |
+| 125 | Connection | (inchangé, hors _L) |
+| 125 | Connexion / interface (connect) | Connection / interface (connect) |
+| 126 | SysML: binding (=) | (inchangé, hors _L) |
+| 126 | Feature | (inchangé, hors _L) |
+| 126 | Liaison d'égalité (bind) | Equality binding (bind) |
+| 127 | SysML: allocate | (inchangé, hors _L) |
+| 127 | Alloué | Allocated |
+| 127 | Cible | Target |
+| 127 | Allocation (allocate) | Allocation (allocate) |
+| 128 | SysML: flow | (inchangé, hors _L) |
+| 128 | Source | Source |
+| 128 | Cible | Target |
+| 128 | Flow | (inchangé, hors _L) |
+| 128 | Flux (flow / message) | Flow (flow / message) |
+| 129 | SysML: subaction / substate | (inchangé, hors _L) |
+| 129 | Action / état | Action / state |
+| 129 | Décomposition (sous-action, sous-état) | Decomposition (subaction, substate) |
+| 130 | SysML: succession (then) | (inchangé, hors _L) |
+| 130 | Action | (inchangé, hors _L) |
+| 130 | Succession (first … then …) | Succession (first … then …) |
+| 131 | SysML: transition | (inchangé, hors _L) |
+| 131 | State | (inchangé, hors _L) |
+| 131 | Transition (état → état) | Transition (state → state) |
+| 132 | SysML: perform | (inchangé, hors _L) |
+| 132 | Part | (inchangé, hors _L) |
+| 132 | Action | (inchangé, hors _L) |
+| 132 | Réalise (perform : partie → action) | Performs (perform: part → action) |
+| 133 | SysML: exhibit | (inchangé, hors _L) |
+| 133 | Part | (inchangé, hors _L) |
+| 133 | State | (inchangé, hors _L) |
+| 133 | Présente (exhibit : partie → état) | Exhibits (exhibit: part → state) |
+| 134 | SysML: satisfy | (inchangé, hors _L) |
+| 134 | Élément | Element |
+| 134 | Requirement | (inchangé, hors _L) |
+| 134 | Satisfait (satisfy : élément → exigence) | Satisfies (satisfy: element → requirement) |
+| 135 | SysML: verify | (inchangé, hors _L) |
+| 135 | Verification | (inchangé, hors _L) |
+| 135 | Requirement | (inchangé, hors _L) |
+| 135 | Vérifie (verify : cas de vérification → exigence) | Verifies (verify: verification case → requirement) |
+| 136 | SysML: subject | (inchangé, hors _L) |
+| 136 | Exigence / cas | Requirement / case |
+| 136 | Sujet | Subject |
+| 136 | Sujet (subject : exigence ou cas → type du sujet) | Subject (subject: requirement or case → subject type) |
+| 137 | SysML: actor | (inchangé, hors _L) |
+| 137 | Cas | Case |
+| 137 | Acteur | Actor |
+| 137 | Acteur (actor / stakeholder → type) | Actor (actor / stakeholder → type) |
+| 138 | SysML: include | (inchangé, hors _L) |
+| 138 | Use Case | (inchangé, hors _L) |
+| 138 | Inclut (include use case) | Includes (include use case) |
+| 139 | SysML: dependency | (inchangé, hors _L) |
+| 139 | Client | Client |
+| 139 | Fournisseur | Supplier |
+| 139 | Dépendance (dependency) | Dependency (dependency) |
+| 140 | SysML: import | (inchangé, hors _L) |
+| 140 | Package | (inchangé, hors _L) |
+| 140 | Import (paquetage → paquetage) | Import (package → package) |
+| 141 | SysML: metadata | (inchangé, hors _L) |
+| 141 | Élément | Element |
+| 141 | Metadata | (inchangé, hors _L) |
+| 141 | Métadonnée appliquée (@ / #) | Applied metadata (@ / #) |
+| 145 | Typage & spécialisation | Typing & specialization |
+| 146 | Structure | Structure |
+| 147 | Comportement | Behavior |
+| 148 | Exigences & cas | Requirements & cases |
+| 149 | Organisation | Organization |
+| 189 | Tous | All |
+| 189 | Tranv. | Cross. |
+| 345 | Conversion SysML → XML impossible | SysML → XML conversion failed |
+| 353 | model.sysml | (inchangé, hors _L) |
+| 359 | model.sysml | (inchangé, hors _L) |
+| 374 | Aucun fichier .sysml | No .sysml file |
+| 376 | Aucun élément SysML reconnu | No SysML element recognised |
+| 383 | ◇ SysML v2 : | ◇ SysML v2: … element(s), … file(s) |
+| 383 | élément(s), | ◇ SysML v2: … element(s), … file(s) |
+| 383 | fichier(s) | ◇ SysML v2: … element(s), … file(s) |
+| 383 | erreur(s), | — … error(s), … warning(s): see ◇ SysML v2 › ✔ Checks |
+| 383 | avertissement(s) : voir ◇ SysML v2 › ✔ Contrôles | — … error(s), … warning(s): see ◇ SysML v2 › ✔ Checks |
+| 389 | Chargement de | Loading … SysML file(s)… |
+| 389 | fichier(s) SysML… | Loading … SysML file(s)… |
+| 391 | Projet SysML | SysML project |
+| 392 | Erreur de chargement : | Loading error: |
+| 393 | Lecture impossible : | Cannot read: |
+| 402 | Lecture de l'archive « | Reading the archive “…”… |
+| 410 | aucun fichier .sysml dans l'archive (les fichiers .kerml ne sont pas lus) | no .sysml file in the archive (.kerml files are not read) |
+| 412 | Erreur de lecture de l'archive : | Error reading the archive: |
+| 423 | archive ZIP illisible | unreadable ZIP archive |
+| 435 | méthode de compression | compression method … not supported |
+| 435 | non prise en charge | compression method … not supported |
+| 436 | décompression indisponible dans ce navigateur | decompression unavailable in this browser |
+| 520 | Namespace | (inchangé, hors _L) |
+| 527 | Erreur au rechargement du modèle SysML embarqué : | Error reloading the embedded SysML model: |
+
+## js/59-sysml-vues.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 16 | Chargez un modèle SysML v2 (.sysml, .kpar ou dossier du projet). | Load a SysML v2 model (.sysml, .kpar or project folder). |
+| 23 | Erreur de rendu : | Rendering error: |
+| 49 | px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 89 | autres) | … (… more) |
+| 113 | var(--c-accent) | (inchangé, hors _L) |
+| 218 | ⊡ Ajuster ＋ － Molette : zoom · glisser : déplacer · clic : détail ⬇ SVG ⬇ PNG | ⊡ Fit ＋ － Wheel: zoom · drag: pan · click: detail ⬇ SVG ⬇ PNG |
+| 274 | Portée | Scope … Subpackages Compartments ^ Inherited |
+| 274 | — Tout le modèle — | — Whole model — |
+| 276 | Compartiments | Scope … Subpackages Compartments ^ Inherited |
+| 277 | ^ Hérités | Scope … Subpackages Compartments ^ Inherited |
+| 294 | éléments : les | … elements: the first … are shown (choose a narrower scope) |
+| 294 | premiers sont affichés (choisissez une portée plus étroite) | … elements: the first … are shown (choose a narrower scope) |
+| 295 | élément(s) | … element(s) |
+| 315 | «satisfy» | (inchangé, hors _L) |
+| 316 | «perform» | (inchangé, hors _L) |
+| 317 | «exhibit» | (inchangé, hors _L) |
+| 318 | «allocate» | (inchangé, hors _L) |
+| 319 | «dependency» | (inchangé, hors _L) |
+| 320 | «subject» | (inchangé, hors _L) |
+| 330 | Aucune définition ni aucun usage dans cette portée. | No definition or usage in this scope. |
+| 397 | Élément | Element … Depth … |
+| 397 | Profondeur | Element … Depth … |
+| 403 | Aucune partie dans ce modèle. | No part in this model. |
+| 429 | var(--c-accent) | (inchangé, hors _L) |
+| 445 | «flow» | (inchangé, hors _L) |
+| 445 | «interface» | (inchangé, hors _L) |
+| 445 | «allocate» | (inchangé, hors _L) |
+| 446 | var(--c-accent) | (inchangé, hors _L) |
+| 449 | partie(s), | … part(s), … port(s), … connection(s) |
+| 449 | port(s), | … part(s), … port(s), … connection(s) |
+| 449 | connexion(s) | … part(s), … port(s), … connection(s) |
+| 521 | var(--c-text) | (inchangé, hors _L) |
+| 532 | Aucun état dans cet élément. | No state in this element. |
+| 532 | Aucune sous-action dans cet élément. | No subaction in this element. |
+| 551 | Machine à états | State machine |
+| 551 | Action | Action |
+| 554 | Aucune machine à états avec des états dans ce modèle. | No state machine with states in this model. |
+| 554 | Aucune action décomposée dans ce modèle. | No decomposed action in this model. |
+| 556 | état(s), | … state(s), … transition(s) |
+| 556 | transition(s) | … state(s), … transition(s) |
+| 556 | succession(s) / flux | … node(s), … succession(s) / flow(s) |
+| 583 | Toutes Non satisfaites Non vérifiées Définitions Usages | All Not satisfied Not verified Definitions Usages … requirement(s) ✓ satisfied … ✔ verified … ⬇ CSV |
+| 585 | exigence(s) ✓ satisfaites | All Not satisfied Not verified Definitions Usages … requirement(s) ✓ satisfied … ✔ verified … ⬇ CSV |
+| 585 | ✔ vérifiées | All Not satisfied Not verified Definitions Usages … requirement(s) ✓ satisfied … ✔ verified … ⬇ CSV |
+| 585 | ⬇ CSV | All Not satisfied Not verified Definitions Usages … requirement(s) ✓ satisfied … ✔ verified … ⬇ CSV |
+| 587 | Exigence | Requirement |
+| 587 | Sorte | Kind |
+| 587 | Texte | Text |
+| 587 | Sujet | Subject |
+| 587 | Contraintes | Constraints |
+| 587 | Typée par | Typed by |
+| 587 | Satisfaite par | Satisfied by |
+| 587 | Vérifiée par | Verified by |
+| 591 | affichée(s) | … shown |
+| 595 | ⚠ aucune | ⚠ none |
+| 595 | Aucune exigence. | No requirement. |
+| 599 | Exigence | Requirement |
+| 599 | Sorte | Kind |
+| 599 | Texte | Text |
+| 599 | Sujet | Subject |
+| 599 | Contraintes | Constraints |
+| 599 | Typée par | Typed by |
+| 599 | Satisfaite par | Satisfied by |
+| 599 | Vérifiée par | Verified by |
+| 611 | Aucune relation dans ce modèle. | No relationship in this model. |
+| 620 | Relation | Relation … ⇄ Transpose … × …… ⬇ CSV |
+| 621 | ⇄ Transposer | Relation … ⇄ Transpose … × …… ⬇ CSV |
+| 622 | ⬇ CSV | Relation … ⇄ Transpose … × …… ⬇ CSV |
+| 622 | — limité à 100 × 100 | — limited to 100 × 100 |
+| 634 | Syntaxe | Syntax |
+| 634 | Nom non ASCII hors apostrophes | Non-ASCII name without quotes |
+| 634 | Caractère inattendu | Unexpected character |
+| 634 | Chaîne non terminée | Unterminated string |
+| 635 | Commentaire non terminé | Unterminated comment |
+| 635 | Note non terminée | Unterminated note |
+| 635 | Import sans visibilité | Import without visibility |
+| 635 | Nom introuvable | Name not found |
+| 636 | Nom en double | Duplicate name |
+| 636 | Multiplicité incohérente | Inconsistent multiplicity |
+| 636 | Typage incompatible | Incompatible typing |
+| 636 | Spécialisation entre sortes différentes | Specialization between different kinds |
+| 637 | Port hors d'une partie | Port outside a part |
+| 637 | Exigence non satisfaite | Requirement not satisfied |
+| 637 | Exigence non vérifiée | Requirement not verified |
+| 637 | Définition jamais utilisée | Definition never used |
+| 637 | Définition sans documentation | Definition without documentation |
+| 647 | Exigence « | Requirement “…”: no satisfy |
+| 647 | » : aucun satisfy | Requirement “…”: no satisfy |
+| 648 | Exigence « | Requirement “…”: no verify |
+| 648 | » : aucun verify | Requirement “…”: no verify |
+| 650 | » n'est ni utilisée comme type ni spécialisée | … “…” is neither used as a type nor specialized |
+| 651 | » sans documentation (doc /* … */) | … “…” without documentation (doc /* … */) |
+| 658 | Erreur | Error |
+| 658 | var(--c-err,#f85149) | (inchangé, hors _L) |
+| 658 | Avertissement | Warning |
+| 658 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
+| 658 | Remarque | Remark |
+| 658 | var(--c-accent) | (inchangé, hors _L) |
+| 660 | Toutes les gravités ✖ Erreurs ( | All severities ✖ Errors (…) ⚠ Warnings (…) ℹ Remarks (…) All checks … Quality remarks ⬇ CSV |
+| 660 | ) ⚠ Avertissements ( | All severities ✖ Errors (…) ⚠ Warnings (…) ℹ Remarks (…) All checks … Quality remarks ⬇ CSV |
+| 660 | ) ℹ Remarques ( | All severities ✖ Errors (…) ⚠ Warnings (…) ℹ Remarks (…) All checks … Quality remarks ⬇ CSV |
+| 660 | ) Tous les contrôles | All severities ✖ Errors (…) ⚠ Warnings (…) ℹ Remarks (…) All checks … Quality remarks ⬇ CSV |
+| 663 | Remarques de qualité ⬇ CSV | All severities ✖ Errors (…) ⚠ Warnings (…) ℹ Remarks (…) All checks … Quality remarks ⬇ CSV |
+| 665 | Gravité | Severity |
+| 665 | Contrôle | Check |
+| 665 | Message | Message |
+| 665 | Élément | Element |
+| 665 | Position | Position |
+| 671 | ✔ Aucun diagnostic. | ✔ No diagnostic. |
+| 678 | Gravité | Severity |
+| 678 | Code | Code |
+| 678 | Contrôle | Check |
+| 678 | Message | Message |
+| 678 | Élément | Element |
+| 678 | Fichier | File |
+| 678 | Ligne | Line |
+| 714 | Fichier | File … ⬇ .sysml |
+| 714 | ⬇ .sysml | File … ⬇ .sysml |
+| 729 | ligne(s) · | … line(s) · … diagnostic(s) |
+| 729 | diagnostic(s) | … line(s) · … diagnostic(s) |
+| 754 | ◇ SysML v2 | ◇ SysML v2 |
+| 754 | var(--c-accent) | (inchangé, hors _L) |
+| 765 | Bibliothèque standard : | Standard library: |
+| 768 | Membres hérités | Inherited members |
+| 771 | var(--c-err,#f85149) | (inchangé, hors _L) |
+| 771 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
+| 774 | ◇ General View | ◇ General View |
+| 775 | ⧉ Interconnection | ⧉ Interconnection |
+| 776 | ⇢ Action Flow | ⇢ Action Flow |
+| 777 | ◎ State Transition | ◎ State Transition |
+| 788 | SysML v2 | SysML v2 |
+| 789 | sy.fam | (inchangé, hors _L) |
+| 789 | SysML — éléments par famille | SysML — elements by family |
+| 790 | SysML — définitions et usages | SysML — definitions and usages |
+| 790 | Définitions | Definitions |
+| 790 | Usages | Usages |
+| 791 | SysML — mots-clés les plus utilisés | SysML — most used keywords |
+| 792 | sy.req.n | (inchangé, hors _L) |
+| 792 | SysML — exigences | SysML — requirements |
+| 792 | définition(s) | … definition(s) |
+| 793 | sy.req.sat | (inchangé, hors _L) |
+| 793 | SysML — exigences satisfaites (satisfy) | SysML — satisfied requirements (satisfy) |
+| 794 | sy.req.ver | (inchangé, hors _L) |
+| 794 | SysML — exigences vérifiées (verify) | SysML — verified requirements (verify) |
+| 795 | sy.doc | (inchangé, hors _L) |
+| 795 | SysML — définitions documentées (doc) | SysML — documented definitions (doc) |
+| 796 | sy.chk | (inchangé, hors _L) |
+| 796 | SysML — contrôles par code | SysML — checks by code |
+| 797 | sy.err | (inchangé, hors _L) |
+| 797 | SysML — erreurs (syntaxe, résolution, contrôles) | SysML — errors (syntax, resolution, checks) |
+| 797 | avertissement(s) | … warning(s) |
+| 798 | sy.files | (inchangé, hors _L) |
+| 798 | SysML — éléments par fichier | SysML — elements by file |
+
+## Textes sans traduction anglaise (7)
 
 - `js/33-qualite-noms.js:43` — contrôle
-- `js/35-tableau-de-bord.js:143` — Tableau de bord : traçabilité indisponible
+- `js/35-tableau-de-bord.js:151` — Tableau de bord : traçabilité indisponible
 - `js/39-exigences-donnees.js:607` — Détail étendu indisponible
 - `js/40-suivi-fichier.js:138` — Sélecteur à accès direct indisponible :
 - `js/46-config-interface.js:83` — Vues enregistrées illisibles :
+- `js/57-sysml-bibliotheque.js:36` — AbsorptionNumberValue AlfvénNumberValue AmpèreNumberValue ArchimedesNumberValue ArrheniusNumberValue AtwoodNumberValue BagnoldNumberForSolidParticlesValue BagnoldNumberValue BatchelorNumberValue BejanNumberForEntropyValue BejanNumberForHeatTransferValue BejanNumberForMassTransferValue BejanNumberValue BinghamNumberValue BiotNumberForMassTransferValue BiotNumberValue BlakeNumberValue BodensteinNumberValue BoltzmannNumberValue BondNumberValue BrinkmanNumberValue CapillaryNumberValue CarnotNumberValue CauchyNumberValue CavitationNumberValue ChandrasekharNumberValue ClausiusNumberValue CompressibilityNumberValue CowlingNumberValue DarcyFrictionFactorValue DeanNumberValue DeborahNumberValue DynamicCapillaryNumberValue EckertNumberValue EkmanNumberValue ElasticityNumberValue ElectricFieldParameterValue EulerNumberValue ExpansionNumberValue FanningNumberValue FourierNumberForMassTransferValue FourierNumberValue FroudeNumberForHeatTransferValue FroudeNumberValue GalileiNumberValue GoertlerNumberValue GraetzNumberForMassTransferValue GraetzNumberValue GrashofMagneticNumberValue GrashofNumberForMassTransferValue GrashofNumberValue HagenNumberValue HallNumberValue HartmannNumberValue HeatTransferNumberValue HedströmNumberValue HookeNumberValue JFactorValue JouleMagneticNumberValue KnudsenNumberValue LagrangeNumberValue LandauGinzburgNumberValue LaplaceNumberValue LavalNumberValue LewisNumberValue LiftCoefficientValue LockhartMartinelliParameterValue LorentzNumberValue LundquistNumberValue MachNumberValue MagneticNumberValue MagneticPressureNumberValue MarangoniNumberValue MassTransferFactorValue MortonNumberValue NazeNumberValue NusseltElectricNumberValue NusseltNumberForMassTransferValue NusseltNumberValue OhnesorgeNumberValue PoiseuilleNumberValue PomerantsevNumberValue PowerNumberValue PrandtlMagneticNumberValue PrandtlNumberValue PécletNumberForMassTransferValue PécletNumberValue RayleighNumberValue ReechNumberValue ReynoldsElectricNumberValue ReynoldsMagneticNumberValue ReynoldsNumberValue RichardsonNumberValue RobertsNumberValue RossbyNumberValue SchmidtNumberValue SommerfeldNumberValue StantonNumberForMassTransferValue StantonNumberValue StarkNumberValue StefanNumberValue StokesNumberForDragValue StokesNumberForGravityValue StokesNumberForRotameterValue StokesNumberForVibratingParticlesValue StokesNumberValue StrouhalNumberValue StuartElectricalNumberValue StuartNumberValue TaylorNumberValue ThrustCoefficientValue WeberNumberValue WeissenbergNumberValue WomersleyNumberValue absorptionNumber aeroelasticityParameter alfvénNumber ampèreNumber archimedesNumber arrheniusNumber atwoodNumber bagnoldNumber bagnoldNumberForSolidParticles batchelorNumber bejanNumber bejanNumberForEntropy bejanNumberForHeatTransfer bejanNumberForMassTransfer binghamNumber biotNumber biotNumberForMassTransfer blakeNumber bodensteinNumber boltzmannNumber bondNumber brinkmanNumber capillaryNumber carnotNumber cauchyNumber cavitationNumber chandrasekharNumber clausiusNumber colburnNumber compressibilityNumber cowlingNumber darcyFrictionFactor deanNumber deborahNumber dulongNumber dynamicCapillaryNumber eckertNumber ekmanNumber elasticityNumber electricFieldParameter eulerMagneticNumber eulerNumber expansionNumber eötvösNumber fanningNumber fourierNumber fourierNumberForMassTransfer froudeNumber froudeNumberForHeatTransfer galileiNumber goertlerNumber goertlerParameter graetzNumber graetzNumberForMassTransfer grashofMagneticNumber grashofNumber grashofNumberForMassTransfer hagenNumber hallNumber hartmannNumber heatTransferFactor heatTransferNumber hedströmNumber hookeNumber jFactor jouleMagneticNumber kiebelNumber knudsenNumber kármanNumber lagrangeNumber landauGinzburgNumber laplaceNumber lavalNumber lewisNumber liftCoefficient lockhartMartinelliParameter lorentzNumber lundquistNumber machMagneticNumber machNumber magneticNumber magneticPressureNumber marangoniNumber massTransferFactor moodyFrictionFactor mortonNumber nazeNumber nusseltElectricNumber nusseltNumber nusseltNumberForMassTransfer ohnesorgeNumber plasticityNumber poiseuilleNumber pomerantsevNumber powerCoefficient powerNumber prandtlMagneticNumber prandtlNumber pécletNumber pécletNumberForMassTransfer rayleighNumber reechNumber reynoldsElectricNumber reynoldsMagneticNumber reynoldsNumber richardsonNumber robertsNumber rossbyNumber schmidtNumber sommerfeldNumber stantonNumber stantonNumberForMassTransfer starkNumber stefanNumber stokesNumber stokesNumberForDrag stokesNumberForGravity stokesNumberForRotameter stokesNumberForVibratingParticles strouhalNumber stuartElectricalNumber stuartNumber suratmanNumber taylorNumber thomsonNumber thrustCoefficient weberNumber weissenbergNumber womersleyNumber
+- `js/57-sysml-bibliotheque.js:38` — AcceptorDensityUnit AcceptorDensityValue AngularReciprocalLatticeVectorMagnitudeUnit AngularReciprocalLatticeVectorMagnitudeValue AtomicScatteringFactorValue CartesianAngularReciprocalLattice3dCoordinateFrame CartesianAngularReciprocalLattice3dVector CartesianBurgers3dVector CartesianDisplacement3dVector CartesianEquilibriumPosition3dVector CartesianFundamentalLattice3dVector CartesianFundamentalReciprocalLattice3dCoordinateFrame CartesianFundamentalReciprocalLattice3dVector CartesianLattice3dVector CartesianParticlePosition3dVector DebyeWallerFactorValue DensityOfVibrationalStatesUnit DensityOfVibrationalStatesValue DonorDensityUnit DonorDensityValue ElectronDensityUnit ElectronDensityValue EnergyDensityOfStatesUnit EnergyDensityOfStatesValue FundamentalReciprocalLatticeVectorMagnitudeUnit FundamentalReciprocalLatticeVectorMagnitudeValue GrüneisenParameterValue HallCoefficientUnit HallCoefficientValue HoleDensityUnit HoleDensityValue IntrinsicCarrierDensityUnit IntrinsicCarrierDensityValue LongRangeOrderParameterValue LorenzCoefficientUnit LorenzCoefficientValue MobilityRatioValue RichardsonConstantUnit RichardsonConstantValue SeebeckCoefficientForSubstancesAAndBUnit SeebeckCoefficientForSubstancesAAndBValue ShortRangeOrderParameterValue StructureFactorValue ThermodynamicGrüneisenParameterValue ThomsonCoefficientUnit ThomsonCoefficientValue acceptorDensity angularReciprocalLatticeVectorMagnitude angularRepetency angularWavenumber atomicScatteringFactor braggAngle carrierLifetime cartesianAngularReciprocalLattice3dVector cartesianBurgers3dVector cartesianDisplacement3dVector cartesianEquilibriumPosition3dVector cartesianFundamentalLattice3dVector cartesianFundamentalReciprocalLattice3dVector cartesianLattice3dVector cartesianParticlePosition3dVector coherenceLength curieTemperature debyeAngularFrequency debyeAngularRepetency debyeAngularWavenumber debyeTemperature debyeWallerFactor densityOfVibrationalStates diffusionLengthForCondensedMatterPhysics donorDensity effectiveMass electronAffinity electronDensity energyDensityOfStates exchangeIntegral fermiAngularRepetency fermiAngularWavenumber fermiEnergy fermiTemperature fundamentalReciprocalLatticeVectorMagnitude gapEnergy grüneisenParameter hallCoefficient holeDensity intrinsicCarrierDensity ionizationEnergy latticePlaneSpacing londonPenetrationDepth longRangeOrderParameter lorenzCoefficient lowerCriticalMagneticFluxDensity meanFreePathOfElectrons meanFreePathOfPhonons mobilityRatio néelTemperature peltierCoefficientForSubstancesAAndB relaxationTime residualResistivity richardsonConstant seebeckCoefficientForSubstancesAAndB shortRangeOrderParameter structureFactor superconductionTransitionTemperature superconductorEnergyGap thermodynamicCriticalMagneticFluxDensity thermodynamicGrüneisenParameter thermoelectricVoltageBetweenSubstancesAAndB thomsonCoefficient upperCriticalMagneticFluxDensity workFunction

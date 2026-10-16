@@ -17,3 +17,11 @@ Produire un document chapitré automatiquement à partir d'un **modèle de docum
 - Briques déjà disponibles : capture SVG des diagrammes, description et élément représenté (`capDiagSvg`, `capDiagMeta`, `capDiagElements`, 54), `capHtmlReport` (26), `capPdfBuild` / `capZipBuild` (24), calculs des vues 📡 et 🔬.
 - À décider avant de commencer : désignation robuste des diagrammes (règles plutôt que noms exacts), format cible prioritaire (Word ou HTML/PDF), liste des tableaux de la V1.
 - Estimation : V1 (modèle JSON + règles + description + quelques tableaux + HTML) ≈ une grosse séance ; éditeur ≈ une séance ; export Word ≈ une à deux séances.
+
+## ◇ SysML v2 — suites possibles (après la première version)
+
+- **Import JSON** (format d'échange KerML / SysML, `@id` / `@type`) : mêmes vues, identifiants d'origine.
+- **Sérialiseur** `.sysml` canonique et aller-retour (`parse(emit(parse(f)))`), base d'une édition dans Arcalyse (formulaires) — à arbitrer avec Arcature v2, qui porte l'éditeur.
+- **Mise en page conservée** des diagrammes SysML (positions déplacées à la souris, enregistrées dans la page, `.arcature/layout/*.json` d'un `.kpar`).
+- **Sequence View** (messages entre lignes de vie : `message`, `event occurrence`), réutilisant le rendu de 🎬 Scénarios.
+- Résolution plus fine : membres des types de la bibliothèque (index étendu), spécialisations implicites détaillées (§7.6.8, clause 8.3), contraintes `validate…` restantes.

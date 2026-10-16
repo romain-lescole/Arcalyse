@@ -32,6 +32,7 @@ A Capella model grows fast: hundreds of functions, exchanges, components and por
 - 🩺 **Ready-to-use checks**: unallocated elements, unconnected ports, incomplete traceability, names to review…
 - 📤 **Exports everywhere**: CSV, PNG, SVG, PDF, standalone HTML reports, dashboards printable in A4.
 - 🔄 **File watch**: Arcalyse detects new versions of the `.capella` file and shows what changed.
+- ◇ **SysML v2 too**: open a `.sysml` file, a folder or a `.kpar` archive — the same explorer, table, Relation Map, review and dashboards, plus General / Interconnection / Action Flow / State Transition views, requirements, grid and checks.
 
 ## What you can do
 
@@ -153,6 +154,7 @@ Un modèle Capella grossit vite : des centaines de fonctions, d'échanges, de co
 - 🩺 **Des contrôles prêts à l'emploi** : éléments non alloués, ports non connectés, traçabilité incomplète, noms à revoir…
 - 📤 **Exports partout** : CSV, PNG, SVG, PDF, rapports HTML autonomes, tableaux de bord imprimables en A4.
 - 🔄 **Suivi du fichier** : Arcalyse détecte les nouvelles versions du `.capella` et montre ce qui a changé.
+- ◇ **SysML v2 aussi** : ouvrez un fichier `.sysml`, un dossier ou une archive `.kpar` — mêmes explorateur, tableau, Relation Map, revue et tableaux de bord, plus les vues General / Interconnection / Action Flow / State Transition, exigences, matrice et contrôles.
 
 ## Ce que vous pouvez faire
 

@@ -1,6 +1,6 @@
 # Modèles de test — provenance et licences
 
-Ces deux modèles Capella publics servent uniquement aux tests d'Arcalyse (`node tests/smoke.js`) et aux captures du README.
+Ces modèles publics (deux Capella, deux SysML v2) servent uniquement aux tests d'Arcalyse (`node tests/smoke.js`) et aux captures du README.
 Ils **ne font pas partie d'Arcalyse** : ils ne sont pas embarqués dans le fichier livré et restent sous leur propre licence,
 distincte de la GPLv3 du logiciel.
 
@@ -8,11 +8,13 @@ distincte de la GPLv3 du logiciel.
 |---|---|---|---|
 | `In-Flight_Entertainment_System.capella` | [dbinfrago/Capella-IFE-sample](https://github.com/dbinfrago/Capella-IFE-sample) (fichier `In-Flight Entertainment System.capella`) | Copyright The Capella contributors | **Eclipse Public License 2.0** — texte complet : [`LICENSES/EPL-2.0.txt`](LICENSES/EPL-2.0.txt) |
 | `In-Flight_Entertainment_System.aird.gz` | même dépôt (fichier `In-Flight Entertainment System.aird`), compressé en gzip | Copyright The Capella contributors | **Eclipse Public License 2.0** — texte complet : [`LICENSES/EPL-2.0.txt`](LICENSES/EPL-2.0.txt) |
+| `sysml/SimpleVehicleModel.sysml` | [Systems-Modeling/SysML-v2-Release](https://github.com/Systems-Modeling/SysML-v2-Release), tag `2026-03` (fichier `sysml/src/examples/Vehicle Example/SysML v2 Spec Annex A SimpleVehicleModel.sysml`) | Copyright the SysML v2 Submission Team / OMG contributors | **Eclipse Public License 2.0** — texte complet : [`LICENSES/EPL-2.0.txt`](LICENSES/EPL-2.0.txt) |
+| `sysml/VehiculeDemo.sysml` | Modèle de démonstration du dossier de conception Arcature v2 (§ 5.4) | auteur d'Arcalyse | comme Arcalyse (GPL v3) |
 | `AIDA.capella` | [AIDA/AIDAArchitecture](https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture) — IRT Saint Exupéry, projet MOISE (AIDA : *Aircraft Inspection by Drone Assistant*) | Copyright (c) 2016-2022 IRT AESE (IRT Saint Exupéry) | **Creative Commons BY-SA 4.0** — https://creativecommons.org/licenses/by-sa/4.0/ |
 
 ## Modifications
 
-- Les fichiers ont été renommés (espaces remplacés par `_`, nom raccourci pour AIDA).
+- Les fichiers ont été renommés (espaces remplacés par `_`, nom raccourci pour AIDA et pour le modèle SysML de l'annexe A).
 - `AIDA.capella` est au format **Capella 7.0** alors que la version d'origine (V4.5) a été produite avec Capella 5.1 :
   il a été migré par l'outil de migration de Capella, sans modification volontaire du contenu.
 - `In-Flight_Entertainment_System.capella` est au format Capella 7.0.1, tel qu'enregistré par Capella ; contenu non modifié volontairement.

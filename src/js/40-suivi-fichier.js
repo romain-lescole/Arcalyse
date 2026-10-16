@@ -131,7 +131,7 @@ async function capWatchPick(){
   if(!window.showOpenFilePicker||_capPickerKo) return {input:true};
   const t0=Date.now();
   try{
-    const [h]=await window.showOpenFilePicker({types:[{description:_L('Modèle Capella'),accept:{'application/xml':['.capella','.melodymodeller','.xml']}}]});
+    const [h]=await window.showOpenFilePicker({types:[{description:_L('Modèle Capella'),accept:{'application/xml':['.capella','.melodymodeller','.xml']}},{description:_L('Modèle SysML v2'),accept:{'text/plain':['.sysml'],'application/zip':['.kpar']}}]});
     return {file:await h.getFile(), handle:h};
   }catch(e){
     if(e&&e.name==='AbortError'&&Date.now()-t0>400) return null;   // fenêtre fermée par l'utilisateur
@@ -206,7 +206,7 @@ async function capWatchCheck(manual){
  * @param {boolean} manual - Vérification demandée par l'utilisateur
  */
 function capWatchRegister(text, hash, mtime, manual){
-  const doc=new DOMParser().parseFromString(text,'application/xml');
+  const doc=capTextToDoc(text, _capFmt==='sysml'?(_capWatch.name||'model.sysml'):'');   // ◇ SysML v2 : texte relu et converti
   if(doc.querySelector('parsererror')){
     // Enregistrement probablement en cours : on réessaiera au prochain passage
     _capWatch.diskHash=''; _capWatch.diskMtime=0;

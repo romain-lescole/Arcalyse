@@ -19,6 +19,7 @@
       <button class="htab" data-ht="chains">⚡ Chains</button>
       <button class="htab" data-ht="itf">🔌 Interfaces & ports</button>
       <button class="htab" data-ht="ana">ƒ Functions · 🔬 Analyses</button>
+      <button class="htab" data-ht="sysml">◇ SysML v2</button>
       <button class="htab" data-ht="review">💬 Review</button>
       <button class="htab" data-ht="usecase">🧪 Use case</button>
     </div>
@@ -31,6 +32,7 @@
         <p class="hp-lead">Standalone application (a single HTML file) to <b>explore, analyse, check and export</b> a Capella / ARCADIA model without opening Capella. The <code>.capella</code> file is read locally in the browser.</p>
         <h3>Opening a model</h3>
         <ol>
+          <li><b>SysML v2</b>: a <code>.sysml</code> file, several files, a folder or a <code>.kpar</code> archive open the same way (see the ◇ SysML v2 tab).</li>
           <li>Drag and drop a <code>.capella</code> file <b>anywhere in the window</b>, or click <b>📂 .capella file…</b> on the home screen (or <b>📁 File › 🔷 Open a Capella model</b>). <b>📁 Project folder…</b> (or <b>📁 File › 📁 Open the project folder…</b>, or a dropped folder, in Edge / Chrome) loads the .capella and its .aird diagrams together; if it contains several models, you choose which one.</li>
           <li>The model is analysed, then the <b>🧭 Explorer › ▦ Cards</b> view opens automatically.</li>
           <li>To change model, simply drop another file (it replaces the displayed model).</li>
@@ -379,6 +381,36 @@
           <tr><td>Printing</td><td>🖨 Print in <b>A4 portrait</b> (default) or landscape format: items are redrawn at page size, in light colours, with a header (name, model, date). “Save as PDF” in the print window to get a PDF.</td></tr>
           <tr><td>Exports</td><td>🌐 Standalone HTML (as displayed); ⬇ / ⬆ JSON to reuse a layout on another model.</td></tr>
         </table>
+      </div>
+
+
+      <!-- ── SYSML V2 ── -->
+      <div id="ht-sysml" class="ht-panel" style="display:none">
+        <h2>◇ SysML v2</h2>
+        <p class="hp-lead">Arcalyse also reads <b>SysML v2</b> models (SysML 2.0 / KerML 1.0, <code>.sysml</code> textual notation). Capella and SysML v2 are not mixed: one model is displayed at a time, but the common views (🧭 Explorer, ▤ Table, 🔗 Links, 🗺 Relation Map, detail panel, ⚖ Comparison, 🔄 Tracking, 💬 Review, 📐 Dashboard, 💾 HTML page) work the same way for both.</p>
+        <h3>Opening a SysML v2 model</h3>
+        <ul>
+          <li>A <code>.sysml</code> file: drag and drop, <b>📂 .capella / .sysml file…</b> or <b>📁 File › 🔷 Open a model</b>.</li>
+          <li>A project made of several files: drop them together, or open the <b>📁 Project folder</b> (all the <code>.sysml</code> files down to 3 levels of subfolders, when there is no <code>.capella</code> file).</li>
+          <li>A <code>.kpar</code> project archive (KerML §10.3): its <code>.sysml</code> files are read (<code>.kerml</code> files are ignored).</li>
+        </ul>
+        <p class="hp-note">As the text carries no identifiers, each element receives a stable identifier computed from its qualified name: 💬 Review comments, ⚖ Comparison and 🔄 Tracking of a single file work from one version to the next. The standard library is not embedded in full: only the index of the names of its packages (ISQ, SI, ScalarValues…) is used to resolve references.</p>
+        <h3>What the analysis checks</h3>
+        <p>Tolerant reading: a syntax error is reported and reading resumes at the next <code>;</code> or <code>}</code>. Then: <b>name resolution</b> (imports, aliases, inherited members, <code>a.b.c</code> chains, redefinitions), <b>duplicate names</b>, inconsistent <b>multiplicities</b> (<code>[3..1]</code>), <b>incompatible typing</b> (a <code>part</code> typed by an <code>attribute def</code>…), specialization between different kinds, accented names without quotes (<code>Réservoir</code> must be written <code>'Réservoir'</code>), imports without visibility.</p>
+        <h3>◇ SysML v2 menu</h3>
+        <ul>
+          <li><b>◇ General View</b>: definitions (square corners) and usages (rounded corners, dashed for <code>ref</code>) of a package or around an element, with their compartments (attributes, ports, parts, actions…, <code>^</code> for inherited members). Edges: specialization (hollow triangle), typing (triangle and two dots), redefinition, composition (filled diamond, hollow for <code>ref</code>), «satisfy», «perform», «exhibit», «allocate», «subject».</li>
+          <li><b>⧉ Interconnection View</b>: nested parts of a part or a definition, ports on the edges (direction arrow, <code>~</code> conjugated), connections, interfaces, flows (filled arrow) and <code>bind</code> bindings.</li>
+          <li><b>⇢ Action Flow View</b>: subactions, start / done, decisions, fork / join; dashed successions with guards, solid flows.</li>
+          <li><b>◎ State Transition View</b>: states (entry / do / exit actions), initial state, transitions <i>trigger [guard] / effect</i>.</li>
+          <li><b>📑 SysML requirements</b>: short identifier, text (<code>doc</code>), subject, constraints, definition, satisfied by, verified by; coverage, filters, ⬇ CSV.</li>
+          <li><b>▦ Grid View</b>: sources × targets matrix of a relationship (satisfy, perform, allocate, typing…), ⬇ CSV.</li>
+          <li><b>✔ SysML checks</b>: all the diagnostics and, optionally, quality remarks (requirements not satisfied or not verified, definitions unused or without documentation); clicking the position opens the source text at the line.</li>
+          <li><b>🧾 Source text</b>: numbered and coloured files, lines in error marked, clickable declared names (element detail), search, ⬇ download.</li>
+        </ul>
+        <p>Diagrams zoom with the mouse wheel, pan by dragging and export to SVG or PNG; clicking a box opens its detail. The detail panel adds a <b>◇ SysML v2</b> section: declaration in textual notation, source text excerpt, standard library references, inherited members, diagnostics and buttons to the views centred on the element.</p>
+        <h3>Common views</h3>
+        <p>The <b>STR</b> (structure), <b>BEH</b> (behavior), <b>REQ</b> (requirements and cases) and <b>ORG</b> (packages, imports, comments…) families replace the ARCADIA layers in the side bar and the filters. 🔗 Links, the relationship columns of the ▤ Table and the 🗺 Relation Map criteria offer the SysML relationships (typing, specialization, composition, connection, flow, succession, transition, perform, satisfy, verify, allocate…). The 📐 Dashboard adds a <b>SysML v2</b> group of indicators. Views specific to Capella (chains, exchanges, Physical Link, .aird diagrams…) are hidden.</p>
       </div>
 
       <!-- ── REVIEW ── -->

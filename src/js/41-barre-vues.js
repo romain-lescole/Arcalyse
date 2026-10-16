@@ -7,10 +7,19 @@
 /** Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
  * g = groupe (menu déroulant ; '' = vue sans menu), t = info-bulle. */
 var CAP_NAV_ITEMS=[
-  {k:'tree',      l:_L('🌳 Arborescence'),      g:'explore'},
-  {k:'cards',     l:_L('▦ Cartes'),             g:'explore'},
-  {k:'table',     l:_L('▤ Tableau'),            g:'',     t:_L('Tableau de tous les éléments du modèle : onglets de vues, colonnes d\'attributs, de relations et par chemin, tri, filtres, export CSV')},
-  {k:'index',     l:_L('📖 Index des types'),   g:'explore'},
+  {k:'tree',      l:_L('🌳 Arborescence'),      g:'explore', fmt:'both'},
+  {k:'cards',     l:_L('▦ Cartes'),             g:'explore', fmt:'both'},
+  {k:'table',     l:_L('▤ Tableau'),            g:'', fmt:'both',     t:_L('Tableau de tous les éléments du modèle : onglets de vues, colonnes d\'attributs, de relations et par chemin, tri, filtres, export CSV')},
+  {k:'index',     l:_L('📖 Index des types'),   g:'explore', fmt:'both'},
+  // ◇ SysML v2 (59-sysml-vues.js) : vues standard de StandardViewDefinitions, exigences, contrôles, texte source
+  {k:'sy:gv',     l:_L('◇ General View'),       g:'sysml', fmt:'sysml', t:_L('Définitions et usages en notation SysML v2 (coins droits / arrondis, compartiments), spécialisations, typages, compositions')},
+  {k:'sy:iv',     l:_L('⧉ Interconnection View'), g:'sysml', fmt:'sysml', t:_L('Parties imbriquées d\'une partie ou d\'une définition, ports sur les bords, connexions, interfaces et flux')},
+  {k:'sy:afv',    l:_L('⇢ Action Flow View'),   g:'sysml', fmt:'sysml', t:_L('Sous-actions d\'une action : début, fin, successions, décisions, fork / join, flux')},
+  {k:'sy:stv',    l:_L('◎ State Transition View'), g:'sysml', fmt:'sysml', t:_L('États d\'une machine à états et transitions (déclencheur [garde] / effet)')},
+  {k:'sy:req',    l:_L('📑 Exigences SysML'),   g:'sysml', fmt:'sysml', t:_L('Exigences : identifiant, texte, sujet, contraintes, satisfaites par, vérifiées par ; couverture')},
+  {k:'sy:grid',   l:_L('▦ Grid View'),          g:'sysml', fmt:'sysml', t:_L('Matrice de relations entre deux ensembles d\'éléments (satisfy, perform, allocate, typage…)')},
+  {k:'sy:chk',    l:_L('✔ Contrôles SysML'),    g:'sysml', fmt:'sysml', t:_L('Erreurs de syntaxe, noms introuvables, doublons, typages incompatibles, multiplicités ; clic : texte source')},
+  {k:'sy:src',    l:_L('🧾 Texte source'),      g:'sysml', fmt:'sysml', t:_L('Fichiers .sysml du projet, numérotés, colorés, avec les diagnostics ; clic sur un nom : son détail')},
   {k:'chains',    l:_L('⚡ Chaînes'),           g:'flux'},
   {k:'fex',       l:_L('ƒ⇆ Functional Exchange'), g:'flux', t:_L('Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles')},
   {k:'oav',       l:_L('🟨 Operational Analysis'), g:'flux', t:_L('Activités opérationnelles (OA) en blocs façon Capella, avec leurs interactions et l\'entité ou l\'acteur qui les porte ; vue par activité, lignes, matrice, contrôles')},
@@ -21,21 +30,22 @@ var CAP_NAV_ITEMS=[
   {k:'diag',      l:_L('🔲 Diagrammes Capella'),       g:'flux', t:_L('Diagrammes Capella du projet (.aird), dessinés comme dans Capella : liste, recherche, mini-carte, filtres, chaînes, exports ; clic sur un élément → son détail')},
   {k:'scen',      l:_L('🎬 Scénarios'),        g:'flux', t:_L('Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références')},
   {k:'ports',     l:_L('🧩 Ports'),             g:'flux', t:_L('Traçabilité Function Port ↔ Component Port ↔ Physical Port')},
-  {k:'links',     l:_L('🔗 Liens'),             g:'flux', t:_L('Relations entre les éléments du modèle')},
+  {k:'links',     l:_L('🔗 Liens'),             g:'flux', fmt:'both', t:_L('Relations entre les éléments du modèle')},
   {k:'functions', l:_L('ƒ Fonctions'),          g:'ana',  t:_L('Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier')},
   {k:'ana:trace', l:_L('🧬 Traçabilité inter-couches'), g:'ana'},
   {k:'ana:caps',  l:_L('🎯 Capacités & missions'),     g:'ana'},
   {k:'ana:states',l:_L('🔁 Modes & états'),            g:'ana'},
-  {k:'ana:diff',  l:_L('⚖ Comparaison de versions'),  g:'ana'},
+  {k:'ana:diff',  l:_L('⚖ Comparaison de versions'),  g:'ana', fmt:'both'},
   {k:'ana:reqs',  l:_L('📑 Exigences'),               g:'ana'},
   {k:'ana:pvmt',  l:_L('🏷 Propriétés'),              g:'ana'},
   {k:'ana:data',  l:_L('🗃 Données & interfaces'),     g:'ana'},
   {k:'ana:cts',   l:_L('⛓ Contraintes'),              g:'ana'},
-  {k:'dashboard', l:_L('📐 Tableau de bord'),   g:'',     t:_L('Tableaux de bord personnalisés : indicateurs, graphiques, tableaux')}
+  {k:'dashboard', l:_L('📐 Tableau de bord'),   g:'', fmt:'both',     t:_L('Tableaux de bord personnalisés : indicateurs, graphiques, tableaux')}
 ];
 /** Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton). */
 var CAP_NAV_GROUPS=[
   {g:'explore', id:'cap-v-elements', l:_L('🧭 Explorateur'),       t:_L('Explorer le modèle : arborescence, cartes, index des types')},
+  {g:'sysml',   id:'cap-v-sysml',    l:_L('◇ SysML v2'),           t:_L('Vues SysML v2 : General View, Interconnection View, Action Flow, State Transition, exigences, Grid View, contrôles, texte source')},
   {g:'flux',    id:'cap-v-flux',     l:_L('📡 Flux & interfaces'), t:_L('Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrammes, scénarios, ports, liens')},
   {g:'',        id:'',               l:'',                     t:''},   // place des vues sans menu
   {g:'ana',     id:'cap-v-analyses', l:_L('🔬 Analyses'),          t:_L('Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes')}
@@ -45,7 +55,7 @@ var CAP_NAV_GROUPS=[
 var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['table','chains','diag','dashboard'], tbl:1, diag:1};
 var _capNav=(()=>{ try{ const el=document.getElementById('cap-toolbar'); const o=el&&JSON.parse(el.textContent);
   if(o&&o.groups&&Array.isArray(o.pins)) return capNavMigrate(o); }catch(e){} return JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); })();
-var _capNavLast={explore:'cards', flux:'chains', ana:'ana:trace'};   // dernière sous-vue ouverte par menu
+var _capNavLast={explore:'cards', flux:'chains', ana:'ana:trace', sysml:'sy:gv'};   // dernière sous-vue ouverte par menu
 
 /** Met à jour un réglage de barre enregistré avant l'arrivée du bouton ▤ Tableau (ancienne 📊 Table View
  * retirée, 📋 Tableau sorti du menu 🧭 Explorateur) ou du bouton 🔲 Diagrammes Capella : chacun est ajouté une fois.
@@ -71,8 +81,12 @@ function capNavSave(){
  */
 function capNavCurKey(force){
   if(!force&&currentMode!=='capella') return '';
-  return capCurrentView==='analyses'?'ana:'+capAnaSub:capCurrentView;
+  return capCurrentView==='analyses'?'ana:'+capAnaSub:capCurrentView==='sysml'?'sy:'+capSySub:capCurrentView;
 }
+
+/** Vues du catalogue disponibles pour le format du modèle affiché (Capella ou ◇ SysML v2, voir capNavFmtOk).
+ * @returns {object[]} Entrées de CAP_NAV_ITEMS */
+function capNavItems(){ return CAP_NAV_ITEMS.filter(i=>typeof capNavFmtOk!=='function'||capNavFmtOk(i)); }
 
 /** Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
  * @param {string} k - Clé de la vue
@@ -81,6 +95,7 @@ function capNavOpen(k){
   capNavClose();
   if(k==='@rm'){ document.getElementById('mode-rm')?.click(); return; }
   if(k.startsWith('ana:')){ capAnaSub=k.slice(4); capShowView('analyses'); }
+  else if(k.startsWith('sy:')){ capSySub=k.slice(3); capShowView('sysml'); }
   else capShowView(k);
 }
 
@@ -88,7 +103,7 @@ function capNavOpen(k){
  * @param {string} g - Groupe ('explore'|'flux'|'ana')
  */
 function capNavGroupOpen(g){
-  const items=CAP_NAV_ITEMS.filter(i=>i.g===g), free=items.filter(i=>!_capNav.pins.includes(i.k));
+  const items=capNavItems().filter(i=>i.g===g), free=items.filter(i=>!_capNav.pins.includes(i.k));
   const last=_capNavLast[g];
   capNavOpen(free.some(i=>i.k===last)?last:(free[0]||items[0]).k);
 }
@@ -99,7 +114,7 @@ function capNavGroupOpen(g){
  */
 function capNavFluxTabs(cur){
   const bar=document.getElementById('cap-flux-tabs'); if(!bar) return;
-  const free=CAP_NAV_ITEMS.filter(i=>i.g==='flux'&&!_capNav.pins.includes(i.k));
+  const free=capNavItems().filter(i=>i.g==='flux'&&!_capNav.pins.includes(i.k));
   const show=free.some(i=>i.k===cur);
   bar.style.display=show?'flex':'none';
   if(!show) return;
@@ -110,12 +125,14 @@ function capNavFluxTabs(cur){
 function capNavRender(){
   const box=document.getElementById('cap-tb-views'); if(!box) return;
   const pin=k=>{ const it=CAP_NAV_ITEMS.find(i=>i.k===k);
+    if(!it||!capNavFmtOk(it)) return '';   // vue d'un autre format (Capella / ◇ SysML v2)
     return `<div class="tbtn" id="cap-v-${k.replace(':','-')}" data-open="${k}" title="${it.t||''}">${it.l}</div>`; };
   let h='';
   CAP_NAV_GROUPS.forEach(G=>{
+    if(G.g&&!capNavItems().some(i=>i.g===G.g)) return;   // menu sans vue pour ce format
     if(G.g&&_capNav.groups[G.g]!==false)
       h+=_L(`<div class="tbtn cap-nav-grp" id="${G.id}" data-g="${G.g}" title="${G.t}">${G.l}<span class="cap-nav-arr" data-dd="${G.g}" title="Choisir une vue">▾</span></div>`);
-    CAP_NAV_ITEMS.filter(i=>i.g===G.g&&_capNav.pins.includes(i.k)&&i.k!=='table'&&i.k!=='diag').forEach(i=>h+=pin(i.k));
+    capNavItems().filter(i=>i.g===G.g&&_capNav.pins.includes(i.k)&&i.k!=='table'&&i.k!=='diag').forEach(i=>h+=pin(i.k));
     // ▤ Tableau : juste après le menu 🧭 Explorateur
     if(G.g==='explore'&&_capNav.pins.includes('table')) h+=pin('table');
   });
@@ -218,8 +235,8 @@ function capNavMenuFill(){
   const g=dd.dataset.g;
   if(g==='file'){
     const sc=s=>` <span class="cap-nav-g">${s}</span>`;
-    res.innerHTML=_L(`<div class="ctx-i" data-act="open" title="Remplace le modèle affiché par un autre fichier .capella">🔷 Ouvrir un modèle Capella…</div>
-      <div class="ctx-i" data-act="folder" title="Ouvre le dossier du projet : le .capella et ses diagrammes (.aird) sont chargés ensemble">📁 Ouvrir le dossier du projet…</div>
+    res.innerHTML=_L(`<div class="ctx-i" data-act="open" title="Remplace le modèle affiché par un autre fichier : .capella, ou .sysml / .kpar (SysML v2)">🔷 Ouvrir un modèle (Capella ou SysML v2)…</div>
+      <div class="ctx-i" data-act="folder" title="Ouvre le dossier du projet : le .capella et ses diagrammes (.aird), ou tous les fichiers .sysml (SysML v2)">📁 Ouvrir le dossier du projet…</div>
       <div class="ctx-i" data-act="update" title="Compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour l'affichage après validation">🔄 Charger une mise à jour du modèle…</div>
       <div class="cap-nav-hint">Mise à jour : delta affiché avant validation ; alerte si les deux fichiers semblent être des projets différents.</div>
       <div class="cw-m-sep"></div>
@@ -248,13 +265,13 @@ function capNavMenuFill(){
       _L(`<div class="cw-m-sep"></div><div class="ctx-i" data-act="themeedit" title="Créer ou modifier un thème personnalisé (toutes les couleurs)">🎨 Personnaliser…</div>`);
     return;
   }
-  if(g!=='☰'){ res.innerHTML=CAP_NAV_ITEMS.filter(i=>i.g===g).map(i=>capNavRow(i)).join('')+
+  if(g!=='☰'){ res.innerHTML=capNavItems().filter(i=>i.g===g).map(i=>capNavRow(i)).join('')+
     _L(`<div class="cap-nav-hint">📌 épingle une vue en bouton direct dans la barre.</div>`); return; }
   const norm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
   const q=norm((dd.querySelector('#cap-nav-q')||{}).value||'').trim();
   const gl=x=>(CAP_NAV_GROUPS.find(G=>G.g===x)||{}).l||'';
   if(q){
-    const all=[{k:'@rm',l:_L('🗺 Relation Map'),g:''},...CAP_NAV_ITEMS];
+    const all=[{k:'@rm',l:_L('🗺 Relation Map'),g:''},...capNavItems()];
     const hit=all.filter(i=>q.split(/\s+/).every(w=>norm(i.l+' '+gl(i.g)+' '+(i.t||'')).includes(w)));
     const inName=i=>q.split(/\s+/).every(w=>norm(i.l).includes(w)); hit.sort((a,b)=>inName(b)-inName(a));   // le nom de la vue prime sur l'info-bulle
     res.innerHTML=hit.length?hit.map(i=>capNavRow(i,gl(i.g))).join(''):_L('<div class="cap-nav-hint">Aucune vue ne correspond.</div>');
@@ -263,9 +280,10 @@ function capNavMenuFill(){
   }
   let h='';
   CAP_NAV_GROUPS.forEach(G=>{
+    if(G.g&&!capNavItems().some(i=>i.g===G.g)) return;
     h+=G.g?_L(`<label class="cap-nav-h"><input type="checkbox" data-gv="${G.g}"${_capNav.groups[G.g]!==false?' checked':''}> Menu ${G.l} ▾ dans la barre</label>`)
           :_L('<div class="cap-nav-h">Autres vues</div>');
-    h+=CAP_NAV_ITEMS.filter(i=>i.g===G.g).map(i=>capNavRow(i)).join('');
+    h+=capNavItems().filter(i=>i.g===G.g).map(i=>capNavRow(i)).join('');
   });
   h+=_L(`<div class="cw-m-sep"></div><div class="ctx-i" data-reset="1">↺ Rétablir la barre par défaut</div>
     <div class="cap-nav-hint">📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML.</div>`);

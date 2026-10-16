@@ -8,7 +8,8 @@
  * Lancement :                      node tests/smoke.js [chemin/vers/modele.capella]
  * Version anglaise :               node tests/smoke.js --en [modele]  (après node build.js --lang en)
  * Version multilingue :            node tests/smoke.js --multi [--fr] [modele]  (après node build.js --lang multi ; anglais par défaut)
- * (par défaut : premier fichier .capella trouvé dans tests/models/)
+ * (par défaut : premier fichier .capella trouvé dans tests/models/) ; puis ◇ SysML v2 : tests/models/sysml/SimpleVehicleModel.sysml
+ * (--no-sysml pour l'omettre)
  */
 'use strict';
 const path = require('path'), fs = require('fs');
@@ -139,6 +140,38 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
       try { capDashDraw({ m: m.id, v, top: 10, txt: 'x' }, m, 400, 220); } catch (e) { bad.push(m.id + '/' + v + ' : ' + e.message); } })); return bad; });
     r.forEach(x => errs.push(x));
   });
+  // ◇ SysML v2 : chargement d'un modèle SysML (remplace le modèle Capella), vues communes et vues SysML, indicateurs, page enregistrée
+  const sysml = path.join(models, 'sysml', 'SimpleVehicleModel.sysml');
+  if (fs.existsSync(sysml) && !args.includes('--no-sysml')) {
+    await step('SysML v2 : chargement', async () => {
+      await p.evaluate(() => { _capReplaceOk = Date.now(); });
+      await p.setInputFiles('#capella-file-input', sysml);
+      await p.waitForFunction(() => _capFmt === 'sysml' && capLoaded && capAllElements.length > 500, null, { timeout: 60000 });
+      const nE = await p.evaluate(() => _capSy.M.diags.filter(d => d.severity === 'error').length);
+      if (nE) throw new Error(nE + ' erreur(s) d\'analyse sur un modèle valide');
+    });
+    for (const v of ['tree', 'cards', 'table', 'links', 'index', 'ana:diff', 'sy:gv', 'sy:iv', 'sy:afv', 'sy:stv', 'sy:req', 'sy:grid', 'sy:chk', 'sy:src'])
+      await step('SysML v2 : vue ' + v, () => p.evaluate(k => capNavOpen(k), v));
+    await step('SysML v2 : clic dans la General View → détail', async () => {
+      await p.evaluate(() => capNavOpen('sy:gv'));
+      await p.click('#cap-view-sysml .sy-node[data-id] text', { force: true });
+      if (!(await p.textContent('#cap-detail-content')).includes('SysML v2')) throw new Error('section ◇ SysML v2 absente du détail');
+    });
+    await step('SysML v2 : Relation Map', () => p.click('#mode-rm'));
+    await step('SysML v2 : tableau de bord', async () => {
+      const r = await p.evaluate(() => { const bad = []; capDashCatalog().forEach(m => CAP_DASH_VIZ[m.kind].forEach(([v]) => {
+        try { capDashDraw({ m: m.id, v, top: 10, txt: 'x' }, m, 400, 220); } catch (e) { bad.push(m.id + '/' + v + ' : ' + e.message); } })); return bad; });
+      r.forEach(x => errs.push(x));
+    });
+    await step('SysML v2 : page enregistrée rechargée', async () => {
+      const html = await p.evaluate(() => capBuildPageHtml());
+      const f = path.join(require('os').tmpdir(), 'arcalyse-smoke-sysml.html'); fs.writeFileSync(f, html);
+      const p2 = await ctx.newPage(); p2.on('pageerror', e => errs.push('page enregistrée : ' + e.message));
+      await p2.goto('file://' + f.replace(/\\/g, '/').replace(/^([A-Za-z]):/, '/$1:'));
+      await p2.waitForFunction(() => typeof _capFmt !== 'undefined' && _capFmt === 'sysml' && capLoaded, null, { timeout: 60000 });
+      await p2.close();
+    });
+  }
   await browser.close();
   if (errs.length) { console.error('\n✖ ' + errs.length + ' erreur(s) :\n  - ' + errs.slice(0, 30).join('\n  - ')); process.exit(1); }
   console.log('\n✔ Aucune erreur.');

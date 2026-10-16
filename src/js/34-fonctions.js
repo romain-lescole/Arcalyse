@@ -737,7 +737,10 @@ function capRenderAnalyses(){
     };
     c._built=true;
   }
-  c.querySelectorAll('[data-an]').forEach(b=>b.classList.toggle('active',b.dataset.an===capAnaSub));
+  // Onglets des analyses disponibles pour le format affiché (◇ SysML v2 : ⚖ Comparaison seulement)
+  const anaOk=k=>{ const it=CAP_NAV_ITEMS.find(i=>i.k===(k==='fns'?'functions':'ana:'+k)); return !it||capNavFmtOk(it); };
+  if(!anaOk(capAnaSub)) capAnaSub='diff';
+  c.querySelectorAll('[data-an]').forEach(b=>{ b.style.display=anaOk(b.dataset.an)?'':'none'; b.classList.toggle('active',b.dataset.an===capAnaSub); });
   capNavSync();   // barre du haut : sous-vue épinglée ou menu 🔬 Analyses
   const box=c.querySelector('#ana-box');
   const R={trace:capRenderTrace, caps:capRenderCapabilities, states:capRenderStates, diff:capRenderDiff, reqs:capRenderRequirements, pvmt:capRenderPvmt, data:capRenderDataModel, cts:capRenderConstraints}[capAnaSub];

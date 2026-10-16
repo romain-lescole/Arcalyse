@@ -19,6 +19,7 @@
       <button class="htab" data-ht="chains">⚡ Chaînes</button>
       <button class="htab" data-ht="itf">🔌 Interfaces & ports</button>
       <button class="htab" data-ht="ana">ƒ Fonctions · 🔬 Analyses</button>
+      <button class="htab" data-ht="sysml">◇ SysML v2</button>
       <button class="htab" data-ht="review">💬 Revue</button>
       <button class="htab" data-ht="usecase">🧪 Cas d'usage</button>
     </div>
@@ -31,6 +32,7 @@
         <p class="hp-lead">Application autonome (un seul fichier HTML) pour <b>explorer, analyser, contrôler et exporter</b> un modèle Capella / ARCADIA sans ouvrir Capella. Le fichier <code>.capella</code> est lu localement dans le navigateur.</p>
         <h3>Ouvrir un modèle</h3>
         <ol>
+          <li><b>SysML v2</b> : un fichier <code>.sysml</code>, plusieurs fichiers, un dossier ou une archive <code>.kpar</code> s'ouvrent de la même façon (voir l'onglet ◇ SysML v2).</li>
           <li>Glissez-déposez un fichier <code>.capella</code> <b>n'importe où dans la fenêtre</b>, ou cliquez <b>📂 Fichier .capella…</b> sur l'écran d'accueil (ou <b>📁 Fichier › 🔷 Ouvrir un modèle Capella</b>). <b>📁 Dossier du projet…</b> (ou <b>📁 Fichier › 📁 Ouvrir le dossier du projet…</b>, ou un dossier déposé, sous Edge / Chrome) charge ensemble le .capella et ses diagrammes .aird ; s'il contient plusieurs modèles, vous choisissez lequel.</li>
           <li>Le modèle est analysé puis la vue <b>🧭 Explorateur › ▦ Cartes</b> s'ouvre automatiquement.</li>
           <li>Pour changer de modèle, redéposez simplement un autre fichier (il remplace le modèle affiché).</li>
@@ -379,6 +381,36 @@
           <tr><td>Impression</td><td>🖨 Imprimer au format <b>A4 portrait</b> (par défaut) ou paysage : les éléments sont redessinés à la taille de la page, en couleurs claires, avec en-tête (nom, modèle, date). « Enregistrer au format PDF » dans la fenêtre d'impression pour obtenir un PDF.</td></tr>
           <tr><td>Exports</td><td>🌐 HTML autonome (tel qu'affiché) ; ⬇ / ⬆ JSON pour réutiliser une disposition sur un autre modèle.</td></tr>
         </table>
+      </div>
+
+
+      <!-- ── SYSML V2 ── -->
+      <div id="ht-sysml" class="ht-panel" style="display:none">
+        <h2>◇ SysML v2</h2>
+        <p class="hp-lead">Arcalyse lit aussi les modèles <b>SysML v2</b> (SysML 2.0 / KerML 1.0, notation textuelle <code>.sysml</code>). Capella et SysML v2 ne sont pas mélangés : un seul modèle est affiché à la fois, mais les vues communes (🧭 Explorateur, ▤ Tableau, 🔗 Liens, 🗺 Relation Map, panneau de détail, ⚖ Comparaison, 🔄 Suivi, 💬 Revue, 📐 Tableau de bord, 💾 Page HTML) fonctionnent de la même façon pour les deux.</p>
+        <h3>Ouvrir un modèle SysML v2</h3>
+        <ul>
+          <li>Un fichier <code>.sysml</code> : glisser-déposer, <b>📂 Fichier .capella / .sysml…</b> ou <b>📁 Fichier › 🔷 Ouvrir un modèle</b>.</li>
+          <li>Un projet de plusieurs fichiers : déposez-les ensemble, ou ouvrez le <b>📁 Dossier du projet</b> (tous les <code>.sysml</code> jusqu'à 3 niveaux de sous-dossiers, quand il n'y a pas de <code>.capella</code>).</li>
+          <li>Une archive de projet <code>.kpar</code> (KerML §10.3) : ses fichiers <code>.sysml</code> sont lus (les <code>.kerml</code> sont ignorés).</li>
+        </ul>
+        <p class="hp-note">Le texte n'ayant pas d'identifiants, chaque élément reçoit un identifiant stable calculé à partir de son nom qualifié : les commentaires de 💬 Revue, la ⚖ Comparaison et le 🔄 Suivi d'un fichier seul fonctionnent d'une version à l'autre. La bibliothèque standard n'est pas embarquée en entier : seul l'index des noms de ses paquetages (ISQ, SI, ScalarValues…) sert à résoudre les références.</p>
+        <h3>Ce que l'analyse vérifie</h3>
+        <p>Lecture tolérante : une erreur de syntaxe est signalée et la lecture reprend au <code>;</code> ou à la <code>}</code> suivante. Puis : <b>résolution des noms</b> (imports, alias, membres hérités, chaînes <code>a.b.c</code>, redéfinitions), <b>noms en double</b>, <b>multiplicités</b> incohérentes (<code>[3..1]</code>), <b>typage incompatible</b> (une <code>part</code> typée par une <code>attribute def</code>…), spécialisation entre sortes différentes, noms accentués hors apostrophes (<code>Réservoir</code> doit s'écrire <code>'Réservoir'</code>), imports sans visibilité.</p>
+        <h3>Menu ◇ SysML v2</h3>
+        <ul>
+          <li><b>◇ General View</b> : définitions (coins droits) et usages (coins arrondis, pointillés pour <code>ref</code>) d'un paquetage ou autour d'un élément, avec leurs compartiments (attributes, ports, parts, actions…, <code>^</code> pour les membres hérités). Arêtes : spécialisation (triangle creux), typage (triangle et deux points), redéfinition, composition (losange plein, creux pour <code>ref</code>), «satisfy», «perform», «exhibit», «allocate», «subject».</li>
+          <li><b>⧉ Interconnection View</b> : parties imbriquées d'une partie ou d'une définition, ports sur les bords (flèche de direction, <code>~</code> conjugué), connexions, interfaces, flux (flèche pleine) et liaisons <code>bind</code>.</li>
+          <li><b>⇢ Action Flow View</b> : sous-actions, début / fin, décisions, fork / join ; successions en pointillés avec gardes, flux en trait plein.</li>
+          <li><b>◎ State Transition View</b> : états (actions entry / do / exit), état initial, transitions <i>déclencheur [garde] / effet</i>.</li>
+          <li><b>📑 Exigences SysML</b> : identifiant court, texte (<code>doc</code>), sujet, contraintes, définition, satisfaites par, vérifiées par ; couverture, filtres, ⬇ CSV.</li>
+          <li><b>▦ Grid View</b> : matrice sources × cibles d'une relation (satisfy, perform, allocate, typage…), ⬇ CSV.</li>
+          <li><b>✔ Contrôles SysML</b> : tous les diagnostics, et en option des remarques de qualité (exigences non satisfaites ou non vérifiées, définitions inutilisées ou sans documentation) ; un clic sur la position ouvre le texte source à la ligne.</li>
+          <li><b>🧾 Texte source</b> : fichiers numérotés et colorés, lignes en erreur marquées, noms déclarés cliquables (détail de l'élément), recherche, ⬇ téléchargement.</li>
+        </ul>
+        <p>Les diagrammes se zooment à la molette, se déplacent en glissant, s'exportent en SVG ou PNG ; un clic sur une boîte ouvre le détail. Le panneau de détail ajoute une section <b>◇ SysML v2</b> : déclaration en notation textuelle, extrait du texte source, références à la bibliothèque standard, membres hérités, diagnostics et boutons vers les vues centrées sur l'élément.</p>
+        <h3>Vues communes</h3>
+        <p>Les familles <b>STR</b> (structure), <b>BEH</b> (comportement), <b>REQ</b> (exigences et cas) et <b>ORG</b> (paquetages, imports, commentaires…) remplacent les couches ARCADIA dans la barre latérale et les filtres. 🔗 Liens, les colonnes de relations du ▤ Tableau et les critères de la 🗺 Relation Map proposent les relations SysML (typage, spécialisation, composition, connexion, flux, succession, transition, perform, satisfy, verify, allocate…). Le 📐 Tableau de bord ajoute un groupe d'indicateurs <b>SysML v2</b>. Les vues propres à Capella (chaînes, échanges, Physical Link, diagrammes .aird…) sont masquées.</p>
       </div>
 
       <!-- ── REVUE ── -->

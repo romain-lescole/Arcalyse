@@ -38,7 +38,9 @@ function capThemeRegister(){
 }
 /** Couleurs d'origine des couches ARCADIA (mémorisées au premier appel). */
 function capThemeLayerDefaults(){
-  if(!_capLayerDefaults){ _capLayerDefaults={}; Object.keys(CAP_LAYERS).forEach(k=>_capLayerDefaults[k]=CAP_LAYERS[k].color); }
+  if(!_capLayerDefaults) _capLayerDefaults={};
+  // Couches du format affiché (ARCADIA, ou familles ◇ SysML v2) : couleur d'origine mémorisée à la première rencontre
+  Object.keys(CAP_LAYERS).forEach(k=>{ if(!(k in _capLayerDefaults)) _capLayerDefaults[k]=CAP_LAYERS[k].color; });
   return _capLayerDefaults;
 }
 /** Applique les couleurs de couches du thème personnalisé (ou celles d'origine pour un autre thème)

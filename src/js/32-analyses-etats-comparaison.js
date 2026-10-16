@@ -291,7 +291,7 @@ function capRenderDiff(box){
       <div class="ana-diff-file"><span class="ana-dim">Ancienne version (référence)</span><b>${capEsc(oldName||'—')}</b></div>
       <button class="cap-lf-btn" id="ana-df-swap" title="Inverser ancienne / nouvelle"${capDiffDoc?'':' disabled'}>⇄</button>
       <div class="ana-diff-file"><span class="ana-dim">Nouvelle version</span><b>${capEsc(newName||'—')}</b></div>
-      <label class="cw-btn ana-diff-load">📂 ${capDiffDoc?_L('Changer la version à comparer…'):_L('Charger une autre version (.capella)…')}<input type="file" id="ana-df-file"${capIsMobile()?'':' accept=".capella,.melodymodeller,.xml"'} style="display:none"></label>
+      <label class="cw-btn ana-diff-load">📂 ${capDiffDoc?_L('Changer la version à comparer…'):(_capFmt==='sysml'?_L('Charger une autre version (.sysml)…'):_L('Charger une autre version (.capella)…'))}<input type="file" id="ana-df-file"${capIsMobile()?'':' accept=".capella,.melodymodeller,.xml,.sysml"'} style="display:none"></label>
     </div>`);
   if(!capDiffDoc){
     box.innerHTML=head+_L(`<div class="phl-empty">Chargez une autre version du même modèle (par défaut considérée comme l'<b>ancienne</b> version ; ⇄ pour inverser).<br>Les éléments sont appariés par identifiant ; le rapport classe les changements en créations, suppressions, renommages, descriptions, propriétés, liens, déplacements et changements de type, du plus synthétique au plus complet, et se copie dans Word, Outlook, Teams ou Excel.</div>`);
@@ -313,7 +313,7 @@ function capRenderDiff(box){
     box.querySelector('#ana-df-file')?.addEventListener('change',e=>{
       const file=e.target.files[0]; if(!file) return;
       const r=new FileReader();
-      r.onload=ev=>{ const doc=new DOMParser().parseFromString(ev.target.result,'application/xml');
+      r.onload=ev=>{ const doc=capTextToDoc(ev.target.result, file.name);   // .capella, ou .sysml (◇ SysML v2)
         if(doc.querySelector('parsererror')){ alert(_L('Fichier XML invalide')); return; }
         capDiffDoc=doc; capDiffName=file.name; delete _capAnaCache.diff; if(box._drState) box._drState.ex.clear(); capRenderDiff(box); };
       r.readAsText(file);

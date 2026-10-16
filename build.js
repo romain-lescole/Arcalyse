@@ -110,7 +110,8 @@ function multiUi(fr, en) {
   /** Change de langue : recharge la page dans l'autre langue en gardant le modèle chargé (transmis par window.name). */
   window.capLangSwitch=function(l){
     var st={capLangSwitch:1,lang:l};
-    try{ if(typeof capLoaded!=='undefined'&&capLoaded&&cap_xmlDoc){ st.xml=new XMLSerializer().serializeToString(cap_xmlDoc); st.name=capCurrentFileName||''; } }catch(e){}
+    try{ if(typeof capLoaded!=='undefined'&&capLoaded&&typeof _capSy!=='undefined'&&_capSy&&_capFmt==='sysml'){ st.sysml={name:_capSy.name||'', files:_capSy.files}; }
+      else if(typeof capLoaded!=='undefined'&&capLoaded&&cap_xmlDoc){ st.xml=new XMLSerializer().serializeToString(cap_xmlDoc); st.name=capCurrentFileName||''; } }catch(e){}
     window.name=JSON.stringify(st); window._capNoLeaveWarn=true;
     var u=location.href.replace(/([?&])lang=(fr|en)&?/,'$1').replace(/[?&]$/,'').replace(/#.*$/,'');
     location.href=u+(u.indexOf('?')<0?'?':'&')+'lang='+l;
@@ -125,6 +126,7 @@ const MULTI_RESTORE = `<script id="cap-lang-restore">
   var w=null; try{ w=JSON.parse(window.name||'null'); }catch(e){}
   if(!w||!w.capLangSwitch) return;
   window.name='';
+  if(w.sysml){ try{ capSyLoadFiles(w.sysml.files||[], w.sysml.name||''); }catch(e){ console.error(e); } return; }   // ◇ SysML v2 : fichiers relus
   if(!w.xml) return;
   var emb=document.getElementById('cap-embedded-xml'); if(emb) emb.remove();   // le modèle transmis remplace celui de la page enregistrée
   capLoadFile(new File([w.xml], w.name||'model.capella', {type:'application/xml'}));

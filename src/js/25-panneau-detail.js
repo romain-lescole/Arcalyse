@@ -55,6 +55,8 @@ function capOpenDetail(id){
 
   // Description Capella (HTML) : affichée mise en forme (balises filtrées), ou son code HTML d'origine
   if(el.attrs.description) html+=capDescSection(el.id, el.attrs.description, secTitle);
+  // ◇ SysML v2 : déclaration, position dans le texte source, membres hérités, diagnostics (59-sysml-vues.js)
+  if(_capFmt==='sysml'&&typeof capSyDetail==='function') html+=capSyDetail(el.id, secTitle);
 
   // Attributs littéraux
   html+=secTitle(_L('Attributs'));
@@ -202,7 +204,7 @@ function capUpdateToolbarForView(view){
   // ▤ Tableau : son propre ⬇ CSV exporte les colonnes affichées ; celui de la barre (attributs bruts) reste pour ▦ Cartes
   const expCsv=document.getElementById('cap-exp-csv'); if(expCsv) expCsv.style.display=view==='table'?'none':'';
   // Barre de recherche / statistiques et compteur : inutiles dans les vues qui ont leurs propres filtres
-  const own=['functions','analyses','dashboard','links','chains','physlink','compex','fex','oav','scen','diag','cblk','csys','ports','index'].includes(view);
+  const own=['functions','analyses','dashboard','links','chains','physlink','compex','fex','oav','scen','diag','cblk','csys','ports','index','sysml'].includes(view);
   const sub=document.getElementById('cap-sub-toolbar'), rc=document.getElementById('cap-result-count');
   // ▤ Tableau : ni recherche ni filtre de couche (filtres par colonne), mais le compteur reste
   // 🌳 Arborescence : sa propre barre (recherche, Arbre / Liste, déplier, JSON) et son compteur
@@ -210,7 +212,7 @@ function capUpdateToolbarForView(view){
   // ▤ Tableau : chaque onglet a ses propres types cochés (51-tableau.js)
   if(typeof capTableTypesView==='function') capTableTypesView(view==='table');
   // Barre latérale des types : inutile dans les vues de 🔗 Liens à 📐 Tableau de bord
-  const noSide=['links','chains','physlink','compex','fex','oav','scen','diag','cblk','csys','ports','functions','analyses','dashboard'].includes(view);
+  const noSide=['links','chains','physlink','compex','fex','oav','scen','diag','cblk','csys','ports','functions','analyses','dashboard','sysml'].includes(view);
   ['cap-sidebar','cap-sidebar-resizer'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display=noSide?'none':'flex'; });
   // Menu 🧭 Explorateur : regroupe Arborescence, Cartes et Index des types (onglets #cap-elem-tabs)
   const isElem=CAP_ELEM_VIEWS.includes(view);

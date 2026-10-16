@@ -45,6 +45,14 @@ function capDashCatalog(){
   if(_capAnaCache.dashCat) return _capAnaCache.dashCat;
   const C=[], add=(g,id,l,kind,f,d)=>C.push({g,id,l,kind,f,d:d||''});
   const LC=k=>(CAP_LAYERS[k]||{}).color||'#8b949e';
+  if(_capFmt==='sysml'){   // ◇ SysML v2 : indicateurs communs du modèle et indicateurs SysML (59-sysml-vues.js)
+    add(_L('Modèle'),'mdl.n',_L('Éléments du modèle'),'n',()=>({n:capAllElements.length}));
+    add(_L('Modèle'),'mdl.types',_L('Types d\'éléments les plus représentés'),'series',()=>({cats:capDashCount(capAllElements,e=>capAnaHuman(e.typeName))}));
+    add(_L('Modèle'),'mdl.rels',_L('Relations SysML par type'),'series',()=>{ const L=capLinksData||(capLinksData=capComputeLinks()); return {cats:CAP_LINK_SECTIONS.map(s=>({l:s.humanLabel,v:(L[s.key]||[]).length})).filter(x=>x.v).sort((a,b)=>b.v-a.v)}; });
+    capSyDashCatalog(add, LC);
+    add(_L('Mise en page'),'txt',_L('Texte libre (titre, commentaire)'),'text',()=>({}));
+    return _capAnaCache.dashCat=C;
+  }
   const F=capComputeFunctions(), layers=CAP_ANA_LAYERS.filter(k=>F.list.some(f=>f.layer===k));
   const fnsOf=k=>F.list.filter(f=>f.layer===k), leaves=fs=>fs.filter(f=>f.leaf);
   const natural=cats=>({cats,order:'natural'});
