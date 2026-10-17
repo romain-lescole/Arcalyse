@@ -1811,3 +1811,9 @@ html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,2
 .dos-mb{border-style:dashed!important;}
 .dos-com{margin-left:4px;}
 
+/* 📑 Dossiers : 👁 aperçu du rendu */
+#dos-visu{position:fixed;inset:0;z-index:3500;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;}
+.dos-visu-box{width:min(1280px,96vw);height:94vh;display:flex;flex-direction:column;background:var(--c-bg);border:1px solid var(--c-border);border-radius:10px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.45);}
+.dos-visu-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 12px;border-bottom:1px solid var(--c-border);background:var(--c-bg2);font-size:13px;}
+.dos-visu-t{font-weight:600;color:var(--c-text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:40%;}
+.dos-visu-f{flex:1;border:0;width:100%;background:#f6f8fa;}

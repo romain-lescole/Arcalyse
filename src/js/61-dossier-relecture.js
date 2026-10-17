@@ -206,8 +206,9 @@ function capDosHtml(d){
   const com=d.commentaires!==false;
   let h=`<div class="hm-doc-h"><span class="hm-kind">${d.modele?_L('🧩 Modèle de rapport'):_L('📑 Dossier de relecture')}</span><input class="hm-doc-t" data-dsf="titre" value="${esc(d.titre)}" placeholder="${_L('Titre')}">`+
     (d.modele?`<span class="tb-grp"><button class="phl-export-btn" data-da="rap-gen" style="margin-left:0" title="${_L('Crée un rapport (dossier ordinaire, modifiable et exportable) à partir de ce modèle et du modèle Capella chargé')}">${_L('▶ Générer le rapport')}</button>`+
+      `<button class="cap-lf-btn" data-da="visu" title="${_L('Voir le rendu du rapport tel que l\'exporte la page HTML, sans rien télécharger')}">${_L('👁 Aperçu')}</button>`+
       `<button class="cap-lf-btn" data-da="rap-json" title="${_L('Enregistrer ce modèle en .json pour le réutiliser dans un autre projet')}">${_L('💾 .json')}</button>`
-    :`<span class="tb-grp"><button class="phl-export-btn" data-da="html" style="margin-left:0" title="${_L('Page HTML autonome (hors ligne) : les relecteurs commentent chaque chapitre, description, diagramme ou texte, puis vous renvoient la page enregistrée')}">${_L('📤 Page HTML à commenter')}</button>`+
+    :`<span class="tb-grp">`+`<button class="cap-lf-btn" data-da="visu" title="${_L('Voir le rendu du rapport tel que l\'exporte la page HTML, sans rien télécharger')}">${_L('👁 Aperçu')}</button>`+`<button class="phl-export-btn" data-da="html" style="margin-left:0" title="${_L('Page HTML autonome (hors ligne) : les relecteurs commentent chaque chapitre, description, diagramme ou texte, puis vous renvoient la page enregistrée')}">${_L('📤 Page HTML à commenter')}</button>`+
     `<button class="cap-lf-btn" data-da="docx" title="${_L('Document Word (.docx) : les relecteurs le commentent avec les commentaires de Word (Révision › Nouveau commentaire) ; le .docx commenté se réimporte ici')}">${_L('📝 Word (.docx)')}</button>`+
     `<button class="cap-lf-btn" data-da="import" title="${_L('Réimporter les retours des relecteurs : page HTML enregistrée, .json ou document Word commenté (.docx)')}">${_L('📥 Réimporter…')}</button>`)+
     `<button class="cap-lf-btn" data-da="dup" title="${_L('Dupliquer (sans les retours)')}">${_L('⎘ Dupliquer')}</button><button class="cap-lf-btn" data-da="del" title="${_L('Supprimer')}">🗑</button>`+
@@ -440,6 +441,7 @@ function capDosClick(e){
       (f&&f.b.k==='chap'?f.b.blocs:d.blocs).push(c); capHomeSave(); capHomeRender(); } return true;
     case 'auto-add': if(d){ (f&&f.b.k==='chap'?f.b.blocs:d.blocs).push({id:capHomeUid(), k:'auto', quoi:'desc'}); capHomeSave(); capHomeRender(); } return true;
     case 'rap-gen': if(d) capRapGenerer(d); return true;
+    case 'visu': if(d) capDosVisu(d, a); return true;
     case 'rap-json': if(d) capRapJson(d); return true;
     case 'rap-new': capRapNouveau(); return true;
     case 'rap-import': capRapImporter(W); return true;
@@ -552,6 +554,66 @@ async function capDosContenu(d, st){
   return conv(d.blocs, '', 0);
 }
 /**
+ * Données exportées d'un dossier (page HTML, Word, aperçu) : contenu résolu sur le modèle chargé et informations d'envoi.
+ * @param {object} d - Dossier
+ * @param {function(string):void} [st] - Avancement
+ * @returns {Promise<object>} envoi (type « arcalyse-dossier-relecture »)
+ */
+async function capDosEnvoi(d, st){
+  const contenu=await capDosContenu(d, st);
+  return {type:'arcalyse-dossier-relecture', version:1, id:d.id, envoi:capHomeUid(), titre:d.titre||_L('Dossier de relecture'), consignes:d.consignes||'',
+    echeance:d.echeance||'', auteur:d.auteur||'', date:new Date().toISOString(), model:capCurrentFileName||'', project:capRevProjectId(), projectName:capRevProjectName(),
+    source:JSON.parse(JSON.stringify({titre:d.titre, consignes:d.consignes, echeance:d.echeance, auteur:d.auteur, blocs:d.blocs})), contenu, relecteur:'', retours:[], relus:{},
+    commentaires:d.commentaires!==false};
+}
+/**
+ * 👁 Aperçu du rendu : la page HTML du dossier (ou, pour un 🧩 modèle, du rapport qu'il produirait, sans le créer)
+ * affichée dans une fenêtre au-dessus de l'application, en lecture ou avec les commentaires ; imprimer, télécharger.
+ * @param {object} d - Dossier ou modèle de rapport
+ * @param {HTMLElement} [btn] - Bouton (désactivé pendant la préparation)
+ */
+async function capDosVisu(d, btn){
+  const W=capHomeWin(btn), st=m=>capWatchFlash(m);
+  let src=d;
+  if(d.modele){ if(!capLoaded){ W.alert(_L('Chargez d\'abord un modèle.')); return; }
+    src=Object.assign({}, d, {id:'apercu', modele:false, blocs:capRapEval(d.blocs, null, capDosOutils())}); }
+  if(!src.blocs.length){ W.alert(_L('Le dossier est vide : ajoutez au moins un chapitre.')); return; }
+  if(btn) btn.disabled=true;
+  try{ capDosVisuOuvrir(await capDosEnvoi(src, st), W, d.modele); }
+  catch(e){ console.error(e); W.alert(_L('Aperçu impossible : ')+(e&&e.message||e)); }
+  finally{ if(btn) btn.disabled=false; }
+}
+/**
+ * Fenêtre d'aperçu : page du rapport dans un cadre, bascule 📄 Lecture / 💬 Avec commentaires, 🖨 Imprimer, ⬇ Page HTML, ✕ (ou Échap).
+ * @param {object} envoi - Données (capDosEnvoi)
+ * @param {Window} W - Fenêtre (page ou fenêtre séparée)
+ * @param {boolean} [modele] - Aperçu d'un 🧩 modèle (rapport non créé)
+ */
+function capDosVisuOuvrir(envoi, W, modele){
+  const D=W.document; D.getElementById('dos-visu')?.remove();
+  const ov=D.createElement('div'); ov.id='dos-visu'; D.body.appendChild(ov);
+  const rendu=()=>{
+    ov.innerHTML=`<div class="dos-visu-box"><div class="dos-visu-h"><b>${_L('👁 Aperçu')}</b><span class="dos-visu-t">${capEsc(envoi.titre)}</span>`+
+      (modele?`<span class="ana-dim">${_L('rendu du rapport que produirait ce modèle (non créé)')}</span>`:'')+`<span style="flex:1"></span>`+
+      `<span class="tb-grp"><button class="phl-toggle-btn${envoi.commentaires?'':' active'}" data-v="lect" title="${_L('Rapport à lire et imprimer')}">${_L('📄 Lecture')}</button>`+
+      `<button class="phl-toggle-btn${envoi.commentaires?' active':''}" data-v="com" title="${_L('Page telle que la voient les relecteurs, avec les 💬')}">${_L('💬 Avec commentaires')}</button></span>`+
+      `<button class="cap-lf-btn" data-v="print">${_L('🖨 Imprimer')}</button><button class="cap-lf-btn" data-v="dl" title="${_L('Télécharger cette page HTML')}">${_L('⬇ Page HTML')}</button>`+
+      `<button class="cap-lf-btn" data-v="x" title="${_L('Fermer (Échap)')}">✕</button></div><iframe class="dos-visu-f" title="${_L('Aperçu')}"></iframe></div>`;
+    ov.querySelector('iframe').srcdoc=capDosPage(envoi);
+  };
+  const fermer=()=>{ ov.remove(); D.removeEventListener('keydown',touche); };
+  const touche=e=>{ if(e.key==='Escape') fermer(); };
+  D.addEventListener('keydown',touche);
+  ov.onclick=e=>{ const b=e.target.closest('[data-v]'); if(e.target===ov){ fermer(); return; } if(!b) return;
+    const v=b.dataset.v;
+    if(v==='x') fermer();
+    else if(v==='lect'||v==='com'){ envoi.commentaires=v==='com'; rendu(); }
+    else if(v==='print'){ const f=ov.querySelector('iframe'); try{ f.contentWindow.focus(); f.contentWindow.print(); }catch(err){ console.error(err); } }
+    else if(v==='dl') capDownloadBlob(new Blob([capDosPage(envoi)],{type:'text/html'}), ((envoi.titre||'rapport').replace(/[^\p{L}\p{N}\-]+/gu,'_').slice(0,60)||'rapport')+'.html');
+  };
+  rendu();
+}
+/**
  * Exporte le dossier : page HTML à commenter ou document Word.
  * @param {object} d - Dossier
  * @param {string} fmt - 'html' | 'docx'
@@ -562,11 +624,7 @@ async function capDosExport(d, fmt, btn){
   const st=m=>capWatchFlash(m);
   if(btn) btn.disabled=true;
   try{
-    const contenu=await capDosContenu(d, st); capHomeSave();   // elemsExp : éléments représentés exportés (réimport Word)
-    const envoi={type:'arcalyse-dossier-relecture', version:1, id:d.id, envoi:capHomeUid(), titre:d.titre||_L('Dossier de relecture'), consignes:d.consignes||'',
-      echeance:d.echeance||'', auteur:d.auteur||'', date:new Date().toISOString(), model:capCurrentFileName||'', project:capRevProjectId(), projectName:capRevProjectName(),
-      source:JSON.parse(JSON.stringify({titre:d.titre, consignes:d.consignes, echeance:d.echeance, auteur:d.auteur, blocs:d.blocs})), contenu, relecteur:'', retours:[], relus:{},
-      commentaires:d.commentaires!==false};
+    const envoi=await capDosEnvoi(d, st); capHomeSave();   // elemsExp : éléments représentés exportés (réimport Word)
     const base=(d.titre||_L('dossier')).replace(/[^\p{L}\p{N}\-]+/gu,'_').slice(0,60)||'dossier';
     if(d.modele) throw new Error(_L('un modèle de rapport ne s\'exporte pas : ▶ Générer le rapport, puis exportez le rapport'));
     if(fmt==='docx'){ capDownloadBlob(await capDosDocx(envoi, st), base+'.docx'); st(_L('✔ Document Word créé : les relecteurs le commentent (Révision › Nouveau commentaire), puis 📥 Réimporter le .docx commenté')); }

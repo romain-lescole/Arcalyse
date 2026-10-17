@@ -1080,7 +1080,7 @@
 - `CAP_HOME_SOURCES` (l. 300) — Éléments des vues qui peuvent être glissés vers une check-list ou un tableau blanc.
 - `capHomeDragRef` (l. 306) — Référence portée par un élément glissable d'une vue (diagramme de la liste, élément de l'Explorateur, chaîne).
 
-## 61-dossier-relecture.js — 1036 lignes
+## 61-dossier-relecture.js — 1094 lignes
 
 - `capDosNorm` (l. 23) — Complète la liste des dossiers lue dans la page (valeurs par défaut, blocs normalisés).
 - `capDosOf` (l. 33) — Dossier concerné par un élément de l'interface (vue ou fenêtre séparée), sinon dossier ouvert dans l'onglet 📑.
@@ -1099,65 +1099,68 @@
 - `capDosNavHtml` (l. 179) — Volet de navigation du dossier ouvert : plan des chapitres numérotés (clic : aller au chapitre, en le dépliant),
 - `capDosAller` (l. 191) — Va à un chapitre du dossier (volet de navigation) : déplie le chapitre et ses parents, puis le fait défiler en haut.
 - `capDosHtml` (l. 203) — Dossier ouvert : en-tête (titre, exports, réimport), consignes, retours, plan du dossier.
-- `capDosListeHtml` (l. 239) — Blocs d'une liste (chapitres numérotés, imbriqués).
-- `capDosModeleBoutons` (l. 244) — Boutons propres aux 🧩 modèles de rapport : boucle « pour chaque » et contenu automatique. @returns {string} HTML
-- `capDosActs` (l. 254) — Actions d'un bloc ou d'un chapitre : convertir (chapitre numéroté ↔ bloc), monter, descendre, sortir du chapitre,
-- `capDosConvertir` (l. 269) — Convertit un bloc en chapitre numéroté, ou un chapitre en bloc (son contenu est placé à sa suite, au même niveau).
-- `capDosBadge` (l. 288) — Pastille du nombre de retours d'un bloc (clic : afficher les retours).
-- `capDosRetoursHtml` (l. 293) — Retours d'un bloc, s'ils sont dépliés. @param {object} d @param {string} bid @returns {string} HTML
-- `capDosDuBloc` (l. 302) — Vrai si un retour porte sur un bloc, ou sur un élément représenté de ce bloc (diagramme).
-- `capDosApercu` (l. 308) — Aperçu de la description d'un élément (3 lignes).
-- `capDosChapHtml` (l. 324) — Chapitre : numéro, titre, élément associé, description, retours, contenu (blocs et sous-chapitres), zone de dépôt.
-- `capDosBlocHtml` (l. 348) — Bloc d'un chapitre : texte libre, élément (avec sa description) ou diagramme (description, éléments représentés).
-- `capDosRetourHtml` (l. 375) — Un retour de relecteur : type, criticité, auteur, date, extrait commenté, texte ; commentaire de 💬 Revue créé.
-- `capDosRetoursTousHtml` (l. 387) — Tous les retours du dossier, dans l'ordre du document. @param {object} d @returns {string} HTML
-- `capDosTypes` (l. 395) — @returns {object[]} types de retour {k, l} proposés aux relecteurs
-- `capDosClick` (l. 406) — Clics de l'onglet 📑 (délégation depuis capHomeClick).
-- `capDosFocus` (l. 456) — Place le curseur dans le titre (chapitre) ou le texte (bloc) qui vient d'être créé. @param {string} id - Bloc
-- `capDosInput` (l. 462) — Saisies de l'onglet 📑 : champs du dossier, titres, textes ; cases (description, éléments représentés).
-- `capDosDrop` (l. 485) — Dépôt d'une référence ou d'un texte dans le dossier ouvert.
-- `capDosDiagSvgs` (l. 509) — SVG des diagrammes d'une liste (la vue 🔲 Diagrammes Capella est ouverte le temps de l'export, puis la vue précédente rétablie).
-- `capDosContenu` (l. 529) — Contenu du dossier prêt à exporter : chapitres numérotés, descriptions (texte), éléments, diagrammes (SVG, dimensions,
-- `capDosExport` (l. 560) — Exporte le dossier : page HTML à commenter ou document Word.
-- `capDosElemsReels` (l. 584) — Éléments représentés d'un diagramme, tels qu'un relecteur les reconnaît : une implication sans nom
-- `capDosBout` (l. 597) — Élément au bout d'un échange : un port est remplacé par son propriétaire (fonction, composant), une Part par son type.
-- `capDosListeLignes` (l. 612) — Lignes d'un tableau d'éléments, lues sur le modèle chargé : nom, type, description ; ou pour des échanges :
-- `capDosB64` (l. 620) — Base64 d'un texte UTF-8 (SVG embarqué dans la page). @param {string} s @returns {string}
-- `capDosPage` (l. 634) — Page HTML autonome (hors ligne) du dossier : sommaire, chapitres numérotés, figures, commentaires par bloc,
-- `$` (l. 687)
-- `esc` (l. 688)
-- `dt` (l. 689)
-- `find` (l. 690)
-- `uid` (l. 691)
-- `ink` (l. 692)
-- `me` (l. 693)
-- `mark` (l. 694)
-- `chaps` (l. 695)
-- `counts` (l. 696)
-- `btn` (l. 698)
-- `zone` (l. 699)
-- `com` (l. 700)
-- `opts` (l. 704)
-- `formHtml` (l. 705)
-- `upd` (l. 708)
-- `updAll` (l. 711)
-- `para` (l. 712)
-- `node` (l. 713)
-- `toc` (l. 734)
-- `render` (l. 736)
-- `needMe` (l. 746)
-- `dl` (l. 764)
-- `base` (l. 765)
-- `capDosDocx` (l. 788) — Document Word du dossier : page de titre (projet, auteur, consignes, mode d'emploi), sommaire, chapitres en styles
-- `capDosUnzip` (l. 898) — Lit les fichiers d'une archive ZIP (méthodes « stored » et « deflate », décompression native du navigateur).
-- `capDosXmlTexte` (l. 918) — Décode les entités XML d'un texte. @param {string} s @returns {string}
-- `capDosWText` (l. 920) — Texte des runs d'un fragment WordprocessingML (paragraphes séparés par un saut de ligne). @param {string} xml @param {string} [tag] - 't' ou
-- `capDosLireDocx` (l. 931) — Retours d'un document Word commenté : commentaires (rattachés au dernier signet « arc_… » qui les précède) et
-- `capDosLireFichier` (l. 960) — Lit un fichier de retours : page HTML enregistrée par un relecteur, .json de ses retours, ou .docx commenté.
-- `capDosLirePage` (l. 969) — @param {string} texte - Code HTML @returns {object|null} données de la page de relecture (sans l'exécuter)
-- `capDosImporter` (l. 977) — Choisit et importe un ou plusieurs fichiers de retours (page HTML, .json, .docx).
-- `capDosFusion` (l. 991) — Rattache des retours lus à leur dossier (même identifiant ; sinon dossier recréé depuis la page, ou dossier ouvert
-- `capDosVersRevue` (l. 1018) — Verse les retours non encore traités dans 💬 Revue : un commentaire par retour, cible = élément du bloc
+- `capDosListeHtml` (l. 240) — Blocs d'une liste (chapitres numérotés, imbriqués).
+- `capDosModeleBoutons` (l. 245) — Boutons propres aux 🧩 modèles de rapport : boucle « pour chaque » et contenu automatique. @returns {string} HTML
+- `capDosActs` (l. 255) — Actions d'un bloc ou d'un chapitre : convertir (chapitre numéroté ↔ bloc), monter, descendre, sortir du chapitre,
+- `capDosConvertir` (l. 270) — Convertit un bloc en chapitre numéroté, ou un chapitre en bloc (son contenu est placé à sa suite, au même niveau).
+- `capDosBadge` (l. 289) — Pastille du nombre de retours d'un bloc (clic : afficher les retours).
+- `capDosRetoursHtml` (l. 294) — Retours d'un bloc, s'ils sont dépliés. @param {object} d @param {string} bid @returns {string} HTML
+- `capDosDuBloc` (l. 303) — Vrai si un retour porte sur un bloc, ou sur un élément représenté de ce bloc (diagramme).
+- `capDosApercu` (l. 309) — Aperçu de la description d'un élément (3 lignes).
+- `capDosChapHtml` (l. 325) — Chapitre : numéro, titre, élément associé, description, retours, contenu (blocs et sous-chapitres), zone de dépôt.
+- `capDosBlocHtml` (l. 349) — Bloc d'un chapitre : texte libre, élément (avec sa description) ou diagramme (description, éléments représentés).
+- `capDosRetourHtml` (l. 376) — Un retour de relecteur : type, criticité, auteur, date, extrait commenté, texte ; commentaire de 💬 Revue créé.
+- `capDosRetoursTousHtml` (l. 388) — Tous les retours du dossier, dans l'ordre du document. @param {object} d @returns {string} HTML
+- `capDosTypes` (l. 396) — @returns {object[]} types de retour {k, l} proposés aux relecteurs
+- `capDosClick` (l. 407) — Clics de l'onglet 📑 (délégation depuis capHomeClick).
+- `capDosFocus` (l. 458) — Place le curseur dans le titre (chapitre) ou le texte (bloc) qui vient d'être créé. @param {string} id - Bloc
+- `capDosInput` (l. 464) — Saisies de l'onglet 📑 : champs du dossier, titres, textes ; cases (description, éléments représentés).
+- `capDosDrop` (l. 487) — Dépôt d'une référence ou d'un texte dans le dossier ouvert.
+- `capDosDiagSvgs` (l. 511) — SVG des diagrammes d'une liste (la vue 🔲 Diagrammes Capella est ouverte le temps de l'export, puis la vue précédente rétablie).
+- `capDosContenu` (l. 531) — Contenu du dossier prêt à exporter : chapitres numérotés, descriptions (texte), éléments, diagrammes (SVG, dimensions,
+- `capDosEnvoi` (l. 562) — Données exportées d'un dossier (page HTML, Word, aperçu) : contenu résolu sur le modèle chargé et informations d'envoi.
+- `capDosVisu` (l. 575) — 👁 Aperçu du rendu : la page HTML du dossier (ou, pour un 🧩 modèle, du rapport qu'il produirait, sans le créer)
+- `capDosVisuOuvrir` (l. 592) — Fenêtre d'aperçu : page du rapport dans un cadre, bascule 📄 Lecture / 💬 Avec commentaires, 🖨 Imprimer, ⬇ Page HTML, ✕ (ou Échap).
+- `capDosExport` (l. 622) — Exporte le dossier : page HTML à commenter ou document Word.
+- `capDosElemsReels` (l. 642) — Éléments représentés d'un diagramme, tels qu'un relecteur les reconnaît : une implication sans nom
+- `capDosBout` (l. 655) — Élément au bout d'un échange : un port est remplacé par son propriétaire (fonction, composant), une Part par son type.
+- `capDosListeLignes` (l. 670) — Lignes d'un tableau d'éléments, lues sur le modèle chargé : nom, type, description ; ou pour des échanges :
+- `capDosB64` (l. 678) — Base64 d'un texte UTF-8 (SVG embarqué dans la page). @param {string} s @returns {string}
+- `capDosPage` (l. 692) — Page HTML autonome (hors ligne) du dossier : sommaire, chapitres numérotés, figures, commentaires par bloc,
+- `$` (l. 745)
+- `esc` (l. 746)
+- `dt` (l. 747)
+- `find` (l. 748)
+- `uid` (l. 749)
+- `ink` (l. 750)
+- `me` (l. 751)
+- `mark` (l. 752)
+- `chaps` (l. 753)
+- `counts` (l. 754)
+- `btn` (l. 756)
+- `zone` (l. 757)
+- `com` (l. 758)
+- `opts` (l. 762)
+- `formHtml` (l. 763)
+- `upd` (l. 766)
+- `updAll` (l. 769)
+- `para` (l. 770)
+- `node` (l. 771)
+- `toc` (l. 792)
+- `render` (l. 794)
+- `needMe` (l. 804)
+- `dl` (l. 822)
+- `base` (l. 823)
+- `capDosDocx` (l. 846) — Document Word du dossier : page de titre (projet, auteur, consignes, mode d'emploi), sommaire, chapitres en styles
+- `capDosUnzip` (l. 956) — Lit les fichiers d'une archive ZIP (méthodes « stored » et « deflate », décompression native du navigateur).
+- `capDosXmlTexte` (l. 976) — Décode les entités XML d'un texte. @param {string} s @returns {string}
+- `capDosWText` (l. 978) — Texte des runs d'un fragment WordprocessingML (paragraphes séparés par un saut de ligne). @param {string} xml @param {string} [tag] - 't' ou
+- `capDosLireDocx` (l. 989) — Retours d'un document Word commenté : commentaires (rattachés au dernier signet « arc_… » qui les précède) et
+- `capDosLireFichier` (l. 1018) — Lit un fichier de retours : page HTML enregistrée par un relecteur, .json de ses retours, ou .docx commenté.
+- `capDosLirePage` (l. 1027) — @param {string} texte - Code HTML @returns {object|null} données de la page de relecture (sans l'exécuter)
+- `capDosImporter` (l. 1035) — Choisit et importe un ou plusieurs fichiers de retours (page HTML, .json, .docx).
+- `capDosFusion` (l. 1049) — Rattache des retours lus à leur dossier (même identifiant ; sinon dossier recréé depuis la page, ou dossier ouvert
+- `capDosVersRevue` (l. 1076) — Verse les retours non encore traités dans 💬 Revue : un commentaire par retour, cible = élément du bloc
 
 ## 62-liens-couches.js — 249 lignes
 
