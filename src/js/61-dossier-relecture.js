@@ -579,17 +579,43 @@ async function capDosVisu(d, btn){
     src=Object.assign({}, d, {id:'apercu', modele:false, blocs:capRapEval(d.blocs, null, capDosOutils())}); }
   if(!src.blocs.length){ W.alert(_L('Le dossier est vide : ajoutez au moins un chapitre.')); return; }
   if(btn) btn.disabled=true;
-  try{ capDosVisuOuvrir(await capDosEnvoi(src, st), W, d.modele); }
+  try{ const envoi=await capDosEnvoi(src, st), w=capDosVisuWins.get(d.id);
+    if(w&&!w.closed){ envoi.commentaires=w._arcCom!=null?w._arcCom:envoi.commentaires; capDosVisuEcrire(w, envoi); w.focus(); st(_L('✔ Aperçu actualisé dans sa fenêtre')); }   // aperçu déjà détaché : actualisé
+    else capDosVisuOuvrir(envoi, W, d.modele, d.id); }
   catch(e){ console.error(e); W.alert(_L('Aperçu impossible : ')+(e&&e.message||e)); }
   finally{ if(btn) btn.disabled=false; }
 }
+/** Aperçus détachés dans une fenêtre séparée : identifiant du dossier → fenêtre. */
+const capDosVisuWins=new Map();
 /**
- * Fenêtre d'aperçu : page du rapport dans un cadre, bascule 📄 Lecture / 💬 Avec commentaires, 🖨 Imprimer, ⬇ Page HTML, ✕ (ou Échap).
+ * Écrit la page du rapport dans une fenêtre séparée (titre « 👁 … »).
+ * @param {Window} w - Fenêtre
+ * @param {object} envoi - Données (capDosEnvoi)
+ */
+function capDosVisuEcrire(w, envoi){
+  const D=w.document; D.open(); D.write(capDosPage(envoi).replace('<title>',`<title>👁 `)); D.close(); w._arcCom=envoi.commentaires;
+}
+/**
+ * ⧉ Détache l'aperçu dans sa propre fenêtre (par exemple sur un autre écran) ; 👁 Aperçu l'actualise ensuite.
+ * @param {object} envoi - Données (capDosEnvoi)
+ * @param {Window} W - Fenêtre d'origine
+ * @param {string} [id] - Dossier (pour actualiser la même fenêtre)
+ * @returns {boolean} vrai si la fenêtre a pu être ouverte
+ */
+function capDosVisuDetacher(envoi, W, id){
+  const w=W.open('', 'arcalyse-apercu-'+(id||'x'), 'width=1150,height=900');
+  if(!w){ W.alert(_L('Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez.')); return false; }
+  capDosVisuEcrire(w, envoi); if(id) capDosVisuWins.set(id, w); w.focus(); return true;
+}
+/**
+ * Fenêtre d'aperçu : page du rapport dans un cadre, bascule 📄 Lecture / 💬 Avec commentaires, 🖨 Imprimer, ⬇ Page HTML,
+ * ⧉ fenêtre séparée, ✕ (ou Échap).
  * @param {object} envoi - Données (capDosEnvoi)
  * @param {Window} W - Fenêtre (page ou fenêtre séparée)
  * @param {boolean} [modele] - Aperçu d'un 🧩 modèle (rapport non créé)
+ * @param {string} [id] - Dossier ou modèle prévisualisé
  */
-function capDosVisuOuvrir(envoi, W, modele){
+function capDosVisuOuvrir(envoi, W, modele, id){
   const D=W.document; D.getElementById('dos-visu')?.remove();
   const ov=D.createElement('div'); ov.id='dos-visu'; D.body.appendChild(ov);
   const rendu=()=>{
@@ -598,6 +624,7 @@ function capDosVisuOuvrir(envoi, W, modele){
       `<span class="tb-grp"><button class="phl-toggle-btn${envoi.commentaires?'':' active'}" data-v="lect" title="${_L('Rapport à lire et imprimer')}">${_L('📄 Lecture')}</button>`+
       `<button class="phl-toggle-btn${envoi.commentaires?' active':''}" data-v="com" title="${_L('Page telle que la voient les relecteurs, avec les 💬')}">${_L('💬 Avec commentaires')}</button></span>`+
       `<button class="cap-lf-btn" data-v="print">${_L('🖨 Imprimer')}</button><button class="cap-lf-btn" data-v="dl" title="${_L('Télécharger cette page HTML')}">${_L('⬇ Page HTML')}</button>`+
+      `<button class="cap-lf-btn" data-v="pop" title="${_L('Ouvrir l\'aperçu dans une fenêtre séparée (par exemple sur un autre écran) ; 👁 Aperçu l\'actualise ensuite')}">⧉</button>`+
       `<button class="cap-lf-btn" data-v="x" title="${_L('Fermer (Échap)')}">✕</button></div><iframe class="dos-visu-f" title="${_L('Aperçu')}"></iframe></div>`;
     ov.querySelector('iframe').srcdoc=capDosPage(envoi);
   };
@@ -607,6 +634,7 @@ function capDosVisuOuvrir(envoi, W, modele){
   ov.onclick=e=>{ const b=e.target.closest('[data-v]'); if(e.target===ov){ fermer(); return; } if(!b) return;
     const v=b.dataset.v;
     if(v==='x') fermer();
+    else if(v==='pop'){ if(capDosVisuDetacher(envoi, W, id)) fermer(); }
     else if(v==='lect'||v==='com'){ envoi.commentaires=v==='com'; rendu(); }
     else if(v==='print'){ const f=ov.querySelector('iframe'); try{ f.contentWindow.focus(); f.contentWindow.print(); }catch(err){ console.error(err); } }
     else if(v==='dl') capDownloadBlob(new Blob([capDosPage(envoi)],{type:'text/html'}), ((envoi.titre||'rapport').replace(/[^\p{L}\p{N}\-]+/gu,'_').slice(0,60)||'rapport')+'.html');

@@ -1080,7 +1080,7 @@
 - `CAP_HOME_SOURCES` (l. 300) — Éléments des vues qui peuvent être glissés vers une check-list ou un tableau blanc.
 - `capHomeDragRef` (l. 306) — Référence portée par un élément glissable d'une vue (diagramme de la liste, élément de l'Explorateur, chaîne).
 
-## 61-dossier-relecture.js — 1094 lignes
+## 61-dossier-relecture.js — 1122 lignes
 
 - `capDosNorm` (l. 23) — Complète la liste des dossiers lue dans la page (valeurs par défaut, blocs normalisés).
 - `capDosOf` (l. 33) — Dossier concerné par un élément de l'interface (vue ou fenêtre séparée), sinon dossier ouvert dans l'onglet 📑.
@@ -1120,47 +1120,49 @@
 - `capDosContenu` (l. 531) — Contenu du dossier prêt à exporter : chapitres numérotés, descriptions (texte), éléments, diagrammes (SVG, dimensions,
 - `capDosEnvoi` (l. 562) — Données exportées d'un dossier (page HTML, Word, aperçu) : contenu résolu sur le modèle chargé et informations d'envoi.
 - `capDosVisu` (l. 575) — 👁 Aperçu du rendu : la page HTML du dossier (ou, pour un 🧩 modèle, du rapport qu'il produirait, sans le créer)
-- `capDosVisuOuvrir` (l. 592) — Fenêtre d'aperçu : page du rapport dans un cadre, bascule 📄 Lecture / 💬 Avec commentaires, 🖨 Imprimer, ⬇ Page HTML, ✕ (ou Échap).
-- `capDosExport` (l. 622) — Exporte le dossier : page HTML à commenter ou document Word.
-- `capDosElemsReels` (l. 642) — Éléments représentés d'un diagramme, tels qu'un relecteur les reconnaît : une implication sans nom
-- `capDosBout` (l. 655) — Élément au bout d'un échange : un port est remplacé par son propriétaire (fonction, composant), une Part par son type.
-- `capDosListeLignes` (l. 670) — Lignes d'un tableau d'éléments, lues sur le modèle chargé : nom, type, description ; ou pour des échanges :
-- `capDosB64` (l. 678) — Base64 d'un texte UTF-8 (SVG embarqué dans la page). @param {string} s @returns {string}
-- `capDosPage` (l. 692) — Page HTML autonome (hors ligne) du dossier : sommaire, chapitres numérotés, figures, commentaires par bloc,
-- `$` (l. 745)
-- `esc` (l. 746)
-- `dt` (l. 747)
-- `find` (l. 748)
-- `uid` (l. 749)
-- `ink` (l. 750)
-- `me` (l. 751)
-- `mark` (l. 752)
-- `chaps` (l. 753)
-- `counts` (l. 754)
-- `btn` (l. 756)
-- `zone` (l. 757)
-- `com` (l. 758)
-- `opts` (l. 762)
-- `formHtml` (l. 763)
-- `upd` (l. 766)
-- `updAll` (l. 769)
-- `para` (l. 770)
-- `node` (l. 771)
-- `toc` (l. 792)
-- `render` (l. 794)
-- `needMe` (l. 804)
-- `dl` (l. 822)
-- `base` (l. 823)
-- `capDosDocx` (l. 846) — Document Word du dossier : page de titre (projet, auteur, consignes, mode d'emploi), sommaire, chapitres en styles
-- `capDosUnzip` (l. 956) — Lit les fichiers d'une archive ZIP (méthodes « stored » et « deflate », décompression native du navigateur).
-- `capDosXmlTexte` (l. 976) — Décode les entités XML d'un texte. @param {string} s @returns {string}
-- `capDosWText` (l. 978) — Texte des runs d'un fragment WordprocessingML (paragraphes séparés par un saut de ligne). @param {string} xml @param {string} [tag] - 't' ou
-- `capDosLireDocx` (l. 989) — Retours d'un document Word commenté : commentaires (rattachés au dernier signet « arc_… » qui les précède) et
-- `capDosLireFichier` (l. 1018) — Lit un fichier de retours : page HTML enregistrée par un relecteur, .json de ses retours, ou .docx commenté.
-- `capDosLirePage` (l. 1027) — @param {string} texte - Code HTML @returns {object|null} données de la page de relecture (sans l'exécuter)
-- `capDosImporter` (l. 1035) — Choisit et importe un ou plusieurs fichiers de retours (page HTML, .json, .docx).
-- `capDosFusion` (l. 1049) — Rattache des retours lus à leur dossier (même identifiant ; sinon dossier recréé depuis la page, ou dossier ouvert
-- `capDosVersRevue` (l. 1076) — Verse les retours non encore traités dans 💬 Revue : un commentaire par retour, cible = élément du bloc
+- `capDosVisuEcrire` (l. 595) — Écrit la page du rapport dans une fenêtre séparée (titre « 👁 … »).
+- `capDosVisuDetacher` (l. 605) — ⧉ Détache l'aperçu dans sa propre fenêtre (par exemple sur un autre écran) ; 👁 Aperçu l'actualise ensuite.
+- `capDosVisuOuvrir` (l. 618) — Fenêtre d'aperçu : page du rapport dans un cadre, bascule 📄 Lecture / 💬 Avec commentaires, 🖨 Imprimer, ⬇ Page HTML,
+- `capDosExport` (l. 650) — Exporte le dossier : page HTML à commenter ou document Word.
+- `capDosElemsReels` (l. 670) — Éléments représentés d'un diagramme, tels qu'un relecteur les reconnaît : une implication sans nom
+- `capDosBout` (l. 683) — Élément au bout d'un échange : un port est remplacé par son propriétaire (fonction, composant), une Part par son type.
+- `capDosListeLignes` (l. 698) — Lignes d'un tableau d'éléments, lues sur le modèle chargé : nom, type, description ; ou pour des échanges :
+- `capDosB64` (l. 706) — Base64 d'un texte UTF-8 (SVG embarqué dans la page). @param {string} s @returns {string}
+- `capDosPage` (l. 720) — Page HTML autonome (hors ligne) du dossier : sommaire, chapitres numérotés, figures, commentaires par bloc,
+- `$` (l. 773)
+- `esc` (l. 774)
+- `dt` (l. 775)
+- `find` (l. 776)
+- `uid` (l. 777)
+- `ink` (l. 778)
+- `me` (l. 779)
+- `mark` (l. 780)
+- `chaps` (l. 781)
+- `counts` (l. 782)
+- `btn` (l. 784)
+- `zone` (l. 785)
+- `com` (l. 786)
+- `opts` (l. 790)
+- `formHtml` (l. 791)
+- `upd` (l. 794)
+- `updAll` (l. 797)
+- `para` (l. 798)
+- `node` (l. 799)
+- `toc` (l. 820)
+- `render` (l. 822)
+- `needMe` (l. 832)
+- `dl` (l. 850)
+- `base` (l. 851)
+- `capDosDocx` (l. 874) — Document Word du dossier : page de titre (projet, auteur, consignes, mode d'emploi), sommaire, chapitres en styles
+- `capDosUnzip` (l. 984) — Lit les fichiers d'une archive ZIP (méthodes « stored » et « deflate », décompression native du navigateur).
+- `capDosXmlTexte` (l. 1004) — Décode les entités XML d'un texte. @param {string} s @returns {string}
+- `capDosWText` (l. 1006) — Texte des runs d'un fragment WordprocessingML (paragraphes séparés par un saut de ligne). @param {string} xml @param {string} [tag] - 't' ou
+- `capDosLireDocx` (l. 1017) — Retours d'un document Word commenté : commentaires (rattachés au dernier signet « arc_… » qui les précède) et
+- `capDosLireFichier` (l. 1046) — Lit un fichier de retours : page HTML enregistrée par un relecteur, .json de ses retours, ou .docx commenté.
+- `capDosLirePage` (l. 1055) — @param {string} texte - Code HTML @returns {object|null} données de la page de relecture (sans l'exécuter)
+- `capDosImporter` (l. 1063) — Choisit et importe un ou plusieurs fichiers de retours (page HTML, .json, .docx).
+- `capDosFusion` (l. 1077) — Rattache des retours lus à leur dossier (même identifiant ; sinon dossier recréé depuis la page, ou dossier ouvert
+- `capDosVersRevue` (l. 1104) — Verse les retours non encore traités dans 💬 Revue : un commentaire par retour, cible = élément du bloc
 
 ## 62-liens-couches.js — 249 lignes
 

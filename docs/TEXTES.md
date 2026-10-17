@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 5333 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 5336 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -5178,121 +5178,124 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 564 | Dossier de relecture | Review package |
 | 578 | Chargez d'abord un modèle. | Load a model first. |
 | 580 | Le dossier est vide : ajoutez au moins un chapitre. | The package is empty: add at least one chapter. |
-| 583 | Aperçu impossible : | Preview impossible: |
-| 596 | 👁 Aperçu | 👁 Preview |
-| 597 | rendu du rapport que produirait ce modèle (non créé) | rendering of the report this template would produce (not created) |
-| 598 | Rapport à lire et imprimer | Report to read and print |
-| 598 | 📄 Lecture | 📄 Reading |
-| 599 | Page telle que la voient les relecteurs, avec les 💬 | Page as reviewers see it, with the 💬 |
-| 599 | 💬 Avec commentaires | 💬 With comments |
-| 600 | 🖨 Imprimer | 🖨 Print |
-| 600 | Télécharger cette page HTML | Download this HTML page |
-| 600 | ⬇ Page HTML | ⬇ HTML page |
-| 601 | Fermer (Échap) | Close (Esc) |
-| 601 | Aperçu | Preview |
-| 623 | Le dossier est vide : ajoutez au moins un chapitre. | The package is empty: add at least one chapter. |
-| 629 | un modèle de rapport ne s'exporte pas : ▶ Générer le rapport, puis exportez le rapport | a report template is not exported: ▶ Generate the report, then export the report |
-| 630 | ✔ Document Word créé : les relecteurs le commentent (Révision › Nouveau commentaire), puis 📥 Réimporter le .docx commenté | ✔ Word document created: reviewers comment it (Review › New Comment), then 📥 Re-import the commented .docx |
-| 631 | ✔ Page de relecture créée : envoyez-la aux relecteurs, puis 📥 Réimporter la page qu'ils ont enregistrée | ✔ Review page created: send it to the reviewers, then 📥 Re-import the page they saved |
-| 632 | Export impossible : | Export failed: |
-| 673 | Échange | Exchange |
-| 673 | Source | Source |
-| 673 | Cible | Target |
-| 673 | Éléments échangés | Exchanged items |
-| 675 | Élément | Element |
-| 675 | Type | (inchangé, hors _L) |
-| 675 | Description | (inchangé, hors _L) |
-| 693 | Relecteur | Reviewer |
-| 693 | Votre nom | Your name |
-| 693 | 💾 Enregistrer la page | 💾 Save the page |
-| 693 | ⬇ Retours .json | ⬇ Feedback .json |
-| 693 | 🖨 Imprimer | 🖨 Print |
-| 694 | ● modifications non enregistrées | ● unsaved changes |
-| 694 | ✔ Page enregistrée : renvoyez-la à l'auteur | ✔ Page saved: send it back to the author |
-| 694 | Indiquez d'abord votre nom (en haut de la page). | First enter your name (at the top of the page). |
-| 695 | Commenter ce passage | Comment on this passage |
-| 695 | Commentaires généraux | General comments |
-| 695 | 💬 Commentaire général | 💬 General comment |
-| 695 | Sommaire | Contents |
-| 695 | Consignes | Instructions |
-| 696 | Figure | Figure |
-| 696 | Relu | Reviewed |
-| 696 | commentaire(s) | comment(s) |
-| 696 | de vous | by you |
-| 696 | chapitre(s) relu(s) | chapter(s) reviewed |
-| 696 | Enregistrer | Save |
-| 696 | Annuler | Cancel |
-| 697 | Votre commentaire… | Your comment… |
-| 697 | Passage commenté | Commented passage |
-| 697 | Supprimer | Delete |
-| 697 | Modifier | Edit |
-| 697 | Supprimer ce commentaire ? | Delete this comment? |
-| 698 | Projet | Project |
-| 698 | Modèle | Model |
-| 698 | Auteur | Author |
-| 698 | Envoyé le | Sent on |
-| 698 | Retour attendu le | Feedback expected by |
-| 698 | Éléments représentés | Represented elements |
-| 699 | Élément représenté | Represented element |
-| 699 | cliquez pour les afficher et les commenter un par un | click to show them and comment on each one |
-| 699 | Description | Description |
-| 699 | (pas de description) | (no description) |
-| 699 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
-| 700 | absent du modèle | missing from the model |
-| 700 | Élément | Element |
-| 700 | Type | (inchangé, hors _L) |
-| 700 | Couche | Layer |
-| 701 | Cliquer pour agrandir / réduire | Click to enlarge / reduce |
-| 701 | Produit par Arcalyse | Produced by Arcalyse |
-| 702 | — Criticité — | — Severity — |
-| 856 | Projet | Project |
-| 856 | Modèle | Model |
-| 856 | Auteur | Author |
-| 856 | Envoyé le | Sent on |
-| 856 | Retour attendu le | Feedback expected by |
-| 859 | Consignes | Instructions |
-| 860 | Relecture : insérez des commentaires Word (Révision › Nouveau commentaire) sur les passages concernés, ou modifiez le texte en mode Suivi des modifications, puis renvoyez le fichier .docx. Chaque commentaire est rattaché au chapitre, à la description ou au diagramme commenté. | Review: insert Word comments (Review › New Comment) on the relevant passages, or edit the text with Track Changes on, then send the .docx file back. Each comment is attached to the commented chapter, description or diagram. |
-| 864 | Sommaire | Contents |
-| 869 | Heading | (inchangé, hors _L) |
-| 871 | (pas de description) | (no description) |
-| 880 | (aucun élément) | (no element) |
-| 883 | (pas de description) | (no description) |
-| 886 | ⏳ Image | ⏳ Image … — … |
-| 890 | Figure | Figure |
-| 893 | .png"/ | (inchangé, hors _L) |
-| 896 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
-| 897 | Figure | Figure |
-| 897 | Caption | (inchangé, hors _L) |
-| 898 | Élément représenté | Represented element |
-| 903 | Éléments représentés | Represented elements |
-| 905 | Élément | Element |
-| 905 | Type | (inchangé, hors _L) |
-| 905 | Couche | Layer |
-| 917 | Title | (inchangé, hors _L) |
-| 918 | Heading | (inchangé, hors _L) |
-| 919 | TOC Heading | (inchangé, hors _L) |
-| 920 | Caption | (inchangé, hors _L) |
-| 921 | Arcalyse — Description | (inchangé, hors _L) |
-| 922 | Arcalyse — Consignes | (inchangé, hors _L) |
-| 923 | Arcalyse — Aide | (inchangé, hors _L) |
-| 927 | .png"/ | (inchangé, hors _L) |
-| 930 | [Content_Types].xml | (inchangé, hors _L) |
-| 939 | Arcalyse | (inchangé, hors _L) |
-| 941 | word/_rels/document.xml.rels | (inchangé, hors _L) |
-| 944 | word/media/image | (inchangé, hors _L) |
-| 959 | archive ZIP illisible | unreadable ZIP archive |
-| 969 | navigateur trop ancien pour lire un .docx | browser too old to read a .docx |
-| 991 | ce fichier n'est pas un document Word | this file is not a Word document |
-| 1021 | cette page n'est pas un dossier de relecture Arcalyse | this page is not an Arcalyse review package |
-| 1022 | fichier illisible (JSON attendu) | unreadable file (JSON expected) |
-| 1023 | ce fichier n'est pas un retour de dossier de relecture | this file is not review package feedback |
-| 1037 | .html,.htm,.json,.docx | (inchangé, hors _L) |
-| 1054 | » : dossier d'origine introuvable dans ce projet. Rattacher ses retours au dossier ouvert « | “…”: original package not found in this project. Attach its feedback to the open package “…”? |
-| 1067 | retour(s) ajouté(s) | ✔ …: … feedback item(s) added |
-| 1067 | déjà présent(s) | , … already present |
-| 1067 | commentaire(s) créé(s) dans 💬 Revue | — … comment(s) created in 💬 Review |
-| 1086 | 📑 Dossier de relecture | 📑 Review package |
-| 1091 | commentaire(s) créé(s) dans 💬 Revue | ✔ … comment(s) created in 💬 Review |
+| 583 | ✔ Aperçu actualisé dans sa fenêtre | ✔ Preview refreshed in its window |
+| 585 | Aperçu impossible : | Preview impossible: |
+| 606 | width=1150,height=900 | (inchangé, hors _L) |
+| 607 | Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez. | The browser blocked the window: allow pop-ups for this page, then try again. |
+| 622 | 👁 Aperçu | 👁 Preview |
+| 623 | rendu du rapport que produirait ce modèle (non créé) | rendering of the report this template would produce (not created) |
+| 624 | Rapport à lire et imprimer | Report to read and print |
+| 624 | 📄 Lecture | 📄 Reading |
+| 625 | Page telle que la voient les relecteurs, avec les 💬 | Page as reviewers see it, with the 💬 |
+| 625 | 💬 Avec commentaires | 💬 With comments |
+| 626 | 🖨 Imprimer | 🖨 Print |
+| 626 | Télécharger cette page HTML | Download this HTML page |
+| 626 | ⬇ Page HTML | ⬇ HTML page |
+| 628 | Fermer (Échap) | Close (Esc) |
+| 628 | Aperçu | Preview |
+| 651 | Le dossier est vide : ajoutez au moins un chapitre. | The package is empty: add at least one chapter. |
+| 657 | un modèle de rapport ne s'exporte pas : ▶ Générer le rapport, puis exportez le rapport | a report template is not exported: ▶ Generate the report, then export the report |
+| 658 | ✔ Document Word créé : les relecteurs le commentent (Révision › Nouveau commentaire), puis 📥 Réimporter le .docx commenté | ✔ Word document created: reviewers comment it (Review › New Comment), then 📥 Re-import the commented .docx |
+| 659 | ✔ Page de relecture créée : envoyez-la aux relecteurs, puis 📥 Réimporter la page qu'ils ont enregistrée | ✔ Review page created: send it to the reviewers, then 📥 Re-import the page they saved |
+| 660 | Export impossible : | Export failed: |
+| 701 | Échange | Exchange |
+| 701 | Source | Source |
+| 701 | Cible | Target |
+| 701 | Éléments échangés | Exchanged items |
+| 703 | Élément | Element |
+| 703 | Type | (inchangé, hors _L) |
+| 703 | Description | (inchangé, hors _L) |
+| 721 | Relecteur | Reviewer |
+| 721 | Votre nom | Your name |
+| 721 | 💾 Enregistrer la page | 💾 Save the page |
+| 721 | ⬇ Retours .json | ⬇ Feedback .json |
+| 721 | 🖨 Imprimer | 🖨 Print |
+| 722 | ● modifications non enregistrées | ● unsaved changes |
+| 722 | ✔ Page enregistrée : renvoyez-la à l'auteur | ✔ Page saved: send it back to the author |
+| 722 | Indiquez d'abord votre nom (en haut de la page). | First enter your name (at the top of the page). |
+| 723 | Commenter ce passage | Comment on this passage |
+| 723 | Commentaires généraux | General comments |
+| 723 | 💬 Commentaire général | 💬 General comment |
+| 723 | Sommaire | Contents |
+| 723 | Consignes | Instructions |
+| 724 | Figure | Figure |
+| 724 | Relu | Reviewed |
+| 724 | commentaire(s) | comment(s) |
+| 724 | de vous | by you |
+| 724 | chapitre(s) relu(s) | chapter(s) reviewed |
+| 724 | Enregistrer | Save |
+| 724 | Annuler | Cancel |
+| 725 | Votre commentaire… | Your comment… |
+| 725 | Passage commenté | Commented passage |
+| 725 | Supprimer | Delete |
+| 725 | Modifier | Edit |
+| 725 | Supprimer ce commentaire ? | Delete this comment? |
+| 726 | Projet | Project |
+| 726 | Modèle | Model |
+| 726 | Auteur | Author |
+| 726 | Envoyé le | Sent on |
+| 726 | Retour attendu le | Feedback expected by |
+| 726 | Éléments représentés | Represented elements |
+| 727 | Élément représenté | Represented element |
+| 727 | cliquez pour les afficher et les commenter un par un | click to show them and comment on each one |
+| 727 | Description | Description |
+| 727 | (pas de description) | (no description) |
+| 727 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
+| 728 | absent du modèle | missing from the model |
+| 728 | Élément | Element |
+| 728 | Type | (inchangé, hors _L) |
+| 728 | Couche | Layer |
+| 729 | Cliquer pour agrandir / réduire | Click to enlarge / reduce |
+| 729 | Produit par Arcalyse | Produced by Arcalyse |
+| 730 | — Criticité — | — Severity — |
+| 884 | Projet | Project |
+| 884 | Modèle | Model |
+| 884 | Auteur | Author |
+| 884 | Envoyé le | Sent on |
+| 884 | Retour attendu le | Feedback expected by |
+| 887 | Consignes | Instructions |
+| 888 | Relecture : insérez des commentaires Word (Révision › Nouveau commentaire) sur les passages concernés, ou modifiez le texte en mode Suivi des modifications, puis renvoyez le fichier .docx. Chaque commentaire est rattaché au chapitre, à la description ou au diagramme commenté. | Review: insert Word comments (Review › New Comment) on the relevant passages, or edit the text with Track Changes on, then send the .docx file back. Each comment is attached to the commented chapter, description or diagram. |
+| 892 | Sommaire | Contents |
+| 897 | Heading | (inchangé, hors _L) |
+| 899 | (pas de description) | (no description) |
+| 908 | (aucun élément) | (no element) |
+| 911 | (pas de description) | (no description) |
+| 914 | ⏳ Image | ⏳ Image … — … |
+| 918 | Figure | Figure |
+| 921 | .png"/ | (inchangé, hors _L) |
+| 924 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
+| 925 | Figure | Figure |
+| 925 | Caption | (inchangé, hors _L) |
+| 926 | Élément représenté | Represented element |
+| 931 | Éléments représentés | Represented elements |
+| 933 | Élément | Element |
+| 933 | Type | (inchangé, hors _L) |
+| 933 | Couche | Layer |
+| 945 | Title | (inchangé, hors _L) |
+| 946 | Heading | (inchangé, hors _L) |
+| 947 | TOC Heading | (inchangé, hors _L) |
+| 948 | Caption | (inchangé, hors _L) |
+| 949 | Arcalyse — Description | (inchangé, hors _L) |
+| 950 | Arcalyse — Consignes | (inchangé, hors _L) |
+| 951 | Arcalyse — Aide | (inchangé, hors _L) |
+| 955 | .png"/ | (inchangé, hors _L) |
+| 958 | [Content_Types].xml | (inchangé, hors _L) |
+| 967 | Arcalyse | (inchangé, hors _L) |
+| 969 | word/_rels/document.xml.rels | (inchangé, hors _L) |
+| 972 | word/media/image | (inchangé, hors _L) |
+| 987 | archive ZIP illisible | unreadable ZIP archive |
+| 997 | navigateur trop ancien pour lire un .docx | browser too old to read a .docx |
+| 1019 | ce fichier n'est pas un document Word | this file is not a Word document |
+| 1049 | cette page n'est pas un dossier de relecture Arcalyse | this page is not an Arcalyse review package |
+| 1050 | fichier illisible (JSON attendu) | unreadable file (JSON expected) |
+| 1051 | ce fichier n'est pas un retour de dossier de relecture | this file is not review package feedback |
+| 1065 | .html,.htm,.json,.docx | (inchangé, hors _L) |
+| 1082 | » : dossier d'origine introuvable dans ce projet. Rattacher ses retours au dossier ouvert « | “…”: original package not found in this project. Attach its feedback to the open package “…”? |
+| 1095 | retour(s) ajouté(s) | ✔ …: … feedback item(s) added |
+| 1095 | déjà présent(s) | , … already present |
+| 1095 | commentaire(s) créé(s) dans 💬 Revue | — … comment(s) created in 💬 Review |
+| 1114 | 📑 Dossier de relecture | 📑 Review package |
+| 1119 | commentaire(s) créé(s) dans 💬 Revue | ✔ … comment(s) created in 💬 Review |
 
 ## js/62-liens-couches.js
 
