@@ -216,8 +216,226 @@ function capDosGenerer(k){
   const o=capDosOutils(), projet=capRevProjectName()||capCurrentFileName||'';
   const d=capDosNouveau(g.l.replace(/^\S+\s/,'')+' — '+projet);
   d.blocs=k==='sts'?capDosPlanSts(o):k==='sts2'?capDosPlanSts2(o):capDosPlanDcs(o);
-  d.gab=k;
+  d.gab=k; d.commentaires=false;   // rapport à lire : sans 💬 dans la page HTML (option dans l'en-tête)
   d.consignes=_L('Document produit automatiquement à partir du modèle, puis complété : relisez chaque chapitre et commentez ce qui est faux, manquant ou ambigu.');
   capHomeSave(); capHomeRender();
   capWatchFlash(_L(`✔ ${g.l} créé : complétez les parties « [À rédiger — …] »`)+(o.reps.length?'':_L(' — ouvrez le .aird du projet puis régénérez pour y avoir les diagrammes')));
+}
+
+/* ── 🧩 Modèles de rapport personnalisés ─────────────────────────────────
+   Un modèle est un dossier (modele:true) édité comme les autres, avec deux sortes de blocs en plus :
+   - 🔁 boucle : un chapitre marqué « pour chaque » (type d'élément, couche, filtre, nom) ; à la génération,
+     un chapitre par élément trouvé, titré par « {nom} » (aussi {type}, {couche}), dont le contenu est évalué
+     pour cet élément (boucles imbriquées : filtre « liés à l'élément de la boucle englobante ») ;
+   - ⚙ contenu automatique : description, diagrammes, échanges, fonctions allouées, liens physiques, chaînes,
+     tableau d'éléments, liens entre couches — calculés pour l'élément de la boucle.
+   ▶ Générer le rapport crée un dossier ordinaire (modifiable, exportable) ; le modèle se réutilise (💾 .json). */
+
+/** Types d'éléments parcourus par une boucle ou listés par un tableau automatique. */
+const CAP_RAP_TYPES=[
+  {k:'fn', l:_L('Fonctions')}, {k:'comp', l:_L('Composants (hors acteurs)')}, {k:'node', l:_L('Nœuds physiques (PA)')}, {k:'actor', l:_L('Acteurs')},
+  {k:'chain', l:_L('Chaînes fonctionnelles')}, {k:'cap', l:_L('Capacités')}, {k:'mission', l:_L('Missions')}, {k:'fe', l:_L('Échanges fonctionnels')},
+  {k:'ce', l:_L('Échanges entre composants')}, {k:'pl', l:_L('Liens physiques')}, {k:'ei', l:_L('Éléments échangés')}, {k:'diag', l:_L('Diagrammes')}];
+/** Filtres d'une boucle ou d'un tableau automatique. */
+const CAP_RAP_FILTRES=[
+  {k:'', l:_L('tous')}, {k:'sys', l:_L('alloués au système')}, {k:'act', l:_L('alloués à un acteur')}, {k:'leaf', l:_L('feuilles seulement')},
+  {k:'ctx', l:_L('liés à l\'élément de la boucle englobante')}];
+/** Contenus automatiques proposés. */
+const CAP_RAP_AUTO=[
+  {k:'desc', l:_L('Description de l\'élément de la boucle')}, {k:'diags', l:_L('Diagrammes dont il est l\'élément représenté')},
+  {k:'diagtype', l:_L('Diagrammes par couche et par type')}, {k:'fein', l:_L('Échanges fonctionnels entrants')}, {k:'feout', l:_L('Échanges fonctionnels sortants')},
+  {k:'alloc', l:_L('Fonctions allouées (et déployées)')}, {k:'pl', l:_L('Liens physiques')}, {k:'chaines', l:_L('Chaînes qui impliquent la fonction')},
+  {k:'liste', l:_L('Tableau d\'éléments (type, couche, filtre)')}, {k:'xlay', l:_L('🔗 Liens entre couches')}];
+
+/**
+ * Options d'une liste déroulante.
+ * @param {{k:string,l:string}[]} l - Choix
+ * @param {string} v - Valeur choisie
+ * @returns {string} HTML
+ */
+function capRapOpts(l, v){ return l.map(x=>`<option value="${x.k}"${x.k===(v||'')?' selected':''}>${capEsc(x.l)}</option>`).join(''); }
+/** @returns {{k:string,l:string}[]} couches proposées ('' : toutes) */
+function capRapCouches(){ return [{k:'', l:_L('toutes couches')}, ...CAP_ANA_LAYERS.map(k=>({k, l:k}))]; }
+
+/**
+ * Réglages d'un chapitre « boucle » (sous son titre, dans l'éditeur du modèle).
+ * @param {object} c - Chapitre {boucle:{type, couche, filtre, nom, max}}
+ * @returns {string} HTML
+ */
+function capRapBoucleHtml(c){
+  const r=c.boucle;
+  return `<div class="dos-boucle"><b>${_L('🔁 Pour chaque')}</b><select data-bb="type">${capRapOpts(CAP_RAP_TYPES, r.type)}</select>`+
+    `<select data-bb="couche">${capRapOpts(capRapCouches(), r.couche)}</select>`+
+    (r.type==='diag'?`<input data-bb="sigles" value="${capEsc(r.sigles||'')}" placeholder="${_L('types : LAB, SDFB… (vide : tous)')}" style="width:150px">`:`<select data-bb="filtre">${capRapOpts(CAP_RAP_FILTRES, r.filtre)}</select>`)+
+    `<input data-bb="nom" value="${capEsc(r.nom||'')}" placeholder="${_L('nom contient…')}" style="width:120px">`+
+    `<label>${_L('au plus')} <input data-bb="max" type="number" min="1" max="200" value="${+r.max||30}" style="width:55px"></label>`+
+    `<span class="ana-dim">${_L('→ un chapitre par élément ; titre : {nom}, {type}, {couche}')}</span></div>`;
+}
+/**
+ * Réglages d'un bloc « contenu automatique ».
+ * @param {object} b - Bloc {k:'auto', quoi, …}
+ * @returns {string} HTML
+ */
+function capRapAutoHtml(b){
+  let h=`<span class="dos-ico">⚙</span><select data-ba="quoi">${capRapOpts(CAP_RAP_AUTO, b.quoi)}</select>`;
+  if(b.quoi==='diagtype') h+=`<select data-ba="couche">${capRapOpts(capRapCouches(), b.couche)}</select><input data-ba="sigles" value="${capEsc(b.sigles||'')}" placeholder="${_L('types : SAB, ES… (vide : tous)')}" style="width:150px">`;
+  if(b.quoi==='liste') h+=`<select data-ba="type">${capRapOpts(CAP_RAP_TYPES.filter(t=>t.k!=='diag'), b.type)}</select><select data-ba="couche">${capRapOpts(capRapCouches(), b.couche)}</select>`+
+    `<select data-ba="filtre">${capRapOpts(CAP_RAP_FILTRES, b.filtre)}</select><input data-ba="nom" value="${capEsc(b.nom||'')}" placeholder="${_L('nom contient…')}" style="width:110px">`;
+  if(b.quoi==='fein'||b.quoi==='feout') h+=`<label class="dos-opt"><input type="checkbox" data-ba="ext"${b.ext?' checked':''}> ${_L('avec l\'extérieur seulement')}</label>`;
+  if(['diagtype','liste','fein','feout','alloc','pl','chaines'].includes(b.quoi)) h+=`<input data-ba="titre" value="${capEsc(b.titre||'')}" placeholder="${_L('titre (facultatif, {nom}…)')}" style="width:150px">`;
+  return h;
+}
+/** Libellé d'un bloc « contenu automatique ». @param {object} b @returns {string} */
+function capRapAutoLib(b){ return (CAP_RAP_AUTO.find(x=>x.k===b.quoi)||{}).l||''; }
+
+/**
+ * Remplace {nom}, {type}, {couche} par les valeurs de l'élément de la boucle.
+ * @param {string} s - Texte
+ * @param {?object} ctx - Élément de la boucle {nom, type, couche}
+ * @returns {string}
+ */
+function capRapFill(s, ctx){ return String(s||'').replace(/\{(nom|type|couche)\}/g,(m,k)=>ctx?ctx[k]||'':m); }
+
+/**
+ * Fonctions allouées à un composant, à ses sous-composants et aux composants déployés sur lui.
+ * @param {string} id - Composant
+ * @param {object} F - capComputeFunctions()
+ * @returns {Set<string>} identifiants des fonctions
+ */
+function capRapFonctionsDe(id, F){
+  if(!_capAnaCache.rapDeploy){ const dep={}; capAllElements.filter(e=>e.typeName==='PartDeploymentLink').forEach(l=>{ const a=capDosBout(l.attrs.location), b=capDosBout(l.attrs.deployedElement); if(a&&b) (dep[a.id]=dep[a.id]||[]).push(b.id); }); _capAnaCache.rapDeploy=dep; }
+  const dep=_capAnaCache.rapDeploy, P=capGetParentIndex().childrenOf, ids=new Set([id]), pile=[id];
+  while(pile.length){ const x=pile.pop(); [...(P[x]||[]), ...(dep[x]||[])].forEach(k=>{ if(!ids.has(k)){ ids.add(k); pile.push(k); } }); }
+  return new Set(F.list.filter(f=>f.alloc.some(a=>ids.has(a.id))).map(f=>f.id));
+}
+
+/**
+ * Éléments parcourus par une boucle (ou listés par un tableau automatique).
+ * @param {object} r - {type, couche, filtre, nom, sigles}
+ * @param {?object} ctx - Élément de la boucle englobante
+ * @param {object} o - capDosOutils()
+ * @returns {object[]} éléments du modèle, ou représentations (diagrammes)
+ */
+function capRapSelect(r, ctx, o){
+  const L=r.couche||'', F=o.F, dansL=e=>!L||o.couche(e)===L, t=r.type||'fn';
+  if(t==='diag'){ const sg=String(r.sigles||'').split(/[\s,;]+/).filter(Boolean).map(x=>x.toUpperCase());
+    return o.reps.filter(x=>(!L||x.couche===L)&&(!sg.length||sg.includes(String(x.sigle).toUpperCase()))&&(!r.nom||String(x.nom).toLowerCase().includes(r.nom.toLowerCase()))); }
+  const de=tn=>capAllElements.filter(e=>tn.includes(e.typeName)&&dansL(e));
+  let l;
+  if(t==='fn') l=F.list.filter(f=>!L||f.layer===L).filter(f=>r.filtre==='sys'?f.alloc.some(a=>!a.actor):r.filtre==='act'?f.alloc.length&&f.alloc.every(a=>a.actor):r.filtre==='leaf'?f.leaf:true).map(f=>capGetElementById_(f.id));
+  else if(t==='comp'||t==='actor'||t==='node') l=CAP_ANA_LAYERS.filter(x=>!L||x===L).flatMap(x=>o.comps(x)).filter(e=>t==='actor'?o.acteur(e):!o.acteur(e)&&(t!=='node'||e.attrs.nature==='NODE'));
+  else if(t==='chain'){ if(!capChainsData) capChainsData=capComputeChains(); l=capChainsData.filter(c=>!L||c.layer===L).map(c=>capGetElementById_(c.id)); }
+  else l=de({cap:['Capability','OperationalCapability','CapabilityRealization'], mission:['Mission'], fe:['FunctionalExchange'], ce:['ComponentExchange'], pl:['PhysicalLink'], ei:['ExchangeItem']}[t]||[]);
+  l=l.filter(Boolean);
+  if((r.filtre==='sys'||r.filtre==='act')&&t!=='fn') l=l.filter(e=>t==='actor'?r.filtre==='act':r.filtre==='sys');
+  if(r.nom) l=l.filter(e=>String(e.attrs.name||'').toLowerCase().includes(r.nom.toLowerCase()));
+  if(r.filtre==='ctx'&&ctx&&ctx.id) l=l.filter(e=>capRapLie(e, t, ctx, o));
+  return l;
+}
+/**
+ * Vrai si un élément est lié à l'élément de la boucle englobante : fonction allouée au composant (ou impliquée dans la
+ * chaîne, ou sous-fonction), échange dont il est une extrémité, chaîne qui implique la fonction, ou élément contenu.
+ * @param {object} e - Élément candidat
+ * @param {string} t - Type de la boucle
+ * @param {object} ctx - Élément englobant {id, el}
+ * @param {object} o - capDosOutils()
+ * @returns {boolean}
+ */
+function capRapLie(e, t, ctx, o){
+  const c=ctx.el, F=o.F;
+  if(t==='fn'&&c){
+    if(/Component$|Actor$/.test(c.typeName)) return capRapFonctionsDe(c.id, F).has(e.id);
+    if(/FunctionalChain|OperationalProcess/.test(c.typeName)) return capRevChainFns(c.id).some(x=>x.id===e.id);
+    if(F.byId[c.id]) return F.byId[e.id]&&F.byId[e.id].parentId===c.id;
+  }
+  if(['fe','ce','pl'].includes(t)){ const a=capDosBout(e.attrs.source), b=capDosBout(e.attrs.target); return !!((a&&a.id===c.id)||(b&&b.id===c.id)); }
+  if(t==='chain'&&F.byId[c.id]) return capRevChainFns(e.id).some(x=>x.id===c.id);
+  const P=capGetParentIndex().parentOf; for(let x=P[e.id], n=0; x&&n<40; x=P[x], n++) if(x===c.id) return true;
+  return false;
+}
+
+/**
+ * Évalue les blocs d'un modèle pour un élément de boucle : boucles déroulées, contenus automatiques calculés,
+ * textes et titres complétés ({nom}…), blocs ordinaires recopiés.
+ * @param {object[]} blocs - Blocs du modèle
+ * @param {?object} ctx - Élément de la boucle {id, el, nom, type, couche} (null au premier niveau)
+ * @param {object} o - capDosOutils()
+ * @returns {object[]} blocs du dossier généré
+ */
+function capRapEval(blocs, ctx, o){
+  const out=[], id=()=>capHomeUid(), {C, E, Lst, R, X}=o;
+  const diagB=r=>({id:id(), k:'diag', ref:capHomeRefDiag(r), desc:true, elems:false});
+  (blocs||[]).forEach(b=>{
+    if(b.k==='chap'&&b.boucle){
+      const r=b.boucle, max=Math.max(1,Math.min(200,+r.max||30));
+      capRapSelect(r, ctx, o).slice(0,max).forEach(x=>{
+        if(r.type==='diag'){ const c2={id:x.uid, el:null, nom:x.nom, type:x.type||_L('Diagramme'), couche:x.couche||''};
+          out.push(C(capRapFill(b.titre||'{nom}', c2), [diagB(x), ...capRapEval(b.blocs, c2, o)])); return; }
+        const c2={id:x.id, el:x, nom:x.attrs.name||'', type:(CAP_HUMAN_NAMES[x.typeName]||{}).h||x.typeName, couche:o.couche(x)};
+        const ch=C(capRapFill(b.titre||'{nom}', c2), capRapEval(b.blocs, c2, o), b.desc!==false?x:null); out.push(ch); });
+      if(!capRapSelect(r, ctx, o).length) out.push(R(_L(`aucun élément pour « ${capRapFill(b.titre||'{nom}', null)} »`)));
+      return;
+    }
+    if(b.k==='chap'){ out.push(Object.assign({}, b, {id:id(), titre:capRapFill(b.titre, ctx), blocs:capRapEval(b.blocs, ctx, o)})); return; }
+    if(b.k==='txt'){ out.push({id:id(), k:'txt', txt:capRapFill(b.txt, ctx)}); return; }
+    if(b.k!=='auto'){ out.push(Object.assign(JSON.parse(JSON.stringify(b)), {id:id()})); return; }
+    const c=ctx&&ctx.el, f=c&&o.F.byId[c.id], tit=d=>capRapFill(b.titre||d, ctx);
+    switch(b.quoi){
+      case 'desc': if(c) out.push(E(c)); break;
+      case 'diags': if(ctx) capDosDiagsDe(ctx.id).slice(0,6).forEach(r=>out.push(diagB(r))); break;
+      case 'diagtype': { const sg=String(b.sigles||'').split(/[\s,;]+/).filter(Boolean).map(x=>x.toUpperCase());
+        o.reps.filter(r=>(!b.couche||r.couche===b.couche)&&(!sg.length||sg.includes(String(r.sigle).toUpperCase()))).slice(0,20).forEach(r=>out.push(diagB(r))); break; }
+      case 'fein': case 'feout': if(f){ const sens=b.quoi==='fein'?'in':'out';
+        const l=b.ext?capDosEchExt(o.F, f, sens):(sens==='in'?f.fesIn:f.fesOut).map(x=>capGetElementById_(x.id)).filter(Boolean);
+        out.push(Lst(tit(sens==='in'?_L('Échanges entrants de « {nom} »'):_L('Échanges sortants de « {nom} »')), l, 'ech')); } break;
+      case 'alloc': if(c) out.push(Lst(tit(_L('Fonctions allouées à « {nom} »')), [...capRapFonctionsDe(c.id, o.F)].map(capGetElementById_).filter(Boolean))); break;
+      case 'pl': if(c) out.push(Lst(tit(_L('Liens physiques de « {nom} »')), capAllElements.filter(e=>e.typeName==='PhysicalLink'&&[e.attrs.source,e.attrs.target].some(v=>{ const x=capDosBout(v); return x&&x.id===c.id; })), 'ech')); break;
+      case 'chaines': if(f) out.push(Lst(tit(_L('Chaînes qui impliquent « {nom} »')), f.chains.map(x=>capGetElementById_(x.id)).filter(Boolean))); break;
+      case 'liste': { const l=capRapSelect({type:b.type||'fn', couche:b.couche, filtre:b.filtre, nom:b.nom}, ctx, o);
+        out.push(Lst(tit((CAP_RAP_TYPES.find(t=>t.k===(b.type||'fn'))||{}).l+(b.couche?' '+b.couche:'')), l, ['fe','ce','pl'].includes(b.type)?'ech':'desc')); break; }
+      case 'xlay': if(c) out.push(X({seed:c.id})); break;
+    }
+  });
+  return out;
+}
+
+/**
+ * ▶ Génère un rapport à partir d'un modèle personnalisé : nouveau dossier ordinaire, ouvert dans l'éditeur.
+ * @param {object} m - Modèle (dossier modele:true)
+ */
+function capRapGenerer(m){
+  if(!capLoaded){ alert(_L('Chargez d\'abord un modèle.')); return; }
+  const o=capDosOutils(), d=capDosNouveau((m.titre||_L('Rapport'))+' — '+(capRevProjectName()||capCurrentFileName||''));
+  Object.assign(d, {blocs:capRapEval(m.blocs, null, o), consignes:m.consignes||'', gab:'perso', depuis:m.id, commentaires:m.commentaires!==false});
+  capHomeSave(); capHomeRender();
+  capWatchFlash(_L(`✔ Rapport généré à partir du modèle « ${m.titre} »`)+(o.reps.length?'':_L(' — ouvrez le .aird du projet puis régénérez pour y avoir les diagrammes')));
+}
+/** ✚ Nouveau modèle de rapport, prérempli d'un exemple de boucles (à adapter). @returns {object} modèle */
+function capRapNouveau(){
+  const id=()=>capHomeUid(), T=txt=>({id:id(), k:'txt', txt}), A=(quoi,p)=>Object.assign({id:id(), k:'auto', quoi}, p||{});
+  const B=(titre, boucle, blocs)=>({id:id(), k:'chap', titre, ref:null, desc:true, boucle, blocs});
+  const m=capDosNouveau(_L('Mon modèle de rapport'));
+  Object.assign(m, {modele:true, commentaires:false, consignes:'', blocs:[
+    {id:id(), k:'chap', titre:_L('Objet'), ref:null, desc:false, blocs:[T(_L('[À rédiger — objet du document]'))]},
+    {id:id(), k:'chap', titre:_L('Architecture du système'), ref:null, desc:false, blocs:[A('diagtype',{couche:'SA', sigles:'SAB'})]},
+    {id:id(), k:'chap', titre:_L('Fonctions du système'), ref:null, desc:false, blocs:[
+      B('{nom}', {type:'fn', couche:'SA', filtre:'sys', nom:'', max:30}, [A('fein',{ext:true}), A('feout',{ext:true}), A('diags')])]},
+    {id:id(), k:'chap', titre:_L('Constituants physiques'), ref:null, desc:false, blocs:[
+      B('{nom}', {type:'node', couche:'PA', filtre:'', nom:'', max:20}, [A('alloc'), A('pl'), T(_L('[À rédiger — exigences dérivées de {nom}]'))])]}]});
+  capHomeSave(); capHomeRender(); return m;
+}
+/** Enregistre un modèle de rapport en .json (réutilisable dans un autre projet). @param {object} m */
+function capRapJson(m){
+  capDownloadBlob(new Blob([JSON.stringify({type:'arcalyse-modele-rapport', version:1, modele:Object.assign({}, m, {retours:[], relus:{}})}, null, 1)],{type:'application/json'}),
+    (m.titre||'modele').replace(/[^\p{L}\p{N}\-]+/gu,'_')+'.json');
+}
+/** Importe un ou plusieurs modèles de rapport (.json). @param {Window} [W] - Fenêtre d'où part la demande */
+function capRapImporter(W){
+  W=W||window; const inp=W.document.createElement('input'); inp.type='file'; inp.multiple=true; if(!capIsMobile()) inp.accept='.json';
+  inp.onchange=async()=>{ let n=0;
+    for(const f of inp.files){ try{ const o=JSON.parse(await f.text()); if(!o||o.type!=='arcalyse-modele-rapport'||!o.modele) throw new Error(_L('ce fichier n\'est pas un modèle de rapport Arcalyse'));
+      const m=capDosNorm([Object.assign({}, o.modele, {id:capHomeUid(), modele:true})])[0]; _capHome.dossiers.push(m); _capDosUi.cur=m.id; n++; }
+      catch(e){ W.alert(f.name+' : '+(e&&e.message||e)); } }
+    if(n){ capHomeSave(); capHomeRender(); capWatchFlash(_L(`✔ ${n} modèle(s) de rapport importé(s)`)); } };
+  inp.click();
 }

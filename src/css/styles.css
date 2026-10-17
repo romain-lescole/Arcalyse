@@ -1805,4 +1805,9 @@ html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,2
 /* 🏠 Accueil : largeur réglable de la liste de gauche et de la palette 📎 */
 .hm-split{flex:none;align-self:stretch;width:7px;margin:0 -4px;cursor:col-resize;position:relative;z-index:5;}
 .hm-split:hover,.hm-split.on{background:color-mix(in srgb,var(--c-accent) 45%,transparent);}
+/* 🧩 Modèles de rapport : boucles et contenus automatiques */
+.dos-boucle{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 8px 6px 22px;padding:5px 8px;border:1px dashed var(--c-accent);border-radius:6px;font-size:12px;background:color-mix(in srgb,var(--c-accent) 8%,transparent);}
+.dos-boucle select,.dos-boucle input,.dos-blk select,.dos-blk input[data-ba]{background:var(--c-bg3);color:var(--c-text);border:1px solid var(--c-border);border-radius:5px;font-size:12px;padding:2px 4px;}
+.dos-mb{border-style:dashed!important;}
+.dos-com{margin-left:4px;}
 
