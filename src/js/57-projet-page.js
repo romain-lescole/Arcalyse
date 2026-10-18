@@ -113,7 +113,7 @@ function capProjetParties(info) {
   if (dash) P.push({ k: 'dash', l: _L('📐 Tableaux de bord'), d: n((dash.list || []).length, _L('page(s)')) });
   const ui = capProjetBloc(info, 'cap-ui-views');
   if (ui && (ui.table || ui.csv || ui.rm || ui.tv)) P.push({ k: 'vues', l: _L('▤ Tableau, 🗺 vues de la Relation Map, ⬇ exports CSV'), d: _L('onglets, colonnes, filtres, vues enregistrées') });
-  if (info.blocs['cap-toolbar']) P.push({ k: 'toolbar', l: _L('☰ Barre des vues'), d: _L('menus affichés, vues épinglées') });
+  if (info.blocs['cap-toolbar']) P.push({ k: 'toolbar', l: _L('☰ Barre des vues et ⚙ préférences'), d: _L('affichage des menus, vues épinglées, enregistrement automatique') });
   if ((ui && ui.theme) || info.blocs['cap-theme-custom']) P.push({ k: 'theme', l: _L('🎨 Thème'), d: _L('thème choisi et thème personnalisé') });
   if (info.blocs['cap-name-rules']) P.push({ k: 'names', l: _L('🔤 Règles de nommage'), d: _L('verbes acceptés, mots refusés') });
   return P;

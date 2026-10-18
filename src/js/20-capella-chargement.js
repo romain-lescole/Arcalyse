@@ -106,6 +106,7 @@ function capBuildPageHtml(){
       applyMode('capella');
       if (typeof capUpdateWelcome === 'function') capUpdateWelcome();
       if (typeof capRevOnModelLoad === 'function') capRevOnModelLoad();
+      if (typeof capAutoBanner === 'function') capAutoBanner();
     } catch (err) {
       console.error('Erreur au rechargement du fichier Capella embarqué :', err);
     }
@@ -133,6 +134,15 @@ function capSaveFullPage(){
   URL.revokeObjectURL(a.href);
   if(typeof capRevMarkSaved==='function') capRevMarkSaved();
 }
+/** Écrit la page dans le fichier d'enregistrement direct, après avoir copié la version précédente
+ * dans le fichier de secours s'il est demandé (⚙ Préférences › Enregistrement, 64-preferences.js).
+ * @param {string} html - Page complète
+ */
+async function capSaveWrite(html){
+  if(typeof capAutoBackup==='function') await capAutoBackup();
+  const w=await _capSaveHandle.createWritable(); await w.write(html); await w.close();
+  if(typeof capAutoWritten==='function') capAutoWritten(html);
+}
 let _capSaveHandle=null;   // fichier choisi pour l'enregistrement direct (valable pour la session)
 /** Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
  * puis l'écrase à chaque enregistrement suivant, sans passer par les téléchargements.
@@ -145,7 +155,7 @@ async function capSavePageDirect(saveAs){
   try{
     if(saveAs||!_capSaveHandle) _capSaveHandle=await window.showSaveFilePicker({suggestedName:capPageFileName(),
       types:[{description:_L('Page HTML'),accept:{'text/html':['.html','.htm']}}]});
-    const w=await _capSaveHandle.createWritable(); await w.write(capBuildPageHtml()); await w.close();
+    await capSaveWrite(capBuildPageHtml());
     if(btn){ btn.title=_L(`Enregistrer dans « ${_capSaveHandle.name} » (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous`);
       const t=btn.textContent; btn.textContent=_L('✔ Enregistré'); setTimeout(()=>{ btn.textContent=t; },1500); }
     if(typeof capRevMarkSaved==='function') capRevMarkSaved();
@@ -260,6 +270,7 @@ function capApplyXmlDoc(doc, name){
   applyMode('capella');
   if(typeof capTourResumeAfterLoad==='function') capTourResumeAfterLoad();   // 🚀 Bien démarrer : 2e temps
   if(typeof capRevOnModelLoad==='function') capRevOnModelLoad();   // 💬 Revue : commentaires à vérifier sur ce modèle
+  if(typeof capAutoBanner==='function') capAutoBanner();   // ⚙ enregistrement automatique : fichier à choisir
 }
 
 /**

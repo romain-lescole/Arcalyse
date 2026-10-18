@@ -7,7 +7,7 @@
  * Les réglages de l'ancienne 📊 Table View (partie « tv ») sont convertis en onglets du tableau (capTableImportTv).
  */
 var CAP_CFG_PARTS=[
-  ['toolbar',_L('☰ Barre des vues'),_L('menus affichés, vues épinglées')],
+  ['toolbar',_L('☰ Barre des vues et ⚙ préférences'),_L('affichage des menus (Expert, Simplifié, Personnalisé), menus affichés, vues épinglées, enregistrement automatique')],
   ['dash',   _L('📐 Tableaux de bord'),_L('pages, indicateurs, disposition')],
   ['table',  _L('▤ Tableau'),_L('onglets de vues, colonnes affichées, colonnes par chemin, tri, filtres, largeurs')],
   ['rm',     _L('🗺 Relation Map'),_L('onglets de vues : contexte, profondeur, disposition, filtres, affichage')],
@@ -42,7 +42,7 @@ function capCfgGet(k){
  */
 function capCfgSet(k, v){
   if(v==null) return;
-  if(k==='toolbar'){ if(v.groups&&Array.isArray(v.pins)){ _capNav=capNavMigrate(v); capNavSave(); capNavRender(); } }
+  if(k==='toolbar'){ if(v.groups&&Array.isArray(v.pins)){ _capNav=capNavMigrate(v); capNavSave(); capNavRender(); if(typeof capAutoSchedule==='function') capAutoSchedule(); } }
   else if(k==='dash'){ capDashStore=v; capDashSave(); const dv=document.getElementById('cap-view-dashboard'); if(dv&&dv.style.display!=='none'&&capLoaded) capRenderDashboard(dv); }
   else if(k==='table'){
     capTableCfgSet(v);

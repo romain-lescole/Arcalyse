@@ -171,7 +171,7 @@
 - `openHelpModal` (l. 160) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
 - `positionOverlay` (l. 256) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
 
-## 20-capella-chargement.js — 925 lignes
+## 20-capella-chargement.js — 936 lignes
 
 - `CAP_LAYERS` (l. 4)
 - `CAP_NS_LAYER` (l. 12)
@@ -181,35 +181,36 @@
 - `CAP_PKG_TYPES` (l. 16)
 - `CAP_TYPE_ICON` (l. 17)
 - `capBuildPageHtml` (l. 36) — Construit le HTML de la page actuelle (tout le HTML/CSS/JS de l'application), fichier
-- `capPageFileName` (l. 125) — Nom de fichier proposé pour la page sauvegardée (celui de la page de projet ouverte, s'il y en a une).
-- `capSaveFullPage` (l. 127) — Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur).
-- `capSavePageDirect` (l. 142) — Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
-- `capEsc` (l. 175) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
-- `capLoadFile` (l. 193) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
-- `capApplyXmlDoc` (l. 242) — Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
-- `capReplaceConfirm` (l. 274) — Demande confirmation avant de remplacer le modèle affiché par un autre fichier : le travail non enregistré
-- `capReplacePreOk` (l. 303) — @returns {boolean} vrai si le remplacement du modèle vient d'être confirmé avant le sélecteur (la confirmation est consommée)
-- `capShowWelcome` (l. 309) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
-- `capWelcomeStatus` (l. 321) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
-- `capUpdateWelcome` (l. 327) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
-- `XSI_NS` (l. 388)
-- `capXType` (l. 390) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
-- `capTName` (l. 392) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
-- `capXId` (l. 394) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
-- `capXName` (l. 396) — Lit l'attribut 'name' d'un élément XML Capella.
-- `capResolveLayer` (l. 401) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
-- `capGetAttrs` (l. 407) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
-- `capBuildTree` (l. 418) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
-- `capRunBulk` (l. 444) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
-- `capBuildTypeRegistry` (l. 454) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
-- `capApplyPanelOnLoad` (l. 474) — Appelée après le chargement Capella : configure le panneau gauche RM.
-- `capInjectToArbo` (l. 549) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
-- `capInjectCapellaRelsToCriteria` (l. 653) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
-- `capInjectLinksToModel` (l. 694) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
-- `capFilterArboToLinked` (l. 738) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
-- `capInjectChainsToModal` (l. 777) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
-- `capRenderCurrentView` (l. 838) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
-- `capUpdateStatChips` (l. 916) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
+- `capPageFileName` (l. 126) — Nom de fichier proposé pour la page sauvegardée (celui de la page de projet ouverte, s'il y en a une).
+- `capSaveFullPage` (l. 128) — Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur).
+- `capSaveWrite` (l. 141) — Écrit la page dans le fichier d'enregistrement direct, après avoir copié la version précédente
+- `capSavePageDirect` (l. 152) — Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
+- `capEsc` (l. 185) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
+- `capLoadFile` (l. 203) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
+- `capApplyXmlDoc` (l. 252) — Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
+- `capReplaceConfirm` (l. 285) — Demande confirmation avant de remplacer le modèle affiché par un autre fichier : le travail non enregistré
+- `capReplacePreOk` (l. 314) — @returns {boolean} vrai si le remplacement du modèle vient d'être confirmé avant le sélecteur (la confirmation est consommée)
+- `capShowWelcome` (l. 320) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
+- `capWelcomeStatus` (l. 332) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
+- `capUpdateWelcome` (l. 338) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
+- `XSI_NS` (l. 399)
+- `capXType` (l. 401) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
+- `capTName` (l. 403) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
+- `capXId` (l. 405) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
+- `capXName` (l. 407) — Lit l'attribut 'name' d'un élément XML Capella.
+- `capResolveLayer` (l. 412) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
+- `capGetAttrs` (l. 418) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
+- `capBuildTree` (l. 429) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
+- `capRunBulk` (l. 455) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
+- `capBuildTypeRegistry` (l. 465) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
+- `capApplyPanelOnLoad` (l. 485) — Appelée après le chargement Capella : configure le panneau gauche RM.
+- `capInjectToArbo` (l. 560) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
+- `capInjectCapellaRelsToCriteria` (l. 664) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
+- `capInjectLinksToModel` (l. 705) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
+- `capFilterArboToLinked` (l. 749) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
+- `capInjectChainsToModal` (l. 788) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
+- `capRenderCurrentView` (l. 849) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
+- `capUpdateStatChips` (l. 927) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
 ## 21-capella-vues-base.js — 1526 lignes
 
@@ -543,23 +544,28 @@
 - `capWatchShowDelta` (l. 440) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 520) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 316 lignes
+## 41-barre-vues.js — 372 lignes
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
 - `CAP_NAV_GROUPS` (l. 40) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
 - `CAP_NAV_DEFAULT` (l. 49) — Réglage par défaut : tous les menus affichés, 🏠 Accueil (tout à gauche), 🔲 Diagrammes Capella (en tête, à côté de 🗺 Relation Map), ▤ Tabl
-- `capNavMigrate` (l. 59) — Met à jour un réglage de barre enregistré avant l'arrivée du bouton ▤ Tableau (ancienne 📊 Table View
-- `capNavSave` (l. 70) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
-- `capNavCurKey` (l. 80) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
-- `capNavOpen` (l. 89) — Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
-- `capNavGroupOpen` (l. 100) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
-- `capNavFluxTabs` (l. 110) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
-- `capNavRender` (l. 120) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
-- `capNavSync` (l. 149) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
-- `capNavClose` (l. 164) — Ferme le menu déroulant de la barre des vues.
-- `capNavRow` (l. 173) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
-- `capNavMenu` (l. 183) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
-- `capNavMenuFill` (l. 230) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+- `CAP_NAV_SIMPLE` (l. 52) — ⚙ Mode Simplifié : vues en boutons directs, vues gardées dans leur menu (les autres sont masquées),
+- `CAP_NAV_CTLS` (l. 54) — Commandes de la barre que le mode ⚙ Personnalisé peut masquer : [id, libellé].
+- `capNavMigrate` (l. 64) — Met à jour un réglage de barre enregistré avant l'arrivée du bouton ▤ Tableau (ancienne 📊 Table View
+- `capNavSimplePerso` (l. 77) — Réglage du mode Simplifié sous la forme d'un réglage personnalisé {pins, hide, ctl}.
+- `capNavEff` (l. 85) — Réglage effectivement appliqué à la barre selon le mode ⚙ (Expert, Simplifié, Personnalisé).
+- `capNavTogglePin` (l. 96) — Épingle ou retire une vue de la barre. Hors mode Expert, la modification passe au mode ⚙ Personnalisé
+- `capNavSave` (l. 108) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capNavCurKey` (l. 118) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
+- `capNavOpen` (l. 127) — Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
+- `capNavGroupOpen` (l. 138) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
+- `capNavFluxTabs` (l. 148) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
+- `capNavRender` (l. 158) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
+- `capNavSync` (l. 195) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
+- `capNavClose` (l. 214) — Ferme le menu déroulant de la barre des vues.
+- `capNavRow` (l. 223) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
+- `capNavMenu` (l. 233) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
+- `capNavMenuFill` (l. 282) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
 
 ## 42-tableaux-analyses.js — 154 lignes
 
@@ -1205,3 +1211,23 @@
 - `capRapNouveau` (l. 414) — ✚ Nouveau modèle de rapport, prérempli d'un exemple de boucles (à adapter). @returns {object} modèle
 - `capRapJson` (l. 428) — Enregistre un modèle de rapport en .json (réutilisable dans un autre projet). @param {object} m
 - `capRapImporter` (l. 433) — Importe un ou plusieurs modèles de rapport (.json). @param {Window} [W] - Fenêtre d'où part la demande
+
+## 64-preferences.js — 304 lignes
+
+- `CAP_PREF_MODES` (l. 9) — Libellés et descriptions des modes d'affichage des menus.
+- `capAutoCfg` (l. 20) — Réglage de l'enregistrement automatique (créé à la première lecture, désactivé par défaut).
+- `capAutoSupported` (l. 26) — Vrai si le navigateur permet d'écrire directement dans un fichier (Edge, Chrome). @returns {boolean}
+- `capPrefSetMode` (l. 31) — Change le mode d'affichage des menus (le mode Personnalisé part du mode Simplifié la première fois).
+- `capPrefMenuHtml` (l. 41) — Contenu du menu ⚙ de la barre : mode des menus, personnalisation, thème, enregistrement automatique, préférences.
+- `capPrefDialog` (l. 56) — Ouvre la fenêtre ⚙ Préférences.
+- `capPrefDialogFill` (l. 68) — Remplit la fenêtre ⚙ Préférences (onglet courant ov._tab) et branche ses commandes.
+- `capPrefCustomFrom` (l. 136) — Réglage personnalisé de départ, recopié d'un mode existant.
+- `capPrefCustomDialog` (l. 146) — Fenêtre 🛠 Personnaliser l'affichage : pour chaque vue, bouton direct / dans son menu / masquée,
+- `capAutoHash` (l. 199) — Empreinte rapide d'un texte (FNV-1a 32 bits) pour savoir si la page a changé.
+- `capAutoPickMain` (l. 208) — Choisit le fichier de la page (« Enregistrer sous ») ; il sert ensuite à 💾 et à l'enregistrement automatique.
+- `capAutoPickBackup` (l. 218) — Choisit le fichier de secours (version précédente de la page).
+- `capAutoBackup` (l. 231) — Copie le contenu actuel du fichier de la page dans le fichier de secours (appelé avant chaque écriture, voir capSaveWrite).
+- `capAutoWritten` (l. 244) — Note un enregistrement réussi (manuel ou automatique) : empreinte de la page écrite, heure.
+- `capAutoTick` (l. 250) — Enregistrement automatique : écrit la page si elle a changé depuis le dernier enregistrement.
+- `capAutoSchedule` (l. 270) — (Re)lance la minuterie de l'enregistrement automatique selon le réglage.
+- `capAutoBanner` (l. 279) — Bandeau sous la barre quand l'enregistrement automatique est activé mais qu'un fichier manque
