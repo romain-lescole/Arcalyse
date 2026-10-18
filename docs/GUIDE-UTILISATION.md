@@ -156,7 +156,13 @@ Quand une vue du menu 📡 Flux & interfaces ou 🔬 Analyses est ouverte, une *
 
 ### 3.4 ⚙ Préférences
 
+<img src="guide/img/01-menu-preferences.png" alt="Menu ⚙ Préférences" width="300" align="right">
+
 La roue crantée **⚙** (à droite de ❓ Aide) ouvre un menu rapide ; **⚙ Préférences…** ouvre la fenêtre complète (onglets ☰ Affichage, 💾 Enregistrement, 🎨 Thème, ⚙ Interface et vues).
+
+<br clear="right">
+
+![Fenêtre ⚙ Préférences — Affichage](guide/img/02-preferences.png)
 
 **Affichage des menus** — trois modes, à changer à tout moment :
 
@@ -166,11 +172,19 @@ La roue crantée **⚙** (à droite de ❓ Aide) ouvre un menu rapide ; **⚙ Pr
 | **Simplifié** | Boutons 🏠 Accueil, 🔲 Diagrammes, ▤ Tableau ; menus réduits à l'essentiel : 🧭 Arborescence, Cartes · 📡 ⚡ Chaînes, ƒ⇆ Functional Exchange, 🧱 System / Logical Component, 🔀 Behavior Exchange, 🔌 Physical Link · 🔬 ƒ Fonctions, 🧬 Traçabilité, 📋 Exigences. 🗺 Relation Map, 🔄 Suivi et 🎨 Thème quittent la barre (le thème reste dans ⚙). Les onglets de 📡 et 🔬 ne montrent que ces vues. |
 | **Personnalisé** | **🛠 Personnaliser l'affichage…** : pour chaque vue, *Bouton* (bouton direct), *Menu* (dans son menu) ou *Masquée* ; cases des commandes de la barre (🗺, 🔄, 💬, 🎨). « Partir de : Simplifié / Expert » recopie un mode existant. |
 
+| Barre en mode Simplifié | Barre en icônes seules |
+|---|---|
+| ![](guide/img/02-barre-simplifiee.png) | ![](guide/img/02-barre-icones.png) |
+
+![🛠 Personnaliser l'affichage](guide/img/02-personnaliser.png)
+
 Une vue **masquée** reste accessible par **☰ / Ctrl+K**, marquée « (masquée) ». Un 📌 cliqué hors du mode Expert passe au mode Personnalisé. 📁 Fichier, 💾, ❓ Aide et ⚙ restent toujours affichés.
 
 **Style de la barre** : *Icônes et textes* ou *Icônes seules* (barre compacte, nom au survol ; 🧱 marqué **SA** / **LA** ; les menus déroulants et ☰ gardent leurs textes). Le style se combine avec chaque mode.
 
 **💾 Enregistrement automatique** (désactivé par défaut, Edge / Chrome) : toutes les 2 à 30 minutes, la page est écrite dans son fichier (celui de 💾 / Ctrl+S), seulement si elle a changé. Option **Garder la version précédente** : avant chaque enregistrement (automatique ou 💾), l'ancien contenu est copié dans un fichier de secours (par exemple `mon-projet.backup.html`, qui s'ouvre comme une page normale). Le navigateur oublie les fichiers choisis quand la page est fermée : à la réouverture, un bandeau propose de les choisir à nouveau.
+
+![Onglet 💾 Enregistrement](guide/img/02-enregistrement-auto.png)
 
 Tous ces réglages sont enregistrés avec la 💾 page HTML et dans la partie « ☰ Barre des vues et ⚙ préférences » du fichier ⚙ Interface et vues.
 
@@ -274,6 +288,8 @@ Sur une check-list : déposez sur un point, sur « ✚ Point » ou sur le périm
 
 Un **dossier de relecture** rassemble, chapitre par chapitre, ce que d'autres personnes doivent relire et commenter. **📑 Nouveau dossier**, puis :
 
+![Onglet 📑 Dossiers : rapport SSS généré](guide/img/05-dossier-sss.png)
+
 | Commande | Effet |
 |---|---|
 | **✚ Chapitre** / glisser un élément | Chapitre à titre libre ; un élément glissé (capacité, chaîne, fonction…) donne un chapitre avec son nom, sa description et les diagrammes dont il est l'élément représenté. |
@@ -285,9 +301,17 @@ Un **dossier de relecture** rassemble, chapitre par chapitre, ce que d'autres pe
 | **👁 Aperçu** | Rendu du rapport tel que l'exporte la page HTML (⧉ : fenêtre séparée). |
 | **📤 Page HTML à commenter · 📝 Word (.docx)** | Exports à faire relire ; **📥 Réimporter…** rattache chaque retour à son bloc et le verse dans 💬 Revue (un retour sur un texte du modèle vise le nom ou la description de l'élément). |
 
+<img src="guide/img/05-dossier-clic-droit.png" alt="Clic droit sur un bloc" width="330" align="right">
+
+<img src="guide/img/05-rapports-plans.png" alt="Plans types" width="260" align="right">
+
 **📘 Rapports automatiques** (bouton **📘 Rapports** de la barre, ou cadre en haut de la liste) : dossier créé selon un plan type, rempli à partir du modèle, puis entièrement modifiable — 📘 Spécification technique du système (boîte noire, deux plans), 📗 Dossier de conception du système (boîte blanche), **📘 SSS** et **📗 SSDD** (ci-dessous). **🧩 Mes modèles** : modèles de rapport personnels (chapitres en boucle sur des éléments, contenus automatiques), **▶ Générer**, **💾 .json** / **📂 Importer** pour les réutiliser.
 
 **📘 SSS et 📗 SSDD (MIL-STD-498)** — *System/Subsystem Specification* (DID DI-IPSC-81431) et *System/Subsystem Design Description* (DID DI-IPSC-81432), avec la numérotation du DID. Une fenêtre demande le **périmètre** : **▶ Système** (System de la SA) ou un **sous-système** (composant SA, LA ou PA, cherché par son nom). Arcalyse en déduit l'intérieur (sous-composants, composants déployés), les fonctions allouées, les échanges avec l'extérieur et les partenaires.
+
+<br clear="right">
+
+![Choix du périmètre (système ou sous-système)](guide/img/05-perimetre.png)
 
 | SSS | Rempli à partir du modèle |
 |---|---|
@@ -1095,6 +1119,8 @@ Toutes les contraintes : rôle (garde, pré / post-condition), expression (liens
 ---
 
 ### 12.9 ⇶ Liens entre couches
+
+![⇶ Liens entre couches](guide/img/70-ana-xlay.png)
 
 Vue **graphique** des réalisations entre couches : une colonne par couche (OA → SA → LA → PA → EPBS), une flèche par lien de réalisation. Mode **élément** (partir d'un élément : fonction, chaîne, capacité, composant… et suivre ses réalisations vers le haut, le bas ou les deux) ou **catégorie** (toutes les réalisations d'une catégorie). Les chaînes sont groupées avec leurs fonctions ; l'ordre limite les croisements. Ouverture aussi par clic droit sur un élément ou par **ℹ Infos** d'une chaîne. Exports **SVG**, **PNG**, **CSV**, et bloc ⇶ d'un 📑 dossier. Bouton direct **⇶ Couches** (épinglé par défaut).
 

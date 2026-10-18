@@ -338,11 +338,11 @@ PARTS.diagrammes = async () => {
 
 /** 🔬 Analyses : chaque onglet et chaque présentation. */
 PARTS.analyses = async () => {
-  for (const k of ['trace', 'caps', 'states', 'diff', 'reqs', 'pvmt', 'data', 'cts']) {
+  for (const k of ['trace', 'xlay', 'caps', 'states', 'diff', 'reqs', 'pvmt', 'data', 'cts']) {
     await view('ana:' + k); await top(); await wait(500);
     await shot('70-ana-' + k);
     const subs = { trace: ['Chemins de traçabilité', 'Liens ('], caps: ['▦ Matrice', '🩺 Contrôles'], states: ['Fonctions × états', '🩺 Contrôles'],
-      data: ['🔌 Interfaces', 'Classes & types', '🩺 Contrôles'], cts: ['🩺 Contrôles'], reqs: [], pvmt: [], diff: [] }[k];
+      data: ['🔌 Interfaces', 'Classes & types', '🩺 Contrôles'], cts: ['🩺 Contrôles'], reqs: [], pvmt: [], diff: [], xlay: [] }[k];
     for (const t of subs) {
       const b = p.locator('#cap-view-analyses button:visible', { hasText: t }).first();
       if (!(await b.count())) { console.log('  ⚠ ' + k + ' : ' + t + ' absent'); continue; }
@@ -528,7 +528,7 @@ PARTS.interface = async () => {
   await view('home'); await top();
   await shot('01-barre-principale', { sel: '#toolbar', pad: 0 });
   const tb = ['#cap-tb-home .tbtn', '#mode-rm', '[data-open="diag"]', '#cap-v-elements', '[data-open="table"]', '#cap-v-flux',
-    '#cap-v-analyses', '[data-open="dashboard"]', '#cap-nav-cfg', '#b-file-menu', '#b-save-direct', '#b-cap-watch', '#b-review', '#b-theme-menu', '#b-help'];
+    '#cap-v-analyses', '[data-open="ana:xlay"]', '#cap-nav-cfg', '#b-file-menu', '#b-save-direct', '#b-cap-watch', '#b-review', '#b-theme-menu', '#b-help', '#b-prefs'];
   await marks(tb, 'tr');
   await shot('01-barre-principale-reperes', { sel: '#toolbar', pad: 2 });
   await unmark();
@@ -540,11 +540,42 @@ PARTS.interface = async () => {
   await dd('#b-file-menu', '01-menu-fichier');
   await dd('#b-theme-menu', '01-menu-theme');
   await dd('#b-help', '01-menu-aide');
+  await dd('#b-prefs', '01-menu-preferences');
   await tall(async () => { await p.click('#cap-nav-cfg'); await wait(300); await shot('01-menu-toutes-vues', { sel: ['#cap-nav-cfg', '#cap-nav-dd'], pad: 8 }); await esc(); });
   await p.keyboard.press('Control+K'); await p.keyboard.type('fonc'); await wait(300);
   await shot('01-ctrl-k-recherche', { sel: ['#cap-nav-dd'], pad: 8 }); await esc();
   await p.click('#b-cap-watch-main').catch(() => {}); await wait(300);
   await shot('01-menu-suivi', { sel: ['#b-cap-watch', '#cap-watch-dd'], pad: 8 }); await esc(); await p.mouse.click(800, 600);
+};
+
+/** ⚙ Préférences : fenêtre, personnalisation, barre simplifiée et en icônes seules, enregistrement automatique. */
+PARTS.preferences = async () => {
+  await view('home'); await top();
+  await p.evaluate(() => capPrefDialog('aff')); await wait(400);
+  await shot('02-preferences', { sel: await dlg('#cap-pref-ov .cw-d-body'), pad: 2 });
+  await p.evaluate(() => capPrefDialog('save')); await wait(300);
+  await shot('02-enregistrement-auto', { sel: await dlg('#cap-pref-ov .cw-d-body'), pad: 2 });
+  await p.evaluate(() => { document.getElementById('cap-pref-ov').style.display = 'none'; capPrefCustomDialog(); }); await wait(400);
+  await tall(async () => { await shot('02-personnaliser', { sel: await dlg('#cap-pref-ov .cap-pref-grid'), pad: 2 }); }, 1500);
+  await p.evaluate(() => { document.getElementById('cap-pref-ov').style.display = 'none'; capPrefSetMode('simple'); }); await wait(400);
+  await shot('02-barre-simplifiee', { sel: '#toolbar', pad: 0 });
+  await p.evaluate(() => capPrefSetIcons(true)); await wait(400);
+  await shot('02-barre-icones', { sel: '#toolbar', pad: 0 });
+  await p.evaluate(() => { capPrefSetIcons(false); capPrefSetMode('expert'); }); await wait(400);
+};
+
+/** 📑 Dossiers de relecture et 📘 Rapports : liste et plans types, rapport SSS, périmètre, clic droit. */
+PARTS.dossiers = async () => {
+  await p.evaluate(() => capDosOuvrir()); await wait(600); await top();
+  await p.evaluate(() => capDosGenerer('sss', null)); await wait(1200);
+  await shot('05-dossier-sss');
+  await shot('05-rapports-plans', { sel: '#cap-view-home .dos-rap', pad: 4 });
+  const t = p.locator('#cap-view-home .dos-k-txt .dos-blk-l').first();
+  if (await t.count()) { await t.scrollIntoViewIfNeeded(); await wait(200); await t.click({ button: 'right' }); await wait(400);
+    await shot('05-dossier-clic-droit', { sel: ['#dos-ctx'], pad: 6 }); await p.mouse.click(5, 300); await wait(200); }
+  await p.evaluate(() => capDosPerimetre('ssdd')); await wait(500);
+  await shot('05-perimetre', { sel: await dlg('.dos-per-q'), pad: 2 });
+  await p.evaluate(() => { document.getElementById('dos-per-ov').style.display = 'none'; });
 };
 
 { const a = PARTS.aida; delete PARTS.aida; PARTS.aida = a; }   // AIDA en dernier (remplace le modèle d'exemple)
