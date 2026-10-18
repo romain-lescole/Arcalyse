@@ -1,5 +1,5 @@
 /* ══ ℹ À PROPOS ══════════════════════════════════════════════════════════════════
- * Fenêtre « À propos » d'Arcalyse (menu ? Aide ▾) : identité et version, auteur, licence Apache 2.0, contact,
+ * Fenêtre « À propos » d'Arcalyse (menu ❓ Aide ▾) : identité et version, auteur, licence Apache 2.0, contact,
  * composants tiers (D3.js, licence ISC à reproduire), marques citées, informations techniques copiables.
  */
 var CAP_APP_VERSION='2.2.1';   // à mettre à jour à chaque livraison (node build.js --livraison)

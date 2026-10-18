@@ -690,7 +690,7 @@ function capFillHeight(root){
 window.addEventListener('resize',()=>capFillHeight());
 
 /** Sous-vues de 🔬 Analyses (onglets) ; « fns » ouvre la vue ƒ Fonctions, qui garde son propre conteneur. */
-var CAP_ANA_SUBS=[['fns',_L('ƒ Fonctions')],['trace',_L('🧬 Traçabilité inter-couches')],['xlay',_L('🔗 Liens entre couches')],['caps',_L('🎯 Capacités & missions')],['states',_L('🔁 Modes & états')],['diff',_L('⚖ Comparaison de versions')],['reqs',_L('📑 Exigences')],['pvmt',_L('🏷 Propriétés')],['data',_L('🗃 Données & interfaces')],['cts',_L('⛓ Contraintes')]];
+var CAP_ANA_SUBS=[['fns',_L('ƒ Fonctions')],['trace',_L('🧬 Traçabilité inter-couches')],['xlay',_L('🪜 Liens entre couches')],['caps',_L('🎯 Capacités & missions')],['states',_L('🚦 Modes & états')],['diff',_L('⚖ Comparaison de versions')],['reqs',_L('📋 Exigences')],['pvmt',_L('🏷 Propriétés')],['data',_L('🗃 Données & interfaces')],['cts',_L('⛓ Contraintes')]];
 
 /** Onglets des sous-vues de 🔬 Analyses (communs à la vue 🔬 Analyses et à la vue ƒ Fonctions).
  * @returns {string} HTML des boutons (attribut data-an)

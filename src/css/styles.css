@@ -1756,7 +1756,7 @@ html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,2
 .hm-pal.hm-pal-pli{width:auto;padding:8px 4px;align-items:center;}
 .crv-dos{cursor:pointer;color:var(--c-accent);}
 .crv-dos:hover{text-decoration:underline;}
-/* 🔗 Liens entre couches (62) */
+/* 🪜 Liens entre couches (62) */
 .xl-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 10px;}
 .xl-find{position:relative;}
 .xl-find .phl-filter-input{width:320px;}
@@ -1834,3 +1834,19 @@ html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,2
 #cap-pref-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
 #cap-auto-bar{position:fixed;left:50%;transform:translateX(-50%);top:46px;z-index:2600;display:none;align-items:center;gap:8px;background:var(--c-bg3);color:var(--c-text);
   border:1px solid var(--c-warn,#e3b341);border-radius:6px;padding:6px 10px;font-size:12px;box-shadow:0 4px 14px rgba(0,0,0,.35);}
+
+/* ── 📑 Dossiers : textes du modèle, menu contextuel, choix d'un élément (65-dossier-textes.js) ── */
+#dos-ctx{position:fixed;z-index:3000;display:none;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;min-width:240px;max-width:380px;max-height:calc(100vh - 16px);overflow:auto;}
+#dos-ctx .crv-ctx-t{max-width:360px;}
+#dos-pick{position:fixed;z-index:3000;display:none;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:6px 0 4px;width:380px;}
+#dos-pick input{display:block;width:calc(100% - 16px);margin:0 8px 6px;padding:5px 8px;box-sizing:border-box;background:var(--c-bg3);color:var(--c-text);border:1px solid var(--c-border);border-radius:4px;outline:none;}
+#dos-pick .dos-pick-l{max-height:320px;overflow:auto;}
+#dos-pick .ctx-i.hl{background:var(--c-bg3);}
+.dos-mod{border-left:3px solid var(--c-accent,var(--c-border));}
+.dos-sugg{border-style:dashed;}
+.dos-suivi{font-style:italic;}
+.dos-tsuivi.active{background:color-mix(in srgb,var(--c-accent) 22%,transparent);}
+/* ⚙ Barre « icônes seules » : libellés masqués (nom en infobulle), marque de couche sous l'icône (🧱 SA / LA) */
+html[data-tbicons] #toolbar .tb-lbl{display:none;}
+html[data-tbicons] #toolbar .tbtn{padding-left:7px;padding-right:7px;}
+.tb-ico-l{font-size:8.5px;font-weight:700;color:var(--c-dim);margin-left:1px;}

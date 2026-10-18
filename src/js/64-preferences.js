@@ -35,6 +35,14 @@ function capPrefSetMode(m){
   if(typeof capWatchFlash==='function') capWatchFlash(_L('⚙ Affichage des menus : ')+l);
 }
 
+/** Change le style de la barre : icônes et textes, ou icônes seules (nom complet en infobulle).
+ * @param {boolean} on - true : icônes seules
+ */
+function capPrefSetIcons(on){
+  _capNav.icons=!!on; capNavSave(); capNavRender();
+  if(typeof capWatchFlash==='function') capWatchFlash(on?_L('⚙ Barre : icônes seules (nom au survol)'):_L('⚙ Barre : icônes et textes'));
+}
+
 /** Contenu du menu ⚙ de la barre : mode des menus, personnalisation, thème, enregistrement automatique, préférences.
  * @returns {string} HTML
  */
@@ -43,6 +51,9 @@ function capPrefMenuHtml(){
   return _L('<div class="cap-nav-h">Affichage des menus</div>')+
     CAP_PREF_MODES.map(([k,l,t])=>`<div class="ctx-i cap-nav-it${k===m?' cur':''}" data-pmode="${k}" title="${t}"><span>${l}</span></div>`).join('')+
     _L(`<div class="ctx-i" data-act="custom" title="Choisir les vues et les commandes affichées (mode Personnalisé)">🛠 Personnaliser l'affichage…</div>
+    <div class="cap-nav-h">Style de la barre</div>
+    <div class="ctx-i cap-nav-it${_capNav.icons?'':' cur'}" data-picons="0"><span>Icônes et textes</span></div>
+    <div class="ctx-i cap-nav-it${_capNav.icons?' cur':''}" data-picons="1" title="Boutons réduits à leur icône ; le nom s'affiche au survol"><span>Icônes seules</span></div>
     <div class="cw-m-sep"></div>
     <div class="ctx-i" data-act="theme">🎨 Thème…</div>
     <div class="ctx-i" data-act="autosave" title="Enregistrer la page à intervalle régulier dans son fichier (Edge, Chrome)">💾 Enregistrement automatique <span class="cap-nav-g">${A.on?_L(`toutes les ${A.min} min`):_L('désactivé')}</span></div>
@@ -72,7 +83,10 @@ function capPrefDialogFill(ov){
   if(t==='aff'){
     body=_L('<div class="cw-d-sub">Choisissez les menus affichés dans la barre. Une vue masquée reste accessible par <b>☰</b> (Ctrl+K).</div>')+
       CAP_PREF_MODES.map(([k,l,d])=>`<label class="cap-pref-row"><input type="radio" name="cap-pref-m" data-pm="${k}"${k===m?' checked':''}> <span><b>${l}</b><br><span class="ana-dim">${d}</span></span></label>`).join('')+
-      _L(`<div style="margin:8px 0 0 24px"><button class="phl-export-btn" data-pa="custom">🛠 Personnaliser l'affichage…</button></div>`);
+      _L(`<div style="margin:8px 0 0 24px"><button class="phl-export-btn" data-pa="custom">🛠 Personnaliser l'affichage…</button></div>
+      <div class="cap-pref-sec" style="margin-top:14px">Style de la barre</div>
+      <label class="cap-pref-row"><input type="radio" name="cap-pref-i" data-pi="0"${_capNav.icons?'':' checked'}> <span><b>Icônes et textes</b></span></label>
+      <label class="cap-pref-row"><input type="radio" name="cap-pref-i" data-pi="1"${_capNav.icons?' checked':''}> <span><b>Icônes seules</b><br><span class="ana-dim">Barre plus compacte : chaque bouton garde son icône, le nom s'affiche au survol ; les menus déroulants et ☰ gardent leurs textes.</span></span></label>`);
   } else if(t==='save'){
     const st=_capAuto.last?_L(`Dernier enregistrement automatique : ${_capAuto.last.toLocaleTimeString('fr-FR')}`):_L('Aucun enregistrement automatique pour l\'instant.');
     body=_L(`<div class="cw-d-sub">La page est enregistrée dans son fichier (celui de 💾 / Ctrl+S), <b>seulement si quelque chose a changé</b>.</div>`)+
@@ -116,6 +130,7 @@ function capPrefDialogFill(ov){
   };
   ov.onchange=e=>{
     const pm=e.target.closest('[data-pm]'); if(pm){ capPrefSetMode(pm.dataset.pm); return; }
+    const pi=e.target.closest('[data-pi]'); if(pi){ capPrefSetIcons(pi.dataset.pi==='1'); return; }
     const pt=e.target.closest('[data-pt]');
     if(pt){ const sel=document.getElementById('theme-sel'); sel.value=pt.dataset.pt; sel.dispatchEvent(new Event('change')); return; }
     const pc=e.target.closest('[data-pc]'); if(!pc) return;
@@ -166,7 +181,7 @@ function capPrefCustomDialog(){
         <table class="cap-pref-grid">${h}</table>
         <div class="cap-pref-sec">Commandes de la barre</div>
         ${CAP_NAV_CTLS.map(([id,l])=>`<label class="cap-pref-row"><input type="checkbox" data-cctl="${id}"${W.ctl.includes(id)?'':' checked'}> <span>${l}</span></label>`).join('')}
-        <div class="cw-d-sub">📁 Fichier, 💾, ? Aide et ⚙ restent toujours affichés.</div>
+        <div class="cw-d-sub">📁 Fichier, 💾, ❓ Aide et ⚙ restent toujours affichés.</div>
       </div>
       <div class="cw-d-ftr"><span style="flex:1"></span><button class="cap-lf-btn" data-cc="x">Annuler</button><button class="phl-export-btn" data-cc="ok">✔ Appliquer (mode Personnalisé)</button></div></div>`);
   };

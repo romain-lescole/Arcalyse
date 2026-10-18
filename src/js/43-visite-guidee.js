@@ -1,5 +1,5 @@
 /* ══ 🎓 VISITE GUIDÉE ═══════════════════════════════════════════════════════════════
- * Didacticiel pas à pas, lancé depuis le menu ? Aide ▾ (ou l'écran d'accueil) : visite générale de l'outil, ou
+ * Didacticiel pas à pas, lancé depuis le menu ❓ Aide ▾ (ou l'écran d'accueil) : visite générale de l'outil, ou
  * 🎯 visite de la vue affichée (Relation Map, chaque vue Capella). Chaque étape met en
  * évidence une zone de l'interface (cadre clignotant, reste de l'écran assombri) et l'explique dans une bulle
  * avec ◀ Précédent / Suivant ▶ et ✕ pour quitter (clavier : ← → Entrée, Échap).
@@ -19,7 +19,7 @@ var CAP_TOUR_STEPS=[
   {s:'#cw-projet', m:'empty', t:_L('📄 Projet de travail'),
    x:_L('Rouvre une page enregistrée (💾) — même par une version précédente d\'Arcalyse, à partir de la 2.1 : modèle, diagrammes, revue, accueil, vues et réglages sont repris dans cette version.')},
   {s:'#cap-v-home', t:_L('🏠 Accueil'),
-   x:_L('Vue ouverte au chargement : informations du projet (cartes réorganisables), check-lists et plans de revue, tableaux blancs. <b>? Aide ▾ → 🎯 Visite de cette vue</b> la présente en détail.')},
+   x:_L('Vue ouverte au chargement : informations du projet (cartes réorganisables), check-lists et plans de revue, tableaux blancs. <b>❓ Aide ▾ → 🎯 Visite de cette vue</b> la présente en détail.')},
   {s:'#cap-tb-views', t:_L('🧭 Barre des vues'),
    x:_L('Toutes les vues d\'analyse du modèle sont regroupées ici, dans des menus déroulants (▾) et des boutons directs.')},
   {s:'#cap-v-diag', t:_L('🔲 Diagrammes Capella'),
@@ -54,13 +54,13 @@ var CAP_TOUR_STEPS=[
   {s:'#b-cap-watch', m:'loaded', t:_L('🔄 Suivi du fichier'),
    x:_L('Détecte les nouvelles versions du fichier .capella et montre ce qui a changé (delta, historique).')},
   {s:'#b-review', t:_L('💬 Revue'),
-   x:_L('Commentaires de revue sur le modèle et les diagrammes, vérification après mise à jour, rapport, revue ciblée à faire relire. Le panneau s\'ouvre à droite ; <b>⧉</b> l\'ouvre dans une fenêtre séparée ; <b>🎓</b> (ou <b>? Aide ▾ → 💬 Visite de la revue</b>) le présente pas à pas.')},
+   x:_L('Commentaires de revue sur le modèle et les diagrammes, vérification après mise à jour, rapport, revue ciblée à faire relire. Le panneau s\'ouvre à droite ; <b>⧉</b> l\'ouvre dans une fenêtre séparée ; <b>🎓</b> (ou <b>❓ Aide ▾ → 💬 Visite de la revue</b>) le présente pas à pas.')},
   {s:'#b-theme-menu', t:_L('🎨 Thème'),
    x:_L('Choisissez un thème clair ou sombre, ou créez votre propre thème personnalisé.')},
-  {s:'#b-help', t:_L('? Aide'),
+  {s:'#b-help', t:_L('❓ Aide'),
    x:_L('L\'aide complète et cette visite guidée restent accessibles à tout moment depuis ce menu.')},
   {t:_L('✅ C\'est parti !'),
-   x:_L('La visite est terminée. Vous pouvez la relancer depuis <b>? Aide ▾ → 🎓 Visite guidée</b>.<br>Dans chaque vue, <b>? Aide ▾ → 🎯 Visite de cette vue</b> présente ses menus et ce qu\'ils font.')}
+   x:_L('La visite est terminée. Vous pouvez la relancer depuis <b>❓ Aide ▾ → 🎓 Visite guidée</b>.<br>Dans chaque vue, <b>❓ Aide ▾ → 🎯 Visite de cette vue</b> présente ses menus et ce qu\'ils font.')}
 ];
 /** Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches). */
 var CAP_TOUR_EXPLORE=[
@@ -84,9 +84,9 @@ var CAP_TOUR_FLUX={s:'#cap-flux-tabs', t:_L('📡 Flux & interfaces'),
 var CAP_TOUR_ANA_TXT={
   trace:_L('<b>🧬 Traçabilité inter-couches</b> : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés.'),
   caps:_L('<b>🎯 Capacités & missions</b> : qui participe à quelle capacité ou mission (acteurs, fonctions, chaînes) et les capacités sans contenu.'),
-  states:_L('<b>🔁 Modes & états</b> : machines d\'états, transitions et éléments disponibles dans chaque mode ou état.'),
+  states:_L('<b>🚦 Modes & états</b> : machines d\'états, transitions et éléments disponibles dans chaque mode ou état.'),
   diff:_L('<b>⚖ Comparaison de versions</b> : chargez une autre version du fichier .capella. Le rapport classe les changements en 8 catégories (créations, suppressions, renommages, descriptions, propriétés, liens, déplacements, types), sur 4 niveaux (Synthèse → Complet), et se copie dans Word, Outlook, Teams ou Excel.'),
-  reqs:_L('<b>📑 Exigences</b> : exigences du modèle, éléments qui les satisfont et exigences non couvertes.'),
+  reqs:_L('<b>📋 Exigences</b> : exigences du modèle, éléments qui les satisfont et exigences non couvertes.'),
   pvmt:_L('<b>🏷 Propriétés</b> : propriétés et valeurs (PVMT) appliquées aux éléments.'),
   data:_L('<b>🗃 Données & interfaces</b> : classes, types de données, Exchange Items et interfaces, avec leurs utilisations.'),
   cts:_L('<b>⛓ Contraintes</b> : contraintes du modèle et éléments contraints.')
@@ -286,8 +286,8 @@ var CAP_TOUR_START=[
    x:_L('<b>📁 Dossier du projet…</b> charge ensemble le modèle .capella et ses diagrammes .aird (vue 🔲 Diagrammes Capella). Recommandé : après une mise à jour du modèle, le .aird est relu lui aussi.')},
   {s:'#cw-projet', m:'empty', t:_L('… ou reprendre un projet de travail'),
    x:_L('<b>📄 Projet de travail (.html)…</b> rouvre une page enregistrée avec 💾, même par une version précédente d\'Arcalyse (à partir de la 2.1) : vous choisissez ce qui est repris (modèle, diagrammes, revue, accueil, tableaux de bord, vues, réglages). Pensez ensuite à l\'enregistrer : elle passe dans la nouvelle version.')},
-  {s:'#b-help, #cap-nav-dd', m:'empty', pre:()=>capTourHelpMenu(), t:_L('? Aide, en haut à droite'),
-   x:_L('Le menu <b>? Aide ▾</b> reste accessible à tout moment, avec ou sans modèle : <b>📖 Aide complète</b> et <b>🎓 Visite guidée</b>.<br>Une fois le modèle ouvert, il propose aussi <b>🎯 Visite de cette vue</b> pour chaque vue.')},
+  {s:'#b-help, #cap-nav-dd', m:'empty', pre:()=>capTourHelpMenu(), t:_L('❓ Aide, en haut à droite'),
+   x:_L('Le menu <b>❓ Aide ▾</b> reste accessible à tout moment, avec ou sans modèle : <b>📖 Aide complète</b> et <b>🎓 Visite guidée</b>.<br>Une fois le modèle ouvert, il propose aussi <b>🎯 Visite de cette vue</b> pour chaque vue.')},
   {m:'empty', pre:()=>capNavClose(), t:_L('À vous !'),
    x:_L('Cliquez sur <b>Terminer ✓</b>, puis ouvrez votre fichier.<br>Dès que le modèle sera chargé, la visite reprendra pour vous montrer où trouver l\'aide et les tutoriels.')}
 ];
@@ -297,18 +297,18 @@ var CAP_TOUR_AFTER=[
    x:_L('Votre modèle est chargé. Voici où trouver l\'aide et les tutoriels, à tout moment.')},
   {s:'#cap-v-home', pre:()=>capNavClose(), t:_L('🏠 Accueil du projet'),
    x:_L('La vue affichée à l\'ouverture : fiche et informations du projet, ☑ check-lists et 📋 plans de revue, 🧾 tableaux blancs. Revenez-y à tout moment par ce bouton.')},
-  {s:'#b-help', pre:()=>capNavClose(), t:_L('? Aide'),
+  {s:'#b-help', pre:()=>capNavClose(), t:_L('❓ Aide'),
    x:_L('L\'aide et toutes les visites guidées sont regroupées dans ce menu.')},
   {s:'#cap-nav-dd', pre:()=>capTourHelpMenu(), t:_L('📚 Aide et tutoriels'),
    x:_L('<b>📖 Aide complète</b> : documentation de toutes les vues.<br><b>🎓 Visite guidée</b> : tour complet de l\'interface.<br><b>🎯 Visite de cette vue</b> : menus et commandes de la vue affichée — disponible dans chaque vue.')},
   {s:'#cap-tb-views', pre:()=>capNavClose(), t:_L('🧭 Et maintenant'),
-   x:_L('Choisissez une vue dans cette barre, puis <b>? Aide ▾ → 🎯 Visite de cette vue</b> pour la découvrir pas à pas.')}
+   x:_L('Choisissez une vue dans cette barre, puis <b>❓ Aide ▾ → 🎯 Visite de cette vue</b> pour la découvrir pas à pas.')}
 ];
 var _capTourResume=false;   // vrai : reprendre « Bien démarrer » (2e temps) au prochain chargement de modèle
 
 var _capTour=null;   // visite en cours : {i, steps} ou null
 
-/** Visite du panneau 💬 Revue (ce n'est pas une vue : lancée par 🎓 dans le panneau ou par ? Aide ▾ → 💬 Visite de la revue). */
+/** Visite du panneau 💬 Revue (ce n'est pas une vue : lancée par 🎓 dans le panneau ou par ❓ Aide ▾ → 💬 Visite de la revue). */
 var CAP_TOUR_REVUE=[
   {pre:()=>capTourRev('list'), t:_L('💬 Revue'), x:_L('Commentaires de revue sur le modèle et les diagrammes : qui commente quoi, criticité, statut, échéance, réponses. Ils sont enregistrés dans la page (💾).')},
   {s:'#b-review', t:_L('💬 Bouton Revue'), x:_L('Ouvre ou ferme le panneau. Son badge compte les commentaires non clos ; <b>⚠ n</b> signale des commentaires à vérifier après une mise à jour du modèle.')},
@@ -320,7 +320,7 @@ var CAP_TOUR_REVUE=[
   {pre:()=>capTourRev('check'), s:'#crv-body', t:_L('🔁 Vérifier'), x:_L('Après un nouveau chargement ou une 🔄 mise à jour : commentaires dont la valeur commentée a changé (avant / maintenant) ou dont l\'élément a disparu. ✔ Valider clôt le commentaire ; ↻ Garder ouvert prend la version actuelle comme référence.')},
   {pre:()=>capTourRev('report'), s:'#crv-body', t:_L('📄 Rapport'), x:_L('Synthèse statut × criticité, <b>📄 Rapport HTML</b> imprimable, <b>⬇ CSV</b>, et <b>📤 Revue ciblée</b> : les relecteurs répondent dans une page autonome, leurs réponses se réimportent ici.')},
   {pre:()=>capTourRev('cfg'), s:'#crv-body', t:_L('⚙ Réglages'), x:_L('Votre nom (auteur des commentaires), participants, champs proposés dans l\'éditeur, calque des notes sur les diagrammes, marque 💬 des éléments commentés.')},
-  {pre:()=>capTourRev('list'), t:_L('✅ À vous'), x:_L('Cette visite se relance par <b>🎓</b> en haut du panneau ou par <b>? Aide ▾ → 💬 Visite de la revue</b>. L\'aide complète a un onglet 💬 Revue.')} ];
+  {pre:()=>capTourRev('list'), t:_L('✅ À vous'), x:_L('Cette visite se relance par <b>🎓</b> en haut du panneau ou par <b>❓ Aide ▾ → 💬 Visite de la revue</b>. L\'aide complète a un onglet 💬 Revue.')} ];
 /**
  * Visite de 💬 Revue : panneau ouvert dans la page (ramené s'il est dans sa fenêtre séparée) sur l'onglet présenté.
  * @param {string} tab - 'list' | 'check' | 'report' | 'cfg'
@@ -490,7 +490,7 @@ function capTourEnd(){
   ['cap-tour-block','cap-tour-spot','cap-tour-pop'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='none'; });
 }
 
-/** Ouvre le menu ? Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente. */
+/** Ouvre le menu ❓ Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente. */
 function capTourHelpMenu(){
   const dd=document.getElementById('cap-nav-dd'), b=document.getElementById('b-help');
   if(b&&!(dd&&dd.style.display!=='none'&&dd.dataset.g==='help')) capNavMenu('help', b);

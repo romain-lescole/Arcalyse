@@ -2,7 +2,7 @@
 <div id="toolbar">
   <!-- 🏠 Accueil du projet (bouton généré par capNavRender, 41-barre-vues.js) -->
   <div id="cap-tb-home" style="display:contents"></div>
-  <div class="tbtn active" id="mode-rm"    title="Relation Map">🗺 Relation Map</div>
+  <div class="tbtn active" id="mode-rm"    title="Relation Map">🗺<span class="tb-lbl"> Relation Map</span></div>
   <div class="tbtn"        id="mode-pbs"   title="PBS" style="display:none">🌲 PBS</div>
   <!-- Vues Capella : au même niveau que Relation Map, toujours visibles (clic = bascule en mode capella) -->
   <!-- Boutons générés par capNavRender (41-barre-vues.js) : menus 🧭 Explorateur / 📡 Flux & interfaces / 🔬 Analyses, ▤ Tableau, vues épinglées, ☰ -->
@@ -12,14 +12,14 @@
   <div class="tbtn" id="b-ref" style="display:none">↺ Reset</div>
   <div class="tsep"></div>
   <!-- 📁 Fichier ▾ : ouvrir un modèle, enregistrer, enregistrer sous, télécharger la page (menu rempli par capNavMenuFill) -->
-  <div class="tbtn" id="b-file-menu" data-dd="file" title="Ouvrir un modèle Capella, enregistrer la page">📁 Fichier ▾</div>
+  <div class="tbtn" id="b-file-menu" data-dd="file" title="Ouvrir un modèle Capella, enregistrer la page">📁<span class="tb-lbl"> Fichier</span> ▾</div>
   <div class="tbtn" id="b-save-direct" title="Enregistrer la page (avec le modèle chargé) directement dans un fichier HTML, sans passer par les téléchargements (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous">💾</div>
   <!-- Commandes conservées pour le code existant, accessibles par le menu 📁 Fichier -->
   <div class="tbtn" id="b-capella-load" title="Charger un fichier Capella" style="display:none">🔷 CAPELLA</div>
   <div class="tbtn" id="b-save-page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome" style="display:none">💾 Page HTML</div>
   <!-- 🔄 Suivi du fichier .capella (mises à jour, delta, historique) — visible quand un modèle est chargé -->
   <div style="position:relative;display:none" id="b-cap-watch">
-    <div class="tbtn" id="b-cap-watch-main">🔄 Suivi<span id="b-cap-watch-badge" class="cw-badge" style="display:none"></span> ▾</div>
+    <div class="tbtn" id="b-cap-watch-main" title="Suivi du fichier .capella : mises à jour, delta, historique">🔄<span class="tb-lbl"> Suivi</span><span id="b-cap-watch-badge" class="cw-badge" style="display:none"></span> ▾</div>
     <div id="cap-watch-dd" style="display:none"></div>
   </div>
   <!-- Éditer/Sauver/Charger → dropdown -->
@@ -34,9 +34,9 @@
     </div>
   </div>
   <!-- 💬 Revue : commentaires de revue (panneau à droite, 55-revue.js) -->
-  <div class="tbtn" id="b-review" title="Revue : commentaires sur le modèle et les diagrammes, vérification après mise à jour, rapport">💬 Revue<span id="b-review-badge" class="cw-badge" style="display:none"></span></div>
+  <div class="tbtn" id="b-review" title="Revue : commentaires sur le modèle et les diagrammes, vérification après mise à jour, rapport">💬<span class="tb-lbl"> Revue</span><span id="b-review-badge" class="cw-badge" style="display:none"></span></div>
   <!-- 🎨 Thème ▾ : liste des thèmes + personnalisation (le sélecteur caché reste la référence du thème choisi) -->
-  <div class="tbtn" id="b-theme-menu" data-dd="theme" title="Changer le thème, créer ou modifier un thème personnalisé">🎨 Thème ▾</div>
+  <div class="tbtn" id="b-theme-menu" data-dd="theme" title="Changer le thème, créer ou modifier un thème personnalisé">🎨<span class="tb-lbl"> Thème</span> ▾</div>
   <select id="theme-sel" title="Changer le thème" style="display:none">
     <option value="dark">🌙 Sombre</option>
     <option value="light">☀️ Clair</option>
@@ -46,8 +46,8 @@
     <option value="contrast">⚡ Contraste</option>
   </select>
   <div class="tbtn" id="b-theme-edit" title="Créer ou modifier un thème personnalisé (toutes les couleurs)" style="display:none">🎨</div>
-  <!-- ? Aide ▾ : aide complète et 🎓 visite guidée (menu rempli par capNavMenuFill) -->
-  <div class="tbtn" id="b-help" data-dd="help" title="Aide complète, visite guidée de l'outil">? Aide ▾</div>
+  <!-- ❓ Aide ▾ : aide complète et 🎓 visite guidée (menu rempli par capNavMenuFill) -->
+  <div class="tbtn" id="b-help" data-dd="help" title="Aide complète, visite guidée de l'outil">❓<span class="tb-lbl"> Aide</span> ▾</div>
   <!-- ⚙ Préférences : affichage des menus (Expert / Simplifié / Personnalisé), enregistrement automatique, thème (64-preferences.js) -->
   <div class="tbtn" id="b-prefs" data-dd="prefs" title="Préférences : affichage des menus, enregistrement automatique, thème, interface et vues">⚙</div>
 </div>

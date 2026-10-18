@@ -197,7 +197,7 @@ function capReqChecks(){
   ];
 }
 
-/** Rend la sous-vue 📑 Exigences : liste filtrable, couverture par couche, contrôles.
+/** Rend la sous-vue 📋 Exigences : liste filtrable, couverture par couche, contrôles.
  * @param {HTMLElement} box - Conteneur
  */
 function capRenderRequirements(box){

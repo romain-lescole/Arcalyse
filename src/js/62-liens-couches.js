@@ -140,7 +140,7 @@ function capXlTitre(o){
 }
 
 /**
- * Ouvre la vue 🔗 Liens entre couches à partir d'un élément.
+ * Ouvre la vue 🪜 Liens entre couches à partir d'un élément.
  * @param {string} id - Élément de départ
  */
 function capXlOpen(id){ Object.assign(_capXl,{mode:'el', seed:id, q:''}); capAnaSub='xlay'; if(capCurrentView==='analyses') capRenderAnalyses(); else capShowView('analyses'); }
@@ -158,7 +158,7 @@ function capXlSuggestions(){
 }
 
 /**
- * Sous-vue 🔬 Analyses › 🔗 Liens entre couches : barre (mode, élément de départ, sens, catégorie, options, exports), dessin.
+ * Sous-vue 🔬 Analyses › 🪜 Liens entre couches : barre (mode, élément de départ, sens, catégorie, options, exports), dessin.
  * @param {HTMLElement} box - Conteneur
  */
 function capRenderXlay(box){

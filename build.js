@@ -79,7 +79,7 @@ function withLangSwitch(ui, to) {
   const btn = `<div class="tbtn" id="b-lang" title="${lab[1]}" onclick="capLangSwitch('${to}')">${lab[0]}</div>`;
   const link = `<a href="#" class="cw-help-link" id="cw-lang-link" onclick="capLangSwitch('${to}');return false">${lab[2]}</a>`;
   const n = ui.length;
-  ui = ui.replace(/(<div class="tbtn" id="b-help"[^>]*>[^<]*<\/div>)/, '$1\n  ' + btn).replace(/(<a [^>]*id="cw-about-link"[^>]*>[^<]*<\/a>)/, '$1\n      ' + link);
+  ui = ui.replace(/(<div class="tbtn" id="b-help"[^>]*>(?:[^<]|<span[^>]*>[^<]*<\/span>)*<\/div>)/, '$1\n  ' + btn).replace(/(<a [^>]*id="cw-about-link"[^>]*>[^<]*<\/a>)/, '$1\n      ' + link);
   if (ui.length < n + btn.length + link.length) errors.push('Version multilingue : emplacement du bouton de langue introuvable dans interface.html');
   return ui;
 }

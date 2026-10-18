@@ -544,6 +544,7 @@ function capHomeWire(box){
   box.addEventListener('input',capHomeInput);
   box.addEventListener('change',capHomeChange);
   box.addEventListener('dblclick',capHomeBoardDbl);
+  box.addEventListener('contextmenu',e=>{ if(typeof capDosContext==='function') capDosContext(e); });   // 📑 clic droit de l'éditeur des dossiers (65)
   box.addEventListener('dragstart',e=>{
     const k=e.target.closest&&e.target.closest('.hm-card-dispo');
     if(k){ e.dataTransfer.setData(CAP_HOME_CARTE, k.dataset.carte); e.dataTransfer.effectAllowed='move'; return; }

@@ -82,8 +82,8 @@ function capDosBlocDe(d, bid){
     return Object.assign(x, {champ:'el', elemId, libelle:'◆ '+(e?e.attrs.name||elemId:elemId)+_L(` (dans ${x.libelle})`)});
   }
   capDosParcours(d.blocs,(b,num)=>{ if(b.id!==id) return;
-    const lib=b.k==='chap'?(champ?_L(`Description de « ${b.titre} »`):b.titre):b.k==='txt'?_L('Texte'):b.k==='xlay'?capXlTitre(b.opts||{}):b.k==='liste'?(b.titre||_L('Tableau')):b.ref?capHomeRefNom(b.ref):'';
-    r={b, num, champ, libelle:(b.k==='diag'?'🔲 ':b.k==='el'?'◆ ':b.k==='xlay'?'🔗 ':b.k==='liste'?'▤ ':'')+lib}; });
+    const lib=b.k==='chap'?(champ?_L(`Description de « ${capDosTitre(b)} »`):capDosTitre(b)):b.k==='txt'?_L('Texte'):b.k==='xlay'?capXlTitre(b.opts||{}):b.k==='liste'?(b.titre||_L('Tableau')):b.ref?capHomeRefNom(b.ref):'';
+    r={b, num, champ, libelle:(b.k==='diag'?'🔲 ':b.k==='el'?'◆ ':b.k==='xlay'?'🪜 ':b.k==='mod'?'🔗 ':b.k==='liste'?'▤ ':'')+lib}; });
   if(!r.b) r.libelle=_L('Bloc retiré du dossier');
   return r;
 }
@@ -181,7 +181,7 @@ function capDosNavHtml(d){
   if(!l.length) return '';
   return `<div class="dos-nav"><div class="dos-nav-h"><b>${_L('🧭 Plan')}</b><span style="flex:1"></span>`+
     `<button class="cap-lf-btn" data-da="nav-pli" title="${_L('Replier tous les chapitres')}">⊟</button><button class="cap-lf-btn" data-da="nav-depli" title="${_L('Déplier tous les chapitres')}">⊞</button></div>`+
-    l.map(x=>`<div class="dos-nav-i" data-dos-nav="${x.b.id}" style="padding-left:${4+Math.min(x.niv,4)*12}px" title="${capEsc(x.b.titre||'')}"><span class="dos-num">${x.num}</span> ${capEsc(x.b.titre||_L('(sans titre)'))}${_capDosUi.plies.has(x.b.id)?' <span class="ana-dim">▸</span>':''}</div>`).join('')+`</div>`;
+    l.map(x=>`<div class="dos-nav-i" data-dos-nav="${x.b.id}" style="padding-left:${4+Math.min(x.niv,4)*12}px" title="${capEsc(capDosTitre(x.b))}"><span class="dos-num">${x.num}</span> ${capEsc(capDosTitre(x.b)||_L('(sans titre)'))}${_capDosUi.plies.has(x.b.id)?' <span class="ana-dim">▸</span>':''}</div>`).join('')+`</div>`;
 }
 /**
  * Va à un chapitre du dossier (volet de navigation) : déplie le chapitre et ses parents, puis le fait défiler en haut.
@@ -326,8 +326,10 @@ function capDosChapHtml(d, c, num, niv){
   const esc=capEsc, pli=_capDosUi.plies.has(c.id);
   let h=`<div class="dos-chap dos-n${Math.min(niv,3)}" data-b="${c.id}"><div class="dos-chap-h" data-drop="dos-chap">`+
     `<span class="dos-pli" data-da="pli" title="${pli?_L('Déplier'):_L('Replier')}">${pli?'▸':'▾'}</span><span class="dos-num">${num}</span>`+
-    `<input class="dos-chap-t" data-bf="titre" value="${esc(c.titre)}" placeholder="${_L('Titre du chapitre (ou glissez ici un élément)')}">`+
+    (c.titreRef&&c.ref?`<input class="dos-chap-t dos-suivi" value="${esc(capDosTitre(c))}" readonly title="${_L('Titre suivi : nom de l\'élément associé (clic droit ou 🔗 pour le saisir librement)')}">`
+      :`<input class="dos-chap-t" data-bf="titre" value="${esc(c.titre)}" placeholder="${_L('Titre du chapitre (ou glissez ici un élément)')}">`)+
     (c.ref?capHomeChip(c.ref,'')+`<span class="hm-chip-x" data-da="ref-x" title="${_L('Retirer l\'élément associé')}">✕</span>`+
+      `<button class="cap-lf-btn dos-tsuivi${c.titreRef?' active':''}" data-da="tx-titre" title="${c.titreRef?_L('Titre suivi (nom de l\'élément) : cliquer pour le saisir librement'):_L('Titre = nom de l\'élément, suivi quand il change dans le modèle')}">🔗</button>`+
       `<label class="dos-opt" title="${_L('Reprendre la description de l\'élément sous le titre')}"><input type="checkbox" data-bf="desc"${c.desc?' checked':''}> ${_L('Description')}</label>`:'')+
     (c.boucle?`<label class="dos-opt" title="${_L('Reprendre la description de chaque élément sous son titre')}"><input type="checkbox" data-bf="desc"${c.desc!==false?' checked':''}> ${_L('Description')}</label>`:'')+
     capDosBadge(d, c.id)+(c.ref&&c.desc?capDosBadge(d, c.id+'.d'):'')+capDosActs(true)+`</div>`+(c.boucle?capRapBoucleHtml(c):'');
@@ -348,20 +350,23 @@ function capDosChapHtml(d, c, num, niv){
  */
 function capDosBlocHtml(d, b){
   const esc=capEsc;
-  let h=`<div class="dos-blk dos-k-${b.k}" data-b="${b.id}"><div class="dos-blk-h">`;
-  if(b.k==='txt') h+=`<span class="dos-ico">¶</span><span class="dos-blk-l">${_L('Texte libre')}</span>`;
+  let h=`<div class="dos-blk dos-k-${b.k}" data-b="${b.id}"><div class="dos-blk-h"${b.k==='txt'||b.k==='mod'?' data-drop="dos-txt"':''}>`, M=null;
+  if(b.k==='txt') h+=`<span class="dos-ico">¶</span><span class="dos-blk-l">${_L('Texte libre')}</span>`+
+    `<button class="cap-lf-btn" data-da="tx-lier" title="${_L('Remplacer par le nom ou la description d\'un élément ou d\'un diagramme, suivi(e) quand le modèle change (ou glissez un élément ici ; clic droit : plus de choix)')}">${_L('🔗 Lier…')}</button>`+capDosSuggestionHtml(b);
+  else if(b.k==='mod'){ M=capDosModHtml(b); h+=M.h; }
   else if(b.k==='el') h+=`<span class="dos-ico">◆</span>${capHomeChip(b.ref,'')}<label class="dos-opt"><input type="checkbox" data-bf="desc"${b.desc?' checked':''}> ${_L('Description')}</label>`;
   else if(b.k==='liste') h+=`<span class="dos-ico">▤</span><input class="dos-liste-t" data-bf="titre" value="${esc(b.titre||'')}" placeholder="${_L('Titre du tableau')}">`+
     `<span class="ana-dim">${_L(`${b.ids.length} élément(s)`)} · ${b.cols==='ech'?_L('échanges : source, cible, éléments échangés'):_L('nom, type, description')}</span>`+
     `<button class="cap-lf-btn" data-da="liste-voir">${_capDosUi.listes.has(b.id)?_L('▴ Masquer'):_L('▾ Voir / modifier')}</button>`;
   else if(b.k==='auto') h+=capRapAutoHtml(b);
-  else if(b.k==='xlay') h+=`<span class="dos-ico">🔗</span><span class="dos-blk-l">${esc(capXlTitre(b.opts||{}))}</span><button class="cap-lf-btn" data-da="xl-open" title="${_L('Ouvrir dans 🔬 Analyses › 🔗 Liens entre couches')}">${_L('🔗 Ouvrir')}</button>`;
+  else if(b.k==='xlay') h+=`<span class="dos-ico">🪜</span><span class="dos-blk-l">${esc(capXlTitre(b.opts||{}))}</span><button class="cap-lf-btn" data-da="xl-open" title="${_L('Ouvrir dans 🔬 Analyses › 🪜 Liens entre couches')}">${_L('🪜 Ouvrir')}</button>`;
   else { const ok=capHomeRefOk(b.ref);
     h+=`<span class="dos-ico">🔲</span>${capHomeChip(b.ref,'')}<label class="dos-opt" title="${_L('Description du diagramme (documentation dans Capella)')}"><input type="checkbox" data-bf="desc"${b.desc?' checked':''}> ${_L('Description')}</label>`+
       `<label class="dos-opt" title="${_L('Tableau des éléments représentés sous le diagramme')}"><input type="checkbox" data-bf="elems"${b.elems?' checked':''}> ${_L('Éléments représentés')}</label>`+
       (ok?'':`<span class="ana-dim" title="${_L('Ouvrez le .aird du projet pour joindre ce diagramme aux exports')}">⚠ ${_L('.aird non chargé')}</span>`); }
   h+=capDosBadge(d, b.id)+capDosActs(false)+`</div>`;
   if(b.k==='txt') h+=`<textarea class="dos-txt" data-bf="txt" rows="${Math.min(12,Math.max(2,String(b.txt||'').split('\n').length+1))}" placeholder="${_L('Texte libre : contexte, question posée aux relecteurs…')}">${esc(b.txt||'')}</textarea>`;
+  else if(M) h+=M.c;
   else if(b.k==='liste'){ if(_capDosUi.listes.has(b.id)) h+=`<div class="dos-liste hm-drop" data-drop="dos-liste">${b.ids.map((id,i)=>{ const r=capHomeRefEl(id)||{k:'el', id, nom:id, type:'', couche:''};
       return capHomeChip(r,'')+`<span class="hm-chip-x" data-da="liste-x" data-i="${i}" title="${_L('Retirer du tableau')}">✕</span>`; }).join('')}<span class="hm-drop-hint">${_L('Glissez ici des éléments pour les ajouter')}</span></div>`; }
   else if(b.desc) h+=capDosApercu(b.ref);
@@ -412,6 +417,7 @@ function capDosClick(e){
   const nv=t.closest('[data-dos-nav]'); if(nv){ const d=capDosCur(); if(d) capDosAller(d, nv.dataset.dosNav); return true; }
   const a=t.closest('[data-da]'); if(!a) return false;
   const act=a.dataset.da, d=capDosOf(a), bEl=t.closest('[data-b]'), f=d&&bEl?capDosTrouve(d.blocs, bEl.dataset.b):null;
+  if(act.startsWith('tx-')){ capDosTxAct(act, a, d, f, W); return true; }   // textes du modèle, commandes du clic droit (65)
   switch(act){
     case 'new': capDosNouveau(); break;
     case 'import': capDosImporter(W); return true;
@@ -490,6 +496,7 @@ function capDosDrop(z, ref, txt){
   if(k==='dos-new') d.blocs.push(capDosChapDe(ref, txt));
   else if(!f) return;
   else if(k==='dos-sub') f.b.blocs.push(capDosChapDe(ref, txt));
+  else if(k==='dos-txt'){ if(!ref) return; capDosLier(f, ref); }   // texte libre → texte du modèle (65)
   else if(k==='dos-liste'){ if(!ref||ref.k!=='el'||f.b.ids.includes(ref.id)) return; f.b.ids.push(ref.id); }
   else if(k==='dos-chap'&&(!ref||ref.k==='el')){
     if(ref){ f.b.ref=ref; f.b.desc=true; if(!f.b.titre) f.b.titre=capHomeRefNom(ref); }
@@ -537,11 +544,12 @@ async function capDosContenu(d, st){
   const conv=(l, pre, niv)=>{ let n=0;
     return l.map(b=>{
       if(b.k==='chap'){ n++; const num=(pre?pre+'.':'')+n, r=b.ref?info(b.ref):null;
-        return {id:b.id, k:'chap', num, niv, titre:b.titre||(r&&r.nom)||'', ref:r?{nom:r.nom, type:r.type, couche:r.couche}:null, desc:b.desc&&r?r.desc:'', avecDesc:!!(b.desc&&r), enfants:conv(b.blocs, num, niv+1)}; }
+        return {id:b.id, k:'chap', num, niv, titre:capDosTitre(b)||(r&&r.nom)||'', ref:r?{nom:r.nom, type:r.type, couche:r.couche}:null, desc:b.desc&&r?r.desc:'', avecDesc:!!(b.desc&&r), enfants:conv(b.blocs, num, niv+1)}; }
       if(b.k==='txt') return {id:b.id, k:'txt', txt:b.txt||''};
+      if(b.k==='mod') return {id:b.id, k:'txt', txt:capDosModTexte(b)};   // texte du modèle, relu à l'export
       if(b.k==='liste'){ const t=capDosListeLignes(b); b.elemsExp=t.rows.map(x=>x.id);   // lignes exportées (réimport Word)
         return {id:b.id, k:'liste', titre:b.titre||'', head:t.head, rows:t.rows}; }
-      if(b.k==='xlay'){ const r=capXlSvg(b.opts||{});   // 🔗 Liens entre couches, redessinés sur le modèle chargé
+      if(b.k==='xlay'){ const r=capXlSvg(b.opts||{});   // 🪜 Liens entre couches, redessinés sur le modèle chargé
         return {id:b.id, k:'diag', fig:++fig, nom:capXlTitre(b.opts||{}), type:_L('Liens entre couches'), couche:'', desc:'', cible:'', svg:r.svg, w:r.w, h:r.h, elems:[]}; }
       if(b.k==='el'){ const r=info(b.ref); return {id:b.id, k:'el', nom:r.nom, type:r.type, couche:r.couche, desc:b.desc?r.desc:'', avecDesc:!!b.desc, absent:r.absent}; }
       const rep=reps.find(x=>x.uid===b.ref.id), svg=svgs[b.ref.id]||'', m=rep?capDiagMeta(rep.uid):null;
@@ -1107,8 +1115,8 @@ function capDosVersRevue(d, discret){
   const cs=l.map(r=>{
     const x=capDosBlocDe(d, r.bloc), b=x.b; let cible=null;
     if(x.elemId) cible=capRevTarget(x.elemId,'');
-    else if(b&&b.ref&&b.ref.k==='el') cible=capRevTarget(b.ref.id, (x.champ==='desc'||(b.k==='el'&&b.desc))?'description':'');
-    else if(b&&b.k==='diag'){ try{ const m=capHomeReps().length&&capDiagMeta(b.ref.id); if(m&&m.cible) cible=capRevTarget(m.cible.id,''); }catch(_){} }
+    else if(b&&b.ref&&b.ref.k==='el') cible=capRevTarget(b.ref.id, (x.champ==='desc'||(b.k==='el'&&b.desc)||(b.k==='mod'&&b.quoi==='desc'))?'description':b.k==='mod'&&b.quoi==='nom'?'name':'');
+    else if(b&&b.ref&&b.ref.k==='diag'){ try{ const m=capHomeReps().length&&capDiagMeta(b.ref.id); if(m&&m.cible) cible=capRevTarget(m.cible.id,''); }catch(_){} }
     const titre=`📑 ${d.titre} › ${x.num?x.num+' ':''}${x.libelle}`.slice(0,200), now=r.date||new Date().toISOString();
     const c={id:capRevUid(), num:0, title:titre, text:(r.extrait?`« ${r.extrait} »\n`:'')+(r.texte||''), crit:r.crit||'', cat:cat[r.type]||'', status:'open',
       author:r.auteur||'', created:now, updated:now, due:'', assignees:[], tags:[_L('📑 Dossier de relecture'), d.titre||''].filter(Boolean), targets:cible?[cible]:[], diag:null, replies:[], project:capRevProjectId(),

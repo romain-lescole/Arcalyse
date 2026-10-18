@@ -537,7 +537,7 @@ function capChainInfo(chain){
     `<div class="hm-row" style="margin:0 0 6px">${el?`<button class="cap-lf-btn" onclick="capOpenDetail('${esc(chain.id)}')">${_L('🔎 Détail complet de l\'élément')}</button>`:''}`+
     `<button class="cap-lf-btn" onclick="capChainsSelectedId='${esc(chain.id)}';capChainsSubView='map';capNavOpen('chains')">${_L('🗺 Vue Relation Map')}</button>`+
     `<button class="cap-lf-btn" onclick="capRevNew([{id:'${esc(chain.id)}',field:''}])" title="${_L('Commenter la chaîne (💬 Revue)')}">${_L('💬 Commenter')}</button>`+
-    `<button class="cap-lf-btn" onclick="capXlOpen('${esc(chain.id)}')" title="${_L('Chaînes des autres couches liées à celle-ci, avec leurs fonctions (🔬 Analyses › 🔗 Liens entre couches)')}">${_L('🔗 Liens entre couches')}</button></div>`;
+    `<button class="cap-lf-btn" onclick="capXlOpen('${esc(chain.id)}')" title="${_L('Chaînes des autres couches liées à celle-ci, avec leurs fonctions (🔬 Analyses › 🪜 Liens entre couches)')}">${_L('🪜 Liens entre couches')}</button></div>`;
   h+=titre(_L('Attributs'))+`<table class="cdg-det-tab">`+ligne(_L('Type'),CAP_CHAIN_LABELS[chain.type]||chain.type)+ligne(_L('Couche'),`${chain.layer} — ${lv.label}`)+
     ligne(t.isPath?_L('Composants'):_L('Fonctions'),t.funcs.length)+ligne(t.isPath?_L('Physical Links'):_L('Échanges'),t.fes.length)+
     ligne(_L('Entrées'),t.entries.length)+ligne(_L('Sorties'),t.exits.length)+ligne(_L('Porteurs'),porteurs.length)+ligne('id',chain.id)+`</table>`;
