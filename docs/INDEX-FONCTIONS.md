@@ -580,35 +580,35 @@
 - `capTfFilter` (l. 127) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
 - `capTfWatch` (l. 149) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
 
-## 43-visite-guidee.js — 518 lignes
+## 43-visite-guidee.js — 523 lignes
 
 - `CAP_TOUR_STEPS` (l. 12) — Étapes de la visite générale : s = sélecteur CSS de la zone (toutes les correspondances visibles sont encadrées
-- `CAP_TOUR_EXPLORE` (l. 66) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
-- `CAP_TOUR_FLUX` (l. 81) — Étapes communes aux vues de 📡 Flux & interfaces (onglets de navigation).
-- `CAP_TOUR_ANA_TXT` (l. 84) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
-- `capTourRmCtx` (l. 97) — Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
-- `CAP_TOUR_VIEWS` (l. 111) — Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
-- `CAP_TOUR_START` (l. 278) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
-- `CAP_TOUR_AFTER` (l. 295) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
-- `CAP_TOUR_REVUE` (l. 312) — Visite du panneau 💬 Revue (ce n'est pas une vue : lancée par 🎓 dans le panneau ou par ❓ Aide ▾ → 💬 Visite de la revue).
-- `capTourRev` (l. 328) — Visite de 💬 Revue : panneau ouvert dans la page (ramené s'il est dans sa fenêtre séparée) sur l'onglet présenté.
-- `capTourRevue` (l. 330) — Lance la visite de 💬 Revue.
-- `capTourHome` (l. 336) — Visite de 🏠 Accueil : affiche l'onglet présenté par l'étape.
-- `capTourCtxKey` (l. 341) — Clé de la vue affichée pour les visites contextuelles.
-- `capTourCtx` (l. 349) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
-- `capTourEls` (l. 357) — Éléments affichés désignés par le sélecteur d'une étape.
-- `capTourVisible` (l. 368) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
-- `capTourStart` (l. 378) — Lance une visite guidée depuis sa première étape.
-- `capTourStartView` (l. 399) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
-- `capTourGo` (l. 407) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
-- `capTourPos` (l. 427) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
-- `capTourRenderPop` (l. 434) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
-- `capTourPlace` (l. 446) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
-- `capTourKey` (l. 478) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
-- `capTourEnd` (l. 487) — Quitte la visite guidée et retire la mise en évidence.
-- `capTourHelpMenu` (l. 494) — Ouvre le menu ❓ Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
-- `capTourStartHere` (l. 501) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
-- `capTourResumeAfterLoad` (l. 508) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
+- `CAP_TOUR_EXPLORE` (l. 68) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
+- `CAP_TOUR_FLUX` (l. 83) — Étapes communes aux vues de 📡 Flux & interfaces (onglets de navigation).
+- `CAP_TOUR_ANA_TXT` (l. 86) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
+- `capTourRmCtx` (l. 99) — Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
+- `CAP_TOUR_VIEWS` (l. 113) — Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
+- `CAP_TOUR_START` (l. 283) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
+- `CAP_TOUR_AFTER` (l. 300) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
+- `CAP_TOUR_REVUE` (l. 317) — Visite du panneau 💬 Revue (ce n'est pas une vue : lancée par 🎓 dans le panneau ou par ❓ Aide ▾ → 💬 Visite de la revue).
+- `capTourRev` (l. 333) — Visite de 💬 Revue : panneau ouvert dans la page (ramené s'il est dans sa fenêtre séparée) sur l'onglet présenté.
+- `capTourRevue` (l. 335) — Lance la visite de 💬 Revue.
+- `capTourHome` (l. 341) — Visite de 🏠 Accueil : affiche l'onglet présenté par l'étape.
+- `capTourCtxKey` (l. 346) — Clé de la vue affichée pour les visites contextuelles.
+- `capTourCtx` (l. 354) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
+- `capTourEls` (l. 362) — Éléments affichés désignés par le sélecteur d'une étape.
+- `capTourVisible` (l. 373) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
+- `capTourStart` (l. 383) — Lance une visite guidée depuis sa première étape.
+- `capTourStartView` (l. 404) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
+- `capTourGo` (l. 412) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
+- `capTourPos` (l. 432) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
+- `capTourRenderPop` (l. 439) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
+- `capTourPlace` (l. 451) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
+- `capTourKey` (l. 483) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
+- `capTourEnd` (l. 492) — Quitte la visite guidée et retire la mise en évidence.
+- `capTourHelpMenu` (l. 499) — Ouvre le menu ❓ Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
+- `capTourStartHere` (l. 506) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
+- `capTourResumeAfterLoad` (l. 513) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
 
 ## 44-functional-exchange.js — 512 lignes
 

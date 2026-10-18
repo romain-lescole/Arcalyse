@@ -3,7 +3,7 @@
 > **Arcalyse** — votre modèle Capella, sous toutes ses coutures.
 > Ce guide passe en revue **tous les menus, sous-menus, vues et fenêtres** de l'application, explique ce que fait chaque commande et **comment s'en servir** (clics, glisser-déposer, raccourcis), avec des captures d'écran.
 
-Les captures ont été faites avec le modèle d'exemple public *In-Flight Entertainment System* (IFE) livré avec Capella et ses diagrammes (`.aird`), dans le thème **Clair** ; les vues 📑 Exigences et 🏷 Propriétés utilisent le modèle *AIDA*. Elles sont régénérées par `node tools/guide-captures.js` (voir [Annexe C](#annexe-c--régénérer-les-captures-du-guide)). Sur les captures annotées, les **pastilles rouges numérotées** renvoient aux tableaux qui les suivent.
+Les captures ont été faites avec le modèle d'exemple public *In-Flight Entertainment System* (IFE) livré avec Capella et ses diagrammes (`.aird`), dans le thème **Clair** ; les vues 📋 Exigences et 🏷 Propriétés utilisent le modèle *AIDA*. Elles sont régénérées par `node tools/guide-captures.js` (voir [Annexe C](#annexe-c--régénérer-les-captures-du-guide)). Sur les captures annotées, les **pastilles rouges numérotées** renvoient aux tableaux qui les suivent.
 
 ---
 
@@ -27,7 +27,7 @@ Les captures ont été faites avec le modèle d'exemple public *In-Flight Entert
 16. [🔄 Suivi du fichier et mises à jour du modèle](#16--suivi-du-fichier-et-mises-à-jour-du-modèle)
 17. [💾 Enregistrer, partager, réutiliser](#17--enregistrer-partager-réutiliser)
 18. [🎨 Thèmes et personnalisation](#18--thèmes-et-personnalisation)
-19. [? Aide, visites guidées, À propos](#19--aide-visites-guidées-à-propos)
+19. [❓ Aide, visites guidées, À propos](#19--aide-visites-guidées-à-propos)
 20. [Raccourcis clavier et gestes de souris](#20-raccourcis-clavier-et-gestes-de-souris)
 21. [Pas à pas : scénarios d'utilisation](#21-pas-à-pas--scénarios-dutilisation)
 22. [Questions fréquentes et dépannage](#22-questions-fréquentes-et-dépannage)
@@ -98,14 +98,15 @@ Le modèle est analysé (quelques secondes pour un gros modèle), puis la vue **
 | 5 | **▤ Tableau** | Tous les éléments en tableau configurable ([§ 6](#6--tableau)). *Épinglé par défaut.* |
 | 6 | **📡 Flux & interfaces ▾** | Menu : ⚡ chaînes ([§ 8](#8--chaînes)), échanges, composants, liens physiques, diagrammes, scénarios, ports, liens ([§ 9](#9--flux--interfaces)). |
 | 7 | **🔬 Analyses ▾** | Menu : ƒ Fonctions, traçabilité, capacités, modes & états, comparaison, exigences, propriétés, données, contraintes ([§ 11](#11-ƒ-fonctions) et [§ 12](#12--analyses)). |
-| 8 | **📐 Tableau de bord** | Tableaux de bord d'indicateurs personnalisables ([§ 13](#13--tableau-de-bord)). *Épinglé par défaut.* |
+| 8 | **⇶ Couches** · **📐 Tableau de bord** · **📘 Rapports** | ⇶ Liens entre couches ([§ 12.9](#129--liens-entre-couches)), tableaux de bord d'indicateurs ([§ 13](#13--tableau-de-bord)), rapports automatiques ([§ 4.5](#45--dossiers-de-relecture-et--rapports)). *Épinglés par défaut.* |
 | 9 | **☰** (Ctrl+K) | Toutes les vues : recherche, menus affichés, épingles ([§ 3.2](#32-menus-des-vues-épingles-et-ctrlk)). |
 | 10 | **📁 Fichier ▾** | Ouvrir, mettre à jour, enregistrer, exporter les réglages ([§ 3.3](#33--fichier)). |
 | 11 | **💾** | Enregistrement direct de la page (Ctrl+S ; Maj+clic : enregistrer sous). |
 | 12 | **🔄 Suivi ▾** | Détection des nouvelles versions du `.capella` ([§ 16](#16--suivi-du-fichier-et-mises-à-jour-du-modèle)). Un badge compte les enregistrements en attente. |
 | 13 | **💬 Revue** | Panneau des commentaires de revue ([§ 15](#15--revue)). Badge : commentaires non clos ; ⚠ n : à vérifier après une mise à jour. |
 | 14 | **🎨 Thème ▾** | Thèmes de couleurs et thème personnalisé ([§ 18](#18--thèmes-et-personnalisation)). |
-| 15 | **? Aide ▾** | Aide complète, visites guidées, À propos ([§ 19](#19--aide-visites-guidées-à-propos)). |
+| 15 | **❓ Aide ▾** | Aide complète, visites guidées, À propos ([§ 19](#19--aide-visites-guidées-à-propos)). |
+| 16 | **⚙** | Préférences : affichage des menus (Expert, Simplifié, Personnalisé), barre en icônes seules, enregistrement automatique, thème ([§ 3.4](#34--préférences)). Hors mode Expert, le mode est rappelé à côté de ⚙. |
 
 Un clic sur un **nom de menu** (ex. « 🔬 Analyses ») rouvre la **dernière vue** utilisée dans ce menu ; la **flèche ▾** déroule la liste.
 
@@ -153,11 +154,31 @@ Quand une vue du menu 📡 Flux & interfaces ou 🔬 Analyses est ouverte, une *
 
 <br clear="right">
 
+### 3.4 ⚙ Préférences
+
+La roue crantée **⚙** (à droite de ❓ Aide) ouvre un menu rapide ; **⚙ Préférences…** ouvre la fenêtre complète (onglets ☰ Affichage, 💾 Enregistrement, 🎨 Thème, ⚙ Interface et vues).
+
+**Affichage des menus** — trois modes, à changer à tout moment :
+
+| Mode | Barre des vues |
+|---|---|
+| **Expert** (par défaut) | Toutes les fonctionnalités, menus et épingles 📌 comme réglés dans ☰. |
+| **Simplifié** | Boutons 🏠 Accueil, 🔲 Diagrammes, ▤ Tableau ; menus réduits à l'essentiel : 🧭 Arborescence, Cartes · 📡 ⚡ Chaînes, ƒ⇆ Functional Exchange, 🧱 System / Logical Component, 🔀 Behavior Exchange, 🔌 Physical Link · 🔬 ƒ Fonctions, 🧬 Traçabilité, 📋 Exigences. 🗺 Relation Map, 🔄 Suivi et 🎨 Thème quittent la barre (le thème reste dans ⚙). Les onglets de 📡 et 🔬 ne montrent que ces vues. |
+| **Personnalisé** | **🛠 Personnaliser l'affichage…** : pour chaque vue, *Bouton* (bouton direct), *Menu* (dans son menu) ou *Masquée* ; cases des commandes de la barre (🗺, 🔄, 💬, 🎨). « Partir de : Simplifié / Expert » recopie un mode existant. |
+
+Une vue **masquée** reste accessible par **☰ / Ctrl+K**, marquée « (masquée) ». Un 📌 cliqué hors du mode Expert passe au mode Personnalisé. 📁 Fichier, 💾, ❓ Aide et ⚙ restent toujours affichés.
+
+**Style de la barre** : *Icônes et textes* ou *Icônes seules* (barre compacte, nom au survol ; 🧱 marqué **SA** / **LA** ; les menus déroulants et ☰ gardent leurs textes). Le style se combine avec chaque mode.
+
+**💾 Enregistrement automatique** (désactivé par défaut, Edge / Chrome) : toutes les 2 à 30 minutes, la page est écrite dans son fichier (celui de 💾 / Ctrl+S), seulement si elle a changé. Option **Garder la version précédente** : avant chaque enregistrement (automatique ou 💾), l'ancien contenu est copié dans un fichier de secours (par exemple `mon-projet.backup.html`, qui s'ouvre comme une page normale). Le navigateur oublie les fichiers choisis quand la page est fermée : à la réouverture, un bandeau propose de les choisir à nouveau.
+
+Tous ces réglages sont enregistrés avec la 💾 page HTML et dans la partie « ☰ Barre des vues et ⚙ préférences » du fichier ⚙ Interface et vues.
+
 ---
 
 ## 4. 🏠 Accueil du projet
 
-Vue affichée à l'ouverture d'un modèle (bouton **🏠 Accueil**, tout à gauche). Trois onglets : **🏠 Projet**, **☑ Check-lists & plans de revue**, **🧾 Tableaux blancs**. Tout ce qui y est saisi est enregistré dans la page (💾).
+Vue affichée à l'ouverture d'un modèle (bouton **🏠 Accueil**, tout à gauche). Quatre onglets : **🏠 Projet**, **☑ Check-lists & plans de revue**, **🧾 Tableaux blancs**, **📑 Dossiers** (dossiers de relecture et rapports, [§ 4.5](#45--dossiers-de-relecture-et--rapports)). Tout ce qui y est saisi est enregistré dans la page (💾).
 
 ### 4.1 🏠 Projet
 
@@ -248,6 +269,23 @@ Pendant ce temps, vous pouvez **glisser dans cette fenêtre** directement depuis
 - une chaîne de **⚡ Chaînes** (liste de la vue Relation Map ou en-tête d'une carte).
 
 Sur une check-list : déposez sur un point, sur « ✚ Point » ou sur le périmètre d'un plan ; sur un tableau blanc : l'objet devient une icône cliquable. Dans la vue 🏠 Accueil elle-même, la palette 📎 sert de source.
+
+### 4.5 📑 Dossiers de relecture et 📘 Rapports
+
+Un **dossier de relecture** rassemble, chapitre par chapitre, ce que d'autres personnes doivent relire et commenter. **📑 Nouveau dossier**, puis :
+
+| Commande | Effet |
+|---|---|
+| **✚ Chapitre** / glisser un élément | Chapitre à titre libre ; un élément glissé (capacité, chaîne, fonction…) donne un chapitre avec son nom, sa description et les diagrammes dont il est l'élément représenté. |
+| **✚ Texte** · glisser un diagramme ou un élément | Blocs du chapitre : texte libre, diagramme (description, éléments représentés), élément (avec sa description), ▤ tableau d'éléments. |
+| **🔗 Texte du modèle** | Un **texte libre** devient le **nom**, la **description** ou le **nom et la description** d'un élément ou d'un diagramme, relus sur le modèle à chaque export : glisser l'élément sur l'en-tête du bloc, **🔗 Lier…** (recherche par nom) ou clic droit. Si le texte est déjà le nom ou la description d'un élément, la pastille **🔗 lier à … ?** le propose. Le texte d'origine est gardé (**↺ Texte d'origine**) ; **¶ Figer** le remplace par le texte actuel du modèle, modifiable. |
+| **🔗** (titre de chapitre) | Chapitre associé à un élément : titre **suivi** = nom de l'élément, mis à jour quand il change dans le modèle. |
+| **Clic droit** | Sur un bloc ou un chapitre : transformer en texte du modèle, figer, nom / description, associer un élément, titre suivi, ouvrir l'élément ou le diagramme, insérer un texte ou un chapitre après, convertir § / ¶, dupliquer, copier le texte, monter / descendre, sortir / entrer, retirer. Sur le 🧭 Plan : aller au chapitre, tout replier / déplier. Dans une zone de saisie : menu du navigateur (**Ctrl+clic droit** : celui d'Arcalyse). |
+| **§ En chapitre · ¶ En bloc · ↑ ↓ ⇤ ⇥ 🗑** | Convertir, déplacer, changer de niveau, retirer. |
+| **👁 Aperçu** | Rendu du rapport tel que l'exporte la page HTML (⧉ : fenêtre séparée). |
+| **📤 Page HTML à commenter · 📝 Word (.docx)** | Exports à faire relire ; **📥 Réimporter…** rattache chaque retour à son bloc et le verse dans 💬 Revue (un retour sur un texte du modèle vise le nom ou la description de l'élément). |
+
+**📘 Rapports automatiques** (bouton **📘 Rapports** de la barre, ou cadre en haut de la liste) : dossier créé selon un plan type, rempli à partir du modèle, puis entièrement modifiable — 📘 Spécification technique du système (boîte noire, deux plans), 📗 Dossier de conception du système (boîte blanche). **🧩 Mes modèles** : modèles de rapport personnels (chapitres en boucle sur des éléments, contenus automatiques), **▶ Générer**, **💾 .json** / **📂 Importer** pour les réutiliser.
 
 ---
 
@@ -901,7 +939,7 @@ Rapport HTML imprimable : un onglet par couche, une section numérotée par fonc
 
 ## 12. 🔬 Analyses
 
-Onglets : **ƒ Fonctions · 🧬 Traçabilité inter-couches · 🎯 Capacités & missions · 🔁 Modes & états · ⚖ Comparaison de versions · 📑 Exigences · 🏷 Propriétés · 🗃 Données & interfaces · ⛓ Contraintes**, et **↻ Recalculer**.
+Onglets : **ƒ Fonctions · 🧬 Traçabilité inter-couches · ⇶ Liens entre couches · 🎯 Capacités & missions · 🚦 Modes & états · ⚖ Comparaison de versions · 📋 Exigences · 🏷 Propriétés · 🗃 Données & interfaces · ⛓ Contraintes**, et **↻ Recalculer**.
 
 Les résultats sont **gardés en mémoire** ; **↻ Recalculer** les rafraîchit. Les contrôles ne sont calculés qu'à l'ouverture de l'onglet 🩺 Contrôles. Une rubrique absente du modèle est simplement signalée comme vide.
 
@@ -940,7 +978,7 @@ Capacités opérationnelles, capacités système, Capability Realizations (LA / 
 |---|---|
 | ![](guide/img/70-ana-caps-matrice.png) | ![](guide/img/70-ana-caps-controles.png) |
 
-### 12.3 🔁 Modes & états
+### 12.3 🚦 Modes & états
 
 ![Machines à états](guide/img/70-ana-states.png)
 
@@ -976,7 +1014,7 @@ Capacités opérationnelles, capacités système, Capability Realizations (LA / 
 
 L'onglet **🔲 Diagrammes** compare le `.aird` chargé à un `.aird` de référence (gardé automatiquement après une 🔄 mise à jour, ou chargé par **📂 Charger un .aird de référence**) : ➕ nouveaux, ➖ supprimés, ✎ renommés, 🧩 contenu modifié, 🎨 mise en page / style seulement ; ⚠ éléments absents du modèle ; 🔷 touchés par le modèle. Filtres, ▸ détail, 🔲 ouvrir le diagramme, ⬇ CSV.
 
-### 12.5 📑 Exigences
+### 12.5 📋 Exigences
 
 ![Exigences](guide/img/70-ana-reqs.png)
 
@@ -1031,6 +1069,12 @@ Propriétés des extensions **PVMT** (domaines, groupes, propriétés et unités
 Toutes les contraintes : rôle (garde, pré / post-condition), expression (liens de texte remplacés par le nom de l'élément cité), langage, éléments contraints, propriétaire. **🩺 Contrôles** : contraintes vides ou sans expression, éléments cités introuvables, sans élément contraint, doublons.
 
 ![Contraintes — contrôles](guide/img/70-ana-cts-controles.png)
+
+---
+
+### 12.9 ⇶ Liens entre couches
+
+Vue **graphique** des réalisations entre couches : une colonne par couche (OA → SA → LA → PA → EPBS), une flèche par lien de réalisation. Mode **élément** (partir d'un élément : fonction, chaîne, capacité, composant… et suivre ses réalisations vers le haut, le bas ou les deux) ou **catégorie** (toutes les réalisations d'une catégorie). Les chaînes sont groupées avec leurs fonctions ; l'ordre limite les croisements. Ouverture aussi par clic droit sur un élément ou par **ℹ Infos** d'une chaîne. Exports **SVG**, **PNG**, **CSV**, et bloc ⇶ d'un 📑 dossier. Bouton direct **⇶ Couches** (épinglé par défaut).
 
 ---
 
@@ -1146,7 +1190,7 @@ La date de création est notée automatiquement. **Ctrl+Entrée** ou **✔ Enreg
 | **📄 Rapport** | Synthèse statut × criticité ; **📄 Rapport HTML** autonome et imprimable (groupé par statut, criticité, responsable ou élément ; réponses en option ; état de chaque commentaire par rapport au modèle) ; **⬇ CSV**. |
 | **⚙ Réglages** | Votre nom, participants, champs proposés, affichage (calque des diagrammes, notes closes, marque 💬 des éléments commentés dans les vues), **🗑 Tout supprimer**. |
 
-En haut du panneau : **✚ Nouveau**, **💾 Revue ▾**, **🎓** (visite guidée du panneau, aussi par **? Aide ▾ › 💬 Visite de la revue**), **⧉** (ouvre le panneau dans une **fenêtre séparée**, par exemple sur un autre écran — autoriser les fenêtres surgissantes ; la fermer ou **⧈** le ramène dans la page), **✕**.
+En haut du panneau : **✚ Nouveau**, **💾 Revue ▾**, **🎓** (visite guidée du panneau, aussi par **❓ Aide ▾ › 💬 Visite de la revue**), **⧉** (ouvre le panneau dans une **fenêtre séparée**, par exemple sur un autre écran — autoriser les fenêtres surgissantes ; la fermer ou **⧈** le ramène dans la page), **✕**.
 
 ### 15.5 💾 Revue ▾ : enregistrer, exporter, fusionner
 
@@ -1222,6 +1266,7 @@ Le bouton **🔄 Suivi** (à côté de 📁 Fichier) détecte qu'une **nouvelle 
 | Partager une analyse avec quelqu'un qui n'a pas Capella | Envoyer la page HTML enregistrée | Elle s'ouvre hors ligne dans n'importe quel navigateur. |
 | Réutiliser ses réglages avec un autre modèle | **📁 Fichier › ⚙ Enregistrer l'interface et les vues…** puis **⚙ Charger une interface et des vues…** | Fichier `.json` **sans le modèle**, parties au choix (ci-dessous). |
 | Passer à une nouvelle version d'Arcalyse | **📄 Projet de travail (.html)…** (accueil) ou **📁 Fichier › 📄 Ouvrir un projet de travail** | Reprend les données d'une page enregistrée (≥ 2.1) dans la nouvelle version ; Ctrl+S réécrit ensuite le même fichier. |
+| Ne rien perdre en cours de travail | **⚙ › 💾 Enregistrement automatique** (désactivé par défaut) | La page dans son fichier, toutes les 2 à 30 min si elle a changé ; version précédente dans un fichier de secours `….backup.html` (option), [§ 3.4](#34--préférences). |
 | Une vue de la Relation Map ou du ▤ Tableau | **💾 Sauver vue / 📂 Charger vue** | Fichier `.json` de la vue. |
 | Une check-list ou un plan de revue | **💾 .json / 📂 Importer…** (🏠 Accueil) | Le document. |
 | Les commentaires de revue | **💾 Revue ▾ › ⬇ Exporter / 📂 Importer-fusionner** | Les commentaires et leurs réponses. |
@@ -1229,7 +1274,7 @@ Le bouton **🔄 Suivi** (à côté de 📁 Fichier) détecte qu'une **nouvelle 
 
 ![Enregistrer l'interface et les vues](guide/img/96-config-interface.png)
 
-Parties de la fenêtre **⚙ Interface et vues** : ☰ Barre des vues · 📐 Tableaux de bord · ▤ Tableau · 🗺 Relation Map · ⬇ Exports CSV · 🎨 Thème · 🔤 Règles de nommage.
+Parties de la fenêtre **⚙ Interface et vues** : ☰ Barre des vues et ⚙ préférences · 📐 Tableaux de bord · ▤ Tableau · 🗺 Relation Map · ⬇ Exports CSV · 🎨 Thème · 🔤 Règles de nommage.
 
 Ne sont **pas** conservés dans la page : la version chargée pour ⚖ Comparaison et les filtres des autres vues.
 
@@ -1252,11 +1297,11 @@ Ne sont **pas** conservés dans la page : la version chargée pour ⚖ Comparais
 
 ![Éditeur de thème](guide/img/95-theme-perso.png)
 
-**Autres personnalisations** : barre des vues (☰, épingles), colonnes du ▤ Tableau, vues de la Relation Map, tableaux de bord, ⚙ Règles de nommage (ƒ Fonctions), champs proposés dans la revue (💬 › ⚙ Réglages).
+**Autres personnalisations** : barre des vues (☰, épingles ; ⚙ modes Expert / Simplifié / Personnalisé et icônes seules, [§ 3.4](#34--préférences)), colonnes du ▤ Tableau, vues de la Relation Map, tableaux de bord, ⚙ Règles de nommage (ƒ Fonctions), champs proposés dans la revue (💬 › ⚙ Réglages).
 
 ---
 
-## 19. ? Aide, visites guidées, À propos
+## 19. ❓ Aide, visites guidées, À propos
 
 <img src="guide/img/01-menu-aide.png" alt="Menu Aide" width="300" align="right">
 
@@ -1297,8 +1342,9 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 | **Maj+molette** | Défilement horizontal (tableaux larges, scénarios). |
 | **← →** | Étapes d'une visite guidée. |
 | **Double-clic** | Nouveau contexte (Relation Map) ; renommer un onglet ; détail d'une ligne du ▤ Tableau ; « uniquement celle-ci » sur un filtre d'allocation ; note sur un tableau blanc ; largeur auto d'une colonne (bord d'en-tête). |
-| **Clic droit** | Menu contextuel (Relation Map, arborescence) ; commentaires de revue sur un élément (vues, diagrammes). |
-| **Glisser-déposer** | Ouvrir un fichier / dossier (sur la fenêtre) ; réordonner colonnes et onglets ; déplacer / redimensionner un élément de tableau de bord ; cartes de 🏠 Projet (⚙ Disposer) ; palette 📎 — ou 🔲 / 🧭 / ⚡ vers une fenêtre séparée — vers check-lists, plans et tableaux blancs ; formes du tableau blanc ; 📝 note de revue sur un diagramme ; trait depuis la poignée ● d'une note ; séparateurs de panneaux. |
+| **Clic droit** | Menu contextuel (Relation Map, arborescence) ; commentaires de revue sur un élément (vues, diagrammes) ; commandes d'un bloc, d'un chapitre ou du plan dans un 📑 dossier. |
+| **Ctrl+clic droit** | Dans une zone de saisie d'un 📑 dossier : menu d'Arcalyse au lieu de celui du navigateur. |
+| **Glisser-déposer** | Ouvrir un fichier / dossier (sur la fenêtre) ; élément ou diagramme sur un bloc texte d'un 📑 dossier (🔗 texte du modèle) ; réordonner colonnes et onglets ; déplacer / redimensionner un élément de tableau de bord ; cartes de 🏠 Projet (⚙ Disposer) ; palette 📎 — ou 🔲 / 🧭 / ⚡ vers une fenêtre séparée — vers check-lists, plans et tableaux blancs ; formes du tableau blanc ; 📝 note de revue sur un diagramme ; trait depuis la poignée ● d'une note ; séparateurs de panneaux. |
 
 ---
 
@@ -1367,7 +1413,7 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 | La matrice n'affiche pas toutes les fonctions. | Elle est limitée aux 100 plus connectées : filtrez par couche ou par fonction. |
 | Je veux renommer ou supprimer un élément. | Arcalyse est en lecture seule : modifiez le modèle dans Capella, puis 🔄 mettez à jour. |
 | Le panneau de revue en fenêtre séparée ne s'ouvre pas. | Autorisez les fenêtres surgissantes pour le fichier. |
-| Signaler un problème. | **? Aide › ℹ À propos** : copiez les informations techniques ; joignez le message de la console (F12). |
+| Signaler un problème. | **❓ Aide › ℹ À propos** : copiez les informations techniques ; joignez le message de la console (F12). |
 
 ---
 
@@ -1375,7 +1421,8 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 
 | Vue | Menu | Sous-vues |
 |---|---|---|
-| 🏠 Accueil | (bouton) | 🏠 Projet (⚙ Disposer les cartes) · ☑ Check-lists & plans de revue · 🧾 Tableaux blancs · ⧉ fenêtres séparées |
+| 🏠 Accueil | (bouton) | 🏠 Projet (⚙ Disposer les cartes) · ☑ Check-lists & plans de revue · 🧾 Tableaux blancs · 📑 Dossiers (📘 Rapports) · ⧉ fenêtres séparées |
+| 📘 Rapports | (épinglé) | 🏠 Accueil › 📑 Dossiers : rapports automatiques, 🧩 mes modèles |
 | 🗺 Relation Map | (bouton) | onglets de vues ; vue chaîne |
 | 🔲 Diagrammes Capella | 📡 (épinglé) | liste, diagramme, ℹ Infos, ⬇ Exporter |
 | 🌳 Arborescence · ▦ Cartes · 📖 Index des types | 🧭 Explorateur | — |
@@ -1388,10 +1435,11 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 | 🔗 Liens | 📡 | — |
 | ƒ Fonctions | 🔬 | 🌳 Hiérarchie · 📋 Tableau · ⛓ Traçabilité · 📊 Métriques · 🩺 Contrôles · 📄 Dossier |
 | 🧬 Traçabilité inter-couches | 🔬 | ▦ Couverture · ⛓ Chemins · 🔗 Liens |
+| ⇶ Liens entre couches | 🔬 (épinglé : ⇶ Couches) | modes élément / catégorie, exports SVG · PNG · CSV |
 | 🎯 Capacités & missions | 🔬 | ▣ Cartes · ▦ Matrice · 🩺 Contrôles |
-| 🔁 Modes & états | 🔬 | ◈ Machines à états · ▦ Fonctions × états · 🩺 Contrôles |
+| 🚦 Modes & états | 🔬 | ◈ Machines à états · ▦ Fonctions × états · 🩺 Contrôles |
 | ⚖ Comparaison de versions | 🔬 | 🔷 Modèle · 🔲 Diagrammes |
-| 📑 Exigences | 🔬 | 📋 Liste · ▦ Couverture · 🩺 Contrôles |
+| 📋 Exigences | 🔬 | 📋 Liste · ▦ Couverture · 🩺 Contrôles |
 | 🏷 Propriétés | 🔬 | ▦ Grille · Σ Synthèse · 📖 Définitions · 🩺 Contrôles |
 | 🗃 Données & interfaces | 🔬 | 📦 Exchange Items · 🔌 Interfaces · 🧱 Classes & types · 🩺 Contrôles |
 | ⛓ Contraintes | 🔬 | 📋 Liste · 🩺 Contrôles |

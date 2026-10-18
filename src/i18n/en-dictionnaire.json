@@ -4027,7 +4027,18 @@
   "↓ Descendre": "↓ Move down",
   "⇤ Sortir du chapitre": "⇤ Move out of the chapter",
   "⇥ Mettre dans le chapitre précédent": "⇥ Put in the previous chapter",
-  "🗑 Retirer du dossier": "🗑 Remove from the document"
+  "🗑 Retirer du dossier": "🗑 Remove from the document",
+  ": Expert (tout), Simplifié (les vues les plus utilisées) ou Personnalisé (🛠 chaque vue en bouton, dans son menu ou masquée) ; barre en": ": Expert (everything), Simplified (the most used views) or Custom (🛠 each view as a button, in its menu or hidden); toolbar with",
+  "icônes seules": "icons only",
+  "💾 enregistrement automatique": "💾 automatic saving",
+  "(désactivé par défaut, avec fichier de secours) ; thème ; interface et vues.": "(off by default, with backup file); theme; interface and views.",
+  "Un dossier rassemble, chapitre par chapitre, ce qu'il faut faire relire : descriptions, diagrammes, éléments, texte libre. Il s'exporte en page HTML à commenter ou en Word ;": "A document gathers, chapter by chapter, what needs reviewing: descriptions, diagrams, elements, free text. It is exported as an HTML page to comment on or as Word;",
+  "rattache les retours à leurs blocs et les verse dans 💬 Revue.": "attaches the feedback to its blocks and adds it to 💬 Review.",
+  "Plans types remplis à partir du modèle (spécification boîte noire, dossier de conception boîte blanche), puis entièrement modifiables ;": "Standard outlines filled from the model (black-box specification, white-box design document), then fully editable;",
+  ": vos propres plans, réutilisables (.json).": ": your own outlines, reusable (.json).",
+  "🔗 Texte du modèle et clic droit": "🔗 Model text and right-click",
+  "Un texte libre peut devenir le nom ou la description d'un élément ou d'un diagramme, suivi(e) quand le modèle change : glissez l'élément sur l'en-tête du bloc ou": "A free text can become the name or description of an element or diagram, updated when the model changes: drag the element onto the block header or",
+  "sur un bloc ou un chapitre propose toutes les commandes (transformer, figer, insérer, convertir, dupliquer, déplacer…).": "on a block or chapter offers all the commands (turn into, freeze, insert, convert, duplicate, move…)."
  },
  "interface": {
   "🌳 Arborescence": "🌳 Tree",

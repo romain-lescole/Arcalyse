@@ -59,6 +59,8 @@ var CAP_TOUR_STEPS=[
    x:_L('Choisissez un thème clair ou sombre, ou créez votre propre thème personnalisé.')},
   {s:'#b-help', t:_L('❓ Aide'),
    x:_L('L\'aide complète et cette visite guidée restent accessibles à tout moment depuis ce menu.')},
+  {s:'#b-prefs', t:_L('⚙ Préférences'),
+   x:_L('<b>Affichage des menus</b> : Expert (tout), Simplifié (les vues les plus utilisées) ou Personnalisé (🛠 chaque vue en bouton, dans son menu ou masquée) ; barre en <b>icônes seules</b> ; <b>💾 enregistrement automatique</b> (désactivé par défaut, avec fichier de secours) ; thème ; interface et vues.')},
   {t:_L('✅ C\'est parti !'),
    x:_L('La visite est terminée. Vous pouvez la relancer depuis <b>❓ Aide ▾ → 🎓 Visite guidée</b>.<br>Dans chaque vue, <b>❓ Aide ▾ → 🎯 Visite de cette vue</b> présente ses menus et ce qu\'ils font.')}
 ];
@@ -170,7 +172,10 @@ var CAP_TOUR_VIEWS={
     {pre:()=>capTourHome('board'), s:'#cap-view-home .hm-tool', t:_L('🧰 Outils du tableau blanc'), x:_L('↖ sélection et déplacement · 🗒 note · T texte libre · ▭ rectangle · ◯ ellipse (Maj : cercle) · ╱ trait · → flèche : glissez sur le tableau pour dessiner.')},
     {s:'#cap-view-home .hm-col,#cap-view-home [data-a="b-fill"]', t:_L('🎨 Couleur et remplissage'), x:_L('Pour les nouveaux objets et pour l\'objet sélectionné. Suppr retire l\'objet sélectionné.')},
     {s:'#cap-view-home .hm-wb', t:_L('🧾 Tableau'), x:_L('Double-clic : note. Les diagrammes et éléments déposés deviennent des icônes cliquables.')},
-    {s:'#cap-view-home .hm-wb-bar [data-a="pop"]', t:_L('⧉ Tableau dans une fenêtre séparée'), x:_L('Ouvre la page du tableau blanc dans sa propre fenêtre (autre écran) : vous pouvez alors y glisser des diagrammes depuis la liste de 🔲 Diagrammes Capella et des éléments depuis 🧭 Explorateur ou ⚡ Chaînes. Les check-lists et plans de revue s\'ouvrent de la même façon (⧉).')}]},
+    {s:'#cap-view-home .hm-wb-bar [data-a="pop"]', t:_L('⧉ Tableau dans une fenêtre séparée'), x:_L('Ouvre la page du tableau blanc dans sa propre fenêtre (autre écran) : vous pouvez alors y glisser des diagrammes depuis la liste de 🔲 Diagrammes Capella et des éléments depuis 🧭 Explorateur ou ⚡ Chaînes. Les check-lists et plans de revue s\'ouvrent de la même façon (⧉).')},
+    {pre:()=>capTourHome('dos'), s:'#cap-view-home .hm-docs-new [data-da="new"]', t:_L('📑 Dossiers de relecture'), x:_L('Un dossier rassemble, chapitre par chapitre, ce qu\'il faut faire relire : descriptions, diagrammes, éléments, texte libre. Il s\'exporte en page HTML à commenter ou en Word ; <b>📥 Réimporter…</b> rattache les retours à leurs blocs et les verse dans 💬 Revue.')},
+    {s:'#cap-view-home .dos-rap', t:_L('📘 Rapports automatiques'), x:_L('Plans types remplis à partir du modèle (spécification boîte noire, dossier de conception boîte blanche), puis entièrement modifiables ; <b>🧩 Mes modèles</b> : vos propres plans, réutilisables (.json).')},
+    {s:'#cap-view-home .dos-ed', t:_L('🔗 Texte du modèle et clic droit'), x:_L('Un texte libre peut devenir le nom ou la description d\'un élément ou d\'un diagramme, suivi(e) quand le modèle change : glissez l\'élément sur l\'en-tête du bloc ou <b>🔗 Lier…</b>. Le <b>clic droit</b> sur un bloc ou un chapitre propose toutes les commandes (transformer, figer, insérer, convertir, dupliquer, déplacer…).')}]},
   chains:{l:_L('⚡ Chaînes'), steps:[
     {t:_L('⚡ Chaînes'), x:_L('Chaînes fonctionnelles, processus opérationnels et chemins physiques du modèle, avec leur diagramme.')},
     {s:'#cap-view-chains [data-cf]', t:_L('🏷 Type'), x:_L('Filtre par type de chaîne.')},
