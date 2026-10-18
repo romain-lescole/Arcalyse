@@ -1756,7 +1756,7 @@ html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,2
 .hm-pal.hm-pal-pli{width:auto;padding:8px 4px;align-items:center;}
 .crv-dos{cursor:pointer;color:var(--c-accent);}
 .crv-dos:hover{text-decoration:underline;}
-/* 🪜 Liens entre couches (62) */
+/* ⇶ Liens entre couches (62) */
 .xl-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 10px;}
 .xl-find{position:relative;}
 .xl-find .phl-filter-input{width:320px;}

@@ -83,7 +83,7 @@ function capDosBlocDe(d, bid){
   }
   capDosParcours(d.blocs,(b,num)=>{ if(b.id!==id) return;
     const lib=b.k==='chap'?(champ?_L(`Description de « ${capDosTitre(b)} »`):capDosTitre(b)):b.k==='txt'?_L('Texte'):b.k==='xlay'?capXlTitre(b.opts||{}):b.k==='liste'?(b.titre||_L('Tableau')):b.ref?capHomeRefNom(b.ref):'';
-    r={b, num, champ, libelle:(b.k==='diag'?'🔲 ':b.k==='el'?'◆ ':b.k==='xlay'?'🪜 ':b.k==='mod'?'🔗 ':b.k==='liste'?'▤ ':'')+lib}; });
+    r={b, num, champ, libelle:(b.k==='diag'?'🔲 ':b.k==='el'?'◆ ':b.k==='xlay'?'⇶ ':b.k==='mod'?'🔗 ':b.k==='liste'?'▤ ':'')+lib}; });
   if(!r.b) r.libelle=_L('Bloc retiré du dossier');
   return r;
 }
@@ -359,7 +359,7 @@ function capDosBlocHtml(d, b){
     `<span class="ana-dim">${_L(`${b.ids.length} élément(s)`)} · ${b.cols==='ech'?_L('échanges : source, cible, éléments échangés'):_L('nom, type, description')}</span>`+
     `<button class="cap-lf-btn" data-da="liste-voir">${_capDosUi.listes.has(b.id)?_L('▴ Masquer'):_L('▾ Voir / modifier')}</button>`;
   else if(b.k==='auto') h+=capRapAutoHtml(b);
-  else if(b.k==='xlay') h+=`<span class="dos-ico">🪜</span><span class="dos-blk-l">${esc(capXlTitre(b.opts||{}))}</span><button class="cap-lf-btn" data-da="xl-open" title="${_L('Ouvrir dans 🔬 Analyses › 🪜 Liens entre couches')}">${_L('🪜 Ouvrir')}</button>`;
+  else if(b.k==='xlay') h+=`<span class="dos-ico">⇶</span><span class="dos-blk-l">${esc(capXlTitre(b.opts||{}))}</span><button class="cap-lf-btn" data-da="xl-open" title="${_L('Ouvrir dans 🔬 Analyses › ⇶ Liens entre couches')}">${_L('⇶ Ouvrir')}</button>`;
   else { const ok=capHomeRefOk(b.ref);
     h+=`<span class="dos-ico">🔲</span>${capHomeChip(b.ref,'')}<label class="dos-opt" title="${_L('Description du diagramme (documentation dans Capella)')}"><input type="checkbox" data-bf="desc"${b.desc?' checked':''}> ${_L('Description')}</label>`+
       `<label class="dos-opt" title="${_L('Tableau des éléments représentés sous le diagramme')}"><input type="checkbox" data-bf="elems"${b.elems?' checked':''}> ${_L('Éléments représentés')}</label>`+
@@ -549,7 +549,7 @@ async function capDosContenu(d, st){
       if(b.k==='mod') return {id:b.id, k:'txt', txt:capDosModTexte(b)};   // texte du modèle, relu à l'export
       if(b.k==='liste'){ const t=capDosListeLignes(b); b.elemsExp=t.rows.map(x=>x.id);   // lignes exportées (réimport Word)
         return {id:b.id, k:'liste', titre:b.titre||'', head:t.head, rows:t.rows}; }
-      if(b.k==='xlay'){ const r=capXlSvg(b.opts||{});   // 🪜 Liens entre couches, redessinés sur le modèle chargé
+      if(b.k==='xlay'){ const r=capXlSvg(b.opts||{});   // ⇶ Liens entre couches, redessinés sur le modèle chargé
         return {id:b.id, k:'diag', fig:++fig, nom:capXlTitre(b.opts||{}), type:_L('Liens entre couches'), couche:'', desc:'', cible:'', svg:r.svg, w:r.w, h:r.h, elems:[]}; }
       if(b.k==='el'){ const r=info(b.ref); return {id:b.id, k:'el', nom:r.nom, type:r.type, couche:r.couche, desc:b.desc?r.desc:'', avecDesc:!!b.desc, absent:r.absent}; }
       const rep=reps.find(x=>x.uid===b.ref.id), svg=svgs[b.ref.id]||'', m=rep?capDiagMeta(rep.uid):null;

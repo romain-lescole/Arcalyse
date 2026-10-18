@@ -185,7 +185,7 @@ function capDashCatalog(){
 
   add(_L('Mise en page'),'txt',_L('Texte libre (titre, commentaire)'),'text',()=>({}));
   add(_L('Diagrammes et vues'),'diag',_L('🔲 Diagramme Capella'),'diag',()=>({}));
-  add(_L('Diagrammes et vues'),'xlay',_L('🪜 Liens entre couches'),'xlay',()=>({}));
+  add(_L('Diagrammes et vues'),'xlay',_L('⇶ Liens entre couches'),'xlay',()=>({}));
   return _capAnaCache.dashCat=C;
 }
 /** Valeur (mise en cache) d'un indicateur du catalogue ; null si le modèle ne contient pas la donnée.

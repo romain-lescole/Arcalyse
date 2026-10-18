@@ -223,7 +223,7 @@ function capDosContext(e){
   if(!f) h=`<div class="crv-ctx-t">${_L('🧭 Plan')}</div>`+it('nav-pli',_L('⊟ Replier tous les chapitres'))+it('nav-depli',_L('⊞ Déplier tous les chapitres'));
   else {
     const b=f.b, Q=capDosQuois(), refNom=b.ref?capEsc(capDosRefTextes(b.ref).nom):'';
-    const titre={chap:_L('§ Chapitre'), txt:_L('¶ Texte libre'), mod:_L('🔗 Texte du modèle'), el:_L('◆ Élément'), diag:_L('🔲 Diagramme'), liste:_L('▤ Tableau d\'éléments'), auto:_L('⚙ Contenu automatique'), xlay:_L('🪜 Liens entre couches')}[b.k]||'';
+    const titre={chap:_L('§ Chapitre'), txt:_L('¶ Texte libre'), mod:_L('🔗 Texte du modèle'), el:_L('◆ Élément'), diag:_L('🔲 Diagramme'), liste:_L('▤ Tableau d\'éléments'), auto:_L('⚙ Contenu automatique'), xlay:_L('⇶ Liens entre couches')}[b.k]||'';
     h=`<div class="crv-ctx-t">${titre}${refNom?` · ${refNom}`:b.k==='chap'&&b.titre?` · ${capEsc(b.titre)}`:''}</div>`;
     if(nav) h+=it('nav-go',_L('➜ Aller au chapitre'));
     if(b.k==='txt'){ const s=capDosSuggestion(b);

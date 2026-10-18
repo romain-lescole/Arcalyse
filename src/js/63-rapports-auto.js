@@ -38,7 +38,7 @@ function capDosOutils(){
     /** Tableau d'éléments (cols : 'desc' ou 'ech'). */ Lst:(titre, els, cols)=>({id:id(), k:'liste', titre, ids:[...new Set(els.map(e=>e.id))], cols:cols||'desc'}),
     /** Diagrammes d'une couche dont le sigle est dans la liste (au plus n). */
     D:(L, sigles, n)=>reps.filter(r=>r.couche===L&&sigles.includes(r.sigle)).slice(0,n||8).map(r=>({id:id(), k:'diag', ref:capHomeRefDiag(r), desc:true, elems:false})),
-    /** Vue 🪜 Liens entre couches. */ X:opts=>({id:id(), k:'xlay', ref:opts.seed?capHomeRefEl(opts.seed):null, opts:Object.assign({mode:'el', seed:'', dir:'dir', cat:'fn', fnCh:true}, opts)}),
+    /** Vue ⇶ Liens entre couches. */ X:opts=>({id:id(), k:'xlay', ref:opts.seed?capHomeRefEl(opts.seed):null, opts:Object.assign({mode:'el', seed:'', dir:'dir', cat:'fn', fnCh:true}, opts)}),
   };
   o.sys=L=>{ const l=comps(L).filter(e=>!acteur(e)); const P=capGetParentIndex().parentOf; return l.find(e=>!l.some(x=>x.id===P[e.id]))||l[0]||null; };   // composant racine non acteur
   o.R=(quoi)=>o.T(_L(`[À rédiger — ${quoi}]`));
@@ -245,7 +245,7 @@ const CAP_RAP_AUTO=[
   {k:'desc', l:_L('Description de l\'élément de la boucle')}, {k:'diags', l:_L('Diagrammes dont il est l\'élément représenté')},
   {k:'diagtype', l:_L('Diagrammes par couche et par type')}, {k:'fein', l:_L('Échanges fonctionnels entrants')}, {k:'feout', l:_L('Échanges fonctionnels sortants')},
   {k:'alloc', l:_L('Fonctions allouées (et déployées)')}, {k:'pl', l:_L('Liens physiques')}, {k:'chaines', l:_L('Chaînes qui impliquent la fonction')},
-  {k:'liste', l:_L('Tableau d\'éléments (type, couche, filtre)')}, {k:'xlay', l:_L('🪜 Liens entre couches')}];
+  {k:'liste', l:_L('Tableau d\'éléments (type, couche, filtre)')}, {k:'xlay', l:_L('⇶ Liens entre couches')}];
 
 /**
  * Options d'une liste déroulante.

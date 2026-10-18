@@ -1179,9 +1179,9 @@
 - `capXlChercher` (l. 125) — Éléments du modèle qui peuvent servir de départ (catégorie de traçabilité, couche ARCADIA réelle), dont le nom contient un texte.
 - `capXlOpts` (l. 135) — @returns {object} options de dessin de la vue (copie de l'état)
 - `capXlTitre` (l. 137) — Titre d'un dessin. @param {object} o - Options @returns {string}
-- `capXlOpen` (l. 146) — Ouvre la vue 🪜 Liens entre couches à partir d'un élément.
+- `capXlOpen` (l. 146) — Ouvre la vue ⇶ Liens entre couches à partir d'un élément.
 - `capXlSuggestions` (l. 152) — Éléments proposés au départ : ceux qui ont le plus de liens de réalisation (chaînes et capacités d'abord).
-- `capRenderXlay` (l. 164) — Sous-vue 🔬 Analyses › 🪜 Liens entre couches : barre (mode, élément de départ, sens, catégorie, options, exports), dessin.
+- `capRenderXlay` (l. 164) — Sous-vue 🔬 Analyses › ⇶ Liens entre couches : barre (mode, élément de départ, sens, catégorie, options, exports), dessin.
 - `capXlWire` (l. 195) — Branche les commandes de la sous-vue (après chaque rendu) : recherche, options, exports, nœuds du dessin.
 - `capXlExport` (l. 225) — Exporte le dessin affiché : SVG, PNG, CSV des liens, ou bloc dans le 📑 dossier de relecture ouvert.
 

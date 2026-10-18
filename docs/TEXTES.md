@@ -1022,8 +1022,8 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 538 | 🗺 Vue Relation Map | 🗺 Relation Map view |
 | 539 | Commenter la chaîne (💬 Revue) | Comment on the chain (💬 Review) |
 | 539 | 💬 Commenter | 💬 Comment |
-| 540 | Chaînes des autres couches liées à celle-ci, avec leurs fonctions (🔬 Analyses › 🪜 Liens entre couches) | Chains of the other layers linked to this one, with their functions (🔬 Analyses › 🪜 Cross-layer links) |
-| 540 | 🪜 Liens entre couches | 🪜 Cross-layer links |
+| 540 | Chaînes des autres couches liées à celle-ci, avec leurs fonctions (🔬 Analyses › ⇶ Liens entre couches) | Chains of the other layers linked to this one, with their functions (🔬 Analyses › ⇶ Cross-layer links) |
+| 540 | ⇶ Liens entre couches | ⇶ Cross-layer links |
 | 541 | Attributs | Attributes |
 | 541 | Type | Type |
 | 541 | Couche | Layer |
@@ -1878,7 +1878,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 677 | - dossier fonctionnel.html | … - functional file.html |
 | 693 | ƒ Fonctions | ƒ Functions |
 | 693 | 🧬 Traçabilité inter-couches | 🧬 Cross-layer traceability |
-| 693 | 🪜 Liens entre couches | 🪜 Cross-layer links |
+| 693 | ⇶ Liens entre couches | ⇶ Cross-layer links |
 | 693 | 🎯 Capacités & missions | 🎯 Capabilities & missions |
 | 693 | 🚦 Modes & états | 🚦 Modes & states |
 | 693 | ⚖ Comparaison de versions | ⚖ Version comparison |
@@ -2154,7 +2154,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 187 | Diagrammes et vues | Diagrams and views |
 | 187 | 🔲 Diagramme Capella | 🔲 Capella diagram |
 | 188 | Diagrammes et vues | Diagrams and views |
-| 188 | 🪜 Liens entre couches | 🪜 Cross-layer links |
+| 188 | ⇶ Liens entre couches | ⇶ Cross-layer links |
 | 197 | Indicateur | (inchangé, hors _L) |
 | 213 | à surveiller | to watch |
 | 223 | Autres ( | Others (…) |
@@ -2842,8 +2842,8 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 26 | ƒ Fonctions | ƒ Functions |
 | 26 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier | Functions: hierarchy, table, traceability, metrics, checks, file |
 | 27 | 🧬 Traçabilité inter-couches | 🧬 Cross-layer traceability |
-| 28 | 🪜 Liens entre couches | 🪜 Cross-layer links |
-| 28 | 🪜 Couches | 🪜 Layers |
+| 28 | ⇶ Liens entre couches | ⇶ Cross-layer links |
+| 28 | ⇶ Couches | ⇶ Layers |
 | 28 | Vue graphique des réalisations entre couches (OA → SA → LA → PA → EPBS) : fonctions, chaînes et leurs fonctions, capacités, composants… | Graphical view of the realizations between layers (OA → SA → LA → PA → EPBS): functions, chains and their functions, capabilities, components… |
 | 29 | 🎯 Capacités & missions | 🎯 Capabilities & missions |
 | 30 | 🚦 Modes & états | 🚦 Modes & states |
@@ -4357,7 +4357,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 735 | 💬 Commenter la chaîne seule | 💬 Comment on the chain only |
 | 739 | 📄 Voir ses commentaires ( | 📄 See its comments (…) |
 | 740 | 🔍 Détail de l'élément | 🔍 Element details |
-| 741 | 🪜 Liens entre couches | 🪜 Cross-layer links |
+| 741 | ⇶ Liens entre couches | ⇶ Cross-layer links |
 | 782 | Note de revue : glissez-la sur le diagramme (déposée sur un élément, elle lui est liée) ou cliquez pour la poser au centre. Les notes forment un calque indépendant du .aird. | Review note: drag it onto the diagram (dropped on an element, it is linked to it) or click to place it in the centre. Notes form a layer independent of the .aird. |
 | 782 | 📝 Note de revue | 📝 Review note |
 | 783 | Afficher ou masquer le calque des notes de revue (indépendant du .aird) | Show or hide the review note layer (independent of the .aird) |
@@ -5157,8 +5157,8 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 359 | nom, type, description | name, type, description |
 | 360 | ▴ Masquer | ▴ Hide |
 | 360 | ▾ Voir / modifier | ▾ View / edit |
-| 362 | Ouvrir dans 🔬 Analyses › 🪜 Liens entre couches | Open in 🔬 Analyses › 🪜 Cross-layer links |
-| 362 | 🪜 Ouvrir | 🪜 Open |
+| 362 | Ouvrir dans 🔬 Analyses › ⇶ Liens entre couches | Open in 🔬 Analyses › ⇶ Cross-layer links |
+| 362 | ⇶ Ouvrir | ⇶ Open |
 | 364 | Description du diagramme (documentation dans Capella) | Diagram description (documentation in Capella) |
 | 364 | Description | Description |
 | 365 | Tableau des éléments représentés sous le diagramme | Table of the represented elements under the diagram |
@@ -5602,7 +5602,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 247 | Liens physiques | Physical links |
 | 247 | Chaînes qui impliquent la fonction | Chains involving the function |
 | 248 | Tableau d'éléments (type, couche, filtre) | Element table (type, layer, filter) |
-| 248 | 🪜 Liens entre couches | 🪜 Cross-layer links |
+| 248 | ⇶ Liens entre couches | ⇶ Cross-layer links |
 | 258 | toutes couches | all layers |
 | 267 | 🔁 Pour chaque | 🔁 For each |
 | 269 | types : LAB, SDFB… (vide : tous) | types: LAB, SDFB… (empty: all) |
@@ -5730,7 +5730,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 226 | 🔲 Diagramme | 🔲 Diagram |
 | 226 | ▤ Tableau d'éléments | ▤ Element table |
 | 226 | ⚙ Contenu automatique | ⚙ Automatic content |
-| 226 | 🪜 Liens entre couches | 🪜 Cross-layer links |
+| 226 | ⇶ Liens entre couches | ⇶ Cross-layer links |
 | 228 | ➜ Aller au chapitre | ➜ Go to chapter |
 | 230 | 🔗 Lier à « | 🔗 Link to “…” (same text) |
 | 230 | » (même texte) | 🔗 Link to “…” (same text) |

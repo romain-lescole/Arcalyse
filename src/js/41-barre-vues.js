@@ -25,7 +25,7 @@ var CAP_NAV_ITEMS=[
   {k:'links',     l:_L('🔗 Liens'),             g:'flux', t:_L('Relations entre les éléments du modèle')},
   {k:'functions', l:_L('ƒ Fonctions'),          g:'ana',  t:_L('Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier')},
   {k:'ana:trace', l:_L('🧬 Traçabilité inter-couches'), g:'ana'},
-  {k:'ana:xlay',  l:_L('🪜 Liens entre couches'),       p:_L('🪜 Couches'), g:'ana', t:_L('Vue graphique des réalisations entre couches (OA → SA → LA → PA → EPBS) : fonctions, chaînes et leurs fonctions, capacités, composants…')},
+  {k:'ana:xlay',  l:_L('⇶ Liens entre couches'),       p:_L('⇶ Couches'), g:'ana', t:_L('Vue graphique des réalisations entre couches (OA → SA → LA → PA → EPBS) : fonctions, chaînes et leurs fonctions, capacités, composants…')},
   {k:'ana:caps',  l:_L('🎯 Capacités & missions'),     g:'ana'},
   {k:'ana:states',l:_L('🚦 Modes & états'),            g:'ana'},
   {k:'ana:diff',  l:_L('⚖ Comparaison de versions'),  g:'ana'},
@@ -66,7 +66,7 @@ function capNavMigrate(o){
   if(!o.diag){ o.diag=1; if(!o.pins.includes('diag')){ const i=o.pins.indexOf('chains'); o.pins.splice(i<0?o.pins.length:i+1, 0, 'diag'); } }
   if(!o.home){ o.home=1; if(!o.pins.includes('home')) o.pins.unshift('home'); }   // 🏠 Accueil (version 2.2)
   if(!o.ch){ o.ch=1; o.pins=o.pins.filter(k=>k!=='chains'); }
-  if(!o.xl){ o.xl=1; if(!o.pins.includes('ana:xlay')){ const i=o.pins.indexOf('dashboard'); o.pins.splice(i<0?o.pins.length:i, 0, 'ana:xlay'); } }   // 🪜 Liens entre couches épinglé (une fois ; désépinglable)
+  if(!o.xl){ o.xl=1; if(!o.pins.includes('ana:xlay')){ const i=o.pins.indexOf('dashboard'); o.pins.splice(i<0?o.pins.length:i, 0, 'ana:xlay'); } }   // ⇶ Liens entre couches épinglé (une fois ; désépinglable)
   if(!o.rp){ o.rp=1; if(!o.pins.includes('home:rap')){ const i=o.pins.indexOf('dashboard'); o.pins.splice(i<0?o.pins.length:i+1, 0, 'home:rap'); } }   // 📘 Rapports, à côté de 📐 Tableau de bord   // ⚡ Chaînes : dans le menu 📡 Flux & interfaces par défaut (version 2.2, une fois ; réépinglable)
   return o;
 }
