@@ -568,6 +568,7 @@ PARTS.preferences = async () => {
 PARTS.dossiers = async () => {
   await p.evaluate(() => capDosOuvrir()); await wait(600); await top();
   await p.evaluate(() => capDosGenerer('sss', null)); await wait(1200);
+  await p.evaluate(() => { const n = document.getElementById('cap-watch-flash'); if (n) n.style.display = 'none'; });   // message « créé » masqué
   await shot('05-dossier-sss');
   await shot('05-rapports-plans', { sel: '#cap-view-home .dos-rap', pad: 4 });
   const t = p.locator('#cap-view-home .dos-k-txt .dos-blk-l').first();
