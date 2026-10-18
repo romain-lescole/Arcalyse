@@ -49,7 +49,7 @@ var CAP_NAV_GROUPS=[
 var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['home','table','diag','ana:xlay','dashboard','home:rap'], tbl:1, diag:1, home:1, ch:1, xl:1, rp:1};
 /** ⚙ Mode Simplifié : vues en boutons directs, vues gardées dans leur menu (les autres sont masquées),
  * commandes masquées de la barre (toujours accessibles par ☰ / Ctrl+K et ⚙). */
-var CAP_NAV_SIMPLE={pins:['home','diag','table'], menu:['tree','cards','chains','fex','csys','cblk','links','functions','ana:trace','ana:reqs'], ctl:['mode-rm','b-cap-watch','b-theme-menu']};
+var CAP_NAV_SIMPLE={pins:['home','diag','table'], menu:['tree','cards','chains','fex','csys','cblk','compex','physlink','functions','ana:trace','ana:reqs'], ctl:['mode-rm','b-cap-watch','b-theme-menu']};
 /** Commandes de la barre que le mode ⚙ Personnalisé peut masquer : [id, libellé]. */
 var CAP_NAV_CTLS=[['mode-rm',_L('🗺 Relation Map')],['b-cap-watch',_L('🔄 Suivi du fichier')],['b-review',_L('💬 Revue')],['b-theme-menu',_L('🎨 Thème')]];
 var _capNav=(()=>{ try{ const el=document.getElementById('cap-toolbar'); const o=el&&JSON.parse(el.textContent);
