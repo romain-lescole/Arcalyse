@@ -20,7 +20,7 @@ const OUT = path.join(ROOT, 'docs', 'guide', 'img');
 const PAGE = path.join(ROOT, 'dist', 'arcalyse-fr.html');
 const MODEL = path.join(ROOT, 'tests', 'models', 'In-Flight_Entertainment_System.capella');
 const AIRD_GZ = MODEL.replace(/\.capella$/, '.aird.gz');
-const W = 1600, H = 900;
+let W = 1600; const H = 900;
 fs.mkdirSync(OUT, { recursive: true });
 
 /** Page Playwright courante et liste des erreurs JavaScript rencontrées. */
@@ -112,6 +112,11 @@ async function each(prefix, list) {
   console.log('✔ ' + prefix + '* (' + list.length + ')');
 }
 
+/** Exécute une suite d'actions avec une fenêtre plus large (barre principale avec ses libellés : sous 1600 px environ, elle passe en icônes seules), puis revient à la taille normale.
+ * @param {Function} fn - Actions asynchrones
+ * @param {number} [w] - Largeur temporaire
+ */
+async function wide(fn, w = 1920) { const w0 = W; W = w; await p.setViewportSize({ width: w, height: H }); await wait(400); try { await fn(); } finally { W = w0; await p.setViewportSize({ width: W, height: H }); await wait(400); } }
 /** Exécute une suite d'actions avec une fenêtre plus haute (menus et fenêtres longs), puis revient à la taille normale.
  * @param {Function} fn - Actions asynchrones
  * @param {number} [h] - Hauteur temporaire
@@ -526,12 +531,13 @@ PARTS.aida = async () => {
 /** Barre d'outils principale et ses menus. */
 PARTS.interface = async () => {
   await view('home'); await top();
+  await wide(async () => {
   await shot('01-barre-principale', { sel: '#toolbar', pad: 0 });
   const tb = ['#cap-tb-home .tbtn', '#mode-rm', '[data-open="diag"]', '#cap-v-elements', '[data-open="table"]', '#cap-v-flux',
     '#cap-v-analyses', '[data-open="ana:xlay"]', '#cap-nav-cfg', '#b-file-menu', '#b-save-direct', '#b-cap-watch', '#b-review', '#b-theme-menu', '#b-help', '#b-prefs'];
   await marks(tb, 'tr');
   await shot('01-barre-principale-reperes', { sel: '#toolbar', pad: 2 });
-  await unmark();
+  await unmark(); });
   // Menus déroulants
   const dd = async (btn, name) => { await p.click(btn); await wait(300); await shot(name, { sel: [btn, '#cap-nav-dd'], pad: 8 }); await esc(); await p.mouse.click(800, 600); await wait(150); };
   await dd('#cap-v-elements .cap-nav-arr', '01-menu-explorateur');
@@ -558,7 +564,7 @@ PARTS.preferences = async () => {
   await p.evaluate(() => { document.getElementById('cap-pref-ov').style.display = 'none'; capPrefCustomDialog(); }); await wait(400);
   await tall(async () => { await shot('02-personnaliser', { sel: await dlg('#cap-pref-ov .cap-pref-grid'), pad: 2 }); }, 1500);
   await p.evaluate(() => { document.getElementById('cap-pref-ov').style.display = 'none'; capPrefSetMode('simple'); }); await wait(400);
-  await shot('02-barre-simplifiee', { sel: '#toolbar', pad: 0 });
+  await wide(async () => { await shot('02-barre-simplifiee', { sel: '#toolbar', pad: 0 }); });
   await p.evaluate(() => capPrefSetIcons(true)); await wait(400);
   await shot('02-barre-icones', { sel: '#toolbar', pad: 0 });
   await p.evaluate(() => { capPrefSetIcons(false); capPrefSetMode('expert'); }); await wait(400);

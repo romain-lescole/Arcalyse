@@ -52,7 +52,7 @@ function capPrefMenuHtml(){
     CAP_PREF_MODES.map(([k,l,t])=>`<div class="ctx-i cap-nav-it${k===m?' cur':''}" data-pmode="${k}" title="${t}"><span>${l}</span></div>`).join('')+
     _L(`<div class="ctx-i" data-act="custom" title="Choisir les vues et les commandes affichées (mode Personnalisé)">🛠 Personnaliser l'affichage…</div>
     <div class="cap-nav-h">Style de la barre</div>
-    <div class="ctx-i cap-nav-it${_capNav.icons?'':' cur'}" data-picons="0"><span>Icônes et textes</span></div>
+    <div class="ctx-i cap-nav-it${_capNav.icons?'':' cur'}" data-picons="0" title="Icônes seules automatiquement tant que la barre ne tient pas sur une ligne"><span>Icônes et textes${document.documentElement.hasAttribute('data-tbauto')?_L(' <span class="cap-nav-g">(icônes seules : la barre déborde)</span>'):''}</span></div>
     <div class="ctx-i cap-nav-it${_capNav.icons?' cur':''}" data-picons="1" title="Boutons réduits à leur icône ; le nom s'affiche au survol"><span>Icônes seules</span></div>
     <div class="cw-m-sep"></div>
     <div class="ctx-i" data-act="theme">🎨 Thème…</div>
@@ -85,7 +85,7 @@ function capPrefDialogFill(ov){
       CAP_PREF_MODES.map(([k,l,d])=>`<label class="cap-pref-row"><input type="radio" name="cap-pref-m" data-pm="${k}"${k===m?' checked':''}> <span><b>${l}</b><br><span class="ana-dim">${d}</span></span></label>`).join('')+
       _L(`<div style="margin:8px 0 0 24px"><button class="phl-export-btn" data-pa="custom">🛠 Personnaliser l'affichage…</button></div>
       <div class="cap-pref-sec" style="margin-top:14px">Style de la barre</div>
-      <label class="cap-pref-row"><input type="radio" name="cap-pref-i" data-pi="0"${_capNav.icons?'':' checked'}> <span><b>Icônes et textes</b></span></label>
+      <label class="cap-pref-row"><input type="radio" name="cap-pref-i" data-pi="0"${_capNav.icons?'':' checked'}> <span><b>Icônes et textes</b><br><span class="ana-dim">Quand la barre ne tient pas sur une ligne (fenêtre étroite), elle passe automatiquement en icônes seules.</span></span></label>
       <label class="cap-pref-row"><input type="radio" name="cap-pref-i" data-pi="1"${_capNav.icons?' checked':''}> <span><b>Icônes seules</b><br><span class="ana-dim">Barre plus compacte : chaque bouton garde son icône, le nom s'affiche au survol ; les menus déroulants et ☰ gardent leurs textes.</span></span></label>`);
   } else if(t==='save'){
     const st=_capAuto.last?_L(`Dernier enregistrement automatique : ${_capAuto.last.toLocaleTimeString('fr-FR')}`):_L('Aucun enregistrement automatique pour l\'instant.');

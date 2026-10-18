@@ -115,6 +115,19 @@ function capNavLbl(l, ico){
   return (_capNav.icons&&ico?ico:a)+(b?`<span class="tb-lbl">${b}</span>`:'');
 }
 
+/**
+ * Icônes seules dans la barre : toujours si l'utilisateur les a choisies (⚙), sinon automatiquement
+ * tant que la barre ne tient pas sur une ligne (attribut data-tbauto sur <html>).
+ */
+function capNavFit(){
+  const H=document.documentElement, tb=document.getElementById('toolbar');
+  if(_capNav.icons||!tb){ H.toggleAttribute('data-tbicons', !!_capNav.icons); H.removeAttribute('data-tbauto'); return; }
+  H.removeAttribute('data-tbicons');   // mesure avec les libellés
+  const b=[...tb.querySelectorAll('.tbtn')].filter(e=>e.offsetParent).map(e=>e.getBoundingClientRect().top);
+  const deborde=b.length>1&&Math.max(...b)>Math.min(...b)+4;
+  H.toggleAttribute('data-tbicons', deborde); H.toggleAttribute('data-tbauto', deborde);
+}
+
 /** Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML). */
 function capNavSave(){
   let el=document.getElementById('cap-toolbar');
@@ -169,7 +182,7 @@ function capNavFluxTabs(cur){
 function capNavRender(){
   const box=document.getElementById('cap-tb-views'); if(!box) return;
   const E=capNavEff(), P=E.pins;
-  const I=!!_capNav.icons, tip=(l,t)=>I?l+(t?' — '+t:''):t||'';   // icônes seules : nom de la vue en infobulle
+  const tip=(l,t)=>l+(t?' — '+t:'');   // nom de la vue en infobulle (utile en icônes seules)
   const pin=k=>{ const it=CAP_NAV_ITEMS.find(i=>i.k===k);
     return `<div class="tbtn" id="cap-v-${k.replace(':','-')}" data-open="${k}" title="${tip(it.l,it.t)}">${capNavLbl(it.p||it.l, it.i)}</div>`; };   // p : libellé court du bouton épinglé
   let h='';
@@ -192,7 +205,7 @@ function capNavRender(){
   if(P.includes('home:rap')) h+=pin('home:rap');   // 📘 Rapports : à côté de 📐 Tableau de bord
   h+=_L(`<div class="tbtn" id="cap-nav-cfg" title="Toutes les vues, recherche (Ctrl+K) et réglage de la barre">☰</div>`);
   box.innerHTML=h;
-  document.documentElement.toggleAttribute('data-tbicons', I);   // ⚙ icônes seules : libellés .tb-lbl masqués (CSS)
+  capNavFit();   // ⚙ icônes seules (choisies, ou automatiques si la barre déborde) : libellés .tb-lbl masqués (CSS)
   // Commandes de la barre masquées par le mode ⚙ (classe prioritaire sur l'affichage géré par chaque module)
   CAP_NAV_CTLS.forEach(([id])=>document.getElementById(id)?.classList.toggle('cap-pref-hide',E.ctl.has(id)));
   const pb=document.getElementById('b-prefs');
@@ -382,5 +395,9 @@ function capNavMenuFill(){
     else if(e.key==='Escape') capNavClose();
   });
   window.addEventListener('resize',capNavClose);
+  // La barre change de largeur (fenêtre, boutons affichés au chargement d'un modèle…) : icônes seules si elle déborde
+  { let f=0; const tb=document.getElementById('toolbar');
+    if(tb&&window.ResizeObserver) new ResizeObserver(()=>{ cancelAnimationFrame(f); f=requestAnimationFrame(capNavFit); }).observe(tb);
+    window.addEventListener('resize',()=>{ cancelAnimationFrame(f); f=requestAnimationFrame(capNavFit); }); }
   capNavRender();
 })();

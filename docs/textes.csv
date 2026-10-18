@@ -2946,16 +2946,16 @@
 "js/41-barre-vues.js";"54";"🔄 Suivi du fichier";"🔄 File watch"
 "js/41-barre-vues.js";"54";"💬 Revue";"💬 Review"
 "js/41-barre-vues.js";"54";"🎨 Thème";"🎨 Theme"
-"js/41-barre-vues.js";"199";"Expert";"Expert"
-"js/41-barre-vues.js";"199";"Simplifié";"Simplified"
-"js/41-barre-vues.js";"199";"Personnalisé";"Custom"
-"js/41-barre-vues.js";"201";"Préférences : affichage des menus (mode actuel :";"Preferences: menu display (current mode:"
-"js/41-barre-vues.js";"201";"), enregistrement automatique, thème, interface et vues";"), automatic saving, theme, interface and views"
-"js/41-barre-vues.js";"217";"Vue affichée :";"Displayed view:"
-"js/41-barre-vues.js";"238";"(masquée)";"(hidden)"
-"js/41-barre-vues.js";"239";"Retirer de la barre";"Remove from the bar"
-"js/41-barre-vues.js";"239";"Épingler dans la barre (bouton direct)";"Pin to the bar (direct button)"
-"js/41-barre-vues.js";"309";"💾 Enregistrer sous…";"<div class=""ctx-i"" data-act=""open"" title=""Replaces the displayed model with another .capella file"">🔷 Open a Capella model…</div>
+"js/41-barre-vues.js";"212";"Expert";"Expert"
+"js/41-barre-vues.js";"212";"Simplifié";"Simplified"
+"js/41-barre-vues.js";"212";"Personnalisé";"Custom"
+"js/41-barre-vues.js";"214";"Préférences : affichage des menus (mode actuel :";"Preferences: menu display (current mode:"
+"js/41-barre-vues.js";"214";"), enregistrement automatique, thème, interface et vues";"), automatic saving, theme, interface and views"
+"js/41-barre-vues.js";"230";"Vue affichée :";"Displayed view:"
+"js/41-barre-vues.js";"251";"(masquée)";"(hidden)"
+"js/41-barre-vues.js";"252";"Retirer de la barre";"Remove from the bar"
+"js/41-barre-vues.js";"252";"Épingler dans la barre (bouton direct)";"Pin to the bar (direct button)"
+"js/41-barre-vues.js";"322";"💾 Enregistrer sous…";"<div class=""ctx-i"" data-act=""open"" title=""Replaces the displayed model with another .capella file"">🔷 Open a Capella model…</div>
       <div class=""ctx-i"" data-act=""folder"" title=""Opens the project folder: the .capella and its diagrams (.aird) are loaded together"">📁 Open the project folder…</div>
       <div class=""ctx-i"" data-act=""projet"" title=""Resumes a work project saved as an HTML page (💾), even by an earlier version of Arcalyse (2.1 or later): model, diagrams, review, home, views and settings"">📄 Open a work project (HTML page)…</div>
       <div class=""cap-nav-hint"">New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over.</div>
@@ -2970,8 +2970,8 @@
       <div class=""ctx-i"" data-act=""cfgsave"" title="".json file without the model: bar, dashboards, ▤ Table, theme, naming rules (your choice)"">⚙ Save the interface and views…</div>
       <div class=""ctx-i"" data-act=""cfgload"" title=""Applies an interface .json file (parts of your choice)"">⚙ Load an interface and views…</div>
       <div class=""cap-nav-hint"">To reuse your settings with another model or a new version of the page.</div>"
-"js/41-barre-vues.js";"309";"Ctrl+S";"Ctrl+S"
-"js/41-barre-vues.js";"310";"🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page.";"<div class=""ctx-i"" data-act=""open"" title=""Replaces the displayed model with another .capella file"">🔷 Open a Capella model…</div>
+"js/41-barre-vues.js";"322";"Ctrl+S";"Ctrl+S"
+"js/41-barre-vues.js";"323";"🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page.";"<div class=""ctx-i"" data-act=""open"" title=""Replaces the displayed model with another .capella file"">🔷 Open a Capella model…</div>
       <div class=""ctx-i"" data-act=""folder"" title=""Opens the project folder: the .capella and its diagrams (.aird) are loaded together"">📁 Open the project folder…</div>
       <div class=""ctx-i"" data-act=""projet"" title=""Resumes a work project saved as an HTML page (💾), even by an earlier version of Arcalyse (2.1 or later): model, diagrams, review, home, views and settings"">📄 Open a work project (HTML page)…</div>
       <div class=""cap-nav-hint"">New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over.</div>
@@ -2986,22 +2986,22 @@
       <div class=""ctx-i"" data-act=""cfgsave"" title="".json file without the model: bar, dashboards, ▤ Table, theme, naming rules (your choice)"">⚙ Save the interface and views…</div>
       <div class=""ctx-i"" data-act=""cfgload"" title=""Applies an interface .json file (parts of your choice)"">⚙ Load an interface and views…</div>
       <div class=""cap-nav-hint"">To reuse your settings with another model or a new version of the page.</div>"
-"js/41-barre-vues.js";"310";"Ctrl+Maj+S";"Ctrl+Maj+S"
-"js/41-barre-vues.js";"321";"📖 Aide complète 🎓 Visite guidée";"📖 Full help 🎓 Guided tour"
-"js/41-barre-vues.js";"323";"🎯 Visite de cette vue";"🎯 Tour of this view …"
-"js/41-barre-vues.js";"324";"🎯 Chargez un modèle pour la visite de chaque vue.";"🎯 Load a model for the tour of each view."
-"js/41-barre-vues.js";"325";"💬 Visite de la revue";"💬 Review tour"
-"js/41-barre-vues.js";"326";"ℹ À propos";"ℹ About"
-"js/41-barre-vues.js";"333";"🎨 Personnaliser…";"🎨 Customize…"
-"js/41-barre-vues.js";"337";"📌 épingle une vue en bouton direct dans la barre.";"📌 pins a view as a direct button in the bar."
-"js/41-barre-vues.js";"342";"🗺 Relation Map";"🗺 Relation Map"
-"js/41-barre-vues.js";"345";"Aucune vue ne correspond.";"No view matches."
-"js/41-barre-vues.js";"352";"Menu";"… ▾ menu in the bar"
-"js/41-barre-vues.js";"352";"▾ dans la barre";"… ▾ menu in the bar"
-"js/41-barre-vues.js";"353";"Autres vues";"Other views"
-"js/41-barre-vues.js";"356";"⚙ Personnaliser l'affichage…";"⚙ Customize display…"
-"js/41-barre-vues.js";"357";"↺ Rétablir la barre par défaut";"↺ Restore the default bar"
-"js/41-barre-vues.js";"359";"📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML.";"📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page."
+"js/41-barre-vues.js";"323";"Ctrl+Maj+S";"Ctrl+Maj+S"
+"js/41-barre-vues.js";"334";"📖 Aide complète 🎓 Visite guidée";"📖 Full help 🎓 Guided tour"
+"js/41-barre-vues.js";"336";"🎯 Visite de cette vue";"🎯 Tour of this view …"
+"js/41-barre-vues.js";"337";"🎯 Chargez un modèle pour la visite de chaque vue.";"🎯 Load a model for the tour of each view."
+"js/41-barre-vues.js";"338";"💬 Visite de la revue";"💬 Review tour"
+"js/41-barre-vues.js";"339";"ℹ À propos";"ℹ About"
+"js/41-barre-vues.js";"346";"🎨 Personnaliser…";"🎨 Customize…"
+"js/41-barre-vues.js";"350";"📌 épingle une vue en bouton direct dans la barre.";"📌 pins a view as a direct button in the bar."
+"js/41-barre-vues.js";"355";"🗺 Relation Map";"🗺 Relation Map"
+"js/41-barre-vues.js";"358";"Aucune vue ne correspond.";"No view matches."
+"js/41-barre-vues.js";"365";"Menu";"… ▾ menu in the bar"
+"js/41-barre-vues.js";"365";"▾ dans la barre";"… ▾ menu in the bar"
+"js/41-barre-vues.js";"366";"Autres vues";"Other views"
+"js/41-barre-vues.js";"369";"⚙ Personnaliser l'affichage…";"⚙ Customize display…"
+"js/41-barre-vues.js";"370";"↺ Rétablir la barre par défaut";"↺ Restore the default bar"
+"js/41-barre-vues.js";"372";"📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML.";"📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page."
 "js/42-tableaux-analyses.js";"43";"Glisser pour régler la largeur de la colonne (double-clic : largeur automatique)";"Drag to set the column width (double-click: automatic width)"
 "js/42-tableaux-analyses.js";"88";"Défilement horizontal du tableau";"Horizontal table scroll"
 "js/42-tableaux-analyses.js";"141";"✕ effacer";"🔍 … / … row… ✕ clear"
@@ -5650,10 +5650,11 @@
 "js/64-preferences.js";"43";"⚙ Barre : icônes seules (nom au survol)";"⚙ Toolbar: icons only (name on hover)"
 "js/64-preferences.js";"43";"⚙ Barre : icônes et textes";"⚙ Toolbar: icons and text"
 "js/64-preferences.js";"51";"Affichage des menus";"Menu display"
-"js/64-preferences.js";"53";"🛠 Personnaliser l'affichage… Style de la barre";"🛠 Customize display… Toolbar style Icons and text Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences…"
-"js/64-preferences.js";"55";"Icônes et textes";"🛠 Customize display… Toolbar style Icons and text Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences…"
-"js/64-preferences.js";"56";"Icônes seules 🎨 Thème… 💾 Enregistrement automatique";"🛠 Customize display… Toolbar style Icons and text Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences…"
-"js/64-preferences.js";"59";"⚙ Préférences…";"🛠 Customize display… Toolbar style Icons and text Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences…"
+"js/64-preferences.js";"53";"🛠 Personnaliser l'affichage… Style de la barre";"🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences…"
+"js/64-preferences.js";"55";"Icônes et textes";"🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences…"
+"js/64-preferences.js";"55";"(icônes seules : la barre déborde)";"(icons only: the toolbar overflows)"
+"js/64-preferences.js";"56";"Icônes seules 🎨 Thème… 💾 Enregistrement automatique";"🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences…"
+"js/64-preferences.js";"59";"⚙ Préférences…";"🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences…"
 "js/64-preferences.js";"59";"toutes les";"every … min"
 "js/64-preferences.js";"59";"désactivé";"off"
 "js/64-preferences.js";"81";"☰ Affichage";"☰ Display"
@@ -5663,11 +5664,11 @@
 "js/64-preferences.js";"84";"Choisissez les menus affichés dans la barre. Une vue masquée reste accessible par ☰ (Ctrl+K).";"Choose the menus shown in the toolbar. A hidden view remains reachable with ☰ (Ctrl+K)."
 "js/64-preferences.js";"86";"🛠 Personnaliser l'affichage… Style de la barre";"<div style=""margin:8px 0 0 24px""><button class=""phl-export-btn"" data-pa=""custom"">🛠 Customize display…</button></div>
       <div class=""cap-pref-sec"" style=""margin-top:14px"">Toolbar style</div>
-      <label class=""cap-pref-row""><input type=""radio"" name=""cap-pref-i"" data-pi=""0""{0}> <span><b>Icons and text</b></span></label>
+      <label class=""cap-pref-row""><input type=""radio"" name=""cap-pref-i"" data-pi=""0""{0}> <span><b>Icons and text</b><br><span class=""ana-dim"">When the toolbar does not fit on one line (narrow window), it switches to icons only automatically.</span></span></label>
       <label class=""cap-pref-row""><input type=""radio"" name=""cap-pref-i"" data-pi=""1""{1}> <span><b>Icons only</b><br><span class=""ana-dim"">More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text.</span></span></label>"
-"js/64-preferences.js";"88";"Icônes et textes";"<div style=""margin:8px 0 0 24px""><button class=""phl-export-btn"" data-pa=""custom"">🛠 Customize display…</button></div>
+"js/64-preferences.js";"88";"Icônes et textes Quand la barre ne tient pas sur une ligne (fenêtre étroite), elle passe automatiquement en icônes seules.";"<div style=""margin:8px 0 0 24px""><button class=""phl-export-btn"" data-pa=""custom"">🛠 Customize display…</button></div>
       <div class=""cap-pref-sec"" style=""margin-top:14px"">Toolbar style</div>
-      <label class=""cap-pref-row""><input type=""radio"" name=""cap-pref-i"" data-pi=""0""{0}> <span><b>Icons and text</b></span></label>
+      <label class=""cap-pref-row""><input type=""radio"" name=""cap-pref-i"" data-pi=""0""{0}> <span><b>Icons and text</b><br><span class=""ana-dim"">When the toolbar does not fit on one line (narrow window), it switches to icons only automatically.</span></span></label>
       <label class=""cap-pref-row""><input type=""radio"" name=""cap-pref-i"" data-pi=""1""{1}> <span><b>Icons only</b><br><span class=""ana-dim"">More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text.</span></span></label>"
 "js/64-preferences.js";"91";"Dernier enregistrement automatique :";"Last automatic save: …"
 "js/64-preferences.js";"91";"Aucun enregistrement automatique pour l'instant.";"No automatic save yet."

@@ -180,7 +180,7 @@ La roue crantée **⚙** (à droite de ❓ Aide) ouvre un menu rapide ; **⚙ Pr
 
 Une vue **masquée** reste accessible par **☰ / Ctrl+K**, marquée « (masquée) ». Un 📌 cliqué hors du mode Expert passe au mode Personnalisé. 📁 Fichier, 💾, ❓ Aide et ⚙ restent toujours affichés.
 
-**Style de la barre** : *Icônes et textes* ou *Icônes seules* (barre compacte, nom au survol ; 🧱 marqué **SA** / **LA** ; les menus déroulants et ☰ gardent leurs textes). Le style se combine avec chaque mode.
+**Style de la barre** : *Icônes et textes* ou *Icônes seules* (barre compacte, nom au survol ; 🧱 marqué **SA** / **LA** ; les menus déroulants et ☰ gardent leurs textes). Le style se combine avec chaque mode. En *Icônes et textes*, la barre passe **automatiquement** en icônes seules tant qu'elle ne tient pas sur une ligne (fenêtre étroite), et retrouve ses textes quand la place revient ; le menu ⚙ l'indique.
 
 **💾 Enregistrement automatique** (désactivé par défaut, Edge / Chrome) : toutes les 2 à 30 minutes, la page est écrite dans son fichier (celui de 💾 / Ctrl+S), seulement si elle a changé. Option **Garder la version précédente** : avant chaque enregistrement (automatique ou 💾), l'ancien contenu est copié dans un fichier de secours (par exemple `mon-projet.backup.html`, qui s'ouvre comme une page normale). Le navigateur oublie les fichiers choisis quand la page est fermée : à la réouverture, un bandeau propose de les choisir à nouveau.
 

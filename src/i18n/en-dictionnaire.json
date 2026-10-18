@@ -4158,7 +4158,10 @@
   "identification des interfaces entre composants et avec l'extérieur, entités concernées": "identification of interfaces among components and with external entities, interfacing entities",
   "traçabilité de chaque composant vers les exigences qui lui sont allouées (SSS), et inversement": "traceability of each component to the requirements allocated to it (SSS), and the reverse",
   "informations générales : sigles, abréviations, glossaire, justification des choix": "general information: acronyms, abbreviations, glossary, rationale",
-  "Plans types remplis à partir du modèle (spécification boîte noire, dossier de conception boîte blanche, SSS et SSDD MIL-STD-498 pour le système ou un sous-système), puis entièrement modifiables ;": "Standard outlines filled from the model (black-box specification, white-box design document, MIL-STD-498 SSS and SSDD for the system or a subsystem), then fully editable;"
+  "Plans types remplis à partir du modèle (spécification boîte noire, dossier de conception boîte blanche, SSS et SSDD MIL-STD-498 pour le système ou un sous-système), puis entièrement modifiables ;": "Standard outlines filled from the model (black-box specification, white-box design document, MIL-STD-498 SSS and SSDD for the system or a subsystem), then fully editable;",
+  "Icônes seules automatiquement tant que la barre ne tient pas sur une ligne": "Icons only automatically as long as the toolbar does not fit on one line",
+  "(icônes seules : la barre déborde)": "(icons only: the toolbar overflows)",
+  "Quand la barre ne tient pas sur une ligne (fenêtre étroite), elle passe automatiquement en icônes seules.": "When the toolbar does not fit on one line (narrow window), it switches to icons only automatically."
  },
  "interface": {
   "🌳 Arborescence": "🌳 Tree",

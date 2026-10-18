@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 5634 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 5635 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -2867,34 +2867,34 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 54 | 🔄 Suivi du fichier | 🔄 File watch |
 | 54 | 💬 Revue | 💬 Review |
 | 54 | 🎨 Thème | 🎨 Theme |
-| 199 | Expert | Expert |
-| 199 | Simplifié | Simplified |
-| 199 | Personnalisé | Custom |
-| 201 | Préférences : affichage des menus (mode actuel : | Preferences: menu display (current mode: |
-| 201 | ), enregistrement automatique, thème, interface et vues | ), automatic saving, theme, interface and views |
-| 217 | Vue affichée : | Displayed view: |
-| 238 | (masquée) | (hidden) |
-| 239 | Retirer de la barre | Remove from the bar |
-| 239 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
-| 309 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 309 | Ctrl+S | Ctrl+S |
-| 310 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 310 | Ctrl+Maj+S | Ctrl+Maj+S |
-| 321 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
-| 323 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
-| 324 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
-| 325 | 💬 Visite de la revue | 💬 Review tour |
-| 326 | ℹ À propos | ℹ About |
-| 333 | 🎨 Personnaliser… | 🎨 Customize… |
-| 337 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
-| 342 | 🗺 Relation Map | 🗺 Relation Map |
-| 345 | Aucune vue ne correspond. | No view matches. |
-| 352 | Menu | … ▾ menu in the bar |
-| 352 | ▾ dans la barre | … ▾ menu in the bar |
-| 353 | Autres vues | Other views |
-| 356 | ⚙ Personnaliser l'affichage… | ⚙ Customize display… |
-| 357 | ↺ Rétablir la barre par défaut | ↺ Restore the default bar |
-| 359 | 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
+| 212 | Expert | Expert |
+| 212 | Simplifié | Simplified |
+| 212 | Personnalisé | Custom |
+| 214 | Préférences : affichage des menus (mode actuel : | Preferences: menu display (current mode: |
+| 214 | ), enregistrement automatique, thème, interface et vues | ), automatic saving, theme, interface and views |
+| 230 | Vue affichée : | Displayed view: |
+| 251 | (masquée) | (hidden) |
+| 252 | Retirer de la barre | Remove from the bar |
+| 252 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
+| 322 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 322 | Ctrl+S | Ctrl+S |
+| 323 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 323 | Ctrl+Maj+S | Ctrl+Maj+S |
+| 334 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
+| 336 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
+| 337 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
+| 338 | 💬 Visite de la revue | 💬 Review tour |
+| 339 | ℹ À propos | ℹ About |
+| 346 | 🎨 Personnaliser… | 🎨 Customize… |
+| 350 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
+| 355 | 🗺 Relation Map | 🗺 Relation Map |
+| 358 | Aucune vue ne correspond. | No view matches. |
+| 365 | Menu | … ▾ menu in the bar |
+| 365 | ▾ dans la barre | … ▾ menu in the bar |
+| 366 | Autres vues | Other views |
+| 369 | ⚙ Personnaliser l'affichage… | ⚙ Customize display… |
+| 370 | ↺ Rétablir la barre par défaut | ↺ Restore the default bar |
+| 372 | 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
 
 ## js/42-tableaux-analyses.js
 
@@ -5654,10 +5654,11 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 43 | ⚙ Barre : icônes seules (nom au survol) | ⚙ Toolbar: icons only (name on hover) |
 | 43 | ⚙ Barre : icônes et textes | ⚙ Toolbar: icons and text |
 | 51 | Affichage des menus | Menu display |
-| 53 | 🛠 Personnaliser l'affichage… Style de la barre | 🛠 Customize display… Toolbar style Icons and text Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences… |
-| 55 | Icônes et textes | 🛠 Customize display… Toolbar style Icons and text Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences… |
-| 56 | Icônes seules 🎨 Thème… 💾 Enregistrement automatique | 🛠 Customize display… Toolbar style Icons and text Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences… |
-| 59 | ⚙ Préférences… | 🛠 Customize display… Toolbar style Icons and text Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences… |
+| 53 | 🛠 Personnaliser l'affichage… Style de la barre | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences… |
+| 55 | Icônes et textes | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences… |
+| 55 | (icônes seules : la barre déborde) | (icons only: the toolbar overflows) |
+| 56 | Icônes seules 🎨 Thème… 💾 Enregistrement automatique | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences… |
+| 59 | ⚙ Préférences… | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences… |
 | 59 | toutes les | every … min |
 | 59 | désactivé | off |
 | 81 | ☰ Affichage | ☰ Display |
@@ -5665,8 +5666,8 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 81 | 🎨 Thème | 🎨 Theme |
 | 81 | ⚙ Interface et vues | ⚙ Interface and views |
 | 84 | Choisissez les menus affichés dans la barre. Une vue masquée reste accessible par ☰ (Ctrl+K). | Choose the menus shown in the toolbar. A hidden view remains reachable with ☰ (Ctrl+K). |
-| 86 | 🛠 Personnaliser l'affichage… Style de la barre | 🛠 Customize display… Toolbar style Icons and text Icons only More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text. |
-| 88 | Icônes et textes | 🛠 Customize display… Toolbar style Icons and text Icons only More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text. |
+| 86 | 🛠 Personnaliser l'affichage… Style de la barre | 🛠 Customize display… Toolbar style Icons and text When the toolbar does not fit on one line (narrow window), it switches to icons only automatically. Icons only More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text. |
+| 88 | Icônes et textes Quand la barre ne tient pas sur une ligne (fenêtre étroite), elle passe automatiquement en icônes seules. | 🛠 Customize display… Toolbar style Icons and text When the toolbar does not fit on one line (narrow window), it switches to icons only automatically. Icons only More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text. |
 | 91 | Dernier enregistrement automatique : | Last automatic save: … |
 | 91 | Aucun enregistrement automatique pour l'instant. | No automatic save yet. |
 | 92 | La page est enregistrée dans son fichier (celui de 💾 / Ctrl+S), seulement si quelque chose a changé . | The page is saved to its file (the one used by 💾 / Ctrl+S), only if something has changed . |
