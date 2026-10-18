@@ -484,10 +484,28 @@ function xtDeplacer(doc, el, parent, index) {
 }
 
 /**
- * Nouvel identifiant Capella (UUID v4, minuscules).
+ * Nouvel identifiant Capella (UUID v4, minuscules), garanti absent du document : ni présent dans
+ * l'index, ni déjà distribué (nœuds préparés pas encore insérés, ou retirés par une annulation).
+ * Le contrôle est une recherche dans l'index et ne ralentit pas la création.
+ * @param {object} [doc] document dont on évite les identifiants
  * @returns {string}
  */
-function xtNouvelId() {
+function xtNouvelId(doc) {
+  for (;;) {
+    const id = xtTirerUuid();
+    if (!doc) return id;
+    if (!doc.idsDonnes) doc.idsDonnes = new Set();
+    if (doc.parId.has(id) || doc.idsDonnes.has(id)) continue;
+    doc.idsDonnes.add(id);
+    return id;
+  }
+}
+
+/**
+ * Tire un UUID v4 au hasard (crypto si disponible, sinon Math.random).
+ * @returns {string}
+ */
+function xtTirerUuid() {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16); });
 }
@@ -723,6 +741,63 @@ const STY_LIENS_SANS_ICONE = new Set([
   "return message mapping", "return message mapping AIS", "return message mapping DF", "return message mapping FS",
   "return message mapping OA"
 ]);
+
+/**
+ * Outils des palettes de Capella qui créent un port (NodeCreationDescription, calque par défaut) : f (description),
+ * o (nom de l'outil), m (mapping du port, chemin tel qu'écrit dans le .aird), t (type créé), r (balise), v (valeurs posées,
+ * ordre EMF), c (conteneur du port : '' = élément visé, getComponentType, abstractType), pre (précondition AQL, transcrite
+ * dans 26-diagrammes.js) ; d (représentation, chemin décodé) seulement si le mapping n'est pas dans la représentation
+ * de l'outil ; p (autres mappings parents, chemins décodés : reusedBorderedNodeMappings) — le parent du mapping en est un.
+ */
+const STY_OUTILS_PORTS = [];   // outils de création : sans objet dans la visionneuse
+
+/** Dossier des images des descriptions de Capella (préfixe des workspacePath des styles de ports). */
+const STY_IMAGES = "/org.polarsys.capella.core.sirius.analysis/description/images/";
+
+/**
+ * Mappings de ports (chemin tel qu'écrit dans le .aird) : f (description), pre (précondition du mapping), styles
+ * (conditionnels dans l'ordre, puis principal) : q (prédicat, '' pour le style principal), c (rang du style conditionnel,
+ * -1 pour le principal), t (type Sirius), a (attributs écrits dans le .aird ; workspacePath sans le dossier des images de
+ * Capella, STY_IMAGES), taille (largeur et hauteur en unités Sirius).
+ */
+const STY_MAPPINGS_PORTS = {};   // outils de création : sans objet dans la visionneuse
+
+/**
+ * Outils des palettes de Capella qui créent un lien par un service Java connu (EdgeCreationDescription) : f (description),
+ * o (nom de l'outil), s (service : createDFFunctionalExchange, createABFunctionalExchange), m (mapping du lien, chemin tel
+ * qu'écrit dans le .aird), src / tgt (mappings permis en source et en cible, chemins décodés), pre (précondition),
+ * conn (précondition du début du tracé), mpre (précondition du mapping du lien) — expressions transcrites dans 26-diagrammes.js.
+ */
+const STY_OUTILS_LIENS = [];   // outils de création : sans objet dans la visionneuse
+
+/**
+ * Outils des palettes de Capella qui créent un élément dessiné en conteneur (ContainerCreationDescription) ou en nœud
+ * (NodeCreationDescription) : g (genre : fonction — getDFTarget, createFunction, allocateToCapability, CreateView ; composant —
+ * getABTarget, createComponent et sa Part ; entite — getABTarget, Entity ; allouee — nœud : fonction de la fonction racine
+ * allouée au composant visé, CreateView), f (description), o (nom de l'outil), m (mapping créé, chemin tel qu'écrit dans le
+ * .aird), pre (précondition de l'outil), mpre (précondition du mapping), st (type du style principal), q (prédicats des
+ * styles conditionnels, dans l'ordre), haut (mapping au premier niveau du diagramme), p (mappings qui peuvent le contenir,
+ * chemins décodés), n (nature d'un composant physique) — expressions transcrites dans 26-diagrammes.js.
+ */
+const STY_OUTILS_CONTENEURS = [];   // outils de création : sans objet dans la visionneuse
+
+/**
+ * Outils de dépôt depuis l'arborescence (ContainerDropDescription, dragSource PROJECT_EXPLORER) qui ajoutent la vue de
+ * l'élément déposé, par représentation où ils servent : g (genre : vue, fonction, part), o (nom), r (représentation, chemin
+ * décodé), pre (précondition), diagramme (dépôt sur le fond accepté), conteneurs (mappings, chemins décodés, qui acceptent le
+ * dépôt), mappings (vues possibles, dans l'ordre : chemins décodés, décrits dans STY_MAPPINGS_DEPOTS) ; un chemin de la
+ * représentation de l'outil est écrit sans elle (« /@defaultLayer/… » : préfixer par r).
+ */
+const STY_OUTILS_DEPOTS = [];   // outils de création : sans objet dans la visionneuse
+
+/**
+ * Types de diagrammes de Capella (DiagramDescription, hors séquences et tableaux) : r (chemin décodé de la description, comme
+ * la description d'une représentation du .aird), d (domainClass), pre (précondition sur l'élément cible), titre (titleExpression).
+ */
+const STY_DIAGRAMMES = [];   // outils de création : sans objet dans la visionneuse
+
+/** Mappings des outils de dépôt (chemin décodé) : d (domainClass), pre (précondition), noeud (DNode, sinon conteneur), q (prédicats des styles conditionnels). */
+const STY_MAPPINGS_DEPOTS = {};   // outils de création : sans objet dans la visionneuse
 
 /* ── src/js/25-liaisons.js ── */
 /* ═══════════════════════════════════════════════════════════════════════
@@ -1021,7 +1096,7 @@ function diaLire(texte) {
     const dt = desc ? xtAttr(desc, 'xmi:type') || '' : '';
     const noeud = parUid.get((xtAttr(d, 'repPath') || '').replace(/^#/, '')) || null;
     const r = {
-      uid: xtAttr(d, 'uid') || '', nom: xtAttr(d, 'name') || '', type, sigle: diaSigle(type),
+      uid: xtAttr(d, 'uid') || '', nom: xtAttr(d, 'name') || '', type, sigle: diaSigle(type), description: diaDecoderChemin(href),
       genre: /Sequence/.test(dt) ? 'sequence' : /Table/.test(dt) ? 'tableau' : /DiagramDescription/.test(dt) ? 'diagramme' : 'autre',
       croise: /CrossTable/.test(dt),                    // tableau croisé (sinon tableau d'édition)
       cibleId: diaHrefId(xtAttr(diaEnfant(d, 'target') || { attrs: [] }, 'href')), noeud, scene: null
@@ -1120,6 +1195,7 @@ function diaLargeurTexte(t, taille) { return String(t).length * taille * 0.56; }
  * @returns {number}
  */
 function diaNbLignes(t, largeur, taille) {
+  largeur = Math.max(largeur, taille);               // largeur nulle ou négative : une lettre par ligne, pas de boucle sans fin
   let n = 1, l = 0;
   const esp = diaLargeurTexte(' ', taille);
   for (const mot of String(t).split(/\s+/).filter(Boolean)) {
@@ -1227,6 +1303,7 @@ function diaScene(aird, rep) {
     if (/^default ?execution/i.test(f.mapping)) { f.figure = 'vie'; f.posTexte = 'aucun'; }
     // Fragments de séquence : combiné (opérateur dans l'onglet), opérande (garde), référence (scénario cité)
     if (sequence) {
+      f.sequence = true;
       if (f.typeSem === 'CombinedFragment') { f.fragment = 'combine'; f.operateur = f.texte.trim(); }
       else if (f.typeSem === 'InteractionOperand') f.fragment = 'operande';
       else if (f.typeSem === 'InteractionUse') { f.fragment = 'reference'; f.operateur = f.texte.trim() || 'ref'; }
@@ -1452,7 +1529,9 @@ function diaScene(aird, rep) {
       texte: masqueTexte || !s ? '' : xtAttr(s, 'name') || '',
       texteDebut: masqueTexte || !s ? '' : xtAttr(s, 'beginLabel') || '', texteFin: masqueTexte || !s ? '' : xtAttr(s, 'endLabel') || '',
       police: pol, decalages: { centre: decalage('6001'), debut: decalage('6002'), fin: decalage('6003') },
-      largeurEtiquette: bornesCentre && bornesCentre.w > 0 ? bornesCentre.w : 0      // largeur de l'étiquette centrale enregistrée (GMF), 0 sinon
+      largeurEtiquette: bornesCentre && bornesCentre.w > 0 ? bornesCentre.w : 0,     // largeur de l'étiquette centrale enregistrée (GMF), 0 sinon
+      etiquetteGmf: !!bornesCentre,                                                    // nœud GMF de l'étiquette centrale (6001) présent
+      arbre: a('routingStyle') === 'tree'                                              // routage en arbre (décompositions), recalculé par Sirius
     });
   }
 
@@ -1636,16 +1715,12 @@ function diaBordVers(f, p) {
 }
 
 /**
- * Position (centre) d'une étiquette de lien, comme GMF (LabelHelper) : le décalage enregistré est exprimé
- * dans le repère du segment qui porte le point de référence (milieu du lien, ou son extrémité), x le long
- * du segment dans son sens de parcours, y à sa gauche ; il tourne donc avec le segment.
- * Vérifié sur IFE : 5 étiquettes sur 778 tombent sur une boîte, contre 171 sans rotation.
+ * Repère d'une étiquette de lien : point de référence (début, fin, ou milieu de la ligne) et segment qui le porte.
  * @param {number[][]} pts points du lien
- * @param {number[]} decalage décalage enregistré [x, y]
- * @param {'centre'|'debut'|'fin'} quoi étiquette
- * @returns {number[]} [x, y]
+ * @param {'debut'|'fin'|'centre'} quoi étiquette
+ * @returns {{ref:number[], a:number[], b:number[]}}
  */
-function diaEtiquette(pts, decalage, quoi) {
+function diaRepereEtiquette(pts, quoi) {
   let ref, a, b;
   if (quoi === 'debut') { ref = pts[0]; a = pts[0]; b = pts[1]; }
   else if (quoi === 'fin') { ref = pts[pts.length - 1]; a = pts[pts.length - 2]; b = pts[pts.length - 1]; }
@@ -1661,6 +1736,21 @@ function diaEtiquette(pts, decalage, quoi) {
       reste -= l;
     }
   }
+  return { ref, a, b };
+}
+
+/**
+ * Position (centre) d'une étiquette de lien, comme GMF (LabelHelper) : le décalage enregistré est exprimé
+ * dans le repère du segment qui porte le point de référence (milieu du lien, ou son extrémité), x le long
+ * du segment dans son sens de parcours, y à sa gauche ; il tourne donc avec le segment.
+ * Vérifié sur IFE : 5 étiquettes sur 778 tombent sur une boîte, contre 171 sans rotation.
+ * @param {number[][]} pts points du lien
+ * @param {number[]} decalage décalage enregistré [x, y]
+ * @param {'centre'|'debut'|'fin'} quoi étiquette
+ * @returns {number[]} [x, y]
+ */
+function diaEtiquette(pts, decalage, quoi) {
+  const { ref, a, b } = diaRepereEtiquette(pts, quoi);
   const [x, y] = decalage, dx = b[0] - a[0], dy = b[1] - a[1];
   let o;
   if (Math.abs(dy) < 1) o = dx < 0 ? [-x, -y] : [x, y];                 // horizontal (de droite à gauche : demi-tour)
@@ -1668,6 +1758,26 @@ function diaEtiquette(pts, decalage, quoi) {
   else { const t = Math.atan2(dy, dx), c = Math.cos(t), si = Math.sin(t); o = [x * c - y * si, x * si + y * c]; }
   return [ref[0] + o[0], ref[1] + o[1]];
 }
+
+/**
+ * Décalage GMF qui place une étiquette de lien en un point (inverse de diaEtiquette : décalage tourné avec le segment).
+ * @param {number[][]} pts points du lien
+ * @param {number[]} point position voulue de l'étiquette
+ * @param {'debut'|'fin'|'centre'} quoi étiquette
+ * @returns {number[]} décalage [x, y] (entiers)
+ */
+function diaDecalageEtiquette(pts, point, quoi) {
+  const { ref, a, b } = diaRepereEtiquette(pts, quoi);
+  const ox = point[0] - ref[0], oy = point[1] - ref[1], dx = b[0] - a[0], dy = b[1] - a[1];
+  let d;
+  if (Math.abs(dy) < 1) d = dx < 0 ? [-ox, -oy] : [ox, oy];
+  else if (Math.abs(dx) < 1) d = dy > 0 ? [oy, -ox] : [-oy, ox];
+  else { const t = Math.atan2(dy, dx), c = Math.cos(t), si = Math.sin(t); d = [ox * c + oy * si, -ox * si + oy * c]; }
+  return d.map(Math.round);
+}
+
+/** Décalages par défaut des étiquettes de liens écrits par Sirius à la création (centre au-dessus, extrémités au-dessous). */
+const DIA_DECALAGES_DEFAUT = { centre: [0, -10], debut: [0, 10], fin: [0, 10] };
 
 /**
  * Lien orthogonal dont les extrémités sont décalées (formes de taille calculée, points périmés) : chaque segment
@@ -1756,6 +1866,226 @@ function diaFraction(e, tag) {
    applique en une opération du journal. Les points des liens sont mis à jour par décalages, exacts même
    quand la taille d'une forme n'est pas enregistrée (taille calculée par Sirius). */
 
+/**
+ * Extrémité d'un lien glissée sur le pourtour de sa forme (E3) : point du bord le plus proche du point visé, fraction de la
+ * forme (ancre GMF) et nouveau tracé : le lien sort perpendiculairement au côté choisi puis rejoint le reste de son tracé par
+ * un coude (points alignés fusionnés). Un port garde son ancre (trop petit pour y glisser).
+ * @param {object} l lien de la scène
+ * @param {'source'|'cible'} bout extrémité
+ * @param {number[]} point point visé (coordonnées du diagramme)
+ * @returns {{points:number[][], fraction:number[]}|null} tracé absolu et fraction [fx, fy], null pour un port
+ */
+function diaExtremite(l, bout, point) {
+  const f = bout === 'source' ? l.source : l.cible;
+  if (!f || f.genre === 'port' || f.w <= 0 || f.h <= 0) return null;
+  // Point du bord le plus proche : ramené dans la forme, puis poussé sur le côté le plus proche
+  let x = Math.min(Math.max(point[0], f.x), f.x + f.w), y = Math.min(Math.max(point[1], f.y), f.y + f.h);
+  const d = { g: x - f.x, d: f.x + f.w - x, h: y - f.y, b: f.y + f.h - y }, cote = Object.keys(d).reduce((a, b) => (d[b] < d[a] ? b : a));
+  if (cote === 'g') x = f.x; else if (cote === 'd') x = f.x + f.w; else if (cote === 'h') y = f.y; else y = f.y + f.h;
+  x = Math.round(x); y = Math.round(y);
+  // Tracé côté extrémité : le lien sort perpendiculairement au côté choisi (12 px), puis rejoint le point suivant par un coude
+  const pts = bout === 'source' ? l.points.map(p => p.slice()) : l.points.map(p => p.slice()).reverse();
+  const n = { g: [-1, 0], d: [1, 0], h: [0, -1], b: [0, 1] }[cote], sortie = [x + n[0] * 12, y + n[1] * 12];
+  const reste = pts.slice(1), suivant = reste[0];
+  const coude = n[0] ? [sortie[0], suivant[1]] : [suivant[0], sortie[1]];
+  const neufs = [[x, y], sortie, coude, ...reste].filter((p, k, t) => k === 0 || p[0] !== t[k - 1][0] || p[1] !== t[k - 1][1]);
+  // Points alignés consécutifs retirés (segments prolongés)
+  const net = neufs.filter((p, k, t) => k === 0 || k === t.length - 1 || !((t[k - 1][0] === p[0] && p[0] === t[k + 1][0]) || (t[k - 1][1] === p[1] && p[1] === t[k + 1][1])));
+  const arrondi = v => Math.round(v * 10000) / 10000;
+  return { points: bout === 'source' ? net : net.reverse(), fraction: [arrondi((x - f.x) / f.w), arrondi((y - f.y) / f.h)] };
+}
+
+/**
+ * Extrémité d'un lien tracé en angles droits sur une forme : d'un port, son centre, perpendiculairement au côté de son
+ * parent ; sinon sur le côté tourné vers l'autre extrémité, au milieu de la partie commune quand les formes se chevauchent
+ * sur un axe (trait droit), sinon au milieu de ce côté.
+ * @param {object} f forme de l'extrémité
+ * @param {object} autre forme de l'autre extrémité
+ * @returns {{p:number[], n:number[], port:boolean}} point, direction de sortie, extrémité sur un port
+ */
+function diaBoutOrthogonal(f, autre) {
+  const centre = g => [g.x + g.w / 2, g.y + g.h / 2];
+  if (f.genre === 'port' && f.parent) {
+    const cote = diaCotePort(f), n = { gauche: [-1, 0], droite: [1, 0], haut: [0, -1], bas: [0, 1] }[cote];
+    return { p: centre(f).map(Math.round), n, port: true };
+  }
+  const a = autre.genre === 'port' && autre.parent ? { x: centre(autre)[0], y: centre(autre)[1], w: 0, h: 0 } : autre;
+  const ry = [Math.max(f.y, a.y), Math.min(f.y + f.h, a.y + a.h)], rx = [Math.max(f.x, a.x), Math.min(f.x + f.w, a.x + a.w)];
+  const [cf, ca] = [centre(f), centre(a)];
+  let n, p;
+  if (ry[1] - ry[0] >= 4 && (a.x >= f.x + f.w || a.x + a.w <= f.x)) { n = [ca[0] > cf[0] ? 1 : -1, 0]; p = [n[0] > 0 ? f.x + f.w : f.x, (ry[0] + ry[1]) / 2]; }
+  else if (rx[1] - rx[0] >= 4 && (a.y >= f.y + f.h || a.y + a.h <= f.y)) { n = [0, ca[1] > cf[1] ? 1 : -1]; p = [(rx[0] + rx[1]) / 2, n[1] > 0 ? f.y + f.h : f.y]; }
+  else if (Math.abs(ca[0] - cf[0]) >= Math.abs(ca[1] - cf[1])) { n = [ca[0] > cf[0] ? 1 : -1, 0]; p = [n[0] > 0 ? f.x + f.w : f.x, cf[1]]; }
+  else { n = [0, ca[1] > cf[1] ? 1 : -1]; p = [cf[0], n[1] > 0 ? f.y + f.h : f.y]; }
+  return { p: p.map(Math.round), n, port: false };
+}
+
+/**
+ * Tracé en angles droits d'un lien (E3) : extrémités sur les côtés en vis-à-vis — au milieu de la partie commune quand les
+ * formes se chevauchent sur un axe (trait droit), sinon au milieu du côté tourné vers l'autre forme ; d'un port, depuis son
+ * centre, perpendiculairement au côté de son parent. Entre deux amorces (12 px), plus court chemin orthogonal qui contourne
+ * les autres formes (marge 8) sur une grille clairsemée (bords des obstacles), avec une pénalité par coude ; les conteneurs
+ * communs aux deux extrémités ne sont pas des obstacles. Sans chemin libre : tracé en Z à mi-distance.
+ * Avec des tracés déjà posés (routage séquentiel), longer l'un d'eux sur une même droite et le croiser ont un coût
+ * (DIA_COUTS_ROUTAGE) : le lien prend de préférence un couloir libre (droites décalées de part et d'autre des tracés posés
+ * proches, ajoutées à la grille).
+ * @param {object} scene scène du diagramme
+ * @param {object} l lien
+ * @param {Array<Array>} [deja] segments déjà posés ([a, b, lien], d'équerre ; lien facultatif : longer un lien qui part de la
+ *   même forme ou du même port ne coûte rien, faisceau écarté ensuite)
+ * @param {{source?:object, cible?:object}} [imposes] extrémités imposées ({p, n, port} : diaRepartirBouts)
+ * @returns {{points:number[][], ancres:{source?:number[], cible?:number[]}}} tracé absolu et fractions des ancres (formes)
+ */
+function diaRouteOrthogonale(scene, l, deja, imposes) {
+  const COUTS = DIA_COUTS_ROUTAGE;  // (PENALITE ci-dessus : coût d'un coude)
+  const s = l.source, c = l.cible, M = 8, AMORCE = 12, PENALITE = DIA_COUTS_ROUTAGE.coude;
+  const arrondi = v => Math.round(v * 10000) / 10000;
+  // Extrémités et directions de sortie (imposées : liens répartis sur un côté partagé, diaRepartirBouts)
+  const bs = (imposes && imposes.source) || diaBoutOrthogonal(s, c), bc = (imposes && imposes.cible) || diaBoutOrthogonal(c, s);
+  const ancres = {};
+  if (!bs.port) ancres.source = [arrondi((bs.p[0] - s.x) / s.w), arrondi((bs.p[1] - s.y) / s.h)];
+  if (!bc.port) ancres.cible = [arrondi((bc.p[0] - c.x) / c.w), arrondi((bc.p[1] - c.y) / c.h)];
+  const as = [bs.p[0] + bs.n[0] * AMORCE, bs.p[1] + bs.n[1] * AMORCE], ac = [bc.p[0] + bc.n[0] * AMORCE, bc.p[1] + bc.n[1] * AMORCE];
+  // Obstacles : formes (hors ports, lignes de liste, éléments contenus dans une extrémité) qui ne contiennent pas les deux extrémités
+  const ancetres = f => { const r = new Set(); for (let p = f; p; p = p.parent) r.add(p); return r; };
+  const aS = ancetres(s), aC = ancetres(c), communs = new Set([...aS].filter(x => aC.has(x)));
+  const dansUnBout = f => { for (let p = f.parent; p; p = p.parent) if (p === s || p === c) return true; return false; };
+  const zone = { x0: Math.min(as[0], ac[0]) - 250, y0: Math.min(as[1], ac[1]) - 250, x1: Math.max(as[0], ac[0]) + 250, y1: Math.max(as[1], ac[1]) + 250 };
+  const obstacles = scene.formes.filter(f => f.genre !== 'port' && f.genre !== 'ligne' && f.genre !== 'note' && !communs.has(f) && !dansUnBout(f) && f.w > 0 && f.h > 0
+    && f.x < zone.x1 && f.x + f.w > zone.x0 && f.y < zone.y1 && f.y + f.h > zone.y0)
+    .map(f => ({ x0: f.x - M, y0: f.y - M, x1: f.x + f.w + M, y1: f.y + f.h + M, f }));
+  // Une amorce dans un obstacle (formes serrées) : cet obstacle est ignoré
+  const dedans = (o, p) => p[0] > o.x0 && p[0] < o.x1 && p[1] > o.y0 && p[1] < o.y1;
+  const obs = obstacles.filter(o => !dedans(o, as) && !dedans(o, ac));
+  const coupe = (a, b) => obs.some(o => {
+    if (a[1] === b[1]) return a[1] > o.y0 && a[1] < o.y1 && Math.max(a[0], b[0]) > o.x0 && Math.min(a[0], b[0]) < o.x1;
+    return a[0] > o.x0 && a[0] < o.x1 && Math.max(a[1], b[1]) > o.y0 && Math.min(a[1], b[1]) < o.y1;
+  });
+  // Tracés déjà posés dans la zone : horizontaux par ordonnée, verticaux par abscisse
+  const horiz = new Map(), vert = new Map(), dansZone = (a, b) => Math.max(a[0], b[0]) >= zone.x0 && Math.min(a[0], b[0]) <= zone.x1 && Math.max(a[1], b[1]) >= zone.y0 && Math.min(a[1], b[1]) <= zone.y1;
+  const hListe = [], vListe = [];
+  // (faisceau : longer un lien qui part de la même forme ou du même port ne coûte rien, diaEcarterTraces les écarte ensuite
+  // dans l'ordre qui ne les croise pas)
+  const frere = o => o && (o.source === s || o.cible === s || o.source === c || o.cible === c);
+  for (const [a, b, o] of deja || []) {
+    if (!dansZone(a, b) || (a[0] === b[0] && a[1] === b[1])) continue;
+    const f = frere(o);
+    if (a[1] === b[1]) { const sg = [Math.min(a[0], b[0]), Math.max(a[0], b[0]), a[1], f]; (horiz.get(a[1]) || horiz.set(a[1], []).get(a[1])).push(sg); hListe.push(sg); }
+    else if (a[0] === b[0]) { const sg = [Math.min(a[1], b[1]), Math.max(a[1], b[1]), a[0], f]; (vert.get(a[0]) || vert.set(a[0], []).get(a[0])).push(sg); vListe.push(sg); }
+  }
+  // Segments posés triés par leur coordonnée fixe (recherche dichotomique des segments croisés)
+  vListe.sort((p, q) => p[2] - q[2]); hListe.sort((p, q) => p[2] - q[2]);
+  const premier = (liste, v) => { let g = 0, d = liste.length; while (g < d) { const m = (g + d) >> 1; if (liste[m][2] <= v) g = m + 1; else d = m; } return g; };
+  /** Surcoût d'un pas d'équerre de a à b : longer un tracé posé (par pixel commun), croiser un tracé posé (DIA_COUTS_ROUTAGE). */
+  const surcout = (a, b) => {
+    if (!hListe.length && !vListe.length) return 0;
+    let c = 0;
+    if (a[1] === b[1]) {
+      const x0 = Math.min(a[0], b[0]), x1 = Math.max(a[0], b[0]);
+      for (const [d, f, , fr] of horiz.get(a[1]) || []) { const o = Math.min(f, x1) - Math.max(d, x0); if (o > 0 && !fr) c += COUTS.longer * o; }
+      for (let i = premier(vListe, x0); i < vListe.length && vListe[i][2] < x1; i++) if (a[1] > vListe[i][0] && a[1] < vListe[i][1]) c += COUTS.croiser;
+    } else {
+      const y0 = Math.min(a[1], b[1]), y1 = Math.max(a[1], b[1]);
+      for (const [d, f, , fr] of vert.get(a[0]) || []) { const o = Math.min(f, y1) - Math.max(d, y0); if (o > 0 && !fr) c += COUTS.longer * o; }
+      for (let i = premier(hListe, y0); i < hListe.length && hListe[i][2] < y1; i++) if (a[0] > hListe[i][0] && a[0] < hListe[i][1]) c += COUTS.croiser;
+    }
+    return c;
+  };
+  // Grille clairsemée : amorces, bords des obstacles (avec marge), milieu ; couloirs voisins des tracés posés
+  // (couloirs : seulement près du rectangle des deux amorces, pour garder une grille petite)
+  const pres = { x0: Math.min(as[0], ac[0]) - COUTS.marge, x1: Math.max(as[0], ac[0]) + COUTS.marge, y0: Math.min(as[1], ac[1]) - COUTS.marge, y1: Math.max(as[1], ac[1]) + COUTS.marge };
+  // (un tracé ne peut en longer un autre que sur une ligne de la grille : seuls ces tracés-là ouvrent des couloirs voisins)
+  const baseX = new Set([as[0], ac[0], Math.round((as[0] + ac[0]) / 2), ...obs.flatMap(o => [o.x0, o.x1])]);
+  const baseY = new Set([as[1], ac[1], Math.round((as[1] + ac[1]) / 2), ...obs.flatMap(o => [o.y0, o.y1])]);
+  const voisins = (l2, k, base) => [...new Set(l2.filter(sg => base.has(sg[2]) && (k ? sg[1] >= pres.x0 && sg[0] <= pres.x1 : sg[1] >= pres.y0 && sg[0] <= pres.y1))
+    .flatMap(sg => [sg[2] - COUTS.couloir, sg[2] + COUTS.couloir]))].filter(v => (k ? v >= pres.y0 && v <= pres.y1 : v >= pres.x0 && v <= pres.x1));
+  const xs = [...new Set([...baseX, ...voisins(vListe, 0, baseX)])].sort((a, b) => a - b);
+  const ys = [...new Set([...baseY, ...voisins(hListe, 1, baseY)])].sort((a, b) => a - b);
+  const ix = new Map(xs.map((v, i) => [v, i])), iy = new Map(ys.map((v, i) => [v, i]));
+  // Nœuds dans un obstacle et pas d'une ligne à la suivante qui le traversent, marqués une fois (indices par recherche
+  // dichotomique : les bords des obstacles sont des lignes de la grille)
+  const nx = xs.length, ny = ys.length, occupe = new Uint8Array(nx * ny), bloqueH = new Uint8Array(nx * ny), bloqueV = new Uint8Array(nx * ny);
+  const indice = (t, v) => { let g = 0, d = t.length; while (g < d) { const m = (g + d) >> 1; if (t[m] < v) g = m + 1; else d = m; } return g; };
+  for (const o of obs) {
+    const i0 = indice(xs, o.x0), i1 = indice(xs, o.x1), j0 = indice(ys, o.y0), j1 = indice(ys, o.y1);
+    for (let i = i0; i < nx && xs[i] <= o.x1; i++) for (let j = j0; j < ny && ys[j] <= o.y1; j++) {
+      const x = xs[i], y = ys[j], ox = x > o.x0 && x < o.x1, oy = y > o.y0 && y < o.y1;
+      if (ox && oy) occupe[i * ny + j] = 1;
+      // pas horizontal de (i, j) à (i + 1, j) : traverse l'obstacle si son milieu y est
+      if (oy && i + 1 < nx && (x + xs[i + 1]) / 2 > o.x0 && (x + xs[i + 1]) / 2 < o.x1) bloqueH[i * ny + j] = 1;
+      if (ox && j + 1 < ny && (y + ys[j + 1]) / 2 > o.y0 && (y + ys[j + 1]) / 2 < o.y1) bloqueV[i * ny + j] = 1;
+    }
+    void i1; void j1;
+  }
+  const libre = (i, j) => !occupe[i * ny + j];
+  const bloque = (i, j, ni, nj) => (nj === j ? bloqueH[Math.min(i, ni) * ny + j] : bloqueV[i * ny + Math.min(j, nj)]) === 1;
+  // Plus court chemin (Dijkstra) sur les états (nœud, direction d'arrivée) ; directions 0 →, 1 ←, 2 ↓, 3 ↑
+  const D = [[1, 0], [-1, 0], [0, 1], [0, -1]], dirDe = n => (n[0] > 0 ? 0 : n[0] < 0 ? 1 : n[1] > 0 ? 2 : 3);
+  const depart = [ix.get(as[0]), iy.get(as[1])], arrivee = [ix.get(ac[0]), iy.get(ac[1])], dArr = dirDe([-bc.n[0], -bc.n[1]]);
+  const cle = (i, j, d) => (i * ys.length + j) * 4 + d, dist = new Map(), prec = new Map(), file = [];
+  // File de priorité : tas binaire de [valeur, état]
+  const pousser = (k, v) => {
+    file.push([v, k]);
+    for (let i = file.length - 1; i > 0;) { const p = (i - 1) >> 1; if (file[p][0] <= file[i][0]) break; [file[p], file[i]] = [file[i], file[p]]; i = p; }
+  };
+  const extraire = () => {
+    const h = file[0], dernier = file.pop();
+    if (file.length) {
+      file[0] = dernier;
+      for (let i = 0; ;) {
+        const g = 2 * i + 1, dr = g + 1;
+        let m = i;
+        if (g < file.length && file[g][0] < file[m][0]) m = g;
+        if (dr < file.length && file[dr][0] < file[m][0]) m = dr;
+        if (m === i) break;
+        [file[m], file[i]] = [file[i], file[m]]; i = m;
+      }
+    }
+    return h;
+  };
+  const d0 = dirDe(bs.n), k0 = cle(depart[0], depart[1], d0);
+  dist.set(k0, 0); pousser(k0, 0);
+  let fin = null;
+  while (file.length) {
+    const [v, k] = extraire();
+    if (v > (dist.get(k) ?? Infinity)) continue;
+    const d = k % 4, n = (k - d) / 4, i = Math.floor(n / ys.length), j = n % ys.length;
+    if (i === arrivee[0] && j === arrivee[1]) { const v2 = v + (d === dArr ? 0 : PENALITE); if (!fin || v2 < fin.v) fin = { k, v: v2 }; continue; }
+    for (let nd = 0; nd < 4; nd++) {
+      if ((d ^ 1) === nd) continue;                    // pas de demi-tour
+      const ni = i + D[nd][0], nj = j + D[nd][1];
+      if (ni < 0 || nj < 0 || ni >= xs.length || nj >= ys.length) continue;
+      const a = [xs[i], ys[j]], b = [xs[ni], ys[nj]];
+      if (!(ni === arrivee[0] && nj === arrivee[1]) && !libre(ni, nj)) continue;
+      if (bloque(i, j, ni, nj)) continue;
+      const nk = cle(ni, nj, nd), nv = v + Math.abs(b[0] - a[0]) + Math.abs(b[1] - a[1]) + (nd === d ? 0 : PENALITE) + surcout(a, b);
+      if (nv < (dist.get(nk) ?? Infinity)) { dist.set(nk, nv); prec.set(nk, k); pousser(nk, nv); }
+    }
+  }
+  let milieu;
+  if (fin) {
+    milieu = [];
+    for (let k = fin.k; k !== undefined; k = prec.get(k)) { const n = (k - (k % 4)) / 4; milieu.unshift([xs[Math.floor(n / ys.length)], ys[n % ys.length]]); }
+  } else {
+    // Sans chemin libre : Z à mi-distance
+    milieu = bs.n[0] ? [as, [Math.round((as[0] + ac[0]) / 2), as[1]], [Math.round((as[0] + ac[0]) / 2), ac[1]], ac] : [as, [as[0], Math.round((as[1] + ac[1]) / 2)], [ac[0], Math.round((as[1] + ac[1]) / 2)], ac];
+  }
+  // Points : extrémité, amorce, chemin, amorce, extrémité ; doublons et points alignés retirés
+  const tous = [bs.p, ...milieu, bc.p].filter((p, k, t) => k === 0 || p[0] !== t[k - 1][0] || p[1] !== t[k - 1][1]);
+  const points = tous.filter((p, k, t) => k === 0 || k === t.length - 1 || !((t[k - 1][0] === p[0] && p[0] === t[k + 1][0]) || (t[k - 1][1] === p[1] && p[1] === t[k + 1][1])));
+  return { points, ancres };
+}
+
+/**
+ * Coûts du routage séquentiel (diaRouteOrthogonale avec des tracés déjà posés), réglés au banc de mesure
+ * (tools/banc-disposition.js) : longer un tracé posé (par pixel commun), le croiser, écart des couloirs voisins ajoutés à la
+ * grille, marge autour des deux amorces où ces couloirs sont cherchés ; coût d'un coude (tout tracé).
+ */
+const DIA_COUTS_ROUTAGE = { coude: 40, longer: 1, croiser: 150, couloir: 8, marge: 60 };
+
+/** Ordre EMF des attributs d'une ancre GMF (IdentityAnchor). */
+const DIA_ORDRE_ANCRE = ['xmi:type', 'xmi:id', 'id'];
+
 /** Ordre EMF des attributs d'une contrainte de position GMF (Bounds, Location). */
 const DIA_ORDRE_BORNES = ['xmi:type', 'xmi:id', 'x', 'y', 'width', 'height'];
 /** Ordre EMF des attributs des points d'un lien GMF (RelativeBendpoints). */
@@ -1769,28 +2099,50 @@ const DIA_ORDRE_POINTS = ['xmi:type', 'xmi:id', 'points'];
 function diaModifiable(rep) { return rep.genre === 'diagramme'; }
 
 /**
+ * Indique si le mode « Mise en page » s'ouvre sur un diagramme : diagrammes, et séquences (lignes de vie déplacées à
+ * l'horizontale seulement, diaMiseEnPageSequence ; aucun outil de création).
+ * @param {object} rep représentation
+ * @returns {boolean}
+ */
+function diaMiseEnPagePermise(rep) { return rep.genre === 'diagramme' || rep.genre === 'sequence'; }
+
+/**
  * Indique si une forme peut être déplacée : position enregistrée, et ni ligne de liste, ni ligne de vie,
- * ni région d'un état (disposées par Sirius).
+ * ni région d'un état (disposées par Sirius) ; dans une séquence, seulement une instance (tête de ligne de vie).
  * @param {object} aird résultat de diaLire
  * @param {object} f forme
  * @returns {boolean}
  */
 function diaDeplacable(aird, f) {
+  if (f.sequence) return !f.parent && f.typeSem === 'InstanceRole';     // séquence : seules les instances (lignes de vie)
   if (f.genre === 'ligne' || f.figure === 'vie' || (f.parent && f.parent.pile)) return false;
   const v = aird.parVue.get(f.vue);
   return !!(v && diaEnfant(v, 'layoutConstraint'));
 }
 
 /**
- * Indique si une forme peut être redimensionnée (contrainte Bounds, hors ports).
+ * Indique si une forme peut être redimensionnée (contrainte Bounds, hors ports et formes de séquence ; une région d'un état
+ * aussi, dans le sens de la pile : diaPoignees).
  * @param {object} aird résultat de diaLire
  * @param {object} f forme
  * @returns {boolean}
  */
 function diaRedimensionnable(aird, f) {
-  if (f.genre === 'port' || !diaDeplacable(aird, f)) return false;
+  if (f.genre === 'port' || f.sequence || (!f.region && !diaDeplacable(aird, f))) return false;
   const lc = diaEnfant(aird.parVue.get(f.vue), 'layoutConstraint');
   return /Bounds/.test(xtAttr(lc, 'xmi:type') || '');
+}
+
+/**
+ * Poignées de taille d'une forme redimensionnable : les huit (côtés et coins) ; une région d'un état (conteneur empilé)
+ * ne change que dans le sens de la pile (bas pour une pile verticale, droite pour une horizontale) : Sirius la place et
+ * l'étire sur toute la largeur de l'état.
+ * @param {object} f forme
+ * @returns {string[]} poignées : n, s, e, w, ne, nw, se, sw
+ */
+function diaPoignees(f) {
+  if (f.region) return [f.parent.pile === 'horizontale' ? 'e' : 's'];
+  return ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'];
 }
 
 /**
@@ -1802,6 +2154,79 @@ function diaCotePort(f) {
   const p = f.parent, cx = f.x + f.w / 2 - p.x, cy = f.y + f.h / 2 - p.y;
   const d = { gauche: cx, droite: p.w - cx, haut: cy, bas: p.h - cy };
   return Object.keys(d).reduce((a, b) => (d[b] < d[a] ? b : a));
+}
+
+/**
+ * Nouvelle boîte d'une forme redimensionnée par une poignée (n, s, e, w et coins), bornée (E1, E2) : taille minimale ; un
+ * conteneur garde tout son contenu (marge de 8) et la place de son titre ; la forme reste dans le compartiment de son
+ * conteneur (taille connue). Une poignée gauche ou haute déplace la forme et contre-déplace son contenu, qui reste en place.
+ * @param {object} scene scène du diagramme
+ * @param {object} f forme
+ * @param {string} quoi poignée : n, s, e, w, ne, nw, se, sw
+ * @param {number} dx décalage du pointeur
+ * @param {number} dy décalage du pointeur
+ * @returns {{tailles:Map<object,number[]>, deplacements:Map<object,number[]>, boite:number[]}} taille et déplacements (la
+ *   forme, son contenu hors ports) à appliquer, boîte [x, y, w, h]
+ */
+function diaRedimensionner(scene, f, quoi, dx, dy) {
+  const formes = scene.formes, contenu = formes.filter(q => q.parent === f && q.genre !== 'port');
+  if (f.region) return diaRedimensionnerRegion(f, contenu, f.parent.pile === 'horizontale' ? dx : dy);
+  let x0 = f.x, y0 = f.y, x1 = f.x + f.w, y1 = f.y + f.h;
+  if (quoi.includes('w')) x0 += dx; if (quoi.includes('e')) x1 += dx;
+  if (quoi.includes('n')) y0 += dy; if (quoi.includes('s')) y1 += dy;
+  // Contenu et titre : bornes qu'un bord ne franchit pas ; taille minimale
+  const marge = 8, minW = 20, minH = f.genre === 'conteneur' ? Math.max(16, f.police.taille + 12) : 16;
+  if (contenu.length) {
+    const cx0 = Math.min(...contenu.map(q => q.x)) - marge, cy0 = Math.min(...contenu.map(q => q.y)) - marge;
+    const cx1 = Math.max(...contenu.map(q => q.x + q.w)) + marge, cy1 = Math.max(...contenu.map(q => q.y + q.h)) + marge;
+    if (quoi.includes('w')) x0 = Math.min(x0, cx0); if (quoi.includes('e')) x1 = Math.max(x1, cx1);
+    if (quoi.includes('n')) y0 = Math.min(y0, cy0 - minH + marge); if (quoi.includes('s')) y1 = Math.max(y1, cy1);
+  }
+  if (x1 - x0 < minW) { if (quoi.includes('w')) x0 = x1 - minW; else x1 = x0 + minW; }
+  if (y1 - y0 < minH) { if (quoi.includes('n')) y0 = y1 - minH; else y1 = y0 + minH; }
+  // Dans le compartiment du conteneur
+  const p = f.parent;
+  if (p && !p.calculee && f.genre !== 'port' && f.genre !== 'note') {
+    const px0 = p.x + DIA_COMPARTIMENT.x, py0 = p.y + DIA_COMPARTIMENT.y, px1 = p.x + p.w - 2, py1 = p.y + p.h - 2;
+    if (quoi.includes('w')) x0 = Math.max(x0, px0); if (quoi.includes('e')) x1 = Math.min(x1, px1);
+    if (quoi.includes('n')) y0 = Math.max(y0, py0); if (quoi.includes('s')) y1 = Math.min(y1, py1);
+  }
+  x0 = Math.round(x0); y0 = Math.round(y0); x1 = Math.round(x1); y1 = Math.round(y1);
+  const ddx = x0 - f.x, ddy = y0 - f.y, deplacements = new Map();
+  if (ddx || ddy) {
+    deplacements.set(f, [ddx, ddy]);
+    for (const q of contenu) deplacements.set(q, [-ddx, -ddy]);
+    // Ports : chacun suit son bord (gauche, haut : avec la forme ; droite, bas : diaMiseEnPage ajoute la variation de taille)
+    // et garde sa position absolue le long de ce bord
+    for (const q of formes) {
+      if (q.parent !== f || q.genre !== 'port') continue;
+      const c = diaCotePort(q), vertical = c === 'gauche' || c === 'droite';
+      deplacements.set(q, [vertical ? 0 : -ddx, vertical ? -ddy : 0]);
+    }
+  }
+  return { tailles: new Map([[f, [x1 - x0, y1 - y0]]]), deplacements, boite: [x0, y0, x1 - x0, y1 - y0] };
+}
+
+/**
+ * Région d'un état agrandie ou réduite dans le sens de sa pile (diaRedimensionner) : au moins son contenu (marge 8) et
+ * 20 px ; l'état qui la contient grandit d'autant (diaMiseEnPage), dans le compartiment de son propre conteneur.
+ * @param {object} f région
+ * @param {object[]} contenu formes contenues (hors ports)
+ * @param {number} d variation voulue dans le sens de la pile
+ * @returns {{tailles:Map<object,number[]>, deplacements:Map, boite:number[]}}
+ */
+function diaRedimensionnerRegion(f, contenu, d) {
+  const vertical = f.parent.pile !== 'horizontale', debut = vertical ? f.y : f.x, taille = vertical ? f.h : f.w;
+  let fin = debut + taille + d;
+  const bout = q => (vertical ? q.y + q.h : q.x + q.w);
+  if (contenu.length) fin = Math.max(fin, Math.max(...contenu.map(bout)) + 8);
+  fin = Math.max(fin, debut + 20);
+  // L'état grandit d'autant : il reste dans le compartiment de son conteneur (taille connue)
+  const etat = f.parent, pp = etat.parent;
+  if (pp && !pp.calculee && !pp.pile) fin = Math.min(fin, debut + taille + (vertical ? pp.y + pp.h - 2 - (etat.y + etat.h) : pp.x + pp.w - 2 - (etat.x + etat.w)));
+  const n = Math.round(fin - debut);
+  const t = vertical ? [f.w, n] : [n, f.h];
+  return { tailles: new Map([[f, t]]), deplacements: new Map(), boite: [f.x, f.y, t[0], t[1]] };
 }
 
 /**
@@ -1888,27 +2313,50 @@ function diaPointsSuivis(points, dS, dC) {
 /**
  * Calcule les changements de la notation GMF pour une mise en page.
  * - deplacements : forme → [dx, dy] (la forme et tout son contenu, ports compris) ;
- * - tailles : forme → [largeur, hauteur] nouvelles (redimensionnement par la droite et le bas : les ports
- *   des côtés droit et bas suivent le bord) ;
- * - traces : lien → points absolus voulus (après déplacements), extrémités comprises.
+ * - tailles : forme → [largeur, hauteur] nouvelles (les ports des côtés droit et bas suivent le bord ; par la gauche
+ *   ou le haut, la forme est aussi déplacée et son contenu contre-déplacé : diaRedimensionner) ;
+ * - traces : lien → points absolus voulus (après déplacements), extrémités comprises ;
+ * - ancres : lien → { source?, cible? } : fractions [fx, fy] de la forme où l'extrémité s'accroche (IdentityAnchor), avec un
+ *   tracé imposé (diaExtremite).
+ * - etiquettes : lien → { centre?, debut?, fin? } : décalages GMF [x, y] des étiquettes (diaDecalageEtiquette).
  * Les liens touchés suivent : un lien dont les deux extrémités bougent ensemble garde ses points ; sinon
  * chaque extrémité suit sa forme, et le premier ou dernier coude garde l'alignement horizontal ou vertical.
  * @param {object} aird résultat de diaLire
  * @param {object} scene scène du diagramme (diaScene)
- * @param {{deplacements?:Map, tailles?:Map, traces?:Map}} m modifications voulues
+ * @param {{deplacements?:Map, tailles?:Map, traces?:Map, ancres?:Map, etiquettes?:Map}} m modifications voulues
  * @returns {Array<{el:object, n:string, avant:(string|null), apres:(string|null), ordre:string[]}>} changements
  */
 function diaMiseEnPage(aird, scene, m) {
-  const deplacements = new Map(m.deplacements || []), tailles = m.tailles || new Map(), traces = m.traces || new Map();
+  const deplacements = new Map(m.deplacements || []), tailles = m.tailles || new Map(), traces = m.traces || new Map(), ancres = m.ancres || new Map();
+
   const changements = new Map();                   // élément → Map(nom → [valeur, ordre])
   const definir = (el, n, v, ordre) => { if (!changements.has(el)) changements.set(el, new Map()); changements.get(el).set(n, [v, ordre]); };
   const entier = v => Math.round(v);
   const valeurBorne = (v, defaut) => (entier(v) === defaut ? null : String(entier(v)));
-
+  // Étiquettes de liens : position GMF (x, y) du nœud d'étiquette (6001 centre, 6002 début, 6003 fin)
+  for (const [l, dec] of m.etiquettes || []) {
+    const e = aird.parVue.get(l.vue);
+    for (const [quoi, type] of [['centre', '6001'], ['debut', '6002'], ['fin', '6003']]) {
+      if (!dec[quoi] || !e) continue;
+      const et = e.enfants.find(c => c.tag === 'children' && xtAttr(c, 'type') === type), lc = et && diaEnfant(et, 'layoutConstraint');
+      if (!lc) throw new Error(_L('Link label not found in the notation.'));
+      definir(lc, 'x', dec[quoi][0] ? String(dec[quoi][0]) : null, DIA_ORDRE_BORNES);
+      definir(lc, 'y', dec[quoi][1] ? String(dec[quoi][1]) : null, DIA_ORDRE_BORNES);
+    }
+  }
   // Redimensionnement : nouvelle taille enregistrée ; ports des côtés droit et bas déplacés avec le bord
   const decalRef = new Map();                      // forme → décalage de son point de référence dû à la taille
   for (const [f, [w, h]] of tailles) {
     const lc = diaEnfant(aird.parVue.get(f.vue), 'layoutConstraint');
+    if (f.region) {
+      // Région : seule la dimension de la pile est écrite (Sirius étire l'autre) ; l'état grandit d'autant si sa taille
+      // est enregistrée (sinon Sirius la calcule)
+      const vertical = f.parent.pile !== 'horizontale', n = vertical ? 'height' : 'width', v = vertical ? h : w, d = v - (vertical ? f.h : f.w);
+      definir(lc, n, String(entier(v)), DIA_ORDRE_BORNES);
+      const lp = diaEnfant(aird.parVue.get(f.parent.vue), 'layoutConstraint'), vp = lp && +(xtAttr(lp, n) || 0);
+      if (vp > 0) definir(lp, n, String(entier(vp + d)), DIA_ORDRE_BORNES);
+      continue;
+    }
     definir(lc, 'width', String(entier(w)), DIA_ORDRE_BORNES);
     definir(lc, 'height', String(entier(h)), DIA_ORDRE_BORNES);
     const dw = w - f.w, dh = h - f.h;
@@ -1951,9 +2399,18 @@ function diaMiseEnPage(aird, scene, m) {
       // Tracé imposé : points absolus rapportés aux ancres après déplacement
       /** Point de référence de l'ancre après déplacement et redimensionnement. */
       const ref = (f, tag) => {
-        const [x, y] = decalage(f), [w, h] = tailles.get(f) || [f.w, f.h], [fx, fy] = diaFraction(e, tag);
+        const a = ancres.get(l), imposee = a && (tag === 'sourceAnchor' ? a.source : a.cible);
+        const [x, y] = decalage(f), [w, h] = tailles.get(f) || [f.w, f.h], [fx, fy] = imposee || diaFraction(e, tag);
         return [f.x + x + w * fx, f.y + y + h * fy];
       };
+      // Ancre imposée (extrémité glissée sur le pourtour) : IdentityAnchor « (fx,fy) »
+      const a = ancres.get(l);
+      for (const [tag, fr] of [['sourceAnchor', a && a.source], ['targetAnchor', a && a.cible]]) {
+        if (!fr) continue;
+        const an = diaEnfant(e, tag);
+        if (!an) throw new Error(_L('This link has no GMF anchor to move.'));
+        definir(an, 'id', '(' + fr[0] + ',' + fr[1] + ')', DIA_ORDRE_ANCRE);
+      }
       const rs = ref(l.source, 'sourceAnchor'), rc = ref(l.cible, 'targetAnchor');
       nouveaux = traces.get(l).map(p => [p[0] - rs[0], p[1] - rs[1], p[0] - rc[0], p[1] - rc[1]]);
     } else {
@@ -1974,6 +2431,3012 @@ function diaMiseEnPage(aird, scene, m) {
     }
   }
   return res;
+}
+
+/** Ordre EMF des attributs d'un filtre AbsoluteBoundsFilter de Sirius (constaté dans les .aird d'IFE et d'AIDA). */
+const DIA_ORDRE_FILTRE = ['xmi:type', 'uid', 'x', 'y', 'height', 'width'];
+
+/**
+ * Mise en page d'un diagramme de séquence, comme Sirius l'accepte : une instance (ligne de vie) se déplace à l'horizontale,
+ * avec tout ce qu'elle porte (exécutions, états, fin de vie). Sirius garde dans chaque élément un filtre
+ * AbsoluteBoundsFilter (position absolue de la dernière mise en page) : décalé avec la forme. Les fragments (combinés,
+ * références) restent calés sur les bords des lignes de vie qu'ils couvrent (constaté sur les 77 séquences d'IFE et d'AIDA) :
+ * leur abscisse et leur largeur suivent, opérandes compris. Refus : têtes qui se chevaucheraient, fragment qui couvrirait
+ * une autre ligne de vie (Sirius n'admet pas qu'un fragment traverse une ligne de vie qu'il ne couvre pas).
+ * Ordre gauche → droite des instances rendu pour réordonner le modèle (InstanceRoleReorderTool : DoIRReorderExternalAction).
+ * @param {object} aird résultat de diaLire
+ * @param {object} scene scène de la séquence
+ * @param {Map<object, number[]>} deplacements forme → [dx, dy] (dy ignoré ; formes autres que les instances ignorées)
+ * @returns {{changements:Array, ordre:string[]}} changements du .aird et identifiants des instances dans leur nouvel ordre
+ * @throws {Error} déplacement refusé
+ */
+function diaMiseEnPageSequence(aird, scene, deplacements) {
+  const irs = scene.formes.filter(f => !f.parent && f.typeSem === 'InstanceRole'), dx = new Map();
+  for (const [f, d] of deplacements) if (irs.includes(f) && Math.round(d[0])) dx.set(f, Math.round(d[0]));
+  if (!dx.size) return { changements: [], ordre: [] };
+  const nx = f => f.x + (dx.get(f) || 0), centre = (f, x) => x + f.w / 2;
+  const tries = irs.slice().sort((a, b) => nx(a) - nx(b));
+  for (let i = 1; i < tries.length; i++) {
+    const a = tries[i - 1], b = tries[i];
+    if (nx(a) + a.w > nx(b)) throw new Error(_Lp('Lifelines “{a}” and “{b}” would overlap.', { a: a.texte, b: b.texte }));
+  }
+  if (tries.some(f => nx(f) < 0)) throw new Error(_L('A lifeline would leave the diagram.'));
+  // Fragments : lignes de vie couvertes (centre de la tête dans le cadre), nouveau cadre calé sur leurs bords
+  const cadres = new Map();
+  for (const fr of scene.formes.filter(f => !f.parent && (f.fragment === 'combine' || f.fragment === 'reference'))) {
+    const couvertes = irs.filter(i => centre(i, i.x) > fr.x && centre(i, i.x) < fr.x + fr.w);
+    if (!couvertes.length || !couvertes.some(i => dx.has(i))) continue;
+    const g = Math.min(...couvertes.map(i => nx(i))) - (Math.min(...couvertes.map(i => i.x)) - fr.x);
+    const d = Math.max(...couvertes.map(i => nx(i) + i.w)) + (fr.x + fr.w - Math.max(...couvertes.map(i => i.x + i.w)));
+    const intrus = irs.find(i => !couvertes.includes(i) && centre(i, nx(i)) > g && centre(i, nx(i)) < d);
+    if (intrus) throw new Error(_Lp('“{i}” would be inside fragment “{f}” without being covered by it.', { i: intrus.texte, f: fr.operateur || fr.texte }));
+    if (g !== fr.x || d - g !== fr.w) cadres.set(fr, [g, d - g]);
+  }
+  // Notation GMF : instances déplacées (contenu relatif), fragments déplacés et élargis, opérandes élargis
+  const dep = new Map([...dx].map(([f, d]) => [f, [d, 0]])), tailles = new Map();
+  for (const [fr, [g, w]] of cadres) {
+    if (g !== fr.x) dep.set(fr, [g - fr.x, 0]);
+    if (w !== fr.w) {
+      tailles.set(fr, [w, fr.h]);
+      for (const o of scene.formes) if (o.parent === fr && o.fragment === 'operande') tailles.set(o, [w, o.h]);
+    }
+  }
+  const changements = diaMiseEnPage(aird, scene, { deplacements: dep, tailles });
+  // Filtres AbsoluteBoundsFilter : contenu des instances décalé, fragments et opérandes recalés
+  const filtre = f => { const s = aird.parUid.get(f.uid); return s && s.enfants.find(c => c.tag === 'graphicalFilters' && /AbsoluteBoundsFilter/.test(xtAttr(c, 'xmi:type') || '')); };
+  const poser = (f, n, v) => {
+    const fl = filtre(f);
+    if (!fl || xtAttr(fl, n) == null) return;
+    const avant = xtAttr(fl, n), apres = String(Math.round(v));
+    if (avant !== apres) changements.push({ el: fl, n, avant, apres, ordre: DIA_ORDRE_FILTRE });
+  };
+  for (const f of scene.formes) {
+    const i = diaInstance(f), d = dx.get(i);
+    if (d) { const fl = filtre(f); if (fl && xtAttr(fl, 'x') != null) poser(f, 'x', +xtAttr(fl, 'x') + d); }
+  }
+  for (const [fr, [g, w]] of cadres) {
+    for (const o of [fr, ...scene.formes.filter(o => o.parent === fr && o.fragment === 'operande')]) { poser(o, 'x', g); poser(o, 'width', w); }
+  }
+  return { changements, ordre: tries.map(f => f.semId) };
+}
+
+/* ─────────────────────────────── Mise en page automatique (E5) ─────────────────────────────── */
+
+/**
+ * Sens dominant des liens entre des formes sœurs (pour la disposition en couches) : côté des ports d'où partent les liens
+ * (un port de sortie à droite : vers la droite), sinon position de la cible par rapport à la source ; vers la droite à égalité.
+ * @param {object} scene scène du diagramme
+ * @param {object[]} formes formes sœurs
+ * @returns {'droite'|'gauche'|'bas'|'haut'}
+ */
+function diaSensDominant(scene, formes) {
+  const ens = new Set(formes), racine = f => { for (let p = f; p; p = p.parent) if (ens.has(p)) return p; return null; };
+  const voix = { droite: 0, gauche: 0, bas: 0, haut: 0 };
+  for (const l of scene.liens) {
+    const a = racine(l.source), b = racine(l.cible);
+    if (l.attacheNote || !a || !b || a === b) continue;
+    if (l.source.genre === 'port' && l.source.parent) { voix[diaCotePort(l.source)]++; continue; }
+    const dx = b.x + b.w / 2 - a.x - a.w / 2, dy = b.y + b.h / 2 - a.y - a.h / 2;
+    voix[Math.abs(dx) >= Math.abs(dy) ? (dx >= 0 ? 'droite' : 'gauche') : (dy >= 0 ? 'bas' : 'haut')]++;
+  }
+  return Object.keys(voix).reduce((m, k) => (voix[k] > voix[m] ? k : m), 'droite');
+}
+
+/** Écarts de la mise en page automatique : entre deux couches (ou niveaux), entre deux formes, marge dans un conteneur. */
+const DIA_ECARTS = { couche: 80, forme: 30, marge: 12 };
+
+/**
+ * Débord d'une forme dû à son nom écrit dehors (sous un acteur, une capacité, un pseudo-état… : diaEtiquetteExterne), à
+ * réserver autour d'elle quand on la place.
+ * @param {object} f forme
+ * @returns {{gauche:number, droite:number, haut:number, bas:number}} marges (px) au-delà de la forme
+ */
+function diaDebordEtiquette(f) {
+  const zero = { gauche: 0, droite: 0, haut: 0, bas: 0 };
+  if (f.posTexte !== 'dessous' || !f.texte) return zero;
+  const e = diaEtiquetteExterne(f), t = f.police.taille, lt = e.uneLigne ? diaLargeurTexte(f.texte, t) : Math.min(diaLargeurTexte(f.texte, t), 160);
+  const lh = e.uneLigne ? t * 1.4 : diaNbLignes(f.texte, 160, t) * t * 1.25 + 2;
+  const x0 = e.ancre === 'start' ? e.x : e.ancre === 'end' ? e.x - lt : e.x - lt / 2, y0 = e.y;
+  return { gauche: Math.max(0, f.x - x0), droite: Math.max(0, x0 + lt - f.x - f.w), haut: Math.max(0, f.y - y0), bas: Math.max(0, y0 + lh - f.y - f.h) };
+}
+
+/**
+ * Diagramme en étoile (diagrammes de capacités, de missions, de contexte…) : une forme, le pivot, est reliée à au moins trois
+ * autres et toutes les formes reliées le sont au pivot (les liens qui ne le touchent pas sont au plus un sur cinq) ; le pivot
+ * ne contient pas d'autres formes et ses liens le touchent lui-même (au moins quatre sur cinq : pas ses ports ni son contenu).
+ * @param {object} scene scène du diagramme
+ * @param {object[]} formes formes sœurs à disposer
+ * @returns {{pivot:object, voisins:object[]}|null} pivot et ses voisins (dans l'ordre de lecture), null si ce n'est pas une étoile
+ */
+function diaEtoile(scene, formes) {
+  const ens = new Set(formes), racine = f => { for (let p = f; p; p = p.parent) if (ens.has(p)) return p; return null; };
+  const voisins = new Map(formes.map(f => [f, new Set()])), arcs = [];
+  for (const l of scene.liens) {
+    if (l.attacheNote) continue;
+    const a = racine(l.source), b = racine(l.cible);
+    if (!a || !b || a === b) continue;
+    voisins.get(a).add(b); voisins.get(b).add(a); arcs.push([a, b]);
+  }
+  const pivot = formes.slice().sort((a, b) => voisins.get(b).size - voisins.get(a).size)[0];
+  if (!pivot || voisins.get(pivot).size < 3) return null;
+  if (scene.liens.some(l => l.arbre && (racine(l.source) === pivot || racine(l.cible) === pivot))) return null;   // décomposition : un arbre
+  // Pivot simple : il ne contient pas d'autres formes, et ses liens le touchent lui-même (pas ses ports ni son contenu)
+  if (scene.formes.some(f => f.parent === pivot && f.genre !== 'port')) return null;
+  const siens = scene.liens.filter(l => !l.attacheNote && (racine(l.source) === pivot || racine(l.cible) === pivot));
+  if (siens.filter(l => l.source === pivot || l.cible === pivot).length < siens.length * 0.8) return null;
+  const lies = formes.filter(f => voisins.get(f).size);
+  if (lies.some(f => f !== pivot && !voisins.get(f).has(pivot))) return null;
+  if (arcs.filter(([a, b]) => a !== pivot && b !== pivot).length > arcs.length / 5) return null;
+  return { pivot, voisins: [...voisins.get(pivot)].sort((a, b) => (Math.abs(a.y - b.y) > 10 ? a.y - b.y : a.x - b.x)) };
+}
+
+/**
+ * Mise en page automatique de formes sœurs (même conteneur, ou le diagramme) : chacune se déplace d'un bloc avec son
+ * contenu ; les liens entre elles (portés par elles, leurs ports ou leur contenu) donnent le graphe.
+ * - « couches » : graphe orienté en couches (méthode de Sugiyama) — cycles rompus (arcs retour inversés), couche = plus long
+ *   chemin depuis les sources, ordre dans la couche par barycentres (allers-retours), couches dans le sens voulu (droite,
+ *   gauche, bas, haut), nœuds fictifs sur les arcs qui sautent des couches, échanges de voisins, chaque forme tirée vers ses
+ *   voisines ; ports reliés replacés sur le côté tourné vers l'autre extrémité ; formes sans lien rangées en grille après le graphe ;
+ * - « arbre » : arbre de haut en bas, racine en haut (décompositions de Capella : lien de l'enfant vers son parent ; le sens
+ *   est déduit des liens, celui où chaque forme a un seul parent ; premier parent retenu), arbre compact à contours
+ *   (Reingold–Tilford : sous-arbres frères rapprochés à chaque profondeur), parent centré au-dessus de ses enfants extrêmes,
+ *   frères et racines dans leur ordre actuel de gauche à droite ; arbres indépendants rangés en rangées (rapport d'écran) ;
+ *   une feuille dont le nom ne tient pas grandit pour le loger (noms jamais coupés) ;
+ * - « grille » : grille compacte dans l'ordre de lecture (lignes puis colonnes), colonnes de la largeur de leur plus large forme ;
+ * - « etoile » : diagramme en étoile (diaEtoile) équilibré, pivot au centre, voisins répartis autour par genre (sinon : couches).
+ * Le coin haut gauche de l'ensemble est gardé (dans un conteneur : au moins à la marge de son compartiment) ; un conteneur
+ * trop petit grandit, et ses propres conteneurs avec lui. Les liens touchés sont retracés (angles droits, ou direct) sur les positions nouvelles.
+ * @param {object} aird résultat de diaLire (ancres GMF des liens)
+ * @param {object} scene scène du diagramme
+ * @param {object[]} formes formes sœurs à disposer (au moins deux)
+ * @param {'couches'|'arbre'|'grille'|'etoile'} genre disposition
+ * @param {{sens?:('droite'|'gauche'|'bas'|'haut'), trace?:('orthogonal'|'direct'|null)}} [opt] sens des couches (droite par
+ *   défaut ; diaSensDominant donne celui des liens existants), tracé
+ *   des liens (angles droits par défaut ; null : les liens suivent leurs formes)
+ * @returns {{deplacements:Map<object,number[]>, tailles:Map<object,number[]>, traces:Map<object,number[][]>, ancres:Map}}
+ */
+function diaDisposer(aird, scene, formes, genre, opt) {
+  opt = opt || {};
+  const ens = new Set(formes), parent = formes[0].parent || null, E = DIA_ECARTS;
+  const racine = f => { for (let p = f; p; p = p.parent) if (ens.has(p)) return p; return null; };
+  // Graphe : arcs entre formes distinctes de l'ensemble (sans doublon), dans l'ordre des liens
+  const succ = new Map(formes.map(f => [f, []])), pred = new Map(formes.map(f => [f, []])), vus = new Set();
+  for (const l of scene.liens) {
+    if (l.attacheNote) continue;
+    const a = racine(l.source), b = racine(l.cible);
+    if (!a || !b || a === b || vus.has(a.vue + '>' + b.vue)) continue;
+    vus.add(a.vue + '>' + b.vue); succ.get(a).push(b); pred.get(b).push(a);
+  }
+  const x0 = Math.max(Math.min(...formes.map(f => f.x)), parent ? parent.x + DIA_COMPARTIMENT.x + E.marge : -Infinity);
+  const y0 = Math.max(Math.min(...formes.map(f => f.y)), parent ? parent.y + DIA_COMPARTIMENT.y + parent.police.taille + E.marge : -Infinity);
+  const pos = new Map(), niveau = new Map();          // niveau : couche ou profondeur (côté des ports)
+  const lecture = (a, b) => (Math.abs(a.y - b.y) > 10 ? a.y - b.y : a.x - b.x);
+  /** Grille compacte de formes à partir d'un coin ; rend la boîte occupée. */
+  const grille = (fs, gx, gy) => {
+    const n = fs.length, cols = Math.max(1, Math.ceil(Math.sqrt(n))), larg = [], haut = [];
+    fs.forEach((f, i) => { const c = i % cols, r = Math.floor(i / cols); larg[c] = Math.max(larg[c] || 0, f.w); haut[r] = Math.max(haut[r] || 0, f.h); });
+    fs.forEach((f, i) => {
+      const c = i % cols, r = Math.floor(i / cols);
+      pos.set(f, [gx + larg.slice(0, c).reduce((s, v) => s + v + E.forme, 0), gy + haut.slice(0, r).reduce((s, v) => s + v + E.forme, 0)]);
+    });
+    return { w: larg.reduce((s, v) => s + v, 0) + E.forme * (larg.length - 1), h: haut.reduce((s, v) => s + v, 0) + E.forme * (haut.length - 1) };
+  };
+  // Arbre : une feuille (rien d'autre que des ports) dont le nom ne tient pas grandit pour le loger (jamais ne rétrécit) :
+  // plus large par pas de 10 jusqu'à 260, puis plus haute
+  const neuves = new Map(), T = f => neuves.get(f) || [f.w, f.h];
+  if (genre === 'arbre') for (const f of formes) {
+    if (!f.texte || f.posTexte === 'dessous' || f.replie || f.pile || f.region || f.calculee || scene.formes.some(g => g.parent === f && g.genre !== 'port')) continue;
+    // (le plus long mot tient sur une ligne : jamais coupé au milieu)
+    const t = f.police.taille, ligne = t * 1.25, mot = Math.max(...f.texte.split(/\s+/).map(m => diaLargeurTexte(m, t)));
+    const loge = (w, h) => w - 34 >= mot && diaNbLignes(f.texte, w - 34, t) * ligne + 10 <= h;
+    if (loge(f.w, f.h)) continue;
+    let w = f.w;
+    while (w < 260 && !loge(w, f.h)) w += 10;
+    const h = loge(w, f.h) ? f.h : Math.max(f.h, Math.ceil(diaNbLignes(f.texte, w - 34, t) * ligne + 10));
+    neuves.set(f, [Math.round(w), Math.round(h)]);
+  }
+  const etoile = genre === 'etoile' ? diaEtoile(scene, formes) : null;
+  let bus = null;                                     // étoile : côtés des voisins, pour tracer les liens en bus
+  if (genre === 'etoile' && !etoile) genre = 'couches';
+  if (genre === 'grille') grille(formes.slice().sort(lecture), x0, y0);
+  else if (genre === 'etoile') {
+    // Étoile équilibrée (#3014 de Capella : pivot collé à un bord, liens éventaillés) : pivot au centre ; flux : entrées à
+    // gauche, sorties à droite ; sinon voisins groupés par genre (type de l'élément) : le plus grand groupe en rangée sous le
+    // pivot (partagé avec une rangée au-dessus s'il dépasse six), le suivant partagé à gauche et à droite, les autres
+    // au-dessus ; un seul genre : réparti sur les quatre côtés, à peu près au carré ; chaque rangée et colonne centrée sur le pivot,
+    // noms écrits dehors réservés (diaDebordEtiquette) ; formes sans lien en grille dessous
+    const { pivot, voisins } = etoile, D = new Map(formes.map(f => [f, diaDebordEtiquette(f)]));
+    const larg = f => f.w + D.get(f).gauche + D.get(f).droite, haut = f => f.h + D.get(f).haut + D.get(f).bas;
+    const groupes = new Map();
+    for (const v of voisins) { const k = v.typeSem || v.genre; if (!groupes.has(k)) groupes.set(k, []); groupes.get(k).push(v); }
+    const tries = [...groupes.values()].sort((a, b) => b.length - a.length);
+    const bas = [], dessus = [], gauche = [], droite = [];
+    const partager = (g, a, b) => g.forEach((f, i) => (i % 2 ? b : a).push(f));
+    // Flux (échanges fonctionnels, de composants, interactions) : les voisins qui envoient au pivot à gauche, ceux qui en reçoivent à droite, ceux qui font
+    // les deux dessous ; une colonne trop haute (plus de six) déborde en rangée au-dessus ou au-dessous
+    const flux = scene.liens.some(l => (l.source === pivot || l.cible === pivot) && /Exchange|Interaction/.test(l.typeSem || ''));
+    const entre = flux ? voisins.filter(v => succ.get(v).includes(pivot) && !pred.get(v).includes(pivot)) : [];
+    const sort = flux ? voisins.filter(v => pred.get(v).includes(pivot) && !succ.get(v).includes(pivot)) : [];
+    if (entre.length && sort.length) {
+      gauche.push(...entre.slice(0, 6)); droite.push(...sort.slice(0, 6));
+      dessus.push(...entre.slice(6)); bas.push(...voisins.filter(v => !entre.includes(v) && !sort.includes(v)), ...sort.slice(6));
+    } else if (tries.length === 1) {
+      // Un seul genre : réparti sur les quatre côtés, à peu près au carré (une colonne empile ses formes : chacune prend
+      // trois voisins sur dix, les rangées le reste)
+      const g = tries[0], c = Math.max(1, Math.round(g.length * 0.3));
+      partager(g.slice(0, 2 * c), gauche, droite); partager(g.slice(2 * c), bas, dessus);
+    } else {
+      if (tries[0].length > 6) partager(tries[0], bas, dessus); else bas.push(...tries[0]);
+      partager(tries[1], gauche, droite);
+      for (const g of tries.slice(2)) dessus.push(...g);
+    }
+    const ecart = E.couche, pas = E.forme;
+    const rangee = fs => fs.reduce((t, f) => t + larg(f), 0) + pas * Math.max(0, fs.length - 1);
+    const colonne = fs => fs.reduce((t, f) => t + haut(f), 0) + pas * Math.max(0, fs.length - 1);
+    const hRangee = fs => Math.max(0, ...fs.map(haut)), lColonne = fs => Math.max(0, ...fs.map(larg));
+    // Pivot : centré dans l'espace laissé par les colonnes et la rangée du dessus
+    const cx = x0 + Math.max(lColonne(gauche) + (gauche.length ? ecart : 0) + larg(pivot) / 2, rangee(dessus) / 2, rangee(bas) / 2);
+    const cy = y0 + (dessus.length ? hRangee(dessus) + ecart : 0) + Math.max(haut(pivot), colonne(gauche), colonne(droite)) / 2;
+    const poser = (f, gx, gy) => pos.set(f, [gx + D.get(f).gauche, gy + D.get(f).haut]);
+    poser(pivot, cx - larg(pivot) / 2, cy - haut(pivot) / 2);
+    const enRangee = (fs, y) => { let x = cx - rangee(fs) / 2; for (const f of fs) { poser(f, x, y); x += larg(f) + pas; } };
+    const enColonne = (fs, x, aDroite) => { let y = cy - colonne(fs) / 2; for (const f of fs) { poser(f, aDroite ? x : x - larg(f), y); y += haut(f) + pas; } };
+    enRangee(dessus, y0);
+    enColonne(gauche, cx - larg(pivot) / 2 - ecart, false);
+    enColonne(droite, cx + larg(pivot) / 2 + ecart, true);
+    const yBas = cy + Math.max(haut(pivot), colonne(gauche), colonne(droite)) / 2 + ecart;
+    enRangee(bas, yBas);
+    const seuls = formes.filter(f => !pos.has(f));
+    if (seuls.length) grille(seuls.sort(lecture), x0, yBas + (bas.length ? hRangee(bas) + ecart : 0));
+    for (const f of formes) niveau.set(f, f === pivot ? 1 : bas.includes(f) ? 2 : dessus.includes(f) ? 0 : 1);
+    bus = { pivot, bas, dessus, gauche, droite, D };
+  }
+  else if (genre === 'arbre') {
+    // Sens des liens : dans un arbre, chaque forme a un seul parent. Les liens de décomposition de Capella vont de l'enfant
+    // au parent (…_subFunctions, …_subComponents) : le parent est alors la cible. Le sens retenu est celui où le moins de
+    // formes ont plusieurs parents (à égalité : le parent est la source)
+    const plusieurs = m => formes.filter(f => m.get(f).length > 1).length;
+    const versParent = plusieurs(succ) < plusieurs(pred);
+    const parents = versParent ? succ : pred;
+    // Parent de chaque forme : premier lien vers un parent qui ne crée pas de cycle
+    const pere = new Map(), enfants = new Map(formes.map(f => [f, []]));
+    const ancetre = (a, b) => { for (let p = a; p; p = pere.get(p)) if (p === b) return true; return false; };
+    for (const f of formes.slice().sort((a, b) => a.x - b.x)) for (const p of parents.get(f)) if (!pere.has(f) && !ancetre(p, f)) { pere.set(f, p); enfants.get(p).push(f); }
+    for (const l of enfants.values()) l.sort((a, b) => a.x + a.w / 2 - b.x - b.w / 2);
+    const prof = new Map(), hauteurs = [];
+    const descendre = (f, d) => { prof.set(f, d); niveau.set(f, d); hauteurs[d] = Math.max(hauteurs[d] || 0, T(f)[1]); for (const c of enfants.get(f)) descendre(c, d + 1); };
+    const racines = formes.filter(f => !pere.has(f)).sort((a, b) => a.x + a.w / 2 - b.x - b.w / 2);
+    for (const r of racines) descendre(r, 0);
+    const yDe = d => y0 + hauteurs.slice(0, d).reduce((s, v) => s + v + E.couche * 0.75, 0);
+    // Arbre compact (Reingold–Tilford) : chaque sous-arbre est décrit par son contour (bords gauche et droit à chaque
+    // profondeur, relatifs au centre de sa racine) ; les sous-arbres frères sont rapprochés jusqu'à ce que leurs contours
+    // soient à l'écart voulu à chaque profondeur commune (un sous-arbre peu profond se glisse contre un voisin profond),
+    // puis le parent est centré sur ses enfants extrêmes
+    const decalage = new Map();                        // forme → abscisse de son centre relative au centre de son parent
+    /** Rapproche des sous-arbres (contours) de gauche à droite ; rend leurs décalages et le contour réuni. */
+    const accoler = contours => {
+      const dec = [0], gauche = contours[0].map(c => c[0]), droite = contours[0].map(c => c[1]);
+      for (let i = 1; i < contours.length; i++) {
+        const c = contours[i];
+        let x = -Infinity;
+        for (let d = 0; d < Math.min(c.length, droite.length); d++) x = Math.max(x, droite[d] - c[d][0] + E.forme);
+        if (x === -Infinity) x = 0;
+        dec.push(x);
+        c.forEach((v, d) => {
+          gauche[d] = d < gauche.length ? Math.min(gauche[d], x + v[0]) : x + v[0];
+          droite[d] = d < droite.length ? Math.max(droite[d], x + v[1]) : x + v[1];
+        });
+      }
+      return { dec, contour: gauche.map((g, d) => [g, droite[d]]) };
+    };
+    const contourDe = f => {
+      const cs = enfants.get(f), propre = [-T(f)[0] / 2, T(f)[0] / 2];
+      if (!cs.length) return [propre];
+      const { dec, contour } = accoler(cs.map(contourDe)), milieu = (dec[0] + dec[dec.length - 1]) / 2;
+      cs.forEach((c, i) => decalage.set(c, dec[i] - milieu));
+      return [propre, ...contour.map(([g, d]) => [g - milieu, d - milieu])];
+    };
+    // Arbres indépendants (racines) rangés en rangées, dans leur ordre : largeur visée d'après la surface totale, pour un
+    // rapport largeur / hauteur proche de celui d'un écran (16 / 10) ; jamais moins large que l'arbre le plus large. Seules
+    // les racines passent à la ligne : sous un même parent, le routage en arbre de Sirius veut les enfants sur une rangée
+    const contours = racines.map(contourDe), etendue = c => Math.max(...c.map(v => v[1])) - Math.min(...c.map(v => v[0]));
+    const hauteurDe = c => yDe(c.length) - y0 - E.couche * 0.75;
+    const visee = Math.max(...contours.map(etendue), Math.sqrt(contours.reduce((t, c) => t + (etendue(c) + E.forme) * (hauteurDe(c) + E.couche), 0) * 1.6));
+    const rangees = [[]];
+    for (let i = 0; i < racines.length; i++) {
+      const r = rangees[rangees.length - 1], essai = accoler([...r, i].map(k => contours[k]));
+      if (r.length && Math.max(...essai.contour.map(v => v[1])) - Math.min(...essai.contour.map(v => v[0])) > visee) rangees.push([i]); else r.push(i);
+    }
+    const placer = (f, cx, dy) => { pos.set(f, [cx - T(f)[0] / 2, yDe(prof.get(f)) + dy]); for (const c of enfants.get(f)) placer(c, cx + decalage.get(c), dy); };
+    let dy = 0;
+    for (const r of rangees) {
+      const t = accoler(r.map(k => contours[k])), gauche = Math.min(...t.contour.map(c => c[0]));
+      r.forEach((k, i) => placer(racines[k], x0 - gauche + t.dec[i], dy));
+      dy += Math.max(...r.map(k => hauteurDe(contours[k]))) + E.couche;
+    }
+  } else {
+    const sens = opt.sens || 'droite', horizontal = sens === 'droite' || sens === 'gauche';
+    const lies = formes.filter(f => succ.get(f).length || pred.get(f).length), seuls = formes.filter(f => !lies.includes(f));
+    // Cycles rompus : arcs retour d'un parcours en profondeur (dans l'ordre de lecture) inversés
+    const S = new Map(lies.map(f => [f, []])), P = new Map(lies.map(f => [f, []])), etat = new Map();
+    const parcourir = f => {
+      etat.set(f, 1);
+      for (const g of succ.get(f)) {
+        if (etat.get(g) === 1) { S.get(g).push(f); P.get(f).push(g); }        // arc retour : inversé
+        else { S.get(f).push(g); P.get(g).push(f); if (!etat.has(g)) parcourir(g); }
+      }
+      etat.set(f, 2);
+    };
+    for (const f of lies.slice().sort(lecture)) if (!etat.has(f)) parcourir(f);
+    // Couches : plus long chemin depuis les sources
+    const couche = new Map();
+    const rang = f => { if (couche.has(f)) return couche.get(f); couche.set(f, 0); const r = P.get(f).length ? Math.max(...P.get(f).map(rang)) + 1 : 0; couche.set(f, r); return r; };
+    for (const f of lies) rang(f);
+    for (const f of lies) niveau.set(f, couche.get(f));
+    // Nœuds fictifs sur les arcs qui sautent des couches : ils réservent le passage du lien et comptent dans l'ordre
+    const H = new Map(lies.map(f => [f, S.get(f).slice()])), B = new Map(lies.map(f => [f, P.get(f).slice()]));
+    const tous = lies.slice(), fictif = new Set();
+    for (const f of lies) for (const g of S.get(f)) {
+      const d = couche.get(g) - couche.get(f);
+      if (d <= 1) continue;
+      let prec = f;
+      H.get(f).splice(H.get(f).indexOf(g), 1); B.get(g).splice(B.get(g).indexOf(f), 1);
+      for (let k = 1; k < d; k++) {
+        const v = { x: 0, y: 0, w: horizontal ? 1 : 10, h: horizontal ? 10 : 1, vue: '' };
+        fictif.add(v); tous.push(v); couche.set(v, couche.get(f) + k); H.set(v, []); B.set(v, [prec]); H.get(prec).push(v);
+        v.x = f.x + (g.x - f.x) * k / d; v.y = f.y + (g.y - f.y) * k / d;
+        prec = v;
+      }
+      H.get(prec).push(g); B.get(g).push(prec);
+    }
+    const couches = [];
+    for (const f of tous) (couches[couche.get(f)] = couches[couche.get(f)] || []).push(f);
+    const axe = f => (horizontal ? f.y + f.h / 2 : f.x + f.w / 2);
+    for (const c of couches) c.sort((a, b) => axe(a) - axe(b));
+    // Ordre : barycentres (allers vers les successeurs, retours vers les prédécesseurs), puis échanges de voisins qui
+    // réduisent les croisements ; le meilleur ordre trouvé est gardé
+    const indice = new Map();
+    const noter = () => { for (const c of couches) c.forEach((f, i) => indice.set(f, i)); };
+    const croisementsEntre = (c) => {
+      let n = 0;
+      const arcs = [];
+      for (const f of c) for (const g of H.get(f)) arcs.push([indice.get(f), indice.get(g)]);
+      for (let a = 0; a < arcs.length; a++) for (let b = a + 1; b < arcs.length; b++) if ((arcs[a][0] - arcs[b][0]) * (arcs[a][1] - arcs[b][1]) < 0) n++;
+      return n;
+    };
+    const total = () => couches.slice(0, -1).reduce((s, c) => s + croisementsEntre(c), 0);
+    noter();
+    let meilleur = couches.map(c => c.slice()), score = total();
+    for (let it = 0; it < 12 && score > 0; it++) {
+      const aller = it % 2 === 0, ordre = aller ? couches.slice(1) : couches.slice(0, -1).reverse();
+      for (const c of ordre) {
+        const bary = f => { const v = (aller ? B : H).get(f); return v.length ? v.reduce((s, g) => s + indice.get(g), 0) / v.length : indice.get(f); };
+        const b = new Map(c.map(f => [f, bary(f)]));
+        c.sort((x, y) => b.get(x) - b.get(y) || indice.get(x) - indice.get(y));
+        c.forEach((f, i) => indice.set(f, i));
+      }
+      // Échanges de voisins (transpose)
+      for (let ameliore = true, tour = 0; ameliore && tour < 4; tour++) {
+        ameliore = false;
+        for (let r = 0; r < couches.length; r++) {
+          const c = couches[r];
+          for (let i = 0; i + 1 < c.length; i++) {
+            const avant = (r > 0 ? croisementsEntre(couches[r - 1]) : 0) + croisementsEntre(c);
+            [c[i], c[i + 1]] = [c[i + 1], c[i]]; c.forEach((f, k) => indice.set(f, k));
+            const apres = (r > 0 ? croisementsEntre(couches[r - 1]) : 0) + croisementsEntre(c);
+            if (apres < avant) ameliore = true;
+            else { [c[i], c[i + 1]] = [c[i + 1], c[i]]; c.forEach((f, k) => indice.set(f, k)); }
+          }
+        }
+      }
+      const t = total();
+      if (t < score) { score = t; meilleur = couches.map(c => c.slice()); }
+    }
+    meilleur.forEach((c, r) => { couches[r] = c; });
+    noter();
+    // Coordonnées : dans chaque couche, formes dans leur ordre ; chaque forme tirée vers le centre de ses voisines
+    // (allers-retours), écart minimal gardé ; couches successives séparées de leur épaisseur
+    const long = f => (horizontal ? f.h : f.w), ecart = (a, b) => (fictif.has(a) || fictif.has(b) ? E.forme / 2 : E.forme);
+    const centreDe = new Map();
+    for (const c of couches) { let q = 0; c.forEach((f, i) => { if (i) q += ecart(c[i - 1], f); centreDe.set(f, q + long(f) / 2); q += long(f); }); }
+    const tasser = (c, voulu) => {
+      // Ordre gardé, écarts minimaux respectés, au plus près des positions voulues (moyenne d'un passage dans chaque sens)
+      const n = c.length, g = new Array(n), d = new Array(n);
+      for (let i = 0; i < n; i++) g[i] = i ? Math.max(voulu[i], g[i - 1] + long(c[i - 1]) / 2 + ecart(c[i - 1], c[i]) + long(c[i]) / 2) : voulu[i];
+      for (let i = n - 1; i >= 0; i--) d[i] = i < n - 1 ? Math.min(voulu[i], d[i + 1] - long(c[i + 1]) / 2 - ecart(c[i], c[i + 1]) - long(c[i]) / 2) : voulu[i];
+      const m = c.map((_, i) => (g[i] + d[i]) / 2);
+      for (let i = 1; i < n; i++) m[i] = Math.max(m[i], m[i - 1] + long(c[i - 1]) / 2 + ecart(c[i - 1], c[i]) + long(c[i]) / 2);
+      c.forEach((f, i) => centreDe.set(f, m[i]));
+    };
+    for (let it = 0; it < 8; it++) {
+      const aller = it % 2 === 0, ordre = aller ? couches.slice(1) : couches.slice(0, -1).reverse();
+      for (const c of ordre) {
+        const voulu = c.map(f => { const v = [...B.get(f), ...H.get(f)]; return v.length ? v.reduce((s, g) => s + centreDe.get(g), 0) / v.length : centreDe.get(f); });
+        tasser(c, voulu);
+      }
+    }
+    const mini = Math.min(...tous.map(f => centreDe.get(f) - long(f) / 2));
+    const epais = c => Math.max(...c.map(f => (horizontal ? f.w : f.h)));
+    let p = 0, L = 0;
+    for (const c of couches) {
+      const e = epais(c);
+      for (const f of c) {
+        const a = p + (e - (horizontal ? f.w : f.h)) / 2, q = centreDe.get(f) - long(f) / 2 - mini;
+        L = Math.max(L, q + long(f));
+        if (!fictif.has(f)) pos.set(f, horizontal ? [x0 + a, y0 + q] : [x0 + q, y0 + a]);
+      }
+      p += e + E.couche;
+    }
+    // Sens inverse (vers la gauche, vers le haut) : couches en miroir dans leur étendue
+    if (sens === 'gauche' || sens === 'haut') {
+      const fin = Math.max(...lies.map(f => (horizontal ? pos.get(f)[0] + f.w : pos.get(f)[1] + f.h)));
+      for (const f of lies) { const [x, y] = pos.get(f); pos.set(f, horizontal ? [x0 + fin - x - f.w, y] : [x, y0 + fin - y - f.h]); }
+    }
+    // Formes sans lien : en grille, sous le graphe (couches horizontales) ou à sa droite (couches verticales)
+    if (seuls.length) {
+      const fs = seuls.slice().sort(lecture);
+      if (!lies.length) grille(fs, x0, y0);
+      else if (horizontal) grille(fs, x0, y0 + L + E.couche / 2);
+      else grille(fs, x0 + L + E.couche / 2, y0);
+    }
+  }
+  const deplacements = new Map();
+  for (const f of formes) { const [x, y] = pos.get(f); const d = [Math.round(x - f.x), Math.round(y - f.y)]; if (d[0] || d[1]) deplacements.set(f, d); }
+  // Ports reliés (couches, arbre) : sur le côté tourné vers l'autre extrémité (couche suivante, précédente, ou même couche),
+  // répartis le long du bord dans l'ordre des extrémités opposées
+  if (genre !== 'grille') {
+    const sens = genre === 'arbre' || genre === 'etoile' ? 'bas' : opt.sens || 'droite', horizontal = sens === 'droite' || sens === 'gauche';
+    const oppose = { droite: 'gauche', gauche: 'droite', bas: 'haut', haut: 'bas' };
+    const centre = f => { const [x, y] = pos.get(f); return [x + T(f)[0] / 2, y + T(f)[1] / 2]; };
+    for (const f of formes) {
+      const cotes = { gauche: [], droite: [], haut: [], bas: [] };
+      for (const q of scene.formes) {
+        if (q.parent !== f || q.genre !== 'port') continue;
+        const l = scene.liens.find(x => !x.attacheNote && (x.source === q || x.cible === q));
+        const autre = l && racine(l.source === q ? l.cible : l.source);
+        if (!autre || autre === f) continue;
+        const na = niveau.get(autre), nf = niveau.get(f), [ax, ay] = centre(autre), [fx, fy] = centre(f);
+        const cote = na != null && nf != null && na !== nf
+          ? (na > nf ? sens : oppose[sens])
+          : (horizontal ? (ay > fy ? 'bas' : 'haut') : (ax > fx ? 'droite' : 'gauche'));
+        cotes[cote].push({ q, a: cote === 'gauche' || cote === 'droite' ? ay : ax });
+      }
+      const [x, y] = pos.get(f), [fw, fh] = T(f), boite = { x, y, w: fw, h: fh };
+      for (const [cote, qs] of Object.entries(cotes)) {
+        qs.sort((a, b) => a.a - b.a);
+        qs.forEach(({ q }, i) => {
+          const t = (i + 1) / (qs.length + 1);
+          const cx = cote === 'gauche' ? x : cote === 'droite' ? x + fw : x + fw * t, cy = cote === 'haut' ? y : cote === 'bas' ? y + fh : y + fh * t;
+          const [px, py] = diaPlacerPort(q, cx, cy, boite), d = deplacements.get(f) || [0, 0];
+          // diaMiseEnPage décale déjà avec le bord les ports droit et bas d'une forme agrandie
+          const ca = diaCotePort(q), auto = [ca === 'droite' ? fw - f.w : 0, ca === 'bas' ? fh - f.h : 0];
+          const dq = [Math.round(px - (q.x + d[0]) - auto[0]), Math.round(py - (q.y + d[1]) - auto[1])];
+          if (dq[0] || dq[1]) deplacements.set(q, dq);
+        });
+      }
+    }
+  }
+  // Conteneur trop petit : il grandit (jamais ne rétrécit)
+  const tailles = new Map(neuves);
+  if (parent && !parent.calculee) {
+    const d = f => deplacements.get(f) || [0, 0];
+    const r = Math.max(...formes.map(f => f.x + d(f)[0] + T(f)[0])) + E.marge, b = Math.max(...formes.map(f => f.y + d(f)[1] + T(f)[1])) + E.marge;
+    let enfant = parent, droite = r, bas = b;
+    // Le conteneur, puis chacun de ses conteneurs (E1 : un élément ne dépasse jamais le sien), grandissent au besoin
+    while (enfant && !enfant.calculee) {
+      const w = Math.max(enfant.w, Math.round(droite - enfant.x)), h = Math.max(enfant.h, Math.round(bas - enfant.y));
+      if (w === enfant.w && h === enfant.h) break;
+      tailles.set(enfant, [w, h]);
+      droite = enfant.x + w + E.marge; bas = enfant.y + h + E.marge; enfant = enfant.parent;
+    }
+  }
+  // Liens touchés retracés sur une copie de la scène aux positions nouvelles
+  const r = opt.trace === null ? { traces: new Map(), ancres: new Map() }
+    : diaRetracer(aird, scene, deplacements, tailles, opt.trace, l => !!(racine(l.source) || racine(l.cible)));
+  // Étoile : liens du pivot à ses voisins en bus, comme à la main — un tronc commun par côté (du bas du pivot à mi-chemin de
+  // la rangée du dessous, puis vers chaque voisin), sans passer sur les noms écrits dehors
+  if (bus && opt.trace === 'orthogonal') {
+    const { pivot, D } = bus, B = f => { const [x, y] = pos.get(f), [w, h] = T(f); return { x, y, w, h }; }, P = B(pivot);
+    const pcx = Math.round(P.x + P.w / 2), pcy = Math.round(P.y + P.h / 2);
+    const milieu = (a, b) => Math.round((a + b) / 2);
+    const cote = new Map([...bus.bas.map(f => [f, 'bas']), ...bus.dessus.map(f => [f, 'dessus']), ...bus.gauche.map(f => [f, 'gauche']), ...bus.droite.map(f => [f, 'droite'])]);
+    // (les bus des rangées passent entre la rangée et le haut ou le bas des colonnes : ils ne coupent pas leurs troncs)
+    const cols = [...bus.gauche, ...bus.droite], haut0 = Math.min(P.y - D.get(pivot).haut, ...cols.map(f => B(f).y - D.get(f).haut));
+    const bas0 = Math.max(P.y + P.h + D.get(pivot).bas, ...cols.map(f => B(f).y + B(f).h + D.get(f).bas));
+    const yb = bus.bas.length ? milieu(bas0, Math.min(...bus.bas.map(f => B(f).y - D.get(f).haut))) : 0;
+    const yh = bus.dessus.length ? milieu(haut0, Math.max(...bus.dessus.map(f => B(f).y + B(f).h + D.get(f).bas))) : 0;
+    const xg = bus.gauche.length ? milieu(P.x - D.get(pivot).gauche, Math.max(...bus.gauche.map(f => B(f).x + B(f).w + D.get(f).droite))) : 0;
+    const xd = bus.droite.length ? milieu(P.x + P.w + D.get(pivot).droite, Math.min(...bus.droite.map(f => B(f).x - D.get(f).gauche))) : 0;
+    for (const l of scene.liens) {
+      if (l.attacheNote || l.source === l.cible) continue;
+      const voisin = l.source === pivot ? l.cible : l.cible === pivot ? l.source : null;
+      if (!voisin || !cote.has(voisin)) continue;           // lien d'un port, ou sans le pivot : tracé par diaRetracer
+      const V = B(voisin), vcx = Math.round(V.x + V.w / 2), vcy = Math.round(V.y + V.h / 2), c = cote.get(voisin);
+      let pts = c === 'bas' ? [[pcx, P.y + P.h], [pcx, yb], [vcx, yb], [vcx, V.y]]
+        : c === 'dessus' ? [[pcx, P.y], [pcx, yh], [vcx, yh], [vcx, V.y + V.h]]
+          : c === 'gauche' ? [[P.x, pcy], [xg, pcy], [xg, vcy], [V.x + V.w, vcy]]
+            : [[P.x + P.w, pcy], [xd, pcy], [xd, vcy], [V.x, vcy]];
+      pts = pts.map(q => q.map(Math.round)).filter((q, k, t) => k === 0 || q[0] !== t[k - 1][0] || q[1] !== t[k - 1][1]);
+      pts = pts.filter((q, k, t) => k === 0 || k === t.length - 1 || !((t[k - 1][0] === q[0] && q[0] === t[k + 1][0]) || (t[k - 1][1] === q[1] && q[1] === t[k + 1][1])));
+      if (l.source !== pivot) pts.reverse();
+      r.traces.set(l, pts);
+      // Ancres GMF réécrites là où le lien en a (IdentityAnchor), comme diaRetracer
+      const e = aird.parVue.get(l.vue), an = {}, frac = (q, b) => [Math.round((q[0] - b.x) / b.w * 10000) / 10000, Math.round((q[1] - b.y) / b.h * 10000) / 10000];
+      if (e && diaEnfant(e, 'sourceAnchor')) an.source = frac(pts[0], l.source === pivot ? P : V);
+      if (e && diaEnfant(e, 'targetAnchor')) an.cible = frac(pts[pts.length - 1], l.cible === pivot ? P : V);
+      if (an.source || an.cible) r.ancres.set(l, an); else r.ancres.delete(l);
+    }
+  }
+  return { deplacements, tailles, traces: r.traces, ancres: r.ancres };
+}
+
+/**
+ * Liens retracés après des déplacements et des redimensionnements, sur une copie de la scène aux positions nouvelles :
+ * en angles droits (diaRouteOrthogonale, ancres GMF réécrites là où le lien en a, segments parallèles écartés :
+ * diaEcarterTraces) ou en ligne droite. Un lien dont les deux
+ * extrémités bougent ensemble n'est pas retracé (ses points suivent).
+ * @param {object} aird résultat de diaLire
+ * @param {object} scene scène du diagramme
+ * @param {Map<object,number[]>} deplacements forme → [dx, dy] (le sien, sans celui de ses conteneurs)
+ * @param {Map<object,number[]>} tailles forme → [largeur, hauteur]
+ * @param {'orthogonal'|'direct'} mode tracé
+ * @param {function(object):boolean} garde liens à considérer
+ * @returns {{traces:Map<object,number[][]>, ancres:Map}}
+ */
+function diaRetracer(aird, scene, deplacements, tailles, mode, garde) {
+  const traces = new Map(), ancres = new Map();
+  const decal = f => { let x = 0, y = 0; for (let p = f; p; p = p.parent) { const v = deplacements.get(p); if (v) { x += v[0]; y += v[1]; } } return [x, y]; };
+  const copies = new Map();
+  const copie = f => {
+    if (!f) return null;
+    if (!copies.has(f)) {
+      const [dx, dy] = decal(f), t = tailles.get(f), c = { ...f, x: f.x + dx, y: f.y + dy };
+      if (t) { c.w = t[0]; c.h = t[1]; }
+      copies.set(f, c); c.parent = copie(f.parent);
+    }
+    return copies.get(f);
+  };
+  const virtuelle = { ...scene, formes: scene.formes.map(copie) }, deja = [];
+  // Les liens les plus courts d'abord (les longs contournent), comme diaTracesOrthogonales
+  const longueur = l => Math.abs(l.source.x - l.cible.x) + Math.abs(l.source.y - l.cible.y);
+  const aRetracer = [];
+  for (const l of scene.liens.slice().sort((a, b) => longueur(a) - longueur(b))) {
+    if (l.attacheNote || !garde(l)) continue;
+    const ds = decal(l.source), dc = decal(l.cible);
+    if (ds[0] === dc[0] && ds[1] === dc[1] && !tailles.has(l.source) && !tailles.has(l.cible)) continue;   // déplacé d'un bloc
+    aRetracer.push([l, { ...l, source: copie(l.source), cible: copie(l.cible) }]);
+  }
+  // Liens retracés d'un même côté répartis le long de celui-ci (diaRepartirBouts)
+  const imposes = mode === 'direct' ? new Map() : diaRepartirBouts(aRetracer.map(([, v]) => v));
+  for (const [l, v] of aRetracer) {
+    if (mode === 'direct') {
+      const cs = [v.source.x + v.source.w / 2, v.source.y + v.source.h / 2], cc = [v.cible.x + v.cible.w / 2, v.cible.y + v.cible.h / 2];
+      traces.set(l, [diaBordVers(v.source, cc), diaBordVers(v.cible, cs)].map(p => p.map(Math.round)));
+    } else {
+      const r = diaRouteOrthogonale(virtuelle, v, deja, imposes.get(v));      // routage séquentiel : évite les liens déjà retracés
+      for (let i = 1; i < r.points.length; i++) deja.push([r.points[i - 1], r.points[i], v]);
+      traces.set(l, r.points);
+      // Ancres réécrites seulement là où le lien en a (IdentityAnchor), comme eddRetracer
+      const e = aird.parVue.get(l.vue), an = {};
+      if (r.ancres.source && e && diaEnfant(e, 'sourceAnchor')) an.source = r.ancres.source;
+      if (r.ancres.cible && e && diaEnfant(e, 'targetAnchor')) an.cible = r.ancres.cible;
+      if (an.source || an.cible) ancres.set(l, an);
+    }
+  }
+  return { traces: mode === 'direct' ? traces : diaEcarterTraces(virtuelle, traces), ancres };
+}
+
+/**
+ * Répartit sur un côté de forme les extrémités des liens tracés ensemble qui en partent (ports exceptés : un port est un
+ * point). Sans cela, tous partiraient du même point (milieu du côté ou de la partie commune) et se croiseraient en sortant.
+ * Ordre le long du côté : celui de la direction de l'autre extrémité (angle vu du côté, comme l'ordre des ports d'ELK), à
+ * égalité celui des liens donnés (deux liens entre les deux mêmes formes restent parallèles) ; places au plus près des
+ * points voulus, écartées d'au moins 16 px (moins sur un petit côté), dans le côté.
+ * @param {object[]} liens liens à tracer (source et cible : formes de la scène, éventuellement déplacées)
+ * @returns {Map<object,{source?:object, cible?:object}>} lien → extrémités imposées ({p, n, port} : diaRouteOrthogonale)
+ */
+function diaRepartirBouts(liens) {
+  const groupes = new Map(), res = new Map();
+  liens.forEach((l, rang) => {
+    if (!l.source || !l.cible || l.source === l.cible) return;
+    for (const [bout, f, autre] of [['source', l.source, l.cible], ['cible', l.cible, l.source]]) {
+      if (f.genre === 'port' || !(f.w > 0 && f.h > 0)) continue;
+      const b = diaBoutOrthogonal(f, autre), cle = f;
+      if (!groupes.has(cle)) groupes.set(cle, new Map());
+      const parCote = groupes.get(cle), cote = b.n.join(',');
+      if (!parCote.has(cote)) parCote.set(cote, []);
+      parCote.get(cote).push({ l, bout, b, autre, rang });
+    }
+  });
+  for (const [f, parCote] of groupes) for (const liste of parCote.values()) {
+    if (liste.length < 2) continue;
+    const n = liste[0].b.n, k = n[0] ? 1 : 0;                       // axe du côté : y pour un côté gauche ou droit
+    const debut = k ? f.y : f.x, long = k ? f.h : f.w, m = liste.length;
+    // Direction de l'autre extrémité vue du côté : composante le long du côté, composante vers l'extérieur
+    for (const e of liste) {
+      const o = [e.autre.x + e.autre.w / 2, e.autre.y + e.autre.h / 2], d = [o[0] - e.b.p[0], o[1] - e.b.p[1]];
+      e.angle = Math.atan2(d[k], d[0] * n[0] + d[1] * n[1]);
+    }
+    liste.sort((a, b) => a.angle - b.angle || a.rang - b.rang);
+    // Places croissantes écartées d'au moins G, au plus près des points voulus (régression isotone des points décalés)
+    const G = Math.min(16, long / (m + 1)), lo = debut + G, hi = debut + long - G;
+    const blocs = [];
+    liste.forEach((e, i) => {
+      blocs.push({ somme: e.b.p[k] - i * G, n: 1 });
+      while (blocs.length > 1 && blocs[blocs.length - 2].somme / blocs[blocs.length - 2].n > blocs[blocs.length - 1].somme / blocs[blocs.length - 1].n) {
+        const b = blocs.pop(); blocs[blocs.length - 1].somme += b.somme; blocs[blocs.length - 1].n += b.n;
+      }
+    });
+    const places = [];
+    for (const b of blocs) for (let j = 0; j < b.n; j++) places.push(b.somme / b.n + places.length * G);
+    const dec = Math.max(0, lo - places[0]) - Math.max(0, places[m - 1] + Math.max(0, lo - places[0]) - hi);
+    liste.forEach((e, i) => {
+      const p = e.b.p.slice();
+      p[k] = Math.round(Math.min(Math.max(places[i] + dec, debut), debut + long));
+      if (!res.has(e.l)) res.set(e.l, {});
+      res.get(e.l)[e.bout] = { p, n, port: false };
+    });
+  }
+  return res;
+}
+
+/**
+ * Tracés en angles droits d'un ensemble de liens (diaRouteOrthogonale, routage séquentiel : chaque lien évite de longer
+ * ou de croiser les tracés déjà posés, ceux des autres liens compris ; extrémités d'un même côté réparties, diaRepartirBouts), puis, au besoin, écartés les uns des autres
+ * (diaEcarterTraces) ; ancres GMF réécrites là où le lien en a (IdentityAnchor).
+ * @param {object} aird résultat de diaLire
+ * @param {object} scene scène du diagramme
+ * @param {object[]} liens liens à retracer
+ * @param {boolean} [ecarter] écarter les segments parallèles (vrai par défaut)
+ * @returns {{traces:Map<object,number[][]>, ancres:Map}}
+ */
+function diaTracesOrthogonales(aird, scene, liens, ecarter) {
+  const traces = new Map(), ancres = new Map(), vises = new Set(liens);
+  // Routage séquentiel : les autres liens (qui ne bougent pas) puis chaque lien tracé comptent comme déjà posés ; les plus
+  // courts d'abord (les longs contournent)
+  const deja = [];
+  const poser = (pts, l) => { for (let i = 1; i < pts.length; i++) deja.push([pts[i - 1], pts[i], l]); };
+  for (const l of scene.liens) if (!vises.has(l) && !l.attacheNote) poser(l.points, l);
+  const longueur = l => Math.abs(l.source.x - l.cible.x) + Math.abs(l.source.y - l.cible.y);
+  const imposes = diaRepartirBouts(liens.filter(l => !l.attacheNote));     // liens d'un même côté répartis le long de celui-ci
+  for (const l of liens.slice().sort((a, b) => longueur(a) - longueur(b))) {
+    if (l.attacheNote) continue;
+    const r = diaRouteOrthogonale(scene, l, deja, imposes.get(l));
+    poser(r.points, l);
+    traces.set(l, r.points);
+    const e = aird.parVue.get(l.vue), an = {};
+    if (r.ancres.source && e && diaEnfant(e, 'sourceAnchor')) an.source = r.ancres.source;
+    if (r.ancres.cible && e && diaEnfant(e, 'targetAnchor')) an.cible = r.ancres.cible;
+    if (an.source || an.cible) ancres.set(l, an);
+  }
+  const fixes = [];
+  for (const l of scene.liens) if (!vises.has(l) && !l.attacheNote) for (let i = 1; i < l.points.length; i++) fixes.push([l.points[i - 1], l.points[i]]);
+  return { traces: ecarter === false ? traces : diaEcarterTraces(scene, traces, { fixes }), ancres };
+}
+
+/**
+ * Toutes les permutations d'une liste (petite).
+ * @param {Array} l liste
+ * @returns {Array<Array>}
+ */
+function diaPermutations(l) {
+  if (l.length <= 1) return [l.slice()];
+  const res = [];
+  l.forEach((x, i) => { for (const p of diaPermutations([...l.slice(0, i), ...l.slice(i + 1)])) res.push([x, ...p]); });
+  return res;
+}
+
+/**
+ * Deux segments se coupent-ils strictement (hors extrémités communes et segments alignés) ?
+ * @param {number[]} a @param {number[]} b premier segment @param {number[]} c @param {number[]} d second segment
+ * @returns {boolean}
+ */
+function diaSegmentsSeCoupent(a, b, c, d) {
+  const o = (p, q, r) => Math.sign((q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0]));
+  return o(a, b, c) * o(a, b, d) < 0 && o(c, d, a) * o(c, d, b) < 0;
+}
+
+/**
+ * Écartement des liens parallèles (« nudging », comme libavoid) : dans un ensemble de tracés d'équerre, les segments
+ * intérieurs (ni le premier, ni le dernier : leurs extrémités tiennent aux formes et aux ports) qui se superposent sur une même
+ * droite sont écartés de part et d'autre de celle-ci, d'un pas fixe, dans l'ordre qui évite de les croiser (un lien qui vient
+ * d'en haut ou y repart passe en haut). Un segment déplacé entraîne ses deux voisins, qui restent d'équerre ; un écart qui
+ * ferait entrer un segment dans une forme étrangère au lien, ou retournerait un voisin, est réduit de moitié, puis abandonné.
+ * Seuls les tracés donnés changent : les autres liens ne bougent jamais.
+ * Parmi les ordres et les places possibles, celui qui croise le moins les autres liens (tous, fixes compris) est retenu, et
+ * seulement s'il ne croise pas plus qu'avant : écarter ne crée jamais de croisement.
+ * @param {object} scene scène (positions des formes, nouvelles si une copie de la scène est donnée)
+ * @param {Map<object,number[][]>} traces lien → points absolus (d'équerre)
+ * @param {{ecart?:number, fixes?:Array<number[][]>}} [opt] pas d'écartement (8 par défaut) ; segments des liens qui ne
+ *   bougent pas
+ * @returns {Map<object,number[][]>} nouveaux tracés (copies)
+ */
+function diaEcarterTraces(scene, traces, opt) {
+  const PAS = (opt && opt.ecart) || 8, fixes = (opt && opt.fixes) || [];
+  const res = new Map([...traces].map(([l, pts]) => [l, pts.map(q => q.slice())]));
+  const formes = scene.formes.filter(f => f.genre !== 'port' && f.genre !== 'ligne' && f.genre !== 'note' && f.w > 0 && f.h > 0);
+  const exclus = new Map();
+  for (const l of res.keys()) { const e = new Set(); for (const b of [l.source, l.cible]) for (let q = b; q; q = q.parent) e.add(q); exclus.set(l, e); }
+  /** Un segment d'équerre entre-t-il dans une forme (intérieur rétréci d'un pixel) ? */
+  const heurte = (a, b, l) => formes.some(f => !exclus.get(l).has(f) && Math.max(a[0], b[0]) > f.x + 1 && Math.min(a[0], b[0]) < f.x + f.w - 1
+    && Math.max(a[1], b[1]) > f.y + 1 && Math.min(a[1], b[1]) < f.y + f.h - 1);
+  /**
+   * Croisements de segments déplacés (par lien : trois segments) avec ceux des autres liens : les autres tracés (dans leur
+   * état courant, ceux du groupe pris dans leur nouvel état) et les liens fixes.
+   */
+  let proches = [];                                  // segments des autres liens près du groupe en cours : [lien, a, b]
+  const croisements = nouveaux => {
+    const remplaces = new Set(nouveaux.map(x => x.l));
+    let c = 0;
+    for (let x = 0; x < nouveaux.length; x++) {
+      for (let y = x + 1; y < nouveaux.length; y++) for (const s1 of nouveaux[x].segs) for (const s2 of nouveaux[y].segs) if (diaSegmentsSeCoupent(s1[0], s1[1], s2[0], s2[1])) c++;
+      for (const s1 of nouveaux[x].segs) for (const [l2, a, b] of proches) if (!remplaces.has(l2) && diaSegmentsSeCoupent(s1[0], s1[1], a, b)) c++;
+    }
+    return c;
+  };
+  /** Segments des autres tracés et des liens fixes qui touchent un rectangle. */
+  const dans = (x0, y0, x1, y1) => {
+    const r = [], touche = (a, b) => Math.max(a[0], b[0]) >= x0 && Math.min(a[0], b[0]) <= x1 && Math.max(a[1], b[1]) >= y0 && Math.min(a[1], b[1]) <= y1;
+    for (const [l2, p2] of res) for (let i = 1; i < p2.length; i++) if (touche(p2[i - 1], p2[i])) r.push([l2, p2[i - 1], p2[i]]);
+    for (const [a, b] of fixes) if (touche(a, b)) r.push([null, a, b]);
+    return r;
+  };
+  // Fourches : des liens qui partent d'un même point (port partagé) dans la même direction gardent une amorce commune
+  // (AMORCE), puis un décrochement de longueur nulle (deux points confondus) : la suite du premier segment devient intérieure
+  // et peut être écartée comme les autres ; les décrochements inutilisés sont retirés à la fin
+  const AMORCE = 12, bouts = new Map();
+  for (const [l, p] of res) {
+    if (p.length < 3) continue;
+    for (const fin of [false, true]) {
+      const a = fin ? p[p.length - 1] : p[0], b = fin ? p[p.length - 2] : p[1], d = [Math.sign(b[0] - a[0]), Math.sign(b[1] - a[1])];
+      if (Math.abs(b[0] - a[0]) + Math.abs(b[1] - a[1]) < AMORCE + PAS || (d[0] && d[1])) continue;
+      const cle = a.join(',') + '|' + d.join(',');
+      if (!bouts.has(cle)) bouts.set(cle, []);
+      bouts.get(cle).push({ p, fin, a, d });
+    }
+  }
+  for (const liste of bouts.values()) {
+    if (liste.length < 2) continue;
+    for (const { p, fin, a, d } of liste) {
+      const q = [a[0] + d[0] * AMORCE, a[1] + d[1] * AMORCE];
+      if (fin) p.splice(p.length - 1, 0, q, q.slice()); else p.splice(1, 0, q, q.slice());
+    }
+  }
+  /** Point d'un décrochement (confondu avec son voisin) : le segment voisin y devient perpendiculaire. */
+  const decroche = (p, i, j) => p[i][0] === p[j][0] && p[i][1] === p[j][1];
+  for (let passe = 0; passe < 2; passe++) {
+    for (const k of [1, 0]) {                        // k = 1 : segments horizontaux (y commun) ; k = 0 : verticaux (x commun)
+      const autre = 1 - k, segs = [];
+      for (const [l, p] of res) for (let i = 1; i + 2 < p.length; i++) {
+        const a = p[i], b = p[i + 1];
+        if (a[k] !== b[k] || a[autre] === b[autre]) continue;
+        segs.push({ l, p, i, c: a[k], d: Math.min(a[autre], b[autre]), f: Math.max(a[autre], b[autre]) });
+      }
+      // Groupes : même droite, étendues qui se recouvrent (de proche en proche)
+      segs.sort((x, y) => x.c - y.c || x.d - y.d);
+      const groupes = [];
+      for (const sg of segs) {
+        const g = groupes[groupes.length - 1];
+        if (g && g.c === sg.c && sg.d < g.fin - 1 && g.liens.has(sg.l) === false) { g.segs.push(sg); g.fin = Math.max(g.fin, sg.f); g.liens.add(sg.l); }
+        else groupes.push({ c: sg.c, fin: sg.f, segs: [sg], liens: new Set([sg.l]) });
+      }
+      for (const g of groupes) {
+        if (g.segs.length < 2) continue;
+        const n = g.segs.length;
+        // Ordres essayés : toutes les permutations (au plus 4 segments), sinon celui des extrémités voisines
+        const cle = sg => (sg.p[sg.i - 1][k] + sg.p[sg.i + 2][k]) / 2 - g.c;
+        const base = g.segs.slice().sort((x, y) => cle(x) - cle(y) || x.d - y.d);
+        const ordres = n <= 4 ? diaPermutations(base) : [base];
+        // Segments proches : rectangle des segments du groupe et de leurs voisins, élargi des écarts possibles
+        const pts = g.segs.flatMap(sg => [sg.p[sg.i - 1], sg.p[sg.i], sg.p[sg.i + 1], sg.p[sg.i + 2]]), marge = n * PAS;
+        proches = dans(Math.min(...pts.map(q => q[0])) - marge, Math.min(...pts.map(q => q[1])) - marge, Math.max(...pts.map(q => q[0])) + marge, Math.max(...pts.map(q => q[1])) + marge);
+        // Places essayées : de part et d'autre de la droite, puis d'un seul côté (couloir le long d'une forme), au pas puis au demi-pas
+        const places = [];
+        for (const pas of [PAS, PAS / 2]) for (const depart of [-(n - 1) / 2, 0, -(n - 1)]) places.push(j => Math.round(g.c + (depart + j) * pas));
+        let meilleur = null;
+        for (const place of places) {
+          for (const ordre of ordres) {
+            const nouveaux = [];
+            const possible = ordre.every((sg, j) => {
+              const v = place(j), av = sg.p[sg.i - 1], ap = sg.p[sg.i + 2];
+              // Les voisins ne se retournent pas (sauf un décrochement de fourche), et rien n'entre dans une forme étrangère au lien
+              if ((!decroche(sg.p, sg.i - 1, sg.i) && Math.sign(av[k] - v) !== Math.sign(av[k] - g.c))
+                || (!decroche(sg.p, sg.i + 1, sg.i + 2) && Math.sign(ap[k] - v) !== Math.sign(ap[k] - g.c))) return false;
+              const a = sg.p[sg.i].slice(), b = sg.p[sg.i + 1].slice();
+              a[k] = v; b[k] = v;
+              if (heurte(a, b, sg.l) || heurte(av, a, sg.l) || heurte(b, ap, sg.l)) return false;
+              nouveaux.push({ l: sg.l, segs: [[av, a], [a, b], [b, ap]] });
+              return true;
+            });
+            if (!possible) continue;
+            const c = croisements(nouveaux);
+            if (!meilleur || c < meilleur.c) meilleur = { c, ordre, place };
+            if (c === 0) break;
+          }
+          if (meilleur && meilleur.c === 0) break;  // première place sans croisement (la plus centrée, au plus grand pas)
+        }
+        const avant = croisements(g.segs.map(sg => ({ l: sg.l, segs: [[sg.p[sg.i - 1], sg.p[sg.i]], [sg.p[sg.i], sg.p[sg.i + 1]], [sg.p[sg.i + 1], sg.p[sg.i + 2]]] })));
+        if (meilleur && meilleur.c <= avant) meilleur.ordre.forEach((sg, j) => { const v = meilleur.place(j); sg.p[sg.i][k] = v; sg.p[sg.i + 1][k] = v; });
+      }
+    }
+  }
+  // Points confondus et points alignés retirés (décrochements inutilisés)
+  for (const [l, p] of res) {
+    const t = p.filter((q, k, u) => k === 0 || q[0] !== u[k - 1][0] || q[1] !== u[k - 1][1]);
+    res.set(l, t.filter((q, k, u) => k === 0 || k === u.length - 1 || !((u[k - 1][0] === q[0] && q[0] === u[k + 1][0]) || (u[k - 1][1] === q[1] && q[1] === u[k + 1][1]))));
+  }
+  return res;
+}
+
+/* ─────────────────────────────── Placement des étiquettes (E5) ─────────────────────────────── */
+
+/**
+ * Boîte de l'étiquette centrale d'un lien dessinée en un point, comme vdLien : texte replié à la largeur enregistrée par GMF
+ * (220 sinon), quatre lignes au plus, icône comprise, bloc centré sur le point (première ligne remontée).
+ * @param {object} l lien de la scène (texte, police, icone, largeurEtiquette)
+ * @param {number[]} point position de l'étiquette (diaEtiquette)
+ * @returns {{x:number, y:number, w:number, h:number}|null} null sans texte
+ */
+function diaBoiteEtiquette(l, point) {
+  if (!l.texte) return null;
+  const t = Math.max(10, (l.police && l.police.taille) || 10), icone = l.icone ? Math.round(t * 1.2) + 3 : 0;
+  const largeur = l.largeurEtiquette ? Math.max(30, l.largeurEtiquette - icone) : 220;
+  const n = Math.min(4, diaNbLignes(l.texte, largeur, t)), w = Math.min(diaLargeurTexte(l.texte, t), largeur) + icone, h = n * t * 1.25;
+  const haut = point[1] - (n - 1) * t * 0.625 - t * 0.85;
+  return { x: point[0] - w / 2, y: haut, w, h };
+}
+
+/** Étiquette centrale d'un lien à placer : texte, nœud GMF de l'étiquette présent, ni réflexive, ni durée de séquence, ni attache de note. */
+function diaAEtiquette(l) { return !!l.texte && l.etiquetteGmf !== false && !l.reflexif && !l.duree && !l.attacheNote; }
+
+/**
+ * Place les étiquettes centrales de liens (E5) : pour chacune, positions essayées le long de son tracé (milieu de chaque
+ * segment, et jusqu'à sept places sur un long segment ; au-dessus ou au-dessous d'un segment horizontal, à gauche ou à droite d'un segment
+ * vertical, à 3 px du trait, ou sur le trait, masqué par le halo du texte ; une rangée plus loin) ; retenue : celle qui recouvre le moins les formes (d'un conteneur qui la loge, seule sa barre
+ * de titre compte),
+ * les autres étiquettes (déjà placées, ou de liens qui ne changent pas) et le moins de traits de liens, au plus près du
+ * milieu du lien (au-dessus de préférence, comme Sirius). Les liens les plus courts d'abord (moins de places possibles). Une
+ * étiquette dont le lien garde son tracé garde aussi sa place si elle n'est pas pire. Seules les étiquettes données changent.
+ * @param {object} scene scène (positions des formes : nouvelles si une copie de la scène est donnée)
+ * @param {Map<object,number[][]>} traces lien → points (absolus) de chaque lien dont l'étiquette est à placer
+ * @param {{autres?:Map<object,number[][]>}} [opt] points des autres liens quand ils changent (scène virtuelle)
+ * @returns {Map<object,{centre:number[]}>} lien → décalage GMF de l'étiquette centrale (diaMiseEnPage : etiquettes)
+ */
+function diaPlacerEtiquettes(scene, traces, opt) {
+  const res = new Map(), autres = (opt && opt.autres) || new Map(), ECART = 3, TITRE = 24;
+  const points = l => traces.get(l) || autres.get(l) || l.points;
+  // Index en grille (cases de 128 px) des formes, des traits de liens et des étiquettes posées
+  const CASE = 128, grille = new Map();
+  const ajouter = (o, x0, y0, x1, y1) => {
+    for (let i = Math.floor(x0 / CASE); i <= Math.floor(x1 / CASE); i++) for (let j = Math.floor(y0 / CASE); j <= Math.floor(y1 / CASE); j++) {
+      const k = i + ',' + j;
+      if (!grille.has(k)) grille.set(k, []);
+      grille.get(k).push(o);
+    }
+  };
+  const voisins = b => {
+    const vus = new Set();
+    for (let i = Math.floor(b.x / CASE); i <= Math.floor((b.x + b.w) / CASE); i++) for (let j = Math.floor(b.y / CASE); j <= Math.floor((b.y + b.h) / CASE); j++)
+      for (const o of grille.get(i + ',' + j) || []) vus.add(o);
+    return vus;
+  };
+  for (const f of scene.formes) if (f.w > 0 && f.h > 0 && f.genre !== 'ligne') ajouter({ f }, f.x, f.y, f.x + f.w, f.y + f.h);
+  const poser = b => ajouter({ e: b }, b.x, b.y, b.x + b.w, b.y + b.h);
+  // Étiquettes fixes (liens dont l'étiquette ne change pas), traits de tous les liens
+  for (const l of scene.liens) if (!traces.has(l) && diaAEtiquette(l)) { const b = diaBoiteEtiquette(l, diaEtiquette(points(l), l.decalages.centre, 'centre')); if (b) poser(b); }
+  for (const l of scene.liens) {
+    const p = points(l);
+    for (let i = 1; i < p.length; i++) ajouter({ l, a: p[i - 1], d: p[i] }, Math.min(p[i - 1][0], p[i][0]), Math.min(p[i - 1][1], p[i][1]), Math.max(p[i - 1][0], p[i][0]), Math.max(p[i - 1][1], p[i][1]));
+  }
+  const recouvre = (a, b) => Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x)) * Math.max(0, Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y));
+  const contient = (f, b) => b.x >= f.x && b.y >= f.y && b.x + b.w <= f.x + f.w && b.y + b.h <= f.y + f.h;
+  /** Un segment d'équerre (ou oblique : boîte englobante) traverse-t-il l'intérieur de la boîte ? */
+  const traverse = (a, c, b) => Math.max(a[0], c[0]) > b.x + 1 && Math.min(a[0], c[0]) < b.x + b.w - 1 && Math.max(a[1], c[1]) > b.y + 1 && Math.min(a[1], c[1]) < b.y + b.h - 1;
+  const cout = (l, b) => {
+    let c = 0;
+    for (const o of voisins(b)) {
+      if (o.f) {
+        const f = o.f, v = recouvre(f, b);
+        if (v <= 0) continue;
+        // Un conteneur qui loge l'étiquette : seule sa barre de titre compte (elle compte toujours, son titre y est écrit)
+        if (f.genre === 'conteneur') c += 6 * recouvre({ x: f.x, y: f.y, w: f.w, h: TITRE }, b);
+        if (!(f.genre === 'conteneur' && contient(f, b))) c += 3 * v;
+      } else if (o.e) c += 5 * recouvre(o.e, b);
+      else if (traverse(o.a, o.d, b)) c += o.l === l ? 60 : 400;
+    }
+    return c;
+  };
+  const longueur = p => { let s = 0; for (let i = 1; i < p.length; i++) s += Math.abs(p[i][0] - p[i - 1][0]) + Math.abs(p[i][1] - p[i - 1][1]); return s; };
+  const liste = [...traces.keys()].filter(diaAEtiquette).sort((a, b) => longueur(traces.get(a)) - longueur(traces.get(b)));
+  for (const l of liste) {
+    const p = traces.get(l), total = longueur(p), essai = diaBoiteEtiquette(l, [0, 0]);
+    // Décalage du point d'ancrage (diaEtiquette) par rapport au centre de la boîte
+    const dy = -(essai.y + essai.h / 2);
+    const candidats = [];
+    let parcouru = 0;
+    for (let i = 1; i < p.length; i++) {
+      const a = p[i - 1], d = p[i], lg = Math.abs(d[0] - a[0]) + Math.abs(d[1] - a[1]);
+      if (lg >= 8) for (const f of lg >= 120 ? [0.5, 0.35, 0.65, 0.2, 0.8, 0.08, 0.92] : lg >= 60 ? [0.5, 0.25, 0.75] : [0.5]) {
+        const m = [a[0] + (d[0] - a[0]) * f, a[1] + (d[1] - a[1]) * f], eloigne = Math.abs(parcouru + lg * f - total / 2);
+        const horizontal = Math.abs(d[1] - a[1]) <= Math.abs(d[0] - a[0]);
+        // Contre le trait, de part et d'autre ; une rangée plus loin ; sur le trait (le halo du texte le masque)
+        const centres = horizontal
+          ? [[m[0], m[1] - ECART - essai.h / 2, 0], [m[0], m[1] + ECART + essai.h / 2, 8], [m[0], m[1] - 2 * ECART - 1.5 * essai.h, 30], [m[0], m[1] + 2 * ECART + 1.5 * essai.h, 34], [m[0], m[1], 20]]
+          : [[m[0] + ECART + essai.w / 2, m[1], 2], [m[0] - ECART - essai.w / 2, m[1], 4], [m[0], m[1], 12]];
+        for (const [cx, cy, cote] of centres) candidats.push({ centre: [cx, cy], penalite: 0.3 * eloigne + cote });
+      }
+      parcouru += lg;
+    }
+    // Place actuelle gardée si le tracé ne change pas (et qu'elle n'est pas pire)
+    const meme = p.length === l.points.length && p.every((q, k) => q[0] === l.points[k][0] && q[1] === l.points[k][1]);
+    if (meme) { const b = diaBoiteEtiquette(l, diaEtiquette(p, l.decalages.centre, 'centre')); candidats.push({ centre: [b.x + b.w / 2, b.y + b.h / 2], penalite: -20 }); }
+    if (!candidats.length) continue;
+    let meilleur = null;
+    for (const k of candidats) {
+      const b = { x: k.centre[0] - essai.w / 2, y: k.centre[1] - essai.h / 2, w: essai.w, h: essai.h }, v = cout(l, b) + k.penalite;
+      if (!meilleur || v < meilleur.v) meilleur = { v, b, centre: k.centre };
+    }
+    poser(meilleur.b);
+    res.set(l, { centre: diaDecalageEtiquette(p, [meilleur.centre[0], meilleur.centre[1] + dy], 'centre') });
+  }
+  return res;
+}
+
+/**
+ * Étiquettes d'une mise en page (diaDisposer, diaResultatElk) : placées (diaPlacerEtiquettes) sur la scène telle qu'elle sera
+ * (formes déplacées et redimensionnées, liens retracés ; un lien dont les deux extrémités bougent ensemble est décalé d'autant),
+ * pour les seuls liens retracés.
+ * @param {object} scene scène du diagramme
+ * @param {{deplacements?:Map, tailles?:Map, traces?:Map}} plan mise en page voulue
+ * @returns {Map<object,{centre:number[]}>} lien → décalages (diaMiseEnPage : etiquettes)
+ */
+function diaAvecEtiquettes(scene, plan) {
+  const deplacements = plan.deplacements || new Map(), tailles = plan.tailles || new Map(), traces = plan.traces || new Map();
+  if (!traces.size) return new Map();
+  const decal = f => { let x = 0, y = 0; for (let p = f; p; p = p.parent) { const v = deplacements.get(p); if (v) { x += v[0]; y += v[1]; } } return [x, y]; };
+  const copies = new Map();
+  const copie = f => {
+    if (!f) return null;
+    if (!copies.has(f)) {
+      const [dx, dy] = decal(f), t = tailles.get(f), c = { ...f, x: f.x + dx, y: f.y + dy };
+      if (t) { c.w = t[0]; c.h = t[1]; }
+      copies.set(f, c); c.parent = copie(f.parent);
+    }
+    return copies.get(f);
+  };
+  const virtuelle = { ...scene, formes: scene.formes.map(copie) }, autres = new Map();
+  for (const l of scene.liens) {
+    if (traces.has(l)) continue;
+    const ds = decal(l.source), dc = decal(l.cible);
+    if (ds[0] === dc[0] && ds[1] === dc[1] && (ds[0] || ds[1])) autres.set(l, l.points.map(q => [q[0] + ds[0], q[1] + ds[1]]));
+  }
+  return diaPlacerEtiquettes(virtuelle, traces, { autres });
+}
+
+/* ─────────────────────────────── Mise en page par ELK (E5) ─────────────────────────────── */
+/* ELK (Eclipse Layout Kernel, elkjs, embarqué dans la page : src/vendor/elk.bundled.js, EPL-2.0) calcule la mise en page ;
+   ces deux fonctions, sans DOM, traduisent la scène en graphe ELK puis le résultat en changements de mise en page
+   (diaMiseEnPage). Le calcul lui-même (asynchrone) est lancé par l'appelant. */
+
+/** Sens des couches → direction d'ELK. */
+const DIA_ELK_DIRECTIONS = { droite: 'RIGHT', gauche: 'LEFT', bas: 'DOWN', haut: 'UP' };
+
+/**
+ * Options d'ELK pour une disposition : algorithme en couches (layered) ou en arbre (mrtree), hiérarchie (contenu des
+ * conteneurs disposé avec le reste, liens entre niveaux compris), tracé orthogonal, écarts serrés. Placement des nœuds par
+ * simplexe de réseau et compactage des longueurs : banc de mesure, surface −17 % sur 294 diagrammes, −29 % sur les grands
+ * PAB / LAB (1,94 → 1,38 fois la main), croisements inchangés, longueur −17 %, mais 17 % de coudes en plus et des
+ * étiquettes plus souvent sur une forme (+31 %).
+ * @param {'couches'|'arbre'} genre disposition
+ * @param {string} sens droite, gauche, bas, haut
+ * @returns {Object<string,string>}
+ */
+function diaOptionsElk(genre, sens) {
+  if (genre === 'arbre') return { 'elk.algorithm': 'mrtree', 'elk.direction': 'DOWN', 'elk.spacing.nodeNode': '30', 'elk.mrtree.weighting': 'CONSTRAINT' };
+  return {
+    'elk.algorithm': 'layered', 'elk.direction': DIA_ELK_DIRECTIONS[sens] || 'RIGHT', 'elk.hierarchyHandling': 'INCLUDE_CHILDREN',
+    'elk.edgeRouting': 'ORTHOGONAL', 'elk.spacing.nodeNode': '20', 'elk.layered.spacing.nodeNodeBetweenLayers': '30',
+    'elk.spacing.edgeNode': '10', 'elk.layered.spacing.edgeNodeBetweenLayers': '10', 'elk.spacing.edgeEdge': '6',
+    'elk.layered.spacing.edgeEdgeBetweenLayers': '6', 'elk.spacing.portPort': '10', 'elk.spacing.labelNode': '5',
+    'elk.layered.nodePlacement.strategy': 'NETWORK_SIMPLEX', 'elk.layered.compaction.postCompaction.strategy': 'EDGE_LENGTH',
+    'elk.layered.thoroughness': '20', 'elk.layered.considerModelOrder.strategy': 'NODES_AND_EDGES',
+    'elk.layered.mergeEdges': 'false', 'elk.layered.unnecessaryBendpoints': 'false', 'elk.edgeLabels.placement': 'CENTER',
+  };
+}
+
+/**
+ * Graphe ELK de formes sœurs à disposer : chaque forme est un nœud (sa taille ; une feuille, qui ne contient que des ports,
+ * reprend sa taille naturelle : celle de son nom, agrandie par ELK pour loger ses ports, jamais plus grande que l'actuelle),
+ * ses ports des ports ELK de côté libre ;
+ * un conteneur (ni empilé, ni replié, ni liste) emporte son contenu, disposé avec lui (avec la hiérarchie) ; les liens entre
+ * éléments du graphe sont des arcs ELK, d'un port au port ou au nœud, avec la taille de leur étiquette centrale (place
+ * réservée). Les enfants sont donnés dans leur ordre actuel (ELK le garde autant que possible).
+ * @param {object} scene scène du diagramme
+ * @param {object[]} formes formes sœurs à disposer
+ * @param {'couches'|'arbre'} genre disposition
+ * @param {{sens?:string, hierarchie?:boolean, etiquettes?:boolean, compacter?:boolean, options?:Object<string,string>}} [opt] sens des couches ;
+ *   hierarchie : disposer aussi le contenu des conteneurs (vrai par défaut pour les couches) ; etiquettes : réserver la place
+ *   des étiquettes des liens (faux par défaut : le banc de mesure montre des liens plus longs et plus de croisements) ;
+ *   compacter : taille naturelle des feuilles (vrai par défaut : banc de mesure, un tiers de surface en moins pour 2,5 % de
+ *   croisements en plus) ; options : options d'ELK ajoutées (banc de mesure)
+ * @returns {{graphe:object, formes:Map<string,object>, liens:Map<string,object>, compactes:Set<string>}} graphe (à donner à
+ *   elk.layout), correspondances identifiant ELK → forme (nœuds et ports) ou lien, nœuds ramenés à leur taille naturelle
+ */
+function diaGrapheElk(scene, formes, genre, opt) {
+  opt = opt || {};
+  const hierarchie = genre === 'couches' && opt.hierarchie !== false, parId = new Map(), ids = new Map(), liens = new Map(), compactes = new Set();
+  let n = 0;
+  const libre = f => f.genre !== 'port' && f.genre !== 'ligne' && !f.region && f.genre !== 'note';
+  const avant = (a, b) => (Math.abs(a.y - b.y) > 10 ? a.y - b.y : a.x - b.x);
+  const noeud = f => {
+    const id = 'n' + n++, x = { id, width: Math.max(1, f.w), height: Math.max(1, f.h), ports: [], children: [] };
+    parId.set(id, f); ids.set(f, id);
+    for (const q of scene.formes) if (q.parent === f && q.genre === 'port') { const pid = 'p' + n++; parId.set(pid, q); ids.set(q, pid); x.ports.push({ id: pid, width: q.w, height: q.h }); }
+    if (x.ports.length) x.layoutOptions = { 'elk.portConstraints': 'FREE' };
+    const contenu = hierarchie && f.genre === 'conteneur' && !f.pile && !f.replie ? scene.formes.filter(g => g.parent === f && libre(g)).sort(avant) : [];
+    if (contenu.length) {
+      const titre = f.posTexte === 'aucun' ? 0 : f.police.taille + 8;
+      x.layoutOptions = { ...(x.layoutOptions || {}), 'elk.padding': `[top=${DIA_COMPARTIMENT.y + titre + 10},left=${DIA_COMPARTIMENT.x + 10},bottom=12,right=12]`,
+        'elk.nodeSize.constraints': '[MINIMUM_SIZE]', 'elk.nodeSize.minimum': `(${Math.round(Math.min(f.w, diaLargeurTexte(f.texte, f.police.taille) + 30))}, ${titre + 30})` };
+      delete x.width; delete x.height;
+      x.children = contenu.map(noeud);
+    } else if (opt.compacter !== false && (f.genre === 'conteneur' || f.genre === 'noeud') && !f.replie && !f.pile && !f.region && !f.calculee
+      && !scene.formes.some(g => g.parent === f && g.genre !== 'port')) {
+      // Feuille (rien d'autre que des ports) : taille naturelle (celle du nom), agrandie par ELK pour loger les ports ; jamais
+      // plus grande que l'actuelle
+      const t = f.police.taille, lt = diaLargeurTexte(f.texte || '', t), w = Math.min(f.w, Math.max(80, Math.min(200, lt + 40)));
+      const h = Math.min(f.h, Math.max(40, diaNbLignes(f.texte || '', Math.max(w - 30, 20), t) * t * 1.3 + 16));
+      x.width = Math.round(w); x.height = Math.round(h); compactes.add(id);
+      x.layoutOptions = { ...(x.layoutOptions || {}), 'elk.nodeSize.constraints': '[PORTS, MINIMUM_SIZE]', 'elk.nodeSize.minimum': `(${x.width}, ${x.height})` };
+    }
+    return x;
+  };
+  const graphe = { id: 'racine', layoutOptions: { ...diaOptionsElk(genre, opt.sens || 'droite'), ...(opt.options || {}) }, children: formes.slice().sort(avant).map(noeud), edges: [] };
+  // Extrémité d'un lien : son port (s'il est dans le graphe), sinon la première forme du graphe qui la contient
+  const bout = f => { for (let p = f; p; p = p.parent) if (ids.has(p)) return ids.get(p); return null; };
+  for (const l of scene.liens) {
+    if (l.attacheNote) continue;
+    const a = bout(l.source), b = bout(l.cible);
+    if (!a || !b || a === b) continue;
+    const id = 'e' + n++, e = { id, sources: [a], targets: [b] };
+    if (l.texte && genre === 'couches' && opt.etiquettes) e.labels = [{ text: l.texte, width: Math.round(diaLargeurTexte(l.texte, l.police.taille)) + 8, height: Math.round(l.police.taille * 1.4) }];
+    liens.set(id, l);
+    graphe.edges.push(e);
+  }
+  return { graphe, formes: parId, liens, compactes };
+}
+
+/**
+ * Changements de mise en page d'un résultat d'ELK (diaGrapheElk puis elk.layout) : déplacements (le sien, sans celui des
+ * conteneurs), tailles des conteneurs disposés et des feuilles ramenées à leur taille naturelle (et du conteneur commun, qui
+ * grandit au besoin avec les siens), ports recalés
+ * sur leur côté comme Sirius (diaPlacerPort), tracés des liens (points d'ELK ; extrémité sur un port : son centre) et ancres
+ * GMF ; les autres liens touchés sont retracés en angles droits. Le coin haut gauche de l'ensemble est gardé.
+ * @param {object} aird résultat de diaLire
+ * @param {object} scene scène du diagramme
+ * @param {object[]} formes formes sœurs disposées
+ * @param {object} res graphe disposé par ELK
+ * @param {{formes:Map, liens:Map, compactes?:Set}} carte correspondances de diaGrapheElk
+ * @returns {{deplacements:Map, tailles:Map, traces:Map, ancres:Map}}
+ */
+function diaResultatElk(aird, scene, formes, res, carte) {
+  const parent = formes[0].parent || null, E = DIA_ECARTS;
+  const x0 = Math.max(Math.min(...formes.map(f => f.x)), parent ? parent.x + DIA_COMPARTIMENT.x + E.marge : -Infinity);
+  const y0 = Math.max(Math.min(...formes.map(f => f.y)), parent ? parent.y + DIA_COMPARTIMENT.y + parent.police.taille + E.marge : -Infinity);
+  const enfants = res.children || [];
+  const ox = x0 - Math.min(...enfants.map(c => c.x)), oy = y0 - Math.min(...enfants.map(c => c.y));
+  const abs = new Map([['racine', [ox, oy]]]), boites = new Map(), deplacements = new Map(), tailles = new Map(), total = new Map();
+  // Nœuds : position absolue, déplacement propre (sans celui des conteneurs), taille des conteneurs disposés
+  const visiter = (x, px, py, dParent) => {
+    const f = carte.formes.get(x.id), ax = px + x.x, ay = py + x.y;
+    abs.set(x.id, [ax, ay]);
+    const w = x.width, h = x.height;
+    boites.set(f, { x: ax, y: ay, w, h });
+    const d = [Math.round(ax - f.x - dParent[0]), Math.round(ay - f.y - dParent[1])];
+    if (d[0] || d[1]) deplacements.set(f, d);
+    const t = [dParent[0] + d[0], dParent[1] + d[1]];
+    total.set(f, t);
+    const redim = ((x.children || []).length || (carte.compactes && carte.compactes.has(x.id))) && (Math.round(w) !== Math.round(f.w) || Math.round(h) !== Math.round(f.h));
+    if (redim) tailles.set(f, [Math.round(w), Math.round(h)]);
+    // Ports : centre d'ELK, recalé sur le côté le plus proche comme Sirius
+    for (const p of x.ports || []) {
+      const q = carte.formes.get(p.id), cx = ax + p.x + p.width / 2, cy = ay + p.y + p.height / 2;
+      const [qx, qy] = diaPlacerPort(q, cx, cy, { x: ax, y: ay, w, h });
+      boites.set(q, { x: qx, y: qy, w: q.w, h: q.h });
+      // diaMiseEnPage décale déjà avec le bord les ports des côtés droit et bas d'une forme redimensionnée
+      const cote = diaCotePort(q), auto = redim ? [cote === 'droite' ? Math.round(w) - f.w : 0, cote === 'bas' ? Math.round(h) - f.h : 0] : [0, 0];
+      const dq = [Math.round(qx - q.x - t[0] - auto[0]), Math.round(qy - q.y - t[1] - auto[1])];
+      if (dq[0] || dq[1]) deplacements.set(q, dq);
+    }
+    for (const c of x.children || []) visiter(c, ax, ay, t);
+  };
+  for (const c of enfants) visiter(c, ox, oy, [0, 0]);
+  // Conteneur commun trop petit : il grandit avec les siens
+  if (parent && !parent.calculee) {
+    let enfant = parent, droite = Math.max(...formes.map(f => boites.get(f).x + boites.get(f).w)) + E.marge, bas = Math.max(...formes.map(f => boites.get(f).y + boites.get(f).h)) + E.marge;
+    while (enfant && !enfant.calculee) {
+      const w = Math.max(enfant.w, Math.round(droite - enfant.x)), h = Math.max(enfant.h, Math.round(bas - enfant.y));
+      if (w === enfant.w && h === enfant.h) break;
+      tailles.set(enfant, [w, h]);
+      droite = enfant.x + w + E.marge; bas = enfant.y + h + E.marge; enfant = enfant.parent;
+    }
+  }
+  // Liens d'ELK : points de sa première section, rapportés au conteneur du lien
+  const traces = new Map(), ancres = new Map(), centre = b => [b.x + b.w / 2, b.y + b.h / 2];
+  const elkAbs = new Map([['racine', [ox, oy]]]);
+  const absElk = (x, px, py) => { const a = [px + x.x, py + x.y]; elkAbs.set(x.id, a); for (const c of x.children || []) absElk(c, a[0], a[1]); };
+  for (const c of enfants) absElk(c, ox, oy);
+  const tousLesArcs = [];
+  const collecter = x => { for (const e of x.edges || []) tousLesArcs.push(e); for (const c of x.children || []) collecter(c); };
+  collecter(res);
+  for (const e of tousLesArcs) {
+    const l = carte.liens.get(e.id), sec = e.sections && e.sections[0];
+    if (!l || !sec) continue;
+    const [cx, cy] = elkAbs.get(e.container || 'racine') || [ox, oy];
+    const pts = [sec.startPoint, ...(sec.bendPoints || []), sec.endPoint].map(p => [Math.round(p.x + cx), Math.round(p.y + cy)]);
+    // Extrémité sur un port : son centre (le port d'ELK est hors du bord, celui de Sirius dessus) ; puis segments remis
+    // d'équerre (un coude ajouté si besoin)
+    for (const [k, f] of [[0, l.source], [pts.length - 1, l.cible]]) { const b = boites.get(f); if (f.genre === 'port' && b) pts[k] = centre(b).map(Math.round); }
+    const net = [pts[0]];
+    for (let i = 1; i < pts.length; i++) {
+      const a = net[net.length - 1], b = pts[i];
+      if (a[0] !== b[0] && a[1] !== b[1]) net.push(i === 1 ? [b[0], a[1]] : [a[0], b[1]]);
+      net.push(b);
+    }
+    traces.set(l, net);
+    const g = aird.parVue.get(l.vue), an = {}, frac = (f, p) => { const b = boites.get(f); return b ? [Math.min(1, Math.max(0, (p[0] - b.x) / b.w)), Math.min(1, Math.max(0, (p[1] - b.y) / b.h))].map(v => Math.round(v * 10000) / 10000) : null; };
+    if (l.source.genre !== 'port' && g && diaEnfant(g, 'sourceAnchor')) an.source = frac(l.source, net[0]);
+    if (l.cible.genre !== 'port' && g && diaEnfant(g, 'targetAnchor')) an.cible = frac(l.cible, net[net.length - 1]);
+    if (an.source || an.cible) ancres.set(l, an);
+  }
+  // Autres liens touchés (vers des formes hors du graphe, ou ramenés à un même nœud) : retracés en angles droits
+  const dans = f => { for (let p = f; p; p = p.parent) if (boites.has(p)) return true; return false; };
+  const r = diaRetracer(aird, scene, deplacements, tailles, 'orthogonal', l => !traces.has(l) && (dans(l.source) || dans(l.cible)));
+  for (const [l, t] of r.traces) traces.set(l, t);
+  for (const [l, a] of r.ancres) ancres.set(l, a);
+  return { deplacements, tailles, traces, ancres };
+}
+
+/**
+ * Score d'une disposition (plus bas : meilleure), pour choisir entre plusieurs résultats (sens des couches) : croisements
+ * entre les liens retracés, segments qui traversent une forme étrangère au lien (positions nouvelles), coudes, longueur.
+ * @param {object} scene scène du diagramme
+ * @param {{deplacements:Map, tailles:Map, traces:Map}} p disposition (diaResultatElk, diaDisposer)
+ * @returns {{score:number, croisements:number, traversees:number, coudes:number, longueur:number}}
+ */
+function diaScoreDisposition(scene, p) {
+  const decal = f => { let x = 0, y = 0; for (let q = f; q; q = q.parent) { const v = p.deplacements.get(q); if (v) { x += v[0]; y += v[1]; } } return [x, y]; };
+  const boites = scene.formes.filter(f => f.genre !== 'port' && f.genre !== 'ligne' && f.genre !== 'note' && f.w > 4 && f.h > 4)
+    .map(f => { const [dx, dy] = decal(f), t = p.tailles.get(f); return { f, x: f.x + dx, y: f.y + dy, w: t ? t[0] : f.w, h: t ? t[1] : f.h }; });
+  const seg = [];
+  let coudes = 0, longueur = 0;
+  for (const [l, pts] of p.traces) {
+    coudes += Math.max(0, pts.length - 2);
+    for (let i = 1; i < pts.length; i++) { seg.push({ a: pts[i - 1], b: pts[i], l }); longueur += Math.abs(pts[i][0] - pts[i - 1][0]) + Math.abs(pts[i][1] - pts[i - 1][1]); }
+  }
+  const o = (p1, q, r) => Math.sign((q[0] - p1[0]) * (r[1] - p1[1]) - (q[1] - p1[1]) * (r[0] - p1[0]));
+  const coupe = (a, b, c, d) => o(a, b, c) * o(a, b, d) < 0 && o(c, d, a) * o(c, d, b) < 0;
+  let croisements = 0, traversees = 0;
+  for (let i = 0; i < seg.length; i++) for (let j = i + 1; j < seg.length; j++) if (seg[i].l !== seg[j].l && coupe(seg[i].a, seg[i].b, seg[j].a, seg[j].b)) croisements++;
+  const lies = l => { const s = new Set(); for (const e of [l.source, l.cible]) for (let q = e; q; q = q.parent) s.add(q); return s; };
+  const memo = new Map();
+  for (const s of seg) {
+    if (!memo.has(s.l)) memo.set(s.l, lies(s.l));
+    const ex = memo.get(s.l);
+    for (const b of boites) {
+      if (ex.has(b.f)) continue;
+      const x0 = b.x + 2, y0 = b.y + 2, x1 = b.x + b.w - 2, y1 = b.y + b.h - 2;
+      if (Math.max(s.a[0], s.b[0]) > x0 && Math.min(s.a[0], s.b[0]) < x1 && Math.max(s.a[1], s.b[1]) > y0 && Math.min(s.a[1], s.b[1]) < y1) traversees++;
+    }
+  }
+  return { score: croisements * 10 + traversees * 10 + coudes + longueur / 100, croisements, traversees, coudes, longueur };
+}
+
+/* ─────────────────────────────── Création de ports (E8, palier 2) ─────────────────────────────── */
+/* Reproduit les outils de palette de Capella qui créent un port (STY_OUTILS_PORTS, générés depuis les .odesign) :
+   l'outil crée le port dans le modèle (règle de 45-regles.js), puis Sirius crée sa vue dans le conteneur visé.
+   Ici, sans DOM : outils proposés sur une forme, style choisi comme Sirius (styles conditionnels), et nœuds Sirius
+   (DNode) et GMF (Node) à insérer dans le .aird, construits sur le modèle des ports qu'écrit Sirius. */
+
+/** Types de ports qu'Arcature sait créer depuis un diagramme. */
+const DIA_TYPES_PORTS = new Set(['ComponentPort', 'FunctionInputPort', 'FunctionOutputPort', 'PhysicalPort']);
+
+/** Préfixe des types du modèle Capella dans les références du .aird. */
+const DIA_NS_CAPELLA = 'org.polarsys.capella.core.data.';
+
+/**
+ * Prédicats des styles conditionnels des mappings de ports, transcrits des services Java de Capella
+ * (CsServices / PortExt : isStandardPort, isInStrictFlowPort… ; FaServices.isAFunctionOutputPort ; CsServices.isAPhysicalPort)
+ * et des expressions AQL des .odesign. Port : { type (court), kind, orientation, requises, fournies (nombres d'interfaces) }.
+ */
+const DIA_PREDICATS_PORTS = {
+  'service:isStandardPort()': p => p.type === 'ComponentPort' && p.kind === 'STANDARD',
+  'service:isInStrictFlowPort()': p => p.type === 'ComponentPort' && p.kind === 'FLOW' && p.orientation === 'IN',
+  'service:isOutStrictFlowPort()': p => p.type === 'ComponentPort' && p.kind === 'FLOW' && p.orientation === 'OUT',
+  'service:isInoutStrictFlowPort()': p => p.type === 'ComponentPort' && p.kind === 'FLOW' && p.orientation === 'INOUT',
+  'service:isAPhysicalPort()': p => p.type === 'PhysicalPort',
+  'service:isAFunctionOutputPort()': p => p.type === 'FunctionOutputPort',
+  'aql:self.kind = fa::ComponentPortKind::FLOW and self.orientation = fa::OrientationPortKind::IN': p => p.kind === 'FLOW' && p.orientation === 'IN',
+  'aql:self.kind = fa::ComponentPortKind::FLOW and self.orientation = fa::OrientationPortKind::OUT': p => p.kind === 'FLOW' && p.orientation === 'OUT',
+  'aql:self.kind = fa::ComponentPortKind::FLOW and self.orientation = fa::OrientationPortKind::INOUT': p => p.kind === 'FLOW' && p.orientation === 'INOUT',
+  'aql:self.requiredInterfaces->size() > 0 and self.providedInterfaces->size() > 0 and self.kind = fa::ComponentPortKind::STANDARD': p => p.requises > 0 && p.fournies > 0 && p.kind === 'STANDARD',
+  'aql:self.requiredInterfaces->size() > 0 and self.providedInterfaces->size() = 0 and self.kind = fa::ComponentPortKind::STANDARD': p => p.requises > 0 && p.fournies === 0 && p.kind === 'STANDARD',
+  'aql:self.requiredInterfaces->size() = 0 and self.providedInterfaces->size() > 0 and self.kind = fa::ComponentPortKind::STANDARD': p => p.requises === 0 && p.fournies > 0 && p.kind === 'STANDARD'
+};
+
+/**
+ * Préconditions des outils et des mappings de ports, transcrites du Java et de l'AQL de Capella. Contexte :
+ * { container (élément du modèle visé), type (composant : getComponentType), vue (élément Sirius visé, jamais le diagramme ici) }.
+ * - FaServices.isValidCreationFunctionInputPort / OutputPort : une fonction de contrôle à une seule entrée
+ *   (DUPLICATE, SPLIT, SELECT — FunctionExt.isControlNodeOneInput) ou à une seule sortie (GATHER, ROUTE) n'en reçoit
+ *   qu'une ; FunctionExt.getRelatedFunction : l'élément lui-même ou sa fonction englobante ;
+ * - ABServices.isValidABComponentPort : la vue parente n'est pas le diagramme ;
+ * - PhysicalServices.isValidPhysicalPort(container) : l'élément visé est une Part dont le type peut avoir un port
+ *   physique (canHavePhysicalPort : composant système ou physique ; composant logique s'il est le système du niveau,
+ *   ou si son plus haut composant englobant n'est pas ce système). Aides de 45-regles.js (REG_H).
+ */
+const DIA_PRECONDITIONS_PORTS = {
+  '': () => true,
+  'aql:container.oclIsKindOf(cs::Part)': c => modType(c.container) === 'Part',
+  'aql:container.oclIsKindOf(cs::Part) and (container.getComponentType().nature != pa::PhysicalComponentNature::NODE or container.getComponentType().isActor())':
+    c => modType(c.container) === 'Part' && !!c.type && ((xtAttr(c.type, 'nature') || 'UNSET') !== 'NODE' || xtAttr(c.type, 'actor') === 'true'),
+  'aql:container.getComponentType().nature != pa::PhysicalComponentNature::BEHAVIOR': c => !!c.type && (xtAttr(c.type, 'nature') || 'UNSET') !== 'BEHAVIOR',
+  'aql:containerView.isValidCreationFunctionInputPort()': c => {
+    const f = diaFonctionLiee(c.container);
+    return !f || !/^(DUPLICATE|SPLIT|SELECT)$/.test(xtAttr(f, 'kind') || '') || !f.enfants.some(x => x.tag === 'inputs');
+  },
+  'aql:containerView.isValidCreationFunctionOutputPort()': c => {
+    const f = diaFonctionLiee(c.container);
+    return !f || !/^(GATHER|ROUTE)$/.test(xtAttr(f, 'kind') || '') || !f.enfants.some(x => x.tag === 'outputs');
+  },
+  'service:isValidABComponentPort(containerView)': c => !!c.vue,
+  'aql:self.isValidPhysicalPort(container)': c => diaPeutAvoirPortPhysique(c),
+  'service:isValidPhysicalPort(container)': c => diaPeutAvoirPortPhysique(c)
+};
+
+/**
+ * PhysicalServices.isValidPhysicalPort(container) puis canHavePhysicalPort(type de la Part).
+ * @param {{container:object, type:object}} c contexte de la précondition
+ * @returns {boolean}
+ */
+function diaPeutAvoirPortPhysique(c) {
+  if (modType(c.container) !== 'Part' || !c.type) return false;
+  const t = modType(c.type);
+  if (t === 'LogicalComponent') {
+    const systeme = REG_H.systeme(c.type), sommet = REG_H.composantSommet(c.type);
+    return c.type === systeme || (!!sommet && sommet !== systeme);
+  }
+  return t === 'SystemComponent' || t === 'PhysicalComponent';
+}
+
+/**
+ * Décode un chemin Sirius (fragment d'URI après « # ») pour le comparer.
+ * @param {string} href référence (avec ou sans ressource)
+ * @returns {string}
+ */
+function diaDecoderChemin(href) {
+  const f = String(href || '').replace(/^[^#]*#/, '');
+  try { return decodeURIComponent(f); } catch (e) { return f; }
+}
+
+/**
+ * Fonction concernée par un élément (FunctionExt.getRelatedFunction) : l'élément s'il est une fonction, sinon la
+ * fonction qui le contient.
+ * @param {object|null} el nœud du modèle
+ * @returns {object|null}
+ */
+function diaFonctionLiee(el) { return regFonctionLiee(el); }
+
+/**
+ * Élément du modèle désigné par une référence « #id » d'un attribut (y compris un élément provisoire : regAvecProvisoires).
+ * @param {object} doc modèle
+ * @param {object} el nœud
+ * @param {string} n nom de l'attribut
+ * @returns {object|null}
+ */
+function diaReference(doc, el, n) {
+  const v = (xtAttr(el, n) || '').split(/\s+/)[0].replace(/^#/, '');
+  return v ? doc.parId.get(v) || (doc.provisoires && doc.provisoires.get(v)) || null : null;
+}
+
+/**
+ * Composant d'un élément visé (CsServices.getComponentType) : une Part donne son type, un composant lui-même,
+ * un port son composant.
+ * @param {object} doc modèle
+ * @param {object|null} el nœud
+ * @returns {object|null}
+ */
+function diaTypeComposant(doc, el) {
+  if (!el) return null;
+  const t = modType(el);
+  if (t === 'Part') return diaReference(doc, el, 'abstractType');
+  if (/Port$/.test(t)) return el.parent || null;
+  return /Component$|^Entity$|^ConfigurationItem$/.test(t) ? el : null;
+}
+
+/**
+ * Représentation (palette) d'un outil de port : écrite dans l'outil, sinon celle qui contient son mapping.
+ * @param {object} o outil (STY_OUTILS_PORTS)
+ * @returns {string} chemin décodé
+ */
+function diaRepresentationOutil(o) {
+  if (o.d) return o.d;
+  const seg = diaDecoderChemin(o.m).split('/@');
+  return '//@' + seg[1] + '/@' + seg[2];
+}
+
+/**
+ * Mappings parents qui portent le port d'un outil : le parent de son mapping, et ceux qui le réutilisent.
+ * @param {object} o outil (STY_OUTILS_PORTS)
+ * @returns {string[]} chemins décodés
+ */
+function diaParentsOutil(o) { return [diaDecoderChemin(o.m).replace(/\/@[^/]+$/, ''), ...(o.p || [])]; }
+
+/**
+ * Outils de création de ports proposés sur une forme d'un diagramme : ceux de la palette du diagramme dont le mapping
+ * de port est porté par le mapping de la forme, dont la précondition (outil et mapping) est vraie, et dont le
+ * type est géré par Arcature. Le port est créé dans le conteneur que donne l'outil (élément visé, ou son composant).
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {object} f forme visée (conteneur ou nœud, pas un port) ; ou forme d'un élément créé dans la même opération
+ *   (diaPreparerConteneur : nœuds Sirius et GMF pas encore insérés dans sirius, gmf, élément du modèle dans el)
+ * @param {object} doc modèle (.capella)
+ * @returns {Array<{outil:object, conteneur:object}>} outils et élément du modèle qui recevra le port
+ */
+function diaOutilsPorts(aird, rep, f, doc) {
+  if (!f || f.genre === 'port' || f.genre === 'ligne' || f.genre === 'note' || !diaModifiable(rep)) return [];
+  const s = f.sirius || aird.parUid.get(f.uid), am = s && diaEnfant(s, 'actualMapping');
+  if (!am) return [];
+  const mapping = diaDecoderChemin(xtAttr(am, 'href')), container = f.el || doc.parId.get(f.semId) || null;
+  if (!container) return [];
+  const res = [];
+  for (const o of STY_OUTILS_PORTS) {
+    if (!DIA_TYPES_PORTS.has(o.t) || diaRepresentationOutil(o) !== rep.description || !diaParentsOutil(o).includes(mapping)) continue;
+    const type = diaTypeComposant(doc, container);
+    const ctx = { container, type, vue: s };
+    const preOutil = DIA_PRECONDITIONS_PORTS[o.pre], preMapping = DIA_PRECONDITIONS_PORTS[(STY_MAPPINGS_PORTS[o.m] || {}).pre || ''];
+    if (!preOutil || !preMapping || !preOutil(ctx) || !preMapping(ctx)) continue;
+    const conteneur = o.c === '' ? container : o.c === 'abstractType' ? diaReference(doc, container, 'abstractType') : type;
+    if (conteneur) res.push({ outil: o, conteneur });
+  }
+  return res;
+}
+
+/**
+ * Style d'un port tel que Sirius le choisit : premier style conditionnel dont le prédicat est vrai, sinon le style principal.
+ * @param {string} mapping chemin du mapping du port
+ * @param {{type:string, kind:string, orientation:string, requises:number, fournies:number}} port caractéristiques du port
+ * @returns {object|null} style (q, c, t, a, taille), null si un prédicat n'est pas transcrit ; chemin : chemin de sa description
+ */
+function diaStylePort(mapping, port) {
+  const m = STY_MAPPINGS_PORTS[mapping];
+  if (!m) return null;
+  for (const st of m.styles) {
+    const p = st.q ? DIA_PREDICATS_PORTS[st.q] : () => true;
+    if (!p) return null;
+    if (p(port)) {
+      return Object.assign({}, st, {
+        chemin: mapping + (st.c < 0 ? '/@style' : '/@conditionnalStyles.' + st.c + '/@style'),
+        a: st.a.map(([n, v]) => [n, n === 'workspacePath' ? STY_IMAGES + v : v])
+      });
+    }
+  }
+  return null;
+}
+
+/**
+ * Identifiant au format d'EMF (EcoreUtil.generateUUID) : « _ » suivi de 22 caractères base64 (- et _).
+ * @returns {string}
+ */
+function diaNouvelUid() {
+  const o = new Uint8Array(16);
+  if (typeof crypto !== 'undefined' && crypto.getRandomValues) crypto.getRandomValues(o);
+  else for (let i = 0; i < 16; i++) o[i] = Math.random() * 256 | 0;
+  const abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+  let s = '_', bits = 0, n = 0;
+  for (const b of o) {
+    bits = (bits << 8) | b; n += 8;
+    while (n >= 6) { n -= 6; s += abc[(bits >> n) & 63]; }
+  }
+  return s + abc[(bits << (6 - n)) & 63];
+}
+
+/**
+ * Préfixe déclaré (xmlns) pour un espace de noms à la racine d'un document.
+ * @param {object} doc document
+ * @param {string} uri espace de noms
+ * @returns {string|null}
+ */
+function diaPrefixe(doc, uri) {
+  const a = doc.racine.attrs.find(x => x.n.startsWith('xmlns:') && x.v === uri);
+  return a ? a.n.slice(6) : null;
+}
+
+/**
+ * Prépare la création de la vue d'un port dans un diagramme, sans rien modifier : nœud Sirius (DNode dans
+ * ownedBorderedNodes de la forme) et nœud GMF (Node parmi les enfants de la vue de la forme), écrits comme Sirius
+ * (structure relevée sur les .aird de Capella : étiquette masquée, nœud de style, police et taille des ports voisins).
+ * Le port est posé sur le bord de la forme au plus près du point visé (diaPlacerPort).
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {object} f forme parente (ou forme d'un élément créé dans la même opération : voir diaOutilsPorts)
+ * @param {object} outil outil (STY_OUTILS_PORTS)
+ * @param {{id:string, nom:string, attrs:Array<[string,string]>}} port port créé dans le modèle (identifiant, nom, attributs posés)
+ * @param {number[]} centre point visé [x, y] (coordonnées du diagramme)
+ * @param {string} uriFa espace de noms du paquetage fa dans le modèle (pour le déclarer dans le .aird s'il y manque ; celui de cs,
+ *   pour un port physique, s'en déduit)
+ * @returns {{etapes:Array<{parent:object, noeud:object, index:number}>, attrs:Array<{el:object, n:string, avant:null, apres:string}>, vue:string,
+ *   sirius:object, gmf:object, boite:{x:number, y:number, w:number, h:number}}}
+ *   nœuds à insérer (dans l'ordre), attributs à ajouter (déclaration d'espace de noms), vue GMF du port ; nœuds Sirius et
+ *   GMF du port et sa boîte (coordonnées du diagramme), pour y accrocher un lien
+ */
+function diaPreparerPort(aird, rep, f, outil, port, centre, uriFa) {
+  const s = f.sirius || aird.parUid.get(f.uid), vueParent = f.gmf || aird.parVue.get(f.vue), doc = aird.doc;
+  if (!s || !vueParent) throw new Error(_L('Shape not found in the .aird.'));
+  const val = n => (port.attrs.find(a => a[0] === n) || [])[1];
+  const style = diaStylePort(outil.m, { type: outil.t, kind: val('kind') || 'STANDARD', orientation: val('orientation') || 'UNSET', requises: 0, fournies: 0 });
+  if (!style) throw new Error(_L('Unknown port style for this diagram.'));
+  const attrs = [];
+  // Espaces de noms : ceux de Sirius sont déclarés dès qu'un diagramme existe ; celui du modèle (fa) peut manquer
+  const pDiagramme = diaPrefixe(doc, 'http://www.eclipse.org/sirius/diagram/1.1.0');
+  const pDescription = diaPrefixe(doc, 'http://www.eclipse.org/sirius/diagram/description/1.1.0');
+  const pStyle = diaPrefixe(doc, 'http://www.eclipse.org/sirius/diagram/description/style/1.1.0');
+  if (!pDiagramme || !pDescription || !pStyle) throw new Error(_L('Sirius namespaces missing from the .aird.'));
+  // Paquetage du port : fa (ports de fonction, de composant), cs (port physique) ; son espace de noms se déduit de celui de fa
+  const paquet = outil.t === 'PhysicalPort' ? 'cs' : 'fa', pFa = DIA_NS_CAPELLA + paquet, uri = uriFa && uriFa.replace(/\/fa\//, '/' + paquet + '/');
+  if (diaPrefixe(doc, uri) !== pFa) {
+    if (xtAttr(doc.racine, 'xmlns:' + pFa) != null || !uri) throw new Error(_L('Incompatible model namespace in the .aird.'));
+    attrs.push({ el: doc.racine, n: 'xmlns:' + pFa, avant: null, apres: uri });
+  }
+  // Ressource du modèle : celle de la forme parente
+  const cible = diaEnfant(s, 'target'), ressource = (xtAttr(cible, 'href') || '').replace(/#.*$/, '');
+  const typeXsi = pFa + ':' + outil.t, href = ressource + '#' + port.id;
+  const plateforme = 'platform:/plugin/org.polarsys.capella.core.sirius.analysis/description/' + outil.f + '#';
+  const neuf = (tag, a, enfants) => { const n = xtNouveau(tag, a); for (const e of enfants || []) { e.parent = n; n.enfants.push(e); } return n; };
+  // Nœud Sirius (ownedBorderedNodes) : cible, éléments sémantiques, étiquette masquée par défaut, style, mapping
+  const uid = diaNouvelUid(), uidStyle = diaNouvelUid(), cache = style.a.some(a => a[0] === 'hideLabelByDefault' && a[1] === 'true');
+  const dnode = neuf('ownedBorderedNodes', [['xmi:type', pDiagramme + ':DNode'], ['uid', uid], ['name', port.nom], ['width', String(style.taille)], ['height', String(style.taille)]], [
+    xtNouveau('target', [['xmi:type', typeXsi], ['href', href]]),
+    xtNouveau('semanticElements', [['xmi:type', typeXsi], ['href', href]]),
+    ...(cache ? [xtNouveau('graphicalFilters', [['xmi:type', pDiagramme + ':HideLabelFilter'], ['uid', diaNouvelUid()]])] : []),
+    neuf('ownedStyle', [['xmi:type', pDiagramme + ':' + style.t], ['uid', uidStyle], ...style.a], [
+      xtNouveau('description', [['xmi:type', pStyle + ':' + style.t + 'Description'], ['href', plateforme + style.chemin]])]),
+    xtNouveau('actualMapping', [['xmi:type', pDescription + ':NodeMapping'], ['href', plateforme + outil.m]])
+  ]);
+  // Position : sur le bord de la forme, relative à son coin (taille d'un port : unités Sirius × 10)
+  const w = style.taille * DIA_UNITE, h = w;
+  const [x, y] = diaPlacerPort({ w, h }, centre[0], centre[1], f).map(Math.round);
+  // Police : celle des ports voisins (Sirius l'écrit selon la machine), sinon celle de la forme
+  const portVoisin = vueParent.enfants.find(c => c.tag === 'children' && /^30(01|12)$/.test(xtAttr(c, 'type') || ''));
+  const police = v => { const st = v && v.enfants.find(c => c.tag === 'styles' && /ShapeStyle/.test(xtAttr(c, 'xmi:type') || '')); return st ? xtAttr(st, 'fontName') : null; };
+  const fontName = police(portVoisin) ?? police(vueParent);
+  const avecPolice = a => (fontName != null ? [...a, ['fontName', fontName]] : a);
+  const conteneur = /DNodeContainer/.test(xtAttr(s, 'xmi:type') || '');
+  const id = () => diaNouvelUid();
+  const gmf = neuf('children', [['xmi:type', 'notation:Node'], ['xmi:id', id()], ['type', conteneur ? '3012' : '3001'], ['element', uid]], [
+    neuf('children', [['xmi:type', 'notation:Node'], ['xmi:id', id()], ...(cache ? [['visible', 'false']] : []), ['type', conteneur ? '5010' : '5001']], [
+      xtNouveau('layoutConstraint', [['xmi:type', 'notation:Location'], ['xmi:id', id()], ['y', String(h + 1)]])]),
+    neuf('children', [['xmi:type', 'notation:Node'], ['xmi:id', id()], ['type', style.t === 'Square' ? '3003' : '3005'], ['element', uidStyle]], [
+      xtNouveau('styles', avecPolice([['xmi:type', 'notation:ShapeStyle'], ['xmi:id', id()]])),
+      xtNouveau('layoutConstraint', [['xmi:type', 'notation:Bounds'], ['xmi:id', id()]])]),
+    xtNouveau('styles', [...avecPolice([['xmi:type', 'notation:ShapeStyle'], ['xmi:id', id()]]), ['fontHeight', '8']]),
+    xtNouveau('layoutConstraint', [['xmi:type', 'notation:Bounds'], ['xmi:id', id()], ...(x - f.x ? [['x', String(x - f.x)]] : []), ...(y - f.y ? [['y', String(y - f.y)]] : []), ['width', String(w)], ['height', String(h)]])
+  ]);
+  // Places : après les ports existants ; sinon après la cible, les éléments sémantiques et les filtres (Sirius),
+  // après l'étiquette et le compartiment (GMF)
+  const apres = (el, test) => { let i = -1; el.enfants.forEach((c, k) => { if (test(c)) i = k; }); return i + 1; };
+  const iSirius = s.enfants.some(c => c.tag === 'ownedBorderedNodes') ? apres(s, c => c.tag === 'ownedBorderedNodes') : apres(s, c => /^(target|semanticElements|graphicalFilters)$/.test(c.tag));
+  const iGmf = apres(vueParent, c => c.tag === 'children' && /^(5\d{3}|7\d{3}|3001|3012)$/.test(xtAttr(c, 'type') || ''));
+  return { etapes: [{ parent: s, noeud: dnode, index: iSirius }, { parent: vueParent, noeud: gmf, index: iGmf }], attrs, vue: xtAttr(gmf, 'xmi:id'),
+    sirius: dnode, gmf, boite: { x, y, w, h } };
+}
+
+/* ─────────────────────────────── Création de liens (E8, palier 3) ─────────────────────────────── */
+/* Outils de palette qui créent un échange fonctionnel (STY_OUTILS_LIENS, services FaServices.createABFunctionalExchange /
+   DFServices.createDFFunctionalExchange) : ports créés au besoin, échange rangé dans la fonction ancêtre commune, vues des
+   ports et du lien. Le style du lien (dont sa description calculée, partagée dans le registre du .aird) est repris d'un lien
+   de même mapping écrit par Sirius, sans ses personnalisations : Sirius recalcule le reste à l'ouverture. */
+
+/** Ordre EMF des attributs des nœuds Sirius (DNode, DNodeContainer…) touchés par un nouveau lien. */
+const DIA_ORDRE_DNODE = ['xmi:type', 'uid', 'name', 'visible', 'outgoingEdges', 'incomingEdges', 'width', 'height', 'resizeKind', 'childrenPresentation'];
+
+/** Ordre EMF des attributs des éléments Sirius (nœuds et liens : DDiagramElement, EdgeTarget, DEdge). */
+const DIA_ORDRE_ELEMENT = ['xmi:type', 'uid', 'name', 'visible', 'outgoingEdges', 'incomingEdges', 'sourceNode', 'targetNode', 'width', 'height', 'resizeKind', 'childrenPresentation'];
+
+/**
+ * Préconditions des outils de liens et de leurs mappings, transcrites du Java et de l'AQL de Capella. Contexte :
+ * { doc, source, cible (éléments du modèle visés), vueSource, vueCible (éléments Sirius des formes qui porteront le lien :
+ * port, ou fonction si le port reste à créer) }.
+ * - FaServices.isValidCreationFunctionalExchange(source) et (source, cible) : diaSourceEchangeValide, diaEchangeValide ;
+ * - DFServices.isValidDFFunctionalExchangeEdge / ABServices.isValidABFunctionalExchangeEdge : pas de lien « interne »
+ *   (CapellaServices.areInternalEdgePorts : le conteneur d'une extrémité contient l'autre) ; un nouvel échange n'a pas de
+ *   catégorie (isACategoryDisplayed faux) ;
+ * - ABServices.isValidABInteractionEdge : extrémités distinctes ; OAServices.getInteractionSourceInDiagram /
+ *   getInteractionTargetInDiagram : activités distinctes (déjà garanti par isValidCreationFunctionalExchange) ;
+ * - CsServices.isValidCreationABComponentExchange / isValidCreationPABComponentExchange : diaEchangeComposantsValide ;
+ * - CsServices.isValidComponentExchangeEdge / isValidPhysicalLinkEdge : un nouveau lien tracé entre les vues de ses propres
+ *   ports est valide (isValidLinkEdge) et n'a pas de catégorie (is…CategoryEdgeDisplayed faux) ;
+ * - PhysicalServices.isValidCreationPhysicalLink(source, cible) / canBeInvolvedInPhysicalLink : diaPeutLienPhysique ;
+ * - implications : la source n'implique pas déjà la cible (CapabilityRealizationExt.isComponentTargetAvailableForCapInvolvement ;
+ *   ownedCapabilityInvolvements.systemComponent, ownedEntityOperationalCapabilityInvolvements.involved ; pour une mission,
+ *   eInverse('mission') lu comme ses MissionInvolvement) ; CCRI : expression invalide dans l'odesign (parenthèse en trop),
+ *   outil refusé ;
+ *   CsServices.isValidCreationPhysicalLink / isValidCreationABPhysicalLink (PAB) : composants nœuds (getComponentType
+ *   ramène un port à son composant).
+ */
+const DIA_PRECONDITIONS_LIENS = {
+  '': () => true,
+  'aql:self.isValidCreationFunctionalExchange(preSource)': c => diaSourceEchangeValide(c.doc, c.source),
+  'aql:self.isValidCreationFunctionalExchange(preSource,preTarget)': c => diaEchangeValide(c.doc, c.source, c.cible),
+  'service:isValidDFFunctionalExchangeEdge(sourceView, targetView)': c => !diaLienInterne(c.vueSource, c.vueCible),
+  'service:isValidABFunctionalExchangeEdge(sourceView, targetView)': c => c.vueSource !== c.vueCible && !diaLienInterne(c.vueSource, c.vueCible),
+  'service:isValidABInteractionEdge(sourceView, targetView)': c => c.vueSource !== c.vueCible,
+  'aql:self.getInteractionSourceInDiagram(diagram) != self.getInteractionTargetInDiagram(diagram)': c => diaFonctionLiee(c.source) !== diaFonctionLiee(c.cible),
+  'aql:self.isValidCreationABComponentExchange(preSourceView,preTargetView)': c => diaEchangeComposantsValide(c.doc, c.source, c.cible),
+  'aql:self.isValidCreationPABComponentExchange(preSourceView,preTargetView)': c => diaEchangeComposantsValide(c.doc, c.source, c.cible)
+    && diaActeurOuPasNoeud(diaTypeComposant(c.doc, c.source)) && diaActeurOuPasNoeud(diaTypeComposant(c.doc, c.cible)),
+  'aql:self.isValidCreationPABComponentExchange(preSourceView)': c => !REG_H.est(c.source, 'PhysicalPort') && diaActeurOuPasNoeud(diaTypeComposant(c.doc, c.source)),
+  'service:isValidComponentExchangeEdge(sourceView, targetView)': () => true,
+  'service:isValidPhysicalLinkEdge(sourceView, targetView)': () => true,
+  'aql:preSourceView.target.canBeInvolvedInPhysicalLink()': c => diaPeutLienPhysique(c.doc, c.source),
+  'aql:preSourceView.target.isValidCreationPhysicalLink(preTargetView.target)': c => !(REG_H.est(c.source, 'PhysicalPort') && c.source === c.cible)
+    && diaPeutLienPhysique(c.doc, c.source) && diaPeutLienPhysique(c.doc, c.cible),
+  'aql:self.isValidCreationPhysicalLink()': c => diaNoeud(diaTypeComposant(c.doc, c.source)),
+  'aql:self.isValidCreationABPhysicalLink(preSourceView,preTargetView)': c => {
+    if (c.source === c.cible) return !REG_H.est(c.source, 'PhysicalPort');
+    const accepte = x => REG_H.est(x, 'PhysicalPort') || REG_H.est(x, 'Component') || (REG_H.est(x, 'Part') && REG_H.est(diaReference(c.doc, x, 'abstractType'), 'Component'));
+    return accepte(c.source) && accepte(c.cible) && diaNoeud(diaTypeComposant(c.doc, c.source)) && diaNoeud(diaTypeComposant(c.doc, c.cible));
+  },
+  // Implications (diagrammes de capacités et de missions)
+  'aql:self.isComponentTargetAvailableForCapInvolvement(preSource,preTarget)': c => !diaImpliques(c.doc, c.source, 'ownedCapabilityRealizationInvolvements').includes(c.cible),
+  'aql:not self.isComponentInvolvedWithCapability(preSource, preTarget))': () => false,
+  'aql:not (preSource.ownedCapabilityInvolvements.systemComponent->includes(preTarget))': c => !diaImpliques(c.doc, c.source, 'ownedCapabilityInvolvements').includes(c.cible),
+  "aql:preSource.eInverse('mission')->filter(ctx::MissionInvolvement)->select(x | x.systemComponent = preTarget)->size() = 0": c => !diaImpliques(c.doc, c.source, 'ownedMissionInvolvements').includes(c.cible),
+  'aql:not (preSource.ownedEntityOperationalCapabilityInvolvements.involved->includes(preTarget))': c => !diaImpliques(c.doc, c.source, 'ownedEntityOperationalCapabilityInvolvements').includes(c.cible)
+};
+
+/**
+ * Éléments impliqués (involved) par les implications d'une source, d'une balise donnée.
+ * @param {object} doc modèle
+ * @param {object} source capacité, mission…
+ * @param {string} tag balise des implications
+ * @returns {object[]}
+ */
+function diaImpliques(doc, source, tag) {
+  return source ? source.enfants.filter(x => x.tag === tag).map(x => diaReference(doc, x, 'involved')).filter(Boolean) : [];
+}
+
+/**
+ * CsServices.isNodeComponent : composant physique de nature nœud.
+ * @param {object|null} c composant
+ * @returns {boolean}
+ */
+function diaNoeud(c) { return !!c && REG_H.est(c, 'PhysicalComponent') && (xtAttr(c, 'nature') || 'UNSET') === 'NODE'; }
+
+/**
+ * PhysicalServices.canBeInvolvedInPhysicalLink : une Part dont le type peut avoir un port physique (canHavePhysicalPort),
+ * ou un port physique.
+ * @param {object} doc modèle
+ * @param {object} el élément visé
+ * @returns {boolean}
+ */
+function diaPeutLienPhysique(doc, el) {
+  if (REG_H.est(el, 'Part')) return diaPeutAvoirPortPhysique({ container: el, type: diaReference(doc, el, 'abstractType') });
+  return REG_H.est(el, 'PhysicalPort');
+}
+
+/**
+ * CsServices.isAbstractActorOrNotNodeComponent : un acteur, ou un composant physique qui n'est pas un nœud.
+ * @param {object|null} c composant
+ * @returns {boolean}
+ */
+function diaActeurOuPasNoeud(c) {
+  return !!c && ((REG_H.est(c, 'Component') && xtAttr(c, 'actor') === 'true') || (REG_H.est(c, 'PhysicalComponent') && (xtAttr(c, 'nature') || 'UNSET') !== 'NODE'));
+}
+
+/**
+ * CsServices.isValidCreationABComponentExchange : un port source doit être de flux sortant (OUT ou INOUT) ou standard, un
+ * port cible de flux entrant (IN ou INOUT) ou standard ; un composant physique nœud n'en reçoit pas, sauf s'il est acteur.
+ * @param {object} doc modèle
+ * @param {object} s élément source
+ * @param {object} t élément cible
+ * @returns {boolean}
+ */
+function diaEchangeComposantsValide(doc, s, t) {
+  const sens = (p, o) => (xtAttr(p, 'kind') || 'STANDARD') === 'STANDARD' || ((xtAttr(p, 'kind') === 'FLOW') && [o, 'INOUT'].includes(xtAttr(p, 'orientation') || 'UNSET'));
+  if (REG_H.est(s, 'ComponentPort') && !sens(s, 'OUT')) return false;
+  if (REG_H.est(t, 'ComponentPort') && !sens(t, 'IN')) return false;
+  const noeud = c => REG_H.est(c, 'PhysicalComponent') && (xtAttr(c, 'nature') || 'UNSET') === 'NODE' && xtAttr(c, 'actor') !== 'true';
+  return !noeud(diaTypeComposant(doc, s)) && !noeud(diaTypeComposant(doc, t));
+}
+
+/**
+ * Indique si un élément est un ancêtre (au sens large) d'un autre.
+ * @param {object} a ancêtre supposé
+ * @param {object} b élément
+ * @returns {boolean}
+ */
+function diaEstAncetre(a, b) { for (let x = b; x; x = x.parent) if (x === a) return true; return false; }
+
+/**
+ * CapellaServices.areInternalEdgePorts : le conteneur (élément Sirius parent) d'une extrémité contient l'autre extrémité.
+ * Pour une extrémité dont le port reste à créer, la vue est la fonction, qui sera son conteneur.
+ * @param {object} vs vue source (port, ou conteneur futur)
+ * @param {object} vc vue cible
+ * @returns {boolean}
+ */
+function diaLienInterne(vs, vc) {
+  const ps = vs.tag === 'ownedBorderedNodes' ? vs.parent : vs, pc = vc.tag === 'ownedBorderedNodes' ? vc.parent : vc;
+  return diaEstAncetre(ps, pc) || diaEstAncetre(pc, ps);
+}
+
+/**
+ * Échanges fonctionnels du modèle dont la source (ou la cible) est un élément (ActivityNode.getOutgoing / getIncoming).
+ * @param {object} doc modèle
+ * @param {object} el nœud (fonction ou port)
+ * @param {'source'|'target'} bout extrémité
+ * @returns {object[]}
+ */
+function diaEchangesDe(doc, el, bout) {
+  const id = modId(el), res = [];
+  xtParcourir(doc.racine, x => { if (modType(x) === 'FunctionalExchange' && (xtAttr(x, bout) || '').replace(/^#/, '') === id) res.push(x); });
+  return res;
+}
+
+/**
+ * FaServices.isValidCreationFunctionalExchange(context, source) : la source est un ActivityNode qui n'est pas une entrée ;
+ * une fonction de contrôle à une seule sortie (GATHER, ROUTE : FunctionExt.isControlNodeOneOutput) n'a pas déjà d'échange
+ * sortant, et la source est son port de sortie ou elle n'en a pas.
+ * @param {object} doc modèle
+ * @param {object} s élément source
+ * @returns {boolean}
+ */
+function diaSourceEchangeValide(doc, s) {
+  if (!s || REG_H.est(s, 'InputPin') || !REG_H.est(s, 'ActivityNode')) return false;
+  const f = diaFonctionLiee(s);
+  if (f && /^(GATHER|ROUTE)$/.test(xtAttr(f, 'kind') || '')) {
+    if (diaEchangesDe(doc, f, 'source').length) return false;
+    if (!(REG_H.est(s, 'OutputPin') || !f.enfants.some(x => x.tag === 'outputs'))) return false;
+  }
+  return true;
+}
+
+/**
+ * FaServices.isValidCreationFunctionalExchange(context, source, target) : la cible est un ActivityNode qui n'est pas une
+ * sortie ; fonctions différentes, aucune ne contient l'autre ; une fonction de contrôle à une seule entrée (DUPLICATE,
+ * SPLIT, SELECT) n'a pas déjà d'échange entrant, et la cible est son port d'entrée ou elle n'en a pas ; puis la source.
+ * @param {object} doc modèle
+ * @param {object} s élément source
+ * @param {object} t élément cible
+ * @returns {boolean}
+ */
+function diaEchangeValide(doc, s, t) {
+  if (!t || REG_H.est(t, 'OutputPin') || !REG_H.est(t, 'ActivityNode')) return false;
+  const fs = diaFonctionLiee(s), ft = diaFonctionLiee(t);
+  if (!fs || !ft || fs === ft || diaEstAncetre(fs, ft) || diaEstAncetre(ft, fs)) return false;
+  if (/^(DUPLICATE|SPLIT|SELECT)$/.test(xtAttr(ft, 'kind') || '')) {
+    if (diaEchangesDe(doc, ft, 'target').length) return false;
+    if (!(REG_H.est(t, 'InputPin') || !ft.enfants.some(x => x.tag === 'inputs'))) return false;
+  }
+  return diaSourceEchangeValide(doc, s);
+}
+
+/**
+ * Mapping (chemin décodé) d'une forme de la scène.
+ * @param {object} aird résultat de diaLire
+ * @param {object} f forme
+ * @returns {string}
+ */
+function diaMappingForme(aird, f) {
+  const s = aird.parUid.get(f.uid), am = s && diaEnfant(s, 'actualMapping');
+  return am ? diaDecoderChemin(xtAttr(am, 'href')) : '';
+}
+
+/**
+ * Représentation (palette) d'un outil de lien : celle qui contient son mapping.
+ * @param {object} o outil (STY_OUTILS_LIENS)
+ * @returns {string}
+ */
+function diaRepresentationLien(o) { const seg = diaDecoderChemin(o.m).split('/@'); return '//@' + seg[1] + '/@' + seg[2]; }
+
+/**
+ * Outils de liens qu'on peut commencer depuis une forme (mapping permis en source, précondition de début de tracé).
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {object} f forme source
+ * @param {object} doc modèle
+ * @returns {object[]} outils (STY_OUTILS_LIENS)
+ */
+function diaOutilsLiens(aird, rep, f, doc) {
+  if (!f || !f.semId || !diaModifiable(rep)) return [];
+  const mapping = diaMappingForme(aird, f), source = doc.parId.get(f.semId);
+  if (!mapping || !source) return [];
+  return STY_OUTILS_LIENS.filter(o => diaRepresentationLien(o) === rep.description && o.src.includes(mapping)
+    && DIA_PRECONDITIONS_LIENS[o.conn] && DIA_PRECONDITIONS_LIENS[o.conn]({ doc, source }));
+}
+
+/**
+ * Indique si un lien peut être tracé entre deux formes avec un outil : mapping permis en cible, précondition de l'outil et
+ * précondition du mapping du lien (sur les vues qui porteront le lien : les ports, ou les fonctions si les ports restent à créer).
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {object} o outil
+ * @param {object} fs forme source
+ * @param {object} fc forme cible
+ * @param {object} doc modèle
+ * @returns {boolean}
+ */
+function diaLienPossible(aird, rep, o, fs, fc, doc) {
+  if (!fc || !fc.semId || fs === fc || !o.tgt.includes(diaMappingForme(aird, fc))) return false;
+  const c = { doc, source: doc.parId.get(fs.semId), cible: doc.parId.get(fc.semId), vueSource: aird.parUid.get(fs.uid), vueCible: aird.parUid.get(fc.uid) };
+  if (!c.source || !c.cible || !c.vueSource || !c.vueCible) return false;
+  const pre = DIA_PRECONDITIONS_LIENS[o.pre], mpre = DIA_PRECONDITIONS_LIENS[o.mpre];
+  return !!pre && !!mpre && pre(c) && mpre(c);
+}
+
+/**
+ * Lien écrit par Sirius à reprendre comme modèle : même mapping de lien, de préférence entre les mêmes mappings
+ * de source et de cible, avec le moins de personnalisations (customFeatures).
+ * @param {object} aird résultat de diaLire
+ * @param {string} mapping chemin du mapping du lien (tel qu'écrit dans l'outil)
+ * @param {string} mSource mapping (décodé) de la vue source
+ * @param {string} mCible mapping (décodé) de la vue cible
+ * @param {function(object):boolean} [prefere] critère supplémentaire (lien du même genre…) : préféré s'il est vrai
+ * @returns {{dedge:object, edge:object}|null}
+ */
+function diaModeleLien(aird, mapping, mSource, mCible, prefere) {
+  const voulu = diaDecoderChemin(mapping), parGmf = new Map();
+  for (const v of aird.parVue.values()) if (v.tag === 'edges') parGmf.set(xtAttr(v, 'element'), v);
+  let meilleur = null, score = Infinity;
+  for (const s of aird.parUid.values()) {
+    if (s.tag !== 'ownedDiagramElements' || !/DEdge/.test(xtAttr(s, 'xmi:type') || '')) continue;
+    const am = diaEnfant(s, 'actualMapping');
+    if (!am || diaDecoderChemin(xtAttr(am, 'href')) !== voulu) continue;
+    const edge = parGmf.get(xtAttr(s, 'uid')), st = diaEnfant(s, 'ownedStyle');
+    if (!edge || !st || !(xtAttr(st, 'description') || diaEnfant(st, 'description'))) continue;
+    const bout = n => { const x = aird.parUid.get(xtAttr(s, n)); const m = x && diaEnfant(x, 'actualMapping'); return m ? diaDecoderChemin(xtAttr(m, 'href')) : ''; };
+    let perso = 0;
+    xtParcourir(st, x => { if (x.tag === 'customFeatures') perso++; });
+    const sc = (prefere && !prefere(s) ? 1000 : 0) + (bout('sourceNode') === mSource ? 0 : 100) + (bout('targetNode') === mCible ? 0 : 100) + perso + s.enfants.filter(c => c.tag === 'semanticElements').length;
+    if (sc < score) { score = sc; meilleur = { dedge: s, edge }; }
+  }
+  return meilleur;
+}
+
+/**
+ * Copie d'un style Sirius (lien, conteneur) pour un nouvel élément : nouveaux uid, personnalisations retirées (balises
+ * customFeatures, attributs et valeurs multiples qu'elles nomment : Sirius les recalcule depuis la description à l'ouverture).
+ * @param {object} st style (ownedStyle) de l'élément modèle
+ * @returns {object} nœud neuf
+ */
+function diaCopierStyle(st) {
+  const copier = n => {
+    const perso = new Set(n.enfants.filter(c => c.tag === 'customFeatures').map(c => c.texte || ''));
+    const x = xtNouveau(n.tag, n.attrs.filter(a => !perso.has(a.n)).map(a => [a.n, a.n === 'uid' ? diaNouvelUid() : a.v]));
+    for (const c of n.enfants) if (c.tag !== 'customFeatures' && !perso.has(c.tag)) { const y = copier(c); y.parent = x; x.enfants.push(y); }
+    if (!n.enfants.length && n.texte != null) x.texte = n.texte;
+    return x;
+  };
+  return copier(st);
+}
+
+/**
+ * Prépare la vue d'un échange fonctionnel dans un diagramme, sans rien modifier : DEdge Sirius (dans le diagramme) et
+ * Edge GMF (dans la notation), écrits sur le modèle d'un lien de même mapping, et liens déclarés sur les nœuds des
+ * extrémités (outgoingEdges, incomingEdges). Une extrémité est soit une forme existante, soit un port préparé
+ * (diaPreparerPort, nœuds pas encore insérés).
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {object} outil outil (STY_OUTILS_LIENS)
+ * @param {{sirius:object, gmf:object, boite:{x:number,y:number,w:number,h:number}}} bs extrémité source
+ * @param {{sirius:object, gmf:object, boite:{x:number,y:number,w:number,h:number}}} bc extrémité cible
+ * @param {{id:string, nom:string, type:string, prefere?:function}} echange échange créé dans le modèle (type : nom court du type ;
+ *   prefere : critère de choix du lien modèle)
+ * @returns {{etapes:Array<{parent:object, noeud:object, index:number}>, attrs:Array, vue:string}}
+ */
+function diaPreparerLien(aird, rep, outil, bs, bc, echange) {
+  const doc = aird.doc, mSource = diaDecoderChemin(xtAttr(diaEnfant(bs.sirius, 'actualMapping'), 'href')), mCible = diaDecoderChemin(xtAttr(diaEnfant(bc.sirius, 'actualMapping'), 'href'));
+  const modele = diaModeleLien(aird, outil.m, mSource, mCible, echange.prefere);
+  if (!modele) throw new Error(_L('No link of this kind in the .aird to use as a model: draw a first one in Capella.'));
+  const diagramme = rep.noeud;
+  let notation = null;
+  for (const a of diagramme.enfants) if (a.tag === 'ownedAnnotationEntries' && xtAttr(a, 'source') === 'GMF_DIAGRAMS') notation = diaEnfant(a, 'data');
+  if (!notation) throw new Error(_L('Diagram notation not found in the .aird.'));
+  const cible = diaEnfant(modele.dedge, 'target');
+  const ressource = (xtAttr(diaEnfant(bs.sirius, 'target'), 'href') || '').replace(/#.*$/, '');
+  const typeXsi = (xtAttr(cible, 'xmi:type') || '').replace(/:.*$/, '') + ':' + echange.type, href = ressource + '#' + echange.id;
+  const neuf = (tag, a, enfants) => { const n = xtNouveau(tag, a); for (const e of enfants || []) { e.parent = n; n.enfants.push(e); } return n; };
+  // Lien Sirius : uid, nom, extrémités ; cible et élément sémantique ; style repris ; mapping
+  const uid = diaNouvelUid(), st = diaCopierStyle(diaEnfant(modele.dedge, 'ownedStyle'));
+  const am = diaEnfant(modele.dedge, 'actualMapping');
+  const dedge = neuf('ownedDiagramElements', [['xmi:type', xtAttr(modele.dedge, 'xmi:type')], ['uid', uid], ...(echange.nom ? [['name', echange.nom]] : []), ['sourceNode', xtAttr(bs.sirius, 'uid')], ['targetNode', xtAttr(bc.sirius, 'uid')]], [
+    xtNouveau('target', [['xmi:type', typeXsi], ['href', href]]),
+    xtNouveau('semanticElements', [['xmi:type', typeXsi], ['href', href]]),
+    st,
+    xtNouveau('actualMapping', [['xmi:type', xtAttr(am, 'xmi:type')], ['href', xtAttr(am, 'href')]])
+  ]);
+  // Lien GMF : étiquettes (centre au-dessus, extrémités au-dessous), routage du style Sirius, police du modèle, trait direct
+  // d'un centre à l'autre (ancres au centre : chaque point relatif à l'ancre source puis à l'ancre cible)
+  const id = () => diaNouvelUid();
+  const police = (modele.edge.enfants.find(c => c.tag === 'styles' && /FontStyle/.test(xtAttr(c, 'xmi:type') || '')) || { attrs: [] }).attrs.filter(a => !/^(xmi:type|xmi:id)$/.test(a.n)).map(a => [a.n, a.v]);
+  const cs = [bs.boite.x + bs.boite.w / 2, bs.boite.y + bs.boite.h / 2], cc = [bc.boite.x + bc.boite.w / 2, bc.boite.y + bc.boite.h / 2];
+  const dx = Math.round(cs[0] - cc[0]), dy = Math.round(cs[1] - cc[1]);
+  const etiquette = (type, y) => neuf('children', [['xmi:type', 'notation:Node'], ['xmi:id', id()], ['type', type]], [xtNouveau('layoutConstraint', [['xmi:type', 'notation:Bounds'], ['xmi:id', id()], ['y', String(y)]])]);
+  // Étiquettes du lien modèle (types GMF), à leur place par défaut : centre au-dessus, extrémités au-dessous
+  const etiquettes = modele.edge.enfants.filter(c => c.tag === 'children').map(c => xtAttr(c, 'type'));
+  const edge = neuf('edges', [['xmi:type', 'notation:Edge'], ['xmi:id', id()], ['type', xtAttr(modele.edge, 'type') || '4001'], ['element', uid], ['source', xtAttr(bs.gmf, 'xmi:id')], ['target', xtAttr(bc.gmf, 'xmi:id')]], [
+    ...(etiquettes.length ? etiquettes : ['6001', '6002', '6003']).map(t => etiquette(t, t === '6001' ? -10 : 10)),
+    xtNouveau('styles', [['xmi:type', 'notation:ConnectorStyle'], ['xmi:id', id()], ...(xtAttr(st, 'routingStyle') === 'manhattan' ? [['routing', 'Rectilinear']] : [])]),
+    xtNouveau('styles', [['xmi:type', 'notation:FontStyle'], ['xmi:id', id()], ...police]),
+    xtNouveau('bendpoints', [['xmi:type', 'notation:RelativeBendpoints'], ['xmi:id', id()], ['points', diaFormatPoints([[0, 0, dx, dy], [-dx, -dy, 0, 0]])]]),
+    xtNouveau('sourceAnchor', [['xmi:type', 'notation:IdentityAnchor'], ['xmi:id', id()], ['id', '(0.5,0.5)']]),
+    xtNouveau('targetAnchor', [['xmi:type', 'notation:IdentityAnchor'], ['xmi:id', id()], ['id', '(0.5,0.5)']])
+  ]);
+  // Liens déclarés sur les nœuds des extrémités : attribut ajouté au nœud neuf, ou changement du nœud existant
+  const attrs = [];
+  const declarer = (n, nom) => {
+    const avant = xtAttr(n, nom) ?? null, apres = (avant ? avant + ' ' : '') + uid;
+    if (aird.parUid.get(xtAttr(n, 'uid')) === n) attrs.push({ el: n, n: nom, avant, apres, ordre: DIA_ORDRE_DNODE });
+    else xtDefinirAttr({ parId: new Map() }, n, nom, apres, DIA_ORDRE_DNODE);   // nœud neuf, pas encore inséré
+  };
+  declarer(bs.sirius, 'outgoingEdges');
+  declarer(bc.sirius, 'incomingEdges');
+  const apres = (el, test) => { let i = -1; el.enfants.forEach((c, k) => { if (test(c)) i = k; }); return i + 1; };
+  return {
+    etapes: [{ parent: diagramme, noeud: dedge, index: apres(diagramme, c => c.tag === 'ownedDiagramElements') },
+      { parent: notation, noeud: edge, index: apres(notation, c => c.tag === 'children' || c.tag === 'edges') }],
+    attrs, vue: xtAttr(edge, 'xmi:id')
+  };
+}
+
+/**
+ * Prépare les vues d'un échange créé entre deux formes : vues des ports créés (FaServices.createViewPin,
+ * CsServices.createViewOrGetPort : outil de port de la palette sur la forme, posé sur le bord tourné vers l'autre
+ * extrémité), puis vue du lien (sur le modèle d'un lien de même mapping, de préférence d'un échange du même genre).
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {object} outil outil de lien (STY_OUTILS_LIENS)
+ * @param {object} fs forme source
+ * @param {object} fc forme cible
+ * @param {{source?:{id:string,nom:string,attrs:Array,type:string}, cible?:{id:string,nom:string,attrs:Array,type:string}}} ports ports créés
+ * @param {{id:string, nom:string, type:string, attrs:Array}} echange échange créé (type court, attributs du nœud du modèle)
+ * @param {object} doc modèle
+ * @param {string} uriFa espace de noms du paquetage fa du modèle
+ * @returns {{etapes:Array, attrs:Array, vue:string, vuesPorts:string[]}}
+ */
+function diaPreparerEchange(aird, rep, outil, fs, fc, ports, echange, doc, uriFa) {
+  const etapes = [], attrs = [], vuesPorts = [];
+  const centre = f => [f.x + f.w / 2, f.y + f.h / 2];
+  const bout = (f, port, autre) => {
+    if (!port) return { sirius: f.sirius || aird.parUid.get(f.uid), gmf: f.gmf || aird.parVue.get(f.vue), boite: f };
+    const o = diaOutilsPorts(aird, rep, f, doc).find(x => x.outil.t === port.type);
+    if (!o) throw new Error(_L('This diagram does not allow adding the required port on this element.'));
+    const r = diaPreparerPort(aird, rep, f, o.outil, port, diaBordVers(f, centre(autre)), uriFa);
+    etapes.push(...r.etapes);
+    for (const a of r.attrs) if (!attrs.some(x => x.el === a.el && x.n === a.n)) attrs.push(a);
+    vuesPorts.push(r.vue);
+    return r;
+  };
+  const bs = bout(fs, ports.source, fc), bc = bout(fc, ports.cible, fs);
+  // Lien modèle préféré : échange du même genre (kind), qui a le même style conditionnel
+  const genre = (echange.attrs.find(a => a.n === 'kind') || {}).v;
+  const prefere = genre ? s => { const el = doc.parId.get(diaHrefId(xtAttr(diaEnfant(s, 'target'), 'href'))); return !!el && xtAttr(el, 'kind') === genre; } : null;
+  const lien = diaPreparerLien(aird, rep, outil, bs, bc, { id: echange.id, nom: echange.nom, type: echange.type, prefere });
+  return { etapes: [...etapes, ...lien.etapes], attrs: [...attrs, ...lien.attrs], vue: lien.vue, vuesPorts };
+}
+
+/* ─────────────────────────────── Lien vers un nouvel élément (E8, palier 3) ─────────────────────────────── */
+/* Outils « fonction » des palettes « Data Flow » et « composant » des palettes LAB / PAB (STY_OUTILS_CONTENEURS) : pendant le
+   tracé d'un lien, un clic sur le fond du diagramme ou dans un conteneur crée l'élément cible (FaServices.createFunction ;
+   CsServices.createComponent et sa Part) et sa vue, puis le lien. La vue (DNodeContainer et Node GMF) est écrite sur le
+   modèle d'un élément de même mapping, de même style et de même niveau du .aird, sans ses enfants ni ses personnalisations. */
+
+/**
+ * Prédicats des styles conditionnels des mappings créés, transcrits des services Java et de l'AQL de Capella :
+ * FaServices.isDuplicateFunction… (genre de la fonction), isAllocatedInActor (fonction allouée à un acteur),
+ * isNotLeafAndisAllLeavesFunctionActorAllocated (fonction non feuille dont toutes les feuilles sont allouées à des acteurs) ;
+ * composant acteur (getComponentType().isActor()), nature d'un composant physique ; acteur humain ; élément du conteneur
+ * (aql:self = container : l'élément cible du diagramme contextuel). Élément : { kind, feuille, acteur, feuillesActeurs,
+ * nature, humain, estConteneur }.
+ */
+const DIA_PREDICATS_CONTENEURS = {
+  'service:isDuplicateFunction()': f => f.kind === 'DUPLICATE',
+  'service:isGatherFunction()': f => f.kind === 'GATHER',
+  'service:isRouteFunction()': f => f.kind === 'ROUTE',
+  'service:isSelectFunction()': f => f.kind === 'SELECT',
+  'service:isSplitFunction()': f => f.kind === 'SPLIT',
+  'service:isAllocatedInActor()': f => f.acteur,
+  'service:isNotLeafAndisAllLeavesFunctionActorAllocated()': f => !f.feuille && f.feuillesActeurs,
+  'service:isNotLeaf()': f => !f.feuille,
+  'aql:self.human = true': f => !!f.humain,
+  'aql:self.human = false': f => !f.humain,
+  'aql:self = container': f => !!f.estConteneur,
+  'aql:(self.getComponentType()->filter(cs::Component)->select(c | c.isActor())->size() > 0)': f => f.acteur,
+  'aql:(self.getComponentType().nature = pa::PhysicalComponentNature::BEHAVIOR)': f => f.nature === 'BEHAVIOR',
+  'aql:(self.getComponentType().nature = pa::PhysicalComponentNature::NODE)': f => f.nature === 'NODE'
+};
+
+/**
+ * Élément créé par un outil, pour les prédicats des styles : fonction de genre FUNCTION, feuille (et, sauf l'outil des
+ * architectures, allouée à aucun composant ; isAllocatedInActor n'est pas employé par les mappings de ces outils-là) ;
+ * composant non acteur, de la nature posée par l'outil.
+ * @param {object} o outil (STY_OUTILS_CONTENEURS)
+ * @returns {object}
+ */
+function diaElementNeuf(o) {
+  return o.g === 'fonction' || o.g === 'allouee' ? { kind: 'FUNCTION', feuille: true, acteur: false, feuillesActeurs: false } : { acteur: false, nature: o.n || null };
+}
+
+/**
+ * Style que Sirius donne à l'élément créé par un outil : premier style conditionnel dont le prédicat est vrai, sinon le style
+ * principal.
+ * @param {object} o outil (STY_OUTILS_CONTENEURS)
+ * @returns {string|null} chemin de la description du style (décodé), null si un prédicat n'est pas transcrit
+ */
+function diaStyleNeuf(o) {
+  const el = diaElementNeuf(o), m = diaDecoderChemin(o.m);
+  for (let i = 0; i < o.q.length; i++) {
+    const p = DIA_PREDICATS_CONTENEURS[o.q[i]];
+    if (!p) return null;
+    if (p(el)) return m + '/@conditionnalStyles.' + i + '/@style';
+  }
+  return m + '/@style';
+}
+
+/**
+ * ComponentExt.canCreateABComponent : un composant peut être créé dans l'élément (une Part : dans son type). Composant : ni
+ * humain, ni composant système (SystemComponent) ; paquetage : celui de son composant englobant ; paquetage racine de
+ * composants système, logiques ou physiques : seulement s'il ne contient encore aucun composant non acteur.
+ * @param {object} doc modèle
+ * @param {object|null} x élément
+ * @returns {boolean}
+ */
+function diaPeutCreerComposant(doc, x) {
+  if (REG_H.est(x, 'Part')) x = diaReference(doc, x, 'abstractType');
+  if (REG_H.est(x, 'Component')) return xtAttr(x, 'human') !== 'true' && !REG_H.est(x, 'SystemComponent');
+  if (!REG_H.est(x, 'ComponentPkg')) return false;
+  let parent = null;
+  for (let p = x.parent; p && !REG_H.est(p, 'BlockArchitecture'); p = p.parent) if (REG_H.est(p, 'Component')) { parent = p; break; }
+  if (parent) return diaPeutCreerComposant(doc, parent);
+  if (/^(SystemComponentPkg|LogicalComponentPkg|PhysicalComponentPkg)$/.test(modType(x))) {
+    let racine = x;
+    while (racine.parent && !REG_H.est(racine.parent, 'BlockArchitecture')) racine = racine.parent;
+    if (REG_H.est(racine, 'ComponentPkg') && racine.enfants.some(c => /^owned(SystemComponents|LogicalComponents|PhysicalComponents)$/.test(c.tag) && xtAttr(c, 'actor') !== 'true')) return false;
+  }
+  return true;
+}
+
+/**
+ * CsServices.getComponentType (d'un élément) : composant lui-même, composant d'un port, type d'une Part, paquetage de composants.
+ * @param {object} doc modèle
+ * @param {object|null} x élément
+ * @returns {object|null}
+ */
+function diaTypeOuPaquetage(doc, x) {
+  if (REG_H.est(x, 'ComponentPkg')) return x;
+  if (REG_H.est(x, 'Port')) return x.parent || null;
+  return REG_H.est(x, 'Part') ? diaReference(doc, x, 'abstractType') : REG_H.est(x, 'Component') ? x : null;
+}
+
+/**
+ * CsServices.getABTarget : élément où créer un composant. Vue d'un élément : sa cible. Fond du diagramme : si la cible du
+ * diagramme y est dessinée (elle-même ou une Part qu'elle type, avec le mapping de l'outil), son conteneur sémantique
+ * (getSemanticParentContainer : premier ancêtre où un composant peut être créé, ou l'architecture) ; sinon la cible si un
+ * composant peut y être créé ; sinon ce conteneur, ou le système du niveau quand c'est l'architecture et qu'il l'accepte.
+ * @param {object} rep représentation
+ * @param {object} o outil (mapping du composant)
+ * @param {object|null} fp forme visée, null pour le fond
+ * @param {object} doc modèle
+ * @returns {object|null}
+ */
+function diaCibleAB(rep, o, fp, doc) {
+  if (fp) return doc.parId.get(fp.semId) || null;
+  const t = doc.parId.get(rep.cibleId) || null;
+  if (!t) return null;
+  const parentSemantique = () => { for (let p = t.parent; p; p = p.parent) if (REG_H.est(p, 'BlockArchitecture') || diaPeutCreerComposant(doc, p)) return p; return null; };
+  const voulu = diaDecoderChemin(o.m);
+  const dessinee = rep.noeud.enfants.some(c => {
+    if (c.tag !== 'ownedDiagramElements' || diaDecoderChemin(xtAttr(diaEnfant(c, 'actualMapping') || { attrs: [] }, 'href')) !== voulu) return false;
+    const x = doc.parId.get(diaHrefId(xtAttr(diaEnfant(c, 'target') || { attrs: [] }, 'href')));
+    return x === t || (REG_H.est(x, 'Part') && diaReference(doc, x, 'abstractType') === t);
+  });
+  if (dessinee) return parentSemantique();
+  if (diaPeutCreerComposant(doc, t)) return t;
+  const parent = parentSemantique();
+  if (REG_H.est(parent, 'BlockArchitecture') && diaPeutCreerComposant(doc, REG_H.systeme(parent))) return REG_H.systeme(parent);
+  return parent;
+}
+
+/**
+ * Préconditions des outils de création (fonctions, composants) et de leurs mappings. Contexte : { doc, rep, o (outil),
+ * fp (forme visée, null pour le fond), cible (élément de la vue visée, ou cible du diagramme) }.
+ * - DFServices.isValidCreationDFFunction : une capacité, ou une fonction qui n'est pas une fonction de contrôle
+ *   (FunctionExt.isControlNode : genre autre que FUNCTION) ;
+ * - ABServices.isValidCreationABComponent(getABTarget) : diaPeutCreerComposant(diaCibleAB) ;
+ * - ABServices.isValidCreationABBehaviorPC / isValidCreationABNodePC : de plus, le composant de la vue visée
+ *   (getComponentType(containerView)) n'est pas un composant physique nœud (resp. de comportement) ;
+ * - fonction allouée (SAB, LAB, PAB) : l'élément visé désigne un composant (getComponentType), la vue est un conteneur ; en
+ *   PAB, pas un nœud (PhysicalServices.isNode) sauf acteur ; CapellaServices.isAllocatedFunction(fonction, conteneur, vue) :
+ *   vraie pour la fonction neuve, allouée au composant de la vue, si la vue est un conteneur.
+ */
+const DIA_PRECONDITIONS_CONTENEURS = {
+  '': () => true,
+  'aql:containerView.isValidCreationDFFunction()': c => REG_H.est(c.cible, 'AbstractCapability')
+    || (REG_H.est(c.cible, 'AbstractFunction') && (xtAttr(c.cible, 'kind') || 'FUNCTION') === 'FUNCTION'),
+  'aql:containerView.getABTarget().isValidCreationABComponent()': c => diaPeutCreerComposant(c.doc, diaCibleAB(c.rep, c.o, c.fp, c.doc)),
+  'aql:containerView.isValidCreationABBehaviorPC()': c => diaPeutCreerComposant(c.doc, diaCibleAB(c.rep, c.o, c.fp, c.doc))
+    && xtAttr(diaTypeOuPaquetage(c.doc, c.cible) || { attrs: [] }, 'nature') !== 'NODE',
+  'aql:containerView.isValidCreationABNodePC()': c => diaPeutCreerComposant(c.doc, diaCibleAB(c.rep, c.o, c.fp, c.doc))
+    && xtAttr(diaTypeOuPaquetage(c.doc, c.cible) || { attrs: [] }, 'nature') !== 'BEHAVIOR',
+  'aql:self.getComponentType().oclIsKindOf(cs::Component)': c => REG_H.est(diaTypeOuPaquetage(c.doc, c.cible), 'Component'),
+  'aql:self.getComponentType().oclIsKindOf(cs::Component) and containerView->filter(diagram::DNodeContainer)->size() != 0':
+    c => REG_H.est(diaTypeOuPaquetage(c.doc, c.cible), 'Component') && !!c.fp && c.fp.genre === 'conteneur',
+  'aql:(not self.isNode() or self.isActor()) and self.getComponentType().oclIsKindOf(cs::Component) and containerView->filter(diagram::DNodeContainer)->size() != 0': c => {
+    const t = diaTypeOuPaquetage(c.doc, c.cible);
+    return REG_H.est(t, 'Component') && (xtAttr(t, 'nature') !== 'NODE' || xtAttr(t, 'actor') === 'true') && !!c.fp && c.fp.genre === 'conteneur';
+  },
+  'service:isAllocatedFunction(container, containerView)': c => !!c.fp && c.fp.genre === 'conteneur'
+};
+
+/**
+ * Outils de création proposés à un endroit (le fond du diagramme, ou un conteneur qui contiendra l'élément) : outils de la
+ * palette du diagramme dont le mapping est permis à cet endroit, préconditions vraies, style de l'élément neuf transcrit,
+ * avec le plan du modèle — fonction : DFServices.getDFTarget puis FaServices.createFunction (regPlanFonction) ; un diagramme
+ * dont la cible est une capacité est refusé (FaServices.allocateToCapability, implication dans la capacité : non reproduit) ;
+ * composant : getComponentType(getABTarget) puis CsServices.createComponent et sa Part (regPlanComposant).
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {object|null} fp forme qui contiendra l'élément (conteneur), null pour le fond du diagramme
+ * @param {object} doc modèle
+ * @returns {Array<{outil:object, conteneur:object, regle:object, typeCourt:string}>}
+ */
+function diaOutilsConteneurs(aird, rep, fp, doc) {
+  if (!diaModifiable(rep) || (fp && (fp.genre !== 'conteneur' || fp.replie || fp.pile))) return [];
+  const cibleDiagramme = doc.parId.get(rep.cibleId) || null;
+  if (!cibleDiagramme) return [];
+  const cible = fp ? doc.parId.get(fp.semId) || null : cibleDiagramme, mappingParent = fp ? diaMappingForme(aird, fp) : '', res = [];
+  for (const o of STY_OUTILS_CONTENEURS) {
+    if (o.g === 'allouee' || diaRepresentationLien(o) !== rep.description || (fp ? !o.p.includes(mappingParent) : !o.haut) || !cible || !diaStyleNeuf(o)) continue;
+    const ctx = { doc, rep, o, fp, cible }, pre = DIA_PRECONDITIONS_CONTENEURS[o.pre], mpre = DIA_PRECONDITIONS_CONTENEURS[o.mpre];
+    if (!pre || !mpre || !pre(ctx) || !mpre(ctx)) continue;
+    let plan = null;
+    if (o.g === 'fonction') {
+      if (REG_H.est(cibleDiagramme, 'AbstractCapability')) continue;
+      // DFServices.getDFTarget : sur le fond, la cible du diagramme, ou sa fonction englobante si elle y est dessinée
+      let t = cible;
+      if (!fp) {
+        const voulu = diaDecoderChemin(o.m);
+        const dessinee = rep.noeud.enfants.some(c => c.tag === 'ownedDiagramElements' && diaHrefId(xtAttr(diaEnfant(c, 'target') || { attrs: [] }, 'href')) === rep.cibleId
+          && diaDecoderChemin(xtAttr(diaEnfant(c, 'actualMapping') || { attrs: [] }, 'href')) === voulu);
+        if (dessinee) t = cible.parent;
+      }
+      plan = t && regPlanFonction(doc, t);
+    } else if (o.g === 'composant') plan = regPlanComposant(doc, diaTypeOuPaquetage(doc, diaCibleAB(rep, o, fp, doc)), o.n);
+    if (plan) res.push(Object.assign({ outil: o }, plan));
+  }
+  return res;
+}
+
+/**
+ * Éléments du modèle préparés pour un plan de création (pas encore insérés, posés sous leur futur parent) : l'élément, et
+ * pour un composant sa Part, qui est alors la cible du lien (comme la vue, qui désigne la Part).
+ * @param {object} plan plan (diaOutilsConteneurs)
+ * @param {string} nom nom de l'élément
+ * @returns {{noeud:object, part:(object|null), cible:object}}
+ */
+function diaNoeudsNeufs(plan, nom) {
+  const { noeud, part } = regNoeuds(plan.regle, nom);
+  noeud.parent = plan.conteneur;
+  if (part) { part.tag = regBalisePart(plan.conteneur); part.parent = plan.conteneur; }
+  return { noeud, part, cible: part || noeud };
+}
+
+/**
+ * Plan de l'élément à créer pour un lien tracé depuis une forme vers un endroit (fond du diagramme ou conteneur) : premier
+ * outil de création (diaOutilsConteneurs) dont le mapping est permis en cible du lien et pour lequel les préconditions de
+ * l'outil de lien et de son mapping sont vraies sur l'élément à venir (éléments et vue posés à leur place, non insérés).
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {object} o outil de lien (STY_OUTILS_LIENS)
+ * @param {object} fs forme source
+ * @param {object|null} fp forme qui contiendra l'élément, null pour le fond
+ * @param {object} doc modèle
+ * @returns {object|null} plan (diaOutilsConteneurs), null si impossible
+ */
+function diaLienVersNouveau(aird, rep, o, fs, fp, doc) {
+  const source = doc.parId.get(fs.semId), vueSource = aird.parUid.get(fs.uid), parentVue = fp ? aird.parUid.get(fp.uid) : rep.noeud;
+  if (!source || !vueSource || !parentVue) return null;
+  for (const plan of diaOutilsConteneurs(aird, rep, fp, doc)) {
+    if (!o.tgt.includes(diaDecoderChemin(plan.outil.m))) continue;
+    const n = diaNoeudsNeufs(plan, '?'), vueCible = xtNouveau('ownedDiagramElements', []);
+    vueCible.parent = parentVue;
+    const c = { doc, source, cible: n.cible, vueSource, vueCible };
+    const pre = DIA_PRECONDITIONS_LIENS[o.pre], mpre = DIA_PRECONDITIONS_LIENS[o.mpre];
+    if (pre && mpre && regAvecProvisoires(doc, [n.noeud, ...(n.part ? [n.part] : [])], () => pre(c) && mpre(c))) return plan;
+  }
+  return null;
+}
+
+/**
+ * Éléments écrits par Sirius à reprendre comme modèles de vue (DNodeContainer ; DNode pour une fonction allouée), avec le
+ * moins de personnalisations : nœud Sirius de même
+ * mapping, même style, mêmes types de cible et d'éléments sémantiques (de préférence de même niveau) ; nœud GMF d'un élément
+ * de même mapping et de même niveau (premier niveau du diagramme ou compartiment d'un conteneur : les types GMF diffèrent),
+ * celui du nœud Sirius s'il convient.
+ * @param {object} aird résultat de diaLire
+ * @param {string} mapping chemin du mapping (tel qu'écrit dans l'outil)
+ * @param {boolean} haut vue au premier niveau du diagramme
+ * @param {string|null} style chemin (décodé) de la description du style ; null : style d'une vue du même élément (opts.cibleId)
+ * @param {string[]} types types courts de la cible puis des éléments sémantiques
+ * @param {{noeud?:boolean, cibleId?:string}} [opts] noeud : DNode (sinon selon l'outil) ; cibleId : élément dessiné, dont une
+ *   vue de même mapping est préférée (même style par construction)
+ * @returns {{sirius:object, gmf:object, memeElement:boolean}|null}
+ */
+function diaModeleConteneur(aird, mapping, haut, style, types, opts) {
+  const o = opts || {};
+  const noeud = o.noeud ?? STY_OUTILS_CONTENEURS.some(x => x.m === mapping && x.g === 'allouee');
+  const voulu = diaDecoderChemin(mapping), parGmf = new Map(), court = x => (xtAttr(x, 'xmi:type') || '').replace(/^.*:/, '');
+  for (const v of aird.parVue.values()) if (v.tag === 'children' && xtAttr(v, 'element')) parGmf.set(xtAttr(v, 'element'), v);
+  let sirius = null, gmfSirius = null, score = Infinity, gmf = null, scoreGmf = Infinity;
+  for (const s of aird.parUid.values()) {
+    if (s.tag !== 'ownedDiagramElements' || !(noeud ? /:DNode$/ : /DNodeContainer/).test(xtAttr(s, 'xmi:type') || '')) continue;
+    const am = diaEnfant(s, 'actualMapping'), st = diaEnfant(s, 'ownedStyle'), cible = diaEnfant(s, 'target'), g = parGmf.get(xtAttr(s, 'uid'));
+    if (!am || !st || !cible || !g || diaDecoderChemin(xtAttr(am, 'href')) !== voulu) continue;
+    const niveau = (xtAttr(g.parent, 'xmi:type') === 'notation:Diagram') === haut;
+    let perso = 0;
+    xtParcourir(st, x => { if (x.tag === 'customFeatures') perso++; });
+    const base = perso * 10 + s.enfants.filter(c => c.tag === 'ownedDiagramElements' || c.tag === 'ownedBorderedNodes').length;
+    if (niveau && base < scoreGmf) { scoreGmf = base; gmf = g; }
+    const d = xtAttr(st, 'description') ? xtAttr(st, 'description') : xtAttr(diaEnfant(st, 'description') || { attrs: [] }, 'href');
+    const t = [cible, ...s.enfants.filter(c => c.tag === 'semanticElements')].map(court);
+    const meme = !!o.cibleId && diaHrefId(xtAttr(cible, 'href')) === o.cibleId;
+    if ((style === null ? !meme : diaDecoderChemin(d) !== style) || t.join(' ') !== types.join(' ')) continue;
+    const sc = base + (niveau ? 0 : 1000) - (meme ? 100000 : 0);
+    if (sc < score) { score = sc; sirius = s; gmfSirius = niveau ? g : null; }
+  }
+  const g = gmfSirius || gmf;
+  return sirius && g ? { sirius, gmf: g, memeElement: !!o.cibleId && diaHrefId(xtAttr(diaEnfant(sirius, 'target'), 'href')) === o.cibleId } : null;
+}
+
+/**
+ * Prépare la vue d'un élément créé (fonction : CreateViewAction ; composant : vue de sa Part que le rafraîchissement de
+ * Sirius ajoute au conteneur visé), sans rien modifier : DNodeContainer Sirius et Node GMF écrits sur le modèle d'un
+ * élément de même mapping (diaModeleConteneur) : attributs, style (sans personnalisations), mapping ; étiquette et
+ * compartiment GMF, sans les vues contenues. L'élément est centré sur le point visé, à une taille qui loge son nom.
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {object} outil outil (STY_OUTILS_CONTENEURS)
+ * @param {object|null} fp forme qui contient la vue, null pour le fond du diagramme
+ * @param {{nom:string, cible:{id:string, type:string}, semantiques:Array<{id:string, type:string}>}} el élément dessiné :
+ *   nom, cible de la vue et éléments sémantiques (types courts)
+ * @param {number[]} point centre visé [x, y] (coordonnées du diagramme)
+ * @param {{style?:(string|null), noeud?:boolean}} [opts] style imposé (null : celui d'une vue du même élément), DNode
+ * @returns {{etapes:Array<{parent:object, noeud:object, index:number}>, attrs:Array, vue:string,
+ *   forme:{sirius:object, gmf:object, genre:string, x:number, y:number, w:number, h:number}}} nœuds à insérer, vue GMF, forme
+ *   de l'élément (pour y créer des ports et y accrocher un lien : diaPreparerEchange)
+ */
+function diaPreparerConteneur(aird, rep, outil, fp, el, point, opts) {
+  const o = opts || {};
+  const modele = diaModeleConteneur(aird, outil.m, !fp, o.style !== undefined ? o.style : diaStyleNeuf(outil), [el.cible.type, ...el.semantiques.map(x => x.type)], { noeud: o.noeud, cibleId: el.cible.id });
+  if (!modele) throw new Error(_L('No element of this type at this level in the .aird to use as a template: create a first one in Capella.'));
+  let notation = null;
+  for (const a of rep.noeud.enfants) if (a.tag === 'ownedAnnotationEntries' && xtAttr(a, 'source') === 'GMF_DIAGRAMS') notation = diaEnfant(a, 'data');
+  const parentSirius = fp ? aird.parUid.get(fp.uid) : rep.noeud;
+  const vueParent = fp ? aird.parVue.get(fp.vue) : notation;
+  const compartiment = fp ? vueParent && vueParent.enfants.find(c => c.tag === 'children' && /^7\d{3}$/.test(xtAttr(c, 'type') || '') && !xtAttr(c, 'element')) : notation;
+  if (!parentSirius || !compartiment) throw new Error(_L('Shape not found in the .aird.'));
+  const neuf = (tag, a, enfants) => { const n = xtNouveau(tag, a); for (const e of enfants || []) { e.parent = n; n.enfants.push(e); } return n; };
+  // Références : types et ressource repris du modèle (mêmes espaces de noms), identifiants des éléments créés
+  const refsModele = [diaEnfant(modele.sirius, 'target'), ...modele.sirius.enfants.filter(c => c.tag === 'semanticElements')];
+  const ref = (tag, x, i) => xtNouveau(tag, [['xmi:type', xtAttr(refsModele[i], 'xmi:type')], ['href', (xtAttr(refsModele[i], 'href') || '').replace(/#.*$/, '') + '#' + x.id]]);
+  // Nœud Sirius : attributs du modèle (nouvel uid, nom ; sans liens), cible, éléments sémantiques, style, mapping
+  const uid = diaNouvelUid(), am = diaEnfant(modele.sirius, 'actualMapping');
+  const attrs = modele.sirius.attrs.filter(a => !/^(outgoingEdges|incomingEdges)$/.test(a.n)).map(a => [a.n, a.n === 'uid' ? uid : a.n === 'name' ? el.nom : a.v]);
+  const sirius = neuf('ownedDiagramElements', attrs, [
+    ref('target', el.cible, 0),
+    ...el.semantiques.map((x, i) => ref('semanticElements', x, i + 1)),
+    diaCopierStyle(diaEnfant(modele.sirius, 'ownedStyle')),
+    xtNouveau('actualMapping', [['xmi:type', xtAttr(am, 'xmi:type')], ['href', xtAttr(am, 'href')]])
+  ]);
+  // Nœud de style GMF d'un DNode : il désigne le style de l'élément Sirius du modèle GMF (qui peut différer du modèle Sirius)
+  const siriusGmf = aird.parUid.get(xtAttr(modele.gmf, 'element'));
+  const styleModele = xtAttr(diaEnfant(siriusGmf || modele.sirius, 'ownedStyle') || { attrs: [] }, 'uid'), styleNeuf = xtAttr(diaEnfant(sirius, 'ownedStyle'), 'uid');
+  const noeud = !/DNodeContainer/.test(xtAttr(sirius, 'xmi:type') || '');
+  // Taille : celle d'une autre vue du même élément (nœud), sinon de quoi loger le nom ; position : centrée sur le point visé,
+  // relative à l'origine du compartiment parent
+  const police = diaPolice(modele.gmf, diaEnfant(modele.sirius, 'ownedStyle')).taille;
+  const vueMeme = modele.memeElement ? [...aird.parVue.values()].find(v => v.tag === 'children' && xtAttr(v, 'element') === xtAttr(modele.sirius, 'uid')) : null;
+  const bm = vueMeme ? diaBornes(vueMeme) : null;
+  const w = noeud && bm && bm.w > 0 ? bm.w : Math.max(noeud ? 80 : 120, Math.round(diaLargeurTexte(el.nom, police) + (noeud ? 20 : 40)));
+  const h = noeud && bm && bm.h > 0 ? bm.h : noeud ? 40 : 60;
+  // Dans un conteneur : la vue reste dedans (sous son titre) quand elle y tient
+  let x = Math.round(point[0] - w / 2), y = Math.round(point[1] - h / 2);
+  if (fp) {
+    const x0 = fp.x + DIA_COMPARTIMENT.x + 4, y0 = fp.y + 24, x1 = fp.x + fp.w - 4 - w, y1 = fp.y + fp.h - 4 - h;
+    if (x1 >= x0) x = Math.min(Math.max(x, x0), x1);
+    if (y1 >= y0) y = Math.min(Math.max(y, y0), y1);
+  }
+  const ox = fp ? fp.x + DIA_COMPARTIMENT.x : 0, oy = fp ? fp.y + DIA_COMPARTIMENT.y : 0;
+  // Nœud GMF : structure du modèle sans les vues contenues (enfants qui désignent un élément Sirius, sauf le nœud de style
+  // d'un DNode, qui désigne alors le style neuf), nouveaux identifiants
+  const copier = n => {
+    const a = n.attrs.map(t => [t.n, t.n === 'xmi:id' ? diaNouvelUid() : t.v]);
+    if (n === modele.gmf) for (const t of a) if (t[0] === 'element') t[1] = uid;
+    if (n !== modele.gmf && xtAttr(n, 'element') === styleModele) for (const t of a) if (t[0] === 'element') t[1] = styleNeuf;
+    if (n.tag === 'layoutConstraint' && n.parent === modele.gmf) {
+      const garder = a.filter(t => !/^(x|y|width|height)$/.test(t[0]));
+      return xtNouveau(n.tag, [...garder, ...(x - ox ? [['x', String(x - ox)]] : []), ...(y - oy ? [['y', String(y - oy)]] : []), ['width', String(w)], ['height', String(h)]]);
+    }
+    const c = xtNouveau(n.tag, a);
+    for (const e of n.enfants) if (!(e.tag === 'children' && xtAttr(e, 'element') && xtAttr(e, 'element') !== styleModele)) { const y2 = copier(e); y2.parent = c; c.enfants.push(y2); }
+    if (!n.enfants.length && n.texte != null) c.texte = n.texte;
+    return c;
+  };
+  const gmf = copier(modele.gmf);
+  // Places : après les vues sœurs ; sinon après les annotations (diagramme) ou le mapping (conteneur) ; GMF : après les
+  // enfants du compartiment (ou du diagramme), sinon en tête
+  const apres = (e, test) => { let i = -1; e.enfants.forEach((c, k) => { if (test(c)) i = k; }); return i + 1; };
+  const iSirius = parentSirius.enfants.some(c => c.tag === 'ownedDiagramElements') ? apres(parentSirius, c => c.tag === 'ownedDiagramElements')
+    : apres(parentSirius, c => c.tag === (fp ? 'actualMapping' : 'ownedAnnotationEntries'));
+  const iGmf = apres(compartiment, c => c.tag === 'children');
+  return {
+    etapes: [{ parent: parentSirius, noeud: sirius, index: iSirius }, { parent: compartiment, noeud: gmf, index: iGmf }],
+    attrs: [], vue: xtAttr(gmf, 'xmi:id'), forme: { sirius, gmf, genre: noeud ? 'noeud' : 'conteneur', x, y, w, h }
+  };
+}
+
+/**
+ * Prépare la vue d'une fonction allouée créée dans un composant (CreateViewAction : DNode dans la vue du composant), centrée
+ * sur le point visé.
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {object} plan plan (diaOutilsContenus)
+ * @param {object} f forme du composant
+ * @param {{id:string, nom:string}} fonction fonction créée
+ * @param {number[]} point centre visé
+ * @returns {{etapes:Array, attrs:Array, vue:string, forme:object}}
+ */
+function diaPreparerFonctionAllouee(aird, rep, plan, f, fonction, point) {
+  const fn = { id: fonction.id, type: plan.typeCourt };
+  return diaPreparerConteneur(aird, rep, plan.outil, f, { nom: fonction.nom, cible: fn, semantiques: [fn] }, point);
+}
+
+/**
+ * Outils « function » des palettes d'architecture proposés sur une forme (SAB, LAB, PAB) : fonction créée dans la fonction
+ * racine et allouée au composant de la forme, dessinée dedans. Mapping permis dans celui de la forme, préconditions, style
+ * de la fonction neuve transcrit, plan du modèle (regPlanFonctionAllouee).
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {object} f forme visée (conteneur d'un composant)
+ * @param {object} doc modèle
+ * @returns {Array<object>} plans (outil, conteneur, regle, typeCourt, allocation, composant)
+ */
+function diaOutilsContenus(aird, rep, f, doc) {
+  if (!f || !diaModifiable(rep) || f.genre !== 'conteneur' || f.replie || f.pile) return [];
+  const cible = doc.parId.get(f.semId) || null, mapping = diaMappingForme(aird, f), res = [];
+  if (!cible) return res;
+  for (const o of STY_OUTILS_CONTENEURS) {
+    if (o.g !== 'allouee' || diaRepresentationLien(o) !== rep.description || !o.p.includes(mapping) || !diaStyleNeuf(o)) continue;
+    const ctx = { doc, rep, o, fp: f, cible }, pre = DIA_PRECONDITIONS_CONTENEURS[o.pre], mpre = DIA_PRECONDITIONS_CONTENEURS[o.mpre];
+    if (!pre || !mpre || !pre(ctx) || !mpre(ctx)) continue;
+    const comp = diaTypeOuPaquetage(doc, cible), plan = regPlanFonctionAllouee(doc, comp);
+    if (plan) res.push(Object.assign({ outil: o, composant: comp }, plan));
+  }
+  return res;
+}
+
+/**
+ * Prépare la vue d'un élément créé par un outil de création (fonction, ou composant dessiné par sa Part), centrée sur le
+ * point visé.
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {{outil:object, fp:(object|null), point:number[], nom:string, typeCourt:string, noeud:object, part:(object|null)}} nouveau
+ *   élément créé (voir diaPreparerEchangeNouveau)
+ * @returns {{etapes:Array, attrs:Array, vue:string, forme:object}} forme.el : élément dessiné (la Part d'un composant)
+ */
+function diaPreparerNouveau(aird, rep, nouveau) {
+  const elem = { id: xtAttr(nouveau.noeud, 'id'), type: nouveau.typeCourt }, part = nouveau.part && { id: xtAttr(nouveau.part, 'id'), type: 'Part' };
+  const f = diaPreparerConteneur(aird, rep, nouveau.outil, nouveau.fp, { nom: nouveau.nom, cible: part || elem, semantiques: part ? [part, elem] : [elem] }, nouveau.point);
+  f.forme.el = nouveau.part || nouveau.noeud;
+  return f;
+}
+
+/**
+ * Prépare les vues d'un lien tracé vers un élément créé avec lui : vue de l'élément (diaPreparerConteneur : la fonction, ou la
+ * Part du composant avec le composant), puis vues des ports et du lien (diaPreparerEchange, l'élément neuf en cible).
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {object} outil outil de lien (STY_OUTILS_LIENS)
+ * @param {object} fs forme source
+ * @param {{outil:object, fp:(object|null), point:number[], nom:string, typeCourt:string, noeud:object, part:(object|null)}} nouveau
+ *   élément créé (outil de création, forme qui le contient, point visé, nom, type court, nœud du modèle, Part d'un composant)
+ * @param {object} ports ports créés (voir diaPreparerEchange)
+ * @param {object} echange échange créé (voir diaPreparerEchange)
+ * @param {object} doc modèle
+ * @param {string} uriFa espace de noms du paquetage fa du modèle
+ * @returns {{etapes:Array, attrs:Array, vue:string, vueElement:string}}
+ */
+function diaPreparerEchangeNouveau(aird, rep, outil, fs, nouveau, ports, echange, doc, uriFa) {
+  const f = diaPreparerNouveau(aird, rep, nouveau);
+  const e = diaPreparerEchange(aird, rep, outil, fs, f.forme, ports, echange, doc, uriFa);
+  return { etapes: [...f.etapes, ...e.etapes], attrs: [...f.attrs, ...e.attrs], vue: e.vue, vueElement: f.vue };
+}
+
+/* ─────────────────────────────── Ajouter un élément existant (E7) ─────────────────────────────── */
+/* Outils de dépôt depuis l'arborescence (STY_OUTILS_DEPOTS) : l'élément glissé est dessiné dans le conteneur visé (ou sur le
+   fond) avec le mapping de l'outil, sans changer le modèle. Ses ports et ses liens ne sont pas ajoutés : Capella les ajoute au
+   rafraîchissement d'un diagramme synchronisé. */
+
+/**
+ * Couche d'un élément (architecture qui le contient) : OA, SA, LA, PA, EPBS, ou '' hors architecture.
+ * @param {object} el élément
+ * @returns {string}
+ */
+function diaCoucheDe(el) {
+  const a = REG_H.est(el, 'BlockArchitecture') || REG_H.est(el, 'OperationalAnalysis') ? el : REG_H.conteneur(el, 'ModellingArchitecture') || REG_H.conteneur(el, 'BlockArchitecture');
+  const t = a ? modType(a) : '';
+  return { OperationalAnalysis: 'OA', SystemAnalysis: 'SA', LogicalArchitecture: 'LA', PhysicalArchitecture: 'PA', EPBSArchitecture: 'EPBS' }[t] || '';
+}
+
+/**
+ * CapellaLayerCheckingExt.isElementFromCurrentOrUpperLayer : l'élément est de la couche courante ou d'une couche plus haute
+ * (OA ⊂ SA ⊂ LA ⊂ PA ; EPBS à part).
+ * @param {object} x élément à vérifier
+ * @param {object} courant élément de la couche courante
+ * @returns {boolean}
+ */
+function diaCoucheAdmise(x, courant) {
+  const c = diaCoucheDe(courant), e = diaCoucheDe(x);
+  if (c === 'OA') return e === 'OA';
+  if (c === 'SA') return e === 'OA' || e === 'SA';
+  if (c === 'LA') return e !== 'PA' && e !== 'EPBS';
+  if (c === 'PA') return e !== 'EPBS';
+  return c === 'EPBS' && e === 'EPBS';
+}
+
+/**
+ * DragAndDropServices.canBeDropped (et, plus strict, aucune vue du même élément dans le diagramme) : élément de la couche
+ * courante ou plus haute ; sur le fond, accepté ; dans un conteneur, l'élément doit être contenu (à toute profondeur) dans
+ * l'élément du conteneur (CapellaServices.isChild).
+ * @param {{doc:object, aird:object, rep:object, el:object, fp:(object|null), cibleVue:object}} c contexte
+ * @param {object} [el] élément à vérifier (c.el par défaut)
+ * @returns {boolean}
+ */
+function diaPeutDeposer(c, el) {
+  const x = el || c.el, reps = c.aird.presences.get(modId(x));
+  if (reps && reps.has(c.rep)) return false;
+  if (!c.cibleVue || !diaCoucheAdmise(x, c.cibleVue)) return false;
+  return !c.fp || (x !== c.cibleVue && diaEstAncetre(c.cibleVue, x));
+}
+
+/**
+ * Préconditions des outils de dépôt et de leurs mappings, transcrites du Java et de l'AQL de Capella. Contexte : { doc, aird,
+ * rep, el (élément déposé), fp (forme visée, null pour le fond), cibleVue (élément de la vue visée, ou cible du diagramme),
+ * self (élément dessiné : précondition d'un mapping) }. isLibraryElementOf : faux (un seul modèle ouvert) ;
+ * DragAndDropServices.partitionableElementCanBeDropped (entités) : pas déjà dessinée ; dans un conteneur, contenue dans
+ * l'entité visée (Parts ancêtres) ; ComponentExt.isActor : composant acteur, ou Part typée par un acteur.
+ */
+const DIA_PRECONDITIONS_DEPOTS = (() => {
+  const lib = ' and not element.isLibraryElementOf(newViewContainer)', depot = ' and element.canBeDropped(newViewContainer)' + lib;
+  const acteur = (doc, x) => xtAttr(REG_H.est(x, 'Part') ? diaReference(doc, x, 'abstractType') || { attrs: [] } : x, 'actor') === 'true';
+  const p = {
+    '': () => true,
+    ['aql:element.isActor()' + depot]: c => acteur(c.doc, c.el) && diaPeutDeposer(c),
+    ['aql:element.oclIsKindOf(cs::Component) and element.isActor()' + depot]: c => REG_H.est(c.el, 'Component') && acteur(c.doc, c.el) && diaPeutDeposer(c),
+    ['aql:element.oclIsKindOf(oa::Entity) and element.partitionableElementCanBeDropped(newViewContainer)' + lib]: c => REG_H.est(c.el, 'Entity') && diaPeutDeposer(c),
+    ['aql:element.getComponentType().oclIsKindOf(cs::Component)' + depot]: c => REG_H.est(diaTypeComposant(c.doc, c.el), 'Component') && diaPeutDeposer(c),
+    ['aql:element.getComponentType().oclIsKindOf(cs::Component) and element.getComponentType().isActor()' + depot]:
+      c => REG_H.est(diaTypeComposant(c.doc, c.el), 'Component') && acteur(c.doc, diaTypeComposant(c.doc, c.el)) && diaPeutDeposer(c),
+    'aql:self.isActor()': c => acteur(c.doc, c.self)
+  };
+  for (const t of ['fa::AbstractFunction', 'oa::OperationalActivity', 'oa::OperationalCapability', 'oa::Role', 'ctx::Capability', 'ctx::Mission', 'la::CapabilityRealization']) {
+    p['aql:element.oclIsKindOf(' + t + ')' + depot] = c => REG_H.est(c.el, t.replace(/^.*::/, '')) && diaPeutDeposer(c);
+  }
+  return p;
+})();
+
+/**
+ * Descripteur d'un élément existant pour les prédicats des styles (DIA_PREDICATS_CONTENEURS) : genre, feuille, allocation à
+ * un acteur (fonction : composants qui l'allouent ; composant ou Part : acteur), feuilles toutes allouées à des acteurs,
+ * nature, humain, élément du conteneur (aql:self = container).
+ * @param {object} doc modèle
+ * @param {object} el élément dessiné
+ * @param {object|null} conteneur élément de la vue parente (ou cible du diagramme)
+ * @returns {object}
+ */
+function diaDescripteur(doc, el, conteneur) {
+  const type = REG_H.est(el, 'Part') ? diaReference(doc, el, 'abstractType') : el;
+  const allouePar = f => {
+    const id = '#' + modId(f), res = [];
+    xtParcourir(doc.racine, x => { if (x.tag === 'ownedFunctionalAllocation' && xtAttr(x, 'targetElement') === id) res.push(x.parent); });
+    return res;
+  };
+  const acteurF = f => allouePar(f).some(c => xtAttr(c, 'actor') === 'true');
+  const sous = f => f.enfants.filter(x => x.tag === 'ownedFunctions');
+  const feuilles = f => (sous(f).length ? sous(f).flatMap(feuilles) : [f]);
+  const fonction = REG_H.est(el, 'AbstractFunction');
+  return {
+    kind: xtAttr(el, 'kind') || 'FUNCTION', feuille: fonction ? !sous(el).length : true,
+    acteur: fonction ? acteurF(el) : xtAttr(type || { attrs: [] }, 'actor') === 'true',
+    feuillesActeurs: fonction && sous(el).length ? feuilles(el).every(acteurF) : false,
+    nature: xtAttr(type || { attrs: [] }, 'nature') || null, humain: xtAttr(type || { attrs: [] }, 'human') === 'true', estConteneur: !!conteneur && el === conteneur
+  };
+}
+
+/**
+ * Dépôt possible d'un élément de l'arborescence à un endroit du diagramme : premier outil de dépôt de la représentation qui
+ * accepte cet endroit (fond, ou mapping du conteneur visé) et l'élément (précondition), puis premier mapping de l'outil qui
+ * l'accepte (domainClass, précondition) ; style : premier style conditionnel vrai (prédicats transcrits), sinon celui d'une
+ * autre vue du même élément. Genre « fonction » : refusé si la cible du diagramme n'est pas une fonction (implication dans la
+ * capacité, non reproduite) ; « part » : un composant déposé est dessiné par sa première Part.
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {object|null} fp forme visée (conteneur), null pour le fond
+ * @param {object} el élément déposé
+ * @param {object} doc modèle
+ * @returns {{outil:object, mapping:object, cible:object, semantiques:object[], style:(string|null)}|null}
+ */
+function diaDepot(aird, rep, fp, el, doc) {
+  if (!el || !diaModifiable(rep) || (fp && (fp.genre !== 'conteneur' || fp.replie || fp.pile))) return null;
+  const cibleDiagramme = doc.parId.get(rep.cibleId) || null, cibleVue = fp ? doc.parId.get(fp.semId) || null : cibleDiagramme;
+  const mappingParent = fp ? diaMappingForme(aird, fp) : '';
+  for (const o of STY_OUTILS_DEPOTS) {
+    const plein = c => (c.startsWith('/@') ? o.r + c : c);       // chemins écrits sans la représentation
+    if (o.r !== rep.description || (fp ? !o.conteneurs.some(c => plein(c) === mappingParent) : !o.diagramme)) continue;
+    const c = { doc, aird, rep, el, fp, cibleVue }, pre = DIA_PRECONDITIONS_DEPOTS[o.pre];
+    if (!pre || !pre(c)) continue;
+    if (o.g === 'fonction' && !REG_H.est(cibleDiagramme, 'AbstractFunction')) continue;
+    // Élément dessiné : la Part pour un composant (CreateView de sa première Part)
+    const cible = o.g === 'part' && !REG_H.est(el, 'Part') ? regPartsDe(doc, el)[0] : el;
+    if (!cible || (cible !== el && !diaPeutDeposer(c, cible))) continue;
+    for (const cm of o.mappings) {
+      const chemin = plein(cm), m = Object.assign({ m: chemin }, STY_MAPPINGS_DEPOTS[chemin]);
+      if (!REG_H.est(cible, m.d.replace(/^.*(::|\.)/, ''))) continue;
+      const mpre = DIA_PRECONDITIONS_DEPOTS[m.pre];
+      if (!mpre || !mpre(Object.assign({ self: cible }, c))) continue;
+      // Style : premier prédicat vrai ; un prédicat non transcrit : style d'une autre vue du même élément
+      const d = diaDescripteur(doc, cible, cibleVue);
+      let style = m.m + '/@style';
+      for (let i = 0; i < m.q.length; i++) {
+        const q = DIA_PREDICATS_CONTENEURS[m.q[i]];
+        if (!q) { style = null; break; }
+        if (q(d)) { style = m.m + '/@conditionnalStyles.' + i + '/@style'; break; }
+      }
+      const semantiques = REG_H.est(cible, 'Part') ? [cible, diaReference(doc, cible, 'abstractType')].filter(Boolean) : [cible];
+      return { outil: o, mapping: m, cible, semantiques, style };
+    }
+  }
+  return null;
+}
+
+/**
+ * Prépare la vue d'un élément déposé (diaDepot), centrée sur le point visé ; une vue du même élément ailleurs donne sa taille.
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {object} depot résultat de diaDepot
+ * @param {object|null} fp forme qui contient la vue, null pour le fond
+ * @param {number[]} point centre visé
+ * @returns {{etapes:Array, attrs:Array, vue:string, forme:object}}
+ */
+function diaPreparerDepot(aird, rep, depot, fp, point) {
+  const ref = x => ({ id: modId(x), type: modType(x) });
+  return diaPreparerConteneur(aird, rep, { m: depot.mapping.m }, fp, { nom: xtAttr(depot.cible, 'name') || '', cible: ref(depot.cible), semantiques: depot.semantiques.map(ref) },
+    point, { style: depot.style, noeud: depot.mapping.noeud });
+}
+
+/* ─────────────────────────────── Créer un diagramme (E7) ─────────────────────────────── */
+/* Les outils de création de diagramme de Capella (DiagramCreationDescription) ne changent pas le modèle : le diagramme est créé
+   vide, Sirius le remplit au premier rafraîchissement selon ses mappings. Arcature écrit la représentation vide (descripteur
+   dans la vue du point de vue, DSemanticDiagram et sa notation GMF) sur le modèle d'un diagramme du même type du .aird :
+   filtres et calques activés, préoccupation courante, le jeu le plus fréquent parmi ces diagrammes. */
+
+/**
+ * Évalue une précondition AQL de type de diagramme sur l'élément cible, pour la forme qu'emploient les descriptions de
+ * Capella : « or », « and », « not », parenthèses, false, self.oclIsKindOf(ns::T), self.getComponentType().oclIsKindOf(ns::T),
+ * self.eContainerOrSelf(cs::BlockArchitecture).oclIsKindOf(ns::T), self.isActor().
+ * @param {string} expr expression (avec « aql: »), '' : vraie
+ * @param {object} doc modèle
+ * @param {object} el élément cible
+ * @returns {boolean|null} null si l'expression n'est pas reconnue (parenthèses déséquilibrées, autre appel)
+ */
+function diaAqlCible(expr, doc, el) {
+  if (!expr) return true;
+  const src = expr.replace(/^aql:/, ''), jetons = src.match(/\(|\)|[^\s()]+(?:\([^()]*\))?(?:\.[A-Za-z]+\([^()]*\))*/g);
+  if (!jetons || jetons.join('').replace(/\s/g, '') !== src.replace(/\s/g, '')) return null;
+  let i = 0;
+  const est = (x, t) => { try { return REG_H.est(x, t.replace(/^.*::/, '')); } catch (e) { return false; } };
+  const atome = j => {
+    let m;
+    if (j === 'false') return false;
+    if (j === 'true') return true;
+    if ((m = j.match(/^self\.oclIsKindOf\(([\w:]+)\)$/))) return est(el, m[1]);
+    if ((m = j.match(/^self\.getComponentType\(\)\.oclIsKindOf\(([\w:]+)\)$/))) return est(diaTypeOuPaquetage(doc, el), m[1]);
+    if ((m = j.match(/^self\.eContainerOrSelf\(cs::BlockArchitecture\)\.oclIsKindOf\(([\w:]+)\)$/))) return est(REG_H.est(el, 'BlockArchitecture') ? el : REG_H.conteneur(el, 'BlockArchitecture'), m[1]);
+    if (j === 'self.isActor()') return xtAttr(REG_H.est(el, 'Part') ? diaReference(doc, el, 'abstractType') || { attrs: [] } : el, 'actor') === 'true';
+    throw new Error('?');
+  };
+  const primaire = () => {
+    const j = jetons[i++];
+    if (j === 'not') return !primaire();
+    if (j === '(') { const v = ou(); if (jetons[i++] !== ')') throw new Error('?'); return v; }
+    if (j == null || j === ')') throw new Error('?');
+    return atome(j);
+  };
+  const et = () => { let v = primaire(); while (jetons[i] === 'and') { i++; const w = primaire(); v = v && w; } return v; };
+  const ou = () => { let v = et(); while (jetons[i] === 'or') { i++; const w = et(); v = v || w; } return v; };
+  try { const v = ou(); return i === jetons.length ? v : null; } catch (e) { return null; }
+}
+
+/**
+ * Types de diagrammes que l'on peut créer sur un élément : description de Capella (STY_DIAGRAMMES) dont la domainClass
+ * accepte l'élément, dont la précondition est vraie, au titre simple ('[SIGLE] ' + self.name), et dont un diagramme existe
+ * dans le .aird pour servir de modèle.
+ * @param {object} aird résultat de diaLire
+ * @param {object} doc modèle
+ * @param {object} el élément cible
+ * @returns {Array<{type:object, nom:string, sigle:string, modele:object}>} modele : représentation à reprendre
+ */
+function diaTypesDiagrammes(aird, doc, el) {
+  if (!aird || !el) return [];
+  const res = [];
+  for (const t of STY_DIAGRAMMES) {
+    const titre = t.titre.match(/^aql:'(\[[^\]]+\]) ' \+ self\.name$/);
+    let accepte = false;
+    try { accepte = REG_H.est(el, t.d.replace(/^.*::/, '')); } catch (e) { accepte = false; }
+    if (!titre || !accepte || diaAqlCible(t.pre, doc, el) !== true) continue;
+    const modele = diaModeleDiagramme(aird, t.r);
+    if (modele) res.push({ type: t, nom: titre[1] + ' ' + (xtAttr(el, 'name') || ''), sigle: titre[1].slice(1, -1), modele });
+  }
+  return res;
+}
+
+/**
+ * Diagramme du .aird à reprendre pour un type : parmi les diagrammes de cette description, ceux dont les filtres, calques et
+ * préoccupation activés forment le jeu le plus fréquent, et parmi eux celui qui a le moins d'éléments.
+ * @param {object} aird résultat de diaLire
+ * @param {string} description chemin décodé de la description
+ * @returns {object|null} représentation
+ */
+function diaModeleDiagramme(aird, description) {
+  const reps = aird.reps.filter(r => r.description === description && r.genre === 'diagramme' && r.noeud && aird.parUid.get(r.uid) && diaDescripteur_(aird, r));
+  if (!reps.length) return null;
+  const sig = r => r.noeud.enfants.filter(c => /^(activatedFilters|activatedLayers|currentConcern)$/.test(c.tag)).map(c => c.tag + diaDecoderChemin(xtAttr(c, 'href'))).sort().join('|');
+  const nb = new Map();
+  for (const r of reps) nb.set(sig(r), (nb.get(sig(r)) || 0) + 1);
+  const taille = r => r.noeud.enfants.filter(c => c.tag === 'ownedDiagramElements').length;
+  return reps.slice().sort((a, b) => (nb.get(sig(b)) - nb.get(sig(a))) || (taille(a) - taille(b)))[0];
+}
+
+/**
+ * Descripteur (DRepresentationDescriptor) d'une représentation.
+ * @param {object} aird résultat de diaLire
+ * @param {object} r représentation
+ * @returns {object|null}
+ */
+function diaDescripteur_(aird, r) {
+  const d = aird.parUid.get(r.uid);
+  return d && d.tag === 'ownedRepresentationDescriptors' ? d : null;
+}
+
+/**
+ * Prépare un diagramme vide d'un type sur un élément, sans rien modifier : descripteur (dans la même vue que celui du
+ * modèle : nom, repPath, changeId, description, cible), DSemanticDiagram (racine du .aird, après les autres) avec sa notation
+ * GMF (sans formes ni liens) et, du modèle, la description, les filtres, calques et préoccupation activés, un nouvel
+ * historique des variables de filtre ; synchronisé (valeur par défaut de Sirius).
+ * @param {object} aird résultat de diaLire
+ * @param {{type:object, nom:string, sigle:string, modele:object}} choix type (diaTypesDiagrammes)
+ * @param {object} el élément cible
+ * @param {string} [nom] nom du diagramme (choix.nom par défaut)
+ * @returns {{etapes:Array, attrs:Array, rep:object}} nœuds à insérer et représentation à indexer
+ */
+function diaPreparerDiagramme(aird, choix, el, nom) {
+  const m = choix.modele, desc = diaDescripteur_(aird, m), racine = aird.doc.racine;
+  const uidRep = diaNouvelUid(), uidDesc = diaNouvelUid(), id = () => diaNouvelUid();
+  const neuf = (tag, a, enfants) => { const n = xtNouveau(tag, a); for (const e of enfants || []) { e.parent = n; n.enfants.push(e); } return n; };
+  const cibleModele = diaEnfant(m.noeud, 'target');
+  const cible = () => xtNouveau('target', [['xmi:type', (xtAttr(cibleModele, 'xmi:type') || '').replace(/:.*$/, '') + ':' + modType(el)], ['href', (xtAttr(cibleModele, 'href') || '').replace(/#.*$/, '') + '#' + modId(el)]]);
+  const copie = n => xtNouveau(n.tag, n.attrs.map(a => [a.n, a.v]));
+  // Descripteur
+  const nomDiag = nom || choix.nom;
+  const descripteur = neuf('ownedRepresentationDescriptors', [['xmi:type', xtAttr(desc, 'xmi:type')], ['uid', uidDesc], ['name', nomDiag], ['repPath', '#' + uidRep], ['changeId', String(Date.now())]],
+    [copie(diaEnfant(desc, 'description')), cible()]);
+  // Diagramme : notation GMF vide, puis les références du modèle
+  const notationModele = m.noeud.enfants.find(c => c.tag === 'ownedAnnotationEntries' && xtAttr(c, 'source') === 'GMF_DIAGRAMS');
+  const dataModele = diaEnfant(notationModele, 'data');
+  const data = neuf('data', dataModele.attrs.map(a => [a.n, a.n === 'xmi:id' ? id() : a.n === 'element' ? uidRep : a.v]),
+    dataModele.enfants.filter(c => c.tag !== 'children' && c.tag !== 'edges').map(c => xtNouveau(c.tag, c.attrs.map(a => [a.n, a.n === 'xmi:id' ? id() : a.v]))));
+  const enfants = [neuf('ownedAnnotationEntries', notationModele.attrs.map(a => [a.n, a.n === 'uid' ? id() : a.v]), [data])];
+  for (const c of m.noeud.enfants) {
+    if (c.tag === 'description' || c.tag === 'activatedFilters' || c.tag === 'activatedLayers' || c.tag === 'currentConcern') enfants.push(copie(c));
+    else if (c.tag === 'filterVariableHistory') enfants.push(xtNouveau(c.tag, c.attrs.map(a => [a.n, a.n === 'uid' ? id() : a.v])));
+    else if (c.tag === 'target') enfants.push(cible());
+  }
+  const diagramme = neuf(m.noeud.tag, m.noeud.attrs.filter(a => a.n !== 'synchronized').map(a => [a.n, a.n === 'uid' ? uidRep : a.v]), enfants);
+  // Représentation indexée par diaIndexer à l'insertion du diagramme (retirée en annulant)
+  const rep = { uid: uidDesc, nom: nomDiag, type: m.type, sigle: m.sigle, description: m.description, genre: 'diagramme', croise: false, cibleId: modId(el), noeud: diagramme, scene: null };
+  diagramme.repArcature = rep;
+  const vue = desc.parent, apres = (e, test) => { let i = -1; e.enfants.forEach((c, k) => { if (test(c)) i = k; }); return i + 1; };
+  return {
+    etapes: [{ parent: vue, noeud: descripteur, index: apres(vue, c => c.tag === 'ownedRepresentationDescriptors') }, { parent: racine, noeud: diagramme, index: racine.enfants.length }],
+    attrs: [], rep
+  };
+}
+
+/* ─────────────────────────────── Style des éléments (2.2) ─────────────────────────────── */
+/* Comme l'onglet « Apparence » de Sirius : la valeur est écrite dans le style Sirius de l'élément (ownedStyle, ou le style
+   de l'étiquette centrale d'un lien), et la propriété inscrite dans ses customFeatures — sans quoi le rafraîchissement de
+   Sirius la remettrait à la valeur de la description. La police est reflétée dans le style GMF de la vue (fontColor,
+   fontHeight, bold, italic), comme le fait Sirius. Constaté dans les .aird d'IFE et d'AIDA : customFeatures et labelFormat
+   sont des éléments enfants (<customFeatures>labelColor</customFeatures>), avant la description. */
+
+/** Ordre EMF des attributs des styles Sirius (constaté dans les .aird d'IFE et d'AIDA). */
+const DIA_ORDRE_STYLES = {
+  FlatContainerStyle: ['xmi:type', 'uid', 'labelSize', 'labelColor', 'showIcon', 'labelAlignment', 'description', 'borderSize', 'borderSizeComputationExpression', 'borderColor', 'borderLineStyle', 'hideLabelByDefault', 'backgroundStyle', 'backgroundColor', 'foregroundColor'],
+  ListContainerStyle: ['xmi:type', 'uid', 'labelSize', 'labelColor', 'showIcon', 'labelAlignment', 'description', 'borderSize', 'borderSizeComputationExpression', 'borderColor', 'borderLineStyle', 'hideLabelByDefault', 'backgroundColor', 'foregroundColor'],
+  Square: ['xmi:type', 'uid', 'description', 'labelSize', 'showIcon', 'iconPath', 'labelAlignment', 'labelColor', 'borderSize', 'borderSizeComputationExpression', 'borderColor', 'hideLabelByDefault', 'labelPosition', 'width', 'height', 'color'],
+  Lozenge: ['xmi:type', 'uid', 'labelSize', 'showIcon', 'labelColor', 'borderSize', 'borderSizeComputationExpression', 'borderColor', 'labelPosition', 'width', 'height', 'color'],
+  Ellipse: ['xmi:type', 'uid', 'labelSize', 'showIcon', 'labelColor', 'borderSize', 'borderSizeComputationExpression', 'borderColor', 'labelPosition', 'horizontalDiameter', 'verticalDiameter', 'color'],
+  Dot: ['xmi:type', 'uid', 'labelSize', 'showIcon', 'labelColor', 'borderSize', 'borderSizeComputationExpression', 'borderColor', 'labelPosition', 'backgroundColor', 'strokeSizeComputationExpression'],
+  WorkspaceImage: ['xmi:type', 'uid', 'labelSize', 'showIcon', 'labelColor', 'borderSize', 'hideLabelByDefault', 'borderSizeComputationExpression', 'borderColor', 'labelPosition', 'workspacePath'],
+  BundledImage: ['xmi:type', 'uid', 'labelSize', 'showIcon', 'labelAlignment', 'labelColor', 'borderSize', 'borderSizeComputationExpression', 'borderColor', 'labelPosition', 'shape', 'color'],
+  EdgeStyle: ['xmi:type', 'uid', 'description', 'lineStyle', 'sourceArrow', 'targetArrow', 'foldingStyle', 'size', 'routingStyle', 'centered', 'strokeColor'],
+  CenterLabelStyle: ['xmi:type', 'uid', 'iconPath', 'labelSize', 'showIcon', 'labelColor'],
+};
+/** Ordre EMF des attributs d'un style GMF (ShapeStyle, FontStyle). */
+const DIA_ORDRE_STYLE_GMF = ['xmi:type', 'xmi:id', 'fontColor', 'fontName', 'description', 'fontHeight', 'bold', 'italic', 'fillColor', 'transparency', 'lineColor', 'lineWidth'];
+/** Valeurs par défaut des propriétés de style de Sirius (non écrites) : constatées absentes des .aird pour ces valeurs. */
+const DIA_DEFAUTS_STYLE = { labelSize: '8', labelColor: '0,0,0', borderSize: '0', size: '1', lineStyle: 'solid' };
+/** Motifs de trait des liens (LineStyle de Sirius). */
+const DIA_MOTIFS = ['solid', 'dash', 'dot', 'dash_dot'];
+
+/**
+ * Propriétés de style qu'un style Sirius porte, selon son type : clé → attributs Sirius (feature de customFeatures).
+ * remplissage : couleur de fond (les deux couleurs du dégradé d'un conteneur) ; bordure, epBordure ; couleurTexte,
+ * tailleTexte, gras, italique (étiquette) ; trait, epTrait, motif (liens).
+ * @param {string} type type court du style (FlatContainerStyle, Square, EdgeStyle…)
+ * @returns {Object<string, string[]>}
+ */
+function diaProprietesStyle(type) {
+  const etiquette = { couleurTexte: ['labelColor'], tailleTexte: ['labelSize'], gras: ['labelFormat'], italique: ['labelFormat'] };
+  if (type === 'EdgeStyle') return { trait: ['strokeColor'], epTrait: ['size'], motif: ['lineStyle'], ...etiquette };
+  if (!DIA_ORDRE_STYLES[type]) return {};
+  const bord = { bordure: ['borderColor'], epBordure: ['borderSize'] };
+  if (/ContainerStyle/.test(type)) return { remplissage: ['backgroundColor', 'foregroundColor'], ...bord, ...etiquette };
+  if (type === 'WorkspaceImage') return { ...bord, ...etiquette };
+  if (type === 'Dot') return { remplissage: ['backgroundColor'], ...bord, ...etiquette };
+  return { remplissage: ['color'], ...bord, ...etiquette };
+}
+
+/** Couleur Sirius « r,g,b » en « #rrggbb ». @param {string} v @returns {string} */
+const diaHexa = v => '#' + v.split(',').map(n => (+n).toString(16).padStart(2, '0')).join('');
+/** Couleur « #rrggbb » en couleur Sirius « r,g,b ». @param {string} h @returns {string} */
+const diaRgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)).join(',');
+
+/**
+ * Nœuds de style d'un élément de diagramme : style Sirius (et celui de l'étiquette centrale pour un lien), style GMF de la
+ * vue (police).
+ * @param {object} aird résultat de diaLire
+ * @param {object} x forme ou lien de la scène
+ * @returns {{s:object, style:object, type:string, etiquette:object, gmf:object|null}|null} null sans style Sirius
+ */
+function diaNoeudsStyle(aird, x) {
+  const s = x.uid && aird.parUid.get(x.uid), style = s && diaEnfant(s, 'ownedStyle');
+  if (!style) return null;
+  const type = (xtAttr(style, 'xmi:type') || '').replace(/^.*:/, ''), lien = type === 'EdgeStyle';
+  const etiquette = lien ? diaEnfant(style, 'centerLabelStyle') : style, vue = aird.parVue.get(x.vue);
+  const gmf = vue ? vue.enfants.find(c => c.tag === 'styles' && /ShapeStyle|FontStyle/.test(xtAttr(c, 'xmi:type') || '')) || null : null;
+  return { s, style, type, etiquette, gmf };
+}
+
+/**
+ * Valeurs des propriétés de style lues dans des nœuds de style Sirius (couleurs « #rrggbb », nombres, booléens, motif).
+ * @param {object} style style Sirius (ownedStyle)
+ * @param {string} type type court du style
+ * @param {object|null} etiquette nœud qui porte l'étiquette (le style lui-même, ou le style de l'étiquette centrale d'un lien)
+ * @returns {Object<string,*>}
+ */
+function diaValeursStyle(style, type, etiquette) {
+  const v = {}, props = diaProprietesStyle(type), formats = etiquette ? etiquette.enfants.filter(c => c.tag === 'labelFormat').map(c => c.texte) : [];
+  const attr = (el, a, d) => (el && xtAttr(el, a) != null ? xtAttr(el, a) : d);
+  for (const k of Object.keys(props)) {
+    if (k === 'remplissage') v[k] = diaHexa(attr(style, props[k][0], /ContainerStyle/.test(type) ? '255,255,255' : '136,136,136'));
+    else if (k === 'bordure') v[k] = diaHexa(attr(style, 'borderColor', '0,0,0'));
+    else if (k === 'epBordure') v[k] = +attr(style, 'borderSize', DIA_DEFAUTS_STYLE.borderSize);
+    else if (k === 'trait') v[k] = diaHexa(attr(style, 'strokeColor', '136,136,136'));
+    else if (k === 'epTrait') v[k] = +attr(style, 'size', DIA_DEFAUTS_STYLE.size);
+    else if (k === 'motif') v[k] = attr(style, 'lineStyle', 'solid');
+    else if (!etiquette) continue;
+    else if (k === 'couleurTexte') v[k] = diaHexa(attr(etiquette, 'labelColor', DIA_DEFAUTS_STYLE.labelColor));
+    else if (k === 'tailleTexte') v[k] = +attr(etiquette, 'labelSize', DIA_DEFAUTS_STYLE.labelSize);
+    else if (k === 'gras') v[k] = formats.includes('bold');
+    else if (k === 'italique') v[k] = formats.includes('italic');
+  }
+  return v;
+}
+
+/**
+ * Style d'un élément du diagramme, pour l'onglet de style : propriétés modifiables et leurs valeurs, et celles qui sont
+ * personnalisées (customFeatures).
+ * @param {object} aird résultat de diaLire
+ * @param {object} x forme ou lien
+ * @returns {{genre:('forme'|'lien'), valeurs:Object<string,*>, personnalise:boolean}|null} null sans style modifiable
+ */
+function diaStyleDe(aird, x) {
+  const n = diaNoeudsStyle(aird, x);
+  if (!n || !Object.keys(diaProprietesStyle(n.type)).length) return null;
+  const perso = [n.style, n.etiquette].some(st => st && st.enfants.some(c => c.tag === 'customFeatures' && !['routingStyle', 'uid', 'workspacePath', 'showIcon', 'hideLabelByDefault', 'labelPosition'].includes(c.texte)));
+  return { genre: n.type === 'EdgeStyle' ? 'lien' : 'forme', valeurs: diaValeursStyle(n.style, n.type, n.etiquette), personnalise: perso };
+}
+
+/**
+ * Style modèle d'un élément, pour rétablir son style par défaut : un autre style du .aird de même description (même
+ * description de style, conditionnelle comprise) sans propriété personnalisée — Sirius y a écrit les valeurs calculées
+ * depuis la description.
+ * @param {object} aird résultat de diaLire
+ * @param {object} style style Sirius de l'élément
+ * @returns {object|null}
+ */
+function diaModeleStyle(aird, style) {
+  const cle = st => { const d = diaEnfant(st, 'description'); return d ? xtAttr(d, 'href') : xtAttr(st, 'description') || ''; };
+  const voulue = cle(style), libre = st => !st || !st.enfants.some(c => c.tag === 'customFeatures');
+  if (!voulue) return null;
+  let modele = null;
+  xtParcourir(aird.doc.racine, el => {
+    if (!modele && el.tag === 'ownedStyle' && el !== style && cle(el) === voulue && libre(el) && libre(diaEnfant(el, 'centerLabelStyle'))) modele = el;
+  });
+  return modele;
+}
+
+/**
+ * Changements du .aird pour donner un style à des éléments du diagramme : attributs des styles Sirius et GMF, éléments
+ * enfants customFeatures et labelFormat ajoutés ou retirés.
+ * - valeurs données : écrites, chaque propriété inscrite dans les customFeatures de son style ;
+ * - defaut (« Style par défaut ») : chaque attribut reprend la valeur du style modèle (diaModeleStyle) et sort des
+ *   customFeatures ; sans modèle, les valeurs par défaut sûres de Sirius (taille, couleur du texte, épaisseurs, motif), les
+ *   couleurs restant celles écrites jusqu'au rafraîchissement de Sirius.
+ * La police est reflétée dans le style GMF de la vue (fontColor : rouge dans l'octet de poids faible, fontHeight, bold,
+ * italic).
+ * @param {object} aird résultat de diaLire
+ * @param {object[]} elements formes et liens
+ * @param {Object<string,*>} valeurs propriétés voulues (celles qu'un élément n'a pas sont ignorées)
+ * @param {boolean} [defaut] rétablir le style par défaut (valeurs ignorées)
+ * @returns {{attrs:Array<{el:object, n:string, avant:(string|null), apres:(string|null), ordre:string[]}>, etapes:Array<{genre:('ajout'|'retrait'), parent:object, noeud:object, index:number}>}}
+ */
+function diaPreparerStyle(aird, elements, valeurs, defaut) {
+  const attrs = [], etapes = [], enfants = new Map();
+  const liste = p => { if (!enfants.has(p)) enfants.set(p, p.enfants.slice()); return enfants.get(p); };
+  const poser = (el, n, v, ordre) => {
+    const avant = xtAttr(el, n) ?? null;
+    if (avant !== v) attrs.push({ el, n, avant, apres: v, ordre: ordre || el.attrs.map(a => a.n).concat(n) });
+  };
+  const retirer = (p, noeud) => { const l = liste(p), i = l.indexOf(noeud); if (i < 0) return; l.splice(i, 1); etapes.push({ genre: 'retrait', parent: p, noeud, index: i }); };
+  const ajouter = (p, noeud, i) => { liste(p).splice(i, 0, noeud); etapes.push({ genre: 'ajout', parent: p, noeud, index: i }); };
+  const texte = (tag, t) => { const x = xtNouveau(tag, []); x.texte = t; return x; };
+  /** Inscrit (oui) ou retire une feature des customFeatures d'un style. */
+  const perso = (st, feature, oui) => {
+    const l = liste(st), ex = l.find(c => c.tag === 'customFeatures' && c.texte === feature);
+    if (oui && !ex) ajouter(st, texte('customFeatures', feature), l.map(c => c.tag).lastIndexOf('customFeatures') + 1);
+    if (!oui && ex) retirer(st, ex);
+  };
+  const valeur = (k, v) => {
+    if (k === 'epBordure' || k === 'epTrait' || k === 'tailleTexte') return String(Math.max(0, Math.round(+v)));
+    if (k === 'motif') return DIA_MOTIFS.includes(v) ? v : 'solid';
+    return diaRgb(v);
+  };
+  for (const x of elements) {
+    const n = diaNoeudsStyle(aird, x);
+    if (!n) continue;
+    const props = diaProprietesStyle(n.type), cour = diaValeursStyle(n.style, n.type, n.etiquette);
+    const modele = defaut ? diaModeleStyle(aird, n.style) : null;
+    const modeleEt = modele && (n.etiquette === n.style ? modele : diaEnfant(modele, 'centerLabelStyle'));
+    const ordreDe = st => DIA_ORDRE_STYLES[st === n.style ? n.type : 'CenterLabelStyle'];
+    let formats = null;                              // libellés de labelFormat voulus (italic, bold), null : inchangés
+    const n0 = attrs.length;
+    for (const k of Object.keys(props)) {
+      const etiq = /Texte|gras|italique/.test(k), st = etiq ? n.etiquette : n.style, mst = etiq ? modeleEt : modele;
+      if (!st) continue;
+      if (k === 'gras' || k === 'italique') {
+        if (defaut) formats = modeleEt ? modeleEt.enfants.filter(c => c.tag === 'labelFormat').map(c => c.texte) : [];
+        else if (k in valeurs && !!valeurs[k] !== cour[k]) {
+          const g = 'gras' in valeurs ? !!valeurs.gras : cour.gras, it = 'italique' in valeurs ? !!valeurs.italique : cour.italique;
+          formats = [...(it ? ['italic'] : []), ...(g ? ['bold'] : [])];
+        }
+        continue;
+      }
+      if (defaut) {
+        for (const a of props[k]) {
+          const v = mst ? xtAttr(mst, a) ?? null : (a in DIA_DEFAUTS_STYLE ? null : xtAttr(st, a) ?? null);
+          poser(st, a, v, ordreDe(st));
+          perso(st, a, false);
+        }
+      } else if (k in valeurs && valeurs[k] !== cour[k]) {
+        const v = valeur(k, valeurs[k]);
+        for (const a of props[k]) { poser(st, a, DIA_DEFAUTS_STYLE[a] === v && xtAttr(st, a) == null ? null : v, ordreDe(st)); perso(st, a, true); }
+      }
+    }
+    if (formats && n.etiquette) {
+      // labelFormat : éléments enfants dans l'ordre de FontFormat (italic, bold), après les customFeatures ; inchangés si
+      // la liste est la même
+      const st = n.etiquette, actuels = liste(st).filter(c => c.tag === 'labelFormat');
+      if (actuels.map(c => c.texte).join() !== formats.join()) {
+        for (const c of actuels) retirer(st, c);
+        for (const f of formats) {
+          const k = liste(st).findIndex(c => c.tag !== 'customFeatures' && c.tag !== 'labelFormat');
+          ajouter(st, texte('labelFormat', f), k < 0 ? liste(st).length : k);
+        }
+      }
+      perso(st, 'labelFormat', !defaut);
+    }
+    // Reflet GMF de la police (seulement si elle a changé) : valeurs finales du style de l'étiquette
+    if (n.gmf && n.etiquette && (formats || attrs.slice(n0).some(c => c.el === n.etiquette && /^label/.test(c.n)))) {
+      const final = a => { for (let i = attrs.length - 1; i >= 0; i--) if (attrs[i].el === n.etiquette && attrs[i].n === a) return attrs[i].apres; return xtAttr(n.etiquette, a) ?? null; };
+      const couleur = final('labelColor') || DIA_DEFAUTS_STYLE.labelColor, taille = final('labelSize') || DIA_DEFAUTS_STYLE.labelSize;
+      const [r, g, b] = couleur.split(',').map(Number), e = r + (g << 8) + (b << 16);
+      if (xtAttr(n.gmf, 'fontColor') != null || e) poser(n.gmf, 'fontColor', e ? String(e) : null, DIA_ORDRE_STYLE_GMF);
+      if (final('labelSize') != null || xtAttr(n.gmf, 'fontHeight') != null) poser(n.gmf, 'fontHeight', taille, DIA_ORDRE_STYLE_GMF);
+      const f = formats || liste(n.etiquette).filter(c => c.tag === 'labelFormat').map(c => c.texte);
+      poser(n.gmf, 'bold', f.includes('bold') ? 'true' : null, DIA_ORDRE_STYLE_GMF);
+      poser(n.gmf, 'italic', f.includes('italic') ? 'true' : null, DIA_ORDRE_STYLE_GMF);
+    }
+  }
+  return { attrs, etapes };
+}
+
+/* ─────────────────────────────── Masquer (E7) ─────────────────────────────── */
+
+/** Ordre EMF des attributs d'une vue GMF (Node, Edge) touchés par le masquage. */
+const DIA_ORDRE_GMF = ['xmi:type', 'xmi:id', 'visible', 'type', 'element', 'source', 'target'];
+
+/**
+ * Prépare le masquage d'éléments d'un diagramme, comme la commande « Hide » de Capella (Sirius HideFilter) : sur chaque
+ * élément, visible="false" et un filtre HideFilter, et visible="false" sur sa vue GMF ; les liens qui touchent l'élément
+ * (ou ses ports, ses éléments contenus) sont masqués aussi, sans filtre, comme Sirius les écrit après rafraîchissement.
+ * Réversible (opération « insertion » : attributs et filtres retirés en annulant).
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation
+ * @param {string[]} uids éléments Sirius à masquer (formes ou liens)
+ * @returns {{etapes:Array, attrs:Array, n:number}} changements (n : éléments masqués, liens compris)
+ */
+function diaMasquer(aird, rep, uids) {
+  const p = diaPrefixe(aird.doc, 'http://www.eclipse.org/sirius/diagram/1.1.0');
+  if (!p) throw new Error(_L('Sirius namespaces missing from the .aird.'));
+  const parGmf = new Map();
+  for (const v of aird.parVue.values()) if ((v.tag === 'children' || v.tag === 'edges') && xtAttr(v, 'element')) parGmf.set(xtAttr(v, 'element'), v);
+  const etapes = [], attrs = [], vus = new Set();
+  const invisible = (el, ordre) => { if (el && xtAttr(el, 'visible') !== 'false') attrs.push({ el, n: 'visible', avant: xtAttr(el, 'visible') ?? null, apres: 'false', ordre }); };
+  const masquer = (s, filtre) => {
+    if (!s || vus.has(s)) return;
+    vus.add(s);
+    invisible(s, DIA_ORDRE_ELEMENT);
+    invisible(parGmf.get(xtAttr(s, 'uid')), DIA_ORDRE_GMF);
+    if (filtre && !s.enfants.some(c => c.tag === 'graphicalFilters' && /HideFilter/.test(xtAttr(c, 'xmi:type') || ''))) {
+      let i = -1;
+      s.enfants.forEach((c, k) => { if (/^(target|semanticElements|graphicalFilters)$/.test(c.tag)) i = k; });
+      etapes.push({ parent: s, noeud: xtNouveau('graphicalFilters', [['xmi:type', p + ':HideFilter'], ['uid', diaNouvelUid()]]), index: i + 1 });
+    }
+  };
+  // Éléments demandés, puis les liens dont une extrémité est dans l'un d'eux (lui-même, ses ports, son contenu)
+  const dedans = new Set();
+  for (const u of uids) {
+    const s = aird.parUid.get(u);
+    masquer(s, true);
+    if (s) xtParcourir(s, x => { const v = xtAttr(x, 'uid'); if (v) dedans.add(v); });
+  }
+  xtParcourir(rep.noeud, x => {
+    if (x.tag === 'ownedDiagramElements' && /DEdge/.test(xtAttr(x, 'xmi:type') || '') && (dedans.has(xtAttr(x, 'sourceNode')) || dedans.has(xtAttr(x, 'targetNode')))) masquer(x, false);
+  });
+  return { etapes, attrs, n: vus.size };
+}
+
+/**
+ * Tient à jour les index d'un .aird après l'insertion ou le retrait d'un sous-arbre (uid, vues GMF, présences des
+ * éléments du modèle dans la représentation, liste des représentations pour un diagramme créé), et oublie la scène calculée
+ * de la représentation.
+ * @param {object} aird résultat de diaLire
+ * @param {object} rep représentation concernée
+ * @param {object} noeud racine du sous-arbre
+ * @param {boolean} ajout true après une insertion, false après un retrait
+ */
+function diaIndexer(aird, rep, noeud, ajout) {
+  // Diagramme créé (diaPreparerDiagramme) : sa représentation entre dans la liste du .aird, ou en sort
+  if (noeud.repArcature) {
+    const r = noeud.repArcature, i = aird.reps.indexOf(r);
+    if (ajout && i < 0) aird.reps.push(r);
+    if (!ajout && i >= 0) aird.reps.splice(i, 1);
+    if (!aird.cibles.has(r.cibleId)) aird.cibles.set(r.cibleId, new Set());
+    if (ajout) aird.cibles.get(r.cibleId).add(r); else aird.cibles.get(r.cibleId).delete(r);
+  }
+  xtParcourir(noeud, el => {
+    const u = xtAttr(el, 'uid'), x = xtAttr(el, 'xmi:id');
+    if (u) { if (ajout) aird.parUid.set(u, el); else if (aird.parUid.get(u) === el) aird.parUid.delete(u); }
+    if (x) { if (ajout) aird.parVue.set(x, el); else if (aird.parVue.get(x) === el) aird.parVue.delete(x); }
+    if (el.tag === 'ownedBorderedNodes' || el.tag === 'ownedDiagramElements' || el.tag === 'ownedElements') {
+      const id = diaHrefId(xtAttr(diaEnfant(el, 'target') || { attrs: [] }, 'href'));
+      if (!id) return;
+      if (ajout) { if (!aird.presences.has(id)) aird.presences.set(id, new Set()); aird.presences.get(id).add(rep); }
+      else if (aird.presences.has(id)) { aird.presences.get(id).delete(rep); if (!aird.presences.get(id).size) aird.presences.delete(id); }
+    }
+  });
+  rep.scene = null;
+}
+
+/* ─────────────────────── Suppression d'éléments du modèle (1.5) ─────────────────────── */
+
+/**
+ * Vues du .aird à retirer avec des éléments supprimés du modèle, comme Capella et Sirius le font : les représentations dont
+ * la cible est supprimée (DeleteRepresentationCommand : descripteur et représentation) ; puis, comme DanglingRefRemovalTrigger
+ * et la synchronisation GMF, les éléments de diagramme et de tableau (nœuds, conteneurs, liens, lignes, colonnes, cellules)
+ * dont la cible est supprimée, les entrées semanticElements et les références des annotations vers eux ; enfin, jusqu'au
+ * point fixe, les vues qui en dépendent : vue GMF de l'élément retiré, liens GMF et liens Sirius dont une extrémité est
+ * retirée, cellules d'une colonne retirée ; les listes d'identifiants (outgoingEdges…) perdent les éléments retirés.
+ * @param {object} aird .aird lu (diaLire)
+ * @param {Set<string>} ids identifiants des éléments supprimés du modèle (contenus compris)
+ * @returns {{retraits:Array<{noeud:object, parent:object, index:number, rep:(object|null)}>, attrs:Array, reps:object[],
+ *   vues:number, restes:string[]}} restes : références au modèle supprimé qui resteraient (suppression à refuser)
+ */
+function diaPlanSuppression(aird, ids) {
+  const retires = new Set(), parNoeud = new Map(aird.reps.filter(r => r.noeud).map(r => [r.noeud, r]));
+  const vise = el => { const t = diaEnfant(el, 'target'); return !!t && ids.has(diaHrefId(xtAttr(t, 'href'))); };
+  const balisesVues = /^(ownedDiagramElements|ownedBorderedNodes|ownedElements|lines|columns|cells)$/;
+  // Un seul parcours : vues visées, références internes qui font dépendre un élément d'un autre (vue GMF → élément Sirius,
+  // extrémités des liens GMF et Sirius, colonne d'une cellule)
+  const dependants = new Map(), ajouter = (id, el) => { if (!dependants.has(id)) dependants.set(id, []); dependants.get(id).push(el); };
+  const repsRetirees = aird.reps.filter(r => ids.has(r.cibleId));
+  for (const r of repsRetirees) { const d = aird.parUid.get(r.uid); if (d) retires.add(d); if (r.noeud) retires.add(r.noeud); }
+  xtParcourir(aird.doc.racine, el => {
+    const t = xtAttr(el, 'xmi:type') || '';
+    if (balisesVues.test(el.tag) && vise(el)) retires.add(el);
+    else if ((el.tag === 'semanticElements' || el.tag === 'references') && ids.has(diaHrefId(xtAttr(el, 'href')))) retires.add(el);
+    const n = t === 'notation:Edge' ? ['element', 'source', 'target'] : /^notation:/.test(t) ? ['element'] : t === 'diagram:DEdge' ? ['sourceNode', 'targetNode'] : el.tag === 'cells' ? ['column'] : null;
+    if (n) for (const k of n) { const v = xtAttr(el, k); if (v) ajouter(v, el); }
+  });
+  // Point fixe : ce qui dépend d'un élément retiré l'est aussi (avec son contenu)
+  const morts = new Set(), file = [...retires];
+  while (file.length) {
+    xtParcourir(file.shift(), x => {
+      for (const k of ['uid', 'xmi:id']) {
+        const v = xtAttr(x, k);
+        if (!v || morts.has(v)) continue;
+        morts.add(v);
+        for (const d of dependants.get(v) || []) if (!retires.has(d)) { retires.add(d); file.push(d); }
+      }
+    });
+  }
+  // Racines des sous-arbres retirés, index d'origine (décroissants sous un même parent), représentation de chacune
+  const racines = [...retires].filter(x => { for (let p = x.parent; p; p = p.parent) if (retires.has(p)) return false; return !!x.parent; });
+  const repDe = x => { for (let p = x; p; p = p.parent) if (parNoeud.has(p)) return parNoeud.get(p); return null; };
+  const retraits = racines.map(x => ({ noeud: x, parent: x.parent, index: x.parent.enfants.indexOf(x), rep: repDe(x) })).sort((a, b) => b.index - a.index);
+  // Listes d'identifiants internes qui citent un élément retiré ; références au modèle supprimé qui resteraient
+  const attrs = [], restes = [];
+  const visiter = el => {
+    if (retires.has(el)) return;
+    for (const a of el.attrs) {
+      if (a.n === 'uid' || a.n === 'xmi:id') continue;
+      if (a.v.includes('#')) { if (a.v.split(/\s+/).some(v => ids.has(v.slice(v.indexOf('#') + 1)))) restes.push((xtAttr(el, 'xmi:type') || el.tag) + ' @' + a.n); continue; }
+      if (a.v[0] !== '_') continue;                    // identifiants internes du .aird : « _… »
+      const jetons = a.v.split(' ');
+      if (!jetons.some(j => morts.has(j))) continue;
+      const reste = jetons.filter(j => !morts.has(j));
+      attrs.push({ el, n: a.n, avant: a.v, apres: reste.length ? reste.join(' ') : null, ordre: el.attrs.map(x => x.n) });
+    }
+    for (const c of el.enfants) visiter(c);
+  };
+  visiter(aird.doc.racine);
+  let vues = 0;
+  for (const r of racines) xtParcourir(r, x => { if (balisesVues.test(x.tag)) vues++; });
+  return { retraits, attrs, reps: repsRetirees, vues, restes };
+}
+
+/**
+ * Index uid et xmi:id du .aird pour un sous-arbre retiré ou remis (les présences sont tenues par diaIndexer).
+ * @param {object} aird .aird lu @param {object} noeud racine du sous-arbre @param {boolean} ajout remis (vrai) ou retiré
+ */
+function diaIndexerRetrait(aird, noeud, ajout) {
+  xtParcourir(noeud, el => {
+    const u = xtAttr(el, 'uid'), x = xtAttr(el, 'xmi:id');
+    if (u) { if (ajout) aird.parUid.set(u, el); else if (aird.parUid.get(u) === el) aird.parUid.delete(u); }
+    if (x) { if (ajout) aird.parVue.set(x, el); else if (aird.parVue.get(x) === el) aird.parVue.delete(x); }
+  });
 }
 
 /* ─────────────────────────────── Tableaux ─────────────────────────────── */
@@ -2599,8 +6062,8 @@ Object.assign(ICO_DESSINS, {
    le choix d'un élément est transmis à l'application hôte (options.choix).
    ═══════════════════════════════════════════════════════════════════════ */
 
-/** État de la visionneuse : conteneur, options de l'hôte. */
-const VIS = { racine: null, options: {} };
+/** État de la visionneuse : conteneur, options de l'hôte, vues réorganisées en mémoire (jeton : calcul en cours). */
+const VIS = { racine: null, options: {}, dispositions: new Map(), jeton: 0 };   // dispositions : vues réorganisées (uid → changements)
 
 /**
  * Élément de la visionneuse par son identifiant.
@@ -2778,7 +6241,10 @@ const VD = {
   masques: { ports: false, etiquettes: false, notes: false, types: new Set(), cats: new Set() },   // filtres d'affichage
   chaine: '',            // chaîne fonctionnelle ou chemin physique mis en évidence (id), ou ''
   tableau: null,         // tableau affiché (diaTableau), ou null pour un dessin
-  replies: new Set()     // lignes repliées du tableau affiché (uid)
+  replies: new Set(),    // lignes repliées du tableau affiché (uid)
+  parcours: [],          // diagrammes ouverts, dans l'ordre (précédent / suivant : Alt+← / Alt+→)
+  iParcours: -1,         // position dans le parcours
+  recents: []            // derniers diagrammes ouverts (uid), le plus récent d'abord
 };
 
 /** Oublie le .aird (nouveau modèle ouvert). */
@@ -2810,9 +6276,23 @@ async function vdOuvrirDialogue() {
  * @param {File} f fichier
  * @param {FileSystemFileHandle|null} [poignee] accès direct pour l'enregistrement sur place
  */
+/**
+ * Recalcule les présences des éléments du modèle dans les représentations (VD.presences : une Part compte pour son
+ * composant), après un changement du .aird qui en retire ou en remet.
+ */
+function vdIndexerPresences() {
+  VD.presences = new Map();
+  if (!VD.aird) return;
+  for (const [id, reps] of VD.aird.presences) {
+    const m = vdIdModele(id);
+    if (!VD.presences.has(m)) VD.presences.set(m, new Set());
+    for (const r of reps) VD.presences.get(m).add(r);
+  }
+}
+
 async function vdChargerFichier(f, poignee) {
   if (!ARC.doc) { uiToast(_L('Open the .capella model first.'), true); return; }
-  const enAttente = ED.faites.some(op => op.type === 'diagramme') || VD.aEnregistrer;
+  const enAttente = ED.faites.some(op => op.type === 'diagramme' || op.type === 'groupe' || op.type === 'insertion') || VD.aEnregistrer;
   if (enAttente && !confirm(_L('Some diagram layout changes are not saved. Discard them?'))) return;
   try {
     const t0 = performance.now();
@@ -2977,7 +6457,11 @@ function vdListe() {
   }
   const ordre = ['OA', 'SA', 'LA', 'PA', 'EPBS', ''];
   $('diag-info').textContent = _Lp('{f} — {n} representation(s)', { f: VD.nom, n });
-  ul.innerHTML = ordre.filter(c => groupes.has(c)).map(c =>
+  // Récents (sans filtre) : les derniers diagrammes ouverts, en tête de liste
+  const recents = mots.length ? [] : VD.recents.map(u => VD.aird.reps.find(r => r.uid === u)).filter(Boolean);
+  const ligne = (r, c) => `<li data-diag="${uiEsc(r.uid)}" class="${r === VD.rep ? 'actif' : ''}" title="${uiEsc(r.type)}">` +
+    `<span class="diag-ico">${vdIconeDiagramme(r)}</span><span class="diag-sigle" data-c="${c}">${uiEsc(vdSigle(r))}</span><span class="diag-nom">${uiEsc(r.nom || '‹' + r.type + '›')}</span></li>`;
+  ul.innerHTML = (recents.length > 1 ? `<li class="diag-groupe">🕘 ${uiEsc(_L('Recent'))} <span class="dim">${recents.length}</span></li>` + recents.map(r => ligne(r, vdCouche(r))).join('') : '') + ordre.filter(c => groupes.has(c)).map(c =>
     `<li class="diag-groupe"><span class="pastille" data-c="${c}">${c || '—'}</span> ${uiEsc(c ? vdNomCouche(c) : _L('Others'))} <span class="dim">${groupes.get(c).length}</span></li>` +
     groupes.get(c).sort((a, b) => a.nom.localeCompare(b.nom)).map(r =>
       `<li data-diag="${uiEsc(r.uid)}" class="${r === VD.rep ? 'actif' : ''}" title="${uiEsc(r.type)}">` +
@@ -3008,6 +6492,9 @@ function vdOuvrir(uid, semId) {
   const scene = tableau ? null : diaScene(VD.aird, r);
   if (!scene && !tableau) { uiToast(_L('This representation has no drawing saved in the .aird.'), true); return; }
   VD.rep = r;
+  // Parcours (précédent / suivant) et récents ; une navigation dans le parcours ne le modifie pas
+  if (!VD.naviguer && VD.parcours[VD.iParcours] !== uid) { VD.parcours = VD.parcours.slice(0, VD.iParcours + 1).concat(uid); VD.iParcours = VD.parcours.length - 1; }
+  VD.recents = [uid, ...VD.recents.filter(u => u !== uid)].slice(0, 6);
   VD.selection = semId || (UI.courant ? modId(UI.courant) : '') || '';
   $('vd-nom').textContent = r.nom;
   $('vd-sigle').textContent = vdSigle(r);
@@ -3499,6 +6986,18 @@ function vdRetour() {
   if (!h) return;
   vdOuvrir(h.uid, h.selection || undefined);
   if (h.vb) { VD.vb = h.vb; vdAppliquerVue(); }
+}
+
+/**
+ * Diagramme précédent ou suivant dans le parcours (Alt+← / Alt+→), comme un navigateur.
+ * @param {number} sens -1 précédent, +1 suivant
+ */
+function vdNaviguer(sens) {
+  let i = VD.iParcours + sens;
+  while (i >= 0 && i < VD.parcours.length && !(VD.aird && VD.aird.reps.some(r => r.uid === VD.parcours[i]))) i += sens;   // diagramme retiré : sauté
+  if (i < 0 || i >= VD.parcours.length) return;
+  VD.iParcours = i; VD.naviguer = true;
+  try { vdOuvrir(VD.parcours[i]); } finally { VD.naviguer = false; }
 }
 
 /** Affiche le bouton « Retour » quand un diagramme a été ouvert depuis une référence. */
@@ -5063,21 +8562,24 @@ function vdClic(g) {
 }
 
 /** Gabarit HTML de la visionneuse. */
-const ARCV_GABARIT = "<div class=\"arcv\">\n  <aside class=\"arcv-gauche\">\n    <div class=\"diag-barre\">\n      <button class=\"bt bt-petit\" id=\"bt-ouvrir-aird\" hidden></button>\n      <input type=\"file\" id=\"entree-aird\" accept=\".aird\" hidden>\n      <span id=\"diag-info\" class=\"dim\"></span>\n    </div>\n    <input id=\"diag-filtre\" type=\"search\" placeholder=\"Filter diagrams (name, type)…\" autocomplete=\"off\">\n    <ul id=\"diag-liste\"></ul>\n  </aside>\n  <section id=\"panneau-detail\" class=\"arcv-centre\">\n    <div id=\"centre-onglets\" class=\"onglets\" hidden>\n      <button class=\"onglet\" data-centre=\"detail\"></button>\n      <button class=\"onglet\" data-centre=\"diagramme\"><span id=\"vd-onglet-nom\"></span></button>\n    </div>\n    <div id=\"vue-diagramme\" hidden>\n      <div class=\"vd-barre\">\n        <button class=\"bt bt-petit\" id=\"vd-retour\" hidden>↩ Back</button>\n        <span id=\"vd-ico\" class=\"diag-ico\"></span>\n        <span id=\"vd-sigle\" class=\"diag-sigle\"></span>\n        <span id=\"vd-nom\"></span>\n        <span id=\"vd-cible\"></span>\n        <span class=\"ressort\"></span>\n        <span class=\"vd-chercher\">\n          <input id=\"vd-chercher\" type=\"search\" placeholder=\"Search the diagram (Ctrl+F)\" autocomplete=\"off\" title=\"Enter: next · Shift+Enter: previous · Esc: clear\">\n          <span id=\"vd-trouves\" class=\"dim\"></span>\n          <button class=\"bt bt-petit\" id=\"vd-precedent\" title=\"Previous result (Shift+Enter)\">▲</button>\n          <button class=\"bt bt-petit\" id=\"vd-suivant\" title=\"Next result (Enter)\">▼</button>\n        </span>\n        <button class=\"bt bt-petit\" id=\"vd-edition\" title=\"Edit the layout: move, resize, reroute links\">✎ Layout</button>\n        <button class=\"bt bt-petit\" id=\"vd-ponts\" title=\"Line jumps where links cross\">⌒ Jumps</button>\n        <select id=\"vd-theme\" class=\"bt-petit\" title=\"Diagram theme\">\n          <option value=\"capella\">Capella theme</option>\n          <option value=\"clair\">Arcature light</option>\n          <option value=\"sombre\">Arcature dark</option>\n        </select>\n        <button class=\"bt bt-petit\" id=\"vd-moins\" title=\"Zoom out\">−</button>\n        <span id=\"vd-zoom\" class=\"dim\"></span>\n        <button class=\"bt bt-petit\" id=\"vd-plus\" title=\"Zoom in\">+</button>\n        <button class=\"bt bt-petit\" id=\"vd-ajuster\" title=\"Show the whole diagram\">⤢ Fit</button>\n        <button class=\"bt bt-petit\" id=\"vd-reel\" title=\"Actual size (100 %)\">1:1</button>\n        <button class=\"bt bt-petit\" id=\"vd-zoom-choix\" title=\"Zoom to the selected element\">⌖</button>\n        <button class=\"bt bt-petit\" id=\"vd-carte-bt\" title=\"Minimap: overview, click to move there\">▣ Map</button>\n        <select id=\"vd-chaine\" class=\"bt-petit\" title=\"Highlight a functional chain or a physical path (number of drawn elements)\" hidden></select>\n        <span class=\"vd-filtres-ancre\">\n          <button class=\"bt bt-petit\" id=\"vd-filtres-bt\" title=\"Display filters: ports, labels, notes, link types, exchange categories\">⧩ Filters</button>\n          <div id=\"vd-filtres\" hidden></div>\n        </span>\n        <span id=\"vd-tableau-info\" class=\"dim\"></span>\n        <span class=\"vd-filtres-ancre\">\n          <button class=\"bt bt-petit\" id=\"vd-export-bt\" title=\"Export: SVG, PNG, print or PDF (table: CSV)\">⬇ Export</button>\n          <div id=\"vd-export\" class=\"vd-menu\" hidden></div>\n        </span>\n        <button class=\"bt bt-petit\" id=\"vd-fermer\" title=\"Close the diagram\">✕</button>\n      </div>\n      <div id=\"vd-outils\" class=\"vd-barre\" hidden>\n        <span class=\"dim\">Align</span>\n        <button class=\"bt bt-petit\" data-aligner=\"gauche\" title=\"Align left\">⇤</button>\n        <button class=\"bt bt-petit\" data-aligner=\"centre\" title=\"Center horizontally\">↔</button>\n        <button class=\"bt bt-petit\" data-aligner=\"droite\" title=\"Align right\">⇥</button>\n        <button class=\"bt bt-petit\" data-aligner=\"haut\" title=\"Align top\">⤒</button>\n        <button class=\"bt bt-petit\" data-aligner=\"milieu\" title=\"Center vertically\">↕</button>\n        <button class=\"bt bt-petit\" data-aligner=\"bas\" title=\"Align bottom\">⤓</button>\n        <span class=\"sep\"></span>\n        <span class=\"dim\">Distribute</span>\n        <button class=\"bt bt-petit\" data-repartir=\"h\" title=\"Distribute horizontally (3 elements or more)\">⋯</button>\n        <button class=\"bt bt-petit\" data-repartir=\"v\" title=\"Distribute vertically (3 elements or more)\">⋮</button>\n        <span class=\"sep\"></span>\n        <span class=\"dim\">Links</span>\n        <button class=\"bt bt-petit\" id=\"vd-orthogonal\" title=\"Reroute with right angles the selected link, or the links of the selected elements\">⌐ Right angles</button>\n        <button class=\"bt bt-petit\" id=\"vd-direct\" title=\"Reroute as a straight line the selected link, or the links of the selected elements\">⟋ Straight</button>\n        <span class=\"ressort\"></span>\n        <span class=\"dim vd-aide\">Shift+click: add · Shift+drag: box selection · arrows: nudge · Alt: no snapping</span>\n      </div>\n      <div id=\"vd-zone\" tabindex=\"0\" title=\"Wheel: zoom · drag: pan · click: select the element · double-click: its details\">\n        <svg id=\"vd-svg\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMinYMin meet\"></svg>\n        <svg id=\"vd-carte\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid meet\" hidden></svg>\n        <div id=\"vd-bulle\" role=\"tooltip\" hidden></div>\n        <style id=\"vd-filtres-style\"></style>\n      </div>\n      <div id=\"vd-tableau\" tabindex=\"0\"></div>\n      <div class=\"vd-pied dim vd-pied-tableau\">Table as saved by Capella in the .aird (labels computed at its last refresh). Click: select the element · double-click: its details.</div>\n      <div class=\"vd-pied dim vd-pied-dessin\">Drawn from the positions saved by Capella. Layout changes only the .aird, saved with the model (Ctrl+S).</div>\n    </div>\n    <div id=\"arcv-vide\" class=\"dim\">Choose a diagram in the list.</div>\n  </section>\n  <div id=\"toast\"></div>\n</div>\n";
+const ARCV_GABARIT = "<div class=\"arcv\">\n  <aside class=\"arcv-gauche\">\n    <div class=\"diag-barre\">\n      <button class=\"bt bt-petit\" id=\"bt-ouvrir-aird\" hidden></button>\n      <input type=\"file\" id=\"entree-aird\" accept=\".aird\" hidden>\n      <span id=\"diag-info\" class=\"dim\"></span>\n    </div>\n    <input id=\"diag-filtre\" type=\"search\" placeholder=\"Filter diagrams (name, type)…\" autocomplete=\"off\">\n    <ul id=\"diag-liste\"></ul>\n  </aside>\n  <section id=\"panneau-detail\" class=\"arcv-centre\">\n    <div id=\"centre-onglets\" class=\"onglets\" hidden>\n      <button class=\"onglet\" data-centre=\"detail\"></button>\n      <button class=\"onglet\" data-centre=\"diagramme\"><span id=\"vd-onglet-nom\"></span></button>\n    </div>\n    <div id=\"vue-diagramme\" hidden>\n      <div class=\"vd-barre\">\n        <button class=\"bt bt-petit\" id=\"vd-retour\" hidden>↩ Back</button>\n        <span id=\"vd-ico\" class=\"diag-ico\"></span>\n        <span id=\"vd-sigle\" class=\"diag-sigle\"></span>\n        <span id=\"vd-nom\"></span>\n        <span id=\"vd-cible\"></span>\n        <span class=\"ressort\"></span>\n        <span class=\"vd-chercher\">\n          <input id=\"vd-chercher\" type=\"search\" placeholder=\"Search the diagram (Ctrl+F)\" autocomplete=\"off\" title=\"Enter: next · Shift+Enter: previous · Esc: clear\">\n          <span id=\"vd-trouves\" class=\"dim\"></span>\n          <button class=\"bt bt-petit\" id=\"vd-precedent\" title=\"Previous result (Shift+Enter)\">▲</button>\n          <button class=\"bt bt-petit\" id=\"vd-suivant\" title=\"Next result (Enter)\">▼</button>\n        </span>\n        <button class=\"bt bt-petit\" id=\"vd-edition\" title=\"Edit the layout: move, resize, reroute links\">✎ Layout</button>\n        <button class=\"bt bt-petit\" id=\"vd-ponts\" title=\"Line jumps where links cross\">⌒ Jumps</button>\n        <select id=\"vd-theme\" class=\"bt-petit\" title=\"Diagram theme\">\n          <option value=\"capella\">Capella theme</option>\n          <option value=\"clair\">Arcature light</option>\n          <option value=\"sombre\">Arcature dark</option>\n        </select>\n        <button class=\"bt bt-petit\" id=\"vd-moins\" title=\"Zoom out\">−</button>\n        <span id=\"vd-zoom\" class=\"dim\"></span>\n        <button class=\"bt bt-petit\" id=\"vd-plus\" title=\"Zoom in\">+</button>\n        <button class=\"bt bt-petit\" id=\"vd-ajuster\" title=\"Show the whole diagram\">⤢ Fit</button>\n        <button class=\"bt bt-petit\" id=\"vd-reel\" title=\"Actual size (100 %)\">1:1</button>\n        <button class=\"bt bt-petit\" id=\"vd-zoom-choix\" title=\"Zoom to the selected element\">⌖</button>\n        <button class=\"bt bt-petit\" id=\"vd-carte-bt\" title=\"Minimap: overview, click to move there\">▣ Map</button>\n        <select id=\"vd-chaine\" class=\"bt-petit\" title=\"Highlight a functional chain or a physical path (number of drawn elements)\" hidden></select>\n        <span class=\"vd-filtres-ancre\">\n          <button class=\"bt bt-petit\" id=\"vd-filtres-bt\" title=\"Display filters: ports, labels, notes, link types, exchange categories\">⧩ Filters</button>\n          <div id=\"vd-filtres\" hidden></div>\n        </span>\n        <span id=\"vd-tableau-info\" class=\"dim\"></span>\n        <span class=\"vd-filtres-ancre\">\n          <button class=\"bt bt-petit\" id=\"vd-export-bt\" title=\"Export: SVG, PNG, print or PDF (table: CSV)\">⬇ Export</button>\n          <div id=\"vd-export\" class=\"vd-menu\" hidden></div>\n        </span>\n        <button class=\"bt bt-petit\" id=\"vd-fermer\" title=\"Close the diagram\">✕</button>\n      </div>\n      <div id=\"vd-outils\" class=\"vd-barre\" hidden>\n        <span class=\"dim\">Align</span>\n        <button class=\"bt bt-petit\" data-aligner=\"gauche\" title=\"Align left\">⇤</button>\n        <button class=\"bt bt-petit\" data-aligner=\"centre\" title=\"Center horizontally\">↔</button>\n        <button class=\"bt bt-petit\" data-aligner=\"droite\" title=\"Align right\">⇥</button>\n        <button class=\"bt bt-petit\" data-aligner=\"haut\" title=\"Align top\">⤒</button>\n        <button class=\"bt bt-petit\" data-aligner=\"milieu\" title=\"Center vertically\">↕</button>\n        <button class=\"bt bt-petit\" data-aligner=\"bas\" title=\"Align bottom\">⤓</button>\n        <span class=\"sep\"></span>\n        <span class=\"dim\">Distribute</span>\n        <button class=\"bt bt-petit\" data-repartir=\"h\" title=\"Distribute horizontally (3 elements or more)\">⋯</button>\n        <button class=\"bt bt-petit\" data-repartir=\"v\" title=\"Distribute vertically (3 elements or more)\">⋮</button>\n        <span class=\"sep\"></span>\n        <span class=\"dim\">Size</span>\n        <button class=\"bt bt-petit\" data-meme=\"largeur\" title=\"Same width as the first selected element\">⟷</button>\n        <button class=\"bt bt-petit\" data-meme=\"hauteur\" title=\"Same height as the first selected element\">↨</button>\n        <button class=\"bt bt-petit\" data-meme=\"taille\" title=\"Same size as the first selected element\">⧈</button>\n        <span class=\"sep\"></span>\n        <span class=\"dim\">Links</span>\n        <button class=\"bt bt-petit\" id=\"vd-orthogonal\" title=\"Reroute with right angles the selected link, or the links of the selected elements\">⌐ Right angles</button>\n        <button class=\"bt bt-petit\" id=\"vd-direct\" title=\"Reroute as a straight line the selected link, or the links of the selected elements\">⟋ Straight</button>\n        <button class=\"bt bt-petit\" id=\"vd-etiquettes\" title=\"Place the labels of the chosen link, of the chosen elements' links, or of all links: away from shapes, other labels and lines\">≣ Labels</button>\n        <span class=\"sep\"></span>\n        <span class=\"dim\">Arrange</span>\n        <button class=\"bt bt-petit\" data-disposer=\"couches\" title=\"In layers, following the links: the selected elements, the content of the selected container, or the whole diagram\">⇉ Layers</button>\n        <button class=\"bt bt-petit\" data-disposer=\"couches\" data-sens=\"bas\" title=\"In layers, top to bottom\">⇊</button>\n        <button class=\"bt bt-petit\" data-disposer=\"arbre\" title=\"As a tree, top to bottom (breakdowns)\">⊤ Tree</button>\n        <button class=\"bt bt-petit\" data-disposer=\"grille\" title=\"As a compact grid, in reading order\">▦ Grid</button>\n        <span class=\"ressort\"></span>\n        <span class=\"dim vd-aide\">Shift+click: add · Shift+drag: box selection · Ctrl+drag: push · Alt+click: same type · arrows: nudge · Alt: no snapping · F2: rename · Del: hide · right-click: create · ?: help</span>\n      </div>\n      <div id=\"vd-zone\" tabindex=\"0\" title=\"Wheel: zoom · drag: pan · click: select the element · double-click: its details\">\n        <svg id=\"vd-svg\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMinYMin meet\"></svg>\n        <svg id=\"vd-carte\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid meet\" hidden></svg>\n        <div id=\"vd-bulle\" role=\"tooltip\" hidden></div>\n        <style id=\"vd-filtres-style\"></style>\n      </div>\n      <div id=\"vd-tableau\" tabindex=\"0\"></div>\n      <div class=\"vd-pied dim vd-pied-tableau\">Table as saved by Capella in the .aird (labels computed at its last refresh). Click: select the element · double-click: its details.</div>\n      <div class=\"vd-pied dim vd-pied-dessin\">Drawn from the positions saved by Capella. Layout changes only the .aird, saved with the model (Ctrl+S).</div>\n    </div>\n    <div id=\"arcv-vide\" class=\"dim\">Choose a diagram in the list.</div>\n  </section>\n  <div id=\"toast\"></div>\n</div>\n";
 /** Styles de la visionneuse, préfixés par .arcv. */
-const ARCV_CSS = ".arcv *{box-sizing:border-box;margin:0;padding:0}\n.arcv button,.arcv input,.arcv select,.arcv textarea{font:inherit;color:inherit}\n.arcv code{font-family:Consolas,'Cascadia Mono',monospace;font-size:12px}\n.arcv .dim{color:var(--c-dim)}\n.arcv [hidden]{display:none !important}\n.arcv #barre{display:flex;align-items:center;gap:5px;padding:6px 10px;background:var(--c-bg2);border-bottom:1px solid var(--c-border)}\n.arcv #barre>*{flex-shrink:0}\n.arcv .marque{font-weight:800;letter-spacing:.03em;margin-right:8px;color:var(--c-accent)}\n.arcv .bt{padding:4px 10px;background:var(--c-bg3);border:1px solid var(--c-border);border-radius:5px;cursor:pointer;white-space:nowrap}\n.arcv .bt:hover:not(:disabled){border-color:var(--c-accent)}\n.arcv .bt:disabled{opacity:.45;cursor:default}\n.arcv .bt.principal{background:var(--c-accent);border-color:var(--c-accent);color:var(--c-bg2);font-weight:600}\n.arcv .sep{width:1px;height:20px;background:var(--c-border);margin:0 3px}\n.arcv .ressort{flex:1 1 0}\n.arcv #barre>#fichier-info{color:var(--c-dim);margin-left:8px;font-size:12px;flex-shrink:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.arcv #etat-modifs{font-size:12px;color:var(--c-warn);font-weight:600}\n.arcv #accueil{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:18px}\n.arcv #zone-depot{width:min(580px,94%);border:2px dashed var(--c-border);border-radius:14px;padding:40px 30px;text-align:center;\n  background:var(--c-bg2);cursor:pointer;transition:border-color .15s,transform .15s}\n.arcv #zone-depot:hover,.arcv #zone-depot.survol{border-color:var(--c-accent)}\n.arcv #zone-depot.survol{transform:scale(1.02)}\n.arcv .acc-marque{font-size:32px;font-weight:800;color:var(--c-accent)}\n.arcv .acc-slogan{font-style:italic;color:var(--c-dim);margin:4px 0 22px}\n.arcv .acc-titre{font-size:17px;font-weight:700}\n.arcv .acc-dossier{margin:16px 0 4px;padding:8px 18px;font-size:14px}\n.arcv .choix-modele{display:flex;flex-direction:column;gap:6px;min-width:360px}\n.arcv .choix-modele .bt{text-align:left;padding:8px 12px}\n.arcv .choix-modele .dim{font-size:11px}\n.arcv .acc-sous{color:var(--c-dim);margin-top:6px}\n.arcv .acc-avert{margin-top:22px;padding:10px 12px;border-radius:8px;background:color-mix(in srgb,var(--c-warn) 12%,transparent);\n  color:var(--c-warn);font-size:12px;text-align:left}\n.arcv #acc-statut{margin-top:14px;min-height:18px;font-weight:600}\n.arcv #acc-statut.err{color:var(--c-err)}\n.arcv .acc-pied{color:var(--c-dim);font-size:11px;text-align:center}\n.arcv #travail{flex:1;display:grid;grid-template-columns:minmax(260px,26%) 5px 1fr 5px minmax(240px,20%);overflow:hidden}\n.arcv #travail>section{overflow:auto;padding:10px;min-width:0}\n.arcv .separateur{cursor:col-resize;background:var(--c-border);background-clip:content-box;padding:0 2px;touch-action:none}\n.arcv .separateur:hover,.arcv .separateur.actif{background:var(--c-accent);background-clip:content-box;padding:0 1px}\n.arcv #panneau-gauche{display:flex;flex-direction:column;gap:6px;overflow:hidden !important}\n.arcv .onglets{display:flex;gap:2px;border-bottom:1px solid var(--c-border);flex-shrink:0}\n.arcv .onglet{flex:1;padding:5px 8px;background:none;border:0;border-bottom:2px solid transparent;cursor:pointer;color:var(--c-dim);font-weight:600}\n.arcv .onglet:hover{color:var(--c-text)}\n.arcv .onglet.actif{color:var(--c-accent);border-bottom-color:var(--c-accent)}\n.arcv .vue-gauche{display:flex;flex-direction:column;gap:6px;flex:1;min-height:0}\n.arcv #vue-recherche{overflow:auto}\n.arcv #arbre-filtre{width:100%;padding:6px 8px;background:var(--c-bg3);border:1px solid var(--c-border);border-radius:5px}\n.arcv .arbre-barre{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:11px}\n.arcv .bt-petit{padding:1px 7px;font-size:12px}\n.arcv .arbre-opt{display:flex;align-items:center;gap:4px;cursor:pointer;color:var(--c-dim)}\n.arcv #arbre-info{margin-left:auto}\n.arcv #arbre{flex:1;min-height:0;overflow:auto;outline:none;font-size:12.5px;border-top:1px solid var(--c-border);padding-top:4px}\n.arcv #arbre ul{list-style:none}\n.arcv .a-ligne{display:flex;align-items:center;gap:5px;padding-top:2px;padding-bottom:2px;padding-right:4px;border-radius:4px;cursor:pointer;white-space:nowrap}\n.arcv .a-ligne:hover{background:var(--c-bg3)}\n.arcv .a-ligne.actif{background:var(--c-bg4);outline:1px solid var(--c-accent)}\n.arcv #arbre:focus .a-ligne.actif{background:color-mix(in srgb,var(--c-accent) 22%,var(--c-bg4))}\n.arcv .a-tog{width:14px;flex-shrink:0;text-align:center;font-size:9px;color:var(--c-dim);transition:transform .12s}\n.arcv .a-tog.ouvert{transform:rotate(90deg)}\n.arcv .a-tog.feuille{cursor:default}\n.arcv .a-ico{flex-shrink:0;min-width:20px;height:16px;padding:0 3px;border-radius:3px;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;\n  background:var(--c-bg3);color:var(--c-dim)}\n.arcv .a-ico[data-c=OA],.arcv .puce-t[data-c=OA]{color:var(--c-OA);background:color-mix(in srgb,var(--c-OA) 16%,transparent)}\n.arcv .a-ico[data-c=SA],.arcv .puce-t[data-c=SA]{color:var(--c-SA);background:color-mix(in srgb,var(--c-SA) 16%,transparent)}\n.arcv .a-ico[data-c=LA],.arcv .puce-t[data-c=LA]{color:var(--c-LA);background:color-mix(in srgb,var(--c-LA) 16%,transparent)}\n.arcv .a-ico[data-c=PA],.arcv .puce-t[data-c=PA]{color:var(--c-PA);background:color-mix(in srgb,var(--c-PA) 16%,transparent)}\n.arcv .a-ico[data-c=EPBS],.arcv .puce-t[data-c=EPBS]{color:var(--c-EPBS);background:color-mix(in srgb,var(--c-EPBS) 16%,transparent)}\n.arcv .a-nom{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}\n.arcv .a-nom.sans-nom,.arcv .a-technique .a-nom{color:var(--c-dim);font-style:italic}\n.arcv .a-oss{font-size:9px}\n.arcv .a-nb{font-size:10px;color:var(--c-dim);font-family:Consolas,'Cascadia Mono',monospace}\n.arcv .a-type{font-size:10px;color:var(--c-dim);opacity:.8;max-width:42%;overflow:hidden;text-overflow:ellipsis}\n.arcv .a-terne>.a-nom,.arcv .a-terne>.a-ico,.arcv .a-terne>.a-type{opacity:.45}\n.arcv .a-ico.ico-svg{min-width:16px;padding:0;background:none}\n.arcv .puce-i{display:inline-flex;vertical-align:-2px;margin-right:3px}\n.arcv .diag-ico{display:inline-flex;flex-shrink:0;vertical-align:-3px}\n.arcv #diag-liste .diag-ico{align-self:flex-start;margin-top:1px}\n.arcv .a-trouve>.a-nom{color:var(--c-accent);font-weight:600}\n.arcv .a-reste{font-size:11px;padding:3px 0}\n.arcv #recherche,.arcv select,.arcv input[type=text],.arcv textarea{width:100%;padding:6px 8px;background:var(--c-bg3);border:1px solid var(--c-border);border-radius:5px}\n.arcv #recherche:focus,.arcv input:focus,.arcv textarea:focus,.arcv select:focus{outline:1px solid var(--c-accent);border-color:var(--c-accent)}\n.arcv .filtres{display:flex;gap:6px}\n.arcv #resultats-info{font-size:11px;color:var(--c-dim)}\n.arcv #resultats,.arcv #journal{list-style:none}\n.arcv #resultats li{padding:4px 6px;border-radius:4px;cursor:pointer;display:flex;gap:6px;align-items:baseline;line-height:1.35}\n.arcv #resultats li:hover{background:var(--c-bg3)}\n.arcv #resultats li.actif{background:var(--c-bg4);outline:1px solid var(--c-accent)}\n.arcv .r-nom{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.arcv .r-type{font-size:11px;color:var(--c-dim);white-space:nowrap}\n.arcv .pastille{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:9px;background:var(--c-bg3);color:var(--c-dim)}\n.arcv .pastille[data-c=OA]{color:var(--c-OA)}\n.arcv .pastille[data-c=SA]{color:var(--c-SA)}\n.arcv .pastille[data-c=LA]{color:var(--c-LA)}\n.arcv .pastille[data-c=PA]{color:var(--c-PA)}\n.arcv .pastille[data-c=EPBS]{color:var(--c-EPBS)}\n.arcv .pastille.ossature{color:var(--c-warn)}\n.arcv #panneau-detail{padding:14px 18px !important}\n.arcv #detail-vide{color:var(--c-dim);margin-top:40px;text-align:center}\n.arcv #detail{display:flex;flex-direction:column;gap:10px;max-width:960px}\n.arcv #detail-formulaire{display:flex;flex-direction:column;gap:10px;min-width:0}\n.arcv #travail.cote #detail{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 22px;max-width:none;align-items:start}\n.arcv #travail.cote #detail-liens{position:sticky;top:0;max-height:calc(100vh - 80px);overflow:auto;margin-top:0;padding-right:4px}\n.arcv #detail-chemin{font-size:11px;color:var(--c-dim);display:flex;flex-wrap:wrap;gap:2px}\n.arcv #detail-chemin a{color:var(--c-dim);cursor:pointer;text-decoration:none}\n.arcv #detail-chemin a:hover{color:var(--c-accent);text-decoration:underline}\n.arcv .detail-entete{display:flex;gap:8px;align-items:center;font-size:15px;font-weight:700}\n.arcv .detail-id{font-size:11px;color:var(--c-dim)}\n.arcv #detail label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--c-dim)}\n.arcv #detail label input,.arcv #detail label textarea{color:var(--c-text);font-size:13px}\n.arcv textarea{resize:vertical;font-family:Consolas,'Cascadia Mono',monospace;font-size:12px !important}\n.arcv .detail-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}\n.arcv .detail-actions .apercu-l{flex-direction:row !important;align-items:center;margin-left:auto}\n.arcv .champ-desc{display:flex;flex-direction:column;gap:4px;position:relative}\n.arcv .desc-entete{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--c-dim)}\n.arcv .desc-modes{display:inline-flex;border:1px solid var(--c-border);border-radius:5px;overflow:hidden}\n.arcv .desc-mode{padding:2px 10px;background:var(--c-bg3);border:0;cursor:pointer;font-size:11px;color:var(--c-dim)}\n.arcv .desc-mode.actif{background:var(--c-accent);color:var(--c-bg2);font-weight:600}\n.arcv .desc-outils{display:flex;align-items:center;gap:2px;flex-wrap:wrap;padding:3px;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:5px 5px 0 0}\n.arcv .desc-outils.inactif{opacity:.4;pointer-events:none}\n.arcv .desc-outils button{min-width:26px;height:24px;padding:0 5px;background:none;border:1px solid transparent;border-radius:4px;cursor:pointer;font-size:12px}\n.arcv .desc-outils button:hover{background:var(--c-bg3);border-color:var(--c-border)}\n.arcv .desc-outils button.actif{background:color-mix(in srgb,var(--c-accent) 25%,transparent);border-color:var(--c-accent)}\n.arcv .desc-outils select{width:auto;padding:2px 4px;font-size:12px}\n.arcv .desc-outils .sep{height:16px}\n.arcv #desc-editeur{display:block;width:100%;height:240px;border:1px solid var(--c-border);border-top:0;border-radius:0 0 6px 6px;background:var(--c-bg3);resize:vertical}\n.arcv #desc-editeur[hidden]{display:none}\n.arcv #champ-description{min-height:240px;border-radius:0 0 6px 6px}\n.arcv .choix-element{position:absolute;z-index:20;top:62px;right:8px;width:min(420px,90%);background:var(--c-bg2);border:1px solid var(--c-accent);border-radius:6px;\n  box-shadow:0 8px 24px rgba(0,0,0,.35);padding:6px;display:flex;flex-direction:column;gap:4px}\n.arcv .choix-element input{width:100%;padding:5px 8px;background:var(--c-bg3);border:1px solid var(--c-border);border-radius:4px}\n.arcv .choix-element ul{list-style:none;max-height:260px;overflow:auto}\n.arcv .choix-element li{padding:3px 6px;border-radius:4px;cursor:pointer;display:flex;gap:6px;align-items:baseline}\n.arcv .choix-element li:hover{background:var(--c-bg3)}\n.arcv #detail h3,.arcv #panneau-journal h3{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--c-dim);margin-top:6px}\n.arcv .modifie{border-color:var(--c-warn) !important}\n.arcv #detail-liens{display:flex;flex-direction:column;gap:4px;margin-top:6px}\n.arcv .rubrique{border-top:1px solid var(--c-border);padding-top:6px}\n.arcv .rubrique>summary{cursor:pointer;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--c-dim);padding:2px 0;list-style-position:inside}\n.arcv .rubrique>summary .nb{font-weight:400;opacity:.8}\n.arcv .r-liaisons>summary{color:var(--c-accent)}\n.arcv .r-sortantes>summary{color:var(--c-ok)}\n.arcv .r-entrantes>summary{color:var(--c-warn)}\n.arcv .r-proprietaire>summary{color:var(--c-EPBS)}\n.arcv .r-contenus>summary{color:var(--c-LA)}\n.arcv .rub-corps{padding:6px 0 8px}\n.arcv .attributs{width:100%;border-collapse:collapse}\n.arcv .attributs td{padding:4px 0;border-bottom:1px solid var(--c-border);vertical-align:top;font-size:12px;word-break:break-all}\n.arcv .attributs td:first-child{width:170px;padding-right:10px;color:var(--c-dim);font-family:Consolas,'Cascadia Mono',monospace;font-size:11px;word-break:normal}\n.arcv .groupe{margin-bottom:8px}\n.arcv .groupe-l{font-family:Consolas,'Cascadia Mono',monospace;font-size:10.5px;color:var(--c-dim);margin-bottom:2px}\n.arcv .groupe-c{display:flex;flex-wrap:wrap;align-items:center}\n.arcv .liaison{display:flex;align-items:center;flex-wrap:wrap;width:100%}\n.arcv .via{display:inline-flex;align-items:center;gap:2px;font-size:10.5px;color:var(--c-dim);margin-left:4px}\n.arcv .puce{display:inline-flex;align-items:center;gap:5px;padding:2px 6px;margin:2px 4px 2px 0;border:1px solid var(--c-border);border-radius:4px;\n  background:var(--c-bg2);font-size:11.5px;cursor:pointer;color:var(--c-text);text-decoration:none;max-width:100%}\n.arcv .puce:hover{border-color:var(--c-accent)}\n.arcv .puce.sans-nom{padding:2px 4px;border-style:dotted}\n.arcv .puce-t{font-size:9px;font-weight:700;padding:0 3px;border-radius:3px;color:var(--c-dim)}\n.arcv .puce.absente{cursor:default;color:var(--c-dim);font-family:Consolas,'Cascadia Mono',monospace;font-size:10.5px;border-style:dashed}\n.arcv #journal li{padding:6px 8px;margin-bottom:5px;border-radius:5px;background:var(--c-bg2);border-left:3px solid var(--c-accent);font-size:12px;cursor:pointer}\n.arcv #journal li:hover{background:var(--c-bg3)}\n.arcv #journal li.annulee{opacity:.45;border-left-color:var(--c-border);text-decoration:line-through}\n.arcv .j-quoi{font-weight:600}\n.arcv .j-detail{color:var(--c-dim);word-break:break-word}\n.arcv #journal-vide{font-size:12px;margin-top:8px}\n.arcv .menu{position:fixed;z-index:70;min-width:240px;max-width:min(480px,94vw);max-height:80vh;overflow:auto;background:var(--c-bg2);border:1px solid var(--c-border);\n  border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,.4);padding:4px 0;font-size:12.5px}\n.arcv #menu-dispo{left:auto}\n.arcv .menu-titre{padding:6px 12px 4px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.arcv .menu-section{padding:6px 12px 2px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--c-dim)}\n.arcv .menu-item{display:flex;width:100%;align-items:center;justify-content:space-between;gap:16px;padding:5px 12px;background:none;border:0;text-align:left;cursor:pointer}\n.arcv .menu-item:hover,.arcv .menu-item:focus{background:var(--c-bg3);outline:none}\n.arcv .menu-item kbd,.arcv .menu kbd{font-family:inherit;font-size:10.5px;color:var(--c-dim);border:1px solid var(--c-border);border-radius:3px;padding:0 4px}\n.arcv .menu-sep{height:1px;background:var(--c-border);margin:4px 0}\n.arcv .menu-vide{padding:5px 12px;color:var(--c-dim);font-size:11.5px}\n.arcv .liste-l{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--c-dim)}\n.arcv .liste-l select,.arcv .liste-l textarea{color:var(--c-text)}\n.arcv .liste-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.arcv #liste-apercu{list-style:none;max-height:260px;overflow:auto;background:var(--c-bg);border-radius:5px;padding:6px 8px;color:var(--c-text);font-size:12px}\n.arcv #fenetre{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:50}\n.arcv .fenetre-cadre{width:min(760px,94vw);max-height:86vh;overflow:auto;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:10px;padding:16px 18px}\n.arcv .fenetre-titre{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:700;margin-bottom:12px}\n.arcv #fenetre-corps{display:flex;flex-direction:column;gap:8px;line-height:1.45}\n.arcv .diag-ligne{display:flex;gap:8px}\n.arcv .diag-ok{color:var(--c-ok)}\n.arcv .diag-ko{color:var(--c-err)}\n.arcv .diag-av{color:var(--c-warn)}\n.arcv #fenetre-corps pre{background:var(--c-bg);padding:8px;border-radius:5px;overflow:auto;font-size:11px;white-space:pre-wrap}\n.arcv #toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);padding:8px 14px;border-radius:6px;background:var(--c-bg3);\n  border:1px solid var(--c-border);opacity:0;pointer-events:none;transition:opacity .2s;z-index:60;max-width:80vw}\n.arcv #toast.visible{opacity:1}\n.arcv #toast.err{border-color:var(--c-err);color:var(--c-err)}\n.arcv .diag-barre{display:flex;align-items:center;gap:8px;flex-wrap:wrap}\n.arcv #diag-info{font-size:11px}\n.arcv #diag-filtre{width:100%;padding:6px 8px;background:var(--c-bg3);border:1px solid var(--c-border);border-radius:5px}\n.arcv #diag-liste{list-style:none;flex:1;min-height:0;overflow:auto;border-top:1px solid var(--c-border);padding-top:4px;font-size:12.5px}\n.arcv #diag-liste li[data-diag]{display:flex;gap:6px;align-items:baseline;padding:3px 6px;border-radius:4px;cursor:pointer;line-height:1.35}\n.arcv #diag-liste li[data-diag]:hover{background:var(--c-bg3)}\n.arcv #diag-liste li.actif{background:var(--c-bg4);outline:1px solid var(--c-accent)}\n.arcv .diag-groupe{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--c-dim);padding:8px 4px 3px}\n.arcv .diag-sigle{font-size:9.5px;font-weight:700;padding:0 4px;border-radius:3px;color:var(--c-dim);background:var(--c-bg3);\n  font-family:Consolas,'Cascadia Mono',monospace;flex-shrink:0;min-width:34px;text-align:center}\n.arcv .diag-sigle[data-c=OA]{color:var(--c-OA)}\n.arcv .diag-sigle[data-c=SA]{color:var(--c-SA)}\n.arcv .diag-sigle[data-c=LA]{color:var(--c-LA)}\n.arcv .diag-sigle[data-c=PA]{color:var(--c-PA)}\n.arcv .diag-sigle[data-c=EPBS]{color:var(--c-EPBS)}\n.arcv .diag-nom{overflow:hidden;text-overflow:ellipsis}\n.arcv .r-diagrammes>summary{color:var(--c-EPBS)}\n.arcv #centre-onglets{margin:-6px -8px 8px}\n.arcv #centre-onglets .onglet{flex:0 1 auto;max-width:50%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.arcv #panneau-detail.mode-diagramme{display:flex;flex-direction:column;overflow:hidden !important;padding:8px 10px !important}\n.arcv #panneau-detail.mode-diagramme #centre-onglets{margin:0 0 6px}\n.arcv #panneau-detail.mode-diagramme>#detail,.arcv #panneau-detail.mode-diagramme>#detail-vide{display:none}\n.arcv #vue-diagramme{display:flex;flex-direction:column;flex:1;min-height:0;gap:6px}\n.arcv #vue-diagramme[hidden]{display:none}\n.arcv .vd-barre{display:flex;align-items:center;gap:6px;flex-wrap:wrap}\n.arcv #vd-nom{font-weight:700}\n.arcv #vd-nom{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:0 1 auto}\n.arcv #vd-zoom{font-size:11px;min-width:44px;text-align:center;font-family:Consolas,'Cascadia Mono',monospace}\n.arcv #vd-cible .puce{margin:0}\n.arcv #vd-svg .vd-lien-ref{cursor:pointer;text-decoration:underline}\n.arcv #vd-svg [data-ref]:hover .vd-lien-ref{text-decoration-thickness:2px}\n.arcv #vd-zone{flex:1;min-height:0;border:1px solid var(--c-border);border-radius:10px;overflow:hidden;cursor:grab;touch-action:none;\n  --vd-toile:#ffffff;--vd-point:transparent;--vd-accent:#2f5fd0;\n  background:radial-gradient(circle,var(--vd-point) 1px,transparent 1.3px) 0 0/20px 20px,var(--vd-toile)}\n.arcv #vd-zone[data-theme=\"clair\"]{--vd-toile:#f6f8fc;--vd-point:#dde3ee;--vd-accent:#2f5fd0}\n.arcv #vd-zone[data-theme=\"sombre\"]{--vd-toile:#131621;--vd-point:#262b3c;--vd-accent:#7aa7ff}\n.arcv #vd-theme{width:auto;padding:2px 6px;font-size:12px}\n.arcv #vd-zone.glisse{cursor:grabbing}\n.arcv #vd-zone:focus{outline:none}\n.arcv #vd-zone:focus-visible{outline:2px solid var(--c-accent)}\n.arcv #vd-svg{width:100%;height:100%;display:block;user-select:none;text-rendering:geometricPrecision}\n.arcv #vd-svg [data-sem]{cursor:pointer}\n.arcv #vd-svg .vd-f,.arcv #vd-svg .vd-l{transition:opacity .18s}\n.arcv #vd-svg .vd-f[data-sem]:hover>.vd-c,.arcv #vd-svg .vd-f[data-sem]:hover>.vd-c>*{stroke:var(--vd-accent);stroke-width:1.8px}\n.arcv #vd-svg .vd-l[data-sem]:hover>path.vd-c{stroke:var(--vd-accent)}\n.arcv #vd-svg .vd-sel>.vd-c,.arcv #vd-svg .vd-sel>.vd-c>*{stroke:var(--vd-accent) !important;stroke-width:2.6px;filter:drop-shadow(0 0 5px color-mix(in srgb,var(--vd-accent) 55%,transparent))}\n.arcv #vd-svg .vd-l.vd-sel>path.vd-c,.arcv #vd-svg .vd-l.vd-lie>path.vd-c{stroke:var(--vd-accent) !important;stroke-width:2.2px}\n.arcv #vd-svg.vd-focus .vd-f:not(.vd-sel):not(.vd-proche),.arcv #vd-svg.vd-focus .vd-l:not(.vd-sel):not(.vd-lie){opacity:.28}\n.arcv #vd-svg .vd-absent{opacity:.35}\n.arcv #vd-zone.edition #vd-svg.vd-focus .vd-f,.arcv #vd-zone.edition #vd-svg.vd-focus .vd-l{opacity:1}\n.arcv #vd-edition.actif,.arcv #vd-ponts.actif{background:color-mix(in srgb,var(--c-accent) 22%,var(--c-bg3));border-color:var(--c-accent);color:var(--c-accent)}\n.arcv #vd-outils{padding:3px 6px;border:1px solid var(--c-border);border-radius:8px;background:var(--c-bg2)}\n.arcv #vd-outils[hidden]{display:none}\n.arcv #vd-outils .dim{font-size:11px}\n.arcv .vd-aide{font-size:10.5px !important}\n.arcv #vd-zone.edition #vd-svg .vd-f[data-v]{cursor:move}\n.arcv #vd-zone.edition #vd-svg .vd-l[data-v]{cursor:pointer}\n.arcv #vd-svg .edd-choix{fill:none;stroke:var(--vd-accent);pointer-events:none}\n.arcv #vd-svg .edd-poignee{fill:var(--vd-toile);stroke:var(--vd-accent);cursor:nwse-resize}\n.arcv #vd-svg .edd-e{cursor:ew-resize}\n.arcv #vd-svg .edd-s{cursor:ns-resize}\n.arcv #vd-svg circle.edd-poignee{cursor:move}\n.arcv #vd-svg .edd-lien{fill:none;stroke:var(--vd-accent);stroke-opacity:.25;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}\n.arcv #vd-svg .edd-guide{stroke:#e5484d;stroke-dasharray:4 3;pointer-events:none}\n.arcv #vd-svg .edd-cadre{fill:color-mix(in srgb,var(--vd-accent) 10%,transparent);stroke:var(--vd-accent);pointer-events:none}\n.arcv .vd-pied{font-size:11px}\n.arcv .vd-chercher{display:inline-flex;align-items:center;gap:4px}\n.arcv #vd-chercher{width:190px;padding:3px 7px;font-size:12px}\n.arcv #vd-trouves{font-size:11px;min-width:34px;text-align:center}\n.arcv #vd-chercher.sans-resultat{border-color:var(--c-err);background:color-mix(in srgb,var(--c-err) 10%,var(--c-bg2))}\n.arcv #vd-zone{position:relative}\n.arcv #vd-svg .vd-trouve>.vd-c,.arcv #vd-svg .vd-trouve>.vd-c>*{stroke:#e8590c !important;stroke-width:2.4px}\n.arcv #vd-svg .vd-l.vd-trouve>path.vd-c{stroke:#e8590c !important}\n.arcv #vd-svg .vd-courant>.vd-c,.arcv #vd-svg .vd-courant>.vd-c>*{stroke:#e8590c !important;stroke-width:3.4px;filter:drop-shadow(0 0 6px #e8590c)}\n.arcv #vd-carte{position:absolute;right:10px;bottom:10px;width:220px;height:150px;background:var(--vd-toile,#fff);border:1px solid var(--c-border);\n  border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:crosshair;opacity:.95}\n.arcv #vd-carte[hidden]{display:none}\n.arcv #vd-bulle{position:absolute;z-index:5;max-width:340px;padding:8px 10px;border-radius:8px;background:var(--c-bg2);color:var(--c-text);\n  border:1px solid var(--c-border);box-shadow:0 6px 18px rgba(0,0,0,.3);font-size:12px;line-height:1.4;pointer-events:none}\n.arcv #vd-bulle[hidden]{display:none}\n.arcv .vd-filtres-ancre{position:relative;display:inline-flex}\n.arcv #vd-filtres{position:absolute;top:calc(100% + 4px);right:0;z-index:20;min-width:240px;max-height:60vh;overflow:auto;padding:8px 10px;\n  background:var(--c-bg2);border:1px solid var(--c-border);border-radius:8px;box-shadow:0 8px 22px rgba(0,0,0,.3);font-size:12px}\n.arcv #vd-filtres[hidden]{display:none}\n.arcv .vd-menu{position:absolute;top:calc(100% + 4px);right:0;z-index:20;min-width:210px;padding:4px;background:var(--c-bg2);border:1px solid var(--c-border);\n  border-radius:8px;box-shadow:0 8px 22px rgba(0,0,0,.3);font-size:12px;display:flex;flex-direction:column}\n.arcv .vd-menu[hidden]{display:none}\n.arcv .vd-menu button{all:unset;padding:5px 8px;border-radius:5px;cursor:pointer;white-space:nowrap}\n.arcv .vd-menu button:hover{background:var(--c-bg3)}\n.arcv #vd-chaine{max-width:230px}\n.arcv #vd-chaine[hidden]{display:none}\n.arcv #vd-svg{--vd-chaine:#1f6feb}\n.arcv #vd-svg.vd-mode-chaine .vd-f:not(.vd-chaine):not(.vd-chaine-proche),.arcv #vd-svg.vd-mode-chaine .vd-l:not(.vd-chaine){opacity:.22}\n.arcv #vd-svg .vd-chaine>.vd-c,.arcv #vd-svg .vd-chaine>.vd-c>*{stroke:var(--vd-chaine) !important;stroke-width:2.6px}\n.arcv #vd-svg .vd-l.vd-chaine>path.vd-c{stroke:var(--vd-chaine) !important;stroke-width:3px}\n.arcv #vue-diagramme.mode-tableau #vd-chaine{display:none !important}\n.arcv #vd-filtres .vf-titre{font-weight:700;margin:8px 0 3px;color:var(--c-dim);font-size:11px;text-transform:uppercase;letter-spacing:.04em}\n.arcv #vd-filtres .vf-titre:first-child{margin-top:0}\n.arcv #vd-filtres .vf-case{display:flex;align-items:center;gap:6px;padding:2px 0;cursor:pointer;white-space:nowrap}\n.arcv #vd-filtres .vf-pied{margin-top:8px;text-align:right}\n.arcv #vd-bulle .vb-titre{display:flex;align-items:center;gap:6px;font-weight:700;font-size:13px;margin-bottom:2px}\n.arcv #vd-bulle .vb-titre svg{flex:none}\n.arcv #vd-bulle .vb-ligne{margin-top:2px}\n.arcv #vd-bulle .vb-texte{margin:5px 0 3px;padding-left:6px;border-left:2px solid var(--c-border)}\n.arcv #vd-carte .vd-carte-vue{fill:color-mix(in srgb,var(--vd-accent) 14%,transparent);stroke:var(--vd-accent);vector-effect:non-scaling-stroke;stroke-width:1.5px}\n.arcv #vue-diagramme.mode-tableau :is(.vd-chercher,#vd-zoom-choix,#vd-carte-bt,.vd-filtres-ancre:has(#vd-filtres)){display:none !important}\n.arcv #vd-tableau,.arcv #vd-tableau-info,.arcv .vd-pied-tableau{display:none}\n.arcv #vue-diagramme.mode-tableau #vd-tableau{display:block}\n.arcv #vue-diagramme.mode-tableau #vd-tableau-info{display:inline-flex}\n.arcv #vue-diagramme.mode-tableau .vd-pied-tableau{display:block}\n.arcv #vue-diagramme.mode-tableau :is(#vd-zone,#vd-outils,.vd-pied-dessin,#vd-edition,#vd-ponts,#vd-theme,#vd-moins,#vd-zoom,#vd-plus,#vd-ajuster,#vd-reel){display:none !important}\n.arcv #vd-tableau{flex:1;min-height:0;overflow:auto;border:1px solid var(--c-border);border-radius:10px;background:var(--c-bg2)}\n.arcv #vd-tableau:focus{outline:none}\n.arcv .vt{border-collapse:separate;border-spacing:0;font-size:12px;table-layout:fixed}\n.arcv .vt th,.arcv .vt td{border-right:1px solid var(--c-bg3);border-bottom:1px solid var(--c-bg3);padding:3px 6px;height:22px;\n  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;box-sizing:border-box}\n.arcv .vt thead th{position:sticky;top:0;z-index:2;background:var(--c-bg4);font-weight:600;text-align:left;border-bottom-color:var(--c-border)}\n.arcv .vt .vt-lig{position:sticky;left:0;z-index:1;background:var(--c-bg3);font-weight:400;text-align:left;border-right-color:var(--c-border)}\n.arcv .vt thead .vt-coin{left:0;z-index:3}\n.arcv .vt td{text-align:center;color:var(--c-text)}\n.arcv .vt [data-sem]{cursor:pointer}\n.arcv .vt [data-sem]:hover{color:var(--c-accent)}\n.arcv .vt .vt-axe{background:color-mix(in srgb,var(--c-accent) 10%,transparent)}\n.arcv .vt tr.vt-axe>.vt-lig{background:color-mix(in srgb,var(--c-accent) 18%,var(--c-bg3))}\n.arcv .vt .vd-sel{outline:2px solid var(--c-accent);outline-offset:-2px;background:color-mix(in srgb,var(--c-accent) 22%,var(--c-bg2))}\n.arcv .vt .vt-lig.vd-sel{background:color-mix(in srgb,var(--c-accent) 28%,var(--c-bg3))}\n.arcv .vt .vt-absent{opacity:.5}\n.arcv .vt-ico{display:inline-flex;vertical-align:-3px;margin-right:4px}\n.arcv .vt-pli{display:inline-block;width:14px;padding:0;margin-right:2px;border:0;background:none;color:var(--c-dim);cursor:pointer;font-size:10px}\n.arcv .vt-vide{padding:16px}\n/* Visionneuse : disposition propre (le reste des styles vient de src/css/styles.css, préfixé par .arcv) */\n.arcv{--c-OA:#d9a400;--c-SA:#3fa33f;--c-LA:#1f9ab3;--c-PA:#d8742f;--c-EPBS:#8a5ce0;\n  display:grid;grid-template-columns:minmax(220px,24%) 1fr;gap:10px;height:100%;min-height:0;font-size:13px;color:var(--c-text);position:relative}\n.arcv.sans-liste{grid-template-columns:1fr}\n.arcv.sans-liste .arcv-gauche{display:none}\n.arcv-gauche{display:flex;flex-direction:column;gap:6px;min-height:0;overflow:hidden}\n.arcv-gauche #diag-liste{flex:1;overflow:auto;list-style:none;margin:0;padding:0}\n.arcv-centre{display:flex;flex-direction:column;min-height:0;min-width:0}\n.arcv #panneau-detail.mode-diagramme{padding:0 !important}\n#arcv-vide{margin:auto;font-size:14px}\n.arcv #toast{position:absolute}\n.arcv .vd-pied-dessin,.arcv #vd-edition,.arcv #vd-outils{display:none !important}\n";
+const ARCV_CSS = ".arcv *{box-sizing:border-box;margin:0;padding:0}\n.arcv button,.arcv input,.arcv select,.arcv textarea{font:inherit;color:inherit}\n.arcv code{font-family:Consolas,'Cascadia Mono',monospace;font-size:12px}\n.arcv .dim{color:var(--c-dim)}\n.arcv [hidden]{display:none !important}\n.arcv #barre{display:flex;align-items:center;gap:5px;padding:6px 10px;background:var(--c-bg2);border-bottom:1px solid var(--c-border)}\n.arcv #barre>*{flex-shrink:0}\n.arcv .marque{font-weight:800;letter-spacing:.03em;margin-right:8px;color:var(--c-accent)}\n.arcv .bt{padding:4px 10px;background:var(--c-bg3);border:1px solid var(--c-border);border-radius:5px;cursor:pointer;white-space:nowrap}\n.arcv .bt:hover:not(:disabled){border-color:var(--c-accent)}\n.arcv .bt:disabled{opacity:.45;cursor:default}\n.arcv .bt.principal{background:var(--c-accent);border-color:var(--c-accent);color:var(--c-bg2);font-weight:600}\n.arcv .sep{width:1px;height:20px;background:var(--c-border);margin:0 3px}\n.arcv .ressort{flex:1 1 0}\n.arcv #barre>#fichier-info{color:var(--c-dim);margin-left:8px;font-size:12px;flex-shrink:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.arcv #etat-modifs{font-size:12px;color:var(--c-warn);font-weight:600}\n.arcv #accueil{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:18px}\n.arcv #zone-depot{width:min(580px,94%);border:2px dashed var(--c-border);border-radius:14px;padding:40px 30px;text-align:center;\n  background:var(--c-bg2);cursor:pointer;transition:border-color .15s,transform .15s}\n.arcv #zone-depot:hover,.arcv #zone-depot.survol{border-color:var(--c-accent)}\n.arcv #zone-depot.survol{transform:scale(1.02)}\n.arcv .acc-marque{font-size:32px;font-weight:800;color:var(--c-accent)}\n.arcv .acc-slogan{font-style:italic;color:var(--c-dim);margin:4px 0 22px}\n.arcv .acc-titre{font-size:17px;font-weight:700}\n.arcv .acc-dossier{margin:16px 0 4px;padding:8px 18px;font-size:14px}\n.arcv .choix-modele{display:flex;flex-direction:column;gap:6px;min-width:360px}\n.arcv .choix-modele .bt{text-align:left;padding:8px 12px}\n.arcv .choix-modele .dim{font-size:11px}\n.arcv .acc-sous{color:var(--c-dim);margin-top:6px}\n.arcv .acc-avert{margin-top:22px;padding:10px 12px;border-radius:8px;background:color-mix(in srgb,var(--c-warn) 12%,transparent);\n  color:var(--c-warn);font-size:12px;text-align:left}\n.arcv #acc-statut{margin-top:14px;min-height:18px;font-weight:600}\n.arcv #acc-statut.err{color:var(--c-err)}\n.arcv .acc-pied{color:var(--c-dim);font-size:11px;text-align:center}\n.arcv #travail{flex:1;display:grid;grid-template-columns:minmax(260px,26%) 5px 1fr 5px minmax(240px,20%);overflow:hidden}\n.arcv #travail>section{overflow:auto;padding:10px;min-width:0}\n.arcv .separateur{cursor:col-resize;background:var(--c-border);background-clip:content-box;padding:0 2px;touch-action:none}\n.arcv .separateur:hover,.arcv .separateur.actif{background:var(--c-accent);background-clip:content-box;padding:0 1px}\n.arcv #panneau-gauche{display:flex;flex-direction:column;gap:6px;overflow:hidden !important}\n.arcv .onglets{display:flex;gap:2px;border-bottom:1px solid var(--c-border);flex-shrink:0}\n.arcv .onglet{flex:1;padding:5px 8px;background:none;border:0;border-bottom:2px solid transparent;cursor:pointer;color:var(--c-dim);font-weight:600}\n.arcv .onglet:hover{color:var(--c-text)}\n.arcv .onglet.actif{color:var(--c-accent);border-bottom-color:var(--c-accent)}\n.arcv .vue-gauche{display:flex;flex-direction:column;gap:6px;flex:1;min-height:0}\n.arcv #vue-recherche{overflow:auto}\n.arcv #arbre-filtre{width:100%;padding:6px 8px;background:var(--c-bg3);border:1px solid var(--c-border);border-radius:5px}\n.arcv .arbre-barre{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:11px}\n.arcv .bt-petit{padding:1px 7px;font-size:12px}\n.arcv .arbre-opt{display:flex;align-items:center;gap:4px;cursor:pointer;color:var(--c-dim)}\n.arcv #arbre-info{margin-left:auto}\n.arcv #arbre{flex:1;min-height:0;overflow:auto;outline:none;font-size:12.5px;border-top:1px solid var(--c-border);padding-top:4px}\n.arcv #arbre ul{list-style:none}\n.arcv .a-ligne{display:flex;align-items:center;gap:5px;padding-top:2px;padding-bottom:2px;padding-right:4px;border-radius:4px;cursor:pointer;white-space:nowrap}\n.arcv .a-ligne:hover{background:var(--c-bg3)}\n.arcv .a-ligne.actif{background:var(--c-bg4);outline:1px solid var(--c-accent)}\n.arcv #arbre:focus .a-ligne.actif{background:color-mix(in srgb,var(--c-accent) 22%,var(--c-bg4))}\n.arcv .a-tog{width:14px;flex-shrink:0;text-align:center;font-size:9px;color:var(--c-dim);transition:transform .12s}\n.arcv .a-tog.ouvert{transform:rotate(90deg)}\n.arcv .a-tog.feuille{cursor:default}\n.arcv .a-ico{flex-shrink:0;min-width:20px;height:16px;padding:0 3px;border-radius:3px;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;\n  background:var(--c-bg3);color:var(--c-dim)}\n.arcv .a-ico[data-c=OA],.arcv .puce-t[data-c=OA]{color:var(--c-OA);background:color-mix(in srgb,var(--c-OA) 16%,transparent)}\n.arcv .a-ico[data-c=SA],.arcv .puce-t[data-c=SA]{color:var(--c-SA);background:color-mix(in srgb,var(--c-SA) 16%,transparent)}\n.arcv .a-ico[data-c=LA],.arcv .puce-t[data-c=LA]{color:var(--c-LA);background:color-mix(in srgb,var(--c-LA) 16%,transparent)}\n.arcv .a-ico[data-c=PA],.arcv .puce-t[data-c=PA]{color:var(--c-PA);background:color-mix(in srgb,var(--c-PA) 16%,transparent)}\n.arcv .a-ico[data-c=EPBS],.arcv .puce-t[data-c=EPBS]{color:var(--c-EPBS);background:color-mix(in srgb,var(--c-EPBS) 16%,transparent)}\n.arcv .a-nom{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}\n.arcv .a-nom.sans-nom,.arcv .a-technique .a-nom{color:var(--c-dim);font-style:italic}\n.arcv .a-oss{font-size:9px}\n.arcv .a-nb{font-size:10px;color:var(--c-dim);font-family:Consolas,'Cascadia Mono',monospace}\n.arcv .a-type{font-size:10px;color:var(--c-dim);opacity:.8;max-width:42%;overflow:hidden;text-overflow:ellipsis}\n.arcv .a-terne>.a-nom,.arcv .a-terne>.a-ico,.arcv .a-terne>.a-type{opacity:.45}\n.arcv .a-ico.ico-svg{min-width:16px;padding:0;background:none}\n.arcv .puce-i{display:inline-flex;vertical-align:-2px;margin-right:3px}\n.arcv .diag-ico{display:inline-flex;flex-shrink:0;vertical-align:-3px}\n.arcv #diag-liste .diag-ico{align-self:flex-start;margin-top:1px}\n.arcv .a-trouve>.a-nom{color:var(--c-accent);font-weight:600}\n.arcv .a-reste{font-size:11px;padding:3px 0}\n.arcv #recherche,.arcv select,.arcv input[type=text],.arcv textarea{width:100%;padding:6px 8px;background:var(--c-bg3);border:1px solid var(--c-border);border-radius:5px}\n.arcv #recherche:focus,.arcv input:focus,.arcv textarea:focus,.arcv select:focus{outline:1px solid var(--c-accent);border-color:var(--c-accent)}\n.arcv .filtres{display:flex;gap:6px}\n.arcv #resultats-info{font-size:11px;color:var(--c-dim)}\n.arcv #resultats,.arcv #journal{list-style:none}\n.arcv #resultats li{padding:4px 6px;border-radius:4px;cursor:pointer;display:flex;gap:6px;align-items:baseline;line-height:1.35}\n.arcv #resultats li:hover{background:var(--c-bg3)}\n.arcv #resultats li.actif{background:var(--c-bg4);outline:1px solid var(--c-accent)}\n.arcv .r-nom{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.arcv .r-type{font-size:11px;color:var(--c-dim);white-space:nowrap}\n.arcv .pastille{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:9px;background:var(--c-bg3);color:var(--c-dim)}\n.arcv .pastille[data-c=OA]{color:var(--c-OA)}\n.arcv .pastille[data-c=SA]{color:var(--c-SA)}\n.arcv .pastille[data-c=LA]{color:var(--c-LA)}\n.arcv .pastille[data-c=PA]{color:var(--c-PA)}\n.arcv .pastille[data-c=EPBS]{color:var(--c-EPBS)}\n.arcv .a-ico[data-c=STR],.arcv .puce-t[data-c=STR]{color:var(--c-STR);background:color-mix(in srgb,var(--c-STR) 16%,transparent)}\n.arcv .pastille[data-c=STR]{color:var(--c-STR)}\n.arcv .a-ico[data-c=BEH],.arcv .puce-t[data-c=BEH]{color:var(--c-BEH);background:color-mix(in srgb,var(--c-BEH) 16%,transparent)}\n.arcv .pastille[data-c=BEH]{color:var(--c-BEH)}\n.arcv .a-ico[data-c=REQ],.arcv .puce-t[data-c=REQ]{color:var(--c-REQ);background:color-mix(in srgb,var(--c-REQ) 16%,transparent)}\n.arcv .pastille[data-c=REQ]{color:var(--c-REQ)}\n.arcv .a-ico[data-c=ORG],.arcv .puce-t[data-c=ORG]{color:var(--c-ORG);background:color-mix(in srgb,var(--c-ORG) 16%,transparent)}\n.arcv .pastille[data-c=ORG]{color:var(--c-ORG)}\n.arcv #detail-formulaire.lecture-seule input,.arcv #detail-formulaire.lecture-seule textarea{opacity:.85;cursor:default}\n.arcv .pastille.ossature{color:var(--c-warn)}\n.arcv #panneau-detail{padding:14px 18px !important}\n.arcv #detail-vide{color:var(--c-dim);margin-top:40px;text-align:center}\n.arcv #detail{display:flex;flex-direction:column;gap:10px;max-width:960px}\n.arcv #detail-formulaire{display:flex;flex-direction:column;gap:10px;min-width:0}\n.arcv #travail.cote #detail{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 22px;max-width:none;align-items:start}\n.arcv #travail.cote #detail-liens{position:sticky;top:0;max-height:calc(100vh - 80px);overflow:auto;margin-top:0;padding-right:4px}\n.arcv #detail-chemin{font-size:11px;color:var(--c-dim);display:flex;flex-wrap:wrap;gap:2px}\n.arcv #detail-chemin a{color:var(--c-dim);cursor:pointer;text-decoration:none}\n.arcv #detail-chemin a:hover{color:var(--c-accent);text-decoration:underline}\n.arcv .detail-entete{display:flex;gap:8px;align-items:center;font-size:15px;font-weight:700}\n.arcv .detail-id{font-size:11px;color:var(--c-dim)}\n.arcv #detail label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--c-dim)}\n.arcv #detail label input,.arcv #detail label textarea{color:var(--c-text);font-size:13px}\n.arcv textarea{resize:vertical;font-family:Consolas,'Cascadia Mono',monospace;font-size:12px !important}\n.arcv .detail-proprietes{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px 14px;align-items:end}\n.arcv #detail .detail-proprietes label.case{min-height:30px}\n.arcv #detail .detail-proprietes label.case{flex-direction:row;align-items:center;gap:6px}\n.arcv #detail .detail-proprietes label.grise{opacity:.6}\n.arcv .detail-proprietes select{color:var(--c-text);font-size:13px}\n.arcv .detail-proprietes .modifie{outline:2px solid var(--c-accent);outline-offset:1px}\n.arcv .detail-relations{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--c-border);padding-top:8px}\n.arcv .rel-titre{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--c-dim)}\n.arcv .rel-titre .bt{margin-left:auto}\n.arcv .rel-valeurs{display:flex;flex-wrap:wrap;gap:4px}\n.arcv .rel-valeur{display:inline-flex;align-items:center;gap:2px}\n.arcv .rel-retirer{border:0;background:none;color:var(--c-dim);cursor:pointer;padding:0 3px;font-size:11px}\n.arcv .bt.petit{padding:1px 8px;font-size:11px}\n.arcv .rel-retirer:disabled{opacity:.35;cursor:not-allowed}\n.arcv .rel-retirer:hover:not(:disabled){color:var(--c-err,#e66)}\n.arcv .detail-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}\n.arcv .detail-actions .apercu-l{flex-direction:row !important;align-items:center;margin-left:auto}\n.arcv .champ-desc{display:flex;flex-direction:column;gap:4px;position:relative}\n.arcv .desc-entete{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--c-dim)}\n.arcv .desc-modes{display:inline-flex;border:1px solid var(--c-border);border-radius:5px;overflow:hidden}\n.arcv .desc-mode{padding:2px 10px;background:var(--c-bg3);border:0;cursor:pointer;font-size:11px;color:var(--c-dim)}\n.arcv .desc-mode.actif{background:var(--c-accent);color:var(--c-bg2);font-weight:600}\n.arcv .desc-outils{display:flex;align-items:center;gap:2px;flex-wrap:wrap;padding:3px;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:5px 5px 0 0}\n.arcv .desc-outils.inactif{opacity:.4;pointer-events:none}\n.arcv .desc-outils button{min-width:26px;height:24px;padding:0 5px;background:none;border:1px solid transparent;border-radius:4px;cursor:pointer;font-size:12px}\n.arcv .desc-outils button:hover{background:var(--c-bg3);border-color:var(--c-border)}\n.arcv .desc-outils button.actif{background:color-mix(in srgb,var(--c-accent) 25%,transparent);border-color:var(--c-accent)}\n.arcv .desc-outils select{width:auto;padding:2px 4px;font-size:12px}\n.arcv .desc-outils .sep{height:16px}\n.arcv #desc-editeur{display:block;width:100%;height:240px;border:1px solid var(--c-border);border-top:0;border-radius:0 0 6px 6px;background:var(--c-bg3);resize:vertical}\n.arcv #desc-editeur[hidden]{display:none}\n.arcv #champ-description{min-height:240px;border-radius:0 0 6px 6px}\n.arcv .choix-element{position:absolute;z-index:20;top:62px;right:8px;width:min(420px,90%);background:var(--c-bg2);border:1px solid var(--c-accent);border-radius:6px;\n  box-shadow:0 8px 24px rgba(0,0,0,.35);padding:6px;display:flex;flex-direction:column;gap:4px}\n.arcv .choix-element input{width:100%;padding:5px 8px;background:var(--c-bg3);border:1px solid var(--c-border);border-radius:4px}\n.arcv .choix-element ul{list-style:none;max-height:260px;overflow:auto}\n.arcv .choix-element li{padding:3px 6px;border-radius:4px;cursor:pointer;display:flex;gap:6px;align-items:baseline}\n.arcv .choix-element li:hover{background:var(--c-bg3)}\n.arcv #detail h3,.arcv #panneau-journal h3{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--c-dim);margin-top:6px}\n.arcv .modifie{border-color:var(--c-warn) !important}\n.arcv #detail-liens{display:flex;flex-direction:column;gap:4px;margin-top:6px}\n.arcv .rubrique{border-top:1px solid var(--c-border);padding-top:6px}\n.arcv .rubrique>summary{cursor:pointer;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--c-dim);padding:2px 0;list-style-position:inside}\n.arcv .rubrique>summary .nb{font-weight:400;opacity:.8}\n.arcv .r-liaisons>summary{color:var(--c-accent)}\n.arcv .r-sortantes>summary{color:var(--c-ok)}\n.arcv .r-entrantes>summary{color:var(--c-warn)}\n.arcv .r-proprietaire>summary{color:var(--c-EPBS)}\n.arcv .r-contenus>summary{color:var(--c-LA)}\n.arcv .rub-corps{padding:6px 0 8px}\n.arcv .attributs{width:100%;border-collapse:collapse}\n.arcv .attributs td{padding:4px 0;border-bottom:1px solid var(--c-border);vertical-align:top;font-size:12px;word-break:break-all}\n.arcv .attributs td:first-child{width:170px;padding-right:10px;color:var(--c-dim);font-family:Consolas,'Cascadia Mono',monospace;font-size:11px;word-break:normal}\n.arcv .groupe{margin-bottom:8px}\n.arcv .groupe-l{font-family:Consolas,'Cascadia Mono',monospace;font-size:10.5px;color:var(--c-dim);margin-bottom:2px}\n.arcv .groupe-c{display:flex;flex-wrap:wrap;align-items:center}\n.arcv .liaison{display:flex;align-items:center;flex-wrap:wrap;width:100%}\n.arcv .via{display:inline-flex;align-items:center;gap:2px;font-size:10.5px;color:var(--c-dim);margin-left:4px}\n.arcv .puce{display:inline-flex;align-items:center;gap:5px;padding:2px 6px;margin:2px 4px 2px 0;border:1px solid var(--c-border);border-radius:4px;\n  background:var(--c-bg2);font-size:11.5px;cursor:pointer;color:var(--c-text);text-decoration:none;max-width:100%}\n.arcv .puce:hover{border-color:var(--c-accent)}\n.arcv .puce.sans-nom{padding:2px 4px;border-style:dotted}\n.arcv .puce-t{font-size:9px;font-weight:700;padding:0 3px;border-radius:3px;color:var(--c-dim)}\n.arcv .puce.absente{cursor:default;color:var(--c-dim);font-family:Consolas,'Cascadia Mono',monospace;font-size:10.5px;border-style:dashed}\n.arcv #journal li{padding:6px 8px;margin-bottom:5px;border-radius:5px;background:var(--c-bg2);border-left:3px solid var(--c-accent);font-size:12px;cursor:pointer}\n.arcv #journal li:hover{background:var(--c-bg3)}\n.arcv #journal li.annulee{opacity:.45;border-left-color:var(--c-border);text-decoration:line-through}\n.arcv .j-quoi{font-weight:600}\n.arcv .j-detail{color:var(--c-dim);word-break:break-word}\n.arcv #journal-vide{font-size:12px;margin-top:8px}\n.arcv .menu{position:fixed;z-index:70;min-width:240px;max-width:min(480px,94vw);max-height:80vh;overflow:auto;background:var(--c-bg2);border:1px solid var(--c-border);\n  border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,.4);padding:4px 0;font-size:12.5px}\n.arcv #menu-dispo{left:auto}\n.arcv .menu-titre{padding:6px 12px 4px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.arcv .menu-section{padding:6px 12px 2px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--c-dim)}\n.arcv .menu-item{display:flex;width:100%;align-items:center;justify-content:space-between;gap:16px;padding:5px 12px;background:none;border:0;text-align:left;cursor:pointer}\n.arcv .menu-item:hover,.arcv .menu-item:focus{background:var(--c-bg3);outline:none}\n.arcv .menu-item kbd,.arcv .menu kbd{font-family:inherit;font-size:10.5px;color:var(--c-dim);border:1px solid var(--c-border);border-radius:3px;padding:0 4px}\n.arcv .menu-sep{height:1px;background:var(--c-border);margin:4px 0}\n.arcv .menu-vide{padding:5px 12px;color:var(--c-dim);font-size:11.5px}\n.arcv .liste-l{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--c-dim)}\n.arcv .liste-l select,.arcv .liste-l textarea{color:var(--c-text)}\n.arcv .liste-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.arcv .choix-filtre{color:var(--c-text);font-size:13px;padding:5px 8px}\n.arcv .choix-liste{list-style:none;margin:0;max-height:min(420px,60vh);overflow:auto;background:var(--c-bg);border-radius:5px;padding:4px}\n.arcv .choix-liste li{display:flex;align-items:center;gap:6px;padding:3px 6px;border-radius:4px;cursor:pointer;min-width:0}\n.arcv .choix-liste li:hover,.arcv .choix-liste li:focus{background:var(--c-bg3);outline:none}\n.arcv .choix-liste .puce{pointer-events:none;flex:none;max-width:60%}\n.arcv .import-apercu{max-height:min(360px,45vh);overflow:auto}\n.arcv .import-table{border-collapse:collapse;font-size:12px;width:100%}\n.arcv .import-table td{padding:2px 6px;border-bottom:1px solid var(--c-border);vertical-align:top}\n.arcv .import-table tr.imp-erreur td:nth-child(2){color:var(--c-err)}\n.arcv .import-table tr.imp-creation td:nth-child(2){color:var(--c-ok)}\n.arcv .supp-liste{display:flex;flex-wrap:wrap;gap:4px;max-height:min(320px,45vh)}\n.arcv .bt.danger{background:var(--c-err);border-color:var(--c-err)}\n.arcv .a-ligne.a-depot{outline:2px solid var(--c-accent);outline-offset:-2px;background:var(--c-bg3)}\n.arcv .a-ligne.a-depot-ko{cursor:not-allowed}\n.arcv .choix-chemin{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.arcv #liste-apercu{list-style:none;max-height:260px;overflow:auto;background:var(--c-bg);border-radius:5px;padding:6px 8px;color:var(--c-text);font-size:12px}\n.arcv #fenetre{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:50}\n.arcv .fenetre-cadre{width:min(760px,94vw);max-height:86vh;overflow:auto;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:10px;padding:16px 18px}\n.arcv .fenetre-titre{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:700;margin-bottom:12px}\n.arcv #fenetre-corps{display:flex;flex-direction:column;gap:8px;line-height:1.45}\n.arcv .diag-ligne{display:flex;gap:8px}\n.arcv .diag-ok{color:var(--c-ok)}\n.arcv .diag-ko{color:var(--c-err)}\n.arcv .diag-av{color:var(--c-warn)}\n.arcv #fenetre-corps pre{background:var(--c-bg);padding:8px;border-radius:5px;overflow:auto;font-size:11px;white-space:pre-wrap}\n.arcv #toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);padding:8px 14px;border-radius:6px;background:var(--c-bg3);\n  border:1px solid var(--c-border);opacity:0;pointer-events:none;transition:opacity .2s;z-index:60;max-width:80vw}\n.arcv #toast.visible{opacity:1}\n.arcv #toast.err{border-color:var(--c-err);color:var(--c-err)}\n.arcv .diag-barre{display:flex;align-items:center;gap:8px;flex-wrap:wrap}\n.arcv #diag-info{font-size:11px}\n.arcv #diag-filtre{width:100%;padding:6px 8px;background:var(--c-bg3);border:1px solid var(--c-border);border-radius:5px}\n.arcv #diag-liste{list-style:none;flex:1;min-height:0;overflow:auto;border-top:1px solid var(--c-border);padding-top:4px;font-size:12.5px}\n.arcv #diag-liste li[data-diag]{display:flex;gap:6px;align-items:baseline;padding:3px 6px;border-radius:4px;cursor:pointer;line-height:1.35}\n.arcv #diag-liste li[data-diag]:hover{background:var(--c-bg3)}\n.arcv #diag-liste li.actif{background:var(--c-bg4);outline:1px solid var(--c-accent)}\n.arcv .diag-groupe{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--c-dim);padding:8px 4px 3px}\n.arcv .diag-sigle{font-size:9.5px;font-weight:700;padding:0 4px;border-radius:3px;color:var(--c-dim);background:var(--c-bg3);\n  font-family:Consolas,'Cascadia Mono',monospace;flex-shrink:0;min-width:34px;text-align:center}\n.arcv .diag-sigle[data-c=OA]{color:var(--c-OA)}\n.arcv .diag-sigle[data-c=SA]{color:var(--c-SA)}\n.arcv .diag-sigle[data-c=LA]{color:var(--c-LA)}\n.arcv .diag-sigle[data-c=PA]{color:var(--c-PA)}\n.arcv .diag-sigle[data-c=EPBS]{color:var(--c-EPBS)}\n.arcv .diag-nom{overflow:hidden;text-overflow:ellipsis}\n.arcv .r-diagrammes>summary{color:var(--c-EPBS)}\n.arcv #centre-onglets{margin:-6px -8px 8px}\n.arcv #centre-onglets .onglet{flex:0 1 auto;max-width:50%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\n.arcv #panneau-detail.mode-diagramme{display:flex;flex-direction:column;overflow:hidden !important;padding:8px 10px !important}\n.arcv #panneau-detail.mode-diagramme #centre-onglets{margin:0 0 6px}\n.arcv #panneau-detail.mode-diagramme>#detail,.arcv #panneau-detail.mode-diagramme>#detail-vide{display:none}\n.arcv #vue-diagramme{display:flex;flex-direction:column;flex:1;min-height:0;gap:6px}\n.arcv #vue-diagramme[hidden]{display:none}\n.arcv .vd-barre{display:flex;align-items:center;gap:6px;flex-wrap:wrap}\n.arcv #vd-nom{font-weight:700}\n.arcv #vd-nom{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:0 1 auto}\n.arcv #vd-zoom{font-size:11px;min-width:44px;text-align:center;font-family:Consolas,'Cascadia Mono',monospace}\n.arcv #vd-cible .puce{margin:0}\n.arcv #vd-svg .vd-lien-ref{cursor:pointer;text-decoration:underline}\n.arcv #vd-svg [data-ref]:hover .vd-lien-ref{text-decoration-thickness:2px}\n.arcv #vd-zone{flex:1;min-height:0;border:1px solid var(--c-border);border-radius:10px;overflow:hidden;cursor:grab;touch-action:none;\n  --vd-toile:#ffffff;--vd-point:transparent;--vd-accent:#2f5fd0;\n  background:radial-gradient(circle,var(--vd-point) 1px,transparent 1.3px) 0 0/20px 20px,var(--vd-toile)}\n.arcv #vd-zone[data-theme=\"clair\"]{--vd-toile:#f6f8fc;--vd-point:#dde3ee;--vd-accent:#2f5fd0}\n.arcv #vd-zone[data-theme=\"sombre\"]{--vd-toile:#131621;--vd-point:#262b3c;--vd-accent:#7aa7ff}\n.arcv #vd-theme{width:auto;padding:2px 6px;font-size:12px}\n.arcv #vd-zone.glisse{cursor:grabbing}\n.arcv #vd-zone:focus{outline:none}\n.arcv #vd-zone:focus-visible{outline:2px solid var(--c-accent)}\n.arcv #vd-svg{width:100%;height:100%;display:block;user-select:none;text-rendering:geometricPrecision}\n.arcv #vd-svg [data-sem]{cursor:pointer}\n.arcv #vd-svg .vd-f,.arcv #vd-svg .vd-l{transition:opacity .18s}\n.arcv #vd-svg .vd-f[data-sem]:hover>.vd-c,.arcv #vd-svg .vd-f[data-sem]:hover>.vd-c>*{stroke:var(--vd-accent);stroke-width:1.8px}\n.arcv #vd-svg .vd-l[data-sem]:hover>path.vd-c{stroke:var(--vd-accent)}\n.arcv #vd-svg .vd-sel>.vd-c,.arcv #vd-svg .vd-sel>.vd-c>*{stroke:var(--vd-accent) !important;stroke-width:2.6px;filter:drop-shadow(0 0 5px color-mix(in srgb,var(--vd-accent) 55%,transparent))}\n.arcv #vd-svg .vd-l.vd-sel>path.vd-c,.arcv #vd-svg .vd-l.vd-lie>path.vd-c{stroke:var(--vd-accent) !important;stroke-width:2.2px}\n.arcv #vd-svg.vd-focus .vd-f:not(.vd-sel):not(.vd-proche),.arcv #vd-svg.vd-focus .vd-l:not(.vd-sel):not(.vd-lie){opacity:.28}\n.arcv #vd-svg .vd-absent{opacity:.35}\n.arcv #vd-zone.edition #vd-svg.vd-focus .vd-f,.arcv #vd-zone.edition #vd-svg.vd-focus .vd-l{opacity:1}\n.arcv #vd-edition.actif,.arcv #vd-ponts.actif{background:color-mix(in srgb,var(--c-accent) 22%,var(--c-bg3));border-color:var(--c-accent);color:var(--c-accent)}\n.arcv #vd-outils{padding:3px 6px;border:1px solid var(--c-border);border-radius:8px;background:var(--c-bg2)}\n.arcv #vd-outils[hidden]{display:none}\n.arcv #vd-outils .dim{font-size:11px}\n.arcv .vd-aide{font-size:10.5px !important}\n.arcv #vd-zone.edition #vd-svg .vd-f[data-v]{cursor:move}\n.arcv #vd-zone.edition #vd-svg .vd-l[data-v]{cursor:pointer}\n.arcv #vd-zone.calcul,.arcv #vd-zone.calcul *{cursor:progress!important}\n.arcv #vd-svg .edd-choix{fill:none;stroke:var(--vd-accent);pointer-events:none}\n.arcv #vd-svg .edd-poignee{fill:var(--vd-toile);stroke:var(--vd-accent);cursor:nwse-resize}\n.arcv #vd-svg .edd-e,.arcv #vd-svg .edd-w{cursor:ew-resize}\n.arcv #vd-svg .edd-s,.arcv #vd-svg .edd-n{cursor:ns-resize}\n.arcv #vd-svg .edd-ne,.arcv #vd-svg .edd-sw{cursor:nesw-resize}\n.arcv #vd-svg circle.edd-poignee{cursor:move}\n.arcv #vd-svg .edd-bout{cursor:crosshair}\n.arcv #vd-svg .edd-etiq{cursor:move}\n.arcv #vd-svg .edd-etiq-defaut{stroke:var(--vd-accent);pointer-events:none}\n.arcv #vd-svg .edd-info{fill:var(--vd-accent);pointer-events:none;font-family:system-ui,sans-serif}\n.arcv .edd-aide td{padding:3px 10px;vertical-align:top}\n.arcv .edd-aide kbd{white-space:nowrap}\n.arcv #vd-svg .edd-lien{fill:none;stroke:var(--vd-accent);stroke-opacity:.25;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}\n.arcv #vd-svg .edd-guide{stroke:#e5484d;stroke-dasharray:4 3;pointer-events:none}\n.arcv .bco{position:absolute;z-index:4;display:flex;flex-direction:column;gap:1px;padding:3px;background:var(--c-bg2);border:1px solid var(--c-border);\n  border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.18);cursor:default}\n.arcv .bco[hidden]{display:none}\n.arcv .bco-bt{width:26px;height:26px;display:flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:5px;background:none;\n  color:var(--c-text);font-size:14px;line-height:1;cursor:pointer}\n.arcv .bco-bt:hover,.arcv .bco-bt:focus-visible{background:var(--c-bg3);outline:none}\n.arcv .bco-plus{height:16px;font-size:10px;color:var(--c-dim)}\n.arcv .bco-menu{position:absolute;z-index:5;min-width:220px;max-width:360px;max-height:60%;overflow:auto;padding:4px 0;background:var(--c-bg2);\n  border:1px solid var(--c-border);border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.2);cursor:default}\n.arcv .bco-menu[hidden]{display:none}\n.arcv .bco-menu .menu-item{justify-content:flex-start;gap:4px;font-size:12px;color:var(--c-text)}\n.arcv .bco-menu .bco-menu-titre{padding:4px 8px;font-size:11px}\n.arcv .bco-menu .sty{display:grid;gap:4px;padding:2px 10px 6px}\n.arcv .bco-menu .sty-ligne{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--c-text)}\n.arcv .bco-menu .sty-ligne input[type=color]{width:36px;height:22px;padding:0;border:1px solid var(--c-border);border-radius:4px;background:none;cursor:pointer}\n.arcv .bco-menu .sty-ligne input[type=number]{width:56px}\n.arcv .bco-menu .sty-ligne select{max-width:130px}\n.arcv .bco-menu .sty-actions{display:flex;flex-wrap:wrap;gap:4px;padding:6px 10px 4px;border-top:1px solid var(--c-border)}\n.arcv #vd-zone.placement,.arcv #vd-zone.placement #vd-svg .vd-f[data-v]{cursor:crosshair}\n.arcv #vd-svg .bco-trace{stroke:var(--vd-accent);fill:none;pointer-events:none}\n.arcv #vd-svg .bco-trace.ko{stroke:#e5484d}\n.arcv #vd-svg .bco-cible{fill:color-mix(in srgb,var(--vd-accent) 12%,transparent);stroke:var(--vd-accent);pointer-events:none}\n.arcv #vd-svg .bco-cible.ko{fill:color-mix(in srgb,#e5484d 12%,transparent);stroke:#e5484d}\n.arcv #vd-svg .bco-nouveau{fill:color-mix(in srgb,var(--vd-accent) 10%,transparent);stroke:var(--vd-accent);pointer-events:none}\n.arcv #vd-svg .bco-nouveau-texte{fill:var(--vd-accent);pointer-events:none}\n.arcv #vd-svg .bco-fantome{fill:color-mix(in srgb,var(--vd-accent) 30%,transparent);stroke:var(--vd-accent);pointer-events:none}\n.arcv .bco-port{flex:none;width:10px;height:10px;margin-right:6px;border:1.5px solid var(--c-text);background:var(--c-bg2);border-radius:1px}\n.arcv .bco-port-in{background:linear-gradient(135deg,transparent 45%,var(--c-text) 45% 55%,transparent 55%)}\n.arcv .bco-port-out{background:linear-gradient(45deg,transparent 45%,var(--c-text) 45% 55%,transparent 55%)}\n.arcv .bco-port-inout{background:var(--c-dim)}\n.arcv .bco-port-phys{background:#fff477;border-color:#7b694f}\n.arcv .bco-renommer{position:absolute;z-index:5;padding:3px 6px;font:inherit;font-size:13px;color:var(--c-text);background:var(--c-bg2);\n  border:2px solid var(--c-accent);border-radius:5px;box-shadow:0 2px 8px rgba(0,0,0,.18)}\n.arcv #vd-svg .edd-cadre{fill:color-mix(in srgb,var(--vd-accent) 10%,transparent);stroke:var(--vd-accent);pointer-events:none}\n.arcv .vd-pied{font-size:11px}\n.arcv .vd-chercher{display:inline-flex;align-items:center;gap:4px}\n.arcv #vd-chercher{width:190px;padding:3px 7px;font-size:12px}\n.arcv #vd-trouves{font-size:11px;min-width:34px;text-align:center}\n.arcv #vd-chercher.sans-resultat{border-color:var(--c-err);background:color-mix(in srgb,var(--c-err) 10%,var(--c-bg2))}\n.arcv #vd-zone{position:relative}\n.arcv #vd-svg .vd-trouve>.vd-c,.arcv #vd-svg .vd-trouve>.vd-c>*{stroke:#e8590c !important;stroke-width:2.4px}\n.arcv #vd-svg .vd-l.vd-trouve>path.vd-c{stroke:#e8590c !important}\n.arcv #vd-svg .vd-courant>.vd-c,.arcv #vd-svg .vd-courant>.vd-c>*{stroke:#e8590c !important;stroke-width:3.4px;filter:drop-shadow(0 0 6px #e8590c)}\n.arcv #vd-carte{position:absolute;right:10px;bottom:10px;width:220px;height:150px;background:var(--vd-toile,#fff);border:1px solid var(--c-border);\n  border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:crosshair;opacity:.95}\n.arcv #vd-carte[hidden]{display:none}\n.arcv #vd-bulle{position:absolute;z-index:5;max-width:340px;padding:8px 10px;border-radius:8px;background:var(--c-bg2);color:var(--c-text);\n  border:1px solid var(--c-border);box-shadow:0 6px 18px rgba(0,0,0,.3);font-size:12px;line-height:1.4;pointer-events:none}\n.arcv #vd-bulle[hidden]{display:none}\n.arcv .vd-filtres-ancre{position:relative;display:inline-flex}\n.arcv #vd-filtres{position:absolute;top:calc(100% + 4px);right:0;z-index:20;min-width:240px;max-height:60vh;overflow:auto;padding:8px 10px;\n  background:var(--c-bg2);border:1px solid var(--c-border);border-radius:8px;box-shadow:0 8px 22px rgba(0,0,0,.3);font-size:12px}\n.arcv #vd-filtres[hidden]{display:none}\n.arcv .vd-menu{position:absolute;top:calc(100% + 4px);right:0;z-index:20;min-width:210px;padding:4px;background:var(--c-bg2);border:1px solid var(--c-border);\n  border-radius:8px;box-shadow:0 8px 22px rgba(0,0,0,.3);font-size:12px;display:flex;flex-direction:column}\n.arcv .vd-menu[hidden]{display:none}\n.arcv .vd-menu button{all:unset;padding:5px 8px;border-radius:5px;cursor:pointer;white-space:nowrap}\n.arcv .vd-menu button:hover{background:var(--c-bg3)}\n.arcv #vd-chaine{max-width:230px}\n.arcv #vd-chaine[hidden]{display:none}\n.arcv #vd-svg{--vd-chaine:#1f6feb}\n.arcv #vd-svg.vd-mode-chaine .vd-f:not(.vd-chaine):not(.vd-chaine-proche),.arcv #vd-svg.vd-mode-chaine .vd-l:not(.vd-chaine){opacity:.22}\n.arcv #vd-svg .vd-chaine>.vd-c,.arcv #vd-svg .vd-chaine>.vd-c>*{stroke:var(--vd-chaine) !important;stroke-width:2.6px}\n.arcv #vd-svg .vd-l.vd-chaine>path.vd-c{stroke:var(--vd-chaine) !important;stroke-width:3px}\n.arcv #vue-diagramme.mode-tableau #vd-chaine{display:none !important}\n.arcv #vd-filtres .vf-titre{font-weight:700;margin:8px 0 3px;color:var(--c-dim);font-size:11px;text-transform:uppercase;letter-spacing:.04em}\n.arcv #vd-filtres .vf-titre:first-child{margin-top:0}\n.arcv #vd-filtres .vf-case{display:flex;align-items:center;gap:6px;padding:2px 0;cursor:pointer;white-space:nowrap}\n.arcv #vd-filtres .vf-pied{margin-top:8px;text-align:right}\n.arcv #vd-bulle .vb-titre{display:flex;align-items:center;gap:6px;font-weight:700;font-size:13px;margin-bottom:2px}\n.arcv #vd-bulle .vb-titre svg{flex:none}\n.arcv #vd-bulle .vb-ligne{margin-top:2px}\n.arcv #vd-bulle .vb-texte{margin:5px 0 3px;padding-left:6px;border-left:2px solid var(--c-border)}\n.arcv #vd-carte .vd-carte-vue{fill:color-mix(in srgb,var(--vd-accent) 14%,transparent);stroke:var(--vd-accent);vector-effect:non-scaling-stroke;stroke-width:1.5px}\n.arcv #vue-diagramme.mode-tableau :is(.vd-chercher,#vd-zoom-choix,#vd-carte-bt,.vd-filtres-ancre:has(#vd-filtres)){display:none !important}\n.arcv #vd-tableau,.arcv #vd-tableau-info,.arcv .vd-pied-tableau{display:none}\n.arcv #vue-diagramme.mode-tableau #vd-tableau{display:block}\n.arcv #vue-diagramme.mode-tableau #vd-tableau-info{display:inline-flex}\n.arcv #vue-diagramme.mode-tableau .vd-pied-tableau{display:block}\n.arcv #vue-diagramme.mode-tableau :is(#vd-zone,#vd-outils,.vd-pied-dessin,#vd-edition,#vd-ponts,#vd-theme,#vd-moins,#vd-zoom,#vd-plus,#vd-ajuster,#vd-reel){display:none !important}\n.arcv #vd-tableau{flex:1;min-height:0;overflow:auto;border:1px solid var(--c-border);border-radius:10px;background:var(--c-bg2)}\n.arcv #vd-tableau:focus{outline:none}\n.arcv .vt{border-collapse:separate;border-spacing:0;font-size:12px;table-layout:fixed}\n.arcv .vt th,.arcv .vt td{border-right:1px solid var(--c-bg3);border-bottom:1px solid var(--c-bg3);padding:3px 6px;height:22px;\n  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;box-sizing:border-box}\n.arcv .vt thead th{position:sticky;top:0;z-index:2;background:var(--c-bg4);font-weight:600;text-align:left;border-bottom-color:var(--c-border)}\n.arcv .vt .vt-lig{position:sticky;left:0;z-index:1;background:var(--c-bg3);font-weight:400;text-align:left;border-right-color:var(--c-border)}\n.arcv .vt thead .vt-coin{left:0;z-index:3}\n.arcv .vt td{text-align:center;color:var(--c-text)}\n.arcv .vt [data-sem]{cursor:pointer}\n.arcv .vt [data-sem]:hover{color:var(--c-accent)}\n.arcv .vt .vt-axe{background:color-mix(in srgb,var(--c-accent) 10%,transparent)}\n.arcv .vt tr.vt-axe>.vt-lig{background:color-mix(in srgb,var(--c-accent) 18%,var(--c-bg3))}\n.arcv .vt .vd-sel{outline:2px solid var(--c-accent);outline-offset:-2px;background:color-mix(in srgb,var(--c-accent) 22%,var(--c-bg2))}\n.arcv .vt .vt-lig.vd-sel{background:color-mix(in srgb,var(--c-accent) 28%,var(--c-bg3))}\n.arcv .vt .vt-absent{opacity:.5}\n.arcv .vt-ico{display:inline-flex;vertical-align:-3px;margin-right:4px}\n.arcv .vt-pli{display:inline-block;width:14px;padding:0;margin-right:2px;border:0;background:none;color:var(--c-dim);cursor:pointer;font-size:10px}\n.arcv .vt-vide{padding:16px}\n.arcv #detail-formulaire.lecture-seule #bt-appliquer,.arcv #detail-formulaire.lecture-seule #bt-defaire-saisie{display:none}\n/* Visionneuse : disposition propre (le reste des styles vient de src/css/styles.css, préfixé par .arcv) */\n.arcv{--c-OA:#d9a400;--c-SA:#3fa33f;--c-LA:#1f9ab3;--c-PA:#d8742f;--c-EPBS:#8a5ce0;\n  display:grid;grid-template-columns:minmax(220px,24%) 1fr;gap:10px;height:100%;min-height:0;font-size:13px;color:var(--c-text);position:relative}\n.arcv.sans-liste{grid-template-columns:1fr}\n.arcv.sans-liste .arcv-gauche{display:none}\n.arcv-gauche{display:flex;flex-direction:column;gap:6px;min-height:0;overflow:hidden}\n.arcv-gauche #diag-liste{flex:1;overflow:auto;list-style:none;margin:0;padding:0}\n.arcv-centre{display:flex;flex-direction:column;min-height:0;min-width:0}\n.arcv #panneau-detail.mode-diagramme{padding:0 !important}\n#arcv-vide{margin:auto;font-size:14px}\n.arcv #toast{position:absolute}\n.arcv .vd-pied-dessin,.arcv #vd-edition,.arcv #vd-outils{display:none !important}\n";
 /* ── src/visionneuse/socle-fin.js ── */
 /* ═══════════════════════════════════════════════════════════════════════
    VISIONNEUSE — API (après le dessin)
    ───────────────────────────────────────────────────────────────────────
    window.ArcatureVisionneuse : visionneuse autonome des diagrammes Capella (.aird), en lecture seule.
-     creer(conteneur, { choix(id, infos), liste: true })   → crée la visionneuse dans un élément
+     creer(conteneur, { choix(id, infos), liste, elk })     → crée la visionneuse dans un élément
      chargerModele(texteCapella, nom)                      → modèle .capella (icônes, liaisons, chaînes)
      chargerAird(texteAird, nom)                           → diagrammes ; renvoie le nombre de représentations
      representations()                                     → [{ uid, nom, type, sigle, genre, couche }]
      diagrammesDe(id)                                      → { cibles, presences } : représentations d'un élément
      ouvrir(uid, [id])  choisir(id)  fermer()  theme('capella' | 'clair' | 'sombre')
      icone(id, [taille]) / iconeType(type, [taille])        → icône SVG d'un élément (variante comme Capella) ou d'un type
+     disposer(mode) → Promise                               → vue réorganisée du diagramme ouvert (mise en page automatique
+                                                              d'Arcature, en mémoire : le .aird n'est jamais modifié)
+     origine(vrai)  disposition([uid])  oublier([uid])      → bascule vue d'origine / réorganisée, état, retour définitif
    ARCV_GABARIT (HTML) et ARCV_CSS (styles préfixés par .arcv) sont produits par node build.js --visionneuse.
    ═══════════════════════════════════════════════════════════════════════ */
 
@@ -5113,6 +8615,98 @@ function arcvPresences() {
   }
 }
 
+/* ── Vue réorganisée : mise en page automatique (E5) appliquée en mémoire, réversible ─────────────────
+   Les changements GMF calculés par diaMiseEnPage sont posés sur le .aird lu en mémoire (VD.aird.doc) et gardés pour être
+   défaits : la vue d'origine revient à l'identique, le fichier .aird de l'hôte n'est jamais touché (aucune écriture). */
+
+/** Modes de réorganisation proposés à l'hôte. */
+const ARCV_MODES = ['etiquettes', 'liens', 'auto', 'couches', 'arbre', 'grille'];
+
+/**
+ * Moteur ELK (elkjs) : fourni par l'hôte (options.elk : instance, ou fonction qui la renvoie), sinon lu dans le bloc
+ * « arc-elk » de la page (texte évalué au premier usage, comme dans Arcature), sinon absent (disposition maison). Une absence
+ * n'est pas retenue (l'hôte peut fournir le moteur plus tard) ; un échec de chargement l'est.
+ * @returns {object|null} instance d'ELK (layout(graphe) → Promise), ou null
+ */
+function arcvElk() {
+  if (VIS.elk || VIS.elk === false) return VIS.elk || null;
+  try {
+    const o = VIS.options.elk;
+    let elk = typeof o === 'function' ? o() : o || null;
+    if (!elk) {
+      const s = document.getElementById('arc-elk');
+      if (typeof window.ELK !== 'function' && s && s.textContent.trim()) (0, eval)(s.textContent);   // définit window.ELK
+      if (typeof window.ELK === 'function') elk = new window.ELK();
+    }
+    if (elk) VIS.elk = elk;
+  } catch (e) { console.error(e); VIS.elk = false; }
+  return VIS.elk || null;
+}
+
+/**
+ * Applique ou défait la réorganisation d'une représentation, puis recalcule sa scène (et redessine le diagramme affiché, ajusté).
+ * @param {object} rep représentation
+ * @param {boolean} active vrai : vue réorganisée ; faux : vue d'origine
+ */
+function arcvActiver(rep, active) {
+  const d = VIS.dispositions.get(rep.uid);
+  if (!d || d.active === active) return;
+  const sens = active ? 'apres' : 'avant', liste = active ? d.changements : d.changements.slice().reverse();
+  for (const c of liste) xtDefinirAttr(VD.aird.doc, c.el, c.n, c[sens], c.ordre);
+  d.active = active;
+  rep.scene = null;
+  if (VD.rep === rep) { diaScene(VD.aird, rep); vdRedessiner(); vdAjuster(); }
+}
+
+/**
+ * Plan de mise en page d'un diagramme (modifications voulues par diaMiseEnPage), calculé sur sa scène d'origine :
+ * étiquettes seules replacées, liens retracés en angles droits (formes gardées), ou tout le premier niveau disposé (contenu
+ * des conteneurs avec ELK ; « auto » : étoile pour un diagramme en étoile, arbre pour une décomposition, couches sinon).
+ * @param {object} rep représentation (genre « diagramme »)
+ * @param {string} mode un des ARCV_MODES
+ * @returns {Promise<{plan:object, genre:string, moteur:string}>}
+ * @throws {Error} rien à réorganiser
+ */
+async function arcvPlan(rep, mode) {
+  const sc = rep.scene, aird = VD.aird;
+  if (mode === 'etiquettes') {
+    const liens = sc.liens.filter(diaAEtiquette);
+    if (!liens.length) throw new Error(_L('No link label to place.'));
+    return { plan: { etiquettes: diaPlacerEtiquettes(sc, new Map(liens.map(l => [l, l.points]))) }, genre: mode, moteur: 'maison' };
+  }
+  let plan, genre = mode, moteur = 'maison';
+  if (mode === 'liens') {
+    if (!sc.liens.length) throw new Error(_L('No link to reroute.'));
+    const r = diaTracesOrthogonales(aird, sc, sc.liens);
+    plan = { traces: r.traces, ancres: r.ancres };
+  } else {
+    const formes = sc.formes.filter(f => !f.parent && f.genre !== 'port' && f.genre !== 'ligne' && diaDeplacable(aird, f));
+    if (formes.length < 2) throw new Error(_L('Nothing to arrange: at least two elements are needed.'));
+    const sens = diaSensDominant(sc, formes);
+    if (mode === 'auto') {
+      genre = 'couches';
+      const liensDe = sc.liens.filter(l => !l.attacheNote && formes.some(f => f === l.source || f === l.cible));
+      if (diaEtoile(sc, formes)) genre = 'etoile';
+      else if (liensDe.length && liensDe.every(l => l.arbre)) genre = 'arbre';
+    }
+    const elk = genre === 'couches' ? arcvElk() : null;
+    if (elk) {
+      const g = diaGrapheElk(sc, formes, 'couches', { sens });
+      plan = diaResultatElk(aird, sc, formes, await elk.layout(g.graphe), g);
+      moteur = 'elk';
+    } else plan = diaDisposer(aird, sc, formes, genre, { sens, trace: 'orthogonal' });
+  }
+  plan.etiquettes = diaAvecEtiquettes(sc, plan);       // étiquettes des liens retracés placées
+  return { plan, genre, moteur };
+}
+
+/**
+ * État de réorganisation exposé à l'hôte.
+ * @param {object} d disposition gardée
+ * @returns {{mode:string, genre:string, moteur:string, origine:boolean, changements:number}}
+ */
+function arcvDispoInfo(d) { return { mode: d.mode, genre: d.genre, moteur: d.moteur, origine: !d.active, changements: d.changements.length }; }
+
 const ArcatureVisionneuse = {
   /** Version d'Arcature dont provient la visionneuse. */
   version: ARC_VERSION,
@@ -5120,8 +8714,9 @@ const ArcatureVisionneuse = {
   /**
    * Crée la visionneuse dans un conteneur (une seule par page).
    * @param {HTMLElement} conteneur élément hôte (sa hauteur fixe celle de la visionneuse)
-   * @param {{choix?:function(string, object):void, liste?:boolean}} [options] choix : appelé au clic sur un élément
-   *   (identifiant du modèle, { type, nom, couche }) ; liste : liste des diagrammes à gauche (vrai par défaut)
+   * @param {{choix?:function(string, object):void, liste?:boolean, elk?:(object|function():object)}} [options] choix : appelé au
+   *   clic sur un élément (identifiant du modèle, { type, nom, couche }) ; liste : liste des diagrammes à gauche (vrai par
+   *   défaut) ; elk : moteur ELK pour la réorganisation en couches (sinon bloc « arc-elk » de la page, sinon disposition maison)
    * @returns {object} l'API
    */
   creer(conteneur, options) {
@@ -5165,6 +8760,7 @@ const ArcatureVisionneuse = {
    * @returns {number} nombre de représentations
    */
   chargerAird(texte, nom) {
+    VIS.dispositions = new Map(); VIS.jeton++;
     VD.aird = diaLire(texte); VD.nom = nom || ''; VD.rep = null; VD.selection = ''; VD.historique = [];
     arcvPresences();
     vdFermer();
@@ -5228,7 +8824,74 @@ const ArcatureVisionneuse = {
    * @param {number} [taille] côté en pixels (16 par défaut)
    * @returns {string} élément <svg> autonome, ou ''
    */
-  iconeType(type, taille) { return icoSvgSeul(icoVarianteType(type), taille); }
+  iconeType(type, taille) { return icoSvgSeul(icoVarianteType(type), taille); },
+
+  /** Modes de réorganisation : etiquettes, liens, auto, couches, arbre, grille. */
+  modes: ARCV_MODES.slice(),
+
+  /** @returns {boolean} vrai si le moteur ELK est disponible (couches hiérarchiques ; sinon disposition maison) */
+  elkDisponible() { return !!arcvElk(); },
+
+  /**
+   * Réorganise le diagramme ouvert et affiche cette vue réorganisée (la précédente, s'il y en a une, est d'abord défaite) :
+   * - etiquettes : étiquettes des liens replacées seules (formes et tracés gardés) ;
+   * - liens : liens retracés en angles droits, contournant les formes, écartés (formes gardées) ;
+   * - auto, couches, arbre, grille : premier niveau disposé (auto : étoile, arbre ou couches selon le diagramme).
+   * Tout se passe en mémoire : le .aird chargé n'est pas modifié, origine(true) rend la vue d'origine à l'identique.
+   * @param {string} mode un des modes
+   * @returns {Promise<object|null>} état (disposition()), ou null si un autre diagramme a été ouvert pendant le calcul
+   * @throws {Error} diagramme absent ou non réorganisable (séquence, tableau), rien à réorganiser
+   */
+  async disposer(mode) {
+    const rep = VD.rep;
+    if (!ARCV_MODES.includes(mode)) throw new Error(_Lp('Unknown rearrangement mode: {m}', { m: mode }));
+    if (!rep || !diaModifiable(rep)) throw new Error(_L('Only diagrams can be rearranged (not sequences or tables).'));
+    arcvActiver(rep, false);
+    VIS.dispositions.delete(rep.uid);
+    const sc = diaScene(VD.aird, rep), jeton = ++VIS.jeton, zone = $('vd-zone');
+    let r;
+    try { if (zone) zone.classList.add('calcul'); r = await arcvPlan(rep, mode); }
+    finally { if (zone) zone.classList.remove('calcul'); }
+    if (jeton !== VIS.jeton || rep.scene !== sc) return null;   // diagramme ou .aird changé pendant le calcul : résultat abandonné
+    const d = { mode, genre: r.genre, moteur: r.moteur, changements: diaMiseEnPage(VD.aird, sc, r.plan), active: false };
+    VIS.dispositions.set(rep.uid, d);
+    arcvActiver(rep, true);
+    return arcvDispoInfo(d);
+  },
+
+  /**
+   * Vue d'origine (telle qu'enregistrée dans le .aird) ou vue réorganisée du diagramme ouvert, déjà calculée par disposer.
+   * @param {boolean} vrai vrai : vue d'origine ; faux : vue réorganisée
+   * @returns {boolean} vrai si le diagramme ouvert a une vue réorganisée
+   */
+  origine(vrai) {
+    if (!VD.rep || !VIS.dispositions.has(VD.rep.uid)) return false;
+    arcvActiver(VD.rep, !vrai);
+    return true;
+  },
+
+  /**
+   * État de réorganisation d'une représentation.
+   * @param {string} [uid] représentation (par défaut : celle ouverte)
+   * @returns {{mode:string, genre:string, moteur:string, origine:boolean, changements:number}|null} null : jamais réorganisée
+   */
+  disposition(uid) {
+    const u = uid || (VD.rep && VD.rep.uid), d = u && VIS.dispositions.get(u);
+    return d ? arcvDispoInfo(d) : null;
+  },
+
+  /**
+   * Abandonne la vue réorganisée d'une représentation (vue d'origine rendue, calcul oublié).
+   * @param {string} [uid] représentation (par défaut : celle ouverte ; '*' : toutes)
+   */
+  oublier(uid) {
+    const uids = uid === '*' ? [...VIS.dispositions.keys()] : [uid || (VD.rep && VD.rep.uid)];
+    for (const u of uids) {
+      const rep = u && VD.aird && VD.aird.reps.find(x => x.uid === u);
+      if (rep) arcvActiver(rep, false);
+      VIS.dispositions.delete(u);
+    }
+  }
 };
 
 window.ArcatureVisionneuse = ArcatureVisionneuse;

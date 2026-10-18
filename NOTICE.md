@@ -19,6 +19,11 @@ La licence ISC est compatible avec l'Apache License 2.0 ; son texte est reprodui
 Visionneuse de diagrammes d'Arcature (`src/vendor/arcature-visionneuse*.js`, embarquée dans le fichier livré) —
 projet frère, même auteur et titulaire des droits, également sous Apache License 2.0.
 
+ELK — Eclipse Layout Kernel, elkjs 0.12.0 (`src/vendor/elk.bundled.js`, fichier `lib/elk.bundled.js` du paquet npm, recopié
+sans modification depuis Arcature, embarqué dans le fichier livré sous forme de texte, évalué à la première vue réorganisée
+d'un diagramme) — Copyright Kiel University and others — Eclipse Public License 2.0 (ou GPL-3.0-or-later),
+https://www.eclipse.org/legal/epl-2.0/ ; ce fichier reste sous sa licence d'origine, dont il porte les mentions.
+
 ## Modèles de test (`tests/models/`)
 
 Ils ne font pas partie du logiciel et restent sous leur propre licence (détails dans `tests/models/LISEZMOI.md`) :

@@ -285,6 +285,7 @@ function capDiagEnsure() {
   if (liste) new MutationObserver(() => {
     const li = liste.querySelector('li.actif[data-diag]'), uid = li ? li.dataset.diag : '';
     if (uid !== _capDiag.actif) { _capDiag.actif = uid; capDiagMarquerActif(); }
+    capDiagDispoMaj();
     if (uid && !_capDiag.export) capDiagCarte();
   }).observe(liste, { subtree: true, attributes: true, attributeFilter: ['class'], childList: true });
   window.addEventListener('resize', () => { if (capCurrentView === 'diag') capDiagFit(); });
@@ -397,6 +398,7 @@ function capDiagBarreVd() {
   const rev = document.createElement('span'); rev.id = 'cdg-crv'; rev.className = 'cdg-crv'; l2.appendChild(rev);
   sep(); prendre('#vd-chaine'); prendre(document.getElementById('vd-filtres-bt') && document.getElementById('vd-filtres-bt').parentElement);
   sep(); ['#vd-moins', '#vd-zoom', '#vd-plus', '#vd-ajuster', '#vd-reel', '#vd-zoom-choix', '#vd-carte-bt'].forEach(prendre);
+  sep(); const dsp = document.createElement('span'); dsp.id = 'cdg-dispo-zone'; l2.appendChild(dsp);   // Vue d'origine / réorganisée
   const ressort = document.createElement('span'); ressort.className = 'ressort'; ressort.style.flex = '1'; l2.appendChild(ressort);
   prendre('#vd-edition'); prendre('#vd-tableau-info');
   // Thème et export : à droite de la ligne 1, avant ✕ (le nom du diagramme est tronqué pour leur laisser la place)
@@ -409,7 +411,7 @@ function capDiagBarreVd() {
   let raf = 0;
   new MutationObserver(ms => { if (ms.every(m => m.target.closest && m.target.closest('#crv-layer'))) return; cancelAnimationFrame(raf); raf = requestAnimationFrame(capDiagChainesFiltre); })
     .observe(document.getElementById('vue-diagramme'), { subtree: true, childList: true });
-  capDiagRevSlot(); capDiagChainesFiltre();
+  capDiagRevSlot(); capDiagChainesFiltre(); capDiagDispoMaj();
 }
 
 /** Remplit l'emplacement de la revue (📝 Note de revue, 💬 Calque) à côté de la recherche du diagramme. */
@@ -430,6 +432,76 @@ function capDiagChainesFiltre() {
   if (sel.selectedOptions[0] && sel.selectedOptions[0].hidden) sel.value = '';
   sel.style.visibility = n ? '' : 'hidden';
   sel.title = n ? _L('Mettre en évidence une chaîne fonctionnelle ou un chemin physique dessiné dans ce diagramme') : '';
+}
+
+/* ── Vue d'origine / vue réorganisée (mise en page automatique d'Arcature, en mémoire) ────────────── */
+
+/**
+ * Réorganisations proposées (API disposer de la visionneuse), groupe « Réorganisée » du choix « Vue » : [mode, libellé, info-bulle].
+ * @returns {string[][]}
+ */
+function capDiagDispoModes() {
+  return [
+    ['auto', _L('✨ Automatique'), _L('Disposition choisie selon le diagramme : en couches, en étoile autour d\'un élément central, ou en arbre pour une décomposition ; liens retracés en angles droits, étiquettes placées')],
+    ['couches', _L('▤ En couches'), _L('Éléments rangés en couches dans le sens des liens (contenu des conteneurs compris), liens en angles droits')],
+    ['arbre', _L('🌳 En arbre'), _L('Arbre compact, racine en haut, noms jamais coupés')],
+    ['grille', _L('▦ En grille'), _L('Grille compacte dans l\'ordre de lecture')],
+    ['liens', _L('↳ Liens retracés'), _L('Formes gardées à leur place ; liens retracés en angles droits, contournant les formes, écartés les uns des autres ; étiquettes replacées')],
+    ['etiquettes', _L('🏷 Étiquettes replacées'), _L('Formes et liens gardés ; étiquettes des liens replacées loin des formes, des traits et des autres étiquettes')]
+  ];
+}
+
+/** @returns {object|undefined} représentation ouverte dans la visionneuse ({uid, genre…}) */
+function capDiagRepOuverte() { return _capDiag.actif ? capDiagReps().find(r => r.uid === _capDiag.actif) : undefined; }
+
+/**
+ * Choix « Vue » de la barre du diagramme : vue d'origine (telle qu'enregistrée dans le .aird) ou réorganisée, et ⇄ pour
+ * comparer les deux. Masqué pour un tableau ou une séquence. Le .aird n'est jamais modifié.
+ */
+function capDiagDispoMaj() {
+  const z = document.getElementById('cdg-dispo-zone'), v = _capDiag.vis;
+  if (!z || !v) return;
+  const r = capDiagRepOuverte(), ok = !!r && r.genre === 'diagramme' && typeof v.disposer === 'function';
+  z.hidden = !ok;
+  if (!ok) { z.innerHTML = ''; return; }
+  const d = v.disposition(), val = d && !d.origine ? d.mode : 'origine', esc = capEsc;
+  z.className = 'cdg-dispo' + (val !== 'origine' ? ' on' : '');
+  z.innerHTML = `<select id="cdg-dispo" title="${esc(_L('Vue du diagramme : telle qu\'enregistrée dans le .aird, ou réorganisée automatiquement pour la lecture (calculée en mémoire : le fichier .aird n\'est jamais modifié)'))}">` +
+    `<option value="origine"${val === 'origine' ? ' selected' : ''} title="${esc(_L('Mise en page enregistrée dans le .aird (faite dans Capella)'))}">${_L('🧭 Vue d\'origine')}</option>` +
+    `<optgroup label="${esc(_L('Réorganisée (en mémoire)'))}">` +
+    capDiagDispoModes().map(([m, l, t]) => `<option value="${m}"${val === m ? ' selected' : ''} title="${esc(t)}">${l}${d && d.mode === m && d.origine ? ' •' : ''}</option>`).join('') +
+    `</optgroup></select><button class="tbtn" id="cdg-dispo-bascule"${d ? '' : ' disabled'} title="${esc(_L('Comparer : passer de la vue d\'origine à la vue réorganisée et inversement'))}">⇄</button>`;
+}
+
+/**
+ * Affiche une vue du diagramme ouvert : d'origine, ou réorganisée (calculée au premier choix d'un mode, gardée ensuite).
+ * @param {string} mode 'origine' ou un mode de capDiagDispoModes
+ * @returns {Promise<void>}
+ */
+async function capDiagDisposer(mode) {
+  const v = _capDiag.vis;
+  if (!v) return;
+  const d = v.disposition();
+  if (mode === 'origine' || (d && d.mode === mode)) { v.origine(mode === 'origine'); capDiagMsg(''); capDiagDispoMaj(); return; }
+  capDiagMsg(_L('⏳ Réorganisation du diagramme…'));
+  const sel = document.getElementById('cdg-dispo'); if (sel) sel.disabled = true;
+  try {
+    const r = await v.disposer(mode);
+    if (r) {
+      const genre = { couches: _L('en couches'), arbre: _L('en arbre'), etoile: _L('en étoile'), grille: _L('en grille') }[r.genre];
+      capDiagMsg(mode === 'auto' && genre ? _L(`✨ Vue réorganisée (${genre}) — le .aird n'est pas modifié`) : _L('✨ Vue réorganisée — le .aird n\'est pas modifié'));
+    }
+  } catch (e) { capDiagMsg('⚠ ' + (e.message || String(e))); }
+  capDiagDispoMaj();
+}
+
+/** ⇄ : passe de la vue d'origine à la vue réorganisée du diagramme ouvert, et inversement. */
+function capDiagDispoBascule() {
+  const v = _capDiag.vis, d = v && v.disposition();
+  if (!d) return;
+  v.origine(!d.origine);
+  capDiagMsg(d.origine ? _L('✨ Vue réorganisée — le .aird n\'est pas modifié') : _L('🧭 Vue d\'origine'));
+  capDiagDispoMaj();
 }
 
 /** Rendu de la vue 🔲 Diagrammes Capella. */
@@ -584,6 +656,7 @@ function capDiagClic(e) {
   const t = e.target;
   if (t.closest('#cdg-ouvrir')) { capDiagPickAird(); return; }
   if (t.closest('#cdg-export')) { capDiagExportDialog(); return; }
+  if (t.closest('#cdg-dispo-bascule')) { capDiagDispoBascule(); return; }
   if (t.closest('#cdg-choix')) { _capDiag.choix = !_capDiag.choix; capDiagBarre(); capDiagListe(); return; }
   const ca = t.closest('[data-carte]');
   if (ca) { _capDiag.carte = ca.dataset.carte; capDiagCarte(); return; }
@@ -609,6 +682,7 @@ function capDiagClic(e) {
 /** Cases à cocher (diagramme, groupe, tout) et choix du classement. @param {Event} e */
 function capDiagChange(e) {
   const t = e.target, S = _capDiag.sel;
+  if (t.id === 'cdg-dispo') { capDiagDisposer(t.value); return; }
   if (t.id === 'cdg-classement') { _capDiag.classement = t.value; capDiagListe(); return; }
   if (t.classList.contains('cdg-sel')) { if (t.checked) S.add(t.dataset.uid); else S.delete(t.dataset.uid); }
   else if (t.classList.contains('cdg-gsel')) capDiagRepsGroupe(t.dataset.g).forEach(r => { if (t.checked) S.add(r.uid); else S.delete(r.uid); });

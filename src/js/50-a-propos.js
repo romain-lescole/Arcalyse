@@ -1,6 +1,6 @@
 /* ══ ℹ À PROPOS ══════════════════════════════════════════════════════════════════
  * Fenêtre « À propos » d'Arcalyse (menu ❓ Aide ▾) : identité et version, auteur, licence Apache 2.0, contact,
- * composants tiers (D3.js, licence ISC à reproduire), marques citées, informations techniques copiables.
+ * composants tiers (D3.js, licence ISC à reproduire ; visionneuse d'Arcature ; ELK, EPL-2.0), marques citées, informations techniques copiables.
  */
 var CAP_APP_VERSION='2.3';   // à mettre à jour à chaque livraison (node build.js --livraison)
 var CAP_APP_AUTHOR=_L('Romain Lescole');
@@ -67,6 +67,7 @@ function capAboutOpen(){
       <table class="ana-t ana-kv">
         <tr><td>D3.js v7.9.0</td><td>Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock.
           <details><summary class="ana-dim">Texte de la licence</summary><pre class="ab-lic">${e(CAP_D3_LICENSE)}</pre></details></td></tr>
+        <tr><td>Arcature, ELK</td><td>Visionneuse de diagrammes d'Arcature (projet frère, même auteur, Apache License 2.0) ; moteur de mise en page ELK (elkjs 0.12.0, Eclipse Layout Kernel) pour les vues réorganisées — Eclipse Public License 2.0, © Kiel University et contributeurs, recopié sans modification (eclipse.org/legal/epl-2.0).</td></tr>
         <tr><td>Capella, ARCADIA</td><td>Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié.</td></tr>
         <tr><td>Modèles de test</td><td>Exemples Capella « In-Flight Entertainment System » (<a href="https://github.com/dbinfrago/Capella-IFE-sample" target="_blank" rel="noopener">github.com/dbinfrago/Capella-IFE-sample</a>) et « AIDA » (<a href="https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture" target="_blank" rel="noopener">sahara.irt-saintexupery.com/AIDA/AIDAArchitecture</a>).</td></tr>
       </table>

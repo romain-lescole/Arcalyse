@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 5635 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 5658 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -3899,15 +3899,14 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 28 | éléments | … · … elements |
 | 29 | Fonctionnement | Operation |
 | 29 | hors ligne (ressources intégrées au fichier) | offline (resources embedded in the file) |
-| 53 | ℹ À propos ✕ | ℹ About ✕ … … … Version … · … Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file. Author and licence Author © … … — creator and rights holder Licence Apache License 2.0 — free software: use (including commercial), study, modification and redistribution allowed, provided that the copyright and licence notices are kept and modified files are marked. Provided without any warranty . Full text: apache.org/licenses/LICENSE-2.0 (LICENSE file of the repository) Contact Source code, issues and contributions: … Development Developed with the help of Claude Code (Anthropic). Third-party components and trademarks D3.js v7.9.0 Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock. Licence text … Capella, ARCADIA Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated. Test models Capella samples “In-Flight Entertainment System” ( github.com/dbinfrago/Capella-IFE-sample ) and “AIDA” ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Technical information … 📋 Copy the info Close |
-| 56 | Version | ℹ About ✕ … … … Version … · … Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file. Author and licence Author © … … — creator and rights holder Licence Apache License 2.0 — free software: use (including commercial), study, modification and redistribution allowed, provided that the copyright and licence notices are kept and modified files are marked. Provided without any warranty . Full text: apache.org/licenses/LICENSE-2.0 (LICENSE file of the repository) Contact Source code, issues and contributions: … Development Developed with the help of Claude Code (Anthropic). Third-party components and trademarks D3.js v7.9.0 Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock. Licence text … Capella, ARCADIA Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated. Test models Capella samples “In-Flight Entertainment System” ( github.com/dbinfrago/Capella-IFE-sample ) and “AIDA” ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Technical information … 📋 Copy the info Close |
-| 57 | Explorateur et analyseur hors ligne de modèles Capella / ARCADIA : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML. Auteur et licence Auteur © | ℹ About ✕ … … … Version … · … Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file. Author and licence Author © … … — creator and rights holder Licence Apache License 2.0 — free software: use (including commercial), study, modification and redistribution allowed, provided that the copyright and licence notices are kept and modified files are marked. Provided without any warranty . Full text: apache.org/licenses/LICENSE-2.0 (LICENSE file of the repository) Contact Source code, issues and contributions: … Development Developed with the help of Claude Code (Anthropic). Third-party components and trademarks D3.js v7.9.0 Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock. Licence text … Capella, ARCADIA Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated. Test models Capella samples “In-Flight Entertainment System” ( github.com/dbinfrago/Capella-IFE-sample ) and “AIDA” ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Technical information … 📋 Copy the info Close |
-| 61 | — créateur et titulaire des droits Licence Apache License 2.0 — logiciel libre : utilisation (y compris commerciale), étude, modification et redistribution autorisées, à condition de conserver les avis de droit d'auteur et de licence et de signaler les fichiers modifiés. Fourni sans aucune garantie . Texte complet : apache.org/licenses/LICENSE-2.0 (fichier LICENSE du dépôt) Contact Code source, signalements et contributions : | ℹ About ✕ … … … Version … · … Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file. Author and licence Author © … … — creator and rights holder Licence Apache License 2.0 — free software: use (including commercial), study, modification and redistribution allowed, provided that the copyright and licence notices are kept and modified files are marked. Provided without any warranty . Full text: apache.org/licenses/LICENSE-2.0 (LICENSE file of the repository) Contact Source code, issues and contributions: … Development Developed with the help of Claude Code (Anthropic). Third-party components and trademarks D3.js v7.9.0 Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock. Licence text … Capella, ARCADIA Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated. Test models Capella samples “In-Flight Entertainment System” ( github.com/dbinfrago/Capella-IFE-sample ) and “AIDA” ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Technical information … 📋 Copy the info Close |
-| 63 | Développement Développé avec l'aide de Claude Code (Anthropic). Composants tiers et marques D3.js v7.9.0 Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock. Texte de la licence | ℹ About ✕ … … … Version … · … Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file. Author and licence Author © … … — creator and rights holder Licence Apache License 2.0 — free software: use (including commercial), study, modification and redistribution allowed, provided that the copyright and licence notices are kept and modified files are marked. Provided without any warranty . Full text: apache.org/licenses/LICENSE-2.0 (LICENSE file of the repository) Contact Source code, issues and contributions: … Development Developed with the help of Claude Code (Anthropic). Third-party components and trademarks D3.js v7.9.0 Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock. Licence text … Capella, ARCADIA Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated. Test models Capella samples “In-Flight Entertainment System” ( github.com/dbinfrago/Capella-IFE-sample ) and “AIDA” ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Technical information … 📋 Copy the info Close |
-| 69 | Capella, ARCADIA Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié. Modèles de test Exemples Capella « In-Flight Entertainment System » ( github.com/dbinfrago/Capella-IFE-sample ) et « AIDA » ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Informations techniques | ℹ About ✕ … … … Version … · … Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file. Author and licence Author © … … — creator and rights holder Licence Apache License 2.0 — free software: use (including commercial), study, modification and redistribution allowed, provided that the copyright and licence notices are kept and modified files are marked. Provided without any warranty . Full text: apache.org/licenses/LICENSE-2.0 (LICENSE file of the repository) Contact Source code, issues and contributions: … Development Developed with the help of Claude Code (Anthropic). Third-party components and trademarks D3.js v7.9.0 Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock. Licence text … Capella, ARCADIA Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated. Test models Capella samples “In-Flight Entertainment System” ( github.com/dbinfrago/Capella-IFE-sample ) and “AIDA” ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Technical information … 📋 Copy the info Close |
-| 74 | 📋 Copier les infos Fermer | ℹ About ✕ … … … Version … · … Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file. Author and licence Author © … … — creator and rights holder Licence Apache License 2.0 — free software: use (including commercial), study, modification and redistribution allowed, provided that the copyright and licence notices are kept and modified files are marked. Provided without any warranty . Full text: apache.org/licenses/LICENSE-2.0 (LICENSE file of the repository) Contact Source code, issues and contributions: … Development Developed with the help of Claude Code (Anthropic). Third-party components and trademarks D3.js v7.9.0 Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock. Licence text … Capella, ARCADIA Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated. Test models Capella samples “In-Flight Entertainment System” ( github.com/dbinfrago/Capella-IFE-sample ) and “AIDA” ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Technical information … 📋 Copy the info Close |
-| 81 | ✔ Informations copiées | ✔ Information copied |
-| 81 | Copiez les informations : | Copy the information: |
+| 53 | ℹ À propos ✕ | ℹ About ✕ {0} {1} {2} Version {3} · {4} Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file. Author and licence Author © {5} {6} — creator and rights holder Licence Apache License 2.0 — free software: use (including commercial), study, modification and redistribution allowed, provided that the copyright and licence notices are kept and modified files are marked. Provided without any warranty . Full text: apache.org/licenses/LICENSE-2.0 (LICENSE file of the repository) Contact Source code, issues and contributions: {8} Development Developed with the help of Claude Code (Anthropic). Third-party components and trademarks D3.js v7.9.0 Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock. Licence text {9} Arcature, ELK Arcature diagram viewer (sister project, same author, Apache License 2.0); ELK layout engine (elkjs 0.12.0, Eclipse Layout Kernel) for rearranged views — Eclipse Public License 2.0, © Kiel University and contributors, copied unmodified (eclipse.org/legal/epl-2.0). Capella, ARCADIA Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated. Test models Capella samples “In-Flight Entertainment System” ( github.com/dbinfrago/Capella-IFE-sample ) and “AIDA” ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Technical information {10} 📋 Copy the info Close |
+| 56 | Version | ℹ About ✕ {0} {1} {2} Version {3} · {4} Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file. Author and licence Author © {5} {6} — creator and rights holder Licence Apache License 2.0 — free software: use (including commercial), study, modification and redistribution allowed, provided that the copyright and licence notices are kept and modified files are marked. Provided without any warranty . Full text: apache.org/licenses/LICENSE-2.0 (LICENSE file of the repository) Contact Source code, issues and contributions: {8} Development Developed with the help of Claude Code (Anthropic). Third-party components and trademarks D3.js v7.9.0 Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock. Licence text {9} Arcature, ELK Arcature diagram viewer (sister project, same author, Apache License 2.0); ELK layout engine (elkjs 0.12.0, Eclipse Layout Kernel) for rearranged views — Eclipse Public License 2.0, © Kiel University and contributors, copied unmodified (eclipse.org/legal/epl-2.0). Capella, ARCADIA Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated. Test models Capella samples “In-Flight Entertainment System” ( github.com/dbinfrago/Capella-IFE-sample ) and “AIDA” ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Technical information {10} 📋 Copy the info Close |
+| 57 | Explorateur et analyseur hors ligne de modèles Capella / ARCADIA : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML. Auteur et licence Auteur © | ℹ About ✕ {0} {1} {2} Version {3} · {4} Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file. Author and licence Author © {5} {6} — creator and rights holder Licence Apache License 2.0 — free software: use (including commercial), study, modification and redistribution allowed, provided that the copyright and licence notices are kept and modified files are marked. Provided without any warranty . Full text: apache.org/licenses/LICENSE-2.0 (LICENSE file of the repository) Contact Source code, issues and contributions: {8} Development Developed with the help of Claude Code (Anthropic). Third-party components and trademarks D3.js v7.9.0 Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock. Licence text {9} Arcature, ELK Arcature diagram viewer (sister project, same author, Apache License 2.0); ELK layout engine (elkjs 0.12.0, Eclipse Layout Kernel) for rearranged views — Eclipse Public License 2.0, © Kiel University and contributors, copied unmodified (eclipse.org/legal/epl-2.0). Capella, ARCADIA Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated. Test models Capella samples “In-Flight Entertainment System” ( github.com/dbinfrago/Capella-IFE-sample ) and “AIDA” ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Technical information {10} 📋 Copy the info Close |
+| 61 | — créateur et titulaire des droits Licence Apache License 2.0 — logiciel libre : utilisation (y compris commerciale), étude, modification et redistribution autorisées, à condition de conserver les avis de droit d'auteur et de licence et de signaler les fichiers modifiés. Fourni sans aucune garantie . Texte complet : apache.org/licenses/LICENSE-2.0 (fichier LICENSE du dépôt) Contact Code source, signalements et contributions : | ℹ About ✕ {0} {1} {2} Version {3} · {4} Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file. Author and licence Author © {5} {6} — creator and rights holder Licence Apache License 2.0 — free software: use (including commercial), study, modification and redistribution allowed, provided that the copyright and licence notices are kept and modified files are marked. Provided without any warranty . Full text: apache.org/licenses/LICENSE-2.0 (LICENSE file of the repository) Contact Source code, issues and contributions: {8} Development Developed with the help of Claude Code (Anthropic). Third-party components and trademarks D3.js v7.9.0 Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock. Licence text {9} Arcature, ELK Arcature diagram viewer (sister project, same author, Apache License 2.0); ELK layout engine (elkjs 0.12.0, Eclipse Layout Kernel) for rearranged views — Eclipse Public License 2.0, © Kiel University and contributors, copied unmodified (eclipse.org/legal/epl-2.0). Capella, ARCADIA Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated. Test models Capella samples “In-Flight Entertainment System” ( github.com/dbinfrago/Capella-IFE-sample ) and “AIDA” ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Technical information {10} 📋 Copy the info Close |
+| 63 | Développement Développé avec l'aide de Claude Code (Anthropic). Composants tiers et marques D3.js v7.9.0 Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock. Texte de la licence | ℹ About ✕ {0} {1} {2} Version {3} · {4} Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file. Author and licence Author © {5} {6} — creator and rights holder Licence Apache License 2.0 — free software: use (including commercial), study, modification and redistribution allowed, provided that the copyright and licence notices are kept and modified files are marked. Provided without any warranty . Full text: apache.org/licenses/LICENSE-2.0 (LICENSE file of the repository) Contact Source code, issues and contributions: {8} Development Developed with the help of Claude Code (Anthropic). Third-party components and trademarks D3.js v7.9.0 Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock. Licence text {9} Arcature, ELK Arcature diagram viewer (sister project, same author, Apache License 2.0); ELK layout engine (elkjs 0.12.0, Eclipse Layout Kernel) for rearranged views — Eclipse Public License 2.0, © Kiel University and contributors, copied unmodified (eclipse.org/legal/epl-2.0). Capella, ARCADIA Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated. Test models Capella samples “In-Flight Entertainment System” ( github.com/dbinfrago/Capella-IFE-sample ) and “AIDA” ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Technical information {10} 📋 Copy the info Close |
+| 75 | 📋 Copier les infos Fermer | ℹ About ✕ {0} {1} {2} Version {3} · {4} Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file. Author and licence Author © {5} {6} — creator and rights holder Licence Apache License 2.0 — free software: use (including commercial), study, modification and redistribution allowed, provided that the copyright and licence notices are kept and modified files are marked. Provided without any warranty . Full text: apache.org/licenses/LICENSE-2.0 (LICENSE file of the repository) Contact Source code, issues and contributions: {8} Development Developed with the help of Claude Code (Anthropic). Third-party components and trademarks D3.js v7.9.0 Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock. Licence text {9} Arcature, ELK Arcature diagram viewer (sister project, same author, Apache License 2.0); ELK layout engine (elkjs 0.12.0, Eclipse Layout Kernel) for rearranged views — Eclipse Public License 2.0, © Kiel University and contributors, copied unmodified (eclipse.org/legal/epl-2.0). Capella, ARCADIA Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated. Test models Capella samples “In-Flight Entertainment System” ( github.com/dbinfrago/Capella-IFE-sample ) and “AIDA” ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Technical information {10} 📋 Copy the info Close |
+| 82 | ✔ Informations copiées | ✔ Information copied |
+| 82 | Copiez les informations : | Copy the information: |
 
 ## js/51-tableau.js
 
@@ -4046,166 +4045,190 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 255 | Lecture impossible : | Cannot read: |
 | 259 | modèles dans ce dossier : choisissez celui à ouvrir. | … models in this folder: choose the one to open. |
 | 274 | Glisser pour régler la largeur de l'explorateur | Drag to adjust the width of the explorer |
-| 323 | ▣ Carte | ▣ Map |
-| 324 | Afficher la carte dans le diagramme | Show the map in the diagram |
-| 325 | ▣ Carte | ▣ Map |
-| 325 | dans le diagramme | in the diagram |
-| 326 | Afficher la carte sous l'explorateur | Show the map below the explorer |
-| 343 | Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML | Export several diagrams as sheets (header, description, title block, appendix): PDF, PNG / SVG ZIP, HTML report |
-| 343 | ⬇ Exporter… | ⬇ Export… |
-| 344 | Choisir les diagrammes à exporter : cases à cocher dans l'explorateur | Choose the diagrams to export: checkboxes in the explorer |
-| 344 | ☑ Terminer la sélection | ☑ Finish selection |
-| 344 | ☐ Sélectionner… | ☐ Select… |
-| 345 | Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés | Information on the open diagram in the details panel: type, layer, description, represented element, displayed elements |
-| 345 | ℹ Infos | ℹ Info |
-| 346 | Choisir le fichier .aird (le sélecteur s'ouvre dans le dossier du .capella quand le navigateur le permet) | Choose the .aird file (the picker opens in the .capella folder when the browser allows it) |
-| 346 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
-| 348 | diagramme(s) | … diagram(s) |
-| 349 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
-| 391 | vd-barre cdg-vd-l2 | (inchangé, hors _L) |
-| 432 | Mettre en évidence une chaîne fonctionnelle ou un chemin physique dessiné dans ce diagramme | Highlight a functional chain or physical path drawn in this diagram |
-| 439 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
-| 453 | Autres | Others |
-| 524 | Aucun .aird chargé. | No .aird loaded. |
-| 524 | 📂 Ouvrir le .aird… s'ouvre dans le dossier du .capella (Edge / Chrome). | 📂 Open the .aird… opens in the .capella folder (Edge / Chrome). |
-| 525 | Ou, depuis l'écran d'accueil, 📁 Dossier du projet… : le .capella et ses diagrammes sont chargés ensemble. | Or, from the home screen, 📁 Project folder…: the .capella and its diagrams are loaded together. |
-| 533 | Cocher / décocher le groupe | Check / uncheck the group |
-| 540 | Informations du diagramme (panneau de détail) | Diagram information (details panel) |
-| 555 | Filtrer (nom, type, sigle, couche)… | Filter (name, type, acronym, layer)… |
-| 556 | Classement de la liste | List grouping |
-| 556 | Couche › type | Layer › type |
-| 556 | Couche | Layer |
-| 556 | Type de diagramme | Diagram type |
-| 556 | Nom (A → Z) | Name (A → Z) |
-| 557 | Tout déplier | Expand all |
-| 557 | Tout replier | Collapse all |
-| 558 | sélectionné(s) pour l'export | … selected for export |
-| 558 | diagramme(s) | … diagram(s) |
-| 560 | sélectionné(s) pour l'export | … selected for export |
-| 560 | diagramme(s) — cochez pour exporter | … diagram(s) — check to export |
-| 561 | Aucun diagramme ne correspond. | No matching diagram. |
-| 644 | var(--c-dim) | (inchangé, hors _L) |
-| 646 | Diagramme | Diagram |
-| 646 | Diagramme de séquence | Sequence diagram |
-| 646 | Tableau | Table |
-| 648 | 🔲 Diagramme Capella | 🔲 Capella diagram |
-| 650 | 🔲 Afficher le diagramme | 🔲 Show the diagram |
-| 651 | Attributs | Attributes |
-| 651 | Type | Type |
-| 651 | Sigle | Acronym |
-| 652 | Couche | Layer |
-| 652 | Nature | Nature |
-| 653 | Éléments | Elements |
-| 654 | Modifié le | Modified on |
-| 654 | Fichier | File |
-| 655 | Description | (inchangé, hors _L) |
-| 656 | Élément représenté | Represented element |
-| 659 | Éléments affichés ( | Displayed elements (…) |
-| 681 | Diagrammes ( | Diagrams (…) |
-| 704 | export SVG de la visionneuse introuvable | viewer SVG export not found |
-| 711 | diagramme vide ou non exportable | empty or non-exportable diagram |
-| 732 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
-| 733 | Projet Capella | Capella project |
-| 740 | Projet | Project |
-| 740 | Couche | Layer |
-| 741 | Diagramme | Diagram |
-| 741 | Contenu | Content |
-| 741 | élément(s) | … element(s) |
-| 742 | Type | (inchangé, hors _L) |
-| 742 | Date | Date |
-| 743 | Sources | Sources |
-| 743 | Planche | Sheet |
-| 761 | ) scale( | (inchangé, hors _L) |
-| 770 | Élément représenté | Represented element |
-| 772 | ) scale( | (inchangé, hors _L) |
-| 776 | ) scale( | (inchangé, hors _L) |
-| 777 | Arcalyse · planche générée le | Arcalyse · sheet generated on … |
-| 793 | ) scale( | (inchangé, hors _L) |
-| 850 | Élément représenté | Represented element |
-| 850 | Description | (inchangé, hors _L) |
-| 851 | Élément | Element |
-| 851 | Type | (inchangé, hors _L) |
-| 851 | Couche | Layer |
-| 866 | Élément | Element |
-| 866 | Type | (inchangé, hors _L) |
-| 866 | Couche | Layer |
-| 872 | 700 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 873 | 700 28px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 875 | 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 876 | élément(s) représenté(s) | … represented element(s) |
-| 876 | Planche | Sheet |
-| 877 | 700 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 880 | 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 917 | ⬇ Exporter des diagrammes | ⬇ Export diagrams |
-| 919 | Diagrammes | Diagrams |
-| 920 | Cochés dans la liste | Checked in the list |
-| 920 | Affichés (filtre en cours) | Displayed (current filter) |
-| 920 | Tous | All |
-| 921 | Mise en page | Layout |
-| 922 | Cadre et en-tête | Frame and header |
-| 922 | Cadre, bandeau de couche, sigle, nom et type du diagramme | Frame, layer band, acronym, name and type of the diagram |
-| 923 | Cartouche | Title block |
-| 923 | Cartouche technique en bas à droite : projet, diagramme, type, couche, contenu, sources, date, planche | Technical title block at the bottom right: project, diagram, type, layer, content, sources, date, sheet |
-| 924 | Description | Description |
-| 924 | Description Capella du diagramme et élément représenté, sous l'en-tête | Capella description of the diagram and represented element, below the header |
-| 925 | Annexes | Appendices |
-| 925 | Éléments représentés dans chaque diagramme : PDF, page(s) d'annexe après la planche · ZIP, un CSV par diagramme · HTML, tableau repliable | Elements represented in each diagram: PDF, appendix page(s) after the sheet · ZIP, one CSV per diagram · HTML, collapsible table |
-| 926 | Sommaire | Contents |
-| 926 | PDF : page de sommaire par couche et type · HTML : onglet Sommaire | PDF: contents page by layer and type · HTML: Contents tab |
-| 927 | Résolution des images PNG / PDF | Resolution of PNG / PDF images |
-| 927 | Résolution | Resolution |
-| 928 | Format | Format |
-| 930 | 📄 PDF | (inchangé, hors _L) |
-| 930 | Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets | One PDF: contents, one sheet per diagram (A4, oriented automatically), bookmarks |
-| 931 | 🗜 ZIP PNG | (inchangé, hors _L) |
-| 931 | Archive ZIP des planches en PNG, un dossier par couche | ZIP archive of the sheets as PNG, one folder per layer |
-| 932 | 🗜 ZIP SVG | (inchangé, hors _L) |
-| 932 | Archive ZIP des planches en SVG (vectoriel), un dossier par couche | ZIP archive of the sheets as SVG (vector), one folder per layer |
-| 933 | 🌐 HTML | (inchangé, hors _L) |
-| 933 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
-| 936 | Aperçu de la planche | Sheet preview |
-| 937 | Fermer | Close |
-| 938 | Lancer l'export dans le format choisi | Start the export in the chosen format |
-| 938 | ⬇ Exporter | ⬇ Export |
-| 956 | Aucun diagramme. | No diagram. |
-| 973 | Projet Capella | Capella project |
-| 983 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 983 | Diagrammes Capella | Capella diagrams |
-| 984 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 987 | planche(s) | … sheet(s) |
-| 995 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 996 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1001 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1002 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1040 | Aucun diagramme à exporter. | No diagram to export. |
-| 1041 | Capella | (inchangé, hors _L) |
-| 1056 | aucun diagramme exportable | no exportable diagram |
-| 1066 | Le PDF fera environ | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
-| 1066 | pages). Pour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…). Continuer quand même ? | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
-| 1067 | Export annulé : PDF estimé à | Export cancelled: PDF estimated at … MB. |
-| 1070 | Sommaire | Contents |
-| 1074 | Planche | Sheet |
-| 1076 | Autres | Others |
-| 1077 | - annexe | - appendix |
-| 1090 | Diagrammes — | Diagrams — … |
-| 1093 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
-| 1093 | pages) | (… pages) |
-| 1094 | ignoré(s) : | — … skipped: |
-| 1095 | ⚠ Échec de l'export : | ⚠ Export failed: |
-| 1114 | Type | (inchangé, hors _L) |
-| 1114 | Couche | Layer |
-| 1114 | Sigle | Acronym |
-| 1114 | Diagramme | Diagram |
-| 1114 | Éléments | Elements |
-| 1125 | Type | (inchangé, hors _L) |
-| 1125 | Annexe | Appendix |
-| 1125 | élément(s) représenté(s) | … represented element(s) |
-| 1125 | Élément | Element |
-| 1125 | Couche | Layer |
-| 1139 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
-| 1139 | diagramme(s) | … diagram(s) |
-| 1140 | 📋 Sommaire | 📋 Contents |
-| 1140 | 🔲 Planches | 🔲 Sheets |
+| 324 | ▣ Carte | ▣ Map |
+| 325 | Afficher la carte dans le diagramme | Show the map in the diagram |
+| 326 | ▣ Carte | ▣ Map |
+| 326 | dans le diagramme | in the diagram |
+| 327 | Afficher la carte sous l'explorateur | Show the map below the explorer |
+| 344 | Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML | Export several diagrams as sheets (header, description, title block, appendix): PDF, PNG / SVG ZIP, HTML report |
+| 344 | ⬇ Exporter… | ⬇ Export… |
+| 345 | Choisir les diagrammes à exporter : cases à cocher dans l'explorateur | Choose the diagrams to export: checkboxes in the explorer |
+| 345 | ☑ Terminer la sélection | ☑ Finish selection |
+| 345 | ☐ Sélectionner… | ☐ Select… |
+| 346 | Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés | Information on the open diagram in the details panel: type, layer, description, represented element, displayed elements |
+| 346 | ℹ Infos | ℹ Info |
+| 347 | Choisir le fichier .aird (le sélecteur s'ouvre dans le dossier du .capella quand le navigateur le permet) | Choose the .aird file (the picker opens in the .capella folder when the browser allows it) |
+| 347 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 349 | diagramme(s) | … diagram(s) |
+| 350 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
+| 392 | vd-barre cdg-vd-l2 | (inchangé, hors _L) |
+| 434 | Mettre en évidence une chaîne fonctionnelle ou un chemin physique dessiné dans ce diagramme | Highlight a functional chain or physical path drawn in this diagram |
+| 445 | ✨ Automatique | ✨ Automatic |
+| 446 | ▤ En couches | ▤ Layered |
+| 446 | Éléments rangés en couches dans le sens des liens (contenu des conteneurs compris), liens en angles droits | Elements arranged in layers following the links (container contents included), links at right angles |
+| 447 | 🌳 En arbre | 🌳 Tree |
+| 447 | Arbre compact, racine en haut, noms jamais coupés | Compact tree, root at the top, names never cut |
+| 448 | ▦ En grille | ▦ Grid |
+| 448 | Grille compacte dans l'ordre de lecture | Compact grid in reading order |
+| 449 | ↳ Liens retracés | ↳ Rerouted links |
+| 450 | 🏷 Étiquettes replacées | 🏷 Relocated labels |
+| 469 | Vue du diagramme : telle qu'enregistrée dans le .aird, ou réorganisée automatiquement pour la lecture (calculée en mémoire : le fichier .aird n'est jamais modifié) | Diagram view: as saved in the .aird, or automatically rearranged for reading (computed in memory: the .aird file is never modified) |
+| 470 | Mise en page enregistrée dans le .aird (faite dans Capella) | Layout saved in the .aird (made in Capella) |
+| 470 | 🧭 Vue d'origine | 🧭 Original view |
+| 471 | Réorganisée (en mémoire) | Rearranged (in memory) |
+| 473 | Comparer : passer de la vue d'origine à la vue réorganisée et inversement | Compare: switch from the original view to the rearranged view and back |
+| 486 | ⏳ Réorganisation du diagramme… | ⏳ Rearranging the diagram… |
+| 491 | en couches | layered |
+| 491 | en arbre | as a tree |
+| 491 | en étoile | as a star |
+| 491 | en grille | as a grid |
+| 492 | ✨ Vue réorganisée ( | ✨ Rearranged view (…) — the .aird is not modified |
+| 492 | ) — le .aird n'est pas modifié | ✨ Rearranged view (…) — the .aird is not modified |
+| 492 | ✨ Vue réorganisée — le .aird n'est pas modifié | ✨ Rearranged view — the .aird is not modified |
+| 503 | ✨ Vue réorganisée — le .aird n'est pas modifié | ✨ Rearranged view — the .aird is not modified |
+| 503 | 🧭 Vue d'origine | 🧭 Original view |
+| 511 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
+| 525 | Autres | Others |
+| 596 | Aucun .aird chargé. | No .aird loaded. |
+| 596 | 📂 Ouvrir le .aird… s'ouvre dans le dossier du .capella (Edge / Chrome). | 📂 Open the .aird… opens in the .capella folder (Edge / Chrome). |
+| 597 | Ou, depuis l'écran d'accueil, 📁 Dossier du projet… : le .capella et ses diagrammes sont chargés ensemble. | Or, from the home screen, 📁 Project folder…: the .capella and its diagrams are loaded together. |
+| 605 | Cocher / décocher le groupe | Check / uncheck the group |
+| 612 | Informations du diagramme (panneau de détail) | Diagram information (details panel) |
+| 627 | Filtrer (nom, type, sigle, couche)… | Filter (name, type, acronym, layer)… |
+| 628 | Classement de la liste | List grouping |
+| 628 | Couche › type | Layer › type |
+| 628 | Couche | Layer |
+| 628 | Type de diagramme | Diagram type |
+| 628 | Nom (A → Z) | Name (A → Z) |
+| 629 | Tout déplier | Expand all |
+| 629 | Tout replier | Collapse all |
+| 630 | sélectionné(s) pour l'export | … selected for export |
+| 630 | diagramme(s) | … diagram(s) |
+| 632 | sélectionné(s) pour l'export | … selected for export |
+| 632 | diagramme(s) — cochez pour exporter | … diagram(s) — check to export |
+| 633 | Aucun diagramme ne correspond. | No matching diagram. |
+| 718 | var(--c-dim) | (inchangé, hors _L) |
+| 720 | Diagramme | Diagram |
+| 720 | Diagramme de séquence | Sequence diagram |
+| 720 | Tableau | Table |
+| 722 | 🔲 Diagramme Capella | 🔲 Capella diagram |
+| 724 | 🔲 Afficher le diagramme | 🔲 Show the diagram |
+| 725 | Attributs | Attributes |
+| 725 | Type | Type |
+| 725 | Sigle | Acronym |
+| 726 | Couche | Layer |
+| 726 | Nature | Nature |
+| 727 | Éléments | Elements |
+| 728 | Modifié le | Modified on |
+| 728 | Fichier | File |
+| 729 | Description | (inchangé, hors _L) |
+| 730 | Élément représenté | Represented element |
+| 733 | Éléments affichés ( | Displayed elements (…) |
+| 755 | Diagrammes ( | Diagrams (…) |
+| 778 | export SVG de la visionneuse introuvable | viewer SVG export not found |
+| 785 | diagramme vide ou non exportable | empty or non-exportable diagram |
+| 806 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
+| 807 | Projet Capella | Capella project |
+| 814 | Projet | Project |
+| 814 | Couche | Layer |
+| 815 | Diagramme | Diagram |
+| 815 | Contenu | Content |
+| 815 | élément(s) | … element(s) |
+| 816 | Type | (inchangé, hors _L) |
+| 816 | Date | Date |
+| 817 | Sources | Sources |
+| 817 | Planche | Sheet |
+| 835 | ) scale( | (inchangé, hors _L) |
+| 844 | Élément représenté | Represented element |
+| 846 | ) scale( | (inchangé, hors _L) |
+| 850 | ) scale( | (inchangé, hors _L) |
+| 851 | Arcalyse · planche générée le | Arcalyse · sheet generated on … |
+| 867 | ) scale( | (inchangé, hors _L) |
+| 924 | Élément représenté | Represented element |
+| 924 | Description | (inchangé, hors _L) |
+| 925 | Élément | Element |
+| 925 | Type | (inchangé, hors _L) |
+| 925 | Couche | Layer |
+| 940 | Élément | Element |
+| 940 | Type | (inchangé, hors _L) |
+| 940 | Couche | Layer |
+| 946 | 700 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 947 | 700 28px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 949 | 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 950 | élément(s) représenté(s) | … represented element(s) |
+| 950 | Planche | Sheet |
+| 951 | 700 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 954 | 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 991 | ⬇ Exporter des diagrammes | ⬇ Export diagrams |
+| 993 | Diagrammes | Diagrams |
+| 994 | Cochés dans la liste | Checked in the list |
+| 994 | Affichés (filtre en cours) | Displayed (current filter) |
+| 994 | Tous | All |
+| 995 | Mise en page | Layout |
+| 996 | Cadre et en-tête | Frame and header |
+| 996 | Cadre, bandeau de couche, sigle, nom et type du diagramme | Frame, layer band, acronym, name and type of the diagram |
+| 997 | Cartouche | Title block |
+| 997 | Cartouche technique en bas à droite : projet, diagramme, type, couche, contenu, sources, date, planche | Technical title block at the bottom right: project, diagram, type, layer, content, sources, date, sheet |
+| 998 | Description | Description |
+| 998 | Description Capella du diagramme et élément représenté, sous l'en-tête | Capella description of the diagram and represented element, below the header |
+| 999 | Annexes | Appendices |
+| 999 | Éléments représentés dans chaque diagramme : PDF, page(s) d'annexe après la planche · ZIP, un CSV par diagramme · HTML, tableau repliable | Elements represented in each diagram: PDF, appendix page(s) after the sheet · ZIP, one CSV per diagram · HTML, collapsible table |
+| 1000 | Sommaire | Contents |
+| 1000 | PDF : page de sommaire par couche et type · HTML : onglet Sommaire | PDF: contents page by layer and type · HTML: Contents tab |
+| 1001 | Résolution des images PNG / PDF | Resolution of PNG / PDF images |
+| 1001 | Résolution | Resolution |
+| 1002 | Format | Format |
+| 1004 | 📄 PDF | (inchangé, hors _L) |
+| 1004 | Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets | One PDF: contents, one sheet per diagram (A4, oriented automatically), bookmarks |
+| 1005 | 🗜 ZIP PNG | (inchangé, hors _L) |
+| 1005 | Archive ZIP des planches en PNG, un dossier par couche | ZIP archive of the sheets as PNG, one folder per layer |
+| 1006 | 🗜 ZIP SVG | (inchangé, hors _L) |
+| 1006 | Archive ZIP des planches en SVG (vectoriel), un dossier par couche | ZIP archive of the sheets as SVG (vector), one folder per layer |
+| 1007 | 🌐 HTML | (inchangé, hors _L) |
+| 1007 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
+| 1010 | Aperçu de la planche | Sheet preview |
+| 1011 | Fermer | Close |
+| 1012 | Lancer l'export dans le format choisi | Start the export in the chosen format |
+| 1012 | ⬇ Exporter | ⬇ Export |
+| 1030 | Aucun diagramme. | No diagram. |
+| 1047 | Projet Capella | Capella project |
+| 1057 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1057 | Diagrammes Capella | Capella diagrams |
+| 1058 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1061 | planche(s) | … sheet(s) |
+| 1069 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1070 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1075 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1076 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1114 | Aucun diagramme à exporter. | No diagram to export. |
+| 1115 | Capella | (inchangé, hors _L) |
+| 1130 | aucun diagramme exportable | no exportable diagram |
+| 1140 | Le PDF fera environ | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
+| 1140 | pages). Pour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…). Continuer quand même ? | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
+| 1141 | Export annulé : PDF estimé à | Export cancelled: PDF estimated at … MB. |
+| 1144 | Sommaire | Contents |
+| 1148 | Planche | Sheet |
+| 1150 | Autres | Others |
+| 1151 | - annexe | - appendix |
+| 1164 | Diagrammes — | Diagrams — … |
+| 1167 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
+| 1167 | pages) | (… pages) |
+| 1168 | ignoré(s) : | — … skipped: |
+| 1169 | ⚠ Échec de l'export : | ⚠ Export failed: |
+| 1188 | Type | (inchangé, hors _L) |
+| 1188 | Couche | Layer |
+| 1188 | Sigle | Acronym |
+| 1188 | Diagramme | Diagram |
+| 1188 | Éléments | Elements |
+| 1199 | Type | (inchangé, hors _L) |
+| 1199 | Annexe | Appendix |
+| 1199 | élément(s) représenté(s) | … represented element(s) |
+| 1199 | Élément | Element |
+| 1199 | Couche | Layer |
+| 1213 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
+| 1213 | diagramme(s) | … diagram(s) |
+| 1214 | 📋 Sommaire | 📋 Contents |
+| 1214 | 🔲 Planches | 🔲 Sheets |
 
 ## js/55-revue.js
 

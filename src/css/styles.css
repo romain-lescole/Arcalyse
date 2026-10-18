@@ -1498,6 +1498,12 @@ html[data-tone="light"] .crv-late{color:#cf222e;}
 #vue-diagramme .cdg-vd-l2 #vd-chaine{width:190px;}
 #vue-diagramme .cdg-vd-l2 #vd-zoom{display:inline-block;width:42px;text-align:center;}
 .cdg-vd-sep{width:1px;align-self:stretch;margin:2px 4px;background:var(--c-border);}
+/* 🔲 Vue d'origine / réorganisée (largeur fixe : la barre ne bouge pas d'un diagramme à l'autre) */
+.cdg-dispo{display:inline-flex;align-items:center;gap:3px;}
+.cdg-dispo[hidden]{display:none;}
+.cdg-dispo #cdg-dispo{width:205px;margin:0;}
+.cdg-dispo.on #cdg-dispo{border-color:var(--c-accent);box-shadow:0 0 0 1px var(--c-accent) inset;}
+.cdg-dispo #cdg-dispo-bascule{padding:2px 7px;}
 .cdg-crv{display:inline-flex;align-items:center;gap:4px;margin-left:6px;}
 .cdg-crv .crv-drag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px 2px 4px;border:1.5px dashed var(--c-warn,#e3b341);border-radius:6px;
   background:color-mix(in srgb,var(--c-warn,#e3b341) 14%,transparent);font-size:12px;font-weight:600;cursor:grab;user-select:none;white-space:nowrap;}

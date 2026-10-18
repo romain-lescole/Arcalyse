@@ -53,6 +53,24 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.click(`#vd-svg .vd-f[data-sem="${id}"]`); await p.waitForTimeout(300);
     if (!(await p.textContent('#cap-detail-content')).includes('Manage Video and Audio Diffusion')) throw new Error('clic dans le diagramme : détail de l\'élément non affiché');
   });
+  // 🔲 Vue réorganisée : liens retracés, vue d'origine rendue à l'identique (⇄), automatique (ELK) ; le .aird n'est pas modifié
+  if (fs.existsSync(airdGz)) await step('diagrammes : vue d\'origine / réorganisée', async () => {
+    const texte0 = await p.evaluate(() => { const r = capDiagReps().find(x => x.sigle === 'PAB') || capDiagReps().find(x => x.genre === 'diagramme'); capDiagOpen(r.uid); return _capDiag.texteAird; });
+    await p.waitForSelector('#cdg-dispo', { timeout: 5000 });
+    const svg0 = await p.innerHTML('#vd-svg');
+    await p.selectOption('#cdg-dispo', 'liens');
+    await p.waitForFunction(() => _capDiag.vis.disposition() && document.querySelector('.cdg-dispo.on'), null, { timeout: 60000 });
+    if ((await p.innerHTML('#vd-svg')) === svg0) throw new Error('liens retracés : dessin inchangé');
+    await p.click('#cdg-dispo-bascule');
+    if ((await p.innerHTML('#vd-svg')) !== svg0 || (await p.inputValue('#cdg-dispo')) !== 'origine') throw new Error('⇄ : vue d\'origine non rendue à l\'identique');
+    await p.selectOption('#cdg-dispo', 'auto');
+    await p.waitForFunction(() => { const d = _capDiag.vis.disposition(); return d && d.mode === 'auto' && !d.origine; }, null, { timeout: 120000 });
+    const d = await p.evaluate(() => _capDiag.vis.disposition());
+    if (d.genre === 'couches' && d.moteur !== 'elk') throw new Error('ELK absent de la page : disposition maison');
+    if ((await p.evaluate(() => _capDiag.texteAird)) !== texte0) throw new Error('le texte du .aird a changé');
+    await p.selectOption('#cdg-dispo', 'origine');
+    if ((await p.innerHTML('#vd-svg')) !== svg0) throw new Error('vue d\'origine non rendue');
+  });
   // 💬 Revue : commentaire depuis le panneau de détail, note sur un diagramme, onglets du panneau, rapport
   await step('revue : commentaire, note de diagramme, vérification, rapport', async () => {
     await p.evaluate(() => { const e = capAllElements.find(x => x.attrs.name === 'Manage Video and Audio Diffusion') || capAllElements.find(x => x.attrs.name && x.layer === 'SA') || capAllElements.find(x => x.attrs.name); capOpenDetail(e.id); });
