@@ -1087,7 +1087,7 @@
 - `CAP_HOME_SOURCES` (l. 300) — Éléments des vues qui peuvent être glissés vers une check-list ou un tableau blanc.
 - `capHomeDragRef` (l. 306) — Référence portée par un élément glissable d'une vue (diagramme de la liste, élément de l'Explorateur, chaîne).
 
-## 61-dossier-relecture.js — 1130 lignes
+## 61-dossier-relecture.js — 1131 lignes
 
 - `capDosNorm` (l. 23) — Complète la liste des dossiers lue dans la page (valeurs par défaut, blocs normalisés).
 - `capDosOf` (l. 33) — Dossier concerné par un élément de l'interface (vue ou fenêtre séparée), sinon dossier ouvert dans l'onglet 📑.
@@ -1134,42 +1134,42 @@
 - `capDosElemsReels` (l. 678) — Éléments représentés d'un diagramme, tels qu'un relecteur les reconnaît : une implication sans nom
 - `capDosBout` (l. 691) — Élément au bout d'un échange : un port est remplacé par son propriétaire (fonction, composant), une Part par son type.
 - `capDosListeLignes` (l. 706) — Lignes d'un tableau d'éléments, lues sur le modèle chargé : nom, type, description ; ou pour des échanges :
-- `capDosB64` (l. 714) — Base64 d'un texte UTF-8 (SVG embarqué dans la page). @param {string} s @returns {string}
-- `capDosPage` (l. 728) — Page HTML autonome (hors ligne) du dossier : sommaire, chapitres numérotés, figures, commentaires par bloc,
-- `$` (l. 781)
-- `esc` (l. 782)
-- `dt` (l. 783)
-- `find` (l. 784)
-- `uid` (l. 785)
-- `ink` (l. 786)
-- `me` (l. 787)
-- `mark` (l. 788)
-- `chaps` (l. 789)
-- `counts` (l. 790)
-- `btn` (l. 792)
-- `zone` (l. 793)
-- `com` (l. 794)
-- `opts` (l. 798)
-- `formHtml` (l. 799)
-- `upd` (l. 802)
-- `updAll` (l. 805)
-- `para` (l. 806)
-- `node` (l. 807)
-- `toc` (l. 828)
-- `render` (l. 830)
-- `needMe` (l. 840)
-- `dl` (l. 858)
-- `base` (l. 859)
-- `capDosDocx` (l. 882) — Document Word du dossier : page de titre (projet, auteur, consignes, mode d'emploi), sommaire, chapitres en styles
-- `capDosUnzip` (l. 992) — Lit les fichiers d'une archive ZIP (méthodes « stored » et « deflate », décompression native du navigateur).
-- `capDosXmlTexte` (l. 1012) — Décode les entités XML d'un texte. @param {string} s @returns {string}
-- `capDosWText` (l. 1014) — Texte des runs d'un fragment WordprocessingML (paragraphes séparés par un saut de ligne). @param {string} xml @param {string} [tag] - 't' ou
-- `capDosLireDocx` (l. 1025) — Retours d'un document Word commenté : commentaires (rattachés au dernier signet « arc_… » qui les précède) et
-- `capDosLireFichier` (l. 1054) — Lit un fichier de retours : page HTML enregistrée par un relecteur, .json de ses retours, ou .docx commenté.
-- `capDosLirePage` (l. 1063) — @param {string} texte - Code HTML @returns {object|null} données de la page de relecture (sans l'exécuter)
-- `capDosImporter` (l. 1071) — Choisit et importe un ou plusieurs fichiers de retours (page HTML, .json, .docx).
-- `capDosFusion` (l. 1085) — Rattache des retours lus à leur dossier (même identifiant ; sinon dossier recréé depuis la page, ou dossier ouvert
-- `capDosVersRevue` (l. 1112) — Verse les retours non encore traités dans 💬 Revue : un commentaire par retour, cible = élément du bloc
+- `capDosB64` (l. 715) — Base64 d'un texte UTF-8 (SVG embarqué dans la page). @param {string} s @returns {string}
+- `capDosPage` (l. 729) — Page HTML autonome (hors ligne) du dossier : sommaire, chapitres numérotés, figures, commentaires par bloc,
+- `$` (l. 782)
+- `esc` (l. 783)
+- `dt` (l. 784)
+- `find` (l. 785)
+- `uid` (l. 786)
+- `ink` (l. 787)
+- `me` (l. 788)
+- `mark` (l. 789)
+- `chaps` (l. 790)
+- `counts` (l. 791)
+- `btn` (l. 793)
+- `zone` (l. 794)
+- `com` (l. 795)
+- `opts` (l. 799)
+- `formHtml` (l. 800)
+- `upd` (l. 803)
+- `updAll` (l. 806)
+- `para` (l. 807)
+- `node` (l. 808)
+- `toc` (l. 829)
+- `render` (l. 831)
+- `needMe` (l. 841)
+- `dl` (l. 859)
+- `base` (l. 860)
+- `capDosDocx` (l. 883) — Document Word du dossier : page de titre (projet, auteur, consignes, mode d'emploi), sommaire, chapitres en styles
+- `capDosUnzip` (l. 993) — Lit les fichiers d'une archive ZIP (méthodes « stored » et « deflate », décompression native du navigateur).
+- `capDosXmlTexte` (l. 1013) — Décode les entités XML d'un texte. @param {string} s @returns {string}
+- `capDosWText` (l. 1015) — Texte des runs d'un fragment WordprocessingML (paragraphes séparés par un saut de ligne). @param {string} xml @param {string} [tag] - 't' ou
+- `capDosLireDocx` (l. 1026) — Retours d'un document Word commenté : commentaires (rattachés au dernier signet « arc_… » qui les précède) et
+- `capDosLireFichier` (l. 1055) — Lit un fichier de retours : page HTML enregistrée par un relecteur, .json de ses retours, ou .docx commenté.
+- `capDosLirePage` (l. 1064) — @param {string} texte - Code HTML @returns {object|null} données de la page de relecture (sans l'exécuter)
+- `capDosImporter` (l. 1072) — Choisit et importe un ou plusieurs fichiers de retours (page HTML, .json, .docx).
+- `capDosFusion` (l. 1086) — Rattache des retours lus à leur dossier (même identifiant ; sinon dossier recréé depuis la page, ou dossier ouvert
+- `capDosVersRevue` (l. 1113) — Verse les retours non encore traités dans 💬 Revue : un commentaire par retour, cible = élément du bloc
 
 ## 62-liens-couches.js — 249 lignes
 
@@ -1185,33 +1185,33 @@
 - `capXlWire` (l. 195) — Branche les commandes de la sous-vue (après chaque rendu) : recherche, options, exports, nœuds du dessin.
 - `capXlExport` (l. 225) — Exporte le dessin affiché : SVG, PNG, CSV des liens, ou bloc dans le 📑 dossier de relecture ouvert.
 
-## 63-rapports-auto.js — 442 lignes
+## 63-rapports-auto.js — 446 lignes
 
 - `capDosGabarits` (l. 17) — @returns {{k:string, l:string, t:string}[]} plans types proposés (k : clé, l : libellé, t : description)
-- `capDosOutils` (l. 26) — Outils de construction d'un plan : blocs du dossier, éléments du modèle par couche, diagrammes par type.
-- `capDosEchExt` (l. 55) — Échanges fonctionnels d'une fonction avec l'extérieur (fonctions allouées à des acteurs).
-- `capDosStsBase` (l. 66) — Éléments communs aux plans boîte noire (couche SA) : système, acteurs, fonctions du système, échanges avec l'extérieur,
-- `capDosPlanSts` (l. 86) — Plan type STS (boîte noire, couche SA), exemple 1.
-- `capDosPlanSts2` (l. 121) — Plan type STS (boîte noire, couche SA), exemple 2 : introduction, présentation du système, exigences techniques.
-- `capDosPlanDcs` (l. 160) — Plan type DCS (boîte blanche, couches LA et PA).
-- `capDosGenerer` (l. 213) — Crée un dossier selon un plan type, rempli à partir du modèle chargé, et l'ouvre.
-- `CAP_RAP_TYPES` (l. 235) — Types d'éléments parcourus par une boucle ou listés par un tableau automatique.
-- `CAP_RAP_FILTRES` (l. 240) — Filtres d'une boucle ou d'un tableau automatique.
-- `CAP_RAP_AUTO` (l. 244) — Contenus automatiques proposés.
-- `capRapOpts` (l. 256) — Options d'une liste déroulante.
-- `capRapCouches` (l. 258) — @returns {{k:string,l:string}[]} couches proposées ('' : toutes)
-- `capRapBoucleHtml` (l. 265) — Réglages d'un chapitre « boucle » (sous son titre, dans l'éditeur du modèle).
-- `capRapAutoHtml` (l. 279) — Réglages d'un bloc « contenu automatique ».
-- `capRapAutoLib` (l. 289) — Libellé d'un bloc « contenu automatique ». @param {object} b @returns {string}
-- `capRapFill` (l. 297) — Remplace {nom}, {type}, {couche} par les valeurs de l'élément de la boucle.
-- `capRapFonctionsDe` (l. 305) — Fonctions allouées à un composant, à ses sous-composants et aux composants déployés sur lui.
-- `capRapSelect` (l. 319) — Éléments parcourus par une boucle (ou listés par un tableau automatique).
-- `capRapLie` (l. 344) — Vrai si un élément est lié à l'élément de la boucle englobante : fonction allouée au composant (ou impliquée dans la
-- `capRapEval` (l. 365) — Évalue les blocs d'un modèle pour un élément de boucle : boucles déroulées, contenus automatiques calculés,
-- `capRapGenerer` (l. 406) — ▶ Génère un rapport à partir d'un modèle personnalisé : nouveau dossier ordinaire, ouvert dans l'éditeur.
-- `capRapNouveau` (l. 414) — ✚ Nouveau modèle de rapport, prérempli d'un exemple de boucles (à adapter). @returns {object} modèle
-- `capRapJson` (l. 428) — Enregistre un modèle de rapport en .json (réutilisable dans un autre projet). @param {object} m
-- `capRapImporter` (l. 433) — Importe un ou plusieurs modèles de rapport (.json). @param {Window} [W] - Fenêtre d'où part la demande
+- `capDosOutils` (l. 28) — Outils de construction d'un plan : blocs du dossier, éléments du modèle par couche, diagrammes par type.
+- `capDosEchExt` (l. 57) — Échanges fonctionnels d'une fonction avec l'extérieur (fonctions allouées à des acteurs).
+- `capDosStsBase` (l. 68) — Éléments communs aux plans boîte noire (couche SA) : système, acteurs, fonctions du système, échanges avec l'extérieur,
+- `capDosPlanSts` (l. 88) — Plan type STS (boîte noire, couche SA), exemple 1.
+- `capDosPlanSts2` (l. 123) — Plan type STS (boîte noire, couche SA), exemple 2 : introduction, présentation du système, exigences techniques.
+- `capDosPlanDcs` (l. 162) — Plan type DCS (boîte blanche, couches LA et PA).
+- `capDosGenerer` (l. 216) — Crée un dossier selon un plan type, rempli à partir du modèle chargé, et l'ouvre.
+- `CAP_RAP_TYPES` (l. 239) — Types d'éléments parcourus par une boucle ou listés par un tableau automatique.
+- `CAP_RAP_FILTRES` (l. 244) — Filtres d'une boucle ou d'un tableau automatique.
+- `CAP_RAP_AUTO` (l. 248) — Contenus automatiques proposés.
+- `capRapOpts` (l. 260) — Options d'une liste déroulante.
+- `capRapCouches` (l. 262) — @returns {{k:string,l:string}[]} couches proposées ('' : toutes)
+- `capRapBoucleHtml` (l. 269) — Réglages d'un chapitre « boucle » (sous son titre, dans l'éditeur du modèle).
+- `capRapAutoHtml` (l. 283) — Réglages d'un bloc « contenu automatique ».
+- `capRapAutoLib` (l. 293) — Libellé d'un bloc « contenu automatique ». @param {object} b @returns {string}
+- `capRapFill` (l. 301) — Remplace {nom}, {type}, {couche} par les valeurs de l'élément de la boucle.
+- `capRapFonctionsDe` (l. 309) — Fonctions allouées à un composant, à ses sous-composants et aux composants déployés sur lui.
+- `capRapSelect` (l. 323) — Éléments parcourus par une boucle (ou listés par un tableau automatique).
+- `capRapLie` (l. 348) — Vrai si un élément est lié à l'élément de la boucle englobante : fonction allouée au composant (ou impliquée dans la
+- `capRapEval` (l. 369) — Évalue les blocs d'un modèle pour un élément de boucle : boucles déroulées, contenus automatiques calculés,
+- `capRapGenerer` (l. 410) — ▶ Génère un rapport à partir d'un modèle personnalisé : nouveau dossier ordinaire, ouvert dans l'éditeur.
+- `capRapNouveau` (l. 418) — ✚ Nouveau modèle de rapport, prérempli d'un exemple de boucles (à adapter). @returns {object} modèle
+- `capRapJson` (l. 432) — Enregistre un modèle de rapport en .json (réutilisable dans un autre projet). @param {object} m
+- `capRapImporter` (l. 437) — Importe un ou plusieurs modèles de rapport (.json). @param {Window} [W] - Fenêtre d'où part la demande
 
 ## 64-preferences.js — 319 lignes
 
@@ -1251,3 +1251,15 @@
 - `capDosChoisir` (l. 174) — Petite fenêtre de choix d'un élément ou d'un diagramme (recherche par nom, type, couche).
 - `capDosContext` (l. 211) — Menu contextuel de l'éditeur des dossiers et rapports (blocs, chapitres, plan).
 - `capDosCtxRun` (l. 275) — Exécute une commande du menu contextuel comme un clic sur un bouton du bloc (mêmes traitements que capDosClick).
+
+## 66-rapports-sss-ssdd.js — 282 lignes
+
+- `capDosPerimetre` (l. 14) — Fenêtre de choix du périmètre d'un rapport SSS / SSDD : le système, ou un composant (sous-système).
+- `capDosSujet` (l. 54) — Contexte d'un périmètre : sujet, couche, éléments intérieurs, fonctions, échanges externes et internes,
+- `capDosReqsDe` (l. 90) — Exigences dont le type, le nom, le texte ou un attribut correspond à une expression.
+- `capDosReqQualif` (l. 98) — Priorité et méthode de vérification d'une exigence : attribut ou propriété PVMT dont le nom contient
+- `capDosReqLignes` (l. 110) — Lignes d'un tableau d'exigences (bloc « liste » cols:'req') : identifiant, exigence, texte, priorité, vérification, éléments liés.
+- `capDosOutilsSs` (l. 124) — Outils communs aux plans SSS / SSDD (au-dessus de capDosOutils) : invite à compléter, tableau d'exigences,
+- `capDosSsDebut` (l. 144) — Chapitres 1 (domaine d'application) et 2 (documents de référence), communs au SSS et au SSDD.
+- `capDosPlanSss` (l. 162) — Plan SSS (DI-IPSC-81431) : spécification du système ou du sous-système et de sa qualification.
+- `capDosPlanSsdd` (l. 232) — Plan SSDD (DI-IPSC-81432) : conception du système ou du sous-système (architecture, exécution, interfaces).

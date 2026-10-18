@@ -17,7 +17,9 @@
 function capDosGabarits(){ return [
   {k:'sts', l:_L('📘 Spécification technique du système (boîte noire)'), t:_L('Plan type STS : objet, domaine d\'application, documents, terminologie, analyse fonctionnelle, exigences fonctionnelles par fonction système (entrées et sorties externes), interfaces externes, exigences opérationnelles, contraintes, vérification')},
   {k:'sts2', l:_L('📘 Spécification technique du système (boîte noire, plan 2)'), t:_L('Plan type STS (exemple 2) : introduction, présentation du système (finalité, contexte, parties prenantes), exigences techniques (fonctionnelles, performances, interfaces fonctionnelles et physiques, opérationnelles et scénarios, contraintes, validation et certification)')},
-  {k:'dcs', l:_L('📗 Dossier de conception du système (boîte blanche)'), t:_L('Plan type DCS : conception fonctionnelle / logique (architecture, flux externes et internes, données, chaînes, séquences), conception organique (architecture physique, interfaces, allocation), constituants et exigences dérivées')} ]; }
+  {k:'dcs', l:_L('📗 Dossier de conception du système (boîte blanche)'), t:_L('Plan type DCS : conception fonctionnelle / logique (architecture, flux externes et internes, données, chaînes, séquences), conception organique (architecture physique, interfaces, allocation), constituants et exigences dérivées')},
+  {k:'sss', l:_L('📘 SSS — Spécification du système / sous-système'), t:_L('Plan MIL-STD-498 (DID DI-IPSC-81431) pour le système ou un sous-système choisi : domaine d\'application, documents, exigences (états et modes, capacités, interfaces externes et internes, données, adaptation, sûreté, sécurité, environnement, ressources informatiques, qualité, contraintes, personnel, formation, logistique, emballage, priorité), dispositions de qualification, traçabilité, notes')},
+  {k:'ssdd', l:_L('📗 SSDD — Description de la conception du système / sous-système'), t:_L('Plan MIL-STD-498 (DID DI-IPSC-81432) pour le système ou un sous-système choisi : domaine d\'application, documents, décisions de conception à l\'échelle du système, architecture (composants, concept d\'exécution, conception des interfaces), traçabilité, notes')} ]; }
 
 /**
  * Outils de construction d'un plan : blocs du dossier, éléments du modèle par couche, diagrammes par type.
@@ -208,18 +210,20 @@ function capDosPlanDcs(o){
 
 /**
  * Crée un dossier selon un plan type, rempli à partir du modèle chargé, et l'ouvre.
- * @param {string} k - 'sts' | 'sts2' | 'dcs'
+ * @param {string} k - 'sts' | 'sts2' | 'dcs' | 'sss' | 'ssdd'
+ * @param {?object} [comp] - SSS / SSDD : composant décrit (sous-système), null pour le système ; absent : fenêtre de choix
  */
-function capDosGenerer(k){
+function capDosGenerer(k, comp){
   if(!capLoaded){ alert(_L('Chargez d\'abord un modèle.')); capHomeRender(); return; }
   const g=capDosGabarits().find(x=>x.k===k); if(!g) return;
+  if((k==='sss'||k==='ssdd')&&comp===undefined){ capDosPerimetre(k); return; }   // système ou sous-système (66)
   const o=capDosOutils(), projet=capRevProjectName()||capCurrentFileName||'';
-  const d=capDosNouveau(g.l.replace(/^\S+\s/,'')+' — '+projet);
-  d.blocs=k==='sts'?capDosPlanSts(o):k==='sts2'?capDosPlanSts2(o):capDosPlanDcs(o);
+  const d=capDosNouveau(g.l.replace(/^\S+\s/,'')+' — '+(comp?comp.attrs.name||'':projet));
+  d.blocs=k==='sts'?capDosPlanSts(o):k==='sts2'?capDosPlanSts2(o):k==='sss'?capDosPlanSss(o, capDosSujet(o, comp)):k==='ssdd'?capDosPlanSsdd(o, capDosSujet(o, comp)):capDosPlanDcs(o);
   d.gab=k; d.commentaires=false;   // rapport à lire : sans 💬 dans la page HTML (option dans l'en-tête)
   d.consignes=_L('Document produit automatiquement à partir du modèle, puis complété : relisez chaque chapitre et commentez ce qui est faux, manquant ou ambigu.');
   capHomeSave(); capHomeRender();
-  capWatchFlash(_L(`✔ ${g.l} créé : complétez les parties « [À rédiger — …] »`)+(o.reps.length?'':_L(' — ouvrez le .aird du projet puis régénérez pour y avoir les diagrammes')));
+  capWatchFlash(_L(`✔ ${g.l} créé : complétez les parties « [À rédiger — …] » ou « [À compléter — …] »`)+(o.reps.length?'':_L(' — ouvrez le .aird du projet puis régénérez pour y avoir les diagrammes')));
 }
 
 /* ── 🧩 Modèles de rapport personnalisés ─────────────────────────────────

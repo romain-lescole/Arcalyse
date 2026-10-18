@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 5490 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 5634 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -5161,6 +5161,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 358 | Titre du tableau | Table title |
 | 359 | élément(s) | … element(s) |
 | 359 | échanges : source, cible, éléments échangés | exchanges: source, target, exchanged items |
+| 359 | exigences : identifiant, texte, priorité, vérification, éléments liés | requirements: identifier, text, priority, verification, linked elements |
 | 359 | nom, type, description | name, type, description |
 | 360 | ▴ Masquer | ▴ Hide |
 | 360 | ▾ Voir / modifier | ▾ View / edit |
@@ -5223,104 +5224,104 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 666 | ✔ Document Word créé : les relecteurs le commentent (Révision › Nouveau commentaire), puis 📥 Réimporter le .docx commenté | ✔ Word document created: reviewers comment it (Review › New Comment), then 📥 Re-import the commented .docx |
 | 667 | ✔ Page de relecture créée : envoyez-la aux relecteurs, puis 📥 Réimporter la page qu'ils ont enregistrée | ✔ Review page created: send it to the reviewers, then 📥 Re-import the page they saved |
 | 668 | Export impossible : | Export failed: |
-| 709 | Échange | Exchange |
-| 709 | Source | Source |
-| 709 | Cible | Target |
-| 709 | Éléments échangés | Exchanged items |
-| 711 | Élément | Element |
-| 711 | Type | (inchangé, hors _L) |
-| 711 | Description | (inchangé, hors _L) |
-| 729 | Relecteur | Reviewer |
-| 729 | Votre nom | Your name |
-| 729 | 💾 Enregistrer la page | 💾 Save the page |
-| 729 | ⬇ Retours .json | ⬇ Feedback .json |
-| 729 | 🖨 Imprimer | 🖨 Print |
-| 730 | ● modifications non enregistrées | ● unsaved changes |
-| 730 | ✔ Page enregistrée : renvoyez-la à l'auteur | ✔ Page saved: send it back to the author |
-| 730 | Indiquez d'abord votre nom (en haut de la page). | First enter your name (at the top of the page). |
-| 731 | Commenter ce passage | Comment on this passage |
-| 731 | Commentaires généraux | General comments |
-| 731 | 💬 Commentaire général | 💬 General comment |
-| 731 | Sommaire | Contents |
-| 731 | Consignes | Instructions |
-| 732 | Figure | Figure |
-| 732 | Relu | Reviewed |
-| 732 | commentaire(s) | comment(s) |
-| 732 | de vous | by you |
-| 732 | chapitre(s) relu(s) | chapter(s) reviewed |
-| 732 | Enregistrer | Save |
-| 732 | Annuler | Cancel |
-| 733 | Votre commentaire… | Your comment… |
-| 733 | Passage commenté | Commented passage |
-| 733 | Supprimer | Delete |
-| 733 | Modifier | Edit |
-| 733 | Supprimer ce commentaire ? | Delete this comment? |
-| 734 | Projet | Project |
-| 734 | Modèle | Model |
-| 734 | Auteur | Author |
-| 734 | Envoyé le | Sent on |
-| 734 | Retour attendu le | Feedback expected by |
-| 734 | Éléments représentés | Represented elements |
-| 735 | Élément représenté | Represented element |
-| 735 | cliquez pour les afficher et les commenter un par un | click to show them and comment on each one |
-| 735 | Description | Description |
-| 735 | (pas de description) | (no description) |
-| 735 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
-| 736 | absent du modèle | missing from the model |
-| 736 | Élément | Element |
-| 736 | Type | (inchangé, hors _L) |
-| 736 | Couche | Layer |
-| 737 | Cliquer pour agrandir / réduire | Click to enlarge / reduce |
-| 737 | Produit par Arcalyse | Produced by Arcalyse |
-| 738 | — Criticité — | — Severity — |
-| 892 | Projet | Project |
-| 892 | Modèle | Model |
-| 892 | Auteur | Author |
-| 892 | Envoyé le | Sent on |
-| 892 | Retour attendu le | Feedback expected by |
-| 895 | Consignes | Instructions |
-| 896 | Relecture : insérez des commentaires Word (Révision › Nouveau commentaire) sur les passages concernés, ou modifiez le texte en mode Suivi des modifications, puis renvoyez le fichier .docx. Chaque commentaire est rattaché au chapitre, à la description ou au diagramme commenté. | Review: insert Word comments (Review › New Comment) on the relevant passages, or edit the text with Track Changes on, then send the .docx file back. Each comment is attached to the commented chapter, description or diagram. |
-| 900 | Sommaire | Contents |
-| 905 | Heading | (inchangé, hors _L) |
-| 907 | (pas de description) | (no description) |
-| 916 | (aucun élément) | (no element) |
-| 919 | (pas de description) | (no description) |
-| 922 | ⏳ Image | ⏳ Image … — … |
-| 926 | Figure | Figure |
-| 929 | .png"/ | (inchangé, hors _L) |
-| 932 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
-| 933 | Figure | Figure |
-| 933 | Caption | (inchangé, hors _L) |
-| 934 | Élément représenté | Represented element |
-| 939 | Éléments représentés | Represented elements |
-| 941 | Élément | Element |
-| 941 | Type | (inchangé, hors _L) |
-| 941 | Couche | Layer |
-| 953 | Title | (inchangé, hors _L) |
-| 954 | Heading | (inchangé, hors _L) |
-| 955 | TOC Heading | (inchangé, hors _L) |
-| 956 | Caption | (inchangé, hors _L) |
-| 957 | Arcalyse — Description | (inchangé, hors _L) |
-| 958 | Arcalyse — Consignes | (inchangé, hors _L) |
-| 959 | Arcalyse — Aide | (inchangé, hors _L) |
-| 963 | .png"/ | (inchangé, hors _L) |
-| 966 | [Content_Types].xml | (inchangé, hors _L) |
-| 975 | Arcalyse | (inchangé, hors _L) |
-| 977 | word/_rels/document.xml.rels | (inchangé, hors _L) |
-| 980 | word/media/image | (inchangé, hors _L) |
-| 995 | archive ZIP illisible | unreadable ZIP archive |
-| 1005 | navigateur trop ancien pour lire un .docx | browser too old to read a .docx |
-| 1027 | ce fichier n'est pas un document Word | this file is not a Word document |
-| 1057 | cette page n'est pas un dossier de relecture Arcalyse | this page is not an Arcalyse review package |
-| 1058 | fichier illisible (JSON attendu) | unreadable file (JSON expected) |
-| 1059 | ce fichier n'est pas un retour de dossier de relecture | this file is not review package feedback |
-| 1073 | .html,.htm,.json,.docx | (inchangé, hors _L) |
-| 1090 | » : dossier d'origine introuvable dans ce projet. Rattacher ses retours au dossier ouvert « | “…”: original package not found in this project. Attach its feedback to the open package “…”? |
-| 1103 | retour(s) ajouté(s) | ✔ …: … feedback item(s) added |
-| 1103 | déjà présent(s) | , … already present |
-| 1103 | commentaire(s) créé(s) dans 💬 Revue | — … comment(s) created in 💬 Review |
-| 1122 | 📑 Dossier de relecture | 📑 Review package |
-| 1127 | commentaire(s) créé(s) dans 💬 Revue | ✔ … comment(s) created in 💬 Review |
+| 710 | Échange | Exchange |
+| 710 | Source | Source |
+| 710 | Cible | Target |
+| 710 | Éléments échangés | Exchanged items |
+| 712 | Élément | Element |
+| 712 | Type | (inchangé, hors _L) |
+| 712 | Description | (inchangé, hors _L) |
+| 730 | Relecteur | Reviewer |
+| 730 | Votre nom | Your name |
+| 730 | 💾 Enregistrer la page | 💾 Save the page |
+| 730 | ⬇ Retours .json | ⬇ Feedback .json |
+| 730 | 🖨 Imprimer | 🖨 Print |
+| 731 | ● modifications non enregistrées | ● unsaved changes |
+| 731 | ✔ Page enregistrée : renvoyez-la à l'auteur | ✔ Page saved: send it back to the author |
+| 731 | Indiquez d'abord votre nom (en haut de la page). | First enter your name (at the top of the page). |
+| 732 | Commenter ce passage | Comment on this passage |
+| 732 | Commentaires généraux | General comments |
+| 732 | 💬 Commentaire général | 💬 General comment |
+| 732 | Sommaire | Contents |
+| 732 | Consignes | Instructions |
+| 733 | Figure | Figure |
+| 733 | Relu | Reviewed |
+| 733 | commentaire(s) | comment(s) |
+| 733 | de vous | by you |
+| 733 | chapitre(s) relu(s) | chapter(s) reviewed |
+| 733 | Enregistrer | Save |
+| 733 | Annuler | Cancel |
+| 734 | Votre commentaire… | Your comment… |
+| 734 | Passage commenté | Commented passage |
+| 734 | Supprimer | Delete |
+| 734 | Modifier | Edit |
+| 734 | Supprimer ce commentaire ? | Delete this comment? |
+| 735 | Projet | Project |
+| 735 | Modèle | Model |
+| 735 | Auteur | Author |
+| 735 | Envoyé le | Sent on |
+| 735 | Retour attendu le | Feedback expected by |
+| 735 | Éléments représentés | Represented elements |
+| 736 | Élément représenté | Represented element |
+| 736 | cliquez pour les afficher et les commenter un par un | click to show them and comment on each one |
+| 736 | Description | Description |
+| 736 | (pas de description) | (no description) |
+| 736 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
+| 737 | absent du modèle | missing from the model |
+| 737 | Élément | Element |
+| 737 | Type | (inchangé, hors _L) |
+| 737 | Couche | Layer |
+| 738 | Cliquer pour agrandir / réduire | Click to enlarge / reduce |
+| 738 | Produit par Arcalyse | Produced by Arcalyse |
+| 739 | — Criticité — | — Severity — |
+| 893 | Projet | Project |
+| 893 | Modèle | Model |
+| 893 | Auteur | Author |
+| 893 | Envoyé le | Sent on |
+| 893 | Retour attendu le | Feedback expected by |
+| 896 | Consignes | Instructions |
+| 897 | Relecture : insérez des commentaires Word (Révision › Nouveau commentaire) sur les passages concernés, ou modifiez le texte en mode Suivi des modifications, puis renvoyez le fichier .docx. Chaque commentaire est rattaché au chapitre, à la description ou au diagramme commenté. | Review: insert Word comments (Review › New Comment) on the relevant passages, or edit the text with Track Changes on, then send the .docx file back. Each comment is attached to the commented chapter, description or diagram. |
+| 901 | Sommaire | Contents |
+| 906 | Heading | (inchangé, hors _L) |
+| 908 | (pas de description) | (no description) |
+| 917 | (aucun élément) | (no element) |
+| 920 | (pas de description) | (no description) |
+| 923 | ⏳ Image | ⏳ Image … — … |
+| 927 | Figure | Figure |
+| 930 | .png"/ | (inchangé, hors _L) |
+| 933 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
+| 934 | Figure | Figure |
+| 934 | Caption | (inchangé, hors _L) |
+| 935 | Élément représenté | Represented element |
+| 940 | Éléments représentés | Represented elements |
+| 942 | Élément | Element |
+| 942 | Type | (inchangé, hors _L) |
+| 942 | Couche | Layer |
+| 954 | Title | (inchangé, hors _L) |
+| 955 | Heading | (inchangé, hors _L) |
+| 956 | TOC Heading | (inchangé, hors _L) |
+| 957 | Caption | (inchangé, hors _L) |
+| 958 | Arcalyse — Description | (inchangé, hors _L) |
+| 959 | Arcalyse — Consignes | (inchangé, hors _L) |
+| 960 | Arcalyse — Aide | (inchangé, hors _L) |
+| 964 | .png"/ | (inchangé, hors _L) |
+| 967 | [Content_Types].xml | (inchangé, hors _L) |
+| 976 | Arcalyse | (inchangé, hors _L) |
+| 978 | word/_rels/document.xml.rels | (inchangé, hors _L) |
+| 981 | word/media/image | (inchangé, hors _L) |
+| 996 | archive ZIP illisible | unreadable ZIP archive |
+| 1006 | navigateur trop ancien pour lire un .docx | browser too old to read a .docx |
+| 1028 | ce fichier n'est pas un document Word | this file is not a Word document |
+| 1058 | cette page n'est pas un dossier de relecture Arcalyse | this page is not an Arcalyse review package |
+| 1059 | fichier illisible (JSON attendu) | unreadable file (JSON expected) |
+| 1060 | ce fichier n'est pas un retour de dossier de relecture | this file is not review package feedback |
+| 1074 | .html,.htm,.json,.docx | (inchangé, hors _L) |
+| 1091 | » : dossier d'origine introuvable dans ce projet. Rattacher ses retours au dossier ouvert « | “…”: original package not found in this project. Attach its feedback to the open package “…”? |
+| 1104 | retour(s) ajouté(s) | ✔ …: … feedback item(s) added |
+| 1104 | déjà présent(s) | , … already present |
+| 1104 | commentaire(s) créé(s) dans 💬 Revue | — … comment(s) created in 💬 Review |
+| 1123 | 📑 Dossier de relecture | 📑 Review package |
+| 1128 | commentaire(s) créé(s) dans 💬 Revue | ✔ … comment(s) created in 💬 Review |
 
 ## js/62-liens-couches.js
 
@@ -5378,262 +5379,266 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 19 | Plan type STS (exemple 2) : introduction, présentation du système (finalité, contexte, parties prenantes), exigences techniques (fonctionnelles, performances, interfaces fonctionnelles et physiques, opérationnelles et scénarios, contraintes, validation et certification) | STS outline (example 2): introduction, system presentation (purpose, context, stakeholders), technical requirements (functional, performance, functional and physical interfaces, operational and scenarios, constraints, validation and certification) |
 | 20 | 📗 Dossier de conception du système (boîte blanche) | 📗 System design file (white box) |
 | 20 | Plan type DCS : conception fonctionnelle / logique (architecture, flux externes et internes, données, chaînes, séquences), conception organique (architecture physique, interfaces, allocation), constituants et exigences dérivées | Design file outline: functional / logical design (architecture, external and internal flows, data, chains, sequences), physical design (physical architecture, interfaces, allocation), constituents and derived requirements |
-| 44 | [À rédiger — | [To be written — …] |
-| 74 | Entrées externes | External inputs |
-| 74 | Entrées externes de « | External inputs of “…” |
-| 75 | Sorties externes | External outputs |
-| 75 | Sorties externes de « | External outputs of “…” |
-| 77 | exigences fonctionnelles et de performances associées à cette fonction | functional and performance requirements associated with this function |
-| 89 | Objet | Purpose |
-| 89 | objet du document, système concerné, phase du projet | purpose of the document, system concerned, project phase |
-| 90 | Domaine d'application | Scope |
-| 91 | Contexte de développement du système | System development context |
-| 91 | contexte, enjeux, parties prenantes | context, stakes, stakeholders |
-| 92 | Description générale du système | General description of the system |
-| 93 | Documents cités | Referenced documents |
-| 93 | Documents de référence | Reference documents |
-| 93 | liste des documents de référence | list of reference documents |
-| 93 | Documents applicables | Applicable documents |
-| 93 | liste des documents applicables | list of applicable documents |
-| 94 | Terminologie | Terminology |
-| 94 | Glossaire | Glossary |
-| 94 | termes et définitions | terms and definitions |
-| 94 | Sigles et acronymes | Abbreviations and acronyms |
-| 94 | sigles et acronymes | abbreviations and acronyms |
-| 95 | Analyse fonctionnelle | Functional analysis |
-| 95 | Missions | Missions |
-| 95 | Mission | (inchangé, hors _L) |
-| 95 | Capacités du système | System capabilities |
-| 95 | Capability | (inchangé, hors _L) |
-| 96 | Chaînes fonctionnelles | Functional chains |
-| 97 | Exigences | Requirements |
-| 98 | Exigences fonctionnelles et de performances associées | Functional requirements and associated performance |
-| 98 | aucune fonction allouée au système dans le modèle | no function allocated to the system in the model |
-| 99 | Exigences de performances | Performance requirements |
-| 99 | performances globales du système | overall system performance |
-| 100 | Exigences d'interfaces externes | External interface requirements |
-| 100 | Échanges entre le système et son environnement | Exchanges between the system and its environment |
-| 101 | Environnement | Environment |
-| 101 | Acteurs | Actors |
-| 102 | Entrées | Inputs |
-| 102 | Entrées du système | System inputs |
-| 103 | Sorties | Outputs |
-| 103 | Sorties du système | System outputs |
-| 104 | Exigences opérationnelles | Operational requirements |
-| 105 | Scénarios, profil de mission | Scenarios, mission profile |
-| 106 | Durée de vie | Lifetime |
-| 106 | durée de vie | lifetime |
-| 106 | Ergonomie et facteurs humains | Ergonomics and human factors |
-| 107 | Sûreté de fonctionnement | Dependability |
-| 107 | Sécurité | Safety |
-| 107 | sécurité | safety |
-| 107 | Fiabilité | Reliability |
-| 107 | fiabilité | reliability |
-| 107 | Maintenabilité | Maintainability |
-| 107 | maintenabilité | maintainability |
-| 107 | Disponibilité | Availability |
-| 107 | disponibilité | availability |
-| 108 | Qualité produit | Product quality |
-| 108 | qualité | quality |
-| 108 | Ressources du système | System resources |
-| 108 | Exigences documentaires | Documentation requirements |
-| 109 | Exigences de contraintes | Constraint requirements |
-| 109 | Réglementation | Regulations |
-| 109 | réglementation | regulations |
-| 109 | Masse et autres caractéristiques physiques | Mass and other physical characteristics |
-| 109 | masse, volume… | mass, volume… |
-| 110 | Conception et fabrication | Design and manufacturing |
-| 110 | études ou solutions imposées, matériaux, fabrication | imposed studies or solutions, materials, manufacturing |
-| 110 | Traçabilité et gestion de configuration | Traceability and configuration management |
-| 110 | traçabilité | traceability |
-| 111 | Transportabilité, stockage et conditionnement | Transportability, storage and packaging |
-| 111 | transport, stockage | transport, storage |
-| 111 | Flexibilité et évolution | Flexibility and evolution |
-| 111 | évolutions | evolutions |
-| 112 | Retrait de service | Withdrawal from service |
-| 112 | retrait de service | withdrawal from service |
-| 112 | Conditions d'environnement | Environmental conditions |
-| 112 | environnement climatique, mécanique… | climatic, mechanical environment… |
-| 113 | Exigences d'intégration, de vérification et de validation | Integration, verification and validation requirements |
-| 113 | méthodes de vérification, essais, recette | verification methods, tests, acceptance |
-| 126 | Introduction | Introduction |
-| 126 | Objet | Purpose |
-| 126 | objet du document, système concerné, phase du projet | purpose of the document, system concerned, project phase |
-| 127 | Documents (documents en référence, documents applicables) | Documents (reference documents, applicable documents) |
-| 127 | documents en référence et documents applicables | reference documents and applicable documents |
-| 128 | Terminologie | Terminology |
-| 128 | termes, sigles et acronymes | terms, abbreviations and acronyms |
-| 129 | Présentation du système | System presentation |
-| 130 | Finalité, mission et objectifs du système | Purpose, mission and objectives of the system |
-| 130 | Missions | Missions |
-| 130 | Mission | (inchangé, hors _L) |
-| 130 | Capacités du système | System capabilities |
-| 130 | Capability | (inchangé, hors _L) |
-| 131 | Contexte physique / organique et fonctionnel du système | Physical / organic and functional context of the system |
-| 131 | Acteurs | Actors |
-| 132 | Parties prenantes | Stakeholders |
-| 132 | Entités et acteurs opérationnels | Operational entities and actors |
-| 132 | parties prenantes | stakeholders |
-| 133 | Exigences techniques | Technical requirements |
-| 134 | Exigences fonctionnelles | Functional requirements |
-| 134 | aucune fonction allouée au système dans le modèle | no function allocated to the system in the model |
-| 135 | Exigences de performance | Performance requirements |
-| 135 | performances globales du système | overall system performance |
-| 136 | Exigences d'interface | Interface requirements |
-| 137 | Interfaces fonctionnelles | Functional interfaces |
-| 137 | Entrées du système | System inputs |
-| 137 | Sorties du système | System outputs |
-| 138 | Interfaces physiques | Physical interfaces |
-| 138 | Échanges entre le système et son environnement | Exchanges between the system and its environment |
-| 139 | Exigences opérationnelles et scénarios opérationnels | Operational requirements and operational scenarios |
-| 140 | Modes opérationnels et scénarios | Operational modes and scenarios |
-| 140 | Chaînes fonctionnelles | Functional chains |
-| 141 | Exigences d'ergonomie et de facteurs humains | Ergonomics and human factors requirements |
-| 142 | Exigences de sûreté de fonctionnement (sécurité, fiabilité, disponibilité, maintenabilité) | Dependability requirements (safety, reliability, availability, maintainability) |
-| 142 | sûreté de fonctionnement | dependability |
-| 143 | Exigences de sécurité de l'information | Information security requirements |
-| 143 | sécurité de l'information | information security |
-| 144 | Exigences d'environnement opérationnel | Operational environment requirements |
-| 144 | environnement opérationnel | operational environment |
-| 145 | Exigences de moyens | Means requirements |
-| 146 | Exigences de transport et de stockage | Transport and storage requirements |
-| 146 | transport, stockage | transport, storage |
-| 147 | Contraintes | Constraints |
-| 147 | Contraintes physiques | Physical constraints |
-| 147 | masse, volume… | mass, volume… |
-| 147 | Contraintes de conception et de réalisation | Design and production constraints |
-| 147 | études ou solutions imposées, matériaux, fabrication | imposed studies or solutions, materials, manufacturing |
-| 148 | Contraintes de réserve et d'extension | Reserve and extension constraints |
-| 148 | réserves et extensions | reserves and extensions |
-| 148 | Contraintes de mise en service | Commissioning constraints |
-| 148 | mise en service | commissioning |
-| 149 | Contraintes de retrait de service | Withdrawal from service constraints |
-| 149 | retrait de service | withdrawal from service |
-| 149 | Contraintes de maintenance et de documentation | Maintenance and documentation constraints |
-| 149 | maintenance, documentation | maintenance, documentation |
-| 150 | Contraintes de production | Production constraints |
-| 150 | Contraintes de réglementation | Regulatory constraints |
-| 150 | réglementation | regulations |
-| 151 | Contraintes de coûts et de délai du produit | Product cost and lead-time constraints |
-| 151 | coûts, délais | costs, lead times |
-| 152 | Exigences de validation et de certification | Validation and certification requirements |
-| 152 | méthodes de validation, certification | validation methods, certification |
-| 177 | Objet | Purpose |
-| 177 | objet du document, système concerné, phase du projet | purpose of the document, system concerned, project phase |
-| 178 | Domaine d'application | Scope |
-| 178 | Description générale du projet | General description of the project |
-| 178 | projet, organisation, jalons | project, organisation, milestones |
-| 178 | Description générale du système | General description of the system |
-| 179 | Documents cités | Referenced documents |
-| 179 | Documents de référence | Reference documents |
-| 179 | liste des documents de référence | list of reference documents |
-| 179 | Documents applicables | Applicable documents |
-| 179 | liste des documents applicables | list of applicable documents |
-| 180 | Terminologie | Terminology |
-| 180 | Glossaire | Glossary |
-| 180 | termes et définitions | terms and definitions |
-| 180 | Sigles et acronymes | Abbreviations and acronyms |
-| 180 | sigles et acronymes | abbreviations and acronyms |
-| 181 | Conception fonctionnelle / logique | Functional / logical design |
-| 182 | Décomposition statique | Static breakdown |
-| 183 | Architecture fonctionnelle / logique | Functional / logical architecture |
-| 183 | Composants logiques | Logical components |
-| 184 | Flux externes | External flows |
-| 184 | Échanges fonctionnels avec l'extérieur | Functional exchanges with the outside |
-| 185 | Flux internes | Internal flows |
-| 185 | Échanges fonctionnels internes | Internal functional exchanges |
-| 186 | Données de paramétrage | Configuration data |
-| 186 | Éléments échangés | Exchanged items |
-| 186 | données de paramétrage | configuration data |
-| 187 | Analyse dynamique | Dynamic analysis |
-| 188 | Chaînes fonctionnelles | Functional chains |
-| 188 | aucune chaîne fonctionnelle en LA dans le modèle | no functional chain in LA in the model |
-| 189 | Diagrammes de séquences | Sequence diagrams |
-| 189 | scénarios logiques | logical scenarios |
-| 190 | Conception organique | Physical design |
-| 191 | Décomposition statique | Static breakdown |
-| 192 | Architecture physique | Physical architecture |
-| 192 | Composants physiques | Physical components |
-| 193 | Interfaces physiques externes | External physical interfaces |
-| 193 | Liens physiques avec l'extérieur | Physical links with the outside |
-| 194 | Interfaces physiques internes | Internal physical interfaces |
-| 194 | Liens physiques internes | Internal physical links |
-| 195 | Allocation de l'architecture fonctionnelle / logique | Allocation of the functional / logical architecture |
-| 195 | principes d'allocation | allocation principles |
-| 196 | Analyse dynamique | Dynamic analysis |
-| 197 | Flux physiques | Physical flows |
-| 197 | Chemins physiques | Physical paths |
-| 197 | Échanges entre composants | Component exchanges |
-| 198 | Diagrammes de séquences | Sequence diagrams |
-| 198 | scénarios physiques | physical scenarios |
-| 199 | Constituants de niveau inférieur | Lower-level constituents |
-| 199 | Constituants | Constituents |
-| 200 | Exigences dérivées | Derived requirements |
-| 201 | Exigences fonctionnelles | Functional requirements |
-| 201 | Fonctions allouées à « | Functions allocated to “…” |
-| 202 | Exigences de performances | Performance requirements |
-| 203 | Exigences d'interfaces externes | External interface requirements |
-| 203 | Liens physiques de « | Physical links of “…” |
-| 204 | Exigences opérationnelles | Operational requirements |
-| 204 | exigences opérationnelles | operational requirements |
-| 205 | Exigences de contraintes | Constraint requirements |
-| 206 | Exigences d'intégration, de vérification et de validation | Integration, verification and validation requirements |
-| 206 | vérification | verification |
-| 206 | aucun constituant physique dans le modèle | no physical constituent in the model |
-| 214 | Chargez d'abord un modèle. | Load a model first. |
-| 220 | Document produit automatiquement à partir du modèle, puis complété : relisez chaque chapitre et commentez ce qui est faux, manquant ou ambigu. | Document produced automatically from the model, then completed: read each chapter and comment on what is wrong, missing or ambiguous. |
-| 222 | créé : complétez les parties « [À rédiger — …] » | ✔ … created: complete the “[To be written — …]” parts |
-| 222 | — ouvrez le .aird du projet puis régénérez pour y avoir les diagrammes | — open the project's .aird then generate again to include the diagrams |
-| 236 | Fonctions | Functions |
-| 236 | Composants (hors acteurs) | Components (excluding actors) |
-| 236 | Nœuds physiques (PA) | Physical nodes (PA) |
-| 236 | Acteurs | Actors |
-| 237 | Chaînes fonctionnelles | Functional chains |
-| 237 | Capacités | Capabilities |
-| 237 | Missions | Missions |
-| 237 | Échanges fonctionnels | Functional exchanges |
-| 238 | Échanges entre composants | Component exchanges |
-| 238 | Liens physiques | Physical links |
-| 238 | Éléments échangés | Exchanged items |
-| 238 | Diagrammes | Diagrams |
-| 241 | alloués au système | allocated to the system |
-| 241 | alloués à un acteur | allocated to an actor |
-| 241 | feuilles seulement | leaves only |
-| 242 | liés à l'élément de la boucle englobante | linked to the element of the enclosing loop |
-| 245 | Description de l'élément de la boucle | Description of the loop element |
-| 245 | Diagrammes dont il est l'élément représenté | Diagrams whose represented element it is |
-| 246 | Diagrammes par couche et par type | Diagrams by layer and type |
-| 246 | Échanges fonctionnels entrants | Incoming functional exchanges |
-| 246 | Échanges fonctionnels sortants | Outgoing functional exchanges |
-| 247 | Fonctions allouées (et déployées) | Allocated (and deployed) functions |
-| 247 | Liens physiques | Physical links |
-| 247 | Chaînes qui impliquent la fonction | Chains involving the function |
-| 248 | Tableau d'éléments (type, couche, filtre) | Element table (type, layer, filter) |
-| 248 | ⇶ Liens entre couches | ⇶ Cross-layer links |
-| 258 | toutes couches | all layers |
-| 267 | 🔁 Pour chaque | 🔁 For each |
-| 269 | types : LAB, SDFB… (vide : tous) | types: LAB, SDFB… (empty: all) |
-| 270 | nom contient… | name contains… |
-| 271 | au plus | at most |
-| 281 | types : SAB, ES… (vide : tous) | types: SAB, ES… (empty: all) |
-| 283 | nom contient… | name contains… |
-| 284 | avec l'extérieur seulement | with the outside only |
-| 328 | Capability | (inchangé, hors _L) |
-| 328 | Mission | (inchangé, hors _L) |
-| 372 | Diagramme | Diagram |
-| 376 | aucun élément pour « | no element for “…” |
-| 407 | Chargez d'abord un modèle. | Load a model first. |
-| 408 | Rapport | Report |
-| 411 | ✔ Rapport généré à partir du modèle « | ✔ Report generated from the template “…” |
-| 411 | — ouvrez le .aird du projet puis régénérez pour y avoir les diagrammes | — open the project's .aird then generate again to include the diagrams |
-| 417 | Mon modèle de rapport | My report template |
-| 419 | Objet | Purpose |
-| 419 | [À rédiger — objet du document] | [To be written — purpose of the document] |
-| 420 | Architecture du système | System architecture |
-| 421 | Fonctions du système | System functions |
-| 423 | Constituants physiques | Physical constituents |
-| 436 | ce fichier n'est pas un modèle de rapport Arcalyse | this file is not an Arcalyse report template |
-| 439 | modèle(s) de rapport importé(s) | ✔ … report template(s) imported |
+| 21 | 📘 SSS — Spécification du système / sous-système | 📘 SSS — System/Subsystem Specification |
+| 21 | Plan MIL-STD-498 (DID DI-IPSC-81431) pour le système ou un sous-système choisi : domaine d'application, documents, exigences (états et modes, capacités, interfaces externes et internes, données, adaptation, sûreté, sécurité, environnement, ressources informatiques, qualité, contraintes, personnel, formation, logistique, emballage, priorité), dispositions de qualification, traçabilité, notes | MIL-STD-498 outline (DID DI-IPSC-81431) for the system or a chosen subsystem: scope, referenced documents, requirements (states and modes, capabilities, external and internal interfaces, data, adaptation, safety, security, environment, computer resources, quality, constraints, personnel, training, logistics, packaging, precedence), qualification provisions, traceability, notes |
+| 22 | 📗 SSDD — Description de la conception du système / sous-système | 📗 SSDD — System/Subsystem Design Description |
+| 22 | Plan MIL-STD-498 (DID DI-IPSC-81432) pour le système ou un sous-système choisi : domaine d'application, documents, décisions de conception à l'échelle du système, architecture (composants, concept d'exécution, conception des interfaces), traçabilité, notes | MIL-STD-498 outline (DID DI-IPSC-81432) for the system or a chosen subsystem: scope, referenced documents, system-wide design decisions, architectural design (components, concept of execution, interface design), traceability, notes |
+| 46 | [À rédiger — | [To be written — …] |
+| 76 | Entrées externes | External inputs |
+| 76 | Entrées externes de « | External inputs of “…” |
+| 77 | Sorties externes | External outputs |
+| 77 | Sorties externes de « | External outputs of “…” |
+| 79 | exigences fonctionnelles et de performances associées à cette fonction | functional and performance requirements associated with this function |
+| 91 | Objet | Purpose |
+| 91 | objet du document, système concerné, phase du projet | purpose of the document, system concerned, project phase |
+| 92 | Domaine d'application | Scope |
+| 93 | Contexte de développement du système | System development context |
+| 93 | contexte, enjeux, parties prenantes | context, stakes, stakeholders |
+| 94 | Description générale du système | General description of the system |
+| 95 | Documents cités | Referenced documents |
+| 95 | Documents de référence | Reference documents |
+| 95 | liste des documents de référence | list of reference documents |
+| 95 | Documents applicables | Applicable documents |
+| 95 | liste des documents applicables | list of applicable documents |
+| 96 | Terminologie | Terminology |
+| 96 | Glossaire | Glossary |
+| 96 | termes et définitions | terms and definitions |
+| 96 | Sigles et acronymes | Abbreviations and acronyms |
+| 96 | sigles et acronymes | abbreviations and acronyms |
+| 97 | Analyse fonctionnelle | Functional analysis |
+| 97 | Missions | Missions |
+| 97 | Mission | (inchangé, hors _L) |
+| 97 | Capacités du système | System capabilities |
+| 97 | Capability | (inchangé, hors _L) |
+| 98 | Chaînes fonctionnelles | Functional chains |
+| 99 | Exigences | Requirements |
+| 100 | Exigences fonctionnelles et de performances associées | Functional requirements and associated performance |
+| 100 | aucune fonction allouée au système dans le modèle | no function allocated to the system in the model |
+| 101 | Exigences de performances | Performance requirements |
+| 101 | performances globales du système | overall system performance |
+| 102 | Exigences d'interfaces externes | External interface requirements |
+| 102 | Échanges entre le système et son environnement | Exchanges between the system and its environment |
+| 103 | Environnement | Environment |
+| 103 | Acteurs | Actors |
+| 104 | Entrées | Inputs |
+| 104 | Entrées du système | System inputs |
+| 105 | Sorties | Outputs |
+| 105 | Sorties du système | System outputs |
+| 106 | Exigences opérationnelles | Operational requirements |
+| 107 | Scénarios, profil de mission | Scenarios, mission profile |
+| 108 | Durée de vie | Lifetime |
+| 108 | durée de vie | lifetime |
+| 108 | Ergonomie et facteurs humains | Ergonomics and human factors |
+| 109 | Sûreté de fonctionnement | Dependability |
+| 109 | Sécurité | Safety |
+| 109 | sécurité | safety |
+| 109 | Fiabilité | Reliability |
+| 109 | fiabilité | reliability |
+| 109 | Maintenabilité | Maintainability |
+| 109 | maintenabilité | maintainability |
+| 109 | Disponibilité | Availability |
+| 109 | disponibilité | availability |
+| 110 | Qualité produit | Product quality |
+| 110 | qualité | quality |
+| 110 | Ressources du système | System resources |
+| 110 | Exigences documentaires | Documentation requirements |
+| 111 | Exigences de contraintes | Constraint requirements |
+| 111 | Réglementation | Regulations |
+| 111 | réglementation | regulations |
+| 111 | Masse et autres caractéristiques physiques | Mass and other physical characteristics |
+| 111 | masse, volume… | mass, volume… |
+| 112 | Conception et fabrication | Design and manufacturing |
+| 112 | études ou solutions imposées, matériaux, fabrication | imposed studies or solutions, materials, manufacturing |
+| 112 | Traçabilité et gestion de configuration | Traceability and configuration management |
+| 112 | traçabilité | traceability |
+| 113 | Transportabilité, stockage et conditionnement | Transportability, storage and packaging |
+| 113 | transport, stockage | transport, storage |
+| 113 | Flexibilité et évolution | Flexibility and evolution |
+| 113 | évolutions | evolutions |
+| 114 | Retrait de service | Withdrawal from service |
+| 114 | retrait de service | withdrawal from service |
+| 114 | Conditions d'environnement | Environmental conditions |
+| 114 | environnement climatique, mécanique… | climatic, mechanical environment… |
+| 115 | Exigences d'intégration, de vérification et de validation | Integration, verification and validation requirements |
+| 115 | méthodes de vérification, essais, recette | verification methods, tests, acceptance |
+| 128 | Introduction | Introduction |
+| 128 | Objet | Purpose |
+| 128 | objet du document, système concerné, phase du projet | purpose of the document, system concerned, project phase |
+| 129 | Documents (documents en référence, documents applicables) | Documents (reference documents, applicable documents) |
+| 129 | documents en référence et documents applicables | reference documents and applicable documents |
+| 130 | Terminologie | Terminology |
+| 130 | termes, sigles et acronymes | terms, abbreviations and acronyms |
+| 131 | Présentation du système | System presentation |
+| 132 | Finalité, mission et objectifs du système | Purpose, mission and objectives of the system |
+| 132 | Missions | Missions |
+| 132 | Mission | (inchangé, hors _L) |
+| 132 | Capacités du système | System capabilities |
+| 132 | Capability | (inchangé, hors _L) |
+| 133 | Contexte physique / organique et fonctionnel du système | Physical / organic and functional context of the system |
+| 133 | Acteurs | Actors |
+| 134 | Parties prenantes | Stakeholders |
+| 134 | Entités et acteurs opérationnels | Operational entities and actors |
+| 134 | parties prenantes | stakeholders |
+| 135 | Exigences techniques | Technical requirements |
+| 136 | Exigences fonctionnelles | Functional requirements |
+| 136 | aucune fonction allouée au système dans le modèle | no function allocated to the system in the model |
+| 137 | Exigences de performance | Performance requirements |
+| 137 | performances globales du système | overall system performance |
+| 138 | Exigences d'interface | Interface requirements |
+| 139 | Interfaces fonctionnelles | Functional interfaces |
+| 139 | Entrées du système | System inputs |
+| 139 | Sorties du système | System outputs |
+| 140 | Interfaces physiques | Physical interfaces |
+| 140 | Échanges entre le système et son environnement | Exchanges between the system and its environment |
+| 141 | Exigences opérationnelles et scénarios opérationnels | Operational requirements and operational scenarios |
+| 142 | Modes opérationnels et scénarios | Operational modes and scenarios |
+| 142 | Chaînes fonctionnelles | Functional chains |
+| 143 | Exigences d'ergonomie et de facteurs humains | Ergonomics and human factors requirements |
+| 144 | Exigences de sûreté de fonctionnement (sécurité, fiabilité, disponibilité, maintenabilité) | Dependability requirements (safety, reliability, availability, maintainability) |
+| 144 | sûreté de fonctionnement | dependability |
+| 145 | Exigences de sécurité de l'information | Information security requirements |
+| 145 | sécurité de l'information | information security |
+| 146 | Exigences d'environnement opérationnel | Operational environment requirements |
+| 146 | environnement opérationnel | operational environment |
+| 147 | Exigences de moyens | Means requirements |
+| 148 | Exigences de transport et de stockage | Transport and storage requirements |
+| 148 | transport, stockage | transport, storage |
+| 149 | Contraintes | Constraints |
+| 149 | Contraintes physiques | Physical constraints |
+| 149 | masse, volume… | mass, volume… |
+| 149 | Contraintes de conception et de réalisation | Design and production constraints |
+| 149 | études ou solutions imposées, matériaux, fabrication | imposed studies or solutions, materials, manufacturing |
+| 150 | Contraintes de réserve et d'extension | Reserve and extension constraints |
+| 150 | réserves et extensions | reserves and extensions |
+| 150 | Contraintes de mise en service | Commissioning constraints |
+| 150 | mise en service | commissioning |
+| 151 | Contraintes de retrait de service | Withdrawal from service constraints |
+| 151 | retrait de service | withdrawal from service |
+| 151 | Contraintes de maintenance et de documentation | Maintenance and documentation constraints |
+| 151 | maintenance, documentation | maintenance, documentation |
+| 152 | Contraintes de production | Production constraints |
+| 152 | Contraintes de réglementation | Regulatory constraints |
+| 152 | réglementation | regulations |
+| 153 | Contraintes de coûts et de délai du produit | Product cost and lead-time constraints |
+| 153 | coûts, délais | costs, lead times |
+| 154 | Exigences de validation et de certification | Validation and certification requirements |
+| 154 | méthodes de validation, certification | validation methods, certification |
+| 179 | Objet | Purpose |
+| 179 | objet du document, système concerné, phase du projet | purpose of the document, system concerned, project phase |
+| 180 | Domaine d'application | Scope |
+| 180 | Description générale du projet | General description of the project |
+| 180 | projet, organisation, jalons | project, organisation, milestones |
+| 180 | Description générale du système | General description of the system |
+| 181 | Documents cités | Referenced documents |
+| 181 | Documents de référence | Reference documents |
+| 181 | liste des documents de référence | list of reference documents |
+| 181 | Documents applicables | Applicable documents |
+| 181 | liste des documents applicables | list of applicable documents |
+| 182 | Terminologie | Terminology |
+| 182 | Glossaire | Glossary |
+| 182 | termes et définitions | terms and definitions |
+| 182 | Sigles et acronymes | Abbreviations and acronyms |
+| 182 | sigles et acronymes | abbreviations and acronyms |
+| 183 | Conception fonctionnelle / logique | Functional / logical design |
+| 184 | Décomposition statique | Static breakdown |
+| 185 | Architecture fonctionnelle / logique | Functional / logical architecture |
+| 185 | Composants logiques | Logical components |
+| 186 | Flux externes | External flows |
+| 186 | Échanges fonctionnels avec l'extérieur | Functional exchanges with the outside |
+| 187 | Flux internes | Internal flows |
+| 187 | Échanges fonctionnels internes | Internal functional exchanges |
+| 188 | Données de paramétrage | Configuration data |
+| 188 | Éléments échangés | Exchanged items |
+| 188 | données de paramétrage | configuration data |
+| 189 | Analyse dynamique | Dynamic analysis |
+| 190 | Chaînes fonctionnelles | Functional chains |
+| 190 | aucune chaîne fonctionnelle en LA dans le modèle | no functional chain in LA in the model |
+| 191 | Diagrammes de séquences | Sequence diagrams |
+| 191 | scénarios logiques | logical scenarios |
+| 192 | Conception organique | Physical design |
+| 193 | Décomposition statique | Static breakdown |
+| 194 | Architecture physique | Physical architecture |
+| 194 | Composants physiques | Physical components |
+| 195 | Interfaces physiques externes | External physical interfaces |
+| 195 | Liens physiques avec l'extérieur | Physical links with the outside |
+| 196 | Interfaces physiques internes | Internal physical interfaces |
+| 196 | Liens physiques internes | Internal physical links |
+| 197 | Allocation de l'architecture fonctionnelle / logique | Allocation of the functional / logical architecture |
+| 197 | principes d'allocation | allocation principles |
+| 198 | Analyse dynamique | Dynamic analysis |
+| 199 | Flux physiques | Physical flows |
+| 199 | Chemins physiques | Physical paths |
+| 199 | Échanges entre composants | Component exchanges |
+| 200 | Diagrammes de séquences | Sequence diagrams |
+| 200 | scénarios physiques | physical scenarios |
+| 201 | Constituants de niveau inférieur | Lower-level constituents |
+| 201 | Constituants | Constituents |
+| 202 | Exigences dérivées | Derived requirements |
+| 203 | Exigences fonctionnelles | Functional requirements |
+| 203 | Fonctions allouées à « | Functions allocated to “…” |
+| 204 | Exigences de performances | Performance requirements |
+| 205 | Exigences d'interfaces externes | External interface requirements |
+| 205 | Liens physiques de « | Physical links of “…” |
+| 206 | Exigences opérationnelles | Operational requirements |
+| 206 | exigences opérationnelles | operational requirements |
+| 207 | Exigences de contraintes | Constraint requirements |
+| 208 | Exigences d'intégration, de vérification et de validation | Integration, verification and validation requirements |
+| 208 | vérification | verification |
+| 208 | aucun constituant physique dans le modèle | no physical constituent in the model |
+| 217 | Chargez d'abord un modèle. | Load a model first. |
+| 224 | Document produit automatiquement à partir du modèle, puis complété : relisez chaque chapitre et commentez ce qui est faux, manquant ou ambigu. | Document produced automatically from the model, then completed: read each chapter and comment on what is wrong, missing or ambiguous. |
+| 226 | créé : complétez les parties « [À rédiger — …] » ou « [À compléter — …] » | ✔ … created: complete the “[To be written — …]” or “[To be completed — …]” parts |
+| 226 | — ouvrez le .aird du projet puis régénérez pour y avoir les diagrammes | — open the project's .aird then generate again to include the diagrams |
+| 240 | Fonctions | Functions |
+| 240 | Composants (hors acteurs) | Components (excluding actors) |
+| 240 | Nœuds physiques (PA) | Physical nodes (PA) |
+| 240 | Acteurs | Actors |
+| 241 | Chaînes fonctionnelles | Functional chains |
+| 241 | Capacités | Capabilities |
+| 241 | Missions | Missions |
+| 241 | Échanges fonctionnels | Functional exchanges |
+| 242 | Échanges entre composants | Component exchanges |
+| 242 | Liens physiques | Physical links |
+| 242 | Éléments échangés | Exchanged items |
+| 242 | Diagrammes | Diagrams |
+| 245 | alloués au système | allocated to the system |
+| 245 | alloués à un acteur | allocated to an actor |
+| 245 | feuilles seulement | leaves only |
+| 246 | liés à l'élément de la boucle englobante | linked to the element of the enclosing loop |
+| 249 | Description de l'élément de la boucle | Description of the loop element |
+| 249 | Diagrammes dont il est l'élément représenté | Diagrams whose represented element it is |
+| 250 | Diagrammes par couche et par type | Diagrams by layer and type |
+| 250 | Échanges fonctionnels entrants | Incoming functional exchanges |
+| 250 | Échanges fonctionnels sortants | Outgoing functional exchanges |
+| 251 | Fonctions allouées (et déployées) | Allocated (and deployed) functions |
+| 251 | Liens physiques | Physical links |
+| 251 | Chaînes qui impliquent la fonction | Chains involving the function |
+| 252 | Tableau d'éléments (type, couche, filtre) | Element table (type, layer, filter) |
+| 252 | ⇶ Liens entre couches | ⇶ Cross-layer links |
+| 262 | toutes couches | all layers |
+| 271 | 🔁 Pour chaque | 🔁 For each |
+| 273 | types : LAB, SDFB… (vide : tous) | types: LAB, SDFB… (empty: all) |
+| 274 | nom contient… | name contains… |
+| 275 | au plus | at most |
+| 285 | types : SAB, ES… (vide : tous) | types: SAB, ES… (empty: all) |
+| 287 | nom contient… | name contains… |
+| 288 | avec l'extérieur seulement | with the outside only |
+| 332 | Capability | (inchangé, hors _L) |
+| 332 | Mission | (inchangé, hors _L) |
+| 376 | Diagramme | Diagram |
+| 380 | aucun élément pour « | no element for “…” |
+| 411 | Chargez d'abord un modèle. | Load a model first. |
+| 412 | Rapport | Report |
+| 415 | ✔ Rapport généré à partir du modèle « | ✔ Report generated from the template “…” |
+| 415 | — ouvrez le .aird du projet puis régénérez pour y avoir les diagrammes | — open the project's .aird then generate again to include the diagrams |
+| 421 | Mon modèle de rapport | My report template |
+| 423 | Objet | Purpose |
+| 423 | [À rédiger — objet du document] | [To be written — purpose of the document] |
+| 424 | Architecture du système | System architecture |
+| 425 | Fonctions du système | System functions |
+| 427 | Constituants physiques | Physical constituents |
+| 440 | ce fichier n'est pas un modèle de rapport Arcalyse | this file is not an Arcalyse report template |
+| 443 | modèle(s) de rapport importé(s) | ✔ … report template(s) imported |
 
 ## js/64-preferences.js
 
@@ -5773,6 +5778,150 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 247 | ⇤ Sortir du chapitre | ⇤ Move out of the chapter |
 | 248 | ⇥ Mettre dans le chapitre précédent | ⇥ Put in the previous chapter |
 | 248 | 🗑 Retirer du dossier | 🗑 Remove from the document |
+
+## js/66-rapports-sss-ssdd.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 23 | Le même plan s'applique au système ou à un sous-système : choisissez le périmètre décrit. | The same outline applies to the system or to a subsystem : choose the scope described. |
+| 24 | 🌐 Système | 🌐 System |
+| 25 | ▶ Système : | ▶ System: … |
+| 25 | Aucun système dans la couche SA | No system in the SA layer |
+| 26 | 🧩 Sous-système : un composant | 🧩 Subsystem: a component |
+| 27 | 🔍 Nom du composant (SA, LA ou PA)… | 🔍 Component name (SA, LA or PA)… |
+| 30 | Le rapport créé reste entièrement modifiable. | The report created remains fully editable. |
+| 30 | Annuler | Cancel |
+| 35 | Aucun composant. | No component. |
+| 112 | Identifiant | Identifier |
+| 112 | Exigence | Requirement |
+| 112 | Texte | Text |
+| 112 | Priorité | Priority |
+| 112 | Vérification | Verification |
+| 112 | Éléments liés | Linked elements |
+| 127 | [À compléter — | [To be completed — …] |
+| 132 | Exigences repérées : | Requirements found: … |
+| 148 | Domaine d'application | Scope |
+| 149 | Identification | Identification |
+| 149 | identification complète : numéro, titre, abréviation, version, édition du système ou du sous-système | full identification: number, title, abbreviation, version, release of the system or subsystem |
+| 149 | Objet décrit : | Item described: … (…, … layer). |
+| 149 | , couche | Item described: … (…, … layer). |
+| 150 | Présentation du système | System presentation |
+| 150 | Missions | Missions |
+| 150 | Capacités | Capabilities |
+| 151 | objet général du système, nature, historique, parties prenantes (client, utilisateurs, développeur, soutien), sites d'exploitation | general purpose of the system, nature, history, stakeholders (acquirer, user, developer, support agencies), operating sites |
+| 152 | Présentation du document | Document overview |
+| 152 | exigences de sécurité ou de confidentialité liées à l'usage du document | security or privacy considerations associated with its use |
+| 153 | Documents de référence | Reference documents |
+| 153 | numéro, titre, révision et date de tous les documents cités, et leur origine | number, title, revision and date of all documents referenced, and their source |
+| 171 | Fonctions impliquées | Involved functions |
+| 171 | Chaînes fonctionnelles | Functional chains |
+| 172 | Exigences liées à « | Requirements linked to “…” |
+| 173 | exigences de capacité : comportement attendu, performances, conditions, réaction aux situations imprévues | capability requirements: required behavior, performance, conditions, response to unexpected situations |
+| 175 | Entrées externes | External inputs |
+| 175 | Sorties externes | External outputs |
+| 176 | Exigences liées à « | Requirements linked to “…” |
+| 176 | exigences fonctionnelles et de performances de cette capacité | functional and performance requirements of this capability |
+| 177 | capacités requises du système (aucune capacité ni fonction allouée dans le modèle) | required system capabilities (no capability or allocated function in the model) |
+| 181 | Échanges entre composants | Component exchanges |
+| 181 | Échanges fonctionnels | Functional exchanges |
+| 182 | Exigences de l'interface avec « | Requirements of the interface with “…” |
+| 183 | priorité de l'interface, type (temps réel, stockage…), éléments de données (format, unités, précision, fréquence), protocoles, caractéristiques physiques | interface priority, type (real-time, storage…), data elements (format, units, accuracy, frequency), protocols, physical characteristics |
+| 189 | (contrainte) | (constraint) |
+| 189 | (sur | (on {0}) |
+| 192 | Ce document spécifie les exigences du système (ou du sous-système) et les méthodes à employer pour vérifier que chacune est satisfaite (plan MIL-STD-498, DID DI-IPSC-81431). Il est produit à partir du modèle Capella, puis complété. | This document specifies the requirements for the system (or subsystem) and the methods to be used to ensure that each requirement has been met (MIL-STD-498 outline, DID DI-IPSC-81431). It is produced from the Capella model, then completed. |
+| 193 | Exigences | Requirements |
+| 194 | États et modes requis | Required states and modes |
+| 194 | Machines à états et modes | State machines and modes |
+| 195 | états et modes dans lesquels le système doit fonctionner, et exigences propres à chacun | states and modes in which the system is required to operate, and the requirements of each |
+| 196 | Exigences de capacité du système | System capability requirements |
+| 197 | Exigences d'interfaces externes | External interface requirements |
+| 198 | Identification des interfaces et diagrammes | Interface identification and diagrams |
+| 198 | Interfaces externes (partenaires) | External interfaces (counterparts) |
+| 198 | identification des interfaces externes, entités concernées, interfaces fixées et à développer | identification of external interfaces, interfacing entities, fixed interfaces and interfaces being developed |
+| 200 | Exigences d'interfaces internes | System internal interface requirements |
+| 200 | Échanges internes au périmètre | Exchanges within the scope |
+| 201 | Exigences sur les données internes | System internal data requirements |
+| 201 | Éléments échangés avec l'extérieur | Items exchanged with the outside |
+| 202 | Exigences d'adaptation | Adaptation requirements |
+| 202 | données dépendantes de l'installation ou paramètres d'exploitation à fournir | installation-dependent data or operational parameters to be provided |
+| 203 | Exigences de sécurité (sûreté) | Safety requirements |
+| 203 | prévention ou réduction des risques pour les personnes, les biens et l'environnement | prevention or minimization of hazards to personnel, property and the environment |
+| 204 | Exigences de sécurité et de confidentialité | Security and privacy requirements |
+| 204 | environnement de sécurité, type et degré de sécurité ou de confidentialité, critères de certification | security environment, type and degree of security or privacy, certification criteria |
+| 205 | Exigences d'environnement du système | System environment requirements |
+| 205 | environnement d'utilisation : matériel, système d'exploitation, conditions climatiques, mécaniques… | environment of use: hardware, operating system, climatic and mechanical conditions… |
+| 206 | Exigences sur les ressources informatiques | Computer resource requirements |
+| 207 | Matériel informatique | Computer hardware requirements |
+| 207 | matériel informatique à utiliser : nombre, type, taille, capacité | computer hardware to be used: number, type, size, capacity |
+| 207 | Composants physiques du périmètre | Physical components in the scope |
+| 208 | Utilisation des ressources matérielles | Computer hardware resource utilization requirements |
+| 208 | marges d'utilisation : processeur, mémoire, entrées / sorties, stockage, réseau | utilization margins: processor, memory, input/output, storage, network |
+| 209 | Logiciel informatique | Computer software requirements |
+| 209 | logiciels à utiliser ou à intégrer : système d'exploitation, bases de données, bibliothèques | software to be used or incorporated: operating system, databases, libraries |
+| 209 | Composants de comportement du périmètre | Behavior components in the scope |
+| 210 | Communications informatiques | Computer communications requirements |
+| 210 | communications : localisation, configuration, débit, protocoles | communications: location, configuration, transmission rates, protocols |
+| 210 | Liens physiques du périmètre | Physical links in the scope |
+| 211 | Facteurs de qualité du système | System quality factors |
+| 211 | fiabilité, maintenabilité, disponibilité, souplesse, portabilité, réutilisabilité, testabilité, facilité d'utilisation | reliability, maintainability, availability, flexibility, portability, reusability, testability, usability |
+| 212 | Contraintes de conception et de construction | Design and construction constraints |
+| 212 | Exigences de contraintes | Constraint requirements |
+| 212 | contraintes de conception et de construction : architecture imposée, composants, normes, matériaux, réutilisation | design and construction constraints: imposed architecture, components, standards, materials, reuse |
+| 213 | Exigences liées au personnel | Personnel-related requirements |
+| 213 | effectifs, compétences, postes de travail, facteurs humains | number of people, skills, workstations, human factors |
+| 214 | Exigences liées à la formation | Training-related requirements |
+| 214 | formation à fournir : matériel, logiciels, documentation, simulateurs | training to be provided: equipment, software, documentation, simulators |
+| 215 | Exigences liées à la logistique | Logistics-related requirements |
+| 215 | maintenance, soutien logiciel, transport, approvisionnement, installations | maintenance, software support, transportation, supply, facilities |
+| 216 | Autres exigences | Other requirements |
+| 216 | autres exigences : documentation à fournir, etc. | other requirements: documentation to be delivered, etc. |
+| 217 | Exigences d'emballage | Packaging requirements |
+| 217 | emballage, marquage, manutention pour la livraison | packaging, labeling and handling for delivery |
+| 218 | Priorité et criticité des exigences | Precedence and criticality of requirements |
+| 218 | Exigences du périmètre | Requirements in the scope |
+| 218 | ordre de priorité, criticité ou poids des exigences (sûreté, sécurité, confidentialité…) | order of precedence, criticality or weighting of requirements (safety, security, privacy…) |
+| 219 | Dispositions de qualification | Qualification provisions |
+| 219 | Méthodes : Démonstration · Essai · Analyse · Inspection · Méthodes particulières (simulations, maquettes…). La colonne « Vérification » reprend l'attribut ou la propriété de chaque exigence. | Methods: Demonstration · Test · Analysis · Inspection · Special qualification methods (simulations, mock-ups…). The “Verification” column shows the attribute or property of each requirement. |
+| 220 | Méthode de qualification de chaque exigence | Qualification method of each requirement |
+| 220 | méthode de qualification de chaque exigence de la section 3 | qualification method for each requirement of section 3 |
+| 221 | Traçabilité des exigences | Requirements traceability |
+| 222 | Exigences et éléments liés | Requirements and linked elements |
+| 222 | traçabilité de chaque exigence vers les exigences du niveau supérieur qu'elle couvre, et inversement | traceability of each requirement to the higher-level requirements it addresses, and the reverse |
+| 223 | Notes | Notes |
+| 223 | informations générales : sigles, abréviations, glossaire | general information: acronyms, abbreviations, glossary |
+| 247 | Fonctions allouées | Allocated functions |
+| 248 | Éléments réalisés (couche supérieure) | Realized elements (upper layer) |
+| 248 | Réalisé par (couche inférieure) | Realized by (lower layer) |
+| 249 | Composants déployés | Deployed components |
+| 250 | rôle du composant, exigences qui lui sont allouées, type (matériel, logiciel, manuel), état de développement (nouveau, réutilisé), ressources informatiques | purpose of the component, requirements allocated to it, type (hardware, software, manual), development status (new, reused), computer resources |
+| 255 | » vers « | From “…” to “…”. |
+| 256 | Éléments échangés | Exchanged items |
+| 257 | Échanges fonctionnels alloués | Allocated functional exchanges |
+| 257 | Liens physiques porteurs | Carrying physical links |
+| 258 | type d'interface, éléments de données (format, unités, précision, fréquence, priorité), protocoles, caractéristiques physiques | interface type, data elements (format, units, accuracy, frequency, priority), protocols, physical characteristics |
+| 264 | Ce document décrit la conception du système (ou du sous-système) dans son ensemble et son architecture (plan MIL-STD-498, DID DI-IPSC-81432). Il est produit à partir du modèle Capella, puis complété. | This document describes the system-wide (or subsystem-wide) design and the architectural design of the system (MIL-STD-498 outline, DID DI-IPSC-81432). It is produced from the Capella model, then completed. |
+| 265 | Décisions de conception à l'échelle du système | System-wide design decisions |
+| 266 | Entrées et sorties (échanges avec l'extérieur) | Inputs and outputs (exchanges with the outside) |
+| 267 | Décisions liées aux exigences critiques | Decisions responding to critical requirements |
+| 267 | décisions répondant aux exigences critiques (sûreté, sécurité, confidentialité) | design decisions responding to critical requirements (safety, security, privacy) |
+| 268 | décisions de conception à l'échelle du système : comportement vu de l'utilisateur, entrées et sorties, réactions aux conditions anormales, bases de données, choix de sûreté et de sécurité, justification des choix | system-wide design decisions: behavior from the user's point of view, inputs and outputs, response to abnormal conditions, databases, safety and security choices, rationale |
+| 269 | Architecture du système | System architecture |
+| 270 | Composants du système | System components |
+| 270 | Composants | Components |
+| 270 | composants du système ou du sous-système (aucun sous-composant dans le modèle) | components of the system or subsystem (no sub-component in the model) |
+| 271 | Concept d'exécution | Concept of execution |
+| 271 | Chaînes fonctionnelles | Functional chains |
+| 272 | Machines à états et modes | State machines and modes |
+| 273 | concept d'exécution entre les composants : flux de commande et de données, comportement dynamique, états et modes, séquencement, concurrence, gestion des erreurs | concept of execution among the components: control and data flow, dynamic behavior, states and modes, sequencing, concurrency, error handling |
+| 274 | Conception des interfaces | Interface design |
+| 275 | Identification des interfaces et diagrammes | Interface identification and diagrams |
+| 275 | Interfaces | Interfaces |
+| 276 | identification des interfaces entre composants et avec l'extérieur, entités concernées | identification of interfaces among components and with external entities, interfacing entities |
+| 278 | Traçabilité des exigences | Requirements traceability |
+| 278 | Exigences et éléments liés | Requirements and linked elements |
+| 279 | traçabilité de chaque composant vers les exigences qui lui sont allouées (SSS), et inversement | traceability of each component to the requirements allocated to it (SSS), and the reverse |
+| 280 | Notes | Notes |
+| 280 | informations générales : sigles, abréviations, glossaire, justification des choix | general information: acronyms, abbreviations, glossary, rationale |
 
 ## Textes sans traduction anglaise (8)
 

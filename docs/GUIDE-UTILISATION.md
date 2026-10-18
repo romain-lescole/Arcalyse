@@ -285,7 +285,29 @@ Un **dossier de relecture** rassemble, chapitre par chapitre, ce que d'autres pe
 | **👁 Aperçu** | Rendu du rapport tel que l'exporte la page HTML (⧉ : fenêtre séparée). |
 | **📤 Page HTML à commenter · 📝 Word (.docx)** | Exports à faire relire ; **📥 Réimporter…** rattache chaque retour à son bloc et le verse dans 💬 Revue (un retour sur un texte du modèle vise le nom ou la description de l'élément). |
 
-**📘 Rapports automatiques** (bouton **📘 Rapports** de la barre, ou cadre en haut de la liste) : dossier créé selon un plan type, rempli à partir du modèle, puis entièrement modifiable — 📘 Spécification technique du système (boîte noire, deux plans), 📗 Dossier de conception du système (boîte blanche). **🧩 Mes modèles** : modèles de rapport personnels (chapitres en boucle sur des éléments, contenus automatiques), **▶ Générer**, **💾 .json** / **📂 Importer** pour les réutiliser.
+**📘 Rapports automatiques** (bouton **📘 Rapports** de la barre, ou cadre en haut de la liste) : dossier créé selon un plan type, rempli à partir du modèle, puis entièrement modifiable — 📘 Spécification technique du système (boîte noire, deux plans), 📗 Dossier de conception du système (boîte blanche), **📘 SSS** et **📗 SSDD** (ci-dessous). **🧩 Mes modèles** : modèles de rapport personnels (chapitres en boucle sur des éléments, contenus automatiques), **▶ Générer**, **💾 .json** / **📂 Importer** pour les réutiliser.
+
+**📘 SSS et 📗 SSDD (MIL-STD-498)** — *System/Subsystem Specification* (DID DI-IPSC-81431) et *System/Subsystem Design Description* (DID DI-IPSC-81432), avec la numérotation du DID. Une fenêtre demande le **périmètre** : **▶ Système** (System de la SA) ou un **sous-système** (composant SA, LA ou PA, cherché par son nom). Arcalyse en déduit l'intérieur (sous-composants, composants déployés), les fonctions allouées, les échanges avec l'extérieur et les partenaires.
+
+| SSS | Rempli à partir du modèle |
+|---|---|
+| 1 Domaine d'application · 2 Documents | description et diagrammes du sujet, missions et capacités (système) |
+| 3.1 États et modes requis | machines à états du sujet et leurs diagrammes |
+| 3.2 Exigences de capacité | une section par capacité (sinon par fonction) : fonctions, chaînes, diagrammes, exigences liées |
+| 3.3 Interfaces externes | 3.3.1 diagrammes et partenaires, puis une interface par partenaire (échanges de composants et fonctionnels) |
+| 3.4 · 3.5 | échanges internes ; éléments échangés avec l'extérieur |
+| 3.6 à 3.17 | exigences repérées par mots-clés (sûreté, sécurité, environnement, qualité, personnel, formation, logistique, emballage…) ; 3.10 : nœuds, comportements et liens physiques (PA) ; 3.12 : ⛓ contraintes |
+| 3.18 · 4 · 5 | tableaux d'exigences (priorité, vérification, éléments liés) ; ⇶ liens entre couches |
+
+| SSDD | Rempli à partir du modèle |
+|---|---|
+| 3 Décisions de conception | description de l'architecture, entrées et sorties, exigences critiques |
+| 4.1 Composants | un chapitre par composant : sous-composants, fonctions allouées, réalisations, déploiement, diagrammes |
+| 4.2 Concept d'exécution | chaînes fonctionnelles, scénarios, flux de données, modes et états |
+| 4.3 Conception des interfaces | 4.3.1 diagrammes et liste, puis une interface par échange : éléments échangés, échanges fonctionnels alloués, liens physiques porteurs |
+| 5 Traçabilité | ⇶ liens entre couches, exigences |
+
+**Priorité** et **vérification** d'une exigence : attribut d'exigence ou propriété PVMT dont le nom contient « priorit », « vérif », « qualif » ou « méthode » ; sinon la colonne reste vide. Ce que le modèle ne contient pas devient une invite **[À compléter — …]** qui rappelle ce que le DID attend.
 
 ---
 

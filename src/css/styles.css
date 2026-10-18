@@ -1831,7 +1831,7 @@ html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,2
 .cap-pref-grid th{text-align:left;color:var(--c-dim);font-size:11px;font-weight:700;padding:8px 6px 3px;border-bottom:1px solid var(--c-border);}
 .cap-pref-grid td{padding:3px 6px;border-bottom:1px solid var(--c-border);}
 .cap-pref-grid td.c{text-align:center;width:72px;}
-#cap-pref-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
+#cap-pref-ov,#dos-per-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
 #cap-auto-bar{position:fixed;left:50%;transform:translateX(-50%);top:46px;z-index:2600;display:none;align-items:center;gap:8px;background:var(--c-bg3);color:var(--c-text);
   border:1px solid var(--c-warn,#e3b341);border-radius:6px;padding:6px 10px;font-size:12px;box-shadow:0 4px 14px rgba(0,0,0,.35);}
 
