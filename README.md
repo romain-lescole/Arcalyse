@@ -12,6 +12,8 @@ No installation · no server · works offline
 
 📘 **[User guide / Guide d'utilisation](docs/GUIDE-UTILISATION.md)** — menu by menu, with screenshots · menu par menu, avec captures d'écran
 
+🛠 **Arcature**, the editing tool for Capella and SysML v2 files, is being finalized · **Arcature**, l'outil de modification des fichiers Capella et SysML v2, est en cours de finalisation.
+
 ![Home screen](docs/captures/00-accueil.png)
 
 </div>
@@ -143,6 +145,8 @@ Choose among dozens of indicators (number of elements, function allocation, desc
 3. **Drag and drop** your `.capella` file (or click 📂 .capella file…), or open the 📁 project folder to load the diagrams (`.aird`) as well — or reopen a saved 📄 work project. That's it.
 
 > 📘 **Complete user guide**, menu by menu, with screenshots (in French): [`docs/GUIDE-UTILISATION.md`](docs/GUIDE-UTILISATION.md).
+
+> 🛠 **Arcature**, the tool for editing Capella and SysML v2 files, is being finalized.
 
 > To try it without a model of your own: the public samples [In-Flight Entertainment System](https://github.com/dbinfrago/Capella-IFE-sample) and [AIDA](https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture) are in `tests/models/` (under their own licences, EPL 2.0 and CC BY-SA 4.0: see [`tests/models/LISEZMOI.md`](tests/models/LISEZMOI.md)).
 
@@ -284,6 +288,8 @@ Choisissez parmi des dizaines d'indicateurs (nombre d'éléments, allocation des
 3. **Glissez-déposez** votre fichier `.capella` (ou cliquez sur 📂 Fichier .capella…), ou ouvrez le 📁 dossier du projet pour charger aussi les diagrammes (`.aird`) — ou rouvrez un 📄 projet de travail enregistré. C'est tout.
 
 > 📘 **Guide d'utilisation complet**, menu par menu, avec captures d'écran : [`docs/GUIDE-UTILISATION.md`](docs/GUIDE-UTILISATION.md).
+
+> 🛠 **Arcature**, l'outil de modification des fichiers Capella et SysML v2, est en cours de finalisation.
 
 > Pour essayer sans modèle à vous : les exemples publics [In-Flight Entertainment System](https://github.com/dbinfrago/Capella-IFE-sample) et [AIDA](https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture) sont dans `tests/models/` (sous leurs propres licences, EPL 2.0 et CC BY-SA 4.0 : voir [`tests/models/LISEZMOI.md`](tests/models/LISEZMOI.md)).
 
