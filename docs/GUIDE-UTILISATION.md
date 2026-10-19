@@ -1143,12 +1143,23 @@ Vue **graphique** des réalisations entre couches : une colonne par couche (OA �
 
 Un **score de 0 à 100** bâti sur **tous les contrôles 🩺** de toutes les vues, avec le 🩺 profil de contrôles (§ 3.5) : les contrôles désactivés sont ignorés, les gravités pèsent ℹ 0, ⚠ 1, ✖ 3, et le score vaut 100 × e^−(Σ poids × lignes ÷ nombre d'éléments nommés) : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. Niveaux : **Bon** (≥ 90), **À surveiller** (≥ 70), **À reprendre**. Un score **par couche** ARCADIA est calculé pour les contrôles qui le permettent (fonctions, échanges fonctionnels, composants).
 
-- **🏠 Carte de l'accueil** : score, niveau, points à vérifier et bloquants, barres par couche, écart avec la version précédente et courbe des dernières versions ; boutons 📊 Détail et 🩺 Profil. Au-delà de 30 000 éléments, le calcul attend un clic. **Décocher une couche** (case devant OA, SA, LA, PA, EPBS, aussi dans la sous-vue) l'exclut du score global : ses lignes de contrôles par couche et ses éléments ne comptent plus, par exemple pour une couche non encore travaillée ; le réglage est conservé avec le projet et noté dans l'historique.
+- **🏠 Carte de l'accueil** : score, niveau, points à vérifier et bloquants, barres par couche, écart avec la version précédente et courbe des dernières versions ; boutons 📊 Détail et 🩺 Profil. Au-delà de 30 000 éléments, le calcul attend un clic. **✕ Masquer** retire la carte de l'accueil (⚙ Disposer › Masquées pour la réafficher) ; dans la sous-vue, l'onglet ▦ Par vue permet de **masquer les contrôles d'une vue** du score (case « Comptée », réglage conservé avec le projet). **Décocher une couche** (case devant OA, SA, LA, PA, EPBS, aussi dans la sous-vue) l'exclut du score global : ses lignes de contrôles par couche et ses éléments ne comptent plus, par exemple pour une couche non encore travaillée ; le réglage est conservé avec le projet et noté dans l'historique.
 - **📋 Contrôles × couches** : chaque contrôle avec sa vue, sa gravité, son nombre de lignes global et par couche ; ⬇ CSV.
 - **▦ Par vue** : contrôles, contrôles sans anomalie, points et bloquants de chaque vue.
 - **📈 Historique** : une ligne par version du modèle ouverte dans le projet (même fichier : entrée mise à jour), conservée avec la 💾 page. Indicateurs « Santé du modèle — … » au 📐 Tableau de bord (score, points, bloquants, par couche, par vue, historique).
 
-### 12.11 📚 Bibliothèques
+### 12.11 📦 REC / RPL
+
+Les **éléments réutilisables** de Capella : un **REC** est un gabarit (ensemble d'éléments du modèle), une **RPL** une réplique instanciée de ce REC (suffixe, conformité BLACK_BOX / CONSTRAINT_REUSE / INHERITANCY_REUSE). Chaque élément d'une réplique garde un lien vers son origine dans le REC.
+
+- **🧬 Répliques** : chaque RPL avec son REC, son suffixe, sa conformité, le nombre d'éléments et les écarts : manquants (éléments du REC sans équivalent), ajoutés (sans origine dans le REC), types différents, renommés hors règle « nom du REC + suffixe », cibles introuvables ; filtre par REC ; ⬇ CSV.
+- **📦 REC** : chaque gabarit avec sa conformité par défaut, ses éléments et ses répliques (✔ conforme ou nombre d'écarts).
+- **⇄ Comparaison** : une réplique face à son REC, élément par élément, avec l'état de chacun (✔, manquant, ajouté, type différent, renommé). Accessible aussi par ⇄ dans les tableaux et le panneau de détail.
+- **🩺 Contrôles** : répliques incomplètes, enrichies, types différents, noms hors règle, liens vers un élément introuvable, REC introuvable, REC sans réplique, REC en double, éléments appartenant à plusieurs répliques.
+
+Le panneau de détail d'un élément indique le REC ou la réplique dont il fait partie ; celui d'un élément de catalogue, son contenu. Indicateurs « REC / RPL — … » au 📐 Tableau de bord.
+
+### 12.12 📚 Bibliothèques
 
 Un modèle peut référencer des éléments d'un autre fichier .capella (**bibliothèque** Capella) : la référence s'écrit `platform:/resource/Projet/Fichier.capella#id` et les bibliothèques utilisées sont déclarées (LibraryReference). Arcalyse ne lit qu'un fichier : sans la bibliothèque, ces cibles sont « introuvables ».
 
@@ -1156,7 +1167,7 @@ Un modèle peut référencer des éléments d'un autre fichier .capella (**bibli
 - **🔗 Références** : élément source, attribut, bibliothèque, cible (📚 nom et type de l'élément visé si la bibliothèque est chargée) ; ⬇ CSV. Même affichage dans le panneau de détail (attributs et section « Références externes »).
 - **🩺 Contrôles** : références vers une bibliothèque non chargée, cibles introuvables dans une bibliothèque chargée (version différente), bibliothèques déclarées sans référence, références vers une bibliothèque non déclarée.
 
-### 12.12 🏷 Catégories d'échanges
+### 12.13 🏷 Catégories d'échanges
 
 Les catégories que Capella permet de poser sur les échanges : **ExchangeCategory** (Functional Exchanges), **ComponentExchangeCategory** (Component Exchanges), **PhysicalLinkCategory** (Physical Links).
 
@@ -1166,7 +1177,7 @@ Les catégories que Capella permet de poser sur les échanges : **ExchangeCatego
 
 Les vues ƒ⇆ Functional Exchange, 🔀 Behavior Exchange et 🔌 Physical Link gagnent une liste **🏷 Toutes catégories** (affichée seulement si le modèle en a) ; le panneau de détail d'un échange liste ses catégories, celui d'une catégorie ses échanges. Indicateurs « Catégories d'échanges — … » au 📐 Tableau de bord.
 
-### 12.13 🔖 Statut de revue
+### 12.14 🔖 Statut de revue
 
 Les champs natifs de revue de Capella, portés par n'importe quel élément : **Status** (littéral de l'énumération *ProgressStatus* du projet : DRAFT, TO BE REVIEWED, TO BE DISCUSSED, REWORK NECESSARY, REVIEWED…) et **Review** (texte libre). Les statuts sont rangés en **classes** d'après leur nom : brouillon, en attente, validé, à retravailler.
 

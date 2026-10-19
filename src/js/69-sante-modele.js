@@ -25,7 +25,7 @@ function capSanteChecks(){
     {k:'csys', all:()=>capCbChecks('all'), layer:l=>capCbChecks(l)},
     {k:'ports', all:()=>capPortsDiagSections(capComputePortLinks())}, {k:'chains', all:()=>capChChecks('all'), layer:l=>capChChecks(l)}, {k:'scen', all:()=>capScChecks()},
     {k:'ana:reqs', all:()=>capReqChecks()}, {k:'ana:pvmt', all:()=>capPvChecks()}, {k:'ana:data', all:()=>capDmChecks()}, {k:'ana:cts', all:()=>capCtChecks()},
-    {k:'ana:cats', all:()=>capEcChecks()}, {k:'ana:libs', all:()=>capLibChecks()}, {k:'ana:status', all:()=>capStChecks()}];
+    {k:'ana:cats', all:()=>capEcChecks()}, {k:'ana:libs', all:()=>capLibChecks()}, {k:'ana:rec', all:()=>capRecChecks()}, {k:'ana:status', all:()=>capStChecks()}];
   views.forEach(v=>{
     let secs; try{ secs=capChkFilter(v.all()); }catch(e){ console.warn('Santé : vue',v.k,e); return; }
     const byLayer={};
@@ -50,10 +50,11 @@ function capSanteCompute(){
   const layerOf=e=>{ if(CAP_ANA_LAYERS.includes(e.layer)) return e.layer; const x=xmap[e.id], l=x?capArchLayerOf(x):'?'; return CAP_ANA_LAYERS.includes(l)?l:''; };
   const popL={}; let pop=0;
   capAllElements.forEach(e=>{ if(!capStEligible(e)) return; pop++; const l=layerOf(e); if(l) popL[l]=(popL[l]||0)+1; });
-  const w=s=>CAP_SANTE_W[s.sev]||0, excl=capSanteExclues();
+  const w=s=>CAP_SANTE_W[s.sev]||0, excl=capSanteExclues(), masq=capSanteVuesMasquees();
   // Lignes d'un contrôle retenues pour le score global : hors couches décochées quand le contrôle est calculé par couche (le reste, non attribuable, est gardé)
   const popRet=pop-excl.reduce((s,l)=>s+(popL[l]||0),0);
-  const nRet=c=>{ if(!excl.length) return c.n;
+  const nRet=c=>{ if(masq.includes(c.view)) return 0;   // vue masquée du score
+    if(!excl.length) return c.n;
     if(!c.layers) return Math.round(c.n*popRet/Math.max(1,pop));   // contrôle sans couche : au prorata des éléments gardés (répartition supposée uniforme)
     const inL=CAP_ANA_LAYERS.reduce((s,l)=>s+(c.layers[l]||0),0), kept=CAP_ANA_LAYERS.filter(l=>!excl.includes(l)).reduce((s,l)=>s+(c.layers[l]||0),0); return kept+Math.round(Math.max(0,c.n-inL)*popRet/Math.max(1,pop)); };
   const pen=checks.reduce((s,c)=>s+w(c)*nRet(c),0);
@@ -63,7 +64,22 @@ function capSanteCompute(){
     couches[l]={score:score(p/Math.max(1,popL[l])), points:cs.filter(c=>c.sev!=='info').reduce((s,c)=>s+c.layers[l],0), bloquants:cs.filter(c=>c.sev==='err').reduce((s,c)=>s+c.layers[l],0), pop:popL[l], nChecks:cs.length}; });
   const parVue={}; checks.forEach(c=>{ const v=parVue[c.view]=parVue[c.view]||{points:0, bloquants:0, n:0, ok:0}; v.n++; if(!c.n) v.ok++; if(c.sev!=='info') v.points+=c.n; if(c.sev==='err') v.bloquants+=c.n; });
   return _capAnaCache.sante={score:score(pen/Math.max(1,popRet)), points:checks.filter(c=>c.sev!=='info').reduce((s,c)=>s+nRet(c),0), bloquants:checks.filter(c=>c.sev==='err').reduce((s,c)=>s+nRet(c),0),
-    info:checks.filter(c=>c.sev==='info').reduce((s,c)=>s+nRet(c),0), pop:popRet, popTotal:pop, exclues:excl.slice(), nChecks:checks.length, nOk:checks.filter(c=>!c.n).length, couches, parVue, checks};
+    info:checks.filter(c=>c.sev==='info').reduce((s,c)=>s+nRet(c),0), pop:popRet, popTotal:pop, exclues:excl.slice(), masquees:masq.slice(), nChecks:checks.length, nOk:checks.filter(c=>!c.n).length, couches, parVue, checks};
+}
+
+/** Vues dont les contrôles sont masqués du score (réglage du projet, bloc `cap-home`). @returns {string[]} */
+function capSanteVuesMasquees(){ return typeof _capHome!=='undefined'&&Array.isArray(_capHome.santeVuesMasquees)?_capHome.santeVuesMasquees:[]; }
+
+/** Masque ou compte de nouveau les contrôles d'une vue dans le score, puis recalcule et réaffiche.
+ * @param {string} v - Clé de la vue (functions, fex, ana:reqs…)
+ * @param {boolean} on - Comptée ou non
+ */
+function capSanteToggleVue(v, on){
+  if(typeof _capHome==='undefined') return;
+  const m=new Set(capSanteVuesMasquees()); if(on) m.delete(v); else m.add(v);
+  _capHome.santeVuesMasquees=[...m]; capHomeSave();
+  delete _capAnaCache.sante; Object.keys(_capAnaCache).forEach(k=>{ if(k.startsWith('dv:sante')) delete _capAnaCache[k]; });
+  if(capCurrentView==='home') capHomeRender(); else capRenderCurrentView();
 }
 
 /** Couches ARCADIA décochées (exclues du score global ; réglage du projet, bloc `cap-home`). @returns {string[]} */
@@ -121,7 +137,8 @@ function capSanteCarte(){
     <div class="sante-layers">${CAP_ANA_LAYERS.filter(l=>S.couches[l]).map(l=>{ const c=S.couches[l], lv=CAP_LAYERS[l]||{color:'#8b949e'}, n=capSanteNiveau(c.score), off=S.exclues.includes(l);
       return `<div class="sante-layer${off?' sante-off':''}" title="${_L(`${c.points} point(s) à vérifier sur ${c.pop} éléments, ${c.nChecks} contrôles par couche`)}"><label><input type="checkbox" data-sante-l="${l}"${off?'':' checked'} title="${_L('Décochée : couche exclue du score global')}"><b style="color:${lv.color}">${l}</b></label><div class="sante-bar"><div style="width:${c.score}%;background:${n.h}"></div></div><span style="color:${n.c}">${c.score}</span></div>`; }).join('')}</div>
     ${S.exclues.length?`<div class="ana-dim" style="font-size:11px">${_L(`Hors score global : ${S.exclues.join(', ')} (${S.popTotal-S.pop} éléments)`)}</div>`:''}
-    <div class="hm-row"><button class="cap-lf-btn" data-nav="ana:sante" title="${_L('Détail contrôle par contrôle et par couche, historique')}">📊 ${_L('Détail')}</button><button class="cap-lf-btn" data-a="sante-profil" title="${_L('Activer ou désactiver des contrôles, gravités, seuils')}">🩺 ${_L('Profil')}</button></div>`;
+    ${S.masquees.length?`<div class="ana-dim" style="font-size:11px">${_L(`Vues masquées du score : ${S.masquees.map(k=>(CAP_NAV_ITEMS.find(i=>i.k===k)||{}).l||k).join(', ')}`)}</div>`:''}
+    <div class="hm-row"><button class="cap-lf-btn" data-nav="ana:sante" title="${_L('Détail contrôle par contrôle et par couche, historique')}">📊 ${_L('Détail')}</button><button class="cap-lf-btn" data-a="sante-profil" title="${_L('Activer ou désactiver des contrôles, gravités, seuils')}">🩺 ${_L('Profil')}</button><button class="cap-lf-btn" data-a="sante-hide" title="${_L('Masquer cette carte (⚙ Disposer › Masquées pour la réafficher)')}" style="margin-left:auto">✕ ${_L('Masquer')}</button></div>`;
 }
 
 /** Sous-vue 💚 Santé du modèle de 🔬 Analyses : synthèse, contrôle × couche, historique.
@@ -138,7 +155,7 @@ function capRenderSante(box){
       ...L.map(l=>c.layers?(c.layers[l]?`<b>${c.layers[l]}</b>`:'0'):'<span class="ana-dim">—</span>')]))+
       capXtTable([_L('Couche'),_L('Score'),_L('Points à vérifier'),_L('Bloquants'),_L('Éléments nommés'),_L('Contrôles par couche')], L.map(l=>{ const c=S.couches[l], n=capSanteNiveau(c.score); return [capChainLayerBadge(l), `<b style="color:${n.c}">${c.score}</b> <span class="ana-dim">${n.l}</span>`, String(c.points), String(c.bloquants), String(c.pop), String(c.nChecks)]; }));
   } else if(st.view==='vue'){
-    body=head+capXtTable([_L('Vue'),_L('Contrôles'),_L('Sans anomalie'),_L('Points à vérifier'),_L('Bloquants')], Object.entries(S.parVue).map(([k,v])=>[esc(lab(k)), String(v.n), String(v.ok), v.points?`<b>${v.points}</b>`:'0', v.bloquants?`<b style="color:var(--c-err,#f85149)">${v.bloquants}</b>`:'0']));
+    body=head+_L(`<p class="ana-help">Décochez une vue pour <b>masquer ses contrôles du score</b> (réglage conservé avec le projet).</p>`)+capXtTable([_L('Comptée'),_L('Vue'),_L('Contrôles'),_L('Sans anomalie'),_L('Points à vérifier'),_L('Bloquants')], Object.entries(S.parVue).map(([k,v])=>{ const off=S.masquees.includes(k); return [`<input type="checkbox" data-sante-v="${esc(k)}"${off?'':' checked'} title="${_L('Décochée : contrôles de la vue masqués du score')}">`, off?`<span class="ana-dim">${esc(lab(k))}</span>`:esc(lab(k)), String(v.n), String(v.ok), v.points?`<b>${v.points}</b>`:'0', v.bloquants?`<b style="color:var(--c-err,#f85149)">${v.bloquants}</b>`:'0']; }));
   } else {
     body=_L(`<p class="ana-help">Une ligne par version du modèle ouverte dans ce projet (même fichier → entrée mise à jour) ; conservé avec la 💾 page. ${capSanteSpark(H,320,60)}</p>`)+
       capXtTable([_L('Date'),_L('Fichier'),_L('Éléments'),_L('Score'),_L('Points'),_L('Bloquants'),...CAP_ANA_LAYERS], [...H].reverse().map(e=>[capSanteDate(e.date), esc(e.nom||''), String(e.elements||''), `<b style="color:${capSanteNiveau(e.score).c}">${e.score}</b>`, String(e.points), String(e.bloquants), ...CAP_ANA_LAYERS.map(l=>e.couches&&e.couches[l]!=null?String(e.couches[l]):'<span class="ana-dim">—</span>')]));
@@ -164,4 +181,5 @@ function capSanteDashCatalog(add, LC){
 }
 
 // Cases des couches (carte de l'accueil, sous-vue) : exclusion du score global
-document.addEventListener('change',e=>{ const i=e.target&&e.target.closest&&e.target.closest('input[data-sante-l]'); if(i) capSanteToggleCouche(i.dataset.santeL, i.checked); });
+document.addEventListener('change',e=>{ const i=e.target&&e.target.closest&&e.target.closest('input[data-sante-l]'); if(i) capSanteToggleCouche(i.dataset.santeL, i.checked);
+  const v=e.target&&e.target.closest&&e.target.closest('input[data-sante-v]'); if(v) capSanteToggleVue(v.dataset.santeV, v.checked); });

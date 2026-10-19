@@ -612,6 +612,27 @@
   "echangesCategorises": 96,
   "introuvables": 0
  },
+ "recRpl": {
+  "recs": 11,
+  "rpls": 13,
+  "elements": 342,
+  "conformes": 0,
+  "ecarts": [
+   "Control Helix:27",
+   "Control Helix:27",
+   "Control Helix:27",
+   "[SF7.1] Compute drone attitude MON:13",
+   "[SF7.2] Compute drone altitude MON:9",
+   "[SF7.3.1] Compute total thrust MON:5",
+   "[SF7.3.2] Select total thrust consign MON:1",
+   "[SF7.3.3] Select attitude consign MON:4",
+   "[SF7.3.4] Control pitch angle MON:1",
+   "[SF7.3.5] Control roll angle MON:1",
+   "[SF7.3.6] Control yaw angle MON:1",
+   "[SF7.3.7] Compute thrust MON:1",
+   "[SF7.3.8] Compute motor rate MON:5"
+  ]
+ },
  "bibliotheques": {
   "references": 0,
   "bibliotheques": 0,
@@ -619,12 +640,12 @@
  },
  "sante": {
   "score": 52,
-  "points": 2970,
+  "points": 2993,
   "bloquants": 0,
   "info": 0,
   "pop": 4608,
-  "nChecks": 104,
-  "nOk": 50,
+  "nChecks": 113,
+  "nOk": 56,
   "couches": {
    "OA": 58,
    "SA": 88,
@@ -741,6 +762,17 @@
    "Références introuvables dans une bibliothèque chargée": 0,
    "Bibliothèques déclarées sans référence": 0,
    "Références vers une bibliothèque non déclarée": 0
+  },
+  "recRpl": {
+   "Répliques incomplètes": 7,
+   "Répliques enrichies": 4,
+   "Types différents entre REC et réplique": 0,
+   "Noms de réplique hors règle REC + suffixe": 12,
+   "Liens de catalogue vers un élément introuvable": 0,
+   "Répliques dont le REC est introuvable": 0,
+   "REC sans réplique": 0,
+   "REC en double": 0,
+   "Éléments appartenant à plusieurs répliques": 0
   },
   "etats": {
    "noInit": 25,
@@ -1157,6 +1189,11 @@
    "Component Ports (PA) non alloués à un Physical Port": 24,
    "Functional Exchange ↔ Component Exchange : ports non alignés": 8
   },
+  "chk.rec": {
+   "Répliques incomplètes": 7,
+   "Répliques enrichies": 4,
+   "Noms de réplique hors règle REC + suffixe": 12
+  },
   "chk.st": {
    "Éléments à retravailler": 1,
    "Éléments en attente de revue": 0,
@@ -1177,7 +1214,8 @@
    "Component Exchanges": 78,
    "Capacités": 59,
    "Chaînes": 38,
-   "Modes & états": 36
+   "Modes & états": 36,
+   "REC / RPL": 23
   },
   "ct.chk": {
    "Contraintes sans expression": 121,
@@ -2092,6 +2130,27 @@
   },
   "pv.sum.Power_consumption › power_consumption": 811,
   "pv.sum.Power_consumption › targeted power consumption": 3160,
+  "rec.by": {
+   "Compute drone altitude": 1,
+   "Compute drone attitude": 1,
+   "Compute motor rate": 1,
+   "Compute thrust": 1,
+   "Compute total thrust": 1,
+   "Control Helix": 3,
+   "Control pitch angle": 1,
+   "Control roll angle": 1,
+   "Control yaw angle": 1,
+   "Select attitude consign": 1,
+   "Select total thrust consign": 1
+  },
+  "rec.els": 342,
+  "rec.n": 11,
+  "rec.ok": {
+   "pct": 0,
+   "num": 0,
+   "den": 13
+  },
+  "rec.rpl": 13,
   "rq.at.Conformity": {
    "(non renseigné)": 147,
    "COMPLIANT": 1
@@ -2152,7 +2211,7 @@
    "PA": 74,
    "EPBS": 100
   },
-  "sante.pts": 2970,
+  "sante.pts": 2993,
   "sante.score": {
    "pct": 52,
    "num": 52,
@@ -2169,6 +2228,7 @@
    "🗃 Données & interfaces": 119,
    "⛓ Contraintes": 153,
    "🏷 Catégories d'échanges": 280,
+   "📦 REC / RPL": 23,
    "🔖 Statut de revue": 3,
    "🔀 Behavior Exchange": 78,
    "🔌 Physical Link": 177,

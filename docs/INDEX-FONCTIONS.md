@@ -357,18 +357,18 @@
 - `capChainExportRefreshCount` (l. 540) — Met à jour le compteur de sélection et la case « Tout » sans re-rendre les cartes (garde les cartes ouvertes).
 - `capRenderChainMap` (l. 551) — Rend la sous-vue « Relation Map » : liste des chaînes groupée par catégorie ARCADIA à gauche,
 
-## 25-panneau-detail.js — 277 lignes
+## 25-panneau-detail.js — 278 lignes
 
 - `capOpenDetail` (l. 5) — Ouvre le panneau de détail (colonne droite de l'overlay) pour un élément Capella.
-- `CAP_DESC_TAGS` (l. 115) — Balises gardées dans une description Capella mise en forme (les autres sont remplacées par leur contenu).
-- `CAP_DESC_CSS` (l. 118) — Propriétés de style gardées (les couleurs de texte sont adaptées au thème ; fonds, positions et images retirés).
-- `capSafeHtml` (l. 126) — Description Capella (HTML) prête à afficher : balises et attributs filtrés (aucun script, aucun gestionnaire
-- `capDescSection` (l. 169) — Section « Description » du panneau de détail : la description mise en forme (aperçu), avec une bascule
-- `capDescToggle` (l. 178) — Bascule Aperçu / code HTML d'une section « Description ». @param {HTMLElement} b - Bouton cliqué
-- `capOpenDetailNode` (l. 185) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
-- `CAP_ELEM_VIEWS` (l. 193)
-- `capUpdateToolbarForView` (l. 199) — Met à jour les boutons actifs et les groupes de contrôles visibles
-- `capShowView` (l. 231) — Affiche une vue Capella (bascule en mode capella si besoin).
+- `CAP_DESC_TAGS` (l. 116) — Balises gardées dans une description Capella mise en forme (les autres sont remplacées par leur contenu).
+- `CAP_DESC_CSS` (l. 119) — Propriétés de style gardées (les couleurs de texte sont adaptées au thème ; fonds, positions et images retirés).
+- `capSafeHtml` (l. 127) — Description Capella (HTML) prête à afficher : balises et attributs filtrés (aucun script, aucun gestionnaire
+- `capDescSection` (l. 170) — Section « Description » du panneau de détail : la description mise en forme (aperçu), avec une bascule
+- `capDescToggle` (l. 179) — Bascule Aperçu / code HTML d'une section « Description ». @param {HTMLElement} b - Bouton cliqué
+- `capOpenDetailNode` (l. 186) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
+- `CAP_ELEM_VIEWS` (l. 194)
+- `capUpdateToolbarForView` (l. 200) — Met à jour les boutons actifs et les groupes de contrôles visibles
+- `capShowView` (l. 232) — Affiche une vue Capella (bascule en mode capella si besoin).
 
 ## 26-rapports-html.js — 101 lignes
 
@@ -466,7 +466,7 @@
 - `capRenderFunctionsView` (l. 714) — Vue « ƒ Fonctions » (onglet de 🔬 Analyses) : hiérarchie, tableau,
 - `capRenderAnalyses` (l. 725) — Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage.
 
-## 35-tableau-de-bord.js — 655 lignes
+## 35-tableau-de-bord.js — 656 lignes
 
 - `CAP_DASH_PAL` (l. 3) — Palette catégorielle à ordre fixe (contrôlée pour le daltonisme), déclinée pour thèmes clairs et sombres.
 - `CAP_DASH_AK` (l. 6) — Couleurs des natures d'allocation (identiques au filtre « Allocation » de ƒ Fonctions).
@@ -476,19 +476,19 @@
 - `capDashPct` (l. 30) — Taux arrondi d'éléments vérifiant un prédicat.
 - `capDashCount` (l. 36) — Compte les éléments par clé (une ou plusieurs clés par élément) et trie par effectif décroissant.
 - `capDashCatalog` (l. 46) — Catalogue de tous les indicateurs disponibles pour le modèle ouvert (fonctions, chaînes, interfaces,
-- `capDashValue` (l. 200) — Valeur (mise en cache) d'un indicateur du catalogue ; null si le modèle ne contient pas la donnée.
-- `capDashCut` (l. 213) — Échappe un texte et le tronque pour une étiquette de graphique.
-- `capDashLevel` (l. 218) — Niveau d'un pourcentage : bon (≥ 90), à surveiller (≥ 50), faible.
-- `capDashCats` (l. 224) — Prépare les catégories d'une répartition : tri, limite d'affichage et regroupement en « Autres ».
-- `capDashDraw` (l. 238) — Dessine le contenu d'un élément du tableau de bord.
-- `capDashSave` (l. 321) — Enregistre les tableaux de bord dans la page (bloc JSON repris par la 💾 Page HTML).
-- `capDashUid` (l. 327) — Identifiant court et unique pour un tableau de bord ou un élément.
-- `capDashExample` (l. 331) — Tableau de bord d'exemple adapté au modèle ouvert (synthèse de quelques indicateurs clés).
-- `capRenderDashboard` (l. 349) — Vue « 📐 Tableau de bord » : tableaux de bord personnalisés (indicateurs, graphiques, tableaux, textes),
-- `capDashPrint` (l. 486) — Imprime un tableau de bord au format A4 : les éléments sont redessinés à la taille de la page
-- `capDashTitre` (l. 521) — Titre affiché d'un élément du tableau de bord.
-- `capDashImgDraw` (l. 531) — Dessine un élément « image » : diagramme Capella (image enregistrée avec l'élément) ou 🔗 liens entre couches (redessinés sur le modèle char
-- `capDashSide` (l. 557) — Panneau de gauche du tableau de bord (mode ✏ Modifier) : ajout ou configuration d'un élément, affiché en direct
+- `capDashValue` (l. 201) — Valeur (mise en cache) d'un indicateur du catalogue ; null si le modèle ne contient pas la donnée.
+- `capDashCut` (l. 214) — Échappe un texte et le tronque pour une étiquette de graphique.
+- `capDashLevel` (l. 219) — Niveau d'un pourcentage : bon (≥ 90), à surveiller (≥ 50), faible.
+- `capDashCats` (l. 225) — Prépare les catégories d'une répartition : tri, limite d'affichage et regroupement en « Autres ».
+- `capDashDraw` (l. 239) — Dessine le contenu d'un élément du tableau de bord.
+- `capDashSave` (l. 322) — Enregistre les tableaux de bord dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capDashUid` (l. 328) — Identifiant court et unique pour un tableau de bord ou un élément.
+- `capDashExample` (l. 332) — Tableau de bord d'exemple adapté au modèle ouvert (synthèse de quelques indicateurs clés).
+- `capRenderDashboard` (l. 350) — Vue « 📐 Tableau de bord » : tableaux de bord personnalisés (indicateurs, graphiques, tableaux, textes),
+- `capDashPrint` (l. 487) — Imprime un tableau de bord au format A4 : les éléments sont redessinés à la taille de la page
+- `capDashTitre` (l. 522) — Titre affiché d'un élément du tableau de bord.
+- `capDashImgDraw` (l. 532) — Dessine un élément « image » : diagramme Capella (image enregistrée avec l'élément) ou 🔗 liens entre couches (redessinés sur le modèle char
+- `capDashSide` (l. 558) — Panneau de gauche du tableau de bord (mode ✏ Modifier) : ajout ou configuration d'un élément, affiché en direct
 
 ## 36-component-exchange.js — 359 lignes
 
@@ -579,30 +579,30 @@
 - `capWatchShowDelta` (l. 436) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 516) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 413 lignes
+## 41-barre-vues.js — 414 lignes
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
-- `CAP_NAV_GROUPS` (l. 44) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
-- `CAP_NAV_DEFAULT` (l. 53) — Réglage par défaut : tous les menus affichés, 🏠 Accueil (tout à gauche), 🔲 Diagrammes Capella (en tête, à côté de 🗺 Relation Map), ▤ Tabl
-- `CAP_NAV_SIMPLE` (l. 56) — ⚙ Mode Simplifié : vues en boutons directs, vues gardées dans leur menu (les autres sont masquées),
-- `CAP_NAV_CTLS` (l. 58) — Commandes de la barre que le mode ⚙ Personnalisé peut masquer : [id, libellé].
-- `capNavMigrate` (l. 68) — Met à jour un réglage de barre enregistré avant l'arrivée du bouton ▤ Tableau (ancienne 📊 Table View
-- `capNavSimplePerso` (l. 81) — Réglage du mode Simplifié sous la forme d'un réglage personnalisé {pins, hide, ctl}.
-- `capNavEff` (l. 89) — Réglage effectivement appliqué à la barre selon le mode ⚙ (Expert, Simplifié, Personnalisé).
-- `capNavTogglePin` (l. 100) — Épingle ou retire une vue de la barre. Hors mode Expert, la modification passe au mode ⚙ Personnalisé
-- `capNavLbl` (l. 117) — Bouton de la barre : icône, puis libellé masqué en mode ⚙ « icônes seules » (nom complet en infobulle).
-- `capNavFit` (l. 126) — Icônes seules dans la barre : toujours si l'utilisateur les a choisies (⚙), sinon automatiquement
-- `capNavSave` (l. 136) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
-- `capNavCurKey` (l. 146) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
-- `capNavOpen` (l. 155) — Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
-- `capNavGroupOpen` (l. 166) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
-- `capNavFluxTabs` (l. 176) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
-- `capNavRender` (l. 186) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
-- `capNavSync` (l. 225) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
-- `capNavClose` (l. 244) — Ferme le menu déroulant de la barre des vues.
-- `capNavRow` (l. 254) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
-- `capNavMenu` (l. 264) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
-- `capNavMenuFill` (l. 317) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+- `CAP_NAV_GROUPS` (l. 45) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
+- `CAP_NAV_DEFAULT` (l. 54) — Réglage par défaut : tous les menus affichés, 🏠 Accueil (tout à gauche), 🔲 Diagrammes Capella (en tête, à côté de 🗺 Relation Map), ▤ Tabl
+- `CAP_NAV_SIMPLE` (l. 57) — ⚙ Mode Simplifié : vues en boutons directs, vues gardées dans leur menu (les autres sont masquées),
+- `CAP_NAV_CTLS` (l. 59) — Commandes de la barre que le mode ⚙ Personnalisé peut masquer : [id, libellé].
+- `capNavMigrate` (l. 69) — Met à jour un réglage de barre enregistré avant l'arrivée du bouton ▤ Tableau (ancienne 📊 Table View
+- `capNavSimplePerso` (l. 82) — Réglage du mode Simplifié sous la forme d'un réglage personnalisé {pins, hide, ctl}.
+- `capNavEff` (l. 90) — Réglage effectivement appliqué à la barre selon le mode ⚙ (Expert, Simplifié, Personnalisé).
+- `capNavTogglePin` (l. 101) — Épingle ou retire une vue de la barre. Hors mode Expert, la modification passe au mode ⚙ Personnalisé
+- `capNavLbl` (l. 118) — Bouton de la barre : icône, puis libellé masqué en mode ⚙ « icônes seules » (nom complet en infobulle).
+- `capNavFit` (l. 127) — Icônes seules dans la barre : toujours si l'utilisateur les a choisies (⚙), sinon automatiquement
+- `capNavSave` (l. 137) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capNavCurKey` (l. 147) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
+- `capNavOpen` (l. 156) — Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
+- `capNavGroupOpen` (l. 167) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
+- `capNavFluxTabs` (l. 177) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
+- `capNavRender` (l. 187) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
+- `capNavSync` (l. 226) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
+- `capNavClose` (l. 245) — Ferme le menu déroulant de la barre des vues.
+- `capNavRow` (l. 255) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
+- `capNavMenu` (l. 265) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
+- `capNavMenuFill` (l. 318) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
 
 ## 42-tableaux-analyses.js — 154 lignes
 
@@ -981,7 +981,7 @@
 - `capRevImportConfirm` (l. 1172) — Fenêtre d'avertissement avant d'importer une revue qui ne semble pas porter sur le modèle chargé :
 - `capRevMerge` (l. 1206) — Fusionne une revue importée : nouveaux commentaires ajoutés (renumérotés si leur numéro est pris),
 
-## 56-accueil.js — 711 lignes
+## 56-accueil.js — 712 lignes
 
 - `CAP_HOME_DND` (l. 23) — Type de données glissées (référence vers un diagramme ou un élément).
 - `CAP_HOME_COULEURS` (l. 25) — Couleurs proposées pour les notes du tableau blanc.
@@ -1037,8 +1037,8 @@
 - `capHomeItemAdd` (l. 621) — Ajoute un point à une section (après un point donné, sinon à la fin) et y place le curseur.
 - `capHomeMove` (l. 628) — Déplace un objet d'une liste d'un cran. @param {Array} l @param {number} i @param {number} dir - -1 / +1
 - `capHomeClick` (l. 631) — Clics de la vue et des fenêtres séparées (délégation). @param {MouseEvent} e
-- `capHomeInput` (l. 687) — Saisie : fiche projet, titres, champs du plan, points, notes du tableau blanc, recherche de la palette. @param {Event} e
-- `capHomeChange` (l. 702) — Listes et cases : création d'une check-list ou d'un plan, champs du plan, case d'un point. @param {Event} e
+- `capHomeInput` (l. 688) — Saisie : fiche projet, titres, champs du plan, points, notes du tableau blanc, recherche de la palette. @param {Event} e
+- `capHomeChange` (l. 703) — Listes et cases : création d'une check-list ou d'un plan, champs du plan, case d'un point. @param {Event} e
 
 ## 57-projet-page.js — 207 lignes
 
@@ -1330,7 +1330,7 @@
 - `capStDetail` (l. 145) — Section « Statut de revue Capella » du panneau de détail ('' si l'élément n'en a pas).
 - `capStDashCatalog` (l. 156) — Indicateurs du tableau de bord : statut de revue Capella.
 
-## 69-sante-modele.js — 168 lignes
+## 69-sante-modele.js — 186 lignes
 
 - `CAP_SANTE_W` (l. 9)
 - `CAP_SANTE_MAX_HIST` (l. 10)
@@ -1338,15 +1338,17 @@
 - `capSanteNiveau` (l. 14) — Niveau lisible d'un score. @param {number} s - Score 0–100 @returns {{l:string, c:string, h:string}} libellé, couleur CSS, couleur fixe
 - `capSanteChecks` (l. 19) — Tous les contrôles de toutes les vues (profil appliqué), avec le nombre de lignes global et par couche quand la vue le permet.
 - `capSanteCompute` (l. 47) — Score de santé global et par couche.
-- `capSanteExclues` (l. 70) — Couches ARCADIA décochées (exclues du score global ; réglage du projet, bloc `cap-home`). @returns {string[]}
-- `capSanteToggleCouche` (l. 76) — Coche ou décoche une couche pour le score global, puis recalcule et réaffiche.
-- `capSanteCle` (l. 85) — Clé de la version du modèle affichée : nom du fichier, nombre d'éléments et de relations (stable, indépendante du 🔄 suivi). @returns {strin
-- `capSanteRecord` (l. 90) — Note le score de la version affichée dans l'historique (`_capHome.sante`) : même version → entrée remplacée.
-- `capSanteSpark` (l. 103) — Petite courbe SVG de l'historique des scores. @param {object[]} H - Historique @param {number} [w=140] @param {number} [h=28] @returns {stri
-- `capSanteDate` (l. 110) — Date courte d'une entrée d'historique. @param {string} iso @returns {string}
-- `capSanteCarte` (l. 113) — Carte 💚 Santé du modèle de 🏠 Accueil. @returns {string} HTML
-- `capRenderSante` (l. 130) — Sous-vue 💚 Santé du modèle de 🔬 Analyses : synthèse, contrôle × couche, historique.
-- `capSanteDashCatalog` (l. 156) — Indicateurs du tableau de bord : santé du modèle.
+- `capSanteVuesMasquees` (l. 71) — Vues dont les contrôles sont masqués du score (réglage du projet, bloc `cap-home`). @returns {string[]}
+- `capSanteToggleVue` (l. 77) — Masque ou compte de nouveau les contrôles d'une vue dans le score, puis recalcule et réaffiche.
+- `capSanteExclues` (l. 86) — Couches ARCADIA décochées (exclues du score global ; réglage du projet, bloc `cap-home`). @returns {string[]}
+- `capSanteToggleCouche` (l. 92) — Coche ou décoche une couche pour le score global, puis recalcule et réaffiche.
+- `capSanteCle` (l. 101) — Clé de la version du modèle affichée : nom du fichier, nombre d'éléments et de relations (stable, indépendante du 🔄 suivi). @returns {strin
+- `capSanteRecord` (l. 106) — Note le score de la version affichée dans l'historique (`_capHome.sante`) : même version → entrée remplacée.
+- `capSanteSpark` (l. 119) — Petite courbe SVG de l'historique des scores. @param {object[]} H - Historique @param {number} [w=140] @param {number} [h=28] @returns {stri
+- `capSanteDate` (l. 126) — Date courte d'une entrée d'historique. @param {string} iso @returns {string}
+- `capSanteCarte` (l. 129) — Carte 💚 Santé du modèle de 🏠 Accueil. @returns {string} HTML
+- `capRenderSante` (l. 147) — Sous-vue 💚 Santé du modèle de 🔬 Analyses : synthèse, contrôle × couche, historique.
+- `capSanteDashCatalog` (l. 173) — Indicateurs du tableau de bord : santé du modèle.
 
 ## 70-chaines-controles.js — 74 lignes
 
@@ -1386,3 +1388,14 @@
 - `capRenderLibs` (l. 123) — Sous-vue 📚 Bibliothèques : bibliothèques, références, contrôles.
 - `capLibDetail` (l. 153) — Section « Références externes » du panneau de détail ('' si l'élément n'en a pas).
 - `capLibDashCatalog` (l. 162) — Indicateurs du tableau de bord : bibliothèques.
+
+## 73-rec-rpl.js — 143 lignes
+
+- `capComputeRec` (l. 16) — Catalogue REC / RPL du modèle (en cache dans `_capAnaCache`).
+- `capRecEcarts` (l. 48) — Nombre d'écarts d'une réplique. @param {object} r - RPL @returns {number}
+- `capRecLink` (l. 51) — Lien vers un élément du modèle visé par un lien de catalogue ('introuvable' sinon). @param {object} l - Lien @returns {string} HTML
+- `capRecChecks` (l. 54) — Contrôles REC / RPL. @returns {object[]} Sections
+- `capRecOpen` (l. 74) — Ouvre la comparaison d'une réplique avec son REC. @param {string} id - RPL
+- `capRenderRec` (l. 79) — Sous-vue 📦 REC / RPL : REC, répliques, comparaison, contrôles.
+- `capRecDetail` (l. 123) — Section « REC / RPL » du panneau de détail : catalogue d'un élément, ou contenu d'un élément de catalogue.
+- `capRecDashCatalog` (l. 134) — Indicateurs du tableau de bord : REC / RPL.

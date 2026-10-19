@@ -86,6 +86,7 @@ function capOpenDetail(id){
   html+=capStDetail(el.id, secTitle);   // 🔖 statut de revue Capella (68)
   html+=capEcDetail(el.id, secTitle);   // 🏷 catégories d'échanges (71)
   html+=capLibDetail(el.id, secTitle);   // 📚 références externes (72)
+  html+=capRecDetail(el.id, secTitle);   // 📦 REC / RPL (73)
 
   // 💬 Commentaires de revue portant sur l'élément
   if(typeof capRevDetailSection==='function') html+=capRevDetailSection(el.id, secTitle);

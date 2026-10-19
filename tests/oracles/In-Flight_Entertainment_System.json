@@ -613,6 +613,17 @@
   "echangesCategorises": 105,
   "introuvables": 0
  },
+ "recRpl": {
+  "recs": 1,
+  "rpls": 3,
+  "elements": 32,
+  "conformes": 3,
+  "ecarts": [
+   "Unit Network Adapter - CMU:0",
+   "Unit Network Adapter - PVDU:0",
+   "Unit Network Adapter- VSU:0"
+  ]
+ },
  "bibliotheques": {
   "references": 0,
   "bibliotheques": 0,
@@ -624,8 +635,8 @@
   "bloquants": 0,
   "info": 0,
   "pop": 1948,
-  "nChecks": 93,
-  "nOk": 38,
+  "nChecks": 102,
+  "nOk": 47,
   "couches": {
    "OA": 54,
    "SA": 71,
@@ -728,6 +739,17 @@
    "Références introuvables dans une bibliothèque chargée": 0,
    "Bibliothèques déclarées sans référence": 0,
    "Références vers une bibliothèque non déclarée": 0
+  },
+  "recRpl": {
+   "Répliques incomplètes": 0,
+   "Répliques enrichies": 0,
+   "Types différents entre REC et réplique": 0,
+   "Noms de réplique hors règle REC + suffixe": 0,
+   "Liens de catalogue vers un élément introuvable": 0,
+   "Répliques dont le REC est introuvable": 0,
+   "REC sans réplique": 0,
+   "REC en double": 0,
+   "Éléments appartenant à plusieurs répliques": 0
   },
   "etats": {
    "noInit": 4,
@@ -1115,6 +1137,7 @@
    "Component Ports sans Function Port alloué": 14,
    "Sens incohérent Function Port / Component Port": 2
   },
+  "chk.rec": null,
   "chk.st": {
    "Éléments à retravailler": 8,
    "Éléments en attente de revue": 1,
@@ -2020,6 +2043,17 @@
   "pv.grp": null,
   "pv.n": 0,
   "pv.set": null,
+  "rec.by": {
+   "Unit Network Adapter": 3
+  },
+  "rec.els": 32,
+  "rec.n": 1,
+  "rec.ok": {
+   "pct": 100,
+   "num": 3,
+   "den": 3
+  },
+  "rec.rpl": 3,
   "rq.chk": null,
   "rq.cov": null,
   "rq.kind": null,

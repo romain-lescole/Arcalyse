@@ -38,7 +38,7 @@ function capHomeNorm(d){
   const c=d.cartes||{};
   return { v:1, fiche:Object.assign({objet:'', phase:'', version:'', resp:'', equipe:'', notes:''}, d.fiche||{}), docs, boards, dossiers:capDosNorm(d.dossiers),
     cartes:{ordre:Array.isArray(c.ordre)?c.ordre:[], masques:Array.isArray(c.masques)?c.masques:[], larges:c.larges&&typeof c.larges==='object'?c.larges:{}},
-    largeurs:d.largeurs&&typeof d.largeurs==='object'?d.largeurs:{}, sante:Array.isArray(d.sante)?d.sante:[], santeExclues:Array.isArray(d.santeExclues)?d.santeExclues:[] };   // sante : historique 💚, santeExclues : couches décochées (69)
+    largeurs:d.largeurs&&typeof d.largeurs==='object'?d.largeurs:{}, sante:Array.isArray(d.sante)?d.sante:[], santeExclues:Array.isArray(d.santeExclues)?d.santeExclues:[], santeVuesMasquees:Array.isArray(d.santeVuesMasquees)?d.santeVuesMasquees:[] };   // sante : historique 💚, santeExclues : couches décochées (69)
 }
 /** Identifiant unique (point, section, document, note). @returns {string} */
 function capHomeUid(){ return 'h'+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
@@ -660,6 +660,7 @@ function capHomeClick(e){
     case 'cartes-reset': _capHome.cartes={ordre:[], masques:[], larges:{}}; break;
     case 'sante-calc': _capHomeUi.santeOk=true; capHomeRender(); return;
     case 'sante-profil': capChkDialog(); return;
+    case 'sante-hide': if(!_capHome.cartes.masques.includes('sante')) _capHome.cartes.masques.push('sante'); capToast(_L('Carte masquée — ⚙ Disposer › Masquées pour la réafficher')); break;
     case 'quick': { const nd=capHomeQuickDoc(); capHomeRender(); const n=capHomeFind(`[data-docid="${nd.id}"] .hm-item-t`); if(n) n.focus(); return; }
     case 'go-docs': u.tab='docs'; break;
     case 'go-dos': u.tab='dos'; break;

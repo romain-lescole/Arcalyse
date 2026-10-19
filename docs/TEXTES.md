@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 6069 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 6181 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -1293,17 +1293,17 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 60 | Attributs | Attributes |
 | 68 | Références sortantes → | Outgoing references → |
 | 76 | Références entrantes ← (navigation inverse) | Incoming references ← (reverse navigation) |
-| 95 | Owner (parent) | Owner (parent) |
-| 101 | Owned elements ( | Owned elements (…) |
-| 148 | capOpenDetailById(this.dataset.hlink) | (inchangé, hors _L) |
-| 149 | Ouvrir le détail de l'élément référencé | Open the details of the referenced element |
-| 150 | noopener noreferrer | (inchangé, hors _L) |
-| 154 | [image : | [image: …] |
-| 173 | Description | Description |
-| 173 | Aperçu | Preview |
-| 173 | Description mise en forme comme dans Capella | Description formatted as in Capella |
-| 173 | ‹/› HTML | ‹/› HTML |
-| 173 | Code HTML d'origine de la description | Original HTML code of the description |
+| 96 | Owner (parent) | Owner (parent) |
+| 102 | Owned elements ( | Owned elements (…) |
+| 149 | capOpenDetailById(this.dataset.hlink) | (inchangé, hors _L) |
+| 150 | Ouvrir le détail de l'élément référencé | Open the details of the referenced element |
+| 151 | noopener noreferrer | (inchangé, hors _L) |
+| 155 | [image : | [image: …] |
+| 174 | Description | Description |
+| 174 | Aperçu | Preview |
+| 174 | Description mise en forme comme dans Capella | Description formatted as in Capella |
+| 174 | ‹/› HTML | ‹/› HTML |
+| 174 | Code HTML d'origine de la description | Original HTML code of the description |
 
 ## js/26-rapports-html.js
 
@@ -1955,6 +1955,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 693 | ⛓ Contraintes | ⛓ Constraints |
 | 693 | 🏷 Catégories d'échanges | 🏷 Exchange categories |
 | 693 | 📚 Bibliothèques | 📚 Libraries |
+| 693 | 📦 REC / RPL | 📦 REC / RPL |
 | 693 | 🔖 Statut de revue | 🔖 Review status |
 | 693 | 💚 Santé du modèle | 💚 Model health |
 | 729 | ↻ Recalculer | … ↻ Recompute |
@@ -2225,120 +2226,122 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 178 | chk.ec | (inchangé, hors _L) |
 | 178 | Bibliothèques | Libraries |
 | 178 | chk.lib | (inchangé, hors _L) |
+| 178 | REC / RPL | REC / RPL |
+| 178 | chk.rec | (inchangé, hors _L) |
 | 178 | Nombre total de constats par domaine | Total number of findings by domain |
-| 191 | Mise en page | Layout |
-| 191 | Texte libre (titre, commentaire) | Free text (title, comment) |
-| 192 | Diagrammes et vues | Diagrams and views |
-| 192 | 🔲 Diagramme Capella | 🔲 Capella diagram |
+| 192 | Mise en page | Layout |
+| 192 | Texte libre (titre, commentaire) | Free text (title, comment) |
 | 193 | Diagrammes et vues | Diagrams and views |
-| 193 | ⇶ Liens entre couches | ⇶ Cross-layer links |
-| 202 | Indicateur | (inchangé, hors _L) |
-| 218 | à surveiller | to watch |
-| 228 | Autres ( | Others (…) |
-| 240 | Texte vide — ⚙ pour le modifier. | Empty text — ⚙ to edit it. |
-| 241 | Indicateur indisponible pour ce modèle. | Indicator not available for this model. |
-| 242 | Aucune donnée dans ce modèle. | No data in this model. |
-| 243 | var(--c-dim) | (inchangé, hors _L) |
-| 243 | var(--c-text) | (inchangé, hors _L) |
-| 243 | var(--c-bg2) | (inchangé, hors _L) |
-| 261 | Catégorie | Category |
-| 261 | Taux | Rate |
-| 261 | Nombre | Count |
-| 261 | Détail | Detail |
-| 261 | Part | (inchangé, hors _L) |
-| 264 | autre(s) ligne(s) — agrandir le cadre pour tout voir | … and … more row(s) — enlarge the frame to see everything |
-| 269 | catégorie(s) | … … category(ies) |
-| 282 | Autres ( | Others (…) |
-| 291 | Autres ( | Others (…) |
-| 334 | Synthèse du modèle — | Model summary — |
-| 334 | Capella | Capella |
-| 335 | mdl.n | (inchangé, hors _L) |
-| 335 | Fonctions (toutes couches) | Functions (all layers) |
-| 336 | mdl.layer | (inchangé, hors _L) |
-| 337 | fn.L.desc | (inchangé, hors _L) |
-| 337 | ch.empty | (inchangé, hors _L) |
-| 338 | ce.dir | (inchangé, hors _L) |
-| 339 | chk.sum | (inchangé, hors _L) |
-| 339 | tr.tab | (inchangé, hors _L) |
-| 340 | Synthèse du modèle | Model summary |
-| 366 | — double-clic pour renommer | {3} {4} |
-| 368 | ✔ Terminer | ✔ Done |
-| 368 | ✏ Modifier | ✏ Edit |
-| 369 | ＋ Ajouter un élément | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 371 | ⧉ Dupliquer ✨ Exemple | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 374 | 🗑 Supprimer | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 383 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer (panneau à gauche) · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. | Drag an item by its title to move it · bottom-right corner to resize it · ＋ on the left of an item to insert one before it · ⚙ configure (left panel) · ⧉ duplicate · ✕ remove. Dashboards are kept in the 💾 HTML Page. |
-| 384 | ,minmax(0,1fr)) | … ＋ … … A4 portrait A4 landscape 🖨 Print 🌐 HTML ⬇ JSON ⬆ JSON … … … … … |
-| 389 | ＋ Ajouter un élément | ＋ Add an item |
-| 390 | Tableau de bord vide. | Empty dashboard. … |
-| 390 | Cliquez sur « ＋ Ajouter un élément ». | Click “＋ Add an item”. |
-| 390 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. | Click “✏ Edit” to add indicators. |
-| 397 | Nouvel élément : choisissez un indicateur, un diagramme ou une vue dans le panneau de gauche. | New item: choose an indicator, a diagram or a view in the left panel. |
-| 416 | Tableau de bord | Dashboard |
-| 418 | Page | Page |
-| 419 | (copie) | (copy) |
-| 421 | Supprimer le tableau de bord « | Delete the dashboard “…”? |
-| 428 | Tableau importé | Imported dashboard |
-| 429 | Fichier de tableau de bord invalide. | Invalid dashboard file. |
-| 436 | ,minmax(0,1fr)) | {0} {2} |
-| 438 | élément(s) | … element(s) |
-| 438 | Tableau de bord | Dashboard |
-| 442 | Ouvrir | Open |
-| 490 | Modèle Capella | Capella model |
-| 534 | Choisissez un diagramme dans le panneau de gauche (le .aird du projet doit être ouvert). | Choose a diagram in the left panel (the project's .aird must be open). |
-| 537 | Choisissez l'élément de départ dans le panneau de gauche. | Choose the starting element in the left panel. |
-| 538 | Aucun modèle chargé. | No model loaded. |
-| 540 | Aucun lien de réalisation. | No realization link. |
-| 559 | Mise en page | Layout |
-| 559 | Diagrammes et vues | Diagrams and views |
-| 569 | ⚙ Configurer l'élément | ⚙ Configure the item |
-| 569 | ＋ Nouvel élément | ＋ New item |
-| 569 | Fermer sans enregistrer | Close without saving |
-| 571 | 🔍 Rechercher un indicateur… | 🔍 Search an indicator… |
-| 572 | Déplier toutes les catégories | Expand all categories |
-| 572 | ⊞ Tout déplier | ⊞ Expand all |
-| 572 | Replier toutes les catégories | Collapse all categories |
-| 572 | ⊟ Tout replier | ⊟ Collapse all |
-| 574 | Annuler | Cancel |
-| 574 | ✔ Enregistrer | ✔ Save |
-| 574 | ✔ Ajouter dans la grille | ✔ Add to the grid |
-| 581 | Aucun indicateur. | No indicator. |
-| 590 | Choisissez ci-dessous un indicateur, un diagramme ou une vue : il apparaît aussitôt dans la grille, à sa place. | Choose an indicator, a diagram or a view below: it appears at once in the grid, in its place. |
-| 592 | Taille | Size |
-| 592 | col. | … col. |
-| 594 | Élément | Element |
-| 595 | Titre | Title |
-| 598 | Diagramme | Diagram |
-| 598 | Reprendre l'image du diagramme dans le .aird chargé | Take the diagram image again from the loaded .aird |
-| 598 | ↻ Mettre à jour | ↻ Update |
-| 599 | 🔍 Choisir un diagramme… | 🔍 Choose a diagram… |
-| 600 | Aucun .aird chargé : | No .aird loaded: |
-| 600 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
-| 603 | Mode | Mode |
-| 603 | À partir d'un élément | From an element |
-| 603 | Toute une catégorie | A whole category |
-| 604 | Catégorie | Category |
-| 605 | Départ | Start |
-| 605 | à choisir | to be chosen |
-| 605 | 🔍 Élément de départ… | 🔍 Starting element… |
-| 606 | Sens | Direction |
-| 606 | Réalisations vers le haut et vers le bas | Realizations upwards and downwards |
-| 606 | Tous les liens de proche en proche | All links, step by step |
-| 607 | Fonctions des chaînes | Chain functions |
-| 609 | Texte | Text |
-| 610 | Représentation | Chart |
-| 611 | Catégories | Categories |
-| 611 | 5 premières | Top 5 |
-| 611 | 8 premières | Top 8 |
-| 611 | 10 premières | Top 10 |
-| 611 | 15 premières | Top 15 |
-| 611 | 20 premières | Top 20 |
-| 611 | Toutes | All |
-| 612 | Tri | Sort |
-| 612 | Par défaut | Default |
-| 612 | Valeur décroissante | Descending value |
-| 612 | Ordre naturel | Natural order |
-| 621 | ⏳ Image du diagramme… | ⏳ Diagram image… |
+| 193 | 🔲 Diagramme Capella | 🔲 Capella diagram |
+| 194 | Diagrammes et vues | Diagrams and views |
+| 194 | ⇶ Liens entre couches | ⇶ Cross-layer links |
+| 203 | Indicateur | (inchangé, hors _L) |
+| 219 | à surveiller | to watch |
+| 229 | Autres ( | Others (…) |
+| 241 | Texte vide — ⚙ pour le modifier. | Empty text — ⚙ to edit it. |
+| 242 | Indicateur indisponible pour ce modèle. | Indicator not available for this model. |
+| 243 | Aucune donnée dans ce modèle. | No data in this model. |
+| 244 | var(--c-dim) | (inchangé, hors _L) |
+| 244 | var(--c-text) | (inchangé, hors _L) |
+| 244 | var(--c-bg2) | (inchangé, hors _L) |
+| 262 | Catégorie | Category |
+| 262 | Taux | Rate |
+| 262 | Nombre | Count |
+| 262 | Détail | Detail |
+| 262 | Part | (inchangé, hors _L) |
+| 265 | autre(s) ligne(s) — agrandir le cadre pour tout voir | … and … more row(s) — enlarge the frame to see everything |
+| 270 | catégorie(s) | … … category(ies) |
+| 283 | Autres ( | Others (…) |
+| 292 | Autres ( | Others (…) |
+| 335 | Synthèse du modèle — | Model summary — |
+| 335 | Capella | Capella |
+| 336 | mdl.n | (inchangé, hors _L) |
+| 336 | Fonctions (toutes couches) | Functions (all layers) |
+| 337 | mdl.layer | (inchangé, hors _L) |
+| 338 | fn.L.desc | (inchangé, hors _L) |
+| 338 | ch.empty | (inchangé, hors _L) |
+| 339 | ce.dir | (inchangé, hors _L) |
+| 340 | chk.sum | (inchangé, hors _L) |
+| 340 | tr.tab | (inchangé, hors _L) |
+| 341 | Synthèse du modèle | Model summary |
+| 367 | — double-clic pour renommer | {3} {4} |
+| 369 | ✔ Terminer | ✔ Done |
+| 369 | ✏ Modifier | ✏ Edit |
+| 370 | ＋ Ajouter un élément | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 372 | ⧉ Dupliquer ✨ Exemple | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 375 | 🗑 Supprimer | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 384 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer (panneau à gauche) · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. | Drag an item by its title to move it · bottom-right corner to resize it · ＋ on the left of an item to insert one before it · ⚙ configure (left panel) · ⧉ duplicate · ✕ remove. Dashboards are kept in the 💾 HTML Page. |
+| 385 | ,minmax(0,1fr)) | … ＋ … … A4 portrait A4 landscape 🖨 Print 🌐 HTML ⬇ JSON ⬆ JSON … … … … … |
+| 390 | ＋ Ajouter un élément | ＋ Add an item |
+| 391 | Tableau de bord vide. | Empty dashboard. … |
+| 391 | Cliquez sur « ＋ Ajouter un élément ». | Click “＋ Add an item”. |
+| 391 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. | Click “✏ Edit” to add indicators. |
+| 398 | Nouvel élément : choisissez un indicateur, un diagramme ou une vue dans le panneau de gauche. | New item: choose an indicator, a diagram or a view in the left panel. |
+| 417 | Tableau de bord | Dashboard |
+| 419 | Page | Page |
+| 420 | (copie) | (copy) |
+| 422 | Supprimer le tableau de bord « | Delete the dashboard “…”? |
+| 429 | Tableau importé | Imported dashboard |
+| 430 | Fichier de tableau de bord invalide. | Invalid dashboard file. |
+| 437 | ,minmax(0,1fr)) | {0} {2} |
+| 439 | élément(s) | … element(s) |
+| 439 | Tableau de bord | Dashboard |
+| 443 | Ouvrir | Open |
+| 491 | Modèle Capella | Capella model |
+| 535 | Choisissez un diagramme dans le panneau de gauche (le .aird du projet doit être ouvert). | Choose a diagram in the left panel (the project's .aird must be open). |
+| 538 | Choisissez l'élément de départ dans le panneau de gauche. | Choose the starting element in the left panel. |
+| 539 | Aucun modèle chargé. | No model loaded. |
+| 541 | Aucun lien de réalisation. | No realization link. |
+| 560 | Mise en page | Layout |
+| 560 | Diagrammes et vues | Diagrams and views |
+| 570 | ⚙ Configurer l'élément | ⚙ Configure the item |
+| 570 | ＋ Nouvel élément | ＋ New item |
+| 570 | Fermer sans enregistrer | Close without saving |
+| 572 | 🔍 Rechercher un indicateur… | 🔍 Search an indicator… |
+| 573 | Déplier toutes les catégories | Expand all categories |
+| 573 | ⊞ Tout déplier | ⊞ Expand all |
+| 573 | Replier toutes les catégories | Collapse all categories |
+| 573 | ⊟ Tout replier | ⊟ Collapse all |
+| 575 | Annuler | Cancel |
+| 575 | ✔ Enregistrer | ✔ Save |
+| 575 | ✔ Ajouter dans la grille | ✔ Add to the grid |
+| 582 | Aucun indicateur. | No indicator. |
+| 591 | Choisissez ci-dessous un indicateur, un diagramme ou une vue : il apparaît aussitôt dans la grille, à sa place. | Choose an indicator, a diagram or a view below: it appears at once in the grid, in its place. |
+| 593 | Taille | Size |
+| 593 | col. | … col. |
+| 595 | Élément | Element |
+| 596 | Titre | Title |
+| 599 | Diagramme | Diagram |
+| 599 | Reprendre l'image du diagramme dans le .aird chargé | Take the diagram image again from the loaded .aird |
+| 599 | ↻ Mettre à jour | ↻ Update |
+| 600 | 🔍 Choisir un diagramme… | 🔍 Choose a diagram… |
+| 601 | Aucun .aird chargé : | No .aird loaded: |
+| 601 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 604 | Mode | Mode |
+| 604 | À partir d'un élément | From an element |
+| 604 | Toute une catégorie | A whole category |
+| 605 | Catégorie | Category |
+| 606 | Départ | Start |
+| 606 | à choisir | to be chosen |
+| 606 | 🔍 Élément de départ… | 🔍 Starting element… |
+| 607 | Sens | Direction |
+| 607 | Réalisations vers le haut et vers le bas | Realizations upwards and downwards |
+| 607 | Tous les liens de proche en proche | All links, step by step |
+| 608 | Fonctions des chaînes | Chain functions |
+| 610 | Texte | Text |
+| 611 | Représentation | Chart |
+| 612 | Catégories | Categories |
+| 612 | 5 premières | Top 5 |
+| 612 | 8 premières | Top 8 |
+| 612 | 10 premières | Top 10 |
+| 612 | 15 premières | Top 15 |
+| 612 | 20 premières | Top 20 |
+| 612 | Toutes | All |
+| 613 | Tri | Sort |
+| 613 | Par défaut | Default |
+| 613 | Valeur décroissante | Descending value |
+| 613 | Ordre naturel | Natural order |
+| 622 | ⏳ Image du diagramme… | ⏳ Diagram image… |
 
 ## js/36-component-exchange.js
 
@@ -2930,59 +2933,61 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 32 | 📋 Exigences | 📋 Requirements |
 | 33 | 🏷 Propriétés | 🏷 Properties |
 | 34 | 🗃 Données & interfaces | 🗃 Data & interfaces |
-| 35 | 📚 Bibliothèques | 📚 Libraries |
-| 35 | Références vers d'autres fichiers .capella (bibliothèques) : par bibliothèque, par référence, chargement des bibliothèques pour résoudre les cibles, contrôles | References to other .capella files (libraries): per library, per reference, loading the libraries to resolve the targets, checks |
-| 36 | 🏷 Catégories d'échanges | 🏷 Exchange categories |
-| 36 | ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory : échanges par catégorie, taux de catégorisation, contrôles | ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory: exchanges per category, categorization rate, checks |
-| 37 | ⛓ Contraintes | ⛓ Constraints |
-| 38 | 💚 Santé du modèle | 💚 Model health |
-| 38 | Score global et par couche bâti sur tous les contrôles (🩺 profil), détail contrôle × couche, historique des versions | Overall and per-layer score built on all checks (🩺 profile), check × layer detail, version history |
-| 39 | 🔖 Statut de revue | 🔖 Review status |
-| 39 | Statut (DRAFT, TO BE REVIEWED, REVIEWED…) et commentaire de revue Capella de chaque élément : liste, répartition, contrôles | Status (DRAFT, TO BE REVIEWED, REVIEWED…) and Capella review comment of each element: list, breakdown, checks |
-| 40 | 📐 Tableau de bord | 📐 Dashboard |
-| 40 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux | Custom dashboards: indicators, charts, tables |
-| 41 | 📘 Rapports automatiques | 📘 Automatic reports |
-| 41 | 📘 Rapports | 📘 Reports |
-| 41 | Rapports produits à partir du modèle selon un plan type (spécification boîte noire, dossier de conception boîte blanche), modifiables, exportables en HTML à commenter ou en Word (🏠 Accueil › 📑 Dossiers) | Reports produced from the model according to a standard outline (black-box specification, white-box design file), editable, exportable as an HTML page to comment or as Word (🏠 Home › 📑 Packages) |
-| 45 | 🧭 Explorateur | 🧭 Explorer |
-| 45 | Explorer le modèle : arborescence, cartes, index des types | Explore the model: tree, cards, type index |
-| 46 | 📡 Flux & interfaces | 📡 Flows & interfaces |
-| 46 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrammes, scénarios, ports, liens | Chains, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrams, scenarios, ports, links |
-| 48 | 🔬 Analyses | 🔬 Analyses |
-| 48 | Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes | Functions, cross-layer traceability, capabilities & missions, modes & states, version comparison, requirements, properties, data & interfaces, constraints |
-| 58 | 🗺 Relation Map | 🗺 Relation Map |
-| 58 | 🔄 Suivi du fichier | 🔄 File watch |
-| 58 | 💬 Revue | 💬 Review |
-| 58 | 🎨 Thème | 🎨 Theme |
-| 216 | Expert | Expert |
-| 216 | Simplifié | Simplified |
-| 216 | Personnalisé | Custom |
-| 218 | Préférences : affichage des menus (mode actuel : | Preferences: menu display (current mode: |
-| 218 | ), enregistrement automatique, thème, interface et vues | ), automatic saving, theme, interface and views |
-| 234 | Vue affichée : | Displayed view: |
-| 256 | (masquée) | (hidden) |
-| 257 | Retirer de la barre | Remove from the bar |
-| 257 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
-| 329 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 329 | Ctrl+S | Ctrl+S |
-| 330 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 330 | Ctrl+Maj+S | Ctrl+Maj+S |
-| 341 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
-| 343 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
-| 344 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
-| 345 | 💬 Visite de la revue | 💬 Review tour |
-| 346 | ℹ À propos | ℹ About |
-| 353 | 🎨 Personnaliser… | 🎨 Customize… |
-| 357 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
-| 362 | 🗺 Relation Map | 🗺 Relation Map |
-| 366 | Vues | Views |
-| 367 | Aucune vue, aucun élément ni diagramme ne correspond. | No view, element or diagram matches. |
-| 374 | Menu | … ▾ menu in the bar |
-| 374 | ▾ dans la barre | … ▾ menu in the bar |
-| 375 | Autres vues | Other views |
-| 378 | ⚙ Personnaliser l'affichage… | ⚙ Customize display… |
-| 379 | ↺ Rétablir la barre par défaut | ↺ Restore the default bar |
-| 381 | 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
+| 35 | 📦 REC / RPL | 📦 REC / RPL |
+| 35 | Éléments réutilisables : REC (gabarits) et RPL (répliques), comparaison élément par élément, écarts, contrôles | Reusable elements: REC (templates) and RPL (replicas), element-by-element comparison, differences, checks |
+| 36 | 📚 Bibliothèques | 📚 Libraries |
+| 36 | Références vers d'autres fichiers .capella (bibliothèques) : par bibliothèque, par référence, chargement des bibliothèques pour résoudre les cibles, contrôles | References to other .capella files (libraries): per library, per reference, loading the libraries to resolve the targets, checks |
+| 37 | 🏷 Catégories d'échanges | 🏷 Exchange categories |
+| 37 | ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory : échanges par catégorie, taux de catégorisation, contrôles | ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory: exchanges per category, categorization rate, checks |
+| 38 | ⛓ Contraintes | ⛓ Constraints |
+| 39 | 💚 Santé du modèle | 💚 Model health |
+| 39 | Score global et par couche bâti sur tous les contrôles (🩺 profil), détail contrôle × couche, historique des versions | Overall and per-layer score built on all checks (🩺 profile), check × layer detail, version history |
+| 40 | 🔖 Statut de revue | 🔖 Review status |
+| 40 | Statut (DRAFT, TO BE REVIEWED, REVIEWED…) et commentaire de revue Capella de chaque élément : liste, répartition, contrôles | Status (DRAFT, TO BE REVIEWED, REVIEWED…) and Capella review comment of each element: list, breakdown, checks |
+| 41 | 📐 Tableau de bord | 📐 Dashboard |
+| 41 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux | Custom dashboards: indicators, charts, tables |
+| 42 | 📘 Rapports automatiques | 📘 Automatic reports |
+| 42 | 📘 Rapports | 📘 Reports |
+| 42 | Rapports produits à partir du modèle selon un plan type (spécification boîte noire, dossier de conception boîte blanche), modifiables, exportables en HTML à commenter ou en Word (🏠 Accueil › 📑 Dossiers) | Reports produced from the model according to a standard outline (black-box specification, white-box design file), editable, exportable as an HTML page to comment or as Word (🏠 Home › 📑 Packages) |
+| 46 | 🧭 Explorateur | 🧭 Explorer |
+| 46 | Explorer le modèle : arborescence, cartes, index des types | Explore the model: tree, cards, type index |
+| 47 | 📡 Flux & interfaces | 📡 Flows & interfaces |
+| 47 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrammes, scénarios, ports, liens | Chains, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrams, scenarios, ports, links |
+| 49 | 🔬 Analyses | 🔬 Analyses |
+| 49 | Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes | Functions, cross-layer traceability, capabilities & missions, modes & states, version comparison, requirements, properties, data & interfaces, constraints |
+| 59 | 🗺 Relation Map | 🗺 Relation Map |
+| 59 | 🔄 Suivi du fichier | 🔄 File watch |
+| 59 | 💬 Revue | 💬 Review |
+| 59 | 🎨 Thème | 🎨 Theme |
+| 217 | Expert | Expert |
+| 217 | Simplifié | Simplified |
+| 217 | Personnalisé | Custom |
+| 219 | Préférences : affichage des menus (mode actuel : | Preferences: menu display (current mode: |
+| 219 | ), enregistrement automatique, thème, interface et vues | ), automatic saving, theme, interface and views |
+| 235 | Vue affichée : | Displayed view: |
+| 257 | (masquée) | (hidden) |
+| 258 | Retirer de la barre | Remove from the bar |
+| 258 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
+| 330 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 330 | Ctrl+S | Ctrl+S |
+| 331 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 331 | Ctrl+Maj+S | Ctrl+Maj+S |
+| 342 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
+| 344 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
+| 345 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
+| 346 | 💬 Visite de la revue | 💬 Review tour |
+| 347 | ℹ À propos | ℹ About |
+| 354 | 🎨 Personnaliser… | 🎨 Customize… |
+| 358 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
+| 363 | 🗺 Relation Map | 🗺 Relation Map |
+| 367 | Vues | Views |
+| 368 | Aucune vue, aucun élément ni diagramme ne correspond. | No view, element or diagram matches. |
+| 375 | Menu | … ▾ menu in the bar |
+| 375 | ▾ dans la barre | … ▾ menu in the bar |
+| 376 | Autres vues | Other views |
+| 379 | ⚙ Personnaliser l'affichage… | ⚙ Customize display… |
+| 380 | ↺ Rétablir la barre par défaut | ↺ Restore the default bar |
+| 382 | 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
 
 ## js/42-tableaux-analyses.js
 
@@ -4871,16 +4876,17 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 504 | autre(s) : précisez la recherche | … … more: refine the search |
 | 504 | Aucun élément ne correspond. | No element matches. |
 | 625 | ] .hm-item-t | (inchangé, hors _L) |
-| 663 | ] .hm-item-t | (inchangé, hors _L) |
-| 671 | (copie) | (copy) |
-| 672 | Supprimer « | Delete “…”? |
-| 672 | (sans titre) | (untitled) |
-| 674 | Nouvelle section | New section |
-| 676 | Supprimer la section « | Delete the section “…” and its … item(s)? |
-| 676 | » et ses | Delete the section “…” and its … item(s)? |
-| 676 | point(s) ? | Delete the section “…” and its … item(s)? |
-| 694 | (sans titre) | (untitled) |
-| 706 | ] .hm-item-t | (inchangé, hors _L) |
+| 663 | Carte masquée — ⚙ Disposer › Masquées pour la réafficher | Card hidden — ⚙ Arrange › Hidden to show it again |
+| 664 | ] .hm-item-t | (inchangé, hors _L) |
+| 672 | (copie) | (copy) |
+| 673 | Supprimer « | Delete “…”? |
+| 673 | (sans titre) | (untitled) |
+| 675 | Nouvelle section | New section |
+| 677 | Supprimer la section « | Delete the section “…” and its … item(s)? |
+| 677 | » et ses | Delete the section “…” and its … item(s)? |
+| 677 | point(s) ? | Delete the section “…” and its … item(s)? |
+| 695 | (sans titre) | (untitled) |
+| 707 | ] .hm-item-t | (inchangé, hors _L) |
 
 ## js/57-projet-page.js
 
@@ -6141,78 +6147,84 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 36 | cap.chk | (inchangé, hors _L) |
 | 36 | sm.chk | (inchangé, hors _L) |
 | 39 | Santé : indicateur | ❌ |
-| 115 | Chargez un modèle. | Load a model. |
-| 116 | Modèle volumineux ( | Large model (… elements): computing all the checks may take a few seconds. |
-| 116 | éléments) : le calcul de tous les contrôles peut prendre quelques secondes. | Large model (… elements): computing all the checks may take a few seconds. |
-| 116 | 💚 Calculer la santé du modèle | 💚 Compute the model health |
-| 119 | point(s) à vérifier | … point(s) to check |
-| 119 | bloquant(s) | … blocking |
-| 119 | contrôles sans anomalie | … / … checks without anomaly |
-| 120 | depuis la version précédente | since the previous version |
-| 122 | point(s) à vérifier sur | … point(s) to check out of … elements, … per-layer checks |
-| 122 | éléments, | … point(s) to check out of … elements, … per-layer checks |
-| 122 | contrôles par couche | … point(s) to check out of … elements, … per-layer checks |
-| 122 | Décochée : couche exclue du score global | Unticked: layer excluded from the overall score |
-| 123 | Hors score global : | Outside the overall score: … (… elements) |
-| 123 | éléments) | Outside the overall score: … (… elements) |
-| 124 | Détail contrôle par contrôle et par couche, historique | Detail check by check and per layer, history |
-| 124 | Détail | Detail |
-| 124 | Activer ou désactiver des contrôles, gravités, seuils | Enable or disable checks, severities, thresholds |
-| 124 | Profil | Profile |
-| 134 | Score | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
-| 134 | = 100 × e −(Σ poids × lignes ÷ | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
-| 134 | éléments nommés) , poids ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profil) : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
-| 134 | point(s) à vérifier dont | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
-| 134 | contrôles sans anomalie. Le score par couche ne compte que les contrôles calculables par couche (fonctions, échanges fonctionnels, composants, chaînes). | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
-| 134 | — couches décochées : | — unticked layers: … (their rows and their … elements do not count) |
-| 134 | (leurs lignes et leurs | — unticked layers: … (their rows and their … elements do not count) |
-| 134 | éléments ne comptent pas) | — unticked layers: … (their rows and their … elements do not count) |
-| 137 | Vue | View |
-| 137 | Contrôle | Check |
-| 137 | Gravité | Severity |
-| 139 | Couche | Layer |
-| 139 | Score | Score |
-| 139 | Points à vérifier | Points to check |
-| 139 | Bloquants | Blocking |
-| 139 | Éléments nommés | Named elements |
-| 139 | Contrôles par couche | Per-layer checks |
-| 141 | Vue | View |
-| 141 | Contrôles | Checks |
-| 141 | Sans anomalie | Without anomaly |
-| 141 | Points à vérifier | Points to check |
-| 141 | Bloquants | Blocking |
-| 144 | Date | Date |
-| 144 | Fichier | File |
-| 144 | Éléments | Elements |
-| 144 | Score | Score |
-| 144 | Points | Items |
-| 144 | Bloquants | Blocking |
-| 146 | 📋 Contrôles × couches | 📋 Checks × layers |
-| 146 | ▦ Par vue | ▦ Per view |
-| 146 | 📈 Historique | 📈 History |
-| 146 | Vue, contrôle… | View, check… |
-| 147 | Couches comptées dans le score global (décocher = exclure) | Layers counted in the overall score (untick = exclude) |
-| 147 | Couches | Layers |
-| 148 | Activer ou désactiver des contrôles, gravités, seuils | Enable or disable checks, severities, thresholds |
-| 148 | Profil | Profile |
-| 149 | Vue | View |
-| 149 | Contrôle | Check |
-| 149 | Gravité | Severity |
-| 149 | Lignes | Rows |
-| 157 | Santé du modèle | Model health |
-| 158 | sante.score | (inchangé, hors _L) |
-| 158 | Santé du modèle — score | Model health — score |
-| 158 | 100 × e^(−Σ poids × lignes des contrôles ÷ éléments nommés) | 100 × e^(−Σ weight × check rows ÷ named elements) |
-| 159 | sante.pts | (inchangé, hors _L) |
-| 159 | Santé du modèle — points à vérifier | Model health — points to check |
-| 160 | sante.err | (inchangé, hors _L) |
-| 160 | Santé du modèle — points bloquants | Model health — blocking points |
-| 161 | sante.layer | (inchangé, hors _L) |
-| 161 | Santé du modèle — score par couche | Model health — score per layer |
-| 162 | sante.vue | (inchangé, hors _L) |
-| 162 | Santé du modèle — points à vérifier par vue | Model health — points to check per view |
-| 163 | sante.hist | (inchangé, hors _L) |
-| 163 | Santé du modèle — historique des scores | Model health — score history |
+| 131 | Chargez un modèle. | Load a model. |
+| 132 | Modèle volumineux ( | Large model (… elements): computing all the checks may take a few seconds. |
+| 132 | éléments) : le calcul de tous les contrôles peut prendre quelques secondes. | Large model (… elements): computing all the checks may take a few seconds. |
+| 132 | 💚 Calculer la santé du modèle | 💚 Compute the model health |
+| 135 | point(s) à vérifier | … point(s) to check |
+| 135 | bloquant(s) | … blocking |
+| 135 | contrôles sans anomalie | … / … checks without anomaly |
+| 136 | depuis la version précédente | since the previous version |
+| 138 | point(s) à vérifier sur | … point(s) to check out of … elements, … per-layer checks |
+| 138 | éléments, | … point(s) to check out of … elements, … per-layer checks |
+| 138 | contrôles par couche | … point(s) to check out of … elements, … per-layer checks |
+| 138 | Décochée : couche exclue du score global | Unticked: layer excluded from the overall score |
+| 139 | Hors score global : | Outside the overall score: … (… elements) |
+| 139 | éléments) | Outside the overall score: … (… elements) |
+| 140 | Vues masquées du score : | Views hidden from the score: … |
+| 141 | Détail contrôle par contrôle et par couche, historique | Detail check by check and per layer, history |
+| 141 | Détail | Detail |
+| 141 | Activer ou désactiver des contrôles, gravités, seuils | Enable or disable checks, severities, thresholds |
+| 141 | Profil | Profile |
+| 141 | Masquer cette carte (⚙ Disposer › Masquées pour la réafficher) | Hide this card (⚙ Arrange › Hidden to show it again) |
+| 141 | Masquer | Hide |
+| 151 | Score | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 151 | = 100 × e −(Σ poids × lignes ÷ | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 151 | éléments nommés) , poids ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profil) : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 151 | point(s) à vérifier dont | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 151 | contrôles sans anomalie. Le score par couche ne compte que les contrôles calculables par couche (fonctions, échanges fonctionnels, composants, chaînes). | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 151 | — couches décochées : | — unticked layers: … (their rows and their … elements do not count) |
+| 151 | (leurs lignes et leurs | — unticked layers: … (their rows and their … elements do not count) |
+| 151 | éléments ne comptent pas) | — unticked layers: … (their rows and their … elements do not count) |
+| 154 | Vue | View |
+| 154 | Contrôle | Check |
+| 154 | Gravité | Severity |
+| 156 | Couche | Layer |
+| 156 | Score | Score |
+| 156 | Points à vérifier | Points to check |
+| 156 | Bloquants | Blocking |
+| 156 | Éléments nommés | Named elements |
+| 156 | Contrôles par couche | Per-layer checks |
+| 158 | Décochez une vue pour masquer ses contrôles du score (réglage conservé avec le projet). | Untick a view to hide its checks from the score (setting kept with the project). |
+| 158 | Comptée | Counted |
+| 158 | Vue | View |
+| 158 | Contrôles | Checks |
+| 158 | Sans anomalie | Without anomaly |
+| 158 | Points à vérifier | Points to check |
+| 158 | Bloquants | Blocking |
+| 158 | Décochée : contrôles de la vue masqués du score | Unticked: the checks of the view are hidden from the score |
+| 161 | Date | Date |
+| 161 | Fichier | File |
+| 161 | Éléments | Elements |
+| 161 | Score | Score |
+| 161 | Points | Items |
+| 161 | Bloquants | Blocking |
+| 163 | 📋 Contrôles × couches | 📋 Checks × layers |
+| 163 | ▦ Par vue | ▦ Per view |
+| 163 | 📈 Historique | 📈 History |
+| 163 | Vue, contrôle… | View, check… |
+| 164 | Couches comptées dans le score global (décocher = exclure) | Layers counted in the overall score (untick = exclude) |
+| 164 | Couches | Layers |
+| 165 | Activer ou désactiver des contrôles, gravités, seuils | Enable or disable checks, severities, thresholds |
+| 165 | Profil | Profile |
+| 166 | Vue | View |
+| 166 | Contrôle | Check |
+| 166 | Gravité | Severity |
+| 166 | Lignes | Rows |
+| 174 | Santé du modèle | Model health |
+| 175 | sante.score | (inchangé, hors _L) |
+| 175 | Santé du modèle — score | Model health — score |
+| 175 | 100 × e^(−Σ poids × lignes des contrôles ÷ éléments nommés) | 100 × e^(−Σ weight × check rows ÷ named elements) |
+| 176 | sante.pts | (inchangé, hors _L) |
+| 176 | Santé du modèle — points à vérifier | Model health — points to check |
+| 177 | sante.err | (inchangé, hors _L) |
+| 177 | Santé du modèle — points bloquants | Model health — blocking points |
+| 178 | sante.layer | (inchangé, hors _L) |
+| 178 | Santé du modèle — score par couche | Model health — score per layer |
+| 179 | sante.vue | (inchangé, hors _L) |
+| 179 | Santé du modèle — points à vérifier par vue | Model health — points to check per view |
+| 180 | sante.hist | (inchangé, hors _L) |
+| 180 | Santé du modèle — historique des scores | Model health — score history |
 
 ## js/70-chaines-controles.js
 
@@ -6402,6 +6414,111 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 167 | Contrôles | Checks |
 | 167 | chk.lib | (inchangé, hors _L) |
 | 167 | Contrôles des bibliothèques | Library checks |
+
+## js/73-rec-rpl.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 26 | (sans nom) | (unnamed) |
+| 56 | Comparer à son REC | Compare with its REC |
+| 56 | REC introuvable | Missing REC |
+| 58 | Réplique | Replica |
+| 58 | Détail | Detail |
+| 58 | Élément de catalogue | Catalogue element |
+| 58 | Type | (inchangé, hors _L) |
+| 62 | Répliques incomplètes | Incomplete replicas |
+| 62 | Éléments du REC sans équivalent dans la réplique (supprimés après instanciation, ou REC enrichi depuis) | REC elements without counterpart in the replica (deleted after instantiation, or REC enriched since) |
+| 62 | manquant(s) | … missing |
+| 63 | Répliques enrichies | Enriched replicas |
+| 63 | Éléments de la réplique sans origine dans le REC (ajoutés localement) | Replica elements without origin in the REC (added locally) |
+| 63 | ajouté(s) | … added |
+| 64 | Types différents entre REC et réplique | Different types between REC and replica |
+| 64 | Un élément répliqué n'a plus le type de son origine | A replicated element no longer has the type of its origin |
+| 65 | Noms de réplique hors règle REC + suffixe | Replica names outside the REC + suffix rule |
+| 65 | Élément suffixé dont le nom n'est ni « nom du REC + suffixe » ni le nom du REC | Suffixed element whose name is neither “REC name + suffix” nor the REC name |
+| 66 | Liens de catalogue vers un élément introuvable | Catalogue links to a missing element |
+| 66 | Élément du modèle supprimé sans mise à jour du catalogue | Model element deleted without updating the catalogue |
+| 66 | lien(s) | … link(s) |
+| 67 | Répliques dont le REC est introuvable | Replicas whose REC is missing |
+| 67 | L'origine de la réplique n'existe plus dans le catalogue | The origin of the replica no longer exists in the catalogue |
+| 68 | REC sans réplique | REC without replica |
+| 68 | Gabarit jamais instancié (ou instancié dans un autre projet) | Template never instantiated (or instantiated in another project) |
+| 68 | élément(s) | … element(s) |
+| 69 | REC en double | Duplicate REC |
+| 69 | Plusieurs REC du même nom | Several REC with the same name |
+| 70 | Éléments appartenant à plusieurs répliques | Elements belonging to several replicas |
+| 70 | Un même élément du modèle lié par plusieurs RPL | One model element linked by several RPL |
+| 70 | Élément | Element |
+| 70 | Répliques | Replicas |
+| 81 | Aucun REC ni RPL dans ce modèle (catalogue d'éléments réutilisables vide). Dans Capella : clic droit sur des éléments › REC / RPL › Create REC, puis Instantiate RPL from REC. | No REC or RPL in this model (empty reusable elements catalogue). In Capella: right-click on elements › REC / RPL › Create REC, then Instantiate RPL from REC. |
+| 85 | REC (gabarits) · | … REC (templates) · … RPL (replicas) · … model element(s) under catalogue. |
+| 85 | RPL (répliques) · | … REC (templates) · … RPL (replicas) · … model element(s) under catalogue. |
+| 85 | élément(s) du modèle sous catalogue. | … REC (templates) · … RPL (replicas) · … model element(s) under catalogue. |
+| 86 | Conformité par défaut | Default compliancy |
+| 86 | Éléments | Elements |
+| 86 | Répliques | Replicas |
+| 86 | Contenu | Content |
+| 87 | Comparer à son REC | Compare with its REC |
+| 87 | écart(s) | … difference(s) |
+| 93 | réplique(s), | … replica(s), … compliant with their REC (… %). ⇄ compares a replica with its REC element by element. |
+| 93 | conforme(s) à leur REC ( | … replica(s), … compliant with their REC (… %). ⇄ compares a replica with its REC element by element. |
+| 93 | %). ⇄ compare une réplique à son REC élément par élément. | … replica(s), … compliant with their REC (… %). ⇄ compares a replica with its REC element by element. |
+| 94 | Réplique | Replica |
+| 94 | Suffixe | Suffix |
+| 94 | Conformité | Compliancy |
+| 94 | Éléments | Elements |
+| 94 | Manquants | Missing |
+| 94 | Ajoutés | Added |
+| 94 | Types ≠ | Types ≠ |
+| 94 | Renommés | Renamed |
+| 94 | Introuvables | Missing targets |
+| 95 | Comparer à son REC | Compare with its REC |
+| 99 | Aucune réplique. | No replica. |
+| 104 | type différent | different type |
+| 104 | renommé | renamed |
+| 106 | ajouté dans la réplique | added in the replica |
+| 107 | (réplique | … (replica……) compared with its REC … : …. |
+| 107 | ) comparée à son REC | … (replica……) compared with its REC … : …. |
+| 107 | , suffixe « | (inchangé, hors _L) |
+| 107 | écart(s) | … difference(s) |
+| 107 | aucun écart | no difference |
+| 108 | Élément du REC | REC element |
+| 108 | Élément de la réplique | Replica element |
+| 108 | État | State |
+| 111 | 🧬 Répliques | 🧬 Replicas |
+| 111 | 📦 REC | 📦 REC |
+| 111 | ⇄ Comparaison | ⇄ Comparison |
+| 111 | 🩺 Contrôles | 🩺 Checks |
+| 113 | REC, réplique, élément… | REC, replica, element… |
+| 113 | Tous les REC | All REC |
+| 114 | Réplique | Replica |
+| 114 | Suffixe | Suffix |
+| 114 | Conformité | Compliancy |
+| 114 | Éléments | Elements |
+| 114 | Manquants | Missing |
+| 114 | Ajoutés | Added |
+| 114 | Types différents | Different types |
+| 114 | Renommés | Renamed |
+| 114 | Introuvables | Missing targets |
+| 125 | Réplique (RPL) | Replica (RPL) |
+| 125 | Élément réutilisable (REC) | Reusable element (REC) |
+| 125 | écart(s) | … difference(s) |
+| 125 | réplique(s) | … replica(s) |
+| 128 | REC / RPL | REC / RPL |
+| 135 | REC / RPL | REC / RPL |
+| 136 | rec.n | (inchangé, hors _L) |
+| 136 | REC / RPL — REC (gabarits) | REC / RPL — REC (templates) |
+| 137 | rec.rpl | (inchangé, hors _L) |
+| 137 | REC / RPL — répliques | REC / RPL — replicas |
+| 138 | rec.ok | (inchangé, hors _L) |
+| 138 | REC / RPL — taux de répliques conformes à leur REC | REC / RPL — share of replicas compliant with their REC |
+| 139 | rec.els | (inchangé, hors _L) |
+| 139 | REC / RPL — éléments du modèle sous catalogue | REC / RPL — model elements under catalogue |
+| 140 | rec.by | (inchangé, hors _L) |
+| 140 | REC / RPL — répliques par REC | REC / RPL — replicas per REC |
+| 141 | Contrôles | Checks |
+| 141 | chk.rec | (inchangé, hors _L) |
+| 141 | Contrôles REC / RPL | REC / RPL checks |
 
 ## Textes sans traduction anglaise (12)
 

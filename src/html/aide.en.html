@@ -392,6 +392,15 @@
         <h3>⛓ Constraints</h3>
         <p>All the constraints: role (guard, pre / post-condition), expression (text links are replaced by the name of the cited element), language, constrained elements, owner. Checks: empty constraints or without expression, missing cited elements, without constrained element, duplicates.</p>
         <p class="hp-note">An element's detail panel also shows its linked requirements, its properties and its constraints. The corresponding indicators are in the 📐 Dashboard catalogue.</p>
+        <h3>📦 REC / RPL</h3>
+        <p>Capella's <b>reusable elements</b>: a <b>REC</b> is a template (a set of model elements), an <b>RPL</b> a replica instantiated from that REC (suffix, compliancy BLACK_BOX / CONSTRAINT_REUSE / INHERITANCY_REUSE). Each element of a replica keeps a link to its origin in the REC.</p>
+        <table class="hp-t">
+          <tr><td>🧬 Replicas</td><td>Each RPL with its REC, suffix, compliancy, number of elements and differences: missing (REC elements without counterpart), added (no origin in the REC), different types, renamed outside the “REC name + suffix” rule, missing targets; filter by REC; ⬇ CSV.</td></tr>
+          <tr><td>📦 REC</td><td>Each template: default compliancy, elements, replicas (✔ compliant or number of differences).</td></tr>
+          <tr><td>⇄ Comparison</td><td>A replica against its REC, element by element, with the state of each (✔, missing, added, different type, renamed). Also reachable through ⇄ in the tables and the details panel.</td></tr>
+          <tr><td>🩺 Checks</td><td>Incomplete replicas, enriched replicas, different types, names outside the rule, links to a missing element, missing REC, REC without replica, duplicate REC, elements belonging to several replicas.</td></tr>
+        </table>
+        <p class="hp-note">The details panel of an element shows the REC or replica it belongs to; that of a catalogue element, its content. “REC / RPL — …” indicators in the 📐 Dashboard.</p>
         <h3>📚 Libraries</h3>
         <p>A model can reference elements of another .capella file (Capella <b>library</b>): the reference reads <i>platform:/resource/Project/File.capella#id</i> and the libraries used are declared (LibraryReference). Arcalyse reads a single file: without the library, those targets are “missing”.</p>
         <table class="hp-t">
@@ -409,7 +418,7 @@
         <h3>💚 Model health</h3>
         <p>A <b>score from 0 to 100</b> built on <b>all 🩺 checks</b> of every view, with the 🩺 checks profile (disabled checks ignored; weights ℹ 0, ⚠ 1, ✖ 3): 100 × e<sup>−(Σ weight × rows ÷ number of named elements)</sup>: 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. Levels: Good (≥ 90), Watch (≥ 70), Rework. Score <b>per ARCADIA layer</b> for the checks that can be computed per layer (functions, functional exchanges, components).</p>
         <table class="hp-t">
-          <tr><td>🏠 Card</td><td>On the home: score, level, points to check and blocking points, bars per layer, difference with the previous version and curve of the last versions. Above 30,000 elements, the computation waits for a click. <b>Unticking a layer</b> (box in front of OA, SA, LA, PA, EPBS, also in the sub-view) excludes it from the overall score: its per-layer check rows and its elements no longer count, checks without a layer count in proportion to the remaining elements (useful for a layer not yet worked on); the setting is kept with the project.</td></tr>
+          <tr><td>🏠 Card</td><td>On the home: score, level, points to check and blocking points, bars per layer, difference with the previous version and curve of the last versions. Above 30,000 elements, the computation waits for a click. <b>✕ Hide</b> removes the card from the home (⚙ Arrange › Hidden to show it again); in the sub-view, the ▦ Per view tab lets you <b>hide the checks of a view</b> from the score (“Counted” box). <b>Unticking a layer</b> (box in front of OA, SA, LA, PA, EPBS, also in the sub-view) excludes it from the overall score: its per-layer check rows and its elements no longer count, checks without a layer count in proportion to the remaining elements (useful for a layer not yet worked on); the setting is kept with the project.</td></tr>
           <tr><td>📋 Checks × layers</td><td>Each check with its view, severity, number of rows overall and per layer; ⬇ CSV.</td></tr>
           <tr><td>▦ Per view</td><td>Checks, checks without anomaly, points and blocking points of each view.</td></tr>
           <tr><td>📈 History</td><td>One row per model version opened in the project (same file: entry updated), kept with the 💾 page; “Model health — …” indicators in the 📐 Dashboard.</td></tr>
