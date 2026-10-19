@@ -134,12 +134,12 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
       return [...document.querySelectorAll('#cap-table-body tr')].length; });
     if (!n) throw new Error('tableau vide après ajout d\'une colonne de relation');
     await p.dragAndDrop('#cap-table-head tr:first-child th:nth-child(1)', '#cap-table-head tr:first-child th:nth-child(3)');
-    await p.click('#cap-table-toolbar >> text=🎯 Portée'); await p.locator('.cap-sc-row input').nth(1).check();
+    await p.click('#cap-table-toolbar [data-tc="scope"]'); await p.locator('.cap-sc-row input').nth(1).check();   // repères data-tc : indépendants de la langue
     if (!await p.evaluate(() => capTableScope.ids.length)) throw new Error('portée non appliquée');
     await p.click('#cap-scope-ov [data-c="clr"]'); await p.click('#cap-scope-ov .cw-d-ftr [data-c="x"]');
-    await p.click('#cap-table-toolbar >> text=🌳 Arbre'); await p.click('#cap-table-toolbar button[title^="Options de l\'arbre"]'); await p.click('.cap-tmenu >> text=Conteneurs grisés'); await p.click('.cap-tmenu >> text=⊞ Tout déplier');
+    await p.click('#cap-table-toolbar [data-tc="tree"]'); await p.click('#cap-table-toolbar [data-tc="menu"]'); await p.click('.cap-tmenu [data-tc="grey"]'); await p.click('.cap-tmenu [data-tc="open"]');
     if (!await p.evaluate(() => document.querySelectorAll('#cap-table-body .cap-ttree-td').length)) throw new Error('affichage en arbre vide');
-    await p.click('#cap-table-toolbar >> text=☰ Lignes'); });
+    await p.click('#cap-table-toolbar [data-tc="rows"]'); });
   await step('tableau de bord : tous les indicateurs', async () => {
     await p.click('#cap-v-dashboard');   // bouton épinglé par défaut
     const r = await p.evaluate(() => { const bad = []; capDashCatalog().forEach(m => CAP_DASH_VIZ[m.kind].forEach(([v]) => {

@@ -497,7 +497,7 @@ function capTableScopeLabel(){
  */
 function capTableScopeButton(){
   const ids=(capTableScope&&capTableScope.ids)||[];
-  const b=document.createElement('div'); b.className='tbtn'+(ids.length?' active':'');
+  const b=document.createElement('div'); b.className='tbtn'+(ids.length?' active':''); b.dataset.tc='scope';   // data-tc : repères stables (tests, toutes langues)
   b.textContent=_L('🎯 Portée : ')+capTableScopeLabel();
   b.title=ids.length
     ? _L('Lignes limitées au contenu (')+(capTableScope.direct?_L('directement contenu'):_L('à tous les niveaux'))+_L(') de :\n')
@@ -659,27 +659,27 @@ var _capTreeMenuOpen=false;   // menu 🌳 ▾ du tableau ouvert (reste ouvert a
  */
 function capTableTreeControls(tb){
   const D=capTableDisplay, g=document.createElement('span'); g.className='tb-grp'; g.style.position='relative';
-  const btn=(lab,tip,on,fn)=>{ const b=document.createElement('button'); b.className='phl-toggle-btn'+(on?' active':''); b.textContent=lab; b.title=tip; b.onclick=fn; return b; };
+  const btn=(lab,tip,on,fn,tc)=>{ const b=document.createElement('button'); b.className='phl-toggle-btn'+(on?' active':''); b.textContent=lab; b.title=tip; b.onclick=fn; if(tc) b.dataset.tc=tc; return b; };   // data-tc : repères stables (tests, toutes langues)
   const set=(fn,keep)=>ev=>{ if(ev) ev.stopPropagation(); fn(); _capTreeMenuOpen=!!keep; capPage=0; capTableSyncToTab(); capRenderTable(); };
-  g.appendChild(btn(_L('☰ Lignes'),_L('Une ligne par élément'),D.mode!=='tree',set(()=>{ D.mode='rows'; })));
-  g.appendChild(btn(_L('🌳 Arbre'),_L('Lignes rangées sous leurs conteneurs (avec une portée : à partir des éléments de portée)'),D.mode==='tree',set(()=>{ D.mode='tree'; })));
+  g.appendChild(btn(_L('☰ Lignes'),_L('Une ligne par élément'),D.mode!=='tree',set(()=>{ D.mode='rows'; }),'rows'));
+  g.appendChild(btn(_L('🌳 Arbre'),_L('Lignes rangées sous leurs conteneurs (avec une portée : à partir des éléments de portée)'),D.mode==='tree',set(()=>{ D.mode='tree'; }),'tree'));
   tb.appendChild(g);
   if(D.mode!=='tree') return;
   // Menu ▾ des options de l'arbre
-  const arr=btn('▾',_L('Options de l\'arbre : conteneurs, déplier, réduire, niveaux'),false,ev=>{ ev.stopPropagation(); _capTreeMenuOpen=!_capTreeMenuOpen; menu.classList.toggle('open',_capTreeMenuOpen); });
+  const arr=btn('▾',_L('Options de l\'arbre : conteneurs, déplier, réduire, niveaux'),false,ev=>{ ev.stopPropagation(); _capTreeMenuOpen=!_capTreeMenuOpen; menu.classList.toggle('open',_capTreeMenuOpen); },'menu');
   g.appendChild(arr);
   const menu=document.createElement('div'); menu.className='cap-colpicker-menu cap-tmenu'+(_capTreeMenuOpen?' open':'');
   menu.onclick=ev=>ev.stopPropagation();
   const sec=t=>{ const d=document.createElement('div'); d.className='cap-colpicker-section'; d.textContent=t; menu.appendChild(d); };
-  const opt=(lab,tip,on,fn)=>{ const d=document.createElement('label'); d.className='cap-colpicker-item'; d.title=tip;
+  const opt=(lab,tip,on,fn,tc)=>{ const d=document.createElement('label'); d.className='cap-colpicker-item'; d.title=tip; if(tc) d.dataset.tc=tc;
     const r=document.createElement('input'); r.type='radio'; r.name='cap-tmenu-c'; r.checked=on; r.onchange=fn; d.appendChild(r); d.appendChild(document.createTextNode(lab)); menu.appendChild(d); };
   sec(_L('Conteneurs'));
   opt(_L('Compact'),_L('Chaque ligne sous son plus proche ancêtre qui est lui-même une ligne (sans les paquetages et conteneurs intermédiaires)'),D.cont!=='grey',set(()=>{ D.cont='compact'; },true));
-  opt(_L('Conteneurs grisés'),_L('Les paquetages et conteneurs intermédiaires sont affichés, grisés et sans valeurs'),D.cont==='grey',set(()=>{ D.cont='grey'; },true));
+  opt(_L('Conteneurs grisés'),_L('Les paquetages et conteneurs intermédiaires sont affichés, grisés et sans valeurs'),D.cont==='grey',set(()=>{ D.cont='grey'; },true),'grey');
   sec(_L('Dépliage'));
   const row=document.createElement('div'); row.className='cap-tmenu-row';
-  const lv=(lab,tip,n)=>{ const b=document.createElement('button'); b.className='tbtn'; b.textContent=lab; b.title=tip; b.onclick=set(()=>{ D.level=n; D.open={}; },true); row.appendChild(b); };
-  lv(_L('⊞ Tout déplier'),_L('Déplier tout l\'arbre'),999);
+  const lv=(lab,tip,n,tc)=>{ const b=document.createElement('button'); b.className='tbtn'; b.textContent=lab; b.title=tip; b.onclick=set(()=>{ D.level=n; D.open={}; },true); if(tc) b.dataset.tc=tc; row.appendChild(b); };
+  lv(_L('⊞ Tout déplier'),_L('Déplier tout l\'arbre'),999,'open');
   lv(_L('⊟ Tout réduire'),_L('Replier toutes les lignes (les conteneurs restent ouverts jusqu\'aux premières lignes)'),0);
   menu.appendChild(row);
   const row2=document.createElement('div'); row2.className='cap-tmenu-row';
