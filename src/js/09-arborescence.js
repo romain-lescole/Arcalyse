@@ -428,10 +428,10 @@ function arboAddEl(pkgElId, parentElId) {
 }
 
 /** Supprime un élément et toutes ses relations de MODEL, puis met à jour l'UI. */
-function arboDeleteEl(elId) {
+async function arboDeleteEl(elId) {
   const el=MODEL.elements.find(e=>e.id===elId); if(!el) return;
   const kids=MODEL.elements.filter(e=>e.parentEl===elId);
-  if(kids.length){ if(!confirm(_L(`"${el.name}" contient ${kids.length} enfant(s). Supprimer ?`))) return; }
+  if(kids.length){ if(!await capConfirm(_L(`"${el.name}" contient ${kids.length} enfant(s). Supprimer ?`),{danger:true})) return; }
   /** Supprime récursivement un élément et toute sa descendance du modèle.
    */
   function delRec(id) {
@@ -469,7 +469,7 @@ function arboMoveEls(srcIds, tgtId){
   const isDescendantOfSel=el=>{ let cur=byId(el.parentEl); let d=0; while(cur&&d<50){ if(set.has(cur.id)) return true; cur=byId(cur.parentEl); d++; } return false; };
   const roots=[...set].map(byId).filter(Boolean).filter(el=>!isDescendantOfSel(el));
   // La cible ne doit être ni dans la sélection ni descendante d'une racine déplacée (cycle)
-  for(const r of roots){ let cur=tgt; let d=0; while(cur&&d<50){ if(cur.id===r.id){ alert(_L('Déplacement impossible : la cible est à l\'intérieur de la sélection.')); return; } cur=byId(cur.parentEl); d++; } }
+  for(const r of roots){ let cur=tgt; let d=0; while(cur&&d<50){ if(cur.id===r.id){ capAlert(_L('Déplacement impossible : la cible est à l\'intérieur de la sélection.')); return; } cur=byId(cur.parentEl); d++; } }
   /** Remonte la hiérarchie pour retrouver le nom du package conteneur d'un élément.
    */
   function findPkg(id){ const e=byId(id); if(!e) return ''; if(e.type==='Package') return e.name; return e.pkg||findPkg(e.parentEl); }
@@ -572,15 +572,15 @@ function arboShowCtxMenu(ev, el){
     pasteItem.onclick=()=>{
       menu.style.display='none';
       if(!navigator.clipboard||!navigator.clipboard.readText){
-        alert(_L("Lecture du presse-papier non disponible dans ce navigateur — utilisez Ctrl+V sur l'élément sélectionné."));
+        capAlert(_L("Lecture du presse-papier non disponible dans ce navigateur — utilisez Ctrl+V sur l'élément sélectionné."));
         return;
       }
       navigator.clipboard.readText().then(text=>{
         const names=arboParseClipboardList(text);
-        if(!names.length){ alert(_L('Le presse-papier ne contient aucune ligne de texte exploitable.')); return; }
+        if(!names.length){ capAlert(_L('Le presse-papier ne contient aucune ligne de texte exploitable.')); return; }
         arboPasteListInto(selIds[0], names);
       }).catch(()=>{
-        alert(_L("Accès au presse-papier refusé — utilisez Ctrl+V sur l'élément sélectionné."));
+        capAlert(_L("Accès au presse-papier refusé — utilisez Ctrl+V sur l'élément sélectionné."));
       });
     };
     menu.appendChild(pasteItem);

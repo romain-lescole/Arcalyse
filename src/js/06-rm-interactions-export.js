@@ -179,7 +179,7 @@ function showFloatEdit(ev, el, idx) {
     const name=document.getElementById('fl-name').value.trim();
     const type=document.getElementById('fl-type').value;
     const pkg =document.getElementById('fl-pkg').value;
-    if (!name){ alert(_L('Le nom ne peut pas être vide.')); return; }
+    if (!name){ capAlert(_L('Le nom ne peut pas être vide.')); return; }
     MODEL.elements[idx]={...MODEL.elements[idx], name, type, pkg};
     floatPanel.style.display='none';
     onModelChanged();
@@ -209,7 +209,7 @@ function showFloatRelation(ev, sourceId) {
     const type=document.getElementById('fl-rel-type').value;
     const tgt =document.getElementById('fl-rel-tgt').value;
     const name=document.getElementById('fl-rel-name').value.trim();
-    if (!tgt){ alert(_L('Veuillez sélectionner une cible.')); return; }
+    if (!tgt){ capAlert(_L('Veuillez sélectionner une cible.')); return; }
     MODEL.relations.push({id:'r_'+Date.now(), src:sourceId, tgt, type, name});
     floatPanel.style.display='none';
     onModelChanged();
@@ -243,7 +243,7 @@ function showFloatNewChild(ev, parentId) {
     const type=document.getElementById('fl-ch-type').value;
     const pkg =document.getElementById('fl-ch-pkg').value;
     const rel =document.getElementById('fl-ch-rel').value;
-    if (!name){ alert(_L('Le nom ne peut pas être vide.')); return; }
+    if (!name){ capAlert(_L('Le nom ne peut pas être vide.')); return; }
     const newId='el_'+Date.now();
     MODEL.elements.push({id:newId, name, type, pkg});
     MODEL.relations.push({id:'r_'+Date.now(), src:parentId, tgt:newId, type:rel, name});
@@ -277,7 +277,7 @@ function showFloatNewElement(ev) {
     const name=document.getElementById('fl-ne-name').value.trim();
     const type=document.getElementById('fl-ne-type').value;
     const pkg =document.getElementById('fl-ne-pkg').value;
-    if (!name){ alert(_L('Le nom ne peut pas être vide.')); return; }
+    if (!name){ capAlert(_L('Le nom ne peut pas être vide.')); return; }
     const newId='el_'+Date.now();
     MODEL.elements.push({id:newId, name, type, pkg});
     floatPanel.style.display='none';
@@ -363,7 +363,7 @@ document.getElementById('export-confirm').onclick=()=>{
  */
 function exportContent(format, dpi=2) {
   const bounds = getContentBounds();
-  if (!bounds) { alert(_L('Rien à exporter.')); return; }
+  if (!bounds) { capAlert(_L('Rien à exporter.')); return; }
 
   const {x0, y0, w, h} = bounds;
 
@@ -423,7 +423,7 @@ function exportContent(format, dpi=2) {
     }
     a.click();
   };
-  img.onerror=()=>{ URL.revokeObjectURL(url); alert(_L('Erreur lors de l\'export.')); };
+  img.onerror=()=>{ URL.revokeObjectURL(url); capAlert(_L('Erreur lors de l\'export.')); };
   img.src=url;
 }
 
@@ -444,7 +444,7 @@ function rmRelLabel(t){ return (RCFG[t]||{}).label || t; }
  * @returns {boolean} Vrai si l'export peut se faire */
 function rmCsvReady(){
   if (S.chainView) return true;
-  if (!d3Root || !treeData) { alert(_L('Aucun graphe affiché : choisissez un élément de contexte.')); return false; }
+  if (!d3Root || !treeData) { capAlert(_L('Aucun graphe affiché : choisissez un élément de contexte.')); return false; }
   return true;
 }
 
@@ -452,7 +452,7 @@ function rmCsvReady(){
  * puis fenêtre « Colonnes de l'export ». */
 function rmCsvTreeDialog(){
   if (!rmCsvReady()) return;
-  if (S.chainView) { alert(_L('L\'arbre par niveaux n\'existe pas en vue chaîne : utilisez « ⇄ Relations affichées », ou quittez la chaîne.')); return; }
+  if (S.chainView) { capAlert(_L('L\'arbre par niveaux n\'existe pas en vue chaîne : utilisez « ⇄ Relations affichées », ou quittez la chaîne.')); return; }
   const cfg=_capCsvCfg['relation-map-arbre.csv']=_capCsvCfg['relation-map-arbre.csv']||{drop:[], add:{}};
   let ov=document.getElementById('rm-csv-ov');
   if (!ov) { ov=document.createElement('div'); ov.id='rm-csv-ov'; document.body.appendChild(ov);

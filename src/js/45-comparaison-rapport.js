@@ -424,7 +424,7 @@ function capDrRender(host, diffs, A, B, meta){
     const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([doc()],{type:'text/html'})); a.download=_L('comparaison-versions.html'); a.click(); URL.revokeObjectURL(a.href);
   };
   host.querySelector('#dr-print').onclick=()=>{
-    const w=window.open('','_blank'); if(!w){ alert(_L('Fenêtre bloquée par le navigateur : utilisez ⬇ HTML puis imprimez le fichier.')); return; }
+    const w=window.open('','_blank'); if(!w){ capAlert(_L('Fenêtre bloquée par le navigateur : utilisez ⬇ HTML puis imprimez le fichier.')); return; }
     w.document.open(); w.document.write(doc()); w.document.close(); w.focus(); setTimeout(()=>w.print(),200);
   };
 }

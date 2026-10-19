@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 5640 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 5659 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -643,6 +643,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 25 | ⚡ Tout | ⚡ All |
 | 50 | Vue | View … |
 | 154 | Fermer la vue « | Close the view “…”? |
+| 154 | Fermer | Close |
 | 169 | Clic : afficher · double-clic : renommer · glisser : déplacer | Click: show · double-click: rename · drag: move |
 | 171 | Vue | View … |
 | 173 | Élément de contexte introuvable dans ce modèle : choisissez-en un autre (arborescence ou double-clic) | Context element not found in this model: choose another one (tree or double-click) |
@@ -664,6 +665,18 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 150 | var(--c-dim) | (inchangé, hors _L) |
 | 152 | var(--c-bg2) | (inchangé, hors _L) |
 | 152 | var(--c-text) | (inchangé, hors _L) |
+
+## js/12-dialogues.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 32 | Saisie | Input |
+| 32 | Attention | Warning |
+| 32 | Erreur | Error |
+| 32 | Information | Information |
+| 32 | Confirmation | Confirmation |
+| 38 | Annuler | Cancel |
+| 38 | Supprimer | Delete |
 
 ## js/20-capella-chargement.js
 
@@ -2713,10 +2726,12 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 268 | Le fichier choisi (« | The chosen file (“…”) does not have the same name as the displayed model (“…”).\nCompare it anyway? |
 | 268 | ») n'a pas le même nom que le modèle affiché (« | The chosen file (“…”) does not have the same name as the displayed model (“…”).\nCompare it anyway? |
 | 268 | »). Le comparer quand même ? | The chosen file (“…”) does not have the same name as the displayed model (“…”).\nCompare it anyway? |
+| 268 | Comparer | Compare |
 | 269 | Impossible de lire « | Cannot read “ |
 | 274 | ✔ Le fichier correspond au modèle affiché | ✔ The file matches the displayed model |
 | 286 | Seuls | Only …% of the elements are shared with the displayed model: it may not be the same project.\n\nReplace the displayed model with this version anyway? |
 | 286 | % des éléments sont communs avec le modèle affiché : ce n'est peut-être pas le même projet. Remplacer quand même le modèle affiché par cette version ? | Only …% of the elements are shared with the displayed model: it may not be the same project.\n\nReplace the displayed model with this version anyway? |
+| 286 | Remplacer | Replace |
 | 291 | Mise à jour impossible : | Update failed: |
 | 291 | Le modèle précédent est conservé. | The previous model is kept. |
 | 301 | — avant la mise à jour de | … — before the … update |
@@ -2730,87 +2745,87 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 338 | différence(s) avec le modèle affiché | … save(s) detected — … difference(s) with the displayed model |
 | 339 | Le fichier a été modifié : resélectionnez-le pour voir le delta | The file has changed: select it again to see the delta |
 | 340 | Suivi du fichier .capella : vérifier les mises à jour, delta, historique | Watch the .capella file: check for updates, delta, history |
-| 361 | 🔄 Nouvelle version du modèle « | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
-| 362 | enregistrements détectés depuis | … saves detected since …, last at … |
-| 362 | , dernier à | … saves detected since …, last at … |
-| 362 | enregistré le | saved on … |
-| 363 | par rapport au modèle affiché | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
-| 363 | 🔍 Voir le delta ✔ Mettre à jour Plus tard | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
-| 366 | a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta. | has changed on disk, but the browser cannot read it again directly. Select it again to see the delta. |
-| 367 | est introuvable (déplacé, renommé ou supprimé). Choisissez le fichier à suivre. | cannot be found (moved, renamed or deleted). Choose the file to watch. |
-| 368 | n'est plus accessible (autorisation refusée). Choisissez de nouveau le fichier à suivre. | is no longer accessible (permission denied). Choose the file to watch again. |
-| 369 | Modèle modifié sur le disque | Model changed on disk |
-| 369 | Fichier suivi indisponible | Watched file unavailable |
-| 370 | 📂 Choisir le fichier… Plus tard | 🔄 … « … » … 📂 Choose the file… Later |
-| 395 | accès direct — relecture automatique | direct access — automatic re-read |
-| 395 | accès limité — modification signalée, fichier à resélectionner | limited access — change reported, file to select again |
-| 395 | aucun fichier suivi (page sauvegardée) | no watched file (saved page) |
-| 396 | 1 min | 1 min |
-| 396 | 5 min | 5 min |
-| 397 | Affiché : fichier du | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 398 | Dernière vérification : | Last check: … |
-| 398 | en cours… | in progress… |
-| 399 | Vérifier maintenant | Check now |
-| 399 | Choisir le fichier à comparer… | Choose the file to compare… |
-| 400 | 📋 Voir le delta en attente ( | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
-| 400 | enreg., | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
-| 400 | diff.) ✔ Mettre à jour l'affichage | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
-| 403 | Détecter les nouvelles versions toutes les | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 403 | Disponible quand un fichier .capella est suivi | Available when a .capella file is watched |
-| 405 | Vérifier au retour dans la fenêtre Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée. | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 408 | 🕘 Historique des mises à jour ( | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 409 | ⚖ Comparer avec la version avant la dernière mise à jour | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 410 | ⚖ Comparer avec la version d'ouverture | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 411 | 📂 Suivre un autre fichier (nouvelle version)… | 📂 Watch another file (new version)… |
-| 452 | Modèle affiché : fichier du | Displayed model: file of {0} &nbsp;→&nbsp; on disk: file of {1} {2} |
-| 453 | Mise à jour appliquée à | Update applied at … : file of … → …… |
-| 453 | : fichier du | Update applied at … : file of … → …… |
-| 453 | enregistrements cumulés) | (… cumulated saves) |
-| 457 | Σ Cumul — modèle affiché → dernier enregistrement | Saves detected before confirmation: the delta cumulated is the one that will be applied; each row shows what a save changed compared with the previous one. Detected at File of Changes Σ Cumulated — displayed model → last save {1} {2} |
-| 460 | Ajouté | Added |
-| 460 | var(--c-ok,#3fb950) | (inchangé, hors _L) |
-| 460 | Supprimé | Deleted |
-| 460 | var(--c-err,#f85149) | (inchangé, hors _L) |
-| 460 | Modifié | Modified |
-| 460 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
-| 473 | changement(s) | … change(s) … |
-| 474 | Propriété Avant Après | Property Before After … |
-| 479 | Delta des modifications | Delta of the changes |
-| 479 | Mise à jour du | Update of |
-| 483 | Par couche : | …By layer: … |
-| 483 | Enregistrement | Save … — |
-| 485 | Tous | All |
-| 485 | ➕ Ajoutés | ➕ Added |
-| 485 | ➖ Supprimés | ➖ Deleted |
-| 485 | ✎ Modifiés | ✎ Modified |
-| 485 | ↪ Déplacés | ↪ Moved |
-| 488 | Statut Couche Type Élément Détail | Status Layer Type Element Detail … … |
-| 489 | lignes affichées sur | … rows shown out of … — filter, export to CSV or open ⚖ Comparison. |
-| 489 | — filtrez, exportez en CSV ou ouvrez ⚖ Comparaison. | … rows shown out of … — filter, export to CSV or open ⚖ Comparison. |
-| 490 | ⬇ CSV | 🔄 … — « … » ✕ … … … … … ⬇ CSV … … |
-| 490 | Aucune différence pour ce filtre. | No difference for this filter. |
-| 494 | ⚖ Ouvrir dans Comparaison de versions | ⚖ Open in Version comparison |
-| 495 | ⚖ Ouvrir dans Comparaison de versions | ⚖ Open in Version comparison |
-| 497 | Plus tard ✔ Mettre à jour l'affichage | Later ✔ Update the display |
-| 497 | Fermer | Close |
-| 512 | Ajouté | Added |
-| 512 | Supprimé | Deleted |
-| 512 | Modifié | Modified |
-| 512 | (déplacé) | (moved) |
-| 515 | Statut | Status |
-| 515 | Couche | Layer |
-| 515 | Type | (inchangé, hors _L) |
-| 515 | Élément | Element |
-| 515 | Propriété | Property |
-| 515 | Avant | Before |
-| 515 | Après | After |
-| 524 | 🕘 Historique des mises à jour — « | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
-| 525 | » ✕ Ouvert à | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
-| 527 | . Cliquez sur une mise à jour pour voir son delta. | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
-| 528 | Appliquée à Fichier du Enreg. Changements | Applied at File of Saves Changes … |
-| 530 | Aucune mise à jour appliquée depuis l'ouverture du modèle. | No update applied since the model was opened. |
-| 532 | Fermer | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
-| 532 | ⚖ Delta cumulé depuis l'ouverture | ⚖ Cumulated delta since opening |
+| 357 | 🔄 Nouvelle version du modèle « | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
+| 358 | enregistrements détectés depuis | … saves detected since …, last at … |
+| 358 | , dernier à | … saves detected since …, last at … |
+| 358 | enregistré le | saved on … |
+| 359 | par rapport au modèle affiché | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
+| 359 | 🔍 Voir le delta ✔ Mettre à jour Plus tard | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
+| 362 | a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta. | has changed on disk, but the browser cannot read it again directly. Select it again to see the delta. |
+| 363 | est introuvable (déplacé, renommé ou supprimé). Choisissez le fichier à suivre. | cannot be found (moved, renamed or deleted). Choose the file to watch. |
+| 364 | n'est plus accessible (autorisation refusée). Choisissez de nouveau le fichier à suivre. | is no longer accessible (permission denied). Choose the file to watch again. |
+| 365 | Modèle modifié sur le disque | Model changed on disk |
+| 365 | Fichier suivi indisponible | Watched file unavailable |
+| 366 | 📂 Choisir le fichier… Plus tard | 🔄 … « … » … 📂 Choose the file… Later |
+| 391 | accès direct — relecture automatique | direct access — automatic re-read |
+| 391 | accès limité — modification signalée, fichier à resélectionner | limited access — change reported, file to select again |
+| 391 | aucun fichier suivi (page sauvegardée) | no watched file (saved page) |
+| 392 | 1 min | 1 min |
+| 392 | 5 min | 5 min |
+| 393 | Affiché : fichier du | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 394 | Dernière vérification : | Last check: … |
+| 394 | en cours… | in progress… |
+| 395 | Vérifier maintenant | Check now |
+| 395 | Choisir le fichier à comparer… | Choose the file to compare… |
+| 396 | 📋 Voir le delta en attente ( | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
+| 396 | enreg., | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
+| 396 | diff.) ✔ Mettre à jour l'affichage | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
+| 399 | Détecter les nouvelles versions toutes les | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 399 | Disponible quand un fichier .capella est suivi | Available when a .capella file is watched |
+| 401 | Vérifier au retour dans la fenêtre Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée. | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 404 | 🕘 Historique des mises à jour ( | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 405 | ⚖ Comparer avec la version avant la dernière mise à jour | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 406 | ⚖ Comparer avec la version d'ouverture | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 407 | 📂 Suivre un autre fichier (nouvelle version)… | 📂 Watch another file (new version)… |
+| 448 | Modèle affiché : fichier du | Displayed model: file of {0} &nbsp;→&nbsp; on disk: file of {1} {2} |
+| 449 | Mise à jour appliquée à | Update applied at … : file of … → …… |
+| 449 | : fichier du | Update applied at … : file of … → …… |
+| 449 | enregistrements cumulés) | (… cumulated saves) |
+| 453 | Σ Cumul — modèle affiché → dernier enregistrement | Saves detected before confirmation: the delta cumulated is the one that will be applied; each row shows what a save changed compared with the previous one. Detected at File of Changes Σ Cumulated — displayed model → last save {1} {2} |
+| 456 | Ajouté | Added |
+| 456 | var(--c-ok,#3fb950) | (inchangé, hors _L) |
+| 456 | Supprimé | Deleted |
+| 456 | var(--c-err,#f85149) | (inchangé, hors _L) |
+| 456 | Modifié | Modified |
+| 456 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
+| 469 | changement(s) | … change(s) … |
+| 470 | Propriété Avant Après | Property Before After … |
+| 475 | Delta des modifications | Delta of the changes |
+| 475 | Mise à jour du | Update of |
+| 479 | Par couche : | …By layer: … |
+| 479 | Enregistrement | Save … — |
+| 481 | Tous | All |
+| 481 | ➕ Ajoutés | ➕ Added |
+| 481 | ➖ Supprimés | ➖ Deleted |
+| 481 | ✎ Modifiés | ✎ Modified |
+| 481 | ↪ Déplacés | ↪ Moved |
+| 484 | Statut Couche Type Élément Détail | Status Layer Type Element Detail … … |
+| 485 | lignes affichées sur | … rows shown out of … — filter, export to CSV or open ⚖ Comparison. |
+| 485 | — filtrez, exportez en CSV ou ouvrez ⚖ Comparaison. | … rows shown out of … — filter, export to CSV or open ⚖ Comparison. |
+| 486 | ⬇ CSV | 🔄 … — « … » ✕ … … … … … ⬇ CSV … … |
+| 486 | Aucune différence pour ce filtre. | No difference for this filter. |
+| 490 | ⚖ Ouvrir dans Comparaison de versions | ⚖ Open in Version comparison |
+| 491 | ⚖ Ouvrir dans Comparaison de versions | ⚖ Open in Version comparison |
+| 493 | Plus tard ✔ Mettre à jour l'affichage | Later ✔ Update the display |
+| 493 | Fermer | Close |
+| 508 | Ajouté | Added |
+| 508 | Supprimé | Deleted |
+| 508 | Modifié | Modified |
+| 508 | (déplacé) | (moved) |
+| 511 | Statut | Status |
+| 511 | Couche | Layer |
+| 511 | Type | (inchangé, hors _L) |
+| 511 | Élément | Element |
+| 511 | Propriété | Property |
+| 511 | Avant | Before |
+| 511 | Après | After |
+| 520 | 🕘 Historique des mises à jour — « | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
+| 521 | » ✕ Ouvert à | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
+| 523 | . Cliquez sur une mise à jour pour voir son delta. | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
+| 524 | Appliquée à Fichier du Enreg. Changements | Applied at File of Saves Changes … |
+| 526 | Aucune mise à jour appliquée depuis l'ouverture du modèle. | No update applied since the model was opened. |
+| 528 | Fermer | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
+| 528 | ⚖ Delta cumulé depuis l'ouverture | ⚖ Cumulated delta since opening |
 
 ## js/41-barre-vues.js
 
@@ -3908,6 +3923,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 74 | 📋 Copier les infos Fermer | ℹ About ✕ … … … Version … · … Offline explorer and analyser of Capella / ARCADIA models: exploration, flows and interfaces, scenarios, analyses, checks and exports, in a single HTML file. Author and licence Author © … … — creator and rights holder Licence Apache License 2.0 — free software: use (including commercial), study, modification and redistribution allowed, provided that the copyright and licence notices are kept and modified files are marked. Provided without any warranty . Full text: apache.org/licenses/LICENSE-2.0 (LICENSE file of the repository) Contact Source code, issues and contributions: … Development Developed with the help of Claude Code (Anthropic). Third-party components and trademarks D3.js v7.9.0 Visualisation library, embedded in this file — ISC licence, © 2010-2023 Mike Bostock. Licence text … Capella, ARCADIA Trademarks of their respective owners (Eclipse Foundation, Thales). Independent tool, compatible with Capella models: neither official nor affiliated. Test models Capella samples “In-Flight Entertainment System” ( github.com/dbinfrago/Capella-IFE-sample ) and “AIDA” ( sahara.irt-saintexupery.com/AIDA/AIDAArchitecture ). Technical information … 📋 Copy the info Close |
 | 81 | ✔ Informations copiées | ✔ Information copied |
 | 81 | Copiez les informations : | Copy the information: |
+| 81 | Copie manuelle | Manual copy |
 
 ## js/51-tableau.js
 
@@ -3918,6 +3934,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 121 | Clic : afficher · double-clic : renommer | Click: show · double-click: rename |
 | 133 | Fermer cet onglet | Close this tab |
 | 136 | Fermer l'onglet « | Close the “…” tab? |
+| 136 | Fermer | Close |
 | 148 | Nouvel onglet (copie des colonnes de la vue affichée) | New tab (copy of the columns of the displayed view) |
 | 151 | Vue | View |
 | 221 | → cibles | … → targets |
@@ -4182,6 +4199,8 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 1056 | aucun diagramme exportable | no exportable diagram |
 | 1066 | Le PDF fera environ | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
 | 1066 | pages). Pour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…). Continuer quand même ? | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
+| 1066 | PDF volumineux | Large PDF |
+| 1066 | Continuer | Continue |
 | 1067 | Export annulé : PDF estimé à | Export cancelled: PDF estimated at … MB. |
 | 1070 | Sommaire | Contents |
 | 1074 | Planche | Sheet |
@@ -4403,6 +4422,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 1015 | ↻ Garder ouvert | ↻ Keep open |
 | 1020 | Valider les | Validate the … comment(s) in the list? |
 | 1020 | commentaire(s) de la liste ? | Validate the … comment(s) in the list? |
+| 1020 | Valider | Validate |
 | 1033 | Total | Total |
 | 1035 | Total | Total |
 | 1041 | Commentaires | Comments |
@@ -4784,8 +4804,8 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 673 | Supprimer la section « | Delete the section “…” and its … item(s)? |
 | 673 | » et ses | Delete the section “…” and its … item(s)? |
 | 673 | point(s) ? | Delete the section “…” and its … item(s)? |
-| 690 | (sans titre) | (untitled) |
-| 702 | ] .hm-item-t | (inchangé, hors _L) |
+| 691 | (sans titre) | (untitled) |
+| 703 | ] .hm-item-t | (inchangé, hors _L) |
 
 ## js/57-projet-page.js
 
@@ -5037,21 +5057,23 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 91 | Double-clic : note · outils ▭ ◯ ╱ → : glisser sur le tableau · déposez des diagrammes et des éléments (palette 📎) · clic sur une icône : l'ouvrir · Suppr : retirer l'objet sélectionné | Double-click: note · ▭ ◯ ╱ → tools: drag on the board · drop diagrams and elements (📎 palette) · click an icon: open it · Del: remove the selected object |
 | 124 | ] .hm-txt-b | (inchangé, hors _L) |
 | 138 | Nom de la page : | Page name: |
+| 138 | Renommer la page | Rename the page |
 | 156 | Page | Page … |
 | 157 | Page | Page … |
 | 158 | Nom de la page : | Page name: |
-| 159 | Supprimer la page « | Delete the page “…” and its … object(s)? |
-| 159 | » et ses | Delete the page “…” and its … object(s)? |
-| 159 | objet(s) ? | Delete the page “…” and its … object(s)? |
-| 256 | » est ouvert dans une fenêtre séparée. | ⧉ “…” is open in a separate window. |
-| 257 | ⧉ Afficher la fenêtre | ⧉ Show the window |
-| 258 | ⧈ Ramener ici | ⧈ Bring back here |
-| 269 | width=1250,height=860 | (inchangé, hors _L) |
-| 269 | width=1150,height=900 | (inchangé, hors _L) |
-| 269 | width=860,height=900 | (inchangé, hors _L) |
-| 270 | Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez. | The browser blocked the window: allow pop-ups for this page, then try again. |
-| 287 | — Arcalyse | (inchangé, hors _L) |
-| 300 | #cdg-gauche .cdg-it[data-uid], #cap-view-cards .cap-card, #cap-view-tree .cap-tree-row[data-id], #cap-view-chains .ccm-item[data-id], #cap-view-chains .cap-chain-hdr | (inchangé, hors _L) |
+| 158 | Renommer la page | Rename the page |
+| 160 | Supprimer la page « | Delete the page “…” and its … object(s)? |
+| 160 | » et ses | Delete the page “…” and its … object(s)? |
+| 160 | objet(s) ? | Delete the page “…” and its … object(s)? |
+| 258 | » est ouvert dans une fenêtre séparée. | ⧉ “…” is open in a separate window. |
+| 259 | ⧉ Afficher la fenêtre | ⧉ Show the window |
+| 260 | ⧈ Ramener ici | ⧈ Bring back here |
+| 271 | width=1250,height=860 | (inchangé, hors _L) |
+| 271 | width=1150,height=900 | (inchangé, hors _L) |
+| 271 | width=860,height=900 | (inchangé, hors _L) |
+| 272 | Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez. | The browser blocked the window: allow pop-ups for this page, then try again. |
+| 289 | — Arcalyse | (inchangé, hors _L) |
+| 302 | #cdg-gauche .cdg-it[data-uid], #cap-view-cards .cap-card, #cap-view-tree .cap-tree-row[data-id], #cap-view-chains .ccm-item[data-id], #cap-view-chains .cap-chain-hdr | (inchangé, hors _L) |
 
 ## js/61-dossier-relecture.js
 
@@ -5195,133 +5217,135 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 443 | Retirer le chapitre « | Remove the chapter “…” and its … block(s)? |
 | 443 | » et ses | Remove the chapter “…” and its … block(s)? |
 | 443 | bloc(s) ? | Remove the chapter “…” and its … block(s)? |
-| 456 | Supprimer ce retour ? | Delete this feedback item? |
-| 464 | ] .dos-txt | (inchangé, hors _L) |
-| 476 | (sans titre) | (untitled) |
-| 524 | ⏳ Diagramme | ⏳ Diagram …/… — … |
-| 525 | Diagramme non exporté : | ❌ |
-| 553 | Liens entre couches | Cross-layer links |
-| 572 | Dossier de relecture | Review package |
-| 586 | Chargez d'abord un modèle. | Load a model first. |
-| 588 | Le dossier est vide : ajoutez au moins un chapitre. | The package is empty: add at least one chapter. |
-| 591 | ✔ Aperçu actualisé dans sa fenêtre | ✔ Preview refreshed in its window |
-| 593 | Aperçu impossible : | Preview impossible: |
-| 614 | width=1150,height=900 | (inchangé, hors _L) |
-| 615 | Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez. | The browser blocked the window: allow pop-ups for this page, then try again. |
-| 630 | 👁 Aperçu | 👁 Preview |
-| 631 | rendu du rapport que produirait ce modèle (non créé) | rendering of the report this template would produce (not created) |
-| 632 | Rapport à lire et imprimer | Report to read and print |
-| 632 | 📄 Lecture | 📄 Reading |
-| 633 | Page telle que la voient les relecteurs, avec les 💬 | Page as reviewers see it, with the 💬 |
-| 633 | 💬 Avec commentaires | 💬 With comments |
-| 634 | 🖨 Imprimer | 🖨 Print |
-| 634 | Télécharger cette page HTML | Download this HTML page |
-| 634 | ⬇ Page HTML | ⬇ HTML page |
-| 636 | Fermer (Échap) | Close (Esc) |
-| 636 | Aperçu | Preview |
-| 659 | Le dossier est vide : ajoutez au moins un chapitre. | The package is empty: add at least one chapter. |
-| 665 | un modèle de rapport ne s'exporte pas : ▶ Générer le rapport, puis exportez le rapport | a report template is not exported: ▶ Generate the report, then export the report |
-| 666 | ✔ Document Word créé : les relecteurs le commentent (Révision › Nouveau commentaire), puis 📥 Réimporter le .docx commenté | ✔ Word document created: reviewers comment it (Review › New Comment), then 📥 Re-import the commented .docx |
-| 667 | ✔ Page de relecture créée : envoyez-la aux relecteurs, puis 📥 Réimporter la page qu'ils ont enregistrée | ✔ Review page created: send it to the reviewers, then 📥 Re-import the page they saved |
-| 668 | Export impossible : | Export failed: |
-| 710 | Échange | Exchange |
-| 710 | Source | Source |
-| 710 | Cible | Target |
-| 710 | Éléments échangés | Exchanged items |
-| 712 | Élément | Element |
-| 712 | Type | (inchangé, hors _L) |
-| 712 | Description | (inchangé, hors _L) |
-| 730 | Relecteur | Reviewer |
-| 730 | Votre nom | Your name |
-| 730 | 💾 Enregistrer la page | 💾 Save the page |
-| 730 | ⬇ Retours .json | ⬇ Feedback .json |
-| 730 | 🖨 Imprimer | 🖨 Print |
-| 731 | ● modifications non enregistrées | ● unsaved changes |
-| 731 | ✔ Page enregistrée : renvoyez-la à l'auteur | ✔ Page saved: send it back to the author |
-| 731 | Indiquez d'abord votre nom (en haut de la page). | First enter your name (at the top of the page). |
-| 732 | Commenter ce passage | Comment on this passage |
-| 732 | Commentaires généraux | General comments |
-| 732 | 💬 Commentaire général | 💬 General comment |
-| 732 | Sommaire | Contents |
-| 732 | Consignes | Instructions |
-| 733 | Figure | Figure |
-| 733 | Relu | Reviewed |
-| 733 | commentaire(s) | comment(s) |
-| 733 | de vous | by you |
-| 733 | chapitre(s) relu(s) | chapter(s) reviewed |
-| 733 | Enregistrer | Save |
-| 733 | Annuler | Cancel |
-| 734 | Votre commentaire… | Your comment… |
-| 734 | Passage commenté | Commented passage |
-| 734 | Supprimer | Delete |
-| 734 | Modifier | Edit |
-| 734 | Supprimer ce commentaire ? | Delete this comment? |
-| 735 | Projet | Project |
-| 735 | Modèle | Model |
-| 735 | Auteur | Author |
-| 735 | Envoyé le | Sent on |
-| 735 | Retour attendu le | Feedback expected by |
-| 735 | Éléments représentés | Represented elements |
-| 736 | Élément représenté | Represented element |
-| 736 | cliquez pour les afficher et les commenter un par un | click to show them and comment on each one |
-| 736 | Description | Description |
-| 736 | (pas de description) | (no description) |
-| 736 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
-| 737 | absent du modèle | missing from the model |
-| 737 | Élément | Element |
-| 737 | Type | (inchangé, hors _L) |
-| 737 | Couche | Layer |
-| 738 | Cliquer pour agrandir / réduire | Click to enlarge / reduce |
-| 738 | Produit par Arcalyse | Produced by Arcalyse |
-| 739 | — Criticité — | — Severity — |
-| 893 | Projet | Project |
-| 893 | Modèle | Model |
-| 893 | Auteur | Author |
-| 893 | Envoyé le | Sent on |
-| 893 | Retour attendu le | Feedback expected by |
-| 896 | Consignes | Instructions |
-| 897 | Relecture : insérez des commentaires Word (Révision › Nouveau commentaire) sur les passages concernés, ou modifiez le texte en mode Suivi des modifications, puis renvoyez le fichier .docx. Chaque commentaire est rattaché au chapitre, à la description ou au diagramme commenté. | Review: insert Word comments (Review › New Comment) on the relevant passages, or edit the text with Track Changes on, then send the .docx file back. Each comment is attached to the commented chapter, description or diagram. |
-| 901 | Sommaire | Contents |
-| 906 | Heading | (inchangé, hors _L) |
-| 908 | (pas de description) | (no description) |
-| 917 | (aucun élément) | (no element) |
-| 920 | (pas de description) | (no description) |
-| 923 | ⏳ Image | ⏳ Image … — … |
-| 927 | Figure | Figure |
-| 930 | .png"/ | (inchangé, hors _L) |
-| 933 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
-| 934 | Figure | Figure |
-| 934 | Caption | (inchangé, hors _L) |
-| 935 | Élément représenté | Represented element |
-| 940 | Éléments représentés | Represented elements |
-| 942 | Élément | Element |
-| 942 | Type | (inchangé, hors _L) |
-| 942 | Couche | Layer |
-| 954 | Title | (inchangé, hors _L) |
-| 955 | Heading | (inchangé, hors _L) |
-| 956 | TOC Heading | (inchangé, hors _L) |
-| 957 | Caption | (inchangé, hors _L) |
-| 958 | Arcalyse — Description | (inchangé, hors _L) |
-| 959 | Arcalyse — Consignes | (inchangé, hors _L) |
-| 960 | Arcalyse — Aide | (inchangé, hors _L) |
-| 964 | .png"/ | (inchangé, hors _L) |
-| 967 | [Content_Types].xml | (inchangé, hors _L) |
-| 976 | Arcalyse | (inchangé, hors _L) |
-| 978 | word/_rels/document.xml.rels | (inchangé, hors _L) |
-| 981 | word/media/image | (inchangé, hors _L) |
-| 996 | archive ZIP illisible | unreadable ZIP archive |
-| 1006 | navigateur trop ancien pour lire un .docx | browser too old to read a .docx |
-| 1028 | ce fichier n'est pas un document Word | this file is not a Word document |
-| 1058 | cette page n'est pas un dossier de relecture Arcalyse | this page is not an Arcalyse review package |
-| 1059 | fichier illisible (JSON attendu) | unreadable file (JSON expected) |
-| 1060 | ce fichier n'est pas un retour de dossier de relecture | this file is not review package feedback |
-| 1074 | .html,.htm,.json,.docx | (inchangé, hors _L) |
-| 1091 | » : dossier d'origine introuvable dans ce projet. Rattacher ses retours au dossier ouvert « | “…”: original package not found in this project. Attach its feedback to the open package “…”? |
-| 1104 | retour(s) ajouté(s) | ✔ …: … feedback item(s) added |
-| 1104 | déjà présent(s) | , … already present |
-| 1104 | commentaire(s) créé(s) dans 💬 Revue | — … comment(s) created in 💬 Review |
-| 1123 | 📑 Dossier de relecture | 📑 Review package |
-| 1128 | commentaire(s) créé(s) dans 💬 Revue | ✔ … comment(s) created in 💬 Review |
+| 443 | Retirer | Remove |
+| 457 | Supprimer ce retour ? | Delete this feedback item? |
+| 465 | ] .dos-txt | (inchangé, hors _L) |
+| 477 | (sans titre) | (untitled) |
+| 525 | ⏳ Diagramme | ⏳ Diagram …/… — … |
+| 526 | Diagramme non exporté : | ❌ |
+| 554 | Liens entre couches | Cross-layer links |
+| 573 | Dossier de relecture | Review package |
+| 587 | Chargez d'abord un modèle. | Load a model first. |
+| 589 | Le dossier est vide : ajoutez au moins un chapitre. | The package is empty: add at least one chapter. |
+| 592 | ✔ Aperçu actualisé dans sa fenêtre | ✔ Preview refreshed in its window |
+| 594 | Aperçu impossible : | Preview impossible: |
+| 615 | width=1150,height=900 | (inchangé, hors _L) |
+| 616 | Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez. | The browser blocked the window: allow pop-ups for this page, then try again. |
+| 631 | 👁 Aperçu | 👁 Preview |
+| 632 | rendu du rapport que produirait ce modèle (non créé) | rendering of the report this template would produce (not created) |
+| 633 | Rapport à lire et imprimer | Report to read and print |
+| 633 | 📄 Lecture | 📄 Reading |
+| 634 | Page telle que la voient les relecteurs, avec les 💬 | Page as reviewers see it, with the 💬 |
+| 634 | 💬 Avec commentaires | 💬 With comments |
+| 635 | 🖨 Imprimer | 🖨 Print |
+| 635 | Télécharger cette page HTML | Download this HTML page |
+| 635 | ⬇ Page HTML | ⬇ HTML page |
+| 637 | Fermer (Échap) | Close (Esc) |
+| 637 | Aperçu | Preview |
+| 660 | Le dossier est vide : ajoutez au moins un chapitre. | The package is empty: add at least one chapter. |
+| 666 | un modèle de rapport ne s'exporte pas : ▶ Générer le rapport, puis exportez le rapport | a report template is not exported: ▶ Generate the report, then export the report |
+| 667 | ✔ Document Word créé : les relecteurs le commentent (Révision › Nouveau commentaire), puis 📥 Réimporter le .docx commenté | ✔ Word document created: reviewers comment it (Review › New Comment), then 📥 Re-import the commented .docx |
+| 668 | ✔ Page de relecture créée : envoyez-la aux relecteurs, puis 📥 Réimporter la page qu'ils ont enregistrée | ✔ Review page created: send it to the reviewers, then 📥 Re-import the page they saved |
+| 669 | Export impossible : | Export failed: |
+| 711 | Échange | Exchange |
+| 711 | Source | Source |
+| 711 | Cible | Target |
+| 711 | Éléments échangés | Exchanged items |
+| 713 | Élément | Element |
+| 713 | Type | (inchangé, hors _L) |
+| 713 | Description | (inchangé, hors _L) |
+| 731 | Relecteur | Reviewer |
+| 731 | Votre nom | Your name |
+| 731 | 💾 Enregistrer la page | 💾 Save the page |
+| 731 | ⬇ Retours .json | ⬇ Feedback .json |
+| 731 | 🖨 Imprimer | 🖨 Print |
+| 732 | ● modifications non enregistrées | ● unsaved changes |
+| 732 | ✔ Page enregistrée : renvoyez-la à l'auteur | ✔ Page saved: send it back to the author |
+| 732 | Indiquez d'abord votre nom (en haut de la page). | First enter your name (at the top of the page). |
+| 733 | Commenter ce passage | Comment on this passage |
+| 733 | Commentaires généraux | General comments |
+| 733 | 💬 Commentaire général | 💬 General comment |
+| 733 | Sommaire | Contents |
+| 733 | Consignes | Instructions |
+| 734 | Figure | Figure |
+| 734 | Relu | Reviewed |
+| 734 | commentaire(s) | comment(s) |
+| 734 | de vous | by you |
+| 734 | chapitre(s) relu(s) | chapter(s) reviewed |
+| 734 | Enregistrer | Save |
+| 734 | Annuler | Cancel |
+| 735 | Votre commentaire… | Your comment… |
+| 735 | Passage commenté | Commented passage |
+| 735 | Supprimer | Delete |
+| 735 | Modifier | Edit |
+| 735 | Supprimer ce commentaire ? | Delete this comment? |
+| 736 | Projet | Project |
+| 736 | Modèle | Model |
+| 736 | Auteur | Author |
+| 736 | Envoyé le | Sent on |
+| 736 | Retour attendu le | Feedback expected by |
+| 736 | Éléments représentés | Represented elements |
+| 737 | Élément représenté | Represented element |
+| 737 | cliquez pour les afficher et les commenter un par un | click to show them and comment on each one |
+| 737 | Description | Description |
+| 737 | (pas de description) | (no description) |
+| 737 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
+| 738 | absent du modèle | missing from the model |
+| 738 | Élément | Element |
+| 738 | Type | (inchangé, hors _L) |
+| 738 | Couche | Layer |
+| 739 | Cliquer pour agrandir / réduire | Click to enlarge / reduce |
+| 739 | Produit par Arcalyse | Produced by Arcalyse |
+| 740 | — Criticité — | — Severity — |
+| 894 | Projet | Project |
+| 894 | Modèle | Model |
+| 894 | Auteur | Author |
+| 894 | Envoyé le | Sent on |
+| 894 | Retour attendu le | Feedback expected by |
+| 897 | Consignes | Instructions |
+| 898 | Relecture : insérez des commentaires Word (Révision › Nouveau commentaire) sur les passages concernés, ou modifiez le texte en mode Suivi des modifications, puis renvoyez le fichier .docx. Chaque commentaire est rattaché au chapitre, à la description ou au diagramme commenté. | Review: insert Word comments (Review › New Comment) on the relevant passages, or edit the text with Track Changes on, then send the .docx file back. Each comment is attached to the commented chapter, description or diagram. |
+| 902 | Sommaire | Contents |
+| 907 | Heading | (inchangé, hors _L) |
+| 909 | (pas de description) | (no description) |
+| 918 | (aucun élément) | (no element) |
+| 921 | (pas de description) | (no description) |
+| 924 | ⏳ Image | ⏳ Image … — … |
+| 928 | Figure | Figure |
+| 931 | .png"/ | (inchangé, hors _L) |
+| 934 | Diagramme non joint (.aird non chargé lors de l'export) | Diagram not included (.aird not loaded at export time) |
+| 935 | Figure | Figure |
+| 935 | Caption | (inchangé, hors _L) |
+| 936 | Élément représenté | Represented element |
+| 941 | Éléments représentés | Represented elements |
+| 943 | Élément | Element |
+| 943 | Type | (inchangé, hors _L) |
+| 943 | Couche | Layer |
+| 955 | Title | (inchangé, hors _L) |
+| 956 | Heading | (inchangé, hors _L) |
+| 957 | TOC Heading | (inchangé, hors _L) |
+| 958 | Caption | (inchangé, hors _L) |
+| 959 | Arcalyse — Description | (inchangé, hors _L) |
+| 960 | Arcalyse — Consignes | (inchangé, hors _L) |
+| 961 | Arcalyse — Aide | (inchangé, hors _L) |
+| 965 | .png"/ | (inchangé, hors _L) |
+| 968 | [Content_Types].xml | (inchangé, hors _L) |
+| 977 | Arcalyse | (inchangé, hors _L) |
+| 979 | word/_rels/document.xml.rels | (inchangé, hors _L) |
+| 982 | word/media/image | (inchangé, hors _L) |
+| 997 | archive ZIP illisible | unreadable ZIP archive |
+| 1007 | navigateur trop ancien pour lire un .docx | browser too old to read a .docx |
+| 1029 | ce fichier n'est pas un document Word | this file is not a Word document |
+| 1059 | cette page n'est pas un dossier de relecture Arcalyse | this page is not an Arcalyse review package |
+| 1060 | fichier illisible (JSON attendu) | unreadable file (JSON expected) |
+| 1061 | ce fichier n'est pas un retour de dossier de relecture | this file is not review package feedback |
+| 1075 | .html,.htm,.json,.docx | (inchangé, hors _L) |
+| 1092 | » : dossier d'origine introuvable dans ce projet. Rattacher ses retours au dossier ouvert « | “…”: original package not found in this project. Attach its feedback to the open package “…”? |
+| 1092 | Rattacher | Attach |
+| 1105 | retour(s) ajouté(s) | ✔ …: … feedback item(s) added |
+| 1105 | déjà présent(s) | , … already present |
+| 1105 | commentaire(s) créé(s) dans 💬 Revue | — … comment(s) created in 💬 Review |
+| 1124 | 📑 Dossier de relecture | 📑 Review package |
+| 1129 | commentaire(s) créé(s) dans 💬 Revue | ✔ … comment(s) created in 💬 Review |
 
 ## js/62-liens-couches.js
 
@@ -5943,4 +5967,4 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 - `js/46-config-interface.js:83` — Vues enregistrées illisibles :
 - `js/54-diagrammes.js:130` — Relecture du .aird impossible :
 - `js/58-revue-ciblee.js:102` — Diagramme non exporté :
-- `js/61-dossier-relecture.js:525` — Diagramme non exporté :
+- `js/61-dossier-relecture.js:526` — Diagramme non exporté :

@@ -214,7 +214,7 @@ function capDosPlanDcs(o){
  * @param {?object} [comp] - SSS / SSDD : composant décrit (sous-système), null pour le système ; absent : fenêtre de choix
  */
 function capDosGenerer(k, comp){
-  if(!capLoaded){ alert(_L('Chargez d\'abord un modèle.')); capHomeRender(); return; }
+  if(!capLoaded){ capAlert(_L('Chargez d\'abord un modèle.')); capHomeRender(); return; }
   const g=capDosGabarits().find(x=>x.k===k); if(!g) return;
   if((k==='sss'||k==='ssdd')&&comp===undefined){ capDosPerimetre(k); return; }   // système ou sous-système (66)
   const o=capDosOutils(), projet=capRevProjectName()||capCurrentFileName||'';
@@ -408,7 +408,7 @@ function capRapEval(blocs, ctx, o){
  * @param {object} m - Modèle (dossier modele:true)
  */
 function capRapGenerer(m){
-  if(!capLoaded){ alert(_L('Chargez d\'abord un modèle.')); return; }
+  if(!capLoaded){ capAlert(_L('Chargez d\'abord un modèle.')); return; }
   const o=capDosOutils(), d=capDosNouveau((m.titre||_L('Rapport'))+' — '+(capRevProjectName()||capCurrentFileName||''));
   Object.assign(d, {blocs:capRapEval(m.blocs, null, o), consignes:m.consignes||'', gab:'perso', depuis:m.id, commentaires:m.commentaires!==false});
   capHomeSave(); capHomeRender();
@@ -439,7 +439,7 @@ function capRapImporter(W){
   inp.onchange=async()=>{ let n=0;
     for(const f of inp.files){ try{ const o=JSON.parse(await f.text()); if(!o||o.type!=='arcalyse-modele-rapport'||!o.modele) throw new Error(_L('ce fichier n\'est pas un modèle de rapport Arcalyse'));
       const m=capDosNorm([Object.assign({}, o.modele, {id:capHomeUid(), modele:true})])[0]; _capHome.dossiers.push(m); _capDosUi.cur=m.id; n++; }
-      catch(e){ W.alert(f.name+' : '+(e&&e.message||e)); } }
+      catch(e){ capAlert(f.name+' : '+(e&&e.message||e),{win:W, level:'err'}); } }
     if(n){ capHomeSave(); capHomeRender(); capWatchFlash(_L(`✔ ${n} modèle(s) de rapport importé(s)`)); } };
   inp.click();
 }

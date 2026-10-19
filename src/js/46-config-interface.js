@@ -119,7 +119,7 @@ function capCfgDialog(mode, data){
       keys.forEach(k=>out.parts[k]=capCfgGet(k));
       capDownloadBlob(new Blob([capCfgSer(out)],{type:'application/json'}),_L('interface-et-vues.json'));
     } else {
-      keys.forEach(k=>{ try{ if(data.parts[k]!=null) capCfgSet(k,data.parts[k]); if(k==='table'&&data.parts.tv) capCfgSet('tv',data.parts.tv); }catch(e){ console.error(e); alert(_L('Réglage « ')+k+_L(' » non appliqué : ')+e.message); } });
+      keys.forEach(k=>{ try{ if(data.parts[k]!=null) capCfgSet(k,data.parts[k]); if(k==='table'&&data.parts.tv) capCfgSet('tv',data.parts.tv); }catch(e){ console.error(e); capAlert(_L('Réglage « ')+k+_L(' » non appliqué : ')+e.message); } });
       if(typeof capWatchFlash==='function') capWatchFlash(_L(`✔ ${keys.length} réglage(s) appliqué(s)`));
     }
   });
@@ -131,8 +131,8 @@ function capCfgLoadFile(){
   inp.onchange=()=>{
     const f=inp.files[0]; if(!f) return;
     f.text().then(t=>{
-      let o; try{ o=capCfgRev(t); }catch(e){ alert(_L('Fichier illisible : JSON invalide.')); return; }
-      if(!o||o.type!=='capella-interface'||!o.parts){ alert(_L('Ce fichier n\'est pas un fichier « interface et vues » d\'Arcalyse.')); return; }
+      let o; try{ o=capCfgRev(t); }catch(e){ capAlert(_L('Fichier illisible : JSON invalide.')); return; }
+      if(!o||o.type!=='capella-interface'||!o.parts){ capAlert(_L('Ce fichier n\'est pas un fichier « interface et vues » d\'Arcalyse.')); return; }
       capCfgDialog('load',o);
     });
   };
@@ -141,7 +141,7 @@ function capCfgLoadFile(){
 
 /** Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi). */
 function capCfgLoadUpdate(){
-  if(!capLoaded){ alert(_L('Ouvrez d\'abord un modèle Capella : la mise à jour se compare au modèle affiché.')); return; }
+  if(!capLoaded){ capAlert(_L('Ouvrez d\'abord un modèle Capella : la mise à jour se compare au modèle affiché.')); return; }
   capWatchPickNewVersion();
 }
 

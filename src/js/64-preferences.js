@@ -222,7 +222,7 @@ function capAutoHash(s){
  */
 async function capAutoPickMain(){
   if(!capAutoSupported()) return false;
-  if(!capLoaded){ alert(_L('Chargez d\'abord un modèle : la page enregistrée le contient.')); return false; }
+  if(!capLoaded){ capAlert(_L('Chargez d\'abord un modèle : la page enregistrée le contient.')); return false; }
   const ok=await capSavePageDirect(true);
   capAutoBanner(); return ok&&!!_capSaveHandle;
 }
@@ -237,7 +237,7 @@ async function capAutoPickBackup(){
     _capAuto.bak=await window.showSaveFilePicker({suggestedName:base+'.backup.html',
       types:[{description:_L('Page HTML'),accept:{'text/html':['.html','.htm']}}]});
     if(_capSaveHandle&&await _capAuto.bak.isSameEntry(_capSaveHandle)){ _capAuto.bak=null;
-      alert(_L('Le fichier de secours doit être différent du fichier de la page.')); return false; }
+      capAlert(_L('Le fichier de secours doit être différent du fichier de la page.'),{level:'warn'}); return false; }
   }catch(e){ if(!(e&&e.name==='AbortError')) console.error(e); return false; }
   capAutoBanner(); return true;
 }

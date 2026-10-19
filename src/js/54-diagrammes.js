@@ -1063,7 +1063,7 @@ async function capDiagExport(fmt) {
     // PDF lourd : estimation (dimensions réelles des planches) et confirmation au-delà du seuil
     if (fmt === 'pdf') {
       const mo = capDiagPdfEstimation(items, o.scale, nSom);
-      if (mo > CAP_DIAG_PDF_ALERTE && !confirm(_L(`Le PDF fera environ ${Math.round(mo)} Mo (${total} pages).\n\nPour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…).\n\nContinuer quand même ?`))) {
+      if (mo > CAP_DIAG_PDF_ALERTE && !await capConfirm(_L(`Le PDF fera environ ${Math.round(mo)} Mo (${total} pages).\n\nPour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…).\n\nContinuer quand même ?`), { title: _L('PDF volumineux'), ok: _L('Continuer') })) {
         st(_L(`Export annulé : PDF estimé à ${Math.round(mo)} Mo.`)); return;
       }
     }

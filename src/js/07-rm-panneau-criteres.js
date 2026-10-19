@@ -46,7 +46,7 @@ function buildPanel() {
       const edit=document.createElement('span'); edit.textContent='✏'; edit.title=_L('Modifier ce critère'); edit.style.cssText=icoStyle;
       edit.onclick=()=>showEditRelCriteriaForm(rb, row, t, cfg);
       const del=document.createElement('span'); del.textContent='✕'; del.title=_L('Supprimer ce critère'); del.style.cssText=icoStyle;
-      del.onclick=()=>{ if(!confirm(_L(`Supprimer le critère "${t}" ?`))) return; delete RCFG[t]; delete S.relF[t]; MODEL.relations=MODEL.relations.filter(r=>r.type!==t); onModelChanged(); };
+      del.onclick=async()=>{ if(!await capConfirm(_L(`Supprimer le critère "${t}" ?`),{danger:true})) return; delete RCFG[t]; delete S.relF[t]; MODEL.relations=MODEL.relations.filter(r=>r.type!==t); onModelChanged(); };
       row.appendChild(edit); row.appendChild(del);
     }
     return row;
@@ -163,7 +163,7 @@ function buildPanel() {
     if (!readOnly && !RM_RO) {   // RM_RO : ni modification ni suppression de type
       const icoS='cursor:pointer;color:var(--c-dim);font-size:10px;flex-shrink:0;padding:0 2px';
       const edit=document.createElement('span'); edit.textContent='✏'; edit.title=_L('Modifier ce type'); edit.style.cssText=icoS; edit.onclick=()=>showEditTypeForm(tb,row,t,cfg);
-      const del=document.createElement('span'); del.textContent='✕'; del.title=_L('Supprimer ce type'); del.style.cssText=icoS; del.onclick=()=>{ const used=MODEL.elements.filter(e=>e.type===t); if(used.length>0){alert(_L(`Ce type est utilisé par ${used.length} élément(s).`));return;} if(!confirm(_L(`Supprimer le type "${t}" ?`))) return; delete TCFG[t]; delete S.typF[t]; onModelChanged(); };
+      const del=document.createElement('span'); del.textContent='✕'; del.title=_L('Supprimer ce type'); del.style.cssText=icoS; del.onclick=async()=>{ const used=MODEL.elements.filter(e=>e.type===t); if(used.length>0){capAlert(_L(`Ce type est utilisé par ${used.length} élément(s).`));return;} if(!await capConfirm(_L(`Supprimer le type "${t}" ?`),{danger:true})) return; delete TCFG[t]; delete S.typF[t]; onModelChanged(); };
       row.appendChild(edit); row.appendChild(del);
     }
     return row;
@@ -287,7 +287,7 @@ function capShowChainInMap(chain){
   // Nettoyage d'anciennes visualisations temporaires (versions précédentes)
   MODEL.elements=MODEL.elements.filter(e=>!e._capViz);
   MODEL.relations=MODEL.relations.filter(r=>!r._capViz);
-  if(!chain||!chain.graph||!chain.graph.nodes.length){ alert(_L("Cette chaîne ne contient aucune étape à visualiser.")); return; }
+  if(!chain||!chain.graph||!chain.graph.nodes.length){ capAlert(_L("Cette chaîne ne contient aucune étape à visualiser.")); return; }
   S.chainView=chain; S.selNode=null;
   S.showRelNames=true; document.getElementById('b-rln')?.classList.add('active');
   applyMode('default');           // reconstruit le panneau et appelle render() → renderChainView

@@ -163,7 +163,7 @@ async function capSavePageDirect(saveAs){
   }catch(e){
     if(e&&e.name==='AbortError') return false;   // fenêtre annulée par l'utilisateur
     console.error(e); _capSaveHandle=null;
-    alert(_L('Enregistrement direct impossible (')+(e&&e.message||e)+_L(').\nLa page va être téléchargée à la place.'));
+    capAlert(_L('Enregistrement direct impossible (')+(e&&e.message||e)+_L(').\nLa page va être téléchargée à la place.'));
     capSaveFullPage();
     return true;
   }

@@ -425,7 +425,7 @@ function capDosClick(e){
     case 'docx': if(d) capDosExport(d,'docx',a); return true;
     case 'dup': if(d){ const c=JSON.parse(JSON.stringify(d)); c.id=capHomeUid(); c.titre=d.titre+_L(' (copie)'); c.retours=[]; c.relus={};
       capDosParcours(c.blocs,b=>{ b.id=capHomeUid(); }); _capHome.dossiers.push(c); u.cur=c.id; } break;
-    case 'del': if(d&&W.confirm(_L(`Supprimer le dossier « ${d.titre||_L('(sans titre)')} » et ses ${d.retours.length} retour(s) ?`))){ capHomePopClose('dos',d.id); _capHome.dossiers=_capHome.dossiers.filter(x=>x!==d); } else return true; break;
+    case 'del': if(d) capConfirm(_L(`Supprimer le dossier « ${d.titre||_L('(sans titre)')} » et ses ${d.retours.length} retour(s) ?`),{win:W, danger:true}).then(ok=>{ if(!ok) return; capHomePopClose('dos',d.id); _capHome.dossiers=_capHome.dossiers.filter(x=>x!==d); capHomeSave(); capHomeRender(); }); return true;
     case 'chap-add': if(d){ const c=capDosChapDe(null,''); d.blocs.push(c); capHomeSave(); capHomeRender(); capDosFocus(c.id); } return true;
     case 'txt-add': if(d){ const b=capDosBlocDeRef(null,''), l=f&&f.b.k==='chap'?f.b.blocs:d.blocs; l.push(b); capHomeSave(); capHomeRender(); capDosFocus(b.id); } return true;
     case 'sub-add': if(f&&f.b.k==='chap'){ const c=capDosChapDe(null,''); f.b.blocs.push(c); u.plies.delete(f.b.id); capHomeSave(); capHomeRender(); capDosFocus(c.id); } return true;
@@ -440,7 +440,8 @@ function capDosClick(e){
     case 'out': if(f&&f.parent){ const p=capDosTrouve(d.blocs, f.parent.id); f.l.splice(f.i,1); p.l.splice(p.i+1,0,f.b); } break;
     case 'in': { const prev=f&&f.l[f.i-1]; if(prev&&prev.k==='chap'){ f.l.splice(f.i,1); prev.blocs.push(f.b); u.plies.delete(prev.id); } else return true; break; }
     case 'del-b': if(f){ let n=0; if(f.b.k==='chap') capDosParcours(f.b.blocs,()=>n++);
-      if(n&&!W.confirm(_L(`Retirer le chapitre « ${f.b.titre} » et ses ${n} bloc(s) ?`))) return true; f.l.splice(f.i,1); } break;
+      if(n){ capConfirm(_L(`Retirer le chapitre « ${f.b.titre} » et ses ${n} bloc(s) ?`),{win:W, danger:true, ok:_L('Retirer')}).then(ok=>{ if(!ok) return; f.l.splice(f.i,1); capHomeSave(); capHomeRender(); }); return true; }
+      f.l.splice(f.i,1); } break;
     case 'ret': { const k=a.dataset.bid; if(u.ret.has(k)) u.ret.delete(k); else u.ret.add(k); capHomeRender(); return true; }
     case 'ret-tous': u.tous=!u.tous; capHomeRender(); return true;
     case 'boucle-add': if(d){ const c={id:capHomeUid(), k:'chap', titre:'{nom}', ref:null, desc:true, boucle:{type:'fn', couche:'SA', filtre:'', nom:'', max:30}, blocs:[]};
@@ -453,7 +454,7 @@ function capDosClick(e){
     case 'rap-import': capRapImporter(W); return true;
     case 'nav-pli': if(d){ capDosParcours(d.blocs,b=>{ if(b.k==='chap') u.plies.add(b.id); }); capHomeRender(); } return true;
     case 'nav-depli': u.plies.clear(); capHomeRender(); return true;
-    case 'ret-del': { const n=t.closest('[data-rid]'); if(d&&n&&W.confirm(_L('Supprimer ce retour ?'))) d.retours=d.retours.filter(r=>r.id!==n.dataset.rid); else return true; break; }
+    case 'ret-del': { const n=t.closest('[data-rid]'); if(d&&n) capConfirm(_L('Supprimer ce retour ?'),{win:W, danger:true}).then(ok=>{ if(!ok) return; d.retours=d.retours.filter(r=>r.id!==n.dataset.rid); capHomeSave(); capHomeRender(); }); return true; }
     case 'rev-go': capRevShow(a.dataset.cid); return true;
     case 'revue': if(d) capDosVersRevue(d); return true;
     default: return false;
@@ -583,14 +584,14 @@ async function capDosEnvoi(d, st){
 async function capDosVisu(d, btn){
   const W=capHomeWin(btn), st=m=>capWatchFlash(m);
   let src=d;
-  if(d.modele){ if(!capLoaded){ W.alert(_L('Chargez d\'abord un modèle.')); return; }
+  if(d.modele){ if(!capLoaded){ capAlert(_L('Chargez d\'abord un modèle.'),{win:W}); return; }
     src=Object.assign({}, d, {id:'apercu', modele:false, blocs:capRapEval(d.blocs, null, capDosOutils())}); }
-  if(!src.blocs.length){ W.alert(_L('Le dossier est vide : ajoutez au moins un chapitre.')); return; }
+  if(!src.blocs.length){ capAlert(_L('Le dossier est vide : ajoutez au moins un chapitre.'),{win:W}); return; }
   if(btn) btn.disabled=true;
   try{ const envoi=await capDosEnvoi(src, st), w=capDosVisuWins.get(d.id);
     if(w&&!w.closed){ envoi.commentaires=w._arcCom!=null?w._arcCom:envoi.commentaires; capDosVisuEcrire(w, envoi); w.focus(); st(_L('✔ Aperçu actualisé dans sa fenêtre')); }   // aperçu déjà détaché : actualisé
     else capDosVisuOuvrir(envoi, W, d.modele, d.id); }
-  catch(e){ console.error(e); W.alert(_L('Aperçu impossible : ')+(e&&e.message||e)); }
+  catch(e){ console.error(e); capAlert(_L('Aperçu impossible : ')+(e&&e.message||e),{win:W, level:'err'}); }
   finally{ if(btn) btn.disabled=false; }
 }
 /** Aperçus détachés dans une fenêtre séparée : identifiant du dossier → fenêtre. */
@@ -612,7 +613,7 @@ function capDosVisuEcrire(w, envoi){
  */
 function capDosVisuDetacher(envoi, W, id){
   const w=W.open('', 'arcalyse-apercu-'+(id||'x'), 'width=1150,height=900');
-  if(!w){ W.alert(_L('Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez.')); return false; }
+  if(!w){ capAlert(_L('Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez.'),{win:W, level:'warn'}); return false; }
   capDosVisuEcrire(w, envoi); if(id) capDosVisuWins.set(id, w); w.focus(); return true;
 }
 /**
@@ -656,7 +657,7 @@ function capDosVisuOuvrir(envoi, W, modele, id){
  * @param {HTMLElement} [btn] - Bouton (désactivé pendant l'export)
  */
 async function capDosExport(d, fmt, btn){
-  if(!d.blocs.length){ capHomeWin(btn).alert(_L('Le dossier est vide : ajoutez au moins un chapitre.')); return; }
+  if(!d.blocs.length){ capAlert(_L('Le dossier est vide : ajoutez au moins un chapitre.'),{win:capHomeWin(btn)}); return; }
   const st=m=>capWatchFlash(m);
   if(btn) btn.disabled=true;
   try{
@@ -665,7 +666,7 @@ async function capDosExport(d, fmt, btn){
     if(d.modele) throw new Error(_L('un modèle de rapport ne s\'exporte pas : ▶ Générer le rapport, puis exportez le rapport'));
     if(fmt==='docx'){ capDownloadBlob(await capDosDocx(envoi, st), base+'.docx'); st(_L('✔ Document Word créé : les relecteurs le commentent (Révision › Nouveau commentaire), puis 📥 Réimporter le .docx commenté')); }
     else { capDownloadBlob(new Blob([capDosPage(envoi)],{type:'text/html'}), base+'.html'); st(_L('✔ Page de relecture créée : envoyez-la aux relecteurs, puis 📥 Réimporter la page qu\'ils ont enregistrée')); }
-  }catch(e){ console.error(e); capHomeWin(btn).alert(_L('Export impossible : ')+(e&&e.message||e)); }
+  }catch(e){ console.error(e); capAlert(_L('Export impossible : ')+(e&&e.message||e),{win:capHomeWin(btn), level:'err'}); }
   finally{ if(btn) btn.disabled=false; }
 }
 /**
@@ -1072,7 +1073,7 @@ function capDosLirePage(texte){
 function capDosImporter(W){
   W=W||window;
   const inp=W.document.createElement('input'); inp.type='file'; inp.multiple=true; if(!capIsMobile()) inp.accept='.html,.htm,.json,.docx';
-  inp.onchange=async()=>{ for(const f of inp.files){ try{ capDosFusion(await capDosLireFichier(f), f.name, W); }catch(e){ console.error(e); W.alert(f.name+' : '+(e&&e.message||e)); } } };
+  inp.onchange=async()=>{ for(const f of inp.files){ try{ await capDosFusion(await capDosLireFichier(f), f.name, W); }catch(e){ console.error(e); capAlert(f.name+' : '+(e&&e.message||e),{win:W, level:'err'}); } } };
   inp.click();
 }
 /**
@@ -1083,12 +1084,12 @@ function capDosImporter(W){
  * @param {string} nom - Nom du fichier
  * @param {Window} [W] - Fenêtre des confirmations
  */
-function capDosFusion(o, nom, W){
+async function capDosFusion(o, nom, W){
   W=W||window;
   let d=_capHome.dossiers.find(x=>x.id===o.id);
   if(!d&&o.source){ d=capDosNorm([Object.assign({}, o.source, {id:o.id||capHomeUid(), retours:[], relus:{}})])[0]; _capHome.dossiers.push(d); }
   if(!d){ const c=capDosCur();
-    if(!c||!W.confirm(_L(`« ${nom} » : dossier d'origine introuvable dans ce projet. Rattacher ses retours au dossier ouvert « ${c?c.titre:''} » ?`))) return;
+    if(!c||!await capConfirm(_L(`« ${nom} » : dossier d'origine introuvable dans ce projet. Rattacher ses retours au dossier ouvert « ${c?c.titre:''} » ?`),{win:W, ok:_L('Rattacher')})) return;
     d=c; }
   const cle=r=>[r.auteur||'', r.date||'', (r.texte||'').trim()].join('|'), vus=new Set(d.retours.map(cle));
   let n=0, deja=0;

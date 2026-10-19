@@ -246,9 +246,9 @@ function capRevDoc(){ const w=capRevPop(); return w&&w.document.hasFocus()?w.doc
 /** @param {string} id @returns {HTMLElement|null} élément du panneau (page ou fenêtre séparée) */
 function capRevQ(id){ const p=_capRevUi.panel; return p?p.ownerDocument.getElementById(id):null; }
 /** @param {string} msg @returns {boolean} confirmation demandée dans la fenêtre où l'on travaille */
-function capRevConfirm(msg){ return capRevDoc().defaultView.confirm(msg); }
+function capRevConfirm(msg, o){ return capConfirm(msg, Object.assign({win:capRevDoc().defaultView}, o||{})); }   // asynchrone (12-dialogues.js)
 /** @param {string} msg - Message affiché dans la fenêtre où l'on travaille */
-function capRevAlert(msg){ capRevDoc().defaultView.alert(msg); }
+function capRevAlert(msg, o){ return capAlert(msg, Object.assign({win:capRevDoc().defaultView}, o||{})); }
 
 /**
  * ⧉ Ouvre le panneau 💬 Revue dans une fenêtre séparée (à placer sur un autre écran). La fenêtre dépend de la page :
@@ -258,7 +258,7 @@ function capRevAlert(msg){ capRevDoc().defaultView.alert(msg); }
 function capRevPopOut(){
   if(capRevPop()){ capRevPop().focus(); return; }
   const w=window.open('', 'arcalyse-revue', 'width=560,height=860');
-  if(!w){ alert(_L('Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez.')); return; }
+  if(!w){ capAlert(_L('Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez.')); return; }
   const D=w.document;
   D.open(); D.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title></title></head><body class="crv-pop-body"></body></html>'); D.close();
   D.title=_L('💬 Revue')+' — '+(capCurrentFileName||'Arcalyse');
@@ -405,7 +405,7 @@ function capRevTargetsHtml(c){
 }
 
 /** Clics du panneau (délégation). @param {MouseEvent} e */
-function capRevPanelClick(e){
+async function capRevPanelClick(e){
   const t=e.target, u=_capRevUi;
   const tab=t.closest('[data-tab]'); if(tab){ u.tab=tab.dataset.tab; capRevRender(); return; }
   const op=t.closest('[data-open]'); if(op){ capOpenDetailById(op.dataset.open); return; }
@@ -431,7 +431,7 @@ function capRevPanelClick(e){
   else if(act==='go') capRevGoto(c);
   else if(act==='validate') capRevValidate(c);
   else if(act==='reopen'){ capRevResnap(c); capRevSave(c.id); }
-  else if(act==='del'){ if(capRevConfirm(_L(`Supprimer le commentaire #${c.num} ?`))){ _capRev.comments=_capRev.comments.filter(x=>x!==c); capRevSave(); } }
+  else if(act==='del'){ if(await capRevConfirm(_L(`Supprimer le commentaire #${c.num} ?`),{danger:true})){ _capRev.comments=_capRev.comments.filter(x=>x!==c); capRevSave(); } }
   else if(act==='reply'){
     const ta=capRevQ('crv-rep-'+c.id), txt=ta&&ta.value.trim(); if(!txt) return;
     (c.replies=c.replies||[]).push({author:_capRev.me||'', date:new Date().toISOString(), text:txt});
@@ -545,14 +545,14 @@ function capRevEdit(id, preset){
     <datalist id="crv-dl-people">${capRevPeople().map(p=>`<option value="${esc(p)}">`).join('')}</datalist>`;
   ov.style.display='flex';
   const fermer=()=>{ ov.style.display='none'; ov.innerHTML=''; };
-  ov.onclick=e=>{
+  ov.onclick=async e=>{
     const t=e.target;
     if(t===ov||t.closest('[data-x]')){ fermer(); return; }
     const p=t.closest('[data-pers]'); if(p){ const k=p.dataset.pers; d.assignees=d.assignees.includes(k)?d.assignees.filter(x=>x!==k):[...d.assignees,k]; p.classList.toggle('on'); return; }
     const td=t.closest('[data-tdel]'); if(td){ d.targets.splice(+td.dataset.tdel,1); D.getElementById('crv-ed-tgs').innerHTML=ciblesHtml(); return; }
     const ad=t.closest('[data-add]'); if(ad){ if(!d.targets.some(x=>x.id===ad.dataset.add)){ const n=capRevTarget(ad.dataset.add,''); if(n) d.targets.push(n); }
       D.getElementById('crv-ed-tgs').innerHTML=ciblesHtml(); D.getElementById('crv-ed-res').innerHTML=''; D.getElementById('crv-ed-find').value=''; return; }
-    if(t.closest('[data-del]')){ if(D.defaultView.confirm(_L(`Supprimer le commentaire #${c0.num} ?`))){ _capRev.comments=_capRev.comments.filter(x=>x!==c0); fermer(); capRevSave(); } return; }
+    if(t.closest('[data-del]')){ if(await capConfirm(_L(`Supprimer le commentaire #${c0.num} ?`),{win:D.defaultView, danger:true})){ _capRev.comments=_capRev.comments.filter(x=>x!==c0); fermer(); capRevSave(); } return; }
     if(t.closest('[data-ok]')) enregistrer();
   };
   ov.onchange=e=>{
@@ -832,7 +832,7 @@ function capRevLayerEnsure(){
  */
 function capRevDiagNoteAt(x, y, id, field){
   const svg=document.getElementById('vd-svg'), uid=capRevDiagUid(), m=svg&&svg.getScreenCTM();
-  if(!uid||!m||!svg.getBoundingClientRect().width){ alert(_L('Ouvrez d\'abord un diagramme (les tableaux du .aird ne portent pas de notes).')); return; }
+  if(!uid||!m||!svg.getBoundingClientRect().width){ capAlert(_L('Ouvrez d\'abord un diagramme (les tableaux du .aird ne portent pas de notes).')); return; }
   const r=svg.getBoundingClientRect();
   if(x==null){ x=r.left+r.width/2-100; y=r.top+r.height/2-55; }
   const p=new DOMPoint(x,y).matrixTransform(m.inverse()), k=m.a||1;
@@ -1016,8 +1016,8 @@ function capRevCheckHtml(){
   }).join('');
 }
 /** Valide tous les commentaires à vérifier (après confirmation). */
-function capRevCheckAll(){
-  const l=capRevToCheck(); if(!l.length||!capRevConfirm(_L(`Valider les ${l.length} commentaire(s) de la liste ?`))) return;
+async function capRevCheckAll(){
+  const l=capRevToCheck(); if(!l.length||!await capRevConfirm(_L(`Valider les ${l.length} commentaire(s) de la liste ?`),{ok:_L('Valider')})) return;
   l.forEach(c=>{ c.status='done'; c.updated=new Date().toISOString(); c.verif={date:c.updated, by:_capRev.me||''}; capRevResnap(c); _capRevUnsaved.add(c.id); });
   capRevSave();
 }
@@ -1120,12 +1120,12 @@ function capRevCfgHtml(){
  * @param {string} act - Action
  * @param {HTMLElement} b - Bouton cliqué
  */
-function capRevCfgAction(act, b){
+async function capRevCfgAction(act, b){
   if(act==='person-add'){ const i=capRevQ('crv-person'), v=i&&i.value.trim(); if(v&&!_capRev.people.includes(v)){ _capRev.people.push(v); capRevSave(); } return; }
   if(act==='person-del'){ _capRev.people=_capRev.people.filter(p=>p!==b.dataset.p); capRevSave(); return; }
   if(act==='export'){ capRevExport(); return; }
   if(act==='import'){ capRevImport(); return; }
-  if(act==='clear'){ if(_capRev.comments.length&&capRevConfirm(_L(`Supprimer les ${_capRev.comments.length} commentaire(s) de la page ? (Exportez-les d'abord pour les garder.)`))){ _capRev.comments=[]; _capRev.seq=0; capRevSave(); } }
+  if(act==='clear'){ if(_capRev.comments.length&&await capRevConfirm(_L(`Supprimer les ${_capRev.comments.length} commentaire(s) de la page ? (Exportez-les d'abord pour les garder.)`),{danger:true})){ _capRev.comments=[]; _capRev.seq=0; capRevSave(); } }
 }
 /** Exporte la revue (participants et commentaires) dans un fichier .json réutilisable. */
 function capRevExport(){
@@ -1143,10 +1143,10 @@ function capRevImport(){
       if(/^\s*</.test(t)){   // page de revue ciblée relue
         const dp=capDosLirePage(t); if(dp){ capDosFusion(dp, f.name); return; }   // page de 📑 dossier de relecture (61)
         const rc=capRevCibleeLire(t);
-        if(!rc){ D.defaultView.alert(_L('Cette page n\'est pas une revue ciblée Arcalyse.')); return; }
+        if(!rc){ capAlert(_L('Cette page n\'est pas une revue ciblée Arcalyse.'),{win:D.defaultView, level:'err'}); return; }
         d=capRevCibleeVersRevue(rc);
-      } else { try{ d=JSON.parse(t); }catch(e){ D.defaultView.alert(_L('Fichier illisible (JSON attendu).')); return; } }
-      if(!d||d.type!=='arcalyse-revue'||!Array.isArray(d.comments)){ D.defaultView.alert(_L('Ce fichier n\'est pas une revue Arcalyse.')); return; }
+      } else { try{ d=JSON.parse(t); }catch(e){ capAlert(_L('Fichier illisible (JSON attendu).'),{win:D.defaultView, level:'err'}); return; } }
+      if(!d||d.type!=='arcalyse-revue'||!Array.isArray(d.comments)){ capAlert(_L('Ce fichier n\'est pas une revue Arcalyse.'),{win:D.defaultView, level:'err'}); return; }
       const m=capRevMatch(d.comments, d.project||'');
       const fusion=()=>{
         // Même projet (ou copie reconnue par ses éléments) : les commentaires sont rattachés au projet chargé

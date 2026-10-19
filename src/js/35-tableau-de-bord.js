@@ -413,7 +413,7 @@ function capRenderDashboard(box){
   box.querySelector('#dash-new').onclick=()=>{ const d={id:capDashUid(),name:_L('Page ')+(S.list.length+1),cols:4,widgets:[]}; S.list.push(d); S.cur=d.id; st.edit=true; save(); rerender(); };
   box.querySelector('#dash-dup')?.addEventListener('click',()=>{ const d=JSON.parse(JSON.stringify(dash)); d.id=capDashUid(); d.name+=_L(' (copie)'); d.widgets.forEach(w=>w.id=capDashUid()); S.list.push(d); S.cur=d.id; save(); rerender(); });
   box.querySelector('#dash-ex')?.addEventListener('click',()=>{ const d=capDashExample(); S.list.push(d); S.cur=d.id; save(); rerender(); });
-  box.querySelector('#dash-del')?.addEventListener('click',()=>{ if(S.list.length<2||!confirm(_L(`Supprimer le tableau de bord « ${dash.name} » ?`))) return; S.list=S.list.filter(d=>d!==dash); S.cur=S.list[0].id; save(); rerender(); });
+  box.querySelector('#dash-del')?.addEventListener('click',async()=>{ if(S.list.length<2||!await capConfirm(_L(`Supprimer le tableau de bord « ${dash.name} » ?`),{danger:true})) return; S.list=S.list.filter(d=>d!==dash); S.cur=S.list[0].id; save(); rerender(); });
   box.querySelector('#dash-orient').onchange=e=>{ st.orient=e.target.value; };
   box.querySelector('#dash-print').onclick=()=>capDashPrint(dash, byId, st.orient||'portrait');
   box.querySelector('#dash-json').onclick=()=>capDownloadBlob(new Blob([JSON.stringify({capellaDashboard:1,...dash},null,2)],{type:'application/json'}),(dash.name.replace(/[^\w\-]+/g,'_')||_L('tableau-de-bord'))+'.json');
@@ -421,7 +421,7 @@ function capRenderDashboard(box){
   box.querySelector('#dash-file').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader();
     r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!Array.isArray(d.widgets)) throw new Error('format');
       const n={id:capDashUid(),name:d.name||_L('Tableau importé'),cols:d.cols||4,widgets:d.widgets.map(w=>({...w,id:capDashUid()}))}; S.list.push(n); S.cur=n.id; save(); rerender();
-    }catch(err){ alert(_L('Fichier de tableau de bord invalide.')); } }; r.readAsText(f); };
+    }catch(err){ capAlert(_L('Fichier de tableau de bord invalide.'),{level:'err'}); } }; r.readAsText(f); };
   box.querySelector('#dash-html').onclick=()=>{
     const css=`.dash-grid{display:grid;gap:10px;grid-auto-rows:120px}.dash-w{background:var(--c-bg2);border:1px solid var(--c-border);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;break-inside:avoid}
       .dash-wh{padding:6px 10px 2px;font-size:12px;font-weight:600}.dash-wb{flex:1;padding:4px 10px 8px;overflow:hidden}.dash-kpi{display:flex;flex-direction:column;justify-content:center;height:100%}

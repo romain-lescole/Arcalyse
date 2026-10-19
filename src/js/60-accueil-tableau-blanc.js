@@ -135,7 +135,7 @@ function capHomeBoardNote(B, x, y, libre){
 /** Double-clic sur le tableau (outil Sélection) : nouvelle note ; sur un onglet de page : la renommer. @param {MouseEvent} e */
 function capHomeBoardDbl(e){
   const W=capHomeWin(e.target);
-  const bt=e.target.closest('[data-board]'); if(bt){ const B=_capHome.boards.find(b=>b.id===bt.dataset.board); const t=B&&W.prompt(_L('Nom de la page :'),B.titre); if(t!=null&&B){ B.titre=t.trim(); capHomeSave(); capHomeRender(); } return; }
+  const bt=e.target.closest('[data-board]'); if(bt){ const B=_capHome.boards.find(b=>b.id===bt.dataset.board); if(B) capPrompt(_L('Nom de la page :'),B.titre,{win:W, title:_L('Renommer la page')}).then(t=>{ if(t!=null){ B.titre=t.trim(); capHomeSave(); capHomeRender(); } }); return; }
   if(e.target.classList.contains('hm-wb-in')&&_capHomeUi.tool==='sel'){ const r=e.target.getBoundingClientRect();
     capHomeBoardNote(capHomeBoardOf(e.target), Math.round(e.clientX-r.left-20), Math.round(e.clientY-r.top-14)); }
 }
@@ -155,8 +155,10 @@ function capHomeBoardClick(e){
     case 'pop-back': capHomePopClose(a.dataset.kind, a.dataset.id); return true;
     case 'b-new': { const b={id:capHomeUid(), titre:_L(`Page ${_capHome.boards.length+1}`), items:[]}; _capHome.boards.push(b); Object.assign(u,{board:b.id, tab:'board'}); break; }
     case 'b-add': { const b={id:capHomeUid(), titre:_L(`Page ${_capHome.boards.length+1}`), items:[]}; _capHome.boards.push(b); u.board=b.id; break; }
-    case 'b-ren': { const v=B&&W.prompt(_L('Nom de la page :'),B.titre); if(v==null) return true; B.titre=v.trim(); break; }
-    case 'b-del': if(B&&(!B.items.length||W.confirm(_L(`Supprimer la page « ${B.titre} » et ses ${B.items.length} objet(s) ?`)))){ capHomePopClose('board',B.id); _capHome.boards=_capHome.boards.filter(x=>x!==B); u.board=''; } else return true; break;
+    case 'b-ren': if(B) capPrompt(_L('Nom de la page :'),B.titre,{win:W, title:_L('Renommer la page')}).then(v=>{ if(v==null) return; B.titre=v.trim(); capHomeSave(); capHomeRender(); }); return true;
+    case 'b-del': { if(!B) return true; const del=()=>{ capHomePopClose('board',B.id); _capHome.boards=_capHome.boards.filter(x=>x!==B); u.board=''; };
+      if(B.items.length){ capConfirm(_L(`Supprimer la page « ${B.titre} » et ses ${B.items.length} objet(s) ?`),{win:W, danger:true}).then(ok=>{ if(ok){ del(); capHomeSave(); capHomeRender(); } }); return true; }
+      del(); break; }
     case 'b-fill': u.fill=!u.fill; if(S&&S.k==='shape') S.fill=u.fill; break;
     case 'bi-del': if(B&&n){ B.items=B.items.filter(x=>x.id!==n.dataset.it); if(u.sel===n.dataset.it) u.sel=''; } break;
     case 'bi-flip': { const it=B&&n&&B.items.find(x=>x.id===n.dataset.it); if(it) it.inv=!it.inv; break; }
@@ -267,7 +269,7 @@ function capHomePopOpen(kind, id){
   const w0=capHomePopWin(kind,id); if(w0){ w0.focus(); return; }
   const o=capHomePopListe(kind).find(x=>x.id===id); if(!o) return;
   const w=window.open('', 'arcalyse-'+kind+'-'+id, kind==='board'?'width=1250,height=860':kind==='dos'?'width=1150,height=900':'width=860,height=900');
-  if(!w){ alert(_L('Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez.')); return; }
+  if(!w){ capAlert(_L('Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez.')); return; }
   const D=w.document;
   D.open(); D.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title></title></head><body class="hm-pop-body"><div class="hm-pop"></div></body></html>'); D.close();
   document.querySelectorAll('style').forEach(st=>D.head.appendChild(D.importNode(st,true)));

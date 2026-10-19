@@ -168,7 +168,7 @@ function capProjetPageDialogue(info, nom, handle) {
  * @param {?FileSystemFileHandle} handle - Fichier où réenregistrer (Ctrl+S), ou null
  */
 function capProjetPageAppliquer(info, keys, nom, handle) {
-  const essai = (k, fn) => { try { fn(); } catch (e) { console.error(e); alert(_L(`Partie « ${k} » non reprise : `) + (e && e.message || e)); } };
+  const essai = (k, fn) => { try { fn(); } catch (e) { console.error(e); capAlert(_L(`Partie « ${k} » non reprise : `) + (e && e.message || e), { level: 'err' }); } };
   const ui = capProjetBloc(info, 'cap-ui-views') || {};
   if (keys.has('toolbar')) essai('toolbar', () => capCfgSet('toolbar', capProjetBloc(info, 'cap-toolbar')));
   if (keys.has('dash')) essai('dash', () => capCfgSet('dash', capProjetBloc(info, 'cap-dashboards')));

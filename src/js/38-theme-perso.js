@@ -108,14 +108,14 @@ function capThemeEditor(){
     capThemeStore={css:{...css}, layers:{...layers}, active:true}; capThemeSave(); capThemeRegister();
     close(); sel.value='custom'; applyTheme('custom');
     if(typeof currentMode!=='undefined'&&currentMode==='capella') capRenderCurrentView(); };
-  ov.querySelector('#thm-del')?.addEventListener('click',()=>{ if(!confirm(_L('Supprimer le thème personnalisé ?'))) return;
+  ov.querySelector('#thm-del')?.addEventListener('click',async()=>{ if(!await capConfirm(_L('Supprimer le thème personnalisé ?'),{danger:true})) return;
     capThemeStore=null; capThemeSave(); capThemeRegister(); close();
     const to=prev==='custom'?'dark':prev; sel.value=to; applyTheme(to); });
   ov.querySelector('#thm-exp').onclick=()=>capDownloadBlob(new Blob([JSON.stringify({capellaTheme:1,css,layers},null,2)],{type:'application/json'}),_L('theme-personnalise.json'));
   ov.querySelector('#thm-imp').onclick=()=>ov.querySelector('#thm-file').click();
   ov.querySelector('#thm-file').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader();
     r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d||typeof d.css!=='object') throw new Error('format');
-      css={...css,...d.css}; layers={...layers,...(d.layers||{})}; fill(); preview(); }catch(err){ alert(_L('Fichier de thème invalide.')); } }; r.readAsText(f); };
+      css={...css,...d.css}; layers={...layers,...(d.layers||{})}; fill(); preview(); }catch(err){ capAlert(_L('Fichier de thème invalide.'),{level:'err'}); } }; r.readAsText(f); };
   fill(); preview();
 }
 

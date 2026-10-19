@@ -30,6 +30,7 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
   const p = await ctx.newPage();
   const errs = []; p.on('pageerror', e => errs.push(e.message));
   p.on('dialog', d => d.dismiss());
+  await p.addInitScript(() => { window._capDlgAuto = 'cancel'; });   // dialogues maison (12) : réponse automatique « Annuler » pendant le parcours
   await p.goto('file://' + page.replace(/\\/g, '/').replace(/^([A-Za-z]):/, '/$1:') + (MULTI ? '?lang=' + (args.includes('--fr') ? 'fr' : 'en') : ''));
   await p.setInputFiles('#capella-file-input', model);
   await p.waitForFunction(() => typeof capLoaded !== 'undefined' && capLoaded, null, { timeout: 180000 });
@@ -77,6 +78,18 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     }
     for (const t of ['list', 'check', 'report', 'cfg']) await p.evaluate(k => capRevToggle(true, k), t);
     await p.evaluate(() => { capRevReportList(); capRevSynthese(_capRev.comments); _capRev.comments = []; _capRev.seq = 0; capRevSave(); capRevToggle(false); });
+  });
+  await step('dialogues maison : confirm, prompt, Entrée / Échap', async () => {
+    await p.evaluate(() => { window._capDlgAuto = null; });
+    const c1 = p.evaluate(() => capConfirm('Question ?', { danger: true })); await p.waitForSelector('.cap-dlg-ov [data-c="ok"]'); await p.click('.cap-dlg-ov [data-c="ok"]');
+    if (await c1 !== true) throw new Error('capConfirm : OK attendu');
+    const c2 = p.evaluate(() => capConfirm('Question ?')); await p.waitForSelector('.cap-dlg-ov'); await p.keyboard.press('Escape');
+    if (await c2 !== false) throw new Error('capConfirm : Échap doit annuler');
+    const c3 = p.evaluate(() => capPrompt('Nom :', 'abc')); await p.waitForSelector('.cap-dlg-ov input'); await p.keyboard.type('d'); await p.keyboard.press('Enter');
+    if (await c3 !== 'd') throw new Error('capPrompt : « d » attendu (valeur initiale sélectionnée), obtenu ' + JSON.stringify(await c3));
+    const c4 = p.evaluate(() => capAlert('Info')); await p.waitForSelector('.cap-dlg-ov[data-kind="alert"]'); await p.keyboard.press('Enter'); await c4;
+    if (await p.$('.cap-dlg-ov')) throw new Error('boîte de dialogue restée ouverte');
+    await p.evaluate(() => { window._capDlgAuto = 'cancel'; });
   });
   await step('barre : menu, épingle, Ctrl+K', async () => {
     await p.click('#cap-v-analyses .cap-nav-arr'); await p.click('#cap-nav-dd [data-open="ana:reqs"]');

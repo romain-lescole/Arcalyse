@@ -4166,7 +4166,18 @@
   "… et {0} autre(s) diagramme(s)": "… and {0} more diagram(s)",
   "🕘 Derniers ouverts": "🕘 Recently opened",
   "Cherchez une vue, un élément du modèle ou un diagramme (raccourci": "Search for a view, a model element or a diagram (shortcut",
-  ") ; réglez la barre : 📌 épingle une vue en bouton direct.": "); set up the bar: 📌 pins a view as a direct button."
+  ") ; réglez la barre : 📌 épingle une vue en bouton direct.": "); set up the bar: 📌 pins a view as a direct button.",
+  "Saisie": "Input",
+  "Attention": "Warning",
+  "Erreur": "Error",
+  "Confirmation": "Confirmation",
+  "Comparer": "Compare",
+  "Remplacer": "Replace",
+  "Copie manuelle": "Manual copy",
+  "PDF volumineux": "Large PDF",
+  "Continuer": "Continue",
+  "Valider": "Validate",
+  "Rattacher": "Attach"
  },
  "interface": {
   "🌳 Arborescence": "🌳 Tree",

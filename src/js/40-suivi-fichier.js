@@ -265,8 +265,8 @@ async function capWatchPickNewVersion(){
   adopt(r.file, r.handle);
   /** Adopte le fichier choisi comme source et le compare au modèle affiché. */
   async function adopt(f, h){
-    if(_capWatch.name&&f.name!==_capWatch.name&&!confirm(_L(`Le fichier choisi (« ${f.name} ») n'a pas le même nom que le modèle affiché (« ${_capWatch.name} »).\nLe comparer quand même ?`))) return;
-    let text; try{ text=await f.text(); }catch(e){ alert(_L('Impossible de lire « ')+f.name+' ».'); return; }
+    if(_capWatch.name&&f.name!==_capWatch.name&&!await capConfirm(_L(`Le fichier choisi (« ${f.name} ») n'a pas le même nom que le modèle affiché (« ${_capWatch.name} »).\nLe comparer quand même ?`),{ok:_L('Comparer')})) return;
+    let text; try{ text=await f.text(); }catch(e){ capAlert(_L('Impossible de lire « ')+f.name+' ».',{level:'err'}); return; }
     Object.assign(_capWatch,{handle:h, file:f, name:f.name, state:'', diskMtime:f.lastModified, diskSize:f.size, lastCheck:Date.now()});
     if(!_capWatch.origDoc){ _capWatch.origDoc=cap_xmlDoc; _capWatch.origAt=Date.now(); }
     capWatchArm();
@@ -281,14 +281,14 @@ async function capWatchPickNewVersion(){
 
 /** Applique la version en attente : recharge le modèle (vue courante conservée), archive le delta dans l'historique
  * et place la version précédente dans ⚖ Comparaison de versions (sauf si l'utilisateur y a chargé sa propre version). */
-function capWatchApply(){
+async function capWatchApply(){
   const p=_capWatch.pending; if(!p) return;
-  if(p.common!=null&&p.common<CAP_WATCH_SAME_MIN&&!confirm(_L(`Seuls ${Math.round(p.common*100)} % des éléments sont communs avec le modèle affiché : ce n'est peut-être pas le même projet.\n\nRemplacer quand même le modèle affiché par cette version ?`))) return;
+  if(p.common!=null&&p.common<CAP_WATCH_SAME_MIN&&!await capConfirm(_L(`Seuls ${Math.round(p.common*100)} % des éléments sont communs avec le modèle affiché : ce n'est peut-être pas le même projet.\n\nRemplacer quand même le modèle affiché par cette version ?`),{ok:_L('Remplacer'),danger:true})) return;
   const prev=cap_xmlDoc, prevName=capCurrentFileName, mode=currentMode;
   const name=_capWatch.name||capCurrentFileName;
   try{ capApplyXmlDoc(p.doc, name); }
   catch(e){
-    alert(_L('Mise à jour impossible : ')+e.message+_L('\nLe modèle précédent est conservé.'));
+    capAlert(_L('Mise à jour impossible : ')+e.message+_L('\nLe modèle précédent est conservé.'),{level:'err'});
     try{ capApplyXmlDoc(prev, prevName); }catch(_){}
     return;
   }
@@ -342,11 +342,7 @@ function capWatchUpdateUi(){
 }
 
 /** Affiche brièvement un message dans la notification (sans action). @param {string} msg - Message */
-function capWatchFlash(msg){
-  const n=document.getElementById('cap-watch-flash'); if(!n) return;
-  n.textContent=msg; n.style.display='block';
-  clearTimeout(n._t); n._t=setTimeout(()=>{ n.style.display='none'; },3500);
-}
+function capWatchFlash(msg){ capToast(msg); }   // notification commune (12-dialogues.js)
 
 /** Affiche ou masque la notification de mise à jour (coin inférieur droit).
  * @param {boolean} show - true : afficher selon l'état courant (version en attente, fichier non relisible…)

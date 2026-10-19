@@ -431,9 +431,9 @@ function capHomeDocImport(){
   const inp=document.createElement('input'); inp.type='file'; if(!capIsMobile()) inp.accept='.json';
   inp.onchange=()=>{ const f=inp.files[0]; if(!f) return;
     f.text().then(t=>{
-      let o; try{ o=JSON.parse(t); }catch(e){ alert(_L('Fichier illisible (JSON attendu).')); return; }
+      let o; try{ o=JSON.parse(t); }catch(e){ capAlert(_L('Fichier illisible (JSON attendu).'),{level:'err'}); return; }
       const l=o&&o.type==='arcalyse-checklist'&&Array.isArray(o.docs)?o.docs:null;
-      if(!l){ alert(_L('Ce fichier n\'est pas une check-list Arcalyse.')); return; }
+      if(!l){ capAlert(_L('Ce fichier n\'est pas une check-list Arcalyse.'),{level:'err'}); return; }
       const docs=capHomeNorm({docs:l}).docs;
       docs.forEach(d=>{ d.id=capHomeUid(); d.sections.forEach(s=>{ s.id=capHomeUid(); s.items.forEach(i=>{ i.id=capHomeUid(); }); }); _capHome.docs.push(d); });
       if(docs.length) _capHomeUi.doc=docs[0].id;
@@ -666,11 +666,12 @@ function capHomeClick(e){
     case 'doc-html': if(d) capHomeDocExport(d); return;
     case 'doc-json': if(d) capDownloadBlob(new Blob([JSON.stringify({type:'arcalyse-checklist', version:1, date:new Date().toISOString(), docs:[d]},null,1)],{type:'application/json'}), (d.titre||'check-list').replace(/[^\p{L}\p{N}\-]+/gu,'_')+'.json'); return;
     case 'doc-dup': if(d){ const c=JSON.parse(JSON.stringify(d)); c.id=capHomeUid(); c.titre=d.titre+_L(' (copie)'); c.sections.forEach(x=>{ x.id=capHomeUid(); x.items.forEach(i=>{ i.id=capHomeUid(); i.ok=false; }); }); _capHome.docs.push(c); u.doc=c.id; } break;
-    case 'doc-del': if(d&&W.confirm(_L(`Supprimer « ${d.titre||_L('(sans titre)')} » ?`))){ capHomePopClose('doc',d.id); _capHome.docs=_capHome.docs.filter(x=>x!==d); if(u.doc===d.id) u.doc=''; } else return; break;
+    case 'doc-del': if(d) capConfirm(_L(`Supprimer « ${d.titre||_L('(sans titre)')} » ?`),{win:W, danger:true}).then(ok=>{ if(!ok) return; capHomePopClose('doc',d.id); _capHome.docs=_capHome.docs.filter(x=>x!==d); if(u.doc===d.id) u.doc=''; capHomeSave(); capHomeRender(); }); return;
     case 'doc-revue': if(d){ const ids=capHomePerimIds(d); capRevCibleeDialog({titre:d.titre, consignes:d.head.objet||'', echeance:d.head.date||'', filtre:c=>capHomeComPerim(c,ids)}); } return;
     case 'sec-add': if(d) d.sections.push({id:capHomeUid(), titre:_L('Nouvelle section'), items:[]}); break;
     case 'sec-up': case 'sec-down': if(s) capHomeMove(d.sections, d.sections.indexOf(s), act==='sec-up'?-1:1); break;
-    case 'sec-del': if(s&&(!s.items.length||W.confirm(_L(`Supprimer la section « ${s.titre} » et ses ${s.items.length} point(s) ?`)))) d.sections=d.sections.filter(x=>x!==s); else return; break;
+    case 'sec-del': if(!s) return; if(s.items.length){ capConfirm(_L(`Supprimer la section « ${s.titre} » et ses ${s.items.length} point(s) ?`),{win:W, danger:true}).then(ok=>{ if(!ok) return; d.sections=d.sections.filter(x=>x!==s); capHomeSave(); capHomeRender(); }); return; }
+      d.sections=d.sections.filter(x=>x!==s); break;
     case 'it-add': if(s) capHomeItemAdd(d, s.id); return;
     case 'it-up': case 'it-down': if(ii>=0) capHomeMove(s.items, ii, act==='it-up'?-1:1); break;
     case 'it-del': if(ii>=0) s.items.splice(ii,1); break;

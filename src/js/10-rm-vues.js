@@ -149,9 +149,9 @@ function rmViewAdd(kind){
 }
 
 /** Ferme un onglet (au moins un onglet reste). @param {number} i - Indice */
-function rmViewClose(i){
+async function rmViewClose(i){
   const tab=rmViews.tabs[i]; if (!tab || rmViews.tabs.length<2) return;
-  if (!confirm(_L(`Fermer la vue « ${tab.name} » ?`))) return;
+  if (!await capConfirm(_L(`Fermer la vue « ${tab.name} » ?`),{ok:_L('Fermer')})) return;
   rmViews.tabs.splice(i,1);
   const was=rmViews.idx;
   rmViews.idx = i<was ? was-1 : Math.min(was, rmViews.tabs.length-1);
@@ -216,7 +216,7 @@ function rmViewLoadFile(file){
       const tab=rmViewNewTab(d.view, {name:d.auto?'':d.name, prefix:d.prefix});
       rmViews.tabs.push(tab); if (tab.auto) tab.name=rmViewAutoName(tab);
       rmViews.idx=rmViews.tabs.length-1; rmViewsRender(); rmViewApply(tab.v);
-    } catch(err) { alert(_L('Vue illisible : ')+err.message); }
+    } catch(err) { capAlert(_L('Vue illisible : ')+err.message,{level:'err'}); }
   };
   r.readAsText(file);
 }

@@ -301,9 +301,9 @@ function capScExport(fmt){
   if(fmt==='svg'){ capDownloadBlob(new Blob([svg],{type:'image/svg+xml'}), base+'.svg'); return; }
   capSvgToCanvas(svg,w,h,2).then(c=>capCanvasBlob(c,'image/png')).then(b=>{
     if(fmt==='png') capDownloadBlob(b, base+'.png');
-    else if(navigator.clipboard&&window.ClipboardItem) navigator.clipboard.write([new ClipboardItem({'image/png':b})]).then(()=>{ if(typeof capWatchFlash==='function') capWatchFlash(_L('✔ Diagramme copié')); },()=>alert(_L('Copie impossible dans ce navigateur.')));
-    else alert(_L('Copie d\'image non disponible dans ce navigateur.'));
-  }).catch(err=>alert(_L('Export impossible : ')+err.message));
+    else if(navigator.clipboard&&window.ClipboardItem) navigator.clipboard.write([new ClipboardItem({'image/png':b})]).then(()=>{ if(typeof capWatchFlash==='function') capWatchFlash(_L('✔ Diagramme copié')); },()=>capAlert(_L('Copie impossible dans ce navigateur.')));
+    else capAlert(_L('Copie d\'image non disponible dans ce navigateur.'));
+  }).catch(err=>capAlert(_L('Export impossible : ')+err.message,{level:'err'}));
 }
 
 /** Ajuste la hauteur de la liste et du diagramme au bas réel de la vue (la barre d'état ne doit pas masquer

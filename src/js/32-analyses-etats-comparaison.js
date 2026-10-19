@@ -315,7 +315,7 @@ function capRenderDiff(box){
       const file=e.target.files[0]; if(!file) return;
       const r=new FileReader();
       r.onload=ev=>{ const doc=new DOMParser().parseFromString(ev.target.result,'application/xml');
-        if(doc.querySelector('parsererror')){ alert(_L('Fichier XML invalide')); return; }
+        if(doc.querySelector('parsererror')){ capAlert(_L('Fichier XML invalide'),{level:'err'}); return; }
         capDiffDoc=doc; capDiffName=file.name; delete _capAnaCache.diff; if(box._drState) box._drState.ex.clear(); capRenderDiff(box); };
       r.readAsText(file);
     });

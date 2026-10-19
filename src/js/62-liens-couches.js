@@ -207,7 +207,7 @@ function capXlWire(box){
     res.innerHTML=l.map(e=>`<div class="ctx-i" data-xl-seed="${capEsc(e.id)}">${capIco(e.id,14)}<b style="color:${(CAP_LAYERS[e.layer]||{}).color};font-size:10px">${capEsc(e.layer)}</b> ${capEsc(e.name)} <span class="ana-dim">${capEsc(capAnaHuman(e.type))}${lies.has(e.id)?'':_L(' · sans lien')}</span></div>`).join('')||`<div class="ana-dim" style="padding:4px 8px">${_L('Aucun élément.')}</div>`;
     res.querySelectorAll('[data-xl-seed]').forEach(b=>b.onclick=()=>{ Object.assign(u,{seed:b.dataset.xlSeed, q:''}); re(); });
   };
-  box.querySelectorAll('[data-xl-x]').forEach(b=>b.onclick=()=>capXlExport(b.dataset.xlX).catch(e=>alert(e.message)));
+  box.querySelectorAll('[data-xl-x]').forEach(b=>b.onclick=()=>capXlExport(b.dataset.xlX).catch(e=>capAlert(e.message,{level:'err'})));
   const svg=box.querySelector('.xl-svg svg'); if(!svg) return;
   svg.querySelectorAll('.xl-n').forEach(n=>{
     n.addEventListener('click',()=>capOpenDetailById(n.dataset.ref));

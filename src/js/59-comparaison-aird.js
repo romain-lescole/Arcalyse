@@ -196,7 +196,7 @@ function capDgWire(host){
   host.addEventListener('change',e=>{
     if(e.target.id==='dg-filtre'){ _capDg.filtre=e.target.value; capDgRender(host); return; }
     if(e.target.id==='dg-ref'){ const f=e.target.files[0]; if(!f) return;
-      f.text().then(t=>{ if(!/ownedRepresentationDescriptors/.test(t)){ alert(_L('Ce fichier ne contient aucun diagramme Capella (.aird attendu).')); return; }
+      f.text().then(t=>{ if(!/ownedRepresentationDescriptors/.test(t)){ capAlert(_L('Ce fichier ne contient aucun diagramme Capella (.aird attendu).'),{level:'err'}); return; }
         Object.assign(_capDg,{ref:t, refNom:f.name, manuel:true, cache:null}); capDgRender(host); }); }
   });
   host.addEventListener('input',e=>{ if(e.target.id==='dg-q'){ _capDg.q=e.target.value; const p=e.target.selectionStart; capDgRender(host);

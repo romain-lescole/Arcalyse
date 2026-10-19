@@ -1194,8 +1194,8 @@ document.getElementById('cap-customcol-addstep')?.addEventListener('click',()=>{
   capRenderCustomColPanel();
 });
 document.getElementById('cap-customcol-create')?.addEventListener('click',()=>{
-  if (!_capCustomColSteps.length || !_capCustomColSteps[0].metaclass) { alert(_L('Choisissez au moins un type de départ et une relation ou une valeur.')); return; }
-  if (_capCustomColSteps.some(s=>!s.property)) { alert(_L('Chaque étape doit avoir une relation ou une valeur sélectionnée.')); return; }
+  if (!_capCustomColSteps.length || !_capCustomColSteps[0].metaclass) { capAlert(_L('Choisissez au moins un type de départ et une relation ou une valeur.')); return; }
+  if (_capCustomColSteps.some(s=>!s.property)) { capAlert(_L('Chaque étape doit avoir une relation ou une valeur sélectionnée.')); return; }
   const nameInp=document.getElementById('cap-customcol-name');
   const stepsLabel=_capCustomColSteps.map(s=>s.property.label.replace(' →','').replace('← ','')).join(' → ');
   const label = nameInp.value.trim() || stepsLabel;
@@ -1246,9 +1246,9 @@ function capSaveTableView(){
 function capLoadTableView(jsonText){
   let data;
   try { data = JSON.parse(jsonText); }
-  catch(e) { alert(_L('Fichier invalide : JSON illisible.')); return; }
+  catch(e) { capAlert(_L('Fichier invalide : JSON illisible.')); return; }
   // Vue du tableau, ou vue de l'ancienne 📊 Table View (convertie) : appliquée à l'onglet affiché
-  if (!capTableApplyViewFile(data)) { alert(_L('Ce fichier ne semble pas être une vue de tableau valide.')); return; }
+  if (!capTableApplyViewFile(data)) { capAlert(_L('Ce fichier ne semble pas être une vue de tableau valide.')); return; }
   capRenderTable();
 }
 document.getElementById('cap-table-view-input')?.addEventListener('change', ev=>{

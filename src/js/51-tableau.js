@@ -131,9 +131,9 @@ function capRenderTableTabs(){
     el.appendChild(nm);
     if (capTableTabs.length>1) {
       const x=document.createElement('span'); x.className='cap-ttab-close'; x.textContent='✕'; x.title=_L('Fermer cet onglet');
-      x.onclick=ev=>{
+      x.onclick=async ev=>{
         ev.stopPropagation();
-        if (!confirm(_L(`Fermer l'onglet « ${tab.name} » ?`))) return;
+        if (!await capConfirm(_L(`Fermer l'onglet « ${tab.name} » ?`),{ok:_L('Fermer')})) return;
         capTableSyncToTab();
         capTableTabs.splice(idx,1);
         if (capTableTabIdx>idx || capTableTabIdx>=capTableTabs.length) capTableTabIdx=Math.max(0,capTableTabIdx-1);

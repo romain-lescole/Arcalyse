@@ -78,7 +78,7 @@ function capAboutOpen(){
   ov.querySelectorAll('[data-c="x"]').forEach(b=>b.onclick=()=>{ ov.style.display='none'; });
   ov.querySelector('[data-c="copy"]').onclick=()=>{
     const txt=[CAP_APP_NAME, ...tech.map(([k,v])=>`${k} : ${v}`)].join('\n');
-    (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>{ if(typeof capWatchFlash==='function') capWatchFlash(_L('✔ Informations copiées')); },()=>prompt(_L('Copiez les informations :'),txt));
+    (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>{ if(typeof capWatchFlash==='function') capWatchFlash(_L('✔ Informations copiées')); },()=>capPrompt(_L('Copiez les informations :'),txt,{title:_L('Copie manuelle')}));
   };
 }
 
