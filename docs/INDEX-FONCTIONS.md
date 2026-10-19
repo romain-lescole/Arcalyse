@@ -206,7 +206,7 @@
 - `capChkRefresh` (l. 85) — Rafraîchit ce qui dépend du profil : valeurs du tableau de bord, vue affichée (et tous les calculs si un seuil a changé :
 - `capChkDialog` (l. 94) — Fenêtre 🩺 Profil de contrôles : par vue, chaque contrôle (activé, gravité, nombre actuel), seuils, export / import .json.
 
-## 20-capella-chargement.js — 937 lignes
+## 20-capella-chargement.js — 938 lignes
 
 - `CAP_LAYERS` (l. 4)
 - `CAP_NS_LAYER` (l. 12)
@@ -223,29 +223,29 @@
 - `capEsc` (l. 185) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
 - `capLoadFile` (l. 203) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
 - `capApplyXmlDoc` (l. 252) — Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
-- `capReplaceConfirm` (l. 286) — Demande confirmation avant de remplacer le modèle affiché par un autre fichier : le travail non enregistré
-- `capReplacePreOk` (l. 315) — @returns {boolean} vrai si le remplacement du modèle vient d'être confirmé avant le sélecteur (la confirmation est consommée)
-- `capShowWelcome` (l. 321) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
-- `capWelcomeStatus` (l. 333) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
-- `capUpdateWelcome` (l. 339) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
-- `XSI_NS` (l. 400)
-- `capXType` (l. 402) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
-- `capTName` (l. 404) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
-- `capXId` (l. 406) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
-- `capXName` (l. 408) — Lit l'attribut 'name' d'un élément XML Capella.
-- `capResolveLayer` (l. 413) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
-- `capGetAttrs` (l. 419) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
-- `capBuildTree` (l. 430) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
-- `capRunBulk` (l. 456) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
-- `capBuildTypeRegistry` (l. 466) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
-- `capApplyPanelOnLoad` (l. 486) — Appelée après le chargement Capella : configure le panneau gauche RM.
-- `capInjectToArbo` (l. 561) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
-- `capInjectCapellaRelsToCriteria` (l. 665) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
-- `capInjectLinksToModel` (l. 706) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
-- `capFilterArboToLinked` (l. 750) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
-- `capInjectChainsToModal` (l. 789) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
-- `capRenderCurrentView` (l. 850) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
-- `capUpdateStatChips` (l. 928) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
+- `capReplaceConfirm` (l. 287) — Demande confirmation avant de remplacer le modèle affiché par un autre fichier : le travail non enregistré
+- `capReplacePreOk` (l. 316) — @returns {boolean} vrai si le remplacement du modèle vient d'être confirmé avant le sélecteur (la confirmation est consommée)
+- `capShowWelcome` (l. 322) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
+- `capWelcomeStatus` (l. 334) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
+- `capUpdateWelcome` (l. 340) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
+- `XSI_NS` (l. 401)
+- `capXType` (l. 403) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
+- `capTName` (l. 405) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
+- `capXId` (l. 407) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
+- `capXName` (l. 409) — Lit l'attribut 'name' d'un élément XML Capella.
+- `capResolveLayer` (l. 414) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
+- `capGetAttrs` (l. 420) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
+- `capBuildTree` (l. 431) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
+- `capRunBulk` (l. 457) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
+- `capBuildTypeRegistry` (l. 467) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
+- `capApplyPanelOnLoad` (l. 487) — Appelée après le chargement Capella : configure le panneau gauche RM.
+- `capInjectToArbo` (l. 562) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
+- `capInjectCapellaRelsToCriteria` (l. 666) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
+- `capInjectLinksToModel` (l. 707) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
+- `capFilterArboToLinked` (l. 751) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
+- `capInjectChainsToModal` (l. 790) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
+- `capRenderCurrentView` (l. 851) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
+- `capUpdateStatChips` (l. 929) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
 ## 21-capella-vues-base.js — 1526 lignes
 
@@ -1418,3 +1418,15 @@
 - `capXlsxBuild` (l. 29) — Construit un classeur .xlsx.
 - `capXlsxDownload` (l. 53) — Télécharge un classeur .xlsx. @param {string} name - Nom de fichier @param {Array} sheets - Feuilles (voir capXlsxBuild)
 - `capXlsxClasseur` (l. 56) — Classeur Excel de toutes les analyses : une feuille par sujet (éléments, fonctions, échanges, composants, liens, chaînes, exigences, statuts
+
+## 76-historique.js — 116 lignes
+
+- `capHistKey` (l. 15) — Clé de la vue affichée, comme dans le menu ☰ : `@rm` pour la Relation Map, `ana:<sous-vue>` pour 🔬 Analyses.
+- `capHistPush` (l. 24) — Consigne une étape (sauf pendant un retour) : les étapes « avant » après la position courante sont oubliées,
+- `capHistGo` (l. 36) — Revient à une étape de l'historique (vue, puis diagramme ou élément du détail).
+- `capHistNav` (l. 52) — ◀ ou ▶ : étape précédente ou suivante.
+- `capHistLabel` (l. 61) — Libellé d'une étape pour la liste : vue (nom du menu), diagramme ou élément.
+- `capHistSync` (l. 69) — Met à jour les boutons ◀ ▶ de la barre (grisés aux extrémités, infobulle = étape visée).
+- `capHistMenu` (l. 80) — Liste des étapes (clic droit sur ◀ ou ▶) : les plus récentes en haut, l'étape courante marquée.
+- `capHistClose` (l. 93) — Ferme la liste des étapes.
+- `capHistReset` (l. 96) — Vide l'historique au chargement d'un autre modèle, qui s'ouvre sur 🏠 Accueil (première étape).

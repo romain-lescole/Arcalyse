@@ -91,6 +91,7 @@ Le modèle est analysé (quelques secondes pour un gros modèle), puis la vue **
 
 | N° | Bouton | Rôle |
 |---|---|---|
+| ◀ ▶ | **Historique** | Précédent / Suivant (Alt+← / Alt+→) : vues, éléments du détail et diagrammes ouverts ([§ 3.7](#37--historique-de-navigation)). |
 | 1 | **🏠 Accueil** | Accueil du projet : fiche, contenu du modèle, check-lists et plans de revue, tableaux blancs ([§ 4](#4--accueil-du-projet)). |
 | 2 | **🗺 Relation Map** | Graphe interactif centré sur un élément et ses voisins ([§ 5](#5--relation-map)). Fait apparaître la 2ᵉ barre de commandes. |
 | 3 | **🔲 Diagrammes Capella** | Diagrammes du projet (`.aird`) dessinés comme dans Capella ([§ 10](#10--diagrammes-capella)). *Épinglé par défaut.* |
@@ -204,6 +205,10 @@ Tous ces réglages sont enregistrés avec la 💾 page HTML et dans la partie «
 - **seuils** : longueur minimale d'une description, nom trop long (caractères, mots), nombre de statuts pour qu'une couche soit « majoritairement validée ».
 
 Le profil est enregistré avec la 💾 page, repris par 📄 Ouvrir un projet et par le fichier ⚙ Interface et vues ; **💾 Exporter / 📂 Importer .json** permettent de partager le profil d'une équipe. Les contrôles sont désignés par leur titre : un profil est propre à une langue de l'interface.
+### 3.7 ◀ ▶ Historique de navigation
+
+Les boutons **◀ ▶** en tête de la barre (**Alt+←** / **Alt+→**, boutons latéraux de la souris) reviennent sur les étapes précédentes, comme dans un navigateur : vues ouvertes (sous-vues de 🔬 Analyses comprises), éléments ouverts dans le panneau de détail, diagrammes ouverts. L'infobulle nomme l'étape visée. **Clic droit** sur ◀ ou ▶ : liste des étapes (la plus récente en haut, l'étape courante marquée ●), clic pour y aller directement. Ouvrir une nouvelle vue après un retour oublie les étapes « suivantes », comme dans un navigateur. L'historique est vidé à l'ouverture d'un autre modèle (une mise à jour 🔄 du même modèle le conserve).
+
 
 ## 4. 🏠 Accueil du projet
 

@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 6366 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 6372 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -8,174 +8,176 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 5 | Relation Map | Relation Map |
-| 5 | Relation Map  (infobulle) | Relation Map |
-| 6 | 🌲 PBS | 🌲 PBS |
-| 12 | ↺ Reset | ↺ Reset |
-| 15 | Fichier | File |
-| 15 | Ouvrir un modèle Capella, enregistrer la page  (infobulle) | Open a Capella model, save the page |
-| 16 | Enregistrer la page (avec le modèle chargé) directement dans un fichier HTML, sans passer par les téléchargements (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous  (infobulle) | Save the page (with the loaded model) directly to an HTML file, without going through downloads (Ctrl+S) — Shift+click or Ctrl+Shift+S: save as |
-| 18 | 🔷 CAPELLA | 🔷 CAPELLA |
-| 18 | Charger un fichier Capella  (infobulle) | Load a Capella file |
-| 19 | 💾 Page HTML | 💾 HTML page |
-| 19 | Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome  (infobulle) | Download the current page (with the Capella file already loaded) as standalone HTML |
-| 22 | Suivi | Watch |
-| 22 | Suivi du fichier .capella : mises à jour, delta, historique  (infobulle) | Watch the .capella file: updates, delta, history |
-| 27 | ✏ Éditer ▾ | ✏ Edit ▾ |
-| 27 | Éditer / Sauver / Charger  (infobulle) | Edit / Save / Load |
-| 31 | ✏ Éditeur de modèle | ✏ Model editor |
-| 32 | 💾 Sauvegarder | 💾 Save |
-| 33 | 📂 Charger un fichier | 📂 Load a file |
-| 37 | Revue | Review |
-| 37 | Revue : commentaires sur le modèle et les diagrammes, vérification après mise à jour, rapport  (infobulle) | Review: comments on the model and diagrams, check after update, report |
-| 39 | Thème | Theme |
-| 39 | Changer le thème, créer ou modifier un thème personnalisé  (infobulle) | Change the theme, create or edit a custom theme |
-| 40 | Changer le thème  (infobulle) | Change theme |
-| 41 | 🌙 Sombre | 🌙 Dark |
-| 42 | ☀️ Clair | ☀️ Light |
-| 43 | 🌊 Marine | 🌊 Navy |
-| 44 | 🌿 Nature | 🌿 Nature |
-| 45 | 🗂 Office 2007 | 🗂 Office 2007 |
-| 46 | ⚡ Contraste | ⚡ Contrast |
-| 48 | Créer ou modifier un thème personnalisé (toutes les couleurs)  (infobulle) | Create or edit a custom theme (all colours) |
-| 50 | Aide | Help |
-| 50 | Aide complète, visite guidée de l'outil  (infobulle) | Full help, guided tour of the tool |
-| 52 | Préférences : affichage des menus, enregistrement automatique, thème, interface et vues  (infobulle) | Preferences: menu display, automatic saving, theme, interface and views |
-| 56 | Zoom avant (Ctrl++)  (infobulle) | Zoom in (Ctrl++) |
-| 57 | Zoom arrière (Ctrl+-)  (infobulle) | Zoom out (Ctrl+-) |
-| 58 | ⊡ Fit | ⊡ Fit |
-| 58 | Ajuster (Ctrl+W)  (infobulle) | Fit (Ctrl+W) |
-| 60 | ⚙ Filtres | ⚙ Filters |
-| 60 | Types d'éléments et critères de relation affichés dans le graphe  (infobulle) | Element types and relation criteria displayed in the graph |
-| 62 | ↓ Ouvrir tout | ↓ Expand all |
-| 63 | ↑ Fermer tout | ↑ Collapse all |
-| 65 | Profondeur | Depth |
-| 65 | Profondeur de voisinage (1 à 10)  (infobulle) | Neighbourhood depth (1 to 10) |
-| 71 | Disposition du graphe  (infobulle) | Graph layout |
-| 73 | → LR — de gauche à droite | → LR — left to right |
-| 74 | ↓ TB — de haut en bas | ↓ TB — top to bottom |
-| 75 | ← RL — de droite à gauche | ← RL — right to left |
-| 76 | ◉ Radiale | ◉ Radial |
-| 77 | ⚡ Zigzag | ⚡ Zigzag |
-| 77 | Zigzag 7:3 — séquence en grille  (infobulle) | Zigzag 7:3 — grid sequence |
-| 81 | # Nums | # Nums |
-| 82 | ◉ Légende | ◉ Legend |
-| 83 | ⌁ Relations | ⌁ Relations |
-| 84 | ✂ Noms | ✂ Names |
-| 84 | Couper les noms longs  (infobulle) | Truncate long names |
-| 85 | ⊙ Unique | ⊙ Single |
-| 86 | ⬡ Compact | ⬡ Compact |
-| 90 | ⬇ Export ▾ | ⬇ Export ▾ |
-| 90 | Exporter le graphe : image ou données (CSV)  (infobulle) | Export the graph: image or data (CSV) |
-| 94 | Image | Image |
-| 95 | 🖼 PNG | 🖼 PNG |
-| 96 | 📷 JPEG | 📷 JPEG |
-| 97 | 📐 SVG | 📐 SVG |
-| 98 | Données (CSV) | Data (CSV) |
-| 99 | ▦ Arbre par niveaux… | ▦ Tree by levels… |
-| 99 | Une colonne par niveau (et par relation) : le graphe déplié de gauche à droite  (infobulle) | One column per level (and per relation): the graph unfolded from left to right |
-| 100 | ⇄ Relations affichées… | ⇄ Displayed relations… |
-| 100 | Une ligne par arête affichée : source, relation, cible, nombre, profondeur, chemin  (infobulle) | One row per displayed edge: source, relation, target, count, depth, path |
-| 109 | Nouvelle vue : copie de la vue affichée, vue vide ou préréglage  (infobulle) | New view: copy of the displayed view, empty view or preset |
-| 113 | 💾 Sauver vue | 💾 Save view |
-| 113 | Enregistrer la vue affichée dans un fichier (.json)  (infobulle) | Save the displayed view to a file (.json) |
-| 114 | 📂 Charger vue | 📂 Load view |
-| 114 | Ouvrir une vue enregistrée dans un nouvel onglet  (infobulle) | Open a saved view in a new tab |
-| 122 | ❓ Aide | ❓ Help |
-| 122 | Aide et présentation des fonctionnalités  (infobulle) | Help and feature overview |
-| 123 | 🚀 Bien démarrer | 🚀 Getting started |
-| 123 | · ouvrir un modèle, puis trouver l'aide et les tutoriels | · open a model, then find the help and tutorials |
-| 123 | Visite guidée en deux temps : où ouvrir votre fichier .capella, puis, une fois le modèle chargé, où trouver l'aide et les tutoriels  (infobulle) | Two-step guided tour: where to open your .capella file, then, once the model is loaded, where to find the help and tutorials |
-| 124 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) | Click to browse, or drag and drop a .capella file |
-| 125 | Arcalyse | Arcalyse |
-| 125 | Votre modèle Capella, sous toutes ses coutures. | Your Capella model, inside and out. |
-| 126 | Ouvrir un modèle Capella | Open a Capella model |
-| 127 | Glissez-déposez votre fichier | Drag and drop your |
-| 127 | (ou le dossier du projet) ici | (or the project folder) here |
-| 127 | ou recherchez-le dans l'explorateur de fichiers. | or browse for it in the file explorer. |
-| 128 | 📂 Fichier .capella… | 📂 .capella file… |
-| 128 | Ouvrir le fichier .capella seul  (infobulle) | Open the .capella file alone |
-| 129 | 📁 Dossier du projet… | 📁 Project folder… |
-| 129 | Ouvrir le dossier du projet : le .capella et ses diagrammes (.aird) sont chargés ensemble  (infobulle) | Open the project folder: the .capella and its diagrams (.aird) are loaded together |
-| 130 | 📄 Projet de travail (.html)… | 📄 Work project (.html)… |
-| 130 | Reprendre un projet de travail enregistré en page HTML (💾), même par une version précédente d'Arcalyse (à partir de la 2.1) : modèle, diagrammes, revue, accueil, vues et réglages sont repris dans cette version  (infobulle) | Resume a work project saved as an HTML page (💾), even by an earlier version of Arcalyse (2.1 or later): model, diagrams, review, home, views and settings are carried over into this version |
-| 133 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. | Accepted formats: .capella · .melodymodeller · .xml — the file is read locally, nothing is sent. |
-| 134 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités | 📖 What can be analysed? Discover the features |
-| 135 | 🎓 Visite guidée de l'interface | 🎓 Guided tour of the interface |
-| 136 | ℹ À propos | ℹ About |
-| 144 | Panneau | Panel |
-| 145 | Réduire le panneau  (infobulle) | Collapse the panel |
-| 148 | Arborescence | Tree |
-| 150 | Tout développer  (infobulle) | Expand all |
-| 152 | Tout réduire  (infobulle) | Collapse all |
-| 158 | ✕ vider | ✕ clear |
-| 158 | Vider la sélection  (infobulle) | Clear the selection |
-| 161 | 🔍 Filtrer l'arborescence…  (infobulle) | 🔍 Filter the tree… |
-| 170 | Contexte | Context |
-| 176 | ✚ Créer un nouvel élément | ✚ Create a new element |
-| 180 | Portée (Paquetages) | Scope (Packages) |
-| 186 | Ouvrir le panneau  (infobulle) | Open the panel |
-| 199 | ⚙ Filtres du graphe | ⚙ Graph filters |
-| 199 | Fermer (Échap)  (infobulle) | Close (Esc) |
-| 202 | Types d'éléments | Element types |
-| 203 | Tout sélectionner  (infobulle) | Select all |
-| 203 | Tout désélectionner  (infobulle) | Deselect all |
-| 207 | Critères de relation | Relation criteria |
-| 208 | Tout sélectionner  (infobulle) | Select all |
-| 208 | Tout désélectionner  (infobulle) | Deselect all |
-| 213 | Légende | Legend |
-| 213 | Replier / déplier la légende  (infobulle) | Collapse / expand the legend |
-| 217 | Fermer le détail  (infobulle) | Close the detail |
-| 222 | Prêt | Ready |
-| 229 | 🔎 Détail | 🔎 Detail |
-| 231 | ✏ Modifier l'élément | ✏ Edit the element |
-| 232 | → Créer une relation vers… | → Create a relation to… |
-| 233 | ✦ Créer un élément enfant | ✦ Create a child element |
-| 235 | ⊙ Définir comme contexte | ⊙ Set as context |
-| 236 | ↓ Développer | ↓ Expand |
-| 237 | ↑ Réduire | ↑ Collapse |
-| 239 | 👁 Masquer l'élément | 👁 Hide the element |
-| 247 | Annuler | Cancel |
-| 248 | Sauvegarder | Save |
-| 256 | ✏ Éditeur de modèle | ✏ Model editor |
-| 260 | Éléments ( | Elements ( |
-| 261 | Relations ( | Relations ( |
-| 262 | Paquetages ( | Packages ( |
-| 263 | Chaînes ( | Chains ( |
-| 272 | Exporter | Export |
-| 273 | Résolution : | Resolution: |
-| 275 | 1× Normal | 1× Normal |
-| 277 | 3× Ultra | 3× Ultra |
-| 278 | 4× Max | 4× Max |
-| 282 | Annuler | Cancel |
-| 283 | Exporter | Export |
-| 303 | Types d'éléments | Element types |
-| 304 | Filtrer les types…  (infobulle) | Filter types… |
-| 309 | Tout cocher | Check all |
-| 311 | Aucun | None |
-| 313 | Défaut | Default |
-| 322 | Glisser pour redimensionner  (infobulle) | Drag to resize |
-| 330 | 🌳 Arborescence | 🌳 Tree |
-| 331 | ▦ Cartes | ▦ Cards |
-| 332 | 📖 Index des types | 📖 Type index |
-| 343 | Rechercher…  (infobulle) | Search… |
-| 347 | Tous | All |
-| 353 | Tranv. | Shared |
-| 355 | ⬇ CSV | ⬇ CSV |
-| 359 | ⊞ Déplier | ⊞ Expand |
-| 360 | ⊟ Réduire | ⊟ Collapse |
-| 362 | ⬇ JSON | ⬇ JSON |
-| 380 | ← Préc. | ← Prev. |
-| 382 | Suiv. → | Next → |
-| 400 | ✨ Colonne par chemin | ✨ Path column |
-| 404 | type de départ | start type |
-| 410 | Type d'élément | Element type |
-| 411 | Relation ou valeur | Relation or value |
-| 415 | + Ajouter une étape | + Add a step |
-| 418 | Nom de la colonne | Column name |
-| 419 | ex: Functions of Component  (infobulle) | e.g. Functions of Component |
-| 420 | Créer la colonne | Create the column |
-| 444 | Aucun élément ne correspond. | No matching element. |
+| 6 | Précédent (Alt+←)  (infobulle) | Back (Alt+←) |
+| 7 | Suivant (Alt+→)  (infobulle) | Forward (Alt+→) |
+| 8 | Relation Map | Relation Map |
+| 8 | Relation Map  (infobulle) | Relation Map |
+| 9 | 🌲 PBS | 🌲 PBS |
+| 15 | ↺ Reset | ↺ Reset |
+| 18 | Fichier | File |
+| 18 | Ouvrir un modèle Capella, enregistrer la page  (infobulle) | Open a Capella model, save the page |
+| 19 | Enregistrer la page (avec le modèle chargé) directement dans un fichier HTML, sans passer par les téléchargements (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous  (infobulle) | Save the page (with the loaded model) directly to an HTML file, without going through downloads (Ctrl+S) — Shift+click or Ctrl+Shift+S: save as |
+| 21 | 🔷 CAPELLA | 🔷 CAPELLA |
+| 21 | Charger un fichier Capella  (infobulle) | Load a Capella file |
+| 22 | 💾 Page HTML | 💾 HTML page |
+| 22 | Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome  (infobulle) | Download the current page (with the Capella file already loaded) as standalone HTML |
+| 25 | Suivi | Watch |
+| 25 | Suivi du fichier .capella : mises à jour, delta, historique  (infobulle) | Watch the .capella file: updates, delta, history |
+| 30 | ✏ Éditer ▾ | ✏ Edit ▾ |
+| 30 | Éditer / Sauver / Charger  (infobulle) | Edit / Save / Load |
+| 34 | ✏ Éditeur de modèle | ✏ Model editor |
+| 35 | 💾 Sauvegarder | 💾 Save |
+| 36 | 📂 Charger un fichier | 📂 Load a file |
+| 40 | Revue | Review |
+| 40 | Revue : commentaires sur le modèle et les diagrammes, vérification après mise à jour, rapport  (infobulle) | Review: comments on the model and diagrams, check after update, report |
+| 42 | Thème | Theme |
+| 42 | Changer le thème, créer ou modifier un thème personnalisé  (infobulle) | Change the theme, create or edit a custom theme |
+| 43 | Changer le thème  (infobulle) | Change theme |
+| 44 | 🌙 Sombre | 🌙 Dark |
+| 45 | ☀️ Clair | ☀️ Light |
+| 46 | 🌊 Marine | 🌊 Navy |
+| 47 | 🌿 Nature | 🌿 Nature |
+| 48 | 🗂 Office 2007 | 🗂 Office 2007 |
+| 49 | ⚡ Contraste | ⚡ Contrast |
+| 51 | Créer ou modifier un thème personnalisé (toutes les couleurs)  (infobulle) | Create or edit a custom theme (all colours) |
+| 53 | Aide | Help |
+| 53 | Aide complète, visite guidée de l'outil  (infobulle) | Full help, guided tour of the tool |
+| 55 | Préférences : affichage des menus, enregistrement automatique, thème, interface et vues  (infobulle) | Preferences: menu display, automatic saving, theme, interface and views |
+| 59 | Zoom avant (Ctrl++)  (infobulle) | Zoom in (Ctrl++) |
+| 60 | Zoom arrière (Ctrl+-)  (infobulle) | Zoom out (Ctrl+-) |
+| 61 | ⊡ Fit | ⊡ Fit |
+| 61 | Ajuster (Ctrl+W)  (infobulle) | Fit (Ctrl+W) |
+| 63 | ⚙ Filtres | ⚙ Filters |
+| 63 | Types d'éléments et critères de relation affichés dans le graphe  (infobulle) | Element types and relation criteria displayed in the graph |
+| 65 | ↓ Ouvrir tout | ↓ Expand all |
+| 66 | ↑ Fermer tout | ↑ Collapse all |
+| 68 | Profondeur | Depth |
+| 68 | Profondeur de voisinage (1 à 10)  (infobulle) | Neighbourhood depth (1 to 10) |
+| 74 | Disposition du graphe  (infobulle) | Graph layout |
+| 76 | → LR — de gauche à droite | → LR — left to right |
+| 77 | ↓ TB — de haut en bas | ↓ TB — top to bottom |
+| 78 | ← RL — de droite à gauche | ← RL — right to left |
+| 79 | ◉ Radiale | ◉ Radial |
+| 80 | ⚡ Zigzag | ⚡ Zigzag |
+| 80 | Zigzag 7:3 — séquence en grille  (infobulle) | Zigzag 7:3 — grid sequence |
+| 84 | # Nums | # Nums |
+| 85 | ◉ Légende | ◉ Legend |
+| 86 | ⌁ Relations | ⌁ Relations |
+| 87 | ✂ Noms | ✂ Names |
+| 87 | Couper les noms longs  (infobulle) | Truncate long names |
+| 88 | ⊙ Unique | ⊙ Single |
+| 89 | ⬡ Compact | ⬡ Compact |
+| 93 | ⬇ Export ▾ | ⬇ Export ▾ |
+| 93 | Exporter le graphe : image ou données (CSV)  (infobulle) | Export the graph: image or data (CSV) |
+| 97 | Image | Image |
+| 98 | 🖼 PNG | 🖼 PNG |
+| 99 | 📷 JPEG | 📷 JPEG |
+| 100 | 📐 SVG | 📐 SVG |
+| 101 | Données (CSV) | Data (CSV) |
+| 102 | ▦ Arbre par niveaux… | ▦ Tree by levels… |
+| 102 | Une colonne par niveau (et par relation) : le graphe déplié de gauche à droite  (infobulle) | One column per level (and per relation): the graph unfolded from left to right |
+| 103 | ⇄ Relations affichées… | ⇄ Displayed relations… |
+| 103 | Une ligne par arête affichée : source, relation, cible, nombre, profondeur, chemin  (infobulle) | One row per displayed edge: source, relation, target, count, depth, path |
+| 112 | Nouvelle vue : copie de la vue affichée, vue vide ou préréglage  (infobulle) | New view: copy of the displayed view, empty view or preset |
+| 116 | 💾 Sauver vue | 💾 Save view |
+| 116 | Enregistrer la vue affichée dans un fichier (.json)  (infobulle) | Save the displayed view to a file (.json) |
+| 117 | 📂 Charger vue | 📂 Load view |
+| 117 | Ouvrir une vue enregistrée dans un nouvel onglet  (infobulle) | Open a saved view in a new tab |
+| 125 | ❓ Aide | ❓ Help |
+| 125 | Aide et présentation des fonctionnalités  (infobulle) | Help and feature overview |
+| 126 | 🚀 Bien démarrer | 🚀 Getting started |
+| 126 | · ouvrir un modèle, puis trouver l'aide et les tutoriels | · open a model, then find the help and tutorials |
+| 126 | Visite guidée en deux temps : où ouvrir votre fichier .capella, puis, une fois le modèle chargé, où trouver l'aide et les tutoriels  (infobulle) | Two-step guided tour: where to open your .capella file, then, once the model is loaded, where to find the help and tutorials |
+| 127 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) | Click to browse, or drag and drop a .capella file |
+| 128 | Arcalyse | Arcalyse |
+| 128 | Votre modèle Capella, sous toutes ses coutures. | Your Capella model, inside and out. |
+| 129 | Ouvrir un modèle Capella | Open a Capella model |
+| 130 | Glissez-déposez votre fichier | Drag and drop your |
+| 130 | (ou le dossier du projet) ici | (or the project folder) here |
+| 130 | ou recherchez-le dans l'explorateur de fichiers. | or browse for it in the file explorer. |
+| 131 | 📂 Fichier .capella… | 📂 .capella file… |
+| 131 | Ouvrir le fichier .capella seul  (infobulle) | Open the .capella file alone |
+| 132 | 📁 Dossier du projet… | 📁 Project folder… |
+| 132 | Ouvrir le dossier du projet : le .capella et ses diagrammes (.aird) sont chargés ensemble  (infobulle) | Open the project folder: the .capella and its diagrams (.aird) are loaded together |
+| 133 | 📄 Projet de travail (.html)… | 📄 Work project (.html)… |
+| 133 | Reprendre un projet de travail enregistré en page HTML (💾), même par une version précédente d'Arcalyse (à partir de la 2.1) : modèle, diagrammes, revue, accueil, vues et réglages sont repris dans cette version  (infobulle) | Resume a work project saved as an HTML page (💾), even by an earlier version of Arcalyse (2.1 or later): model, diagrams, review, home, views and settings are carried over into this version |
+| 136 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. | Accepted formats: .capella · .melodymodeller · .xml — the file is read locally, nothing is sent. |
+| 137 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités | 📖 What can be analysed? Discover the features |
+| 138 | 🎓 Visite guidée de l'interface | 🎓 Guided tour of the interface |
+| 139 | ℹ À propos | ℹ About |
+| 147 | Panneau | Panel |
+| 148 | Réduire le panneau  (infobulle) | Collapse the panel |
+| 151 | Arborescence | Tree |
+| 153 | Tout développer  (infobulle) | Expand all |
+| 155 | Tout réduire  (infobulle) | Collapse all |
+| 161 | ✕ vider | ✕ clear |
+| 161 | Vider la sélection  (infobulle) | Clear the selection |
+| 164 | 🔍 Filtrer l'arborescence…  (infobulle) | 🔍 Filter the tree… |
+| 173 | Contexte | Context |
+| 179 | ✚ Créer un nouvel élément | ✚ Create a new element |
+| 183 | Portée (Paquetages) | Scope (Packages) |
+| 189 | Ouvrir le panneau  (infobulle) | Open the panel |
+| 202 | ⚙ Filtres du graphe | ⚙ Graph filters |
+| 202 | Fermer (Échap)  (infobulle) | Close (Esc) |
+| 205 | Types d'éléments | Element types |
+| 206 | Tout sélectionner  (infobulle) | Select all |
+| 206 | Tout désélectionner  (infobulle) | Deselect all |
+| 210 | Critères de relation | Relation criteria |
+| 211 | Tout sélectionner  (infobulle) | Select all |
+| 211 | Tout désélectionner  (infobulle) | Deselect all |
+| 216 | Légende | Legend |
+| 216 | Replier / déplier la légende  (infobulle) | Collapse / expand the legend |
+| 220 | Fermer le détail  (infobulle) | Close the detail |
+| 225 | Prêt | Ready |
+| 232 | 🔎 Détail | 🔎 Detail |
+| 234 | ✏ Modifier l'élément | ✏ Edit the element |
+| 235 | → Créer une relation vers… | → Create a relation to… |
+| 236 | ✦ Créer un élément enfant | ✦ Create a child element |
+| 238 | ⊙ Définir comme contexte | ⊙ Set as context |
+| 239 | ↓ Développer | ↓ Expand |
+| 240 | ↑ Réduire | ↑ Collapse |
+| 242 | 👁 Masquer l'élément | 👁 Hide the element |
+| 250 | Annuler | Cancel |
+| 251 | Sauvegarder | Save |
+| 259 | ✏ Éditeur de modèle | ✏ Model editor |
+| 263 | Éléments ( | Elements ( |
+| 264 | Relations ( | Relations ( |
+| 265 | Paquetages ( | Packages ( |
+| 266 | Chaînes ( | Chains ( |
+| 275 | Exporter | Export |
+| 276 | Résolution : | Resolution: |
+| 278 | 1× Normal | 1× Normal |
+| 280 | 3× Ultra | 3× Ultra |
+| 281 | 4× Max | 4× Max |
+| 285 | Annuler | Cancel |
+| 286 | Exporter | Export |
+| 306 | Types d'éléments | Element types |
+| 307 | Filtrer les types…  (infobulle) | Filter types… |
+| 312 | Tout cocher | Check all |
+| 314 | Aucun | None |
+| 316 | Défaut | Default |
+| 325 | Glisser pour redimensionner  (infobulle) | Drag to resize |
+| 333 | 🌳 Arborescence | 🌳 Tree |
+| 334 | ▦ Cartes | ▦ Cards |
+| 335 | 📖 Index des types | 📖 Type index |
+| 346 | Rechercher…  (infobulle) | Search… |
+| 350 | Tous | All |
+| 356 | Tranv. | Shared |
+| 358 | ⬇ CSV | ⬇ CSV |
+| 362 | ⊞ Déplier | ⊞ Expand |
+| 363 | ⊟ Réduire | ⊟ Collapse |
+| 365 | ⬇ JSON | ⬇ JSON |
+| 383 | ← Préc. | ← Prev. |
+| 385 | Suiv. → | Next → |
+| 403 | ✨ Colonne par chemin | ✨ Path column |
+| 407 | type de départ | start type |
+| 413 | Type d'élément | Element type |
+| 414 | Relation ou valeur | Relation or value |
+| 418 | + Ajouter une étape | + Add a step |
+| 421 | Nom de la colonne | Column name |
+| 422 | ex: Functions of Component  (infobulle) | e.g. Functions of Component |
+| 423 | Créer la colonne | Create the column |
+| 447 | Aucun élément ne correspond. | No matching element. |
 
 ## js/01-donnees-config.js
 
@@ -748,59 +750,59 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 236 | 🔲 Diagrammes de l'ancien modèle (« | 🔲 Diagrams of the previous model (“…”) removed: open this model's .aird in 🔲 Capella Diagrams |
 | 236 | ») retirés : ouvrez le .aird de ce modèle dans 🔲 Diagrammes Capella | 🔲 Diagrams of the previous model (“…”) removed: open this model's .aird in 🔲 Capella Diagrams |
 | 238 | Erreur de chargement : | Loading error: |
-| 257 | Aucun élément Capella reconnu dans ce fichier | No Capella element recognised in this file |
-| 291 | ⚠ Ouvrir un autre modèle ? ✕ Modèle affiché : | ⚠ Open another model? ✕ Displayed model: … |
-| 295 | Fichier à ouvrir : | File to open: … |
-| 296 | Le modèle affiché va être remplacé. Tout le travail qui n'a pas été enregistré dans la page (vues et onglets, tableaux de bord, réglages, version de ⚖ Comparaison…) risque d'être perdu. | The displayed model will be replaced. All work not saved in the page (views and tabs, dashboards, settings, ⚖ Comparison version…) may be lost. |
-| 297 | commentaire(s) de revue modifié(s) depuis le dernier enregistrement : ils restent dans la page ouverte (et seront vérifiés sur le nouveau modèle), mais seront perdus si elle est fermée sans être enregistrée. Vous pouvez aussi les exporter (💬 Revue › 💾 Revue ▾ › ⬇ Exporter). | 💬 … review comment(s) changed since the last save: they stay in the open page (and will be checked against the new model), but will be lost if it is closed without saving. You can also export them (💬 Review › 💾 Review ▾ › ⬇ Export). |
-| 298 | Nouvelle version du même modèle ? Préférez 📁 Fichier › 🔄 Charger une mise à jour du modèle : le delta est affiché et la version précédente reste disponible pour ⚖ Comparaison. Annuler 💾 Enregistrer la page | New version of the same model? Prefer 📁 File › 🔄 Load a model update: the delta is shown and the previous version stays available for ⚖ Comparison. Cancel 💾 Save the page |
-| 302 | Ouvrir le fichier | Open the file |
-| 302 | 📂 Choisir le fichier .capella… | 📂 Choose the .capella file… |
-| 309 | ✔ Page enregistrée | ✔ Page saved |
-| 327 | Ouvrir un autre modèle Capella | Open another Capella model |
-| 328 | Modèle actuel : | Current model: … Drop a new file .capella to replace it. |
-| 328 | Déposez un nouveau fichier .capella pour le remplacer. | Current model: … Drop a new file .capella to replace it. |
-| 329 | ⚠ Le travail non enregistré sur le modèle actuel sera perdu : enregistrez d'abord la page (💾, Ctrl+S). Pour une nouvelle version du même modèle, préférez 📁 Fichier › 🔄 Charger une mise à jour du modèle. | ⚠ Unsaved work on the current model will be lost: save the page first (💾, Ctrl+S). For a new version of the same model, prefer 📁 File › 🔄 Load a model update. |
-| 416 | Shared | (inchangé, hors _L) |
-| 435 | Project | (inchangé, hors _L) |
-| 496 | Composition | (inchangé, hors _L) |
-| 496 | Aggregation | (inchangé, hors _L) |
-| 496 | Association | (inchangé, hors _L) |
-| 496 | Containment | (inchangé, hors _L) |
-| 496 | Generalization | (inchangé, hors _L) |
-| 496 | Realization | (inchangé, hors _L) |
-| 496 | Dependency | (inchangé, hors _L) |
-| 496 | Usage | (inchangé, hors _L) |
-| 496 | Abstraction | (inchangé, hors _L) |
-| 496 | Refine | (inchangé, hors _L) |
-| 496 | Trace | (inchangé, hors _L) |
-| 496 | Satisfy | (inchangé, hors _L) |
-| 496 | Verify | (inchangé, hors _L) |
-| 496 | Copy | (inchangé, hors _L) |
-| 496 | Allocation | (inchangé, hors _L) |
-| 497 | Block | (inchangé, hors _L) |
-| 497 | Component | (inchangé, hors _L) |
-| 497 | Class | (inchangé, hors _L) |
-| 497 | Interface | (inchangé, hors _L) |
-| 497 | Requirement | (inchangé, hors _L) |
-| 497 | Package | (inchangé, hors _L) |
-| 500 | Aggregation | (inchangé, hors _L) |
-| 500 | Association | (inchangé, hors _L) |
-| 500 | Containment | (inchangé, hors _L) |
-| 500 | Generalization | (inchangé, hors _L) |
-| 500 | Realization | (inchangé, hors _L) |
-| 500 | Dependency | (inchangé, hors _L) |
-| 500 | Usage | (inchangé, hors _L) |
-| 500 | Abstraction | (inchangé, hors _L) |
-| 500 | Refine | (inchangé, hors _L) |
-| 500 | Trace | (inchangé, hors _L) |
-| 500 | Satisfy | (inchangé, hors _L) |
-| 500 | Verify | (inchangé, hors _L) |
-| 500 | Copy | (inchangé, hors _L) |
-| 500 | Allocation | (inchangé, hors _L) |
-| 618 | PhysicalComponent (NODE) | (inchangé, hors _L) |
-| 619 | PhysicalComponent (BEHAVIOR) | (inchangé, hors _L) |
-| 858 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella | 🔷 Load a .capella file via 📁 File › 🔷 Open a Capella model |
+| 258 | Aucun élément Capella reconnu dans ce fichier | No Capella element recognised in this file |
+| 292 | ⚠ Ouvrir un autre modèle ? ✕ Modèle affiché : | ⚠ Open another model? ✕ Displayed model: … |
+| 296 | Fichier à ouvrir : | File to open: … |
+| 297 | Le modèle affiché va être remplacé. Tout le travail qui n'a pas été enregistré dans la page (vues et onglets, tableaux de bord, réglages, version de ⚖ Comparaison…) risque d'être perdu. | The displayed model will be replaced. All work not saved in the page (views and tabs, dashboards, settings, ⚖ Comparison version…) may be lost. |
+| 298 | commentaire(s) de revue modifié(s) depuis le dernier enregistrement : ils restent dans la page ouverte (et seront vérifiés sur le nouveau modèle), mais seront perdus si elle est fermée sans être enregistrée. Vous pouvez aussi les exporter (💬 Revue › 💾 Revue ▾ › ⬇ Exporter). | 💬 … review comment(s) changed since the last save: they stay in the open page (and will be checked against the new model), but will be lost if it is closed without saving. You can also export them (💬 Review › 💾 Review ▾ › ⬇ Export). |
+| 299 | Nouvelle version du même modèle ? Préférez 📁 Fichier › 🔄 Charger une mise à jour du modèle : le delta est affiché et la version précédente reste disponible pour ⚖ Comparaison. Annuler 💾 Enregistrer la page | New version of the same model? Prefer 📁 File › 🔄 Load a model update: the delta is shown and the previous version stays available for ⚖ Comparison. Cancel 💾 Save the page |
+| 303 | Ouvrir le fichier | Open the file |
+| 303 | 📂 Choisir le fichier .capella… | 📂 Choose the .capella file… |
+| 310 | ✔ Page enregistrée | ✔ Page saved |
+| 328 | Ouvrir un autre modèle Capella | Open another Capella model |
+| 329 | Modèle actuel : | Current model: … Drop a new file .capella to replace it. |
+| 329 | Déposez un nouveau fichier .capella pour le remplacer. | Current model: … Drop a new file .capella to replace it. |
+| 330 | ⚠ Le travail non enregistré sur le modèle actuel sera perdu : enregistrez d'abord la page (💾, Ctrl+S). Pour une nouvelle version du même modèle, préférez 📁 Fichier › 🔄 Charger une mise à jour du modèle. | ⚠ Unsaved work on the current model will be lost: save the page first (💾, Ctrl+S). For a new version of the same model, prefer 📁 File › 🔄 Load a model update. |
+| 417 | Shared | (inchangé, hors _L) |
+| 436 | Project | (inchangé, hors _L) |
+| 497 | Composition | (inchangé, hors _L) |
+| 497 | Aggregation | (inchangé, hors _L) |
+| 497 | Association | (inchangé, hors _L) |
+| 497 | Containment | (inchangé, hors _L) |
+| 497 | Generalization | (inchangé, hors _L) |
+| 497 | Realization | (inchangé, hors _L) |
+| 497 | Dependency | (inchangé, hors _L) |
+| 497 | Usage | (inchangé, hors _L) |
+| 497 | Abstraction | (inchangé, hors _L) |
+| 497 | Refine | (inchangé, hors _L) |
+| 497 | Trace | (inchangé, hors _L) |
+| 497 | Satisfy | (inchangé, hors _L) |
+| 497 | Verify | (inchangé, hors _L) |
+| 497 | Copy | (inchangé, hors _L) |
+| 497 | Allocation | (inchangé, hors _L) |
+| 498 | Block | (inchangé, hors _L) |
+| 498 | Component | (inchangé, hors _L) |
+| 498 | Class | (inchangé, hors _L) |
+| 498 | Interface | (inchangé, hors _L) |
+| 498 | Requirement | (inchangé, hors _L) |
+| 498 | Package | (inchangé, hors _L) |
+| 501 | Aggregation | (inchangé, hors _L) |
+| 501 | Association | (inchangé, hors _L) |
+| 501 | Containment | (inchangé, hors _L) |
+| 501 | Generalization | (inchangé, hors _L) |
+| 501 | Realization | (inchangé, hors _L) |
+| 501 | Dependency | (inchangé, hors _L) |
+| 501 | Usage | (inchangé, hors _L) |
+| 501 | Abstraction | (inchangé, hors _L) |
+| 501 | Refine | (inchangé, hors _L) |
+| 501 | Trace | (inchangé, hors _L) |
+| 501 | Satisfy | (inchangé, hors _L) |
+| 501 | Verify | (inchangé, hors _L) |
+| 501 | Copy | (inchangé, hors _L) |
+| 501 | Allocation | (inchangé, hors _L) |
+| 619 | PhysicalComponent (NODE) | (inchangé, hors _L) |
+| 620 | PhysicalComponent (BEHAVIOR) | (inchangé, hors _L) |
+| 859 | 🔷 Chargez un fichier .capella via 📁 Fichier › 🔷 Ouvrir un modèle Capella | 🔷 Load a .capella file via 📁 File › 🔷 Open a Capella model |
 
 ## js/21-capella-vues-base.js
 
@@ -6714,6 +6716,15 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 71 | Éléments nommés | Named elements |
 | 72 | -analyses.xlsx | -analyses.xlsx |
 | 73 | ✔ Classeur Excel : | ✔ Excel workbook: … sheets |
+
+## js/76-historique.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 62 | 🗺 Relation Map | 🗺 Relation Map |
+| 73 | Précédent (Alt+←) | Back (Alt+←) |
+| 74 | Suivant (Alt+→) | Forward (Alt+→) |
+| 87 | Historique de navigation | Navigation history |
 
 ## Textes sans traduction anglaise (12)
 

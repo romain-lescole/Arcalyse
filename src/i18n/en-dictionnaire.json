@@ -4582,7 +4582,10 @@
   "Santé": "Health",
   "Valeur": "Value",
   "-analyses.xlsx": "-analyses.xlsx",
-  "✔ Classeur Excel : {0} feuilles": "✔ Excel workbook: {0} sheets"
+  "✔ Classeur Excel : {0} feuilles": "✔ Excel workbook: {0} sheets",
+  "Précédent (Alt+←)": "Back (Alt+←)",
+  "Suivant (Alt+→)": "Forward (Alt+→)",
+  "Historique de navigation": "Navigation history"
  },
  "interface": {
   "🌳 Arborescence": "🌳 Tree",
@@ -4697,7 +4700,9 @@
   "Aide": "Help",
   "Barre principale": "Main bar",
   "Commandes de la Relation Map": "Relation Map commands",
-  "Panneau de détail": "Details panel"
+  "Panneau de détail": "Details panel",
+  "Précédent (Alt+←)": "Back (Alt+←)",
+  "Suivant (Alt+→)": "Forward (Alt+→)"
  },
  "types": {
   "AbstractCapabilityInclude": "Inclusion of a Capability in another one (reference via 'included').",

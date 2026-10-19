@@ -119,6 +119,12 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.click('#b-theme-menu'); await p.click('#cap-nav-dd [data-thm="light"]');
     await p.click('#b-theme-menu'); await p.click('#cap-nav-dd [data-thm="dark"]');
     await p.click('#b-file-menu'); await p.keyboard.press('Escape'); });
+  await step('historique ◀ ▶ : retour, Alt+→, liste', async () => {
+    await p.evaluate(() => { capNavOpen('tree'); capNavOpen('cards'); });
+    await p.click('#b-hist-back'); if (await p.evaluate(() => capCurrentView) !== 'tree') throw new Error('◀ : vue Arborescence non rétablie');
+    await p.keyboard.press('Alt+ArrowRight'); if (await p.evaluate(() => capCurrentView) !== 'cards') throw new Error('Alt+→ : vue Cartes non rétablie');
+    await p.click('#b-hist-back', { button: 'right' }); if (!(await p.$('#cap-hist-dd [data-hi]'))) throw new Error('clic droit : liste des étapes absente');
+    await p.keyboard.press('Escape'); await p.evaluate(() => capHistClose()); });
   await step('analyses : sous-vues', async () => { await p.click('#cap-v-analyses');
     for (const b of await p.$$('#cap-view-analyses [data-an]:not([data-an="fns"])')) { await b.click(); await p.waitForTimeout(300); }
     await p.evaluate(() => capNavOpen('ana:states')); await p.waitForTimeout(300);

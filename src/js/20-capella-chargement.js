@@ -253,6 +253,7 @@ function capApplyXmlDoc(doc, name){
   cap_xmlDoc=doc;
   capAllElements=[];
   _capParentIndexCache=null; _capElementByIdCache=null; _capRefIndexCache=null; _capMcPropsCache=null; _capTableRelIdx=null; capChainsData=null; capLinksData=null; _capPortsCache=null; capAnaReset();
+  if(typeof capHistReset==='function'&&_capHist.model!==name){ capHistReset(); _capHist.model=name; }   // ◀ ▶ historique vidé pour un autre modèle (76)
   capTreeData=capBuildTree(doc.documentElement,new Set());
   if(!capAllElements.length) throw new Error(_L('Aucun élément Capella reconnu dans ce fichier'));
   capBuildTypeRegistry();
