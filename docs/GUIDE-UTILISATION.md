@@ -42,7 +42,7 @@ Arcalyse est une application **autonome** : un **seul fichier HTML** (`arcalyse-
 |---|---|
 | Navigateur conseillé | **Microsoft Edge** ou **Google Chrome** récents : ils permettent l'enregistrement direct (Ctrl+S réécrit le même fichier) et la relecture automatique du `.capella` modifié. Les autres navigateurs fonctionnent, avec téléchargement à la place de l'enregistrement direct. |
 | Fichiers lus | `.capella` (modèle sémantique), `.melodymodeller`, `.xml` ; `.aird` (diagrammes) en complément, dans 🔲 Diagrammes Capella. Un `.aird` ou `.afm` seul ne suffit pas : il ne contient pas les éléments du modèle. |
-| Fichiers produits | Page HTML autonome (avec le modèle), CSV, PDF, ZIP (PNG / SVG), HTML de rapports, JSON (vues, réglages, revue). Tout est produit dans le navigateur. |
+| Fichiers produits | Page HTML autonome (avec le modèle), CSV ou Excel (.xlsx), PDF, ZIP (PNG / SVG), HTML de rapports, JSON (vues, réglages, revue). Tout est produit dans le navigateur. |
 | Lecture seule | Arcalyse **ne modifie jamais** le modèle Capella : c'est un outil de lecture, d'analyse et de revue. |
 | Langues | Version française, anglaise, ou multilingue (bouton 🌐 EN / FR dans `arcalyse-multi.html`, ou adresse `?lang=fr` / `?lang=en`). |
 
@@ -200,6 +200,8 @@ Tous ces réglages sont enregistrés avec la 💾 page HTML et dans la partie «
 
 **⚙ › 🩺 Profil de contrôles…** (ou le bouton **🩺 Profil** en tête de chaque onglet 🩺 Contrôles) liste, vue par vue, tous les contrôles d'Arcalyse avec le nombre de lignes qu'ils signalent sur le modèle chargé. Pour chacun :
 
+![Profil de contrôles](guide/img/03-profil-controles.png)
+
 - **activé** ou non : un contrôle désactivé disparaît des vues et des indicateurs du tableau de bord ; il reste listé en bas de l'onglet 🩺 Contrôles pour être réactivé ;
 - **gravité** : ℹ information (compté à part, hors « points à vérifier »), ⚠ à vérifier (défaut), ✖ bloquant (signalé dans le total) ;
 - **seuils** : longueur minimale d'une description, nom trop long (caractères, mots), nombre de statuts pour qu'une couche soit « majoritairement validée ».
@@ -207,7 +209,11 @@ Tous ces réglages sont enregistrés avec la 💾 page HTML et dans la partie «
 Le profil est enregistré avec la 💾 page, repris par 📄 Ouvrir un projet et par le fichier ⚙ Interface et vues ; **💾 Exporter / 📂 Importer .json** permettent de partager le profil d'une équipe. Les contrôles sont désignés par leur titre : un profil est propre à une langue de l'interface.
 ### 3.7 ◀ ▶ Historique de navigation
 
+<img src="guide/img/01-historique-liste.png" alt="Historique de navigation (clic droit sur ◀)" width="300" align="right">
+
 Les boutons **◀ ▶** en tête de la barre (**Alt+←** / **Alt+→**, boutons latéraux de la souris) reviennent sur les étapes précédentes, comme dans un navigateur : vues ouvertes (sous-vues de 🔬 Analyses comprises), éléments ouverts dans le panneau de détail, diagrammes ouverts. L'infobulle nomme l'étape visée. **Clic droit** sur ◀ ou ▶ : liste des étapes (la plus récente en haut, l'étape courante marquée ●), clic pour y aller directement. Ouvrir une nouvelle vue après un retour oublie les étapes « suivantes », comme dans un navigateur. L'historique est vidé à l'ouverture d'un autre modèle (une mise à jour 🔄 du même modèle le conserve).
+
+<br clear="right">
 
 
 ## 4. 🏠 Accueil du projet
@@ -740,6 +746,8 @@ Glossaire des **types présents** dans le modèle : type technique, nom lisible 
 
 Troisième présentation de ⚡ Chaînes (à côté de ▦ Diagrammes et 🗺 Vue Relation Map), filtrée par la catégorie ARCADIA choisie : chaînes **vides** ; **discontinues** (étapes en plusieurs morceaux non reliés) ; **implications vers un élément introuvable** (fonction, composant ou échange supprimé ou dans une bibliothèque) ; **échanges dont une extrémité n'est pas dans la chaîne** ; **références** vers une chaîne introuvable ou **cycliques** ; chaînes **non réalisées à la couche inférieure** ou **ne réalisant rien à la couche supérieure** (seulement là où des réalisations existent déjà) ; chaînes **hors capacité** (seulement si d'autres chaînes de la couche en ont une) ; **sans description** ; **en double** ; **étapes portées par des fonctions non allouées** ; **composants isolés** dans un chemin physique. Chaque ligne ouvre le détail de la chaîne ou sa vue 🗺. Soumis au 🩺 profil de contrôles (§ 3.5) ; indicateur « Contrôles des chaînes » au 📐 Tableau de bord ; pris en compte par la 💚 santé du modèle, y compris par couche.
 
+![Contrôles des chaînes](guide/img/40-chaines-controles.png)
+
 ## 9. 📡 Flux & interfaces
 
 Vues d'interfaces, du fonctionnel au physique, accessibles par le menu **📡 Flux & interfaces ▾** ou par la rangée d'onglets : ƒ⇆ Functional Exchange, 🟨 Operational Analysis, 🧱 System Component, 🧱 Logical Component, 🔀 Behavior Exchange, 🔌 Physical Link, 🎬 Scénarios, 🧩 Ports, 🔗 Liens (et ⚡ Chaînes, 🔲 Diagrammes Capella quand ils ne sont pas épinglés).
@@ -1015,6 +1023,8 @@ Les résultats sont **gardés en mémoire** ; **↻ Recalculer** les rafraîchit
 
 **Tableaux et listes longs** : affichés par **pages de 200 lignes** (barre ‹ › en tête et en pied : page précédente / suivante, choix de la page, **Tout afficher**) — tableaux des analyses, 🧩 Ports, 🧬 Traçabilité, 🔗 Liens, listes du panneau de détail. Un filtre par colonne actif affiche toutes les lignes pour porter sur l'ensemble ; les exports CSV / Excel contiennent toujours tout.
 
+![Barre de pagination](guide/img/04-pagination.png)
+
 **Tableaux des analyses** : sous chaque en-tête, un champ **Filtrer…** (plusieurs mots : tous requis ; **!mot** : exclure) ; le nombre de lignes affichées est indiqué au-dessus, avec **✕** pour effacer. Glisser le bord droit d'un en-tête règle la largeur (double-clic : automatique). Un tableau plus large que la vue a une barre de défilement horizontal collée en bas de l'écran (aussi **Maj + molette**).
 
 ### 12.1 🧬 Traçabilité inter-couches
@@ -1152,7 +1162,11 @@ Vue **graphique** des réalisations entre couches : une colonne par couche (OA �
 
 ### 12.10 💚 Santé du modèle
 
-Un **score de 0 à 100** bâti sur **tous les contrôles 🩺** de toutes les vues, avec le 🩺 profil de contrôles (§ 3.5) : les contrôles désactivés sont ignorés, les gravités pèsent ℹ 0, ⚠ 1, ✖ 3, et le score vaut 100 × e^−(Σ poids × lignes ÷ nombre d'éléments nommés) : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. Niveaux : **Bon** (≥ 90), **À surveiller** (≥ 70), **À reprendre**. Un score **par couche** ARCADIA est calculé pour les contrôles qui le permettent (fonctions, échanges fonctionnels, composants).
+Un **score de 0 à 100** bâti sur **tous les contrôles 🩺** de toutes les vues, avec le 🩺 profil de contrôles (§ 3.6) : les contrôles désactivés sont ignorés, les gravités pèsent ℹ 0, ⚠ 1, ✖ 3, et le score vaut 100 × e^−(Σ poids × lignes ÷ nombre d'éléments nommés) : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. Niveaux : **Bon** (≥ 90), **À surveiller** (≥ 70), **À reprendre**. Un score **par couche** ARCADIA est calculé pour les contrôles qui le permettent (fonctions, échanges fonctionnels, composants).
+
+| 🏠 Carte de l'accueil | 📋 Contrôles × couches |
+|---|---|
+| ![Carte Santé](guide/img/05-home-sante.png) | ![Santé — contrôles × couches](guide/img/70-ana-sante.png) |
 
 - **🏠 Carte de l'accueil** : score, niveau, points à vérifier et bloquants, barres par couche, écart avec la version précédente et courbe des dernières versions ; boutons 📊 Détail et 🩺 Profil. Au-delà de 30 000 éléments, le calcul attend un clic. **✕ Masquer** retire la carte de l'accueil (⚙ Disposer › Masquées pour la réafficher) ; dans la sous-vue, l'onglet ▦ Par vue permet de **masquer les contrôles d'une vue** du score (case « Comptée », réglage conservé avec le projet). **Décocher une couche** (case devant OA, SA, LA, PA, EPBS, aussi dans la sous-vue) l'exclut du score global : ses lignes de contrôles par couche et ses éléments ne comptent plus, par exemple pour une couche non encore travaillée ; le réglage est conservé avec le projet et noté dans l'historique.
 - **📋 Contrôles × couches** : chaque contrôle avec sa vue, sa gravité, son nombre de lignes global et par couche ; ⬇ CSV.
@@ -1160,6 +1174,8 @@ Un **score de 0 à 100** bâti sur **tous les contrôles 🩺** de toutes les vu
 - **📈 Historique** : une ligne par version du modèle ouverte dans le projet (même fichier : entrée mise à jour), conservée avec la 💾 page. Indicateurs « Santé du modèle — … » au 📐 Tableau de bord (score, points, bloquants, par couche, par vue, historique).
 
 ### 12.11 🖧 Déploiement & EPBS
+
+![Déploiement](guide/img/70-ana-deploy.png)
 
 - **🖧 Déploiement** : chaque nœud physique (PhysicalComponent de nature NODE) avec les comportements (nature BEHAVIOR) qu'il héberge par PartDeploymentLink, le nombre de fonctions portées et ses liens physiques ; comportements non déployés en bas ; ⬇ CSV.
 - **🧰 EPBS** : arbre des Configuration Items (COTS, logiciel, matériel, interface, NDI, système…) et les composants ou liens physiques qu'ils réalisent (PhysicalArtifactRealization) ; répartition par nature.
@@ -1170,6 +1186,8 @@ Le panneau de détail d'un composant physique indique où il est déployé, ce q
 ### 12.12 📦 REC / RPL
 
 Les **éléments réutilisables** de Capella : un **REC** est un gabarit (ensemble d'éléments du modèle), une **RPL** une réplique instanciée de ce REC (suffixe, conformité BLACK_BOX / CONSTRAINT_REUSE / INHERITANCY_REUSE). Chaque élément d'une réplique garde un lien vers son origine dans le REC.
+
+![REC / RPL — répliques](guide/img/70-ana-rec.png)
 
 - **🧬 Répliques** : chaque RPL avec son REC, son suffixe, sa conformité, le nombre d'éléments et les écarts : manquants (éléments du REC sans équivalent), ajoutés (sans origine dans le REC), types différents, renommés hors règle « nom du REC + suffixe », cibles introuvables ; filtre par REC ; ⬇ CSV.
 - **📦 REC** : chaque gabarit avec sa conformité par défaut, ses éléments et ses répliques (✔ conforme ou nombre d'écarts).
@@ -1190,6 +1208,8 @@ Un modèle peut référencer des éléments d'un autre fichier .capella (**bibli
 
 Les catégories que Capella permet de poser sur les échanges : **ExchangeCategory** (Functional Exchanges), **ComponentExchangeCategory** (Component Exchanges), **PhysicalLinkCategory** (Physical Links).
 
+![Catégories d'échanges](guide/img/70-ana-cats.png)
+
 - **🏷 Catégories** : couche, nature, nombre et liste des échanges de chaque catégorie ; **▸** ouvre la vue de flux filtrée sur la catégorie.
 - **⇆ Échanges** : taux d'échanges catégorisés par nature et par couche, puis chaque échange avec ses catégories (filtre catégorisés / sans catégorie) ; ⬇ CSV.
 - **🩺 Contrôles** : échanges sans catégorie (seulement dans les natures et couches où des catégories sont déjà utilisées), catégories vides, référençant un échange introuvable, en double, échanges dans plusieurs catégories.
@@ -1199,6 +1219,8 @@ Les vues ƒ⇆ Functional Exchange, 🔀 Behavior Exchange et 🔌 Physical Link
 ### 12.15 🔖 Statut de revue
 
 Les champs natifs de revue de Capella, portés par n'importe quel élément : **Status** (littéral de l'énumération *ProgressStatus* du projet : DRAFT, TO BE REVIEWED, TO BE DISCUSSED, REWORK NECESSARY, REVIEWED…) et **Review** (texte libre). Les statuts sont rangés en **classes** d'après leur nom : brouillon, en attente, validé, à retravailler.
+
+![Statut de revue](guide/img/70-ana-status.png)
 
 - **📋 Liste** : éléments ayant un statut ou un commentaire Capella, avec couche, type, statut et commentaire ; filtres par couche, statut ou classe, type, présence d'un commentaire, recherche ; ⬇ CSV. Le bouton **💬** crée un commentaire de 💬 Revue sur l'élément (le nombre de commentaires existants est affiché).
 - **▦ Répartition** : nombre d'éléments par statut et par couche, puis par type d'élément et classe.
@@ -1263,6 +1285,10 @@ Un **clic sur un nom** (presque partout : cartes, tableaux, blocs, listes, diagr
 Tout est **cliquable** pour naviguer de proche en proche. **×** ferme le panneau.
 
 **🗂 Onglets** : ces sections sont réparties en **📋 Fiche** (description, attributs), **🔗 Liens** (références, owner, éléments contenus), **🔲 Diagrammes**, **🔬 Analyses** (exigences, propriétés, contraintes, scénarios, statut de revue, catégories, bibliothèques, REC / RPL, déploiement) et **💬 Revue** ; **≡ Tout** (par défaut) montre toutes les sections à la suite. Chaque onglet indique son nombre de sections ; un onglet vide pour l'élément n'est pas proposé. L'onglet choisi est gardé d'un élément à l'autre et enregistré avec la 💾 page. Les boutons **◀ ▶** de la barre ([§ 3.7](#37--historique-de-navigation)) reviennent sur les éléments ouverts précédemment.
+
+| ≡ Tout (par défaut) et 📋 Fiche | 🔗 Liens |
+|---|---|
+| ![Onglets du panneau de détail](guide/img/90-detail-onglets.png) | ![Onglet Liens](guide/img/90-detail-onglet-liens.png) |
 
 <br clear="right">
 
@@ -1464,6 +1490,7 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 | **Tab** / **Maj+Tab** | Passe de commande en commande (boutons, menus, onglets, liens du détail, lignes de tableau) avec un contour visible. |
 | **Entrée** / **Espace** | Active la commande qui a le focus ; dans une boîte de dialogue, Entrée = OK et Échap = annuler. |
 | **Ctrl+K** | Recherche dans ☰ : vue, élément du modèle ou diagramme (Entrée pour ouvrir). |
+| **Alt+←** / **Alt+→** | Étape précédente / suivante de l'historique ◀ ▶ (vues, éléments du détail, diagrammes) ; aussi les boutons latéraux de la souris. |
 | **Ctrl+S** / **Ctrl+Maj+S** | Enregistrer / enregistrer sous. |
 | **Échap** | Ferme la fenêtre, le menu ou la sélection en cours. |
 | **Ctrl +** / **Ctrl −** / **Ctrl+molette** | Zoom du graphe (Relation Map). |

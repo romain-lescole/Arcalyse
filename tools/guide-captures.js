@@ -6,7 +6,7 @@
  * dans docs/guide/img/.
  *
  * Prérequis : node build.js, puis Playwright (npm i -D playwright && npx playwright install chromium).
- * Lancement : node tools/guide-captures.js [partie…]   (sans argument : toutes les parties)
+ * Lancement : node tools/guide-captures.js [partie…]   (sans argument : toutes les parties ; CHROMIUM_PATH=… pour un Chromium déjà installé)
  */
 'use strict';
 const path = require('path'), fs = require('fs'), zlib = require('zlib'), os = require('os');
@@ -343,11 +343,13 @@ PARTS.diagrammes = async () => {
 
 /** 🔬 Analyses : chaque onglet et chaque présentation. */
 PARTS.analyses = async () => {
-  for (const k of ['trace', 'xlay', 'caps', 'states', 'diff', 'reqs', 'pvmt', 'data', 'cts']) {
+  for (const k of ['trace', 'xlay', 'caps', 'states', 'diff', 'reqs', 'pvmt', 'data', 'cts', 'sante', 'deploy', 'rec', 'libs', 'cats', 'status']) {
     await view('ana:' + k); await top(); await wait(500);
     await shot('70-ana-' + k);
     const subs = { trace: ['Chemins de traçabilité', 'Liens ('], caps: ['▦ Matrice', '🩺 Contrôles'], states: ['Fonctions × états', '🩺 Contrôles'],
-      data: ['🔌 Interfaces', 'Classes & types', '🩺 Contrôles'], cts: ['🩺 Contrôles'], reqs: [], pvmt: [], diff: [], xlay: [] }[k];
+      data: ['🔌 Interfaces', 'Classes & types', '🩺 Contrôles'], cts: ['🩺 Contrôles'], reqs: [], pvmt: [], diff: [], xlay: [],
+      sante: ['▦ Par vue', '📈 Historique'], deploy: ['🧰 EPBS', '🩺 Contrôles'], rec: [], libs: [], cats: ['⇆ Échanges', '🩺 Contrôles'], status: ['▦ Répartition', '🩺 Contrôles'] }[k];
+    if (await p.evaluate(() => { const h = [...document.querySelectorAll('#ana-box [data-hold]')].find(x => x.offsetParent); return !!(h && h.querySelector('.phl-empty') && h.textContent.trim().length < 400); })) console.log('  ℹ ' + k + ' : vide sur ce modèle');
     for (const t of subs) {
       const b = p.locator('#cap-view-analyses button:visible', { hasText: t }).first();
       if (!(await b.count())) { console.log('  ⚠ ' + k + ' : ' + t + ' absent'); continue; }
@@ -508,6 +510,29 @@ PARTS.divers = async () => {
   await p.click('#b-help', { force: true }); await wait(300); await shot('01-menu-aide', { sel: ['#b-help', '#cap-nav-dd'], pad: 8 }); await esc();
 };
 
+/** Nouveautés 2.4 : 💚 carte Santé de l'accueil, 🩺 profil de contrôles, ⚡ contrôles des chaînes, ◀ ▶ historique, 🗂 onglets du panneau de détail, ⏭ pagination. */
+PARTS.nouveautes = async () => {
+  await view('home'); await p.evaluate(() => { _capHomeUi.santeOk = true; capHomeRender(); }); await wait(2000); await top();
+  await shot('05-home-sante', { sel: '[data-carte="sante"]', pad: 4 });
+  await p.evaluate(() => capChkDialog()); await wait(800);
+  await tall(async () => { await shot('03-profil-controles', { sel: '#cap-chk-ov > div', pad: 2 }); }, 1200);
+  await esc(); await p.evaluate(() => { const o = document.getElementById('cap-chk-ov'); if (o) o.style.display = 'none'; });
+  await view('chains'); await p.click('#cap-view-chains [data-sv="diag"]'); await wait(1200); await top();
+  await shot('40-chaines-controles');
+  await view('tree'); await view('cards'); const id = await idOf('Manage Video and Audio Diffusion');
+  await p.evaluate(id => capOpenDetail(id), id); await wait(400);
+  await shot('01-historique', { sel: ['#b-hist-back', '#b-hist-fwd'], pad: 6 });
+  await p.click('#b-hist-back', { button: 'right' }); await wait(300);
+  await shot('01-historique-liste', { sel: ['#b-hist-back', '#cap-hist-dd'], pad: 8 }); await p.evaluate(() => capHistClose());
+  await p.evaluate(() => { _capNav.det = 'fiche'; }); await p.evaluate(id => capOpenDetail(id), id); await wait(400);
+  await shot('90-detail-onglets', { sel: '#cap-detail', pad: 0, maxH: 560 });
+  await p.click('#cap-detail-content [data-dtab="liens"]'); await wait(300);
+  await shot('90-detail-onglet-liens', { sel: '#cap-detail', pad: 0, maxH: 560 });
+  await p.evaluate(() => { _capNav.det = 'all'; capNavSave(); });
+  await view('ports'); await wait(800);
+  await shot('04-pagination', { sel: '#cap-view-ports .cap-pg-bar', pad: 6 });
+};
+
 /** 📑 Exigences et 🏷 Propriétés (PVMT) avec le modèle AIDA, qui en contient (à lancer en dernier : remplace le modèle). */
 PARTS.aida = async () => {
   const old = p; p = await old.context().newPage(); await old.close();
@@ -589,7 +614,8 @@ PARTS.dossiers = async () => {
 
 if (require.main === module) (async () => {
   const want = process.argv.slice(2);
-  const browser = await chromium.launch();
+  const exe = process.env.CHROMIUM_PATH;   // Chromium déjà installé (sinon : npx playwright install chromium), comme tests/smoke.js
+  const browser = await chromium.launch(exe ? { executablePath: exe } : {});
   await setup(browser);
   for (const [k, fn] of Object.entries(PARTS)) {
     if (k !== 'accueil' && !(await p.evaluate(() => typeof capLoaded !== 'undefined' && capLoaded))) await load();

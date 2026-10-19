@@ -114,10 +114,16 @@ Sequence diagrams (ES, FS, OES, OAS, IS) are redrawn: lifelines, messages, execu
 - **🧬 Cross-layer traceability**: OA → SA → LA → PA → EPBS realization rates by category, at a glance, and the list of untraced elements.
 - **🎯 Capabilities & missions**, **🔁 Modes & states**, **📑 Requirements**, **🏷 Properties**, **🗃 Data & interfaces**, **⛓ Constraints**.
 - **⚖ Version comparison**: elements added, deleted, modified or moved between two versions of the model, with an exportable report — and the **🔲 Diagrams** tab for the `.aird`.
+- **💚 Model health**: a 0–100 score built on every check of every view, by layer, with its history across the model versions — and a **🩺 check profile** (enable, severity, thresholds) shared as a file.
+- **🖧 Deployment & EPBS**, **📦 REC / RPL** (replicas compared with their REC), **📚 Libraries** (external references, resolved once the library is loaded), **🏷 Exchange categories**, **🔖 Capella review status**, and **⚡ chain checks** (empty, broken, unallocated, physical paths).
 
 ![Functions — hierarchy and descriptions](docs/captures/06-fonctions.png)
 
 ![Cross-layer traceability](docs/captures/07-tracabilite.png)
+
+![Model health — checks × layers, score per layer](docs/captures/17-sante-modele.png)
+
+![Deployment & EPBS — nodes, hosted behaviours, physical links](docs/captures/18-deploiement.png)
 
 ### 📐 Build your dashboards
 Choose among dozens of indicators (number of elements, function allocation, description rate, empty chains, traceability…), arrange them on A4 pages, print or export to HTML.
@@ -126,7 +132,10 @@ Choose among dozens of indicators (number of elements, function allocation, desc
 
 ### And also
 - 🧭 **Explorer**: tree, cards by layer, ARCADIA type index.
-- 🔍 **Details panel**: attributes, references in both directions, diagrams of the element, and its Capella **description formatted as in Capella** (links to other elements clickable, original HTML code on demand).
+- 🔍 **Details panel**: attributes, references in both directions, diagrams of the element, and its Capella **description formatted as in Capella** (links to other elements clickable, original HTML code on demand) — with tabs (sheet, links, diagrams, analyses, review) when you want less.
+- ◀ ▶ **History** (Alt+← / Alt+→) over views, elements and diagrams, and a **Ctrl+K** palette to jump to any view, element or diagram by name.
+- ⬇ **Excel**: every table exports as CSV or `.xlsx`, and one workbook gathers all the analyses. Long tables and lists come by pages of 200 rows.
+- ♿ **Accessibility**: keyboard navigation, named controls, visible focus, system colour scheme.
 - 🔗 **Links**: all the model relations, filterable and exportable.
 - ▤ **Table**: all elements in a table, with view tabs, relation columns and computed path columns (live preview), sort, filters and CSV export.
 - 🎨 **Themes**: Dark, Light, Office 2007, high contrast, and your own custom theme.
@@ -257,10 +266,16 @@ Les diagrammes de séquence (ES, FS, OES, OAS, IS) sont redessinés : lignes de 
 - **🧬 Traçabilité inter-couches** : taux de réalisation OA → SA → LA → PA → EPBS par catégorie, en un coup d'œil, et la liste des éléments non tracés.
 - **🎯 Capacités & missions**, **🔁 Modes & états**, **📑 Exigences**, **🏷 Propriétés**, **🗃 Données & interfaces**, **⛓ Contraintes**.
 - **⚖ Comparaison de versions** : éléments ajoutés, supprimés, modifiés ou déplacés entre deux versions du modèle, avec rapport exportable — et l'onglet **🔲 Diagrammes** pour les `.aird`.
+- **💚 Santé du modèle** : un score de 0 à 100 bâti sur tous les contrôles de toutes les vues, par couche, avec son historique au fil des versions du modèle — et un **🩺 profil de contrôles** (activation, gravité, seuils) partageable en fichier.
+- **🖧 Déploiement & EPBS**, **📦 REC / RPL** (répliques comparées à leur REC), **📚 Bibliothèques** (références externes, résolues dès que la bibliothèque est chargée), **🏷 Catégories d'échanges**, **🔖 Statut de revue Capella**, et **⚡ contrôles des chaînes** (vides, discontinues, non allouées, chemins physiques).
 
 ![Fonctions — hiérarchie et descriptions](docs/captures/06-fonctions.png)
 
 ![Traçabilité inter-couches](docs/captures/07-tracabilite.png)
+
+![Santé du modèle — contrôles × couches, score par couche](docs/captures/17-sante-modele.png)
+
+![Déploiement & EPBS — nœuds, comportements hébergés, liens physiques](docs/captures/18-deploiement.png)
 
 ### 📐 Composer vos tableaux de bord
 Choisissez parmi des dizaines d'indicateurs (nombre d'éléments, allocation des fonctions, taux de description, chaînes vides, traçabilité…), disposez-les sur des pages A4, imprimez ou exportez en HTML.
@@ -269,7 +284,10 @@ Choisissez parmi des dizaines d'indicateurs (nombre d'éléments, allocation des
 
 ### Et aussi
 - 🧭 **Explorateur** : arborescence, cartes par couche, index des types ARCADIA.
-- 🔍 **Panneau de détail** : attributs, références dans les deux sens, diagrammes de l'élément, et sa **description Capella mise en forme comme dans Capella** (liens vers d'autres éléments cliquables, code HTML d'origine à la demande).
+- 🔍 **Panneau de détail** : attributs, références dans les deux sens, diagrammes de l'élément, et sa **description Capella mise en forme comme dans Capella** (liens vers d'autres éléments cliquables, code HTML d'origine à la demande) — avec des onglets (fiche, liens, diagrammes, analyses, revue) quand on veut moins.
+- ◀ ▶ **Historique** (Alt+← / Alt+→) des vues, éléments et diagrammes, et une palette **Ctrl+K** pour atteindre n'importe quelle vue, élément ou diagramme par son nom.
+- ⬇ **Excel** : chaque tableau s'exporte en CSV ou en `.xlsx`, et un classeur rassemble toutes les analyses. Les tableaux et listes longs s'affichent par pages de 200 lignes.
+- ♿ **Accessibilité** : navigation au clavier, commandes nommées, focus visible, thème selon le réglage du système.
 - 🔗 **Liens** : toutes les relations du modèle, filtrables et exportables.
 - ▤ **Tableau** : tous les éléments en tableau, avec onglets de vues, colonnes de relations et colonnes calculées par chemin (aperçu en direct), tri, filtres et export CSV.
 - 🎨 **Thèmes** : Sombre, Clair, Office 2007, contraste élevé, et votre thème personnalisé.
