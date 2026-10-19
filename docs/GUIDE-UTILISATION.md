@@ -1125,6 +1125,16 @@ Toutes les contraintes : rôle (garde, pré / post-condition), expression (liens
 
 Vue **graphique** des réalisations entre couches : une colonne par couche (OA → SA → LA → PA → EPBS), une flèche par lien de réalisation. Mode **élément** (partir d'un élément : fonction, chaîne, capacité, composant… et suivre ses réalisations vers le haut, le bas ou les deux) ou **catégorie** (toutes les réalisations d'une catégorie). Les chaînes sont groupées avec leurs fonctions ; l'ordre limite les croisements. Ouverture aussi par clic droit sur un élément ou par **ℹ Infos** d'une chaîne. Exports **SVG**, **PNG**, **CSV**, et bloc ⇶ d'un 📑 dossier. Bouton direct **⇶ Couches** (épinglé par défaut).
 
+### 12.10 🔖 Statut de revue
+
+Les champs natifs de revue de Capella, portés par n'importe quel élément : **Status** (littéral de l'énumération *ProgressStatus* du projet : DRAFT, TO BE REVIEWED, TO BE DISCUSSED, REWORK NECESSARY, REVIEWED…) et **Review** (texte libre). Les statuts sont rangés en **classes** d'après leur nom : brouillon, en attente, validé, à retravailler.
+
+- **📋 Liste** : éléments ayant un statut ou un commentaire Capella, avec couche, type, statut et commentaire ; filtres par couche, statut ou classe, type, présence d'un commentaire, recherche ; ⬇ CSV. Le bouton **💬** crée un commentaire de 💬 Revue sur l'élément (le nombre de commentaires existants est affiché).
+- **▦ Répartition** : nombre d'éléments par statut et par couche, puis par type d'élément et classe.
+- **🩺 Contrôles** : éléments à retravailler ; en attente de revue ; brouillons dans une couche majoritairement validée ; commentaire Capella sans statut ; à retravailler sans commentaire dans 💬 Revue ; statut référencé introuvable.
+
+Le panneau de détail d'un élément affiche son statut et son commentaire (🔖 *voir tous* ouvre la liste filtrée sur ce statut) ; la colonne *status* du ▤ Tableau montre le nom du littéral. Indicateurs « Statut de revue — … » dans le catalogue du 📐 Tableau de bord.
+
 ---
 
 ## 13. 📐 Tableau de bord

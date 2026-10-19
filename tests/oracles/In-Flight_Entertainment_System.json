@@ -575,6 +575,31 @@
    "tronque": false
   }
  },
+ "statutRevue": {
+  "elements": 10,
+  "avecStatut": 10,
+  "avecCommentaire": 9,
+  "litteraux": [
+   "DRAFT:draft",
+   "TO BE REVIEWED:wait",
+   "TO BE DISCUSSED:wait",
+   "REWORK NECESSARY:ko",
+   "UNDER REWORK:ko",
+   "REVIEWED:ok",
+   "TODO:draft"
+  ],
+  "parStatut": {
+   "REWORK NECESSARY": 7,
+   "TO BE DISCUSSED": 1,
+   "TODO": 1,
+   "UNDER REWORK": 1
+  },
+  "parClasse": {
+   "draft": 1,
+   "ko": 8,
+   "wait": 1
+  }
+ },
  "controles": {
   "fonctions": {
    "Noms ne commençant pas par un verbe": 14,
@@ -633,6 +658,14 @@
    "Expressions citant un élément introuvable": 0,
    "Contraintes sans élément contraint explicite": 7,
    "Contraintes en double sur un même élément": 0
+  },
+  "statutRevue": {
+   "Éléments à retravailler": 8,
+   "Éléments en attente de revue": 1,
+   "Brouillons dans une couche majoritairement validée": 0,
+   "Commentaire de revue Capella sans statut": 0,
+   "À retravailler sans commentaire dans 💬 Revue": 8,
+   "Statut référencé introuvable": 0
   },
   "etats": {
    "noInit": 4,
@@ -1004,6 +1037,14 @@
    "Component Ports (PA) non alloués à un Physical Port": 26,
    "Component Ports sans Function Port alloué": 14,
    "Sens incohérent Function Port / Component Port": 2
+  },
+  "chk.st": {
+   "Éléments à retravailler": 8,
+   "Éléments en attente de revue": 1,
+   "Brouillons dans une couche majoritairement validée": 0,
+   "Commentaire de revue Capella sans statut": 0,
+   "À retravailler sans commentaire dans 💬 Revue": 8,
+   "Statut référencé introuvable": 0
   },
   "chk.sum": {
    "Ports": 202,
@@ -1885,6 +1926,49 @@
    "Seat TV": 15,
    "Aircraft": 6
   },
+  "st.by": {
+   "TO BE DISCUSSED": 1,
+   "REWORK NECESSARY": 7,
+   "UNDER REWORK": 1,
+   "TODO": 1
+  },
+  "st.cls": {
+   "Brouillon": 1,
+   "En attente": 1,
+   "À retravailler": 8
+  },
+  "st.ko": 8,
+  "st.layer": {
+   "cats": [
+    "SA",
+    "LA",
+    "PA"
+   ],
+   "series": {
+    "Brouillon": [
+     1,
+     0,
+     0
+    ],
+    "En attente": [
+     1,
+     0,
+     0
+    ],
+    "À retravailler": [
+     3,
+     3,
+     2
+    ]
+   }
+  },
+  "st.n": 10,
+  "st.pct": {
+   "pct": 1,
+   "num": 10,
+   "den": 1948
+  },
+  "st.rev": 9,
   "tr.dn.cap": {
    "OA→SA": 33,
    "SA→LA": 72,

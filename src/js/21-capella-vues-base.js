@@ -567,7 +567,7 @@ function capExtractValue(el, prop){
   if (prop.valueKind==='id')        return el.id||'';
   if (prop.valueKind==='type')      return el.typeName||'';
   if (prop.valueKind==='humanType') return (CAP_HUMAN_NAMES[el.typeName]||{}).h||'';
-  if (prop.valueKind==='attr')      return el.attrs[prop.attrKey]||'';
+  if (prop.valueKind==='attr')      return prop.attrKey==='status'&&el.attrs.status?capStName(el.attrs.status):(el.attrs[prop.attrKey]||'');   // status : nom du littéral ProgressStatus (68)
   return '';
 }
 

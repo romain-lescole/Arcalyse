@@ -33,6 +33,7 @@ var CAP_NAV_ITEMS=[
   {k:'ana:pvmt',  l:_L('🏷 Propriétés'),              g:'ana'},
   {k:'ana:data',  l:_L('🗃 Données & interfaces'),     g:'ana'},
   {k:'ana:cts',   l:_L('⛓ Contraintes'),              g:'ana'},
+  {k:'ana:status',l:_L('🔖 Statut de revue'),          g:'ana', t:_L('Statut (DRAFT, TO BE REVIEWED, REVIEWED…) et commentaire de revue Capella de chaque élément : liste, répartition, contrôles')},
   {k:'dashboard', l:_L('📐 Tableau de bord'),   g:'',     t:_L('Tableaux de bord personnalisés : indicateurs, graphiques, tableaux')},
   {k:'home:rap',  l:_L('📘 Rapports automatiques'), p:_L('📘 Rapports'), g:'', t:_L('Rapports produits à partir du modèle selon un plan type (spécification boîte noire, dossier de conception boîte blanche), modifiables, exportables en HTML à commenter ou en Word (🏠 Accueil › 📑 Dossiers)')}
 ];

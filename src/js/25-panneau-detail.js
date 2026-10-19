@@ -83,6 +83,7 @@ function capOpenDetail(id){
 
   // Exigences, propriétés (PVMT) et contraintes de l'élément
   html+=capXtDetail(el.id, secTitle);
+  html+=capStDetail(el.id, secTitle);   // 🔖 statut de revue Capella (68)
 
   // 💬 Commentaires de revue portant sur l'élément
   if(typeof capRevDetailSection==='function') html+=capRevDetailSection(el.id, secTitle);

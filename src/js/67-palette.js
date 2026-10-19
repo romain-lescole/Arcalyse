@@ -16,7 +16,7 @@ var _capPalRecent=[];       // [{kind:'el'|'diag', id}] du plus récent au plus 
  */
 function capPalNorm(s){ return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase(); }
 
-/** Index des éléments du modèle cherchables par la palette (types techniques et éléments sans nom exclus),
+/** Index des éléments du modèle cherchables par la palette (valeurs, liens techniques, paquetages et éléments sans nom exclus),
  * en cache dans `_capAnaCache` (vidé au chargement d'un modèle) et lié au document XML courant.
  * @returns {Array<{id:string,name:string,typeName:string,type:string,layer:string,n:string,t:string,path:string}>} Entrées
  */
@@ -27,8 +27,8 @@ function capPalIndex(){
   const nameOf=e=>(e.attrs&&(e.attrs.name||e.attrs.ReqIFLongName||e.attrs.ReqIFName))||'';
   const idx=[];
   capAllElements.forEach(e=>{
-    if(CAP_TECHNICAL_TYPES.has(e.typeName)) return;
-    const name=nameOf(e); if(!name) return;
+    if(!capStEligible(e)) return;   // éléments nommés hors valeurs, liens techniques, paquetages (68) : échanges, ports et liens physiques compris
+    const name=nameOf(e);
     const path=[]; let p=parentOf[e.id], n=0;
     while(p&&n<3){ const pe=byId[p]; if(pe){ const pn=nameOf(pe); if(pn&&!CAP_TECHNICAL_TYPES.has(pe.typeName)){ path.unshift(pn); n++; } } p=parentOf[p]; }
     const type=capAnaHuman(e.typeName);

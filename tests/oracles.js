@@ -100,13 +100,16 @@ function releve() {
   R.liensCouches = {};   // ⇶ par catégorie (fonctions, composants, chaînes…), tous les liens
   CAP_TRACE_CATS.forEach(c => { const XL = capXlCompute({ mode: 'cat', cat: c.k, dir: 'all', fnCh: true }); R.liensCouches[c.k] = { noeuds: taille(XL.nodes), aretes: taille(XL.edges), tronque: !!XL.trop }; });
 
+  const ST2 = capComputeStatus();
+  R.statutRevue = { elements: ST2.list.length, avecStatut: ST2.list.filter(e => e.status).length, avecCommentaire: ST2.list.filter(e => e.review).length, litteraux: ST2.lits.map(l => l.name + ':' + l.cls), parStatut: compte(ST2.list, e => e.status || '(sans)'), parClasse: compte(ST2.list, e => e.cls || '(sans)') };
+
   // 🩺 Contrôles de toutes les vues : nombre de lignes par contrôle
   const etatsCtl = { noInit: 0, unreach: 0, deadEnd: 0, noTrig: 0 };
   ST.sms.forEach(m => { const c = capStateChecks(m); Object.keys(etatsCtl).forEach(k => { etatsCtl[k] += (c[k] || []).length; }); });
   R.controles = {
     fonctions: sections(capFnChecks(F, 'all')), functionalExchange: sections(capFexChecks('all')), composants: sections(capCbChecks('all')),
     scenarios: sections(capScChecks()), exigences: sections(capReqChecks()), pvmt: sections(capPvChecks()), donnees: sections(capDmChecks()),
-    contraintes: sections(capCtChecks()), etats: etatsCtl };
+    contraintes: sections(capCtChecks()), statutRevue: sections(capStChecks()), etats: etatsCtl };
 
   // 📐 Tableau de bord : valeur de chaque indicateur (texte, diagramme et image exclus : pas de valeur calculée)
   R.tableauDeBord = {};

@@ -389,6 +389,14 @@
         <h3>⛓ Contraintes</h3>
         <p>Toutes les contraintes : rôle (garde, pré / post-condition), expression (les liens de texte sont remplacés par le nom de l'élément cité), langage, éléments contraints, propriétaire. Contrôles : contraintes vides ou sans expression, éléments cités introuvables, sans élément contraint, doublons.</p>
         <p class="hp-note">Le panneau de détail d'un élément affiche aussi ses exigences liées, ses propriétés et ses contraintes. Les indicateurs correspondants sont dans le catalogue du 📐 Tableau de bord.</p>
+        <h3>🔖 Statut de revue</h3>
+        <p>Les champs natifs de revue de Capella : <b>Status</b> (littéral de l'énumération <i>ProgressStatus</i> du projet : DRAFT, TO BE REVIEWED, TO BE DISCUSSED, REWORK NECESSARY, REVIEWED…) et <b>Review</b> (texte libre), portés par n'importe quel élément. Les statuts sont rangés en classes d'après leur nom : brouillon, en attente, validé, à retravailler.</p>
+        <table class="hp-t">
+          <tr><td>📋 Liste</td><td>Éléments ayant un statut ou un commentaire Capella : couche, type, statut, commentaire ; filtres par couche, statut (ou classe), type, présence d'un commentaire ; recherche. Le bouton 💬 crée un commentaire de 💬 Revue sur l'élément (le nombre de commentaires existants est affiché).</td></tr>
+          <tr><td>▦ Répartition</td><td>Nombre d'éléments par statut et par couche, puis par type d'élément et classe.</td></tr>
+          <tr><td>🩺 Contrôles</td><td>Éléments à retravailler, en attente de revue, brouillons dans une couche majoritairement validée, commentaire Capella sans statut, à retravailler sans commentaire dans 💬 Revue, statut référencé introuvable.</td></tr>
+        </table>
+        <p class="hp-note">Le panneau de détail affiche le statut et le commentaire de l'élément (🔖 voir tous = la liste filtrée sur ce statut) ; la colonne <i>status</i> du ▤ Tableau montre le nom du littéral. Indicateurs « Statut de revue — … » dans le catalogue du 📐 Tableau de bord.</p>
         <h3>📐 Tableau de bord (onglet à part, à côté de 🔬 Analyses)</h3>
         <p>Composez vos propres tableaux de bord à partir de <b>tous les indicateurs calculés</b> (≈ 130 sur un modèle complet) : modèle, fonctions (par couche et comparaison des couches, allocation, allocataires, sous-systèmes, nommage), chaînes, Component Exchanges, Physical Links, ports, traçabilité, capacités, modes & états, exigences, propriétés, données & interfaces, contraintes, contrôles. Un tableau de bord d'exemple est créé au premier affichage.</p>
         <table class="hp-t">

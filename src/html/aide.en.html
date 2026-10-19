@@ -389,6 +389,14 @@
         <h3>⛓ Constraints</h3>
         <p>All the constraints: role (guard, pre / post-condition), expression (text links are replaced by the name of the cited element), language, constrained elements, owner. Checks: empty constraints or without expression, missing cited elements, without constrained element, duplicates.</p>
         <p class="hp-note">An element's detail panel also shows its linked requirements, its properties and its constraints. The corresponding indicators are in the 📐 Dashboard catalogue.</p>
+        <h3>🔖 Review status</h3>
+        <p>Capella's native review fields: <b>Status</b> (a literal of the project's <i>ProgressStatus</i> enumeration: DRAFT, TO BE REVIEWED, TO BE DISCUSSED, REWORK NECESSARY, REVIEWED…) and <b>Review</b> (free text), carried by any element. Statuses are sorted into classes from their name: draft, pending, validated, to rework.</p>
+        <table class="hp-t">
+          <tr><td>📋 List</td><td>Elements with a status or a Capella comment: layer, type, status, comment; filters by layer, status (or class), type, presence of a comment; search. The 💬 button creates a 💬 Review comment on the element (the number of existing comments is shown).</td></tr>
+          <tr><td>▦ Breakdown</td><td>Number of elements per status and layer, then per element type and class.</td></tr>
+          <tr><td>🩺 Checks</td><td>Elements to rework, pending review, drafts in a mostly validated layer, Capella comment without status, to rework without a comment in 💬 Review, unresolved status reference.</td></tr>
+        </table>
+        <p class="hp-note">The details panel shows the status and comment of the element (🔖 see all = the list filtered on that status); the <i>status</i> column of the ▤ Table shows the literal name. “Review status — …” indicators in the 📐 Dashboard catalogue.</p>
         <h3>📐 Dashboard (separate tab, next to 🔬 Analyses)</h3>
         <p>Build your own dashboards from <b>all the computed indicators</b> (≈ 130 on a complete model): model, functions (by layer and layer comparison, allocation, allocation targets, subsystems, naming), chains, Component Exchanges, Physical Links, ports, traceability, capabilities, modes & states, requirements, properties, data & interfaces, constraints, checks. A sample dashboard is created the first time it is displayed.</p>
         <table class="hp-t">

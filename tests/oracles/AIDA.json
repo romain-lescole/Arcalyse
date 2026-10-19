@@ -579,6 +579,27 @@
    "tronque": false
   }
  },
+ "statutRevue": {
+  "elements": 2,
+  "avecStatut": 1,
+  "avecCommentaire": 2,
+  "litteraux": [
+   "DRAFT:draft",
+   "TO_BE_REVIEWED:ok",
+   "TO_BE_DISCUSSED:wait",
+   "REWORK_NECESSARY:ko",
+   "UNDER_REWORK:ko",
+   "REVIEWED_OK:ok"
+  ],
+  "parStatut": {
+   "(sans)": 1,
+   "REWORK_NECESSARY": 1
+  },
+  "parClasse": {
+   "(sans)": 1,
+   "ko": 1
+  }
+ },
  "controles": {
   "fonctions": {
    "Noms ne commençant pas par un verbe": 219,
@@ -651,6 +672,14 @@
    "Expressions citant un élément introuvable": 0,
    "Contraintes sans élément contraint explicite": 25,
    "Contraintes en double sur un même élément": 0
+  },
+  "statutRevue": {
+   "Éléments à retravailler": 1,
+   "Éléments en attente de revue": 0,
+   "Brouillons dans une couche majoritairement validée": 0,
+   "Commentaire de revue Capella sans statut": 1,
+   "À retravailler sans commentaire dans 💬 Revue": 1,
+   "Statut référencé introuvable": 0
   },
   "etats": {
    "noInit": 25,
@@ -1056,6 +1085,14 @@
    "Sens incohérent Function Port / Component Port": 34,
    "Component Ports (PA) non alloués à un Physical Port": 24,
    "Functional Exchange ↔ Component Exchange : ports non alignés": 8
+  },
+  "chk.st": {
+   "Éléments à retravailler": 1,
+   "Éléments en attente de revue": 0,
+   "Brouillons dans une couche majoritairement validée": 0,
+   "Commentaire de revue Capella sans statut": 1,
+   "À retravailler sans commentaire dans 💬 Revue": 1,
+   "Statut référencé introuvable": 0
   },
   "chk.sum": {
    "Fonctions": 522,
@@ -2046,6 +2083,30 @@
    "LIDAR altimeter": 2,
    "RC receiver": 2
   },
+  "st.by": {
+   "REWORK_NECESSARY": 1
+  },
+  "st.cls": {
+   "À retravailler": 1
+  },
+  "st.ko": 1,
+  "st.layer": {
+   "cats": [
+    "PA"
+   ],
+   "series": {
+    "À retravailler": [
+     1
+    ]
+   }
+  },
+  "st.n": 1,
+  "st.pct": {
+   "pct": 0,
+   "num": 1,
+   "den": 4608
+  },
+  "st.rev": 2,
   "tr.dn.cap": {
    "OA→SA": 100,
    "SA→LA": 75
