@@ -191,6 +191,16 @@ Tous ces réglages sont enregistrés avec la 💾 page HTML et dans la partie «
 
 ---
 
+### 3.5 🩺 Profil de contrôles
+
+**⚙ › 🩺 Profil de contrôles…** (ou le bouton **🩺 Profil** en tête de chaque onglet 🩺 Contrôles) liste, vue par vue, tous les contrôles d'Arcalyse avec le nombre de lignes qu'ils signalent sur le modèle chargé. Pour chacun :
+
+- **activé** ou non : un contrôle désactivé disparaît des vues et des indicateurs du tableau de bord ; il reste listé en bas de l'onglet 🩺 Contrôles pour être réactivé ;
+- **gravité** : ℹ information (compté à part, hors « points à vérifier »), ⚠ à vérifier (défaut), ✖ bloquant (signalé dans le total) ;
+- **seuils** : longueur minimale d'une description, nom trop long (caractères, mots), nombre de statuts pour qu'une couche soit « majoritairement validée ».
+
+Le profil est enregistré avec la 💾 page, repris par 📄 Ouvrir un projet et par le fichier ⚙ Interface et vues ; **💾 Exporter / 📂 Importer .json** permettent de partager le profil d'une équipe. Les contrôles sont désignés par leur titre : un profil est propre à une langue de l'interface.
+
 ## 4. 🏠 Accueil du projet
 
 Vue affichée à l'ouverture d'un modèle (bouton **🏠 Accueil**, tout à gauche). Quatre onglets : **🏠 Projet**, **☑ Check-lists & plans de revue**, **🧾 Tableaux blancs**, **📑 Dossiers** (dossiers de relecture et rapports, [§ 4.5](#45--dossiers-de-relecture-et--rapports)). Tout ce qui y est saisi est enregistré dans la page (💾).

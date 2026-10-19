@@ -634,6 +634,108 @@
 "js/12-dialogues.js";"38";"Annuler";"Cancel"
 "js/12-dialogues.js";"38";"Supprimer";"Delete"
 "js/13-accessibilite.js";"9";".tbtn,.ctx-i,.cap-nav-it,.cap-det-link,.cex-det,.phl-link-badge,.phl-comp-hdr,.cdg-det-el,.cdg-lien,.cap-fold-btn,.cap-chain-hdr,.cap-card,.cap-tree-tog,.cap-ttab,.cap-ttab-close,.cap-nav-pin,[onclick]";"(inchangé, hors _L)"
+"js/14-profil-controles.js";"12";"fn.descMin";"(inchangé, hors _L)"
+"js/14-profil-controles.js";"12";"Description trop courte : moins de … caractères";"Description too short: fewer than … characters"
+"js/14-profil-controles.js";"13";"nq.longChars";"(inchangé, hors _L)"
+"js/14-profil-controles.js";"13";"Nom trop long : plus de … caractères";"Name too long: more than … characters"
+"js/14-profil-controles.js";"14";"nq.longWords";"(inchangé, hors _L)"
+"js/14-profil-controles.js";"14";"Nom trop long : plus de … mots";"Name too long: more than … words"
+"js/14-profil-controles.js";"15";"st.minStatuts";"(inchangé, hors _L)"
+"js/14-profil-controles.js";"15";"Couche « majoritairement validée » : au moins … statuts";"“Mostly validated” layer: at least … statuses"
+"js/14-profil-controles.js";"17";"Information";"Information"
+"js/14-profil-controles.js";"17";"À vérifier";"To check"
+"js/14-profil-controles.js";"17";"Bloquant";"Blocking"
+"js/14-profil-controles.js";"62";"Autres vues";"Other views"
+"js/14-profil-controles.js";"65";"Profil de contrôles : vue";""
+"js/14-profil-controles.js";"99";"Activé";"Enabled"
+"js/14-profil-controles.js";"101";"Gravité";"Severity"
+"js/14-profil-controles.js";"103";"🩺 Profil de contrôles";"<div class=""cw-d-box"" style=""width:min(820px,calc(100vw - 32px))"">
+    <div class=""cw-d-hdr""><b>🩺 Checks profile</b><span class=""ana-dim"" style=""font-size:11px"">{0} disabled · {1} severity change(s) · {2} threshold change(s)</span><button class=""cap-lf-btn"" data-c=""x"">✕</button></div>
+    <div class=""cw-d-body"">
+      <p class=""cw-d-sub"">Each 🩺 check can be <b>off</b> (it no longer appears in the views or the dashboard) or be given a <b>severity</b> : ℹ information (counted apart), ⚠ to check, ✖ blocking. The profile is saved with the 💾 page, carried over by 📄 Open a project and by the ⚙ Interface and views file; export it alone to share it with your team.{3}</p>
+      <div style=""display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap""><input id=""chk-q"" class=""phl-filter-input"" placeholder=""🔍 Filter the checks…"" value=""{4}"" style=""width:240px"">
+        <button class=""cap-lf-btn"" data-c=""allon"" title=""Re-enable all checks"">☑ Enable all</button><button class=""cap-lf-btn"" data-c=""alloff"" title=""Disable the displayed checks (filter)"">☐ Disable all</button></div>
+      <table class=""ana-t chk-t""><thead><tr><th></th><th>Check</th><th>Severity</th><th title=""Rows currently reported"">n</th></tr></thead><tbody>{5}</tbody></table>
+      <h4 style=""margin:12px 0 4px"">Thresholds</h4>
+      <table class=""ana-t chk-t""><tbody>{6}</tbody></table>
+    </div>
+    <div class=""cw-d-ftr""><button class=""cap-lf-btn"" data-c=""reset"" title=""Re-enable everything, “to check” severity, default thresholds"">↺ Restore</button>
+      <button class=""cap-lf-btn"" data-c=""exp"" title="".json file of the profile alone (without the model or the other settings)"">💾 Export .json</button><button class=""cap-lf-btn"" data-c=""imp"">📂 Import .json</button>
+      <span class=""ana-dim"" style=""font-size:11px;margin-left:auto"">Also in ⚙ Interface and views</span><button class=""cap-lf-btn"" data-c=""x"">✕ Close</button></div></div>"
+"js/14-profil-controles.js";"104";"désactivé(s) ·";"<div class=""cw-d-box"" style=""width:min(820px,calc(100vw - 32px))"">
+    <div class=""cw-d-hdr""><b>🩺 Checks profile</b><span class=""ana-dim"" style=""font-size:11px"">{0} disabled · {1} severity change(s) · {2} threshold change(s)</span><button class=""cap-lf-btn"" data-c=""x"">✕</button></div>
+    <div class=""cw-d-body"">
+      <p class=""cw-d-sub"">Each 🩺 check can be <b>off</b> (it no longer appears in the views or the dashboard) or be given a <b>severity</b> : ℹ information (counted apart), ⚠ to check, ✖ blocking. The profile is saved with the 💾 page, carried over by 📄 Open a project and by the ⚙ Interface and views file; export it alone to share it with your team.{3}</p>
+      <div style=""display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap""><input id=""chk-q"" class=""phl-filter-input"" placeholder=""🔍 Filter the checks…"" value=""{4}"" style=""width:240px"">
+        <button class=""cap-lf-btn"" data-c=""allon"" title=""Re-enable all checks"">☑ Enable all</button><button class=""cap-lf-btn"" data-c=""alloff"" title=""Disable the displayed checks (filter)"">☐ Disable all</button></div>
+      <table class=""ana-t chk-t""><thead><tr><th></th><th>Check</th><th>Severity</th><th title=""Rows currently reported"">n</th></tr></thead><tbody>{5}</tbody></table>
+      <h4 style=""margin:12px 0 4px"">Thresholds</h4>
+      <table class=""ana-t chk-t""><tbody>{6}</tbody></table>
+    </div>
+    <div class=""cw-d-ftr""><button class=""cap-lf-btn"" data-c=""reset"" title=""Re-enable everything, “to check” severity, default thresholds"">↺ Restore</button>
+      <button class=""cap-lf-btn"" data-c=""exp"" title="".json file of the profile alone (without the model or the other settings)"">💾 Export .json</button><button class=""cap-lf-btn"" data-c=""imp"">📂 Import .json</button>
+      <span class=""ana-dim"" style=""font-size:11px;margin-left:auto"">Also in ⚙ Interface and views</span><button class=""cap-lf-btn"" data-c=""x"">✕ Close</button></div></div>"
+"js/14-profil-controles.js";"104";"gravité(s) modifiée(s) ·";"<div class=""cw-d-box"" style=""width:min(820px,calc(100vw - 32px))"">
+    <div class=""cw-d-hdr""><b>🩺 Checks profile</b><span class=""ana-dim"" style=""font-size:11px"">{0} disabled · {1} severity change(s) · {2} threshold change(s)</span><button class=""cap-lf-btn"" data-c=""x"">✕</button></div>
+    <div class=""cw-d-body"">
+      <p class=""cw-d-sub"">Each 🩺 check can be <b>off</b> (it no longer appears in the views or the dashboard) or be given a <b>severity</b> : ℹ information (counted apart), ⚠ to check, ✖ blocking. The profile is saved with the 💾 page, carried over by 📄 Open a project and by the ⚙ Interface and views file; export it alone to share it with your team.{3}</p>
+      <div style=""display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap""><input id=""chk-q"" class=""phl-filter-input"" placeholder=""🔍 Filter the checks…"" value=""{4}"" style=""width:240px"">
+        <button class=""cap-lf-btn"" data-c=""allon"" title=""Re-enable all checks"">☑ Enable all</button><button class=""cap-lf-btn"" data-c=""alloff"" title=""Disable the displayed checks (filter)"">☐ Disable all</button></div>
+      <table class=""ana-t chk-t""><thead><tr><th></th><th>Check</th><th>Severity</th><th title=""Rows currently reported"">n</th></tr></thead><tbody>{5}</tbody></table>
+      <h4 style=""margin:12px 0 4px"">Thresholds</h4>
+      <table class=""ana-t chk-t""><tbody>{6}</tbody></table>
+    </div>
+    <div class=""cw-d-ftr""><button class=""cap-lf-btn"" data-c=""reset"" title=""Re-enable everything, “to check” severity, default thresholds"">↺ Restore</button>
+      <button class=""cap-lf-btn"" data-c=""exp"" title="".json file of the profile alone (without the model or the other settings)"">💾 Export .json</button><button class=""cap-lf-btn"" data-c=""imp"">📂 Import .json</button>
+      <span class=""ana-dim"" style=""font-size:11px;margin-left:auto"">Also in ⚙ Interface and views</span><button class=""cap-lf-btn"" data-c=""x"">✕ Close</button></div></div>"
+"js/14-profil-controles.js";"106";"Chargez un modèle pour voir tous les contrôles et leurs nombres.";"Load a model to see all the checks and their counts."
+"js/14-profil-controles.js";"107";"☑ Tout activer ☐ Tout désactiver Contrôle Gravité n";"<div class=""cw-d-box"" style=""width:min(820px,calc(100vw - 32px))"">
+    <div class=""cw-d-hdr""><b>🩺 Checks profile</b><span class=""ana-dim"" style=""font-size:11px"">{0} disabled · {1} severity change(s) · {2} threshold change(s)</span><button class=""cap-lf-btn"" data-c=""x"">✕</button></div>
+    <div class=""cw-d-body"">
+      <p class=""cw-d-sub"">Each 🩺 check can be <b>off</b> (it no longer appears in the views or the dashboard) or be given a <b>severity</b> : ℹ information (counted apart), ⚠ to check, ✖ blocking. The profile is saved with the 💾 page, carried over by 📄 Open a project and by the ⚙ Interface and views file; export it alone to share it with your team.{3}</p>
+      <div style=""display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap""><input id=""chk-q"" class=""phl-filter-input"" placeholder=""🔍 Filter the checks…"" value=""{4}"" style=""width:240px"">
+        <button class=""cap-lf-btn"" data-c=""allon"" title=""Re-enable all checks"">☑ Enable all</button><button class=""cap-lf-btn"" data-c=""alloff"" title=""Disable the displayed checks (filter)"">☐ Disable all</button></div>
+      <table class=""ana-t chk-t""><thead><tr><th></th><th>Check</th><th>Severity</th><th title=""Rows currently reported"">n</th></tr></thead><tbody>{5}</tbody></table>
+      <h4 style=""margin:12px 0 4px"">Thresholds</h4>
+      <table class=""ana-t chk-t""><tbody>{6}</tbody></table>
+    </div>
+    <div class=""cw-d-ftr""><button class=""cap-lf-btn"" data-c=""reset"" title=""Re-enable everything, “to check” severity, default thresholds"">↺ Restore</button>
+      <button class=""cap-lf-btn"" data-c=""exp"" title="".json file of the profile alone (without the model or the other settings)"">💾 Export .json</button><button class=""cap-lf-btn"" data-c=""imp"">📂 Import .json</button>
+      <span class=""ana-dim"" style=""font-size:11px;margin-left:auto"">Also in ⚙ Interface and views</span><button class=""cap-lf-btn"" data-c=""x"">✕ Close</button></div></div>"
+"js/14-profil-controles.js";"109";"Seuils";"<div class=""cw-d-box"" style=""width:min(820px,calc(100vw - 32px))"">
+    <div class=""cw-d-hdr""><b>🩺 Checks profile</b><span class=""ana-dim"" style=""font-size:11px"">{0} disabled · {1} severity change(s) · {2} threshold change(s)</span><button class=""cap-lf-btn"" data-c=""x"">✕</button></div>
+    <div class=""cw-d-body"">
+      <p class=""cw-d-sub"">Each 🩺 check can be <b>off</b> (it no longer appears in the views or the dashboard) or be given a <b>severity</b> : ℹ information (counted apart), ⚠ to check, ✖ blocking. The profile is saved with the 💾 page, carried over by 📄 Open a project and by the ⚙ Interface and views file; export it alone to share it with your team.{3}</p>
+      <div style=""display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap""><input id=""chk-q"" class=""phl-filter-input"" placeholder=""🔍 Filter the checks…"" value=""{4}"" style=""width:240px"">
+        <button class=""cap-lf-btn"" data-c=""allon"" title=""Re-enable all checks"">☑ Enable all</button><button class=""cap-lf-btn"" data-c=""alloff"" title=""Disable the displayed checks (filter)"">☐ Disable all</button></div>
+      <table class=""ana-t chk-t""><thead><tr><th></th><th>Check</th><th>Severity</th><th title=""Rows currently reported"">n</th></tr></thead><tbody>{5}</tbody></table>
+      <h4 style=""margin:12px 0 4px"">Thresholds</h4>
+      <table class=""ana-t chk-t""><tbody>{6}</tbody></table>
+    </div>
+    <div class=""cw-d-ftr""><button class=""cap-lf-btn"" data-c=""reset"" title=""Re-enable everything, “to check” severity, default thresholds"">↺ Restore</button>
+      <button class=""cap-lf-btn"" data-c=""exp"" title="".json file of the profile alone (without the model or the other settings)"">💾 Export .json</button><button class=""cap-lf-btn"" data-c=""imp"">📂 Import .json</button>
+      <span class=""ana-dim"" style=""font-size:11px;margin-left:auto"">Also in ⚙ Interface and views</span><button class=""cap-lf-btn"" data-c=""x"">✕ Close</button></div></div>"
+"js/14-profil-controles.js";"109";"Aucun contrôle ne correspond.";"No check matches."
+"js/14-profil-controles.js";"111";"↺ Rétablir 💾 Exporter .json 📂 Importer .json Aussi dans ⚙ Interface et vues ✕ Fermer";"<div class=""cw-d-box"" style=""width:min(820px,calc(100vw - 32px))"">
+    <div class=""cw-d-hdr""><b>🩺 Checks profile</b><span class=""ana-dim"" style=""font-size:11px"">{0} disabled · {1} severity change(s) · {2} threshold change(s)</span><button class=""cap-lf-btn"" data-c=""x"">✕</button></div>
+    <div class=""cw-d-body"">
+      <p class=""cw-d-sub"">Each 🩺 check can be <b>off</b> (it no longer appears in the views or the dashboard) or be given a <b>severity</b> : ℹ information (counted apart), ⚠ to check, ✖ blocking. The profile is saved with the 💾 page, carried over by 📄 Open a project and by the ⚙ Interface and views file; export it alone to share it with your team.{3}</p>
+      <div style=""display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap""><input id=""chk-q"" class=""phl-filter-input"" placeholder=""🔍 Filter the checks…"" value=""{4}"" style=""width:240px"">
+        <button class=""cap-lf-btn"" data-c=""allon"" title=""Re-enable all checks"">☑ Enable all</button><button class=""cap-lf-btn"" data-c=""alloff"" title=""Disable the displayed checks (filter)"">☐ Disable all</button></div>
+      <table class=""ana-t chk-t""><thead><tr><th></th><th>Check</th><th>Severity</th><th title=""Rows currently reported"">n</th></tr></thead><tbody>{5}</tbody></table>
+      <h4 style=""margin:12px 0 4px"">Thresholds</h4>
+      <table class=""ana-t chk-t""><tbody>{6}</tbody></table>
+    </div>
+    <div class=""cw-d-ftr""><button class=""cap-lf-btn"" data-c=""reset"" title=""Re-enable everything, “to check” severity, default thresholds"">↺ Restore</button>
+      <button class=""cap-lf-btn"" data-c=""exp"" title="".json file of the profile alone (without the model or the other settings)"">💾 Export .json</button><button class=""cap-lf-btn"" data-c=""imp"">📂 Import .json</button>
+      <span class=""ana-dim"" style=""font-size:11px;margin-left:auto"">Also in ⚙ Interface and views</span><button class=""cap-lf-btn"" data-c=""x"">✕ Close</button></div></div>"
+"js/14-profil-controles.js";"111";"défaut";"default"
+"js/14-profil-controles.js";"126";"Rétablir le profil par défaut : tous les contrôles activés, gravité « à vérifier », seuils d'origine ?";"Restore the default profile: all checks enabled, “to check” severity, original thresholds?"
+"js/14-profil-controles.js";"126";"Rétablir";"Restore"
+"js/14-profil-controles.js";"128";".json,application/json";"(inchangé, hors _L)"
+"js/14-profil-controles.js";"129";"Fichier illisible (JSON attendu).";"Unreadable file (JSON expected)."
+"js/14-profil-controles.js";"130";"Ce fichier n'est pas un profil de contrôles Arcalyse.";"This file is not an Arcalyse checks profile."
+"js/14-profil-controles.js";"131";"✔ Profil de contrôles importé";"✔ Checks profile imported"
 "js/20-capella-chargement.js";"5";"Operational Analysis";"Operational Analysis"
 "js/20-capella-chargement.js";"6";"System Analysis";"System Analysis"
 "js/20-capella-chargement.js";"7";"Logical Architecture";"Logical Architecture"
@@ -1194,23 +1296,29 @@
 "js/27-interfaces-calculs.js";"58";"Émetteur ↓ / Récepteur →";"Sender ↓ / Receiver →"
 "js/27-interfaces-calculs.js";"58";"Composant";"Component"
 "js/27-interfaces-calculs.js";"72";"· cliquez une cellule pour lister les";"… … · click a cell to list the …"
-"js/27-interfaces-calculs.js";"94";"à vérifier";"⚠ … point… to check"
-"js/27-interfaces-calculs.js";"94";"✔ Aucune anomalie détectée";"✔ No anomaly detected"
-"js/27-interfaces-calculs.js";"99";"✔ RAS";"✔ Nothing to report"
-"js/27-interfaces-calculs.js";"118";"Port d'entrée (IN)";"Input port (IN)"
-"js/27-interfaces-calculs.js";"119";"Port de sortie (OUT)";"Output port (OUT)"
-"js/27-interfaces-calculs.js";"120";"Port bidirectionnel (INOUT)";"Bidirectional port (INOUT)"
-"js/27-interfaces-calculs.js";"121";"Orientation non définie (UNSET)";"Undefined orientation (UNSET)"
-"js/27-interfaces-calculs.js";"125";"→ Orienté";"→ Oriented"
-"js/27-interfaces-calculs.js";"125";"Sens source → cible";"Source → target direction"
-"js/27-interfaces-calculs.js";"126";"← Inversé";"← Reversed"
-"js/27-interfaces-calculs.js";"126";"Sens cible → source (déduit des orientations de ports)";"Target → source direction (deduced from port orientations)"
-"js/27-interfaces-calculs.js";"127";"⇄ Bidirectionnel";"⇄ Bidirectional"
-"js/27-interfaces-calculs.js";"127";"Échange dans les deux sens (port INOUT)";"Exchange in both directions (INOUT port)"
-"js/27-interfaces-calculs.js";"128";"? Non orienté";"? Not oriented"
-"js/27-interfaces-calculs.js";"128";"Aucun port orienté : sens inconnu";"No oriented port: unknown direction"
-"js/27-interfaces-calculs.js";"157";"Deux ports OUT reliés";"Two OUT ports connected"
-"js/27-interfaces-calculs.js";"158";"Deux ports IN reliés";"Two IN ports connected"
+"js/27-interfaces-calculs.js";"98";"à vérifier";"⚠ … point… to check"
+"js/27-interfaces-calculs.js";"98";"✔ Aucune anomalie détectée";"✔ No anomaly detected"
+"js/27-interfaces-calculs.js";"98";"pour information";"· ℹ … for information"
+"js/27-interfaces-calculs.js";"99";"Profil de contrôles : activer ou désactiver chaque contrôle, gravité, seuils";"Checks profile: enable or disable each check, severity, thresholds"
+"js/27-interfaces-calculs.js";"99";"Profil";"Profile"
+"js/27-interfaces-calculs.js";"99";"désactivé(s)";"disabled"
+"js/27-interfaces-calculs.js";"104";"✔ RAS";"✔ Nothing to report"
+"js/27-interfaces-calculs.js";"106";"contrôle(s) désactivé(s) par le profil";"… check(s) disabled by the profile"
+"js/27-interfaces-calculs.js";"107";"Ouvrir le profil sur ce contrôle";"Open the profile on this check"
+"js/27-interfaces-calculs.js";"125";"Port d'entrée (IN)";"Input port (IN)"
+"js/27-interfaces-calculs.js";"126";"Port de sortie (OUT)";"Output port (OUT)"
+"js/27-interfaces-calculs.js";"127";"Port bidirectionnel (INOUT)";"Bidirectional port (INOUT)"
+"js/27-interfaces-calculs.js";"128";"Orientation non définie (UNSET)";"Undefined orientation (UNSET)"
+"js/27-interfaces-calculs.js";"132";"→ Orienté";"→ Oriented"
+"js/27-interfaces-calculs.js";"132";"Sens source → cible";"Source → target direction"
+"js/27-interfaces-calculs.js";"133";"← Inversé";"← Reversed"
+"js/27-interfaces-calculs.js";"133";"Sens cible → source (déduit des orientations de ports)";"Target → source direction (deduced from port orientations)"
+"js/27-interfaces-calculs.js";"134";"⇄ Bidirectionnel";"⇄ Bidirectional"
+"js/27-interfaces-calculs.js";"134";"Échange dans les deux sens (port INOUT)";"Exchange in both directions (INOUT port)"
+"js/27-interfaces-calculs.js";"135";"? Non orienté";"? Not oriented"
+"js/27-interfaces-calculs.js";"135";"Aucun port orienté : sens inconnu";"No oriented port: unknown direction"
+"js/27-interfaces-calculs.js";"164";"Deux ports OUT reliés";"Two OUT ports connected"
+"js/27-interfaces-calculs.js";"165";"Deux ports IN reliés";"Two IN ports connected"
 "js/28-index-types.js";"21";"🔍 Rechercher par type, nom humain ou description…";"🔍 Search by type, human name or description…"
 "js/28-index-types.js";"50";"Type";"(inchangé, hors _L)"
 "js/28-index-types.js";"51";"Human Type";"(inchangé, hors _L)"
@@ -1546,6 +1654,8 @@
 "js/33-qualite-noms.js";"46";"Minuscule en tête";"Lowercase first letter"
 "js/33-qualite-noms.js";"47";"Espaces superflus";"Extra spaces"
 "js/33-qualite-noms.js";"48";"Ponctuation finale";"Trailing punctuation"
+"js/33-qualite-noms.js";"49";"nq.longChars";"(inchangé, hors _L)"
+"js/33-qualite-noms.js";"49";"nq.longWords";"(inchangé, hors _L)"
 "js/33-qualite-noms.js";"49";"Nom long (";"Long name (… words, … chars)"
 "js/33-qualite-noms.js";"49";"mots,";"Long name (… words, … chars)"
 "js/33-qualite-noms.js";"49";"car.)";"Long name (… words, … chars)"
@@ -1564,7 +1674,10 @@
 "js/34-fonctions.js";"134";"Langue détectée :";"Detected language: …"
 "js/34-fonctions.js";"138";"Fonctions sans description";"Functions without description"
 "js/34-fonctions.js";"139";"Descriptions trop courtes ou identiques au nom";"Descriptions too short or identical to the name"
-"js/34-fonctions.js";"139";"Moins de 20 caractères, ou répète le nom";"Fewer than 20 characters, or repeats the name"
+"js/34-fonctions.js";"139";"Moins de";"Fewer than … characters, or repeats the name"
+"js/34-fonctions.js";"139";"caractères, ou répète le nom";"Fewer than … characters, or repeats the name"
+"js/34-fonctions.js";"139";"fn.descMin";"(inchangé, hors _L)"
+"js/34-fonctions.js";"140";"fn.descMin";"(inchangé, hors _L)"
 "js/34-fonctions.js";"141";"Marqueurs de travail en cours (TODO, TBD, NOT DONE…)";"Work-in-progress markers (TODO, TBD, NOT DONE…)"
 "js/34-fonctions.js";"142";"Noms en double dans une même couche";"Duplicate names within a layer"
 "js/34-fonctions.js";"143";"Fonctions feuilles non allouées";"Unallocated leaf functions"
@@ -3745,24 +3858,26 @@
 "js/46-config-interface.js";"15";"thème choisi et thème personnalisé";"chosen theme and custom theme"
 "js/46-config-interface.js";"16";"🔤 Règles de nommage";"🔤 Naming rules"
 "js/46-config-interface.js";"16";"verbes acceptés, mots refusés";"accepted verbs, refused words"
-"js/46-config-interface.js";"83";"Vues enregistrées illisibles :";""
-"js/46-config-interface.js";"98";"+ anciens onglets 📊 Table View";"+ former 📊 Table View tabs"
-"js/46-config-interface.js";"99";"par chemin";", … path column…"
-"js/46-config-interface.js";"102";"⚙ Enregistrer l'interface et les vues";"⚙ Save the interface and views"
-"js/46-config-interface.js";"102";"⚙ Charger une interface et des vues";"⚙ Load an interface and views"
-"js/46-config-interface.js";"104";"Fichier .json sans le modèle : à recharger avec un autre modèle ou une nouvelle version de la page.";"File .json without the model: to be reloaded with another model or a new version of the page."
-"js/46-config-interface.js";"105";"Fichier enregistré le";"File saved on … . The checked parts will replace the current settings."
-"js/46-config-interface.js";"105";". Les parties cochées remplaceront les réglages actuels.";"File saved on … . The checked parts will replace the current settings."
-"js/46-config-interface.js";"107";"Annuler";"… ✕ … … Cancel …"
-"js/46-config-interface.js";"107";"Ce fichier ne contient aucun réglage reconnu.";"This file contains no recognised setting."
-"js/46-config-interface.js";"110";"💾 Enregistrer";"💾 Save"
-"js/46-config-interface.js";"110";"📂 Appliquer";"📂 Apply"
-"js/46-config-interface.js";"122";"Réglage «";"Setting “"
-"js/46-config-interface.js";"122";"» non appliqué :";"” not applied:"
-"js/46-config-interface.js";"123";"réglage(s) appliqué(s)";"✔ … setting(s) applied"
-"js/46-config-interface.js";"134";"Fichier illisible : JSON invalide.";"Unreadable file: invalid JSON."
-"js/46-config-interface.js";"135";"Ce fichier n'est pas un fichier « interface et vues » d'Arcalyse.";"This file is not an Arcalyse “interface and views” file."
-"js/46-config-interface.js";"144";"Ouvrez d'abord un modèle Capella : la mise à jour se compare au modèle affiché.";"Open a Capella model first: the update is compared with the displayed model."
+"js/46-config-interface.js";"17";"🩺 Profil de contrôles";"🩺 Checks profile"
+"js/46-config-interface.js";"17";"contrôles désactivés, gravités, seuils";"disabled checks, severities, thresholds"
+"js/46-config-interface.js";"86";"Vues enregistrées illisibles :";""
+"js/46-config-interface.js";"101";"+ anciens onglets 📊 Table View";"+ former 📊 Table View tabs"
+"js/46-config-interface.js";"102";"par chemin";", … path column…"
+"js/46-config-interface.js";"105";"⚙ Enregistrer l'interface et les vues";"⚙ Save the interface and views"
+"js/46-config-interface.js";"105";"⚙ Charger une interface et des vues";"⚙ Load an interface and views"
+"js/46-config-interface.js";"107";"Fichier .json sans le modèle : à recharger avec un autre modèle ou une nouvelle version de la page.";"File .json without the model: to be reloaded with another model or a new version of the page."
+"js/46-config-interface.js";"108";"Fichier enregistré le";"File saved on … . The checked parts will replace the current settings."
+"js/46-config-interface.js";"108";". Les parties cochées remplaceront les réglages actuels.";"File saved on … . The checked parts will replace the current settings."
+"js/46-config-interface.js";"110";"Annuler";"… ✕ … … Cancel …"
+"js/46-config-interface.js";"110";"Ce fichier ne contient aucun réglage reconnu.";"This file contains no recognised setting."
+"js/46-config-interface.js";"113";"💾 Enregistrer";"💾 Save"
+"js/46-config-interface.js";"113";"📂 Appliquer";"📂 Apply"
+"js/46-config-interface.js";"125";"Réglage «";"Setting “"
+"js/46-config-interface.js";"125";"» non appliqué :";"” not applied:"
+"js/46-config-interface.js";"126";"réglage(s) appliqué(s)";"✔ … setting(s) applied"
+"js/46-config-interface.js";"137";"Fichier illisible : JSON invalide.";"Unreadable file: invalid JSON."
+"js/46-config-interface.js";"138";"Ce fichier n'est pas un fichier « interface et vues » d'Arcalyse.";"This file is not an Arcalyse “interface and views” file."
+"js/46-config-interface.js";"147";"Ouvrez d'abord un modèle Capella : la mise à jour se compare au modèle affiché.";"Open a Capella model first: the update is compared with the displayed model."
 "js/47-composants.js";"13";"🧱 Logical Component";"🧱 Logical Component"
 "js/47-composants.js";"13";"Logical Components";"Logical Components"
 "js/47-composants.js";"13";"Couche LA";"LA layer"
@@ -4867,34 +4982,36 @@
 "js/57-projet-page.js";"117";"thème choisi et thème personnalisé";"chosen theme and custom theme"
 "js/57-projet-page.js";"118";"🔤 Règles de nommage";"🔤 Naming rules"
 "js/57-projet-page.js";"118";"verbes acceptés, mots refusés";"accepted verbs, refused words"
-"js/57-projet-page.js";"133";"⚠ Version d'Arcalyse inconnue (page antérieure à la 2.0 ?) : la reprise est tentée, certains réglages peuvent manquer.";"⚠ Unknown Arcalyse version (page older than 2.0?): the import is attempted, some settings may be missing."
-"js/57-projet-page.js";"134";"⚠ Page enregistrée par la version";"⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing."
-"js/57-projet-page.js";"134";", antérieure à la";"⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing."
-"js/57-projet-page.js";"134";": la reprise est tentée, certains réglages peuvent manquer.";"⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing."
-"js/57-projet-page.js";"135";"⚠ Page enregistrée par une version plus récente (";"⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored."
-"js/57-projet-page.js";"135";") que celle-ci (";"⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored."
-"js/57-projet-page.js";"135";") : ce qu'elle seule connaît sera ignoré.";"⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored."
-"js/57-projet-page.js";"136";"✔ Page enregistrée par la version";"✔ Page saved by version …: fully carried over into version …."
-"js/57-projet-page.js";"136";": reprise complète dans la version";"✔ Page saved by version …: fully carried over into version …."
-"js/57-projet-page.js";"139";"📄 Ouvrir un projet de travail";"📄 Open a work project"
-"js/57-projet-page.js";"141";"Page";"Page"
-"js/57-projet-page.js";"143";"Cette page ne contient pas de modèle : seuls le travail et les réglages cochés seront repris.";"This page contains no model: only the checked work and settings will be carried over."
-"js/57-projet-page.js";"144";"À reprendre dans cette version :";"To carry over into this version:"
-"js/57-projet-page.js";"146";"💾 Enregistrer ensuite dans ce même fichier";"💾 Then save into this same file"
-"js/57-projet-page.js";"146";"Ctrl+S remplacera l'ancienne page par la page de cette version, avec tout le travail (le navigateur demandera l'autorisation d'écrire).";"Ctrl+S will replace the old page with this version's page, with all the work (the browser will ask for write permission)."
-"js/57-projet-page.js";"147";"Pensez ensuite à enregistrer (💾, Ctrl+S) : la page enregistrée sera celle de cette version, avec tout le travail.";"Remember to save afterwards (💾, Ctrl+S): the saved page will be this version's, with all the work."
-"js/57-projet-page.js";"149";"Annuler";"Cancel"
-"js/57-projet-page.js";"150";"📄 Ouvrir le projet";"📄 Open the project"
-"js/57-projet-page.js";"171";"Partie «";"Part “…” not carried over:"
-"js/57-projet-page.js";"171";"» non reprise :";"Part “…” not carried over:"
-"js/57-projet-page.js";"180";"✔ Travail et réglages de la page repris";"✔ Work and settings of the page carried over"
-"js/57-projet-page.js";"184";"XML invalide";"Invalid XML"
-"js/57-projet-page.js";"185";"Modèle de la page illisible :";"Unreadable page model:"
-"js/57-projet-page.js";"189";"Chargement de «";"Loading “…”…"
-"js/57-projet-page.js";"199";"✔ Projet «";"✔ Project “…” carried over into version … — remember to save it (💾)"
-"js/57-projet-page.js";"199";"» repris dans la version";"✔ Project “…” carried over into version … — remember to save it (💾)"
-"js/57-projet-page.js";"199";"— pensez à l'enregistrer (💾)";"✔ Project “…” carried over into version … — remember to save it (💾)"
-"js/57-projet-page.js";"201";"Erreur de chargement :";"Loading error:"
+"js/57-projet-page.js";"119";"🩺 Profil de contrôles";"🩺 Checks profile"
+"js/57-projet-page.js";"119";"contrôles désactivés, gravités, seuils";"disabled checks, severities, thresholds"
+"js/57-projet-page.js";"134";"⚠ Version d'Arcalyse inconnue (page antérieure à la 2.0 ?) : la reprise est tentée, certains réglages peuvent manquer.";"⚠ Unknown Arcalyse version (page older than 2.0?): the import is attempted, some settings may be missing."
+"js/57-projet-page.js";"135";"⚠ Page enregistrée par la version";"⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing."
+"js/57-projet-page.js";"135";", antérieure à la";"⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing."
+"js/57-projet-page.js";"135";": la reprise est tentée, certains réglages peuvent manquer.";"⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing."
+"js/57-projet-page.js";"136";"⚠ Page enregistrée par une version plus récente (";"⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored."
+"js/57-projet-page.js";"136";") que celle-ci (";"⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored."
+"js/57-projet-page.js";"136";") : ce qu'elle seule connaît sera ignoré.";"⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored."
+"js/57-projet-page.js";"137";"✔ Page enregistrée par la version";"✔ Page saved by version …: fully carried over into version …."
+"js/57-projet-page.js";"137";": reprise complète dans la version";"✔ Page saved by version …: fully carried over into version …."
+"js/57-projet-page.js";"140";"📄 Ouvrir un projet de travail";"📄 Open a work project"
+"js/57-projet-page.js";"142";"Page";"Page"
+"js/57-projet-page.js";"144";"Cette page ne contient pas de modèle : seuls le travail et les réglages cochés seront repris.";"This page contains no model: only the checked work and settings will be carried over."
+"js/57-projet-page.js";"145";"À reprendre dans cette version :";"To carry over into this version:"
+"js/57-projet-page.js";"147";"💾 Enregistrer ensuite dans ce même fichier";"💾 Then save into this same file"
+"js/57-projet-page.js";"147";"Ctrl+S remplacera l'ancienne page par la page de cette version, avec tout le travail (le navigateur demandera l'autorisation d'écrire).";"Ctrl+S will replace the old page with this version's page, with all the work (the browser will ask for write permission)."
+"js/57-projet-page.js";"148";"Pensez ensuite à enregistrer (💾, Ctrl+S) : la page enregistrée sera celle de cette version, avec tout le travail.";"Remember to save afterwards (💾, Ctrl+S): the saved page will be this version's, with all the work."
+"js/57-projet-page.js";"150";"Annuler";"Cancel"
+"js/57-projet-page.js";"151";"📄 Ouvrir le projet";"📄 Open the project"
+"js/57-projet-page.js";"172";"Partie «";"Part “…” not carried over:"
+"js/57-projet-page.js";"172";"» non reprise :";"Part “…” not carried over:"
+"js/57-projet-page.js";"182";"✔ Travail et réglages de la page repris";"✔ Work and settings of the page carried over"
+"js/57-projet-page.js";"186";"XML invalide";"Invalid XML"
+"js/57-projet-page.js";"187";"Modèle de la page illisible :";"Unreadable page model:"
+"js/57-projet-page.js";"191";"Chargement de «";"Loading “…”…"
+"js/57-projet-page.js";"201";"✔ Projet «";"✔ Project “…” carried over into version … — remember to save it (💾)"
+"js/57-projet-page.js";"201";"» repris dans la version";"✔ Project “…” carried over into version … — remember to save it (💾)"
+"js/57-projet-page.js";"201";"— pensez à l'enregistrer (💾)";"✔ Project “…” carried over into version … — remember to save it (💾)"
+"js/57-projet-page.js";"203";"Erreur de chargement :";"Loading error:"
 "js/58-revue-ciblee.js";"16";"— Avis —";"— Opinion —"
 "js/58-revue-ciblee.js";"16";"👍 D'accord";"👍 Agree"
 "js/58-revue-ciblee.js";"16";"👎 Pas d'accord";"👎 Disagree"
@@ -5674,64 +5791,64 @@
 "js/64-preferences.js";"43";"⚙ Barre : icônes seules (nom au survol)";"⚙ Toolbar: icons only (name on hover)"
 "js/64-preferences.js";"43";"⚙ Barre : icônes et textes";"⚙ Toolbar: icons and text"
 "js/64-preferences.js";"51";"Affichage des menus";"Menu display"
-"js/64-preferences.js";"53";"🛠 Personnaliser l'affichage… Style de la barre";"🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences…"
-"js/64-preferences.js";"55";"Icônes et textes";"🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences…"
+"js/64-preferences.js";"53";"🛠 Personnaliser l'affichage… Style de la barre";"🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … 🩺 Checks profile… ⚙ Preferences…"
+"js/64-preferences.js";"55";"Icônes et textes";"🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … 🩺 Checks profile… ⚙ Preferences…"
 "js/64-preferences.js";"55";"(icônes seules : la barre déborde)";"(icons only: the toolbar overflows)"
-"js/64-preferences.js";"56";"Icônes seules 🎨 Thème… 💾 Enregistrement automatique";"🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences…"
-"js/64-preferences.js";"59";"⚙ Préférences…";"🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences…"
+"js/64-preferences.js";"56";"Icônes seules 🎨 Thème… 💾 Enregistrement automatique";"🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … 🩺 Checks profile… ⚙ Preferences…"
+"js/64-preferences.js";"59";"🩺 Profil de contrôles… ⚙ Préférences…";"🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … 🩺 Checks profile… ⚙ Preferences…"
 "js/64-preferences.js";"59";"toutes les";"every … min"
 "js/64-preferences.js";"59";"désactivé";"off"
-"js/64-preferences.js";"81";"☰ Affichage";"☰ Display"
-"js/64-preferences.js";"81";"💾 Enregistrement";"💾 Saving"
-"js/64-preferences.js";"81";"🎨 Thème";"🎨 Theme"
-"js/64-preferences.js";"81";"⚙ Interface et vues";"⚙ Interface and views"
-"js/64-preferences.js";"84";"Choisissez les menus affichés dans la barre. Une vue masquée reste accessible par ☰ (Ctrl+K).";"Choose the menus shown in the toolbar. A hidden view remains reachable with ☰ (Ctrl+K)."
-"js/64-preferences.js";"86";"🛠 Personnaliser l'affichage… Style de la barre";"<div style=""margin:8px 0 0 24px""><button class=""phl-export-btn"" data-pa=""custom"">🛠 Customize display…</button></div>
+"js/64-preferences.js";"82";"☰ Affichage";"☰ Display"
+"js/64-preferences.js";"82";"💾 Enregistrement";"💾 Saving"
+"js/64-preferences.js";"82";"🎨 Thème";"🎨 Theme"
+"js/64-preferences.js";"82";"⚙ Interface et vues";"⚙ Interface and views"
+"js/64-preferences.js";"85";"Choisissez les menus affichés dans la barre. Une vue masquée reste accessible par ☰ (Ctrl+K).";"Choose the menus shown in the toolbar. A hidden view remains reachable with ☰ (Ctrl+K)."
+"js/64-preferences.js";"87";"🛠 Personnaliser l'affichage… Style de la barre";"<div style=""margin:8px 0 0 24px""><button class=""phl-export-btn"" data-pa=""custom"">🛠 Customize display…</button></div>
       <div class=""cap-pref-sec"" style=""margin-top:14px"">Toolbar style</div>
       <label class=""cap-pref-row""><input type=""radio"" name=""cap-pref-i"" data-pi=""0""{0}> <span><b>Icons and text</b><br><span class=""ana-dim"">When the toolbar does not fit on one line (narrow window), it switches to icons only automatically.</span></span></label>
       <label class=""cap-pref-row""><input type=""radio"" name=""cap-pref-i"" data-pi=""1""{1}> <span><b>Icons only</b><br><span class=""ana-dim"">More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text.</span></span></label>"
-"js/64-preferences.js";"88";"Icônes et textes Quand la barre ne tient pas sur une ligne (fenêtre étroite), elle passe automatiquement en icônes seules.";"<div style=""margin:8px 0 0 24px""><button class=""phl-export-btn"" data-pa=""custom"">🛠 Customize display…</button></div>
+"js/64-preferences.js";"89";"Icônes et textes Quand la barre ne tient pas sur une ligne (fenêtre étroite), elle passe automatiquement en icônes seules.";"<div style=""margin:8px 0 0 24px""><button class=""phl-export-btn"" data-pa=""custom"">🛠 Customize display…</button></div>
       <div class=""cap-pref-sec"" style=""margin-top:14px"">Toolbar style</div>
       <label class=""cap-pref-row""><input type=""radio"" name=""cap-pref-i"" data-pi=""0""{0}> <span><b>Icons and text</b><br><span class=""ana-dim"">When the toolbar does not fit on one line (narrow window), it switches to icons only automatically.</span></span></label>
       <label class=""cap-pref-row""><input type=""radio"" name=""cap-pref-i"" data-pi=""1""{1}> <span><b>Icons only</b><br><span class=""ana-dim"">More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text.</span></span></label>"
-"js/64-preferences.js";"91";"Dernier enregistrement automatique :";"Last automatic save: …"
-"js/64-preferences.js";"91";"Aucun enregistrement automatique pour l'instant.";"No automatic save yet."
-"js/64-preferences.js";"92";"La page est enregistrée dans son fichier (celui de 💾 / Ctrl+S), seulement si quelque chose a changé .";"The page is saved to its file (the one used by 💾 / Ctrl+S), only if something has changed ."
-"js/64-preferences.js";"93";"⚠ Ce navigateur ne permet pas d'écrire directement dans un fichier (Edge ou Chrome nécessaire) : enregistrement automatique indisponible.";"⚠ This browser cannot write directly to a file (Edge or Chrome required): automatic saving unavailable."
-"js/64-preferences.js";"94";"Enregistrer automatiquement toutes les";"Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again."
-"js/64-preferences.js";"95";"minutes Fichier de la page :";"Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again."
-"js/64-preferences.js";"96";"non choisi";"not chosen"
-"js/64-preferences.js";"97";"Choisir…";"Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again."
-"js/64-preferences.js";"98";"⚠ Dernière erreur :";"⚠ Last error: …"
-"js/64-preferences.js";"99";"Garder la version précédente dans un fichier de secours Avant chaque enregistrement (automatique ou 💾), le contenu actuel du fichier est copié dans le fichier de secours (par exemple mon-projet.backup.html , qui s'ouvre comme une page normale). Protège d'un enregistrement malencontreux. Fichier de secours :";"Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again."
-"js/64-preferences.js";"101";"non choisi";"not chosen"
-"js/64-preferences.js";"102";"Choisir… Le navigateur oublie les fichiers choisis quand la page est fermée : à la réouverture, un bandeau propose de les choisir à nouveau.";"Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again."
-"js/64-preferences.js";"106";"Thème de l'interface (enregistré avec la page).";"Interface theme (saved with the page)."
-"js/64-preferences.js";"108";"🎨 Personnaliser le thème…";"🎨 Customize theme…"
-"js/64-preferences.js";"110";"Fichier .json sans le modèle : barre des vues et préférences, tableaux de bord, ▤ Tableau, thème, règles de nommage… pour réutiliser vos réglages avec un autre modèle. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues…";"File .json without the model: view bar and preferences, dashboards, ▤ Table, theme, naming rules… to reuse your settings with another model. ⚙ Save the interface and views… ⚙ Load an interface and views…"
-"js/64-preferences.js";"114";"⚙ Préférences ✕";"⚙ Preferences ✕ … … Settings saved with the 💾 HTML page. Close"
-"js/64-preferences.js";"116";"Réglages enregistrés avec la 💾 Page HTML. Fermer";"⚙ Preferences ✕ … … Settings saved with the 💾 HTML page. Close"
-"js/64-preferences.js";"173";"Autres vues";"Other views"
-"js/64-preferences.js";"173";"Bouton";"Button"
-"js/64-preferences.js";"173";"Menu";"Menu"
-"js/64-preferences.js";"173";"Masquée";"Hidden"
-"js/64-preferences.js";"175";"🛠 Personnaliser l'affichage ✕ Bouton : bouton direct dans la barre · Menu : dans son menu déroulant · Masquée : accessible seulement par ☰ (Ctrl+K). Un menu sans vue n'est pas affiché. Partir de : Simplifié Expert";"🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode)"
-"js/64-preferences.js";"181";"Commandes de la barre";"🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode)"
-"js/64-preferences.js";"183";"📁 Fichier, 💾, ❓ Aide et ⚙ restent toujours affichés. Annuler ✔ Appliquer (mode Personnalisé)";"🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode)"
-"js/64-preferences.js";"204";"✔ Affichage personnalisé appliqué";"✔ Custom display applied"
-"js/64-preferences.js";"225";"Chargez d'abord un modèle : la page enregistrée le contient.";"Load a model first: the saved page contains it."
-"js/64-preferences.js";"238";"Page HTML";"HTML page"
-"js/64-preferences.js";"240";"Le fichier de secours doit être différent du fichier de la page.";"The backup file must be different from the page file."
-"js/64-preferences.js";"253";"fichier de secours :";"backup file:"
-"js/64-preferences.js";"275";"Enregistrer dans «";"Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as"
-"js/64-preferences.js";"275";"» (Ctrl+S) — enregistré automatiquement à";"Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as"
-"js/64-preferences.js";"275";"— Maj+clic ou Ctrl+Maj+S : enregistrer sous";"Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as"
-"js/64-preferences.js";"279";"⚠ Enregistrement automatique impossible :";"⚠ Automatic saving failed:"
-"js/64-preferences.js";"309";"💾 Enregistrement automatique activé : choisissez le fichier de la page. ▶ Choisir le fichier…";"💾 Automatic saving is on: choose the page file. ▶ Choose the file…"
-"js/64-preferences.js";"310";"🛟 Fichier de secours (version précédente) non choisi. Choisir…";"🛟 Backup file (previous version) not chosen. Choose…"
-"js/64-preferences.js";"311";"⚠ Enregistrement automatique :";"⚠ Automatic saving: … ⚙ Settings"
-"js/64-preferences.js";"311";"⚙ Réglages";"⚠ Automatic saving: … ⚙ Settings"
-"js/64-preferences.js";"312";"Désactiver ✕";"Turn off ✕"
+"js/64-preferences.js";"92";"Dernier enregistrement automatique :";"Last automatic save: …"
+"js/64-preferences.js";"92";"Aucun enregistrement automatique pour l'instant.";"No automatic save yet."
+"js/64-preferences.js";"93";"La page est enregistrée dans son fichier (celui de 💾 / Ctrl+S), seulement si quelque chose a changé .";"The page is saved to its file (the one used by 💾 / Ctrl+S), only if something has changed ."
+"js/64-preferences.js";"94";"⚠ Ce navigateur ne permet pas d'écrire directement dans un fichier (Edge ou Chrome nécessaire) : enregistrement automatique indisponible.";"⚠ This browser cannot write directly to a file (Edge or Chrome required): automatic saving unavailable."
+"js/64-preferences.js";"95";"Enregistrer automatiquement toutes les";"Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again."
+"js/64-preferences.js";"96";"minutes Fichier de la page :";"Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again."
+"js/64-preferences.js";"97";"non choisi";"not chosen"
+"js/64-preferences.js";"98";"Choisir…";"Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again."
+"js/64-preferences.js";"99";"⚠ Dernière erreur :";"⚠ Last error: …"
+"js/64-preferences.js";"100";"Garder la version précédente dans un fichier de secours Avant chaque enregistrement (automatique ou 💾), le contenu actuel du fichier est copié dans le fichier de secours (par exemple mon-projet.backup.html , qui s'ouvre comme une page normale). Protège d'un enregistrement malencontreux. Fichier de secours :";"Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again."
+"js/64-preferences.js";"102";"non choisi";"not chosen"
+"js/64-preferences.js";"103";"Choisir… Le navigateur oublie les fichiers choisis quand la page est fermée : à la réouverture, un bandeau propose de les choisir à nouveau.";"Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again."
+"js/64-preferences.js";"107";"Thème de l'interface (enregistré avec la page).";"Interface theme (saved with the page)."
+"js/64-preferences.js";"109";"🎨 Personnaliser le thème…";"🎨 Customize theme…"
+"js/64-preferences.js";"111";"Fichier .json sans le modèle : barre des vues et préférences, tableaux de bord, ▤ Tableau, thème, règles de nommage… pour réutiliser vos réglages avec un autre modèle. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues…";"File .json without the model: view bar and preferences, dashboards, ▤ Table, theme, naming rules… to reuse your settings with another model. ⚙ Save the interface and views… ⚙ Load an interface and views…"
+"js/64-preferences.js";"115";"⚙ Préférences ✕";"⚙ Preferences ✕ … … Settings saved with the 💾 HTML page. Close"
+"js/64-preferences.js";"117";"Réglages enregistrés avec la 💾 Page HTML. Fermer";"⚙ Preferences ✕ … … Settings saved with the 💾 HTML page. Close"
+"js/64-preferences.js";"174";"Autres vues";"Other views"
+"js/64-preferences.js";"174";"Bouton";"Button"
+"js/64-preferences.js";"174";"Menu";"Menu"
+"js/64-preferences.js";"174";"Masquée";"Hidden"
+"js/64-preferences.js";"176";"🛠 Personnaliser l'affichage ✕ Bouton : bouton direct dans la barre · Menu : dans son menu déroulant · Masquée : accessible seulement par ☰ (Ctrl+K). Un menu sans vue n'est pas affiché. Partir de : Simplifié Expert";"🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode)"
+"js/64-preferences.js";"182";"Commandes de la barre";"🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode)"
+"js/64-preferences.js";"184";"📁 Fichier, 💾, ❓ Aide et ⚙ restent toujours affichés. Annuler ✔ Appliquer (mode Personnalisé)";"🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode)"
+"js/64-preferences.js";"205";"✔ Affichage personnalisé appliqué";"✔ Custom display applied"
+"js/64-preferences.js";"226";"Chargez d'abord un modèle : la page enregistrée le contient.";"Load a model first: the saved page contains it."
+"js/64-preferences.js";"239";"Page HTML";"HTML page"
+"js/64-preferences.js";"241";"Le fichier de secours doit être différent du fichier de la page.";"The backup file must be different from the page file."
+"js/64-preferences.js";"254";"fichier de secours :";"backup file:"
+"js/64-preferences.js";"276";"Enregistrer dans «";"Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as"
+"js/64-preferences.js";"276";"» (Ctrl+S) — enregistré automatiquement à";"Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as"
+"js/64-preferences.js";"276";"— Maj+clic ou Ctrl+Maj+S : enregistrer sous";"Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as"
+"js/64-preferences.js";"280";"⚠ Enregistrement automatique impossible :";"⚠ Automatic saving failed:"
+"js/64-preferences.js";"310";"💾 Enregistrement automatique activé : choisissez le fichier de la page. ▶ Choisir le fichier…";"💾 Automatic saving is on: choose the page file. ▶ Choose the file…"
+"js/64-preferences.js";"311";"🛟 Fichier de secours (version précédente) non choisi. Choisir…";"🛟 Backup file (previous version) not chosen. Choose…"
+"js/64-preferences.js";"312";"⚠ Enregistrement automatique :";"⚠ Automatic saving: … ⚙ Settings"
+"js/64-preferences.js";"312";"⚙ Réglages";"⚠ Automatic saving: … ⚙ Settings"
+"js/64-preferences.js";"313";"Désactiver ✕";"Turn off ✕"
 "js/65-dossier-textes.js";"10";"Nom";"Name"
 "js/65-dossier-textes.js";"10";"Description";"Description"
 "js/65-dossier-textes.js";"10";"Nom et description";"Name and description"
@@ -5960,12 +6077,15 @@
 "js/68-statut-revue.js";"85";"Type";"(inchangé, hors _L)"
 "js/68-statut-revue.js";"85";"Statut";"Status"
 "js/68-statut-revue.js";"85";"Commentaire Capella";"Capella comment"
+"js/68-statut-revue.js";"87";"st.minStatuts";"(inchangé, hors _L)"
 "js/68-statut-revue.js";"89";"Éléments à retravailler";"Elements to rework"
 "js/68-statut-revue.js";"89";"Statut de rework ou de refus (REWORK NECESSARY, UNDER REWORK, REVIEWED KO…)";"Rework or rejection status (REWORK NECESSARY, UNDER REWORK, REVIEWED KO…)"
 "js/68-statut-revue.js";"90";"Éléments en attente de revue";"Elements pending review"
 "js/68-statut-revue.js";"90";"TO BE REVIEWED, TO BE DISCUSSED, UNDER REVIEW…";"TO BE REVIEWED, TO BE DISCUSSED, UNDER REVIEW…"
 "js/68-statut-revue.js";"91";"Brouillons dans une couche majoritairement validée";"Drafts in a mostly validated layer"
-"js/68-statut-revue.js";"91";"DRAFT / TODO dans une couche où plus de la moitié des statuts sont validés (au moins 5 statuts)";"DRAFT / TODO in a layer where more than half of the statuses are validated (at least 5 statuses)"
+"js/68-statut-revue.js";"91";"DRAFT / TODO dans une couche où plus de la moitié des statuts sont validés (au moins";"DRAFT / TODO in a layer where more than half of the statuses are validated (at least … statuses)"
+"js/68-statut-revue.js";"91";"statuts)";"DRAFT / TODO in a layer where more than half of the statuses are validated (at least … statuses)"
+"js/68-statut-revue.js";"91";"st.minStatuts";"(inchangé, hors _L)"
 "js/68-statut-revue.js";"92";"Commentaire de revue Capella sans statut";"Capella review comment without status"
 "js/68-statut-revue.js";"92";"Le champ « review » est rempli mais aucun statut n'est posé";"The “review” field is filled in but no status is set"
 "js/68-statut-revue.js";"93";"À retravailler sans commentaire dans 💬 Revue";"To rework without a comment in 💬 Review"

@@ -84,11 +84,11 @@ function capStRevComments(id){ return typeof _capRev!=='undefined'&&_capRev&&_ca
 function capStChecks(){
   const S=capComputeStatus(), cols=[_L('Élément'),'Type',_L('Statut'),_L('Commentaire Capella')];
   const row=e=>`<tr><td>${capChainLayerBadge(e.layer)} ${capDetLink(e.id,e.name,'font-weight:600')}</td><td class="ana-dim">${capEsc(e.type)}</td><td>${capStBadge(e.status,e.cls)}</td><td>${capXtShort(e.review,120)}</td></tr>`;
-  const okLayers=new Set(CAP_ANA_LAYERS.filter(k=>{ const l=S.list.filter(e=>e.layer===k&&e.status); return l.length>=5&&l.filter(e=>e.cls==='ok').length>l.length/2; }));
+  const okLayers=new Set(CAP_ANA_LAYERS.filter(k=>{ const l=S.list.filter(e=>e.layer===k&&e.status); return l.length>=capChkParam('st.minStatuts')&&l.filter(e=>e.cls==='ok').length>l.length/2; }));   // seuil du 🩺 profil (14)
   return [
     {icon:'⚠', title:_L('Éléments à retravailler'), tip:_L('Statut de rework ou de refus (REWORK NECESSARY, UNDER REWORK, REVIEWED KO…)'), cols, items:S.list.filter(e=>e.cls==='ko').map(row)},
     {icon:'⏳', title:_L('Éléments en attente de revue'), tip:_L('TO BE REVIEWED, TO BE DISCUSSED, UNDER REVIEW…'), cols, items:S.list.filter(e=>e.cls==='wait').map(row)},
-    {icon:'✎', title:_L('Brouillons dans une couche majoritairement validée'), tip:_L('DRAFT / TODO dans une couche où plus de la moitié des statuts sont validés (au moins 5 statuts)'), cols, items:S.list.filter(e=>e.cls==='draft'&&okLayers.has(e.layer)).map(row)},
+    {icon:'✎', title:_L('Brouillons dans une couche majoritairement validée'), tip:_L(`DRAFT / TODO dans une couche où plus de la moitié des statuts sont validés (au moins ${capChkParam('st.minStatuts')} statuts)`), cols, items:S.list.filter(e=>e.cls==='draft'&&okLayers.has(e.layer)).map(row)},
     {icon:'💬', title:_L('Commentaire de revue Capella sans statut'), tip:_L('Le champ « review » est rempli mais aucun statut n\'est posé'), cols, items:S.list.filter(e=>e.review&&!e.status).map(row)},
     {icon:'🔗', title:_L('À retravailler sans commentaire dans 💬 Revue'), tip:_L('Élément à retravailler qu\'aucun commentaire de revue Arcalyse ne vise : le reprendre dans la revue (bouton 💬 de la liste)'), cols, items:S.list.filter(e=>e.cls==='ko'&&!capStRevComments(e.id).length).map(row)},
     {icon:'?', title:_L('Statut référencé introuvable'), tip:_L('Le littéral visé n\'existe pas dans l\'énumération ProgressStatus du projet'), cols, items:S.list.filter(e=>e.litId&&S.byLit[e.litId]&&S.byLit[e.litId].missing).map(row)}];
@@ -163,5 +163,5 @@ function capStDashCatalog(add, LC){
   add(G,'st.cls',_L('Statut de revue — éléments par classe de statut'),'series',()=>({cats:Object.keys(CAP_ST_CLS).map(k=>({l:CAP_ST_CLS[k].l, v:S().list.filter(e=>e.cls===k).length, c:CAP_ST_CLS[k].h})).filter(c=>c.v), order:'natural'}));
   add(G,'st.layer',_L('Statut de revue — classes de statut par couche'),'multi',()=>{ const s=S(), L=CAP_ANA_LAYERS.filter(k=>s.list.some(e=>e.layer===k&&e.status));
     return {cats:L, series:Object.keys(CAP_ST_CLS).map(k=>({l:CAP_ST_CLS[k].l, c:CAP_ST_CLS[k].h, vals:L.map(x=>s.list.filter(e=>e.layer===x&&e.cls===k).length)})).filter(x=>x.vals.some(Boolean))}; });
-  add(_L('Contrôles'),'chk.st',_L('Statut de revue — contrôles'),'series',()=>({cats:capStChecks().map(x=>({l:x.title, v:x.items.length}))}));
+  add(_L('Contrôles'),'chk.st',_L('Statut de revue — contrôles'),'series',()=>({cats:capChkFilter(capStChecks()).filter(x=>x.sev!=='info').map(x=>({l:x.title, v:x.items.length}))}));
 }

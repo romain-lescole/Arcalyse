@@ -164,7 +164,7 @@ function capDashCatalog(){
     return {cats:[{l:_L('Régions sans état initial'),v:t.noInit},{l:_L('États inatteignables'),v:t.unreach},{l:_L('États sans issue'),v:t.deadEnd},{l:_L('Transitions sans déclencheur'),v:t.noTrig}].filter(x=>x.v)}; });
 
   // Contrôles
-  const secs=s=>({cats:s.map(x=>({l:x.title,v:(x.items||[]).length})).filter(x=>x.v).sort((a,b)=>b.v-a.v)});
+  const secs=s=>({cats:capChkFilter(s).filter(x=>x.sev!=='info').map(x=>({l:x.title,v:(x.items||[]).length})).filter(x=>x.v).sort((a,b)=>b.v-a.v)});   // 🩺 profil (14) : contrôles désactivés et ℹ exclus
   add(_L('Contrôles'),'chk.fn',_L('Contrôles des fonctions'),'series',()=>secs(capFnChecks(F,'all')));
   add(_L('Contrôles'),'chk.pt',_L('Contrôles des ports'),'series',()=>secs(capPortsDiagSections(PT())));
   add(_L('Contrôles'),'chk.ce',_L('Contrôles des Component Exchanges'),'series',()=>({cats:[

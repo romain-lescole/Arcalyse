@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 5746 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 5794 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -685,6 +685,41 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 |---:|---|---|
 | 9 | .tbtn,.ctx-i,.cap-nav-it,.cap-det-link,.cex-det,.phl-link-badge,.phl-comp-hdr,.cdg-det-el,.cdg-lien,.cap-fold-btn,.cap-chain-hdr,.cap-card,.cap-tree-tog,.cap-ttab,.cap-ttab-close,.cap-nav-pin,[onclick] | (inchangé, hors _L) |
 
+## js/14-profil-controles.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 12 | fn.descMin | (inchangé, hors _L) |
+| 12 | Description trop courte : moins de … caractères | Description too short: fewer than … characters |
+| 13 | nq.longChars | (inchangé, hors _L) |
+| 13 | Nom trop long : plus de … caractères | Name too long: more than … characters |
+| 14 | nq.longWords | (inchangé, hors _L) |
+| 14 | Nom trop long : plus de … mots | Name too long: more than … words |
+| 15 | st.minStatuts | (inchangé, hors _L) |
+| 15 | Couche « majoritairement validée » : au moins … statuts | “Mostly validated” layer: at least … statuses |
+| 17 | Information | Information |
+| 17 | À vérifier | To check |
+| 17 | Bloquant | Blocking |
+| 62 | Autres vues | Other views |
+| 65 | Profil de contrôles : vue | ❌ |
+| 99 | Activé | Enabled |
+| 101 | Gravité | Severity |
+| 103 | 🩺 Profil de contrôles | 🩺 Checks profile {0} disabled · {1} severity change(s) · {2} threshold change(s) ✕ Each 🩺 check can be off (it no longer appears in the views or the dashboard) or be given a severity : ℹ information (counted apart), ⚠ to check, ✖ blocking. The profile is saved with the 💾 page, carried over by 📄 Open a project and by the ⚙ Interface and views file; export it alone to share it with your team.{3} ☑ Enable all ☐ Disable all Check Severity n {5} Thresholds {6} ↺ Restore 💾 Export .json 📂 Import .json Also in ⚙ Interface and views ✕ Close |
+| 104 | désactivé(s) · | 🩺 Checks profile {0} disabled · {1} severity change(s) · {2} threshold change(s) ✕ Each 🩺 check can be off (it no longer appears in the views or the dashboard) or be given a severity : ℹ information (counted apart), ⚠ to check, ✖ blocking. The profile is saved with the 💾 page, carried over by 📄 Open a project and by the ⚙ Interface and views file; export it alone to share it with your team.{3} ☑ Enable all ☐ Disable all Check Severity n {5} Thresholds {6} ↺ Restore 💾 Export .json 📂 Import .json Also in ⚙ Interface and views ✕ Close |
+| 104 | gravité(s) modifiée(s) · | 🩺 Checks profile {0} disabled · {1} severity change(s) · {2} threshold change(s) ✕ Each 🩺 check can be off (it no longer appears in the views or the dashboard) or be given a severity : ℹ information (counted apart), ⚠ to check, ✖ blocking. The profile is saved with the 💾 page, carried over by 📄 Open a project and by the ⚙ Interface and views file; export it alone to share it with your team.{3} ☑ Enable all ☐ Disable all Check Severity n {5} Thresholds {6} ↺ Restore 💾 Export .json 📂 Import .json Also in ⚙ Interface and views ✕ Close |
+| 106 | Chargez un modèle pour voir tous les contrôles et leurs nombres. | Load a model to see all the checks and their counts. |
+| 107 | ☑ Tout activer ☐ Tout désactiver Contrôle Gravité n | 🩺 Checks profile {0} disabled · {1} severity change(s) · {2} threshold change(s) ✕ Each 🩺 check can be off (it no longer appears in the views or the dashboard) or be given a severity : ℹ information (counted apart), ⚠ to check, ✖ blocking. The profile is saved with the 💾 page, carried over by 📄 Open a project and by the ⚙ Interface and views file; export it alone to share it with your team.{3} ☑ Enable all ☐ Disable all Check Severity n {5} Thresholds {6} ↺ Restore 💾 Export .json 📂 Import .json Also in ⚙ Interface and views ✕ Close |
+| 109 | Seuils | 🩺 Checks profile {0} disabled · {1} severity change(s) · {2} threshold change(s) ✕ Each 🩺 check can be off (it no longer appears in the views or the dashboard) or be given a severity : ℹ information (counted apart), ⚠ to check, ✖ blocking. The profile is saved with the 💾 page, carried over by 📄 Open a project and by the ⚙ Interface and views file; export it alone to share it with your team.{3} ☑ Enable all ☐ Disable all Check Severity n {5} Thresholds {6} ↺ Restore 💾 Export .json 📂 Import .json Also in ⚙ Interface and views ✕ Close |
+| 109 | Aucun contrôle ne correspond. | No check matches. |
+| 111 | ↺ Rétablir 💾 Exporter .json 📂 Importer .json Aussi dans ⚙ Interface et vues ✕ Fermer | 🩺 Checks profile {0} disabled · {1} severity change(s) · {2} threshold change(s) ✕ Each 🩺 check can be off (it no longer appears in the views or the dashboard) or be given a severity : ℹ information (counted apart), ⚠ to check, ✖ blocking. The profile is saved with the 💾 page, carried over by 📄 Open a project and by the ⚙ Interface and views file; export it alone to share it with your team.{3} ☑ Enable all ☐ Disable all Check Severity n {5} Thresholds {6} ↺ Restore 💾 Export .json 📂 Import .json Also in ⚙ Interface and views ✕ Close |
+| 111 | défaut | default |
+| 126 | Rétablir le profil par défaut : tous les contrôles activés, gravité « à vérifier », seuils d'origine ? | Restore the default profile: all checks enabled, “to check” severity, original thresholds? |
+| 126 | Rétablir | Restore |
+| 128 | .json,application/json | (inchangé, hors _L) |
+| 129 | Fichier illisible (JSON attendu). | Unreadable file (JSON expected). |
+| 130 | Ce fichier n'est pas un profil de contrôles Arcalyse. | This file is not an Arcalyse checks profile. |
+| 131 | ✔ Profil de contrôles importé | ✔ Checks profile imported |
+
 ## js/20-capella-chargement.js
 
 | Ligne | Texte | Anglais |
@@ -1284,23 +1319,29 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 58 | Émetteur ↓ / Récepteur → | Sender ↓ / Receiver → |
 | 58 | Composant | Component |
 | 72 | · cliquez une cellule pour lister les | … … · click a cell to list the … |
-| 94 | à vérifier | ⚠ … point… to check |
-| 94 | ✔ Aucune anomalie détectée | ✔ No anomaly detected |
-| 99 | ✔ RAS | ✔ Nothing to report |
-| 118 | Port d'entrée (IN) | Input port (IN) |
-| 119 | Port de sortie (OUT) | Output port (OUT) |
-| 120 | Port bidirectionnel (INOUT) | Bidirectional port (INOUT) |
-| 121 | Orientation non définie (UNSET) | Undefined orientation (UNSET) |
-| 125 | → Orienté | → Oriented |
-| 125 | Sens source → cible | Source → target direction |
-| 126 | ← Inversé | ← Reversed |
-| 126 | Sens cible → source (déduit des orientations de ports) | Target → source direction (deduced from port orientations) |
-| 127 | ⇄ Bidirectionnel | ⇄ Bidirectional |
-| 127 | Échange dans les deux sens (port INOUT) | Exchange in both directions (INOUT port) |
-| 128 | ? Non orienté | ? Not oriented |
-| 128 | Aucun port orienté : sens inconnu | No oriented port: unknown direction |
-| 157 | Deux ports OUT reliés | Two OUT ports connected |
-| 158 | Deux ports IN reliés | Two IN ports connected |
+| 98 | à vérifier | ⚠ … point… to check |
+| 98 | ✔ Aucune anomalie détectée | ✔ No anomaly detected |
+| 98 | pour information | · ℹ … for information |
+| 99 | Profil de contrôles : activer ou désactiver chaque contrôle, gravité, seuils | Checks profile: enable or disable each check, severity, thresholds |
+| 99 | Profil | Profile |
+| 99 | désactivé(s) | disabled |
+| 104 | ✔ RAS | ✔ Nothing to report |
+| 106 | contrôle(s) désactivé(s) par le profil | … check(s) disabled by the profile |
+| 107 | Ouvrir le profil sur ce contrôle | Open the profile on this check |
+| 125 | Port d'entrée (IN) | Input port (IN) |
+| 126 | Port de sortie (OUT) | Output port (OUT) |
+| 127 | Port bidirectionnel (INOUT) | Bidirectional port (INOUT) |
+| 128 | Orientation non définie (UNSET) | Undefined orientation (UNSET) |
+| 132 | → Orienté | → Oriented |
+| 132 | Sens source → cible | Source → target direction |
+| 133 | ← Inversé | ← Reversed |
+| 133 | Sens cible → source (déduit des orientations de ports) | Target → source direction (deduced from port orientations) |
+| 134 | ⇄ Bidirectionnel | ⇄ Bidirectional |
+| 134 | Échange dans les deux sens (port INOUT) | Exchange in both directions (INOUT port) |
+| 135 | ? Non orienté | ? Not oriented |
+| 135 | Aucun port orienté : sens inconnu | No oriented port: unknown direction |
+| 164 | Deux ports OUT reliés | Two OUT ports connected |
+| 165 | Deux ports IN reliés | Two IN ports connected |
 
 ## js/28-index-types.js
 
@@ -1666,6 +1707,8 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 46 | Minuscule en tête | Lowercase first letter |
 | 47 | Espaces superflus | Extra spaces |
 | 48 | Ponctuation finale | Trailing punctuation |
+| 49 | nq.longChars | (inchangé, hors _L) |
+| 49 | nq.longWords | (inchangé, hors _L) |
 | 49 | Nom long ( | Long name (… words, … chars) |
 | 49 | mots, | Long name (… words, … chars) |
 | 49 | car.) | Long name (… words, … chars) |
@@ -1689,7 +1732,10 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 134 | Langue détectée : | Detected language: … |
 | 138 | Fonctions sans description | Functions without description |
 | 139 | Descriptions trop courtes ou identiques au nom | Descriptions too short or identical to the name |
-| 139 | Moins de 20 caractères, ou répète le nom | Fewer than 20 characters, or repeats the name |
+| 139 | Moins de | Fewer than … characters, or repeats the name |
+| 139 | caractères, ou répète le nom | Fewer than … characters, or repeats the name |
+| 139 | fn.descMin | (inchangé, hors _L) |
+| 140 | fn.descMin | (inchangé, hors _L) |
 | 141 | Marqueurs de travail en cours (TODO, TBD, NOT DONE…) | Work-in-progress markers (TODO, TBD, NOT DONE…) |
 | 142 | Noms en double dans une même couche | Duplicate names within a layer |
 | 143 | Fonctions feuilles non allouées | Unallocated leaf functions |
@@ -3669,24 +3715,26 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 15 | thème choisi et thème personnalisé | chosen theme and custom theme |
 | 16 | 🔤 Règles de nommage | 🔤 Naming rules |
 | 16 | verbes acceptés, mots refusés | accepted verbs, refused words |
-| 83 | Vues enregistrées illisibles : | ❌ |
-| 98 | + anciens onglets 📊 Table View | + former 📊 Table View tabs |
-| 99 | par chemin | , … path column… |
-| 102 | ⚙ Enregistrer l'interface et les vues | ⚙ Save the interface and views |
-| 102 | ⚙ Charger une interface et des vues | ⚙ Load an interface and views |
-| 104 | Fichier .json sans le modèle : à recharger avec un autre modèle ou une nouvelle version de la page. | File .json without the model: to be reloaded with another model or a new version of the page. |
-| 105 | Fichier enregistré le | File saved on … . The checked parts will replace the current settings. |
-| 105 | . Les parties cochées remplaceront les réglages actuels. | File saved on … . The checked parts will replace the current settings. |
-| 107 | Annuler | … ✕ … … Cancel … |
-| 107 | Ce fichier ne contient aucun réglage reconnu. | This file contains no recognised setting. |
-| 110 | 💾 Enregistrer | 💾 Save |
-| 110 | 📂 Appliquer | 📂 Apply |
-| 122 | Réglage « | Setting “ |
-| 122 | » non appliqué : | ” not applied: |
-| 123 | réglage(s) appliqué(s) | ✔ … setting(s) applied |
-| 134 | Fichier illisible : JSON invalide. | Unreadable file: invalid JSON. |
-| 135 | Ce fichier n'est pas un fichier « interface et vues » d'Arcalyse. | This file is not an Arcalyse “interface and views” file. |
-| 144 | Ouvrez d'abord un modèle Capella : la mise à jour se compare au modèle affiché. | Open a Capella model first: the update is compared with the displayed model. |
+| 17 | 🩺 Profil de contrôles | 🩺 Checks profile |
+| 17 | contrôles désactivés, gravités, seuils | disabled checks, severities, thresholds |
+| 86 | Vues enregistrées illisibles : | ❌ |
+| 101 | + anciens onglets 📊 Table View | + former 📊 Table View tabs |
+| 102 | par chemin | , … path column… |
+| 105 | ⚙ Enregistrer l'interface et les vues | ⚙ Save the interface and views |
+| 105 | ⚙ Charger une interface et des vues | ⚙ Load an interface and views |
+| 107 | Fichier .json sans le modèle : à recharger avec un autre modèle ou une nouvelle version de la page. | File .json without the model: to be reloaded with another model or a new version of the page. |
+| 108 | Fichier enregistré le | File saved on … . The checked parts will replace the current settings. |
+| 108 | . Les parties cochées remplaceront les réglages actuels. | File saved on … . The checked parts will replace the current settings. |
+| 110 | Annuler | … ✕ … … Cancel … |
+| 110 | Ce fichier ne contient aucun réglage reconnu. | This file contains no recognised setting. |
+| 113 | 💾 Enregistrer | 💾 Save |
+| 113 | 📂 Appliquer | 📂 Apply |
+| 125 | Réglage « | Setting “ |
+| 125 | » non appliqué : | ” not applied: |
+| 126 | réglage(s) appliqué(s) | ✔ … setting(s) applied |
+| 137 | Fichier illisible : JSON invalide. | Unreadable file: invalid JSON. |
+| 138 | Ce fichier n'est pas un fichier « interface et vues » d'Arcalyse. | This file is not an Arcalyse “interface and views” file. |
+| 147 | Ouvrez d'abord un modèle Capella : la mise à jour se compare au modèle affiché. | Open a Capella model first: the update is compared with the displayed model. |
 
 ## js/47-composants.js
 
@@ -4846,34 +4894,36 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 117 | thème choisi et thème personnalisé | chosen theme and custom theme |
 | 118 | 🔤 Règles de nommage | 🔤 Naming rules |
 | 118 | verbes acceptés, mots refusés | accepted verbs, refused words |
-| 133 | ⚠ Version d'Arcalyse inconnue (page antérieure à la 2.0 ?) : la reprise est tentée, certains réglages peuvent manquer. | ⚠ Unknown Arcalyse version (page older than 2.0?): the import is attempted, some settings may be missing. |
-| 134 | ⚠ Page enregistrée par la version | ⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing. |
-| 134 | , antérieure à la | ⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing. |
-| 134 | : la reprise est tentée, certains réglages peuvent manquer. | ⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing. |
-| 135 | ⚠ Page enregistrée par une version plus récente ( | ⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored. |
-| 135 | ) que celle-ci ( | ⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored. |
-| 135 | ) : ce qu'elle seule connaît sera ignoré. | ⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored. |
-| 136 | ✔ Page enregistrée par la version | ✔ Page saved by version …: fully carried over into version …. |
-| 136 | : reprise complète dans la version | ✔ Page saved by version …: fully carried over into version …. |
-| 139 | 📄 Ouvrir un projet de travail | 📄 Open a work project |
-| 141 | Page | Page |
-| 143 | Cette page ne contient pas de modèle : seuls le travail et les réglages cochés seront repris. | This page contains no model: only the checked work and settings will be carried over. |
-| 144 | À reprendre dans cette version : | To carry over into this version: |
-| 146 | 💾 Enregistrer ensuite dans ce même fichier | 💾 Then save into this same file |
-| 146 | Ctrl+S remplacera l'ancienne page par la page de cette version, avec tout le travail (le navigateur demandera l'autorisation d'écrire). | Ctrl+S will replace the old page with this version's page, with all the work (the browser will ask for write permission). |
-| 147 | Pensez ensuite à enregistrer (💾, Ctrl+S) : la page enregistrée sera celle de cette version, avec tout le travail. | Remember to save afterwards (💾, Ctrl+S): the saved page will be this version's, with all the work. |
-| 149 | Annuler | Cancel |
-| 150 | 📄 Ouvrir le projet | 📄 Open the project |
-| 171 | Partie « | Part “…” not carried over: |
-| 171 | » non reprise : | Part “…” not carried over: |
-| 180 | ✔ Travail et réglages de la page repris | ✔ Work and settings of the page carried over |
-| 184 | XML invalide | Invalid XML |
-| 185 | Modèle de la page illisible : | Unreadable page model: |
-| 189 | Chargement de « | Loading “…”… |
-| 199 | ✔ Projet « | ✔ Project “…” carried over into version … — remember to save it (💾) |
-| 199 | » repris dans la version | ✔ Project “…” carried over into version … — remember to save it (💾) |
-| 199 | — pensez à l'enregistrer (💾) | ✔ Project “…” carried over into version … — remember to save it (💾) |
-| 201 | Erreur de chargement : | Loading error: |
+| 119 | 🩺 Profil de contrôles | 🩺 Checks profile |
+| 119 | contrôles désactivés, gravités, seuils | disabled checks, severities, thresholds |
+| 134 | ⚠ Version d'Arcalyse inconnue (page antérieure à la 2.0 ?) : la reprise est tentée, certains réglages peuvent manquer. | ⚠ Unknown Arcalyse version (page older than 2.0?): the import is attempted, some settings may be missing. |
+| 135 | ⚠ Page enregistrée par la version | ⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing. |
+| 135 | , antérieure à la | ⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing. |
+| 135 | : la reprise est tentée, certains réglages peuvent manquer. | ⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing. |
+| 136 | ⚠ Page enregistrée par une version plus récente ( | ⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored. |
+| 136 | ) que celle-ci ( | ⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored. |
+| 136 | ) : ce qu'elle seule connaît sera ignoré. | ⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored. |
+| 137 | ✔ Page enregistrée par la version | ✔ Page saved by version …: fully carried over into version …. |
+| 137 | : reprise complète dans la version | ✔ Page saved by version …: fully carried over into version …. |
+| 140 | 📄 Ouvrir un projet de travail | 📄 Open a work project |
+| 142 | Page | Page |
+| 144 | Cette page ne contient pas de modèle : seuls le travail et les réglages cochés seront repris. | This page contains no model: only the checked work and settings will be carried over. |
+| 145 | À reprendre dans cette version : | To carry over into this version: |
+| 147 | 💾 Enregistrer ensuite dans ce même fichier | 💾 Then save into this same file |
+| 147 | Ctrl+S remplacera l'ancienne page par la page de cette version, avec tout le travail (le navigateur demandera l'autorisation d'écrire). | Ctrl+S will replace the old page with this version's page, with all the work (the browser will ask for write permission). |
+| 148 | Pensez ensuite à enregistrer (💾, Ctrl+S) : la page enregistrée sera celle de cette version, avec tout le travail. | Remember to save afterwards (💾, Ctrl+S): the saved page will be this version's, with all the work. |
+| 150 | Annuler | Cancel |
+| 151 | 📄 Ouvrir le projet | 📄 Open the project |
+| 172 | Partie « | Part “…” not carried over: |
+| 172 | » non reprise : | Part “…” not carried over: |
+| 182 | ✔ Travail et réglages de la page repris | ✔ Work and settings of the page carried over |
+| 186 | XML invalide | Invalid XML |
+| 187 | Modèle de la page illisible : | Unreadable page model: |
+| 191 | Chargement de « | Loading “…”… |
+| 201 | ✔ Projet « | ✔ Project “…” carried over into version … — remember to save it (💾) |
+| 201 | » repris dans la version | ✔ Project “…” carried over into version … — remember to save it (💾) |
+| 201 | — pensez à l'enregistrer (💾) | ✔ Project “…” carried over into version … — remember to save it (💾) |
+| 203 | Erreur de chargement : | Loading error: |
 
 ## js/58-revue-ciblee.js
 
@@ -5688,58 +5738,58 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 43 | ⚙ Barre : icônes seules (nom au survol) | ⚙ Toolbar: icons only (name on hover) |
 | 43 | ⚙ Barre : icônes et textes | ⚙ Toolbar: icons and text |
 | 51 | Affichage des menus | Menu display |
-| 53 | 🛠 Personnaliser l'affichage… Style de la barre | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences… |
-| 55 | Icônes et textes | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences… |
+| 53 | 🛠 Personnaliser l'affichage… Style de la barre | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … 🩺 Checks profile… ⚙ Preferences… |
+| 55 | Icônes et textes | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … 🩺 Checks profile… ⚙ Preferences… |
 | 55 | (icônes seules : la barre déborde) | (icons only: the toolbar overflows) |
-| 56 | Icônes seules 🎨 Thème… 💾 Enregistrement automatique | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences… |
-| 59 | ⚙ Préférences… | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⚙ Preferences… |
+| 56 | Icônes seules 🎨 Thème… 💾 Enregistrement automatique | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … 🩺 Checks profile… ⚙ Preferences… |
+| 59 | 🩺 Profil de contrôles… ⚙ Préférences… | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … 🩺 Checks profile… ⚙ Preferences… |
 | 59 | toutes les | every … min |
 | 59 | désactivé | off |
-| 81 | ☰ Affichage | ☰ Display |
-| 81 | 💾 Enregistrement | 💾 Saving |
-| 81 | 🎨 Thème | 🎨 Theme |
-| 81 | ⚙ Interface et vues | ⚙ Interface and views |
-| 84 | Choisissez les menus affichés dans la barre. Une vue masquée reste accessible par ☰ (Ctrl+K). | Choose the menus shown in the toolbar. A hidden view remains reachable with ☰ (Ctrl+K). |
-| 86 | 🛠 Personnaliser l'affichage… Style de la barre | 🛠 Customize display… Toolbar style Icons and text When the toolbar does not fit on one line (narrow window), it switches to icons only automatically. Icons only More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text. |
-| 88 | Icônes et textes Quand la barre ne tient pas sur une ligne (fenêtre étroite), elle passe automatiquement en icônes seules. | 🛠 Customize display… Toolbar style Icons and text When the toolbar does not fit on one line (narrow window), it switches to icons only automatically. Icons only More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text. |
-| 91 | Dernier enregistrement automatique : | Last automatic save: … |
-| 91 | Aucun enregistrement automatique pour l'instant. | No automatic save yet. |
-| 92 | La page est enregistrée dans son fichier (celui de 💾 / Ctrl+S), seulement si quelque chose a changé . | The page is saved to its file (the one used by 💾 / Ctrl+S), only if something has changed . |
-| 93 | ⚠ Ce navigateur ne permet pas d'écrire directement dans un fichier (Edge ou Chrome nécessaire) : enregistrement automatique indisponible. | ⚠ This browser cannot write directly to a file (Edge or Chrome required): automatic saving unavailable. |
-| 94 | Enregistrer automatiquement toutes les | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
-| 95 | minutes Fichier de la page : | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
-| 96 | non choisi | not chosen |
-| 97 | Choisir… | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
-| 98 | ⚠ Dernière erreur : | ⚠ Last error: … |
-| 99 | Garder la version précédente dans un fichier de secours Avant chaque enregistrement (automatique ou 💾), le contenu actuel du fichier est copié dans le fichier de secours (par exemple mon-projet.backup.html , qui s'ouvre comme une page normale). Protège d'un enregistrement malencontreux. Fichier de secours : | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
-| 101 | non choisi | not chosen |
-| 102 | Choisir… Le navigateur oublie les fichiers choisis quand la page est fermée : à la réouverture, un bandeau propose de les choisir à nouveau. | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
-| 106 | Thème de l'interface (enregistré avec la page). | Interface theme (saved with the page). |
-| 108 | 🎨 Personnaliser le thème… | 🎨 Customize theme… |
-| 110 | Fichier .json sans le modèle : barre des vues et préférences, tableaux de bord, ▤ Tableau, thème, règles de nommage… pour réutiliser vos réglages avec un autre modèle. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… | File .json without the model: view bar and preferences, dashboards, ▤ Table, theme, naming rules… to reuse your settings with another model. ⚙ Save the interface and views… ⚙ Load an interface and views… |
-| 114 | ⚙ Préférences ✕ | ⚙ Preferences ✕ … … Settings saved with the 💾 HTML page. Close |
-| 116 | Réglages enregistrés avec la 💾 Page HTML. Fermer | ⚙ Preferences ✕ … … Settings saved with the 💾 HTML page. Close |
-| 173 | Autres vues | Other views |
-| 173 | Bouton | Button |
-| 173 | Menu | Menu |
-| 173 | Masquée | Hidden |
-| 175 | 🛠 Personnaliser l'affichage ✕ Bouton : bouton direct dans la barre · Menu : dans son menu déroulant · Masquée : accessible seulement par ☰ (Ctrl+K). Un menu sans vue n'est pas affiché. Partir de : Simplifié Expert | 🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode) |
-| 181 | Commandes de la barre | 🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode) |
-| 183 | 📁 Fichier, 💾, ❓ Aide et ⚙ restent toujours affichés. Annuler ✔ Appliquer (mode Personnalisé) | 🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode) |
-| 204 | ✔ Affichage personnalisé appliqué | ✔ Custom display applied |
-| 225 | Chargez d'abord un modèle : la page enregistrée le contient. | Load a model first: the saved page contains it. |
-| 238 | Page HTML | HTML page |
-| 240 | Le fichier de secours doit être différent du fichier de la page. | The backup file must be different from the page file. |
-| 253 | fichier de secours : | backup file: |
-| 275 | Enregistrer dans « | Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as |
-| 275 | » (Ctrl+S) — enregistré automatiquement à | Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as |
-| 275 | — Maj+clic ou Ctrl+Maj+S : enregistrer sous | Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as |
-| 279 | ⚠ Enregistrement automatique impossible : | ⚠ Automatic saving failed: |
-| 309 | 💾 Enregistrement automatique activé : choisissez le fichier de la page. ▶ Choisir le fichier… | 💾 Automatic saving is on: choose the page file. ▶ Choose the file… |
-| 310 | 🛟 Fichier de secours (version précédente) non choisi. Choisir… | 🛟 Backup file (previous version) not chosen. Choose… |
-| 311 | ⚠ Enregistrement automatique : | ⚠ Automatic saving: … ⚙ Settings |
-| 311 | ⚙ Réglages | ⚠ Automatic saving: … ⚙ Settings |
-| 312 | Désactiver ✕ | Turn off ✕ |
+| 82 | ☰ Affichage | ☰ Display |
+| 82 | 💾 Enregistrement | 💾 Saving |
+| 82 | 🎨 Thème | 🎨 Theme |
+| 82 | ⚙ Interface et vues | ⚙ Interface and views |
+| 85 | Choisissez les menus affichés dans la barre. Une vue masquée reste accessible par ☰ (Ctrl+K). | Choose the menus shown in the toolbar. A hidden view remains reachable with ☰ (Ctrl+K). |
+| 87 | 🛠 Personnaliser l'affichage… Style de la barre | 🛠 Customize display… Toolbar style Icons and text When the toolbar does not fit on one line (narrow window), it switches to icons only automatically. Icons only More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text. |
+| 89 | Icônes et textes Quand la barre ne tient pas sur une ligne (fenêtre étroite), elle passe automatiquement en icônes seules. | 🛠 Customize display… Toolbar style Icons and text When the toolbar does not fit on one line (narrow window), it switches to icons only automatically. Icons only More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text. |
+| 92 | Dernier enregistrement automatique : | Last automatic save: … |
+| 92 | Aucun enregistrement automatique pour l'instant. | No automatic save yet. |
+| 93 | La page est enregistrée dans son fichier (celui de 💾 / Ctrl+S), seulement si quelque chose a changé . | The page is saved to its file (the one used by 💾 / Ctrl+S), only if something has changed . |
+| 94 | ⚠ Ce navigateur ne permet pas d'écrire directement dans un fichier (Edge ou Chrome nécessaire) : enregistrement automatique indisponible. | ⚠ This browser cannot write directly to a file (Edge or Chrome required): automatic saving unavailable. |
+| 95 | Enregistrer automatiquement toutes les | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
+| 96 | minutes Fichier de la page : | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
+| 97 | non choisi | not chosen |
+| 98 | Choisir… | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
+| 99 | ⚠ Dernière erreur : | ⚠ Last error: … |
+| 100 | Garder la version précédente dans un fichier de secours Avant chaque enregistrement (automatique ou 💾), le contenu actuel du fichier est copié dans le fichier de secours (par exemple mon-projet.backup.html , qui s'ouvre comme une page normale). Protège d'un enregistrement malencontreux. Fichier de secours : | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
+| 102 | non choisi | not chosen |
+| 103 | Choisir… Le navigateur oublie les fichiers choisis quand la page est fermée : à la réouverture, un bandeau propose de les choisir à nouveau. | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
+| 107 | Thème de l'interface (enregistré avec la page). | Interface theme (saved with the page). |
+| 109 | 🎨 Personnaliser le thème… | 🎨 Customize theme… |
+| 111 | Fichier .json sans le modèle : barre des vues et préférences, tableaux de bord, ▤ Tableau, thème, règles de nommage… pour réutiliser vos réglages avec un autre modèle. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… | File .json without the model: view bar and preferences, dashboards, ▤ Table, theme, naming rules… to reuse your settings with another model. ⚙ Save the interface and views… ⚙ Load an interface and views… |
+| 115 | ⚙ Préférences ✕ | ⚙ Preferences ✕ … … Settings saved with the 💾 HTML page. Close |
+| 117 | Réglages enregistrés avec la 💾 Page HTML. Fermer | ⚙ Preferences ✕ … … Settings saved with the 💾 HTML page. Close |
+| 174 | Autres vues | Other views |
+| 174 | Bouton | Button |
+| 174 | Menu | Menu |
+| 174 | Masquée | Hidden |
+| 176 | 🛠 Personnaliser l'affichage ✕ Bouton : bouton direct dans la barre · Menu : dans son menu déroulant · Masquée : accessible seulement par ☰ (Ctrl+K). Un menu sans vue n'est pas affiché. Partir de : Simplifié Expert | 🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode) |
+| 182 | Commandes de la barre | 🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode) |
+| 184 | 📁 Fichier, 💾, ❓ Aide et ⚙ restent toujours affichés. Annuler ✔ Appliquer (mode Personnalisé) | 🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode) |
+| 205 | ✔ Affichage personnalisé appliqué | ✔ Custom display applied |
+| 226 | Chargez d'abord un modèle : la page enregistrée le contient. | Load a model first: the saved page contains it. |
+| 239 | Page HTML | HTML page |
+| 241 | Le fichier de secours doit être différent du fichier de la page. | The backup file must be different from the page file. |
+| 254 | fichier de secours : | backup file: |
+| 276 | Enregistrer dans « | Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as |
+| 276 | » (Ctrl+S) — enregistré automatiquement à | Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as |
+| 276 | — Maj+clic ou Ctrl+Maj+S : enregistrer sous | Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as |
+| 280 | ⚠ Enregistrement automatique impossible : | ⚠ Automatic saving failed: |
+| 310 | 💾 Enregistrement automatique activé : choisissez le fichier de la page. ▶ Choisir le fichier… | 💾 Automatic saving is on: choose the page file. ▶ Choose the file… |
+| 311 | 🛟 Fichier de secours (version précédente) non choisi. Choisir… | 🛟 Backup file (previous version) not chosen. Choose… |
+| 312 | ⚠ Enregistrement automatique : | ⚠ Automatic saving: … ⚙ Settings |
+| 312 | ⚙ Réglages | ⚠ Automatic saving: … ⚙ Settings |
+| 313 | Désactiver ✕ | Turn off ✕ |
 
 ## js/65-dossier-textes.js
 
@@ -5988,12 +6038,15 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 85 | Type | (inchangé, hors _L) |
 | 85 | Statut | Status |
 | 85 | Commentaire Capella | Capella comment |
+| 87 | st.minStatuts | (inchangé, hors _L) |
 | 89 | Éléments à retravailler | Elements to rework |
 | 89 | Statut de rework ou de refus (REWORK NECESSARY, UNDER REWORK, REVIEWED KO…) | Rework or rejection status (REWORK NECESSARY, UNDER REWORK, REVIEWED KO…) |
 | 90 | Éléments en attente de revue | Elements pending review |
 | 90 | TO BE REVIEWED, TO BE DISCUSSED, UNDER REVIEW… | TO BE REVIEWED, TO BE DISCUSSED, UNDER REVIEW… |
 | 91 | Brouillons dans une couche majoritairement validée | Drafts in a mostly validated layer |
-| 91 | DRAFT / TODO dans une couche où plus de la moitié des statuts sont validés (au moins 5 statuts) | DRAFT / TODO in a layer where more than half of the statuses are validated (at least 5 statuses) |
+| 91 | DRAFT / TODO dans une couche où plus de la moitié des statuts sont validés (au moins | DRAFT / TODO in a layer where more than half of the statuses are validated (at least … statuses) |
+| 91 | statuts) | DRAFT / TODO in a layer where more than half of the statuses are validated (at least … statuses) |
+| 91 | st.minStatuts | (inchangé, hors _L) |
 | 92 | Commentaire de revue Capella sans statut | Capella review comment without status |
 | 92 | Le champ « review » est rempli mais aucun statut n'est posé | The “review” field is filled in but no status is set |
 | 93 | À retravailler sans commentaire dans 💬 Revue | To rework without a comment in 💬 Review |
@@ -6055,13 +6108,14 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 166 | chk.st | (inchangé, hors _L) |
 | 166 | Statut de revue — contrôles | Review status — checks |
 
-## Textes sans traduction anglaise (8)
+## Textes sans traduction anglaise (9)
 
+- `js/14-profil-controles.js:65` — Profil de contrôles : vue
 - `js/33-qualite-noms.js:43` — contrôle
 - `js/35-tableau-de-bord.js:145` — Tableau de bord : traçabilité indisponible
 - `js/39-exigences-donnees.js:607` — Détail étendu indisponible
 - `js/40-suivi-fichier.js:138` — Sélecteur à accès direct indisponible :
-- `js/46-config-interface.js:83` — Vues enregistrées illisibles :
+- `js/46-config-interface.js:86` — Vues enregistrées illisibles :
 - `js/54-diagrammes.js:130` — Relecture du .aird impossible :
 - `js/58-revue-ciblee.js:102` — Diagramme non exporté :
 - `js/61-dossier-relecture.js:526` — Diagramme non exporté :

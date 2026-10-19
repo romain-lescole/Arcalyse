@@ -796,7 +796,12 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
 .cap-mx-tot{color:var(--c-dim);font-weight:700;background:var(--c-bg3);}
 .cap-mx-hint{font-size:10.5px;color:var(--c-dim);margin:6px 2px;}
 .cap-mx-detail:not(:empty){margin-top:8px;padding-top:8px;border-top:1px dashed var(--c-border);}
-.cap-diag-sum{font-size:13px;font-weight:700;margin:4px 0 10px;}
+.cap-diag-sum{font-size:13px;font-weight:700;margin:4px 0 10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.cap-diag-cfg{margin-left:auto;font-weight:400;font-size:11.5px;}
+.cap-diag-err{color:var(--c-err,#f85149);}
+.cap-diag-offl summary{color:var(--c-dim);} .cap-diag-offl ul{margin:4px 0 8px 28px;padding:0;font-size:12px;color:var(--c-dim);} .cap-diag-offl li{margin:2px 0;}
+.cap-diag-cnt.err{background:rgba(248,81,73,.2);color:var(--c-err,#f85149);} .cap-diag-cnt.info{background:rgba(88,166,255,.18);color:var(--c-accent,#58a6ff);}
+.chk-t td,.chk-t th{vertical-align:top;} .chk-t tr.chk-v th{text-align:left;background:var(--c-bg3);padding:6px 8px;} .chk-t tr.chk-off td{opacity:.55;} .chk-t tr.chk-focus td{background:rgba(88,166,255,.12);} .chk-t td.chk-n{text-align:right;white-space:nowrap;}
 .cap-diag{border:1px solid var(--c-border);border-radius:7px;margin-bottom:8px;background:var(--c-bg2);}
 .cap-diag summary{cursor:pointer;padding:8px 12px;display:flex;align-items:center;gap:8px;font-size:12px;}
 .cap-diag-ico{width:18px;text-align:center;}
@@ -1277,7 +1282,7 @@ html[data-tone="light"] .fex-pname{color:#2a5a2a;}
 .ab-ver{font-size:12px;color:var(--c-accent);margin:2px 0 4px;}
 .ab-mono{font-family:monospace;user-select:all;}
 .ab-lic{white-space:pre-wrap;font-size:10.5px;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:5px;padding:8px;margin:6px 0 0;max-height:180px;overflow:auto;}
-#cap-csvx-ov,#cap-scope-ov,#cap-cfg-ov,#rm-csv-ov,#cdg-export-ov,#cap-replace-ov,#crv-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
+#cap-csvx-ov,#cap-scope-ov,#cap-cfg-ov,#cap-chk-ov,#rm-csv-ov,#cdg-export-ov,#cap-replace-ov,#crv-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
 .cfg-part{display:flex;gap:8px;align-items:flex-start;padding:6px 4px;border-bottom:1px solid var(--c-border);font-size:12.5px;cursor:pointer;}
 .cfg-part input{margin-top:3px;}
 

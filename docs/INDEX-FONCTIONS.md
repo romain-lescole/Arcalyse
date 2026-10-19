@@ -190,6 +190,22 @@
 - `capA11yPressed` (l. 42) — Reflète la classe .active d'un bouton à bascule dans aria-pressed (seulement s'il en a eu une).
 - `capA11yFix` (l. 50) — Passe sur une zone du document : commandes cliquables, icônes décoratives.
 
+## 14-profil-controles.js — 133 lignes
+
+- `CAP_CHK_PARAMS` (l. 11) — Seuils réglables : clé, libellé, valeur par défaut, vue concernée (clé de CAP_NAV_ITEMS).
+- `CAP_CHK_SEV` (l. 17) — Gravités : clé, pictogramme, libellé.
+- `CAP_CHK_VIEWS` (l. 20) — Vues dont les contrôles sont connus d'avance (clé de CAP_NAV_ITEMS → sections). Les vues qui bâtissent leurs
+- `capChkSave` (l. 29) — Enregistre le profil dans la page (bloc `cap-checks`, repris par la 💾 Page HTML).
+- `capChkParam` (l. 36) — Valeur d'un seuil (profil, sinon défaut). @param {string} k - Clé de CAP_CHK_PARAMS @returns {number}
+- `capChkSev` (l. 39) — Gravité d'un contrôle. @param {string} title - Titre @returns {'info'|'warn'|'err'}
+- `capChkOff` (l. 42) — Vrai si le profil désactive un contrôle. @param {string} title - Titre @returns {boolean}
+- `capChkFilter` (l. 48) — Sections de contrôles conservées par le profil (contrôles activés), gravité renseignée (`sev`).
+- `capChkSeen` (l. 53) — Note les contrôles affichés par une vue (catalogue des vues sans fonction de contrôles).
+- `capChkCatalog` (l. 61) — Catalogue des contrôles connus : par vue, titre, info-bulle et nombre de lignes actuel.
+- `capChkSet` (l. 74) — Applique un profil (fichier ⚙, 📄 projet, import) puis rafraîchit l'affichage.
+- `capChkRefresh` (l. 83) — Rafraîchit ce qui dépend du profil : valeurs du tableau de bord, vue affichée (et tous les calculs si un seuil a changé).
+- `capChkDialog` (l. 92) — Fenêtre 🩺 Profil de contrôles : par vue, chaque contrôle (activé, gravité, nombre actuel), seuils, export / import .json.
+
 ## 20-capella-chargement.js — 936 lignes
 
 - `CAP_LAYERS` (l. 4)
@@ -360,22 +376,22 @@
 - `capReportClean` (l. 33) — Nettoie un fragment HTML de l'application pour un fichier autonome : retire les appels au panneau de détail
 - `capHtmlReport` (l. 44) — Construit et télécharge un rapport HTML autonome à onglets.
 
-## 27-interfaces-calculs.js — 325 lignes
+## 27-interfaces-calculs.js — 332 lignes
 
 - `capArchLayerOf` (l. 8) — Couche ARCADIA d'un élément XML, déduite de l'architecture qui le contient.
 - `capBuildIdMap` (l. 17) — Index id → élément XML, sur l'attribut plain « id » ET xmi:id (namespacé).
 - `capCsvDownload` (l. 31) — Télécharge un CSV (séparateur « ; », BOM UTF-8 pour Excel).
 - `capMatrixBuild` (l. 44) — Construit une matrice composant × composant (N² des interfaces).
 - `capFoldList` (l. 81) — Liste repliable d'éléments HTML séparés par des virgules : au-delà de `max`, le reste est masqué derrière « +N autres » (clic pour déplier /
-- `capDiagHtml` (l. 92) — Rend un rapport de contrôles : sections repliables avec compteur et niveau (ok / avertissement).
-- `capDetLink` (l. 109) — Lien HTML cliquable ouvrant le panneau de détail d'un élément Capella.
-- `CAP_PORT_ORIENTS` (l. 115) — Valeurs de l'attribut orientation d'un ComponentPort (OrientationPortKind).
-- `CAP_ORIENT_STYLE` (l. 117) — Style d'affichage de chaque orientation de port (couleur, libellé, info-bulle).
-- `CAP_CEX_DIRS` (l. 124) — Libellés des sens effectifs d'un Component Exchange.
-- `capNormOrient` (l. 135) — Normalise l'orientation d'un port Capella : attribut absent (valeur par défaut EMF) → 'UNSET'.
-- `capCexDirection` (l. 149) — Déduit le sens effectif d'un Component Exchange à partir des orientations de ses deux ports.
-- `capComputeCompExchanges` (l. 168) — Calcule les Component Exchanges : pour chaque ComponentExchange, résout source/target
-- `capComputePhysLinks` (l. 255) — Calcule les Physical Links du modèle : pour chaque PhysicalLink, résout les deux
+- `capDiagHtml` (l. 93) — Rend un rapport de contrôles : sections repliables avec compteur et gravité, selon le 🩺 profil de contrôles (14) :
+- `capDetLink` (l. 116) — Lien HTML cliquable ouvrant le panneau de détail d'un élément Capella.
+- `CAP_PORT_ORIENTS` (l. 122) — Valeurs de l'attribut orientation d'un ComponentPort (OrientationPortKind).
+- `CAP_ORIENT_STYLE` (l. 124) — Style d'affichage de chaque orientation de port (couleur, libellé, info-bulle).
+- `CAP_CEX_DIRS` (l. 131) — Libellés des sens effectifs d'un Component Exchange.
+- `capNormOrient` (l. 142) — Normalise l'orientation d'un port Capella : attribut absent (valeur par défaut EMF) → 'UNSET'.
+- `capCexDirection` (l. 156) — Déduit le sens effectif d'un Component Exchange à partir des orientations de ses deux ports.
+- `capComputeCompExchanges` (l. 175) — Calcule les Component Exchanges : pour chaque ComponentExchange, résout source/target
+- `capComputePhysLinks` (l. 262) — Calcule les Physical Links du modèle : pour chaque PhysicalLink, résout les deux
 
 ## 28-index-types.js — 113 lignes
 
@@ -668,18 +684,18 @@
 - `capDrClipboard` (l. 297) — Copie dans le presse-papiers (HTML mis en forme + texte brut ; repli par sélection si l'API est refusée).
 - `capDrRender` (l. 327) — Rend le rapport de comparaison dans un conteneur (barre de réglages, filtres, rapport, copie et exports).
 
-## 46-config-interface.js — 149 lignes
+## 46-config-interface.js — 152 lignes
 
 - `CAP_CFG_PARTS` (l. 9)
-- `capCfgSer` (l. 20) — Sérialise en JSON en conservant les ensembles (Set). @param {*} o @returns {string}
-- `capCfgRev` (l. 22) — Relit un JSON produit par capCfgSer (ensembles reconstitués). @param {string} t @returns {*}
-- `capCfgGet` (l. 28) — État courant d'une partie de l'interface.
-- `capCfgSet` (l. 43) — Applique une partie de configuration à l'interface (et la mémorise dans la page).
-- `capCfgStoreViews` (l. 67) — Écrit dans la page (bloc JSON « cap-ui-views ») ce que les autres blocs ne conservent pas encore :
-- `capCfgRestoreViews` (l. 74) — Réapplique à l'ouverture de la page les vues mémorisées par capCfgStoreViews.
-- `capCfgDialog` (l. 90) — Fenêtre de choix des parties à enregistrer ou à charger.
-- `capCfgLoadFile` (l. 129) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
-- `capCfgLoadUpdate` (l. 143) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
+- `capCfgSer` (l. 21) — Sérialise en JSON en conservant les ensembles (Set). @param {*} o @returns {string}
+- `capCfgRev` (l. 23) — Relit un JSON produit par capCfgSer (ensembles reconstitués). @param {string} t @returns {*}
+- `capCfgGet` (l. 29) — État courant d'une partie de l'interface.
+- `capCfgSet` (l. 45) — Applique une partie de configuration à l'interface (et la mémorise dans la page).
+- `capCfgStoreViews` (l. 70) — Écrit dans la page (bloc JSON « cap-ui-views ») ce que les autres blocs ne conservent pas encore :
+- `capCfgRestoreViews` (l. 77) — Réapplique à l'ouverture de la page les vues mémorisées par capCfgStoreViews.
+- `capCfgDialog` (l. 93) — Fenêtre de choix des parties à enregistrer ou à charger.
+- `capCfgLoadFile` (l. 132) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
+- `capCfgLoadUpdate` (l. 146) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
 
 ## 47-composants.js — 439 lignes
 
@@ -1024,7 +1040,7 @@
 - `capHomeInput` (l. 684) — Saisie : fiche projet, titres, champs du plan, points, notes du tableau blanc, recherche de la palette. @param {Event} e
 - `capHomeChange` (l. 699) — Listes et cases : création d'une check-list ou d'un plan, champs du plan, case d'un point. @param {Event} e
 
-## 57-projet-page.js — 205 lignes
+## 57-projet-page.js — 207 lignes
 
 - `CAP_PROJET_VERSION_MIN` (l. 16) — Plus ancienne version d'Arcalyse dont les pages enregistrées sont reprises sans réserve.
 - `CAP_PROJET_BLOCS` (l. 18) — Blocs JSON d'une page enregistrée repris à l'ouverture d'un projet de travail.
@@ -1034,8 +1050,8 @@
 - `capProjetVersionCmp` (l. 82) — Compare deux numéros de version (« 2.1 », « 2.10.1 »).
 - `capProjetBloc` (l. 94) — Relit un bloc JSON d'une page enregistrée (ensembles « __set » reconstitués, comme les fichiers ⚙ d'interface).
 - `capProjetParties` (l. 104) — Parties d'une page de projet, avec ce qu'elles contiennent (pour la fenêtre de choix).
-- `capProjetPageDialogue` (l. 129) — Fenêtre « Ouvrir un projet de travail » : version de la page, compatibilité, parties à reprendre (cochées),
-- `capProjetPageAppliquer` (l. 170) — Applique une page de projet : travail et réglages cochés, puis modèle et diagrammes ; ouvre 🏠 Accueil.
+- `capProjetPageDialogue` (l. 130) — Fenêtre « Ouvrir un projet de travail » : version de la page, compatibilité, parties à reprendre (cochées),
+- `capProjetPageAppliquer` (l. 171) — Applique une page de projet : travail et réglages cochés, puis modèle et diagrammes ; ouvre 🏠 Accueil.
 
 ## 58-revue-ciblee.js — 291 lignes
 
@@ -1233,7 +1249,7 @@
 - `capRapJson` (l. 432) — Enregistre un modèle de rapport en .json (réutilisable dans un autre projet). @param {object} m
 - `capRapImporter` (l. 437) — Importe un ou plusieurs modèles de rapport (.json). @param {Window} [W] - Fenêtre d'où part la demande
 
-## 64-preferences.js — 319 lignes
+## 64-preferences.js — 320 lignes
 
 - `CAP_PREF_MODES` (l. 9) — Libellés et descriptions des modes d'affichage des menus.
 - `capAutoCfg` (l. 20) — Réglage de l'enregistrement automatique (créé à la première lecture, désactivé par défaut).
@@ -1241,18 +1257,18 @@
 - `capPrefSetMode` (l. 31) — Change le mode d'affichage des menus (le mode Personnalisé part du mode Simplifié la première fois).
 - `capPrefSetIcons` (l. 41) — Change le style de la barre : icônes et textes, ou icônes seules (nom complet en infobulle).
 - `capPrefMenuHtml` (l. 49) — Contenu du menu ⚙ de la barre : mode des menus, personnalisation, thème, enregistrement automatique, préférences.
-- `capPrefDialog` (l. 67) — Ouvre la fenêtre ⚙ Préférences.
-- `capPrefDialogFill` (l. 79) — Remplit la fenêtre ⚙ Préférences (onglet courant ov._tab) et branche ses commandes.
-- `capPrefCustomFrom` (l. 151) — Réglage personnalisé de départ, recopié d'un mode existant.
-- `capPrefCustomDialog` (l. 161) — Fenêtre 🛠 Personnaliser l'affichage : pour chaque vue, bouton direct / dans son menu / masquée,
-- `capAutoHash` (l. 214) — Empreinte rapide d'un texte (FNV-1a 32 bits) pour savoir si la page a changé.
-- `capAutoPickMain` (l. 223) — Choisit le fichier de la page (« Enregistrer sous ») ; il sert ensuite à 💾 et à l'enregistrement automatique.
-- `capAutoPickBackup` (l. 233) — Choisit le fichier de secours (version précédente de la page).
-- `capAutoBackup` (l. 246) — Copie le contenu actuel du fichier de la page dans le fichier de secours (appelé avant chaque écriture, voir capSaveWrite).
-- `capAutoWritten` (l. 259) — Note un enregistrement réussi (manuel ou automatique) : empreinte de la page écrite, heure.
-- `capAutoTick` (l. 265) — Enregistrement automatique : écrit la page si elle a changé depuis le dernier enregistrement.
-- `capAutoSchedule` (l. 285) — (Re)lance la minuterie de l'enregistrement automatique selon le réglage.
-- `capAutoBanner` (l. 294) — Bandeau sous la barre quand l'enregistrement automatique est activé mais qu'un fichier manque
+- `capPrefDialog` (l. 68) — Ouvre la fenêtre ⚙ Préférences.
+- `capPrefDialogFill` (l. 80) — Remplit la fenêtre ⚙ Préférences (onglet courant ov._tab) et branche ses commandes.
+- `capPrefCustomFrom` (l. 152) — Réglage personnalisé de départ, recopié d'un mode existant.
+- `capPrefCustomDialog` (l. 162) — Fenêtre 🛠 Personnaliser l'affichage : pour chaque vue, bouton direct / dans son menu / masquée,
+- `capAutoHash` (l. 215) — Empreinte rapide d'un texte (FNV-1a 32 bits) pour savoir si la page a changé.
+- `capAutoPickMain` (l. 224) — Choisit le fichier de la page (« Enregistrer sous ») ; il sert ensuite à 💾 et à l'enregistrement automatique.
+- `capAutoPickBackup` (l. 234) — Choisit le fichier de secours (version précédente de la page).
+- `capAutoBackup` (l. 247) — Copie le contenu actuel du fichier de la page dans le fichier de secours (appelé avant chaque écriture, voir capSaveWrite).
+- `capAutoWritten` (l. 260) — Note un enregistrement réussi (manuel ou automatique) : empreinte de la page écrite, heure.
+- `capAutoTick` (l. 266) — Enregistrement automatique : écrit la page si elle a changé depuis le dernier enregistrement.
+- `capAutoSchedule` (l. 286) — (Re)lance la minuterie de l'enregistrement automatique selon le réglage.
+- `capAutoBanner` (l. 295) — Bandeau sous la barre quand l'enregistrement automatique est activé mais qu'un fichier manque
 
 ## 65-dossier-textes.js — 283 lignes
 

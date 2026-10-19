@@ -85,19 +85,26 @@ function capFoldList(items, max){
   return _L(`${items.slice(0,max).join(', ')}<span class="cap-fold-more" style="display:none">, ${items.slice(max).join(', ')}</span> <span class="cap-fold-btn" data-n="${rest}" title="Afficher / masquer les ${rest} autres" onclick="event.stopPropagation();const m=this.previousElementSibling,o=m.style.display==='none';m.style.display=o?'':'none';this.textContent=o?'▴ réduire':'+'+this.dataset.n+' autres';">+${rest} autres</span>`);
 }
 
-/** Rend un rapport de contrôles : sections repliables avec compteur et niveau (ok / avertissement).
+/** Rend un rapport de contrôles : sections repliables avec compteur et gravité, selon le 🩺 profil de contrôles (14) :
+ * contrôles désactivés listés à part, gravité ℹ / ⚠ / ✖ (les ℹ ne comptent pas dans les points à vérifier).
  * @param {object[]} sections - [{icon, title, tip, items:string[] (HTML), cols?:string[]}]
  * @returns {string} HTML du rapport
  */
 function capDiagHtml(sections){
-  const total=sections.reduce((s,x)=>s+x.items.length,0);
-  return `<div class="cap-diag-sum">${total?_L(`⚠ ${total} point${total>1?'s':''} à vérifier`):_L('✔ Aucune anomalie détectée')}</div>`+
-    sections.map(s=>`<details class="cap-diag"${s.items.length&&s.items.length<=30?' open':''}>
-      <summary><span class="cap-diag-ico">${s.icon}</span><b>${capEsc(s.title)}</b>
-        <span class="cap-diag-cnt ${s.items.length?'warn':'ok'}">${s.items.length}</span>
+  capChkSeen(sections);
+  const on=capChkFilter(sections), off=sections.filter(s=>s&&capChkOff(s.title));
+  const total=on.filter(s=>s.sev!=='info').reduce((s,x)=>s+x.items.length,0), info=on.filter(s=>s.sev==='info').reduce((s,x)=>s+x.items.length,0), err=on.filter(s=>s.sev==='err').reduce((s,x)=>s+x.items.length,0);
+  const sevIco={info:'ℹ',warn:'⚠',err:'✖'};
+  return `<div class="cap-diag-sum"><span>${total?_L(`⚠ ${total} point${total>1?'s':''} à vérifier`)+(err?_L(` <span class="cap-diag-err">dont ${err} bloquant${err>1?'s':''}</span>`):''):_L('✔ Aucune anomalie détectée')}${info?_L(` <span class="ana-dim">· ℹ ${info} pour information</span>`):''}</span>
+      <button class="cap-lf-btn cap-diag-cfg" onclick="capChkDialog()" title="${_L('Profil de contrôles : activer ou désactiver chaque contrôle, gravité, seuils')}">🩺 ${_L('Profil')}${off.length?` <span class="ana-dim">(${off.length} ${_L('désactivé(s)')})</span>`:''}</button></div>`+
+    on.map(s=>`<details class="cap-diag"${s.items.length&&s.items.length<=30?' open':''}>
+      <summary><span class="cap-diag-ico" title="${capEsc((CAP_CHK_SEV.find(x=>x[0]===s.sev)||[])[2]||'')}">${s.sev==='warn'?s.icon:sevIco[s.sev]}</span><b>${capEsc(s.title)}</b>
+        <span class="cap-diag-cnt ${s.items.length?s.sev:'ok'}">${s.items.length}</span>
         <span class="cap-diag-tip">${capEsc(s.tip||'')}</span></summary>
       ${s.items.length?`<table class="cap-diag-t">${s.cols?`<tr>${s.cols.map(c=>`<th>${capEsc(c)}</th>`).join('')}</tr>`:''}${s.items.join('')}</table>`:_L('<div class="cap-diag-ok">✔ RAS</div>')}
-    </details>`).join('');
+    </details>`).join('')+
+    (off.length?`<details class="cap-diag cap-diag-offl"><summary><span class="cap-diag-ico">☐</span><b>${_L(`${off.length} contrôle(s) désactivé(s) par le profil`)}</b></summary>
+      <ul>${off.map(s=>`<li>${capEsc(s.title)} <button class="cap-lf-btn" onclick="capChkDialog(${JSON.stringify(s.title).replace(/"/g,'&quot;')})" title="${_L('Ouvrir le profil sur ce contrôle')}">🩺</button></li>`).join('')}</ul></details>`:'');
 }
 
 /** Lien HTML cliquable ouvrant le panneau de détail d'un élément Capella.

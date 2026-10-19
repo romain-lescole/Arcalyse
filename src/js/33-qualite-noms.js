@@ -46,7 +46,7 @@ function capNameQuality(name){
   if(first&&first[0]!==first[0].toUpperCase()) issues.push({code:'case', label:_L('Minuscule en tête')});
   if(raw!==n||/\s{2,}/.test(raw)) issues.push({code:'space', label:_L('Espaces superflus')});
   if(/[.;:!?]$/.test(n)) issues.push({code:'punct', label:_L('Ponctuation finale')});
-  if(n.length>70||words.length>9) issues.push({code:'long', label:_L(`Nom long (${words.length} mots, ${n.length} car.)`)});
+  if(n.length>capChkParam('nq.longChars')||words.length>capChkParam('nq.longWords')) issues.push({code:'long', label:_L(`Nom long (${words.length} mots, ${n.length} car.)`)});
   if(words.length===1) issues.push({code:'short', label:_L('Un seul mot : objet de l\'action absent')});
   return {lang, verb, issues};
 }

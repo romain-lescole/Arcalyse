@@ -91,6 +91,17 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     if (await p.$('.cap-dlg-ov')) throw new Error('boîte de dialogue restée ouverte');
     await p.evaluate(() => { window._capDlgAuto = 'cancel'; });
   });
+  await step('profil de contrôles : désactiver puis réactiver', async () => {
+    await p.evaluate(() => capNavOpen('functions')); await p.waitForTimeout(300); await p.click('#cap-view-functions [data-fv="checks"]'); await p.waitForTimeout(300);
+    const t = await p.evaluate(() => document.querySelector('#cap-view-functions details.cap-diag b')?.textContent); if (!t) throw new Error('aucun contrôle affiché');
+    await p.evaluate(() => capChkDialog()); await p.waitForSelector('#cap-chk-ov tr.chk-r');
+    await p.evaluate(t => { const tr = [...document.querySelectorAll('#cap-chk-ov tr.chk-r')].find(x => x.dataset.t === t); tr.querySelector('[data-on]').click(); }, t); await p.waitForTimeout(300);
+    await p.click('#cap-chk-ov [data-c="x"]');
+    if (await p.evaluate(t => [...document.querySelectorAll('#cap-view-functions details.cap-diag:not(.cap-diag-offl) b')].some(b => b.textContent === t), t)) throw new Error('contrôle désactivé encore affiché : ' + t);
+    if (!(await p.$('#cap-view-functions .cap-diag-offl'))) throw new Error('liste des contrôles désactivés absente');
+    await p.evaluate(() => { capChkSet({ off: {}, sev: {}, params: {} }); }); await p.waitForTimeout(300); await p.click('#cap-view-functions [data-fv="checks"]'); await p.waitForTimeout(300);
+    if (!await p.evaluate(t => [...document.querySelectorAll('#cap-view-functions details.cap-diag b')].some(b => b.textContent === t), t)) throw new Error('contrôle non réactivé : ' + t);
+  });
   await step('barre : menu, épingle, Ctrl+K', async () => {
     await p.click('#cap-v-analyses .cap-nav-arr'); await p.click('#cap-nav-dd [data-open="ana:reqs"]');
     await p.click('#cap-v-analyses .cap-nav-arr'); await p.click('#cap-nav-dd [data-pin="ana:reqs"]'); await p.click('#cap-v-ana-reqs');

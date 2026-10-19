@@ -276,7 +276,7 @@ function capNavMenu(g, anchor){
       const a=e.target.closest('[data-act]');
       if(a){ capNavClose(); ({open:()=>capPickCapellaFile(), folder:()=>capOpenProjectFolder(), projet:()=>capProjetPagePick(), save:()=>capSavePageDirect(false), saveas:()=>capSavePageDirect(true),
         page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor(), update:()=>capCfgLoadUpdate(), cfgsave:()=>capCfgDialog('save'), cfgload:()=>capCfgLoadFile(),
-        help:()=>openHelpModal(), custom:()=>capPrefCustomDialog(), prefs:()=>capPrefDialog(), autosave:()=>capPrefDialog('save'),
+        help:()=>openHelpModal(), custom:()=>capPrefCustomDialog(), prefs:()=>capPrefDialog(), autosave:()=>capPrefDialog('save'), checks:()=>capChkDialog(),
         theme:()=>capNavMenu('theme', document.getElementById('b-prefs')), tour:()=>capTourStart(), tourview:()=>capTourStartView(), tourrev:()=>capTourRevue(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
       if(e.target.closest('[data-reset]')){ const a=_capNav.auto; _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); if(a) _capNav.auto=a;   // ⚙ enregistrement automatique conservé
         capNavSave(); capNavRender(); capNavMenuFill(); }

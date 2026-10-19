@@ -13,7 +13,8 @@ var CAP_CFG_PARTS=[
   ['rm',     _L('🗺 Relation Map'),_L('onglets de vues : contexte, profondeur, disposition, filtres, affichage')],
   ['csv',    _L('⬇ Exports CSV'),_L('colonnes retirées ou ajoutées (ID, owner, attributs…) pour chaque export')],
   ['theme',  _L('🎨 Thème'),_L('thème choisi et thème personnalisé')],
-  ['names',  _L('🔤 Règles de nommage'),_L('verbes acceptés, mots refusés')]
+  ['names',  _L('🔤 Règles de nommage'),_L('verbes acceptés, mots refusés')],
+  ['checks', _L('🩺 Profil de contrôles'),_L('contrôles désactivés, gravités, seuils')]
 ];
 
 /** Sérialise en JSON en conservant les ensembles (Set). @param {*} o @returns {string} */
@@ -33,6 +34,7 @@ function capCfgGet(k){
   if(k==='rm') return rmViewsCfgGet();
   if(k==='theme') return {current:currentTheme, custom:capThemeStore};
   if(k==='names') return capNameRules;
+  if(k==='checks') return capChkProfile;
   return null;
 }
 
@@ -60,6 +62,7 @@ function capCfgSet(k, v){
     if(v.current&&THEMES[v.current]&&sel){ sel.value=v.current; applyTheme(v.current); }
   }
   else if(k==='names'){ if(v.verbs) capSaveNameRules(v); }
+  else if(k==='checks'){ if(v.off||v.sev||v.params) capChkSet(v); }
 }
 
 /** Écrit dans la page (bloc JSON « cap-ui-views ») ce que les autres blocs ne conservent pas encore :

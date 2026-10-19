@@ -136,8 +136,8 @@ function capFnChecks(F, layer){
   return [
     ...nqSecs,
     {icon:'📝', title:_L('Fonctions sans description'), cols, items:fs.filter(f=>!f.desc&&f.parentId).map(f=>row(f))},
-    {icon:'✎', title:_L('Descriptions trop courtes ou identiques au nom'), tip:_L('Moins de 20 caractères, ou répète le nom'), cols,
-      items:fs.filter(f=>f.desc&&(f.desc.length<20||f.desc.trim().toLowerCase()===f.name.trim().toLowerCase())).map(f=>row(f,`« ${f.desc.slice(0,60)} »`))},
+    {icon:'✎', title:_L('Descriptions trop courtes ou identiques au nom'), tip:_L(`Moins de ${capChkParam('fn.descMin')} caractères, ou répète le nom`), cols,
+      items:fs.filter(f=>f.desc&&(f.desc.length<capChkParam('fn.descMin')||f.desc.trim().toLowerCase()===f.name.trim().toLowerCase())).map(f=>row(f,`« ${f.desc.slice(0,60)} »`))},
     {icon:'⚑', title:_L('Marqueurs de travail en cours (TODO, TBD, NOT DONE…)'), cols, items:fs.filter(f=>todo.test(f.name)||todo.test(f.desc)).map(f=>row(f,f.status||''))},
     {icon:'≡', title:_L('Noms en double dans une même couche'), cols, items:Object.values(dup).filter(a=>a.length>1).flat().map(f=>row(f,`${dup[f.layer+'|'+f.name.trim().toLowerCase()].length} occurrences`))},
     {icon:'🧩', title:_L('Fonctions feuilles non allouées'), tip:_L('Couches où des allocations existent'), cols,
