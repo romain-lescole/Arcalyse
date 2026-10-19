@@ -392,6 +392,13 @@
         <h3>⛓ Contraintes</h3>
         <p>Toutes les contraintes : rôle (garde, pré / post-condition), expression (les liens de texte sont remplacés par le nom de l'élément cité), langage, éléments contraints, propriétaire. Contrôles : contraintes vides ou sans expression, éléments cités introuvables, sans élément contraint, doublons.</p>
         <p class="hp-note">Le panneau de détail d'un élément affiche aussi ses exigences liées, ses propriétés et ses contraintes. Les indicateurs correspondants sont dans le catalogue du 📐 Tableau de bord.</p>
+        <h3>🏷 Catégories d'échanges</h3>
+        <p>Les catégories que Capella permet de poser sur les échanges : <b>ExchangeCategory</b> (Functional Exchanges), <b>ComponentExchangeCategory</b> (Component Exchanges), <b>PhysicalLinkCategory</b> (Physical Links). Elles filtrent aussi ƒ⇆ Functional Exchange, 🔀 Behavior Exchange et 🔌 Physical Link (liste « 🏷 Toutes catégories », affichée seulement si le modèle en a), et le panneau de détail d'un échange liste ses catégories (et celui d'une catégorie, ses échanges).</p>
+        <table class="hp-t">
+          <tr><td>🏷 Catégories</td><td>Chaque catégorie : couche, nature, nombre et liste des échanges ; ▸ ouvre la vue de flux filtrée sur la catégorie.</td></tr>
+          <tr><td>⇆ Échanges</td><td>Taux d'échanges catégorisés par nature et par couche, puis chaque échange avec ses catégories (filtre catégorisés / sans catégorie).</td></tr>
+          <tr><td>🩺 Contrôles</td><td>Échanges sans catégorie (dans les natures et couches où des catégories sont déjà utilisées), catégories vides, référençant un échange introuvable, en double, échanges dans plusieurs catégories.</td></tr>
+        </table>
         <h3>💚 Santé du modèle</h3>
         <p>Un <b>score de 0 à 100</b> bâti sur <b>tous les contrôles 🩺</b> de toutes les vues, avec le 🩺 profil de contrôles (contrôles désactivés ignorés ; poids ℹ 0, ⚠ 1, ✖ 3) : 100 × e<sup>−(Σ poids × lignes ÷ nombre d'éléments nommés)</sup> : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. Niveaux : Bon (≥ 90), À surveiller (≥ 70), À reprendre. Score <b>par couche</b> ARCADIA pour les contrôles calculables par couche (fonctions, échanges fonctionnels, composants).</p>
         <table class="hp-t">

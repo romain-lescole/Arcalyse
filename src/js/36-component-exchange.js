@@ -41,7 +41,7 @@ function capRenderCompExchange(){
   let colorIdx=0;
   allLinks.forEach(l=>{ if(!linkColorMap[l.linkName]){linkColorMap[l.linkName]=LINK_COLORS[colorIdx%LINK_COLORS.length];colorIdx++;} });
 
-  if(!container._cex) container._cex={nameFilter:'',nodeFilter:'',view:_capCompExView};
+  if(!container._cex) container._cex={nameFilter:'',nodeFilter:'',cat:capEcPending('compex'),view:_capCompExView};   // cat : 🏷 catégorie (71)
   const st=container._cex;
   if(!st.dirFilter) st.dirFilter='all';   // all | fwd | rev | bi | unset | warn
   if(!st.kindFilter) st.kindFilter='all'; // all | UNSET | ASSEMBLY | DELEGATION | FLOW
@@ -71,6 +71,7 @@ function capRenderCompExchange(){
     return allLinks.filter(l=>{
       if(st.dirFilter==='warn' ? !l.warn : (st.dirFilter!=='all' && l.dir!==st.dirFilter)) return false;
       if(st.kindFilter!=='all' && l.kind!==st.kindFilter) return false;
+      if(st.cat&&!capEcMatch(l.linkId, st.cat)) return false;   // 🏷 catégorie (71)
       if(nf && !l.linkName.toLowerCase().includes(nf)
             && !l.fes.some(f=>f.name.toLowerCase().includes(nf))
             && !l.items.some(i=>i.name.toLowerCase().includes(nf))) return false;
@@ -301,6 +302,7 @@ function capRenderCompExchange(){
         <input id="cex-node-input" type="text" class="phl-filter-input" placeholder="Filtrer par composant…" value="${st.nodeFilter}" style="width:200px;">
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;margin-left:8px;">🔍 Exchange :</span>
         <input id="cex-name-input" type="text" class="phl-filter-input" placeholder="Exchange, FE ou Exchange Item…" value="${st.nameFilter}" style="width:200px;">
+        ${capEcSelect('CE', st.cat||'', 'cex-cat')}
         <div style="margin-left:auto;display:flex;gap:6px;">
           <button class="phl-export-btn" id="cex-exp-csv">⬇ CSV</button>
           <button class="phl-export-btn" id="cex-exp-html" title="Rapport HTML de la vue affichée">⬇ HTML</button>
@@ -318,6 +320,7 @@ function capRenderCompExchange(){
     }));
     container.querySelector('#cex-kind-sel')?.addEventListener('change',e=>{ st.kindFilter=e.target.value; render(); });
 
+    container.querySelector('#cex-cat')?.addEventListener('change',e=>{ st.cat=e.target.value; render(); });   // 🏷 catégorie (71)
     let debTimer;
     container.querySelector('#cex-name-input')?.addEventListener('input',e=>{
       st.nameFilter=e.target.value;

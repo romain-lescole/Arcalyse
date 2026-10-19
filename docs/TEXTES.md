@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 5924 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 6001 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -1293,17 +1293,17 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 60 | Attributs | Attributes |
 | 68 | Références sortantes → | Outgoing references → |
 | 76 | Références entrantes ← (navigation inverse) | Incoming references ← (reverse navigation) |
-| 93 | Owner (parent) | Owner (parent) |
-| 99 | Owned elements ( | Owned elements (…) |
-| 146 | capOpenDetailById(this.dataset.hlink) | (inchangé, hors _L) |
-| 147 | Ouvrir le détail de l'élément référencé | Open the details of the referenced element |
-| 148 | noopener noreferrer | (inchangé, hors _L) |
-| 152 | [image : | [image: …] |
-| 171 | Description | Description |
-| 171 | Aperçu | Preview |
-| 171 | Description mise en forme comme dans Capella | Description formatted as in Capella |
-| 171 | ‹/› HTML | ‹/› HTML |
-| 171 | Code HTML d'origine de la description | Original HTML code of the description |
+| 94 | Owner (parent) | Owner (parent) |
+| 100 | Owned elements ( | Owned elements (…) |
+| 147 | capOpenDetailById(this.dataset.hlink) | (inchangé, hors _L) |
+| 148 | Ouvrir le détail de l'élément référencé | Open the details of the referenced element |
+| 149 | noopener noreferrer | (inchangé, hors _L) |
+| 153 | [image : | [image: …] |
+| 172 | Description | Description |
+| 172 | Aperçu | Preview |
+| 172 | Description mise en forme comme dans Capella | Description formatted as in Capella |
+| 172 | ‹/› HTML | ‹/› HTML |
+| 172 | Code HTML d'origine de la description | Original HTML code of the description |
 
 ## js/26-rapports-html.js
 
@@ -1360,74 +1360,74 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | Ligne | Texte | Anglais |
 |---:|---|---|
 | 44 | Capella Project | Capella Project |
-| 80 | ComponentPorts alloués : | Allocated ComponentPorts: |
-| 94 | Physical Links sans Component Exchange alloué | Physical Links without allocated Component Exchange |
-| 94 | Le lien ne transporte aucun échange | The link carries no exchange |
-| 94 | Physical Link | Physical Link |
-| 94 | Extrémité 1 | End 1 |
-| 94 | Extrémité 2 | End 2 |
-| 96 | Ports physiques orphelins (sans Physical Link) | Orphan physical ports (no Physical Link) |
-| 96 | PhysicalPort relié à aucun lien | PhysicalPort connected to no link |
-| 96 | Composant | Component |
-| 96 | Port physique | Physical port |
-| 96 | ComponentPorts alloués | Allocated ComponentPorts |
-| 97 | Ports physiques sans ComponentPort alloué | Physical ports without allocated ComponentPort |
-| 97 | Aucune ComponentPortAllocation | No ComponentPortAllocation |
+| 81 | ComponentPorts alloués : | Allocated ComponentPorts: |
+| 95 | Physical Links sans Component Exchange alloué | Physical Links without allocated Component Exchange |
+| 95 | Le lien ne transporte aucun échange | The link carries no exchange |
+| 95 | Physical Link | Physical Link |
+| 95 | Extrémité 1 | End 1 |
+| 95 | Extrémité 2 | End 2 |
+| 97 | Ports physiques orphelins (sans Physical Link) | Orphan physical ports (no Physical Link) |
+| 97 | PhysicalPort relié à aucun lien | PhysicalPort connected to no link |
 | 97 | Composant | Component |
 | 97 | Port physique | Physical port |
 | 97 | ComponentPorts alloués | Allocated ComponentPorts |
-| 98 | Component Exchanges (PA) non alloués à un Physical Link | Component Exchanges (PA) not allocated to a Physical Link |
-| 98 | Hors délégations | Delegations excluded |
-| 98 | Component Exchange | Component Exchange |
-| 105 | Aucun lien physique ne correspond au filtre. | No physical link matches the filter. |
-| 151 | Component Exchanges alloués : | Allocated Component Exchanges: |
-| 151 | Aucun Component Exchange alloué | No allocated Component Exchange |
-| 155 | var(--c-dim) | (inchangé, hors _L) |
-| 176 | ≡ Vue Ligne | ≡ Line view |
-| 176 | ▣ Vue Composant | ▣ Component view |
-| 176 | ▦ Matrice | ▦ Matrix |
-| 176 | 🩺 Contrôles | 🩺 Checks |
-| 182 | composant « | component “…” |
-| 182 | lien « | link “…” |
-| 182 | avec CE | with CE |
-| 182 | sans CE | without CE |
-| 183 | 🔌 Physical Links | 🔌 Physical Links |
-| 183 | · filtres : | · filters: |
-| 218 | ◧ Vue Blocs | ◧ Blocks view |
-| 218 | ≡ Vue Ligne | ≡ Line view |
-| 218 | ▣ Vue Composant | ▣ Component view |
-| 218 | ▦ Matrice | ▦ Matrix |
-| 218 | Matrice N² composant × composant | N² matrix component × component |
-| 218 | 🩺 Contrôles | 🩺 Checks |
-| 218 | Liens sans CE, ports orphelins, CE non alloués… | Links without CE, orphan ports, unallocated CEs… |
-| 220 | Périmètre : Physical Links de la couche PA entre Physical Components Node (nœuds du système en jaune, nœuds acteurs en bleu clair). | Scope: Physical Links of the layer PA between Physical Components Node (system nodes in yellow, actor nodes in light blue). … |
-| 228 | ◧ Vue Blocs | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
-| 229 | ≡ Vue Ligne | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
-| 230 | ▣ Vue Composant | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
-| 231 | ▦ Matrice | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
-| 232 | 🩺 Contrôles | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
-| 235 | Tous | All |
-| 235 | ⇢ Avec CE | ⇢ With CE |
-| 235 | ∅ Sans CE | ∅ Without CE |
-| 236 | 🖥 Composant : | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
-| 241 | 🔍 Lien : | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
-| 243 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
-| 276 | N° Lien | Link No. |
-| 276 | Composant 1 | Component 1 |
-| 276 | Port Composant 1 | Component Port 1 |
-| 276 | ComponentPorts alloués 1 | Allocated ComponentPorts 1 |
-| 276 | Lien Physique | Physical Link |
-| 276 | Component Exchanges alloués | Allocated Component Exchanges |
-| 276 | Port Composant 2 | Component Port 2 |
-| 276 | ComponentPorts alloués 2 | Allocated ComponentPorts 2 |
-| 276 | Composant 2 | Component 2 |
-| 276 | Couche | Layer |
-| 284 | N° Lien | Link No. |
-| 284 | Source | Source |
-| 284 | Port Source | Source Port |
-| 284 | Lien Physique | Physical Link |
-| 284 | Port Cible | Target Port |
-| 284 | Destination | Destination |
+| 98 | Ports physiques sans ComponentPort alloué | Physical ports without allocated ComponentPort |
+| 98 | Aucune ComponentPortAllocation | No ComponentPortAllocation |
+| 98 | Composant | Component |
+| 98 | Port physique | Physical port |
+| 98 | ComponentPorts alloués | Allocated ComponentPorts |
+| 99 | Component Exchanges (PA) non alloués à un Physical Link | Component Exchanges (PA) not allocated to a Physical Link |
+| 99 | Hors délégations | Delegations excluded |
+| 99 | Component Exchange | Component Exchange |
+| 106 | Aucun lien physique ne correspond au filtre. | No physical link matches the filter. |
+| 152 | Component Exchanges alloués : | Allocated Component Exchanges: |
+| 152 | Aucun Component Exchange alloué | No allocated Component Exchange |
+| 156 | var(--c-dim) | (inchangé, hors _L) |
+| 177 | ≡ Vue Ligne | ≡ Line view |
+| 177 | ▣ Vue Composant | ▣ Component view |
+| 177 | ▦ Matrice | ▦ Matrix |
+| 177 | 🩺 Contrôles | 🩺 Checks |
+| 183 | composant « | component “…” |
+| 183 | lien « | link “…” |
+| 183 | avec CE | with CE |
+| 183 | sans CE | without CE |
+| 184 | 🔌 Physical Links | 🔌 Physical Links |
+| 184 | · filtres : | · filters: |
+| 219 | ◧ Vue Blocs | ◧ Blocks view |
+| 219 | ≡ Vue Ligne | ≡ Line view |
+| 219 | ▣ Vue Composant | ▣ Component view |
+| 219 | ▦ Matrice | ▦ Matrix |
+| 219 | Matrice N² composant × composant | N² matrix component × component |
+| 219 | 🩺 Contrôles | 🩺 Checks |
+| 219 | Liens sans CE, ports orphelins, CE non alloués… | Links without CE, orphan ports, unallocated CEs… |
+| 221 | Périmètre : Physical Links de la couche PA entre Physical Components Node (nœuds du système en jaune, nœuds acteurs en bleu clair). | Scope: Physical Links of the layer PA between Physical Components Node (system nodes in yellow, actor nodes in light blue). … |
+| 229 | ◧ Vue Blocs | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: … ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
+| 230 | ≡ Vue Ligne | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: … ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
+| 231 | ▣ Vue Composant | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: … ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
+| 232 | ▦ Matrice | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: … ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
+| 233 | 🩺 Contrôles | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: … ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
+| 236 | Tous | All |
+| 236 | ⇢ Avec CE | ⇢ With CE |
+| 236 | ∅ Sans CE | ∅ Without CE |
+| 237 | 🖥 Composant : | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: … ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
+| 242 | 🔍 Lien : | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: … ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
+| 245 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) | ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks …/… link… … 🖥 Component: 🔍 Link: … ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
+| 279 | N° Lien | Link No. |
+| 279 | Composant 1 | Component 1 |
+| 279 | Port Composant 1 | Component Port 1 |
+| 279 | ComponentPorts alloués 1 | Allocated ComponentPorts 1 |
+| 279 | Lien Physique | Physical Link |
+| 279 | Component Exchanges alloués | Allocated Component Exchanges |
+| 279 | Port Composant 2 | Component Port 2 |
+| 279 | ComponentPorts alloués 2 | Allocated ComponentPorts 2 |
+| 279 | Composant 2 | Component 2 |
+| 279 | Couche | Layer |
+| 287 | N° Lien | Link No. |
+| 287 | Source | Source |
+| 287 | Port Source | Source Port |
+| 287 | Lien Physique | Physical Link |
+| 287 | Port Cible | Target Port |
+| 287 | Destination | Destination |
 
 ## js/30-ports.js
 
@@ -1953,6 +1953,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 693 | 🏷 Propriétés | 🏷 Properties |
 | 693 | 🗃 Données & interfaces | 🗃 Data & interfaces |
 | 693 | ⛓ Contraintes | ⛓ Constraints |
+| 693 | 🏷 Catégories d'échanges | 🏷 Exchange categories |
 | 693 | 🔖 Statut de revue | 🔖 Review status |
 | 693 | 💚 Santé du modèle | 💚 Model health |
 | 729 | ↻ Recalculer | … ↻ Recompute |
@@ -2219,216 +2220,218 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 178 | dm.chk | (inchangé, hors _L) |
 | 178 | Contraintes | Constraints |
 | 178 | ct.chk | (inchangé, hors _L) |
+| 178 | Catégories d'échanges | Exchange categories |
+| 178 | chk.ec | (inchangé, hors _L) |
 | 178 | Nombre total de constats par domaine | Total number of findings by domain |
-| 189 | Mise en page | Layout |
-| 189 | Texte libre (titre, commentaire) | Free text (title, comment) |
-| 190 | Diagrammes et vues | Diagrams and views |
-| 190 | 🔲 Diagramme Capella | 🔲 Capella diagram |
+| 190 | Mise en page | Layout |
+| 190 | Texte libre (titre, commentaire) | Free text (title, comment) |
 | 191 | Diagrammes et vues | Diagrams and views |
-| 191 | ⇶ Liens entre couches | ⇶ Cross-layer links |
-| 200 | Indicateur | (inchangé, hors _L) |
-| 216 | à surveiller | to watch |
-| 226 | Autres ( | Others (…) |
-| 238 | Texte vide — ⚙ pour le modifier. | Empty text — ⚙ to edit it. |
-| 239 | Indicateur indisponible pour ce modèle. | Indicator not available for this model. |
-| 240 | Aucune donnée dans ce modèle. | No data in this model. |
-| 241 | var(--c-dim) | (inchangé, hors _L) |
-| 241 | var(--c-text) | (inchangé, hors _L) |
-| 241 | var(--c-bg2) | (inchangé, hors _L) |
-| 259 | Catégorie | Category |
-| 259 | Taux | Rate |
-| 259 | Nombre | Count |
-| 259 | Détail | Detail |
-| 259 | Part | (inchangé, hors _L) |
-| 262 | autre(s) ligne(s) — agrandir le cadre pour tout voir | … and … more row(s) — enlarge the frame to see everything |
-| 267 | catégorie(s) | … … category(ies) |
-| 280 | Autres ( | Others (…) |
-| 289 | Autres ( | Others (…) |
-| 332 | Synthèse du modèle — | Model summary — |
-| 332 | Capella | Capella |
-| 333 | mdl.n | (inchangé, hors _L) |
-| 333 | Fonctions (toutes couches) | Functions (all layers) |
-| 334 | mdl.layer | (inchangé, hors _L) |
-| 335 | fn.L.desc | (inchangé, hors _L) |
-| 335 | ch.empty | (inchangé, hors _L) |
-| 336 | ce.dir | (inchangé, hors _L) |
-| 337 | chk.sum | (inchangé, hors _L) |
-| 337 | tr.tab | (inchangé, hors _L) |
-| 338 | Synthèse du modèle | Model summary |
-| 364 | — double-clic pour renommer | {3} {4} |
-| 366 | ✔ Terminer | ✔ Done |
-| 366 | ✏ Modifier | ✏ Edit |
-| 367 | ＋ Ajouter un élément | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 369 | ⧉ Dupliquer ✨ Exemple | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 372 | 🗑 Supprimer | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 381 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer (panneau à gauche) · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. | Drag an item by its title to move it · bottom-right corner to resize it · ＋ on the left of an item to insert one before it · ⚙ configure (left panel) · ⧉ duplicate · ✕ remove. Dashboards are kept in the 💾 HTML Page. |
-| 382 | ,minmax(0,1fr)) | … ＋ … … A4 portrait A4 landscape 🖨 Print 🌐 HTML ⬇ JSON ⬆ JSON … … … … … |
-| 387 | ＋ Ajouter un élément | ＋ Add an item |
-| 388 | Tableau de bord vide. | Empty dashboard. … |
-| 388 | Cliquez sur « ＋ Ajouter un élément ». | Click “＋ Add an item”. |
-| 388 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. | Click “✏ Edit” to add indicators. |
-| 395 | Nouvel élément : choisissez un indicateur, un diagramme ou une vue dans le panneau de gauche. | New item: choose an indicator, a diagram or a view in the left panel. |
-| 414 | Tableau de bord | Dashboard |
-| 416 | Page | Page |
-| 417 | (copie) | (copy) |
-| 419 | Supprimer le tableau de bord « | Delete the dashboard “…”? |
-| 426 | Tableau importé | Imported dashboard |
-| 427 | Fichier de tableau de bord invalide. | Invalid dashboard file. |
-| 434 | ,minmax(0,1fr)) | {0} {2} |
-| 436 | élément(s) | … element(s) |
-| 436 | Tableau de bord | Dashboard |
-| 440 | Ouvrir | Open |
-| 488 | Modèle Capella | Capella model |
-| 532 | Choisissez un diagramme dans le panneau de gauche (le .aird du projet doit être ouvert). | Choose a diagram in the left panel (the project's .aird must be open). |
-| 535 | Choisissez l'élément de départ dans le panneau de gauche. | Choose the starting element in the left panel. |
-| 536 | Aucun modèle chargé. | No model loaded. |
-| 538 | Aucun lien de réalisation. | No realization link. |
-| 557 | Mise en page | Layout |
-| 557 | Diagrammes et vues | Diagrams and views |
-| 567 | ⚙ Configurer l'élément | ⚙ Configure the item |
-| 567 | ＋ Nouvel élément | ＋ New item |
-| 567 | Fermer sans enregistrer | Close without saving |
-| 569 | 🔍 Rechercher un indicateur… | 🔍 Search an indicator… |
-| 570 | Déplier toutes les catégories | Expand all categories |
-| 570 | ⊞ Tout déplier | ⊞ Expand all |
-| 570 | Replier toutes les catégories | Collapse all categories |
-| 570 | ⊟ Tout replier | ⊟ Collapse all |
-| 572 | Annuler | Cancel |
-| 572 | ✔ Enregistrer | ✔ Save |
-| 572 | ✔ Ajouter dans la grille | ✔ Add to the grid |
-| 579 | Aucun indicateur. | No indicator. |
-| 588 | Choisissez ci-dessous un indicateur, un diagramme ou une vue : il apparaît aussitôt dans la grille, à sa place. | Choose an indicator, a diagram or a view below: it appears at once in the grid, in its place. |
-| 590 | Taille | Size |
-| 590 | col. | … col. |
-| 592 | Élément | Element |
-| 593 | Titre | Title |
-| 596 | Diagramme | Diagram |
-| 596 | Reprendre l'image du diagramme dans le .aird chargé | Take the diagram image again from the loaded .aird |
-| 596 | ↻ Mettre à jour | ↻ Update |
-| 597 | 🔍 Choisir un diagramme… | 🔍 Choose a diagram… |
-| 598 | Aucun .aird chargé : | No .aird loaded: |
-| 598 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
-| 601 | Mode | Mode |
-| 601 | À partir d'un élément | From an element |
-| 601 | Toute une catégorie | A whole category |
-| 602 | Catégorie | Category |
-| 603 | Départ | Start |
-| 603 | à choisir | to be chosen |
-| 603 | 🔍 Élément de départ… | 🔍 Starting element… |
-| 604 | Sens | Direction |
-| 604 | Réalisations vers le haut et vers le bas | Realizations upwards and downwards |
-| 604 | Tous les liens de proche en proche | All links, step by step |
-| 605 | Fonctions des chaînes | Chain functions |
-| 607 | Texte | Text |
-| 608 | Représentation | Chart |
-| 609 | Catégories | Categories |
-| 609 | 5 premières | Top 5 |
-| 609 | 8 premières | Top 8 |
-| 609 | 10 premières | Top 10 |
-| 609 | 15 premières | Top 15 |
-| 609 | 20 premières | Top 20 |
-| 609 | Toutes | All |
-| 610 | Tri | Sort |
-| 610 | Par défaut | Default |
-| 610 | Valeur décroissante | Descending value |
-| 610 | Ordre naturel | Natural order |
-| 619 | ⏳ Image du diagramme… | ⏳ Diagram image… |
+| 191 | 🔲 Diagramme Capella | 🔲 Capella diagram |
+| 192 | Diagrammes et vues | Diagrams and views |
+| 192 | ⇶ Liens entre couches | ⇶ Cross-layer links |
+| 201 | Indicateur | (inchangé, hors _L) |
+| 217 | à surveiller | to watch |
+| 227 | Autres ( | Others (…) |
+| 239 | Texte vide — ⚙ pour le modifier. | Empty text — ⚙ to edit it. |
+| 240 | Indicateur indisponible pour ce modèle. | Indicator not available for this model. |
+| 241 | Aucune donnée dans ce modèle. | No data in this model. |
+| 242 | var(--c-dim) | (inchangé, hors _L) |
+| 242 | var(--c-text) | (inchangé, hors _L) |
+| 242 | var(--c-bg2) | (inchangé, hors _L) |
+| 260 | Catégorie | Category |
+| 260 | Taux | Rate |
+| 260 | Nombre | Count |
+| 260 | Détail | Detail |
+| 260 | Part | (inchangé, hors _L) |
+| 263 | autre(s) ligne(s) — agrandir le cadre pour tout voir | … and … more row(s) — enlarge the frame to see everything |
+| 268 | catégorie(s) | … … category(ies) |
+| 281 | Autres ( | Others (…) |
+| 290 | Autres ( | Others (…) |
+| 333 | Synthèse du modèle — | Model summary — |
+| 333 | Capella | Capella |
+| 334 | mdl.n | (inchangé, hors _L) |
+| 334 | Fonctions (toutes couches) | Functions (all layers) |
+| 335 | mdl.layer | (inchangé, hors _L) |
+| 336 | fn.L.desc | (inchangé, hors _L) |
+| 336 | ch.empty | (inchangé, hors _L) |
+| 337 | ce.dir | (inchangé, hors _L) |
+| 338 | chk.sum | (inchangé, hors _L) |
+| 338 | tr.tab | (inchangé, hors _L) |
+| 339 | Synthèse du modèle | Model summary |
+| 365 | — double-clic pour renommer | {3} {4} |
+| 367 | ✔ Terminer | ✔ Done |
+| 367 | ✏ Modifier | ✏ Edit |
+| 368 | ＋ Ajouter un élément | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 370 | ⧉ Dupliquer ✨ Exemple | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 373 | 🗑 Supprimer | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 382 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer (panneau à gauche) · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. | Drag an item by its title to move it · bottom-right corner to resize it · ＋ on the left of an item to insert one before it · ⚙ configure (left panel) · ⧉ duplicate · ✕ remove. Dashboards are kept in the 💾 HTML Page. |
+| 383 | ,minmax(0,1fr)) | … ＋ … … A4 portrait A4 landscape 🖨 Print 🌐 HTML ⬇ JSON ⬆ JSON … … … … … |
+| 388 | ＋ Ajouter un élément | ＋ Add an item |
+| 389 | Tableau de bord vide. | Empty dashboard. … |
+| 389 | Cliquez sur « ＋ Ajouter un élément ». | Click “＋ Add an item”. |
+| 389 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. | Click “✏ Edit” to add indicators. |
+| 396 | Nouvel élément : choisissez un indicateur, un diagramme ou une vue dans le panneau de gauche. | New item: choose an indicator, a diagram or a view in the left panel. |
+| 415 | Tableau de bord | Dashboard |
+| 417 | Page | Page |
+| 418 | (copie) | (copy) |
+| 420 | Supprimer le tableau de bord « | Delete the dashboard “…”? |
+| 427 | Tableau importé | Imported dashboard |
+| 428 | Fichier de tableau de bord invalide. | Invalid dashboard file. |
+| 435 | ,minmax(0,1fr)) | {0} {2} |
+| 437 | élément(s) | … element(s) |
+| 437 | Tableau de bord | Dashboard |
+| 441 | Ouvrir | Open |
+| 489 | Modèle Capella | Capella model |
+| 533 | Choisissez un diagramme dans le panneau de gauche (le .aird du projet doit être ouvert). | Choose a diagram in the left panel (the project's .aird must be open). |
+| 536 | Choisissez l'élément de départ dans le panneau de gauche. | Choose the starting element in the left panel. |
+| 537 | Aucun modèle chargé. | No model loaded. |
+| 539 | Aucun lien de réalisation. | No realization link. |
+| 558 | Mise en page | Layout |
+| 558 | Diagrammes et vues | Diagrams and views |
+| 568 | ⚙ Configurer l'élément | ⚙ Configure the item |
+| 568 | ＋ Nouvel élément | ＋ New item |
+| 568 | Fermer sans enregistrer | Close without saving |
+| 570 | 🔍 Rechercher un indicateur… | 🔍 Search an indicator… |
+| 571 | Déplier toutes les catégories | Expand all categories |
+| 571 | ⊞ Tout déplier | ⊞ Expand all |
+| 571 | Replier toutes les catégories | Collapse all categories |
+| 571 | ⊟ Tout replier | ⊟ Collapse all |
+| 573 | Annuler | Cancel |
+| 573 | ✔ Enregistrer | ✔ Save |
+| 573 | ✔ Ajouter dans la grille | ✔ Add to the grid |
+| 580 | Aucun indicateur. | No indicator. |
+| 589 | Choisissez ci-dessous un indicateur, un diagramme ou une vue : il apparaît aussitôt dans la grille, à sa place. | Choose an indicator, a diagram or a view below: it appears at once in the grid, in its place. |
+| 591 | Taille | Size |
+| 591 | col. | … col. |
+| 593 | Élément | Element |
+| 594 | Titre | Title |
+| 597 | Diagramme | Diagram |
+| 597 | Reprendre l'image du diagramme dans le .aird chargé | Take the diagram image again from the loaded .aird |
+| 597 | ↻ Mettre à jour | ↻ Update |
+| 598 | 🔍 Choisir un diagramme… | 🔍 Choose a diagram… |
+| 599 | Aucun .aird chargé : | No .aird loaded: |
+| 599 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 602 | Mode | Mode |
+| 602 | À partir d'un élément | From an element |
+| 602 | Toute une catégorie | A whole category |
+| 603 | Catégorie | Category |
+| 604 | Départ | Start |
+| 604 | à choisir | to be chosen |
+| 604 | 🔍 Élément de départ… | 🔍 Starting element… |
+| 605 | Sens | Direction |
+| 605 | Réalisations vers le haut et vers le bas | Realizations upwards and downwards |
+| 605 | Tous les liens de proche en proche | All links, step by step |
+| 606 | Fonctions des chaînes | Chain functions |
+| 608 | Texte | Text |
+| 609 | Représentation | Chart |
+| 610 | Catégories | Categories |
+| 610 | 5 premières | Top 5 |
+| 610 | 8 premières | Top 8 |
+| 610 | 10 premières | Top 10 |
+| 610 | 15 premières | Top 15 |
+| 610 | 20 premières | Top 20 |
+| 610 | Toutes | All |
+| 611 | Tri | Sort |
+| 611 | Par défaut | Default |
+| 611 | Valeur décroissante | Descending value |
+| 611 | Ordre naturel | Natural order |
+| 620 | ⏳ Image du diagramme… | ⏳ Diagram image… |
 
 ## js/36-component-exchange.js
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
 | 64 | Capella Project | Capella Project |
-| 91 | ⇄ INOUT | ⇄ INOUT |
-| 116 | Aucun component exchange ne correspond au filtre. | No component exchange matches the filter. |
-| 129 | Sens non défini | Undefined direction |
-| 166 | ÉMET → | SENDS → |
-| 166 | Émission — ce composant envoie le signal | Sending — this component sends the signal |
-| 167 | ← REÇOIT | ← RECEIVES |
-| 167 | Réception — ce composant reçoit le signal | Receiving — this component receives the signal |
-| 168 | ⇄ ÉCHANGE | ⇄ EXCHANGE |
-| 168 | Bidirectionnel — port INOUT | Bidirectional — INOUT port |
-| 169 | Non orienté — aucun port IN/OUT/INOUT | Not oriented — no IN/OUT/INOUT port |
-| 185 | Items : | Items: |
-| 192 | Acteur | Actor |
-| 213 | Component Exchange | Component Exchange |
-| 213 | Source | Source |
-| 213 | Cible | Target |
-| 213 | Couche | Layer |
-| 217 | Exchanges sans Functional Exchange alloué | Exchanges without allocated Functional Exchange |
-| 217 | Aucune ComponentExchangeFunctionalExchangeAllocation | No ComponentExchangeFunctionalExchangeAllocation |
-| 218 | Ports orphelins (ComponentPort sans exchange) | Orphan ports (ComponentPort without exchange) |
-| 218 | Port défini sur un composant mais relié à aucun Component Exchange | Port defined on a component but connected to no Component Exchange |
-| 218 | Composant | Component |
-| 218 | Port | Port |
-| 218 | Orientation | Orientation |
-| 218 | Couche | Layer |
-| 220 | Orientations de ports incohérentes | Inconsistent port orientations |
-| 220 | OUT→OUT ou IN→IN hors délégation | OUT→OUT or IN→IN outside delegation |
-| 221 | Exchanges non orientés | Non-oriented exchanges |
-| 221 | Les deux ports sont UNSET : le sens du flux est inconnu | Both ports are UNSET: the flow direction is unknown |
-| 222 | Exchanges de couche PA non alloués à un Physical Link | PA-layer exchanges not allocated to a Physical Link |
-| 222 | Aucune ComponentExchangeAllocation depuis un PhysicalLink | No ComponentExchangeAllocation from a PhysicalLink |
-| 231 | ≡ Vue Ligne | ≡ Line view |
-| 231 | ▣ Vue Composant | ▣ Component view |
-| 231 | ▦ Matrice | ▦ Matrix |
-| 231 | 🩺 Contrôles | 🩺 Checks |
-| 238 | composant « | component “…” |
-| 238 | exchange « | exchange “…” |
-| 239 | 🔀 Behavior Exchanges (PA) | 🔀 Behavior Exchanges (PA) |
-| 239 | · filtres : | · filters: |
-| 266 | ◧ Vue Blocs | ◧ Blocks view |
-| 266 | Composants Behavior dessinés comme dans Capella (bleu = système, bleu clair = acteur), ports UNSET / IN / OUT / INOUT | Behavior components drawn as in Capella (blue = system, light blue = actor), UNSET / IN / OUT / INOUT ports |
-| 266 | ≡ Vue Ligne | ≡ Line view |
-| 266 | ▣ Vue Composant | ▣ Component view |
-| 266 | ▦ Matrice | ▦ Matrix |
-| 266 | Matrice N² composant × composant | N² matrix component × component |
-| 266 | 🩺 Contrôles | 🩺 Checks |
-| 266 | Ports orphelins, exchanges sans FE, orientations incohérentes… | Orphan ports, exchanges without FE, inconsistent orientations… |
-| 273 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it (… out of … in the model). … |
-| 273 | dans le modèle). | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it (… out of … in the model). … |
-| 279 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: ⬇ CSV ⬇ HTML ⬇ HTML (all views) {14} |
-| 282 | ◧ Vue Blocs | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: ⬇ CSV ⬇ HTML ⬇ HTML (all views) {14} |
-| 283 | ≡ Vue Ligne | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: ⬇ CSV ⬇ HTML ⬇ HTML (all views) {14} |
-| 284 | ▣ Vue Composant | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: ⬇ CSV ⬇ HTML ⬇ HTML (all views) {14} |
-| 285 | ▦ Matrice | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: ⬇ CSV ⬇ HTML ⬇ HTML (all views) {14} |
-| 286 | 🩺 Contrôles | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: ⬇ CSV ⬇ HTML ⬇ HTML (all views) {14} |
-| 289 | Tous | All |
-| 289 | Tous les sens | All directions |
-| 291 | ⚠ Incohérents | ⚠ Inconsistent |
-| 291 | Orientations de ports incohérentes (OUT→OUT, IN→IN hors délégation) | Inconsistent port orientations (OUT→OUT, IN→IN outside delegation) |
-| 295 | Tous kinds | All kinds … |
-| 297 | 🖥 Composant : | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: ⬇ CSV ⬇ HTML ⬇ HTML (all views) {14} |
-| 301 | 🔍 Exchange : | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: ⬇ CSV ⬇ HTML ⬇ HTML (all views) {14} |
-| 303 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: ⬇ CSV ⬇ HTML ⬇ HTML (all views) {14} |
-| 335 | N° Exchange | Exchange No. |
-| 335 | Composant Source | Source Component |
-| 335 | Port Source | Source Port |
-| 335 | Orientation Source | Source Orientation |
-| 335 | Component Exchange | Component Exchange |
-| 335 | Kind | Kind |
-| 335 | Sens | Direction |
-| 335 | Port Cible | Target Port |
-| 335 | Orientation Cible | Target Orientation |
-| 335 | Composant Cible | Target Component |
-| 335 | Functional Exchanges | Functional Exchanges |
-| 335 | Exchange Items | Exchange Items |
-| 335 | Physical Links | Physical Links |
-| 335 | Alerte | Alert |
-| 341 | ⇄ Bidirectionnel | ⇄ Bidirectional |
-| 341 | ? Non orienté | ? Not oriented |
-| 341 | Émission → | Sending → |
-| 341 | ← Réception | ← Receiving |
-| 344 | N° Exchange | Exchange No. |
-| 344 | Sens | Direction |
-| 344 | Composant | Component |
-| 344 | Port | Port |
-| 344 | Orientation | Orientation |
-| 344 | Component Exchange | Component Exchange |
-| 344 | Kind | Kind |
-| 344 | Port distant | Remote port |
-| 344 | Orientation distante | Remote orientation |
-| 344 | Composant distant | Remote component |
+| 92 | ⇄ INOUT | ⇄ INOUT |
+| 117 | Aucun component exchange ne correspond au filtre. | No component exchange matches the filter. |
+| 130 | Sens non défini | Undefined direction |
+| 167 | ÉMET → | SENDS → |
+| 167 | Émission — ce composant envoie le signal | Sending — this component sends the signal |
+| 168 | ← REÇOIT | ← RECEIVES |
+| 168 | Réception — ce composant reçoit le signal | Receiving — this component receives the signal |
+| 169 | ⇄ ÉCHANGE | ⇄ EXCHANGE |
+| 169 | Bidirectionnel — port INOUT | Bidirectional — INOUT port |
+| 170 | Non orienté — aucun port IN/OUT/INOUT | Not oriented — no IN/OUT/INOUT port |
+| 186 | Items : | Items: |
+| 193 | Acteur | Actor |
+| 214 | Component Exchange | Component Exchange |
+| 214 | Source | Source |
+| 214 | Cible | Target |
+| 214 | Couche | Layer |
+| 218 | Exchanges sans Functional Exchange alloué | Exchanges without allocated Functional Exchange |
+| 218 | Aucune ComponentExchangeFunctionalExchangeAllocation | No ComponentExchangeFunctionalExchangeAllocation |
+| 219 | Ports orphelins (ComponentPort sans exchange) | Orphan ports (ComponentPort without exchange) |
+| 219 | Port défini sur un composant mais relié à aucun Component Exchange | Port defined on a component but connected to no Component Exchange |
+| 219 | Composant | Component |
+| 219 | Port | Port |
+| 219 | Orientation | Orientation |
+| 219 | Couche | Layer |
+| 221 | Orientations de ports incohérentes | Inconsistent port orientations |
+| 221 | OUT→OUT ou IN→IN hors délégation | OUT→OUT or IN→IN outside delegation |
+| 222 | Exchanges non orientés | Non-oriented exchanges |
+| 222 | Les deux ports sont UNSET : le sens du flux est inconnu | Both ports are UNSET: the flow direction is unknown |
+| 223 | Exchanges de couche PA non alloués à un Physical Link | PA-layer exchanges not allocated to a Physical Link |
+| 223 | Aucune ComponentExchangeAllocation depuis un PhysicalLink | No ComponentExchangeAllocation from a PhysicalLink |
+| 232 | ≡ Vue Ligne | ≡ Line view |
+| 232 | ▣ Vue Composant | ▣ Component view |
+| 232 | ▦ Matrice | ▦ Matrix |
+| 232 | 🩺 Contrôles | 🩺 Checks |
+| 239 | composant « | component “…” |
+| 239 | exchange « | exchange “…” |
+| 240 | 🔀 Behavior Exchanges (PA) | 🔀 Behavior Exchanges (PA) |
+| 240 | · filtres : | · filters: |
+| 267 | ◧ Vue Blocs | ◧ Blocks view |
+| 267 | Composants Behavior dessinés comme dans Capella (bleu = système, bleu clair = acteur), ports UNSET / IN / OUT / INOUT | Behavior components drawn as in Capella (blue = system, light blue = actor), UNSET / IN / OUT / INOUT ports |
+| 267 | ≡ Vue Ligne | ≡ Line view |
+| 267 | ▣ Vue Composant | ▣ Component view |
+| 267 | ▦ Matrice | ▦ Matrix |
+| 267 | Matrice N² composant × composant | N² matrix component × component |
+| 267 | 🩺 Contrôles | 🩺 Checks |
+| 267 | Ports orphelins, exchanges sans FE, orientations incohérentes… | Orphan ports, exchanges without FE, inconsistent orientations… |
+| 274 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it (… out of … in the model). … |
+| 274 | dans le modèle). | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it (… out of … in the model). … |
+| 280 | Périmètre : Component Exchanges de la couche PA entre Physical Components Behavior , ou entre un Behavior et un acteur (nœud) qui lui est relié ( | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: {14} ⬇ CSV ⬇ HTML ⬇ HTML (all views) {15} |
+| 283 | ◧ Vue Blocs | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: {14} ⬇ CSV ⬇ HTML ⬇ HTML (all views) {15} |
+| 284 | ≡ Vue Ligne | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: {14} ⬇ CSV ⬇ HTML ⬇ HTML (all views) {15} |
+| 285 | ▣ Vue Composant | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: {14} ⬇ CSV ⬇ HTML ⬇ HTML (all views) {15} |
+| 286 | ▦ Matrice | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: {14} ⬇ CSV ⬇ HTML ⬇ HTML (all views) {15} |
+| 287 | 🩺 Contrôles | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: {14} ⬇ CSV ⬇ HTML ⬇ HTML (all views) {15} |
+| 290 | Tous | All |
+| 290 | Tous les sens | All directions |
+| 292 | ⚠ Incohérents | ⚠ Inconsistent |
+| 292 | Orientations de ports incohérentes (OUT→OUT, IN→IN hors délégation) | Inconsistent port orientations (OUT→OUT, IN→IN outside delegation) |
+| 296 | Tous kinds | All kinds … |
+| 298 | 🖥 Composant : | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: {14} ⬇ CSV ⬇ HTML ⬇ HTML (all views) {15} |
+| 302 | 🔍 Exchange : | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: {14} ⬇ CSV ⬇ HTML ⬇ HTML (all views) {15} |
+| 305 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) | Scope: Component Exchanges of the layer PA between Physical Components Behavior , or between a Behavior and a actor (node) connected to it ({0} out of {1} in the model). SA and LA exchanges are in 🧱 System Component and 🧱 Logical Component; links between nodes in 🔌 Physical Link. ◧ Blocks view ≡ Line view ▣ Component view ▦ Matrix 🩺 Checks {7}/{8} exchange{9} {10} {11} 🖥 Component: 🔍 Exchange: {14} ⬇ CSV ⬇ HTML ⬇ HTML (all views) {15} |
+| 338 | N° Exchange | Exchange No. |
+| 338 | Composant Source | Source Component |
+| 338 | Port Source | Source Port |
+| 338 | Orientation Source | Source Orientation |
+| 338 | Component Exchange | Component Exchange |
+| 338 | Kind | Kind |
+| 338 | Sens | Direction |
+| 338 | Port Cible | Target Port |
+| 338 | Orientation Cible | Target Orientation |
+| 338 | Composant Cible | Target Component |
+| 338 | Functional Exchanges | Functional Exchanges |
+| 338 | Exchange Items | Exchange Items |
+| 338 | Physical Links | Physical Links |
+| 338 | Alerte | Alert |
+| 344 | ⇄ Bidirectionnel | ⇄ Bidirectional |
+| 344 | ? Non orienté | ? Not oriented |
+| 344 | Émission → | Sending → |
+| 344 | ← Réception | ← Receiving |
+| 347 | N° Exchange | Exchange No. |
+| 347 | Sens | Direction |
+| 347 | Composant | Component |
+| 347 | Port | Port |
+| 347 | Orientation | Orientation |
+| 347 | Component Exchange | Component Exchange |
+| 347 | Kind | Kind |
+| 347 | Port distant | Remote port |
+| 347 | Orientation distante | Remote orientation |
+| 347 | Composant distant | Remote component |
 
 ## js/37-capella-cablage.js
 
@@ -2924,55 +2927,57 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 32 | 📋 Exigences | 📋 Requirements |
 | 33 | 🏷 Propriétés | 🏷 Properties |
 | 34 | 🗃 Données & interfaces | 🗃 Data & interfaces |
-| 35 | ⛓ Contraintes | ⛓ Constraints |
-| 36 | 💚 Santé du modèle | 💚 Model health |
-| 36 | Score global et par couche bâti sur tous les contrôles (🩺 profil), détail contrôle × couche, historique des versions | Overall and per-layer score built on all checks (🩺 profile), check × layer detail, version history |
-| 37 | 🔖 Statut de revue | 🔖 Review status |
-| 37 | Statut (DRAFT, TO BE REVIEWED, REVIEWED…) et commentaire de revue Capella de chaque élément : liste, répartition, contrôles | Status (DRAFT, TO BE REVIEWED, REVIEWED…) and Capella review comment of each element: list, breakdown, checks |
-| 38 | 📐 Tableau de bord | 📐 Dashboard |
-| 38 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux | Custom dashboards: indicators, charts, tables |
-| 39 | 📘 Rapports automatiques | 📘 Automatic reports |
-| 39 | 📘 Rapports | 📘 Reports |
-| 39 | Rapports produits à partir du modèle selon un plan type (spécification boîte noire, dossier de conception boîte blanche), modifiables, exportables en HTML à commenter ou en Word (🏠 Accueil › 📑 Dossiers) | Reports produced from the model according to a standard outline (black-box specification, white-box design file), editable, exportable as an HTML page to comment or as Word (🏠 Home › 📑 Packages) |
-| 43 | 🧭 Explorateur | 🧭 Explorer |
-| 43 | Explorer le modèle : arborescence, cartes, index des types | Explore the model: tree, cards, type index |
-| 44 | 📡 Flux & interfaces | 📡 Flows & interfaces |
-| 44 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrammes, scénarios, ports, liens | Chains, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrams, scenarios, ports, links |
-| 46 | 🔬 Analyses | 🔬 Analyses |
-| 46 | Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes | Functions, cross-layer traceability, capabilities & missions, modes & states, version comparison, requirements, properties, data & interfaces, constraints |
-| 56 | 🗺 Relation Map | 🗺 Relation Map |
-| 56 | 🔄 Suivi du fichier | 🔄 File watch |
-| 56 | 💬 Revue | 💬 Review |
-| 56 | 🎨 Thème | 🎨 Theme |
-| 214 | Expert | Expert |
-| 214 | Simplifié | Simplified |
-| 214 | Personnalisé | Custom |
-| 216 | Préférences : affichage des menus (mode actuel : | Preferences: menu display (current mode: |
-| 216 | ), enregistrement automatique, thème, interface et vues | ), automatic saving, theme, interface and views |
-| 232 | Vue affichée : | Displayed view: |
-| 254 | (masquée) | (hidden) |
-| 255 | Retirer de la barre | Remove from the bar |
-| 255 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
-| 327 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 327 | Ctrl+S | Ctrl+S |
-| 328 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 328 | Ctrl+Maj+S | Ctrl+Maj+S |
-| 339 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
-| 341 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
-| 342 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
-| 343 | 💬 Visite de la revue | 💬 Review tour |
-| 344 | ℹ À propos | ℹ About |
-| 351 | 🎨 Personnaliser… | 🎨 Customize… |
-| 355 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
-| 360 | 🗺 Relation Map | 🗺 Relation Map |
-| 364 | Vues | Views |
-| 365 | Aucune vue, aucun élément ni diagramme ne correspond. | No view, element or diagram matches. |
-| 372 | Menu | … ▾ menu in the bar |
-| 372 | ▾ dans la barre | … ▾ menu in the bar |
-| 373 | Autres vues | Other views |
-| 376 | ⚙ Personnaliser l'affichage… | ⚙ Customize display… |
-| 377 | ↺ Rétablir la barre par défaut | ↺ Restore the default bar |
-| 379 | 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
+| 35 | 🏷 Catégories d'échanges | 🏷 Exchange categories |
+| 35 | ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory : échanges par catégorie, taux de catégorisation, contrôles | ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory: exchanges per category, categorization rate, checks |
+| 36 | ⛓ Contraintes | ⛓ Constraints |
+| 37 | 💚 Santé du modèle | 💚 Model health |
+| 37 | Score global et par couche bâti sur tous les contrôles (🩺 profil), détail contrôle × couche, historique des versions | Overall and per-layer score built on all checks (🩺 profile), check × layer detail, version history |
+| 38 | 🔖 Statut de revue | 🔖 Review status |
+| 38 | Statut (DRAFT, TO BE REVIEWED, REVIEWED…) et commentaire de revue Capella de chaque élément : liste, répartition, contrôles | Status (DRAFT, TO BE REVIEWED, REVIEWED…) and Capella review comment of each element: list, breakdown, checks |
+| 39 | 📐 Tableau de bord | 📐 Dashboard |
+| 39 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux | Custom dashboards: indicators, charts, tables |
+| 40 | 📘 Rapports automatiques | 📘 Automatic reports |
+| 40 | 📘 Rapports | 📘 Reports |
+| 40 | Rapports produits à partir du modèle selon un plan type (spécification boîte noire, dossier de conception boîte blanche), modifiables, exportables en HTML à commenter ou en Word (🏠 Accueil › 📑 Dossiers) | Reports produced from the model according to a standard outline (black-box specification, white-box design file), editable, exportable as an HTML page to comment or as Word (🏠 Home › 📑 Packages) |
+| 44 | 🧭 Explorateur | 🧭 Explorer |
+| 44 | Explorer le modèle : arborescence, cartes, index des types | Explore the model: tree, cards, type index |
+| 45 | 📡 Flux & interfaces | 📡 Flows & interfaces |
+| 45 | Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrammes, scénarios, ports, liens | Chains, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrams, scenarios, ports, links |
+| 47 | 🔬 Analyses | 🔬 Analyses |
+| 47 | Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes | Functions, cross-layer traceability, capabilities & missions, modes & states, version comparison, requirements, properties, data & interfaces, constraints |
+| 57 | 🗺 Relation Map | 🗺 Relation Map |
+| 57 | 🔄 Suivi du fichier | 🔄 File watch |
+| 57 | 💬 Revue | 💬 Review |
+| 57 | 🎨 Thème | 🎨 Theme |
+| 215 | Expert | Expert |
+| 215 | Simplifié | Simplified |
+| 215 | Personnalisé | Custom |
+| 217 | Préférences : affichage des menus (mode actuel : | Preferences: menu display (current mode: |
+| 217 | ), enregistrement automatique, thème, interface et vues | ), automatic saving, theme, interface and views |
+| 233 | Vue affichée : | Displayed view: |
+| 255 | (masquée) | (hidden) |
+| 256 | Retirer de la barre | Remove from the bar |
+| 256 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
+| 328 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 328 | Ctrl+S | Ctrl+S |
+| 329 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 329 | Ctrl+Maj+S | Ctrl+Maj+S |
+| 340 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
+| 342 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
+| 343 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
+| 344 | 💬 Visite de la revue | 💬 Review tour |
+| 345 | ℹ À propos | ℹ About |
+| 352 | 🎨 Personnaliser… | 🎨 Customize… |
+| 356 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
+| 361 | 🗺 Relation Map | 🗺 Relation Map |
+| 365 | Vues | Views |
+| 366 | Aucune vue, aucun élément ni diagramme ne correspond. | No view, element or diagram matches. |
+| 373 | Menu | … ▾ menu in the bar |
+| 373 | ▾ dans la barre | … ▾ menu in the bar |
+| 374 | Autres vues | Other views |
+| 377 | ⚙ Personnaliser l'affichage… | ⚙ Customize display… |
+| 378 | ↺ Rétablir la barre par défaut | ↺ Restore the default bar |
+| 380 | 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
 
 ## js/42-tableaux-analyses.js
 
@@ -3493,89 +3498,89 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 184 | Acteurs | Actors |
 | 185 | 🏢 Entités | 🏢 Entities |
 | 185 | 🧩 Système / sous-systèmes | 🧩 System / subsystems |
-| 214 | Function Input Port | Function Input Port |
-| 214 | Function Output Port | Function Output Port |
-| 214 | — non connecté | — not connected |
-| 219 | ∅ Item | ∅ Item |
-| 232 | sans port | no port |
-| 246 | sans port | no port |
-| 266 | ÉMET → | SENDS → |
-| 266 | Sortie — la fonction émet l'échange | Output — the function sends the exchange |
-| 266 | ← REÇOIT | ← RECEIVES |
-| 266 | Entrée — la fonction reçoit l'échange | Input — the function receives the exchange |
-| 273 | sans port | no port |
-| 275 | Aucun Exchange Item | No Exchange Item |
-| 277 | sans port | no port |
-| 285 | échange | … … … exchange… (… ← · … →) ▶ … |
-| 308 | (échange relié directement à la fonction, sans port) | (exchange connected directly to the function, no port) |
-| 309 | non connecté | not connected |
-| 312 | allouée au système | allocated to the system |
-| 312 | allouée à un acteur | allocated to an actor |
-| 312 | non allouée | unallocated |
-| 312 | fonction mère (non allouée) | parent function (unallocated) |
-| 319 | aucun port ni échange | no port or exchange |
-| 330 | » — clic : son bloc | {2} {3} |
-| 341 | fonctions : pour rester fluide, la matrice en affiche | ⚠ … functions: to stay responsive, the matrix shows … (the most connected). Filter by layer or by function to see the others. |
-| 341 | (les plus connectées). Filtrez par couche ou par fonction pour voir les autres. | ⚠ … functions: to stay responsive, the matrix shows … (the most connected). Filter by layer or by function to see the others. |
-| 345 | échanges | exchanges |
-| 345 | Source ↓ / Cible → | Source ↓ / Target → |
-| 356 | · page | ◀ … …–… of … · page … / … ▶ |
-| 367 | Aucune fonction ne correspond au filtre. | No function matches the filter. |
-| 370 | ↩ Revenir à « | ↩ Back to “…” |
-| 373 | Aucun functional exchange ne correspond au filtre. | No functional exchange matches the filter. |
-| 381 | Échanges | Exchanges |
-| 419 | échange | …/… exchange… |
-| 433 | ◧ Vue Blocs | ◧ Blocks view |
-| 433 | ≡ Vue Ligne | ≡ Line view |
-| 433 | ▣ Vue | ▣ … view |
-| 433 | ▦ Matrice | ▦ Matrix |
-| 433 | 🩺 Contrôles | 🩺 Checks |
-| 437 | allocation : | allocation: |
-| 437 | allocataire « | allocated to “…” |
-| 437 | fonction « | function “…” |
-| 437 | échange « | exchange “…” |
-| 438 | 🟨 Operational Analysis — activités et interactions | 🟨 Operational Analysis — activities and interactions |
-| 438 | ƒ⇆ Functional Exchanges | ƒ⇆ Functional Exchanges |
-| 438 | échanges | …/… exchanges… |
-| 438 | · filtres : | · filters: |
-| 445 | Entrée | Input |
-| 445 | Sortie | Output |
-| 448 | Entrée | Input |
-| 450 | Couche | Layer |
-| 450 | Fonction | Function |
-| 450 | Sens | Direction |
-| 450 | Port | Port |
-| 450 | Functional Exchange | Functional Exchange |
-| 450 | Fonction distante | Remote function |
-| 450 | Port distant | Remote port |
-| 453 | Couche | Layer |
-| 453 | Fonction source | Source function |
-| 453 | Port source | Source port |
-| 453 | Functional Exchange | Functional Exchange |
-| 453 | Port cible | Target port |
-| 453 | Fonction cible | Target function |
-| 453 | Exchange Items | Exchange Items |
-| 453 | Component Exchanges | Component Exchanges |
-| 453 | Chaînes | Chains |
-| 463 | ◧ Vue Blocs | ◧ Blocks view |
-| 464 | ≡ Vue Ligne | ≡ Line view |
-| 464 | Un échange par ligne : | One exchange per row: source … ▶ exchange ▶ target … |
-| 464 | source ▶ échange ▶ | One exchange per row: source … ▶ exchange ▶ target … |
-| 464 | ▣ Vue | ▣ … view |
-| 464 | Échanges regroupés par | Exchanges grouped by … |
-| 465 | ▦ Matrice | ▦ Matrix |
-| 465 | Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus | Function × function matrix (row = source, column = target), 100 functions at most |
-| 465 | 🩺 Contrôles | 🩺 Checks |
-| 465 | Ports orphelins, échanges sans Exchange Item, fonctions sans échange… | Orphan ports, exchanges without Exchange Item, functions without exchange… |
-| 471 | Toutes | All |
-| 476 | 🟨 Activité : | 🟨 Activity: |
-| 476 | ƒ Fonction : | ƒ Function: |
-| 477 | 🔍 Échange : | … … … … 🔍 Exchange: … … ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
-| 480 | avec ports ou échanges | with ports or exchanges |
-| 482 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) | … … … … 🔍 Exchange: … … ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
-| 482 | Allocation | Allocation …… |
-| 482 | — un échange est gardé si l'une de ses deux fonctions correspond | — an exchange is kept if either of its two functions matches |
-| 482 | — double-clic : uniquement celles-ci | {5} {6} {7} |
+| 215 | Function Input Port | Function Input Port |
+| 215 | Function Output Port | Function Output Port |
+| 215 | — non connecté | — not connected |
+| 220 | ∅ Item | ∅ Item |
+| 233 | sans port | no port |
+| 247 | sans port | no port |
+| 267 | ÉMET → | SENDS → |
+| 267 | Sortie — la fonction émet l'échange | Output — the function sends the exchange |
+| 267 | ← REÇOIT | ← RECEIVES |
+| 267 | Entrée — la fonction reçoit l'échange | Input — the function receives the exchange |
+| 274 | sans port | no port |
+| 276 | Aucun Exchange Item | No Exchange Item |
+| 278 | sans port | no port |
+| 286 | échange | … … … exchange… (… ← · … →) ▶ … |
+| 309 | (échange relié directement à la fonction, sans port) | (exchange connected directly to the function, no port) |
+| 310 | non connecté | not connected |
+| 313 | allouée au système | allocated to the system |
+| 313 | allouée à un acteur | allocated to an actor |
+| 313 | non allouée | unallocated |
+| 313 | fonction mère (non allouée) | parent function (unallocated) |
+| 320 | aucun port ni échange | no port or exchange |
+| 331 | » — clic : son bloc | {2} {3} |
+| 342 | fonctions : pour rester fluide, la matrice en affiche | ⚠ … functions: to stay responsive, the matrix shows … (the most connected). Filter by layer or by function to see the others. |
+| 342 | (les plus connectées). Filtrez par couche ou par fonction pour voir les autres. | ⚠ … functions: to stay responsive, the matrix shows … (the most connected). Filter by layer or by function to see the others. |
+| 346 | échanges | exchanges |
+| 346 | Source ↓ / Cible → | Source ↓ / Target → |
+| 357 | · page | ◀ … …–… of … · page … / … ▶ |
+| 368 | Aucune fonction ne correspond au filtre. | No function matches the filter. |
+| 371 | ↩ Revenir à « | ↩ Back to “…” |
+| 374 | Aucun functional exchange ne correspond au filtre. | No functional exchange matches the filter. |
+| 382 | Échanges | Exchanges |
+| 420 | échange | …/… exchange… |
+| 434 | ◧ Vue Blocs | ◧ Blocks view |
+| 434 | ≡ Vue Ligne | ≡ Line view |
+| 434 | ▣ Vue | ▣ … view |
+| 434 | ▦ Matrice | ▦ Matrix |
+| 434 | 🩺 Contrôles | 🩺 Checks |
+| 438 | allocation : | allocation: |
+| 438 | allocataire « | allocated to “…” |
+| 438 | fonction « | function “…” |
+| 438 | échange « | exchange “…” |
+| 439 | 🟨 Operational Analysis — activités et interactions | 🟨 Operational Analysis — activities and interactions |
+| 439 | ƒ⇆ Functional Exchanges | ƒ⇆ Functional Exchanges |
+| 439 | échanges | …/… exchanges… |
+| 439 | · filtres : | · filters: |
+| 446 | Entrée | Input |
+| 446 | Sortie | Output |
+| 449 | Entrée | Input |
+| 451 | Couche | Layer |
+| 451 | Fonction | Function |
+| 451 | Sens | Direction |
+| 451 | Port | Port |
+| 451 | Functional Exchange | Functional Exchange |
+| 451 | Fonction distante | Remote function |
+| 451 | Port distant | Remote port |
+| 454 | Couche | Layer |
+| 454 | Fonction source | Source function |
+| 454 | Port source | Source port |
+| 454 | Functional Exchange | Functional Exchange |
+| 454 | Port cible | Target port |
+| 454 | Fonction cible | Target function |
+| 454 | Exchange Items | Exchange Items |
+| 454 | Component Exchanges | Component Exchanges |
+| 454 | Chaînes | Chains |
+| 464 | ◧ Vue Blocs | ◧ Blocks view |
+| 465 | ≡ Vue Ligne | ≡ Line view |
+| 465 | Un échange par ligne : | One exchange per row: source … ▶ exchange ▶ target … |
+| 465 | source ▶ échange ▶ | One exchange per row: source … ▶ exchange ▶ target … |
+| 465 | ▣ Vue | ▣ … view |
+| 465 | Échanges regroupés par | Exchanges grouped by … |
+| 466 | ▦ Matrice | ▦ Matrix |
+| 466 | Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus | Function × function matrix (row = source, column = target), 100 functions at most |
+| 466 | 🩺 Contrôles | 🩺 Checks |
+| 466 | Ports orphelins, échanges sans Exchange Item, fonctions sans échange… | Orphan ports, exchanges without Exchange Item, functions without exchange… |
+| 472 | Toutes | All |
+| 477 | 🟨 Activité : | 🟨 Activity: |
+| 477 | ƒ Fonction : | ƒ Function: |
+| 478 | 🔍 Échange : | … … … … 🔍 Exchange: … … … ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
+| 482 | avec ports ou échanges | with ports or exchanges |
+| 484 | ⬇ CSV ⬇ HTML ⬇ HTML (toutes les vues) | … … … … 🔍 Exchange: … … … ⬇ CSV ⬇ HTML ⬇ HTML (all views) … |
+| 484 | Allocation | Allocation …… |
+| 484 | — un échange est gardé si l'une de ses deux fonctions correspond | — an exchange is kept if either of its two functions matches |
+| 484 | — double-clic : uniquement celles-ci | {5} {6} {7} |
 
 ## js/45-comparaison-rapport.js
 
@@ -6247,6 +6252,83 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 72 | Contrôles | Checks |
 | 72 | chk.ch | (inchangé, hors _L) |
 | 72 | Contrôles des chaînes | Chain checks |
+
+## js/71-categories-echanges.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 10 | Functional Exchange | Functional Exchange |
+| 11 | Component Exchange | Component Exchange |
+| 12 | Physical Link | Physical Link |
+| 27 | (sans nom) | (unnamed) |
+| 29 | (sans nom) | (unnamed) |
+| 46 | Catégorie d'échange (ExchangeCategory) | Exchange category (ExchangeCategory) |
+| 46 | 🏷 Toutes catégories | 🏷 All categories |
+| 46 | — sans catégorie | — no category |
+| 53 | Catégorie | Category |
+| 60 | Catégorie | Category |
+| 60 | Type | (inchangé, hors _L) |
+| 60 | Échanges | Exchanges |
+| 60 | Échange | Exchange |
+| 60 | Catégories | Categories |
+| 67 | Échanges sans catégorie | Exchanges without category |
+| 67 | Dans les natures et couches où des catégories sont déjà utilisées | In the kinds and layers where categories are already used |
+| 68 | Catégories vides | Empty categories |
+| 68 | Catégorie sans aucun échange | Category without any exchange |
+| 69 | Catégories référençant un échange introuvable | Categories referencing a missing exchange |
+| 69 | Échange supprimé ou hors du fichier chargé | Exchange deleted or outside the loaded file |
+| 69 | introuvable(s) | + … missing |
+| 70 | Catégories en double | Duplicate categories |
+| 70 | Même nom, même nature et même couche | Same name, same kind and same layer |
+| 71 | Échanges dans plusieurs catégories | Exchanges in several categories |
+| 71 | Autorisé par Capella, à vérifier si les catégories doivent être exclusives | Allowed by Capella, to check if categories must be exclusive |
+| 79 | Aucune catégorie d'échange dans ce modèle (ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory). Dans Capella : paquetage de fonctions › Catégorie d'échanges, puis affecter les échanges. | No exchange category in this model (ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory). In Capella: function package › Exchange category, then assign the exchanges. |
+| 87 | catégorie(s) · | {0} category(ies) · {1} categorized exchange(s). Click a name to open the details; ▸ opens the flow view filtered on the category. |
+| 88 | Couche | Layer |
+| 88 | Catégorie | Category |
+| 88 | Type | (inchangé, hors _L) |
+| 88 | Échanges | Exchanges |
+| 88 | Liste | List |
+| 88 | Ouvrir la vue de flux filtrée sur cette catégorie | Open the flow view filtered on this category |
+| 89 | introuvable(s) | missing |
+| 94 | Taux d'échanges catégorisés par nature et par couche, puis chaque échange avec ses catégories. | Share of categorized exchanges per kind and layer, then each exchange with its categories. |
+| 95 | Type | (inchangé, hors _L) |
+| 96 | Couche | Layer |
+| 96 | Échange | Exchange |
+| 96 | Type | (inchangé, hors _L) |
+| 96 | Catégories | Categories |
+| 96 | ∅ aucune | ∅ none |
+| 99 | 🏷 Catégories | 🏷 Categories |
+| 99 | ⇆ Échanges | ⇆ Exchanges |
+| 99 | 🩺 Contrôles | 🩺 Checks |
+| 100 | Catégorie… | Category… |
+| 100 | Échange, catégorie… | Exchange, category… |
+| 101 | Toutes natures | All kinds |
+| 102 | Catégorisés ou non | Categorized or not |
+| 102 | Catégorisés | Categorized |
+| 102 | Sans catégorie | Without category |
+| 104 | Couche | Layer |
+| 104 | Échange | Exchange |
+| 104 | Type | (inchangé, hors _L) |
+| 104 | Catégories | Categories |
+| 105 | Couche | Layer |
+| 105 | Catégorie | Category |
+| 105 | Type | (inchangé, hors _L) |
+| 105 | Échanges | Exchanges |
+| 105 | Liste | List |
+| 130 | Échanges de la catégorie ( | Exchanges of the category (…) |
+| 132 | Catégories ( | Categories (…) |
+| 140 | Catégories d'échanges | Exchange categories |
+| 141 | Catégories d'échanges — nombre | Exchange categories — number |
+| 142 | ec.pct | (inchangé, hors _L) |
+| 142 | Catégories d'échanges — taux de Functional Exchanges catégorisés | Exchange categories — share of categorized Functional Exchanges |
+| 143 | ec.layer | (inchangé, hors _L) |
+| 143 | Catégories d'échanges — Functional Exchanges catégorisés par couche | Exchange categories — categorized Functional Exchanges per layer |
+| 144 | ec.top | (inchangé, hors _L) |
+| 144 | Catégories d'échanges — échanges par catégorie | Exchange categories — exchanges per category |
+| 145 | Contrôles | Checks |
+| 145 | chk.ec | (inchangé, hors _L) |
+| 145 | Contrôles des catégories d'échanges | Exchange category checks |
 
 ## Textes sans traduction anglaise (11)
 

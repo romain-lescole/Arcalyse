@@ -392,6 +392,13 @@
         <h3>⛓ Constraints</h3>
         <p>All the constraints: role (guard, pre / post-condition), expression (text links are replaced by the name of the cited element), language, constrained elements, owner. Checks: empty constraints or without expression, missing cited elements, without constrained element, duplicates.</p>
         <p class="hp-note">An element's detail panel also shows its linked requirements, its properties and its constraints. The corresponding indicators are in the 📐 Dashboard catalogue.</p>
+        <h3>🏷 Exchange categories</h3>
+        <p>The categories Capella lets you set on exchanges: <b>ExchangeCategory</b> (Functional Exchanges), <b>ComponentExchangeCategory</b> (Component Exchanges), <b>PhysicalLinkCategory</b> (Physical Links). They also filter ƒ⇆ Functional Exchange, 🔀 Behavior Exchange and 🔌 Physical Link (“🏷 All categories” list, shown only if the model has some), and the details panel of an exchange lists its categories (and that of a category, its exchanges).</p>
+        <table class="hp-t">
+          <tr><td>🏷 Categories</td><td>Each category: layer, kind, number and list of exchanges; ▸ opens the flow view filtered on the category.</td></tr>
+          <tr><td>⇆ Exchanges</td><td>Share of categorized exchanges per kind and layer, then each exchange with its categories (filter categorized / without category).</td></tr>
+          <tr><td>🩺 Checks</td><td>Exchanges without category (in the kinds and layers where categories are already used), empty categories, referencing a missing exchange, duplicates, exchanges in several categories.</td></tr>
+        </table>
         <h3>💚 Model health</h3>
         <p>A <b>score from 0 to 100</b> built on <b>all 🩺 checks</b> of every view, with the 🩺 checks profile (disabled checks ignored; weights ℹ 0, ⚠ 1, ✖ 3): 100 × e<sup>−(Σ weight × rows ÷ number of named elements)</sup>: 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. Levels: Good (≥ 90), Watch (≥ 70), Rework. Score <b>per ARCADIA layer</b> for the checks that can be computed per layer (functions, functional exchanges, components).</p>
         <table class="hp-t">

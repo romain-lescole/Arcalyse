@@ -600,14 +600,27 @@
    "wait": 1
   }
  },
+ "categoriesEchanges": {
+  "categories": 32,
+  "parNature": {
+   "FE": 32
+  },
+  "parCouche": {
+   "LA": 13,
+   "PA": 12,
+   "SA": 7
+  },
+  "echangesCategorises": 105,
+  "introuvables": 0
+ },
  "sante": {
-  "score": 48,
-  "points": 1437,
+  "score": 44,
+  "points": 1589,
   "bloquants": 0,
   "info": 0,
   "pop": 1948,
-  "nChecks": 84,
-  "nOk": 32,
+  "nChecks": 89,
+  "nOk": 34,
   "couches": {
    "OA": 54,
    "SA": 71,
@@ -697,6 +710,13 @@
    "Chaînes en double": 0,
    "Étapes portées par des fonctions non allouées": 2,
    "Composants isolés dans un chemin physique": 0
+  },
+  "categories": {
+   "Échanges sans catégorie": 144,
+   "Catégories vides": 5,
+   "Catégories référençant un échange introuvable": 0,
+   "Catégories en double": 0,
+   "Échanges dans plusieurs catégories": 3
   },
   "etats": {
    "noInit": 4,
@@ -1053,6 +1073,11 @@
    "Étapes portées par des fonctions non allouées": 2,
    "Chaînes discontinues": 1
   },
+  "chk.ec": {
+   "Échanges sans catégorie": 144,
+   "Catégories vides": 5,
+   "Échanges dans plusieurs catégories": 3
+  },
   "chk.fn": {
    "Fonctions feuilles ne réalisant rien à la couche supérieure": 54,
    "Fonctions sans description": 39,
@@ -1090,6 +1115,7 @@
    "Ports": 202,
    "Fonctions": 196,
    "Données & interfaces": 192,
+   "Catégories d'échanges": 152,
    "Capacités": 75,
    "Chaînes": 71,
    "Physical Links": 68,
@@ -1129,6 +1155,47 @@
    "pct": 94,
    "num": 16,
    "den": 17
+  },
+  "ec.layer": {
+   "OA": 0,
+   "SA": 17,
+   "LA": 47,
+   "PA": 41
+  },
+  "ec.n": 32,
+  "ec.pct": {
+   "pct": 39,
+   "num": 105,
+   "den": 272
+  },
+  "ec.top": {
+   "Displayed Imposed Video Data (SA)": 1,
+   "Displayed VOD Movie Data (SA)": 3,
+   "Imposed Video Control Commands (SA)": 3,
+   "Media Content (SA)": 5,
+   "VOD Movie Control Commands (SA)": 3,
+   "VOD Movie Selections (SA)": 2,
+   "Displayed Imposed Video Data (LA)": 2,
+   "Displayed VOD Movie Data (LA)": 3,
+   "Imposed Video Control Commands (LA)": 6,
+   "Media Content (LA)": 10,
+   "Media Requests (LA)": 6,
+   "Passenger Service Selection (LA)": 2,
+   "Played Media (LA)": 4,
+   "Service Activation / Interruption (LA)": 5,
+   "VOD Movie Control Commands (LA)": 7,
+   "VOD Selections (LA)": 2,
+   "Displayed Imposed Video Data (PA)": 2,
+   "Displayed VOD Movie Data (PA)": 3,
+   "Imposed Video Control Commands (PA)": 6,
+   "Media Content (PA)": 9,
+   "Media Requests (PA)": 6,
+   "Passenger Service Selection (PA)": 2,
+   "Played Media (PA)": 1,
+   "Secondary Imposed Video Control Commands (PA)": 3,
+   "Service Activation / Interruption (PA)": 4,
+   "VOD Movie Control Commands (PA)": 6,
+   "VOD Selections (PA)": 2
   },
   "fex.chk": {
    "Échanges sans Exchange Item": 252,
@@ -1951,10 +2018,10 @@
    "PA": 61,
    "EPBS": 100
   },
-  "sante.pts": 1437,
+  "sante.pts": 1589,
   "sante.score": {
-   "pct": 48,
-   "num": 48,
+   "pct": 44,
+   "num": 44,
    "den": 100
   },
   "sante.vue": {
@@ -1965,6 +2032,7 @@
    "⚡ Chaînes": 71,
    "🗃 Données & interfaces": 192,
    "⛓ Contraintes": 9,
+   "🏷 Catégories d'échanges": 152,
    "🔖 Statut de revue": 17,
    "🔀 Behavior Exchange": 27,
    "🔌 Physical Link": 68,

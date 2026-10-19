@@ -103,6 +103,9 @@ function releve() {
   const ST2 = capComputeStatus();
   R.statutRevue = { elements: ST2.list.length, avecStatut: ST2.list.filter(e => e.status).length, avecCommentaire: ST2.list.filter(e => e.review).length, litteraux: ST2.lits.map(l => l.name + ':' + l.cls), parStatut: compte(ST2.list, e => e.status || '(sans)'), parClasse: compte(ST2.list, e => e.cls || '(sans)') };
 
+  const EC = capComputeExchangeCategories();
+  R.categoriesEchanges = { categories: EC.cats.length, parNature: compte(EC.cats, c => c.kind), parCouche: compte(EC.cats, c => c.layer), echangesCategorises: Object.keys(EC.byEx).length, introuvables: somme(EC.cats, c => c.broken) };
+
   const SA = capSanteCompute();
   R.sante = { score: SA.score, points: SA.points, bloquants: SA.bloquants, info: SA.info, pop: SA.pop, nChecks: SA.nChecks, nOk: SA.nOk, couches: Object.fromEntries(Object.entries(SA.couches).map(([k, v]) => [k, v.score])) };
 
@@ -112,7 +115,7 @@ function releve() {
   R.controles = {
     fonctions: sections(capFnChecks(F, 'all')), functionalExchange: sections(capFexChecks('all')), composants: sections(capCbChecks('all')),
     scenarios: sections(capScChecks()), exigences: sections(capReqChecks()), pvmt: sections(capPvChecks()), donnees: sections(capDmChecks()),
-    contraintes: sections(capCtChecks()), statutRevue: sections(capStChecks()), chaines: sections(capChChecks('all')), etats: etatsCtl };
+    contraintes: sections(capCtChecks()), statutRevue: sections(capStChecks()), chaines: sections(capChChecks('all')), categories: sections(capEcChecks()), etats: etatsCtl };
 
   // 📐 Tableau de bord : valeur de chaque indicateur (texte, diagramme et image exclus : pas de valeur calculée)
   R.tableauDeBord = {};

@@ -22,7 +22,7 @@ function capRenderPhysLink(){
   allLinks.forEach(l=>{ if(!linkColorMap[l.linkName]){linkColorMap[l.linkName]=LINK_COLORS[colorIdx%LINK_COLORS.length];colorIdx++;} });
 
   // ── Persist state on container ──
-  if(!container._phl) container._phl={nameFilter:'',nodeFilter:'',view:_capPhysLinkView};
+  if(!container._phl) container._phl={nameFilter:'',nodeFilter:'',cat:capEcPending('physlink'),view:_capPhysLinkView};   // cat : 🏷 catégorie (71)
   const st=container._phl;
   if(!st.ceFilter) st.ceFilter='all'; // all | with | without (Component Exchanges alloués)
 
@@ -61,6 +61,7 @@ function capRenderPhysLink(){
     return allLinks.filter(l=>{
       if(st.ceFilter==='with'&&!l.ces.length) return false;
       if(st.ceFilter==='without'&&l.ces.length) return false;
+      if(st.cat&&!capEcMatch(l.linkId, st.cat)) return false;   // 🏷 catégorie (71)
       if(nf && !l.linkName.toLowerCase().includes(nf) && !l.ces.some(c=>c.name.toLowerCase().includes(nf))) return false;
       if(ndf && !l.src.pcName.toLowerCase().includes(ndf) && !l.tgt.pcName.toLowerCase().includes(ndf)) return false;
       return true;
@@ -241,6 +242,7 @@ function capRenderPhysLink(){
         <input id="phl-node-input" type="text" class="phl-filter-input" placeholder="Filtrer par composant…" value="${st.nodeFilter}" style="width:200px;">
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;margin-left:8px;">🔍 Lien :</span>
         <input id="phl-name-input" type="text" class="phl-filter-input" placeholder="Lien ou Component Exchange…" value="${st.nameFilter}" style="width:200px;">
+        ${capEcSelect('PL', st.cat||'', 'phl-cat')}
         <div style="margin-left:auto;display:flex;gap:6px;">
           <button class="phl-export-btn" id="phl-exp-csv">⬇ CSV</button>
           <button class="phl-export-btn" id="phl-exp-html" title="Rapport HTML de la vue affichée">⬇ HTML</button>
@@ -257,6 +259,7 @@ function capRenderPhysLink(){
     wireMain();
 
     // ── Text filters — update content only, NO full re-render → focus preserved ──
+    container.querySelector('#phl-cat')?.addEventListener('change',e=>{ st.cat=e.target.value; render(); });   // 🏷 catégorie (71)
     let debTimer;
     container.querySelector('#phl-name-input')?.addEventListener('input',e=>{
       st.nameFilter=e.target.value;

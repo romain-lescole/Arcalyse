@@ -136,7 +136,7 @@ function capRenderFunctionalExchange(mode){
   container.classList.toggle('fex-oa', OAV);
   const X0=capComputeFunctionalExchanges();
   const X=OAV?{...X0, list:X0.list.filter(x=>x.layer==='OA'), fns:X0.fns.filter(f=>f.layer==='OA')}:X0, allLinks=X.list;
-  if(!container._fex) container._fex={view:OAV?_capOavView:_capFexView, layer:OAV?'OA':'all', fnFilter:'', nameFilter:'', withPorts:false, page:0, ak:new Set(['sys','act','none']), back:null};
+  if(!container._fex) container._fex={view:OAV?_capOavView:_capFexView, layer:OAV?'OA':'all', fnFilter:'', nameFilter:'', cat:capEcPending(OAV?'oav':'fex'), withPorts:false, page:0, ak:new Set(['sys','act','none']), back:null};   // cat : 🏷 catégorie (71)
   const st=container._fex;
   if(OAV) st.layer='OA';
   const keepView=()=>{ if(OAV) _capOavView=st.view; else _capFexView=st.view; };
@@ -190,6 +190,7 @@ function capRenderFunctionalExchange(mode){
     const nf=st.nameFilter.trim().toLowerCase(), ff=st.fnFilter.trim().toLowerCase();
     return allLinks.filter(x=>{
       if(st.layer!=='all'&&x.layer!==st.layer) return false;
+      if(st.cat&&!capEcMatch(x.id, st.cat)) return false;   // 🏷 catégorie (71)
       if(nf&&!x.name.toLowerCase().includes(nf)&&!x.items.some(i=>i.name.toLowerCase().includes(nf))) return false;
       if(ff&&!x.src.fnName.toLowerCase().includes(ff)&&!x.tgt.fnName.toLowerCase().includes(ff)) return false;
       if(akOn()&&!st.ak.has(akOf(x.src.fnId))&&!st.ak.has(akOf(x.tgt.fnId))) return false;   // une extrémité au moins
@@ -477,6 +478,7 @@ function capRenderFunctionalExchange(mode){
         <input id="fex-fn-input" type="text" class="phl-filter-input" placeholder="Filtrer par ${W.fn}…" value="${capEsc(st.fnFilter)}" style="width:200px;">
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;margin-left:8px;">🔍 Échange :</span>
         <input id="fex-name-input" type="text" class="phl-filter-input" placeholder="Échange ou Exchange Item…" value="${capEsc(st.nameFilter)}" style="width:200px;">
+        ${capEcSelect('FE', st.cat||'', 'fex-cat')}
         ${st.view==='block'?_L(`<label style="font-size:11px;color:var(--c-dim);display:flex;align-items:center;gap:4px;margin-left:8px;" title="Masquer les fonctions sans port ni échange (fonctions mères le plus souvent)"><input type="checkbox" id="fex-withports"${st.withPorts?' checked':''}> avec ports ou échanges</label>`):''}
         ${(()=>{ const base=X.fns.filter(fn=>(st.layer==='all'||fn.layer===st.layer)&&!(st.view==='block'&&st.withPorts&&!fn.ins.length&&!fn.outs.length&&!fn.fesIn.length&&!fn.fesOut.length)&&whoFn(fn.id)), n=k=>base.filter(fn=>akOf(fn.id)===k).length;
           return _L(`<span class="tb-grp ana-ak" style="margin-left:8px" title="Clic : afficher / masquer · double-clic : uniquement celle-ci (ou tout réafficher)${st.view==='block'?'':_L(' — un échange est gardé si l\'une de ses deux fonctions correspond')}"><span class="tb-grp-l">Allocation</span>${['sys','act','none'].map(k=>_L(`<label class="ana-ak-chip${st.ak.has(k)?' on':''}" style="--c:${CAP_FN_AK[k].c}" title="${AKL(k).tip} — double-clic : uniquement celles-ci"><input type="checkbox" data-fak="${k}"${st.ak.has(k)?' checked':''}>${AKL(k).i} ${AKL(k).l} <b>${n(k)}</b></label>`)).join('')}${whoSelect()}</span>`); })()}
@@ -490,6 +492,7 @@ function capRenderFunctionalExchange(mode){
     container.querySelectorAll('.phl-toggle-btn').forEach(b=>b.addEventListener('click',()=>{ st.view=b.dataset.pv; st.page=0; render(); }));
     container.querySelectorAll('.fex-layer-btn').forEach(b=>b.addEventListener('click',()=>{ st.layer=b.dataset.ly; st.page=0; render(); }));
     container.querySelector('#fex-withports')?.addEventListener('change',e=>{ st.withPorts=e.target.checked; st.page=0; render(); });
+    container.querySelector('#fex-cat')?.addEventListener('change',e=>{ st.cat=e.target.value; st.page=0; render(); });   // 🏷 catégorie (71)
     container.querySelector('#fex-who')?.addEventListener('change',e=>{ st.who=e.target.value;
       if(st.who) st.ak.add(who.act.has(st.who)?'act':'sys');   // la nature correspondante reste visible
       st.page=0; render(); });

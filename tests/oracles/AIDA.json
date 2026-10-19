@@ -600,14 +600,26 @@
    "ko": 1
   }
  },
+ "categoriesEchanges": {
+  "categories": 22,
+  "parNature": {
+   "FE": 22
+  },
+  "parCouche": {
+   "LA": 2,
+   "PA": 20
+  },
+  "echangesCategorises": 96,
+  "introuvables": 0
+ },
  "sante": {
-  "score": 56,
-  "points": 2690,
+  "score": 52,
+  "points": 2970,
   "bloquants": 0,
   "info": 0,
   "pop": 4608,
-  "nChecks": 95,
-  "nOk": 43,
+  "nChecks": 100,
+  "nOk": 46,
   "couches": {
    "OA": 58,
    "SA": 88,
@@ -711,6 +723,13 @@
    "Chaînes en double": 0,
    "Étapes portées par des fonctions non allouées": 0,
    "Composants isolés dans un chemin physique": 0
+  },
+  "categories": {
+   "Échanges sans catégorie": 278,
+   "Catégories vides": 2,
+   "Catégories référençant un échange introuvable": 0,
+   "Catégories en double": 0,
+   "Échanges dans plusieurs catégories": 0
   },
   "etats": {
    "noInit": 25,
@@ -1099,6 +1118,10 @@
    "Chaînes discontinues": 4,
    "Chaînes non réalisées à la couche inférieure": 2
   },
+  "chk.ec": {
+   "Échanges sans catégorie": 278,
+   "Catégories vides": 2
+  },
   "chk.fn": {
    "Noms ne commençant pas par un verbe": 219,
    "Fonctions feuilles ne réalisant rien à la couche supérieure": 159,
@@ -1133,6 +1156,7 @@
   "chk.sum": {
    "Fonctions": 522,
    "Ports": 505,
+   "Catégories d'échanges": 280,
    "Propriétés": 210,
    "Physical Links": 177,
    "Contraintes": 153,
@@ -1174,6 +1198,40 @@
    "pct": 58,
    "num": 11,
    "den": 19
+  },
+  "ec.layer": {
+   "OA": 0,
+   "SA": 0,
+   "LA": 6,
+   "PA": 90
+  },
+  "ec.n": 22,
+  "ec.pct": {
+   "pct": 22,
+   "num": 96,
+   "den": 427
+  },
+  "ec.top": {
+   "Navigation data for failure detection (LA)": 3,
+   "Navigation data for identification (LA)": 3,
+   "Altitude (PA)": 3,
+   "Altitude and position for identification (PA)": 2,
+   "AP engagement (PA)": 4,
+   "Attitude manual consigns (PA)": 3,
+   "Automatic control start (PA)": 2,
+   "Drone attitude (PA)": 16,
+   "Drone attitude MON (PA)": 3,
+   "Drone attitude rate (PA)": 9,
+   "Drone attitude rate MON (PA)": 3,
+   "Helixes thrust and torque (PA)": 8,
+   "Motors disabled (PA)": 4,
+   "Motors rate MON (PA)": 4,
+   "Motors speed commands (PA)": 12,
+   "Motors speed measures MON (PA)": 4,
+   "Pilot orders (PA)": 5,
+   "Pitch and roll consigns (PA)": 2,
+   "Pitch and roll consigns MON (PA)": 2,
+   "Propellers airflow (PA)": 4
   },
   "fex.chk": {
    "Échanges sans Exchange Item": 419,
@@ -2079,10 +2137,10 @@
    "PA": 74,
    "EPBS": 100
   },
-  "sante.pts": 2690,
+  "sante.pts": 2970,
   "sante.score": {
-   "pct": 56,
-   "num": 56,
+   "pct": 52,
+   "num": 52,
    "den": 100
   },
   "sante.vue": {
@@ -2095,6 +2153,7 @@
    "🏷 Propriétés": 210,
    "🗃 Données & interfaces": 119,
    "⛓ Contraintes": 153,
+   "🏷 Catégories d'échanges": 280,
    "🔖 Statut de revue": 3,
    "🔀 Behavior Exchange": 78,
    "🔌 Physical Link": 177,
