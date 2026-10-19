@@ -1,0 +1,2209 @@
+{
+ "modele": {
+  "elements": 18502,
+  "parCouche": {
+   "EPBS": 5,
+   "LA": 165,
+   "OA": 33,
+   "PA": 862,
+   "SA": 255,
+   "Shared": 17182
+  },
+  "parType": {
+   "AbstractCapabilityInclude": 4,
+   "AbstractCapabilityRealization": 17,
+   "AbstractFunctionAbstractCapabilityInvolvement": 249,
+   "AbstractStateRealization": 15,
+   "AttributeDefinition": 3,
+   "AttributeDefinitionEnumeration": 7,
+   "BinaryExpression": 4,
+   "BooleanPropertyValue": 12,
+   "BooleanType": 2,
+   "Capability": 12,
+   "CapabilityExploitation": 14,
+   "CapabilityInvolvement": 49,
+   "CapabilityPkg": 3,
+   "CapabilityRealization": 23,
+   "CapabilityRealizationInvolvement": 37,
+   "CapabilityRealizationPkg": 7,
+   "CapellaIncomingRelation": 116,
+   "CapellaModule": 1,
+   "CapellaTypesFolder": 1,
+   "CatalogElement": 24,
+   "CatalogElementLink": 342,
+   "CombinedFragment": 46,
+   "CompliancyDefinition": 3,
+   "CompliancyDefinitionPkg": 1,
+   "ComponentExchange": 131,
+   "ComponentExchangeAllocation": 98,
+   "ComponentExchangeFunctionalExchangeAllocation": 233,
+   "ComponentExchangeRealization": 10,
+   "ComponentFunctionalAllocation": 202,
+   "ComponentPort": 258,
+   "ComponentPortAllocation": 188,
+   "ComponentRealization": 27,
+   "ConfigurationItem": 1,
+   "ConfigurationItemPkg": 1,
+   "Constraint": 201,
+   "ConstraintDuration": 1,
+   "DataPkg": 13,
+   "DataTypeDefinition": 6,
+   "EPBSArchitecture": 1,
+   "Entity": 5,
+   "EntityOperationalCapabilityInvolvement": 4,
+   "EntityPkg": 1,
+   "EnumValue": 29,
+   "EnumerationDataTypeDefinition": 7,
+   "EnumerationPropertyLiteral": 20,
+   "EnumerationPropertyType": 3,
+   "EnumerationPropertyValue": 315,
+   "EnumerationValueAttribute": 11,
+   "EventReceiptOperation": 766,
+   "EventSentOperation": 766,
+   "ExchangeCategory": 22,
+   "ExchangeItem": 19,
+   "Execution": 766,
+   "ExecutionEnd": 766,
+   "ExecutionEvent": 766,
+   "FinalState": 15,
+   "FloatPropertyValue": 132,
+   "Folder": 37,
+   "FragmentEnd": 144,
+   "FunctionInputPort": 420,
+   "FunctionOutputPort": 311,
+   "FunctionRealization": 59,
+   "FunctionalChain": 17,
+   "FunctionalChainAbstractCapabilityInvolvement": 3,
+   "FunctionalChainInvolvementFunction": 139,
+   "FunctionalChainInvolvementLink": 157,
+   "FunctionalChainRealization": 1,
+   "FunctionalChainReference": 1,
+   "FunctionalExchange": 427,
+   "FunctionalExchangeRealization": 58,
+   "GenericTrace": 90,
+   "InformationRealization": 22,
+   "InitialPseudoState": 14,
+   "InstanceRole": 550,
+   "IntegerValueAttribute": 1,
+   "InteractionOperand": 86,
+   "InteractionState": 714,
+   "InteractionUse": 26,
+   "InterfacePkg": 5,
+   "InternalRelation": 20,
+   "KeyValue": 1,
+   "LiteralBooleanValue": 4,
+   "LiteralNumericValue": 24,
+   "LogicalArchitecture": 1,
+   "LogicalArchitectureRealization": 1,
+   "LogicalComponent": 17,
+   "LogicalComponentPkg": 2,
+   "LogicalFunction": 45,
+   "LogicalFunctionPkg": 4,
+   "MessageEnd": 1532,
+   "Mission": 4,
+   "MissionInvolvement": 23,
+   "MissionPkg": 1,
+   "Mode": 94,
+   "ModelInformation": 1,
+   "NumericType": 24,
+   "OpaqueExpression": 201,
+   "OperationalActivity": 11,
+   "OperationalActivityPkg": 1,
+   "OperationalAnalysis": 1,
+   "OperationalAnalysisRealization": 1,
+   "OperationalCapability": 4,
+   "OperationalCapabilityPkg": 1,
+   "OperationalProcess": 3,
+   "Part": 135,
+   "PartDeploymentLink": 43,
+   "PartMass": 34,
+   "PhysicalArchitecture": 1,
+   "PhysicalArchitectureRealization": 1,
+   "PhysicalArtifactRealization": 1,
+   "PhysicalComponent": 102,
+   "PhysicalComponentPkg": 4,
+   "PhysicalFunction": 158,
+   "PhysicalFunctionPkg": 3,
+   "PhysicalLink": 93,
+   "PhysicalPath": 12,
+   "PhysicalPathInvolvement": 104,
+   "PhysicalPathReference": 2,
+   "PhysicalPort": 183,
+   "PortAllocation": 433,
+   "PortRealization": 95,
+   "PropertyValueGroup": 392,
+   "PropertyValuePkg": 6,
+   "RecCatalog": 1,
+   "Region": 147,
+   "RelationType": 2,
+   "Requirement": 118,
+   "RequirementType": 1,
+   "RequirementsPkg": 19,
+   "RequirementsTrace": 18,
+   "RolePkg": 1,
+   "Scenario": 64,
+   "ScenarioRealization": 37,
+   "SequenceMessage": 766,
+   "State": 18,
+   "StateFragment": 357,
+   "StateMachine": 34,
+   "StateTransition": 82,
+   "StateTransitionRealization": 13,
+   "StringPropertyValue": 50,
+   "StringType": 4,
+   "StringValueAttribute": 1,
+   "SystemAnalysis": 1,
+   "SystemAnalysisRealization": 1,
+   "SystemComponent": 10,
+   "SystemComponentPkg": 1,
+   "SystemEngineering": 1,
+   "SystemFunction": 23,
+   "SystemFunctionPkg": 4,
+   "SystemFunctionalInterfaceRequirement": 2,
+   "SystemFunctionalRequirement": 17,
+   "SystemNonFunctionalRequirement": 6,
+   "SystemUserRequirement": 5,
+   "TransfoLink": 2817
+  }
+ },
+ "relations": {
+  "pcNode_pcNode": 41,
+  "pcBeh_pcBeh": 47,
+  "pcRoot_pcAny": 2,
+  "pcNode_pcBeh": 38,
+  "pcBeh_fn": 129,
+  "fn_fn": 146,
+  "lc_lc": 8,
+  "lf_lf": 22,
+  "lc_lf": 41,
+  "sc_sf": 22,
+  "oa_oa": 10,
+  "entity_oa": 10,
+  "cap_comp": 49,
+  "lcap_lcomp": 14,
+  "pcap_pcomp": 23,
+  "ocap_entity": 4,
+  "mission_comp": 23,
+  "mission_cap": 14,
+  "fe_fn": 427,
+  "ce_comp": 131,
+  "pl_pc": 93,
+  "ex_ei": 12,
+  "fn_real": 59,
+  "comp_real": 27,
+  "fe_real": 58,
+  "ce_fe": 233,
+  "pl_ce": 98,
+  "pp_cp": 188,
+  "fc_fn": 139,
+  "fc_fe": 157,
+  "cap_fn": 249,
+  "cap_fc": 3
+ },
+ "chaines": {
+  "nombre": 32,
+  "parType": {
+   "FunctionalChain": 17,
+   "OperationalProcess": 3,
+   "PhysicalPath": 12
+  },
+  "parCouche": {
+   "LA": 1,
+   "OA": 3,
+   "PA": 25,
+   "SA": 3
+  },
+  "noeuds": 196,
+  "aretes": 202,
+  "vides": 0
+ },
+ "fonctions": {
+  "nombre": 237,
+  "parCouche": {
+   "LA": 45,
+   "OA": 11,
+   "PA": 158,
+   "SA": 23
+  },
+  "feuilles": 201,
+  "allouees": 202,
+  "parAllocation": {
+   "act": 60,
+   "parent": 35,
+   "sys": 142
+  },
+  "realisees": 50,
+  "avecDescription": 124
+ },
+ "qualiteNoms": {
+  "langues": {
+   "": 4,
+   "EN": 232,
+   "FR": 1
+  },
+  "defauts": {
+   "noverb": 219
+  }
+ },
+ "tracabilite": [
+  {
+   "cat": "fn",
+   "de": "OA",
+   "vers": "SA",
+   "haut": 11,
+   "hautOk": 11,
+   "bas": 23,
+   "basOk": 11
+  },
+  {
+   "cat": "fn",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 23,
+   "hautOk": 23,
+   "bas": 45,
+   "basOk": 23
+  },
+  {
+   "cat": "fn",
+   "de": "LA",
+   "vers": "PA",
+   "haut": 45,
+   "hautOk": 16,
+   "bas": 158,
+   "basOk": 18
+  },
+  {
+   "cat": "comp",
+   "de": "OA",
+   "vers": "SA",
+   "haut": 5,
+   "hautOk": 5,
+   "bas": 10,
+   "basOk": 8
+  },
+  {
+   "cat": "comp",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 10,
+   "hautOk": 10,
+   "bas": 17,
+   "basOk": 10
+  },
+  {
+   "cat": "comp",
+   "de": "LA",
+   "vers": "PA",
+   "haut": 17,
+   "hautOk": 9,
+   "bas": 102,
+   "basOk": 9
+  },
+  {
+   "cat": "comp",
+   "de": "PA",
+   "vers": "EPBS",
+   "haut": 102,
+   "hautOk": 1,
+   "bas": 1,
+   "basOk": 1
+  },
+  {
+   "cat": "fe",
+   "de": "OA",
+   "vers": "SA",
+   "haut": 11,
+   "hautOk": 11,
+   "bas": 42,
+   "basOk": 10
+  },
+  {
+   "cat": "fe",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 42,
+   "hautOk": 42,
+   "bas": 77,
+   "basOk": 42
+  },
+  {
+   "cat": "ce",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 7,
+   "hautOk": 7,
+   "bas": 17,
+   "basOk": 10
+  },
+  {
+   "cat": "port",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 91,
+   "hautOk": 89,
+   "bas": 169,
+   "basOk": 93
+  },
+  {
+   "cat": "port",
+   "de": "LA",
+   "vers": "PA",
+   "haut": 169,
+   "hautOk": 2,
+   "bas": 912,
+   "basOk": 2
+  },
+  {
+   "cat": "cap",
+   "de": "OA",
+   "vers": "SA",
+   "haut": 4,
+   "hautOk": 4,
+   "bas": 16,
+   "basOk": 5
+  },
+  {
+   "cat": "cap",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 16,
+   "hautOk": 12,
+   "bas": 12,
+   "basOk": 12
+  },
+  {
+   "cat": "chain",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 3,
+   "hautOk": 1,
+   "bas": 1,
+   "basOk": 1
+  },
+  {
+   "cat": "scen",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 41,
+   "hautOk": 12,
+   "bas": 12,
+   "basOk": 12
+  },
+  {
+   "cat": "state",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 435,
+   "hautOk": 28,
+   "bas": 369,
+   "basOk": 28
+  },
+  {
+   "cat": "data",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 23,
+   "hautOk": 22,
+   "bas": 23,
+   "basOk": 22
+  }
+ ],
+ "functionalExchange": {
+  "echanges": 427,
+  "parCouche": {
+   "LA": 77,
+   "OA": 11,
+   "PA": 297,
+   "SA": 42
+  },
+  "fonctions": 237
+ },
+ "composants": {
+  "composants": 134,
+  "parCouche": {
+   "LA": 17,
+   "OA": 5,
+   "PA": 102,
+   "SA": 10
+  },
+  "acteurs": 31,
+  "ports": 258,
+  "liens": 131
+ },
+ "componentExchange": {
+  "nombre": 131,
+  "parCouche": {
+   "LA": 17,
+   "PA": 107,
+   "SA": 7
+  },
+  "parSens": {
+   "bi": 7,
+   "fwd": 124
+  },
+  "incoherents": 0,
+  "avecFe": 107,
+  "avecPl": 55
+ },
+ "behaviorExchange": {
+  "nombre": 106
+ },
+ "physicalLink": {
+  "nombre": 93,
+  "avecCe": 43,
+  "ces": 55
+ },
+ "ports": {
+  "fp": 731,
+  "cp": 258,
+  "pp": 183,
+  "fe": 427,
+  "ce": 131,
+  "pl": 93,
+  "feVersCe": 229,
+  "ceVersPl": 96
+ },
+ "scenarios": {
+  "nombre": 64,
+  "parCouche": {
+   "LA": 12,
+   "PA": 11,
+   "SA": 41
+  },
+  "parType": {
+   "ES": 30,
+   "FS": 34
+  },
+  "messages": 766
+ },
+ "capacites": {
+  "nombre": 43,
+  "parCouche": {
+   "LA": 12,
+   "OA": 4,
+   "PA": 11,
+   "SA": 16
+  },
+  "avecFonctions": 25,
+  "avecChaines": 3,
+  "avecScenarios": 15
+ },
+ "etats": {
+  "machines": 34,
+  "etats": 141,
+  "transitions": 82
+ },
+ "exigences": {
+  "nombre": 148,
+  "parSource": {
+   "Capella": 30,
+   "Requirements Viewpoint": 118
+  },
+  "parType": {
+   "AIDA requirements for RV&V": 117,
+   "Requirement": 1,
+   "SystemFunctionalInterfaceRequirement": 2,
+   "SystemFunctionalRequirement": 17,
+   "SystemNonFunctionalRequirement": 6,
+   "SystemUserRequirement": 5
+  },
+  "elementsLies": 26
+ },
+ "pvmt": {
+  "definitions": 6,
+  "valeurs": 452,
+  "elementsValues": 382
+ },
+ "donnees": {
+  "exchangeItems": 19,
+  "interfaces": 0,
+  "types": 30,
+  "fes": 427,
+  "ces": 131
+ },
+ "liensCouches": {
+  "fn": {
+   "noeuds": 83,
+   "aretes": 59,
+   "tronque": false
+  },
+  "comp": {
+   "noeuds": 39,
+   "aretes": 28,
+   "tronque": false
+  },
+  "fe": {
+   "noeuds": 95,
+   "aretes": 58,
+   "tronque": false
+  },
+  "ce": {
+   "noeuds": 17,
+   "aretes": 10,
+   "tronque": false
+  },
+  "pl": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "port": {
+   "noeuds": 184,
+   "aretes": 95,
+   "tronque": false
+  },
+  "cap": {
+   "noeuds": 28,
+   "aretes": 17,
+   "tronque": false
+  },
+  "chain": {
+   "noeuds": 14,
+   "aretes": 4,
+   "tronque": false
+  },
+  "scen": {
+   "noeuds": 50,
+   "aretes": 37,
+   "tronque": false
+  },
+  "state": {
+   "noeuds": 56,
+   "aretes": 28,
+   "tronque": false
+  },
+  "data": {
+   "noeuds": 44,
+   "aretes": 22,
+   "tronque": false
+  }
+ },
+ "controles": {
+  "fonctions": {
+   "Noms ne commençant pas par un verbe": 219,
+   "Verbes peu précis en tête du nom": 0,
+   "Présentation des noms": 0,
+   "Noms trop longs ou d'un seul mot": 0,
+   "Langue minoritaire dans la couche": 1,
+   "Fonctions sans description": 109,
+   "Descriptions trop courtes ou identiques au nom": 0,
+   "Marqueurs de travail en cours (TODO, TBD, NOT DONE…)": 0,
+   "Noms en double dans une même couche": 0,
+   "Fonctions feuilles non allouées": 0,
+   "Fonctions allouées à plusieurs composants": 0,
+   "Fonctions mères allouées": 1,
+   "Fonctions feuilles sans aucun échange": 2,
+   "Échanges portés par des fonctions mères": 0,
+   "Ports de fonction sans échange": 2,
+   "Fonctions feuilles non réalisées à la couche inférieure": 29,
+   "Fonctions feuilles ne réalisant rien à la couche supérieure": 159
+  },
+  "functionalExchange": {
+   "Ports de fonction orphelins (sans échange)": 6,
+   "Échanges sans Exchange Item": 419,
+   "Fonctions feuilles sans aucun échange": 2,
+   "Fonctions mères portant des ports": 0,
+   "Échanges LA / PA non alloués à un Component Exchange": 167
+  },
+  "composants": {
+   "Ports de composant orphelins (sans Component Exchange)": 2,
+   "Ports connectés sans orientation (UNSET)": 0,
+   "Échanges aux orientations incohérentes": 0,
+   "Composants feuilles sans port": 34,
+   "Composants feuilles sans fonction allouée": 44
+  },
+  "scenarios": {
+   "Scénarios vides (aucun message)": 0,
+   "Messages sans échange": 0,
+   "Lignes de vie sans élément représenté": 0,
+   "Scénarios hors capacité": 0,
+   "Références vers un scénario introuvable": 0
+  },
+  "exigences": {
+   "Exigences liées à aucun élément du modèle": 14,
+   "Exigences sans texte": 0,
+   "Exigences sans identifiant": 0,
+   "Identifiants en double": 2,
+   "Relations vers un élément introuvable": 0,
+   "Fonctions feuilles sans exigence": 16,
+   "Composants / acteurs sans exigence": 84
+  },
+  "pvmt": {
+   "Éléments concernés par un groupe PVMT mais non renseignés": 128,
+   "Valeurs numériques restées à la valeur par défaut (0)": 64,
+   "Énumérations ou textes non renseignés": 0,
+   "Groupes appliqués dont la définition est introuvable": 0,
+   "Groupes appliqués sans lien vers leur définition": 18
+  },
+  "donnees": {
+   "Exchange Items portés par aucun échange ni interface": 8,
+   "Exchange Items sans élément (contenu non décrit)": 0,
+   "Functional Exchanges sans Exchange Item": 111,
+   "Interfaces sans Exchange Item alloué": 0,
+   "Interfaces ni fournies, ni requises, ni utilisées": 0,
+   "Exchange Items d'un FE absents des interfaces des ports du CE porteur": 0,
+   "Classes et types de données jamais utilisés": 0
+  },
+  "contraintes": {
+   "Contraintes vides (ni nom ni expression)": 7,
+   "Contraintes sans expression": 121,
+   "Expressions citant un élément introuvable": 0,
+   "Contraintes sans élément contraint explicite": 25,
+   "Contraintes en double sur un même élément": 0
+  },
+  "etats": {
+   "noInit": 25,
+   "unreach": 1,
+   "deadEnd": 2,
+   "noTrig": 8
+  }
+ },
+ "tableauDeBord": {
+  "cap.chk": {
+   "Sans fonction ni chaîne": 14,
+   "Sans acteur ni composant": 21,
+   "Sans scénario": 24
+  },
+  "cap.fn": {
+   "pct": 64,
+   "num": 25,
+   "den": 39
+  },
+  "cap.layer": {
+   "OA": 4,
+   "SA": 16,
+   "LA": 12,
+   "PA": 11
+  },
+  "cap.n": 43,
+  "cap.type": {
+   "Capability Realization": 23,
+   "Capability": 12,
+   "Operational Capability": 4,
+   "Mission": 4
+  },
+  "cb.chk.LA": {
+   "Composants feuilles sans fonction allouée": 3
+  },
+  "cb.chk.PB": null,
+  "cb.chk.PN": null,
+  "cb.chk.SA": {
+   "Composants feuilles sans fonction allouée": 3
+  },
+  "cb.n.LA": 17,
+  "cb.n.PB": 0,
+  "cb.n.PN": 0,
+  "cb.n.SA": 10,
+  "cb.ports.LA": {
+   "pct": 100,
+   "num": 32,
+   "den": 32
+  },
+  "cb.ports.PB": null,
+  "cb.ports.PN": null,
+  "cb.ports.SA": {
+   "pct": 100,
+   "num": 14,
+   "den": 14
+  },
+  "ce.comp": {
+   "Power supply behavior": 22,
+   "Monitoring flight control board": 20,
+   "Main flight control board": 16,
+   "Drone environment behavior": 14,
+   "Control desk behavior": 9,
+   "AIDA": 8,
+   "Flight control and monitoring system": 7,
+   "Drone pilot behavior": 6,
+   "Payload control behavior": 6,
+   "Motor protection 1 behavior": 6,
+   "Motor protection 2 behavior": 6,
+   "Motor protection 3 behavior": 6,
+   "Motor protection 4 behavior": 6,
+   "Drone operator": 5,
+   "Drone environment": 5,
+   "Payload": 5,
+   "Structure behavior": 5,
+   "Control desk": 4,
+   "LIDAR altimeter behavior": 4,
+   "Optical flow sensor behavior": 4,
+   "GPS receiver behavior": 4,
+   "Camera sensor behavior": 4,
+   "Motor controller 1 behavior": 4,
+   "Motor controller 2 behavior": 4,
+   "Motor controller 3 behavior": 4,
+   "Motor controller 4 behavior": 4,
+   "Motor 1 behavior": 4,
+   "Motor 2 behavior": 4,
+   "Motor 3 behavior": 4,
+   "Motor 4 behavior": 4,
+   "Aircraft": 3,
+   "Remote control": 3,
+   "Propeller 1 behavior": 3,
+   "Propeller 3 behavior": 3,
+   "Pressure sensor MON behavior": 3,
+   "Pressure sensor behavior": 3,
+   "Propeller 2 behavior": 3,
+   "Propeller 4 behavior": 3,
+   "Inertial reference sensors behavior": 3,
+   "Magnetometer behavior": 3,
+   "Inertial reference sensors MON behavior": 3,
+   "Magnetometer MON behavior": 3,
+   "Manual remote control behavior": 3,
+   "Camera rotary support behavior": 3,
+   "Airline data base": 2,
+   "Air Traffic Management and airport Authorities": 2,
+   "Structure": 2,
+   "Propulsion system": 2,
+   "Data base behavior": 2,
+   "Camera remote control behavior": 2,
+   "Override push button behavior": 2,
+   "Positioning system behavior": 1,
+   "Aircraft behavior": 1
+  },
+  "ce.dir": {
+   "→ Orienté": 124,
+   "⇄ Bidirectionnel": 7
+  },
+  "ce.fe": {
+   "pct": 82,
+   "num": 107,
+   "den": 131
+  },
+  "ce.kind": {
+   "FLOW": 131
+  },
+  "ce.layer": {
+   "SA": 7,
+   "LA": 17,
+   "PA": 107
+  },
+  "ce.n": 131,
+  "ce.orph": 2,
+  "ce.papl": 52,
+  "ch.avg": 6.1,
+  "ch.empty": {
+   "Non vides": 32
+  },
+  "ch.full": {
+   "pct": 100,
+   "num": 32,
+   "den": 32
+  },
+  "ch.kind": {
+   "Système": 117,
+   "Acteurs": 12
+  },
+  "ch.layer": {
+   "OA": 3,
+   "SA": 3,
+   "LA": 1,
+   "PA": 25
+  },
+  "ch.n": 32,
+  "ch.top": {
+   "cols": [
+    "Chaîne",
+    "Type",
+    "Couche",
+    "Étapes",
+    "Échanges"
+   ],
+   "lignes": 30,
+   "rows": [
+    [
+     "Attitude and altitude control MON",
+     "Chaîne fonctionnelle",
+     "PA",
+     23,
+     38
+    ],
+    [
+     "Attitude and altitude control COM",
+     "Chaîne fonctionnelle",
+     "PA",
+     18,
+     32
+    ],
+    [
+     "Auto control path",
+     "Chaîne fonctionnelle",
+     "PA",
+     11,
+     13
+    ],
+    [
+     "Flight control power supply",
+     "Chemin physique",
+     "PA",
+     10,
+     9
+    ],
+    [
+     "Attitude control loop",
+     "Chaîne fonctionnelle",
+     "LA",
+     9,
+     7
+    ],
+    [
+     "Sensors CAN bus",
+     "Chemin physique",
+     "PA",
+     9,
+     8
+    ],
+    [
+     "Motors CAN bus",
+     "Chemin physique",
+     "PA",
+     8,
+     7
+    ],
+    [
+     "Pilot loop",
+     "Chaîne fonctionnelle",
+     "SA",
+     7,
+     6
+    ],
+    [
+     "Manual mode selection path",
+     "Chaîne fonctionnelle",
+     "PA",
+     7,
+     7
+    ],
+    [
+     "Engine 1 control path",
+     "Chaîne fonctionnelle",
+     "PA",
+     7,
+     7
+    ],
+    [
+     "Engine 2 control path",
+     "Chaîne fonctionnelle",
+     "PA",
+     7,
+     6
+    ],
+    [
+     "Engine 3 control path",
+     "Chaîne fonctionnelle",
+     "PA",
+     7,
+     6
+    ],
+    [
+     "Engine 4 control path",
+     "Chaîne fonctionnelle",
+     "PA",
+     7,
+     6
+    ],
+    [
+     "Attitude control loop",
+     "Chaîne fonctionnelle",
+     "SA",
+     5,
+     4
+    ],
+    [
+     "Manual control path",
+     "Chaîne fonctionnelle",
+     "PA",
+     5,
+     4
+    ],
+    [
+     "Nav auto control path",
+     "Chaîne fonctionnelle",
+     "PA",
+     5,
+     6
+    ],
+    [
+     "Engine 1 monitoring path",
+     "Chaîne fonctionnelle",
+     "PA",
+     5,
+     4
+    ],
+    [
+     "Pilot drone control path",
+     "Chemin physique",
+     "PA",
+     5,
+     4
+    ],
+    [
+     "Payload power supply",
+     "Chemin physique",
+     "PA",
+     5,
+     4
+    ],
+    [
+     "Realise the Pre Flight Check",
+     "Processus opérationnel",
+     "OA",
+     4,
+     3
+    ],
+    [
+     "Detect icing",
+     "Processus opérationnel",
+     "OA",
+     4,
+     3
+    ],
+    [
+     "Drone follow-up display path",
+     "Chaîne fonctionnelle",
+     "PA",
+     3,
+     2
+    ],
+    [
+     "Pilot payload control path",
+     "Chemin physique",
+     "PA",
+     3,
+     2
+    ],
+    [
+     "Drone mission data path",
+     "Chemin physique",
+     "PA",
+     3,
+     2
+    ],
+    [
+     "Motor 1 load path",
+     "Chemin physique",
+     "PA",
+     3,
+     2
+    ],
+    [
+     "Motor 2 load path",
+     "Chemin physique",
+     "PA",
+     3,
+     2
+    ],
+    [
+     "Motor 3 load path",
+     "Chemin physique",
+     "PA",
+     3,
+     2
+    ],
+    [
+     "Motor 4 load path",
+     "Chemin physique",
+     "PA",
+     3,
+     2
+    ],
+    [
+     "Keep the record of Pre Flight checks results",
+     "Processus opérationnel",
+     "OA",
+     2,
+     1
+    ],
+    [
+     "Speed consign control path",
+     "Chaîne fonctionnelle",
+     "PA",
+     2,
+     1
+    ]
+   ]
+  },
+  "ch.type": {
+   "Chaîne fonctionnelle": 17,
+   "Processus opérationnel": 3,
+   "Chemin physique": 12
+  },
+  "chk.ce": {
+   "Sans Functional Exchange": 24,
+   "Ports orphelins": 2,
+   "PA sans Physical Link": 52
+  },
+  "chk.fn": {
+   "Noms ne commençant pas par un verbe": 219,
+   "Fonctions feuilles ne réalisant rien à la couche supérieure": 159,
+   "Fonctions sans description": 109,
+   "Fonctions feuilles non réalisées à la couche inférieure": 29,
+   "Fonctions feuilles sans aucun échange": 2,
+   "Ports de fonction sans échange": 2,
+   "Langue minoritaire dans la couche": 1,
+   "Fonctions mères allouées": 1
+  },
+  "chk.pl": {
+   "Sans Component Exchange": 50,
+   "Ports physiques sans Component Port": 75,
+   "CE (PA) non alloués": 52
+  },
+  "chk.pt": {
+   "Function Ports non alloués alors que la fonction est allouée à un composant qui a des ports": 311,
+   "Physical Ports sans Component Port alloué": 75,
+   "Component Ports sans Function Port alloué": 53,
+   "Sens incohérent Function Port / Component Port": 34,
+   "Component Ports (PA) non alloués à un Physical Port": 24,
+   "Functional Exchange ↔ Component Exchange : ports non alignés": 8
+  },
+  "chk.sum": {
+   "Fonctions": 522,
+   "Ports": 505,
+   "Propriétés": 210,
+   "Physical Links": 177,
+   "Contraintes": 153,
+   "Données & interfaces": 119,
+   "Exigences": 116,
+   "Component Exchanges": 78,
+   "Capacités": 59,
+   "Modes & états": 36
+  },
+  "ct.chk": {
+   "Contraintes sans expression": 121,
+   "Contraintes sans élément contraint explicite": 25,
+   "Contraintes vides (ni nom ni expression)": 7
+  },
+  "ct.layer": {
+   "OA": 1,
+   "SA": 25,
+   "LA": 34,
+   "PA": 141
+  },
+  "ct.n": 201,
+  "dg.cmp": null,
+  "dg.layer": null,
+  "dg.n": null,
+  "dg.orph": null,
+  "dm.chk": {
+   "Functional Exchanges sans Exchange Item": 111,
+   "Exchange Items portés par aucun échange ni interface": 8
+  },
+  "dm.fe": {
+   "OA": 0,
+   "SA": 10,
+   "LA": 5,
+   "PA": 0
+  },
+  "dm.n": 19,
+  "dm.used": {
+   "pct": 58,
+   "num": 11,
+   "den": 19
+  },
+  "fex.chk": {
+   "Échanges sans Exchange Item": 419,
+   "Échanges LA / PA non alloués à un Component Exchange": 167,
+   "Ports de fonction orphelins (sans échange)": 6,
+   "Fonctions feuilles sans aucun échange": 2
+  },
+  "fex.items": {
+   "pct": 2,
+   "num": 8,
+   "den": 427
+  },
+  "fex.layer": {
+   "OA": 11,
+   "SA": 42,
+   "LA": 77,
+   "PA": 297
+  },
+  "fex.n": 427,
+  "fn.L.alloc": {
+   "OA": 100,
+   "SA": 100,
+   "LA": 100,
+   "PA": 100
+  },
+  "fn.L.cap": {
+   "OA": 100,
+   "SA": 91,
+   "LA": 68,
+   "PA": 38
+  },
+  "fn.L.chain": {
+   "OA": 50,
+   "SA": 32,
+   "LA": 18,
+   "PA": 65
+  },
+  "fn.L.depth": {
+   "OA": 1,
+   "SA": 1,
+   "LA": 3,
+   "PA": 3
+  },
+  "fn.L.desc": {
+   "OA": 60,
+   "SA": 14,
+   "LA": 14,
+   "PA": 69
+  },
+  "fn.L.fe": {
+   "OA": 100,
+   "SA": 95,
+   "LA": 98,
+   "PA": 100
+  },
+  "fn.L.leaf": {
+   "OA": 10,
+   "SA": 22,
+   "LA": 40,
+   "PA": 129
+  },
+  "fn.L.n": {
+   "OA": 11,
+   "SA": 23,
+   "LA": 45,
+   "PA": 158
+  },
+  "fn.L.nq": {
+   "OA": 100,
+   "SA": 0,
+   "LA": 9,
+   "PA": 0
+  },
+  "fn.L.trace": {
+   "OA": 100,
+   "SA": 100,
+   "LA": 65,
+   "PA": 2
+  },
+  "fn.LA.ak": {
+   "Système": 25,
+   "Acteurs": 15
+  },
+  "fn.LA.alloc": {
+   "pct": 100,
+   "num": 40,
+   "den": 40
+  },
+  "fn.LA.cap": {
+   "pct": 68,
+   "num": 27,
+   "den": 40
+  },
+  "fn.LA.chain": {
+   "pct": 18,
+   "num": 7,
+   "den": 40
+  },
+  "fn.LA.depth": 3,
+  "fn.LA.desc": {
+   "pct": 14,
+   "num": 6,
+   "den": 44
+  },
+  "fn.LA.fe": {
+   "pct": 98,
+   "num": 39,
+   "den": 40
+  },
+  "fn.LA.leaf": 40,
+  "fn.LA.lvl": {
+   "Niveau 0": 1,
+   "Niveau 1": 22,
+   "Niveau 2": 18,
+   "Niveau 3": 4
+  },
+  "fn.LA.n": 45,
+  "fn.LA.nq": {
+   "pct": 9,
+   "num": 4,
+   "den": 44
+  },
+  "fn.LA.sub": {
+   "Drone": 16,
+   "Remote control": 6,
+   "Control desk": 4
+  },
+  "fn.LA.trace": {
+   "pct": 65,
+   "num": 26,
+   "den": 40
+  },
+  "fn.LA.who": {
+   "Flight control and monitoring system": 9,
+   "👤 Drone operator": 8,
+   "Remote control": 6,
+   "Propulsion system": 5,
+   "Control desk": 4,
+   "👤 Drone environment": 2,
+   "👤 Airline data base": 2,
+   "Structure": 1,
+   "Payload": 1,
+   "👤 Air Traffic Management and airport Authorities": 1,
+   "👤 Aircraft flight crew": 1,
+   "👤 Aircraft": 1
+  },
+  "fn.OA.ak": {
+   "Système": 3,
+   "Acteurs": 7
+  },
+  "fn.OA.alloc": {
+   "pct": 100,
+   "num": 10,
+   "den": 10
+  },
+  "fn.OA.cap": {
+   "pct": 100,
+   "num": 10,
+   "den": 10
+  },
+  "fn.OA.chain": {
+   "pct": 50,
+   "num": 5,
+   "den": 10
+  },
+  "fn.OA.depth": 1,
+  "fn.OA.desc": {
+   "pct": 60,
+   "num": 6,
+   "den": 10
+  },
+  "fn.OA.fe": {
+   "pct": 100,
+   "num": 10,
+   "den": 10
+  },
+  "fn.OA.leaf": 10,
+  "fn.OA.lvl": {
+   "Niveau 0": 1,
+   "Niveau 1": 10
+  },
+  "fn.OA.n": 11,
+  "fn.OA.nq": {
+   "pct": 100,
+   "num": 10,
+   "den": 10
+  },
+  "fn.OA.trace": {
+   "pct": 100,
+   "num": 10,
+   "den": 10
+  },
+  "fn.OA.who": {
+   "👤 Line maintenance operator": 6,
+   "Airline maintenance database": 1,
+   "Aircraft": 1,
+   "👤 Flight crew": 1,
+   "Environment": 1
+  },
+  "fn.PA.ak": {
+   "Système": 106,
+   "Acteurs": 23
+  },
+  "fn.PA.alloc": {
+   "pct": 100,
+   "num": 129,
+   "den": 129
+  },
+  "fn.PA.cap": {
+   "pct": 38,
+   "num": 49,
+   "den": 129
+  },
+  "fn.PA.chain": {
+   "pct": 65,
+   "num": 84,
+   "den": 129
+  },
+  "fn.PA.depth": 3,
+  "fn.PA.desc": {
+   "pct": 69,
+   "num": 109,
+   "den": 157
+  },
+  "fn.PA.fe": {
+   "pct": 100,
+   "num": 129,
+   "den": 129
+  },
+  "fn.PA.leaf": 129,
+  "fn.PA.lvl": {
+   "Niveau 0": 1,
+   "Niveau 1": 23,
+   "Niveau 2": 40,
+   "Niveau 3": 94
+  },
+  "fn.PA.n": 158,
+  "fn.PA.nq": {
+   "pct": 0,
+   "num": 0,
+   "den": 157
+  },
+  "fn.PA.sub": {
+   "AIDA behavior": 106
+  },
+  "fn.PA.trace": {
+   "pct": 2,
+   "num": 3,
+   "den": 129
+  },
+  "fn.PA.who": {
+   "Main flight control board": 21,
+   "Monitoring flight control board": 20,
+   "Control desk behavior": 11,
+   "👤 Drone pilot behavior": 10,
+   "👤 Drone environment behavior": 8,
+   "Manual remote control behavior": 4,
+   "Motor controller 1 behavior": 3,
+   "Motor controller 2 behavior": 3,
+   "Motor controller 3 behavior": 3,
+   "Motor controller 4 behavior": 3,
+   "👤 Data base behavior": 3,
+   "Inertial reference sensors MON behavior": 2,
+   "Motor protection 1 behavior": 2,
+   "Motor 1 behavior": 2,
+   "Motor 2 behavior": 2,
+   "Motor protection 2 behavior": 2,
+   "Motor 3 behavior": 2,
+   "Motor protection 3 behavior": 2,
+   "Motor 4 behavior": 2,
+   "Motor protection 4 behavior": 2,
+   "Inertial reference sensors behavior": 2,
+   "Payload control behavior": 2,
+   "Magnetometer MON behavior": 1,
+   "Pressure sensor MON behavior": 1,
+   "Propeller 1 behavior": 1,
+   "Propeller 2 behavior": 1,
+   "Propeller 3 behavior": 1,
+   "Propeller 4 behavior": 1,
+   "Structure behavior": 1,
+   "Override push button behavior": 1,
+   "Magnetometer behavior": 1,
+   "LIDAR altimeter behavior": 1,
+   "Pressure sensor behavior": 1,
+   "Optical flow sensor behavior": 1,
+   "GPS receiver behavior": 1,
+   "Camera rotary support behavior": 1,
+   "Camera sensor behavior": 1,
+   "Camera remote control behavior": 1,
+   "👤 Aircraft behavior": 1,
+   "👤 Positioning system behavior": 1
+  },
+  "fn.SA.ak": {
+   "Système": 7,
+   "Acteurs": 15
+  },
+  "fn.SA.alloc": {
+   "pct": 100,
+   "num": 22,
+   "den": 22
+  },
+  "fn.SA.cap": {
+   "pct": 91,
+   "num": 20,
+   "den": 22
+  },
+  "fn.SA.chain": {
+   "pct": 32,
+   "num": 7,
+   "den": 22
+  },
+  "fn.SA.depth": 1,
+  "fn.SA.desc": {
+   "pct": 14,
+   "num": 3,
+   "den": 22
+  },
+  "fn.SA.fe": {
+   "pct": 95,
+   "num": 21,
+   "den": 22
+  },
+  "fn.SA.leaf": 22,
+  "fn.SA.lvl": {
+   "Niveau 0": 1,
+   "Niveau 1": 22
+  },
+  "fn.SA.n": 23,
+  "fn.SA.nq": {
+   "pct": 0,
+   "num": 0,
+   "den": 22
+  },
+  "fn.SA.trace": {
+   "pct": 100,
+   "num": 22,
+   "den": 22
+  },
+  "fn.SA.who": {
+   "👤 Drone operator": 8,
+   "AIDA": 7,
+   "👤 Drone environment": 2,
+   "👤 Airline data base": 2,
+   "👤 Air Traffic Management and airport Authorities": 1,
+   "👤 Aircraft": 1,
+   "👤 Aircraft flight crew": 1
+  },
+  "fn.ak": {
+   "cats": [
+    "OA",
+    "SA",
+    "LA",
+    "PA"
+   ],
+   "series": {
+    "Système": [
+     3,
+     7,
+     25,
+     106
+    ],
+    "Acteurs": [
+     7,
+     15,
+     15,
+     23
+    ]
+   }
+  },
+  "fn.nq": {
+   "Pas de verbe en tête": 219
+  },
+  "fn.top": {
+   "cols": [
+    "Couche",
+    "N°",
+    "Fonction",
+    "Échanges"
+   ],
+   "lignes": 30,
+   "rows": [
+    [
+     "PA",
+     "1.6.2",
+     "[SF3.2] Compute navigation data",
+     46
+    ],
+    [
+     "PA",
+     "1.1.2",
+     "[SF6.2] Store data",
+     21
+    ],
+    [
+     "SA",
+     "1.4",
+     "[SysFun_4] Control drone motion",
+     16
+    ],
+    [
+     "PA",
+     "1.2.1.5",
+     "[SF7.1.5] Compute navigation data MON",
+     16
+    ],
+    [
+     "PA",
+     "1.5.5.2",
+     "[SF2.5.2] Compute motors speed command",
+     16
+    ],
+    [
+     "PA",
+     "1.1.1.5",
+     "[SF6.1.5] Compute the flight plan",
+     14
+    ],
+    [
+     "LA",
+     "1.3",
+     "[LogFun_3] Provide drone navigation data",
+     13
+    ],
+    [
+     "PA",
+     "1.2.3.1",
+     "[SF7.3.1] Compare drone attitude",
+     13
+    ],
+    [
+     "PA",
+     "1.19",
+     "[Env] Interact with drone",
+     13
+    ],
+    [
+     "LA",
+     "1.4.4",
+     "[LogFun_4_4] Manage mission",
+     12
+    ],
+    [
+     "PA",
+     "1.2.3.4",
+     "[SF7.3.4] Monitor drone motors",
+     12
+    ],
+    [
+     "PA",
+     "1.2.3.5",
+     "[SF7.3.5] Disable drone motor",
+     11
+    ],
+    [
+     "PA",
+     "1.2.2.3",
+     "[SF7.2.3] Select attitude consign MON",
+     10
+    ],
+    [
+     "PA",
+     "1.4.5",
+     "[SF1.5] Reconstitute global thrust and torque",
+     10
+    ],
+    [
+     "PA",
+     "1.5.3.2",
+     "[SF2.3.2] Select attitude consign",
+     10
+    ],
+    [
+     "PA",
+     "1.7.2.1",
+     "[SF4.2.1] Run flight plan",
+     10
+    ],
+    [
+     "SA",
+     "1.3",
+     "[SysFun_3] Provide drone navigation data",
+     9
+    ],
+    [
+     "LA",
+     "1.6.1",
+     "[LogFun_6_1] Detect and mitigate failures",
+     9
+    ],
+    [
+     "PA",
+     "1.1.3.3",
+     "[SF6.3.3] Generate mission report",
+     9
+    ],
+    [
+     "PA",
+     "1.2.3.3",
+     "[SF7.3.3] Compare drone motor commands",
+     9
+    ],
+    [
+     "SA",
+     "1.6",
+     "[SysFun_6] Detect AIDA failures",
+     8
+    ],
+    [
+     "LA",
+     "1.4.9",
+     "[LogFun_4_9] Control drone attitude and thrust",
+     8
+    ],
+    [
+     "PA",
+     "1.2.2.7",
+     "[SF7.2.7] Compute thrust MON",
+     8
+    ],
+    [
+     "PA",
+     "1.2.2.8",
+     "[SF7.2.8] Compute motor rate MON",
+     8
+    ],
+    [
+     "PA",
+     "1.5.1.4",
+     "[SF2.1.4] Compute thrust and attitude consign",
+     8
+    ],
+    [
+     "PA",
+     "1.5.5.1",
+     "[SF2.5.1] Compute motors expected thrust",
+     8
+    ],
+    [
+     "SA",
+     "1.2",
+     "[SysFun_2] Define mission",
+     7
+    ],
+    [
+     "SA",
+     "1.5",
+     "[SysFun_5] Acquire visual information",
+     7
+    ],
+    [
+     "LA",
+     "1.2",
+     "[LogFun_2] Define mission",
+     7
+    ],
+    [
+     "LA",
+     "1.4.5",
+     "[LogFun_4_5] Control drone position and speed",
+     7
+    ]
+   ]
+  },
+  "mdl.layer": {
+   "OA": 33,
+   "SA": 255,
+   "LA": 165,
+   "PA": 862,
+   "EPBS": 5,
+   "Transverse": 17182
+  },
+  "mdl.n": 18502,
+  "mdl.rels": {
+   "Échange fonctionnel (fonction → fonction)": 427,
+   "Capacité → fonction impliquée": 249,
+   "Échange de composants → échange fonctionnel alloué": 233,
+   "Port physique → port de composant alloué": 188,
+   "Chaîne fonctionnelle → échange impliqué": 157,
+   "Sous-fonction physique": 146,
+   "Chaîne fonctionnelle → fonction impliquée": 139,
+   "Échange de composants (composant → composant)": 131,
+   "Composant physique → fonction (réalise)": 129,
+   "Lien / chemin physique → échange de composants alloué": 98,
+   "Lien physique (composant ↔ composant)": 93,
+   "Fonction → fonction réalisée (couche supérieure)": 59,
+   "Échange fonctionnel → échange réalisé (couche supérieure)": 58,
+   "Capacité → système / acteur impliqué": 49,
+   "Sous-composant comportemental": 47,
+   "Sous-composant nœud": 41,
+   "Composant logique → fonction (réalise)": 41,
+   "Déploie (comportement sur nœud)": 38,
+   "Composant → composant réalisé (couche supérieure)": 27,
+   "Réalisation de capacité → composant physique impliqué": 23,
+   "Mission → système / acteur impliqué": 23,
+   "Sous-fonction logique": 22,
+   "Système / acteur → fonction (réalise)": 22,
+   "Réalisation de capacité → composant logique impliqué": 14,
+   "Mission → capacité exploitée": 14,
+   "Échange → élément échangé (Exchange Item)": 12,
+   "Sous-activité opérationnelle": 10,
+   "Entité → activité (réalise)": 10,
+   "Sous-composant logique": 8,
+   "Capacité opérationnelle → entité impliquée": 4,
+   "Capacité → chaîne fonctionnelle impliquée": 3,
+   "Sous-composant physique (nature mixte)": 2
+  },
+  "mdl.types": {
+   "Transfo Link": 2817,
+   "Message End": 1532,
+   "Sequence Message": 766,
+   "Execution End": 766,
+   "Execution": 766,
+   "Event Sent Operation": 766,
+   "Event Receipt Operation": 766,
+   "Execution Event": 766,
+   "Interaction State": 714,
+   "Instance Role": 550,
+   "Port Allocation": 433,
+   "Functional Exchange": 427,
+   "Function Input Port": 420,
+   "Property Value Group": 392,
+   "State Fragment": 357,
+   "Catalog Element Link": 342,
+   "EnumerationPropertyValue": 315,
+   "Function Output Port": 311,
+   "Component Port": 258,
+   "Abstract Function Abstract Capability Involvement": 249,
+   "Component Exchange Functional Exchange Allocation": 233,
+   "Component Functional Allocation": 202,
+   "Constraint": 201,
+   "Opaque Expression": 201,
+   "Component Port Allocation": 188,
+   "Physical Port": 183,
+   "Physical Function": 158,
+   "Functional Chain Involvement Link": 157,
+   "Region": 147,
+   "Fragment End": 144,
+   "Functional Chain Involvement Function": 139,
+   "Part": 135,
+   "FloatPropertyValue": 132,
+   "Component Exchange": 131,
+   "Requirement": 118,
+   "CapellaIncomingRelation": 116,
+   "Physical Path Involvement": 104,
+   "Physical Component": 102,
+   "Component Exchange Allocation": 98,
+   "Port Realization": 95,
+   "Mode": 94,
+   "Physical Link": 93,
+   "Generic Trace": 90,
+   "Interaction Operand": 86,
+   "State Transition": 82,
+   "Scenario": 64,
+   "Function Realization": 59,
+   "Functional Exchange Realization": 58,
+   "StringPropertyValue": 50,
+   "Capability Involvement": 49,
+   "Combined Fragment": 46,
+   "Logical Function": 45,
+   "Part Deployment Link": 43,
+   "Scenario Realization": 37,
+   "Capability Realization Involvement": 37,
+   "Folder": 37,
+   "State Machine": 34,
+   "PartMass": 34,
+   "EnumValue": 29,
+   "Component Realization": 27,
+   "Interaction Use": 26,
+   "Catalog Element": 24,
+   "Numeric Type": 24,
+   "Literal Numeric Value": 24,
+   "System Function": 23,
+   "Mission Involvement": 23,
+   "Capability Realization": 23,
+   "Exchange Category": 22,
+   "Information Realization": 22,
+   "Enumeration Property Literal": 20,
+   "InternalRelation": 20,
+   "RequirementsPkg": 19,
+   "Exchange Item": 19,
+   "RequirementsTrace": 18,
+   "State": 18,
+   "SystemFunctionalRequirement": 17,
+   "Functional Chain": 17,
+   "Abstract Capability Realization": 17,
+   "Logical Component": 17,
+   "Final State": 15,
+   "Abstract State Realization": 15,
+   "Initial Pseudo State": 14,
+   "Capability Exploitation": 14,
+   "Data Package": 13,
+   "State Transition Realization": 13,
+   "Boolean Property Value": 12,
+   "Capability": 12,
+   "Physical Path": 12,
+   "Operational Activity": 11,
+   "EnumerationValueAttribute": 11,
+   "System Component": 10,
+   "ComponentExchangeRealization": 10,
+   "Capability Realization Package": 7,
+   "EnumerationDataTypeDefinition": 7,
+   "AttributeDefinitionEnumeration": 7,
+   "Property Value Package": 6,
+   "SystemNonFunctionalRequirement": 6,
+   "DataTypeDefinition": 6,
+   "Interface Package": 5,
+   "Entity": 5,
+   "SystemUserRequirement": 5,
+   "Operational Capability": 4,
+   "Abstract Capability Include": 4,
+   "Entity Operational Capability Involvement": 4,
+   "System Function Package": 4,
+   "Literal Boolean Value": 4,
+   "String Type": 4,
+   "BinaryExpression": 4,
+   "Mission": 4,
+   "Logical Function Package": 4,
+   "Physical Component Package": 4,
+   "Enumeration Property Type": 3,
+   "Compliancy Definition": 3,
+   "Operational Process": 3,
+   "Functional Chain Abstract Capability Involvement": 3,
+   "Capability Package": 3,
+   "AttributeDefinition": 3,
+   "Physical Function Package": 3,
+   "SystemFunctionalInterfaceRequirement": 2,
+   "Boolean Type": 2,
+   "Logical Component Package": 2,
+   "RelationType": 2,
+   "PhysicalPathReference": 2,
+   "Model Information": 1,
+   "Key Value": 1,
+   "System Engineering": 1,
+   "Rec Catalog": 1,
+   "Compliancy Definition Package": 1,
+   "Operational Analysis": 1,
+   "Operational Activity Package": 1,
+   "Operational Capability Package": 1,
+   "Role Package": 1,
+   "Entity Package": 1,
+   "System Analysis": 1,
+   "Functional Chain Reference": 1,
+   "System Component Package": 1,
+   "Mission Package": 1,
+   "Operational Analysis Realization": 1,
+   "Logical Architecture": 1,
+   "Functional Chain Realization": 1,
+   "System Analysis Realization": 1,
+   "Physical Architecture": 1,
+   "CapellaTypesFolder": 1,
+   "RequirementType": 1,
+   "CapellaModule": 1,
+   "StringValueAttribute": 1,
+   "IntegerValueAttribute": 1,
+   "ConstraintDuration": 1,
+   "Logical Architecture Realization": 1,
+   "EPBS Architecture": 1,
+   "Configuration Item Package": 1,
+   "Configuration Item": 1,
+   "Physical Artifact Realization": 1,
+   "Physical Architecture Realization": 1
+  },
+  "pl.ce": {
+   "pct": 46,
+   "num": 43,
+   "den": 93
+  },
+  "pl.comp": {
+   "Structure": 20,
+   "Drone Environment": 13,
+   "Flight controler": 13,
+   "Drone control desk": 9,
+   "Drone pilot": 9,
+   "Power supply": 9,
+   "Remote structure": 8,
+   "Motor Control and Protection System 1": 7,
+   "Motor Control and Protection System 2": 7,
+   "Motor Control and Protection System 3": 7,
+   "Remote communication": 6,
+   "Motor Control and Protection System 4": 6,
+   "Payload control": 5,
+   "Optical flow sensor": 4,
+   "LIDAR altimeter": 4,
+   "GPS receiver": 4,
+   "Remote switch": 4,
+   "Motor 2": 4,
+   "Motor 1": 4,
+   "Motor 4": 4,
+   "Motor 3": 4,
+   "Left and right side sticks": 3,
+   "Push button": 3,
+   "Camera control device": 3,
+   "Camera sensor": 3,
+   "Remote battery": 3,
+   "Wifi controller": 3,
+   "RC receiver": 3,
+   "Camera rotary support": 3,
+   "Propeller 1": 2,
+   "Propeller 2": 2,
+   "Propeller 4": 2,
+   "Propeller 3": 2,
+   "Positioning System": 1,
+   "Data base": 1,
+   "Aircraft": 1
+  },
+  "pl.layer": {
+   "PA": 93
+  },
+  "pl.n": 93,
+  "pl.nocp": 75,
+  "pl.orph": 0,
+  "pt.cp": {
+   "pct": 89,
+   "num": 188,
+   "den": 212
+  },
+  "pt.fp": {
+   "pct": 57,
+   "num": 418,
+   "den": 731
+  },
+  "pt.pp": {
+   "pct": 59,
+   "num": 108,
+   "den": 183
+  },
+  "pv.chk": {
+   "Éléments concernés par un groupe PVMT mais non renseignés": 128,
+   "Valeurs numériques restées à la valeur par défaut (0)": 64,
+   "Groupes appliqués sans lien vers leur définition": 18
+  },
+  "pv.grp": {
+   "FDAL": 158,
+   "Extension_1": 94,
+   "IDAL": 65,
+   "Power_consumption": 65
+  },
+  "pv.n": 452,
+  "pv.set": {
+   "pct": 85,
+   "num": 382,
+   "den": 452
+  },
+  "pv.sum.Power_consumption › power_consumption": 811,
+  "pv.sum.Power_consumption › targeted power consumption": 3160,
+  "rq.at.Conformity": {
+   "(non renseigné)": 147,
+   "COMPLIANT": 1
+  },
+  "rq.at.Means Of Compliance": {
+   "(non renseigné)": 147,
+   "ANALYSIS": 1
+  },
+  "rq.at.Requirement Type": {
+   "(non renseigné)": 147,
+   "DEFINITION": 1
+  },
+  "rq.at.Safety": {
+   "(non renseigné)": 147,
+   "NO": 1
+  },
+  "rq.at.Status": {
+   "(non renseigné)": 147,
+   "MATURE": 1
+  },
+  "rq.at.Terminal": {
+   "(non renseigné)": 147,
+   "YES": 1
+  },
+  "rq.at.Traceability Type": {
+   "(non renseigné)": 147,
+   "DIRECT": 1
+  },
+  "rq.chk": {
+   "Composants / acteurs sans exigence": 84,
+   "Fonctions feuilles sans exigence": 16,
+   "Exigences liées à aucun élément du modèle": 14,
+   "Identifiants en double": 2
+  },
+  "rq.cov": {
+   "pct": 91,
+   "num": 134,
+   "den": 148
+  },
+  "rq.kind": {
+   "AIDA requirements for RV&V": 117,
+   "SystemFunctionalRequirement": 17,
+   "SystemNonFunctionalRequirement": 6,
+   "SystemUserRequirement": 5,
+   "SystemFunctionalInterfaceRequirement": 2,
+   "Requirement": 1
+  },
+  "rq.layer": {
+   "SA": 18,
+   "PA": 116
+  },
+  "rq.n": 148,
+  "sc.chk": null,
+  "sc.kind": {
+   "FS": 34,
+   "ES": 30
+  },
+  "sc.layer": {
+   "SA": 41,
+   "LA": 12,
+   "PA": 11
+  },
+  "sc.n": 64,
+  "sm.chk": {
+   "Régions sans état initial": 25,
+   "États inatteignables": 1,
+   "États sans issue": 2,
+   "Transitions sans déclencheur": 8
+  },
+  "sm.n": 34,
+  "sm.owner": {
+   "AIDA": 2,
+   "Flight control and monitoring system": 2,
+   "Drone": 5,
+   "Physical System": 3,
+   "Payload control": 4,
+   "Flight control system": 4,
+   "Control desk": 3,
+   "Propulsion system": 3,
+   "Propulsion unit 1": 3,
+   "Motor 1": 3,
+   "Propulsion unit 2": 3,
+   "Motor 2": 3,
+   "Propulsion unit 3": 3,
+   "Motor 3": 3,
+   "Propulsion unit 4": 3,
+   "Motor 4": 3,
+   "Payload": 3,
+   "Wifi controller": 3,
+   "Motor Control and Protection System 1": 2,
+   "Motor Control and Protection System 2": 2,
+   "Motor Control and Protection System 3": 2,
+   "Motor Control and Protection System 4": 2,
+   "Camera sensor": 2,
+   "Camera rotary support": 2,
+   "Flight controler": 2,
+   "Optical flow sensor": 2,
+   "GPS receiver": 2,
+   "LIDAR altimeter": 2,
+   "RC receiver": 2
+  },
+  "tr.dn.cap": {
+   "OA→SA": 100,
+   "SA→LA": 75
+  },
+  "tr.dn.ce": {
+   "SA→LA": 100
+  },
+  "tr.dn.chain": {
+   "SA→LA": 33
+  },
+  "tr.dn.comp": {
+   "OA→SA": 100,
+   "SA→LA": 100,
+   "LA→PA": 53,
+   "PA→EPBS": 1
+  },
+  "tr.dn.data": {
+   "SA→LA": 96
+  },
+  "tr.dn.fe": {
+   "OA→SA": 100,
+   "SA→LA": 100
+  },
+  "tr.dn.fn": {
+   "OA→SA": 100,
+   "SA→LA": 100,
+   "LA→PA": 29
+  },
+  "tr.dn.port": {
+   "SA→LA": 98,
+   "LA→PA": 1
+  },
+  "tr.dn.scen": {
+   "SA→LA": 29
+  },
+  "tr.dn.state": {
+   "SA→LA": 6
+  },
+  "tr.n": 355,
+  "tr.tab": {
+   "cols": [
+    "Catégorie",
+    "OA→SA",
+    "SA→LA",
+    "LA→PA",
+    "PA→EPBS"
+   ],
+   "lignes": 10,
+   "rows": [
+    [
+     "Fonctions / activités",
+     "▼ 100 % · ▲ 48 %",
+     "▼ 100 % · ▲ 49 %",
+     "▼ 29 % · ▲ 2 %",
+     "—"
+    ],
+    [
+     "Composants / acteurs",
+     "▼ 100 % · ▲ 80 %",
+     "▼ 100 % · ▲ 59 %",
+     "▼ 53 % · ▲ 9 %",
+     "▼ 1 % · ▲ 100 %"
+    ],
+    [
+     "Functional Exchanges",
+     "▼ 100 % · ▲ 24 %",
+     "▼ 100 % · ▲ 55 %",
+     "—",
+     "—"
+    ],
+    [
+     "Component Exchanges",
+     "—",
+     "▼ 100 % · ▲ 59 %",
+     "—",
+     "—"
+    ],
+    [
+     "Ports",
+     "—",
+     "▼ 98 % · ▲ 55 %",
+     "▼ 1 % · ▲ 0 %",
+     "—"
+    ],
+    [
+     "Capacités / missions",
+     "▼ 100 % · ▲ 31 %",
+     "▼ 75 % · ▲ 100 %",
+     "—",
+     "—"
+    ],
+    [
+     "Chaînes / processus",
+     "—",
+     "▼ 33 % · ▲ 100 %",
+     "—",
+     "—"
+    ],
+    [
+     "Scénarios",
+     "—",
+     "▼ 29 % · ▲ 100 %",
+     "—",
+     "—"
+    ],
+    [
+     "États, modes, transitions",
+     "—",
+     "▼ 6 % · ▲ 8 %",
+     "—",
+     "—"
+    ],
+    [
+     "Données / Exchange Items",
+     "—",
+     "▼ 96 % · ▲ 96 %",
+     "—",
+     "—"
+    ]
+   ]
+  },
+  "tr.up.cap": {
+   "OA→SA": 31,
+   "SA→LA": 100
+  },
+  "tr.up.ce": {
+   "SA→LA": 59
+  },
+  "tr.up.chain": {
+   "SA→LA": 100
+  },
+  "tr.up.comp": {
+   "OA→SA": 80,
+   "SA→LA": 59,
+   "LA→PA": 9,
+   "PA→EPBS": 100
+  },
+  "tr.up.data": {
+   "SA→LA": 96
+  },
+  "tr.up.fe": {
+   "OA→SA": 24,
+   "SA→LA": 55
+  },
+  "tr.up.fn": {
+   "OA→SA": 48,
+   "SA→LA": 49,
+   "LA→PA": 2
+  },
+  "tr.up.port": {
+   "SA→LA": 55,
+   "LA→PA": 0
+  },
+  "tr.up.scen": {
+   "SA→LA": 100
+  },
+  "tr.up.state": {
+   "SA→LA": 8
+  }
+ }
+}

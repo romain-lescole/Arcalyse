@@ -5,7 +5,7 @@
  * Vérifie aussi qu'aucun élément du tableau de bord ne déborde de son cadre.
  *
  * Installation (une seule fois) :  npm install --save-dev playwright  puis  npx playwright install chromium
- * Lancement :                      node tests/smoke.js [chemin/vers/modele.capella]
+ * Lancement :                      node tests/smoke.js [chemin/vers/modele.capella]   (CHROMIUM_PATH=/chemin/vers/chrome pour un Chromium déjà installé)
  * Version anglaise :               node tests/smoke.js --en [modele]  (après node build.js --lang en)
  * Version multilingue :            node tests/smoke.js --multi [--fr] [modele]  (après node build.js --lang multi ; anglais par défaut)
  * (par défaut : premier fichier .capella trouvé dans tests/models/)
@@ -24,7 +24,8 @@ if (!fs.existsSync(page)) { console.error('Lancez d\'abord : node build.js' + (M
 if (!model) { console.error('Aucun modèle : placez un .capella dans tests/models/ ou passez-le en argument'); process.exit(2); }
 
 (async () => {
-  const browser = await chromium.launch();
+  const exe = process.env.CHROMIUM_PATH;   // Chromium déjà installé (sinon : npx playwright install chromium)
+  const browser = await chromium.launch(exe ? { executablePath: exe } : {});
   const ctx = await browser.newContext({ offline: true, viewport: { width: 1500, height: 900 } });
   const p = await ctx.newPage();
   const errs = []; p.on('pageerror', e => errs.push(e.message));

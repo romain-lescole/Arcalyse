@@ -1,0 +1,2052 @@
+{
+ "modele": {
+  "elements": 5473,
+  "parCouche": {
+   "EPBS": 42,
+   "LA": 209,
+   "OA": 53,
+   "PA": 337,
+   "SA": 193,
+   "Shared": 4639
+  },
+  "parType": {
+   "AbstractCapabilityInclude": 1,
+   "AbstractCapabilityRealization": 26,
+   "AbstractFunctionAbstractCapabilityInvolvement": 65,
+   "AbstractStateRealization": 31,
+   "Association": 14,
+   "BooleanType": 2,
+   "Capability": 13,
+   "CapabilityExploitation": 12,
+   "CapabilityInvolvement": 33,
+   "CapabilityPkg": 1,
+   "CapabilityRealization": 23,
+   "CapabilityRealizationInvolvement": 58,
+   "CapabilityRealizationPkg": 3,
+   "CatalogElement": 4,
+   "CatalogElementLink": 32,
+   "CatalogElementPkg": 2,
+   "ChangeEvent": 3,
+   "ChoicePseudoState": 4,
+   "Class": 34,
+   "CombinedFragment": 4,
+   "CommunicationMean": 2,
+   "CompliancyDefinition": 3,
+   "CompliancyDefinitionPkg": 1,
+   "ComponentExchange": 23,
+   "ComponentExchangeAllocation": 1,
+   "ComponentExchangeFunctionalExchangeAllocation": 26,
+   "ComponentFunctionalAllocation": 179,
+   "ComponentPort": 52,
+   "ComponentPortAllocation": 2,
+   "ComponentRealization": 33,
+   "ConfigurationItem": 11,
+   "ConfigurationItemPkg": 1,
+   "Constraint": 25,
+   "ControlNode": 4,
+   "DataPkg": 16,
+   "DeepHistoryPseudoState": 2,
+   "EPBSArchitecture": 1,
+   "Entity": 8,
+   "EntityOperationalCapabilityInvolvement": 6,
+   "EntityPkg": 1,
+   "Enumeration": 9,
+   "EnumerationLiteral": 28,
+   "EnumerationPropertyLiteral": 7,
+   "EnumerationPropertyType": 1,
+   "EventReceiptOperation": 80,
+   "EventSentOperation": 80,
+   "ExchangeCategory": 32,
+   "ExchangeItem": 17,
+   "ExchangeItemAllocation": 5,
+   "ExchangeItemElement": 22,
+   "Execution": 80,
+   "ExecutionEnd": 80,
+   "ExecutionEvent": 80,
+   "FinalState": 4,
+   "FragmentEnd": 10,
+   "FunctionInputPort": 248,
+   "FunctionOutputPort": 234,
+   "FunctionRealization": 143,
+   "FunctionalChain": 35,
+   "FunctionalChainAbstractCapabilityInvolvement": 31,
+   "FunctionalChainInvolvementFunction": 176,
+   "FunctionalChainInvolvementLink": 161,
+   "FunctionalChainRealization": 18,
+   "FunctionalChainReference": 5,
+   "FunctionalExchange": 272,
+   "FunctionalExchangeRealization": 142,
+   "Generalization": 7,
+   "InformationRealization": 26,
+   "InitialPseudoState": 9,
+   "InstanceRole": 59,
+   "InteractionOperand": 8,
+   "InteractionState": 94,
+   "InteractionUse": 1,
+   "Interface": 4,
+   "InterfacePkg": 5,
+   "KeyValue": 226,
+   "LiteralNumericValue": 224,
+   "LogicalArchitecture": 1,
+   "LogicalArchitectureRealization": 1,
+   "LogicalComponent": 23,
+   "LogicalComponentPkg": 1,
+   "LogicalFunction": 64,
+   "LogicalFunctionPkg": 1,
+   "MessageEnd": 160,
+   "Mission": 5,
+   "MissionInvolvement": 15,
+   "MissionPkg": 1,
+   "Mode": 48,
+   "ModelInformation": 1,
+   "NumericType": 5,
+   "OpaqueExpression": 24,
+   "OperationalActivity": 24,
+   "OperationalActivityPkg": 1,
+   "OperationalAnalysis": 1,
+   "OperationalAnalysisRealization": 1,
+   "OperationalCapability": 3,
+   "OperationalCapabilityPkg": 1,
+   "OperationalProcess": 2,
+   "Part": 111,
+   "PartDeploymentLink": 22,
+   "PhysicalArchitecture": 1,
+   "PhysicalArchitectureRealization": 1,
+   "PhysicalArtifactRealization": 28,
+   "PhysicalComponent": 64,
+   "PhysicalComponentPkg": 1,
+   "PhysicalFunction": 103,
+   "PhysicalFunctionPkg": 2,
+   "PhysicalLink": 21,
+   "PhysicalPath": 2,
+   "PhysicalPathInvolvement": 18,
+   "PhysicalPort": 37,
+   "PhysicalQuantity": 4,
+   "PortAllocation": 69,
+   "PortRealization": 219,
+   "Property": 88,
+   "RecCatalog": 1,
+   "Region": 61,
+   "RolePkg": 1,
+   "Scenario": 13,
+   "ScenarioRealization": 7,
+   "SequenceLink": 12,
+   "SequenceMessage": 80,
+   "State": 6,
+   "StateFragment": 47,
+   "StateMachine": 5,
+   "StateTransition": 85,
+   "StateTransitionRealization": 32,
+   "StringType": 2,
+   "SystemAnalysis": 1,
+   "SystemAnalysisRealization": 1,
+   "SystemComponent": 5,
+   "SystemComponentPkg": 1,
+   "SystemEngineering": 1,
+   "SystemFunction": 44,
+   "SystemFunctionPkg": 1,
+   "TransfoLink": 464,
+   "Unit": 4
+  }
+ },
+ "relations": {
+  "pcNode_pcNode": 20,
+  "pcBeh_pcBeh": 29,
+  "pcRoot_pcAny": 10,
+  "pcNode_pcBeh": 22,
+  "pcBeh_fn": 77,
+  "fn_fn": 101,
+  "lc_lc": 18,
+  "lf_lf": 63,
+  "lc_lf": 48,
+  "sf_sf": 43,
+  "sc_sf": 32,
+  "oa_oa": 23,
+  "entity_oa": 22,
+  "cap_comp": 33,
+  "lcap_lcomp": 30,
+  "pcap_pcomp": 28,
+  "ocap_entity": 6,
+  "mission_comp": 15,
+  "mission_cap": 12,
+  "fe_fn": 272,
+  "ce_comp": 23,
+  "pl_pc": 21,
+  "ex_ei": 20,
+  "fn_real": 143,
+  "comp_real": 33,
+  "fe_real": 142,
+  "ce_fe": 26,
+  "pl_ce": 1,
+  "pp_cp": 2,
+  "fc_fn": 176,
+  "fc_fe": 161,
+  "cap_fn": 65,
+  "cap_fc": 31
+ },
+ "chaines": {
+  "nombre": 39,
+  "parType": {
+   "FunctionalChain": 35,
+   "OperationalProcess": 2,
+   "PhysicalPath": 2
+  },
+  "parCouche": {
+   "LA": 10,
+   "OA": 2,
+   "PA": 17,
+   "SA": 10
+  },
+  "noeuds": 186,
+  "aretes": 169,
+  "vides": 15
+ },
+ "fonctions": {
+  "nombre": 235,
+  "parCouche": {
+   "LA": 64,
+   "OA": 24,
+   "PA": 103,
+   "SA": 44
+  },
+  "feuilles": 181,
+  "allouees": 179,
+  "parAllocation": {
+   "act": 66,
+   "none": 2,
+   "parent": 54,
+   "sys": 113
+  },
+  "realisees": 113,
+  "avecDescription": 192
+ },
+ "qualiteNoms": {
+  "langues": {
+   "": 4,
+   "EN": 231
+  },
+  "defauts": {
+   "noverb": 14,
+   "short": 10,
+   "space": 4,
+   "vague": 29
+  }
+ },
+ "tracabilite": [
+  {
+   "cat": "fn",
+   "de": "OA",
+   "vers": "SA",
+   "haut": 24,
+   "hautOk": 9,
+   "bas": 44,
+   "basOk": 15
+  },
+  {
+   "cat": "fn",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 44,
+   "hautOk": 40,
+   "bas": 64,
+   "basOk": 61
+  },
+  {
+   "cat": "fn",
+   "de": "LA",
+   "vers": "PA",
+   "haut": 64,
+   "hautOk": 64,
+   "bas": 103,
+   "basOk": 65
+  },
+  {
+   "cat": "comp",
+   "de": "OA",
+   "vers": "SA",
+   "haut": 8,
+   "hautOk": 4,
+   "bas": 5,
+   "basOk": 4
+  },
+  {
+   "cat": "comp",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 5,
+   "hautOk": 5,
+   "bas": 23,
+   "basOk": 5
+  },
+  {
+   "cat": "comp",
+   "de": "LA",
+   "vers": "PA",
+   "haut": 23,
+   "hautOk": 23,
+   "bas": 64,
+   "basOk": 24
+  },
+  {
+   "cat": "comp",
+   "de": "PA",
+   "vers": "EPBS",
+   "haut": 64,
+   "hautOk": 22,
+   "bas": 11,
+   "basOk": 10
+  },
+  {
+   "cat": "fe",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 41,
+   "hautOk": 41,
+   "bas": 88,
+   "basOk": 52
+  },
+  {
+   "cat": "fe",
+   "de": "LA",
+   "vers": "PA",
+   "haut": 88,
+   "hautOk": 88,
+   "bas": 120,
+   "basOk": 88
+  },
+  {
+   "cat": "pl",
+   "de": "PA",
+   "vers": "EPBS",
+   "haut": 21,
+   "hautOk": 6,
+   "bas": 11,
+   "basOk": 1
+  },
+  {
+   "cat": "port",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 81,
+   "hautOk": 61,
+   "bas": 196,
+   "basOk": 61
+  },
+  {
+   "cat": "port",
+   "de": "LA",
+   "vers": "PA",
+   "haut": 196,
+   "hautOk": 158,
+   "bas": 294,
+   "basOk": 158
+  },
+  {
+   "cat": "cap",
+   "de": "OA",
+   "vers": "SA",
+   "haut": 3,
+   "hautOk": 1,
+   "bas": 18,
+   "basOk": 3
+  },
+  {
+   "cat": "cap",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 18,
+   "hautOk": 13,
+   "bas": 13,
+   "basOk": 13
+  },
+  {
+   "cat": "cap",
+   "de": "LA",
+   "vers": "PA",
+   "haut": 13,
+   "hautOk": 10,
+   "bas": 10,
+   "basOk": 10
+  },
+  {
+   "cat": "chain",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 10,
+   "hautOk": 10,
+   "bas": 10,
+   "basOk": 10
+  },
+  {
+   "cat": "chain",
+   "de": "LA",
+   "vers": "PA",
+   "haut": 10,
+   "hautOk": 7,
+   "bas": 17,
+   "basOk": 8
+  },
+  {
+   "cat": "scen",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 6,
+   "hautOk": 4,
+   "bas": 6,
+   "basOk": 5
+  },
+  {
+   "cat": "state",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 108,
+   "hautOk": 63,
+   "bas": 118,
+   "basOk": 63
+  },
+  {
+   "cat": "data",
+   "de": "LA",
+   "vers": "PA",
+   "haut": 24,
+   "hautOk": 22,
+   "bas": 39,
+   "basOk": 23
+  }
+ ],
+ "functionalExchange": {
+  "echanges": 272,
+  "parCouche": {
+   "LA": 88,
+   "OA": 23,
+   "PA": 120,
+   "SA": 41
+  },
+  "fonctions": 235
+ },
+ "composants": {
+  "composants": 100,
+  "parCouche": {
+   "LA": 23,
+   "OA": 8,
+   "PA": 64,
+   "SA": 5
+  },
+  "acteurs": 16,
+  "ports": 52,
+  "liens": 23
+ },
+ "componentExchange": {
+  "nombre": 23,
+  "parCouche": {
+   "LA": 12,
+   "PA": 11
+  },
+  "parSens": {
+   "bi": 5,
+   "fwd": 17,
+   "rev": 1
+  },
+  "incoherents": 0,
+  "avecFe": 13,
+  "avecPl": 0
+ },
+ "behaviorExchange": {
+  "nombre": 11
+ },
+ "physicalLink": {
+  "nombre": 21,
+  "avecCe": 0,
+  "ces": 0
+ },
+ "ports": {
+  "fp": 482,
+  "cp": 52,
+  "pp": 37,
+  "fe": 272,
+  "ce": 23,
+  "pl": 21,
+  "feVersCe": 26,
+  "ceVersPl": 1
+ },
+ "scenarios": {
+  "nombre": 13,
+  "parCouche": {
+   "LA": 6,
+   "OA": 1,
+   "SA": 6
+  },
+  "parType": {
+   "ES": 6,
+   "FS": 6,
+   "OES": 1
+  },
+  "messages": 80
+ },
+ "capacites": {
+  "nombre": 44,
+  "parCouche": {
+   "LA": 13,
+   "OA": 3,
+   "PA": 10,
+   "SA": 18
+  },
+  "avecFonctions": 9,
+  "avecChaines": 6,
+  "avecScenarios": 9
+ },
+ "etats": {
+  "machines": 5,
+  "etats": 73,
+  "transitions": 85
+ },
+ "exigences": {
+  "nombre": 0,
+  "parSource": {},
+  "parType": {},
+  "elementsLies": 0
+ },
+ "pvmt": {
+  "definitions": 0,
+  "valeurs": 0,
+  "elementsValues": 0
+ },
+ "donnees": {
+  "exchangeItems": 17,
+  "interfaces": 4,
+  "types": 56,
+  "fes": 272,
+  "ces": 25
+ },
+ "liensCouches": {
+  "fn": {
+   "noeuds": 178,
+   "aretes": 143,
+   "tronque": false
+  },
+  "comp": {
+   "noeuds": 80,
+   "aretes": 55,
+   "tronque": false
+  },
+  "fe": {
+   "noeuds": 217,
+   "aretes": 142,
+   "tronque": false
+  },
+  "ce": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "pl": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "port": {
+   "noeuds": 379,
+   "aretes": 219,
+   "tronque": false
+  },
+  "cap": {
+   "noeuds": 37,
+   "aretes": 26,
+   "tronque": false
+  },
+  "chain": {
+   "noeuds": 101,
+   "aretes": 66,
+   "tronque": false
+  },
+  "scen": {
+   "noeuds": 11,
+   "aretes": 7,
+   "tronque": false
+  },
+  "state": {
+   "noeuds": 126,
+   "aretes": 63,
+   "tronque": false
+  },
+  "data": {
+   "noeuds": 51,
+   "aretes": 26,
+   "tronque": false
+  }
+ },
+ "controles": {
+  "fonctions": {
+   "Noms ne commençant pas par un verbe": 14,
+   "Verbes peu précis en tête du nom": 29,
+   "Présentation des noms": 4,
+   "Noms trop longs ou d'un seul mot": 10,
+   "Langue minoritaire dans la couche": 0,
+   "Fonctions sans description": 39,
+   "Descriptions trop courtes ou identiques au nom": 0,
+   "Marqueurs de travail en cours (TODO, TBD, NOT DONE…)": 0,
+   "Noms en double dans une même couche": 0,
+   "Fonctions feuilles non allouées": 2,
+   "Fonctions allouées à plusieurs composants": 0,
+   "Fonctions mères allouées": 0,
+   "Fonctions feuilles sans aucun échange": 24,
+   "Échanges portés par des fonctions mères": 0,
+   "Ports de fonction sans échange": 2,
+   "Fonctions feuilles non réalisées à la couche inférieure": 18,
+   "Fonctions feuilles ne réalisant rien à la couche supérieure": 54
+  },
+  "functionalExchange": {
+   "Ports de fonction orphelins (sans échange)": 2,
+   "Échanges sans Exchange Item": 252,
+   "Fonctions feuilles sans aucun échange": 24,
+   "Fonctions mères portant des ports": 0,
+   "Échanges LA / PA non alloués à un Component Exchange": 182
+  },
+  "composants": {
+   "Ports de composant orphelins (sans Component Exchange)": 6,
+   "Ports connectés sans orientation (UNSET)": 0,
+   "Échanges aux orientations incohérentes": 0,
+   "Composants feuilles sans port": 42,
+   "Composants feuilles sans fonction allouée": 16
+  },
+  "scenarios": {
+   "Scénarios vides (aucun message)": 0,
+   "Messages sans échange": 0,
+   "Lignes de vie sans élément représenté": 0,
+   "Scénarios hors capacité": 0,
+   "Références vers un scénario introuvable": 0
+  },
+  "exigences": {},
+  "pvmt": {},
+  "donnees": {
+   "Exchange Items portés par aucun échange ni interface": 1,
+   "Exchange Items sans élément (contenu non décrit)": 0,
+   "Functional Exchanges sans Exchange Item": 188,
+   "Interfaces sans Exchange Item alloué": 0,
+   "Interfaces ni fournies, ni requises, ni utilisées": 0,
+   "Exchange Items d'un FE absents des interfaces des ports du CE porteur": 0,
+   "Classes et types de données jamais utilisés": 3
+  },
+  "contraintes": {
+   "Contraintes vides (ni nom ni expression)": 1,
+   "Contraintes sans expression": 1,
+   "Expressions citant un élément introuvable": 0,
+   "Contraintes sans élément contraint explicite": 7,
+   "Contraintes en double sur un même élément": 0
+  },
+  "etats": {
+   "noInit": 4,
+   "unreach": 4,
+   "deadEnd": 19,
+   "noTrig": 29
+  }
+ },
+ "tableauDeBord": {
+  "cap.chk": {
+   "Sans fonction ni chaîne": 28,
+   "Sans acteur ni composant": 17,
+   "Sans scénario": 30
+  },
+  "cap.fn": {
+   "pct": 28,
+   "num": 11,
+   "den": 39
+  },
+  "cap.layer": {
+   "OA": 3,
+   "SA": 18,
+   "LA": 13,
+   "PA": 10
+  },
+  "cap.n": 44,
+  "cap.type": {
+   "Capability Realization": 23,
+   "Capability": 13,
+   "Mission": 5,
+   "Operational Capability": 3
+  },
+  "cb.chk.LA": {
+   "Composants feuilles sans port": 6
+  },
+  "cb.chk.PB": null,
+  "cb.chk.PN": null,
+  "cb.chk.SA": {
+   "Composants feuilles sans port": 1
+  },
+  "cb.n.LA": 23,
+  "cb.n.PB": 0,
+  "cb.n.PN": 0,
+  "cb.n.SA": 5,
+  "cb.ports.LA": {
+   "pct": 100,
+   "num": 24,
+   "den": 24
+  },
+  "cb.ports.PB": null,
+  "cb.ports.PN": null,
+  "cb.ports.SA": null,
+  "ce.comp": {
+   "Media Server": 6,
+   "Streaming Server": 5,
+   "Seat TV Interactions Manager": 3,
+   "Applications Server": 3,
+   "Cabin Terminal Interactions Manager": 3,
+   "Passenger": 3,
+   "Aircraft Interface": 2,
+   "Aircraft": 2,
+   "Seat TV Services Manager": 2,
+   "Seat TV Audio Video Player": 2,
+   "PVDU Airline-Specific Interactions Manager": 2,
+   "CMU Airline-Specific Interactions Manager": 2,
+   "Crew": 2,
+   "CMU Core Interactions Manager": 2,
+   "PVDU Core Interactions Manager": 2,
+   "PTV Video Player ": 2,
+   "Cabin Screen": 1,
+   "Cabin Screen SW": 1,
+   "PVDU Video Decoder": 1
+  },
+  "ce.dir": {
+   "→ Orienté": 17,
+   "⇄ Bidirectionnel": 5,
+   "← Inversé": 1
+  },
+  "ce.fe": {
+   "pct": 57,
+   "num": 13,
+   "den": 23
+  },
+  "ce.kind": {
+   "FLOW": 23
+  },
+  "ce.layer": {
+   "LA": 12,
+   "PA": 11
+  },
+  "ce.n": 23,
+  "ce.orph": 6,
+  "ce.papl": 11,
+  "ch.avg": 7.8,
+  "ch.empty": {
+   "Non vides": 24,
+   "Vides": 15
+  },
+  "ch.full": {
+   "pct": 62,
+   "num": 24,
+   "den": 39
+  },
+  "ch.kind": {
+   "Système": 129,
+   "Acteurs": 37,
+   "Non allouées": 4
+  },
+  "ch.layer": {
+   "OA": 2,
+   "SA": 10,
+   "LA": 10,
+   "PA": 17
+  },
+  "ch.n": 39,
+  "ch.top": {
+   "cols": [
+    "Chaîne",
+    "Type",
+    "Couche",
+    "Étapes",
+    "Échanges"
+   ],
+   "lignes": 30,
+   "rows": [
+    [
+     "Watch Imposed Video on Private Screen",
+     "Chaîne fonctionnelle",
+     "PA",
+     19,
+     18
+    ],
+    [
+     "Watch Imposed Video on Cabin Screen",
+     "Chaîne fonctionnelle",
+     "PA",
+     17,
+     17
+    ],
+    [
+     "Watch Imposed Video on Private Screen",
+     "Chaîne fonctionnelle",
+     "LA",
+     15,
+     14
+    ],
+    [
+     "Watch Imposed Video on Cabin Screen",
+     "Chaîne fonctionnelle",
+     "LA",
+     14,
+     14
+    ],
+    [
+     "Broadcast Audio Announcement",
+     "Chaîne fonctionnelle",
+     "PA",
+     11,
+     10
+    ],
+    [
+     "Broadcast VOD Movie",
+     "Chaîne fonctionnelle",
+     "PA",
+     11,
+     10
+    ],
+    [
+     "Broadcast Audio Announcement",
+     "Chaîne fonctionnelle",
+     "LA",
+     9,
+     8
+    ],
+    [
+     "Start Playing VOD Movie",
+     "Chaîne fonctionnelle",
+     "LA",
+     9,
+     8
+    ],
+    [
+     "Resume VOD Movie",
+     "Chaîne fonctionnelle",
+     "LA",
+     9,
+     8
+    ],
+    [
+     "Watch Imposed Video on Private Screen",
+     "Chaîne fonctionnelle",
+     "SA",
+     8,
+     7
+    ],
+    [
+     "Watch Imposed Video on Cabin Screen",
+     "Chaîne fonctionnelle",
+     "SA",
+     7,
+     7
+    ],
+    [
+     "Broadcast Audio Announcement",
+     "Chaîne fonctionnelle",
+     "SA",
+     6,
+     3
+    ],
+    [
+     "Start Playing VOD Movie",
+     "Chaîne fonctionnelle",
+     "SA",
+     6,
+     5
+    ],
+    [
+     "Resume VOD Movie",
+     "Chaîne fonctionnelle",
+     "SA",
+     6,
+     5
+    ],
+    [
+     "Start Playing VOD Movie",
+     "Chaîne fonctionnelle",
+     "PA",
+     6,
+     6
+    ],
+    [
+     "Resume VOD Movie",
+     "Chaîne fonctionnelle",
+     "PA",
+     6,
+     6
+    ],
+    [
+     "PFC AND",
+     "Chaîne fonctionnelle",
+     "PA",
+     5,
+     5
+    ],
+    [
+     "PVDU BUS",
+     "Chemin physique",
+     "PA",
+     5,
+     4
+    ],
+    [
+     "Network Path",
+     "Chemin physique",
+     "PA",
+     5,
+     4
+    ],
+    [
+     "PFC IT",
+     "Chaîne fonctionnelle",
+     "PA",
+     4,
+     3
+    ],
+    [
+     "Broadcast Safety Instructions Movie",
+     "Processus opérationnel",
+     "OA",
+     3,
+     2
+    ],
+    [
+     "Perform Audio Announcement",
+     "Processus opérationnel",
+     "OA",
+     3,
+     2
+    ],
+    [
+     "PFC1",
+     "Chaîne fonctionnelle",
+     "PA",
+     2,
+     1
+    ],
+    [
+     "Stop Playing Imposed Video [NOT DONE]",
+     "Chaîne fonctionnelle",
+     "SA",
+     0,
+     0
+    ],
+    [
+     "Pause Running Imposed Video [NOT DONE]",
+     "Chaîne fonctionnelle",
+     "SA",
+     0,
+     0
+    ],
+    [
+     "VOD Service Activation [NOT DONE]",
+     "Chaîne fonctionnelle",
+     "SA",
+     0,
+     0
+    ],
+    [
+     "VOD Movie Interruption [NOT DONE]",
+     "Chaîne fonctionnelle",
+     "SA",
+     0,
+     0
+    ],
+    [
+     "Stop VOD Movie[NOT DONE]",
+     "Chaîne fonctionnelle",
+     "SA",
+     0,
+     0
+    ],
+    [
+     "Stop Playing Imposed Video [NOT DONE]",
+     "Chaîne fonctionnelle",
+     "LA",
+     0,
+     0
+    ],
+    [
+     "Pause Running Imposed Video [NOT DONE]",
+     "Chaîne fonctionnelle",
+     "LA",
+     0,
+     0
+    ]
+   ]
+  },
+  "ch.type": {
+   "Chaîne fonctionnelle": 35,
+   "Processus opérationnel": 2,
+   "Chemin physique": 2
+  },
+  "chk.ce": {
+   "Sans Functional Exchange": 10,
+   "Ports orphelins": 6,
+   "PA sans Physical Link": 11
+  },
+  "chk.fn": {
+   "Fonctions feuilles ne réalisant rien à la couche supérieure": 54,
+   "Fonctions sans description": 39,
+   "Verbes peu précis en tête du nom": 29,
+   "Fonctions feuilles sans aucun échange": 24,
+   "Fonctions feuilles non réalisées à la couche inférieure": 18,
+   "Noms ne commençant pas par un verbe": 14,
+   "Noms trop longs ou d'un seul mot": 10,
+   "Présentation des noms": 4,
+   "Fonctions feuilles non allouées": 2,
+   "Ports de fonction sans échange": 2
+  },
+  "chk.pl": {
+   "Sans Component Exchange": 21,
+   "Ports physiques sans lien": 1,
+   "Ports physiques sans Component Port": 35,
+   "CE (PA) non alloués": 11
+  },
+  "chk.pt": {
+   "Function Ports non alloués alors que la fonction est allouée à un composant qui a des ports": 125,
+   "Physical Ports sans Component Port alloué": 35,
+   "Component Ports (PA) non alloués à un Physical Port": 26,
+   "Component Ports sans Function Port alloué": 14,
+   "Sens incohérent Function Port / Component Port": 2
+  },
+  "chk.sum": {
+   "Ports": 202,
+   "Fonctions": 196,
+   "Données & interfaces": 192,
+   "Capacités": 75,
+   "Physical Links": 68,
+   "Modes & états": 56,
+   "Component Exchanges": 27,
+   "Contraintes": 9
+  },
+  "ct.chk": {
+   "Contraintes sans élément contraint explicite": 7,
+   "Contraintes vides (ni nom ni expression)": 1,
+   "Contraintes sans expression": 1
+  },
+  "ct.layer": {
+   "OA": 4,
+   "SA": 8,
+   "LA": 11,
+   "PA": 2
+  },
+  "ct.n": 25,
+  "dg.cmp": null,
+  "dg.layer": null,
+  "dg.n": null,
+  "dg.orph": null,
+  "dm.chk": {
+   "Functional Exchanges sans Exchange Item": 188,
+   "Classes et types de données jamais utilisés": 3,
+   "Exchange Items portés par aucun échange ni interface": 1
+  },
+  "dm.fe": {
+   "OA": 0,
+   "SA": 0,
+   "LA": 7,
+   "PA": 12
+  },
+  "dm.n": 17,
+  "dm.used": {
+   "pct": 94,
+   "num": 16,
+   "den": 17
+  },
+  "fex.chk": {
+   "Échanges sans Exchange Item": 252,
+   "Échanges LA / PA non alloués à un Component Exchange": 182,
+   "Fonctions feuilles sans aucun échange": 24,
+   "Ports de fonction orphelins (sans échange)": 2
+  },
+  "fex.items": {
+   "pct": 7,
+   "num": 20,
+   "den": 272
+  },
+  "fex.layer": {
+   "OA": 23,
+   "SA": 41,
+   "LA": 88,
+   "PA": 120
+  },
+  "fex.n": 272,
+  "fn.L.alloc": {
+   "OA": 100,
+   "SA": 100,
+   "LA": 100,
+   "PA": 97
+  },
+  "fn.L.cap": {
+   "OA": 9,
+   "SA": 63,
+   "LA": 46,
+   "PA": 0
+  },
+  "fn.L.chain": {
+   "OA": 27,
+   "SA": 38,
+   "LA": 52,
+   "PA": 56
+  },
+  "fn.L.depth": {
+   "OA": 2,
+   "SA": 4,
+   "LA": 4,
+   "PA": 5
+  },
+  "fn.L.desc": {
+   "OA": 4,
+   "SA": 86,
+   "LA": 100,
+   "PA": 89
+  },
+  "fn.L.fe": {
+   "OA": 95,
+   "SA": 72,
+   "LA": 88,
+   "PA": 90
+  },
+  "fn.L.leaf": {
+   "OA": 22,
+   "SA": 32,
+   "LA": 48,
+   "PA": 79
+  },
+  "fn.L.n": {
+   "OA": 24,
+   "SA": 44,
+   "LA": 64,
+   "PA": 103
+  },
+  "fn.L.nq": {
+   "OA": 100,
+   "SA": 74,
+   "LA": 81,
+   "PA": 76
+  },
+  "fn.L.trace": {
+   "OA": 36,
+   "SA": 88,
+   "LA": 100,
+   "PA": 59
+  },
+  "fn.LA.ak": {
+   "Système": 30,
+   "Acteurs": 18
+  },
+  "fn.LA.alloc": {
+   "pct": 100,
+   "num": 48,
+   "den": 48
+  },
+  "fn.LA.cap": {
+   "pct": 46,
+   "num": 22,
+   "den": 48
+  },
+  "fn.LA.chain": {
+   "pct": 52,
+   "num": 25,
+   "den": 48
+  },
+  "fn.LA.depth": 4,
+  "fn.LA.desc": {
+   "pct": 100,
+   "num": 63,
+   "den": 63
+  },
+  "fn.LA.fe": {
+   "pct": 88,
+   "num": 42,
+   "den": 48
+  },
+  "fn.LA.leaf": 48,
+  "fn.LA.lvl": {
+   "Niveau 0": 1,
+   "Niveau 1": 5,
+   "Niveau 2": 23,
+   "Niveau 3": 18,
+   "Niveau 4": 17
+  },
+  "fn.LA.n": 64,
+  "fn.LA.nq": {
+   "pct": 81,
+   "num": 51,
+   "den": 63
+  },
+  "fn.LA.sub": {
+   "Seat TV": 13,
+   "Aircraft Front Servers": 10,
+   "Cabin Terminal": 6,
+   "Cabin Screen": 1
+  },
+  "fn.LA.trace": {
+   "pct": 100,
+   "num": 48,
+   "den": 48
+  },
+  "fn.LA.who": {
+   "👤 Aircraft": 7,
+   "👤 Passenger": 5,
+   "Seat TV Airline-Specific Interactions Manager": 5,
+   "👤 Ground Operator": 4,
+   "Seat TV Core Interactions Manager": 4,
+   "Aircraft-Specific Aircraft Interface": 3,
+   "Cabin Terminal Core Interactions Manager": 3,
+   "Cabin Terminal Airline-Specific Interactions Manager": 3,
+   "👤 Cabin Crew": 2,
+   "Media Server": 2,
+   "Streaming Server": 2,
+   "Seat TV Audio Video Player": 2,
+   "Applications Server": 2,
+   "Seat TV Services Manager": 2,
+   "Core Aircraft Interface": 1,
+   "Cabin Screen": 1
+  },
+  "fn.OA.ak": {
+   "Système": 10,
+   "Acteurs": 12
+  },
+  "fn.OA.alloc": {
+   "pct": 100,
+   "num": 22,
+   "den": 22
+  },
+  "fn.OA.cap": {
+   "pct": 9,
+   "num": 2,
+   "den": 22
+  },
+  "fn.OA.chain": {
+   "pct": 27,
+   "num": 6,
+   "den": 22
+  },
+  "fn.OA.depth": 2,
+  "fn.OA.desc": {
+   "pct": 4,
+   "num": 1,
+   "den": 23
+  },
+  "fn.OA.fe": {
+   "pct": 95,
+   "num": 21,
+   "den": 22
+  },
+  "fn.OA.leaf": 22,
+  "fn.OA.lvl": {
+   "Niveau 0": 1,
+   "Niveau 1": 18,
+   "Niveau 2": 5
+  },
+  "fn.OA.n": 24,
+  "fn.OA.nq": {
+   "pct": 100,
+   "num": 23,
+   "den": 23
+  },
+  "fn.OA.trace": {
+   "pct": 36,
+   "num": 8,
+   "den": 22
+  },
+  "fn.OA.who": {
+   "Aircraft": 6,
+   "👤 Passenger": 5,
+   "👤 Cabin Crew": 3,
+   "Airline Company": 2,
+   "👤 Pilot": 2,
+   "👤 Ground Operator": 2,
+   "Personal Device": 2
+  },
+  "fn.PA.ak": {
+   "Système": 59,
+   "Acteurs": 18,
+   "Non allouées": 2
+  },
+  "fn.PA.alloc": {
+   "pct": 97,
+   "num": 77,
+   "den": 79
+  },
+  "fn.PA.cap": {
+   "pct": 0,
+   "num": 0,
+   "den": 79
+  },
+  "fn.PA.chain": {
+   "pct": 56,
+   "num": 44,
+   "den": 79
+  },
+  "fn.PA.depth": 5,
+  "fn.PA.desc": {
+   "pct": 89,
+   "num": 91,
+   "den": 102
+  },
+  "fn.PA.fe": {
+   "pct": 90,
+   "num": 71,
+   "den": 79
+  },
+  "fn.PA.leaf": 79,
+  "fn.PA.lvl": {
+   "Niveau 0": 1,
+   "Niveau 1": 7,
+   "Niveau 2": 37,
+   "Niveau 3": 22,
+   "Niveau 4": 30,
+   "Niveau 5": 6
+  },
+  "fn.PA.n": 103,
+  "fn.PA.nq": {
+   "pct": 76,
+   "num": 78,
+   "den": 102
+  },
+  "fn.PA.sub": {
+   "BEHAVIOURAL PCs": 57,
+   "REC DEFINITION": 2
+  },
+  "fn.PA.trace": {
+   "pct": 59,
+   "num": 47,
+   "den": 79
+  },
+  "fn.PA.who": {
+   "Remote diagnostic equipment SW": 8,
+   "👤 Aircraft": 7,
+   "👤 Passenger": 5,
+   "👤 Maintenance operator": 4,
+   "PVDU Core Interactions Manager": 4,
+   "PVDU Screen SW": 4,
+   "Aircraft-Specific Aircraft Interface": 3,
+   "Aircraft-Specific Network Manager": 3,
+   "CMU Core Interactions Manager": 3,
+   "Streaming Server": 3,
+   "CMU Airline-Specific Interactions Manager": 3,
+   "PTV Video Player ": 3,
+   "👤 Crew": 2,
+   "Unit Network Adapter - CMU": 2,
+   "Unit Network Adapter - PVDU": 2,
+   "Unit Network Adapter - VSU": 2,
+   "PVDU Video Decoder": 2,
+   "Cabin Video Player": 2,
+   "PVDU Audio Decoder": 2,
+   "Applications Server": 2,
+   "Remote Control SW": 2,
+   "PVDU Services Manager": 2,
+   "Unit Network Adapter": 2,
+   "Media Loading Unit SW": 1,
+   "Media Server": 1,
+   "Core Aircraft Interface": 1,
+   "Cabin Screen SW": 1,
+   "DAC SW": 1
+  },
+  "fn.SA.ak": {
+   "Système": 14,
+   "Acteurs": 18
+  },
+  "fn.SA.alloc": {
+   "pct": 100,
+   "num": 32,
+   "den": 32
+  },
+  "fn.SA.cap": {
+   "pct": 63,
+   "num": 20,
+   "den": 32
+  },
+  "fn.SA.chain": {
+   "pct": 38,
+   "num": 12,
+   "den": 32
+  },
+  "fn.SA.depth": 4,
+  "fn.SA.desc": {
+   "pct": 86,
+   "num": 37,
+   "den": 43
+  },
+  "fn.SA.fe": {
+   "pct": 72,
+   "num": 23,
+   "den": 32
+  },
+  "fn.SA.leaf": 32,
+  "fn.SA.lvl": {
+   "Niveau 0": 1,
+   "Niveau 1": 5,
+   "Niveau 2": 23,
+   "Niveau 3": 11,
+   "Niveau 4": 4
+  },
+  "fn.SA.n": 44,
+  "fn.SA.nq": {
+   "pct": 74,
+   "num": 32,
+   "den": 43
+  },
+  "fn.SA.trace": {
+   "pct": 88,
+   "num": 28,
+   "den": 32
+  },
+  "fn.SA.who": {
+   "IFE System": 14,
+   "👤 Aircraft": 7,
+   "👤 Passenger": 5,
+   "👤 Ground Operator": 4,
+   "👤 Cabin Crew": 2
+  },
+  "fn.ak": {
+   "cats": [
+    "OA",
+    "SA",
+    "LA",
+    "PA"
+   ],
+   "series": {
+    "Système": [
+     10,
+     14,
+     30,
+     59
+    ],
+    "Acteurs": [
+     12,
+     18,
+     18,
+     18
+    ],
+    "Non allouées": [
+     0,
+     0,
+     0,
+     2
+    ]
+   }
+  },
+  "fn.nq": {
+   "Verbe vague": 29,
+   "Pas de verbe en tête": 14,
+   "Un seul mot": 10,
+   "Espaces superflus": 4
+  },
+  "fn.top": {
+   "cols": [
+    "Couche",
+    "N°",
+    "Fonction",
+    "Échanges"
+   ],
+   "lignes": 30,
+   "rows": [
+    [
+     "LA",
+     "1.5.4.1.3",
+     "Retrieve VOD Movie Data",
+     13
+    ],
+    [
+     "PA",
+     "1.5.6.1.3",
+     "Retrieve VOD Movie Data",
+     13
+    ],
+    [
+     "LA",
+     "1.5.4.1.2",
+     "Capture VOD Selections",
+     12
+    ],
+    [
+     "PA",
+     "1.5.6.1.2",
+     "Capture VOD Selections",
+     12
+    ],
+    [
+     "SA",
+     "1.5.4.1",
+     "Broadcast Audio Video Streams",
+     11
+    ],
+    [
+     "SA",
+     "1.5.3.1.2",
+     "Retrieve VOD Movie Data",
+     10
+    ],
+    [
+     "LA",
+     "1.5.2.2",
+     "Store Digital Media",
+     9
+    ],
+    [
+     "LA",
+     "1.5.3.2.2",
+     "Prepare Broadcasts",
+     9
+    ],
+    [
+     "PA",
+     "1.5.2.2",
+     "Store Digital Media",
+     9
+    ],
+    [
+     "PA",
+     "1.5.5.2.1",
+     "Prepare Broadcasts",
+     9
+    ],
+    [
+     "SA",
+     "1.2.4",
+     "Command VOD Service",
+     8
+    ],
+    [
+     "LA",
+     "1.2.4",
+     "Command VOD Session",
+     8
+    ],
+    [
+     "LA",
+     "1.5.4.2.1",
+     "Capture Imposed Video Selections",
+     8
+    ],
+    [
+     "PA",
+     "1.2.4",
+     "Command VOD Session",
+     8
+    ],
+    [
+     "PA",
+     "1.5.6.2.1",
+     "Capture Imposed Video Selections",
+     8
+    ],
+    [
+     "OA",
+     "1.17",
+     "Broadcast Audio",
+     7
+    ],
+    [
+     "SA",
+     "1.5.1.1",
+     "Store Digital Media",
+     7
+    ],
+    [
+     "LA",
+     "1.1.1",
+     "Command Airline-Imposed Video Broadcast",
+     7
+    ],
+    [
+     "LA",
+     "1.5.4.1.1",
+     "Display VOD Movie Data",
+     7
+    ],
+    [
+     "PA",
+     "1.1.1",
+     "Command Airline-Imposed Video Broadcast",
+     7
+    ],
+    [
+     "PA",
+     "1.5.6.1.1",
+     "Display VOD Movie Data",
+     7
+    ],
+    [
+     "SA",
+     "1.1.1",
+     "Play Airline-Imposed Videos",
+     6
+    ],
+    [
+     "LA",
+     "1.5.4.1.4",
+     "Handle VOD Service Activation and Interruption",
+     6
+    ],
+    [
+     "PA",
+     "1.5.6.1.4",
+     "Handle VOD Service Activation and Interruption",
+     6
+    ],
+    [
+     "OA",
+     "1.6",
+     "Broadcast Movies",
+     5
+    ],
+    [
+     "LA",
+     "1.5.3.1.2",
+     "Process Imposed Video Controls",
+     5
+    ],
+    [
+     "LA",
+     "1.5.3.3.1",
+     "Play Audio-Video Stream on Seat TV",
+     5
+    ],
+    [
+     "LA",
+     "1.5.4.2.2",
+     "Retrieve Imposed Video Data",
+     5
+    ],
+    [
+     "LA",
+     "1.5.5.2",
+     "Capture Passenger Service Selection",
+     5
+    ],
+    [
+     "LA",
+     "1.5.5.3",
+     "Determine  Passenger Service Availability",
+     5
+    ]
+   ]
+  },
+  "mdl.layer": {
+   "OA": 53,
+   "SA": 193,
+   "LA": 209,
+   "PA": 337,
+   "EPBS": 42,
+   "Transverse": 4639
+  },
+  "mdl.n": 5473,
+  "mdl.rels": {
+   "Échange fonctionnel (fonction → fonction)": 272,
+   "Chaîne fonctionnelle → fonction impliquée": 176,
+   "Chaîne fonctionnelle → échange impliqué": 161,
+   "Fonction → fonction réalisée (couche supérieure)": 143,
+   "Échange fonctionnel → échange réalisé (couche supérieure)": 142,
+   "Sous-fonction physique": 101,
+   "Composant physique → fonction (réalise)": 77,
+   "Capacité → fonction impliquée": 65,
+   "Sous-fonction logique": 63,
+   "Composant logique → fonction (réalise)": 48,
+   "Sous-fonction système": 43,
+   "Capacité → système / acteur impliqué": 33,
+   "Composant → composant réalisé (couche supérieure)": 33,
+   "Système / acteur → fonction (réalise)": 32,
+   "Capacité → chaîne fonctionnelle impliquée": 31,
+   "Réalisation de capacité → composant logique impliqué": 30,
+   "Sous-composant comportemental": 29,
+   "Réalisation de capacité → composant physique impliqué": 28,
+   "Échange de composants → échange fonctionnel alloué": 26,
+   "Sous-activité opérationnelle": 23,
+   "Échange de composants (composant → composant)": 23,
+   "Déploie (comportement sur nœud)": 22,
+   "Entité → activité (réalise)": 22,
+   "Lien physique (composant ↔ composant)": 21,
+   "Sous-composant nœud": 20,
+   "Échange → élément échangé (Exchange Item)": 20,
+   "Sous-composant logique": 18,
+   "Mission → système / acteur impliqué": 15,
+   "Mission → capacité exploitée": 12,
+   "Sous-composant physique (nature mixte)": 10,
+   "Capacité opérationnelle → entité impliquée": 6,
+   "Port physique → port de composant alloué": 2,
+   "Lien / chemin physique → échange de composants alloué": 1
+  },
+  "mdl.types": {
+   "Transfo Link": 464,
+   "Functional Exchange": 272,
+   "Function Input Port": 248,
+   "Function Output Port": 234,
+   "Key Value": 226,
+   "Literal Numeric Value": 224,
+   "Port Realization": 219,
+   "Component Functional Allocation": 179,
+   "Functional Chain Involvement Function": 176,
+   "Functional Chain Involvement Link": 161,
+   "Message End": 160,
+   "Function Realization": 143,
+   "Functional Exchange Realization": 142,
+   "Part": 111,
+   "Physical Function": 103,
+   "Interaction State": 94,
+   "Property": 88,
+   "State Transition": 85,
+   "Sequence Message": 80,
+   "Execution End": 80,
+   "Execution": 80,
+   "Event Sent Operation": 80,
+   "Event Receipt Operation": 80,
+   "Execution Event": 80,
+   "Port Allocation": 69,
+   "Abstract Function Abstract Capability Involvement": 65,
+   "Logical Function": 64,
+   "Physical Component": 64,
+   "Region": 61,
+   "Instance Role": 59,
+   "Capability Realization Involvement": 58,
+   "Component Port": 52,
+   "Mode": 48,
+   "State Fragment": 47,
+   "System Function": 44,
+   "Physical Port": 37,
+   "Functional Chain": 35,
+   "Class": 34,
+   "Capability Involvement": 33,
+   "Component Realization": 33,
+   "Catalog Element Link": 32,
+   "Exchange Category": 32,
+   "State Transition Realization": 32,
+   "Functional Chain Abstract Capability Involvement": 31,
+   "Abstract State Realization": 31,
+   "Enumeration Literal": 28,
+   "Physical Artifact Realization": 28,
+   "Abstract Capability Realization": 26,
+   "Component Exchange Functional Exchange Allocation": 26,
+   "Information Realization": 26,
+   "Constraint": 25,
+   "Operational Activity": 24,
+   "Opaque Expression": 24,
+   "Capability Realization": 23,
+   "Component Exchange": 23,
+   "Logical Component": 23,
+   "Exchange Item Element": 22,
+   "Part Deployment Link": 22,
+   "Physical Link": 21,
+   "Functional Chain Realization": 18,
+   "Physical Path Involvement": 18,
+   "Exchange Item": 17,
+   "Data Package": 16,
+   "Mission Involvement": 15,
+   "Association": 14,
+   "Scenario": 13,
+   "Capability": 13,
+   "Capability Exploitation": 12,
+   "Sequence Link": 12,
+   "Configuration Item": 11,
+   "Fragment End": 10,
+   "Initial Pseudo State": 9,
+   "Enumeration": 9,
+   "Interaction Operand": 8,
+   "Entity": 8,
+   "Enumeration Property Literal": 7,
+   "Scenario Realization": 7,
+   "Generalization": 7,
+   "Entity Operational Capability Involvement": 6,
+   "State": 6,
+   "Interface Package": 5,
+   "State Machine": 5,
+   "System Component": 5,
+   "Mission": 5,
+   "Numeric Type": 5,
+   "Functional Chain Reference": 5,
+   "Exchange Item Allocation": 5,
+   "Catalog Element": 4,
+   "Combined Fragment": 4,
+   "Final State": 4,
+   "Choice Pseudo State": 4,
+   "Unit": 4,
+   "Physical Quantity": 4,
+   "Control Node": 4,
+   "Interface": 4,
+   "Compliancy Definition": 3,
+   "Operational Capability": 3,
+   "Change Event": 3,
+   "Capability Realization Package": 3,
+   "Catalog Element Package": 2,
+   "Operational Process": 2,
+   "Communication Mean": 2,
+   "String Type": 2,
+   "Boolean Type": 2,
+   "Deep History Pseudo State": 2,
+   "Physical Function Package": 2,
+   "Physical Path": 2,
+   "Component Port Allocation": 2,
+   "Model Information": 1,
+   "Enumeration Property Type": 1,
+   "System Engineering": 1,
+   "Rec Catalog": 1,
+   "Compliancy Definition Package": 1,
+   "Operational Analysis": 1,
+   "Operational Activity Package": 1,
+   "Operational Capability Package": 1,
+   "Role Package": 1,
+   "Entity Package": 1,
+   "System Analysis": 1,
+   "System Function Package": 1,
+   "Capability Package": 1,
+   "Abstract Capability Include": 1,
+   "System Component Package": 1,
+   "Mission Package": 1,
+   "Operational Analysis Realization": 1,
+   "Logical Architecture": 1,
+   "Logical Function Package": 1,
+   "Interaction Use": 1,
+   "Logical Component Package": 1,
+   "System Analysis Realization": 1,
+   "Physical Architecture": 1,
+   "Physical Component Package": 1,
+   "Component Exchange Allocation": 1,
+   "Logical Architecture Realization": 1,
+   "EPBS Architecture": 1,
+   "Configuration Item Package": 1,
+   "Physical Architecture Realization": 1
+  },
+  "pl.ce": {
+   "pct": 0,
+   "num": 0,
+   "den": 21
+  },
+  "pl.comp": {
+   "Application Server HW / SW": 4,
+   "Ethernet Switches": 4,
+   "Private Video Display Unit": 4,
+   "PVDU Processor": 4,
+   "BUS": 4,
+   "Video Server Unit": 3,
+   "Cabin Management Unit": 2,
+   "Cabin Screen Video Splitter": 2,
+   "VSU Processor": 2,
+   "CMU Processor": 2,
+   "ASU Processor": 2,
+   "Passenger Remote Control": 1,
+   "Media Loading Unit": 1,
+   "Cabin Video Display Unit": 1,
+   "VSU Hard Disk": 1,
+   "PVDU Screen": 1,
+   "PVDU Audio Processing Unit": 1,
+   "PVDU MPEG Decoder": 1,
+   "Digital Analog Converter": 1,
+   "CMU Touch Screen": 1
+  },
+  "pl.layer": {
+   "PA": 21
+  },
+  "pl.n": 21,
+  "pl.nocp": 35,
+  "pl.orph": 1,
+  "pt.cp": {
+   "pct": 7,
+   "num": 2,
+   "den": 28
+  },
+  "pt.fp": {
+   "pct": 14,
+   "num": 67,
+   "den": 482
+  },
+  "pt.pp": {
+   "pct": 5,
+   "num": 2,
+   "den": 37
+  },
+  "pv.chk": null,
+  "pv.grp": null,
+  "pv.n": 0,
+  "pv.set": null,
+  "rq.chk": null,
+  "rq.cov": null,
+  "rq.kind": null,
+  "rq.layer": null,
+  "rq.n": 0,
+  "sc.chk": null,
+  "sc.kind": {
+   "FS": 6,
+   "ES": 6,
+   "OES": 1
+  },
+  "sc.layer": {
+   "OA": 1,
+   "SA": 6,
+   "LA": 6
+  },
+  "sc.n": 13,
+  "sm.chk": {
+   "Régions sans état initial": 4,
+   "États inatteignables": 4,
+   "États sans issue": 19,
+   "Transitions sans déclencheur": 29
+  },
+  "sm.n": 5,
+  "sm.owner": {
+   "IFE System": 9,
+   "Seat TV": 15,
+   "Aircraft": 6
+  },
+  "tr.dn.cap": {
+   "OA→SA": 33,
+   "SA→LA": 72,
+   "LA→PA": 77
+  },
+  "tr.dn.chain": {
+   "SA→LA": 100,
+   "LA→PA": 70
+  },
+  "tr.dn.comp": {
+   "OA→SA": 50,
+   "SA→LA": 100,
+   "LA→PA": 100,
+   "PA→EPBS": 34
+  },
+  "tr.dn.data": {
+   "LA→PA": 92
+  },
+  "tr.dn.fe": {
+   "SA→LA": 100,
+   "LA→PA": 100
+  },
+  "tr.dn.fn": {
+   "OA→SA": 36,
+   "SA→LA": 88,
+   "LA→PA": 100
+  },
+  "tr.dn.pl": {
+   "PA→EPBS": 29
+  },
+  "tr.dn.port": {
+   "SA→LA": 75,
+   "LA→PA": 81
+  },
+  "tr.dn.scen": {
+   "SA→LA": 67
+  },
+  "tr.dn.state": {
+   "SA→LA": 58
+  },
+  "tr.n": 705,
+  "tr.tab": {
+   "cols": [
+    "Catégorie",
+    "OA→SA",
+    "SA→LA",
+    "LA→PA",
+    "PA→EPBS"
+   ],
+   "lignes": 10,
+   "rows": [
+    [
+     "Fonctions / activités",
+     "▼ 36 % · ▲ 31 %",
+     "▼ 88 % · ▲ 100 %",
+     "▼ 100 % · ▲ 59 %",
+     "—"
+    ],
+    [
+     "Composants / acteurs",
+     "▼ 50 % · ▲ 80 %",
+     "▼ 100 % · ▲ 22 %",
+     "▼ 100 % · ▲ 38 %",
+     "▼ 34 % · ▲ 91 %"
+    ],
+    [
+     "Functional Exchanges",
+     "—",
+     "▼ 100 % · ▲ 59 %",
+     "▼ 100 % · ▲ 73 %",
+     "—"
+    ],
+    [
+     "Physical Links",
+     "—",
+     "—",
+     "—",
+     "▼ 29 % · ▲ 9 %"
+    ],
+    [
+     "Ports",
+     "—",
+     "▼ 75 % · ▲ 31 %",
+     "▼ 81 % · ▲ 54 %",
+     "—"
+    ],
+    [
+     "Capacités / missions",
+     "▼ 33 % · ▲ 17 %",
+     "▼ 72 % · ▲ 100 %",
+     "▼ 77 % · ▲ 100 %",
+     "—"
+    ],
+    [
+     "Chaînes / processus",
+     "—",
+     "▼ 100 % · ▲ 100 %",
+     "▼ 70 % · ▲ 47 %",
+     "—"
+    ],
+    [
+     "Scénarios",
+     "—",
+     "▼ 67 % · ▲ 83 %",
+     "—",
+     "—"
+    ],
+    [
+     "États, modes, transitions",
+     "—",
+     "▼ 58 % · ▲ 53 %",
+     "—",
+     "—"
+    ],
+    [
+     "Données / Exchange Items",
+     "—",
+     "—",
+     "▼ 92 % · ▲ 59 %",
+     "—"
+    ]
+   ]
+  },
+  "tr.up.cap": {
+   "OA→SA": 17,
+   "SA→LA": 100,
+   "LA→PA": 100
+  },
+  "tr.up.chain": {
+   "SA→LA": 100,
+   "LA→PA": 47
+  },
+  "tr.up.comp": {
+   "OA→SA": 80,
+   "SA→LA": 22,
+   "LA→PA": 38,
+   "PA→EPBS": 91
+  },
+  "tr.up.data": {
+   "LA→PA": 59
+  },
+  "tr.up.fe": {
+   "SA→LA": 59,
+   "LA→PA": 73
+  },
+  "tr.up.fn": {
+   "OA→SA": 31,
+   "SA→LA": 100,
+   "LA→PA": 59
+  },
+  "tr.up.pl": {
+   "PA→EPBS": 9
+  },
+  "tr.up.port": {
+   "SA→LA": 31,
+   "LA→PA": 54
+  },
+  "tr.up.scen": {
+   "SA→LA": 83
+  },
+  "tr.up.state": {
+   "SA→LA": 53
+  }
+ }
+}

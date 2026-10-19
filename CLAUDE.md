@@ -9,7 +9,7 @@ Application **autonome, fonctionnant hors ligne**, qui charge un fichier `.capel
 3. **Français partout** : interface, messages, commentaires, et **JSDoc en français pour toute nouvelle fonction** (couverture actuelle 100 %).
 4. **Réponses courtes**, en français : ce qui a changé, en quelques lignes.
 5. **Lecture ciblée** : chercher avec `grep`/recherche dans `src/js/` ou consulter `docs/INDEX-FONCTIONS.md`, puis lire seulement les lignes utiles. Ne pas lire un module entier sans nécessité.
-6. **Vérification par défaut = `node build.js`** (syntaxe de chaque module). Test navigateur (`node tests/smoke.js`) seulement si l'utilisateur le demande ou après un gros changement transversal. **Pas de capture d'écran** sauf demande.
+6. **Vérification par défaut = `node build.js`** (syntaxe de chaque module). Après un changement dans un **moteur de calcul** (fonctions, chaînes, liens, traçabilité, contrôles, indicateurs…) : `node tests/oracles.js` (résultats attendus sur les modèles de test) ; si l'écart est voulu, `--update` et relire le diff des `.json`. Test navigateur (`node tests/smoke.js`) seulement si l'utilisateur le demande ou après un gros changement transversal. **Pas de capture d'écran** sauf demande.
 7. Ne rien supprimer ou renommer de visible sans le signaler. Ne pas committer sans demande ; proposer un message de commit en fin de tâche.
 8. **Textes** : l'interface est en français ; tout libellé affiché reste écrit en clair dans le code (pas de clés), **enveloppé par `_L('…')`** (jamais une valeur comparée ou une clé). La version anglaise est produite au build (`node build.js --lang en`) : tout texte nouveau ou modifié doit être traduit dans `src/i18n/en-dictionnaire.json` (le build liste les manquants dans `dist/arcalyse-en-manquants.txt`), et l'aide dans `src/html/aide.en.html`. Démarche, outils et pièges : `docs/i18n/LISEZMOI.md` — ne pas improviser une autre méthode. Après des changements de libellés, régénérer l'inventaire `node tools/textes.js --en`.
 9. **Ne jamais modifier `livraison/`** sauf si l'utilisateur demande explicitement une livraison (`node build.js --livraison`).
@@ -111,6 +111,8 @@ node tools/textes.js [--en]   # inventaire de tous les textes affichés → docs
 node tools/split.js f.html    # réimporte dans src/ un fichier assemblé AVEC repères (modifié ailleurs) ; --dry pour simuler
 node tools/guide-captures.js [partie…]   # captures du guide d'utilisation docs/GUIDE-UTILISATION.md → docs/guide/img/ (Playwright, après node build.js)
 node tests/smoke.js [--en | --multi [--fr]] [m.capella]   # test navigateur hors ligne (--en : version anglaise ; --multi : multilingue) (nécessite : npm i -D playwright && npx playwright install chromium)
+node tests/oracles.js [--update] [--en] [m.capella…]   # oracles de non-régression des moteurs : relevé (éléments, relations, chaînes, fonctions, contrôles, indicateurs…) comparé à tests/oracles/<modèle>.json ; --update après un changement voulu (même prérequis que smoke ; CHROMIUM_PATH=… pour un Chromium déjà installé)
+npx eslint                    # lint statique de src/js (eslint.config.js : globales des modules relevées automatiquement ; no-undef, no-redeclare, no-unused-vars) (nécessite : npm i -D eslint)
 ```
 Modèle de test : `tests/models/In-Flight_Entertainment_System.capella` (exemple public Capella ; d'autres modèles doivent fonctionner — aucun calcul ne doit supposer un modèle particulier).
 

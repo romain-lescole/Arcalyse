@@ -12,6 +12,9 @@
     "index": "node tools/index.js",
     "split": "node tools/split.js",
     "smoke": "node tests/smoke.js",
+    "oracles": "node tests/oracles.js",
+    "oracles:update": "node tests/oracles.js --update",
+    "lint": "eslint",
     "textes": "node tools/textes.js",
     "textes:en": "node tools/textes.js --en"
   }
