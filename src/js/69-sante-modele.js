@@ -25,7 +25,7 @@ function capSanteChecks(){
     {k:'csys', all:()=>capCbChecks('all'), layer:l=>capCbChecks(l)},
     {k:'ports', all:()=>capPortsDiagSections(capComputePortLinks())}, {k:'chains', all:()=>capChChecks('all'), layer:l=>capChChecks(l)}, {k:'scen', all:()=>capScChecks()},
     {k:'ana:reqs', all:()=>capReqChecks()}, {k:'ana:pvmt', all:()=>capPvChecks()}, {k:'ana:data', all:()=>capDmChecks()}, {k:'ana:cts', all:()=>capCtChecks()},
-    {k:'ana:cats', all:()=>capEcChecks()}, {k:'ana:libs', all:()=>capLibChecks()}, {k:'ana:rec', all:()=>capRecChecks()}, {k:'ana:status', all:()=>capStChecks()}];
+    {k:'ana:cats', all:()=>capEcChecks()}, {k:'ana:libs', all:()=>capLibChecks()}, {k:'ana:rec', all:()=>capRecChecks()}, {k:'ana:deploy', all:()=>capDepChecks()}, {k:'ana:status', all:()=>capStChecks()}];
   views.forEach(v=>{
     let secs; try{ secs=capChkFilter(v.all()); }catch(e){ console.warn('Santé : vue',v.k,e); return; }
     const byLayer={};

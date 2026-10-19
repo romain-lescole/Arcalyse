@@ -613,6 +613,21 @@
   "echangesCategorises": 105,
   "introuvables": 0
  },
+ "deploiement": {
+  "noeuds": 25,
+  "comportements": 36,
+  "deployes": 22,
+  "cis": 11,
+  "ciKinds": {
+   "COTSCI": 1,
+   "CSCI": 3,
+   "HWCI": 3,
+   "InterfaceCI": 1,
+   "NDICI": 1,
+   "SystemCI": 2
+  },
+  "ceNonRelies": 0
+ },
  "recRpl": {
   "recs": 1,
   "rpls": 3,
@@ -630,13 +645,13 @@
   "declarees": 0
  },
  "sante": {
-  "score": 44,
-  "points": 1589,
+  "score": 43,
+  "points": 1625,
   "bloquants": 0,
   "info": 0,
   "pop": 1948,
-  "nChecks": 102,
-  "nOk": 47,
+  "nChecks": 112,
+  "nOk": 54,
   "couches": {
    "OA": 54,
    "SA": 71,
@@ -725,6 +740,7 @@
    "Chaînes sans description": 39,
    "Chaînes en double": 0,
    "Étapes portées par des fonctions non allouées": 2,
+   "Liens d'un chemin physique ne reliant pas ses composants voisins": 0,
    "Composants isolés dans un chemin physique": 0
   },
   "categories": {
@@ -750,6 +766,17 @@
    "REC sans réplique": 0,
    "REC en double": 0,
    "Éléments appartenant à plusieurs répliques": 0
+  },
+  "deploiement": {
+   "Comportements non déployés": 14,
+   "Nœuds sans comportement déployé": 8,
+   "Échanges entre comportements sans lien physique entre leurs nœuds": 0,
+   "Comportements déployés sur plusieurs nœuds": 0,
+   "Nœuds physiques non réalisés par un Configuration Item": 14,
+   "Configuration Items vides": 0,
+   "Réalisations EPBS vers un élément introuvable": 0,
+   "Éléments réalisés par plusieurs Configuration Items": 0,
+   "Configuration Items sans nature": 0
   },
   "etats": {
    "noInit": 4,
@@ -1106,6 +1133,11 @@
    "Étapes portées par des fonctions non allouées": 2,
    "Chaînes discontinues": 1
   },
+  "chk.dep": {
+   "Comportements non déployés": 14,
+   "Nœuds sans comportement déployé": 8,
+   "Nœuds physiques non réalisés par un Configuration Item": 14
+  },
   "chk.ec": {
    "Échanges sans catégorie": 144,
    "Catégories vides": 5,
@@ -1155,6 +1187,7 @@
    "Chaînes": 71,
    "Physical Links": 68,
    "Modes & états": 56,
+   "Déploiement & EPBS": 36,
    "Component Exchanges": 27,
    "Contraintes": 9
   },
@@ -1170,6 +1203,41 @@
    "PA": 2
   },
   "ct.n": 25,
+  "dep.beh": {
+   "pct": 61,
+   "num": 22,
+   "den": 36
+  },
+  "dep.ci": 11,
+  "dep.cikind": {
+   "Système": 2,
+   "COTS": 1,
+   "Interface": 1,
+   "Matériel (HWCI)": 3,
+   "Logiciel (CSCI)": 3,
+   "NDI": 1
+  },
+  "dep.cipct": {
+   "pct": 33,
+   "num": 7,
+   "den": 21
+  },
+  "dep.nodes": 25,
+  "dep.per": {
+   "VSU Hard Disk": 1,
+   "VSU Processor": 2,
+   "PVDU Processor": 4,
+   "PVDU MPEG Decoder": 1,
+   "PVDU Screen": 1,
+   "PVDU Audio Processing Unit": 1,
+   "Digital Analog Converter": 1,
+   "Passenger Remote Control": 1,
+   "CMU Processor": 2,
+   "CMU Touch Screen": 1,
+   "Media Loading Unit": 1,
+   "ASU Processor": 5,
+   "Cabin Video Display Unit": 1
+  },
   "dg.cmp": null,
   "dg.layer": null,
   "dg.n": null,
@@ -2067,10 +2135,10 @@
    "PA": 61,
    "EPBS": 100
   },
-  "sante.pts": 1589,
+  "sante.pts": 1625,
   "sante.score": {
-   "pct": 44,
-   "num": 44,
+   "pct": 43,
+   "num": 43,
    "den": 100
   },
   "sante.vue": {
@@ -2082,6 +2150,7 @@
    "🗃 Données & interfaces": 192,
    "⛓ Contraintes": 9,
    "🏷 Catégories d'échanges": 152,
+   "🖧 Déploiement & EPBS": 36,
    "🔖 Statut de revue": 17,
    "🔀 Behavior Exchange": 27,
    "🔌 Physical Link": 68,

@@ -392,6 +392,13 @@
         <h3>⛓ Constraints</h3>
         <p>All the constraints: role (guard, pre / post-condition), expression (text links are replaced by the name of the cited element), language, constrained elements, owner. Checks: empty constraints or without expression, missing cited elements, without constrained element, duplicates.</p>
         <p class="hp-note">An element's detail panel also shows its linked requirements, its properties and its constraints. The corresponding indicators are in the 📐 Dashboard catalogue.</p>
+        <h3>🖧 Deployment &amp; EPBS</h3>
+        <table class="hp-t">
+          <tr><td>🖧 Deployment</td><td>Each physical node (PhysicalComponent of nature NODE) with the behaviours (nature BEHAVIOR) it hosts through PartDeploymentLink, the number of functions carried and its physical links; undeployed behaviours at the bottom; ⬇ CSV.</td></tr>
+          <tr><td>🧰 EPBS</td><td>Tree of Configuration Items (nature COTS, software, hardware, interface, NDI, system…) and the physical components or links they realize (PhysicalArtifactRealization); breakdown per nature.</td></tr>
+          <tr><td>🩺 Checks</td><td>Undeployed behaviours, nodes without behaviour (only if the model practises deployment), <b>exchanges between behaviours deployed on nodes that no physical link connects</b>, multiple deployments, nodes not realized by a Configuration Item, empty Configuration Items, realizations of a missing element, elements realized by several items, items without nature.</td></tr>
+        </table>
+        <p class="hp-note">The details panel of a physical component shows where it is deployed, what it hosts and the Configuration Item realizing it. ⚡ Chains › 🩺 also checks the <b>continuity of physical paths</b> (involved link whose ends are not on the neighbouring components).</p>
         <h3>📦 REC / RPL</h3>
         <p>Capella's <b>reusable elements</b>: a <b>REC</b> is a template (a set of model elements), an <b>RPL</b> a replica instantiated from that REC (suffix, compliancy BLACK_BOX / CONSTRAINT_REUSE / INHERITANCY_REUSE). Each element of a replica keeps a link to its origin in the REC.</p>
         <table class="hp-t">

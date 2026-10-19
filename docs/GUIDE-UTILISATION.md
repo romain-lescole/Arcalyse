@@ -1148,7 +1148,15 @@ Un **score de 0 à 100** bâti sur **tous les contrôles 🩺** de toutes les vu
 - **▦ Par vue** : contrôles, contrôles sans anomalie, points et bloquants de chaque vue.
 - **📈 Historique** : une ligne par version du modèle ouverte dans le projet (même fichier : entrée mise à jour), conservée avec la 💾 page. Indicateurs « Santé du modèle — … » au 📐 Tableau de bord (score, points, bloquants, par couche, par vue, historique).
 
-### 12.11 📦 REC / RPL
+### 12.11 🖧 Déploiement & EPBS
+
+- **🖧 Déploiement** : chaque nœud physique (PhysicalComponent de nature NODE) avec les comportements (nature BEHAVIOR) qu'il héberge par PartDeploymentLink, le nombre de fonctions portées et ses liens physiques ; comportements non déployés en bas ; ⬇ CSV.
+- **🧰 EPBS** : arbre des Configuration Items (COTS, logiciel, matériel, interface, NDI, système…) et les composants ou liens physiques qu'ils réalisent (PhysicalArtifactRealization) ; répartition par nature.
+- **🩺 Contrôles** : comportements non déployés, nœuds sans comportement (seulement si le modèle pratique le déploiement), **échanges entre comportements déployés sur des nœuds qu'aucun lien physique ne relie**, déploiements multiples, nœuds non réalisés par un Configuration Item, Configuration Items vides, réalisations vers un élément introuvable, éléments réalisés par plusieurs articles, articles sans nature.
+
+Le panneau de détail d'un composant physique indique où il est déployé, ce qu'il héberge et le Configuration Item qui le réalise. ⚡ Chaînes › 🩺 contrôle aussi la **continuité des chemins physiques** (lien impliqué dont les extrémités ne sont pas sur les composants voisins).
+
+### 12.12 📦 REC / RPL
 
 Les **éléments réutilisables** de Capella : un **REC** est un gabarit (ensemble d'éléments du modèle), une **RPL** une réplique instanciée de ce REC (suffixe, conformité BLACK_BOX / CONSTRAINT_REUSE / INHERITANCY_REUSE). Chaque élément d'une réplique garde un lien vers son origine dans le REC.
 
@@ -1159,7 +1167,7 @@ Les **éléments réutilisables** de Capella : un **REC** est un gabarit (ensemb
 
 Le panneau de détail d'un élément indique le REC ou la réplique dont il fait partie ; celui d'un élément de catalogue, son contenu. Indicateurs « REC / RPL — … » au 📐 Tableau de bord.
 
-### 12.12 📚 Bibliothèques
+### 12.13 📚 Bibliothèques
 
 Un modèle peut référencer des éléments d'un autre fichier .capella (**bibliothèque** Capella) : la référence s'écrit `platform:/resource/Projet/Fichier.capella#id` et les bibliothèques utilisées sont déclarées (LibraryReference). Arcalyse ne lit qu'un fichier : sans la bibliothèque, ces cibles sont « introuvables ».
 
@@ -1167,7 +1175,7 @@ Un modèle peut référencer des éléments d'un autre fichier .capella (**bibli
 - **🔗 Références** : élément source, attribut, bibliothèque, cible (📚 nom et type de l'élément visé si la bibliothèque est chargée) ; ⬇ CSV. Même affichage dans le panneau de détail (attributs et section « Références externes »).
 - **🩺 Contrôles** : références vers une bibliothèque non chargée, cibles introuvables dans une bibliothèque chargée (version différente), bibliothèques déclarées sans référence, références vers une bibliothèque non déclarée.
 
-### 12.13 🏷 Catégories d'échanges
+### 12.14 🏷 Catégories d'échanges
 
 Les catégories que Capella permet de poser sur les échanges : **ExchangeCategory** (Functional Exchanges), **ComponentExchangeCategory** (Component Exchanges), **PhysicalLinkCategory** (Physical Links).
 
@@ -1177,7 +1185,7 @@ Les catégories que Capella permet de poser sur les échanges : **ExchangeCatego
 
 Les vues ƒ⇆ Functional Exchange, 🔀 Behavior Exchange et 🔌 Physical Link gagnent une liste **🏷 Toutes catégories** (affichée seulement si le modèle en a) ; le panneau de détail d'un échange liste ses catégories, celui d'une catégorie ses échanges. Indicateurs « Catégories d'échanges — … » au 📐 Tableau de bord.
 
-### 12.14 🔖 Statut de revue
+### 12.15 🔖 Statut de revue
 
 Les champs natifs de revue de Capella, portés par n'importe quel élément : **Status** (littéral de l'énumération *ProgressStatus* du projet : DRAFT, TO BE REVIEWED, TO BE DISCUSSED, REWORK NECESSARY, REVIEWED…) et **Review** (texte libre). Les statuts sont rangés en **classes** d'après leur nom : brouillon, en attente, validé, à retravailler.
 

@@ -32,6 +32,7 @@ var CAP_NAV_ITEMS=[
   {k:'ana:reqs',  l:_L('📋 Exigences'),               g:'ana'},
   {k:'ana:pvmt',  l:_L('🏷 Propriétés'),              g:'ana'},
   {k:'ana:data',  l:_L('🗃 Données & interfaces'),     g:'ana'},
+  {k:'ana:deploy',l:_L('🖧 Déploiement & EPBS'),       g:'ana', t:_L('Comportements déployés sur les nœuds physiques (PartDeploymentLink), Configuration Items de l\'EPBS et ce qu\'ils réalisent, contrôles')},
   {k:'ana:rec',   l:_L('📦 REC / RPL'),                g:'ana', t:_L('Éléments réutilisables : REC (gabarits) et RPL (répliques), comparaison élément par élément, écarts, contrôles')},
   {k:'ana:libs',  l:_L('📚 Bibliothèques'),            g:'ana', t:_L('Références vers d\'autres fichiers .capella (bibliothèques) : par bibliothèque, par référence, chargement des bibliothèques pour résoudre les cibles, contrôles')},
   {k:'ana:cats',  l:_L('🏷 Catégories d\'échanges'),   g:'ana', t:_L('ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory : échanges par catégorie, taux de catégorisation, contrôles')},

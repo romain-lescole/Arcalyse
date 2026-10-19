@@ -20,7 +20,7 @@ const CAP_CHK_SEV=[['info','ℹ',_L('Information')],['warn','⚠',_L('À vérifi
 const CAP_CHK_VIEWS=[
   ['functions', ()=>capFnChecks(capComputeFunctions(),'all')], ['fex', ()=>capFexChecks('all')], ['csys', ()=>capCbChecks('SA')], ['cblk', ()=>capCbChecks('LA')],
   ['ports', ()=>capPortsDiagSections(capComputePortLinks())], ['chains', ()=>capChChecks('all')], ['scen', ()=>capScChecks()], ['ana:reqs', ()=>capReqChecks()], ['ana:pvmt', ()=>capPvChecks()],
-  ['ana:data', ()=>capDmChecks()], ['ana:cts', ()=>capCtChecks()], ['ana:cats', ()=>capEcChecks()], ['ana:libs', ()=>capLibChecks()], ['ana:rec', ()=>capRecChecks()], ['ana:status', ()=>capStChecks()]];
+  ['ana:data', ()=>capDmChecks()], ['ana:cts', ()=>capCtChecks()], ['ana:cats', ()=>capEcChecks()], ['ana:libs', ()=>capLibChecks()], ['ana:rec', ()=>capRecChecks()], ['ana:deploy', ()=>capDepChecks()], ['ana:status', ()=>capStChecks()]];
 
 var capChkProfile=(()=>{ try{ const el=document.getElementById('cap-checks'); const p=el?JSON.parse(el.textContent):null; return Object.assign({off:{}, sev:{}, params:{}}, p||{}); }catch(e){ return {off:{}, sev:{}, params:{}}; } })();
 var _capChkSeen={};   // titre → {tip, view} des contrôles déjà affichés (vues sans fonction de contrôles)

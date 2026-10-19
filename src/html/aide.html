@@ -392,6 +392,13 @@
         <h3>⛓ Contraintes</h3>
         <p>Toutes les contraintes : rôle (garde, pré / post-condition), expression (les liens de texte sont remplacés par le nom de l'élément cité), langage, éléments contraints, propriétaire. Contrôles : contraintes vides ou sans expression, éléments cités introuvables, sans élément contraint, doublons.</p>
         <p class="hp-note">Le panneau de détail d'un élément affiche aussi ses exigences liées, ses propriétés et ses contraintes. Les indicateurs correspondants sont dans le catalogue du 📐 Tableau de bord.</p>
+        <h3>🖧 Déploiement &amp; EPBS</h3>
+        <table class="hp-t">
+          <tr><td>🖧 Déploiement</td><td>Chaque nœud physique (PhysicalComponent de nature NODE) avec les comportements (nature BEHAVIOR) qu'il héberge par PartDeploymentLink, le nombre de fonctions portées et ses liens physiques ; comportements non déployés en bas ; ⬇ CSV.</td></tr>
+          <tr><td>🧰 EPBS</td><td>Arbre des Configuration Items (nature COTS, logiciel, matériel, interface, NDI, système…) et les composants ou liens physiques qu'ils réalisent (PhysicalArtifactRealization) ; répartition par nature.</td></tr>
+          <tr><td>🩺 Contrôles</td><td>Comportements non déployés, nœuds sans comportement (seulement si le modèle pratique le déploiement), <b>échanges entre comportements déployés sur des nœuds qu'aucun lien physique ne relie</b>, déploiements multiples, nœuds non réalisés par un Configuration Item, Configuration Items vides, réalisations vers un élément introuvable, éléments réalisés par plusieurs articles, articles sans nature.</td></tr>
+        </table>
+        <p class="hp-note">Le panneau de détail d'un composant physique indique où il est déployé, ce qu'il héberge et le Configuration Item qui le réalise. ⚡ Chaînes › 🩺 contrôle aussi la <b>continuité des chemins physiques</b> (lien impliqué dont les extrémités ne sont pas sur les composants voisins).</p>
         <h3>📦 REC / RPL</h3>
         <p>Les <b>éléments réutilisables</b> de Capella : un <b>REC</b> est un gabarit (ensemble d'éléments du modèle), une <b>RPL</b> une réplique instanciée de ce REC (suffixe, conformité BLACK_BOX / CONSTRAINT_REUSE / INHERITANCY_REUSE). Chaque élément d'une réplique garde un lien vers son origine dans le REC.</p>
         <table class="hp-t">

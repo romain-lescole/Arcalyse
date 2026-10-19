@@ -87,6 +87,7 @@ function capOpenDetail(id){
   html+=capEcDetail(el.id, secTitle);   // 🏷 catégories d'échanges (71)
   html+=capLibDetail(el.id, secTitle);   // 📚 références externes (72)
   html+=capRecDetail(el.id, secTitle);   // 📦 REC / RPL (73)
+  html+=capDepDetail(el.id, secTitle);   // 🖧 déploiement & EPBS (74)
 
   // 💬 Commentaires de revue portant sur l'élément
   if(typeof capRevDetailSection==='function') html+=capRevDetailSection(el.id, secTitle);

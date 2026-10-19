@@ -49,6 +49,14 @@ function capChChecks(layer){
   // Références cycliques entre chaînes (DFS sur refs)
   const cyc=new Set(); { const st={}; const dfs=(u,path)=>{ st[u]=1; (refs[u]||[]).forEach(r=>{ if(!r.ok) return; if(st[r.id]===1){ path.forEach(p=>cyc.add(p)); cyc.add(r.id); } else if(!st[r.id]) dfs(r.id,[...path,r.id]); }); st[u]=2; }; Object.keys(refs).forEach(u=>{ if(!st[u]) dfs(u,[u]); }); }
   const dup={}; cs.forEach(c=>{ const k=c.layer+'|'+c.type+'|'+c.name.trim().toLowerCase(); (dup[k]=dup[k]||[]).push(c); });
+  // Continuité d'un chemin physique : chaque lien impliqué doit relier (par ses ports) les deux composants qu'il joint dans le chemin
+  const plEnds={}; capComputePhysLinks().forEach(l=>{ plEnds[l.linkId]=[l.src.pcId,l.tgt.pcId]; });
+  const {parentOf}=capGetParentIndex();
+  const famille=id=>{ const out=new Set([id]); for(let p=parentOf[id]; p; p=parentOf[p]){ const e=capGetElementById_(p); if(e&&e.typeName==='PhysicalComponent') out.add(p); } return out; };   // le port du lien peut être sur un sous-composant
+  const norm=id=>{ const e=capGetElementById_(id); if(e&&e.typeName==='Part'){ const t=(e.attrs.abstractType||'').trim().replace(/^.*#/,''); return t||id; } return id; };   // le chemin implique des Parts, les ports sont sur les composants
+  const badPl=c=>{ if(c.type!=='PhysicalPath') return []; const comp={}; c.graph.nodes.forEach(n=>{ comp[n.id]=norm(n.refId); });
+    return c.graph.edges.filter(e=>{ if(!e.refId||!plEnds[e.refId]||!comp[e.srcId]||!comp[e.tgtId]) return false; const [p1,p2]=plEnds[e.refId], f1=famille(p1), f2=famille(p2), a=comp[e.srcId], b=comp[e.tgtId];
+      return !((f1.has(a)&&f2.has(b))||(f1.has(b)&&f2.has(a))); }); };
   return [
     {icon:'∅', title:_L('Chaînes vides'), tip:_L('Aucune fonction (ou composant) ni échange impliqué'), cols, items:cs.filter(capChainIsEmpty).map(c=>row(c))},
     {icon:'⛓', title:_L('Chaînes discontinues'), tip:_L('Les étapes forment plusieurs morceaux non reliés entre eux (au moins deux étapes)'), cols, items:cs.filter(c=>c.graph.nodes.length>=2&&components(c)>1).map(c=>row(c,_L(`${components(c)} morceaux, ${c.graph.nodes.length} étapes, ${c.graph.edges.length} échanges`)))},
@@ -62,6 +70,7 @@ function capChChecks(layer){
     {icon:'📝', title:_L('Chaînes sans description'), cols, items:cs.filter(c=>!c.desc).map(c=>row(c))},
     {icon:'≡', title:_L('Chaînes en double'), tip:_L('Même nom, même type et même couche'), cols, items:Object.values(dup).filter(a=>a.length>1).flat().map(c=>row(c,_L(`${dup[c.layer+'|'+c.type+'|'+c.name.trim().toLowerCase()].length} chaînes de ce nom`)))},
     {icon:'∅', title:_L('Étapes portées par des fonctions non allouées'), tip:_L('Fonctions de la chaîne sans composant allocataire (hors processus opérationnels)'), cols, items:cs.filter(c=>c.type==='FunctionalChain'&&c.graph.nodes.some(n=>n.kind==='none'&&n.elemType!=='?')).map(c=>row(c,c.graph.nodes.filter(n=>n.kind==='none'&&n.elemType!=='?').map(n=>esc(n.name)).join(', ')))},
+    {icon:'⛓', title:_L('Liens d\'un chemin physique ne reliant pas ses composants voisins'), tip:_L('Le Physical Link impliqué entre deux composants du chemin n\'a pas ses extrémités sur ces composants : chemin discontinu'), cols, items:cs.filter(c=>badPl(c).length).map(c=>row(c,badPl(c).map(e=>esc(e.name||'—')).join(', ')))},
     {icon:'🔌', title:_L('Composants isolés dans un chemin physique'), tip:_L('Composant impliqué qu\'aucun lien physique du chemin ne relie (chemins d\'au moins deux composants)'), cols, items:cs.filter(c=>c.type==='PhysicalPath'&&c.graph.nodes.length>=2&&c.graph.nodes.some(n=>!c.graph.edges.some(e=>e.srcId===n.id||e.tgtId===n.id))).map(c=>row(c,c.graph.nodes.filter(n=>!c.graph.edges.some(e=>e.srcId===n.id||e.tgtId===n.id)).map(n=>esc(n.name)).join(', ')))}];
 }
 

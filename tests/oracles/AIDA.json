@@ -612,6 +612,16 @@
   "echangesCategorises": 96,
   "introuvables": 0
  },
+ "deploiement": {
+  "noeuds": 50,
+  "comportements": 51,
+  "deployes": 43,
+  "cis": 1,
+  "ciKinds": {
+   "SystemCI": 1
+  },
+  "ceNonRelies": 0
+ },
  "recRpl": {
   "recs": 11,
   "rpls": 13,
@@ -639,13 +649,13 @@
   "declarees": 0
  },
  "sante": {
-  "score": 52,
-  "points": 2993,
+  "score": 51,
+  "points": 3060,
   "bloquants": 0,
   "info": 0,
   "pop": 4608,
-  "nChecks": 113,
-  "nOk": 56,
+  "nChecks": 123,
+  "nOk": 63,
   "couches": {
    "OA": 58,
    "SA": 88,
@@ -748,6 +758,7 @@
    "Chaînes sans description": 32,
    "Chaînes en double": 0,
    "Étapes portées par des fonctions non allouées": 0,
+   "Liens d'un chemin physique ne reliant pas ses composants voisins": 0,
    "Composants isolés dans un chemin physique": 0
   },
   "categories": {
@@ -773,6 +784,17 @@
    "REC sans réplique": 0,
    "REC en double": 0,
    "Éléments appartenant à plusieurs répliques": 0
+  },
+  "deploiement": {
+   "Comportements non déployés": 10,
+   "Nœuds sans comportement déployé": 15,
+   "Échanges entre comportements sans lien physique entre leurs nœuds": 0,
+   "Comportements déployés sur plusieurs nœuds": 0,
+   "Nœuds physiques non réalisés par un Configuration Item": 42,
+   "Configuration Items vides": 0,
+   "Réalisations EPBS vers un élément introuvable": 0,
+   "Éléments réalisés par plusieurs Configuration Items": 0,
+   "Configuration Items sans nature": 0
   },
   "etats": {
    "noInit": 25,
@@ -1161,6 +1183,11 @@
    "Chaînes discontinues": 4,
    "Chaînes non réalisées à la couche inférieure": 2
   },
+  "chk.dep": {
+   "Comportements non déployés": 10,
+   "Nœuds sans comportement déployé": 15,
+   "Nœuds physiques non réalisés par un Configuration Item": 42
+  },
   "chk.ec": {
    "Échanges sans catégorie": 278,
    "Catégories vides": 2
@@ -1212,6 +1239,7 @@
    "Données & interfaces": 119,
    "Exigences": 116,
    "Component Exchanges": 78,
+   "Déploiement & EPBS": 67,
    "Capacités": 59,
    "Chaînes": 38,
    "Modes & états": 36,
@@ -1229,6 +1257,55 @@
    "PA": 141
   },
   "ct.n": 201,
+  "dep.beh": {
+   "pct": 79,
+   "num": 38,
+   "den": 48
+  },
+  "dep.ci": 1,
+  "dep.cikind": {
+   "Système": 1
+  },
+  "dep.cipct": {
+   "pct": 0,
+   "num": 0,
+   "den": 42
+  },
+  "dep.nodes": 50,
+  "dep.per": {
+   "Left and right side sticks": 1,
+   "Push button": 1,
+   "Camera control device": 1,
+   "Drone control desk": 1,
+   "Drone": 1,
+   "Propeller 1": 1,
+   "Motor 1": 1,
+   "Motor Control and Protection System 1": 2,
+   "Propeller 2": 1,
+   "Motor 2": 1,
+   "Motor Control and Protection System 2": 2,
+   "Propeller 3": 1,
+   "Motor Control and Protection System 3": 2,
+   "Motor 3": 1,
+   "Propeller 4": 1,
+   "Motor Control and Protection System 4": 2,
+   "Motor 4": 1,
+   "Payload": 1,
+   "Camera sensor": 1,
+   "Camera rotary support": 1,
+   "Payload control": 1,
+   "Power supply": 1,
+   "Structure": 1,
+   "Flight controler": 8,
+   "Optical flow sensor": 1,
+   "GPS receiver": 1,
+   "LIDAR altimeter": 1,
+   "Data base": 1,
+   "Drone Environment": 1,
+   "Positioning System": 1,
+   "Aircraft": 1,
+   "Drone pilot": 1
+  },
   "dg.cmp": null,
   "dg.layer": null,
   "dg.n": null,
@@ -2211,10 +2288,10 @@
    "PA": 74,
    "EPBS": 100
   },
-  "sante.pts": 2993,
+  "sante.pts": 3060,
   "sante.score": {
-   "pct": 52,
-   "num": 52,
+   "pct": 51,
+   "num": 51,
    "den": 100
   },
   "sante.vue": {
@@ -2229,6 +2306,7 @@
    "⛓ Contraintes": 153,
    "🏷 Catégories d'échanges": 280,
    "📦 REC / RPL": 23,
+   "🖧 Déploiement & EPBS": 67,
    "🔖 Statut de revue": 3,
    "🔀 Behavior Exchange": 78,
    "🔌 Physical Link": 177,
