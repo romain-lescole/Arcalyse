@@ -1002,20 +1002,20 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 225 | ID ⬇ CSV | All relations (…) ID ⬇ CSV … relation types present… … |
 | 227 | types de relations présents | All relations (…) ID ⬇ CSV … relation types present… … |
 | 227 | Relations non trouvées dans ce modèle : | Relations not found in this model: |
-| 256 | Source | … … → … … …… Source … … Target … … |
-| 258 | Cible | … … → … … …… Source … … Target … … |
-| 258 | ID source | Source ID |
-| 258 | Via | Via |
-| 258 | ID cible | Target ID |
-| 266 | Aucun lien. | No link. |
-| 278 | Relation | Relation |
-| 278 | Source | Source |
-| 278 | Type source | Source type |
-| 278 | ID source | Source ID |
-| 278 | Via | Via |
-| 278 | Cible | Target |
-| 278 | Type cible | Target type |
-| 278 | ID cible | Target ID |
+| 257 | Source | Source … … Target … |
+| 257 | Cible | Source … … Target … |
+| 257 | ID source | Source ID |
+| 257 | Via | Via |
+| 257 | ID cible | Target ID |
+| 264 | Aucun lien. | No link. |
+| 276 | Relation | Relation |
+| 276 | Source | Source |
+| 276 | Type source | Source type |
+| 276 | ID source | Source ID |
+| 276 | Via | Via |
+| 276 | Cible | Target |
+| 276 | Type cible | Target type |
+| 276 | ID cible | Target ID |
 
 ## js/23-chaines.js
 
@@ -1470,47 +1470,44 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 141 | Component Exchange | Component Exchange |
 | 141 | Physical Link | Physical Link |
 | 141 | Écart | Gap |
-| 173 | Aucun port ne correspond au filtre. | No port matches the filter. |
-| 179 | ∅ non alloué | ∅ not allocated |
-| 185 | Couche Fonction Function Port Functional Exchanges Composant Component Port Component Exchanges Physical Port Physical Links | Layer Function Function Port Functional Exchanges Component Component Port Component Exchanges Physical Port Physical Links … … |
-| 189 | Affichage limité aux | Display limited to the first … rows out of … — refine the filter or export to CSV. |
-| 189 | premières lignes sur | Display limited to the first … rows out of … — refine the filter or export to CSV. |
-| 189 | — affinez le filtre ou exportez en CSV. | Display limited to the first … rows out of … — refine the filter or export to CSV. |
-| 201 | Aucun composant ne correspond au filtre. | No component matches the filter. |
-| 205 | ∅ aucun Component Port | ∅ no Component Port |
-| 206 | ∅ lien | ∅ link |
-| 211 | ∅ aucun Function Port | ∅ no Function Port |
-| 219 | component port(s) | … … …… component port(s)… ▶ …… |
-| 219 | port(s) physique(s) · | physical port(s) · |
-| 222 | Ports physiques → Component Ports alloués | Physical ports → allocated Component Ports … |
-| 222 | Component Ports ← Function Ports alloués | Component Ports ← allocated Function Ports … |
-| 242 | ≡ Traçabilité | ≡ Traceability ▣ By component 🩺 Checks ƒ … function ports · ⬦ … component ports · 🔌 … physical ports … |
-| 243 | ▣ Par composant | ≡ Traceability ▣ By component 🩺 Checks ƒ … function ports · ⬦ … component ports · 🔌 … physical ports … |
-| 244 | 🩺 Contrôles ƒ | ≡ Traceability ▣ By component 🩺 Checks ƒ … function ports · ⬦ … component ports · 🔌 … physical ports … |
-| 245 | function ports · ⬦ | ≡ Traceability ▣ By component 🩺 Checks ƒ … function ports · ⬦ … component ports · 🔌 … physical ports … |
-| 245 | component ports · 🔌 | ≡ Traceability ▣ By component 🩺 Checks ƒ … function ports · ⬦ … component ports · 🔌 … physical ports … |
-| 245 | physical ports | ≡ Traceability ▣ By component 🩺 Checks ƒ … function ports · ⬦ … component ports · 🔌 … physical ports … |
-| 249 | Toutes couches | All layers … … ⬇ CSV |
-| 250 | Non classé | Unclassified |
-| 252 | ⬇ CSV | All layers … … ⬇ CSV |
-| 252 | Seulement les chaînes incomplètes | Incomplete chains only |
-| 254 | ⬇ CSV | ⬇ CSV |
-| 266 | Contrôle | Check |
-| 266 | Élément | Element |
-| 266 | Détail | Detail |
-| 266 | Complément | Complement |
-| 271 | Couche | Layer |
-| 271 | Fonction | Function |
-| 271 | Function Port | Function Port |
-| 271 | Direction | Direction |
-| 271 | Functional Exchanges | Functional Exchanges |
-| 271 | Composant | Component |
-| 271 | Component Port | Component Port |
-| 271 | Orientation | Orientation |
-| 271 | Component Exchanges | Component Exchanges |
-| 271 | Physical Ports | Physical Ports |
-| 271 | Physical Links | Physical Links |
-| 271 | Incomplet | Incomplete |
+| 172 | Aucun port ne correspond au filtre. | No port matches the filter. |
+| 178 | ∅ non alloué | ∅ not allocated |
+| 184 | Couche Fonction Function Port Functional Exchanges Composant Component Port Component Exchanges Physical Port Physical Links | Layer Function Function Port Functional Exchanges Component Component Port Component Exchanges Physical Port Physical Links |
+| 200 | Aucun composant ne correspond au filtre. | No component matches the filter. |
+| 204 | ∅ aucun Component Port | ∅ no Component Port |
+| 205 | ∅ lien | ∅ link |
+| 210 | ∅ aucun Function Port | ∅ no Function Port |
+| 218 | component port(s) | … … …… component port(s)… ▶ …… |
+| 218 | port(s) physique(s) · | physical port(s) · |
+| 221 | Ports physiques → Component Ports alloués | Physical ports → allocated Component Ports … |
+| 221 | Component Ports ← Function Ports alloués | Component Ports ← allocated Function Ports … |
+| 241 | ≡ Traçabilité | ≡ Traceability ▣ By component 🩺 Checks ƒ … function ports · ⬦ … component ports · 🔌 … physical ports … |
+| 242 | ▣ Par composant | ≡ Traceability ▣ By component 🩺 Checks ƒ … function ports · ⬦ … component ports · 🔌 … physical ports … |
+| 243 | 🩺 Contrôles ƒ | ≡ Traceability ▣ By component 🩺 Checks ƒ … function ports · ⬦ … component ports · 🔌 … physical ports … |
+| 244 | function ports · ⬦ | ≡ Traceability ▣ By component 🩺 Checks ƒ … function ports · ⬦ … component ports · 🔌 … physical ports … |
+| 244 | component ports · 🔌 | ≡ Traceability ▣ By component 🩺 Checks ƒ … function ports · ⬦ … component ports · 🔌 … physical ports … |
+| 244 | physical ports | ≡ Traceability ▣ By component 🩺 Checks ƒ … function ports · ⬦ … component ports · 🔌 … physical ports … |
+| 248 | Toutes couches | All layers … … ⬇ CSV |
+| 249 | Non classé | Unclassified |
+| 251 | ⬇ CSV | All layers … … ⬇ CSV |
+| 251 | Seulement les chaînes incomplètes | Incomplete chains only |
+| 253 | ⬇ CSV | ⬇ CSV |
+| 265 | Contrôle | Check |
+| 265 | Élément | Element |
+| 265 | Détail | Detail |
+| 265 | Complément | Complement |
+| 270 | Couche | Layer |
+| 270 | Fonction | Function |
+| 270 | Function Port | Function Port |
+| 270 | Direction | Direction |
+| 270 | Functional Exchanges | Functional Exchanges |
+| 270 | Composant | Component |
+| 270 | Component Port | Component Port |
+| 270 | Orientation | Orientation |
+| 270 | Component Exchanges | Component Exchanges |
+| 270 | Physical Ports | Physical Ports |
+| 270 | Physical Links | Physical Links |
+| 270 | Incomplet | Incomplete |
 
 ## js/31-analyses-traca-capacites.js
 
@@ -1529,112 +1526,108 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 21 | Données / Exchange Items | Data / Exchange Items |
 | 145 | Catégorie | Category … … |
 | 148 | Aucun lien de réalisation entre couches dans ce modèle. | No realization link between layers in this model. |
-| 158 | 800 lignes affichées sur | 800 rows shown out of … — export to CSV to see everything. |
-| 158 | — export CSV pour tout voir. | 800 rows shown out of … — export to CSV to see everything. |
 | 158 | Calcul limité à 3000 chemins. | Computation limited to 3000 paths. |
-| 163 | Type de lien Réalisant (bas) Type Réalisé (haut) Type | Link type Realizing (lower) Type Realized (upper) Type … … |
-| 165 | 1000 liens affichés sur | 1000 links shown out of … — export to CSV to see everything. |
-| 165 | — export CSV pour tout voir. | 1000 links shown out of … — export to CSV to see everything. |
-| 168 | ▦ Couverture | ▦ Coverage ⛓ Traceability paths 🔗 Links (…) … … Leaf functions Include TransfoLinks ⬇ CSV … |
-| 169 | ⛓ Chemins de traçabilité | ▦ Coverage ⛓ Traceability paths 🔗 Links (…) … … Leaf functions Include TransfoLinks ⬇ CSV … |
-| 170 | 🔗 Liens ( | ▦ Coverage ⛓ Traceability paths 🔗 Links (…) … … Leaf functions Include TransfoLinks ⬇ CSV … |
-| 173 | Fonctions feuilles | ▦ Coverage ⛓ Traceability paths 🔗 Links (…) … … Leaf functions Include TransfoLinks ⬇ CSV … |
-| 174 | Inclure les TransfoLink ⬇ CSV | ▦ Coverage ⛓ Traceability paths 🔗 Links (…) … … Leaf functions Include TransfoLinks ⬇ CSV … |
-| 186 | ✔ RAS | ✔ Nothing to report |
-| 188 | non réalisés en | ▼ … … not realized in … (…) … ▲ … … realizing nothing in … (…) … |
-| 189 | ne réalisant rien en | ▼ … … not realized in … (…) … ▲ … … realizing nothing in … (…) … |
-| 196 | réalisé | realized |
-| 196 | NON réalisé | NOT realized |
-| 197 | réalisant | realizing |
-| 197 | ne réalise rien | realizes nothing |
-| 199 | Catégorie | Category |
-| 199 | Passage | Transition |
-| 199 | Niveau | Level |
-| 199 | Élément | Element |
-| 199 | Type | (inchangé, hors _L) |
-| 199 | Statut | Status |
-| 202 | Type de lien | Link type |
-| 202 | Couche réalisant | Realizing layer |
-| 202 | Réalisant | Realizing |
-| 202 | Type | (inchangé, hors _L) |
-| 202 | Couche réalisé | Realized layer |
-| 202 | Réalisé | Realized |
-| 207 | Capability | (inchangé, hors _L) |
-| 207 | Mission | (inchangé, hors _L) |
-| 261 | Aucune capacité ni mission dans ce modèle. | No capability or mission in this model. |
-| 268 | acteur(s)/composant(s) ▶ | … … … · …… actor(s)/component(s) ▶ … Involved actors / components … … |
-| 268 | capacité(s) · | … capability(ies) · |
-| 268 | fonction(s) · | … function(s) · … chain(s) · … scenario(s) · |
-| 268 | chaîne(s) · | … function(s) · … chain(s) · … scenario(s) · |
-| 268 | scénario(s) · | … function(s) · … chain(s) · … scenario(s) · |
-| 271 | Capacités exploitées | Exploited capabilities … |
+| 163 | Type de lien Réalisant (bas) Type Réalisé (haut) Type | Link type Realizing (lower) Type Realized (upper) Type |
+| 167 | ▦ Couverture | ▦ Coverage ⛓ Traceability paths 🔗 Links (…) … … Leaf functions Include TransfoLinks ⬇ CSV … |
+| 168 | ⛓ Chemins de traçabilité | ▦ Coverage ⛓ Traceability paths 🔗 Links (…) … … Leaf functions Include TransfoLinks ⬇ CSV … |
+| 169 | 🔗 Liens ( | ▦ Coverage ⛓ Traceability paths 🔗 Links (…) … … Leaf functions Include TransfoLinks ⬇ CSV … |
+| 172 | Fonctions feuilles | ▦ Coverage ⛓ Traceability paths 🔗 Links (…) … … Leaf functions Include TransfoLinks ⬇ CSV … |
+| 173 | Inclure les TransfoLink ⬇ CSV | ▦ Coverage ⛓ Traceability paths 🔗 Links (…) … … Leaf functions Include TransfoLinks ⬇ CSV … |
+| 185 | ✔ RAS | ✔ Nothing to report |
+| 187 | non réalisés en | ▼ … … not realized in … (…) … ▲ … … realizing nothing in … (…) … |
+| 188 | ne réalisant rien en | ▼ … … not realized in … (…) … ▲ … … realizing nothing in … (…) … |
+| 195 | réalisé | realized |
+| 195 | NON réalisé | NOT realized |
+| 196 | réalisant | realizing |
+| 196 | ne réalise rien | realizes nothing |
+| 198 | Catégorie | Category |
+| 198 | Passage | Transition |
+| 198 | Niveau | Level |
+| 198 | Élément | Element |
+| 198 | Type | (inchangé, hors _L) |
+| 198 | Statut | Status |
+| 201 | Type de lien | Link type |
+| 201 | Couche réalisant | Realizing layer |
+| 201 | Réalisant | Realizing |
+| 201 | Type | (inchangé, hors _L) |
+| 201 | Couche réalisé | Realized layer |
+| 201 | Réalisé | Realized |
+| 206 | Capability | (inchangé, hors _L) |
+| 206 | Mission | (inchangé, hors _L) |
+| 260 | Aucune capacité ni mission dans ce modèle. | No capability or mission in this model. |
+| 267 | acteur(s)/composant(s) ▶ | … … … · …… actor(s)/component(s) ▶ … Involved actors / components … … |
+| 267 | capacité(s) · | … capability(ies) · |
+| 267 | fonction(s) · | … function(s) · … chain(s) · … scenario(s) · |
+| 267 | chaîne(s) · | … function(s) · … chain(s) · … scenario(s) · |
+| 267 | scénario(s) · | … function(s) · … chain(s) · … scenario(s) · |
+| 270 | Capacités exploitées | Exploited capabilities … |
+| 270 | ∅ aucune | ∅ none |
+| 270 | Fonctions impliquées | Involved functions … Involved chains … Scenarios … Includes / extends / specializes … Exploited by missions … Realizes (upper layer) … Realized by (lower layer) … |
+| 271 | Chaînes impliquées | Involved functions … Involved chains … Scenarios … Includes / extends / specializes … Exploited by missions … Realizes (upper layer) … Realized by (lower layer) … |
 | 271 | ∅ aucune | ∅ none |
-| 271 | Fonctions impliquées | Involved functions … Involved chains … Scenarios … Includes / extends / specializes … Exploited by missions … Realizes (upper layer) … Realized by (lower layer) … |
-| 272 | Chaînes impliquées | Involved functions … Involved chains … Scenarios … Includes / extends / specializes … Exploited by missions … Realizes (upper layer) … Realized by (lower layer) … |
-| 272 | ∅ aucune | ∅ none |
-| 273 | Scénarios | Involved functions … Involved chains … Scenarios … Includes / extends / specializes … Exploited by missions … Realizes (upper layer) … Realized by (lower layer) … |
-| 274 | Inclut / étend / spécialise | Involved functions … Involved chains … Scenarios … Includes / extends / specializes … Exploited by missions … Realizes (upper layer) … Realized by (lower layer) … |
-| 275 | Exploitée par les missions | Involved functions … Involved chains … Scenarios … Includes / extends / specializes … Exploited by missions … Realizes (upper layer) … Realized by (lower layer) … |
-| 276 | Réalise (couche haute) | Involved functions … Involved chains … Scenarios … Includes / extends / specializes … Exploited by missions … Realizes (upper layer) … Realized by (lower layer) … |
-| 277 | Réalisée par (couche basse) | Involved functions … Involved chains … Scenarios … Includes / extends / specializes … Exploited by missions … Realizes (upper layer) … Realized by (lower layer) … |
-| 278 | Acteurs / composants impliqués | … … … · …… actor(s)/component(s) ▶ … Involved actors / components … … |
-| 279 | ∅ aucun | ∅ none |
-| 280 | Autres implications | Other involvements … |
-| 282 | Aucune capacité ne correspond au filtre. | No capability matches the filter. |
-| 289 | Capacité ↓ / | Capability ↓ / … → … Σ … Σ … |
-| 289 | Fonction | Function |
-| 289 | Chaîne | Chain |
-| 289 | Capacité | Capability |
-| 294 | Rien à croiser pour ce filtre. | Nothing to cross for this filter. |
-| 306 | Capacités sans fonction ni chaîne impliquée | Capabilities without involved function or chain |
-| 306 | Rien ne décrit le comportement attendu | Nothing describes the expected behaviour |
-| 306 | Capacité | Capability |
+| 272 | Scénarios | Involved functions … Involved chains … Scenarios … Includes / extends / specializes … Exploited by missions … Realizes (upper layer) … Realized by (lower layer) … |
+| 273 | Inclut / étend / spécialise | Involved functions … Involved chains … Scenarios … Includes / extends / specializes … Exploited by missions … Realizes (upper layer) … Realized by (lower layer) … |
+| 274 | Exploitée par les missions | Involved functions … Involved chains … Scenarios … Includes / extends / specializes … Exploited by missions … Realizes (upper layer) … Realized by (lower layer) … |
+| 275 | Réalise (couche haute) | Involved functions … Involved chains … Scenarios … Includes / extends / specializes … Exploited by missions … Realizes (upper layer) … Realized by (lower layer) … |
+| 276 | Réalisée par (couche basse) | Involved functions … Involved chains … Scenarios … Includes / extends / specializes … Exploited by missions … Realizes (upper layer) … Realized by (lower layer) … |
+| 277 | Acteurs / composants impliqués | … … … · …… actor(s)/component(s) ▶ … Involved actors / components … … |
+| 278 | ∅ aucun | ∅ none |
+| 279 | Autres implications | Other involvements … |
+| 281 | Aucune capacité ne correspond au filtre. | No capability matches the filter. |
+| 288 | Capacité ↓ / | Capability ↓ / … → … Σ … Σ … |
+| 288 | Fonction | Function |
+| 288 | Chaîne | Chain |
+| 288 | Capacité | Capability |
+| 293 | Rien à croiser pour ce filtre. | Nothing to cross for this filter. |
+| 305 | Capacités sans fonction ni chaîne impliquée | Capabilities without involved function or chain |
+| 305 | Rien ne décrit le comportement attendu | Nothing describes the expected behaviour |
+| 305 | Capacité | Capability |
+| 305 | Type | (inchangé, hors _L) |
+| 306 | Capacités / missions sans acteur ni composant impliqué | Capabilities / missions without involved actor or component |
+| 306 | Élément | Element |
 | 306 | Type | (inchangé, hors _L) |
-| 307 | Capacités / missions sans acteur ni composant impliqué | Capabilities / missions without involved actor or component |
-| 307 | Élément | Element |
+| 307 | Capacités sans scénario | Capabilities without scenario |
+| 307 | Aucun scénario pour illustrer la capacité | No scenario to illustrate the capability |
+| 307 | Capacité | Capability |
 | 307 | Type | (inchangé, hors _L) |
-| 308 | Capacités sans scénario | Capabilities without scenario |
-| 308 | Aucun scénario pour illustrer la capacité | No scenario to illustrate the capability |
+| 308 | Capacités non réalisées à la couche inférieure | Capabilities not realized in the lower layer |
+| 308 | Seulement si la couche inférieure contient des capacités | Only if the lower layer contains capabilities |
 | 308 | Capacité | Capability |
 | 308 | Type | (inchangé, hors _L) |
-| 309 | Capacités non réalisées à la couche inférieure | Capabilities not realized in the lower layer |
-| 309 | Seulement si la couche inférieure contient des capacités | Only if the lower layer contains capabilities |
-| 309 | Capacité | Capability |
-| 309 | Type | (inchangé, hors _L) |
-| 311 | Capacités système non exploitées par une mission | System capabilities not exploited by a mission |
-| 311 | Seulement si le modèle contient des missions | Only if the model contains missions |
-| 311 | Capacité | Capability |
-| 311 | Type | (inchangé, hors _L) |
-| 313 | Missions sans capacité exploitée | Missions without exploited capability |
-| 313 | Mission | (inchangé, hors _L) |
+| 310 | Capacités système non exploitées par une mission | System capabilities not exploited by a mission |
+| 310 | Seulement si le modèle contient des missions | Only if the model contains missions |
+| 310 | Capacité | Capability |
+| 310 | Type | (inchangé, hors _L) |
+| 312 | Missions sans capacité exploitée | Missions without exploited capability |
+| 312 | Mission | (inchangé, hors _L) |
+| 312 | Type | (inchangé, hors _L) |
+| 313 | Fonctions feuilles impliquées dans aucune capacité | Leaf functions involved in no capability |
+| 313 | Couches où des capacités impliquent déjà des fonctions | Layers where capabilities already involve functions |
+| 313 | Fonction | Function |
 | 313 | Type | (inchangé, hors _L) |
-| 314 | Fonctions feuilles impliquées dans aucune capacité | Leaf functions involved in no capability |
-| 314 | Couches où des capacités impliquent déjà des fonctions | Layers where capabilities already involve functions |
-| 314 | Fonction | Function |
-| 314 | Type | (inchangé, hors _L) |
-| 319 | ▣ Cartes | ▣ Cards ▦ Matrix 🩺 Checks … … … ⬇ CSV … |
-| 320 | ▦ Matrice | ▣ Cards ▦ Matrix 🩺 Checks … … … ⬇ CSV … |
-| 321 | 🩺 Contrôles | ▣ Cards ▦ Matrix 🩺 Checks … … … ⬇ CSV … |
-| 322 | Toutes ( | All (…) … |
-| 325 | × Acteurs / composants | × Actors / components |
-| 325 | × Fonctions | × Functions |
-| 325 | × Chaînes | × Chains |
-| 325 | Missions × capacités | Missions × capabilities |
-| 326 | ⬇ CSV | ▣ Cards ▦ Matrix 🩺 Checks … … … ⬇ CSV … |
+| 318 | ▣ Cartes | ▣ Cards ▦ Matrix 🩺 Checks … … … ⬇ CSV … |
+| 319 | ▦ Matrice | ▣ Cards ▦ Matrix 🩺 Checks … … … ⬇ CSV … |
+| 320 | 🩺 Contrôles | ▣ Cards ▦ Matrix 🩺 Checks … … … ⬇ CSV … |
+| 321 | Toutes ( | All (…) … |
+| 324 | × Acteurs / composants | × Actors / components |
+| 324 | × Fonctions | × Functions |
+| 324 | × Chaînes | × Chains |
+| 324 | Missions × capacités | Missions × capabilities |
+| 325 | ⬇ CSV | ▣ Cards ▦ Matrix 🩺 Checks … … … ⬇ CSV … |
+| 335 | Couche | Layer |
+| 335 | Capacité | Capability |
 | 336 | Couche | Layer |
-| 336 | Capacité | Capability |
-| 337 | Couche | Layer |
-| 337 | Type | (inchangé, hors _L) |
-| 337 | Nom | Name |
-| 337 | Fonctions | Functions |
-| 337 | Chaînes | Chains |
-| 337 | Acteurs / composants | Actors / components |
-| 337 | Scénarios | Scenarios |
-| 337 | Inclusions | Inclusions |
-| 337 | Missions | Missions |
-| 337 | Réalise | Realizes |
-| 337 | Réalisée par | Realized by |
-| 337 | Capacités exploitées | Exploited capabilities |
+| 336 | Type | (inchangé, hors _L) |
+| 336 | Nom | Name |
+| 336 | Fonctions | Functions |
+| 336 | Chaînes | Chains |
+| 336 | Acteurs / composants | Actors / components |
+| 336 | Scénarios | Scenarios |
+| 336 | Inclusions | Inclusions |
+| 336 | Missions | Missions |
+| 336 | Réalise | Realizes |
+| 336 | Réalisée par | Realized by |
+| 336 | Capacités exploitées | Exploited capabilities |
 
 ## js/32-analyses-etats-comparaison.js
 
@@ -3003,7 +2996,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 |---:|---|---|
 | 43 | Glisser pour régler la largeur de la colonne (double-clic : largeur automatique) | Drag to set the column width (double-click: automatic width) |
 | 88 | Défilement horizontal du tableau | Horizontal table scroll |
-| 141 | ✕ effacer | 🔍 … / … row… ✕ clear |
+| 144 | ✕ effacer | 🔍 … / … row… ✕ clear |
 
 ## js/43-visite-guidee.js
 
@@ -6547,86 +6540,86 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 12 | Article principal | Prime item |
 | 12 | Système | System |
 | 22 | (sans nom) | (unnamed) |
-| 65 | Composant | Component |
-| 65 | Nature | Nature |
-| 65 | Détail | Detail |
-| 65 | Configuration Item | Configuration Item |
-| 69 | Comportements non déployés | Undeployed behaviours |
-| 69 | PhysicalComponent de nature BEHAVIOR sans PartDeploymentLink vers un nœud (seulement si le modèle pratique le déploiement) | PhysicalComponent of nature BEHAVIOR without PartDeploymentLink to a node (only if the model practises deployment) |
-| 69 | porte des fonctions | carries functions |
-| 70 | Nœuds sans comportement déployé | Nodes without deployed behaviour |
-| 70 | PhysicalComponent de nature NODE qui n'héberge aucun comportement (seulement si le modèle pratique le déploiement) | PhysicalComponent of nature NODE hosting no behaviour (only if the model practises deployment) |
-| 71 | Échanges entre comportements sans lien physique entre leurs nœuds | Exchanges between behaviours without physical link between their nodes |
-| 71 | Component Exchange (PA) dont les deux comportements sont déployés sur des nœuds distincts qu'aucun Physical Link ne relie | Component Exchange (PA) whose two behaviours are deployed on distinct nodes that no Physical Link connects |
-| 71 | Component Exchange | Component Exchange |
-| 71 | Nœuds | Nodes |
-| 71 | Détail | Detail |
-| 73 | Comportements déployés sur plusieurs nœuds | Behaviours deployed on several nodes |
-| 73 | Déploiement multiple : à vérifier (redondance voulue, ou erreur) | Multiple deployment: to check (intended redundancy, or error) |
-| 74 | Nœuds physiques non réalisés par un Configuration Item | Physical nodes not realized by a Configuration Item |
-| 74 | Seulement si des Configuration Items réalisent déjà des éléments | Only if Configuration Items already realize elements |
-| 75 | Configuration Items vides | Empty Configuration Items |
-| 75 | Ni réalisation (PhysicalArtifactRealization) ni sous-article | Neither realization (PhysicalArtifactRealization) nor sub-item |
-| 76 | Réalisations EPBS vers un élément introuvable | EPBS realizations of a missing element |
-| 76 | réalisation(s) | … realization(s) |
-| 77 | Éléments réalisés par plusieurs Configuration Items | Elements realized by several Configuration Items |
-| 77 | Élément | Element |
-| 77 | Configuration Items | Configuration Items |
-| 78 | Configuration Items sans nature | Configuration Items without nature |
-| 78 | Attribut kind absent | Missing kind attribute |
-| 86 | Aucun composant physique (nœud ou comportement) ni Configuration Item dans ce modèle : l'architecture physique et l'EPBS ne sont pas encore modélisées. | No physical component (node or behaviour) nor Configuration Item in this model: the physical architecture and the EPBS are not modelled yet. |
-| 92 | comportement(s), dont | … node(s) · … behaviour(s), including … deployed · … exchange(s) between unconnected nodes. Click a name to open the details. |
-| 92 | déployé(s) · | … node(s) · … behaviour(s), including … deployed · … exchange(s) between unconnected nodes. Click a name to open the details. |
-| 92 | échange(s) entre nœuds non reliés. Cliquez un nom pour ouvrir le détail. | … node(s) · … behaviour(s), including … deployed · … exchange(s) between unconnected nodes. Click a name to open the details. |
-| 93 | Comportements déployés | Deployed behaviours |
-| 93 | Fonctions (via les comportements) | Functions (through the behaviours) |
-| 93 | Liens physiques | Physical links |
-| 94 | (acteur) | (actor) |
-| 94 | ∅ aucun | ∅ none |
-| 95 | Comportements non déployés ( | Undeployed behaviours (…) |
-| 101 | Configuration Item(s) · | … Configuration Item(s) · … physical element(s) realized. Tree of items (indentation = nesting). |
-| 101 | élément(s) physique(s) réalisé(s). Arbre des articles (indentation = imbrication). | … Configuration Item(s) · … physical element(s) realized. Tree of items (indentation = nesting). |
-| 102 | Configuration Item | Configuration Item |
-| 102 | Nature | Nature |
-| 102 | Réalise | Realizes |
-| 103 | introuvable(s) | missing |
-| 104 | Nature | Nature |
-| 104 | Configuration Items | Configuration Items |
-| 104 | Éléments réalisés | Realized elements |
-| 108 | 🖧 Déploiement | 🖧 Deployment |
-| 108 | 🧰 EPBS | 🧰 EPBS |
-| 108 | 🩺 Contrôles | 🩺 Checks |
-| 109 | Nœud, comportement… | Node, behaviour… |
-| 109 | Article, élément… | Item, element… |
-| 109 | Toutes natures | All kinds |
-| 111 | Configuration Item | Configuration Item |
-| 111 | Nature | Nature |
-| 111 | Parent | Parent |
-| 111 | Réalise | Realizes |
-| 112 | Comportement | Behaviour |
-| 112 | Fonctions | Functions |
-| 123 | Déployé sur | Deployed on |
-| 124 | Héberge ( | Hosts (…) |
-| 125 | Configuration Item | Configuration Item |
-| 125 | réalise | realizes |
-| 125 | sous-article(s) | … sub-item(s) |
-| 126 | Réalisé par (EPBS) | Realized by (EPBS) |
-| 134 | Déploiement & EPBS | Deployment & EPBS |
-| 135 | dep.nodes | (inchangé, hors _L) |
-| 135 | Déploiement — nœuds physiques | Deployment — physical nodes |
-| 136 | dep.beh | (inchangé, hors _L) |
-| 136 | Déploiement — taux de comportements déployés | Deployment — share of deployed behaviours |
-| 137 | dep.per | (inchangé, hors _L) |
-| 137 | Déploiement — comportements par nœud | Deployment — behaviours per node |
-| 138 | dep.ci | (inchangé, hors _L) |
-| 138 | EPBS — Configuration Items | EPBS — Configuration Items |
-| 139 | dep.cikind | (inchangé, hors _L) |
-| 139 | EPBS — Configuration Items par nature | EPBS — Configuration Items per nature |
-| 140 | dep.cipct | (inchangé, hors _L) |
-| 140 | EPBS — taux de nœuds réalisés par un Configuration Item | EPBS — share of nodes realized by a Configuration Item |
-| 141 | Contrôles | Checks |
-| 141 | chk.dep | (inchangé, hors _L) |
-| 141 | Contrôles du déploiement et de l'EPBS | Deployment and EPBS checks |
+| 75 | Composant | Component |
+| 75 | Nature | Nature |
+| 75 | Détail | Detail |
+| 75 | Configuration Item | Configuration Item |
+| 79 | Comportements non déployés | Undeployed behaviours |
+| 79 | PhysicalComponent de nature BEHAVIOR sans PartDeploymentLink vers un nœud (seulement si le modèle pratique le déploiement) | PhysicalComponent of nature BEHAVIOR without PartDeploymentLink to a node (only if the model practises deployment) |
+| 79 | porte des fonctions | carries functions |
+| 80 | Nœuds sans comportement déployé | Nodes without deployed behaviour |
+| 80 | PhysicalComponent de nature NODE qui n'héberge aucun comportement (seulement si le modèle pratique le déploiement) | PhysicalComponent of nature NODE hosting no behaviour (only if the model practises deployment) |
+| 81 | Échanges entre comportements sans lien physique entre leurs nœuds | Exchanges between behaviours without physical link between their nodes |
+| 81 | Component Exchange (PA) dont les deux comportements sont déployés sur des nœuds distincts qu'aucun Physical Link ne relie | Component Exchange (PA) whose two behaviours are deployed on distinct nodes that no Physical Link connects |
+| 81 | Component Exchange | Component Exchange |
+| 81 | Nœuds | Nodes |
+| 81 | Détail | Detail |
+| 83 | Comportements déployés sur plusieurs nœuds | Behaviours deployed on several nodes |
+| 83 | Déploiement multiple : à vérifier (redondance voulue, ou erreur) | Multiple deployment: to check (intended redundancy, or error) |
+| 84 | Nœuds physiques non réalisés par un Configuration Item | Physical nodes not realized by a Configuration Item |
+| 84 | Seulement si des Configuration Items réalisent déjà des éléments | Only if Configuration Items already realize elements |
+| 85 | Configuration Items vides | Empty Configuration Items |
+| 85 | Ni réalisation (PhysicalArtifactRealization) ni sous-article | Neither realization (PhysicalArtifactRealization) nor sub-item |
+| 86 | Réalisations EPBS vers un élément introuvable | EPBS realizations of a missing element |
+| 86 | réalisation(s) | … realization(s) |
+| 87 | Éléments réalisés par plusieurs Configuration Items | Elements realized by several Configuration Items |
+| 87 | Élément | Element |
+| 87 | Configuration Items | Configuration Items |
+| 88 | Configuration Items sans nature | Configuration Items without nature |
+| 88 | Attribut kind absent | Missing kind attribute |
+| 96 | Aucun composant physique (nœud ou comportement) ni Configuration Item dans ce modèle : l'architecture physique et l'EPBS ne sont pas encore modélisées. | No physical component (node or behaviour) nor Configuration Item in this model: the physical architecture and the EPBS are not modelled yet. |
+| 103 | comportement(s), dont | … node(s) · … behaviour(s), including … deployed · … exchange(s) between unconnected nodes. Click a name to open the details. |
+| 103 | déployé(s) · | … node(s) · … behaviour(s), including … deployed · … exchange(s) between unconnected nodes. Click a name to open the details. |
+| 103 | échange(s) entre nœuds non reliés. Cliquez un nom pour ouvrir le détail. | … node(s) · … behaviour(s), including … deployed · … exchange(s) between unconnected nodes. Click a name to open the details. |
+| 104 | Comportements déployés | Deployed behaviours |
+| 104 | Fonctions (via les comportements) | Functions (through the behaviours) |
+| 104 | Liens physiques | Physical links |
+| 105 | (acteur) | (actor) |
+| 105 | ∅ aucun | ∅ none |
+| 106 | Comportements non déployés ( | Undeployed behaviours (…) |
+| 112 | Configuration Item(s) · | … Configuration Item(s) · … physical element(s) realized. Tree of items (indentation = nesting). |
+| 112 | élément(s) physique(s) réalisé(s). Arbre des articles (indentation = imbrication). | … Configuration Item(s) · … physical element(s) realized. Tree of items (indentation = nesting). |
+| 113 | Configuration Item | Configuration Item |
+| 113 | Nature | Nature |
+| 113 | Réalise | Realizes |
+| 114 | introuvable(s) | missing |
+| 115 | Nature | Nature |
+| 115 | Configuration Items | Configuration Items |
+| 115 | Éléments réalisés | Realized elements |
+| 119 | 🖧 Déploiement | 🖧 Deployment |
+| 119 | 🧰 EPBS | 🧰 EPBS |
+| 119 | 🩺 Contrôles | 🩺 Checks |
+| 120 | Nœud, comportement… | Node, behaviour… |
+| 120 | Article, élément… | Item, element… |
+| 120 | Toutes natures | All kinds |
+| 122 | Configuration Item | Configuration Item |
+| 122 | Nature | Nature |
+| 122 | Parent | Parent |
+| 122 | Réalise | Realizes |
+| 123 | Comportement | Behaviour |
+| 123 | Fonctions | Functions |
+| 134 | Déployé sur | Deployed on |
+| 135 | Héberge ( | Hosts (…) |
+| 136 | Configuration Item | Configuration Item |
+| 136 | réalise | realizes |
+| 136 | sous-article(s) | … sub-item(s) |
+| 137 | Réalisé par (EPBS) | Realized by (EPBS) |
+| 145 | Déploiement & EPBS | Deployment & EPBS |
+| 146 | dep.nodes | (inchangé, hors _L) |
+| 146 | Déploiement — nœuds physiques | Deployment — physical nodes |
+| 147 | dep.beh | (inchangé, hors _L) |
+| 147 | Déploiement — taux de comportements déployés | Deployment — share of deployed behaviours |
+| 148 | dep.per | (inchangé, hors _L) |
+| 148 | Déploiement — comportements par nœud | Deployment — behaviours per node |
+| 149 | dep.ci | (inchangé, hors _L) |
+| 149 | EPBS — Configuration Items | EPBS — Configuration Items |
+| 150 | dep.cikind | (inchangé, hors _L) |
+| 150 | EPBS — Configuration Items par nature | EPBS — Configuration Items per nature |
+| 151 | dep.cipct | (inchangé, hors _L) |
+| 151 | EPBS — taux de nœuds réalisés par un Configuration Item | EPBS — share of nodes realized by a Configuration Item |
+| 152 | Contrôles | Checks |
+| 152 | chk.dep | (inchangé, hors _L) |
+| 152 | Contrôles du déploiement et de l'EPBS | Deployment and EPBS checks |
 
 ## js/75-excel.js
 
@@ -6742,6 +6735,18 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 14 | Commentaires de revue portant sur l'élément | Review comments about the element |
 | 15 | ≡ Tout | ≡ All |
 | 15 | Toutes les sections à la suite | Every section in a row |
+
+## js/78-pagination.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 40 | Revenir à l'affichage par pages | Back to page display |
+| 40 | Par pages de | Pages of … |
+| 42 | Aller à la page | Go to page |
+| 43 | Page précédente | Previous page |
+| 43 | Page suivante | Next page |
+| 44 | Afficher toutes les lignes (plus lent au-delà de quelques milliers) | Show every row (slower beyond a few thousand) |
+| 44 | Tout afficher | Show all |
 
 ## Textes sans traduction anglaise (12)
 

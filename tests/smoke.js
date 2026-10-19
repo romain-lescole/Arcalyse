@@ -120,6 +120,15 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.click('#b-theme-menu'); await p.click('#cap-nav-dd [data-thm="light"]');
     await p.click('#b-theme-menu'); await p.click('#cap-nav-dd [data-thm="dark"]');
     await p.click('#b-file-menu'); await p.keyboard.press('Escape'); });
+  await step('pagination ⏭ : ports, page suivante, tout afficher', async () => {
+    await p.evaluate(() => capNavOpen('ports'));
+    const bar = await p.$('#cap-view-ports .cap-pg-bar');
+    if (bar) { const first = await p.evaluate(() => document.querySelector('#cap-view-ports .cap-pg-body tr').textContent);
+      await p.click('#cap-view-ports .cap-pg-bar [data-pg-go="next"]');
+      if (await p.evaluate(() => document.querySelector('#cap-view-ports .cap-pg-body tr').textContent) === first) throw new Error('page suivante : mêmes lignes');
+      await p.click('#cap-view-ports .cap-pg-bar [data-pg-go="all"]');
+      if (!(await p.$('#cap-view-ports .cap-pg-bar [data-pg-go="0"]'))) throw new Error('Tout afficher : barre non mise à jour'); }
+    else console.log('  (moins de 200 lignes : pas de pagination sur ce modèle)'); });
   await step('panneau de détail : onglets', async () => {
     await p.evaluate(() => { capNavOpen('cards'); const e = capAllElements.find(x => x.typeName === 'SystemFunction' && x.attrs.name); capOpenDetail(e.id); });
     if (!(await p.$('#cap-detail-content .cap-det-tab.active'))) throw new Error('onglets du panneau absents');

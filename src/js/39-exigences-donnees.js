@@ -43,8 +43,8 @@ function capXtLinks(arr, withLayer){
  */
 function capXtTable(cols, rows, empty){
   if(!rows.length) return `<div class="phl-empty">${empty||_L('Aucun élément ne correspond au filtre.')}</div>`;
-  return `<div style="overflow:auto"><table class="ana-t"><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
-    <tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  return capPaged(rows, {render:r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`,   // pages de 200 lignes (78)
+    open:`<div style="overflow:auto"><table class="ana-t"><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody class="cap-pg-body">`, close:'</tbody></table></div>'});
 }
 /** Boutons de choix de vue.
  * @param {string[][]} views - [clé, libellé]

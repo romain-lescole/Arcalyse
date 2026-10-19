@@ -153,16 +153,15 @@ function capRenderTrace(box){
     const f=q?rows.filter(r=>CAP_ANA_LAYERS.some(k=>(r[k]||[]).some(e=>e.name.toLowerCase().includes(q)))):rows;
     const cols=CAP_ANA_LAYERS.filter(k=>rows.some(r=>r[k]));
     box._trRows=f; box._trCols=cols;
-    body=`<table class="ana-t"><tr>${cols.map(k=>`<th>${capChainLayerBadge(k)} ${capEsc(capChainLayerInfo(k).label)}</th>`).join('')}</tr>
-      ${f.slice(0,800).map(r=>`<tr>${cols.map(k=>`<td>${(r[k]||[]).map(e=>L(e.id,e.name)+` <span class="ana-dim">${capEsc(capAnaHuman(e.type))}</span>`).join('<br>')||'<span class="ana-miss">∅</span>'}</td>`).join('')}</tr>`).join('')}
-    </table>${f.length>800?_L(`<div class="cap-mx-hint">800 lignes affichées sur ${f.length} — export CSV pour tout voir.</div>`):''}${rows.length>=3000?_L('<div class="cap-mx-hint">Calcul limité à 3000 chemins.</div>'):''}`;
+    body=capPaged(f, {render:r=>`<tr>${cols.map(k=>`<td>${(r[k]||[]).map(e=>L(e.id,e.name)+` <span class="ana-dim">${capEsc(capAnaHuman(e.type))}</span>`).join('<br>')||'<span class="ana-miss">∅</span>'}</td>`).join('')}</tr>`,   // pages de 200 (78)
+      open:`<table class="ana-t"><thead><tr>${cols.map(k=>`<th>${capChainLayerBadge(k)} ${capEsc(capChainLayerInfo(k).label)}</th>`).join('')}</tr></thead><tbody class="cap-pg-body">`, close:'</tbody></table>'})+
+      (rows.length>=3000?_L('<div class="cap-mx-hint">Calcul limité à 3000 chemins.</div>'):'');
   } else {
     const q=st.q.trim().toLowerCase();
     const f=d.links.filter(l=>!q||(l.src.name+' '+l.tgt.name+' '+l.type).toLowerCase().includes(q));
     box._trLinks=f;
-    body=_L(`<table class="ana-t"><tr><th>Type de lien</th><th>Réalisant (bas)</th><th>Type</th><th></th><th>Réalisé (haut)</th><th>Type</th></tr>
-      ${f.slice(0,1000).map(l=>`<tr><td class="ana-dim">${capEsc(l.type)}</td><td>${capChainLayerBadge(l.src.layer)} ${L(l.src.id,l.src.name)}</td><td class="ana-dim">${capEsc(capAnaHuman(l.src.type))}</td><td>→</td><td>${capChainLayerBadge(l.tgt.layer)} ${L(l.tgt.id,l.tgt.name)}</td><td class="ana-dim">${capEsc(capAnaHuman(l.tgt.type))}</td></tr>`).join('')}
-    </table>${f.length>1000?_L(`<div class="cap-mx-hint">1000 liens affichés sur ${f.length} — export CSV pour tout voir.</div>`):''}`);
+    body=capPaged(f, {open:_L('<table class="ana-t"><thead><tr><th>Type de lien</th><th>Réalisant (bas)</th><th>Type</th><th></th><th>Réalisé (haut)</th><th>Type</th></tr></thead><tbody class="cap-pg-body">'), close:'</tbody></table>',   // pages de 200 (78)
+      render:l=>`<tr><td class="ana-dim">${capEsc(l.type)}</td><td>${capChainLayerBadge(l.src.layer)} ${L(l.src.id,l.src.name)}</td><td class="ana-dim">${capEsc(capAnaHuman(l.src.type))}</td><td>→</td><td>${capChainLayerBadge(l.tgt.layer)} ${L(l.tgt.id,l.tgt.name)}</td><td class="ana-dim">${capEsc(capAnaHuman(l.tgt.type))}</td></tr>`});
   }
   box.innerHTML=_L(`<div class="phl-filter-bar" style="flex-wrap:wrap;margin-bottom:8px">
       <button class="cap-lf-btn${st.view==='cov'?' active':''}" data-trv="cov">▦ Couverture</button>

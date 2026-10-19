@@ -2,7 +2,7 @@
 // Les sections du panneau de détail (capOpenDetail, 25) portent un onglet (`data-tab` posé par secTitle) :
 // 📋 Fiche (description, attributs), 🔗 Liens (références, owner, owned), 🔲 Diagrammes, 🔬 Analyses (exigences,
 // propriétés, contraintes, scénarios, statut, catégories, bibliothèques, REC / RPL, déploiement), 💬 Revue, ≡ Tout.
-// capDetTabs regroupe les sections par onglet après le rendu ; l'onglet choisi est gardé d'un élément à l'autre
+// capDetTabs regroupe les sections par onglet après le rendu ; ≡ Tout par défaut, l'onglet choisi est gardé d'un élément à l'autre
 // (`_capNav.det`, enregistré avec la barre) ; un onglet sans section pour l'élément n'est pas proposé.
 
 /** Onglets du panneau de détail, dans l'ordre d'affichage. */
@@ -15,10 +15,10 @@ var CAP_DET_TABS=[
   {k:'all',   l:_L('≡ Tout'),        t:_L('Toutes les sections à la suite')}
 ];
 
-/** Onglet choisi (gardé d'un élément à l'autre, enregistré avec la barre).
+/** Onglet choisi (≡ Tout par défaut ; gardé d'un élément à l'autre, enregistré avec la barre).
  * @returns {string} Clé d'onglet
  */
-function capDetTab(){ return typeof _capNav!=='undefined'&&_capNav&&_capNav.det||'fiche'; }
+function capDetTab(){ return typeof _capNav!=='undefined'&&_capNav&&_capNav.det||'all'; }
 
 /** Regroupe les sections du panneau en onglets : l'en-tête (badge, nom, boutons 💬) reste en tête, puis la barre
  * d'onglets, puis un volet par onglet. Sans section marquée (ℹ d'un diagramme, d'une chaîne), rien n'est changé.

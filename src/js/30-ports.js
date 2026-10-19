@@ -151,7 +151,6 @@ function capRenderPorts(){
   const L=capDetLink;
   const allRows=capPortsTraceRows(d);
   const layers=CAP_CHAIN_LAYER_ORDER.filter(k=>allRows.some(r=>r.layer===k));
-  const MAX=600;
 
   /** Lignes de traçabilité retenues par les filtres (couche, texte, incomplètes). */
   function filteredRows(){
@@ -168,10 +167,10 @@ function capRenderPorts(){
   /** Liste compacte d'échanges (FE, CE ou PL) avec le nom de l'élément distant. */
   const xList=(arr,arrow)=>arr.length?arr.map(x=>`<div class="prt-x">${x.role==='in'?'←':x.role==='out'?'→':arrow} ${L(x.id,x.name)} <span style="color:var(--c-dim)">(${capEsc(x.other)})</span></div>`).join(''):'<span style="color:var(--c-dim)">—</span>';
 
-  /** Table de traçabilité (limitée à MAX lignes à l'écran ; l'export CSV contient tout). */
+  /** Table de traçabilité (pages de 200 lignes, 78). */
   function buildTrace(rows){
     if(!rows.length) return _L('<div class="phl-empty">Aucun port ne correspond au filtre.</div>');
-    const body=rows.slice(0,MAX).map(r=>`<tr class="${r.incomplete?'prt-inc':''}">
+    const row=r=>`<tr class="${r.incomplete?'prt-inc':''}">
       <td>${capChainLayerBadge(r.layer)}</td>
       <td>${r.fp?L(r.fp.ownId,r.fp.ownName,'font-weight:600'):'<span class="prt-miss">∅</span>'}</td>
       <td>${r.fp?L(r.fp.id,r.fp.name)+capOrientBadge(r.fp.dir):''}</td>
@@ -181,12 +180,12 @@ function capRenderPorts(){
       <td>${r.cp?xList(r.cp.ces,'↔'):''}</td>
       <td>${r.ppl.length?r.ppl.map(p=>`<div>${L(p.ownId,p.ownName,'font-weight:600')} ⬦ ${L(p.id,p.name)}</div>`).join(''):(r.cp&&r.cp.layer==='PA'?'<span class="prt-miss">∅</span>':'<span style="color:var(--c-dim)">—</span>')}</td>
       <td>${r.ppl.length?xList(r.ppl.flatMap(p=>p.pls),'↔'):''}</td>
-    </tr>`).join('');
-    return _L(`<div class="prt-wrap"><table class="prt-t"><thead><tr>
+    </tr>`;
+    const head=_L(`<div class="prt-wrap"><table class="prt-t"><thead><tr>
       <th>Couche</th><th>Fonction</th><th>Function Port</th><th>Functional Exchanges</th>
       <th>Composant</th><th>Component Port</th><th>Component Exchanges</th><th>Physical Port</th><th>Physical Links</th>
-    </tr></thead><tbody>${body}</tbody></table></div>
-    ${rows.length>MAX?_L(`<div class="cap-mx-hint">Affichage limité aux ${MAX} premières lignes sur ${rows.length} — affinez le filtre ou exportez en CSV.</div>`):''}`);
+    </tr></thead><tbody class="cap-pg-body">`);
+    return capPaged(rows, {render:row, open:head, close:'</tbody></table></div>'});
   }
 
   /** Cartes par composant : ports physiques (et ComponentPorts portés), ComponentPorts (et FunctionPorts alloués). */

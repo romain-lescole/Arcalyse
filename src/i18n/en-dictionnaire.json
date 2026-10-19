@@ -4593,7 +4593,13 @@
   "Exigences, propriétés, contraintes, scénarios, statut de revue, catégories, bibliothèques, REC / RPL, déploiement": "Requirements, properties, constraints, scenarios, review status, categories, libraries, REC / RPL, deployment",
   "Commentaires de revue portant sur l'élément": "Review comments about the element",
   "≡ Tout": "≡ All",
-  "Toutes les sections à la suite": "Every section in a row"
+  "Toutes les sections à la suite": "Every section in a row",
+  "{0} lignes": "{0} rows",
+  "Revenir à l'affichage par pages": "Back to page display",
+  "Par pages de {0}": "Pages of {0}",
+  "Aller à la page": "Go to page",
+  "Afficher toutes les lignes (plus lent au-delà de quelques milliers)": "Show every row (slower beyond a few thousand)",
+  "Tout afficher": "Show all"
  },
  "interface": {
   "🌳 Arborescence": "🌳 Tree",

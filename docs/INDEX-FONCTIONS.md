@@ -297,7 +297,7 @@
 - `capRenderTreeBody` (l. 1437) — Rend le contenu de 🌳 Arborescence selon l'affichage : arbre (avec une recherche : résultats et leurs
 - `capRenderTreeNode` (l. 1482) — Rend récursivement un nœud de l'arborescence Capella.
 
-## 22-capella-liens.js — 281 lignes
+## 22-capella-liens.js — 279 lignes
 
 - `CAP_LINK_SECTIONS` (l. 2)
 - `CAP_LINK_GROUPS` (l. 41) — Groupes de relations affichés dans la barre de la vue 🔗 Liens (ordre d'affichage).
@@ -376,7 +376,7 @@
 - `capReportClean` (l. 33) — Nettoie un fragment HTML de l'application pour un fichier autonome : retire les appels au panneau de détail
 - `capHtmlReport` (l. 44) — Construit et télécharge un rapport HTML autonome à onglets.
 
-## 27-interfaces-calculs.js — 333 lignes
+## 27-interfaces-calculs.js — 346 lignes
 
 - `capArchLayerOf` (l. 8) — Couche ARCADIA d'un élément XML, déduite de l'architecture qui le contient.
 - `capBuildIdMap` (l. 17) — Index id → élément XML, sur l'attribut plain « id » ET xmi:id (namespacé).
@@ -391,7 +391,8 @@
 - `capNormOrient` (l. 143) — Normalise l'orientation d'un port Capella : attribut absent (valeur par défaut EMF) → 'UNSET'.
 - `capCexDirection` (l. 157) — Déduit le sens effectif d'un Component Exchange à partir des orientations de ses deux ports.
 - `capComputeCompExchanges` (l. 176) — Calcule les Component Exchanges : pour chaque ComponentExchange, résout source/target
-- `capComputePhysLinks` (l. 263) — Calcule les Physical Links du modèle : pour chaque PhysicalLink, résout les deux
+- `capAnaCopy` (l. 266) — Copie d'un tableau de résultats avec ses propriétés annexes (`allPorts`, `unallocCEs`…), pour qu'un appelant
+- `capComputePhysLinks` (l. 274) — Calcule les Physical Links du modèle : pour chaque PhysicalLink, résout les deux
 
 ## 28-index-types.js — 113 lignes
 
@@ -402,7 +403,7 @@
 
 - `capRenderPhysLink` (l. 4) — Rend la vue Physical Link avec deux modes (≡ Ligne / ▣ Composant),
 
-## 30-ports.js — 276 lignes
+## 30-ports.js — 275 lignes
 
 - `capOrientBadge` (l. 11) — Badge d'orientation / de direction d'un port (IN, OUT, INOUT, UNSET), version globale.
 - `capComputePortLinks` (l. 22) — Collecte tous les ports du modèle et leurs liens d'allocation et d'échange :
@@ -410,7 +411,7 @@
 - `capPortsDiagSections` (l. 99) — Contrôles de cohérence entre les trois niveaux de ports et les allocations d'échanges.
 - `capRenderPorts` (l. 146) — Rend la vue 🧩 Ports : table de traçabilité FP ↔ CP ↔ PP, cartes par composant et contrôles de cohérence.
 
-## 31-analyses-traca-capacites.js — 340 lignes
+## 31-analyses-traca-capacites.js — 339 lignes
 
 - `CAP_ANA_LAYERS` (l. 8)
 - `CAP_TRACE_CATS` (l. 10) — Catégories d'éléments pour la traçabilité, reconnues par le nom de type (toutes versions de Capella).
@@ -422,9 +423,9 @@
 - `capTraceCoverage` (l. 86) — Tableau de couverture : pour chaque catégorie et chaque passage de couche (OA→SA, SA→LA, LA→PA, PA→EPBS),
 - `capTracePaths` (l. 110) — Chemins de traçabilité descendants d'une catégorie : une ligne par chemin OA → … → EPBS
 - `capRenderTrace` (l. 131) — Rend la sous-vue Traçabilité : couverture par catégorie × couche, chemins de traçabilité, liste des liens.
-- `CAP_CAP_TYPES` (l. 207)
-- `capComputeCapabilities` (l. 212) — Calcule capacités et missions : fonctions, chaînes, composants/acteurs impliqués (tout type *Involvement,
-- `capRenderCapabilities` (l. 252) — Rend la sous-vue Capacités & missions : cartes par couche, matrice d'implication, contrôles de couverture.
+- `CAP_CAP_TYPES` (l. 206)
+- `capComputeCapabilities` (l. 211) — Calcule capacités et missions : fonctions, chaînes, composants/acteurs impliqués (tout type *Involvement,
+- `capRenderCapabilities` (l. 251) — Rend la sous-vue Capacités & missions : cartes par couche, matrice d'implication, contrôles de couverture.
 
 ## 32-analyses-etats-comparaison.js — 326 lignes
 
@@ -604,7 +605,7 @@
 - `capNavMenu` (l. 266) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
 - `capNavMenuFill` (l. 319) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
 
-## 42-tableaux-analyses.js — 154 lignes
+## 42-tableaux-analyses.js — 157 lignes
 
 - `capTfNorm` (l. 14) — Normalise un texte pour la comparaison (minuscules, sans accents).
 - `capTfEnhanceAll` (l. 19) — Équipe les tableaux pas encore traités d'un conteneur.
@@ -614,7 +615,7 @@
 - `capTfFreeze` (l. 106) — Fige les largeurs actuelles des colonnes (avant le premier redimensionnement).
 - `capTfWidths` (l. 116) — Applique les largeurs retenues (disposition fixe, le texte passe à la ligne).
 - `capTfFilter` (l. 127) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
-- `capTfWatch` (l. 149) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
+- `capTfWatch` (l. 152) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
 
 ## 43-visite-guidee.js — 523 lignes
 
@@ -1400,14 +1401,15 @@
 - `capRecDetail` (l. 123) — Section « REC / RPL » du panneau de détail : catalogue d'un élément, ou contenu d'un élément de catalogue.
 - `capRecDashCatalog` (l. 134) — Indicateurs du tableau de bord : REC / RPL.
 
-## 74-deploiement-epbs.js — 143 lignes
+## 74-deploiement-epbs.js — 154 lignes
 
 - `CAP_CI_KINDS` (l. 12) — Libellés des natures de Configuration Item.
 - `capComputeDeploy` (l. 20) — Déploiement et EPBS du modèle (en cache dans `_capAnaCache`).
-- `capDepChecks` (l. 61) — Contrôles du déploiement et de l'EPBS. @returns {object[]} Sections
-- `capRenderDeploy` (l. 84) — Sous-vue 🖧 Déploiement & EPBS.
-- `capDepDetail` (l. 120) — Section « Déploiement / EPBS » du panneau de détail.
-- `capDepDashCatalog` (l. 133) — Indicateurs du tableau de bord : déploiement et EPBS.
+- `capDepFnCount` (l. 64) — Nombre de fonctions allouées à chaque composant (une passe sur les fonctions, résultat gardé avec elles).
+- `capDepChecks` (l. 71) — Contrôles du déploiement et de l'EPBS. @returns {object[]} Sections
+- `capRenderDeploy` (l. 94) — Sous-vue 🖧 Déploiement & EPBS.
+- `capDepDetail` (l. 131) — Section « Déploiement / EPBS » du panneau de détail.
+- `capDepDashCatalog` (l. 144) — Indicateurs du tableau de bord : déploiement et EPBS.
 
 ## 75-excel.js — 75 lignes
 
@@ -1434,7 +1436,16 @@
 ## 77-detail-onglets.js — 67 lignes
 
 - `CAP_DET_TABS` (l. 9) — Onglets du panneau de détail, dans l'ordre d'affichage.
-- `capDetTab` (l. 21) — Onglet choisi (gardé d'un élément à l'autre, enregistré avec la barre).
+- `capDetTab` (l. 21) — Onglet choisi (≡ Tout par défaut ; gardé d'un élément à l'autre, enregistré avec la barre).
 - `capDetTabs` (l. 27) — Regroupe les sections du panneau en onglets : l'en-tête (badge, nom, boutons 💬) reste en tête, puis la barre
 - `capDetTabsRefresh` (l. 49) — Met à jour la barre d'onglets : nombre de sections de chaque volet, onglet masqué quand son volet est vide
 - `capDetTabShow` (l. 63) — Affiche un onglet du panneau (≡ Tout : tous les volets à la suite).
+
+## 78-pagination.js — 76 lignes
+
+- `CAP_PG_SIZE` (l. 9) — Lignes par page.
+- `capPaged` (l. 19) — HTML d'une liste ou d'un tableau paginé.
+- `capPgRows` (l. 32) — Lignes de la page courante (ou toutes). @param {Object} st - État du bloc @returns {string} HTML
+- `capPgBar` (l. 38) — Barre de pagination d'un bloc. @param {Object} st - État du bloc @returns {string} HTML
+- `capPgShow` (l. 51) — Affiche une page d'un bloc (ou toutes les lignes) et met la barre à jour ; un filtre par colonne (42) actif est réappliqué.
+- `capPgPrune` (l. 63) — Oublie les blocs qui ne sont plus affichés (mémoire).

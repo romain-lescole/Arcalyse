@@ -1013,6 +1013,8 @@ Onglets : **ƒ Fonctions · 🧬 Traçabilité inter-couches · ⇶ Liens entre 
 
 Les résultats sont **gardés en mémoire** ; **↻ Recalculer** les rafraîchit. Les contrôles ne sont calculés qu'à l'ouverture de l'onglet 🩺 Contrôles. Une rubrique absente du modèle est simplement signalée comme vide.
 
+**Tableaux et listes longs** : affichés par **pages de 200 lignes** (barre ‹ › en tête et en pied : page précédente / suivante, choix de la page, **Tout afficher**) — tableaux des analyses, 🧩 Ports, 🧬 Traçabilité, 🔗 Liens, listes du panneau de détail. Un filtre par colonne actif affiche toutes les lignes pour porter sur l'ensemble ; les exports CSV / Excel contiennent toujours tout.
+
 **Tableaux des analyses** : sous chaque en-tête, un champ **Filtrer…** (plusieurs mots : tous requis ; **!mot** : exclure) ; le nombre de lignes affichées est indiqué au-dessus, avec **✕** pour effacer. Glisser le bord droit d'un en-tête règle la largeur (double-clic : automatique). Un tableau plus large que la vue a une barre de défilement horizontal collée en bas de l'écran (aussi **Maj + molette**).
 
 ### 12.1 🧬 Traçabilité inter-couches
@@ -1260,7 +1262,7 @@ Un **clic sur un nom** (presque partout : cartes, tableaux, blocs, listes, diagr
 
 Tout est **cliquable** pour naviguer de proche en proche. **×** ferme le panneau.
 
-**🗂 Onglets** : ces sections sont réparties en **📋 Fiche** (description, attributs), **🔗 Liens** (références, owner, éléments contenus), **🔲 Diagrammes**, **🔬 Analyses** (exigences, propriétés, contraintes, scénarios, statut de revue, catégories, bibliothèques, REC / RPL, déploiement) et **💬 Revue** ; **≡ Tout** remet toutes les sections à la suite. Chaque onglet indique son nombre de sections ; un onglet vide pour l'élément n'est pas proposé. L'onglet choisi est gardé d'un élément à l'autre et enregistré avec la 💾 page. Les boutons **◀ ▶** de la barre ([§ 3.7](#37--historique-de-navigation)) reviennent sur les éléments ouverts précédemment.
+**🗂 Onglets** : ces sections sont réparties en **📋 Fiche** (description, attributs), **🔗 Liens** (références, owner, éléments contenus), **🔲 Diagrammes**, **🔬 Analyses** (exigences, propriétés, contraintes, scénarios, statut de revue, catégories, bibliothèques, REC / RPL, déploiement) et **💬 Revue** ; **≡ Tout** (par défaut) montre toutes les sections à la suite. Chaque onglet indique son nombre de sections ; un onglet vide pour l'élément n'est pas proposé. L'onglet choisi est gardé d'un élément à l'autre et enregistré avec la 💾 page. Les boutons **◀ ▶** de la barre ([§ 3.7](#37--historique-de-navigation)) reviennent sur les éléments ouverts précédemment.
 
 <br clear="right">
 

@@ -71,7 +71,7 @@ function capOpenDetail(id){
   if(outgoingRefs.length){
     html+=secTitle(_L('Références sortantes →'),'#4dd880');
     outgoingRefs.forEach(r=>{
-      html+=`<div style="margin-bottom:6px;"><span style="font-family:monospace;font-size:10px;color:var(--c-dim);">${capEsc(r.attrKey)}</span><div style="margin-top:2px;">${r.targets.map(elLink).join('')}</div></div>`;
+      html+=`<div style="margin-bottom:6px;"><span style="font-family:monospace;font-size:10px;color:var(--c-dim);">${capEsc(r.attrKey)}</span><div style="margin-top:2px;">${capPaged(r.targets,{render:elLink})}</div></div>`;
     });
   }
 
@@ -81,7 +81,7 @@ function capOpenDetail(id){
     const byAttr={};
     incoming.forEach(inc=>{ const key=inc.from.typeName+'.'+inc.attrKey; (byAttr[key]=byAttr[key]||[]).push(inc.from); });
     Object.entries(byAttr).forEach(([key,els])=>{
-      html+=`<div style="margin-bottom:6px;"><span style="font-family:monospace;font-size:10px;color:var(--c-dim);">← ${capEsc(key)}</span><div style="margin-top:2px;">${els.map(elLink).join('')}</div></div>`;
+      html+=`<div style="margin-bottom:6px;"><span style="font-family:monospace;font-size:10px;color:var(--c-dim);">← ${capEsc(key)}</span><div style="margin-top:2px;">${capPaged(els,{render:elLink})}</div></div>`;
     });
   }
 
@@ -109,7 +109,7 @@ function capOpenDetail(id){
   if(children.length){
     html+=secTitle(_L(`Owned elements (${children.length})`),'#58a6ff');
     Object.entries(childrenByType).sort().forEach(([t,els])=>{
-      html+=`<div style="margin-bottom:6px;"><span style="font-family:monospace;font-size:10px;color:var(--c-dim);">${capEsc(t)} (${els.length})</span><div style="margin-top:2px;">${els.map(elLink).join('')}</div></div>`;
+      html+=`<div style="margin-bottom:6px;"><span style="font-family:monospace;font-size:10px;color:var(--c-dim);">${capEsc(t)} (${els.length})</span><div style="margin-top:2px;">${capPaged(els,{render:elLink})}</div></div>`;
     });
   }
 

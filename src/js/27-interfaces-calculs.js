@@ -175,6 +175,7 @@ function capCexDirection(o1,o2,kind,nest){
  * LogicalComponent, PhysicalComponent, acteurs, Entity...). Miroir de capComputePhysLinks. */
 function capComputeCompExchanges(){
   if(!cap_xmlDoc) return [];
+  if(typeof _capAnaCache!=='undefined'&&_capAnaCache.ce) return capAnaCopy(_capAnaCache.ce);   // calcul gardé (≈ 100 ms sur un gros modèle), copie rendue
   const allNodes=[...cap_xmlDoc.getElementsByTagName('*')];
   const xmap={};
   allNodes.forEach(el=>{
@@ -253,7 +254,17 @@ function capComputeCompExchanges(){
   exchanges.allPorts=Object.entries(portToComp).map(([pid,{comp,port}])=>({
     portId:pid, portName:N(capXName(port)), orient:capNormOrient(port.getAttribute('orientation')),
     pcId:capXId(comp), pcName:N(capXName(comp)), pcType:capTName(comp), pcNature:comp.getAttribute('nature')||'', layer:capArchLayerOf(comp), connected:used.has(pid)}));
-  return exchanges;
+  if(typeof _capAnaCache!=='undefined') _capAnaCache.ce=exchanges;
+  return capAnaCopy(exchanges);
+}
+
+/** Copie d'un tableau de résultats avec ses propriétés annexes (`allPorts`, `unallocCEs`…), pour qu'un appelant
+ * qui trie ou modifie la liste n'altère pas le cache.
+ * @param {Array} arr - Tableau mis en cache
+ * @returns {Array} Copie
+ */
+function capAnaCopy(arr){
+  const c=arr.slice(); Object.keys(arr).forEach(k=>{ if(!/^\d+$/.test(k)) c[k]=arr[k]; }); return c;
 }
 
 /** Calcule les Physical Links du modèle : pour chaque PhysicalLink, résout les deux
@@ -262,6 +273,7 @@ function capComputeCompExchanges(){
  */
 function capComputePhysLinks(){
   if(!cap_xmlDoc) return [];
+  if(typeof _capAnaCache!=='undefined'&&_capAnaCache.pl) return capAnaCopy(_capAnaCache.pl);   // calcul gardé, copie rendue
   const allNodes=[...cap_xmlDoc.getElementsByTagName('*')];
   const xmap=capBuildIdMap(allNodes);
   const rid=r=>(r||'').trim().replace(/^.*#/,'');
@@ -325,7 +337,8 @@ function capComputePhysLinks(){
   links.unallocCEs=allNodes.filter(el=>capTName(el)==='ComponentExchange' && capArchLayerOf(el)==='PA'
       && (el.getAttribute('kind')||'')!=='DELEGATION' && !allocatedCE.has(capXId(el)))
     .map(el=>({id:capXId(el), name:N(capXName(el))}));
-  return links;
+  if(typeof _capAnaCache!=='undefined') _capAnaCache.pl=links;
+  return capAnaCopy(links);
 }
 
 /** Rend la vue Physical Link avec deux modes (≡ Ligne / ▣ Composant),

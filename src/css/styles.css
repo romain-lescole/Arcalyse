@@ -1910,3 +1910,11 @@ html[data-tbicons] #toolbar .tbtn{padding-left:7px;padding-right:7px;}
 .cap-det-n{font-size:9px;opacity:.8;margin-left:3px;}
 .cap-det-pane{display:none;}
 .cap-det-pane.on{display:block;}
+
+/* ⏭ Pagination des listes et tableaux (78) */
+.cap-pg-bar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;font-size:11px;color:var(--c-dim);margin:5px 2px 8px;}
+.cap-pg-b{font:inherit;font-size:11px;padding:1px 7px;border:1px solid var(--c-border);border-radius:4px;background:none;color:var(--c-text);cursor:pointer;line-height:1.5;}
+.cap-pg-b:hover:not([disabled]){background:var(--c-border);}
+.cap-pg-b[disabled]{opacity:.35;cursor:default;}
+.cap-pg-sel{font:inherit;font-size:11px;padding:1px 3px;border:1px solid var(--c-border);border-radius:4px;background:var(--c-bg2);color:var(--c-text);}
+.cap-pg-pos{font-weight:600;color:var(--c-text);}

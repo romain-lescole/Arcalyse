@@ -254,14 +254,12 @@ function capRenderLinks(){
         <span class="cap-link-type" style="color:${tc};background:${sec.tgtC}22">${capEsc(tT)}</span>
         ${sec.via?`<span class="cap-link-via">via ${capEsc(sec.via)}</span>`:''}
         <span class="cap-link-n">${rows.length<all.length?rows.length+' / ':''}${all.length}</span>
-      </div>
-      <table class="cap-link-table"><thead><tr><th>Source</th>${capLinksShowIds?_L('<th>ID source</th>'):''}<th></th>${hasVia?`<th>${capEsc(sec.via||_L('Via'))}</th><th></th>`:''}<th>Cible</th>${capLinksShowIds?_L('<th>ID cible</th>'):''}</tr></thead>
-      <tbody>${rows.map(r=>`<tr>
+      </div>`)+capPaged(rows, {open:_L(`<table class="cap-link-table"><thead><tr><th>Source</th>${capLinksShowIds?_L('<th>ID source</th>'):''}<th></th>${hasVia?`<th>${capEsc(sec.via||_L('Via'))}</th><th></th>`:''}<th>Cible</th>${capLinksShowIds?_L('<th>ID cible</th>'):''}</tr></thead><tbody class="cap-pg-body">`), close:'</tbody></table>', render:r=>`<tr>
         <td>${capDetLink(r.src.id,r.src.name,`color:${sc};font-weight:600`)}</td>${idCell(r.src.id)}
         <td class="cap-link-arr">→</td>
         ${hasVia?`<td>${r.via?capDetLink(r.via.id,r.via.name,'color:var(--c-text)'):''}</td><td class="cap-link-arr">→</td>`:''}
         <td>${capDetLink(r.tgt.id,r.tgt.name,`color:${tc};font-weight:600`)}</td>${idCell(r.tgt.id)}
-      </tr>`).join('')}</tbody></table></div>`);
+      </tr>`})+`</div>`;   // pages de 200 lignes (78)
     }
     body.innerHTML=html||_L('<div style="color:var(--c-dim);padding:40px;text-align:center">Aucun lien.</div>');
     cnt.textContent=nShown<nTot?_L(`${nShown} / ${nTot} liens`):_L(`${nTot} liens`);

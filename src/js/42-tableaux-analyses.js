@@ -31,7 +31,7 @@ function capTfEnhance(t){
   if(!head||!head.cells.length||[...head.cells].some(c=>c.tagName!=='TH'||c.colSpan>1)) return;
   const n=head.cells.length;
   const key=capAnaSub+'|'+[...head.cells].map(c=>c.textContent.trim()).join('¦');
-  const st=_capTfState[key]||(_capTfState[key]={f:[],w:[]});
+  const st=_capTfState[key]||(_capTfState[key]={f:[],w:[]}); t._tfSt=st;   // relu par la pagination (78) au changement de page
   // Ligne de filtres
   const fr=document.createElement('tr'); fr.className='cap-tf-row';
   fr.innerHTML=[...Array(n)].map((_,i)=>_L(`<th><input type="text" data-tf="${i}" placeholder="Filtrer…" title="Filtrer cette colonne (plusieurs mots : tous requis ; « ! » en tête : exclure)" value="${capEsc(st.f[i]||'')}"></th>`)).join('');
@@ -128,6 +128,9 @@ function capTfFilter(t,st){
   const tests=st.f.map(v=>{ const ws=capTfNorm(v).trim().split(/\s+/).filter(Boolean);
     return ws.length?ws.map(w=>w[0]==='!'&&w.length>1?{w:w.slice(1),neg:true}:{w,neg:false}):null; });
   [...t.querySelectorAll('.cap-tf-row input')].forEach((inp,i)=>inp.classList.toggle('on',!!tests[i]));
+  // Tableau paginé (78) : un filtre actif porte sur toutes les lignes → « Tout afficher » ; filtres effacés → retour aux pages
+  const pg=t.closest('.cap-pg'), pst=pg&&_capPg.blocks[pg.dataset.pg];
+  if(pst){ const on=tests.some(Boolean); if(on&&!pst.all){ capPgShow(pg,'all'); return; } if(!on&&pst.all){ capPgShow(pg,0); } }
   let tot=0, vis=0, prev=true;
   [...t.rows].slice(2).forEach(r=>{
     if(r.cells.length===1&&r.cells[0].colSpan>1){ r.style.display=prev?'':'none'; return; }

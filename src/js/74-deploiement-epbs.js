@@ -57,6 +57,16 @@ function capComputeDeploy(){
   return _capAnaCache.deploy={nodes, behaviors, onNode, hosts, cis, ciByEl, ceBad};
 }
 
+/** Nombre de fonctions allouées à chaque composant (une passe sur les fonctions, résultat gardé avec elles).
+ * @param {Object} F - Résultat de capComputeFunctions
+ * @returns {Object<string, number>} id du composant → nombre
+ */
+function capDepFnCount(F){
+  if(F._nByComp) return F._nByComp;
+  const n={}; F.list.forEach(f=>(f.alloc||[]).forEach(a=>{ n[a.id]=(n[a.id]||0)+1; }));
+  return F._nByComp=n;
+}
+
 /** Contrôles du déploiement et de l'EPBS. @returns {object[]} Sections */
 function capDepChecks(){
   const D=capComputeDeploy(), esc=capEsc, F=capComputeFunctions();
@@ -64,7 +74,7 @@ function capDepChecks(){
   const ciRow=(c,extra)=>`<tr><td>${capIcoType('ConfigurationItem',12)}${capDetLink(c.id,c.name,'font-weight:600')}</td><td class="ana-dim">${esc(CAP_CI_KINDS[c.kind]||c.kind)}</td><td>${extra||''}</td></tr>`;
   const cols=[_L('Composant'),_L('Nature'),_L('Détail')], colsCI=[_L('Configuration Item'),_L('Nature'),_L('Détail')];
   const deployUsed=Object.keys(D.onNode).length>0, epbsUsed=D.cis.some(c=>c.realizes.length);
-  const hasFn=c=>F.list.some(f=>f.alloc.some(a=>a.id===c.id));
+  const nF=capDepFnCount(F), hasFn=c=>!!nF[c.id];
   return [
     {icon:'🖧', title:_L('Comportements non déployés'), tip:_L('PhysicalComponent de nature BEHAVIOR sans PartDeploymentLink vers un nœud (seulement si le modèle pratique le déploiement)'), cols, items:deployUsed?D.behaviors.filter(b=>!b.actor&&!D.onNode[b.id]).map(b=>pcRow(b,hasFn(b)?_L('porte des fonctions'):'')):[]},
     {icon:'▭', title:_L('Nœuds sans comportement déployé'), tip:_L('PhysicalComponent de nature NODE qui n\'héberge aucun comportement (seulement si le modèle pratique le déploiement)'), cols, items:deployUsed?D.nodes.filter(n=>!n.actor&&!D.hosts[n.id]).map(n=>pcRow(n)):[]},
@@ -84,13 +94,14 @@ function capDepChecks(){
 function capRenderDeploy(box){
   const st=_capDep, D=capComputeDeploy(), esc=capEsc, q=st.q.trim().toLowerCase(), F=capComputeFunctions();
   if(!D.nodes.length&&!D.behaviors.length&&!D.cis.length){ box.innerHTML=_L('<div class="phl-empty">Aucun composant physique (nœud ou comportement) ni Configuration Item dans ce modèle : l\'architecture physique et l\'EPBS ne sont pas encore modélisées.</div>'); return; }
-  const fnsOf=c=>F.list.filter(f=>f.alloc.some(a=>a.id===c.id)).length;
+  const nF=capDepFnCount(F), fnsOf=c=>nF[c.id]||0;   // nombre de fonctions par composant, calculé une fois
+  const PL=capComputePhysLinks();
   let body='', cnt='';
   if(st.view==='dep'){
     const shown=D.nodes.filter(n=>capXtHas(q,n.name,...(D.hosts[n.id]||[]).map(b=>b.name)));
     const orph=D.behaviors.filter(b=>!b.actor&&!D.onNode[b.id]);
     body=_L(`<p class="ana-help">${D.nodes.length} nœud(s) · ${D.behaviors.length} comportement(s), dont <b>${D.behaviors.filter(b=>D.onNode[b.id]).length}</b> déployé(s) · ${D.ceBad.length} échange(s) entre nœuds non reliés. Cliquez un nom pour ouvrir le détail.</p>`)+
-      capXtTable([_L('Nœud'),_L('Comportements déployés'),_L('Fonctions (via les comportements)'),_L('Liens physiques')], shown.map(n=>{ const hs=D.hosts[n.id]||[], pls=capComputePhysLinks().filter(l=>l.src.pcId===n.id||l.tgt.pcId===n.id);
+      capXtTable([_L('Nœud'),_L('Comportements déployés'),_L('Fonctions (via les comportements)'),_L('Liens physiques')], shown.map(n=>{ const hs=D.hosts[n.id]||[], pls=PL.filter(l=>l.src.pcId===n.id||l.tgt.pcId===n.id);
         return [`${capIcoType('PhysicalComponent',12)}${capDetLink(n.id,n.name,'font-weight:600')}${n.actor?_L(' <span class="ana-dim">(acteur)</span>'):''}`, hs.length?hs.map(b=>`<div>${capIcoType('PhysicalComponent',12)}${capDetLink(b.id,b.name)} <span class="ana-dim">${_L(`ƒ ${fnsOf(b)}`)}</span></div>`).join(''):_L('<span class="ana-miss">∅ aucun</span>'), String(hs.reduce((s,b)=>s+fnsOf(b),0)), pls.length?pls.map(l=>`<div>${capDetLink(l.linkId,l.linkName)} <span class="ana-dim">→ ${esc(l.src.pcId===n.id?l.tgt.pcName:l.src.pcName)}</span></div>`).join(''):'<span class="ana-dim">—</span>']; }))+
       (orph.length?_L(`<h4 style="margin:12px 0 4px">Comportements non déployés (${orph.length})</h4>`)+`<div style="font-size:12px">${orph.map(b=>`${capIcoType('PhysicalComponent',12)}${capDetLink(b.id,b.name)}`).join(' · ')}</div>`:'');
     cnt=`${shown.length} / ${D.nodes.length}`;
