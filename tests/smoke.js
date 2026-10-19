@@ -120,6 +120,14 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.click('#b-theme-menu'); await p.click('#cap-nav-dd [data-thm="light"]');
     await p.click('#b-theme-menu'); await p.click('#cap-nav-dd [data-thm="dark"]');
     await p.click('#b-file-menu'); await p.keyboard.press('Escape'); });
+  await step('scripts 📜 : console, exemple, lien', async () => {
+    await p.evaluate(() => capScrToggle(true));
+    if (await p.evaluate(() => document.getElementById('cap-scripts').style.display) !== 'flex') throw new Error('console non ouverte');
+    await p.evaluate(() => { document.getElementById('scr-code').value = capScrApi().exemples()[0].code; capScrExecuter(); });
+    await p.waitForFunction(() => !_capScr.enCours, null, { timeout: 60000 });
+    if (await p.$('#scr-sortie .scr-err')) throw new Error('exemple en erreur : ' + await p.textContent('#scr-sortie .scr-err'));
+    if (!(await p.$('#scr-sortie [data-id]'))) throw new Error('aucun lien d\'élément dans la sortie');
+    await p.evaluate(() => capScrToggle(false)); });
   await step('pagination ⏭ : ports, page suivante, tout afficher', async () => {
     await p.evaluate(() => capNavOpen('ports'));
     const bar = await p.$('#cap-view-ports .cap-pg-bar');

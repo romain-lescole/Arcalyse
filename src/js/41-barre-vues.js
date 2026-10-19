@@ -157,6 +157,7 @@ function capNavCurKey(force){
 function capNavOpen(k){
   capNavClose();
   if(k==='@rm'){ document.getElementById('mode-rm')?.click(); return; }
+  if(k==='@scripts'){ capScrToggle(true); return; }   // 📜 console de scripts (81)
   if(k==='home:rap'){ capDosOuvrir(); return; }   // 📘 Rapports : onglet 📑 Dossiers de l'accueil
   if(k.startsWith('ana:')){ capAnaSub=k.slice(4); capShowView('analyses'); }
   else capShowView(k);
@@ -362,7 +363,7 @@ function capNavMenuFill(){
   const q=norm((dd.querySelector('#cap-nav-q')||{}).value||'').trim();
   const gl=x=>(CAP_NAV_GROUPS.find(G=>G.g===x)||{}).l||'';
   if(q){
-    const all=[{k:'@rm',l:_L('🗺 Relation Map'),g:''},...CAP_NAV_ITEMS];
+    const all=[{k:'@rm',l:_L('🗺 Relation Map'),g:''},{k:'@scripts',l:_L('📜 Scripts'),g:'',t:_L('Console de scripts : parcourir et analyser le modèle avec l\'API (Alt+4)')},...CAP_NAV_ITEMS];
     const hit=all.filter(i=>q.split(/\s+/).every(w=>norm(i.l+' '+gl(i.g)+' '+(i.t||'')).includes(w)));
     const inName=i=>q.split(/\s+/).every(w=>norm(i.l).includes(w)); hit.sort((a,b)=>inName(b)-inName(a));   // le nom de la vue prime sur l'info-bulle
     const pal=capPalHtml(q);   // éléments du modèle et diagrammes (67)

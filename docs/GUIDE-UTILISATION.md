@@ -31,6 +31,7 @@ Les captures ont été faites avec le modèle d'exemple public *In-Flight Entert
 20. [Raccourcis clavier et gestes de souris](#20-raccourcis-clavier-et-gestes-de-souris)
 21. [Pas à pas : scénarios d'utilisation](#21-pas-à-pas--scénarios-dutilisation)
 22. [Questions fréquentes et dépannage](#22-questions-fréquentes-et-dépannage)
+23. [📜 Scripts (macros)](#23--scripts-macros)
 
 ---
 
@@ -1491,6 +1492,7 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 | **Entrée** / **Espace** | Active la commande qui a le focus ; dans une boîte de dialogue, Entrée = OK et Échap = annuler. |
 | **Ctrl+K** | Recherche dans ☰ : vue, élément du modèle ou diagramme (Entrée pour ouvrir). |
 | **Alt+←** / **Alt+→** | Étape précédente / suivante de l'historique ◀ ▶ (vues, éléments du détail, diagrammes) ; aussi les boutons latéraux de la souris. |
+| **Alt+4** | Ouvre ou ferme la console 📜 Scripts ; dans l'éditeur, **Ctrl+Entrée** exécute le script. |
 | **Ctrl+S** / **Ctrl+Maj+S** | Enregistrer / enregistrer sous. |
 | **Échap** | Ferme la fenêtre, le menu ou la sélection en cours. |
 | **Ctrl +** / **Ctrl −** / **Ctrl+molette** | Zoom du graphe (Relation Map). |
@@ -1630,3 +1632,54 @@ node tools/guide-captures.js rm tableau   # seulement certaines parties
 ```
 
 Le script (Playwright, Chromium hors ligne, fenêtre 1600 × 900, thème Clair) charge `tests/models/In-Flight_Entertainment_System.capella` et son `.aird`, parcourt les vues, menus et fenêtres, pose les repères numérotés, puis allège les images (PNG 256 couleurs, si ImageMagick est installé). Parties : `accueil`, `rm`, `tableau`, `explorateur`, `chaines`, `flux`, `diagrammes`, `analyses`, `fonctions`, `tableaubord`, `comparaison`, `revue`, `home`, `divers`, `interface`, `aida`.
+
+---
+
+## 23. 📜 Scripts (macros)
+
+Le bouton **📜 Scripts** de la barre (ou **Alt+4**, ou ☰ / Ctrl+K « Scripts ») ouvre une console en bas des vues : des scripts **JavaScript** parcourent et analysent le modèle affiché par une **API**, comme les macros de Catia Magic / MagicDraw ou Python4Capella. L'API est celle d'**Arcature** (mêmes noms : un script de lecture tourne dans les deux outils), limitée à la **lecture** — Arcalyse ne modifie jamais le modèle — et complétée par `analysis`, qui rend les résultats de toutes les analyses d'Arcalyse.
+
+![Console de scripts](guide/img/99-scripts.png)
+
+### 23.1 Lancer un script
+
+- À gauche, l'**éditeur** ; à droite, la **sortie**. Choisissez un **exemple** dans la liste (fonctions sans description, fonctions non allouées, matrice d'allocation, statistiques, santé et contrôles, traçabilité, chaînes, exigences, qualité des noms…) ou écrivez votre script, puis **Ctrl+Entrée** (ou ▶ Exécuter).
+- Les éléments affichés sont des **liens** : un clic ouvre le panneau de détail. Les tableaux ont un bouton **⬇ CSV** ; les fichiers produits par `out.file` sont proposés au téléchargement. **■ Arrêter** interrompt un script trop long.
+- `model.selection` contient l'élément ouvert dans le panneau de détail ; `model.diagrams` et `élément.diagrams` les diagrammes du `.aird` s'il est chargé.
+- Une erreur indique la **ligne** du script (clic sur le message : l'éditeur s'y place). Un type, une relation ou un critère mal orthographiés lèvent une erreur explicite.
+
+### 23.2 L'API en bref
+
+| Objet | Rôle |
+|---|---|
+| `model` | `elements(filtre)`, `find`, `count`, `findByPath('A/B/C')`, `layer('LA')`, `getElementById`, `root`, `selection`, `types()`, `diagrams` |
+| élément | `id`, `type`, `layer`, `name`, `summary`, `description`, `review`, `owner`, `path`, `isSkeleton`, `isTechnical` ; `children()`, `descendants()`, `attributes()`, `isA('Component')`, `references()`, `referencedBy()`, `links('allocation', 'in')`, `diagrams` |
+| `metamodel` | types de Capella et héritage : `isA`, `supertypes`, `types` |
+| `analysis` (avec `await`) | `functions()`, `chains()`, `traceability()`, `capabilities()`, `states()`, `health()`, `requirements()`, `properties()`, `data()`, `constraints()`, `status()`, `categories()`, `rec()`, `libraries()`, `scenarios()`, `ports()`, `functionalExchanges()`, `componentExchanges()`, `physicalLinks()`, `deployment()`, `checks(vue)`, `nameQuality(nom)` |
+| `out` | `print`, `warn`, `error`, `table`, `csv`, `file`, `progress`, `clear` |
+| `ui` (avec `await`) | `ask`, `confirm`, `choose`, `readFile`, `readCsv`, `parseCsv` |
+
+Filtre : un nom de type (`'Component'` : sous-types compris), une fonction, ou `{ type, exactType, layer, name, technical, where }`. Référence complète : [`docs/api/arcalyse.d.ts`](api/arcalyse.d.ts) (autocomplétion dans VS Code) et [`docs/api/LISEZMOI.md`](api/LISEZMOI.md).
+
+```js
+// Composants logiques sans fonction allouée, en tableau puis en CSV
+const rows = model.elements({ type: 'LogicalComponent', where: c => !c.isSkeleton })
+  .filter(c => !c.links('allocation', 'out').length)
+  .map(c => ({ component: c, owner: c.owner }));
+out.table(rows);
+out.file('composants-vides.csv', out.csv(rows));
+```
+
+```js
+// Contrôles bloquants de toutes les vues (profil 🩺 appliqué)
+for (const c of await analysis.checks())
+  if (c.severity === 'err' && c.rows.length) out.warn(c.view, c.title, c.rows.length);
+```
+
+### 23.3 Bibliothèque et partage
+
+**💾** enregistre le script dans le **projet** (gardé dans la 💾 page HTML, repris par 📄 Ouvrir un projet de travail) ; **📂** importe des fichiers `.js` ; **⬇** exporte le script affiché ; **🗑** le supprime. **📁 Dossier partagé** (Chrome / Edge) : un dossier de scripts — à côté du modèle, sur un partage réseau — dont les `.js` apparaissent dans la liste ; 💾 y réécrit le fichier, et un nouveau script y est enregistré ; le dossier est retrouvé à la prochaine ouverture (le navigateur peut redemander l'autorisation).
+
+### 23.4 Isolement
+
+Le script tourne dans un **worker** isolé, sur un instantané du modèle : il n'a accès ni à la page, ni au fichier, ni au réseau (`fetch` retiré) ; il demande ses analyses à Arcalyse, qui les calcule avec ses moteurs. Un script reçu d'un collègue ne peut donc ni envoyer le modèle ailleurs ni modifier quoi que ce soit.

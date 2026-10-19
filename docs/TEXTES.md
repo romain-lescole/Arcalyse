@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 6384 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 6590 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -28,156 +28,173 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 34 | ✏ Éditeur de modèle | ✏ Model editor |
 | 35 | 💾 Sauvegarder | 💾 Save |
 | 36 | 📂 Charger un fichier | 📂 Load a file |
-| 40 | Revue | Review |
-| 40 | Revue : commentaires sur le modèle et les diagrammes, vérification après mise à jour, rapport  (infobulle) | Review: comments on the model and diagrams, check after update, report |
-| 42 | Thème | Theme |
-| 42 | Changer le thème, créer ou modifier un thème personnalisé  (infobulle) | Change the theme, create or edit a custom theme |
-| 43 | Changer le thème  (infobulle) | Change theme |
-| 44 | 🌙 Sombre | 🌙 Dark |
-| 45 | ☀️ Clair | ☀️ Light |
-| 46 | 🌊 Marine | 🌊 Navy |
-| 47 | 🌿 Nature | 🌿 Nature |
-| 48 | 🗂 Office 2007 | 🗂 Office 2007 |
-| 49 | ⚡ Contraste | ⚡ Contrast |
-| 51 | Créer ou modifier un thème personnalisé (toutes les couleurs)  (infobulle) | Create or edit a custom theme (all colours) |
-| 53 | Aide | Help |
-| 53 | Aide complète, visite guidée de l'outil  (infobulle) | Full help, guided tour of the tool |
-| 55 | Préférences : affichage des menus, enregistrement automatique, thème, interface et vues  (infobulle) | Preferences: menu display, automatic saving, theme, interface and views |
-| 59 | Zoom avant (Ctrl++)  (infobulle) | Zoom in (Ctrl++) |
-| 60 | Zoom arrière (Ctrl+-)  (infobulle) | Zoom out (Ctrl+-) |
-| 61 | ⊡ Fit | ⊡ Fit |
-| 61 | Ajuster (Ctrl+W)  (infobulle) | Fit (Ctrl+W) |
-| 63 | ⚙ Filtres | ⚙ Filters |
-| 63 | Types d'éléments et critères de relation affichés dans le graphe  (infobulle) | Element types and relation criteria displayed in the graph |
-| 65 | ↓ Ouvrir tout | ↓ Expand all |
-| 66 | ↑ Fermer tout | ↑ Collapse all |
-| 68 | Profondeur | Depth |
-| 68 | Profondeur de voisinage (1 à 10)  (infobulle) | Neighbourhood depth (1 to 10) |
-| 74 | Disposition du graphe  (infobulle) | Graph layout |
-| 76 | → LR — de gauche à droite | → LR — left to right |
-| 77 | ↓ TB — de haut en bas | ↓ TB — top to bottom |
-| 78 | ← RL — de droite à gauche | ← RL — right to left |
-| 79 | ◉ Radiale | ◉ Radial |
-| 80 | ⚡ Zigzag | ⚡ Zigzag |
-| 80 | Zigzag 7:3 — séquence en grille  (infobulle) | Zigzag 7:3 — grid sequence |
-| 84 | # Nums | # Nums |
-| 85 | ◉ Légende | ◉ Legend |
-| 86 | ⌁ Relations | ⌁ Relations |
-| 87 | ✂ Noms | ✂ Names |
-| 87 | Couper les noms longs  (infobulle) | Truncate long names |
-| 88 | ⊙ Unique | ⊙ Single |
-| 89 | ⬡ Compact | ⬡ Compact |
-| 93 | ⬇ Export ▾ | ⬇ Export ▾ |
-| 93 | Exporter le graphe : image ou données (CSV)  (infobulle) | Export the graph: image or data (CSV) |
-| 97 | Image | Image |
-| 98 | 🖼 PNG | 🖼 PNG |
-| 99 | 📷 JPEG | 📷 JPEG |
-| 100 | 📐 SVG | 📐 SVG |
-| 101 | Données (CSV) | Data (CSV) |
-| 102 | ▦ Arbre par niveaux… | ▦ Tree by levels… |
-| 102 | Une colonne par niveau (et par relation) : le graphe déplié de gauche à droite  (infobulle) | One column per level (and per relation): the graph unfolded from left to right |
-| 103 | ⇄ Relations affichées… | ⇄ Displayed relations… |
-| 103 | Une ligne par arête affichée : source, relation, cible, nombre, profondeur, chemin  (infobulle) | One row per displayed edge: source, relation, target, count, depth, path |
-| 112 | Nouvelle vue : copie de la vue affichée, vue vide ou préréglage  (infobulle) | New view: copy of the displayed view, empty view or preset |
-| 116 | 💾 Sauver vue | 💾 Save view |
-| 116 | Enregistrer la vue affichée dans un fichier (.json)  (infobulle) | Save the displayed view to a file (.json) |
-| 117 | 📂 Charger vue | 📂 Load view |
-| 117 | Ouvrir une vue enregistrée dans un nouvel onglet  (infobulle) | Open a saved view in a new tab |
-| 125 | ❓ Aide | ❓ Help |
-| 125 | Aide et présentation des fonctionnalités  (infobulle) | Help and feature overview |
-| 126 | 🚀 Bien démarrer | 🚀 Getting started |
-| 126 | · ouvrir un modèle, puis trouver l'aide et les tutoriels | · open a model, then find the help and tutorials |
-| 126 | Visite guidée en deux temps : où ouvrir votre fichier .capella, puis, une fois le modèle chargé, où trouver l'aide et les tutoriels  (infobulle) | Two-step guided tour: where to open your .capella file, then, once the model is loaded, where to find the help and tutorials |
-| 127 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) | Click to browse, or drag and drop a .capella file |
-| 128 | Arcalyse | Arcalyse |
-| 128 | Votre modèle Capella, sous toutes ses coutures. | Your Capella model, inside and out. |
-| 129 | Ouvrir un modèle Capella | Open a Capella model |
-| 130 | Glissez-déposez votre fichier | Drag and drop your |
-| 130 | (ou le dossier du projet) ici | (or the project folder) here |
-| 130 | ou recherchez-le dans l'explorateur de fichiers. | or browse for it in the file explorer. |
-| 131 | 📂 Fichier .capella… | 📂 .capella file… |
-| 131 | Ouvrir le fichier .capella seul  (infobulle) | Open the .capella file alone |
-| 132 | 📁 Dossier du projet… | 📁 Project folder… |
-| 132 | Ouvrir le dossier du projet : le .capella et ses diagrammes (.aird) sont chargés ensemble  (infobulle) | Open the project folder: the .capella and its diagrams (.aird) are loaded together |
-| 133 | 📄 Projet de travail (.html)… | 📄 Work project (.html)… |
-| 133 | Reprendre un projet de travail enregistré en page HTML (💾), même par une version précédente d'Arcalyse (à partir de la 2.1) : modèle, diagrammes, revue, accueil, vues et réglages sont repris dans cette version  (infobulle) | Resume a work project saved as an HTML page (💾), even by an earlier version of Arcalyse (2.1 or later): model, diagrams, review, home, views and settings are carried over into this version |
-| 136 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. | Accepted formats: .capella · .melodymodeller · .xml — the file is read locally, nothing is sent. |
-| 137 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités | 📖 What can be analysed? Discover the features |
-| 138 | 🎓 Visite guidée de l'interface | 🎓 Guided tour of the interface |
-| 139 | ℹ À propos | ℹ About |
-| 147 | Panneau | Panel |
-| 148 | Réduire le panneau  (infobulle) | Collapse the panel |
-| 151 | Arborescence | Tree |
-| 153 | Tout développer  (infobulle) | Expand all |
-| 155 | Tout réduire  (infobulle) | Collapse all |
-| 161 | ✕ vider | ✕ clear |
-| 161 | Vider la sélection  (infobulle) | Clear the selection |
-| 164 | 🔍 Filtrer l'arborescence…  (infobulle) | 🔍 Filter the tree… |
-| 173 | Contexte | Context |
-| 179 | ✚ Créer un nouvel élément | ✚ Create a new element |
-| 183 | Portée (Paquetages) | Scope (Packages) |
-| 189 | Ouvrir le panneau  (infobulle) | Open the panel |
-| 202 | ⚙ Filtres du graphe | ⚙ Graph filters |
-| 202 | Fermer (Échap)  (infobulle) | Close (Esc) |
-| 205 | Types d'éléments | Element types |
-| 206 | Tout sélectionner  (infobulle) | Select all |
-| 206 | Tout désélectionner  (infobulle) | Deselect all |
-| 210 | Critères de relation | Relation criteria |
-| 211 | Tout sélectionner  (infobulle) | Select all |
-| 211 | Tout désélectionner  (infobulle) | Deselect all |
-| 216 | Légende | Legend |
-| 216 | Replier / déplier la légende  (infobulle) | Collapse / expand the legend |
-| 220 | Fermer le détail  (infobulle) | Close the detail |
-| 225 | Prêt | Ready |
-| 232 | 🔎 Détail | 🔎 Detail |
-| 234 | ✏ Modifier l'élément | ✏ Edit the element |
-| 235 | → Créer une relation vers… | → Create a relation to… |
-| 236 | ✦ Créer un élément enfant | ✦ Create a child element |
-| 238 | ⊙ Définir comme contexte | ⊙ Set as context |
-| 239 | ↓ Développer | ↓ Expand |
-| 240 | ↑ Réduire | ↑ Collapse |
-| 242 | 👁 Masquer l'élément | 👁 Hide the element |
-| 250 | Annuler | Cancel |
-| 251 | Sauvegarder | Save |
-| 259 | ✏ Éditeur de modèle | ✏ Model editor |
-| 263 | Éléments ( | Elements ( |
-| 264 | Relations ( | Relations ( |
-| 265 | Paquetages ( | Packages ( |
-| 266 | Chaînes ( | Chains ( |
-| 275 | Exporter | Export |
-| 276 | Résolution : | Resolution: |
-| 278 | 1× Normal | 1× Normal |
-| 280 | 3× Ultra | 3× Ultra |
-| 281 | 4× Max | 4× Max |
-| 285 | Annuler | Cancel |
-| 286 | Exporter | Export |
-| 306 | Types d'éléments | Element types |
-| 307 | Filtrer les types…  (infobulle) | Filter types… |
-| 312 | Tout cocher | Check all |
-| 314 | Aucun | None |
-| 316 | Défaut | Default |
-| 325 | Glisser pour redimensionner  (infobulle) | Drag to resize |
-| 333 | 🌳 Arborescence | 🌳 Tree |
-| 334 | ▦ Cartes | ▦ Cards |
-| 335 | 📖 Index des types | 📖 Type index |
-| 346 | Rechercher…  (infobulle) | Search… |
-| 350 | Tous | All |
-| 356 | Tranv. | Shared |
-| 358 | ⬇ CSV | ⬇ CSV |
-| 362 | ⊞ Déplier | ⊞ Expand |
-| 363 | ⊟ Réduire | ⊟ Collapse |
-| 365 | ⬇ JSON | ⬇ JSON |
-| 383 | ← Préc. | ← Prev. |
-| 385 | Suiv. → | Next → |
-| 403 | ✨ Colonne par chemin | ✨ Path column |
-| 407 | type de départ | start type |
-| 413 | Type d'élément | Element type |
-| 414 | Relation ou valeur | Relation or value |
-| 418 | + Ajouter une étape | + Add a step |
-| 421 | Nom de la colonne | Column name |
-| 422 | ex: Functions of Component  (infobulle) | e.g. Functions of Component |
-| 423 | Créer la colonne | Create the column |
-| 447 | Aucun élément ne correspond. | No matching element. |
+| 40 | Scripts | Scripts |
+| 40 | Scripts : parcourir et analyser le modèle avec l'API, comme les macros de Catia Magic (Alt+4)  (infobulle) | Scripts: browse and analyse the model with the API, like Catia Magic macros (Alt+4) |
+| 42 | Revue | Review |
+| 42 | Revue : commentaires sur le modèle et les diagrammes, vérification après mise à jour, rapport  (infobulle) | Review: comments on the model and diagrams, check after update, report |
+| 44 | Thème | Theme |
+| 44 | Changer le thème, créer ou modifier un thème personnalisé  (infobulle) | Change the theme, create or edit a custom theme |
+| 45 | Changer le thème  (infobulle) | Change theme |
+| 46 | 🌙 Sombre | 🌙 Dark |
+| 47 | ☀️ Clair | ☀️ Light |
+| 48 | 🌊 Marine | 🌊 Navy |
+| 49 | 🌿 Nature | 🌿 Nature |
+| 50 | 🗂 Office 2007 | 🗂 Office 2007 |
+| 51 | ⚡ Contraste | ⚡ Contrast |
+| 53 | Créer ou modifier un thème personnalisé (toutes les couleurs)  (infobulle) | Create or edit a custom theme (all colours) |
+| 55 | Aide | Help |
+| 55 | Aide complète, visite guidée de l'outil  (infobulle) | Full help, guided tour of the tool |
+| 57 | Préférences : affichage des menus, enregistrement automatique, thème, interface et vues  (infobulle) | Preferences: menu display, automatic saving, theme, interface and views |
+| 61 | Zoom avant (Ctrl++)  (infobulle) | Zoom in (Ctrl++) |
+| 62 | Zoom arrière (Ctrl+-)  (infobulle) | Zoom out (Ctrl+-) |
+| 63 | ⊡ Fit | ⊡ Fit |
+| 63 | Ajuster (Ctrl+W)  (infobulle) | Fit (Ctrl+W) |
+| 65 | ⚙ Filtres | ⚙ Filters |
+| 65 | Types d'éléments et critères de relation affichés dans le graphe  (infobulle) | Element types and relation criteria displayed in the graph |
+| 67 | ↓ Ouvrir tout | ↓ Expand all |
+| 68 | ↑ Fermer tout | ↑ Collapse all |
+| 70 | Profondeur | Depth |
+| 70 | Profondeur de voisinage (1 à 10)  (infobulle) | Neighbourhood depth (1 to 10) |
+| 76 | Disposition du graphe  (infobulle) | Graph layout |
+| 78 | → LR — de gauche à droite | → LR — left to right |
+| 79 | ↓ TB — de haut en bas | ↓ TB — top to bottom |
+| 80 | ← RL — de droite à gauche | ← RL — right to left |
+| 81 | ◉ Radiale | ◉ Radial |
+| 82 | ⚡ Zigzag | ⚡ Zigzag |
+| 82 | Zigzag 7:3 — séquence en grille  (infobulle) | Zigzag 7:3 — grid sequence |
+| 86 | # Nums | # Nums |
+| 87 | ◉ Légende | ◉ Legend |
+| 88 | ⌁ Relations | ⌁ Relations |
+| 89 | ✂ Noms | ✂ Names |
+| 89 | Couper les noms longs  (infobulle) | Truncate long names |
+| 90 | ⊙ Unique | ⊙ Single |
+| 91 | ⬡ Compact | ⬡ Compact |
+| 95 | ⬇ Export ▾ | ⬇ Export ▾ |
+| 95 | Exporter le graphe : image ou données (CSV)  (infobulle) | Export the graph: image or data (CSV) |
+| 99 | Image | Image |
+| 100 | 🖼 PNG | 🖼 PNG |
+| 101 | 📷 JPEG | 📷 JPEG |
+| 102 | 📐 SVG | 📐 SVG |
+| 103 | Données (CSV) | Data (CSV) |
+| 104 | ▦ Arbre par niveaux… | ▦ Tree by levels… |
+| 104 | Une colonne par niveau (et par relation) : le graphe déplié de gauche à droite  (infobulle) | One column per level (and per relation): the graph unfolded from left to right |
+| 105 | ⇄ Relations affichées… | ⇄ Displayed relations… |
+| 105 | Une ligne par arête affichée : source, relation, cible, nombre, profondeur, chemin  (infobulle) | One row per displayed edge: source, relation, target, count, depth, path |
+| 114 | Nouvelle vue : copie de la vue affichée, vue vide ou préréglage  (infobulle) | New view: copy of the displayed view, empty view or preset |
+| 118 | 💾 Sauver vue | 💾 Save view |
+| 118 | Enregistrer la vue affichée dans un fichier (.json)  (infobulle) | Save the displayed view to a file (.json) |
+| 119 | 📂 Charger vue | 📂 Load view |
+| 119 | Ouvrir une vue enregistrée dans un nouvel onglet  (infobulle) | Open a saved view in a new tab |
+| 127 | ❓ Aide | ❓ Help |
+| 127 | Aide et présentation des fonctionnalités  (infobulle) | Help and feature overview |
+| 128 | 🚀 Bien démarrer | 🚀 Getting started |
+| 128 | · ouvrir un modèle, puis trouver l'aide et les tutoriels | · open a model, then find the help and tutorials |
+| 128 | Visite guidée en deux temps : où ouvrir votre fichier .capella, puis, une fois le modèle chargé, où trouver l'aide et les tutoriels  (infobulle) | Two-step guided tour: where to open your .capella file, then, once the model is loaded, where to find the help and tutorials |
+| 129 | Cliquer pour parcourir, ou glisser-déposer un fichier .capella  (infobulle) | Click to browse, or drag and drop a .capella file |
+| 130 | Arcalyse | Arcalyse |
+| 130 | Votre modèle Capella, sous toutes ses coutures. | Your Capella model, inside and out. |
+| 131 | Ouvrir un modèle Capella | Open a Capella model |
+| 132 | Glissez-déposez votre fichier | Drag and drop your |
+| 132 | (ou le dossier du projet) ici | (or the project folder) here |
+| 132 | ou recherchez-le dans l'explorateur de fichiers. | or browse for it in the file explorer. |
+| 133 | 📂 Fichier .capella… | 📂 .capella file… |
+| 133 | Ouvrir le fichier .capella seul  (infobulle) | Open the .capella file alone |
+| 134 | 📁 Dossier du projet… | 📁 Project folder… |
+| 134 | Ouvrir le dossier du projet : le .capella et ses diagrammes (.aird) sont chargés ensemble  (infobulle) | Open the project folder: the .capella and its diagrams (.aird) are loaded together |
+| 135 | 📄 Projet de travail (.html)… | 📄 Work project (.html)… |
+| 135 | Reprendre un projet de travail enregistré en page HTML (💾), même par une version précédente d'Arcalyse (à partir de la 2.1) : modèle, diagrammes, revue, accueil, vues et réglages sont repris dans cette version  (infobulle) | Resume a work project saved as an HTML page (💾), even by an earlier version of Arcalyse (2.1 or later): model, diagrams, review, home, views and settings are carried over into this version |
+| 138 | Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé. | Accepted formats: .capella · .melodymodeller · .xml — the file is read locally, nothing is sent. |
+| 139 | 📖 Que peut-on analyser ? Découvrir les fonctionnalités | 📖 What can be analysed? Discover the features |
+| 140 | 🎓 Visite guidée de l'interface | 🎓 Guided tour of the interface |
+| 141 | ℹ À propos | ℹ About |
+| 149 | Panneau | Panel |
+| 150 | Réduire le panneau  (infobulle) | Collapse the panel |
+| 153 | Arborescence | Tree |
+| 155 | Tout développer  (infobulle) | Expand all |
+| 157 | Tout réduire  (infobulle) | Collapse all |
+| 163 | ✕ vider | ✕ clear |
+| 163 | Vider la sélection  (infobulle) | Clear the selection |
+| 166 | 🔍 Filtrer l'arborescence…  (infobulle) | 🔍 Filter the tree… |
+| 175 | Contexte | Context |
+| 181 | ✚ Créer un nouvel élément | ✚ Create a new element |
+| 185 | Portée (Paquetages) | Scope (Packages) |
+| 191 | Ouvrir le panneau  (infobulle) | Open the panel |
+| 204 | ⚙ Filtres du graphe | ⚙ Graph filters |
+| 204 | Fermer (Échap)  (infobulle) | Close (Esc) |
+| 207 | Types d'éléments | Element types |
+| 208 | Tout sélectionner  (infobulle) | Select all |
+| 208 | Tout désélectionner  (infobulle) | Deselect all |
+| 212 | Critères de relation | Relation criteria |
+| 213 | Tout sélectionner  (infobulle) | Select all |
+| 213 | Tout désélectionner  (infobulle) | Deselect all |
+| 218 | Légende | Legend |
+| 218 | Replier / déplier la légende  (infobulle) | Collapse / expand the legend |
+| 222 | Fermer le détail  (infobulle) | Close the detail |
+| 227 | Prêt | Ready |
+| 234 | 🔎 Détail | 🔎 Detail |
+| 236 | ✏ Modifier l'élément | ✏ Edit the element |
+| 237 | → Créer une relation vers… | → Create a relation to… |
+| 238 | ✦ Créer un élément enfant | ✦ Create a child element |
+| 240 | ⊙ Définir comme contexte | ⊙ Set as context |
+| 241 | ↓ Développer | ↓ Expand |
+| 242 | ↑ Réduire | ↑ Collapse |
+| 244 | 👁 Masquer l'élément | 👁 Hide the element |
+| 252 | Annuler | Cancel |
+| 253 | Sauvegarder | Save |
+| 261 | ✏ Éditeur de modèle | ✏ Model editor |
+| 265 | Éléments ( | Elements ( |
+| 266 | Relations ( | Relations ( |
+| 267 | Paquetages ( | Packages ( |
+| 268 | Chaînes ( | Chains ( |
+| 277 | Exporter | Export |
+| 278 | Résolution : | Resolution: |
+| 280 | 1× Normal | 1× Normal |
+| 282 | 3× Ultra | 3× Ultra |
+| 283 | 4× Max | 4× Max |
+| 287 | Annuler | Cancel |
+| 288 | Exporter | Export |
+| 308 | Types d'éléments | Element types |
+| 309 | Filtrer les types…  (infobulle) | Filter types… |
+| 314 | Tout cocher | Check all |
+| 316 | Aucun | None |
+| 318 | Défaut | Default |
+| 327 | Glisser pour redimensionner  (infobulle) | Drag to resize |
+| 335 | 🌳 Arborescence | 🌳 Tree |
+| 336 | ▦ Cartes | ▦ Cards |
+| 337 | 📖 Index des types | 📖 Type index |
+| 348 | Rechercher…  (infobulle) | Search… |
+| 352 | Tous | All |
+| 358 | Tranv. | Shared |
+| 360 | ⬇ CSV | ⬇ CSV |
+| 364 | ⊞ Déplier | ⊞ Expand |
+| 365 | ⊟ Réduire | ⊟ Collapse |
+| 367 | ⬇ JSON | ⬇ JSON |
+| 385 | ← Préc. | ← Prev. |
+| 387 | Suiv. → | Next → |
+| 405 | ✨ Colonne par chemin | ✨ Path column |
+| 409 | type de départ | start type |
+| 415 | Type d'élément | Element type |
+| 416 | Relation ou valeur | Relation or value |
+| 420 | + Ajouter une étape | + Add a step |
+| 423 | Nom de la colonne | Column name |
+| 424 | ex: Functions of Component  (infobulle) | e.g. Functions of Component |
+| 425 | Créer la colonne | Create the column |
+| 449 | Aucun élément ne correspond. | No matching element. |
+| 453 | Glisser pour redimensionner  (infobulle) | Drag to resize |
+| 455 | 📜 Scripts | 📜 Scripts |
+| 456 | Bibliothèque de scripts : exemples, scripts du projet, dossier partagé  (infobulle) | Script library: examples, project scripts, shared folder |
+| 457 | Nouveau script  (infobulle) | New script |
+| 458 | Enregistrer dans la bibliothèque du projet (gardée dans la 💾 page HTML)  (infobulle) | Save in the project library (kept in the 💾 HTML page) |
+| 459 | Supprimer de la bibliothèque  (infobulle) | Remove from the library |
+| 460 | Importer des fichiers .js dans la bibliothèque  (infobulle) | Import .js files into the library |
+| 461 | Exporter le script affiché en fichier .js  (infobulle) | Export the displayed script as a .js file |
+| 464 | ▶ Exécuter | ▶ Run |
+| 464 | Exécuter sur le modèle affiché (Ctrl+Entrée)  (infobulle) | Run on the displayed model (Ctrl+Enter) |
+| 465 | ■ Arrêter | ■ Stop |
+| 465 | Arrêter le script  (infobulle) | Stop the script |
+| 466 | Effacer la sortie  (infobulle) | Clear the output |
+| 469 | API : model, metamodel, analysis, out, ui — lecture et analyse seulement | API: model, metamodel, analysis, out, ui — reading and analysis only |
+| 470 | Fermer (Alt+4)  (infobulle) | Close (Alt+4) |
 
 ## js/01-donnees-config.js
 
@@ -2807,91 +2824,91 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 314 | ), non appliquée | … — on disk (…), not applied |
 | 315 | — avant la mise à jour de | … — before the … update |
 | 316 | — version d'ouverture ( | … — opening version (…) |
-| 338 | enregistrement(s) détecté(s) — | … save(s) detected — … difference(s) with the displayed model |
-| 338 | différence(s) avec le modèle affiché | … save(s) detected — … difference(s) with the displayed model |
-| 339 | Le fichier a été modifié : resélectionnez-le pour voir le delta | The file has changed: select it again to see the delta |
-| 340 | Suivi du fichier .capella : vérifier les mises à jour, delta, historique | Watch the .capella file: check for updates, delta, history |
-| 357 | 🔄 Nouvelle version du modèle « | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
-| 358 | enregistrements détectés depuis | … saves detected since …, last at … |
-| 358 | , dernier à | … saves detected since …, last at … |
-| 358 | enregistré le | saved on … |
-| 359 | par rapport au modèle affiché | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
-| 359 | 🔍 Voir le delta ✔ Mettre à jour Plus tard | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
-| 362 | a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta. | has changed on disk, but the browser cannot read it again directly. Select it again to see the delta. |
-| 363 | est introuvable (déplacé, renommé ou supprimé). Choisissez le fichier à suivre. | cannot be found (moved, renamed or deleted). Choose the file to watch. |
-| 364 | n'est plus accessible (autorisation refusée). Choisissez de nouveau le fichier à suivre. | is no longer accessible (permission denied). Choose the file to watch again. |
-| 365 | Modèle modifié sur le disque | Model changed on disk |
-| 365 | Fichier suivi indisponible | Watched file unavailable |
-| 366 | 📂 Choisir le fichier… Plus tard | 🔄 … « … » … 📂 Choose the file… Later |
-| 391 | accès direct — relecture automatique | direct access — automatic re-read |
-| 391 | accès limité — modification signalée, fichier à resélectionner | limited access — change reported, file to select again |
-| 391 | aucun fichier suivi (page sauvegardée) | no watched file (saved page) |
-| 392 | 1 min | 1 min |
-| 392 | 5 min | 5 min |
-| 393 | Affiché : fichier du | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 394 | Dernière vérification : | Last check: … |
-| 394 | en cours… | in progress… |
-| 395 | Vérifier maintenant | Check now |
-| 395 | Choisir le fichier à comparer… | Choose the file to compare… |
-| 396 | 📋 Voir le delta en attente ( | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
-| 396 | enreg., | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
-| 396 | diff.) ✔ Mettre à jour l'affichage | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
-| 399 | Détecter les nouvelles versions toutes les | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 399 | Disponible quand un fichier .capella est suivi | Available when a .capella file is watched |
-| 401 | Vérifier au retour dans la fenêtre Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée. | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 404 | 🕘 Historique des mises à jour ( | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 405 | ⚖ Comparer avec la version avant la dernière mise à jour | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 406 | ⚖ Comparer avec la version d'ouverture | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
-| 407 | 📂 Suivre un autre fichier (nouvelle version)… | 📂 Watch another file (new version)… |
-| 448 | Modèle affiché : fichier du | Displayed model: file of {0} &nbsp;→&nbsp; on disk: file of {1} {2} |
-| 449 | Mise à jour appliquée à | Update applied at … : file of … → …… |
-| 449 | : fichier du | Update applied at … : file of … → …… |
-| 449 | enregistrements cumulés) | (… cumulated saves) |
-| 453 | Σ Cumul — modèle affiché → dernier enregistrement | Saves detected before confirmation: the delta cumulated is the one that will be applied; each row shows what a save changed compared with the previous one. Detected at File of Changes Σ Cumulated — displayed model → last save {1} {2} |
-| 456 | Ajouté | Added |
-| 456 | var(--c-ok,#3fb950) | (inchangé, hors _L) |
-| 456 | Supprimé | Deleted |
-| 456 | var(--c-err,#f85149) | (inchangé, hors _L) |
-| 456 | Modifié | Modified |
-| 456 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
-| 469 | changement(s) | … change(s) … |
-| 470 | Propriété Avant Après | Property Before After … |
-| 475 | Delta des modifications | Delta of the changes |
-| 475 | Mise à jour du | Update of |
-| 479 | Par couche : | …By layer: … |
-| 479 | Enregistrement | Save … — |
-| 481 | Tous | All |
-| 481 | ➕ Ajoutés | ➕ Added |
-| 481 | ➖ Supprimés | ➖ Deleted |
-| 481 | ✎ Modifiés | ✎ Modified |
-| 481 | ↪ Déplacés | ↪ Moved |
-| 484 | Statut Couche Type Élément Détail | Status Layer Type Element Detail … … |
-| 485 | lignes affichées sur | … rows shown out of … — filter, export to CSV or open ⚖ Comparison. |
-| 485 | — filtrez, exportez en CSV ou ouvrez ⚖ Comparaison. | … rows shown out of … — filter, export to CSV or open ⚖ Comparison. |
-| 486 | ⬇ CSV | 🔄 … — « … » ✕ … … … … … ⬇ CSV … … |
-| 486 | Aucune différence pour ce filtre. | No difference for this filter. |
-| 490 | ⚖ Ouvrir dans Comparaison de versions | ⚖ Open in Version comparison |
+| 339 | enregistrement(s) détecté(s) — | … save(s) detected — … difference(s) with the displayed model |
+| 339 | différence(s) avec le modèle affiché | … save(s) detected — … difference(s) with the displayed model |
+| 340 | Le fichier a été modifié : resélectionnez-le pour voir le delta | The file has changed: select it again to see the delta |
+| 341 | Suivi du fichier .capella : vérifier les mises à jour, delta, historique | Watch the .capella file: check for updates, delta, history |
+| 358 | 🔄 Nouvelle version du modèle « | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
+| 359 | enregistrements détectés depuis | … saves detected since …, last at … |
+| 359 | , dernier à | … saves detected since …, last at … |
+| 359 | enregistré le | saved on … |
+| 360 | par rapport au modèle affiché | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
+| 360 | 🔍 Voir le delta ✔ Mettre à jour Plus tard | 🔄 New version of the model « … » — … … compared with the displayed model … 🔍 View the delta ✔ Update Later |
+| 363 | a été modifié sur le disque, mais le navigateur ne peut pas le relire directement. Resélectionnez-le pour voir le delta. | has changed on disk, but the browser cannot read it again directly. Select it again to see the delta. |
+| 364 | est introuvable (déplacé, renommé ou supprimé). Choisissez le fichier à suivre. | cannot be found (moved, renamed or deleted). Choose the file to watch. |
+| 365 | n'est plus accessible (autorisation refusée). Choisissez de nouveau le fichier à suivre. | is no longer accessible (permission denied). Choose the file to watch again. |
+| 366 | Modèle modifié sur le disque | Model changed on disk |
+| 366 | Fichier suivi indisponible | Watched file unavailable |
+| 367 | 📂 Choisir le fichier… Plus tard | 🔄 … « … » … 📂 Choose the file… Later |
+| 392 | accès direct — relecture automatique | direct access — automatic re-read |
+| 392 | accès limité — modification signalée, fichier à resélectionner | limited access — change reported, file to select again |
+| 392 | aucun fichier suivi (page sauvegardée) | no watched file (saved page) |
+| 393 | 1 min | 1 min |
+| 393 | 5 min | 5 min |
+| 394 | Affiché : fichier du | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 395 | Dernière vérification : | Last check: … |
+| 395 | en cours… | in progress… |
+| 396 | Vérifier maintenant | Check now |
+| 396 | Choisir le fichier à comparer… | Choose the file to compare… |
+| 397 | 📋 Voir le delta en attente ( | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
+| 397 | enreg., | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
+| 397 | diff.) ✔ Mettre à jour l'affichage | 📋 View the pending delta (… saves, … diff.) ✔ Update the display |
+| 400 | Détecter les nouvelles versions toutes les | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 400 | Disponible quand un fichier .capella est suivi | Available when a .capella file is watched |
+| 402 | Vérifier au retour dans la fenêtre Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée. | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 405 | 🕘 Historique des mises à jour ( | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 406 | ⚖ Comparer avec la version avant la dernière mise à jour | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 407 | ⚖ Comparer avec la version d'ouverture | … … Displayed: file of …… 🔍 … … Detect new versions every … Check when coming back to the window You are only notified: the update is never applied without your confirmation (✔ Update). If there are several saves, the latest version is applied. 🕘 Update history (…) ⚖ Compare with the version before the last update ⚖ Compare with the opening version … |
+| 408 | 📂 Suivre un autre fichier (nouvelle version)… | 📂 Watch another file (new version)… |
+| 449 | Modèle affiché : fichier du | Displayed model: file of {0} &nbsp;→&nbsp; on disk: file of {1} {2} |
+| 450 | Mise à jour appliquée à | Update applied at … : file of … → …… |
+| 450 | : fichier du | Update applied at … : file of … → …… |
+| 450 | enregistrements cumulés) | (… cumulated saves) |
+| 454 | Σ Cumul — modèle affiché → dernier enregistrement | Saves detected before confirmation: the delta cumulated is the one that will be applied; each row shows what a save changed compared with the previous one. Detected at File of Changes Σ Cumulated — displayed model → last save {1} {2} |
+| 457 | Ajouté | Added |
+| 457 | var(--c-ok,#3fb950) | (inchangé, hors _L) |
+| 457 | Supprimé | Deleted |
+| 457 | var(--c-err,#f85149) | (inchangé, hors _L) |
+| 457 | Modifié | Modified |
+| 457 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
+| 470 | changement(s) | … change(s) … |
+| 471 | Propriété Avant Après | Property Before After … |
+| 476 | Delta des modifications | Delta of the changes |
+| 476 | Mise à jour du | Update of |
+| 480 | Par couche : | …By layer: … |
+| 480 | Enregistrement | Save … — |
+| 482 | Tous | All |
+| 482 | ➕ Ajoutés | ➕ Added |
+| 482 | ➖ Supprimés | ➖ Deleted |
+| 482 | ✎ Modifiés | ✎ Modified |
+| 482 | ↪ Déplacés | ↪ Moved |
+| 485 | Statut Couche Type Élément Détail | Status Layer Type Element Detail … … |
+| 486 | lignes affichées sur | … rows shown out of … — filter, export to CSV or open ⚖ Comparison. |
+| 486 | — filtrez, exportez en CSV ou ouvrez ⚖ Comparaison. | … rows shown out of … — filter, export to CSV or open ⚖ Comparison. |
+| 487 | ⬇ CSV | 🔄 … — « … » ✕ … … … … … ⬇ CSV … … |
+| 487 | Aucune différence pour ce filtre. | No difference for this filter. |
 | 491 | ⚖ Ouvrir dans Comparaison de versions | ⚖ Open in Version comparison |
-| 493 | Plus tard ✔ Mettre à jour l'affichage | Later ✔ Update the display |
-| 493 | Fermer | Close |
-| 508 | Ajouté | Added |
-| 508 | Supprimé | Deleted |
-| 508 | Modifié | Modified |
-| 508 | (déplacé) | (moved) |
-| 511 | Statut | Status |
-| 511 | Couche | Layer |
-| 511 | Type | (inchangé, hors _L) |
-| 511 | Élément | Element |
-| 511 | Propriété | Property |
-| 511 | Avant | Before |
-| 511 | Après | After |
-| 520 | 🕘 Historique des mises à jour — « | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
-| 521 | » ✕ Ouvert à | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
-| 523 | . Cliquez sur une mise à jour pour voir son delta. | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
-| 524 | Appliquée à Fichier du Enreg. Changements | Applied at File of Saves Changes … |
-| 526 | Aucune mise à jour appliquée depuis l'ouverture du modèle. | No update applied since the model was opened. |
-| 528 | Fermer | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
-| 528 | ⚖ Delta cumulé depuis l'ouverture | ⚖ Cumulated delta since opening |
+| 492 | ⚖ Ouvrir dans Comparaison de versions | ⚖ Open in Version comparison |
+| 494 | Plus tard ✔ Mettre à jour l'affichage | Later ✔ Update the display |
+| 494 | Fermer | Close |
+| 509 | Ajouté | Added |
+| 509 | Supprimé | Deleted |
+| 509 | Modifié | Modified |
+| 509 | (déplacé) | (moved) |
+| 512 | Statut | Status |
+| 512 | Couche | Layer |
+| 512 | Type | (inchangé, hors _L) |
+| 512 | Élément | Element |
+| 512 | Propriété | Property |
+| 512 | Avant | Before |
+| 512 | Après | After |
+| 521 | 🕘 Historique des mises à jour — « | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
+| 522 | » ✕ Ouvert à | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
+| 524 | . Cliquez sur une mise à jour pour voir son delta. | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
+| 525 | Appliquée à Fichier du Enreg. Changements | Applied at File of Saves Changes … |
+| 527 | Aucune mise à jour appliquée depuis l'ouverture du modèle. | No update applied since the model was opened. |
+| 529 | Fermer | 🕘 Update history — “…” ✕ Opened at …. Click an update to see its delta. … … Close |
+| 529 | ⚖ Delta cumulé depuis l'ouverture | ⚖ Cumulated delta since opening |
 
 ## js/41-barre-vues.js
 
@@ -2960,35 +2977,38 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 60 | 🔄 Suivi du fichier | 🔄 File watch |
 | 60 | 💬 Revue | 💬 Review |
 | 60 | 🎨 Thème | 🎨 Theme |
-| 218 | Expert | Expert |
-| 218 | Simplifié | Simplified |
-| 218 | Personnalisé | Custom |
-| 220 | Préférences : affichage des menus (mode actuel : | Preferences: menu display (current mode: |
-| 220 | ), enregistrement automatique, thème, interface et vues | ), automatic saving, theme, interface and views |
-| 236 | Vue affichée : | Displayed view: |
-| 258 | (masquée) | (hidden) |
-| 259 | Retirer de la barre | Remove from the bar |
-| 259 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
-| 331 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 331 | Ctrl+S | Ctrl+S |
-| 332 | 🌐 Télécharger la page HTML 📗 Classeur Excel des analyses La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 332 | Ctrl+Maj+S | Ctrl+Maj+S |
-| 344 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
-| 346 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
-| 347 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
-| 348 | 💬 Visite de la revue | 💬 Review tour |
-| 349 | ℹ À propos | ℹ About |
-| 356 | 🎨 Personnaliser… | 🎨 Customize… |
-| 360 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
-| 365 | 🗺 Relation Map | 🗺 Relation Map |
-| 369 | Vues | Views |
-| 370 | Aucune vue, aucun élément ni diagramme ne correspond. | No view, element or diagram matches. |
-| 377 | Menu | … ▾ menu in the bar |
-| 377 | ▾ dans la barre | … ▾ menu in the bar |
-| 378 | Autres vues | Other views |
-| 381 | ⚙ Personnaliser l'affichage… | ⚙ Customize display… |
-| 382 | ↺ Rétablir la barre par défaut | ↺ Restore the default bar |
-| 384 | 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
+| 219 | Expert | Expert |
+| 219 | Simplifié | Simplified |
+| 219 | Personnalisé | Custom |
+| 221 | Préférences : affichage des menus (mode actuel : | Preferences: menu display (current mode: |
+| 221 | ), enregistrement automatique, thème, interface et vues | ), automatic saving, theme, interface and views |
+| 237 | Vue affichée : | Displayed view: |
+| 259 | (masquée) | (hidden) |
+| 260 | Retirer de la barre | Remove from the bar |
+| 260 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
+| 332 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 332 | Ctrl+S | Ctrl+S |
+| 333 | 🌐 Télécharger la page HTML 📗 Classeur Excel des analyses La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 333 | Ctrl+Maj+S | Ctrl+Maj+S |
+| 345 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
+| 347 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
+| 348 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
+| 349 | 💬 Visite de la revue | 💬 Review tour |
+| 350 | ℹ À propos | ℹ About |
+| 357 | 🎨 Personnaliser… | 🎨 Customize… |
+| 361 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
+| 366 | 🗺 Relation Map | 🗺 Relation Map |
+| 366 | @scripts | (inchangé, hors _L) |
+| 366 | 📜 Scripts | 📜 Scripts |
+| 366 | Console de scripts : parcourir et analyser le modèle avec l'API (Alt+4) | Script console: browse and analyse the model with the API (Alt+4) |
+| 370 | Vues | Views |
+| 371 | Aucune vue, aucun élément ni diagramme ne correspond. | No view, element or diagram matches. |
+| 378 | Menu | … ▾ menu in the bar |
+| 378 | ▾ dans la barre | … ▾ menu in the bar |
+| 379 | Autres vues | Other views |
+| 382 | ⚙ Personnaliser l'affichage… | ⚙ Customize display… |
+| 383 | ↺ Rétablir la barre par défaut | ↺ Restore the default bar |
+| 385 | 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
 
 ## js/42-tableaux-analyses.js
 
@@ -4916,42 +4936,44 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 113 | page(s) | page(s) |
 | 115 | ▤ Tableau, 🗺 vues de la Relation Map, ⬇ exports CSV | ▤ Table, 🗺 Relation Map views, ⬇ CSV exports |
 | 115 | onglets, colonnes, filtres, vues enregistrées | tabs, columns, filters, saved views |
-| 116 | ☰ Barre des vues et ⚙ préférences | ☰ View bar and ⚙ preferences |
-| 116 | affichage des menus, vues épinglées, enregistrement automatique | menu display, pinned views, automatic saving |
-| 117 | 🎨 Thème | 🎨 Theme |
-| 117 | thème choisi et thème personnalisé | chosen theme and custom theme |
-| 118 | 🔤 Règles de nommage | 🔤 Naming rules |
-| 118 | verbes acceptés, mots refusés | accepted verbs, refused words |
-| 119 | 🩺 Profil de contrôles | 🩺 Checks profile |
-| 119 | contrôles désactivés, gravités, seuils | disabled checks, severities, thresholds |
-| 134 | ⚠ Version d'Arcalyse inconnue (page antérieure à la 2.0 ?) : la reprise est tentée, certains réglages peuvent manquer. | ⚠ Unknown Arcalyse version (page older than 2.0?): the import is attempted, some settings may be missing. |
-| 135 | ⚠ Page enregistrée par la version | ⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing. |
-| 135 | , antérieure à la | ⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing. |
-| 135 | : la reprise est tentée, certains réglages peuvent manquer. | ⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing. |
-| 136 | ⚠ Page enregistrée par une version plus récente ( | ⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored. |
-| 136 | ) que celle-ci ( | ⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored. |
-| 136 | ) : ce qu'elle seule connaît sera ignoré. | ⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored. |
-| 137 | ✔ Page enregistrée par la version | ✔ Page saved by version …: fully carried over into version …. |
-| 137 | : reprise complète dans la version | ✔ Page saved by version …: fully carried over into version …. |
-| 140 | 📄 Ouvrir un projet de travail | 📄 Open a work project |
-| 142 | Page | Page |
-| 144 | Cette page ne contient pas de modèle : seuls le travail et les réglages cochés seront repris. | This page contains no model: only the checked work and settings will be carried over. |
-| 145 | À reprendre dans cette version : | To carry over into this version: |
-| 147 | 💾 Enregistrer ensuite dans ce même fichier | 💾 Then save into this same file |
-| 147 | Ctrl+S remplacera l'ancienne page par la page de cette version, avec tout le travail (le navigateur demandera l'autorisation d'écrire). | Ctrl+S will replace the old page with this version's page, with all the work (the browser will ask for write permission). |
-| 148 | Pensez ensuite à enregistrer (💾, Ctrl+S) : la page enregistrée sera celle de cette version, avec tout le travail. | Remember to save afterwards (💾, Ctrl+S): the saved page will be this version's, with all the work. |
-| 150 | Annuler | Cancel |
-| 151 | 📄 Ouvrir le projet | 📄 Open the project |
-| 172 | Partie « | Part “…” not carried over: |
-| 172 | » non reprise : | Part “…” not carried over: |
-| 182 | ✔ Travail et réglages de la page repris | ✔ Work and settings of the page carried over |
-| 186 | XML invalide | Invalid XML |
-| 187 | Modèle de la page illisible : | Unreadable page model: |
-| 191 | Chargement de « | Loading “…”… |
-| 201 | ✔ Projet « | ✔ Project “…” carried over into version … — remember to save it (💾) |
-| 201 | » repris dans la version | ✔ Project “…” carried over into version … — remember to save it (💾) |
-| 201 | — pensez à l'enregistrer (💾) | ✔ Project “…” carried over into version … — remember to save it (💾) |
-| 203 | Erreur de chargement : | Loading error: |
+| 117 | 📜 Scripts | 📜 Scripts |
+| 117 | script(s) | script(s) |
+| 118 | ☰ Barre des vues et ⚙ préférences | ☰ View bar and ⚙ preferences |
+| 118 | affichage des menus, vues épinglées, enregistrement automatique | menu display, pinned views, automatic saving |
+| 119 | 🎨 Thème | 🎨 Theme |
+| 119 | thème choisi et thème personnalisé | chosen theme and custom theme |
+| 120 | 🔤 Règles de nommage | 🔤 Naming rules |
+| 120 | verbes acceptés, mots refusés | accepted verbs, refused words |
+| 121 | 🩺 Profil de contrôles | 🩺 Checks profile |
+| 121 | contrôles désactivés, gravités, seuils | disabled checks, severities, thresholds |
+| 136 | ⚠ Version d'Arcalyse inconnue (page antérieure à la 2.0 ?) : la reprise est tentée, certains réglages peuvent manquer. | ⚠ Unknown Arcalyse version (page older than 2.0?): the import is attempted, some settings may be missing. |
+| 137 | ⚠ Page enregistrée par la version | ⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing. |
+| 137 | , antérieure à la | ⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing. |
+| 137 | : la reprise est tentée, certains réglages peuvent manquer. | ⚠ Page saved by version …, older than …: the import is attempted, some settings may be missing. |
+| 138 | ⚠ Page enregistrée par une version plus récente ( | ⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored. |
+| 138 | ) que celle-ci ( | ⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored. |
+| 138 | ) : ce qu'elle seule connaît sera ignoré. | ⚠ Page saved by a newer version (…) than this one (…): what only it knows will be ignored. |
+| 139 | ✔ Page enregistrée par la version | ✔ Page saved by version …: fully carried over into version …. |
+| 139 | : reprise complète dans la version | ✔ Page saved by version …: fully carried over into version …. |
+| 142 | 📄 Ouvrir un projet de travail | 📄 Open a work project |
+| 144 | Page | Page |
+| 146 | Cette page ne contient pas de modèle : seuls le travail et les réglages cochés seront repris. | This page contains no model: only the checked work and settings will be carried over. |
+| 147 | À reprendre dans cette version : | To carry over into this version: |
+| 149 | 💾 Enregistrer ensuite dans ce même fichier | 💾 Then save into this same file |
+| 149 | Ctrl+S remplacera l'ancienne page par la page de cette version, avec tout le travail (le navigateur demandera l'autorisation d'écrire). | Ctrl+S will replace the old page with this version's page, with all the work (the browser will ask for write permission). |
+| 150 | Pensez ensuite à enregistrer (💾, Ctrl+S) : la page enregistrée sera celle de cette version, avec tout le travail. | Remember to save afterwards (💾, Ctrl+S): the saved page will be this version's, with all the work. |
+| 152 | Annuler | Cancel |
+| 153 | 📄 Ouvrir le projet | 📄 Open the project |
+| 174 | Partie « | Part “…” not carried over: |
+| 174 | » non reprise : | Part “…” not carried over: |
+| 185 | ✔ Travail et réglages de la page repris | ✔ Work and settings of the page carried over |
+| 189 | XML invalide | Invalid XML |
+| 190 | Modèle de la page illisible : | Unreadable page model: |
+| 194 | Chargement de « | Loading “…”… |
+| 204 | ✔ Projet « | ✔ Project “…” carried over into version … — remember to save it (💾) |
+| 204 | » repris dans la version | ✔ Project “…” carried over into version … — remember to save it (💾) |
+| 204 | — pensez à l'enregistrer (💾) | ✔ Project “…” carried over into version … — remember to save it (💾) |
+| 206 | Erreur de chargement : | Loading error: |
 
 ## js/58-revue-ciblee.js
 
@@ -6748,7 +6770,211 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 44 | Afficher toutes les lignes (plus lent au-delà de quelques milliers) | Show every row (slower beyond a few thousand) |
 | 44 | Tout afficher | Show all |
 
-## Textes sans traduction anglaise (12)
+## js/79-scripts-metamodele.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 7 | org.polarsys.capella.common.data.activity | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.common.data.behavior | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.common.data.core | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.capellacommon | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.capellacore | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.capellamodeller | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.cs | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.ctx | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.epbs | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.fa | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.information | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.information.communication | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.information.datatype | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.information.datavalue | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.interaction | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.la | ❌ |
+| 7 | org.polarsys.capella.core.data.oa | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.pa | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.pa.deployment | (inchangé, hors _L) |
+| 7 | org.polarsys.capella.core.data.sharedmodel | (inchangé, hors _L) |
+
+## js/80-scripts-api.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 31 | Worker | (inchangé, hors _L) |
+| 75 | Type ambigu : | Ambiguous type: …. Qualify it with its package, e.g. “la:…”. |
+| 75 | . Préciser le paquetage, par exemple « la: | Ambiguous type: …. Qualify it with its package, e.g. “la:…”. |
+| 140 | Élément attendu (objet obtenu par l'API). | Element expected (an object obtained from the API). |
+| 151 | racine du projet | project root |
+| 152 | niveau d'architecture | architecture level |
+| 153 | ingénierie système | system engineering |
+| 155 | paquetage racine du niveau | root package of the level |
+| 155 | réalisation entre niveaux | realization between levels |
+| 155 | élément racine du niveau | root element of the level |
+| 156 | élément racine du niveau | root element of the level |
+| 166 | Nom de type attendu. | Type name expected. |
+| 172 | Type inconnu : | Unknown type: … |
+| 184 | Filtre invalide : nom de type, fonction ou objet attendu. | Invalid filter: type name, function or object expected. |
+| 187 | Critère de filtre inconnu : | Unknown filter criterion: … |
+| 192 | Couche inconnue : | Unknown layer: … (OA, SA, LA, PA, EPBS) |
+| 192 | (OA, SA, LA, PA, EPBS) | Unknown layer: … (OA, SA, LA, PA, EPBS) |
+| 195 | Le critère « where » doit être une fonction. | The “where” criterion must be a function. |
+| 216 | Chemin attendu (noms séparés par « / »). | Path expected (names separated by “/”). |
+| 287 | Relation inconnue : | Unknown relation: … |
+| 288 | Sens inconnu : | Unknown direction: … (in or out) |
+| 288 | (in ou out) | Unknown direction: … (in or out) |
+| 305 | Arcalyse | (inchangé, hors _L) |
+| 323 | Couche inconnue : | Unknown layer: … (OA, SA, LA, PA, EPBS) |
+| 323 | (OA, SA, LA, PA, EPBS) | Unknown layer: … (OA, SA, LA, PA, EPBS) |
+| 330 | Type inconnu : | Unknown type: … |
+| 361 | Liste de lignes attendue. | List of rows expected. |
+| 362 | Liste de colonnes attendue. | List of columns expected. |
+| 379 | Séparateur CSV : un seul caractère. | CSV separator: a single character. |
+| 388 | Nom de fichier attendu. | File name expected. |
+| 405 | Séparateur CSV : un seul caractère. | CSV separator: a single character. |
+| 421 | Texte attendu pour | Text expected for …. |
+| 427 | Liste de choix attendue (non vide). | List of choices expected (not empty). |
+| 434 | .csv,.tsv,.txt | (inchangé, hors _L) |
+| 457 | Analyses indisponibles dans ce contexte. | Analyses unavailable in this context. |
+| 513 | Worker | (inchangé, hors _L) |
+| 528 | Fonctions sans description | Functions without description |
+| 529 | Fonctions (hors fonctions racines) dont la description est vide. | Functions (root functions excluded) whose description is empty. |
+| 533 | Fonctions non allouées | Unallocated functions |
+| 534 | Fonctions feuilles de SA, LA et PA allouées à aucun composant ni acteur. | Leaf functions of SA, LA and PA allocated to no component nor actor. |
+| 541 | Matrice d'allocation (CSV) | Allocation matrix (CSV) |
+| 542 | Composants et fonctions allouées, affichés puis proposés en fichier CSV. | Components and allocated functions, displayed then offered as a CSV file. |
+| 545 | for (const l of c.links('allocation', 'out')) | (inchangé, hors _L) |
+| 549 | Statistiques par type et par couche | Statistics by type and layer |
+| 550 | Nombre d'éléments par type et par couche (éléments techniques exclus). | Number of elements by type and layer (technical elements excluded). |
+| 553 | if (!counts.has(e.type)) counts.set(e.type, Object.fromEntries([['type', e.type], ...layers.map(l = | (inchangé, hors _L) |
+| 556 | out.table([...counts.values()].sort((a, b) = | (inchangé, hors _L) |
+| 557 | Échanges fonctionnels sans élément échangé | Functional exchanges without exchange item |
+| 558 | Échanges fonctionnels qui ne transportent aucun élément d'échange. | Functional exchanges that carry no exchange item. |
+| 564 | Fiche de l'élément sélectionné | Sheet of the selected element |
+| 565 | Attributs, liaisons, références et diagrammes de l'élément ouvert dans le panneau de détail. | Attributes, links, references and diagrams of the element opened in the detail panel. |
+| 567 | if (!e) throw new Error( | (inchangé, hors _L) |
+| 567 | Ouvrez d'abord un élément dans le panneau de détail. | Open an element in the detail panel first. |
+| 569 | out.table(Object.entries(e.attributes()).map(([name, value]) = | (inchangé, hors _L) |
+| 569 | Attributs | Attributes |
+| 570 | out.table(e.links().map(l = | (inchangé, hors _L) |
+| 570 | Liaisons | Links |
+| 571 | out.print( | (inchangé, hors _L) |
+| 571 | Référencé par : | Referenced by: |
+| 572 | out.print( | (inchangé, hors _L) |
+| 572 | Diagrammes : | Diagrams: |
+| 572 | , e.diagrams.map(d = | (inchangé, hors _L) |
+| 573 | Santé du modèle et contrôles | Model health and checks |
+| 574 | Score 💚 global et par couche, puis les contrôles 🩺 les plus fournis (toutes vues, profil appliqué). | 💚 Global and per-layer score, then the 🩺 checks with the most rows (all views, profile applied). |
+| 576 | out.print( | (inchangé, hors _L) |
+| 576 | Score : | Score: |
+| 576 | , h.score, '/ 100 —', h.points, | (inchangé, hors _L) |
+| 576 | point(s) à vérifier, | point(s) to check, |
+| 576 | , h.bloquants, | (inchangé, hors _L) |
+| 576 | bloquant(s) | blocking |
+| 577 | out.table(Object.entries(h.couches).map(([layer, c]) = | (inchangé, hors _L) |
+| 579 | out.table(checks.filter(c = c.rows.length).sort((a, b) = b.rows.length - a.rows.length).slice(0, 15) | (inchangé, hors _L) |
+| 580 | .map(c = | (inchangé, hors _L) |
+| 580 | Contrôles | Checks |
+| 581 | Lignes d'un contrôle (export CSV) | Rows of a check (CSV export) |
+| 584 | const views = [...new Set(checks.map(c = | (inchangé, hors _L) |
+| 585 | const view = await ui.choose( | (inchangé, hors _L) |
+| 585 | Vue : | View: |
+| 587 | const check = await ui.choose( | (inchangé, hors _L) |
+| 587 | Contrôle : | Check: |
+| 587 | , checks.filter(c = c.view === view).map(c = | (inchangé, hors _L) |
+| 589 | const c = checks.find(x = | (inchangé, hors _L) |
+| 590 | const rows = c.rows.map(r = Object.fromEntries(c.columns.map((col, i) = | (inchangé, hors _L) |
+| 593 | Fonctions non réalisées à la couche inférieure | Functions not realized at the lower layer |
+| 594 | Fonctions feuilles de chaque couche qu'aucune fonction de la couche suivante ne réalise (🧬 Traçabilité). | Leaf functions of each layer that no function of the next layer realizes (🧬 Traceability). |
+| 600 | const below = (t.down[f.id] \|\| []).map(id = model.getElementById(id)).filter(x = | (inchangé, hors _L) |
+| 604 | Chaînes fonctionnelles : étapes et composants | Functional chains: steps and components |
+| 605 | Pour chaque chaîne, ses fonctions dans l'ordre et les composants qui les portent (⚡ Chaînes). | For each chain, its functions in order and the components that carry them (⚡ Chains). |
+| 608 | const fns = ch.steps.filter(s = | (inchangé, hors _L) |
+| 609 | const comps = [...new Set(fns.flatMap(s = s.element.links('allocation', 'in').map(l = | (inchangé, hors _L) |
+| 610 | out.print(ch.element \|\| ch.name, '—', fns.length, | (inchangé, hors _L) |
+| 610 | fonction(s) : | function(s): |
+| 610 | , fns.map(s = | (inchangé, hors _L) |
+| 612 | Exigences et éléments couverts (CSV) | Requirements and covered elements (CSV) |
+| 615 | Aucune exigence dans ce modèle. | No requirement in this model. |
+| 616 | const rows = r.list.map(q = | (inchangé, hors _L) |
+| 619 | Qualité des noms de fonctions | Quality of function names |
+| 620 | Fonctions dont le nom ne commence pas par un verbe ou présente un défaut (règles de ƒ Fonctions). | Functions whose name does not start with a verb or shows a defect (ƒ Functions rules). |
+
+## js/81-scripts-console.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 40 | (brouillon) | (draft) |
+| 41 | Exemples | Examples |
+| 42 | Scripts du projet | Project scripts |
+| 61 | Le script en cours n'est pas enregistré. Le remplacer ? | The current script is not saved. Replace it? |
+| 71 | ✔ Script enregistré dans le projet (💾 page HTML). | ✔ Script saved in the project (💾 HTML page). |
+| 74 | Nom du script (enregistré dans le dossier « | Script name (saved in the “…” folder): |
+| 74 | Nom du script : | Script name: |
+| 74 | Script | Script … |
+| 77 | ✔ Script enregistré dans le projet (💾 page HTML). | ✔ Script saved in the project (💾 HTML page). |
+| 85 | Supprimer le script « | Remove the script “…” from the project? |
+| 85 | » du projet ? | Remove the script “…” from the project? |
+| 91 | Le script en cours n'est pas enregistré. Le remplacer ? | The current script is not saved. Replace it? |
+| 103 | Le script en cours n'est pas enregistré. Le remplacer ? | The current script is not saved. Replace it? |
+| 109 | script(s) importé(s) dans le projet. | ✔ … script(s) imported into the project. |
+| 149 | Écriture refusée dans le dossier « | Writing refused in the “…” folder. |
+| 150 | Le fichier « | The file “…” already exists in the folder. Replace it? |
+| 150 | » existe déjà dans le dossier. Le remplacer ? | The file “…” already exists in the folder. Replace it? |
+| 154 | ✔ Script enregistré dans le dossier « | ✔ Script saved in the “…” folder: … |
+| 162 | Dossier de scripts partagé : « | Shared script folder: “…” (… scripts). Click to choose another one. |
+| 162 | scripts). Cliquer pour en choisir un autre. | Shared script folder: “…” (… scripts). Click to choose another one. |
+| 163 | Rouvrir le dossier de scripts « | Reopen the “…” script folder (the browser asks for permission) |
+| 163 | » (le navigateur demande l'autorisation) | Reopen the “…” script folder (the browser asks for permission) |
+| 163 | Ouvrir un dossier de scripts partagé (à côté du modèle, sur un partage réseau…) | Open a shared script folder (next to the model, on a network share…) |
+| 171 | ✔ Dossier de scripts : « | ✔ Script folder: “…”, … script(s). |
+| 171 | script(s). | ✔ Script folder: “…”, … script(s). |
+| 189 | Ouvrez d'abord un modèle. | Open a model first. |
+| 216 | Avancement : | Progress: … / … |
+| 217 | … sortie tronquée après | … output truncated after … messages. |
+| 217 | messages. | … output truncated after … messages. |
+| 230 | ligne(s) | … row(s) |
+| 231 | ⬇ CSV | (inchangé, hors _L) |
+| 231 | Télécharger le tableau complet en CSV | Download the full table as CSV |
+| 233 | ligne(s) de plus (voir le CSV) | … and … more row(s) (see the CSV) |
+| 245 | (annulé) | (cancelled) |
+| 250 | Annuler | Cancel |
+| 251 | Oui | Yes |
+| 251 | Non | No |
+| 253 | Filtrer… | Filter… |
+| 255 | Annuler | Cancel |
+| 256 | Choisir un fichier… | Choose a file… |
+| 256 | Annuler | Cancel |
+| 256 | Le script demande un fichier. | The script asks for a file. |
+| 261 | (aucun) | (none) |
+| 263 | Oui | Yes |
+| 263 | Non | No |
+| 271 | Le script attend une réponse… | The script is waiting for an answer… |
+| 286 | Terminé en | Done in … ms |
+| 286 | Script terminé, sans sortie (utilisez out.print). | Script finished without output (use out.print). |
+| 287 | (ligne | (line …) |
+| 288 | Erreur | Error |
+| 290 | Aller à la ligne | Go to the line |
+| 312 | const CAP_LANG= | (inchangé, hors _L) |
+| 312 | )().servir(async function ( | (inchangé, hors _L) |
+| 319 | Ouvrez d'abord un modèle. | Open a model first. |
+| 326 | Préparation… | Preparing… |
+| 329 | Exécution… | Running… |
+| 333 | Exécution dans la page, sans isolement : ce navigateur refuse le worker des scripts. | Running in the page, without isolation: this browser refuses the script worker. |
+| 342 | Exécution… | Running… |
+| 343 | Analyse | Analysis …… |
+| 344 | Exécution… | Running… |
+| 348 | Erreur du worker des scripts. | Script worker error. |
+| 352 | Arrêté par l'utilisateur. | Stopped by the user. |
+
+## js/82-scripts-analyses.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 99 | (erreur de calcul) | (computation error) |
+| 102 | Vue de contrôles inconnue : | Unknown checks view: … (…) |
+| 144 | Analyse inconnue : | Unknown analysis: … (…) |
+| 146 | Analyse | Analysis …: … |
+
+## Textes sans traduction anglaise (13)
 
 - `js/14-profil-controles.js:65` — Profil de contrôles : vue
 - `js/33-qualite-noms.js:43` — contrôle
@@ -6762,3 +6988,4 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 - `js/69-sante-modele.js:30` — Santé : vue
 - `js/69-sante-modele.js:39` — Santé : indicateur
 - `js/72-bibliotheques.js:90` — Bibliothèque
+- `js/79-scripts-metamodele.js:7` — org.polarsys.capella.core.data.la

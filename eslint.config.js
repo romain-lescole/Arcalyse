@@ -25,7 +25,7 @@ fs.readdirSync(JS_DIR).filter(f => f.endsWith('.js')).forEach(f => {
 // Globales du navigateur et des bibliothèques embarquées
 const BROWSER = ['window', 'document', 'navigator', 'console', 'setTimeout', 'clearTimeout', 'setInterval', 'clearInterval', 'requestAnimationFrame',
   'cancelAnimationFrame', 'requestIdleCallback', 'DOMParser', 'XMLSerializer', 'Blob', 'File', 'FileReader', 'URL', 'URLSearchParams', 'TextEncoder',
-  'TextDecoder', 'Image', 'Node', 'Element', 'HTMLElement', 'SVGElement', 'Event', 'CustomEvent', 'MouseEvent', 'KeyboardEvent', 'MutationObserver',
+  'TextDecoder', 'Image', 'Node', 'indexedDB', 'Worker', 'self', 'Element', 'HTMLElement', 'SVGElement', 'Event', 'CustomEvent', 'MouseEvent', 'KeyboardEvent', 'MutationObserver',
   'ResizeObserver', 'IntersectionObserver', 'getComputedStyle', 'performance', 'crypto', 'ClipboardItem', 'location', 'history', 'alert', 'confirm',
   'prompt', 'DecompressionStream', 'CompressionStream', 'Response', 'Request', 'AbortController', 'structuredClone', 'queueMicrotask', 'self', 'name',
   'atob', 'btoa', 'XMLDocument', 'Document', 'DocumentFragment', 'Range', 'Selection', 'NodeFilter', 'HTMLInputElement', 'FontFace', 'open', 'close',

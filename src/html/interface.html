@@ -36,6 +36,8 @@
       <div class="ctx-i" id="b-load">📂 Charger un fichier</div>
     </div>
   </div>
+  <!-- 📜 Scripts : console de scripts (tiroir en bas des vues, 81-scripts-console.js) -->
+  <div class="tbtn" id="b-scripts" title="Scripts : parcourir et analyser le modèle avec l'API, comme les macros de Catia Magic (Alt+4)" style="display:none">📜<span class="tb-lbl"> Scripts</span></div>
   <!-- 💬 Revue : commentaires de revue (panneau à droite, 55-revue.js) -->
   <div class="tbtn" id="b-review" title="Revue : commentaires sur le modèle et les diagrammes, vérification après mise à jour, rapport">💬<span class="tb-lbl"> Revue</span><span id="b-review-badge" class="cw-badge" style="display:none"></span></div>
   <!-- 🎨 Thème ▾ : liste des thèmes + personnalisation (le sélecteur caché reste la référence du thème choisi) -->
@@ -446,6 +448,33 @@
       <div style="font-size:32px;margin-bottom:12px;">🔷</div>
       <div>Aucun élément ne correspond.</div>
     </div>
+    <!-- 📜 Console de scripts (tiroir en bas des vues : 81-scripts-console.js) -->
+    <section id="cap-scripts" role="region" aria-label="Scripts" style="display:none">
+      <div class="scr-poignee" title="Glisser pour redimensionner"></div>
+      <div class="scr-barre">
+        <strong>📜 Scripts</strong>
+        <select id="scr-liste" title="Bibliothèque de scripts : exemples, scripts du projet, dossier partagé"></select>
+        <button class="cap-lf-btn" id="scr-nouveau" title="Nouveau script">＋</button>
+        <button class="cap-lf-btn" id="scr-enregistrer" title="Enregistrer dans la bibliothèque du projet (gardée dans la 💾 page HTML)">💾</button>
+        <button class="cap-lf-btn" id="scr-supprimer" title="Supprimer de la bibliothèque">🗑</button>
+        <button class="cap-lf-btn" id="scr-importer" title="Importer des fichiers .js dans la bibliothèque">📂</button>
+        <button class="cap-lf-btn" id="scr-exporter" title="Exporter le script affiché en fichier .js">⬇</button>
+        <button class="cap-lf-btn" id="scr-dossier" style="display:none">📁</button>
+        <span class="tsep"></span>
+        <button class="cap-lf-btn scr-principal" id="scr-executer" title="Exécuter sur le modèle affiché (Ctrl+Entrée)">▶ Exécuter</button>
+        <button class="cap-lf-btn" id="scr-arreter" title="Arrêter le script" disabled>■ Arrêter</button>
+        <button class="cap-lf-btn" id="scr-effacer" title="Effacer la sortie">⌫</button>
+        <span id="scr-etat" class="ana-dim"></span>
+        <span style="flex:1"></span>
+        <span class="ana-dim scr-aide" title="Référence de l'API : docs/api/arcalyse.d.ts (aide ❓ › Scripts). Le script ne peut que lire et analyser le modèle ; il tourne isolé de la page et du réseau.">API : model, metamodel, analysis, out, ui — lecture et analyse seulement</span>
+        <button class="cap-lf-btn" id="scr-fermer" title="Fermer (Alt+4)">✕</button>
+      </div>
+      <div class="scr-corps">
+        <textarea id="scr-code" spellcheck="false" autocomplete="off" wrap="off" aria-label="Code du script"></textarea>
+        <div id="scr-sortie" aria-live="polite"></div>
+      </div>
+      <input type="file" id="scr-fichier" accept=".js,.txt" multiple hidden>
+    </section>
   </div>
 
   <!-- Detail panel — inline right column, shown on element click -->

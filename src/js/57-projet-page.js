@@ -15,7 +15,7 @@ const _capProjetPage = { nom: '' };
 /** Plus ancienne version d'Arcalyse dont les pages enregistrées sont reprises sans réserve. */
 const CAP_PROJET_VERSION_MIN = '2.1';
 /** Blocs JSON d'une page enregistrée repris à l'ouverture d'un projet de travail. */
-const CAP_PROJET_BLOCS = ['cap-review', 'cap-home', 'cap-dashboards', 'cap-toolbar', 'cap-ui-views', 'cap-theme-custom', 'cap-name-rules', 'cap-checks'];
+const CAP_PROJET_BLOCS = ['cap-review', 'cap-home', 'cap-dashboards', 'cap-toolbar', 'cap-ui-views', 'cap-theme-custom', 'cap-name-rules', 'cap-checks', 'cap-scripts-data'];
 
 /**
  * 📄 Ouvrir un projet de travail : choix de la page HTML (sélecteur à accès direct quand le navigateur le permet,
@@ -113,6 +113,8 @@ function capProjetParties(info) {
   if (dash) P.push({ k: 'dash', l: _L('📐 Tableaux de bord'), d: n((dash.list || []).length, _L('page(s)')) });
   const ui = capProjetBloc(info, 'cap-ui-views');
   if (ui && (ui.table || ui.csv || ui.rm || ui.tv)) P.push({ k: 'vues', l: _L('▤ Tableau, 🗺 vues de la Relation Map, ⬇ exports CSV'), d: _L('onglets, colonnes, filtres, vues enregistrées') });
+  const scr = capProjetBloc(info, 'cap-scripts-data');
+  if (scr && Array.isArray(scr.bib) && scr.bib.length) P.push({ k: 'scripts', l: _L('📜 Scripts'), d: n(scr.bib.length, _L('script(s)')) });
   if (info.blocs['cap-toolbar']) P.push({ k: 'toolbar', l: _L('☰ Barre des vues et ⚙ préférences'), d: _L('affichage des menus, vues épinglées, enregistrement automatique') });
   if ((ui && ui.theme) || info.blocs['cap-theme-custom']) P.push({ k: 'theme', l: _L('🎨 Thème'), d: _L('thème choisi et thème personnalisé') });
   if (info.blocs['cap-name-rules']) P.push({ k: 'names', l: _L('🔤 Règles de nommage'), d: _L('verbes acceptés, mots refusés') });
@@ -177,6 +179,7 @@ function capProjetPageAppliquer(info, keys, nom, handle) {
   if (keys.has('theme')) essai('theme', () => { const c = capProjetBloc(info, 'cap-theme-custom'); capCfgSet('theme', Object.assign({ current: ui.theme || '' }, c ? { custom: c } : {})); });
   if (keys.has('names')) essai('names', () => capCfgSet('names', capProjetBloc(info, 'cap-name-rules')));
   if (keys.has('checks')) essai('checks', () => capCfgSet('checks', capProjetBloc(info, 'cap-checks')));
+  if (keys.has('scripts')) essai('scripts', () => capScrSetData(capProjetBloc(info, 'cap-scripts-data')));
   if (keys.has('revue')) essai('revue', () => { _capRev = capRevNorm(capProjetBloc(info, 'cap-review')); _capRev.comments.forEach(c => _capRevUnsaved.add(c.id)); capRevSave(); });
   if (keys.has('accueil')) essai('accueil', () => capHomeSetData(capProjetBloc(info, 'cap-home')));
   if (!info.xml) { capShowWelcome(!capLoaded); if (typeof capWatchFlash === 'function') capWatchFlash(_L('✔ Travail et réglages de la page repris')); return; }

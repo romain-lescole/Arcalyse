@@ -328,6 +328,7 @@ function capWatchOpenCompare(what){
 function capWatchUpdateUi(){
   const b=document.getElementById('b-cap-watch'); if(!b) return;
   b.style.display=capLoaded?'':'none';
+  const bs=document.getElementById('b-scripts'); if(bs) bs.style.display=capLoaded?'':'none';   // 📜 Scripts (81) : avec un modèle chargé
   const badge=document.getElementById('b-cap-watch-badge');
   const p=_capWatch.pending, st=_capWatch.state;
   if(badge){

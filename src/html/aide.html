@@ -21,6 +21,7 @@
       <button class="htab" data-ht="itf">🔌 Interfaces & ports</button>
       <button class="htab" data-ht="ana">ƒ Fonctions · 🔬 Analyses</button>
       <button class="htab" data-ht="review">💬 Revue</button>
+      <button class="htab" data-ht="scripts">📜 Scripts</button>
       <button class="htab" data-ht="usecase">🧪 Cas d'usage</button>
     </div>
     <!-- Content -->
@@ -488,6 +489,19 @@
       </div>
 
       <!-- ── ACCUEIL ── -->
+      <div id="ht-scripts" class="ht-panel" style="display:none">
+        <h2>📜 Scripts — macros de lecture et d'analyse</h2>
+        <p class="hp-lead">Le bouton <b>📜 Scripts</b> de la barre (ou <b>Alt+4</b>, ou ☰ / Ctrl+K « Scripts ») ouvre une console en bas des vues : des scripts <b>JavaScript</b> parcourent et analysent le modèle affiché par une <b>API</b>, comme les macros de Catia Magic ou Python4Capella. L'API est celle d'<b>Arcature</b> (mêmes noms), limitée à la <b>lecture</b> : Arcalyse ne modifie jamais le modèle ; elle y ajoute <code>analysis</code>, les résultats de toutes les analyses d'Arcalyse.</p>
+        <table class="hp-t">
+          <tr><td>Lancer</td><td>Choisir un <b>exemple</b> dans la liste ou écrire un script, puis <b>Ctrl+Entrée</b> (▶ Exécuter). <b>■ Arrêter</b> interrompt une boucle sans fin. Les éléments affichés dans la sortie sont des <b>liens</b> (clic : panneau de détail) ; les tableaux s'exportent en <b>⬇ CSV</b> ; les fichiers produits par <code>out.file</code> sont proposés au téléchargement. <code>model.selection</code> contient l'élément ouvert dans le panneau de détail.</td></tr>
+          <tr><td>API</td><td><code>model</code> (<code>elements(filtre)</code>, <code>find</code>, <code>count</code>, <code>findByPath</code>, <code>layer('LA')</code>, <code>root</code>, <code>selection</code>, <code>diagrams</code>), <b>élément</b> (<code>name</code>, <code>type</code>, <code>layer</code>, <code>description</code>, <code>owner</code>, <code>children()</code>, <code>descendants()</code>, <code>attributes()</code>, <code>isA()</code>, <code>references()</code>, <code>referencedBy()</code>, <code>links('allocation', 'in')</code>, <code>diagrams</code>), <code>metamodel</code> (types de Capella et héritage), <code>out</code> (<code>print</code>, <code>table</code>, <code>csv</code>, <code>file</code>, <code>progress</code>), <code>ui</code> (<code>await ui.ask</code>, <code>confirm</code>, <code>choose</code>, <code>readCsv</code>). Filtre : nom de type (sous-types compris), fonction, ou <code>{ type, exactType, layer, name, technical, where }</code>. Référence complète : <code>docs/api/arcalyse.d.ts</code> et <code>docs/api/LISEZMOI.md</code>.</td></tr>
+          <tr><td><code>analysis</code></td><td>Avec <code>await</code> : <code>functions()</code>, <code>chains()</code>, <code>traceability()</code>, <code>capabilities()</code>, <code>states()</code>, <code>health()</code> (💚 score), <code>requirements()</code>, <code>properties()</code>, <code>data()</code>, <code>constraints()</code>, <code>status()</code>, <code>categories()</code>, <code>rec()</code>, <code>libraries()</code>, <code>scenarios()</code>, <code>ports()</code>, <code>functionalExchanges()</code>, <code>componentExchanges()</code>, <code>physicalLinks()</code>, <code>deployment()</code>, <code>checks(vue)</code> (🩺 contrôles, profil appliqué), <code>nameQuality(nom)</code>. Les résultats sont ceux des vues ; tout objet qui désigne un élément porte <code>element</code>.</td></tr>
+          <tr><td>Bibliothèque</td><td><b>💾</b> enregistre le script dans le <b>projet</b> (gardé dans la 💾 page HTML, repris par 📄 Ouvrir un projet), <b>📂</b> importe des fichiers .js, <b>⬇</b> exporte le script affiché, <b>🗑</b> supprime. <b>📁 Dossier partagé</b> (Chrome / Edge) : un dossier de scripts (à côté du modèle, sur un partage réseau) dont les .js apparaissent dans la liste ; 💾 y réécrit le fichier ; le dossier est retrouvé à la prochaine ouverture.</td></tr>
+          <tr><td>Isolement</td><td>Le script tourne dans un <b>worker</b> isolé, sur un instantané du modèle : ni page, ni fichier, ni réseau (<code>fetch</code> retiré). Un script reçu d'un collègue ne peut donc ni envoyer le modèle ailleurs ni toucher à la page. Une erreur indique la <b>ligne</b> du script (clic : l'éditeur s'y place).</td></tr>
+          <tr><td>Arcature</td><td>Un script qui n'utilise que <code>model</code>, <code>metamodel</code>, <code>out</code> et <code>ui</code> tourne tel quel dans Arcature (qui, lui, peut aussi modifier le modèle). <code>model.tool</code> vaut <code>'Arcalyse'</code> ou <code>'Arcature'</code>.</td></tr>
+        </table>
+      </div>
+
       <div id="ht-home" class="ht-panel" style="display:none">
         <h2>🏠 Accueil du projet</h2>
         <p class="hp-lead">Vue affichée à l'ouverture d'un modèle ou d'un projet (bouton <b>🏠 Accueil</b>, tout à gauche de la barre). Tout ce qui y est saisi est enregistré <b>dans la page</b> (💾).</p>

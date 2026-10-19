@@ -136,6 +136,7 @@ Choose among dozens of indicators (number of elements, function allocation, desc
 - ◀ ▶ **History** (Alt+← / Alt+→) over views, elements and diagrams, and a **Ctrl+K** palette to jump to any view, element or diagram by name.
 - ⬇ **Excel**: every table exports as CSV or `.xlsx`, and one workbook gathers all the analyses. Long tables and lists come by pages of 200 rows.
 - ♿ **Accessibility**: keyboard navigation, named controls, visible focus, system colour scheme.
+- 📜 **Scripts (macros)**: JavaScript scripts browse and analyse the model through the same read-only API as Arcature (`model`, `metamodel`, `out`, `ui`), plus `analysis` for every Arcalyse analysis; examples, project library, shared folder, isolated worker. Reference: [`docs/api/arcalyse.d.ts`](docs/api/arcalyse.d.ts).
 - 🔗 **Links**: all the model relations, filterable and exportable.
 - ▤ **Table**: all elements in a table, with view tabs, relation columns and computed path columns (live preview), sort, filters and CSV export.
 - 🎨 **Themes**: Dark, Light, Office 2007, high contrast, and your own custom theme.
@@ -288,6 +289,7 @@ Choisissez parmi des dizaines d'indicateurs (nombre d'éléments, allocation des
 - ◀ ▶ **Historique** (Alt+← / Alt+→) des vues, éléments et diagrammes, et une palette **Ctrl+K** pour atteindre n'importe quelle vue, élément ou diagramme par son nom.
 - ⬇ **Excel** : chaque tableau s'exporte en CSV ou en `.xlsx`, et un classeur rassemble toutes les analyses. Les tableaux et listes longs s'affichent par pages de 200 lignes.
 - ♿ **Accessibilité** : navigation au clavier, commandes nommées, focus visible, thème selon le réglage du système.
+- 📜 **Scripts (macros)** : des scripts JavaScript parcourent et analysent le modèle par la même API de lecture qu'Arcature (`model`, `metamodel`, `out`, `ui`), complétée par `analysis` pour toutes les analyses d'Arcalyse ; exemples, bibliothèque du projet, dossier partagé, worker isolé. Référence : [`docs/api/arcalyse.d.ts`](docs/api/arcalyse.d.ts).
 - 🔗 **Liens** : toutes les relations du modèle, filtrables et exportables.
 - ▤ **Tableau** : tous les éléments en tableau, avec onglets de vues, colonnes de relations et colonnes calculées par chemin (aperçu en direct), tri, filtres et export CSV.
 - 🎨 **Thèmes** : Sombre, Clair, Office 2007, contraste élevé, et votre thème personnalisé.

@@ -533,6 +533,16 @@ PARTS.nouveautes = async () => {
   await shot('04-pagination', { sel: '#cap-view-ports .cap-pg-bar', pad: 6 });
 };
 
+/** 📜 Console de scripts : exemple « Fonctions non allouées » exécuté, sortie avec tableau. */
+PARTS.scripts = async () => {
+  await view('cards'); const id = await idOf('Manage Video and Audio Diffusion'); await p.evaluate(id => capOpenDetail(id), id);
+  await p.evaluate(() => { capScrToggle(true); document.getElementById('scr-code').value = capScrApi().exemples().find(x => x.cle === 'non-allouees').code; _capScr.choix = 'ex:non-allouees'; capScrListe(); capScrExecuter(); });
+  await p.waitForFunction(() => !_capScr.enCours, null, { timeout: 60000 }); await wait(400);
+  await p.evaluate(() => { const c = document.getElementById('scr-code'); c.scrollTop = 0; c.scrollLeft = 0; c.blur(); });
+  await shot('99-scripts', { sel: '#cap-scripts', pad: 0 });
+  await p.evaluate(() => capScrToggle(false));
+};
+
 /** 📑 Exigences et 🏷 Propriétés (PVMT) avec le modèle AIDA, qui en contient (à lancer en dernier : remplace le modèle). */
 PARTS.aida = async () => {
   const old = p; p = await old.context().newPage(); await old.close();

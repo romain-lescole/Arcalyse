@@ -21,6 +21,7 @@
       <button class="htab" data-ht="itf">🔌 Interfaces & ports</button>
       <button class="htab" data-ht="ana">ƒ Functions · 🔬 Analyses</button>
       <button class="htab" data-ht="review">💬 Review</button>
+      <button class="htab" data-ht="scripts">📜 Scripts</button>
       <button class="htab" data-ht="usecase">🧪 Use case</button>
     </div>
     <!-- Content -->
@@ -488,6 +489,19 @@
       </div>
 
       <!-- ── HOME ── -->
+      <div id="ht-scripts" class="ht-panel" style="display:none">
+        <h2>📜 Scripts — reading and analysis macros</h2>
+        <p class="hp-lead">The <b>📜 Scripts</b> button of the bar (or <b>Alt+4</b>, or ☰ / Ctrl+K “Scripts”) opens a console below the views: <b>JavaScript</b> scripts browse and analyse the displayed model through an <b>API</b>, like Catia Magic macros or Python4Capella. The API is <b>Arcature</b>'s (same names), limited to <b>reading</b>: Arcalyse never modifies the model; it adds <code>analysis</code>, the results of every Arcalyse analysis.</p>
+        <table class="hp-t">
+          <tr><td>Run</td><td>Pick an <b>example</b> in the list or write a script, then <b>Ctrl+Enter</b> (▶ Run). <b>■ Stop</b> interrupts an endless loop. Elements shown in the output are <b>links</b> (click: detail panel); tables export as <b>⬇ CSV</b>; files produced by <code>out.file</code> are offered for download. <code>model.selection</code> holds the element opened in the detail panel.</td></tr>
+          <tr><td>API</td><td><code>model</code> (<code>elements(filter)</code>, <code>find</code>, <code>count</code>, <code>findByPath</code>, <code>layer('LA')</code>, <code>root</code>, <code>selection</code>, <code>diagrams</code>), <b>element</b> (<code>name</code>, <code>type</code>, <code>layer</code>, <code>description</code>, <code>owner</code>, <code>children()</code>, <code>descendants()</code>, <code>attributes()</code>, <code>isA()</code>, <code>references()</code>, <code>referencedBy()</code>, <code>links('allocation', 'in')</code>, <code>diagrams</code>), <code>metamodel</code> (Capella types and inheritance), <code>out</code> (<code>print</code>, <code>table</code>, <code>csv</code>, <code>file</code>, <code>progress</code>), <code>ui</code> (<code>await ui.ask</code>, <code>confirm</code>, <code>choose</code>, <code>readCsv</code>). Filter: a type name (subtypes included), a function, or <code>{ type, exactType, layer, name, technical, where }</code>. Full reference: <code>docs/api/arcalyse.d.ts</code> and <code>docs/api/LISEZMOI.md</code>.</td></tr>
+          <tr><td><code>analysis</code></td><td>With <code>await</code>: <code>functions()</code>, <code>chains()</code>, <code>traceability()</code>, <code>capabilities()</code>, <code>states()</code>, <code>health()</code> (💚 score), <code>requirements()</code>, <code>properties()</code>, <code>data()</code>, <code>constraints()</code>, <code>status()</code>, <code>categories()</code>, <code>rec()</code>, <code>libraries()</code>, <code>scenarios()</code>, <code>ports()</code>, <code>functionalExchanges()</code>, <code>componentExchanges()</code>, <code>physicalLinks()</code>, <code>deployment()</code>, <code>checks(view)</code> (🩺 checks, profile applied), <code>nameQuality(name)</code>. The results are those of the views; every object that designates an element carries <code>element</code>.</td></tr>
+          <tr><td>Library</td><td><b>💾</b> saves the script in the <b>project</b> (kept in the 💾 HTML page, reloaded by 📄 Open a work project), <b>📂</b> imports .js files, <b>⬇</b> exports the displayed script, <b>🗑</b> removes it. <b>📁 Shared folder</b> (Chrome / Edge): a folder of scripts (next to the model, on a network share) whose .js files appear in the list; 💾 rewrites the file; the folder is found again at the next opening.</td></tr>
+          <tr><td>Isolation</td><td>The script runs in an isolated <b>worker</b>, on a snapshot of the model: no page, no file, no network (<code>fetch</code> removed). A script received from a colleague can neither send the model elsewhere nor touch the page. An error gives the <b>line</b> of the script (click: the editor goes there).</td></tr>
+          <tr><td>Arcature</td><td>A script that only uses <code>model</code>, <code>metamodel</code>, <code>out</code> and <code>ui</code> runs as is in Arcature (which can also modify the model). <code>model.tool</code> is <code>'Arcalyse'</code> or <code>'Arcature'</code>.</td></tr>
+        </table>
+      </div>
+
       <div id="ht-home" class="ht-panel" style="display:none">
         <h2>🏠 Project home</h2>
         <p class="hp-lead">View shown when a model or a project is opened (<b>🏠 Home</b> button, at the far left of the bar). Everything entered there is saved <b>in the page</b> (💾).</p>

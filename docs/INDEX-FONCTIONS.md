@@ -547,7 +547,7 @@
 - `capXtDetail` (l. 585) — Sections supplémentaires du panneau de détail : exigences liées, propriétés, contraintes.
 - `capXtDashCatalog` (l. 614) — Ajoute au catalogue du tableau de bord les indicateurs Exigences, Propriétés, Données & interfaces, Contraintes.
 
-## 40-suivi-fichier.js — 549 lignes
+## 40-suivi-fichier.js — 550 lignes
 
 - `capWatchHash` (l. 30) — Empreinte rapide d'un texte (FNV-1a 32 bits + longueur), pour reconnaître une version déjà vue.
 - `capWatchTime` (l. 37) — Heure lisible (hh:mm:ss) d'un horodatage. @param {number} t - Millisecondes
@@ -571,16 +571,16 @@
 - `capWatchApply` (l. 284) — Applique la version en attente : recharge le modèle (vue courante conservée), archive le delta dans l'historique
 - `capWatchOpenCompare` (l. 311) — Ouvre ⚖ Comparaison de versions (🔬 Analyses) sur deux versions connues du suivi.
 - `capWatchUpdateUi` (l. 328) — Met à jour le bouton 🔄 Suivi (visibilité, badge, info-bulle).
-- `capWatchFlash` (l. 345) — Affiche brièvement un message dans la notification (sans action). @param {string} msg - Message
-- `capWatchNote` (l. 350) — Affiche ou masque la notification de mise à jour (coin inférieur droit).
-- `capWatchMenu` (l. 380) — Ouvre ou ferme le menu du bouton 🔄 Suivi. @param {boolean} [show] - Forcer l'état (sinon bascule)
-- `capWatchMenuRender` (l. 388) — Construit le contenu du menu 🔄 Suivi (état de la source, réglages, historique).
-- `capWatchModalClose` (l. 424) — Ferme la fenêtre du delta.
-- `capWatchModalRefresh` (l. 428) — Réaffiche la fenêtre du delta si elle montre la version en attente (nouvel enregistrement détecté entre-temps).
-- `capWatchShowDelta` (l. 436) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
-- `capWatchShowHistory` (l. 516) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
+- `capWatchFlash` (l. 346) — Affiche brièvement un message dans la notification (sans action). @param {string} msg - Message
+- `capWatchNote` (l. 351) — Affiche ou masque la notification de mise à jour (coin inférieur droit).
+- `capWatchMenu` (l. 381) — Ouvre ou ferme le menu du bouton 🔄 Suivi. @param {boolean} [show] - Forcer l'état (sinon bascule)
+- `capWatchMenuRender` (l. 389) — Construit le contenu du menu 🔄 Suivi (état de la source, réglages, historique).
+- `capWatchModalClose` (l. 425) — Ferme la fenêtre du delta.
+- `capWatchModalRefresh` (l. 429) — Réaffiche la fenêtre du delta si elle montre la version en attente (nouvel enregistrement détecté entre-temps).
+- `capWatchShowDelta` (l. 437) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
+- `capWatchShowHistory` (l. 517) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 416 lignes
+## 41-barre-vues.js — 417 lignes
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
 - `CAP_NAV_GROUPS` (l. 46) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
@@ -596,14 +596,14 @@
 - `capNavSave` (l. 138) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
 - `capNavCurKey` (l. 148) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
 - `capNavOpen` (l. 157) — Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
-- `capNavGroupOpen` (l. 168) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
-- `capNavFluxTabs` (l. 178) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
-- `capNavRender` (l. 188) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
-- `capNavSync` (l. 227) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
-- `capNavClose` (l. 246) — Ferme le menu déroulant de la barre des vues.
-- `capNavRow` (l. 256) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
-- `capNavMenu` (l. 266) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
-- `capNavMenuFill` (l. 319) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+- `capNavGroupOpen` (l. 169) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
+- `capNavFluxTabs` (l. 179) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
+- `capNavRender` (l. 189) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
+- `capNavSync` (l. 228) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
+- `capNavClose` (l. 247) — Ferme le menu déroulant de la barre des vues.
+- `capNavRow` (l. 257) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
+- `capNavMenu` (l. 267) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
+- `capNavMenuFill` (l. 320) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
 
 ## 42-tableaux-analyses.js — 157 lignes
 
@@ -1041,7 +1041,7 @@
 - `capHomeInput` (l. 688) — Saisie : fiche projet, titres, champs du plan, points, notes du tableau blanc, recherche de la palette. @param {Event} e
 - `capHomeChange` (l. 703) — Listes et cases : création d'une check-list ou d'un plan, champs du plan, case d'un point. @param {Event} e
 
-## 57-projet-page.js — 207 lignes
+## 57-projet-page.js — 210 lignes
 
 - `CAP_PROJET_VERSION_MIN` (l. 16) — Plus ancienne version d'Arcalyse dont les pages enregistrées sont reprises sans réserve.
 - `CAP_PROJET_BLOCS` (l. 18) — Blocs JSON d'une page enregistrée repris à l'ouverture d'un projet de travail.
@@ -1051,8 +1051,8 @@
 - `capProjetVersionCmp` (l. 82) — Compare deux numéros de version (« 2.1 », « 2.10.1 »).
 - `capProjetBloc` (l. 94) — Relit un bloc JSON d'une page enregistrée (ensembles « __set » reconstitués, comme les fichiers ⚙ d'interface).
 - `capProjetParties` (l. 104) — Parties d'une page de projet, avec ce qu'elles contiennent (pour la fenêtre de choix).
-- `capProjetPageDialogue` (l. 130) — Fenêtre « Ouvrir un projet de travail » : version de la page, compatibilité, parties à reprendre (cochées),
-- `capProjetPageAppliquer` (l. 171) — Applique une page de projet : travail et réglages cochés, puis modèle et diagrammes ; ouvre 🏠 Accueil.
+- `capProjetPageDialogue` (l. 132) — Fenêtre « Ouvrir un projet de travail » : version de la page, compatibilité, parties à reprendre (cochées),
+- `capProjetPageAppliquer` (l. 173) — Applique une page de projet : travail et réglages cochés, puis modèle et diagrammes ; ouvre 🏠 Accueil.
 
 ## 58-revue-ciblee.js — 291 lignes
 
@@ -1449,3 +1449,69 @@
 - `capPgBar` (l. 38) — Barre de pagination d'un bloc. @param {Object} st - État du bloc @returns {string} HTML
 - `capPgShow` (l. 51) — Affiche une page d'un bloc (ou toutes les lignes) et met la barre à jour ; un filtre par colonne (42) actif est réappliqué.
 - `capPgPrune` (l. 63) — Oublie les blocs qui ne sont plus affichés (mémoire).
+
+## 79-scripts-metamodele.js — 8 lignes
+
+- `CAP_MM` (l. 7) — Référentiel réduit du métamodèle Capella (version, préfixes, types, héritage).
+
+## 80-scripts-api.js — 632 lignes
+
+- `capScrNoyau` (l. 20) — Construit le noyau de l'API de scripts : objets publics et exécution. Autonome (aucune autre fonction d'Arcalyse),
+
+## 81-scripts-console.js — 408 lignes
+
+- `CAP_SCR_MAX_SORTIES` (l. 14) — Nombre maximal de sorties affichées (au-delà : sortie tronquée).
+- `CAP_SCR_MAX_LIGNES` (l. 16) — Nombre maximal de lignes affichées par tableau (le CSV les contient toutes).
+- `CAP_SCR_BASE` (l. 18) — Base du navigateur où la poignée du dossier de scripts partagé est mémorisée (seule donnée hors de la page : une poignée ne se sérialise pas
+- `capScrApi` (l. 21) — Noyau de l'API (construit une fois dans la page : exemples, CSV, exécution sans worker). @returns {object}
+- `capScrData` (l. 24) — Bloc JSON `cap-scripts-data` de la page : bibliothèque et brouillon. @returns {{bib:object[], brouillon:object|null, hauteur:string}}
+- `capScrSave` (l. 29) — Enregistre la bibliothèque et le brouillon dans la page (repris par la 💾 page HTML et 📄 Ouvrir un projet).
+- `capScrListe` (l. 37) — Remplit la liste de la bibliothèque.
+- `capScrScript` (l. 48) — Script désigné par un choix de la liste. @param {string} choix - 'ex:clé', 'bib:indice' ou 'dos:indice' @returns {{nom:string, code:string}|
+- `capScrModifie` (l. 55) — Vrai si le texte de l'éditeur a changé depuis son chargement ou son enregistrement. @returns {boolean}
+- `capScrOuvrir` (l. 58) — Affiche un script de la liste dans l'éditeur (après confirmation si le texte en cours a changé). @param {string} choix
+- `capScrEnregistrer` (l. 67) — Enregistre le script affiché : dans son fichier (dossier partagé), à sa place (projet), sinon comme nouveau script.
+- `capScrSupprimer` (l. 83) — Supprime le script affiché de la bibliothèque du projet.
+- `capScrNouveau` (l. 90) — Nouveau script vide.
+- `capScrDecoder` (l. 96) — Décode un fichier texte : UTF-8, sinon Windows-1252 (CSV d'Excel). @param {ArrayBuffer} buf @returns {string}
+- `capScrImporter` (l. 101) — Importe des fichiers .js dans la bibliothèque du projet ; le premier est affiché. @param {File[]} fichiers
+- `capScrTelecharger` (l. 112) — Propose un texte en téléchargement. @param {string} contenu @param {string} nom @param {string} type
+- `capScrExporter` (l. 117) — Exporte le script affiché en fichier .js.
+- `capScrBase` (l. 121) — Ouvre la base du navigateur (null si indisponible). @returns {Promise<IDBDatabase|null>}
+- `capScrDosMemoire` (l. 125) — Lit ou mémorise la poignée du dossier. @param {FileSystemDirectoryHandle} [poignee] @returns {Promise<FileSystemDirectoryHandle|null>}
+- `capScrDosAutorise` (l. 131) — Vérifie, et demande si besoin, l'autorisation d'accès au dossier. @param {FileSystemDirectoryHandle} h @param {boolean} ecrire @param {boole
+- `capScrDosCharger` (l. 137) — Lit les scripts (.js) du dossier et les place dans la bibliothèque. @param {FileSystemDirectoryHandle} h
+- `capScrDosEcrire` (l. 147) — Écrit un script dans le dossier, puis relit le dossier et affiche ce script. @param {string} fichier @param {string} code @param {boolean} n
+- `capScrDosBouton` (l. 158) — Bouton 📁 : visible si le navigateur sait ouvrir un dossier ; infobulle selon l'état.
+- `capScrDosChoisir` (l. 166) — Bouton 📁 : rouvre le dossier mémorisé, ou en fait choisir un.
+- `capScrDosInit` (l. 175) — Retrouve le dossier mémorisé : relu tout de suite si l'autorisation est encore valable.
+- `capScrToggle` (l. 186) — Ouvre ou ferme le tiroir des scripts (bascule en mode Capella si besoin). @param {boolean} [ouvrir]
+- `capScrEffacer` (l. 196) — Vide la sortie (et libère les fichiers proposés).
+- `capScrMorceau` (l. 201) — HTML d'un morceau de sortie : texte, ou lien vers un élément. @param {string|object} m @returns {string}
+- `capScrAjouter` (l. 208) — Ajoute un nœud à la sortie (fin gardée visible si l'utilisateur y était). @param {HTMLElement} n
+- `capScrLigne` (l. 210) — Affiche une ligne (état, erreur…). @param {string} html @param {string} [classe] @returns {HTMLElement}
+- `capScrAfficher` (l. 212) — Affiche un lot de sorties du script. @param {object[]} lot - Messages { k, … }
+- `capScrTableau` (l. 226) — Affiche un tableau de sortie (lignes bornées) avec son export CSV. @param {{titre:string, colonnes:string[], cellules:Array}} m
+- `capScrDemander` (l. 237) — Pose dans la sortie une question du script et attend la réponse. @param {object} d - Demande { k, question, defaut, items, multiple, accept 
+- `capScrAbandonner` (l. 276) — Abandonne les questions encore ouvertes (fin ou arrêt du script).
+- `capScrFin` (l. 280) — Fin d'exécution : bilan dans la console. @param {{ok:boolean, erreur?:string, ligne?:number|null, duree:number, sorties:number}} r
+- `capScrAllerLigne` (l. 293) — Sélectionne une ligne de l'éditeur. @param {number} n
+- `capScrSelection` (l. 300) — Élément « sélectionné » pour le script : celui du panneau de détail affiché. @returns {string[]}
+- `capScrUrlWorker` (l. 310) — Code du worker d'un script : prélude (langue, _L, métamodèle), noyau recopié (capScrNoyau), puis le script enveloppé
+- `capScrExecuter` (l. 318) — Exécute le script de l'éditeur sur un instantané du modèle affiché.
+- `capScrArreter` (l. 352) — Arrête le script en cours.
+- `capScrClavier` (l. 354) — Raccourcis de l'éditeur : Tab (indentation), Ctrl+Entrée (exécuter). @param {KeyboardEvent} e
+- `capScrGlisser` (l. 359) — Redimensionne le tiroir en glissant sa poignée. @param {PointerEvent} e
+- `capScrSetData` (l. 367) — Remplace le bloc `cap-scripts-data` (📄 Ouvrir un projet de travail, 57) et recharge la console. @param {object} d - Bloc { bib, brouillon, 
+- `capScrRecharger` (l. 375) — Recharge la bibliothèque et le brouillon depuis la page (ouverture d'un projet).
+
+## 82-scripts-analyses.js — 148 lignes
+
+- `CAP_SCR_RELATIONS` (l. 9) — Relations de 🔗 Liens (CAP_LINK_SECTIONS) → relations publiques de l'API (noms d'Arcature) ; les décompositions ne sont pas reprises (childr
+- `capScrSnapshot` (l. 20) — Instantané du modèle affiché pour un script : éléments (attributs compris), relations, diagrammes et leurs éléments.
+- `capScrDiagrammes` (l. 35) — Diagrammes du .aird chargé (visionneuse d'Arcature) et, pour chaque élément, les diagrammes qui le montrent ou le ciblent.
+- `capScrNettoyer` (l. 61) — Rend un résultat d'analyse transportable et exploitable par un script : copie profonde sans fonctions ni clés privées
+- `capScrCellules` (l. 83) — Cellules d'une ligne de contrôle (HTML de capDiagHtml) : texte, ou { $el, name } pour une cellule qui désigne un élément.
+- `capScrControles` (l. 95) — Contrôles 🩺 de toutes les vues (ou d'une vue), avec le profil appliqué : lignes parsées depuis le HTML des sections.
+- `CAP_SCR_ANALYSES` (l. 107) — Analyses servies aux scripts : nom public → calcul (arguments du script, { $id } pour un élément).
+- `capScrAnalyse` (l. 142) — Calcule une analyse demandée par un script (console : requête du worker, ou exécution dans la page).
