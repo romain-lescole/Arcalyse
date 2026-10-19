@@ -4350,7 +4350,12 @@
   "Composants isolés dans un chemin physique": "Isolated components in a physical path",
   "Composant impliqué qu'aucun lien physique du chemin ne relie (chemins d'au moins deux composants)": "Involved component that no physical link of the path connects (paths of at least two components)",
   "Contrôles des chaînes": "Chain checks",
-  "Implication d'échange dont la source ou la cible ne désigne aucune étape ni nœud de contrôle de la chaîne (ni des chaînes qu'elle référence)": "Exchange involvement whose source or target designates no step nor control node of the chain (nor of the chains it references)"
+  "Implication d'échange dont la source ou la cible ne désigne aucune étape ni nœud de contrôle de la chaîne (ni des chaînes qu'elle référence)": "Exchange involvement whose source or target designates no step nor control node of the chain (nor of the chains it references)",
+  "Décochée : couche exclue du score global": "Unticked: layer excluded from the overall score",
+  "Hors score global : {0} ({1} éléments)": "Outside the overall score: {0} ({1} elements)",
+  "— couches décochées :": "— unticked layers:",
+  "(leurs lignes et leurs {0} éléments ne comptent pas)": "(their rows and their {0} elements do not count)",
+  "Couches comptées dans le score global (décocher = exclure)": "Layers counted in the overall score (untick = exclude)"
  },
  "interface": {
   "🌳 Arborescence": "🌳 Tree",

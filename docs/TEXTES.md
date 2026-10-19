@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 5916 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 5924 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -6131,70 +6131,78 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 36 | cap.chk | (inchangé, hors _L) |
 | 36 | sm.chk | (inchangé, hors _L) |
 | 39 | Santé : indicateur | ❌ |
-| 95 | Chargez un modèle. | Load a model. |
-| 96 | Modèle volumineux ( | Large model (… elements): computing all the checks may take a few seconds. |
-| 96 | éléments) : le calcul de tous les contrôles peut prendre quelques secondes. | Large model (… elements): computing all the checks may take a few seconds. |
-| 96 | 💚 Calculer la santé du modèle | 💚 Compute the model health |
-| 99 | point(s) à vérifier | … point(s) to check |
-| 99 | bloquant(s) | … blocking |
-| 99 | contrôles sans anomalie | … / … checks without anomaly |
-| 100 | depuis la version précédente | since the previous version |
-| 102 | point(s) à vérifier sur | … point(s) to check out of … elements, … per-layer checks |
-| 102 | éléments, | … point(s) to check out of … elements, … per-layer checks |
-| 102 | contrôles par couche | … point(s) to check out of … elements, … per-layer checks |
-| 103 | Détail contrôle par contrôle et par couche, historique | Detail check by check and per layer, history |
-| 103 | Détail | Detail |
-| 103 | Activer ou désactiver des contrôles, gravités, seuils | Enable or disable checks, severities, thresholds |
-| 103 | Profil | Profile |
-| 113 | Score | Score {1} / 100 ({2}) = 100 × e −(Σ weight × rows ÷ {3} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {4} point(s) to check including {5} blocking; {6} for information; {7} / {8} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
-| 113 | ) = 100 × e −(Σ poids × lignes ÷ | Score {1} / 100 ({2}) = 100 × e −(Σ weight × rows ÷ {3} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {4} point(s) to check including {5} blocking; {6} for information; {7} / {8} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
-| 113 | éléments nommés) , poids ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profil) : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. | Score {1} / 100 ({2}) = 100 × e −(Σ weight × rows ÷ {3} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {4} point(s) to check including {5} blocking; {6} for information; {7} / {8} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
-| 113 | point(s) à vérifier dont | Score {1} / 100 ({2}) = 100 × e −(Σ weight × rows ÷ {3} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {4} point(s) to check including {5} blocking; {6} for information; {7} / {8} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
-| 113 | contrôles sans anomalie. Le score par couche ne compte que les contrôles calculables par couche (fonctions, échanges fonctionnels, composants, chaînes). | Score {1} / 100 ({2}) = 100 × e −(Σ weight × rows ÷ {3} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {4} point(s) to check including {5} blocking; {6} for information; {7} / {8} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
-| 116 | Vue | View |
-| 116 | Contrôle | Check |
-| 116 | Gravité | Severity |
-| 118 | Couche | Layer |
-| 118 | Score | Score |
-| 118 | Points à vérifier | Points to check |
-| 118 | Bloquants | Blocking |
-| 118 | Éléments nommés | Named elements |
-| 118 | Contrôles par couche | Per-layer checks |
-| 120 | Vue | View |
-| 120 | Contrôles | Checks |
-| 120 | Sans anomalie | Without anomaly |
-| 120 | Points à vérifier | Points to check |
-| 120 | Bloquants | Blocking |
-| 123 | Date | Date |
-| 123 | Fichier | File |
-| 123 | Éléments | Elements |
-| 123 | Score | Score |
-| 123 | Points | Items |
-| 123 | Bloquants | Blocking |
-| 125 | 📋 Contrôles × couches | 📋 Checks × layers |
-| 125 | ▦ Par vue | ▦ Per view |
-| 125 | 📈 Historique | 📈 History |
-| 125 | Vue, contrôle… | View, check… |
-| 126 | Activer ou désactiver des contrôles, gravités, seuils | Enable or disable checks, severities, thresholds |
-| 126 | Profil | Profile |
-| 127 | Vue | View |
-| 127 | Contrôle | Check |
-| 127 | Gravité | Severity |
-| 127 | Lignes | Rows |
-| 135 | Santé du modèle | Model health |
-| 136 | sante.score | (inchangé, hors _L) |
-| 136 | Santé du modèle — score | Model health — score |
-| 136 | 100 × e^(−Σ poids × lignes des contrôles ÷ éléments nommés) | 100 × e^(−Σ weight × check rows ÷ named elements) |
-| 137 | sante.pts | (inchangé, hors _L) |
-| 137 | Santé du modèle — points à vérifier | Model health — points to check |
-| 138 | sante.err | (inchangé, hors _L) |
-| 138 | Santé du modèle — points bloquants | Model health — blocking points |
-| 139 | sante.layer | (inchangé, hors _L) |
-| 139 | Santé du modèle — score par couche | Model health — score per layer |
-| 140 | sante.vue | (inchangé, hors _L) |
-| 140 | Santé du modèle — points à vérifier par vue | Model health — points to check per view |
-| 141 | sante.hist | (inchangé, hors _L) |
-| 141 | Santé du modèle — historique des scores | Model health — score history |
+| 115 | Chargez un modèle. | Load a model. |
+| 116 | Modèle volumineux ( | Large model (… elements): computing all the checks may take a few seconds. |
+| 116 | éléments) : le calcul de tous les contrôles peut prendre quelques secondes. | Large model (… elements): computing all the checks may take a few seconds. |
+| 116 | 💚 Calculer la santé du modèle | 💚 Compute the model health |
+| 119 | point(s) à vérifier | … point(s) to check |
+| 119 | bloquant(s) | … blocking |
+| 119 | contrôles sans anomalie | … / … checks without anomaly |
+| 120 | depuis la version précédente | since the previous version |
+| 122 | point(s) à vérifier sur | … point(s) to check out of … elements, … per-layer checks |
+| 122 | éléments, | … point(s) to check out of … elements, … per-layer checks |
+| 122 | contrôles par couche | … point(s) to check out of … elements, … per-layer checks |
+| 122 | Décochée : couche exclue du score global | Unticked: layer excluded from the overall score |
+| 123 | Hors score global : | Outside the overall score: … (… elements) |
+| 123 | éléments) | Outside the overall score: … (… elements) |
+| 124 | Détail contrôle par contrôle et par couche, historique | Detail check by check and per layer, history |
+| 124 | Détail | Detail |
+| 124 | Activer ou désactiver des contrôles, gravités, seuils | Enable or disable checks, severities, thresholds |
+| 124 | Profil | Profile |
+| 134 | Score | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 134 | = 100 × e −(Σ poids × lignes ÷ | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 134 | éléments nommés) , poids ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profil) : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 134 | point(s) à vérifier dont | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 134 | contrôles sans anomalie. Le score par couche ne compte que les contrôles calculables par couche (fonctions, échanges fonctionnels, composants, chaînes). | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 134 | — couches décochées : | — unticked layers: … (their rows and their … elements do not count) |
+| 134 | (leurs lignes et leurs | — unticked layers: … (their rows and their … elements do not count) |
+| 134 | éléments ne comptent pas) | — unticked layers: … (their rows and their … elements do not count) |
+| 137 | Vue | View |
+| 137 | Contrôle | Check |
+| 137 | Gravité | Severity |
+| 139 | Couche | Layer |
+| 139 | Score | Score |
+| 139 | Points à vérifier | Points to check |
+| 139 | Bloquants | Blocking |
+| 139 | Éléments nommés | Named elements |
+| 139 | Contrôles par couche | Per-layer checks |
+| 141 | Vue | View |
+| 141 | Contrôles | Checks |
+| 141 | Sans anomalie | Without anomaly |
+| 141 | Points à vérifier | Points to check |
+| 141 | Bloquants | Blocking |
+| 144 | Date | Date |
+| 144 | Fichier | File |
+| 144 | Éléments | Elements |
+| 144 | Score | Score |
+| 144 | Points | Items |
+| 144 | Bloquants | Blocking |
+| 146 | 📋 Contrôles × couches | 📋 Checks × layers |
+| 146 | ▦ Par vue | ▦ Per view |
+| 146 | 📈 Historique | 📈 History |
+| 146 | Vue, contrôle… | View, check… |
+| 147 | Couches comptées dans le score global (décocher = exclure) | Layers counted in the overall score (untick = exclude) |
+| 147 | Couches | Layers |
+| 148 | Activer ou désactiver des contrôles, gravités, seuils | Enable or disable checks, severities, thresholds |
+| 148 | Profil | Profile |
+| 149 | Vue | View |
+| 149 | Contrôle | Check |
+| 149 | Gravité | Severity |
+| 149 | Lignes | Rows |
+| 157 | Santé du modèle | Model health |
+| 158 | sante.score | (inchangé, hors _L) |
+| 158 | Santé du modèle — score | Model health — score |
+| 158 | 100 × e^(−Σ poids × lignes des contrôles ÷ éléments nommés) | 100 × e^(−Σ weight × check rows ÷ named elements) |
+| 159 | sante.pts | (inchangé, hors _L) |
+| 159 | Santé du modèle — points à vérifier | Model health — points to check |
+| 160 | sante.err | (inchangé, hors _L) |
+| 160 | Santé du modèle — points bloquants | Model health — blocking points |
+| 161 | sante.layer | (inchangé, hors _L) |
+| 161 | Santé du modèle — score par couche | Model health — score per layer |
+| 162 | sante.vue | (inchangé, hors _L) |
+| 162 | Santé du modèle — points à vérifier par vue | Model health — points to check per view |
+| 163 | sante.hist | (inchangé, hors _L) |
+| 163 | Santé du modèle — historique des scores | Model health — score history |
 
 ## js/70-chaines-controles.js
 

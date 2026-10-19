@@ -38,7 +38,7 @@ function capHomeNorm(d){
   const c=d.cartes||{};
   return { v:1, fiche:Object.assign({objet:'', phase:'', version:'', resp:'', equipe:'', notes:''}, d.fiche||{}), docs, boards, dossiers:capDosNorm(d.dossiers),
     cartes:{ordre:Array.isArray(c.ordre)?c.ordre:[], masques:Array.isArray(c.masques)?c.masques:[], larges:c.larges&&typeof c.larges==='object'?c.larges:{}},
-    largeurs:d.largeurs&&typeof d.largeurs==='object'?d.largeurs:{}, sante:Array.isArray(d.sante)?d.sante:[] };   // sante : historique 💚 (69)
+    largeurs:d.largeurs&&typeof d.largeurs==='object'?d.largeurs:{}, sante:Array.isArray(d.sante)?d.sante:[], santeExclues:Array.isArray(d.santeExclues)?d.santeExclues:[] };   // sante : historique 💚, santeExclues : couches décochées (69)
 }
 /** Identifiant unique (point, section, document, note). @returns {string} */
 function capHomeUid(){ return 'h'+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }

@@ -1330,7 +1330,7 @@
 - `capStDetail` (l. 145) — Section « Statut de revue Capella » du panneau de détail ('' si l'élément n'en a pas).
 - `capStDashCatalog` (l. 156) — Indicateurs du tableau de bord : statut de revue Capella.
 
-## 69-sante-modele.js — 143 lignes
+## 69-sante-modele.js — 168 lignes
 
 - `CAP_SANTE_W` (l. 9)
 - `CAP_SANTE_MAX_HIST` (l. 10)
@@ -1338,13 +1338,15 @@
 - `capSanteNiveau` (l. 14) — Niveau lisible d'un score. @param {number} s - Score 0–100 @returns {{l:string, c:string, h:string}} libellé, couleur CSS, couleur fixe
 - `capSanteChecks` (l. 19) — Tous les contrôles de toutes les vues (profil appliqué), avec le nombre de lignes global et par couche quand la vue le permet.
 - `capSanteCompute` (l. 47) — Score de santé global et par couche.
-- `capSanteCle` (l. 65) — Clé de la version du modèle affichée : nom du fichier, nombre d'éléments et de relations (stable, indépendante du 🔄 suivi). @returns {strin
-- `capSanteRecord` (l. 70) — Note le score de la version affichée dans l'historique (`_capHome.sante`) : même version → entrée remplacée.
-- `capSanteSpark` (l. 83) — Petite courbe SVG de l'historique des scores. @param {object[]} H - Historique @param {number} [w=140] @param {number} [h=28] @returns {stri
-- `capSanteDate` (l. 90) — Date courte d'une entrée d'historique. @param {string} iso @returns {string}
-- `capSanteCarte` (l. 93) — Carte 💚 Santé du modèle de 🏠 Accueil. @returns {string} HTML
-- `capRenderSante` (l. 109) — Sous-vue 💚 Santé du modèle de 🔬 Analyses : synthèse, contrôle × couche, historique.
-- `capSanteDashCatalog` (l. 134) — Indicateurs du tableau de bord : santé du modèle.
+- `capSanteExclues` (l. 70) — Couches ARCADIA décochées (exclues du score global ; réglage du projet, bloc `cap-home`). @returns {string[]}
+- `capSanteToggleCouche` (l. 76) — Coche ou décoche une couche pour le score global, puis recalcule et réaffiche.
+- `capSanteCle` (l. 85) — Clé de la version du modèle affichée : nom du fichier, nombre d'éléments et de relations (stable, indépendante du 🔄 suivi). @returns {strin
+- `capSanteRecord` (l. 90) — Note le score de la version affichée dans l'historique (`_capHome.sante`) : même version → entrée remplacée.
+- `capSanteSpark` (l. 103) — Petite courbe SVG de l'historique des scores. @param {object[]} H - Historique @param {number} [w=140] @param {number} [h=28] @returns {stri
+- `capSanteDate` (l. 110) — Date courte d'une entrée d'historique. @param {string} iso @returns {string}
+- `capSanteCarte` (l. 113) — Carte 💚 Santé du modèle de 🏠 Accueil. @returns {string} HTML
+- `capRenderSante` (l. 130) — Sous-vue 💚 Santé du modèle de 🔬 Analyses : synthèse, contrôle × couche, historique.
+- `capSanteDashCatalog` (l. 156) — Indicateurs du tableau de bord : santé du modèle.
 
 ## 70-chaines-controles.js — 74 lignes
 
