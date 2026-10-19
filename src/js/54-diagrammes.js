@@ -251,6 +251,7 @@ function capProjectFromFiles(fichiers) {
       const f = await m.lire(), fa = a ? await a.lire() : null;
       capDiagSetAird(fa ? await fa.text() : '', fa ? fa.name : '', a && a.h || null, fa ? fa.lastModified : 0);
       _capDiag.attente = true;   // diagrammes du modèle qui va être chargé (ne pas les retirer comme ceux d'un ancien modèle)
+      capLibQueue(mods.filter(x => x !== m));   // 📚 autres .capella du dossier : bibliothèques chargées après le modèle si elles sont référencées (72)
       capLoadFile(f, m.h || null, true);
     } catch (e) { capWelcomeStatus(_L('Lecture impossible : ') + (e && e.message || e), 'err'); }
   };

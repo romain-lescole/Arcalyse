@@ -612,14 +612,19 @@
   "echangesCategorises": 96,
   "introuvables": 0
  },
+ "bibliotheques": {
+  "references": 0,
+  "bibliotheques": 0,
+  "declarees": 0
+ },
  "sante": {
   "score": 52,
   "points": 2970,
   "bloquants": 0,
   "info": 0,
   "pop": 4608,
-  "nChecks": 100,
-  "nOk": 46,
+  "nChecks": 104,
+  "nOk": 50,
   "couches": {
    "OA": 58,
    "SA": 88,
@@ -730,6 +735,12 @@
    "Catégories référençant un échange introuvable": 0,
    "Catégories en double": 0,
    "Échanges dans plusieurs catégories": 0
+  },
+  "bibliotheques": {
+   "Références vers une bibliothèque non chargée": 0,
+   "Références introuvables dans une bibliothèque chargée": 0,
+   "Bibliothèques déclarées sans référence": 0,
+   "Références vers une bibliothèque non déclarée": 0
   },
   "etats": {
    "noInit": 25,
@@ -1132,6 +1143,7 @@
    "Langue minoritaire dans la couche": 1,
    "Fonctions mères allouées": 1
   },
+  "chk.lib": null,
   "chk.pl": {
    "Sans Component Exchange": 50,
    "Ports physiques sans Component Port": 75,
@@ -1795,6 +1807,9 @@
     ]
    ]
   },
+  "lib.by": null,
+  "lib.n": 0,
+  "lib.refs": 0,
   "mdl.layer": {
    "OA": 33,
    "SA": 255,

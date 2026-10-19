@@ -1148,7 +1148,15 @@ Un **score de 0 à 100** bâti sur **tous les contrôles 🩺** de toutes les vu
 - **▦ Par vue** : contrôles, contrôles sans anomalie, points et bloquants de chaque vue.
 - **📈 Historique** : une ligne par version du modèle ouverte dans le projet (même fichier : entrée mise à jour), conservée avec la 💾 page. Indicateurs « Santé du modèle — … » au 📐 Tableau de bord (score, points, bloquants, par couche, par vue, historique).
 
-### 12.11 🏷 Catégories d'échanges
+### 12.11 📚 Bibliothèques
+
+Un modèle peut référencer des éléments d'un autre fichier .capella (**bibliothèque** Capella) : la référence s'écrit `platform:/resource/Projet/Fichier.capella#id` et les bibliothèques utilisées sont déclarées (LibraryReference). Arcalyse ne lit qu'un fichier : sans la bibliothèque, ces cibles sont « introuvables ».
+
+- **📚 Bibliothèques** : chaque bibliothèque référencée avec son projet, déclarée ou non, le nombre de références et d'éléments visés, chargée ou non. **📂 Charger…** ouvre le fichier .capella de la bibliothèque (plusieurs à la fois). Avec **📁 Dossier du projet** ouvert sur le dossier parent (modèle et bibliothèques côte à côte), les bibliothèques référencées sont chargées d'elles-mêmes. Une bibliothèque chargée n'est pas enregistrée dans la page : rechargez-la à la réouverture.
+- **🔗 Références** : élément source, attribut, bibliothèque, cible (📚 nom et type de l'élément visé si la bibliothèque est chargée) ; ⬇ CSV. Même affichage dans le panneau de détail (attributs et section « Références externes »).
+- **🩺 Contrôles** : références vers une bibliothèque non chargée, cibles introuvables dans une bibliothèque chargée (version différente), bibliothèques déclarées sans référence, références vers une bibliothèque non déclarée.
+
+### 12.12 🏷 Catégories d'échanges
 
 Les catégories que Capella permet de poser sur les échanges : **ExchangeCategory** (Functional Exchanges), **ComponentExchangeCategory** (Component Exchanges), **PhysicalLinkCategory** (Physical Links).
 
@@ -1158,7 +1166,7 @@ Les catégories que Capella permet de poser sur les échanges : **ExchangeCatego
 
 Les vues ƒ⇆ Functional Exchange, 🔀 Behavior Exchange et 🔌 Physical Link gagnent une liste **🏷 Toutes catégories** (affichée seulement si le modèle en a) ; le panneau de détail d'un échange liste ses catégories, celui d'une catégorie ses échanges. Indicateurs « Catégories d'échanges — … » au 📐 Tableau de bord.
 
-### 12.12 🔖 Statut de revue
+### 12.13 🔖 Statut de revue
 
 Les champs natifs de revue de Capella, portés par n'importe quel élément : **Status** (littéral de l'énumération *ProgressStatus* du projet : DRAFT, TO BE REVIEWED, TO BE DISCUSSED, REWORK NECESSARY, REVIEWED…) et **Review** (texte libre). Les statuts sont rangés en **classes** d'après leur nom : brouillon, en attente, validé, à retravailler.
 

@@ -32,6 +32,7 @@ var CAP_NAV_ITEMS=[
   {k:'ana:reqs',  l:_L('📋 Exigences'),               g:'ana'},
   {k:'ana:pvmt',  l:_L('🏷 Propriétés'),              g:'ana'},
   {k:'ana:data',  l:_L('🗃 Données & interfaces'),     g:'ana'},
+  {k:'ana:libs',  l:_L('📚 Bibliothèques'),            g:'ana', t:_L('Références vers d\'autres fichiers .capella (bibliothèques) : par bibliothèque, par référence, chargement des bibliothèques pour résoudre les cibles, contrôles')},
   {k:'ana:cats',  l:_L('🏷 Catégories d\'échanges'),   g:'ana', t:_L('ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory : échanges par catégorie, taux de catégorisation, contrôles')},
   {k:'ana:cts',   l:_L('⛓ Contraintes'),              g:'ana'},
   {k:'ana:sante', l:_L('💚 Santé du modèle'),          g:'ana', t:_L('Score global et par couche bâti sur tous les contrôles (🩺 profil), détail contrôle × couche, historique des versions')},

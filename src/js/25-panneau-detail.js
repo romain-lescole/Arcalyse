@@ -58,7 +58,7 @@ function capOpenDetail(id){
 
   // Attributs littéraux
   html+=secTitle(_L('Attributs'));
-  html+=`<table style="width:100%;border-collapse:collapse">${literalRows.map(([k,v])=>`<tr><td style="color:var(--c-dim);font-family:monospace;font-size:11px;padding:5px 0;width:100px;padding-right:10px;border-bottom:1px solid var(--c-border);vertical-align:top;">${capEsc(k)}</td><td style="color:var(--c-text);word-break:break-all;font-size:12px;padding:5px 0;border-bottom:1px solid var(--c-border);">${capEsc(String(v).slice(0,400))}${typeof capRevAttrBtn==='function'?capRevAttrBtn(el.id,k):''}</td></tr>`).join('')}</table>`;
+  html+=`<table style="width:100%;border-collapse:collapse">${literalRows.map(([k,v])=>`<tr><td style="color:var(--c-dim);font-family:monospace;font-size:11px;padding:5px 0;width:100px;padding-right:10px;border-bottom:1px solid var(--c-border);vertical-align:top;">${capEsc(k)}</td><td style="color:var(--c-text);word-break:break-all;font-size:12px;padding:5px 0;border-bottom:1px solid var(--c-border);">${typeof capLibIsExt==='function'&&String(v).trim().split(/\s+/).every(capLibIsExt)?String(v).trim().split(/\s+/).map(capLibRefHtml).join('<br>'):capEsc(String(v).slice(0,400))}${typeof capRevAttrBtn==='function'?capRevAttrBtn(el.id,k):''}</td></tr>`).join('')}</table>`;   // 📚 référence externe : bibliothèque › élément (72)
 
   // 🔲 Diagrammes Capella du projet (.aird) où l'élément est représenté : juste après les attributs
   if(typeof capDiagDetail==='function') html+=capDiagDetail(el.id, secTitle);
@@ -85,6 +85,7 @@ function capOpenDetail(id){
   html+=capXtDetail(el.id, secTitle);
   html+=capStDetail(el.id, secTitle);   // 🔖 statut de revue Capella (68)
   html+=capEcDetail(el.id, secTitle);   // 🏷 catégories d'échanges (71)
+  html+=capLibDetail(el.id, secTitle);   // 📚 références externes (72)
 
   // 💬 Commentaires de revue portant sur l'élément
   if(typeof capRevDetailSection==='function') html+=capRevDetailSection(el.id, secTitle);

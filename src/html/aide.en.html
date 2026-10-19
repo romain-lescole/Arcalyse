@@ -392,6 +392,13 @@
         <h3>⛓ Constraints</h3>
         <p>All the constraints: role (guard, pre / post-condition), expression (text links are replaced by the name of the cited element), language, constrained elements, owner. Checks: empty constraints or without expression, missing cited elements, without constrained element, duplicates.</p>
         <p class="hp-note">An element's detail panel also shows its linked requirements, its properties and its constraints. The corresponding indicators are in the 📐 Dashboard catalogue.</p>
+        <h3>📚 Libraries</h3>
+        <p>A model can reference elements of another .capella file (Capella <b>library</b>): the reference reads <i>platform:/resource/Project/File.capella#id</i> and the libraries used are declared (LibraryReference). Arcalyse reads a single file: without the library, those targets are “missing”.</p>
+        <table class="hp-t">
+          <tr><td>📚 Libraries</td><td>Each referenced library: project, declared or not, number of references and of targeted elements, loaded or not. <b>📂 Load…</b> opens the library's .capella file (several at once); with <b>📁 Project folder</b> opened on the parent folder (model and libraries side by side), the referenced libraries load by themselves. A loaded library is not saved in the page.</td></tr>
+          <tr><td>🔗 References</td><td>Each external reference: source element, attribute, library, target (📚 name and type of the targeted element when the library is loaded). Same display in the details panel (attributes and “External references” section).</td></tr>
+          <tr><td>🩺 Checks</td><td>References to a library not loaded, targets missing from a loaded library (different version), declared libraries without reference, references to an undeclared library.</td></tr>
+        </table>
         <h3>🏷 Exchange categories</h3>
         <p>The categories Capella lets you set on exchanges: <b>ExchangeCategory</b> (Functional Exchanges), <b>ComponentExchangeCategory</b> (Component Exchanges), <b>PhysicalLinkCategory</b> (Physical Links). They also filter ƒ⇆ Functional Exchange, 🔀 Behavior Exchange and 🔌 Physical Link (“🏷 All categories” list, shown only if the model has some), and the details panel of an exchange lists its categories (and that of a category, its exchanges).</p>
         <table class="hp-t">

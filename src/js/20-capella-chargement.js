@@ -270,6 +270,7 @@ function capApplyXmlDoc(doc, name){
   applyMode('capella');
   if(typeof capTourResumeAfterLoad==='function') capTourResumeAfterLoad();   // 🚀 Bien démarrer : 2e temps
   if(typeof capRevOnModelLoad==='function') capRevOnModelLoad();   // 💬 Revue : commentaires à vérifier sur ce modèle
+  if(typeof capLibOnModelLoad==='function') capLibOnModelLoad();   // 📚 bibliothèques du dossier du projet référencées par ce modèle (72)
   if(typeof capAutoBanner==='function') capAutoBanner();   // ⚙ enregistrement automatique : fichier à choisir
 }
 

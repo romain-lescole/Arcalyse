@@ -20,3 +20,7 @@ distincte de la licence Apache 2.0 du logiciel.
 
 Conformément à la licence CC BY-SA 4.0, toute adaptation de `AIDA.capella` redistribuée doit l'être sous la même licence,
 avec la mention de l'auteur ci-dessus. Conformément à l'EPL 2.0, le modèle IFE est redistribué sous EPL 2.0, avec le texte de la licence.
+
+## Modèles synthétiques (sous-dossier `bibliotheque/`)
+
+`Modele.capella` et `Bibliotheque.capella` sont écrits à la main pour tester 📚 Bibliothèques (72) : le modèle déclare deux bibliothèques (une référencée, une sans référence), réalise une activité de la bibliothèque, vise une cible absente de celle-ci et une bibliothèque non déclarée (enfant `href`). Ils sont placés dans un sous-dossier pour ne pas entrer dans `tests/oracles.js` (racine seulement) ; licence Apache 2.0 comme Arcalyse.

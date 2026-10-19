@@ -175,7 +175,7 @@ function capDashCatalog(){
     {l:_L('Sans Component Exchange'),v:PL().filter(x=>!x.ces.length).length},{l:_L('Ports physiques sans lien'),v:(PL().allPorts||[]).filter(p=>!p.connected).length},
     {l:_L('Ports physiques sans Component Port'),v:(PL().allPorts||[]).filter(p=>!(p.cps||[]).length).length},{l:_L('CE (PA) non alloués'),v:(PL().unallocCEs||[]).length}].filter(x=>x.v)}));
   add(_L('Contrôles'),'chk.sum',_L('Synthèse des contrôles par domaine'),'series',()=>{ const tot=id=>{ const m=C.find(x=>x.id===id), v=m&&capDashValue(m); return v?v.cats.reduce((s,c)=>s+c.v,0):0; };
-    return {cats:[[_L('Fonctions'),'chk.fn'],[_L('Ports'),'chk.pt'],[_L('Component Exchanges'),'chk.ce'],[_L('Physical Links'),'chk.pl'],[_L('Chaînes'),'chk.ch'],[_L('Capacités'),'cap.chk'],[_L('Modes & états'),'sm.chk'],[_L('Exigences'),'rq.chk'],[_L('Propriétés'),'pv.chk'],[_L('Données & interfaces'),'dm.chk'],[_L('Contraintes'),'ct.chk'],[_L('Catégories d\'échanges'),'chk.ec']].map(([l,id])=>({l,v:tot(id)})).filter(x=>x.v).sort((a,b)=>b.v-a.v)}; },_L('Nombre total de constats par domaine'));
+    return {cats:[[_L('Fonctions'),'chk.fn'],[_L('Ports'),'chk.pt'],[_L('Component Exchanges'),'chk.ce'],[_L('Physical Links'),'chk.pl'],[_L('Chaînes'),'chk.ch'],[_L('Capacités'),'cap.chk'],[_L('Modes & états'),'sm.chk'],[_L('Exigences'),'rq.chk'],[_L('Propriétés'),'pv.chk'],[_L('Données & interfaces'),'dm.chk'],[_L('Contraintes'),'ct.chk'],[_L('Catégories d\'échanges'),'chk.ec'],[_L('Bibliothèques'),'chk.lib']].map(([l,id])=>({l,v:tot(id)})).filter(x=>x.v).sort((a,b)=>b.v-a.v)}; },_L('Nombre total de constats par domaine'));
 
   capXtDashCatalog(add, LC);
   capFexDashCatalog(add, LC);
@@ -186,6 +186,7 @@ function capDashCatalog(){
   capSanteDashCatalog(add, LC);   // 💚 santé du modèle (69)
   capChDashCatalog(add);   // ⚡ contrôles des chaînes (70)
   capEcDashCatalog(add, LC);   // 🏷 catégories d'échanges (71)
+  capLibDashCatalog(add);   // 📚 bibliothèques (72)
 
   add(_L('Mise en page'),'txt',_L('Texte libre (titre, commentaire)'),'text',()=>({}));
   add(_L('Diagrammes et vues'),'diag',_L('🔲 Diagramme Capella'),'diag',()=>({}));

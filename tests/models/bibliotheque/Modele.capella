@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.polarsys.capella.core.data.capellamodeller:Project xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:libraries="http://www.polarsys.org/capella/common/libraries/7.0.0" xmlns:org.polarsys.capella.core.data.capellamodeller="http://www.polarsys.org/capella/core/modeller/7.0.0" xmlns:org.polarsys.capella.core.data.ctx="http://www.polarsys.org/capella/core/ctx/7.0.0" xmlns:org.polarsys.capella.core.data.oa="http://www.polarsys.org/capella/core/oa/7.0.0" xmlns:org.polarsys.capella.core.data.fa="http://www.polarsys.org/capella/core/fa/7.0.0" xmlns:org.polarsys.capella.core.data.cs="http://www.polarsys.org/capella/core/cs/7.0.0" id="mod-proj-0001" name="Modele">
+  <ownedExtensions xsi:type="libraries:ModelInformation" id="mod-info-0001">
+    <ownedReferences xsi:type="libraries:LibraryReference" id="mod-libref-0001" library="platform:/resource/Bibliotheque/Bibliotheque.capella#lib-info-0001"/>
+    <ownedReferences xsi:type="libraries:LibraryReference" id="mod-libref-0002" library="platform:/resource/Inutile/Inutile.capella#x-info"/>
+  </ownedExtensions>
+  <ownedModelRoots xsi:type="org.polarsys.capella.core.data.capellamodeller:SystemEngineering" id="mod-se-0001" name="Modele">
+    <ownedArchitectures xsi:type="org.polarsys.capella.core.data.ctx:SystemAnalysis" id="mod-sa-0001" name="System Analysis">
+      <ownedFunctionPkg xsi:type="org.polarsys.capella.core.data.ctx:SystemFunctionPkg" id="mod-sfpkg-0001" name="System Functions">
+        <ownedSystemFunctions xsi:type="org.polarsys.capella.core.data.ctx:SystemFunction" id="mod-sf-0001" name="Fonction système réalisant une activité de la bibliothèque">
+          <ownedFunctionRealizations xsi:type="org.polarsys.capella.core.data.fa:FunctionRealization" id="mod-fr-0001" sourceElement="#mod-sf-0001" targetElement="platform:/resource/Bibliotheque/Bibliotheque.capella#lib-act-0001"/>
+        </ownedSystemFunctions>
+        <ownedSystemFunctions xsi:type="org.polarsys.capella.core.data.ctx:SystemFunction" id="mod-sf-0002" name="Fonction visant une cible absente de la bibliothèque">
+          <ownedFunctionRealizations xsi:type="org.polarsys.capella.core.data.fa:FunctionRealization" id="mod-fr-0002" sourceElement="#mod-sf-0002" targetElement="platform:/resource/Bibliotheque/Bibliotheque.capella#lib-act-9999"/>
+        </ownedSystemFunctions>
+        <ownedSystemFunctions xsi:type="org.polarsys.capella.core.data.ctx:SystemFunction" id="mod-sf-0003" name="Fonction visant une bibliothèque non déclarée">
+          <ownedFunctionRealizations xsi:type="org.polarsys.capella.core.data.fa:FunctionRealization" id="mod-fr-0003" sourceElement="#mod-sf-0003">
+            <targetElement href="platform:/resource/Autre/Autre.capella#autre-act-0001"/>
+          </ownedFunctionRealizations>
+        </ownedSystemFunctions>
+      </ownedFunctionPkg>
+    </ownedArchitectures>
+  </ownedModelRoots>
+</org.polarsys.capella.core.data.capellamodeller:Project>

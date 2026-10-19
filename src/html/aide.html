@@ -392,6 +392,13 @@
         <h3>⛓ Contraintes</h3>
         <p>Toutes les contraintes : rôle (garde, pré / post-condition), expression (les liens de texte sont remplacés par le nom de l'élément cité), langage, éléments contraints, propriétaire. Contrôles : contraintes vides ou sans expression, éléments cités introuvables, sans élément contraint, doublons.</p>
         <p class="hp-note">Le panneau de détail d'un élément affiche aussi ses exigences liées, ses propriétés et ses contraintes. Les indicateurs correspondants sont dans le catalogue du 📐 Tableau de bord.</p>
+        <h3>📚 Bibliothèques</h3>
+        <p>Un modèle peut référencer des éléments d'un autre fichier .capella (<b>bibliothèque</b> Capella) : la référence s'écrit <i>platform:/resource/Projet/Fichier.capella#id</i> et les bibliothèques utilisées sont déclarées (LibraryReference). Arcalyse ne lit qu'un fichier : sans la bibliothèque, ces cibles sont « introuvables ».</p>
+        <table class="hp-t">
+          <tr><td>📚 Bibliothèques</td><td>Chaque bibliothèque référencée : projet, déclarée ou non, nombre de références et d'éléments visés, chargée ou non. <b>📂 Charger…</b> ouvre le fichier .capella de la bibliothèque (plusieurs à la fois) ; avec <b>📁 Dossier du projet</b> ouvert sur le dossier parent (modèle et bibliothèques côte à côte), les bibliothèques référencées sont chargées d'elles-mêmes. Une bibliothèque chargée n'est pas enregistrée dans la page.</td></tr>
+          <tr><td>🔗 Références</td><td>Chaque référence externe : élément source, attribut, bibliothèque, cible (📚 nom et type de l'élément visé si la bibliothèque est chargée). Même affichage dans le panneau de détail (attributs et section « Références externes »).</td></tr>
+          <tr><td>🩺 Contrôles</td><td>Références vers une bibliothèque non chargée, cibles introuvables dans une bibliothèque chargée (version différente), bibliothèques déclarées sans référence, références vers une bibliothèque non déclarée.</td></tr>
+        </table>
         <h3>🏷 Catégories d'échanges</h3>
         <p>Les catégories que Capella permet de poser sur les échanges : <b>ExchangeCategory</b> (Functional Exchanges), <b>ComponentExchangeCategory</b> (Component Exchanges), <b>PhysicalLinkCategory</b> (Physical Links). Elles filtrent aussi ƒ⇆ Functional Exchange, 🔀 Behavior Exchange et 🔌 Physical Link (liste « 🏷 Toutes catégories », affichée seulement si le modèle en a), et le panneau de détail d'un échange liste ses catégories (et celui d'une catégorie, ses échanges).</p>
         <table class="hp-t">
