@@ -38,7 +38,7 @@ var CAP_TOUR_STEPS=[
   {s:'#cap-v-dashboard', t:_L('📐 Tableau de bord'),
    x:_L('Composez vos propres tableaux de bord : indicateurs, graphiques et tableaux, imprimables en A4.')},
   {s:'#cap-nav-cfg', t:_L('☰ Toutes les vues'),
-   x:_L('Cherchez une vue par son nom (raccourci <b>Ctrl+K</b>) et réglez la barre : 📌 épingle une vue en bouton direct.')},
+   x:_L('Cherchez une vue, un élément du modèle ou un diagramme (raccourci <b>Ctrl+K</b>) ; réglez la barre : 📌 épingle une vue en bouton direct.')},
   {s:'#mode-rm', t:_L('🗺 Relation Map'),
    x:_L('Graphe interactif des éléments et de leurs relations : zoom, dépliage, disposition, export en image.')},
   {s:'#cap-sidebar', m:'loaded', pre:()=>{ if(currentMode!=='capella') capNavOpen('cards'); }, t:_L('🏷 Types affichés'),

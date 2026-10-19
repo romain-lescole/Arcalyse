@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 5635 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 5640 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -2876,25 +2876,26 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 251 | (masquée) | (hidden) |
 | 252 | Retirer de la barre | Remove from the bar |
 | 252 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
-| 322 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 322 | Ctrl+S | Ctrl+S |
-| 323 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 323 | Ctrl+Maj+S | Ctrl+Maj+S |
-| 334 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
-| 336 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
-| 337 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
-| 338 | 💬 Visite de la revue | 💬 Review tour |
-| 339 | ℹ À propos | ℹ About |
-| 346 | 🎨 Personnaliser… | 🎨 Customize… |
-| 350 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
-| 355 | 🗺 Relation Map | 🗺 Relation Map |
-| 358 | Aucune vue ne correspond. | No view matches. |
-| 365 | Menu | … ▾ menu in the bar |
-| 365 | ▾ dans la barre | … ▾ menu in the bar |
-| 366 | Autres vues | Other views |
-| 369 | ⚙ Personnaliser l'affichage… | ⚙ Customize display… |
-| 370 | ↺ Rétablir la barre par défaut | ↺ Restore the default bar |
-| 372 | 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
+| 323 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 323 | Ctrl+S | Ctrl+S |
+| 324 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 324 | Ctrl+Maj+S | Ctrl+Maj+S |
+| 335 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
+| 337 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
+| 338 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
+| 339 | 💬 Visite de la revue | 💬 Review tour |
+| 340 | ℹ À propos | ℹ About |
+| 347 | 🎨 Personnaliser… | 🎨 Customize… |
+| 351 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
+| 356 | 🗺 Relation Map | 🗺 Relation Map |
+| 360 | Vues | Views |
+| 361 | Aucune vue, aucun élément ni diagramme ne correspond. | No view, element or diagram matches. |
+| 368 | Menu | … ▾ menu in the bar |
+| 368 | ▾ dans la barre | … ▾ menu in the bar |
+| 369 | Autres vues | Other views |
+| 372 | ⚙ Personnaliser l'affichage… | ⚙ Customize display… |
+| 373 | ↺ Rétablir la barre par défaut | ↺ Restore the default bar |
+| 375 | 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
 
 ## js/42-tableaux-analyses.js
 
@@ -2933,7 +2934,6 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 38 | 📐 Tableau de bord | 📐 Dashboard |
 | 39 | Composez vos propres tableaux de bord : indicateurs, graphiques et tableaux, imprimables en A4. | Build your own dashboards: indicators, charts and tables, printable in A4. |
 | 40 | ☰ Toutes les vues | ☰ All views |
-| 41 | Cherchez une vue par son nom (raccourci Ctrl+K ) et réglez la barre : 📌 épingle une vue en bouton direct. | Search a view by its name (shortcut Ctrl+K ) and set up the bar: 📌 pins a view as a direct button. |
 | 42 | 🗺 Relation Map | 🗺 Relation Map |
 | 43 | Graphe interactif des éléments et de leurs relations : zoom, dépliage, disposition, export en image. | Interactive graph of the elements and their relations: zoom, expansion, layout, image export. |
 | 44 | 🏷 Types affichés | 🏷 Displayed types |
@@ -5923,6 +5923,16 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 279 | traçabilité de chaque composant vers les exigences qui lui sont allouées (SSS), et inversement | traceability of each component to the requirements allocated to it (SSS), and the reverse |
 | 280 | Notes | Notes |
 | 280 | informations générales : sigles, abréviations, glossaire, justification des choix | general information: acronyms, abbreviations, glossary, rationale |
+
+## js/67-palette.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 101 | Éléments du modèle | Model elements |
+| 102 | autre(s) : précisez la recherche (nom, type, couche) | … and … more: refine the search (name, type, layer) |
+| 105 | Diagrammes | Diagrams |
+| 106 | autre(s) diagramme(s) | … and … more diagram(s) |
+| 118 | 🕘 Derniers ouverts | 🕘 Recently opened |
 
 ## Textes sans traduction anglaise (8)
 

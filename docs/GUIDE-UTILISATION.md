@@ -122,7 +122,8 @@ Dans chaque menu, l'icône **📌** à droite d'une vue l'**épingle** : elle de
 
 **☰ Toutes les vues** (ou **Ctrl+K**) :
 
-- **🔍 Aller à une vue…** : tapez quelques lettres, flèches ↑ ↓ pour choisir, **Entrée** pour ouvrir ;
+- **🔍 Vue, élément du modèle, diagramme…** : tapez quelques lettres, flèches ↑ ↓ pour choisir, **Entrée** pour ouvrir. La recherche trouve les **vues**, les **éléments du modèle** (nom, type, couche, identifiant ; le type et le chemin de l'élément sont rappelés, Entrée l'affiche dans le panneau de détail) et les **diagrammes** du .aird chargé (nom, sigle, couche ; Entrée l'ouvre dans 🔲 Diagrammes). La section la plus pertinente vient en tête ; 8 éléments et 5 diagrammes au plus sont proposés, précisez la recherche au besoin ;
+- **🕘 Derniers ouverts** : sans recherche, les derniers éléments et diagrammes ouverts par ce menu ;
 - **cases « Menu … dans la barre »** : affichent ou masquent un menu entier (une vue masquée reste accessible ici) ;
 - **📌** : épingler / désépingler chaque vue ;
 - **Autres vues** : 🏠 Accueil, ▤ Tableau, 📐 Tableau de bord (vues sans menu) ;
@@ -1377,7 +1378,7 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 
 | Raccourci / geste | Effet |
 |---|---|
-| **Ctrl+K** | Aller à une vue (recherche dans ☰, Entrée pour ouvrir). |
+| **Ctrl+K** | Recherche dans ☰ : vue, élément du modèle ou diagramme (Entrée pour ouvrir). |
 | **Ctrl+S** / **Ctrl+Maj+S** | Enregistrer / enregistrer sous. |
 | **Échap** | Ferme la fenêtre, le menu ou la sélection en cours. |
 | **Ctrl +** / **Ctrl −** / **Ctrl+molette** | Zoom du graphe (Relation Map). |

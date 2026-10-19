@@ -544,7 +544,7 @@
 - `capWatchShowDelta` (l. 440) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 520) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 404 lignes
+## 41-barre-vues.js — 407 lignes
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
 - `CAP_NAV_GROUPS` (l. 40) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
@@ -567,7 +567,7 @@
 - `capNavClose` (l. 240) — Ferme le menu déroulant de la barre des vues.
 - `capNavRow` (l. 249) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
 - `capNavMenu` (l. 259) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
-- `capNavMenuFill` (l. 310) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+- `capNavMenuFill` (l. 311) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
 
 ## 42-tableaux-analyses.js — 154 lignes
 
@@ -1264,3 +1264,17 @@
 - `capDosSsDebut` (l. 144) — Chapitres 1 (domaine d'application) et 2 (documents de référence), communs au SSS et au SSDD.
 - `capDosPlanSss` (l. 162) — Plan SSS (DI-IPSC-81431) : spécification du système ou du sous-système et de sa qualification.
 - `capDosPlanSsdd` (l. 232) — Plan SSDD (DI-IPSC-81432) : conception du système ou du sous-système (architecture, exécution, interfaces).
+
+## 67-palette.js — 132 lignes
+
+- `CAP_PAL_MAX` (l. 8)
+- `CAP_PAL_MAX_DIAG` (l. 9)
+- `CAP_PAL_RECENT` (l. 10)
+- `capPalNorm` (l. 17) — Normalise un texte pour la recherche : sans accents, en minuscules.
+- `capPalIndex` (l. 23) — Index des éléments du modèle cherchables par la palette (types techniques et éléments sans nom exclus),
+- `capPalScore` (l. 51) — Pertinence d'une entrée pour une requête : 0 = pas de correspondance, puis par ordre croissant :
+- `capPalSearch` (l. 67) — Cherche les éléments du modèle et les diagrammes correspondant à une requête.
+- `capPalRow` (l. 84) — Ligne de résultat (élément ou diagramme) du menu ☰.
+- `capPalHtml` (l. 98) — HTML des résultats « Éléments du modèle » et « Diagrammes » du menu ☰ pour une requête ('' si aucun).
+- `capPalRecentHtml` (l. 114) — 🕘 Derniers éléments et diagrammes ouverts par la palette (menu ☰ sans requête ; '' si aucun).
+- `capPalOpen` (l. 125) — Ouvre un résultat de la palette : le panneau de détail d'un élément (en vues Capella) ou un diagramme.

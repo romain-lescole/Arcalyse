@@ -1,7 +1,7 @@
 /* ══ ☰ BARRE DES VUES CAPELLA ══════════════════════════════════════════════════════
  * La barre du haut regroupe les vues dans des menus déroulants (🧭 Explorateur, 📡 Flux & interfaces,
  * 🔬 Analyses) ; n'importe quelle vue ou sous-vue peut être épinglée (📌) en bouton direct.
- * Le menu ☰ (ou Ctrl+K) permet de chercher une vue et de régler la barre : menus affichés, épingles,
+ * Le menu ☰ (ou Ctrl+K) permet de chercher une vue — et, avec le module 67, un élément du modèle ou un diagramme — et de régler la barre : menus affichés, épingles,
  * retour aux réglages par défaut. Réglage enregistré dans la page (bloc JSON cap-toolbar, repris par la 💾 Page HTML).
  */
 /** Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
@@ -203,7 +203,7 @@ function capNavRender(){
   h=h.replace(pin('dashboard'),'').replace(pin('home:rap'),'');
   if(P.includes('dashboard')) h+=pin('dashboard');
   if(P.includes('home:rap')) h+=pin('home:rap');   // 📘 Rapports : à côté de 📐 Tableau de bord
-  h+=_L(`<div class="tbtn" id="cap-nav-cfg" title="Toutes les vues, recherche (Ctrl+K) et réglage de la barre">☰</div>`);
+  h+=_L(`<div class="tbtn" id="cap-nav-cfg" title="Toutes les vues ; recherche d'une vue, d'un élément du modèle ou d'un diagramme (Ctrl+K) ; réglage de la barre">☰</div>`);
   box.innerHTML=h;
   capNavFit();   // ⚙ icônes seules (choisies, ou automatiques si la barre déborde) : libellés .tb-lbl masqués (CSS)
   // Commandes de la barre masquées par le mode ⚙ (classe prioritaire sur l'affichage géré par chaque module)
@@ -267,6 +267,7 @@ function capNavMenu(g, anchor){
       if(pi){ capNavClose(); capPrefSetIcons(pi.dataset.picons==='1'); return; }
       const pm=e.target.closest('[data-pmode]');
       if(pm){ capNavClose(); capPrefSetMode(pm.dataset.pmode); return; }
+      const pal=e.target.closest('[data-pal]'); if(pal){ capPalOpen(pal.dataset.pal, pal.dataset.id); return; }   // élément ou diagramme (67)
       const o=e.target.closest('[data-open]'); if(o){ capNavOpen(o.dataset.open); return; }
       const th=e.target.closest('[data-thm]');
       if(th){ capNavClose(); const sel=document.getElementById('theme-sel'); sel.value=th.dataset.thm; sel.dispatchEvent(new Event('change')); return; }
@@ -285,7 +286,7 @@ function capNavMenu(g, anchor){
   }
   if(dd.style.display!=='none'&&dd.dataset.g===g){ capNavClose(); return; }
   dd.dataset.g=g;
-  dd.innerHTML=g==='☰'?_L(`<input id="cap-nav-q" type="text" placeholder="🔍 Aller à une vue… (Ctrl+K)" autocomplete="off"><div id="cap-nav-res"></div>`):'<div id="cap-nav-res"></div>';
+  dd.innerHTML=g==='☰'?_L(`<input id="cap-nav-q" type="text" placeholder="🔍 Vue, élément du modèle, diagramme… (Ctrl+K)" autocomplete="off"><div id="cap-nav-res"></div>`):'<div id="cap-nav-res"></div>';
   capNavMenuFill();
   dd.style.display='block';
   const r=anchor.getBoundingClientRect(), w=dd.offsetWidth;
@@ -296,11 +297,11 @@ function capNavMenu(g, anchor){
     q.focus();
     q.oninput=()=>capNavMenuFill();
     q.onkeydown=e=>{
-      const rows=[...dd.querySelectorAll('#cap-nav-res [data-open]')], i=rows.findIndex(r=>r.classList.contains('hl'));
+      const rows=[...dd.querySelectorAll('#cap-nav-res [data-open],#cap-nav-res [data-pal]')], i=rows.findIndex(r=>r.classList.contains('hl'));
       if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault(); if(!rows.length) return;
         const n=(i+(e.key==='ArrowDown'?1:-1)+rows.length)%rows.length;
         rows.forEach((r,j)=>r.classList.toggle('hl',j===n)); rows[n].scrollIntoView({block:'nearest'}); }
-      else if(e.key==='Enter'){ const r=rows[i<0?0:i]; if(r) capNavOpen(r.dataset.open); }
+      else if(e.key==='Enter'){ const r=rows[i<0?0:i]; if(r){ if(r.dataset.pal) capPalOpen(r.dataset.pal, r.dataset.id); else capNavOpen(r.dataset.open); } }
       else if(e.key==='Escape') capNavClose();
     };
   }
@@ -355,11 +356,13 @@ function capNavMenuFill(){
     const all=[{k:'@rm',l:_L('🗺 Relation Map'),g:''},...CAP_NAV_ITEMS];
     const hit=all.filter(i=>q.split(/\s+/).every(w=>norm(i.l+' '+gl(i.g)+' '+(i.t||'')).includes(w)));
     const inName=i=>q.split(/\s+/).every(w=>norm(i.l).includes(w)); hit.sort((a,b)=>inName(b)-inName(a));   // le nom de la vue prime sur l'info-bulle
-    res.innerHTML=hit.length?hit.map(i=>capNavRow(i,gl(i.g))).join(''):_L('<div class="cap-nav-hint">Aucune vue ne correspond.</div>');
-    res.querySelector('[data-open]')?.classList.add('hl');
+    const pal=capPalHtml(q);   // éléments du modèle et diagrammes (67)
+    res.innerHTML=(hit.length?(pal?_L('<div class="cap-nav-h">Vues</div>'):'')+hit.map(i=>capNavRow(i,gl(i.g))).join(''):'')+pal
+      ||_L('<div class="cap-nav-hint">Aucune vue, aucun élément ni diagramme ne correspond.</div>');
+    res.querySelector('[data-open],[data-pal]')?.classList.add('hl');
     return;
   }
-  let h='';
+  let h=capPalRecentHtml();   // 🕘 derniers éléments / diagrammes ouverts par la palette (67)
   const expert=(_capNav.mode||'expert')==='expert';
   CAP_NAV_GROUPS.forEach(G=>{
     h+=G.g&&expert?_L(`<label class="cap-nav-h"><input type="checkbox" data-gv="${G.g}"${_capNav.groups[G.g]!==false?' checked':''}> Menu ${G.l} ▾ dans la barre</label>`)

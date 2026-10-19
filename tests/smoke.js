@@ -83,6 +83,12 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.click('#cap-v-analyses .cap-nav-arr'); await p.click('#cap-nav-dd [data-pin="ana:reqs"]'); await p.click('#cap-v-ana-reqs');
     await p.keyboard.press('Control+K'); await p.keyboard.type('ports'); await p.keyboard.press('Enter');
     if (await p.evaluate(() => capCurrentView) !== 'ports') throw new Error('Ctrl+K : vue Ports non ouverte');
+    // 🔍 Palette : un élément du modèle par son nom → panneau de détail
+    const nomEl = await p.evaluate(() => (capAllElements.find(x => /Function$/.test(x.typeName) && x.attrs.name && x.attrs.name.length > 12) || {}).attrs?.name);
+    if (nomEl) { await p.keyboard.press('Control+K'); await p.keyboard.type(nomEl); await p.waitForTimeout(150);
+      if (!(await p.$('#cap-nav-res [data-pal="el"]'))) throw new Error('Ctrl+K : aucun élément trouvé pour « ' + nomEl + ' »');
+      await p.keyboard.press('Enter'); await p.waitForTimeout(300);
+      if (!(await p.textContent('#cap-detail-content')).includes(nomEl)) throw new Error('Ctrl+K : détail de « ' + nomEl + ' » non ouvert'); }
     await p.evaluate(() => { _capNav = JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); capNavRender(); });
     await p.click('#cap-v-flux'); await p.click('#cap-flux-tabs [data-open="physlink"]');
     if (await p.evaluate(() => capCurrentView) !== 'physlink') throw new Error('onglets 📡 Flux : Physical Link non ouvert');

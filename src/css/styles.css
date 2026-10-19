@@ -1107,6 +1107,11 @@ html[data-tone="light"] #cap-table tbody td.sel{background:color-mix(in srgb,var
 .cap-nav-h{display:flex;align-items:center;gap:6px;padding:7px 13px 3px;color:var(--c-dim);font-size:11px;font-weight:700;border-top:1px solid var(--c-border);margin-top:3px;cursor:pointer;}
 .cap-nav-h:first-child{border-top:none;margin-top:0;}
 .cap-nav-hint{padding:4px 13px;color:var(--c-dim);font-size:10.5px;font-style:italic;}
+/* 🔍 Palette Ctrl+K (67) : éléments du modèle et diagrammes dans le menu ☰ */
+#cap-nav-dd[data-g="☰"]{min-width:340px;max-width:560px;}
+.cap-pal-it>span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cap-pal-it svg{vertical-align:-2px;margin-right:3px;}
+.cap-pal-l{font-size:9px;font-weight:700;margin-right:2px;}
 /* ── 🔬 Tableaux des analyses : ligne de filtres, largeur des colonnes ── */
 .cap-tf-row th{padding:2px 4px!important;background:var(--c-bg2)!important;text-transform:none!important;}
 .cap-tf-row input{width:100%;min-width:36px;box-sizing:border-box;padding:2px 5px;font-size:11px;font-weight:400;background:var(--c-bg3);color:var(--c-text);border:1px solid var(--c-border);border-radius:3px;outline:none;}
