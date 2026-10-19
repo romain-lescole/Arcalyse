@@ -183,6 +183,7 @@ function capDashCatalog(){
   capScDashCatalog(add, LC);
   capDgDashCatalog(add, LC);
   capStDashCatalog(add, LC);   // 🔖 statut de revue Capella (68)
+  capSanteDashCatalog(add, LC);   // 💚 santé du modèle (69)
 
   add(_L('Mise en page'),'txt',_L('Texte libre (titre, commentaire)'),'text',()=>({}));
   add(_L('Diagrammes et vues'),'diag',_L('🔲 Diagramme Capella'),'diag',()=>({}));

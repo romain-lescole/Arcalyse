@@ -390,6 +390,14 @@
         <h3>⛓ Contraintes</h3>
         <p>Toutes les contraintes : rôle (garde, pré / post-condition), expression (les liens de texte sont remplacés par le nom de l'élément cité), langage, éléments contraints, propriétaire. Contrôles : contraintes vides ou sans expression, éléments cités introuvables, sans élément contraint, doublons.</p>
         <p class="hp-note">Le panneau de détail d'un élément affiche aussi ses exigences liées, ses propriétés et ses contraintes. Les indicateurs correspondants sont dans le catalogue du 📐 Tableau de bord.</p>
+        <h3>💚 Santé du modèle</h3>
+        <p>Un <b>score de 0 à 100</b> bâti sur <b>tous les contrôles 🩺</b> de toutes les vues, avec le 🩺 profil de contrôles (contrôles désactivés ignorés ; poids ℹ 0, ⚠ 1, ✖ 3) : 100 × e<sup>−(Σ poids × lignes ÷ nombre d'éléments nommés)</sup> : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. Niveaux : Bon (≥ 90), À surveiller (≥ 70), À reprendre. Score <b>par couche</b> ARCADIA pour les contrôles calculables par couche (fonctions, échanges fonctionnels, composants).</p>
+        <table class="hp-t">
+          <tr><td>🏠 Carte</td><td>Sur l'accueil : score, niveau, points à vérifier et bloquants, barres par couche, écart avec la version précédente et courbe des dernières versions. Au-delà de 30 000 éléments, le calcul attend un clic.</td></tr>
+          <tr><td>📋 Contrôles × couches</td><td>Chaque contrôle avec sa vue, sa gravité, son nombre de lignes global et par couche ; ⬇ CSV.</td></tr>
+          <tr><td>▦ Par vue</td><td>Contrôles, contrôles sans anomalie, points et bloquants de chaque vue.</td></tr>
+          <tr><td>📈 Historique</td><td>Une ligne par version du modèle ouverte dans le projet (même fichier : entrée mise à jour), conservée avec la 💾 page ; indicateurs « Santé du modèle — … » au 📐 Tableau de bord.</td></tr>
+        </table>
         <h3>🔖 Statut de revue</h3>
         <p>Les champs natifs de revue de Capella : <b>Status</b> (littéral de l'énumération <i>ProgressStatus</i> du projet : DRAFT, TO BE REVIEWED, TO BE DISCUSSED, REWORK NECESSARY, REVIEWED…) et <b>Review</b> (texte libre), portés par n'importe quel élément. Les statuts sont rangés en classes d'après leur nom : brouillon, en attente, validé, à retravailler.</p>
         <table class="hp-t">

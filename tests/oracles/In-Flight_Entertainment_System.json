@@ -600,6 +600,22 @@
    "wait": 1
   }
  },
+ "sante": {
+  "score": 50,
+  "points": 1366,
+  "bloquants": 0,
+  "info": 0,
+  "pop": 1948,
+  "nChecks": 71,
+  "nOk": 26,
+  "couches": {
+   "OA": 55,
+   "SA": 74,
+   "LA": 76,
+   "PA": 63,
+   "EPBS": 100
+  }
+ },
  "controles": {
   "fonctions": {
    "Noms ne commençant pas par un verbe": 14,
@@ -1902,6 +1918,36 @@
   "rq.kind": null,
   "rq.layer": null,
   "rq.n": 0,
+  "sante.err": 0,
+  "sante.hist": {
+   "19/10/2026 19:20": 50
+  },
+  "sante.layer": {
+   "OA": 55,
+   "SA": 74,
+   "LA": 76,
+   "PA": 63,
+   "EPBS": 100
+  },
+  "sante.pts": 1366,
+  "sante.score": {
+   "pct": 50,
+   "num": 50,
+   "den": 100
+  },
+  "sante.vue": {
+   "ƒ Fonctions": 196,
+   "ƒ⇆ Functional Exchange": 460,
+   "🧱 System Component": 64,
+   "🧩 Ports": 202,
+   "🗃 Données & interfaces": 192,
+   "⛓ Contraintes": 9,
+   "🔖 Statut de revue": 17,
+   "🔀 Behavior Exchange": 27,
+   "🔌 Physical Link": 68,
+   "🎯 Capacités & missions": 75,
+   "🚦 Modes & états": 56
+  },
   "sc.chk": null,
   "sc.kind": {
    "FS": 6,

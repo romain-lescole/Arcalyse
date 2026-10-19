@@ -829,6 +829,13 @@ html[data-tone="light"] :is(.phl-cell-pc,.phl-cell-port,.phl-cell-link){backgrou
 .ana-kv td:first-child{color:var(--c-dim);white-space:nowrap;width:1%;font-size:10.5px;}
 .ana-dim{color:var(--c-dim);font-size:10.5px;}
 .ana-miss{color:var(--c-warn,#e3b341);font-size:10.5px;}
+.sante-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px;}   /* 💚 santé du modèle (69) */
+.sante-score{font-size:34px;font-weight:800;line-height:1;} .sante-unit{font-size:13px;font-weight:400;color:var(--c-dim);margin-left:2px;}
+.sante-niv{font-weight:700;font-size:13px;}
+.sante-layers{display:flex;flex-direction:column;gap:4px;margin:6px 0;}
+.sante-layer{display:grid;grid-template-columns:38px 1fr 34px;align-items:center;gap:8px;font-size:12px;} .sante-layer span{text-align:right;font-weight:700;}
+.sante-bar{height:8px;background:var(--c-bg3);border-radius:4px;overflow:hidden;} .sante-bar>div{height:100%;border-radius:4px;}
+.sante-spark{flex-shrink:0;}
 .st-badge{display:inline-block;padding:1px 7px;border:1px solid;border-radius:10px;font-size:10.5px;font-weight:700;white-space:nowrap;}   /* 🔖 statut de revue (68) */
 .ana-cov td{min-width:150px;}
 .ana-cell{cursor:pointer;}

@@ -103,6 +103,9 @@ function releve() {
   const ST2 = capComputeStatus();
   R.statutRevue = { elements: ST2.list.length, avecStatut: ST2.list.filter(e => e.status).length, avecCommentaire: ST2.list.filter(e => e.review).length, litteraux: ST2.lits.map(l => l.name + ':' + l.cls), parStatut: compte(ST2.list, e => e.status || '(sans)'), parClasse: compte(ST2.list, e => e.cls || '(sans)') };
 
+  const SA = capSanteCompute();
+  R.sante = { score: SA.score, points: SA.points, bloquants: SA.bloquants, info: SA.info, pop: SA.pop, nChecks: SA.nChecks, nOk: SA.nOk, couches: Object.fromEntries(Object.entries(SA.couches).map(([k, v]) => [k, v.score])) };
+
   // 🩺 Contrôles de toutes les vues : nombre de lignes par contrôle
   const etatsCtl = { noInit: 0, unreach: 0, deadEnd: 0, noTrig: 0 };
   ST.sms.forEach(m => { const c = capStateChecks(m); Object.keys(etatsCtl).forEach(k => { etatsCtl[k] += (c[k] || []).length; }); });

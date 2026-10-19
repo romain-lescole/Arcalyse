@@ -38,7 +38,7 @@ function capHomeNorm(d){
   const c=d.cartes||{};
   return { v:1, fiche:Object.assign({objet:'', phase:'', version:'', resp:'', equipe:'', notes:''}, d.fiche||{}), docs, boards, dossiers:capDosNorm(d.dossiers),
     cartes:{ordre:Array.isArray(c.ordre)?c.ordre:[], masques:Array.isArray(c.masques)?c.masques:[], larges:c.larges&&typeof c.larges==='object'?c.larges:{}},
-    largeurs:d.largeurs&&typeof d.largeurs==='object'?d.largeurs:{} };
+    largeurs:d.largeurs&&typeof d.largeurs==='object'?d.largeurs:{}, sante:Array.isArray(d.sante)?d.sante:[] };   // sante : historique 💚 (69)
 }
 /** Identifiant unique (point, section, document, note). @returns {string} */
 function capHomeUid(){ return 'h'+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
@@ -227,6 +227,7 @@ function capHomeCartes(){
   {k:'contenu', l:_L('🧩 Contenu du modèle'), w:2, f:()=>`<div class="hm-layers">${capHomeCouches().map(c=>{ const lv=CAP_LAYERS[c.k];
     return `<div class="hm-layer" style="--hm-c:${lv.color}"><div class="hm-layer-h"><b style="color:${lv.color}">${c.k}</b> <span class="ana-dim">${esc(lv.label)}</span><span style="flex:1"></span><b>${c.n}</b></div>`+
       c.types.map(([t,n])=>`<div class="hm-layer-t"><span>${capIcoType(t,12)} ${esc((CAP_HUMAN_NAMES[t]||{}).h||t)}</span><span>${n}</span></div>`).join('')+`</div>`; }).join('')}</div>`},
+  {k:'sante', l:_L('💚 Santé du modèle'), w:1, f:()=>capSanteCarte()},   // 69-sante-modele.js
   {k:'revue', l:_L('💬 Revue'), w:1, f:()=>{ const cs=_capRev.comments, ouv=cs.filter(c=>!capRevClosed(c)), chk=capRevToCheck().length, late=cs.filter(capRevLate).length;
     return (cs.length?`<div class="hm-chips"><span class="hm-stat"><b>${ouv.length}</b> ${_L('non clos')}</span>`+
       capRevCrits().filter(c=>c.k).map(c=>{ const n=ouv.filter(x=>x.crit===c.k).length; return n?`<span class="hm-stat" style="color:${capTextOn(c.c)}"><b>${n}</b> ${c.l}</span>`:''; }).join('')+
@@ -657,6 +658,8 @@ function capHomeClick(e){
     case 'carte-show': _capHome.cartes.masques=_capHome.cartes.masques.filter(k=>k!==a.dataset.k); break;
     case 'carte-wide': { const c=capHomeCartes().find(x=>x.k===a.dataset.k), w=_capHome.cartes.larges[a.dataset.k]||c.w; _capHome.cartes.larges[a.dataset.k]=w===2?1:2; break; }
     case 'cartes-reset': _capHome.cartes={ordre:[], masques:[], larges:{}}; break;
+    case 'sante-calc': _capHomeUi.santeOk=true; capHomeRender(); return;
+    case 'sante-profil': capChkDialog(); return;
     case 'quick': { const nd=capHomeQuickDoc(); capHomeRender(); const n=capHomeFind(`[data-docid="${nd.id}"] .hm-item-t`); if(n) n.focus(); return; }
     case 'go-docs': u.tab='docs'; break;
     case 'go-dos': u.tab='dos'; break;

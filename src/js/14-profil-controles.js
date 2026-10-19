@@ -83,7 +83,7 @@ function capChkSet(p){
  * @param {boolean} [full] - Vider aussi les caches de calcul (seuils)
  */
 function capChkRefresh(full){
-  if(typeof _capAnaCache!=='undefined'){ if(full){ _capAnaCache={}; if(typeof _capPortsCache!=='undefined') _capPortsCache=null; } else Object.keys(_capAnaCache).forEach(k=>{ if(k.startsWith('dv:')||k==='dashCat') delete _capAnaCache[k]; }); }
+  if(typeof _capAnaCache!=='undefined'){ if(full){ _capAnaCache={}; if(typeof _capPortsCache!=='undefined') _capPortsCache=null; } else Object.keys(_capAnaCache).forEach(k=>{ if(k.startsWith('dv:')||k==='dashCat'||k.startsWith('sante')) delete _capAnaCache[k]; }); }   // + 💚 santé (69)
   if(full){ ['cap-view-analyses','cap-view-functions'].forEach(id=>{ const c=document.getElementById(id); if(c){ c.querySelectorAll('[data-hold]').forEach(h=>{ h.innerHTML=''; ['_fn','_tr','_cp','_sm','_rq','_pv','_dm','_ct'].forEach(k=>delete h[k]); }); } }); }
   if(typeof capLoaded!=='undefined'&&capLoaded&&typeof currentMode!=='undefined'&&currentMode==='capella'&&typeof capRenderCurrentView==='function') capRenderCurrentView();
 }
