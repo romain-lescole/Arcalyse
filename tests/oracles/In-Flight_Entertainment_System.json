@@ -601,18 +601,18 @@
   }
  },
  "sante": {
-  "score": 50,
-  "points": 1366,
+  "score": 48,
+  "points": 1437,
   "bloquants": 0,
   "info": 0,
   "pop": 1948,
-  "nChecks": 71,
-  "nOk": 26,
+  "nChecks": 84,
+  "nOk": 32,
   "couches": {
-   "OA": 55,
-   "SA": 74,
-   "LA": 76,
-   "PA": 63,
+   "OA": 54,
+   "SA": 71,
+   "LA": 74,
+   "PA": 61,
    "EPBS": 100
   }
  },
@@ -682,6 +682,21 @@
    "Commentaire de revue Capella sans statut": 0,
    "À retravailler sans commentaire dans 💬 Revue": 8,
    "Statut référencé introuvable": 0
+  },
+  "chaines": {
+   "Chaînes vides": 15,
+   "Chaînes discontinues": 1,
+   "Implications vers un élément introuvable": 0,
+   "Échanges dont une extrémité n'est pas dans la chaîne": 0,
+   "Références vers une chaîne introuvable": 0,
+   "Références de chaînes cycliques": 0,
+   "Chaînes non réalisées à la couche inférieure": 3,
+   "Chaînes ne réalisant rien à la couche supérieure": 7,
+   "Chaînes hors capacité": 4,
+   "Chaînes sans description": 39,
+   "Chaînes en double": 0,
+   "Étapes portées par des fonctions non allouées": 2,
+   "Composants isolés dans un chemin physique": 0
   },
   "etats": {
    "noInit": 4,
@@ -1029,6 +1044,15 @@
    "Ports orphelins": 6,
    "PA sans Physical Link": 11
   },
+  "chk.ch": {
+   "Chaînes sans description": 39,
+   "Chaînes vides": 15,
+   "Chaînes ne réalisant rien à la couche supérieure": 7,
+   "Chaînes hors capacité": 4,
+   "Chaînes non réalisées à la couche inférieure": 3,
+   "Étapes portées par des fonctions non allouées": 2,
+   "Chaînes discontinues": 1
+  },
   "chk.fn": {
    "Fonctions feuilles ne réalisant rien à la couche supérieure": 54,
    "Fonctions sans description": 39,
@@ -1067,6 +1091,7 @@
    "Fonctions": 196,
    "Données & interfaces": 192,
    "Capacités": 75,
+   "Chaînes": 71,
    "Physical Links": 68,
    "Modes & états": 56,
    "Component Exchanges": 27,
@@ -1919,20 +1944,17 @@
   "rq.layer": null,
   "rq.n": 0,
   "sante.err": 0,
-  "sante.hist": {
-   "19/10/2026 19:20": 50
-  },
   "sante.layer": {
-   "OA": 55,
-   "SA": 74,
-   "LA": 76,
-   "PA": 63,
+   "OA": 54,
+   "SA": 71,
+   "LA": 74,
+   "PA": 61,
    "EPBS": 100
   },
-  "sante.pts": 1366,
+  "sante.pts": 1437,
   "sante.score": {
-   "pct": 50,
-   "num": 50,
+   "pct": 48,
+   "num": 48,
    "den": 100
   },
   "sante.vue": {
@@ -1940,6 +1962,7 @@
    "ƒ⇆ Functional Exchange": 460,
    "🧱 System Component": 64,
    "🧩 Ports": 202,
+   "⚡ Chaînes": 71,
    "🗃 Données & interfaces": 192,
    "⛓ Contraintes": 9,
    "🔖 Statut de revue": 17,

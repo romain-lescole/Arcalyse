@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 5874 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 5916 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -1032,72 +1032,73 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 361 | · SORTIE | · OUTPUT |
 | 368 | ENTRÉE | INPUT |
 | 398 | Non classée | Unclassified |
-| 418 | Tous types ( | All types (…) … … ▦ Diagrams 🗺 Relation Map view All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
+| 418 | Tous types ( | All types (…) … … ▦ Diagrams 🗺 Relation Map view 🩺 Checks All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
 | 420 | chaîne(s) | … chain(s) |
-| 422 | ▦ Diagrammes | All types (…) … … ▦ Diagrams 🗺 Relation Map view All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
-| 423 | 🗺 Vue Relation Map | All types (…) … … ▦ Diagrams 🗺 Relation Map view All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
-| 427 | Toutes catégories ( | All types (…) … … ▦ Diagrams 🗺 Relation Map view All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
-| 429 | Contenu | All types (…) … … ▦ Diagrams 🗺 Relation Map view All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
-| 429 | Non classées | Unclassified |
-| 431 | Tri | All types (…) … … ▦ Diagrams 🗺 Relation Map view All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
-| 431 | Toutes | All |
-| 431 | Non vides | Non-empty |
-| 431 | Vides | Empty |
-| 433 | Ordre du modèle | Model order |
-| 433 | Fonctions ↓ | Functions ↓ |
-| 433 | Fonctions ↑ | Functions ↑ |
-| 436 | Porté par un acteur | All types (…) … … ▦ Diagrams 🗺 Relation Map view All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
-| 437 | Porté par le système | All types (…) … … ▦ Diagrams 🗺 Relation Map view All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
-| 438 | Non alloué | All types (…) … … ▦ Diagrams 🗺 Relation Map view All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
-| 439 | Activité opérationnelle (processus OA) Bordure épaisse = entrée / sortie de la chaîne · flèches dans le sens réel des échanges | All types (…) … … ▦ Diagrams 🗺 Relation Map view All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
-| 455 | Aucune chaîne. | No chain. |
-| 459 | chaîne | … … … chain… |
-| 471 | échanges · | … … … … … · … exchanges · … input… · … output…… ▶ |
-| 471 | entrée | … … … … … · … exchanges · … input… · … output…… ▶ |
-| 471 | ⑂ ramifiée | ⑂ branched |
-| 497 | Entrées | Inputs … Outputs … 🖼 PNG 📐 SVG 📋 Copy ⬇ CSV ℹ Info 💬 Comment 🗺 Open in Relation Map view … … (…) N° … Type Allocated to Role Entr. Sort. … … (…) … |
-| 498 | Sorties | Inputs … Outputs … 🖼 PNG 📐 SVG 📋 Copy ⬇ CSV ℹ Info 💬 Comment 🗺 Open in Relation Map view … … (…) N° … Type Allocated to Role Entr. Sort. … … (…) … |
-| 499 | 🖼 PNG 📐 SVG 📋 Copier ⬇ CSV ℹ Infos 💬 Commenter | Inputs … Outputs … 🖼 PNG 📐 SVG 📋 Copy ⬇ CSV ℹ Info 💬 Comment 🗺 Open in Relation Map view … … (…) N° … Type Allocated to Role Entr. Sort. … … (…) … |
-| 507 | 🗺 Ouvrir en vue Relation Map | Inputs … Outputs … 🖼 PNG 📐 SVG 📋 Copy ⬇ CSV ℹ Info 💬 Comment 🗺 Open in Relation Map view … … (…) N° … Type Allocated to Role Entr. Sort. … … (…) … |
-| 512 | Composants impliqués | Involved components |
-| 512 | Fonctions impliquées | Involved functions |
-| 513 | Type Alloué à Rôle Entr. Sort. | Inputs … Outputs … 🖼 PNG 📐 SVG 📋 Copy ⬇ CSV ℹ Info 💬 Comment 🗺 Open in Relation Map view … … (…) N° … Type Allocated to Role Entr. Sort. … … (…) … |
-| 513 | Composant | Component |
-| 513 | Fonction | Function |
-| 514 | Physical Links impliqués | Involved Physical Links |
-| 514 | Functional Exchanges impliqués | Involved Functional Exchanges |
-| 515 | Source Cible | N° … Source Target … … |
-| 515 | Physical Link | Physical Link |
-| 515 | Functional Exchange | Functional Exchange |
-| 515 | Component Exchanges alloués | Allocated Component Exchanges |
-| 515 | Exchange Items CE porteur | Exchange Items Carrying CE |
-| 527 | var(--c-dim) | (inchangé, hors _L) |
-| 535 | ⚡ Chaîne | ⚡ Chain |
-| 537 | 🔎 Détail complet de l'élément | 🔎 Full detail of the element |
-| 538 | 🗺 Vue Relation Map | 🗺 Relation Map view |
-| 539 | Commenter la chaîne (💬 Revue) | Comment on the chain (💬 Review) |
-| 539 | 💬 Commenter | 💬 Comment |
-| 540 | Chaînes des autres couches liées à celle-ci, avec leurs fonctions (🔬 Analyses › ⇶ Liens entre couches) | Chains of the other layers linked to this one, with their functions (🔬 Analyses › ⇶ Cross-layer links) |
-| 540 | ⇶ Liens entre couches | ⇶ Cross-layer links |
-| 541 | Attributs | Attributes |
-| 541 | Type | Type |
-| 541 | Couche | Layer |
-| 542 | Composants | Components |
-| 542 | Fonctions | Functions |
-| 542 | Physical Links | Physical Links |
-| 542 | Échanges | Exchanges |
-| 543 | Entrées | Inputs |
-| 543 | Sorties | Outputs |
-| 543 | Porteurs | Owners |
-| 544 | Description | Description |
-| 545 | Capacités qui l'impliquent ( | Capabilities involving it (…) |
-| 547 | Entrées ( | Inputs (…) |
-| 547 | Sorties ( | Outputs (…) |
-| 548 | Porteurs ( | Owners (…) |
-| 549 | Composants ( | Components (…) |
-| 549 | Fonctions ( | Functions (…) |
-| 550 | Physical Links ( | Physical Links (…) |
-| 550 | Échanges ( | Exchanges (…) |
+| 422 | ▦ Diagrammes | All types (…) … … ▦ Diagrams 🗺 Relation Map view 🩺 Checks All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
+| 423 | 🗺 Vue Relation Map | All types (…) … … ▦ Diagrams 🗺 Relation Map view 🩺 Checks All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
+| 424 | 🩺 Contrôles | All types (…) … … ▦ Diagrams 🗺 Relation Map view 🩺 Checks All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
+| 428 | Toutes catégories ( | All types (…) … … ▦ Diagrams 🗺 Relation Map view 🩺 Checks All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
+| 430 | Contenu | All types (…) … … ▦ Diagrams 🗺 Relation Map view 🩺 Checks All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
+| 430 | Non classées | Unclassified |
+| 432 | Tri | All types (…) … … ▦ Diagrams 🗺 Relation Map view 🩺 Checks All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
+| 432 | Toutes | All |
+| 432 | Non vides | Non-empty |
+| 432 | Vides | Empty |
+| 434 | Ordre du modèle | Model order |
+| 434 | Fonctions ↓ | Functions ↓ |
+| 434 | Fonctions ↑ | Functions ↑ |
+| 437 | Porté par un acteur | All types (…) … … ▦ Diagrams 🗺 Relation Map view 🩺 Checks All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
+| 438 | Porté par le système | All types (…) … … ▦ Diagrams 🗺 Relation Map view 🩺 Checks All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
+| 439 | Non alloué | All types (…) … … ▦ Diagrams 🗺 Relation Map view 🩺 Checks All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
+| 440 | Activité opérationnelle (processus OA) Bordure épaisse = entrée / sortie de la chaîne · flèches dans le sens réel des échanges | All types (…) … … ▦ Diagrams 🗺 Relation Map view 🩺 Checks All categories (…) … Content … Sort … Carried by an actor Carried by the system Unallocated Operational activity (OA process) Thick border = chain input / output · arrows in the actual direction of the exchanges |
+| 457 | Aucune chaîne. | No chain. |
+| 461 | chaîne | … … … chain… |
+| 473 | échanges · | … … … … … · … exchanges · … input… · … output…… ▶ |
+| 473 | entrée | … … … … … · … exchanges · … input… · … output…… ▶ |
+| 473 | ⑂ ramifiée | ⑂ branched |
+| 499 | Entrées | Inputs … Outputs … 🖼 PNG 📐 SVG 📋 Copy ⬇ CSV ℹ Info 💬 Comment 🗺 Open in Relation Map view … … (…) N° … Type Allocated to Role Entr. Sort. … … (…) … |
+| 500 | Sorties | Inputs … Outputs … 🖼 PNG 📐 SVG 📋 Copy ⬇ CSV ℹ Info 💬 Comment 🗺 Open in Relation Map view … … (…) N° … Type Allocated to Role Entr. Sort. … … (…) … |
+| 501 | 🖼 PNG 📐 SVG 📋 Copier ⬇ CSV ℹ Infos 💬 Commenter | Inputs … Outputs … 🖼 PNG 📐 SVG 📋 Copy ⬇ CSV ℹ Info 💬 Comment 🗺 Open in Relation Map view … … (…) N° … Type Allocated to Role Entr. Sort. … … (…) … |
+| 509 | 🗺 Ouvrir en vue Relation Map | Inputs … Outputs … 🖼 PNG 📐 SVG 📋 Copy ⬇ CSV ℹ Info 💬 Comment 🗺 Open in Relation Map view … … (…) N° … Type Allocated to Role Entr. Sort. … … (…) … |
+| 514 | Composants impliqués | Involved components |
+| 514 | Fonctions impliquées | Involved functions |
+| 515 | Type Alloué à Rôle Entr. Sort. | Inputs … Outputs … 🖼 PNG 📐 SVG 📋 Copy ⬇ CSV ℹ Info 💬 Comment 🗺 Open in Relation Map view … … (…) N° … Type Allocated to Role Entr. Sort. … … (…) … |
+| 515 | Composant | Component |
+| 515 | Fonction | Function |
+| 516 | Physical Links impliqués | Involved Physical Links |
+| 516 | Functional Exchanges impliqués | Involved Functional Exchanges |
+| 517 | Source Cible | N° … Source Target … … |
+| 517 | Physical Link | Physical Link |
+| 517 | Functional Exchange | Functional Exchange |
+| 517 | Component Exchanges alloués | Allocated Component Exchanges |
+| 517 | Exchange Items CE porteur | Exchange Items Carrying CE |
+| 529 | var(--c-dim) | (inchangé, hors _L) |
+| 537 | ⚡ Chaîne | ⚡ Chain |
+| 539 | 🔎 Détail complet de l'élément | 🔎 Full detail of the element |
+| 540 | 🗺 Vue Relation Map | 🗺 Relation Map view |
+| 541 | Commenter la chaîne (💬 Revue) | Comment on the chain (💬 Review) |
+| 541 | 💬 Commenter | 💬 Comment |
+| 542 | Chaînes des autres couches liées à celle-ci, avec leurs fonctions (🔬 Analyses › ⇶ Liens entre couches) | Chains of the other layers linked to this one, with their functions (🔬 Analyses › ⇶ Cross-layer links) |
+| 542 | ⇶ Liens entre couches | ⇶ Cross-layer links |
+| 543 | Attributs | Attributes |
+| 543 | Type | Type |
+| 543 | Couche | Layer |
+| 544 | Composants | Components |
+| 544 | Fonctions | Functions |
+| 544 | Physical Links | Physical Links |
+| 544 | Échanges | Exchanges |
+| 545 | Entrées | Inputs |
+| 545 | Sorties | Outputs |
+| 545 | Porteurs | Owners |
+| 546 | Description | Description |
+| 547 | Capacités qui l'impliquent ( | Capabilities involving it (…) |
+| 549 | Entrées ( | Inputs (…) |
+| 549 | Sorties ( | Outputs (…) |
+| 550 | Porteurs ( | Owners (…) |
+| 551 | Composants ( | Components (…) |
+| 551 | Fonctions ( | Functions (…) |
+| 552 | Physical Links ( | Physical Links (…) |
+| 552 | Échanges ( | Exchanges (…) |
 
 ## js/24-chaines-export.js
 
@@ -2204,6 +2205,8 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 178 | chk.ce | (inchangé, hors _L) |
 | 178 | Physical Links | Physical Links |
 | 178 | chk.pl | (inchangé, hors _L) |
+| 178 | Chaînes | Chains |
+| 178 | chk.ch | (inchangé, hors _L) |
 | 178 | Capacités | Capabilities |
 | 178 | cap.chk | (inchangé, hors _L) |
 | 178 | Modes & états | Modes & states |
@@ -2217,119 +2220,119 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 178 | Contraintes | Constraints |
 | 178 | ct.chk | (inchangé, hors _L) |
 | 178 | Nombre total de constats par domaine | Total number of findings by domain |
-| 188 | Mise en page | Layout |
-| 188 | Texte libre (titre, commentaire) | Free text (title, comment) |
-| 189 | Diagrammes et vues | Diagrams and views |
-| 189 | 🔲 Diagramme Capella | 🔲 Capella diagram |
+| 189 | Mise en page | Layout |
+| 189 | Texte libre (titre, commentaire) | Free text (title, comment) |
 | 190 | Diagrammes et vues | Diagrams and views |
-| 190 | ⇶ Liens entre couches | ⇶ Cross-layer links |
-| 199 | Indicateur | (inchangé, hors _L) |
-| 215 | à surveiller | to watch |
-| 225 | Autres ( | Others (…) |
-| 237 | Texte vide — ⚙ pour le modifier. | Empty text — ⚙ to edit it. |
-| 238 | Indicateur indisponible pour ce modèle. | Indicator not available for this model. |
-| 239 | Aucune donnée dans ce modèle. | No data in this model. |
-| 240 | var(--c-dim) | (inchangé, hors _L) |
-| 240 | var(--c-text) | (inchangé, hors _L) |
-| 240 | var(--c-bg2) | (inchangé, hors _L) |
-| 258 | Catégorie | Category |
-| 258 | Taux | Rate |
-| 258 | Nombre | Count |
-| 258 | Détail | Detail |
-| 258 | Part | (inchangé, hors _L) |
-| 261 | autre(s) ligne(s) — agrandir le cadre pour tout voir | … and … more row(s) — enlarge the frame to see everything |
-| 266 | catégorie(s) | … … category(ies) |
-| 279 | Autres ( | Others (…) |
-| 288 | Autres ( | Others (…) |
-| 331 | Synthèse du modèle — | Model summary — |
-| 331 | Capella | Capella |
-| 332 | mdl.n | (inchangé, hors _L) |
-| 332 | Fonctions (toutes couches) | Functions (all layers) |
-| 333 | mdl.layer | (inchangé, hors _L) |
-| 334 | fn.L.desc | (inchangé, hors _L) |
-| 334 | ch.empty | (inchangé, hors _L) |
-| 335 | ce.dir | (inchangé, hors _L) |
-| 336 | chk.sum | (inchangé, hors _L) |
-| 336 | tr.tab | (inchangé, hors _L) |
-| 337 | Synthèse du modèle | Model summary |
-| 363 | — double-clic pour renommer | {3} {4} |
-| 365 | ✔ Terminer | ✔ Done |
-| 365 | ✏ Modifier | ✏ Edit |
-| 366 | ＋ Ajouter un élément | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 368 | ⧉ Dupliquer ✨ Exemple | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 371 | 🗑 Supprimer | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
-| 380 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer (panneau à gauche) · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. | Drag an item by its title to move it · bottom-right corner to resize it · ＋ on the left of an item to insert one before it · ⚙ configure (left panel) · ⧉ duplicate · ✕ remove. Dashboards are kept in the 💾 HTML Page. |
-| 381 | ,minmax(0,1fr)) | … ＋ … … A4 portrait A4 landscape 🖨 Print 🌐 HTML ⬇ JSON ⬆ JSON … … … … … |
-| 386 | ＋ Ajouter un élément | ＋ Add an item |
-| 387 | Tableau de bord vide. | Empty dashboard. … |
-| 387 | Cliquez sur « ＋ Ajouter un élément ». | Click “＋ Add an item”. |
-| 387 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. | Click “✏ Edit” to add indicators. |
-| 394 | Nouvel élément : choisissez un indicateur, un diagramme ou une vue dans le panneau de gauche. | New item: choose an indicator, a diagram or a view in the left panel. |
-| 413 | Tableau de bord | Dashboard |
-| 415 | Page | Page |
-| 416 | (copie) | (copy) |
-| 418 | Supprimer le tableau de bord « | Delete the dashboard “…”? |
-| 425 | Tableau importé | Imported dashboard |
-| 426 | Fichier de tableau de bord invalide. | Invalid dashboard file. |
-| 433 | ,minmax(0,1fr)) | {0} {2} |
-| 435 | élément(s) | … element(s) |
-| 435 | Tableau de bord | Dashboard |
-| 439 | Ouvrir | Open |
-| 487 | Modèle Capella | Capella model |
-| 531 | Choisissez un diagramme dans le panneau de gauche (le .aird du projet doit être ouvert). | Choose a diagram in the left panel (the project's .aird must be open). |
-| 534 | Choisissez l'élément de départ dans le panneau de gauche. | Choose the starting element in the left panel. |
-| 535 | Aucun modèle chargé. | No model loaded. |
-| 537 | Aucun lien de réalisation. | No realization link. |
-| 556 | Mise en page | Layout |
-| 556 | Diagrammes et vues | Diagrams and views |
-| 566 | ⚙ Configurer l'élément | ⚙ Configure the item |
-| 566 | ＋ Nouvel élément | ＋ New item |
-| 566 | Fermer sans enregistrer | Close without saving |
-| 568 | 🔍 Rechercher un indicateur… | 🔍 Search an indicator… |
-| 569 | Déplier toutes les catégories | Expand all categories |
-| 569 | ⊞ Tout déplier | ⊞ Expand all |
-| 569 | Replier toutes les catégories | Collapse all categories |
-| 569 | ⊟ Tout replier | ⊟ Collapse all |
-| 571 | Annuler | Cancel |
-| 571 | ✔ Enregistrer | ✔ Save |
-| 571 | ✔ Ajouter dans la grille | ✔ Add to the grid |
-| 578 | Aucun indicateur. | No indicator. |
-| 587 | Choisissez ci-dessous un indicateur, un diagramme ou une vue : il apparaît aussitôt dans la grille, à sa place. | Choose an indicator, a diagram or a view below: it appears at once in the grid, in its place. |
-| 589 | Taille | Size |
-| 589 | col. | … col. |
-| 591 | Élément | Element |
-| 592 | Titre | Title |
-| 595 | Diagramme | Diagram |
-| 595 | Reprendre l'image du diagramme dans le .aird chargé | Take the diagram image again from the loaded .aird |
-| 595 | ↻ Mettre à jour | ↻ Update |
-| 596 | 🔍 Choisir un diagramme… | 🔍 Choose a diagram… |
-| 597 | Aucun .aird chargé : | No .aird loaded: |
-| 597 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
-| 600 | Mode | Mode |
-| 600 | À partir d'un élément | From an element |
-| 600 | Toute une catégorie | A whole category |
-| 601 | Catégorie | Category |
-| 602 | Départ | Start |
-| 602 | à choisir | to be chosen |
-| 602 | 🔍 Élément de départ… | 🔍 Starting element… |
-| 603 | Sens | Direction |
-| 603 | Réalisations vers le haut et vers le bas | Realizations upwards and downwards |
-| 603 | Tous les liens de proche en proche | All links, step by step |
-| 604 | Fonctions des chaînes | Chain functions |
-| 606 | Texte | Text |
-| 607 | Représentation | Chart |
-| 608 | Catégories | Categories |
-| 608 | 5 premières | Top 5 |
-| 608 | 8 premières | Top 8 |
-| 608 | 10 premières | Top 10 |
-| 608 | 15 premières | Top 15 |
-| 608 | 20 premières | Top 20 |
-| 608 | Toutes | All |
-| 609 | Tri | Sort |
-| 609 | Par défaut | Default |
-| 609 | Valeur décroissante | Descending value |
-| 609 | Ordre naturel | Natural order |
-| 618 | ⏳ Image du diagramme… | ⏳ Diagram image… |
+| 190 | 🔲 Diagramme Capella | 🔲 Capella diagram |
+| 191 | Diagrammes et vues | Diagrams and views |
+| 191 | ⇶ Liens entre couches | ⇶ Cross-layer links |
+| 200 | Indicateur | (inchangé, hors _L) |
+| 216 | à surveiller | to watch |
+| 226 | Autres ( | Others (…) |
+| 238 | Texte vide — ⚙ pour le modifier. | Empty text — ⚙ to edit it. |
+| 239 | Indicateur indisponible pour ce modèle. | Indicator not available for this model. |
+| 240 | Aucune donnée dans ce modèle. | No data in this model. |
+| 241 | var(--c-dim) | (inchangé, hors _L) |
+| 241 | var(--c-text) | (inchangé, hors _L) |
+| 241 | var(--c-bg2) | (inchangé, hors _L) |
+| 259 | Catégorie | Category |
+| 259 | Taux | Rate |
+| 259 | Nombre | Count |
+| 259 | Détail | Detail |
+| 259 | Part | (inchangé, hors _L) |
+| 262 | autre(s) ligne(s) — agrandir le cadre pour tout voir | … and … more row(s) — enlarge the frame to see everything |
+| 267 | catégorie(s) | … … category(ies) |
+| 280 | Autres ( | Others (…) |
+| 289 | Autres ( | Others (…) |
+| 332 | Synthèse du modèle — | Model summary — |
+| 332 | Capella | Capella |
+| 333 | mdl.n | (inchangé, hors _L) |
+| 333 | Fonctions (toutes couches) | Functions (all layers) |
+| 334 | mdl.layer | (inchangé, hors _L) |
+| 335 | fn.L.desc | (inchangé, hors _L) |
+| 335 | ch.empty | (inchangé, hors _L) |
+| 336 | ce.dir | (inchangé, hors _L) |
+| 337 | chk.sum | (inchangé, hors _L) |
+| 337 | tr.tab | (inchangé, hors _L) |
+| 338 | Synthèse du modèle | Model summary |
+| 364 | — double-clic pour renommer | {3} {4} |
+| 366 | ✔ Terminer | ✔ Done |
+| 366 | ✏ Modifier | ✏ Edit |
+| 367 | ＋ Ajouter un élément | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 369 | ⧉ Dupliquer ✨ Exemple | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 372 | 🗑 Supprimer | ＋ Add an item … ⧉ Duplicate ✨ Example 🗑 Delete |
+| 381 | Glisser un élément par son titre pour le déplacer · coin inférieur droit pour le redimensionner · ＋ à gauche d'un élément pour en insérer un avant lui · ⚙ configurer (panneau à gauche) · ⧉ dupliquer · ✕ retirer. Les tableaux de bord sont conservés dans la 💾 Page HTML. | Drag an item by its title to move it · bottom-right corner to resize it · ＋ on the left of an item to insert one before it · ⚙ configure (left panel) · ⧉ duplicate · ✕ remove. Dashboards are kept in the 💾 HTML Page. |
+| 382 | ,minmax(0,1fr)) | … ＋ … … A4 portrait A4 landscape 🖨 Print 🌐 HTML ⬇ JSON ⬆ JSON … … … … … |
+| 387 | ＋ Ajouter un élément | ＋ Add an item |
+| 388 | Tableau de bord vide. | Empty dashboard. … |
+| 388 | Cliquez sur « ＋ Ajouter un élément ». | Click “＋ Add an item”. |
+| 388 | Cliquez sur « ✏ Modifier » pour ajouter des indicateurs. | Click “✏ Edit” to add indicators. |
+| 395 | Nouvel élément : choisissez un indicateur, un diagramme ou une vue dans le panneau de gauche. | New item: choose an indicator, a diagram or a view in the left panel. |
+| 414 | Tableau de bord | Dashboard |
+| 416 | Page | Page |
+| 417 | (copie) | (copy) |
+| 419 | Supprimer le tableau de bord « | Delete the dashboard “…”? |
+| 426 | Tableau importé | Imported dashboard |
+| 427 | Fichier de tableau de bord invalide. | Invalid dashboard file. |
+| 434 | ,minmax(0,1fr)) | {0} {2} |
+| 436 | élément(s) | … element(s) |
+| 436 | Tableau de bord | Dashboard |
+| 440 | Ouvrir | Open |
+| 488 | Modèle Capella | Capella model |
+| 532 | Choisissez un diagramme dans le panneau de gauche (le .aird du projet doit être ouvert). | Choose a diagram in the left panel (the project's .aird must be open). |
+| 535 | Choisissez l'élément de départ dans le panneau de gauche. | Choose the starting element in the left panel. |
+| 536 | Aucun modèle chargé. | No model loaded. |
+| 538 | Aucun lien de réalisation. | No realization link. |
+| 557 | Mise en page | Layout |
+| 557 | Diagrammes et vues | Diagrams and views |
+| 567 | ⚙ Configurer l'élément | ⚙ Configure the item |
+| 567 | ＋ Nouvel élément | ＋ New item |
+| 567 | Fermer sans enregistrer | Close without saving |
+| 569 | 🔍 Rechercher un indicateur… | 🔍 Search an indicator… |
+| 570 | Déplier toutes les catégories | Expand all categories |
+| 570 | ⊞ Tout déplier | ⊞ Expand all |
+| 570 | Replier toutes les catégories | Collapse all categories |
+| 570 | ⊟ Tout replier | ⊟ Collapse all |
+| 572 | Annuler | Cancel |
+| 572 | ✔ Enregistrer | ✔ Save |
+| 572 | ✔ Ajouter dans la grille | ✔ Add to the grid |
+| 579 | Aucun indicateur. | No indicator. |
+| 588 | Choisissez ci-dessous un indicateur, un diagramme ou une vue : il apparaît aussitôt dans la grille, à sa place. | Choose an indicator, a diagram or a view below: it appears at once in the grid, in its place. |
+| 590 | Taille | Size |
+| 590 | col. | … col. |
+| 592 | Élément | Element |
+| 593 | Titre | Title |
+| 596 | Diagramme | Diagram |
+| 596 | Reprendre l'image du diagramme dans le .aird chargé | Take the diagram image again from the loaded .aird |
+| 596 | ↻ Mettre à jour | ↻ Update |
+| 597 | 🔍 Choisir un diagramme… | 🔍 Choose a diagram… |
+| 598 | Aucun .aird chargé : | No .aird loaded: |
+| 598 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 601 | Mode | Mode |
+| 601 | À partir d'un élément | From an element |
+| 601 | Toute une catégorie | A whole category |
+| 602 | Catégorie | Category |
+| 603 | Départ | Start |
+| 603 | à choisir | to be chosen |
+| 603 | 🔍 Élément de départ… | 🔍 Starting element… |
+| 604 | Sens | Direction |
+| 604 | Réalisations vers le haut et vers le bas | Realizations upwards and downwards |
+| 604 | Tous les liens de proche en proche | All links, step by step |
+| 605 | Fonctions des chaînes | Chain functions |
+| 607 | Texte | Text |
+| 608 | Représentation | Chart |
+| 609 | Catégories | Categories |
+| 609 | 5 premières | Top 5 |
+| 609 | 8 premières | Top 8 |
+| 609 | 10 premières | Top 10 |
+| 609 | 15 premières | Top 15 |
+| 609 | 20 premières | Top 20 |
+| 609 | Toutes | All |
+| 610 | Tri | Sort |
+| 610 | Par défaut | Default |
+| 610 | Valeur décroissante | Descending value |
+| 610 | Ordre naturel | Natural order |
+| 619 | ⏳ Image du diagramme… | ⏳ Diagram image… |
 
 ## js/36-component-exchange.js
 
@@ -6143,11 +6146,11 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 103 | Détail | Detail |
 | 103 | Activer ou désactiver des contrôles, gravités, seuils | Enable or disable checks, severities, thresholds |
 | 103 | Profil | Profile |
-| 113 | Score | Score {1} / 100 ({2}) = 100 × e −(Σ weight × rows ÷ {3} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {4} point(s) to check including {5} blocking; {6} for information; {7} / {8} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components). |
-| 113 | ) = 100 × e −(Σ poids × lignes ÷ | Score {1} / 100 ({2}) = 100 × e −(Σ weight × rows ÷ {3} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {4} point(s) to check including {5} blocking; {6} for information; {7} / {8} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components). |
-| 113 | éléments nommés) , poids ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profil) : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. | Score {1} / 100 ({2}) = 100 × e −(Σ weight × rows ÷ {3} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {4} point(s) to check including {5} blocking; {6} for information; {7} / {8} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components). |
-| 113 | point(s) à vérifier dont | Score {1} / 100 ({2}) = 100 × e −(Σ weight × rows ÷ {3} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {4} point(s) to check including {5} blocking; {6} for information; {7} / {8} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components). |
-| 113 | contrôles sans anomalie. Le score par couche ne compte que les contrôles calculables par couche (fonctions, échanges fonctionnels, composants). | Score {1} / 100 ({2}) = 100 × e −(Σ weight × rows ÷ {3} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {4} point(s) to check including {5} blocking; {6} for information; {7} / {8} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components). |
+| 113 | Score | Score {1} / 100 ({2}) = 100 × e −(Σ weight × rows ÷ {3} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {4} point(s) to check including {5} blocking; {6} for information; {7} / {8} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 113 | ) = 100 × e −(Σ poids × lignes ÷ | Score {1} / 100 ({2}) = 100 × e −(Σ weight × rows ÷ {3} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {4} point(s) to check including {5} blocking; {6} for information; {7} / {8} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 113 | éléments nommés) , poids ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profil) : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. | Score {1} / 100 ({2}) = 100 × e −(Σ weight × rows ÷ {3} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {4} point(s) to check including {5} blocking; {6} for information; {7} / {8} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 113 | point(s) à vérifier dont | Score {1} / 100 ({2}) = 100 × e −(Σ weight × rows ÷ {3} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {4} point(s) to check including {5} blocking; {6} for information; {7} / {8} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 113 | contrôles sans anomalie. Le score par couche ne compte que les contrôles calculables par couche (fonctions, échanges fonctionnels, composants, chaînes). | Score {1} / 100 ({2}) = 100 × e −(Σ weight × rows ÷ {3} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {4} point(s) to check including {5} blocking; {6} for information; {7} / {8} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
 | 116 | Vue | View |
 | 116 | Contrôle | Check |
 | 116 | Gravité | Severity |
@@ -6192,6 +6195,50 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 140 | Santé du modèle — points à vérifier par vue | Model health — points to check per view |
 | 141 | sante.hist | (inchangé, hors _L) |
 | 141 | Santé du modèle — historique des scores | Model health — score history |
+
+## js/70-chaines-controles.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 38 | Chaîne | Chain |
+| 38 | Type | (inchangé, hors _L) |
+| 38 | Détail | Detail |
+| 40 | Ouvrir dans la vue Relation Map des chaînes | Open in the Relation Map view of the chains |
+| 53 | Chaînes vides | Empty chains |
+| 53 | Aucune fonction (ou composant) ni échange impliqué | No function (or component) nor exchange involved |
+| 54 | Chaînes discontinues | Discontinuous chains |
+| 54 | Les étapes forment plusieurs morceaux non reliés entre eux (au moins deux étapes) | The steps form several unconnected pieces (at least two steps) |
+| 54 | morceaux, | … pieces, … steps, … exchanges |
+| 54 | étapes, | … pieces, … steps, … exchanges |
+| 54 | échanges | … pieces, … steps, … exchanges |
+| 55 | Implications vers un élément introuvable | Involvements of a missing element |
+| 55 | Fonction, composant ou échange impliqué absent du fichier (supprimé, ou dans une bibliothèque) | Involved function, component or exchange missing from the file (deleted, or in a library) |
+| 55 | étape(s), | … step(s), … exchange(s) |
+| 55 | échange(s) | … step(s), … exchange(s) |
+| 56 | Échanges dont une extrémité n'est pas dans la chaîne | Exchanges with an end outside the chain |
+| 56 | Implication d'échange dont la source ou la cible ne désigne aucune étape ni nœud de contrôle de la chaîne (ni des chaînes qu'elle référence) | Exchange involvement whose source or target designates no step nor control node of the chain (nor of the chains it references) |
+| 57 | Références vers une chaîne introuvable | References to a missing chain |
+| 57 | FunctionalChainReference dont la chaîne visée n'existe pas | FunctionalChainReference whose target chain does not exist |
+| 57 | référence(s) | … reference(s) |
+| 58 | Références de chaînes cycliques | Cyclic chain references |
+| 58 | Une chaîne se référence elle-même, directement ou par d'autres chaînes | A chain references itself, directly or through other chains |
+| 59 | Chaînes non réalisées à la couche inférieure | Chains not realized in the lower layer |
+| 59 | Seulement si la couche inférieure réalise déjà des chaînes | Only if the lower layer already realizes chains |
+| 60 | Chaînes ne réalisant rien à la couche supérieure | Chains realizing nothing in the upper layer |
+| 60 | Seulement si d'autres chaînes de la même couche réalisent déjà une chaîne | Only if other chains of the same layer already realize a chain |
+| 61 | Chaînes hors capacité | Chains outside any capability |
+| 61 | Chaîne qu'aucune capacité ni mission n'implique (seulement si d'autres chaînes de la couche le sont) | Chain involved in no capability or mission (only if other chains of the layer are) |
+| 62 | Chaînes sans description | Chains without description |
+| 63 | Chaînes en double | Duplicate chains |
+| 63 | Même nom, même type et même couche | Same name, same type and same layer |
+| 63 | chaînes de ce nom | … chains with this name |
+| 64 | Étapes portées par des fonctions non allouées | Steps carried by unallocated functions |
+| 64 | Fonctions de la chaîne sans composant allocataire (hors processus opérationnels) | Functions of the chain without an allocating component (operational processes excluded) |
+| 65 | Composants isolés dans un chemin physique | Isolated components in a physical path |
+| 65 | Composant impliqué qu'aucun lien physique du chemin ne relie (chemins d'au moins deux composants) | Involved component that no physical link of the path connects (paths of at least two components) |
+| 72 | Contrôles | Checks |
+| 72 | chk.ch | (inchangé, hors _L) |
+| 72 | Contrôles des chaînes | Chain checks |
 
 ## Textes sans traduction anglaise (11)
 

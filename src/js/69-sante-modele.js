@@ -23,7 +23,7 @@ function capSanteChecks(){
     {k:'functions', all:()=>capFnChecks(F,'all'), layer:l=>capFnChecks(F,l)},
     {k:'fex', all:()=>capFexChecks('all'), layer:l=>capFexChecks(l)},
     {k:'csys', all:()=>capCbChecks('all'), layer:l=>capCbChecks(l)},
-    {k:'ports', all:()=>capPortsDiagSections(capComputePortLinks())}, {k:'scen', all:()=>capScChecks()},
+    {k:'ports', all:()=>capPortsDiagSections(capComputePortLinks())}, {k:'chains', all:()=>capChChecks('all'), layer:l=>capChChecks(l)}, {k:'scen', all:()=>capScChecks()},
     {k:'ana:reqs', all:()=>capReqChecks()}, {k:'ana:pvmt', all:()=>capPvChecks()}, {k:'ana:data', all:()=>capDmChecks()}, {k:'ana:cts', all:()=>capCtChecks()},
     {k:'ana:status', all:()=>capStChecks()}];
   views.forEach(v=>{
@@ -110,7 +110,7 @@ function capRenderSante(box){
   const st=box._sa=box._sa||{view:'tab', q:''}, esc=capEsc, S=capSanteCompute(), H=capSanteRecord(), N=capSanteNiveau(S.score);
   const L=CAP_ANA_LAYERS.filter(l=>S.couches[l]), lab=k=>{ const it=CAP_NAV_ITEMS.find(i=>i.k===k); return it?it.l:k; }, sevL=s=>(CAP_CHK_SEV.find(x=>x[0]===s)||[])[2]||s;
   const q=st.q.trim().toLowerCase(), shown=S.checks.filter(c=>!q||(c.title+' '+lab(c.view)).toLowerCase().includes(q));
-  const head=_L(`<p class="ana-help">Score <b style="color:${N.c}">${S.score} / 100 (${N.l})</b> = 100 × e<sup>−(Σ poids × lignes ÷ ${S.pop} éléments nommés)</sup>, poids ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profil) : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. <b>${S.points}</b> point(s) à vérifier dont <b>${S.bloquants}</b> bloquant(s) ; ${S.info} pour information ; ${S.nOk} / ${S.nChecks} contrôles sans anomalie. Le score par couche ne compte que les contrôles calculables par couche (fonctions, échanges fonctionnels, composants).</p>`);
+  const head=_L(`<p class="ana-help">Score <b style="color:${N.c}">${S.score} / 100 (${N.l})</b> = 100 × e<sup>−(Σ poids × lignes ÷ ${S.pop} éléments nommés)</sup>, poids ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profil) : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. <b>${S.points}</b> point(s) à vérifier dont <b>${S.bloquants}</b> bloquant(s) ; ${S.info} pour information ; ${S.nOk} / ${S.nChecks} contrôles sans anomalie. Le score par couche ne compte que les contrôles calculables par couche (fonctions, échanges fonctionnels, composants, chaînes).</p>`);
   let body='';
   if(st.view==='tab'){
     body=head+capXtTable([_L('Vue'),_L('Contrôle'),_L('Gravité'),'Σ',...L], shown.map(c=>[esc(lab(c.view)), esc(c.title), `<span class="cap-diag-cnt ${c.n?c.sev:'ok'}">${sevL(c.sev)}</span>`, c.n?`<b>${c.n}</b>`:'<span class="ana-dim">0</span>',

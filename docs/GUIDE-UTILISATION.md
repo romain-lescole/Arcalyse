@@ -727,6 +727,10 @@ Glossaire des **types présents** dans le modèle : type technique, nom lisible 
 
 ---
 
+### 8.4 🩺 Contrôles
+
+Troisième présentation de ⚡ Chaînes (à côté de ▦ Diagrammes et 🗺 Vue Relation Map), filtrée par la catégorie ARCADIA choisie : chaînes **vides** ; **discontinues** (étapes en plusieurs morceaux non reliés) ; **implications vers un élément introuvable** (fonction, composant ou échange supprimé ou dans une bibliothèque) ; **échanges dont une extrémité n'est pas dans la chaîne** ; **références** vers une chaîne introuvable ou **cycliques** ; chaînes **non réalisées à la couche inférieure** ou **ne réalisant rien à la couche supérieure** (seulement là où des réalisations existent déjà) ; chaînes **hors capacité** (seulement si d'autres chaînes de la couche en ont une) ; **sans description** ; **en double** ; **étapes portées par des fonctions non allouées** ; **composants isolés** dans un chemin physique. Chaque ligne ouvre le détail de la chaîne ou sa vue 🗺. Soumis au 🩺 profil de contrôles (§ 3.5) ; indicateur « Contrôles des chaînes » au 📐 Tableau de bord ; pris en compte par la 💚 santé du modèle, y compris par couche.
+
 ## 9. 📡 Flux & interfaces
 
 Vues d'interfaces, du fonctionnel au physique, accessibles par le menu **📡 Flux & interfaces ▾** ou par la rangée d'onglets : ƒ⇆ Functional Exchange, 🟨 Operational Analysis, 🧱 System Component, 🧱 Logical Component, 🔀 Behavior Exchange, 🔌 Physical Link, 🎬 Scénarios, 🧩 Ports, 🔗 Liens (et ⚡ Chaînes, 🔲 Diagrammes Capella quand ils ne sont pas épinglés).

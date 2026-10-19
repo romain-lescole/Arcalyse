@@ -304,7 +304,7 @@
 - `capComputeLinks` (l. 54) — Extrait et résout toutes les relations Capella depuis le XML :
 - `capRenderLinks` (l. 201) — Rend la vue Liens : barre (recherche, filtres groupés par famille de relations, export)
 
-## 23-chaines.js — 578 lignes
+## 23-chaines.js — 580 lignes
 
 - `CAP_CHAIN_COLORS` (l. 2)
 - `CAP_CHAIN_LABELS` (l. 3)
@@ -325,10 +325,10 @@
 - `capChainLayerInfo` (l. 397) — Libellé et couleurs d'une catégorie ARCADIA de chaîne ('?' = non classée).
 - `capChainLayerBadge` (l. 401) — Badge coloré de catégorie ARCADIA (OA, SA, LA, PA…).
 - `capRenderChains` (l. 408) — Rend la vue Chaînes : filtres (type + catégorie ARCADIA), légende et bascule entre les
-- `capRenderChainCards` (l. 453) — Construit le HTML des cartes de chaînes, regroupées par catégorie ARCADIA
-- `capChainCardBody` (l. 484) — Rend le contenu d'une carte ouverte : entrées/sorties, diagramme et table des échanges.
-- `capChainInfo` (l. 525) — ℹ Infos d'une chaîne dans le panneau de détail (comme pour un diagramme) : type, couche, nombre de fonctions
-- `capWireChainCards` (l. 557) — Attache l'ouverture/fermeture des cartes (rendu paresseux du diagramme) et la navigation.
+- `capRenderChainCards` (l. 455) — Construit le HTML des cartes de chaînes, regroupées par catégorie ARCADIA
+- `capChainCardBody` (l. 486) — Rend le contenu d'une carte ouverte : entrées/sorties, diagramme et table des échanges.
+- `capChainInfo` (l. 527) — ℹ Infos d'une chaîne dans le panneau de détail (comme pour un diagramme) : type, couche, nombre de fonctions
+- `capWireChainCards` (l. 559) — Attache l'ouverture/fermeture des cartes (rendu paresseux du diagramme) et la navigation.
 
 ## 24-chaines-export.js — 818 lignes
 
@@ -466,7 +466,7 @@
 - `capRenderFunctionsView` (l. 714) — Vue « ƒ Fonctions » (onglet de 🔬 Analyses) : hiérarchie, tableau,
 - `capRenderAnalyses` (l. 725) — Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage.
 
-## 35-tableau-de-bord.js — 652 lignes
+## 35-tableau-de-bord.js — 653 lignes
 
 - `CAP_DASH_PAL` (l. 3) — Palette catégorielle à ordre fixe (contrôlée pour le daltonisme), déclinée pour thèmes clairs et sombres.
 - `CAP_DASH_AK` (l. 6) — Couleurs des natures d'allocation (identiques au filtre « Allocation » de ƒ Fonctions).
@@ -476,19 +476,19 @@
 - `capDashPct` (l. 30) — Taux arrondi d'éléments vérifiant un prédicat.
 - `capDashCount` (l. 36) — Compte les éléments par clé (une ou plusieurs clés par élément) et trie par effectif décroissant.
 - `capDashCatalog` (l. 46) — Catalogue de tous les indicateurs disponibles pour le modèle ouvert (fonctions, chaînes, interfaces,
-- `capDashValue` (l. 197) — Valeur (mise en cache) d'un indicateur du catalogue ; null si le modèle ne contient pas la donnée.
-- `capDashCut` (l. 210) — Échappe un texte et le tronque pour une étiquette de graphique.
-- `capDashLevel` (l. 215) — Niveau d'un pourcentage : bon (≥ 90), à surveiller (≥ 50), faible.
-- `capDashCats` (l. 221) — Prépare les catégories d'une répartition : tri, limite d'affichage et regroupement en « Autres ».
-- `capDashDraw` (l. 235) — Dessine le contenu d'un élément du tableau de bord.
-- `capDashSave` (l. 318) — Enregistre les tableaux de bord dans la page (bloc JSON repris par la 💾 Page HTML).
-- `capDashUid` (l. 324) — Identifiant court et unique pour un tableau de bord ou un élément.
-- `capDashExample` (l. 328) — Tableau de bord d'exemple adapté au modèle ouvert (synthèse de quelques indicateurs clés).
-- `capRenderDashboard` (l. 346) — Vue « 📐 Tableau de bord » : tableaux de bord personnalisés (indicateurs, graphiques, tableaux, textes),
-- `capDashPrint` (l. 483) — Imprime un tableau de bord au format A4 : les éléments sont redessinés à la taille de la page
-- `capDashTitre` (l. 518) — Titre affiché d'un élément du tableau de bord.
-- `capDashImgDraw` (l. 528) — Dessine un élément « image » : diagramme Capella (image enregistrée avec l'élément) ou 🔗 liens entre couches (redessinés sur le modèle char
-- `capDashSide` (l. 554) — Panneau de gauche du tableau de bord (mode ✏ Modifier) : ajout ou configuration d'un élément, affiché en direct
+- `capDashValue` (l. 198) — Valeur (mise en cache) d'un indicateur du catalogue ; null si le modèle ne contient pas la donnée.
+- `capDashCut` (l. 211) — Échappe un texte et le tronque pour une étiquette de graphique.
+- `capDashLevel` (l. 216) — Niveau d'un pourcentage : bon (≥ 90), à surveiller (≥ 50), faible.
+- `capDashCats` (l. 222) — Prépare les catégories d'une répartition : tri, limite d'affichage et regroupement en « Autres ».
+- `capDashDraw` (l. 236) — Dessine le contenu d'un élément du tableau de bord.
+- `capDashSave` (l. 319) — Enregistre les tableaux de bord dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capDashUid` (l. 325) — Identifiant court et unique pour un tableau de bord ou un élément.
+- `capDashExample` (l. 329) — Tableau de bord d'exemple adapté au modèle ouvert (synthèse de quelques indicateurs clés).
+- `capRenderDashboard` (l. 347) — Vue « 📐 Tableau de bord » : tableaux de bord personnalisés (indicateurs, graphiques, tableaux, textes),
+- `capDashPrint` (l. 484) — Imprime un tableau de bord au format A4 : les éléments sont redessinés à la taille de la page
+- `capDashTitre` (l. 519) — Titre affiché d'un élément du tableau de bord.
+- `capDashImgDraw` (l. 529) — Dessine un élément « image » : diagramme Capella (image enregistrée avec l'élément) ou 🔗 liens entre couches (redessinés sur le modèle char
+- `capDashSide` (l. 555) — Panneau de gauche du tableau de bord (mode ✏ Modifier) : ajout ou configuration d'un élément, affiché en direct
 
 ## 36-component-exchange.js — 356 lignes
 
@@ -1345,3 +1345,9 @@
 - `capSanteCarte` (l. 93) — Carte 💚 Santé du modèle de 🏠 Accueil. @returns {string} HTML
 - `capRenderSante` (l. 109) — Sous-vue 💚 Santé du modèle de 🔬 Analyses : synthèse, contrôle × couche, historique.
 - `capSanteDashCatalog` (l. 134) — Indicateurs du tableau de bord : santé du modèle.
+
+## 70-chaines-controles.js — 74 lignes
+
+- `capChRefs` (l. 13) — Références entre chaînes (`FunctionalChainReference`) et identifiants des enfants de chaque chaîne (nœuds de contrôle compris).
+- `capChChecks` (l. 30) — Contrôles des chaînes.
+- `capChDashCatalog` (l. 71) — Indicateurs du tableau de bord : contrôles des chaînes.

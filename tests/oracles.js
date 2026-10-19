@@ -112,12 +112,12 @@ function releve() {
   R.controles = {
     fonctions: sections(capFnChecks(F, 'all')), functionalExchange: sections(capFexChecks('all')), composants: sections(capCbChecks('all')),
     scenarios: sections(capScChecks()), exigences: sections(capReqChecks()), pvmt: sections(capPvChecks()), donnees: sections(capDmChecks()),
-    contraintes: sections(capCtChecks()), statutRevue: sections(capStChecks()), etats: etatsCtl };
+    contraintes: sections(capCtChecks()), statutRevue: sections(capStChecks()), chaines: sections(capChChecks('all')), etats: etatsCtl };
 
   // 📐 Tableau de bord : valeur de chaque indicateur (texte, diagramme et image exclus : pas de valeur calculée)
   R.tableauDeBord = {};
   capDashCatalog().forEach(m => {
-    if (['text', 'diag', 'xlay'].includes(m.kind)) return;
+    if (['text', 'diag', 'xlay'].includes(m.kind) || m.id === 'sante.hist') return;   // sante.hist : libellés horodatés (non déterministe)
     const v = capDashValue(m); let n = null;
     if (v == null) n = null;
     else if (m.kind === 'n') n = v.n;

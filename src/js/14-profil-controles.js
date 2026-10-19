@@ -19,7 +19,7 @@ const CAP_CHK_SEV=[['info','ℹ',_L('Information')],['warn','⚠',_L('À vérifi
  * contrôles en ligne (🔌, 🔀, 🧬, 🚦) sont ajoutées au catalogue à leur premier affichage (`_capChkSeen`). */
 const CAP_CHK_VIEWS=[
   ['functions', ()=>capFnChecks(capComputeFunctions(),'all')], ['fex', ()=>capFexChecks('all')], ['csys', ()=>capCbChecks('SA')], ['cblk', ()=>capCbChecks('LA')],
-  ['ports', ()=>capPortsDiagSections(capComputePortLinks())], ['scen', ()=>capScChecks()], ['ana:reqs', ()=>capReqChecks()], ['ana:pvmt', ()=>capPvChecks()],
+  ['ports', ()=>capPortsDiagSections(capComputePortLinks())], ['chains', ()=>capChChecks('all')], ['scen', ()=>capScChecks()], ['ana:reqs', ()=>capReqChecks()], ['ana:pvmt', ()=>capPvChecks()],
   ['ana:data', ()=>capDmChecks()], ['ana:cts', ()=>capCtChecks()], ['ana:status', ()=>capStChecks()]];
 
 var capChkProfile=(()=>{ try{ const el=document.getElementById('cap-checks'); const p=el?JSON.parse(el.textContent):null; return Object.assign({off:{}, sev:{}, params:{}}, p||{}); }catch(e){ return {off:{}, sev:{}, params:{}}; } })();

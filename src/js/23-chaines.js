@@ -12,7 +12,7 @@ const CAP_CHAIN_KIND={
   none:   {fill:'#eeeeee', stroke:'#8a8a8a', label:_L('Non alloué'), rm:'#8b949e'},
   oa:     {fill:'#f8dc7c', stroke:'#6b4f2a', label:_L('Activité opérationnelle'), rm:'#e3b341'},
 };
-let capChainsSubView='diagram';   // 'diagram' (cartes + diagrammes) | 'map' (vue Relation Map)
+let capChainsSubView='diagram';   // 'diagram' (cartes + diagrammes) | 'map' (vue Relation Map) | 'diag' (🩺 contrôles, 70)
 let capChainsSelectedId=null;     // chaîne affichée dans la vue Relation Map
 let capChainsSearch='';           // filtre texte de la liste des chaînes (vue Relation Map)
 let capChainsEmptyFilter='all';   // contenu : 'all' | 'full' (non vides) | 'empty' (vides : aucune fonction ni échange)
@@ -421,6 +421,7 @@ function capRenderChains(){
       <span class="tb-grp" style="margin-left:auto" title="Présentation">
         <button class="cap-lf-btn${capChainsSubView==='diagram'?' active':''}" data-sv="diagram" title="Cartes dépliables avec le diagramme de chaque chaîne">▦ Diagrammes</button>
         <button class="cap-lf-btn${capChainsSubView==='map'?' active':''}" data-sv="map" title="Graphe interactif dans le style de la Relation Map">🗺 Vue Relation Map</button>
+        <button class="cap-lf-btn${capChainsSubView==='diag'?' active':''}" data-sv="diag" title="Chaînes vides, discontinues, implications introuvables, références, réalisations entre couches, capacités, doublons…">🩺 Contrôles</button>
       </span>
     </div>
     <div class="cap-lf-bar" style="flex-wrap:wrap;margin-top:-4px;gap:6px">
@@ -439,7 +440,8 @@ function capRenderChains(){
       <span><i style="background:${CAP_CHAIN_KIND.oa.fill};border-color:${CAP_CHAIN_KIND.oa.stroke}"></i>Activité opérationnelle (processus OA)</span>
       <span>Bordure épaisse = entrée / sortie de la chaîne · flèches dans le sens réel des échanges</span>
     </div>`);
-  if(capChainsSubView==='map'){ container.innerHTML=bar+'<div id="cap-chainmap-wrap"></div>'; capRenderChainMap(); }
+  if(capChainsSubView==='diag'){ container.innerHTML=bar+`<div class="cap-chain-diag">${capDiagHtml(capChChecks(capChainsLayerFilter))}</div>`; }   // 🩺 contrôles (70), filtrés par catégorie
+  else if(capChainsSubView==='map'){ container.innerHTML=bar+'<div id="cap-chainmap-wrap"></div>'; capRenderChainMap(); }
   else { container.innerHTML=bar+capChainExportBar()+capRenderChainCards(); capWireChainCards(container); capWireChainExport(container); }
   container.querySelectorAll('[data-cf]').forEach(btn=>btn.addEventListener('click',()=>{capChainsFilter=btn.dataset.cf||'all';capRenderChains();}));
   container.querySelectorAll('[data-lf]').forEach(btn=>btn.addEventListener('click',()=>{capChainsLayerFilter=btn.dataset.lf||'all';capRenderChains();}));
