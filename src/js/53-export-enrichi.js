@@ -132,7 +132,7 @@ function capCsvExport(name, header, rows){
       </div>
       <div class="cw-d-ftr"><button class="cap-lf-btn" data-c="reset" title="Revenir aux colonnes de base, sans information ajoutée">↺ Colonnes de base</button>
         <span class="ana-dim">${nCols} colonne(s), ${rows.length} ligne(s)</span><span style="flex:1"></span>
-        <button class="cap-lf-btn" data-c="x">Annuler</button><button class="phl-export-btn" data-c="ok">⬇ Télécharger</button></div></div>`);
+        <span class="ana-dim" style="font-size:11px;margin-left:auto">${capExportFormat()==='xlsx'?_L('Format : Excel (.xlsx)'):_L('Format : CSV')} · ${_L('⚙ Préférences pour changer')}</span><button class="cap-lf-btn" data-c="x">Annuler</button><button class="phl-export-btn" data-c="ok">⬇ Télécharger</button></div></div>`);
     ov.querySelectorAll('[data-c="x"]').forEach(b=>b.onclick=()=>{ ov.style.display='none'; });
     ov.querySelector('[data-c="reset"]').onclick=()=>{ cfg.drop=[]; cfg.add={}; draw(); };
     ov.querySelector('[data-c="ok"]').onclick=()=>{

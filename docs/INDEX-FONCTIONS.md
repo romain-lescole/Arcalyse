@@ -376,22 +376,22 @@
 - `capReportClean` (l. 33) — Nettoie un fragment HTML de l'application pour un fichier autonome : retire les appels au panneau de détail
 - `capHtmlReport` (l. 44) — Construit et télécharge un rapport HTML autonome à onglets.
 
-## 27-interfaces-calculs.js — 332 lignes
+## 27-interfaces-calculs.js — 333 lignes
 
 - `capArchLayerOf` (l. 8) — Couche ARCADIA d'un élément XML, déduite de l'architecture qui le contient.
 - `capBuildIdMap` (l. 17) — Index id → élément XML, sur l'attribut plain « id » ET xmi:id (namespacé).
 - `capCsvDownload` (l. 31) — Télécharge un CSV (séparateur « ; », BOM UTF-8 pour Excel).
-- `capMatrixBuild` (l. 44) — Construit une matrice composant × composant (N² des interfaces).
-- `capFoldList` (l. 81) — Liste repliable d'éléments HTML séparés par des virgules : au-delà de `max`, le reste est masqué derrière « +N autres » (clic pour déplier /
-- `capDiagHtml` (l. 93) — Rend un rapport de contrôles : sections repliables avec compteur et gravité, selon le 🩺 profil de contrôles (14) :
-- `capDetLink` (l. 116) — Lien HTML cliquable ouvrant le panneau de détail d'un élément Capella.
-- `CAP_PORT_ORIENTS` (l. 122) — Valeurs de l'attribut orientation d'un ComponentPort (OrientationPortKind).
-- `CAP_ORIENT_STYLE` (l. 124) — Style d'affichage de chaque orientation de port (couleur, libellé, info-bulle).
-- `CAP_CEX_DIRS` (l. 131) — Libellés des sens effectifs d'un Component Exchange.
-- `capNormOrient` (l. 142) — Normalise l'orientation d'un port Capella : attribut absent (valeur par défaut EMF) → 'UNSET'.
-- `capCexDirection` (l. 156) — Déduit le sens effectif d'un Component Exchange à partir des orientations de ses deux ports.
-- `capComputeCompExchanges` (l. 175) — Calcule les Component Exchanges : pour chaque ComponentExchange, résout source/target
-- `capComputePhysLinks` (l. 262) — Calcule les Physical Links du modèle : pour chaque PhysicalLink, résout les deux
+- `capMatrixBuild` (l. 45) — Construit une matrice composant × composant (N² des interfaces).
+- `capFoldList` (l. 82) — Liste repliable d'éléments HTML séparés par des virgules : au-delà de `max`, le reste est masqué derrière « +N autres » (clic pour déplier /
+- `capDiagHtml` (l. 94) — Rend un rapport de contrôles : sections repliables avec compteur et gravité, selon le 🩺 profil de contrôles (14) :
+- `capDetLink` (l. 117) — Lien HTML cliquable ouvrant le panneau de détail d'un élément Capella.
+- `CAP_PORT_ORIENTS` (l. 123) — Valeurs de l'attribut orientation d'un ComponentPort (OrientationPortKind).
+- `CAP_ORIENT_STYLE` (l. 125) — Style d'affichage de chaque orientation de port (couleur, libellé, info-bulle).
+- `CAP_CEX_DIRS` (l. 132) — Libellés des sens effectifs d'un Component Exchange.
+- `capNormOrient` (l. 143) — Normalise l'orientation d'un port Capella : attribut absent (valeur par défaut EMF) → 'UNSET'.
+- `capCexDirection` (l. 157) — Déduit le sens effectif d'un Component Exchange à partir des orientations de ses deux ports.
+- `capComputeCompExchanges` (l. 176) — Calcule les Component Exchanges : pour chaque ComponentExchange, résout source/target
+- `capComputePhysLinks` (l. 263) — Calcule les Physical Links du modèle : pour chaque PhysicalLink, résout les deux
 
 ## 28-index-types.js — 113 lignes
 
@@ -579,7 +579,7 @@
 - `capWatchShowDelta` (l. 436) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 516) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 415 lignes
+## 41-barre-vues.js — 416 lignes
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
 - `CAP_NAV_GROUPS` (l. 46) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
@@ -1249,7 +1249,7 @@
 - `capRapJson` (l. 432) — Enregistre un modèle de rapport en .json (réutilisable dans un autre projet). @param {object} m
 - `capRapImporter` (l. 437) — Importe un ou plusieurs modèles de rapport (.json). @param {Window} [W] - Fenêtre d'où part la demande
 
-## 64-preferences.js — 320 lignes
+## 64-preferences.js — 321 lignes
 
 - `CAP_PREF_MODES` (l. 9) — Libellés et descriptions des modes d'affichage des menus.
 - `capAutoCfg` (l. 20) — Réglage de l'enregistrement automatique (créé à la première lecture, désactivé par défaut).
@@ -1257,18 +1257,18 @@
 - `capPrefSetMode` (l. 31) — Change le mode d'affichage des menus (le mode Personnalisé part du mode Simplifié la première fois).
 - `capPrefSetIcons` (l. 41) — Change le style de la barre : icônes et textes, ou icônes seules (nom complet en infobulle).
 - `capPrefMenuHtml` (l. 49) — Contenu du menu ⚙ de la barre : mode des menus, personnalisation, thème, enregistrement automatique, préférences.
-- `capPrefDialog` (l. 68) — Ouvre la fenêtre ⚙ Préférences.
-- `capPrefDialogFill` (l. 80) — Remplit la fenêtre ⚙ Préférences (onglet courant ov._tab) et branche ses commandes.
-- `capPrefCustomFrom` (l. 152) — Réglage personnalisé de départ, recopié d'un mode existant.
-- `capPrefCustomDialog` (l. 162) — Fenêtre 🛠 Personnaliser l'affichage : pour chaque vue, bouton direct / dans son menu / masquée,
-- `capAutoHash` (l. 215) — Empreinte rapide d'un texte (FNV-1a 32 bits) pour savoir si la page a changé.
-- `capAutoPickMain` (l. 224) — Choisit le fichier de la page (« Enregistrer sous ») ; il sert ensuite à 💾 et à l'enregistrement automatique.
-- `capAutoPickBackup` (l. 234) — Choisit le fichier de secours (version précédente de la page).
-- `capAutoBackup` (l. 247) — Copie le contenu actuel du fichier de la page dans le fichier de secours (appelé avant chaque écriture, voir capSaveWrite).
-- `capAutoWritten` (l. 260) — Note un enregistrement réussi (manuel ou automatique) : empreinte de la page écrite, heure.
-- `capAutoTick` (l. 266) — Enregistrement automatique : écrit la page si elle a changé depuis le dernier enregistrement.
-- `capAutoSchedule` (l. 286) — (Re)lance la minuterie de l'enregistrement automatique selon le réglage.
-- `capAutoBanner` (l. 295) — Bandeau sous la barre quand l'enregistrement automatique est activé mais qu'un fichier manque
+- `capPrefDialog` (l. 69) — Ouvre la fenêtre ⚙ Préférences.
+- `capPrefDialogFill` (l. 81) — Remplit la fenêtre ⚙ Préférences (onglet courant ov._tab) et branche ses commandes.
+- `capPrefCustomFrom` (l. 153) — Réglage personnalisé de départ, recopié d'un mode existant.
+- `capPrefCustomDialog` (l. 163) — Fenêtre 🛠 Personnaliser l'affichage : pour chaque vue, bouton direct / dans son menu / masquée,
+- `capAutoHash` (l. 216) — Empreinte rapide d'un texte (FNV-1a 32 bits) pour savoir si la page a changé.
+- `capAutoPickMain` (l. 225) — Choisit le fichier de la page (« Enregistrer sous ») ; il sert ensuite à 💾 et à l'enregistrement automatique.
+- `capAutoPickBackup` (l. 235) — Choisit le fichier de secours (version précédente de la page).
+- `capAutoBackup` (l. 248) — Copie le contenu actuel du fichier de la page dans le fichier de secours (appelé avant chaque écriture, voir capSaveWrite).
+- `capAutoWritten` (l. 261) — Note un enregistrement réussi (manuel ou automatique) : empreinte de la page écrite, heure.
+- `capAutoTick` (l. 267) — Enregistrement automatique : écrit la page si elle a changé depuis le dernier enregistrement.
+- `capAutoSchedule` (l. 287) — (Re)lance la minuterie de l'enregistrement automatique selon le réglage.
+- `capAutoBanner` (l. 296) — Bandeau sous la barre quand l'enregistrement automatique est activé mais qu'un fichier manque
 
 ## 65-dossier-textes.js — 283 lignes
 
@@ -1408,3 +1408,13 @@
 - `capRenderDeploy` (l. 84) — Sous-vue 🖧 Déploiement & EPBS.
 - `capDepDetail` (l. 120) — Section « Déploiement / EPBS » du panneau de détail.
 - `capDepDashCatalog` (l. 133) — Indicateurs du tableau de bord : déploiement et EPBS.
+
+## 75-excel.js — 75 lignes
+
+- `capExportFormat` (l. 10) — Format courant des exports de tableaux. @returns {'csv'|'xlsx'}
+- `capExportToggle` (l. 13) — Bascule CSV ↔ Excel pour les exports de tableaux (⚙ Préférences).
+- `capXlsxCol` (l. 16) — Lettre(s) de colonne Excel (0 → A, 25 → Z, 26 → AA). @param {number} i - Indice @returns {string}
+- `capXlsxSheetName` (l. 19) — Nom de feuille valide (31 caractères, sans []:*?/\\, unique). @param {string} n - Nom voulu @param {Set} used - Noms déjà pris @returns {str
+- `capXlsxBuild` (l. 29) — Construit un classeur .xlsx.
+- `capXlsxDownload` (l. 53) — Télécharge un classeur .xlsx. @param {string} name - Nom de fichier @param {Array} sheets - Feuilles (voir capXlsxBuild)
+- `capXlsxClasseur` (l. 56) — Classeur Excel de toutes les analyses : une feuille par sujet (éléments, fonctions, échanges, composants, liens, chaînes, exigences, statuts

@@ -57,6 +57,7 @@ function capPrefMenuHtml(){
     <div class="cw-m-sep"></div>
     <div class="ctx-i" data-act="theme">🎨 Thème…</div>
     <div class="ctx-i" data-act="autosave" title="Enregistrer la page à intervalle régulier dans son fichier (Edge, Chrome)">💾 Enregistrement automatique <span class="cap-nav-g">${A.on?_L(`toutes les ${A.min} min`):_L('désactivé')}</span></div>
+    <div class="ctx-i" data-act="xport" title="Format des exports ⬇ de tous les tableaux : fichier CSV (point-virgule, UTF-8) ou classeur Excel .xlsx (en-tête figé, filtres)">⬇ Exports des tableaux : <b>${capExportFormat()==='xlsx'?_L('Excel (.xlsx)'):'CSV'}</b> <span class="cap-nav-g">${_L('cliquer pour changer')}</span></div>
     <div class="ctx-i" data-act="checks" title="Activer ou désactiver chaque contrôle 🩺, gravité, seuils ; profil partageable en .json">🩺 Profil de contrôles…</div>
     <div class="cw-m-sep"></div>
     <div class="ctx-i" data-act="prefs">⚙ Préférences…</div>`);

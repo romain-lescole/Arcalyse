@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 6274 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 6366 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -1317,32 +1317,33 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 58 | Émetteur ↓ / Récepteur → | Sender ↓ / Receiver → |
-| 58 | Composant | Component |
-| 72 | · cliquez une cellule pour lister les | … … · click a cell to list the … |
-| 98 | à vérifier | ⚠ … point… to check |
-| 98 | ✔ Aucune anomalie détectée | ✔ No anomaly detected |
-| 98 | pour information | · ℹ … for information |
-| 99 | Profil de contrôles : activer ou désactiver chaque contrôle, gravité, seuils | Checks profile: enable or disable each check, severity, thresholds |
-| 99 | Profil | Profile |
-| 99 | désactivé(s) | disabled |
-| 104 | ✔ RAS | ✔ Nothing to report |
-| 106 | contrôle(s) désactivé(s) par le profil | … check(s) disabled by the profile |
-| 107 | Ouvrir le profil sur ce contrôle | Open the profile on this check |
-| 125 | Port d'entrée (IN) | Input port (IN) |
-| 126 | Port de sortie (OUT) | Output port (OUT) |
-| 127 | Port bidirectionnel (INOUT) | Bidirectional port (INOUT) |
-| 128 | Orientation non définie (UNSET) | Undefined orientation (UNSET) |
-| 132 | → Orienté | → Oriented |
-| 132 | Sens source → cible | Source → target direction |
-| 133 | ← Inversé | ← Reversed |
-| 133 | Sens cible → source (déduit des orientations de ports) | Target → source direction (deduced from port orientations) |
-| 134 | ⇄ Bidirectionnel | ⇄ Bidirectional |
-| 134 | Échange dans les deux sens (port INOUT) | Exchange in both directions (INOUT port) |
-| 135 | ? Non orienté | ? Not oriented |
-| 135 | Aucun port orienté : sens inconnu | No oriented port: unknown direction |
-| 164 | Deux ports OUT reliés | Two OUT ports connected |
-| 165 | Deux ports IN reliés | Two IN ports connected |
+| 32 | Données | Data |
+| 59 | Émetteur ↓ / Récepteur → | Sender ↓ / Receiver → |
+| 59 | Composant | Component |
+| 73 | · cliquez une cellule pour lister les | … … · click a cell to list the … |
+| 99 | à vérifier | ⚠ … point… to check |
+| 99 | ✔ Aucune anomalie détectée | ✔ No anomaly detected |
+| 99 | pour information | · ℹ … for information |
+| 100 | Profil de contrôles : activer ou désactiver chaque contrôle, gravité, seuils | Checks profile: enable or disable each check, severity, thresholds |
+| 100 | Profil | Profile |
+| 100 | désactivé(s) | disabled |
+| 105 | ✔ RAS | ✔ Nothing to report |
+| 107 | contrôle(s) désactivé(s) par le profil | … check(s) disabled by the profile |
+| 108 | Ouvrir le profil sur ce contrôle | Open the profile on this check |
+| 126 | Port d'entrée (IN) | Input port (IN) |
+| 127 | Port de sortie (OUT) | Output port (OUT) |
+| 128 | Port bidirectionnel (INOUT) | Bidirectional port (INOUT) |
+| 129 | Orientation non définie (UNSET) | Undefined orientation (UNSET) |
+| 133 | → Orienté | → Oriented |
+| 133 | Sens source → cible | Source → target direction |
+| 134 | ← Inversé | ← Reversed |
+| 134 | Sens cible → source (déduit des orientations de ports) | Target → source direction (deduced from port orientations) |
+| 135 | ⇄ Bidirectionnel | ⇄ Bidirectional |
+| 135 | Échange dans les deux sens (port INOUT) | Exchange in both directions (INOUT port) |
+| 136 | ? Non orienté | ? Not oriented |
+| 136 | Aucun port orienté : sens inconnu | No oriented port: unknown direction |
+| 165 | Deux ports OUT reliés | Two OUT ports connected |
+| 166 | Deux ports IN reliés | Two IN ports connected |
 
 ## js/28-index-types.js
 
@@ -2973,26 +2974,26 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 258 | (masquée) | (hidden) |
 | 259 | Retirer de la barre | Remove from the bar |
 | 259 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
-| 331 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 331 | 💾 Enregistrer sous… | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
 | 331 | Ctrl+S | Ctrl+S |
-| 332 | 🌐 Télécharger la page HTML La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 332 | 🌐 Télécharger la page HTML 📗 Classeur Excel des analyses La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 🔷 Open a Capella model… 📁 Open the project folder… 📄 Open a work project (HTML page)… New version of Arcalyse? Open in it the project page saved with the previous one: all the work is carried over. 🔄 Load a model update… Update: delta shown before validation; warning if the two files seem to be different projects. Diagrams loaded: the .aird is re-read if it was opened with direct access (project folder), otherwise the up-to-date .aird is requested. 💾 Save{0} 💾 Save as…{1} 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
 | 332 | Ctrl+Maj+S | Ctrl+Maj+S |
-| 343 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
-| 345 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
-| 346 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
-| 347 | 💬 Visite de la revue | 💬 Review tour |
-| 348 | ℹ À propos | ℹ About |
-| 355 | 🎨 Personnaliser… | 🎨 Customize… |
-| 359 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
-| 364 | 🗺 Relation Map | 🗺 Relation Map |
-| 368 | Vues | Views |
-| 369 | Aucune vue, aucun élément ni diagramme ne correspond. | No view, element or diagram matches. |
-| 376 | Menu | … ▾ menu in the bar |
-| 376 | ▾ dans la barre | … ▾ menu in the bar |
-| 377 | Autres vues | Other views |
-| 380 | ⚙ Personnaliser l'affichage… | ⚙ Customize display… |
-| 381 | ↺ Rétablir la barre par défaut | ↺ Restore the default bar |
-| 383 | 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
+| 344 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
+| 346 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
+| 347 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
+| 348 | 💬 Visite de la revue | 💬 Review tour |
+| 349 | ℹ À propos | ℹ About |
+| 356 | 🎨 Personnaliser… | 🎨 Customize… |
+| 360 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
+| 365 | 🗺 Relation Map | 🗺 Relation Map |
+| 369 | Vues | Views |
+| 370 | Aucune vue, aucun élément ni diagramme ne correspond. | No view, element or diagram matches. |
+| 377 | Menu | … ▾ menu in the bar |
+| 377 | ▾ dans la barre | … ▾ menu in the bar |
+| 378 | Autres vues | Other views |
+| 381 | ⚙ Personnaliser l'affichage… | ⚙ Customize display… |
+| 382 | ↺ Rétablir la barre par défaut | ↺ Restore the default bar |
+| 384 | 📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML. | 📌 = direct button in the bar. A hidden view remains accessible here. Setting saved with the 💾 HTML page. |
 
 ## js/42-tableaux-analyses.js
 
@@ -4110,15 +4111,19 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 25 | Description | Description |
 | 25 | Summary | Summary |
 | 71 | (colonne supprimée) | (deleted column) |
-| 119 | ⬇ Export CSV — | ⬇ CSV export — … ✕ Uncheck the columns to remove. For a column that refers to model elements, add information on those elements: it will be inserted right next to it. Your choices are kept for this export. … ↺ Base columns … column(s), … row(s) Cancel ⬇ Download |
-| 120 | ✕ Décochez les colonnes à retirer. Pour une colonne qui désigne des éléments du modèle, ajoutez des informations sur ces éléments : elles seront insérées juste à côté. Vos choix sont retenus pour cet export. | ⬇ CSV export — … ✕ Uncheck the columns to remove. For a column that refers to model elements, add information on those elements: it will be inserted right next to it. Your choices are kept for this export. … ↺ Base columns … column(s), … row(s) Cancel ⬇ Download |
+| 119 | ⬇ Export CSV — | ⬇ CSV export — … ✕ Uncheck the columns to remove. For a column that refers to model elements, add information on those elements: it will be inserted right next to it. Your choices are kept for this export. … ↺ Base columns … column(s), … row(s) … · … Cancel ⬇ Download |
+| 120 | ✕ Décochez les colonnes à retirer. Pour une colonne qui désigne des éléments du modèle, ajoutez des informations sur ces éléments : elles seront insérées juste à côté. Vos choix sont retenus pour cet export. | ⬇ CSV export — … ✕ Uncheck the columns to remove. For a column that refers to model elements, add information on those elements: it will be inserted right next to it. Your choices are kept for this export. … ↺ Base columns … column(s), … row(s) … · … Cancel ⬇ Download |
 | 126 | élément(s) : | · … element(s): …… |
 | 128 | Colonne par chemin du ▤ Tableau | ▤ Table path column |
 | 129 | Attribut Capella | Capella attribute |
 | 130 | ＋ Attribut… | ＋ Attribute… … |
-| 131 | ↺ Colonnes de base | ⬇ CSV export — … ✕ Uncheck the columns to remove. For a column that refers to model elements, add information on those elements: it will be inserted right next to it. Your choices are kept for this export. … ↺ Base columns … column(s), … row(s) Cancel ⬇ Download |
-| 134 | colonne(s), | ⬇ CSV export — … ✕ Uncheck the columns to remove. For a column that refers to model elements, add information on those elements: it will be inserted right next to it. Your choices are kept for this export. … ↺ Base columns … column(s), … row(s) Cancel ⬇ Download |
-| 134 | ligne(s) Annuler ⬇ Télécharger | ⬇ CSV export — … ✕ Uncheck the columns to remove. For a column that refers to model elements, add information on those elements: it will be inserted right next to it. Your choices are kept for this export. … ↺ Base columns … column(s), … row(s) Cancel ⬇ Download |
+| 131 | ↺ Colonnes de base | ⬇ CSV export — … ✕ Uncheck the columns to remove. For a column that refers to model elements, add information on those elements: it will be inserted right next to it. Your choices are kept for this export. … ↺ Base columns … column(s), … row(s) … · … Cancel ⬇ Download |
+| 134 | colonne(s), | ⬇ CSV export — … ✕ Uncheck the columns to remove. For a column that refers to model elements, add information on those elements: it will be inserted right next to it. Your choices are kept for this export. … ↺ Base columns … column(s), … row(s) … · … Cancel ⬇ Download |
+| 134 | ligne(s) | ⬇ CSV export — … ✕ Uncheck the columns to remove. For a column that refers to model elements, add information on those elements: it will be inserted right next to it. Your choices are kept for this export. … ↺ Base columns … column(s), … row(s) … · … Cancel ⬇ Download |
+| 135 | Annuler ⬇ Télécharger | ⬇ CSV export — … ✕ Uncheck the columns to remove. For a column that refers to model elements, add information on those elements: it will be inserted right next to it. Your choices are kept for this export. … ↺ Base columns … column(s), … row(s) … · … Cancel ⬇ Download |
+| 135 | Format : Excel (.xlsx) | Format: Excel (.xlsx) |
+| 135 | Format : CSV | Format: CSV |
+| 135 | ⚙ Préférences pour changer | ⚙ Preferences to change |
 
 ## js/54-diagrammes.js
 
@@ -5766,58 +5771,61 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 43 | ⚙ Barre : icônes seules (nom au survol) | ⚙ Toolbar: icons only (name on hover) |
 | 43 | ⚙ Barre : icônes et textes | ⚙ Toolbar: icons and text |
 | 51 | Affichage des menus | Menu display |
-| 53 | 🛠 Personnaliser l'affichage… Style de la barre | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … 🩺 Checks profile… ⚙ Preferences… |
-| 55 | Icônes et textes | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … 🩺 Checks profile… ⚙ Preferences… |
+| 53 | 🛠 Personnaliser l'affichage… Style de la barre | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⬇ Table exports: … … 🩺 Checks profile… ⚙ Preferences… |
+| 55 | Icônes et textes | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⬇ Table exports: … … 🩺 Checks profile… ⚙ Preferences… |
 | 55 | (icônes seules : la barre déborde) | (icons only: the toolbar overflows) |
-| 56 | Icônes seules 🎨 Thème… 💾 Enregistrement automatique | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … 🩺 Checks profile… ⚙ Preferences… |
-| 59 | 🩺 Profil de contrôles… ⚙ Préférences… | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … 🩺 Checks profile… ⚙ Preferences… |
+| 56 | Icônes seules 🎨 Thème… 💾 Enregistrement automatique | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⬇ Table exports: … … 🩺 Checks profile… ⚙ Preferences… |
+| 59 | ⬇ Exports des tableaux : | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⬇ Table exports: … … 🩺 Checks profile… ⚙ Preferences… |
 | 59 | toutes les | every … min |
 | 59 | désactivé | off |
-| 82 | ☰ Affichage | ☰ Display |
-| 82 | 💾 Enregistrement | 💾 Saving |
-| 82 | 🎨 Thème | 🎨 Theme |
-| 82 | ⚙ Interface et vues | ⚙ Interface and views |
-| 85 | Choisissez les menus affichés dans la barre. Une vue masquée reste accessible par ☰ (Ctrl+K). | Choose the menus shown in the toolbar. A hidden view remains reachable with ☰ (Ctrl+K). |
-| 87 | 🛠 Personnaliser l'affichage… Style de la barre | 🛠 Customize display… Toolbar style Icons and text When the toolbar does not fit on one line (narrow window), it switches to icons only automatically. Icons only More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text. |
-| 89 | Icônes et textes Quand la barre ne tient pas sur une ligne (fenêtre étroite), elle passe automatiquement en icônes seules. | 🛠 Customize display… Toolbar style Icons and text When the toolbar does not fit on one line (narrow window), it switches to icons only automatically. Icons only More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text. |
-| 92 | Dernier enregistrement automatique : | Last automatic save: … |
-| 92 | Aucun enregistrement automatique pour l'instant. | No automatic save yet. |
-| 93 | La page est enregistrée dans son fichier (celui de 💾 / Ctrl+S), seulement si quelque chose a changé . | The page is saved to its file (the one used by 💾 / Ctrl+S), only if something has changed . |
-| 94 | ⚠ Ce navigateur ne permet pas d'écrire directement dans un fichier (Edge ou Chrome nécessaire) : enregistrement automatique indisponible. | ⚠ This browser cannot write directly to a file (Edge or Chrome required): automatic saving unavailable. |
-| 95 | Enregistrer automatiquement toutes les | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
-| 96 | minutes Fichier de la page : | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
-| 97 | non choisi | not chosen |
-| 98 | Choisir… | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
-| 99 | ⚠ Dernière erreur : | ⚠ Last error: … |
-| 100 | Garder la version précédente dans un fichier de secours Avant chaque enregistrement (automatique ou 💾), le contenu actuel du fichier est copié dans le fichier de secours (par exemple mon-projet.backup.html , qui s'ouvre comme une page normale). Protège d'un enregistrement malencontreux. Fichier de secours : | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
-| 102 | non choisi | not chosen |
-| 103 | Choisir… Le navigateur oublie les fichiers choisis quand la page est fermée : à la réouverture, un bandeau propose de les choisir à nouveau. | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
-| 107 | Thème de l'interface (enregistré avec la page). | Interface theme (saved with the page). |
-| 109 | 🎨 Personnaliser le thème… | 🎨 Customize theme… |
-| 111 | Fichier .json sans le modèle : barre des vues et préférences, tableaux de bord, ▤ Tableau, thème, règles de nommage… pour réutiliser vos réglages avec un autre modèle. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… | File .json without the model: view bar and preferences, dashboards, ▤ Table, theme, naming rules… to reuse your settings with another model. ⚙ Save the interface and views… ⚙ Load an interface and views… |
-| 115 | ⚙ Préférences ✕ | ⚙ Preferences ✕ … … Settings saved with the 💾 HTML page. Close |
-| 117 | Réglages enregistrés avec la 💾 Page HTML. Fermer | ⚙ Preferences ✕ … … Settings saved with the 💾 HTML page. Close |
-| 174 | Autres vues | Other views |
-| 174 | Bouton | Button |
-| 174 | Menu | Menu |
-| 174 | Masquée | Hidden |
-| 176 | 🛠 Personnaliser l'affichage ✕ Bouton : bouton direct dans la barre · Menu : dans son menu déroulant · Masquée : accessible seulement par ☰ (Ctrl+K). Un menu sans vue n'est pas affiché. Partir de : Simplifié Expert | 🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode) |
-| 182 | Commandes de la barre | 🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode) |
-| 184 | 📁 Fichier, 💾, ❓ Aide et ⚙ restent toujours affichés. Annuler ✔ Appliquer (mode Personnalisé) | 🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode) |
-| 205 | ✔ Affichage personnalisé appliqué | ✔ Custom display applied |
-| 226 | Chargez d'abord un modèle : la page enregistrée le contient. | Load a model first: the saved page contains it. |
-| 239 | Page HTML | HTML page |
-| 241 | Le fichier de secours doit être différent du fichier de la page. | The backup file must be different from the page file. |
-| 254 | fichier de secours : | backup file: |
-| 276 | Enregistrer dans « | Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as |
-| 276 | » (Ctrl+S) — enregistré automatiquement à | Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as |
-| 276 | — Maj+clic ou Ctrl+Maj+S : enregistrer sous | Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as |
-| 280 | ⚠ Enregistrement automatique impossible : | ⚠ Automatic saving failed: |
-| 310 | 💾 Enregistrement automatique activé : choisissez le fichier de la page. ▶ Choisir le fichier… | 💾 Automatic saving is on: choose the page file. ▶ Choose the file… |
-| 311 | 🛟 Fichier de secours (version précédente) non choisi. Choisir… | 🛟 Backup file (previous version) not chosen. Choose… |
-| 312 | ⚠ Enregistrement automatique : | ⚠ Automatic saving: … ⚙ Settings |
-| 312 | ⚙ Réglages | ⚠ Automatic saving: … ⚙ Settings |
-| 313 | Désactiver ✕ | Turn off ✕ |
+| 60 | 🩺 Profil de contrôles… ⚙ Préférences… | 🛠 Customize display… Toolbar style Icons and text… Icons only 🎨 Theme… 💾 Automatic saving … ⬇ Table exports: … … 🩺 Checks profile… ⚙ Preferences… |
+| 60 | Excel (.xlsx) | Excel (.xlsx) |
+| 60 | cliquer pour changer | click to change |
+| 83 | ☰ Affichage | ☰ Display |
+| 83 | 💾 Enregistrement | 💾 Saving |
+| 83 | 🎨 Thème | 🎨 Theme |
+| 83 | ⚙ Interface et vues | ⚙ Interface and views |
+| 86 | Choisissez les menus affichés dans la barre. Une vue masquée reste accessible par ☰ (Ctrl+K). | Choose the menus shown in the toolbar. A hidden view remains reachable with ☰ (Ctrl+K). |
+| 88 | 🛠 Personnaliser l'affichage… Style de la barre | 🛠 Customize display… Toolbar style Icons and text When the toolbar does not fit on one line (narrow window), it switches to icons only automatically. Icons only More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text. |
+| 90 | Icônes et textes Quand la barre ne tient pas sur une ligne (fenêtre étroite), elle passe automatiquement en icônes seules. | 🛠 Customize display… Toolbar style Icons and text When the toolbar does not fit on one line (narrow window), it switches to icons only automatically. Icons only More compact toolbar: each button keeps its icon, the name shows on hover; drop-down menus and ☰ keep their text. |
+| 93 | Dernier enregistrement automatique : | Last automatic save: … |
+| 93 | Aucun enregistrement automatique pour l'instant. | No automatic save yet. |
+| 94 | La page est enregistrée dans son fichier (celui de 💾 / Ctrl+S), seulement si quelque chose a changé . | The page is saved to its file (the one used by 💾 / Ctrl+S), only if something has changed . |
+| 95 | ⚠ Ce navigateur ne permet pas d'écrire directement dans un fichier (Edge ou Chrome nécessaire) : enregistrement automatique indisponible. | ⚠ This browser cannot write directly to a file (Edge or Chrome required): automatic saving unavailable. |
+| 96 | Enregistrer automatiquement toutes les | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
+| 97 | minutes Fichier de la page : | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
+| 98 | non choisi | not chosen |
+| 99 | Choisir… | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
+| 100 | ⚠ Dernière erreur : | ⚠ Last error: … |
+| 101 | Garder la version précédente dans un fichier de secours Avant chaque enregistrement (automatique ou 💾), le contenu actuel du fichier est copié dans le fichier de secours (par exemple mon-projet.backup.html , qui s'ouvre comme une page normale). Protège d'un enregistrement malencontreux. Fichier de secours : | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
+| 103 | non choisi | not chosen |
+| 104 | Choisir… Le navigateur oublie les fichiers choisis quand la page est fermée : à la réouverture, un bandeau propose de les choisir à nouveau. | Save automatically every … minutes Page file: … Choose… …… Keep the previous version in a backup file Before each save (automatic or 💾), the current content of the file is copied to the backup file (for example my-project.backup.html , which opens like a normal page). Protects against an unwanted save. Backup file: … Choose… The browser forgets the chosen files when the page is closed: when reopened, a banner offers to choose them again. |
+| 108 | Thème de l'interface (enregistré avec la page). | Interface theme (saved with the page). |
+| 110 | 🎨 Personnaliser le thème… | 🎨 Customize theme… |
+| 112 | Fichier .json sans le modèle : barre des vues et préférences, tableaux de bord, ▤ Tableau, thème, règles de nommage… pour réutiliser vos réglages avec un autre modèle. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… | File .json without the model: view bar and preferences, dashboards, ▤ Table, theme, naming rules… to reuse your settings with another model. ⚙ Save the interface and views… ⚙ Load an interface and views… |
+| 116 | ⚙ Préférences ✕ | ⚙ Preferences ✕ … … Settings saved with the 💾 HTML page. Close |
+| 118 | Réglages enregistrés avec la 💾 Page HTML. Fermer | ⚙ Preferences ✕ … … Settings saved with the 💾 HTML page. Close |
+| 175 | Autres vues | Other views |
+| 175 | Bouton | Button |
+| 175 | Menu | Menu |
+| 175 | Masquée | Hidden |
+| 177 | 🛠 Personnaliser l'affichage ✕ Bouton : bouton direct dans la barre · Menu : dans son menu déroulant · Masquée : accessible seulement par ☰ (Ctrl+K). Un menu sans vue n'est pas affiché. Partir de : Simplifié Expert | 🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode) |
+| 183 | Commandes de la barre | 🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode) |
+| 185 | 📁 Fichier, 💾, ❓ Aide et ⚙ restent toujours affichés. Annuler ✔ Appliquer (mode Personnalisé) | 🛠 Customize display ✕ Button : direct button in the toolbar · Menu : in its drop-down menu · Hidden : reachable only with ☰ (Ctrl+K). A menu without any view is not shown. Start from: Simplified Expert … Toolbar commands … 📁 File, 💾, ❓ Help and ⚙ are always shown. Cancel ✔ Apply (Custom mode) |
+| 206 | ✔ Affichage personnalisé appliqué | ✔ Custom display applied |
+| 227 | Chargez d'abord un modèle : la page enregistrée le contient. | Load a model first: the saved page contains it. |
+| 240 | Page HTML | HTML page |
+| 242 | Le fichier de secours doit être différent du fichier de la page. | The backup file must be different from the page file. |
+| 255 | fichier de secours : | backup file: |
+| 277 | Enregistrer dans « | Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as |
+| 277 | » (Ctrl+S) — enregistré automatiquement à | Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as |
+| 277 | — Maj+clic ou Ctrl+Maj+S : enregistrer sous | Save to “…” (Ctrl+S) — saved automatically at … — Shift+click or Ctrl+Shift+S: save as |
+| 281 | ⚠ Enregistrement automatique impossible : | ⚠ Automatic saving failed: |
+| 311 | 💾 Enregistrement automatique activé : choisissez le fichier de la page. ▶ Choisir le fichier… | 💾 Automatic saving is on: choose the page file. ▶ Choose the file… |
+| 312 | 🛟 Fichier de secours (version précédente) non choisi. Choisir… | 🛟 Backup file (previous version) not chosen. Choose… |
+| 313 | ⚠ Enregistrement automatique : | ⚠ Automatic saving: … ⚙ Settings |
+| 313 | ⚙ Réglages | ⚠ Automatic saving: … ⚙ Settings |
+| 314 | Désactiver ✕ | Turn off ✕ |
 
 ## js/65-dossier-textes.js
 
@@ -6617,6 +6625,95 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 141 | Contrôles | Checks |
 | 141 | chk.dep | (inchangé, hors _L) |
 | 141 | Contrôles du déploiement et de l'EPBS | Deployment and EPBS checks |
+
+## js/75-excel.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 13 | ✔ Exports des tableaux en Excel (.xlsx) | ✔ Table exports as Excel (.xlsx) |
+| 13 | ✔ Exports des tableaux en CSV | ✔ Table exports as CSV |
+| 20 | Feuille | (inchangé, hors _L) |
+| 43 | [Content_Types].xml | (inchangé, hors _L) |
+| 46 | xl/_rels/workbook.xml.rels | (inchangé, hors _L) |
+| 46 | .xml"/ | (inchangé, hors _L) |
+| 48 | xl/worksheets/sheet | (inchangé, hors _L) |
+| 57 | Chargez d'abord un modèle. | Load a model first. |
+| 61 | Éléments | Elements |
+| 61 | Couche | Layer |
+| 61 | Type | (inchangé, hors _L) |
+| 61 | Nom | Name |
+| 61 | Description | Description |
+| 62 | Fonctions | Functions |
+| 62 | Couche | Layer |
+| 62 | Fonction | Function |
+| 62 | Feuille | Leaf |
+| 62 | Allocation | Allocation |
+| 62 | Allocataires | Allocated to |
+| 62 | Réalise | Realizes |
+| 62 | Réalisée par | Realized by |
+| 62 | Description | Description |
+| 63 | Functional Exchanges | Functional Exchanges |
+| 63 | Couche | Layer |
+| 63 | Échange | Exchange |
+| 63 | Source | Source |
+| 63 | Cible | Target |
+| 63 | Exchange Items | Exchange Items |
+| 63 | Catégories | Categories |
+| 64 | Composants | Components |
+| 64 | Couche | Layer |
+| 64 | Composant | Component |
+| 64 | Nature | Nature |
+| 64 | Ports | Ports |
+| 64 | Fonctions | Functions |
+| 64 | Acteur | Actor |
+| 65 | Component Exchanges | Component Exchanges |
+| 65 | Couche | Layer |
+| 65 | Échange | Exchange |
+| 65 | Source | Source |
+| 65 | Cible | Target |
+| 65 | Sens | Direction |
+| 65 | Functional Exchanges | Functional Exchanges |
+| 65 | Physical Links | Physical Links |
+| 66 | Physical Links | Physical Links |
+| 66 | Couche | Layer |
+| 66 | Lien | Link |
+| 66 | Source | Source |
+| 66 | Cible | Target |
+| 66 | Component Exchanges | Component Exchanges |
+| 67 | Chaînes | Chains |
+| 67 | Couche | Layer |
+| 67 | Type | (inchangé, hors _L) |
+| 67 | Chaîne | Chain |
+| 67 | Étapes | Steps |
+| 67 | Échanges | Exchanges |
+| 67 | Description | Description |
+| 68 | Exigences | Requirements |
+| 68 | Exigence | Requirement |
+| 68 | Famille | Family |
+| 68 | Type | (inchangé, hors _L) |
+| 68 | Texte | Text |
+| 68 | Éléments liés | Linked elements |
+| 69 | Statut de revue | Review status |
+| 69 | Couche | Layer |
+| 69 | Élément | Element |
+| 69 | Type | (inchangé, hors _L) |
+| 69 | Statut | Status |
+| 69 | Classe | Class |
+| 69 | Commentaire Capella | Capella comment |
+| 70 | Contrôles | Checks |
+| 70 | Vue | View |
+| 70 | Contrôle | Check |
+| 70 | Gravité | Severity |
+| 70 | Lignes | Rows |
+| 71 | Santé | Health |
+| 71 | Indicateur | Indicator |
+| 71 | Valeur | Value |
+| 71 | Score | Score |
+| 71 | Points à vérifier | Points to check |
+| 71 | Bloquants | Blocking |
+| 71 | Éléments nommés | Named elements |
+| 72 | -analyses.xlsx | -analyses.xlsx |
+| 73 | ✔ Classeur Excel : | ✔ Excel workbook: … sheets |
 
 ## Textes sans traduction anglaise (12)
 

@@ -29,6 +29,7 @@ function capBuildIdMap(allNodes){
  * @param {Array<Array>} rows - Lignes de valeurs
  */
 function capCsvDownload(name, header, rows){
+  if(typeof capExportFormat==='function'&&capExportFormat()==='xlsx'){ capXlsxDownload(name, [{name:_L('Données'), header, rows}]); return; }   // ⚙ exports en Excel (75)
   const esc=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
   const csv=[header,...rows].map(r=>r.map(esc).join(';')).join('\n');
   capDownloadBlob(new Blob(['\uFEFF'+csv],{type:'text/csv'}), name);

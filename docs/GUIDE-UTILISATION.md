@@ -191,7 +191,11 @@ Tous ces réglages sont enregistrés avec la 💾 page HTML et dans la partie «
 
 ---
 
-### 3.5 🩺 Profil de contrôles
+### 3.5 ⬇ Exports Excel
+
+**⚙ › Exports des tableaux : CSV / Excel** : tous les boutons ⬇ CSV des vues produisent alors un classeur **.xlsx** (une feuille, en-tête en gras figé, filtres automatiques, largeurs de colonnes, nombres typés) ; le réglage est enregistré avec la barre. **📁 Fichier › 📗 Classeur Excel des analyses** : un classeur, une feuille par analyse (éléments, fonctions, échanges fonctionnels, composants, Component Exchanges, Physical Links, chaînes, exigences, statuts de revue, contrôles, santé). Le fichier est écrit par Arcalyse, sans bibliothèque.
+
+### 3.6 🩺 Profil de contrôles
 
 **⚙ › 🩺 Profil de contrôles…** (ou le bouton **🩺 Profil** en tête de chaque onglet 🩺 Contrôles) liste, vue par vue, tous les contrôles d'Arcalyse avec le nombre de lignes qu'ils signalent sur le modèle chargé. Pour chacun :
 
