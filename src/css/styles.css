@@ -1073,6 +1073,11 @@ html[data-tone="light"] #cap-table tbody td.sel{background:color-mix(in srgb,var
 #cap-watch-flash{position:fixed;left:50%;transform:translateX(-50%);bottom:36px;z-index:2650;background:var(--c-bg3);color:var(--c-text);border:1px solid var(--c-border);
   border-radius:6px;padding:7px 12px;font-size:12px;box-shadow:0 4px 14px rgba(0,0,0,.35);}
 #cap-watch-ov{position:fixed;inset:0;z-index:2900;background:rgba(0,0,0,.55);align-items:center;justify-content:center;}
+/* ♿ Accessibilité (13) : focus visible au clavier, mouvement réduit */
+:focus-visible{outline:2px solid var(--c-accent,#58a6ff);outline-offset:1px;}
+.tbtn:focus-visible,[role="button"]:focus-visible,.phl-toggle-btn:focus-visible,.cap-lf-btn:focus-visible{outline:2px solid var(--c-accent,#58a6ff);outline-offset:1px;}
+tr[role="button"]:focus-visible{outline-offset:-2px;}
+@media (prefers-reduced-motion:reduce){ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important;} }
 /* 💬 Dialogues maison (12) : capConfirm / capAlert / capPrompt */
 .cap-dlg-ov{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;}
 .cap-dlg{background:var(--c-bg2);color:var(--c-text);border:1px solid var(--c-border);border-radius:9px;width:min(460px,calc(100vw - 32px));max-height:calc(100vh - 60px);
@@ -1870,6 +1875,6 @@ html:not([data-tone="light"]) svg.ico{filter:drop-shadow(0 0 .6px rgba(255,255,2
 .dos-suivi{font-style:italic;}
 .dos-tsuivi.active{background:color-mix(in srgb,var(--c-accent) 22%,transparent);}
 /* ⚙ Barre « icônes seules » : libellés masqués (nom en infobulle), marque de couche sous l'icône (🧱 SA / LA) */
-html[data-tbicons] #toolbar .tb-lbl{display:none;}
+html[data-tbicons] #toolbar .tb-lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}   /* masqué à l'écran, lu par les lecteurs d'écran (♿ 13) */
 html[data-tbicons] #toolbar .tbtn{padding-left:7px;padding-right:7px;}
 .tb-ico-l{font-size:8.5px;font-weight:700;color:var(--c-dim);margin-left:1px;}

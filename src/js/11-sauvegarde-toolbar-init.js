@@ -240,7 +240,7 @@ document.addEventListener('keydown', ev=>{
 /* ═══════════════════════════════════════════════════════════════════════
    21. INITIALISATION
    ═══════════════════════════════════════════════════════════════════════ */
-applyTheme('dark');   // applique le thème par défaut (Sombre)
+applyTheme(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');   // thème par défaut selon le réglage du système (♿) ; une page enregistrée rétablit ensuite son propre thème (46)
 document.getElementById('theme-sel').value='dark';
 migratePkgsToElements(); // convertit packages en éléments type Package
 setupMarkers();        // crée les marqueurs SVG

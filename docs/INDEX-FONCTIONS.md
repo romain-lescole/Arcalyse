@@ -179,6 +179,17 @@
 - `capPrompt` (l. 85) — Demande une saisie (remplace `prompt`).
 - `capToast` (l. 95) — Notification brève en bas de la fenêtre (disparaît seule) : confirmation d'une action, petit avertissement.
 
+## 13-accessibilite.js — 82 lignes
+
+- `CAP_A11Y_CLICK` (l. 9)
+- `CAP_A11Y_NATIVE` (l. 10)
+- `capA11yPicto` (l. 16) — Vrai si un texte ne contient aucune lettre ni chiffre (pictogrammes, symboles, espaces seulement).
+- `capA11yName` (l. 22) — Nom accessible court tiré d'une info-bulle : sa première partie (avant « — », « : », « ; », une parenthèse ou un retour à la ligne), 60 cara
+- `capA11yNative` (l. 28) — Vrai si un élément est déjà atteignable au clavier par nature (contrôle natif) ou par un rôle posé ailleurs.
+- `capA11yEquip` (l. 33) — Équipe un élément cliquable : rôle, tabulation, nom accessible, état enfoncé.
+- `capA11yPressed` (l. 42) — Reflète la classe .active d'un bouton à bascule dans aria-pressed (seulement s'il en a eu une).
+- `capA11yFix` (l. 50) — Passe sur une zone du document : commandes cliquables, icônes décoratives.
+
 ## 20-capella-chargement.js — 936 lignes
 
 - `CAP_LAYERS` (l. 4)
@@ -552,7 +563,7 @@
 - `capWatchShowDelta` (l. 436) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 516) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 407 lignes
+## 41-barre-vues.js — 409 lignes
 
 - `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
 - `CAP_NAV_GROUPS` (l. 40) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
@@ -573,9 +584,9 @@
 - `capNavRender` (l. 182) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
 - `capNavSync` (l. 221) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
 - `capNavClose` (l. 240) — Ferme le menu déroulant de la barre des vues.
-- `capNavRow` (l. 249) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
-- `capNavMenu` (l. 259) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
-- `capNavMenuFill` (l. 311) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+- `capNavRow` (l. 250) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
+- `capNavMenu` (l. 260) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
+- `capNavMenuFill` (l. 313) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
 
 ## 42-tableaux-analyses.js — 154 lignes
 

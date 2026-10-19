@@ -4289,7 +4289,10 @@
   "Suivi": "Watch",
   "Revue": "Review",
   "Thème": "Theme",
-  "Aide": "Help"
+  "Aide": "Help",
+  "Barre principale": "Main bar",
+  "Commandes de la Relation Map": "Relation Map commands",
+  "Panneau de détail": "Details panel"
  },
  "types": {
   "AbstractCapabilityInclude": "Inclusion of a Capability in another one (reference via 'included').",

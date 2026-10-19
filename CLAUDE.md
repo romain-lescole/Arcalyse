@@ -39,6 +39,7 @@ Application **autonome, fonctionnant hors ligne**, qui charge un fichier `.capel
 | `js/10-rm-vues.js` | 🗂 Vues de la Relation Map : onglets `rmViews` (capture `rmViewCapture`, application `rmViewApply`, enregistrement `rmViewSync` en fin de `render()`), préréglages `RM_VIEW_PRESETS`, 💾 / 📂 vue (`rmViewSave`, `rmViewLoadFile`), partie ⚙ `rm` (`rmViewsCfgGet`/`rmViewsCfgSet`) |
 | `js/11-sauvegarde-toolbar-init.js` | Sauvegarde/chargement JSON, gestionnaires de la barre, raccourcis, initialisation (`applyTheme('dark')`) |
 | `js/12-dialogues.js` | 💬 Dialogues maison : `capConfirm` / `capAlert` / `capPrompt` (asynchrones, `await` ; options `title`, `ok`, `cancel`, `danger`, `level`, `win` pour les fenêtres séparées ; `_capDlgAuto` pour les tests) à la place de `confirm` / `alert` / `prompt` du navigateur ; notification brève `capToast` (`capWatchFlash` y renvoie) |
+| `js/13-accessibilite.js` | ♿ Accessibilité : observateur `capA11yFix` (rôle `button` + `tabindex` sur les div/span cliquables `CAP_A11Y_CLICK` ou à `onclick`, `aria-label` tiré de `title` quand le texte n'est qu'un pictogramme, `aria-pressed` ↔ `.active`, SVG décoratifs `aria-hidden`), Entrée / Espace = clic sur les rôles `button` ; focus visible et mouvement réduit dans le CSS, repères (`role="main"`, `toolbar`, `status`) dans `interface.html`, thème initial selon `prefers-color-scheme` (11) |
 | `js/20-capella-chargement.js` | Moteur Capella : `capLoadFile`, parsing XML, `capBuildTree`, registre des types, injection dans la Relation Map, `capSaveFullPage`, écran d'accueil |
 | `js/21-capella-vues-base.js` | Barre latérale, ▦ Cartes, ▤ Tableau (colonnes, ✨ colonne par chemin : moteur Metachain `cap…`, aperçu en direct `capPp…`), 🌳 Arborescence |
 | `js/22-capella-liens.js` | `CAP_LINK_SECTIONS` (20 relations, `humanLabel`), `capComputeLinks`, vue 🔗 Liens |
@@ -91,6 +92,7 @@ Textes : inventaire **`docs/TEXTES.md`** ; traduction : **`docs/i18n/LISEZMOI.md
 
 ## Conventions utiles
 
+- **Accessibilité** : un bouton réduit à un pictogramme doit porter un `title` (devient son nom accessible) ; une commande `div`/`span` cliquable doit utiliser une classe de `CAP_A11Y_CLICK` (13) ou l'attribut `onclick` pour être atteignable au clavier ; état enfoncé = classe `.active`.
 - **Jamais `confirm` / `alert` / `prompt` du navigateur** (sauf dans les gabarits des pages autonomes de 58 et 61) : `await capConfirm(texte, {danger:true})`, `capAlert(texte, {level:'err'})`, `await capPrompt(texte, valeur)` (module 12), avec `win` dans une fenêtre séparée ; confirmation d'une action réussie : `capToast('✔ …')`.
 - Thèmes clairs : `html[data-tone="light"]` (Office 2007, Clair, personnalisé clair) pour les règles communes ; un correcteur automatique fonce les textes colorés trop pâles (voir NOTES-TECHNIQUES).
 - Couleurs : toujours via les variables CSS (`var(--c-text)`, `var(--c-dim)`, `var(--c-warn,#e3b341)`…). Texte sur fond coloré : `capInk(fond)`. Texte coloré sur le fond du thème : `capTextOn(couleur)`. Thème par défaut : Sombre — vérifier le contraste en clair **et** en sombre.

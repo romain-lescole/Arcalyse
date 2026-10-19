@@ -1,5 +1,5 @@
 <!-- ════════════════════════  TOOLBAR  ════════════════════════ -->
-<div id="toolbar">
+<div id="toolbar" role="toolbar" aria-label="Barre principale">
   <!-- 🏠 Accueil du projet (bouton généré par capNavRender, 41-barre-vues.js) -->
   <div id="cap-tb-home" style="display:contents"></div>
   <div class="tbtn active" id="mode-rm"    title="Relation Map">🗺<span class="tb-lbl"> Relation Map</span></div>
@@ -52,7 +52,7 @@
   <div class="tbtn" id="b-prefs" data-dd="prefs" title="Préférences : affichage des menus, enregistrement automatique, thème, interface et vues">⚙</div>
 </div>
 <!-- Toolbar niveau 2 : commandes propres à la Relation Map -->
-<div id="toolbar2">
+<div id="toolbar2" role="toolbar" aria-label="Commandes de la Relation Map">
   <div class="tbtn" id="b-zi"  title="Zoom avant (Ctrl++)">＋</div>
   <div class="tbtn" id="b-zo"  title="Zoom arrière (Ctrl+-)">－</div>
   <div class="tbtn" id="b-fit" title="Ajuster (Ctrl+W)">⊡ Fit</div>
@@ -116,7 +116,7 @@
 </div>
 
 <!-- ════════════════════════  MAIN  ════════════════════════ -->
-<div id="main">
+<div id="main" role="main">
   <!-- Écran d'accueil : ouverture d'un fichier Capella (glisser-déposer ou explorateur) -->
   <div id="cap-welcome">
     <button id="cw-help" type="button" title="Aide et présentation des fonctionnalités">❓ Aide</button>
@@ -219,7 +219,7 @@
   </div>
 </div><!-- /main -->
 
-<div id="infobar"><span id="info-txt">Prêt</span></div>
+<div id="infobar" role="status" aria-live="polite"><span id="info-txt">Prêt</span></div>
 
 <!-- ════════════════════════  INFOBULLE  ════════════════════════ -->
 <div id="tip"><div class="tn" id="tt-n"></div><div class="ts" id="tt-s"></div></div>
@@ -290,13 +290,13 @@
 <input type="file" id="cap-watch-input" accept=".capella,.melodymodeller,.xml" style="display:none">
 <!-- 🔄 Suivi du fichier : notification de mise à jour, message bref, fenêtre du delta -->
 <div id="cap-watch-note" style="display:none"></div>
-<div id="cap-watch-flash" style="display:none"></div>
+<div id="cap-watch-flash" role="status" aria-live="polite" style="display:none"></div>
 <div id="cap-watch-ov" style="display:none"></div>
 
 <!-- ═══ CAPELLA DATA PANEL (full overlay, shown when mode=capella) ═══ -->
 <div id="capella-overlay" style="display:none;position:fixed;inset:0;top:0;bottom:0;background:var(--c-bg);z-index:50;flex-direction:row;">
   <!-- Left sidebar: type filter -->
-  <div id="cap-sidebar" style="width:240px;flex-shrink:0;border-right:1px solid var(--c-border);
+  <div id="cap-sidebar" role="complementary" aria-label="Types d'éléments" style="width:240px;flex-shrink:0;border-right:1px solid var(--c-border);
        display:flex;flex-direction:column;overflow:hidden;background:var(--c-bg2);">
     <div id="cap-sidebar-hdr" style="padding:10px 12px 8px;border-bottom:1px solid var(--c-border);
          display:flex;flex-direction:column;gap:7px;background:var(--c-bg);">
@@ -362,7 +362,7 @@
         <button class="tbtn" id="cap-exp-json">⬇ JSON</button>
       </div>
     </div>
-    <div id="cap-result-count" style="padding:4px 12px;font-size:11px;color:var(--c-dim);flex-shrink:0;"></div>
+    <div id="cap-result-count" role="status" aria-live="polite" style="padding:4px 12px;font-size:11px;color:var(--c-dim);flex-shrink:0;"></div>
 
     <div id="cap-view-cards"  style="flex:1;overflow-y:auto;padding:12px 16px;display:block;"></div>
     <div id="cap-view-table"  style="flex:1;overflow:hidden;display:none;flex-direction:column;">
@@ -446,7 +446,7 @@
   </div>
 
   <!-- Detail panel — inline right column, shown on element click -->
-  <div id="cap-detail" style="display:none;width:320px;flex-shrink:0;border-left:1px solid var(--c-border);
+  <div id="cap-detail" role="region" aria-label="Panneau de détail" style="display:none;width:320px;flex-shrink:0;border-left:1px solid var(--c-border);
        background:var(--c-bg2);overflow-y:auto;padding:16px;flex-direction:column;position:relative;">
     <button id="cap-detail-close" style="position:absolute;top:10px;right:10px;background:none;
             border:none;color:var(--c-dim);cursor:pointer;font-size:18px;line-height:1;">×</button>

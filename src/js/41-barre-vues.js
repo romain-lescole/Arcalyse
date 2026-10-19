@@ -239,6 +239,7 @@ function capNavSync(force){
 /** Ferme le menu déroulant de la barre des vues. */
 function capNavClose(){
   const dd=document.getElementById('cap-nav-dd'); if(dd) dd.style.display='none';
+  document.querySelectorAll('[aria-expanded="true"]').forEach(b=>b.setAttribute('aria-expanded','false'));   // ♿ menus refermés
 }
 
 /** Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
@@ -286,6 +287,7 @@ function capNavMenu(g, anchor){
   }
   if(dd.style.display!=='none'&&dd.dataset.g===g){ capNavClose(); return; }
   dd.dataset.g=g;
+  if(anchor&&anchor.setAttribute){ anchor.setAttribute('aria-haspopup','true'); anchor.setAttribute('aria-expanded','true'); }   // ♿
   dd.innerHTML=g==='☰'?_L(`<input id="cap-nav-q" type="text" placeholder="🔍 Vue, élément du modèle, diagramme… (Ctrl+K)" autocomplete="off"><div id="cap-nav-res"></div>`):'<div id="cap-nav-res"></div>';
   capNavMenuFill();
   dd.style.display='block';

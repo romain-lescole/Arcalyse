@@ -1378,6 +1378,8 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 
 | Raccourci / geste | Effet |
 |---|---|
+| **Tab** / **Maj+Tab** | Passe de commande en commande (boutons, menus, onglets, liens du détail, lignes de tableau) avec un contour visible. |
+| **Entrée** / **Espace** | Active la commande qui a le focus ; dans une boîte de dialogue, Entrée = OK et Échap = annuler. |
 | **Ctrl+K** | Recherche dans ☰ : vue, élément du modèle ou diagramme (Entrée pour ouvrir). |
 | **Ctrl+S** / **Ctrl+Maj+S** | Enregistrer / enregistrer sous. |
 | **Échap** | Ferme la fenêtre, le menu ou la sélection en cours. |
