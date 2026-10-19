@@ -4585,7 +4585,15 @@
   "✔ Classeur Excel : {0} feuilles": "✔ Excel workbook: {0} sheets",
   "Précédent (Alt+←)": "Back (Alt+←)",
   "Suivant (Alt+→)": "Forward (Alt+→)",
-  "Historique de navigation": "Navigation history"
+  "Historique de navigation": "Navigation history",
+  "📋 Fiche": "📋 Sheet",
+  "Description et attributs de l'élément": "Description and attributes of the element",
+  "Références sortantes et entrantes, owner, éléments contenus": "Outgoing and incoming references, owner, owned elements",
+  "Diagrammes du projet où l'élément est représenté": "Project diagrams where the element is shown",
+  "Exigences, propriétés, contraintes, scénarios, statut de revue, catégories, bibliothèques, REC / RPL, déploiement": "Requirements, properties, constraints, scenarios, review status, categories, libraries, REC / RPL, deployment",
+  "Commentaires de revue portant sur l'élément": "Review comments about the element",
+  "≡ Tout": "≡ All",
+  "Toutes les sections à la suite": "Every section in a row"
  },
  "interface": {
   "🌳 Arborescence": "🌳 Tree",

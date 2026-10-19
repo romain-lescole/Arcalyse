@@ -86,6 +86,7 @@ function capRevRefresh(){
   document.querySelectorAll('#crv-det-sec').forEach(sec=>{
     const id=sec.dataset.el, el=capLoaded&&capGetElementById_(id); if(!el||!_capRevUi.secTitle) return;
     sec.innerHTML=capRevDetailSectionIn(id,_capRevUi.secTitle);
+    if(typeof capDetTabsRefresh==='function') capDetTabsRefresh(sec.closest('#cap-detail-content,#rm-detail-content'));   // onglet 💬 Revue montré / masqué (77)
     const bar=sec.parentElement&&sec.parentElement.querySelector('.crv-det-bar'); if(bar) bar.outerHTML=capRevDetailHead(el);
   });
 }
@@ -632,7 +633,7 @@ function capRevAttrBtn(id, k){
  */
 function capRevDetailSection(id, secTitle){
   _capRevUi.secTitle=secTitle;
-  return `<div id="crv-det-sec" data-el="${capEsc(id)}">${capRevDetailSectionIn(id, secTitle)}</div>`;
+  return `<div id="crv-det-sec" data-el="${capEsc(id)}" data-tab="revue">${capRevDetailSectionIn(id, secTitle)}</div>`;   // data-tab : onglet 💬 Revue du panneau (77)
 }
 /**
  * Contenu de la section « Commentaires » du panneau de détail.

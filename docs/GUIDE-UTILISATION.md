@@ -1260,6 +1260,8 @@ Un **clic sur un nom** (presque partout : cartes, tableaux, blocs, listes, diagr
 
 Tout est **cliquable** pour naviguer de proche en proche. **×** ferme le panneau.
 
+**🗂 Onglets** : ces sections sont réparties en **📋 Fiche** (description, attributs), **🔗 Liens** (références, owner, éléments contenus), **🔲 Diagrammes**, **🔬 Analyses** (exigences, propriétés, contraintes, scénarios, statut de revue, catégories, bibliothèques, REC / RPL, déploiement) et **💬 Revue** ; **≡ Tout** remet toutes les sections à la suite. Chaque onglet indique son nombre de sections ; un onglet vide pour l'élément n'est pas proposé. L'onglet choisi est gardé d'un élément à l'autre et enregistré avec la 💾 page. Les boutons **◀ ▶** de la barre ([§ 3.7](#37--historique-de-navigation)) reviennent sur les éléments ouverts précédemment.
+
 <br clear="right">
 
 ---

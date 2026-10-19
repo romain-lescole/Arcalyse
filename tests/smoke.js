@@ -47,6 +47,7 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.waitForFunction(() => document.querySelectorAll('#diag-liste li[data-diag]').length > 10, null, { timeout: 60000 });
     // Panneau de détail d'une fonction : section « Diagrammes », lien vers un diagramme où elle est dessinée
     const id = await p.evaluate(() => { const e = capAllElements.find(x => x.attrs.name === 'Manage Video and Audio Diffusion'); capOpenDetail(e.id); return e.id; });
+    if (await p.$('#cap-detail-content [data-dtab="diag"]')) await p.click('#cap-detail-content [data-dtab="diag"]');   // 🗂 onglet 🔲 Diagrammes du panneau (77)
     const lien = await p.$('#cap-detail-content .cdg-lien');
     if (!lien) throw new Error('section « Diagrammes » absente du panneau de détail');
     await lien.click(); await p.waitForTimeout(300);
@@ -119,6 +120,12 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.click('#b-theme-menu'); await p.click('#cap-nav-dd [data-thm="light"]');
     await p.click('#b-theme-menu'); await p.click('#cap-nav-dd [data-thm="dark"]');
     await p.click('#b-file-menu'); await p.keyboard.press('Escape'); });
+  await step('panneau de détail : onglets', async () => {
+    await p.evaluate(() => { capNavOpen('cards'); const e = capAllElements.find(x => x.typeName === 'SystemFunction' && x.attrs.name); capOpenDetail(e.id); });
+    if (!(await p.$('#cap-detail-content .cap-det-tab.active'))) throw new Error('onglets du panneau absents');
+    await p.click('#cap-detail-content [data-dtab="liens"]');
+    if (!(await p.$('#cap-detail-content .cap-det-pane[data-pane="liens"].on'))) throw new Error('onglet 🔗 Liens non affiché');
+    await p.click('#cap-detail-content [data-dtab="all"]'); await p.evaluate(() => { _capNav.det = 'fiche'; capNavSave(); }); });
   await step('historique ◀ ▶ : retour, Alt+→, liste', async () => {
     await p.evaluate(() => { capNavOpen('tree'); capNavOpen('cards'); });
     await p.click('#b-hist-back'); if (await p.evaluate(() => capCurrentView) !== 'tree') throw new Error('◀ : vue Arborescence non rétablie');

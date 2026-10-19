@@ -44,7 +44,9 @@ function capOpenDetail(id){
     const elv=CAP_LAYERS[e.layer]||{color:'#8b949e',bg:'rgba(139,148,158,.1)'};
     return `<span class="cap-det-link" onclick="capOpenDetail('${capEsc(e.id)}')" style="cursor:pointer;display:inline-flex;align-items:center;gap:5px;padding:2px 6px;border-radius:4px;border:1px solid var(--c-border);margin:2px 3px 2px 0;font-size:11px;background:var(--c-bg2);" onmouseenter="this.style.borderColor='var(--c-accent)'" onmouseleave="this.style.borderColor='var(--c-border)'">${capIco(e.id,13)}<span style="color:${elv.color};font-size:9px;font-weight:700">${capEsc(e.typeName)}</span><span style="color:var(--c-text)">${capEsc(e.attrs.name||e.id.slice(0,12))}</span></span>`;
   };
-  const secTitle=(txt,color)=>`<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:${color||'var(--c-dim)'};margin:16px 0 6px;">${txt}</div>`;
+  // Onglet du panneau (77) porté par chaque titre de section : 📋 fiche, 🔗 liens, 🔲 diag, 🔬 ana, 💬 revue
+  let curTab='fiche';
+  const secTitle=(txt,color)=>`<div class="cap-det-sec" data-tab="${curTab}" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:${color||'var(--c-dim)'};margin:16px 0 6px;">${txt}</div>`;
 
   let html=`<span class="cap-type-badge" style="color:${lv.color};background:${lv.bg};display:inline-block;margin-bottom:6px">${capEsc(el.typeName)}</span>`;
   if(human.h) html+=`<div style="font-size:11px;color:var(--c-accent);font-weight:600;margin-bottom:2px;">${capEsc(human.h)}</div>`;
@@ -61,7 +63,9 @@ function capOpenDetail(id){
   html+=`<table style="width:100%;border-collapse:collapse">${literalRows.map(([k,v])=>`<tr><td style="color:var(--c-dim);font-family:monospace;font-size:11px;padding:5px 0;width:100px;padding-right:10px;border-bottom:1px solid var(--c-border);vertical-align:top;">${capEsc(k)}</td><td style="color:var(--c-text);word-break:break-all;font-size:12px;padding:5px 0;border-bottom:1px solid var(--c-border);">${typeof capLibIsExt==='function'&&String(v).trim().split(/\s+/).every(capLibIsExt)?String(v).trim().split(/\s+/).map(capLibRefHtml).join('<br>'):capEsc(String(v).slice(0,400))}${typeof capRevAttrBtn==='function'?capRevAttrBtn(el.id,k):''}</td></tr>`).join('')}</table>`;   // 📚 référence externe : bibliothèque › élément (72)
 
   // 🔲 Diagrammes Capella du projet (.aird) où l'élément est représenté : juste après les attributs
+  curTab='diag';
   if(typeof capDiagDetail==='function') html+=capDiagDetail(el.id, secTitle);
+  curTab='liens';
 
   // Références sortantes (attributs → autres éléments, cliquables)
   if(outgoingRefs.length){
@@ -82,6 +86,7 @@ function capOpenDetail(id){
   }
 
   // Exigences, propriétés (PVMT) et contraintes de l'élément
+  curTab='ana';
   html+=capXtDetail(el.id, secTitle);
   html+=capStDetail(el.id, secTitle);   // 🔖 statut de revue Capella (68)
   html+=capEcDetail(el.id, secTitle);   // 🏷 catégories d'échanges (71)
@@ -90,7 +95,9 @@ function capOpenDetail(id){
   html+=capDepDetail(el.id, secTitle);   // 🖧 déploiement & EPBS (74)
 
   // 💬 Commentaires de revue portant sur l'élément
+  curTab='revue';
   if(typeof capRevDetailSection==='function') html+=capRevDetailSection(el.id, secTitle);
+  curTab='liens';
 
   // Owner
   if(parent){
@@ -109,7 +116,8 @@ function capOpenDetail(id){
   // En Relation Map, le détail s'affiche dans son propre panneau à droite du graphe (06)
   const inRm = currentMode!=='capella' && document.getElementById('rm-detail');
   if (inRm) { S.propEl=id; _rmDetailOn=true; }
-  document.getElementById(inRm?'rm-detail-content':'cap-detail-content').innerHTML=html;
+  const box=document.getElementById(inRm?'rm-detail-content':'cap-detail-content'); box.innerHTML=html;
+  if(typeof capDetTabs==='function') capDetTabs(box);   // 🗂 onglets du panneau (77)
   const det=document.getElementById(inRm?'rm-detail':'cap-detail');
   if(det){ det.style.display='flex'; }
 }
