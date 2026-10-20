@@ -525,7 +525,7 @@ PARTS.scripts = async () => {
   await p.evaluate(() => capScrToggle(false));
 };
 
-/** 📑 Exigences et 🏷 Propriétés (PVMT) avec le modèle AIDA, qui en contient (à lancer en dernier : remplace le modèle). */
+/** 🧾 Exigences et 🎛 Propriétés (PVMT) avec le modèle AIDA, qui en contient (à lancer en dernier : remplace le modèle). */
 PARTS.aida = async () => {
   const old = p; p = await old.context().newPage(); await old.close();
   p.on('pageerror', e => { errs.push(e.message); console.log('  ✖ JS : ' + e.message); }); p.on('dialog', d => d.accept());

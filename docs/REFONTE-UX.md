@@ -69,7 +69,10 @@ fichier de secours) · **Interface et vues** (parties de `CAP_CFG_PARTS`, export
 6. ✔ *(fait)* **Revue & documents** (55, 58, 56, 61, 63) : Commentaires avec l'envoi aux relecteurs, check-lists sorties de l'Accueil,
    Faire relire = dossiers de relecture, Rapports automatiques en entrée séparée.
 7. ✔ *(fait — ▦ Cartes gardé, mode Complet)* **Retraits** (28, 22, 60, 08, 02, 11, 20) avec compatibilité des anciennes pages : Index des types, vue Liens, tableaux blancs (données gardées), éditeur de modèle et code mort masqué.
-8. *(à décider)* **Pictogrammes** : la maquette remplace les emojis par des icônes au trait ; coût élevé (tous les libellés,
-   dictionnaire anglais, tests). Au minimum : un emoji unique par notion (doublons actuels 🏷, 🧱, 📋, ⛓, ⚡).
+8. ✔ *(fait — version minimale)* **Pictogrammes** : un emoji unique par notion — 🧾 Exigences (📋 reste aux plans de revue et à la
+   📋 Fiche du détail), 🎛 Propriétés (🏷 reste aux catégories d'échanges), 🔒 Contraintes (⛓ reste aux chemins de traçabilité),
+   ▤ Tableau de ƒ Fonctions (comme le ▤ Tableau), ✚ Check-list rapide (⚡ reste aux chaînes), 🛠 Audit du rapport de comparaison ;
+   🧱 garde les composants de toutes les couches (une notion, une famille). Les icônes au trait de la maquette restent possibles
+   plus tard (coût élevé : tous les libellés, dictionnaire anglais, tests).
 
 Livraison prévue en **v3.0** après le lot 7 ; captures du README et du guide à refaire (modèle IFE, thème Clair, 1440×860).

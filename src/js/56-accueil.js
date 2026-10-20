@@ -224,7 +224,7 @@ function capHomeCartes(){
       champ('notes',_L('Notes'),_L('Hypothèses, liens, informations utiles…'),true); }},
   {k:'docs', l:_L('☑ Check-lists & plans de revue'), w:1, f:()=>(_capHome.docs.length?`<div class="hm-dl">${_capHome.docs.map(d=>`<div class="hm-dl-i" data-doc="${d.id}"><span>${d.kind==='plan'?'📋':'☑'} ${esc(d.titre||_L('(sans titre)'))}${d.kind==='plan'&&d.head.date?` <span class="ana-dim">${esc(capRevDate(d.head.date))}</span>`:''}</span>${capHomeBar(capHomeProgress(d))}${pop('doc',d.id)}</div>`).join('')}</div>`
       :`<div class="ana-dim">${_L('Aucune check-list ni plan de revue.')}</div>`)+
-    `<div class="hm-row"><button class="cap-lf-btn" data-a="quick" title="${_L('Crée une check-list vide et place le curseur sur le premier point')}">${_L('⚡ Check-list rapide')}</button><button class="cap-lf-btn" data-a="go-docs" title="${_L('Nouvelle check-list à partir d\'un modèle, nouveau plan de revue')}">${_L('☑ Modèles et plans de revue')}</button></div>`},
+    `<div class="hm-row"><button class="cap-lf-btn" data-a="quick" title="${_L('Crée une check-list vide et place le curseur sur le premier point')}">${_L('✚ Check-list rapide')}</button><button class="cap-lf-btn" data-a="go-docs" title="${_L('Nouvelle check-list à partir d\'un modèle, nouveau plan de revue')}">${_L('☑ Modèles et plans de revue')}</button></div>`},
   {k:'contenu', l:_L('🧩 Contenu du modèle'), w:2, f:()=>`<div class="hm-layers">${capHomeCouches().map(c=>{ const lv=CAP_LAYERS[c.k];
     return `<div class="hm-layer" style="--hm-c:${lv.color}"><div class="hm-layer-h"><b style="color:${lv.color}">${c.k}</b> <span class="ana-dim">${esc(lv.label)}</span><span style="flex:1"></span><b>${c.n}</b></div>`+
       c.types.map(([t,n])=>{ const H=CAP_HUMAN_NAMES[t]||{}; return `<div class="hm-layer-t" title="${esc(t+(H.d?' — '+H.d:''))}"><span>${capIcoType(t,12)} ${esc(H.h||t)}</span><span>${n}</span></div>`; }).join('')+`</div>`; }).join('')}</div>`},
@@ -362,7 +362,7 @@ function capHomeNewDoc(kind, mk){
 }
 
 /**
- * ⚡ Check-list rapide : une section, un point par ligne (au moins un point vide), puis ouverture.
+ * ✚ Check-list rapide : une section, un point par ligne (au moins un point vide), puis ouverture.
  * @param {string} [titre] - Titre ('' : « Check-list du <date> »)
  * @param {string} [lignes] - Points, un par ligne
  * @returns {object} check-list créée

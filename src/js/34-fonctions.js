@@ -574,7 +574,7 @@ function capRenderFunctions(box){
       <button class="cap-lf-btn" id="ana-nr-apply">✔ Appliquer</button></details>`)+capDiagHtml(capFnChecks(F, st.layer));
   const shownN=(q||akOn||st.who)?inLayer.filter(f=>match(f)&&akMatch(f)).length:inLayer.length;
   box.innerHTML=_L(`<div class="phl-filter-bar" style="flex-wrap:wrap;margin-bottom:8px;gap:6px">
-      <span class="tb-grp" title="Vue">${[['tree',_L('🌳 Hiérarchie')],['table',_L('📋 Tableau')],['trace',_L('⛓ Traçabilité')],['metrics',_L('📊 Métriques')],['checks',_L('🩺 Contrôles')]].map(([k,l])=>`<button class="cap-lf-btn${st.view===k?' active':''}" data-fv="${k}">${l}</button>`).join('')}</span>
+      <span class="tb-grp" title="Vue">${[['tree',_L('🌳 Hiérarchie')],['table',_L('▤ Tableau')],['trace',_L('⛓ Traçabilité')],['metrics',_L('📊 Métriques')],['checks',_L('🩺 Contrôles')]].map(([k,l])=>`<button class="cap-lf-btn${st.view===k?' active':''}" data-fv="${k}">${l}</button>`).join('')}</span>
       ${st.view!=='metrics'?_L(`<span class="tb-grp" title="Couche">${layers.map(k=>`<button class="cap-lf-btn${st.layer===k?' active':''}" data-fl="${k}">${k} (${F.list.filter(f=>f.layer===k).length})</button>`).join('')}<button class="cap-lf-btn${st.layer==='all'?' active':''}" data-fl="all">Toutes</button></span>`):''}
       ${['tree','table','trace'].includes(st.view)?_L(`<span class="tb-grp" title="Recherche et affichage"><input id="ana-fn-q" class="phl-filter-input" placeholder="🔍 Nom ou description…" value="${esc(st.q)}" style="width:190px">
         ${['tree','trace'].includes(st.view)?_L(`<label class="cap-chx-opt"><input type="checkbox" id="ana-fn-desc"${st.desc?' checked':''}> Descriptions</label>`):''}
@@ -690,7 +690,7 @@ function capFillHeight(root){
 window.addEventListener('resize',()=>capFillHeight());
 
 /** Sous-vues de 🔬 Analyses (onglets) ; « fns » ouvre la vue ƒ Fonctions, qui garde son propre conteneur. */
-var CAP_ANA_SUBS=[['fns',_L('ƒ Fonctions')],['trace',_L('🧬 Traçabilité inter-couches')],['xlay',_L('⇶ Liens entre couches')],['caps',_L('🎯 Capacités & missions')],['states',_L('🚦 Modes & états')],['diff',_L('⚖ Comparaison de versions')],['reqs',_L('📋 Exigences')],['pvmt',_L('🏷 Propriétés')],['data',_L('🗃 Données & interfaces')],['cts',_L('⛓ Contraintes')],['cats',_L('🏷 Catégories d\'échanges')],['libs',_L('📚 Bibliothèques')],['rec',_L('📦 REC / RPL')],['deploy',_L('🖧 Déploiement & EPBS')],['status',_L('🔖 Statut de revue')],['sante',_L('💚 Santé & contrôles')]];
+var CAP_ANA_SUBS=[['fns',_L('ƒ Fonctions')],['trace',_L('🧬 Traçabilité inter-couches')],['xlay',_L('⇶ Liens entre couches')],['caps',_L('🎯 Capacités & missions')],['states',_L('🚦 Modes & états')],['diff',_L('⚖ Comparaison de versions')],['reqs',_L('🧾 Exigences')],['pvmt',_L('🎛 Propriétés')],['data',_L('🗃 Données & interfaces')],['cts',_L('🔒 Contraintes')],['cats',_L('🏷 Catégories d\'échanges')],['libs',_L('📚 Bibliothèques')],['rec',_L('📦 REC / RPL')],['deploy',_L('🖧 Déploiement & EPBS')],['status',_L('🔖 Statut de revue')],['sante',_L('💚 Santé & contrôles')]];
 
 /** Onglets des sous-vues de 🔬 Analyses (communs à la vue 🔬 Analyses et à la vue ƒ Fonctions).
  * @returns {string} HTML des boutons (attribut data-an)

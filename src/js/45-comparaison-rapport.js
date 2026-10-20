@@ -361,7 +361,7 @@ function capDrRender(host, diffs, A, B, meta){
       <span class="tb-grp"><span class="tb-grp-l">Préréglage</span>
         <button class="cap-lf-btn" data-pre="notes" title="Simple, regroupé par catégorie, éléments techniques rattachés : pour des notes de version">📰 Notes de version</button>
         <button class="cap-lf-btn" data-pre="review" title="Détaillé, avant / après">🔍 Revue</button>
-        <button class="cap-lf-btn" data-pre="audit" title="Complet, éléments techniques non regroupés">🧾 Audit</button></span>
+        <button class="cap-lf-btn" data-pre="audit" title="Complet, éléments techniques non regroupés">🛠 Audit</button></span>
     </div>
     <div class="dr-bar">
       <span class="tb-grp"><span class="tb-grp-l">Catégories</span>${CAP_DR_CATS.map(c=>chip(st.cats.has(c.k),'data-cat',c.k,`${c.i} ${c.l} (${catN(c.k)})`,'',c.c)).join('')}

@@ -12,7 +12,7 @@
  * cc = sélecteur de couche commun, pc = vue ouverte selon la couche mémorisée ; une vue membre porte m (sa famille) et
  * c (libellé de sa puce dans la barre de famille) et n'apparaît plus seule dans les menus (recherche, épingles et ☰ la gardent). */
 var CAP_NAV_ITEMS=[
-  {k:'home',      l:_L('🏠 Accueil'),           g:'',     t:_L('Accueil du projet : informations, check-lists, plans de revue, tableaux blancs (texte, diagrammes et éléments cliquables)')},
+  {k:'home',      l:_L('🏠 Accueil'),           g:'',     t:_L('Accueil du projet : en-tête, tâches courantes, fiche, contenu, santé et revue du modèle')},
   {k:'diag',      l:_L('🔲 Diagrammes Capella'), p:_L('🔲 Diagrammes'), g:'', t:_L('Diagrammes Capella du projet (.aird), dessinés comme dans Capella : liste, recherche, mini-carte, filtres, chaînes, exports ; clic sur un élément → son détail')},
   {k:'table',     l:_L('▤ Tableau'),            g:'',     t:_L('Tableau de tous les éléments du modèle : onglets de vues, colonnes d\'attributs, de relations et par chemin, tri, filtres, export CSV')},
   // 🏗 Architecture
@@ -41,10 +41,10 @@ var CAP_NAV_ITEMS=[
   {k:'grp:trac',  l:_L('🧬 Traçabilité entre couches'), g:'verif', f:['ana:trace','ana:xlay'], t:_L('Réalisations entre couches OA → SA → LA → PA → EPBS : tableau de couverture et chemins, ou graphe des réalisations')},
   {k:'ana:trace', l:_L('🧬 Traçabilité inter-couches'), m:'grp:trac', c:_L('🧬 Tableau de traçabilité'), g:'verif'},
   {k:'ana:xlay',  l:_L('⇶ Liens entre couches'),       p:_L('⇶ Couches'), m:'grp:trac', c:_L('⇶ Graphe des réalisations'), g:'verif', t:_L('Vue graphique des réalisations entre couches (OA → SA → LA → PA → EPBS) : fonctions, chaînes et leurs fonctions, capacités, composants…')},
-  {k:'ana:reqs',  l:_L('📋 Exigences'),               g:'verif'},
-  {k:'ana:pvmt',  l:_L('🏷 Propriétés'),              m:'grp:prop', c:_L('🏷 Propriétés (PVMT)'), g:'verif'},
-  {k:'ana:cts',   l:_L('⛓ Contraintes'),              m:'grp:prop', c:_L('⛓ Contraintes'), g:'verif'},
-  {k:'grp:prop',  l:_L('🏷 Propriétés & contraintes'), g:'verif', f:['ana:pvmt','ana:cts'], t:_L('Propriétés PVMT (groupes, valeurs, définitions) et contraintes (expressions, éléments contraints)')},
+  {k:'ana:reqs',  l:_L('🧾 Exigences'),               g:'verif'},
+  {k:'ana:pvmt',  l:_L('🎛 Propriétés'),              m:'grp:prop', c:_L('🎛 Propriétés (PVMT)'), g:'verif'},
+  {k:'ana:cts',   l:_L('🔒 Contraintes'),              m:'grp:prop', c:_L('🔒 Contraintes'), g:'verif'},
+  {k:'grp:prop',  l:_L('🎛 Propriétés & contraintes'), g:'verif', f:['ana:pvmt','ana:cts'], t:_L('Propriétés PVMT (groupes, valeurs, définitions) et contraintes (expressions, éléments contraints)')},
   {k:'ana:diff',  l:_L('⚖ Comparaison de versions'),  g:'verif'},
   {k:'ana:status',l:_L('🔖 Statut de revue'),          g:'verif', t:_L('Statut (DRAFT, TO BE REVIEWED, REVIEWED…) et commentaire de revue Capella de chaque élément : liste, répartition, contrôles')},
   {k:'ana:cats',  l:_L('🏷 Catégories d\'échanges'),   g:'verif', s:_L('Avancé'), x:1, t:_L('ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory : échanges par catégorie, taux de catégorisation, contrôles')},
@@ -432,7 +432,7 @@ function capNavMenuFill(){
       <div class="ctx-i" data-act="saveas">💾 Enregistrer sous…${sc(_L('Ctrl+Maj+S'))}</div>
       <div class="ctx-i" data-act="page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome">🌐 Télécharger la page HTML</div>
       <div class="ctx-i" data-act="xlsx" title="Un classeur .xlsx, une feuille par analyse : éléments, fonctions, échanges, composants, liens, chaînes, exigences, statuts de revue, contrôles, santé">📗 Classeur Excel des analyses</div>
-      <div class="cap-nav-hint">La page HTML enregistrée contient : <b>le modèle chargé</b> et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue.<br>Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues.</div>
+      <div class="cap-nav-hint">La page HTML enregistrée contient : <b>le modèle chargé</b> et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, dossiers), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue.<br>Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues.</div>
       <div class="cw-m-sep"></div>
       <div class="ctx-i" data-act="cfgsave" title="Fichier .json sans le modèle : barre, tableaux de bord, ▤ Tableau, thème, règles de nommage (au choix)">⚙ Enregistrer l'interface et les vues…</div>
       <div class="ctx-i" data-act="cfgload" title="Applique un fichier .json d'interface (au choix des parties)">⚙ Charger une interface et des vues…</div>

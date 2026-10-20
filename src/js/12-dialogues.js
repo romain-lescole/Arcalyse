@@ -2,7 +2,7 @@
    💬 Dialogues maison : capConfirm / capAlert / capPrompt (à la place de confirm / alert / prompt
    du navigateur) et notification brève capToast. Thème de la page, textes traduits au build,
    Entrée = OK, Échap = annuler, bouton par défaut au clavier ; fonctionnent aussi dans les
-   fenêtres séparées (⧉ revue, check-lists, tableaux blancs, dossiers) : passer `win`.
+   fenêtres séparées (⧉ revue, check-lists, dossiers) : passer `win`.
    Asynchrones : `if(!await capConfirm('…')) return;` dans une fonction async.
    Tests : `window._capDlgAuto = 'ok' | 'cancel'` répond sans afficher (test fumée).
    ═══════════════════════════════════════════════════════════════════════════ */

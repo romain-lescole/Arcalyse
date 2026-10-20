@@ -3,7 +3,7 @@
 > **Arcalyse** — votre modèle Capella, sous toutes ses coutures.
 > Ce guide passe en revue **tous les menus, sous-menus, vues et fenêtres** de l'application, explique ce que fait chaque commande et **comment s'en servir** (clics, glisser-déposer, raccourcis), avec des captures d'écran.
 
-Les captures ont été faites avec le modèle d'exemple public *In-Flight Entertainment System* (IFE) livré avec Capella et ses diagrammes (`.aird`), dans le thème **Clair** ; les vues 📋 Exigences et 🏷 Propriétés utilisent le modèle *AIDA*. Elles sont régénérées par `node tools/guide-captures.js` (voir [Annexe C](#annexe-c--régénérer-les-captures-du-guide)). Sur les captures annotées, les **pastilles rouges numérotées** renvoient aux tableaux qui les suivent.
+Les captures ont été faites avec le modèle d'exemple public *In-Flight Entertainment System* (IFE) livré avec Capella et ses diagrammes (`.aird`), dans le thème **Clair** ; les vues 🧾 Exigences et 🎛 Propriétés utilisent le modèle *AIDA*. Elles sont régénérées par `node tools/guide-captures.js` (voir [Annexe C](#annexe-c--régénérer-les-captures-du-guide)). Sur les captures annotées, les **pastilles rouges numérotées** renvoient aux tableaux qui les suivent.
 
 ---
 
@@ -120,7 +120,7 @@ Les vues proches sont réunies en **familles** : une seule entrée de menu, puis
 |---|---|---|
 | **ƒ Fonctions & échanges** : ƒ Fonctions, ƒ⇆ échanges fonctionnels, 🟨 activités OA | 💚 Santé & contrôles | 💬 Commentaires (panneau de revue) |
 | **🧱 Composants & interfaces** : SA · System Component, LA · Logical Component, PA · Behavior Exchange, PA · Physical Link, 🧩 Ports | **🧬 Traçabilité entre couches** : tableau de traçabilité, ⇶ graphe des réalisations | ☑ Check-lists & plans de revue |
-| **⚡ Chaînes & scénarios** : ⚡ Chaînes, 🎬 Scénarios | 📋 Exigences, **🏷 Propriétés & contraintes** (propriétés PVMT, ⛓ contraintes) | 📑 Faire relire (dossiers de relecture) |
+| **⚡ Chaînes & scénarios** : ⚡ Chaînes, 🎬 Scénarios | 🧾 Exigences, **🎛 Propriétés & contraintes** (propriétés PVMT, 🔒 contraintes) | 📑 Faire relire (dossiers de relecture) |
 | 🚦 Modes & états, 🎯 Capacités & missions, 🗃 Données & interfaces, 🖧 Déploiement & EPBS | ⚖ Comparaison de versions, 🔖 Statut de revue | 📘 Rapports automatiques, 📐 Tableau de bord |
 | *Explorer* : 🗺 Relation Map, 🌳 Arborescence ; *Complet* : ▦ Cartes | *Avancé (Complet)* : 🏷 Catégories d'échanges, 📦 REC / RPL, 📚 Bibliothèques | *Complet* : 📜 Scripts |
 
@@ -246,7 +246,7 @@ Puis **six cartes** sur deux lignes :
 |---|---|
 | **🔷 Projet** | Nom du projet Capella, fichier, version de Capella (lue dans le fichier), diagrammes chargés et leur nombre par couche (clic sur le nom du `.aird` : 🔲 Diagrammes Capella ; **📂 Ouvrir le .aird…** s'il n'y en a pas), nombre d'éléments, **dernière mise à jour** du modèle et **🔄** pour en charger une, version d'Arcalyse. |
 | **📝 Fiche projet** | Champs libres : objet, phase / jalon, version du modèle, responsable, équipe, notes. |
-| **☑ Check-lists & plans de revue** | Avancement de chaque document ; **⚡ Check-list rapide** (liste vide, curseur sur le premier point) ; **☑ Modèles et plans de revue** (ouvre l'onglet) ; **⧉** ouvre un document dans une fenêtre séparée. |
+| **☑ Check-lists & plans de revue** | Avancement de chaque document ; **✚ Check-list rapide** (liste vide, curseur sur le premier point) ; **☑ Modèles et plans de revue** (ouvre l'onglet) ; **⧉** ouvre un document dans une fenêtre séparée. |
 | **🧩 Contenu du modèle** | Une carte par couche (OA, SA, LA, PA, EPBS, Transverse) : principaux types et leur nombre. |
 | **💬 Revue** | État de la revue : commentaires non clos, par criticité, à vérifier, en retard ; **Ouvrir la revue**. |
 
@@ -266,7 +266,7 @@ La disposition est enregistrée dans la page.
 
 <img src="guide/img/05-home-nouveau.png" alt="Nouvelle check-list / plan" width="250" align="right">
 
-**Créer une check-list** : liste **☑ Nouvelle check-list** (colonne de gauche) → **Vide (à remplir)** (le curseur est placé sur le premier point ; Entrée ajoute le suivant) ou un modèle (**Qualité du modèle**, **revue OA / SA / LA / PA**). Depuis 🏠 Projet, **⚡ Check-list rapide** crée aussi une liste vide. **📂 Importer…** reprend une check-list enregistrée en `.json`. La check-list s'ouvre au centre :
+**Créer une check-list** : liste **☑ Nouvelle check-list** (colonne de gauche) → **Vide (à remplir)** (le curseur est placé sur le premier point ; Entrée ajoute le suivant) ou un modèle (**Qualité du modèle**, **revue OA / SA / LA / PA**). Depuis 🏠 Projet, **✚ Check-list rapide** crée aussi une liste vide. **📂 Importer…** reprend une check-list enregistrée en `.json`. La check-list s'ouvre au centre :
 
 <br clear="right">
 
@@ -342,7 +342,7 @@ Un **dossier de relecture** rassemble, chapitre par chapitre, ce que d'autres pe
 | 3.2 Exigences de capacité | une section par capacité (sinon par fonction) : fonctions, chaînes, diagrammes, exigences liées |
 | 3.3 Interfaces externes | 3.3.1 diagrammes et partenaires, puis une interface par partenaire (échanges de composants et fonctionnels) |
 | 3.4 · 3.5 | échanges internes ; éléments échangés avec l'extérieur |
-| 3.6 à 3.17 | exigences repérées par mots-clés (sûreté, sécurité, environnement, qualité, personnel, formation, logistique, emballage…) ; 3.10 : nœuds, comportements et liens physiques (PA) ; 3.12 : ⛓ contraintes |
+| 3.6 à 3.17 | exigences repérées par mots-clés (sûreté, sécurité, environnement, qualité, personnel, formation, logistique, emballage…) ; 3.10 : nœuds, comportements et liens physiques (PA) ; 3.12 : 🔒 contraintes |
 | 3.18 · 4 · 5 | tableaux d'exigences (priorité, vérification, éléments liés) ; ⇶ liens entre couches |
 
 | SSDD | Rempli à partir du modèle |
@@ -945,7 +945,7 @@ Molette : zoom ; glisser : déplacement ; infobulles au survol ; mini-carte.
 
 Premier onglet de 🔬 Analyses : activités OA et fonctions SA / LA / PA, **couche par couche**, avec leurs descriptions mises en avant.
 
-**Barre commune** : sous-vues **🌳 Hiérarchie · 📋 Tableau · ⛓ Traçabilité · 📊 Métriques · 🩺 Contrôles** ; couches **OA · SA · LA · PA · Toutes** ; **Nom ou description…** ; **Descriptions** (afficher dans l'arbre) ; **⊞ / ⊟** ; filtre **ALLOCATION** (🧩 Système, 👤 Acteurs, ∅ Non allouées — clic : afficher / masquer, double-clic : uniquement celle-ci) ; liste **Tous les allocataires** (un acteur, ou le système et ses sous-systèmes en arbre) ; **⬇ CSV** ; **📄 Dossier fonctionnel**.
+**Barre commune** : sous-vues **🌳 Hiérarchie · ▤ Tableau · ⛓ Traçabilité · 📊 Métriques · 🩺 Contrôles** ; couches **OA · SA · LA · PA · Toutes** ; **Nom ou description…** ; **Descriptions** (afficher dans l'arbre) ; **⊞ / ⊟** ; filtre **ALLOCATION** (🧩 Système, 👤 Acteurs, ∅ Non allouées — clic : afficher / masquer, double-clic : uniquement celle-ci) ; liste **Tous les allocataires** (un acteur, ou le système et ses sous-systèmes en arbre) ; **⬇ CSV** ; **📄 Dossier fonctionnel**.
 
 ### 11.1 🌳 Hiérarchie
 
@@ -953,7 +953,7 @@ Premier onglet de 🔬 Analyses : activités OA et fonctions SA / LA / PA, **cou
 
 Arbre numéroté (1, 1.1, 1.2…) avec badges : allocation, échanges ⇄, **réalise ⬆ / réalisée par ⬇**, *sans description*, *nom à revoir*. **Clic sur une fonction** : **fiche** à droite (chemin, description, résumé, sous-fonctions, allocation, ports, échanges entrants et sortants, chaînes, capacités, états, arbre de traçabilité vers le haut et vers le bas) ; ses liens naviguent d'une fonction ou d'une couche à l'autre. Le séparateur **⋮** se glisse pour ajuster les largeurs (double-clic : défaut). Chaque fonction porte un liseré de la couleur de son allocation (double liseré si allouée au système et à un acteur).
 
-### 11.2 📋 Tableau
+### 11.2 ▤ Tableau
 
 ![Tableau des fonctions](guide/img/71-fn-table.png)
 
@@ -995,7 +995,7 @@ Rapport HTML imprimable : un onglet par couche, une section numérotée par fonc
 
 ## 12. 🔬 Analyses
 
-Onglets : **ƒ Fonctions · 🧬 Traçabilité inter-couches · ⇶ Liens entre couches · 🎯 Capacités & missions · 🚦 Modes & états · ⚖ Comparaison de versions · 📋 Exigences · 🏷 Propriétés · 🗃 Données & interfaces · ⛓ Contraintes**, et **↻ Recalculer**.
+Onglets : **ƒ Fonctions · 🧬 Traçabilité inter-couches · ⇶ Liens entre couches · 🎯 Capacités & missions · 🚦 Modes & états · ⚖ Comparaison de versions · 🧾 Exigences · 🎛 Propriétés · 🗃 Données & interfaces · 🔒 Contraintes**, et **↻ Recalculer**.
 
 Les résultats sont **gardés en mémoire** ; **↻ Recalculer** les rafraîchit. Les contrôles ne sont calculés qu'à l'ouverture de l'onglet 🩺 Contrôles. Une rubrique absente du modèle est simplement signalée comme vide.
 
@@ -1065,7 +1065,7 @@ Capacités opérationnelles, capacités système, Capability Realizations (LA / 
 | Réglage | Choix |
 |---|---|
 | **Niveau** | Synthèse (compteurs) · Simple (une phrase par changement) · Détaillé (chaque propriété avant → après) · Complet (+ identifiant, type technique, chemin). |
-| **Préréglage** | 📰 Notes de version (Simple) · 🔍 Revue (Détaillé) · 🧾 Audit (Complet, éléments techniques non regroupés). |
+| **Préréglage** | 📰 Notes de version (Simple) · 🔍 Revue (Détaillé) · 🛠 Audit (Complet, éléments techniques non regroupés). |
 | **Catégories, couches, familles, recherche** | Filtres ; **Regrouper par** catégorie, couche, famille ou élément parent. |
 | **Rattacher le technique à son élément** | (coché par défaut) allocations, réalisations, implications apparaissent comme 🔗 liens de l'élément concerné. |
 | **Exclure une ligne** | Décochez-la : elle reste visible (barrée) mais disparaît de la copie et des exports. |
@@ -1074,7 +1074,7 @@ Capacités opérationnelles, capacités système, Capability Realizations (LA / 
 
 L'onglet **🔲 Diagrammes** compare le `.aird` chargé à un `.aird` de référence (gardé automatiquement après une 🔄 mise à jour, ou chargé par **📂 Charger un .aird de référence**) : ➕ nouveaux, ➖ supprimés, ✎ renommés, 🧩 contenu modifié, 🎨 mise en page / style seulement ; ⚠ éléments absents du modèle ; 🔷 touchés par le modèle. Filtres, ▸ détail, 🔲 ouvrir le diagramme, ⬇ CSV.
 
-### 12.5 📋 Exigences
+### 12.5 🧾 Exigences
 
 ![Exigences](guide/img/70-ana-reqs.png)
 
@@ -1090,7 +1090,7 @@ Exigences du **Requirements Viewpoint** (identifiant, texte, attributs, relation
 |---|---|
 | ![](guide/img/70-ana-reqs-couverture.png) | ![](guide/img/70-ana-reqs-controles.png) |
 
-### 12.6 🏷 Propriétés (PVMT)
+### 12.6 🎛 Propriétés (PVMT)
 
 ![Propriétés](guide/img/70-ana-pvmt.png)
 
@@ -1122,7 +1122,7 @@ Propriétés des extensions **PVMT** (domaines, groupes, propriétés et unités
 |---|---|---|
 | ![](guide/img/70-ana-data-interfaces.png) | ![](guide/img/70-ana-data-classes-types.png) | ![](guide/img/70-ana-data-controles.png) |
 
-### 12.8 ⛓ Contraintes
+### 12.8 🔒 Contraintes
 
 ![Contraintes](guide/img/70-ana-cts.png)
 
@@ -1588,16 +1588,16 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 | 🧱 System Component · 🧱 Logical Component · 🔀 Behavior Exchange · 🔌 Physical Link | 📡 | ◧ Blocs · ▣ Composant · ≡ Ligne · ▦ Matrice · 🩺 Contrôles |
 | 🎬 Scénarios | 📡 | 🎬 Diagramme · 🩺 Contrôles |
 | 🧩 Ports | 📡 | ≡ Traçabilité · ▣ Par composant · 🩺 Contrôles |
-| ƒ Fonctions | 🔬 | 🌳 Hiérarchie · 📋 Tableau · ⛓ Traçabilité · 📊 Métriques · 🩺 Contrôles · 📄 Dossier |
+| ƒ Fonctions | 🔬 | 🌳 Hiérarchie · ▤ Tableau · ⛓ Traçabilité · 📊 Métriques · 🩺 Contrôles · 📄 Dossier |
 | 🧬 Traçabilité inter-couches | 🔬 | ▦ Couverture · ⛓ Chemins · 🔗 Liens |
 | ⇶ Liens entre couches | 🔬 (épinglé : ⇶ Couches) | modes élément / catégorie, exports SVG · PNG · CSV |
 | 🎯 Capacités & missions | 🔬 | ▣ Cartes · ▦ Matrice · 🩺 Contrôles |
 | 🚦 Modes & états | 🔬 | ◈ Machines à états · ▦ Fonctions × états · 🩺 Contrôles |
 | ⚖ Comparaison de versions | 🔬 | 🔷 Modèle · 🔲 Diagrammes |
-| 📋 Exigences | 🔬 | 📋 Liste · ▦ Couverture · 🩺 Contrôles |
-| 🏷 Propriétés | 🔬 | ▦ Grille · Σ Synthèse · 📖 Définitions · 🩺 Contrôles |
+| 🧾 Exigences | 🔬 | 📋 Liste · ▦ Couverture · 🩺 Contrôles |
+| 🎛 Propriétés | 🔬 | ▦ Grille · Σ Synthèse · 📖 Définitions · 🩺 Contrôles |
 | 🗃 Données & interfaces | 🔬 | 📦 Exchange Items · 🔌 Interfaces · 🧱 Classes & types · 🩺 Contrôles |
-| ⛓ Contraintes | 🔬 | 📋 Liste · 🩺 Contrôles |
+| 🔒 Contraintes | 🔬 | 📋 Liste · 🩺 Contrôles |
 | 📐 Tableau de bord | (épinglé) | pages, édition, catalogue |
 
 ## Annexe B — Formats d'export

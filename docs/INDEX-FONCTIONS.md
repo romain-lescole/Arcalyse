@@ -505,21 +505,21 @@
 - `capReqIfName` (l. 118) — Nom ReqIF lisible d'un élément du Requirements Viewpoint (type, attribut, valeur…).
 - `capComputeRequirements` (l. 124) — Calcule les exigences des deux familles (Requirements Viewpoint et exigences Capella de base),
 - `capReqChecks` (l. 177) — Sections de contrôle des exigences (réutilisées par le tableau de bord).
-- `capRenderRequirements` (l. 203) — Rend la sous-vue 📋 Exigences : liste filtrable, couverture par couche, contrôles.
+- `capRenderRequirements` (l. 203) — Rend la sous-vue 🧾 Exigences : liste filtrable, couverture par couche, contrôles.
 - `CAP_PV_ARCH` (l. 243)
 - `capPvValue` (l. 250) — Valeur lisible d'une PropertyValue Capella (valeur par défaut EMF si absente).
 - `capPvUnit` (l. 258) — Unité d'une propriété PVMT (sous-propriété « __UNIT__ » de la propriété ou de sa définition).
 - `capComputePvmt` (l. 267) — Calcule les propriétés PVMT : définitions (domaines, groupes, propriétés, applicabilité)
 - `capPvMissing` (l. 306) — Éléments auxquels un groupe PVMT s'applique (classes et architectures déclarées) sans l'avoir reçu.
 - `capPvChecks` (l. 320) — Sections de contrôle des propriétés PVMT (réutilisées par le tableau de bord).
-- `capRenderPvmt` (l. 336) — Rend la sous-vue 🏷 Propriétés : grille par groupe (une colonne par propriété), synthèse, définitions, contrôles.
+- `capRenderPvmt` (l. 336) — Rend la sous-vue 🎛 Propriétés : grille par groupe (une colonne par propriété), synthèse, définitions, contrôles.
 - `CAP_DM_TYPES` (l. 387)
 - `capComputeDataModel` (l. 393) — Calcule le modèle de données : Exchange Items (éléments, échanges et interfaces qui les portent),
 - `capDmChecks` (l. 444) — Sections de contrôle du modèle de données et des interfaces (réutilisées par le tableau de bord).
 - `capRenderDataModel` (l. 473) — Rend la sous-vue 🗃 Données & interfaces : Exchange Items, interfaces, classes et types, contrôles.
 - `capComputeConstraints` (l. 516) — Calcule les contraintes : expression (liens linkedText résolus), langage, éléments contraints, propriétaire.
 - `capCtChecks` (l. 545) — Sections de contrôle des contraintes (réutilisées par le tableau de bord).
-- `capRenderConstraints` (l. 562) — Rend la sous-vue ⛓ Contraintes : liste filtrable et contrôles.
+- `capRenderConstraints` (l. 562) — Rend la sous-vue 🔒 Contraintes : liste filtrable et contrôles.
 - `capXtDetail` (l. 585) — Sections supplémentaires du panneau de détail : exigences liées, propriétés, contraintes.
 - `capXtDashCatalog` (l. 614) — Ajoute au catalogue du tableau de bord les indicateurs Exigences, Propriétés, Données & interfaces, Contraintes.
 
@@ -1002,7 +1002,7 @@
 - `capHomeEnteteHtml` (l. 292) — En-tête de l'onglet 🏠 Projet : modèle, couches, état des diagrammes et des bibliothèques (détail dépliable), vues sans données.
 - `capHomeModeles` (l. 325) — Modèles de check-lists (ARCADIA) : sections et points proposés.
 - `capHomeNewDoc` (l. 347) — Crée une check-list ou un plan de revue et l'ouvre.
-- `capHomeQuickDoc` (l. 370) — ⚡ Check-list rapide : une section, un point par ligne (au moins un point vide), puis ouverture.
+- `capHomeQuickDoc` (l. 370) — ✚ Check-list rapide : une section, un point par ligne (au moins un point vide), puis ouverture.
 - `capHomeDocsHtml` (l. 380) — Onglet ☑ Check-lists & plans de revue : création (listes « Nouvelle check-list », « Nouveau plan de revue »), import,
 - `capHomeDocHtml` (l. 402) — Document ouvert : en-tête (titre, avancement, actions), champs du plan de revue, sections et points.
 - `capHomePerimIds` (l. 448) — Identifiants du périmètre d'un plan : éléments et diagrammes du périmètre et des points.

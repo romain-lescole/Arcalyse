@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════
-   🔬 ANALYSES — 📑 EXIGENCES · 🏷 PROPRIÉTÉS (PVMT) · 🗃 DONNÉES & INTERFACES · ⛓ CONTRAINTES
+   🔬 ANALYSES — 🧾 EXIGENCES · 🎛 PROPRIÉTÉS (PVMT) · 🗃 DONNÉES & INTERFACES · 🔒 CONTRAINTES
    Sous-vues de 🔬 Analyses ; calculs mis en cache dans _capAnaCache (reqs, pvmt, dm, cts).
    Exigences : Requirements Viewpoint (Requirements:Requirement, relations Capella entrantes /
    sortantes / internes) et exigences Capella de base (SystemUserRequirement…, RequirementsTrace).
@@ -112,7 +112,7 @@ function capXtId(el){ return el?capXId(el):''; }
 /** Élément courant résolu : un Part renvoie au composant qu'il type. */
 function capXtDePart(el, res){ return el&&capTName(el)==='Part'?(res(el.getAttribute('abstractType'))||el):el; }
 
-/* ── 1. 📑 EXIGENCES ────────────────────────────────────────────── */
+/* ── 1. 🧾 EXIGENCES ────────────────────────────────────────────── */
 
 /** Nom ReqIF lisible d'un élément du Requirements Viewpoint (type, attribut, valeur…). */
 function capReqIfName(el){ return el?(el.getAttribute('ReqIFLongName')||el.getAttribute('ReqIFName')||el.getAttribute('name')||''):''; }
@@ -197,7 +197,7 @@ function capReqChecks(){
   ];
 }
 
-/** Rend la sous-vue 📋 Exigences : liste filtrable, couverture par couche, contrôles.
+/** Rend la sous-vue 🧾 Exigences : liste filtrable, couverture par couche, contrôles.
  * @param {HTMLElement} box - Conteneur
  */
 function capRenderRequirements(box){
@@ -238,7 +238,7 @@ function capRenderRequirements(box){
     shown.map(r=>[r.ident,capCx(r.name,r.id),r.src,r.kind,r.path,r.text,...attrDefs.map(d=>r.attrs[d]||''),capCxList(r.links),[...new Set(r.links.map(e=>e.layer))].join(', '),capCxList(r.rels)])));
 }
 
-/* ── 2. 🏷 PROPRIÉTÉS (PVMT) ────────────────────────────────────── */
+/* ── 2. 🎛 PROPRIÉTÉS (PVMT) ────────────────────────────────────── */
 
 const CAP_PV_ARCH={OPERATIONAL:'OA',SYSTEM:'SA',LOGICAL:'LA',PHYSICAL:'PA',EPBS:'EPBS'};
 
@@ -330,7 +330,7 @@ function capPvChecks(){
   ];
 }
 
-/** Rend la sous-vue 🏷 Propriétés : grille par groupe (une colonne par propriété), synthèse, définitions, contrôles.
+/** Rend la sous-vue 🎛 Propriétés : grille par groupe (une colonne par propriété), synthèse, définitions, contrôles.
  * @param {HTMLElement} box - Conteneur
  */
 function capRenderPvmt(box){
@@ -508,7 +508,7 @@ function capRenderDataModel(box){
   capXtBind(box, st, capRenderDataModel, ()=>capCsvExport(_L(`donnees-${st.view}.csv`), header, rows));
 }
 
-/* ── 4. ⛓ CONTRAINTES ───────────────────────────────────────────── */
+/* ── 4. 🔒 CONTRAINTES ───────────────────────────────────────────── */
 
 /** Calcule les contraintes : expression (liens linkedText résolus), langage, éléments contraints, propriétaire.
  * @returns {{list:object[], byEl:object}} Contraintes et index élément → contraintes
@@ -556,7 +556,7 @@ function capCtChecks(){
   ];
 }
 
-/** Rend la sous-vue ⛓ Contraintes : liste filtrable et contrôles.
+/** Rend la sous-vue 🔒 Contraintes : liste filtrable et contrôles.
  * @param {HTMLElement} box - Conteneur
  */
 function capRenderConstraints(box){

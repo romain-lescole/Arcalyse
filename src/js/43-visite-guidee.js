@@ -19,7 +19,7 @@ var CAP_TOUR_STEPS=[
   {s:'#cw-projet', m:'empty', t:_L('📄 Projet de travail'),
    x:_L('Rouvre une page enregistrée (💾) — même par une version précédente d\'Arcalyse, à partir de la 2.1 : modèle, diagrammes, revue, accueil, vues et réglages sont repris dans cette version.')},
   {s:'#cap-v-home', t:_L('🏠 Accueil'),
-   x:_L('Vue ouverte au chargement : informations du projet (cartes réorganisables), check-lists et plans de revue, tableaux blancs. <b>❓ Aide ▾ → 🎯 Visite de cette vue</b> la présente en détail.')},
+   x:_L('Vue ouverte au chargement : informations du projet (en-tête, tâches courantes, cartes réorganisables). <b>❓ Aide ▾ → 🎯 Visite de cette vue</b> la présente en détail.')},
   {s:'#cap-tb-views', t:_L('🧭 Barre des vues'),
    x:_L('Les vues sont rangées par intention : boutons directs (🔲 Diagrammes, ▤ Tableau), trois menus déroulants — <b>🏗 Architecture</b>, <b>✅ Vérifier</b>, <b>💬 Revue & documents</b> — et le champ 🔍 de recherche.')},
   {s:'#cap-v-diag', t:_L('🔲 Diagrammes Capella'),
@@ -78,10 +78,10 @@ var CAP_TOUR_ANA_TXT={
   caps:_L('<b>🎯 Capacités & missions</b> : qui participe à quelle capacité ou mission (acteurs, fonctions, chaînes) et les capacités sans contenu.'),
   states:_L('<b>🚦 Modes & états</b> : machines d\'états, transitions et éléments disponibles dans chaque mode ou état.'),
   diff:_L('<b>⚖ Comparaison de versions</b> : chargez une autre version du fichier .capella. Le rapport classe les changements en 8 catégories (créations, suppressions, renommages, descriptions, propriétés, liens, déplacements, types), sur 4 niveaux (Synthèse → Complet), et se copie dans Word, Outlook, Teams ou Excel.'),
-  reqs:_L('<b>📋 Exigences</b> : exigences du modèle, éléments qui les satisfont et exigences non couvertes.'),
-  pvmt:_L('<b>🏷 Propriétés</b> : propriétés et valeurs (PVMT) appliquées aux éléments.'),
+  reqs:_L('<b>🧾 Exigences</b> : exigences du modèle, éléments qui les satisfont et exigences non couvertes.'),
+  pvmt:_L('<b>🎛 Propriétés</b> : propriétés et valeurs (PVMT) appliquées aux éléments.'),
   data:_L('<b>🗃 Données & interfaces</b> : classes, types de données, Exchange Items et interfaces, avec leurs utilisations.'),
-  cts:_L('<b>⛓ Contraintes</b> : contraintes du modèle et éléments contraints.')
+  cts:_L('<b>🔒 Contraintes</b> : contraintes du modèle et éléments contraints.')
 };
 /** Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
  * la racine de l'arborescence si son graphe compte entre 6 et 60 nœuds, sinon le premier élément très relié
@@ -145,7 +145,7 @@ var CAP_TOUR_VIEWS={
     {s:'#cap-view-home .hm-taches', t:_L('🚀 Que voulez-vous faire ?'), x:_L('Six tâches courantes, chacune ouvre la bonne vue : parcourir les diagrammes, vérifier la qualité, préparer une revue, comparer deux versions, sortir un tableau Excel, produire un document. ✕ masque la section (⚙ Disposer les cartes pour la réafficher).')},
     {s:'#cap-view-home [data-a="dispo"]', t:_L('⚙ Disposer les cartes'), x:_L('Réorganisez la page comme un tableau de bord : glissez une carte par ⠿ sur une autre, ⇔ change sa largeur, ✕ la masque (＋ pour la réafficher), ↺ revient à la disposition par défaut.')},
     {s:'#cap-view-home [data-carte="fiche"]', t:_L('📝 Fiche projet'), x:_L('Objet, phase, version, responsable, équipe, notes : à remplir librement.')},
-    {s:'#cap-view-home [data-carte="docs"]', t:_L('☑ Raccourcis'), x:_L('Vos check-lists et plans de revue : clic pour les ouvrir, ⧉ pour les ouvrir dans une fenêtre séparée ; <b>⚡ Check-list rapide</b> en crée une tout de suite.')},
+    {s:'#cap-view-home [data-carte="docs"]', t:_L('☑ Raccourcis'), x:_L('Vos check-lists et plans de revue : clic pour les ouvrir, ⧉ pour les ouvrir dans une fenêtre séparée ; <b>✚ Check-list rapide</b> en crée une tout de suite.')},
     {s:'#cap-view-home [data-carte="projet"]', t:_L('🔷 Projet'), x:_L('Fichiers, version de Capella, diagrammes chargés (par couche ; clic sur le nom : 🔲 Diagrammes Capella), dernière mise à jour du modèle (🔄 : en charger une).')},
     {pre:()=>capTourHome('docs'), s:'#cap-view-home .hm-docs-new', t:_L('✚ Créer une check-list'), x:_L('<b>☑ Nouvelle check-list</b> : choisissez « Vide (à remplir) » (curseur sur le premier point, Entrée : point suivant) ou un modèle ARCADIA (qualité, revues OA, SA, LA, PA). <b>📋 Nouveau plan de revue</b> : vide ou avec les points de contrôle d\'un modèle. <b>📂 Importer…</b> : une check-list enregistrée en .json. Le <b>⧉</b> à droite de chaque check-list l\'ouvre dans une fenêtre séparée.')},
     {s:'#cap-view-home .hm-pal', t:_L('📎 Glisser-déposer'), x:_L('Cherchez un diagramme ou un élément et glissez-le sur un point (il y est lié), sur « ✚ Point » (nouveau point lié), ou sur le périmètre d\'un plan. Clic : l\'ouvrir.')},
@@ -236,7 +236,7 @@ var CAP_TOUR_VIEWS={
     {s:'#prt-main', t:_L('📋 Résultat'), x:_L('Les lignes incomplètes sont signalées en couleur. Clic sur un élément pour ouvrir son détail.')}]},
   functions:{l:_L('ƒ Fonctions'), steps:[
     {t:_L('ƒ Fonctions'), x:_L('Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles.')},
-    {s:'#cap-view-functions [data-fv]', t:_L('🖼 Présentation'), x:_L('<b>🌳 Hiérarchie</b> · <b>📋 Tableau</b> façon Excel · <b>⛓ Traçabilité</b> entre couches · <b>📊 Métriques</b> · <b>🩺 Contrôles</b> (qualité des noms, fonctions non allouées…).')},
+    {s:'#cap-view-functions [data-fv]', t:_L('🖼 Présentation'), x:_L('<b>🌳 Hiérarchie</b> · <b>▤ Tableau</b> façon Excel · <b>⛓ Traçabilité</b> entre couches · <b>📊 Métriques</b> · <b>🩺 Contrôles</b> (qualité des noms, fonctions non allouées…).')},
     {s:'#cap-view-functions [data-fl]', t:_L('🧱 Couche'), x:_L('Choisit la couche ARCADIA étudiée (OA, SA, LA, PA).')},
     {s:'#ana-fn-q,#ana-fn-desc,#ana-fn-exp,#ana-fn-col', t:_L('🔍 Recherche et affichage'), x:_L('Filtre par nom ou description ; affiche les descriptions ; ⊞ / ⊟ déplient ou replient la hiérarchie.')},
     {s:'#cap-view-functions .ana-ak,#ana-fn-who', t:_L('🎯 Allocation'), x:_L('Fonctions allouées au système, à un acteur ou non allouées (clic : afficher / masquer, double-clic : uniquement celle-ci) ; la liste choisit un acteur ou un sous-système.')},
@@ -278,7 +278,7 @@ var CAP_TOUR_AFTER=[
   {pre:()=>capNavClose(), t:_L('✅ Modèle ouvert'),
    x:_L('Votre modèle est chargé. Voici où trouver l\'aide et les tutoriels, à tout moment.')},
   {s:'#cap-v-home', pre:()=>capNavClose(), t:_L('🏠 Accueil du projet'),
-   x:_L('La vue affichée à l\'ouverture : fiche et informations du projet, ☑ check-lists et 📋 plans de revue, 🧾 tableaux blancs. Revenez-y à tout moment par ce bouton.')},
+   x:_L('La vue affichée à l\'ouverture : en-tête et fiche du projet, tâches courantes, contenu, santé et revue du modèle. Revenez-y à tout moment par ce bouton.')},
   {s:'#b-help', pre:()=>capNavClose(), t:_L('❓ Aide'),
    x:_L('L\'aide et toutes les visites guidées sont regroupées dans ce menu.')},
   {s:'#cap-nav-dd', pre:()=>capTourHelpMenu(), t:_L('📚 Aide et tutoriels'),

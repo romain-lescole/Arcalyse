@@ -1766,7 +1766,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 572 | Mots refusés en tête (faux verbes) | ⚙ Custom naming rules Extends the built-in lists (≈ 1,000 English verbs, French verbs in -er/-ir/-re/-oir). One word per line or comma-separated. Kept in the 💾 HTML page. Domain verbs accepted first … Words refused first (false verbs) … ✔ Apply |
 | 573 | ✔ Appliquer | ⚙ Custom naming rules Extends the built-in lists (≈ 1,000 English verbs, French verbs in -er/-ir/-re/-oir). One word per line or comma-separated. Kept in the 💾 HTML page. Domain verbs accepted first … Words refused first (false verbs) … ✔ Apply |
 | 577 | 🌳 Hiérarchie | 🌳 Hierarchy |
-| 577 | 📋 Tableau | 📋 Table |
+| 577 | ▤ Tableau | ▤ Table |
 | 577 | ⛓ Traçabilité | ⛓ Traceability |
 | 577 | 📊 Métriques | 📊 Metrics |
 | 577 | 🩺 Contrôles | 🩺 Checks |
@@ -1825,10 +1825,10 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 693 | 🎯 Capacités & missions | 🎯 Capabilities & missions |
 | 693 | 🚦 Modes & états | 🚦 Modes & states |
 | 693 | ⚖ Comparaison de versions | ⚖ Version comparison |
-| 693 | 📋 Exigences | 📋 Requirements |
-| 693 | 🏷 Propriétés | 🏷 Properties |
+| 693 | 🧾 Exigences | 🧾 Requirements |
+| 693 | 🎛 Propriétés | 🎛 Properties |
 | 693 | 🗃 Données & interfaces | 🗃 Data & interfaces |
-| 693 | ⛓ Contraintes | ⛓ Constraints |
+| 693 | 🔒 Contraintes | 🔒 Constraints |
 | 693 | 🏷 Catégories d'échanges | 🏷 Exchange categories |
 | 693 | 📚 Bibliothèques | 📚 Libraries |
 | 693 | 📦 REC / RPL | 📦 REC / RPL |
@@ -2778,7 +2778,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | Ligne | Texte | Anglais |
 |---:|---|---|
 | 15 | 🏠 Accueil | 🏠 Home |
-| 15 | Accueil du projet : informations, check-lists, plans de revue, tableaux blancs (texte, diagrammes et éléments cliquables) | Project home: information, checklists, review plans, whiteboards (text, clickable diagrams and elements) |
+| 15 | Accueil du projet : en-tête, tâches courantes, fiche, contenu, santé et revue du modèle | Project home: header, common tasks, sheet, content, health and review of the model |
 | 16 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
 | 16 | 🔲 Diagrammes | 🔲 Diagrams |
 | 17 | ▤ Tableau | ▤ Table |
@@ -2831,11 +2831,11 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 43 | ⇶ Couches | ⇶ Layers |
 | 43 | ⇶ Graphe des réalisations | ⇶ Realization graph |
 | 43 | Vue graphique des réalisations entre couches (OA → SA → LA → PA → EPBS) : fonctions, chaînes et leurs fonctions, capacités, composants… | Graphical view of the realizations between layers (OA → SA → LA → PA → EPBS): functions, chains and their functions, capabilities, components… |
-| 44 | 📋 Exigences | 📋 Requirements |
-| 45 | 🏷 Propriétés | 🏷 Properties |
-| 45 | 🏷 Propriétés (PVMT) | 🏷 Properties (PVMT) |
-| 46 | ⛓ Contraintes | ⛓ Constraints |
-| 47 | 🏷 Propriétés & contraintes | 🏷 Properties & constraints |
+| 44 | 🧾 Exigences | 🧾 Requirements |
+| 45 | 🎛 Propriétés | 🎛 Properties |
+| 45 | 🎛 Propriétés (PVMT) | 🎛 Properties (PVMT) |
+| 46 | 🔒 Contraintes | 🔒 Constraints |
+| 47 | 🎛 Propriétés & contraintes | 🎛 Properties & constraints |
 | 47 | Propriétés PVMT (groupes, valeurs, définitions) et contraintes (expressions, éléments contraints) | PVMT properties (groups, values, definitions) and constraints (expressions, constrained elements) |
 | 48 | ⚖ Comparaison de versions | ⚖ Version comparison |
 | 49 | 🔖 Statut de revue | 🔖 Review status |
@@ -2887,10 +2887,10 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 353 | Retirer de la barre | Remove from the bar |
 | 353 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
 | 429 | 🔄 Suivi du fichier… | 🔄 File watch…… |
-| 430 | 💾 Enregistrer | 💾 Save… 💾 Save as…… 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 431 | 💾 Enregistrer sous… | 💾 Save… 💾 Save as…… 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 430 | 💾 Enregistrer | 💾 Save… 💾 Save as…… 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, review packages), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 431 | 💾 Enregistrer sous… | 💾 Save… 💾 Save as…… 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, review packages), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
 | 431 | Ctrl+S | Ctrl+S |
-| 432 | 🌐 Télécharger la page HTML 📗 Classeur Excel des analyses La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 💾 Save… 💾 Save as…… 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 432 | 🌐 Télécharger la page HTML 📗 Classeur Excel des analyses La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, dossiers), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 💾 Save… 💾 Save as…… 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, review packages), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
 | 432 | Ctrl+Maj+S | Ctrl+Maj+S |
 | 444 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
 | 446 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
@@ -2926,7 +2926,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 19 | 📄 Projet de travail | 📄 Work project |
 | 20 | Rouvre une page enregistrée (💾) — même par une version précédente d'Arcalyse, à partir de la 2.1 : modèle, diagrammes, revue, accueil, vues et réglages sont repris dans cette version. | Reopens a saved page (💾) — even from an earlier version of Arcalyse, 2.1 or later: model, diagrams, review, home, views and settings are carried over into this version. |
 | 21 | 🏠 Accueil | 🏠 Home |
-| 22 | Vue ouverte au chargement : informations du projet (cartes réorganisables), check-lists et plans de revue, tableaux blancs. ❓ Aide ▾ → 🎯 Visite de cette vue la présente en détail. | View opened on loading: project information (rearrangeable cards), checklists and review plans, whiteboards. ❓ Help ▾ → 🎯 Tour of this view presents it in detail. |
+| 22 | Vue ouverte au chargement : informations du projet (en-tête, tâches courantes, cartes réorganisables). ❓ Aide ▾ → 🎯 Visite de cette vue la présente en détail. | View opened on loading: project information (header, common tasks, rearrangeable cards). ❓ Help ▾ → 🎯 Tour of this view presents it in detail. |
 | 23 | 🧭 Barre des vues | 🧭 View bar |
 | 24 | Les vues sont rangées par intention : boutons directs (🔲 Diagrammes, ▤ Tableau), trois menus déroulants — 🏗 Architecture , ✅ Vérifier , 💬 Revue & documents — et le champ 🔍 de recherche. | Views are grouped by purpose: direct buttons (🔲 Diagrams, ▤ Table), three drop-down menus — 🏗 Architecture , ✅ Check , 💬 Review & documents — and the 🔍 search field. |
 | 25 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
@@ -2972,10 +2972,10 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 78 | 🎯 Capacités & missions : qui participe à quelle capacité ou mission (acteurs, fonctions, chaînes) et les capacités sans contenu. | 🎯 Capabilities & missions : who takes part in which capability or mission (actors, functions, chains) and the capabilities without content. |
 | 79 | 🚦 Modes & états : machines d'états, transitions et éléments disponibles dans chaque mode ou état. | 🚦 Modes & states : state machines, transitions and elements available in each mode or state. |
 | 80 | ⚖ Comparaison de versions : chargez une autre version du fichier .capella. Le rapport classe les changements en 8 catégories (créations, suppressions, renommages, descriptions, propriétés, liens, déplacements, types), sur 4 niveaux (Synthèse → Complet), et se copie dans Word, Outlook, Teams ou Excel. | ⚖ Version comparison : load another version of the .capella file. The report sorts the changes into 8 categories (creations, deletions, renamings, descriptions, properties, links, moves, types), on 4 levels (Summary → Full), and can be copied into Word, Outlook, Teams or Excel. |
-| 81 | 📋 Exigences : exigences du modèle, éléments qui les satisfont et exigences non couvertes. | 📋 Requirements : model requirements, elements satisfying them and uncovered requirements. |
-| 82 | 🏷 Propriétés : propriétés et valeurs (PVMT) appliquées aux éléments. | 🏷 Properties : properties and values (PVMT) applied to the elements. |
+| 81 | 🧾 Exigences : exigences du modèle, éléments qui les satisfont et exigences non couvertes. | 🧾 Requirements : model requirements, elements satisfying them and uncovered requirements. |
+| 82 | 🎛 Propriétés : propriétés et valeurs (PVMT) appliquées aux éléments. | 🎛 Properties : properties and values (PVMT) applied to the elements. |
 | 83 | 🗃 Données & interfaces : classes, types de données, Exchange Items et interfaces, avec leurs utilisations. | 🗃 Data & interfaces : classes, data types, Exchange Items and interfaces, with their uses. |
-| 84 | ⛓ Contraintes : contraintes du modèle et éléments contraints. | ⛓ Constraints : model constraints and constrained elements. |
+| 84 | 🔒 Contraintes : contraintes du modèle et éléments contraints. | 🔒 Constraints : model constraints and constrained elements. |
 | 104 | 🗺 Relation Map | 🗺 Relation Map |
 | 105 | 🗺 Relation Map | 🗺 Relation Map |
 | 105 | Graphe centré sur un élément de contexte : ses voisins sont affichés jusqu'à la profondeur choisie, selon les relations Capella cochées. | Graph centred on a context element : its neighbours are displayed up to the chosen depth, according to the checked Capella relations. |
@@ -3233,7 +3233,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 238 | Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles. | All the model functions, layer by layer: hierarchy, allocation, traceability, metrics and checks. |
 | 239 | #cap-view-functions [data-fv] | (inchangé, hors _L) |
 | 239 | 🖼 Présentation | 🖼 Layout |
-| 239 | 🌳 Hiérarchie · 📋 Tableau façon Excel · ⛓ Traçabilité entre couches · 📊 Métriques · 🩺 Contrôles (qualité des noms, fonctions non allouées…). | 🌳 Hierarchy · 📋 Table Excel-style · ⛓ Traceability between layers · 📊 Metrics · 🩺 Checks (name quality, unallocated functions…). |
+| 239 | 🌳 Hiérarchie · ▤ Tableau façon Excel · ⛓ Traçabilité entre couches · 📊 Métriques · 🩺 Contrôles (qualité des noms, fonctions non allouées…). | 🌳 Hierarchy · ▤ Table Excel-style · ⛓ Traceability between layers · 📊 Metrics · 🩺 Checks (name quality, unallocated functions…). |
 | 240 | #cap-view-functions [data-fl] | (inchangé, hors _L) |
 | 240 | 🧱 Couche | 🧱 Layer |
 | 240 | Choisit la couche ARCADIA étudiée (OA, SA, LA, PA). | Chooses the ARCADIA layer studied (OA, SA, LA, PA). |
@@ -3292,7 +3292,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 278 | ✅ Modèle ouvert | ✅ Model open |
 | 279 | Votre modèle est chargé. Voici où trouver l'aide et les tutoriels, à tout moment. | Your model is loaded. Here is where to find the help and tutorials, at any time. |
 | 280 | 🏠 Accueil du projet | 🏠 Project home |
-| 281 | La vue affichée à l'ouverture : fiche et informations du projet, ☑ check-lists et 📋 plans de revue, 🧾 tableaux blancs. Revenez-y à tout moment par ce bouton. | The view shown on opening: project sheet and information, ☑ checklists and 📋 review plans, 🧾 whiteboards. Come back to it at any time with this button. |
+| 281 | La vue affichée à l'ouverture : en-tête et fiche du projet, tâches courantes, contenu, santé et revue du modèle. Revenez-y à tout moment par ce bouton. | The view shown on opening: project header and sheet, common tasks, content, health and review of the model. Come back to it at any time with this button. |
 | 282 | ❓ Aide | ❓ Help |
 | 283 | L'aide et toutes les visites guidées sont regroupées dans ce menu. | The help and all the guided tours are grouped in this menu. |
 | 284 | 📚 Aide et tutoriels | 📚 Help and tutorials |
@@ -3597,17 +3597,17 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 354 | lignes affichées sur | … rows shown out of … — the copy and exports contain everything. |
 | 354 | — la copie et les exports contiennent tout. | … rows shown out of … — the copy and exports contain everything. |
 | 355 | Aucun changement pour ces filtres. | No change for these filters. |
-| 358 | Niveau | Level … Preset 📰 Release notes 🔍 Review 🧾 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
-| 360 | Préréglage 📰 Notes de version 🔍 Revue 🧾 Audit Catégories | Level … Preset 📰 Release notes 🔍 Review 🧾 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
-| 367 | ✱ Couches | Level … Preset 📰 Release notes 🔍 Review 🧾 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
-| 371 | Toutes familles | Level … Preset 📰 Release notes 🔍 Review 🧾 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 358 | Niveau | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 360 | Préréglage 📰 Notes de version 🔍 Revue 🛠 Audit Catégories | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 367 | ✱ Couches | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 371 | Toutes familles | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
 | 371 | Hors couche | No layer |
 | 371 | Aucune sélection = toutes | No selection = all |
-| 373 | Regrouper par | Level … Preset 📰 Release notes 🔍 Review 🧾 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
-| 375 | Rattacher le technique à son élément | Level … Preset 📰 Release notes 🔍 Review 🧾 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
-| 378 | changement(s) retenu(s) | Level … Preset 📰 Release notes 🔍 Review 🧾 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 373 | Regrouper par | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 375 | Rattacher le technique à son élément | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 378 | changement(s) retenu(s) | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
 | 378 | exclu(s) ↺ tout réinclure | · … excluded ↺ include all again |
-| 380 | 📋 Copier ⬇ CSV ⬇ HTML 🖨 Imprimer | Level … Preset 📰 Release notes 🔍 Review 🧾 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 380 | 📋 Copier ⬇ CSV ⬇ HTML 🖨 Imprimer | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
 | 380 | 📋 Copier ( | 📋 Copy ( |
 | 380 | Format : | Format: |
 | 418 | ✔ Copié | ✔ Copied |
@@ -4575,7 +4575,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 225 | (sans titre) | (untitled) |
 | 226 | Aucune check-list ni plan de revue. | No checklist or review plan. |
 | 227 | Crée une check-list vide et place le curseur sur le premier point | Creates an empty checklist and puts the cursor on the first item |
-| 227 | ⚡ Check-list rapide | ⚡ Quick checklist |
+| 227 | ✚ Check-list rapide | ✚ Quick checklist |
 | 227 | Nouvelle check-list à partir d'un modèle, nouveau plan de revue | New checklist from a template, new review plan |
 | 227 | ☑ Modèles et plans de revue | ☑ Templates and review plans |
 | 228 | 🧩 Contenu du modèle | 🧩 Model content |
