@@ -205,12 +205,13 @@ function capRevOnModelLoad(){
 
 /* ── Bouton de la barre et panneau ─────────────────────────────────────── */
 
-/** Met à jour le badge du bouton 💬 Revue (commentaires ouverts ; ⚠ s'il y en a à vérifier). */
+/** Met à jour le badge des commentaires (bouton 💬 Revue et menu 💬 Revue & documents de la barre) :
+ * commentaires ouverts ; ⚠ s'il y en a à vérifier. */
 function capRevBadge(){
-  const b=document.getElementById('b-review-badge'); if(!b) return;
   const n=_capRev.comments.filter(c=>!capRevClosed(c)).length, k=capLoaded?capRevToCheck().length:0;
-  b.textContent=k?'⚠ '+k:n?String(n):''; b.style.display=n||k?'':'none'; b.classList.toggle('crv-warn',!!k);
-  b.title=_L(`${n} commentaire(s) non clos`)+(k?_L(` — ${k} à vérifier`):'');
+  ['b-review-badge','cap-nav-rev-badge'].forEach(id=>{ const b=document.getElementById(id); if(!b) return;
+    b.textContent=k?'⚠ '+k:n?String(n):''; b.style.display=n||k?'':'none'; b.classList.toggle('crv-warn',!!k);
+    b.title=_L(`${n} commentaire(s) non clos`)+(k?_L(` — ${k} à vérifier`):''); });
 }
 /**
  * Ouvre ou ferme le panneau 💬 Revue (dans la page, ou dans sa fenêtre séparée si elle est ouverte : elle passe alors au premier plan).

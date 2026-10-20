@@ -1,112 +1,105 @@
 /* ══ ☰ BARRE DES VUES CAPELLA ══════════════════════════════════════════════════════
- * La barre du haut regroupe les vues dans des menus déroulants (🧭 Explorateur, 📡 Flux & interfaces,
- * 🔬 Analyses) ; n'importe quelle vue ou sous-vue peut être épinglée (📌) en bouton direct.
- * Le menu ☰ (ou Ctrl+K) permet de chercher une vue — et, avec le module 67, un élément du modèle ou un diagramme — et de régler la barre : menus affichés, épingles,
- * retour aux réglages par défaut. Réglage enregistré dans la page (bloc JSON cap-toolbar, repris par la 💾 Page HTML).
+ * Navigation par intentions (refonte 3.0, docs/REFONTE-UX.md) : boutons directs 🏠 Accueil, 🔲 Diagrammes, ▤ Tableau,
+ * puis trois menus déroulants — 🏗 Architecture, ✅ Vérifier, 💬 Revue & documents — rangés en sections ; n'importe quelle
+ * vue peut être épinglée (📌) en bouton direct. Le champ 🔍 de la barre (ou Ctrl+K) cherche une vue — et, avec le
+ * module 67, un élément du modèle ou un diagramme ; sans texte, il liste toutes les vues. Niveau d'affichage
+ * Essentiel / Complet (le mode Complet ajoute les vues marquées x). Réglage enregistré dans la page (bloc JSON cap-toolbar).
  */
-/** Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
- * g = groupe (menu déroulant ; '' = vue sans menu), t = info-bulle. */
+/** Catalogue des vues : k = clé (vue capShowView, « ana:… » pour une sous-vue de 🔬 Analyses, « home:… » pour un onglet
+ * de 🏠 Accueil, « @… » pour une commande), l = libellé, g = menu ('' = bouton direct), s = section du menu,
+ * x = mode Complet seulement, tb = onglets de section sous la barre, t = info-bulle. */
 var CAP_NAV_ITEMS=[
   {k:'home',      l:_L('🏠 Accueil'),           g:'',     t:_L('Accueil du projet : informations, check-lists, plans de revue, tableaux blancs (texte, diagrammes et éléments cliquables)')},
-  {k:'tree',      l:_L('🌳 Arborescence'),      g:'explore'},
-  {k:'cards',     l:_L('▦ Cartes'),             g:'explore'},
+  {k:'diag',      l:_L('🔲 Diagrammes Capella'), p:_L('🔲 Diagrammes'), g:'', t:_L('Diagrammes Capella du projet (.aird), dessinés comme dans Capella : liste, recherche, mini-carte, filtres, chaînes, exports ; clic sur un élément → son détail')},
   {k:'table',     l:_L('▤ Tableau'),            g:'',     t:_L('Tableau de tous les éléments du modèle : onglets de vues, colonnes d\'attributs, de relations et par chemin, tri, filtres, export CSV')},
-  {k:'index',     l:_L('📖 Index des types'),   g:'explore'},
-  {k:'chains',    l:_L('⚡ Chaînes'),           g:'flux'},
-  {k:'fex',       l:_L('ƒ⇆ Functional Exchange'), g:'flux', t:_L('Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles')},
-  {k:'oav',       l:_L('🟨 Operational Analysis'), g:'flux', t:_L('Activités opérationnelles (OA) en blocs façon Capella, avec leurs interactions et l\'entité ou l\'acteur qui les porte ; vue par activité, lignes, matrice, contrôles')},
-  {k:'csys',      l:_L('🧱 System Component'), i:'🧱<sub class="tb-ico-l">SA</sub>', g:'flux', t:_L('System Components (SA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles')},
-  {k:'cblk',      l:_L('🧱 Logical Component'), i:'🧱<sub class="tb-ico-l">LA</sub>', g:'flux', t:_L('Logical Components (LA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles')},
-  {k:'compex',    l:_L('🔀 Behavior Exchange'), g:'flux', t:_L('Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange)')},
-  {k:'physlink',  l:_L('🔌 Physical Link'),     g:'flux'},
-  {k:'diag',      l:_L('🔲 Diagrammes Capella'),       g:'flux', t:_L('Diagrammes Capella du projet (.aird), dessinés comme dans Capella : liste, recherche, mini-carte, filtres, chaînes, exports ; clic sur un élément → son détail')},
-  {k:'scen',      l:_L('🎬 Scénarios'),        g:'flux', t:_L('Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références')},
-  {k:'ports',     l:_L('🧩 Ports'),             g:'flux', t:_L('Traçabilité Function Port ↔ Component Port ↔ Physical Port')},
-  {k:'links',     l:_L('🔗 Liens'),             g:'flux', t:_L('Relations entre les éléments du modèle')},
-  {k:'functions', l:_L('ƒ Fonctions'),          g:'ana',  t:_L('Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier')},
-  {k:'ana:trace', l:_L('🧬 Traçabilité inter-couches'), g:'ana'},
-  {k:'ana:xlay',  l:_L('⇶ Liens entre couches'),       p:_L('⇶ Couches'), g:'ana', t:_L('Vue graphique des réalisations entre couches (OA → SA → LA → PA → EPBS) : fonctions, chaînes et leurs fonctions, capacités, composants…')},
-  {k:'ana:caps',  l:_L('🎯 Capacités & missions'),     g:'ana'},
-  {k:'ana:states',l:_L('🚦 Modes & états'),            g:'ana'},
-  {k:'ana:diff',  l:_L('⚖ Comparaison de versions'),  g:'ana'},
-  {k:'ana:reqs',  l:_L('📋 Exigences'),               g:'ana'},
-  {k:'ana:pvmt',  l:_L('🏷 Propriétés'),              g:'ana'},
-  {k:'ana:data',  l:_L('🗃 Données & interfaces'),     g:'ana'},
-  {k:'ana:deploy',l:_L('🖧 Déploiement & EPBS'),       g:'ana', t:_L('Comportements déployés sur les nœuds physiques (PartDeploymentLink), Configuration Items de l\'EPBS et ce qu\'ils réalisent, contrôles')},
-  {k:'ana:rec',   l:_L('📦 REC / RPL'),                g:'ana', t:_L('Éléments réutilisables : REC (gabarits) et RPL (répliques), comparaison élément par élément, écarts, contrôles')},
-  {k:'ana:libs',  l:_L('📚 Bibliothèques'),            g:'ana', t:_L('Références vers d\'autres fichiers .capella (bibliothèques) : par bibliothèque, par référence, chargement des bibliothèques pour résoudre les cibles, contrôles')},
-  {k:'ana:cats',  l:_L('🏷 Catégories d\'échanges'),   g:'ana', t:_L('ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory : échanges par catégorie, taux de catégorisation, contrôles')},
-  {k:'ana:cts',   l:_L('⛓ Contraintes'),              g:'ana'},
-  {k:'ana:sante', l:_L('💚 Santé du modèle'),          g:'ana', t:_L('Score global et par couche bâti sur tous les contrôles (🩺 profil), détail contrôle × couche, historique des versions')},
-  {k:'ana:status',l:_L('🔖 Statut de revue'),          g:'ana', t:_L('Statut (DRAFT, TO BE REVIEWED, REVIEWED…) et commentaire de revue Capella de chaque élément : liste, répartition, contrôles')},
-  {k:'dashboard', l:_L('📐 Tableau de bord'),   g:'',     t:_L('Tableaux de bord personnalisés : indicateurs, graphiques, tableaux')},
-  {k:'home:rap',  l:_L('📘 Rapports automatiques'), p:_L('📘 Rapports'), g:'', t:_L('Rapports produits à partir du modèle selon un plan type (spécification boîte noire, dossier de conception boîte blanche), modifiables, exportables en HTML à commenter ou en Word (🏠 Accueil › 📑 Dossiers)')}
+  // 🏗 Architecture
+  {k:'functions', l:_L('ƒ Fonctions'),          g:'arch', s:_L('Fonctions & échanges'), tb:1, t:_L('Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier')},
+  {k:'fex',       l:_L('ƒ⇆ Functional Exchange'), g:'arch', s:_L('Fonctions & échanges'), tb:1, t:_L('Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles')},
+  {k:'oav',       l:_L('🟨 Operational Analysis'), g:'arch', s:_L('Fonctions & échanges'), tb:1, t:_L('Activités opérationnelles (OA) en blocs façon Capella, avec leurs interactions et l\'entité ou l\'acteur qui les porte ; vue par activité, lignes, matrice, contrôles')},
+  {k:'csys',      l:_L('🧱 System Component'), i:'🧱<sub class="tb-ico-l">SA</sub>', g:'arch', s:_L('Composants & interfaces'), tb:1, t:_L('System Components (SA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles')},
+  {k:'cblk',      l:_L('🧱 Logical Component'), i:'🧱<sub class="tb-ico-l">LA</sub>', g:'arch', s:_L('Composants & interfaces'), tb:1, t:_L('Logical Components (LA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles')},
+  {k:'compex',    l:_L('🔀 Behavior Exchange'), g:'arch', s:_L('Composants & interfaces'), tb:1, t:_L('Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange)')},
+  {k:'physlink',  l:_L('🔌 Physical Link'),     g:'arch', s:_L('Composants & interfaces'), tb:1},
+  {k:'ports',     l:_L('🧩 Ports'),             g:'arch', s:_L('Composants & interfaces'), tb:1, t:_L('Traçabilité Function Port ↔ Component Port ↔ Physical Port')},
+  {k:'chains',    l:_L('⚡ Chaînes'),           g:'arch', s:_L('Chaînes & scénarios'), tb:1},
+  {k:'scen',      l:_L('🎬 Scénarios'),        g:'arch', s:_L('Chaînes & scénarios'), tb:1, t:_L('Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références')},
+  {k:'ana:states',l:_L('🚦 Modes & états'),            g:'arch', s:_L('Comportement et déploiement')},
+  {k:'ana:caps',  l:_L('🎯 Capacités & missions'),     g:'arch', s:_L('Comportement et déploiement')},
+  {k:'ana:data',  l:_L('🗃 Données & interfaces'),     g:'arch', s:_L('Comportement et déploiement')},
+  {k:'ana:deploy',l:_L('🖧 Déploiement & EPBS'),       g:'arch', s:_L('Comportement et déploiement'), t:_L('Comportements déployés sur les nœuds physiques (PartDeploymentLink), Configuration Items de l\'EPBS et ce qu\'ils réalisent, contrôles')},
+  {k:'@rm',       l:_L('🗺 Relation Map'),      g:'arch', s:_L('Explorer'), t:_L('Graphe interactif des éléments et de leurs relations : voisinage, dépliage, disposition, export en image')},
+  {k:'tree',      l:_L('🌳 Arborescence'),      g:'arch', s:_L('Explorer')},
+  {k:'cards',     l:_L('▦ Cartes'),             g:'arch', s:_L('Explorer'), x:1},
+  {k:'index',     l:_L('📖 Index des types'),   g:'arch', s:_L('Explorer'), x:1},
+  {k:'links',     l:_L('🔗 Liens'),             g:'arch', s:_L('Explorer'), x:1, t:_L('Relations entre les éléments du modèle')},
+  // ✅ Vérifier
+  {k:'ana:sante', l:_L('💚 Santé du modèle'),          g:'verif', t:_L('Score global et par couche bâti sur tous les contrôles (🩺 profil), détail contrôle × couche, historique des versions')},
+  {k:'ana:trace', l:_L('🧬 Traçabilité inter-couches'), g:'verif'},
+  {k:'ana:xlay',  l:_L('⇶ Liens entre couches'),       p:_L('⇶ Couches'), g:'verif', t:_L('Vue graphique des réalisations entre couches (OA → SA → LA → PA → EPBS) : fonctions, chaînes et leurs fonctions, capacités, composants…')},
+  {k:'ana:reqs',  l:_L('📋 Exigences'),               g:'verif'},
+  {k:'ana:pvmt',  l:_L('🏷 Propriétés'),              g:'verif'},
+  {k:'ana:cts',   l:_L('⛓ Contraintes'),              g:'verif'},
+  {k:'ana:diff',  l:_L('⚖ Comparaison de versions'),  g:'verif'},
+  {k:'ana:status',l:_L('🔖 Statut de revue'),          g:'verif', t:_L('Statut (DRAFT, TO BE REVIEWED, REVIEWED…) et commentaire de revue Capella de chaque élément : liste, répartition, contrôles')},
+  {k:'ana:cats',  l:_L('🏷 Catégories d\'échanges'),   g:'verif', s:_L('Avancé'), x:1, t:_L('ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory : échanges par catégorie, taux de catégorisation, contrôles')},
+  {k:'ana:rec',   l:_L('📦 REC / RPL'),                g:'verif', s:_L('Avancé'), x:1, t:_L('Éléments réutilisables : REC (gabarits) et RPL (répliques), comparaison élément par élément, écarts, contrôles')},
+  {k:'ana:libs',  l:_L('📚 Bibliothèques'),            g:'verif', s:_L('Avancé'), x:1, t:_L('Références vers d\'autres fichiers .capella (bibliothèques) : par bibliothèque, par référence, chargement des bibliothèques pour résoudre les cibles, contrôles')},
+  // 💬 Revue & documents
+  {k:'@revue',    l:_L('💬 Commentaires'),             g:'revue', t:_L('Panneau 💬 Revue : commentaires sur le modèle et les diagrammes, vérification après mise à jour, rapport, envoi de commentaires à relire')},
+  {k:'home:docs', l:_L('☑ Check-lists & plans de revue'), g:'revue', t:_L('Check-lists et plans de revue (🏠 Accueil) : modèles ARCADIA ou vierges, points liés aux diagrammes et aux éléments, export')},
+  {k:'home:dos',  l:_L('📑 Faire relire'),             g:'revue', t:_L('Dossiers de relecture : chapitres, descriptions, diagrammes ; page HTML ou Word à commenter, réimport des commentaires dans 💬 Revue')},
+  {k:'home:rap',  l:_L('📘 Rapports automatiques'), p:_L('📘 Rapports'), g:'revue', t:_L('Rapports produits à partir du modèle selon un plan type (spécification boîte noire, dossier de conception boîte blanche, SSS / SSDD), modifiables, exportables en HTML à commenter ou en Word')},
+  {k:'dashboard', l:_L('📐 Tableau de bord'),   g:'revue', t:_L('Tableaux de bord personnalisés : indicateurs, graphiques, tableaux')},
+  {k:'@scripts',  l:_L('📜 Scripts'),           g:'revue', x:1, t:_L('Console de scripts : parcourir et analyser le modèle avec l\'API, comme les macros de Catia Magic (Alt+4)')}
 ];
 /** Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton). */
 var CAP_NAV_GROUPS=[
-  {g:'explore', id:'cap-v-elements', l:_L('🧭 Explorateur'),       t:_L('Explorer le modèle : arborescence, cartes, index des types')},
-  {g:'flux',    id:'cap-v-flux',     l:_L('📡 Flux & interfaces'), t:_L('Chaînes, Functional Exchange, System / Logical Component, Behavior Exchange, Physical Link, diagrammes, scénarios, ports, liens')},
-  {g:'',        id:'',               l:'',                     t:''},   // place des vues sans menu
-  {g:'ana',     id:'cap-v-analyses', l:_L('🔬 Analyses'),          t:_L('Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes')}
+  {g:'arch',  id:'cap-v-arch',  l:_L('🏗 Architecture'),        t:_L('Comment le système est construit : fonctions et échanges, composants et interfaces, chaînes et scénarios, modes et états, capacités, données, déploiement ; Relation Map et arborescence')},
+  {g:'verif', id:'cap-v-verif', l:_L('✅ Vérifier'),            t:_L('Le modèle est-il juste et complet ? Santé du modèle et contrôles, traçabilité, exigences, propriétés, contraintes, comparaison de versions, statut de revue')},
+  {g:'revue', id:'cap-v-revue', l:_L('💬 Revue & documents'),   t:_L('Relire et produire : commentaires, check-lists et plans de revue, dossiers à faire relire, rapports automatiques, tableaux de bord')}
 ];
-/** Réglage par défaut : tous les menus affichés, 🏠 Accueil (tout à gauche), 🔲 Diagrammes Capella (en tête, à côté de 🗺 Relation Map), ▤ Tableau
- * et 📐 Tableau de bord en boutons directs ; ⚡ Chaînes et 🎬 Scénarios restent dans le menu 📡 Flux & interfaces
- * (tbl, diag, home, ch : marques d'un réglage qui connaît ces changements, voir capNavMigrate). */
-var CAP_NAV_DEFAULT={groups:{explore:true, flux:true, ana:true}, pins:['home','table','diag','ana:xlay','dashboard','home:rap'], tbl:1, diag:1, home:1, ch:1, xl:1, rp:1};
-/** ⚙ Mode Simplifié : vues en boutons directs, vues gardées dans leur menu (les autres sont masquées),
- * commandes masquées de la barre (toujours accessibles par ☰ / Ctrl+K et ⚙). */
-var CAP_NAV_SIMPLE={pins:['home','diag','table'], menu:['tree','cards','chains','fex','csys','cblk','compex','physlink','functions','ana:trace','ana:reqs'], ctl:['mode-rm','b-cap-watch','b-theme-menu']};
-/** Commandes de la barre que le mode ⚙ Personnalisé peut masquer : [id, libellé]. */
-var CAP_NAV_CTLS=[['mode-rm',_L('🗺 Relation Map')],['b-cap-watch',_L('🔄 Suivi du fichier')],['b-review',_L('💬 Revue')],['b-theme-menu',_L('🎨 Thème')]];
+/** Réglage par défaut : boutons directs 🏠 Accueil, 🔲 Diagrammes, ▤ Tableau ; niveau Essentiel (v3 : réglage de la refonte 3.0). */
+var CAP_NAV_DEFAULT={pins:['home','diag','table'], mode:'essentiel', v3:1};
 var _capNav=(()=>{ try{ const el=document.getElementById('cap-toolbar'); const o=el&&JSON.parse(el.textContent);
-  if(o&&o.groups&&Array.isArray(o.pins)) return capNavMigrate(o); }catch(e){} return JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); })();
-var _capNavLast={explore:'cards', flux:'chains', ana:'ana:trace'};   // dernière sous-vue ouverte par menu
+  if(o&&Array.isArray(o.pins)) return capNavMigrate(o); }catch(e){} return JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); })();
 
-/** Met à jour un réglage de barre enregistré avant l'arrivée du bouton ▤ Tableau (ancienne 📊 Table View
- * retirée, 📋 Tableau sorti du menu 🧭 Explorateur) ou du bouton 🔲 Diagrammes Capella : chacun est ajouté une fois.
- * @param {object} o - Réglage {groups, pins}
+/** Met à jour un réglage de barre enregistré avant la refonte 3.0 : niveau Expert → Complet, Simplifié ou Personnalisé
+ * → Essentiel ; épingles ramenées aux boutons directs, plus celles que l'utilisateur avait ajoutées lui-même.
+ * @param {object} o - Réglage {pins, mode, …}
  * @returns {object} Réglage mis à jour
  */
 function capNavMigrate(o){
-  if(!o.tbl){ o.tbl=1; if(!o.pins.includes('table')) o.pins.unshift('table'); }
-  if(!o.diag){ o.diag=1; if(!o.pins.includes('diag')){ const i=o.pins.indexOf('chains'); o.pins.splice(i<0?o.pins.length:i+1, 0, 'diag'); } }
-  if(!o.home){ o.home=1; if(!o.pins.includes('home')) o.pins.unshift('home'); }   // 🏠 Accueil (version 2.2)
-  if(!o.ch){ o.ch=1; o.pins=o.pins.filter(k=>k!=='chains'); }
-  if(!o.xl){ o.xl=1; if(!o.pins.includes('ana:xlay')){ const i=o.pins.indexOf('dashboard'); o.pins.splice(i<0?o.pins.length:i, 0, 'ana:xlay'); } }   // ⇶ Liens entre couches épinglé (une fois ; désépinglable)
-  if(!o.rp){ o.rp=1; if(!o.pins.includes('home:rap')){ const i=o.pins.indexOf('dashboard'); o.pins.splice(i<0?o.pins.length:i+1, 0, 'home:rap'); } }   // 📘 Rapports, à côté de 📐 Tableau de bord   // ⚡ Chaînes : dans le menu 📡 Flux & interfaces par défaut (version 2.2, une fois ; réépinglable)
+  if(o.v3) return o;
+  const old=['home','table','diag','chains','ana:xlay','dashboard','home:rap'];   // anciennes épingles par défaut
+  const mine=((o.mode==='perso'&&o.perso&&o.perso.pins)||o.pins||[]).filter(k=>!old.includes(k)&&CAP_NAV_ITEMS.some(i=>i.k===k&&i.k[0]!=='@'));
+  o.mode=(o.mode==='simple'||o.mode==='perso')?'essentiel':'complet';
+  o.pins=['home','diag','table',...mine];
+  ['groups','perso','tbl','diag','home','ch','xl','rp'].forEach(k=>delete o[k]);
+  o.v3=1;
   return o;
 }
 
-/** Réglage du mode Simplifié sous la forme d'un réglage personnalisé {pins, hide, ctl}.
- * @returns {object} Copie modifiable
- */
-function capNavSimplePerso(){
-  return {pins:CAP_NAV_SIMPLE.pins.slice(), ctl:CAP_NAV_SIMPLE.ctl.slice(),
-    hide:CAP_NAV_ITEMS.map(i=>i.k).filter(k=>!CAP_NAV_SIMPLE.pins.includes(k)&&!CAP_NAV_SIMPLE.menu.includes(k))};
-}
-
-/** Réglage effectivement appliqué à la barre selon le mode ⚙ (Expert, Simplifié, Personnalisé).
- * @returns {{mode:string, pins:string[], groups:object, hide:Set<string>, ctl:Set<string>}}
+/** Réglage effectivement appliqué à la barre selon le niveau ⚙ (Essentiel ou Complet).
+ * @returns {{mode:string, pins:string[], hide:Set<string>}} hide : vues réservées au mode Complet
  */
 function capNavEff(){
-  const m=_capNav.mode||'expert';
-  if(m==='expert') return {mode:m, pins:_capNav.pins, groups:_capNav.groups, hide:new Set(), ctl:new Set()};
-  const P=m==='perso'&&_capNav.perso||capNavSimplePerso();
-  return {mode:m, pins:P.pins||[], groups:{explore:true, flux:true, ana:true}, hide:new Set(P.hide||[]), ctl:new Set(P.ctl||[])};
+  const m=_capNav.mode==='complet'?'complet':'essentiel';
+  return {mode:m, pins:_capNav.pins, hide:new Set(m==='complet'?[]:CAP_NAV_ITEMS.filter(i=>i.x).map(i=>i.k))};
 }
 
-/** Épingle ou retire une vue de la barre. Hors mode Expert, la modification passe au mode ⚙ Personnalisé
- * (copie du mode Simplifié s'il était actif) ; une vue épinglée n'est plus masquée.
+/** Change le niveau d'affichage des menus.
+ * @param {'essentiel'|'complet'} m - Niveau
+ */
+function capNavSetMode(m){
+  _capNav.mode=m==='complet'?'complet':'essentiel'; capNavSave(); capNavRender();
+  if(typeof capToast==='function') capToast(m==='complet'?_L('⚙ Menus : Complet (toutes les vues)'):_L('⚙ Menus : Essentiel (vues avancées masquées, accessibles par la recherche)'));
+}
+
+/** Épingle ou retire une vue de la barre (bouton direct) ; une vue épinglée reste aussi dans son menu.
  * @param {string} k - Clé de la vue
  */
 function capNavTogglePin(k){
-  let L;
-  if((_capNav.mode||'expert')==='expert') L=_capNav.pins;
-  else {
-    if(_capNav.mode!=='perso'||!_capNav.perso){ _capNav.perso=capNavSimplePerso(); _capNav.mode='perso'; }
-    const P=_capNav.perso; L=P.pins; P.hide=(P.hide||[]).filter(x=>x!==k);
-  }
-  const i=L.indexOf(k); if(i>=0) L.splice(i,1); else L.push(k);
+  const L=_capNav.pins, i=L.indexOf(k); if(i>=0) L.splice(i,1); else L.push(k);
   capNavSave(); capNavRender();
 }
 
@@ -141,94 +134,79 @@ function capNavSave(){
   el.textContent=JSON.stringify(_capNav).replace(/</g,'\\u003c');
 }
 
-/** Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
+/** Clé de la vue affichée (« ana:… » pour une sous-vue de 🔬 Analyses, « home:… » pour un onglet de 🏠 Accueil,
+ * « @rm » pour la Relation Map).
  * @param {boolean} [force] - Ignorer le mode courant (appel pendant une bascule vers le mode capella)
- * @returns {string} Clé, ou '' hors du mode capella
+ * @returns {string} Clé, ou '' hors des vues connues
  */
 function capNavCurKey(force){
-  if(!force&&currentMode!=='capella') return '';
-  if(capCurrentView==='home'&&typeof _capHomeUi!=='undefined'&&_capHomeUi.tab==='dos') return 'home:rap';   // 📑 Dossiers / 📘 Rapports
+  if(!force&&currentMode!=='capella') return currentMode==='default'?'@rm':'';
+  if(capCurrentView==='home'&&typeof _capHomeUi!=='undefined'){
+    if(_capHomeUi.tab==='dos') return 'home:dos';   // 📑 Faire relire (dossiers de relecture)
+    if(_capHomeUi.tab==='docs') return 'home:docs';   // ☑ Check-lists & plans de revue
+  }
   return capCurrentView==='analyses'?'ana:'+capAnaSub:capCurrentView;
 }
 
-/** Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
+/** Ouvre une vue du catalogue, ou exécute une commande (« @… »).
  * @param {string} k - Clé de la vue
  */
 function capNavOpen(k){
   capNavClose();
   if(k==='@rm'){ document.getElementById('mode-rm')?.click(); return; }
   if(k==='@scripts'){ capScrToggle(true); return; }   // 📜 console de scripts (81)
-  if(k==='home:rap'){ capDosOuvrir(); return; }   // 📘 Rapports : onglet 📑 Dossiers de l'accueil
+  if(k==='@revue'){ capRevToggle(true); return; }   // 💬 panneau des commentaires (55)
+  if(k==='home:rap'||k==='home:dos'){ capDosOuvrir(); return; }   // 📑 dossiers de relecture et 📘 rapports : onglet 📑 de l'accueil
+  if(k==='home:docs'){ _capHomeUi.tab='docs'; if(currentMode!=='capella'||capCurrentView!=='home') capShowView('home'); else capHomeRender(); return; }
   if(k.startsWith('ana:')){ capAnaSub=k.slice(4); capShowView('analyses'); }
   else capShowView(k);
 }
 
-/** Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
- * @param {string} g - Groupe ('explore'|'flux'|'ana')
- */
-function capNavGroupOpen(g){
-  const E=capNavEff(), items=CAP_NAV_ITEMS.filter(i=>i.g===g), free=items.filter(i=>!E.pins.includes(i.k)&&!E.hide.has(i.k));
-  const last=_capNavLast[g];
-  capNavOpen(free.some(i=>i.k===last)?last:(free[0]||items[0]).k);
-}
-
-/** Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
- * affichés quand la vue courante en fait partie.
+/** Onglets de section sous la barre (ex. Composants & interfaces : System Component, Logical Component…) :
+ * vues de la même section du menu, affichés quand la vue courante en fait partie (sauf ƒ Fonctions, qui a ses onglets).
  * @param {string} cur - Clé de la vue affichée
  */
 function capNavFluxTabs(cur){
   const bar=document.getElementById('cap-flux-tabs'); if(!bar) return;
-  const E=capNavEff(), free=CAP_NAV_ITEMS.filter(i=>i.g==='flux'&&!E.pins.includes(i.k)&&(!E.hide.has(i.k)||i.k===cur));
-  const show=free.some(i=>i.k===cur);
-  bar.style.display=show?'flex':'none';
-  if(!show) return;
-  bar.innerHTML=`<span class="tb-grp">${free.map(i=>`<button class="phl-toggle-btn${i.k===cur?' active':''}" data-open="${i.k}" title="${i.t||''}">${i.l}</button>`).join('')}</span>`;   // onglets entourés comme les groupes de ƒ Fonctions
+  const E=capNavEff(), it=CAP_NAV_ITEMS.find(i=>i.k===cur);
+  const free=it&&it.tb&&cur!=='functions'?CAP_NAV_ITEMS.filter(i=>i.tb&&i.s===it.s&&(!E.hide.has(i.k)||i.k===cur)):[];
+  bar.style.display=free.length>1?'flex':'none';
+  if(free.length<2) return;
+  bar.innerHTML=`<span class="tb-grp"><span class="tb-grp-l">${it.s}</span>${free.map(i=>`<button class="phl-toggle-btn${i.k===cur?' active':''}" data-open="${i.k}" title="${i.t||''}">${i.l}</button>`).join('')}</span>`;   // onglets entourés comme les groupes de ƒ Fonctions
 }
 
-/** Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles). */
+/** Reconstruit les boutons de la barre des vues : boutons directs (épingles), menus, champ de recherche, niveau. */
 function capNavRender(){
   const box=document.getElementById('cap-tb-views'); if(!box) return;
   const E=capNavEff(), P=E.pins;
   const tip=(l,t)=>l+(t?' — '+t:'');   // nom de la vue en infobulle (utile en icônes seules)
-  const pin=k=>{ const it=CAP_NAV_ITEMS.find(i=>i.k===k);
+  const pin=k=>{ const it=CAP_NAV_ITEMS.find(i=>i.k===k); if(!it) return '';
     return `<div class="tbtn" id="cap-v-${k.replace(':','-')}" data-open="${k}" title="${tip(it.l,it.t)}">${capNavLbl(it.p||it.l, it.i)}</div>`; };   // p : libellé court du bouton épinglé
-  let h='';
+  const home=document.getElementById('cap-tb-home'); if(home) home.innerHTML=P.includes('home')?pin('home'):'';   // 🏠 Accueil : tout à gauche
+  let h=['diag','table'].filter(k=>P.includes(k)).map(pin).join('');
+  h+=P.filter(k=>!['home','diag','table'].includes(k)).map(pin).join('');   // épingles ajoutées par l'utilisateur
+  h+='<span class="tsep"></span>';
   CAP_NAV_GROUPS.forEach(G=>{
-    // Menu affiché s'il est coché (mode Expert) et s'il lui reste une vue ni épinglée ni masquée
-    if(G.g&&E.groups[G.g]!==false&&CAP_NAV_ITEMS.some(i=>i.g===G.g&&!P.includes(i.k)&&!E.hide.has(i.k)))
-      h+=_L(`<div class="tbtn cap-nav-grp" id="${G.id}" data-g="${G.g}" title="${tip(G.l,G.t)}">${capNavLbl(G.l)}<span class="cap-nav-arr" data-dd="${G.g}" title="Choisir une vue">▾</span></div>`);
-    CAP_NAV_ITEMS.filter(i=>i.g===G.g&&P.includes(i.k)&&i.k!=='table'&&i.k!=='diag').forEach(i=>h+=pin(i.k));
-    // ▤ Tableau : juste après le menu 🧭 Explorateur
-    if(G.g==='explore'&&P.includes('table')) h+=pin('table');
+    h+=`<div class="tbtn cap-nav-grp" id="${G.id}" data-g="${G.g}" data-dd="${G.g}" title="${tip(G.l,G.t)}">${capNavLbl(G.l)}${G.g==='revue'?'<span id="cap-nav-rev-badge" class="cw-badge" style="display:none"></span>':''}<span class="cap-nav-arr">▾</span></div>`;
   });
-  // 🔲 Diagrammes Capella : en tête, juste après le bouton 🗺 Relation Map
-  if(P.includes('diag')) h=pin('diag')+h;
-  // 🏠 Accueil : tout à gauche, avant 🗺 Relation Map
-  h=h.replace(pin('home'),'');
-  const home=document.getElementById('cap-tb-home'); if(home) home.innerHTML=P.includes('home')?pin('home'):'';
-  // Vues épinglées sans menu placées après le dernier groupe (📐 Tableau de bord)
-  h=h.replace(pin('dashboard'),'').replace(pin('home:rap'),'');
-  if(P.includes('dashboard')) h+=pin('dashboard');
-  if(P.includes('home:rap')) h+=pin('home:rap');   // 📘 Rapports : à côté de 📐 Tableau de bord
-  h+=_L(`<div class="tbtn" id="cap-nav-cfg" title="Toutes les vues ; recherche d'une vue, d'un élément du modèle ou d'un diagramme (Ctrl+K) ; réglage de la barre">☰</div>`);
+  h+=_L(`<label class="cap-nav-search" id="cap-nav-cfg" title="Chercher une vue, un élément du modèle ou un diagramme (Ctrl+K) ; sans texte : toutes les vues">🔍<input id="cap-nav-q" type="text" placeholder="Vue, élément, diagramme…" autocomplete="off" aria-label="Chercher une vue, un élément du modèle ou un diagramme"><kbd>Ctrl K</kbd></label>`);
+  const q0=document.getElementById('cap-nav-q'), qv=q0?q0.value:'', qf=q0&&document.activeElement===q0;   // recherche en cours conservée
   box.innerHTML=h;
+  capNavSearchWire();
+  if(qv||qf){ const q=document.getElementById('cap-nav-q'); q.value=qv; if(qf) q.focus(); }
+  const lv=document.getElementById('cap-nav-lvl');
+  if(lv) lv.innerHTML=_L(`<button type="button" data-lvl="essentiel" class="${E.mode==='essentiel'?'active':''}" title="Les vues les plus utilisées ; les vues avancées restent accessibles par la recherche">Essentiel</button><button type="button" data-lvl="complet" class="${E.mode==='complet'?'active':''}" title="Toutes les vues, dont REC / RPL, catégories d'échanges, bibliothèques et scripts">Complet</button>`);
   capNavFit();   // ⚙ icônes seules (choisies, ou automatiques si la barre déborde) : libellés .tb-lbl masqués (CSS)
-  // Commandes de la barre masquées par le mode ⚙ (classe prioritaire sur l'affichage géré par chaque module)
-  CAP_NAV_CTLS.forEach(([id])=>document.getElementById(id)?.classList.toggle('cap-pref-hide',E.ctl.has(id)));
-  const pb=document.getElementById('b-prefs');
-  if(pb){ const ml={expert:_L('Expert'), simple:_L('Simplifié'), perso:_L('Personnalisé')}[E.mode];
-    pb.innerHTML=E.mode==='expert'?'⚙':'⚙<span class="cap-pref-mode tb-lbl"> '+ml+'</span>';
-    pb.title=_L('Préférences : affichage des menus (mode actuel : ')+ml+_L('), enregistrement automatique, thème, interface et vues'); }
+  if(typeof _capRev!=='undefined'&&_capRev) capRevBadge();   // badge des commentaires sur 💬 Revue & documents (55, chargé après ce module)
   capNavSync();
 }
 
-/** Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
+/** Met à jour l'état actif des boutons de la barre (vue affichée, menu qui la contient).
  * @param {boolean} [force] - Ignorer le mode courant (voir capNavCurKey)
  */
 function capNavSync(force){
   if(typeof _capNav==='undefined') return;   // appelé avant le chargement de ce module
   const cur=capNavCurKey(force), it=CAP_NAV_ITEMS.find(i=>i.k===cur), E=capNavEff();
-  if(it&&it.g) _capNavLast[it.g]=cur;
   document.querySelectorAll('#cap-tb-views [data-open],#cap-tb-home [data-open]').forEach(b=>b.classList.toggle('active',b.dataset.open===cur));
   document.querySelectorAll('#cap-tb-views .cap-nav-grp').forEach(b=>{
     const on=!!it&&it.g===b.dataset.g&&!E.pins.includes(cur);
@@ -237,7 +215,7 @@ function capNavSync(force){
     b.title=(it&&it.g===b.dataset.g?_L('Vue affichée : ')+it.l+'\n':'')+(_capNav.icons?G.l+' — ':'')+G.t;
   });
   capNavFluxTabs(cur);
-  // Onglets de 🔬 Analyses et de ƒ Fonctions : sous-vues masquées par le mode ⚙ (sauf celle affichée)
+  // Onglets de 🔬 Analyses et de ƒ Fonctions : sous-vues du mode Complet masquées en Essentiel (sauf celle affichée)
   document.querySelectorAll('#cap-view-analyses [data-an],#cap-view-functions [data-an]').forEach(b=>{
     const k=b.dataset.an==='fns'?'functions':'ana:'+b.dataset.an;
     b.classList.toggle('cap-pref-hide',E.hide.has(k)&&k!==cur); });
@@ -246,6 +224,7 @@ function capNavSync(force){
 /** Ferme le menu déroulant de la barre des vues. */
 function capNavClose(){
   const dd=document.getElementById('cap-nav-dd'); if(dd) dd.style.display='none';
+  const q=document.getElementById('cap-nav-q'); if(q&&document.activeElement!==q) q.value='';   // 🔍 recherche terminée
   document.querySelectorAll('[aria-expanded="true"]').forEach(b=>b.setAttribute('aria-expanded','false'));   // ♿ menus refermés
 }
 
@@ -256,12 +235,13 @@ function capNavClose(){
  */
 function capNavRow(it, extra){
   const E=capNavEff(), on=E.pins.includes(it.k), cur=capNavCurKey()===it.k, hid=E.hide.has(it.k);
-  return `<div class="ctx-i cap-nav-it${cur?' cur':''}${hid?' cap-nav-hid':''}" data-open="${it.k}" title="${it.t||''}"><span>${it.l}${extra?` <span class="cap-nav-g">${extra}</span>`:''}${hid?_L(' <span class="cap-nav-g">(masquée)</span>'):''}</span>`+
+  return `<div class="ctx-i cap-nav-it${cur?' cur':''}${hid?' cap-nav-hid':''}" data-open="${it.k}" title="${it.t||''}"><span>${it.l}${extra?` <span class="cap-nav-g">${extra}</span>`:''}${hid?_L(' <span class="cap-nav-g">(mode Complet)</span>'):''}</span>`+
     (it.k[0]==='@'?'':`<span class="cap-nav-pin${on?' on':''}" data-pin="${it.k}" title="${on?_L('Retirer de la barre'):_L('Épingler dans la barre (bouton direct)')}">📌</span>`)+`</div>`;
 }
 
-/** Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
- * @param {string} g - Groupe ('explore'|'flux'|'ana') ou '☰'
+/** Ouvre le menu déroulant d'un groupe, d'une commande de droite (Fichier, Aide, ⚙…) ou de la recherche (☰ : résultats
+ * du champ 🔍 de la barre, ou toutes les vues sans texte).
+ * @param {string} g - Groupe ('arch'|'verif'|'revue'), menu ('file'|'help'|'prefs'|'theme') ou '☰'
  * @param {HTMLElement} anchor - Bouton sous lequel placer le menu
  */
 function capNavMenu(g, anchor){
@@ -273,8 +253,8 @@ function capNavMenu(g, anchor){
       if(p){ e.stopPropagation(); capNavTogglePin(p.dataset.pin); capNavMenuFill(); return; }
       const pi=e.target.closest('[data-picons]');
       if(pi){ capNavClose(); capPrefSetIcons(pi.dataset.picons==='1'); return; }
-      const pm=e.target.closest('[data-pmode]');
-      if(pm){ capNavClose(); capPrefSetMode(pm.dataset.pmode); return; }
+      const lv=e.target.closest('[data-lvl]');
+      if(lv){ capNavSetMode(lv.dataset.lvl); capNavMenuFill(); return; }
       const pal=e.target.closest('[data-pal]'); if(pal){ capPalOpen(pal.dataset.pal, pal.dataset.id); return; }   // élément ou diagramme (67)
       const o=e.target.closest('[data-open]'); if(o){ capNavOpen(o.dataset.open); return; }
       const th=e.target.closest('[data-thm]');
@@ -282,38 +262,42 @@ function capNavMenu(g, anchor){
       const a=e.target.closest('[data-act]');
       if(a){ capNavClose(); ({open:()=>capPickCapellaFile(), folder:()=>capOpenProjectFolder(), projet:()=>capProjetPagePick(), save:()=>capSavePageDirect(false), saveas:()=>capSavePageDirect(true),
         page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor(), update:()=>capCfgLoadUpdate(), cfgsave:()=>capCfgDialog('save'), cfgload:()=>capCfgLoadFile(),
-        help:()=>openHelpModal(), custom:()=>capPrefCustomDialog(), prefs:()=>capPrefDialog(), autosave:()=>capPrefDialog('save'), checks:()=>capChkDialog(), xport:()=>capExportToggle(), xlsx:()=>capXlsxClasseur(),
+        watch:()=>setTimeout(()=>capWatchMenu(true),0),   // 🔄 Suivi du fichier (40) : après la fermeture de ce menu par le même clic
+        help:()=>openHelpModal(), prefs:()=>capPrefDialog(), autosave:()=>capPrefDialog('save'), checks:()=>capChkDialog(), xport:()=>capExportToggle(), xlsx:()=>capXlsxClasseur(),
         theme:()=>capNavMenu('theme', document.getElementById('b-prefs')), tour:()=>capTourStart(), tourview:()=>capTourStartView(), tourrev:()=>capTourRevue(), tourscr:()=>capTourScripts(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
-      if(e.target.closest('[data-reset]')){ const a=_capNav.auto; _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); if(a) _capNav.auto=a;   // ⚙ enregistrement automatique conservé
+      if(e.target.closest('[data-reset]')){ const au=_capNav.auto, ic=_capNav.icons; _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT));
+        if(au) _capNav.auto=au; if(ic) _capNav.icons=ic;   // ⚙ enregistrement automatique et style de la barre conservés
         capNavSave(); capNavRender(); capNavMenuFill(); }
     });
-    dd.addEventListener('change',e=>{
-      const c=e.target.closest('[data-gv]'); if(!c) return;
-      _capNav.groups[c.dataset.gv]=c.checked; capNavSave(); capNavRender();
-    });
   }
-  if(dd.style.display!=='none'&&dd.dataset.g===g){ capNavClose(); return; }
+  if(dd.style.display!=='none'&&dd.dataset.g===g&&g!=='☰'){ capNavClose(); return; }
   dd.dataset.g=g;
   if(anchor&&anchor.setAttribute){ anchor.setAttribute('aria-haspopup','true'); anchor.setAttribute('aria-expanded','true'); }   // ♿
-  dd.innerHTML=g==='☰'?_L(`<input id="cap-nav-q" type="text" placeholder="🔍 Vue, élément du modèle, diagramme… (Ctrl+K)" autocomplete="off"><div id="cap-nav-res"></div>`):'<div id="cap-nav-res"></div>';
+  dd.innerHTML='<div id="cap-nav-res"></div>';
   capNavMenuFill();
   dd.style.display='block';
   const r=anchor.getBoundingClientRect(), w=dd.offsetWidth;
   dd.style.top=(r.bottom+4)+'px';
   dd.style.left=Math.max(8,Math.min(r.left, window.innerWidth-w-8))+'px';
-  const q=dd.querySelector('#cap-nav-q');
-  if(q){
-    q.focus();
-    q.oninput=()=>capNavMenuFill();
-    q.onkeydown=e=>{
-      const rows=[...dd.querySelectorAll('#cap-nav-res [data-open],#cap-nav-res [data-pal]')], i=rows.findIndex(r=>r.classList.contains('hl'));
-      if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault(); if(!rows.length) return;
-        const n=(i+(e.key==='ArrowDown'?1:-1)+rows.length)%rows.length;
-        rows.forEach((r,j)=>r.classList.toggle('hl',j===n)); rows[n].scrollIntoView({block:'nearest'}); }
-      else if(e.key==='Enter'){ const r=rows[i<0?0:i]; if(r){ if(r.dataset.pal) capPalOpen(r.dataset.pal, r.dataset.id); else capNavOpen(r.dataset.open); } }
-      else if(e.key==='Escape') capNavClose();
-    };
-  }
+}
+
+/** Branche le champ 🔍 de la barre : saisie = résultats dans le menu ☰, flèches pour choisir, Entrée pour ouvrir. */
+function capNavSearchWire(){
+  const q=document.getElementById('cap-nav-q'); if(!q||q._wired) return;
+  q._wired=true;
+  const open=()=>{ const dd=document.getElementById('cap-nav-dd');
+    if(!dd||dd.style.display==='none'||dd.dataset.g!=='☰') capNavMenu('☰', document.getElementById('cap-nav-cfg')); else capNavMenuFill(); };
+  q.addEventListener('focus',open);
+  q.addEventListener('input',open);
+  q.addEventListener('keydown',e=>{
+    const dd=document.getElementById('cap-nav-dd'); if(!dd||dd.style.display==='none'){ if(e.key==='ArrowDown') open(); return; }
+    const rows=[...dd.querySelectorAll('#cap-nav-res [data-open],#cap-nav-res [data-pal]')], i=rows.findIndex(r=>r.classList.contains('hl'));
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault(); if(!rows.length) return;
+      const n=(i+(e.key==='ArrowDown'?1:-1)+rows.length)%rows.length;
+      rows.forEach((r,j)=>r.classList.toggle('hl',j===n)); rows[n].scrollIntoView({block:'nearest'}); }
+    else if(e.key==='Enter'){ const r=rows[i<0?0:i]; if(r){ q.value=''; q.blur(); if(r.dataset.pal) capPalOpen(r.dataset.pal, r.dataset.id); else capNavOpen(r.dataset.open); } }
+    else if(e.key==='Escape'){ q.value=''; capNavClose(); q.blur(); }
+  });
 }
 
 /** Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche. */
@@ -327,8 +311,9 @@ function capNavMenuFill(){
       <div class="ctx-i" data-act="projet" title="Reprend un projet de travail enregistré en page HTML (💾), même par une version précédente d'Arcalyse (à partir de la 2.1) : modèle, diagrammes, revue, accueil, vues et réglages">📄 Ouvrir un projet de travail (page HTML)…</div>
       <div class="cap-nav-hint">Nouvelle version d'Arcalyse ? Ouvrez-y la page de votre projet enregistrée avec l'ancienne : tout le travail est repris.</div>
       <div class="ctx-i" data-act="update" title="Compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour l'affichage après validation">🔄 Charger une mise à jour du modèle…</div>
-      <div class="cap-nav-hint">Mise à jour : delta affiché avant validation ; alerte si les deux fichiers semblent être des projets différents. Diagrammes chargés : le .aird est relu s'il a été ouvert avec un accès direct (dossier du projet), sinon le .aird à jour est demandé.</div>
-      <div class="cw-m-sep"></div>
+      <div class="cap-nav-hint">Mise à jour : delta affiché avant validation ; alerte si les deux fichiers semblent être des projets différents. Diagrammes chargés : le .aird est relu s'il a été ouvert avec un accès direct (dossier du projet), sinon le .aird à jour est demandé.</div>`)+
+      (capLoaded?_L(`<div class="ctx-i" data-act="watch" title="Détecter les nouvelles versions du fichier .capella, voir le delta, historique des mises à jour">🔄 Suivi du fichier…${_capWatch.pending?` <span class="cw-badge">${_capWatch.pending.versions.length}</span>`:''}</div>`):'')+
+      _L(`<div class="cw-m-sep"></div>
       <div class="ctx-i" data-act="save" title="Page HTML autonome : modèle + interface et vues">💾 Enregistrer${sc(_L('Ctrl+S'))}</div>
       <div class="ctx-i" data-act="saveas">💾 Enregistrer sous…${sc(_L('Ctrl+Maj+S'))}</div>
       <div class="ctx-i" data-act="page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome">🌐 Télécharger la page HTML</div>
@@ -358,14 +343,14 @@ function capNavMenuFill(){
       _L(`<div class="cw-m-sep"></div><div class="ctx-i" data-act="themeedit" title="Créer ou modifier un thème personnalisé (toutes les couleurs)">🎨 Personnaliser…</div>`);
     return;
   }
-  if(g!=='☰'){ const E=capNavEff(); res.innerHTML=CAP_NAV_ITEMS.filter(i=>i.g===g&&!E.hide.has(i.k)).map(i=>capNavRow(i)).join('')+
+  if(g!=='☰'){ const E=capNavEff(), all=CAP_NAV_ITEMS.filter(i=>i.g===g), its=all.filter(i=>!E.hide.has(i.k)), n=all.length-its.length;
+    res.innerHTML=capNavSections(its)+(n?_L(`<div class="ctx-i cap-nav-more" data-lvl="complet" title="Afficher toutes les vues dans les menus">➕ ${n} vue(s) avancée(s) en mode Complet</div>`):'')+
     _L(`<div class="cap-nav-hint">📌 épingle une vue en bouton direct dans la barre.</div>`); return; }
   const norm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
-  const q=norm((dd.querySelector('#cap-nav-q')||{}).value||'').trim();
+  const q=norm((document.getElementById('cap-nav-q')||{}).value||'').trim();
   const gl=x=>(CAP_NAV_GROUPS.find(G=>G.g===x)||{}).l||'';
   if(q){
-    const all=[{k:'@rm',l:_L('🗺 Relation Map'),g:''},{k:'@scripts',l:_L('📜 Scripts'),g:'',t:_L('Console de scripts : parcourir et analyser le modèle avec l\'API (Alt+4)')},...CAP_NAV_ITEMS];
-    const hit=all.filter(i=>q.split(/\s+/).every(w=>norm(i.l+' '+gl(i.g)+' '+(i.t||'')).includes(w)));
+    const hit=CAP_NAV_ITEMS.filter(i=>q.split(/\s+/).every(w=>norm(i.l+' '+gl(i.g)+' '+(i.s||'')+' '+(i.t||'')).includes(w)));
     const inName=i=>q.split(/\s+/).every(w=>norm(i.l).includes(w)); hit.sort((a,b)=>inName(b)-inName(a));   // le nom de la vue prime sur l'info-bulle
     const pal=capPalHtml(q);   // éléments du modèle et diagrammes (67)
     res.innerHTML=(hit.length?(pal?_L('<div class="cap-nav-h">Vues</div>'):'')+hit.map(i=>capNavRow(i,gl(i.g))).join(''):'')+pal
@@ -374,17 +359,22 @@ function capNavMenuFill(){
     return;
   }
   let h=capPalRecentHtml();   // 🕘 derniers éléments / diagrammes ouverts par la palette (67)
-  const expert=(_capNav.mode||'expert')==='expert';
-  CAP_NAV_GROUPS.forEach(G=>{
-    h+=G.g&&expert?_L(`<label class="cap-nav-h"><input type="checkbox" data-gv="${G.g}"${_capNav.groups[G.g]!==false?' checked':''}> Menu ${G.l} ▾ dans la barre</label>`)
-          :G.g?`<div class="cap-nav-h">${G.l}</div>`:_L('<div class="cap-nav-h">Autres vues</div>');
-    h+=CAP_NAV_ITEMS.filter(i=>i.g===G.g).map(i=>capNavRow(i)).join('');
-  });
-  if(!expert) h+=_L(`<div class="cw-m-sep"></div><div class="ctx-i" data-act="custom">⚙ Personnaliser l'affichage…</div>`);
-  else h+=_L(`<div class="cw-m-sep"></div><div class="ctx-i" data-reset="1">↺ Rétablir la barre par défaut</div>
-    `);
-  h+=_L(`<div class="cap-nav-hint">📌 = bouton direct dans la barre. Une vue masquée reste accessible ici. Réglage enregistré avec la 💾 Page HTML.</div>`);
+  h+=_L('<div class="cap-nav-h">Boutons directs</div>')+CAP_NAV_ITEMS.filter(i=>!i.g).map(i=>capNavRow(i)).join('');
+  CAP_NAV_GROUPS.forEach(G=>{ h+=`<div class="cap-nav-h">${G.l}</div>`+capNavSections(CAP_NAV_ITEMS.filter(i=>i.g===G.g), true); });
+  h+=_L(`<div class="cw-m-sep"></div><div class="ctx-i" data-reset="1">↺ Rétablir la barre par défaut</div>
+    <div class="cap-nav-hint">📌 = bouton direct dans la barre. Les vues du mode Complet restent accessibles ici et par la recherche. Réglage enregistré avec la 💾 Page HTML.</div>`);
   res.innerHTML=h;
+}
+
+/** Lignes d'un menu rangées par section (intertitre à chaque changement de section).
+ * @param {Object[]} its - Éléments de CAP_NAV_ITEMS, dans l'ordre du catalogue
+ * @param {boolean} [sub] - Intertitres secondaires (dans la liste complète du menu ☰)
+ * @returns {string} HTML
+ */
+function capNavSections(its, sub){
+  let h='', s=null;
+  its.forEach(i=>{ if((i.s||'')!==s){ s=i.s||''; if(s) h+=`<div class="cap-nav-s${sub?' sub':''}">${s}</div>`; } h+=capNavRow(i); });
+  return h;
 }
 
 // Câblage : clics de la barre (délégation), fermeture du menu, raccourci Ctrl+K
@@ -393,19 +383,19 @@ function capNavMenuFill(){
   document.getElementById('cap-tb-home')?.addEventListener('click',e=>{ const o=e.target.closest('[data-open]'); if(o) capNavOpen(o.dataset.open); });
   box.addEventListener('click',e=>{
     const dd=e.target.closest('[data-dd]'); if(dd){ e.stopPropagation(); capNavMenu(dd.dataset.dd, dd.closest('.cap-nav-grp')); return; }
-    const grp=e.target.closest('.cap-nav-grp'); if(grp){ capNavGroupOpen(grp.dataset.g); return; }
     const o=e.target.closest('[data-open]'); if(o){ capNavOpen(o.dataset.open); return; }
-    const cfg=e.target.closest('#cap-nav-cfg'); if(cfg){ e.stopPropagation(); capNavMenu('☰', cfg); }
   });
-  // Menus 📁 Fichier, 🎨 Thème et ❓ Aide (partie droite de la barre), onglets 📡 Flux & interfaces
+  // Niveau Essentiel / Complet
+  document.getElementById('cap-nav-lvl')?.addEventListener('click',e=>{ const b=e.target.closest('[data-lvl]'); if(b) capNavSetMode(b.dataset.lvl); });
+  // Menus 📁 Fichier, ❓ Aide et ⚙ (partie droite de la barre), onglets de section
   ['b-file-menu','b-theme-menu','b-help','b-prefs'].forEach(id=>document.getElementById(id)?.addEventListener('click',e=>{
     e.stopPropagation(); capNavMenu(e.currentTarget.dataset.dd, e.currentTarget); }));
   document.getElementById('cap-flux-tabs')?.addEventListener('click',e=>{ const o=e.target.closest('[data-open]'); if(o) capNavOpen(o.dataset.open); });
   document.addEventListener('mousedown',e=>{ if(!e.target.closest('#cap-nav-dd,[data-dd],#cap-nav-cfg')) capNavClose(); });
   document.addEventListener('keydown',e=>{
     if((e.ctrlKey||e.metaKey)&&!e.altKey&&(e.key==='k'||e.key==='K')){ e.preventDefault();
-      const dd=document.getElementById('cap-nav-dd');
-      if(dd&&dd.style.display!=='none'&&dd.dataset.g==='☰') capNavClose(); else capNavMenu('☰', document.getElementById('cap-nav-cfg')); }
+      const dd=document.getElementById('cap-nav-dd'), q=document.getElementById('cap-nav-q');
+      if(dd&&dd.style.display!=='none'&&dd.dataset.g==='☰'){ capNavClose(); q?.blur(); } else if(q) q.focus(); }
     else if(e.key==='Escape') capNavClose();
   });
   window.addEventListener('resize',capNavClose);

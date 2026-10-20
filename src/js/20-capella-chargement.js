@@ -320,6 +320,7 @@ let capCurrentFileName='';
 /** Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
  * s'affiche en surimpression (pendant un glisser-déposer ou un rechargement). */
 function capShowWelcome(show){
+  document.documentElement.toggleAttribute('data-capvide', !capLoaded);   // barre réduite tant qu'aucun modèle n'est ouvert (CSS)
   const w=document.getElementById('cap-welcome'); if(!w) return;
   w.classList.toggle('cw-hidden', !show);
   w.classList.toggle('cw-overlay', !!capLoaded);

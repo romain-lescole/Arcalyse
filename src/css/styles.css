@@ -1129,12 +1129,32 @@ tr[role="button"]:focus-visible{outline-offset:-2px;}
 .cap-nav-grp{display:flex;align-items:center;gap:2px;padding-right:3px;}
 .cap-nav-arr{padding:0 3px;margin-left:2px;border-left:1px solid var(--c-border);opacity:.75;}
 .cap-nav-arr:hover{opacity:1;color:var(--c-accent,var(--c-text));}
-#cap-nav-cfg{padding-left:9px;padding-right:9px;}
+/* 🔍 Champ de recherche de la barre (Ctrl+K) : résultats dans le menu ☰ */
+.cap-nav-search{display:flex;align-items:center;gap:6px;flex:0 1 250px;min-width:120px;height:26px;margin-left:6px;padding:0 8px;box-sizing:border-box;
+  background:var(--c-bg3);border:1px solid var(--c-border);border-radius:5px;color:var(--c-dim);cursor:text;}
+.cap-nav-search:focus-within{border-color:var(--c-accent,var(--c-border));}
+.cap-nav-search kbd{font:inherit;font-size:10px;border:1px solid var(--c-border);border-radius:3px;padding:0 4px;background:var(--c-bg2);white-space:nowrap;}
+#cap-nav-q{flex:1;min-width:0;border:0;background:transparent;color:var(--c-text);font-size:12px;outline:none;padding:0;}
+html[data-tbicons] .cap-nav-search{flex-basis:170px;}
+html[data-tbicons] .cap-nav-search kbd{display:none;}
+#cap-tb-views{flex:1 1 auto;min-width:0;}
+#cap-tb-views .tsep{margin:0 3px;}
+/* Niveau d'affichage des menus : Essentiel / Complet */
+.cap-nav-lvl{display:inline-flex;border:1px solid var(--c-border);border-radius:5px;overflow:hidden;margin-right:4px;}
+.cap-nav-lvl button{border:0;background:var(--c-bg2);color:var(--c-dim);font-size:11px;font-weight:600;padding:3px 8px;cursor:pointer;}
+.cap-nav-lvl button.active{background:var(--c-accent);color:var(--c-bg2);}
+.cap-nav-lvl button:not(.active):hover{color:var(--c-text);}
+/* Sections des menus (ex. Composants & interfaces) */
+.cap-nav-s{padding:6px 13px 2px;color:var(--c-dim);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+.cap-nav-s.sub{padding-left:20px;text-transform:none;letter-spacing:0;font-weight:600;}
+.cap-nav-more{color:var(--c-accent,var(--c-text));font-size:11px;}
+.cap-nav-grp .cw-badge{margin-left:3px;}
+/* Aucun modèle ouvert : barre réduite à 📁 Fichier, ⚙ et ❓ ; pas de 2ᵉ barre ni d'onglets de la Relation Map */
+html[data-capvide] #cap-tb-views,html[data-capvide] #cap-tb-home,html[data-capvide] #b-hist-back,html[data-capvide] #b-hist-fwd,
+html[data-capvide] #cap-nav-lvl,html[data-capvide] #b-save-direct,html[data-capvide] #toolbar2,html[data-capvide] #rm-tabs,
+html[data-capvide] #infobar{display:none!important;}
 #cap-nav-dd{position:fixed;z-index:2500;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;min-width:260px;max-width:360px;
   max-height:calc(100vh - 80px);overflow:auto;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;font-size:12px;}
-#cap-nav-q{display:block;width:calc(100% - 16px);margin:4px 8px 6px;padding:5px 8px;box-sizing:border-box;background:var(--c-bg3);color:var(--c-text);
-  border:1px solid var(--c-border);border-radius:4px;font-size:12px;outline:none;}
-#cap-nav-q:focus{border-color:var(--c-accent,var(--c-border));}
 .cap-nav-it{display:flex;align-items:center;justify-content:space-between;gap:10px;}
 .cap-nav-it.cur{font-weight:700;}
 .cap-nav-it.cur>span:first-child::before{content:'● ';color:var(--c-accent,var(--c-text));}

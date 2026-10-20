@@ -324,17 +324,15 @@ function capWatchOpenCompare(what){
 
 /* ── Interface : bouton, menu, notification, fenêtre du delta ───────────── */
 
-/** Met à jour le bouton 🔄 Suivi (visibilité, badge, info-bulle). */
+/** Met à jour le bouton 🔄 Suivi (badge, info-bulle) : il n'apparaît dans la barre que lorsqu'une nouvelle version
+ * est détectée (ou que le fichier n'est plus lisible) et pendant que son menu est ouvert (📁 Fichier › 🔄 Suivi du fichier). */
 function capWatchUpdateUi(){
   const b=document.getElementById('b-cap-watch'); if(!b) return;
-  b.style.display=capLoaded?'':'none';
-  const bs=document.getElementById('b-scripts'); if(bs) bs.style.display=capLoaded?'':'none';   // 📜 Scripts (81) : avec un modèle chargé
   const badge=document.getElementById('b-cap-watch-badge');
   const p=_capWatch.pending, st=_capWatch.state;
-  if(badge){
-    badge.textContent=p?String(p.versions.length):(st==='stale'||st==='missing'||st==='denied')?'!':'';
-    badge.style.display=badge.textContent?'':'none';
-  }
+  const txt=p?String(p.versions.length):(st==='stale'||st==='missing'||st==='denied')?'!':'';
+  if(badge){ badge.textContent=txt; badge.style.display=txt?'':'none'; }
+  b.style.display=capLoaded&&(txt||document.getElementById('cap-watch-dd')?.style.display==='block')?'':'none';
   b.classList.toggle('cw-busy',_capWatch.busy);
   b.title=p?_L(`${p.versions.length} enregistrement(s) détecté(s) — ${p.counts.total} différence(s) avec le modèle affiché`)
     :st==='stale'?_L('Le fichier a été modifié : resélectionnez-le pour voir le delta')
@@ -382,6 +380,7 @@ function capWatchMenu(show){
   const dd=document.getElementById('cap-watch-dd'); if(!dd) return;
   const open=show===undefined?dd.style.display!=='block':show;
   dd.style.display=open?'block':'none';
+  capWatchUpdateUi();   // bouton affiché tant que le menu est ouvert
   if(open) capWatchMenuRender();
 }
 

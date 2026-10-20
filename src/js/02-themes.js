@@ -243,6 +243,8 @@ function applyTheme(name) {
 function applyMode(mode) {
   if (mode !== 'default' && mode !== 'PBS' && mode !== 'capella') return;
   currentMode = mode;
+  // Aucun modèle ouvert : barre réduite à 📁 Fichier, ⚙ et ❓ (règles html[data-capvide] de styles.css)
+  try { document.documentElement.toggleAttribute('data-capvide', !capLoaded); } catch(e) { /* capLoaded pas encore déclaré (20) */ }
   const isCapella = mode === 'capella';
   const isGraph   = !isCapella;
 

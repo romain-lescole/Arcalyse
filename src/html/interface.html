@@ -5,14 +5,17 @@
   <!-- ◀ ▶ Historique de navigation (76-historique.js) : Alt+← / Alt+→, clic droit = liste des étapes -->
   <div class="tbtn off" id="b-hist-back" title="Précédent (Alt+←)">◀</div>
   <div class="tbtn off" id="b-hist-fwd" title="Suivant (Alt+→)">▶</div>
-  <div class="tbtn active" id="mode-rm"    title="Relation Map">🗺<span class="tb-lbl"> Relation Map</span></div>
+  <!-- 🗺 Relation Map : ouverte par 🏗 Architecture › Explorer (bouton masqué, gardé pour le code existant) -->
+  <div class="tbtn active" id="mode-rm"    title="Relation Map" style="display:none">🗺<span class="tb-lbl"> Relation Map</span></div>
   <div class="tbtn"        id="mode-pbs"   title="PBS" style="display:none">🌲 PBS</div>
-  <!-- Vues Capella : au même niveau que Relation Map, toujours visibles (clic = bascule en mode capella) -->
-  <!-- Boutons générés par capNavRender (41-barre-vues.js) : menus 🧭 Explorateur / 📡 Flux & interfaces / 🔬 Analyses, ▤ Tableau, vues épinglées, ☰ -->
+  <!-- Boutons générés par capNavRender (41-barre-vues.js) : 🔲 Diagrammes, ▤ Tableau, vues épinglées, menus 🏗 Architecture /
+       ✅ Vérifier / 💬 Revue & documents, champ 🔍 de recherche (Ctrl+K) ; masqués tant qu'aucun modèle n'est ouvert (html[data-capvide]) -->
   <div id="cap-tb-views" style="display:flex;align-items:center;gap:3px;"></div>
   <!-- Spacer : tout ce qui suit est poussé à droite -->
   <div id="tb-spacer"></div>
   <div class="tbtn" id="b-ref" style="display:none">↺ Reset</div>
+  <!-- Niveau d'affichage des menus : Essentiel / Complet (boutons générés par capNavRender) -->
+  <span id="cap-nav-lvl" class="cap-nav-lvl" role="group" aria-label="Niveau d'affichage des menus"></span>
   <div class="tsep"></div>
   <!-- 📁 Fichier ▾ : ouvrir un modèle, enregistrer, enregistrer sous, télécharger la page (menu rempli par capNavMenuFill) -->
   <div class="tbtn" id="b-file-menu" data-dd="file" title="Ouvrir un modèle Capella, enregistrer la page">📁<span class="tb-lbl"> Fichier</span> ▾</div>
@@ -20,7 +23,8 @@
   <!-- Commandes conservées pour le code existant, accessibles par le menu 📁 Fichier -->
   <div class="tbtn" id="b-capella-load" title="Charger un fichier Capella" style="display:none">🔷 CAPELLA</div>
   <div class="tbtn" id="b-save-page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome" style="display:none">💾 Page HTML</div>
-  <!-- 🔄 Suivi du fichier .capella (mises à jour, delta, historique) — visible quand un modèle est chargé -->
+  <!-- 🔄 Suivi du fichier .capella (mises à jour, delta, historique) : menu ouvert par 📁 Fichier › 🔄 Suivi du fichier ;
+       le bouton n'apparaît que lorsqu'une nouvelle version est détectée (badge) ou que son menu est ouvert (40) -->
   <div style="position:relative;display:none" id="b-cap-watch">
     <div class="tbtn" id="b-cap-watch-main" title="Suivi du fichier .capella : mises à jour, delta, historique">🔄<span class="tb-lbl"> Suivi</span><span id="b-cap-watch-badge" class="cw-badge" style="display:none"></span> ▾</div>
     <div id="cap-watch-dd" style="display:none"></div>
@@ -36,12 +40,12 @@
       <div class="ctx-i" id="b-load">📂 Charger un fichier</div>
     </div>
   </div>
-  <!-- 📜 Scripts : console de scripts (tiroir en bas des vues, 81-scripts-console.js) -->
+  <!-- 📜 Scripts : console de scripts (tiroir en bas des vues, 81-scripts-console.js) ; ouverte par 💬 Revue & documents › 📜 Scripts (mode Complet), Alt+4 ou la recherche -->
   <div class="tbtn" id="b-scripts" title="Scripts : parcourir et analyser le modèle avec l'API, comme les macros de Catia Magic (Alt+4)" style="display:none">📜<span class="tb-lbl"> Scripts</span></div>
-  <!-- 💬 Revue : commentaires de revue (panneau à droite, 55-revue.js) -->
-  <div class="tbtn" id="b-review" title="Revue : commentaires sur le modèle et les diagrammes, vérification après mise à jour, rapport">💬<span class="tb-lbl"> Revue</span><span id="b-review-badge" class="cw-badge" style="display:none"></span></div>
-  <!-- 🎨 Thème ▾ : liste des thèmes + personnalisation (le sélecteur caché reste la référence du thème choisi) -->
-  <div class="tbtn" id="b-theme-menu" data-dd="theme" title="Changer le thème, créer ou modifier un thème personnalisé">🎨<span class="tb-lbl"> Thème</span> ▾</div>
+  <!-- 💬 Revue : commentaires de revue (panneau à droite, 55-revue.js) ; ouvert par 💬 Revue & documents › 💬 Commentaires (bouton masqué, badge recopié sur le menu) -->
+  <div class="tbtn" id="b-review" style="display:none" title="Revue : commentaires sur le modèle et les diagrammes, vérification après mise à jour, rapport">💬<span class="tb-lbl"> Revue</span><span id="b-review-badge" class="cw-badge" style="display:none"></span></div>
+  <!-- 🎨 Thème : dans ⚙ (menu et Préférences) ; le sélecteur caché reste la référence du thème choisi -->
+  <div class="tbtn" id="b-theme-menu" data-dd="theme" style="display:none" title="Changer le thème, créer ou modifier un thème personnalisé">🎨<span class="tb-lbl"> Thème</span> ▾</div>
   <select id="theme-sel" title="Changer le thème" style="display:none">
     <option value="dark">🌙 Sombre</option>
     <option value="light">☀️ Clair</option>
@@ -53,8 +57,8 @@
   <div class="tbtn" id="b-theme-edit" title="Créer ou modifier un thème personnalisé (toutes les couleurs)" style="display:none">🎨</div>
   <!-- ❓ Aide ▾ : aide complète et 🎓 visite guidée (menu rempli par capNavMenuFill) -->
   <div class="tbtn" id="b-help" data-dd="help" title="Aide complète, visite guidée de l'outil">❓<span class="tb-lbl"> Aide</span> ▾</div>
-  <!-- ⚙ Préférences : affichage des menus (Expert / Simplifié / Personnalisé), enregistrement automatique, thème (64-preferences.js) -->
-  <div class="tbtn" id="b-prefs" data-dd="prefs" title="Préférences : affichage des menus, enregistrement automatique, thème, interface et vues">⚙</div>
+  <!-- ⚙ Préférences : niveau des menus (Essentiel / Complet), style de la barre, thème, enregistrement automatique (64-preferences.js) -->
+  <div class="tbtn" id="b-prefs" data-dd="prefs" title="Préférences : menus, style de la barre, thème, enregistrement automatique, interface et vues">⚙</div>
 </div>
 <!-- Toolbar niveau 2 : commandes propres à la Relation Map -->
 <div id="toolbar2" role="toolbar" aria-label="Commandes de la Relation Map">
@@ -337,7 +341,7 @@
         <button class="cap-lf-btn" data-ev="index">📖 Index des types</button>
       </span>
     </div>
-    <!-- Onglets du menu 📡 Flux & interfaces : vues du menu non épinglées (remplis par capNavFluxTabs) -->
+    <!-- Onglets de section (ex. Composants & interfaces) : vues de la même section du menu (remplis par capNavFluxTabs) -->
     <div id="cap-flux-tabs" class="phl-toggle-bar" style="display:none;gap:4px;padding:10px 16px 8px;margin:0;border-bottom:1px solid var(--c-border);flex-shrink:0;"></div>
     <!-- Sub-toolbar: stats + filters + search + expand/json — always in content area -->
     <div id="cap-sub-toolbar" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:6px 12px;border-bottom:1px solid var(--c-border);background:var(--c-bg2);flex-shrink:0;">

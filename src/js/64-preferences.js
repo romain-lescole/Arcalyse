@@ -1,15 +1,14 @@
 // ════════════════════════════════════════════════════════════════════
-//  ⚙ PRÉFÉRENCES : affichage des menus (Expert / Simplifié / Personnalisé),
+//  ⚙ PRÉFÉRENCES : niveau d'affichage des menus (Essentiel / Complet),
 //  enregistrement automatique de la page, thème, interface et vues
 //  Réglages rangés dans _capNav (bloc page `cap-toolbar`, partie ⚙ `toolbar`) :
-//  mode, perso {pins, hide, ctl}, auto {on, min, bak}.
+//  mode ('essentiel' | 'complet'), pins, icons, auto {on, min, bak}.
 // ════════════════════════════════════════════════════════════════════
 
-/** Libellés et descriptions des modes d'affichage des menus. */
+/** Libellés et descriptions des niveaux d'affichage des menus. */
 var CAP_PREF_MODES=[
-  ['simple',_L('Simplifié'),_L('Les vues les plus utilisées : 🏠 Accueil, 🔲 Diagrammes, ▤ Tableau, l\'essentiel de 🧭 Explorateur, 📡 Flux & interfaces et 🔬 Analyses.')],
-  ['expert',_L('Expert'),_L('Toutes les fonctionnalités, menus et épingles 📌 comme réglés dans ☰.')],
-  ['perso', _L('Personnalisé'),_L('Vous choisissez chaque vue (bouton direct, dans son menu ou masquée) et les commandes de la barre.')]
+  ['essentiel',_L('Essentiel'),_L('Les vues les plus utilisées dans les menus 🏗 Architecture, ✅ Vérifier et 💬 Revue & documents ; les vues avancées restent accessibles par la recherche 🔍 (Ctrl+K).')],
+  ['complet',_L('Complet'),_L('Toutes les vues, dont REC / RPL, catégories d\'échanges, bibliothèques, cartes, index des types, liens et 📜 Scripts.')]
 ];
 /** État de l'enregistrement automatique (non enregistré : fichiers choisis pour la session). */
 var _capAuto={timer:null, hash:'', last:null, bak:null, err:'', warned:false};
@@ -25,16 +24,6 @@ function capAutoCfg(){
 /** Vrai si le navigateur permet d'écrire directement dans un fichier (Edge, Chrome). @returns {boolean} */
 function capAutoSupported(){ return !!window.showSaveFilePicker; }
 
-/** Change le mode d'affichage des menus (le mode Personnalisé part du mode Simplifié la première fois).
- * @param {'expert'|'simple'|'perso'} m - Mode
- */
-function capPrefSetMode(m){
-  if(m==='perso'&&!_capNav.perso) _capNav.perso=capNavSimplePerso();
-  _capNav.mode=m; capNavSave(); capNavRender();
-  const l=(CAP_PREF_MODES.find(x=>x[0]===m)||[])[1];
-  if(typeof capWatchFlash==='function') capWatchFlash(_L('⚙ Affichage des menus : ')+l);
-}
-
 /** Change le style de la barre : icônes et textes, ou icônes seules (nom complet en infobulle).
  * @param {boolean} on - true : icônes seules
  */
@@ -43,14 +32,14 @@ function capPrefSetIcons(on){
   if(typeof capWatchFlash==='function') capWatchFlash(on?_L('⚙ Barre : icônes seules (nom au survol)'):_L('⚙ Barre : icônes et textes'));
 }
 
-/** Contenu du menu ⚙ de la barre : mode des menus, personnalisation, thème, enregistrement automatique, préférences.
+/** Contenu du menu ⚙ de la barre : niveau des menus, style de la barre, thème, enregistrement automatique, préférences.
  * @returns {string} HTML
  */
 function capPrefMenuHtml(){
-  const m=_capNav.mode||'expert', A=capAutoCfg();
-  return _L('<div class="cap-nav-h">Affichage des menus</div>')+
-    CAP_PREF_MODES.map(([k,l,t])=>`<div class="ctx-i cap-nav-it${k===m?' cur':''}" data-pmode="${k}" title="${t}"><span>${l}</span></div>`).join('')+
-    _L(`<div class="ctx-i" data-act="custom" title="Choisir les vues et les commandes affichées (mode Personnalisé)">🛠 Personnaliser l'affichage…</div>
+  const m=capNavEff().mode, A=capAutoCfg();
+  return _L('<div class="cap-nav-h">Menus</div>')+
+    CAP_PREF_MODES.map(([k,l,t])=>`<div class="ctx-i cap-nav-it${k===m?' cur':''}" data-lvl="${k}" title="${t}"><span>${l}</span></div>`).join('')+
+    _L(`
     <div class="cap-nav-h">Style de la barre</div>
     <div class="ctx-i cap-nav-it${_capNav.icons?'':' cur'}" data-picons="0" title="Icônes seules automatiquement tant que la barre ne tient pas sur une ligne"><span>Icônes et textes${document.documentElement.hasAttribute('data-tbauto')?_L(' <span class="cap-nav-g">(icônes seules : la barre déborde)</span>'):''}</span></div>
     <div class="ctx-i cap-nav-it${_capNav.icons?' cur':''}" data-picons="1" title="Boutons réduits à leur icône ; le nom s'affiche au survol"><span>Icônes seules</span></div>
@@ -79,14 +68,13 @@ function capPrefDialog(tab){
  * @param {HTMLElement} ov - Fond de la fenêtre
  */
 function capPrefDialogFill(ov){
-  const t=ov._tab, m=_capNav.mode||'expert', A=capAutoCfg(), sup=capAutoSupported();
+  const t=ov._tab, m=capNavEff().mode, A=capAutoCfg(), sup=capAutoSupported();
   const tabs=[['aff',_L('☰ Affichage')],['save',_L('💾 Enregistrement')],['theme',_L('🎨 Thème')],['cfg',_L('⚙ Interface et vues')]];
   let body='';
   if(t==='aff'){
-    body=_L('<div class="cw-d-sub">Choisissez les menus affichés dans la barre. Une vue masquée reste accessible par <b>☰</b> (Ctrl+K).</div>')+
+    body=_L('<div class="cw-d-sub">Niveau d\'affichage des menus (aussi par les boutons <b>Essentiel</b> / <b>Complet</b> de la barre). Une vue absente des menus reste accessible par la recherche <b>🔍</b> (Ctrl+K).</div>')+
       CAP_PREF_MODES.map(([k,l,d])=>`<label class="cap-pref-row"><input type="radio" name="cap-pref-m" data-pm="${k}"${k===m?' checked':''}> <span><b>${l}</b><br><span class="ana-dim">${d}</span></span></label>`).join('')+
-      _L(`<div style="margin:8px 0 0 24px"><button class="phl-export-btn" data-pa="custom">🛠 Personnaliser l'affichage…</button></div>
-      <div class="cap-pref-sec" style="margin-top:14px">Style de la barre</div>
+      _L(`<div class="cap-pref-sec" style="margin-top:14px">Style de la barre</div>
       <label class="cap-pref-row"><input type="radio" name="cap-pref-i" data-pi="0"${_capNav.icons?'':' checked'}> <span><b>Icônes et textes</b><br><span class="ana-dim">Quand la barre ne tient pas sur une ligne (fenêtre étroite), elle passe automatiquement en icônes seules.</span></span></label>
       <label class="cap-pref-row"><input type="radio" name="cap-pref-i" data-pi="1"${_capNav.icons?' checked':''}> <span><b>Icônes seules</b><br><span class="ana-dim">Barre plus compacte : chaque bouton garde son icône, le nom s'affiche au survol ; les menus déroulants et ☰ gardent leurs textes.</span></span></label>`);
   } else if(t==='save'){
@@ -123,7 +111,6 @@ function capPrefDialogFill(ov){
     const a=e.target.closest('[data-pa]'); if(!a) return;
     const k=a.dataset.pa;
     if(k==='x'){ ov.style.display='none'; return; }
-    if(k==='custom'){ ov.style.display='none'; capPrefCustomDialog(); return; }
     if(k==='themeedit'){ ov.style.display='none'; capThemeEditor(); return; }
     if(k==='cfgsave'){ ov.style.display='none'; capCfgDialog('save'); return; }
     if(k==='cfgload'){ ov.style.display='none'; capCfgLoadFile(); return; }
@@ -131,7 +118,7 @@ function capPrefDialogFill(ov){
     if(k==='bak') capAutoPickBackup().then(()=>capPrefDialogFill(ov));
   };
   ov.onchange=e=>{
-    const pm=e.target.closest('[data-pm]'); if(pm){ capPrefSetMode(pm.dataset.pm); return; }
+    const pm=e.target.closest('[data-pm]'); if(pm){ capNavSetMode(pm.dataset.pm); return; }
     const pi=e.target.closest('[data-pi]'); if(pi){ capPrefSetIcons(pi.dataset.pi==='1'); return; }
     const pt=e.target.closest('[data-pt]');
     if(pt){ const sel=document.getElementById('theme-sel'); sel.value=pt.dataset.pt; sel.dispatchEvent(new Event('change')); return; }
@@ -143,67 +130,6 @@ function capPrefDialogFill(ov){
     if(pc.dataset.pc==='on'&&A.on&&!_capSaveHandle) capAutoPickMain().then(()=>capPrefDialogFill(ov));
     else if(pc.dataset.pc==='bak'&&A.bak&&!_capAuto.bak) capAutoPickBackup().then(()=>capPrefDialogFill(ov));
     else capPrefDialogFill(ov);
-  };
-}
-
-/** Réglage personnalisé de départ, recopié d'un mode existant.
- * @param {'simple'|'expert'|'perso'} m - Mode de départ
- * @returns {{pins:string[], hide:string[], ctl:string[]}}
- */
-function capPrefCustomFrom(m){
-  if(m==='perso'&&_capNav.perso) return JSON.parse(JSON.stringify(_capNav.perso));
-  if(m==='expert') return {pins:_capNav.pins.slice(), ctl:[],
-    hide:CAP_NAV_ITEMS.filter(i=>i.g&&_capNav.groups[i.g]===false&&!_capNav.pins.includes(i.k)).map(i=>i.k)};   // menus décochés : vues masquées
-  return capNavSimplePerso();
-}
-
-/** Fenêtre 🛠 Personnaliser l'affichage : pour chaque vue, bouton direct / dans son menu / masquée,
- * et commandes de la barre affichées ; « Appliquer » passe au mode Personnalisé.
- */
-function capPrefCustomDialog(){
-  let ov=document.getElementById('cap-pref-ov');
-  if(!ov){ capPrefDialog(); ov=document.getElementById('cap-pref-ov'); }
-  const m=_capNav.mode||'expert';
-  let W=capPrefCustomFrom(m==='perso'?'perso':m);
-  const st=k=>W.pins.includes(k)?'pin':W.hide.includes(k)?'hide':'menu';
-  const fill=()=>{
-    const row=it=>{ const s=st(it.k), r=v=>`<td class="c"><input type="radio" name="cpc-${it.k}" data-ck="${it.k}" value="${v}"${s===v?' checked':''}></td>`;
-      return `<tr><td>${it.l}</td>${r('pin')}${it.g?r('menu'):'<td class="c ana-dim">—</td>'}${r('hide')}</tr>`; };
-    let h='';
-    CAP_NAV_GROUPS.forEach(G=>{
-      const its=CAP_NAV_ITEMS.filter(i=>i.g===G.g); if(!its.length) return;
-      h+=`<tr><th>${G.g?G.l:_L('Autres vues')}</th><th class="c">${_L('Bouton')}</th><th class="c">${_L('Menu')}</th><th class="c">${_L('Masquée')}</th></tr>`+its.map(row).join('');
-    });
-    ov.innerHTML=_L(`<div class="cw-d-box" style="max-width:620px">
-      <div class="cw-d-hdr"><b>🛠 Personnaliser l'affichage</b><button class="cap-lf-btn" data-cc="x">✕</button></div>
-      <div class="cw-d-body">
-        <div class="cw-d-sub"><b>Bouton</b> : bouton direct dans la barre · <b>Menu</b> : dans son menu déroulant · <b>Masquée</b> : accessible seulement par ☰ (Ctrl+K). Un menu sans vue n'est pas affiché.</div>
-        <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px"><span class="ana-dim">Partir de :</span>
-          <button class="cap-lf-btn" data-cc="simple">Simplifié</button><button class="cap-lf-btn" data-cc="expert">Expert</button></div>
-        <table class="cap-pref-grid">${h}</table>
-        <div class="cap-pref-sec">Commandes de la barre</div>
-        ${CAP_NAV_CTLS.map(([id,l])=>`<label class="cap-pref-row"><input type="checkbox" data-cctl="${id}"${W.ctl.includes(id)?'':' checked'}> <span>${l}</span></label>`).join('')}
-        <div class="cw-d-sub">📁 Fichier, 💾, ❓ Aide et ⚙ restent toujours affichés.</div>
-      </div>
-      <div class="cw-d-ftr"><span style="flex:1"></span><button class="cap-lf-btn" data-cc="x">Annuler</button><button class="phl-export-btn" data-cc="ok">✔ Appliquer (mode Personnalisé)</button></div></div>`);
-  };
-  fill();
-  ov.style.display='flex';
-  ov.onchange=e=>{
-    const c=e.target.closest('[data-ck]');
-    if(c){ const k=c.dataset.ck; W.pins=W.pins.filter(x=>x!==k); W.hide=W.hide.filter(x=>x!==k);
-      if(c.value==='pin') W.pins.push(k); else if(c.value==='hide') W.hide.push(k); return; }
-    const t=e.target.closest('[data-cctl]');
-    if(t){ const id=t.dataset.cctl; W.ctl=W.ctl.filter(x=>x!==id); if(!t.checked) W.ctl.push(id); }
-  };
-  ov.onclick=e=>{
-    if(e.target===ov){ ov.style.display='none'; return; }
-    const b=e.target.closest('[data-cc]'); if(!b) return;
-    const k=b.dataset.cc;
-    if(k==='x'){ ov.style.display='none'; return; }
-    if(k==='simple'||k==='expert'){ W=capPrefCustomFrom(k); fill(); return; }
-    if(k==='ok'){ _capNav.perso=W; _capNav.mode='perso'; capNavSave(); capNavRender(); ov.style.display='none';
-      if(typeof capWatchFlash==='function') capWatchFlash(_L('✔ Affichage personnalisé appliqué')); }
   };
 }
 

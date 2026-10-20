@@ -56,7 +56,7 @@ fichier de secours) · **Interface et vues** (parties de `CAP_CFG_PARTS`, export
 
 ## Lots
 
-1. **Barre et navigation** (41, 64, `interface.html`, 11, 67) : nouveau catalogue de vues et 3 menus pointant vers les vues
+1. ✔ *(fait)* **Barre et navigation** (41, 64, `interface.html`, 11, 67) : nouveau catalogue de vues et 3 menus pointant vers les vues
    **existantes** (aucune fusion encore), recherche visible, Essentiel / Complet (conversion de `cap-toolbar`), Thème et
    Suivi déplacés, 💬 Revue et 📜 Scripts dans le menu, barre réduite avant chargement (pas de 2ᵉ barre de la Relation Map).
 2. **⚙ Préférences** (64, 38, 40, 46) : rubriques ci-dessus ; thèmes réduits à quatre (Marine / Nature d'une ancienne page → Sombre).

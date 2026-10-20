@@ -21,26 +21,21 @@ var CAP_TOUR_STEPS=[
   {s:'#cap-v-home', t:_L('🏠 Accueil'),
    x:_L('Vue ouverte au chargement : informations du projet (cartes réorganisables), check-lists et plans de revue, tableaux blancs. <b>❓ Aide ▾ → 🎯 Visite de cette vue</b> la présente en détail.')},
   {s:'#cap-tb-views', t:_L('🧭 Barre des vues'),
-   x:_L('Toutes les vues d\'analyse du modèle sont regroupées ici, dans des menus déroulants (▾) et des boutons directs.')},
+   x:_L('Les vues sont rangées par intention : boutons directs (🔲 Diagrammes, ▤ Tableau), trois menus déroulants — <b>🏗 Architecture</b>, <b>✅ Vérifier</b>, <b>💬 Revue & documents</b> — et le champ 🔍 de recherche.')},
   {s:'#cap-v-diag', t:_L('🔲 Diagrammes Capella'),
    x:_L('Les diagrammes du projet (.aird) dessinés comme dans Capella, avec export en planches.')},
-  {s:'#cap-v-elements', t:_L('🧭 Explorateur'),
-   x:_L('Parcourir le modèle : arborescence, cartes et index des types.')},
   {s:'#cap-v-table', t:_L('▤ Tableau'),
    x:_L('Tous les éléments du modèle en tableau : onglets de vues, colonnes d\'attributs, de relations et par chemin, tri, filtres, export CSV.')},
-  {s:'#cap-v-flux', t:_L('📡 Flux & interfaces'),
-   x:_L('Chaînes fonctionnelles, échanges et composants, Physical Link, scénarios, traçabilité des ports et liens entre éléments.')},
-
-  {s:'#cap-v-functions', t:_L('ƒ Fonctions'),
-   x:_L('Hiérarchie des fonctions, tableau, allocation aux composants, métriques, contrôles de qualité des noms et dossier imprimable.')},
-  {s:'#cap-v-analyses', t:_L('🔬 Analyses'),
-   x:_L('ƒ Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données et contraintes.')},
-  {s:'#cap-v-dashboard', t:_L('📐 Tableau de bord'),
-   x:_L('Composez vos propres tableaux de bord : indicateurs, graphiques et tableaux, imprimables en A4.')},
-  {s:'#cap-nav-cfg', t:_L('☰ Toutes les vues'),
-   x:_L('Cherchez une vue, un élément du modèle ou un diagramme (raccourci <b>Ctrl+K</b>) ; réglez la barre : 📌 épingle une vue en bouton direct.')},
-  {s:'#mode-rm', t:_L('🗺 Relation Map'),
-   x:_L('Graphe interactif des éléments et de leurs relations : zoom, dépliage, disposition, export en image.')},
+  {s:'#cap-v-arch', t:_L('🏗 Architecture'),
+   x:_L('Comment le système est construit : fonctions et échanges, composants et interfaces, chaînes et scénarios, modes et états, capacités, données, déploiement ; 🗺 Relation Map et 🌳 arborescence pour explorer le modèle.')},
+  {s:'#cap-v-verif', t:_L('✅ Vérifier'),
+   x:_L('Le modèle est-il juste et complet ? 💚 Santé du modèle et contrôles, traçabilité inter-couches, exigences, propriétés, contraintes, ⚖ comparaison de versions, statut de revue Capella.')},
+  {s:'#cap-v-revue', t:_L('💬 Revue & documents'),
+   x:_L('Commentaires de revue (le badge compte ceux qui ne sont pas clos), check-lists et plans de revue, 📑 dossiers à faire relire, 📘 rapports automatiques, tableaux de bord.')},
+  {s:'#cap-nav-cfg', t:_L('🔍 Recherche'),
+   x:_L('Cherchez une vue, un élément du modèle ou un diagramme (raccourci <b>Ctrl+K</b>) ; sans texte, la liste de toutes les vues : 📌 épingle une vue en bouton direct.')},
+  {s:'#cap-nav-lvl', t:_L('Essentiel / Complet'),
+   x:_L('<b>Essentiel</b> : les vues les plus utilisées. <b>Complet</b> : ajoute les vues avancées (REC / RPL, catégories d\'échanges, bibliothèques, cartes, index des types, liens) et 📜 Scripts.')},
   {s:'#cap-sidebar', m:'loaded', pre:()=>{ if(currentMode!=='capella') capNavOpen('cards'); }, t:_L('🏷 Types affichés'),
    x:_L('Cochez les types d\'éléments à afficher dans les vues. Le champ du haut filtre la liste.')},
   {s:'#cap-sub-toolbar', m:'loaded', t:_L('🔍 Recherche et filtres'),
@@ -51,18 +46,10 @@ var CAP_TOUR_STEPS=[
    x:_L('<b>🔷 Ouvrir</b> un autre modèle (remplace l\'actuel) · <b>📄 Ouvrir un projet de travail</b> (page enregistrée, même par une version précédente) · <b>🔄 Charger une mise à jour</b> du modèle (delta puis validation, alerte si ce n\'est pas le même projet) · <b>💾 Enregistrer</b> la page HTML autonome (modèle + interface et vues) · <b>⚙ Enregistrer / Charger l\'interface et les vues</b> (fichier .json sans le modèle, pour réutiliser vos réglages).')},
   {s:'#b-save-direct', t:_L('💾 Enregistrer'),
    x:_L('Enregistre directement la page avec le modèle chargé (<b>Ctrl+S</b>) ; Maj+clic pour « Enregistrer sous ».')},
-  {s:'#b-cap-watch', m:'loaded', t:_L('🔄 Suivi du fichier'),
-   x:_L('Détecte les nouvelles versions du fichier .capella et montre ce qui a changé (delta, historique).')},
-  {s:'#b-review', t:_L('💬 Revue'),
-   x:_L('Commentaires de revue sur le modèle et les diagrammes, vérification après mise à jour, rapport, revue ciblée à faire relire. Le panneau s\'ouvre à droite ; <b>⧉</b> l\'ouvre dans une fenêtre séparée ; <b>🎓</b> (ou <b>❓ Aide ▾ → 💬 Visite de la revue</b>) le présente pas à pas.')},
-  {s:'#b-scripts', m:'loaded', t:_L('📜 Scripts'),
-   x:_L('Console de scripts (Alt+4) : des scripts JavaScript lisent et analysent le modèle par une API, comme les macros de Catia Magic. <b>❓ Aide ▾ → 📜 Visite des scripts</b> la présente.')},
-  {s:'#b-theme-menu', t:_L('🎨 Thème'),
-   x:_L('Choisissez un thème clair ou sombre, ou créez votre propre thème personnalisé.')},
   {s:'#b-help', t:_L('❓ Aide'),
    x:_L('L\'aide complète et cette visite guidée restent accessibles à tout moment depuis ce menu.')},
   {s:'#b-prefs', t:_L('⚙ Préférences'),
-   x:_L('<b>Affichage des menus</b> : Expert (tout), Simplifié (les vues les plus utilisées) ou Personnalisé (🛠 chaque vue en bouton, dans son menu ou masquée) ; barre en <b>icônes seules</b> ; <b>💾 enregistrement automatique</b> (désactivé par défaut, avec fichier de secours) ; thème ; interface et vues.')},
+   x:_L('<b>Menus</b> Essentiel ou Complet ; barre en <b>icônes seules</b> ; <b>🎨 thème</b> ; <b>💾 enregistrement automatique</b> (désactivé par défaut, avec fichier de secours) ; format des exports ; 🩺 profil de contrôles ; interface et vues.')},
   {t:_L('✅ C\'est parti !'),
    x:_L('La visite est terminée. Vous pouvez la relancer depuis <b>❓ Aide ▾ → 🎓 Visite guidée</b>.<br>Dans chaque vue, <b>❓ Aide ▾ → 🎯 Visite de cette vue</b> présente ses menus et ce qu\'ils font.')}
 ];
@@ -81,9 +68,9 @@ var CAP_TOUR_EXPLORE=[
   {s:'#cap-result-count', t:_L('🔢 Résultat'),
    x:_L('Nombre d\'éléments qui passent les filtres (types, recherche, couche).')}
 ];
-/** Étapes communes aux vues de 📡 Flux & interfaces (onglets de navigation). */
-var CAP_TOUR_FLUX={s:'#cap-flux-tabs', t:_L('📡 Flux & interfaces'),
-  x:_L('Ces onglets passent d\'une vue d\'interfaces à l\'autre, du fonctionnel au physique : <b>ƒ⇆ Functional Exchange</b> (fonctions), <b>🧱 System Component</b> (SA), <b>🧱 Logical Component</b> (LA), <b>🔀 Behavior Exchange</b> (PA, composants Behavior), <b>🔌 Physical Link</b> (PA, nœuds), <b>🧩 Ports</b> et <b>🔗 Liens</b> (toutes les relations du modèle). Chaque vue s\'ouvre en <b>◧ Vue Blocs</b>, le rendu façon Capella.')};
+/** Étape commune aux vues qui ont des onglets de section sous la barre (Fonctions & échanges, Composants & interfaces, Chaînes & scénarios). */
+var CAP_TOUR_FLUX={s:'#cap-flux-tabs', t:_L('🗂 Onglets de section'),
+  x:_L('Ces onglets passent d\'une vue à l\'autre de la même section du menu : pour <b>Composants & interfaces</b>, 🧱 System Component (SA), 🧱 Logical Component (LA), 🔀 Behavior Exchange (PA), 🔌 Physical Link (PA) et 🧩 Ports ; pour <b>Fonctions & échanges</b>, ƒ Fonctions, ƒ⇆ Functional Exchange et 🟨 Operational Analysis.')};
 /** Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »). */
 var CAP_TOUR_ANA_TXT={
   trace:_L('<b>🧬 Traçabilité inter-couches</b> : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés.'),
@@ -318,7 +305,7 @@ var _capTour=null;   // visite en cours : {i, steps} ou null
 /** Visite du panneau 💬 Revue (ce n'est pas une vue : lancée par 🎓 dans le panneau ou par ❓ Aide ▾ → 💬 Visite de la revue). */
 var CAP_TOUR_REVUE=[
   {pre:()=>capTourRev('list'), t:_L('💬 Revue'), x:_L('Commentaires de revue sur le modèle et les diagrammes : qui commente quoi, criticité, statut, échéance, réponses. Ils sont enregistrés dans la page (💾).')},
-  {s:'#b-review', t:_L('💬 Bouton Revue'), x:_L('Ouvre ou ferme le panneau. Son badge compte les commentaires non clos ; <b>⚠ n</b> signale des commentaires à vérifier après une mise à jour du modèle.')},
+  {s:'#cap-v-revue', t:_L('💬 Revue & documents'), x:_L('<b>💬 Commentaires</b> ouvre ou ferme le panneau. Le badge du menu compte les commentaires non clos ; <b>⚠ n</b> signale des commentaires à vérifier après une mise à jour du modèle.')},
   {s:'#crv-panel .crv-tabs', t:_L('🗂 Onglets'), x:_L('<b>💬 Commentaires</b> (liste, filtres) · <b>🔁 Vérifier</b> (après une mise à jour) · <b>📄 Rapport</b> · <b>⚙ Réglages</b>.')},
   {s:'#crv-panel [data-a="new"]', t:_L('✚ Nouveau commentaire'), x:_L('Sur l\'élément du panneau de détail, ou commentaire général. Seul le texte est obligatoire. On commente aussi par <b>clic droit</b> sur un élément dans les vues, depuis le <b>panneau de détail</b> (💬 à côté du nom, de la description, des attributs) et par <b>📝 Note de revue</b> sur un diagramme.')},
   {s:'#crv-panel .crv-filters', one:true, t:_L('🔍 Recherche et filtres'), x:_L('Texte, statut, criticité, personne, portée (diagramme ouvert, élément du panneau de détail, en retard, qui me sont attribués), tri. Clic sur une carte : texte complet, réponses, statut.')},
@@ -331,7 +318,7 @@ var CAP_TOUR_REVUE=[
 /** Visite de la console 📜 Scripts (ce n'est pas une vue : lancée par 🎓 dans la console ou par ❓ Aide ▾ → 📜 Visite des scripts). */
 var CAP_TOUR_SCRIPTS=[
   {pre:()=>capScrToggle(true), t:_L('📜 Scripts (macros)'), x:_L('Des scripts <b>JavaScript</b> parcourent et analysent le modèle affiché par une <b>API</b> (celle d\'Arcature, en lecture seule), comme les macros de Catia Magic ou Python4Capella. Ils tournent isolés : ni page, ni fichier, ni réseau.')},
-  {s:'#b-scripts', t:_L('📜 Bouton Scripts'), x:_L('Ouvre ou ferme la console (aussi <b>Alt+4</b>, ou ☰ / Ctrl+K « Scripts »).')},
+  {s:'#cap-nav-cfg', t:_L('📜 Ouvrir la console'), x:_L('<b>Alt+4</b>, menu <b>💬 Revue & documents › 📜 Scripts</b> (mode Complet) ou recherche 🔍 « Scripts ».')},
   {s:'#scr-liste', t:_L('📚 Bibliothèque'), x:_L('<b>Exemples</b> fournis (fonctions sans description, non allouées, matrice d\'allocation, statistiques, santé et contrôles, traçabilité, chaînes, exigences, qualité des noms…), scripts du <b>projet</b> et du <b>dossier partagé</b>. Choisir un script l\'affiche dans l\'éditeur.')},
   {s:'#scr-nouveau,#scr-enregistrer,#scr-supprimer,#scr-importer,#scr-exporter,#scr-dossier', t:_L('💾 Enregistrer, importer, exporter'), x:_L('<b>＋</b> nouveau script · <b>💾</b> enregistre dans le projet (gardé dans la 💾 page HTML) ou dans le dossier partagé · <b>🗑</b> supprime · <b>📂</b> importe des fichiers .js · <b>⬇</b> exporte le script affiché · <b>📁</b> dossier de scripts partagé (Chrome / Edge).')},
   {s:'#scr-code', t:_L('✏ Éditeur'), x:_L('Le script. Il voit <code>model</code>, <code>metamodel</code>, <code>analysis</code>, <code>out</code>, <code>ui</code> et <code>console</code>. Par exemple : <code>out.print(model.count())</code> affiche le nombre d\'éléments du modèle. <b>Tab</b> indente, <b>Ctrl+Entrée</b> exécute.')},

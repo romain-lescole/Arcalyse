@@ -175,7 +175,7 @@ PARTS.accueil = async () => {
 
 /** 🗺 Relation Map. */
 PARTS.rm = async () => {
-  await p.click('#mode-rm'); await wait(500);
+  await p.evaluate(() => capNavOpen('@rm')); await wait(500);   // 🏗 Architecture › Explorer › 🗺 Relation Map
   const id = await idOf('Cabin Terminal', 'LA') || await idOf('Cabin Terminal');
   await p.evaluate(id => setCtx(id), id); await wait(1200);
   await shot('10-rm-vue-ensemble');
@@ -413,7 +413,7 @@ PARTS.comparaison = async () => {
   await p.click('#cap-watch-note [data-cw="delta"]'); await wait(1500);
   await shot('73-suivi-delta');
   await esc(); await p.evaluate(() => { capWatchModalClose(); _capWatch.dismissed = true; capWatchNote(false); }); await wait(300);
-  await p.click('#b-cap-watch-main').catch(() => {}); await wait(300);
+  await p.evaluate(() => capWatchMenu(true)); await wait(300);   // 📁 Fichier › 🔄 Suivi du fichier
   await shot('01-menu-suivi', { sel: ['#b-cap-watch', '#cap-watch-dd'], pad: 8 }); await p.mouse.click(800, 880);
 };
 
@@ -568,41 +568,40 @@ PARTS.interface = async () => {
   await view('home'); await top();
   await wide(async () => {
   await shot('01-barre-principale', { sel: '#toolbar', pad: 0 });
-  const tb = ['#cap-tb-home .tbtn', '#mode-rm', '[data-open="diag"]', '#cap-v-elements', '[data-open="table"]', '#cap-v-flux',
-    '#cap-v-analyses', '[data-open="ana:xlay"]', '#cap-nav-cfg', '#b-file-menu', '#b-save-direct', '#b-cap-watch', '#b-review', '#b-theme-menu', '#b-help', '#b-prefs'];
+  const tb = ['#cap-tb-home .tbtn', '[data-open="diag"]', '[data-open="table"]', '#cap-v-arch', '#cap-v-verif', '#cap-v-revue',
+    '#cap-nav-cfg', '#cap-nav-lvl', '#b-file-menu', '#b-save-direct', '#b-help', '#b-prefs'];   // numéros du tableau du § 3.1 du guide
   await marks(tb, 'tr');
   await shot('01-barre-principale-reperes', { sel: '#toolbar', pad: 2 });
   await unmark(); });
   // Menus déroulants
   const dd = async (btn, name) => { await p.click(btn); await wait(300); await shot(name, { sel: [btn, '#cap-nav-dd'], pad: 8 }); await esc(); await p.mouse.click(800, 600); await wait(150); };
-  await dd('#cap-v-elements .cap-nav-arr', '01-menu-explorateur');
-  await dd('#cap-v-flux .cap-nav-arr', '01-menu-flux');
-  await dd('#cap-v-analyses .cap-nav-arr', '01-menu-analyses');
+  await dd('#cap-v-arch', '01-menu-architecture');
+  await dd('#cap-v-verif', '01-menu-verifier');
+  await dd('#cap-v-revue', '01-menu-revue');
   await dd('#b-file-menu', '01-menu-fichier');
-  await dd('#b-theme-menu', '01-menu-theme');
+  await p.evaluate(() => capNavMenu('theme', document.getElementById('b-prefs'))); await wait(300);   // 🎨 Thème : dans ⚙
+  await shot('01-menu-theme', { sel: ['#b-prefs', '#cap-nav-dd'], pad: 8 }); await esc(); await p.mouse.click(800, 600); await wait(150);
   await dd('#b-help', '01-menu-aide');
   await dd('#b-prefs', '01-menu-preferences');
-  await tall(async () => { await p.click('#cap-nav-cfg'); await wait(300); await shot('01-menu-toutes-vues', { sel: ['#cap-nav-cfg', '#cap-nav-dd'], pad: 8 }); await esc(); });
+  await tall(async () => { await p.click('#cap-nav-q'); await wait(300); await shot('01-menu-toutes-vues', { sel: ['#cap-nav-cfg', '#cap-nav-dd'], pad: 8 }); await esc(); });
   await p.keyboard.press('Control+K'); await p.keyboard.type('fonc'); await wait(300);
   await shot('01-ctrl-k-recherche', { sel: ['#cap-nav-dd'], pad: 8 }); await esc();
-  await p.click('#b-cap-watch-main').catch(() => {}); await wait(300);
+  await p.evaluate(() => capWatchMenu(true)); await wait(300);   // 📁 Fichier › 🔄 Suivi du fichier
   await shot('01-menu-suivi', { sel: ['#b-cap-watch', '#cap-watch-dd'], pad: 8 }); await esc(); await p.mouse.click(800, 600);
 };
 
-/** ⚙ Préférences : fenêtre, personnalisation, barre simplifiée et en icônes seules, enregistrement automatique. */
+/** ⚙ Préférences : fenêtre, barre en mode Complet et en icônes seules, enregistrement automatique. */
 PARTS.preferences = async () => {
   await view('home'); await top();
   await p.evaluate(() => capPrefDialog('aff')); await wait(400);
   await shot('02-preferences', { sel: await dlg('#cap-pref-ov .cw-d-body'), pad: 2 });
   await p.evaluate(() => capPrefDialog('save')); await wait(300);
   await shot('02-enregistrement-auto', { sel: await dlg('#cap-pref-ov .cw-d-body'), pad: 2 });
-  await p.evaluate(() => { document.getElementById('cap-pref-ov').style.display = 'none'; capPrefCustomDialog(); }); await wait(400);
-  await tall(async () => { await shot('02-personnaliser', { sel: await dlg('#cap-pref-ov .cap-pref-grid'), pad: 2 }); }, 1500);
-  await p.evaluate(() => { document.getElementById('cap-pref-ov').style.display = 'none'; capPrefSetMode('simple'); }); await wait(400);
-  await wide(async () => { await shot('02-barre-simplifiee', { sel: '#toolbar', pad: 0 }); });
+  await p.evaluate(() => { document.getElementById('cap-pref-ov').style.display = 'none'; capNavSetMode('complet'); }); await wait(400);
+  await wide(async () => { await shot('02-barre-complet', { sel: '#toolbar', pad: 0 }); });
   await p.evaluate(() => capPrefSetIcons(true)); await wait(400);
   await shot('02-barre-icones', { sel: '#toolbar', pad: 0 });
-  await p.evaluate(() => { capPrefSetIcons(false); capPrefSetMode('expert'); }); await wait(400);
+  await p.evaluate(() => { capPrefSetIcons(false); capNavSetMode('essentiel'); }); await wait(400);
 };
 
 /** 📑 Dossiers de relecture et 📘 Rapports : liste et plans types, rapport SSS, périmètre, clic droit. */
