@@ -63,7 +63,7 @@ fichier de secours) · **Interface et vues** (parties de `CAP_CFG_PARTS`, export
 3. ✔ *(fait)* **Accueil** (56, 20, 72) : écran d'ouverture (trois ouvertures, choix du modèle si le dossier en contient plusieurs),
    en-tête de projet (modèle, `.aird`, bibliothèques et leur état), « Que voulez-vous faire ? », santé par couche,
    vues masquées pour ce modèle (fonction « a des données » par vue).
-4. **💚 Santé & contrôles** (69, 14, onglets Contrôles) : filtre par vue, « Ouvrir dans la vue », pastille de contrôles dans chaque vue.
+4. ✔ *(fait)* **💚 Santé & contrôles** (69, 14, onglets Contrôles) : filtre par vue, « Ouvrir dans la vue », pastille de contrôles dans chaque vue.
 5. **Fusions** : Composants & interfaces (47, 36, 29, 30 — moteur `capRenderComponentBlocks` déjà commun), Fonctions & échanges
    (34, 44), Traçabilité (31 + 62), Chaînes & scénarios (23, 49), Propriétés & contraintes (39) ; sélecteur de couche global.
 6. **Revue & documents** (55, 58, 56, 61, 63) : Commentaires avec l'envoi aux relecteurs, check-lists sorties de l'Accueil,

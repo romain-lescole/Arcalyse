@@ -33,7 +33,7 @@ var CAP_NAV_ITEMS=[
   {k:'index',     l:_L('📖 Index des types'),   g:'arch', s:_L('Explorer'), x:1},
   {k:'links',     l:_L('🔗 Liens'),             g:'arch', s:_L('Explorer'), x:1, t:_L('Relations entre les éléments du modèle')},
   // ✅ Vérifier
-  {k:'ana:sante', l:_L('💚 Santé du modèle'),          g:'verif', t:_L('Score global et par couche bâti sur tous les contrôles (🩺 profil), détail contrôle × couche, historique des versions')},
+  {k:'ana:sante', l:_L('💚 Santé & contrôles'),          g:'verif', t:_L('Score global et par couche bâti sur tous les contrôles (🩺 profil), détail contrôle × couche, historique des versions')},
   {k:'ana:trace', l:_L('🧬 Traçabilité inter-couches'), g:'verif'},
   {k:'ana:xlay',  l:_L('⇶ Liens entre couches'),       p:_L('⇶ Couches'), g:'verif', t:_L('Vue graphique des réalisations entre couches (OA → SA → LA → PA → EPBS) : fonctions, chaînes et leurs fonctions, capacités, composants…')},
   {k:'ana:reqs',  l:_L('📋 Exigences'),               g:'verif'},
@@ -201,7 +201,10 @@ function capNavFluxTabs(cur){
   const free=it&&it.tb&&cur!=='functions'?CAP_NAV_ITEMS.filter(i=>i.tb&&i.s===it.s&&(!E.hide.has(i.k)||i.k===cur)):[];
   bar.style.display=free.length>1?'flex':'none';
   if(free.length<2) return;
-  bar.innerHTML=`<span class="tb-grp"><span class="tb-grp-l">${it.s}</span>${free.map(i=>`<button class="phl-toggle-btn${i.k===cur?' active':''}" data-open="${i.k}" title="${i.t||''}">${i.l}</button>`).join('')}</span>`;   // onglets entourés comme les groupes de ƒ Fonctions
+  // Pastille des contrôles de la vue → 💚 Santé filtrée (nombre affiché si les contrôles sont déjà calculés : pas de calcul ici)
+  const C=typeof _capAnaCache!=='undefined'&&_capAnaCache.santeChecks, vk=capSanteVueCle(cur), n=C?C.filter(c=>c.view===vk&&c.n>0&&c.sev!=='info').length:-1;
+  const chk=`<button class="cap-lf-btn cap-nav-chk${n>0?' def':''}" onclick="capSanteOuvrir('${cur}')" title="${_L('Contrôles de cette vue dans ✅ Vérifier › 💚 Santé & contrôles')}">🩺 ${n>0?_L(`${n} contrôle(s) en défaut`):n===0?_L('Contrôles sans défaut'):_L('Contrôles')} → 💚</button>`;
+  bar.innerHTML=`<span class="tb-grp"><span class="tb-grp-l">${it.s}</span>${free.map(i=>`<button class="phl-toggle-btn${i.k===cur?' active':''}" data-open="${i.k}" title="${i.t||''}">${i.l}</button>`).join('')}</span><span style="flex:1"></span>${chk}`;   // onglets entourés comme les groupes de ƒ Fonctions
 }
 
 /** Reconstruit les boutons de la barre des vues : boutons directs (épingles), menus, champ de recherche, niveau. */

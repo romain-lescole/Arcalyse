@@ -377,7 +377,7 @@
 - `capReportClean` (l. 33) — Nettoie un fragment HTML de l'application pour un fichier autonome : retire les appels au panneau de détail
 - `capHtmlReport` (l. 44) — Construit et télécharge un rapport HTML autonome à onglets.
 
-## 27-interfaces-calculs.js — 346 lignes
+## 27-interfaces-calculs.js — 347 lignes
 
 - `capArchLayerOf` (l. 8) — Couche ARCADIA d'un élément XML, déduite de l'architecture qui le contient.
 - `capBuildIdMap` (l. 17) — Index id → élément XML, sur l'attribut plain « id » ET xmi:id (namespacé).
@@ -385,15 +385,15 @@
 - `capMatrixBuild` (l. 45) — Construit une matrice composant × composant (N² des interfaces).
 - `capFoldList` (l. 82) — Liste repliable d'éléments HTML séparés par des virgules : au-delà de `max`, le reste est masqué derrière « +N autres » (clic pour déplier /
 - `capDiagHtml` (l. 94) — Rend un rapport de contrôles : sections repliables avec compteur et gravité, selon le 🩺 profil de contrôles (14) :
-- `capDetLink` (l. 117) — Lien HTML cliquable ouvrant le panneau de détail d'un élément Capella.
-- `CAP_PORT_ORIENTS` (l. 123) — Valeurs de l'attribut orientation d'un ComponentPort (OrientationPortKind).
-- `CAP_ORIENT_STYLE` (l. 125) — Style d'affichage de chaque orientation de port (couleur, libellé, info-bulle).
-- `CAP_CEX_DIRS` (l. 132) — Libellés des sens effectifs d'un Component Exchange.
-- `capNormOrient` (l. 143) — Normalise l'orientation d'un port Capella : attribut absent (valeur par défaut EMF) → 'UNSET'.
-- `capCexDirection` (l. 157) — Déduit le sens effectif d'un Component Exchange à partir des orientations de ses deux ports.
-- `capComputeCompExchanges` (l. 176) — Calcule les Component Exchanges : pour chaque ComponentExchange, résout source/target
-- `capAnaCopy` (l. 266) — Copie d'un tableau de résultats avec ses propriétés annexes (`allPorts`, `unallocCEs`…), pour qu'un appelant
-- `capComputePhysLinks` (l. 274) — Calcule les Physical Links du modèle : pour chaque PhysicalLink, résout les deux
+- `capDetLink` (l. 118) — Lien HTML cliquable ouvrant le panneau de détail d'un élément Capella.
+- `CAP_PORT_ORIENTS` (l. 124) — Valeurs de l'attribut orientation d'un ComponentPort (OrientationPortKind).
+- `CAP_ORIENT_STYLE` (l. 126) — Style d'affichage de chaque orientation de port (couleur, libellé, info-bulle).
+- `CAP_CEX_DIRS` (l. 133) — Libellés des sens effectifs d'un Component Exchange.
+- `capNormOrient` (l. 144) — Normalise l'orientation d'un port Capella : attribut absent (valeur par défaut EMF) → 'UNSET'.
+- `capCexDirection` (l. 158) — Déduit le sens effectif d'un Component Exchange à partir des orientations de ses deux ports.
+- `capComputeCompExchanges` (l. 177) — Calcule les Component Exchanges : pour chaque ComponentExchange, résout source/target
+- `capAnaCopy` (l. 267) — Copie d'un tableau de résultats avec ses propriétés annexes (`allPorts`, `unallocCEs`…), pour qu'un appelant
+- `capComputePhysLinks` (l. 275) — Calcule les Physical Links du modèle : pour chaque PhysicalLink, résout les deux
 
 ## 28-index-types.js — 113 lignes
 
@@ -583,7 +583,7 @@
 - `capWatchShowDelta` (l. 452) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 532) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 439 lignes
+## 41-barre-vues.js — 442 lignes
 
 - `CAP_NAV_ITEMS` (l. 11) — Catalogue des vues : k = clé (vue capShowView, « ana:… » pour une sous-vue de 🔬 Analyses, « home:… » pour un onglet
 - `CAP_NAV_GROUPS` (l. 56) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
@@ -599,14 +599,14 @@
 - `capNavCurKey` (l. 171) — Clé de la vue affichée (« ana:… » pour une sous-vue de 🔬 Analyses, « home:… » pour un onglet de 🏠 Accueil,
 - `capNavOpen` (l. 183) — Ouvre une vue du catalogue, ou exécute une commande (« @… »).
 - `capNavFluxTabs` (l. 198) — Onglets de section sous la barre (ex. Composants & interfaces : System Component, Logical Component…) :
-- `capNavRender` (l. 208) — Reconstruit les boutons de la barre des vues : boutons directs (épingles), menus, champ de recherche, niveau.
-- `capNavSync` (l. 236) — Met à jour l'état actif des boutons de la barre (vue affichée, menu qui la contient).
-- `capNavClose` (l. 254) — Ferme le menu déroulant de la barre des vues.
-- `capNavRow` (l. 265) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
-- `capNavMenu` (l. 276) — Ouvre le menu déroulant d'un groupe, d'une commande de droite (Fichier, Aide, ⚙…) ou de la recherche (☰ : résultats
-- `capNavSearchWire` (l. 314) — Branche le champ 🔍 de la barre : saisie = résultats dans le menu ☰, flèches pour choisir, Entrée pour ouvrir.
-- `capNavMenuFill` (l. 333) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
-- `capNavSections` (l. 405) — Lignes d'un menu rangées par section (intertitre à chaque changement de section).
+- `capNavRender` (l. 211) — Reconstruit les boutons de la barre des vues : boutons directs (épingles), menus, champ de recherche, niveau.
+- `capNavSync` (l. 239) — Met à jour l'état actif des boutons de la barre (vue affichée, menu qui la contient).
+- `capNavClose` (l. 257) — Ferme le menu déroulant de la barre des vues.
+- `capNavRow` (l. 268) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
+- `capNavMenu` (l. 279) — Ouvre le menu déroulant d'un groupe, d'une commande de droite (Fichier, Aide, ⚙…) ou de la recherche (☰ : résultats
+- `capNavSearchWire` (l. 317) — Branche le champ 🔍 de la barre : saisie = résultats dans le menu ☰, flèches pour choisir, Entrée pour ouvrir.
+- `capNavMenuFill` (l. 336) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+- `capNavSections` (l. 408) — Lignes d'un menu rangées par section (intertitre à chaque changement de section).
 
 ## 42-tableaux-analyses.js — 157 lignes
 
@@ -620,37 +620,37 @@
 - `capTfFilter` (l. 127) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
 - `capTfWatch` (l. 152) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
 
-## 43-visite-guidee.js — 527 lignes
+## 43-visite-guidee.js — 528 lignes
 
 - `CAP_TOUR_STEPS` (l. 12) — Étapes de la visite générale : s = sélecteur CSS de la zone (toutes les correspondances visibles sont encadrées
 - `CAP_TOUR_EXPLORE` (l. 57) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
 - `CAP_TOUR_FLUX` (l. 72) — Étape commune aux vues qui ont des onglets de section sous la barre (Fonctions & échanges, Composants & interfaces, Chaînes & scénarios).
 - `CAP_TOUR_ANA_TXT` (l. 75) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
-- `capTourRmCtx` (l. 88) — Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
-- `CAP_TOUR_VIEWS` (l. 102) — Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
-- `CAP_TOUR_START` (l. 273) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
-- `CAP_TOUR_AFTER` (l. 290) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
-- `CAP_TOUR_REVUE` (l. 307) — Visite du panneau 💬 Revue (ce n'est pas une vue : lancée par 🎓 dans le panneau ou par ❓ Aide ▾ → 💬 Visite de la revue).
-- `CAP_TOUR_SCRIPTS` (l. 320) — Visite de la console 📜 Scripts (ce n'est pas une vue : lancée par 🎓 dans la console ou par ❓ Aide ▾ → 📜 Visite des scripts).
-- `capTourScripts` (l. 331) — Lance la visite de la console 📜 Scripts (modèle chargé).
-- `capTourRev` (l. 337) — Visite de 💬 Revue : panneau ouvert dans la page (ramené s'il est dans sa fenêtre séparée) sur l'onglet présenté.
-- `capTourRevue` (l. 339) — Lance la visite de 💬 Revue.
-- `capTourHome` (l. 345) — Visite de 🏠 Accueil : affiche l'onglet présenté par l'étape.
-- `capTourCtxKey` (l. 350) — Clé de la vue affichée pour les visites contextuelles.
-- `capTourCtx` (l. 358) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
-- `capTourEls` (l. 366) — Éléments affichés désignés par le sélecteur d'une étape.
-- `capTourVisible` (l. 377) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
-- `capTourStart` (l. 387) — Lance une visite guidée depuis sa première étape.
-- `capTourStartView` (l. 408) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
-- `capTourGo` (l. 416) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
-- `capTourPos` (l. 436) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
-- `capTourRenderPop` (l. 443) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
-- `capTourPlace` (l. 455) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
-- `capTourKey` (l. 487) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
-- `capTourEnd` (l. 496) — Quitte la visite guidée et retire la mise en évidence.
-- `capTourHelpMenu` (l. 503) — Ouvre le menu ❓ Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
-- `capTourStartHere` (l. 510) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
-- `capTourResumeAfterLoad` (l. 517) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
+- `capTourRmCtx` (l. 89) — Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
+- `CAP_TOUR_VIEWS` (l. 103) — Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
+- `CAP_TOUR_START` (l. 274) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
+- `CAP_TOUR_AFTER` (l. 291) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
+- `CAP_TOUR_REVUE` (l. 308) — Visite du panneau 💬 Revue (ce n'est pas une vue : lancée par 🎓 dans le panneau ou par ❓ Aide ▾ → 💬 Visite de la revue).
+- `CAP_TOUR_SCRIPTS` (l. 321) — Visite de la console 📜 Scripts (ce n'est pas une vue : lancée par 🎓 dans la console ou par ❓ Aide ▾ → 📜 Visite des scripts).
+- `capTourScripts` (l. 332) — Lance la visite de la console 📜 Scripts (modèle chargé).
+- `capTourRev` (l. 338) — Visite de 💬 Revue : panneau ouvert dans la page (ramené s'il est dans sa fenêtre séparée) sur l'onglet présenté.
+- `capTourRevue` (l. 340) — Lance la visite de 💬 Revue.
+- `capTourHome` (l. 346) — Visite de 🏠 Accueil : affiche l'onglet présenté par l'étape.
+- `capTourCtxKey` (l. 351) — Clé de la vue affichée pour les visites contextuelles.
+- `capTourCtx` (l. 359) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
+- `capTourEls` (l. 367) — Éléments affichés désignés par le sélecteur d'une étape.
+- `capTourVisible` (l. 378) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
+- `capTourStart` (l. 388) — Lance une visite guidée depuis sa première étape.
+- `capTourStartView` (l. 409) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
+- `capTourGo` (l. 417) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
+- `capTourPos` (l. 437) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
+- `capTourRenderPop` (l. 444) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
+- `capTourPlace` (l. 456) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
+- `capTourKey` (l. 488) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
+- `capTourEnd` (l. 497) — Quitte la visite guidée et retire la mise en évidence.
+- `capTourHelpMenu` (l. 504) — Ouvre le menu ❓ Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
+- `capTourStartHere` (l. 511) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
+- `capTourResumeAfterLoad` (l. 518) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
 
 ## 44-functional-exchange.js — 515 lignes
 
@@ -1338,7 +1338,7 @@
 - `capStDetail` (l. 145) — Section « Statut de revue Capella » du panneau de détail ('' si l'élément n'en a pas).
 - `capStDashCatalog` (l. 156) — Indicateurs du tableau de bord : statut de revue Capella.
 
-## 69-sante-modele.js — 186 lignes
+## 69-sante-modele.js — 240 lignes
 
 - `CAP_SANTE_W` (l. 9)
 - `CAP_SANTE_MAX_HIST` (l. 10)
@@ -1355,8 +1355,11 @@
 - `capSanteSpark` (l. 119) — Petite courbe SVG de l'historique des scores. @param {object[]} H - Historique @param {number} [w=140] @param {number} [h=28] @returns {stri
 - `capSanteDate` (l. 126) — Date courte d'une entrée d'historique. @param {string} iso @returns {string}
 - `capSanteCarte` (l. 129) — Carte 💚 Santé du modèle de 🏠 Accueil. @returns {string} HTML
-- `capRenderSante` (l. 147) — Sous-vue 💚 Santé du modèle de 🔬 Analyses : synthèse, contrôle × couche, historique.
-- `capSanteDashCatalog` (l. 173) — Indicateurs du tableau de bord : santé du modèle.
+- `capSanteVueCle` (l. 151) — Clé de vue sous laquelle 💚 Santé range les contrôles d'une vue (🧱 LA avec 🧱 SA, 🟨 OA avec ƒ⇆).
+- `capSanteOuvrir` (l. 156) — Ouvre ✅ Vérifier › 💚 Santé & contrôles filtrée sur les contrôles d'une vue (contrôles en défaut).
+- `capSanteAller` (l. 166) — Ouvre la vue d'un contrôle sur son onglet 🩺 Contrôles et déplie la section du contrôle.
+- `capRenderSante` (l. 188) — Sous-vue 💚 Santé du modèle de 🔬 Analyses : synthèse, contrôle × couche, historique.
+- `capSanteDashCatalog` (l. 224) — Indicateurs du tableau de bord : santé du modèle.
 
 ## 70-chaines-controles.js — 83 lignes
 

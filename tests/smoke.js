@@ -137,6 +137,16 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     { await p.evaluate(() => capNavSetMode('essentiel'));
       if (k) { await p.click('#cap-v-verif'); if (await p.$(`#cap-nav-dd [data-open="${k}"]`)) throw new Error('vue sans données encore dans le menu : ' + k); await p.keyboard.press('Escape'); } }
     await p.evaluate(() => capNavSetMode('complet')); });
+  await step('💚 Santé & contrôles : pastille, filtre par vue, ouvrir dans la vue', async () => {
+    await p.evaluate(() => capNavOpen('fex')); await p.waitForTimeout(300);
+    await p.click('#cap-flux-tabs .cap-nav-chk'); await p.waitForTimeout(800);
+    if (await p.evaluate(() => capCurrentView + ':' + capAnaSub) !== 'analyses:sante') throw new Error('pastille : 💚 Santé non ouverte');
+    if (!(await p.$('.sante-vues [data-svue="fex"].active'))) throw new Error('💚 Santé : filtre sur ƒ⇆ non appliqué');
+    const t = await p.evaluate(() => document.querySelector('[data-sgo]')?.dataset.st);
+    if (t) { await p.click('[data-sgo]'); await p.waitForTimeout(1500);
+      if (!(await p.evaluate(t => [...document.querySelectorAll('#cap-view-fex details.cap-diag[open] summary b')].some(b => b.textContent === t), t))) throw new Error('« Ouvrir ↗ » : section non dépliée — ' + t); }
+    await p.click('#cap-view-fex .cap-diag-cfg'); await p.waitForTimeout(500);
+    if (await p.evaluate(() => capAnaSub) !== 'sante') throw new Error('bouton 💚 des contrôles inopérant'); });
   await step('⚙ Préférences : rubriques, thème, suivi enregistré', async () => {
     await p.evaluate(() => capPrefDialog());
     for (const t of ['aff', 'theme', 'suivi', 'save', 'cfg', 'ctl', 'exp']) { await p.click(`#cap-pref-ov [data-ptab="${t}"]`); await p.waitForTimeout(100); }

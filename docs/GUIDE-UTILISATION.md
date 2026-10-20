@@ -118,7 +118,7 @@ Chaque menu est rangé en **sections** :
 
 | 🏗 Architecture ▾ | ✅ Vérifier ▾ | 💬 Revue & documents ▾ |
 |---|---|---|
-| *Fonctions & échanges* : ƒ Fonctions, ƒ⇆ Functional Exchange, 🟨 Operational Analysis | 💚 Santé du modèle | 💬 Commentaires (panneau de revue) |
+| *Fonctions & échanges* : ƒ Fonctions, ƒ⇆ Functional Exchange, 🟨 Operational Analysis | 💚 Santé & contrôles | 💬 Commentaires (panneau de revue) |
 | *Composants & interfaces* : 🧱 System Component, 🧱 Logical Component, 🔀 Behavior Exchange, 🔌 Physical Link, 🧩 Ports | 🧬 Traçabilité inter-couches, ⇶ Liens entre couches | ☑ Check-lists & plans de revue |
 | *Chaînes & scénarios* : ⚡ Chaînes, 🎬 Scénarios | 📋 Exigences, 🏷 Propriétés, ⛓ Contraintes | 📑 Faire relire (dossiers de relecture) |
 | *Comportement et déploiement* : 🚦 Modes & états, 🎯 Capacités & missions, 🗃 Données & interfaces, 🖧 Déploiement & EPBS | ⚖ Comparaison de versions, 🔖 Statut de revue | 📘 Rapports automatiques, 📐 Tableau de bord |
@@ -1176,7 +1176,14 @@ Toutes les contraintes : rôle (garde, pré / post-condition), expression (liens
 
 Vue **graphique** des réalisations entre couches : une colonne par couche (OA → SA → LA → PA → EPBS), une flèche par lien de réalisation. Mode **élément** (partir d'un élément : fonction, chaîne, capacité, composant… et suivre ses réalisations vers le haut, le bas ou les deux) ou **catégorie** (toutes les réalisations d'une catégorie). Les chaînes sont groupées avec leurs fonctions ; l'ordre limite les croisements. Ouverture aussi par clic droit sur un élément ou par **ℹ Infos** d'une chaîne. Exports **SVG**, **PNG**, **CSV**, et bloc ⇶ d'un 📑 dossier. Bouton direct **⇶ Couches** (épinglé par défaut).
 
-### 12.10 💚 Santé du modèle
+### 12.10 💚 Santé & contrôles
+
+**Porte d'entrée unique des contrôles** (✅ Vérifier › 💚 Santé & contrôles). On y arrive aussi depuis chaque vue, la liste étant alors filtrée sur cette vue :
+
+- la pastille **🩺 n contrôle(s) en défaut → 💚** à droite des onglets de section (vues d'interfaces, chaînes et scénarios) ;
+- le bouton **💚 Santé & contrôles** en tête de chaque onglet 🩺 Contrôles, à côté de 🩺 Profil.
+
+Dans l'onglet 📋 Contrôles × couches : puces **Vue** (Toutes, ou une vue avec son nombre de contrôles en défaut), case **En défaut seulement** (cochée par défaut : les contrôles qui ont des lignes, les plus fréquents d'abord) et, sur chaque ligne, **Ouvrir ↗** : la vue s'ouvre sur son onglet 🩺 Contrôles, section du contrôle dépliée et mise en évidence.
 
 Un **score de 0 à 100** bâti sur **tous les contrôles 🩺** de toutes les vues, avec le 🩺 profil de contrôles (§ 3.6) : les contrôles désactivés sont ignorés, les gravités pèsent ℹ 0, ⚠ 1, ✖ 3, et le score vaut 100 × e^−(Σ poids × lignes ÷ nombre d'éléments nommés) : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. Niveaux : **Bon** (≥ 90), **À surveiller** (≥ 70), **À reprendre**. Un score **par couche** ARCADIA est calculé pour les contrôles qui le permettent (fonctions, échanges fonctionnels, composants).
 
@@ -1185,7 +1192,7 @@ Un **score de 0 à 100** bâti sur **tous les contrôles 🩺** de toutes les vu
 | ![Carte Santé](guide/img/05-home-sante.png) | ![Santé — contrôles × couches](guide/img/70-ana-sante.png) |
 
 - **🏠 Carte de l'accueil** : score, niveau, points à vérifier et bloquants, barres par couche, écart avec la version précédente et courbe des dernières versions ; boutons 📊 Détail et 🩺 Profil. Au-delà de 30 000 éléments, le calcul attend un clic. **✕ Masquer** retire la carte de l'accueil (⚙ Disposer › Masquées pour la réafficher) ; dans la sous-vue, l'onglet ▦ Par vue permet de **masquer les contrôles d'une vue** du score (case « Comptée », réglage conservé avec le projet). **Décocher une couche** (case devant OA, SA, LA, PA, EPBS, aussi dans la sous-vue) l'exclut du score global : ses lignes de contrôles par couche et ses éléments ne comptent plus, par exemple pour une couche non encore travaillée ; le réglage est conservé avec le projet et noté dans l'historique.
-- **📋 Contrôles × couches** : chaque contrôle avec sa vue, sa gravité, son nombre de lignes global et par couche ; ⬇ CSV.
+- **📋 Contrôles × couches** : chaque contrôle avec sa vue, sa gravité, son nombre de lignes global et par couche, et **Ouvrir ↗** ; ⬇ CSV.
 - **▦ Par vue** : contrôles, contrôles sans anomalie, points et bloquants de chaque vue.
 - **📈 Historique** : une ligne par version du modèle ouverte dans le projet (même fichier : entrée mise à jour), conservée avec la 💾 page. Indicateurs « Santé du modèle — … » au 📐 Tableau de bord (score, points, bloquants, par couche, par vue, historique).
 

@@ -262,7 +262,7 @@ function capHomeProjetHtml(){
 /** Tâches proposées par « Que voulez-vous faire ? » : [icône, titre, description, clé de vue (capNavOpen), chemin affiché]. */
 function capHomeTaches(){ return [
   ['🔲', _L('Parcourir les diagrammes'), _L('Ouvrir le .aird du projet et passer d\'un élément à l\'autre par un clic.'), 'diag', _L('🔲 Diagrammes')],
-  ['💚', _L('Vérifier la qualité du modèle'), _L('Tous les contrôles, un score par couche, la liste de ce qu\'il faut corriger.'), 'ana:sante', _L('✅ Vérifier › 💚 Santé du modèle')],
+  ['💚', _L('Vérifier la qualité du modèle'), _L('Tous les contrôles, un score par couche, la liste de ce qu\'il faut corriger.'), 'ana:sante', _L('✅ Vérifier › 💚 Santé & contrôles')],
   ['💬', _L('Préparer une revue'), _L('Commenter les éléments et les diagrammes, suivre une check-list, faire relire un dossier.'), '@revue', _L('💬 Revue & documents › 💬 Commentaires')],
   ['⚖', _L('Comparer deux versions'), _L('Ce qui a changé depuis la version précédente du modèle : éléments et diagrammes.'), 'ana:diff', _L('✅ Vérifier › ⚖ Comparaison de versions')],
   ['▤', _L('Sortir un tableau Excel'), _L('Éléments, attributs et relations, avec les colonnes de votre choix.'), 'table', _L('▤ Tableau')],

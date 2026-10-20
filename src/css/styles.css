@@ -2028,3 +2028,9 @@ html[data-tbicons] #toolbar .tbtn{padding-left:7px;padding-right:7px;}
 .scr-q-liste label:hover{background:var(--c-bg3);}
 .scr-pastille{font-size:9px;font-weight:700;padding:0 4px;border-radius:3px;background:var(--c-bg3);color:var(--c-dim);}
 #b-scripts.active{background:var(--c-bg4);border-color:var(--c-accent);color:var(--c-accent);}
+/* 💚 Santé & contrôles (lot 4 de la refonte 3.0) : puces des vues, pastille des onglets de section, contrôle atteint */
+.sante-vues{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin:6px 0 8px;}
+.sante-vues .tb-grp-l{margin-right:2px;}
+.cap-nav-chk{font-size:11.5px;white-space:nowrap;}
+.cap-nav-chk.def{border-color:var(--c-warn,#e3b341);}
+details.cap-diag.cap-diag-flash{outline:2px solid var(--c-accent);outline-offset:2px;}

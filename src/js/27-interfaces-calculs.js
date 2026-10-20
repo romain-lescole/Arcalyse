@@ -97,6 +97,7 @@ function capDiagHtml(sections){
   const total=on.filter(s=>s.sev!=='info').reduce((s,x)=>s+x.items.length,0), info=on.filter(s=>s.sev==='info').reduce((s,x)=>s+x.items.length,0), err=on.filter(s=>s.sev==='err').reduce((s,x)=>s+x.items.length,0);
   const sevIco={info:'ℹ',warn:'⚠',err:'✖'};
   return `<div class="cap-diag-sum"><span>${total?_L(`⚠ ${total} point${total>1?'s':''} à vérifier`)+(err?_L(` <span class="cap-diag-err">dont ${err} bloquant${err>1?'s':''}</span>`):''):_L('✔ Aucune anomalie détectée')}${info?_L(` <span class="ana-dim">· ℹ ${info} pour information</span>`):''}</span>
+      <button class="cap-lf-btn cap-diag-cfg" onclick="capSanteOuvrir()" title="${_L('Tous les contrôles de toutes les vues dans ✅ Vérifier › 💚 Santé & contrôles, filtrés sur cette vue')}">💚 ${_L('Santé & contrôles')}</button>
       <button class="cap-lf-btn cap-diag-cfg" onclick="capChkDialog()" title="${_L('Profil de contrôles : activer ou désactiver chaque contrôle, gravité, seuils')}">🩺 ${_L('Profil')}${off.length?` <span class="ana-dim">(${off.length} ${_L('désactivé(s)')})</span>`:''}</button></div>`+
     on.map(s=>`<details class="cap-diag"${s.items.length&&s.items.length<=30?' open':''}>
       <summary><span class="cap-diag-ico" title="${capEsc((CAP_CHK_SEV.find(x=>x[0]===s.sev)||[])[2]||'')}">${s.sev==='warn'?s.icon:sevIco[s.sev]}</span><b>${capEsc(s.title)}</b>

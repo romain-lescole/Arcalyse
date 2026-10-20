@@ -73,6 +73,7 @@ var CAP_TOUR_FLUX={s:'#cap-flux-tabs', t:_L('🗂 Onglets de section'),
   x:_L('Ces onglets passent d\'une vue à l\'autre de la même section du menu : pour <b>Composants & interfaces</b>, 🧱 System Component (SA), 🧱 Logical Component (LA), 🔀 Behavior Exchange (PA), 🔌 Physical Link (PA) et 🧩 Ports ; pour <b>Fonctions & échanges</b>, ƒ Fonctions, ƒ⇆ Functional Exchange et 🟨 Operational Analysis.')};
 /** Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »). */
 var CAP_TOUR_ANA_TXT={
+  sante:_L('<b>💚 Santé & contrôles</b> : la porte d\'entrée unique des contrôles — score global et par couche, puces <b>Vue</b> et case <b>En défaut seulement</b>, et <b>Ouvrir ↗</b> sur chaque ligne pour aller au contrôle dans sa vue. Les pastilles 🩺 des vues mènent ici, filtrées.'),
   trace:_L('<b>🧬 Traçabilité inter-couches</b> : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés.'),
   caps:_L('<b>🎯 Capacités & missions</b> : qui participe à quelle capacité ou mission (acteurs, fonctions, chaînes) et les capacités sans contenu.'),
   states:_L('<b>🚦 Modes & états</b> : machines d\'états, transitions et éléments disponibles dans chaque mode ou état.'),
