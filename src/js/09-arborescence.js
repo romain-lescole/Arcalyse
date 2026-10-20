@@ -741,5 +741,5 @@ function rmSetElemVal(el, col, val) {
 /** Callback appelé après toute modification du modèle : rebuildTree, buildArbo, buildPanel. */
 function onModelChanged() {
   buildPanel(); setupMarkers();
-  rebuildTree(); updateModalCounts(); renderModalTab(editTab); setTimeout(()=>fitView(true),80);
+  rebuildTree(); setTimeout(()=>fitView(true),80);
 }

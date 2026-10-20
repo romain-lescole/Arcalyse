@@ -42,9 +42,9 @@ s'ouvrir : les réglages et blocs des fonctions retirées sont convertis ou igno
 
 **Déplacé** : 🎨 Thème → ⚙ Préférences ; 🔄 Suivi → 📁 Fichier (badge seulement si une nouvelle version arrive) ;
 ☰ Toutes les vues → champ de recherche.
-**Retiré** (après le lot 1, une fois l'usage observé) : ▦ Cartes, 📖 Index des types (→ aide et infobulle du type),
+**Retiré** (lot 7) : 📖 Index des types (→ aide et infobulle du type),
 vue 🔗 Liens (→ colonnes de relations du ▤ Tableau et onglet 🔗 du détail), 🧾 Tableaux blancs (les ⧉ fenêtres séparées restent),
-thèmes Marine et Nature, code mort masqué (éditeur de modèle 08, mode PBS, ↺ Reset, boutons 🔷 CAPELLA / 💾 Page HTML).
+thèmes Marine et Nature, code mort masqué (éditeur de modèle 08, mode PBS, ↺ Reset, boutons 🔷 CAPELLA / 💾 Page HTML). **▦ Cartes gardé** (mode Complet).
 
 ## ⚙ Préférences (roue crantée)
 
@@ -68,7 +68,7 @@ fichier de secours) · **Interface et vues** (parties de `CAP_CFG_PARTS`, export
    (34, 44), Traçabilité (31 + 62), Chaînes & scénarios (23, 49), Propriétés & contraintes (39) ; sélecteur de couche global.
 6. ✔ *(fait)* **Revue & documents** (55, 58, 56, 61, 63) : Commentaires avec l'envoi aux relecteurs, check-lists sorties de l'Accueil,
    Faire relire = dossiers de relecture, Rapports automatiques en entrée séparée.
-7. **Retraits** (21, 28, 22, 60, 08, 02) avec compatibilité des anciennes pages.
+7. ✔ *(fait — ▦ Cartes gardé, mode Complet)* **Retraits** (28, 22, 60, 08, 02, 11, 20) avec compatibilité des anciennes pages : Index des types, vue Liens, tableaux blancs (données gardées), éditeur de modèle et code mort masqué.
 8. *(à décider)* **Pictogrammes** : la maquette remplace les emojis par des icônes au trait ; coût élevé (tous les libellés,
    dictionnaire anglais, tests). Au minimum : un emoji unique par notion (doublons actuels 🏷, 🧱, 📋, ⛓, ⚡).
 

@@ -15,7 +15,7 @@ Les captures ont été faites avec le modèle d'exemple public *In-Flight Entert
 4. [🏠 Accueil du projet](#4--accueil-du-projet)
 5. [🗺 Relation Map](#5--relation-map)
 6. [▤ Tableau](#6--tableau)
-7. [🧭 Explorateur : Arborescence, Cartes, Index des types](#7--explorateur--arborescence-cartes-index-des-types)
+7. [🧭 Explorateur : Arborescence et Cartes](#7--explorateur--arborescence-et-cartes)
 8. [⚡ Chaînes](#8--chaînes)
 9. [📡 Flux & interfaces](#9--flux--interfaces)
 10. [🔲 Diagrammes Capella](#10--diagrammes-capella)
@@ -95,7 +95,7 @@ Le modèle est analysé (quelques secondes pour un gros modèle), puis la vue **
 | N° | Bouton | Rôle |
 |---|---|---|
 | ◀ ▶ | **Historique** | Précédent / Suivant (Alt+← / Alt+→) : vues, éléments du détail et diagrammes ouverts ([§ 3.7](#37--historique-de-navigation)). |
-| 1 | **🏠 Accueil** | Accueil du projet : fiche, contenu du modèle, check-lists et plans de revue, tableaux blancs ([§ 4](#4--accueil-du-projet)). |
+| 1 | **🏠 Accueil** | Accueil du projet : fiche, contenu du modèle, check-lists et plans de revue ([§ 4](#4--accueil-du-projet)). |
 | 2 | **🔲 Diagrammes** | Diagrammes du projet (`.aird`) dessinés comme dans Capella ([§ 10](#10--diagrammes-capella)). |
 | 3 | **▤ Tableau** | Tous les éléments en tableau configurable ([§ 6](#6--tableau)). |
 | 4 | **🏗 Architecture ▾** | Comment le système est construit : fonctions et échanges, composants et interfaces, chaînes et scénarios, modes et états, capacités, données, déploiement ; 🗺 Relation Map et 🌳 arborescence ([§ 3.2](#32-menus-des-vues-épingles-et-ctrlk)). |
@@ -122,7 +122,7 @@ Les vues proches sont réunies en **familles** : une seule entrée de menu, puis
 | **🧱 Composants & interfaces** : SA · System Component, LA · Logical Component, PA · Behavior Exchange, PA · Physical Link, 🧩 Ports | **🧬 Traçabilité entre couches** : tableau de traçabilité, ⇶ graphe des réalisations | ☑ Check-lists & plans de revue |
 | **⚡ Chaînes & scénarios** : ⚡ Chaînes, 🎬 Scénarios | 📋 Exigences, **🏷 Propriétés & contraintes** (propriétés PVMT, ⛓ contraintes) | 📑 Faire relire (dossiers de relecture) |
 | 🚦 Modes & états, 🎯 Capacités & missions, 🗃 Données & interfaces, 🖧 Déploiement & EPBS | ⚖ Comparaison de versions, 🔖 Statut de revue | 📘 Rapports automatiques, 📐 Tableau de bord |
-| *Explorer* : 🗺 Relation Map, 🌳 Arborescence ; *Complet* : ▦ Cartes, 📖 Index des types, 🔗 Liens | *Avancé (Complet)* : 🏷 Catégories d'échanges, 📦 REC / RPL, 📚 Bibliothèques | *Complet* : 📜 Scripts |
+| *Explorer* : 🗺 Relation Map, 🌳 Arborescence ; *Complet* : ▦ Cartes | *Avancé (Complet)* : 🏷 Catégories d'échanges, 📦 REC / RPL, 📚 Bibliothèques | *Complet* : 📜 Scripts |
 
 Une famille s'ouvre sur la dernière vue utilisée. **Couche commune** : 🧱 Composants & interfaces a une puce par couche (SA, LA, PA comportement, PA nœuds) ; ƒ Fonctions & échanges et ⚡ Chaînes & scénarios ont un sélecteur **Couche** (Toutes, OA, SA, LA, PA, EPBS). La couche choisie est **mémorisée** (avec la page) et reprise d'une famille à l'autre : choisir LA dans 🧱 puis ouvrir ƒ Fonctions & échanges affiche les fonctions LA. À droite de la barre de famille, la pastille 🩺 mène aux contrôles de la vue dans 💚 Santé & contrôles. Chaque vue reste trouvable seule par la recherche 🔍 et peut être épinglée (📌).
 
@@ -182,7 +182,7 @@ La roue crantée **⚙** (à droite de ❓ Aide) ouvre un menu rapide (niveau de
 | Niveau | Menus |
 |---|---|
 | **Essentiel** (par défaut) | Les vues les plus utilisées dans 🏗 Architecture, ✅ Vérifier et 💬 Revue & documents. |
-| **Complet** | Ajoute ▦ Cartes, 📖 Index des types, 🔗 Liens, 🏷 Catégories d'échanges, 📦 REC / RPL, 📚 Bibliothèques et 📜 Scripts. |
+| **Complet** | Ajoute ▦ Cartes, 🏷 Catégories d'échanges, 📦 REC / RPL, 📚 Bibliothèques et 📜 Scripts. |
 
 | Menu ✅ Vérifier en mode Complet | Barre en icônes seules |
 |---|---|
@@ -224,7 +224,7 @@ Les boutons **◀ ▶** en tête de la barre (**Alt+←** / **Alt+→**, boutons
 
 ## 4. 🏠 Accueil du projet
 
-Vue affichée à l'ouverture d'un modèle (bouton **🏠 Accueil**, tout à gauche). Deux espaces : **🏠 Accueil** — onglets **🏠 Projet** et **🧾 Tableaux blancs** (bouton 🏠 de la barre) — et **💬 Revue & documents** — onglets **☑ Check-lists & plans de revue**, **📑 Faire relire** (dossiers de relecture) et **📘 Rapports automatiques** ([§ 4.5](#45--dossiers-de-relecture-et--rapports)), ouverts par le menu 💬 Revue & documents ; un bouton **💬 Commentaires** y ouvre le panneau de revue. Tout ce qui y est saisi est enregistré dans la page (💾).
+Vue affichée à l'ouverture d'un modèle (bouton **🏠 Accueil**, tout à gauche). Deux espaces : **🏠 Accueil** — onglet **🏠 Projet** (bouton 🏠 de la barre) — et **💬 Revue & documents** — onglets **☑ Check-lists & plans de revue**, **📑 Faire relire** (dossiers de relecture) et **📘 Rapports automatiques** ([§ 4.4](#44--dossiers-de-relecture-et--rapports)), ouverts par le menu 💬 Revue & documents ; un bouton **💬 Commentaires** y ouvre le panneau de revue. Tout ce qui y est saisi est enregistré dans la page (💾).
 
 ### 4.1 🏠 Projet
 
@@ -247,7 +247,6 @@ Puis **six cartes** sur deux lignes :
 | **🔷 Projet** | Nom du projet Capella, fichier, version de Capella (lue dans le fichier), diagrammes chargés et leur nombre par couche (clic sur le nom du `.aird` : 🔲 Diagrammes Capella ; **📂 Ouvrir le .aird…** s'il n'y en a pas), nombre d'éléments, **dernière mise à jour** du modèle et **🔄** pour en charger une, version d'Arcalyse. |
 | **📝 Fiche projet** | Champs libres : objet, phase / jalon, version du modèle, responsable, équipe, notes. |
 | **☑ Check-lists & plans de revue** | Avancement de chaque document ; **⚡ Check-list rapide** (liste vide, curseur sur le premier point) ; **☑ Modèles et plans de revue** (ouvre l'onglet) ; **⧉** ouvre un document dans une fenêtre séparée. |
-| **🧾 Tableaux blancs** | Pages existantes (nombre d'objets) ; **✚ Nouveau tableau blanc** ; **⧉** fenêtre séparée. |
 | **🧩 Contenu du modèle** | Une carte par couche (OA, SA, LA, PA, EPBS, Transverse) : principaux types et leur nombre. |
 | **💬 Revue** | État de la revue : commentaires non clos, par criticité, à vérifier, en retard ; **Ouvrir la revue**. |
 
@@ -276,7 +275,7 @@ La disposition est enregistrée dans la page.
 - **Qui** : responsable du point ; **💬** (au survol) : ajouter un constat ; **↑ ↓ 🗑** (au survol) : déplacer, supprimer ;
 - **✚ Point** ajoute un point ; **Entrée** dans un point en crée un nouveau dessous ; **✚ Section** ajoute une section ;
 - en-tête : **⬇ HTML** (document imprimable), **💾 .json** (pour réutiliser dans un autre projet via **📂 Importer…**), **⧉** dupliquer (cases décochées), **🗑** supprimer ;
-- **⧉** à droite d'un document dans la liste de gauche : l'ouvre dans une **fenêtre séparée** ([§ 4.4](#44--fenêtres-séparées-et-glisser-déposer-depuis-les-vues)).
+- **⧉** à droite d'un document dans la liste de gauche : l'ouvre dans une **fenêtre séparée** ([§ 4.3](#43--fenêtres-séparées-et-glisser-déposer-depuis-les-vues)).
 
 **Glisser-déposer depuis la palette 📎** (colonne de droite « Glisser-déposer ») : cherchez un **diagramme ou un élément**, puis faites-le glisser :
 
@@ -293,30 +292,9 @@ La disposition est enregistrée dans la page.
 | Périmètre | Diagrammes et éléments revus, **glissés depuis la palette 📎** ; nombre de commentaires de revue non clos sur ce périmètre ; **📤 Revue ciblée du périmètre…** (page à envoyer aux relecteurs, [§ 15.6](#156--revue-ciblée-relecture-par-dautres-personnes)). |
 | Sections | 1. Critères d'entrée · 2. Points de contrôle (repris du modèle choisi) · 3. Critères de sortie · 4. Actions et décisions (responsable, **échéance**). |
 
-### 4.3 🧾 Tableaux blancs
+### 4.3 ⧉ Fenêtres séparées et glisser-déposer depuis les vues
 
-![Accueil — tableau blanc](guide/img/05-home-tableau-blanc.png)
-
-Pages libres pour préparer une réunion, schématiser ou noter des idées.
-
-![Barre du tableau blanc](guide/img/05-home-tb-barre.png)
-
-| Commande | Effet |
-|---|---|
-| **Page 1, Page 2…** · **✚** | Onglets de pages ; ✚ ajoute une page ; double-clic sur un onglet pour le renommer. |
-| **↖ Sélection** | Clic sur un objet : le sélectionner (cadre pointillé) ; glisser : le déplacer ; **Suppr** : le retirer. **Double-clic dans le vide** : nouvelle note. |
-| **🗒 Note** | Clic sur le tableau : note colorée, déplacée par son bandeau, redimensionnée par le coin. |
-| **T Texte** | Clic sur le tableau : texte libre, sans fond. |
-| **▭ Rectangle · ◯ Ellipse** | Glisser sur le tableau (**Maj** : carré, cercle). Coin ▫ : redimensionner. Les formes non remplies laissent cliquer ce qu'elles entourent. |
-| **╱ Trait · → Flèche** | Glisser d'un bout à l'autre ; **⇅** inverse le sens d'un trait. |
-| **Couleurs** · **◼ Rempli / ◻ Contour** | Pour les nouveaux objets et pour l'objet sélectionné. |
-| **✎ · 🗑 · ⧉** | Renommer la page, la supprimer, l'ouvrir dans une fenêtre séparée. |
-
-**Glisser depuis la palette 📎** (à droite) un diagramme ou un élément : il apparaît en **icône cliquable** (ouvre le diagramme ou le panneau de détail) et se déplace à la souris. Un élément supprimé du modèle, ou un diagramme dont le `.aird` n'est pas chargé, apparaît **grisé**.
-
-### 4.4 ⧉ Fenêtres séparées et glisser-déposer depuis les vues
-
-Le **⧉** d'une check-list, d'un plan (liste de gauche, carte de 🏠 Projet) ou d'un tableau blanc (barre, carte) l'ouvre dans **sa propre fenêtre** (par exemple sur un autre écran ; autoriser les fenêtres surgissantes), liée à la page : les modifications se voient des deux côtés. La vue montre un rappel (**⧉ Afficher la fenêtre**, **⧈ Ramener ici**).
+Le **⧉** d'une check-list, d'un plan (liste de gauche, carte de 🏠 Projet) ou d'un 📑 dossier l'ouvre dans **sa propre fenêtre** (par exemple sur un autre écran ; autoriser les fenêtres surgissantes), liée à la page : les modifications se voient des deux côtés. La vue montre un rappel (**⧉ Afficher la fenêtre**, **⧈ Ramener ici**).
 
 Pendant ce temps, vous pouvez **glisser dans cette fenêtre** directement depuis les vues :
 
@@ -324,9 +302,9 @@ Pendant ce temps, vous pouvez **glisser dans cette fenêtre** directement depuis
 - une carte ou une ligne de l'arborescence de **🧭 Explorateur** ;
 - une chaîne de **⚡ Chaînes** (liste de la vue Relation Map ou en-tête d'une carte).
 
-Sur une check-list : déposez sur un point, sur « ✚ Point » ou sur le périmètre d'un plan ; sur un tableau blanc : l'objet devient une icône cliquable. Dans la vue 🏠 Accueil elle-même, la palette 📎 sert de source.
+Sur une check-list : déposez sur un point, sur « ✚ Point » ou sur le périmètre d'un plan. Dans la vue 🏠 Accueil elle-même, la palette 📎 sert de source.
 
-### 4.5 📑 Dossiers de relecture et 📘 Rapports
+### 4.4 📑 Dossiers de relecture et 📘 Rapports
 
 **💬 Revue & documents › 📑 Faire relire** liste les dossiers de relecture (📑 Nouveau dossier, 📥 Réimporter des retours…) ; **💬 Revue & documents › 📘 Rapports automatiques** présente les plans types, vos modèles (🧩) et les rapports produits. Les deux partagent le même éditeur et les mêmes exports (HTML à commenter, Word) ; un rapport produit reste dans 📘. Pour faire relire des **commentaires** plutôt qu'un document : panneau 💬 Revue › **📤 Faire relire** ([§ 15.6](#156--revue-ciblée-relecture-par-dautres-personnes)).
 
@@ -523,7 +501,7 @@ Un clic sur une **chaîne (⚡)** dans l'arborescence, ou le bouton **🗺 Ouvri
 | **▦ Arbre par niveaux…** (CSV) | Graphe déplié de gauche à droite : contexte en 1ʳᵉ colonne, puis une colonne par niveau et par relation (« N2 · Échange fonctionnel »). Options : **Relation dans une colonne à part** (« Relation Nn » + « Nn » : nombre de colonnes fixe) et **Répéter les cellules des parents** (utile pour filtrer ou faire un tableau croisé). « ×n » = relations fusionnées, « ↺ » = occurrence déjà déployée. Seuls les nœuds affichés sont exportés. |
 | **⇄ Relations affichées…** (CSV) | Une ligne par arête : source, relation, cible, nombre, profondeur, chemin depuis le contexte (en vue chaîne : source, échange, cible). |
 
-Les exports CSV passent par la fenêtre **« Colonnes de l'export »** ([§ 9.9](#99--csv-enrichi-colonnes-de-lexport)) : vous pouvez y ajouter ID, type, couche, owner, description… pour chaque colonne d'éléments.
+Les exports CSV passent par la fenêtre **« Colonnes de l'export »** ([§ 9.8](#98--csv-enrichi-colonnes-de-lexport)) : vous pouvez y ajouter ID, type, couche, owner, description… pour chaque colonne d'éléments.
 
 ---
 
@@ -584,7 +562,7 @@ Le menu **⊞ Colonnes ▾** coche les colonnes affichées, par section :
 - **Colonnes calculées** : *Name, ID, Owner, Owned element* (affichées par défaut) ; *Couche, Type, Human Type* ;
 - **Colonnes par chemin** : vos colonnes ✨ (**✏** modifier, **✕** supprimer) ;
 - **Attributs** du fichier XML (`kind`, `nature`, `orientation`, `summary`…) ;
-- **Relations** : les relations de la vue 🔗 Liens, par groupe (décomposition, allocation, échanges, réalisation, capacités, chaînes), avec leur nombre de liens. **Deux cases par relation** : **→ cibles** (éléments vers lesquels pointe la ligne, ex. fonctions réalisées par un composant) et **← sources** (éléments qui pointent vers la ligne, ex. composant qui réalise une fonction).
+- **Relations** : les relations du modèle, par groupe (décomposition, allocation, échanges, réalisation, capacités, chaînes), avec leur nombre de liens. **Deux cases par relation** : **→ cibles** (éléments vers lesquels pointe la ligne, ex. fonctions réalisées par un composant) et **← sources** (éléments qui pointent vers la ligne, ex. composant qui réalise une fonction).
 
 Le champ **🔍 Rechercher une colonne…** filtre toutes les sections :
 
@@ -678,9 +656,9 @@ Sous chaque en-tête, un champ **Filtrer…**. Le compteur en haut indique le no
 
 ---
 
-## 7. 🧭 Explorateur : Arborescence, Cartes, Index des types
+## 7. 🧭 Explorateur : Arborescence et Cartes
 
-Trois onglets ; le menu rouvre le dernier utilisé. La barre latérale des types ([§ 6.2](#62-types-déléments-barre-latérale)) n'est affichée que dans l'Explorateur et le ▤ Tableau.
+Deux onglets ; le menu rouvre le dernier utilisé. La barre latérale des types ([§ 6.2](#62-types-déléments-barre-latérale)) n'est affichée que dans l'Explorateur et le ▤ Tableau.
 
 ### 7.1 🌳 Arborescence
 
@@ -705,12 +683,6 @@ Arbre complet du modèle (types cochés dans la barre latérale) :
 - **⬇ CSV** ;
 - pagination par **500 cartes** (**⏮ ◀ Préc. · Suiv. ▶ ⏭**, en haut et en bas) ;
 - **clic** sur une carte : panneau de détail.
-
-### 7.3 📖 Index des types
-
-![Index des types](guide/img/30-explorateur-index.png)
-
-Glossaire des **types présents** dans le modèle : type technique, nom lisible (*Human Type*), nombre d'éléments, description du type. Idéal pour découvrir la composition d'un modèle inconnu.
 
 ---
 
@@ -742,7 +714,7 @@ Glossaire des **types présents** dans le modèle : type technique, nom lisible 
 - **Fonctions impliquées** : ordre du flux, type, allocation, rôle entrée / sortie, nombre d'échanges entrants / sortants ;
 - **Functional Exchanges impliqués** : source → cible numérotées, Exchange Items, Component Exchange porteur (pour un chemin physique : composants, Physical Links et CE alloués) ;
 - boutons **ℹ Infos · 🖼 PNG · 📐 SVG · 📋 Copier** (coller dans Word / PowerPoint) **· ⬇ CSV · 🗺 Ouvrir en vue Relation Map** ;
-- l'en-tête d'une carte se **glisse** vers une check-list ou un tableau blanc ouvert en fenêtre séparée ([§ 4.4](#44--fenêtres-séparées-et-glisser-déposer-depuis-les-vues)).
+- l'en-tête d'une carte se **glisse** vers une check-list ouverte en fenêtre séparée ([§ 4.3](#43--fenêtres-séparées-et-glisser-déposer-depuis-les-vues)).
 
 <img src="guide/img/40-chaines-infos.png" alt="Infos de chaîne" width="300" align="right">
 
@@ -768,7 +740,7 @@ Troisième présentation de ⚡ Chaînes (à côté de ▦ Diagrammes et 🗺 Vu
 
 ## 9. 📡 Flux & interfaces
 
-Vues d'interfaces, du fonctionnel au physique, accessibles par le menu **🏗 Architecture ▾** (familles *ƒ Fonctions & échanges* : ƒ⇆ échanges fonctionnels, 🟨 activités OA ; *🧱 Composants & interfaces* : System Component, Logical Component, Behavior Exchange, Physical Link, 🧩 Ports ; *⚡ Chaînes & scénarios* : 🎬 Scénarios ; *Explorer* : 🔗 Liens, mode Complet) et par la barre de famille.
+Vues d'interfaces, du fonctionnel au physique, accessibles par le menu **🏗 Architecture ▾** (familles *ƒ Fonctions & échanges* : ƒ⇆ échanges fonctionnels, 🟨 activités OA ; *🧱 Composants & interfaces* : System Component, Logical Component, Behavior Exchange, Physical Link, 🧩 Ports ; *⚡ Chaînes & scénarios* : 🎬 Scénarios ; *Explorer* : 🌳 Arborescence, ▦ Cartes) et par la barre de famille.
 
 **Organisation commune** à ƒ⇆, 🟨, 🧱, 🔀 et 🔌 : chaque vue s'ouvre en **◧ Vue Blocs** (rendu façon Capella, navigation d'un bloc à l'autre) et propose aussi **≡ Vue Ligne**, **▣ Vue Composant / Fonction / Activité**, **▦ Matrice** N² et **🩺 Contrôles**. Les commandes de chaque barre sont **entourées par catégorie** (vues, filtres et champs, exports) et restent visibles en haut lors du défilement.
 
@@ -781,7 +753,7 @@ Vues d'interfaces, du fonctionnel au physique, accessibles par le menu **🏗 Ar
 | Liste **Tous les allocataires / Tous les composants** | Un acteur précis, ou le système et ses sous-systèmes en arbre (sous-composants compris). |
 | **avec ports** / **avec ports ou échanges** | Masque les blocs sans port (ou les fonctions mères). |
 | **◀ ▶** | Pages de 100 blocs (exports : tout le résultat filtré). |
-| **⬇ CSV · ⬇ HTML · ⬇ HTML (toutes les vues)** | CSV enrichi ([§ 9.9](#99--csv-enrichi-colonnes-de-lexport)) ; rapport HTML de la vue affichée ; rapport à onglets Ligne / Composant / Matrice / Contrôles, avec recherche et matrice cliquable. |
+| **⬇ CSV · ⬇ HTML · ⬇ HTML (toutes les vues)** | CSV enrichi ([§ 9.8](#98--csv-enrichi-colonnes-de-lexport)) ; rapport HTML de la vue affichée ; rapport à onglets Ligne / Composant / Matrice / Contrôles, avec recherche et matrice cliquable. |
 
 ### 9.1 ƒ⇆ Functional Exchange
 
@@ -898,19 +870,7 @@ Diagrammes de séquence des scénarios Capella — **ES** (Exchange Scenario), *
 
 > L'ordre des événements est celui du modèle ; les espacements sont calculés (la mise en page dessinée dans Capella est dans le `.aird`) : le contenu est fidèle, pas la position au pixel près.
 
-### 9.8 🔗 Liens
-
-![Liens](guide/img/31-liens.png)
-
-Relations Capella extraites du modèle (décompositions, allocations, échanges fonctionnels / de composants / liens physiques, éléments échangés, réalisations inter-couches, chaînes, capacités) :
-
-- **🔍 Rechercher** un élément, un échange, un ID ;
-- **Toutes les relations (n)**, ou **clic sur un nom de groupe** (DÉCOMPOSITION, ALLOCATION…) ou **sur une relation** pour filtrer ;
-- case **ID** : colonnes d'identifiants ; **⬇ CSV** des lignes affichées ;
-- « n types de relations présents · n absents » : les relations absentes du modèle sont listées en infobulle ;
-- **clic sur un nom** : panneau de détail.
-
-### 9.9 ⬇ CSV enrichi (colonnes de l'export)
+### 9.8 ⬇ CSV enrichi (colonnes de l'export)
 
 Dans les vues d'interfaces (🏗 Architecture) et 🔬 Analyses, **⬇ CSV** ouvre d'abord la fenêtre **« Colonnes de l'export »** :
 
@@ -1039,7 +999,7 @@ Onglets : **ƒ Fonctions · 🧬 Traçabilité inter-couches · ⇶ Liens entre 
 
 Les résultats sont **gardés en mémoire** ; **↻ Recalculer** les rafraîchit. Les contrôles ne sont calculés qu'à l'ouverture de l'onglet 🩺 Contrôles. Une rubrique absente du modèle est simplement signalée comme vide.
 
-**Tableaux et listes longs** : affichés par **pages de 200 lignes** (barre ‹ › en tête et en pied : page précédente / suivante, choix de la page, **Tout afficher**) — tableaux des analyses, 🧩 Ports, 🧬 Traçabilité, 🔗 Liens, listes du panneau de détail. Un filtre par colonne actif affiche toutes les lignes pour porter sur l'ensemble ; les exports CSV / Excel contiennent toujours tout.
+**Tableaux et listes longs** : affichés par **pages de 200 lignes** (barre ‹ › en tête et en pied : page précédente / suivante, choix de la page, **Tout afficher**) — tableaux des analyses, 🧩 Ports, 🧬 Traçabilité, listes du panneau de détail. Un filtre par colonne actif affiche toutes les lignes pour porter sur l'ensemble ; les exports CSV / Excel contiennent toujours tout.
 
 ![Barre de pagination](guide/img/04-pagination.png)
 
@@ -1445,7 +1405,7 @@ Pour faire relire des commentaires par des personnes qui n'ont **ni Capella ni A
 
 | Besoin | Commande | Ce qui est enregistré |
 |---|---|---|
-| Garder tout son travail | **💾** / **Ctrl+S** (Maj+clic ou Ctrl+Maj+S : enregistrer sous) ; **📁 Fichier › 🌐 Télécharger la page HTML** | **Toute l'application avec le modèle embarqué** et ses diagrammes (`.aird`), l'🏠 accueil (fiche projet, check-lists, plans de revue, tableaux blancs), les commentaires de 💬 revue, la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau (colonnes par chemin, filtres, largeurs, tri), les vues de la Relation Map, les choix d'export CSV, le thème et les règles de nommage. À l'ouverture du fichier, le modèle se recharge tout seul. |
+| Garder tout son travail | **💾** / **Ctrl+S** (Maj+clic ou Ctrl+Maj+S : enregistrer sous) ; **📁 Fichier › 🌐 Télécharger la page HTML** | **Toute l'application avec le modèle embarqué** et ses diagrammes (`.aird`), l'🏠 accueil (fiche projet, check-lists, plans de revue, dossiers), les commentaires de 💬 revue, la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau (colonnes par chemin, filtres, largeurs, tri), les vues de la Relation Map, les choix d'export CSV, le thème et les règles de nommage. À l'ouverture du fichier, le modèle se recharge tout seul. |
 | Partager une analyse avec quelqu'un qui n'a pas Capella | Envoyer la page HTML enregistrée | Elle s'ouvre hors ligne dans n'importe quel navigateur. |
 | Réutiliser ses réglages avec un autre modèle | **📁 Fichier › ⚙ Enregistrer l'interface et les vues…** puis **⚙ Charger une interface et des vues…** | Fichier `.json` **sans le modèle**, parties au choix (ci-dessous). |
 | Passer à une nouvelle version d'Arcalyse | **📄 Projet de travail (.html)…** (accueil) ou **📁 Fichier › 📄 Ouvrir un projet de travail** | Reprend les données d'une page enregistrée (≥ 2.1) dans la nouvelle version ; Ctrl+S réécrit ensuite le même fichier. |
@@ -1502,7 +1462,7 @@ Ne sont **pas** conservés dans la page : la version chargée pour ⚖ Comparais
 |---|---|---|
 | ![](guide/img/98-visite-vue.png) | ![](guide/img/98-visite-revue.png) | ![](guide/img/97-aide.png) |
 
-Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, check-lists, plans et tableaux blancs.
+Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, check-lists, plans et dossiers.
 
 ![À propos](guide/img/97-a-propos.png)
 
@@ -1528,10 +1488,10 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 | **Ctrl+V** | Colle une liste (texte ou Excel) sous l'élément sélectionné de l'arborescence de la Relation Map *(sans effet : la Relation Map est en lecture seule)*. |
 | **Maj+molette** | Défilement horizontal (tableaux larges, scénarios). |
 | **← →** | Étapes d'une visite guidée. |
-| **Double-clic** | Nouveau contexte (Relation Map) ; renommer un onglet ; détail d'une ligne du ▤ Tableau ; « uniquement celle-ci » sur un filtre d'allocation ; note sur un tableau blanc ; largeur auto d'une colonne (bord d'en-tête). |
+| **Double-clic** | Nouveau contexte (Relation Map) ; renommer un onglet ; détail d'une ligne du ▤ Tableau ; « uniquement celle-ci » sur un filtre d'allocation ; largeur auto d'une colonne (bord d'en-tête). |
 | **Clic droit** | Menu contextuel (Relation Map, arborescence) ; commentaires de revue sur un élément (vues, diagrammes) ; commandes d'un bloc, d'un chapitre ou du plan dans un 📑 dossier. |
 | **Ctrl+clic droit** | Dans une zone de saisie d'un 📑 dossier : menu d'Arcalyse au lieu de celui du navigateur. |
-| **Glisser-déposer** | Ouvrir un fichier / dossier (sur la fenêtre) ; élément ou diagramme sur un bloc texte d'un 📑 dossier (🔗 texte du modèle) ; réordonner colonnes et onglets ; déplacer / redimensionner un élément de tableau de bord ; cartes de 🏠 Projet (⚙ Disposer) ; palette 📎 — ou 🔲 / 🧭 / ⚡ vers une fenêtre séparée — vers check-lists, plans et tableaux blancs ; formes du tableau blanc ; 📝 note de revue sur un diagramme ; trait depuis la poignée ● d'une note ; séparateurs de panneaux. |
+| **Glisser-déposer** | Ouvrir un fichier / dossier (sur la fenêtre) ; élément ou diagramme sur un bloc texte d'un 📑 dossier (🔗 texte du modèle) ; réordonner colonnes et onglets ; déplacer / redimensionner un élément de tableau de bord ; cartes de 🏠 Projet (⚙ Disposer) ; palette 📎 — ou 🔲 / 🧭 / ⚡ vers une fenêtre séparée — vers check-lists et plans ; 📝 note de revue sur un diagramme ; trait depuis la poignée ● d'une note ; séparateurs de panneaux. |
 
 ---
 
@@ -1541,7 +1501,7 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 
 1. **Charger** le projet : 📁 Dossier du projet… (ou glisser-déposer le `.capella` et le `.aird`).
 2. **🏠 Accueil** : remplir la **📝 fiche projet** ; **📋 Nouveau plan de revue** à partir du modèle de la couche revue (ex. SA) ; glisser depuis la palette 📎 les diagrammes et éléments du **périmètre**.
-3. **🧭 Explorateur › 📖 Index des types** : composition du modèle ; **▦ Cartes** et **🌳 Arborescence** pour parcourir ; panneau de détail pour suivre les références.
+3. **🏠 Accueil › 🧩 Contenu du modèle** : composition du modèle (infobulle : description du type) ; **▦ Cartes** et **🌳 Arborescence** pour parcourir ; panneau de détail pour suivre les références.
 4. **🔲 Diagrammes Capella** : parcourir les diagrammes de la couche ; **📝 Note de revue** sur les points à discuter.
 5. **ƒ Fonctions › 🩺 Contrôles** et **✍ qualité des noms** ; **📊 Métriques** pour la maturité par couche.
 6. **🏗 Architecture** (vues d'interfaces) : 🧱 System / Logical Component (ports orphelins, non orientés), ƒ⇆ Functional Exchange (échanges sans Exchange Item), 🔌 Physical Link (liens sans CE), 🧩 Ports (alignement FE ↔ CE ↔ PL).
@@ -1617,18 +1577,17 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 
 | Vue | Menu | Sous-vues |
 |---|---|---|
-| 🏠 Accueil | (bouton) | 🏠 Projet (⚙ Disposer les cartes) · ☑ Check-lists & plans de revue · 🧾 Tableaux blancs · 📑 Dossiers (📘 Rapports) · ⧉ fenêtres séparées |
+| 🏠 Accueil | (bouton) | 🏠 Projet (⚙ Disposer les cartes) · ☑ Check-lists & plans de revue · 📑 Dossiers (📘 Rapports) · ⧉ fenêtres séparées |
 | 📘 Rapports | (épinglé) | 🏠 Accueil › 📑 Dossiers : rapports automatiques, 🧩 mes modèles |
 | 🗺 Relation Map | (bouton) | onglets de vues ; vue chaîne |
 | 🔲 Diagrammes Capella | 📡 (épinglé) | liste, diagramme, ℹ Infos, ⬇ Exporter |
-| 🌳 Arborescence · ▦ Cartes · 📖 Index des types | 🧭 Explorateur | — |
+| 🌳 Arborescence · ▦ Cartes | 🧭 Explorateur | — |
 | ▤ Tableau | (épinglé) | onglets, ☰ Lignes / 🌳 Arbre |
 | ⚡ Chaînes | 📡 | ▦ Diagrammes · 🗺 Vue Relation Map · ℹ Infos |
 | ƒ⇆ Functional Exchange · 🟨 Operational Analysis | 📡 | ◧ Blocs · ≡ Ligne · ▣ Fonction / Activité · ▦ Matrice · 🩺 Contrôles |
 | 🧱 System Component · 🧱 Logical Component · 🔀 Behavior Exchange · 🔌 Physical Link | 📡 | ◧ Blocs · ▣ Composant · ≡ Ligne · ▦ Matrice · 🩺 Contrôles |
 | 🎬 Scénarios | 📡 | 🎬 Diagramme · 🩺 Contrôles |
 | 🧩 Ports | 📡 | ≡ Traçabilité · ▣ Par composant · 🩺 Contrôles |
-| 🔗 Liens | 📡 | — |
 | ƒ Fonctions | 🔬 | 🌳 Hiérarchie · 📋 Tableau · ⛓ Traçabilité · 📊 Métriques · 🩺 Contrôles · 📄 Dossier |
 | 🧬 Traçabilité inter-couches | 🔬 | ▦ Couverture · ⛓ Chemins · 🔗 Liens |
 | ⇶ Liens entre couches | 🔬 (épinglé : ⇶ Couches) | modes élément / catégorie, exports SVG · PNG · CSV |
@@ -1646,7 +1605,7 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 | Format | Où |
 |---|---|
 | **Page HTML autonome** (application + modèle) | 💾, 📁 Fichier |
-| **CSV** | ▤ Tableau, 🔗 Liens, ⚡ Chaînes, toutes les vues 📡 et 🔬 (CSV enrichi), Relation Map (arbre par niveaux, relations), 🔄 delta, ⚖ comparaison, 💬 revue, ▦ Cartes |
+| **CSV** | ▤ Tableau, ⚡ Chaînes, toutes les vues 📡 et 🔬 (CSV enrichi), Relation Map (arbre par niveaux, relations), 🔄 delta, ⚖ comparaison, 💬 revue, ▦ Cartes |
 | **PDF** | ⚡ Chaînes (planches), 🔲 Diagrammes (planches), 📐 / ⚖ / rapports via 🖨 Imprimer |
 | **ZIP PNG / SVG** | ⚡ Chaînes, 🔲 Diagrammes |
 | **PNG / SVG / JPEG / copie d'image** | Relation Map, cartes de chaînes, 🎬 Scénarios, 📊 Métriques, diagrammes Capella |

@@ -36,8 +36,6 @@ var CAP_NAV_ITEMS=[
   {k:'@rm',       l:_L('🗺 Relation Map'),      g:'arch', s:_L('Explorer'), t:_L('Graphe interactif des éléments et de leurs relations : voisinage, dépliage, disposition, export en image')},
   {k:'tree',      l:_L('🌳 Arborescence'),      g:'arch', s:_L('Explorer')},
   {k:'cards',     l:_L('▦ Cartes'),             g:'arch', s:_L('Explorer'), x:1},
-  {k:'index',     l:_L('📖 Index des types'),   g:'arch', s:_L('Explorer'), x:1},
-  {k:'links',     l:_L('🔗 Liens'),             g:'arch', s:_L('Explorer'), x:1, t:_L('Relations entre les éléments du modèle')},
   // ✅ Vérifier
   {k:'ana:sante', l:_L('💚 Santé & contrôles'),          g:'verif', t:_L('Score global et par couche bâti sur tous les contrôles (🩺 profil), détail contrôle × couche, historique des versions')},
   {k:'grp:trac',  l:_L('🧬 Traçabilité entre couches'), g:'verif', f:['ana:trace','ana:xlay'], t:_L('Réalisations entre couches OA → SA → LA → PA → EPBS : tableau de couverture et chemins, ou graphe des réalisations')},

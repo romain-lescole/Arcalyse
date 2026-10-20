@@ -41,14 +41,6 @@ function buildPanel() {
     row.dataset.searchKey = ((cfg.label||'')+' '+t).toLowerCase();
     row.appendChild(cb); row.appendChild(sw); row.appendChild(nm);
     if (cfg._capella) { const n=MODEL.relations.filter(r=>r.type===t).length; const c=document.createElement('span'); c.className='typ-cnt'; c.textContent=n; c.title=_L(`${n} relation(s) de ce type`); row.appendChild(c); }
-    if (!readOnly && !RM_RO) {   // RM_RO : ni modification ni suppression de critère
-      const icoStyle='cursor:pointer;color:var(--c-dim);font-size:10px;flex-shrink:0;padding:0 2px';
-      const edit=document.createElement('span'); edit.textContent='✏'; edit.title=_L('Modifier ce critère'); edit.style.cssText=icoStyle;
-      edit.onclick=()=>showEditRelCriteriaForm(rb, row, t, cfg);
-      const del=document.createElement('span'); del.textContent='✕'; del.title=_L('Supprimer ce critère'); del.style.cssText=icoStyle;
-      del.onclick=async()=>{ if(!await capConfirm(_L(`Supprimer le critère "${t}" ?`),{danger:true})) return; delete RCFG[t]; delete S.relF[t]; MODEL.relations=MODEL.relations.filter(r=>r.type!==t); onModelChanged(); };
-      row.appendChild(edit); row.appendChild(del);
-    }
     return row;
   }
 
@@ -82,12 +74,6 @@ function buildPanel() {
     .filter(([t,cfg])=>!cfg._capella||relCount[t]); // relations Capella absentes du modèle : non listées
   customRelEntries.forEach(([t,cfg])=>rb.appendChild(makeRelRow(t,cfg,false)));
 
-  // Bouton créer nouveau critère de relation
-  const addRel=document.createElement('div'); addRel.className='add-btn';
-  addRel.textContent=_L('+ Nouveau critère de relation');
-  addRel.onclick=()=>showNewRelCriteriaForm(rb);
-  if (RM_RO) addRel.style.display='none';   // lecture seule
-  rb.appendChild(addRel);
   if (S.relSearch) rmFiltersSearch(rb, S.relSearch);
 
   // ── Types d'éléments ────────────────────────────────────────────────────
@@ -160,12 +146,6 @@ function buildPanel() {
     row.dataset.searchKey = (displayLabel + ' ' + t).toLowerCase();
     if (S.typSearch && !row.dataset.searchKey.includes(S.typSearch)) row.style.display='none';
     row.appendChild(cb); row.appendChild(sw); row.appendChild(nm); if (nm._cnt) row.appendChild(nm._cnt);
-    if (!readOnly && !RM_RO) {   // RM_RO : ni modification ni suppression de type
-      const icoS='cursor:pointer;color:var(--c-dim);font-size:10px;flex-shrink:0;padding:0 2px';
-      const edit=document.createElement('span'); edit.textContent='✏'; edit.title=_L('Modifier ce type'); edit.style.cssText=icoS; edit.onclick=()=>showEditTypeForm(tb,row,t,cfg);
-      const del=document.createElement('span'); del.textContent='✕'; del.title=_L('Supprimer ce type'); del.style.cssText=icoS; del.onclick=async()=>{ const used=MODEL.elements.filter(e=>e.type===t); if(used.length>0){capAlert(_L(`Ce type est utilisé par ${used.length} élément(s).`));return;} if(!await capConfirm(_L(`Supprimer le type "${t}" ?`),{danger:true})) return; delete TCFG[t]; delete S.typF[t]; onModelChanged(); };
-      row.appendChild(edit); row.appendChild(del);
-    }
     return row;
   }
 
@@ -213,11 +193,6 @@ function buildPanel() {
   ]);
   allTypListNoPkg.filter(t=>!groupedTypes.has(t)).forEach(t=>{ if(!TCFG[t]) TCFG[t]={color:nextColor(),abbr:t.slice(0,3).toUpperCase()}; tb.appendChild(makeTypRow(t,TCFG[t],false)); });
 
-  const addTyp=document.createElement('div'); addTyp.className='add-btn';
-  addTyp.textContent=_L("+ Nouveau type d'élément");
-  addTyp.onclick=()=>showNewTypeForm(tb);
-  if (RM_RO) addTyp.style.display='none';   // lecture seule
-  tb.appendChild(addTyp);
   }
 
   // Portée (section cachée — basée sur les éléments Package)

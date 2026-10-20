@@ -237,11 +237,11 @@ function applyMode(mode) {
   const isGraph   = !isCapella;
 
   // Update mode buttons
-  ['mode-rm','mode-pbs'].forEach(id=>{
+  ['mode-rm'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.classList.remove('active');
   });
   // En mode capella, le bouton actif est celui de la vue (capUpdateToolbarForView)
-  const modeMap={'default':'mode-rm','PBS':'mode-pbs'};
+  const modeMap={'default':'mode-rm'};
   const activeBtn=document.getElementById(modeMap[mode]); if(activeBtn) activeBtn.classList.add('active');
 
   // Show/hide toolbar buttons (+ to Compact)

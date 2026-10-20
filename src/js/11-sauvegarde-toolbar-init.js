@@ -1,55 +1,4 @@
 /* ═══════════════════════════════════════════════════════════════════════
-   18. SAUVEGARDE / CHARGEMENT JSON
-   ═══════════════════════════════════════════════════════════════════════ */
-/** Sérialise MODEL, RCFG, TCFG et S en JSON et télécharge le fichier. */
-function saveJSON() {
-  const data={
-    version:3,
-    model:{packages:MODEL.packages, pkgParent:MODEL.pkgParent||{}, customAttrs:MODEL.customAttrs||[], elements:MODEL.elements, relations:MODEL.relations},
-    view:{ctx:S.ctx, depth:S.depth, layout:S.layout, cutLen:S.cutLen, theme:currentTheme,
-          relColors:Object.fromEntries(Object.entries(RCFG).map(([k,v])=>[k,v.color]))},
-  };
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));
-  a.download='relation-map.json'; a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href),2000);
-}
-
-/** Charge un fichier JSON et restaure l'état complet de l'application. */
-function loadJSON(file) {
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    try {
-      const data=JSON.parse(ev.target.result);
-      if (data.model){
-        if (data.model.packages)    MODEL.packages    =data.model.packages;
-        if (data.model.pkgParent)   MODEL.pkgParent   =data.model.pkgParent;
-        if (data.model.customAttrs) MODEL.customAttrs =data.model.customAttrs;
-        if (data.model.elements)    MODEL.elements    =data.model.elements;
-        if (data.model.relations)   MODEL.relations   =data.model.relations;
-      }
-      if (data.view){
-        if (data.view.ctx)    S.ctx   =data.view.ctx;
-        if (data.view.depth)  S.depth =data.view.depth;
-        if (data.view.layout) S.layout=data.view.layout;
-        if (data.view.cutLen) S.cutLen=data.view.cutLen;
-        if (data.view.theme)  { document.getElementById('theme-sel').value=data.view.theme; applyTheme(data.view.theme); }
-        if (data.view.relColors) Object.entries(data.view.relColors).forEach(([k,v])=>{ if(RCFG[k]) RCFG[k].color=v; });
-      }
-      migratePkgsToElements(); // migrate old format if needed
-      S.relF=Object.fromEntries(Object.keys(RCFG).map(t=>[t,true]));
-      S.typF=Object.fromEntries([...new Set(MODEL.elements.map(e=>e.type))].map(t=>[t,true]));
-      S.pkgF=Object.fromEntries(MODEL.elements.filter(e=>e.type==='Package').map(e=>[e.name,true]));
-      S.hidden.clear();
-      document.getElementById('dep-inp').value=S.depth;
-      document.querySelectorAll('.lbtn').forEach(b=>b.classList.toggle('active',b.dataset.l===S.layout)); rmLayoutLabel();
-      onModelChanged();
-    } catch(err){ capAlert(_L('Erreur : ')+err.message,{level:'err'}); }
-  };
-  reader.readAsText(file);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════
    19. GESTIONNAIRES TOOLBAR
    ═══════════════════════════════════════════════════════════════════════ */
 document.getElementById('b-zi').onclick  = ()=>svg.transition().duration(250).call(zoomBeh.scaleBy,1.4);
@@ -71,35 +20,21 @@ bCut.onclick =()=>{ S.cutNames    =!S.cutNames;     bCut.classList.toggle('activ
 bSgl.onclick =()=>{ S.singleNode=!S.singleNode; bSgl.classList.toggle('active',S.singleNode); rebuildTree(); };
 bCpct.onclick=()=>{ S.compact   =!S.compact;    bCpct.classList.toggle('active',S.compact);   render(); setTimeout(()=>fitView(true),60); };
 
-document.getElementById('b-ref').onclick  = ()=>{ S.hidden.clear(); S.selNode=null; rebuildTree(); setTimeout(()=>fitView(true),80); };
-document.getElementById('b-edit').onclick  = ()=>{ document.getElementById('b-edit-dd').style.display='none'; openModal(); };
-document.getElementById('b-save').onclick  = ()=>{ document.getElementById('b-edit-dd').style.display='none'; saveJSON(); };
-document.getElementById('b-load').onclick  = ()=>{ document.getElementById('b-edit-dd').style.display='none'; document.getElementById('file-input').click(); };
 document.getElementById('b-expng').onclick  = ()=>{ document.getElementById('b-exp-dd').style.display='none'; openExportModal('png'); };
 document.getElementById('b-expjpg').onclick = ()=>{ document.getElementById('b-exp-dd').style.display='none'; openExportModal('jpeg'); };
 document.getElementById('b-exsvg').onclick  = ()=>{ document.getElementById('b-exp-dd').style.display='none'; openExportModal('svg'); };
 document.getElementById('b-excsv-tree').onclick = ()=>{ document.getElementById('b-exp-dd').style.display='none'; rmCsvTreeDialog(); };
 document.getElementById('b-excsv-rel').onclick  = ()=>{ document.getElementById('b-exp-dd').style.display='none'; rmCsvRelations(); };
-// Dropdown toggle for Edit menu
-document.getElementById('b-edit-menu')?.addEventListener('click',e=>{
-  e.stopPropagation();
-  const dd=document.getElementById('b-edit-dd');
-  dd.style.display=dd.style.display==='block'?'none':'block';
-  document.getElementById('b-exp-dd').style.display='none';
-});
 // Dropdown toggle for Export menu
 document.getElementById('b-exp-menu')?.addEventListener('click',e=>{
   e.stopPropagation();
   const dd=document.getElementById('b-exp-dd');
   dd.style.display=dd.style.display==='block'?'none':'block';
-  document.getElementById('b-edit-dd').style.display='none';
 });
 // Close dropdowns on outside click
 document.addEventListener('click',()=>{
-  document.getElementById('b-edit-dd').style.display='none';
-  document.getElementById('b-exp-dd').style.display='none';
+  const dd=document.getElementById('b-exp-dd'); if(dd) dd.style.display='none';
 });
-document.getElementById('file-input').onchange=ev=>{ if(ev.target.files[0]) loadJSON(ev.target.files[0]); ev.target.value=''; };
 
 /** Applique la profondeur d'exploration du graphe (bornée entre 1 et 10),
  * met à jour le champ de saisie puis reconstruit et recadre la vue.
@@ -127,7 +62,6 @@ document.addEventListener('click', ev=>{ if(!ev.target.closest('#b-lay-wrap')) d
 // Sélecteur de mode
 // Mode buttons wiring
 document.getElementById('mode-rm')?.addEventListener('click',()=>applyMode('default'));
-document.getElementById('mode-pbs')?.addEventListener('click',()=>applyMode('PBS'));
 
 // Sélecteur de thème
 document.getElementById('theme-sel').onchange=ev=>applyTheme(ev.target.value);
@@ -231,7 +165,6 @@ document.addEventListener('keydown', ev=>{
   if (ev.key==='Escape'){
     S.selNode=null; render(); rmFiltersToggle(false);
     floatPanel.style.display='none';
-    document.getElementById('modal-ov').classList.remove('open');
     document.getElementById('export-ov').classList.remove('open');
     document.getElementById('help-ov').style.display='none';
   }

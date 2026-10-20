@@ -279,8 +279,6 @@ PARTS.explorateur = async () => {
   await shot('30-explorateur-arborescence');
   await p.fill('#cap-view-tree input[type=search], #cap-view-tree input', '').catch(() => {});
   await view('cards'); await top(); await shot('30-explorateur-cartes');
-  await view('index'); await top(); await shot('30-explorateur-index');
-  await view('links'); await top(); await shot('31-liens');
 };
 
 /** ⚡ Chaînes. */
@@ -455,7 +453,7 @@ PARTS.revue = async () => {
     await shot('95-revue-clic-droit', { sel: ['#crv-ctx'], pad: 40 }); await p.mouse.click(5, 890); }
 };
 
-/** 🏠 Accueil du projet : check-lists, plans de revue, tableaux blancs. */
+/** 🏠 Accueil du projet : check-lists, plans de revue. */
 PARTS.home = async () => {
   await view('home'); await top();
   await shot('05-home-projet');
@@ -469,22 +467,6 @@ PARTS.home = async () => {
   await shot('05-home-nouveau', { sel: '#cap-view-home .hm-docs-new', pad: 6 });
   await p.selectOption('#cap-view-home [data-new="plan"]', { index: 3 }); await wait(600);
   await shot('05-home-plan');
-  await p.locator('#cap-view-home button:visible', { hasText: 'Tableaux blancs' }).first().click(); await wait(500);
-  const zone = async () => (await p.$('#cap-view-home .hm-wb')).boundingBox();
-  const z = await zone();
-  await p.click('#cap-view-home [data-tool="note"]'); await p.mouse.click(z.x + 60, z.y + 60); await wait(400);
-  await p.keyboard.type('Points à revoir avec l\'équipe système'); await wait(200);
-  await p.click('#cap-view-home [data-tool="rect"]');
-  await p.mouse.move(z.x + 380, z.y + 50); await p.mouse.down(); await p.mouse.move(z.x + 620, z.y + 200, { steps: 6 }); await p.mouse.up(); await wait(300);
-  await p.click('#cap-view-home [data-tool="ellipse"]');
-  await p.mouse.move(z.x + 420, z.y + 260); await p.mouse.down(); await p.mouse.move(z.x + 600, z.y + 360, { steps: 6 }); await p.mouse.up(); await wait(300);
-  await p.click('#cap-view-home [data-tool="arrow"]');
-  await p.mouse.move(z.x + 290, z.y + 110); await p.mouse.down(); await p.mouse.move(z.x + 375, z.y + 120, { steps: 6 }); await p.mouse.up(); await wait(300);
-  await p.click('#cap-view-home [data-tool="text"]'); await p.mouse.click(z.x + 400, z.y + 400); await wait(300);
-  await p.keyboard.type('Interfaces cabine'); await wait(200);
-  await p.click('#cap-view-home [data-tool="sel"]'); await p.mouse.click(z.x + 700, z.y + 500); await wait(300);
-  await shot('05-home-tableau-blanc');
-  await shot('05-home-tb-barre', { sel: '#cap-view-home .hm-wb-bar', pad: 4 });
 };
 
 /** Thème personnalisé, interface et vues, À propos, aide, visites guidées. */

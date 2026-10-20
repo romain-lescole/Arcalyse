@@ -7,38 +7,22 @@
   <div class="tbtn off" id="b-hist-fwd" title="Suivant (Alt+→)">▶</div>
   <!-- 🗺 Relation Map : ouverte par 🏗 Architecture › Explorer (bouton masqué, gardé pour le code existant) -->
   <div class="tbtn active" id="mode-rm"    title="Relation Map" style="display:none">🗺<span class="tb-lbl"> Relation Map</span></div>
-  <div class="tbtn"        id="mode-pbs"   title="PBS" style="display:none">🌲 PBS</div>
   <!-- Boutons générés par capNavRender (41-barre-vues.js) : 🔲 Diagrammes, ▤ Tableau, vues épinglées, menus 🏗 Architecture /
        ✅ Vérifier / 💬 Revue & documents, champ 🔍 de recherche (Ctrl+K) ; masqués tant qu'aucun modèle n'est ouvert (html[data-capvide]) -->
   <div id="cap-tb-views" style="display:flex;align-items:center;gap:3px;"></div>
   <!-- Spacer : tout ce qui suit est poussé à droite -->
   <div id="tb-spacer"></div>
-  <div class="tbtn" id="b-ref" style="display:none">↺ Reset</div>
   <!-- Niveau d'affichage des menus : Essentiel / Complet (boutons générés par capNavRender) -->
   <span id="cap-nav-lvl" class="cap-nav-lvl" role="group" aria-label="Niveau d'affichage des menus"></span>
   <div class="tsep"></div>
   <!-- 📁 Fichier ▾ : ouvrir un modèle, enregistrer, enregistrer sous, télécharger la page (menu rempli par capNavMenuFill) -->
   <div class="tbtn" id="b-file-menu" data-dd="file" title="Ouvrir un modèle Capella, enregistrer la page">📁<span class="tb-lbl"> Fichier</span> ▾</div>
   <div class="tbtn" id="b-save-direct" title="Enregistrer la page (avec le modèle chargé) directement dans un fichier HTML, sans passer par les téléchargements (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous">💾</div>
-  <!-- Commandes conservées pour le code existant, accessibles par le menu 📁 Fichier -->
-  <div class="tbtn" id="b-capella-load" title="Charger un fichier Capella" style="display:none">🔷 CAPELLA</div>
-  <div class="tbtn" id="b-save-page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome" style="display:none">💾 Page HTML</div>
   <!-- 🔄 Suivi du fichier .capella (mises à jour, delta, historique) : menu ouvert par 📁 Fichier › 🔄 Suivi du fichier ;
        le bouton n'apparaît que lorsqu'une nouvelle version est détectée (badge) ou que son menu est ouvert (40) -->
   <div style="position:relative;display:none" id="b-cap-watch">
     <div class="tbtn" id="b-cap-watch-main" title="Suivi du fichier .capella : mises à jour, delta, historique">🔄<span class="tb-lbl"> Suivi</span><span id="b-cap-watch-badge" class="cw-badge" style="display:none"></span> ▾</div>
     <div id="cap-watch-dd" style="display:none"></div>
-  </div>
-  <!-- Éditer/Sauver/Charger → dropdown -->
-  <div style="position:relative;display:none" id="b-edit-wrap"><!-- menu Éditer retiré de l'interface (version Capella) -->
-    <div class="tbtn" id="b-edit-menu" title="Éditer / Sauver / Charger">✏ Éditer ▾</div>
-    <div id="b-edit-dd" style="display:none;position:absolute;top:calc(100% + 4px);right:0;z-index:500;
-         background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;
-         min-width:160px;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;">
-      <div class="ctx-i" id="b-edit">✏ Éditeur de modèle</div>
-      <div class="ctx-i" id="b-save">💾 Sauvegarder</div>
-      <div class="ctx-i" id="b-load">📂 Charger un fichier</div>
-    </div>
   </div>
   <!-- 📜 Scripts : console de scripts (tiroir en bas des vues, 81-scripts-console.js) ; ouverte par 💬 Revue & documents › 📜 Scripts (mode Complet), Alt+4 ou la recherche -->
   <div class="tbtn" id="b-scripts" title="Scripts : parcourir et analyser le modèle avec l'API, comme les macros de Catia Magic (Alt+4)" style="display:none">📜<span class="tb-lbl"> Scripts</span></div>
@@ -257,23 +241,6 @@
   </div>
 </div>
 
-<!-- ════════════════════════  MODALE ÉDITEUR  ════════════════════════ -->
-<div id="modal-ov">
-  <div id="modal-box">
-    <div id="modal-hdr">
-      <span>✏ Éditeur de modèle</span>
-      <button id="modal-close">✕</button>
-    </div>
-    <div id="modal-tabs">
-      <button class="mtab active" data-t="el">Éléments (<span id="el-count">0</span>)</button>
-      <button class="mtab" data-t="rel">Relations (<span id="rel-count">0</span>)</button>
-      <button class="mtab" data-t="pkg">Paquetages (<span id="pkg-count">0</span>)</button>
-      <button class="mtab" data-t="chains" id="mtab-chains" style="display:none">Chaînes (<span id="chains-count">0</span>)</button>
-    </div>
-    <div id="modal-body"></div>
-  </div>
-</div>
-
 <!-- ════════════════════════  MODAL EXPORT QUALITÉ  ════════════════════════ -->
 <div id="export-ov">
   <div id="export-box">
@@ -293,7 +260,6 @@
   </div>
 </div>
 
-<input type="file" id="file-input" accept=".json" style="display:none">
 <input type="file" id="capella-file-input" accept=".capella,.melodymodeller,.xml" style="display:none">
 <input type="file" id="cap-watch-input" accept=".capella,.melodymodeller,.xml" style="display:none">
 <!-- 🔄 Suivi du fichier : notification de mise à jour, message bref, fenêtre du delta -->
@@ -337,7 +303,6 @@
       <span class="tb-grp">
         <button class="cap-lf-btn" data-ev="tree">🌳 Arborescence</button>
         <button class="cap-lf-btn" data-ev="cards">▦ Cartes</button>
-        <button class="cap-lf-btn" data-ev="index">📖 Index des types</button>
       </span>
     </div>
     <!-- Onglets de section (ex. Composants & interfaces) : vues de la même section du menu (remplis par capNavFluxTabs) -->
@@ -430,7 +395,6 @@
     </div>
 
     <div id="cap-view-tree"   style="flex:1;overflow-y:auto;padding:10px 16px;display:none;"></div>
-    <div id="cap-view-links"  style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-chains" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-physlink" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-compex" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
@@ -444,7 +408,6 @@
     <div id="cap-view-functions" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-analyses" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-dashboard" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
-    <div id="cap-view-index" style="flex:1;overflow:hidden;display:none;flex-direction:column;"></div>
     <div id="cap-view-home" style="flex:1;overflow:hidden;display:none;flex-direction:column;"></div>
 
     <div id="cap-empty" style="display:none;text-align:center;padding:60px;color:var(--c-dim);">
