@@ -159,7 +159,17 @@ Le réglage de la barre est enregistré avec la 💾 page HTML et dans le fichie
 
 <img src="guide/img/01-menu-preferences.png" alt="Menu ⚙ Préférences" width="300" align="right">
 
-La roue crantée **⚙** (à droite de ❓ Aide) ouvre un menu rapide (niveau des menus, style de la barre, 🎨 Thème…, enregistrement automatique, format des exports, 🩺 profil de contrôles) ; **⚙ Préférences…** ouvre la fenêtre complète (onglets ☰ Affichage, 💾 Enregistrement, 🎨 Thème, ⚙ Interface et vues).
+La roue crantée **⚙** (à droite de ❓ Aide) ouvre un menu rapide (niveau des menus, style de la barre, 🎨 Thème…, enregistrement automatique, format des exports, 🩺 profil de contrôles) ; **⚙ Préférences…** ouvre la fenêtre complète, rubriques à gauche :
+
+| Rubrique | Réglages |
+|---|---|
+| ☰ Affichage | Niveau des menus (Essentiel / Complet), style de la barre. |
+| 🎨 Thème | Sombre, Clair, Office 2007, Contraste (et 🎨 Personnalisé une fois créé), avec aperçu ; **🎨 Ajuster les couleurs…** ouvre l'éditeur de thème ([§ 18](#18--thèmes-et-personnalisation)). |
+| 🔄 Suivi du fichier | Détection automatique des nouvelles versions (10 s, 30 s, 1 min, 5 min), vérification au retour dans la fenêtre ; enregistré avec la page ([§ 16](#16--suivi-du-fichier-et-mises-à-jour-du-modèle)). |
+| 💾 Enregistrement | Enregistrement automatique et fichier de secours (voir plus bas). |
+| ⚙ Interface et vues | Parties du fichier `.json` de réglages, enregistrer / charger ([§ 17](#17--enregistrer-partager-réutiliser)). |
+| 🩺 Contrôles et nommage | 🩺 Profil de contrôles ([§ 3.6](#36--profil-de-contrôles)), règles de nommage (ƒ Fonctions › 🩺 Contrôles). |
+| ⬇ Exports | Excel (.xlsx) ou CSV pour les boutons ⬇ CSV ; 📗 Classeur Excel des analyses ([§ 3.5](#35--exports-excel)). |
 
 <br clear="right">
 
@@ -1436,7 +1446,7 @@ Ne sont **pas** conservés dans la page : la version chargée pour ⚖ Comparais
 
 <img src="guide/img/01-menu-theme.png" alt="Menu Thème" width="260" align="right">
 
-**⚙ › 🎨 Thème** : **Sombre** (par défaut), **Office 2007**, **Clair**, **Marine**, **Nature**, **Contraste**, et **🎨 Personnalisé** une fois créé. Les vues se redessinent avec des couleurs adaptées ; en thème clair, les textes colorés sont automatiquement foncés pour rester lisibles.
+**⚙ › 🎨 Thème** : **Sombre** (par défaut), **Clair**, **Office 2007**, **Contraste** (🌊 Marine et 🌿 Nature ont été retirés en 3.0 : une page qui les utilisait passe en Sombre), et **🎨 Personnalisé** une fois créé. Les vues se redessinent avec des couleurs adaptées ; en thème clair, les textes colorés sont automatiquement foncés pour rester lisibles.
 
 **⚙ › 🎨 Thème › Personnaliser…** ouvre l'éditeur de thème :
 

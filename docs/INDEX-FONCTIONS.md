@@ -11,26 +11,27 @@
 - `TCFG` (l. 38)
 - `MODES` (l. 50)
 
-## 02-themes.js — 306 lignes
+## 02-themes.js — 294 lignes
 
 - `THEMES` (l. 6)
-- `capInk` (l. 57) — Couleur de texte lisible sur un fond donné : noir ou blanc, selon le meilleur contraste (WCAG).
-- `capTextOn` (l. 67) — Couleur d'un texte coloré lisible sur le fond du thème : assombrie en thème clair.
-- `capIsLight` (l. 72) — Indique si le thème courant est clair (couleurs de texte foncées nécessaires).
-- `CAP_MIN_CONTRAST` (l. 80) — Contraste minimal visé pour un texte coloré (WCAG AA, texte courant).
-- `capParseColor` (l. 85) — Décompose une couleur CSS (#rgb, #rrggbb, rgb(), rgba()) en [r,g,b,a].
-- `capLuminance` (l. 94) — Luminance relative WCAG d'une couleur [r,g,b].
-- `capContrast` (l. 96) — Rapport de contraste WCAG entre deux couleurs [r,g,b].
-- `capBlend` (l. 98) — Superpose une couleur semi-transparente [r,g,b,a] sur un fond opaque [r,g,b,1].
-- `capHex` (l. 100) — Couleur [r,g,b] → #rrggbb.
-- `capReadableOn` (l. 107) — Couleur de texte lisible sur un fond donné, en conservant la teinte : foncée sur fond clair, éclaircie
-- `capEffectiveBg` (l. 121) — Fond effectif (opaque) derrière un élément : superpose les fonds semi-transparents de ses ancêtres.
-- `capFixContrast` (l. 133) — Corrige le contraste des textes colorés en ligne (style="color:…") d'un sous-arbre, en thème clair.
-- `capRestoreContrast` (l. 149) — Rend leurs couleurs d'origine aux textes corrigés par capFixContrast (retour à un thème sombre).
-- `capContrastCss` (l. 156) — Génère, pour le thème clair courant, des règles qui foncent les couleurs de texte fixes des feuilles
-- `applyTheme` (l. 198) — Applique le thème visuel global (dark/light/dracula/solarized/nord).
-- `applyMode` (l. 243) — Bascule entre les modes d'affichage : default (Relation Map), PBS, capella.
-- `tv` (l. 304) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
+- `CAP_THEME_ANCIENS` (l. 39) — Thèmes retirés (refonte 3.0) : une page ou un fichier ⚙ qui les utilise passe au thème indiqué.
+- `capInk` (l. 46) — Couleur de texte lisible sur un fond donné : noir ou blanc, selon le meilleur contraste (WCAG).
+- `capTextOn` (l. 56) — Couleur d'un texte coloré lisible sur le fond du thème : assombrie en thème clair.
+- `capIsLight` (l. 61) — Indique si le thème courant est clair (couleurs de texte foncées nécessaires).
+- `CAP_MIN_CONTRAST` (l. 69) — Contraste minimal visé pour un texte coloré (WCAG AA, texte courant).
+- `capParseColor` (l. 74) — Décompose une couleur CSS (#rgb, #rrggbb, rgb(), rgba()) en [r,g,b,a].
+- `capLuminance` (l. 83) — Luminance relative WCAG d'une couleur [r,g,b].
+- `capContrast` (l. 85) — Rapport de contraste WCAG entre deux couleurs [r,g,b].
+- `capBlend` (l. 87) — Superpose une couleur semi-transparente [r,g,b,a] sur un fond opaque [r,g,b,1].
+- `capHex` (l. 89) — Couleur [r,g,b] → #rrggbb.
+- `capReadableOn` (l. 96) — Couleur de texte lisible sur un fond donné, en conservant la teinte : foncée sur fond clair, éclaircie
+- `capEffectiveBg` (l. 110) — Fond effectif (opaque) derrière un élément : superpose les fonds semi-transparents de ses ancêtres.
+- `capFixContrast` (l. 122) — Corrige le contraste des textes colorés en ligne (style="color:…") d'un sous-arbre, en thème clair.
+- `capRestoreContrast` (l. 138) — Rend leurs couleurs d'origine aux textes corrigés par capFixContrast (retour à un thème sombre).
+- `capContrastCss` (l. 145) — Génère, pour le thème clair courant, des règles qui foncent les couleurs de texte fixes des feuilles
+- `applyTheme` (l. 184) — Applique un thème (Sombre, Clair, Office 2007, Contraste ou personnalisé) en posant toutes ses variables CSS sur :root,
+- `applyMode` (l. 231) — Bascule entre les modes d'affichage : default (Relation Map), PBS, capella.
+- `tv` (l. 292) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
 
 ## 03-rm-etat-svg.js — 121 lignes
 
@@ -547,7 +548,7 @@
 - `capXtDetail` (l. 585) — Sections supplémentaires du panneau de détail : exigences liées, propriétés, contraintes.
 - `capXtDashCatalog` (l. 614) — Ajoute au catalogue du tableau de bord les indicateurs Exigences, Propriétés, Données & interfaces, Contraintes.
 
-## 40-suivi-fichier.js — 549 lignes
+## 40-suivi-fichier.js — 565 lignes
 
 - `capWatchHash` (l. 30) — Empreinte rapide d'un texte (FNV-1a 32 bits + longueur), pour reconnaître une version déjà vue.
 - `capWatchTime` (l. 37) — Heure lisible (hh:mm:ss) d'un horodatage. @param {number} t - Millisecondes
@@ -556,29 +557,31 @@
 - `capWatchLite` (l. 53) — Copie allégée d'un delta (sans les nœuds XML), pour le garder en mémoire sans retenir les anciens documents.
 - `capWatchChips` (l. 58) — Pastilles ➕ ➖ ✎ ↪ d'un comptage. @param {object} c - Comptage capWatchCounts @returns {string} HTML
 - `capWatchSetSource` (l. 69) — Enregistre la source suivie après le chargement d'un modèle (remet le suivi à zéro).
-- `capWatchArm` (l. 82) — (Ré)arme la vérification périodique selon les réglages.
-- `capIsMobile` (l. 90) — Vrai sur téléphone / tablette : leurs sélecteurs ne connaissent pas l'extension .capella et grisent ces fichiers
-- `capPickCapellaFile` (l. 103) — Ouvre un fichier Capella à charger : sélecteur avec accès direct (Edge/Chrome, permet le 🔄 suivi),
-- `capWatchPickerFailed` (l. 119) — Repli quand le sélecteur à accès direct a été refusé : tente le sélecteur classique (le navigateur peut
-- `capWatchPick` (l. 130) — Demande un fichier .capella avec le sélecteur à accès direct quand le navigateur le permet.
-- `capWatchReadDisk` (l. 148) — Lit l'état du fichier suivi sur le disque.
-- `capWatchCheck` (l. 167) — Vérifie si le fichier suivi a changé et, le cas échéant, prépare la mise à jour (delta + notification).
-- `capWatchRegister` (l. 208) — Analyse une nouvelle version lue sur le disque et l'ajoute aux enregistrements en attente :
-- `CAP_WATCH_SAME_MIN` (l. 235)
-- `capWatchCommon` (l. 242) — Part des éléments identifiés communs aux deux versions (rapportée à la plus grande).
-- `capWatchSuspectHtml` (l. 252) — Avertissement (HTML) quand la nouvelle version partage trop peu d'éléments avec le modèle affiché.
-- `capWatchPickNewVersion` (l. 259) — Choisit manuellement la nouvelle version du fichier (accès limité, page sauvegardée, fichier déplacé) :
-- `capWatchApply` (l. 284) — Applique la version en attente : recharge le modèle (vue courante conservée), archive le delta dans l'historique
-- `capWatchOpenCompare` (l. 311) — Ouvre ⚖ Comparaison de versions (🔬 Analyses) sur deux versions connues du suivi.
-- `capWatchUpdateUi` (l. 329) — Met à jour le bouton 🔄 Suivi (badge, info-bulle) : il n'apparaît dans la barre que lorsqu'une nouvelle version
-- `capWatchFlash` (l. 344) — Affiche brièvement un message dans la notification (sans action). @param {string} msg - Message
-- `capWatchNote` (l. 349) — Affiche ou masque la notification de mise à jour (coin inférieur droit).
-- `capWatchMenu` (l. 379) — Ouvre ou ferme le menu du bouton 🔄 Suivi. @param {boolean} [show] - Forcer l'état (sinon bascule)
-- `capWatchMenuRender` (l. 388) — Construit le contenu du menu 🔄 Suivi (état de la source, réglages, historique).
-- `capWatchModalClose` (l. 424) — Ferme la fenêtre du delta.
-- `capWatchModalRefresh` (l. 428) — Réaffiche la fenêtre du delta si elle montre la version en attente (nouvel enregistrement détecté entre-temps).
-- `capWatchShowDelta` (l. 436) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
-- `capWatchShowHistory` (l. 516) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
+- `capWatchCfgSet` (l. 84) — Change les réglages du suivi (⚙ Préférences ou menu 🔄) et les enregistre avec la barre (_capNav.watch, bloc cap-toolbar).
+- `capWatchCfgLoad` (l. 91) — Reprend les réglages du suivi enregistrés avec la barre (appelé au chargement de la page et après ⚙ Charger une interface).
+- `capWatchArm` (l. 98) — (Ré)arme la vérification périodique selon les réglages.
+- `capIsMobile` (l. 106) — Vrai sur téléphone / tablette : leurs sélecteurs ne connaissent pas l'extension .capella et grisent ces fichiers
+- `capPickCapellaFile` (l. 119) — Ouvre un fichier Capella à charger : sélecteur avec accès direct (Edge/Chrome, permet le 🔄 suivi),
+- `capWatchPickerFailed` (l. 135) — Repli quand le sélecteur à accès direct a été refusé : tente le sélecteur classique (le navigateur peut
+- `capWatchPick` (l. 146) — Demande un fichier .capella avec le sélecteur à accès direct quand le navigateur le permet.
+- `capWatchReadDisk` (l. 164) — Lit l'état du fichier suivi sur le disque.
+- `capWatchCheck` (l. 183) — Vérifie si le fichier suivi a changé et, le cas échéant, prépare la mise à jour (delta + notification).
+- `capWatchRegister` (l. 224) — Analyse une nouvelle version lue sur le disque et l'ajoute aux enregistrements en attente :
+- `CAP_WATCH_SAME_MIN` (l. 251)
+- `capWatchCommon` (l. 258) — Part des éléments identifiés communs aux deux versions (rapportée à la plus grande).
+- `capWatchSuspectHtml` (l. 268) — Avertissement (HTML) quand la nouvelle version partage trop peu d'éléments avec le modèle affiché.
+- `capWatchPickNewVersion` (l. 275) — Choisit manuellement la nouvelle version du fichier (accès limité, page sauvegardée, fichier déplacé) :
+- `capWatchApply` (l. 300) — Applique la version en attente : recharge le modèle (vue courante conservée), archive le delta dans l'historique
+- `capWatchOpenCompare` (l. 327) — Ouvre ⚖ Comparaison de versions (🔬 Analyses) sur deux versions connues du suivi.
+- `capWatchUpdateUi` (l. 345) — Met à jour le bouton 🔄 Suivi (badge, info-bulle) : il n'apparaît dans la barre que lorsqu'une nouvelle version
+- `capWatchFlash` (l. 360) — Affiche brièvement un message dans la notification (sans action). @param {string} msg - Message
+- `capWatchNote` (l. 365) — Affiche ou masque la notification de mise à jour (coin inférieur droit).
+- `capWatchMenu` (l. 395) — Ouvre ou ferme le menu du bouton 🔄 Suivi. @param {boolean} [show] - Forcer l'état (sinon bascule)
+- `capWatchMenuRender` (l. 404) — Construit le contenu du menu 🔄 Suivi (état de la source, réglages, historique).
+- `capWatchModalClose` (l. 440) — Ferme la fenêtre du delta.
+- `capWatchModalRefresh` (l. 444) — Réaffiche la fenêtre du delta si elle montre la version en attente (nouvel enregistrement détecté entre-temps).
+- `capWatchShowDelta` (l. 452) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
+- `capWatchShowHistory` (l. 532) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
 ## 41-barre-vues.js — 408 lignes
 
@@ -686,18 +689,18 @@
 - `capDrClipboard` (l. 297) — Copie dans le presse-papiers (HTML mis en forme + texte brut ; repli par sélection si l'API est refusée).
 - `capDrRender` (l. 327) — Rend le rapport de comparaison dans un conteneur (barre de réglages, filtres, rapport, copie et exports).
 
-## 46-config-interface.js — 153 lignes
+## 46-config-interface.js — 154 lignes
 
 - `CAP_CFG_PARTS` (l. 9)
 - `capCfgSer` (l. 21) — Sérialise en JSON en conservant les ensembles (Set). @param {*} o @returns {string}
 - `capCfgRev` (l. 23) — Relit un JSON produit par capCfgSer (ensembles reconstitués). @param {string} t @returns {*}
 - `capCfgGet` (l. 29) — État courant d'une partie de l'interface.
 - `capCfgSet` (l. 45) — Applique une partie de configuration à l'interface (et la mémorise dans la page).
-- `capCfgStoreViews` (l. 71) — Écrit dans la page (bloc JSON « cap-ui-views ») ce que les autres blocs ne conservent pas encore :
-- `capCfgRestoreViews` (l. 78) — Réapplique à l'ouverture de la page les vues mémorisées par capCfgStoreViews.
-- `capCfgDialog` (l. 94) — Fenêtre de choix des parties à enregistrer ou à charger.
-- `capCfgLoadFile` (l. 133) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
-- `capCfgLoadUpdate` (l. 147) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
+- `capCfgStoreViews` (l. 72) — Écrit dans la page (bloc JSON « cap-ui-views ») ce que les autres blocs ne conservent pas encore :
+- `capCfgRestoreViews` (l. 79) — Réapplique à l'ouverture de la page les vues mémorisées par capCfgStoreViews.
+- `capCfgDialog` (l. 95) — Fenêtre de choix des parties à enregistrer ou à charger.
+- `capCfgLoadFile` (l. 134) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
+- `capCfgLoadUpdate` (l. 148) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
 
 ## 47-composants.js — 439 lignes
 
@@ -1251,23 +1254,24 @@
 - `capRapJson` (l. 432) — Enregistre un modèle de rapport en .json (réutilisable dans un autre projet). @param {object} m
 - `capRapImporter` (l. 437) — Importe un ou plusieurs modèles de rapport (.json). @param {Window} [W] - Fenêtre d'où part la demande
 
-## 64-preferences.js — 247 lignes
+## 64-preferences.js — 294 lignes
 
 - `CAP_PREF_MODES` (l. 9) — Libellés et descriptions des niveaux d'affichage des menus.
 - `capAutoCfg` (l. 19) — Réglage de l'enregistrement automatique (créé à la première lecture, désactivé par défaut).
 - `capAutoSupported` (l. 25) — Vrai si le navigateur permet d'écrire directement dans un fichier (Edge, Chrome). @returns {boolean}
-- `capPrefSetIcons` (l. 30) — Change le style de la barre : icônes et textes, ou icônes seules (nom complet en infobulle).
-- `capPrefMenuHtml` (l. 38) — Contenu du menu ⚙ de la barre : niveau des menus, style de la barre, thème, enregistrement automatique, préférences.
-- `capPrefDialog` (l. 58) — Ouvre la fenêtre ⚙ Préférences.
-- `capPrefDialogFill` (l. 70) — Remplit la fenêtre ⚙ Préférences (onglet courant ov._tab) et branche ses commandes.
-- `capAutoHash` (l. 142) — Empreinte rapide d'un texte (FNV-1a 32 bits) pour savoir si la page a changé.
-- `capAutoPickMain` (l. 151) — Choisit le fichier de la page (« Enregistrer sous ») ; il sert ensuite à 💾 et à l'enregistrement automatique.
-- `capAutoPickBackup` (l. 161) — Choisit le fichier de secours (version précédente de la page).
-- `capAutoBackup` (l. 174) — Copie le contenu actuel du fichier de la page dans le fichier de secours (appelé avant chaque écriture, voir capSaveWrite).
-- `capAutoWritten` (l. 187) — Note un enregistrement réussi (manuel ou automatique) : empreinte de la page écrite, heure.
-- `capAutoTick` (l. 193) — Enregistrement automatique : écrit la page si elle a changé depuis le dernier enregistrement.
-- `capAutoSchedule` (l. 213) — (Re)lance la minuterie de l'enregistrement automatique selon le réglage.
-- `capAutoBanner` (l. 222) — Bandeau sous la barre quand l'enregistrement automatique est activé mais qu'un fichier manque
+- `capPrefNamesOpen` (l. 28) — Ouvre ƒ Fonctions › 🩺 Contrôles, réglage des règles de nommage déplié.
+- `capPrefSetIcons` (l. 38) — Change le style de la barre : icônes et textes, ou icônes seules (nom complet en infobulle).
+- `capPrefMenuHtml` (l. 46) — Contenu du menu ⚙ de la barre : niveau des menus, style de la barre, thème, enregistrement automatique, préférences.
+- `capPrefDialog` (l. 66) — Ouvre la fenêtre ⚙ Préférences.
+- `capPrefDialogFill` (l. 78) — Remplit la fenêtre ⚙ Préférences (onglet courant ov._tab) et branche ses commandes.
+- `capAutoHash` (l. 187) — Empreinte rapide d'un texte (FNV-1a 32 bits) pour savoir si la page a changé.
+- `capAutoPickMain` (l. 196) — Choisit le fichier de la page (« Enregistrer sous ») ; il sert ensuite à 💾 et à l'enregistrement automatique.
+- `capAutoPickBackup` (l. 206) — Choisit le fichier de secours (version précédente de la page).
+- `capAutoBackup` (l. 219) — Copie le contenu actuel du fichier de la page dans le fichier de secours (appelé avant chaque écriture, voir capSaveWrite).
+- `capAutoWritten` (l. 232) — Note un enregistrement réussi (manuel ou automatique) : empreinte de la page écrite, heure.
+- `capAutoTick` (l. 238) — Enregistrement automatique : écrit la page si elle a changé depuis le dernier enregistrement.
+- `capAutoSchedule` (l. 258) — (Re)lance la minuterie de l'enregistrement automatique selon le réglage.
+- `capAutoBanner` (l. 267) — Bandeau sous la barre quand l'enregistrement automatique est activé mais qu'un fichier manque
 
 ## 65-dossier-textes.js — 283 lignes
 

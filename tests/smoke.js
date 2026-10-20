@@ -127,6 +127,16 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.click('#b-prefs'); await p.click('#cap-nav-dd [data-act="theme"]'); await p.click('#cap-nav-dd [data-thm="light"]');
     await p.click('#b-prefs'); await p.click('#cap-nav-dd [data-act="theme"]'); await p.click('#cap-nav-dd [data-thm="dark"]');
     await p.click('#b-file-menu'); await p.keyboard.press('Escape'); });
+  await step('⚙ Préférences : rubriques, thème, suivi enregistré', async () => {
+    await p.evaluate(() => capPrefDialog());
+    for (const t of ['aff', 'theme', 'suivi', 'save', 'cfg', 'ctl', 'exp']) { await p.click(`#cap-pref-ov [data-ptab="${t}"]`); await p.waitForTimeout(100); }
+    await p.click('#cap-pref-ov [data-ptab="theme"]'); await p.click('#cap-pref-ov label:has([data-pt="office2007"])');
+    if (await p.evaluate(() => currentTheme) !== 'office2007') throw new Error('thème Office 2007 non appliqué');
+    await p.click('#cap-pref-ov label:has([data-pt="dark"])');
+    await p.click('#cap-pref-ov [data-ptab="suivi"]'); await p.selectOption('#cap-pref-ov [data-pw="period"]', '60');
+    if (await p.evaluate(() => JSON.parse(document.getElementById('cap-toolbar').textContent).watch?.period) !== 60) throw new Error('période du suivi non enregistrée');
+    if (await p.evaluate(() => { applyTheme('blue'); return currentTheme; }) !== 'dark') throw new Error('ancien thème Marine non converti en Sombre');
+    await p.click('#cap-pref-ov .cw-d-hdr [data-pa="x"]'); });
   await step('scripts 📜 : console, exemple, lien', async () => {
     await p.evaluate(() => capScrToggle(true));
     if (await p.evaluate(() => document.getElementById('cap-scripts').style.display) !== 'flex') throw new Error('console non ouverte');

@@ -18,20 +18,6 @@ const THEMES = {
           '--c-node-bg':'#ffffff','--c-node-txt':'#1a1a2e',
           '--c-node-hdr':'rgba(255,255,255,.85)','--c-shadow':'rgba(0,0,0,.2)'},
   },
-  blue: {
-    css: {'--c-bg':'#0d1117','--c-bg2':'#161b22','--c-bg3':'#21262d',
-          '--c-bg4':'#1c2128','--c-border':'#30363d','--c-text':'#c9d1d9',
-          '--c-dim':'#8b949e','--c-accent':'#58a6ff','--c-ctx':'#f0c040',
-          '--c-node-bg':'#1c2128','--c-node-txt':'#c9d1d9',
-          '--c-node-hdr':'rgba(0,0,0,.55)','--c-shadow':'rgba(0,0,0,.6)'},
-  },
-  green: {
-    css: {'--c-bg':'#0f1a12','--c-bg2':'#0a1a0d','--c-bg3':'#1a3322',
-          '--c-bg4':'#122018','--c-border':'#2a5038','--c-text':'#b8e5c4',
-          '--c-dim':'#6a9e7a','--c-accent':'#4dd880','--c-ctx':'#f0c040',
-          '--c-node-bg':'#1a2f1f','--c-node-txt':'#c8e8d0',
-          '--c-node-hdr':'rgba(0,0,0,.5)','--c-shadow':'rgba(0,0,0,.5)'},
-  },
   office2007: {
     // Inspiré de Microsoft Office 2007 (bleu « Luna », ruban dégradé, surbrillance dorée)
     css: {'--c-bg':'#e4ecf7','--c-bg2':'#f5f9fe','--c-bg3':'#cfdff3',
@@ -48,6 +34,9 @@ const THEMES = {
           '--c-node-hdr':'rgba(255,255,255,.2)','--c-shadow':'rgba(0,0,0,.8)'},
   },
 };
+
+/** Thèmes retirés (refonte 3.0) : une page ou un fichier ⚙ qui les utilise passe au thème indiqué. */
+const CAP_THEME_ANCIENS = {blue:'dark', green:'dark'};
 
 let currentTheme = 'dark';
 /** Couleur de texte lisible sur un fond donné : noir ou blanc, selon le meilleur contraste (WCAG).
@@ -188,16 +177,15 @@ new MutationObserver(muts=>{
   });
 }).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
 
-/**
- * Applique un thème en posant toutes ses variables CSS sur :root,
- * puis relance le rendu pour actualiser les couleurs SVG.
- */
-/** Applique le thème visuel global (dark/light/dracula/solarized/nord).
+/** Applique un thème (Sombre, Clair, Office 2007, Contraste ou personnalisé) en posant toutes ses variables CSS sur :root,
+ * puis relance le rendu pour actualiser les couleurs SVG ; un thème retiré (CAP_THEME_ANCIENS) devient son remplaçant.
  * @param {string} name - Clé du thème dans THEMES
  */
 function applyTheme(name) {
+  name = CAP_THEME_ANCIENS[name] || name;   // 🌊 Marine / 🌿 Nature retirés → 🌙 Sombre
   const t = THEMES[name];
   if (!t) return;
+  const sel = document.getElementById('theme-sel'); if (sel && sel.value !== name && sel.querySelector(`option[value="${name}"]`)) sel.value = name;
   currentTheme = name;
   document.documentElement.dataset.theme = name; // permet des styles propres à un thème (ex. Office 2007)
   document.documentElement.dataset.tone = capIsLight() ? 'light' : 'dark'; // règles communes aux thèmes clairs

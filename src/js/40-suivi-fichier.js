@@ -78,6 +78,22 @@ function capWatchSetSource(file, handle, text){
   capWatchUpdateUi();
 }
 
+/** Change les réglages du suivi (⚙ Préférences ou menu 🔄) et les enregistre avec la barre (_capNav.watch, bloc cap-toolbar).
+ * @param {{auto?:boolean, period?:number, onFocus?:boolean}} o - Réglages modifiés
+ */
+function capWatchCfgSet(o){
+  ['auto','period','onFocus'].forEach(k=>{ if(o[k]!==undefined) _capWatch[k]=o[k]; });
+  if(typeof _capNav!=='undefined'&&_capNav){ _capNav.watch={auto:_capWatch.auto, period:_capWatch.period, onFocus:_capWatch.onFocus}; capNavSave(); }
+  capWatchArm();
+}
+
+/** Reprend les réglages du suivi enregistrés avec la barre (appelé au chargement de la page et après ⚙ Charger une interface). */
+function capWatchCfgLoad(){
+  const c=typeof _capNav!=='undefined'&&_capNav&&_capNav.watch; if(!c) return;
+  ['auto','period','onFocus'].forEach(k=>{ if(c[k]!==undefined) _capWatch[k]=c[k]; });
+  capWatchArm();
+}
+
 /** (Ré)arme la vérification périodique selon les réglages. */
 function capWatchArm(){
   clearInterval(_capWatch.timer); _capWatch.timer=null;
@@ -415,9 +431,9 @@ function capWatchMenuRender(){
     else if(a==='last'||a==='orig') capWatchOpenCompare(a);
     else if(a==='pick') capWatchPickNewVersion();
   });
-  dd.querySelector('[data-wm="auto"]').onchange=e=>{ w.auto=e.target.checked; capWatchArm(); };
-  dd.querySelector('[data-wm="period"]').onchange=e=>{ w.period=+e.target.value; capWatchArm(); };
-  dd.querySelector('[data-wm="focus"]').onchange=e=>{ w.onFocus=e.target.checked; };
+  dd.querySelector('[data-wm="auto"]').onchange=e=>capWatchCfgSet({auto:e.target.checked});
+  dd.querySelector('[data-wm="period"]').onchange=e=>capWatchCfgSet({period:+e.target.value});
+  dd.querySelector('[data-wm="focus"]').onchange=e=>capWatchCfgSet({onFocus:e.target.checked});
 }
 
 /** Ferme la fenêtre du delta. */

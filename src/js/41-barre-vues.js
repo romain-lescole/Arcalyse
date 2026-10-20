@@ -265,8 +265,8 @@ function capNavMenu(g, anchor){
         watch:()=>setTimeout(()=>capWatchMenu(true),0),   // 🔄 Suivi du fichier (40) : après la fermeture de ce menu par le même clic
         help:()=>openHelpModal(), prefs:()=>capPrefDialog(), autosave:()=>capPrefDialog('save'), checks:()=>capChkDialog(), xport:()=>capExportToggle(), xlsx:()=>capXlsxClasseur(),
         theme:()=>capNavMenu('theme', document.getElementById('b-prefs')), tour:()=>capTourStart(), tourview:()=>capTourStartView(), tourrev:()=>capTourRevue(), tourscr:()=>capTourScripts(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
-      if(e.target.closest('[data-reset]')){ const au=_capNav.auto, ic=_capNav.icons; _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT));
-        if(au) _capNav.auto=au; if(ic) _capNav.icons=ic;   // ⚙ enregistrement automatique et style de la barre conservés
+      if(e.target.closest('[data-reset]')){ const keep=['auto','icons','watch','xport'].filter(k=>_capNav[k]!==undefined).map(k=>[k,_capNav[k]]);
+        _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); keep.forEach(([k,v])=>_capNav[k]=v);   // ⚙ enregistrement, style, suivi, exports conservés
         capNavSave(); capNavRender(); capNavMenuFill(); }
     });
   }
