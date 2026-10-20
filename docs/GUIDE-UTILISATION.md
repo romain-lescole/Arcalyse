@@ -114,19 +114,19 @@ Sans modèle ouvert, la barre se réduit à 📁 Fichier, ❓ Aide et ⚙. Quand
 
 ### 3.2 Menus des vues, épingles et Ctrl+K
 
-Chaque menu est rangé en **sections** :
+Les vues proches sont réunies en **familles** : une seule entrée de menu, puis une **barre de famille** sous la barre principale pour passer d'une vue de la famille à l'autre.
 
 | 🏗 Architecture ▾ | ✅ Vérifier ▾ | 💬 Revue & documents ▾ |
 |---|---|---|
-| *Fonctions & échanges* : ƒ Fonctions, ƒ⇆ Functional Exchange, 🟨 Operational Analysis | 💚 Santé & contrôles | 💬 Commentaires (panneau de revue) |
-| *Composants & interfaces* : 🧱 System Component, 🧱 Logical Component, 🔀 Behavior Exchange, 🔌 Physical Link, 🧩 Ports | 🧬 Traçabilité inter-couches, ⇶ Liens entre couches | ☑ Check-lists & plans de revue |
-| *Chaînes & scénarios* : ⚡ Chaînes, 🎬 Scénarios | 📋 Exigences, 🏷 Propriétés, ⛓ Contraintes | 📑 Faire relire (dossiers de relecture) |
-| *Comportement et déploiement* : 🚦 Modes & états, 🎯 Capacités & missions, 🗃 Données & interfaces, 🖧 Déploiement & EPBS | ⚖ Comparaison de versions, 🔖 Statut de revue | 📘 Rapports automatiques, 📐 Tableau de bord |
+| **ƒ Fonctions & échanges** : ƒ Fonctions, ƒ⇆ échanges fonctionnels, 🟨 activités OA | 💚 Santé & contrôles | 💬 Commentaires (panneau de revue) |
+| **🧱 Composants & interfaces** : SA · System Component, LA · Logical Component, PA · Behavior Exchange, PA · Physical Link, 🧩 Ports | **🧬 Traçabilité entre couches** : tableau de traçabilité, ⇶ graphe des réalisations | ☑ Check-lists & plans de revue |
+| **⚡ Chaînes & scénarios** : ⚡ Chaînes, 🎬 Scénarios | 📋 Exigences, **🏷 Propriétés & contraintes** (propriétés PVMT, ⛓ contraintes) | 📑 Faire relire (dossiers de relecture) |
+| 🚦 Modes & états, 🎯 Capacités & missions, 🗃 Données & interfaces, 🖧 Déploiement & EPBS | ⚖ Comparaison de versions, 🔖 Statut de revue | 📘 Rapports automatiques, 📐 Tableau de bord |
 | *Explorer* : 🗺 Relation Map, 🌳 Arborescence ; *Complet* : ▦ Cartes, 📖 Index des types, 🔗 Liens | *Avancé (Complet)* : 🏷 Catégories d'échanges, 📦 REC / RPL, 📚 Bibliothèques | *Complet* : 📜 Scripts |
 
-En mode **Essentiel**, les vues marquées *Complet* n'apparaissent pas dans les menus ; une ligne « ➕ n vue(s) avancée(s) en mode Complet » en bas du menu bascule en mode Complet. Elles restent accessibles par la recherche.
+Une famille s'ouvre sur la dernière vue utilisée. **Couche commune** : 🧱 Composants & interfaces a une puce par couche (SA, LA, PA comportement, PA nœuds) ; ƒ Fonctions & échanges et ⚡ Chaînes & scénarios ont un sélecteur **Couche** (Toutes, OA, SA, LA, PA, EPBS). La couche choisie est **mémorisée** (avec la page) et reprise d'une famille à l'autre : choisir LA dans 🧱 puis ouvrir ƒ Fonctions & échanges affiche les fonctions LA. À droite de la barre de famille, la pastille 🩺 mène aux contrôles de la vue dans 💚 Santé & contrôles. Chaque vue reste trouvable seule par la recherche 🔍 et peut être épinglée (📌).
 
-Quand une vue d'une section est ouverte (par exemple 🧱 System Component), une **rangée d'onglets de section** sous la barre passe directement aux autres vues de la section (Logical Component, Behavior Exchange, Physical Link, Ports).
+En mode **Essentiel**, les vues marquées *Complet* n'apparaissent pas dans les menus ; une ligne « ➕ n vue(s) avancée(s) en mode Complet » en bas du menu bascule en mode Complet. Elles restent accessibles par la recherche.
 
 Dans chaque menu, l'icône **📌** à droite d'une vue l'**épingle** : elle devient un bouton direct de la barre (un second clic la retire). Par défaut, les boutons directs sont 🏠 Accueil, 🔲 Diagrammes et ▤ Tableau.
 
@@ -766,7 +766,7 @@ Troisième présentation de ⚡ Chaînes (à côté de ▦ Diagrammes et 🗺 Vu
 
 ## 9. 📡 Flux & interfaces
 
-Vues d'interfaces, du fonctionnel au physique, accessibles par le menu **🏗 Architecture ▾** (sections *Fonctions & échanges* : ƒ⇆ Functional Exchange, 🟨 Operational Analysis ; *Composants & interfaces* : 🧱 System Component, 🧱 Logical Component, 🔀 Behavior Exchange, 🔌 Physical Link, 🧩 Ports ; *Chaînes & scénarios* : 🎬 Scénarios ; *Explorer* : 🔗 Liens, mode Complet) ou par la rangée d'onglets de section.
+Vues d'interfaces, du fonctionnel au physique, accessibles par le menu **🏗 Architecture ▾** (familles *ƒ Fonctions & échanges* : ƒ⇆ échanges fonctionnels, 🟨 activités OA ; *🧱 Composants & interfaces* : System Component, Logical Component, Behavior Exchange, Physical Link, 🧩 Ports ; *⚡ Chaînes & scénarios* : 🎬 Scénarios ; *Explorer* : 🔗 Liens, mode Complet) et par la barre de famille.
 
 **Organisation commune** à ƒ⇆, 🟨, 🧱, 🔀 et 🔌 : chaque vue s'ouvre en **◧ Vue Blocs** (rendu façon Capella, navigation d'un bloc à l'autre) et propose aussi **≡ Vue Ligne**, **▣ Vue Composant / Fonction / Activité**, **▦ Matrice** N² et **🩺 Contrôles**. Les commandes de chaque barre sont **entourées par catégorie** (vues, filtres et champs, exports) et restent visibles en haut lors du défilement.
 
@@ -1180,7 +1180,7 @@ Vue **graphique** des réalisations entre couches : une colonne par couche (OA �
 
 **Porte d'entrée unique des contrôles** (✅ Vérifier › 💚 Santé & contrôles). On y arrive aussi depuis chaque vue, la liste étant alors filtrée sur cette vue :
 
-- la pastille **🩺 n contrôle(s) en défaut → 💚** à droite des onglets de section (vues d'interfaces, chaînes et scénarios) ;
+- la pastille **🩺 n contrôle(s) en défaut → 💚** à droite des barres de famille (fonctions, composants, chaînes et scénarios, propriétés) ;
 - le bouton **💚 Santé & contrôles** en tête de chaque onglet 🩺 Contrôles, à côté de 🩺 Profil.
 
 Dans l'onglet 📋 Contrôles × couches : puces **Vue** (Toutes, ou une vue avec son nombre de contrôles en défaut), case **En défaut seulement** (cochée par défaut : les contrôles qui ont des lignes, les plus fréquents d'abord) et, sur chaque ligne, **Ouvrir ↗** : la vue s'ouvre sur son onglet 🩺 Contrôles, section du contrôle dépliée et mise en évidence.

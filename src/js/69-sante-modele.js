@@ -141,6 +141,9 @@ function capSanteCarte(){
     <div class="hm-row"><button class="cap-lf-btn" data-nav="ana:sante" title="${_L('Détail contrôle par contrôle et par couche, historique')}">📊 ${_L('Détail')}</button><button class="cap-lf-btn" data-a="sante-profil" title="${_L('Activer ou désactiver des contrôles, gravités, seuils')}">🩺 ${_L('Profil')}</button><button class="cap-lf-btn" data-a="sante-hide" title="${_L('Masquer cette carte (⚙ Disposer › Masquées pour la réafficher)')}" style="margin-left:auto">✕ ${_L('Masquer')}</button></div>`;
 }
 
+/** Vues qui ont des contrôles comptés par 💚 Santé (clés de capSanteVueCle) : la pastille 🩺 des barres de famille ne s'affiche que pour elles. */
+const CAP_SANTE_VUES=['functions','fex','csys','ports','chains','scen','compex','physlink','ana:reqs','ana:pvmt','ana:data','ana:cts','ana:cats','ana:libs','ana:rec','ana:deploy','ana:status','ana:caps','ana:states'];
+
 /** Filtre demandé à l'ouverture de 💚 Santé depuis une vue (pastille, bouton 💚 des contrôles) : {vue} ou null. */
 var _capSantePend=null;
 

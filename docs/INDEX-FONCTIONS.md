@@ -583,30 +583,36 @@
 - `capWatchShowDelta` (l. 452) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
 - `capWatchShowHistory` (l. 532) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 442 lignes
+## 41-barre-vues.js — 528 lignes
 
-- `CAP_NAV_ITEMS` (l. 11) — Catalogue des vues : k = clé (vue capShowView, « ana:… » pour une sous-vue de 🔬 Analyses, « home:… » pour un onglet
-- `CAP_NAV_GROUPS` (l. 56) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
-- `CAP_NAV_DEFAULT` (l. 62) — Réglage par défaut : boutons directs 🏠 Accueil, 🔲 Diagrammes, ▤ Tableau ; niveau Essentiel (v3 : réglage de la refonte 3.0).
-- `capNavMigrate` (l. 71) — Met à jour un réglage de barre enregistré avant la refonte 3.0 : niveau Expert → Complet, Simplifié ou Personnalisé
-- `capNavVides` (l. 87) — Vues sans données dans le modèle ouvert (pas de scénario, d'exigence, de bibliothèque…) : clés de CAP_NAV_ITEMS.
-- `capNavEff` (l. 114) — Réglage effectivement appliqué à la barre selon le niveau ⚙ (Essentiel ou Complet) et le réglage « vues vides masquées ».
-- `capNavSetMode` (l. 122) — Change le niveau d'affichage des menus.
-- `capNavTogglePin` (l. 130) — Épingle ou retire une vue de la barre (bouton direct) ; une vue épinglée reste aussi dans son menu.
-- `capNavLbl` (l. 141) — Bouton de la barre : icône, puis libellé masqué en mode ⚙ « icônes seules » (nom complet en infobulle).
-- `capNavFit` (l. 150) — Icônes seules dans la barre : toujours si l'utilisateur les a choisies (⚙), sinon automatiquement
-- `capNavSave` (l. 160) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
-- `capNavCurKey` (l. 171) — Clé de la vue affichée (« ana:… » pour une sous-vue de 🔬 Analyses, « home:… » pour un onglet de 🏠 Accueil,
-- `capNavOpen` (l. 183) — Ouvre une vue du catalogue, ou exécute une commande (« @… »).
-- `capNavFluxTabs` (l. 198) — Onglets de section sous la barre (ex. Composants & interfaces : System Component, Logical Component…) :
-- `capNavRender` (l. 211) — Reconstruit les boutons de la barre des vues : boutons directs (épingles), menus, champ de recherche, niveau.
-- `capNavSync` (l. 239) — Met à jour l'état actif des boutons de la barre (vue affichée, menu qui la contient).
-- `capNavClose` (l. 257) — Ferme le menu déroulant de la barre des vues.
-- `capNavRow` (l. 268) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
-- `capNavMenu` (l. 279) — Ouvre le menu déroulant d'un groupe, d'une commande de droite (Fichier, Aide, ⚙…) ou de la recherche (☰ : résultats
-- `capNavSearchWire` (l. 317) — Branche le champ 🔍 de la barre : saisie = résultats dans le menu ☰, flèches pour choisir, Entrée pour ouvrir.
-- `capNavMenuFill` (l. 336) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
-- `capNavSections` (l. 408) — Lignes d'un menu rangées par section (intertitre à chaque changement de section).
+- `CAP_NAV_ITEMS` (l. 14) — Catalogue des vues : k = clé (vue capShowView, « ana:… » pour une sous-vue de 🔬 Analyses, « home:… » pour un onglet
+- `CAP_NAV_GROUPS` (l. 64) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
+- `CAP_NAV_DEFAULT` (l. 70) — Réglage par défaut : boutons directs 🏠 Accueil, 🔲 Diagrammes, ▤ Tableau ; niveau Essentiel (v3 : réglage de la refonte 3.0).
+- `capNavMigrate` (l. 79) — Met à jour un réglage de barre enregistré avant la refonte 3.0 : niveau Expert → Complet, Simplifié ou Personnalisé
+- `capNavVides` (l. 95) — Vues sans données dans le modèle ouvert (pas de scénario, d'exigence, de bibliothèque…) : clés de CAP_NAV_ITEMS.
+- `capNavEff` (l. 122) — Réglage effectivement appliqué à la barre selon le niveau ⚙ (Essentiel ou Complet) et le réglage « vues vides masquées ».
+- `capNavSetMode` (l. 131) — Change le niveau d'affichage des menus.
+- `capNavTogglePin` (l. 139) — Épingle ou retire une vue de la barre (bouton direct) ; une vue épinglée reste aussi dans son menu.
+- `capNavLbl` (l. 150) — Bouton de la barre : icône, puis libellé masqué en mode ⚙ « icônes seules » (nom complet en infobulle).
+- `capNavFit` (l. 159) — Icônes seules dans la barre : toujours si l'utilisateur les a choisies (⚙), sinon automatiquement
+- `capNavSave` (l. 169) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capNavCurKey` (l. 180) — Clé de la vue affichée (« ana:… » pour une sous-vue de 🔬 Analyses, « home:… » pour un onglet de 🏠 Accueil,
+- `capNavOpen` (l. 192) — Ouvre une vue du catalogue, ou exécute une commande (« @… »).
+- `CAP_NAV_COUCHE_VUE` (l. 207) — Couche propre aux vues qui n'en montrent qu'une (🧱 SA / LA, PA, 🟨 OA) : sert à mémoriser la couche choisie.
+- `capNavCoucheLue` (l. 213) — Couche affichée par une vue ('' = toutes), lue dans l'état de la vue.
+- `capNavCoucheDispo` (l. 227) — Vrai si une vue a des éléments dans une couche (pour n'imposer une couche que si elle montre quelque chose).
+- `capNavCouchePose` (l. 241) — Applique la couche mémorisée (_capNav.couche, '' = toutes) à la vue affichée, si elle a un filtre de couche
+- `capNavCoucheSet` (l. 256) — Choisit la couche commune (sélecteur de la barre de famille) : mémorisée avec la barre, appliquée à la vue affichée.
+- `capNavGroupOpen` (l. 263) — Ouvre une famille de vues : la vue de la couche mémorisée (🧱), sinon la dernière ouverte, sinon la première qui a des données.
+- `capNavFluxTabs` (l. 274) — Barre de famille sous la barre principale (ex. 🧱 Composants & interfaces : SA · System Component, LA · Logical Component…) :
+- `capNavRender` (l. 292) — Reconstruit les boutons de la barre des vues : boutons directs (épingles), menus, champ de recherche, niveau.
+- `capNavSync` (l. 320) — Met à jour l'état actif des boutons de la barre (vue affichée, menu qui la contient).
+- `capNavClose` (l. 338) — Ferme le menu déroulant de la barre des vues.
+- `capNavRow` (l. 349) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
+- `capNavMenu` (l. 360) — Ouvre le menu déroulant d'un groupe, d'une commande de droite (Fichier, Aide, ⚙…) ou de la recherche (☰ : résultats
+- `capNavSearchWire` (l. 398) — Branche le champ 🔍 de la barre : saisie = résultats dans le menu ☰, flèches pour choisir, Entrée pour ouvrir.
+- `capNavMenuFill` (l. 417) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+- `capNavSections` (l. 489) — Lignes d'un menu rangées par section (intertitre à chaque changement de section).
 
 ## 42-tableaux-analyses.js — 157 lignes
 
@@ -624,7 +630,7 @@
 
 - `CAP_TOUR_STEPS` (l. 12) — Étapes de la visite générale : s = sélecteur CSS de la zone (toutes les correspondances visibles sont encadrées
 - `CAP_TOUR_EXPLORE` (l. 57) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
-- `CAP_TOUR_FLUX` (l. 72) — Étape commune aux vues qui ont des onglets de section sous la barre (Fonctions & échanges, Composants & interfaces, Chaînes & scénarios).
+- `CAP_TOUR_FLUX` (l. 72) — Étape commune aux vues d'une famille (barre de famille sous la barre principale).
 - `CAP_TOUR_ANA_TXT` (l. 75) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
 - `capTourRmCtx` (l. 89) — Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
 - `CAP_TOUR_VIEWS` (l. 103) — Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
@@ -1338,7 +1344,7 @@
 - `capStDetail` (l. 145) — Section « Statut de revue Capella » du panneau de détail ('' si l'élément n'en a pas).
 - `capStDashCatalog` (l. 156) — Indicateurs du tableau de bord : statut de revue Capella.
 
-## 69-sante-modele.js — 240 lignes
+## 69-sante-modele.js — 243 lignes
 
 - `CAP_SANTE_W` (l. 9)
 - `CAP_SANTE_MAX_HIST` (l. 10)
@@ -1355,11 +1361,12 @@
 - `capSanteSpark` (l. 119) — Petite courbe SVG de l'historique des scores. @param {object[]} H - Historique @param {number} [w=140] @param {number} [h=28] @returns {stri
 - `capSanteDate` (l. 126) — Date courte d'une entrée d'historique. @param {string} iso @returns {string}
 - `capSanteCarte` (l. 129) — Carte 💚 Santé du modèle de 🏠 Accueil. @returns {string} HTML
-- `capSanteVueCle` (l. 151) — Clé de vue sous laquelle 💚 Santé range les contrôles d'une vue (🧱 LA avec 🧱 SA, 🟨 OA avec ƒ⇆).
-- `capSanteOuvrir` (l. 156) — Ouvre ✅ Vérifier › 💚 Santé & contrôles filtrée sur les contrôles d'une vue (contrôles en défaut).
-- `capSanteAller` (l. 166) — Ouvre la vue d'un contrôle sur son onglet 🩺 Contrôles et déplie la section du contrôle.
-- `capRenderSante` (l. 188) — Sous-vue 💚 Santé du modèle de 🔬 Analyses : synthèse, contrôle × couche, historique.
-- `capSanteDashCatalog` (l. 224) — Indicateurs du tableau de bord : santé du modèle.
+- `CAP_SANTE_VUES` (l. 145) — Vues qui ont des contrôles comptés par 💚 Santé (clés de capSanteVueCle) : la pastille 🩺 des barres de famille ne s'affiche que pour elles.
+- `capSanteVueCle` (l. 154) — Clé de vue sous laquelle 💚 Santé range les contrôles d'une vue (🧱 LA avec 🧱 SA, 🟨 OA avec ƒ⇆).
+- `capSanteOuvrir` (l. 159) — Ouvre ✅ Vérifier › 💚 Santé & contrôles filtrée sur les contrôles d'une vue (contrôles en défaut).
+- `capSanteAller` (l. 169) — Ouvre la vue d'un contrôle sur son onglet 🩺 Contrôles et déplie la section du contrôle.
+- `capRenderSante` (l. 191) — Sous-vue 💚 Santé du modèle de 🔬 Analyses : synthèse, contrôle × couche, historique.
+- `capSanteDashCatalog` (l. 227) — Indicateurs du tableau de bord : santé du modèle.
 
 ## 70-chaines-controles.js — 83 lignes
 

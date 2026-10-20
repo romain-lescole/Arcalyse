@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 6701 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 6709 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -2918,132 +2918,140 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 12 | 🏠 Accueil | 🏠 Home |
-| 12 | Accueil du projet : informations, check-lists, plans de revue, tableaux blancs (texte, diagrammes et éléments cliquables) | Project home: information, checklists, review plans, whiteboards (text, clickable diagrams and elements) |
-| 13 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
-| 13 | 🔲 Diagrammes | 🔲 Diagrams |
-| 14 | ▤ Tableau | ▤ Table |
-| 14 | Tableau de tous les éléments du modèle : onglets de vues, colonnes d'attributs, de relations et par chemin, tri, filtres, export CSV | Table of all model elements: view tabs, attribute, relation and path columns, sort, filters, CSV export |
-| 16 | ƒ Fonctions | ƒ Functions |
-| 16 | Fonctions & échanges | Functions & exchanges |
-| 16 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier | Functions: hierarchy, table, traceability, metrics, checks, file |
-| 17 | ƒ⇆ Functional Exchange | ƒ⇆ Functional Exchange |
-| 17 | Fonctions & échanges | Functions & exchanges |
-| 17 | Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles | Exchanges between functions: rows, by function, Capella-style blocks with pins, matrix, checks |
-| 18 | 🟨 Operational Analysis | 🟨 Operational Analysis |
-| 18 | Fonctions & échanges | Functions & exchanges |
-| 19 | 🧱 System Component | 🧱 System Component |
-| 19 | Composants & interfaces | Components & interfaces |
-| 20 | 🧱 Logical Component | 🧱 Logical Component |
-| 20 | Composants & interfaces | Components & interfaces |
-| 21 | 🔀 Behavior Exchange | 🔀 Behavior Exchange |
-| 21 | Composants & interfaces | Components & interfaces |
-| 21 | Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange) | PA-layer Component Exchanges between Physical Components Behavior, and with connected actors (formerly 🔀 Component Exchange) |
-| 22 | 🔌 Physical Link | 🔌 Physical Link |
-| 22 | Composants & interfaces | Components & interfaces |
-| 23 | 🧩 Ports | 🧩 Ports |
-| 23 | Composants & interfaces | Components & interfaces |
-| 23 | Traçabilité Function Port ↔ Component Port ↔ Physical Port | Function Port ↔ Component Port ↔ Physical Port traceability |
-| 24 | ⚡ Chaînes | ⚡ Chains |
-| 24 | Chaînes & scénarios | Chains & scenarios |
-| 25 | 🎬 Scénarios | 🎬 Scenarios |
-| 25 | Chaînes & scénarios | Chains & scenarios |
-| 25 | Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références | Sequence diagrams of Capella scenarios (ES, FS, OES, OAS, IS): lifelines, messages, executions, states, modes and functions, combined fragments, references |
-| 26 | 🚦 Modes & états | 🚦 Modes & states |
-| 26 | Comportement et déploiement | Behaviour and deployment |
-| 27 | 🎯 Capacités & missions | 🎯 Capabilities & missions |
-| 27 | Comportement et déploiement | Behaviour and deployment |
-| 28 | 🗃 Données & interfaces | 🗃 Data & interfaces |
-| 28 | Comportement et déploiement | Behaviour and deployment |
-| 29 | 🖧 Déploiement & EPBS | 🖧 Deployment & EPBS |
-| 29 | Comportement et déploiement | Behaviour and deployment |
-| 29 | Comportements déployés sur les nœuds physiques (PartDeploymentLink), Configuration Items de l'EPBS et ce qu'ils réalisent, contrôles | Behaviours deployed on physical nodes (PartDeploymentLink), EPBS Configuration Items and what they realize, checks |
-| 30 | 🗺 Relation Map | 🗺 Relation Map |
-| 30 | Explorer | Explore |
-| 30 | Graphe interactif des éléments et de leurs relations : voisinage, dépliage, disposition, export en image | Interactive graph of elements and their relations: neighbourhood, expansion, layout, image export |
-| 31 | 🌳 Arborescence | 🌳 Tree |
-| 31 | Explorer | Explore |
-| 32 | ▦ Cartes | ▦ Cards |
-| 32 | Explorer | Explore |
-| 33 | 📖 Index des types | 📖 Type index |
-| 33 | Explorer | Explore |
-| 34 | 🔗 Liens | 🔗 Links |
-| 34 | Explorer | Explore |
-| 34 | Relations entre les éléments du modèle | Relations between model elements |
-| 36 | 💚 Santé & contrôles | 💚 Health & checks |
-| 36 | Score global et par couche bâti sur tous les contrôles (🩺 profil), détail contrôle × couche, historique des versions | Overall and per-layer score built on all checks (🩺 profile), check × layer detail, version history |
-| 37 | 🧬 Traçabilité inter-couches | 🧬 Cross-layer traceability |
-| 38 | ⇶ Liens entre couches | ⇶ Cross-layer links |
-| 38 | ⇶ Couches | ⇶ Layers |
-| 38 | Vue graphique des réalisations entre couches (OA → SA → LA → PA → EPBS) : fonctions, chaînes et leurs fonctions, capacités, composants… | Graphical view of the realizations between layers (OA → SA → LA → PA → EPBS): functions, chains and their functions, capabilities, components… |
-| 39 | 📋 Exigences | 📋 Requirements |
-| 40 | 🏷 Propriétés | 🏷 Properties |
-| 41 | ⛓ Contraintes | ⛓ Constraints |
-| 42 | ⚖ Comparaison de versions | ⚖ Version comparison |
-| 43 | 🔖 Statut de revue | 🔖 Review status |
-| 43 | Statut (DRAFT, TO BE REVIEWED, REVIEWED…) et commentaire de revue Capella de chaque élément : liste, répartition, contrôles | Status (DRAFT, TO BE REVIEWED, REVIEWED…) and Capella review comment of each element: list, breakdown, checks |
-| 44 | 🏷 Catégories d'échanges | 🏷 Exchange categories |
-| 44 | Avancé | Advanced |
-| 44 | ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory : échanges par catégorie, taux de catégorisation, contrôles | ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory: exchanges per category, categorization rate, checks |
-| 45 | 📦 REC / RPL | 📦 REC / RPL |
-| 45 | Avancé | Advanced |
-| 45 | Éléments réutilisables : REC (gabarits) et RPL (répliques), comparaison élément par élément, écarts, contrôles | Reusable elements: REC (templates) and RPL (replicas), element-by-element comparison, differences, checks |
-| 46 | 📚 Bibliothèques | 📚 Libraries |
-| 46 | Avancé | Advanced |
-| 46 | Références vers d'autres fichiers .capella (bibliothèques) : par bibliothèque, par référence, chargement des bibliothèques pour résoudre les cibles, contrôles | References to other .capella files (libraries): per library, per reference, loading the libraries to resolve the targets, checks |
-| 48 | @revue | (inchangé, hors _L) |
-| 48 | 💬 Commentaires | 💬 Comments |
-| 48 | Panneau 💬 Revue : commentaires sur le modèle et les diagrammes, vérification après mise à jour, rapport, envoi de commentaires à relire | 💬 Review panel: comments on the model and diagrams, check after an update, report, sending comments out for review |
-| 49 | ☑ Check-lists & plans de revue | ☑ Checklists & review plans |
-| 49 | Check-lists et plans de revue (🏠 Accueil) : modèles ARCADIA ou vierges, points liés aux diagrammes et aux éléments, export | Checklists and review plans (🏠 Home): ARCADIA or blank templates, items linked to diagrams and elements, export |
-| 50 | 📑 Faire relire | 📑 Send for review |
-| 51 | 📘 Rapports automatiques | 📘 Automatic reports |
-| 51 | 📘 Rapports | 📘 Reports |
-| 51 | Rapports produits à partir du modèle selon un plan type (spécification boîte noire, dossier de conception boîte blanche, SSS / SSDD), modifiables, exportables en HTML à commenter ou en Word | Reports produced from the model following a standard outline (black-box specification, white-box design file, SSS / SSDD), editable, exportable as HTML to comment on or as Word |
-| 52 | 📐 Tableau de bord | 📐 Dashboard |
-| 52 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux | Custom dashboards: indicators, charts, tables |
-| 53 | @scripts | (inchangé, hors _L) |
-| 53 | 📜 Scripts | 📜 Scripts |
-| 53 | Console de scripts : parcourir et analyser le modèle avec l'API, comme les macros de Catia Magic (Alt+4) | Script console: browse and analyse the model with the API, like Catia Magic macros (Alt+4) |
-| 57 | 🏗 Architecture | 🏗 Architecture |
-| 58 | ✅ Vérifier | ✅ Check |
-| 58 | Le modèle est-il juste et complet ? Santé du modèle et contrôles, traçabilité, exigences, propriétés, contraintes, comparaison de versions, statut de revue | Is the model correct and complete? Model health and checks, traceability, requirements, properties, constraints, version comparison, review status |
-| 59 | 💬 Revue & documents | 💬 Review & documents |
-| 59 | Relire et produire : commentaires, check-lists et plans de revue, dossiers à faire relire, rapports automatiques, tableaux de bord | Review and produce: comments, checklists and review plans, files to send for review, automatic reports, dashboards |
-| 124 | ⚙ Menus : Complet (toutes les vues) | ⚙ Menus: Full (all views) |
-| 124 | ⚙ Menus : Essentiel (vues avancées masquées, accessibles par la recherche) | ⚙ Menus: Essential (advanced views hidden, available through search) |
-| 206 | Contrôles de cette vue dans ✅ Vérifier › 💚 Santé & contrôles | Checks of this view in ✅ Check › 💚 Health & checks |
-| 206 | contrôle(s) en défaut | … failing check(s) |
-| 206 | Contrôles sans défaut | No failing check |
-| 206 | Contrôles | Checks |
-| 224 | 🔍 Ctrl K | 🔍 Ctrl K |
-| 230 | Essentiel | Essential Full |
-| 230 | Complet | Essential Full |
-| 247 | Vue affichée : | Displayed view: |
-| 270 | (absent de ce modèle) | (not in this model) |
-| 270 | (mode Complet) | (Full mode) |
-| 271 | Retirer de la barre | Remove from the bar |
-| 271 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
-| 347 | 🔄 Suivi du fichier… | 🔄 File watch…… |
-| 348 | 💾 Enregistrer | 💾 Save… 💾 Save as…… 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 349 | 💾 Enregistrer sous… | 💾 Save… 💾 Save as…… 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 349 | Ctrl+S | Ctrl+S |
-| 350 | 🌐 Télécharger la page HTML 📗 Classeur Excel des analyses La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 💾 Save… 💾 Save as…… 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
-| 350 | Ctrl+Maj+S | Ctrl+Maj+S |
-| 362 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
-| 364 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
-| 365 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
-| 366 | 💬 Visite de la revue | 💬 Review tour |
-| 367 | 📜 Visite des scripts | 📜 Scripts tour |
-| 368 | ℹ À propos | ℹ About |
-| 375 | 🎨 Personnaliser… | 🎨 Customize… |
-| 380 | vue(s) avancée(s) en mode Complet | ➕ … advanced view(s) in Full mode |
-| 381 | vue(s) sans données dans ce modèle, retirée(s) du menu (⚙ Préférences › Affichage). | … view(s) without data in this model, removed from the menu (⚙ Preferences › Display). |
-| 382 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
-| 390 | Vues | Views |
-| 391 | Aucune vue, aucun élément ni diagramme ne correspond. | No view, element or diagram matches. |
-| 396 | Boutons directs | Direct buttons |
-| 398 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Les vues du mode Complet restent accessibles ici et par la recherche. Réglage enregistré avec la 💾 Page HTML. | ↺ Restore the default bar 📌 = direct button in the toolbar. Full-mode views remain available here and through search. Setting saved with the 💾 HTML page. |
+| 15 | 🏠 Accueil | 🏠 Home |
+| 15 | Accueil du projet : informations, check-lists, plans de revue, tableaux blancs (texte, diagrammes et éléments cliquables) | Project home: information, checklists, review plans, whiteboards (text, clickable diagrams and elements) |
+| 16 | 🔲 Diagrammes Capella | 🔲 Capella diagrams |
+| 16 | 🔲 Diagrammes | 🔲 Diagrams |
+| 17 | ▤ Tableau | ▤ Table |
+| 17 | Tableau de tous les éléments du modèle : onglets de vues, colonnes d'attributs, de relations et par chemin, tri, filtres, export CSV | Table of all model elements: view tabs, attribute, relation and path columns, sort, filters, CSV export |
+| 19 | ƒ Fonctions & échanges | ƒ Functions & exchanges |
+| 19 | Fonctions (hiérarchie, tableau, traçabilité, métriques, contrôles), échanges fonctionnels en blocs, lignes et matrice, activités opérationnelles (OA) | Functions (hierarchy, table, traceability, metrics, checks), functional exchanges as blocks, rows and matrix, operational activities (OA) |
+| 20 | 🧱 Composants & interfaces | 🧱 Components & interfaces |
+| 20 | Composants en blocs à ports par couche (SA, LA, PA comportement, PA nœuds et Physical Links), échanges entre composants, traçabilité des ports | Components as port blocks per layer (SA, LA, PA behaviour, PA nodes and Physical Links), exchanges between components, port traceability |
+| 21 | ⚡ Chaînes & scénarios | ⚡ Chains & scenarios |
+| 22 | ƒ Fonctions | ƒ Functions |
+| 22 | Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier | Functions: hierarchy, table, traceability, metrics, checks, file |
+| 23 | ƒ⇆ Functional Exchange | ƒ⇆ Functional Exchange |
+| 23 | ƒ⇆ Échanges fonctionnels | ƒ⇆ Functional exchanges |
+| 23 | Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles | Exchanges between functions: rows, by function, Capella-style blocks with pins, matrix, checks |
+| 24 | 🟨 Operational Analysis | 🟨 Operational Analysis |
+| 24 | 🟨 Activités OA | 🟨 OA activities |
+| 25 | 🧱 System Component | 🧱 System Component |
+| 25 | SA · System Component | SA · System Component |
+| 26 | 🧱 Logical Component | 🧱 Logical Component |
+| 26 | LA · Logical Component | LA · Logical Component |
+| 27 | 🔀 Behavior Exchange | 🔀 Behavior Exchange |
+| 27 | PA · Behavior Exchange | PA · Behavior Exchange |
+| 27 | Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange) | PA-layer Component Exchanges between Physical Components Behavior, and with connected actors (formerly 🔀 Component Exchange) |
+| 28 | 🔌 Physical Link | 🔌 Physical Link |
+| 28 | PA · Physical Link | PA · Physical Link |
+| 29 | 🧩 Ports | 🧩 Ports |
+| 29 | Traçabilité Function Port ↔ Component Port ↔ Physical Port | Function Port ↔ Component Port ↔ Physical Port traceability |
+| 30 | ⚡ Chaînes | ⚡ Chains |
+| 31 | 🎬 Scénarios | 🎬 Scenarios |
+| 31 | Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références | Sequence diagrams of Capella scenarios (ES, FS, OES, OAS, IS): lifelines, messages, executions, states, modes and functions, combined fragments, references |
+| 32 | 🚦 Modes & états | 🚦 Modes & states |
+| 33 | 🎯 Capacités & missions | 🎯 Capabilities & missions |
+| 34 | 🗃 Données & interfaces | 🗃 Data & interfaces |
+| 35 | 🖧 Déploiement & EPBS | 🖧 Deployment & EPBS |
+| 35 | Comportements déployés sur les nœuds physiques (PartDeploymentLink), Configuration Items de l'EPBS et ce qu'ils réalisent, contrôles | Behaviours deployed on physical nodes (PartDeploymentLink), EPBS Configuration Items and what they realize, checks |
+| 36 | 🗺 Relation Map | 🗺 Relation Map |
+| 36 | Explorer | Explore |
+| 36 | Graphe interactif des éléments et de leurs relations : voisinage, dépliage, disposition, export en image | Interactive graph of elements and their relations: neighbourhood, expansion, layout, image export |
+| 37 | 🌳 Arborescence | 🌳 Tree |
+| 37 | Explorer | Explore |
+| 38 | ▦ Cartes | ▦ Cards |
+| 38 | Explorer | Explore |
+| 39 | 📖 Index des types | 📖 Type index |
+| 39 | Explorer | Explore |
+| 40 | 🔗 Liens | 🔗 Links |
+| 40 | Explorer | Explore |
+| 40 | Relations entre les éléments du modèle | Relations between model elements |
+| 42 | 💚 Santé & contrôles | 💚 Health & checks |
+| 42 | Score global et par couche bâti sur tous les contrôles (🩺 profil), détail contrôle × couche, historique des versions | Overall and per-layer score built on all checks (🩺 profile), check × layer detail, version history |
+| 43 | 🧬 Traçabilité entre couches | 🧬 Cross-layer traceability |
+| 43 | Réalisations entre couches OA → SA → LA → PA → EPBS : tableau de couverture et chemins, ou graphe des réalisations | Realizations between layers OA → SA → LA → PA → EPBS: coverage table and paths, or realization graph |
+| 44 | 🧬 Traçabilité inter-couches | 🧬 Cross-layer traceability |
+| 44 | 🧬 Tableau de traçabilité | 🧬 Traceability table |
+| 45 | ⇶ Liens entre couches | ⇶ Cross-layer links |
+| 45 | ⇶ Couches | ⇶ Layers |
+| 45 | ⇶ Graphe des réalisations | ⇶ Realization graph |
+| 45 | Vue graphique des réalisations entre couches (OA → SA → LA → PA → EPBS) : fonctions, chaînes et leurs fonctions, capacités, composants… | Graphical view of the realizations between layers (OA → SA → LA → PA → EPBS): functions, chains and their functions, capabilities, components… |
+| 46 | 📋 Exigences | 📋 Requirements |
+| 47 | 🏷 Propriétés | 🏷 Properties |
+| 47 | 🏷 Propriétés (PVMT) | 🏷 Properties (PVMT) |
+| 48 | ⛓ Contraintes | ⛓ Constraints |
+| 49 | 🏷 Propriétés & contraintes | 🏷 Properties & constraints |
+| 49 | Propriétés PVMT (groupes, valeurs, définitions) et contraintes (expressions, éléments contraints) | PVMT properties (groups, values, definitions) and constraints (expressions, constrained elements) |
+| 50 | ⚖ Comparaison de versions | ⚖ Version comparison |
+| 51 | 🔖 Statut de revue | 🔖 Review status |
+| 51 | Statut (DRAFT, TO BE REVIEWED, REVIEWED…) et commentaire de revue Capella de chaque élément : liste, répartition, contrôles | Status (DRAFT, TO BE REVIEWED, REVIEWED…) and Capella review comment of each element: list, breakdown, checks |
+| 52 | 🏷 Catégories d'échanges | 🏷 Exchange categories |
+| 52 | Avancé | Advanced |
+| 52 | ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory : échanges par catégorie, taux de catégorisation, contrôles | ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory: exchanges per category, categorization rate, checks |
+| 53 | 📦 REC / RPL | 📦 REC / RPL |
+| 53 | Avancé | Advanced |
+| 53 | Éléments réutilisables : REC (gabarits) et RPL (répliques), comparaison élément par élément, écarts, contrôles | Reusable elements: REC (templates) and RPL (replicas), element-by-element comparison, differences, checks |
+| 54 | 📚 Bibliothèques | 📚 Libraries |
+| 54 | Avancé | Advanced |
+| 54 | Références vers d'autres fichiers .capella (bibliothèques) : par bibliothèque, par référence, chargement des bibliothèques pour résoudre les cibles, contrôles | References to other .capella files (libraries): per library, per reference, loading the libraries to resolve the targets, checks |
+| 56 | @revue | (inchangé, hors _L) |
+| 56 | 💬 Commentaires | 💬 Comments |
+| 56 | Panneau 💬 Revue : commentaires sur le modèle et les diagrammes, vérification après mise à jour, rapport, envoi de commentaires à relire | 💬 Review panel: comments on the model and diagrams, check after an update, report, sending comments out for review |
+| 57 | ☑ Check-lists & plans de revue | ☑ Checklists & review plans |
+| 57 | Check-lists et plans de revue (🏠 Accueil) : modèles ARCADIA ou vierges, points liés aux diagrammes et aux éléments, export | Checklists and review plans (🏠 Home): ARCADIA or blank templates, items linked to diagrams and elements, export |
+| 58 | 📑 Faire relire | 📑 Send for review |
+| 59 | 📘 Rapports automatiques | 📘 Automatic reports |
+| 59 | 📘 Rapports | 📘 Reports |
+| 59 | Rapports produits à partir du modèle selon un plan type (spécification boîte noire, dossier de conception boîte blanche, SSS / SSDD), modifiables, exportables en HTML à commenter ou en Word | Reports produced from the model following a standard outline (black-box specification, white-box design file, SSS / SSDD), editable, exportable as HTML to comment on or as Word |
+| 60 | 📐 Tableau de bord | 📐 Dashboard |
+| 60 | Tableaux de bord personnalisés : indicateurs, graphiques, tableaux | Custom dashboards: indicators, charts, tables |
+| 61 | @scripts | (inchangé, hors _L) |
+| 61 | 📜 Scripts | 📜 Scripts |
+| 61 | Console de scripts : parcourir et analyser le modèle avec l'API, comme les macros de Catia Magic (Alt+4) | Script console: browse and analyse the model with the API, like Catia Magic macros (Alt+4) |
+| 65 | 🏗 Architecture | 🏗 Architecture |
+| 66 | ✅ Vérifier | ✅ Check |
+| 66 | Le modèle est-il juste et complet ? Santé du modèle et contrôles, traçabilité, exigences, propriétés, contraintes, comparaison de versions, statut de revue | Is the model correct and complete? Model health and checks, traceability, requirements, properties, constraints, version comparison, review status |
+| 67 | 💬 Revue & documents | 💬 Review & documents |
+| 67 | Relire et produire : commentaires, check-lists et plans de revue, dossiers à faire relire, rapports automatiques, tableaux de bord | Review and produce: comments, checklists and review plans, files to send for review, automatic reports, dashboards |
+| 133 | ⚙ Menus : Complet (toutes les vues) | ⚙ Menus: Full (all views) |
+| 133 | ⚙ Menus : Essentiel (vues avancées masquées, accessibles par la recherche) | ⚙ Menus: Essential (advanced views hidden, available through search) |
+| 281 | (absent de ce modèle) | (not in this model) |
+| 283 | Couche commune aux vues de la famille (mémorisée d'une vue à l'autre) | Layer shared by the views of the family (kept from one view to another) |
+| 283 | Couche | Layer |
+| 284 | Toutes | All |
+| 287 | Contrôles de cette vue dans ✅ Vérifier › 💚 Santé & contrôles | Checks of this view in ✅ Check › 💚 Health & checks |
+| 287 | contrôle(s) en défaut | … failing check(s) |
+| 287 | Contrôles sans défaut | No failing check |
+| 287 | Contrôles | Checks |
+| 305 | 🔍 Ctrl K | 🔍 Ctrl K |
+| 311 | Essentiel | Essential Full |
+| 311 | Complet | Essential Full |
+| 328 | Vue affichée : | Displayed view: |
+| 351 | (absent de ce modèle) | (not in this model) |
+| 351 | (mode Complet) | (Full mode) |
+| 352 | Retirer de la barre | Remove from the bar |
+| 352 | Épingler dans la barre (bouton direct) | Pin to the bar (direct button) |
+| 428 | 🔄 Suivi du fichier… | 🔄 File watch…… |
+| 429 | 💾 Enregistrer | 💾 Save… 💾 Save as…… 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 430 | 💾 Enregistrer sous… | 💾 Save… 💾 Save as…… 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 430 | Ctrl+S | Ctrl+S |
+| 431 | 🌐 Télécharger la page HTML 📗 Classeur Excel des analyses La page HTML enregistrée contient : le modèle chargé et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, tableaux blancs), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue. Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues. ⚙ Enregistrer l'interface et les vues… ⚙ Charger une interface et des vues… Pour réutiliser vos réglages avec un autre modèle ou une nouvelle version de la page. | 💾 Save… 💾 Save as…… 🌐 Download the HTML page 📗 Excel workbook of the analyses The saved HTML page contains: the loaded model and its diagrams (.aird), 🏠 the home (project sheet, checklists, review plans, whiteboards), the views bar (menus, pins), the dashboards, the ▤ Table tabs and columns, the theme, the naming rules and the 💬 Review comments. Not kept: the version loaded for ⚖ Comparison, the filters of the other views. ⚙ Save the interface and views… ⚙ Load an interface and views… To reuse your settings with another model or a new version of the page. |
+| 431 | Ctrl+Maj+S | Ctrl+Maj+S |
+| 443 | 📖 Aide complète 🎓 Visite guidée | 📖 Full help 🎓 Guided tour |
+| 445 | 🎯 Visite de cette vue | 🎯 Tour of this view … |
+| 446 | 🎯 Chargez un modèle pour la visite de chaque vue. | 🎯 Load a model for the tour of each view. |
+| 447 | 💬 Visite de la revue | 💬 Review tour |
+| 448 | 📜 Visite des scripts | 📜 Scripts tour |
+| 449 | ℹ À propos | ℹ About |
+| 456 | 🎨 Personnaliser… | 🎨 Customize… |
+| 461 | vue(s) avancée(s) en mode Complet | ➕ … advanced view(s) in Full mode |
+| 462 | vue(s) sans données dans ce modèle, retirée(s) du menu (⚙ Préférences › Affichage). | … view(s) without data in this model, removed from the menu (⚙ Preferences › Display). |
+| 463 | 📌 épingle une vue en bouton direct dans la barre. | 📌 pins a view as a direct button in the bar. |
+| 471 | Vues | Views |
+| 472 | Aucune vue, aucun élément ni diagramme ne correspond. | No view, element or diagram matches. |
+| 477 | Boutons directs | Direct buttons |
+| 479 | ↺ Rétablir la barre par défaut 📌 = bouton direct dans la barre. Les vues du mode Complet restent accessibles ici et par la recherche. Réglage enregistré avec la 💾 Page HTML. | ↺ Restore the default bar 📌 = direct button in the toolbar. Full-mode views remain available here and through search. Setting saved with the 💾 HTML page. |
 
 ## js/42-tableaux-analyses.js
 
@@ -3104,7 +3112,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 67 | Limite l'affichage à une couche ARCADIA ( Tous pour les réafficher). ⬇ CSV exporte les éléments affichés. | Limits the display to one ARCADIA layer ( All to show them all again). ⬇ CSV export the displayed elements. |
 | 68 | 🔢 Résultat | 🔢 Result |
 | 69 | Nombre d'éléments qui passent les filtres (types, recherche, couche). | Number of elements passing the filters (types, search, layer). |
-| 72 | 🗂 Onglets de section | 🗂 Section tabs |
+| 72 | 🗂 Barre de famille | 🗂 Family bar |
 | 76 | 💚 Santé & contrôles : la porte d'entrée unique des contrôles — score global et par couche, puces Vue et case En défaut seulement , et Ouvrir ↗ sur chaque ligne pour aller au contrôle dans sa vue. Les pastilles 🩺 des vues mènent ici, filtrées. | 💚 Health & checks : the single entry point for checks — overall and per-layer score, View chips and Failing only , and Open ↗ on each row to go to the check in its view. The 🩺 pills of the views lead here, filtered. |
 | 77 | 🧬 Traçabilité inter-couches : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés. | 🧬 Cross-layer traceability : coverage of OA → SA → LA → PA realizations (functions, components, exchanges), traceability paths and links, with the unrealized elements. |
 | 78 | 🎯 Capacités & missions : qui participe à quelle capacité ou mission (acteurs, fonctions, chaînes) et les capacités sans contenu. | 🎯 Capabilities & missions : who takes part in which capability or mission (actors, functions, chains) and the capabilities without content. |
@@ -6303,69 +6311,69 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 141 | Profil | Profile |
 | 141 | Masquer cette carte (⚙ Disposer › Masquées pour la réafficher) | Hide this card (⚙ Arrange › Hidden to show it again) |
 | 141 | Masquer | Hide |
-| 196 | Vue | View |
-| 196 | Toutes | All |
-| 198 | Seulement les contrôles qui ont des lignes, triés par nombre de lignes | Only checks that have rows, sorted by number of rows |
-| 198 | En défaut seulement | Failing only |
-| 199 | Ouvrir l'onglet 🩺 Contrôles de la vue, sur ce contrôle | Open the view's 🩺 Checks tab, on this check |
-| 199 | Ouvrir ↗ | Open ↗ |
-| 200 | Score | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
-| 200 | = 100 × e −(Σ poids × lignes ÷ | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
-| 200 | éléments nommés) , poids ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profil) : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
-| 200 | point(s) à vérifier dont | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
-| 200 | contrôles sans anomalie. Le score par couche ne compte que les contrôles calculables par couche (fonctions, échanges fonctionnels, composants, chaînes). | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
-| 200 | — couches décochées : | — unticked layers: … (their rows and their … elements do not count) |
-| 200 | (leurs lignes et leurs | — unticked layers: … (their rows and their … elements do not count) |
-| 200 | éléments ne comptent pas) | — unticked layers: … (their rows and their … elements do not count) |
-| 203 | Vue | View |
-| 203 | Contrôle | Check |
-| 203 | Gravité | Severity |
-| 205 | Couche | Layer |
-| 205 | Score | Score |
-| 205 | Points à vérifier | Points to check |
-| 205 | Bloquants | Blocking |
-| 205 | Éléments nommés | Named elements |
-| 205 | Contrôles par couche | Per-layer checks |
-| 207 | Décochez une vue pour masquer ses contrôles du score (réglage conservé avec le projet). | Untick a view to hide its checks from the score (setting kept with the project). |
-| 207 | Comptée | Counted |
-| 207 | Vue | View |
-| 207 | Contrôles | Checks |
-| 207 | Sans anomalie | Without anomaly |
-| 207 | Points à vérifier | Points to check |
-| 207 | Bloquants | Blocking |
-| 207 | Décochée : contrôles de la vue masqués du score | Unticked: the checks of the view are hidden from the score |
-| 210 | Date | Date |
-| 210 | Fichier | File |
-| 210 | Éléments | Elements |
-| 210 | Score | Score |
-| 210 | Points | Items |
+| 199 | Vue | View |
+| 199 | Toutes | All |
+| 201 | Seulement les contrôles qui ont des lignes, triés par nombre de lignes | Only checks that have rows, sorted by number of rows |
+| 201 | En défaut seulement | Failing only |
+| 202 | Ouvrir l'onglet 🩺 Contrôles de la vue, sur ce contrôle | Open the view's 🩺 Checks tab, on this check |
+| 202 | Ouvrir ↗ | Open ↗ |
+| 203 | Score | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 203 | = 100 × e −(Σ poids × lignes ÷ | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 203 | éléments nommés) , poids ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profil) : 0,1 anomalie par élément ≈ 90, 0,36 ≈ 70. | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 203 | point(s) à vérifier dont | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 203 | contrôles sans anomalie. Le score par couche ne compte que les contrôles calculables par couche (fonctions, échanges fonctionnels, composants, chaînes). | Score {1} / 100 ({2}) {3} = 100 × e −(Σ weight × rows ÷ {4} named elements) , weights ℹ 0 · ⚠ 1 · ✖ 3 (🩺 profile): 0.1 anomaly per element ≈ 90, 0.36 ≈ 70. {5} point(s) to check including {6} blocking; {7} for information; {8} / {9} checks without anomaly. The per-layer score only counts the checks that can be computed per layer (functions, functional exchanges, components, chains). |
+| 203 | — couches décochées : | — unticked layers: … (their rows and their … elements do not count) |
+| 203 | (leurs lignes et leurs | — unticked layers: … (their rows and their … elements do not count) |
+| 203 | éléments ne comptent pas) | — unticked layers: … (their rows and their … elements do not count) |
+| 206 | Vue | View |
+| 206 | Contrôle | Check |
+| 206 | Gravité | Severity |
+| 208 | Couche | Layer |
+| 208 | Score | Score |
+| 208 | Points à vérifier | Points to check |
+| 208 | Bloquants | Blocking |
+| 208 | Éléments nommés | Named elements |
+| 208 | Contrôles par couche | Per-layer checks |
+| 210 | Décochez une vue pour masquer ses contrôles du score (réglage conservé avec le projet). | Untick a view to hide its checks from the score (setting kept with the project). |
+| 210 | Comptée | Counted |
+| 210 | Vue | View |
+| 210 | Contrôles | Checks |
+| 210 | Sans anomalie | Without anomaly |
+| 210 | Points à vérifier | Points to check |
 | 210 | Bloquants | Blocking |
-| 212 | 📋 Contrôles × couches | 📋 Checks × layers |
-| 212 | ▦ Par vue | ▦ Per view |
-| 212 | 📈 Historique | 📈 History |
-| 212 | Vue, contrôle… | View, check… |
-| 213 | Couches comptées dans le score global (décocher = exclure) | Layers counted in the overall score (untick = exclude) |
-| 213 | Couches | Layers |
-| 214 | Activer ou désactiver des contrôles, gravités, seuils | Enable or disable checks, severities, thresholds |
-| 214 | Profil | Profile |
-| 217 | Vue | View |
-| 217 | Contrôle | Check |
-| 217 | Gravité | Severity |
-| 217 | Lignes | Rows |
-| 225 | Santé du modèle | Model health |
-| 226 | sante.score | (inchangé, hors _L) |
-| 226 | Santé du modèle — score | Model health — score |
-| 226 | 100 × e^(−Σ poids × lignes des contrôles ÷ éléments nommés) | 100 × e^(−Σ weight × check rows ÷ named elements) |
-| 227 | sante.pts | (inchangé, hors _L) |
-| 227 | Santé du modèle — points à vérifier | Model health — points to check |
-| 228 | sante.err | (inchangé, hors _L) |
-| 228 | Santé du modèle — points bloquants | Model health — blocking points |
-| 229 | sante.layer | (inchangé, hors _L) |
-| 229 | Santé du modèle — score par couche | Model health — score per layer |
-| 230 | sante.vue | (inchangé, hors _L) |
-| 230 | Santé du modèle — points à vérifier par vue | Model health — points to check per view |
-| 231 | sante.hist | (inchangé, hors _L) |
-| 231 | Santé du modèle — historique des scores | Model health — score history |
+| 210 | Décochée : contrôles de la vue masqués du score | Unticked: the checks of the view are hidden from the score |
+| 213 | Date | Date |
+| 213 | Fichier | File |
+| 213 | Éléments | Elements |
+| 213 | Score | Score |
+| 213 | Points | Items |
+| 213 | Bloquants | Blocking |
+| 215 | 📋 Contrôles × couches | 📋 Checks × layers |
+| 215 | ▦ Par vue | ▦ Per view |
+| 215 | 📈 Historique | 📈 History |
+| 215 | Vue, contrôle… | View, check… |
+| 216 | Couches comptées dans le score global (décocher = exclure) | Layers counted in the overall score (untick = exclude) |
+| 216 | Couches | Layers |
+| 217 | Activer ou désactiver des contrôles, gravités, seuils | Enable or disable checks, severities, thresholds |
+| 217 | Profil | Profile |
+| 220 | Vue | View |
+| 220 | Contrôle | Check |
+| 220 | Gravité | Severity |
+| 220 | Lignes | Rows |
+| 228 | Santé du modèle | Model health |
+| 229 | sante.score | (inchangé, hors _L) |
+| 229 | Santé du modèle — score | Model health — score |
+| 229 | 100 × e^(−Σ poids × lignes des contrôles ÷ éléments nommés) | 100 × e^(−Σ weight × check rows ÷ named elements) |
+| 230 | sante.pts | (inchangé, hors _L) |
+| 230 | Santé du modèle — points à vérifier | Model health — points to check |
+| 231 | sante.err | (inchangé, hors _L) |
+| 231 | Santé du modèle — points bloquants | Model health — blocking points |
+| 232 | sante.layer | (inchangé, hors _L) |
+| 232 | Santé du modèle — score par couche | Model health — score per layer |
+| 233 | sante.vue | (inchangé, hors _L) |
+| 233 | Santé du modèle — points à vérifier par vue | Model health — points to check per view |
+| 234 | sante.hist | (inchangé, hors _L) |
+| 234 | Santé du modèle — historique des scores | Model health — score history |
 
 ## js/70-chaines-controles.js
 

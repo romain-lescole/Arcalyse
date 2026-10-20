@@ -68,9 +68,9 @@ var CAP_TOUR_EXPLORE=[
   {s:'#cap-result-count', t:_L('🔢 Résultat'),
    x:_L('Nombre d\'éléments qui passent les filtres (types, recherche, couche).')}
 ];
-/** Étape commune aux vues qui ont des onglets de section sous la barre (Fonctions & échanges, Composants & interfaces, Chaînes & scénarios). */
-var CAP_TOUR_FLUX={s:'#cap-flux-tabs', t:_L('🗂 Onglets de section'),
-  x:_L('Ces onglets passent d\'une vue à l\'autre de la même section du menu : pour <b>Composants & interfaces</b>, 🧱 System Component (SA), 🧱 Logical Component (LA), 🔀 Behavior Exchange (PA), 🔌 Physical Link (PA) et 🧩 Ports ; pour <b>Fonctions & échanges</b>, ƒ Fonctions, ƒ⇆ Functional Exchange et 🟨 Operational Analysis.')};
+/** Étape commune aux vues d'une famille (barre de famille sous la barre principale). */
+var CAP_TOUR_FLUX={s:'#cap-flux-tabs', t:_L('🗂 Barre de famille'),
+  x:_L('Les vues d\'une même famille du menu, réunies : pour <b>🧱 Composants & interfaces</b>, une puce par couche (SA, LA, PA comportement, PA nœuds) et 🧩 Ports ; pour <b>ƒ Fonctions & échanges</b> et <b>⚡ Chaînes & scénarios</b>, un sélecteur de <b>couche commun</b>, mémorisé d\'une vue à l\'autre (la couche choisie dans 🧱 est reprise par ƒ). À droite, la pastille 🩺 mène aux contrôles de la vue dans 💚 Santé.')};
 /** Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »). */
 var CAP_TOUR_ANA_TXT={
   sante:_L('<b>💚 Santé & contrôles</b> : la porte d\'entrée unique des contrôles — score global et par couche, puces <b>Vue</b> et case <b>En défaut seulement</b>, et <b>Ouvrir ↗</b> sur chaque ligne pour aller au contrôle dans sa vue. Les pastilles 🩺 des vues mènent ici, filtrées.'),

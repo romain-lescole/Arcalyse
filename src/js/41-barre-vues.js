@@ -6,27 +6,33 @@
  * Essentiel / Complet (le mode Complet ajoute les vues marquées x). Réglage enregistré dans la page (bloc JSON cap-toolbar).
  */
 /** Catalogue des vues : k = clé (vue capShowView, « ana:… » pour une sous-vue de 🔬 Analyses, « home:… » pour un onglet
- * de 🏠 Accueil, « @… » pour une commande), l = libellé, g = menu ('' = bouton direct), s = section du menu,
- * x = mode Complet seulement, tb = onglets de section sous la barre, t = info-bulle. */
+ * de 🏠 Accueil, « @… » pour une commande, « grp:… » pour une famille de vues fusionnées), l = libellé, g = menu ('' = bouton
+ * direct), s = section du menu, x = mode Complet seulement, t = info-bulle.
+ * Familles (refonte 3.0, lot 5) : f = vues de la famille (une seule entrée dans le menu, barre de famille sous la barre),
+ * cc = sélecteur de couche commun, pc = vue ouverte selon la couche mémorisée ; une vue membre porte m (sa famille) et
+ * c (libellé de sa puce dans la barre de famille) et n'apparaît plus seule dans les menus (recherche, épingles et ☰ la gardent). */
 var CAP_NAV_ITEMS=[
   {k:'home',      l:_L('🏠 Accueil'),           g:'',     t:_L('Accueil du projet : informations, check-lists, plans de revue, tableaux blancs (texte, diagrammes et éléments cliquables)')},
   {k:'diag',      l:_L('🔲 Diagrammes Capella'), p:_L('🔲 Diagrammes'), g:'', t:_L('Diagrammes Capella du projet (.aird), dessinés comme dans Capella : liste, recherche, mini-carte, filtres, chaînes, exports ; clic sur un élément → son détail')},
   {k:'table',     l:_L('▤ Tableau'),            g:'',     t:_L('Tableau de tous les éléments du modèle : onglets de vues, colonnes d\'attributs, de relations et par chemin, tri, filtres, export CSV')},
   // 🏗 Architecture
-  {k:'functions', l:_L('ƒ Fonctions'),          g:'arch', s:_L('Fonctions & échanges'), tb:1, t:_L('Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier')},
-  {k:'fex',       l:_L('ƒ⇆ Functional Exchange'), g:'arch', s:_L('Fonctions & échanges'), tb:1, t:_L('Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles')},
-  {k:'oav',       l:_L('🟨 Operational Analysis'), g:'arch', s:_L('Fonctions & échanges'), tb:1, t:_L('Activités opérationnelles (OA) en blocs façon Capella, avec leurs interactions et l\'entité ou l\'acteur qui les porte ; vue par activité, lignes, matrice, contrôles')},
-  {k:'csys',      l:_L('🧱 System Component'), i:'🧱<sub class="tb-ico-l">SA</sub>', g:'arch', s:_L('Composants & interfaces'), tb:1, t:_L('System Components (SA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles')},
-  {k:'cblk',      l:_L('🧱 Logical Component'), i:'🧱<sub class="tb-ico-l">LA</sub>', g:'arch', s:_L('Composants & interfaces'), tb:1, t:_L('Logical Components (LA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles')},
-  {k:'compex',    l:_L('🔀 Behavior Exchange'), g:'arch', s:_L('Composants & interfaces'), tb:1, t:_L('Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange)')},
-  {k:'physlink',  l:_L('🔌 Physical Link'),     g:'arch', s:_L('Composants & interfaces'), tb:1},
-  {k:'ports',     l:_L('🧩 Ports'),             g:'arch', s:_L('Composants & interfaces'), tb:1, t:_L('Traçabilité Function Port ↔ Component Port ↔ Physical Port')},
-  {k:'chains',    l:_L('⚡ Chaînes'),           g:'arch', s:_L('Chaînes & scénarios'), tb:1},
-  {k:'scen',      l:_L('🎬 Scénarios'),        g:'arch', s:_L('Chaînes & scénarios'), tb:1, t:_L('Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références')},
-  {k:'ana:states',l:_L('🚦 Modes & états'),            g:'arch', s:_L('Comportement et déploiement')},
-  {k:'ana:caps',  l:_L('🎯 Capacités & missions'),     g:'arch', s:_L('Comportement et déploiement')},
-  {k:'ana:data',  l:_L('🗃 Données & interfaces'),     g:'arch', s:_L('Comportement et déploiement')},
-  {k:'ana:deploy',l:_L('🖧 Déploiement & EPBS'),       g:'arch', s:_L('Comportement et déploiement'), t:_L('Comportements déployés sur les nœuds physiques (PartDeploymentLink), Configuration Items de l\'EPBS et ce qu\'ils réalisent, contrôles')},
+  {k:'grp:fonc',  l:_L('ƒ Fonctions & échanges'),   g:'arch', f:['functions','fex','oav'], cc:1, t:_L('Fonctions (hiérarchie, tableau, traçabilité, métriques, contrôles), échanges fonctionnels en blocs, lignes et matrice, activités opérationnelles (OA)')},
+  {k:'grp:comp',  l:_L('🧱 Composants & interfaces'), g:'arch', f:['csys','cblk','compex','physlink','ports'], pc:{SA:'csys', LA:'cblk', PA:'compex'}, t:_L('Composants en blocs à ports par couche (SA, LA, PA comportement, PA nœuds et Physical Links), échanges entre composants, traçabilité des ports')},
+  {k:'grp:chsc',  l:_L('⚡ Chaînes & scénarios'),     g:'arch', f:['chains','scen'], cc:1, t:_L('Chaînes fonctionnelles, processus opérationnels et chemins physiques ; scénarios (diagrammes de séquence)')},
+  {k:'functions', l:_L('ƒ Fonctions'),          m:'grp:fonc', c:_L('ƒ Fonctions'), g:'arch', t:_L('Fonctions : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier')},
+  {k:'fex',       l:_L('ƒ⇆ Functional Exchange'), m:'grp:fonc', c:_L('ƒ⇆ Échanges fonctionnels'), g:'arch', t:_L('Échanges entre fonctions : lignes, par fonction, blocs à pins façon Capella, matrice, contrôles')},
+  {k:'oav',       l:_L('🟨 Operational Analysis'), m:'grp:fonc', c:_L('🟨 Activités OA'), g:'arch', t:_L('Activités opérationnelles (OA) en blocs façon Capella, avec leurs interactions et l\'entité ou l\'acteur qui les porte ; vue par activité, lignes, matrice, contrôles')},
+  {k:'csys',      l:_L('🧱 System Component'), i:'🧱<sub class="tb-ico-l">SA</sub>', m:'grp:comp', c:_L('SA · System Component'), g:'arch', t:_L('System Components (SA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles')},
+  {k:'cblk',      l:_L('🧱 Logical Component'), i:'🧱<sub class="tb-ico-l">LA</sub>', m:'grp:comp', c:_L('LA · Logical Component'), g:'arch', t:_L('Logical Components (LA) en blocs façon Capella : Component Ports UNSET / IN / OUT / INOUT, échanges, composants distants ; vue par composant, lignes, matrice, contrôles')},
+  {k:'compex',    l:_L('🔀 Behavior Exchange'), m:'grp:comp', c:_L('PA · Behavior Exchange'), g:'arch', t:_L('Component Exchanges de la couche PA entre Physical Components Behavior, et avec les acteurs reliés (anciennement 🔀 Component Exchange)')},
+  {k:'physlink',  l:_L('🔌 Physical Link'),     m:'grp:comp', c:_L('PA · Physical Link'), g:'arch'},
+  {k:'ports',     l:_L('🧩 Ports'),             m:'grp:comp', c:_L('🧩 Ports'), g:'arch', t:_L('Traçabilité Function Port ↔ Component Port ↔ Physical Port')},
+  {k:'chains',    l:_L('⚡ Chaînes'),           m:'grp:chsc', c:_L('⚡ Chaînes'), g:'arch'},
+  {k:'scen',      l:_L('🎬 Scénarios'),        m:'grp:chsc', c:_L('🎬 Scénarios'), g:'arch', t:_L('Diagrammes de séquence des scénarios Capella (ES, FS, OES, OAS, IS) : lignes de vie, messages, exécutions, états, modes et fonctions, fragments combinés, références')},
+  {k:'ana:states',l:_L('🚦 Modes & états'),            g:'arch'},
+  {k:'ana:caps',  l:_L('🎯 Capacités & missions'),     g:'arch'},
+  {k:'ana:data',  l:_L('🗃 Données & interfaces'),     g:'arch'},
+  {k:'ana:deploy',l:_L('🖧 Déploiement & EPBS'),       g:'arch', t:_L('Comportements déployés sur les nœuds physiques (PartDeploymentLink), Configuration Items de l\'EPBS et ce qu\'ils réalisent, contrôles')},
   {k:'@rm',       l:_L('🗺 Relation Map'),      g:'arch', s:_L('Explorer'), t:_L('Graphe interactif des éléments et de leurs relations : voisinage, dépliage, disposition, export en image')},
   {k:'tree',      l:_L('🌳 Arborescence'),      g:'arch', s:_L('Explorer')},
   {k:'cards',     l:_L('▦ Cartes'),             g:'arch', s:_L('Explorer'), x:1},
@@ -34,11 +40,13 @@ var CAP_NAV_ITEMS=[
   {k:'links',     l:_L('🔗 Liens'),             g:'arch', s:_L('Explorer'), x:1, t:_L('Relations entre les éléments du modèle')},
   // ✅ Vérifier
   {k:'ana:sante', l:_L('💚 Santé & contrôles'),          g:'verif', t:_L('Score global et par couche bâti sur tous les contrôles (🩺 profil), détail contrôle × couche, historique des versions')},
-  {k:'ana:trace', l:_L('🧬 Traçabilité inter-couches'), g:'verif'},
-  {k:'ana:xlay',  l:_L('⇶ Liens entre couches'),       p:_L('⇶ Couches'), g:'verif', t:_L('Vue graphique des réalisations entre couches (OA → SA → LA → PA → EPBS) : fonctions, chaînes et leurs fonctions, capacités, composants…')},
+  {k:'grp:trac',  l:_L('🧬 Traçabilité entre couches'), g:'verif', f:['ana:trace','ana:xlay'], t:_L('Réalisations entre couches OA → SA → LA → PA → EPBS : tableau de couverture et chemins, ou graphe des réalisations')},
+  {k:'ana:trace', l:_L('🧬 Traçabilité inter-couches'), m:'grp:trac', c:_L('🧬 Tableau de traçabilité'), g:'verif'},
+  {k:'ana:xlay',  l:_L('⇶ Liens entre couches'),       p:_L('⇶ Couches'), m:'grp:trac', c:_L('⇶ Graphe des réalisations'), g:'verif', t:_L('Vue graphique des réalisations entre couches (OA → SA → LA → PA → EPBS) : fonctions, chaînes et leurs fonctions, capacités, composants…')},
   {k:'ana:reqs',  l:_L('📋 Exigences'),               g:'verif'},
-  {k:'ana:pvmt',  l:_L('🏷 Propriétés'),              g:'verif'},
-  {k:'ana:cts',   l:_L('⛓ Contraintes'),              g:'verif'},
+  {k:'ana:pvmt',  l:_L('🏷 Propriétés'),              m:'grp:prop', c:_L('🏷 Propriétés (PVMT)'), g:'verif'},
+  {k:'ana:cts',   l:_L('⛓ Contraintes'),              m:'grp:prop', c:_L('⛓ Contraintes'), g:'verif'},
+  {k:'grp:prop',  l:_L('🏷 Propriétés & contraintes'), g:'verif', f:['ana:pvmt','ana:cts'], t:_L('Propriétés PVMT (groupes, valeurs, définitions) et contraintes (expressions, éléments contraints)')},
   {k:'ana:diff',  l:_L('⚖ Comparaison de versions'),  g:'verif'},
   {k:'ana:status',l:_L('🔖 Statut de revue'),          g:'verif', t:_L('Statut (DRAFT, TO BE REVIEWED, REVIEWED…) et commentaire de revue Capella de chaque élément : liste, répartition, contrôles')},
   {k:'ana:cats',  l:_L('🏷 Catégories d\'échanges'),   g:'verif', s:_L('Avancé'), x:1, t:_L('ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory : échanges par catégorie, taux de catégorisation, contrôles')},
@@ -113,6 +121,7 @@ function capNavVides(){
  */
 function capNavEff(){
   const m=_capNav.mode==='complet'?'complet':'essentiel', vides=_capNav.vides===false?new Set():capNavVides();
+  CAP_NAV_ITEMS.filter(i=>i.f&&i.f.every(k=>vides.has(k))).forEach(i=>vides.add(i.k));   // famille dont aucune vue n'a de données
   return {mode:m, pins:_capNav.pins, vides, hide:new Set(m==='complet'?[]:[...CAP_NAV_ITEMS.filter(i=>i.x).map(i=>i.k), ...vides])};
 }
 
@@ -185,26 +194,98 @@ function capNavOpen(k){
   if(k==='@rm'){ document.getElementById('mode-rm')?.click(); return; }
   if(k==='@scripts'){ capScrToggle(true); return; }   // 📜 console de scripts (81)
   if(k==='@revue'){ capRevToggle(true); return; }   // 💬 panneau des commentaires (55)
+  if(k.startsWith('grp:')){ const G=CAP_NAV_ITEMS.find(i=>i.k===k); if(G) capNavGroupOpen(G); return; }   // famille de vues (lot 5)
   if(k==='home:rap'||k==='home:dos'){ capDosOuvrir(); return; }   // 📑 dossiers de relecture et 📘 rapports : onglet 📑 de l'accueil
   if(k==='home:docs'){ _capHomeUi.tab='docs'; if(currentMode!=='capella'||capCurrentView!=='home') capShowView('home'); else capHomeRender(); return; }
   if(k.startsWith('ana:')){ capAnaSub=k.slice(4); capShowView('analyses'); }
   else capShowView(k);
 }
 
-/** Onglets de section sous la barre (ex. Composants & interfaces : System Component, Logical Component…) :
- * vues de la même section du menu, affichés quand la vue courante en fait partie (sauf ƒ Fonctions, qui a ses onglets).
+/** Dernière vue ouverte de chaque famille (session) : rouverte par l'entrée de menu de la famille. */
+var _capNavLastGrp={};
+/** Couche propre aux vues qui n'en montrent qu'une (🧱 SA / LA, PA, 🟨 OA) : sert à mémoriser la couche choisie. */
+var CAP_NAV_COUCHE_VUE={csys:'SA', cblk:'LA', compex:'PA', physlink:'PA', oav:'OA'};
+
+/** Couche affichée par une vue ('' = toutes), lue dans l'état de la vue.
+ * @param {string} k - Clé de la vue
+ * @returns {string}
+ */
+function capNavCoucheLue(k){
+  const v=x=>x&&x!=='all'?x:'';
+  if(k==='functions'){ const h=document.querySelector('#cap-view-functions [data-hold="fns"]'); return v(h&&h._fn&&h._fn.layer); }
+  if(k==='fex'){ const c=document.getElementById('cap-view-fex'); return v(c&&c._fex&&c._fex.layer); }
+  if(k==='chains') return v(capChainsLayerFilter);
+  if(k==='scen') return v(_capScState.layer);
+  return CAP_NAV_COUCHE_VUE[k]||'';
+}
+
+/** Vrai si une vue a des éléments dans une couche (pour n'imposer une couche que si elle montre quelque chose).
+ * @param {string} k - Clé de la vue
+ * @param {string} c - Couche
+ * @returns {boolean}
+ */
+function capNavCoucheDispo(k, c){
+  try{
+    if(k==='functions') return capComputeFunctions().list.some(f=>f.layer===c);
+    if(k==='fex') return capComputeFunctionalExchanges().list.some(x=>x.layer===c);
+    if(k==='chains') return (capChainsData||(capChainsData=capComputeChains())).some(x=>x.layer===c);
+    if(k==='scen') return capComputeScenarios().list.some(x=>x.layer===c);
+  }catch(e){ /* calcul indisponible */ }
+  return false;
+}
+
+/** Applique la couche mémorisée (_capNav.couche, '' = toutes) à la vue affichée, si elle a un filtre de couche
+ * et des éléments dans cette couche, puis la redessine.
+ * @param {string} k - Clé de la vue
+ */
+function capNavCouchePose(k){
+  const c=_capNav.couche; if(c===undefined||capNavCoucheLue(k)===c||(c&&!capNavCoucheDispo(k,c))) return;
+  const l=c||'all';
+  if(k==='functions'){ const h=document.querySelector('#cap-view-functions [data-hold="fns"]'); if(h&&h._fn){ h._fn.layer=l; capRenderFunctions(h); } }
+  else if(k==='fex'){ const v=document.getElementById('cap-view-fex'); if(v&&v._fex){ v._fex.layer=l; capRenderFunctionalExchange(); } }
+  else if(k==='chains'){ capChainsLayerFilter=l; capRenderChains(); }
+  else if(k==='scen'){ _capScState.layer=l; capRenderScenarios(); }
+  else return;
+  capNavFluxTabs(k);
+}
+
+/** Choisit la couche commune (sélecteur de la barre de famille) : mémorisée avec la barre, appliquée à la vue affichée.
+ * @param {string} c - Couche ('' = toutes)
+ * @param {string} k - Clé de la vue affichée
+ */
+function capNavCoucheSet(c, k){
+  _capNav.couche=c; capNavSave(); capNavCouchePose(k);
+}
+
+/** Ouvre une famille de vues : la vue de la couche mémorisée (🧱), sinon la dernière ouverte, sinon la première qui a des données.
+ * @param {Object} G - Entrée de famille de CAP_NAV_ITEMS
+ */
+function capNavGroupOpen(G){
+  const E=capNavEff(), c=_capNav.couche;
+  const k=(G.pc&&c&&G.pc[c])||_capNavLastGrp[G.k]||G.f.find(x=>!E.vides.has(x))||G.f[0];
+  capNavOpen(k);
+  if(G.cc) capNavCouchePose(k);
+}
+
+/** Barre de famille sous la barre principale (ex. 🧱 Composants & interfaces : SA · System Component, LA · Logical Component…) :
+ * puces des vues de la famille, sélecteur de couche commun (familles cc), pastille des contrôles → 💚 Santé.
  * @param {string} cur - Clé de la vue affichée
  */
 function capNavFluxTabs(cur){
   const bar=document.getElementById('cap-flux-tabs'); if(!bar) return;
-  const E=capNavEff(), it=CAP_NAV_ITEMS.find(i=>i.k===cur);
-  const free=it&&it.tb&&cur!=='functions'?CAP_NAV_ITEMS.filter(i=>i.tb&&i.s===it.s&&(!E.hide.has(i.k)||i.k===cur)):[];
-  bar.style.display=free.length>1?'flex':'none';
-  if(free.length<2) return;
+  const E=capNavEff(), it=CAP_NAV_ITEMS.find(i=>i.k===cur), G=it&&it.m&&CAP_NAV_ITEMS.find(i=>i.k===it.m);
+  bar.style.display=G?'flex':'none';
+  if(!G) return;
+  _capNavLastGrp[G.k]=cur;
+  const puces=G.f.map(k=>{ const i=CAP_NAV_ITEMS.find(x=>x.k===k), v=E.vides.has(k);
+    return `<button class="phl-toggle-btn${k===cur?' active':''}${v?' cap-nav-vide':''}" data-open="${k}" title="${i.l}${i.t?' — '+i.t:''}${v?_L(' (absent de ce modèle)'):''}">${i.c||i.l}</button>`; }).join('');
+  const cl=capNavCoucheLue(cur), fixe=CAP_NAV_COUCHE_VUE[cur];
+  const couche=G.cc?`<span class="tb-grp" title="${_L('Couche commune aux vues de la famille (mémorisée d\'une vue à l\'autre)')}"><span class="tb-grp-l">${_L('Couche')}</span>`+
+    [['',_L('Toutes')],...CAP_ANA_LAYERS.map(l=>[l,l])].map(([l,t])=>`<button class="cap-lf-btn${cl===l?' active':''}" data-couche="${l}"${fixe&&l!==fixe?' disabled':''}>${t}</button>`).join('')+`</span>`:'';
   // Pastille des contrôles de la vue → 💚 Santé filtrée (nombre affiché si les contrôles sont déjà calculés : pas de calcul ici)
   const C=typeof _capAnaCache!=='undefined'&&_capAnaCache.santeChecks, vk=capSanteVueCle(cur), n=C?C.filter(c=>c.view===vk&&c.n>0&&c.sev!=='info').length:-1;
-  const chk=`<button class="cap-lf-btn cap-nav-chk${n>0?' def':''}" onclick="capSanteOuvrir('${cur}')" title="${_L('Contrôles de cette vue dans ✅ Vérifier › 💚 Santé & contrôles')}">🩺 ${n>0?_L(`${n} contrôle(s) en défaut`):n===0?_L('Contrôles sans défaut'):_L('Contrôles')} → 💚</button>`;
-  bar.innerHTML=`<span class="tb-grp"><span class="tb-grp-l">${it.s}</span>${free.map(i=>`<button class="phl-toggle-btn${i.k===cur?' active':''}" data-open="${i.k}" title="${i.t||''}">${i.l}</button>`).join('')}</span><span style="flex:1"></span>${chk}`;   // onglets entourés comme les groupes de ƒ Fonctions
+  const chk=!CAP_SANTE_VUES.includes(vk)?'':`<button class="cap-lf-btn cap-nav-chk${n>0?' def':''}" onclick="capSanteOuvrir('${cur}')" title="${_L('Contrôles de cette vue dans ✅ Vérifier › 💚 Santé & contrôles')}">🩺 ${n>0?_L(`${n} contrôle(s) en défaut`):n===0?_L('Contrôles sans défaut'):_L('Contrôles')} → 💚</button>`;
+  bar.innerHTML=`<span class="cap-fam-t">${G.l}</span><span class="tb-grp">${puces}</span>${couche}<span style="flex:1"></span>${chk}`;
 }
 
 /** Reconstruit les boutons de la barre des vues : boutons directs (épingles), menus, champ de recherche, niveau. */
@@ -239,9 +320,9 @@ function capNavRender(){
 function capNavSync(force){
   if(typeof _capNav==='undefined') return;   // appelé avant le chargement de ce module
   const cur=capNavCurKey(force), it=CAP_NAV_ITEMS.find(i=>i.k===cur), E=capNavEff();
-  document.querySelectorAll('#cap-tb-views [data-open],#cap-tb-home [data-open]').forEach(b=>b.classList.toggle('active',b.dataset.open===cur));
+  document.querySelectorAll('#cap-tb-views [data-open],#cap-tb-home [data-open]').forEach(b=>b.classList.toggle('active',b.dataset.open===cur||(!!it&&b.dataset.open===it.m)));
   document.querySelectorAll('#cap-tb-views .cap-nav-grp').forEach(b=>{
-    const on=!!it&&it.g===b.dataset.g&&!E.pins.includes(cur);
+    const on=!!it&&it.g===b.dataset.g&&!E.pins.includes(cur)&&!(it.m&&E.pins.includes(it.m));
     b.classList.toggle('active',on);
     const G=CAP_NAV_GROUPS.find(x=>x.g===b.dataset.g);
     b.title=(it&&it.g===b.dataset.g?_L('Vue affichée : ')+it.l+'\n':'')+(_capNav.icons?G.l+' — ':'')+G.t;
@@ -375,7 +456,7 @@ function capNavMenuFill(){
       _L(`<div class="cw-m-sep"></div><div class="ctx-i" data-act="themeedit" title="Créer ou modifier un thème personnalisé (toutes les couleurs)">🎨 Personnaliser…</div>`);
     return;
   }
-  if(g!=='☰'){ const E=capNavEff(), all=CAP_NAV_ITEMS.filter(i=>i.g===g), its=all.filter(i=>!E.hide.has(i.k));
+  if(g!=='☰'){ const E=capNavEff(), all=CAP_NAV_ITEMS.filter(i=>i.g===g&&!i.m), its=all.filter(i=>!E.hide.has(i.k));   // vues d'une famille : dans sa barre
     const n=all.filter(i=>i.x&&E.hide.has(i.k)).length, nv=all.filter(i=>!i.x&&E.vides.has(i.k)&&E.hide.has(i.k)).length;
     res.innerHTML=capNavSections(its)+(n?_L(`<div class="ctx-i cap-nav-more" data-lvl="complet" title="Afficher toutes les vues dans les menus">➕ ${n} vue(s) avancée(s) en mode Complet</div>`):'')+
     (nv?_L(`<div class="cap-nav-hint">${nv} vue(s) sans données dans ce modèle, retirée(s) du menu (⚙ Préférences › Affichage).</div>`):'')+
@@ -424,7 +505,12 @@ function capNavSections(its, sub){
   // Menus 📁 Fichier, ❓ Aide et ⚙ (partie droite de la barre), onglets de section
   ['b-file-menu','b-theme-menu','b-help','b-prefs'].forEach(id=>document.getElementById(id)?.addEventListener('click',e=>{
     e.stopPropagation(); capNavMenu(e.currentTarget.dataset.dd, e.currentTarget); }));
-  document.getElementById('cap-flux-tabs')?.addEventListener('click',e=>{ const o=e.target.closest('[data-open]'); if(o) capNavOpen(o.dataset.open); });
+  document.getElementById('cap-flux-tabs')?.addEventListener('click',e=>{
+    const c=e.target.closest('[data-couche]'); if(c){ capNavCoucheSet(c.dataset.couche, capNavCurKey()); return; }
+    const o=e.target.closest('[data-open]'); if(!o) return;
+    const k=o.dataset.open, it=CAP_NAV_ITEMS.find(i=>i.k===k), G=it&&CAP_NAV_ITEMS.find(i=>i.k===it.m);
+    if(CAP_NAV_COUCHE_VUE[k]&&G&&G.pc){ _capNav.couche=CAP_NAV_COUCHE_VUE[k]; capNavSave(); }   // 🧱 : la puce choisit aussi la couche commune
+    capNavOpen(k); if(G&&G.cc) capNavCouchePose(k); });
   document.addEventListener('mousedown',e=>{ if(!e.target.closest('#cap-nav-dd,[data-dd],#cap-nav-cfg')) capNavClose(); });
   document.addEventListener('keydown',e=>{
     if((e.ctrlKey||e.metaKey)&&!e.altKey&&(e.key==='k'||e.key==='K')){ e.preventDefault();
