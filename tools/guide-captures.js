@@ -390,7 +390,8 @@ PARTS.tableaubord = async () => {
  * @returns {string} Chemin du fichier
  */
 function modelV2() {
-  const f = path.join(os.tmpdir(), 'In-Flight_Entertainment_System-v2.capella');
+  const d = path.join(os.tmpdir(), 'arcalyse-v2'); fs.mkdirSync(d, { recursive: true });   // même nom de fichier : pas de confirmation « autre fichier »
+  const f = path.join(d, 'In-Flight_Entertainment_System.capella');
   let t = fs.readFileSync(MODEL, 'utf8');
   t = t.replace(/name="Cabin Terminal"/, 'name="Cabin Terminal Unit"').replace(/name="Media Server"/, 'name="Media Server (MS)"');
   t = t.replace(/name="Play Sound in Cabin"/, 'name="Play Sound in Cabin Area"');
@@ -460,7 +461,7 @@ PARTS.home = async () => {
   await p.click('#cap-view-home [data-a="dispo"]'); await wait(500);
   await shot('05-home-disposer');
   await p.click('#cap-view-home [data-a="dispo"]'); await wait(400);
-  await p.locator('#cap-view-home button:visible', { hasText: 'Check-lists & plans' }).first().click(); await wait(500);
+  await view('home:docs'); await wait(500);   // menu 💬 Revue & documents › ☑ Check-lists & plans de revue
   await p.selectOption('#cap-view-home [data-new="list"]', { index: 2 }); await wait(600);
   await p.locator('#cap-view-home .hm-item input[type=checkbox]').nth(0).check(); await p.locator('#cap-view-home .hm-item input[type=checkbox]').nth(1).check(); await wait(300);
   await shot('05-home-checklist');

@@ -523,6 +523,9 @@ function capNavSections(its, sub){
   // La barre change de largeur (fenêtre, boutons affichés au chargement d'un modèle…) : icônes seules si elle déborde
   { let f=0; const tb=document.getElementById('toolbar');
     if(tb&&window.ResizeObserver) new ResizeObserver(()=>{ cancelAnimationFrame(f); f=requestAnimationFrame(capNavFit); }).observe(tb);
-    window.addEventListener('resize',()=>{ cancelAnimationFrame(f); f=requestAnimationFrame(capNavFit); }); }
+    window.addEventListener('resize',()=>{ cancelAnimationFrame(f); f=requestAnimationFrame(capNavFit); });
+    // Contenu changé sans changement de taille (badge du suivi, compteur de revue…) : une barre passée en icônes seules
+    // lors d'un débordement passager doit retrouver ses libellés
+    if(tb&&window.MutationObserver) new MutationObserver(()=>{ cancelAnimationFrame(f); f=requestAnimationFrame(capNavFit); }).observe(tb, {childList:true, subtree:true, characterData:true, attributes:true, attributeFilter:['style','class']}); }
   capNavRender();
 })();
