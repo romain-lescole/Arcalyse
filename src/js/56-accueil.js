@@ -2,7 +2,7 @@
    🏠 ACCUEIL — page d'accueil du projet (vue affichée à l'ouverture d'un modèle ou d'un projet)
    ───────────────────────────────────────────────────────────────────────
    Trois onglets :
-   • 🏠 Projet : accès rapide aux vues, puis six cartes sur deux lignes, réorganisables (⚙ Disposer : ordre par
+   • 🏠 Projet : en-tête du projet (modèle, .aird, bibliothèques et leur état, vues sans données), « Que voulez-vous faire ? » (six tâches), puis six cartes sur deux lignes, réorganisables (⚙ Disposer : ordre par
      glisser-déposer, largeur, cartes masquées) — projet (fichiers, version de Capella, diagrammes, mises à jour),
      fiche projet modifiable, raccourcis des check-lists et des tableaux blancs, contenu du modèle, revue ;
    • ☑ Check-lists & plans de revue : listes « Nouvelle check-list » et « Nouveau plan de revue » (vide ou modèle
@@ -38,6 +38,7 @@ function capHomeNorm(d){
   const c=d.cartes||{};
   return { v:1, fiche:Object.assign({objet:'', phase:'', version:'', resp:'', equipe:'', notes:''}, d.fiche||{}), docs, boards, dossiers:capDosNorm(d.dossiers),
     cartes:{ordre:Array.isArray(c.ordre)?c.ordre:[], masques:Array.isArray(c.masques)?c.masques:[], larges:c.larges&&typeof c.larges==='object'?c.larges:{}},
+    taches:d.taches!==false,   // section « Que voulez-vous faire ? » de l'onglet 🏠 Projet
     largeurs:d.largeurs&&typeof d.largeurs==='object'?d.largeurs:{}, sante:Array.isArray(d.sante)?d.sante:[], santeExclues:Array.isArray(d.santeExclues)?d.santeExclues:[], santeVuesMasquees:Array.isArray(d.santeVuesMasquees)?d.santeVuesMasquees:[] };   // sante : historique 💚, santeExclues : couches décochées (69)
 }
 /** Identifiant unique (point, section, document, note). @returns {string} */
@@ -144,7 +145,7 @@ function capRenderHome(box){
   else if(u.tab==='board') corps=capHomeBoardHtml(capHomeCurBoard())+capHomePaletteHtml();
   else if(u.tab==='dos') corps=capDosOngletHtml()+capHomePaletteHtml();
   else corps=capHomeProjetHtml();
-  box.innerHTML=`<div class="hm-bar"><span class="tb-grp">${tab('projet',_L('🏠 Projet'),_L('Informations du projet, fiche, contenu du modèle, revue, accès rapide'))}`+
+  box.innerHTML=`<div class="hm-bar"><span class="tb-grp">${tab('projet',_L('🏠 Projet'),_L('Informations du projet, tâches courantes, fiche, contenu du modèle, revue'))}`+
     tab('docs',_L(`☑ Check-lists & plans de revue`)+(nd?` <span class="hm-n">${nd}</span>`:''),_L('Listes à cocher et plans de revue, liés à des diagrammes et des éléments'))+
     tab('board',_L(`🧾 Tableaux blancs`)+(nb?` <span class="hm-n">${nb}</span>`:''),_L('Pages libres : texte, formes, diagrammes et éléments en icônes cliquables'))+
     tab('dos',_L(`📑 Dossiers de relecture`)+(_capHome.dossiers.length?` <span class="hm-n">${_capHome.dossiers.length}</span>`:''),_L('Documents chapitrés à faire relire : descriptions, diagrammes, texte libre ; export HTML à commenter ou Word, réimport des retours'))+`</span>`+
@@ -244,11 +245,10 @@ function capHomeCartesOrdre(){
 /** Onglet 🏠 Projet : cartes (ordre, largeur et cartes masquées réglables par ⚙ Disposer). @returns {string} HTML */
 function capHomeProjetHtml(){
   const u=_capHomeUi, C=_capHome.cartes, all=capHomeCartes(), esc=capEsc;
-  const nav=k=>{ const it=CAP_NAV_ITEMS.find(i=>i.k===k); return it?`<button class="cap-lf-btn" data-nav="${k}" title="${it.t||''}">${it.l}</button>`:''; };
-  let bar=`<div class="hm-dispo"><span class="hm-quick" title="${_L('Accès rapide aux vues')}">${['diag','table','tree','chains','functions','fex','csys','cblk','scen','ana:trace','ana:diff','dashboard'].map(nav).join('')}</span>`+
-    `<span style="flex:1"></span><button class="cap-lf-btn${u.dispo?' active':''}" data-a="dispo" title="${_L('Réorganiser la page : glisser les cartes, largeur, cartes masquées')}">${u.dispo?_L('✔ Terminer la disposition'):_L('⚙ Disposer les cartes')}</button>`;
+  let bar=`<div class="hm-dispo">`+    `<span style="flex:1"></span><button class="cap-lf-btn${u.dispo?' active':''}" data-a="dispo" title="${_L('Réorganiser la page : glisser les cartes, largeur, cartes masquées')}">${u.dispo?_L('✔ Terminer la disposition'):_L('⚙ Disposer les cartes')}</button>`;
   if(u.dispo) bar+=`</div><div class="hm-dispo"><span class="hm-drop-hint">${_L('Glissez une carte par ⠿ sur une autre pour la placer avant elle ; ⇔ largeur ; ✕ masquer.')}</span>`+
-    (C.masques.length?`<span class="ana-dim">${_L('Masquées :')}</span>`+C.masques.map(k=>{ const c=all.find(x=>x.k===k); return c?`<button class="cap-lf-btn" data-a="carte-show" data-k="${k}">＋ ${c.l}</button>`:''; }).join(''):'')+
+    (C.masques.length||!_capHome.taches?`<span class="ana-dim">${_L('Masquées :')}</span>`:'')+(_capHome.taches?'':`<button class="cap-lf-btn" data-a="taches-show">${_L('＋ Que voulez-vous faire ?')}</button>`)+
+    C.masques.map(k=>{ const c=all.find(x=>x.k===k); return c?`<button class="cap-lf-btn" data-a="carte-show" data-k="${k}">＋ ${c.l}</button>`:''; }).join('')+
     `<button class="cap-lf-btn" data-a="cartes-reset">${_L('↺ Disposition par défaut')}</button>`;
   bar+=`</div>`;
   const h=capHomeCartesOrdre().map(k=>{ const c=all.find(x=>x.k===k), w=C.larges[k]||c.w;
@@ -256,7 +256,64 @@ function capHomeProjetHtml(){
     return `<section class="hm-card${u.dispo?' hm-card-dispo':''}" data-carte="${k}" style="grid-column:span ${w}"${u.dispo?' draggable="true"':''}>`+
       `<h3>${u.dispo?`<span class="hm-grip" title="${_L('Glisser pour déplacer')}">⠿</span>`:''}${c.l}`+
       (u.dispo?`<span style="flex:1"></span><span class="hm-cb" data-a="carte-wide" data-k="${k}" title="${_L('Largeur : 1 ou 2 colonnes')}">⇔</span><span class="hm-cb" data-a="carte-hide" data-k="${k}" title="${_L('Masquer la carte')}">✕</span>`:'')+`</h3>${corps}</section>`; }).join('');
-  return `<div class="hm-main">${bar}<div class="hm-grid">${h}</div></div>`;
+  return `<div class="hm-main">${capHomeEnteteHtml()}${capHomeTachesHtml()}${bar}<div class="hm-grid">${h}</div></div>`;
+}
+
+/** Tâches proposées par « Que voulez-vous faire ? » : [icône, titre, description, clé de vue (capNavOpen), chemin affiché]. */
+function capHomeTaches(){ return [
+  ['🔲', _L('Parcourir les diagrammes'), _L('Ouvrir le .aird du projet et passer d\'un élément à l\'autre par un clic.'), 'diag', _L('🔲 Diagrammes')],
+  ['💚', _L('Vérifier la qualité du modèle'), _L('Tous les contrôles, un score par couche, la liste de ce qu\'il faut corriger.'), 'ana:sante', _L('✅ Vérifier › 💚 Santé du modèle')],
+  ['💬', _L('Préparer une revue'), _L('Commenter les éléments et les diagrammes, suivre une check-list, faire relire un dossier.'), '@revue', _L('💬 Revue & documents › 💬 Commentaires')],
+  ['⚖', _L('Comparer deux versions'), _L('Ce qui a changé depuis la version précédente du modèle : éléments et diagrammes.'), 'ana:diff', _L('✅ Vérifier › ⚖ Comparaison de versions')],
+  ['▤', _L('Sortir un tableau Excel'), _L('Éléments, attributs et relations, avec les colonnes de votre choix.'), 'table', _L('▤ Tableau')],
+  ['📘', _L('Produire un document'), _L('Rapport automatique : spécification, dossier de conception, SSS / SSDD, en Word ou HTML.'), 'home:rap', _L('💬 Revue & documents › 📘 Rapports automatiques')]
+]; }
+
+/** Section « Que voulez-vous faire ? » de l'onglet 🏠 Projet (masquable, réaffichée par ⚙ Disposer). @returns {string} HTML */
+function capHomeTachesHtml(){
+  if(!_capHome.taches) return '';
+  return `<section class="hm-taches"><h3>${_L('Que voulez-vous faire ?')}<span style="flex:1"></span><span class="hm-cb" data-a="taches-hide" title="${_L('Masquer cette section (⚙ Disposer les cartes pour la réafficher)')}">✕</span></h3>`+
+    `<div class="hm-taches-g">${capHomeTaches().map(([i,t,d,k,c])=>`<button type="button" class="hm-tache" data-nav="${k}"><span class="hm-tache-i" aria-hidden="true">${i}</span><b>${t}</b><span class="hm-tache-d">${d}</span><span class="hm-tache-c">${c} →</span></button>`).join('')}</div></section>`;
+}
+
+/** Bibliothèques du projet et leur état : référencées par le modèle (72, capLibScan) ou chargées sans être référencées.
+ * @returns {{name:string, key:string, n:number, declared:boolean, lib:object|null, miss:number, etat:'ok'|'part'|'absent'|'unused'|'extra'}[]}
+ */
+function capHomeLibs(){
+  const S=capLibScan(), rows=S.libs.map(L=>{ const lib=capLibLoaded(L.name), miss=lib?[...L.ids].filter(id=>!lib.xmap[id]).length:0;
+    return {name:L.name, key:L.key, n:L.n, declared:L.declared, lib, miss, etat:!L.n?'unused':!lib?'absent':miss?'part':'ok'}; });
+  _capLibs.filter(l=>!rows.some(r=>r.lib===l)).forEach(l=>rows.push({name:l.name, key:l.key, n:0, declared:false, lib:l, miss:0, etat:'extra'}));
+  return rows;
+}
+
+/** En-tête de l'onglet 🏠 Projet : modèle, couches, état des diagrammes et des bibliothèques (détail dépliable), vues sans données.
+ * @returns {string} HTML
+ */
+function capHomeEnteteHtml(){
+  if(!capLoaded) return '';
+  const esc=capEsc, u=_capHomeUi, nom=capRevProjectName()||capCurrentFileName||'—', reps=capHomeReps();
+  const couches=capHomeCouches().filter(c=>c.k!=='Shared').map(c=>`<span class="hm-stat"><b style="color:${CAP_LAYERS[c.k].color}">${c.k}</b> ${c.n}</span>`).join('');
+  const aird=_capDiag&&_capDiag.texteAird
+    ?`<button type="button" class="hm-pill" data-nav="diag" title="${_L('🔲 Ouvrir les diagrammes')}"><i class="ok"></i>${_L('Diagrammes :')} ${esc(_capDiag.nomAird)}${reps.length?' · '+reps.length:''}</button>`
+    :`<button type="button" class="hm-pill hm-pill-none" data-a="aird" title="${_L('Les diagrammes Capella sont dans le fichier .aird, à côté du .capella')}"><i></i>${_L('Diagrammes : pas de .aird — Ajouter…')}</button>`;
+  const L=capHomeLibs(), nOk=L.filter(r=>r.lib).length, nTodo=L.filter(r=>r.etat==='absent'||r.etat==='unused').length, nPart=L.some(r=>r.etat==='part');
+  const libs=L.length
+    ?`<button type="button" class="hm-pill${u.libs?' on':''}" data-a="libs" aria-expanded="${u.libs?'true':'false'}" title="${_L('État des bibliothèques Capella référencées par le modèle')}"><i class="${nTodo||nPart?'warn':'ok'}"></i>${_L(`Bibliothèques : ${nOk} chargée(s) · ${nTodo} à traiter`)} ${u.libs?'▴':'▾'}</button>`
+    :`<span class="hm-pill hm-pill-dim" title="${_L('Le modèle ne référence aucun autre fichier .capella')}"><i></i>${_L('Aucune bibliothèque')}</span>`;
+  const ET={ok:['ok',_L('Chargée')], part:['warn',_L('Chargée, cibles absentes')], absent:['warn',_L('Fichier absent')], unused:['dim',_L('Jamais utilisée')], extra:['ok',_L('Chargée, non référencée')]};
+  const table=u.libs&&L.length?`<div class="hm-libs"><table class="ana-t"><thead><tr><th>${_L('Bibliothèque')}</th><th>${_L('État')}</th><th>${_L('Références depuis le modèle')}</th><th></th></tr></thead><tbody>`+
+    L.map(r=>{ const [c,l]=ET[r.etat];
+      const refs=r.etat==='unused'?_L('aucune : la déclaration peut sans doute être retirée dans Capella'):r.etat==='extra'?_L('aucune'):r.etat==='absent'?_L(`${r.n} référence(s), cibles inconnues tant que le fichier n'est pas chargé`)
+        :_L(`${r.n} référence(s)`)+(r.miss?' · <span class="hm-libs-w">'+_L(`${r.miss} cible(s) absente(s) de la bibliothèque`)+'</span>':'');
+      const act=r.etat==='absent'?`<button class="phl-export-btn" data-a="lib-load">${_L('Charger le fichier…')}</button>`:r.n?`<button class="cap-lf-btn" data-a="lib-refs" data-k="${esc(r.key)}">${_L('Voir les références')}</button>`:'';
+      return `<tr><td><b>${esc(r.name)}</b><br><span class="ana-dim">${r.declared?_L('déclarée dans le modèle'):r.etat==='extra'?_L('chargée à la main ou depuis le dossier'):_L('non déclarée (référence directe)')}</span></td>`+
+        `<td><span class="hm-etat hm-etat-${c}"><i></i>${l}</span></td><td>${refs}</td><td style="text-align:right;white-space:nowrap">${act}</td></tr>`; }).join('')+
+    `</tbody></table><div class="hm-libs-f"><span class="ana-dim">${_L('Les éléments venus d\'une bibliothèque se résolvent dans le panneau de détail.')}</span><span style="flex:1"></span>`+
+    `<button class="cap-lf-btn" data-nav="ana:libs">${_L('📚 Vue Bibliothèques et contrôles')}</button><button class="cap-lf-btn" data-a="lib-load">${_L('Charger des bibliothèques…')}</button></div></div>`:'';
+  const V=[...capNavVides()].map(k=>(CAP_NAV_ITEMS.find(i=>i.k===k)||{}).l).filter(Boolean);
+  const vides=V.length&&_capNav.vides!==false?`<div class="hm-vides">${_L('Sans données dans ce modèle, retirées des menus en mode Essentiel :')} ${V.map(esc).join(' · ')}</div>`:'';
+  return `<section class="hm-head"><div class="hm-head-t"><h2>${esc(nom)}</h2><span class="ana-dim">${esc(capCurrentFileName||'')} · ${_L(`${capAllElements.length} éléments`)}</span><span class="hm-chips">${couches}</span></div>`+
+    `<div class="hm-pills"><span class="hm-pill"><i class="ok"></i>${_L('Modèle chargé')}</span>${aird}${libs}</div>${table}${vides}</section>`;
 }
 
 /* ── Onglet ☑ Check-lists & plans de revue ─────────────────────────────── */
@@ -650,6 +707,11 @@ function capHomeClick(e){
   const iEl=t.closest('[data-i]'), ii=s&&iEl?s.items.findIndex(x=>x.id===iEl.dataset.i):-1;
   switch(act){
     case 'aird': capDiagPickAird(); return;
+    case 'libs': u.libs=!u.libs; capHomeRender(); return;
+    case 'lib-load': capLibPick(()=>{ capHomeRender(); }); return;
+    case 'lib-refs': _capLib.lib=a.dataset.k; _capLib.view='refs'; capNavOpen('ana:libs'); return;
+    case 'taches-hide': _capHome.taches=false; capToast(_L('Section masquée — ⚙ Disposer les cartes pour la réafficher')); break;
+    case 'taches-show': _capHome.taches=true; break;
     case 'rev': capRevToggle(true,'list'); return;
     case 'rev-cible': capRevCibleeDialog(); return;
     case 'update': capCfgLoadUpdate(); return;

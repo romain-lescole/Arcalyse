@@ -150,7 +150,8 @@ var CAP_TOUR_VIEWS={
   home:{l:_L('🏠 Accueil'), steps:[
     {pre:()=>capTourHome('projet'), t:_L('🏠 Accueil'), x:_L('La page d\'accueil du projet, ouverte au chargement d\'un modèle ou d\'un projet. Tout ce qui y est saisi est enregistré dans la page (💾).')},
     {s:'#cap-view-home .hm-bar .tb-grp', t:_L('🗂 Trois onglets'), x:_L('<b>🏠 Projet</b> (informations), <b>☑ Check-lists & plans de revue</b>, <b>🧾 Tableaux blancs</b>.')},
-    {s:'#cap-view-home .hm-quick', t:_L('🚀 Accès rapide'), x:_L('Les vues les plus utilisées, en un clic.')},
+    {s:'#cap-view-home .hm-head', t:_L('🔷 En-tête du projet'), x:_L('Le modèle et ses couches, puis l\'état des <b>diagrammes</b> (.aird chargé, ou « Ajouter… ») et des <b>bibliothèques</b> : un clic sur la pastille déplie leur état (chargée, fichier absent, cibles absentes, jamais utilisée) avec « Charger le fichier… ». En bas, les vues sans données dans ce modèle.')},
+    {s:'#cap-view-home .hm-taches', t:_L('🚀 Que voulez-vous faire ?'), x:_L('Six tâches courantes, chacune ouvre la bonne vue : parcourir les diagrammes, vérifier la qualité, préparer une revue, comparer deux versions, sortir un tableau Excel, produire un document. ✕ masque la section (⚙ Disposer les cartes pour la réafficher).')},
     {s:'#cap-view-home [data-a="dispo"]', t:_L('⚙ Disposer les cartes'), x:_L('Réorganisez la page comme un tableau de bord : glissez une carte par ⠿ sur une autre, ⇔ change sa largeur, ✕ la masque (＋ pour la réafficher), ↺ revient à la disposition par défaut.')},
     {s:'#cap-view-home [data-carte="fiche"]', t:_L('📝 Fiche projet'), x:_L('Objet, phase, version, responsable, équipe, notes : à remplir librement.')},
     {s:'#cap-view-home [data-carte="docs"],#cap-view-home [data-carte="boards"]', t:_L('☑ 🧾 Raccourcis'), x:_L('Vos check-lists, plans de revue et tableaux blancs : clic pour les ouvrir, ⧉ pour les ouvrir dans une fenêtre séparée ; <b>⚡ Check-list rapide</b> en crée une tout de suite.')},

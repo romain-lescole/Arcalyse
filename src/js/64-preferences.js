@@ -83,7 +83,8 @@ function capPrefDialogFill(ov){
   if(t==='aff'){
     body=_L('<div class="cw-d-sub">Niveau d\'affichage des menus (aussi par les boutons <b>Essentiel</b> / <b>Complet</b> de la barre). Une vue absente des menus reste accessible par la recherche <b>🔍</b> (Ctrl+K).</div>')+
       CAP_PREF_MODES.map(([k,l,d])=>`<label class="cap-pref-row"><input type="radio" name="cap-pref-m" data-pm="${k}"${k===m?' checked':''}> <span><b>${l}</b><br><span class="ana-dim">${d}</span></span></label>`).join('')+
-      _L(`<div class="cap-pref-sec" style="margin-top:14px">Style de la barre</div>
+      _L(`<label class="cap-pref-row" style="margin-top:6px"><input type="checkbox" data-pv="1"${_capNav.vides===false?'':' checked'}> <span><b>Masquer les vues sans données</b> dans le modèle ouvert (pas de scénario, d'exigence, de bibliothèque…)<br><span class="ana-dim">En mode Essentiel elles quittent les menus ; en mode Complet elles restent, grisées, avec la mention « absent de ce modèle ».</span></span></label>
+      <div class="cap-pref-sec" style="margin-top:14px">Style de la barre</div>
       <label class="cap-pref-row"><input type="radio" name="cap-pref-i" data-pi="0"${_capNav.icons?'':' checked'}> <span><b>Icônes et textes</b><br><span class="ana-dim">Quand la barre ne tient pas sur une ligne (fenêtre étroite), elle passe automatiquement en icônes seules.</span></span></label>
       <label class="cap-pref-row"><input type="radio" name="cap-pref-i" data-pi="1"${_capNav.icons?' checked':''}> <span><b>Icônes seules</b><br><span class="ana-dim">Barre plus compacte : chaque bouton garde son icône, le nom s'affiche au survol ; les menus déroulants et ☰ gardent leurs textes.</span></span></label>`);
   } else if(t==='save'){
@@ -164,6 +165,7 @@ function capPrefDialogFill(ov){
     const pi=e.target.closest('[data-pi]'); if(pi){ capPrefSetIcons(pi.dataset.pi==='1'); return; }
     const pt=e.target.closest('[data-pt]');
     if(pt){ const sel=document.getElementById('theme-sel'); sel.value=pt.dataset.pt; sel.dispatchEvent(new Event('change')); capPrefDialogFill(ov); return; }
+    const pv=e.target.closest('[data-pv]'); if(pv){ _capNav.vides=pv.checked; capNavSave(); capNavRender(); return; }
     const pw=e.target.closest('[data-pw]');
     if(pw){ const k=pw.dataset.pw; capWatchCfgSet({[k]:k==='period'?+pw.value:pw.checked}); return; }
     const px=e.target.closest('[data-px]'); if(px){ _capNav.xport=px.dataset.px; capNavSave(); return; }

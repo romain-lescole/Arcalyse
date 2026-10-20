@@ -79,12 +79,41 @@ function capNavMigrate(o){
   return o;
 }
 
-/** Réglage effectivement appliqué à la barre selon le niveau ⚙ (Essentiel ou Complet).
- * @returns {{mode:string, pins:string[], hide:Set<string>}} hide : vues réservées au mode Complet
+/** Vues sans données dans le modèle ouvert (pas de scénario, d'exigence, de bibliothèque…) : clés de CAP_NAV_ITEMS.
+ * Tests légers sur les types présents, en cache dans _capAnaCache (vidé au chargement d'un modèle) ; les bibliothèques
+ * sont testées à chaque appel (elles peuvent être chargées après le modèle).
+ * @returns {Set<string>}
+ */
+function capNavVides(){
+  if(!capLoaded||typeof _capAnaCache==='undefined') return new Set();
+  if(!_capAnaCache.navVides){
+    const T=new Set(capAllElements.map(e=>e.typeName)), has=re=>[...T].some(t=>re.test(t));
+    const test={
+      'scen':()=>T.has('Scenario'),
+      'ana:states':()=>T.has('StateMachine'),
+      'ana:deploy':()=>T.has('PartDeploymentLink')||T.has('ConfigurationItem'),
+      'ana:reqs':()=>has(/Requirement$/),
+      'ana:pvmt':()=>T.has('PropertyValueGroup')||has(/^(String|Integer|Float|Boolean|Enumeration)PropertyValue$/),
+      'ana:cts':()=>T.has('Constraint'),
+      'ana:status':()=>capAllElements.some(e=>e.attrs&&(e.attrs.status||e.attrs.review)),
+      'ana:cats':()=>has(/^(Exchange|ComponentExchange|PhysicalLink)Category$/),
+      'ana:rec':()=>T.has('CatalogElement')
+    };
+    const S=new Set(); Object.entries(test).forEach(([k,f])=>{ try{ if(!f()) S.add(k); }catch(e){ /* test indisponible : vue gardée */ } });
+    _capAnaCache.navVides=S;
+  }
+  const S=new Set(_capAnaCache.navVides);
+  try{ if(!_capLibs.length&&!capLibScan().libs.length) S.add('ana:libs'); }catch(e){ /* 72 indisponible */ }
+  return S;
+}
+
+/** Réglage effectivement appliqué à la barre selon le niveau ⚙ (Essentiel ou Complet) et le réglage « vues vides masquées ».
+ * @returns {{mode:string, pins:string[], hide:Set<string>, vides:Set<string>}} hide : vues absentes des menus
+ * (mode Complet seulement ; vides en Essentiel) ; vides : vues sans données dans le modèle ouvert (grisées en Complet)
  */
 function capNavEff(){
-  const m=_capNav.mode==='complet'?'complet':'essentiel';
-  return {mode:m, pins:_capNav.pins, hide:new Set(m==='complet'?[]:CAP_NAV_ITEMS.filter(i=>i.x).map(i=>i.k))};
+  const m=_capNav.mode==='complet'?'complet':'essentiel', vides=_capNav.vides===false?new Set():capNavVides();
+  return {mode:m, pins:_capNav.pins, vides, hide:new Set(m==='complet'?[]:[...CAP_NAV_ITEMS.filter(i=>i.x).map(i=>i.k), ...vides])};
 }
 
 /** Change le niveau d'affichage des menus.
@@ -234,8 +263,8 @@ function capNavClose(){
  * @returns {string} HTML
  */
 function capNavRow(it, extra){
-  const E=capNavEff(), on=E.pins.includes(it.k), cur=capNavCurKey()===it.k, hid=E.hide.has(it.k);
-  return `<div class="ctx-i cap-nav-it${cur?' cur':''}${hid?' cap-nav-hid':''}" data-open="${it.k}" title="${it.t||''}"><span>${it.l}${extra?` <span class="cap-nav-g">${extra}</span>`:''}${hid?_L(' <span class="cap-nav-g">(mode Complet)</span>'):''}</span>`+
+  const E=capNavEff(), on=E.pins.includes(it.k), cur=capNavCurKey()===it.k, vide=E.vides.has(it.k), hid=vide||E.hide.has(it.k);
+  return `<div class="ctx-i cap-nav-it${cur?' cur':''}${hid?' cap-nav-hid':''}" data-open="${it.k}" title="${it.t||''}"><span>${it.l}${extra?` <span class="cap-nav-g">${extra}</span>`:''}${vide?_L(' <span class="cap-nav-g">(absent de ce modèle)</span>'):hid?_L(' <span class="cap-nav-g">(mode Complet)</span>'):''}</span>`+
     (it.k[0]==='@'?'':`<span class="cap-nav-pin${on?' on':''}" data-pin="${it.k}" title="${on?_L('Retirer de la barre'):_L('Épingler dans la barre (bouton direct)')}">📌</span>`)+`</div>`;
 }
 
@@ -265,7 +294,7 @@ function capNavMenu(g, anchor){
         watch:()=>setTimeout(()=>capWatchMenu(true),0),   // 🔄 Suivi du fichier (40) : après la fermeture de ce menu par le même clic
         help:()=>openHelpModal(), prefs:()=>capPrefDialog(), autosave:()=>capPrefDialog('save'), checks:()=>capChkDialog(), xport:()=>capExportToggle(), xlsx:()=>capXlsxClasseur(),
         theme:()=>capNavMenu('theme', document.getElementById('b-prefs')), tour:()=>capTourStart(), tourview:()=>capTourStartView(), tourrev:()=>capTourRevue(), tourscr:()=>capTourScripts(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
-      if(e.target.closest('[data-reset]')){ const keep=['auto','icons','watch','xport'].filter(k=>_capNav[k]!==undefined).map(k=>[k,_capNav[k]]);
+      if(e.target.closest('[data-reset]')){ const keep=['auto','icons','watch','xport','vides'].filter(k=>_capNav[k]!==undefined).map(k=>[k,_capNav[k]]);
         _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); keep.forEach(([k,v])=>_capNav[k]=v);   // ⚙ enregistrement, style, suivi, exports conservés
         capNavSave(); capNavRender(); capNavMenuFill(); }
     });
@@ -343,8 +372,10 @@ function capNavMenuFill(){
       _L(`<div class="cw-m-sep"></div><div class="ctx-i" data-act="themeedit" title="Créer ou modifier un thème personnalisé (toutes les couleurs)">🎨 Personnaliser…</div>`);
     return;
   }
-  if(g!=='☰'){ const E=capNavEff(), all=CAP_NAV_ITEMS.filter(i=>i.g===g), its=all.filter(i=>!E.hide.has(i.k)), n=all.length-its.length;
+  if(g!=='☰'){ const E=capNavEff(), all=CAP_NAV_ITEMS.filter(i=>i.g===g), its=all.filter(i=>!E.hide.has(i.k));
+    const n=all.filter(i=>i.x&&E.hide.has(i.k)).length, nv=all.filter(i=>!i.x&&E.vides.has(i.k)&&E.hide.has(i.k)).length;
     res.innerHTML=capNavSections(its)+(n?_L(`<div class="ctx-i cap-nav-more" data-lvl="complet" title="Afficher toutes les vues dans les menus">➕ ${n} vue(s) avancée(s) en mode Complet</div>`):'')+
+    (nv?_L(`<div class="cap-nav-hint">${nv} vue(s) sans données dans ce modèle, retirée(s) du menu (⚙ Préférences › Affichage).</div>`):'')+
     _L(`<div class="cap-nav-hint">📌 épingle une vue en bouton direct dans la barre.</div>`); return; }
   const norm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
   const q=norm((document.getElementById('cap-nav-q')||{}).value||'').trim();

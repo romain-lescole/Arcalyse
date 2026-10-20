@@ -76,6 +76,8 @@ Arcalyse est une application **autonome** : un **seul fichier HTML** (`arcalyse-
 3. **Menu 📁 Fichier › 🔷 Ouvrir un modèle Capella…** (voir [§ 3.3](#33--fichier)). Si un modèle est déjà ouvert, un avertissement rappelle que le travail non enregistré sera perdu et propose d'abord 💾 Enregistrer la page.
 4. **📁 Dossier du projet…** (bouton d'accueil ou 📁 Fichier › 📁 Ouvrir le dossier du projet…).
 
+L'écran d'accueil présente les trois ouvertures côte à côte, chacune expliquée : **📂 Fichier .capella…** (le modèle seul), **📁 Dossier du projet…** (conseillé : modèle, diagrammes et bibliothèques en une fois) et **📄 Projet de travail (.html)…** (reprendre une page enregistrée). Si le dossier contient **plusieurs modèles**, la liste « lequel ouvrir ? » les présente avec leur sous-dossier ; les autres `.capella` du dossier sont chargés comme bibliothèques si le modèle choisi y fait référence.
+
 Le modèle est analysé (quelques secondes pour un gros modèle), puis la vue **🏠 Accueil du projet** s'ouvre automatiquement.
 
 > ⚠ Quand un modèle est chargé, le navigateur demande une confirmation avant de quitter la page (← Précédent, fermeture de l'onglet) : pensez à **💾 Enregistrer** pour garder votre travail (commentaires, vues, tableaux de bord…).
@@ -228,7 +230,17 @@ Vue affichée à l'ouverture d'un modèle (bouton **🏠 Accueil**, tout à gauc
 
 ![Accueil — Projet](guide/img/05-home-projet.png)
 
-En tête, l'**accès rapide** aux vues les plus utiles (🔲 Diagrammes Capella, ▤ Tableau, 🌳 Arborescence, ⚡ Chaînes, ƒ Fonctions…). Puis **six cartes** sur deux lignes :
+**En-tête du projet** : nom du projet, fichier, nombre d'éléments par couche, et trois pastilles d'état :
+
+- **Modèle chargé** ;
+- **Diagrammes** : le `.aird` chargé et son nombre de diagrammes (clic : 🔲 Diagrammes), ou « pas de .aird — Ajouter… » ;
+- **Bibliothèques** : « n chargée(s) · m à traiter » ; un clic déplie le tableau des bibliothèques référencées par le modèle, avec leur état — *Chargée*, *Chargée, cibles absentes* (des éléments visés n'y sont pas), *Fichier absent* (bouton **Charger le fichier…**), *Jamais utilisée* (déclarée sans référence : la déclaration peut sans doute être retirée dans Capella) — et **Voir les références** (📚 Bibliothèques).
+
+En dessous, les **vues sans données** dans ce modèle (pas de scénario, d'exigence, de bibliothèque…) : en mode Essentiel elles sont retirées des menus, en mode Complet elles restent grisées (réglage ⚙ Préférences › Affichage).
+
+**Que voulez-vous faire ?** : six tâches courantes, chacune ouvre la bonne vue — parcourir les diagrammes, vérifier la qualité du modèle (💚 Santé), préparer une revue (💬 Commentaires), comparer deux versions, sortir un tableau Excel (▤ Tableau), produire un document (📘 Rapports automatiques). **✕** masque la section ; **⚙ Disposer les cartes** › « ＋ Que voulez-vous faire ? » la réaffiche.
+
+Puis **six cartes** sur deux lignes :
 
 | Carte | Contenu |
 |---|---|

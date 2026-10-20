@@ -257,8 +257,10 @@ function capProjectFromFiles(fichiers) {
   };
   if (mods.length === 1) { charger(mods[0]); return; }
   const st = document.getElementById('cw-status');
-  capWelcomeStatus(_L(`${mods.length} modèles dans ce dossier : choisissez celui à ouvrir.`), '');
-  st.insertAdjacentHTML('beforeend', `<div class="cw-choix">${mods.map((m, i) => `<button type="button" class="cw-choix-b" data-mod="${i}">🔷 ${capEsc(m.chemin)}</button>`).join('')}</div>`);
+  capWelcomeStatus(_L(`${mods.length} modèles dans ce dossier : lequel ouvrir ?`), '');
+  const dos = c => { const i = c.lastIndexOf('/'); return i < 0 ? ['', c] : [c.slice(0, i + 1), c.slice(i + 1)]; };   // dossier / nom
+  st.insertAdjacentHTML('beforeend', `<div class="cw-choix"><div class="cw-choix-h">${_L('Les autres .capella seront chargés comme bibliothèques si le modèle choisi y fait référence.')}</div>` +
+    mods.map((m, i) => { const [d, n] = dos(m.chemin); return `<button type="button" class="cw-choix-b" data-mod="${i}">🔷 <span><span class="cw-choix-d">${capEsc(d)}</span><b>${capEsc(n)}</b></span><span class="cw-choix-o">${_L('Ouvrir →')}</span></button>`; }).join('') + `</div>`);
   st.querySelectorAll('[data-mod]').forEach(b => b.addEventListener('click', ev => { ev.stopPropagation(); charger(mods[+b.dataset.mod]); }));
 }
 

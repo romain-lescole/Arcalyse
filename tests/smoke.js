@@ -127,6 +127,16 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.click('#b-prefs'); await p.click('#cap-nav-dd [data-act="theme"]'); await p.click('#cap-nav-dd [data-thm="light"]');
     await p.click('#b-prefs'); await p.click('#cap-nav-dd [data-act="theme"]'); await p.click('#cap-nav-dd [data-thm="dark"]');
     await p.click('#b-file-menu'); await p.keyboard.press('Escape'); });
+  await step('🏠 Accueil : en-tête du projet, tâches, vues sans données', async () => {
+    await p.evaluate(() => { _capHomeUi.tab = 'projet'; capNavOpen('home'); }); await p.waitForTimeout(300);
+    if (!(await p.$('#cap-view-home .hm-head .hm-pill'))) throw new Error('en-tête du projet absent');
+    if ((await p.$$('#cap-view-home .hm-tache')).length !== 6) throw new Error('« Que voulez-vous faire ? » : 6 tâches attendues');
+    await p.click('#cap-view-home .hm-tache[data-nav="table"]');
+    if (await p.evaluate(() => capCurrentView) !== 'table') throw new Error('tâche « Sortir un tableau Excel » : ▤ Tableau non ouvert');
+    const k = await p.evaluate(() => [...capNavVides()].find(x => CAP_NAV_ITEMS.find(i => i.k === x && i.g === 'verif' && !i.x)));   // vue sans données du menu ✅ Vérifier
+    { await p.evaluate(() => capNavSetMode('essentiel'));
+      if (k) { await p.click('#cap-v-verif'); if (await p.$(`#cap-nav-dd [data-open="${k}"]`)) throw new Error('vue sans données encore dans le menu : ' + k); await p.keyboard.press('Escape'); } }
+    await p.evaluate(() => capNavSetMode('complet')); });
   await step('⚙ Préférences : rubriques, thème, suivi enregistré', async () => {
     await p.evaluate(() => capPrefDialog());
     for (const t of ['aff', 'theme', 'suivi', 'save', 'cfg', 'ctl', 'exp']) { await p.click(`#cap-pref-ov [data-ptab="${t}"]`); await p.waitForTimeout(100); }

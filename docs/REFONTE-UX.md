@@ -60,7 +60,7 @@ fichier de secours) · **Interface et vues** (parties de `CAP_CFG_PARTS`, export
    **existantes** (aucune fusion encore), recherche visible, Essentiel / Complet (conversion de `cap-toolbar`), Thème et
    Suivi déplacés, 💬 Revue et 📜 Scripts dans le menu, barre réduite avant chargement (pas de 2ᵉ barre de la Relation Map).
 2. ✔ *(fait)* **⚙ Préférences** (64, 38, 40, 46) : rubriques ci-dessus ; thèmes réduits à quatre (Marine / Nature d'une ancienne page → Sombre).
-3. **Accueil** (56, 20, 72) : écran d'ouverture (trois ouvertures, choix du modèle si le dossier en contient plusieurs),
+3. ✔ *(fait)* **Accueil** (56, 20, 72) : écran d'ouverture (trois ouvertures, choix du modèle si le dossier en contient plusieurs),
    en-tête de projet (modèle, `.aird`, bibliothèques et leur état), « Que voulez-vous faire ? », santé par couche,
    vues masquées pour ce modèle (fonction « a des données » par vue).
 4. **💚 Santé & contrôles** (69, 14, onglets Contrôles) : filtre par vue, « Ouvrir dans la vue », pastille de contrôles dans chaque vue.
