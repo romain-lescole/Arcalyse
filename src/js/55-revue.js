@@ -297,6 +297,7 @@ function capRevRender(){
   const pos=(D.getElementById('crv-body')||{}).scrollTop||0;
   p.innerHTML=`<div class="crv-hdr"><b>${_L('💬 Revue')}</b><span class="ana-dim">${capEsc(capCurrentFileName||'')}</span><span style="flex:1"></span>`+
     `<button class="cap-lf-btn" data-a="new" title="${_L('Nouveau commentaire (sur l\'élément affiché dans le panneau de détail, s\'il y en a un)')}">${_L('✚ Nouveau')}</button>`+
+    `<button class="cap-lf-btn" data-a="cible" title="${_L('Page HTML autonome à envoyer aux relecteurs : ils répondent aux commentaires choisis et en ajoutent ; leurs réponses se réimportent ici')}">${_L('📤 Faire relire')}</button>`+
     `<span class="crv-dd-a"><button class="cap-lf-btn${u.dd?' active':''}" data-a="dd" title="${_L('Exporter ou importer les commentaires (.json)')}">${_L('💾 Revue ▾')}${nNon?` <span class="crv-n crv-warn" title="${_L('Commentaires modifiés depuis le dernier enregistrement ou export')}">${nNon}</span>`:''}</button>`+
     (u.dd?`<div class="crv-dd">`+
       _L(`<div class="crv-dd-h">Les commentaires sont enregistrés <b>dans la page</b> : 💾 Enregistrer (Ctrl+S) les conserve avec le modèle.</div>`)+

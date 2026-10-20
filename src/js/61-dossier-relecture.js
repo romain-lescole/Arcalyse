@@ -36,12 +36,25 @@ function capDosOf(el){ const n=el&&el.closest&&el.closest('[data-dosid]'); retur
  * @param {string} [id] - Dossier à ouvrir
  */
 function capDosOuvrir(id){
-  if(id&&_capHome.dossiers.some(d=>d.id===id)) _capDosUi.cur=id;
-  _capHomeUi.tab='dos';
-  if(currentMode!=='capella'||capCurrentView!=='home') capNavOpen('home'); else capHomeRender();
+  const d=id&&_capHome.dossiers.find(x=>x.id===id);
+  if(d) _capDosUi.cur=id;
+  _capHomeUi.tab=d?capDosOnglet(d):'dos';
+  if(currentMode!=='capella'||capCurrentView!=='home'){ capNavClose(); capShowView('home'); } else capHomeRender();   // capShowView : garde l'onglet choisi
 }
 /** @returns {object|undefined} dossier ouvert dans l'onglet 📑 */
-function capDosCur(){ const l=_capHome.dossiers; if(!l.some(d=>d.id===_capDosUi.cur)) _capDosUi.cur=l.length?l[0].id:''; return l.find(d=>d.id===_capDosUi.cur); }
+/** Onglet d'un dossier : 📘 Rapports automatiques (rapport produit par un plan type ou modèle de rapport) ou 📑 Faire relire.
+ * @param {object} d - Dossier
+ * @returns {'rap'|'dos'}
+ */
+function capDosOnglet(d){ return d&&(d.gab||d.modele)?'rap':'dos'; }
+/** Dossiers de l'onglet affiché (📘 rapports et modèles, ou 📑 dossiers de relecture). @returns {object[]} */
+function capDosListe(){ const t=_capHomeUi.tab==='rap'?'rap':'dos'; return _capHome.dossiers.filter(d=>capDosOnglet(d)===t); }
+/** Ouvre 💬 Revue & documents › 📘 Rapports automatiques (onglet de l'accueil). */
+function capRapOuvrir(){
+  _capHomeUi.tab='rap';
+  if(currentMode!=='capella'||capCurrentView!=='home'){ capNavClose(); capShowView('home'); } else capHomeRender();   // capShowView : garde l'onglet choisi
+}
+function capDosCur(){ const l=capDosListe(); if(!l.some(d=>d.id===_capDosUi.cur)) _capDosUi.cur=l.length?l[0].id:''; return l.find(d=>d.id===_capDosUi.cur); }
 /**
  * Bloc d'un dossier et sa place : liste qui le contient, rang, chapitre parent.
  * @param {object[]} l - Blocs
@@ -98,7 +111,7 @@ function capDosBlocDe(d, bid){
 function capDosNouveau(titre){
   const d={id:capHomeUid(), titre:titre||_L('Dossier de relecture')+' — '+(capRevProjectName()||capCurrentFileName||''), consignes:'', echeance:'',
     auteur:_capRev.me||'', blocs:[], retours:[], relus:{}};
-  _capHome.dossiers.push(d); _capDosUi.cur=d.id; _capHomeUi.tab='dos';
+  _capHome.dossiers.push(d); _capDosUi.cur=d.id; if(_capHomeUi.tab!=='rap') _capHomeUi.tab='dos';   // 📘 : le rapport reste dans son onglet
   capHomeSave(); return d;
 }
 /**
@@ -153,20 +166,24 @@ function capDosDepuisPlan(p){
 
 /** Onglet 📑 : liste des dossiers, dossier ouvert. @returns {string} HTML */
 function capDosOngletHtml(){
-  const esc=capEsc, d=capDosCur();
-  const liste=`<aside class="hm-docs"${capHomeLargeur('docs')}><div class="hm-docs-new">`+
-    `<button class="cap-lf-btn" data-da="new" title="${_L('Nouveau dossier : chapitres, descriptions, diagrammes et texte libre à faire relire')}">${_L('📑 Nouveau dossier')}</button>`+
-    `<div class="dos-rap" title="${_L('Dossier rempli à partir du modèle selon un plan type, entièrement modifiable ensuite')}"><div class="dos-rap-t">${_L('📘 Rapports automatiques')}</div>`+
+  const esc=capEsc, d=capDosCur(), rap=_capHomeUi.tab==='rap', L=capDosListe();
+  const reimp=`<button class="cap-lf-btn" data-da="import" title="${_L('Réimporter les retours des relecteurs : page HTML enregistrée, .json ou document Word commenté (.docx)')}">${_L('📥 Réimporter des retours…')}</button>`;
+  const haut=rap
+    ?`<div class="dos-rap" title="${_L('Dossier rempli à partir du modèle selon un plan type, entièrement modifiable ensuite')}"><div class="dos-rap-t">${_L('📘 Plans types')}</div>`+
       capDosGabarits().map(g=>`<button class="cap-lf-btn dos-rap-b" data-dos-gab="${g.k}" title="${esc(g.t)}">${esc(g.l.replace(/^\S+\s/,''))}</button>`).join('')+
       `<div class="dos-rap-t" style="margin-top:4px">${_L('🧩 Mes modèles')}</div>`+
-      _capHome.dossiers.filter(x=>x.modele).map(x=>`<button class="cap-lf-btn dos-rap-b" data-rap-go="${x.id}" title="${_L('Générer un rapport à partir de ce modèle')}">▶ ${esc(x.titre||_L('(sans titre)'))}</button>`).join('')+
+      L.filter(x=>x.modele).map(x=>`<button class="cap-lf-btn dos-rap-b" data-rap-go="${x.id}" title="${_L('Générer un rapport à partir de ce modèle')}">▶ ${esc(x.titre||_L('(sans titre)'))}</button>`).join('')+
       `<span class="hm-row" style="margin:0"><button class="cap-lf-btn" data-da="rap-new" title="${_L('Nouveau modèle de rapport (prérempli d\'un exemple de boucles, à adapter)')}">${_L('✚ Nouveau modèle')}</button>`+
-      `<button class="cap-lf-btn" data-da="rap-import" title="${_L('Importer un modèle de rapport (.json)')}">${_L('📂 Importer')}</button></span></div>`+
-    `<button class="cap-lf-btn" data-da="import" title="${_L('Réimporter les retours des relecteurs : page HTML enregistrée, .json ou document Word commenté (.docx)')}">${_L('📥 Réimporter des retours…')}</button></div>`+
-    (_capHome.dossiers.length?_capHome.dossiers.map(x=>{ const n=x.retours.length;
+      `<button class="cap-lf-btn" data-da="rap-import" title="${_L('Importer un modèle de rapport (.json)')}">${_L('📂 Importer')}</button></span></div>`+reimp
+    :`<button class="cap-lf-btn" data-da="new" title="${_L('Nouveau dossier : chapitres, descriptions, diagrammes et texte libre à faire relire')}">${_L('📑 Nouveau dossier')}</button>`+reimp;
+  const vide=rap
+    ?`<div class="hm-empty">${_L('Un rapport automatique est produit à partir du modèle selon un plan type (spécification boîte noire, dossier de conception boîte blanche, SSS / SSDD) ou selon un de vos modèles ; il reste entièrement modifiable, puis s\'exporte en HTML à commenter ou en Word.<br><br>Choisissez un plan type ci-dessus.')}</div>`
+    :`<div class="hm-empty">${_L('Un dossier de relecture rassemble ce qu\'il faut faire relire, chapitre par chapitre : description d\'une capacité ou d\'une chaîne, ses diagrammes, d\'autres diagrammes en sous-chapitres, du texte libre.<br><br>Il s\'exporte en page HTML que les relecteurs commentent dans leur navigateur, ou en document Word ; leurs retours se réimportent ici.')}</div>`;
+  const liste=`<aside class="hm-docs"${capHomeLargeur('docs')}><div class="hm-docs-new">${haut}</div>`+
+    (L.length?(rap?`<div class="dos-rap-t" style="padding:6px 8px 2px">${_L('Rapports produits et modèles')}</div>`:'')+L.map(x=>{ const n=x.retours.length;
       return `<div class="hm-docs-i${d&&x.id===d.id?' on':''}" data-dos-open="${x.id}"> <span class="hm-docs-n">${x.modele?'🧩':x.gab==='dcs'||x.gab==='ssdd'?'📗':x.gab?'📘':'📑'} ${esc(x.titre||_L('(sans titre)'))}</span>${n?`<span class="hm-n" title="${_L('Retours des relecteurs')}">💬 ${n}</span>`:''}`+
         `<span class="hm-pop-b" data-a="pop" data-kind="dos" data-id="${x.id}" title="${_L('Ouvrir dans une fenêtre séparée (par exemple sur un autre écran)')}">⧉</span></div>`; }).join('')
-      :`<div class="hm-empty">${_L('Un dossier de relecture rassemble ce qu\'il faut faire relire, chapitre par chapitre : description d\'une capacité ou d\'une chaîne, ses diagrammes, d\'autres diagrammes en sous-chapitres, du texte libre.<br><br>Il s\'exporte en page HTML que les relecteurs commentent dans leur navigateur, ou en document Word ; leurs retours se réimportent ici.')}</div>`)+`</aside>`;
+      :vide)+`</aside>`;
   const main=d?(capHomePopWin('dos',d.id)?capHomePopPlace('dos',d):`<div class="hm-doc dos-ed" data-dosid="${d.id}">${capDosHtml(d)}</div>`):'';
   return `<div class="hm-main hm-docs-w">${liste.replace(/<\/aside>$/, d&&!capHomePopWin('dos',d.id)?capDosNavHtml(d)+'</aside>':'</aside>')}${capHomeSplit('docs')}${main}</div>`;
 }

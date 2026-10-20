@@ -1,7 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════════════
    🏠 ACCUEIL — page d'accueil du projet (vue affichée à l'ouverture d'un modèle ou d'un projet)
    ───────────────────────────────────────────────────────────────────────
-   Trois onglets :
+   Deux espaces (refonte 3.0) : 🏠 Accueil — onglets 🏠 Projet, 🧾 Tableaux blancs — et 💬 Revue & documents — onglets
+   ☑ Check-lists & plans de revue, 📑 Faire relire, 📘 Rapports automatiques (61, 63). Contenu :
    • 🏠 Projet : en-tête du projet (modèle, .aird, bibliothèques et leur état, vues sans données), « Que voulez-vous faire ? » (six tâches), puis six cartes sur deux lignes, réorganisables (⚙ Disposer : ordre par
      glisser-déposer, largeur, cartes masquées) — projet (fichiers, version de Capella, diagrammes, mises à jour),
      fiche projet modifiable, raccourcis des check-lists et des tableaux blancs, contenu du modèle, revue ;
@@ -139,16 +140,23 @@ function capRenderHome(box){
   capHomeWire(box);
   const u=_capHomeUi, nd=_capHome.docs.length, nb=_capHome.boards.length;
   const tab=(k,l,t)=>`<button class="phl-toggle-btn${u.tab===k?' active':''}" data-tab="${k}" title="${t}">${l}</button>`;
-  const pos=capHomeScrollGet(box), cle=u.tab+':'+(u.tab==='dos'?_capDosUi.cur:u.tab==='docs'?u.doc:u.board);
+  const pos=capHomeScrollGet(box), cle=u.tab+':'+(u.tab==='dos'||u.tab==='rap'?_capDosUi.cur:u.tab==='docs'?u.doc:u.board);
   let corps;
   if(u.tab==='docs') corps=capHomeDocsHtml()+capHomePaletteHtml();
   else if(u.tab==='board') corps=capHomeBoardHtml(capHomeCurBoard())+capHomePaletteHtml();
-  else if(u.tab==='dos') corps=capDosOngletHtml()+capHomePaletteHtml();
+  else if(u.tab==='dos'||u.tab==='rap') corps=capDosOngletHtml()+capHomePaletteHtml();
   else corps=capHomeProjetHtml();
-  box.innerHTML=`<div class="hm-bar"><span class="tb-grp">${tab('projet',_L('🏠 Projet'),_L('Informations du projet, tâches courantes, fiche, contenu du modèle, revue'))}`+
-    tab('docs',_L(`☑ Check-lists & plans de revue`)+(nd?` <span class="hm-n">${nd}</span>`:''),_L('Listes à cocher et plans de revue, liés à des diagrammes et des éléments'))+
-    tab('board',_L(`🧾 Tableaux blancs`)+(nb?` <span class="hm-n">${nb}</span>`:''),_L('Pages libres : texte, formes, diagrammes et éléments en icônes cliquables'))+
-    tab('dos',_L(`📑 Dossiers de relecture`)+(_capHome.dossiers.length?` <span class="hm-n">${_capHome.dossiers.length}</span>`:''),_L('Documents chapitrés à faire relire : descriptions, diagrammes, texte libre ; export HTML à commenter ou Word, réimport des retours'))+`</span>`+
+  // Deux espaces dans la même vue (refonte 3.0, lot 6) : 🏠 Accueil (projet, tableaux blancs) et 💬 Revue & documents
+  // (check-lists et plans de revue, 📑 faire relire, 📘 rapports automatiques)
+  const revue=['docs','dos','rap'].includes(u.tab), nDos=_capHome.dossiers.filter(d=>capDosOnglet(d)==='dos').length, nRap=_capHome.dossiers.length-nDos;
+  const onglets=revue
+    ?tab('docs',_L(`☑ Check-lists & plans de revue`)+(nd?` <span class="hm-n">${nd}</span>`:''),_L('Listes à cocher et plans de revue, liés à des diagrammes et des éléments'))+
+      tab('dos',_L(`📑 Faire relire`)+(nDos?` <span class="hm-n">${nDos}</span>`:''),_L('Documents chapitrés à faire relire : descriptions, diagrammes, texte libre ; export HTML à commenter ou Word, réimport des retours'))+
+      tab('rap',_L(`📘 Rapports automatiques`)+(nRap?` <span class="hm-n">${nRap}</span>`:''),_L('Rapports produits à partir du modèle selon un plan type ou un de vos modèles, modifiables, exportables en HTML à commenter ou en Word'))
+    :tab('projet',_L('🏠 Projet'),_L('Informations du projet, tâches courantes, fiche, contenu du modèle, revue'))+
+      tab('board',_L(`🧾 Tableaux blancs`)+(nb?` <span class="hm-n">${nb}</span>`:''),_L('Pages libres : texte, formes, diagrammes et éléments en icônes cliquables'));
+  box.innerHTML=`<div class="hm-bar"><span class="hm-bar-e">${revue?_L('💬 Revue & documents'):_L('🏠 Accueil')}</span><span class="tb-grp">${onglets}</span>`+
+    (revue?`<button class="cap-lf-btn" data-a="rev" title="${_L('Panneau 💬 Revue : commentaires sur le modèle et les diagrammes, envoi aux relecteurs')}">${_L('💬 Commentaires')}</button>`:'')+
     `<span class="hm-bar-t">${capEsc(capRevProjectName()||capCurrentFileName||'')}</span></div>`+
     `<div class="hm-body">${corps}</div>`;
   if(box._hmCle===cle) capHomeScrollSet(box, pos); box._hmCle=cle;   // même onglet, même document : on reste où l'on était

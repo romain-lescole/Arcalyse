@@ -181,6 +181,7 @@ function capNavCurKey(force){
   if(!force&&currentMode!=='capella') return currentMode==='default'?'@rm':'';
   if(capCurrentView==='home'&&typeof _capHomeUi!=='undefined'){
     if(_capHomeUi.tab==='dos') return 'home:dos';   // 📑 Faire relire (dossiers de relecture)
+    if(_capHomeUi.tab==='rap') return 'home:rap';   // 📘 Rapports automatiques
     if(_capHomeUi.tab==='docs') return 'home:docs';   // ☑ Check-lists & plans de revue
   }
   return capCurrentView==='analyses'?'ana:'+capAnaSub:capCurrentView;
@@ -195,8 +196,10 @@ function capNavOpen(k){
   if(k==='@scripts'){ capScrToggle(true); return; }   // 📜 console de scripts (81)
   if(k==='@revue'){ capRevToggle(true); return; }   // 💬 panneau des commentaires (55)
   if(k.startsWith('grp:')){ const G=CAP_NAV_ITEMS.find(i=>i.k===k); if(G) capNavGroupOpen(G); return; }   // famille de vues (lot 5)
-  if(k==='home:rap'||k==='home:dos'){ capDosOuvrir(); return; }   // 📑 dossiers de relecture et 📘 rapports : onglet 📑 de l'accueil
-  if(k==='home:docs'){ _capHomeUi.tab='docs'; if(currentMode!=='capella'||capCurrentView!=='home') capShowView('home'); else capHomeRender(); return; }
+  if(k==='home:dos'){ capDosOuvrir(); return; }   // 📑 Faire relire : dossiers de relecture (onglet de l'accueil)
+  if(k==='home:rap'){ capRapOuvrir(); return; }   // 📘 Rapports automatiques (onglet de l'accueil)
+  if(k==='home:docs'){ _capHomeUi.tab='docs'; if(currentMode!=='capella'||capCurrentView!=='home') capShowView('home'); else capHomeRender(); return; }   // ☑ Check-lists
+  if(k==='home'&&['docs','dos','rap'].includes(_capHomeUi.tab)) _capHomeUi.tab='projet';   // 🏠 Accueil : pas un onglet de 💬 Revue & documents
   if(k.startsWith('ana:')){ capAnaSub=k.slice(4); capShowView('analyses'); }
   else capShowView(k);
 }

@@ -147,6 +147,14 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
       if (!(await p.evaluate(t => [...document.querySelectorAll('#cap-view-fex details.cap-diag[open] summary b')].some(b => b.textContent === t), t))) throw new Error('« Ouvrir ↗ » : section non dépliée — ' + t); }
     await p.click('#cap-view-fex .cap-diag-cfg'); await p.waitForTimeout(500);
     if (await p.evaluate(() => capAnaSub) !== 'sante') throw new Error('bouton 💚 des contrôles inopérant'); });
+  await step('💬 Revue & documents : faire relire, rapports, retour à l\'accueil', async () => {
+    await p.click('#cap-v-revue'); await p.click('#cap-nav-dd [data-open="home:rap"]'); await p.waitForTimeout(300);
+    if (await p.evaluate(() => capNavCurKey()) !== 'home:rap') throw new Error('📘 Rapports automatiques non ouverts');
+    if (!(await p.$('#cap-view-home [data-dos-gab]'))) throw new Error('📘 : plans types absents');
+    await p.click('#cap-view-home [data-tab="dos"]'); await p.click('#cap-view-home [data-da="new"]'); await p.waitForTimeout(300);
+    if (await p.evaluate(() => capNavCurKey() + ':' + capDosOnglet(capDosCur())) !== 'home:dos:dos') throw new Error('📑 Faire relire : nouveau dossier mal rangé');
+    await p.click('#cap-tb-home .tbtn'); await p.waitForTimeout(300);
+    if (await p.evaluate(() => _capHomeUi.tab) !== 'projet') throw new Error('🏠 Accueil : onglet Projet attendu'); });
   await step('🗂 Familles de vues : menu, puces, couche commune', async () => {
     await p.click('#cap-v-arch'); if (await p.$('#cap-nav-dd [data-open="csys"]')) throw new Error('vue d\'une famille encore seule dans le menu');
     await p.click('#cap-nav-dd [data-open="grp:comp"]'); await p.click('#cap-flux-tabs [data-open="cblk"]');

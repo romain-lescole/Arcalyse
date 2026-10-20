@@ -224,7 +224,7 @@ Les boutons **◀ ▶** en tête de la barre (**Alt+←** / **Alt+→**, boutons
 
 ## 4. 🏠 Accueil du projet
 
-Vue affichée à l'ouverture d'un modèle (bouton **🏠 Accueil**, tout à gauche). Quatre onglets : **🏠 Projet**, **☑ Check-lists & plans de revue**, **🧾 Tableaux blancs**, **📑 Dossiers** (dossiers de relecture et rapports, [§ 4.5](#45--dossiers-de-relecture-et--rapports)). Tout ce qui y est saisi est enregistré dans la page (💾).
+Vue affichée à l'ouverture d'un modèle (bouton **🏠 Accueil**, tout à gauche). Deux espaces : **🏠 Accueil** — onglets **🏠 Projet** et **🧾 Tableaux blancs** (bouton 🏠 de la barre) — et **💬 Revue & documents** — onglets **☑ Check-lists & plans de revue**, **📑 Faire relire** (dossiers de relecture) et **📘 Rapports automatiques** ([§ 4.5](#45--dossiers-de-relecture-et--rapports)), ouverts par le menu 💬 Revue & documents ; un bouton **💬 Commentaires** y ouvre le panneau de revue. Tout ce qui y est saisi est enregistré dans la page (💾).
 
 ### 4.1 🏠 Projet
 
@@ -327,6 +327,8 @@ Pendant ce temps, vous pouvez **glisser dans cette fenêtre** directement depuis
 Sur une check-list : déposez sur un point, sur « ✚ Point » ou sur le périmètre d'un plan ; sur un tableau blanc : l'objet devient une icône cliquable. Dans la vue 🏠 Accueil elle-même, la palette 📎 sert de source.
 
 ### 4.5 📑 Dossiers de relecture et 📘 Rapports
+
+**💬 Revue & documents › 📑 Faire relire** liste les dossiers de relecture (📑 Nouveau dossier, 📥 Réimporter des retours…) ; **💬 Revue & documents › 📘 Rapports automatiques** présente les plans types, vos modèles (🧩) et les rapports produits. Les deux partagent le même éditeur et les mêmes exports (HTML à commenter, Word) ; un rapport produit reste dans 📘. Pour faire relire des **commentaires** plutôt qu'un document : panneau 💬 Revue › **📤 Faire relire** ([§ 15.6](#156--revue-ciblée-relecture-par-dautres-personnes)).
 
 Un **dossier de relecture** rassemble, chapitre par chapitre, ce que d'autres personnes doivent relire et commenter. **📑 Nouveau dossier**, puis :
 

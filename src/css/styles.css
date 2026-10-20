@@ -2039,3 +2039,5 @@ details.cap-diag.cap-diag-flash{outline:2px solid var(--c-accent);outline-offset
 #cap-flux-tabs{flex-wrap:wrap;align-items:center;}
 #cap-flux-tabs .phl-toggle-btn.cap-nav-vide{opacity:.55;}
 #cap-flux-tabs .cap-lf-btn[disabled]{opacity:.4;cursor:default;}
+/* 🏠 Accueil / 💬 Revue & documents : nom de l'espace en tête de la barre d'onglets (lot 6) */
+.hm-bar-e{font-weight:700;font-size:13px;color:var(--c-text);white-space:nowrap;}
