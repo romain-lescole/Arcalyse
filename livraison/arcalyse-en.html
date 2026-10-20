@@ -1931,6 +1931,44 @@ html[data-tbicons] #toolbar .tbtn{padding-left:7px;padding-right:7px;}
 .cap-pg-b[disabled]{opacity:.35;cursor:default;}
 .cap-pg-sel{font:inherit;font-size:11px;padding:1px 3px;border:1px solid var(--c-border);border-radius:4px;background:var(--c-bg2);color:var(--c-text);}
 .cap-pg-pos{font-weight:600;color:var(--c-text);}
+
+/* 📜 Console de scripts (81) */
+#cap-scripts{flex:0 0 auto;height:42vh;min-height:140px;display:flex;flex-direction:column;background:var(--c-bg2);border-top:1px solid var(--c-border);}
+.scr-poignee{height:5px;cursor:row-resize;flex-shrink:0;touch-action:none;}
+.scr-poignee:hover{background:var(--c-accent);}
+.scr-barre{display:flex;align-items:center;gap:5px;padding:2px 10px 6px;flex-wrap:wrap;font-size:12px;}
+.scr-barre select{max-width:280px;padding:2px 6px;font:inherit;font-size:12px;background:var(--c-bg3);color:var(--c-text);border:1px solid var(--c-border);border-radius:5px;}
+.scr-barre .cap-lf-btn.scr-principal{border-color:var(--c-accent);color:var(--c-accent);font-weight:600;}
+#scr-dossier.active{border-color:var(--c-accent);color:var(--c-accent);}
+#scr-etat{margin-left:6px;}
+.scr-aide{font-size:11px;cursor:help;}
+.scr-corps{flex:1;min-height:0;display:grid;grid-template-columns:minmax(260px,45%) 1fr;border-top:1px solid var(--c-border);}
+#scr-code{resize:none;border:0;border-right:1px solid var(--c-border);border-radius:0;background:var(--c-bg);color:var(--c-text);font-family:Consolas,'Cascadia Mono',Menlo,monospace;font-size:12.5px;line-height:1.4;padding:6px 8px;tab-size:2;min-width:0;}
+#scr-code:focus{outline:none;}
+#scr-sortie{overflow:auto;padding:6px 10px;font-size:12.5px;min-width:0;}
+.scr-l{padding:1px 0;white-space:pre-wrap;word-break:break-word;border-bottom:1px solid var(--c-border);}
+.scr-l .cap-det-link{margin:0 2px;white-space:nowrap;}
+.scr-av{color:var(--c-warn,#e3b341);} .scr-err{color:var(--c-err,#f85149);} .scr-dim{color:var(--c-dim);}
+.scr-lien{cursor:pointer;text-decoration:underline dotted;}
+.scr-progression{color:var(--c-dim);font-style:italic;}
+.scr-fic a{color:var(--c-accent);}
+.scr-tableau{margin:6px 0 10px;overflow:auto;}
+.scr-t-titre{display:flex;align-items:center;gap:8px;margin-bottom:3px;}
+.scr-tableau table{border-collapse:collapse;font-size:12px;}
+.scr-tableau th{text-align:left;background:var(--c-bg3);position:sticky;top:0;}
+.scr-tableau th,.scr-tableau td{padding:2px 8px;border:1px solid var(--c-border);vertical-align:top;}
+.scr-tableau td.num{text-align:right;font-variant-numeric:tabular-nums;}
+.scr-question{margin:6px 0;padding:6px 10px;border-left:3px solid var(--c-warn,#e3b341);background:var(--c-bg3);border-radius:4px;}
+.scr-question.repondue{border-left-color:var(--c-border);background:none;}
+.scr-q-titre{font-weight:600;margin-bottom:4px;}
+.scr-q-ligne{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.scr-q-ligne input[type=text],.scr-q-filtre{flex:1;max-width:420px;padding:3px 6px;font:inherit;background:var(--c-bg);color:var(--c-text);border:1px solid var(--c-border);border-radius:4px;}
+.scr-q-filtre{margin-bottom:4px;}
+.scr-q-liste{max-height:200px;overflow:auto;margin-bottom:6px;display:flex;flex-direction:column;}
+.scr-q-liste label{display:flex;align-items:center;gap:6px;padding:1px 4px;cursor:pointer;border-radius:3px;}
+.scr-q-liste label:hover{background:var(--c-bg3);}
+.scr-pastille{font-size:9px;font-weight:700;padding:0 4px;border-radius:3px;background:var(--c-bg3);color:var(--c-dim);}
+#b-scripts.active{background:var(--c-bg4);border-color:var(--c-accent);color:var(--c-accent);}
 </style>
 </head>
 <body>
@@ -1973,6 +2011,8 @@ html[data-tbicons] #toolbar .tbtn{padding-left:7px;padding-right:7px;}
       <div class="ctx-i" id="b-load">📂 Load a file</div>
     </div>
   </div>
+  <!-- 📜 Scripts : console de scripts (tiroir en bas des vues, 81-scripts-console.js) -->
+  <div class="tbtn" id="b-scripts" title="Scripts: browse and analyse the model with the API, like Catia Magic macros (Alt+4)" style="display:none">📜<span class="tb-lbl"> Scripts</span></div>
   <!-- 💬 Revue : commentaires de revue (panneau à droite, 55-revue.js) -->
   <div class="tbtn" id="b-review" title="Review: comments on the model and diagrams, check after update, report">💬<span class="tb-lbl"> Review</span><span id="b-review-badge" class="cw-badge" style="display:none"></span></div>
   <!-- 🎨 Thème ▾ : liste des thèmes + personnalisation (le sélecteur caché reste la référence du thème choisi) -->
@@ -2383,6 +2423,34 @@ html[data-tbicons] #toolbar .tbtn{padding-left:7px;padding-right:7px;}
       <div style="font-size:32px;margin-bottom:12px;">🔷</div>
       <div>No matching element.</div>
     </div>
+    <!-- 📜 Console de scripts (tiroir en bas des vues : 81-scripts-console.js) -->
+    <section id="cap-scripts" role="region" aria-label="Scripts" style="display:none">
+      <div class="scr-poignee" title="Drag to resize"></div>
+      <div class="scr-barre">
+        <strong>📜 Scripts</strong>
+        <select id="scr-liste" title="Script library: examples, project scripts, shared folder"></select>
+        <button class="cap-lf-btn" id="scr-nouveau" title="New script">＋</button>
+        <button class="cap-lf-btn" id="scr-enregistrer" title="Save in the project library (kept in the 💾 HTML page)">💾</button>
+        <button class="cap-lf-btn" id="scr-supprimer" title="Remove from the library">🗑</button>
+        <button class="cap-lf-btn" id="scr-importer" title="Import .js files into the library">📂</button>
+        <button class="cap-lf-btn" id="scr-exporter" title="Export the displayed script as a .js file">⬇</button>
+        <button class="cap-lf-btn" id="scr-dossier" style="display:none">📁</button>
+        <span class="tsep"></span>
+        <button class="cap-lf-btn scr-principal" id="scr-executer" title="Run on the displayed model (Ctrl+Enter)">▶ Run</button>
+        <button class="cap-lf-btn" id="scr-arreter" title="Stop the script" disabled>■ Stop</button>
+        <button class="cap-lf-btn" id="scr-effacer" title="Clear the output">⌫</button>
+        <span id="scr-etat" class="ana-dim"></span>
+        <span style="flex:1"></span>
+        <span class="ana-dim scr-aide" title="API reference: docs/api/arcalyse.d.ts (help ❓ › Scripts). A script can only read and analyse the model; it runs isolated from the page and the network.">API: model, metamodel, analysis, out, ui — reading and analysis only</span>
+        <button class="cap-lf-btn" id="scr-visite" title="Guided tour of the script console">🎓</button>
+        <button class="cap-lf-btn" id="scr-fermer" title="Close (Alt+4)">✕</button>
+      </div>
+      <div class="scr-corps">
+        <textarea id="scr-code" spellcheck="false" autocomplete="off" wrap="off" aria-label="Script code"></textarea>
+        <div id="scr-sortie" aria-live="polite"></div>
+      </div>
+      <input type="file" id="scr-fichier" accept=".js,.txt" multiple hidden>
+    </section>
   </div>
 
   <!-- Detail panel — inline right column, shown on element click -->
@@ -2419,6 +2487,7 @@ html[data-tbicons] #toolbar .tbtn{padding-left:7px;padding-right:7px;}
       <button class="htab" data-ht="itf">🔌 Interfaces & ports</button>
       <button class="htab" data-ht="ana">ƒ Functions · 🔬 Analyses</button>
       <button class="htab" data-ht="review">💬 Review</button>
+      <button class="htab" data-ht="scripts">📜 Scripts</button>
       <button class="htab" data-ht="usecase">🧪 Use case</button>
     </div>
     <!-- Content -->
@@ -2886,6 +2955,20 @@ html[data-tbicons] #toolbar .tbtn{padding-left:7px;padding-right:7px;}
       </div>
 
       <!-- ── HOME ── -->
+      <div id="ht-scripts" class="ht-panel" style="display:none">
+        <h2>📜 Scripts — reading and analysis macros</h2>
+        <p class="hp-lead">The <b>📜 Scripts</b> button of the bar (or <b>Alt+4</b>, or ☰ / Ctrl+K “Scripts”) opens a console below the views: <b>JavaScript</b> scripts browse and analyse the displayed model through an <b>API</b>, like Catia Magic macros or Python4Capella. The API is <b>Arcature</b>'s (same names), limited to <b>reading</b>: Arcalyse never modifies the model; it adds <code>analysis</code>, the results of every Arcalyse analysis.</p>
+        <table class="hp-t">
+          <tr><td>Run</td><td>Pick an <b>example</b> in the list or write a script, then <b>Ctrl+Enter</b> (▶ Run). <b>■ Stop</b> interrupts an endless loop. Elements shown in the output are <b>links</b> (click: detail panel); tables export as <b>⬇ CSV</b>; files produced by <code>out.file</code> are offered for download. <code>model.selection</code> holds the element opened in the detail panel.</td></tr>
+          <tr><td>API</td><td><code>model</code> (<code>elements(filter)</code>, <code>find</code>, <code>count</code>, <code>findByPath</code>, <code>layer('LA')</code>, <code>root</code>, <code>selection</code>, <code>diagrams</code>), <b>element</b> (<code>name</code>, <code>type</code>, <code>layer</code>, <code>description</code>, <code>owner</code>, <code>children()</code>, <code>descendants()</code>, <code>attributes()</code>, <code>isA()</code>, <code>references()</code>, <code>referencedBy()</code>, <code>links('allocation', 'in')</code>, <code>diagrams</code>), <code>metamodel</code> (Capella types and inheritance), <code>out</code> (<code>print</code>, <code>table</code>, <code>csv</code>, <code>file</code>, <code>progress</code>), <code>ui</code> (<code>await ui.ask</code>, <code>confirm</code>, <code>choose</code>, <code>readCsv</code>). Filter: a type name (subtypes included), a function, or <code>{ type, exactType, layer, name, technical, where }</code>. Full reference: <code>docs/api/arcalyse.d.ts</code> and <code>docs/api/LISEZMOI.md</code>.</td></tr>
+          <tr><td><code>analysis</code></td><td>With <code>await</code>: <code>functions()</code>, <code>chains()</code>, <code>traceability()</code>, <code>capabilities()</code>, <code>states()</code>, <code>health()</code> (💚 score), <code>requirements()</code>, <code>properties()</code>, <code>data()</code>, <code>constraints()</code>, <code>status()</code>, <code>categories()</code>, <code>rec()</code>, <code>libraries()</code>, <code>scenarios()</code>, <code>ports()</code>, <code>functionalExchanges()</code>, <code>componentExchanges()</code>, <code>physicalLinks()</code>, <code>deployment()</code>, <code>checks(view)</code> (🩺 checks, profile applied), <code>nameQuality(name)</code>. The results are those of the views; every object that designates an element carries <code>element</code>.</td></tr>
+          <tr><td>Library</td><td><b>💾</b> saves the script in the <b>project</b> (kept in the 💾 HTML page, reloaded by 📄 Open a work project), <b>📂</b> imports .js files, <b>⬇</b> exports the displayed script, <b>🗑</b> removes it. <b>📁 Shared folder</b> (Chrome / Edge): a folder of scripts (next to the model, on a network share) whose .js files appear in the list; 💾 rewrites the file; the folder is found again at the next opening.</td></tr>
+          <tr><td>Isolation</td><td>The script runs in an isolated <b>worker</b>, on a snapshot of the model: no page, no file, no network (<code>fetch</code> removed). A script received from a colleague can neither send the model elsewhere nor touch the page. An error gives the <b>line</b> of the script (click: the editor goes there).</td></tr>
+          <tr><td>Recipes</td><td>Number of elements: <code>out.print(model.count())</code> · per layer: <code>out.table(['OA','SA','LA','PA','EPBS'].map(layer => ({ layer, n: model.count({ layer }) })))</code> · per type: <code>out.table(model.types())</code> · functions without description: <code>model.elements({ type: 'AbstractFunction', where: f => !f.description })</code> · health score: <code>(await analysis.health()).score</code>. More recipes in <code>docs/api/LISEZMOI.md</code>.</td></tr>
+          <tr><td>Arcature</td><td>A script that only uses <code>model</code>, <code>metamodel</code>, <code>out</code> and <code>ui</code> runs as is in Arcature (which can also modify the model). <code>model.tool</code> is <code>'Arcalyse'</code> or <code>'Arcature'</code>.</td></tr>
+        </table>
+      </div>
+
       <div id="ht-home" class="ht-panel" style="display:none">
         <h2>🏠 Project home</h2>
         <p class="hp-lead">View shown when a model or a project is opened (<b>🏠 Home</b> button, at the far left of the bar). Everything entered there is saved <b>in the page</b> (💾).</p>
@@ -16252,6 +16335,7 @@ function capWatchOpenCompare(what){
 function capWatchUpdateUi(){
   const b=document.getElementById('b-cap-watch'); if(!b) return;
   b.style.display=capLoaded?'':'none';
+  const bs=document.getElementById('b-scripts'); if(bs) bs.style.display=capLoaded?'':'none';   // 📜 Scripts (81) : avec un modèle chargé
   const badge=document.getElementById('b-cap-watch-badge');
   const p=_capWatch.pending, st=_capWatch.state;
   if(badge){
@@ -16629,6 +16713,7 @@ function capNavCurKey(force){
 function capNavOpen(k){
   capNavClose();
   if(k==='@rm'){ document.getElementById('mode-rm')?.click(); return; }
+  if(k==='@scripts'){ capScrToggle(true); return; }   // 📜 console de scripts (81)
   if(k==='home:rap'){ capDosOuvrir(); return; }   // 📘 Rapports : onglet 📑 Dossiers de l'accueil
   if(k.startsWith('ana:')){ capAnaSub=k.slice(4); capShowView('analyses'); }
   else capShowView(k);
@@ -16754,7 +16839,7 @@ function capNavMenu(g, anchor){
       if(a){ capNavClose(); ({open:()=>capPickCapellaFile(), folder:()=>capOpenProjectFolder(), projet:()=>capProjetPagePick(), save:()=>capSavePageDirect(false), saveas:()=>capSavePageDirect(true),
         page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor(), update:()=>capCfgLoadUpdate(), cfgsave:()=>capCfgDialog('save'), cfgload:()=>capCfgLoadFile(),
         help:()=>openHelpModal(), custom:()=>capPrefCustomDialog(), prefs:()=>capPrefDialog(), autosave:()=>capPrefDialog('save'), checks:()=>capChkDialog(), xport:()=>capExportToggle(), xlsx:()=>capXlsxClasseur(),
-        theme:()=>capNavMenu('theme', document.getElementById('b-prefs')), tour:()=>capTourStart(), tourview:()=>capTourStartView(), tourrev:()=>capTourRevue(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
+        theme:()=>capNavMenu('theme', document.getElementById('b-prefs')), tour:()=>capTourStart(), tourview:()=>capTourStartView(), tourrev:()=>capTourRevue(), tourscr:()=>capTourScripts(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
       if(e.target.closest('[data-reset]')){ const a=_capNav.auto; _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); if(a) _capNav.auto=a;   // ⚙ enregistrement automatique conservé
         capNavSave(); capNavRender(); capNavMenuFill(); }
     });
@@ -16818,6 +16903,7 @@ function capNavMenuFill(){
       (v?_L(`<div class="ctx-i" data-act="tourview" title="Presents the menus and commands of the displayed view">🎯 Tour of this view <span class="cap-nav-g">${v.l}</span></div>`)
         :_L(`<div class="cap-nav-hint">🎯 Load a model for the tour of each view.</div>`))+
       _L(`<div class="ctx-i" data-act="tourrev" title="Presents the 💬 Review panel: comments, checking, report, targeted review, separate window">💬 Review tour</div>`)+
+      (capLoaded?_L(`<div class="ctx-i" data-act="tourscr" title="Presents the 📜 Scripts console: library, editor, execution, output">📜 Scripts tour</div>`):'')+
       _L(`<div class="cw-m-sep"></div><div class="ctx-i" data-act="about" title="Version, author, licence, third-party components, technical information">ℹ About</div>`);
     return;
   }
@@ -16834,7 +16920,7 @@ function capNavMenuFill(){
   const q=norm((dd.querySelector('#cap-nav-q')||{}).value||'').trim();
   const gl=x=>(CAP_NAV_GROUPS.find(G=>G.g===x)||{}).l||'';
   if(q){
-    const all=[{k:'@rm',l:_L('🗺 Relation Map'),g:''},...CAP_NAV_ITEMS];
+    const all=[{k:'@rm',l:_L('🗺 Relation Map'),g:''},{k:'@scripts',l:_L('📜 Scripts'),g:'',t:_L("Script console: browse and analyse the model with the API (Alt+4)")},...CAP_NAV_ITEMS];
     const hit=all.filter(i=>q.split(/\s+/).every(w=>norm(i.l+' '+gl(i.g)+' '+(i.t||'')).includes(w)));
     const inName=i=>q.split(/\s+/).every(w=>norm(i.l).includes(w)); hit.sort((a,b)=>inName(b)-inName(a));   // le nom de la vue prime sur l'info-bulle
     const pal=capPalHtml(q);   // éléments du modèle et diagrammes (67)
@@ -17098,6 +17184,8 @@ var CAP_TOUR_STEPS=[
    x:_L("Detects new versions of the .capella file and shows what changed (delta, history).")},
   {s:'#b-review', t:_L("💬 Review"),
    x:_L("Review comments on the model and the diagrams, checking after an update, report, targeted review for other reviewers. The panel opens on the right; <b>⧉<\/b> opens it in a separate window; <b>🎓<\/b> (or <b>❓ Help ▾ → 💬 Review tour<\/b>) presents it step by step.")},
+  {s:'#b-scripts', m:'loaded', t:_L('📜 Scripts'),
+   x:_L("Script console (Alt+4): JavaScript scripts read and analyse the model through an API, like Catia Magic macros. <b>❓ Help ▾ → 📜 Scripts tour<\/b> presents it.")},
   {s:'#b-theme-menu', t:_L("🎨 Theme"),
    x:_L("Choose a light or dark theme, or create your own custom theme.")},
   {s:'#b-help', t:_L("❓ Help"),
@@ -17369,6 +17457,20 @@ var CAP_TOUR_REVUE=[
   {pre:()=>capTourRev('report'), s:'#crv-body', t:_L("📄 Report"), x:_L("Status × criticality summary, <b>📄 HTML report<\/b> printable, <b>⬇ CSV<\/b>, and <b>📤 Targeted review<\/b> : reviewers answer in a standalone page, their answers are imported back here.")},
   {pre:()=>capTourRev('cfg'), s:'#crv-body', t:_L("⚙ Settings"), x:_L("Your name (author of the comments), participants, fields offered in the editor, notes layer on the diagrams, 💬 mark on commented elements.")},
   {pre:()=>capTourRev('list'), t:_L("✅ Your turn"), x:_L("This tour can be restarted with <b>🎓<\/b> at the top of the panel or with <b>❓ Help ▾ → 💬 Review tour<\/b>. The full help has a 💬 Review tab.")} ];
+/** Visite de la console 📜 Scripts (ce n'est pas une vue : lancée par 🎓 dans la console ou par ❓ Aide ▾ → 📜 Visite des scripts). */
+var CAP_TOUR_SCRIPTS=[
+  {pre:()=>capScrToggle(true), t:_L('📜 Scripts (macros)'), x:_L(" <b>JavaScript<\/b> scripts browse and analyse the displayed model through an <b>API<\/b> (Arcature's, read-only), like Catia Magic macros or Python4Capella. They run isolated: no page, no file, no network.")},
+  {s:'#b-scripts', t:_L("📜 Scripts button"), x:_L("Opens or closes the console (also <b>Alt+4<\/b>, or ☰ / Ctrl+K “Scripts”).")},
+  {s:'#scr-liste', t:_L("📚 Library"), x:_L("<b>Examples<\/b> provided (functions without description, unallocated, allocation matrix, statistics, health and checks, traceability, chains, requirements, name quality…), scripts of the <b>project<\/b> and of the <b>shared folder<\/b>. Choosing a script shows it in the editor.")},
+  {s:'#scr-nouveau,#scr-enregistrer,#scr-supprimer,#scr-importer,#scr-exporter,#scr-dossier', t:_L("💾 Save, import, export"), x:_L("<b>＋<\/b> new script · <b>💾<\/b> saves in the project (kept in the 💾 HTML page) or in the shared folder · <b>🗑<\/b> removes · <b>📂<\/b> imports .js files · <b>⬇<\/b> exports the displayed script · <b>📁<\/b> shared script folder (Chrome / Edge).")},
+  {s:'#scr-code', t:_L("✏ Editor"), x:_L("The script. It sees <code>model<\/code>, <code>metamodel<\/code>, <code>analysis<\/code>, <code>out<\/code>, <code>ui<\/code> and <code>console<\/code>. For instance: <code>out.print(model.count())<\/code> prints the number of elements of the model. <b>Tab<\/b> indents, <b>Ctrl+Enter<\/b> runs.")},
+  {s:'#scr-executer,#scr-arreter,#scr-effacer', t:_L("▶ Run"), x:_L("<b>▶ Run<\/b> runs the script on the displayed model (Ctrl+Enter); <b>■ Stop<\/b> interrupts an endless loop; <b>⌫<\/b> clears the output.")},
+  {s:'#scr-sortie', t:_L("📋 Output"), x:_L("<code>out.print<\/code> writes a line, <code>out.table<\/code> a table (button <b>⬇ CSV<\/b>), <code>out.file<\/code> offers a file. Elements are <b>links<\/b> : a click opens the detail panel. An error gives the line of the script (click: the editor goes there). The script's questions (<code>ui.ask<\/code>, <code>ui.choose<\/code>…) appear here.")},
+  {s:'.scr-aide', t:_L("📖 Reference"), x:_L("The full API reference is in <code>docs/api/arcalyse.d.ts<\/code> (VS Code autocompletion) and <code>docs/api/LISEZMOI.md<\/code> (recipes); the full help has a 📜 Scripts tab.")},
+  {t:_L("✅ Your turn"), x:_L("This tour can be restarted with <b>🎓<\/b> in the console or by <b>❓ Help ▾ → 📜 Scripts tour<\/b>.")} ];
+/** Lance la visite de la console 📜 Scripts (modèle chargé). */
+function capTourScripts(){ if(!capLoaded){ capToast(_L("Open a model first."),{level:'warn'}); return; } capScrToggle(true); capTourStart(CAP_TOUR_SCRIPTS); }
+
 /**
  * Visite de 💬 Revue : panneau ouvert dans la page (ramené s'il est dans sa fenêtre séparée) sur l'onglet présenté.
  * @param {string} tab - 'list' | 'check' | 'report' | 'cfg'
@@ -19641,7 +19743,7 @@ function capRenderScenarios(){
  * Fenêtre « À propos » d'Arcalyse (menu ❓ Aide ▾) : identité et version, auteur, licence Apache 2.0, contact,
  * composants tiers (D3.js, licence ISC à reproduire), marques citées, informations techniques copiables.
  */
-var CAP_APP_VERSION='2.4';   // à mettre à jour à chaque livraison (node build.js --livraison)
+var CAP_APP_VERSION='2.5';   // à mettre à jour à chaque livraison (node build.js --livraison)
 var CAP_APP_AUTHOR=_L('Romain Lescole');
 var CAP_APP_NAME=_L('Arcalyse');
 var CAP_APP_SLOGAN=_L("Your Capella model, inside and out.");
@@ -23928,7 +24030,7 @@ const _capProjetPage = { nom: '' };
 /** Plus ancienne version d'Arcalyse dont les pages enregistrées sont reprises sans réserve. */
 const CAP_PROJET_VERSION_MIN = '2.1';
 /** Blocs JSON d'une page enregistrée repris à l'ouverture d'un projet de travail. */
-const CAP_PROJET_BLOCS = ['cap-review', 'cap-home', 'cap-dashboards', 'cap-toolbar', 'cap-ui-views', 'cap-theme-custom', 'cap-name-rules', 'cap-checks'];
+const CAP_PROJET_BLOCS = ['cap-review', 'cap-home', 'cap-dashboards', 'cap-toolbar', 'cap-ui-views', 'cap-theme-custom', 'cap-name-rules', 'cap-checks', 'cap-scripts-data'];
 
 /**
  * 📄 Ouvrir un projet de travail : choix de la page HTML (sélecteur à accès direct quand le navigateur le permet,
@@ -24026,6 +24128,8 @@ function capProjetParties(info) {
   if (dash) P.push({ k: 'dash', l: _L("📐 Dashboards"), d: n((dash.list || []).length, _L('page(s)')) });
   const ui = capProjetBloc(info, 'cap-ui-views');
   if (ui && (ui.table || ui.csv || ui.rm || ui.tv)) P.push({ k: 'vues', l: _L("▤ Table, 🗺 Relation Map views, ⬇ CSV exports"), d: _L("tabs, columns, filters, saved views") });
+  const scr = capProjetBloc(info, 'cap-scripts-data');
+  if (scr && Array.isArray(scr.bib) && scr.bib.length) P.push({ k: 'scripts', l: _L('📜 Scripts'), d: n(scr.bib.length, _L('script(s)')) });
   if (info.blocs['cap-toolbar']) P.push({ k: 'toolbar', l: _L("☰ View bar and ⚙ preferences"), d: _L("menu display, pinned views, automatic saving") });
   if ((ui && ui.theme) || info.blocs['cap-theme-custom']) P.push({ k: 'theme', l: _L("🎨 Theme"), d: _L("chosen theme and custom theme") });
   if (info.blocs['cap-name-rules']) P.push({ k: 'names', l: _L("🔤 Naming rules"), d: _L("accepted verbs, refused words") });
@@ -24090,6 +24194,7 @@ function capProjetPageAppliquer(info, keys, nom, handle) {
   if (keys.has('theme')) essai('theme', () => { const c = capProjetBloc(info, 'cap-theme-custom'); capCfgSet('theme', Object.assign({ current: ui.theme || '' }, c ? { custom: c } : {})); });
   if (keys.has('names')) essai('names', () => capCfgSet('names', capProjetBloc(info, 'cap-name-rules')));
   if (keys.has('checks')) essai('checks', () => capCfgSet('checks', capProjetBloc(info, 'cap-checks')));
+  if (keys.has('scripts')) essai('scripts', () => capScrSetData(capProjetBloc(info, 'cap-scripts-data')));
   if (keys.has('revue')) essai('revue', () => { _capRev = capRevNorm(capProjetBloc(info, 'cap-review')); _capRev.comments.forEach(c => _capRevUnsaved.add(c.id)); capRevSave(); });
   if (keys.has('accueil')) essai('accueil', () => capHomeSetData(capProjetBloc(info, 'cap-home')));
   if (!info.xml) { capShowWelcome(!capLoaded); if (typeof capWatchFlash === 'function') capWatchFlash(_L("✔ Work and settings of the page carried over")); return; }
@@ -29175,6 +29280,1200 @@ document.addEventListener('change',e=>{
   const s=e.target.closest('.cap-pg-sel'); if(!s) return;
   capPgShow(s.closest('.cap-pg'), +s.value);
 });
+// ── Métamodèle Capella (types et héritage) pour l'API de scripts — FICHIER GÉNÉRÉ, NE PAS MODIFIER À LA MAIN ──
+// Extrait du référentiel d'Arcature (src/js/44-metamodele.js, généré depuis les sources de Capella v7.0.1, 8e92bb0) :
+// p : préfixes d'espace de noms ; n : types « indice de préfixe:Nom » ; t : par type, [abstrait (1/0), indices des types parents].
+// Sert à isA(), metamodel.supertypes() et aux filtres par type avec héritage (80-scripts-api.js). Sans DOM.
+
+/** Référentiel réduit du métamodèle Capella (version, préfixes, types, héritage). */
+var CAP_MM={"version":"v7.0.1","commit":"8e92bb0","p":["libraries","org.polarsys.capella.common.data.activity","org.polarsys.capella.common.data.behavior","org.polarsys.capella.common.data.core","org.polarsys.capella.core.data.capellacommon","org.polarsys.capella.core.data.capellacore","org.polarsys.capella.core.data.capellamodeller","org.polarsys.capella.core.data.cs","org.polarsys.capella.core.data.ctx","org.polarsys.capella.core.data.epbs","org.polarsys.capella.core.data.fa","org.polarsys.capella.core.data.information","org.polarsys.capella.core.data.information.communication","org.polarsys.capella.core.data.information.datatype","org.polarsys.capella.core.data.information.datavalue","org.polarsys.capella.core.data.interaction","org.polarsys.capella.core.data.la","org.polarsys.capella.core.data.oa","org.polarsys.capella.core.data.pa","org.polarsys.capella.core.data.pa.deployment","org.polarsys.capella.core.data.sharedmodel","re"],"n":["0:LibraryAbstractElement","0:LibraryReference","0:ModelInformation","0:ModelVersion","1:AbstractAction","1:AbstractActivity","1:AcceptEventAction","1:ActivityEdge","1:ActivityExchange","1:ActivityGroup","1:ActivityNode","1:ActivityPartition","1:CallAction","1:CallBehaviorAction","1:ControlFlow","1:ExceptionHandler","1:ExecutableNode","1:InputPin","1:InterruptibleActivityRegion","1:InvocationAction","1:ObjectFlow","1:ObjectNode","1:OutputPin","1:Pin","1:SendSignalAction","1:StructuredActivityNode","1:ValuePin","2:AbstractBehavior","2:AbstractEvent","2:AbstractMessageEvent","2:AbstractSignal","2:AbstractSignalEvent","2:AbstractTimeEvent","2:TimeExpression","3:AbstractConstraint","3:AbstractExchangeItem","3:AbstractInformationFlow","3:AbstractNamedElement","3:AbstractParameter","3:AbstractParameterSet","3:AbstractRelationship","3:AbstractTrace","3:AbstractType","3:AbstractTypedElement","3:FinalizableElement","3:IState","3:InformationsExchanger","3:ModelElement","3:PublishableElement","3:TraceableElement","3:ValueSpecification","4:AbstractCapabilityPkg","4:AbstractState","4:AbstractStateRealization","4:CapabilityRealizationInvolvedElement","4:CapabilityRealizationInvolvement","4:ChangeEvent","4:ChoicePseudoState","4:DeepHistoryPseudoState","4:EntryPointPseudoState","4:ExitPointPseudoState","4:FinalState","4:ForkPseudoState","4:GenericTrace","4:InitialPseudoState","4:JoinPseudoState","4:JustificationLink","4:Mode","4:Pseudostate","4:Region","4:ShallowHistoryPseudoState","4:State","4:StateEvent","4:StateEventRealization","4:StateMachine","4:StateTransition","4:StateTransitionRealization","4:TerminatePseudoState","4:TimeEvent","4:TransfoLink","5:AbstractAnnotation","5:AbstractDependenciesPkg","5:AbstractExchangeItemPkg","5:AbstractModellingStructure","5:AbstractPropertyValue","5:Allocation","5:BooleanPropertyValue","5:CapellaElement","5:Classifier","5:Constraint","5:EnumerationPropertyLiteral","5:EnumerationPropertyType","5:EnumerationPropertyValue","5:Feature","5:FloatPropertyValue","5:GeneralClass","5:GeneralizableElement","5:Generalization","5:IntegerPropertyValue","5:InvolvedElement","5:Involvement","5:InvolverElement","5:KeyValue","5:ModellingArchitecture","5:ModellingArchitecturePkg","5:ModellingBlock","5:NamedElement","5:NamedRelationship","5:Namespace","5:NamingRule","5:PropertyValueGroup","5:PropertyValuePkg","5:Relationship","5:ReuseLink","5:ReuseableStructure","5:ReuserStructure","5:StringPropertyValue","5:Structure","5:Trace","5:Type","5:TypedElement","6:Folder","6:Library","6:ModelRoot","6:Project","6:SystemEngineering","6:SystemEngineeringPkg","7:AbstractDeploymentLink","7:AbstractPathInvolvedElement","7:AbstractPhysicalArtifact","7:AbstractPhysicalLinkEnd","7:AbstractPhysicalPathLink","7:ArchitectureAllocation","7:Block","7:BlockArchitecture","7:BlockArchitecturePkg","7:Component","7:ComponentArchitecture","7:ComponentPkg","7:ComponentRealization","7:DeployableElement","7:DeploymentTarget","7:ExchangeItemAllocation","7:Interface","7:InterfaceAllocation","7:InterfaceAllocator","7:InterfaceImplementation","7:InterfacePkg","7:InterfaceUse","7:Part","7:PhysicalLink","7:PhysicalLinkCategory","7:PhysicalLinkEnd","7:PhysicalLinkRealization","7:PhysicalPath","7:PhysicalPathInvolvement","7:PhysicalPathRealization","7:PhysicalPathReference","7:PhysicalPort","7:PhysicalPortRealization","7:ProvidedInterfaceLink","7:RequiredInterfaceLink","8:Capability","8:CapabilityExploitation","8:CapabilityInvolvement","8:CapabilityPkg","8:Mission","8:MissionInvolvement","8:MissionPkg","8:OperationalAnalysisRealization","8:SystemAnalysis","8:SystemCommunication","8:SystemCommunicationHook","8:SystemComponent","8:SystemComponentPkg","8:SystemFunction","8:SystemFunctionPkg","9:ConfigurationItem","9:ConfigurationItemPkg","9:EPBSArchitecture","9:EPBSArchitecturePkg","9:PhysicalArchitectureRealization","9:PhysicalArtifactRealization","10:AbstractFunction","10:AbstractFunctionAllocation","10:AbstractFunctionalArchitecture","10:AbstractFunctionalBlock","10:AbstractFunctionalChainContainer","10:ComponentExchange","10:ComponentExchangeAllocation","10:ComponentExchangeAllocator","10:ComponentExchangeCategory","10:ComponentExchangeEnd","10:ComponentExchangeFunctionalExchangeAllocation","10:ComponentExchangeRealization","10:ComponentFunctionalAllocation","10:ComponentPort","10:ComponentPortAllocation","10:ComponentPortAllocationEnd","10:ControlNode","10:ExchangeCategory","10:ExchangeContainment","10:ExchangeLink","10:ExchangeSpecification","10:ExchangeSpecificationRealization","10:FunctionInputPort","10:FunctionOutputPort","10:FunctionPkg","10:FunctionPort","10:FunctionRealization","10:FunctionSpecification","10:FunctionalChain","10:FunctionalChainInvolvement","10:FunctionalChainInvolvementFunction","10:FunctionalChainInvolvementLink","10:FunctionalChainRealization","10:FunctionalChainReference","10:FunctionalExchange","10:FunctionalExchangeRealization","10:FunctionalExchangeSpecification","10:ReferenceHierarchyContext","10:SequenceLink","10:SequenceLinkEnd","12:CommunicationItem","12:CommunicationLink","12:CommunicationLinkExchanger","12:Exception","12:Message","12:MessageReference","12:MessageReferencePkg","12:Signal","12:SignalInstance","13:BooleanType","13:DataType","13:Enumeration","13:NumericType","13:PhysicalQuantity","13:StringType","14:AbstractBooleanValue","14:AbstractComplexValue","14:AbstractEnumerationValue","14:AbstractExpressionValue","14:AbstractStringValue","14:BinaryExpression","14:BooleanReference","14:ComplexValue","14:ComplexValueReference","14:DataValue","14:DataValueContainer","14:EnumerationLiteral","14:EnumerationReference","14:LiteralBooleanValue","14:LiteralNumericValue","14:LiteralStringValue","14:NumericReference","14:NumericValue","14:OpaqueExpression","14:StringReference","14:UnaryExpression","14:ValuePart","11:AbstractCollectionValue","11:AbstractEventOperation","11:AbstractInstance","11:Association","11:AssociationPkg","11:Class","11:Collection","11:CollectionValue","11:CollectionValueReference","11:DataPkg","11:DomainElement","11:ExchangeItem","11:ExchangeItemElement","11:ExchangeItemInstance","11:ExchangeItemRealization","11:InformationRealization","11:KeyPart","11:MultiplicityElement","11:Operation","11:OperationAllocation","11:Parameter","11:Port","11:PortAllocation","11:PortRealization","11:Property","11:Service","11:Union","11:UnionProperty","11:Unit","15:AbstractCapability","15:AbstractCapabilityExtend","15:AbstractCapabilityExtensionPoint","15:AbstractCapabilityGeneralization","15:AbstractCapabilityInclude","15:AbstractCapabilityRealization","15:AbstractEnd","15:AbstractFragment","15:AbstractFunctionAbstractCapabilityInvolvement","15:ArmTimerEvent","15:CancelTimerEvent","15:CombinedFragment","15:ConstraintDuration","15:CreationEvent","15:DestructionEvent","15:Event","15:EventReceiptOperation","15:EventSentOperation","15:Execution","15:ExecutionEnd","15:ExecutionEvent","15:FragmentEnd","15:FunctionalChainAbstractCapabilityInvolvement","15:Gate","15:InstanceRole","15:InteractionFragment","15:InteractionOperand","15:InteractionState","15:InteractionUse","15:MergeLink","15:MessageEnd","15:RefinementLink","15:Scenario","15:ScenarioRealization","15:SequenceMessage","15:SequenceMessageValuation","15:StateFragment","15:TimeLapse","16:CapabilityRealization","16:CapabilityRealizationPkg","16:ContextInterfaceRealization","16:LogicalArchitecture","16:LogicalArchitecturePkg","16:LogicalComponent","16:LogicalComponentPkg","16:LogicalFunction","16:LogicalFunctionPkg","16:SystemAnalysisRealization","17:AbstractConceptItem","17:ActivityAllocation","17:CapabilityConfiguration","17:CommunicationMean","17:CommunityOfInterest","17:CommunityOfInterestComposition","17:Concept","17:ConceptCompliance","17:ConceptPkg","17:Entity","17:EntityOperationalCapabilityInvolvement","17:EntityPkg","17:ItemInConcept","17:Location","17:OperationalActivity","17:OperationalActivityPkg","17:OperationalAnalysis","17:OperationalCapability","17:OperationalCapabilityPkg","17:OperationalProcess","17:OperationalScenario","17:OrganisationalUnit","17:OrganisationalUnitComposition","17:Role","17:RoleAllocation","17:RoleAssemblyUsage","17:RolePkg","17:Swimlane","19:AbstractPhysicalInstance","19:ComponentInstance","19:ConnectionInstance","19:DeploymentAspect","19:DeploymentConfiguration","19:InstanceDeploymentLink","19:PartDeploymentLink","19:PortInstance","19:TypeDeploymentLink","18:LogicalArchitectureRealization","18:LogicalInterfaceRealization","18:PhysicalArchitecture","18:PhysicalArchitecturePkg","18:PhysicalComponent","18:PhysicalComponentPkg","18:PhysicalFunction","18:PhysicalFunctionPkg","18:PhysicalNode","20:GenericPkg","20:SharedPkg","21:CatalogElement","21:CatalogElementLink","21:CatalogElementPkg","21:CompliancyDefinition","21:CompliancyDefinitionPkg","21:GroupingElementPkg","21:ReAbstractElement","21:ReDescriptionElement","21:ReElementContainer","21:ReNamedElement","21:RecCatalog"],"t":[[1],[0,0],[0,0],[0,0],[1,16,37],[1,27,49],[1,4],[1,40],[1,36],[1,47],[1,37],[1,9,37],[1,19],[1,12],[1,7],[1,47],[1,10],[1,23],[1,9],[1,4],[1,7],[1,10,43],[1,23],[1,21],[1,19],[1,9,4],[1,17],[1,37],[1,42],[1,28],[1,42],[1,29],[1,28],[1,50],[1,47],[1,42],[1,37,40],[1,47],[1,43],[1,37],[1,47],[1,49],[1,37],[1,37],[1,47],[1,37],[1,47],[1],[1,47],[1,47],[1,43],[1,117],[1,106,45],[0,85],[1,99],[0,100],[0,72],[0,68],[0,68],[0,68],[0,68],[0,71],[0,68],[0,118],[0,68],[0,68],[0,63],[0,71],[1,52],[0,106],[0,68],[0,52],[1,106,28],[0,85],[0,87,27],[0,106,112],[0,85],[0,68],[0,72],[0,63],[1,87],[1,117],[1,117],[1,115],[1,106],[1,112,41],[0,84],[1,49,48],[1,96],[0,106,34],[0,106],[0,106],[0,84],[1,106],[0,84],[1,88,44],[1,119],[0,112],[0,84],[1,87],[1,112],[1,87],[0,87],[1,117],[1,117],[1,119],[1,37,87],[1,112,106],[1,106],[0,80],[0,108],[0,117],[1,40,87],[0,112],[1,117],[1,117],[0,84],[1,108],[1,112,41],[1,42,108],[1,43,106],[0,117],[0,124],[1,87],[0,117],[0,83,123],[0,117,123],[1,112],[1,99],[1,87],[1,87],[1,190],[1,85],[1,105,186],[1,185],[1,104],[1,133,88,145,225],[1,134],[1,117],[0,85],[1,106],[1,106],[0,112,261,44],[0,95,145],[1,85],[1,87],[0,112],[0,229,81,82],[0,112],[0,262,46,140,141,128],[0,131,129,128],[0,106],[0,130],[0,85],[0,106,190,128,101],[0,100],[0,85],[0,155],[0,281,129,46,130,284],[0,85],[1,112],[1,112],[0,289],[0,112],[0,100],[0,51],[0,106,101],[0,100],[0,117],[0,132],[0,137],[0,112],[0,106],[0,136,99],[0,138],[0,183],[0,207],[0,54,136],[0,138],[0,137],[0,135],[0,132],[0,85],[1,108,99,262,187,13,28],[1,85],[1,103],[1,105],[1,87],[0,28,261,106,203],[0,85],[1,106],[0,106],[0,46,87],[0,184],[0,204],[0,184],[0,281,46,284],[0,85],[0,87],[0,222],[0,106],[0,112],[0,107],[1,106,8],[1,85],[0,208,17],[0,208,22],[1,117],[1,281,120,28],[0,184],[0,108,5],[0,106,101,99],[1,100],[0,212,222],[0,212,220],[0,85],[0,212],[0,106,112,99,20,28,261],[0,85],[0,203],[1],[0,87,220],[1,87],[1,88,248],[0,87],[1],[0,223],[0,223],[0,112],[1,117],[0,223,30],[0,262],[0,233],[1,96,248,44],[0,233],[0,233],[0,235],[0,233],[1,247],[1,247],[1,247],[1,238,239,240,255,242],[1,247],[0,241],[0,238],[0,239],[0,239],[1,106,50],[1,117],[0,240],[0,240],[0,238],[0,255],[0,242],[0,255],[1,247],[0,87,50],[0,242],[0,241],[0,87],[1,247],[1,106],[1,284],[0,107],[1,117],[0,95],[0,88,277,248,44],[0,260],[0,260],[0,81,82,264,248,229],[0,265],[0,35,28,30,44,96],[0,106,277,120],[0,262],[0,85],[0,85],[0,112],[1,87],[1,93,28,261],[0,85],[0,120,277,38],[1,106],[0,85],[0,85],[0,93,120,277,44],[0,278],[0,265],[0,284],[0,106],[1,117,101,187],[0,112],[0,107],[0,112],[0,112],[0,85],[1,314],[1,326],[0,100],[0,304],[0,304],[0,296],[0,106],[0,304],[0,304],[1,106,28],[0,304],[0,304],[0,326],[0,295],[0,304],[0,314],[0,100],[0,319],[0,106],[1,106],[0,314],[0,314],[0,296],[0,118],[0,295],[0,118],[0,108,27],[0,85],[0,106],[0,87],[0,326],[1,106],[0,289],[0,51],[0,144],[0,137],[0,135],[0,136,54],[0,138],[0,183],[0,207],[0,132],[1,136],[0,85],[0,337],[0,107,188],[0,106],[0,106],[0,106],[0,112],[0,117],[0,337,46,99],[0,100],[0,138],[0,106],[0,337],[0,183],[0,207],[0,134],[0,289,108],[0,51],[0,211],[1,106],[0,106],[0,106],[0,262],[0,85],[0,106],[0,117],[0,106,11],[1,87],[0,365,140,141],[0,365],[0,117],[0,106],[0,127],[0,127],[0,365],[0,127],[0,132],[0,144],[0,137],[0,135],[0,129,136,54,140,141],[0,138,264],[0,183],[0,207],[0,378],[0,117],[0,114,123],[0,392,393],[0,391],[0,394,393],[0,392],[0,394],[0,387],[1],[1,394],[1],[1,391],[0,387]]};
+// ── 📜 API de scripts (macros) — noyau sans DOM ─────────────────────────────
+// Repris de l'API de scripts d'Arcature (src/js/47-api.js, contrat docs/api/arcature.d.ts), limité à la LECTURE
+// et à l'ANALYSE : Arcalyse ne modifie jamais le modèle. Noms publics en anglais (mêmes noms qu'Arcature : un script
+// de lecture écrit pour l'un tourne dans l'autre) ; le code reste en français. Contrat : docs/api/arcalyse.d.ts.
+//
+// Tout le noyau tient dans la fonction capScrNoyau() : la console (81) la recopie telle quelle (toString) dans le
+// worker des scripts, avec le script de l'utilisateur ; sans worker, elle l'appelle dans la page (exécution signalée
+// comme non isolée). Le script voit uniquement : model, metamodel, analysis, out, ui, console.
+//
+// Données : un instantané du modèle affiché (82-scripts-analyses.js : éléments, relations de 🔗 Liens, diagrammes du
+// .aird), reçu par le worker. Les analyses (ƒ fonctions, ⚡ chaînes, 🧬 traçabilité, 🩺 contrôles, 💚 santé…) sont
+// calculées par la page à la demande du script (await analysis.xxx()) et rendues en JSON ; les objets qui désignent
+// un élément reçoivent une propriété `element`.
+
+/**
+ * Construit le noyau de l'API de scripts : objets publics et exécution. Autonome (aucune autre fonction d'Arcalyse),
+ * pour être recopié dans le worker ; dépend seulement de `_L`, `CAP_LANG` et `CAP_MM` (définis dans le worker par la console).
+ * @returns {{executer:Function, servir:Function, exemples:Function, csv:Function, VERSION:string, MASQUES:string[], parametres:Function}} Noyau
+ */
+function capScrNoyau(){
+  /** Version du contrat de l'API (docs/api/arcalyse.d.ts). */
+  const API_VERSION='1.0';
+  /** Relations publiques (mêmes noms qu'Arcature) acceptées par element.links(). */
+  const API_RELATIONS=['source','target','allocation','functionalExchange','componentExchange','physicalLink','communicationMean','exchangedItem',
+    'exchangeAllocation','componentExchangeAllocation','portAllocation','deployment','involvement','exploitation','include','extend','generalization',
+    'realization','trace','transition','otherAllocation'];
+  /** Couches ARCADIA acceptées par les filtres et model.layer(). */
+  const API_COUCHES=['OA','SA','LA','PA','EPBS'];
+  /** Noms globaux masqués pendant l'exécution d'un script (page, réseau, état d'Arcalyse). */
+  const API_MASQUES=['document','window','self','globalThis','parent','top','frames','localStorage','sessionStorage','indexedDB','caches','navigator',
+    'fetch','XMLHttpRequest','WebSocket','EventSource','importScripts','postMessage','Worker','SharedWorker','require','process',
+    'capAllElements','cap_xmlDoc','_capAnaCache','_capNav','_capHome','_capRev','capScrNoyau','capScrExecuter','capScrSnapshot','capScrAnalyse'];
+  /** Données internes de chaque enveloppe d'élément ({ ctx, e }), inaccessibles depuis l'objet public. */
+  const INTERNE=new WeakMap();
+  /** Constructeur des fonctions asynchrones (le script peut utiliser await). */
+  const ASYNC=Object.getPrototypeOf(async function(){ /* modèle */ }).constructor;
+  /** Nom de source donné au script (numéros de ligne des erreurs). */
+  const SOURCE='arcalyse-script.js';
+  /** Analyses proposées par `analysis` (calculées par la page : 82-scripts-analyses.js). */
+  const ANALYSES=['functions','chains','traceability','capabilities','states','health','requirements','properties','data','constraints','status',
+    'categories','rec','libraries','scenarios','ports','functionalExchanges','componentExchanges','physicalLinks','deployment','checks','nameQuality','diagramsOf'];
+
+  /** Erreur levée par l'API, avec un message affichable. @param {string} msg @returns {Error} */
+  const erreur=msg=>{ const e=new Error(msg); e.name='ArcalyseError'; return e; };
+
+  // ── Métamodèle (types et héritage : CAP_MM, 79-scripts-metamodele.js) ──
+  const MMX={complet:null, court:null, anc:[]};
+  /** Construit les index du référentiel (nom complet et nom court → indice). */
+  function mmInit(){
+    if(MMX.complet) return;
+    MMX.complet=new Map(); MMX.court=new Map();
+    CAP_MM.n.forEach((n,i)=>{ const k=n.indexOf(':'), nom=n.slice(k+1);
+      MMX.complet.set(CAP_MM.p[+n.slice(0,k)]+':'+nom, i);
+      MMX.court.set(nom, MMX.court.has(nom)?-1:i); });   // -1 : nom court ambigu
+  }
+  /** Nom court d'un type. @param {number} i @returns {string} */
+  const mmNom=i=>CAP_MM.n[i].slice(CAP_MM.n[i].indexOf(':')+1);
+  /** Ancêtres d'un type, lui compris. @param {number} i @returns {Set<number>} */
+  function mmAncetres(i){
+    if(MMX.anc[i]) return MMX.anc[i];
+    const s=new Set([i]);
+    for(const p of CAP_MM.t[i].slice(1)) for(const a of mmAncetres(p)) s.add(a);
+    return (MMX.anc[i]=s);
+  }
+  /** Indice d'un type nommé : court (« LogicalFunction ») ou qualifié (« la:LogicalFunction », nom complet) ; -1 si hors métamodèle.
+   * @param {string} nom @returns {number} */
+  function mmIndice(nom){
+    mmInit();
+    if(nom.includes(':')){
+      if(MMX.complet.has(nom)) return MMX.complet.get(nom);
+      for(const [k,i] of MMX.complet) if(k.endsWith('.'+nom)) return i;
+      return -1;
+    }
+    const i=MMX.court.get(nom);
+    if(i===-1) throw erreur(_L(`Ambiguous type: ${nom}. Qualify it with its package, e.g. “la:${nom}”.`));
+    return i==null?-1:i;
+  }
+  /** Indice du type d'un élément de l'instantané (fullType). @param {object} e @returns {number} */
+  const mmType=e=>{ mmInit(); if(e._mm!==undefined) return e._mm; return (e._mm=MMX.complet.get(e.fullType)??-1); };
+
+  // ── Contexte d'exécution : instantané, index, sorties ──
+  /**
+   * Contexte d'un script : instantané du modèle, index (parent, enfants, références), enveloppes, sorties.
+   * @param {object} snap - Instantané (capScrSnapshot)
+   * @param {object} options - Options d'exécution
+   * @returns {object} Contexte
+   */
+  function contexte(snap, options){
+    const parId=new Map(), enfants=new Map(), liens=new Map();
+    snap.elements.forEach((e,i)=>{ e._i=i; parId.set(e.id, e); });
+    snap.elements.forEach(e=>{ if(e.parent&&parId.has(e.parent)){ let l=enfants.get(e.parent); if(!l) enfants.set(e.parent, l=[]); l.push(e); } });
+    const ajouter=(id,l)=>{ let t=liens.get(id); if(!t) liens.set(id, t=[]); t.push(l); };
+    (snap.links||[]).forEach(r=>{
+      if(!parId.has(r.src)||!parId.has(r.tgt)) return;
+      ajouter(r.src, {rel:r.rel, dir:'out', autre:r.tgt, via:r.via||null});
+      ajouter(r.tgt, {rel:r.rel, dir:'in', autre:r.src, via:r.via||null});
+      if(r.via&&parId.has(r.via)){ ajouter(r.via, {rel:'source', dir:'out', autre:r.src, via:null}); ajouter(r.via, {rel:'target', dir:'out', autre:r.tgt, via:null}); }
+    });
+    return { snap, options, parId, enfants, liens, refs:null, technique:new Set(snap.technical||[]), enveloppes:new Map(), diagrammes:null,
+      tampon:[], dernierEnvoi:Date.now(), nbSorties:0, emettre:options.emettre||(()=>{}) };
+  }
+
+  /** Envoie une sortie (regroupées par lots). @param {object} ctx @param {object} m */
+  function sortie(ctx, m){
+    ctx.tampon.push(m); ctx.nbSorties++;
+    if(ctx.tampon.length>=(ctx.options.lot||200)||Date.now()-ctx.dernierEnvoi>100) vider(ctx);
+  }
+  /** Transmet les sorties en attente. @param {object} ctx */
+  function vider(ctx){ if(!ctx.tampon.length) return; const lot=ctx.tampon; ctx.tampon=[]; ctx.dernierEnvoi=Date.now(); ctx.emettre(lot); }
+
+  /** Index des références par attribut (sortantes et entrantes), calculé à la première demande.
+   * @param {object} ctx @returns {{sortantes:Map, entrantes:Map}} */
+  function references(ctx){
+    if(ctx.refs) return ctx.refs;
+    const sortantes=new Map(), entrantes=new Map();
+    const push=(m,k,v)=>{ let l=m.get(k); if(!l) m.set(k, l=[]); l.push(v); };
+    for(const e of ctx.snap.elements){
+      for(const [k,v] of Object.entries(e.attrs||{})){
+        if(k==='name'||k==='description'||k==='summary'||k==='id'||typeof v!=='string'||v.length<8) continue;
+        for(const id of new Set(v.trim().split(/\s+/).map(x=>x.replace(/^#/,'')))){
+          if(id===e.id||!ctx.parId.has(id)) continue;
+          push(sortantes, e.id, {attr:k, id}); push(entrantes, id, {attr:k, id:e.id});
+        }
+      }
+    }
+    return (ctx.refs={sortantes, entrantes});
+  }
+
+  /** Enveloppe publique d'un élément (la même pour un même élément : el1 === el2 est fiable).
+   * @param {object} ctx @param {object|null} e @returns {ApiElement|null} */
+  function envelopper(ctx, e){
+    if(!e) return null;
+    let w=ctx.enveloppes.get(e);
+    if(!w){ w=new ApiElement(); INTERNE.set(w, {ctx, e}); ctx.enveloppes.set(e, w); }
+    return w;
+  }
+  /** Enveloppe depuis un identifiant. @param {object} ctx @param {string} id @returns {ApiElement|null} */
+  const parId=(ctx,id)=>envelopper(ctx, ctx.parId.get(String(id==null?'':id).replace(/^#/,''))||null);
+  /** Données internes d'une enveloppe (refuse les objets qui ne viennent pas de l'API). @param {*} w @returns {{ctx:object, e:object}} */
+  function interne(w){ const i=INTERNE.get(w); if(!i) throw erreur(_L("Element expected (an object obtained from the API).")); return i; }
+
+  /** Couche publique ('' hors des architectures). @param {object} e @returns {string} */
+  const couche=e=>(API_COUCHES.includes(e.layer)?e.layer:'');
+  /** Libellé : nom, ou ‹Type› sans nom. @param {object} e @returns {string} */
+  const libelle=e=>{ const n=e.attrs&&e.attrs.name; return n?String(n).replace(/\s*\n\s*/g,' '):'‹'+e.type+'›'; };
+  /** Types d'architecture → couche. */
+  const ARCHIS={OperationalAnalysis:'OA', SystemAnalysis:'SA', LogicalArchitecture:'LA', PhysicalArchitecture:'PA', EPBSArchitecture:'EPBS'};
+  /** Ossature créée par Capella avec le projet (approximation : ingénierie, architectures, paquetages et fonctions racines).
+   * @param {object} ctx @param {object} e @returns {string|null} raison, ou null */
+  function ossature(ctx, e){
+    if(!e.parent||!ctx.parId.has(e.parent)) return _L("project root");
+    if(ARCHIS[e.type]) return _L("architecture level");
+    if(e.type==='SystemEngineering') return _L("system engineering");
+    const p=ctx.parId.get(e.parent);
+    if(ARCHIS[p.type]) return /Pkg$/.test(e.type)?_L("root package of the level"):/Realization|Realisation/.test(e.type)?_L("realization between levels"):_L("root element of the level");
+    if(/Pkg$/.test(p.type)&&p.parent&&ctx.parId.has(p.parent)&&ARCHIS[ctx.parId.get(p.parent).type]&&/Function|Activity|Component|Entity/.test(e.type)&&/^Root /i.test(e.attrs.name||'')) return _L("root element of the level");
+    return null;
+  }
+
+  // ── Types et filtres ──
+  /** Types courts présents dans le modèle. @param {object} ctx @returns {Set<string>} */
+  function typesModele(ctx){ if(!ctx.types){ ctx.types=new Set(); ctx.snap.elements.forEach(e=>ctx.types.add(e.type)); } return ctx.types; }
+  /** Prépare un test « est de ce type » : héritage du métamodèle, ou égalité du type court pour un type hors métamodèle présent dans le modèle.
+   * @param {object} ctx @param {string} nom @param {boolean} exact @returns {function(object):boolean} */
+  function testType(ctx, nom, exact){
+    if(typeof nom!=='string'||!nom) throw erreur(_L("Type name expected."));
+    const i=mmIndice(nom);
+    if(i<0){
+      const qualifie=nom.includes(':');
+      const test=qualifie?e=>e.fullType===nom||e.fullType.endsWith('.'+nom):e=>e.type===nom;
+      const present=qualifie?ctx.snap.elements.some(test):typesModele(ctx).has(nom);
+      if(!present) throw erreur(_L(`Unknown type: ${nom}`));
+      return test;
+    }
+    if(exact) return e=>mmType(e)===i;
+    return e=>{ const t=mmType(e); return t>=0&&mmAncetres(t).has(i); };
+  }
+  /** Compile un filtre public : nom de type, fonction, ou { type, exactType, layer, name, technical, where }.
+   * @param {object} ctx @param {*} f @returns {function(object):boolean} */
+  function filtre(ctx, f){
+    if(f==null) return ()=>true;
+    if(typeof f==='string') f={type:f};
+    else if(typeof f==='function') f={where:f};
+    if(typeof f!=='object') throw erreur(_L("Invalid filter: type name, function or object expected."));
+    const connus=['type','exactType','layer','name','technical','where'];
+    const inconnu=Object.keys(f).find(k=>!connus.includes(k));
+    if(inconnu) throw erreur(_L(`Unknown filter criterion: ${inconnu}`));
+    const tests=[], liste=v=>(Array.isArray(v)?v:[v]);
+    if(f.type!=null){ const t=liste(f.type).map(x=>testType(ctx,x,false)); tests.push(e=>t.some(x=>x(e))); }
+    if(f.exactType!=null){ const t=liste(f.exactType).map(x=>testType(ctx,x,true)); tests.push(e=>t.some(x=>x(e))); }
+    if(f.layer!=null){ const c=liste(f.layer); const faux=c.find(x=>!API_COUCHES.includes(x)&&x!=='');
+      if(faux!==undefined) throw erreur(_L(`Unknown layer: ${faux} (OA, SA, LA, PA, EPBS)`)); tests.push(e=>c.includes(couche(e))); }
+    if(f.name!=null){ const nom=f.name; tests.push(nom instanceof RegExp?e=>{ nom.lastIndex=0; return nom.test(e.attrs.name??''); }:e=>(e.attrs.name??'')===String(nom)); }
+    if(f.technical!=null) tests.push(e=>ctx.technique.has(e.type)===!!f.technical);
+    if(f.where!=null){ if(typeof f.where!=='function') throw erreur(_L("The “where” criterion must be a function.")); tests.push(e=>!!f.where(envelopper(ctx,e))); }
+    return e=>tests.every(t=>t(e));
+  }
+  /** Descendants d'un élément (ordre du document) qui vérifient un test. @param {object} ctx @param {object} e @param {Function} test @returns {ApiElement[]} */
+  function descendants(ctx, e, test){
+    const res=[];
+    const voir=x=>{ for(const c of ctx.enfants.get(x.id)||[]){ if(test(c)) res.push(envelopper(ctx,c)); voir(c); } };
+    voir(e); return res;
+  }
+  /** Échappe un nom pour un chemin. @param {string} s @returns {string} */
+  const echapper=s=>String(s).replace(/[\\/]/g, c=>'\\'+c);
+  /** Découpe un chemin « A/B/C » (« \/ » : barre dans un nom). @param {string} chemin @returns {string[]} */
+  function decouper(chemin){
+    if(chemin===''||chemin==='/') return [];
+    if(chemin[0]==='/') chemin=chemin.slice(1);
+    const res=[]; let cour='';
+    for(let i=0;i<chemin.length;i++){ const c=chemin[i]; if(c==='\\'&&i+1<chemin.length) cour+=chemin[++i]; else if(c==='/'){ res.push(cour); cour=''; } else cour+=c; }
+    res.push(cour); return res;
+  }
+  /** Élément par chemin de noms sous un élément (homonymes : première branche qui aboutit). @param {object} ctx @param {object|null} e @param {string} chemin @returns {ApiElement|null} */
+  function parChemin(ctx, e, chemin){
+    if(typeof chemin!=='string') throw erreur(_L("Path expected (names separated by “/”)."));
+    const noms=decouper(chemin);
+    const enfantsDe=x=>x?(ctx.enfants.get(x.id)||[]):ctx.snap.elements.filter(y=>!y.parent||!ctx.parId.has(y.parent));
+    const chercher=(x,i)=>{ if(i===noms.length) return x; for(const c of enfantsDe(x)) if((c.attrs.name??'')===noms[i]){ const r=chercher(c,i+1); if(r) return r; } return null; };
+    if(!noms.length) return e?envelopper(ctx,e):envelopper(ctx, ctx.snap.elements.find(y=>y.type==='SystemEngineering')||enfantsDe(null)[0]||null);   // chemin vide : l'élément de départ (la racine du modèle)
+    const r=chercher(e,0);
+    return r?envelopper(ctx,r):null;
+  }
+
+  // ── Diagrammes (instantané du .aird) ──
+  /** Objets publics des diagrammes et index par élément. @param {object} ctx @returns {{liste:object[], parElement:Map}} */
+  function diagrammes(ctx){
+    if(ctx.diagrammes) return ctx.diagrammes;
+    const liste=(ctx.snap.diagrams||[]).map(d=>Object.freeze({ id:d.id, name:d.name, type:d.type, code:d.code||'', layer:d.layer||'', kind:d.kind||'diagram',
+      get target(){ return parId(ctx, d.target); }, toString(){ return d.name; }, toJSON(){ return {id:d.id, name:d.name, type:d.type}; } }));
+    const parDiag=new Map(liste.map(d=>[d.id,d])), parElement=new Map();
+    for(const [id,ids] of Object.entries(ctx.snap.diagramsOf||{})) parElement.set(id, ids.map(x=>parDiag.get(x)).filter(Boolean));
+    return (ctx.diagrammes={liste, parElement});
+  }
+
+  /** Élément du modèle vu par les scripts (lecture seule). */
+  class ApiElement {
+    /** @returns {string} identifiant Capella */
+    get id(){ return interne(this).e.id; }
+    /** @returns {string} type court (« LogicalFunction ») */
+    get type(){ return interne(this).e.type; }
+    /** @returns {string} type tel qu'écrit dans le fichier (xsi:type) */
+    get fullType(){ return interne(this).e.fullType; }
+    /** @returns {string} couche ARCADIA : OA, SA, LA, PA, EPBS, ou '' */
+    get layer(){ return couche(interne(this).e); }
+    /** @returns {string} nom ('' si absent) */
+    get name(){ return interne(this).e.attrs.name??''; }
+    /** @returns {string} résumé ('' si absent) */
+    get summary(){ return interne(this).e.attrs.summary??''; }
+    /** @returns {string} description HTML ('' si absente) */
+    get description(){ return interne(this).e.attrs.description??''; }
+    /** @returns {string} commentaire de revue Capella ('' si absent) */
+    get review(){ return interne(this).e.attrs.review??''; }
+    /** @returns {string} libellé affiché : nom, ou ‹Type› pour un élément sans nom */
+    get label(){ return libelle(interne(this).e); }
+    /** @returns {ApiElement|null} propriétaire */
+    get owner(){ const {ctx,e}=interne(this); return e.parent?parId(ctx, e.parent):null; }
+    /** @returns {object[]} diagrammes du .aird qui montrent l'élément (ou dont il est la cible) */
+    get diagrams(){ const {ctx,e}=interne(this); return (diagrammes(ctx).parElement.get(e.id)||[]).slice(); }
+    /** @returns {string} chemin de noms depuis l'ingénierie système (comprise : le projet n'est pas un élément d'Arcalyse), utilisable par findByPath */
+    get path(){ const {ctx,e}=interne(this); const ch=[]; for(let p=e; p; p=p.parent?ctx.parId.get(p.parent):null) ch.unshift(echapper(p.attrs.name??'')); return ch.join('/'); }
+    /** @returns {boolean} élément de l'ossature créée par Capella (projet, architectures, paquetages et fonctions racines) */
+    get isSkeleton(){ const {ctx,e}=interne(this); return ossature(ctx,e)!=null; }
+    /** @returns {string|null} raison de la protection, ou null */
+    get skeletonReason(){ const {ctx,e}=interne(this); return ossature(ctx,e); }
+    /** @returns {boolean} élément technique (valeurs, traces, réalisations, ports, échanges… : CAP_TECHNICAL_TYPES d'Arcalyse) */
+    get isTechnical(){ const {ctx,e}=interne(this); return ctx.technique.has(e.type); }
+    /** Éléments directement contenus. @param {*} [f] filtre @returns {ApiElement[]} */
+    children(f){ const {ctx,e}=interne(this), t=filtre(ctx,f); return (ctx.enfants.get(e.id)||[]).filter(t).map(c=>envelopper(ctx,c)); }
+    /** Tous les éléments contenus, à toute profondeur. @param {*} [f] filtre @returns {ApiElement[]} */
+    descendants(f){ const {ctx,e}=interne(this); return descendants(ctx, e, filtre(ctx,f)); }
+    /** Élément contenu désigné par un chemin de noms relatif. @param {string} chemin @returns {ApiElement|null} */
+    findByPath(chemin){ const {ctx,e}=interne(this); return parChemin(ctx, e, chemin); }
+    /** Valeur d'un attribut XML, ou null. @param {string} nom @returns {string|null} */
+    attribute(nom){ const v=interne(this).e.attrs[nom]; return v==null?null:String(v); }
+    /** Tous les attributs XML (copie). @returns {Object<string,string>} */
+    attributes(){ return Object.assign({}, interne(this).e.attrs); }
+    /** Indique si l'élément est de ce type ou en hérite. @param {string} type @returns {boolean} */
+    isA(type){ const {ctx,e}=interne(this); return testType(ctx,type,false)(e); }
+    /** Éléments référencés par cet élément (attributs de référence), éventuellement par un seul attribut. @param {string} [attr] @returns {ApiElement[]} */
+    references(attr){ const {ctx,e}=interne(this); return (references(ctx).sortantes.get(e.id)||[]).filter(r=>attr==null||r.attr===attr).map(r=>parId(ctx,r.id)); }
+    /** Éléments qui référencent cet élément. @param {string} [attr] @returns {ApiElement[]} */
+    referencedBy(attr){ const {ctx,e}=interne(this); return (references(ctx).entrantes.get(e.id)||[]).filter(r=>attr==null||r.attr===attr).map(r=>parId(ctx,r.id)); }
+    /** Liaisons métier (celles de 🔗 Liens) : allocations, échanges, réalisations, implications…
+     * @param {string} [relation] relation publique @param {'in'|'out'} [sens] @returns {Array<{relation:string, direction:string, element:ApiElement, via:ApiElement|null}>} */
+    links(relation, sens){
+      const {ctx,e}=interne(this);
+      if(relation!=null&&!API_RELATIONS.includes(relation)) throw erreur(_L(`Unknown relation: ${relation}`));
+      if(sens!=null&&sens!=='in'&&sens!=='out') throw erreur(_L(`Unknown direction: ${sens} (in or out)`));
+      return (ctx.liens.get(e.id)||[]).filter(l=>(relation==null||l.rel===relation)&&(sens==null||l.dir===sens))
+        .map(l=>({relation:l.rel, direction:l.dir, element:parId(ctx,l.autre), via:l.via?parId(ctx,l.via):null}));
+    }
+    /** @returns {string} libellé */
+    toString(){ return this.label; }
+    /** @returns {{id:string, type:string, name:string}} forme JSON */
+    toJSON(){ return {id:this.id, type:this.type, name:this.name}; }
+  }
+
+  // ── Objets publics ──
+  /** Objet « model ». @param {object} ctx @returns {object} */
+  function modele(ctx){
+    const racines=()=>ctx.snap.elements.filter(e=>!e.parent||!ctx.parId.has(e.parent));
+    const racine=()=>ctx.snap.elements.find(e=>e.type==='SystemEngineering')||racines().find(e=>e.type!=='ModelInformation')||racines()[0]||null;
+    return Object.freeze({
+      apiVersion:API_VERSION,
+      tool:'Arcalyse',
+      fileName:ctx.snap.fileName||'',
+      capellaVersion:ctx.snap.capellaVersion||'',
+      get root(){ return envelopper(ctx, racine()); },
+      get selection(){ return (ctx.options.selection||[]).map(id=>parId(ctx,id)).filter(Boolean); },
+      get diagrams(){ return diagrammes(ctx).liste.slice(); },
+      get hasDiagrams(){ return diagrammes(ctx).liste.length>0; },
+      /** Élément par identifiant, ou null. */
+      getElementById(id){ return parId(ctx, id); },
+      /** Tous les éléments qui vérifient un filtre, dans l'ordre du document. */
+      elements(f){ const t=filtre(ctx,f); return ctx.snap.elements.filter(t).map(e=>envelopper(ctx,e)); },
+      /** Premier élément qui vérifie un filtre, ou null. */
+      find(f){ const t=filtre(ctx,f); return envelopper(ctx, ctx.snap.elements.find(t)||null); },
+      /** Nombre d'éléments qui vérifient un filtre. */
+      count(f){ const t=filtre(ctx,f); let n=0; for(const e of ctx.snap.elements) if(t(e)) n++; return n; },
+      /** Élément par chemin de noms depuis la racine. */
+      findByPath(chemin){ return parChemin(ctx, null, chemin); },
+      /** Architecture d'une couche ARCADIA, ou null. */
+      layer(code){ if(!API_COUCHES.includes(code)) throw erreur(_L(`Unknown layer: ${code} (OA, SA, LA, PA, EPBS)`)); return envelopper(ctx, ctx.snap.elements.find(e=>ARCHIS[e.type]===code)||null); },
+      /** Types présents dans le modèle avec leur nombre d'éléments, par ordre décroissant. */
+      types(){ const n=new Map(); for(const e of ctx.snap.elements) n.set(e.type,(n.get(e.type)||0)+1); return [...n].sort((a,b)=>b[1]-a[1]).map(([type,count])=>({type,count})); }
+    });
+  }
+  /** Objet « metamodel » : types de Capella et héritage. @returns {object} */
+  function metamodele(){
+    const indice=nom=>{ const i=mmIndice(nom); if(i<0) throw erreur(_L(`Unknown type: ${nom}`)); return i; };
+    return Object.freeze({
+      version:CAP_MM.version,
+      has(nom){ try{ return mmIndice(nom)>=0; }catch(e){ return true; } },
+      isA(nom, parent){ return mmAncetres(indice(nom)).has(indice(parent)); },
+      supertypes(nom){ return [...mmAncetres(indice(nom))].map(mmNom); },
+      types(){ return CAP_MM.n.map((n,i)=>CAP_MM.p[+n.slice(0,n.indexOf(':'))].split('.').pop()+':'+mmNom(i)); }
+    });
+  }
+
+  // ── Sorties ──
+  /** Valeur publique → morceau de sortie : texte, ou référence d'élément. @param {*} v @returns {string|object} */
+  function morceau(v){
+    const i=INTERNE.get(v);
+    if(i) return {id:i.e.id, label:libelle(i.e), type:i.e.type, layer:couche(i.e)};
+    if(v==null) return String(v);
+    if(typeof v==='string') return v;
+    if(v instanceof Error) return v.message;
+    if(typeof v==='object'){ try{ return JSON.stringify(v,(k,x)=>(x instanceof RegExp?String(x):x)); }catch(e){ return String(v); } }
+    return String(v);
+  }
+  /** Valeurs → morceaux d'une ligne. @param {Array} valeurs @param {string} sep @returns {Array} */
+  function morceaux(valeurs, sep){
+    const res=[];
+    valeurs.forEach((v,i)=>{ if(i) res.push(sep);
+      if(Array.isArray(v)&&v.some(x=>INTERNE.has(x))) v.forEach((x,j)=>{ if(j) res.push(', '); res.push(morceau(x)); });
+      else res.push(morceau(v)); });
+    return res;
+  }
+  /** Normalise des lignes de tableau : colonnes, puis cellules en morceaux. @param {Array} lignes @param {string[]} [colonnes] @returns {{colonnes:string[], cellules:Array}} */
+  function tableau(lignes, colonnes){
+    if(!Array.isArray(lignes)) throw erreur(_L("List of rows expected."));
+    if(colonnes!=null&&!Array.isArray(colonnes)) throw erreur(_L("List of columns expected."));
+    let cols=colonnes;
+    if(!cols){ const vus=new Set();
+      for(const l of lignes){ if(Array.isArray(l)) l.forEach((x,i)=>vus.add(String(i+1))); else if(l&&typeof l==='object'&&!INTERNE.has(l)) Object.keys(l).forEach(k=>vus.add(k)); else vus.add('value'); }
+      cols=[...vus]; }
+    cols=cols.map(String);
+    const cellules=lignes.map(l=>cols.map((c,i)=>{ const v=Array.isArray(l)?l[colonnes?i:+c-1]:l&&typeof l==='object'&&!INTERNE.has(l)?l[c]:l; return v===undefined?[]:morceaux([v],''); }));
+    return {colonnes:cols, cellules};
+  }
+  /** Texte CSV d'un tableau normalisé (RFC 4180). @param {{colonnes:string[], cellules:Array}} t @param {string} sep @returns {string} */
+  function csv(t, sep){
+    const champ=s=>(/[",\n\r;\t]/.test(s)||s!==s.trim()?'"'+s.replace(/"/g,'""')+'"':s);
+    const texte=m=>m.map(x=>(typeof x==='string'?x:x.label)).join('');
+    return [t.colonnes.map(champ).join(sep), ...t.cellules.map(l=>l.map(c=>champ(texte(c))).join(sep))].join('\r\n')+'\r\n';
+  }
+  /** Objet « out ». @param {object} ctx @returns {object} */
+  function out(ctx){
+    const sep=o=>{ const s=o&&o.separator!=null?String(o.separator):';'; if(s.length!==1) throw erreur(_L("CSV separator: a single character.")); return s; };
+    return Object.freeze({
+      print(...v){ sortie(ctx,{k:'print', niveau:'info', parts:morceaux(v,' ')}); },
+      warn(...v){ sortie(ctx,{k:'print', niveau:'warn', parts:morceaux(v,' ')}); },
+      error(...v){ sortie(ctx,{k:'print', niveau:'error', parts:morceaux(v,' ')}); },
+      table(lignes, colonnes, options){ const t=tableau(lignes,colonnes); sortie(ctx,{k:'table', titre:options&&options.title?String(options.title):'', colonnes:t.colonnes, cellules:t.cellules}); },
+      csv(lignes, colonnes, options){ return csv(tableau(lignes,colonnes), sep(options)); },
+      file(nom, contenu, type){
+        let n=String(nom||'').replace(/[\\/:*?"<>|\x00-\x1f]/g,'_').replace(/^\.+/,'');
+        if(!n) throw erreur(_L("File name expected."));
+        let texte=String(contenu??'');
+        if(/\.csv$/i.test(n)&&texte[0]!=='﻿') texte='﻿'+texte;
+        sortie(ctx,{k:'file', nom:n, contenu:texte, type:type?String(type):/\.csv$/i.test(n)?'text/csv':/\.json$/i.test(n)?'application/json':'text/plain'});
+      },
+      clear(){ sortie(ctx,{k:'clear'}); },
+      progress(fait, total){ sortie(ctx,{k:'progress', fait:+fait||0, total:total==null?null:+total}); }
+    });
+  }
+
+  // ── Entrées (ui) et CSV ──
+  /** Découpe un texte CSV (RFC 4180 ; séparateur détecté). @param {string} texte @param {{separator?:string, header?:boolean}} [options] @returns {{columns:string[], rows:Array}} */
+  function lireCsv(texte, options){
+    const o=options||{};
+    let t=String(texte??''); if(t[0]==='﻿') t=t.slice(1);
+    let sep=o.separator;
+    if(sep==null){ const premiere=t.split(/\r?\n/,1)[0].replace(/"[^"]*"/g,''); const nb=c=>premiere.split(c).length-1; sep=[';',',','\t'].reduce((a,c)=>(nb(c)>nb(a)?c:a),';'); }
+    if(typeof sep!=='string'||sep.length!==1) throw erreur(_L("CSV separator: a single character."));
+    const lignes=[]; let ligne=[], champ='', i=0, entre=false;
+    while(i<t.length){ const c=t[i];
+      if(entre){ if(c==='"'){ if(t[i+1]==='"'){ champ+='"'; i+=2; continue; } entre=false; i++; continue; } champ+=c; i++; continue; }
+      if(c==='"'&&champ===''){ entre=true; i++; continue; }
+      if(c===sep){ ligne.push(champ); champ=''; i++; continue; }
+      if(c==='\r'||c==='\n'){ ligne.push(champ); champ=''; if(c==='\r'&&t[i+1]==='\n') i++; i++; if(ligne.some(x=>x!=='')) lignes.push(ligne); ligne=[]; continue; }
+      champ+=c; i++; }
+    ligne.push(champ); if(ligne.some(x=>x!=='')) lignes.push(ligne);
+    if(o.header===false) return {columns:[], rows:lignes};
+    const columns=(lignes.shift()||[]).map(x=>x.trim());
+    return {columns, rows:lignes.map(l=>Object.fromEntries(columns.map((c,k)=>[c, l[k]??''])))};
+  }
+  /** Objet « ui » (asynchrone : await) ; sans interlocuteur, réponses par défaut. @param {object} ctx @returns {object} */
+  function ui(ctx){
+    const demander=async(d,defaut)=>{ vider(ctx); return ctx.options.interagir?ctx.options.interagir(d):defaut; };
+    const texte=(v,quoi)=>{ if(v!=null&&typeof v!=='string') throw erreur(_L(`Text expected for ${quoi}.`)); return v==null?'':v; };
+    const lireFichier=async(o,accept)=>{ const r=await demander({k:'file', accept:o&&o.accept!=null?String(o.accept):accept}, null); return r&&typeof r.text==='string'?{name:String(r.name||''), text:r.text}:null; };
+    return Object.freeze({
+      async ask(question, defaut){ const r=await demander({k:'ask', question:texte(question,'question'), defaut:defaut==null?'':String(defaut)}, defaut==null?null:String(defaut)); return r==null?null:String(r); },
+      async confirm(question){ return (await demander({k:'confirm', question:texte(question,'question')}, false))===true; },
+      async choose(question, items, options){
+        if(!Array.isArray(items)||!items.length) throw erreur(_L("List of choices expected (not empty)."));
+        const multiple=!!(options&&options.multiple);
+        const r=await demander({k:'choose', question:texte(question,'question'), items:items.map(morceau), multiple}, multiple?[]:null);
+        const pris=(Array.isArray(r)?r:r==null?[]:[r]).filter(k=>Number.isInteger(k)&&k>=0&&k<items.length).map(k=>items[k]);
+        return multiple?pris:pris.length?pris[0]:null;
+      },
+      async readFile(options){ return lireFichier(options,''); },
+      async readCsv(options){ const f=await lireFichier(options,'.csv,.tsv,.txt'); return f?Object.assign({name:f.name}, lireCsv(f.text, options)):null; },
+      parseCsv(t, options){ return lireCsv(texte(t,'text'), options); }
+    });
+  }
+
+  // ── Analyses (calculées par la page) ──
+  /** Attache les éléments aux résultats d'une analyse : tout objet portant `$el` reçoit `element` (l'enveloppe, ou null).
+   * @param {object} ctx @param {*} v @returns {*} */
+  function attacher(ctx, v){
+    if(Array.isArray(v)) return v.map(x=>attacher(ctx,x));
+    if(v&&typeof v==='object'){
+      const o={};
+      for(const [k,x] of Object.entries(v)){ if(k==='$el'){ o.element=parId(ctx,x); } else o[k]=attacher(ctx,x); }
+      return o;
+    }
+    return v;
+  }
+  /** Objet « analysis » : une fonction asynchrone par analyse (résultat JSON de la page, éléments attachés). @param {object} ctx @returns {object} */
+  function analyse(ctx){
+    const o={};
+    for(const nom of ANALYSES) o[nom]=async(...args)=>{
+      vider(ctx);
+      const a=args.map(x=>{ const i=INTERNE.get(x); return i?{$id:i.e.id}:x; });
+      if(!ctx.options.analyser) throw erreur(_L("Analyses unavailable in this context."));
+      const r=await ctx.options.analyser(nom, a);
+      if(r&&r.$error) throw erreur(r.$error);
+      return attacher(ctx, r);
+    };
+    o.names=()=>ANALYSES.slice();
+    return Object.freeze(o);
+  }
+
+  // ── Exécution ──
+  /** Corps de la fonction qui enveloppe un script (fonction interne : ses déclarations peuvent reprendre les noms masqués). @param {string} code @returns {string} */
+  const corps=code=>'"use strict";\nreturn (async () => {\n'+code+'\n})();\n//# sourceURL='+SOURCE;
+  /** Paramètres de la fonction qui enveloppe un script : objets de l'API, puis noms masqués. @returns {string[]} */
+  const parametres=()=>['model','metamodel','analysis','out','console','ui',...API_MASQUES];
+  /** Ligne du script où une erreur s'est produite. @param {Error} e @param {number} decalage @param {string} [source] @returns {number|null} */
+  function ligne(e, decalage, source){
+    const nom=(source||SOURCE).replace(/[.*+?^${}()|[\]\\/]/g,'\\$&');
+    for(const m of String(e&&e.stack||'').matchAll(new RegExp(nom+':(\\d+)','g'))) if(+m[1]-decalage>=1) return +m[1]-decalage;
+    const l=e&&typeof e.lineNumber==='number'&&!source?e.lineNumber-decalage:null;
+    return l!=null&&l>=1?l:null;
+  }
+  /** Décalage entre les lignes du script et celles rapportées par le moteur (en-tête du constructeur de fonction), mesuré une fois. @returns {Promise<number|null>} */
+  async function decalage(){
+    if(decalage.val!==undefined) return decalage.val;
+    try{ await new ASYNC(corps('throw new Error();'))(); }catch(e){ const l=ligne(e,0); decalage.val=l==null?null:l-1; }
+    return decalage.val;
+  }
+  /**
+   * Exécute un script sur un instantané. Sorties par options.emettre (lots), entrées par options.interagir, analyses par options.analyser.
+   * @param {object} snap - Instantané (capScrSnapshot)
+   * @param {string|Function} code - Texte du script, ou fonction déjà compilée (paramètres parametres())
+   * @param {{emettre?:Function, interagir?:Function, analyser?:Function, selection?:string[], lot?:number, source?:string, decalage?:number}} [options]
+   * @returns {Promise<{ok:boolean, erreur?:string, ligne?:number|null, duree:number, sorties:number}>} Bilan
+   */
+  async function executer(snap, code, options){
+    options=options||{};
+    const ctx=contexte(snap, options), t0=Date.now(), o=out(ctx);
+    const globaux={ model:modele(ctx), metamodel:metamodele(), analysis:analyse(ctx), out:o,
+      console:Object.freeze({log:o.print, info:o.print, warn:o.warn, error:o.error, table:o.table, clear:o.clear}), ui:ui(ctx) };
+    const compile=typeof code==='function';
+    const dec=compile?options.decalage??null:await decalage();
+    const fin=(ok,e)=>{ vider(ctx); const r={ok, duree:Date.now()-t0, sorties:ctx.nbSorties};
+      if(!ok){ r.erreur=e&&e.name==='ArcalyseError'?e.message:(e&&e.name?e.name+': ':'')+(e&&e.message!=null?e.message:String(e)); r.ligne=dec==null?null:ligne(e, dec, compile?options.source:null); }
+      return r; };
+    let fn=code;
+    if(!compile){ try{ fn=new ASYNC(...parametres(), corps(code)); }catch(e){ return fin(false,e); } }
+    try{ await fn(...parametres().map(n=>globaux[n])); }catch(e){ return fin(false,e); }
+    return fin(true);
+  }
+  /**
+   * Point d'entrée du worker : reçoit { snap, options }, renvoie { k:'sorties', lot } puis { k:'fin', … } ; une entrée ou une
+   * analyse demandée part en { k:'ui'|'analyse', n, … }, la page répond { k:'reponse', n, valeur }. Les accès au réseau sont retirés.
+   * @param {Function} script - Script compilé (paramètres parametres())
+   */
+  function servir(script){
+    const envoyer=self.postMessage.bind(self);
+    for(const n of ['fetch','XMLHttpRequest','WebSocket','EventSource','importScripts','indexedDB','caches','postMessage','Worker']) try{ self[n]=undefined; }catch(e){ /* non modifiable */ }
+    const attentes=new Map(); let compteur=0;
+    const demander=m=>new Promise(resoudre=>{ const n=++compteur; attentes.set(n, resoudre); envoyer(Object.assign({n}, m)); });
+    self.onmessage=async e=>{
+      if(e.data.k==='reponse'){ const f=attentes.get(e.data.n); attentes.delete(e.data.n); if(f) f(e.data.valeur); return; }
+      const {snap, options}=e.data;
+      const r=await executer(snap, script, Object.assign({}, options, { interagir:d=>demander({k:'ui', demande:d}), analyser:(nom,args)=>demander({k:'analyse', nom, args}), emettre:lot=>envoyer({k:'sorties', lot}) }));
+      envoyer(Object.assign({k:'fin'}, r));
+    };
+  }
+
+  /** Scripts d'exemple proposés dans la console (testés par tests/scripts.js). @returns {Array<{cle:string, nom:string, code:string}>} */
+  function exemples(){
+    const c=t=>t.split('\n').map(l=>'// '+l).join('\n');
+    return [
+      {cle:'sans-description', nom:_L("Functions without description"), code:[
+        c(_L("Functions (root functions excluded) whose description is empty.")),
+        'const sans = model.elements({ type: \'AbstractFunction\', where: f => !f.isSkeleton && !f.description.trim() });',
+        'for (const f of sans) out.print(f.layer, f);',
+        'out.print(`${sans.length} / ${model.count(\'AbstractFunction\')}`);'].join('\n')},
+      {cle:'non-allouees', nom:_L("Unallocated functions"), code:[
+        c(_L("Leaf functions of SA, LA and PA allocated to no component nor actor.")),
+        'const rows = [];',
+        'for (const f of model.elements({ type: \'AbstractFunction\', layer: [\'SA\', \'LA\', \'PA\'] })) {',
+        '  if (f.isSkeleton || f.children(\'AbstractFunction\').length) continue;',
+        '  if (!f.links(\'allocation\', \'in\').length) rows.push({ layer: f.layer, function: f, owner: f.owner });',
+        '}',
+        'out.table(rows);'].join('\n')},
+      {cle:'matrice-allocation', nom:_L("Allocation matrix (CSV)"), code:[
+        c(_L("Components and allocated functions, displayed then offered as a CSV file.")),
+        'const rows = [];',
+        'for (const c of model.elements({ type: \'Component\' }))',
+        '  for (const l of c.links(\'allocation\', \'out\'))',
+        '    rows.push({ layer: c.layer, component: c, function: l.element });',
+        'out.table(rows);',
+        'out.file(\'allocations.csv\', out.csv(rows));'].join('\n')},
+      {cle:'statistiques', nom:_L("Statistics by type and layer"), code:[
+        c(_L("Number of elements by type and layer (technical elements excluded).")),
+        'const layers = [\'OA\', \'SA\', \'LA\', \'PA\', \'EPBS\'], counts = new Map();',
+        'for (const e of model.elements({ technical: false })) {',
+        '  if (!counts.has(e.type)) counts.set(e.type, Object.fromEntries([[\'type\', e.type], ...layers.map(l => [l, 0]), [\'-\', 0]]));',
+        '  counts.get(e.type)[e.layer || \'-\']++;',
+        '}',
+        'out.table([...counts.values()].sort((a, b) => a.type.localeCompare(b.type)));'].join('\n')},
+      {cle:'echanges', nom:_L("Functional exchanges without exchange item"), code:[
+        c(_L("Functional exchanges that carry no exchange item.")),
+        'for (const x of model.elements(\'FunctionalExchange\')) {',
+        '  if (x.links(\'exchangedItem\', \'out\').length) continue;',
+        '  const [s] = x.links(\'source\'), [t] = x.links(\'target\');',
+        '  out.print(x, \':\', s ? s.element : \'?\', \'→\', t ? t.element : \'?\');',
+        '}'].join('\n')},
+      {cle:'selection', nom:_L("Sheet of the selected element"), code:[
+        c(_L("Attributes, links, references and diagrams of the element opened in the detail panel.")),
+        'const [e] = model.selection;',
+        'if (!e) throw new Error('+JSON.stringify(_L("Open an element in the detail panel first."))+');',
+        'out.print(e.type, e, \'—\', e.path);',
+        'out.table(Object.entries(e.attributes()).map(([name, value]) => ({ name, value })), null, { title: '+JSON.stringify(_L("Attributes"))+' });',
+        'out.table(e.links().map(l => ({ relation: l.relation, direction: l.direction, element: l.element, via: l.via || \'\' })), null, { title: '+JSON.stringify(_L("Links"))+' });',
+        'out.print('+JSON.stringify(_L("Referenced by:"))+', e.referencedBy());',
+        'out.print('+JSON.stringify(_L("Diagrams:"))+', e.diagrams.map(d => d.name).join(\' · \') || \'—\');'].join('\n')},
+      {cle:'sante', nom:_L("Model health and checks"), code:[
+        c(_L("💚 Global and per-layer score, then the 🩺 checks with the most rows (all views, profile applied).")),
+        'const h = await analysis.health();',
+        'out.print('+JSON.stringify(_L("Score:"))+', h.score, \'/ 100 —\', h.points, '+JSON.stringify(_L("point(s) to check,"))+', h.bloquants, '+JSON.stringify(_L("blocking"))+');',
+        'out.table(Object.entries(h.couches).map(([layer, c]) => ({ layer, score: c.score, points: c.points, elements: c.pop })));',
+        'const checks = await analysis.checks();',
+        'out.table(checks.filter(c => c.rows.length).sort((a, b) => b.rows.length - a.rows.length).slice(0, 15)',
+        '  .map(c => ({ view: c.view, check: c.title, severity: c.severity, rows: c.rows.length })), null, { title: '+JSON.stringify(_L("Checks"))+' });'].join('\n')},
+      {cle:'controle', nom:_L("Rows of a check (CSV export)"), code:[
+        c(_L("Choice of a view then of a check; its rows are displayed and offered as CSV.")),
+        'const checks = await analysis.checks();',
+        'const views = [...new Set(checks.map(c => c.view))];',
+        'const view = await ui.choose('+JSON.stringify(_L("View:"))+', views);',
+        'if (!view) return;',
+        'const check = await ui.choose('+JSON.stringify(_L("Check:"))+', checks.filter(c => c.view === view).map(c => `${c.title} (${c.rows.length})`));',
+        'if (!check) return;',
+        'const c = checks.find(x => x.view === view && check.startsWith(x.title + \' (\'));',
+        'const rows = c.rows.map(r => Object.fromEntries(c.columns.map((col, i) => [col || String(i + 1), r[i] && r[i].element ? r[i].element : r[i]])));',
+        'out.table(rows, null, { title: c.title });',
+        'out.file(\'controle.csv\', out.csv(rows));'].join('\n')},
+      {cle:'tracabilite', nom:_L("Functions not realized at the lower layer"), code:[
+        c(_L("Leaf functions of each layer that no function of the next layer realizes (🧬 Traceability).")),
+        'const t = await analysis.traceability({ leafOnly: true });',
+        'const next = { OA: \'SA\', SA: \'LA\', LA: \'PA\' };',
+        'const rows = [];',
+        'for (const f of model.elements({ type: \'AbstractFunction\', layer: [\'OA\', \'SA\', \'LA\'] })) {',
+        '  if (f.isSkeleton || f.children(\'AbstractFunction\').length) continue;',
+        '  const below = (t.down[f.id] || []).map(id => model.getElementById(id)).filter(x => x && x.layer === next[f.layer]);',
+        '  if (!below.length) rows.push({ layer: f.layer, function: f, expected: next[f.layer] });',
+        '}',
+        'out.table(rows);'].join('\n')},
+      {cle:'chaines', nom:_L("Functional chains: steps and components"), code:[
+        c(_L("For each chain, its functions in order and the components that carry them (⚡ Chains).")),
+        'const chains = await analysis.chains();',
+        'for (const ch of chains) {',
+        '  const fns = ch.steps.filter(s => s.kind === \'function\' && s.element);',
+        '  const comps = [...new Set(fns.flatMap(s => s.element.links(\'allocation\', \'in\').map(l => l.element.name)))];',
+        '  out.print(ch.element || ch.name, \'—\', fns.length, '+JSON.stringify(_L("function(s):"))+', fns.map(s => s.element), \'—\', comps.join(\', \') || \'∅\');',
+        '}'].join('\n')},
+      {cle:'exigences', nom:_L("Requirements and covered elements (CSV)"), code:[
+        c(_L("Each requirement of the Requirements Viewpoint with its linked elements; empty when the model has none.")),
+        'const r = await analysis.requirements();',
+        'if (!r.list.length) { out.warn('+JSON.stringify(_L("No requirement in this model."))+'); return; }',
+        'const rows = r.list.map(q => ({ id: q.ident || \'\', requirement: q.element || q.name, text: (q.text || \'\').slice(0, 120), linked: (q.links || []).map(l => l.element || l.name) }));',
+        'out.table(rows);',
+        'out.file(\'exigences.csv\', out.csv(rows));'].join('\n')},
+      {cle:'noms', nom:_L("Quality of function names"), code:[
+        c(_L("Functions whose name does not start with a verb or shows a defect (ƒ Functions rules).")),
+        'const rows = [];',
+        'for (const f of model.elements({ type: \'AbstractFunction\', where: f => !f.isSkeleton })) {',
+        '  const q = await analysis.nameQuality(f.name);',
+        '  if (q.issues.length) rows.push({ layer: f.layer, function: f, issues: q.issues.map(i => i.label).join(\' ; \') });',
+        '}',
+        'out.table(rows);'].join('\n')}
+    ];
+  }
+
+  return { executer, servir, exemples, csv, VERSION:API_VERSION, MASQUES:API_MASQUES, parametres, ANALYSES };
+}
+// ── 📜 Console de scripts (macros) ──────────────────────────────────────────
+// Reprise de la console de scripts d'Arcature (src/js/57-scripts.js et 59-scripts-dossier.js), sans la partie
+// « modifications » : Arcalyse ne modifie jamais le modèle. Tiroir en bas des vues (bouton 📜 Scripts, Alt+4) :
+// bibliothèque (exemples, scripts du projet gardés dans le bloc JSON `cap-scripts-data` de la 💾 page, dossier partagé
+// Chrome / Edge), éditeur (Ctrl+Entrée), sortie (liens vers les éléments, tableaux avec CSV, fichiers à télécharger),
+// questions posées par le script (ui.ask, ui.choose, ui.readCsv…). Le script s'exécute dans un worker construit à partir
+// du noyau (capScrNoyau, 80) : pas d'accès à la page ni au réseau, interruptible ; il reçoit un instantané du modèle (82)
+// et demande ses analyses à la page. Sans worker (navigateur qui le refuse) : exécution dans la page, signalée.
+
+/** État de la console de scripts. */
+var _capScr={ worker:null, url:null, decalage:0, enCours:false, debut:0, questions:[], choix:'', charge:'', tableaux:[], urls:[], nbSorties:0, tronque:false,
+  bib:[], dossier:null, attente:null, noyau:null, open:false };
+/** Nombre maximal de sorties affichées (au-delà : sortie tronquée). */
+const CAP_SCR_MAX_SORTIES=5000;
+/** Nombre maximal de lignes affichées par tableau (le CSV les contient toutes). */
+const CAP_SCR_MAX_LIGNES=1000;
+/** Base du navigateur où la poignée du dossier de scripts partagé est mémorisée (seule donnée hors de la page : une poignée ne se sérialise pas). */
+const CAP_SCR_BASE={nom:'arcalyse', table:'poignees', cle:'dossier-scripts'};
+
+/** Noyau de l'API (construit une fois dans la page : exemples, CSV, exécution sans worker). @returns {object} */
+function capScrApi(){ return _capScr.noyau||(_capScr.noyau=capScrNoyau()); }
+
+/** Bloc JSON `cap-scripts-data` de la page : bibliothèque et brouillon. @returns {{bib:object[], brouillon:object|null, hauteur:string}} */
+function capScrData(){
+  try{ const el=document.getElementById('cap-scripts-data'); const d=el?JSON.parse(el.textContent):null; if(d&&typeof d==='object') return Object.assign({bib:[], brouillon:null, hauteur:''}, d); }catch(e){ /* bloc absent ou illisible */ }
+  return {bib:[], brouillon:null, hauteur:''};
+}
+/** Enregistre la bibliothèque et le brouillon dans la page (repris par la 💾 page HTML et 📄 Ouvrir un projet). */
+function capScrSave(){
+  let el=document.getElementById('cap-scripts-data');
+  if(!el){ el=document.createElement('script'); el.type='application/json'; el.id='cap-scripts-data'; document.head.appendChild(el); }
+  const code=document.getElementById('scr-code'), sec=document.getElementById('cap-scripts');
+  el.textContent=JSON.stringify({ bib:_capScr.bib, brouillon:{choix:_capScr.choix, code:code?code.value:''}, hauteur:sec&&sec.style.height||'' }).replace(/</g,'\\u003c');
+}
+
+/** Remplit la liste de la bibliothèque. */
+function capScrListe(){
+  const sel=document.getElementById('scr-liste'); if(!sel) return;
+  const opt=(v,t)=>`<option value="${capEsc(v)}">${capEsc(t)}</option>`;
+  let h=opt('', _L("(draft)"));
+  h+=`<optgroup label="${capEsc(_L("Examples"))}">`+capScrApi().exemples().map(x=>opt('ex:'+x.cle, x.nom)).join('')+'</optgroup>';
+  if(_capScr.bib.length) h+=`<optgroup label="${capEsc(_L("Project scripts"))}">`+_capScr.bib.map((s,i)=>opt('bib:'+i, s.nom)).join('')+'</optgroup>';
+  if(_capScr.dossier) h+=`<optgroup label="${capEsc('📁 '+_capScr.dossier.nom)}">`+_capScr.dossier.scripts.map((s,i)=>opt('dos:'+i, s.nom)).join('')+'</optgroup>';
+  sel.innerHTML=h; sel.value=_capScr.choix;
+  document.getElementById('scr-supprimer').disabled=!_capScr.choix.startsWith('bib:');
+}
+/** Script désigné par un choix de la liste. @param {string} choix - 'ex:clé', 'bib:indice' ou 'dos:indice' @returns {{nom:string, code:string}|null} */
+function capScrScript(choix){
+  if(choix.startsWith('ex:')) return capScrApi().exemples().find(x=>'ex:'+x.cle===choix)||null;
+  if(choix.startsWith('bib:')) return _capScr.bib[+choix.slice(4)]||null;
+  if(choix.startsWith('dos:')) return (_capScr.dossier&&_capScr.dossier.scripts[+choix.slice(4)])||null;
+  return null;
+}
+/** Vrai si le texte de l'éditeur a changé depuis son chargement ou son enregistrement. @returns {boolean} */
+function capScrModifie(){ const c=document.getElementById('scr-code'); return c.value!==_capScr.charge&&c.value.trim()!==''; }
+
+/** Affiche un script de la liste dans l'éditeur (après confirmation si le texte en cours a changé). @param {string} choix */
+async function capScrOuvrir(choix){
+  const s=capScrScript(choix);
+  if(!s){ _capScr.choix=''; capScrListe(); return; }
+  if(capScrModifie()&&!(await capConfirm(_L("The current script is not saved. Replace it?")))){ capScrListe(); return; }
+  _capScr.choix=choix; _capScr.charge=s.code;
+  document.getElementById('scr-code').value=s.code;
+  capScrListe(); capScrSave();
+}
+/** Enregistre le script affiché : dans son fichier (dossier partagé), à sa place (projet), sinon comme nouveau script. */
+async function capScrEnregistrer(){
+  const code=document.getElementById('scr-code').value;
+  try{
+    if(_capScr.choix.startsWith('dos:')&&capScrScript(_capScr.choix)){ await capScrDosEcrire(capScrScript(_capScr.choix).fichier, code, false); }
+    else if(_capScr.choix.startsWith('bib:')&&_capScr.bib[+_capScr.choix.slice(4)]){ _capScr.bib[+_capScr.choix.slice(4)].code=code; capToast(_L("✔ Script saved in the project (💾 HTML page).")); }
+    else {
+      const ex=capScrScript(_capScr.choix);
+      const nom=await capPrompt(_capScr.dossier?_L(`Script name (saved in the “${_capScr.dossier.nom}” folder):`):_L("Script name:"), ex?ex.nom:_L(`Script ${_capScr.bib.length+1}`));
+      if(!nom||!nom.trim()) return;
+      if(_capScr.dossier){ if(!(await capScrDosEcrire(nom.trim().replace(/[\\/:*?"<>|]/g,'_')+'.js', code, true))) return; }
+      else { _capScr.bib.push({nom:nom.trim(), code}); _capScr.choix='bib:'+(_capScr.bib.length-1); capToast(_L("✔ Script saved in the project (💾 HTML page).")); }
+    }
+  }catch(e){ capToast(e.message, {level:'err'}); return; }
+  _capScr.charge=code; capScrListe(); capScrSave();
+}
+/** Supprime le script affiché de la bibliothèque du projet. */
+async function capScrSupprimer(){
+  const i=_capScr.choix.startsWith('bib:')?+_capScr.choix.slice(4):-1;
+  if(i<0||!_capScr.bib[i]||!(await capConfirm(_L(`Remove the script “${_capScr.bib[i].nom}” from the project?`), {danger:true}))) return;
+  _capScr.bib.splice(i,1); _capScr.choix=''; _capScr.charge='';
+  capScrListe(); capScrSave();
+}
+/** Nouveau script vide. */
+async function capScrNouveau(){
+  if(capScrModifie()&&!(await capConfirm(_L("The current script is not saved. Replace it?")))) return;
+  _capScr.choix=''; _capScr.charge=''; document.getElementById('scr-code').value='';
+  capScrListe(); capScrSave(); document.getElementById('scr-code').focus();
+}
+/** Décode un fichier texte : UTF-8, sinon Windows-1252 (CSV d'Excel). @param {ArrayBuffer} buf @returns {string} */
+function capScrDecoder(buf){
+  let t; try{ t=new TextDecoder('utf-8',{fatal:true}).decode(buf); }catch(e){ t=new TextDecoder('windows-1252').decode(buf); }
+  return t[0]==='﻿'?t.slice(1):t;
+}
+/** Importe des fichiers .js dans la bibliothèque du projet ; le premier est affiché. @param {File[]} fichiers */
+async function capScrImporter(fichiers){
+  if(!fichiers.length) return;
+  if(capScrModifie()&&!(await capConfirm(_L("The current script is not saved. Replace it?")))) return;
+  const premier=_capScr.bib.length;
+  for(const f of fichiers) _capScr.bib.push({nom:f.name.replace(/\.(js|txt)$/i,''), code:capScrDecoder(await f.arrayBuffer())});
+  _capScr.choix='bib:'+premier; _capScr.charge=_capScr.bib[premier].code;
+  document.getElementById('scr-code').value=_capScr.charge;
+  capScrListe(); capScrSave();
+  capToast(_L(`✔ ${fichiers.length} script(s) imported into the project.`));
+}
+/** Propose un texte en téléchargement. @param {string} contenu @param {string} nom @param {string} type */
+function capScrTelecharger(contenu, nom, type){
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([contenu],{type:type||'text/plain'})); a.download=nom;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+}
+/** Exporte le script affiché en fichier .js. */
+function capScrExporter(){ const s=capScrScript(_capScr.choix); capScrTelecharger(document.getElementById('scr-code').value, (s?s.nom:'script').replace(/[\\/:*?"<>|]/g,'_')+'.js', 'text/javascript'); }
+
+// ── Dossier de scripts partagé (Chrome / Edge : File System Access API) ──
+/** Ouvre la base du navigateur (null si indisponible). @returns {Promise<IDBDatabase|null>} */
+function capScrBase(){
+  return new Promise(resoudre=>{ try{ const r=indexedDB.open(CAP_SCR_BASE.nom,1); r.onupgradeneeded=()=>r.result.createObjectStore(CAP_SCR_BASE.table); r.onsuccess=()=>resoudre(r.result); r.onerror=()=>resoudre(null); }catch(e){ resoudre(null); } });
+}
+/** Lit ou mémorise la poignée du dossier. @param {FileSystemDirectoryHandle} [poignee] @returns {Promise<FileSystemDirectoryHandle|null>} */
+async function capScrDosMemoire(poignee){
+  const base=await capScrBase(); if(!base) return null;
+  return new Promise(resoudre=>{ try{ const t=base.transaction(CAP_SCR_BASE.table, poignee?'readwrite':'readonly').objectStore(CAP_SCR_BASE.table);
+    const r=poignee?t.put(poignee, CAP_SCR_BASE.cle):t.get(CAP_SCR_BASE.cle); r.onsuccess=()=>resoudre(poignee||r.result||null); r.onerror=()=>resoudre(null); }catch(e){ resoudre(null); } });
+}
+/** Vérifie, et demande si besoin, l'autorisation d'accès au dossier. @param {FileSystemDirectoryHandle} h @param {boolean} ecrire @param {boolean} demander @returns {Promise<boolean>} */
+async function capScrDosAutorise(h, ecrire, demander){
+  const mode={mode:ecrire?'readwrite':'read'};
+  if(!h.queryPermission||(await h.queryPermission(mode))==='granted') return true;
+  return demander&&(await h.requestPermission(mode))==='granted';
+}
+/** Lit les scripts (.js) du dossier et les place dans la bibliothèque. @param {FileSystemDirectoryHandle} h */
+async function capScrDosCharger(h){
+  const scripts=[];
+  for await (const [nom,f] of h.entries()){ if(f.kind!=='file'||!/\.js$/i.test(nom)) continue; scripts.push({nom:nom.replace(/\.js$/i,''), fichier:nom, code:capScrDecoder(await (await f.getFile()).arrayBuffer())}); }
+  scripts.sort((a,b)=>a.nom.localeCompare(b.nom));
+  const affiche=_capScr.choix.startsWith('dos:')&&capScrScript(_capScr.choix)?capScrScript(_capScr.choix).fichier:null;
+  _capScr.dossier={poignee:h, nom:h.name, scripts}; _capScr.attente=null;
+  if(affiche){ const i=scripts.findIndex(x=>x.fichier===affiche); _capScr.choix=i>=0?'dos:'+i:''; }
+  capScrListe(); capScrDosBouton();
+}
+/** Écrit un script dans le dossier, puis relit le dossier et affiche ce script. @param {string} fichier @param {string} code @param {boolean} nouveau @returns {Promise<boolean>} */
+async function capScrDosEcrire(fichier, code, nouveau){
+  const h=_capScr.dossier.poignee;
+  if(!(await capScrDosAutorise(h,true,true))) throw new Error(_L(`Writing refused in the “${h.name}” folder.`));
+  if(nouveau&&_capScr.dossier.scripts.some(x=>x.fichier.toLowerCase()===fichier.toLowerCase())&&!(await capConfirm(_L(`The file “${fichier}” already exists in the folder. Replace it?`)))) return false;
+  const w=await (await h.getFileHandle(fichier,{create:true})).createWritable(); await w.write(code); await w.close();
+  await capScrDosCharger(h);
+  const i=_capScr.dossier.scripts.findIndex(x=>x.fichier===fichier); if(i>=0) _capScr.choix='dos:'+i;
+  capToast(_L(`✔ Script saved in the “${h.name}” folder: ${fichier}`));
+  return true;
+}
+/** Bouton 📁 : visible si le navigateur sait ouvrir un dossier ; infobulle selon l'état. */
+function capScrDosBouton(){
+  const b=document.getElementById('scr-dossier'); if(!b) return;
+  b.style.display=window.showDirectoryPicker?'':'none';
+  b.classList.toggle('active', !!_capScr.dossier);
+  b.title=_capScr.dossier?_L(`Shared script folder: “${_capScr.dossier.nom}” (${_capScr.dossier.scripts.length} scripts). Click to choose another one.`)
+    :_capScr.attente?_L(`Reopen the “${_capScr.attente.name}” script folder (the browser asks for permission)`):_L("Open a shared script folder (next to the model, on a network share…)");
+}
+/** Bouton 📁 : rouvre le dossier mémorisé, ou en fait choisir un. */
+async function capScrDosChoisir(){
+  try{
+    if(_capScr.attente&&!_capScr.dossier){ if(await capScrDosAutorise(_capScr.attente,false,true)){ await capScrDosCharger(_capScr.attente); return; } }
+    const h=await window.showDirectoryPicker({id:'arcalyse-scripts', mode:'readwrite'});
+    await capScrDosCharger(h); await capScrDosMemoire(h);
+    capToast(_L(`✔ Script folder: “${h.name}”, ${_capScr.dossier.scripts.length} script(s).`));
+  }catch(e){ if(e.name!=='AbortError') capToast(e.message,{level:'err'}); }
+}
+/** Retrouve le dossier mémorisé : relu tout de suite si l'autorisation est encore valable. */
+async function capScrDosInit(){
+  capScrDosBouton();
+  if(!window.showDirectoryPicker) return;
+  const h=await capScrDosMemoire(); if(!h) return;
+  _capScr.attente=h;
+  try{ if(await capScrDosAutorise(h,false,false)) await capScrDosCharger(h); }catch(e){ /* dossier déplacé ou supprimé */ }
+  capScrDosBouton();
+}
+
+// ── Sortie ──
+/** Ouvre ou ferme le tiroir des scripts (bascule en mode Capella si besoin). @param {boolean} [ouvrir] */
+function capScrToggle(ouvrir){
+  const t=document.getElementById('cap-scripts'); if(!t) return;
+  const voir=ouvrir==null?!_capScr.open:!!ouvrir;
+  if(voir&&!capLoaded){ capToast(_L("Open a model first."),{level:'warn'}); return; }
+  if(voir&&currentMode!=='capella') applyMode('capella');
+  _capScr.open=voir; t.style.display=voir?'flex':'none';
+  document.getElementById('b-scripts')?.classList.toggle('active', voir);
+  if(voir){ if(_capScr.dossier) capScrDosCharger(_capScr.dossier.poignee).catch(()=>{ /* dossier inaccessible : liste inchangée */ }); document.getElementById('scr-code').focus(); }
+}
+/** Vide la sortie (et libère les fichiers proposés). */
+function capScrEffacer(){
+  _capScr.urls.forEach(u=>URL.revokeObjectURL(u)); _capScr.urls=[]; _capScr.tableaux=[]; _capScr.nbSorties=0; _capScr.tronque=false;
+  document.getElementById('scr-sortie').innerHTML='';
+}
+/** HTML d'un morceau de sortie : texte, ou lien vers un élément. @param {string|object} m @returns {string} */
+function capScrMorceau(m){
+  if(typeof m==='string') return capEsc(m);
+  const el=capGetElementById_(m.id);
+  if(!el) return `<span class="scr-dim" title="${capEsc(m.id)}">${capEsc(m.type)} ${capEsc(m.label)}</span>`;
+  return `<span class="cap-det-link" data-id="${capEsc(m.id)}" title="${capEsc(m.type)}${m.layer?' · '+capEsc(m.layer):''}">${capIcoType(m.type,12)}${capEsc(m.label)}</span>`;
+}
+/** Ajoute un nœud à la sortie (fin gardée visible si l'utilisateur y était). @param {HTMLElement} n */
+function capScrAjouter(n){ const s=document.getElementById('scr-sortie'), enBas=s.scrollHeight-s.scrollTop-s.clientHeight<40; s.appendChild(n); if(enBas) s.scrollTop=s.scrollHeight; }
+/** Affiche une ligne (état, erreur…). @param {string} html @param {string} [classe] @returns {HTMLElement} */
+function capScrLigne(html, classe){ const d=document.createElement('div'); d.className='scr-l '+(classe||''); d.innerHTML=html; capScrAjouter(d); return d; }
+/** Affiche un lot de sorties du script. @param {object[]} lot - Messages { k, … } */
+function capScrAfficher(lot){
+  for(const m of lot){
+    if(m.k==='clear'){ capScrEffacer(); continue; }
+    if(m.k==='progress'){ let p=document.getElementById('scr-sortie').querySelector('.scr-progression'); if(!p) p=capScrLigne('','scr-progression');
+      p.textContent=m.total?_L(`Progress: ${m.fait} / ${m.total}`):_L(`Progress: ${m.fait}`); continue; }
+    if(_capScr.nbSorties>=CAP_SCR_MAX_SORTIES){ if(!_capScr.tronque){ _capScr.tronque=true; capScrLigne(capEsc(_L(`… output truncated after ${CAP_SCR_MAX_SORTIES} messages.`)),'scr-av'); } continue; }
+    _capScr.nbSorties++;
+    if(m.k==='print') capScrLigne(m.parts.map(capScrMorceau).join(''), m.niveau==='warn'?'scr-av':m.niveau==='error'?'scr-err':'');
+    else if(m.k==='table') capScrTableau(m);
+    else if(m.k==='file'){ const url=URL.createObjectURL(new Blob([m.contenu],{type:m.type})); _capScr.urls.push(url);
+      capScrLigne(`📄 <a href="${capEsc(url)}" download="${capEsc(m.nom)}">${capEsc(m.nom)}</a> <span class="scr-dim">${capEsc(_L(`${new Blob([m.contenu]).size} bytes`))}</span>`,'scr-fic'); }
+  }
+}
+/** Affiche un tableau de sortie (lignes bornées) avec son export CSV. @param {{titre:string, colonnes:string[], cellules:Array}} m */
+function capScrTableau(m){
+  const i=_capScr.tableaux.push(m)-1;
+  const lignes=m.cellules.slice(0,CAP_SCR_MAX_LIGNES).map(l=>'<tr>'+l.map(c=>{ const num=c.length===1&&typeof c[0]==='string'&&/^-?\d+(\.\d+)?$/.test(c[0]); return `<td${num?' class="num"':''}>${c.map(capScrMorceau).join('')}</td>`; }).join('')+'</tr>').join('');
+  const reste=m.cellules.length-CAP_SCR_MAX_LIGNES, d=document.createElement('div'); d.className='scr-tableau';
+  d.innerHTML=`<div class="scr-t-titre">${m.titre?`<strong>${capEsc(m.titre)}</strong> `:''}<span class="scr-dim">${capEsc(_L(`${m.cellules.length} row(s)`))}</span>`+
+    ` <button class="cap-lf-btn" data-csv="${i}" title="${capEsc(_L("Download the full table as CSV"))}">⬇ CSV</button></div>`+
+    `<table><thead><tr>${m.colonnes.map(c=>`<th>${capEsc(c)}</th>`).join('')}</tr></thead><tbody>${lignes}</tbody></table>`+
+    (reste>0?`<div class="scr-dim">${capEsc(_L(`… and ${reste} more row(s) (see the CSV)`))}</div>`:'');
+  capScrAjouter(d);
+}
+/** Pose dans la sortie une question du script et attend la réponse. @param {object} d - Demande { k, question, defaut, items, multiple, accept } @returns {Promise<*>} */
+function capScrDemander(d){
+  return new Promise(resoudre=>{
+    const cadre=document.createElement('div'); cadre.className='scr-question';
+    const abandon=d.k==='confirm'?false:d.k==='choose'&&d.multiple?[]:null;
+    let fini=false;
+    const fin=(v,resume)=>{ if(fini) return; fini=true; cadre.querySelectorAll('button, input').forEach(x=>{ x.disabled=true; }); cadre.classList.add('repondue');
+      const r=document.createElement('div'); r.className='scr-dim'; r.textContent='→ '+resume; cadre.appendChild(r);
+      _capScr.questions=_capScr.questions.filter(q=>q!==annuler); resoudre(v); };
+    const annuler=()=>fin(abandon, _L("(cancelled)"));
+    _capScr.questions.push(annuler);
+    const bouton=(cle,texte,principal)=>`<button class="cap-lf-btn${principal?' scr-principal':''}" data-q="${cle}">${capEsc(texte)}</button>`;
+    const titre=d.question?`<div class="scr-q-titre">❓ ${capEsc(d.question)}</div>`:'';
+    const libelle=m=>(typeof m==='string'?capEsc(m):`<span class="scr-pastille">${capEsc(m.type)}</span> ${capEsc(m.label)}`);
+    if(d.k==='ask'){ cadre.innerHTML=titre+`<div class="scr-q-ligne"><input type="text">${bouton('ok',_L('OK'),true)}${bouton('annuler',_L("Cancel"))}</div>`; cadre.querySelector('input').value=d.defaut||''; }
+    else if(d.k==='confirm'){ cadre.innerHTML=titre+`<div class="scr-q-ligne">${bouton('oui',_L("Yes"),true)}${bouton('non',_L("No"))}</div>`; }
+    else if(d.k==='choose'){ const type=d.multiple?'checkbox':'radio', nom='q'+Date.now();
+      cadre.innerHTML=titre+(d.items.length>8?`<input type="search" class="scr-q-filtre" placeholder="${capEsc(_L("Filter…"))}">`:'')+
+        `<div class="scr-q-liste">${d.items.map((m,i)=>`<label><input type="${type}" name="${nom}" value="${i}"> ${libelle(m)}</label>`).join('')}</div>`+
+        `<div class="scr-q-ligne">${bouton('ok',_L('OK'),true)}${bouton('annuler',_L("Cancel"))}</div>`; }
+    else if(d.k==='file'){ cadre.innerHTML=titre+`<div class="scr-q-ligne">${bouton('fichier',_L("Choose a file…"),true)}${bouton('annuler',_L("Cancel"))}<span class="scr-dim">${capEsc(_L("The script asks for a file."))}</span><input type="file" hidden></div>`;
+      if(d.accept) cadre.querySelector('input[type=file]').accept=d.accept; }
+    else { resoudre(abandon); return; }
+    const valider=()=>{ if(d.k==='ask'){ const v=cadre.querySelector('input').value; fin(v,v); return; }
+      const coches=[...cadre.querySelectorAll('.scr-q-liste input:checked')].map(x=>+x.value);
+      fin(d.multiple?coches:coches.length?coches[0]:null, coches.map(i=>(typeof d.items[i]==='string'?d.items[i]:d.items[i].label)).join(', ')||_L("(none)")); };
+    cadre.addEventListener('click',e=>{ const b=e.target.closest('[data-q]'); if(!b) return;
+      ({ok:valider, annuler, oui:()=>fin(true,_L("Yes")), non:()=>fin(false,_L("No")), fichier:()=>cadre.querySelector('input[type=file]').click()})[b.dataset.q](); });
+    cadre.addEventListener('dblclick',e=>{ if(d.k==='choose'&&!d.multiple&&e.target.closest('label')) valider(); });
+    cadre.addEventListener('keydown',e=>{ if(e.key==='Escape'){ e.preventDefault(); annuler(); } else if(e.key==='Enter'&&d.k!=='file'&&!e.target.closest('button')){ e.preventDefault(); valider(); } });
+    const filtre=cadre.querySelector('.scr-q-filtre');
+    if(filtre) filtre.oninput=()=>{ const t=filtre.value.toLowerCase(); cadre.querySelectorAll('.scr-q-liste label').forEach(l=>{ l.hidden=!!t&&!l.textContent.toLowerCase().includes(t); }); };
+    const entree=cadre.querySelector('input[type=file]');
+    if(entree) entree.onchange=async()=>{ const f=entree.files[0]; if(!f) return; try{ fin({name:f.name, text:capScrDecoder(await f.arrayBuffer())}, f.name); }catch(e){ capToast(e.message,{level:'err'}); annuler(); } };
+    capScrAjouter(cadre);
+    document.getElementById('scr-etat').textContent=_L("The script is waiting for an answer…");
+    const focus=cadre.querySelector('.scr-q-filtre, input[type=text], .scr-q-liste input, button'); if(focus) focus.focus();
+  });
+}
+/** Abandonne les questions encore ouvertes (fin ou arrêt du script). */
+function capScrAbandonner(){ _capScr.questions.slice().forEach(q=>q()); }
+
+// ── Exécution ──
+/** Fin d'exécution : bilan dans la console. @param {{ok:boolean, erreur?:string, ligne?:number|null, duree:number, sorties:number}} r */
+function capScrFin(r){
+  if(_capScr.worker){ _capScr.worker.terminate(); _capScr.worker=null; }
+  capScrAbandonner();
+  if(_capScr.url){ URL.revokeObjectURL(_capScr.url); _capScr.url=null; }
+  _capScr.enCours=false;
+  document.getElementById('scr-executer').disabled=false; document.getElementById('scr-arreter').disabled=true;
+  if(r.ok){ document.getElementById('scr-etat').textContent=_L(`Done in ${r.duree} ms`); if(!r.sorties) capScrLigne(capEsc(_L("Script finished without output (use out.print).")),'scr-dim'); return; }
+  const ou=r.ligne?' '+_L(`(line ${r.ligne})`):'';
+  document.getElementById('scr-etat').textContent=_L("Error")+ou;
+  const d=capScrLigne(capEsc('✖ '+r.erreur+ou),'scr-err');
+  if(r.ligne){ d.dataset.ligne=r.ligne; d.title=_L("Go to the line"); d.classList.add('scr-lien'); }
+}
+/** Sélectionne une ligne de l'éditeur. @param {number} n */
+function capScrAllerLigne(n){
+  const t=document.getElementById('scr-code'), lignes=t.value.split('\n'); if(n<1||n>lignes.length) return;
+  const debut=lignes.slice(0,n-1).reduce((s,l)=>s+l.length+1,0);
+  t.focus(); t.setSelectionRange(debut, debut+lignes[n-1].length);
+  t.scrollTop=Math.max(0,(n-3)*(parseFloat(getComputedStyle(t).lineHeight)||17));
+}
+/** Élément « sélectionné » pour le script : celui du panneau de détail affiché. @returns {string[]} */
+function capScrSelection(){
+  const sec=document.querySelector('#cap-detail[style*="flex"] #crv-det-sec, #rm-detail #crv-det-sec');
+  return sec&&sec.dataset.el&&capGetElementById_(sec.dataset.el)?[sec.dataset.el]:[];
+}
+/**
+ * Code du worker d'un script : prélude (langue, _L, métamodèle), noyau recopié (capScrNoyau), puis le script enveloppé
+ * dans une fonction (la politique de la page interdit eval : le script fait partie du code du worker).
+ * @param {string} code - Texte du script
+ * @returns {string} URL du worker (Blob)
+ */
+function capScrUrlWorker(code){
+  const api=capScrApi();
+  const tete=`const CAP_LANG=${JSON.stringify(CAP_LANG)}; const _L=s=>s; const CAP_MM=${JSON.stringify(CAP_MM)};\n(${capScrNoyau.toString()})().servir(async function (${api.parametres().join(', ')}) { return (async () => {\n`;
+  _capScr.decalage=tete.split('\n').length-1;
+  _capScr.url=URL.createObjectURL(new Blob([tete+code+'\n})(); });\n'],{type:'text/javascript'}));
+  return _capScr.url;
+}
+/** Exécute le script de l'éditeur sur un instantané du modèle affiché. */
+async function capScrExecuter(){
+  if(!capLoaded){ capToast(_L("Open a model first."),{level:'warn'}); return; }
+  if(_capScr.enCours) return;
+  capScrSave(); capScrEffacer();
+  const code=document.getElementById('scr-code').value;
+  const options={selection:capScrSelection()};
+  _capScr.enCours=true; _capScr.debut=Date.now();
+  document.getElementById('scr-executer').disabled=true;
+  document.getElementById('scr-etat').textContent=_L("Preparing…");
+  let snap;
+  try{ snap=capScrSnapshot(options.selection); }catch(e){ capScrFin({ok:false, erreur:e.message, duree:0, sorties:0}); return; }
+  document.getElementById('scr-etat').textContent=_L("Running…");
+  let w=null;
+  try{ if(typeof Worker!=='undefined') w=new Worker(capScrUrlWorker(code)); }catch(e){ w=null; }
+  if(!w){
+    capScrLigne(capEsc(_L("Running in the page, without isolation: this browser refuses the script worker.")),'scr-av');
+    capScrFin(await capScrApi().executer(snap, code, Object.assign(options,{emettre:capScrAfficher, interagir:capScrDemander, analyser:(n,a)=>capScrAnalyse(n,a)})));
+    return;
+  }
+  _capScr.worker=w; document.getElementById('scr-arreter').disabled=false;
+  w.onmessage=e=>{
+    if(w!==_capScr.worker) return;
+    const m=e.data;
+    if(m.k==='sorties') capScrAfficher(m.lot);
+    else if(m.k==='ui') capScrDemander(m.demande).then(valeur=>{ if(w!==_capScr.worker) return; document.getElementById('scr-etat').textContent=_L("Running…"); w.postMessage({k:'reponse', n:m.n, valeur}); });
+    else if(m.k==='analyse'){ document.getElementById('scr-etat').textContent=_L(`Analysis ${m.nom}…`); let valeur; try{ valeur=capScrAnalyse(m.nom, m.args); }catch(x){ valeur={$error:x.message}; }
+      if(w!==_capScr.worker) return; document.getElementById('scr-etat').textContent=_L("Running…"); w.postMessage({k:'reponse', n:m.n, valeur}); }
+    else if(m.k==='fin') capScrFin(m);
+  };
+  w.onerror=e=>{ e.preventDefault(); if(w!==_capScr.worker) return; const l=e.lineno?e.lineno-_capScr.decalage:0;
+    capScrFin({ok:false, erreur:(e.message||_L("Script worker error.")).replace(/^Uncaught /,''), ligne:l>=1?l:null, duree:Date.now()-_capScr.debut, sorties:0}); };
+  w.postMessage({snap, options:Object.assign(options,{source:_capScr.url, decalage:_capScr.decalage})});
+}
+/** Arrête le script en cours. */
+function capScrArreter(){ if(!_capScr.worker) return; capScrFin({ok:false, erreur:_L("Stopped by the user."), duree:Date.now()-_capScr.debut, sorties:0}); }
+/** Raccourcis de l'éditeur : Tab (indentation), Ctrl+Entrée (exécuter). @param {KeyboardEvent} e */
+function capScrClavier(e){
+  if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){ e.preventDefault(); e.stopPropagation(); capScrExecuter(); return; }
+  if(e.key==='Tab'&&!e.shiftKey&&!e.ctrlKey&&!e.altKey){ e.preventDefault(); const t=e.target, d=t.selectionStart; t.setRangeText('  ',d,t.selectionEnd,'end'); t.dispatchEvent(new Event('input')); }
+}
+/** Redimensionne le tiroir en glissant sa poignée. @param {PointerEvent} e */
+function capScrGlisser(e){
+  e.preventDefault();
+  const t=document.getElementById('cap-scripts');
+  const bouger=ev=>{ t.style.height=Math.max(140, Math.min(window.innerHeight-160, window.innerHeight-ev.clientY))+'px'; };
+  const fin=()=>{ document.removeEventListener('pointermove',bouger); document.removeEventListener('pointerup',fin); capScrSave(); };
+  document.addEventListener('pointermove',bouger); document.addEventListener('pointerup',fin);
+}
+/** Remplace le bloc `cap-scripts-data` (📄 Ouvrir un projet de travail, 57) et recharge la console. @param {object} d - Bloc { bib, brouillon, hauteur } */
+function capScrSetData(d){
+  let el=document.getElementById('cap-scripts-data');
+  if(!el){ el=document.createElement('script'); el.type='application/json'; el.id='cap-scripts-data'; document.head.appendChild(el); }
+  el.textContent=JSON.stringify(d||{bib:[]}).replace(/</g,'\\u003c');
+  capScrRecharger();
+}
+
+/** Recharge la bibliothèque et le brouillon depuis la page (ouverture d'un projet). */
+function capScrRecharger(){
+  const d=capScrData(); _capScr.bib=Array.isArray(d.bib)?d.bib.filter(s=>s&&typeof s.code==='string'):[];
+  const code=document.getElementById('scr-code'), sec=document.getElementById('cap-scripts');
+  if(d.brouillon&&typeof d.brouillon.code==='string'){ _capScr.choix=capScrScript(d.brouillon.choix||'')?d.brouillon.choix:''; code.value=d.brouillon.code; const s=capScrScript(_capScr.choix); _capScr.charge=s?s.code:''; }
+  else { const ex=capScrApi().exemples()[0]; _capScr.choix='ex:'+ex.cle; _capScr.charge=ex.code; code.value=ex.code; }
+  if(d.hauteur&&sec) sec.style.height=d.hauteur;
+  capScrListe();
+}
+
+// ── Branchement ──
+(()=>{
+  const $=id=>document.getElementById(id);
+  if(!$('cap-scripts')) return;
+  capScrRecharger();
+  $('b-scripts')?.addEventListener('click',()=>capScrToggle());
+  $('scr-fermer').onclick=()=>capScrToggle(false);
+  $('scr-visite').onclick=()=>capTourScripts();
+  $('scr-liste').onchange=e=>capScrOuvrir(e.target.value);
+  $('scr-nouveau').onclick=capScrNouveau; $('scr-enregistrer').onclick=capScrEnregistrer; $('scr-supprimer').onclick=capScrSupprimer;
+  $('scr-importer').onclick=()=>$('scr-fichier').click();
+  $('scr-fichier').onchange=e=>{ const f=[...e.target.files]; e.target.value=''; capScrImporter(f); };
+  $('scr-dossier').onclick=capScrDosChoisir; capScrDosInit();
+  $('scr-exporter').onclick=capScrExporter; $('scr-executer').onclick=capScrExecuter; $('scr-arreter').onclick=capScrArreter;
+  $('scr-effacer').onclick=()=>{ capScrEffacer(); $('scr-etat').textContent=''; };
+  $('scr-code').onkeydown=capScrClavier;
+  let minuterie; $('scr-code').oninput=()=>{ clearTimeout(minuterie); minuterie=setTimeout(capScrSave, 500); };
+  $('cap-scripts').querySelector('.scr-poignee').onpointerdown=capScrGlisser;
+  $('scr-sortie').onclick=e=>{
+    const csv=e.target.closest('[data-csv]'); if(csv){ const t=_capScr.tableaux[+csv.dataset.csv]; capScrTelecharger('﻿'+capScrApi().csv(t,';'), (t.titre||'table').replace(/[\\/:*?"<>|]/g,'_')+'.csv','text/csv'); return; }
+    const l=e.target.closest('[data-ligne]'); if(l){ capScrAllerLigne(+l.dataset.ligne); return; }
+    const p=e.target.closest('[data-id]'); if(p&&capLoaded) capOpenDetail(p.dataset.id);
+  };
+  document.addEventListener('keydown',e=>{ if(e.altKey&&!e.ctrlKey&&!e.metaKey&&e.key==='4'){ e.preventDefault(); capScrToggle(); } });
+})();
+// ── 📜 Scripts : instantané du modèle et analyses servies à la console ────────
+// Côté page (accès aux moteurs d'Arcalyse). L'instantané (capScrSnapshot) est confié au worker des scripts (81) :
+// éléments, relations de 🔗 Liens traduites dans les noms de relations de l'API d'Arcature, diagrammes du .aird.
+// Les analyses (capScrAnalyse) sont calculées à la demande d'un script (await analysis.xxx()) avec les moteurs et
+// leurs caches (_capAnaCache) ; leur résultat est rendu « propre » (capScrNettoyer : Set / Map / nœuds XML / cycles →
+// JSON ; tout objet portant un `id` d'élément reçoit `$el`, que le noyau transforme en propriété `element`).
+
+/** Relations de 🔗 Liens (CAP_LINK_SECTIONS) → relations publiques de l'API (noms d'Arcature) ; les décompositions ne sont pas reprises (children()). */
+const CAP_SCR_RELATIONS={ pcBeh_fn:'allocation', lc_lf:'allocation', sc_sf:'allocation', entity_oa:'allocation', pcNode_pcBeh:'deployment',
+  cap_comp:'involvement', lcap_lcomp:'involvement', pcap_pcomp:'involvement', ocap_entity:'involvement', mission_comp:'involvement', mission_cap:'exploitation',
+  fe_fn:'functionalExchange', ce_comp:'componentExchange', pl_pc:'physicalLink', ex_ei:'exchangedItem', fn_real:'realization', comp_real:'realization',
+  fe_real:'realization', ce_fe:'exchangeAllocation', pl_ce:'componentExchangeAllocation', pp_cp:'portAllocation', fc_fn:'involvement', fc_fe:'involvement',
+  cap_fn:'involvement', cap_fc:'involvement' };
+
+/**
+ * Instantané du modèle affiché pour un script : éléments (attributs compris), relations, diagrammes et leurs éléments.
+ * @param {string[]} [selection] - Identifiants sélectionnés (élément du panneau de détail)
+ * @returns {object} Instantané { fileName, elements, technical, links, diagrams, diagramsOf, selection }
+ */
+function capScrSnapshot(selection){
+  const {parentOf}=capGetParentIndex();
+  const elements=capAllElements.map(e=>({id:e.id, type:e.typeName, fullType:e.fullType||'', layer:e.layer||'', attrs:e.attrs||{}, parent:parentOf[e.id]||''}));
+  const L=capLinksData||(capLinksData=capComputeLinks()), links=[];
+  for(const [key,rel] of Object.entries(CAP_SCR_RELATIONS)) for(const r of L[key]||[]) if(r.src&&r.tgt&&r.src.id&&r.tgt.id) links.push({rel, src:r.src.id, tgt:r.tgt.id, via:r.via&&r.via.id||''});
+  const d=capScrDiagrammes();
+  return { fileName:capCurrentFileName||'', elements, technical:[...CAP_TECHNICAL_TYPES],
+    links, diagrams:d.liste, diagramsOf:d.parElement, selection:selection||[] };
+}
+
+/**
+ * Diagrammes du .aird chargé (visionneuse d'Arcature) et, pour chaque élément, les diagrammes qui le montrent ou le ciblent.
+ * Index gardé dans _capAnaCache (vidé au chargement d'un modèle ou d'un .aird) ; calcul borné à quelques secondes.
+ * @returns {{liste:object[], parElement:Object<string,string[]>}} Diagrammes et index
+ */
+function capScrDiagrammes(){
+  const reps=typeof capDiagReps==='function'?capDiagReps():[];
+  if(!reps.length) return {liste:[], parElement:{}};
+  const cle=reps.length+'|'+(reps[0]&&reps[0].uid);
+  if(_capAnaCache.scrDiag&&_capAnaCache.scrDiag.cle===cle) return _capAnaCache.scrDiag;
+  const cible={}, parElement={}, t0=Date.now();
+  for(const e of capAllElements){
+    if(Date.now()-t0>4000) break;   // modèle énorme : index partiel (les éléments restants n'ont pas de diagrammes connus)
+    let r; try{ r=_capDiag.vis.diagrammesDe(e.id); }catch(x){ continue; }
+    const ids=[...new Set([...(r.cibles||[]), ...(r.presences||[])].map(x=>x.uid))];
+    if(ids.length) parElement[e.id]=ids;
+    (r.cibles||[]).forEach(x=>{ if(!cible[x.uid]) cible[x.uid]=e.id; });
+  }
+  const liste=reps.map(r=>({id:r.uid, name:r.nom||'', type:r.type||'', code:r.sigle||'', layer:r.couche||'', kind:r.genre==='sequence'?'sequence':r.genre==='tableau'?'table':'diagram', target:cible[r.uid]||''}));
+  return (_capAnaCache.scrDiag={cle, liste, parElement});
+}
+
+/**
+ * Rend un résultat d'analyse transportable et exploitable par un script : copie profonde sans fonctions ni clés privées
+ * (`_x`), Set → tableau, Map → objet, nœud XML → { $el } ; tout objet dont `id` (ou `linkId`) est un élément du modèle
+ * reçoit `$el` (le noyau y attache l'élément). Les cycles sont coupés.
+ * @param {*} v - Valeur
+ * @param {number} [prof] - Profondeur (bornée)
+ * @param {Set} [pile] - Objets en cours de copie (cycles)
+ * @returns {*} Valeur propre
+ */
+function capScrNettoyer(v, prof, pile){
+  prof=prof||0; pile=pile||new Set();
+  if(v==null||typeof v!=='object') return typeof v==='function'?undefined:v;
+  if(typeof Node!=='undefined'&&v instanceof Node){ const id=v.getAttribute&&(v.getAttribute('id')||capXId(v)); return id&&capGetElementById_(id)?{$el:id}:{id:id||'', tag:v.tagName||''}; }
+  if(prof>12||pile.has(v)) return undefined;
+  pile.add(v);
+  let r;
+  if(Array.isArray(v)) r=v.map(x=>capScrNettoyer(x,prof+1,pile)).filter(x=>x!==undefined);
+  else if(v instanceof Set) r=[...v].map(x=>capScrNettoyer(x,prof+1,pile)).filter(x=>x!==undefined);
+  else if(v instanceof Map){ r={}; for(const [k,x] of v){ const y=capScrNettoyer(x,prof+1,pile); if(y!==undefined) r[String(k)]=y; } }
+  else {
+    r={};
+    for(const [k,x] of Object.entries(v)){ if(k[0]==='_'||k==='$el') continue; const y=capScrNettoyer(x,prof+1,pile); if(y!==undefined) r[k]=y; }
+    const id=typeof v.id==='string'?v.id:typeof v.linkId==='string'?v.linkId:'';
+    if(id&&capGetElementById_(id)) r.$el=id;
+  }
+  pile.delete(v);
+  return r;
+}
+
+/** Cellules d'une ligne de contrôle (HTML de capDiagHtml) : texte, ou { $el, name } pour une cellule qui désigne un élément.
+ * @param {string} html - Ligne `<tr>…</tr>` @returns {Array<string|{$el:string, name:string}>} */
+function capScrCellules(html){
+  const doc=new DOMParser().parseFromString('<table>'+html+'</table>','text/html');
+  const tr=doc.querySelector('tr'); if(!tr) return [];
+  return [...tr.cells].map(td=>{ const m=td.innerHTML.match(/capOpenDetail(?:ById)?\('([^']+)'/); const name=td.textContent.replace(/\s+/g,' ').trim();
+    return m&&capGetElementById_(m[1])?{$el:m[1], name}:name; });
+}
+
+/**
+ * Contrôles 🩺 de toutes les vues (ou d'une vue), avec le profil appliqué : lignes parsées depuis le HTML des sections.
+ * @param {string} [vue] - Clé de vue (CAP_CHK_VIEWS : 'functions', 'chains', 'ana:reqs'…)
+ * @returns {object[]} Sections { view, title, tip, severity, columns, rows:[[cellule…]] }
+ */
+function capScrControles(vue){
+  const res=[];
+  for(const [k,fn] of CAP_CHK_VIEWS){
+    if(vue&&k!==vue) continue;
+    let sections; try{ sections=capChkFilter(fn()); }catch(e){ res.push({view:k, title:_L("(computation error)"), tip:e.message, severity:'err', columns:[], rows:[]}); continue; }
+    for(const s of sections) res.push({view:k, title:s.title, tip:s.tip||'', severity:s.sev||'warn', columns:(s.cols||[]).map(c=>String(c).replace(/<[^>]+>/g,'')), rows:(s.items||[]).map(capScrCellules)});
+  }
+  if(vue&&!res.length) throw new Error(_L(`Unknown checks view: ${vue} (${CAP_CHK_VIEWS.map(v=>v[0]).join(', ')})`));
+  return res;
+}
+
+/** Analyses servies aux scripts : nom public → calcul (arguments du script, { $id } pour un élément). */
+const CAP_SCR_ANALYSES={
+  functions:()=>capScrNettoyer(capComputeFunctions().list),
+  chains:()=>capComputeChains().map(c=>({ $el:c.id, id:c.id, name:c.name, type:c.type, layer:c.layer||'', description:c.desc||'',
+    steps:((c.graph&&c.graph.nodes)||[]).map(n=>Object.assign({kind:'function', nodeId:n.id, name:n.name||'', type:n.elemType||''}, n.refId&&capGetElementById_(n.refId)?{$el:n.refId}:{})),
+    exchanges:((c.graph&&c.graph.edges)||[]).map(e=>Object.assign({name:e.name||'', from:e.srcId||'', to:e.tgtId||''}, e.refId&&capGetElementById_(e.refId)?{$el:e.refId}:{})),
+    graph:capScrNettoyer(c.graph) })),
+  traceability:o=>{ const t=capComputeTrace(!!(o&&o.transfo), !(o&&o.leafOnly===false)); return {links:capScrNettoyer(t.links), elements:capScrNettoyer(t.els), up:capScrNettoyer(t.up), down:capScrNettoyer(t.down)}; },
+  capabilities:()=>capScrNettoyer(capComputeCapabilities()),
+  states:()=>capScrNettoyer(capComputeStates()),
+  health:()=>capScrNettoyer(capSanteCompute()),
+  requirements:()=>capScrNettoyer(capComputeRequirements()),
+  properties:()=>capScrNettoyer(capComputePvmt()),
+  data:()=>capScrNettoyer(capComputeDataModel()),
+  constraints:()=>capScrNettoyer(capComputeConstraints()),
+  status:()=>capScrNettoyer(capComputeStatus()),
+  categories:()=>capScrNettoyer(capComputeExchangeCategories()),
+  rec:()=>capScrNettoyer(capComputeRec()),
+  libraries:()=>capScrNettoyer(capLibScan()),
+  scenarios:()=>capScrNettoyer(capComputeScenarios().list),
+  ports:()=>{ const P=capComputePortLinks(); return capScrNettoyer({functionPorts:Object.values(P.fps), componentPorts:Object.values(P.cps), physicalPorts:Object.values(P.pps), functionalExchanges:P.fes, componentExchanges:P.ces, physicalLinks:P.pls}); },
+  functionalExchanges:()=>capScrNettoyer(capComputeFunctionalExchanges().list),
+  componentExchanges:()=>capScrNettoyer(capComputeCompExchanges()),
+  physicalLinks:()=>capScrNettoyer(capComputePhysLinks()),
+  deployment:()=>capScrNettoyer(capComputeDeploy()),
+  checks:vue=>capScrControles(vue==null?'':String(vue)),
+  nameQuality:nom=>capScrNettoyer(capNameQuality(String(nom==null?'':nom))),
+  diagramsOf:el=>{ const id=el&&el.$id||String(el||''); return capScrDiagrammes().parElement[id]||[]; }
+};
+
+/**
+ * Calcule une analyse demandée par un script (console : requête du worker, ou exécution dans la page).
+ * @param {string} nom - Nom public de l'analyse (CAP_SCR_ANALYSES)
+ * @param {Array} [args] - Arguments du script
+ * @returns {*} Résultat propre, ou { $error } si l'analyse échoue
+ */
+function capScrAnalyse(nom, args){
+  const f=CAP_SCR_ANALYSES[nom];
+  if(!f) return {$error:_L(`Unknown analysis: ${nom} (${Object.keys(CAP_SCR_ANALYSES).join(', ')})`)};
+  try{ const r=f(...(args||[])); return r===undefined?null:r; }
+  catch(e){ return {$error:_L(`Analysis ${nom}: ${e.message}`)}; }
+}
 
 </script>
 <!-- Visionneuse de diagrammes d'Arcature (Apache 2.0, même auteur) : produite par « node build.js --visionneuse » dans Arcature,
