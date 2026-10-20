@@ -283,7 +283,7 @@ function capNavMenu(g, anchor){
       if(a){ capNavClose(); ({open:()=>capPickCapellaFile(), folder:()=>capOpenProjectFolder(), projet:()=>capProjetPagePick(), save:()=>capSavePageDirect(false), saveas:()=>capSavePageDirect(true),
         page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor(), update:()=>capCfgLoadUpdate(), cfgsave:()=>capCfgDialog('save'), cfgload:()=>capCfgLoadFile(),
         help:()=>openHelpModal(), custom:()=>capPrefCustomDialog(), prefs:()=>capPrefDialog(), autosave:()=>capPrefDialog('save'), checks:()=>capChkDialog(), xport:()=>capExportToggle(), xlsx:()=>capXlsxClasseur(),
-        theme:()=>capNavMenu('theme', document.getElementById('b-prefs')), tour:()=>capTourStart(), tourview:()=>capTourStartView(), tourrev:()=>capTourRevue(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
+        theme:()=>capNavMenu('theme', document.getElementById('b-prefs')), tour:()=>capTourStart(), tourview:()=>capTourStartView(), tourrev:()=>capTourRevue(), tourscr:()=>capTourScripts(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
       if(e.target.closest('[data-reset]')){ const a=_capNav.auto; _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); if(a) _capNav.auto=a;   // ⚙ enregistrement automatique conservé
         capNavSave(); capNavRender(); capNavMenuFill(); }
     });
@@ -347,6 +347,7 @@ function capNavMenuFill(){
       (v?_L(`<div class="ctx-i" data-act="tourview" title="Présente les menus et les commandes de la vue affichée">🎯 Visite de cette vue <span class="cap-nav-g">${v.l}</span></div>`)
         :_L(`<div class="cap-nav-hint">🎯 Chargez un modèle pour la visite de chaque vue.</div>`))+
       _L(`<div class="ctx-i" data-act="tourrev" title="Présente le panneau 💬 Revue : commentaires, vérification, rapport, revue ciblée, fenêtre séparée">💬 Visite de la revue</div>`)+
+      (capLoaded?_L(`<div class="ctx-i" data-act="tourscr" title="Présente la console 📜 Scripts : bibliothèque, éditeur, exécution, sortie">📜 Visite des scripts</div>`):'')+
       _L(`<div class="cw-m-sep"></div><div class="ctx-i" data-act="about" title="Version, auteur, licence, composants tiers, informations techniques">ℹ À propos</div>`);
     return;
   }

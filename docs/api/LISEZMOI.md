@@ -84,6 +84,65 @@ if (csv) out.file('exigences.csv', out.csv(rows));
 
 Un type mal orthographié, une relation ou un critère inconnus lèvent une erreur explicite, avec le numéro de ligne du script.
 
+## Recettes
+
+```js
+// Nombre d'éléments du modèle, puis hors éléments techniques
+out.print(model.count(), model.count({ technical: false }));
+```
+
+```js
+// Éléments par couche et par type
+out.table(['OA', 'SA', 'LA', 'PA', 'EPBS'].map(layer => ({ layer, elements: model.count({ layer }) })));
+out.table(model.types());
+```
+
+```js
+// Chercher par nom (texte exact ou expression régulière), lister les enfants d'un élément
+for (const e of model.elements({ name: /video/i })) out.print(e.type, e, '←', e.owner);
+const sys = model.find({ type: 'SystemComponent', where: c => !c.isSkeleton });
+if (sys) out.table(sys.children({ technical: false }).map(c => ({ type: c.type, element: c })));
+```
+
+```js
+// Descriptions manquantes, par couche, avec export CSV
+const rows = model.elements({ type: ['AbstractFunction', 'Component'], technical: false, where: e => !e.isSkeleton && !e.description.trim() })
+  .map(e => ({ layer: e.layer, type: e.type, element: e, owner: e.owner }));
+out.table(rows); out.file('sans-description.csv', out.csv(rows));
+```
+
+```js
+// Qui réalise quoi : fonctions LA et les fonctions SA qu'elles réalisent
+for (const f of model.elements({ type: 'LogicalFunction', technical: false }))
+  out.print(f, '→', f.links('realization', 'out').map(l => l.element));
+```
+
+```js
+// Santé par couche et contrôles bloquants
+const h = await analysis.health();
+out.table(Object.entries(h.couches).map(([layer, c]) => ({ layer, score: c.score, points: c.points })));
+for (const c of await analysis.checks()) if (c.severity === 'err' && c.rows.length) out.warn(c.view, c.title, c.rows.length);
+```
+
+```js
+// Lignes d'un contrôle précis (titre tel qu'affiché dans la vue)
+const c = (await analysis.checks('functions')).find(x => x.title.startsWith('Fonctions sans description'));
+if (c) out.table(c.rows.map(r => Object.fromEntries(c.columns.map((col, i) => [col || String(i + 1), r[i] && r[i].element ? r[i].element : r[i]]))));
+```
+
+```js
+// Diagrammes qui montrent l'élément ouvert dans le panneau de détail
+const [e] = model.selection;
+if (e) out.table(e.diagrams.map(d => ({ code: d.code, diagram: d.name, layer: d.layer })));
+```
+
+```js
+// Demander un seuil, puis lister les composants qui portent plus de n fonctions
+const n = +(await ui.ask('Nombre de fonctions au-delà duquel signaler :', '10')) || 10;
+const rows = model.elements('Component').map(c => ({ component: c, functions: c.links('allocation', 'out').length })).filter(r => r.functions > n);
+out.table(rows.sort((a, b) => b.functions - a.functions));
+```
+
 ## Isolement
 
 Dans la page, le script s'exécute dans un **worker** construit à partir du noyau de l'API et du script : il n'a accès

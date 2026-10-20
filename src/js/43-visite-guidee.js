@@ -55,6 +55,8 @@ var CAP_TOUR_STEPS=[
    x:_L('Détecte les nouvelles versions du fichier .capella et montre ce qui a changé (delta, historique).')},
   {s:'#b-review', t:_L('💬 Revue'),
    x:_L('Commentaires de revue sur le modèle et les diagrammes, vérification après mise à jour, rapport, revue ciblée à faire relire. Le panneau s\'ouvre à droite ; <b>⧉</b> l\'ouvre dans une fenêtre séparée ; <b>🎓</b> (ou <b>❓ Aide ▾ → 💬 Visite de la revue</b>) le présente pas à pas.')},
+  {s:'#b-scripts', m:'loaded', t:_L('📜 Scripts'),
+   x:_L('Console de scripts (Alt+4) : des scripts JavaScript lisent et analysent le modèle par une API, comme les macros de Catia Magic. <b>❓ Aide ▾ → 📜 Visite des scripts</b> la présente.')},
   {s:'#b-theme-menu', t:_L('🎨 Thème'),
    x:_L('Choisissez un thème clair ou sombre, ou créez votre propre thème personnalisé.')},
   {s:'#b-help', t:_L('❓ Aide'),
@@ -326,6 +328,20 @@ var CAP_TOUR_REVUE=[
   {pre:()=>capTourRev('report'), s:'#crv-body', t:_L('📄 Rapport'), x:_L('Synthèse statut × criticité, <b>📄 Rapport HTML</b> imprimable, <b>⬇ CSV</b>, et <b>📤 Revue ciblée</b> : les relecteurs répondent dans une page autonome, leurs réponses se réimportent ici.')},
   {pre:()=>capTourRev('cfg'), s:'#crv-body', t:_L('⚙ Réglages'), x:_L('Votre nom (auteur des commentaires), participants, champs proposés dans l\'éditeur, calque des notes sur les diagrammes, marque 💬 des éléments commentés.')},
   {pre:()=>capTourRev('list'), t:_L('✅ À vous'), x:_L('Cette visite se relance par <b>🎓</b> en haut du panneau ou par <b>❓ Aide ▾ → 💬 Visite de la revue</b>. L\'aide complète a un onglet 💬 Revue.')} ];
+/** Visite de la console 📜 Scripts (ce n'est pas une vue : lancée par 🎓 dans la console ou par ❓ Aide ▾ → 📜 Visite des scripts). */
+var CAP_TOUR_SCRIPTS=[
+  {pre:()=>capScrToggle(true), t:_L('📜 Scripts (macros)'), x:_L('Des scripts <b>JavaScript</b> parcourent et analysent le modèle affiché par une <b>API</b> (celle d\'Arcature, en lecture seule), comme les macros de Catia Magic ou Python4Capella. Ils tournent isolés : ni page, ni fichier, ni réseau.')},
+  {s:'#b-scripts', t:_L('📜 Bouton Scripts'), x:_L('Ouvre ou ferme la console (aussi <b>Alt+4</b>, ou ☰ / Ctrl+K « Scripts »).')},
+  {s:'#scr-liste', t:_L('📚 Bibliothèque'), x:_L('<b>Exemples</b> fournis (fonctions sans description, non allouées, matrice d\'allocation, statistiques, santé et contrôles, traçabilité, chaînes, exigences, qualité des noms…), scripts du <b>projet</b> et du <b>dossier partagé</b>. Choisir un script l\'affiche dans l\'éditeur.')},
+  {s:'#scr-nouveau,#scr-enregistrer,#scr-supprimer,#scr-importer,#scr-exporter,#scr-dossier', t:_L('💾 Enregistrer, importer, exporter'), x:_L('<b>＋</b> nouveau script · <b>💾</b> enregistre dans le projet (gardé dans la 💾 page HTML) ou dans le dossier partagé · <b>🗑</b> supprime · <b>📂</b> importe des fichiers .js · <b>⬇</b> exporte le script affiché · <b>📁</b> dossier de scripts partagé (Chrome / Edge).')},
+  {s:'#scr-code', t:_L('✏ Éditeur'), x:_L('Le script. Il voit <code>model</code>, <code>metamodel</code>, <code>analysis</code>, <code>out</code>, <code>ui</code> et <code>console</code>. Par exemple : <code>out.print(model.count())</code> affiche le nombre d\'éléments du modèle. <b>Tab</b> indente, <b>Ctrl+Entrée</b> exécute.')},
+  {s:'#scr-executer,#scr-arreter,#scr-effacer', t:_L('▶ Exécuter'), x:_L('<b>▶ Exécuter</b> lance le script sur le modèle affiché (Ctrl+Entrée) ; <b>■ Arrêter</b> interrompt une boucle sans fin ; <b>⌫</b> efface la sortie.')},
+  {s:'#scr-sortie', t:_L('📋 Sortie'), x:_L('<code>out.print</code> écrit une ligne, <code>out.table</code> un tableau (bouton <b>⬇ CSV</b>), <code>out.file</code> propose un fichier. Les éléments sont des <b>liens</b> : un clic ouvre le panneau de détail. Une erreur indique la ligne du script (clic : l\'éditeur s\'y place). Les questions du script (<code>ui.ask</code>, <code>ui.choose</code>…) s\'affichent ici.')},
+  {s:'.scr-aide', t:_L('📖 Référence'), x:_L('La référence complète de l\'API est dans <code>docs/api/arcalyse.d.ts</code> (autocomplétion VS Code) et <code>docs/api/LISEZMOI.md</code> (recettes) ; l\'aide complète a un onglet 📜 Scripts.')},
+  {t:_L('✅ À vous'), x:_L('Cette visite se relance par <b>🎓</b> dans la console ou par <b>❓ Aide ▾ → 📜 Visite des scripts</b>.')} ];
+/** Lance la visite de la console 📜 Scripts (modèle chargé). */
+function capTourScripts(){ if(!capLoaded){ capToast(_L('Ouvrez d\'abord un modèle.'),{level:'warn'}); return; } capScrToggle(true); capTourStart(CAP_TOUR_SCRIPTS); }
+
 /**
  * Visite de 💬 Revue : panneau ouvert dans la page (ramené s'il est dans sa fenêtre séparée) sur l'onglet présenté.
  * @param {string} tab - 'list' | 'check' | 'report' | 'cfg'

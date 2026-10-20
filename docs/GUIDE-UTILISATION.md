@@ -1561,6 +1561,15 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 1. **🔲 Diagrammes Capella** ; filtrer la liste (ex. « LAB ») ou **☐ Sélectionner…** les diagrammes.
 2. **⬇ Exporter…** : Cadre, Cartouche, Description, Annexes, Sommaire ; format **📄 PDF** ; **⬇ Exporter**.
 
+
+### 21.5 Compter, lister et exporter avec un script
+
+1. Ouvrir le modèle, puis **📜 Scripts** (ou **Alt+4**).
+2. Dans l'éditeur, taper `out.print(model.count())` et **Ctrl+Entrée** : le nombre d'éléments du modèle s'affiche.
+3. Pour un détail par couche : `out.table(['OA', 'SA', 'LA', 'PA', 'EPBS'].map(layer => ({ layer, elements: model.count({ layer }) })))`, puis **⬇ CSV** sur le tableau.
+4. Pour une liste d'éléments : `out.table(model.elements({ type: 'LogicalFunction', where: f => !f.description }).map(f => ({ function: f, owner: f.owner })))` — un clic sur une fonction ouvre son panneau de détail.
+5. Pour garder le script : **💾**, lui donner un nom ; il est enregistré dans la page (💾) et repris par 📄 Ouvrir un projet de travail. **⬇** l'exporte en `.js` pour le partager.
+
 ---
 
 ## 22. Questions fréquentes et dépannage
@@ -1659,7 +1668,7 @@ Le bouton **📜 Scripts** de la barre (ou **Alt+4**, ou ☰ / Ctrl+K « Scripts
 | `out` | `print`, `warn`, `error`, `table`, `csv`, `file`, `progress`, `clear` |
 | `ui` (avec `await`) | `ask`, `confirm`, `choose`, `readFile`, `readCsv`, `parseCsv` |
 
-Filtre : un nom de type (`'Component'` : sous-types compris), une fonction, ou `{ type, exactType, layer, name, technical, where }`. Référence complète : [`docs/api/arcalyse.d.ts`](api/arcalyse.d.ts) (autocomplétion dans VS Code) et [`docs/api/LISEZMOI.md`](api/LISEZMOI.md).
+Filtre : un nom de type (`'Component'` : sous-types compris), une fonction, ou `{ type, exactType, layer, name, technical, where }`. Référence complète : [`docs/api/arcalyse.d.ts`](api/arcalyse.d.ts) (autocomplétion dans VS Code) et [`docs/api/LISEZMOI.md`](api/LISEZMOI.md), qui contient aussi des **recettes** prêtes à l'emploi (compter, lister, exporter, contrôler). Visite guidée : **❓ Aide ▾ → 📜 Visite des scripts** ou 🎓 dans la console.
 
 ```js
 // Composants logiques sans fonction allouée, en tableau puis en CSV

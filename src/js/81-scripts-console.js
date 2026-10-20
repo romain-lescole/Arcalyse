@@ -388,6 +388,7 @@ function capScrRecharger(){
   capScrRecharger();
   $('b-scripts')?.addEventListener('click',()=>capScrToggle());
   $('scr-fermer').onclick=()=>capScrToggle(false);
+  $('scr-visite').onclick=()=>capTourScripts();
   $('scr-liste').onchange=e=>capScrOuvrir(e.target.value);
   $('scr-nouveau').onclick=capScrNouveau; $('scr-enregistrer').onclick=capScrEnregistrer; $('scr-supprimer').onclick=capScrSupprimer;
   $('scr-importer').onclick=()=>$('scr-fichier').click();

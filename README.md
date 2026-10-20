@@ -130,13 +130,23 @@ Choose among dozens of indicators (number of elements, function allocation, desc
 
 ![Dashboard](docs/captures/08-tableau-de-bord.png)
 
+### 📜 Script the analysis (macros)
+JavaScript scripts browse and analyse the model through the same read-only API as Arcature (`model`, `metamodel`, `out`, `ui`), plus `analysis` for every Arcalyse analysis (functions, chains, traceability, checks, health…). Examples, a project library kept in the HTML page, a shared folder, and an isolated worker: no page, no file, no network. Reference: [`docs/api/arcalyse.d.ts`](docs/api/arcalyse.d.ts), recipes: [`docs/api/LISEZMOI.md`](docs/api/LISEZMOI.md).
+
+```js
+out.print('Elements:', model.count());
+out.table(model.types());
+for (const c of await analysis.checks()) if (c.severity === 'err' && c.rows.length) out.warn(c.view, c.title, c.rows.length);
+```
+
+![Scripts — health example, output with links and tables](docs/captures/19-scripts.png)
+
 ### And also
 - 🧭 **Explorer**: tree, cards by layer, ARCADIA type index.
 - 🔍 **Details panel**: attributes, references in both directions, diagrams of the element, and its Capella **description formatted as in Capella** (links to other elements clickable, original HTML code on demand) — with tabs (sheet, links, diagrams, analyses, review) when you want less.
 - ◀ ▶ **History** (Alt+← / Alt+→) over views, elements and diagrams, and a **Ctrl+K** palette to jump to any view, element or diagram by name.
 - ⬇ **Excel**: every table exports as CSV or `.xlsx`, and one workbook gathers all the analyses. Long tables and lists come by pages of 200 rows.
 - ♿ **Accessibility**: keyboard navigation, named controls, visible focus, system colour scheme.
-- 📜 **Scripts (macros)**: JavaScript scripts browse and analyse the model through the same read-only API as Arcature (`model`, `metamodel`, `out`, `ui`), plus `analysis` for every Arcalyse analysis; examples, project library, shared folder, isolated worker. Reference: [`docs/api/arcalyse.d.ts`](docs/api/arcalyse.d.ts).
 - 🔗 **Links**: all the model relations, filterable and exportable.
 - ▤ **Table**: all elements in a table, with view tabs, relation columns and computed path columns (live preview), sort, filters and CSV export.
 - 🎨 **Themes**: Dark, Light, Office 2007, high contrast, and your own custom theme.
@@ -283,13 +293,23 @@ Choisissez parmi des dizaines d'indicateurs (nombre d'éléments, allocation des
 
 ![Tableau de bord](docs/captures/08-tableau-de-bord.png)
 
+### 📜 Scripter l'analyse (macros)
+Des scripts JavaScript parcourent et analysent le modèle par la même API de lecture qu'Arcature (`model`, `metamodel`, `out`, `ui`), complétée par `analysis` pour toutes les analyses d'Arcalyse (fonctions, chaînes, traçabilité, contrôles, santé…). Exemples, bibliothèque du projet gardée dans la page HTML, dossier partagé, worker isolé : ni page, ni fichier, ni réseau. Référence : [`docs/api/arcalyse.d.ts`](docs/api/arcalyse.d.ts), recettes : [`docs/api/LISEZMOI.md`](docs/api/LISEZMOI.md).
+
+```js
+out.print('Éléments :', model.count());
+out.table(model.types());
+for (const c of await analysis.checks()) if (c.severity === 'err' && c.rows.length) out.warn(c.view, c.title, c.rows.length);
+```
+
+![Scripts — exemple santé, sortie avec liens et tableaux](docs/captures/19-scripts.png)
+
 ### Et aussi
 - 🧭 **Explorateur** : arborescence, cartes par couche, index des types ARCADIA.
 - 🔍 **Panneau de détail** : attributs, références dans les deux sens, diagrammes de l'élément, et sa **description Capella mise en forme comme dans Capella** (liens vers d'autres éléments cliquables, code HTML d'origine à la demande) — avec des onglets (fiche, liens, diagrammes, analyses, revue) quand on veut moins.
 - ◀ ▶ **Historique** (Alt+← / Alt+→) des vues, éléments et diagrammes, et une palette **Ctrl+K** pour atteindre n'importe quelle vue, élément ou diagramme par son nom.
 - ⬇ **Excel** : chaque tableau s'exporte en CSV ou en `.xlsx`, et un classeur rassemble toutes les analyses. Les tableaux et listes longs s'affichent par pages de 200 lignes.
 - ♿ **Accessibilité** : navigation au clavier, commandes nommées, focus visible, thème selon le réglage du système.
-- 📜 **Scripts (macros)** : des scripts JavaScript parcourent et analysent le modèle par la même API de lecture qu'Arcature (`model`, `metamodel`, `out`, `ui`), complétée par `analysis` pour toutes les analyses d'Arcalyse ; exemples, bibliothèque du projet, dossier partagé, worker isolé. Référence : [`docs/api/arcalyse.d.ts`](docs/api/arcalyse.d.ts).
 - 🔗 **Liens** : toutes les relations du modèle, filtrables et exportables.
 - ▤ **Tableau** : tous les éléments en tableau, avec onglets de vues, colonnes de relations et colonnes calculées par chemin (aperçu en direct), tri, filtres et export CSV.
 - 🎨 **Thèmes** : Sombre, Clair, Office 2007, contraste élevé, et votre thème personnalisé.
