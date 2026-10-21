@@ -5,56 +5,42 @@
   <!-- ◀ ▶ Historique de navigation (76-historique.js) : Alt+← / Alt+→, clic droit = liste des étapes -->
   <div class="tbtn off" id="b-hist-back" title="Précédent (Alt+←)">◀</div>
   <div class="tbtn off" id="b-hist-fwd" title="Suivant (Alt+→)">▶</div>
-  <div class="tbtn active" id="mode-rm"    title="Relation Map">🗺<span class="tb-lbl"> Relation Map</span></div>
-  <div class="tbtn"        id="mode-pbs"   title="PBS" style="display:none">🌲 PBS</div>
-  <!-- Vues Capella : au même niveau que Relation Map, toujours visibles (clic = bascule en mode capella) -->
-  <!-- Boutons générés par capNavRender (41-barre-vues.js) : menus 🧭 Explorateur / 📡 Flux & interfaces / 🔬 Analyses, ▤ Tableau, vues épinglées, ☰ -->
+  <!-- 🗺 Relation Map : ouverte par 🏗 Architecture › Explorer (bouton masqué, gardé pour le code existant) -->
+  <div class="tbtn active" id="mode-rm"    title="Relation Map" style="display:none">🗺<span class="tb-lbl"> Relation Map</span></div>
+  <!-- Boutons générés par capNavRender (41-barre-vues.js) : 🔲 Diagrammes, ▤ Tableau, vues épinglées, menus 🏗 Architecture /
+       ✅ Vérifier / 💬 Revue & documents, champ 🔍 de recherche (Ctrl+K) ; masqués tant qu'aucun modèle n'est ouvert (html[data-capvide]) -->
   <div id="cap-tb-views" style="display:flex;align-items:center;gap:3px;"></div>
   <!-- Spacer : tout ce qui suit est poussé à droite -->
   <div id="tb-spacer"></div>
-  <div class="tbtn" id="b-ref" style="display:none">↺ Reset</div>
+  <!-- Niveau d'affichage des menus : Essentiel / Complet (boutons générés par capNavRender) -->
+  <span id="cap-nav-lvl" class="cap-nav-lvl" role="group" aria-label="Niveau d'affichage des menus"></span>
   <div class="tsep"></div>
   <!-- 📁 Fichier ▾ : ouvrir un modèle, enregistrer, enregistrer sous, télécharger la page (menu rempli par capNavMenuFill) -->
   <div class="tbtn" id="b-file-menu" data-dd="file" title="Ouvrir un modèle Capella, enregistrer la page">📁<span class="tb-lbl"> Fichier</span> ▾</div>
   <div class="tbtn" id="b-save-direct" title="Enregistrer la page (avec le modèle chargé) directement dans un fichier HTML, sans passer par les téléchargements (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous">💾</div>
-  <!-- Commandes conservées pour le code existant, accessibles par le menu 📁 Fichier -->
-  <div class="tbtn" id="b-capella-load" title="Charger un fichier Capella" style="display:none">🔷 CAPELLA</div>
-  <div class="tbtn" id="b-save-page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome" style="display:none">💾 Page HTML</div>
-  <!-- 🔄 Suivi du fichier .capella (mises à jour, delta, historique) — visible quand un modèle est chargé -->
+  <!-- 🔄 Suivi du fichier .capella (mises à jour, delta, historique) : menu ouvert par 📁 Fichier › 🔄 Suivi du fichier ;
+       le bouton n'apparaît que lorsqu'une nouvelle version est détectée (badge) ou que son menu est ouvert (40) -->
   <div style="position:relative;display:none" id="b-cap-watch">
     <div class="tbtn" id="b-cap-watch-main" title="Suivi du fichier .capella : mises à jour, delta, historique">🔄<span class="tb-lbl"> Suivi</span><span id="b-cap-watch-badge" class="cw-badge" style="display:none"></span> ▾</div>
     <div id="cap-watch-dd" style="display:none"></div>
   </div>
-  <!-- Éditer/Sauver/Charger → dropdown -->
-  <div style="position:relative;display:none" id="b-edit-wrap"><!-- menu Éditer retiré de l'interface (version Capella) -->
-    <div class="tbtn" id="b-edit-menu" title="Éditer / Sauver / Charger">✏ Éditer ▾</div>
-    <div id="b-edit-dd" style="display:none;position:absolute;top:calc(100% + 4px);right:0;z-index:500;
-         background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;
-         min-width:160px;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;">
-      <div class="ctx-i" id="b-edit">✏ Éditeur de modèle</div>
-      <div class="ctx-i" id="b-save">💾 Sauvegarder</div>
-      <div class="ctx-i" id="b-load">📂 Charger un fichier</div>
-    </div>
-  </div>
-  <!-- 📜 Scripts : console de scripts (tiroir en bas des vues, 81-scripts-console.js) -->
+  <!-- 📜 Scripts : console de scripts (tiroir en bas des vues, 81-scripts-console.js) ; ouverte par 💬 Revue & documents › 📜 Scripts (mode Complet), Alt+4 ou la recherche -->
   <div class="tbtn" id="b-scripts" title="Scripts : parcourir et analyser le modèle avec l'API, comme les macros de Catia Magic (Alt+4)" style="display:none">📜<span class="tb-lbl"> Scripts</span></div>
-  <!-- 💬 Revue : commentaires de revue (panneau à droite, 55-revue.js) -->
-  <div class="tbtn" id="b-review" title="Revue : commentaires sur le modèle et les diagrammes, vérification après mise à jour, rapport">💬<span class="tb-lbl"> Revue</span><span id="b-review-badge" class="cw-badge" style="display:none"></span></div>
-  <!-- 🎨 Thème ▾ : liste des thèmes + personnalisation (le sélecteur caché reste la référence du thème choisi) -->
-  <div class="tbtn" id="b-theme-menu" data-dd="theme" title="Changer le thème, créer ou modifier un thème personnalisé">🎨<span class="tb-lbl"> Thème</span> ▾</div>
+  <!-- 💬 Revue : commentaires de revue (panneau à droite, 55-revue.js) ; ouvert par 💬 Revue & documents › 💬 Commentaires (bouton masqué, badge recopié sur le menu) -->
+  <div class="tbtn" id="b-review" style="display:none" title="Revue : commentaires sur le modèle et les diagrammes, vérification après mise à jour, rapport">💬<span class="tb-lbl"> Revue</span><span id="b-review-badge" class="cw-badge" style="display:none"></span></div>
+  <!-- 🎨 Thème : dans ⚙ (menu et Préférences) ; le sélecteur caché reste la référence du thème choisi -->
+  <div class="tbtn" id="b-theme-menu" data-dd="theme" style="display:none" title="Changer le thème, créer ou modifier un thème personnalisé">🎨<span class="tb-lbl"> Thème</span> ▾</div>
   <select id="theme-sel" title="Changer le thème" style="display:none">
     <option value="dark">🌙 Sombre</option>
     <option value="light">☀️ Clair</option>
-    <option value="blue">🌊 Marine</option>
-    <option value="green">🌿 Nature</option>
     <option value="office2007">🗂 Office 2007</option>
     <option value="contrast">⚡ Contraste</option>
   </select>
   <div class="tbtn" id="b-theme-edit" title="Créer ou modifier un thème personnalisé (toutes les couleurs)" style="display:none">🎨</div>
   <!-- ❓ Aide ▾ : aide complète et 🎓 visite guidée (menu rempli par capNavMenuFill) -->
   <div class="tbtn" id="b-help" data-dd="help" title="Aide complète, visite guidée de l'outil">❓<span class="tb-lbl"> Aide</span> ▾</div>
-  <!-- ⚙ Préférences : affichage des menus (Expert / Simplifié / Personnalisé), enregistrement automatique, thème (64-preferences.js) -->
-  <div class="tbtn" id="b-prefs" data-dd="prefs" title="Préférences : affichage des menus, enregistrement automatique, thème, interface et vues">⚙</div>
+  <!-- ⚙ Préférences : niveau des menus (Essentiel / Complet), style de la barre, thème, enregistrement automatique (64-preferences.js) -->
+  <div class="tbtn" id="b-prefs" data-dd="prefs" title="Préférences : menus, style de la barre, thème, enregistrement automatique, interface et vues">⚙</div>
 </div>
 <!-- Toolbar niveau 2 : commandes propres à la Relation Map -->
 <div id="toolbar2" role="toolbar" aria-label="Commandes de la Relation Map">
@@ -129,10 +115,11 @@
     <div id="cap-drop-zone" title="Cliquer pour parcourir, ou glisser-déposer un fichier .capella">
       <div class="cw-brand"><span class="cw-brand-n"><svg class="cap-logo" width="40" height="40" viewBox="0 0 100 100" aria-hidden="true"><g stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none" opacity=".85"><path d="M50 16L20 84M50 16L80 84"/><path d="M32 58Q50 40 68 58" stroke="#5aa2e8" stroke-width="6"/></g><circle cx="50" cy="16" r="9" fill="#f0a35e"/><circle cx="20" cy="84" r="9" fill="#4fc3a1"/><circle cx="80" cy="84" r="9" fill="#e8c84f"/><circle cx="32" cy="58" r="5" fill="#5aa2e8"/><circle cx="68" cy="58" r="5" fill="#5aa2e8"/></svg>Arcalyse</span><span class="cw-brand-s">Votre modèle Capella, sous toutes ses coutures.</span></div>
       <div class="cw-title" id="cw-title">Ouvrir un modèle Capella</div>
-      <div class="cw-sub" id="cw-sub">Glissez-déposez votre fichier <strong>.capella</strong> (ou le dossier du projet) ici<br>ou recherchez-le dans l'explorateur de fichiers.</div>
-      <div class="cw-btns"><button class="cw-btn" id="cw-browse" type="button" title="Ouvrir le fichier .capella seul">📂 Fichier .capella…</button>
-      <button class="cw-btn cw-btn2" id="cw-folder" type="button" title="Ouvrir le dossier du projet : le .capella et ses diagrammes (.aird) sont chargés ensemble">📁 Dossier du projet…</button>
-      <button class="cw-btn cw-btn2" id="cw-projet" type="button" title="Reprendre un projet de travail enregistré en page HTML (💾), même par une version précédente d'Arcalyse (à partir de la 2.1) : modèle, diagrammes, revue, accueil, vues et réglages sont repris dans cette version">📄 Projet de travail (.html)…</button></div>
+      <div class="cw-sub" id="cw-sub">Glissez-déposez ici votre modèle <strong>.capella</strong>, le dossier du projet ou une page de projet <strong>.html</strong>, ou choisissez :</div>
+      <!-- Trois façons d'ouvrir (refonte 3.0) : le dossier du projet est conseillé (modèle, diagrammes et bibliothèques en une fois) -->
+      <div class="cw-btns"><button class="cw-btn cw-btn2" id="cw-browse" type="button" title="Ouvrir le fichier .capella seul"><b>📂 Fichier .capella…</b><span>Le modèle seul. Tout est disponible sauf les diagrammes, qu'on peut ajouter ensuite avec le .aird.</span></button>
+      <button class="cw-btn" id="cw-folder" type="button" title="Ouvrir le dossier du projet : le .capella et ses diagrammes (.aird) sont chargés ensemble"><b>📁 Dossier du projet…</b><span>Le modèle, ses diagrammes (.aird) et ses bibliothèques, en une fois. Conseillé.</span></button>
+      <button class="cw-btn cw-btn2" id="cw-projet" type="button" title="Reprendre un projet de travail enregistré en page HTML (💾), même par une version précédente d'Arcalyse (à partir de la 2.1) : modèle, diagrammes, revue, accueil, vues et réglages sont repris dans cette version"><b>📄 Projet de travail (.html)…</b><span>Reprendre une page enregistrée : modèle, revue, dossiers, réglages. Vous choisissez les parties.</span></button></div>
       <input type="file" id="cw-folder-input" webkitdirectory multiple style="display:none">
       <div class="cw-status" id="cw-status"></div>
       <div class="cw-hint">Formats acceptés : .capella · .melodymodeller · .xml — le fichier est lu localement, rien n'est envoyé.</div>
@@ -254,23 +241,6 @@
   </div>
 </div>
 
-<!-- ════════════════════════  MODALE ÉDITEUR  ════════════════════════ -->
-<div id="modal-ov">
-  <div id="modal-box">
-    <div id="modal-hdr">
-      <span>✏ Éditeur de modèle</span>
-      <button id="modal-close">✕</button>
-    </div>
-    <div id="modal-tabs">
-      <button class="mtab active" data-t="el">Éléments (<span id="el-count">0</span>)</button>
-      <button class="mtab" data-t="rel">Relations (<span id="rel-count">0</span>)</button>
-      <button class="mtab" data-t="pkg">Paquetages (<span id="pkg-count">0</span>)</button>
-      <button class="mtab" data-t="chains" id="mtab-chains" style="display:none">Chaînes (<span id="chains-count">0</span>)</button>
-    </div>
-    <div id="modal-body"></div>
-  </div>
-</div>
-
 <!-- ════════════════════════  MODAL EXPORT QUALITÉ  ════════════════════════ -->
 <div id="export-ov">
   <div id="export-box">
@@ -290,7 +260,6 @@
   </div>
 </div>
 
-<input type="file" id="file-input" accept=".json" style="display:none">
 <input type="file" id="capella-file-input" accept=".capella,.melodymodeller,.xml" style="display:none">
 <input type="file" id="cap-watch-input" accept=".capella,.melodymodeller,.xml" style="display:none">
 <!-- 🔄 Suivi du fichier : notification de mise à jour, message bref, fenêtre du delta -->
@@ -334,10 +303,9 @@
       <span class="tb-grp">
         <button class="cap-lf-btn" data-ev="tree">🌳 Arborescence</button>
         <button class="cap-lf-btn" data-ev="cards">▦ Cartes</button>
-        <button class="cap-lf-btn" data-ev="index">📖 Index des types</button>
       </span>
     </div>
-    <!-- Onglets du menu 📡 Flux & interfaces : vues du menu non épinglées (remplis par capNavFluxTabs) -->
+    <!-- Onglets de section (ex. Composants & interfaces) : vues de la même section du menu (remplis par capNavFluxTabs) -->
     <div id="cap-flux-tabs" class="phl-toggle-bar" style="display:none;gap:4px;padding:10px 16px 8px;margin:0;border-bottom:1px solid var(--c-border);flex-shrink:0;"></div>
     <!-- Sub-toolbar: stats + filters + search + expand/json — always in content area -->
     <div id="cap-sub-toolbar" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:6px 12px;border-bottom:1px solid var(--c-border);background:var(--c-bg2);flex-shrink:0;">
@@ -427,7 +395,6 @@
     </div>
 
     <div id="cap-view-tree"   style="flex:1;overflow-y:auto;padding:10px 16px;display:none;"></div>
-    <div id="cap-view-links"  style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-chains" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-physlink" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-compex" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
@@ -441,7 +408,6 @@
     <div id="cap-view-functions" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-analyses" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-dashboard" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
-    <div id="cap-view-index" style="flex:1;overflow:hidden;display:none;flex-direction:column;"></div>
     <div id="cap-view-home" style="flex:1;overflow:hidden;display:none;flex-direction:column;"></div>
 
     <div id="cap-empty" style="display:none;text-align:center;padding:60px;color:var(--c-dim);">

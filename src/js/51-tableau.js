@@ -707,7 +707,7 @@ function capTableTreeToggle(id, open){
   capRenderTableBodyOnly();
 }
 
-/* ── 📋 Sélection de cellules et copie (comme ƒ Fonctions › 📋 Tableau) ─────────
+/* ── 📋 Sélection de cellules et copie (comme ƒ Fonctions › ▤ Tableau) ─────────
  * Clic : une cellule · clic-glisser : un rectangle · Ctrl+clic : ajouter / retirer · Maj+clic : étendre ;
  * Ctrl+C ou 📋 Copier : texte tabulé (collage dans Excel / Word) ; Échap ou clic hors du tableau : effacer.
  * Double-clic sur une ligne : panneau de détail. La sélection porte sur la page affichée (effacée à chaque rendu). */

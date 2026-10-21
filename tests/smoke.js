@@ -35,7 +35,7 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
   await p.setInputFiles('#capella-file-input', model);
   await p.waitForFunction(() => typeof capLoaded !== 'undefined' && capLoaded, null, { timeout: 180000 });
   const step = async (label, fn) => { const n = errs.length; try { await fn(); } catch (e) { errs.push(label + ' : ' + e.message); } await p.waitForTimeout(250); console.log((errs.length > n ? '✖ ' : '✔ ') + label); };
-  for (const v of ['home', 'tree', 'cards', 'table', 'links', 'chains', 'physlink', 'compex', 'ports', 'fex', 'oav', 'csys', 'cblk', 'scen', 'diag', 'functions', 'analyses', 'dashboard', 'index'])
+  for (const v of ['home', 'tree', 'cards', 'table', 'chains', 'physlink', 'compex', 'ports', 'fex', 'oav', 'csys', 'cblk', 'scen', 'diag', 'functions', 'analyses', 'dashboard'])
     await step('vue ' + v, () => p.evaluate(k => capNavOpen(k), v));
   // 🗺 Diagrammes : .aird du modèle (s'il accompagne le modèle dans tests/models, compressé) ; détail → diagramme → clic → détail
   const airdGz = model.replace(/\.capella$/i, '.aird.gz');
@@ -103,9 +103,16 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.evaluate(() => { capChkSet({ off: {}, sev: {}, params: {} }); }); await p.waitForTimeout(300); await p.click('#cap-view-functions [data-fv="checks"]'); await p.waitForTimeout(300);
     if (!await p.evaluate(t => [...document.querySelectorAll('#cap-view-functions details.cap-diag b')].some(b => b.textContent === t), t)) throw new Error('contrôle non réactivé : ' + t);
   });
-  await step('barre : menu, épingle, Ctrl+K', async () => {
-    await p.click('#cap-v-analyses .cap-nav-arr'); await p.click('#cap-nav-dd [data-open="ana:reqs"]');
-    await p.click('#cap-v-analyses .cap-nav-arr'); await p.click('#cap-nav-dd [data-pin="ana:reqs"]'); await p.click('#cap-v-ana-reqs');
+  await step('barre : menu, épingle, Ctrl+K, Essentiel / Complet', async () => {
+    await p.click('#cap-v-verif'); await p.click('#cap-nav-dd [data-open="ana:reqs"]');
+    await p.click('#cap-v-verif'); await p.click('#cap-nav-dd [data-pin="ana:reqs"]'); await p.click('#cap-v-ana-reqs');
+    // Niveau Essentiel (par défaut) : vues avancées absentes du menu ✅ Vérifier ; Complet : présentes
+    await p.click('#cap-v-verif'); if (await p.$('#cap-nav-dd [data-open="ana:rec"]')) throw new Error('Essentiel : REC / RPL présent dans le menu');
+    await p.keyboard.press('Escape'); await p.click('#cap-nav-lvl [data-lvl="complet"]');
+    await p.click('#cap-v-verif'); if (!(await p.$('#cap-nav-dd [data-open="ana:rec"]'))) throw new Error('Complet : REC / RPL absent du menu');
+    await p.keyboard.press('Escape'); await p.click('#cap-nav-lvl [data-lvl="essentiel"]');
+    await p.click('#cap-v-revue'); await p.click('#cap-nav-dd [data-open="home:docs"]');
+    if (await p.evaluate(() => capCurrentView + ':' + _capHomeUi.tab) !== 'home:docs') throw new Error('💬 Revue & documents : check-lists non ouvertes');
     await p.keyboard.press('Control+K'); await p.keyboard.type('ports'); await p.keyboard.press('Enter');
     if (await p.evaluate(() => capCurrentView) !== 'ports') throw new Error('Ctrl+K : vue Ports non ouverte');
     // 🔍 Palette : un élément du modèle par son nom → panneau de détail
@@ -115,11 +122,62 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
       await p.keyboard.press('Enter'); await p.waitForTimeout(300);
       if (!(await p.textContent('#cap-detail-content')).includes(nomEl)) throw new Error('Ctrl+K : détail de « ' + nomEl + ' » non ouvert'); }
     await p.evaluate(() => { _capNav = JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); capNavRender(); });
-    await p.click('#cap-v-flux'); await p.click('#cap-flux-tabs [data-open="physlink"]');
-    if (await p.evaluate(() => capCurrentView) !== 'physlink') throw new Error('onglets 📡 Flux : Physical Link non ouvert');
-    await p.click('#b-theme-menu'); await p.click('#cap-nav-dd [data-thm="light"]');
-    await p.click('#b-theme-menu'); await p.click('#cap-nav-dd [data-thm="dark"]');
+    await p.click('#cap-v-arch'); await p.click('#cap-nav-dd [data-open="grp:comp"]'); await p.click('#cap-flux-tabs [data-open="physlink"]');
+    if (await p.evaluate(() => capCurrentView) !== 'physlink') throw new Error('barre de famille : Physical Link non ouvert');
+    await p.click('#b-prefs'); await p.click('#cap-nav-dd [data-act="theme"]'); await p.click('#cap-nav-dd [data-thm="light"]');
+    await p.click('#b-prefs'); await p.click('#cap-nav-dd [data-act="theme"]'); await p.click('#cap-nav-dd [data-thm="dark"]');
     await p.click('#b-file-menu'); await p.keyboard.press('Escape'); });
+  await step('🏠 Accueil : en-tête du projet, tâches, vues sans données', async () => {
+    await p.evaluate(() => { _capHomeUi.tab = 'projet'; capNavOpen('home'); }); await p.waitForTimeout(300);
+    if (!(await p.$('#cap-view-home .hm-head .hm-pill'))) throw new Error('en-tête du projet absent');
+    if ((await p.$$('#cap-view-home .hm-tache')).length !== 6) throw new Error('« Que voulez-vous faire ? » : 6 tâches attendues');
+    await p.click('#cap-view-home .hm-tache[data-nav="table"]');
+    if (await p.evaluate(() => capCurrentView) !== 'table') throw new Error('tâche « Sortir un tableau Excel » : ▤ Tableau non ouvert');
+    const k = await p.evaluate(() => [...capNavVides()].find(x => CAP_NAV_ITEMS.find(i => i.k === x && i.g === 'verif' && !i.x && !i.m)));   // vue sans données du menu ✅ Vérifier
+    { await p.evaluate(() => capNavSetMode('essentiel'));
+      if (k) { await p.click('#cap-v-verif'); if (await p.$(`#cap-nav-dd [data-open="${k}"]`)) throw new Error('vue sans données encore dans le menu : ' + k); await p.keyboard.press('Escape'); } }
+    await p.evaluate(() => capNavSetMode('complet')); });
+  await step('💚 Santé & contrôles : pastille, filtre par vue, ouvrir dans la vue', async () => {
+    await p.evaluate(() => capNavOpen('fex')); await p.waitForTimeout(300);
+    await p.click('#cap-flux-tabs .cap-nav-chk'); await p.waitForTimeout(800);
+    if (await p.evaluate(() => capCurrentView + ':' + capAnaSub) !== 'analyses:sante') throw new Error('pastille : 💚 Santé non ouverte');
+    if (!(await p.$('.sante-vues [data-svue="fex"].active'))) throw new Error('💚 Santé : filtre sur ƒ⇆ non appliqué');
+    const t = await p.evaluate(() => document.querySelector('[data-sgo]')?.dataset.st);
+    if (t) { await p.click('[data-sgo]'); await p.waitForTimeout(1500);
+      if (!(await p.evaluate(t => [...document.querySelectorAll('#cap-view-fex details.cap-diag[open] summary b')].some(b => b.textContent === t), t))) throw new Error('« Ouvrir ↗ » : section non dépliée — ' + t); }
+    await p.click('#cap-view-fex .cap-diag-cfg'); await p.waitForTimeout(500);
+    if (await p.evaluate(() => capAnaSub) !== 'sante') throw new Error('bouton 💚 des contrôles inopérant'); });
+  await step('💬 Revue & documents : faire relire, rapports, retour à l\'accueil', async () => {
+    await p.click('#cap-v-revue'); await p.click('#cap-nav-dd [data-open="home:rap"]'); await p.waitForTimeout(300);
+    if (await p.evaluate(() => capNavCurKey()) !== 'home:rap') throw new Error('📘 Rapports automatiques non ouverts');
+    if (!(await p.$('#cap-view-home [data-dos-gab]'))) throw new Error('📘 : plans types absents');
+    await p.click('#cap-view-home [data-tab="dos"]'); await p.click('#cap-view-home [data-da="new"]'); await p.waitForTimeout(300);
+    if (await p.evaluate(() => capNavCurKey() + ':' + capDosOnglet(capDosCur())) !== 'home:dos:dos') throw new Error('📑 Faire relire : nouveau dossier mal rangé');
+    await p.click('#cap-tb-home .tbtn'); await p.waitForTimeout(300);
+    if (await p.evaluate(() => _capHomeUi.tab) !== 'projet') throw new Error('🏠 Accueil : onglet Projet attendu'); });
+  await step('🗂 Familles de vues : menu, puces, couche commune', async () => {
+    await p.click('#cap-v-arch'); if (await p.$('#cap-nav-dd [data-open="csys"]')) throw new Error('vue d\'une famille encore seule dans le menu');
+    await p.click('#cap-nav-dd [data-open="grp:comp"]'); await p.click('#cap-flux-tabs [data-open="cblk"]');
+    if (await p.evaluate(() => capCurrentView + ':' + _capNav.couche) !== 'cblk:LA') throw new Error('puce LA : couche non mémorisée');
+    await p.click('#cap-v-arch'); await p.click('#cap-nav-dd [data-open="grp:fonc"]'); await p.waitForTimeout(500);
+    // La famille s'ouvre sur sa dernière vue (ƒ Fonctions ou ƒ⇆) : la couche commune LA doit y être appliquée
+    if (await p.evaluate(() => capNavCoucheLue(capCurrentView))!== 'LA') throw new Error('ƒ Fonctions & échanges : couche commune LA non appliquée (' + await p.evaluate(() => capCurrentView) + ')');
+    await p.click('#cap-flux-tabs [data-open="functions"]'); await p.waitForTimeout(500);
+    if (await p.evaluate(() => capNavCoucheLue('functions')) !== 'LA') throw new Error('ƒ Fonctions : couche commune LA non appliquée');
+    await p.click('#cap-flux-tabs [data-couche=""]'); await p.waitForTimeout(300);
+    if (await p.evaluate(() => capNavCoucheLue('functions'))) throw new Error('couche « Toutes » non appliquée');
+    await p.click('#cap-v-verif'); await p.click('#cap-nav-dd [data-open="grp:trac"]'); await p.click('#cap-flux-tabs [data-open="ana:xlay"]');
+    if (await p.evaluate(() => capAnaSub) !== 'xlay') throw new Error('🧬 Traçabilité : graphe non ouvert'); });
+  await step('⚙ Préférences : rubriques, thème, suivi enregistré', async () => {
+    await p.evaluate(() => capPrefDialog());
+    for (const t of ['aff', 'theme', 'suivi', 'save', 'cfg', 'ctl', 'exp']) { await p.click(`#cap-pref-ov [data-ptab="${t}"]`); await p.waitForTimeout(100); }
+    await p.click('#cap-pref-ov [data-ptab="theme"]'); await p.click('#cap-pref-ov label:has([data-pt="office2007"])');
+    if (await p.evaluate(() => currentTheme) !== 'office2007') throw new Error('thème Office 2007 non appliqué');
+    await p.click('#cap-pref-ov label:has([data-pt="dark"])');
+    await p.click('#cap-pref-ov [data-ptab="suivi"]'); await p.selectOption('#cap-pref-ov [data-pw="period"]', '60');
+    if (await p.evaluate(() => JSON.parse(document.getElementById('cap-toolbar').textContent).watch?.period) !== 60) throw new Error('période du suivi non enregistrée');
+    if (await p.evaluate(() => { applyTheme('blue'); return currentTheme; }) !== 'dark') throw new Error('ancien thème Marine non converti en Sombre');
+    await p.click('#cap-pref-ov .cw-d-hdr [data-pa="x"]'); });
   await step('scripts 📜 : console, exemple, lien', async () => {
     await p.evaluate(() => capScrToggle(true));
     if (await p.evaluate(() => document.getElementById('cap-scripts').style.display) !== 'flex') throw new Error('console non ouverte');
@@ -149,7 +207,7 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.keyboard.press('Alt+ArrowRight'); if (await p.evaluate(() => capCurrentView) !== 'cards') throw new Error('Alt+→ : vue Cartes non rétablie');
     await p.click('#b-hist-back', { button: 'right' }); if (!(await p.$('#cap-hist-dd [data-hi]'))) throw new Error('clic droit : liste des étapes absente');
     await p.keyboard.press('Escape'); await p.evaluate(() => capHistClose()); });
-  await step('analyses : sous-vues', async () => { await p.click('#cap-v-analyses');
+  await step('analyses : sous-vues', async () => { await p.evaluate(() => { capNavSetMode('complet'); capNavOpen('ana:trace'); }); await p.waitForTimeout(300);   // Complet : tous les onglets
     for (const b of await p.$$('#cap-view-analyses [data-an]:not([data-an="fns"])')) { await b.click(); await p.waitForTimeout(300); }
     await p.evaluate(() => capNavOpen('ana:states')); await p.waitForTimeout(300);
     const inp = p.locator('#ana-box .cap-tf-row input:visible').first();
@@ -174,7 +232,8 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
       await p.waitForTimeout(150); await p.keyboard.press('Escape'); await p.evaluate(() => { if (typeof capTourEnd === 'function') capTourEnd(); });
     } });
   await step('À propos et aide', async () => { await p.evaluate(() => capAboutOpen()); await p.evaluate(() => { document.getElementById('cap-about-ov').style.display = 'none'; openHelpModal(); }); await p.keyboard.press('Escape'); });
-  await step('Relation Map', () => p.click('#mode-rm'));
+  await step('Relation Map', async () => { await p.click('#cap-v-arch'); await p.click('#cap-nav-dd [data-open="@rm"]');
+    if (await p.evaluate(() => currentMode) !== 'default') throw new Error('Relation Map non ouverte'); });
   await step('▤ Tableau : onglet, tri, colonne de relation, glisser-déposer', async () => {
     await p.click('#cap-v-table');
     await p.click('#cap-table-tabs .cap-ttab-add');
@@ -195,7 +254,7 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     if (!await p.evaluate(() => document.querySelectorAll('#cap-table-body .cap-ttree-td').length)) throw new Error('affichage en arbre vide');
     await p.click('#cap-table-toolbar [data-tc="rows"]'); });
   await step('tableau de bord : tous les indicateurs', async () => {
-    await p.click('#cap-v-dashboard');   // bouton épinglé par défaut
+    await p.click('#cap-v-revue'); await p.click('#cap-nav-dd [data-open="dashboard"]');   // menu 💬 Revue & documents
     const r = await p.evaluate(() => { const bad = []; capDashCatalog().forEach(m => CAP_DASH_VIZ[m.kind].forEach(([v]) => {
       try { capDashDraw({ m: m.id, v, top: 10, txt: 'x' }, m, 400, 220); } catch (e) { bad.push(m.id + '/' + v + ' : ' + e.message); } })); return bad; });
     r.forEach(x => errs.push(x));

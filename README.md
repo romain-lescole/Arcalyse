@@ -112,7 +112,7 @@ Sequence diagrams (ES, FS, OES, OAS, IS) are redrawn: lifelines, messages, execu
 ### 🔬 Analyse and check
 - **ƒ Functions**: hierarchy with descriptions, Excel-style table (value filters, copy), allocation to the system or to actors, cross-layer traceability, metrics, **name quality** (action verbs in French and English, customisable rules) and printable **functional file**.
 - **🧬 Cross-layer traceability**: OA → SA → LA → PA → EPBS realization rates by category, at a glance, and the list of untraced elements.
-- **🎯 Capabilities & missions**, **🔁 Modes & states**, **📑 Requirements**, **🏷 Properties**, **🗃 Data & interfaces**, **⛓ Constraints**.
+- **🎯 Capabilities & missions**, **🔁 Modes & states**, **📑 Requirements**, **🎛 Properties**, **🗃 Data & interfaces**, **🔒 Constraints**.
 - **⚖ Version comparison**: elements added, deleted, modified or moved between two versions of the model, with an exportable report — and the **🔲 Diagrams** tab for the `.aird`.
 - **💚 Model health**: a 0–100 score built on every check of every view, by layer, with its history across the model versions — and a **🩺 check profile** (enable, severity, thresholds) shared as a file.
 - **🖧 Deployment & EPBS**, **📦 REC / RPL** (replicas compared with their REC), **📚 Libraries** (external references, resolved once the library is loaded), **🏷 Exchange categories**, **🔖 Capella review status**, and **⚡ chain checks** (empty, broken, unallocated, physical paths).
@@ -275,7 +275,7 @@ Les diagrammes de séquence (ES, FS, OES, OAS, IS) sont redessinés : lignes de 
 ### 🔬 Analyser et contrôler
 - **ƒ Fonctions** : hiérarchie avec descriptions, tableau façon Excel (filtres par valeur, copie), allocation au système ou aux acteurs, traçabilité entre couches, métriques, **qualité des noms** (verbes d'action en français et en anglais, règles personnalisables) et **dossier fonctionnel** imprimable.
 - **🧬 Traçabilité inter-couches** : taux de réalisation OA → SA → LA → PA → EPBS par catégorie, en un coup d'œil, et la liste des éléments non tracés.
-- **🎯 Capacités & missions**, **🔁 Modes & états**, **📑 Exigences**, **🏷 Propriétés**, **🗃 Données & interfaces**, **⛓ Contraintes**.
+- **🎯 Capacités & missions**, **🔁 Modes & états**, **🧾 Exigences**, **🎛 Propriétés**, **🗃 Données & interfaces**, **🔒 Contraintes**.
 - **⚖ Comparaison de versions** : éléments ajoutés, supprimés, modifiés ou déplacés entre deux versions du modèle, avec rapport exportable — et l'onglet **🔲 Diagrammes** pour les `.aird`.
 - **💚 Santé du modèle** : un score de 0 à 100 bâti sur tous les contrôles de toutes les vues, par couche, avec son historique au fil des versions du modèle — et un **🩺 profil de contrôles** (activation, gravité, seuils) partageable en fichier.
 - **🖧 Déploiement & EPBS**, **📦 REC / RPL** (répliques comparées à leur REC), **📚 Bibliothèques** (références externes, résolues dès que la bibliothèque est chargée), **🏷 Catégories d'échanges**, **🔖 Statut de revue Capella**, et **⚡ contrôles des chaînes** (vides, discontinues, non allouées, chemins physiques).

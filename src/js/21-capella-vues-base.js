@@ -1502,7 +1502,7 @@ function capRenderTreeNode(node,container,depth,filter){
   const nodeEl=document.createElement('div'); nodeEl.className='';
   const row=document.createElement('div'); row.className='cap-tree-row'+(filter?(matchSelf?' cap-hl':' cap-dim'):'');   // recherche : conteneurs grisés s'ils ne correspondent pas
   row.style.paddingLeft=(depth*16+4)+'px';
-  if(node.id&&node.id!=='cap-root') row.dataset.id=node.id;   // glissable vers 🏠 Accueil (tableau blanc, check-list), clic droit 💬
+  if(node.id&&node.id!=='cap-root') row.dataset.id=node.id;   // glissable vers une check-list en fenêtre séparée, clic droit 💬
   const tog=document.createElement('span'); tog.className='cap-tree-tog'+(hasCh?'':' leaf'); tog.textContent=hasCh?'▶':'';
   const icon=document.createElement('span'); icon.className='cap-tree-icon';
   const svg=node.id&&node.id!=='cap-root'?capIco(node.id,16):'';   // icône façon Capella (visionneuse d'Arcature), sinon sigle

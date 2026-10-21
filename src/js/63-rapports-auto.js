@@ -219,6 +219,7 @@ function capDosGenerer(k, comp){
   if((k==='sss'||k==='ssdd')&&comp===undefined){ capDosPerimetre(k); return; }   // système ou sous-système (66)
   const o=capDosOutils(), projet=capRevProjectName()||capCurrentFileName||'';
   const d=capDosNouveau(g.l.replace(/^\S+\s/,'')+' — '+(comp?comp.attrs.name||'':projet));
+  _capHomeUi.tab='rap';   // 📘 Rapports automatiques
   d.blocs=k==='sts'?capDosPlanSts(o):k==='sts2'?capDosPlanSts2(o):k==='sss'?capDosPlanSss(o, capDosSujet(o, comp)):k==='ssdd'?capDosPlanSsdd(o, capDosSujet(o, comp)):capDosPlanDcs(o);
   d.gab=k; d.commentaires=false;   // rapport à lire : sans 💬 dans la page HTML (option dans l'en-tête)
   d.consignes=_L('Document produit automatiquement à partir du modèle, puis complété : relisez chaque chapitre et commentez ce qui est faux, manquant ou ambigu.');
@@ -410,6 +411,7 @@ function capRapEval(blocs, ctx, o){
 function capRapGenerer(m){
   if(!capLoaded){ capAlert(_L('Chargez d\'abord un modèle.')); return; }
   const o=capDosOutils(), d=capDosNouveau((m.titre||_L('Rapport'))+' — '+(capRevProjectName()||capCurrentFileName||''));
+  _capHomeUi.tab='rap';   // 📘 Rapports automatiques
   Object.assign(d, {blocs:capRapEval(m.blocs, null, o), consignes:m.consignes||'', gab:'perso', depuis:m.id, commentaires:m.commentaires!==false});
   capHomeSave(); capHomeRender();
   capWatchFlash(_L(`✔ Rapport généré à partir du modèle « ${m.titre} »`)+(o.reps.length?'':_L(' — ouvrez le .aird du projet puis régénérez pour y avoir les diagrammes')));
@@ -419,6 +421,7 @@ function capRapNouveau(){
   const id=()=>capHomeUid(), T=txt=>({id:id(), k:'txt', txt}), A=(quoi,p)=>Object.assign({id:id(), k:'auto', quoi}, p||{});
   const B=(titre, boucle, blocs)=>({id:id(), k:'chap', titre, ref:null, desc:true, boucle, blocs});
   const m=capDosNouveau(_L('Mon modèle de rapport'));
+  _capHomeUi.tab='rap';   // 📘 Rapports automatiques
   Object.assign(m, {modele:true, commentaires:false, consignes:'', blocs:[
     {id:id(), k:'chap', titre:_L('Objet'), ref:null, desc:false, blocs:[T(_L('[À rédiger — objet du document]'))]},
     {id:id(), k:'chap', titre:_L('Architecture du système'), ref:null, desc:false, blocs:[A('diagtype',{couche:'SA', sigles:'SAB'})]},

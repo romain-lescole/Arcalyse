@@ -7,7 +7,7 @@
  * Les réglages de l'ancienne 📊 Table View (partie « tv ») sont convertis en onglets du tableau (capTableImportTv).
  */
 var CAP_CFG_PARTS=[
-  ['toolbar',_L('☰ Barre des vues et ⚙ préférences'),_L('affichage des menus (Expert, Simplifié, Personnalisé), menus affichés, vues épinglées, enregistrement automatique')],
+  ['toolbar',_L('☰ Barre des vues et ⚙ préférences'),_L('niveau des menus (Essentiel, Complet), vues épinglées, style de la barre, suivi du fichier, enregistrement automatique, format des exports')],
   ['dash',   _L('📐 Tableaux de bord'),_L('pages, indicateurs, disposition')],
   ['table',  _L('▤ Tableau'),_L('onglets de vues, colonnes affichées, colonnes par chemin, tri, filtres, largeurs')],
   ['rm',     _L('🗺 Relation Map'),_L('onglets de vues : contexte, profondeur, disposition, filtres, affichage')],
@@ -44,7 +44,8 @@ function capCfgGet(k){
  */
 function capCfgSet(k, v){
   if(v==null) return;
-  if(k==='toolbar'){ if(v.groups&&Array.isArray(v.pins)){ _capNav=capNavMigrate(v); capNavSave(); capNavRender(); if(typeof capAutoSchedule==='function') capAutoSchedule(); } }
+  if(k==='toolbar'){ if(v&&Array.isArray(v.pins)){ _capNav=capNavMigrate(v);   // réglage d'avant la 3.0 converti
+    capNavSave(); capNavRender(); capWatchCfgLoad(); if(typeof capAutoSchedule==='function') capAutoSchedule(); } }
   else if(k==='dash'){ capDashStore=v; capDashSave(); const dv=document.getElementById('cap-view-dashboard'); if(dv&&dv.style.display!=='none'&&capLoaded) capRenderDashboard(dv); }
   else if(k==='table'){
     capTableCfgSet(v);
@@ -59,7 +60,8 @@ function capCfgSet(k, v){
   else if(k==='theme'){
     if(v.custom!==undefined){ capThemeStore=v.custom; capThemeSave(); if(typeof capThemeRegister==='function') capThemeRegister(); }
     const sel=document.getElementById('theme-sel');
-    if(v.current&&THEMES[v.current]&&sel){ sel.value=v.current; applyTheme(v.current); }
+    const cur=v.current&&(CAP_THEME_ANCIENS[v.current]||v.current);   // thème retiré → Sombre
+    if(cur&&THEMES[cur]&&sel){ sel.value=cur; applyTheme(cur); }
   }
   else if(k==='names'){ if(v.verbs) capSaveNameRules(v); }
   else if(k==='checks'){ if(v.off||v.sev||v.params) capChkSet(v); }

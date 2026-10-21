@@ -175,7 +175,7 @@ PARTS.accueil = async () => {
 
 /** 🗺 Relation Map. */
 PARTS.rm = async () => {
-  await p.click('#mode-rm'); await wait(500);
+  await p.evaluate(() => capNavOpen('@rm')); await wait(500);   // 🏗 Architecture › Explorer › 🗺 Relation Map
   const id = await idOf('Cabin Terminal', 'LA') || await idOf('Cabin Terminal');
   await p.evaluate(id => setCtx(id), id); await wait(1200);
   await shot('10-rm-vue-ensemble');
@@ -279,8 +279,6 @@ PARTS.explorateur = async () => {
   await shot('30-explorateur-arborescence');
   await p.fill('#cap-view-tree input[type=search], #cap-view-tree input', '').catch(() => {});
   await view('cards'); await top(); await shot('30-explorateur-cartes');
-  await view('index'); await top(); await shot('30-explorateur-index');
-  await view('links'); await top(); await shot('31-liens');
 };
 
 /** ⚡ Chaînes. */
@@ -392,7 +390,8 @@ PARTS.tableaubord = async () => {
  * @returns {string} Chemin du fichier
  */
 function modelV2() {
-  const f = path.join(os.tmpdir(), 'In-Flight_Entertainment_System-v2.capella');
+  const d = path.join(os.tmpdir(), 'arcalyse-v2'); fs.mkdirSync(d, { recursive: true });   // même nom de fichier : pas de confirmation « autre fichier »
+  const f = path.join(d, 'In-Flight_Entertainment_System.capella');
   let t = fs.readFileSync(MODEL, 'utf8');
   t = t.replace(/name="Cabin Terminal"/, 'name="Cabin Terminal Unit"').replace(/name="Media Server"/, 'name="Media Server (MS)"');
   t = t.replace(/name="Play Sound in Cabin"/, 'name="Play Sound in Cabin Area"');
@@ -413,7 +412,7 @@ PARTS.comparaison = async () => {
   await p.click('#cap-watch-note [data-cw="delta"]'); await wait(1500);
   await shot('73-suivi-delta');
   await esc(); await p.evaluate(() => { capWatchModalClose(); _capWatch.dismissed = true; capWatchNote(false); }); await wait(300);
-  await p.click('#b-cap-watch-main').catch(() => {}); await wait(300);
+  await p.evaluate(() => capWatchMenu(true)); await wait(300);   // 📁 Fichier › 🔄 Suivi du fichier
   await shot('01-menu-suivi', { sel: ['#b-cap-watch', '#cap-watch-dd'], pad: 8 }); await p.mouse.click(800, 880);
 };
 
@@ -455,36 +454,20 @@ PARTS.revue = async () => {
     await shot('95-revue-clic-droit', { sel: ['#crv-ctx'], pad: 40 }); await p.mouse.click(5, 890); }
 };
 
-/** 🏠 Accueil du projet : check-lists, plans de revue, tableaux blancs. */
+/** 🏠 Accueil du projet : check-lists, plans de revue. */
 PARTS.home = async () => {
   await view('home'); await top();
   await shot('05-home-projet');
   await p.click('#cap-view-home [data-a="dispo"]'); await wait(500);
   await shot('05-home-disposer');
   await p.click('#cap-view-home [data-a="dispo"]'); await wait(400);
-  await p.locator('#cap-view-home button:visible', { hasText: 'Check-lists & plans' }).first().click(); await wait(500);
+  await view('home:docs'); await wait(500);   // menu 💬 Revue & documents › ☑ Check-lists & plans de revue
   await p.selectOption('#cap-view-home [data-new="list"]', { index: 2 }); await wait(600);
   await p.locator('#cap-view-home .hm-item input[type=checkbox]').nth(0).check(); await p.locator('#cap-view-home .hm-item input[type=checkbox]').nth(1).check(); await wait(300);
   await shot('05-home-checklist');
   await shot('05-home-nouveau', { sel: '#cap-view-home .hm-docs-new', pad: 6 });
   await p.selectOption('#cap-view-home [data-new="plan"]', { index: 3 }); await wait(600);
   await shot('05-home-plan');
-  await p.locator('#cap-view-home button:visible', { hasText: 'Tableaux blancs' }).first().click(); await wait(500);
-  const zone = async () => (await p.$('#cap-view-home .hm-wb')).boundingBox();
-  const z = await zone();
-  await p.click('#cap-view-home [data-tool="note"]'); await p.mouse.click(z.x + 60, z.y + 60); await wait(400);
-  await p.keyboard.type('Points à revoir avec l\'équipe système'); await wait(200);
-  await p.click('#cap-view-home [data-tool="rect"]');
-  await p.mouse.move(z.x + 380, z.y + 50); await p.mouse.down(); await p.mouse.move(z.x + 620, z.y + 200, { steps: 6 }); await p.mouse.up(); await wait(300);
-  await p.click('#cap-view-home [data-tool="ellipse"]');
-  await p.mouse.move(z.x + 420, z.y + 260); await p.mouse.down(); await p.mouse.move(z.x + 600, z.y + 360, { steps: 6 }); await p.mouse.up(); await wait(300);
-  await p.click('#cap-view-home [data-tool="arrow"]');
-  await p.mouse.move(z.x + 290, z.y + 110); await p.mouse.down(); await p.mouse.move(z.x + 375, z.y + 120, { steps: 6 }); await p.mouse.up(); await wait(300);
-  await p.click('#cap-view-home [data-tool="text"]'); await p.mouse.click(z.x + 400, z.y + 400); await wait(300);
-  await p.keyboard.type('Interfaces cabine'); await wait(200);
-  await p.click('#cap-view-home [data-tool="sel"]'); await p.mouse.click(z.x + 700, z.y + 500); await wait(300);
-  await shot('05-home-tableau-blanc');
-  await shot('05-home-tb-barre', { sel: '#cap-view-home .hm-wb-bar', pad: 4 });
 };
 
 /** Thème personnalisé, interface et vues, À propos, aide, visites guidées. */
@@ -543,7 +526,7 @@ PARTS.scripts = async () => {
   await p.evaluate(() => capScrToggle(false));
 };
 
-/** 📑 Exigences et 🏷 Propriétés (PVMT) avec le modèle AIDA, qui en contient (à lancer en dernier : remplace le modèle). */
+/** 🧾 Exigences et 🎛 Propriétés (PVMT) avec le modèle AIDA, qui en contient (à lancer en dernier : remplace le modèle). */
 PARTS.aida = async () => {
   const old = p; p = await old.context().newPage(); await old.close();
   p.on('pageerror', e => { errs.push(e.message); console.log('  ✖ JS : ' + e.message); }); p.on('dialog', d => d.accept());
@@ -568,41 +551,40 @@ PARTS.interface = async () => {
   await view('home'); await top();
   await wide(async () => {
   await shot('01-barre-principale', { sel: '#toolbar', pad: 0 });
-  const tb = ['#cap-tb-home .tbtn', '#mode-rm', '[data-open="diag"]', '#cap-v-elements', '[data-open="table"]', '#cap-v-flux',
-    '#cap-v-analyses', '[data-open="ana:xlay"]', '#cap-nav-cfg', '#b-file-menu', '#b-save-direct', '#b-cap-watch', '#b-review', '#b-theme-menu', '#b-help', '#b-prefs'];
+  const tb = ['#cap-tb-home .tbtn', '[data-open="diag"]', '[data-open="table"]', '#cap-v-arch', '#cap-v-verif', '#cap-v-revue',
+    '#cap-nav-cfg', '#cap-nav-lvl', '#b-file-menu', '#b-save-direct', '#b-help', '#b-prefs'];   // numéros du tableau du § 3.1 du guide
   await marks(tb, 'tr');
   await shot('01-barre-principale-reperes', { sel: '#toolbar', pad: 2 });
   await unmark(); });
   // Menus déroulants
   const dd = async (btn, name) => { await p.click(btn); await wait(300); await shot(name, { sel: [btn, '#cap-nav-dd'], pad: 8 }); await esc(); await p.mouse.click(800, 600); await wait(150); };
-  await dd('#cap-v-elements .cap-nav-arr', '01-menu-explorateur');
-  await dd('#cap-v-flux .cap-nav-arr', '01-menu-flux');
-  await dd('#cap-v-analyses .cap-nav-arr', '01-menu-analyses');
+  await dd('#cap-v-arch', '01-menu-architecture');
+  await dd('#cap-v-verif', '01-menu-verifier');
+  await dd('#cap-v-revue', '01-menu-revue');
   await dd('#b-file-menu', '01-menu-fichier');
-  await dd('#b-theme-menu', '01-menu-theme');
+  await p.evaluate(() => capNavMenu('theme', document.getElementById('b-prefs'))); await wait(300);   // 🎨 Thème : dans ⚙
+  await shot('01-menu-theme', { sel: ['#b-prefs', '#cap-nav-dd'], pad: 8 }); await esc(); await p.mouse.click(800, 600); await wait(150);
   await dd('#b-help', '01-menu-aide');
   await dd('#b-prefs', '01-menu-preferences');
-  await tall(async () => { await p.click('#cap-nav-cfg'); await wait(300); await shot('01-menu-toutes-vues', { sel: ['#cap-nav-cfg', '#cap-nav-dd'], pad: 8 }); await esc(); });
+  await tall(async () => { await p.click('#cap-nav-q'); await wait(300); await shot('01-menu-toutes-vues', { sel: ['#cap-nav-cfg', '#cap-nav-dd'], pad: 8 }); await esc(); });
   await p.keyboard.press('Control+K'); await p.keyboard.type('fonc'); await wait(300);
   await shot('01-ctrl-k-recherche', { sel: ['#cap-nav-dd'], pad: 8 }); await esc();
-  await p.click('#b-cap-watch-main').catch(() => {}); await wait(300);
+  await p.evaluate(() => capWatchMenu(true)); await wait(300);   // 📁 Fichier › 🔄 Suivi du fichier
   await shot('01-menu-suivi', { sel: ['#b-cap-watch', '#cap-watch-dd'], pad: 8 }); await esc(); await p.mouse.click(800, 600);
 };
 
-/** ⚙ Préférences : fenêtre, personnalisation, barre simplifiée et en icônes seules, enregistrement automatique. */
+/** ⚙ Préférences : fenêtre, barre en mode Complet et en icônes seules, enregistrement automatique. */
 PARTS.preferences = async () => {
   await view('home'); await top();
   await p.evaluate(() => capPrefDialog('aff')); await wait(400);
   await shot('02-preferences', { sel: await dlg('#cap-pref-ov .cw-d-body'), pad: 2 });
   await p.evaluate(() => capPrefDialog('save')); await wait(300);
   await shot('02-enregistrement-auto', { sel: await dlg('#cap-pref-ov .cw-d-body'), pad: 2 });
-  await p.evaluate(() => { document.getElementById('cap-pref-ov').style.display = 'none'; capPrefCustomDialog(); }); await wait(400);
-  await tall(async () => { await shot('02-personnaliser', { sel: await dlg('#cap-pref-ov .cap-pref-grid'), pad: 2 }); }, 1500);
-  await p.evaluate(() => { document.getElementById('cap-pref-ov').style.display = 'none'; capPrefSetMode('simple'); }); await wait(400);
-  await wide(async () => { await shot('02-barre-simplifiee', { sel: '#toolbar', pad: 0 }); });
+  await p.evaluate(() => { document.getElementById('cap-pref-ov').style.display = 'none'; capNavSetMode('complet'); }); await wait(400);
+  await wide(async () => { await shot('02-barre-complet', { sel: '#toolbar', pad: 0 }); });
   await p.evaluate(() => capPrefSetIcons(true)); await wait(400);
   await shot('02-barre-icones', { sel: '#toolbar', pad: 0 });
-  await p.evaluate(() => { capPrefSetIcons(false); capPrefSetMode('expert'); }); await wait(400);
+  await p.evaluate(() => { capPrefSetIcons(false); capNavSetMode('essentiel'); }); await wait(400);
 };
 
 /** 📑 Dossiers de relecture et 📘 Rapports : liste et plans types, rapport SSS, périmètre, clic droit. */

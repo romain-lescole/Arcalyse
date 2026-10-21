@@ -175,7 +175,6 @@ window.addEventListener('beforeunload', e=>{
   if(!capLoaded||window._capNoLeaveWarn) return;
   e.preventDefault(); e.returnValue='';
 });
-document.getElementById('b-save-page')?.addEventListener('click', capSaveFullPage);
 document.getElementById('b-save-direct')?.addEventListener('click', e=>capSavePageDirect(e.shiftKey));
 document.addEventListener('keydown', e=>{
   if(e.ctrlKey&&!e.altKey&&(e.key==='s'||e.key==='S')){ e.preventDefault(); capSavePageDirect(e.shiftKey); }
@@ -185,7 +184,6 @@ document.addEventListener('keydown', e=>{
 function capEsc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 // ── File loading ──
-document.getElementById('b-capella-load').addEventListener('click',()=>capPickCapellaFile());
 document.getElementById('capella-file-input').addEventListener('cancel',()=>{ _capReplaceOk=0; });
 document.getElementById('capella-file-input').addEventListener('change',e=>{
   const f=e.target.files[0]; if(!f) return;
@@ -320,6 +318,7 @@ let capCurrentFileName='';
 /** Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
  * s'affiche en surimpression (pendant un glisser-déposer ou un rechargement). */
 function capShowWelcome(show){
+  document.documentElement.toggleAttribute('data-capvide', !capLoaded);   // barre réduite tant qu'aucun modèle n'est ouvert (CSS)
   const w=document.getElementById('cap-welcome'); if(!w) return;
   w.classList.toggle('cw-hidden', !show);
   w.classList.toggle('cw-overlay', !!capLoaded);
@@ -785,15 +784,9 @@ function capFilterArboToLinked(){
 
 /** Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
  * et les ajoute à MODEL.elements à leur position hiérarchique réelle dans le modèle.
- * Rend visible l'onglet Chaînes dans l'éditeur.
  */
 function capInjectChainsToModal(){
   capChainsForModal=capComputeChains();
-  // Show chains tab in modal
-  const tab=document.getElementById('mtab-chains');
-  if(tab) tab.style.display='';
-  const cnt=document.getElementById('chains-count');
-  if(cnt) cnt.textContent=capChainsForModal.length;
   // Add chain elements to MODEL so they appear in arbo at their real hierarchical position
   MODEL.elements=MODEL.elements.filter(e=>!e._capChain);
   const CAP_CHAIN_COLORS_MAP={FunctionalChain:'#22c55e',OperationalProcess:'#3b82f6',PhysicalPath:'#f97316'};
@@ -849,7 +842,7 @@ function capInjectChainsToModal(){
  * Met à jour les boutons de vue et les compteurs de stats.
  */
 function capRenderCurrentView(){
-  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-links','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-fex','cap-view-cblk','cap-view-csys','cap-view-oav','cap-view-scen','cap-view-diag','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-index','cap-view-home'].forEach(id=>{
+  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-fex','cap-view-cblk','cap-view-csys','cap-view-oav','cap-view-scen','cap-view-diag','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-home'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
   const pg=document.getElementById('cap-pagination'); if(pg) pg.style.display='none';
@@ -876,9 +869,6 @@ function capRenderCurrentView(){
   } else if(capCurrentView==='table'){
     document.getElementById('cap-view-table').style.display='flex';
     capRenderTable();
-  } else if(capCurrentView==='links'){
-    document.getElementById('cap-view-links').style.display='block';
-    capRenderLinks();
   } else if(capCurrentView==='chains'){
     document.getElementById('cap-view-chains').style.display='block';
     capRenderChains();
@@ -918,9 +908,6 @@ function capRenderCurrentView(){
   } else if(capCurrentView==='ports'){
     document.getElementById('cap-view-ports').style.display='block';
     capRenderPorts();
-  } else if(capCurrentView==='index'){
-    document.getElementById('cap-view-index').style.display='flex';
-    capRenderIndex();
   }
   capRenderSidebar();
 }

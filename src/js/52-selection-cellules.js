@@ -1,5 +1,5 @@
 /* ══ 📋 SÉLECTION DE CELLULES DANS LES TABLEAUX DES VUES ══════════════════════════
- * Tous les tableaux des vues Capella (#cap-content) — sauf ▤ Tableau et ƒ Fonctions › 📋 Tableau, qui ont la leur,
+ * Tous les tableaux des vues Capella (#cap-content) — sauf ▤ Tableau et ƒ Fonctions › ▤ Tableau, qui ont la leur,
  * les matrices et les tableaux clé / valeur — reçoivent la sélection de cellules :
  *  - clic-glisser : rectangle ; Ctrl+clic : ajouter / retirer ; Maj+clic : étendre ;
  *  - clic simple : sélectionne la cellule, SAUF si la cellule ou sa ligne a déjà une action au clic (curseur main,

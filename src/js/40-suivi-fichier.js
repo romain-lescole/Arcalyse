@@ -78,6 +78,22 @@ function capWatchSetSource(file, handle, text){
   capWatchUpdateUi();
 }
 
+/** Change les réglages du suivi (⚙ Préférences ou menu 🔄) et les enregistre avec la barre (_capNav.watch, bloc cap-toolbar).
+ * @param {{auto?:boolean, period?:number, onFocus?:boolean}} o - Réglages modifiés
+ */
+function capWatchCfgSet(o){
+  ['auto','period','onFocus'].forEach(k=>{ if(o[k]!==undefined) _capWatch[k]=o[k]; });
+  if(typeof _capNav!=='undefined'&&_capNav){ _capNav.watch={auto:_capWatch.auto, period:_capWatch.period, onFocus:_capWatch.onFocus}; capNavSave(); }
+  capWatchArm();
+}
+
+/** Reprend les réglages du suivi enregistrés avec la barre (appelé au chargement de la page et après ⚙ Charger une interface). */
+function capWatchCfgLoad(){
+  const c=typeof _capNav!=='undefined'&&_capNav&&_capNav.watch; if(!c) return;
+  ['auto','period','onFocus'].forEach(k=>{ if(c[k]!==undefined) _capWatch[k]=c[k]; });
+  capWatchArm();
+}
+
 /** (Ré)arme la vérification périodique selon les réglages. */
 function capWatchArm(){
   clearInterval(_capWatch.timer); _capWatch.timer=null;
@@ -324,17 +340,15 @@ function capWatchOpenCompare(what){
 
 /* ── Interface : bouton, menu, notification, fenêtre du delta ───────────── */
 
-/** Met à jour le bouton 🔄 Suivi (visibilité, badge, info-bulle). */
+/** Met à jour le bouton 🔄 Suivi (badge, info-bulle) : il n'apparaît dans la barre que lorsqu'une nouvelle version
+ * est détectée (ou que le fichier n'est plus lisible) et pendant que son menu est ouvert (📁 Fichier › 🔄 Suivi du fichier). */
 function capWatchUpdateUi(){
   const b=document.getElementById('b-cap-watch'); if(!b) return;
-  b.style.display=capLoaded?'':'none';
-  const bs=document.getElementById('b-scripts'); if(bs) bs.style.display=capLoaded?'':'none';   // 📜 Scripts (81) : avec un modèle chargé
   const badge=document.getElementById('b-cap-watch-badge');
   const p=_capWatch.pending, st=_capWatch.state;
-  if(badge){
-    badge.textContent=p?String(p.versions.length):(st==='stale'||st==='missing'||st==='denied')?'!':'';
-    badge.style.display=badge.textContent?'':'none';
-  }
+  const txt=p?String(p.versions.length):(st==='stale'||st==='missing'||st==='denied')?'!':'';
+  if(badge){ badge.textContent=txt; badge.style.display=txt?'':'none'; }
+  b.style.display=capLoaded&&(txt||document.getElementById('cap-watch-dd')?.style.display==='block')?'':'none';
   b.classList.toggle('cw-busy',_capWatch.busy);
   b.title=p?_L(`${p.versions.length} enregistrement(s) détecté(s) — ${p.counts.total} différence(s) avec le modèle affiché`)
     :st==='stale'?_L('Le fichier a été modifié : resélectionnez-le pour voir le delta')
@@ -382,6 +396,7 @@ function capWatchMenu(show){
   const dd=document.getElementById('cap-watch-dd'); if(!dd) return;
   const open=show===undefined?dd.style.display!=='block':show;
   dd.style.display=open?'block':'none';
+  capWatchUpdateUi();   // bouton affiché tant que le menu est ouvert
   if(open) capWatchMenuRender();
 }
 
@@ -416,9 +431,9 @@ function capWatchMenuRender(){
     else if(a==='last'||a==='orig') capWatchOpenCompare(a);
     else if(a==='pick') capWatchPickNewVersion();
   });
-  dd.querySelector('[data-wm="auto"]').onchange=e=>{ w.auto=e.target.checked; capWatchArm(); };
-  dd.querySelector('[data-wm="period"]').onchange=e=>{ w.period=+e.target.value; capWatchArm(); };
-  dd.querySelector('[data-wm="focus"]').onchange=e=>{ w.onFocus=e.target.checked; };
+  dd.querySelector('[data-wm="auto"]').onchange=e=>capWatchCfgSet({auto:e.target.checked});
+  dd.querySelector('[data-wm="period"]').onchange=e=>capWatchCfgSet({period:+e.target.value});
+  dd.querySelector('[data-wm="focus"]').onchange=e=>capWatchCfgSet({onFocus:e.target.checked});
 }
 
 /** Ferme la fenêtre du delta. */

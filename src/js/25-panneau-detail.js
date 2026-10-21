@@ -200,7 +200,7 @@ document.getElementById('cap-detail-close')?.addEventListener('click',()=>{const
 
 // ── Sub-toolbar wiring ──
 // ── Capella toolbar view buttons (now in main toolbar) ──
-const CAP_ELEM_VIEWS=['tree','cards','index']; // vues regroupées sous le menu 🧭 Explorateur (▤ Tableau : bouton direct)
+const CAP_ELEM_VIEWS=['tree','cards']; // vues regroupées sous le menu 🧭 Explorateur (▤ Tableau : bouton direct)
 let capElemView='cards';                               // dernier onglet ouvert dans 🧭 Explorateur
 /** Met à jour les boutons actifs et les groupes de contrôles visibles
  * selon la vue Capella courante (tree/cards/table/links/chains/physlink).
@@ -215,7 +215,7 @@ function capUpdateToolbarForView(view){
   // ▤ Tableau : son propre ⬇ CSV exporte les colonnes affichées ; celui de la barre (attributs bruts) reste pour ▦ Cartes
   const expCsv=document.getElementById('cap-exp-csv'); if(expCsv) expCsv.style.display=view==='table'?'none':'';
   // Barre de recherche / statistiques et compteur : inutiles dans les vues qui ont leurs propres filtres
-  const own=['home','functions','analyses','dashboard','links','chains','physlink','compex','fex','oav','scen','diag','cblk','csys','ports','index'].includes(view);
+  const own=['home','functions','analyses','dashboard','chains','physlink','compex','fex','oav','scen','diag','cblk','csys','ports'].includes(view);
   const sub=document.getElementById('cap-sub-toolbar'), rc=document.getElementById('cap-result-count');
   // ▤ Tableau : ni recherche ni filtre de couche (filtres par colonne), mais le compteur reste
   // 🌳 Arborescence : sa propre barre (recherche, Arbre / Liste, déplier, JSON) et son compteur
@@ -223,7 +223,7 @@ function capUpdateToolbarForView(view){
   // ▤ Tableau : chaque onglet a ses propres types cochés (51-tableau.js)
   if(typeof capTableTypesView==='function') capTableTypesView(view==='table');
   // Barre latérale des types : inutile dans les vues de 🔗 Liens à 📐 Tableau de bord
-  const noSide=['home','links','chains','physlink','compex','fex','oav','scen','diag','cblk','csys','ports','functions','analyses','dashboard'].includes(view);
+  const noSide=['home','chains','physlink','compex','fex','oav','scen','diag','cblk','csys','ports','functions','analyses','dashboard'].includes(view);
   ['cap-sidebar','cap-sidebar-resizer'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display=noSide?'none':'flex'; });
   // Menu 🧭 Explorateur : regroupe Arborescence, Cartes et Index des types (onglets #cap-elem-tabs)
   const isElem=CAP_ELEM_VIEWS.includes(view);
@@ -236,9 +236,10 @@ function capUpdateToolbarForView(view){
 }
 
 /** Affiche une vue Capella (bascule en mode capella si besoin).
- * @param {string} view - 'tree'|'cards'|'table'|'index'|'links'|'chains'|…
+ * @param {string} view - 'tree'|'cards'|'table'|'chains'|…
  */
 function capShowView(view){
+  if(!document.getElementById('cap-view-'+view)) view='home';   // vue retirée (📖 index, 🔗 links : lot 7) demandée par une ancienne page
   capCurrentView=view; capPage=0;
   capUpdateToolbarForView(view);
   if(currentMode!=='capella') applyMode('capella'); // bascule depuis la Relation Map

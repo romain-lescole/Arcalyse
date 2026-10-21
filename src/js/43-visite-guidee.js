@@ -19,28 +19,23 @@ var CAP_TOUR_STEPS=[
   {s:'#cw-projet', m:'empty', t:_L('📄 Projet de travail'),
    x:_L('Rouvre une page enregistrée (💾) — même par une version précédente d\'Arcalyse, à partir de la 2.1 : modèle, diagrammes, revue, accueil, vues et réglages sont repris dans cette version.')},
   {s:'#cap-v-home', t:_L('🏠 Accueil'),
-   x:_L('Vue ouverte au chargement : informations du projet (cartes réorganisables), check-lists et plans de revue, tableaux blancs. <b>❓ Aide ▾ → 🎯 Visite de cette vue</b> la présente en détail.')},
+   x:_L('Vue ouverte au chargement : informations du projet (en-tête, tâches courantes, cartes réorganisables). <b>❓ Aide ▾ → 🎯 Visite de cette vue</b> la présente en détail.')},
   {s:'#cap-tb-views', t:_L('🧭 Barre des vues'),
-   x:_L('Toutes les vues d\'analyse du modèle sont regroupées ici, dans des menus déroulants (▾) et des boutons directs.')},
+   x:_L('Les vues sont rangées par intention : boutons directs (🔲 Diagrammes, ▤ Tableau), trois menus déroulants — <b>🏗 Architecture</b>, <b>✅ Vérifier</b>, <b>💬 Revue & documents</b> — et le champ 🔍 de recherche.')},
   {s:'#cap-v-diag', t:_L('🔲 Diagrammes Capella'),
    x:_L('Les diagrammes du projet (.aird) dessinés comme dans Capella, avec export en planches.')},
-  {s:'#cap-v-elements', t:_L('🧭 Explorateur'),
-   x:_L('Parcourir le modèle : arborescence, cartes et index des types.')},
   {s:'#cap-v-table', t:_L('▤ Tableau'),
    x:_L('Tous les éléments du modèle en tableau : onglets de vues, colonnes d\'attributs, de relations et par chemin, tri, filtres, export CSV.')},
-  {s:'#cap-v-flux', t:_L('📡 Flux & interfaces'),
-   x:_L('Chaînes fonctionnelles, échanges et composants, Physical Link, scénarios, traçabilité des ports et liens entre éléments.')},
-
-  {s:'#cap-v-functions', t:_L('ƒ Fonctions'),
-   x:_L('Hiérarchie des fonctions, tableau, allocation aux composants, métriques, contrôles de qualité des noms et dossier imprimable.')},
-  {s:'#cap-v-analyses', t:_L('🔬 Analyses'),
-   x:_L('ƒ Fonctions, traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données et contraintes.')},
-  {s:'#cap-v-dashboard', t:_L('📐 Tableau de bord'),
-   x:_L('Composez vos propres tableaux de bord : indicateurs, graphiques et tableaux, imprimables en A4.')},
-  {s:'#cap-nav-cfg', t:_L('☰ Toutes les vues'),
-   x:_L('Cherchez une vue, un élément du modèle ou un diagramme (raccourci <b>Ctrl+K</b>) ; réglez la barre : 📌 épingle une vue en bouton direct.')},
-  {s:'#mode-rm', t:_L('🗺 Relation Map'),
-   x:_L('Graphe interactif des éléments et de leurs relations : zoom, dépliage, disposition, export en image.')},
+  {s:'#cap-v-arch', t:_L('🏗 Architecture'),
+   x:_L('Comment le système est construit : fonctions et échanges, composants et interfaces, chaînes et scénarios, modes et états, capacités, données, déploiement ; 🗺 Relation Map et 🌳 arborescence pour explorer le modèle.')},
+  {s:'#cap-v-verif', t:_L('✅ Vérifier'),
+   x:_L('Le modèle est-il juste et complet ? 💚 Santé du modèle et contrôles, traçabilité inter-couches, exigences, propriétés, contraintes, ⚖ comparaison de versions, statut de revue Capella.')},
+  {s:'#cap-v-revue', t:_L('💬 Revue & documents'),
+   x:_L('Commentaires de revue (le badge compte ceux qui ne sont pas clos), check-lists et plans de revue, 📑 dossiers à faire relire, 📘 rapports automatiques, tableaux de bord.')},
+  {s:'#cap-nav-cfg', t:_L('🔍 Recherche'),
+   x:_L('Cherchez une vue, un élément du modèle ou un diagramme (raccourci <b>Ctrl+K</b>) ; sans texte, la liste de toutes les vues : 📌 épingle une vue en bouton direct.')},
+  {s:'#cap-nav-lvl', t:_L('Essentiel / Complet'),
+   x:_L('<b>Essentiel</b> : les vues les plus utilisées. <b>Complet</b> : ajoute les vues avancées (REC / RPL, catégories d\'échanges, bibliothèques, cartes, index des types, liens) et 📜 Scripts.')},
   {s:'#cap-sidebar', m:'loaded', pre:()=>{ if(currentMode!=='capella') capNavOpen('cards'); }, t:_L('🏷 Types affichés'),
    x:_L('Cochez les types d\'éléments à afficher dans les vues. Le champ du haut filtre la liste.')},
   {s:'#cap-sub-toolbar', m:'loaded', t:_L('🔍 Recherche et filtres'),
@@ -51,25 +46,17 @@ var CAP_TOUR_STEPS=[
    x:_L('<b>🔷 Ouvrir</b> un autre modèle (remplace l\'actuel) · <b>📄 Ouvrir un projet de travail</b> (page enregistrée, même par une version précédente) · <b>🔄 Charger une mise à jour</b> du modèle (delta puis validation, alerte si ce n\'est pas le même projet) · <b>💾 Enregistrer</b> la page HTML autonome (modèle + interface et vues) · <b>⚙ Enregistrer / Charger l\'interface et les vues</b> (fichier .json sans le modèle, pour réutiliser vos réglages).')},
   {s:'#b-save-direct', t:_L('💾 Enregistrer'),
    x:_L('Enregistre directement la page avec le modèle chargé (<b>Ctrl+S</b>) ; Maj+clic pour « Enregistrer sous ».')},
-  {s:'#b-cap-watch', m:'loaded', t:_L('🔄 Suivi du fichier'),
-   x:_L('Détecte les nouvelles versions du fichier .capella et montre ce qui a changé (delta, historique).')},
-  {s:'#b-review', t:_L('💬 Revue'),
-   x:_L('Commentaires de revue sur le modèle et les diagrammes, vérification après mise à jour, rapport, revue ciblée à faire relire. Le panneau s\'ouvre à droite ; <b>⧉</b> l\'ouvre dans une fenêtre séparée ; <b>🎓</b> (ou <b>❓ Aide ▾ → 💬 Visite de la revue</b>) le présente pas à pas.')},
-  {s:'#b-scripts', m:'loaded', t:_L('📜 Scripts'),
-   x:_L('Console de scripts (Alt+4) : des scripts JavaScript lisent et analysent le modèle par une API, comme les macros de Catia Magic. <b>❓ Aide ▾ → 📜 Visite des scripts</b> la présente.')},
-  {s:'#b-theme-menu', t:_L('🎨 Thème'),
-   x:_L('Choisissez un thème clair ou sombre, ou créez votre propre thème personnalisé.')},
   {s:'#b-help', t:_L('❓ Aide'),
    x:_L('L\'aide complète et cette visite guidée restent accessibles à tout moment depuis ce menu.')},
   {s:'#b-prefs', t:_L('⚙ Préférences'),
-   x:_L('<b>Affichage des menus</b> : Expert (tout), Simplifié (les vues les plus utilisées) ou Personnalisé (🛠 chaque vue en bouton, dans son menu ou masquée) ; barre en <b>icônes seules</b> ; <b>💾 enregistrement automatique</b> (désactivé par défaut, avec fichier de secours) ; thème ; interface et vues.')},
+   x:_L('<b>Menus</b> Essentiel ou Complet ; barre en <b>icônes seules</b> ; <b>🎨 thème</b> ; <b>💾 enregistrement automatique</b> (désactivé par défaut, avec fichier de secours) ; format des exports ; 🩺 profil de contrôles ; interface et vues.')},
   {t:_L('✅ C\'est parti !'),
    x:_L('La visite est terminée. Vous pouvez la relancer depuis <b>❓ Aide ▾ → 🎓 Visite guidée</b>.<br>Dans chaque vue, <b>❓ Aide ▾ → 🎯 Visite de cette vue</b> présente ses menus et ce qu\'ils font.')}
 ];
 /** Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches). */
 var CAP_TOUR_EXPLORE=[
   {s:'#cap-elem-tabs', t:_L('🧭 Sous-vues de l\'Explorateur'),
-   x:_L('Trois façons de parcourir le modèle : <b>🌳 Arborescence</b> (hiérarchie), <b>▦ Cartes</b> (une carte par élément) et <b>📖 Index des types</b>. Le <b>▤ Tableau</b> a son propre bouton dans la barre.')},
+   x:_L('Deux façons de parcourir le modèle : <b>🌳 Arborescence</b> (hiérarchie) et <b>▦ Cartes</b> (une carte par élément). Le <b>▤ Tableau</b> a son propre bouton dans la barre.')},
   {s:'#cap-sidebar', t:_L('🏷 Types d\'éléments'),
    x:_L('Types présents dans le modèle, rangés par couche ARCADIA (OA, SA, LA, PA, EPBS, transverse). Cochez ceux à afficher ; <b>Tout cocher</b>, <b>Aucun</b> et <b>Défaut</b> règlent la liste d\'un coup. La bordure droite se tire pour élargir le panneau.')},
   {s:'#cap-stat-chips', t:_L('📊 Répartition'),
@@ -81,19 +68,20 @@ var CAP_TOUR_EXPLORE=[
   {s:'#cap-result-count', t:_L('🔢 Résultat'),
    x:_L('Nombre d\'éléments qui passent les filtres (types, recherche, couche).')}
 ];
-/** Étapes communes aux vues de 📡 Flux & interfaces (onglets de navigation). */
-var CAP_TOUR_FLUX={s:'#cap-flux-tabs', t:_L('📡 Flux & interfaces'),
-  x:_L('Ces onglets passent d\'une vue d\'interfaces à l\'autre, du fonctionnel au physique : <b>ƒ⇆ Functional Exchange</b> (fonctions), <b>🧱 System Component</b> (SA), <b>🧱 Logical Component</b> (LA), <b>🔀 Behavior Exchange</b> (PA, composants Behavior), <b>🔌 Physical Link</b> (PA, nœuds), <b>🧩 Ports</b> et <b>🔗 Liens</b> (toutes les relations du modèle). Chaque vue s\'ouvre en <b>◧ Vue Blocs</b>, le rendu façon Capella.')};
+/** Étape commune aux vues d'une famille (barre de famille sous la barre principale). */
+var CAP_TOUR_FLUX={s:'#cap-flux-tabs', t:_L('🗂 Barre de famille'),
+  x:_L('Les vues d\'une même famille du menu, réunies : pour <b>🧱 Composants & interfaces</b>, une puce par couche (SA, LA, PA comportement, PA nœuds) et 🧩 Ports ; pour <b>ƒ Fonctions & échanges</b> et <b>⚡ Chaînes & scénarios</b>, un sélecteur de <b>couche commun</b>, mémorisé d\'une vue à l\'autre (la couche choisie dans 🧱 est reprise par ƒ). À droite, la pastille 🩺 mène aux contrôles de la vue dans 💚 Santé.')};
 /** Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »). */
 var CAP_TOUR_ANA_TXT={
+  sante:_L('<b>💚 Santé & contrôles</b> : la porte d\'entrée unique des contrôles — score global et par couche, puces <b>Vue</b> et case <b>En défaut seulement</b>, et <b>Ouvrir ↗</b> sur chaque ligne pour aller au contrôle dans sa vue. Les pastilles 🩺 des vues mènent ici, filtrées.'),
   trace:_L('<b>🧬 Traçabilité inter-couches</b> : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés.'),
   caps:_L('<b>🎯 Capacités & missions</b> : qui participe à quelle capacité ou mission (acteurs, fonctions, chaînes) et les capacités sans contenu.'),
   states:_L('<b>🚦 Modes & états</b> : machines d\'états, transitions et éléments disponibles dans chaque mode ou état.'),
   diff:_L('<b>⚖ Comparaison de versions</b> : chargez une autre version du fichier .capella. Le rapport classe les changements en 8 catégories (créations, suppressions, renommages, descriptions, propriétés, liens, déplacements, types), sur 4 niveaux (Synthèse → Complet), et se copie dans Word, Outlook, Teams ou Excel.'),
-  reqs:_L('<b>📋 Exigences</b> : exigences du modèle, éléments qui les satisfont et exigences non couvertes.'),
-  pvmt:_L('<b>🏷 Propriétés</b> : propriétés et valeurs (PVMT) appliquées aux éléments.'),
+  reqs:_L('<b>🧾 Exigences</b> : exigences du modèle, éléments qui les satisfont et exigences non couvertes.'),
+  pvmt:_L('<b>🎛 Propriétés</b> : propriétés et valeurs (PVMT) appliquées aux éléments.'),
   data:_L('<b>🗃 Données & interfaces</b> : classes, types de données, Exchange Items et interfaces, avec leurs utilisations.'),
-  cts:_L('<b>⛓ Contraintes</b> : contraintes du modèle et éléments contraints.')
+  cts:_L('<b>🔒 Contraintes</b> : contraintes du modèle et éléments contraints.')
 };
 /** Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
  * la racine de l'arborescence si son graphe compte entre 6 et 60 nœuds, sinon le premier élément très relié
@@ -150,33 +138,20 @@ var CAP_TOUR_VIEWS={
      x:_L('<b>⊞ Colonnes</b> choisit les colonnes : calculées, par chemin, attributs du fichier et <b>relations</b> (→ cibles / ← sources). <b>🎯 Portée</b> limite les lignes au contenu d\'éléments choisis (paquetages, couches, composants…). <b>☰ Lignes / 🌳 Arbre</b> : en arbre, les lignes sont rangées sous leurs conteneurs ; le menu ▾ règle les conteneurs (compact ou grisés), déplier / réduire et niveaux. <b>✨ Colonne par chemin</b> en calcule une en suivant des relations (metachain), avec aperçu en direct. <b>📋 Copier</b> copie les cellules sélectionnées (clic, clic-glisser, Ctrl / Maj+clic ; Ctrl+C), <b>≡ En ligne</b> règle les cellules multiples, <b>⬇ CSV</b> exporte les colonnes affichées, <b>💾 Sauver vue</b> / <b>📂 Charger vue</b> gardent la configuration de l\'onglet, <b>↺ Réinitialiser</b> revient au départ.')},
     {s:'#cap-table-head', t:_L('↕ En-têtes'), x:_L('<b>Clic</b> sur un titre : tri ▲, puis ▼, puis sans tri. <b>Glisser</b> un titre sur un autre : change l\'ordre des colonnes. Le champ <i>Filtrer…</i> filtre la colonne ; le bord droit d\'un titre se tire pour la largeur.')},
     {s:'#cap-pagination', t:_L('📄 Pages'), x:_L('Navigation de page en page et nombre de lignes par page.')}]},
-  index:{l:_L('📖 Index des types'), steps:[CAP_TOUR_EXPLORE[0],
-    {s:'#cap-view-index input.inp', t:_L('🔍 Recherche'), x:_L('Cherche un type par son nom technique, son nom lisible ou sa description.')},
-    {s:'#cap-index-thead', t:_L('↕ Tri'), x:_L('Clic sur un titre de colonne pour trier (nom, nombre d\'éléments…).')},
-    {s:'#cap-index-tbody', t:_L('📖 Types'), x:_L('Chaque type présent dans le modèle : nom lisible, nombre d\'éléments et description ARCADIA.')}]},
-  links:{l:_L('🔗 Liens'), steps:[CAP_TOUR_FLUX,
-    {t:_L('🔗 Liens'), x:_L('Toutes les relations entre éléments du modèle, classées par nature : décomposition, allocation, échanges, réalisation inter-couches, capacités, chaînes.')},
-    {s:'#cap-view-links .cap-lf-q', t:_L('🔍 Recherche'), x:_L('Filtre les liens par élément, échange ou identifiant.')},
-    {s:'#cap-view-links .cap-lf-glab,#cap-view-links .cap-lf-btn', t:_L('🔗 Relations'), x:_L('Clic sur une relation pour n\'afficher qu\'elle ; le libellé de gauche sélectionne tout le groupe. Le nombre de liens est indiqué sur chaque bouton.')},
-    {s:'#cap-view-links .cap-lf-csv', t:_L('⬇ Export'), x:_L('Exporte les liens affichés en CSV (la case voisine ajoute les identifiants).')},
-    {s:'#cap-view-links .cap-link-table', one:true, t:_L('📋 Tableau des liens'), x:_L('Source → cible pour chaque lien. Clic sur un élément pour ouvrir son détail.')}]},
   home:{l:_L('🏠 Accueil'), steps:[
     {pre:()=>capTourHome('projet'), t:_L('🏠 Accueil'), x:_L('La page d\'accueil du projet, ouverte au chargement d\'un modèle ou d\'un projet. Tout ce qui y est saisi est enregistré dans la page (💾).')},
-    {s:'#cap-view-home .hm-bar .tb-grp', t:_L('🗂 Trois onglets'), x:_L('<b>🏠 Projet</b> (informations), <b>☑ Check-lists & plans de revue</b>, <b>🧾 Tableaux blancs</b>.')},
-    {s:'#cap-view-home .hm-quick', t:_L('🚀 Accès rapide'), x:_L('Les vues les plus utilisées, en un clic.')},
+    {s:'#cap-view-home .hm-bar .tb-grp', t:_L('🗂 Deux espaces'), x:_L('<b>🏠 Accueil</b> : 🏠 Projet (informations). <b>💬 Revue & documents</b> (menu du même nom) : ☑ Check-lists & plans de revue, 📑 Faire relire, 📘 Rapports automatiques.')},
+    {s:'#cap-view-home .hm-head', t:_L('🔷 En-tête du projet'), x:_L('Le modèle et ses couches, puis l\'état des <b>diagrammes</b> (.aird chargé, ou « Ajouter… ») et des <b>bibliothèques</b> : un clic sur la pastille déplie leur état (chargée, fichier absent, cibles absentes, jamais utilisée) avec « Charger le fichier… ». En bas, les vues sans données dans ce modèle.')},
+    {s:'#cap-view-home .hm-taches', t:_L('🚀 Que voulez-vous faire ?'), x:_L('Six tâches courantes, chacune ouvre la bonne vue : parcourir les diagrammes, vérifier la qualité, préparer une revue, comparer deux versions, sortir un tableau Excel, produire un document. ✕ masque la section (⚙ Disposer les cartes pour la réafficher).')},
     {s:'#cap-view-home [data-a="dispo"]', t:_L('⚙ Disposer les cartes'), x:_L('Réorganisez la page comme un tableau de bord : glissez une carte par ⠿ sur une autre, ⇔ change sa largeur, ✕ la masque (＋ pour la réafficher), ↺ revient à la disposition par défaut.')},
     {s:'#cap-view-home [data-carte="fiche"]', t:_L('📝 Fiche projet'), x:_L('Objet, phase, version, responsable, équipe, notes : à remplir librement.')},
-    {s:'#cap-view-home [data-carte="docs"],#cap-view-home [data-carte="boards"]', t:_L('☑ 🧾 Raccourcis'), x:_L('Vos check-lists, plans de revue et tableaux blancs : clic pour les ouvrir, ⧉ pour les ouvrir dans une fenêtre séparée ; <b>⚡ Check-list rapide</b> en crée une tout de suite.')},
+    {s:'#cap-view-home [data-carte="docs"]', t:_L('☑ Raccourcis'), x:_L('Vos check-lists et plans de revue : clic pour les ouvrir, ⧉ pour les ouvrir dans une fenêtre séparée ; <b>✚ Check-list rapide</b> en crée une tout de suite.')},
     {s:'#cap-view-home [data-carte="projet"]', t:_L('🔷 Projet'), x:_L('Fichiers, version de Capella, diagrammes chargés (par couche ; clic sur le nom : 🔲 Diagrammes Capella), dernière mise à jour du modèle (🔄 : en charger une).')},
     {pre:()=>capTourHome('docs'), s:'#cap-view-home .hm-docs-new', t:_L('✚ Créer une check-list'), x:_L('<b>☑ Nouvelle check-list</b> : choisissez « Vide (à remplir) » (curseur sur le premier point, Entrée : point suivant) ou un modèle ARCADIA (qualité, revues OA, SA, LA, PA). <b>📋 Nouveau plan de revue</b> : vide ou avec les points de contrôle d\'un modèle. <b>📂 Importer…</b> : une check-list enregistrée en .json. Le <b>⧉</b> à droite de chaque check-list l\'ouvre dans une fenêtre séparée.')},
-    {s:'#cap-view-home .hm-pal', t:_L('📎 Glisser-déposer'), x:_L('Cherchez un diagramme ou un élément et glissez-le sur un point (il y est lié), sur « ✚ Point » (nouveau point lié), sur le périmètre d\'un plan ou sur un tableau blanc. Clic : l\'ouvrir.')},
+    {s:'#cap-view-home .hm-pal', t:_L('📎 Glisser-déposer'), x:_L('Cherchez un diagramme ou un élément et glissez-le sur un point (il y est lié), sur « ✚ Point » (nouveau point lié), ou sur le périmètre d\'un plan. Clic : l\'ouvrir.')},
     {s:'#cap-view-home .hm-docs-i [data-a="pop"]', one:true, t:_L('⧉ Fenêtre séparée'), x:_L('Ouvre la check-list dans sa propre fenêtre (autre écran) : vous pouvez alors y glisser des diagrammes depuis 🔲 Diagrammes Capella et des éléments depuis 🧭 Explorateur ou ⚡ Chaînes.')},
-    {pre:()=>capTourHome('board'), s:'#cap-view-home .hm-tool', t:_L('🧰 Outils du tableau blanc'), x:_L('↖ sélection et déplacement · 🗒 note · T texte libre · ▭ rectangle · ◯ ellipse (Maj : cercle) · ╱ trait · → flèche : glissez sur le tableau pour dessiner.')},
-    {s:'#cap-view-home .hm-col,#cap-view-home [data-a="b-fill"]', t:_L('🎨 Couleur et remplissage'), x:_L('Pour les nouveaux objets et pour l\'objet sélectionné. Suppr retire l\'objet sélectionné.')},
-    {s:'#cap-view-home .hm-wb', t:_L('🧾 Tableau'), x:_L('Double-clic : note. Les diagrammes et éléments déposés deviennent des icônes cliquables.')},
-    {s:'#cap-view-home .hm-wb-bar [data-a="pop"]', t:_L('⧉ Tableau dans une fenêtre séparée'), x:_L('Ouvre la page du tableau blanc dans sa propre fenêtre (autre écran) : vous pouvez alors y glisser des diagrammes depuis la liste de 🔲 Diagrammes Capella et des éléments depuis 🧭 Explorateur ou ⚡ Chaînes. Les check-lists et plans de revue s\'ouvrent de la même façon (⧉).')},
     {pre:()=>capTourHome('dos'), s:'#cap-view-home .hm-docs-new [data-da="new"]', t:_L('📑 Dossiers de relecture'), x:_L('Un dossier rassemble, chapitre par chapitre, ce qu\'il faut faire relire : descriptions, diagrammes, éléments, texte libre. Il s\'exporte en page HTML à commenter ou en Word ; <b>📥 Réimporter…</b> rattache les retours à leurs blocs et les verse dans 💬 Revue.')},
-    {s:'#cap-view-home .dos-rap', t:_L('📘 Rapports automatiques'), x:_L('Plans types remplis à partir du modèle (spécification boîte noire, dossier de conception boîte blanche, SSS et SSDD MIL-STD-498 pour le système ou un sous-système), puis entièrement modifiables ; <b>🧩 Mes modèles</b> : vos propres plans, réutilisables (.json).')},
+    {pre:()=>capTourHome('rap'), s:'#cap-view-home .dos-rap', t:_L('📘 Rapports automatiques'), x:_L('Plans types remplis à partir du modèle (spécification boîte noire, dossier de conception boîte blanche, SSS et SSDD MIL-STD-498 pour le système ou un sous-système), puis entièrement modifiables ; <b>🧩 Mes modèles</b> : vos propres plans, réutilisables (.json).')},
     {s:'#cap-view-home .dos-ed', t:_L('🔗 Texte du modèle et clic droit'), x:_L('Un texte libre peut devenir le nom ou la description d\'un élément ou d\'un diagramme, suivi(e) quand le modèle change : glissez l\'élément sur l\'en-tête du bloc ou <b>🔗 Lier…</b>. Le <b>clic droit</b> sur un bloc ou un chapitre propose toutes les commandes (transformer, figer, insérer, convertir, dupliquer, déplacer…).')}]},
   chains:{l:_L('⚡ Chaînes'), steps:[
     {t:_L('⚡ Chaînes'), x:_L('Chaînes fonctionnelles, processus opérationnels et chemins physiques du modèle, avec leur diagramme.')},
@@ -261,7 +236,7 @@ var CAP_TOUR_VIEWS={
     {s:'#prt-main', t:_L('📋 Résultat'), x:_L('Les lignes incomplètes sont signalées en couleur. Clic sur un élément pour ouvrir son détail.')}]},
   functions:{l:_L('ƒ Fonctions'), steps:[
     {t:_L('ƒ Fonctions'), x:_L('Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles.')},
-    {s:'#cap-view-functions [data-fv]', t:_L('🖼 Présentation'), x:_L('<b>🌳 Hiérarchie</b> · <b>📋 Tableau</b> façon Excel · <b>⛓ Traçabilité</b> entre couches · <b>📊 Métriques</b> · <b>🩺 Contrôles</b> (qualité des noms, fonctions non allouées…).')},
+    {s:'#cap-view-functions [data-fv]', t:_L('🖼 Présentation'), x:_L('<b>🌳 Hiérarchie</b> · <b>▤ Tableau</b> façon Excel · <b>⛓ Traçabilité</b> entre couches · <b>📊 Métriques</b> · <b>🩺 Contrôles</b> (qualité des noms, fonctions non allouées…).')},
     {s:'#cap-view-functions [data-fl]', t:_L('🧱 Couche'), x:_L('Choisit la couche ARCADIA étudiée (OA, SA, LA, PA).')},
     {s:'#ana-fn-q,#ana-fn-desc,#ana-fn-exp,#ana-fn-col', t:_L('🔍 Recherche et affichage'), x:_L('Filtre par nom ou description ; affiche les descriptions ; ⊞ / ⊟ déplient ou replient la hiérarchie.')},
     {s:'#cap-view-functions .ana-ak,#ana-fn-who', t:_L('🎯 Allocation'), x:_L('Fonctions allouées au système, à un acteur ou non allouées (clic : afficher / masquer, double-clic : uniquement celle-ci) ; la liste choisit un acteur ou un sous-système.')},
@@ -303,7 +278,7 @@ var CAP_TOUR_AFTER=[
   {pre:()=>capNavClose(), t:_L('✅ Modèle ouvert'),
    x:_L('Votre modèle est chargé. Voici où trouver l\'aide et les tutoriels, à tout moment.')},
   {s:'#cap-v-home', pre:()=>capNavClose(), t:_L('🏠 Accueil du projet'),
-   x:_L('La vue affichée à l\'ouverture : fiche et informations du projet, ☑ check-lists et 📋 plans de revue, 🧾 tableaux blancs. Revenez-y à tout moment par ce bouton.')},
+   x:_L('La vue affichée à l\'ouverture : en-tête et fiche du projet, tâches courantes, contenu, santé et revue du modèle. Revenez-y à tout moment par ce bouton.')},
   {s:'#b-help', pre:()=>capNavClose(), t:_L('❓ Aide'),
    x:_L('L\'aide et toutes les visites guidées sont regroupées dans ce menu.')},
   {s:'#cap-nav-dd', pre:()=>capTourHelpMenu(), t:_L('📚 Aide et tutoriels'),
@@ -318,7 +293,7 @@ var _capTour=null;   // visite en cours : {i, steps} ou null
 /** Visite du panneau 💬 Revue (ce n'est pas une vue : lancée par 🎓 dans le panneau ou par ❓ Aide ▾ → 💬 Visite de la revue). */
 var CAP_TOUR_REVUE=[
   {pre:()=>capTourRev('list'), t:_L('💬 Revue'), x:_L('Commentaires de revue sur le modèle et les diagrammes : qui commente quoi, criticité, statut, échéance, réponses. Ils sont enregistrés dans la page (💾).')},
-  {s:'#b-review', t:_L('💬 Bouton Revue'), x:_L('Ouvre ou ferme le panneau. Son badge compte les commentaires non clos ; <b>⚠ n</b> signale des commentaires à vérifier après une mise à jour du modèle.')},
+  {s:'#cap-v-revue', t:_L('💬 Revue & documents'), x:_L('<b>💬 Commentaires</b> ouvre ou ferme le panneau. Le badge du menu compte les commentaires non clos ; <b>⚠ n</b> signale des commentaires à vérifier après une mise à jour du modèle.')},
   {s:'#crv-panel .crv-tabs', t:_L('🗂 Onglets'), x:_L('<b>💬 Commentaires</b> (liste, filtres) · <b>🔁 Vérifier</b> (après une mise à jour) · <b>📄 Rapport</b> · <b>⚙ Réglages</b>.')},
   {s:'#crv-panel [data-a="new"]', t:_L('✚ Nouveau commentaire'), x:_L('Sur l\'élément du panneau de détail, ou commentaire général. Seul le texte est obligatoire. On commente aussi par <b>clic droit</b> sur un élément dans les vues, depuis le <b>panneau de détail</b> (💬 à côté du nom, de la description, des attributs) et par <b>📝 Note de revue</b> sur un diagramme.')},
   {s:'#crv-panel .crv-filters', one:true, t:_L('🔍 Recherche et filtres'), x:_L('Texte, statut, criticité, personne, portée (diagramme ouvert, élément du panneau de détail, en retard, qui me sont attribués), tri. Clic sur une carte : texte complet, réponses, statut.')},
@@ -331,7 +306,7 @@ var CAP_TOUR_REVUE=[
 /** Visite de la console 📜 Scripts (ce n'est pas une vue : lancée par 🎓 dans la console ou par ❓ Aide ▾ → 📜 Visite des scripts). */
 var CAP_TOUR_SCRIPTS=[
   {pre:()=>capScrToggle(true), t:_L('📜 Scripts (macros)'), x:_L('Des scripts <b>JavaScript</b> parcourent et analysent le modèle affiché par une <b>API</b> (celle d\'Arcature, en lecture seule), comme les macros de Catia Magic ou Python4Capella. Ils tournent isolés : ni page, ni fichier, ni réseau.')},
-  {s:'#b-scripts', t:_L('📜 Bouton Scripts'), x:_L('Ouvre ou ferme la console (aussi <b>Alt+4</b>, ou ☰ / Ctrl+K « Scripts »).')},
+  {s:'#cap-nav-cfg', t:_L('📜 Ouvrir la console'), x:_L('<b>Alt+4</b>, menu <b>💬 Revue & documents › 📜 Scripts</b> (mode Complet) ou recherche 🔍 « Scripts ».')},
   {s:'#scr-liste', t:_L('📚 Bibliothèque'), x:_L('<b>Exemples</b> fournis (fonctions sans description, non allouées, matrice d\'allocation, statistiques, santé et contrôles, traçabilité, chaînes, exigences, qualité des noms…), scripts du <b>projet</b> et du <b>dossier partagé</b>. Choisir un script l\'affiche dans l\'éditeur.')},
   {s:'#scr-nouveau,#scr-enregistrer,#scr-supprimer,#scr-importer,#scr-exporter,#scr-dossier', t:_L('💾 Enregistrer, importer, exporter'), x:_L('<b>＋</b> nouveau script · <b>💾</b> enregistre dans le projet (gardé dans la 💾 page HTML) ou dans le dossier partagé · <b>🗑</b> supprime · <b>📂</b> importe des fichiers .js · <b>⬇</b> exporte le script affiché · <b>📁</b> dossier de scripts partagé (Chrome / Edge).')},
   {s:'#scr-code', t:_L('✏ Éditeur'), x:_L('Le script. Il voit <code>model</code>, <code>metamodel</code>, <code>analysis</code>, <code>out</code>, <code>ui</code> et <code>console</code>. Par exemple : <code>out.print(model.count())</code> affiche le nombre d\'éléments du modèle. <b>Tab</b> indente, <b>Ctrl+Entrée</b> exécute.')},
@@ -352,7 +327,7 @@ function capTourRevue(){ capTourRev('list'); capTourStart(CAP_TOUR_REVUE); }
 
 /**
  * Visite de 🏠 Accueil : affiche l'onglet présenté par l'étape.
- * @param {string} tab - 'projet' | 'docs' | 'board'
+ * @param {string} tab - 'projet' | 'docs' | 'dos' | 'rap'
  */
 function capTourHome(tab){ Object.assign(_capHomeUi,{tab, dispo:false}); capHomeRender(); }
 

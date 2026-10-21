@@ -108,7 +108,7 @@ function capProjetParties(info) {
   const rev = capProjetBloc(info, 'cap-review');
   if (rev && Array.isArray(rev.comments)) P.push({ k: 'revue', l: _L('💬 Revue'), d: n(rev.comments.length, _L('commentaire(s)')) });
   const home = capProjetBloc(info, 'cap-home');
-  if (home) P.push({ k: 'accueil', l: _L('🏠 Accueil'), d: _L(`fiche projet, ${(home.docs || []).length} check-list(s) ou plan(s) de revue, ${(home.boards || []).length} tableau(x) blanc(s)`) });
+  if (home) P.push({ k: 'accueil', l: _L('🏠 Accueil'), d: _L(`fiche projet, ${(home.docs || []).length} check-list(s) ou plan(s) de revue, ${(home.dossiers || []).length} dossier(s)`) });
   const dash = capProjetBloc(info, 'cap-dashboards');
   if (dash) P.push({ k: 'dash', l: _L('📐 Tableaux de bord'), d: n((dash.list || []).length, _L('page(s)')) });
   const ui = capProjetBloc(info, 'cap-ui-views');

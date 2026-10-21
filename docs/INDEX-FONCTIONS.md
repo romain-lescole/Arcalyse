@@ -11,26 +11,27 @@
 - `TCFG` (l. 38)
 - `MODES` (l. 50)
 
-## 02-themes.js — 304 lignes
+## 02-themes.js — 294 lignes
 
 - `THEMES` (l. 6)
-- `capInk` (l. 57) — Couleur de texte lisible sur un fond donné : noir ou blanc, selon le meilleur contraste (WCAG).
-- `capTextOn` (l. 67) — Couleur d'un texte coloré lisible sur le fond du thème : assombrie en thème clair.
-- `capIsLight` (l. 72) — Indique si le thème courant est clair (couleurs de texte foncées nécessaires).
-- `CAP_MIN_CONTRAST` (l. 80) — Contraste minimal visé pour un texte coloré (WCAG AA, texte courant).
-- `capParseColor` (l. 85) — Décompose une couleur CSS (#rgb, #rrggbb, rgb(), rgba()) en [r,g,b,a].
-- `capLuminance` (l. 94) — Luminance relative WCAG d'une couleur [r,g,b].
-- `capContrast` (l. 96) — Rapport de contraste WCAG entre deux couleurs [r,g,b].
-- `capBlend` (l. 98) — Superpose une couleur semi-transparente [r,g,b,a] sur un fond opaque [r,g,b,1].
-- `capHex` (l. 100) — Couleur [r,g,b] → #rrggbb.
-- `capReadableOn` (l. 107) — Couleur de texte lisible sur un fond donné, en conservant la teinte : foncée sur fond clair, éclaircie
-- `capEffectiveBg` (l. 121) — Fond effectif (opaque) derrière un élément : superpose les fonds semi-transparents de ses ancêtres.
-- `capFixContrast` (l. 133) — Corrige le contraste des textes colorés en ligne (style="color:…") d'un sous-arbre, en thème clair.
-- `capRestoreContrast` (l. 149) — Rend leurs couleurs d'origine aux textes corrigés par capFixContrast (retour à un thème sombre).
-- `capContrastCss` (l. 156) — Génère, pour le thème clair courant, des règles qui foncent les couleurs de texte fixes des feuilles
-- `applyTheme` (l. 198) — Applique le thème visuel global (dark/light/dracula/solarized/nord).
-- `applyMode` (l. 243) — Bascule entre les modes d'affichage : default (Relation Map), PBS, capella.
-- `tv` (l. 302) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
+- `CAP_THEME_ANCIENS` (l. 39) — Thèmes retirés (refonte 3.0) : une page ou un fichier ⚙ qui les utilise passe au thème indiqué.
+- `capInk` (l. 46) — Couleur de texte lisible sur un fond donné : noir ou blanc, selon le meilleur contraste (WCAG).
+- `capTextOn` (l. 56) — Couleur d'un texte coloré lisible sur le fond du thème : assombrie en thème clair.
+- `capIsLight` (l. 61) — Indique si le thème courant est clair (couleurs de texte foncées nécessaires).
+- `CAP_MIN_CONTRAST` (l. 69) — Contraste minimal visé pour un texte coloré (WCAG AA, texte courant).
+- `capParseColor` (l. 74) — Décompose une couleur CSS (#rgb, #rrggbb, rgb(), rgba()) en [r,g,b,a].
+- `capLuminance` (l. 83) — Luminance relative WCAG d'une couleur [r,g,b].
+- `capContrast` (l. 85) — Rapport de contraste WCAG entre deux couleurs [r,g,b].
+- `capBlend` (l. 87) — Superpose une couleur semi-transparente [r,g,b,a] sur un fond opaque [r,g,b,1].
+- `capHex` (l. 89) — Couleur [r,g,b] → #rrggbb.
+- `capReadableOn` (l. 96) — Couleur de texte lisible sur un fond donné, en conservant la teinte : foncée sur fond clair, éclaircie
+- `capEffectiveBg` (l. 110) — Fond effectif (opaque) derrière un élément : superpose les fonds semi-transparents de ses ancêtres.
+- `capFixContrast` (l. 122) — Corrige le contraste des textes colorés en ligne (style="color:…") d'un sous-arbre, en thème clair.
+- `capRestoreContrast` (l. 138) — Rend leurs couleurs d'origine aux textes corrigés par capFixContrast (retour à un thème sombre).
+- `capContrastCss` (l. 145) — Génère, pour le thème clair courant, des règles qui foncent les couleurs de texte fixes des feuilles
+- `applyTheme` (l. 184) — Applique un thème (Sombre, Clair, Office 2007, Contraste ou personnalisé) en posant toutes ses variables CSS sur :root,
+- `applyMode` (l. 231) — Bascule entre les modes d'affichage : default (Relation Map), PBS, capella.
+- `tv` (l. 292) — Lit la valeur d'une variable CSS (ex: --c-text). @param {string} varName
 
 ## 03-rm-etat-svg.js — 121 lignes
 
@@ -89,30 +90,13 @@
 - `typSelectAll` (l. 600) — Coche ou décoche tous les filtres de types d'éléments du panneau gauche.
 - `relSelectAll` (l. 608) — Coche ou décoche tous les filtres de types de relations du panneau gauche.
 
-## 07-rm-panneau-criteres.js — 298 lignes
+## 07-rm-panneau-criteres.js — 273 lignes
 
 - `buildPanel` (l. 7) — Reconstruit entièrement le panneau gauche : critères de relation, types d'éléments.
-- `rmFiltersSearch` (l. 251) — Filtre en direct les lignes d'une colonne du tiroir ⚙ Filtres par leur clé de recherche,
-- `rmFiltersCount` (l. 260) — Met à jour les compteurs « cochés / total » du tiroir ⚙ Filtres et de son bouton (barre 2).
-- `rmFiltersToggle` (l. 270) — Ouvre ou ferme le tiroir ⚙ Filtres.
-- `capShowChainInMap` (l. 286) — Visualise une chaîne fonctionnelle dans la Relation Map en préservant ses ramifications
-
-## 08-editeur-modele.js — 573 lignes
-
-- `openModal` (l. 10) — Ouvre la fenêtre modale d'édition du modèle (éléments, relations, chaînes, types).
-- `updateModalCounts` (l. 22) — Met à jour les compteurs affichés sur les onglets de la fenêtre modale d'édition.
-- `renderModalTab` (l. 29) — Affiche le contenu de l'onglet demandé dans la fenêtre modale d'édition.
-- `renderChainsTab` (l. 40) — Rend l'onglet « Chaînes » de la modale : liste des chaînes de relations définies.
-- `renderElementsTab` (l. 72) — Rend l'onglet « Éléments » de la modale d'édition : tableau filtrable de tous les
-- `showElementForm` (l. 152) — Affiche le formulaire de création/édition d'un élément dans la modale.
-- `deleteElement` (l. 185) — Supprime un élément depuis la modale d'édition, avec ses relations associées.
-- `renderRelationsTab` (l. 200) — Rend l'onglet « Relations » de la modale d'édition : tableau des relations du modèle
-- `showRelForm` (l. 280) — Affiche le formulaire de création/édition d'une relation dans la modale.
-- `renderPackagesTab` (l. 309) — Rend l'onglet « Packages » de la modale d'édition : liste des éléments de type Package
-- `showEditRelCriteriaForm` (l. 340) — Affiche un mini-formulaire inline dans la section "Critères de relation"
-- `showNewRelCriteriaForm` (l. 402) — Affiche le formulaire de définition d'un nouveau critère de relation.
-- `showEditTypeForm` (l. 481) — Affiche un mini-formulaire inline dans la section "Types d'éléments"
-- `showNewTypeForm` (l. 530) — Affiche le formulaire de création d'un nouveau type d'élément.
+- `rmFiltersSearch` (l. 226) — Filtre en direct les lignes d'une colonne du tiroir ⚙ Filtres par leur clé de recherche,
+- `rmFiltersCount` (l. 235) — Met à jour les compteurs « cochés / total » du tiroir ⚙ Filtres et de son bouton (barre 2).
+- `rmFiltersToggle` (l. 245) — Ouvre ou ferme le tiroir ⚙ Filtres.
+- `capShowChainInMap` (l. 261) — Visualise une chaîne fonctionnelle dans la Relation Map en préservant ses ramifications
 
 ## 09-arborescence.js — 746 lignes
 
@@ -162,14 +146,12 @@
 - `rmViewsCfgGet` (l. 237) — État des vues pour la 💾 Page HTML et le fichier ⚙ Interface et vues.
 - `rmViewsCfgSet` (l. 241) — Remplace les vues par celles d'une configuration (page enregistrée ou fichier ⚙).
 
-## 11-sauvegarde-toolbar-init.js — 274 lignes
+## 11-sauvegarde-toolbar-init.js — 207 lignes
 
-- `saveJSON` (l. 5) — Sérialise MODEL, RCFG, TCFG et S en JSON et télécharge le fichier.
-- `loadJSON` (l. 19) — Charge un fichier JSON et restaure l'état complet de l'application.
-- `applyDepth` (l. 108) — Applique la profondeur d'exploration du graphe (bornée entre 1 et 10),
-- `rmLayoutLabel` (l. 120) — Affiche la disposition courante (S.layout) sur le bouton du menu Disposition de la barre 2.
-- `openHelpModal` (l. 160) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
-- `positionOverlay` (l. 256) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
+- `applyDepth` (l. 43) — Applique la profondeur d'exploration du graphe (bornée entre 1 et 10),
+- `rmLayoutLabel` (l. 55) — Affiche la disposition courante (S.layout) sur le bouton du menu Disposition de la barre 2.
+- `openHelpModal` (l. 94) — Ouvre la fenêtre d'aide, éventuellement sur un onglet donné.
+- `positionOverlay` (l. 189) — Positionne #capella-overlay sous #toolbar en lisant sa hauteur réelle.
 
 ## 12-dialogues.js — 102 lignes
 
@@ -206,7 +188,7 @@
 - `capChkRefresh` (l. 85) — Rafraîchit ce qui dépend du profil : valeurs du tableau de bord, vue affichée (et tous les calculs si un seuil a changé :
 - `capChkDialog` (l. 94) — Fenêtre 🩺 Profil de contrôles : par vue, chaque contrôle (activé, gravité, nombre actuel), seuils, export / import .json.
 
-## 20-capella-chargement.js — 938 lignes
+## 20-capella-chargement.js — 925 lignes
 
 - `CAP_LAYERS` (l. 4)
 - `CAP_NS_LAYER` (l. 12)
@@ -220,32 +202,32 @@
 - `capSaveFullPage` (l. 128) — Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur).
 - `capSaveWrite` (l. 141) — Écrit la page dans le fichier d'enregistrement direct, après avoir copié la version précédente
 - `capSavePageDirect` (l. 152) — Enregistre la page directement dans un fichier choisi une fois (API File System Access d'Edge/Chrome),
-- `capEsc` (l. 185) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
-- `capLoadFile` (l. 203) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
-- `capApplyXmlDoc` (l. 252) — Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
-- `capReplaceConfirm` (l. 287) — Demande confirmation avant de remplacer le modèle affiché par un autre fichier : le travail non enregistré
-- `capReplacePreOk` (l. 316) — @returns {boolean} vrai si le remplacement du modèle vient d'être confirmé avant le sélecteur (la confirmation est consommée)
-- `capShowWelcome` (l. 322) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
-- `capWelcomeStatus` (l. 334) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
-- `capUpdateWelcome` (l. 340) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
-- `XSI_NS` (l. 401)
-- `capXType` (l. 403) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
-- `capTName` (l. 405) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
-- `capXId` (l. 407) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
-- `capXName` (l. 409) — Lit l'attribut 'name' d'un élément XML Capella.
-- `capResolveLayer` (l. 414) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
-- `capGetAttrs` (l. 420) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
-- `capBuildTree` (l. 431) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
-- `capRunBulk` (l. 457) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
-- `capBuildTypeRegistry` (l. 467) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
-- `capApplyPanelOnLoad` (l. 487) — Appelée après le chargement Capella : configure le panneau gauche RM.
-- `capInjectToArbo` (l. 562) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
-- `capInjectCapellaRelsToCriteria` (l. 666) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
-- `capInjectLinksToModel` (l. 707) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
-- `capFilterArboToLinked` (l. 751) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
-- `capInjectChainsToModal` (l. 790) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
-- `capRenderCurrentView` (l. 851) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
-- `capUpdateStatChips` (l. 929) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
+- `capEsc` (l. 184) — Échappe les caractères HTML spéciaux pour un affichage sûr. @param {string} s
+- `capLoadFile` (l. 201) — Charge un fichier Capella (depuis l'explorateur ou un glisser-déposer) : vérifie
+- `capApplyXmlDoc` (l. 250) — Remplace le modèle affiché par un document XML Capella déjà analysé : vide les caches,
+- `capReplaceConfirm` (l. 285) — Demande confirmation avant de remplacer le modèle affiché par un autre fichier : le travail non enregistré
+- `capReplacePreOk` (l. 314) — @returns {boolean} vrai si le remplacement du modèle vient d'être confirmé avant le sélecteur (la confirmation est consommée)
+- `capShowWelcome` (l. 320) — Affiche ou masque l'écran d'accueil. Quand un modèle est déjà chargé, l'écran
+- `capWelcomeStatus` (l. 333) — Affiche un message d'état (chargement, erreur) dans la zone de dépôt.
+- `capUpdateWelcome` (l. 339) — Synchronise l'écran d'accueil avec l'état de chargement (appelé au démarrage,
+- `XSI_NS` (l. 400)
+- `capXType` (l. 402) — Lit l'attribut xsi:type d'un élément XML Capella (plain ou namespacé).
+- `capTName` (l. 404) — Extrait le nom court du type (après ':') depuis xsi:type. Ex: 'pa:PhysicalComponent' → 'PhysicalComponent'.
+- `capXId` (l. 406) — Lit l'ID d'un élément XML Capella (attribut plain 'id' ou xmi:id namespacé).
+- `capXName` (l. 408) — Lit l'attribut 'name' d'un élément XML Capella.
+- `capResolveLayer` (l. 413) — Détermine la couche ARCADIA (OA/SA/LA/PA/EPBS/Shared) d'un élément
+- `capGetAttrs` (l. 419) — Extrait les attributs pertinents d'un élément XML Capella (définis dans CAP_ATTR_KEYS).
+- `capBuildTree` (l. 430) — Construit récursivement l'arbre d'éléments Capella depuis le XML.
+- `capRunBulk` (l. 456) — Exécute fn en mode chargement groupé puis reconstruit une fois le panneau (qui reconstruit l'arborescence).
+- `capBuildTypeRegistry` (l. 466) — Construit capTypeRegistry : {type → {count, layer, checked}} depuis capAllElements.
+- `capApplyPanelOnLoad` (l. 486) — Appelée après le chargement Capella : configure le panneau gauche RM.
+- `capInjectToArbo` (l. 561) — Injecte les éléments Capella dans MODEL.elements pour qu'ils apparaissent
+- `capInjectCapellaRelsToCriteria` (l. 665) — Ajoute les types de relations Capella (PC NODE→PC NODE, etc.) dans RCFG
+- `capInjectLinksToModel` (l. 706) — Calcule les liens Capella via capComputeLinks() et les injecte dans MODEL.relations
+- `capFilterArboToLinked` (l. 750) — Filtre MODEL.elements pour ne conserver que les éléments _capella référencés
+- `capInjectChainsToModal` (l. 788) — Calcule les chaînes (FunctionalChain, OperationalProcess, PhysicalPath)
+- `capRenderCurrentView` (l. 844) — Dispatche le rendu vers la vue Capella active (cards/table/tree/links/chains/physlink).
+- `capUpdateStatChips` (l. 916) — Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre.
 
 ## 21-capella-vues-base.js — 1526 lignes
 
@@ -297,12 +279,11 @@
 - `capRenderTreeBody` (l. 1437) — Rend le contenu de 🌳 Arborescence selon l'affichage : arbre (avec une recherche : résultats et leurs
 - `capRenderTreeNode` (l. 1482) — Rend récursivement un nœud de l'arborescence Capella.
 
-## 22-capella-liens.js — 279 lignes
+## 22-capella-liens.js — 195 lignes
 
 - `CAP_LINK_SECTIONS` (l. 2)
 - `CAP_LINK_GROUPS` (l. 41) — Groupes de relations affichés dans la barre de la vue 🔗 Liens (ordre d'affichage).
 - `capComputeLinks` (l. 54) — Extrait et résout toutes les relations Capella depuis le XML :
-- `capRenderLinks` (l. 201) — Rend la vue Liens : barre (recherche, filtres groupés par famille de relations, export)
 
 ## 23-chaines.js — 580 lignes
 
@@ -357,7 +338,7 @@
 - `capChainExportRefreshCount` (l. 540) — Met à jour le compteur de sélection et la case « Tout » sans re-rendre les cartes (garde les cartes ouvertes).
 - `capRenderChainMap` (l. 551) — Rend la sous-vue « Relation Map » : liste des chaînes groupée par catégorie ARCADIA à gauche,
 
-## 25-panneau-detail.js — 287 lignes
+## 25-panneau-detail.js — 288 lignes
 
 - `capOpenDetail` (l. 5) — Ouvre le panneau de détail (colonne droite de l'overlay) pour un élément Capella.
 - `CAP_DESC_TAGS` (l. 125) — Balises gardées dans une description Capella mise en forme (les autres sont remplacées par leur contenu).
@@ -376,7 +357,7 @@
 - `capReportClean` (l. 33) — Nettoie un fragment HTML de l'application pour un fichier autonome : retire les appels au panneau de détail
 - `capHtmlReport` (l. 44) — Construit et télécharge un rapport HTML autonome à onglets.
 
-## 27-interfaces-calculs.js — 346 lignes
+## 27-interfaces-calculs.js — 347 lignes
 
 - `capArchLayerOf` (l. 8) — Couche ARCADIA d'un élément XML, déduite de l'architecture qui le contient.
 - `capBuildIdMap` (l. 17) — Index id → élément XML, sur l'attribut plain « id » ET xmi:id (namespacé).
@@ -384,20 +365,15 @@
 - `capMatrixBuild` (l. 45) — Construit une matrice composant × composant (N² des interfaces).
 - `capFoldList` (l. 82) — Liste repliable d'éléments HTML séparés par des virgules : au-delà de `max`, le reste est masqué derrière « +N autres » (clic pour déplier /
 - `capDiagHtml` (l. 94) — Rend un rapport de contrôles : sections repliables avec compteur et gravité, selon le 🩺 profil de contrôles (14) :
-- `capDetLink` (l. 117) — Lien HTML cliquable ouvrant le panneau de détail d'un élément Capella.
-- `CAP_PORT_ORIENTS` (l. 123) — Valeurs de l'attribut orientation d'un ComponentPort (OrientationPortKind).
-- `CAP_ORIENT_STYLE` (l. 125) — Style d'affichage de chaque orientation de port (couleur, libellé, info-bulle).
-- `CAP_CEX_DIRS` (l. 132) — Libellés des sens effectifs d'un Component Exchange.
-- `capNormOrient` (l. 143) — Normalise l'orientation d'un port Capella : attribut absent (valeur par défaut EMF) → 'UNSET'.
-- `capCexDirection` (l. 157) — Déduit le sens effectif d'un Component Exchange à partir des orientations de ses deux ports.
-- `capComputeCompExchanges` (l. 176) — Calcule les Component Exchanges : pour chaque ComponentExchange, résout source/target
-- `capAnaCopy` (l. 266) — Copie d'un tableau de résultats avec ses propriétés annexes (`allPorts`, `unallocCEs`…), pour qu'un appelant
-- `capComputePhysLinks` (l. 274) — Calcule les Physical Links du modèle : pour chaque PhysicalLink, résout les deux
-
-## 28-index-types.js — 113 lignes
-
-- `capRenderIndex` (l. 14) — Construit la vue « Index des types » : barre de recherche, en-têtes triables et
-- `capRenderIndexBody` (l. 45) — Rend les lignes de l'Index des types : un type Capella distinct par ligne
+- `capDetLink` (l. 118) — Lien HTML cliquable ouvrant le panneau de détail d'un élément Capella.
+- `CAP_PORT_ORIENTS` (l. 124) — Valeurs de l'attribut orientation d'un ComponentPort (OrientationPortKind).
+- `CAP_ORIENT_STYLE` (l. 126) — Style d'affichage de chaque orientation de port (couleur, libellé, info-bulle).
+- `CAP_CEX_DIRS` (l. 133) — Libellés des sens effectifs d'un Component Exchange.
+- `capNormOrient` (l. 144) — Normalise l'orientation d'un port Capella : attribut absent (valeur par défaut EMF) → 'UNSET'.
+- `capCexDirection` (l. 158) — Déduit le sens effectif d'un Component Exchange à partir des orientations de ses deux ports.
+- `capComputeCompExchanges` (l. 177) — Calcule les Component Exchanges : pour chaque ComponentExchange, résout source/target
+- `capAnaCopy` (l. 267) — Copie d'un tableau de résultats avec ses propriétés annexes (`allPorts`, `unallocCEs`…), pour qu'un appelant
+- `capComputePhysLinks` (l. 275) — Calcule les Physical Links du modèle : pour chaque PhysicalLink, résout les deux
 
 ## 29-physical-link.js — 297 lignes
 
@@ -529,25 +505,25 @@
 - `capReqIfName` (l. 118) — Nom ReqIF lisible d'un élément du Requirements Viewpoint (type, attribut, valeur…).
 - `capComputeRequirements` (l. 124) — Calcule les exigences des deux familles (Requirements Viewpoint et exigences Capella de base),
 - `capReqChecks` (l. 177) — Sections de contrôle des exigences (réutilisées par le tableau de bord).
-- `capRenderRequirements` (l. 203) — Rend la sous-vue 📋 Exigences : liste filtrable, couverture par couche, contrôles.
+- `capRenderRequirements` (l. 203) — Rend la sous-vue 🧾 Exigences : liste filtrable, couverture par couche, contrôles.
 - `CAP_PV_ARCH` (l. 243)
 - `capPvValue` (l. 250) — Valeur lisible d'une PropertyValue Capella (valeur par défaut EMF si absente).
 - `capPvUnit` (l. 258) — Unité d'une propriété PVMT (sous-propriété « __UNIT__ » de la propriété ou de sa définition).
 - `capComputePvmt` (l. 267) — Calcule les propriétés PVMT : définitions (domaines, groupes, propriétés, applicabilité)
 - `capPvMissing` (l. 306) — Éléments auxquels un groupe PVMT s'applique (classes et architectures déclarées) sans l'avoir reçu.
 - `capPvChecks` (l. 320) — Sections de contrôle des propriétés PVMT (réutilisées par le tableau de bord).
-- `capRenderPvmt` (l. 336) — Rend la sous-vue 🏷 Propriétés : grille par groupe (une colonne par propriété), synthèse, définitions, contrôles.
+- `capRenderPvmt` (l. 336) — Rend la sous-vue 🎛 Propriétés : grille par groupe (une colonne par propriété), synthèse, définitions, contrôles.
 - `CAP_DM_TYPES` (l. 387)
 - `capComputeDataModel` (l. 393) — Calcule le modèle de données : Exchange Items (éléments, échanges et interfaces qui les portent),
 - `capDmChecks` (l. 444) — Sections de contrôle du modèle de données et des interfaces (réutilisées par le tableau de bord).
 - `capRenderDataModel` (l. 473) — Rend la sous-vue 🗃 Données & interfaces : Exchange Items, interfaces, classes et types, contrôles.
 - `capComputeConstraints` (l. 516) — Calcule les contraintes : expression (liens linkedText résolus), langage, éléments contraints, propriétaire.
 - `capCtChecks` (l. 545) — Sections de contrôle des contraintes (réutilisées par le tableau de bord).
-- `capRenderConstraints` (l. 562) — Rend la sous-vue ⛓ Contraintes : liste filtrable et contrôles.
+- `capRenderConstraints` (l. 562) — Rend la sous-vue 🔒 Contraintes : liste filtrable et contrôles.
 - `capXtDetail` (l. 585) — Sections supplémentaires du panneau de détail : exigences liées, propriétés, contraintes.
 - `capXtDashCatalog` (l. 614) — Ajoute au catalogue du tableau de bord les indicateurs Exigences, Propriétés, Données & interfaces, Contraintes.
 
-## 40-suivi-fichier.js — 550 lignes
+## 40-suivi-fichier.js — 565 lignes
 
 - `capWatchHash` (l. 30) — Empreinte rapide d'un texte (FNV-1a 32 bits + longueur), pour reconnaître une version déjà vue.
 - `capWatchTime` (l. 37) — Heure lisible (hh:mm:ss) d'un horodatage. @param {number} t - Millisecondes
@@ -556,54 +532,62 @@
 - `capWatchLite` (l. 53) — Copie allégée d'un delta (sans les nœuds XML), pour le garder en mémoire sans retenir les anciens documents.
 - `capWatchChips` (l. 58) — Pastilles ➕ ➖ ✎ ↪ d'un comptage. @param {object} c - Comptage capWatchCounts @returns {string} HTML
 - `capWatchSetSource` (l. 69) — Enregistre la source suivie après le chargement d'un modèle (remet le suivi à zéro).
-- `capWatchArm` (l. 82) — (Ré)arme la vérification périodique selon les réglages.
-- `capIsMobile` (l. 90) — Vrai sur téléphone / tablette : leurs sélecteurs ne connaissent pas l'extension .capella et grisent ces fichiers
-- `capPickCapellaFile` (l. 103) — Ouvre un fichier Capella à charger : sélecteur avec accès direct (Edge/Chrome, permet le 🔄 suivi),
-- `capWatchPickerFailed` (l. 119) — Repli quand le sélecteur à accès direct a été refusé : tente le sélecteur classique (le navigateur peut
-- `capWatchPick` (l. 130) — Demande un fichier .capella avec le sélecteur à accès direct quand le navigateur le permet.
-- `capWatchReadDisk` (l. 148) — Lit l'état du fichier suivi sur le disque.
-- `capWatchCheck` (l. 167) — Vérifie si le fichier suivi a changé et, le cas échéant, prépare la mise à jour (delta + notification).
-- `capWatchRegister` (l. 208) — Analyse une nouvelle version lue sur le disque et l'ajoute aux enregistrements en attente :
-- `CAP_WATCH_SAME_MIN` (l. 235)
-- `capWatchCommon` (l. 242) — Part des éléments identifiés communs aux deux versions (rapportée à la plus grande).
-- `capWatchSuspectHtml` (l. 252) — Avertissement (HTML) quand la nouvelle version partage trop peu d'éléments avec le modèle affiché.
-- `capWatchPickNewVersion` (l. 259) — Choisit manuellement la nouvelle version du fichier (accès limité, page sauvegardée, fichier déplacé) :
-- `capWatchApply` (l. 284) — Applique la version en attente : recharge le modèle (vue courante conservée), archive le delta dans l'historique
-- `capWatchOpenCompare` (l. 311) — Ouvre ⚖ Comparaison de versions (🔬 Analyses) sur deux versions connues du suivi.
-- `capWatchUpdateUi` (l. 328) — Met à jour le bouton 🔄 Suivi (visibilité, badge, info-bulle).
-- `capWatchFlash` (l. 346) — Affiche brièvement un message dans la notification (sans action). @param {string} msg - Message
-- `capWatchNote` (l. 351) — Affiche ou masque la notification de mise à jour (coin inférieur droit).
-- `capWatchMenu` (l. 381) — Ouvre ou ferme le menu du bouton 🔄 Suivi. @param {boolean} [show] - Forcer l'état (sinon bascule)
-- `capWatchMenuRender` (l. 389) — Construit le contenu du menu 🔄 Suivi (état de la source, réglages, historique).
-- `capWatchModalClose` (l. 425) — Ferme la fenêtre du delta.
-- `capWatchModalRefresh` (l. 429) — Réaffiche la fenêtre du delta si elle montre la version en attente (nouvel enregistrement détecté entre-temps).
-- `capWatchShowDelta` (l. 437) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
-- `capWatchShowHistory` (l. 517) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
+- `capWatchCfgSet` (l. 84) — Change les réglages du suivi (⚙ Préférences ou menu 🔄) et les enregistre avec la barre (_capNav.watch, bloc cap-toolbar).
+- `capWatchCfgLoad` (l. 91) — Reprend les réglages du suivi enregistrés avec la barre (appelé au chargement de la page et après ⚙ Charger une interface).
+- `capWatchArm` (l. 98) — (Ré)arme la vérification périodique selon les réglages.
+- `capIsMobile` (l. 106) — Vrai sur téléphone / tablette : leurs sélecteurs ne connaissent pas l'extension .capella et grisent ces fichiers
+- `capPickCapellaFile` (l. 119) — Ouvre un fichier Capella à charger : sélecteur avec accès direct (Edge/Chrome, permet le 🔄 suivi),
+- `capWatchPickerFailed` (l. 135) — Repli quand le sélecteur à accès direct a été refusé : tente le sélecteur classique (le navigateur peut
+- `capWatchPick` (l. 146) — Demande un fichier .capella avec le sélecteur à accès direct quand le navigateur le permet.
+- `capWatchReadDisk` (l. 164) — Lit l'état du fichier suivi sur le disque.
+- `capWatchCheck` (l. 183) — Vérifie si le fichier suivi a changé et, le cas échéant, prépare la mise à jour (delta + notification).
+- `capWatchRegister` (l. 224) — Analyse une nouvelle version lue sur le disque et l'ajoute aux enregistrements en attente :
+- `CAP_WATCH_SAME_MIN` (l. 251)
+- `capWatchCommon` (l. 258) — Part des éléments identifiés communs aux deux versions (rapportée à la plus grande).
+- `capWatchSuspectHtml` (l. 268) — Avertissement (HTML) quand la nouvelle version partage trop peu d'éléments avec le modèle affiché.
+- `capWatchPickNewVersion` (l. 275) — Choisit manuellement la nouvelle version du fichier (accès limité, page sauvegardée, fichier déplacé) :
+- `capWatchApply` (l. 300) — Applique la version en attente : recharge le modèle (vue courante conservée), archive le delta dans l'historique
+- `capWatchOpenCompare` (l. 327) — Ouvre ⚖ Comparaison de versions (🔬 Analyses) sur deux versions connues du suivi.
+- `capWatchUpdateUi` (l. 345) — Met à jour le bouton 🔄 Suivi (badge, info-bulle) : il n'apparaît dans la barre que lorsqu'une nouvelle version
+- `capWatchFlash` (l. 360) — Affiche brièvement un message dans la notification (sans action). @param {string} msg - Message
+- `capWatchNote` (l. 365) — Affiche ou masque la notification de mise à jour (coin inférieur droit).
+- `capWatchMenu` (l. 395) — Ouvre ou ferme le menu du bouton 🔄 Suivi. @param {boolean} [show] - Forcer l'état (sinon bascule)
+- `capWatchMenuRender` (l. 404) — Construit le contenu du menu 🔄 Suivi (état de la source, réglages, historique).
+- `capWatchModalClose` (l. 440) — Ferme la fenêtre du delta.
+- `capWatchModalRefresh` (l. 444) — Réaffiche la fenêtre du delta si elle montre la version en attente (nouvel enregistrement détecté entre-temps).
+- `capWatchShowDelta` (l. 452) — Affiche la fenêtre du delta : version en attente (cumul et enregistrements pas à pas) ou mise à jour de l'historique.
+- `capWatchShowHistory` (l. 532) — Affiche l'historique des mises à jour appliquées pendant la session (chacune ouvre son delta).
 
-## 41-barre-vues.js — 418 lignes
+## 41-barre-vues.js — 529 lignes
 
-- `CAP_NAV_ITEMS` (l. 9) — Catalogue des vues : k = clé (vue capShowView, ou « ana:… » pour une sous-vue de 🔬 Analyses), l = libellé,
-- `CAP_NAV_GROUPS` (l. 46) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
-- `CAP_NAV_DEFAULT` (l. 55) — Réglage par défaut : tous les menus affichés, 🏠 Accueil (tout à gauche), 🔲 Diagrammes Capella (en tête, à côté de 🗺 Relation Map), ▤ Tabl
-- `CAP_NAV_SIMPLE` (l. 58) — ⚙ Mode Simplifié : vues en boutons directs, vues gardées dans leur menu (les autres sont masquées),
-- `CAP_NAV_CTLS` (l. 60) — Commandes de la barre que le mode ⚙ Personnalisé peut masquer : [id, libellé].
-- `capNavMigrate` (l. 70) — Met à jour un réglage de barre enregistré avant l'arrivée du bouton ▤ Tableau (ancienne 📊 Table View
-- `capNavSimplePerso` (l. 83) — Réglage du mode Simplifié sous la forme d'un réglage personnalisé {pins, hide, ctl}.
-- `capNavEff` (l. 91) — Réglage effectivement appliqué à la barre selon le mode ⚙ (Expert, Simplifié, Personnalisé).
-- `capNavTogglePin` (l. 102) — Épingle ou retire une vue de la barre. Hors mode Expert, la modification passe au mode ⚙ Personnalisé
-- `capNavLbl` (l. 119) — Bouton de la barre : icône, puis libellé masqué en mode ⚙ « icônes seules » (nom complet en infobulle).
-- `capNavFit` (l. 128) — Icônes seules dans la barre : toujours si l'utilisateur les a choisies (⚙), sinon automatiquement
-- `capNavSave` (l. 138) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
-- `capNavCurKey` (l. 148) — Clé de la vue Capella affichée (« ana:… » pour une sous-vue de 🔬 Analyses).
-- `capNavOpen` (l. 157) — Ouvre une vue du catalogue (ou la Relation Map pour la clé @rm).
-- `capNavGroupOpen` (l. 169) — Ouvre la vue d'un menu (clic sur son nom) : la dernière vue non épinglée utilisée, sinon la première non épinglée.
-- `capNavFluxTabs` (l. 179) — Onglets du menu 📡 Flux & interfaces (comme ceux de 🔬 Analyses) : vues du menu non épinglées,
-- `capNavRender` (l. 189) — Reconstruit les boutons de la barre des vues selon le réglage (menus, épingles).
-- `capNavSync` (l. 228) — Met à jour l'état actif des boutons de la barre (vue affichée, dernière sous-vue de chaque menu).
-- `capNavClose` (l. 247) — Ferme le menu déroulant de la barre des vues.
-- `capNavRow` (l. 257) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
-- `capNavMenu` (l. 267) — Ouvre le menu déroulant d'un groupe, ou le menu ☰ (toutes les vues, recherche, réglage).
-- `capNavMenuFill` (l. 320) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+- `CAP_NAV_ITEMS` (l. 14) — Catalogue des vues : k = clé (vue capShowView, « ana:… » pour une sous-vue de 🔬 Analyses, « home:… » pour un onglet
+- `CAP_NAV_GROUPS` (l. 62) — Menus déroulants de la barre, dans l'ordre d'affichage (id = identifiant du bouton).
+- `CAP_NAV_DEFAULT` (l. 68) — Réglage par défaut : boutons directs 🏠 Accueil, 🔲 Diagrammes, ▤ Tableau ; niveau Essentiel (v3 : réglage de la refonte 3.0).
+- `capNavMigrate` (l. 77) — Met à jour un réglage de barre enregistré avant la refonte 3.0 : niveau Expert → Complet, Simplifié ou Personnalisé
+- `capNavVides` (l. 93) — Vues sans données dans le modèle ouvert (pas de scénario, d'exigence, de bibliothèque…) : clés de CAP_NAV_ITEMS.
+- `capNavEff` (l. 120) — Réglage effectivement appliqué à la barre selon le niveau ⚙ (Essentiel ou Complet) et le réglage « vues vides masquées ».
+- `capNavSetMode` (l. 129) — Change le niveau d'affichage des menus.
+- `capNavTogglePin` (l. 137) — Épingle ou retire une vue de la barre (bouton direct) ; une vue épinglée reste aussi dans son menu.
+- `capNavLbl` (l. 148) — Bouton de la barre : icône, puis libellé masqué en mode ⚙ « icônes seules » (nom complet en infobulle).
+- `capNavFit` (l. 157) — Icônes seules dans la barre : toujours si l'utilisateur les a choisies (⚙), sinon automatiquement
+- `capNavSave` (l. 167) — Enregistre le réglage de la barre dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capNavCurKey` (l. 178) — Clé de la vue affichée (« ana:… » pour une sous-vue de 🔬 Analyses, « home:… » pour un onglet de 🏠 Accueil,
+- `capNavOpen` (l. 191) — Ouvre une vue du catalogue, ou exécute une commande (« @… »).
+- `CAP_NAV_COUCHE_VUE` (l. 208) — Couche propre aux vues qui n'en montrent qu'une (🧱 SA / LA, PA, 🟨 OA) : sert à mémoriser la couche choisie.
+- `capNavCoucheLue` (l. 214) — Couche affichée par une vue ('' = toutes), lue dans l'état de la vue.
+- `capNavCoucheDispo` (l. 228) — Vrai si une vue a des éléments dans une couche (pour n'imposer une couche que si elle montre quelque chose).
+- `capNavCouchePose` (l. 242) — Applique la couche mémorisée (_capNav.couche, '' = toutes) à la vue affichée, si elle a un filtre de couche
+- `capNavCoucheSet` (l. 257) — Choisit la couche commune (sélecteur de la barre de famille) : mémorisée avec la barre, appliquée à la vue affichée.
+- `capNavGroupOpen` (l. 264) — Ouvre une famille de vues : la vue de la couche mémorisée (🧱), sinon la dernière ouverte, sinon la première qui a des données.
+- `capNavFluxTabs` (l. 275) — Barre de famille sous la barre principale (ex. 🧱 Composants & interfaces : SA · System Component, LA · Logical Component…) :
+- `capNavRender` (l. 293) — Reconstruit les boutons de la barre des vues : boutons directs (épingles), menus, champ de recherche, niveau.
+- `capNavSync` (l. 321) — Met à jour l'état actif des boutons de la barre (vue affichée, menu qui la contient).
+- `capNavClose` (l. 339) — Ferme le menu déroulant de la barre des vues.
+- `capNavRow` (l. 350) — Ligne d'une vue dans un menu : ouverture au clic, 📌 pour l'épingler en bouton direct.
+- `capNavMenu` (l. 361) — Ouvre le menu déroulant d'un groupe, d'une commande de droite (Fichier, Aide, ⚙…) ou de la recherche (☰ : résultats
+- `capNavSearchWire` (l. 399) — Branche le champ 🔍 de la barre : saisie = résultats dans le menu ☰, flèches pour choisir, Entrée pour ouvrir.
+- `capNavMenuFill` (l. 418) — Remplit le menu ouvert : vues du groupe, ou (menu ☰) réglage complet ou résultats de la recherche.
+- `capNavSections` (l. 490) — Lignes d'un menu rangées par section (intertitre à chaque changement de section).
 
 ## 42-tableaux-analyses.js — 157 lignes
 
@@ -617,37 +601,37 @@
 - `capTfFilter` (l. 127) — Masque les lignes qui ne correspondent pas aux filtres et affiche le compteur.
 - `capTfWatch` (l. 152) — Surveille la zone des sous-vues de 🔬 Analyses pour équiper les tableaux à chaque rendu.
 
-## 43-visite-guidee.js — 539 lignes
+## 43-visite-guidee.js — 514 lignes
 
 - `CAP_TOUR_STEPS` (l. 12) — Étapes de la visite générale : s = sélecteur CSS de la zone (toutes les correspondances visibles sont encadrées
-- `CAP_TOUR_EXPLORE` (l. 70) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
-- `CAP_TOUR_FLUX` (l. 85) — Étapes communes aux vues de 📡 Flux & interfaces (onglets de navigation).
-- `CAP_TOUR_ANA_TXT` (l. 88) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
-- `capTourRmCtx` (l. 101) — Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
-- `CAP_TOUR_VIEWS` (l. 115) — Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
-- `CAP_TOUR_START` (l. 285) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
-- `CAP_TOUR_AFTER` (l. 302) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
-- `CAP_TOUR_REVUE` (l. 319) — Visite du panneau 💬 Revue (ce n'est pas une vue : lancée par 🎓 dans le panneau ou par ❓ Aide ▾ → 💬 Visite de la revue).
-- `CAP_TOUR_SCRIPTS` (l. 332) — Visite de la console 📜 Scripts (ce n'est pas une vue : lancée par 🎓 dans la console ou par ❓ Aide ▾ → 📜 Visite des scripts).
-- `capTourScripts` (l. 343) — Lance la visite de la console 📜 Scripts (modèle chargé).
-- `capTourRev` (l. 349) — Visite de 💬 Revue : panneau ouvert dans la page (ramené s'il est dans sa fenêtre séparée) sur l'onglet présenté.
-- `capTourRevue` (l. 351) — Lance la visite de 💬 Revue.
-- `capTourHome` (l. 357) — Visite de 🏠 Accueil : affiche l'onglet présenté par l'étape.
-- `capTourCtxKey` (l. 362) — Clé de la vue affichée pour les visites contextuelles.
-- `capTourCtx` (l. 370) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
-- `capTourEls` (l. 378) — Éléments affichés désignés par le sélecteur d'une étape.
-- `capTourVisible` (l. 389) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
-- `capTourStart` (l. 399) — Lance une visite guidée depuis sa première étape.
-- `capTourStartView` (l. 420) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
-- `capTourGo` (l. 428) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
-- `capTourPos` (l. 448) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
-- `capTourRenderPop` (l. 455) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
-- `capTourPlace` (l. 467) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
-- `capTourKey` (l. 499) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
-- `capTourEnd` (l. 508) — Quitte la visite guidée et retire la mise en évidence.
-- `capTourHelpMenu` (l. 515) — Ouvre le menu ❓ Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
-- `capTourStartHere` (l. 522) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
-- `capTourResumeAfterLoad` (l. 529) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
+- `CAP_TOUR_EXPLORE` (l. 57) — Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches).
+- `CAP_TOUR_FLUX` (l. 72) — Étape commune aux vues d'une famille (barre de famille sous la barre principale).
+- `CAP_TOUR_ANA_TXT` (l. 75) — Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »).
+- `capTourRmCtx` (l. 89) — Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
+- `CAP_TOUR_VIEWS` (l. 103) — Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
+- `CAP_TOUR_START` (l. 260) — 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps).
+- `CAP_TOUR_AFTER` (l. 277) — 🚀 Bien démarrer, 2e temps (modèle chargé) : où trouver l'aide et les tutoriels.
+- `CAP_TOUR_REVUE` (l. 294) — Visite du panneau 💬 Revue (ce n'est pas une vue : lancée par 🎓 dans le panneau ou par ❓ Aide ▾ → 💬 Visite de la revue).
+- `CAP_TOUR_SCRIPTS` (l. 307) — Visite de la console 📜 Scripts (ce n'est pas une vue : lancée par 🎓 dans la console ou par ❓ Aide ▾ → 📜 Visite des scripts).
+- `capTourScripts` (l. 318) — Lance la visite de la console 📜 Scripts (modèle chargé).
+- `capTourRev` (l. 324) — Visite de 💬 Revue : panneau ouvert dans la page (ramené s'il est dans sa fenêtre séparée) sur l'onglet présenté.
+- `capTourRevue` (l. 326) — Lance la visite de 💬 Revue.
+- `capTourHome` (l. 332) — Visite de 🏠 Accueil : affiche l'onglet présenté par l'étape.
+- `capTourCtxKey` (l. 337) — Clé de la vue affichée pour les visites contextuelles.
+- `capTourCtx` (l. 345) — Visite contextuelle de la vue affichée, si elle existe et qu'un modèle est chargé.
+- `capTourEls` (l. 353) — Éléments affichés désignés par le sélecteur d'une étape.
+- `capTourVisible` (l. 364) — Indique si une étape est utilisable (zone affichée, ou bulle centrée).
+- `capTourStart` (l. 374) — Lance une visite guidée depuis sa première étape.
+- `capTourStartView` (l. 395) — Lance la visite de la vue affichée (ou la visite générale s'il n'y en a pas).
+- `capTourGo` (l. 403) — Passe à l'étape suivante ou précédente utilisable (les zones non affichées sont sautées).
+- `capTourPos` (l. 423) — Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
+- `capTourRenderPop` (l. 430) — Remplit la bulle de l'étape courante (titre, texte, compteur, boutons).
+- `capTourPlace` (l. 442) — Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre).
+- `capTourKey` (l. 474) — Raccourcis clavier pendant la visite : ← → Entrée pour naviguer, Échap pour quitter.
+- `capTourEnd` (l. 483) — Quitte la visite guidée et retire la mise en évidence.
+- `capTourHelpMenu` (l. 490) — Ouvre le menu ❓ Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente.
+- `capTourStartHere` (l. 497) — Lance « 🚀 Bien démarrer » : sans modèle, montre où ouvrir le fichier et arme la reprise après chargement ;
+- `capTourResumeAfterLoad` (l. 504) — Reprend « 🚀 Bien démarrer » (2e temps) après le chargement d'un modèle, si la reprise a été armée.
 
 ## 44-functional-exchange.js — 515 lignes
 
@@ -687,18 +671,18 @@
 - `capDrClipboard` (l. 297) — Copie dans le presse-papiers (HTML mis en forme + texte brut ; repli par sélection si l'API est refusée).
 - `capDrRender` (l. 327) — Rend le rapport de comparaison dans un conteneur (barre de réglages, filtres, rapport, copie et exports).
 
-## 46-config-interface.js — 152 lignes
+## 46-config-interface.js — 154 lignes
 
 - `CAP_CFG_PARTS` (l. 9)
 - `capCfgSer` (l. 21) — Sérialise en JSON en conservant les ensembles (Set). @param {*} o @returns {string}
 - `capCfgRev` (l. 23) — Relit un JSON produit par capCfgSer (ensembles reconstitués). @param {string} t @returns {*}
 - `capCfgGet` (l. 29) — État courant d'une partie de l'interface.
 - `capCfgSet` (l. 45) — Applique une partie de configuration à l'interface (et la mémorise dans la page).
-- `capCfgStoreViews` (l. 70) — Écrit dans la page (bloc JSON « cap-ui-views ») ce que les autres blocs ne conservent pas encore :
-- `capCfgRestoreViews` (l. 77) — Réapplique à l'ouverture de la page les vues mémorisées par capCfgStoreViews.
-- `capCfgDialog` (l. 93) — Fenêtre de choix des parties à enregistrer ou à charger.
-- `capCfgLoadFile` (l. 132) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
-- `capCfgLoadUpdate` (l. 146) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
+- `capCfgStoreViews` (l. 72) — Écrit dans la page (bloc JSON « cap-ui-views ») ce que les autres blocs ne conservent pas encore :
+- `capCfgRestoreViews` (l. 79) — Réapplique à l'ouverture de la page les vues mémorisées par capCfgStoreViews.
+- `capCfgDialog` (l. 95) — Fenêtre de choix des parties à enregistrer ou à charger.
+- `capCfgLoadFile` (l. 134) — Ouvre un fichier .json d'interface et propose les parties à appliquer.
+- `capCfgLoadUpdate` (l. 148) — Charge une mise à jour du modèle depuis un autre fichier : comparaison, delta, puis mise à jour après validation (🔄 Suivi).
 
 ## 47-composants.js — 439 lignes
 
@@ -828,7 +812,7 @@
 - `capCsvxBuild` (l. 85) — Construit l'en-tête et les lignes finales d'un export selon les choix enregistrés.
 - `capCsvExport` (l. 102) — Export CSV enrichi : ouvre la fenêtre « Colonnes de l'export » puis télécharge le fichier.
 
-## 54-diagrammes.js — 1144 lignes
+## 54-diagrammes.js — 1146 lignes
 
 - `CAP_DIAG_COUCHES` (l. 19) — Ordre des couches ARCADIA dans la liste et les exports.
 - `capDiagDispo` (l. 22) — @returns {boolean} vrai si la visionneuse d'Arcature est embarquée dans la page
@@ -844,50 +828,50 @@
 - `capOpenProjectFolder` (l. 207) — 📁 Dossier du projet (écran d'accueil) : charge ensemble le modèle .capella et ses diagrammes .aird.
 - `capProjectScanDir` (l. 222) — Lit un dossier du projet (sélecteur ou dossier déposé) sur 2 niveaux et charge le modèle et ses diagrammes.
 - `capProjectFromFiles` (l. 240) — Charge un projet à partir des fichiers d'un dossier : le .capella (choisi dans l'écran d'accueil s'il y en a plusieurs)
-- `capDiagMsg` (l. 266) — Affiche un message bref dans la barre de la vue. @param {string} t - Texte
-- `capDiagEnsure` (l. 269) — Crée la vue (une fois) : barre (ouvrir, export, sélection), liste classée à gauche, hôte de la visionneuse.
-- `capDiagSplit` (l. 300) — Séparateur entre l'explorateur et le diagramme : glisser pour régler la largeur de l'explorateur.
-- `capDiagCarte` (l. 317) — ▣ Carte (mini-carte de la visionneuse) : sous l'explorateur (repliable) ou dans le diagramme, comme dans la visionneuse.
-- `capDiagBarre` (l. 341) — Barre du haut : 📂 Ouvrir le .aird…, ⬇ Exporter…, ☐ Sélectionner…, fichier chargé.
-- `capDiagFit` (l. 355) — Ajuste la hauteur de la vue à la fenêtre.
-- `capDiagSync` (l. 363) — Transmet à la visionneuse le modèle courant (texte XML) et le .aird en attente, si besoin.
-- `capDiagBarreVd` (l. 389) — Réorganise la barre de la visionneuse au-dessus du diagramme, pour qu'elle ne bouge plus d'un diagramme à l'autre :
-- `capDiagRevSlot` (l. 417) — Remplit l'emplacement de la revue (📝 Note de revue, 💬 Calque) à côté de la recherche du diagramme.
-- `capDiagChainesFiltre` (l. 426) — Liste « Chaînes et chemins » : ne garde que les chaînes fonctionnelles et chemins physiques dessinés dans
-- `capRenderDiagrams` (l. 437) — Rendu de la vue 🔲 Diagrammes Capella.
-- `capDiagReps` (l. 451) — @returns {object[]} représentations du .aird chargé ({uid, nom, type, sigle, genre, couche})
-- `capDiagCouche` (l. 454) — Libellé et couleur d'une couche ARCADIA. @param {string} c - OA, SA, LA, PA, EPBS… @returns {{label:string,color:string,bg:string}}
-- `capDiagRang` (l. 457) — Rang d'une couche pour le tri. @param {string} c - Couche @returns {number}
-- `capDiagIcones` (l. 460) — Icône de chaque diagramme, reprise de la liste (masquée) de la visionneuse. @returns {Map<string,string>} uid → SVG
-- `capDiagFiltrees` (l. 469) — Représentations filtrées par la recherche (nom, type, sigle, couche). @returns {object[]}
-- `capDiagGroupes` (l. 480) — Regroupe les représentations selon le classement choisi.
-- `capDiagOuvert` (l. 515) — Un groupe est-il ouvert ? Couches ouvertes, types repliés par défaut ; tout est ouvert pendant une recherche.
-- `capDiagListe` (l. 522) — Rend la liste classée (panneau gauche).
-- `capDiagMarquerActif` (l. 568) — Met en évidence le diagramme ouvert dans la liste.
-- `capDiagRepsGroupe` (l. 577) — Représentations d'un groupe de la liste (selon la clé).
-- `capDiagClic` (l. 584) — Clics de la vue : barre (ouvrir, export, sélection), carte, groupes repliables, diagrammes. @param {MouseEvent} e
-- `capDiagChange` (l. 611) — Cases à cocher (diagramme, groupe, tout) et choix du classement. @param {Event} e
-- `capDiagOpen` (l. 626) — Ouvre un diagramme dans la vue 🔲 Diagrammes Capella et y met un élément en évidence.
-- `capDiagInfo` (l. 637) — Panneau de détail d'un diagramme (comme pour un élément du modèle) : type, couche, sigle, nature, identifiant,
-- `capDiagDetail` (l. 675) — Section « Diagrammes » du panneau de détail : représentations de l'élément et diagrammes où il est dessiné.
-- `capDiagSvg` (l. 693) — SVG autonome d'un diagramme, tel que l'exporte la visionneuse (menu ⬇ Exporter › SVG) :
-- `capDiagPlanche` (l. 725) — Planche d'un diagramme : cadre, en-tête (couche, sigle, nom, type), diagramme centré, cartouche technique
-- `capDiagTexte` (l. 804) — Texte brut d'une description Capella (attribut XML contenant du HTML).
-- `capDiagMeta` (l. 816) — Description et élément représenté d'un diagramme, lus dans le .aird (DRepresentationDescriptor : documentation, target).
-- `capDiagElements` (l. 836) — Annexe d'un diagramme : éléments du modèle représentés (attributs data-sem du SVG), triés par couche, type et nom.
-- `capDiagAnnexeCsv` (l. 849) — Annexe au format CSV (séparateur ;, BOM) : en-tête du diagramme, description, puis éléments représentés.
-- `CAP_DIAG_ANX` (l. 856) — Lignes d'annexe par page PDF.
-- `capDiagAnnexePages` (l. 865) — Pages d'annexe du PDF (A4 paysage) : tableau des éléments représentés.
-- `capDiagCibles` (l. 901) — Diagrammes visés par l'export, dans l'ordre de la liste (couche, type, nom).
-- `capDiagExportDialog` (l. 908) — Fenêtre « Exporter des diagrammes » : portée, mise en page, aperçu de la planche, formats.
-- `capDiagApercu` (l. 953) — Aperçu de la planche du premier diagramme visé (diagramme ouvert s'il en fait partie).
-- `capDiagPdfSommaire` (l. 972) — Page de sommaire du PDF (paysage A4) : projet, date, nombre de planches, liste par couche et type avec numéros de page.
-- `CAP_DIAG_PDF_ALERTE` (l. 1014) — Seuil (Mo) au-delà duquel l'export PDF demande confirmation.
-- `capDiagPdfEstimation` (l. 1024) — Taille estimée du PDF, d'après la surface des planches rastérisées (même bornes que capSvgToCanvas)
-- `capDiagExport` (l. 1038) — Export groupé des diagrammes en planches : capture de tous les diagrammes, puis pagination
-- `capDiagExportHtml` (l. 1109) — Rapport HTML autonome : onglet Sommaire (tableau avec liens) et onglet Planches
+- `capDiagMsg` (l. 268) — Affiche un message bref dans la barre de la vue. @param {string} t - Texte
+- `capDiagEnsure` (l. 271) — Crée la vue (une fois) : barre (ouvrir, export, sélection), liste classée à gauche, hôte de la visionneuse.
+- `capDiagSplit` (l. 302) — Séparateur entre l'explorateur et le diagramme : glisser pour régler la largeur de l'explorateur.
+- `capDiagCarte` (l. 319) — ▣ Carte (mini-carte de la visionneuse) : sous l'explorateur (repliable) ou dans le diagramme, comme dans la visionneuse.
+- `capDiagBarre` (l. 343) — Barre du haut : 📂 Ouvrir le .aird…, ⬇ Exporter…, ☐ Sélectionner…, fichier chargé.
+- `capDiagFit` (l. 357) — Ajuste la hauteur de la vue à la fenêtre.
+- `capDiagSync` (l. 365) — Transmet à la visionneuse le modèle courant (texte XML) et le .aird en attente, si besoin.
+- `capDiagBarreVd` (l. 391) — Réorganise la barre de la visionneuse au-dessus du diagramme, pour qu'elle ne bouge plus d'un diagramme à l'autre :
+- `capDiagRevSlot` (l. 419) — Remplit l'emplacement de la revue (📝 Note de revue, 💬 Calque) à côté de la recherche du diagramme.
+- `capDiagChainesFiltre` (l. 428) — Liste « Chaînes et chemins » : ne garde que les chaînes fonctionnelles et chemins physiques dessinés dans
+- `capRenderDiagrams` (l. 439) — Rendu de la vue 🔲 Diagrammes Capella.
+- `capDiagReps` (l. 453) — @returns {object[]} représentations du .aird chargé ({uid, nom, type, sigle, genre, couche})
+- `capDiagCouche` (l. 456) — Libellé et couleur d'une couche ARCADIA. @param {string} c - OA, SA, LA, PA, EPBS… @returns {{label:string,color:string,bg:string}}
+- `capDiagRang` (l. 459) — Rang d'une couche pour le tri. @param {string} c - Couche @returns {number}
+- `capDiagIcones` (l. 462) — Icône de chaque diagramme, reprise de la liste (masquée) de la visionneuse. @returns {Map<string,string>} uid → SVG
+- `capDiagFiltrees` (l. 471) — Représentations filtrées par la recherche (nom, type, sigle, couche). @returns {object[]}
+- `capDiagGroupes` (l. 482) — Regroupe les représentations selon le classement choisi.
+- `capDiagOuvert` (l. 517) — Un groupe est-il ouvert ? Couches ouvertes, types repliés par défaut ; tout est ouvert pendant une recherche.
+- `capDiagListe` (l. 524) — Rend la liste classée (panneau gauche).
+- `capDiagMarquerActif` (l. 570) — Met en évidence le diagramme ouvert dans la liste.
+- `capDiagRepsGroupe` (l. 579) — Représentations d'un groupe de la liste (selon la clé).
+- `capDiagClic` (l. 586) — Clics de la vue : barre (ouvrir, export, sélection), carte, groupes repliables, diagrammes. @param {MouseEvent} e
+- `capDiagChange` (l. 613) — Cases à cocher (diagramme, groupe, tout) et choix du classement. @param {Event} e
+- `capDiagOpen` (l. 628) — Ouvre un diagramme dans la vue 🔲 Diagrammes Capella et y met un élément en évidence.
+- `capDiagInfo` (l. 639) — Panneau de détail d'un diagramme (comme pour un élément du modèle) : type, couche, sigle, nature, identifiant,
+- `capDiagDetail` (l. 677) — Section « Diagrammes » du panneau de détail : représentations de l'élément et diagrammes où il est dessiné.
+- `capDiagSvg` (l. 695) — SVG autonome d'un diagramme, tel que l'exporte la visionneuse (menu ⬇ Exporter › SVG) :
+- `capDiagPlanche` (l. 727) — Planche d'un diagramme : cadre, en-tête (couche, sigle, nom, type), diagramme centré, cartouche technique
+- `capDiagTexte` (l. 806) — Texte brut d'une description Capella (attribut XML contenant du HTML).
+- `capDiagMeta` (l. 818) — Description et élément représenté d'un diagramme, lus dans le .aird (DRepresentationDescriptor : documentation, target).
+- `capDiagElements` (l. 838) — Annexe d'un diagramme : éléments du modèle représentés (attributs data-sem du SVG), triés par couche, type et nom.
+- `capDiagAnnexeCsv` (l. 851) — Annexe au format CSV (séparateur ;, BOM) : en-tête du diagramme, description, puis éléments représentés.
+- `CAP_DIAG_ANX` (l. 858) — Lignes d'annexe par page PDF.
+- `capDiagAnnexePages` (l. 867) — Pages d'annexe du PDF (A4 paysage) : tableau des éléments représentés.
+- `capDiagCibles` (l. 903) — Diagrammes visés par l'export, dans l'ordre de la liste (couche, type, nom).
+- `capDiagExportDialog` (l. 910) — Fenêtre « Exporter des diagrammes » : portée, mise en page, aperçu de la planche, formats.
+- `capDiagApercu` (l. 955) — Aperçu de la planche du premier diagramme visé (diagramme ouvert s'il en fait partie).
+- `capDiagPdfSommaire` (l. 974) — Page de sommaire du PDF (paysage A4) : projet, date, nombre de planches, liste par couche et type avec numéros de page.
+- `CAP_DIAG_PDF_ALERTE` (l. 1016) — Seuil (Mo) au-delà duquel l'export PDF demande confirmation.
+- `capDiagPdfEstimation` (l. 1026) — Taille estimée du PDF, d'après la surface des planches rastérisées (même bornes que capSvgToCanvas)
+- `capDiagExport` (l. 1040) — Export groupé des diagrammes en planches : capture de tous les diagrammes, puis pagination
+- `capDiagExportHtml` (l. 1111) — Rapport HTML autonome : onglet Sommaire (tableau avec liens) et onglet Planches
 
-## 55-revue.js — 1238 lignes
+## 55-revue.js — 1240 lignes
 
 - `capRevNorm` (l. 27) — Complète des données de revue (lues dans la page ou un fichier) avec les valeurs par défaut.
 - `capRevStatuts` (l. 36) — @returns {object[]} statuts d'un commentaire {k, l, c, i} (k : valeur enregistrée)
@@ -918,130 +902,133 @@
 - `capRevMatch` (l. 176) — Compare une revue (ou des commentaires) au modèle chargé. Critères, dans l'ordre :
 - `CAP_REV_MIN_ELTS` (l. 192) — En dessous de ce nombre d'éléments commentés, la part retrouvée dans le modèle ne suffit pas à conclure.
 - `capRevOnModelLoad` (l. 196) — Après le chargement d'un modèle : rattache au projet les anciens commentaires qui n'en avaient pas,
-- `capRevBadge` (l. 209) — Met à jour le badge du bouton 💬 Revue (commentaires ouverts ; ⚠ s'il y en a à vérifier).
-- `capRevToggle` (l. 220) — Ouvre ou ferme le panneau 💬 Revue (dans la page, ou dans sa fenêtre séparée si elle est ouverte : elle passe alors au premier plan).
-- `capRevPanel` (l. 233) — @returns {HTMLElement} panneau 💬 Revue (créé au premier appel ; il peut se trouver dans la fenêtre séparée)
-- `capRevPop` (l. 244) — @returns {Window|null} fenêtre séparée de la revue, si elle est ouverte
-- `capRevDoc` (l. 246) — @returns {Document} document où l'utilisateur travaille sur la revue : la fenêtre séparée si elle a le focus, sinon la page
-- `capRevQ` (l. 248) — @param {string} id @returns {HTMLElement|null} élément du panneau (page ou fenêtre séparée)
-- `capRevConfirm` (l. 250) — @param {string} msg @returns {boolean} confirmation demandée dans la fenêtre où l'on travaille
-- `capRevAlert` (l. 252) — @param {string} msg - Message affiché dans la fenêtre où l'on travaille
-- `capRevPopOut` (l. 259) — ⧉ Ouvre le panneau 💬 Revue dans une fenêtre séparée (à placer sur un autre écran). La fenêtre dépend de la page :
-- `capRevPopTheme` (l. 277) — Recopie le thème de la page (attributs et variables de couleur de <html>) dans la fenêtre séparée. @param {Window} w
-- `capRevPopBack` (l. 282) — Fenêtre séparée fermée : le panneau revient (fermé) dans la page.
-- `capRevRender` (l. 290) — Affiche le contenu du panneau 💬 Revue (onglet courant).
-- `capRevPeople` (l. 321) — Personnes connues : participants, auteurs et responsables des commentaires. @returns {string[]}
-- `capRevFiltered` (l. 327) — @returns {object[]} commentaires de l'onglet 💬 Commentaires, filtrés et triés
-- `capRevListHtml` (l. 349) — Onglet 💬 Commentaires : filtres et cartes. @returns {string} HTML
-- `capRevCardHtml` (l. 369) — Carte d'un commentaire (repliée : en-tête, titre, méta ; dépliée : texte complet, réponses, actions).
-- `capRevTargetsHtml` (l. 399) — Pastilles des cibles d'un commentaire (élément + champ, diagramme), cliquables. @param {object} c @returns {string} HTML
-- `capRevPanelClick` (l. 409) — Clics du panneau (délégation). @param {MouseEvent} e
-- `capRevPanelInput` (l. 443) — Saisie dans le panneau : recherche, réglages. @param {Event} e
-- `capRevPanelChange` (l. 448) — Listes et cases du panneau : filtres, statut d'un commentaire, réglages. @param {Event} e
-- `capRevGet` (l. 460) — @param {string} id @returns {object|undefined} commentaire
-- `capRevGoto` (l. 467) — Montre la cible d'un commentaire : sa note dans le diagramme (s'il a été posé sur un diagramme et que le .aird
-- `capRevValidate` (l. 478) — Valide un commentaire (correction vérifiée) : statut Validé, date et vérificateur. @param {object} c
-- `capRevResnap` (l. 483) — Prend la version actuelle du modèle comme nouvelle référence des cibles d'un commentaire. @param {object} c
-- `capRevNew` (l. 494) — Nouveau commentaire : ouvre l'éditeur avec ses cibles (et sa note de diagramme) déjà renseignées.
-- `capRevEdit` (l. 502) — Éditeur d'un commentaire (fenêtre) : texte (seul champ obligatoire), titre, criticité, catégorie, statut,
-- `capRevDetailHead` (l. 611) — Boutons 💬 du panneau de détail, sous le nom de l'élément : commenter l'élément, son nom, sa description.
-- `capRevAttrBtn` (l. 625) — Petit bouton 💬 d'un attribut du panneau de détail (visible au survol) : commenter cet attribut.
-- `capRevDetailSection` (l. 634) — Section « Commentaires » du panneau de détail : commentaires portant sur l'élément.
-- `capRevDetailSectionIn` (l. 644) — Contenu de la section « Commentaires » du panneau de détail.
-- `capRevShow` (l. 653) — Ouvre 💬 Revue sur un commentaire (déplié). @param {string} id
-- `capRevShowFor` (l. 659) — Ouvre 💬 Revue sur les commentaires d'un élément. @param {string} id
-- `CAP_REV_ID_ATTRS` (l. 664) — Attributs portant l'identifiant d'un élément du modèle dans les vues (blocs, tableaux, listes, diagrammes).
-- `capRevChainAt` (l. 670) — Chaîne (⚡ Chaînes) dans laquelle se trouve un élément de l'interface : carte de chaîne ou graphe de la vue Relation Map des chaînes.
-- `capRevChainFns` (l. 679) — Fonctions (ou composants) d'une chaîne, pour les proposer comme éléments commentés.
-- `capRevElementAt` (l. 691) — Élément du modèle désigné par un nœud de l'interface (lui ou un de ses parents) : attribut d'identifiant
-- `capRevContext` (l. 705) — Menu du clic droit dans les vues : sur un élément, commenter l'élément, son nom, sa description, voir ses commentaires.
-- `capRevShowDiag` (l. 749) — Ouvre 💬 Revue sur les notes du diagramme ouvert.
-- `capRevMarkSchedule` (l. 755) — Programme la mise à jour des marques 💬 (après un rendu de vue).
-- `capRevMark` (l. 757) — Marque d'un 💬 les blocs, cartes et noms cliquables des éléments qui ont des commentaires non clos.
-- `capRevDiagUid` (l. 773) — @returns {string} identifiant du diagramme ouvert dans la visionneuse ('' sinon)
-- `capRevDiagBar` (l. 779) — Commandes de la revue dans la barre de 🔲 Diagrammes Capella : 📝 Note (à glisser sur le diagramme) et
-- `capRevLayerEnsure` (l. 787) — Installe (une fois) le calque des commentaires au-dessus du diagramme et ses écouteurs.
-- `capRevDiagNoteAt` (l. 834) — Pose une note de revue sur le diagramme ouvert, à un point de l'écran (centre de la vue par défaut),
-- `capRevDiagBox` (l. 851) — Boîte d'un élément du diagramme en coordonnées du diagramme (union de ses formes dessinées).
-- `capRevLayerDraw` (l. 866) — Dessine les notes du diagramme ouvert sur le calque : un plan qui suit le zoom et le déplacement
-- `capRevNoteClick` (l. 910) — Boutons d'une note du calque : lier, modifier, réduire / agrandir. @param {MouseEvent} e
-- `capRevToggleTarget` (l. 924) — Lie un élément à un commentaire, ou le délie s'il l'était déjà.
-- `capRevNoteLine` (l. 938) — Trait tiré depuis la poignée ● d'une note : suit le pointeur (élément visé en surbrillance) ;
-- `capRevNoteDown` (l. 960) — Glisser une note (en-tête ou pastille), la redimensionner (coin) ou tirer un trait vers un élément (poignée ●). @param {PointerEvent} e
-- `capRevDiffHtml` (l. 989) — Différence entre la valeur commentée et le modèle chargé, pour une cible.
-- `capRevCheckHtml` (l. 1003) — Onglet 🔁 Vérifier. @returns {string} HTML
-- `capRevCheckAll` (l. 1020) — Valide tous les commentaires à vérifier (après confirmation).
-- `capRevReportList` (l. 1029) — @returns {object[]} commentaires du rapport (ceux de la liste filtrée, ou tous)
-- `capRevSynthese` (l. 1031) — Tableau croisé statut × criticité. @param {object[]} l - Commentaires @returns {string} HTML
-- `capRevReportTab` (l. 1039) — Onglet 📄 Rapport : synthèse et exports. @returns {string} HTML
-- `capRevGroupes` (l. 1057) — Groupes du rapport selon le regroupement choisi.
-- `capRevReportHtml` (l. 1067) — Télécharge le rapport HTML autonome de la revue.
-- `capRevCsv` (l. 1090) — Télécharge les commentaires du rapport en CSV (une ligne par commentaire).
-- `capRevCfgHtml` (l. 1102) — Onglet ⚙ Réglages. @returns {string} HTML
-- `capRevCfgAction` (l. 1124) — Actions de l'onglet ⚙ Réglages : participants, export, import, suppression.
-- `capRevExport` (l. 1132) — Exporte la revue (participants et commentaires) dans un fichier .json réutilisable.
-- `capRevImport` (l. 1139) — Importe un fichier .json de revue, ou une page de 📤 revue ciblée relue (.html), et la fusionne avec les commentaires de la page.
-- `capRevImportConfirm` (l. 1173) — Fenêtre d'avertissement avant d'importer une revue qui ne semble pas porter sur le modèle chargé :
-- `capRevMerge` (l. 1207) — Fusionne une revue importée : nouveaux commentaires ajoutés (renumérotés si leur numéro est pris),
+- `capRevBadge` (l. 210) — Met à jour le badge des commentaires (bouton 💬 Revue et menu 💬 Revue & documents de la barre) :
+- `capRevToggle` (l. 221) — Ouvre ou ferme le panneau 💬 Revue (dans la page, ou dans sa fenêtre séparée si elle est ouverte : elle passe alors au premier plan).
+- `capRevPanel` (l. 234) — @returns {HTMLElement} panneau 💬 Revue (créé au premier appel ; il peut se trouver dans la fenêtre séparée)
+- `capRevPop` (l. 245) — @returns {Window|null} fenêtre séparée de la revue, si elle est ouverte
+- `capRevDoc` (l. 247) — @returns {Document} document où l'utilisateur travaille sur la revue : la fenêtre séparée si elle a le focus, sinon la page
+- `capRevQ` (l. 249) — @param {string} id @returns {HTMLElement|null} élément du panneau (page ou fenêtre séparée)
+- `capRevConfirm` (l. 251) — @param {string} msg @returns {boolean} confirmation demandée dans la fenêtre où l'on travaille
+- `capRevAlert` (l. 253) — @param {string} msg - Message affiché dans la fenêtre où l'on travaille
+- `capRevPopOut` (l. 260) — ⧉ Ouvre le panneau 💬 Revue dans une fenêtre séparée (à placer sur un autre écran). La fenêtre dépend de la page :
+- `capRevPopTheme` (l. 278) — Recopie le thème de la page (attributs et variables de couleur de <html>) dans la fenêtre séparée. @param {Window} w
+- `capRevPopBack` (l. 283) — Fenêtre séparée fermée : le panneau revient (fermé) dans la page.
+- `capRevRender` (l. 291) — Affiche le contenu du panneau 💬 Revue (onglet courant).
+- `capRevPeople` (l. 323) — Personnes connues : participants, auteurs et responsables des commentaires. @returns {string[]}
+- `capRevFiltered` (l. 329) — @returns {object[]} commentaires de l'onglet 💬 Commentaires, filtrés et triés
+- `capRevListHtml` (l. 351) — Onglet 💬 Commentaires : filtres et cartes. @returns {string} HTML
+- `capRevCardHtml` (l. 371) — Carte d'un commentaire (repliée : en-tête, titre, méta ; dépliée : texte complet, réponses, actions).
+- `capRevTargetsHtml` (l. 401) — Pastilles des cibles d'un commentaire (élément + champ, diagramme), cliquables. @param {object} c @returns {string} HTML
+- `capRevPanelClick` (l. 411) — Clics du panneau (délégation). @param {MouseEvent} e
+- `capRevPanelInput` (l. 445) — Saisie dans le panneau : recherche, réglages. @param {Event} e
+- `capRevPanelChange` (l. 450) — Listes et cases du panneau : filtres, statut d'un commentaire, réglages. @param {Event} e
+- `capRevGet` (l. 462) — @param {string} id @returns {object|undefined} commentaire
+- `capRevGoto` (l. 469) — Montre la cible d'un commentaire : sa note dans le diagramme (s'il a été posé sur un diagramme et que le .aird
+- `capRevValidate` (l. 480) — Valide un commentaire (correction vérifiée) : statut Validé, date et vérificateur. @param {object} c
+- `capRevResnap` (l. 485) — Prend la version actuelle du modèle comme nouvelle référence des cibles d'un commentaire. @param {object} c
+- `capRevNew` (l. 496) — Nouveau commentaire : ouvre l'éditeur avec ses cibles (et sa note de diagramme) déjà renseignées.
+- `capRevEdit` (l. 504) — Éditeur d'un commentaire (fenêtre) : texte (seul champ obligatoire), titre, criticité, catégorie, statut,
+- `capRevDetailHead` (l. 613) — Boutons 💬 du panneau de détail, sous le nom de l'élément : commenter l'élément, son nom, sa description.
+- `capRevAttrBtn` (l. 627) — Petit bouton 💬 d'un attribut du panneau de détail (visible au survol) : commenter cet attribut.
+- `capRevDetailSection` (l. 636) — Section « Commentaires » du panneau de détail : commentaires portant sur l'élément.
+- `capRevDetailSectionIn` (l. 646) — Contenu de la section « Commentaires » du panneau de détail.
+- `capRevShow` (l. 655) — Ouvre 💬 Revue sur un commentaire (déplié). @param {string} id
+- `capRevShowFor` (l. 661) — Ouvre 💬 Revue sur les commentaires d'un élément. @param {string} id
+- `CAP_REV_ID_ATTRS` (l. 666) — Attributs portant l'identifiant d'un élément du modèle dans les vues (blocs, tableaux, listes, diagrammes).
+- `capRevChainAt` (l. 672) — Chaîne (⚡ Chaînes) dans laquelle se trouve un élément de l'interface : carte de chaîne ou graphe de la vue Relation Map des chaînes.
+- `capRevChainFns` (l. 681) — Fonctions (ou composants) d'une chaîne, pour les proposer comme éléments commentés.
+- `capRevElementAt` (l. 693) — Élément du modèle désigné par un nœud de l'interface (lui ou un de ses parents) : attribut d'identifiant
+- `capRevContext` (l. 707) — Menu du clic droit dans les vues : sur un élément, commenter l'élément, son nom, sa description, voir ses commentaires.
+- `capRevShowDiag` (l. 751) — Ouvre 💬 Revue sur les notes du diagramme ouvert.
+- `capRevMarkSchedule` (l. 757) — Programme la mise à jour des marques 💬 (après un rendu de vue).
+- `capRevMark` (l. 759) — Marque d'un 💬 les blocs, cartes et noms cliquables des éléments qui ont des commentaires non clos.
+- `capRevDiagUid` (l. 775) — @returns {string} identifiant du diagramme ouvert dans la visionneuse ('' sinon)
+- `capRevDiagBar` (l. 781) — Commandes de la revue dans la barre de 🔲 Diagrammes Capella : 📝 Note (à glisser sur le diagramme) et
+- `capRevLayerEnsure` (l. 789) — Installe (une fois) le calque des commentaires au-dessus du diagramme et ses écouteurs.
+- `capRevDiagNoteAt` (l. 836) — Pose une note de revue sur le diagramme ouvert, à un point de l'écran (centre de la vue par défaut),
+- `capRevDiagBox` (l. 853) — Boîte d'un élément du diagramme en coordonnées du diagramme (union de ses formes dessinées).
+- `capRevLayerDraw` (l. 868) — Dessine les notes du diagramme ouvert sur le calque : un plan qui suit le zoom et le déplacement
+- `capRevNoteClick` (l. 912) — Boutons d'une note du calque : lier, modifier, réduire / agrandir. @param {MouseEvent} e
+- `capRevToggleTarget` (l. 926) — Lie un élément à un commentaire, ou le délie s'il l'était déjà.
+- `capRevNoteLine` (l. 940) — Trait tiré depuis la poignée ● d'une note : suit le pointeur (élément visé en surbrillance) ;
+- `capRevNoteDown` (l. 962) — Glisser une note (en-tête ou pastille), la redimensionner (coin) ou tirer un trait vers un élément (poignée ●). @param {PointerEvent} e
+- `capRevDiffHtml` (l. 991) — Différence entre la valeur commentée et le modèle chargé, pour une cible.
+- `capRevCheckHtml` (l. 1005) — Onglet 🔁 Vérifier. @returns {string} HTML
+- `capRevCheckAll` (l. 1022) — Valide tous les commentaires à vérifier (après confirmation).
+- `capRevReportList` (l. 1031) — @returns {object[]} commentaires du rapport (ceux de la liste filtrée, ou tous)
+- `capRevSynthese` (l. 1033) — Tableau croisé statut × criticité. @param {object[]} l - Commentaires @returns {string} HTML
+- `capRevReportTab` (l. 1041) — Onglet 📄 Rapport : synthèse et exports. @returns {string} HTML
+- `capRevGroupes` (l. 1059) — Groupes du rapport selon le regroupement choisi.
+- `capRevReportHtml` (l. 1069) — Télécharge le rapport HTML autonome de la revue.
+- `capRevCsv` (l. 1092) — Télécharge les commentaires du rapport en CSV (une ligne par commentaire).
+- `capRevCfgHtml` (l. 1104) — Onglet ⚙ Réglages. @returns {string} HTML
+- `capRevCfgAction` (l. 1126) — Actions de l'onglet ⚙ Réglages : participants, export, import, suppression.
+- `capRevExport` (l. 1134) — Exporte la revue (participants et commentaires) dans un fichier .json réutilisable.
+- `capRevImport` (l. 1141) — Importe un fichier .json de revue, ou une page de 📤 revue ciblée relue (.html), et la fusionne avec les commentaires de la page.
+- `capRevImportConfirm` (l. 1175) — Fenêtre d'avertissement avant d'importer une revue qui ne semble pas porter sur le modèle chargé :
+- `capRevMerge` (l. 1209) — Fusionne une revue importée : nouveaux commentaires ajoutés (renumérotés si leur numéro est pris),
 
-## 56-accueil.js — 712 lignes
+## 56-accueil.js — 766 lignes
 
 - `CAP_HOME_DND` (l. 23) — Type de données glissées (référence vers un diagramme ou un élément).
-- `CAP_HOME_COULEURS` (l. 25) — Couleurs proposées pour les notes du tableau blanc.
-- `capHomeNorm` (l. 32) — Complète des données d'accueil (lues dans la page ou un fichier) avec les valeurs par défaut.
-- `capHomeUid` (l. 44) — Identifiant unique (point, section, document, note). @returns {string}
-- `capHomeSave` (l. 47) — Enregistre l'accueil dans la page (bloc JSON repris par la 💾 Page HTML).
-- `capHomeSaveLater` (l. 54) — Enregistrement différé (saisie au clavier).
-- `capHomeSetData` (l. 59) — Remplace les données de l'accueil (📄 Ouvrir un projet de travail) et réaffiche la vue si elle est ouverte.
-- `capHomeRefEl` (l. 72) — Référence vers un élément du modèle.
-- `capHomeReps` (l. 77) — Représentations du .aird chargé (la visionneuse est préparée si besoin). @returns {object[]}
-- `capHomeRefDiag` (l. 87) — Référence vers un diagramme.
-- `capHomeRefOk` (l. 89) — @param {object} ref @returns {boolean} vrai si la cible existe (élément du modèle, diagramme du .aird chargé)
-- `capHomeRefIco` (l. 96) — Icône d'une référence : dessin Capella de l'élément ou du diagramme.
-- `capHomeRefNom` (l. 102) — Nom affiché d'une référence (nom actuel dans le modèle si l'élément existe). @param {object} ref @returns {string}
-- `capHomeRefType` (l. 104) — Type lisible d'une référence. @param {object} ref @returns {string}
-- `capHomeChip` (l. 111) — Pastille d'une référence (dans un point de check-list ou le périmètre d'un plan), cliquable, avec ✕ pour la retirer.
-- `capHomeRefOpen` (l. 121) — Ouvre la cible d'une référence : diagramme (🔲 Diagrammes Capella) ou panneau de détail de l'élément.
-- `capRenderHome` (l. 136) — Affiche la vue 🏠 Accueil (et rafraîchit les check-lists et tableaux blancs ouverts dans une fenêtre séparée).
-- `CAP_HOME_SCROLLS` (l. 159) — Zones qui défilent dans l'accueil (vue ou fenêtre séparée) : page, liste de gauche, document ouvert.
-- `capHomeScrollGet` (l. 165) — Positions de défilement des zones de l'accueil, avant un nouveau rendu.
-- `capHomeScrollSet` (l. 171) — Rétablit les positions de défilement après un rendu (plier un chapitre, cocher une case… ne ramène plus en haut).
-- `capHomeCapellaVersion` (l. 176) — @returns {string} version de Capella du modèle, lue dans les espaces de noms du fichier ('' si inconnue)
-- `capHomeCouches` (l. 185) — Contenu du modèle par couche : nombre d'éléments et types principaux (hors types techniques et paquetages).
-- `capHomeProgress` (l. 192) — @param {object} d - Check-list ou plan @returns {{ok:number, n:number}} points cochés / points
-- `capHomeBar` (l. 194) — Barre d'avancement. @param {{ok:number,n:number}} p @returns {string} HTML
-- `capHomeCartes` (l. 201) — Cartes de l'onglet 🏠 Projet, dans l'ordre par défaut : k = clé, l = titre, w = largeur par défaut (1 ou 2 colonnes),
-- `capHomeCartesOrdre` (l. 239) — @returns {string[]} clés des cartes affichées, dans l'ordre choisi (cartes nouvelles ajoutées à la fin)
-- `capHomeProjetHtml` (l. 245) — Onglet 🏠 Projet : cartes (ordre, largeur et cartes masquées réglables par ⚙ Disposer). @returns {string} HTML
-- `capHomeModeles` (l. 268) — Modèles de check-lists (ARCADIA) : sections et points proposés.
-- `capHomeNewDoc` (l. 290) — Crée une check-list ou un plan de revue et l'ouvre.
-- `capHomeQuickDoc` (l. 313) — ⚡ Check-list rapide : une section, un point par ligne (au moins un point vide), puis ouverture.
-- `capHomeDocsHtml` (l. 323) — Onglet ☑ Check-lists & plans de revue : création (listes « Nouvelle check-list », « Nouveau plan de revue »), import,
-- `capHomeDocHtml` (l. 345) — Document ouvert : en-tête (titre, avancement, actions), champs du plan de revue, sections et points.
-- `capHomePerimIds` (l. 391) — Identifiants du périmètre d'un plan : éléments et diagrammes du périmètre et des points.
-- `capHomeComPerim` (l. 397) — @param {object} c - Commentaire de revue @param {{el:Set,diag:Set}} ids - Périmètre @returns {boolean} vrai si le commentaire porte sur le p
-- `capHomeDocExport` (l. 403) — Document HTML imprimable d'une check-list ou d'un plan de revue.
-- `capHomeDocImport` (l. 431) — Importe une check-list ou un plan de revue enregistré en .json (💾 .json).
-- `CAP_HOME_LARG` (l. 451) — Bornes de largeur des volets réglables (px).
-- `capHomeLargeur` (l. 457) — Attribut style de la largeur choisie pour un volet (rien : largeur par défaut).
-- `capHomeSplit` (l. 463) — Poignée de redimensionnement d'un volet, placée entre le volet et le document (double-clic : largeur par défaut).
-- `capHomeSplitDown` (l. 468) — Glisser la poignée d'un volet : la largeur suit la souris, puis elle est enregistrée dans la page.
-- `capHomePaletteHtml` (l. 483) — Palette à droite (check-lists, tableaux blancs, fenêtres séparées) : recherche, diagrammes, éléments. @returns {string} HTML
-- `capHomePaletteList` (l. 491) — Résultats de la palette : diagrammes (filtrés), éléments dont le nom contient la recherche. @returns {string} HTML
-- `capHomeRender` (l. 510) — Réaffiche la vue 🏠 Accueil si elle est affichée, et les fenêtres séparées ouvertes.
-- `capHomeDocOf` (l. 519) — Check-list ou plan concerné par un élément de l'interface (vue ou fenêtre séparée).
-- `capHomeCurDoc` (l. 521) — @returns {object|undefined} document ouvert dans l'onglet ☑
-- `capHomeWin` (l. 526) — Fenêtre d'un élément de l'interface (la page, ou une fenêtre séparée) : boîtes de dialogue au bon endroit.
-- `capHomeFind` (l. 532) — Premier élément correspondant au sélecteur, dans la page ou les fenêtres séparées (curseur placé après un rendu).
-- `capHomeWire` (l. 542) — Branche (une fois) les écouteurs d'un conteneur (vue ou fenêtre séparée) : clics, saisies, glisser-déposer,
-- `CAP_HOME_CARTE` (l. 584) — Type de données glissées pour réordonner les cartes de 🏠 Projet.
-- `capHomeCarteMove` (l. 590) — Place une carte de 🏠 Projet avant une autre.
-- `capHomeDrop` (l. 602) — Dépôt d'une référence (ou d'un texte) sur une zone : périmètre, point, section, tableau blanc.
-- `capHomeItemAdd` (l. 621) — Ajoute un point à une section (après un point donné, sinon à la fin) et y place le curseur.
-- `capHomeMove` (l. 628) — Déplace un objet d'une liste d'un cran. @param {Array} l @param {number} i @param {number} dir - -1 / +1
-- `capHomeClick` (l. 631) — Clics de la vue et des fenêtres séparées (délégation). @param {MouseEvent} e
-- `capHomeInput` (l. 688) — Saisie : fiche projet, titres, champs du plan, points, notes du tableau blanc, recherche de la palette. @param {Event} e
-- `capHomeChange` (l. 703) — Listes et cases : création d'une check-list ou d'un plan, champs du plan, case d'un point. @param {Event} e
+- `capHomeNorm` (l. 30) — Complète des données d'accueil (lues dans la page ou un fichier) avec les valeurs par défaut.
+- `capHomeUid` (l. 43) — Identifiant unique (point, section, document, note). @returns {string}
+- `capHomeSave` (l. 46) — Enregistre l'accueil dans la page (bloc JSON repris par la 💾 Page HTML).
+- `capHomeSaveLater` (l. 53) — Enregistrement différé (saisie au clavier).
+- `capHomeSetData` (l. 58) — Remplace les données de l'accueil (📄 Ouvrir un projet de travail) et réaffiche la vue si elle est ouverte.
+- `capHomeRefEl` (l. 71) — Référence vers un élément du modèle.
+- `capHomeReps` (l. 76) — Représentations du .aird chargé (la visionneuse est préparée si besoin). @returns {object[]}
+- `capHomeRefDiag` (l. 86) — Référence vers un diagramme.
+- `capHomeRefOk` (l. 88) — @param {object} ref @returns {boolean} vrai si la cible existe (élément du modèle, diagramme du .aird chargé)
+- `capHomeRefIco` (l. 95) — Icône d'une référence : dessin Capella de l'élément ou du diagramme.
+- `capHomeRefNom` (l. 101) — Nom affiché d'une référence (nom actuel dans le modèle si l'élément existe). @param {object} ref @returns {string}
+- `capHomeRefType` (l. 103) — Type lisible d'une référence. @param {object} ref @returns {string}
+- `capHomeChip` (l. 110) — Pastille d'une référence (dans un point de check-list ou le périmètre d'un plan), cliquable, avec ✕ pour la retirer.
+- `capHomeRefOpen` (l. 120) — Ouvre la cible d'une référence : diagramme (🔲 Diagrammes Capella) ou panneau de détail de l'élément.
+- `capRenderHome` (l. 135) — Affiche la vue 🏠 Accueil (et rafraîchit les check-lists et dossiers ouverts dans une fenêtre séparée).
+- `CAP_HOME_SCROLLS` (l. 163) — Zones qui défilent dans l'accueil (vue ou fenêtre séparée) : page, liste de gauche, document ouvert.
+- `capHomeScrollGet` (l. 169) — Positions de défilement des zones de l'accueil, avant un nouveau rendu.
+- `capHomeScrollSet` (l. 175) — Rétablit les positions de défilement après un rendu (plier un chapitre, cocher une case… ne ramène plus en haut).
+- `capHomeCapellaVersion` (l. 180) — @returns {string} version de Capella du modèle, lue dans les espaces de noms du fichier ('' si inconnue)
+- `capHomeCouches` (l. 189) — Contenu du modèle par couche : nombre d'éléments et types principaux (hors types techniques et paquetages).
+- `capHomeProgress` (l. 196) — @param {object} d - Check-list ou plan @returns {{ok:number, n:number}} points cochés / points
+- `capHomeBar` (l. 198) — Barre d'avancement. @param {{ok:number,n:number}} p @returns {string} HTML
+- `capHomeCartes` (l. 205) — Cartes de l'onglet 🏠 Projet, dans l'ordre par défaut : k = clé, l = titre, w = largeur par défaut (1 ou 2 colonnes),
+- `capHomeCartesOrdre` (l. 240) — @returns {string[]} clés des cartes affichées, dans l'ordre choisi (cartes nouvelles ajoutées à la fin)
+- `capHomeProjetHtml` (l. 246) — Onglet 🏠 Projet : cartes (ordre, largeur et cartes masquées réglables par ⚙ Disposer). @returns {string} HTML
+- `capHomeTaches` (l. 263) — Tâches proposées par « Que voulez-vous faire ? » : [icône, titre, description, clé de vue (capNavOpen), chemin affiché].
+- `capHomeTachesHtml` (l. 273) — Section « Que voulez-vous faire ? » de l'onglet 🏠 Projet (masquable, réaffichée par ⚙ Disposer). @returns {string} HTML
+- `capHomeLibs` (l. 282) — Bibliothèques du projet et leur état : référencées par le modèle (72, capLibScan) ou chargées sans être référencées.
+- `capHomeEnteteHtml` (l. 292) — En-tête de l'onglet 🏠 Projet : modèle, couches, état des diagrammes et des bibliothèques (détail dépliable), vues sans données.
+- `capHomeModeles` (l. 325) — Modèles de check-lists (ARCADIA) : sections et points proposés.
+- `capHomeNewDoc` (l. 347) — Crée une check-list ou un plan de revue et l'ouvre.
+- `capHomeQuickDoc` (l. 370) — ✚ Check-list rapide : une section, un point par ligne (au moins un point vide), puis ouverture.
+- `capHomeDocsHtml` (l. 380) — Onglet ☑ Check-lists & plans de revue : création (listes « Nouvelle check-list », « Nouveau plan de revue »), import,
+- `capHomeDocHtml` (l. 402) — Document ouvert : en-tête (titre, avancement, actions), champs du plan de revue, sections et points.
+- `capHomePerimIds` (l. 448) — Identifiants du périmètre d'un plan : éléments et diagrammes du périmètre et des points.
+- `capHomeComPerim` (l. 454) — @param {object} c - Commentaire de revue @param {{el:Set,diag:Set}} ids - Périmètre @returns {boolean} vrai si le commentaire porte sur le p
+- `capHomeDocExport` (l. 460) — Document HTML imprimable d'une check-list ou d'un plan de revue.
+- `capHomeDocImport` (l. 488) — Importe une check-list ou un plan de revue enregistré en .json (💾 .json).
+- `CAP_HOME_LARG` (l. 508) — Bornes de largeur des volets réglables (px).
+- `capHomeLargeur` (l. 514) — Attribut style de la largeur choisie pour un volet (rien : largeur par défaut).
+- `capHomeSplit` (l. 520) — Poignée de redimensionnement d'un volet, placée entre le volet et le document (double-clic : largeur par défaut).
+- `capHomeSplitDown` (l. 525) — Glisser la poignée d'un volet : la largeur suit la souris, puis elle est enregistrée dans la page.
+- `capHomePaletteHtml` (l. 540) — Palette à droite (check-lists, dossiers, fenêtres séparées) : recherche, diagrammes, éléments. @returns {string} HTML
+- `capHomePaletteList` (l. 548) — Résultats de la palette : diagrammes (filtrés), éléments dont le nom contient la recherche. @returns {string} HTML
+- `capHomeRender` (l. 567) — Réaffiche la vue 🏠 Accueil si elle est affichée, et les fenêtres séparées ouvertes.
+- `capHomeDocOf` (l. 576) — Check-list ou plan concerné par un élément de l'interface (vue ou fenêtre séparée).
+- `capHomeCurDoc` (l. 578) — @returns {object|undefined} document ouvert dans l'onglet ☑
+- `capHomeWin` (l. 583) — Fenêtre d'un élément de l'interface (la page, ou une fenêtre séparée) : boîtes de dialogue au bon endroit.
+- `capHomeFind` (l. 589) — Premier élément correspondant au sélecteur, dans la page ou les fenêtres séparées (curseur placé après un rendu).
+- `capHomeWire` (l. 599) — Branche (une fois) les écouteurs d'un conteneur (vue ou fenêtre séparée) : clics, saisies, glisser-déposer,
+- `CAP_HOME_CARTE` (l. 639) — Type de données glissées pour réordonner les cartes de 🏠 Projet.
+- `capHomeCarteMove` (l. 645) — Place une carte de 🏠 Projet avant une autre.
+- `capHomeDrop` (l. 656) — Dépôt d'une référence (ou d'un texte) sur une zone : périmètre, point, section, dossier.
+- `capHomeItemAdd` (l. 673) — Ajoute un point à une section (après un point donné, sinon à la fin) et y place le curseur.
+- `capHomeMove` (l. 680) — Déplace un objet d'une liste d'un cran. @param {Array} l @param {number} i @param {number} dir - -1 / +1
+- `capHomeClick` (l. 683) — Clics de la vue et des fenêtres séparées (délégation). @param {MouseEvent} e
+- `capHomeInput` (l. 743) — Saisie : fiche projet, titres, champs du plan, points, recherche de la palette. @param {Event} e
+- `capHomeChange` (l. 757) — Listes et cases : création d'une check-list ou d'un plan, champs du plan, case d'un point. @param {Event} e
 
 ## 57-projet-page.js — 210 lignes
 
@@ -1101,114 +1088,104 @@
 - `capDgCsv` (l. 207) — Télécharge la comparaison des diagrammes (une ligne par diagramme).
 - `capDgDashCatalog` (l. 220) — Indicateurs du tableau de bord sur les diagrammes (.aird chargé) : nombre, par couche, liens avec le modèle,
 
-## 60-accueil-tableau-blanc.js — 328 lignes
+## 60-accueil-fenetres.js — 107 lignes
 
-- `capHomeOutils` (l. 14) — Outils du tableau blanc : k = outil, i = icône, t = info-bulle.
-- `capHomeCurBoard` (l. 24) — @returns {object} page de tableau blanc ouverte dans l'onglet 🧾 (une page est créée s'il n'y en a aucune)
-- `capHomeBoardOf` (l. 32) — Page de tableau blanc concernée par un élément de l'interface (vue ou fenêtre séparée).
-- `capHomeShapeSvg` (l. 39) — Dessin SVG d'une forme, en pixels (taille de l'objet).
-- `capHomeItemHtml` (l. 59) — HTML d'un objet du tableau blanc.
-- `capHomeBoardHtml` (l. 78) — Onglet 🧾 Tableaux blancs (ou fenêtre séparée) : pages, outils, couleurs, plan de travail.
-- `capHomeBoardAfter` (l. 98) — Après le rendu d'un tableau blanc : hauteur jusqu'en bas de sa fenêtre, suivi de la taille des notes.
-- `capHomeBoardAdd` (l. 121) — Ajoute un objet sur une page de tableau blanc.
-- `capHomeBoardNote` (l. 132) — Nouvelle note (ou texte libre) à une position du tableau.
-- `capHomeBoardDbl` (l. 136) — Double-clic sur le tableau (outil Sélection) : nouvelle note ; sur un onglet de page : la renommer. @param {MouseEvent} e
-- `capHomeBoardClick` (l. 147) — Clics propres au tableau blanc (pages, outils, couleurs, remplissage, fenêtre séparée, objets).
-- `capHomeBoardKey` (l. 172) — Suppr / Retour arrière hors saisie : retire l'objet sélectionné du tableau blanc. @param {KeyboardEvent} e @returns {boolean} vrai si traité
-- `capHomeBoardDown` (l. 185) — Tableau blanc, bouton de souris enfoncé : dessin avec l'outil choisi (dans le vide), redimensionnement d'une forme
-- `capHomePopListe` (l. 239) — Liste des objets d'un type de fenêtre séparée.
-- `capHomePopWin` (l. 246) — Fenêtre séparée ouverte pour une check-list (doc) ou un tableau blanc (board).
-- `capHomePopDocs` (l. 248) — @returns {Document[]} documents des fenêtres séparées ouvertes
-- `capHomePopClose` (l. 250) — Ferme la fenêtre séparée d'une check-list ou d'un tableau blanc. @param {string} kind @param {string} id
-- `capHomePopPlace` (l. 257) — Rappel affiché dans la vue quand une check-list ou un tableau blanc est ouvert dans sa fenêtre.
-- `capHomePopOpen` (l. 268) — ⧉ Ouvre une check-list, un plan de revue ou un tableau blanc dans une fenêtre séparée (même script, mêmes données).
-- `capHomePopsRender` (l. 284) — Réaffiche le contenu des fenêtres séparées ouvertes (ferme celles dont la check-list ou la page a été supprimée).
-- `CAP_HOME_SOURCES` (l. 302) — Éléments des vues qui peuvent être glissés vers une check-list ou un tableau blanc.
-- `capHomeDragRef` (l. 308) — Référence portée par un élément glissable d'une vue (diagramme de la liste, élément de l'Explorateur, chaîne).
+- `capHomePopListe` (l. 20) — Liste des objets d'un type de fenêtre séparée.
+- `capHomePopWin` (l. 27) — Fenêtre séparée ouverte pour une check-list (doc) ou un dossier (dos).
+- `capHomePopDocs` (l. 29) — @returns {Document[]} documents des fenêtres séparées ouvertes
+- `capHomePopClose` (l. 31) — Ferme la fenêtre séparée d'une check-list ou d'un dossier. @param {string} kind @param {string} id
+- `capHomePopPlace` (l. 38) — Rappel affiché dans la vue quand une check-list ou un dossier est ouvert dans sa fenêtre.
+- `capHomePopOpen` (l. 49) — ⧉ Ouvre une check-list, un plan de revue ou un dossier dans une fenêtre séparée (même script, mêmes données).
+- `capHomePopsRender` (l. 65) — Réaffiche le contenu des fenêtres séparées ouvertes (ferme celles dont la check-list ou la page a été supprimée).
+- `CAP_HOME_SOURCES` (l. 82) — Éléments des vues qui peuvent être glissés vers une check-list ou un dossier.
+- `capHomeDragRef` (l. 88) — Référence portée par un élément glissable d'une vue (diagramme de la liste, élément de l'Explorateur, chaîne).
 
-## 61-dossier-relecture.js — 1132 lignes
+## 61-dossier-relecture.js — 1149 lignes
 
 - `capDosNorm` (l. 23) — Complète la liste des dossiers lue dans la page (valeurs par défaut, blocs normalisés).
 - `capDosOf` (l. 33) — Dossier concerné par un élément de l'interface (vue ou fenêtre séparée), sinon dossier ouvert dans l'onglet 📑.
 - `capDosOuvrir` (l. 38) — Ouvre l'onglet 📑 Dossiers de relecture de 🏠 Accueil (depuis 💬 Revue, par exemple).
-- `capDosCur` (l. 44) — @returns {object|undefined} dossier ouvert dans l'onglet 📑
-- `capDosTrouve` (l. 52) — Bloc d'un dossier et sa place : liste qui le contient, rang, chapitre parent.
-- `capDosParcours` (l. 66) — Parcourt les blocs d'un dossier dans l'ordre du document.
-- `capDosBlocDe` (l. 76) — Bloc visé par un retour (« id » ou « id.d » pour la description d'un chapitre).
-- `capDosNouveau` (l. 98) — Crée un dossier et l'ouvre.
-- `capDosDiagsDe` (l. 109) — Diagrammes dont un élément est l'élément représenté (cible du diagramme dans le .aird).
-- `capDosNomDiag` (l. 115) — Nom d'un diagramme sans le préfixe de son type (« [LAB] … »). @param {string} n @returns {string}
-- `capDosChapDe` (l. 123) — Chapitre créé à partir d'une référence glissée : élément (titre, description, diagrammes dont il est l'élément représenté)
-- `capDosBlocDeRef` (l. 137) — Bloc créé à partir d'une référence glissée dans un chapitre : diagramme, élément (avec sa description) ou texte libre.
-- `capDosDepuisPlan` (l. 145) — Crée un dossier à partir d'un plan de revue : un chapitre par élément ou diagramme du périmètre.
-- `capDosOngletHtml` (l. 155) — Onglet 📑 : liste des dossiers, dossier ouvert. @returns {string} HTML
-- `capDosNavHtml` (l. 179) — Volet de navigation du dossier ouvert : plan des chapitres numérotés (clic : aller au chapitre, en le dépliant),
-- `capDosAller` (l. 191) — Va à un chapitre du dossier (volet de navigation) : déplie le chapitre et ses parents, puis le fait défiler en haut.
-- `capDosHtml` (l. 203) — Dossier ouvert : en-tête (titre, exports, réimport), consignes, retours, plan du dossier.
-- `capDosListeHtml` (l. 240) — Blocs d'une liste (chapitres numérotés, imbriqués).
-- `capDosModeleBoutons` (l. 245) — Boutons propres aux 🧩 modèles de rapport : boucle « pour chaque » et contenu automatique. @returns {string} HTML
-- `capDosActs` (l. 255) — Actions d'un bloc ou d'un chapitre : convertir (chapitre numéroté ↔ bloc), monter, descendre, sortir du chapitre,
-- `capDosConvertir` (l. 270) — Convertit un bloc en chapitre numéroté, ou un chapitre en bloc (son contenu est placé à sa suite, au même niveau).
-- `capDosBadge` (l. 289) — Pastille du nombre de retours d'un bloc (clic : afficher les retours).
-- `capDosRetoursHtml` (l. 294) — Retours d'un bloc, s'ils sont dépliés. @param {object} d @param {string} bid @returns {string} HTML
-- `capDosDuBloc` (l. 303) — Vrai si un retour porte sur un bloc, ou sur un élément représenté de ce bloc (diagramme).
-- `capDosApercu` (l. 309) — Aperçu de la description d'un élément (3 lignes).
-- `capDosChapHtml` (l. 325) — Chapitre : numéro, titre, élément associé, description, retours, contenu (blocs et sous-chapitres), zone de dépôt.
-- `capDosBlocHtml` (l. 351) — Bloc d'un chapitre : texte libre, élément (avec sa description) ou diagramme (description, éléments représentés).
-- `capDosRetourHtml` (l. 381) — Un retour de relecteur : type, criticité, auteur, date, extrait commenté, texte ; commentaire de 💬 Revue créé.
-- `capDosRetoursTousHtml` (l. 393) — Tous les retours du dossier, dans l'ordre du document. @param {object} d @returns {string} HTML
-- `capDosTypes` (l. 401) — @returns {object[]} types de retour {k, l} proposés aux relecteurs
-- `capDosClick` (l. 412) — Clics de l'onglet 📑 (délégation depuis capHomeClick).
-- `capDosFocus` (l. 465) — Place le curseur dans le titre (chapitre) ou le texte (bloc) qui vient d'être créé. @param {string} id - Bloc
-- `capDosInput` (l. 471) — Saisies de l'onglet 📑 : champs du dossier, titres, textes ; cases (description, éléments représentés).
-- `capDosDrop` (l. 494) — Dépôt d'une référence ou d'un texte dans le dossier ouvert.
-- `capDosDiagSvgs` (l. 519) — SVG des diagrammes d'une liste (la vue 🔲 Diagrammes Capella est ouverte le temps de l'export, puis la vue précédente rétablie).
-- `capDosContenu` (l. 539) — Contenu du dossier prêt à exporter : chapitres numérotés, descriptions (texte), éléments, diagrammes (SVG, dimensions,
-- `capDosEnvoi` (l. 571) — Données exportées d'un dossier (page HTML, Word, aperçu) : contenu résolu sur le modèle chargé et informations d'envoi.
-- `capDosVisu` (l. 584) — 👁 Aperçu du rendu : la page HTML du dossier (ou, pour un 🧩 modèle, du rapport qu'il produirait, sans le créer)
-- `capDosVisuEcrire` (l. 604) — Écrit la page du rapport dans une fenêtre séparée (titre « 👁 … »).
-- `capDosVisuDetacher` (l. 614) — ⧉ Détache l'aperçu dans sa propre fenêtre (par exemple sur un autre écran) ; 👁 Aperçu l'actualise ensuite.
-- `capDosVisuOuvrir` (l. 627) — Fenêtre d'aperçu : page du rapport dans un cadre, bascule 📄 Lecture / 💬 Avec commentaires, 🖨 Imprimer, ⬇ Page HTML,
-- `capDosExport` (l. 659) — Exporte le dossier : page HTML à commenter ou document Word.
-- `capDosElemsReels` (l. 679) — Éléments représentés d'un diagramme, tels qu'un relecteur les reconnaît : une implication sans nom
-- `capDosBout` (l. 692) — Élément au bout d'un échange : un port est remplacé par son propriétaire (fonction, composant), une Part par son type.
-- `capDosListeLignes` (l. 707) — Lignes d'un tableau d'éléments, lues sur le modèle chargé : nom, type, description ; ou pour des échanges :
-- `capDosB64` (l. 716) — Base64 d'un texte UTF-8 (SVG embarqué dans la page). @param {string} s @returns {string}
-- `capDosPage` (l. 730) — Page HTML autonome (hors ligne) du dossier : sommaire, chapitres numérotés, figures, commentaires par bloc,
-- `$` (l. 783)
-- `esc` (l. 784)
-- `dt` (l. 785)
-- `find` (l. 786)
-- `uid` (l. 787)
-- `ink` (l. 788)
-- `me` (l. 789)
-- `mark` (l. 790)
-- `chaps` (l. 791)
-- `counts` (l. 792)
-- `btn` (l. 794)
-- `zone` (l. 795)
-- `com` (l. 796)
-- `opts` (l. 800)
-- `formHtml` (l. 801)
-- `upd` (l. 804)
-- `updAll` (l. 807)
-- `para` (l. 808)
-- `node` (l. 809)
-- `toc` (l. 830)
-- `render` (l. 832)
-- `needMe` (l. 842)
-- `dl` (l. 860)
-- `base` (l. 861)
-- `capDosDocx` (l. 884) — Document Word du dossier : page de titre (projet, auteur, consignes, mode d'emploi), sommaire, chapitres en styles
-- `capDosUnzip` (l. 994) — Lit les fichiers d'une archive ZIP (méthodes « stored » et « deflate », décompression native du navigateur).
-- `capDosXmlTexte` (l. 1014) — Décode les entités XML d'un texte. @param {string} s @returns {string}
-- `capDosWText` (l. 1016) — Texte des runs d'un fragment WordprocessingML (paragraphes séparés par un saut de ligne). @param {string} xml @param {string} [tag] - 't' ou
-- `capDosLireDocx` (l. 1027) — Retours d'un document Word commenté : commentaires (rattachés au dernier signet « arc_… » qui les précède) et
-- `capDosLireFichier` (l. 1056) — Lit un fichier de retours : page HTML enregistrée par un relecteur, .json de ses retours, ou .docx commenté.
-- `capDosLirePage` (l. 1065) — @param {string} texte - Code HTML @returns {object|null} données de la page de relecture (sans l'exécuter)
-- `capDosImporter` (l. 1073) — Choisit et importe un ou plusieurs fichiers de retours (page HTML, .json, .docx).
-- `capDosFusion` (l. 1087) — Rattache des retours lus à leur dossier (même identifiant ; sinon dossier recréé depuis la page, ou dossier ouvert
-- `capDosVersRevue` (l. 1114) — Verse les retours non encore traités dans 💬 Revue : un commentaire par retour, cible = élément du bloc
+- `capDosOnglet` (l. 49) — Onglet d'un dossier : 📘 Rapports automatiques (rapport produit par un plan type ou modèle de rapport) ou 📑 Faire relire.
+- `capDosListe` (l. 51) — Dossiers de l'onglet affiché (📘 rapports et modèles, ou 📑 dossiers de relecture). @returns {object[]}
+- `capRapOuvrir` (l. 53) — Ouvre 💬 Revue & documents › 📘 Rapports automatiques (onglet de l'accueil).
+- `capDosCur` (l. 57)
+- `capDosTrouve` (l. 65) — Bloc d'un dossier et sa place : liste qui le contient, rang, chapitre parent.
+- `capDosParcours` (l. 79) — Parcourt les blocs d'un dossier dans l'ordre du document.
+- `capDosBlocDe` (l. 89) — Bloc visé par un retour (« id » ou « id.d » pour la description d'un chapitre).
+- `capDosNouveau` (l. 111) — Crée un dossier et l'ouvre.
+- `capDosDiagsDe` (l. 122) — Diagrammes dont un élément est l'élément représenté (cible du diagramme dans le .aird).
+- `capDosNomDiag` (l. 128) — Nom d'un diagramme sans le préfixe de son type (« [LAB] … »). @param {string} n @returns {string}
+- `capDosChapDe` (l. 136) — Chapitre créé à partir d'une référence glissée : élément (titre, description, diagrammes dont il est l'élément représenté)
+- `capDosBlocDeRef` (l. 150) — Bloc créé à partir d'une référence glissée dans un chapitre : diagramme, élément (avec sa description) ou texte libre.
+- `capDosDepuisPlan` (l. 158) — Crée un dossier à partir d'un plan de revue : un chapitre par élément ou diagramme du périmètre.
+- `capDosOngletHtml` (l. 168) — Onglet 📑 : liste des dossiers, dossier ouvert. @returns {string} HTML
+- `capDosNavHtml` (l. 196) — Volet de navigation du dossier ouvert : plan des chapitres numérotés (clic : aller au chapitre, en le dépliant),
+- `capDosAller` (l. 208) — Va à un chapitre du dossier (volet de navigation) : déplie le chapitre et ses parents, puis le fait défiler en haut.
+- `capDosHtml` (l. 220) — Dossier ouvert : en-tête (titre, exports, réimport), consignes, retours, plan du dossier.
+- `capDosListeHtml` (l. 257) — Blocs d'une liste (chapitres numérotés, imbriqués).
+- `capDosModeleBoutons` (l. 262) — Boutons propres aux 🧩 modèles de rapport : boucle « pour chaque » et contenu automatique. @returns {string} HTML
+- `capDosActs` (l. 272) — Actions d'un bloc ou d'un chapitre : convertir (chapitre numéroté ↔ bloc), monter, descendre, sortir du chapitre,
+- `capDosConvertir` (l. 287) — Convertit un bloc en chapitre numéroté, ou un chapitre en bloc (son contenu est placé à sa suite, au même niveau).
+- `capDosBadge` (l. 306) — Pastille du nombre de retours d'un bloc (clic : afficher les retours).
+- `capDosRetoursHtml` (l. 311) — Retours d'un bloc, s'ils sont dépliés. @param {object} d @param {string} bid @returns {string} HTML
+- `capDosDuBloc` (l. 320) — Vrai si un retour porte sur un bloc, ou sur un élément représenté de ce bloc (diagramme).
+- `capDosApercu` (l. 326) — Aperçu de la description d'un élément (3 lignes).
+- `capDosChapHtml` (l. 342) — Chapitre : numéro, titre, élément associé, description, retours, contenu (blocs et sous-chapitres), zone de dépôt.
+- `capDosBlocHtml` (l. 368) — Bloc d'un chapitre : texte libre, élément (avec sa description) ou diagramme (description, éléments représentés).
+- `capDosRetourHtml` (l. 398) — Un retour de relecteur : type, criticité, auteur, date, extrait commenté, texte ; commentaire de 💬 Revue créé.
+- `capDosRetoursTousHtml` (l. 410) — Tous les retours du dossier, dans l'ordre du document. @param {object} d @returns {string} HTML
+- `capDosTypes` (l. 418) — @returns {object[]} types de retour {k, l} proposés aux relecteurs
+- `capDosClick` (l. 429) — Clics de l'onglet 📑 (délégation depuis capHomeClick).
+- `capDosFocus` (l. 482) — Place le curseur dans le titre (chapitre) ou le texte (bloc) qui vient d'être créé. @param {string} id - Bloc
+- `capDosInput` (l. 488) — Saisies de l'onglet 📑 : champs du dossier, titres, textes ; cases (description, éléments représentés).
+- `capDosDrop` (l. 511) — Dépôt d'une référence ou d'un texte dans le dossier ouvert.
+- `capDosDiagSvgs` (l. 536) — SVG des diagrammes d'une liste (la vue 🔲 Diagrammes Capella est ouverte le temps de l'export, puis la vue précédente rétablie).
+- `capDosContenu` (l. 556) — Contenu du dossier prêt à exporter : chapitres numérotés, descriptions (texte), éléments, diagrammes (SVG, dimensions,
+- `capDosEnvoi` (l. 588) — Données exportées d'un dossier (page HTML, Word, aperçu) : contenu résolu sur le modèle chargé et informations d'envoi.
+- `capDosVisu` (l. 601) — 👁 Aperçu du rendu : la page HTML du dossier (ou, pour un 🧩 modèle, du rapport qu'il produirait, sans le créer)
+- `capDosVisuEcrire` (l. 621) — Écrit la page du rapport dans une fenêtre séparée (titre « 👁 … »).
+- `capDosVisuDetacher` (l. 631) — ⧉ Détache l'aperçu dans sa propre fenêtre (par exemple sur un autre écran) ; 👁 Aperçu l'actualise ensuite.
+- `capDosVisuOuvrir` (l. 644) — Fenêtre d'aperçu : page du rapport dans un cadre, bascule 📄 Lecture / 💬 Avec commentaires, 🖨 Imprimer, ⬇ Page HTML,
+- `capDosExport` (l. 676) — Exporte le dossier : page HTML à commenter ou document Word.
+- `capDosElemsReels` (l. 696) — Éléments représentés d'un diagramme, tels qu'un relecteur les reconnaît : une implication sans nom
+- `capDosBout` (l. 709) — Élément au bout d'un échange : un port est remplacé par son propriétaire (fonction, composant), une Part par son type.
+- `capDosListeLignes` (l. 724) — Lignes d'un tableau d'éléments, lues sur le modèle chargé : nom, type, description ; ou pour des échanges :
+- `capDosB64` (l. 733) — Base64 d'un texte UTF-8 (SVG embarqué dans la page). @param {string} s @returns {string}
+- `capDosPage` (l. 747) — Page HTML autonome (hors ligne) du dossier : sommaire, chapitres numérotés, figures, commentaires par bloc,
+- `$` (l. 800)
+- `esc` (l. 801)
+- `dt` (l. 802)
+- `find` (l. 803)
+- `uid` (l. 804)
+- `ink` (l. 805)
+- `me` (l. 806)
+- `mark` (l. 807)
+- `chaps` (l. 808)
+- `counts` (l. 809)
+- `btn` (l. 811)
+- `zone` (l. 812)
+- `com` (l. 813)
+- `opts` (l. 817)
+- `formHtml` (l. 818)
+- `upd` (l. 821)
+- `updAll` (l. 824)
+- `para` (l. 825)
+- `node` (l. 826)
+- `toc` (l. 847)
+- `render` (l. 849)
+- `needMe` (l. 859)
+- `dl` (l. 877)
+- `base` (l. 878)
+- `capDosDocx` (l. 901) — Document Word du dossier : page de titre (projet, auteur, consignes, mode d'emploi), sommaire, chapitres en styles
+- `capDosUnzip` (l. 1011) — Lit les fichiers d'une archive ZIP (méthodes « stored » et « deflate », décompression native du navigateur).
+- `capDosXmlTexte` (l. 1031) — Décode les entités XML d'un texte. @param {string} s @returns {string}
+- `capDosWText` (l. 1033) — Texte des runs d'un fragment WordprocessingML (paragraphes séparés par un saut de ligne). @param {string} xml @param {string} [tag] - 't' ou
+- `capDosLireDocx` (l. 1044) — Retours d'un document Word commenté : commentaires (rattachés au dernier signet « arc_… » qui les précède) et
+- `capDosLireFichier` (l. 1073) — Lit un fichier de retours : page HTML enregistrée par un relecteur, .json de ses retours, ou .docx commenté.
+- `capDosLirePage` (l. 1082) — @param {string} texte - Code HTML @returns {object|null} données de la page de relecture (sans l'exécuter)
+- `capDosImporter` (l. 1090) — Choisit et importe un ou plusieurs fichiers de retours (page HTML, .json, .docx).
+- `capDosFusion` (l. 1104) — Rattache des retours lus à leur dossier (même identifiant ; sinon dossier recréé depuis la page, ou dossier ouvert
+- `capDosVersRevue` (l. 1131) — Verse les retours non encore traités dans 💬 Revue : un commentaire par retour, cible = élément du bloc
 
 ## 62-liens-couches.js — 249 lignes
 
@@ -1224,7 +1201,7 @@
 - `capXlWire` (l. 195) — Branche les commandes de la sous-vue (après chaque rendu) : recherche, options, exports, nœuds du dessin.
 - `capXlExport` (l. 225) — Exporte le dessin affiché : SVG, PNG, CSV des liens, ou bloc dans le 📑 dossier de relecture ouvert.
 
-## 63-rapports-auto.js — 446 lignes
+## 63-rapports-auto.js — 449 lignes
 
 - `capDosGabarits` (l. 17) — @returns {{k:string, l:string, t:string}[]} plans types proposés (k : clé, l : libellé, t : description)
 - `capDosOutils` (l. 28) — Outils de construction d'un plan : blocs du dossier, éléments du modèle par couche, diagrammes par type.
@@ -1234,44 +1211,42 @@
 - `capDosPlanSts2` (l. 123) — Plan type STS (boîte noire, couche SA), exemple 2 : introduction, présentation du système, exigences techniques.
 - `capDosPlanDcs` (l. 162) — Plan type DCS (boîte blanche, couches LA et PA).
 - `capDosGenerer` (l. 216) — Crée un dossier selon un plan type, rempli à partir du modèle chargé, et l'ouvre.
-- `CAP_RAP_TYPES` (l. 239) — Types d'éléments parcourus par une boucle ou listés par un tableau automatique.
-- `CAP_RAP_FILTRES` (l. 244) — Filtres d'une boucle ou d'un tableau automatique.
-- `CAP_RAP_AUTO` (l. 248) — Contenus automatiques proposés.
-- `capRapOpts` (l. 260) — Options d'une liste déroulante.
-- `capRapCouches` (l. 262) — @returns {{k:string,l:string}[]} couches proposées ('' : toutes)
-- `capRapBoucleHtml` (l. 269) — Réglages d'un chapitre « boucle » (sous son titre, dans l'éditeur du modèle).
-- `capRapAutoHtml` (l. 283) — Réglages d'un bloc « contenu automatique ».
-- `capRapAutoLib` (l. 293) — Libellé d'un bloc « contenu automatique ». @param {object} b @returns {string}
-- `capRapFill` (l. 301) — Remplace {nom}, {type}, {couche} par les valeurs de l'élément de la boucle.
-- `capRapFonctionsDe` (l. 309) — Fonctions allouées à un composant, à ses sous-composants et aux composants déployés sur lui.
-- `capRapSelect` (l. 323) — Éléments parcourus par une boucle (ou listés par un tableau automatique).
-- `capRapLie` (l. 348) — Vrai si un élément est lié à l'élément de la boucle englobante : fonction allouée au composant (ou impliquée dans la
-- `capRapEval` (l. 369) — Évalue les blocs d'un modèle pour un élément de boucle : boucles déroulées, contenus automatiques calculés,
-- `capRapGenerer` (l. 410) — ▶ Génère un rapport à partir d'un modèle personnalisé : nouveau dossier ordinaire, ouvert dans l'éditeur.
-- `capRapNouveau` (l. 418) — ✚ Nouveau modèle de rapport, prérempli d'un exemple de boucles (à adapter). @returns {object} modèle
-- `capRapJson` (l. 432) — Enregistre un modèle de rapport en .json (réutilisable dans un autre projet). @param {object} m
-- `capRapImporter` (l. 437) — Importe un ou plusieurs modèles de rapport (.json). @param {Window} [W] - Fenêtre d'où part la demande
+- `CAP_RAP_TYPES` (l. 240) — Types d'éléments parcourus par une boucle ou listés par un tableau automatique.
+- `CAP_RAP_FILTRES` (l. 245) — Filtres d'une boucle ou d'un tableau automatique.
+- `CAP_RAP_AUTO` (l. 249) — Contenus automatiques proposés.
+- `capRapOpts` (l. 261) — Options d'une liste déroulante.
+- `capRapCouches` (l. 263) — @returns {{k:string,l:string}[]} couches proposées ('' : toutes)
+- `capRapBoucleHtml` (l. 270) — Réglages d'un chapitre « boucle » (sous son titre, dans l'éditeur du modèle).
+- `capRapAutoHtml` (l. 284) — Réglages d'un bloc « contenu automatique ».
+- `capRapAutoLib` (l. 294) — Libellé d'un bloc « contenu automatique ». @param {object} b @returns {string}
+- `capRapFill` (l. 302) — Remplace {nom}, {type}, {couche} par les valeurs de l'élément de la boucle.
+- `capRapFonctionsDe` (l. 310) — Fonctions allouées à un composant, à ses sous-composants et aux composants déployés sur lui.
+- `capRapSelect` (l. 324) — Éléments parcourus par une boucle (ou listés par un tableau automatique).
+- `capRapLie` (l. 349) — Vrai si un élément est lié à l'élément de la boucle englobante : fonction allouée au composant (ou impliquée dans la
+- `capRapEval` (l. 370) — Évalue les blocs d'un modèle pour un élément de boucle : boucles déroulées, contenus automatiques calculés,
+- `capRapGenerer` (l. 411) — ▶ Génère un rapport à partir d'un modèle personnalisé : nouveau dossier ordinaire, ouvert dans l'éditeur.
+- `capRapNouveau` (l. 420) — ✚ Nouveau modèle de rapport, prérempli d'un exemple de boucles (à adapter). @returns {object} modèle
+- `capRapJson` (l. 435) — Enregistre un modèle de rapport en .json (réutilisable dans un autre projet). @param {object} m
+- `capRapImporter` (l. 440) — Importe un ou plusieurs modèles de rapport (.json). @param {Window} [W] - Fenêtre d'où part la demande
 
-## 64-preferences.js — 321 lignes
+## 64-preferences.js — 296 lignes
 
-- `CAP_PREF_MODES` (l. 9) — Libellés et descriptions des modes d'affichage des menus.
-- `capAutoCfg` (l. 20) — Réglage de l'enregistrement automatique (créé à la première lecture, désactivé par défaut).
-- `capAutoSupported` (l. 26) — Vrai si le navigateur permet d'écrire directement dans un fichier (Edge, Chrome). @returns {boolean}
-- `capPrefSetMode` (l. 31) — Change le mode d'affichage des menus (le mode Personnalisé part du mode Simplifié la première fois).
-- `capPrefSetIcons` (l. 41) — Change le style de la barre : icônes et textes, ou icônes seules (nom complet en infobulle).
-- `capPrefMenuHtml` (l. 49) — Contenu du menu ⚙ de la barre : mode des menus, personnalisation, thème, enregistrement automatique, préférences.
-- `capPrefDialog` (l. 69) — Ouvre la fenêtre ⚙ Préférences.
-- `capPrefDialogFill` (l. 81) — Remplit la fenêtre ⚙ Préférences (onglet courant ov._tab) et branche ses commandes.
-- `capPrefCustomFrom` (l. 153) — Réglage personnalisé de départ, recopié d'un mode existant.
-- `capPrefCustomDialog` (l. 163) — Fenêtre 🛠 Personnaliser l'affichage : pour chaque vue, bouton direct / dans son menu / masquée,
-- `capAutoHash` (l. 216) — Empreinte rapide d'un texte (FNV-1a 32 bits) pour savoir si la page a changé.
-- `capAutoPickMain` (l. 225) — Choisit le fichier de la page (« Enregistrer sous ») ; il sert ensuite à 💾 et à l'enregistrement automatique.
-- `capAutoPickBackup` (l. 235) — Choisit le fichier de secours (version précédente de la page).
-- `capAutoBackup` (l. 248) — Copie le contenu actuel du fichier de la page dans le fichier de secours (appelé avant chaque écriture, voir capSaveWrite).
-- `capAutoWritten` (l. 261) — Note un enregistrement réussi (manuel ou automatique) : empreinte de la page écrite, heure.
-- `capAutoTick` (l. 267) — Enregistrement automatique : écrit la page si elle a changé depuis le dernier enregistrement.
-- `capAutoSchedule` (l. 287) — (Re)lance la minuterie de l'enregistrement automatique selon le réglage.
-- `capAutoBanner` (l. 296) — Bandeau sous la barre quand l'enregistrement automatique est activé mais qu'un fichier manque
+- `CAP_PREF_MODES` (l. 9) — Libellés et descriptions des niveaux d'affichage des menus.
+- `capAutoCfg` (l. 19) — Réglage de l'enregistrement automatique (créé à la première lecture, désactivé par défaut).
+- `capAutoSupported` (l. 25) — Vrai si le navigateur permet d'écrire directement dans un fichier (Edge, Chrome). @returns {boolean}
+- `capPrefNamesOpen` (l. 28) — Ouvre ƒ Fonctions › 🩺 Contrôles, réglage des règles de nommage déplié.
+- `capPrefSetIcons` (l. 38) — Change le style de la barre : icônes et textes, ou icônes seules (nom complet en infobulle).
+- `capPrefMenuHtml` (l. 46) — Contenu du menu ⚙ de la barre : niveau des menus, style de la barre, thème, enregistrement automatique, préférences.
+- `capPrefDialog` (l. 66) — Ouvre la fenêtre ⚙ Préférences.
+- `capPrefDialogFill` (l. 78) — Remplit la fenêtre ⚙ Préférences (onglet courant ov._tab) et branche ses commandes.
+- `capAutoHash` (l. 189) — Empreinte rapide d'un texte (FNV-1a 32 bits) pour savoir si la page a changé.
+- `capAutoPickMain` (l. 198) — Choisit le fichier de la page (« Enregistrer sous ») ; il sert ensuite à 💾 et à l'enregistrement automatique.
+- `capAutoPickBackup` (l. 208) — Choisit le fichier de secours (version précédente de la page).
+- `capAutoBackup` (l. 221) — Copie le contenu actuel du fichier de la page dans le fichier de secours (appelé avant chaque écriture, voir capSaveWrite).
+- `capAutoWritten` (l. 234) — Note un enregistrement réussi (manuel ou automatique) : empreinte de la page écrite, heure.
+- `capAutoTick` (l. 240) — Enregistrement automatique : écrit la page si elle a changé depuis le dernier enregistrement.
+- `capAutoSchedule` (l. 260) — (Re)lance la minuterie de l'enregistrement automatique selon le réglage.
+- `capAutoBanner` (l. 269) — Bandeau sous la barre quand l'enregistrement automatique est activé mais qu'un fichier manque
 
 ## 65-dossier-textes.js — 283 lignes
 
@@ -1333,7 +1308,7 @@
 - `capStDetail` (l. 145) — Section « Statut de revue Capella » du panneau de détail ('' si l'élément n'en a pas).
 - `capStDashCatalog` (l. 156) — Indicateurs du tableau de bord : statut de revue Capella.
 
-## 69-sante-modele.js — 186 lignes
+## 69-sante-modele.js — 243 lignes
 
 - `CAP_SANTE_W` (l. 9)
 - `CAP_SANTE_MAX_HIST` (l. 10)
@@ -1350,8 +1325,12 @@
 - `capSanteSpark` (l. 119) — Petite courbe SVG de l'historique des scores. @param {object[]} H - Historique @param {number} [w=140] @param {number} [h=28] @returns {stri
 - `capSanteDate` (l. 126) — Date courte d'une entrée d'historique. @param {string} iso @returns {string}
 - `capSanteCarte` (l. 129) — Carte 💚 Santé du modèle de 🏠 Accueil. @returns {string} HTML
-- `capRenderSante` (l. 147) — Sous-vue 💚 Santé du modèle de 🔬 Analyses : synthèse, contrôle × couche, historique.
-- `capSanteDashCatalog` (l. 173) — Indicateurs du tableau de bord : santé du modèle.
+- `CAP_SANTE_VUES` (l. 145) — Vues qui ont des contrôles comptés par 💚 Santé (clés de capSanteVueCle) : la pastille 🩺 des barres de famille ne s'affiche que pour elles.
+- `capSanteVueCle` (l. 154) — Clé de vue sous laquelle 💚 Santé range les contrôles d'une vue (🧱 LA avec 🧱 SA, 🟨 OA avec ƒ⇆).
+- `capSanteOuvrir` (l. 159) — Ouvre ✅ Vérifier › 💚 Santé & contrôles filtrée sur les contrôles d'une vue (contrôles en défaut).
+- `capSanteAller` (l. 169) — Ouvre la vue d'un contrôle sur son onglet 🩺 Contrôles et déplie la section du contrôle.
+- `capRenderSante` (l. 191) — Sous-vue 💚 Santé du modèle de 🔬 Analyses : synthèse, contrôle × couche, historique.
+- `capSanteDashCatalog` (l. 227) — Indicateurs du tableau de bord : santé du modèle.
 
 ## 70-chaines-controles.js — 83 lignes
 
