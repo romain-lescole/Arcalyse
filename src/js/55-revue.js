@@ -15,7 +15,7 @@
 /** Données de la revue : auteur par défaut, participants, champs proposés, options du calque, commentaires. */
 var _capRev = capRevNorm((()=>{ try{ const el=document.getElementById('cap-review'); return el?JSON.parse(el.textContent):null; }catch(e){ return null; } })());
 /** État de l'interface de la revue (non enregistré). */
-const _capRevUi = { open:false, tab:'list', q:'', st:'notclosed', crit:'', who:'', scope:'all', sort:'num', exp:new Set(), link:'', elId:'', groupe:'status', portee:'list', reponses:true };
+const _capRevUi = { open:false, dock:'rev', tab:'list', q:'', st:'notclosed', crit:'', who:'', scope:'all', sort:'num', exp:new Set(), link:'', elId:'', groupe:'status', portee:'list', reponses:true };
 /** Commentaires modifiés depuis le dernier enregistrement de la page ou le dernier export. */
 const _capRevUnsaved = new Set();
 
@@ -223,12 +223,53 @@ function capRevToggle(open, tab){
   const w=capRevPop();
   if(w){ _capRevUi.open=true; capRevRender(); if(open!==false) w.focus(); else w.close(); return; }
   _capRevUi.open=open==null?!_capRevUi.open:!!open;
+  if(_capRevUi.open) _capRevUi.dock='rev';   // ouvert : passe devant le panneau de détail (onglets)
   const p=capRevPanel();
-  const tb=document.getElementById('toolbar');
-  p.style.top=(tb?Math.round(tb.getBoundingClientRect().bottom):40)+'px';
   p.style.display=_capRevUi.open?'flex':'none';
   document.getElementById('b-review')?.classList.toggle('active',_capRevUi.open);
+  capDockSync();
   capRevRender();
+}
+
+/* ── Panneau ancré à droite, partagé avec le panneau de détail ──────────────
+   Le panneau 💬 Revue n'est plus posé par-dessus la vue : il occupe une colonne à droite (vues Capella :
+   #capella-overlay ; Relation Map : #main), comme le panneau de détail. Quand les deux sont ouverts, un seul
+   est visible à la fois et des onglets 🔎 Propriétés / 💬 Revue permettent de passer de l'un à l'autre. */
+
+/** @returns {HTMLElement|null} panneau de détail du mode affiché (vues Capella ou Relation Map) */
+function capDockDet(){ return document.getElementById(currentMode==='capella'?'cap-detail':'rm-detail'); }
+/** @returns {boolean} panneau de revue ouvert dans la page (pas dans sa fenêtre séparée) */
+function capDockRevOn(){ return !!(_capRevUi.open&&!capRevPop()); }
+/** @returns {boolean} panneau de détail du mode affiché ouvert */
+function capDockDetOn(){ const d=capDockDet(); return !!(d&&d.style.display!=='none'); }
+/**
+ * Onglets 🔎 Propriétés / 💬 Revue affichés en tête des deux panneaux quand ils sont ouverts ensemble.
+ * @param {string} actif - 'det' ou 'rev'
+ * @returns {string} HTML
+ */
+function capDockTabsHtml(actif){
+  const n=_capRev.comments.filter(c=>!capRevClosed(c)).length;
+  const b=(k,l,t)=>`<button class="cap-dock-tab${actif===k?' on':''}" data-dock="${k}" title="${t}">${l}</button>`;
+  return b('det',_L('🔎 Propriétés'),_L('Panneau de détail de l\'élément sélectionné'))+
+    b('rev',_L('💬 Revue')+(n?` <span class="crv-n">${n}</span>`:''),_L('Panneau des commentaires de revue'));
+}
+/**
+ * Affiche l'un des deux panneaux ancrés quand ils sont ouverts ensemble.
+ * @param {string} k - 'det' (🔎 Propriétés) ou 'rev' (💬 Revue)
+ */
+function capDockShow(k){ _capRevUi.dock=k; capDockSync(); if(k==='rev') capRevRender(); }
+/** Place le panneau de revue dans la colonne de droite du mode affiché et règle les onglets partagés avec le panneau de détail. */
+function capDockSync(){
+  try{ if(!_capRevUi.panel) return; }catch(e){ return; }   // appelé par applyMode avant le chargement de ce module
+  const p=_capRevUi.panel, rev=capDockRevOn();
+  if(p&&rev){ const hote=document.getElementById(currentMode==='capella'?'capella-overlay':'main'); if(hote&&p.parentElement!==hote) hote.appendChild(p); }
+  ['cap-detail','rm-detail'].forEach(i=>{ const d=document.getElementById(i); if(d) d.classList.remove('cap-dock-hid'); });
+  const det=capDockDet(), both=rev&&capDockDetOn();
+  if(p) p.classList.toggle('cap-dock-hid', both&&_capRevUi.dock==='det');
+  if(det) det.classList.toggle('cap-dock-hid', both&&_capRevUi.dock==='rev');
+  document.querySelectorAll('#cap-detail>.cap-dock-tabs,#rm-detail>.cap-dock-tabs').forEach(x=>x.remove());
+  if(det&&both){ const t=document.createElement('div'); t.className='cap-dock-tabs'; t.innerHTML=capDockTabsHtml('det'); det.insertBefore(t, det.firstChild); }
+  if(p&&rev&&!!p.querySelector('.crv-hdr>.cap-dock-tabs')!==both) capRevRender();
 }
 /** @returns {HTMLElement} panneau 💬 Revue (créé au premier appel ; il peut se trouver dans la fenêtre séparée) */
 function capRevPanel(){
@@ -269,6 +310,7 @@ function capRevPopOut(){
   const p=capRevPanel(); D.body.appendChild(D.adoptNode(p));
   p.classList.add('crv-pop'); p.style.display='flex';
   _capRevUi.win=w; _capRevUi.open=true;
+  capDockSync();   // le panneau de détail reprend toute la colonne de droite
   w.addEventListener('pagehide',capRevPopBack);
   w.addEventListener('keydown',e=>{ if(e.ctrlKey&&!e.altKey&&(e.key==='s'||e.key==='S')){ e.preventDefault(); capSavePageDirect(e.shiftKey); } });
   document.getElementById('b-review')?.classList.add('active');
@@ -284,6 +326,7 @@ function capRevPopBack(){
   const p=_capRevUi.panel;
   if(p&&p.ownerDocument!==document) document.body.appendChild(document.adoptNode(p));
   if(p){ p.classList.remove('crv-pop'); p.style.display='none'; }
+  capDockSync();
   _capRevUi.win=null; _capRevUi.open=false; _capRevUi.dd=false;
   document.getElementById('b-review')?.classList.remove('active');
 }
@@ -295,7 +338,10 @@ function capRevRender(){
   const tab=(k,l,t)=>`<button class="crv-tab${u.tab===k?' on':''}" data-tab="${k}" title="${t}">${l}</button>`;
   const keep=D.activeElement&&p.contains(D.activeElement)?D.activeElement.id:'';
   const pos=(D.getElementById('crv-body')||{}).scrollTop||0;
-  p.innerHTML=`<div class="crv-hdr"><b>${_L('💬 Revue')}</b><span class="ana-dim">${capEsc(capCurrentFileName||'')}</span><span style="flex:1"></span>`+
+  const both=!pop&&capDockDetOn();
+  p.innerHTML=`<div class="crv-hdr">${both?`<span class="cap-dock-tabs">${capDockTabsHtml('rev')}</span>`:`<b>${_L('💬 Revue')}</b>`}<span class="ana-dim">${capEsc(capCurrentFileName||'')}</span><span style="flex:1"></span>`+
+    `<button class="cap-lf-btn" data-a="pop" title="${pop?_L('Ramener le panneau dans la page'):_L('Ouvrir le panneau dans une fenêtre séparée (par exemple sur un autre écran)')}">${pop?'⧈':'⧉'}</button>`+
+    (pop?'':`<button class="cap-lf-btn" data-a="close" title="${_L('Fermer')}">✕</button>`)+`</div><div class="crv-acts">`+
     `<button class="cap-lf-btn" data-a="new" title="${_L('Nouveau commentaire (sur l\'élément affiché dans le panneau de détail, s\'il y en a un)')}">${_L('✚ Nouveau')}</button>`+
     `<button class="cap-lf-btn" data-a="cible" title="${_L('Page HTML autonome à envoyer aux relecteurs : ils répondent aux commentaires choisis et en ajoutent ; leurs réponses se réimportent ici')}">${_L('📤 Faire relire')}</button>`+
     `<span class="crv-dd-a"><button class="cap-lf-btn${u.dd?' active':''}" data-a="dd" title="${_L('Exporter ou importer les commentaires (.json)')}">${_L('💾 Revue ▾')}${nNon?` <span class="crv-n crv-warn" title="${_L('Commentaires modifiés depuis le dernier enregistrement ou export')}">${nNon}</span>`:''}</button>`+
@@ -307,9 +353,7 @@ function capRevRender(){
       _L(`<div class="crv-dd-h">L'export garde la revue hors de la page, pour la transmettre ou réunir celles de plusieurs relecteurs (l'import ajoute les nouveaux commentaires et garde la version la plus récente des autres).</div>`)+
       (nNon?`<div class="crv-dd-h" style="color:var(--c-warn,#e3b341)">${_L(`${nNon} commentaire(s) modifié(s) depuis le dernier enregistrement ou export.`)}</div>`:'')+`</div>`:'')+`</span>`+
     `<button class="cap-lf-btn" data-a="dossiers" title="${_L('📑 Dossiers de relecture (🏠 Accueil) : document chapitré à faire relire, export HTML ou Word, réimport des retours')}">📑</button>`+
-    `<button class="cap-lf-btn" data-a="tour" title="${_L('Visite guidée du panneau 💬 Revue')}">🎓</button>`+
-    `<button class="cap-lf-btn" data-a="pop" title="${pop?_L('Ramener le panneau dans la page'):_L('Ouvrir le panneau dans une fenêtre séparée (par exemple sur un autre écran)')}">${pop?'⧈':'⧉'}</button>`+
-    (pop?'':`<button class="cap-lf-btn" data-a="close" title="${_L('Fermer')}">✕</button>`)+`</div>`+
+    `<button class="cap-lf-btn" data-a="tour" title="${_L('Visite guidée du panneau 💬 Revue')}">🎓</button></div>`+
     `<div class="crv-tabs">${tab('list',_L(`💬 Commentaires <span class="crv-n">${nOpen}</span>`),_L('Liste des commentaires, filtres et recherche'))}`+
     tab('check',_L(`🔁 Vérifier`)+(nChk?` <span class="crv-n crv-warn">${nChk}</span>`:''),_L('Commentaires dont l\'élément a changé ou disparu depuis le commentaire, ou marqués « Corrigé, à vérifier »'))+
     tab('report',_L('📄 Rapport'),_L('Synthèse, rapport HTML, CSV'))+tab('cfg',_L('⚙ Réglages'),_L('Votre nom, participants, champs proposés, affichage'))+`</div>`+
@@ -410,6 +454,7 @@ function capRevTargetsHtml(c){
 /** Clics du panneau (délégation). @param {MouseEvent} e */
 async function capRevPanelClick(e){
   const t=e.target, u=_capRevUi;
+  const dk=t.closest('[data-dock]'); if(dk){ capDockShow(dk.dataset.dock); return; }
   const tab=t.closest('[data-tab]'); if(tab){ u.tab=tab.dataset.tab; capRevRender(); return; }
   const op=t.closest('[data-open]'); if(op){ capOpenDetailById(op.dataset.open); return; }
   const dg=t.closest('[data-diag]'); if(dg){ const c=capRevGet(t.closest('[data-c]')?.dataset.c); if(c) capRevGoto(c); return; }
@@ -727,6 +772,7 @@ function capRevContext(e){
         (el.attrs.description?note('description',_L('📝 Note sur sa description')):'')
       :`<div class="crv-ctx-t">🔲 ${esc(rep.nom||'')}</div>`+note('',_L('📝 Note de revue ici'));
     if(nd) h+=`<div class="ctx-i" onclick="capRevShowDiag()">${_L(`📄 Notes de ce diagramme (${nd})`)}</div>`;
+    h+=`<div class="ctx-i" onclick="capDgwOuvrir('${esc(uid)}')">${_L('⧉ Afficher dans la fenêtre de comparaison')}</div>`;   // 83
   } else {
     // Dans une chaîne (carte ou graphe) : le commentaire d'une fonction est aussi rattaché à la chaîne
     const chId=capRevChainAt(e.target), ch=chId&&chId!==el.id&&capGetElementById_(chId), plus=ch?`,{id:'${esc(chId)}',field:''}`:'';
@@ -1232,7 +1278,8 @@ function capRevMerge(d){
   document.addEventListener('contextmenu',capRevContext);
   const root=document.getElementById('cap-content');
   if(root) new MutationObserver(()=>{ if(_capRev.mark&&_capRev.comments.length) capRevMarkSchedule(); }).observe(root,{childList:true, subtree:true});
-  window.addEventListener('resize',()=>{ if(_capRevUi.open&&!capRevPop()) capRevToggle(true); });
+  // Onglets 🔎 Propriétés / 💬 Revue posés en tête du panneau de détail
+  document.addEventListener('click',e=>{ const dk=e.target.closest&&e.target.closest('.cap-dock-tabs [data-dock]'); if(dk&&!e.target.closest('#crv-panel')) capDockShow(dk.dataset.dock); });
   window.addEventListener('pagehide',()=>{ const w=capRevPop(); if(w) w.close(); });   // la fenêtre séparée ne vit qu'avec la page
   new MutationObserver(()=>{ const w=capRevPop(); if(w) capRevPopTheme(w); }).observe(document.documentElement,{attributes:true, attributeFilter:['data-theme','data-tone','style']});
   capRevBadge();

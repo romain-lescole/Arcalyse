@@ -266,6 +266,7 @@ function applyMode(mode) {
   if(capOv) { if(isCapella) capOv.classList.add('cap-visible'); else capOv.classList.remove('cap-visible'); }
   // Panneau 🔎 Détail de la Relation Map : masqué dans les vues Capella, rouvert au retour s'il l'était
   const rmDet=document.getElementById('rm-detail'); if(rmDet) rmDet.style.display = (!isCapella && _rmDetailOn) ? 'flex' : 'none';
+  if(typeof capDockSync==='function') capDockSync();   // 💬 Revue ancrée : suit la colonne de droite du mode affiché (55)
   // Hide whole left panel in capella mode
   document.getElementById('panel').style.display = isCapella ? 'none' : '';
   document.getElementById('panel-resize-bar').style.display = isCapella ? 'none' : '';

@@ -573,11 +573,13 @@ function rmDetailOpen(id){
   if (capGetElementById_(id)) { capOpenDetail(id); return; }
   box.innerHTML='<div id="props-body"></div>'; rmPropsRender();
   det.style.display='flex';
+  capDockShow('det');
 }
 /** Ferme le panneau de détail de la Relation Map. */
 function rmDetailClose(){
   _rmDetailOn=false;
   const det=document.getElementById('rm-detail'); if (det) det.style.display='none';
+  capDockSync();
 }
 /** Le panneau de détail suit la sélection (S.propEl) tant qu'il est ouvert, en Relation Map. */
 function rmDetailFollow(){
