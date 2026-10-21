@@ -45,7 +45,7 @@ function capCfgGet(k){
 function capCfgSet(k, v){
   if(v==null) return;
   if(k==='toolbar'){ if(v&&Array.isArray(v.pins)){ _capNav=capNavMigrate(v);   // réglage d'avant la 3.0 converti
-    capNavSave(); capNavRender(); capWatchCfgLoad(); if(typeof capAutoSchedule==='function') capAutoSchedule(); } }
+    capNavSave(); capNavRender(); capWatchCfgLoad(); capDockWidthApply(); if(typeof capAutoSchedule==='function') capAutoSchedule(); } }
   else if(k==='dash'){ capDashStore=v; capDashSave(); const dv=document.getElementById('cap-view-dashboard'); if(dv&&dv.style.display!=='none'&&capLoaded) capRenderDashboard(dv); }
   else if(k==='table'){
     capTableCfgSet(v);

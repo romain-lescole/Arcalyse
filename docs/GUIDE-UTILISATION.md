@@ -930,6 +930,8 @@ Molette : zoom ; glisser : déplacement ; infobulles au survol ; mini-carte.
 
 ![Infos du diagramme](guide/img/60-diag-infos.png)
 
+**⧉ Comparer** (barre de la vue) : ouvre le diagramme affiché dans la **fenêtre de comparaison**, une fenêtre séparée (une seule, réutilisée) à placer par exemple sur un autre écran. Elle a sa propre liste de diagrammes ; molette : zoom, glisser : déplacer, **⤢ Ajuster** ; un clic sur un élément ouvre son détail dans la page. **Clic droit** sur un diagramme de l'explorateur (ou dans le diagramme ouvert) › **⧉ Afficher dans la fenêtre de comparaison** : ce diagramme s'y affiche, celui de la page ne change pas.
+
 ### 10.4 ⬇ Exporter… (planches)
 
 ![Export des diagrammes](guide/img/60-diag-export.png)
@@ -1281,7 +1283,7 @@ Tout est **cliquable** pour naviguer de proche en proche. **×** ferme le pannea
 
 ## 15. 💬 Revue
 
-**💬 Revue & documents › 💬 Commentaires** ouvre le panneau de revue à droite. Le badge du menu compte les commentaires non clos ; **⚠ n** signale des commentaires à vérifier après une mise à jour du modèle.
+**💬 Revue & documents › 💬 Commentaires** ouvre le panneau de revue, **ancré à droite** : la vue se resserre pour lui laisser la place. Si le panneau de détail est ouvert aussi, des onglets **🔎 Propriétés / 💬 Revue** passent de l'un à l'autre ; **⧉** le détache dans une fenêtre séparée, **✕** le ferme. Les deux panneaux ont la même largeur, réglable en glissant leur bord gauche (double-clic : largeur par défaut), enregistrée avec la page. Le badge du menu compte les commentaires non clos ; **⚠ n** signale des commentaires à vérifier après une mise à jour du modèle.
 
 ### 15.1 Commenter un élément
 

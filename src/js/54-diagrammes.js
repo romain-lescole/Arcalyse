@@ -41,7 +41,15 @@ function capIco(id, taille) {
   }
   const k = id + '|' + (taille || 14);
   let s = _capIco.cache.get(k);
-  if (s == null) { try { s = A.icone(id, taille || 14) || ''; } catch (e) { s = ''; } _capIco.cache.set(k, s); }
+  if (s == null) {
+    try { s = A.icone(id, taille || 14) || ''; } catch (e) { s = ''; }
+    if (!s) {   // type sans icône dans la visionneuse : icône de complément (84)
+      const el = capAllElements.length ? capGetElementById_(id) : null;
+      if (!el) return '';   // modèle en cours de chargement : pas de mise en cache
+      s = capIcoPlus(el.typeName, taille);
+    }
+    _capIco.cache.set(k, s);
+  }
   return s;
 }
 /**
@@ -55,7 +63,7 @@ function capIcoType(type, taille) {
   if (!type || !A || typeof A.iconeType !== 'function') return '';
   const k = '@' + type + '|' + (taille || 14);
   let s = _capIco.cache.get(k);
-  if (s == null) { try { s = A.iconeType(type, taille || 14) || ''; } catch (e) { s = ''; } _capIco.cache.set(k, s); }
+  if (s == null) { try { s = A.iconeType(type, taille || 14) || ''; } catch (e) { s = ''; } if (!s) s = capIcoPlus(type, taille); _capIco.cache.set(k, s); }   // 84 : complément
   return s;
 }
 
@@ -67,6 +75,7 @@ function capIcoType(type, taille) {
  * @param {boolean} [attente] - true : le .aird va avec le modèle en cours de chargement (pas d'ouverture de la vue)
  */
 function capDiagLoadAird(f, h, attente) {
+  capDgwFermer();   // ⧉ la fenêtre de comparaison montrait l'ancien .aird (83)
   const r = new FileReader();
   r.onerror = () => capWelcomeStatus(_L(`Impossible de lire « ${f.name} ».`), 'err');
   r.onload = ev => {
@@ -345,7 +354,8 @@ function capDiagBarre() {
   const n = _capDiag.sel.size;
   const exp = _capDiag.airdCharge ? `<span class="tb-grp"><button class="tbtn" id="cdg-export" title="${_L('Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML')}">${_L('⬇ Exporter…')}${n ? ` <span class="cdg-nb">${n}</span>` : ''}</button>` +
     `<button class="tbtn${_capDiag.choix ? ' active' : ''}" id="cdg-choix" title="${_L('Choisir les diagrammes à exporter : cases à cocher dans l\'explorateur')}">${_capDiag.choix ? _L('☑ Terminer la sélection') : _L('☐ Sélectionner…')}</button></span>` : '';
-  const infos = _capDiag.airdCharge ? `<button class="tbtn" id="cdg-infos" title="${_L('Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés')}">${_L('ℹ Infos')}</button>` : '';
+  const infos = _capDiag.airdCharge ? `<button class="tbtn" id="cdg-infos" title="${_L('Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés')}">${_L('ℹ Infos')}</button>` +
+    `<button class="tbtn" id="cdg-comparer" title="${_L('Afficher le diagramme ouvert dans la fenêtre de comparaison (fenêtre séparée, par exemple sur un autre écran) ; clic droit sur un diagramme de la liste pour en choisir un autre')}">${_L('⧉ Comparer')}</button>` : '';
   b.innerHTML = `<span class="tb-grp"><button class="tbtn" id="cdg-ouvrir" title="${_L('Choisir le fichier .aird (le sélecteur s\'ouvre dans le dossier du .capella quand le navigateur le permet)')}">${_L('📂 Ouvrir le .aird…')}</button>` +
     infos + `</span>` + exp +
     `<span id="cdg-info" class="cdg-info">${_capDiag.airdCharge ? capEsc(_capDiag.nomAird) + ' — ' + _L(`${_capDiag.nbReps} diagramme(s)`) :
@@ -587,6 +597,7 @@ function capDiagClic(e) {
   const t = e.target;
   if (t.closest('#cdg-ouvrir')) { capDiagPickAird(); return; }
   if (t.closest('#cdg-export')) { capDiagExportDialog(); return; }
+  if (t.closest('#cdg-comparer')) { capDgwOuvrir(_capDiag.actif); return; }   // ⧉ fenêtre de comparaison (83)
   if (t.closest('#cdg-choix')) { _capDiag.choix = !_capDiag.choix; capDiagBarre(); capDiagListe(); return; }
   const ca = t.closest('[data-carte]');
   if (ca) { _capDiag.carte = ca.dataset.carte; capDiagCarte(); return; }

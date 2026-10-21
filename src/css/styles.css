@@ -333,7 +333,7 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
 #rm-tab-add-dd{min-width:230px}
 
 /* ── Relation Map : panneau de détail à droite (clic droit › 🔎 Détail) ── */
-#rm-detail{width:var(--rm-detail-w,340px);flex-shrink:0;border-left:1px solid var(--c-border);background:var(--c-bg2);
+#rm-detail{width:var(--dock-w,400px);max-width:70vw;flex-shrink:0;border-left:1px solid var(--c-border);background:var(--c-bg2);
            overflow-y:auto;padding:16px;flex-direction:column;position:relative}
 #rm-detail-close{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--c-dim);
                  cursor:pointer;font-size:18px;line-height:1}
@@ -1399,8 +1399,23 @@ pre.cap-desc{font:11px/1.45 Consolas,monospace;white-space:pre-wrap;margin:0;}
 /* ── 💬 Revue : panneau, cartes, éditeur, calque des diagrammes ── */
 #b-review-badge{background:var(--c-accent);color:var(--c-bg);}
 #b-review-badge.crv-warn{background:var(--c-warn,#e3b341);color:#000;}
-#crv-panel{position:fixed;right:0;bottom:0;width:min(460px,100vw);z-index:2500;display:none;flex-direction:column;background:var(--c-bg);border-left:1px solid var(--c-border);box-shadow:-6px 0 22px rgba(0,0,0,.3);color:var(--c-text);}
-.crv-hdr{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--c-border);font-size:14px;}
+#crv-panel{position:relative;width:var(--dock-w,400px);max-width:70vw;flex-shrink:0;min-height:0;display:none;flex-direction:column;background:var(--c-bg);border-left:1px solid var(--c-border);color:var(--c-text);}
+.crv-hdr{display:flex;align-items:center;gap:8px;padding:8px 10px 4px;font-size:14px;}
+.crv-acts{display:flex;flex-wrap:wrap;align-items:center;gap:5px;padding:0 10px 8px;border-bottom:1px solid var(--c-border);}
+.crv-acts .cap-lf-btn,.crv-hdr .cap-lf-btn{margin:0;}
+.crv-hdr>.cap-lf-btn{flex-shrink:0;}
+/* Onglets 🔎 Propriétés / 💬 Revue : panneaux de détail et de revue ouverts ensemble dans la colonne de droite */
+.cap-dock-hid{display:none!important;}
+#cap-detail{width:var(--dock-w,400px)!important;max-width:70vw;}
+/* Bord gauche des panneaux de droite : largeur commune réglable (55, capDockResizeDown) */
+html.cap-dock-res,html.cap-dock-res *,html.cap-dock-drag,html.cap-dock-drag *{cursor:col-resize!important;}
+html.cap-dock-drag{user-select:none;}
+html.cap-dock-res #cap-detail,html.cap-dock-res #rm-detail,html.cap-dock-res #crv-panel,html.cap-dock-drag #cap-detail,html.cap-dock-drag #rm-detail,html.cap-dock-drag #crv-panel{border-left-color:var(--c-accent);}
+.cap-dock-tabs{display:flex;gap:2px;flex-shrink:0;}
+#cap-detail>.cap-dock-tabs,#rm-detail>.cap-dock-tabs{margin:-6px 26px 10px 0;}
+.cap-dock-tab{background:none;border:1px solid transparent;border-radius:6px;padding:4px 9px;font-size:12.5px;color:var(--c-dim);cursor:pointer;}
+.cap-dock-tab:hover{color:var(--c-text);background:var(--c-bg3);}
+.cap-dock-tab.on{background:var(--c-bg3);border-color:var(--c-border);color:var(--c-text);font-weight:600;}
 .crv-hdr .ana-dim{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:160px;}
 .crv-tabs{display:flex;gap:2px;padding:6px 8px 0;border-bottom:1px solid var(--c-border);flex-wrap:wrap;}
 .crv-tab{background:none;border:1px solid transparent;border-bottom:none;border-radius:6px 6px 0 0;padding:5px 9px;font-size:12px;color:var(--c-dim);cursor:pointer;}
@@ -1479,7 +1494,7 @@ html[data-tone="light"] .crv-late{color:#cf222e;}
 .crv-det-c.closed{opacity:.6;}
 .crv-det-c:hover{border-color:var(--c-accent);}
 /* Clic droit */
-#crv-ctx{position:fixed;z-index:3000;display:none;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;min-width:220px;max-width:340px;}
+#crv-ctx,#cdg-ctx{position:fixed;z-index:3000;display:none;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;min-width:220px;max-width:340px;}
 .crv-ctx-t{padding:5px 13px 6px;font-size:11.5px;font-weight:600;border-bottom:1px solid var(--c-border);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 /* Marques des éléments commentés */
 .fex-blk.crv-mk .fex-box{outline:2px dashed var(--c-warn,#e3b341);outline-offset:2px;}
@@ -1537,7 +1552,7 @@ html[data-tone="light"] .crv-late{color:#cf222e;}
 .crv-dd-h{padding:5px 12px;font-size:11px;color:var(--c-dim);line-height:1.45;}
 .crv-dd-h b{color:var(--c-text);}
 body.crv-pop-body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:'Segoe UI',system-ui,sans-serif;overflow:hidden;}
-#crv-panel.crv-pop{position:static;width:auto;height:100vh;border:0;box-shadow:none;}
+#crv-panel.crv-pop{position:static;width:auto;max-width:none;height:100vh;border:0;box-shadow:none;}
 .crv-hdr .cap-lf-btn{white-space:nowrap;}
 #vue-diagramme .cdg-vd-l1 .vd-chercher{flex:0 0 auto;margin-right:6px;}
 .cdg-crv{margin-left:0;}
@@ -1954,3 +1969,14 @@ details.cap-diag.cap-diag-flash{outline:2px solid var(--c-accent);outline-offset
 #cap-flux-tabs .cap-lf-btn[disabled]{opacity:.4;cursor:default;}
 /* 🏠 Accueil / 💬 Revue & documents : nom de l'espace en tête de la barre d'onglets (lot 6) */
 .hm-bar-e{font-weight:700;font-size:13px;color:var(--c-text);white-space:nowrap;}
+/* ⧉ Fenêtre de comparaison des diagrammes (83-fenetre-diagramme.js) */
+body.dgw-body{margin:0;height:100vh;display:flex;flex-direction:column;background:var(--c-bg);color:var(--c-text);font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;overflow:hidden;}
+.dgw-barre{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:6px 10px;border-bottom:1px solid var(--c-border);background:var(--c-bg2);}
+.dgw-barre select{width:auto!important;min-width:280px;max-width:min(560px,60vw);}
+.dgw-pct{display:inline-block;min-width:48px;text-align:center;font-size:12px;color:var(--c-dim);}
+.dgw-aide{font-size:11.5px;color:var(--c-dim);}
+.dgw-zone{flex:1;min-height:0;position:relative;overflow:hidden;background:#fff;cursor:grab;}
+.dgw-zone.dgw-glisse{cursor:grabbing;}
+.dgw-zone .dgw-svg{display:block;width:100%;height:100%;}
+.dgw-zone [data-sem]{cursor:pointer;}
+.dgw-msg{padding:40px;text-align:center;color:#555;}

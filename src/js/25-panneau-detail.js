@@ -120,6 +120,7 @@ function capOpenDetail(id){
   if(typeof capDetTabs==='function') capDetTabs(box);   // 🗂 onglets du panneau (77)
   const det=document.getElementById(inRm?'rm-detail':'cap-detail');
   if(det){ det.style.display='flex'; }
+  if(typeof capDockShow==='function') capDockShow('det');   // devant le panneau 💬 Revue s'il est ouvert (onglets, 55)
 }
 /** Balises gardées dans une description Capella mise en forme (les autres sont remplacées par leur contenu). */
 const CAP_DESC_TAGS=new Set(['P','BR','B','STRONG','I','EM','U','S','STRIKE','DEL','INS','SUB','SUP','SPAN','DIV','UL','OL','LI','TABLE','THEAD','TBODY','TFOOT','TR','TD','TH','CAPTION',
@@ -196,7 +197,7 @@ function capOpenDetailNode(node){
   const el=capAllElements.find(e=>e.id===node.id);
   if(el) capOpenDetail(el.id);
 }
-document.getElementById('cap-detail-close')?.addEventListener('click',()=>{const d=document.getElementById('cap-detail');if(d)d.style.display='none';});
+document.getElementById('cap-detail-close')?.addEventListener('click',()=>{const d=document.getElementById('cap-detail');if(d)d.style.display='none';capDockSync();});
 
 // ── Sub-toolbar wiring ──
 // ── Capella toolbar view buttons (now in main toolbar) ──
