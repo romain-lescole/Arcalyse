@@ -258,6 +258,39 @@ function capDockTabsHtml(actif){
  * @param {string} k - 'det' (🔎 Propriétés) ou 'rev' (💬 Revue)
  */
 function capDockShow(k){ _capRevUi.dock=k; capDockSync(); if(k==='rev') capRevRender(); }
+/** Largeur par défaut de la colonne de droite (panneaux de détail et de revue), en pixels. */
+const CAP_DOCK_W=400;
+/** Applique la largeur commune des panneaux de droite (réglage `_capNav.dockW`, enregistré avec la barre). */
+function capDockWidthApply(){
+  let st=document.getElementById('cap-dock-style');
+  if(!st){ st=document.createElement('style'); st.id='cap-dock-style'; document.head.appendChild(st); }
+  const w=Math.round(+(_capNav&&_capNav.dockW)||CAP_DOCK_W);
+  st.textContent=`:root{--dock-w:${w}px}`;
+}
+/** @returns {HTMLElement|null} panneau de droite visible dont le bord gauche se trouve sous le pointeur (à 5 px près) */
+function capDockEdgeAt(x, y){
+  for(const i of ['cap-detail','rm-detail','crv-panel']){
+    const d=document.getElementById(i); if(!d||!d.offsetParent||d.classList.contains('cap-dock-hid')) continue;
+    const r=d.getBoundingClientRect(); if(r.width&&Math.abs(x-r.left)<=5&&y>=r.top&&y<=r.bottom) return d;
+  }
+  return null;
+}
+/**
+ * Bord gauche des panneaux de droite : glisser pour régler leur largeur commune (double-clic : largeur par défaut).
+ * @param {PointerEvent} e - Appui du pointeur
+ */
+function capDockResizeDown(e){
+  if(e.button!==0) return;
+  const d=capDockEdgeAt(e.clientX, e.clientY); if(!d) return;
+  e.preventDefault(); e.stopPropagation();
+  const H=document.documentElement, droite=d.getBoundingClientRect().right;
+  H.classList.add('cap-dock-drag');
+  const mv=ev=>{ _capNav.dockW=Math.round(Math.min(innerWidth*0.7, Math.max(280, droite-ev.clientX))); capDockWidthApply(); };
+  const fin=()=>{ H.classList.remove('cap-dock-drag'); document.removeEventListener('pointermove',mv); document.removeEventListener('pointerup',fin);
+    capNavSave(); window.dispatchEvent(new Event('resize')); };   // vues qui se recalent sur la largeur (diagrammes…)
+  document.addEventListener('pointermove',mv); document.addEventListener('pointerup',fin);
+}
+
 /** Place le panneau de revue dans la colonne de droite du mode affiché et règle les onglets partagés avec le panneau de détail. */
 function capDockSync(){
   try{ if(!_capRevUi.panel) return; }catch(e){ return; }   // appelé par applyMode avant le chargement de ce module
@@ -1278,6 +1311,12 @@ function capRevMerge(d){
   document.addEventListener('contextmenu',capRevContext);
   const root=document.getElementById('cap-content');
   if(root) new MutationObserver(()=>{ if(_capRev.mark&&_capRev.comments.length) capRevMarkSchedule(); }).observe(root,{childList:true, subtree:true});
+  // Largeur commune des panneaux de droite : bord gauche à glisser (curseur ↔ au survol), double-clic pour revenir à la largeur par défaut
+  capDockWidthApply();
+  document.addEventListener('pointerdown',capDockResizeDown,true);
+  { let f=0; document.addEventListener('pointermove',e=>{ if(f) return; f=requestAnimationFrame(()=>{ f=0; const H=document.documentElement;
+    if(!H.classList.contains('cap-dock-drag')) H.classList.toggle('cap-dock-res', !!capDockEdgeAt(e.clientX, e.clientY)); }); },{passive:true}); }
+  document.addEventListener('dblclick',e=>{ if(capDockEdgeAt(e.clientX, e.clientY)){ delete _capNav.dockW; capDockWidthApply(); capNavSave(); window.dispatchEvent(new Event('resize')); } });
   // Onglets 🔎 Propriétés / 💬 Revue posés en tête du panneau de détail
   document.addEventListener('click',e=>{ const dk=e.target.closest&&e.target.closest('.cap-dock-tabs [data-dock]'); if(dk&&!e.target.closest('#crv-panel')) capDockShow(dk.dataset.dock); });
   window.addEventListener('pagehide',()=>{ const w=capRevPop(); if(w) w.close(); });   // la fenêtre séparée ne vit qu'avec la page

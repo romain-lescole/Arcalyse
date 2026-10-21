@@ -1283,7 +1283,7 @@ Tout est **cliquable** pour naviguer de proche en proche. **×** ferme le pannea
 
 ## 15. 💬 Revue
 
-**💬 Revue & documents › 💬 Commentaires** ouvre le panneau de revue, **ancré à droite** : la vue se resserre pour lui laisser la place. Si le panneau de détail est ouvert aussi, des onglets **🔎 Propriétés / 💬 Revue** passent de l'un à l'autre ; **⧉** le détache dans une fenêtre séparée, **✕** le ferme. Le badge du menu compte les commentaires non clos ; **⚠ n** signale des commentaires à vérifier après une mise à jour du modèle.
+**💬 Revue & documents › 💬 Commentaires** ouvre le panneau de revue, **ancré à droite** : la vue se resserre pour lui laisser la place. Si le panneau de détail est ouvert aussi, des onglets **🔎 Propriétés / 💬 Revue** passent de l'un à l'autre ; **⧉** le détache dans une fenêtre séparée, **✕** le ferme. Les deux panneaux ont la même largeur, réglable en glissant leur bord gauche (double-clic : largeur par défaut), enregistrée avec la page. Le badge du menu compte les commentaires non clos ; **⚠ n** signale des commentaires à vérifier après une mise à jour du modèle.
 
 ### 15.1 Commenter un élément
 
