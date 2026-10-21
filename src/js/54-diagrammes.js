@@ -41,7 +41,15 @@ function capIco(id, taille) {
   }
   const k = id + '|' + (taille || 14);
   let s = _capIco.cache.get(k);
-  if (s == null) { try { s = A.icone(id, taille || 14) || ''; } catch (e) { s = ''; } _capIco.cache.set(k, s); }
+  if (s == null) {
+    try { s = A.icone(id, taille || 14) || ''; } catch (e) { s = ''; }
+    if (!s) {   // type sans icône dans la visionneuse : icône de complément (84)
+      const el = capAllElements.length ? capGetElementById_(id) : null;
+      if (!el) return '';   // modèle en cours de chargement : pas de mise en cache
+      s = capIcoPlus(el.typeName, taille);
+    }
+    _capIco.cache.set(k, s);
+  }
   return s;
 }
 /**
@@ -55,7 +63,7 @@ function capIcoType(type, taille) {
   if (!type || !A || typeof A.iconeType !== 'function') return '';
   const k = '@' + type + '|' + (taille || 14);
   let s = _capIco.cache.get(k);
-  if (s == null) { try { s = A.iconeType(type, taille || 14) || ''; } catch (e) { s = ''; } _capIco.cache.set(k, s); }
+  if (s == null) { try { s = A.iconeType(type, taille || 14) || ''; } catch (e) { s = ''; } if (!s) s = capIcoPlus(type, taille); _capIco.cache.set(k, s); }   // 84 : complément
   return s;
 }
 

@@ -812,64 +812,64 @@
 - `capCsvxBuild` (l. 85) — Construit l'en-tête et les lignes finales d'un export selon les choix enregistrés.
 - `capCsvExport` (l. 102) — Export CSV enrichi : ouvre la fenêtre « Colonnes de l'export » puis télécharge le fichier.
 
-## 54-diagrammes.js — 1149 lignes
+## 54-diagrammes.js — 1157 lignes
 
 - `CAP_DIAG_COUCHES` (l. 19) — Ordre des couches ARCADIA dans la liste et les exports.
 - `capDiagDispo` (l. 22) — @returns {boolean} vrai si la visionneuse d'Arcature est embarquée dans la page
 - `capIco` (l. 35) — Icône d'un élément du modèle, comme dans Capella (variante selon acteur, humain, nature, genre de fonction…),
-- `capIcoType` (l. 53) — Icône d'un type d'élément (sans variante), sans modèle chargé.
-- `capDiagLoadAird` (l. 69) — Charge un fichier .aird (diagrammes du projet). Sans modèle chargé (ou s'il accompagne un .capella en cours
-- `capDiagSetAird` (l. 95) — Mémorise le texte d'un .aird (les diagrammes seront relus par la visionneuse à la prochaine synchronisation).
-- `capDiagAvantNouveauModele` (l. 106) — Un autre modèle remplace le modèle affiché : les diagrammes de l'ancien modèle (.aird) ne lui correspondent pas,
-- `capDiagApresMaj` (l. 120) — Après une 🔄 mise à jour du modèle (même projet, nouvelle version du .capella) : les diagrammes chargés viennent
-- `capDiagRefsManquantes` (l. 147) — Nombre d'éléments du modèle montrés par le .aird chargé (références « fichier#id ») qui n'existent plus dans le modèle affiché.
-- `capDiagMajDialogue` (l. 161) — Fenêtre affichée après une 🔄 mise à jour du modèle quand les diagrammes (.aird) peuvent ne plus correspondre :
-- `capDiagPickAird` (l. 189) — 📂 Ouvrir le .aird : sélecteur à accès direct ouvert dans le dossier du .capella (Edge/Chrome,
-- `capOpenProjectFolder` (l. 208) — 📁 Dossier du projet (écran d'accueil) : charge ensemble le modèle .capella et ses diagrammes .aird.
-- `capProjectScanDir` (l. 223) — Lit un dossier du projet (sélecteur ou dossier déposé) sur 2 niveaux et charge le modèle et ses diagrammes.
-- `capProjectFromFiles` (l. 241) — Charge un projet à partir des fichiers d'un dossier : le .capella (choisi dans l'écran d'accueil s'il y en a plusieurs)
-- `capDiagMsg` (l. 269) — Affiche un message bref dans la barre de la vue. @param {string} t - Texte
-- `capDiagEnsure` (l. 272) — Crée la vue (une fois) : barre (ouvrir, export, sélection), liste classée à gauche, hôte de la visionneuse.
-- `capDiagSplit` (l. 303) — Séparateur entre l'explorateur et le diagramme : glisser pour régler la largeur de l'explorateur.
-- `capDiagCarte` (l. 320) — ▣ Carte (mini-carte de la visionneuse) : sous l'explorateur (repliable) ou dans le diagramme, comme dans la visionneuse.
-- `capDiagBarre` (l. 344) — Barre du haut : 📂 Ouvrir le .aird…, ⬇ Exporter…, ☐ Sélectionner…, fichier chargé.
-- `capDiagFit` (l. 359) — Ajuste la hauteur de la vue à la fenêtre.
-- `capDiagSync` (l. 367) — Transmet à la visionneuse le modèle courant (texte XML) et le .aird en attente, si besoin.
-- `capDiagBarreVd` (l. 393) — Réorganise la barre de la visionneuse au-dessus du diagramme, pour qu'elle ne bouge plus d'un diagramme à l'autre :
-- `capDiagRevSlot` (l. 421) — Remplit l'emplacement de la revue (📝 Note de revue, 💬 Calque) à côté de la recherche du diagramme.
-- `capDiagChainesFiltre` (l. 430) — Liste « Chaînes et chemins » : ne garde que les chaînes fonctionnelles et chemins physiques dessinés dans
-- `capRenderDiagrams` (l. 441) — Rendu de la vue 🔲 Diagrammes Capella.
-- `capDiagReps` (l. 455) — @returns {object[]} représentations du .aird chargé ({uid, nom, type, sigle, genre, couche})
-- `capDiagCouche` (l. 458) — Libellé et couleur d'une couche ARCADIA. @param {string} c - OA, SA, LA, PA, EPBS… @returns {{label:string,color:string,bg:string}}
-- `capDiagRang` (l. 461) — Rang d'une couche pour le tri. @param {string} c - Couche @returns {number}
-- `capDiagIcones` (l. 464) — Icône de chaque diagramme, reprise de la liste (masquée) de la visionneuse. @returns {Map<string,string>} uid → SVG
-- `capDiagFiltrees` (l. 473) — Représentations filtrées par la recherche (nom, type, sigle, couche). @returns {object[]}
-- `capDiagGroupes` (l. 484) — Regroupe les représentations selon le classement choisi.
-- `capDiagOuvert` (l. 519) — Un groupe est-il ouvert ? Couches ouvertes, types repliés par défaut ; tout est ouvert pendant une recherche.
-- `capDiagListe` (l. 526) — Rend la liste classée (panneau gauche).
-- `capDiagMarquerActif` (l. 572) — Met en évidence le diagramme ouvert dans la liste.
-- `capDiagRepsGroupe` (l. 581) — Représentations d'un groupe de la liste (selon la clé).
-- `capDiagClic` (l. 588) — Clics de la vue : barre (ouvrir, export, sélection), carte, groupes repliables, diagrammes. @param {MouseEvent} e
-- `capDiagChange` (l. 616) — Cases à cocher (diagramme, groupe, tout) et choix du classement. @param {Event} e
-- `capDiagOpen` (l. 631) — Ouvre un diagramme dans la vue 🔲 Diagrammes Capella et y met un élément en évidence.
-- `capDiagInfo` (l. 642) — Panneau de détail d'un diagramme (comme pour un élément du modèle) : type, couche, sigle, nature, identifiant,
-- `capDiagDetail` (l. 680) — Section « Diagrammes » du panneau de détail : représentations de l'élément et diagrammes où il est dessiné.
-- `capDiagSvg` (l. 698) — SVG autonome d'un diagramme, tel que l'exporte la visionneuse (menu ⬇ Exporter › SVG) :
-- `capDiagPlanche` (l. 730) — Planche d'un diagramme : cadre, en-tête (couche, sigle, nom, type), diagramme centré, cartouche technique
-- `capDiagTexte` (l. 809) — Texte brut d'une description Capella (attribut XML contenant du HTML).
-- `capDiagMeta` (l. 821) — Description et élément représenté d'un diagramme, lus dans le .aird (DRepresentationDescriptor : documentation, target).
-- `capDiagElements` (l. 841) — Annexe d'un diagramme : éléments du modèle représentés (attributs data-sem du SVG), triés par couche, type et nom.
-- `capDiagAnnexeCsv` (l. 854) — Annexe au format CSV (séparateur ;, BOM) : en-tête du diagramme, description, puis éléments représentés.
-- `CAP_DIAG_ANX` (l. 861) — Lignes d'annexe par page PDF.
-- `capDiagAnnexePages` (l. 870) — Pages d'annexe du PDF (A4 paysage) : tableau des éléments représentés.
-- `capDiagCibles` (l. 906) — Diagrammes visés par l'export, dans l'ordre de la liste (couche, type, nom).
-- `capDiagExportDialog` (l. 913) — Fenêtre « Exporter des diagrammes » : portée, mise en page, aperçu de la planche, formats.
-- `capDiagApercu` (l. 958) — Aperçu de la planche du premier diagramme visé (diagramme ouvert s'il en fait partie).
-- `capDiagPdfSommaire` (l. 977) — Page de sommaire du PDF (paysage A4) : projet, date, nombre de planches, liste par couche et type avec numéros de page.
-- `CAP_DIAG_PDF_ALERTE` (l. 1019) — Seuil (Mo) au-delà duquel l'export PDF demande confirmation.
-- `capDiagPdfEstimation` (l. 1029) — Taille estimée du PDF, d'après la surface des planches rastérisées (même bornes que capSvgToCanvas)
-- `capDiagExport` (l. 1043) — Export groupé des diagrammes en planches : capture de tous les diagrammes, puis pagination
-- `capDiagExportHtml` (l. 1114) — Rapport HTML autonome : onglet Sommaire (tableau avec liens) et onglet Planches
+- `capIcoType` (l. 61) — Icône d'un type d'élément (sans variante), sans modèle chargé.
+- `capDiagLoadAird` (l. 77) — Charge un fichier .aird (diagrammes du projet). Sans modèle chargé (ou s'il accompagne un .capella en cours
+- `capDiagSetAird` (l. 103) — Mémorise le texte d'un .aird (les diagrammes seront relus par la visionneuse à la prochaine synchronisation).
+- `capDiagAvantNouveauModele` (l. 114) — Un autre modèle remplace le modèle affiché : les diagrammes de l'ancien modèle (.aird) ne lui correspondent pas,
+- `capDiagApresMaj` (l. 128) — Après une 🔄 mise à jour du modèle (même projet, nouvelle version du .capella) : les diagrammes chargés viennent
+- `capDiagRefsManquantes` (l. 155) — Nombre d'éléments du modèle montrés par le .aird chargé (références « fichier#id ») qui n'existent plus dans le modèle affiché.
+- `capDiagMajDialogue` (l. 169) — Fenêtre affichée après une 🔄 mise à jour du modèle quand les diagrammes (.aird) peuvent ne plus correspondre :
+- `capDiagPickAird` (l. 197) — 📂 Ouvrir le .aird : sélecteur à accès direct ouvert dans le dossier du .capella (Edge/Chrome,
+- `capOpenProjectFolder` (l. 216) — 📁 Dossier du projet (écran d'accueil) : charge ensemble le modèle .capella et ses diagrammes .aird.
+- `capProjectScanDir` (l. 231) — Lit un dossier du projet (sélecteur ou dossier déposé) sur 2 niveaux et charge le modèle et ses diagrammes.
+- `capProjectFromFiles` (l. 249) — Charge un projet à partir des fichiers d'un dossier : le .capella (choisi dans l'écran d'accueil s'il y en a plusieurs)
+- `capDiagMsg` (l. 277) — Affiche un message bref dans la barre de la vue. @param {string} t - Texte
+- `capDiagEnsure` (l. 280) — Crée la vue (une fois) : barre (ouvrir, export, sélection), liste classée à gauche, hôte de la visionneuse.
+- `capDiagSplit` (l. 311) — Séparateur entre l'explorateur et le diagramme : glisser pour régler la largeur de l'explorateur.
+- `capDiagCarte` (l. 328) — ▣ Carte (mini-carte de la visionneuse) : sous l'explorateur (repliable) ou dans le diagramme, comme dans la visionneuse.
+- `capDiagBarre` (l. 352) — Barre du haut : 📂 Ouvrir le .aird…, ⬇ Exporter…, ☐ Sélectionner…, fichier chargé.
+- `capDiagFit` (l. 367) — Ajuste la hauteur de la vue à la fenêtre.
+- `capDiagSync` (l. 375) — Transmet à la visionneuse le modèle courant (texte XML) et le .aird en attente, si besoin.
+- `capDiagBarreVd` (l. 401) — Réorganise la barre de la visionneuse au-dessus du diagramme, pour qu'elle ne bouge plus d'un diagramme à l'autre :
+- `capDiagRevSlot` (l. 429) — Remplit l'emplacement de la revue (📝 Note de revue, 💬 Calque) à côté de la recherche du diagramme.
+- `capDiagChainesFiltre` (l. 438) — Liste « Chaînes et chemins » : ne garde que les chaînes fonctionnelles et chemins physiques dessinés dans
+- `capRenderDiagrams` (l. 449) — Rendu de la vue 🔲 Diagrammes Capella.
+- `capDiagReps` (l. 463) — @returns {object[]} représentations du .aird chargé ({uid, nom, type, sigle, genre, couche})
+- `capDiagCouche` (l. 466) — Libellé et couleur d'une couche ARCADIA. @param {string} c - OA, SA, LA, PA, EPBS… @returns {{label:string,color:string,bg:string}}
+- `capDiagRang` (l. 469) — Rang d'une couche pour le tri. @param {string} c - Couche @returns {number}
+- `capDiagIcones` (l. 472) — Icône de chaque diagramme, reprise de la liste (masquée) de la visionneuse. @returns {Map<string,string>} uid → SVG
+- `capDiagFiltrees` (l. 481) — Représentations filtrées par la recherche (nom, type, sigle, couche). @returns {object[]}
+- `capDiagGroupes` (l. 492) — Regroupe les représentations selon le classement choisi.
+- `capDiagOuvert` (l. 527) — Un groupe est-il ouvert ? Couches ouvertes, types repliés par défaut ; tout est ouvert pendant une recherche.
+- `capDiagListe` (l. 534) — Rend la liste classée (panneau gauche).
+- `capDiagMarquerActif` (l. 580) — Met en évidence le diagramme ouvert dans la liste.
+- `capDiagRepsGroupe` (l. 589) — Représentations d'un groupe de la liste (selon la clé).
+- `capDiagClic` (l. 596) — Clics de la vue : barre (ouvrir, export, sélection), carte, groupes repliables, diagrammes. @param {MouseEvent} e
+- `capDiagChange` (l. 624) — Cases à cocher (diagramme, groupe, tout) et choix du classement. @param {Event} e
+- `capDiagOpen` (l. 639) — Ouvre un diagramme dans la vue 🔲 Diagrammes Capella et y met un élément en évidence.
+- `capDiagInfo` (l. 650) — Panneau de détail d'un diagramme (comme pour un élément du modèle) : type, couche, sigle, nature, identifiant,
+- `capDiagDetail` (l. 688) — Section « Diagrammes » du panneau de détail : représentations de l'élément et diagrammes où il est dessiné.
+- `capDiagSvg` (l. 706) — SVG autonome d'un diagramme, tel que l'exporte la visionneuse (menu ⬇ Exporter › SVG) :
+- `capDiagPlanche` (l. 738) — Planche d'un diagramme : cadre, en-tête (couche, sigle, nom, type), diagramme centré, cartouche technique
+- `capDiagTexte` (l. 817) — Texte brut d'une description Capella (attribut XML contenant du HTML).
+- `capDiagMeta` (l. 829) — Description et élément représenté d'un diagramme, lus dans le .aird (DRepresentationDescriptor : documentation, target).
+- `capDiagElements` (l. 849) — Annexe d'un diagramme : éléments du modèle représentés (attributs data-sem du SVG), triés par couche, type et nom.
+- `capDiagAnnexeCsv` (l. 862) — Annexe au format CSV (séparateur ;, BOM) : en-tête du diagramme, description, puis éléments représentés.
+- `CAP_DIAG_ANX` (l. 869) — Lignes d'annexe par page PDF.
+- `capDiagAnnexePages` (l. 878) — Pages d'annexe du PDF (A4 paysage) : tableau des éléments représentés.
+- `capDiagCibles` (l. 914) — Diagrammes visés par l'export, dans l'ordre de la liste (couche, type, nom).
+- `capDiagExportDialog` (l. 921) — Fenêtre « Exporter des diagrammes » : portée, mise en page, aperçu de la planche, formats.
+- `capDiagApercu` (l. 966) — Aperçu de la planche du premier diagramme visé (diagramme ouvert s'il en fait partie).
+- `capDiagPdfSommaire` (l. 985) — Page de sommaire du PDF (paysage A4) : projet, date, nombre de planches, liste par couche et type avec numéros de page.
+- `CAP_DIAG_PDF_ALERTE` (l. 1027) — Seuil (Mo) au-delà duquel l'export PDF demande confirmation.
+- `capDiagPdfEstimation` (l. 1037) — Taille estimée du PDF, d'après la surface des planches rastérisées (même bornes que capSvgToCanvas)
+- `capDiagExport` (l. 1051) — Export groupé des diagrammes en planches : capture de tous les diagrammes, puis pagination
+- `capDiagExportHtml` (l. 1122) — Rapport HTML autonome : onglet Sommaire (tableau avec liens) et onglet Planches
 
 ## 55-revue.js — 1326 lignes
 
@@ -1520,3 +1520,8 @@
 - `capDgwZoom` (l. 127) — Zoom autour d'un point de la fenêtre (centre de la zone par défaut).
 - `capDgwPct` (l. 138) — Met à jour le pourcentage de zoom affiché (100 % = diagramme entier dans la fenêtre). @param {Window} w
 - `capDgwContexte` (l. 144) — Clic droit sur un diagramme de l'explorateur de 🔲 Diagrammes Capella : ouvrir ici, dans la fenêtre de comparaison, ses informations.
+
+## 84-icones-complements.js — 87 lignes
+
+- `capIcoPlusTable` (l. 15) — Corps SVG (viewBox 0 0 16 16) des icônes de complément, par type court. Construit au premier appel.
+- `capIcoPlus` (l. 80) — Icône de complément d'un type (dessinée ici) ou, à défaut, icône générique à ses initiales.
