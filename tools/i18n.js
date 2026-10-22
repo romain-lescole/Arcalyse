@@ -133,7 +133,7 @@ function patternOf(a) {
  * une seule des deux branches étant évaluée.
  * Renvoie { code, missing:[{key, line, file}], count }. Les _L imbriqués dans un gabarit sont traduits aussi.
  */
-function translateCode(code, dict, file, multi) {
+function translateCode(code, dict, file, multi, quotes = ['“', '”']) {
   const calls = lCalls(parse(code)).sort((a, b) => a.start - b.start);
   const missing = [];
   let count = 0;
@@ -151,7 +151,7 @@ function translateCode(code, dict, file, multi) {
   function literal(a) {
     count++;
     const r = translatePattern(patternOf(a), dict);
-    r.text = r.text.replace(/«(\s|&nbsp;)?/g, '“').replace(/(\s|&nbsp;)?»/g, '”');   // guillemets restés hors traduction
+    r.text = r.text.replace(/«(\s|&nbsp;)?/g, quotes[0]).replace(/(\s|&nbsp;)?»/g, quotes[1]);   // guillemets restés hors traduction (anglais “ ”, allemand „ “)
     r.missing.forEach(k => missing.push({ key: k, line: a.loc.start.line, file }));
     if (a.type === 'Literal') { const t = r.text.replace(/\u0001/g, '{'); if (t === a.value) return code.slice(a.start, a.end);
       return multi ? `(CAP_LANG==='en'?${jsString(t)}:${code.slice(a.start, a.end)})` : jsString(t); }

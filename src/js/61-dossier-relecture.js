@@ -758,7 +758,7 @@ function capDosPage(data){
   const json=o=>JSON.stringify(o).replace(/</g,'\\u003c');
   const d=JSON.parse(JSON.stringify(data));
   (function b64(l){ l.forEach(n=>{ if(n.k==='diag'&&n.svg){ n.svg64=capDosB64(n.svg); delete n.svg; } if(n.enfants) b64(n.enfants); }); })(d.contenu);
-  return `<!DOCTYPE html><html lang="${CAP_LANG==='en'?'en':'fr'}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${capEsc(d.titre)}</title><style>
+  return `<!DOCTYPE html><html lang="${CAP_LANG}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${capEsc(d.titre)}</title><style>
 *{box-sizing:border-box}body{margin:0;font:14px/1.5 'Segoe UI',Arial,sans-serif;color:#1f2328;background:#f6f8fa}
 #bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 16px;background:#fff;border-bottom:1px solid #d0d7de;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 #bar input{padding:4px 8px;border:1px solid #d0d7de;border-radius:6px;font:inherit;width:200px}#bar .sp{flex:1}#cnt{color:#57606a;font-size:12.5px}
@@ -967,7 +967,7 @@ async function capDosDocx(data, st){
   const doc=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document ${NS}><w:body>${corps}<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="567" w:footer="567" w:gutter="0"/></w:sectPr></w:body></w:document>`;
   const sty=(id, nom, ppr, rpr, extra)=>`<w:style w:type="paragraph" w:styleId="${id}"><w:name w:val="${nom}"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/>${extra||''}<w:pPr>${ppr}</w:pPr><w:rPr>${rpr}</w:rPr></w:style>`;
   const styles=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">`+
-    `<w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:eastAsia="Calibri" w:cs="Calibri"/><w:sz w:val="22"/><w:lang w:val="${CAP_LANG==='en'?'en-GB':'fr-FR'}"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="120" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>`+
+    `<w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:eastAsia="Calibri" w:cs="Calibri"/><w:sz w:val="22"/><w:lang w:val="${{en:'en-GB',de:'de-DE'}[CAP_LANG]||'fr-FR'}"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="120" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>`+
     `<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style>`+
     sty('Title','Title','<w:spacing w:after="200"/>','<w:b/><w:color w:val="1F2328"/><w:sz w:val="44"/>')+
     [1,2,3,4].map(i=>sty('Heading'+i,'heading '+i,`<w:keepNext/><w:spacing w:before="${[360,280,220,180][i-1]}" w:after="100"/><w:outlineLvl w:val="${i-1}"/>`,`<w:b/><w:color w:val="${i===1?'1F4E79':'24292F'}"/><w:sz w:val="${[34,28,25,23][i-1]}"/>`)).join('')+

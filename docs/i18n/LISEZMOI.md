@@ -8,7 +8,12 @@ node build.js --lang en --livraison   # → livraison/arcalyse-en.html (sur dema
 node tests/smoke.js --en              # test navigateur de la version anglaise
 node build.js --lang multi            # → dist/arcalyse-multi.html : français + anglais dans un seul fichier, bascule 🌐
 node tests/smoke.js --multi [--fr]    # test navigateur de la version multilingue (anglais par défaut)
+node build.js --lang de               # → dist/arcalyse-de.html (+ dist/arcalyse-de-manquants.txt)
+node build.js --lang de --livraison   # → livraison/arcalyse-de.html (sur demande explicite uniquement)
+node tests/smoke.js --de              # test navigateur de la version allemande
 ```
+
+**Version allemande** (`--lang de`) : même mécanisme que l'anglais, avec `src/i18n/de-dictionnaire.json` (mêmes clés françaises, mêmes parties `code` / `interface` / `types`) et l'aide `src/html/aide.de.html` (même découpage ligne pour ligne que `aide.en.html`) ; `CAP_LANG` vaut `'de'`, dates en `'de-DE'`, guillemets « » restés hors traduction → „ “. La visionneuse de diagrammes d'Arcature reste en anglais (pas de version allemande). Elle ne fait pas partie de la version multilingue (FR + EN). Tout texte ajouté au dictionnaire anglais s'ajoute aussi au dictionnaire allemand (`node build.js --lang de` liste les manquants).
 
 **Version multilingue** (`--lang multi`) : chaque `_L` devient `(CAP_LANG==='en'?anglais:français)` ; l'interface et l'aide des deux langues sont dans deux `<template>`, et un petit script (`cap-lang-boot`) insère celle de la langue choisie avant le script principal : `?lang=fr|en` dans l'adresse, sinon langue de la page enregistrée, sinon langue du navigateur. Le bouton 🌐 (barre et écran d'accueil, ajouté par le build) recharge la page dans l'autre langue en transmettant le modèle chargé par `window.name` (rechargé par `cap-lang-restore`).
 
@@ -17,6 +22,8 @@ node tests/smoke.js --multi [--fr]    # test navigateur de la version multilingu
 | Fichier | Rôle |
 |---|---|
 | `src/i18n/en-dictionnaire.json` | Dictionnaire **français → anglais** utilisé par le build : `code` (textes du JS, clé = texte français exact, `${…}` notés `{0}`, `{1}`…), `interface` (textes et infobulles de `interface.html`, complétés par `code`), `types` (descriptions des types Capella, clé = nom du type). Trié par clé. |
+| `src/i18n/de-dictionnaire.json` | Dictionnaire **français → allemand** (`node build.js --lang de`), même structure que le dictionnaire anglais. Termes Capella / ARCADIA gardés en anglais, comme dans Capella. |
+| `src/html/aide.de.html` | Aide en allemand (version allemande). **À mettre à jour avec les deux autres aides.** |
 | `src/html/aide.en.html` | Aide en anglais, utilisée à la place de `src/html/aide.html` par le build anglais. **À mettre à jour en même temps que l'aide française.** |
 | `tools/i18n.js` | Bibliothèque commune : `translateCode` (remplacement des `_L` d'un module), `translatePattern` (recherche d'une traduction), `visible`. |
 | `tools/i18n-envelopper.js` | Enveloppe automatiquement par `_L` les libellés d'un ou plusieurs modules (première passe ; liste les textes écartés car techniques). |

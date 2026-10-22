@@ -12,6 +12,10 @@
  *                                   textes de interface.html (« interface », puis « code »), aide src/html/aide.en.html,
  *                                   descriptions des types (« types ») ; textes sans traduction listés dans
  *                                   dist/arcalyse-en-manquants.txt (ils restent en français). Voir docs/i18n/LISEZMOI.md.
+ *   node build.js --lang de       → version allemande dist/arcalyse-de.html (avec --livraison : livraison/arcalyse-de.html) :
+ *                                   même principe, dictionnaire src/i18n/de-dictionnaire.json, aide src/html/aide.de.html,
+ *                                   textes manquants dans dist/arcalyse-de-manquants.txt ; visionneuse de diagrammes en anglais
+ *                                   (Arcature n'a pas de version allemande).
  *   node build.js --lang multi    → version multilingue dist/arcalyse-multi.html : les deux langues dans un seul fichier,
  *                                   chaque _L devient (CAP_LANG==='en'?anglais:français), interface et aide dans deux
  *                                   <template> ; langue choisie au chargement (?lang=fr|en, langue de la page enregistrée,
@@ -35,22 +39,25 @@ const markers = !livraison && !args.includes('--no-markers');
 const outArg = args.indexOf('--out');
 const langArg = args.indexOf('--lang');
 const LANG = langArg >= 0 ? String(args[langArg + 1] || '').toLowerCase() : 'fr';
-if (!['fr', 'en', 'multi'].includes(LANG)) { console.error(`✖ Langue inconnue : ${LANG} (fr, en ou multi)`); process.exit(1); }
+if (!['fr', 'en', 'de', 'multi'].includes(LANG)) { console.error(`✖ Langue inconnue : ${LANG} (fr, en, de ou multi)`); process.exit(1); }
 const OUT = livraison ? path.join(ROOT, 'livraison', `arcalyse-${LANG}.html`)
   : outArg >= 0 ? path.resolve(args[outArg + 1]) : path.join(ROOT, 'dist', `arcalyse-${LANG}.html`);
-const EN = LANG === 'en', MULTI = LANG === 'multi', TR = EN || MULTI;   // TR : une traduction est nécessaire
+const EN = LANG === 'en' || LANG === 'de', MULTI = LANG === 'multi', TR = EN || MULTI;   // EN : version dans une seule autre langue (anglais ou allemand) ; TR : une traduction est nécessaire
+const DL = MULTI ? 'en' : LANG;                                       // langue du dictionnaire et de l'aide
+const LOCALE = { en: 'en-GB', de: 'de-DE' }[DL], QUOTES = DL === 'de' ? ['„', '“'] : ['“', '”'];
+const LANG_NOM = { en: 'anglaise', de: 'allemande' }[DL];
 const i18n = TR ? require('./tools/i18n.js') : null;
-const DICT = TR ? JSON.parse(fs.readFileSync(path.join(SRC, 'i18n', 'en-dictionnaire.json'), 'utf8')) : null;
-const missing = [];   // {file, line, key} : textes sans traduction (version anglaise)
+const DICT = TR ? JSON.parse(fs.readFileSync(path.join(SRC, 'i18n', `${DL}-dictionnaire.json`), 'utf8')) : null;
+const missing = [];   // {file, line, key} : textes sans traduction (version anglaise ou allemande)
 
-/** Version anglaise d'un fichier inclus (rel = chemin relatif à src/). */
+/** Version traduite (anglaise ou allemande) d'un fichier inclus (rel = chemin relatif à src/). */
 function translate(rel, txt) {
   if (rel.startsWith('js/')) {
-    const r = i18n.translateCode(txt, DICT.code, 'src/' + rel, MULTI);
+    const r = i18n.translateCode(txt, DICT.code, 'src/' + rel, MULTI, QUOTES);
     missing.push(...r.missing);
     txt = r.code;
     if (rel === 'js/01-donnees-config.js') {
-      txt = txt.replace(/^const CAP_LANG='fr';$/m, MULTI ? "const CAP_LANG=document.documentElement.getAttribute('data-lang')==='en'?'en':'fr';" : "const CAP_LANG='en';");
+      txt = txt.replace(/^const CAP_LANG='fr';$/m, MULTI ? "const CAP_LANG=document.documentElement.getAttribute('data-lang')==='en'?'en':'fr';" : `const CAP_LANG='${DL}';`);
       // descriptions des types Capella (CAP_HUMAN_NAMES[type].d)
       const ast = i18n.parse(txt), rep = [];
       ast.body.forEach(st => (st.declarations || []).forEach(d => { if (d.id && d.id.name === 'CAP_HUMAN_NAMES' && d.init && d.init.type === 'ObjectExpression')
@@ -59,9 +66,9 @@ function translate(rel, txt) {
             MULTI ? `(CAP_LANG==='en'?${i18n.jsString(DICT.types[k])}:${i18n.jsString(dp.value.value)})` : i18n.jsString(DICT.types[k])]); }); }));
       rep.sort((a, b) => b[0] - a[0]).forEach(([a, b, v]) => { txt = txt.slice(0, a) + v + txt.slice(b); });
     }
-    // dates et nombres au format anglais, documents produits déclarés en anglais
+    // dates et nombres au format de la langue, documents produits déclarés dans cette langue
     if (MULTI) return txt.replace(/(toLocale(?:Date|Time)?String\()'fr-FR'/g, "$1(CAP_LANG==='en'?'en-GB':'fr-FR')").replace(/<html lang="fr">/g, '<html lang="${CAP_LANG}">');
-    return txt.replace(/(toLocale(?:Date|Time)?String\()'fr-FR'/g, "$1'en-GB'").replace(/<html lang="fr">/g, '<html lang="en">');
+    return txt.replace(/(toLocale(?:Date|Time)?String\()'fr-FR'/g, `$1'${LOCALE}'`).replace(/<html lang="fr">/g, `<html lang="${DL}">`);
   }
   if (rel === 'html/interface.html') {
     const r = i18n.translatePattern(txt, Object.assign({}, DICT.code, DICT.interface));
@@ -118,7 +125,8 @@ function multiUi(fr, en) {
 })();
 <\/script>`;
 }
-const FR_TITLE = 'Arcalyse — votre modèle Capella, sous toutes ses coutures', EN_TITLE = 'Arcalyse — your Capella model, inside and out';
+const FR_TITLE = 'Arcalyse — votre modèle Capella, sous toutes ses coutures', EN_TITLE = 'Arcalyse — your Capella model, inside and out',
+  DE_TITLE = 'Arcalyse — Ihr Capella-Modell aus allen Blickwinkeln';
 /** Script de fin de page (version multilingue) : recharge le modèle transmis lors d'un changement de langue. */
 const MULTI_RESTORE = `<script id="cap-lang-restore">
 (function(){
@@ -139,9 +147,10 @@ function marks(p) {
 
 const errors = [], warnings = [];
 let tplTxt = fs.readFileSync(path.join(SRC, 'index.html'), 'utf8').replace(/\r\n/g, '\n');
-if (EN) tplTxt = tplTxt.replace('<html lang="fr">', '<html lang="en">').replace('@@INCLUDE html/aide.html@@', '@@INCLUDE html/aide.en.html@@')
-  .replace(/<title>[^<]*<\/title>/, `<title>${EN_TITLE}</title>`);
-// Visionneuse de diagrammes d'Arcature : version de la langue construite (les deux en multilingue, choisie au chargement)
+if (EN) tplTxt = tplTxt.replace('<html lang="fr">', `<html lang="${DL}">`).replace('@@INCLUDE html/aide.html@@', `@@INCLUDE html/aide.${DL}.html@@`)
+  .replace(/<title>[^<]*<\/title>/, `<title>${DL === 'de' ? DE_TITLE : EN_TITLE}</title>`);
+// Visionneuse de diagrammes d'Arcature : version de la langue construite (les deux en multilingue, choisie au chargement ;
+// anglaise pour la version allemande, Arcature n'ayant pas de visionneuse en allemand)
 if (EN) tplTxt = tplTxt.replace('@@INCLUDE vendor/arcature-visionneuse.js@@', '@@INCLUDE vendor/arcature-visionneuse-en.js@@');
 if (MULTI) tplTxt = tplTxt.replace(/^@@INCLUDE vendor\/arcature-visionneuse\.js@@$/m,
   "if(document.documentElement.getAttribute('data-lang')==='en'){\n@@INCLUDE vendor/arcature-visionneuse-en.js@@\n}else{\n@@INCLUDE vendor/arcature-visionneuse.js@@\n}");
@@ -196,12 +205,12 @@ if (TR) {
   const rep = path.join(path.dirname(OUT), `arcalyse-${LANG}-manquants.txt`);
   if (byKey.size) {
     fs.writeFileSync(rep, [...byKey].map(([k, w]) => `${JSON.stringify(k)}\t${[...new Set(w)].join(' ')}`).join('\n') + '\n');
-    warnings.push(`${byKey.size} texte(s) sans traduction anglaise (restés en français) → ${path.relative(ROOT, rep)}`);
+    warnings.push(`${byKey.size} texte(s) sans traduction ${LANG_NOM} (restés en français) → ${path.relative(ROOT, rep)}`);
   } else if (fs.existsSync(rep)) fs.unlinkSync(rep);
 }
 const kb = (Buffer.byteLength(html) / 1024).toFixed(0);
 warnings.forEach(w => console.warn('⚠ ' + w));
-console.log(`✔ ${path.relative(ROOT, OUT) || OUT} — ${kb} Ko, ${included.length} fichiers, ${jsFiles.length} modules JS, syntaxe OK${markers ? '' : ' (sans repères)'}${EN ? ' — version anglaise' : MULTI ? ' — version multilingue (FR + EN)' : ''}`);
+console.log(`✔ ${path.relative(ROOT, OUT) || OUT} — ${kb} Ko, ${included.length} fichiers, ${jsFiles.length} modules JS, syntaxe OK${markers ? '' : ' (sans repères)'}${EN ? ' — version ' + LANG_NOM : MULTI ? ' — version multilingue (FR + EN)' : ''}`);
 if (livraison) console.log(`
 Livraison prête. Pour la publier (remplacer X.Y par le numéro de version) :
   git add livraison

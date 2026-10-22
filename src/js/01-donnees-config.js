@@ -4,7 +4,7 @@
  * de chaque _L('…') est remplacé par sa traduction (docs/i18n/LISEZMOI.md) : ne l'utiliser qu'autour d'un
  * littéral affiché, jamais autour d'une valeur comparée ou servant de clé. */
 function _L(s){ return s; }
-/** Langue de l'interface ('fr', ou 'en' dans la version anglaise produite par le build). */
+/** Langue de l'interface ('fr', 'en' ou 'de' dans les versions anglaise et allemande produites par le build). */
 const CAP_LANG='fr';
 
 /** Relation Map en lecture seule (Arcalyse est un outil de lecture et d'analyse) : arborescence (renommage, ajout,

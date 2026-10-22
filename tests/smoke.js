@@ -7,6 +7,7 @@
  * Installation (une seule fois) :  npm install --save-dev playwright  puis  npx playwright install chromium
  * Lancement :                      node tests/smoke.js [chemin/vers/modele.capella]   (CHROMIUM_PATH=/chemin/vers/chrome pour un Chromium déjà installé)
  * Version anglaise :               node tests/smoke.js --en [modele]  (après node build.js --lang en)
+ * Version allemande :             node tests/smoke.js --de [modele]  (après node build.js --lang de)
  * Version multilingue :            node tests/smoke.js --multi [--fr] [modele]  (après node build.js --lang multi ; anglais par défaut)
  * (par défaut : premier fichier .capella trouvé dans tests/models/)
  */
@@ -16,11 +17,11 @@ let chromium; try { ({ chromium } = require('playwright')); }
 catch (e) { console.error('Playwright absent : npm install --save-dev playwright && npx playwright install chromium'); process.exit(2); }
 
 const ROOT = path.join(__dirname, '..');
-const args = process.argv.slice(2), EN = args.includes('--en'), MULTI = args.includes('--multi');
-const page = path.join(ROOT, 'dist', MULTI ? 'arcalyse-multi.html' : EN ? 'arcalyse-en.html' : 'arcalyse-fr.html');
+const args = process.argv.slice(2), EN = args.includes('--en'), DE = args.includes('--de'), MULTI = args.includes('--multi');
+const page = path.join(ROOT, 'dist', MULTI ? 'arcalyse-multi.html' : EN ? 'arcalyse-en.html' : DE ? 'arcalyse-de.html' : 'arcalyse-fr.html');
 const models = path.join(__dirname, 'models');
 const model = args.find(a => !a.startsWith('--')) || (fs.existsSync(models) ? fs.readdirSync(models).filter(f => f.endsWith('.capella')).map(f => path.join(models, f))[0] : null);
-if (!fs.existsSync(page)) { console.error('Lancez d\'abord : node build.js' + (MULTI ? ' --lang multi' : EN ? ' --lang en' : '')); process.exit(2); }
+if (!fs.existsSync(page)) { console.error('Lancez d\'abord : node build.js' + (MULTI ? ' --lang multi' : EN ? ' --lang en' : DE ? ' --lang de' : '')); process.exit(2); }
 if (!model) { console.error('Aucun modèle : placez un .capella dans tests/models/ ou passez-le en argument'); process.exit(2); }
 
 (async () => {
