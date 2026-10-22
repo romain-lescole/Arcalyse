@@ -3,7 +3,9 @@
 // ← Éléments référençants · Élément courant · Éléments référencés →, chacune en catégories repliables.
 // Les liens techniques (réalisations, allocations, implications, ports) sont résolus en catégories lisibles
 // (« Fonctions allouées », « Composants réalisants », « Échanges entrants »…) ; un clic fait de l'élément
-// l'élément courant (historique ◀ ▶ conservé, 76). Filtre commun aux trois colonnes, ⤢ pour élargir le panneau.
+// l'élément courant (historique ◀ ▶ conservé, 76). Filtre commun aux trois colonnes, ⤢ pour élargir le panneau,
+// ⧉ pour l'ouvrir dans une fenêtre séparée qui suit l'élément du panneau de détail (`_capSem.win`).
+// Clics et saisie par délégation (capSemClic / capSemSaisie) : les mêmes lignes servent dans la page et dans la fenêtre.
 
 /** Libellés des liens de traçabilité (sourceElement → targetElement) : [côté source (référencés), côté cible (référençants)]. */
 const CAP_SEM_TRACE={
@@ -65,8 +67,8 @@ function capSemRevIndex(){
   _capSemIdx={_src:capAllElements, map};
   return map;
 }
-/** État de l'onglet : filtre saisi (gardé d'un élément à l'autre) et panneau élargi. */
-const _capSem={q:'', large:false, w:0};
+/** État de l'onglet : filtre saisi (gardé d'un élément à l'autre), panneau élargi, élément courant, fenêtre séparée. */
+const _capSem={q:'', large:false, w:0, cur:'', win:null};
 
 /** Éléments référencés par la valeur d'un attribut (IDs résolus).
  * @param {Object} e - Élément Capella
@@ -162,36 +164,41 @@ function capSemData(el){
  * @returns {string} HTML
  */
 function capSemItem(it, diagDe){
-  if(diagDe) return `<div class="csb-it cap-det-link" data-n="${capEsc(String(it.nom||it.type).toLowerCase())}" onclick="capDiagOpen('${capEsc(it.uid)}','${capEsc(diagDe)}')" title="${capEsc(it.type)}"><span class="cdg-sigle">${capEsc(it.sigle)}</span><span class="csb-nm">${capEsc(it.nom||it.type)}</span></div>`;
+  if(diagDe) return `<div class="csb-it cap-det-link" role="button" tabindex="0" data-n="${capEsc(String(it.nom||it.type).toLowerCase())}" data-sem-diag="${capEsc(it.uid)}" data-sem-de="${capEsc(diagDe)}" title="${capEsc(it.type)}"><span class="cdg-sigle">${capEsc(it.sigle)}</span><span class="csb-nm">${capEsc(it.nom||it.type)}</span></div>`;
   const lv=CAP_LAYERS[it.layer]||{color:'#8b949e'}, nm=it.attrs.name||it.typeName;
-  return `<div class="csb-it cap-det-link" data-n="${capEsc(String(nm).toLowerCase())}" onclick="capOpenDetail('${capEsc(it.id)}')" title="${capEsc(it.typeName+(it.layer?' — '+it.layer:''))}">${capIco(it.id,13)}<span class="csb-nm">${capEsc(nm)}</span><span class="csb-ty" style="color:${capTextOn(lv.color)}">${capEsc(it.typeName)}</span></div>`;
+  return `<div class="csb-it cap-det-link" role="button" tabindex="0" data-n="${capEsc(String(nm).toLowerCase())}" data-sem-id="${capEsc(it.id)}" title="${capEsc(it.typeName+(it.layer?' — '+it.layer:''))}">${capIco(it.id,13)}<span class="csb-nm">${capEsc(nm)}</span><span class="csb-ty" style="color:${capTextOn(lv.color)}">${capEsc(it.typeName)}</span></div>`;
 }
 
 /** Catégorie repliable (ouverte jusqu'à 30 lignes, fermée pour les liens techniques contenus).
  * @param {Object} c - Catégorie de capSemData
  * @param {string} id - Élément courant
+ * @param {boolean} [pop] - Rendu pour la fenêtre séparée
  * @returns {string} HTML
  */
-function capSemCat(c, id){
+function capSemCat(c, id, pop){
   const n=c.items.length, ouvert=!c.link&&n<=30;
   const corps=c.attrs ? `<table class="csb-attrs">${c.attrs.map(([k,v])=>`<tr data-n="${capEsc(String(k+' '+v).toLowerCase())}" class="csb-it"><td>${capEsc(k)}</td><td>${capEsc(String(v).slice(0,200))}</td></tr>`).join('')}</table>`
-    : capPaged(c.items,{render:it=>capSemItem(it, c.diag?id:'')});
+    : capPaged(c.items,{render:it=>capSemItem(it, c.diag?id:''), size:pop?2000:undefined});   // fenêtre : pas de pagination (blocs de 78 propres à la page)
   const tip=c.k&&c.k!==c.l&&!c.diag&&c.k!=='attr' ? ` title="${capEsc(c.k)}"` : '';
   return `<details class="csb-cat"${ouvert?' open':''}><summary${tip}>${capEsc(c.l)} <span class="csb-n">${n}</span></summary>${corps}</details>`;
 }
 
-/** Section 🧭 Navigateur sémantique du panneau de détail (onglet `sem`).
+/** Section 🧭 Navigateur sémantique du panneau de détail (onglet `sem`), ou contenu de la fenêtre séparée.
  * @param {Object} el - Élément courant
  * @param {function(string, string):string} secTitle - Titre de section du panneau
+ * @param {boolean} [pop] - Rendu pour la fenêtre séparée (bouton ⧈ au lieu de ⤢ / ⧉)
  * @returns {string} HTML
  */
-function capSemDetail(el, secTitle){
+function capSemDetail(el, secTitle, pop){
   const d=capSemData(el), lv=CAP_LAYERS[el.layer]||{color:'#8b949e'};
-  const col=(cls, titre, tip, cats, tete)=>`<div class="csb-col ${cls}"><div class="csb-h" title="${capEsc(tip)}">${titre} <span class="csb-n">${cats.reduce((s,c)=>s+(c.attrs?0:c.items.length),0)}</span></div>${tete||''}${cats.map(c=>capSemCat(c, el.id)).join('')||`<div class="csb-vide">${_L('Aucun élément')}</div>`}</div>`;
+  _capSem.cur=el.id;
+  const col=(cls, titre, tip, cats, tete)=>`<div class="csb-col ${cls}"><div class="csb-h" title="${capEsc(tip)}">${titre} <span class="csb-n">${cats.reduce((s,c)=>s+(c.attrs?0:c.items.length),0)}</span></div>${tete||''}${cats.map(c=>capSemCat(c, el.id, pop)).join('')||`<div class="csb-vide">${_L('Aucun élément')}</div>`}</div>`;
   const tete=`<div class="csb-cur"><span>${capIco(el.id,16)}</span><b>${capEsc(el.attrs.name||_L('—sans nom—'))}</b><span class="csb-ty" style="color:${capTextOn(lv.color)}">${capEsc(el.typeName)}${el.layer?' · '+capEsc(el.layer):''}</span></div>`;
   return secTitle(_L('🧭 Navigateur sémantique'))+
-    `<div class="csb" data-tab="sem"><div class="csb-bar"><input type="search" class="csb-q" placeholder="${_L('Filtrer les éléments…')}" value="${capEsc(_capSem.q)}" oninput="capSemFiltre(this)" title="${_L('Filtre commun aux trois colonnes (nom de l\'élément)')}">`+
-    `<button type="button" class="tbtn csb-large${_capSem.large?' active':''}" onclick="capSemLarge(this)" title="${_L('Élargir le panneau pour voir les trois colonnes côte à côte')}">⤢</button></div>`+
+    `<div class="csb" data-tab="sem"><div class="csb-bar"><input type="search" class="csb-q" placeholder="${_L('Filtrer les éléments…')}" value="${capEsc(_capSem.q)}" title="${_L('Filtre commun aux trois colonnes (nom de l\'élément)')}">`+
+    (pop ? `<button type="button" class="tbtn" data-sem-a="back" title="${_L('Fermer la fenêtre séparée (le navigateur reste dans l\'onglet 🧭 du panneau de détail)')}">⧈</button>`
+      : `<button type="button" class="tbtn csb-large${_capSem.large?' active':''}" data-sem-a="large" title="${_L('Élargir le panneau pour voir les trois colonnes côte à côte')}">⤢</button>`+
+        `<button type="button" class="tbtn${capSemPop()?' active':''}" data-sem-a="pop" title="${_L('Ouvrir le navigateur sémantique dans une fenêtre séparée (par exemple sur un autre écran) : il suit l\'élément du panneau de détail')}">⧉</button>`)+`</div>`+
     `<div class="csb-cols">${col('csb-refg', _L('← Éléments référençants'), _L('Éléments qui désignent l\'élément courant (Referencing Elements)'), d.refg)}`+
     `${col('csb-curc', _L('Élément courant'), _L('Attributs et éléments contenus (Current Element)'), d.cur, tete)}`+
     `${col('csb-refd', _L('Éléments référencés →'), _L('Éléments désignés par l\'élément courant (Referenced Elements)'), d.refd)}</div></div>`;
@@ -200,7 +207,7 @@ function capSemDetail(el, secTitle){
 /** Après le rendu du panneau de détail : réapplique le filtre saisi pour l'élément précédent.
  * @param {HTMLElement} box - Conteneur du panneau
  */
-function capSemApres(box){ if(_capSem.q) capSemFiltre(box&&box.querySelector('.csb-q')); }
+function capSemApres(box){ if(_capSem.q) capSemFiltre(box&&box.querySelector('.csb-q')); capSemPopRender(); }
 
 /** Filtre les lignes des trois colonnes (nom contenant le texte saisi) ; catégories vides masquées.
  * @param {HTMLInputElement} inp - Champ de filtre
@@ -222,4 +229,68 @@ function capSemLarge(b){
   else if(_capSem.w) _capNav.dockW=_capSem.w; else delete _capNav.dockW;
   capDockWidthApply(); capNavSave(); window.dispatchEvent(new Event('resize'));
   b.classList.toggle('active',_capSem.large);
+}
+
+/** Clic dans un navigateur sémantique (page ou fenêtre séparée) : élément → élément courant, diagramme → ouvert, boutons.
+ * @param {MouseEvent} e - Clic
+ */
+function capSemClic(e){
+  const t=e.target.closest&&e.target.closest('.csb [data-sem-id],.csb [data-sem-diag],.csb [data-sem-a]'); if(!t) return;
+  const d=t.dataset;
+  if(d.semId) capOpenDetail(d.semId);
+  else if(d.semDiag){ capDiagOpen(d.semDiag, d.semDe); if(t.ownerDocument!==document) window.focus(); }
+  else if(d.semA==='large') capSemLarge(t);
+  else if(d.semA==='pop') capSemPopOut();
+  else if(d.semA==='back'){ const w=capSemPop(); if(w) w.close(); capSemPopFerme(); }
+}
+/** Saisie dans le champ de filtre d'un navigateur sémantique. @param {Event} e - Saisie */
+function capSemSaisie(e){ if(e.target.classList&&e.target.classList.contains('csb-q')) capSemFiltre(e.target); }
+document.addEventListener('click', capSemClic);
+document.addEventListener('input', capSemSaisie);
+window.addEventListener('pagehide', ()=>{ const w=capSemPop(); if(w) w.close(); });
+
+/** @returns {Window|null} Fenêtre séparée du navigateur sémantique, si elle est ouverte */
+function capSemPop(){ const w=_capSem.win; return w&&!w.closed?w:null; }
+
+/** Ouvre (ou ramène au premier plan) la fenêtre séparée du navigateur sémantique, qui suit le panneau de détail. */
+function capSemPopOut(){
+  if(capSemPop()){ capSemPop().focus(); return; }
+  const w=window.open('', 'arcalyse-semantique', 'width=1180,height=820');
+  if(!w){ capAlert(_L('Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez.')); return; }
+  const D=w.document;
+  D.open(); D.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title></title></head><body class="csb-pop-body"></body></html>'); D.close();
+  document.querySelectorAll('style').forEach(st=>D.head.appendChild(D.importNode(st,true)));
+  _capSem.win=w;
+  D.addEventListener('click', e=>{
+    capSemClic(e);
+    const b=e.target.closest('.cap-pg-bar [data-pg-go]'); if(b){ e.preventDefault(); capPgShow(b.closest('.cap-pg'), b.dataset.pgGo); }
+  });
+  D.addEventListener('input', capSemSaisie);
+  D.addEventListener('keydown', e=>{
+    if((e.key==='Enter'||e.key===' ')&&e.target.getAttribute&&e.target.getAttribute('role')==='button'){ e.preventDefault(); e.target.click(); }
+    else if(e.ctrlKey&&!e.altKey&&(e.key==='s'||e.key==='S')){ e.preventDefault(); capSavePageDirect(e.shiftKey); }
+  });
+  w.addEventListener('pagehide', capSemPopFerme);
+  capSemPopRender();
+  capSemBoutons();
+}
+
+/** Fenêtre séparée fermée : oubli de la fenêtre, bouton ⧉ du panneau rétabli. */
+function capSemPopFerme(){ _capSem.win=null; capSemBoutons(); }
+
+/** État du bouton ⧉ des navigateurs affichés dans la page (enfoncé tant que la fenêtre est ouverte). */
+function capSemBoutons(){ document.querySelectorAll('.csb [data-sem-a="pop"]').forEach(b=>b.classList.toggle('active', !!capSemPop())); }
+
+/** Redessine la fenêtre séparée pour l'élément courant (thème de la page recopié). */
+function capSemPopRender(){
+  const w=capSemPop(); if(!w) return;
+  const D=w.document, el=_capSem.cur&&capGetElementById_(_capSem.cur);
+  capRevPopTheme(w);
+  D.title=_L('🧭 Navigateur sémantique')+' — '+(el?(el.attrs.name||el.typeName)+' — ':'')+(capCurrentFileName||'Arcalyse');
+  const pos=D.scrollingElement?D.scrollingElement.scrollTop:0;
+  D.body.innerHTML=el ? capSemDetail(el, ()=>'', true)
+    : `<div class="csb"><div class="csb-vide">${_L('Ouvrez le détail d\'un élément : le navigateur sémantique le suivra ici.')}</div></div>`;
+  if(_capSem.q) capSemFiltre(D.querySelector('.csb-q'));
+  if(D.scrollingElement) D.scrollingElement.scrollTop=pos&&el&&el.id===w._capSemCur?pos:0;
+  w._capSemCur=el&&el.id;
 }

@@ -1526,20 +1526,27 @@
 - `capIcoPlusTable` (l. 15) — Corps SVG (viewBox 0 0 16 16) des icônes de complément, par type court. Construit au premier appel.
 - `capIcoPlus` (l. 80) — Icône de complément d'un type (dessinée ici) ou, à défaut, icône générique à ses initiales.
 
-## 85-navigateur-semantique.js — 226 lignes
+## 85-navigateur-semantique.js — 297 lignes
 
-- `CAP_SEM_TRACE` (l. 9) — Libellés des liens de traçabilité (sourceElement → targetElement) : [côté source (référencés), côté cible (référençants)].
-- `CAP_SEM_INVOLVE` (l. 30) — Libellés des implications (attribut `involved`) vues depuis l'élément impliquant (référencés).
-- `CAP_SEM_ATTR` (l. 43) — Libellés lisibles des attributs de référence les plus courants (sinon le nom XML tel quel).
-- `CAP_SEM_SKIP` (l. 51) — Attributs jamais lus comme des références (texte libre).
-- `capSemRevIndex` (l. 58) — Index inverse des références : id cible → éléments dont un attribut le référence (calculé une fois par modèle).
-- `capSemRefs` (l. 76) — Éléments référencés par la valeur d'un attribut (IDs résolus).
-- `capSemIsLink` (l. 81) — Vrai pour un lien technique (traçabilité, allocation, implication) résumé en catégorie lisible.
-- `capSemIsPort` (l. 86) — Vrai pour un port ou un pin (fonction, composant, physique).
-- `capSemData` (l. 92) — Catégories des trois colonnes pour un élément : référençants, courant (attributs, contenus), référencés.
-- `capSemItem` (l. 164) — Ligne d'un élément ou d'un diagramme dans une catégorie (clic : devient l'élément courant / ouvre le diagramme).
-- `capSemCat` (l. 175) — Catégorie repliable (ouverte jusqu'à 30 lignes, fermée pour les liens techniques contenus).
-- `capSemDetail` (l. 188) — Section 🧭 Navigateur sémantique du panneau de détail (onglet `sem`).
-- `capSemApres` (l. 203) — Après le rendu du panneau de détail : réapplique le filtre saisi pour l'élément précédent.
-- `capSemFiltre` (l. 208) — Filtre les lignes des trois colonnes (nom contenant le texte saisi) ; catégories vides masquées.
-- `capSemLarge` (l. 219) — Élargit (ou rétablit) la colonne de droite pour afficher les trois colonnes côte à côte.
+- `CAP_SEM_TRACE` (l. 11) — Libellés des liens de traçabilité (sourceElement → targetElement) : [côté source (référencés), côté cible (référençants)].
+- `CAP_SEM_INVOLVE` (l. 32) — Libellés des implications (attribut `involved`) vues depuis l'élément impliquant (référencés).
+- `CAP_SEM_ATTR` (l. 45) — Libellés lisibles des attributs de référence les plus courants (sinon le nom XML tel quel).
+- `CAP_SEM_SKIP` (l. 53) — Attributs jamais lus comme des références (texte libre).
+- `capSemRevIndex` (l. 60) — Index inverse des références : id cible → éléments dont un attribut le référence (calculé une fois par modèle).
+- `capSemRefs` (l. 78) — Éléments référencés par la valeur d'un attribut (IDs résolus).
+- `capSemIsLink` (l. 83) — Vrai pour un lien technique (traçabilité, allocation, implication) résumé en catégorie lisible.
+- `capSemIsPort` (l. 88) — Vrai pour un port ou un pin (fonction, composant, physique).
+- `capSemData` (l. 94) — Catégories des trois colonnes pour un élément : référençants, courant (attributs, contenus), référencés.
+- `capSemItem` (l. 166) — Ligne d'un élément ou d'un diagramme dans une catégorie (clic : devient l'élément courant / ouvre le diagramme).
+- `capSemCat` (l. 178) — Catégorie repliable (ouverte jusqu'à 30 lignes, fermée pour les liens techniques contenus).
+- `capSemDetail` (l. 192) — Section 🧭 Navigateur sémantique du panneau de détail (onglet `sem`), ou contenu de la fenêtre séparée.
+- `capSemApres` (l. 210) — Après le rendu du panneau de détail : réapplique le filtre saisi pour l'élément précédent.
+- `capSemFiltre` (l. 215) — Filtre les lignes des trois colonnes (nom contenant le texte saisi) ; catégories vides masquées.
+- `capSemLarge` (l. 226) — Élargit (ou rétablit) la colonne de droite pour afficher les trois colonnes côte à côte.
+- `capSemClic` (l. 237) — Clic dans un navigateur sémantique (page ou fenêtre séparée) : élément → élément courant, diagramme → ouvert, boutons.
+- `capSemSaisie` (l. 247) — Saisie dans le champ de filtre d'un navigateur sémantique. @param {Event} e - Saisie
+- `capSemPop` (l. 253) — @returns {Window|null} Fenêtre séparée du navigateur sémantique, si elle est ouverte
+- `capSemPopOut` (l. 256) — Ouvre (ou ramène au premier plan) la fenêtre séparée du navigateur sémantique, qui suit le panneau de détail.
+- `capSemPopFerme` (l. 279) — Fenêtre séparée fermée : oubli de la fenêtre, bouton ⧉ du panneau rétabli.
+- `capSemBoutons` (l. 282) — État du bouton ⧉ des navigateurs affichés dans la page (enfoncé tant que la fenêtre est ouverte).
+- `capSemPopRender` (l. 285) — Redessine la fenêtre séparée pour l'élément courant (thème de la page recopié).

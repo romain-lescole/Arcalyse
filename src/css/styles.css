@@ -1934,6 +1934,8 @@ html[data-tbicons] #toolbar .tbtn{padding-left:7px;padding-right:7px;}
 .csb-attrs td{padding:2px 4px;border-bottom:1px solid var(--c-border);vertical-align:top;word-break:break-all;color:var(--c-text);}
 .csb-attrs td:first-child{font-family:monospace;color:var(--c-dim);width:40%;}
 .csb-vide{font-size:11px;color:var(--c-dim);padding:6px 8px;font-style:italic;}
+body.csb-pop-body{margin:0;padding:10px 12px;background:var(--c-bg);color:var(--c-text);font-family:'Segoe UI',system-ui,sans-serif;}
+body.csb-pop-body .csb-cols{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
 
 /* ⏭ Pagination des listes et tableaux (78) */
 .cap-pg-bar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;font-size:11px;color:var(--c-dim);margin:5px 2px 8px;}

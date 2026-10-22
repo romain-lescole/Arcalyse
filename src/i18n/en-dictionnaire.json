@@ -5079,7 +5079,10 @@
   "Élément courant": "Current element",
   "Attributs et éléments contenus (Current Element)": "Attributes and owned elements (Current Element)",
   "Éléments référencés →": "Referenced elements →",
-  "Éléments désignés par l'élément courant (Referenced Elements)": "Elements the current element points to (Referenced Elements)"
+  "Éléments désignés par l'élément courant (Referenced Elements)": "Elements the current element points to (Referenced Elements)",
+  "Fermer la fenêtre séparée (le navigateur reste dans l'onglet 🧭 du panneau de détail)": "Close the separate window (the browser stays in the 🧭 tab of the detail panel)",
+  "Ouvrir le navigateur sémantique dans une fenêtre séparée (par exemple sur un autre écran) : il suit l'élément du panneau de détail": "Open the semantic browser in a separate window (for example on another screen): it follows the element of the detail panel",
+  "Ouvrez le détail d'un élément : le navigateur sémantique le suivra ici.": "Open the detail of an element: the semantic browser will follow it here."
  },
  "interface": {
   "🌳 Arborescence": "🌳 Tree",

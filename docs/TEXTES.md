@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 6622 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 6629 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -6916,95 +6916,102 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 10 | Fonctions réalisées | Realized functions |
-| 10 | Fonctions réalisantes | Realizing functions |
-| 11 | Fonctions allouées | Allocated functions |
-| 11 | Composants allouant | Allocating components |
-| 12 | Échanges réalisés | Realized exchanges |
-| 12 | Échanges réalisants | Realizing exchanges |
-| 13 | Composants réalisés | Realized components |
-| 13 | Composants réalisants | Realizing components |
-| 14 | Ports réalisés | Realized ports |
-| 14 | Ports réalisants | Realizing ports |
-| 15 | Ports alloués | Allocated ports |
-| 15 | Ports allouant | Allocating ports |
-| 16 | Ports alloués | Allocated ports |
-| 16 | Ports allouant | Allocating ports |
-| 17 | Échanges fonctionnels alloués | Allocated functional exchanges |
-| 17 | Échanges de composants allouant | Allocating component exchanges |
-| 18 | Échanges de composants alloués | Allocated component exchanges |
-| 18 | Liens physiques allouant | Allocating physical links |
-| 19 | Transitions réalisées | Realized transitions |
-| 19 | Transitions réalisantes | Realizing transitions |
-| 20 | États / modes réalisés | Realized states / modes |
-| 20 | États / modes réalisants | Realizing states / modes |
-| 21 | Artefacts physiques réalisés | Realized physical artifacts |
-| 21 | Configuration items réalisants | Realizing configuration items |
-| 22 | Capacités réalisées | Realized capabilities |
-| 22 | Capacités réalisantes | Realizing capabilities |
-| 23 | Informations réalisées | Realized information |
-| 23 | Informations réalisantes | Realizing information |
-| 24 | Chaînes réalisées | Realized chains |
-| 24 | Chaînes réalisantes | Realizing chains |
-| 25 | Scénarios réalisés | Realized scenarios |
-| 25 | Scénarios réalisants | Realizing scenarios |
-| 26 | Éléments transitionnés | Transitioned elements |
-| 26 | Issu de la transition de | Transitioned from |
-| 27 | Traces génériques → | Generic traces → |
-| 27 | ← Traces génériques | ← Generic traces |
-| 31 | Fonctions impliquées | Involved functions |
-| 32 | Échanges impliqués | Involved exchanges |
+| 12 | Fonctions réalisées | Realized functions |
+| 12 | Fonctions réalisantes | Realizing functions |
+| 13 | Fonctions allouées | Allocated functions |
+| 13 | Composants allouant | Allocating components |
+| 14 | Échanges réalisés | Realized exchanges |
+| 14 | Échanges réalisants | Realizing exchanges |
+| 15 | Composants réalisés | Realized components |
+| 15 | Composants réalisants | Realizing components |
+| 16 | Ports réalisés | Realized ports |
+| 16 | Ports réalisants | Realizing ports |
+| 17 | Ports alloués | Allocated ports |
+| 17 | Ports allouant | Allocating ports |
+| 18 | Ports alloués | Allocated ports |
+| 18 | Ports allouant | Allocating ports |
+| 19 | Échanges fonctionnels alloués | Allocated functional exchanges |
+| 19 | Échanges de composants allouant | Allocating component exchanges |
+| 20 | Échanges de composants alloués | Allocated component exchanges |
+| 20 | Liens physiques allouant | Allocating physical links |
+| 21 | Transitions réalisées | Realized transitions |
+| 21 | Transitions réalisantes | Realizing transitions |
+| 22 | États / modes réalisés | Realized states / modes |
+| 22 | États / modes réalisants | Realizing states / modes |
+| 23 | Artefacts physiques réalisés | Realized physical artifacts |
+| 23 | Configuration items réalisants | Realizing configuration items |
+| 24 | Capacités réalisées | Realized capabilities |
+| 24 | Capacités réalisantes | Realizing capabilities |
+| 25 | Informations réalisées | Realized information |
+| 25 | Informations réalisantes | Realizing information |
+| 26 | Chaînes réalisées | Realized chains |
+| 26 | Chaînes réalisantes | Realizing chains |
+| 27 | Scénarios réalisés | Realized scenarios |
+| 27 | Scénarios réalisants | Realizing scenarios |
+| 28 | Éléments transitionnés | Transitioned elements |
+| 28 | Issu de la transition de | Transitioned from |
+| 29 | Traces génériques → | Generic traces → |
+| 29 | ← Traces génériques | ← Generic traces |
 | 33 | Fonctions impliquées | Involved functions |
-| 34 | Composants impliqués | Involved components |
-| 35 | Acteurs / système impliqués | Involved actors / system |
-| 36 | Chaînes fonctionnelles impliquées | Involved functional chains |
-| 37 | Liens physiques impliqués | Involved physical links |
-| 38 | Capacités impliquées | Involved capabilities |
-| 39 | Entités impliquées | Involved entities |
-| 40 | Chaînes référencées | Referenced chains |
-| 44 | Type | Type |
-| 44 | Source | Source |
-| 44 | Cible | Target |
-| 44 | Élément impliqué | Involved element |
-| 45 | Élément source | Source element |
-| 45 | Élément cible | Target element |
-| 45 | Instance représentée | Represented instance |
-| 46 | Éléments échangés | Exchanged items |
-| 46 | Fonction associée | Related function |
-| 46 | État associé | Related state |
-| 47 | Élément déployé | Deployed element |
-| 47 | Déployé sur | Deployed on |
-| 47 | Extrémités | Link ends |
-| 47 | Capacité | Capability |
-| 48 | Élément alloué | Allocated item |
-| 48 | Disponible dans les états | Available in states |
-| 48 | Statut | Status |
-| 102 | Parent | Parent |
-| 108 | Éléments impliqués | Involved elements |
-| 111 | Échanges sortants | Outgoing exchanges |
-| 112 | Échanges entrants | Incoming exchanges |
-| 113 | Liens physiques | Physical links |
-| 116 | Élément source | Source element |
-| 116 | Élément cible | Target element |
-| 116 | Éléments reliés | Connected elements |
-| 127 | Impliqué dans | Involved in |
-| 130 | Parts représentant l'élément | Representing parts |
-| 130 | Part.abstractType | (inchangé, hors _L) |
-| 142 | Diagrammes représentant l'élément | Representing diagrams |
-| 143 | Diagrammes contenant l'élément | Diagrams containing the element |
-| 149 | Attributs | Attributes |
-| 190 | Aucun élément | No element |
-| 191 | —sans nom— | —unnamed— |
-| 192 | 🧭 Navigateur sémantique | 🧭 Semantic browser |
-| 193 | Filtrer les éléments… | Filter elements… |
-| 193 | Filtre commun aux trois colonnes (nom de l'élément) | Filter shared by the three columns (element name) |
-| 194 | Élargir le panneau pour voir les trois colonnes côte à côte | Widen the panel to see the three columns side by side |
-| 195 | ← Éléments référençants | ← Referencing elements |
-| 195 | Éléments qui désignent l'élément courant (Referencing Elements) | Elements that point to the current element (Referencing Elements) |
-| 196 | Élément courant | Current element |
-| 196 | Attributs et éléments contenus (Current Element) | Attributes and owned elements (Current Element) |
-| 197 | Éléments référencés → | Referenced elements → |
-| 197 | Éléments désignés par l'élément courant (Referenced Elements) | Elements the current element points to (Referenced Elements) |
+| 34 | Échanges impliqués | Involved exchanges |
+| 35 | Fonctions impliquées | Involved functions |
+| 36 | Composants impliqués | Involved components |
+| 37 | Acteurs / système impliqués | Involved actors / system |
+| 38 | Chaînes fonctionnelles impliquées | Involved functional chains |
+| 39 | Liens physiques impliqués | Involved physical links |
+| 40 | Capacités impliquées | Involved capabilities |
+| 41 | Entités impliquées | Involved entities |
+| 42 | Chaînes référencées | Referenced chains |
+| 46 | Type | Type |
+| 46 | Source | Source |
+| 46 | Cible | Target |
+| 46 | Élément impliqué | Involved element |
+| 47 | Élément source | Source element |
+| 47 | Élément cible | Target element |
+| 47 | Instance représentée | Represented instance |
+| 48 | Éléments échangés | Exchanged items |
+| 48 | Fonction associée | Related function |
+| 48 | État associé | Related state |
+| 49 | Élément déployé | Deployed element |
+| 49 | Déployé sur | Deployed on |
+| 49 | Extrémités | Link ends |
+| 49 | Capacité | Capability |
+| 50 | Élément alloué | Allocated item |
+| 50 | Disponible dans les états | Available in states |
+| 50 | Statut | Status |
+| 104 | Parent | Parent |
+| 110 | Éléments impliqués | Involved elements |
+| 113 | Échanges sortants | Outgoing exchanges |
+| 114 | Échanges entrants | Incoming exchanges |
+| 115 | Liens physiques | Physical links |
+| 118 | Élément source | Source element |
+| 118 | Élément cible | Target element |
+| 118 | Éléments reliés | Connected elements |
+| 129 | Impliqué dans | Involved in |
+| 132 | Parts représentant l'élément | Representing parts |
+| 132 | Part.abstractType | (inchangé, hors _L) |
+| 144 | Diagrammes représentant l'élément | Representing diagrams |
+| 145 | Diagrammes contenant l'élément | Diagrams containing the element |
+| 151 | Attributs | Attributes |
+| 195 | Aucun élément | No element |
+| 196 | —sans nom— | —unnamed— |
+| 197 | 🧭 Navigateur sémantique | 🧭 Semantic browser |
+| 198 | Filtrer les éléments… | Filter elements… |
+| 198 | Filtre commun aux trois colonnes (nom de l'élément) | Filter shared by the three columns (element name) |
+| 199 | Fermer la fenêtre séparée (le navigateur reste dans l'onglet 🧭 du panneau de détail) | Close the separate window (the browser stays in the 🧭 tab of the detail panel) |
+| 200 | Élargir le panneau pour voir les trois colonnes côte à côte | Widen the panel to see the three columns side by side |
+| 201 | Ouvrir le navigateur sémantique dans une fenêtre séparée (par exemple sur un autre écran) : il suit l'élément du panneau de détail | Open the semantic browser in a separate window (for example on another screen): it follows the element of the detail panel |
+| 202 | ← Éléments référençants | ← Referencing elements |
+| 202 | Éléments qui désignent l'élément courant (Referencing Elements) | Elements that point to the current element (Referencing Elements) |
+| 203 | Élément courant | Current element |
+| 203 | Attributs et éléments contenus (Current Element) | Attributes and owned elements (Current Element) |
+| 204 | Éléments référencés → | Referenced elements → |
+| 204 | Éléments désignés par l'élément courant (Referenced Elements) | Elements the current element points to (Referenced Elements) |
+| 258 | width=1180,height=820 | (inchangé, hors _L) |
+| 259 | Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez. | The browser blocked the window: allow pop-ups for this page, then try again. |
+| 289 | 🧭 Navigateur sémantique | 🧭 Semantic browser |
+| 289 | Arcalyse | (inchangé, hors _L) |
+| 292 | Ouvrez le détail d'un élément : le navigateur sémantique le suivra ici. | Open the detail of an element: the semantic browser will follow it here. |
 
 ## Textes sans traduction anglaise (13)
 
