@@ -113,11 +113,16 @@ function capOpenDetail(id){
     });
   }
 
+  // 🧭 Navigateur sémantique façon Capella : référençants · élément courant · référencés (85)
+  curTab='sem';
+  if(typeof capSemDetail==='function') html+=capSemDetail(el, secTitle);
+
   // En Relation Map, le détail s'affiche dans son propre panneau à droite du graphe (06)
   const inRm = currentMode!=='capella' && document.getElementById('rm-detail');
   if (inRm) { S.propEl=id; _rmDetailOn=true; }
   const box=document.getElementById(inRm?'rm-detail-content':'cap-detail-content'); box.innerHTML=html;
   if(typeof capDetTabs==='function') capDetTabs(box);   // 🗂 onglets du panneau (77)
+  if(typeof capSemApres==='function') capSemApres(box);   // 🧭 filtre du navigateur sémantique (85)
   const det=document.getElementById(inRm?'rm-detail':'cap-detail');
   if(det){ det.style.display='flex'; }
   if(typeof capDockShow==='function') capDockShow('det');   // devant le panneau 💬 Revue s'il est ouvert (onglets, 55)

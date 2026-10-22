@@ -1,6 +1,6 @@
 // ── 🗂 Panneau de détail à onglets ─────────────────────────────────────────
 // Les sections du panneau de détail (capOpenDetail, 25) portent un onglet (`data-tab` posé par secTitle) :
-// 📋 Fiche (description, attributs), 🔗 Liens (références, owner, owned), 🔲 Diagrammes, 🔬 Analyses (exigences,
+// 📋 Fiche (description, attributs), 🔗 Liens (références, owner, owned), 🧭 Sémantique (85), 🔲 Diagrammes, 🔬 Analyses (exigences,
 // propriétés, contraintes, scénarios, statut, catégories, bibliothèques, REC / RPL, déploiement), 💬 Revue, ≡ Tout.
 // capDetTabs regroupe les sections par onglet après le rendu ; ≡ Tout par défaut, l'onglet choisi est gardé d'un élément à l'autre
 // (`_capNav.det`, enregistré avec la barre) ; un onglet sans section pour l'élément n'est pas proposé.
@@ -9,6 +9,7 @@
 var CAP_DET_TABS=[
   {k:'fiche', l:_L('📋 Fiche'),      t:_L('Description et attributs de l\'élément')},
   {k:'liens', l:_L('🔗 Liens'),      t:_L('Références sortantes et entrantes, owner, éléments contenus')},
+  {k:'sem',   l:_L('🧭 Sémantique'), t:_L('Navigateur sémantique façon Capella (Semantic Browser) : éléments référençants, élément courant, éléments référencés')},
   {k:'diag',  l:_L('🔲 Diagrammes'), t:_L('Diagrammes du projet où l\'élément est représenté')},
   {k:'ana',   l:_L('🔬 Analyses'),   t:_L('Exigences, propriétés, contraintes, scénarios, statut de revue, catégories, bibliothèques, REC / RPL, déploiement')},
   {k:'revue', l:_L('💬 Revue'),      t:_L('Commentaires de revue portant sur l\'élément')},
@@ -62,5 +63,6 @@ function capDetTabsRefresh(box){
  */
 function capDetTabShow(box, k){
   box.querySelectorAll('.cap-det-tab').forEach(b=>{ const on=b.dataset.dtab===k; b.classList.toggle('active',on); b.setAttribute('aria-selected',on); });
-  box.querySelectorAll('.cap-det-pane').forEach(p=>p.classList.toggle('on', k==='all'||p.dataset.pane===k));
+  // ≡ Tout : sans le 🧭 navigateur sémantique, qui reprend les liens sous une autre forme
+  box.querySelectorAll('.cap-det-pane').forEach(p=>p.classList.toggle('on', (k==='all'&&p.dataset.pane!=='sem')||p.dataset.pane===k));
 }

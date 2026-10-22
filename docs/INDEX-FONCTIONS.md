@@ -338,18 +338,18 @@
 - `capChainExportRefreshCount` (l. 540) — Met à jour le compteur de sélection et la case « Tout » sans re-rendre les cartes (garde les cartes ouvertes).
 - `capRenderChainMap` (l. 551) — Rend la sous-vue « Relation Map » : liste des chaînes groupée par catégorie ARCADIA à gauche,
 
-## 25-panneau-detail.js — 289 lignes
+## 25-panneau-detail.js — 294 lignes
 
 - `capOpenDetail` (l. 5) — Ouvre le panneau de détail (colonne droite de l'overlay) pour un élément Capella.
-- `CAP_DESC_TAGS` (l. 126) — Balises gardées dans une description Capella mise en forme (les autres sont remplacées par leur contenu).
-- `CAP_DESC_CSS` (l. 129) — Propriétés de style gardées (les couleurs de texte sont adaptées au thème ; fonds, positions et images retirés).
-- `capSafeHtml` (l. 137) — Description Capella (HTML) prête à afficher : balises et attributs filtrés (aucun script, aucun gestionnaire
-- `capDescSection` (l. 180) — Section « Description » du panneau de détail : la description mise en forme (aperçu), avec une bascule
-- `capDescToggle` (l. 189) — Bascule Aperçu / code HTML d'une section « Description ». @param {HTMLElement} b - Bouton cliqué
-- `capOpenDetailNode` (l. 196) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
-- `CAP_ELEM_VIEWS` (l. 204)
-- `capUpdateToolbarForView` (l. 210) — Met à jour les boutons actifs et les groupes de contrôles visibles
-- `capShowView` (l. 242) — Affiche une vue Capella (bascule en mode capella si besoin).
+- `CAP_DESC_TAGS` (l. 131) — Balises gardées dans une description Capella mise en forme (les autres sont remplacées par leur contenu).
+- `CAP_DESC_CSS` (l. 134) — Propriétés de style gardées (les couleurs de texte sont adaptées au thème ; fonds, positions et images retirés).
+- `capSafeHtml` (l. 142) — Description Capella (HTML) prête à afficher : balises et attributs filtrés (aucun script, aucun gestionnaire
+- `capDescSection` (l. 185) — Section « Description » du panneau de détail : la description mise en forme (aperçu), avec une bascule
+- `capDescToggle` (l. 194) — Bascule Aperçu / code HTML d'une section « Description ». @param {HTMLElement} b - Bouton cliqué
+- `capOpenDetailNode` (l. 201) — Ouvre le panneau de détail à partir d'un nœud de l'arborescence Capella.
+- `CAP_ELEM_VIEWS` (l. 209)
+- `capUpdateToolbarForView` (l. 215) — Met à jour les boutons actifs et les groupes de contrôles visibles
+- `capShowView` (l. 247) — Affiche une vue Capella (bascule en mode capella si besoin).
 
 ## 26-rapports-html.js — 101 lignes
 
@@ -1424,13 +1424,13 @@
 - `capHistClose` (l. 93) — Ferme la liste des étapes.
 - `capHistReset` (l. 96) — Vide l'historique au chargement d'un autre modèle, qui s'ouvre sur 🏠 Accueil (première étape).
 
-## 77-detail-onglets.js — 67 lignes
+## 77-detail-onglets.js — 69 lignes
 
 - `CAP_DET_TABS` (l. 9) — Onglets du panneau de détail, dans l'ordre d'affichage.
-- `capDetTab` (l. 21) — Onglet choisi (≡ Tout par défaut ; gardé d'un élément à l'autre, enregistré avec la barre).
-- `capDetTabs` (l. 27) — Regroupe les sections du panneau en onglets : l'en-tête (badge, nom, boutons 💬) reste en tête, puis la barre
-- `capDetTabsRefresh` (l. 49) — Met à jour la barre d'onglets : nombre de sections de chaque volet, onglet masqué quand son volet est vide
-- `capDetTabShow` (l. 63) — Affiche un onglet du panneau (≡ Tout : tous les volets à la suite).
+- `capDetTab` (l. 22) — Onglet choisi (≡ Tout par défaut ; gardé d'un élément à l'autre, enregistré avec la barre).
+- `capDetTabs` (l. 28) — Regroupe les sections du panneau en onglets : l'en-tête (badge, nom, boutons 💬) reste en tête, puis la barre
+- `capDetTabsRefresh` (l. 50) — Met à jour la barre d'onglets : nombre de sections de chaque volet, onglet masqué quand son volet est vide
+- `capDetTabShow` (l. 64) — Affiche un onglet du panneau (≡ Tout : tous les volets à la suite).
 
 ## 78-pagination.js — 76 lignes
 
@@ -1525,3 +1525,21 @@
 
 - `capIcoPlusTable` (l. 15) — Corps SVG (viewBox 0 0 16 16) des icônes de complément, par type court. Construit au premier appel.
 - `capIcoPlus` (l. 80) — Icône de complément d'un type (dessinée ici) ou, à défaut, icône générique à ses initiales.
+
+## 85-navigateur-semantique.js — 226 lignes
+
+- `CAP_SEM_TRACE` (l. 9) — Libellés des liens de traçabilité (sourceElement → targetElement) : [côté source (référencés), côté cible (référençants)].
+- `CAP_SEM_INVOLVE` (l. 30) — Libellés des implications (attribut `involved`) vues depuis l'élément impliquant (référencés).
+- `CAP_SEM_ATTR` (l. 43) — Libellés lisibles des attributs de référence les plus courants (sinon le nom XML tel quel).
+- `CAP_SEM_SKIP` (l. 51) — Attributs jamais lus comme des références (texte libre).
+- `capSemRevIndex` (l. 58) — Index inverse des références : id cible → éléments dont un attribut le référence (calculé une fois par modèle).
+- `capSemRefs` (l. 76) — Éléments référencés par la valeur d'un attribut (IDs résolus).
+- `capSemIsLink` (l. 81) — Vrai pour un lien technique (traçabilité, allocation, implication) résumé en catégorie lisible.
+- `capSemIsPort` (l. 86) — Vrai pour un port ou un pin (fonction, composant, physique).
+- `capSemData` (l. 92) — Catégories des trois colonnes pour un élément : référençants, courant (attributs, contenus), référencés.
+- `capSemItem` (l. 164) — Ligne d'un élément ou d'un diagramme dans une catégorie (clic : devient l'élément courant / ouvre le diagramme).
+- `capSemCat` (l. 175) — Catégorie repliable (ouverte jusqu'à 30 lignes, fermée pour les liens techniques contenus).
+- `capSemDetail` (l. 188) — Section 🧭 Navigateur sémantique du panneau de détail (onglet `sem`).
+- `capSemApres` (l. 203) — Après le rendu du panneau de détail : réapplique le filtre saisi pour l'élément précédent.
+- `capSemFiltre` (l. 208) — Filtre les lignes des trois colonnes (nom contenant le texte saisi) ; catégories vides masquées.
+- `capSemLarge` (l. 219) — Élargit (ou rétablit) la colonne de droite pour afficher les trois colonnes côte à côte.
