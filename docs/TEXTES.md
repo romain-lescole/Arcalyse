@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 6629 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 6630 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -6993,25 +6993,31 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 144 | Diagrammes représentant l'élément | Representing diagrams |
 | 145 | Diagrammes contenant l'élément | Diagrams containing the element |
 | 151 | Attributs | Attributes |
-| 195 | Aucun élément | No element |
-| 196 | —sans nom— | —unnamed— |
-| 197 | 🧭 Navigateur sémantique | 🧭 Semantic browser |
-| 198 | Filtrer les éléments… | Filter elements… |
-| 198 | Filtre commun aux trois colonnes (nom de l'élément) | Filter shared by the three columns (element name) |
-| 199 | Fermer la fenêtre séparée (le navigateur reste dans l'onglet 🧭 du panneau de détail) | Close the separate window (the browser stays in the 🧭 tab of the detail panel) |
-| 200 | Élargir le panneau pour voir les trois colonnes côte à côte | Widen the panel to see the three columns side by side |
-| 201 | Ouvrir le navigateur sémantique dans une fenêtre séparée (par exemple sur un autre écran) : il suit l'élément du panneau de détail | Open the semantic browser in a separate window (for example on another screen): it follows the element of the detail panel |
-| 202 | ← Éléments référençants | ← Referencing elements |
-| 202 | Éléments qui désignent l'élément courant (Referencing Elements) | Elements that point to the current element (Referencing Elements) |
-| 203 | Élément courant | Current element |
-| 203 | Attributs et éléments contenus (Current Element) | Attributes and owned elements (Current Element) |
-| 204 | Éléments référencés → | Referenced elements → |
-| 204 | Éléments désignés par l'élément courant (Referenced Elements) | Elements the current element points to (Referenced Elements) |
-| 258 | width=1180,height=820 | (inchangé, hors _L) |
-| 259 | Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez. | The browser blocked the window: allow pop-ups for this page, then try again. |
-| 289 | 🧭 Navigateur sémantique | 🧭 Semantic browser |
-| 289 | Arcalyse | (inchangé, hors _L) |
-| 292 | Ouvrez le détail d'un élément : le navigateur sémantique le suivra ici. | Open the detail of an element: the semantic browser will follow it here. |
+| 193 | Aucun élément | No element |
+| 194 | —sans nom— | —unnamed— |
+| 195 | 🧭 Navigateur sémantique | 🧭 Semantic browser |
+| 196 | Filtrer les éléments… | Filter elements… |
+| 196 | Filtre commun aux trois colonnes (nom de l'élément) | Filter shared by the three columns (element name) |
+| 197 | Élargir le panneau pour voir les trois colonnes côte à côte | Widen the panel to see the three columns side by side |
+| 198 | ← Éléments référençants | ← Referencing elements |
+| 198 | Éléments qui désignent l'élément courant (Referencing Elements) | Elements that point to the current element (Referencing Elements) |
+| 199 | Élément courant | Current element |
+| 199 | Attributs et éléments contenus (Current Element) | Attributes and owned elements (Current Element) |
+| 200 | Éléments référencés → | Referenced elements → |
+| 200 | Éléments désignés par l'élément courant (Referenced Elements) | Elements the current element points to (Referenced Elements) |
+
+## js/86-detail-fenetre.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 20 | width=820,height=900 | (inchangé, hors _L) |
+| 21 | Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez. | The browser blocked the window: allow pop-ups for this page, then try again. |
+| 25 | 🔎 Propriétés | 🔎 Properties |
+| 26 | Ramener le panneau de détail dans la page | Bring the detail panel back into the page |
+| 63 | Ouvrez le détail d'un élément : il s'affichera ici. | Open the detail of an element: it will be shown here. |
+| 68 | 🔎 Propriétés | 🔎 Properties |
+| 68 | Arcalyse | (inchangé, hors _L) |
+| 102 | Ouvrir le panneau de détail dans une fenêtre séparée (par exemple sur un autre écran) : il suit l'élément choisi | Open the detail panel in a separate window (for example on another screen): it follows the chosen element |
 
 ## Textes sans traduction anglaise (13)
 

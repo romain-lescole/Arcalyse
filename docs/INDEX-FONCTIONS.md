@@ -1526,7 +1526,7 @@
 - `capIcoPlusTable` (l. 15) — Corps SVG (viewBox 0 0 16 16) des icônes de complément, par type court. Construit au premier appel.
 - `capIcoPlus` (l. 80) — Icône de complément d'un type (dessinée ici) ou, à défaut, icône générique à ses initiales.
 
-## 85-navigateur-semantique.js — 297 lignes
+## 85-navigateur-semantique.js — 244 lignes
 
 - `CAP_SEM_TRACE` (l. 11) — Libellés des liens de traçabilité (sourceElement → targetElement) : [côté source (référencés), côté cible (référençants)].
 - `CAP_SEM_INVOLVE` (l. 32) — Libellés des implications (attribut `involved`) vues depuis l'élément impliquant (référencés).
@@ -1538,15 +1538,22 @@
 - `capSemIsPort` (l. 88) — Vrai pour un port ou un pin (fonction, composant, physique).
 - `capSemData` (l. 94) — Catégories des trois colonnes pour un élément : référençants, courant (attributs, contenus), référencés.
 - `capSemItem` (l. 166) — Ligne d'un élément ou d'un diagramme dans une catégorie (clic : devient l'élément courant / ouvre le diagramme).
-- `capSemCat` (l. 178) — Catégorie repliable (ouverte jusqu'à 30 lignes, fermée pour les liens techniques contenus).
-- `capSemDetail` (l. 192) — Section 🧭 Navigateur sémantique du panneau de détail (onglet `sem`), ou contenu de la fenêtre séparée.
-- `capSemApres` (l. 210) — Après le rendu du panneau de détail : réapplique le filtre saisi pour l'élément précédent.
-- `capSemFiltre` (l. 215) — Filtre les lignes des trois colonnes (nom contenant le texte saisi) ; catégories vides masquées.
-- `capSemLarge` (l. 226) — Élargit (ou rétablit) la colonne de droite pour afficher les trois colonnes côte à côte.
-- `capSemClic` (l. 237) — Clic dans un navigateur sémantique (page ou fenêtre séparée) : élément → élément courant, diagramme → ouvert, boutons.
-- `capSemSaisie` (l. 247) — Saisie dans le champ de filtre d'un navigateur sémantique. @param {Event} e - Saisie
-- `capSemPop` (l. 253) — @returns {Window|null} Fenêtre séparée du navigateur sémantique, si elle est ouverte
-- `capSemPopOut` (l. 256) — Ouvre (ou ramène au premier plan) la fenêtre séparée du navigateur sémantique, qui suit le panneau de détail.
-- `capSemPopFerme` (l. 279) — Fenêtre séparée fermée : oubli de la fenêtre, bouton ⧉ du panneau rétabli.
-- `capSemBoutons` (l. 282) — État du bouton ⧉ des navigateurs affichés dans la page (enfoncé tant que la fenêtre est ouverte).
-- `capSemPopRender` (l. 285) — Redessine la fenêtre séparée pour l'élément courant (thème de la page recopié).
+- `capSemCat` (l. 177) — Catégorie repliable (ouverte jusqu'à 30 lignes, fermée pour les liens techniques contenus).
+- `capSemDetail` (l. 190) — Section 🧭 Navigateur sémantique du panneau de détail (onglet `sem`).
+- `capSemApres` (l. 206) — Après le rendu du panneau de détail : réapplique le filtre saisi pour l'élément précédent.
+- `capSemFiltre` (l. 211) — Filtre les lignes des trois colonnes (nom contenant le texte saisi) ; catégories vides masquées.
+- `capSemLarge` (l. 222) — Élargit (ou rétablit) la colonne de droite pour afficher les trois colonnes côte à côte.
+- `capSemClic` (l. 233) — Clic dans un navigateur sémantique (page ou fenêtre séparée) : élément → élément courant, diagramme → ouvert, boutons.
+- `capSemSaisie` (l. 241) — Saisie dans le champ de filtre d'un navigateur sémantique. @param {Event} e - Saisie
+
+## 86-detail-fenetre.js — 120 lignes
+
+- `CAP_DETPOP_SRC` (l. 12) — Panneaux de détail de la page et leur contenu.
+- `capDetPop` (l. 15) — @returns {Window|null} Fenêtre séparée du panneau de détail, si elle est ouverte
+- `capDetPopOut` (l. 18) — Ouvre (ou ramène au premier plan) la fenêtre séparée du panneau de détail.
+- `capDetPopPont` (l. 49) — Rend visibles dans la fenêtre séparée les fonctions d'Arcalyse appelées par les `onclick` du contenu recopié.
+- `capDetPopCopie` (l. 56) — Recopie dans la fenêtre le contenu d'un panneau de détail de la page, puis masque ce panneau.
+- `capDetPopClic` (l. 76) — Clic dans la fenêtre séparée : ⧈, onglets du panneau, pagination, 🧭 navigateur sémantique.
+- `capDetPopBack` (l. 87) — Fenêtre fermée : le panneau de détail revient dans la page (s'il a un contenu).
+- `capDetPopBoutons` (l. 97) — Boutons ⧉ des panneaux de détail de la page (créés au chargement du module ; enfoncés pendant que la fenêtre est ouverte).
+- `capDetPopWatch` (l. 109) — Observe les contenus des panneaux de détail : tout changement est recopié dans la fenêtre séparée ouverte.
