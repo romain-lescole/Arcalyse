@@ -346,7 +346,7 @@ html[data-theme="office2007"] .arbo-row.arbo-sel{background:linear-gradient(#fff
 #rm-tab-add-dd{min-width:230px}
 
 /* ── Relation Map : panneau de détail à droite (clic droit › 🔎 Détail) ── */
-#rm-detail{width:var(--rm-detail-w,340px);flex-shrink:0;border-left:1px solid var(--c-border);background:var(--c-bg2);
+#rm-detail{width:var(--dock-w,400px);max-width:70vw;flex-shrink:0;border-left:1px solid var(--c-border);background:var(--c-bg2);
            overflow-y:auto;padding:16px;flex-direction:column;position:relative}
 #rm-detail-close{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--c-dim);
                  cursor:pointer;font-size:18px;line-height:1}
@@ -1412,8 +1412,23 @@ pre.cap-desc{font:11px/1.45 Consolas,monospace;white-space:pre-wrap;margin:0;}
 /* ── 💬 Revue : panneau, cartes, éditeur, calque des diagrammes ── */
 #b-review-badge{background:var(--c-accent);color:var(--c-bg);}
 #b-review-badge.crv-warn{background:var(--c-warn,#e3b341);color:#000;}
-#crv-panel{position:fixed;right:0;bottom:0;width:min(460px,100vw);z-index:2500;display:none;flex-direction:column;background:var(--c-bg);border-left:1px solid var(--c-border);box-shadow:-6px 0 22px rgba(0,0,0,.3);color:var(--c-text);}
-.crv-hdr{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--c-border);font-size:14px;}
+#crv-panel{position:relative;width:var(--dock-w,400px);max-width:70vw;flex-shrink:0;min-height:0;display:none;flex-direction:column;background:var(--c-bg);border-left:1px solid var(--c-border);color:var(--c-text);}
+.crv-hdr{display:flex;align-items:center;gap:8px;padding:8px 10px 4px;font-size:14px;}
+.crv-acts{display:flex;flex-wrap:wrap;align-items:center;gap:5px;padding:0 10px 8px;border-bottom:1px solid var(--c-border);}
+.crv-acts .cap-lf-btn,.crv-hdr .cap-lf-btn{margin:0;}
+.crv-hdr>.cap-lf-btn{flex-shrink:0;}
+/* Onglets 🔎 Propriétés / 💬 Revue : panneaux de détail et de revue ouverts ensemble dans la colonne de droite */
+.cap-dock-hid{display:none!important;}
+#cap-detail{width:var(--dock-w,400px)!important;max-width:70vw;}
+/* Bord gauche des panneaux de droite : largeur commune réglable (55, capDockResizeDown) */
+html.cap-dock-res,html.cap-dock-res *,html.cap-dock-drag,html.cap-dock-drag *{cursor:col-resize!important;}
+html.cap-dock-drag{user-select:none;}
+html.cap-dock-res #cap-detail,html.cap-dock-res #rm-detail,html.cap-dock-res #crv-panel,html.cap-dock-drag #cap-detail,html.cap-dock-drag #rm-detail,html.cap-dock-drag #crv-panel{border-left-color:var(--c-accent);}
+.cap-dock-tabs{display:flex;gap:2px;flex-shrink:0;}
+#cap-detail>.cap-dock-tabs,#rm-detail>.cap-dock-tabs{margin:-6px 26px 10px 0;}
+.cap-dock-tab{background:none;border:1px solid transparent;border-radius:6px;padding:4px 9px;font-size:12.5px;color:var(--c-dim);cursor:pointer;}
+.cap-dock-tab:hover{color:var(--c-text);background:var(--c-bg3);}
+.cap-dock-tab.on{background:var(--c-bg3);border-color:var(--c-border);color:var(--c-text);font-weight:600;}
 .crv-hdr .ana-dim{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:160px;}
 .crv-tabs{display:flex;gap:2px;padding:6px 8px 0;border-bottom:1px solid var(--c-border);flex-wrap:wrap;}
 .crv-tab{background:none;border:1px solid transparent;border-bottom:none;border-radius:6px 6px 0 0;padding:5px 9px;font-size:12px;color:var(--c-dim);cursor:pointer;}
@@ -1492,7 +1507,7 @@ html[data-tone="light"] .crv-late{color:#cf222e;}
 .crv-det-c.closed{opacity:.6;}
 .crv-det-c:hover{border-color:var(--c-accent);}
 /* Clic droit */
-#crv-ctx{position:fixed;z-index:3000;display:none;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;min-width:220px;max-width:340px;}
+#crv-ctx,#cdg-ctx{position:fixed;z-index:3000;display:none;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.35);padding:4px 0;min-width:220px;max-width:340px;}
 .crv-ctx-t{padding:5px 13px 6px;font-size:11.5px;font-weight:600;border-bottom:1px solid var(--c-border);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 /* Marques des éléments commentés */
 .fex-blk.crv-mk .fex-box{outline:2px dashed var(--c-warn,#e3b341);outline-offset:2px;}
@@ -1550,7 +1565,7 @@ html[data-tone="light"] .crv-late{color:#cf222e;}
 .crv-dd-h{padding:5px 12px;font-size:11px;color:var(--c-dim);line-height:1.45;}
 .crv-dd-h b{color:var(--c-text);}
 body.crv-pop-body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:'Segoe UI',system-ui,sans-serif;overflow:hidden;}
-#crv-panel.crv-pop{position:static;width:auto;height:100vh;border:0;box-shadow:none;}
+#crv-panel.crv-pop{position:static;width:auto;max-width:none;height:100vh;border:0;box-shadow:none;}
 .crv-hdr .cap-lf-btn{white-space:nowrap;}
 #vue-diagramme .cdg-vd-l1 .vd-chercher{flex:0 0 auto;margin-right:6px;}
 .cdg-crv{margin-left:0;}
@@ -1967,6 +1982,17 @@ details.cap-diag.cap-diag-flash{outline:2px solid var(--c-accent);outline-offset
 #cap-flux-tabs .cap-lf-btn[disabled]{opacity:.4;cursor:default;}
 /* 🏠 Accueil / 💬 Revue & documents : nom de l'espace en tête de la barre d'onglets (lot 6) */
 .hm-bar-e{font-weight:700;font-size:13px;color:var(--c-text);white-space:nowrap;}
+/* ⧉ Fenêtre de comparaison des diagrammes (83-fenetre-diagramme.js) */
+body.dgw-body{margin:0;height:100vh;display:flex;flex-direction:column;background:var(--c-bg);color:var(--c-text);font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;overflow:hidden;}
+.dgw-barre{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:6px 10px;border-bottom:1px solid var(--c-border);background:var(--c-bg2);}
+.dgw-barre select{width:auto!important;min-width:280px;max-width:min(560px,60vw);}
+.dgw-pct{display:inline-block;min-width:48px;text-align:center;font-size:12px;color:var(--c-dim);}
+.dgw-aide{font-size:11.5px;color:var(--c-dim);}
+.dgw-zone{flex:1;min-height:0;position:relative;overflow:hidden;background:#fff;cursor:grab;}
+.dgw-zone.dgw-glisse{cursor:grabbing;}
+.dgw-zone .dgw-svg{display:block;width:100%;height:100%;}
+.dgw-zone [data-sem]{cursor:pointer;}
+.dgw-msg{padding:40px;text-align:center;color:#555;}
 </style>
 </head>
 <body>
@@ -2630,7 +2656,7 @@ details.cap-diag.cap-diag-flash{outline:2px solid var(--c-accent);outline-offset
           <tr><td>🧭 Explorateur › ▦ Cartes</td><td>Éléments groupés par couche ARCADIA, filtres de couche et recherche ; par pages de 500 cartes (⏮ ◀ Préc. · Suiv. ▶ ⏭, en haut et en bas de la liste).</td></tr>
           <tr><td>▤ Tableau</td><td>Bouton direct de la barre : tableau paginé avec onglets de vues, colonnes d'attributs, de relations et par chemin, tri, filtres, export CSV (onglet ▤ Tableau de cette aide).</td></tr>
           <tr><td>⚡ Chaînes</td><td>Chaînes fonctionnelles, processus opérationnels et chemins physiques : diagrammes, tables et exports (onglet ⚡ Chaînes).</td></tr>
-          <tr><td>🔲 Diagrammes Capella</td><td>Diagrammes Capella du projet (fichier <b>.aird</b>, à côté du .capella) dessinés comme dans Capella par la visionneuse d'Arcature : <b>📂 Ouvrir le .aird…</b> (le sélecteur s'ouvre dans le dossier du .capella sous Edge / Chrome), <b>📁 Dossier du projet…</b> sur l'écran d'accueil (.capella et .aird chargés ensemble), ou déposez le .aird (seul ou avec le .capella) sur la fenêtre. <b>Explorateur</b> à gauche : classé par couche (par défaut), couche › type de diagramme (OA › OAB…), type ou nom ; groupes repliables (⊞ / ⊟), filtre ; largeur réglable en glissant le séparateur (double-clic : largeur d'origine). <b>▣ Carte</b> sous l'explorateur (▾ pour la replier, ⇲ pour la remettre dans le diagramme, ⇱ pour la ramener). <b>⬇ Exporter…</b> : plusieurs diagrammes à la fois (choisis avec <b>☐ Sélectionner…</b>, affichés ou tous ; les tableaux sont exclus ; alerte si le PDF risque de dépasser 40 Mo) en <b>planches</b> — cadre et en-tête (couche, sigle, nom, type), description Capella et élément représenté, cartouche (projet, type, couche, contenu, sources, date, planche), annexe des éléments représentés, aperçu — au format choisi puis <b>⬇ Exporter</b> : PDF (sommaire, signets, annexes), ZIP PNG / SVG (un dossier par couche, un CSV d'annexe par diagramme) ou rapport HTML (planches repliables par couche et type). Au-dessus du diagramme, deux lignes qui ne bougent pas d'un diagramme à l'autre : <b>identité</b> (nom, recherche dans le diagramme ▲ ▼, thème, ⬇ Exporter, ✕ ; l'élément représenté est dans ℹ Infos) puis <b>outils</b> (📝 Note de revue et 💬 Calque, chaînes et chemins, filtres, zoom, carte, mise en page). Tableaux, zoom, recherche (Ctrl+F), mini-carte, infobulles, filtres (ports, étiquettes, catégories d'échanges), <b>chaînes et chemins</b> : seuls ceux dessinés dans le diagramme sont proposés, exports SVG / PNG / impression. <b>ℹ Infos</b> (ou ℹ au survol d'un diagramme de l'explorateur) : le panneau de détail présente le diagramme — type, couche, nature, nombre d'éléments, date de dernière modification, description, élément représenté et éléments affichés, groupés par type et cliquables. <b>Clic sur un élément</b> : son panneau de détail ; dans le panneau de détail, la section <b>Diagrammes</b> ouvre un diagramme où l'élément est représenté, centré sur lui. Lecture seule.</td></tr>
+          <tr><td>🔲 Diagrammes Capella</td><td>Diagrammes Capella du projet (fichier <b>.aird</b>, à côté du .capella) dessinés comme dans Capella par la visionneuse d'Arcature : <b>📂 Ouvrir le .aird…</b> (le sélecteur s'ouvre dans le dossier du .capella sous Edge / Chrome), <b>📁 Dossier du projet…</b> sur l'écran d'accueil (.capella et .aird chargés ensemble), ou déposez le .aird (seul ou avec le .capella) sur la fenêtre. <b>Explorateur</b> à gauche : classé par couche (par défaut), couche › type de diagramme (OA › OAB…), type ou nom ; groupes repliables (⊞ / ⊟), filtre ; largeur réglable en glissant le séparateur (double-clic : largeur d'origine). <b>▣ Carte</b> sous l'explorateur (▾ pour la replier, ⇲ pour la remettre dans le diagramme, ⇱ pour la ramener). <b>⬇ Exporter…</b> : plusieurs diagrammes à la fois (choisis avec <b>☐ Sélectionner…</b>, affichés ou tous ; les tableaux sont exclus ; alerte si le PDF risque de dépasser 40 Mo) en <b>planches</b> — cadre et en-tête (couche, sigle, nom, type), description Capella et élément représenté, cartouche (projet, type, couche, contenu, sources, date, planche), annexe des éléments représentés, aperçu — au format choisi puis <b>⬇ Exporter</b> : PDF (sommaire, signets, annexes), ZIP PNG / SVG (un dossier par couche, un CSV d'annexe par diagramme) ou rapport HTML (planches repliables par couche et type). Au-dessus du diagramme, deux lignes qui ne bougent pas d'un diagramme à l'autre : <b>identité</b> (nom, recherche dans le diagramme ▲ ▼, thème, ⬇ Exporter, ✕ ; l'élément représenté est dans ℹ Infos) puis <b>outils</b> (📝 Note de revue et 💬 Calque, chaînes et chemins, filtres, zoom, carte, mise en page). Tableaux, zoom, recherche (Ctrl+F), mini-carte, infobulles, filtres (ports, étiquettes, catégories d'échanges), <b>chaînes et chemins</b> : seuls ceux dessinés dans le diagramme sont proposés, exports SVG / PNG / impression. <b>ℹ Infos</b> (ou ℹ au survol d'un diagramme de l'explorateur) : le panneau de détail présente le diagramme — type, couche, nature, nombre d'éléments, date de dernière modification, description, élément représenté et éléments affichés, groupés par type et cliquables. <b>⧉ Comparer</b> (barre de la vue) ouvre le diagramme affiché dans la <b>fenêtre de comparaison</b> : une fenêtre séparée (une seule, réutilisée ; par exemple sur un autre écran) avec sa propre liste de diagrammes, zoom à la molette, déplacement au glisser, <b>⤢ Ajuster</b> ; un clic sur un élément ouvre son détail dans la page. <b>Clic droit</b> sur un diagramme de l'explorateur (ou dans le diagramme ouvert) › <b>⧉ Afficher dans la fenêtre de comparaison</b> y montre un autre diagramme, le diagramme de la page ne change pas. <b>Clic sur un élément</b> : son panneau de détail ; dans le panneau de détail, la section <b>Diagrammes</b> ouvre un diagramme où l'élément est représenté, centré sur lui. Lecture seule.</td></tr>
           <tr><td>ƒ⇆ Functional Exchange · 🧱 System / Logical Component · 🔀 Behavior Exchange · 🔌 Physical Link · 🧩 Ports</td><td>Analyse des interfaces et contrôles de cohérence (onglet 🔌 Interfaces & ports).</td></tr>
           <tr><td>🏗 Architecture › ƒ Fonctions</td><td>Fonctions couche par couche : hiérarchie, tableau, traçabilité, métriques, contrôles, dossier (onglet ƒ Fonctions · 🔬 Analyses).</td></tr>
           <tr><td>🔬 Analyses</td><td>Sous-vues réparties entre 🏗 Architecture (modes & états, capacités, données, déploiement) et ✅ Vérifier (santé, traçabilité, exigences, propriétés, contraintes, comparaison, statut de revue…) ; la vue garde sa rangée d'onglets (onglet 🔬 Analyses).</td></tr>
@@ -2897,7 +2923,7 @@ details.cap-diag.cap-diag-flash{outline:2px solid var(--c-accent);outline-offset
       <!-- ── REVUE ── -->
       <div id="ht-review" class="ht-panel" style="display:none">
         <h2>💬 Revue — commentaires sur le modèle et les diagrammes</h2>
-        <p class="hp-lead">Le bouton <b>💬 Revue</b> de la barre ouvre le panneau de revue (à droite). Son badge compte les commentaires non clos ; <b>⚠ n</b> signale des commentaires à vérifier après une mise à jour du modèle.</p>
+        <p class="hp-lead"><b>💬 Revue & documents › 💬 Commentaires</b> ouvre le panneau de revue, <b>ancré à droite</b> : la vue se resserre pour lui laisser la place (rien n'est masqué). Si le panneau de détail est ouvert aussi, des onglets <b>🔎 Propriétés / 💬 Revue</b> passent de l'un à l'autre ; ouvrir le détail d'un élément affiche 🔎 Propriétés. <b>⧉</b> détache le panneau dans une fenêtre séparée, <b>✕</b> le ferme. Les deux panneaux ont la <b>même largeur</b>, réglable en glissant leur bord gauche (curseur ↔ ; double-clic : largeur par défaut) ; elle est enregistrée avec la page. Son badge compte les commentaires non clos ; <b>⚠ n</b> signale des commentaires à vérifier après une mise à jour du modèle.</p>
         <h3>Commenter</h3>
         <table class="hp-t">
           <tr><td>Panneau de détail</td><td><b>💬 Commenter</b> (l'élément), <b>💬 le nom</b>, <b>💬 la description</b> sous le nom de l'élément ; un <b>💬</b> apparaît au survol de chaque attribut. La section <b>💬 Commentaires de revue</b> liste ceux qui portent sur l'élément.</td></tr>
@@ -3666,7 +3692,7 @@ details.cap-diag.cap-diag-flash{outline:2px solid var(--c-accent);outline-offset
           <tr><td>🧭 Explorer › ▦ Cards</td><td>Elements grouped by ARCADIA layer, layer filters and search; in pages of 500 cards (⏮ ◀ Prev. · Next ▶ ⏭, at the top and bottom of the list).</td></tr>
           <tr><td>▤ Table</td><td>Direct button of the bar: paged table with view tabs, attribute, relation and path columns, sort, filters, CSV export (▤ Table tab of this help).</td></tr>
           <tr><td>⚡ Chains</td><td>Functional chains, operational processes and physical paths: diagrams, tables and exports (⚡ Chains tab).</td></tr>
-          <tr><td>🔲 Capella diagrams</td><td>Capella diagrams of the project (<b>.aird</b> file, next to the .capella) drawn as in Capella by the Arcature viewer: <b>📂 Open the .aird…</b> (the picker opens in the .capella folder in Edge / Chrome), <b>📁 Project folder…</b> on the home screen (.capella and .aird loaded together), or drop the .aird (alone or with the .capella) on the window. <b>Explorer</b> on the left: grouped by layer (default), layer › diagram type (OA › OAB…), type or name; collapsible groups (⊞ / ⊟), filter; width adjustable by dragging the separator (double-click: original width). <b>▣ Map</b> below the explorer (▾ to collapse it, ⇲ to put it back in the diagram, ⇱ to bring it back). <b>⬇ Export…</b>: several diagrams at once (chosen with <b>☐ Select…</b>, displayed or all; tables are excluded; warning if the PDF may exceed 40 MB) as <b>sheets</b> — frame and header (layer, acronym, name, type), Capella description and represented element, title block (project, type, layer, content, sources, date, sheet), appendix of represented elements, preview — in the chosen format, then <b>⬇ Export</b>: PDF (contents, bookmarks, appendices), PNG / SVG ZIP (one folder per layer, one appendix CSV per diagram) or HTML report (sheets collapsible by layer and type). Above the diagram, two rows that do not move from one diagram to another: <b>identity</b> (name, diagram search ▲ ▼, theme, ⬇ Export, ✕; the represented element is in ℹ Info) then <b>tools</b> (📝 Review note and 💬 Layer, chains and paths, filters, zoom, map, layout). Tables, zoom, search (Ctrl+F), minimap, tooltips, filters (ports, labels, exchange categories), <b>chains and paths</b>: only those drawn in the diagram are offered, SVG / PNG / print exports. <b>ℹ Info</b> (or ℹ when hovering a diagram in the explorer): the details panel presents the diagram — type, layer, nature, number of elements, last modification date, description, represented element and displayed elements, grouped by type and clickable. <b>Click an element</b>: its details panel; in the details panel, the <b>Diagrams</b> section opens a diagram where the element is represented, centred on it. Read-only.</td></tr>
+          <tr><td>🔲 Capella diagrams</td><td>Capella diagrams of the project (<b>.aird</b> file, next to the .capella) drawn as in Capella by the Arcature viewer: <b>📂 Open the .aird…</b> (the picker opens in the .capella folder in Edge / Chrome), <b>📁 Project folder…</b> on the home screen (.capella and .aird loaded together), or drop the .aird (alone or with the .capella) on the window. <b>Explorer</b> on the left: grouped by layer (default), layer › diagram type (OA › OAB…), type or name; collapsible groups (⊞ / ⊟), filter; width adjustable by dragging the separator (double-click: original width). <b>▣ Map</b> below the explorer (▾ to collapse it, ⇲ to put it back in the diagram, ⇱ to bring it back). <b>⬇ Export…</b>: several diagrams at once (chosen with <b>☐ Select…</b>, displayed or all; tables are excluded; warning if the PDF may exceed 40 MB) as <b>sheets</b> — frame and header (layer, acronym, name, type), Capella description and represented element, title block (project, type, layer, content, sources, date, sheet), appendix of represented elements, preview — in the chosen format, then <b>⬇ Export</b>: PDF (contents, bookmarks, appendices), PNG / SVG ZIP (one folder per layer, one appendix CSV per diagram) or HTML report (sheets collapsible by layer and type). Above the diagram, two rows that do not move from one diagram to another: <b>identity</b> (name, diagram search ▲ ▼, theme, ⬇ Export, ✕; the represented element is in ℹ Info) then <b>tools</b> (📝 Review note and 💬 Layer, chains and paths, filters, zoom, map, layout). Tables, zoom, search (Ctrl+F), minimap, tooltips, filters (ports, labels, exchange categories), <b>chains and paths</b>: only those drawn in the diagram are offered, SVG / PNG / print exports. <b>ℹ Info</b> (or ℹ when hovering a diagram in the explorer): the details panel presents the diagram — type, layer, nature, number of elements, last modification date, description, represented element and displayed elements, grouped by type and clickable. <b>⧉ Compare</b> (view bar) opens the displayed diagram in the <b>comparison window</b>: a separate window (a single one, reused; for example on another screen) with its own list of diagrams, wheel zoom, drag to pan, <b>⤢ Fit</b>; clicking an element opens its details in the page. <b>Right-click</b> a diagram in the explorer (or in the open diagram) › <b>⧉ Show in the comparison window</b> shows another diagram there; the page's diagram does not change. <b>Click an element</b>: its details panel; in the details panel, the <b>Diagrams</b> section opens a diagram where the element is represented, centred on it. Read-only.</td></tr>
           <tr><td>ƒ⇆ Functional Exchange · 🧱 System / Logical Component · 🔀 Behavior Exchange · 🔌 Physical Link · 🧩 Ports</td><td>Interface analysis and consistency checks (🔌 Interfaces & ports tab).</td></tr>
           <tr><td>🏗 Architecture › ƒ Functions</td><td>Functions layer by layer: hierarchy, table, traceability, metrics, checks, file (ƒ Functions · 🔬 Analyses tab).</td></tr>
           <tr><td>🔬 Analyses</td><td>Sub-views split between 🏗 Architecture (modes & states, capabilities, data, deployment) and ✅ Check (health, traceability, requirements, properties, constraints, comparison, review status…); the view keeps its row of tabs (🔬 Analyses tab).</td></tr>
@@ -3933,7 +3959,7 @@ details.cap-diag.cap-diag-flash{outline:2px solid var(--c-accent);outline-offset
       <!-- ── REVIEW ── -->
       <div id="ht-review" class="ht-panel" style="display:none">
         <h2>💬 Review — comments on the model and diagrams</h2>
-        <p class="hp-lead">The <b>💬 Review</b> button of the bar opens the review panel (on the right). Its badge counts open comments; <b>⚠ n</b> flags comments to check after a model update.</p>
+        <p class="hp-lead"><b>💬 Review & documents › 💬 Comments</b> opens the review panel, <b>docked on the right</b>: the view narrows to make room for it (nothing is hidden). If the detail panel is open too, <b>🔎 Properties / 💬 Review</b> tabs switch between them; opening an element's details shows 🔎 Properties. <b>⧉</b> detaches the panel into a separate window, <b>✕</b> closes it. Both panels share the <b>same width</b>, adjustable by dragging their left edge (↔ cursor; double-click: default width); it is saved with the page. Its badge counts open comments; <b>⚠ n</b> flags comments to check after a model update.</p>
         <h3>Commenting</h3>
         <table class="hp-t">
           <tr><td>Detail panel</td><td><b>💬 Comment</b> (the element), <b>💬 the name</b>, <b>💬 the description</b> below the element name; a <b>💬</b> appears when hovering each attribute. The <b>💬 Review comments</b> section lists those concerning the element.</td></tr>
@@ -4429,6 +4455,7 @@ function applyMode(mode) {
   if(capOv) { if(isCapella) capOv.classList.add('cap-visible'); else capOv.classList.remove('cap-visible'); }
   // Panneau 🔎 Détail de la Relation Map : masqué dans les vues Capella, rouvert au retour s'il l'était
   const rmDet=document.getElementById('rm-detail'); if(rmDet) rmDet.style.display = (!isCapella && _rmDetailOn) ? 'flex' : 'none';
+  if(typeof capDockSync==='function') capDockSync();   // 💬 Revue ancrée : suit la colonne de droite du mode affiché (55)
   // Hide whole left panel in capella mode
   document.getElementById('panel').style.display = isCapella ? 'none' : '';
   document.getElementById('panel-resize-bar').style.display = isCapella ? 'none' : '';
@@ -5689,11 +5716,13 @@ function rmDetailOpen(id){
   if (capGetElementById_(id)) { capOpenDetail(id); return; }
   box.innerHTML='<div id="props-body"></div>'; rmPropsRender();
   det.style.display='flex';
+  capDockShow('det');
 }
 /** Ferme le panneau de détail de la Relation Map. */
 function rmDetailClose(){
   _rmDetailOn=false;
   const det=document.getElementById('rm-detail'); if (det) det.style.display='none';
+  capDockSync();
 }
 /** Le panneau de détail suit la sélection (S.propEl) tant qu'il est ouvert, en Relation Map. */
 function rmDetailFollow(){
@@ -11822,6 +11851,7 @@ function capOpenDetail(id){
   if(typeof capDetTabs==='function') capDetTabs(box);   // 🗂 onglets du panneau (77)
   const det=document.getElementById(inRm?'rm-detail':'cap-detail');
   if(det){ det.style.display='flex'; }
+  if(typeof capDockShow==='function') capDockShow('det');   // devant le panneau 💬 Revue s'il est ouvert (onglets, 55)
 }
 /** Balises gardées dans une description Capella mise en forme (les autres sont remplacées par leur contenu). */
 const CAP_DESC_TAGS=new Set(['P','BR','B','STRONG','I','EM','U','S','STRIKE','DEL','INS','SUB','SUP','SPAN','DIV','UL','OL','LI','TABLE','THEAD','TBODY','TFOOT','TR','TD','TH','CAPTION',
@@ -11898,7 +11928,7 @@ function capOpenDetailNode(node){
   const el=capAllElements.find(e=>e.id===node.id);
   if(el) capOpenDetail(el.id);
 }
-document.getElementById('cap-detail-close')?.addEventListener('click',()=>{const d=document.getElementById('cap-detail');if(d)d.style.display='none';});
+document.getElementById('cap-detail-close')?.addEventListener('click',()=>{const d=document.getElementById('cap-detail');if(d)d.style.display='none';capDockSync();});
 
 // ── Sub-toolbar wiring ──
 // ── Capella toolbar view buttons (now in main toolbar) ──
@@ -19590,7 +19620,7 @@ function capCfgGet(k){
 function capCfgSet(k, v){
   if(v==null) return;
   if(k==='toolbar'){ if(v&&Array.isArray(v.pins)){ _capNav=capNavMigrate(v);   // réglage d'avant la 3.0 converti
-    capNavSave(); capNavRender(); capWatchCfgLoad(); if(typeof capAutoSchedule==='function') capAutoSchedule(); } }
+    capNavSave(); capNavRender(); capWatchCfgLoad(); capDockWidthApply(); if(typeof capAutoSchedule==='function') capAutoSchedule(); } }
   else if(k==='dash'){ capDashStore=v; capDashSave(); const dv=document.getElementById('cap-view-dashboard'); if(dv&&dv.style.display!=='none'&&capLoaded) capRenderDashboard(dv); }
   else if(k==='table'){
     capTableCfgSet(v);
@@ -20748,7 +20778,7 @@ function capRenderScenarios(){
  * Fenêtre « À propos » d'Arcalyse (menu ❓ Aide ▾) : identité et version, auteur, licence Apache 2.0, contact,
  * composants tiers (D3.js, licence ISC à reproduire), marques citées, informations techniques copiables.
  */
-var CAP_APP_VERSION='3.0';   // à mettre à jour à chaque livraison (node build.js --livraison)
+var CAP_APP_VERSION='3.1';   // à mettre à jour à chaque livraison (node build.js --livraison)
 var CAP_APP_AUTHOR=_L('Romain Lescole');
 var CAP_APP_NAME=_L('Arcalyse');
 var CAP_APP_SLOGAN=_L((CAP_LANG==='en'?"Your Capella model, inside and out.":'Votre modèle Capella, sous toutes ses coutures.'));
@@ -22021,7 +22051,15 @@ function capIco(id, taille) {
   }
   const k = id + '|' + (taille || 14);
   let s = _capIco.cache.get(k);
-  if (s == null) { try { s = A.icone(id, taille || 14) || ''; } catch (e) { s = ''; } _capIco.cache.set(k, s); }
+  if (s == null) {
+    try { s = A.icone(id, taille || 14) || ''; } catch (e) { s = ''; }
+    if (!s) {   // type sans icône dans la visionneuse : icône de complément (84)
+      const el = capAllElements.length ? capGetElementById_(id) : null;
+      if (!el) return '';   // modèle en cours de chargement : pas de mise en cache
+      s = capIcoPlus(el.typeName, taille);
+    }
+    _capIco.cache.set(k, s);
+  }
   return s;
 }
 /**
@@ -22035,7 +22073,7 @@ function capIcoType(type, taille) {
   if (!type || !A || typeof A.iconeType !== 'function') return '';
   const k = '@' + type + '|' + (taille || 14);
   let s = _capIco.cache.get(k);
-  if (s == null) { try { s = A.iconeType(type, taille || 14) || ''; } catch (e) { s = ''; } _capIco.cache.set(k, s); }
+  if (s == null) { try { s = A.iconeType(type, taille || 14) || ''; } catch (e) { s = ''; } if (!s) s = capIcoPlus(type, taille); _capIco.cache.set(k, s); }   // 84 : complément
   return s;
 }
 
@@ -22047,6 +22085,7 @@ function capIcoType(type, taille) {
  * @param {boolean} [attente] - true : le .aird va avec le modèle en cours de chargement (pas d'ouverture de la vue)
  */
 function capDiagLoadAird(f, h, attente) {
+  capDgwFermer();   // ⧉ la fenêtre de comparaison montrait l'ancien .aird (83)
   const r = new FileReader();
   r.onerror = () => capWelcomeStatus(_L((CAP_LANG==='en'?`Cannot read “${f.name}”.`:`Impossible de lire « ${f.name} ».`)), 'err');
   r.onload = ev => {
@@ -22325,7 +22364,8 @@ function capDiagBarre() {
   const n = _capDiag.sel.size;
   const exp = _capDiag.airdCharge ? `<span class="tb-grp"><button class="tbtn" id="cdg-export" title="${_L((CAP_LANG==='en'?"Export several diagrams as sheets (header, description, title block, appendix): PDF, PNG / SVG ZIP, HTML report":'Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML'))}">${_L((CAP_LANG==='en'?"⬇ Export…":'⬇ Exporter…'))}${n ? ` <span class="cdg-nb">${n}</span>` : ''}</button>` +
     `<button class="tbtn${_capDiag.choix ? ' active' : ''}" id="cdg-choix" title="${_L((CAP_LANG==='en'?"Choose the diagrams to export: checkboxes in the explorer":'Choisir les diagrammes à exporter : cases à cocher dans l\'explorateur'))}">${_capDiag.choix ? _L((CAP_LANG==='en'?"☑ Finish selection":'☑ Terminer la sélection')) : _L((CAP_LANG==='en'?"☐ Select…":'☐ Sélectionner…'))}</button></span>` : '';
-  const infos = _capDiag.airdCharge ? `<button class="tbtn" id="cdg-infos" title="${_L((CAP_LANG==='en'?"Information on the open diagram in the details panel: type, layer, description, represented element, displayed elements":'Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés'))}">${_L((CAP_LANG==='en'?"ℹ Info":'ℹ Infos'))}</button>` : '';
+  const infos = _capDiag.airdCharge ? `<button class="tbtn" id="cdg-infos" title="${_L((CAP_LANG==='en'?"Information on the open diagram in the details panel: type, layer, description, represented element, displayed elements":'Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés'))}">${_L((CAP_LANG==='en'?"ℹ Info":'ℹ Infos'))}</button>` +
+    `<button class="tbtn" id="cdg-comparer" title="${_L((CAP_LANG==='en'?"Show the open diagram in the comparison window (separate window, for example on another screen); right-click a diagram in the list to choose another one":'Afficher le diagramme ouvert dans la fenêtre de comparaison (fenêtre séparée, par exemple sur un autre écran) ; clic droit sur un diagramme de la liste pour en choisir un autre'))}">${_L((CAP_LANG==='en'?"⧉ Compare":'⧉ Comparer'))}</button>` : '';
   b.innerHTML = `<span class="tb-grp"><button class="tbtn" id="cdg-ouvrir" title="${_L((CAP_LANG==='en'?"Choose the .aird file (the picker opens in the .capella folder when the browser allows it)":'Choisir le fichier .aird (le sélecteur s\'ouvre dans le dossier du .capella quand le navigateur le permet)'))}">${_L((CAP_LANG==='en'?"📂 Open the .aird…":'📂 Ouvrir le .aird…'))}</button>` +
     infos + `</span>` + exp +
     `<span id="cdg-info" class="cdg-info">${_capDiag.airdCharge ? capEsc(_capDiag.nomAird) + ' — ' + _L((CAP_LANG==='en'?`${_capDiag.nbReps} diagram(s)`:`${_capDiag.nbReps} diagramme(s)`)) :
@@ -22567,6 +22607,7 @@ function capDiagClic(e) {
   const t = e.target;
   if (t.closest('#cdg-ouvrir')) { capDiagPickAird(); return; }
   if (t.closest('#cdg-export')) { capDiagExportDialog(); return; }
+  if (t.closest('#cdg-comparer')) { capDgwOuvrir(_capDiag.actif); return; }   // ⧉ fenêtre de comparaison (83)
   if (t.closest('#cdg-choix')) { _capDiag.choix = !_capDiag.choix; capDiagBarre(); capDiagListe(); return; }
   const ca = t.closest('[data-carte]');
   if (ca) { _capDiag.carte = ca.dataset.carte; capDiagCarte(); return; }
@@ -23141,7 +23182,7 @@ function capDiagExportHtml(items, racine) {
 /** Données de la revue : auteur par défaut, participants, champs proposés, options du calque, commentaires. */
 var _capRev = capRevNorm((()=>{ try{ const el=document.getElementById('cap-review'); return el?JSON.parse(el.textContent):null; }catch(e){ return null; } })());
 /** État de l'interface de la revue (non enregistré). */
-const _capRevUi = { open:false, tab:'list', q:'', st:'notclosed', crit:'', who:'', scope:'all', sort:'num', exp:new Set(), link:'', elId:'', groupe:'status', portee:'list', reponses:true };
+const _capRevUi = { open:false, dock:'rev', tab:'list', q:'', st:'notclosed', crit:'', who:'', scope:'all', sort:'num', exp:new Set(), link:'', elId:'', groupe:'status', portee:'list', reponses:true };
 /** Commentaires modifiés depuis le dernier enregistrement de la page ou le dernier export. */
 const _capRevUnsaved = new Set();
 
@@ -23349,12 +23390,86 @@ function capRevToggle(open, tab){
   const w=capRevPop();
   if(w){ _capRevUi.open=true; capRevRender(); if(open!==false) w.focus(); else w.close(); return; }
   _capRevUi.open=open==null?!_capRevUi.open:!!open;
+  if(_capRevUi.open) _capRevUi.dock='rev';   // ouvert : passe devant le panneau de détail (onglets)
   const p=capRevPanel();
-  const tb=document.getElementById('toolbar');
-  p.style.top=(tb?Math.round(tb.getBoundingClientRect().bottom):40)+'px';
   p.style.display=_capRevUi.open?'flex':'none';
   document.getElementById('b-review')?.classList.toggle('active',_capRevUi.open);
+  capDockSync();
   capRevRender();
+}
+
+/* ── Panneau ancré à droite, partagé avec le panneau de détail ──────────────
+   Le panneau 💬 Revue n'est plus posé par-dessus la vue : il occupe une colonne à droite (vues Capella :
+   #capella-overlay ; Relation Map : #main), comme le panneau de détail. Quand les deux sont ouverts, un seul
+   est visible à la fois et des onglets 🔎 Propriétés / 💬 Revue permettent de passer de l'un à l'autre. */
+
+/** @returns {HTMLElement|null} panneau de détail du mode affiché (vues Capella ou Relation Map) */
+function capDockDet(){ return document.getElementById(currentMode==='capella'?'cap-detail':'rm-detail'); }
+/** @returns {boolean} panneau de revue ouvert dans la page (pas dans sa fenêtre séparée) */
+function capDockRevOn(){ return !!(_capRevUi.open&&!capRevPop()); }
+/** @returns {boolean} panneau de détail du mode affiché ouvert */
+function capDockDetOn(){ const d=capDockDet(); return !!(d&&d.style.display!=='none'); }
+/**
+ * Onglets 🔎 Propriétés / 💬 Revue affichés en tête des deux panneaux quand ils sont ouverts ensemble.
+ * @param {string} actif - 'det' ou 'rev'
+ * @returns {string} HTML
+ */
+function capDockTabsHtml(actif){
+  const n=_capRev.comments.filter(c=>!capRevClosed(c)).length;
+  const b=(k,l,t)=>`<button class="cap-dock-tab${actif===k?' on':''}" data-dock="${k}" title="${t}">${l}</button>`;
+  return b('det',_L((CAP_LANG==='en'?"🔎 Properties":'🔎 Propriétés')),_L((CAP_LANG==='en'?"Detail panel of the selected element":'Panneau de détail de l\'élément sélectionné')))+
+    b('rev',_L((CAP_LANG==='en'?"💬 Review":'💬 Revue'))+(n?` <span class="crv-n">${n}</span>`:''),_L((CAP_LANG==='en'?"Review comments panel":'Panneau des commentaires de revue')));
+}
+/**
+ * Affiche l'un des deux panneaux ancrés quand ils sont ouverts ensemble.
+ * @param {string} k - 'det' (🔎 Propriétés) ou 'rev' (💬 Revue)
+ */
+function capDockShow(k){ _capRevUi.dock=k; capDockSync(); if(k==='rev') capRevRender(); }
+/** Largeur par défaut de la colonne de droite (panneaux de détail et de revue), en pixels. */
+const CAP_DOCK_W=400;
+/** Applique la largeur commune des panneaux de droite (réglage `_capNav.dockW`, enregistré avec la barre). */
+function capDockWidthApply(){
+  let st=document.getElementById('cap-dock-style');
+  if(!st){ st=document.createElement('style'); st.id='cap-dock-style'; document.head.appendChild(st); }
+  const w=Math.round(+(_capNav&&_capNav.dockW)||CAP_DOCK_W);
+  st.textContent=`:root{--dock-w:${w}px}`;
+}
+/** @returns {HTMLElement|null} panneau de droite visible dont le bord gauche se trouve sous le pointeur (à 5 px près) */
+function capDockEdgeAt(x, y){
+  for(const i of ['cap-detail','rm-detail','crv-panel']){
+    const d=document.getElementById(i); if(!d||!d.offsetParent||d.classList.contains('cap-dock-hid')) continue;
+    const r=d.getBoundingClientRect(); if(r.width&&Math.abs(x-r.left)<=5&&y>=r.top&&y<=r.bottom) return d;
+  }
+  return null;
+}
+/**
+ * Bord gauche des panneaux de droite : glisser pour régler leur largeur commune (double-clic : largeur par défaut).
+ * @param {PointerEvent} e - Appui du pointeur
+ */
+function capDockResizeDown(e){
+  if(e.button!==0) return;
+  const d=capDockEdgeAt(e.clientX, e.clientY); if(!d) return;
+  e.preventDefault(); e.stopPropagation();
+  const H=document.documentElement, droite=d.getBoundingClientRect().right;
+  H.classList.add('cap-dock-drag');
+  const mv=ev=>{ _capNav.dockW=Math.round(Math.min(innerWidth*0.7, Math.max(280, droite-ev.clientX))); capDockWidthApply(); };
+  const fin=()=>{ H.classList.remove('cap-dock-drag'); document.removeEventListener('pointermove',mv); document.removeEventListener('pointerup',fin);
+    capNavSave(); window.dispatchEvent(new Event('resize')); };   // vues qui se recalent sur la largeur (diagrammes…)
+  document.addEventListener('pointermove',mv); document.addEventListener('pointerup',fin);
+}
+
+/** Place le panneau de revue dans la colonne de droite du mode affiché et règle les onglets partagés avec le panneau de détail. */
+function capDockSync(){
+  try{ if(!_capRevUi.panel) return; }catch(e){ return; }   // appelé par applyMode avant le chargement de ce module
+  const p=_capRevUi.panel, rev=capDockRevOn();
+  if(p&&rev){ const hote=document.getElementById(currentMode==='capella'?'capella-overlay':'main'); if(hote&&p.parentElement!==hote) hote.appendChild(p); }
+  ['cap-detail','rm-detail'].forEach(i=>{ const d=document.getElementById(i); if(d) d.classList.remove('cap-dock-hid'); });
+  const det=capDockDet(), both=rev&&capDockDetOn();
+  if(p) p.classList.toggle('cap-dock-hid', both&&_capRevUi.dock==='det');
+  if(det) det.classList.toggle('cap-dock-hid', both&&_capRevUi.dock==='rev');
+  document.querySelectorAll('#cap-detail>.cap-dock-tabs,#rm-detail>.cap-dock-tabs').forEach(x=>x.remove());
+  if(det&&both){ const t=document.createElement('div'); t.className='cap-dock-tabs'; t.innerHTML=capDockTabsHtml('det'); det.insertBefore(t, det.firstChild); }
+  if(p&&rev&&!!p.querySelector('.crv-hdr>.cap-dock-tabs')!==both) capRevRender();
 }
 /** @returns {HTMLElement} panneau 💬 Revue (créé au premier appel ; il peut se trouver dans la fenêtre séparée) */
 function capRevPanel(){
@@ -23395,6 +23510,7 @@ function capRevPopOut(){
   const p=capRevPanel(); D.body.appendChild(D.adoptNode(p));
   p.classList.add('crv-pop'); p.style.display='flex';
   _capRevUi.win=w; _capRevUi.open=true;
+  capDockSync();   // le panneau de détail reprend toute la colonne de droite
   w.addEventListener('pagehide',capRevPopBack);
   w.addEventListener('keydown',e=>{ if(e.ctrlKey&&!e.altKey&&(e.key==='s'||e.key==='S')){ e.preventDefault(); capSavePageDirect(e.shiftKey); } });
   document.getElementById('b-review')?.classList.add('active');
@@ -23410,6 +23526,7 @@ function capRevPopBack(){
   const p=_capRevUi.panel;
   if(p&&p.ownerDocument!==document) document.body.appendChild(document.adoptNode(p));
   if(p){ p.classList.remove('crv-pop'); p.style.display='none'; }
+  capDockSync();
   _capRevUi.win=null; _capRevUi.open=false; _capRevUi.dd=false;
   document.getElementById('b-review')?.classList.remove('active');
 }
@@ -23421,7 +23538,10 @@ function capRevRender(){
   const tab=(k,l,t)=>`<button class="crv-tab${u.tab===k?' on':''}" data-tab="${k}" title="${t}">${l}</button>`;
   const keep=D.activeElement&&p.contains(D.activeElement)?D.activeElement.id:'';
   const pos=(D.getElementById('crv-body')||{}).scrollTop||0;
-  p.innerHTML=`<div class="crv-hdr"><b>${_L((CAP_LANG==='en'?"💬 Review":'💬 Revue'))}</b><span class="ana-dim">${capEsc(capCurrentFileName||'')}</span><span style="flex:1"></span>`+
+  const both=!pop&&capDockDetOn();
+  p.innerHTML=`<div class="crv-hdr">${both?`<span class="cap-dock-tabs">${capDockTabsHtml('rev')}</span>`:`<b>${_L((CAP_LANG==='en'?"💬 Review":'💬 Revue'))}</b>`}<span class="ana-dim">${capEsc(capCurrentFileName||'')}</span><span style="flex:1"></span>`+
+    `<button class="cap-lf-btn" data-a="pop" title="${pop?_L((CAP_LANG==='en'?"Bring the panel back into the page":'Ramener le panneau dans la page')):_L((CAP_LANG==='en'?"Open the panel in a separate window (for example on another screen)":'Ouvrir le panneau dans une fenêtre séparée (par exemple sur un autre écran)'))}">${pop?'⧈':'⧉'}</button>`+
+    (pop?'':`<button class="cap-lf-btn" data-a="close" title="${_L((CAP_LANG==='en'?"Close":'Fermer'))}">✕</button>`)+`</div><div class="crv-acts">`+
     `<button class="cap-lf-btn" data-a="new" title="${_L((CAP_LANG==='en'?"New comment (on the element shown in the detail panel, if any)":'Nouveau commentaire (sur l\'élément affiché dans le panneau de détail, s\'il y en a un)'))}">${_L((CAP_LANG==='en'?"✚ New":'✚ Nouveau'))}</button>`+
     `<button class="cap-lf-btn" data-a="cible" title="${_L((CAP_LANG==='en'?"Standalone HTML page to send to reviewers: they answer the chosen comments and add their own; their answers are imported back here":'Page HTML autonome à envoyer aux relecteurs : ils répondent aux commentaires choisis et en ajoutent ; leurs réponses se réimportent ici'))}">${_L((CAP_LANG==='en'?"📤 Send for review":'📤 Faire relire'))}</button>`+
     `<span class="crv-dd-a"><button class="cap-lf-btn${u.dd?' active':''}" data-a="dd" title="${_L((CAP_LANG==='en'?"Export or import the comments (.json)":'Exporter ou importer les commentaires (.json)'))}">${_L((CAP_LANG==='en'?"💾 Review ▾":'💾 Revue ▾'))}${nNon?` <span class="crv-n crv-warn" title="${_L((CAP_LANG==='en'?"Comments changed since the last save or export":'Commentaires modifiés depuis le dernier enregistrement ou export'))}">${nNon}</span>`:''}</button>`+
@@ -23433,9 +23553,7 @@ function capRevRender(){
       _L((CAP_LANG==='en'?`<div class="crv-dd-h">Export keeps the review outside the page, to share it or combine those of several reviewers (import adds new comments and keeps the most recent version of the others).</div>`:`<div class="crv-dd-h">L'export garde la revue hors de la page, pour la transmettre ou réunir celles de plusieurs relecteurs (l'import ajoute les nouveaux commentaires et garde la version la plus récente des autres).</div>`))+
       (nNon?`<div class="crv-dd-h" style="color:var(--c-warn,#e3b341)">${_L((CAP_LANG==='en'?`${nNon} comment(s) changed since the last save or export.`:`${nNon} commentaire(s) modifié(s) depuis le dernier enregistrement ou export.`))}</div>`:'')+`</div>`:'')+`</span>`+
     `<button class="cap-lf-btn" data-a="dossiers" title="${_L((CAP_LANG==='en'?"📑 Review packages (🏠 Home): chaptered document to have reviewed, HTML or Word export, re-import of the feedback":'📑 Dossiers de relecture (🏠 Accueil) : document chapitré à faire relire, export HTML ou Word, réimport des retours'))}">📑</button>`+
-    `<button class="cap-lf-btn" data-a="tour" title="${_L((CAP_LANG==='en'?"Guided tour of the 💬 Review panel":'Visite guidée du panneau 💬 Revue'))}">🎓</button>`+
-    `<button class="cap-lf-btn" data-a="pop" title="${pop?_L((CAP_LANG==='en'?"Bring the panel back into the page":'Ramener le panneau dans la page')):_L((CAP_LANG==='en'?"Open the panel in a separate window (for example on another screen)":'Ouvrir le panneau dans une fenêtre séparée (par exemple sur un autre écran)'))}">${pop?'⧈':'⧉'}</button>`+
-    (pop?'':`<button class="cap-lf-btn" data-a="close" title="${_L((CAP_LANG==='en'?"Close":'Fermer'))}">✕</button>`)+`</div>`+
+    `<button class="cap-lf-btn" data-a="tour" title="${_L((CAP_LANG==='en'?"Guided tour of the 💬 Review panel":'Visite guidée du panneau 💬 Revue'))}">🎓</button></div>`+
     `<div class="crv-tabs">${tab('list',_L((CAP_LANG==='en'?`💬 Comments <span class="crv-n">${nOpen}</span>`:`💬 Commentaires <span class="crv-n">${nOpen}</span>`)),_L((CAP_LANG==='en'?"Comment list, filters and search":'Liste des commentaires, filtres et recherche')))}`+
     tab('check',_L((CAP_LANG==='en'?`🔁 Check`:`🔁 Vérifier`))+(nChk?` <span class="crv-n crv-warn">${nChk}</span>`:''),_L((CAP_LANG==='en'?"Comments whose element has changed or disappeared since the comment, or marked “Fixed, to be checked”":'Commentaires dont l\'élément a changé ou disparu depuis le commentaire, ou marqués « Corrigé, à vérifier »')))+
     tab('report',_L((CAP_LANG==='en'?"📄 Report":'📄 Rapport')),_L((CAP_LANG==='en'?"Summary, HTML report, CSV":'Synthèse, rapport HTML, CSV')))+tab('cfg',_L((CAP_LANG==='en'?"⚙ Settings":'⚙ Réglages')),_L((CAP_LANG==='en'?"Your name, participants, offered fields, display":'Votre nom, participants, champs proposés, affichage')))+`</div>`+
@@ -23536,6 +23654,7 @@ function capRevTargetsHtml(c){
 /** Clics du panneau (délégation). @param {MouseEvent} e */
 async function capRevPanelClick(e){
   const t=e.target, u=_capRevUi;
+  const dk=t.closest('[data-dock]'); if(dk){ capDockShow(dk.dataset.dock); return; }
   const tab=t.closest('[data-tab]'); if(tab){ u.tab=tab.dataset.tab; capRevRender(); return; }
   const op=t.closest('[data-open]'); if(op){ capOpenDetailById(op.dataset.open); return; }
   const dg=t.closest('[data-diag]'); if(dg){ const c=capRevGet(t.closest('[data-c]')?.dataset.c); if(c) capRevGoto(c); return; }
@@ -23853,6 +23972,7 @@ function capRevContext(e){
         (el.attrs.description?note('description',_L((CAP_LANG==='en'?"📝 Note on its description":'📝 Note sur sa description'))):'')
       :`<div class="crv-ctx-t">🔲 ${esc(rep.nom||'')}</div>`+note('',_L((CAP_LANG==='en'?"📝 Review note here":'📝 Note de revue ici')));
     if(nd) h+=`<div class="ctx-i" onclick="capRevShowDiag()">${_L((CAP_LANG==='en'?`📄 Notes of this diagram (${nd})`:`📄 Notes de ce diagramme (${nd})`))}</div>`;
+    h+=`<div class="ctx-i" onclick="capDgwOuvrir('${esc(uid)}')">${_L((CAP_LANG==='en'?"⧉ Show in the comparison window":'⧉ Afficher dans la fenêtre de comparaison'))}</div>`;   // 83
   } else {
     // Dans une chaîne (carte ou graphe) : le commentaire d'une fonction est aussi rattaché à la chaîne
     const chId=capRevChainAt(e.target), ch=chId&&chId!==el.id&&capGetElementById_(chId), plus=ch?`,{id:'${esc(chId)}',field:''}`:'';
@@ -24358,7 +24478,14 @@ function capRevMerge(d){
   document.addEventListener('contextmenu',capRevContext);
   const root=document.getElementById('cap-content');
   if(root) new MutationObserver(()=>{ if(_capRev.mark&&_capRev.comments.length) capRevMarkSchedule(); }).observe(root,{childList:true, subtree:true});
-  window.addEventListener('resize',()=>{ if(_capRevUi.open&&!capRevPop()) capRevToggle(true); });
+  // Largeur commune des panneaux de droite : bord gauche à glisser (curseur ↔ au survol), double-clic pour revenir à la largeur par défaut
+  capDockWidthApply();
+  document.addEventListener('pointerdown',capDockResizeDown,true);
+  { let f=0; document.addEventListener('pointermove',e=>{ if(f) return; f=requestAnimationFrame(()=>{ f=0; const H=document.documentElement;
+    if(!H.classList.contains('cap-dock-drag')) H.classList.toggle('cap-dock-res', !!capDockEdgeAt(e.clientX, e.clientY)); }); },{passive:true}); }
+  document.addEventListener('dblclick',e=>{ if(capDockEdgeAt(e.clientX, e.clientY)){ delete _capNav.dockW; capDockWidthApply(); capNavSave(); window.dispatchEvent(new Event('resize')); } });
+  // Onglets 🔎 Propriétés / 💬 Revue posés en tête du panneau de détail
+  document.addEventListener('click',e=>{ const dk=e.target.closest&&e.target.closest('.cap-dock-tabs [data-dock]'); if(dk&&!e.target.closest('#crv-panel')) capDockShow(dk.dataset.dock); });
   window.addEventListener('pagehide',()=>{ const w=capRevPop(); if(w) w.close(); });   // la fenêtre séparée ne vit qu'avec la page
   new MutationObserver(()=>{ const w=capRevPop(); if(w) capRevPopTheme(w); }).observe(document.documentElement,{attributes:true, attributeFilter:['data-theme','data-tone','style']});
   capRevBadge();
@@ -31461,6 +31588,260 @@ function capScrAnalyse(nom, args){
   if(!f) return {$error:_L((CAP_LANG==='en'?`Unknown analysis: ${nom} (${Object.keys(CAP_SCR_ANALYSES).join(', ')})`:`Analyse inconnue : ${nom} (${Object.keys(CAP_SCR_ANALYSES).join(', ')})`))};
   try{ const r=f(...(args||[])); return r===undefined?null:r; }
   catch(e){ return {$error:_L((CAP_LANG==='en'?`Analysis ${nom}: ${e.message}`:`Analyse ${nom} : ${e.message}`))}; }
+}
+/* ═══════════════════════════════════════════════════════════════════════
+   ⧉ FENÊTRE DE COMPARAISON DES DIAGRAMMES
+   ───────────────────────────────────────────────────────────────────────
+   Une seule fenêtre séparée (réutilisée) pour afficher un second diagramme à côté de celui de 🔲 Diagrammes
+   Capella, par exemple sur un autre écran, et les comparer. Elle s'ouvre par ⧉ Comparer (barre de la vue),
+   par le clic droit sur un diagramme de l'explorateur ou dans le diagramme ouvert, et propose sa propre liste.
+   Le dessin est l'export SVG de la visionneuse (capDiagSvg, 54) : zoom à la molette, déplacement au glisser,
+   clic sur un élément → panneau de détail dans la page. Une seule fenêtre : la visionneuse n'a qu'une instance
+   (identifiants fixes), et deux diagrammes côte à côte suffisent à comparer.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/** État de la fenêtre de comparaison : fenêtre, diagramme affiché, cadrage courant et cadrage d'origine (viewBox). */
+const _capDgw = { win:null, uid:'', vb:null, vb0:null };
+
+/** @returns {Window|null} fenêtre de comparaison, si elle est ouverte */
+function capDgwWin(){ const w=_capDgw.win; return w&&!w.closed?w:null; }
+
+/** Ferme la fenêtre de comparaison (autre .aird ou autre modèle chargé, page quittée). */
+function capDgwFermer(){ const w=capDgwWin(); if(w) w.close(); _capDgw.win=null; _capDgw.uid=''; }
+
+/**
+ * Affiche un diagramme dans la fenêtre de comparaison, ouverte au besoin (une seule fenêtre, réutilisée).
+ * Le diagramme ouvert dans la page est rétabli après l'export.
+ * @param {string} uid - Représentation (diagramme) à afficher
+ */
+async function capDgwOuvrir(uid){
+  if(!uid){ capToast(_L((CAP_LANG==='en'?"Open or choose a diagram first.":'Ouvrez ou choisissez d\'abord un diagramme.'))); return; }
+  if(!_capDiag.vis){ capToast(_L((CAP_LANG==='en'?"Open 🔲 Capella Diagrams first.":'Ouvrez d\'abord 🔲 Diagrammes Capella.'))); return; }
+  let w=capDgwWin();
+  if(!w){
+    w=window.open('', 'arcalyse-diagramme', 'width=1100,height=800');
+    if(!w){ capAlert(_L((CAP_LANG==='en'?"The browser blocked the window: allow pop-ups for this page, then try again.":'Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez.'))); return; }
+    _capDgw.win=w; capDgwPreparer(w);
+  }
+  w.focus();
+  const z=w.document.getElementById('dgw-zone'); if(z) z.innerHTML=`<div class="dgw-msg">${_L((CAP_LANG==='en'?"Preparing the diagram…":'Préparation du diagramme…'))}</div>`;
+  const avant=_capDiag.actif; let svg='';
+  try{ svg=await capDiagSvg(uid); }
+  catch(e){ if(z) z.innerHTML=`<div class="dgw-msg">${_L((CAP_LANG==='en'?"Diagram cannot be displayed":'Diagramme impossible à afficher'))} : ${capEsc(e.message||String(e))}</div>`; return; }
+  finally{ if(avant&&avant!==uid&&_capDiag.vis){ _capDiag.vis.ouvrir(avant); _capDiag.actif=avant; capDiagMarquerActif(); } }
+  _capDgw.uid=uid;
+  capDgwAfficher(w, svg);
+}
+
+/**
+ * Prépare le document de la fenêtre : styles et thème de la page, barre (liste des diagrammes, zoom), zone de dessin, écouteurs.
+ * @param {Window} w - Fenêtre de comparaison
+ */
+function capDgwPreparer(w){
+  const D=w.document;
+  D.open(); D.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title></title></head><body class="dgw-body"></body></html>'); D.close();
+  D.title=_L((CAP_LANG==='en'?"⧉ Diagram comparison":'⧉ Comparaison de diagrammes'));
+  document.querySelectorAll('style').forEach(st=>D.head.appendChild(D.importNode(st,true)));
+  capRevPopTheme(w);
+  D.body.innerHTML=`<div class="dgw-barre"><select id="dgw-choix" class="phl-filter-input" title="${_L((CAP_LANG==='en'?"Diagram shown in this window":'Diagramme affiché dans cette fenêtre'))}">${capDgwOptions()}</select>`+
+    `<span class="tb-grp"><button class="cap-lf-btn" data-z="moins" title="${_L((CAP_LANG==='en'?"Zoom out":'Zoom arrière'))}">−</button><span id="dgw-pct" class="dgw-pct"></span>`+
+    `<button class="cap-lf-btn" data-z="plus" title="${_L((CAP_LANG==='en'?"Zoom in":'Zoom avant'))}">+</button><button class="cap-lf-btn" data-z="ajuster" title="${_L((CAP_LANG==='en'?"Fit the diagram to the window":'Ajuster le diagramme à la fenêtre'))}">${_L((CAP_LANG==='en'?"⤢ Fit":'⤢ Ajuster'))}</button></span>`+
+    `<span class="dgw-aide">${_L((CAP_LANG==='en'?"Wheel: zoom · drag: pan · click an element: its details in the page":'Molette : zoom · glisser : déplacer · clic sur un élément : son détail dans la page'))}</span></div>`+
+    `<div id="dgw-zone" class="dgw-zone"></div>`;
+  D.getElementById('dgw-choix').addEventListener('change',e=>capDgwOuvrir(e.target.value));
+  D.body.addEventListener('click',e=>{ const b=e.target.closest('[data-z]'); if(!b) return; const k=b.dataset.z;
+    if(k==='ajuster') capDgwCadre(w, Object.assign({}, _capDgw.vb0)); else capDgwZoom(w, k==='plus'?1/1.25:1.25); });
+  const zone=D.getElementById('dgw-zone');
+  zone.addEventListener('wheel',e=>{ e.preventDefault(); capDgwZoom(w, e.deltaY<0?1/1.15:1.15, e.clientX, e.clientY); }, {passive:false});
+  // Glisser : déplacer ; clic sans déplacement sur un élément : son détail dans la page
+  zone.addEventListener('pointerdown',e=>{
+    if(e.button!==0||!_capDgw.vb) return;
+    const x0=e.clientX, y0=e.clientY, v0=Object.assign({}, _capDgw.vb), k=1/capDgwEchelle(w), cible=e.target; let bouge=false;
+    const mv=ev=>{ const dx=ev.clientX-x0, dy=ev.clientY-y0; if(!bouge&&Math.abs(dx)+Math.abs(dy)<4) return; bouge=true; zone.classList.add('dgw-glisse');
+      capDgwCadre(w, Object.assign({}, v0, {x:v0.x-dx*k, y:v0.y-dy*k})); };
+    const fin=ev=>{ zone.removeEventListener('pointermove',mv); zone.removeEventListener('pointerup',fin); zone.classList.remove('dgw-glisse');
+      if(bouge) return; const s=cible.closest&&cible.closest('[data-sem]'); if(s) capOpenDetailById(s.getAttribute('data-sem')); };   // cible de l'appui (pointeur capturé)
+    zone.setPointerCapture(e.pointerId); zone.addEventListener('pointermove',mv); zone.addEventListener('pointerup',fin);
+  });
+  w.addEventListener('resize',()=>capDgwPct(w));
+}
+
+/** @returns {string} options de la liste des diagrammes (tableaux exclus : pas d'export SVG), groupées par couche */
+function capDgwOptions(){
+  const reps=capDiagReps().filter(r=>r.genre!=='tableau'), esc=capEsc, par={};
+  reps.forEach(r=>{ (par[r.couche||'—']=par[r.couche||'—']||[]).push(r); });
+  return Object.keys(par).sort((a,b)=>capDiagRang(a)-capDiagRang(b)).map(c=>`<optgroup label="${esc(c)} — ${esc(capDiagCouche(c).label||'')}">`+
+    par[c].sort((a,b)=>a.nom.localeCompare(b.nom)).map(r=>`<option value="${esc(r.uid)}"${r.uid===_capDgw.uid?' selected':''}>${esc(r.nom)}</option>`).join('')+`</optgroup>`).join('');
+}
+
+/**
+ * Pose le SVG d'un diagramme dans la fenêtre, cadré sur tout le diagramme.
+ * @param {Window} w - Fenêtre de comparaison
+ * @param {string} svg - SVG exporté par la visionneuse
+ */
+function capDgwAfficher(w, svg){
+  const D=w.document, zone=D.getElementById('dgw-zone'), r=capDiagReps().find(x=>x.uid===_capDgw.uid)||{};
+  zone.innerHTML=svg;
+  const s=zone.querySelector('svg'); if(!s){ zone.innerHTML=`<div class="dgw-msg">${_L((CAP_LANG==='en'?"Empty diagram.":'Diagramme vide.'))}</div>`; return; }
+  let vb=(s.getAttribute('viewBox')||'').split(/[\s,]+/).map(Number);
+  if(vb.length!==4||vb.some(isNaN)){ const bb=s.getBBox(); vb=[bb.x, bb.y, bb.width||1, bb.height||1]; }
+  _capDgw.vb0={x:vb[0], y:vb[1], w:vb[2], h:vb[3]};
+  s.removeAttribute('width'); s.removeAttribute('height'); s.setAttribute('preserveAspectRatio','xMidYMid meet'); s.classList.add('dgw-svg');
+  capDgwCadre(w, Object.assign({}, _capDgw.vb0));
+  D.title='⧉ '+(r.nom||_L((CAP_LANG==='en'?"Diagram":'Diagramme')))+' — Arcalyse';
+  const ch=D.getElementById('dgw-choix'); if(ch){ ch.innerHTML=capDgwOptions(); ch.value=_capDgw.uid; }
+}
+
+/**
+ * Applique un cadrage (viewBox) au diagramme de la fenêtre.
+ * @param {Window} w - Fenêtre de comparaison
+ * @param {{x:number,y:number,w:number,h:number}} vb - Cadrage
+ */
+function capDgwCadre(w, vb){
+  const s=w.document.querySelector('#dgw-zone svg'); if(!s||!vb) return;
+  _capDgw.vb=vb; s.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`); capDgwPct(w);
+}
+
+/** @param {Window} w @returns {number} pixels d'écran par unité du diagramme (cadrage « meet ») */
+function capDgwEchelle(w){
+  const z=w.document.getElementById('dgw-zone'), vb=_capDgw.vb; if(!z||!vb) return 1;
+  return Math.min(z.clientWidth/vb.w, z.clientHeight/vb.h)||1;
+}
+
+/**
+ * Zoom autour d'un point de la fenêtre (centre de la zone par défaut).
+ * @param {Window} w - Fenêtre de comparaison
+ * @param {number} f - Facteur appliqué au cadrage (< 1 : zoom avant)
+ * @param {number} [cx] - Abscisse du point fixe (coordonnées de la fenêtre)
+ * @param {number} [cy] - Ordonnée du point fixe
+ */
+function capDgwZoom(w, f, cx, cy){
+  const z=w.document.getElementById('dgw-zone'), vb=_capDgw.vb, v0=_capDgw.vb0; if(!z||!vb) return;
+  const nw=Math.min(v0.w*8, Math.max(v0.w/40, vb.w*f)); f=nw/vb.w;
+  const r=z.getBoundingClientRect(), k=capDgwEchelle(w);
+  if(cx==null){ cx=r.left+r.width/2; cy=r.top+r.height/2; }
+  // Point du diagramme sous le curseur (cadrage centré : marges égales de part et d'autre)
+  const ox=r.left+(r.width-vb.w*k)/2, oy=r.top+(r.height-vb.h*k)/2, px=vb.x+(cx-ox)/k, py=vb.y+(cy-oy)/k;
+  capDgwCadre(w, {x:px-(px-vb.x)*f, y:py-(py-vb.y)*f, w:vb.w*f, h:vb.h*f});
+}
+
+/** Met à jour le pourcentage de zoom affiché (100 % = diagramme entier dans la fenêtre). @param {Window} w */
+function capDgwPct(w){ const p=w.document.getElementById('dgw-pct'); if(p&&_capDgw.vb) p.textContent=Math.round(_capDgw.vb0.w/_capDgw.vb.w*100)+' %'; }
+
+/**
+ * Clic droit sur un diagramme de l'explorateur de 🔲 Diagrammes Capella : ouvrir ici, dans la fenêtre de comparaison, ses informations.
+ * @param {MouseEvent} e - Événement contextmenu
+ */
+function capDgwContexte(e){
+  const it=e.target.closest&&e.target.closest('#cdg-gauche .cdg-it[data-uid]'); if(!it) return;
+  e.preventDefault();
+  const uid=it.dataset.uid, r=capDiagReps().find(x=>x.uid===uid)||{}, esc=capEsc;
+  let m=document.getElementById('cdg-ctx');
+  if(!m){ m=document.createElement('div'); m.id='cdg-ctx'; document.body.appendChild(m);
+    document.addEventListener('mousedown',ev=>{ if(!ev.target.closest('#cdg-ctx')) m.style.display='none'; });
+    m.addEventListener('click',ev=>{ const a=ev.target.closest('[data-dgw]'); m.style.display='none'; if(!a) return;
+      const u=m.dataset.uid; if(a.dataset.dgw==='pop') capDgwOuvrir(u); else if(a.dataset.dgw==='info') capDiagInfo(u); else capDiagOpen(u); }); }
+  m.dataset.uid=uid;
+  m.innerHTML=`<div class="crv-ctx-t">🔲 ${esc(r.nom||'')}</div>`+
+    `<div class="ctx-i" data-dgw="ici">${_L((CAP_LANG==='en'?"🔲 Open here":'🔲 Ouvrir ici'))}</div>`+
+    `<div class="ctx-i" data-dgw="pop">${_L((CAP_LANG==='en'?"⧉ Show in the comparison window":'⧉ Afficher dans la fenêtre de comparaison'))}</div>`+
+    `<div class="ctx-i" data-dgw="info">${_L((CAP_LANG==='en'?"ℹ Diagram information":'ℹ Informations du diagramme'))}</div>`;
+  if(r.genre==='tableau') m.querySelector('[data-dgw="pop"]').remove();   // tableau : pas d'export SVG
+  m.style.display='block';
+  m.style.left=Math.min(e.clientX, innerWidth-m.offsetWidth-8)+'px'; m.style.top=Math.min(e.clientY, innerHeight-m.offsetHeight-8)+'px';
+}
+
+// Câblage : clic droit dans l'explorateur, fenêtre fermée avec la page, thème recopié
+(function(){
+  document.addEventListener('contextmenu',capDgwContexte);
+  window.addEventListener('pagehide',capDgwFermer);
+  new MutationObserver(()=>{ const w=capDgwWin(); if(w) capRevPopTheme(w); }).observe(document.documentElement,{attributes:true, attributeFilter:['data-theme','data-tone','style']});
+})();
+/* ═══════════════════════════════════════════════════════════════════════
+   🖼 ICÔNES DE COMPLÉMENT
+   ───────────────────────────────────────────────────────────────────────
+   La visionneuse d'Arcature (capIco / capIcoType, 54) ne dessine pas d'icône pour certains types : éléments
+   internes des scénarios (MessageEnd, ExecutionEnd…), liens de traçabilité, expressions, machines à états,
+   exigences (Requirements), catalogues REC / RPL… Ce module les dessine dans le même style (SVG 16 × 16, couleurs
+   de Capella) ; tout autre type sans icône reçoit une icône générique à ses initiales, pour qu'aucun élément
+   n'en soit dépourvu.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/**
+ * Corps SVG (viewBox 0 0 16 16) des icônes de complément, par type court. Construit au premier appel.
+ * @returns {Object<string,string>} Type → dessin
+ */
+function capIcoPlusTable(){
+  if(capIcoPlusTable._t) return capIcoPlusTable._t;
+  const tx=(t, x, y, taille, coul)=>`<text x="${x}" y="${y}" font-size="${taille}" font-weight="700" text-anchor="middle" fill="${coul||'#111'}" stroke="none">${t}</text>`;
+  const fl=(a, b, coul, plein)=>`<path d="M${a} 8H${b-2.4}" stroke="${coul}" stroke-width="1.6"${plein?'':' stroke-dasharray="2 1.4"'}/><path d="M${b-3} 6L${b} 8L${b-3} 10Z" fill="${coul}" stroke="${coul}" stroke-width=".5"/>`;
+  // Gabarits partagés
+  const dossier=(f, s)=>`<path d="M1 3.5H6L7.3 5H15V13.5H1Z" fill="${f}" stroke="${s}" stroke-width="1.1"/><path d="M1 6.5H15" stroke="${s}" stroke-width=".9"/>`;
+  const typeDef=t=>`<rect x="1" y="2.5" width="14" height="11" rx="2" fill="#e8eef7" stroke="#2b5a8a" stroke-width="1.1"/>`+tx(t, 8, 10.8, t.length>1?6.4:8, '#1d3f63');
+  const valeur=t=>`<path d="M1.5 4.5H10.5L14.5 8L10.5 11.5H1.5Z" fill="#fdf1d6" stroke="#8a6d1a" stroke-width="1.1"/>`+tx(t, 6.6, 10.4, 6.2, '#5c4710');
+  const lien=(c1, c2, coul, plein)=>`<rect x="1" y="5" width="4" height="6" fill="${c1}" stroke="#333" stroke-width="1"/><rect x="11" y="5" width="4" height="6" fill="${c2}" stroke="#333" stroke-width="1"/>`+fl(5, 11, coul, plein);
+  const ligneVie=`<path d="M8 1V15" stroke="#555" stroke-width="1" stroke-dasharray="1.6 1.2"/>`;
+  const capa=(x, y)=>`<ellipse cx="${x}" cy="${y}" rx="3.4" ry="2.4" fill="#efe3b5" stroke="#94761e" stroke-width="1"/>`;
+  const enveloppe=`<rect x="1" y="4" width="9.5" height="8" fill="#fff" stroke="#333" stroke-width="1"/><path d="M1 4L5.75 8.5L10.5 4" fill="none" stroke="#333" stroke-width=".9"/>`;
+  const rec=(t, f, s)=>`<rect x="1" y="2.5" width="14" height="11" rx="1.5" fill="${f}" stroke="${s}" stroke-width="1.1"/>`+tx(t, 8, 10.6, t.length>2?5.6:6.6, s);
+  capIcoPlusTable._t={
+    // Scénarios : fins de messages, d'exécutions et de fragments, états, événements
+    MessageEnd: ligneVie+`<path d="M1.5 8H6.6" stroke="#111" stroke-width="1.3"/><circle cx="8" cy="8" r="2.3" fill="#2b5a8a" stroke="#111" stroke-width=".8"/>`,
+    ExecutionEnd: ligneVie+`<rect x="5.6" y="2.5" width="4.8" height="8.5" fill="#cfe6ff" stroke="#2b5a8a" stroke-width="1"/><path d="M4 11H12" stroke="#111" stroke-width="1.6"/>`,
+    ExecutionEvent: ligneVie+`<rect x="5.6" y="3" width="4.8" height="10" fill="#cfe6ff" stroke="#2b5a8a" stroke-width="1"/><path d="M6.8 6.5H9.2M6.8 9.5H9.2" stroke="#2b5a8a" stroke-width=".9"/>`,
+    FragmentEnd: `<path d="M2 2.5H14V13.5H2Z" fill="#f2f2f2" stroke="#555" stroke-width="1"/><path d="M2 2.5H8.5V5L7.5 6H2" fill="#fff" stroke="#555" stroke-width="1"/><path d="M2 13.5H14" stroke="#111" stroke-width="2"/>`,
+    InteractionState: ligneVie+`<rect x="2" y="5.2" width="12" height="5.6" rx="2.8" fill="#d9d9d9" stroke="#666" stroke-width="1"/>`,
+    EventSentOperation: enveloppe+`<path d="M10.5 8H13.4" stroke="#2e8b2e" stroke-width="1.6"/><path d="M12.6 5.8L15.2 8L12.6 10.2Z" fill="#2e8b2e"/>`,
+    EventReceiptOperation: `<rect x="5.5" y="4" width="9.5" height="8" fill="#fff" stroke="#333" stroke-width="1"/><path d="M5.5 4L10.25 8.5L15 4" fill="none" stroke="#333" stroke-width=".9"/><path d="M1 8H3.4" stroke="#2b5a8a" stroke-width="1.6"/><path d="M2.8 5.8L5.4 8L2.8 10.2Z" fill="#2b5a8a"/>`,
+    // Machines à états
+    StateMachine: `<rect x="1" y="2" width="8" height="5" rx="1.8" fill="#d9d9d9" stroke="#666" stroke-width="1"/><rect x="7" y="9" width="8" height="5" rx="1.8" fill="#d9d9d9" stroke="#666" stroke-width="1"/><path d="M4 7.2V11.5H6" fill="none" stroke="#333" stroke-width="1.1"/><path d="M5.4 9.8L7.2 11.5L5.4 13.2Z" fill="#333"/>`,
+    StateTransition: `<path d="M2.5 12.5C3 5 10 3 12.6 6.8" fill="none" stroke="#333" stroke-width="1.5"/><path d="M10.4 7.6L13.6 8.4L13.2 5Z" fill="#333"/><circle cx="2.5" cy="12.5" r="1.5" fill="#666"/>`,
+    // Expressions et contraintes
+    OpaqueExpression: tx('{ }', 8, 10.8, 8, '#222'),
+    BinaryExpression: tx('{&amp;}', 8, 10.6, 7, '#222'),
+    // Liens de traçabilité et relations entre éléments
+    TransfoLink: lien('#dce7f4', '#a5dd8e', '#555', false),
+    GenericTrace: lien('#eee', '#eee', '#7b4fb0', false),
+    CatalogElementLink: `<rect x="1.5" y="5.5" width="7" height="5" rx="2.5" fill="none" stroke="#5a3a8a" stroke-width="1.6"/><rect x="7.5" y="5.5" width="7" height="5" rx="2.5" fill="none" stroke="#5a3a8a" stroke-width="1.6"/>`,
+    AbstractCapabilityInclude: capa(4, 8)+capa(12, 8)+`<path d="M7.4 8H8.8" stroke="#94761e" stroke-width="1.2" stroke-dasharray="1.2 .8"/>`,
+    CapabilityExploitation: `<ellipse cx="4.2" cy="8" rx="3.4" ry="2.4" fill="#e7d4f3" stroke="#6b3e8e" stroke-width="1"/>`+capa(12, 8)+`<path d="M7.6 8H8.7" stroke="#6b3e8e" stroke-width="1.2"/>`,
+    PartDeploymentLink: `<rect x="7" y="3" width="8" height="10" fill="#ffff4a" stroke="#111" stroke-width="1.1"/><rect x="1" y="5.5" width="4" height="5" fill="#fff" stroke="#111" stroke-width="1"/><path d="M5 8H9" stroke="#111" stroke-width="1.2" stroke-dasharray="1.4 1"/><path d="M8.4 6.3L10.4 8L8.4 9.7Z" fill="#111"/>`,
+    CapellaIncomingRelation: lien('#fff', '#e6eef8', '#2b5a8a', true),
+    InternalRelation: lien('#e6eef8', '#e6eef8', '#2b5a8a', true),
+    // Exigences (Requirements Viewpoint)
+    CapellaModule: `<path d="M3 1.5H13.5V14.5H3Z" fill="#cfe0f5" stroke="#2b5a8a" stroke-width="1.1"/><path d="M4.8 1.5V14.5" stroke="#2b5a8a" stroke-width=".9"/>`+tx('M', 9.4, 10.8, 7, '#1d3f63'),
+    Requirement: `<path d="M3 1.5H10.5L13.5 4.5V14.5H3Z" fill="#fff" stroke="#2b5a8a" stroke-width="1.1"/><path d="M10.5 1.5V4.5H13.5" fill="none" stroke="#2b5a8a" stroke-width=".9"/>`+tx('R', 8.2, 12, 7.5, '#2b5a8a'),
+    RequirementType: typeDef('RT'), RelationType: typeDef('RL'),
+    DataTypeDefinition: typeDef('DT'), EnumerationDataTypeDefinition: typeDef('E'),
+    AttributeDefinition: typeDef('A'), AttributeDefinitionEnumeration: typeDef('AE'),
+    EnumValue: `<rect x="2" y="3" width="12" height="10" fill="#fff" stroke="#7a1414" stroke-width="1.1"/>`+tx('e', 8, 11, 8, '#7a1414'),
+    StringValueAttribute: valeur('S'), IntegerValueAttribute: valeur('1'), EnumerationValueAttribute: valeur('E'),
+    // Dossiers
+    Folder: dossier('#f6dc86', '#8a6d1a'), CapellaTypesFolder: dossier('#e4ecf6', '#333'),
+    // REC / RPL
+    RecCatalog: rec('REC', '#e6dcf5', '#5a3a8a'),
+    CatalogElement: rec('RE', '#f1ebfa', '#5a3a8a'),
+    CompliancyDefinition: `<circle cx="8" cy="8" r="6.5" fill="#f1ebfa" stroke="#5a3a8a" stroke-width="1.1"/><path d="M4.8 8.2L7.2 10.6L11.4 5.6" fill="none" stroke="#5a3a8a" stroke-width="1.7"/>`,
+    // Divers
+    ModelInformation: `<circle cx="8" cy="8" r="6.5" fill="#e6eef8" stroke="#2b5a8a" stroke-width="1.1"/>`+tx('i', 8, 11.4, 9, '#2b5a8a'),
+    KeyValue: `<circle cx="4.5" cy="8" r="3" fill="#fdf1d6" stroke="#8a6d1a" stroke-width="1.2"/><path d="M7.5 8H15M12.5 8V10.5M14.5 8V10" stroke="#8a6d1a" stroke-width="1.4"/>`,
+    PartMass: `<path d="M4 6H12L14.5 14H1.5Z" fill="#ddd" stroke="#555" stroke-width="1"/><circle cx="8" cy="4" r="1.8" fill="none" stroke="#555" stroke-width="1.1"/>`+tx('kg', 8, 12.4, 5.2, '#222'),
+  };
+  return capIcoPlusTable._t;
+}
+
+/**
+ * Icône de complément d'un type (dessinée ici) ou, à défaut, icône générique à ses initiales.
+ * @param {string} type - Type court (« MessageEnd »)
+ * @param {number} [taille] - Côté en pixels (14 par défaut)
+ * @returns {string} SVG (vide sans type)
+ */
+function capIcoPlus(type, taille){
+  if(!type) return '';
+  const n=taille||14, t=capIcoPlusTable()[type];
+  const corps=t||(()=>{ const ini=(type.match(/[A-Z]/g)||[type[0].toUpperCase()]).slice(0,2).join('');
+    return `<rect x="1.5" y="1.5" width="13" height="13" rx="3" fill="#eceef1" stroke="#8b949e" stroke-width="1"/><text x="8" y="10.6" font-size="${ini.length>1?6.4:8}" font-weight="700" text-anchor="middle" fill="#444" stroke="none">${ini}</text>`; })();
+  return `<svg class="ico" viewBox="0 0 16 16" width="${n}" height="${n}" aria-hidden="true" stroke-linejoin="round" font-family="Arial,Helvetica,sans-serif">${corps}</svg>`;
 }
 
 </script>
