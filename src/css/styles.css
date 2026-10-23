@@ -1911,6 +1911,39 @@ html[data-tbicons] #toolbar .tbtn{padding-left:7px;padding-right:7px;}
 .cap-det-pane{display:none;}
 .cap-det-pane.on{display:block;}
 
+/* 🧭 Navigateur sémantique façon Capella (85) */
+.csb-bar{display:flex;gap:6px;align-items:center;margin-bottom:6px;}
+.csb-q{flex:1;min-width:0;font:inherit;font-size:12px;padding:3px 7px;border:1px solid var(--c-border);border-radius:4px;background:var(--c-bg);color:var(--c-text);}
+.csb-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;align-items:start;}
+.csb-col{border:1px solid var(--c-border);border-radius:6px;background:var(--c-bg2);min-width:0;padding:0 0 4px;}
+.csb-h{font-size:11px;font-weight:700;padding:5px 8px;border-bottom:1px solid var(--c-border);border-radius:6px 6px 0 0;background:var(--c-bg4);}
+.csb-refg .csb-h{color:var(--c-warn,#e3b341);}
+.csb-refd .csb-h{color:var(--c-ok,#3fb950);}
+.csb-curc .csb-h{color:var(--c-accent);}
+.csb-cur{display:flex;flex-wrap:wrap;align-items:center;gap:5px;padding:6px 8px;font-size:12px;border-bottom:1px dashed var(--c-border);}
+.csb-cur b{word-break:break-word;}
+.csb-n{font-size:9px;font-weight:400;color:var(--c-dim);margin-left:3px;}
+.csb-cat{margin:2px 4px;}
+.csb-cat>summary{cursor:pointer;font-size:11px;font-weight:600;color:var(--c-text);padding:3px 2px;list-style-position:inside;}
+.csb-cat>summary:hover{color:var(--c-accent);}
+.csb-it.cap-det-link{display:flex;align-items:center;gap:5px;padding:2px 4px 2px 16px;font-size:11px;border-radius:3px;cursor:pointer;min-width:0;}
+.csb-it.cap-det-link:hover{background:var(--c-border);}
+.csb-nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--c-text);}
+.csb-ty{font-size:9px;font-weight:700;margin-left:auto;padding-left:6px;white-space:nowrap;}
+.csb-attrs{width:100%;border-collapse:collapse;font-size:11px;margin-left:12px;width:calc(100% - 12px);}
+.csb-attrs td{padding:2px 4px;border-bottom:1px solid var(--c-border);vertical-align:top;word-break:break-all;color:var(--c-text);}
+.csb-attrs td:first-child{font-family:monospace;color:var(--c-dim);width:40%;}
+.csb-vide{font-size:11px;color:var(--c-dim);padding:6px 8px;font-style:italic;}
+
+/* ⧉ Panneau de détail dans une fenêtre séparée (86) : en-tête fixe, contenu à défilement vertical */
+.cap-det-popb{position:absolute;top:9px;right:34px;background:none;border:none;color:var(--c-dim);cursor:pointer;font-size:15px;line-height:1;padding:2px 4px;border-radius:4px;z-index:2;}
+.cap-det-popb:hover,.cap-det-popb.active{color:var(--c-accent);}
+body.cdp-body{margin:0;height:100vh;display:flex;flex-direction:column;overflow:hidden;background:var(--c-bg2);color:var(--c-text);font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;}
+.cdp-hdr{flex:none;display:flex;align-items:center;gap:6px;padding:7px 12px;border-bottom:1px solid var(--c-border);background:var(--c-bg);font-size:12px;}
+.cdp-nom{color:var(--c-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
+.cdp-box{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:12px 16px 24px;word-break:break-word;}
+.cdp-box .csb-large{display:none;}
+
 /* ⏭ Pagination des listes et tableaux (78) */
 .cap-pg-bar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;font-size:11px;color:var(--c-dim);margin:5px 2px 8px;}
 .cap-pg-b{font:inherit;font-size:11px;padding:1px 7px;border:1px solid var(--c-border);border-radius:4px;background:none;color:var(--c-text);cursor:pointer;line-height:1.5;}
