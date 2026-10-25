@@ -94,7 +94,7 @@ A **💬 Review** button opens a review panel: comments on the model, on its ele
 ### ⚡ Read functional chains
 Each functional chain, operational process or physical path is redrawn, with its inputs / outputs, the involved functions, their allocation and the exchanges. Filters by type, layer and content; **ℹ Info** of the displayed chain (owners, capabilities involving it, description) in the details panel; PDF, PNG, SVG, ZIP or HTML export of all chains at once.
 
-![Functional chains](docs/captures/02-chaines.png)
+![Functional chains — a chain unfolded: inputs, involved functions, exchanges, outputs](docs/captures/02-chaines.png)
 
 ### ƒ⇆ See the exchanges as in Capella
 The **Blocks views** follow the Capella rendering: green (system) or blue (actor) functions, input and output pins, exchanges and remote function. A click on the remote function takes you there. Same principle for **Operational Analysis**, **System / Logical Components**, **Behavior Exchange** and **Physical Links**, each with a row view, an N² matrix and checks.
@@ -269,7 +269,7 @@ Un bouton **💬 Revue** ouvre un panneau de revue : des commentaires sur le mod
 ### ⚡ Lire les chaînes fonctionnelles
 Chaque chaîne fonctionnelle, processus opérationnel ou chemin physique est redessiné, avec ses entrées / sorties, les fonctions impliquées, leur allocation et les échanges. Filtres par type, couche et contenu ; **ℹ Infos** de la chaîne affichée (porteurs, capacités qui l'impliquent, description) dans le panneau de détail ; export PDF, PNG, SVG, ZIP ou HTML de toutes les chaînes d'un coup.
 
-![Chaînes fonctionnelles](docs/captures/02-chaines.png)
+![Chaînes fonctionnelles — une chaîne dépliée : entrées, fonctions impliquées, échanges, sorties](docs/captures/02-chaines.png)
 
 ### ƒ⇆ Voir les échanges comme dans Capella
 Les **Vues Blocs** reprennent le rendu de Capella : fonctions vertes (système) ou bleues (acteurs), pins d'entrée et de sortie, échanges et fonction distante. Un clic sur la fonction distante vous y emmène. Même principe pour l'**Operational Analysis**, les **System / Logical Components**, le **Behavior Exchange** et les **Physical Links**, avec à chaque fois vue en lignes, matrice N² et contrôles.
