@@ -30,7 +30,7 @@ const page = path.join(ROOT, 'dist', EN ? 'arcalyse-en.html' : 'arcalyse-fr.html
 const modelsDir = path.join(__dirname, 'models'), oraclesDir = path.join(__dirname, 'oracles');
 const models = args.filter(a => !a.startsWith('--')).map(a => path.resolve(a));
 if (!models.length && fs.existsSync(modelsDir))
-  fs.readdirSync(modelsDir).filter(f => f.endsWith('.capella')).sort().forEach(f => models.push(path.join(modelsDir, f)));
+  fs.readdirSync(modelsDir).filter(f => /\.(capella|sysml)$/.test(f)).sort().forEach(f => models.push(path.join(modelsDir, f)));   // .sysml : lus par le lecteur SysML v2 (87)
 if (!fs.existsSync(page)) { console.error('Lancez d\'abord : node build.js' + (EN ? ' --lang en' : '')); process.exit(2); }
 if (!models.length) { console.error('Aucun modèle : placez un .capella dans tests/models/ ou passez-le en argument'); process.exit(2); }
 
@@ -115,6 +115,15 @@ function releve() {
   const LB = capLibScan();
   R.bibliotheques = { references: LB.refs.length, bibliotheques: LB.libs.length, declarees: LB.declared.size };
 
+  // 🧩 SysML v2 (87) : éléments par métaclasse et famille, liaisons par relation, diagnostics par code
+  if (typeof _capSysml !== 'undefined' && _capSysml.lecture) {
+    const lec = _capSysml.lecture, els = lec.elements();
+    R.sysml = { elements: els.length, parType: compte(els, e => e.type), parFamille: compte(els, e => e.famille || '(sans)'), techniques: els.filter(e => e.technique).length,
+      liaisons: compte(lec.toutesLiaisons(), l => l.relation), diagnostics: compte(lec.diagnostics, d => d.severite + ':' + d.code), fichiers: (lec.fichiers || []).length,
+      xml: { elements: capAllElements.length, references: somme(capAllElements, e => Object.keys(e.attrs).filter(k => /^#/.test(String(e.attrs[k]))).length) },
+      relationMap: compte(MODEL.relations.filter(r => String(r.type).startsWith('sysml:')), r => r.type), vuesVides: [...capNavVides()].sort(),
+      vues: Object.fromEntries(capSyVuesListe().map(v => { const vue = capSyVue(v.cle); return [v.sigle + ' ' + v.nom, { formes: vue.formes.length, liens: vue.liens.length, texte: vue.texte.length }]; })) };
+  }
   const SA = capSanteCompute();
   R.sante = { score: SA.score, points: SA.points, bloquants: SA.bloquants, info: SA.info, pop: SA.pop, nChecks: SA.nChecks, nOk: SA.nOk, couches: Object.fromEntries(Object.entries(SA.couches).map(([k, v]) => [k, v.score])) };
 
@@ -123,7 +132,7 @@ function releve() {
   ST.sms.forEach(m => { const c = capStateChecks(m); Object.keys(etatsCtl).forEach(k => { etatsCtl[k] += (c[k] || []).length; }); });
   R.controles = {
     fonctions: sections(capFnChecks(F, 'all')), functionalExchange: sections(capFexChecks('all')), composants: sections(capCbChecks('all')),
-    scenarios: sections(capScChecks()), exigences: sections(capReqChecks()), pvmt: sections(capPvChecks()), donnees: sections(capDmChecks()),
+    scenarios: sections(capScChecks()), sysml: sections(capSyChecks()), exigences: sections(capReqChecks()), pvmt: sections(capPvChecks()), donnees: sections(capDmChecks()),
     contraintes: sections(capCtChecks()), statutRevue: sections(capStChecks()), chaines: sections(capChChecks('all')), categories: sections(capEcChecks()), bibliotheques: sections(capLibChecks()), recRpl: sections(capRecChecks()), deploiement: sections(capDepChecks()), etats: etatsCtl };
 
   // 📐 Tableau de bord : valeur de chaque indicateur (texte, diagramme et image exclus : pas de valeur calculée)
@@ -168,7 +177,7 @@ function diff(a, b, chemin, out) {
   const browser = await chromium.launch(exe ? { executablePath: exe } : {});
   let ko = 0;
   for (const model of models) {
-    const nom = path.basename(model, '.capella'), oracle = path.join(oraclesDir, nom + (EN ? '.en' : '') + '.json');
+    const nom = path.basename(model).replace(/\.(capella|sysml)$/, ''), oracle = path.join(oraclesDir, nom + (EN ? '.en' : '') + '.json');
     const ctx = await browser.newContext({ offline: true, viewport: { width: 1500, height: 900 } });
     const p = await ctx.newPage();
     const errs = []; p.on('pageerror', e => errs.push(e.message)); p.on('dialog', d => d.dismiss());

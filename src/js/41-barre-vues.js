@@ -13,7 +13,7 @@
  * c (libellé de sa puce dans la barre de famille) et n'apparaît plus seule dans les menus (recherche, épingles et ☰ la gardent). */
 var CAP_NAV_ITEMS=[
   {k:'home',      l:_L('🏠 Accueil'),           g:'',     t:_L('Accueil du projet : en-tête, tâches courantes, fiche, contenu, santé et revue du modèle')},
-  {k:'diag',      l:_L('🔲 Diagrammes Capella'), p:_L('🔲 Diagrammes'), g:'', t:_L('Diagrammes Capella du projet (.aird), dessinés comme dans Capella : liste, recherche, mini-carte, filtres, chaînes, exports ; clic sur un élément → son détail')},
+  {k:'diag',      l:_L('🔲 Diagrammes'), p:_L('🔲 Diagrammes'), g:'', t:_L('Capella : diagrammes du projet (.aird), dessinés comme dans Capella ; SysML v2 : vues calculées depuis le texte. Capella : liste, recherche, mini-carte, filtres, chaînes, exports ; clic sur un élément → son détail')},
   {k:'table',     l:_L('▤ Tableau'),            g:'',     t:_L('Tableau de tous les éléments du modèle : onglets de vues, colonnes d\'attributs, de relations et par chemin, tri, filtres, export CSV')},
   // 🏗 Architecture
   {k:'grp:fonc',  l:_L('ƒ Fonctions & échanges'),   g:'arch', f:['functions','fex','oav'], cc:1, t:_L('Fonctions (hiérarchie, tableau, traçabilité, métriques, contrôles), échanges fonctionnels en blocs, lignes et matrice, activités opérationnelles (OA)')},
@@ -33,6 +33,7 @@ var CAP_NAV_ITEMS=[
   {k:'ana:caps',  l:_L('🎯 Capacités & missions'),     g:'arch'},
   {k:'ana:data',  l:_L('🗃 Données & interfaces'),     g:'arch'},
   {k:'ana:deploy',l:_L('🖧 Déploiement & EPBS'),       g:'arch', t:_L('Comportements déployés sur les nœuds physiques (PartDeploymentLink), Configuration Items de l\'EPBS et ce qu\'ils réalisent, contrôles')},
+  {k:'ana:sysml', l:_L('🧩 SysML v2'),                 g:'arch', t:_L('Modèle SysML v2 lu par le lecteur d\'Arcature : éléments par famille et métaclasse, liaisons (typage, spécialisation, connexion, allocation…), diagnostics (erreurs et avertissements avec fichier et ligne), texte des fichiers')},
   {k:'@rm',       l:_L('🗺 Relation Map'),      g:'arch', s:_L('Explorer'), t:_L('Graphe interactif des éléments et de leurs relations : voisinage, dépliage, disposition, export en image')},
   {k:'tree',      l:_L('🌳 Arborescence'),      g:'arch', s:_L('Explorer')},
   {k:'cards',     l:_L('▦ Cartes'),             g:'arch', s:_L('Explorer'), x:1},
@@ -103,9 +104,11 @@ function capNavVides(){
       'ana:cts':()=>T.has('Constraint'),
       'ana:status':()=>capAllElements.some(e=>e.attrs&&(e.attrs.status||e.attrs.review)),
       'ana:cats':()=>has(/^(Exchange|ComponentExchange|PhysicalLink)Category$/),
-      'ana:rec':()=>T.has('CatalogElement')
+      'ana:rec':()=>T.has('CatalogElement'),
+      'ana:sysml':()=>typeof _capSysml!=='undefined'&&!!_capSysml.lecture
     };
     const S=new Set(); Object.entries(test).forEach(([k,f])=>{ try{ if(!f()) S.add(k); }catch(e){ /* test indisponible : vue gardée */ } });
+    if(typeof _capSysml!=='undefined'&&_capSysml.lecture) CAP_SY_VUES_CAPELLA.forEach(k=>S.add(k));   // 🧩 modèle SysML v2 : vues propres à Capella sans données (87)
     _capAnaCache.navVides=S;
   }
   const S=new Set(_capAnaCache.navVides);
@@ -329,10 +332,6 @@ function capNavSync(force){
     b.title=(it&&it.g===b.dataset.g?_L('Vue affichée : ')+it.l+'\n':'')+(_capNav.icons?G.l+' — ':'')+G.t;
   });
   capNavFluxTabs(cur);
-  // Onglets de 🔬 Analyses et de ƒ Fonctions : sous-vues du mode Complet masquées en Essentiel (sauf celle affichée)
-  document.querySelectorAll('#cap-view-analyses [data-an],#cap-view-functions [data-an]').forEach(b=>{
-    const k=b.dataset.an==='fns'?'functions':'ana:'+b.dataset.an;
-    b.classList.toggle('cap-pref-hide',E.hide.has(k)&&k!==cur); });
 }
 
 /** Ferme le menu déroulant de la barre des vues. */
@@ -420,17 +419,17 @@ function capNavMenuFill(){
   const g=dd.dataset.g;
   if(g==='file'){
     const sc=s=>` <span class="cap-nav-g">${s}</span>`;
-    res.innerHTML=_L(`<div class="ctx-i" data-act="open" title="Remplace le modèle affiché par un autre fichier .capella">🔷 Ouvrir un modèle Capella…</div>
-      <div class="ctx-i" data-act="folder" title="Ouvre le dossier du projet : le .capella et ses diagrammes (.aird) sont chargés ensemble">📁 Ouvrir le dossier du projet…</div>
+    res.innerHTML=_L(`<div class="ctx-i" data-act="open" title="Remplace le modèle affiché par un autre fichier modèle (Capella : .capella ; SysML v2 : .sysml, .kpar)">📂 Ouvrir un modèle…</div>
+      <div class="ctx-i" data-act="folder" title="Ouvre le dossier du projet : Capella (.capella, .aird, bibliothèques) ou SysML v2 (les .sysml du projet), chargé en une fois">📁 Ouvrir le dossier du projet…</div>
       <div class="ctx-i" data-act="projet" title="Reprend un projet de travail enregistré en page HTML (💾), même par une version précédente d'Arcalyse (à partir de la 2.1) : modèle, diagrammes, revue, accueil, vues et réglages">📄 Ouvrir un projet de travail (page HTML)…</div>
       <div class="cap-nav-hint">Nouvelle version d'Arcalyse ? Ouvrez-y la page de votre projet enregistrée avec l'ancienne : tout le travail est repris.</div>
-      <div class="ctx-i" data-act="update" title="Compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour l'affichage après validation">🔄 Charger une mise à jour du modèle…</div>
+      <div class="ctx-i" data-act="update" title="Capella : compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour l'affichage après validation">🔄 Charger une mise à jour du modèle (Capella)…</div>
       <div class="cap-nav-hint">Mise à jour : delta affiché avant validation ; alerte si les deux fichiers semblent être des projets différents. Diagrammes chargés : le .aird est relu s'il a été ouvert avec un accès direct (dossier du projet), sinon le .aird à jour est demandé.</div>`)+
-      (capLoaded?_L(`<div class="ctx-i" data-act="watch" title="Détecter les nouvelles versions du fichier .capella, voir le delta, historique des mises à jour">🔄 Suivi du fichier…${_capWatch.pending?` <span class="cw-badge">${_capWatch.pending.versions.length}</span>`:''}</div>`):'')+
+      (capLoaded?_L(`<div class="ctx-i" data-act="watch" title="Capella : détecter les nouvelles versions du fichier .capella, voir le delta, historique des mises à jour">🔄 Suivi du fichier (Capella)…${_capWatch.pending?` <span class="cw-badge">${_capWatch.pending.versions.length}</span>`:''}</div>`):'')+
       _L(`<div class="cw-m-sep"></div>
       <div class="ctx-i" data-act="save" title="Page HTML autonome : modèle + interface et vues">💾 Enregistrer${sc(_L('Ctrl+S'))}</div>
       <div class="ctx-i" data-act="saveas">💾 Enregistrer sous…${sc(_L('Ctrl+Maj+S'))}</div>
-      <div class="ctx-i" data-act="page" title="Télécharger la page actuelle (avec le fichier Capella déjà chargé) en HTML autonome">🌐 Télécharger la page HTML</div>
+      <div class="ctx-i" data-act="page" title="Télécharger la page actuelle (avec le modèle déjà chargé) en HTML autonome">🌐 Télécharger la page HTML</div>
       <div class="ctx-i" data-act="xlsx" title="Un classeur .xlsx, une feuille par analyse : éléments, fonctions, échanges, composants, liens, chaînes, exigences, statuts de revue, contrôles, santé">📗 Classeur Excel des analyses</div>
       <div class="cap-nav-hint">La page HTML enregistrée contient : <b>le modèle chargé</b> et ses diagrammes (.aird), 🏠 l'accueil (fiche projet, check-lists, plans de revue, dossiers), la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau, le thème, les règles de nommage et les commentaires de 💬 Revue.<br>Non conservés : la version chargée pour ⚖ Comparaison, les filtres des autres vues.</div>
       <div class="cw-m-sep"></div>

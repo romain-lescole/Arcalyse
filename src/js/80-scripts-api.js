@@ -38,7 +38,7 @@ function capScrNoyau(){
   const SOURCE='arcalyse-script.js';
   /** Analyses proposées par `analysis` (calculées par la page : 82-scripts-analyses.js). */
   const ANALYSES=['functions','chains','traceability','capabilities','states','health','requirements','properties','data','constraints','status',
-    'categories','rec','libraries','scenarios','ports','functionalExchanges','componentExchanges','physicalLinks','deployment','checks','nameQuality','diagramsOf'];
+    'categories','rec','libraries','scenarios','ports','functionalExchanges','componentExchanges','physicalLinks','deployment','checks','nameQuality','diagramsOf','sysml'];
 
   /** Erreur levée par l'API, avec un message affichable. @param {string} msg @returns {Error} */
   const erreur=msg=>{ const e=new Error(msg); e.name='ArcalyseError'; return e; };

@@ -86,12 +86,12 @@ function capStChecks(){
   const row=e=>`<tr><td>${capChainLayerBadge(e.layer)} ${capDetLink(e.id,e.name,'font-weight:600')}</td><td class="ana-dim">${capEsc(e.type)}</td><td>${capStBadge(e.status,e.cls)}</td><td>${capXtShort(e.review,120)}</td></tr>`;
   const okLayers=new Set(CAP_ANA_LAYERS.filter(k=>{ const l=S.list.filter(e=>e.layer===k&&e.status); return l.length>=capChkParam('st.minStatuts')&&l.filter(e=>e.cls==='ok').length>l.length/2; }));   // seuil du 🩺 profil (14)
   return [
-    {icon:'⚠', title:_L('Éléments à retravailler'), tip:_L('Statut de rework ou de refus (REWORK NECESSARY, UNDER REWORK, REVIEWED KO…)'), cols, items:S.list.filter(e=>e.cls==='ko').map(row)},
-    {icon:'⏳', title:_L('Éléments en attente de revue'), tip:_L('TO BE REVIEWED, TO BE DISCUSSED, UNDER REVIEW…'), cols, items:S.list.filter(e=>e.cls==='wait').map(row)},
-    {icon:'✎', title:_L('Brouillons dans une couche majoritairement validée'), tip:_L(`DRAFT / TODO dans une couche où plus de la moitié des statuts sont validés (au moins ${capChkParam('st.minStatuts')} statuts)`), cols, items:S.list.filter(e=>e.cls==='draft'&&okLayers.has(e.layer)).map(row)},
-    {icon:'💬', title:_L('Commentaire de revue Capella sans statut'), tip:_L('Le champ « review » est rempli mais aucun statut n\'est posé'), cols, items:S.list.filter(e=>e.review&&!e.status).map(row)},
-    {icon:'🔗', title:_L('À retravailler sans commentaire dans 💬 Revue'), tip:_L('Élément à retravailler qu\'aucun commentaire de revue Arcalyse ne vise : le reprendre dans la revue (bouton 💬 de la liste)'), cols, items:S.list.filter(e=>e.cls==='ko'&&!capStRevComments(e.id).length).map(row)},
-    {icon:'?', title:_L('Statut référencé introuvable'), tip:_L('Le littéral visé n\'existe pas dans l\'énumération ProgressStatus du projet'), cols, items:S.list.filter(e=>e.litId&&S.byLit[e.litId]&&S.byLit[e.litId].missing).map(row)}];
+    {icon:'⚠', sev:'info', title:_L('Éléments à retravailler'), tip:_L('Statut de rework ou de refus (REWORK NECESSARY, UNDER REWORK, REVIEWED KO…)'), cols, items:S.list.filter(e=>e.cls==='ko').map(row)},
+    {icon:'⏳', sev:'info', title:_L('Éléments en attente de revue'), tip:_L('TO BE REVIEWED, TO BE DISCUSSED, UNDER REVIEW…'), cols, items:S.list.filter(e=>e.cls==='wait').map(row)},
+    {icon:'✎', sev:'info', title:_L('Brouillons dans une couche majoritairement validée'), tip:_L(`DRAFT / TODO dans une couche où plus de la moitié des statuts sont validés (au moins ${capChkParam('st.minStatuts')} statuts)`), cols, items:S.list.filter(e=>e.cls==='draft'&&okLayers.has(e.layer)).map(row)},
+    {icon:'💬', sev:'info', title:_L('Commentaire de revue Capella sans statut'), tip:_L('Le champ « review » est rempli mais aucun statut n\'est posé'), cols, items:S.list.filter(e=>e.review&&!e.status).map(row)},
+    {icon:'🔗', sev:'info', title:_L('À retravailler sans commentaire dans 💬 Revue'), tip:_L('Élément à retravailler qu\'aucun commentaire de revue Arcalyse ne vise : le reprendre dans la revue (bouton 💬 de la liste)'), cols, items:S.list.filter(e=>e.cls==='ko'&&!capStRevComments(e.id).length).map(row)},
+    {icon:'?', sev:'err', title:_L('Statut référencé introuvable'), tip:_L('Le littéral visé n\'existe pas dans l\'énumération ProgressStatus du projet'), cols, items:S.list.filter(e=>e.litId&&S.byLit[e.litId]&&S.byLit[e.litId].missing).map(row)}];
 }
 
 /** Rend la sous-vue 🔖 Statut de revue : liste filtrable, répartition statut × couche, contrôles.

@@ -147,7 +147,7 @@ async function capWatchPick(){
   if(!window.showOpenFilePicker||_capPickerKo) return {input:true};
   const t0=Date.now();
   try{
-    const [h]=await window.showOpenFilePicker({types:[{description:_L('Modèle Capella'),accept:{'application/xml':['.capella','.melodymodeller','.xml']}}]});
+    const [h]=await window.showOpenFilePicker({types:capFormatsTypes()});
     return {file:await h.getFile(), handle:h};
   }catch(e){
     if(e&&e.name==='AbortError'&&Date.now()-t0>400) return null;   // fenêtre fermée par l'utilisateur

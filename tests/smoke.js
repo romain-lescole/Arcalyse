@@ -68,11 +68,11 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
       await p.evaluate(() => { const n = [...document.querySelectorAll('#vd-svg [data-sem]')].find(x => capGetElementById_(x.getAttribute('data-sem')));
         const r = n.getBoundingClientRect(); capRevDiagNoteAt(r.left, r.top, n.getAttribute('data-sem')); });
       await p.fill('#crv-ed-text', 'note smoke'); await p.click('#crv-ov [data-ok]'); await p.waitForTimeout(200);
-      if (!(await p.$('#crv-layer .crv-note'))) throw new Error('note absente du calque du diagramme');
+      if (!(await p.$('.crv-layer .crv-note'))) throw new Error('note absente du calque du diagramme');
       // Trait tiré de la poignée ● de la note vers un autre élément : il est lié à la note
       const [h, t] = await p.evaluate(() => { const c = _capRev.comments[_capRev.comments.length - 1], ids = new Set(c.targets.map(x => x.id));
         const n = [...document.querySelectorAll('#vd-svg .vd-f[data-sem]')].find(x => !ids.has(x.getAttribute('data-sem')) && capGetElementById_(x.getAttribute('data-sem')) && x.getBoundingClientRect().width > 20);
-        const a = document.querySelector('#crv-layer .crv-note-ln').getBoundingClientRect(), b = n.getBoundingClientRect();
+        const a = document.querySelector('.crv-layer .crv-note-ln').getBoundingClientRect(), b = n.getBoundingClientRect();
         return [{ x: a.x + a.width / 2, y: a.y + a.height / 2 }, { x: b.x + 6, y: b.y + b.height / 2 }]; });
       await p.mouse.move(h.x, h.y); await p.mouse.down(); await p.mouse.move(t.x, t.y, { steps: 6 }); await p.mouse.up(); await p.waitForTimeout(200);
       if (await p.evaluate(() => _capRev.comments[_capRev.comments.length - 1].targets.length) < 2) throw new Error('trait vers un élément : lien non créé');
@@ -208,17 +208,18 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     await p.click('#b-hist-back', { button: 'right' }); if (!(await p.$('#cap-hist-dd [data-hi]'))) throw new Error('clic droit : liste des étapes absente');
     await p.keyboard.press('Escape'); await p.evaluate(() => capHistClose()); });
   await step('analyses : sous-vues', async () => { await p.evaluate(() => { capNavSetMode('complet'); capNavOpen('ana:trace'); }); await p.waitForTimeout(300);   // Complet : tous les onglets
-    for (const b of await p.$$('#cap-view-analyses [data-an]:not([data-an="fns"])')) { await b.click(); await p.waitForTimeout(300); }
+    for (const k of await p.evaluate(() => CAP_NAV_ITEMS.filter(i => i.k.startsWith('ana:')).map(i => i.k))) { await p.evaluate(k => capNavOpen(k), k); await p.waitForTimeout(300); }   // sous-vues par les menus ☰ (la barre d'onglets a été retirée)
+    if (!(await p.$('#ana-recalc'))) throw new Error('↻ Recalculer absent de la barre de la sous-vue');
     await p.evaluate(() => capNavOpen('ana:states')); await p.waitForTimeout(300);
     const inp = p.locator('#ana-box .cap-tf-row input:visible').first();
     if (await inp.count()) { await inp.fill('zzzz'); await p.waitForTimeout(100);
       if (!/^🔍 0 \//.test(await p.evaluate(() => [...document.querySelectorAll('#ana-box .cap-tf-cnt')].map(c => c.textContent).find(Boolean) || ''))) throw new Error('filtre de tableau inopérant');
       await inp.fill(''); } });
-  await step('ƒ Fonctions : vues', async () => { await p.click('#cap-view-analyses [data-an="fns"]');   // onglet de 🔬 Analyses
-    if (await p.evaluate(() => capCurrentView) !== 'functions') throw new Error('onglet ƒ Fonctions inopérant');
+  await step('ƒ Fonctions : vues', async () => { await p.evaluate(() => capNavOpen('functions')); await p.waitForTimeout(300);
+    if (await p.evaluate(() => capCurrentView) !== 'functions') throw new Error('vue ƒ Fonctions non ouverte');
     for (const v of ['tree', 'table', 'trace', 'metrics', 'checks']) { await p.click(`#cap-view-functions [data-fv="${v}"]`); await p.waitForTimeout(300); }
-    await p.click('#cap-view-functions [data-an="trace"]');
-    if (await p.evaluate(() => capCurrentView + ':' + capAnaSub) !== 'analyses:trace') throw new Error('retour vers 🔬 Analyses inopérant'); });
+    await p.evaluate(() => capNavOpen('ana:trace')); await p.waitForTimeout(300);
+    if (await p.evaluate(() => capCurrentView + ':' + capAnaSub) !== 'analyses:trace') throw new Error('ouverture de 🧬 Traçabilité inopérante'); });
   for (const v of ['fex', 'oav', 'csys', 'cblk', 'compex', 'physlink', 'ports', 'scen'])   // chaque présentation (Blocs, Ligne, Matrice, Contrôles…)
     await step('sous-vues ' + v, async () => {
       await p.evaluate(k => capNavOpen(k), v); await p.waitForTimeout(300);
@@ -259,6 +260,40 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
       try { capDashDraw({ m: m.id, v, top: 10, txt: 'x' }, m, 400, 220); } catch (e) { bad.push(m.id + '/' + v + ' : ' + e.message); } })); return bad; });
     r.forEach(x => errs.push(x));
   });
+  // 🧩 SysML v2 (87) : modèle d'essai ouvert à la place du .capella (confirmation du remplacement), vue, détail, accueil
+  const sysml = path.join(models, 'VehiculeDemo.sysml');
+  if (fs.existsSync(sysml)) await step('🧩 SysML v2 : ouverture, vue, détail, santé, vues calculées (groupes, main, carte, note, texte), accueil', async () => {
+    await p.setInputFiles('#capella-file-input', sysml); await p.waitForTimeout(300);
+    await p.click('#cap-replace-ov [data-c="go"]');
+    await p.waitForFunction(() => capCurrentFileName === 'VehiculeDemo.sysml', null, { timeout: 60000 }); await p.waitForTimeout(400);
+    const r = await p.evaluate(async () => { const o = { n: capAllElements.length, rel: MODEL.relations.filter(x => String(x.type).startsWith('sysml:')).length, vides: capNavVides().has('functions') };
+      capNavOpen('ana:sysml'); await new Promise(r => setTimeout(r, 300)); const box = document.querySelector('#ana-box');
+      for (const v of ['els', 'lia', 'diag', 'fic']) { _capSy.view = v; capRenderSysml(box.querySelector('[data-hold="sysml"]')); } _capSy.view = 'els';
+      o.fic = box.querySelectorAll('.sy-ln').length;
+      const boite = capAllElements.find(e => e.attrs.name === 'boite'); capOpenDetail(boite.id); await new Promise(r => setTimeout(r, 200));
+      o.detail = /part boite : Boite/.test(document.querySelector('#cap-detail').innerText);
+      o.sante = capSanteCompute().checks.some(c => c.view === 'ana:sysml');
+      capNavOpen('diag'); await new Promise(r => setTimeout(r, 300)); const dv = document.getElementById('cap-view-diag'); o.vues = dv.querySelectorAll('.sy-vue-it').length;   // 🔲 vues calculées
+      const it = dv.querySelector('.sy-vue-it'); if (it) { it.click(); await new Promise(r => setTimeout(r, 300)); } const svg = dv.querySelector('svg.sy-vue-svg'); o.svg = svg ? svg.querySelectorAll('[data-sem]').length : 0;
+      if (svg) { svg.querySelector('g[data-sem]').dispatchEvent(new MouseEvent('click', { bubbles: true })); await new Promise(r => setTimeout(r, 200)); o.clic = /capSyVueOuvrir\(/.test(document.querySelector('#cap-detail').innerHTML); }   // section des vues de l'élément (langue indifférente)
+      o.carte = !!dv.querySelector('.sy-carte-zone .sy-carte-panneau .sy-carte-vp'); o.main = svg && getComputedStyle(svg.closest('.sy-vue-hote')).cursor === 'grab';   // ▣ carte sous l'explorateur, main
+      const bc = dv.querySelector('[data-sycarte="diagramme"]'); if (bc) { bc.click(); await new Promise(r => setTimeout(r, 200)); o.carte = o.carte && !!dv.querySelector('.sy-vue-droite-corps > .sy-carte') && !dv.querySelector('.sy-carte-panneau'); dv.querySelector('[data-sycarte="panneau"]').click(); await new Promise(r => setTimeout(r, 200)); }   // ⇲ dans la vue, ⇱ retour
+      const dsvg = document.querySelector('#cap-detail h3 svg'); o.ico = !dsvg || dsvg.getBoundingClientRect().width <= 24;   // CSS du lecteur restreinte aux vues : icônes de la page intactes
+      const grp = dv.querySelector('.sy-grp-h'); if (grp) { const n0 = dv.querySelectorAll('.sy-vue-it').length; grp.click(); await new Promise(r => setTimeout(r, 150)); o.pli = dv.querySelectorAll('.sy-vue-it').length < n0; dv.querySelector('.sy-grp-h').click(); await new Promise(r => setTimeout(r, 150)); }   // groupes repliables
+      if (typeof capRevDiagNoteAt === 'function' && dv.querySelector('#sy-crv-note')) {   // 📝 note de revue posée sur la vue (55) : calque, liée à l'élément cliqué
+        const g = [...dv.querySelectorAll('svg.sy-vue-svg [data-sem]')].find(x => capGetElementById_(x.getAttribute('data-sem')) && x.getBoundingClientRect().width > 30 && x.getBoundingClientRect().top < innerHeight - 100);
+        if (g) { const r = g.getBoundingClientRect(); window._capDlgAuto = 'ok'; capRevDiagNoteAt(r.left + 8, r.top + 8, g.getAttribute('data-sem')); await new Promise(r => setTimeout(r, 300));
+          const ta = document.getElementById('crv-ed-text'); if (ta) { ta.value = 'note sysml'; document.querySelector('#crv-ov [data-ok]').click(); await new Promise(r => setTimeout(r, 300)); }
+          const c = _capRev.comments[_capRev.comments.length - 1]; o.note = !!(c && c.diag && /^sy:/.test(c.diag.uid) && c.targets.length === 1 && dv.querySelector('.sy-vue-cadre > .crv-layer .crv-note'));
+          _capRev.comments = _capRev.comments.filter(x => x !== c); capRevSave(); } else o.note = true; } else o.note = true;
+      const bt = dv.querySelector('[data-symode="texte"]'); if (bt) { bt.click(); await new Promise(r => setTimeout(r, 200)); } o.texte = !!dv.querySelector('.sy-vue-texte') && dv.querySelectorAll('.sy-vue-texte .sy-tk-kw').length > 0;   // ≡ texte coloré
+      if (o.texte) { const f0 = dv.querySelector('.sy-vue-texte').style.fontSize; dv.querySelector('[data-syzoom="+"]').click(); o.texte = dv.querySelector('.sy-vue-texte').style.fontSize !== f0; dv.querySelector('[data-syzoom="0"]').click(); }   // taille du texte (− ⊡ +, Ctrl + molette)
+      capNavOpen('home'); await new Promise(r => setTimeout(r, 300)); o.pastille = !!document.querySelector('#cap-view-home .hm-pill[data-nav="ana:sysml"]');   // pastille 🧩 de l'accueil (langue indifférente)
+      return o; });
+    if (r.n < 40 || r.rel < 20) throw new Error('modèle SysML : ' + r.n + ' éléments, ' + r.rel + ' liaisons');
+    if (!r.vides) throw new Error('vues Capella non marquées sans données');
+    if (!r.fic || !r.detail || !r.sante || !r.pastille) throw new Error('vue, détail, santé ou accueil SysML incomplets : ' + JSON.stringify(r));
+    if (r.vues < 5 || !r.svg || !r.clic || !r.texte || !r.carte || !r.main || !r.pli || !r.note || !r.ico) throw new Error('vues calculées : ' + JSON.stringify(r)); });
   await browser.close();
   if (errs.length) { console.error('\n✖ ' + errs.length + ' erreur(s) :\n  - ' + errs.slice(0, 30).join('\n  - ')); process.exit(1); }
   console.log('\n✔ Aucune erreur.');

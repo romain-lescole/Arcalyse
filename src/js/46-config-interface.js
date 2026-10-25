@@ -64,7 +64,7 @@ function capCfgSet(k, v){
     if(cur&&THEMES[cur]&&sel){ sel.value=cur; applyTheme(cur); }
   }
   else if(k==='names'){ if(v.verbs) capSaveNameRules(v); }
-  else if(k==='checks'){ if(v.off||v.sev||v.params) capChkSet(v); }
+  else if(k==='checks'){ if(v.off||v.sev||v.params||v.poids) capChkSet(v); }
 }
 
 /** Écrit dans la page (bloc JSON « cap-ui-views ») ce que les autres blocs ne conservent pas encore :

@@ -480,7 +480,8 @@ function capRevTargetsHtml(c){
   const t=(c.targets||[]).map(x=>{ const s=capRevTargetState(x), lv=CAP_LAYERS[x.layer]||{color:'#8b949e'};
     return `<span class="crv-tg${s==='deleted'?' crv-tg-del':s==='changed'?' crv-tg-chg':''}" data-open="${esc(x.id)}" title="${esc(x.type)}${x.field?' — '+esc(capRevFieldLabel(x.field)):''}">`+
       `${capIco(x.id,13)||capIcoType(x.type,13)}<span style="color:${lv.color};font-size:9px;font-weight:700">${esc(x.layer||'')}</span> ${esc(x.name||x.id.slice(0,12))}${x.field?` <i>· ${esc(capRevFieldLabel(x.field))}</i>`:''}</span>`; }).join('');
-  const d=c.diag?`<span class="crv-tg crv-tg-diag" data-diag="${esc(c.diag.uid)}" title="${_L('Note sur le diagramme')}">🔲 ${esc(c.diag.nom||c.diag.uid)}</span>`:'';
+  const dIco=c.diag&&/^sy:/.test(c.diag.uid)&&typeof capSyVueIco==='function'?capSyVueIco(c.diag.uid.split(':')[1],13)||'🔲':'🔲';   // vue SysML v2 : icône du genre (87)
+  const d=c.diag?`<span class="crv-tg crv-tg-diag" data-diag="${esc(c.diag.uid)}" title="${_L('Note sur le diagramme')}">${dIco} ${esc(c.diag.nom||c.diag.uid)}</span>`:'';
   return t||d?`<div class="crv-tgs">${d}${t}</div>`:'';
 }
 
@@ -545,14 +546,16 @@ function capRevGet(id){ return _capRev.comments.find(c=>c.id===id); }
  * @param {object} c - Commentaire
  */
 function capRevGoto(c){
-  if(c.diag&&typeof capDiagReps==='function'&&capDiagReps().some(r=>r.uid===c.diag.uid)){
+  const sy=c.diag&&/^sy:/.test(c.diag.uid);   // vue calculée SysML v2 (87)
+  const dispo=c.diag&&(sy?typeof capSyVuesListe==='function'&&capSyVuesListe().some(v=>'sy:'+v.cle===c.diag.uid):typeof capDiagReps==='function'&&capDiagReps().some(r=>r.uid===c.diag.uid));
+  if(dispo){
     capDiagOpen(c.diag.uid);
-    setTimeout(()=>{ capRevLayerDraw(); const n=document.querySelector(`#crv-layer .crv-note[data-c="${CSS.escape(c.id)}"]`); if(n){ n.classList.add('crv-flash'); setTimeout(()=>n.classList.remove('crv-flash'),1600); } },200);
+    setTimeout(()=>{ capRevLayerDraw(); const n=document.querySelector(`.crv-layer .crv-note[data-c="${CSS.escape(c.id)}"]`); if(n){ n.classList.add('crv-flash'); setTimeout(()=>n.classList.remove('crv-flash'),1600); } },300);
     return;
   }
   const t=(c.targets||[]).find(x=>capLoaded&&capGetElementById_(x.id));
   if(t){ capOpenDetailById(t.id); return; }
-  if(c.diag) capRevAlert(_L('Ce commentaire est posé sur un diagramme : ouvrez le .aird du projet dans 🔲 Diagrammes Capella pour voir la note.'));
+  if(c.diag) capRevAlert(sy?_L('Ce commentaire est posé sur une vue SysML v2 : rouvrez le fichier .sysml pour voir la note.'):_L('Ce commentaire est posé sur un diagramme : ouvrez le .aird du projet dans 🔲 Diagrammes Capella pour voir la note.'));
 }
 /** Valide un commentaire (correction vérifiée) : statut Validé, date et vérificateur. @param {object} c */
 function capRevValidate(c){
@@ -786,8 +789,8 @@ function capRevContext(e){
   if(e.defaultPrevented||!capLoaded||e.ctrlKey||e.shiftKey) return;
   if(!e.target.closest('#cap-content,#cap-detail-content,#rm-detail-content')) return;
   if(e.target.closest('input,textarea,select,.crv-note,.crv-linkbar')) return;
-  const svg=document.getElementById('vd-svg'), zone=document.getElementById('vd-zone');
-  const uid=capRevDiagUid(), inDiag=!!(uid&&zone&&zone.contains(e.target)&&svg&&svg.getBoundingClientRect().width);
+  const cx=capRevDiagCtx(), {svg, zone, uid}=cx;
+  const inDiag=!!(uid&&zone&&zone.contains(e.target)&&svg&&svg.getBoundingClientRect().width);
   const el=capRevElementAt(e.target); if(!el&&!inDiag) return;
   e.preventDefault();
   const esc=capEsc, id=el?esc(el.id):'', x=e.clientX, y=e.clientY;
@@ -799,13 +802,13 @@ function capRevContext(e){
   const note=(f,l)=>`<div class="ctx-i" onclick="capRevDiagNoteAt(${el?x+24:x},${el?y-140:y},'${id}','${f}')">${l}</div>`;
   let h;
   if(inDiag){
-    const rep=capDiagReps().find(r=>r.uid===uid)||{}, nd=_capRev.comments.filter(c=>c.diag&&c.diag.uid===uid).length;
+    const nd=_capRev.comments.filter(c=>c.diag&&c.diag.uid===uid).length;
     h=el?`<div class="crv-ctx-t">${capIco(el.id,14)}${esc(el.attrs.name||el.typeName)} <span class="ana-dim">${esc(el.typeName)}</span></div>`+
         note('',_L('📝 Note de revue ici, liée à l\'élément'))+note('name',_L('📝 Note sur son nom'))+
         (el.attrs.description?note('description',_L('📝 Note sur sa description')):'')
-      :`<div class="crv-ctx-t">🔲 ${esc(rep.nom||'')}</div>`+note('',_L('📝 Note de revue ici'));
+      :`<div class="crv-ctx-t">🔲 ${esc(cx.nom||'')}</div>`+note('',_L('📝 Note de revue ici'));
     if(nd) h+=`<div class="ctx-i" onclick="capRevShowDiag()">${_L(`📄 Notes de ce diagramme (${nd})`)}</div>`;
-    h+=`<div class="ctx-i" onclick="capDgwOuvrir('${esc(uid)}')">${_L('⧉ Afficher dans la fenêtre de comparaison')}</div>`;   // 83
+    if(!cx.sysml) h+=`<div class="ctx-i" onclick="capDgwOuvrir('${esc(uid)}')">${_L('⧉ Afficher dans la fenêtre de comparaison')}</div>`;   // 83 (diagrammes Capella seulement)
   } else {
     // Dans une chaîne (carte ou graphe) : le commentaire d'une fonction est aussi rattaché à la chaîne
     const chId=capRevChainAt(e.target), ch=chId&&chId!==el.id&&capGetElementById_(chId), plus=ch?`,{id:'${esc(chId)}',field:''}`:'';
@@ -850,8 +853,33 @@ function capRevMark(){
 
 /* ── Calque des commentaires sur les diagrammes ─────────────────────────── */
 
-/** @returns {string} identifiant du diagramme ouvert dans la visionneuse ('' sinon) */
-function capRevDiagUid(){ const li=document.querySelector('#diag-liste li.actif[data-diag]'); return li?li.dataset.diag:''; }
+/**
+ * Contexte du dessin qui porte les notes : la vue calculée SysML v2 affichée (87, `capSyRevCtx`, identifiant « sy:<clé> »),
+ * sinon le diagramme Capella ouvert dans la visionneuse (54). Les notes sont posées en coordonnées du SVG, le calque est un
+ * enfant de la zone (classe `crv-layer`).
+ * @returns {{uid:string, nom:string, svg:SVGSVGElement|null, zone:HTMLElement|null, vis?:HTMLElement, sysml:boolean}} uid vide si rien n'est affiché ; `vis` : conteneur défilant quand la zone est plus grande que ce qui est visible
+ */
+function capRevDiagCtx(){
+  const sy=typeof capSyRevCtx==='function'?capSyRevCtx():null;
+  if(sy) return Object.assign({sysml:true}, sy);
+  const li=document.querySelector('#diag-liste li.actif[data-diag]'), uid=li?li.dataset.diag:'';
+  const rep=uid&&typeof capDiagReps==='function'?capDiagReps().find(r=>r.uid===uid):null;
+  return {uid, nom:rep?rep.nom||'':'', svg:document.getElementById('vd-svg'), zone:document.getElementById('vd-zone'), sysml:false};
+}
+/** @returns {string} identifiant du diagramme ouvert dans la visionneuse, ou de la vue SysML affichée ('' sinon) */
+function capRevDiagUid(){ return capRevDiagCtx().uid; }
+/**
+ * Élément du modèle dessiné sous un point de l'écran (forme ou lien portant `data-sem` dans le SVG du contexte).
+ * @param {{svg:SVGSVGElement|null}} cx - Contexte (`capRevDiagCtx`)
+ * @param {number} x - Abscisse écran
+ * @param {number} y - Ordonnée écran
+ * @returns {string} identifiant ('' si rien)
+ */
+function capRevSemAt(cx, x, y){
+  if(!cx.svg) return '';
+  const s=document.elementsFromPoint(x,y).map(e=>e.closest&&e.closest('[data-sem]')).find(e=>e&&cx.svg.contains(e));
+  return s?s.getAttribute('data-sem'):'';
+}
 /**
  * Commandes de la revue dans la barre de 🔲 Diagrammes Capella : 📝 Note (à glisser sur le diagramme) et
  * affichage du calque. Appelé par capDiagBarre (54-diagrammes.js).
@@ -866,42 +894,41 @@ function capRevDiagBar(){
 }
 /** Installe (une fois) le calque des commentaires au-dessus du diagramme et ses écouteurs. */
 function capRevLayerEnsure(){
-  const zone=document.getElementById('vd-zone'), box=document.getElementById('cap-view-diag');
+  const cx=capRevDiagCtx(), zone=cx.zone, box=document.getElementById('cap-view-diag');
   if(!zone||!box) return;
-  if(!box._crv){
+  if(!box._crv){   // une fois par conteneur : boutons des barres (Capella : #cdg-…, SysML : #sy-…), Échap, redimensionnement
     box._crv=true;
     box.addEventListener('click',e=>{
-      if(e.target.closest('#cdg-crv-layer')){ _capRev.layer=!_capRev.layer; capRevSave(); return; }
-      if(e.target.closest('#cdg-crv-note')) capRevDiagNoteAt(null,null,'');
+      if(e.target.closest('#cdg-crv-layer,#sy-crv-layer')){ _capRev.layer=!_capRev.layer; capRevSave(); return; }
+      if(e.target.closest('#cdg-crv-note,#sy-crv-note')) capRevDiagNoteAt(null,null,'');
     });
-    box.addEventListener('dragstart',e=>{ if(e.target.id==='cdg-crv-note'){ e.dataTransfer.setData('application/x-arcalyse-note','1'); e.dataTransfer.effectAllowed='copy'; } });
+    box.addEventListener('dragstart',e=>{ if(e.target.id==='cdg-crv-note'||e.target.id==='sy-crv-note'){ e.dataTransfer.setData('application/x-arcalyse-note','1'); e.dataTransfer.effectAllowed='copy'; } });
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&_capRevUi.link){ _capRevUi.link=''; capRevLayerDraw(); } });
+    window.addEventListener('resize',()=>{ cancelAnimationFrame(box._crvRaf); box._crvRaf=requestAnimationFrame(capRevLayerDraw); });
   }
-  if(zone._crv) return;
+  if(zone._crv) return;   // zone déjà équipée (la zone SysML est recréée à chaque rendu : équipée de nouveau)
   zone._crv=true;
   if(getComputedStyle(zone).position==='static') zone.style.position='relative';
-  const L=document.createElement('div'); L.id='crv-layer'; zone.appendChild(L);
+  const L=document.createElement('div'); L.className='crv-layer'; zone.appendChild(L);
   const estNote=e=>[...(e.dataTransfer&&e.dataTransfer.types||[])].includes('application/x-arcalyse-note');
   zone.addEventListener('dragover',e=>{ if(estNote(e)){ e.preventDefault(); e.dataTransfer.dropEffect='copy'; } });
   zone.addEventListener('drop',e=>{
     if(!estNote(e)) return; e.preventDefault(); e.stopPropagation();
-    const sem=document.elementsFromPoint(e.clientX,e.clientY).map(x=>x.closest&&x.closest('#vd-svg [data-sem]')).find(Boolean);
-    capRevDiagNoteAt(e.clientX,e.clientY, sem?sem.getAttribute('data-sem'):'');
+    capRevDiagNoteAt(e.clientX,e.clientY, capRevSemAt(capRevDiagCtx(),e.clientX,e.clientY));
   });
   // Mode 🔗 Lier : un clic sur un élément du diagramme le lie à la note (ou le délie) au lieu de l'ouvrir
   const lier=e=>{
     if(!_capRevUi.link) return;
-    const s=e.target.closest&&e.target.closest('#vd-svg [data-sem]'); if(!s) return;
+    const c2=capRevDiagCtx(), s=e.target.closest&&e.target.closest('[data-sem]'); if(!s||!c2.svg||!c2.svg.contains(s)) return;
     e.stopPropagation(); e.preventDefault();
     if(e.type!=='click') return;
     capRevToggleTarget(_capRevUi.link, s.getAttribute('data-sem'));
   };
   ['click','dblclick','pointerdown','mousedown'].forEach(t=>zone.addEventListener(t,lier,true));
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&_capRevUi.link){ _capRevUi.link=''; capRevLayerDraw(); } });
   // Zoom, déplacement, autre diagramme : la visionneuse modifie le viewBox ou redessine le SVG
   let raf=0;
   new MutationObserver(ms=>{ if(ms.every(m=>L.contains(m.target))) return; cancelAnimationFrame(raf); raf=requestAnimationFrame(capRevLayerDraw); })
     .observe(zone,{subtree:true, childList:true, attributes:true, attributeFilter:['viewBox']});
-  window.addEventListener('resize',()=>{ cancelAnimationFrame(raf); raf=requestAnimationFrame(capRevLayerDraw); });
   capRevLayerDraw();
 }
 /**
@@ -913,14 +940,15 @@ function capRevLayerEnsure(){
  * @param {string} [field] - Partie commentée de l'élément ('' : élément entier, 'name', 'description')
  */
 function capRevDiagNoteAt(x, y, id, field){
-  const svg=document.getElementById('vd-svg'), uid=capRevDiagUid(), m=svg&&svg.getScreenCTM();
-  if(!uid||!m||!svg.getBoundingClientRect().width){ capAlert(_L('Ouvrez d\'abord un diagramme (les tableaux du .aird ne portent pas de notes).')); return; }
-  const r=svg.getBoundingClientRect();
-  if(x==null){ x=r.left+r.width/2-100; y=r.top+r.height/2-55; }
+  const cx=capRevDiagCtx(), svg=cx.svg, uid=cx.uid, m=svg&&svg.getScreenCTM();
+  if(!uid||!m||!svg.getBoundingClientRect().width){ capAlert(_L('Ouvrez d\'abord un diagramme ou une vue (les tableaux du .aird ne portent pas de notes).')); return; }
+  const r=svg.getBoundingClientRect(), zr=(cx.vis||cx.zone)?(cx.vis||cx.zone).getBoundingClientRect():r;
+  if(x==null){   // au centre de la partie visible du dessin
+    const vx=Math.max(r.left,zr.left), vy=Math.max(r.top,zr.top), vw=Math.min(r.right,zr.right)-vx, vh=Math.min(r.bottom,zr.bottom)-vy;
+    x=vx+Math.max(0,vw)/2-100; y=vy+Math.max(0,vh)/2-55; }
   const p=new DOMPoint(x,y).matrixTransform(m.inverse()), k=m.a||1;
-  const rep=capDiagReps().find(z=>z.uid===uid)||{};
   if(!_capRev.layer){ _capRev.layer=true; capRevSave(); }
-  capRevNew(id?[{id, field:field||''}]:[], {uid, nom:rep.nom||'', x:Math.round(p.x), y:Math.round(p.y), w:Math.round(200/k), h:Math.round(110/k)});
+  capRevNew(id?[{id, field:field||''}]:[], {uid, nom:cx.nom||'', x:Math.round(p.x), y:Math.round(p.y), w:Math.round(200/k), h:Math.round(110/k)});
 }
 /**
  * Boîte d'un élément du diagramme en coordonnées du diagramme (union de ses formes dessinées).
@@ -945,10 +973,10 @@ function capRevDiagBox(svg, inv, id){
  * de la visionneuse (matrice écran du SVG), les notes à leur position, les liens vers leurs éléments.
  */
 function capRevLayerDraw(){
-  const L=document.getElementById('crv-layer'), svg=document.getElementById('vd-svg'), zone=document.getElementById('vd-zone');
+  const cx=capRevDiagCtx(), svg=cx.svg, zone=cx.zone, L=zone&&zone.querySelector(':scope > .crv-layer');
   if(!L||!svg||!zone) return;
-  const uid=capRevDiagUid(), u=_capRevUi;
-  const nb=document.querySelector('#cdg-crv-layer .cdg-nb'); if(nb) nb.textContent=uid?_capRev.comments.filter(c=>c.diag&&c.diag.uid===uid).length:0;
+  const uid=cx.uid, u=_capRevUi, nNotes=uid?_capRev.comments.filter(c=>c.diag&&c.diag.uid===uid).length:0;
+  document.querySelectorAll('#cdg-crv-layer,#sy-crv-layer').forEach(b=>{ const nb=b.querySelector('.cdg-nb'); if(nb) nb.textContent=nNotes; b.classList.toggle(b.id==='sy-crv-layer'?'active':'actif', !!_capRev.layer); });
   const list=uid&&_capRev.layer?_capRev.comments.filter(c=>c.diag&&c.diag.uid===uid&&(_capRev.layerDone||!capRevClosed(c)||c.id===u.link)):[];
   const m=svg.getScreenCTM(), sr=svg.getBoundingClientRect();
   if(!list.length||!m||!sr.width){ if(L.innerHTML) L.innerHTML=''; return; }
@@ -1018,16 +1046,15 @@ function capRevToggleTarget(cid, id){
  */
 function capRevNoteLine(e, n, c, m){
   const d=c.diag, inv=m.inverse(), x1=d.x+d.w, y1=d.y+d.h/2, NS='http://www.w3.org/2000/svg';
-  const links=document.querySelector('#crv-layer .crv-links'); if(!links) return;
+  const cx=capRevDiagCtx(), links=cx.zone&&cx.zone.querySelector(':scope > .crv-layer .crv-links'); if(!links) return;
   const ln=document.createElementNS(NS,'line'), cadre=document.createElementNS(NS,'rect');
   [['x1',x1],['y1',y1],['x2',x1],['y2',y1],['stroke','var(--c-accent)'],['stroke-width','2.5'],['vector-effect','non-scaling-stroke']].forEach(([k,v])=>ln.setAttribute(k,v));
   [['fill','none'],['stroke','var(--c-accent)'],['stroke-width','3'],['rx','3'],['vector-effect','non-scaling-stroke'],['visibility','hidden']].forEach(([k,v])=>cadre.setAttribute(k,v));
   links.append(cadre, ln);
-  const cible=ev=>{ const s=document.elementsFromPoint(ev.clientX,ev.clientY).map(x=>x.closest&&x.closest('#vd-svg [data-sem]')).find(Boolean);
-    return s&&capGetElementById_(s.getAttribute('data-sem'))?s.getAttribute('data-sem'):''; };
+  const cible=ev=>{ const id=capRevSemAt(cx,ev.clientX,ev.clientY); return id&&capGetElementById_(id)?id:''; };
   const bouge=ev=>{
     const p=new DOMPoint(ev.clientX,ev.clientY).matrixTransform(inv); ln.setAttribute('x2',p.x); ln.setAttribute('y2',p.y);
-    const id=cible(ev), b=id&&capRevDiagBox(document.getElementById('vd-svg'),inv,id);
+    const id=cible(ev), b=id&&capRevDiagBox(cx.svg,inv,id);
     if(b){ cadre.setAttribute('x',b.x-4); cadre.setAttribute('y',b.y-4); cadre.setAttribute('width',b.w+8); cadre.setAttribute('height',b.h+8); }
     cadre.setAttribute('visibility',b?'visible':'hidden');
   };
@@ -1043,7 +1070,7 @@ function capRevNoteDown(e){
   if(!n||!h||e.button!==0) return;
   if(e.target.closest('.crv-nb')) return;
   e.stopPropagation(); e.preventDefault();
-  const c=capRevGet(n.dataset.c), svg=document.getElementById('vd-svg'), m=svg&&svg.getScreenCTM(); if(!c||!m) return;
+  const c=capRevGet(n.dataset.c), svg=capRevDiagCtx().svg, m=svg&&svg.getScreenCTM(); if(!c||!m) return;
   if(h.dataset.n==='line'){ capRevNoteLine(e, n, c, m); return; }
   const d=c.diag, x0=e.clientX, y0=e.clientY, o={x:d.x, y:d.y, w:d.w, h:d.h}, size=h.dataset.n==='size';
   n._moved=false; n.setPointerCapture(e.pointerId);

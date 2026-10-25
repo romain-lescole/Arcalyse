@@ -72,14 +72,14 @@ function capIcoPlusTable(){
 }
 
 /**
- * Icône de complément d'un type (dessinée ici) ou, à défaut, icône générique à ses initiales.
+ * Icône de complément d'un type (dessinée ici, ou métaclasse SysML v2 dessinée par 87) ou, à défaut, icône générique à ses initiales.
  * @param {string} type - Type court (« MessageEnd »)
  * @param {number} [taille] - Côté en pixels (14 par défaut)
  * @returns {string} SVG (vide sans type)
  */
 function capIcoPlus(type, taille){
   if(!type) return '';
-  const n=taille||14, t=capIcoPlusTable()[type];
+  const n=taille||14, t=capIcoPlusTable()[type]||(typeof capIcoSysml==='function'?capIcoSysml(type):'');   // 87 : métaclasses SysML v2
   const corps=t||(()=>{ const ini=(type.match(/[A-Z]/g)||[type[0].toUpperCase()]).slice(0,2).join('');
     return `<rect x="1.5" y="1.5" width="13" height="13" rx="3" fill="#eceef1" stroke="#8b949e" stroke-width="1"/><text x="8" y="10.6" font-size="${ini.length>1?6.4:8}" font-weight="700" text-anchor="middle" fill="#444" stroke="none">${ini}</text>`; })();
   return `<svg class="ico" viewBox="0 0 16 16" width="${n}" height="${n}" aria-hidden="true" stroke-linejoin="round" font-family="Arial,Helvetica,sans-serif">${corps}</svg>`;

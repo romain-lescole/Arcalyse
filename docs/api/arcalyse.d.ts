@@ -252,6 +252,8 @@ interface Analysis {
   physicalLinks(): Promise<Analysed[]>;
   /** 🖧 Deployment & EPBS: nodes, behaviors, onNode, hosts, cis (configuration items), ciByEl, ceBad. */
   deployment(): Promise<Analysed>;
+  /** 🧩 SysML v2 (model read by the Arcature reader): nom, projet, fichiers, racine, elements (plain objects of the reader), diagnostics, liaisons, vues (computed views: cle, genre, sigle, nom, element); null for a Capella model. */
+  sysml(): Promise<Analysed | null>;
   /** 🩺 Checks of every view (or of one view), with the check profile applied. */
   checks(view?: string): Promise<Check[]>;
   /** Name quality (rules of ƒ Functions): lang, verb, issues (code, label). */

@@ -13,9 +13,9 @@ var CAP_TOUR_STEPS=[
   {t:_L('🎓 Bienvenue dans Arcalyse'),
    x:_L('Cette visite présente les principales zones de l\'outil en quelques étapes.<br>Utilisez <b>Suivant ▶</b> et <b>◀ Précédent</b> (ou les flèches du clavier) ; <b>✕</b> ou <b>Échap</b> pour quitter à tout moment.')},
   {s:'#cap-drop-zone', m:'empty', t:_L('🔷 Ouvrir un modèle'),
-   x:_L('Glissez-déposez un fichier <b>.capella</b> ici, ou cliquez pour le chercher. Le fichier est lu sur ce poste : rien n\'est envoyé.')},
+   x:_L('Glissez-déposez un fichier modèle (<b>.capella</b>, <b>.sysml</b>, <b>.kpar</b>) ici, ou cliquez pour le chercher. Le fichier est lu sur ce poste : rien n\'est envoyé.')},
   {s:'#cw-folder', m:'empty', t:_L('📁 Dossier du projet'),
-   x:_L('Charge ensemble le modèle <b>.capella</b> et ses diagrammes <b>.aird</b> ; après une mise à jour du modèle, le .aird est relu automatiquement.')},
+   x:_L('Charge ensemble le modèle <b>.capella</b> et ses diagrammes <b>.aird</b> (ou les <b>.sysml</b> d\'un projet) ; après une mise à jour du modèle Capella, le .aird est relu automatiquement.')},
   {s:'#cw-projet', m:'empty', t:_L('📄 Projet de travail'),
    x:_L('Rouvre une page enregistrée (💾) — même par une version précédente d\'Arcalyse, à partir de la 2.1 : modèle, diagrammes, revue, accueil, vues et réglages sont repris dans cette version.')},
   {s:'#cap-v-home', t:_L('🏠 Accueil'),
@@ -81,7 +81,8 @@ var CAP_TOUR_ANA_TXT={
   reqs:_L('<b>🧾 Exigences</b> : exigences du modèle, éléments qui les satisfont et exigences non couvertes.'),
   pvmt:_L('<b>🎛 Propriétés</b> : propriétés et valeurs (PVMT) appliquées aux éléments.'),
   data:_L('<b>🗃 Données & interfaces</b> : classes, types de données, Exchange Items et interfaces, avec leurs utilisations.'),
-  cts:_L('<b>🔒 Contraintes</b> : contraintes du modèle et éléments contraints.')
+  cts:_L('<b>🔒 Contraintes</b> : contraintes du modèle et éléments contraints.'),
+  sysml:_L('<b>🧩 SysML v2</b> : éléments, liaisons et diagnostics du modèle SysML v2 lu par le lecteur d\'Arcature.')
 };
 /** Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
  * la racine de l'arborescence si son graphe compte entre 6 et 60 nœuds, sinon le premier élément très relié
@@ -243,8 +244,8 @@ var CAP_TOUR_VIEWS={
     {s:'#ana-fn-csv,#ana-fn-html', t:_L('⬇ Exports'), x:_L('<b>⬇ CSV</b> et <b>📄 Dossier fonctionnel</b> : document HTML avec une section par fonction (description, allocation, échanges, traçabilité).')},
     {s:'#cap-view-functions .phl-filter-bar + *', one:true, t:_L('📋 Résultat'), x:_L('Clic sur une fonction pour ouvrir son détail.')}]},
   analyses:{l:_L('🔬 Analyses'), steps:[
-    {s:'#cap-view-analyses [data-an]', t:_L('🔬 Analyses'), x:_L('ƒ Fonctions et huit analyses du modèle : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes.')},
-    {s:'#cap-view-analyses [data-an].active', t:_L('🔎 Analyse affichée'), x:()=>CAP_TOUR_ANA_TXT[capAnaSub]||_L('Analyse en cours.')},
+    {s:'#cap-tb-views .cap-nav-grp', t:_L('🔬 Analyses'), x:_L('Les analyses s\'ouvrent par les menus 🏗 Architecture et ✅ Vérifier (ou 🔍 Ctrl+K) : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes.')},
+    {s:'#cap-tb-views .cap-nav-grp.active, #cap-flux-tabs .phl-toggle-btn.active', t:_L('🔎 Analyse affichée'), x:()=>CAP_TOUR_ANA_TXT[capAnaSub]||_L('Analyse en cours.')},
     {s:'#ana-recalc', t:_L('↻ Recalculer'), x:_L('Les résultats sont gardés en mémoire ; ce bouton les recalcule (utile après une mise à jour du modèle).')},
     {s:'#ana-box .phl-filter-bar', one:true, t:_L('🧰 Options'), x:_L('Présentations, filtres et export CSV propres à l\'analyse affichée.')},
     {s:'#ana-box', t:_L('📋 Résultat'), x:_L('Les tableaux se filtrent (champ <i>Filtrer…</i> sous les titres) et se redimensionnent ; clic sur un élément pour ouvrir son détail.')}]},
@@ -259,13 +260,13 @@ var CAP_TOUR_VIEWS={
 /** 🚀 Bien démarrer, 1er temps (sans modèle) : où ouvrir le fichier. Terminer la visite arme la reprise (2e temps). */
 var CAP_TOUR_START=[
   {t:_L('🚀 Bien démarrer'),
-   x:_L('Deux temps pour bien démarrer :<br><b>1.</b> ouvrir votre modèle Capella ;<br><b>2.</b> une fois le modèle ouvert, savoir où trouver l\'aide et les tutoriels.')},
-  {s:'#cap-drop-zone', m:'empty', t:_L('1 · Ouvrir un modèle Capella'),
-   x:_L('Glissez-déposez votre fichier <b>.capella</b> dans ce cadre (formats acceptés : .capella, .melodymodeller, .xml).<br>Le fichier est lu sur ce poste : rien n\'est envoyé.')},
+   x:_L('Deux temps pour bien démarrer :<br><b>1.</b> ouvrir votre modèle ;<br><b>2.</b> une fois le modèle ouvert, savoir où trouver l\'aide et les tutoriels.')},
+  {s:'#cap-drop-zone', m:'empty', t:_L('1 · Ouvrir un modèle'),
+   x:_L('Glissez-déposez votre fichier modèle dans ce cadre : Capella (<b>.capella</b>, .melodymodeller, .xml) ou SysML v2 (<b>.sysml</b>, <b>.kpar</b>).<br>Le fichier est lu sur ce poste : rien n\'est envoyé.')},
   {s:'#cw-browse', m:'empty', t:_L('… ou le chercher'),
-   x:_L('Vous pouvez aussi cliquer sur <b>📂 Fichier .capella…</b> pour le choisir dans l\'explorateur de fichiers.')},
+   x:_L('Vous pouvez aussi cliquer sur <b>📂 Fichier modèle…</b> pour le choisir dans l\'explorateur de fichiers.')},
   {s:'#cw-folder', m:'empty', t:_L('… ou ouvrir le dossier du projet'),
-   x:_L('<b>📁 Dossier du projet…</b> charge ensemble le modèle .capella et ses diagrammes .aird (vue 🔲 Diagrammes Capella). Recommandé : après une mise à jour du modèle, le .aird est relu lui aussi.')},
+   x:_L('<b>📁 Dossier du projet…</b> charge ensemble le modèle .capella et ses diagrammes .aird (vue 🔲 Diagrammes), ou les .sysml d\'un projet SysML v2. Recommandé : après une mise à jour du modèle, le .aird est relu lui aussi.')},
   {s:'#cw-projet', m:'empty', t:_L('… ou reprendre un projet de travail'),
    x:_L('<b>📄 Projet de travail (.html)…</b> rouvre une page enregistrée avec 💾, même par une version précédente d\'Arcalyse (à partir de la 2.1) : vous choisissez ce qui est repris (modèle, diagrammes, revue, accueil, tableaux de bord, vues, réglages). Pensez ensuite à l\'enregistrer : elle passe dans la nouvelle version.')},
   {s:'#b-help, #cap-nav-dd', m:'empty', pre:()=>capTourHelpMenu(), t:_L('❓ Aide, en haut à droite'),

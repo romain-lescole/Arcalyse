@@ -127,18 +127,18 @@ function capPortsDiagSections(d){
     if(miss.length) cePl.push(_L(`<tr><td>${L(ce.id,ce.name,'font-weight:600')}</td><td>${L(pl.id,pl.name)}</td><td>Port ${miss.join(_L(' et '))} du CE non alloué aux ports physiques du lien</td></tr>`));
   }));
   return [
-    {icon:'ƒ', title:_L('Function Ports non alloués alors que la fonction est allouée à un composant qui a des ports'),
+    {icon:'ƒ', sev:'info', title:_L('Function Ports non alloués alors que la fonction est allouée à un composant qui a des ports'),
       tip:_L(`Aucune PortAllocation · ${fps.filter(fp=>!fp.cps.length&&!fp.compHasCP).length} autres ports non alloués ignorés (fonction non allouée ou composant sans ports)`), cols:[_L('Fonction ⬦ Port'),_L('Couche')],
       items:fps.filter(fp=>!fp.cps.length&&fp.compHasCP).map(fp=>`<tr><td>${fpCell(fp)}</td><td>${fp.layer}</td></tr>`)},
-    {icon:'⬦', title:_L('Component Ports sans Function Port alloué'), tip:_L('Port de composant sans comportement associé'), cols:[_L('Composant ⬦ Port'),_L('Couche')],
+    {icon:'⬦', sev:'info', title:_L('Component Ports sans Function Port alloué'), tip:_L('Port de composant sans comportement associé'), cols:[_L('Composant ⬦ Port'),_L('Couche')],
       items:cps.filter(cp=>!cp.fps.length).map(cp=>`<tr><td>${cpCell(cp)}</td><td>${cp.layer}</td></tr>`)},
-    {icon:'🔌', title:_L('Component Ports (PA) non alloués à un Physical Port'), tip:_L('Aucune ComponentPortAllocation'), cols:[_L('Composant ⬦ Port')],
+    {icon:'🔌', sev:'info', title:_L('Component Ports (PA) non alloués à un Physical Port'), tip:_L('Aucune ComponentPortAllocation'), cols:[_L('Composant ⬦ Port')],
       items:cps.filter(cp=>cp.layer==='PA'&&!cp.pps.length).map(cp=>`<tr><td>${cpCell(cp)}</td></tr>`)},
-    {icon:'◌', title:_L('Physical Ports sans Component Port alloué'), tip:_L('Port physique sans port logique porté'), cols:[_L('Composant ⬦ Port physique')],
+    {icon:'◌', sev:'info', title:_L('Physical Ports sans Component Port alloué'), tip:_L('Port physique sans port logique porté'), cols:[_L('Composant ⬦ Port physique')],
       items:pps.filter(pp=>!pp.cps.length).map(pp=>`<tr><td>${ppCell(pp)}</td></tr>`)},
-    {icon:'⇆', title:_L('Sens incohérent Function Port / Component Port'), tip:_L('Sortie de fonction sur port IN, ou entrée sur port OUT'), cols:[_L('Function Port'),_L('Component Port')], items:dirBad},
-    {icon:'∦', title:_L('Functional Exchange ↔ Component Exchange : ports non alignés'), tip:_L('Les ports du FE doivent être alloués aux ports du CE qui le porte'), cols:[_L('Functional Exchange'),_L('Component Exchange'),_L('Écart')], items:feCe},
-    {icon:'∦', title:_L('Component Exchange ↔ Physical Link : ports non alignés'), tip:_L('Les ports du CE doivent être alloués aux ports physiques du lien qui le porte'), cols:[_L('Component Exchange'),_L('Physical Link'),_L('Écart')], items:cePl},
+    {icon:'⇆', sev:'err', title:_L('Sens incohérent Function Port / Component Port'), tip:_L('Sortie de fonction sur port IN, ou entrée sur port OUT'), cols:[_L('Function Port'),_L('Component Port')], items:dirBad},
+    {icon:'∦', sev:'err', title:_L('Functional Exchange ↔ Component Exchange : ports non alignés'), tip:_L('Les ports du FE doivent être alloués aux ports du CE qui le porte'), cols:[_L('Functional Exchange'),_L('Component Exchange'),_L('Écart')], items:feCe},
+    {icon:'∦', sev:'err', title:_L('Component Exchange ↔ Physical Link : ports non alignés'), tip:_L('Les ports du CE doivent être alloués aux ports physiques du lien qui le porte'), cols:[_L('Component Exchange'),_L('Physical Link'),_L('Écart')], items:cePl},
   ];
 }
 

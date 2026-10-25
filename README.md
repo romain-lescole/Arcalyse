@@ -2,9 +2,9 @@
 
 # 🔷 Arcalyse
 
-### *Your Capella model, inside and out.* · *Votre modèle Capella, sous toutes ses coutures.*
+### *Your model, inside and out.* · *Votre modèle, sous toutes ses coutures.*
 
-**Explore, check and understand a Capella / ARCADIA model — in a single HTML file.**
+**Explore, check and understand a Capella / ARCADIA model — or a SysML v2 model — in a single HTML file.**
 
 No installation · no server · works offline
 
@@ -26,12 +26,13 @@ No installation · no server · works offline
 
 ## Why Arcalyse?
 
-A Capella model grows fast: hundreds of functions, exchanges, components and ports, spread over five layers. In the workbench, each diagram only shows a piece of it. **Arcalyse reads the `.capella` file directly** and gives you, in a few seconds, an overview, Capella-style views and consistency checks — without opening Capella, without installing anything.
+A Capella model grows fast: hundreds of functions, exchanges, components and ports, spread over five layers. In the workbench, each diagram only shows a piece of it. **Arcalyse reads the `.capella` file directly** and gives you, in a few seconds, an overview, Capella-style views and consistency checks — without opening Capella, without installing anything. It also reads **SysML v2** models in textual notation (`.sysml`, `.kpar`, project folder) and computes their views from the text.
 
 - 📂 **Drag and drop** your `.capella` file: the model is analysed in the browser, on your computer.
 - 🔌 **Offline**: a single standalone HTML file (D3 library embedded), usable without a connection.
 - 🧭 **All ARCADIA layers**: OA, SA, LA, PA, EPBS — functions, components, exchanges, chains, scenarios, requirements, properties.
 - 🔲 **Capella diagrams**: with the project's `.aird`, the diagrams are drawn as in Capella, browsable and exportable as sheets (PDF, ZIP, HTML).
+- 🧩 **SysML v2**: a `.sysml` file, a `.kpar` archive or a project folder, read by Arcature's reader — elements, relations, diagnostics, SysON-style icons, and **views computed from the text** (general, interconnection, states, action flow).
 - 💬 **Review**: comments and notes on the elements and the diagrams, severity, assignees, due dates, check after each new version of the model, report.
 - 🩺 **Ready-to-use checks**: unallocated elements, unconnected ports, incomplete traceability, names to review…
 - 📤 **Exports everywhere**: CSV, PNG, SVG, PDF, standalone HTML reports, dashboards printable in A4.
@@ -141,6 +142,17 @@ for (const c of await analysis.checks()) if (c.severity === 'err' && c.rows.leng
 
 ![Scripts — health example, output with links and tables](docs/captures/19-scripts.png)
 
+### 🧩 Read a SysML v2 model
+Drop a **`.sysml`** file, a **`.kpar`** archive or the **📁 project folder** (all its `.sysml` read together, names resolved from one file to another): the model is read by the standalone **SysML v2 reader of Arcature**, offline, read-only. Every generic view then works as for a `.capella` — tree, cards, table, details panel (declaration, qualified name, family, position, links, diagnostics, text excerpt), Ctrl+K, Relation Map (typing, specialization, composition, connections, allocations, satisfy…), review notes, saved page — plus:
+- **🧩 SysML v2** view: elements by family (structure, behaviour, requirements & cases, organisation) and metaclass, links by relation, **🩺 diagnostics** of the reader (syntax, unresolved names…) also counted in the 💚 model health, source files;
+- **🔲 views computed from the text** (SysML v2 has no diagram file): general view (GV), interconnection (IV), states (STV), action flow (AFV), laid out automatically — visual (click a shape to open the element, hand, Ctrl + wheel, minimap below the explorer, 📝 review notes linked to shapes) or coloured text (Ctrl + wheel for the text size), exportable as SVG and text; an element's views are listed in its details panel;
+- **icons** per metaclass in the SysON style (part, port, action, state, requirement, package… — definition solid, usage light, reference usage dashed) and per view kind;
+- dashboard indicators and the `analysis.sysml()` script API. Capella-only views (functions, exchanges, chains, scenarios, ARCADIA analyses) are marked as empty.
+
+![SysML v2 — general view computed from the text, review note linked to a requirement, element details with SysON-style icons](docs/captures/20-sysml-vues.png)
+
+![SysML v2 — elements by family and metaclass, declaration, source file and line](docs/captures/21-sysml-elements.png)
+
 ### And also
 - 🧭 **Explorer**: tree, cards by layer, ARCADIA type index.
 - 🔍 **Details panel**: attributes, references in both directions, diagrams of the element, and its Capella **description formatted as in Capella** (links to other elements clickable, original HTML code on demand) — with tabs (sheet, links, diagrams, analyses, review) when you want less.
@@ -162,7 +174,7 @@ for (const c of await analysis.checks()) if (c.severity === 'err' && c.rows.leng
    - delivered, ready to use, in **[`livraison/`](livraison/)** (“Download raw file” button on GitHub): **`arcalyse-en.html`** (English), **`arcalyse-fr.html`** (French) or **`arcalyse-multi.html`** (both languages, 🌐 switch; browser language by default);
    - or built from the sources: `node build.js --lang en` → `dist/arcalyse-en.html`, `node build.js` → `dist/arcalyse-fr.html`, `node build.js --lang multi` → `dist/arcalyse-multi.html`.
 2. **Open it** in a recent browser (tested with Google Chrome version 155), even without a network.
-3. **Drag and drop** your `.capella` file (or click 📂 .capella file…), or open the 📁 project folder to load the diagrams (`.aird`) as well — or reopen a saved 📄 work project. That's it.
+3. **Drag and drop** your `.capella` file — or a SysML v2 `.sysml` / `.kpar` file — (or click 📂 Model file…), or open the 📁 project folder to load the diagrams (`.aird`) or all the `.sysml` files as well — or reopen a saved 📄 work project. That's it.
 
 > 📘 **Complete user guide**, menu by menu, with screenshots (in French): [`docs/GUIDE-UTILISATION.md`](docs/GUIDE-UTILISATION.md).
 
@@ -187,12 +199,13 @@ D3.js v7.9.0 is embedded under the ISC licence (© 2010-2023 Mike Bostock).
 
 ## Pourquoi Arcalyse ?
 
-Un modèle Capella grossit vite : des centaines de fonctions, d'échanges, de composants, de ports, réparties sur cinq couches. Dans l'atelier, chaque diagramme n'en montre qu'un morceau. **Arcalyse lit directement le fichier `.capella`** et vous donne, en quelques secondes, une vue d'ensemble, des vues façon Capella et des contrôles de cohérence — sans ouvrir Capella, sans rien installer.
+Un modèle Capella grossit vite : des centaines de fonctions, d'échanges, de composants, de ports, réparties sur cinq couches. Dans l'atelier, chaque diagramme n'en montre qu'un morceau. **Arcalyse lit directement le fichier `.capella`** et vous donne, en quelques secondes, une vue d'ensemble, des vues façon Capella et des contrôles de cohérence — sans ouvrir Capella, sans rien installer. Il lit aussi les modèles **SysML v2** en notation textuelle (`.sysml`, `.kpar`, dossier du projet) et calcule leurs vues depuis le texte.
 
 - 📂 **Glissez-déposez** votre `.capella` : le modèle est analysé dans le navigateur, sur votre poste.
 - 🔌 **Hors ligne** : un seul fichier HTML autonome (bibliothèque D3 embarquée), utilisable sans connexion.
 - 🧭 **Toutes les couches ARCADIA** : OA, SA, LA, PA, EPBS — fonctions, composants, échanges, chaînes, scénarios, exigences, propriétés.
 - 🔲 **Diagrammes Capella** : avec le `.aird` du projet, les diagrammes sont dessinés comme dans Capella, consultables et exportables en planches (PDF, ZIP, HTML).
+- 🧩 **SysML v2** : un fichier `.sysml`, une archive `.kpar` ou un dossier de projet, lus par le lecteur d'Arcature — éléments, relations, diagnostics, icônes façon SysON, et **vues calculées depuis le texte** (générale, interconnexion, états, flux d'actions).
 - 💬 **Revue** : commentaires et notes sur les éléments et les diagrammes, criticité, responsables, échéances, vérification à chaque nouvelle version du modèle, rapport.
 - 🩺 **Des contrôles prêts à l'emploi** : éléments non alloués, ports non connectés, traçabilité incomplète, noms à revoir…
 - 📤 **Exports partout** : CSV, PNG, SVG, PDF, rapports HTML autonomes, tableaux de bord imprimables en A4.
@@ -304,6 +317,17 @@ for (const c of await analysis.checks()) if (c.severity === 'err' && c.rows.leng
 
 ![Scripts — exemple santé, sortie avec liens et tableaux](docs/captures/19-scripts.png)
 
+### 🧩 Lire un modèle SysML v2
+Déposez un fichier **`.sysml`**, une archive **`.kpar`** ou le **📁 dossier du projet** (tous ses `.sysml` lus ensemble, noms résolus d'un fichier à l'autre) : le modèle est lu par le **lecteur SysML v2 autonome d'Arcature**, hors ligne, en lecture seule. Toutes les vues génériques fonctionnent alors comme pour un `.capella` — arborescence, cartes, tableau, panneau de détail (déclaration, nom qualifié, famille, position, liaisons, diagnostics, extrait du texte), Ctrl+K, Relation Map (typage, spécialisation, composition, connexions, allocations, satisfy…), notes de revue, page enregistrée — et en plus :
+- vue **🧩 SysML v2** : éléments par famille (structure, comportement, exigences & cas, organisation) et par métaclasse, liaisons par relation, **🩺 diagnostics** du lecteur (syntaxe, noms introuvables…) comptés aussi dans la 💚 santé du modèle, fichiers sources ;
+- **🔲 vues calculées depuis le texte** (SysML v2 n'a pas de fichier de diagrammes) : vue générale (GV), d'interconnexion (IV), des états (STV), du flux d'actions (AFV), disposées automatiquement — en visuel (clic sur une forme pour ouvrir l'élément, main, Ctrl + molette, carte sous l'explorateur, 📝 notes de revue liées aux formes) ou en texte coloré (Ctrl + molette pour la taille du texte), exportables en SVG et en texte ; les vues d'un élément sont listées dans son panneau de détail ;
+- des **icônes** par métaclasse façon SysON (part, port, action, état, exigence, paquet… — définition pleine, usage clair, usage de référence en tirets) et par genre de vue ;
+- des indicateurs du tableau de bord et l'API de scripts `analysis.sysml()`. Les vues propres à Capella (fonctions, échanges, chaînes, scénarios, analyses ARCADIA) sont marquées sans données.
+
+![SysML v2 — vue générale calculée depuis le texte, note de revue liée à une exigence, détail d'un élément avec les icônes façon SysON](docs/captures/20-sysml-vues.png)
+
+![SysML v2 — éléments par famille et métaclasse, déclaration, fichier et ligne](docs/captures/21-sysml-elements.png)
+
 ### Et aussi
 - 🧭 **Explorateur** : arborescence, cartes par couche, index des types ARCADIA.
 - 🔍 **Panneau de détail** : attributs, références dans les deux sens, diagrammes de l'élément, et sa **description Capella mise en forme comme dans Capella** (liens vers d'autres éléments cliquables, code HTML d'origine à la demande) — avec des onglets (fiche, liens, diagrammes, analyses, revue) quand on veut moins.
@@ -325,7 +349,7 @@ for (const c of await analysis.checks()) if (c.severity === 'err' && c.rows.leng
    - version livrée, prête à l'emploi, dans **[`livraison/`](livraison/)** (bouton « Download raw file » sur GitHub) : **`arcalyse-fr.html`** (français), **`arcalyse-en.html`** (anglais) ou **`arcalyse-multi.html`** (les deux langues, bascule 🌐 ; langue du navigateur par défaut) ;
    - ou version de développement, construite à partir des sources : `node build.js` → `dist/arcalyse-fr.html`, `node build.js --lang en` → `dist/arcalyse-en.html`, `node build.js --lang multi` → `dist/arcalyse-multi.html`.
 2. **Ouvrez-le** dans un navigateur récent (testé sous Google Chrome version 155), même sans réseau.
-3. **Glissez-déposez** votre fichier `.capella` (ou cliquez sur 📂 Fichier .capella…), ou ouvrez le 📁 dossier du projet pour charger aussi les diagrammes (`.aird`) — ou rouvrez un 📄 projet de travail enregistré. C'est tout.
+3. **Glissez-déposez** votre fichier `.capella` — ou un fichier SysML v2 `.sysml` / `.kpar` — (ou cliquez sur 📂 Fichier modèle…), ou ouvrez le 📁 dossier du projet pour charger aussi les diagrammes (`.aird`) ou tous les `.sysml` — ou rouvrez un 📄 projet de travail enregistré. C'est tout.
 
 > 📘 **Guide d'utilisation complet**, menu par menu, avec captures d'écran : [`docs/GUIDE-UTILISATION.md`](docs/GUIDE-UTILISATION.md).
 

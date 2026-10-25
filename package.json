@@ -14,6 +14,8 @@
     "smoke": "node tests/smoke.js",
     "oracles": "node tests/oracles.js",
     "oracles:update": "node tests/oracles.js --update",
+    "test:sysml": "node tests/sysml.js",
+    "lecteur-sysml": "node build.js --lecteur-sysml",
     "lint": "eslint",
     "textes": "node tools/textes.js",
     "textes:en": "node tools/textes.js --en"

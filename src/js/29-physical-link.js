@@ -92,11 +92,11 @@ function capRenderPhysLink(){
     const ports=(allLinks.allPorts||[]).filter(p=>!ndf||p.pcName.toLowerCase().includes(ndf));
     const pRow=p=>`<tr><td>${capDetLink(p.pcId,p.pcName,'font-weight:600;color:'+pcColor(p.pcNature))}</td><td>${capDetLink(p.portId,p.portName)}</td><td>${p.cps.map(c=>capEsc(c.compName+' ⬦ '+c.name)).join(', ')||'—'}</td></tr>`;
     return capDiagHtml([
-      {icon:'∅', title:_L('Physical Links sans Component Exchange alloué'), tip:_L('Le lien ne transporte aucun échange'), cols:['N°',_L('Physical Link'),_L('Extrémité 1'),_L('Extrémité 2')],
+      {icon:'∅', sev:'info', title:_L('Physical Links sans Component Exchange alloué'), tip:_L('Le lien ne transporte aucun échange'), cols:['N°',_L('Physical Link'),_L('Extrémité 1'),_L('Extrémité 2')],
         items:filtered.filter(l=>!l.ces.length).map(l=>`<tr><td>#${linkNumMap[l.linkId]||''}</td><td>${capDetLink(l.linkId,l.linkName,'font-weight:600')}</td><td>${capEsc(l.src.pcName+' ⬦ '+l.src.portName)}</td><td>${capEsc(l.tgt.pcName+' ⬦ '+l.tgt.portName)}</td></tr>`)},
       {icon:'⭘', title:_L('Ports physiques orphelins (sans Physical Link)'), tip:_L('PhysicalPort relié à aucun lien'), cols:[_L('Composant'),_L('Port physique'),_L('ComponentPorts alloués')], items:ports.filter(p=>!p.connected).map(pRow)},
-      {icon:'◌', title:_L('Ports physiques sans ComponentPort alloué'), tip:_L('Aucune ComponentPortAllocation'), cols:[_L('Composant'),_L('Port physique'),_L('ComponentPorts alloués')], items:ports.filter(p=>p.connected&&!p.cps.length).map(pRow)},
-      {icon:'🔀', title:_L('Component Exchanges (PA) non alloués à un Physical Link'), tip:_L('Hors délégations'), cols:[_L('Component Exchange')], items:(allLinks.unallocCEs||[]).map(c=>`<tr><td>${capDetLink(c.id,c.name,'font-weight:600')}</td></tr>`)},
+      {icon:'◌', sev:'info', title:_L('Ports physiques sans ComponentPort alloué'), tip:_L('Aucune ComponentPortAllocation'), cols:[_L('Composant'),_L('Port physique'),_L('ComponentPorts alloués')], items:ports.filter(p=>p.connected&&!p.cps.length).map(pRow)},
+      {icon:'🔀', sev:'info', title:_L('Component Exchanges (PA) non alloués à un Physical Link'), tip:_L('Hors délégations'), cols:[_L('Component Exchange')], items:(allLinks.unallocCEs||[]).map(c=>`<tr><td>${capDetLink(c.id,c.name,'font-weight:600')}</td></tr>`)},
     ]);
   }
 

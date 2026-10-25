@@ -74,11 +74,11 @@ function capCbChecks(layer){
       items:orphan.map(o=>`<tr><td>${fl(o.c.id,o.c.name)}</td><td>${fl(o.p.id,o.p.name)}</td><td>${o.p.orient}</td><td>${o.c.layer}</td></tr>`)},
     {icon:'?', title:_L('Ports connectés sans orientation (UNSET)'), tip:_L('Le sens du flux n\'est pas défini sur le port'), cols:[_L('Composant'),_L('Port'),_L('Couche')],
       items:unset.map(o=>`<tr><td>${fl(o.c.id,o.c.name)}</td><td>${fl(o.p.id,o.p.name)}</td><td>${o.c.layer}</td></tr>`)},
-    {icon:'⚠', title:_L('Échanges aux orientations incohérentes'), tip:_L('OUT → OUT ou IN → IN hors délégation'), cols:[_L('Component Exchange'),_L('Source'),_L('Cible'),_L('Couche')],
+    {icon:'⚠', sev:'err', title:_L('Échanges aux orientations incohérentes'), tip:_L('OUT → OUT ou IN → IN hors délégation'), cols:[_L('Component Exchange'),_L('Source'),_L('Cible'),_L('Couche')],
       items:ls.filter(l=>l.warn).map(l=>`<tr><td>${fl(l.linkId,l.linkName)}</td><td>${fl(l.src.pcId,l.src.pcName)} ⬦ ${capEsc(l.src.portName)}</td><td>${fl(l.tgt.pcId,l.tgt.pcName)} ⬦ ${capEsc(l.tgt.portName)}</td><td>${l.layer}</td></tr>`)},
-    {icon:'∅', title:_L('Composants feuilles sans port'), tip:_L('Composant sans sous-composant et sans Component Port (hors acteurs)'), cols:[_L('Composant'),_L('Couche')],
-      items:cs.filter(c=>leaf(c)&&!c.actor&&!c.ports.length).map(c=>`<tr><td>${fl(c.id,c.name)}</td><td>${c.layer}</td></tr>`)},
-    {icon:'ƒ', title:_L('Composants feuilles sans fonction allouée'), tip:_L('Composant sans sous-composant à qui aucune fonction n\'est allouée'), cols:[_L('Composant'),_L('Nature'),_L('Couche')],
+    {icon:'∅', sev:'info', title:_L('Composants feuilles sans port'), tip:_L('Composant sans sous-composant et sans Component Port (hors acteurs)'), cols:[_L('Composant'),_L('Couche')],
+      items:cs.filter(c=>leaf(c)&&!c.actor&&!c.ports.length&&c.layer!=='OA').map(c=>`<tr><td>${fl(c.id,c.name)}</td><td>${c.layer}</td></tr>`)},
+    {icon:'ƒ', sev:'info', title:_L('Composants feuilles sans fonction allouée'), tip:_L('Composant sans sous-composant à qui aucune fonction n\'est allouée'), cols:[_L('Composant'),_L('Nature'),_L('Couche')],
       items:cs.filter(c=>leaf(c)&&!c.fns.length).map(c=>`<tr><td>${fl(c.id,c.name)}</td><td>${c.actor?_L('Acteur'):_L('Système')}</td><td>${c.layer}</td></tr>`)}
   ];
 }

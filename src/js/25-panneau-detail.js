@@ -51,7 +51,7 @@ function capOpenDetail(id){
   let html=`<span class="cap-type-badge" style="color:${lv.color};background:${lv.bg};display:inline-block;margin-bottom:6px">${capEsc(el.typeName)}</span>`;
   if(human.h) html+=`<div style="font-size:11px;color:var(--c-accent);font-weight:600;margin-bottom:2px;">${capEsc(human.h)}</div>`;
   if(human.d) html+=`<div style="font-size:11px;color:var(--c-dim);margin-bottom:8px;line-height:1.5;">${capEsc(human.d)}</div>`;
-  html+=`<h3 style="font-size:14px;font-weight:600;margin-bottom:10px;word-break:break-word;display:flex;align-items:center;gap:6px">${capIco(el.id,20)}<span>${capEsc(name)}</span></h3>`;
+  html+=`<h3 style="font-size:14px;font-weight:600;margin-bottom:10px;word-break:break-word;display:flex;align-items:center;gap:6px">${capIco(el.id,16)}<span>${capEsc(name)}</span></h3>`;
   // 💬 Revue : commenter l'élément, son nom, sa description (55-revue.js)
   if(typeof capRevDetailHead==='function') html+=capRevDetailHead(el);
 
@@ -65,6 +65,7 @@ function capOpenDetail(id){
   // 🔲 Diagrammes Capella du projet (.aird) où l'élément est représenté : juste après les attributs
   curTab='diag';
   if(typeof capDiagDetail==='function') html+=capDiagDetail(el.id, secTitle);
+  if(typeof capSyVuesDetail==='function') html+=capSyVuesDetail(el.id, secTitle);   // 🧩 vues calculées SysML v2 (87)
   curTab='liens';
 
   // Références sortantes (attributs → autres éléments, cliquables)
@@ -93,6 +94,7 @@ function capOpenDetail(id){
   html+=capLibDetail(el.id, secTitle);   // 📚 références externes (72)
   html+=capRecDetail(el.id, secTitle);   // 📦 REC / RPL (73)
   html+=capDepDetail(el.id, secTitle);   // 🖧 déploiement & EPBS (74)
+  if(typeof capSyDetail==='function') html+=capSyDetail(el.id, secTitle);   // 🧩 SysML v2 (87)
 
   // 💬 Commentaires de revue portant sur l'élément
   curTab='revue';

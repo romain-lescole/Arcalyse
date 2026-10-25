@@ -127,16 +127,16 @@ function capFnChecks(F, layer){
   const langCount={}; fs.filter(f=>f.parentId).forEach(f=>{ const k=f.layer; langCount[k]=langCount[k]||{FR:0,EN:0}; langCount[k][nq(f).lang]++; });
   const minority=f=>{ const c=langCount[f.layer]; if(!c||!f.parentId) return false; const l=nq(f).lang, o=l==='FR'?'EN':'FR'; return c[l]<c[o]&&c[l]/(c[l]+c[o])<0.3; };
   const nqSecs=[
-    {icon:'✍', title:_L('Noms ne commençant pas par un verbe'), tip:_L('Infinitif en français (« Afficher… »), forme de base en anglais (« Display… »)'), cols, items:fs.filter(f=>has(f,['noverb','ing','noun']).length).map(f=>row(f,has(f,['noverb','ing','noun'])[0].label))},
-    {icon:'≈', title:_L('Verbes peu précis en tête du nom'), tip:_L('Gérer, traiter, effectuer, manage, handle, process…'), cols, items:fs.filter(f=>has(f,['vague']).length).map(f=>row(f,has(f,['vague'])[0].label))},
-    {icon:'Aa', title:_L('Présentation des noms'), tip:_L('Minuscule en tête, espaces superflus, ponctuation finale'), cols, items:fs.filter(f=>has(f,['case','space','punct']).length).map(f=>row(f,has(f,['case','space','punct']).map(i=>i.label).join(' · ')))},
-    {icon:'↔', title:_L('Noms trop longs ou d\'un seul mot'), cols, items:fs.filter(f=>has(f,['long','short']).length).map(f=>row(f,has(f,['long','short']).map(i=>i.label).join(' · ')))},
-    {icon:'🌐', title:_L('Langue minoritaire dans la couche'), tip:_L('Nom dans une autre langue que la majorité des fonctions de sa couche'), cols, items:fs.filter(minority).map(f=>row(f,_L(`Langue détectée : ${nq(f).lang}`)))},
+    {icon:'✍', sev:'info', title:_L('Noms ne commençant pas par un verbe'), tip:_L('Infinitif en français (« Afficher… »), forme de base en anglais (« Display… »)'), cols, items:fs.filter(f=>has(f,['noverb','ing','noun']).length).map(f=>row(f,has(f,['noverb','ing','noun'])[0].label))},
+    {icon:'≈', sev:'info', title:_L('Verbes peu précis en tête du nom'), tip:_L('Gérer, traiter, effectuer, manage, handle, process…'), cols, items:fs.filter(f=>has(f,['vague']).length).map(f=>row(f,has(f,['vague'])[0].label))},
+    {icon:'Aa', sev:'info', title:_L('Présentation des noms'), tip:_L('Minuscule en tête, espaces superflus, ponctuation finale'), cols, items:fs.filter(f=>has(f,['case','space','punct']).length).map(f=>row(f,has(f,['case','space','punct']).map(i=>i.label).join(' · ')))},
+    {icon:'↔', sev:'info', title:_L('Noms trop longs ou d\'un seul mot'), cols, items:fs.filter(f=>has(f,['long','short']).length).map(f=>row(f,has(f,['long','short']).map(i=>i.label).join(' · ')))},
+    {icon:'🌐', sev:'info', title:_L('Langue minoritaire dans la couche'), tip:_L('Nom dans une autre langue que la majorité des fonctions de sa couche'), cols, items:fs.filter(minority).map(f=>row(f,_L(`Langue détectée : ${nq(f).lang}`)))},
   ];
   return [
     ...nqSecs,
-    {icon:'📝', title:_L('Fonctions sans description'), cols, items:fs.filter(f=>!f.desc&&f.parentId).map(f=>row(f))},
-    {icon:'✎', title:_L('Descriptions trop courtes ou identiques au nom'), tip:_L(`Moins de ${capChkParam('fn.descMin')} caractères, ou répète le nom`), cols,
+    {icon:'📝', sev:'info', title:_L('Fonctions sans description'), cols, items:fs.filter(f=>!f.desc&&f.parentId).map(f=>row(f))},
+    {icon:'✎', sev:'info', title:_L('Descriptions trop courtes ou identiques au nom'), tip:_L(`Moins de ${capChkParam('fn.descMin')} caractères, ou répète le nom`), cols,
       items:fs.filter(f=>f.desc&&(f.desc.length<capChkParam('fn.descMin')||f.desc.trim().toLowerCase()===f.name.trim().toLowerCase())).map(f=>row(f,`« ${f.desc.slice(0,60)} »`))},
     {icon:'⚑', title:_L('Marqueurs de travail en cours (TODO, TBD, NOT DONE…)'), cols, items:fs.filter(f=>todo.test(f.name)||todo.test(f.desc)).map(f=>row(f,f.status||''))},
     {icon:'≡', title:_L('Noms en double dans une même couche'), cols, items:Object.values(dup).filter(a=>a.length>1).flat().map(f=>row(f,`${dup[f.layer+'|'+f.name.trim().toLowerCase()].length} occurrences`))},
@@ -149,7 +149,7 @@ function capFnChecks(F, layer){
     {icon:'◌', title:_L('Ports de fonction sans échange'), cols, items:fs.filter(f=>f.unused.length).map(f=>row(f,f.unused.map(p=>p.name).join(', ')))},
     {icon:'⬇', title:_L('Fonctions feuilles non réalisées à la couche inférieure'), tip:_L('Seulement si la couche inférieure réalise déjà des fonctions'), cols,
       items:fs.filter(f=>f.leaf&&f.parentId&&lowerOf(f.layer)&&layerUses(lowerOf(f.layer),g=>g.realizes.length)&&!f.realizedBy.length).map(f=>row(f))},
-    {icon:'⬆', title:_L('Fonctions feuilles ne réalisant rien à la couche supérieure'), tip:_L('Seulement si la couche réalise déjà des fonctions'), cols,
+    {icon:'⬆', sev:'info', title:_L('Fonctions feuilles ne réalisant rien à la couche supérieure'), tip:_L('Seulement si la couche réalise déjà des fonctions'), cols,
       items:fs.filter(f=>f.leaf&&f.layer!=='OA'&&layerUses(f.layer,g=>g.realizes.length)&&!f.realizes.length).map(f=>row(f))},
   ];
 }
@@ -689,60 +689,60 @@ function capFillHeight(root){
 }
 window.addEventListener('resize',()=>capFillHeight());
 
-/** Sous-vues de 🔬 Analyses (onglets) ; « fns » ouvre la vue ƒ Fonctions, qui garde son propre conteneur. */
-var CAP_ANA_SUBS=[['fns',_L('ƒ Fonctions')],['trace',_L('🧬 Traçabilité inter-couches')],['xlay',_L('⇶ Liens entre couches')],['caps',_L('🎯 Capacités & missions')],['states',_L('🚦 Modes & états')],['diff',_L('⚖ Comparaison de versions')],['reqs',_L('🧾 Exigences')],['pvmt',_L('🎛 Propriétés')],['data',_L('🗃 Données & interfaces')],['cts',_L('🔒 Contraintes')],['cats',_L('🏷 Catégories d\'échanges')],['libs',_L('📚 Bibliothèques')],['rec',_L('📦 REC / RPL')],['deploy',_L('🖧 Déploiement & EPBS')],['status',_L('🔖 Statut de revue')],['sante',_L('💚 Santé & contrôles')]];
-
-/** Onglets des sous-vues de 🔬 Analyses (communs à la vue 🔬 Analyses et à la vue ƒ Fonctions).
- * @returns {string} HTML des boutons (attribut data-an)
- */
-function capAnaTabsHtml(){
-  return CAP_ANA_SUBS.map(([k,l])=>`<button class="phl-toggle-btn" data-an="${k}">${l}</button>`).join('');
+/** Vide les résultats en mémoire et relance la sous-vue de 🔬 Analyses affichée (bouton ↻ Recalculer). */
+function capAnaRecalc(){
+  _capAnaCache={}; _capPortsCache=null;
+  const c=document.getElementById('cap-view-analyses');
+  if(c) c.querySelectorAll('[data-hold]').forEach(h=>{ h.innerHTML=''; ['_fn','_tr','_cp','_sm','_rq','_pv','_dm','_ct'].forEach(k=>delete h[k]); });
+  capRenderAnalyses();
 }
 
-/** Ouvre une sous-vue de 🔬 Analyses depuis ses onglets (ƒ Fonctions : vue à part).
- * @param {string} k - Clé de la sous-vue
+/** Place le bouton ↻ Recalculer (#ana-recalc) au bout de la première barre de la sous-vue affichée de 🔬 Analyses
+ * (la barre d'onglets des sous-vues a été retirée en 3.0 : elle doublait les menus ☰ ; les sous-vues s'ouvrent par
+ * 🏗 / ✅ / 💬, 🔍 Ctrl+K ou la barre de famille). Sans barre : petite ligne alignée à droite.
+ * @param {HTMLElement} box - Conteneur #ana-box
  */
-function capAnaTabOpen(k){
-  if(k==='fns'){ capShowView('functions'); return; }
-  capAnaSub=k;
-  if(capCurrentView==='analyses') capRenderAnalyses(); else capShowView('analyses');
+function capAnaRecalcPose(box){
+  const h=[...box.querySelectorAll('[data-hold]')].find(x=>x.style.display!=='none'); if(!h||h.querySelector('#ana-recalc')) return;
+  const b=document.createElement('button'); b.className='phl-export-btn'; b.id='ana-recalc'; b.title=_L('Vider les résultats et recalculer l\'analyse affichée'); b.textContent=_L('↻ Recalculer'); b.onclick=capAnaRecalc;
+  const bar=h.querySelector('.phl-filter-bar, .phl-toggle-bar, .cap-lf-bar');
+  if(bar){ b.style.marginLeft=[...bar.children].some(x=>x.style.marginLeft==='auto')?'4px':'auto'; bar.appendChild(b); }
+  else { const d=document.createElement('div'); d.style.cssText='display:flex;justify-content:flex-end;margin-bottom:6px'; d.appendChild(b); h.prepend(d); }
 }
 
-/** Vue « ƒ Fonctions » (onglet de 🔬 Analyses) : hiérarchie, tableau,
+/** Observe #ana-box : après chaque rendu d'une sous-vue, repose ↻ Recalculer. @param {HTMLElement} box - Conteneur #ana-box */
+function capAnaRecalcWatch(box){
+  if(box._rcObs) return;
+  box._rcObs=new MutationObserver(()=>{ clearTimeout(box._rcT); box._rcT=setTimeout(()=>capAnaRecalcPose(box),30); });
+  box._rcObs.observe(box,{childList:true,subtree:true});
+}
+
+/** Vue « ƒ Fonctions » (menu 🏗 Architecture ; famille ƒ Fonctions & échanges) : hiérarchie, tableau,
  * traçabilité, métriques, contrôles et dossier (↻ Recalculer de 🔬 Analyses vide aussi son cache).
  */
 function capRenderFunctionsView(){
   const c=document.getElementById('cap-view-functions'); if(!c) return;
   if(!c._built){
-    c.innerHTML=`<div class="phl-toggle-bar">${capAnaTabsHtml()}</div><div data-hold="fns"></div>`;
-    c.querySelectorAll('[data-an]').forEach(b=>{ b.classList.toggle('active',b.dataset.an==='fns'); b.onclick=()=>capAnaTabOpen(b.dataset.an); });
+    c.innerHTML='<div data-hold="fns"></div>';
     c._built=true;
   }
   capRenderFunctions(c.querySelector('[data-hold="fns"]'));
 }
 
-/** Point d'entrée de la vue 🔬 Analyses : barre des sous-vues et routage. */
+/** Point d'entrée de la vue 🔬 Analyses : routage vers la sous-vue `capAnaSub` (choisie dans les menus ☰ ; ↻ Recalculer posé par `capAnaRecalcPose`). */
 function capRenderAnalyses(){
   const c=document.getElementById('cap-view-analyses'); if(!c) return;
   if(capAnaSub==='fns') capAnaSub='trace';   // ƒ Fonctions : vue à part
   if(!c._built){
-    c.innerHTML=_L(`<div class="phl-toggle-bar">${capAnaTabsHtml()}
-      <button class="phl-export-btn" id="ana-recalc" style="margin-left:auto" title="Vider les résultats et recalculer l'analyse affichée">↻ Recalculer</button></div><div id="ana-box"></div>`);
-    c.querySelectorAll('[data-an]').forEach(b=>b.onclick=()=>capAnaTabOpen(b.dataset.an));
-    c.querySelector('#ana-recalc').onclick=()=>{
-      // Vide les résultats en mémoire et relance la sous-vue affichée
-      _capAnaCache={}; _capPortsCache=null;
-      c.querySelectorAll('[data-hold]').forEach(h=>{ h.innerHTML=''; ['_fn','_tr','_cp','_sm','_rq','_pv','_dm','_ct'].forEach(k=>delete h[k]); });
-      capRenderAnalyses();
-    };
+    c.innerHTML='<div id="ana-box"></div>';
     c._built=true;
   }
-  c.querySelectorAll('[data-an]').forEach(b=>b.classList.toggle('active',b.dataset.an===capAnaSub));
   capNavSync();   // barre du haut : sous-vue épinglée ou menu 🔬 Analyses
   const box=c.querySelector('#ana-box');
-  const R={trace:capRenderTrace, xlay:capRenderXlay, caps:capRenderCapabilities, states:capRenderStates, diff:capRenderDiff, reqs:capRenderRequirements, pvmt:capRenderPvmt, data:capRenderDataModel, cts:capRenderConstraints, status:capRenderStatus, sante:capRenderSante, cats:capRenderExchangeCategories, libs:capRenderLibs, rec:capRenderRec, deploy:capRenderDeploy}[capAnaSub];
+  const R={trace:capRenderTrace, xlay:capRenderXlay, caps:capRenderCapabilities, states:capRenderStates, diff:capRenderDiff, reqs:capRenderRequirements, pvmt:capRenderPvmt, data:capRenderDataModel, cts:capRenderConstraints, status:capRenderStatus, sante:capRenderSante, cats:capRenderExchangeCategories, libs:capRenderLibs, rec:capRenderRec, deploy:capRenderDeploy, sysml:capRenderSysml}[capAnaSub];
   const holder=box.querySelector(`[data-hold="${capAnaSub}"]`)||(()=>{ const d=document.createElement('div'); d.dataset.hold=capAnaSub; box.appendChild(d); return d; })();
   box.querySelectorAll('[data-hold]').forEach(h=>h.style.display=h===holder?'':'none');
   R(holder);
+  capAnaRecalcPose(box); capAnaRecalcWatch(box);   // ↻ Recalculer au bout de la barre de la sous-vue
   capTfWatch(box); capTfEnhanceAll(box);   // filtres et largeur des colonnes des tableaux (42-tableaux-analyses.js)
 }

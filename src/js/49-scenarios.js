@@ -273,10 +273,10 @@ function capScChecks(){
   return [
     {icon:'∅', title:_L('Scénarios vides (aucun message)'), tip:_L('Scénario sans SequenceMessage'), cols, items:S.filter(s=>!s.nMsg).map(s=>row(s,_L(`${s.roles.length} ligne(s) de vie`)))},
     {icon:'⇢', title:_L('Messages sans échange'), tip:_L('SequenceMessage dont l\'événement n\'invoque aucun échange (Functional / Component Exchange…)'), cols, items:S.filter(s=>s.nNoEx).map(s=>row(s,_L(`${s.nNoEx} message(s)`)))},
-    {icon:'?', title:_L('Lignes de vie sans élément représenté'), tip:_L('InstanceRole sans representedInstance résolu'), cols, items:noRef},
-    {icon:'🎯', title:_L('Scénarios hors capacité'), tip:_L('Scénario qui n\'est pas rangé sous une capacité ou une réalisation de capacité'), cols,
+    {icon:'?', sev:'err', title:_L('Lignes de vie sans élément représenté'), tip:_L('InstanceRole sans representedInstance résolu'), cols, items:noRef},
+    {icon:'🎯', sev:'info', title:_L('Scénarios hors capacité'), tip:_L('Scénario qui n\'est pas rangé sous une capacité ou une réalisation de capacité'), cols,
       items:S.filter(s=>!/Capability/.test(s.capType)).map(s=>row(s,capEsc(s.capType||'—')))},
-    {icon:'↗', title:_L('Références vers un scénario introuvable'), tip:_L('InteractionUse sans referencedScenario résolu'), cols,
+    {icon:'↗', sev:'err', title:_L('Références vers un scénario introuvable'), tip:_L('InteractionUse sans referencedScenario résolu'), cols,
       items:S.filter(s=>s.nRef>s.refs.length).map(s=>row(s,_L(`${s.nRef-s.refs.length} référence(s)`)))}
   ];
 }

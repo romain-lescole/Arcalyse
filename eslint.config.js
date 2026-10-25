@@ -34,7 +34,7 @@ const BROWSER = ['window', 'document', 'navigator', 'console', 'setTimeout', 'cl
   'InputEvent', 'ClipboardEvent', 'HTMLCanvasElement', 'CanvasRenderingContext2D', 'OffscreenCanvas', 'ImageData', 'Path2D', 'DOMRect', 'DOMMatrix',
   'SVGSVGElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'HTMLAnchorElement', 'HTMLTableElement', 'HTMLDivElement', 'ErrorEvent', 'PromiseRejectionEvent',
   'addEventListener', 'removeEventListener', 'dispatchEvent', 'parent', 'opener', 'frames', 'top', 'frameElement', 'HTMLIFrameElement', 'Intl', 'Audio',
-  'DOMPoint', 'CSS', 'getSelection', 'd3', 'ArcatureVisionneuse', 'I18N_EN', 'CAP_LANG_BUILD'];
+  'DOMPoint', 'CSS', 'getSelection', 'd3', 'ArcatureVisionneuse', 'ArcatureLecteurSysml', 'I18N_EN', 'CAP_LANG_BUILD'];
 BROWSER.forEach(n => { if (!(n in globals)) globals[n] = 'readonly'; });
 
 module.exports = [

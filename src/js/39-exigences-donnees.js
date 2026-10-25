@@ -191,9 +191,9 @@ function capReqChecks(){
     {icon:'✎', title:_L('Exigences sans texte'), cols, items:list.filter(r=>!r.text).map(row)},
     {icon:'#', title:_L('Exigences sans identifiant'), cols, items:list.filter(r=>!r.ident).map(row)},
     {icon:'⧉', title:_L('Identifiants en double'), tip:_L('Au sein d\'une même famille (Requirements Viewpoint ou exigences Capella)'), cols, items:Object.values(ids).filter(a=>a.length>1).flat().map(row)},
-    {icon:'⚠', title:_L('Relations vers un élément introuvable'), tip:_L('Cible supprimée ou hors du fichier chargé'), cols, items:list.filter(r=>r.broken).map(row)},
-    {icon:'ƒ', title:_L('Fonctions feuilles sans exigence'), tip:_L('Couches où d\'autres fonctions sont déjà liées à des exigences'), cols:[_L('Fonction'),'Type'], items:orph('fn')},
-    {icon:'▣', title:_L('Composants / acteurs sans exigence'), tip:_L('Couches où d\'autres composants sont déjà liés à des exigences'), cols:[_L('Composant'),'Type'], items:orph('comp')},
+    {icon:'⚠', sev:'err', title:_L('Relations vers un élément introuvable'), tip:_L('Cible supprimée ou hors du fichier chargé'), cols, items:list.filter(r=>r.broken).map(row)},
+    {icon:'ƒ', sev:'info', title:_L('Fonctions feuilles sans exigence'), tip:_L('Couches où d\'autres fonctions sont déjà liées à des exigences'), cols:[_L('Fonction'),'Type'], items:orph('fn')},
+    {icon:'▣', sev:'info', title:_L('Composants / acteurs sans exigence'), tip:_L('Couches où d\'autres composants sont déjà liés à des exigences'), cols:[_L('Composant'),'Type'], items:orph('comp')},
   ];
 }
 
@@ -322,11 +322,11 @@ function capPvChecks(){
   const miss=defs.flatMap(d=>capPvMissing(d).map(e=>`<tr><td>${capChainLayerBadge(e.layer)} ${capDetLink(e.id,e.name)}</td><td class="ana-dim">${capEsc(capAnaHuman(e.type))}</td><td>${capEsc(d.domain+' › '+d.name)}</td></tr>`));
   const vrow=v=>`<tr><td>${capChainLayerBadge(v.el.layer)} ${capDetLink(v.el.id,v.el.name)}</td><td>${capEsc(v.group||v.domain)}</td><td>${capEsc(v.prop)}</td></tr>`;
   return [
-    {icon:'∅', title:_L('Éléments concernés par un groupe PVMT mais non renseignés'), tip:_L('Selon les classes et architectures déclarées dans la définition du groupe (groupes à condition exclus)'), cols:[_L('Élément'),'Type',_L('Groupe attendu')], items:miss},
-    {icon:'○', title:_L('Valeurs numériques restées à la valeur par défaut (0)'), tip:_L('Propriété appliquée mais jamais saisie'), cols:[_L('Élément'),_L('Groupe'),_L('Propriété')], items:vals.filter(v=>v.kind==='num'&&v.dflt).map(vrow)},
-    {icon:'○', title:_L('Énumérations ou textes non renseignés'), cols:[_L('Élément'),_L('Groupe'),_L('Propriété')], items:vals.filter(v=>(v.kind==='enum'||v.kind==='str')&&v.dflt).map(vrow)},
-    {icon:'?', title:_L('Groupes appliqués dont la définition est introuvable'), cols:[_L('Élément'),_L('Groupe'),_L('Propriété')], items:vals.filter(v=>!v.defId&&v.group).map(vrow)},
-    {icon:'⛓', title:_L('Groupes appliqués sans lien vers leur définition'), tip:_L('Rattachés ici par leur nom « Domaine.Groupe » ; à réappliquer avec l\'outil PVMT'), cols:[_L('Élément'),_L('Groupe'),_L('Propriété')], items:vals.filter(v=>v.unlinked).map(vrow)},
+    {icon:'∅', sev:'info', title:_L('Éléments concernés par un groupe PVMT mais non renseignés'), tip:_L('Selon les classes et architectures déclarées dans la définition du groupe (groupes à condition exclus)'), cols:[_L('Élément'),'Type',_L('Groupe attendu')], items:miss},
+    {icon:'○', sev:'info', title:_L('Valeurs numériques restées à la valeur par défaut (0)'), tip:_L('Propriété appliquée mais jamais saisie'), cols:[_L('Élément'),_L('Groupe'),_L('Propriété')], items:vals.filter(v=>v.kind==='num'&&v.dflt).map(vrow)},
+    {icon:'○', sev:'info', title:_L('Énumérations ou textes non renseignés'), cols:[_L('Élément'),_L('Groupe'),_L('Propriété')], items:vals.filter(v=>(v.kind==='enum'||v.kind==='str')&&v.dflt).map(vrow)},
+    {icon:'?', sev:'err', title:_L('Groupes appliqués dont la définition est introuvable'), cols:[_L('Élément'),_L('Groupe'),_L('Propriété')], items:vals.filter(v=>!v.defId&&v.group).map(vrow)},
+    {icon:'⛓', sev:'info', title:_L('Groupes appliqués sans lien vers leur définition'), tip:_L('Rattachés ici par leur nom « Domaine.Groupe » ; à réappliquer avec l\'outil PVMT'), cols:[_L('Élément'),_L('Groupe'),_L('Propriété')], items:vals.filter(v=>v.unlinked).map(vrow)},
   ];
 }
 
@@ -458,12 +458,12 @@ function capDmChecks(){
   });
   return [
     {icon:'∅', title:_L('Exchange Items portés par aucun échange ni interface'), cols:[_L('Exchange Item'),'Type'], items:D.eis.filter(e=>!e.fes.length&&!e.ces.length&&!e.itfs.length).map(row)},
-    {icon:'▤', title:_L('Exchange Items sans élément (contenu non décrit)'), tip:_L('Seulement si le modèle décrit le contenu d\'autres Exchange Items'), cols:[_L('Exchange Item'),'Type'], items:usesEie?D.eis.filter(e=>!e.elems.length).map(row):[]},
-    {icon:'⇢', title:_L('Functional Exchanges sans Exchange Item'), tip:_L('Couches où d\'autres FE portent déjà des Exchange Items'), cols:[_L('Functional Exchange'),'Type'], items:D.fes.filter(f=>layersFeEi.has(f.layer)&&!f.items.length).map(row)},
-    {icon:'🔌', title:_L('Interfaces sans Exchange Item alloué'), cols:['Interface','Type'], items:D.itfs.filter(i=>!i.items.length).map(row)},
+    {icon:'▤', sev:'info', title:_L('Exchange Items sans élément (contenu non décrit)'), tip:_L('Seulement si le modèle décrit le contenu d\'autres Exchange Items'), cols:[_L('Exchange Item'),'Type'], items:usesEie?D.eis.filter(e=>!e.elems.length).map(row):[]},
+    {icon:'⇢', sev:'info', title:_L('Functional Exchanges sans Exchange Item'), tip:_L('Couches où d\'autres FE portent déjà des Exchange Items'), cols:[_L('Functional Exchange'),'Type'], items:D.fes.filter(f=>layersFeEi.has(f.layer)&&!f.items.length).map(row)},
+    {icon:'🔌', sev:'info', title:_L('Interfaces sans Exchange Item alloué'), cols:['Interface','Type'], items:D.itfs.filter(i=>!i.items.length).map(row)},
     {icon:'⭘', title:_L('Interfaces ni fournies, ni requises, ni utilisées'), cols:['Interface','Type'], items:D.itfs.filter(i=>!i.provided.length&&!i.required.length&&!i.users.length).map(row)},
     {icon:'≠', title:_L('Exchange Items d\'un FE absents des interfaces des ports du CE porteur'), tip:_L('Seulement pour les CE dont les ports déclarent des interfaces'), cols:[_L('Component Exchange'),_L('Functional Exchange'),_L('Exchange Item manquant')], items:incoh},
-    {icon:'🧱', title:_L('Classes et types de données jamais utilisés'), tip:_L('Hors types prédéfinis'), cols:['Type',_L('Nature')], items:D.types.filter(y=>!y.predefined&&!y.usedBy.length&&!D.eis.some(e=>e.elems.some(x=>x.typeId===y.id))).map(row)},
+    {icon:'🧱', sev:'info', title:_L('Classes et types de données jamais utilisés'), tip:_L('Hors types prédéfinis'), cols:['Type',_L('Nature')], items:D.types.filter(y=>!y.predefined&&!y.usedBy.length&&!D.eis.some(e=>e.elems.some(x=>x.typeId===y.id))).map(row)},
   ];
 }
 
@@ -549,9 +549,9 @@ function capCtChecks(){
   const dup={}; list.filter(c=>c.text).forEach(c=>{ const k=c.text+'|'+(c.on.map(e=>e.id).join(',')||(c.owner||{}).id); (dup[k]=dup[k]||[]).push(c); });
   return [
     {icon:'∅', title:_L('Contraintes vides (ni nom ni expression)'), cols, items:list.filter(c=>!c.name&&!c.text).map(row)},
-    {icon:'✎', title:_L('Contraintes sans expression'), tip:_L('Seul le nom porte l\'information'), cols, items:list.filter(c=>c.name&&!c.text).map(row)},
-    {icon:'⚠', title:_L('Expressions citant un élément introuvable'), tip:_L('Lien de texte vers un élément supprimé'), cols, items:list.filter(c=>c.broken).map(row)},
-    {icon:'↳', title:_L('Contraintes sans élément contraint explicite'), tip:_L('Rattachées seulement à leur propriétaire (constrainedElements vide) ; gardes et pré/post-conditions exclues'), cols, items:list.filter(c=>!c.on.length&&!c.role).map(row)},
+    {icon:'✎', sev:'info', title:_L('Contraintes sans expression'), tip:_L('Seul le nom porte l\'information'), cols, items:list.filter(c=>c.name&&!c.text).map(row)},
+    {icon:'⚠', sev:'err', title:_L('Expressions citant un élément introuvable'), tip:_L('Lien de texte vers un élément supprimé'), cols, items:list.filter(c=>c.broken).map(row)},
+    {icon:'↳', sev:'info', title:_L('Contraintes sans élément contraint explicite'), tip:_L('Rattachées seulement à leur propriétaire (constrainedElements vide) ; gardes et pré/post-conditions exclues'), cols, items:list.filter(c=>!c.on.length&&!c.role).map(row)},
     {icon:'⧉', title:_L('Contraintes en double sur un même élément'), cols, items:Object.values(dup).filter(a=>a.length>1).flat().map(row)},
   ];
 }

@@ -103,16 +103,16 @@ function capFexChecks(layer){
   const parentPorts=fns.filter(f=>!f.leaf&&(f.ins.length||f.outs.length));
   const noPort=fes.filter(x=>x.layer!=='OA'&&(!x.src.portId||!x.tgt.portId));   // en OA, les échanges relient directement les activités
   const sec=[
-    {icon:'⭘', title:_L('Ports de fonction orphelins (sans échange)'), tip:_L('Function Port défini mais relié à aucun Functional Exchange'), cols:[_L('Fonction'),_L('Port'),_L('Sens'),_L('Couche')],
+    {icon:'⭘', sante:false, title:_L('Ports de fonction orphelins (sans échange)'), tip:_L('Function Port défini mais relié à aucun Functional Exchange'), cols:[_L('Fonction'),_L('Port'),_L('Sens'),_L('Couche')],
       items:orphan.map(o=>`<tr><td>${fl(o.f.id,o.f.name)}</td><td>${fl(o.p.id,o.p.name)}</td><td>${o.p.dir==='IN'?_L('▶ entrée'):_L('sortie ▶')}</td><td>${o.f.layer}</td></tr>`)},
-    {icon:'∅', title:_L('Échanges sans Exchange Item'), tip:_L('Aucun Exchange Item porté (exchangedItems)'), cols:exCols, items:fes.filter(x=>!x.items.length).map(exRow)},
-    {icon:'ƒ', title:_L('Fonctions feuilles sans aucun échange'), tip:_L('Fonction sans sous-fonction, ni entrée ni sortie'), cols:['N°',_L('Fonction'),_L('Couche')],
+    {icon:'∅', sev:'info', sante:false, title:_L('Échanges sans Exchange Item'), tip:_L('Aucun Exchange Item porté (exchangedItems)'), cols:exCols, items:fes.filter(x=>!x.items.length).map(exRow)},
+    {icon:'ƒ', sante:false, title:_L('Fonctions feuilles sans aucun échange'), tip:_L('Fonction sans sous-fonction, ni entrée ni sortie'), cols:['N°',_L('Fonction'),_L('Couche')],
       items:leafNoFe.map(f=>`<tr><td>${capEsc(f.num)}</td><td>${fl(f.id,f.name)}</td><td>${f.layer}</td></tr>`)},
     {icon:'▣', title:_L('Fonctions mères portant des ports'), tip:_L('Bonne pratique Capella : les ports et échanges sont portés par les fonctions feuilles'), cols:['N°',_L('Fonction'),_L('Ports'),_L('Couche')],
       items:parentPorts.map(f=>`<tr><td>${capEsc(f.num)}</td><td>${fl(f.id,f.name)}</td><td>${f.ins.length} ▶ / ${f.outs.length} ▶</td><td>${f.layer}</td></tr>`)}
   ];
   if(noPort.length) sec.push({icon:'⚠', title:_L('Échanges reliés directement à une fonction (sans port)'), tip:_L('Source ou cible sans Function Port (hors OA, où c\'est la règle)'), cols:exCols, items:noPort.map(exRow)});
-  if(X.ceUsed) sec.push({icon:'🔀', title:_L('Échanges LA / PA non alloués à un Component Exchange'), tip:_L('Aucune ComponentExchangeFunctionalExchangeAllocation (le modèle en utilise ailleurs)'), cols:exCols,
+  if(X.ceUsed) sec.push({icon:'🔀', sev:'info', title:_L('Échanges LA / PA non alloués à un Component Exchange'), tip:_L('Aucune ComponentExchangeFunctionalExchangeAllocation (le modèle en utilise ailleurs)'), cols:exCols,
     items:fes.filter(x=>(x.layer==='LA'||x.layer==='PA')&&!x.ces.length&&x.src.fnId!==x.tgt.fnId).map(exRow)});
   return sec;
 }

@@ -310,10 +310,11 @@ function capHomeEnteteHtml(){
         `<td><span class="hm-etat hm-etat-${c}"><i></i>${l}</span></td><td>${refs}</td><td style="text-align:right;white-space:nowrap">${act}</td></tr>`; }).join('')+
     `</tbody></table><div class="hm-libs-f"><span class="ana-dim">${_L('Les éléments venus d\'une bibliothèque se résolvent dans le panneau de détail.')}</span><span style="flex:1"></span>`+
     `<button class="cap-lf-btn" data-nav="ana:libs">${_L('📚 Vue Bibliothèques et contrôles')}</button><button class="cap-lf-btn" data-a="lib-load">${_L('Charger des bibliothèques…')}</button></div></div>`:'';
+  const sysml=typeof capSysmlPastille==='function'?capSysmlPastille():'';   // 🧩 SysML v2 (87)
   const V=[...capNavVides()].map(k=>(CAP_NAV_ITEMS.find(i=>i.k===k)||{}).l).filter(Boolean);
   const vides=V.length&&_capNav.vides!==false?`<div class="hm-vides">${_L('Sans données dans ce modèle, retirées des menus en mode Essentiel :')} ${V.map(esc).join(' · ')}</div>`:'';
   return `<section class="hm-head"><div class="hm-head-t"><h2>${esc(nom)}</h2><span class="ana-dim">${esc(capCurrentFileName||'')} · ${_L(`${capAllElements.length} éléments`)}</span><span class="hm-chips">${couches}</span></div>`+
-    `<div class="hm-pills"><span class="hm-pill"><i class="ok"></i>${_L('Modèle chargé')}</span>${aird}${libs}</div>${table}${vides}</section>`;
+    `<div class="hm-pills"><span class="hm-pill"><i class="ok"></i>${_L('Modèle chargé')}</span>${sysml||aird}${libs}</div>${table}${vides}</section>`;
 }
 
 /* ── Onglet ☑ Check-lists & plans de revue ─────────────────────────────── */

@@ -111,9 +111,9 @@ function capLibChecks(){
   const colsL=[_L('Bibliothèque'),_L('Projet'),_L('Références')], colsR=[_L('Élément'),_L('Attribut'),_L('Cible')];
   const unresolved=S.refs.filter(r=>{ const x=capLibResolve(r.prefix+'#'+r.id); return x&&!x.el; }), notLoaded=S.refs.filter(r=>!capLibResolve(r.prefix+'#'+r.id));
   return [
-    {icon:'📚', title:_L('Références vers une bibliothèque non chargée'), tip:_L('Chargez le fichier de la bibliothèque (📂, ou 📁 Dossier du projet) pour résoudre ces cibles'), cols:colsR, items:notLoaded.map(refRow)},
-    {icon:'?', title:_L('Références introuvables dans une bibliothèque chargée'), tip:_L('Cible absente du fichier de la bibliothèque : élément supprimé ou version différente'), cols:colsR, items:unresolved.map(refRow)},
-    {icon:'∅', title:_L('Bibliothèques déclarées sans référence'), tip:_L('LibraryReference vers une bibliothèque dont aucun élément n\'est utilisé'), cols:colsL, items:S.libs.filter(l=>l.declared&&!l.n).map(libRow)},
+    {icon:'📚', sev:'info', title:_L('Références vers une bibliothèque non chargée'), tip:_L('Chargez le fichier de la bibliothèque (📂, ou 📁 Dossier du projet) pour résoudre ces cibles'), cols:colsR, items:notLoaded.map(refRow)},
+    {icon:'?', sev:'err', title:_L('Références introuvables dans une bibliothèque chargée'), tip:_L('Cible absente du fichier de la bibliothèque : élément supprimé ou version différente'), cols:colsR, items:unresolved.map(refRow)},
+    {icon:'∅', sev:'info', title:_L('Bibliothèques déclarées sans référence'), tip:_L('LibraryReference vers une bibliothèque dont aucun élément n\'est utilisé'), cols:colsL, items:S.libs.filter(l=>l.declared&&!l.n).map(libRow)},
     {icon:'⚠', title:_L('Références vers une bibliothèque non déclarée'), tip:_L('Aucune LibraryReference pour ce fichier : dépendance non déclarée dans le projet Capella'), cols:colsL, items:S.libs.filter(l=>l.n&&!l.declared).map(libRow)}];
 }
 

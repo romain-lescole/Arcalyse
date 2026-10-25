@@ -215,12 +215,12 @@ function capRenderCompExchange(){
     const ports=(allLinks.allPorts||[]).filter(p=>!p.connected)
       .filter(p=>!st.nodeFilter.trim()||p.pcName.toLowerCase().includes(st.nodeFilter.trim().toLowerCase()));
     return capDiagHtml([
-      {icon:'∅', title:_L('Exchanges sans Functional Exchange alloué'), tip:_L('Aucune ComponentExchangeFunctionalExchangeAllocation'), cols:exCols, items:filtered.filter(l=>!l.fes.length).map(exRow)},
+      {icon:'∅', sev:'info', title:_L('Exchanges sans Functional Exchange alloué'), tip:_L('Aucune ComponentExchangeFunctionalExchangeAllocation'), cols:exCols, items:filtered.filter(l=>!l.fes.length).map(exRow)},
       {icon:'⭘', title:_L('Ports orphelins (ComponentPort sans exchange)'), tip:_L('Port défini sur un composant mais relié à aucun Component Exchange'), cols:[_L('Composant'),_L('Port'),_L('Orientation'),_L('Couche')],
         items:ports.map(p=>`<tr><td>${detLink(p.pcId,p.pcName,'font-weight:600')}</td><td>${detLink(p.portId,p.portName)}</td><td>${orientBadge(p.orient)}</td><td>${p.layer}</td></tr>`)},
-      {icon:'⚠', title:_L('Orientations de ports incohérentes'), tip:_L('OUT→OUT ou IN→IN hors délégation'), cols:exCols, items:filtered.filter(l=>l.warn).map(exRow)},
+      {icon:'⚠', sev:'err', title:_L('Orientations de ports incohérentes'), tip:_L('OUT→OUT ou IN→IN hors délégation'), cols:exCols, items:filtered.filter(l=>l.warn).map(exRow)},
       {icon:'?', title:_L('Exchanges non orientés'), tip:_L('Les deux ports sont UNSET : le sens du flux est inconnu'), cols:exCols, items:filtered.filter(l=>l.dir==='unset').map(exRow)},
-      {icon:'🔌', title:_L('Exchanges de couche PA non alloués à un Physical Link'), tip:_L('Aucune ComponentExchangeAllocation depuis un PhysicalLink'), cols:exCols, items:filtered.filter(l=>l.layer==='PA'&&!l.pls.length&&l.kind!=='DELEGATION').map(exRow)},
+      {icon:'🔌', sev:'info', title:_L('Exchanges de couche PA non alloués à un Physical Link'), tip:_L('Aucune ComponentExchangeAllocation depuis un PhysicalLink'), cols:exCols, items:filtered.filter(l=>l.layer==='PA'&&!l.pls.length&&l.kind!=='DELEGATION').map(exRow)},
     ]);
   }
 

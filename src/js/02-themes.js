@@ -195,6 +195,7 @@ function applyTheme(name) {
     document.documentElement.style.setProperty(k, v)
   );
   capThemeLayersApply(name); // couleurs des couches ARCADIA (thème personnalisé)
+  if(typeof capSyVuesTheme==='function') capSyVuesTheme();   // 🧩 SVG des vues SysML v2 (87)
   setupMarkers(); // recrée les marqueurs (le losange vide utilise --c-bg)
   render(); // relance pour les couleurs SVG (nodeBg, nodeText…)
   // Re-render Physical Link si la vue est active (isLight doit être réévalué)

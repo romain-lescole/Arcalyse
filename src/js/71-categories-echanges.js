@@ -64,11 +64,11 @@ function capEcChecks(){
   const multi=[]; Object.entries(E.exs).forEach(([k,l])=>l.forEach(e=>{ if(capEcOf(e.id).length>1) multi.push({...e, kind:k}); }));
   const dup={}; E.cats.forEach(c=>{ const k=c.kind+'|'+c.layer+'|'+c.name.trim().toLowerCase(); (dup[k]=dup[k]||[]).push(c); });
   return [
-    {icon:'🏷', title:_L('Échanges sans catégorie'), tip:_L('Dans les natures et couches où des catégories sont déjà utilisées'), cols:colsE, items:noCat.map(exRow)},
+    {icon:'🏷', sev:'info', title:_L('Échanges sans catégorie'), tip:_L('Dans les natures et couches où des catégories sont déjà utilisées'), cols:colsE, items:noCat.map(exRow)},
     {icon:'∅', title:_L('Catégories vides'), tip:_L('Catégorie sans aucun échange'), cols:colsC, items:E.cats.filter(c=>!c.ids.length&&!c.broken).map(catRow)},
-    {icon:'?', title:_L('Catégories référençant un échange introuvable'), tip:_L('Échange supprimé ou hors du fichier chargé'), cols:colsC, items:E.cats.filter(c=>c.broken).map(c=>catRow(c).replace('</td></tr>',_L(` <span class="ana-miss">+ ${c.broken} introuvable(s)</span></td></tr>`)))},
+    {icon:'?', sev:'err', title:_L('Catégories référençant un échange introuvable'), tip:_L('Échange supprimé ou hors du fichier chargé'), cols:colsC, items:E.cats.filter(c=>c.broken).map(c=>catRow(c).replace('</td></tr>',_L(` <span class="ana-miss">+ ${c.broken} introuvable(s)</span></td></tr>`)))},
     {icon:'≡', title:_L('Catégories en double'), tip:_L('Même nom, même nature et même couche'), cols:colsC, items:Object.values(dup).filter(a=>a.length>1).flat().map(catRow)},
-    {icon:'⧉', title:_L('Échanges dans plusieurs catégories'), tip:_L('Autorisé par Capella, à vérifier si les catégories doivent être exclusives'), cols:colsE, items:multi.map(exRow)}];
+    {icon:'⧉', sev:'info', title:_L('Échanges dans plusieurs catégories'), tip:_L('Autorisé par Capella, à vérifier si les catégories doivent être exclusives'), cols:colsE, items:multi.map(exRow)}];
 }
 
 /** Sous-vue 🏷 Catégories d'échanges : par catégorie, par échange, contrôles.

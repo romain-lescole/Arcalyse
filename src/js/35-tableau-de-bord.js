@@ -151,9 +151,9 @@ function capDashCatalog(){
   add(_L('Capacités'),'cap.layer',_L('Capacités par couche'),'series',()=>natural(CAP_ANA_LAYERS.map(k=>({l:k,v:CP().filter(c=>c.layer===k).length,c:LC(k)})).filter(x=>x.v)));
   add(_L('Capacités'),'cap.fn',_L('Capacités décrites par des fonctions ou chaînes'),'pct',()=>capDashPct(nonMis(),c=>c.fns.length||c.chains.length));
   add(_L('Capacités'),'cap.chk',_L('Contrôles des capacités'),'series',()=>({cats:[
-    {l:_L('Sans fonction ni chaîne'),v:nonMis().filter(c=>!c.fns.length&&!c.chains.length).length},
-    {l:_L('Sans acteur ni composant'),v:CP().filter(c=>!c.actors.length).length},
-    {l:_L('Sans scénario'),v:nonMis().filter(c=>!c.scen.length).length},
+    {l:_L('Sans fonction ni chaîne'), sev:'info', v:nonMis().filter(c=>!c.fns.length&&!c.chains.length).length},
+    {l:_L('Sans acteur ni composant'), sev:'info', v:CP().filter(c=>!c.actors.length).length},
+    {l:_L('Sans scénario'), sev:'info', v:nonMis().filter(c=>!c.scen.length).length},
     {l:_L('Missions sans capacité'),v:CP().filter(c=>c.type==='Mission'&&!c.exploits.length).length}].filter(x=>x.v)}));
 
   // Modes & états
@@ -161,19 +161,19 @@ function capDashCatalog(){
   add(_L('Modes & états'),'sm.n',_L('Machines à états'),'n',()=>({n:SM().sms.length,sub:_L(`${SM().sms.reduce((s,m)=>s+real(m).length,0)} états/modes · ${SM().sms.reduce((s,m)=>s+m.trans.length,0)} transitions`)}));
   add(_L('Modes & états'),'sm.owner',_L('États et modes par machine'),'series',()=>({cats:SM().sms.map(m=>({l:m.owner&&m.owner.name?m.owner.name:m.name,v:real(m).length})).filter(x=>x.v).sort((a,b)=>b.v-a.v)}));
   add(_L('Modes & états'),'sm.chk',_L('Contrôles des machines à états'),'series',()=>{ const t={noInit:0,unreach:0,deadEnd:0,noTrig:0}; SM().sms.forEach(m=>{ const c=capStateChecks(m); Object.keys(t).forEach(k=>t[k]+=c[k].length); });
-    return {cats:[{l:_L('Régions sans état initial'),v:t.noInit},{l:_L('États inatteignables'),v:t.unreach},{l:_L('États sans issue'),v:t.deadEnd},{l:_L('Transitions sans déclencheur'),v:t.noTrig}].filter(x=>x.v)}; });
+    return {cats:[{l:_L('Régions sans état initial'),v:t.noInit},{l:_L('États inatteignables'),v:t.unreach},{l:_L('États sans issue'), sev:'info', v:t.deadEnd},{l:_L('Transitions sans déclencheur'), sev:'info', v:t.noTrig}].filter(x=>x.v)}; });
 
   // Contrôles
   const secs=s=>({cats:capChkFilter(s).filter(x=>x.sev!=='info').map(x=>({l:x.title,v:(x.items||[]).length})).filter(x=>x.v).sort((a,b)=>b.v-a.v)});   // 🩺 profil (14) : contrôles désactivés et ℹ exclus
   add(_L('Contrôles'),'chk.fn',_L('Contrôles des fonctions'),'series',()=>secs(capFnChecks(F,'all')));
   add(_L('Contrôles'),'chk.pt',_L('Contrôles des ports'),'series',()=>secs(capPortsDiagSections(PT())));
   add(_L('Contrôles'),'chk.ce',_L('Contrôles des Component Exchanges'),'series',()=>({cats:[
-    {l:_L('Sans Functional Exchange'),v:CE().filter(x=>!x.fes.length).length},{l:_L('Ports orphelins'),v:(CE().allPorts||[]).filter(p=>!p.connected).length},
-    {l:_L('Orientations incohérentes'),v:CE().filter(x=>x.warn).length},{l:_L('Non orientés'),v:CE().filter(x=>x.dir==='unset').length},
-    {l:_L('PA sans Physical Link'),v:CE().filter(x=>x.layer==='PA'&&x.kind!=='DELEGATION'&&!x.pls.length).length}].filter(x=>x.v)}));
+    {l:_L('Sans Functional Exchange'), sev:'info', v:CE().filter(x=>!x.fes.length).length},{l:_L('Ports orphelins'), sante:false, v:(CE().allPorts||[]).filter(p=>!p.connected).length},
+    {l:_L('Orientations incohérentes'), sev:'err', sante:false, v:CE().filter(x=>x.warn).length},{l:_L('Non orientés'),v:CE().filter(x=>x.dir==='unset').length},
+    {l:_L('PA sans Physical Link'), sev:'info', sante:false, v:CE().filter(x=>x.layer==='PA'&&x.kind!=='DELEGATION'&&!x.pls.length).length}].filter(x=>x.v)}));
   add(_L('Contrôles'),'chk.pl',_L('Contrôles des Physical Links'),'series',()=>({cats:[
-    {l:_L('Sans Component Exchange'),v:PL().filter(x=>!x.ces.length).length},{l:_L('Ports physiques sans lien'),v:(PL().allPorts||[]).filter(p=>!p.connected).length},
-    {l:_L('Ports physiques sans Component Port'),v:(PL().allPorts||[]).filter(p=>!(p.cps||[]).length).length},{l:_L('CE (PA) non alloués'),v:(PL().unallocCEs||[]).length}].filter(x=>x.v)}));
+    {l:_L('Sans Component Exchange'), sev:'info', v:PL().filter(x=>!x.ces.length).length},{l:_L('Ports physiques sans lien'),v:(PL().allPorts||[]).filter(p=>!p.connected).length},
+    {l:_L('Ports physiques sans Component Port'), sev:'info', sante:false, v:(PL().allPorts||[]).filter(p=>!(p.cps||[]).length).length},{l:_L('CE (PA) non alloués'), sev:'info', v:(PL().unallocCEs||[]).length}].filter(x=>x.v)}));
   add(_L('Contrôles'),'chk.sum',_L('Synthèse des contrôles par domaine'),'series',()=>{ const tot=id=>{ const m=C.find(x=>x.id===id), v=m&&capDashValue(m); return v?v.cats.reduce((s,c)=>s+c.v,0):0; };
     return {cats:[[_L('Fonctions'),'chk.fn'],[_L('Ports'),'chk.pt'],[_L('Component Exchanges'),'chk.ce'],[_L('Physical Links'),'chk.pl'],[_L('Chaînes'),'chk.ch'],[_L('Capacités'),'cap.chk'],[_L('Modes & états'),'sm.chk'],[_L('Exigences'),'rq.chk'],[_L('Propriétés'),'pv.chk'],[_L('Données & interfaces'),'dm.chk'],[_L('Contraintes'),'ct.chk'],[_L('Catégories d\'échanges'),'chk.ec'],[_L('Bibliothèques'),'chk.lib'],[_L('REC / RPL'),'chk.rec'],[_L('Déploiement & EPBS'),'chk.dep']].map(([l,id])=>({l,v:tot(id)})).filter(x=>x.v).sort((a,b)=>b.v-a.v)}; },_L('Nombre total de constats par domaine'));
 
@@ -189,6 +189,7 @@ function capDashCatalog(){
   capLibDashCatalog(add);   // 📚 bibliothèques (72)
   capRecDashCatalog(add);   // 📦 REC / RPL (73)
   capDepDashCatalog(add);   // 🖧 déploiement & EPBS (74)
+  if(typeof capSyDashCatalog==='function') capSyDashCatalog(add);   // 🧩 SysML v2 (87)
 
   add(_L('Mise en page'),'txt',_L('Texte libre (titre, commentaire)'),'text',()=>({}));
   add(_L('Diagrammes et vues'),'diag',_L('🔲 Diagramme Capella'),'diag',()=>({}));

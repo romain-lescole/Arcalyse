@@ -649,18 +649,18 @@
   "declarees": 0
  },
  "sante": {
-  "score": 51,
-  "points": 3060,
-  "bloquants": 0,
-  "info": 0,
+  "score": 95,
+  "points": 150,
+  "bloquants": 46,
+  "info": 2351,
   "pop": 4608,
-  "nChecks": 123,
+  "nChecks": 117,
   "nOk": 63,
   "couches": {
-   "OA": 58,
-   "SA": 88,
-   "LA": 74,
-   "PA": 74,
+   "OA": 100,
+   "SA": 100,
+   "LA": 96,
+   "PA": 100,
    "EPBS": 100
   }
  },
@@ -695,7 +695,7 @@
    "Ports de composant orphelins (sans Component Exchange)": 2,
    "Ports connectés sans orientation (UNSET)": 0,
    "Échanges aux orientations incohérentes": 0,
-   "Composants feuilles sans port": 34,
+   "Composants feuilles sans port": 31,
    "Composants feuilles sans fonction allouée": 44
   },
   "scenarios": {
@@ -705,6 +705,7 @@
    "Scénarios hors capacité": 0,
    "Références vers un scénario introuvable": 0
   },
+  "sysml": {},
   "exigences": {
    "Exigences liées à aucun élément du modèle": 14,
    "Exigences sans texte": 0,
@@ -1179,27 +1180,17 @@
    "PA sans Physical Link": 52
   },
   "chk.ch": {
-   "Chaînes sans description": 32,
    "Chaînes discontinues": 4,
    "Chaînes non réalisées à la couche inférieure": 2
   },
-  "chk.dep": {
-   "Comportements non déployés": 10,
-   "Nœuds sans comportement déployé": 15,
-   "Nœuds physiques non réalisés par un Configuration Item": 42
-  },
+  "chk.dep": null,
   "chk.ec": {
-   "Échanges sans catégorie": 278,
    "Catégories vides": 2
   },
   "chk.fn": {
-   "Noms ne commençant pas par un verbe": 219,
-   "Fonctions feuilles ne réalisant rien à la couche supérieure": 159,
-   "Fonctions sans description": 109,
    "Fonctions feuilles non réalisées à la couche inférieure": 29,
    "Fonctions feuilles sans aucun échange": 2,
    "Ports de fonction sans échange": 2,
-   "Langue minoritaire dans la couche": 1,
    "Fonctions mères allouées": 1
   },
   "chk.lib": null,
@@ -1209,41 +1200,29 @@
    "CE (PA) non alloués": 52
   },
   "chk.pt": {
-   "Function Ports non alloués alors que la fonction est allouée à un composant qui a des ports": 311,
-   "Physical Ports sans Component Port alloué": 75,
-   "Component Ports sans Function Port alloué": 53,
    "Sens incohérent Function Port / Component Port": 34,
-   "Component Ports (PA) non alloués à un Physical Port": 24,
    "Functional Exchange ↔ Component Exchange : ports non alignés": 8
   },
   "chk.rec": {
-   "Répliques incomplètes": 7,
-   "Répliques enrichies": 4,
-   "Noms de réplique hors règle REC + suffixe": 12
+   "Répliques incomplètes": 7
   },
   "chk.st": {
-   "Éléments à retravailler": 1,
-   "Éléments en attente de revue": 0,
-   "Brouillons dans une couche majoritairement validée": 0,
-   "Commentaire de revue Capella sans statut": 1,
-   "À retravailler sans commentaire dans 💬 Revue": 1,
    "Statut référencé introuvable": 0
   },
   "chk.sum": {
-   "Fonctions": 522,
-   "Ports": 505,
-   "Catégories d'échanges": 280,
    "Propriétés": 210,
    "Physical Links": 177,
    "Contraintes": 153,
    "Données & interfaces": 119,
    "Exigences": 116,
    "Component Exchanges": 78,
-   "Déploiement & EPBS": 67,
    "Capacités": 59,
-   "Chaînes": 38,
+   "Ports": 42,
    "Modes & états": 36,
-   "REC / RPL": 23
+   "Fonctions": 34,
+   "REC / RPL": 7,
+   "Chaînes": 6,
+   "Catégories d'échanges": 2
   },
   "ct.chk": {
    "Contraintes sans expression": 121,
@@ -2280,38 +2259,31 @@
    "PA": 116
   },
   "rq.n": 148,
-  "sante.err": 0,
+  "sante.err": 46,
   "sante.layer": {
-   "OA": 58,
-   "SA": 88,
-   "LA": 74,
-   "PA": 74,
+   "OA": 100,
+   "SA": 100,
+   "LA": 96,
+   "PA": 100,
    "EPBS": 100
   },
-  "sante.pts": 3060,
+  "sante.pts": 150,
   "sante.score": {
-   "pct": 51,
-   "num": 51,
+   "pct": 95,
+   "num": 95,
    "den": 100
   },
   "sante.vue": {
-   "ƒ Fonctions": 522,
-   "ƒ⇆ Functional Exchange": 594,
-   "🧱 System Component": 80,
-   "🧩 Ports": 505,
-   "⚡ Chaînes": 38,
-   "🧾 Exigences": 116,
-   "🎛 Propriétés": 210,
-   "🗃 Données & interfaces": 119,
-   "🔒 Contraintes": 153,
-   "🏷 Catégories d'échanges": 280,
-   "📦 REC / RPL": 23,
-   "🖧 Déploiement & EPBS": 67,
-   "🔖 Statut de revue": 3,
-   "🔀 Behavior Exchange": 78,
-   "🔌 Physical Link": 177,
-   "🎯 Capacités & missions": 59,
-   "🚦 Modes & états": 36
+   "ƒ Fonctions": 34,
+   "🧱 System Component": 2,
+   "🧩 Ports": 42,
+   "⚡ Chaînes": 6,
+   "🧾 Exigences": 16,
+   "🗃 Données & interfaces": 8,
+   "🔒 Contraintes": 7,
+   "🏷 Catégories d'échanges": 2,
+   "📦 REC / RPL": 7,
+   "🚦 Modes & états": 26
   },
   "sc.chk": null,
   "sc.kind": {
@@ -2386,6 +2358,12 @@
    "den": 4608
   },
   "st.rev": 2,
+  "sy.diag": null,
+  "sy.fam": null,
+  "sy.n": 0,
+  "sy.rel": null,
+  "sy.type": null,
+  "sy.vues": null,
   "tr.dn.cap": {
    "OA→SA": 100,
    "SA→LA": 75

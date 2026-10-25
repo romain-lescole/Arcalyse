@@ -115,7 +115,7 @@ function capRenderCards(){
       const pills=[]; if(el.id)pills.push(`<span class="cap-meta-pill">id:${capEsc(el.id.slice(0,16))}</span>`);
       ['kind','nature','direction','visibility'].forEach(k=>{if(el.attrs[k])pills.push(`<span class="cap-meta-pill">${k}:${capEsc(el.attrs[k])}</span>`);});
       return`<div class="cap-card" onclick="capOpenDetail('${capEsc(el.id)}')">
-        <div class="cap-card-top">${capIco(el.id,16)}<span class="cap-type-badge" style="color:${lv.color};background:${lv.bg}">${capEsc(el.typeName)}</span>${nm}</div>
+        <div class="cap-card-top">${capIco(el.id,14)}<span class="cap-type-badge" style="color:${lv.color};background:${lv.bg}">${capEsc(el.typeName)}</span>${nm}</div>
         ${pills.length?`<div class="cap-meta">${pills.join('')}</div>`:''}
       </div>`;
     }).join('');
@@ -1459,7 +1459,7 @@ function capRenderTreeBody(){
       const lv=n.layer?CAP_LAYERS[n.layer]:null, color=lv?lv.color:'#8b949e', bg=lv?lv.bg:'rgba(139,148,158,.1)';
       const row=document.createElement('div'); row.className='cap-tree-row cap-tree-lrow'; row.dataset.id=n.id;   // glissable vers 🏠 Accueil, clic droit 💬
       const pth=path.length>3?'… › '+path.slice(-3).join(' › '):path.join(' › ');
-      const svg=capIco(n.id,16);
+      const svg=capIco(n.id,14);
       row.innerHTML=(svg?`<span class="cap-tree-icon cap-tree-svg">${svg}</span>`:`<span class="cap-tree-icon" style="background:${bg};color:${color}">${capEsc(CAP_TYPE_ICON[n.typeName]||n.typeName.slice(0,2).toLowerCase())}</span>`)
         +`<span class="cap-tree-label${n.name?'':' unnamed'}" title="${capEsc(n.name||'')}">${capEsc(n.name||'—')}</span>`
         +`<span class="cap-tree-path" title="${capEsc(path.join(' › '))}">${capEsc(pth)}</span>`
@@ -1505,7 +1505,7 @@ function capRenderTreeNode(node,container,depth,filter){
   if(node.id&&node.id!=='cap-root') row.dataset.id=node.id;   // glissable vers une check-list en fenêtre séparée, clic droit 💬
   const tog=document.createElement('span'); tog.className='cap-tree-tog'+(hasCh?'':' leaf'); tog.textContent=hasCh?'▶':'';
   const icon=document.createElement('span'); icon.className='cap-tree-icon';
-  const svg=node.id&&node.id!=='cap-root'?capIco(node.id,16):'';   // icône façon Capella (visionneuse d'Arcature), sinon sigle
+  const svg=node.id&&node.id!=='cap-root'?capIco(node.id,14):'';   // icône façon Capella (visionneuse d'Arcature), sinon sigle
   if(svg){ icon.classList.add('cap-tree-svg'); icon.innerHTML=svg; } else { icon.style.cssText=`background:${bg};color:${color};`; icon.textContent=iconTxt; }
   const label=document.createElement('span'); label.className='cap-tree-label'+(name?'':' unnamed'); label.textContent=name||'—'; label.title=name;
   row.appendChild(tog); row.appendChild(icon); row.appendChild(label);

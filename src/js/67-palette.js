@@ -69,7 +69,7 @@ function capPalSearch(q){
   if(!words.length||!capAllElements.length) return {els:[], nEls:0, diags:[], nDiags:0};
   const els=[]; capPalIndex().forEach(e=>{ const s=capPalScore(e.n, e.t, e.id, q, words); if(s) els.push({s,e}); });
   els.sort((a,b)=>b.s-a.s||a.e.name.length-b.e.name.length||(a.e.n<b.e.n?-1:a.e.n>b.e.n?1:0));
-  const reps=typeof capDiagReps==='function'?capDiagReps():[], diags=[];
+  const reps=[...(typeof capDiagReps==='function'?capDiagReps():[]), ...(typeof capSyVuesReps==='function'?capSyVuesReps():[])], diags=[];   // + vues SysML v2 (87)
   reps.forEach(r=>{ const s=capPalScore(capPalNorm(r.nom), capPalNorm(`${r.type||''} ${r.sigle||''} ${r.couche||''}`), r.uid, q, words); if(s) diags.push({s,r}); });
   diags.sort((a,b)=>b.s-a.s||(a.r.nom<b.r.nom?-1:a.r.nom>b.r.nom?1:0));
   return {els:els.slice(0,CAP_PAL_MAX).map(x=>x.e), nEls:els.length, diags:diags.slice(0,CAP_PAL_MAX_DIAG).map(x=>x.r), nDiags:diags.length,
@@ -85,7 +85,8 @@ function capPalRow(kind, x){
   const esc=capEsc;
   if(kind==='diag'){
     const lv=capDiagCouche(x.couche);
-    return `<div class="ctx-i cap-nav-it cap-pal-it" data-pal="diag" data-id="${esc(x.uid)}" title="${esc(x.type||'')}"><span>🔲 <span class="cap-pal-l" style="color:${lv.color}">${esc(x.couche||'')}</span> ${esc(x.nom)} <span class="cap-nav-g">${esc(x.type||'')}</span></span></div>`;
+    const ico=String(x.uid).startsWith('sy:')&&typeof capSyVueIco==='function'?capSyVueIco(x.genre,13)||'🔲':'🔲';   // vue SysML v2 : icône du genre (87)
+    return `<div class="ctx-i cap-nav-it cap-pal-it" data-pal="diag" data-id="${esc(x.uid)}" title="${esc(x.type||'')}"><span>${ico} <span class="cap-pal-l" style="color:${lv.color}">${esc(x.couche||'')}</span> ${esc(x.nom)} <span class="cap-nav-g">${esc(x.type||'')}</span></span></div>`;
   }
   const lv=CAP_LAYERS[x.layer]||{color:'#8b949e'}, couche=CAP_ANA_LAYERS.includes(x.layer)?x.layer:'';
   return `<div class="ctx-i cap-nav-it cap-pal-it" data-pal="el" data-id="${esc(x.id)}" title="${esc(x.type)}${x.path?' — '+esc(x.path):''}"><span>${capIcoType(x.typeName,13)}${couche?`<span class="cap-pal-l" style="color:${lv.color}">${couche}</span> `:''}${esc(x.name)} <span class="cap-nav-g">${esc(x.type)}${x.path?' · '+esc(x.path):''}</span></span></div>`;

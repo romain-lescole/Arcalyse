@@ -39,6 +39,35 @@ if (!['fr', 'en', 'multi'].includes(LANG)) { console.error(`✖ Langue inconnue 
 const OUT = livraison ? path.join(ROOT, 'livraison', `arcalyse-${LANG}.html`)
   : outArg >= 0 ? path.resolve(args[outArg + 1]) : path.join(ROOT, 'dist', `arcalyse-${LANG}.html`);
 const EN = LANG === 'en', MULTI = LANG === 'multi', TR = EN || MULTI;   // TR : une traduction est nécessaire
+// ── Reprise du lecteur SysML v2 d'Arcature : node build.js --lecteur-sysml [dossier d'Arcature] (ou variable ARCATURE) ──
+// Copie dist/arcature-lecteur-sysml.js et -en.js (assemblés dans Arcature par node build.js --lecteur-sysml [--lang en], lancés
+// ici s'ils manquent) dans src/vendor/ et note l'origine (dépôt, branche, commit, commande) dans src/vendor/LISEZMOI-lecteur-sysml.md.
+if (args.includes('--lecteur-sysml')) {
+  const { execSync } = require('child_process');
+  const i = args.indexOf('--lecteur-sysml'), donne = args[i + 1] && !args[i + 1].startsWith('--') ? args[i + 1] : '';
+  const cand = [donne, process.env.ARCATURE, path.join(ROOT, '..', 'Arcature'), path.join(ROOT, '..', 'arcature')].filter(Boolean).map(p => path.resolve(p));
+  const ARC = cand.find(p => fs.existsSync(path.join(p, 'build.js')));
+  if (!ARC) { console.error('✖ Dossier d\'Arcature introuvable (node build.js --lecteur-sysml <dossier>, ou ARCATURE=<dossier>) : ' + cand.join(', ')); process.exit(1); }
+  const srcFr = path.join(ARC, 'dist', 'arcature-lecteur-sysml.js'), srcEn = path.join(ARC, 'dist', 'arcature-lecteur-sysml-en.js');
+  const sh = c => execSync(c, { cwd: ARC, stdio: ['ignore', 'pipe', 'inherit'] }).toString().trim();
+  if (!fs.existsSync(srcFr)) sh('node build.js --lecteur-sysml');
+  if (!fs.existsSync(srcEn)) sh('node build.js --lecteur-sysml --lang en');
+  const VENDOR = path.join(SRC, 'vendor');
+  fs.copyFileSync(srcFr, path.join(VENDOR, 'arcature-lecteur-sysml.js'));
+  fs.copyFileSync(srcEn, path.join(VENDOR, 'arcature-lecteur-sysml-en.js'));
+  let commit = '?', branche = '?'; try { commit = sh('git rev-parse HEAD'); branche = sh('git rev-parse --abbrev-ref HEAD'); } catch (e) { /* pas un dépôt git */ }
+  const ko = Math.round(fs.statSync(srcFr).size / 1024);
+  fs.writeFileSync(path.join(VENDOR, 'LISEZMOI-lecteur-sysml.md'), `# Lecteur SysML v2 d'Arcature (fichiers tiers, ne pas modifier à la main)
+
+- Fichiers : \`arcature-lecteur-sysml.js\` (français) et \`arcature-lecteur-sysml-en.js\` (anglais), ≈ ${ko} Ko chacun, licence Apache 2.0.
+- Origine : dépôt \`romain-lescole/Arcature\`, branche \`${branche}\`, commit \`${commit}\`, repris le ${new Date().toISOString().slice(0, 10)}.
+- Assemblés dans Arcature par \`node build.js --lecteur-sysml\` et \`node build.js --lecteur-sysml --lang en\` ; recopiés ici par
+  \`node build.js --lecteur-sysml <dossier d'Arcature>\` (qui réécrit cette note).
+- Mode d'emploi et contrat : \`docs/SYSML-V2.md\` (Arcalyse), \`docs/LECTEUR-SYSML.md\` et \`docs/api/lecteur-sysml.d.ts\` (Arcature).
+`);
+  console.log(`✔ src/vendor/arcature-lecteur-sysml.js et -en.js repris d'Arcature (${branche} @ ${commit.slice(0, 7)}, ${ko} Ko) — relancer node build.js`);
+  process.exit(0);
+}
 const i18n = TR ? require('./tools/i18n.js') : null;
 const DICT = TR ? JSON.parse(fs.readFileSync(path.join(SRC, 'i18n', 'en-dictionnaire.json'), 'utf8')) : null;
 const missing = [];   // {file, line, key} : textes sans traduction (version anglaise)
@@ -118,7 +147,7 @@ function multiUi(fr, en) {
 })();
 <\/script>`;
 }
-const FR_TITLE = 'Arcalyse — votre modèle Capella, sous toutes ses coutures', EN_TITLE = 'Arcalyse — your Capella model, inside and out';
+const FR_TITLE = 'Arcalyse — votre modèle, sous toutes ses coutures', EN_TITLE = 'Arcalyse — your model, inside and out';
 /** Script de fin de page (version multilingue) : recharge le modèle transmis lors d'un changement de langue. */
 const MULTI_RESTORE = `<script id="cap-lang-restore">
 (function(){
@@ -145,6 +174,10 @@ if (EN) tplTxt = tplTxt.replace('<html lang="fr">', '<html lang="en">').replace(
 if (EN) tplTxt = tplTxt.replace('@@INCLUDE vendor/arcature-visionneuse.js@@', '@@INCLUDE vendor/arcature-visionneuse-en.js@@');
 if (MULTI) tplTxt = tplTxt.replace(/^@@INCLUDE vendor\/arcature-visionneuse\.js@@$/m,
   "if(document.documentElement.getAttribute('data-lang')==='en'){\n@@INCLUDE vendor/arcature-visionneuse-en.js@@\n}else{\n@@INCLUDE vendor/arcature-visionneuse.js@@\n}");
+// Lecteur SysML v2 d'Arcature : même règle (src/vendor/arcature-lecteur-sysml.js, -en.js)
+if (EN) tplTxt = tplTxt.replace('@@INCLUDE vendor/arcature-lecteur-sysml.js@@', '@@INCLUDE vendor/arcature-lecteur-sysml-en.js@@');
+if (MULTI) tplTxt = tplTxt.replace(/^@@INCLUDE vendor\/arcature-lecteur-sysml\.js@@$/m,
+  "if(document.documentElement.getAttribute('data-lang')==='en'){\n@@INCLUDE vendor/arcature-lecteur-sysml-en.js@@\n}else{\n@@INCLUDE vendor/arcature-lecteur-sysml.js@@\n}");
 if (MULTI) tplTxt = tplTxt.replace(/^@@INCLUDE html\/aide\.html@@$/m, '').replace(/<\/body>\s*<\/html>\s*$/, MULTI_RESTORE + '\n</body>\n</html>\n');
 const tpl = tplTxt.split('\n');
 const included = [];

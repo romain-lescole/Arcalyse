@@ -128,6 +128,7 @@ const CAP_SCR_ANALYSES={
   componentExchanges:()=>capScrNettoyer(capComputeCompExchanges()),
   physicalLinks:()=>capScrNettoyer(capComputePhysLinks()),
   deployment:()=>capScrNettoyer(capComputeDeploy()),
+  sysml:()=>typeof _capSysml!=='undefined'&&_capSysml.lecture?capScrNettoyer(Object.assign(_capSysml.lecture.json(), {vues:capSyVuesListe()})):null,   // 🧩 SysML v2 (87) : null pour un modèle Capella
   checks:vue=>capScrControles(vue==null?'':String(vue)),
   nameQuality:nom=>capScrNettoyer(capNameQuality(String(nom==null?'':nom))),
   diagramsOf:el=>{ const id=el&&el.$id||String(el||''); return capScrDiagrammes().parElement[id]||[]; }

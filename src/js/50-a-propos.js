@@ -5,7 +5,7 @@
 var CAP_APP_VERSION='3.1';   // à mettre à jour à chaque livraison (node build.js --livraison)
 var CAP_APP_AUTHOR=_L('Romain Lescole');
 var CAP_APP_NAME=_L('Arcalyse');
-var CAP_APP_SLOGAN=_L('Votre modèle Capella, sous toutes ses coutures.');
+var CAP_APP_SLOGAN=_L('Votre modèle, sous toutes ses coutures.');
 var CAP_APP_REPO='github.com/romain-lescole/arcalyse';
 /** Texte de la licence ISC de D3.js (reproduction obligatoire). */
 var CAP_D3_LICENSE=`Copyright 2010-2023 Mike Bostock
@@ -55,7 +55,7 @@ function capAboutOpen(){
     <div class="cw-d-body">
       <div class="ab-id"><div class="ab-logo">${capLogoSvg(56)}</div><div><div class="ab-name">${e(CAP_APP_NAME)}</div><div class="ab-slogan">${e(CAP_APP_SLOGAN)}</div>
         <div class="ab-ver">Version ${e(CAP_APP_VERSION)} · ${e(tech[1][1])}</div>
-        <div class="ana-dim">Explorateur et analyseur hors ligne de modèles Capella / ARCADIA : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML.</div></div></div>
+        <div class="ana-dim">Explorateur et analyseur hors ligne de modèles d'architecture — Capella / ARCADIA et SysML v2 : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML.</div></div></div>
       <h4>Auteur et licence</h4>
       <table class="ana-t ana-kv">
         <tr><td>Auteur</td><td>© ${yr} ${e(CAP_APP_AUTHOR)} — créateur et titulaire des droits</td></tr>

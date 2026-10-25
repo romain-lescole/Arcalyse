@@ -233,7 +233,7 @@ async function capProjectScanDir(d) {
   /** Parcourt un dossier jusqu'à la profondeur donnée. */
   const scan = async (dir, chemin, prof) => {
     for await (const [nom, h] of dir.entries()) {
-      if (h.kind === 'file' && /\.(capella|melodymodeller|aird)$/i.test(nom)) fichiers.push({ nom, chemin: chemin + nom, h });
+      if (h.kind === 'file' && /\.(capella|melodymodeller|aird|sysml|kpar)$/i.test(nom)) fichiers.push({ nom, chemin: chemin + nom, h });
       else if (h.kind === 'directory' && prof > 0 && !nom.startsWith('.')) await scan(h, chemin + nom + '/', prof - 1);
     }
   };
@@ -250,7 +250,9 @@ function capProjectFromFiles(fichiers) {
   const mods = fichiers.filter(f => /\.(capella|melodymodeller)$/i.test(f.nom)).sort((a, b) => a.chemin.split('/').length - b.chemin.split('/').length || a.chemin.localeCompare(b.chemin));
   const airds = fichiers.filter(f => /\.aird$/i.test(f.nom));
   capShowWelcome(true);
-  if (!mods.length) { capWelcomeStatus(_L('Aucun fichier .capella dans ce dossier (ni dans ses sous-dossiers).'), 'err'); return; }
+  const sysml = fichiers.filter(f => /\.(sysml|kpar)$/i.test(f.nom));
+  if (!mods.length && sysml.length && typeof capSysmlOuvrirDossier === 'function') { capSysmlOuvrirDossier(sysml); return; }   // 🧩 projet SysML v2 en dossier (87)
+  if (!mods.length) { capWelcomeStatus(_L('Aucun fichier .capella ni .sysml dans ce dossier (ni dans ses sous-dossiers).'), 'err'); return; }
   /** Charge un modèle et son .aird. */
   const charger = async m => {
     if (capLoaded && !capReplacePreOk() && !(await capReplaceConfirm(m.nom))) { capShowWelcome(false); return; }
@@ -420,7 +422,7 @@ function capDiagBarreVd() {
   const ponts = document.getElementById('vd-ponts'); if (ponts) ponts.style.display = 'none';
   // Chaînes et chemins : seulement ceux dessinés dans le diagramme ouvert (liste remplie par la visionneuse à chaque ouverture)
   let raf = 0;
-  new MutationObserver(ms => { if (ms.every(m => m.target.closest && m.target.closest('#crv-layer'))) return; cancelAnimationFrame(raf); raf = requestAnimationFrame(capDiagChainesFiltre); })
+  new MutationObserver(ms => { if (ms.every(m => m.target.closest && m.target.closest('.crv-layer'))) return; cancelAnimationFrame(raf); raf = requestAnimationFrame(capDiagChainesFiltre); })
     .observe(document.getElementById('vue-diagramme'), { subtree: true, childList: true });
   capDiagRevSlot(); capDiagChainesFiltre();
 }
@@ -448,6 +450,8 @@ function capDiagChainesFiltre() {
 /** Rendu de la vue 🔲 Diagrammes Capella. */
 function capRenderDiagrams() {
   const box = document.getElementById('cap-view-diag');
+  if (typeof _capSysml !== 'undefined' && _capSysml.lecture && typeof capSyVuesRender === 'function') { capSyVuesRender(box); return; }   // 🧩 vues calculées SysML v2 (87)
+  const sv = box.querySelector('#cap-sy-vues'); if (sv) { sv.style.display = 'none'; [...box.children].forEach(c => { if (c !== sv) c.style.display = ''; }); }
   if (!capDiagDispo()) {
     box.innerHTML = `<div class="cdg-vide">${_L('Visionneuse de diagrammes absente de cette page.')}</div>`;
     return;
@@ -637,6 +641,7 @@ function capDiagChange(e) {
  * @param {string} [id] - élément du modèle à centrer
  */
 function capDiagOpen(uid, id) {
+  if (String(uid).startsWith('sy:') && typeof capSyVueOuvrir === 'function') { capSyVueOuvrir(uid.slice(3), id); return; }   // 🧩 vue SysML v2 (🔍 palette)
   capNavOpen('diag');
   if (_capDiag.vis) { _capDiag.actif = uid; _capDiag.vis.ouvrir(uid, id); capDiagMarquerActif(); }
 }
