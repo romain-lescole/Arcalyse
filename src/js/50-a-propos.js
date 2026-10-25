@@ -2,7 +2,7 @@
  * Fenêtre « À propos » d'Arcalyse (menu ❓ Aide ▾) : identité et version, auteur, licence Apache 2.0, contact,
  * composants tiers (D3.js, licence ISC à reproduire), marques citées, informations techniques copiables.
  */
-var CAP_APP_VERSION='3.1';   // à mettre à jour à chaque livraison (node build.js --livraison)
+var CAP_APP_VERSION='3.2';   // à mettre à jour à chaque livraison (node build.js --livraison)
 var CAP_APP_AUTHOR=_L('Romain Lescole');
 var CAP_APP_NAME=_L('Arcalyse');
 var CAP_APP_SLOGAN=_L('Votre modèle, sous toutes ses coutures.');
