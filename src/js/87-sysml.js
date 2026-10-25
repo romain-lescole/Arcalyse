@@ -671,7 +671,7 @@ function capSyVuesDetail(id, secTitle){
   return secTitle(_L(`Vues SysML v2 (${vs.length})`),'#58a6ff')+vs.map(v=>`<div class="cap-det-link cdg-lien" onclick="capSyVueOuvrir('${capEsc(v.cle)}','${capEsc(id)}')" title="${capEsc(v.libelleGenre)}">${capSyVueIco(v.genre, 14)} <span class="cdg-sigle">${capEsc(v.sigle)}</span>${capEsc(v.nom)}</div>`).join('');
 }
 
-/* ── 🖼 Icônes des métaclasses SysML v2 (façon SysON : un glyphe par nature d'élément, couleur de la famille STR / BEH / REQ / ORG,
+/* ── 🖼 Icônes des métaclasses SysML v2 (dessinées pour Arcalyse, aucun fichier d'un autre outil repris : un glyphe par nature d'élément, couleur de la famille STR / BEH / REQ / ORG,
    définition = forme pleine aux angles vifs, usage = forme claire aux angles arrondis, usages de référence (perform, exhibit,
    satisfy, assert, binding, flow…) = contour en tirets). Appelées par `capIcoPlus` (84) quand la visionneuse ne dessine rien. ── */
 

@@ -32,7 +32,7 @@ A Capella model grows fast: hundreds of functions, exchanges, components and por
 - 🔌 **Offline**: a single standalone HTML file (D3 library embedded), usable without a connection.
 - 🧭 **All ARCADIA layers**: OA, SA, LA, PA, EPBS — functions, components, exchanges, chains, scenarios, requirements, properties.
 - 🔲 **Capella diagrams**: with the project's `.aird`, the diagrams are drawn as in Capella, browsable and exportable as sheets (PDF, ZIP, HTML).
-- 🧩 **SysML v2**: a `.sysml` file, a `.kpar` archive or a project folder, read by Arcature's reader — elements, relations, diagnostics, SysON-style icons, and **views computed from the text** (general, interconnection, states, action flow).
+- 🧩 **SysML v2**: a `.sysml` file, a `.kpar` archive or a project folder, read by Arcature's reader — elements, relations, diagnostics, icons drawn for Arcalyse, and **views computed from the text** (general, interconnection, states, action flow).
 - 💬 **Review**: comments and notes on the elements and the diagrams, severity, assignees, due dates, check after each new version of the model, report.
 - 🩺 **Ready-to-use checks**: unallocated elements, unconnected ports, incomplete traceability, names to review…
 - 📤 **Exports everywhere**: CSV, PNG, SVG, PDF, standalone HTML reports, dashboards printable in A4.
@@ -146,10 +146,10 @@ for (const c of await analysis.checks()) if (c.severity === 'err' && c.rows.leng
 Drop a **`.sysml`** file, a **`.kpar`** archive or the **📁 project folder** (all its `.sysml` read together, names resolved from one file to another): the model is read by the standalone **SysML v2 reader of Arcature**, offline, read-only. Every generic view then works as for a `.capella` — tree, cards, table, details panel (declaration, qualified name, family, position, links, diagnostics, text excerpt), Ctrl+K, Relation Map (typing, specialization, composition, connections, allocations, satisfy…), review notes, saved page — plus:
 - **🧩 SysML v2** view: elements by family (structure, behaviour, requirements & cases, organisation) and metaclass, links by relation, **🩺 diagnostics** of the reader (syntax, unresolved names…) also counted in the 💚 model health, source files;
 - **🔲 views computed from the text** (SysML v2 has no diagram file): general view (GV), interconnection (IV), states (STV), action flow (AFV), laid out automatically — visual (click a shape to open the element, hand, Ctrl + wheel, minimap below the explorer, 📝 review notes linked to shapes) or coloured text (Ctrl + wheel for the text size), exportable as SVG and text; an element's views are listed in its details panel;
-- **icons** per metaclass in the SysON style (part, port, action, state, requirement, package… — definition solid, usage light, reference usage dashed) and per view kind;
+- **icons** per metaclass drawn for Arcalyse (part, port, action, state, requirement, package… — definition solid, usage light, reference usage dashed) and per view kind;
 - dashboard indicators and the `analysis.sysml()` script API. Capella-only views (functions, exchanges, chains, scenarios, ARCADIA analyses) are marked as empty.
 
-![SysML v2 — general view computed from the text, review note linked to a requirement, element details with SysON-style icons](docs/captures/20-sysml-vues.png)
+![SysML v2 — general view computed from the text, review note linked to a requirement, element details with icons drawn for Arcalyse](docs/captures/20-sysml-vues.png)
 
 ![SysML v2 — elements by family and metaclass, declaration, source file and line](docs/captures/21-sysml-elements.png)
 
@@ -205,7 +205,7 @@ Un modèle Capella grossit vite : des centaines de fonctions, d'échanges, de co
 - 🔌 **Hors ligne** : un seul fichier HTML autonome (bibliothèque D3 embarquée), utilisable sans connexion.
 - 🧭 **Toutes les couches ARCADIA** : OA, SA, LA, PA, EPBS — fonctions, composants, échanges, chaînes, scénarios, exigences, propriétés.
 - 🔲 **Diagrammes Capella** : avec le `.aird` du projet, les diagrammes sont dessinés comme dans Capella, consultables et exportables en planches (PDF, ZIP, HTML).
-- 🧩 **SysML v2** : un fichier `.sysml`, une archive `.kpar` ou un dossier de projet, lus par le lecteur d'Arcature — éléments, relations, diagnostics, icônes façon SysON, et **vues calculées depuis le texte** (générale, interconnexion, états, flux d'actions).
+- 🧩 **SysML v2** : un fichier `.sysml`, une archive `.kpar` ou un dossier de projet, lus par le lecteur d'Arcature — éléments, relations, diagnostics, icônes dessinées pour Arcalyse, et **vues calculées depuis le texte** (générale, interconnexion, états, flux d'actions).
 - 💬 **Revue** : commentaires et notes sur les éléments et les diagrammes, criticité, responsables, échéances, vérification à chaque nouvelle version du modèle, rapport.
 - 🩺 **Des contrôles prêts à l'emploi** : éléments non alloués, ports non connectés, traçabilité incomplète, noms à revoir…
 - 📤 **Exports partout** : CSV, PNG, SVG, PDF, rapports HTML autonomes, tableaux de bord imprimables en A4.
@@ -321,10 +321,10 @@ for (const c of await analysis.checks()) if (c.severity === 'err' && c.rows.leng
 Déposez un fichier **`.sysml`**, une archive **`.kpar`** ou le **📁 dossier du projet** (tous ses `.sysml` lus ensemble, noms résolus d'un fichier à l'autre) : le modèle est lu par le **lecteur SysML v2 autonome d'Arcature**, hors ligne, en lecture seule. Toutes les vues génériques fonctionnent alors comme pour un `.capella` — arborescence, cartes, tableau, panneau de détail (déclaration, nom qualifié, famille, position, liaisons, diagnostics, extrait du texte), Ctrl+K, Relation Map (typage, spécialisation, composition, connexions, allocations, satisfy…), notes de revue, page enregistrée — et en plus :
 - vue **🧩 SysML v2** : éléments par famille (structure, comportement, exigences & cas, organisation) et par métaclasse, liaisons par relation, **🩺 diagnostics** du lecteur (syntaxe, noms introuvables…) comptés aussi dans la 💚 santé du modèle, fichiers sources ;
 - **🔲 vues calculées depuis le texte** (SysML v2 n'a pas de fichier de diagrammes) : vue générale (GV), d'interconnexion (IV), des états (STV), du flux d'actions (AFV), disposées automatiquement — en visuel (clic sur une forme pour ouvrir l'élément, main, Ctrl + molette, carte sous l'explorateur, 📝 notes de revue liées aux formes) ou en texte coloré (Ctrl + molette pour la taille du texte), exportables en SVG et en texte ; les vues d'un élément sont listées dans son panneau de détail ;
-- des **icônes** par métaclasse façon SysON (part, port, action, état, exigence, paquet… — définition pleine, usage clair, usage de référence en tirets) et par genre de vue ;
+- des **icônes** par métaclasse dessinées pour Arcalyse (part, port, action, état, exigence, paquet… — définition pleine, usage clair, usage de référence en tirets) et par genre de vue ;
 - des indicateurs du tableau de bord et l'API de scripts `analysis.sysml()`. Les vues propres à Capella (fonctions, échanges, chaînes, scénarios, analyses ARCADIA) sont marquées sans données.
 
-![SysML v2 — vue générale calculée depuis le texte, note de revue liée à une exigence, détail d'un élément avec les icônes façon SysON](docs/captures/20-sysml-vues.png)
+![SysML v2 — vue générale calculée depuis le texte, note de revue liée à une exigence, détail d'un élément avec les icônes dessinées pour Arcalyse](docs/captures/20-sysml-vues.png)
 
 ![SysML v2 — éléments par famille et métaclasse, déclaration, fichier et ligne](docs/captures/21-sysml-elements.png)
 

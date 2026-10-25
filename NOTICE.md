@@ -25,7 +25,11 @@ Ils ne font pas partie du logiciel et restent sous leur propre licence (détails
 - `In-Flight_Entertainment_System.capella` — Copyright The Capella contributors — Eclipse Public License 2.0 ;
 - `AIDA.capella` — Copyright (c) 2016-2022 IRT AESE (IRT Saint Exupéry) — Creative Commons BY-SA 4.0.
 
+## Icônes
+
+Les icônes des éléments (Capella et SysML v2) et des diagrammes sont des dessins SVG originaux, écrits pour Arcalyse et Arcature (visionneuse d'Arcature, modules `84-icones-complements.js` et `87-sysml.js`) : aucune image ni aucun fichier d'icône de Capella, de SysON ou d'un autre outil n'est repris. Elles suivent seulement les conventions visuelles usuelles des notations (formes, couleurs par couche ou par famille), pour que l'utilisateur s'y retrouve.
+
 ## Marques
 
-Capella et ARCADIA sont des marques de leurs détenteurs respectifs (Eclipse Foundation, Thales).
+Capella et ARCADIA sont des marques de leurs détenteurs respectifs (Eclipse Foundation, Thales) ; SysON est un projet de l'Eclipse Foundation (Obeo).
 Arcalyse est un outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié.
