@@ -17,8 +17,12 @@ D3.js v7.9.0 (`src/vendor/d3.min.js`, embarqué dans le fichier livré) — lice
 La licence ISC est compatible avec l'Apache License 2.0 ; son texte est reproduit dans la fenêtre ℹ À propos.
 
 Visionneuse de diagrammes d'Arcature (`src/vendor/arcature-visionneuse*.js`, embarquée dans le fichier livré) —
-projet frère, même auteur et titulaire des droits, également sous Apache License 2.0, **sauf ses icônes**, sous Eclipse
-Public License 2.0 (voir « Icônes » ci-dessous).
+projet frère, même auteur et titulaire des droits, également sous Apache License 2.0, **sauf trois de ses modules**, sous
+Eclipse Public License 2.0 : `23-styles-capella.js` (données et expressions des descriptions de diagrammes de Capella),
+`26-diagrammes.js` (comportements des outils de diagramme de Capella transcrits) et `27-icones.js` (voir « Icônes »
+ci-dessous) — adaptations d'œuvres d'Eclipse Capella (© THALES GLOBAL SERVICES et les contributeurs de Capella) et
+d'Eclipse Sirius. Texte : `LICENSES/EPL-2.0.txt`. Arcature prévoit de les réécrire en salle blanche pour les ramener
+sous Apache 2.0 (`docs/LICENCES.md` d'Arcature).
 
 Lecteur SysML v2 d'Arcature (`src/vendor/arcature-lecteur-sysml*.js`, embarqué dans le fichier livré) — même auteur et
 titulaire des droits, également sous Apache License 2.0 (origine dans `src/vendor/LISEZMOI-lecteur-sysml.md`).

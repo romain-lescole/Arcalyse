@@ -2,6 +2,20 @@
 
 Pistes validées avec l'utilisateur, à reprendre plus tard.
 
+## ⚖ Licences : visionneuse réécrite en salle blanche (après Arcature, phases L.2 à L.5)
+
+Audit des licences du 2026-10-28 : trois modules de la visionneuse d'Arcature embarquée (`23-styles-capella`,
+`26-diagrammes`, `27-icones`) sont des adaptations d'œuvres d'Eclipse Capella / Sirius, donc sous **EPL-2.0** (mentionné
+dans `NOTICE.md`, ℹ À propos et l'en-tête de la page). Arcature va les réécrire en salle blanche (`docs/LICENCES.md`
+d'Arcature : une session écrit la spécification du comportement, une autre le code sans voir celui de Capella ; tests
+comme oracle). Ensuite, côté Arcalyse :
+- reprendre la visionneuse (`node build.js --visionneuse`) — elle a beaucoup évolué depuis la dernière reprise (≈ 340 Ko →
+  ≈ 770 Ko) : à traiter comme une mise à jour à part, avec `node tests/smoke.js` et `node tests/oracles.js` ;
+- retirer les mentions EPL devenues inutiles (`NOTICE.md`, À propos, en-tête de `src/index.html`, aide) ;
+- les icônes (27) restent sous EPL tant qu'Arcature n'a pas dessiné un jeu d'icônes propre.
+- En attendant, la visionneuse embarquée garde son ancien en-tête « Licence Apache 2.0 » : la prochaine reprise apportera
+  les en-têtes EPL dans le fichier lui-même.
+
 ## 📄 Rapports automatiques à partir d'un modèle de document (après la v2.0)
 
 Produire un document chapitré automatiquement à partir d'un **modèle de document** réutilisable d'une version du modèle à l'autre.

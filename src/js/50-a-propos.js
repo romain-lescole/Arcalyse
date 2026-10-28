@@ -67,7 +67,7 @@ function capAboutOpen(){
       <table class="ana-t ana-kv">
         <tr><td>D3.js v7.9.0</td><td>Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock.
           <details><summary class="ana-dim">Texte de la licence</summary><pre class="ab-lic">${e(CAP_D3_LICENSE)}</pre></details></td></tr>
-        <tr><td>Icônes des éléments</td><td>Adaptées des icônes d'Eclipse Capella (© THALES GLOBAL SERVICES et les contributeurs de Capella) et d'Eclipse Sirius, dessinées par la visionneuse d'Arcature — Eclipse Public License 2.0.</td></tr>
+        <tr><td>Visionneuse de diagrammes</td><td>Icônes, styles et outils de diagramme de la visionneuse d'Arcature, adaptés d'Eclipse Capella (© THALES GLOBAL SERVICES et les contributeurs de Capella) et d'Eclipse Sirius — Eclipse Public License 2.0.</td></tr>
         <tr><td>Capella, ARCADIA</td><td>Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié.</td></tr>
         <tr><td>Modèles de test</td><td>Exemples Capella « In-Flight Entertainment System » (<a href="https://github.com/dbinfrago/Capella-IFE-sample" target="_blank" rel="noopener">github.com/dbinfrago/Capella-IFE-sample</a>) et « AIDA » (<a href="https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture" target="_blank" rel="noopener">sahara.irt-saintexupery.com/AIDA/AIDAArchitecture</a>).</td></tr>
       </table>
