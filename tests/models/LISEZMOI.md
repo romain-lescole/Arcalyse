@@ -19,7 +19,9 @@ distincte de la licence Apache 2.0 du logiciel.
 - Pour IFE, les diagrammes `.aird` sont repris, compressés en gzip (`.aird.gz`), pour tester la vue 🗺 Diagrammes ; pour AIDA, seul le fichier sémantique `.capella` est repris.
 
 Conformément à la licence CC BY-SA 4.0, toute adaptation de `AIDA.capella` redistribuée doit l'être sous la même licence,
-avec la mention de l'auteur ci-dessus. Conformément à l'EPL 2.0, le modèle IFE est redistribué sous EPL 2.0, avec le texte de la licence.
+avec la mention de l'auteur ci-dessus. C'est le cas de l'oracle `tests/oracles/AIDA.json`, relevé tiré de ce modèle (noms
+et comptes d'éléments) : Copyright (c) 2016-2022 IRT AESE (IRT Saint Exupéry), CC BY-SA 4.0. De même, l'oracle
+`tests/oracles/In-Flight_Entertainment_System.json` reste sous EPL 2.0, comme le modèle IFE. Conformément à l'EPL 2.0, le modèle IFE est redistribué sous EPL 2.0, avec le texte de la licence.
 
 ## Modèle SysML v2
 

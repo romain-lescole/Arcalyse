@@ -19,6 +19,20 @@ La licence ISC est compatible avec l'Apache License 2.0 ; son texte est reprodui
 Visionneuse de diagrammes d'Arcature (`src/vendor/arcature-visionneuse*.js`, embarquée dans le fichier livré) —
 projet frère, même auteur et titulaire des droits, également sous Apache License 2.0.
 
+Lecteur SysML v2 d'Arcature (`src/vendor/arcature-lecteur-sysml*.js`, embarqué dans le fichier livré) — même auteur et
+titulaire des droits, également sous Apache License 2.0 (origine dans `src/vendor/LISEZMOI-lecteur-sysml.md`).
+
+## Informations d'interopérabilité reprises
+
+Pour lire les fichiers des autres outils, Arcalyse reprend des **noms** (et non des textes ni du code) :
+- noms des types du métamodèle Capella et leur héritage (`src/js/79-scripts-metamodele.js`), relevés dans les sources de
+  Capella v7.0.1 — Copyright Thales et les contributeurs de Capella, Eclipse Public License 2.0 ;
+- noms des paquetages et de leurs membres de la bibliothèque standard SysML v2 (index du lecteur SysML d'Arcature), relevés
+  dans `sysml.library` du dépôt SysML-v2-Release — Eclipse Public License 2.0.
+
+Les descriptions des types Capella affichées par Arcalyse (`CAP_HUMAN_NAMES`, et leur traduction anglaise) sont rédigées
+pour Arcalyse.
+
 ## Modèles de test (`tests/models/`)
 
 Ils ne font pas partie du logiciel et restent sous leur propre licence (détails dans `tests/models/LISEZMOI.md`) :
