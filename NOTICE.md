@@ -17,7 +17,8 @@ D3.js v7.9.0 (`src/vendor/d3.min.js`, embarqué dans le fichier livré) — lice
 La licence ISC est compatible avec l'Apache License 2.0 ; son texte est reproduit dans la fenêtre ℹ À propos.
 
 Visionneuse de diagrammes d'Arcature (`src/vendor/arcature-visionneuse*.js`, embarquée dans le fichier livré) —
-projet frère, même auteur et titulaire des droits, également sous Apache License 2.0.
+projet frère, même auteur et titulaire des droits, également sous Apache License 2.0, **sauf ses icônes**, sous Eclipse
+Public License 2.0 (voir « Icônes » ci-dessous).
 
 Lecteur SysML v2 d'Arcature (`src/vendor/arcature-lecteur-sysml*.js`, embarqué dans le fichier livré) — même auteur et
 titulaire des droits, également sous Apache License 2.0 (origine dans `src/vendor/LISEZMOI-lecteur-sysml.md`).
@@ -41,7 +42,14 @@ Ils ne font pas partie du logiciel et restent sous leur propre licence (détails
 
 ## Icônes
 
-Les icônes des éléments (Capella et SysML v2) et des diagrammes sont des dessins SVG originaux, écrits pour Arcalyse et Arcature (visionneuse d'Arcature, modules `84-icones-complements.js` et `87-sysml.js`) : aucune image ni aucun fichier d'icône de Capella, de SysON ou d'un autre outil n'est repris. Elles suivent seulement les conventions visuelles usuelles des notations (formes, couleurs par couche ou par famille), pour que l'utilisateur s'y retrouve.
+Les icônes des éléments Capella et des diagrammes sont dessinées par la visionneuse d'Arcature (module
+`src/js/27-icones.js` d'Arcature, embarqué dans `src/vendor/arcature-visionneuse*.js`). Ce sont des **adaptations en SVG
+des icônes d'Eclipse Capella** (formes, sigles et couleurs repris ; © 2006-2020 THALES GLOBAL SERVICES et les contributeurs
+de Capella) et des icônes génériques d'Eclipse Sirius : elles sont distribuées sous **Eclipse Public License 2.0**
+(texte : `LICENSES/EPL-2.0.txt`), et non sous Apache 2.0. L'EPL s'applique à ce module seulement.
+
+Les icônes de complément d'Arcalyse (`84-icones-complements.js`) et les icônes SysML v2 (`87-sysml.js`) sont des dessins
+écrits pour Arcalyse, sous Apache 2.0 : aucun fichier d'icône d'un autre outil n'y est repris.
 
 ## Marques
 
