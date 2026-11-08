@@ -21,7 +21,7 @@ const CAP_CHK_POIDS={info:0, warn:1, err:3};   // poids d'origine des gravités 
 const CAP_CHK_VIEWS=[
   ['functions', ()=>capFnChecks(capComputeFunctions(),'all')], ['fex', ()=>capFexChecks('all')], ['csys', ()=>capCbChecks('SA')], ['cblk', ()=>capCbChecks('LA')],
   ['ports', ()=>capPortsDiagSections(capComputePortLinks())], ['chains', ()=>capChChecks('all')], ['scen', ()=>capScChecks()], ['ana:reqs', ()=>capReqChecks()], ['ana:pvmt', ()=>capPvChecks()],
-  ['ana:data', ()=>capDmChecks()], ['ana:cts', ()=>capCtChecks()], ['ana:cats', ()=>capEcChecks()], ['ana:libs', ()=>capLibChecks()], ['ana:rec', ()=>capRecChecks()], ['ana:deploy', ()=>capDepChecks()], ['ana:status', ()=>capStChecks()], ['ana:sysml', ()=>capSyChecks()], ['ana:uml', ()=>capSyChecks('uml')],
+  ['ana:data', ()=>capDmChecks()], ['ana:cts', ()=>capCtChecks()], ['ana:cats', ()=>capEcChecks()], ['ana:libs', ()=>capLibChecks()], ['ana:rec', ()=>capRecChecks()], ['ana:deploy', ()=>capDepChecks()], ['ana:status', ()=>capStChecks()], ['ana:sysml', ()=>capSyChecks()], ['ana:uml', ()=>capSyChecks('uml')], ['ana:reqif', ()=>capSyChecks('reqif')],
   ['ana:umlblk', ()=>capUmlBlkChecks()], ['ana:umlact', ()=>capUmlActChecks()], ['ana:umlreq', ()=>capUmlReqChecks()],
   ['ana:umlstm', ()=>capUmlStmChecks()], ['ana:umlseq', ()=>capUmlSeqChecks()],
   ['ana:umlucs', ()=>capUmlUcChecks()], ['ana:umltrace', ()=>capUmlTrChecks()],

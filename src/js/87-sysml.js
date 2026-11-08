@@ -38,13 +38,13 @@ function capSysmlReconnait(nom){ return capSysmlDispo()&&ArcatureLecteurSysml.re
 function capSyL(){ return _capSysml.L||(capSysmlDispo()?ArcatureLecteurSysml:null); }
 
 /** Vrai si la lecture affichée est un modèle UML ou SysML v1 (lu par le lecteur de 88). @returns {boolean} */
-function capSyUml(){ return !!_capSysml.lecture&&!!_capSysml.format&&_capSysml.format!=='sysml2'; }
+function capSyUml(){ return !!_capSysml.lecture&&!!_capSysml.format&&_capSysml.format!=='sysml2'&&_capSysml.format!=='reqif'; }   // ReqIF : capSyReqif (101)
 
 /** Nom du format de la lecture affichée : « SysML v2 », « UML » ou « SysML v1 » (noms des langages, non traduits). @returns {string} */
-function capSyNomFormat(){ return {uml:'UML', sysml1:'SysML v1'}[_capSysml.format]||'SysML v2'; }
+function capSyNomFormat(){ return {uml:'UML', sysml1:'SysML v1', reqif:'ReqIF'}[_capSysml.format]||'SysML v2'; }
 
 /** Sous-vue de 🔬 Analyses qui montre la lecture affichée : `ana:sysml` (SysML v2) ou `ana:uml` (UML / SysML v1, 88). @returns {string} */
-function capSyNavCle(){ return capSyUml()?'ana:uml':'ana:sysml'; }
+function capSyNavCle(){ return capSyUml()?'ana:uml':_capSysml.format==='reqif'?'ana:reqif':'ana:sysml'; }
 
 /** Lit un File SysML (.sysml en texte, .kpar en octets). @param {File} f - Fichier @returns {Promise<object>} Lecture du lecteur */
 function capSysmlLireFichier(f){
@@ -109,17 +109,17 @@ async function capSysmlOuvrirDossier(fichiers, nom, confirme){
  * XML, pipeline Capella (`capApplyXmlDoc`), accueil.
  * @param {object} lecture - Lecture du lecteur d'Arcature
  * @param {string} nom - Nom du fichier ou du projet
- * @param {object} [L] - Lecteur qui l'a produite (`ArcatureLecteurUml`) ; absent : lecteur SysML v2
- * @param {string} [format] - `uml` ou `sysml1` avec L ; `sysml2` sinon
+ * @param {object} [L] - Lecteur qui l'a produite (`ArcatureLecteurUml`, `ArcatureLecteurReqif`) ; absent : lecteur SysML v2
+ * @param {string} [format] - `uml` ou `sysml1` (UML), `reqif` (101) avec L ; `sysml2` sinon
  */
 function capSysmlAppliquer(lecture, nom, L, format){
   try{
-    const uml=!!L&&!!format&&format!=='sysml2';
-    if(!lecture||!lecture.elements||lecture.elements().length<2) throw new Error(uml?_L('Aucun élément UML ou SysML v1 reconnu dans ce fichier'):_L('Aucun élément SysML v2 reconnu dans ce fichier'));
+    const rq=format==='reqif'&&!!L, uml=!rq&&!!L&&!!format&&format!=='sysml2';
+    if(!lecture||!lecture.elements||lecture.elements().length<2) throw new Error(rq?_L('Aucune exigence ReqIF reconnue dans ce fichier'):uml?_L('Aucun élément UML ou SysML v1 reconnu dans ce fichier'):_L('Aucun élément SysML v2 reconnu dans ce fichier'));
     const airdRetire=typeof capDiagAvantNouveauModele==='function'?capDiagAvantNouveauModele():'';   // 🔲 diagrammes d'un ancien modèle Capella
-    const doc=capSysmlVersXml(lecture, nom, uml?format:'sysml2', L);
-    _capSysml={lecture, nom, doc, L:L||null, format:uml?format:'sysml2'};
-    capSysmlTypesHumains(lecture);
+    const doc=rq?capReqifVersXml(lecture, nom):capSysmlVersXml(lecture, nom, uml?format:'sysml2', L);   // ReqIF : 101
+    _capSysml={lecture, nom, doc, L:L||null, format:rq?'reqif':uml?format:'sysml2'};
+    if(rq) capReqifTypesHumains(lecture); else capSysmlTypesHumains(lecture);
     capCurrentView='home';
     if(typeof _capProjetPage!=='undefined') _capProjetPage.nom='';
     capApplyXmlDoc(doc, nom);
@@ -127,7 +127,7 @@ function capSysmlAppliquer(lecture, nom, L, format){
     if(typeof _capWatch!=='undefined'&&_capWatch){ _capWatch.handle=null; _capWatch.file=null; if(typeof capWatchUpdateUi==='function') capWatchUpdateUi(); }   // pas de 🔄 suivi d'un .sysml
     capWelcomeStatus('',''); capShowWelcome(false);
     const d=capSysmlDiagnostics();
-    if((d.erreurs||d.avertissements)&&!uml) setTimeout(()=>capToast(_L(`🧩 SysML v2 : ${d.erreurs} erreur(s), ${d.avertissements} avertissement(s) — détail dans 🏗 Architecture › 🧩 SysML v2`)),500);
+    if((d.erreurs||d.avertissements)&&!uml&&!rq) setTimeout(()=>capToast(_L(`🧩 SysML v2 : ${d.erreurs} erreur(s), ${d.avertissements} avertissement(s) — détail dans 🏗 Architecture › 🧩 SysML v2`)),500);
     if(d.liste.length&&uml) setTimeout(()=>capToast(_L(`🧬 ${capSyNomFormat()} : ${capUmlImpactTexte(capUmlParImpact(d.liste))} — détail dans 🏗 Architecture › 🧬 UML / SysML v1`)),500);   // par impact réel (98)
     if(airdRetire&&typeof capWatchFlash==='function') setTimeout(()=>capWatchFlash(_L(`🔲 Diagrammes de l'ancien modèle (« ${airdRetire} ») retirés`)),700);
   }catch(err){
@@ -253,7 +253,8 @@ function capSysmlDiagnostics(tous){
  * @returns {object[]} Sections {icon, title, tip, sev, cols, items}
  */
 function capSyChecks(format){
-  if(!_capSysml.lecture||(format==='uml')!==capSyUml()) return [];
+  if(!_capSysml.lecture||(format==='uml')!==capSyUml()||(format==='reqif')!==(_capSysml.format==='reqif')) return [];
+  if(format==='reqif') return capReqifChecks();   // 101
   if(capSyUml()) return capUmlChecks();   // 88 : diagnostics de la validation (contraintes UML, SysML, UAF)
   const D=capSysmlDiagnostics(), esc=capEsc;
   const row=d=>`<tr><td>${esc(capSyPosition(d))}</td><td><span class="ana-dim" title="${esc(d.regle||'')}">${esc(d.code||d.regle||'')}</span></td><td>${esc(d.message||'')}</td><td>${d.element?capSyLien(d.element):'<span class="ana-dim">—</span>'}</td></tr>`;
@@ -316,7 +317,7 @@ function capSysmlCriteres(){
   presentes.forEach(rel=>{
     const key='sysml:'+rel, st=CAP_SY_REL_STYLE[rel]||['#8b949e',''];
     if(!RCFG[key]) RCFG[key]={color:st[0], dash:st[1], open:false, diamond:rel==='composition', hollowDiamond:rel==='reference', circle:false, noArrow:false, _capella:true, label:''};
-    RCFG[key].label=(capSyUml()?_L('UML — '):_L('SysML — '))+capSyRelLibelle(rel);
+    RCFG[key].label=(capSyUml()?_L('UML — '):_capSysml.format==='reqif'?'ReqIF — ':_L('SysML — '))+capSyRelLibelle(rel);
     if(!(key in S.relF)) S.relF[key]=['typage','composition','connexion','specialisation','allocation','satisfy'].includes(rel);   // les plus parlantes affichées d'emblée
   });
 }
@@ -410,6 +411,7 @@ function capRenderSysml(box){
 function capSyDetail(id, secTitle){
   const lec=_capSysml.lecture, e=lec?lec.element(id):null; if(!e) return '';
   if(capSyUml()) return capUmlDetail(id, secTitle);   // 88
+  if(_capSysml.format==='reqif') return capReqifDetail(id, secTitle);   // 101
   const esc=capEsc, L=capSyL(), fams=L.familles||{};
   const kv=[[_L('Déclaration'), e.declaration?`<code>${esc(e.declaration)}</code>`:''], [_L('Mot-clé'), e.motCle], [_L('Nom qualifié'), e.nomQualifie], [_L('Famille'), e.famille?`<span style="color:${CAP_SY_FAM_COULEUR[e.famille]||'inherit'}">${esc(fams[e.famille]||e.famille)}</span>`:''],
     [_L('Nature'), e.definition?_L('définition'):e.usage?_L('usage'):''], [_L('Visibilité'), e.visibilite], [_L('Modificateurs'), (e.modificateurs||[]).join(' ')], [_L('Direction'), e.direction], [_L('Multiplicité'), e.multiplicite], [_L('Valeur'), e.valeur],
@@ -430,14 +432,16 @@ function capSyDetail(id, secTitle){
  */
 function capSyDashCatalog(add){
   const G=_L('SysML v2'), fams=()=>(capSysmlDispo()&&ArcatureLecteurSysml.familles)||{};
-  const els=()=>_capSysml.lecture&&!capSyUml()?_capSysml.lecture.elements().filter(e=>!e.racine&&!e.projet):[];
+  const sy=()=>!capSyUml()&&_capSysml.format!=='reqif';
+  if(typeof capReqifDashCatalog==='function') capReqifDashCatalog(add);   // 📑 ReqIF (101)
+  const els=()=>_capSysml.lecture&&sy()?_capSysml.lecture.elements().filter(e=>!e.racine&&!e.projet):[];
   if(typeof capUmlDashCatalog==='function') capUmlDashCatalog(add);   // 88 : indicateurs UML / SysML v1
   add(G,'sy.n',_L('SysML v2 — éléments'),'n',()=>({n:els().length, sub:_L(`${(_capSysml.lecture&&_capSysml.lecture.fichiers||[]).length} fichier(s)`)}));
   add(G,'sy.fam',_L('SysML v2 — éléments par famille'),'series',()=>{ const m={}; els().forEach(e=>{ m[e.famille]=(m[e.famille]||0)+1; }); return {cats:Object.entries(m).map(([k,v])=>({l:fams()[k]||k, v, c:CAP_SY_FAM_COULEUR[k]})).filter(c=>c.v)}; });
   add(G,'sy.type',_L('SysML v2 — éléments par métaclasse'),'series',()=>{ const m={}; els().forEach(e=>{ m[e.type]=(m[e.type]||0)+1; }); return {cats:Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,12).map(([k,v])=>({l:k, v}))}; });
-  add(G,'sy.rel',_L('SysML v2 — liaisons par relation'),'series',()=>{ const m={}; (capSyUml()?[]:capSysmlLiaisons()).forEach(l=>{ m[l.relation]=(m[l.relation]||0)+1; }); return {cats:Object.entries(m).sort((a,b)=>b[1]-a[1]).map(([k,v])=>({l:capSyRelLibelle(k), v, c:(CAP_SY_REL_STYLE[k]||[])[0]}))}; });
-  add(G,'sy.vues',_L('SysML v2 — vues calculées par genre'),'series',()=>{ const m={}; (capSyUml()?[]:capSyVuesListe()).forEach(v=>{ m[v.libelleGenre]=(m[v.libelleGenre]||0)+1; }); return {cats:Object.entries(m).map(([l,v])=>({l, v}))}; });
-  add(G,'sy.diag',_L('SysML v2 — diagnostics du lecteur'),'series',()=>{ const D=capSyUml()?{erreurs:0, avertissements:0}:capSysmlDiagnostics(); return {cats:[{l:_L('Erreurs'), v:D.erreurs, c:'#f85149'},{l:_L('Avertissements'), v:D.avertissements, c:'#e3b341'}].filter(c=>c.v)}; },_L('Erreurs et avertissements du lecteur SysML v2 d\'Arcature'));
+  add(G,'sy.rel',_L('SysML v2 — liaisons par relation'),'series',()=>{ const m={}; (!sy()?[]:capSysmlLiaisons()).forEach(l=>{ m[l.relation]=(m[l.relation]||0)+1; }); return {cats:Object.entries(m).sort((a,b)=>b[1]-a[1]).map(([k,v])=>({l:capSyRelLibelle(k), v, c:(CAP_SY_REL_STYLE[k]||[])[0]}))}; });
+  add(G,'sy.vues',_L('SysML v2 — vues calculées par genre'),'series',()=>{ const m={}; (!sy()?[]:capSyVuesListe()).forEach(v=>{ m[v.libelleGenre]=(m[v.libelleGenre]||0)+1; }); return {cats:Object.entries(m).map(([l,v])=>({l, v}))}; });
+  add(G,'sy.diag',_L('SysML v2 — diagnostics du lecteur'),'series',()=>{ const D=!sy()?{erreurs:0, avertissements:0}:capSysmlDiagnostics(); return {cats:[{l:_L('Erreurs'), v:D.erreurs, c:'#f85149'},{l:_L('Avertissements'), v:D.avertissements, c:'#e3b341'}].filter(c=>c.v)}; },_L('Erreurs et avertissements du lecteur SysML v2 d\'Arcature'));
 }
 
 /* ── 🖼 Vues des lecteurs dans 🔲 Diagrammes (SysML v2 : vues calculées depuis le texte ; UML / SysML v1 : diagrammes du fichier et
@@ -958,7 +962,7 @@ document.addEventListener('keydown',e=>{
    `capIcoType` (54) avant la visionneuse quand le modèle ouvert est SysML, et par `capIcoPlus` (84) sinon. ── */
 
 /** Le modèle affiché vient-il d'une lecture SysML v2 (et non UML / SysML v1, servis par le même chemin : 88) ? @returns {boolean} */
-function capSysmlActif(){ return !!(_capSysml.lecture&&_capSysml.doc&&typeof cap_xmlDoc!=='undefined'&&cap_xmlDoc===_capSysml.doc)&&!capSyUml(); }
+function capSysmlActif(){ return !!(_capSysml.lecture&&_capSysml.doc&&typeof cap_xmlDoc!=='undefined'&&cap_xmlDoc===_capSysml.doc)&&!capSyUml()&&_capSysml.format!=='reqif'; }
 
 /** Corps SVG (viewBox 0 0 16 16) de l'icône d'une métaclasse SysML v2, ou '' (icône générique de 84).
  * @param {string|object} typeOuElement - Métaclasse (« PartDefinition ») ou élément de la lecture (marques comprises)

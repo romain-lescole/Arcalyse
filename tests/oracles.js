@@ -14,7 +14,7 @@
  * Mettre à jour les oracles :      node tests/oracles.js --update [modèle…]     (après un changement voulu des résultats)
  * Version anglaise :               node tests/oracles.js --en                    (après node build.js --lang en ; les titres
  *                                  des contrôles et des indicateurs étant traduits, les oracles sont distincts : <modèle>.en.json)
- * (par défaut : tous les .capella et .sysml de tests/models/, et les modèles UML / SysML v1 de tests/models/uml/)
+ * (par défaut : tous les .capella et .sysml de tests/models/, les modèles UML / SysML v1 de tests/models/uml/ et les exigences ReqIF de tests/models/reqif/)
  *
  * Quand une différence est voulue (nouveau contrôle, correction d'un calcul), relancer avec --update et
  * relire le diff du .json avant de le committer : c'est lui qui documente le changement de résultat.
@@ -33,6 +33,8 @@ if (!models.length && fs.existsSync(modelsDir))
   fs.readdirSync(modelsDir).filter(f => /\.(capella|sysml)$/.test(f)).sort().forEach(f => models.push(path.join(modelsDir, f)));   // .sysml : lus par le lecteur SysML v2 (87)
 if (!args.filter(a => !a.startsWith('--')).length && fs.existsSync(path.join(modelsDir, 'uml')))   // UML / SysML v1 : lus par le lecteur UML (88), sans leur .notation
   fs.readdirSync(path.join(modelsDir, 'uml')).filter(f => /\.(uml|xmi|mdzip|qea)$/.test(f)).sort().forEach(f => models.push(path.join(modelsDir, 'uml', f)));
+if (!args.filter(a => !a.startsWith('--')).length && fs.existsSync(path.join(modelsDir, 'reqif')))   // ReqIF : lus par le lecteur ReqIF (101)
+  fs.readdirSync(path.join(modelsDir, 'reqif')).filter(f => /\.reqifz?$/.test(f)).sort().forEach(f => models.push(path.join(modelsDir, 'reqif', f)));
 if (!fs.existsSync(page)) { console.error('Lancez d\'abord : node build.js' + (EN ? ' --lang en' : '')); process.exit(2); }
 if (!models.length) { console.error('Aucun modèle : placez un .capella dans tests/models/ ou passez-le en argument'); process.exit(2); }
 
@@ -126,6 +128,15 @@ function releve() {
       relationMap: compte(MODEL.relations.filter(r => String(r.type).startsWith('sysml:')), r => r.type), vuesVides: [...capNavVides()].sort(),
       vues: Object.fromEntries(capSyVuesListe().map(v => { const vue = capSyVue(v.cle); return [v.sigle + ' ' + v.nom, { formes: vue.formes.length, liens: vue.liens.length, texte: vue.texte.length }]; })) };
   }
+  // 📑 ReqIF (101) : objets par spécification et par type, relations, contrôles, pièces jointes, images résolues
+  if (typeof capReqifLec === 'function' && capReqifLec()) {
+    const lec = capReqifLec(), Q = capReqifObjets();
+    R.reqif = { documents: lec.documents.length, specifications: Q.specs.map(s => s.nom + ':' + s.n), objets: Q.list.length, titres: Q.list.filter(o => o.titre).length,
+      parType: compte(Q.list, o => o.e.typeReqif || '(sans)'), identifiants: Q.list.filter(o => o.e.identifiant).length, attributs: Q.attrs.slice().sort(),
+      relations: compte(Q.rels, r => r.rel), pieces: lec.fichiers.length, images: Q.list.reduce((s, o) => s + o.e.images, 0),
+      imagesResolues: Q.list.reduce((s, o) => s + (capReqifTexteHtml(o.id).match(/<img [^>]*src="blob:/g) || []).length, 0),
+      controles: Object.fromEntries(capReqifChecks().map(c => [c.title, c.items.length])) };
+  }
   // ▦ Matrice (91) : chaque préréglage applicable, avec tous les éléments (lignes, colonnes, cellules, liens, sans relation)
   if (typeof capMxReleve === 'function') R.matrice = capMxReleve();
   // 🧱 Blocs & ports, ƒ Activités & flux (92) et 🧾 Exigences SysML (93) : vides hors UML / SysML v1
@@ -217,7 +228,7 @@ function diff(a, b, chemin, out) {
   const browser = await chromium.launch(exe ? { executablePath: exe } : {});
   let ko = 0;
   for (const model of models) {
-    const nom = path.basename(model).replace(/\.(capella|sysml|uml|xmi|mdzip|qea)$/, ''), oracle = path.join(oraclesDir, nom + (EN ? '.en' : '') + '.json');
+    const nom = path.basename(model).replace(/\.(capella|sysml|uml|xmi|mdzip|qea|reqifz?)$/, ''), oracle = path.join(oraclesDir, nom + (EN ? '.en' : '') + '.json');
     const ctx = await browser.newContext({ offline: true, viewport: { width: 1500, height: 900 } });
     const p = await ctx.newPage();
     const errs = []; p.on('pageerror', e => errs.push(e.message)); p.on('dialog', d => d.dismiss());

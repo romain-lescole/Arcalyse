@@ -69,7 +69,7 @@ function capAboutOpen(){
         <tr><td>D3.js v7.9.0</td><td>Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock.
           <details><summary class="ana-dim">Texte de la licence</summary><pre class="ab-lic">${e(CAP_D3_LICENSE)}</pre></details></td></tr>
         <tr><td>Visionneuse de diagrammes</td><td>Icônes, styles et outils de diagramme de la visionneuse d'Arcature, adaptés d'Eclipse Capella (© THALES GLOBAL SERVICES et les contributeurs de Capella) et d'Eclipse Sirius — Eclipse Public License 2.0.</td></tr>
-        <tr><td>Lecteurs d'Arcature</td><td>Lecteur SysML v2 et lecteur UML / SysML v1 du projet frère Arcature (même auteur), embarqués dans ce fichier — Apache License 2.0.</td></tr>
+        <tr><td>Lecteurs d'Arcature</td><td>Lecteur SysML v2, lecteur UML / SysML v1 et lecteur ReqIF du projet frère Arcature (même auteur), embarqués dans ce fichier — Apache License 2.0.</td></tr>
         <tr><td>Documents de l'OMG</td><td>Le lecteur UML / SysML v1 contient les noms des métaclasses d'UML 2.5.1, des stéréotypes de SysML 1.7 et d'UAF 1.2 et le texte des contraintes de ces profils, tirés des documents normatifs de l'Object Management Group (© OMG et les sociétés qui ont soumis ces spécifications), repris selon la licence des spécifications de l'OMG. Arcalyse ne revendique aucune conformité à ces spécifications.</td></tr>
         <tr><td>Capella, ARCADIA</td><td>Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié.</td></tr>
         <tr><td>UML, SysML, UAF, XMI, OMG</td><td>Marques déposées de l'Object Management Group, Inc.</td></tr>

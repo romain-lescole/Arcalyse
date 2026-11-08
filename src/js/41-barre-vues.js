@@ -34,6 +34,7 @@ var CAP_NAV_ITEMS=[
   {k:'ana:caps',  l:_L('🎯 Capacités & missions'),     g:'arch'},
   {k:'ana:data',  l:_L('🗃 Données & interfaces'),     g:'arch'},
   {k:'ana:deploy',l:_L('🖧 Déploiement & EPBS'),       g:'arch', t:_L('Comportements déployés sur les nœuds physiques (PartDeploymentLink), Configuration Items de l\'EPBS et ce qu\'ils réalisent, contrôles')},
+  {k:'ana:reqif', l:_L('📑 ReqIF'),                    g:'arch', t:_L('Exigences ReqIF lues par le lecteur d\'Arcature (.reqif, .reqifz) : document de chaque spécification (chapitres numérotés, textes et images, valeurs des attributs), tableau des exigences, relations, types, pièces jointes, contrôles')},
   {k:'ana:sysml', l:_L('🧩 SysML v2'),                 g:'arch', t:_L('Modèle SysML v2 lu par le lecteur d\'Arcature : éléments par famille et métaclasse, liaisons (typage, spécialisation, connexion, allocation…), diagnostics (erreurs et avertissements avec fichier et ligne), texte des fichiers')},
   {k:'grp:uml',   l:_L('🧬 UML / SysML v1'),           g:'arch', f:['ana:uml','ana:umlblk','ana:umlicd','ana:umlact','ana:umlstm','ana:umlseq','ana:umlucs','ana:umlsoft'], t:_L('Modèle UML / SysML v1 : éléments, liaisons et diagnostics ; blocs à ports et connecteurs, interfaces (ICD), activités à pins et flux, dessinés comme les Vues Blocs de Capella ; machines à états ; interactions ; cas d\'utilisation ; paquetages, classes et déploiement')},
   {k:'ana:umlblk',l:_L('🧱 Blocs & ports'),            m:'grp:uml', c:_L('🧱 Blocs & ports'), g:'arch', t:_L('Blocs SysML v1 et composants UML dessinés comme les composants de Capella : ports IN / OUT / INOUT d\'après les FlowProperty, connecteurs et bloc distant, ItemFlow, allocations ; par contexte (ibd), lignes, matrice, contrôles')},
@@ -123,7 +124,8 @@ function capNavVides(){
       'ana:status':()=>capAllElements.some(e=>e.attrs&&(e.attrs.status||e.attrs.review)),
       'ana:cats':()=>has(/^(Exchange|ComponentExchange|PhysicalLink)Category$/),
       'ana:rec':()=>T.has('CatalogElement'),
-      'ana:sysml':()=>typeof _capSysml!=='undefined'&&!!_capSysml.lecture&&!(typeof capSyUml==='function'&&capSyUml()),
+      'ana:sysml':()=>typeof _capSysml!=='undefined'&&!!_capSysml.lecture&&!(typeof capSyUml==='function'&&capSyUml())&&_capSysml.format!=='reqif',
+      'ana:reqif':()=>typeof capSyReqif==='function'&&capSyReqif(),   // 📑 ReqIF (101)
       'ana:uml':()=>typeof capSyUml==='function'&&capSyUml(),
       'ana:umlblk':()=>!!capUmlLec()&&capUmlLec().elements().some(e=>e.metaclasse==='Port'||e.metaclasse==='Connector'||e.type==='Block'||(e.stereotypes||[]).includes('Block')),   // 🧬 UML / SysML v1 (92, 93)
       'ana:umlact':()=>!!capUmlLec()&&capUmlLec().elements().some(e=>CAP_UML_ACTION.test(e.metaclasse)),
@@ -162,6 +164,7 @@ function capNavHorsEdition(){
   if(!CAP_EDITION) return [];
   const ks=[]; if(typeof capSysmlDispo!=='function'||!capSysmlDispo()) ks.push('ana:sysml');
   if(typeof capUmlDispo!=='function'||!capUmlDispo()) ks.push('ana:uml');
+  if(typeof capReqifDispo!=='function'||!capReqifDispo()) ks.push('ana:reqif');
   if(CAP_EDITION!=='capella') try{ ks.push(...CAP_SY_VUES_CAPELLA); }catch(e){ /* 87 pas encore exécuté (premier rendu de la barre) */ }
   return ks;
 }

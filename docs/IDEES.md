@@ -253,3 +253,25 @@ de la documentation de Rhapsody 10.0.3) portent « Licensed Materials - Property
 **en local seulement**, dans `tests/models/rhapsody-local/` (ignoré par git ; tests sautés s'il est absent), jamais versionnés,
 ni eux ni des oracles qui recopient leur contenu. Tests versionnés : un petit `.rpy` **écrit à la main pour Arcalyse**
 (Apache 2.0) d'après le format observé, sans rien recopier des exemples d'IBM (bloc, ports, exigence, machine à états, diagramme).
+
+## 🤖 IA : suite du serveur MCP (essai)
+
+Fait : serveur MCP local (`mcp/serveur.js`, outils du module 89) ; **modèles UML / SysML v1** (2026-11-05) : `.uml` avec son `.notation` trouvé à côté, `.xmi`, `.mdzip`, `.qea` / `.qeax`, ouverts par le même chemin que
+l'interface ; fiche (stéréotypes, métaclasse, attributs écrits, liaisons, diagnostics, diagrammes), traçabilité par les liens
+`satisfy` / `verify` / `deriveReqt`… et couverture des exigences, contrôles = validation du lecteur, erreurs claires pour les
+paramètres propres à Capella ; outil **`diagrams`** (liste, éléments d'un diagramme, texte d'une vue SysML / UML) pour tous les
+formats ; `tests/mcp.js` sur `Bibliotheque.uml` + `.notation`, `Drone-2026x.mdzip`, `Drone-ea.qea`. À suivre :
+- UML / SysML v1, reste : `analysis.uml()` dans l'API de scripts (aujourd'hui `analysis.sysml()` sert aussi UML, champ `format`) si
+  l'on veut un nom propre ; `tests/mcp.js` sur `Rover-cameo.xmi` et un `.qeax` ; diagrammes d'un très gros projet indexés en
+  4 s au plus pour `get_element` (index partiel au-delà, comme le `.aird`) ; sélection multiple dans le sélecteur de l'interface
+  (`#capella-file-input` n'accepte qu'un fichier, `docs/UML.md` parle de « sélection multiple » : seuls le dépôt et le 📁 dossier ouvrent
+  un `.uml` avec son `.notation`).
+- **Prompts MCP** prêts à l'emploi : pré-relecture d'une couche, rédaction d'un chapitre SSS d'un sous-système, explication des contrôles en défaut.
+- Outil `propose_review_comments` : l'IA produit un `.json` de commentaires 💬 fusionnable par `capRevMerge` (jamais d'écriture dans le modèle).
+- Outils supplémentaires : chaînes, échanges d'un composant, exigences (diagrammes : fait, outil `diagrams`).
+- **Version intégrée** (`node build.js --ia`, build séparé) : panneau 🤖 à côté de 🔎 / 💬, fournisseurs « compatible OpenAI » (Ollama, LM Studio, passerelles d'entreprise) et Anthropic, clé en mémoire seulement (jamais dans la 💾 page), journal des envois, pseudonymisation des noms ; mêmes outils (88).
+- Pont MCP vers la page ouverte (version IA seulement) ; cœur IA partagé avec Arcature (écriture par lots avec aperçu et transaction annulable).
+
+## 📑 ReqIF à côté d'un modèle (version 2)
+
+Ouvrir un `.reqif` / `.reqifz` **en plus** d'un modèle Capella, SysML ou UML et comparer le référentiel d'exigences au modèle : exigences absentes du modèle, modifiées (texte, attributs), présentes dans le modèle mais pas dans le ReqIF, non couvertes (satisfy, traces). À décider : règle de rapprochement (identifiant ReqIF / `ReqIFIdentifier` du Requirements Viewpoint de Capella, ReqIF.ForeignID, attribut « id » d'une exigence SysML, nom), présentation (onglet de 📑 ReqIF, contrôles 🩺, rapport). Version 1 faite le 2026-11-08 (`docs/REQIF.md`).

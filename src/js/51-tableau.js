@@ -358,7 +358,7 @@ function capTableCsv(){
  */
 function capTableCfgGet(){
   capTableTabsEnsure(); capTableSyncToTab();
-  return {tabs:capTableTabs, active:capTableTabIdx, customCols:capTableCustomCols, multiValDisplay:capTableMultiValDisplay,
+  return {tabs:capTableTabs, active:capTableTabIdx, customCols:capTableCustomCols, multiValDisplay:capTableMultiValDisplay, riche:capTableRiche,
     visibleCols:capTableVisibleCols, colFilters:capTableColFilters, colWidths:capTableColWidths};
 }
 
@@ -366,7 +366,7 @@ function capTableCfgGet(){
  * @param {object} v - État produit par capTableCfgGet (ou ancien format)
  */
 function capTableCfgSet(v){
-  capTableCustomCols=v.customCols||[]; capTableMultiValDisplay=v.multiValDisplay||'inline';
+  capTableCustomCols=v.customCols||[]; capTableMultiValDisplay=v.multiValDisplay||'inline'; capTableRiche=v.riche==null?null:!!v.riche;
   if (Array.isArray(v.tabs)&&v.tabs.length) {
     capTableTabs=v.tabs.map(t=>Object.assign(capTableTabNew(t.name), t));
     capTableTabIdx=Math.min(v.active||0, capTableTabs.length-1);

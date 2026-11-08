@@ -51,7 +51,8 @@ function capBuildPageHtml(){
 
   if (capLoaded && cap_xmlDoc) {
     // Sérialise le document XML Capella tel qu'il a été chargé
-    const xmlText = new XMLSerializer().serializeToString(cap_xmlDoc);
+    let xmlText = new XMLSerializer().serializeToString(cap_xmlDoc);
+    if (typeof capReqifPageXml === 'function') xmlText = capReqifPageXml(xmlText);   // 📑 images des textes ReqIF recopiées dans la page (101)
 
     const xmlScript = document.createElement('script');
     xmlScript.id = 'cap-embedded-xml';
@@ -130,7 +131,7 @@ function capBuildPageHtml(){
 let _capSources=null, _capSourcesPend=null;
 /**
  * Retient les fichiers d'une lecture SysML / UML en cours (appelée par 87 et 88) ; gardés si elle aboutit (capSysmlAppliquer).
- * @param {string} k - 'sy' (un fichier .sysml / .kpar), 'syd' (dossier de .sysml), 'umld' (fichiers UML / SysML v1)
+ * @param {string} k - 'sy' (un fichier .sysml / .kpar), 'syd' (dossier de .sysml), 'umld' (fichiers UML / SysML v1), 'rq' (un .reqif / .reqifz), 'rqd' (fichiers ReqIF et pièces jointes)
  * @param {string} nom - Nom affiché
  * @param {{nom:string, chemin:string, lire:function():Promise<File>}[]} fichiers - Fichiers
  * @param {string} [choix] - Chemin du modèle principal choisi parmi plusieurs (dossier UML : rouvert sans redemander)
@@ -175,6 +176,8 @@ function capLangRestaurer(w){
     try{
       if(w.sources.k==='sy') f[0].lire().then(file=>capSysmlOuvrir(file, null, true));
       else if(w.sources.k==='syd') capSysmlOuvrirDossier(f, w.sources.nom, true);
+      else if(w.sources.k==='rq') f[0].lire().then(file=>capReqifOuvrir(file, null, true));   // 📑 ReqIF (101)
+      else if(w.sources.k==='rqd') capReqifOuvrirDossier(f, w.sources.nom, true);
       else capUmlOuvrirDossier(f, w.sources.nom, true, w.sources.choix);   // modèle principal déjà choisi : pas de nouvelle question
     }catch(e){ console.error('Modèle non rechargé :', e); }
   } else if(w.boot&&!capLoaded){ const s=document.createElement('script'); s.textContent=w.boot; document.body.appendChild(s); }   // amorçage de la page enregistrée
@@ -278,7 +281,15 @@ const CAP_FORMATS=[
       [_L('Papyrus'), _L('`.uml` + `.notation` ensemble')], [_L('IBM Rhapsody'), _L('dossier du projet (`.rpy` + `_rpy`), sans les diagrammes')], [_L('Export XMI (tout outil)'), _L('`.xmi` sans les diagrammes de Cameo')]],
     obtenez:[_L('Les diagrammes de l\'outil (bdd, ibd, activité, états, séquence…), les tableaux et matrices de Cameo'), _L('Validation UML 2.5.1, SysML 1.7 et UAF 1.2')],
     sansObjet:_L('Sans objet : vues ARCADIA, propres à Capella'), multiple:true,
-    actions:[{l:_L('📂 Fichier modèle…'), a:'fichier', p:true}, {l:_L('Dossier (Papyrus, Rhapsody)…'), a:'dossier'}]}
+    actions:[{l:_L('📂 Fichier modèle…'), a:'fichier', p:true}, {l:_L('Dossier (Papyrus, Rhapsody)…'), a:'dossier'}]},
+  {k:'reqif', l:'ReqIF', ico:'📑', c:'#e3b341', ext:['reqif','reqifz'], annexes:[], mime:{'application/xml':['.reqif'], 'application/zip':['.reqifz']},
+    dispo:()=>typeof capReqifDispo==='function'&&capReqifDispo(), dossier:_L('les fichiers .reqif et leurs images, lus ensemble'),
+    sous:_L('exigences'),
+    outils:[[_L('DOORS, Polarion, Jama, codeBeamer…'), _L('archive `.reqifz` (textes et images)')], [_L('Capella, Enterprise Architect, ReqIF Studio'), _L('fichier `.reqif`')]],
+    ouvrir:[{h:_L('Une archive `.reqifz`'), n:_L('Les exigences et les images de leurs textes.'), conseil:true}, {h:_L('ou un fichier `.reqif`'), n:_L('Avec ses images : choisissez-les ensemble, ou ouvrez le dossier.')}],
+    obtenez:[_L('Le document de chaque spécification : chapitres numérotés, textes et images, valeurs des attributs'), _L('Les exigences en tableau Excel, leurs relations en matrice'), _L('Contrôles : textes, identifiants, relations, images absentes')],
+    sansObjet:_L('Sans objet : vues ARCADIA, SysML et UML'), multiple:true,
+    actions:[{l:_L('📂 Fichier .reqif / .reqifz…'), a:'fichier', p:true}, {l:_L('Dossier (ReqIF et images)…'), a:'dossier'}]}
 ];
 /** Pastille du projet de travail (page HTML enregistrée), aux côtés des formats. */
 const CAP_FMT_PAGE={k:'page', l:_L('Projet de travail'), c:'#e8c84f'};
@@ -293,6 +304,7 @@ const CAP_ASTUCES=[
   {f:'uml', t:_L('Les anciens projets d\'Enterprise Architect (`.eap`, `.eapx`, `.feap`) ne sont pas lus : enregistrez-les en `.qea` depuis EA 16+, ou exportez-les en XMI.')},
   {f:'uml', t:_L('Rhapsody : ouvrez le dossier du projet, qui contient le `.rpy` et son dossier `_rpy` (un paquetage par fichier `.sbs`). Les diagrammes ne sont pas encore lus ; un projet au format XML (`.rpyx`) s\'enregistre au format texte depuis Rhapsody.')},
   {f:'page', t:_L('Une page de projet `.html` est lue sans être exécutée ; vous choisissez ensuite les parties à reprendre.')},
+  {f:'reqif', t:_L('Un `.reqif` seul ne contient pas les images de ses textes : ouvrez l\'archive `.reqifz` exportée par l\'outil, ou choisissez le `.reqif` avec ses images.')},
   {f:'uml', t:_L('Le `.mdzip` se décompresse dans le navigateur : Chrome / Edge 80+, Firefox 113+ ou Safari 16.4+. Les tableaux et matrices de Cameo sont recalculés d\'après leur définition.')}
 ];
 /** Message pour un fichier d'un format que cette version (réduite à un format) ne lit pas.
@@ -418,6 +430,7 @@ function capFormatsOuvrir(fs, hs){
   if(fs.length===1){ capLoadFile(fs[0], hs&&hs[0]||null, ok); return; }
   if(fs.every(f=>/\.sysml$/i.test(f.name))&&typeof capSysmlOuvrirFichiers==='function'){ capSysmlOuvrirFichiers(fs, ok); return; }
   if(typeof capUmlOuvrirFichiers==='function'&&fs.some(f=>capUmlReconnait(f.name))){ capUmlOuvrirFichiers(fs, ok); return; }
+  if(typeof capReqifOuvrirFichiers==='function'&&fs.some(f=>capReqifReconnait(f.name))){ capReqifOuvrirFichiers(fs, ok); return; }   // 📑 .reqif et ses images (101)
   capLoadFile(fs[0], hs&&hs[0]||null, ok);
 }
 
@@ -432,6 +445,7 @@ function capLoadFile(f, handle, confirme){
   const name=(f&&f.name)||'';
   const ext=(name.split('.').pop()||'').toLowerCase();
   if (typeof capSysmlReconnait==='function' && capSysmlReconnait(name)) { capSysmlOuvrir(f, handle, confirme); return; }   // 🧩 SysML v2 (.sysml, .kpar : 87)
+  if (typeof capReqifReconnait==='function' && capReqifReconnait(name)) { capReqifOuvrir(f, handle, confirme); return; }   // 📑 ReqIF (.reqif, .reqifz : 101)
   if (typeof capUmlReconnait==='function' && (capUmlReconnait(name) || capUmlAnnexe(name))) { capUmlOuvrir(f, handle, confirme); return; }   // 🧬 UML / SysML v1 (.uml, .xmi, .mdzip, .qea : 88)
   if (ext==='aird' && capDiagDispo()) { capDiagLoadAird(f, handle); return; }   // 🔲 Diagrammes Capella du projet
   if (ext==='html' || ext==='htm') { capProjetPageOuvrir(f, handle, confirme); return; }   // 📄 projet de travail (page HTML enregistrée)
@@ -621,6 +635,7 @@ function capUpdateWelcome(){ capFormatsPoser(); capShowWelcome(!capLoaded); }
     const tous=[...(ev.dataTransfer.files||[])];
     const sy=tous.filter(x=>/\.sysml$/i.test(x.name));
     if(sy.length>1&&typeof capSysmlOuvrirFichiers==='function'){ capSysmlOuvrirFichiers(sy); return; }   // 🧩 plusieurs .sysml : lus ensemble (87)
+    if(tous.length>1&&typeof capReqifReconnait==='function'&&tous.some(x=>capReqifReconnait(x.name))&&!tous.some(x=>/\.(capella|melodymodeller|sysml|uml|xmi|mdzip|qea)$/i.test(x.name))){ capReqifOuvrirFichiers(tous); return; }   // 📑 .reqif et ses images (101)
     if(tous.length>1&&typeof capUmlReconnait==='function'&&tous.some(x=>capUmlReconnait(x.name))&&!tous.some(x=>/\.(capella|melodymodeller)$/i.test(x.name))){ capUmlOuvrirFichiers(tous); return; }   // 🧬 modèle UML et son .notation (88)
     const aird=tous.find(x=>/\.aird$/i.test(x.name)), mod=tous.find(x=>/\.(capella|melodymodeller|xml)$/i.test(x.name));
     if(aird && mod && tous.length>1){ const go=()=>{ capLoadFile(mod, null, true); capDiagLoadAird(aird, null, true); };

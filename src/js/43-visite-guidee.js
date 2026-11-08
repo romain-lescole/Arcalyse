@@ -85,6 +85,7 @@ var CAP_TOUR_ANA_TXT={
   data:_L('<b>🗃 Données & interfaces</b> : classes, types de données, Exchange Items et interfaces, avec leurs utilisations.'),
   cts:_L('<b>🔒 Contraintes</b> : contraintes du modèle et éléments contraints.'),
   sysml:_L('<b>🧩 SysML v2</b> : éléments, liaisons et diagnostics du modèle SysML v2 lu par le lecteur d\'Arcature.'),
+  reqif:_L('<b>📑 ReqIF</b> : les exigences d\'un fichier .reqif ou d\'une archive .reqifz — document de chaque spécification (chapitres numérotés, textes et images, valeurs des attributs), relations, types, pièces jointes, contrôles.'),
   status:_L('<b>🔖 Statut de revue</b> : statut Capella (DRAFT, TO BE REVIEWED, REVIEWED…) et commentaire de revue de chaque élément — liste, répartition, contrôles ; pont vers 💬 Revue.'),
   cats:_L('<b>🏷 Catégories d\'échanges</b> : échanges classés par ExchangeCategory, ComponentExchangeCategory ou PhysicalLinkCategory, taux de catégorisation ; une catégorie filtre les vues de flux.'),
   rec:_L('<b>📦 REC / RPL</b> : éléments réutilisables (REC) et leurs répliques (RPL), comparés élément par élément : manquants, ajoutés, renommés, types différents.'),
@@ -109,6 +110,7 @@ var CAP_TOUR_ANA_TXT={
 var CAP_TOUR_ANA_PRES={
   umlblk:_L('<b>◧ Vue Blocs</b> : blocs dessinés avec leurs ports · <b>◎ Voisinage</b> : un bloc au centre, ses voisins de part et d\'autre · <b>≡ Vue Ligne</b> : un connecteur par ligne · <b>▦ Matrice</b> : bloc × bloc · <b>🩺 Contrôles</b> : ports sans connecteur, connecteurs incohérents…'),
   umlact:_L('<b>⇶ Couloirs</b> : une activité, un couloir par porteur · <b>◧ Vue Blocs</b> : actions dessinées avec leurs pins · <b>≡ Vue Ligne</b> : un flux par ligne · <b>▦ Matrice</b> : action × action · <b>🩺 Contrôles</b> : pins sans flux, actions isolées…'),
+  reqif:_L('<b>📄 Document</b> : plan à gauche, exigences dans l\'ordre, images des textes · <b>▤ Exigences</b> : une colonne par attribut, ▤ Ouvrir dans ▤ Tableau · <b>🔗 Relations</b> par type · <b>🧩 Types</b> · <b>🖼 Pièces jointes</b> (absentes signalées) · <b>🩺 Contrôles</b>.'),
   umlreq:_L('<b>📋 Liste</b> · <b>🌳 Arbre</b> (contenance) · <b>📊 Couverture</b> (satisfaites, vérifiées, filtres) · <b>▦ Matrice</b> exigence × élément · <b>🩺 Contrôles</b>.'),
   umlstm:_L('<b>📋 Machines</b> · <b>🔎 États & transitions</b> d\'une machine · <b>🖼 Diagramme calculé</b> (redessiné à partir du modèle : composites, régions, pseudo-états) · <b>▦ Matrice</b> état × état · <b>🩺 Contrôles</b>. 🔲 ouvre le diagramme de la machine quand le fichier en a un.'),
   umlseq:_L('<b>📋 Interactions</b> · <b>🔎 Messages</b> d\'une interaction, dans l\'ordre · <b>🖼 Diagramme calculé</b> (séquence redessinée : exécutions, fragments alt / opt / loop / par, références) · <b>▦ Matrice</b> ligne de vie × ligne de vie · <b>🩺 Contrôles</b>.'),
