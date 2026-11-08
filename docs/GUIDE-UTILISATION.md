@@ -39,7 +39,7 @@ Les captures ont été faites avec le modèle d'exemple public *In-Flight Entert
 
 ## 1. Présentation et prérequis
 
-Arcalyse est une application **autonome** : un **seul fichier HTML** — un par format, chacun bilingue : `arcalyse-capella.html`, `arcalyse-sysml2.html`, `arcalyse-uml.html`, ou `arcalyse-complet.html` pour tous les formats — qui s'ouvre dans un navigateur et **fonctionne hors ligne**. Elle lit un modèle Capella / ARCADIA (`.capella`) **localement** — rien n'est envoyé sur un réseau — pour l'explorer, l'analyser, le contrôler, le commenter et l'exporter, sans ouvrir Capella. Elle lit aussi les modèles **SysML v2** et **UML / SysML v1** ([§ 24](#24--sysml-v2-et--uml--sysml-v1)) : ce guide décrit Capella, la plupart des vues valent pour les trois.
+Arcalyse est une application **autonome** : un **seul fichier HTML** — un par format, chacun bilingue : `arcalyse-capella.html`, `arcalyse-sysml2.html`, `arcalyse-uml.html`, `arcalyse-reqif.html` (exigences ReqIF), ou `arcalyse-complet.html` pour tous les formats — qui s'ouvre dans un navigateur et **fonctionne hors ligne**. Elle lit un modèle Capella / ARCADIA (`.capella`) **localement** — rien n'est envoyé sur un réseau — pour l'explorer, l'analyser, le contrôler, le commenter et l'exporter, sans ouvrir Capella. Elle lit aussi les modèles **SysML v2** et **UML / SysML v1** ([§ 24](#24--sysml-v2-et--uml--sysml-v1)) : ce guide décrit Capella, la plupart des vues valent pour les trois.
 
 | Point | Détail |
 |---|---|

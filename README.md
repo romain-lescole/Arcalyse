@@ -184,12 +184,12 @@ Drop an Eclipse UML2 / Papyrus **`.uml`** file with its **`.notation`** (both to
 ## Getting started
 
 1. **Get the HTML file**:
-   - delivered, ready to use, in **[`livraison/`](livraison/)** (“Download raw file” button on GitHub), one file per format, each in English and French (🌐 switch; browser language by default): **`arcalyse-capella.html`** (Capella), **`arcalyse-sysml2.html`** (SysML v2), **`arcalyse-uml.html`** (UML / SysML v1) or **`arcalyse-complet.html`** (all formats);
-   - or built from the sources: `node build.js --livrables` → the same four files in `dist/` (`node build.js` → `dist/arcalyse-fr.html`, all formats, French only).
+   - delivered, ready to use, in **[`livraison/`](livraison/)** (“Download raw file” button on GitHub), one file per format, each in English and French (🌐 switch; browser language by default): **`arcalyse-capella.html`** (Capella), **`arcalyse-sysml2.html`** (SysML v2), **`arcalyse-uml.html`** (UML / SysML v1), **`arcalyse-reqif.html`** (ReqIF requirements) or **`arcalyse-complet.html`** (all formats);
+   - or built from the sources: `node build.js --livrables` → the same five files in `dist/` (`node build.js` → `dist/arcalyse-fr.html`, all formats, French only).
 2. **Open it** in a recent browser (tested with Google Chrome version 155), even without a network.
-3. **Drag and drop** your model — Capella `.capella`, SysML v2 `.sysml` / `.kpar`, UML / SysML v1 `.mdzip`, `.qea`, `.uml`, `.xmi`, Rhapsody `.rpy` — or the 📁 project folder anywhere on the page, or start from your format's card: it says what to open and what you will get. Or reopen a saved 📄 working project. That's all.
+3. **Drag and drop** your model — Capella `.capella`, SysML v2 `.sysml` / `.kpar`, UML / SysML v1 `.mdzip`, `.qea`, `.uml`, `.xmi`, Rhapsody `.rpy`, ReqIF `.reqifz` / `.reqif` — or the 📁 project folder anywhere on the page, or start from your format's card: it says what to open and what you will get. Or reopen a saved 📄 working project. That's all.
 
-> 📦 **File size**: about 8 MB for `arcalyse-complet.html` (all formats, both languages); the single-format files are lighter, as they only embed the Arcature component of their format (Capella diagram viewer, SysML v2 reader or UML / SysML v1 reader), plus D3.
+> 📦 **File size**: about 8 MB for `arcalyse-complet.html` (all formats, both languages); the single-format files are lighter, as they only embed the Arcature component of their format (Capella diagram viewer, SysML v2 reader, UML / SysML v1 reader or ReqIF reader), plus D3.
 
 > 📘 **Complete user guide**, menu by menu, with screenshots (in French): [`docs/GUIDE-UTILISATION.md`](docs/GUIDE-UTILISATION.md).
 
@@ -377,12 +377,12 @@ Déposez un fichier **`.uml`** d'Eclipse UML2 / Papyrus avec son **`.notation`**
 ## Démarrer
 
 1. **Récupérez le fichier HTML** :
-   - version livrée, prête à l'emploi, dans **[`livraison/`](livraison/)** (bouton « Download raw file » sur GitHub), un fichier par format, chacun en français et en anglais (bascule 🌐 ; langue du navigateur par défaut) : **`arcalyse-capella.html`** (Capella), **`arcalyse-sysml2.html`** (SysML v2), **`arcalyse-uml.html`** (UML / SysML v1) ou **`arcalyse-complet.html`** (tous les formats) ;
-   - ou version de développement, construite à partir des sources : `node build.js --livrables` → les quatre mêmes fichiers dans `dist/` (`node build.js` → `dist/arcalyse-fr.html`, tous formats, en français).
+   - version livrée, prête à l'emploi, dans **[`livraison/`](livraison/)** (bouton « Download raw file » sur GitHub), un fichier par format, chacun en français et en anglais (bascule 🌐 ; langue du navigateur par défaut) : **`arcalyse-capella.html`** (Capella), **`arcalyse-sysml2.html`** (SysML v2), **`arcalyse-uml.html`** (UML / SysML v1), **`arcalyse-reqif.html`** (exigences ReqIF) ou **`arcalyse-complet.html`** (tous les formats) ;
+   - ou version de développement, construite à partir des sources : `node build.js --livrables` → les cinq mêmes fichiers dans `dist/` (`node build.js` → `dist/arcalyse-fr.html`, tous formats, en français).
 2. **Ouvrez-le** dans un navigateur récent (testé sous Google Chrome version 155), même sans réseau.
-3. **Glissez-déposez** votre modèle — Capella `.capella`, SysML v2 `.sysml` / `.kpar`, UML / SysML v1 `.mdzip`, `.qea`, `.uml`, `.xmi`, Rhapsody `.rpy` — ou le 📁 dossier du projet n'importe où sur la page, ou partez de la carte de votre format : elle dit quoi ouvrir et ce que vous obtiendrez. Ou rouvrez un 📄 projet de travail enregistré. C'est tout.
+3. **Glissez-déposez** votre modèle — Capella `.capella`, SysML v2 `.sysml` / `.kpar`, UML / SysML v1 `.mdzip`, `.qea`, `.uml`, `.xmi`, Rhapsody `.rpy`, ReqIF `.reqifz` / `.reqif` — ou le 📁 dossier du projet n'importe où sur la page, ou partez de la carte de votre format : elle dit quoi ouvrir et ce que vous obtiendrez. Ou rouvrez un 📄 projet de travail enregistré. C'est tout.
 
-> 📦 **Taille du fichier** : environ 8 Mo pour `arcalyse-complet.html` (tous les formats, deux langues) ; les fichiers d'un seul format sont plus légers, car ils n'embarquent que le composant d'Arcature de leur format (visionneuse de diagrammes Capella, lecteur SysML v2 ou lecteur UML / SysML v1), plus D3.
+> 📦 **Taille du fichier** : environ 8 Mo pour `arcalyse-complet.html` (tous les formats, deux langues) ; les fichiers d'un seul format sont plus légers, car ils n'embarquent que le composant d'Arcature de leur format (visionneuse de diagrammes Capella, lecteur SysML v2, lecteur UML / SysML v1 ou lecteur ReqIF), plus D3.
 
 > 📘 **Guide d'utilisation complet**, menu par menu, avec captures d'écran : [`docs/GUIDE-UTILISATION.md`](docs/GUIDE-UTILISATION.md).
 

@@ -6,7 +6,7 @@
 function _L(s){ return s; }
 /** Langue de l'interface ('fr', ou 'en' dans la version anglaise produite par le build). */
 const CAP_LANG='fr';
-/** Version réduite à un format (build `--format capella|sysml2|uml`) : seul le lecteur de ce format est embarqué ; '' : version complète. */
+/** Version réduite à un format (build `--format capella|sysml2|uml|reqif`) : seul le lecteur de ce format est embarqué ; '' : version complète. */
 const CAP_EDITION='';
 
 /** Relation Map en lecture seule (Arcalyse est un outil de lecture et d'analyse) : arborescence (renommage, ajout,

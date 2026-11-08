@@ -12,11 +12,11 @@
  *                                   textes de interface.html (« interface », puis « code »), aide src/html/aide.en.html,
  *                                   descriptions des types (« types ») ; textes sans traduction listés dans
  *                                   dist/arcalyse-en-manquants.txt (ils restent en français). Voir docs/i18n/LISEZMOI.md.
- *   node build.js --format capella|sysml2|uml  → version réduite à un format : seul le composant d'Arcature de ce
- *                                   format est embarqué (visionneuse pour Capella, lecteur SysML v2, lecteur UML / SysML v1),
+ *   node build.js --format capella|sysml2|uml|reqif  → version réduite à un format : seul le composant d'Arcature de ce
+ *                                   format est embarqué (visionneuse pour Capella, lecteur SysML v2, lecteur UML / SysML v1, lecteur ReqIF),
  *                                   CAP_EDITION posé dans 01 ; sortie dist/arcalyse-<format>-<langue>.html.
- *   node build.js --livrables     → les quatre livrables, bilingues FR + EN (bascule 🌐) : arcalyse-capella.html,
- *                                   arcalyse-sysml2.html, arcalyse-uml.html (une version par format) et arcalyse-complet.html
+ *   node build.js --livrables     → les cinq livrables, bilingues FR + EN (bascule 🌐) : arcalyse-capella.html,
+ *                                   arcalyse-sysml2.html, arcalyse-uml.html, arcalyse-reqif.html (une version par format) et arcalyse-complet.html
  *                                   (tous les formats), dans dist/ ; avec --livraison : dans livraison/, sans repères.
  *   node build.js --lang multi    → version multilingue dist/arcalyse-multi.html : les deux langues dans un seul fichier,
  *                                   chaque _L devient (CAP_LANG==='en'?anglais:français), interface et aide dans deux
@@ -42,8 +42,8 @@ const outArg = args.indexOf('--out');
 const langArg = args.indexOf('--lang');
 const LANG = langArg >= 0 ? String(args[langArg + 1] || '').toLowerCase() : 'fr';
 if (!['fr', 'en', 'multi'].includes(LANG)) { console.error(`✖ Langue inconnue : ${LANG} (fr, en ou multi)`); process.exit(1); }
-// Les quatre livrables (bilingues) : un assemblage par livrable, lancé par ce même script
-const LIVRABLES = { complet: [], capella: ['--format', 'capella'], sysml2: ['--format', 'sysml2'], uml: ['--format', 'uml'] };
+// Les cinq livrables (bilingues) : un assemblage par livrable, lancé par ce même script
+const LIVRABLES = { complet: [], capella: ['--format', 'capella'], sysml2: ['--format', 'sysml2'], uml: ['--format', 'uml'], reqif: ['--format', 'reqif'] };
 if (args.includes('--livrables')) {
   const { execFileSync } = require('child_process'), dir = livraison ? 'livraison' : 'dist';
   for (const [nom, opt] of Object.entries(LIVRABLES)) {
@@ -56,10 +56,10 @@ Livrables prêts dans livraison/. Pour les publier (remplacer X.Y) : git add liv
   process.exit(0);
 }
 // Version réduite à un format : composants d'Arcature embarqués par format
-const FORMATS = { capella: ['visionneuse', 'lecteur-reqif'], sysml2: ['lecteur-sysml', 'lecteur-reqif'], uml: ['lecteur-uml', 'lecteur-reqif'] };   // ReqIF (exigences) : dans toutes les versions
+const FORMATS = { capella: ['visionneuse'], sysml2: ['lecteur-sysml'], uml: ['lecteur-uml'], reqif: ['lecteur-reqif'] };   // ReqIF : version à part et version complète
 const fmtArg = args.indexOf('--format');
 const FORMAT = fmtArg >= 0 ? String(args[fmtArg + 1] || '').toLowerCase() : '';
-if (FORMAT && !FORMATS[FORMAT]) { console.error(`✖ Format inconnu : ${FORMAT} (capella, sysml2 ou uml)`); process.exit(1); }
+if (FORMAT && !FORMATS[FORMAT]) { console.error(`✖ Format inconnu : ${FORMAT} (capella, sysml2, uml ou reqif)`); process.exit(1); }
 if (FORMAT && livraison) { console.error('✖ --format avec --livraison : utiliser node build.js --livrables --livraison'); process.exit(1); }
 const NOM = FORMAT ? `arcalyse-${FORMAT}-${LANG}` : `arcalyse-${LANG}`;
 const OUT = livraison ? path.join(ROOT, 'livraison', `${NOM}.html`)
