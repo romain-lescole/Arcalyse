@@ -120,7 +120,8 @@ async function capRevCibleeExport(cs, o){
   const elements={};
   cs.forEach(c=>(c.targets||[]).forEach(t=>{ if(elements[t.id]) return; const e=capLoaded&&capGetElementById_(t.id);
     elements[t.id]={nom:e?e.attrs.name||t.name||'':t.name||'', type:(CAP_HUMAN_NAMES[e?e.typeName:t.type]||{}).h||t.type||'', couche:e?e.layer||'':t.layer||'',
-      desc:o.desc&&e?capHtmlToText(e.attrs.description||'').slice(0,4000):'', absent:!e}; }));
+      desc:o.desc&&e?capHtmlToText(e.attrs.description||'').slice(0,4000):'', absent:!e};
+    const h=o.desc&&e?capDosRiche(e.attrs.description):''; if(h&&h.length<=40000) elements[t.id].html=h; }));   // mise en forme gardée (sinon texte)
   const diagrams=o.diag&&typeof _capDiag!=='undefined'&&_capDiag.airdCharge?await capRevCibleeDiagrammes(cs):{};
   const comments=cs.map(c=>{ const x=JSON.parse(JSON.stringify(c)); if(!o.rep) x.replies=[]; (x.targets||[]).forEach(t=>{ delete t.snap; }); return x; });
   const data={type:'arcalyse-revue-ciblee', version:1, id:capRevUid(), titre:o.titre||_L('Revue ciblée'), consignes:o.consignes||'', echeance:o.echeance||'',
@@ -168,6 +169,7 @@ input,textarea,select{font:inherit;padding:5px 7px;border:1px solid var(--b);bor
 .ch{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.num{font-weight:700}.crit{padding:0 8px;border-radius:9px;font-size:11.5px;font-weight:700}
 .ti{font-weight:600;margin:4px 0}.tx{white-space:pre-wrap}.tg{display:inline-block;margin:3px 6px 0 0;padding:1px 8px;border:1px solid var(--b);border-radius:10px;font-size:12px;background:#f6f8fa}
 .tgd{margin:4px 0 0 0;max-height:150px;overflow:auto;font-size:12px;color:#444c56;white-space:pre-wrap;border-left:3px solid var(--b);padding-left:8px}
+.rh{white-space:normal}.rh p{margin:0 0 4px}.rh ul,.rh ol{margin:2px 0 4px;padding-left:20px}.rh img{max-width:100%}.rh .hl{color:#0969da}.rh table{border-collapse:collapse}.rh td,.rh th{border:1px solid #d0d7de;padding:2px 5px}
 .r{margin:6px 0 0 12px;padding:4px 10px;border-left:3px solid var(--b);white-space:pre-wrap}.r.me{border-left-color:#1f883d;background:#f0fff4}.r .d b{color:var(--t)}
 .av{font-weight:600}.f{margin-top:8px;display:grid;grid-template-columns:170px 1fr auto;gap:6px;align-items:start}
 details.dg{margin-top:6px}details.dg summary{cursor:pointer;color:var(--a)}.dgw{overflow:auto;max-height:70vh;border:1px solid var(--b);border-radius:6px;background:#fff;margin-top:4px}.dgw svg{max-width:100%;height:auto}
@@ -213,7 +215,7 @@ function card(c){
   var st=find(ST,c.status)||ST[0], cr=find(CR,c.crit||'')||CR[0], h='<div class="c" data-c="'+esc(c.id)+'" style="--cc:'+(c.crit?cr.c:'#8b949e')+'"><div class="ch"><span class="num">#'+c.num+'</span>'+
     (c.crit?'<span class="crit" style="background:'+cr.c+';color:'+ink(cr.c)+'">'+esc(cr.l)+'</span>':'')+'<span class="d">'+esc(st.l)+'</span><span class="d">'+esc(c.author||'')+' · '+dt(c.created)+'</span></div>'+
     (c.title?'<div class="ti">'+esc(c.title)+'</div>':'')+'<div class="tx">'+esc(c.text)+'</div>';
-  (c.targets||[]).forEach(function(t){var e=D.elements[t.id]||{};h+='<div><span class="tg"><b>'+esc(e.couche||t.layer||'')+'</b> '+esc(e.nom||t.name||t.id)+' <span class="d">'+esc(e.type||t.type||'')+(t.field?' · '+esc(T.field)+' '+esc(t.field):'')+(e.absent?' · '+esc(T.gone):'')+'</span></span>'+(e.desc?'<div class="tgd">'+esc(e.desc)+'</div>':'')+'</div>';});
+  (c.targets||[]).forEach(function(t){var e=D.elements[t.id]||{};h+='<div><span class="tg"><b>'+esc(e.couche||t.layer||'')+'</b> '+esc(e.nom||t.name||t.id)+' <span class="d">'+esc(e.type||t.type||'')+(t.field?' · '+esc(T.field)+' '+esc(t.field):'')+(e.absent?' · '+esc(T.gone):'')+'</span></span>'+(e.html?'<div class="tgd rh">'+e.html+'</div>':e.desc?'<div class="tgd">'+esc(e.desc)+'</div>':'')+'</div>';});
   if(c.diag){var g=D.diagrams[c.diag.uid];h+=g?'<details class="dg"><summary>'+esc(T.diag)+' : '+esc(g.nom)+' <span class="d">'+esc(g.type)+'</span></summary><div class="dgw">'+g.svg+'</div></details>':'<div class="d">'+esc(T.diag)+' : '+esc(c.diag.nom||'')+'</div>';}
   (c.replies||[]).forEach(function(r){h+=rep(r,false);});
   D.reponses.filter(function(r){return r.cid===c.id;}).forEach(function(r){h+=rep(r,true);});

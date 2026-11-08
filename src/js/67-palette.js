@@ -69,7 +69,7 @@ function capPalSearch(q){
   if(!words.length||!capAllElements.length) return {els:[], nEls:0, diags:[], nDiags:0};
   const els=[]; capPalIndex().forEach(e=>{ const s=capPalScore(e.n, e.t, e.id, q, words); if(s) els.push({s,e}); });
   els.sort((a,b)=>b.s-a.s||a.e.name.length-b.e.name.length||(a.e.n<b.e.n?-1:a.e.n>b.e.n?1:0));
-  const reps=[...(typeof capDiagReps==='function'?capDiagReps():[]), ...(typeof capSyVuesReps==='function'?capSyVuesReps():[])], diags=[];   // + vues SysML v2 (87)
+  const reps=typeof capDiagReps==='function'?capDiagReps():[], diags=[];   // diagrammes Capella ou vues des lecteurs SysML / UML (54)
   reps.forEach(r=>{ const s=capPalScore(capPalNorm(r.nom), capPalNorm(`${r.type||''} ${r.sigle||''} ${r.couche||''}`), r.uid, q, words); if(s) diags.push({s,r}); });
   diags.sort((a,b)=>b.s-a.s||(a.r.nom<b.r.nom?-1:a.r.nom>b.r.nom?1:0));
   return {els:els.slice(0,CAP_PAL_MAX).map(x=>x.e), nEls:els.length, diags:diags.slice(0,CAP_PAL_MAX_DIAG).map(x=>x.r), nDiags:diags.length,
@@ -85,7 +85,7 @@ function capPalRow(kind, x){
   const esc=capEsc;
   if(kind==='diag'){
     const lv=capDiagCouche(x.couche);
-    const ico=String(x.uid).startsWith('sy:')&&typeof capSyVueIco==='function'?capSyVueIco(x.genre,13)||'🔲':'🔲';   // vue SysML v2 : icône du genre (87)
+    const ico=String(x.uid).startsWith('sy:')&&typeof capSyVueIco==='function'?capSyVueIco(x,13)||'🔲':'🔲';   // vue SysML / UML : icône du genre (87)
     return `<div class="ctx-i cap-nav-it cap-pal-it" data-pal="diag" data-id="${esc(x.uid)}" title="${esc(x.type||'')}"><span>${ico} <span class="cap-pal-l" style="color:${lv.color}">${esc(x.couche||'')}</span> ${esc(x.nom)} <span class="cap-nav-g">${esc(x.type||'')}</span></span></div>`;
   }
   const lv=CAP_LAYERS[x.layer]||{color:'#8b949e'}, couche=CAP_ANA_LAYERS.includes(x.layer)?x.layer:'';
@@ -106,7 +106,8 @@ function capPalHtml(q){
     diags=_L('<div class="cap-nav-h">Diagrammes</div>')+R.diags.map(r=>capPalRow('diag',r)).join('');
     if(R.nDiags>R.diags.length) diags+=_L(`<div class="cap-nav-hint">… et ${R.nDiags-R.diags.length} autre(s) diagramme(s)</div>`);
   }
-  return R.diagsFirst?diags+els:els+diags;
+  const mx=typeof capMxPalHtml==='function'?capMxPalHtml(capPalNorm(q).trim()):'';   // onglets de ▦ Matrice (91)
+  return mx+(R.diagsFirst?diags+els:els+diags);
 }
 
 /** 🕘 Derniers éléments et diagrammes ouverts par la palette (menu ☰ sans requête ; '' si aucun).
@@ -125,6 +126,7 @@ function capPalRecentHtml(){
  */
 function capPalOpen(kind, id){
   capNavClose();
+  if(kind==='mx'){ capMxOuvrirOnglet(id); return; }   // onglet de ▦ Matrice (91)
   _capPalRecent=[{kind,id}, ..._capPalRecent.filter(r=>!(r.kind===kind&&r.id===id))].slice(0,CAP_PAL_RECENT);
   if(kind==='diag'){ capDiagOpen(id); return; }
   if(typeof currentMode!=='undefined'&&currentMode!=='capella') capShowView(capCurrentView&&capCurrentView!=='home'?capCurrentView:'tree');   // depuis la Relation Map : vues Capella (panneau de détail)

@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xmi:XMI xmlns:uml='http://www.omg.org/spec/UML/20161101' xmlns:xmi='http://www.omg.org/spec/XMI/20161101' xmlns:sysml='http://www.omg.org/spec/SysML/20181001/SysML' xmlns:MD_Customization_for_SysML__additional_stereotypes='http://www.magicdraw.com/spec/Customization/190/SysML'>
+	<xmi:Documentation>
+		<xmi:exporter>MagicDraw Clean XMI Exporter</xmi:exporter>
+		<xmi:exporterVersion>19.0 v9</xmi:exporterVersion>
+	</xmi:Documentation>
+	<uml:Model xmi:type='uml:Model' xmi:id='eee_1045467100313_135436_1' name='Rover'>
+		<packagedElement xmi:type='uml:Package' xmi:id='_19_0_3_1_pkg_req' name='Requirements'>
+			<packagedElement xmi:type='uml:Class' xmi:id='_19_0_3_1_req_speed' name='Speed'>
+				<ownedComment xmi:type='uml:Comment' xmi:id='_19_0_3_1_cmt_speed' body='&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;p&gt;Top speed of the rover.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;'>
+					<annotatedElement xmi:idref='_19_0_3_1_req_speed'/>
+				</ownedComment>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='_19_0_3_1_req_range' name='Range'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='_19_0_3_1_derive' client='_19_0_3_1_req_range' supplier='_19_0_3_1_req_speed'/>
+		</packagedElement>
+		<packagedElement xmi:type='uml:Package' xmi:id='_19_0_3_1_pkg_str' name='Structure'>
+			<packagedElement xmi:type='uml:Class' xmi:id='_19_0_3_1_blk_rover' name='Rover'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='_19_0_3_1_prt_wheel' name='wheel' visibility='private' aggregation='composite' type='_19_0_3_1_blk_wheel'/>
+				<ownedAttribute xmi:type='uml:Port' xmi:id='_19_0_3_1_port_pwr' name='power' visibility='private' type='_19_0_3_1_ib_pwr'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='_19_0_3_1_blk_wheel' name='Wheel'/>
+			<packagedElement xmi:type='uml:Class' xmi:id='_19_0_3_1_ib_pwr' name='PowerIF'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='_19_0_3_1_fp_i' name='current' visibility='private'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='_19_0_3_1_sat' client='_19_0_3_1_blk_rover' supplier='_19_0_3_1_req_speed'/>
+		</packagedElement>
+	</uml:Model>
+	<sysml:Requirement xmi:id='_19_0_3_1_req_speed_app' base_Class='_19_0_3_1_req_speed' id='R1' text='The rover shall reach 2 m/s.'/>
+	<sysml:Requirement xmi:id='_19_0_3_1_req_range_app' base_Class='_19_0_3_1_req_range' id='R2' text='The rover shall drive 5 km.'/>
+	<sysml:DeriveReqt xmi:id='_19_0_3_1_derive_app' base_Abstraction='_19_0_3_1_derive'/>
+	<sysml:Block xmi:id='_19_0_3_1_blk_rover_app' base_Class='_19_0_3_1_blk_rover'/>
+	<sysml:Block xmi:id='_19_0_3_1_blk_wheel_app' base_Class='_19_0_3_1_blk_wheel'/>
+	<sysml:InterfaceBlock xmi:id='_19_0_3_1_ib_pwr_app' base_Class='_19_0_3_1_ib_pwr'/>
+	<sysml:FlowProperty xmi:id='_19_0_3_1_fp_i_app' base_Property='_19_0_3_1_fp_i' direction='in'/>
+	<sysml:ProxyPort xmi:id='_19_0_3_1_port_pwr_app' base_Port='_19_0_3_1_port_pwr'/>
+	<sysml:Satisfy xmi:id='_19_0_3_1_sat_app' base_Abstraction='_19_0_3_1_sat'/>
+	<xmi:Extension extender='MagicDraw UML 19.0'>
+		<plugin pluginName='SysML' pluginVersion='19.0'/>
+	</xmi:Extension>
+</xmi:XMI>

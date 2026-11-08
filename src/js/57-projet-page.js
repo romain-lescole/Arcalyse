@@ -175,7 +175,7 @@ function capProjetPageAppliquer(info, keys, nom, handle) {
   const ui = capProjetBloc(info, 'cap-ui-views') || {};
   if (keys.has('toolbar')) essai('toolbar', () => capCfgSet('toolbar', capProjetBloc(info, 'cap-toolbar')));
   if (keys.has('dash')) essai('dash', () => capCfgSet('dash', capProjetBloc(info, 'cap-dashboards')));
-  if (keys.has('vues')) essai('vues', () => { ['table', 'csv', 'rm', 'tv'].forEach(k => { if (ui[k]) capCfgSet(k, ui[k]); }); });
+  if (keys.has('vues')) essai('vues', () => { ['table', 'matrix', 'csv', 'rm', 'tv'].forEach(k => { if (ui[k]) capCfgSet(k, ui[k]); }); });
   if (keys.has('theme')) essai('theme', () => { const c = capProjetBloc(info, 'cap-theme-custom'); capCfgSet('theme', Object.assign({ current: ui.theme || '' }, c ? { custom: c } : {})); });
   if (keys.has('names')) essai('names', () => capCfgSet('names', capProjetBloc(info, 'cap-name-rules')));
   if (keys.has('checks')) essai('checks', () => capCfgSet('checks', capProjetBloc(info, 'cap-checks')));

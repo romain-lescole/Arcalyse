@@ -13,8 +13,9 @@
  * c (libellé de sa puce dans la barre de famille) et n'apparaît plus seule dans les menus (recherche, épingles et ☰ la gardent). */
 var CAP_NAV_ITEMS=[
   {k:'home',      l:_L('🏠 Accueil'),           g:'',     t:_L('Accueil du projet : en-tête, tâches courantes, fiche, contenu, santé et revue du modèle')},
-  {k:'diag',      l:_L('🔲 Diagrammes'), p:_L('🔲 Diagrammes'), g:'', t:_L('Capella : diagrammes du projet (.aird), dessinés comme dans Capella ; SysML v2 : vues calculées depuis le texte. Capella : liste, recherche, mini-carte, filtres, chaînes, exports ; clic sur un élément → son détail')},
+  {k:'diag',      l:_L('🔲 Diagrammes'), p:_L('🔲 Diagrammes'), g:'', t:_L('Capella : diagrammes du projet (.aird), dessinés comme dans Capella ; UML / SysML v1 : diagrammes et tableaux enregistrés dans le fichier (Cameo, Enterprise Architect, Papyrus) ; SysML v2 : vues calculées depuis le texte. Capella : liste, recherche, mini-carte, filtres, chaînes, exports ; clic sur un élément → son détail')},
   {k:'table',     l:_L('▤ Tableau'),            g:'',     t:_L('Tableau de tous les éléments du modèle : onglets de vues, colonnes d\'attributs, de relations et par chemin, tri, filtres, export CSV')},
+  {k:'matrix',    l:_L('▦ Matrice'),            g:'',     t:_L('Éléments en lignes et en colonnes, reliés par les relations choisies (allocations, échanges, réalisations, exigences, liaisons SysML / UML, relations par chemin) : onglets, préréglages, sens, groupes, marques personnalisables, exports CSV / Excel')},
   // 🏗 Architecture
   {k:'grp:fonc',  l:_L('ƒ Fonctions & échanges'),   g:'arch', f:['functions','fex','oav'], cc:1, t:_L('Fonctions (hiérarchie, tableau, traçabilité, métriques, contrôles), échanges fonctionnels en blocs, lignes et matrice, activités opérationnelles (OA)')},
   {k:'grp:comp',  l:_L('🧱 Composants & interfaces'), g:'arch', f:['csys','cblk','compex','physlink','ports'], pc:{SA:'csys', LA:'cblk', PA:'compex'}, t:_L('Composants en blocs à ports par couche (SA, LA, PA comportement, PA nœuds et Physical Links), échanges entre composants, traçabilité des ports')},
@@ -34,15 +35,28 @@ var CAP_NAV_ITEMS=[
   {k:'ana:data',  l:_L('🗃 Données & interfaces'),     g:'arch'},
   {k:'ana:deploy',l:_L('🖧 Déploiement & EPBS'),       g:'arch', t:_L('Comportements déployés sur les nœuds physiques (PartDeploymentLink), Configuration Items de l\'EPBS et ce qu\'ils réalisent, contrôles')},
   {k:'ana:sysml', l:_L('🧩 SysML v2'),                 g:'arch', t:_L('Modèle SysML v2 lu par le lecteur d\'Arcature : éléments par famille et métaclasse, liaisons (typage, spécialisation, connexion, allocation…), diagnostics (erreurs et avertissements avec fichier et ligne), texte des fichiers')},
+  {k:'grp:uml',   l:_L('🧬 UML / SysML v1'),           g:'arch', f:['ana:uml','ana:umlblk','ana:umlicd','ana:umlact','ana:umlstm','ana:umlseq','ana:umlucs','ana:umlsoft'], t:_L('Modèle UML / SysML v1 : éléments, liaisons et diagnostics ; blocs à ports et connecteurs, interfaces (ICD), activités à pins et flux, dessinés comme les Vues Blocs de Capella ; machines à états ; interactions ; cas d\'utilisation ; paquetages, classes et déploiement')},
+  {k:'ana:umlblk',l:_L('🧱 Blocs & ports'),            m:'grp:uml', c:_L('🧱 Blocs & ports'), g:'arch', t:_L('Blocs SysML v1 et composants UML dessinés comme les composants de Capella : ports IN / OUT / INOUT d\'après les FlowProperty, connecteurs et bloc distant, ItemFlow, allocations ; par contexte (ibd), lignes, matrice, contrôles')},
+  {k:'ana:umlact',l:_L('ƒ Activités & flux'),          m:'grp:uml', c:_L('ƒ Activités & flux'), g:'arch', t:_L('Actions des activités dessinées comme les fonctions de Capella : pins d\'entrée et de sortie, flux d\'objets et de contrôle d\'action à action, bloc porteur, actions d\'appel ; par activité, lignes, matrice, contrôles')},
+  {k:'ana:umlstm',l:_L('🚦 Machines à états'),         m:'grp:uml', c:_L('🚦 Machines à états'), g:'arch', t:_L('Machines à états UML / SysML v1 : états, transitions (déclencheur, garde, effet), diagramme calculé à partir du modèle, matrice état × état ; contrôles : état initial, états inatteignables, impasses, déclencheurs ambigus, signaux jamais émis')},
+  {k:'ana:umlseq',l:_L('🎬 Interactions'),             m:'grp:uml', c:_L('🎬 Interactions'), g:'arch', t:_L('Interactions (diagrammes de séquence) UML / SysML v1 : lignes de vie et parts représentées, messages dans l\'ordre, diagramme de séquence calculé à partir du modèle, matrice ; contrôles : signatures, opérations du destinataire, messages entre parts sans connecteur')},
+  {k:'ana:umlicd',l:_L('🗃 Interfaces (ICD)'),         m:'grp:uml', c:_L('🗃 Interfaces'), g:'arch', t:_L('Interfaces UML / SysML v1 (types des ports : InterfaceBlock, Interface) : FlowProperty et sens, opérations, ports et blocs qui les utilisent ; ICD : une ligne par connecteur entre ports avec interfaces et objets transportés ; contrôles')},
+  {k:'ana:umlucs',l:_L('🎯 Cas d\'utilisation'),         m:'grp:uml', c:_L('🎯 Cas d\'utilisation'), g:'arch', t:_L('Cas d\'utilisation UML / SysML v1 : acteurs (directs ou par inclusion / extension), sujet, include / extend, comportements et exigences liés, matrice acteur × cas, contrôles')},
+  {k:'ana:umlsoft',l:_L('📦 Paquetages & classes'),     m:'grp:uml', c:_L('📦 Paquetages & classes'), g:'arch', t:_L('UML logiciel : dépendances et cycles entre paquetages (métriques de Martin), classes (héritage, couplage, interfaces réalisées et requises), déploiement (nœuds, artefacts), contrôles')},
+  {k:'ana:uml',   l:_L('🧬 UML / SysML v1'), m:'grp:uml', c:_L('🧬 Modèle'), g:'arch', t:_L('Modèle UML 2.5.1, SysML v1 ou UAF lu par le lecteur d\'Arcature (.uml, .xmi, .mdzip, .qea) : éléments par famille, type et métaclasse, liaisons (généralisation, composition, association, satisfy, allocation…), diagnostics de la validation (contraintes UML, SysML, UAF)')},
   {k:'@rm',       l:_L('🗺 Relation Map'),      g:'arch', s:_L('Explorer'), t:_L('Graphe interactif des éléments et de leurs relations : voisinage, dépliage, disposition, export en image')},
   {k:'tree',      l:_L('🌳 Arborescence'),      g:'arch', s:_L('Explorer')},
-  {k:'cards',     l:_L('▦ Cartes'),             g:'arch', s:_L('Explorer'), x:1},
+  {k:'cards',     l:_L('🃏 Cartes'),             g:'arch', s:_L('Explorer'), x:1},
   // ✅ Vérifier
   {k:'ana:sante', l:_L('💚 Santé & contrôles'),          g:'verif', t:_L('Score global et par couche bâti sur tous les contrôles (🩺 profil), détail contrôle × couche, historique des versions')},
   {k:'grp:trac',  l:_L('🧬 Traçabilité entre couches'), g:'verif', f:['ana:trace','ana:xlay'], t:_L('Réalisations entre couches OA → SA → LA → PA → EPBS : tableau de couverture et chemins, ou graphe des réalisations')},
   {k:'ana:trace', l:_L('🧬 Traçabilité inter-couches'), m:'grp:trac', c:_L('🧬 Tableau de traçabilité'), g:'verif'},
   {k:'ana:xlay',  l:_L('⇶ Liens entre couches'),       p:_L('⇶ Couches'), m:'grp:trac', c:_L('⇶ Graphe des réalisations'), g:'verif', t:_L('Vue graphique des réalisations entre couches (OA → SA → LA → PA → EPBS) : fonctions, chaînes et leurs fonctions, capacités, composants…')},
   {k:'ana:reqs',  l:_L('🧾 Exigences'),               g:'verif'},
+  {k:'ana:umltrace',l:_L('⇶ Traçabilité par niveaux'), g:'verif', t:_L('UML / SysML v1 : éléments classés par niveau (exigences, cas d\'utilisation, fonctionnel, logique, physique) d\'après leur type et leurs paquetages ; satisfy, verify, refine, trace, allocate… ; couverture, chemins, graphe en colonnes, contrôles')},
+  {k:'ana:umlbudget',l:_L('⚖ Budgets'),                g:'verif', t:_L('UML / SysML v1 : masse, puissance, coût… cumulés sur l\'arbre des parts (multiplicités comprises), comparés à une limite (valeur …Max, …Limit, budget) ; marge, contrôles. Bilan statique sur les valeurs par défaut')},
+  {k:'ana:umlpar',l:_L('🔒 Paramétrique & contraintes'), g:'verif', t:_L('UML / SysML v1 : blocs de contrainte (équations, paramètres), usages et liaisons aux valeurs (BindingConnector), contraintes OCL ; contrôles : paramètres non liés, unités différentes, équations, contraintes sans texte')},
+  {k:'ana:umlreq',l:_L('🧾 Exigences SysML'),         g:'verif', t:_L('Exigences SysML v1 («Requirement») : identifiant, texte, contenance ; satisfy, verify, deriveReqt, refine, trace ; liste, arbre, couverture, matrice exigence × élément, contrôles')},
   {k:'ana:pvmt',  l:_L('🎛 Propriétés'),              m:'grp:prop', c:_L('🎛 Propriétés (PVMT)'), g:'verif'},
   {k:'ana:cts',   l:_L('🔒 Contraintes'),              m:'grp:prop', c:_L('🔒 Contraintes'), g:'verif'},
   {k:'grp:prop',  l:_L('🎛 Propriétés & contraintes'), g:'verif', f:['ana:pvmt','ana:cts'], t:_L('Propriétés PVMT (groupes, valeurs, définitions) et contraintes (expressions, éléments contraints)')},
@@ -65,24 +79,28 @@ var CAP_NAV_GROUPS=[
   {g:'verif', id:'cap-v-verif', l:_L('✅ Vérifier'),            t:_L('Le modèle est-il juste et complet ? Santé du modèle et contrôles, traçabilité, exigences, propriétés, contraintes, comparaison de versions, statut de revue')},
   {g:'revue', id:'cap-v-revue', l:_L('💬 Revue & documents'),   t:_L('Relire et produire : commentaires, check-lists et plans de revue, dossiers à faire relire, rapports automatiques, tableaux de bord')}
 ];
-/** Réglage par défaut : boutons directs 🏠 Accueil, 🔲 Diagrammes, ▤ Tableau ; niveau Essentiel (v3 : réglage de la refonte 3.0). */
-var CAP_NAV_DEFAULT={pins:['home','diag','table'], mode:'essentiel', v3:1};
+/** Réglage par défaut : boutons directs 🏠 Accueil, 🔲 Diagrammes, ▤ Tableau, ▦ Matrice ; niveau Essentiel (v3 : réglage de la
+ * refonte 3.0 ; mx : ▦ Matrice déjà ajoutée aux boutons directs). */
+var CAP_NAV_DEFAULT={pins:['home','diag','table','matrix'], mode:'essentiel', v3:1, mx:1};
 var _capNav=(()=>{ try{ const el=document.getElementById('cap-toolbar'); const o=el&&JSON.parse(el.textContent);
   if(o&&Array.isArray(o.pins)) return capNavMigrate(o); }catch(e){} return JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); })();
 
 /** Met à jour un réglage de barre enregistré avant la refonte 3.0 : niveau Expert → Complet, Simplifié ou Personnalisé
  * → Essentiel ; épingles ramenées aux boutons directs, plus celles que l'utilisateur avait ajoutées lui-même.
+ * Un réglage d'avant la ▦ Matrice reçoit une fois son bouton direct, après ▤ Tableau (mx).
  * @param {object} o - Réglage {pins, mode, …}
  * @returns {object} Réglage mis à jour
  */
 function capNavMigrate(o){
-  if(o.v3) return o;
-  const old=['home','table','diag','chains','ana:xlay','dashboard','home:rap'];   // anciennes épingles par défaut
-  const mine=((o.mode==='perso'&&o.perso&&o.perso.pins)||o.pins||[]).filter(k=>!old.includes(k)&&CAP_NAV_ITEMS.some(i=>i.k===k&&i.k[0]!=='@'));
-  o.mode=(o.mode==='simple'||o.mode==='perso')?'essentiel':'complet';
-  o.pins=['home','diag','table',...mine];
-  ['groups','perso','tbl','diag','home','ch','xl','rp'].forEach(k=>delete o[k]);
-  o.v3=1;
+  if(!o.v3){
+    const old=['home','table','diag','chains','ana:xlay','dashboard','home:rap'];   // anciennes épingles par défaut
+    const mine=((o.mode==='perso'&&o.perso&&o.perso.pins)||o.pins||[]).filter(k=>!old.includes(k)&&CAP_NAV_ITEMS.some(i=>i.k===k&&i.k[0]!=='@'));
+    o.mode=(o.mode==='simple'||o.mode==='perso')?'essentiel':'complet';
+    o.pins=['home','diag','table',...mine];
+    ['groups','perso','tbl','diag','home','ch','xl','rp'].forEach(k=>delete o[k]);
+    o.v3=1;
+  }
+  if(!o.mx){ const i=o.pins.indexOf('table'); if(!o.pins.includes('matrix')) o.pins.splice(i<0?o.pins.length:i+1,0,'matrix'); o.mx=1; }
   return o;
 }
 
@@ -105,7 +123,19 @@ function capNavVides(){
       'ana:status':()=>capAllElements.some(e=>e.attrs&&(e.attrs.status||e.attrs.review)),
       'ana:cats':()=>has(/^(Exchange|ComponentExchange|PhysicalLink)Category$/),
       'ana:rec':()=>T.has('CatalogElement'),
-      'ana:sysml':()=>typeof _capSysml!=='undefined'&&!!_capSysml.lecture
+      'ana:sysml':()=>typeof _capSysml!=='undefined'&&!!_capSysml.lecture&&!(typeof capSyUml==='function'&&capSyUml()),
+      'ana:uml':()=>typeof capSyUml==='function'&&capSyUml(),
+      'ana:umlblk':()=>!!capUmlLec()&&capUmlLec().elements().some(e=>e.metaclasse==='Port'||e.metaclasse==='Connector'||e.type==='Block'||(e.stereotypes||[]).includes('Block')),   // 🧬 UML / SysML v1 (92, 93)
+      'ana:umlact':()=>!!capUmlLec()&&capUmlLec().elements().some(e=>CAP_UML_ACTION.test(e.metaclasse)),
+      'ana:umlreq':()=>!!capUmlLec()&&capUmlLec().elements().some(capUmlEstExigence),
+      'ana:umlstm':()=>!!capUmlLec()&&capUmlLec().elements().some(e=>/StateMachine$/.test(e.metaclasse)),   // 92
+      'ana:umlseq':()=>!!capUmlLec()&&capUmlLec().elements().some(e=>e.metaclasse==='Interaction'),
+      'ana:umlucs':()=>!!capUmlLec()&&capUmlLec().elements().some(e=>e.metaclasse==='UseCase'),   // 93
+      'ana:umltrace':()=>!!capUmlLec()&&capUmlTracabilite().aretes.length>0,
+      'ana:umlicd':()=>!!capUmlLec()&&capUmlInterfaces().list.length>0,   // 94
+      'ana:umlbudget':()=>!!capUmlLec()&&capUmlBudgets().grandeurs.length>0,
+      'ana:umlpar':()=>!!capUmlLec()&&(capUmlParametrique().blocs.length>0||capUmlParametrique().contraintes.length>0),   // 95
+      'ana:umlsoft':()=>!!capUmlLec()&&(capUmlLogiciel().classes.length>0||capUmlLogiciel().noeuds.length>0)
     };
     const S=new Set(); Object.entries(test).forEach(([k,f])=>{ try{ if(!f()) S.add(k); }catch(e){ /* test indisponible : vue gardée */ } });
     if(typeof _capSysml!=='undefined'&&_capSysml.lecture) CAP_SY_VUES_CAPELLA.forEach(k=>S.add(k));   // 🧩 modèle SysML v2 : vues propres à Capella sans données (87)
@@ -123,7 +153,17 @@ function capNavVides(){
 function capNavEff(){
   const m=_capNav.mode==='complet'?'complet':'essentiel', vides=_capNav.vides===false?new Set():capNavVides();
   CAP_NAV_ITEMS.filter(i=>i.f&&i.f.every(k=>vides.has(k))).forEach(i=>vides.add(i.k));   // famille dont aucune vue n'a de données
-  return {mode:m, pins:_capNav.pins, vides, hide:new Set(m==='complet'?[]:[...CAP_NAV_ITEMS.filter(i=>i.x).map(i=>i.k), ...vides])};
+  return {mode:m, pins:_capNav.pins, vides, hide:new Set([...(m==='complet'?[]:[...CAP_NAV_ITEMS.filter(i=>i.x).map(i=>i.k), ...vides]), ...capNavHorsEdition()])};
+}
+
+/** Vues d'un format que cette version ne lit pas (version réduite à un format, CAP_EDITION) : absentes des menus quel que soit le niveau.
+ * @returns {string[]} Clés de vues */
+function capNavHorsEdition(){
+  if(!CAP_EDITION) return [];
+  const ks=[]; if(typeof capSysmlDispo!=='function'||!capSysmlDispo()) ks.push('ana:sysml');
+  if(typeof capUmlDispo!=='function'||!capUmlDispo()) ks.push('ana:uml');
+  if(CAP_EDITION!=='capella') try{ ks.push(...CAP_SY_VUES_CAPELLA); }catch(e){ /* 87 pas encore exécuté (premier rendu de la barre) */ }
+  return ks;
 }
 
 /** Change le niveau d'affichage des menus.
@@ -199,6 +239,7 @@ function capNavOpen(k){
   if(k.startsWith('grp:')){ const G=CAP_NAV_ITEMS.find(i=>i.k===k); if(G) capNavGroupOpen(G); return; }   // famille de vues (lot 5)
   if(k==='home:dos'){ capDosOuvrir(); return; }   // 📑 Faire relire : dossiers de relecture (onglet de l'accueil)
   if(k==='home:rap'){ capRapOuvrir(); return; }   // 📘 Rapports automatiques (onglet de l'accueil)
+  if(k==='revdoc'){ if(!['docs','dos','rap'].includes(_capHomeUi.tab)) k='home:docs'; else { if(currentMode!=='capella'||capCurrentView!=='home') capShowView('home'); else capHomeRender(); return; } }   // espace 💬 Revue & documents (clé de sa visite, 43)
   if(k==='home:docs'){ _capHomeUi.tab='docs'; if(currentMode!=='capella'||capCurrentView!=='home') capShowView('home'); else capHomeRender(); return; }   // ☑ Check-lists
   if(k==='home'&&['docs','dos','rap'].includes(_capHomeUi.tab)) _capHomeUi.tab='projet';   // 🏠 Accueil : pas un onglet de 💬 Revue & documents
   if(k.startsWith('ana:')){ capAnaSub=k.slice(4); capShowView('analyses'); }
@@ -300,8 +341,8 @@ function capNavRender(){
   const pin=k=>{ const it=CAP_NAV_ITEMS.find(i=>i.k===k); if(!it) return '';
     return `<div class="tbtn" id="cap-v-${k.replace(':','-')}" data-open="${k}" title="${tip(it.l,it.t)}">${capNavLbl(it.p||it.l, it.i)}</div>`; };   // p : libellé court du bouton épinglé
   const home=document.getElementById('cap-tb-home'); if(home) home.innerHTML=P.includes('home')?pin('home'):'';   // 🏠 Accueil : tout à gauche
-  let h=['diag','table'].filter(k=>P.includes(k)).map(pin).join('');
-  h+=P.filter(k=>!['home','diag','table'].includes(k)).map(pin).join('');   // épingles ajoutées par l'utilisateur
+  let h=['diag','table','matrix'].filter(k=>P.includes(k)).map(pin).join('');
+  h+=P.filter(k=>!['home','diag','table','matrix'].includes(k)).map(pin).join('');   // épingles ajoutées par l'utilisateur
   h+='<span class="tsep"></span>';
   CAP_NAV_GROUPS.forEach(G=>{
     h+=`<div class="tbtn cap-nav-grp" id="${G.id}" data-g="${G.g}" data-dd="${G.g}" title="${tip(G.l,G.t)}">${capNavLbl(G.l)}${G.g==='revue'?'<span id="cap-nav-rev-badge" class="cw-badge" style="display:none"></span>':''}<span class="cap-nav-arr">▾</span></div>`;
@@ -377,7 +418,7 @@ function capNavMenu(g, anchor){
         page:()=>capSaveFullPage(), themeedit:()=>capThemeEditor(), update:()=>capCfgLoadUpdate(), cfgsave:()=>capCfgDialog('save'), cfgload:()=>capCfgLoadFile(),
         watch:()=>setTimeout(()=>capWatchMenu(true),0),   // 🔄 Suivi du fichier (40) : après la fermeture de ce menu par le même clic
         help:()=>openHelpModal(), prefs:()=>capPrefDialog(), autosave:()=>capPrefDialog('save'), checks:()=>capChkDialog(), xport:()=>capExportToggle(), xlsx:()=>capXlsxClasseur(),
-        theme:()=>capNavMenu('theme', document.getElementById('b-prefs')), tour:()=>capTourStart(), tourview:()=>capTourStartView(), tourrev:()=>capTourRevue(), tourscr:()=>capTourScripts(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
+        theme:()=>capNavMenu('theme', document.getElementById('b-prefs')), tour:()=>capTourStart(), tourview:()=>capTourStartView(), tourrev:()=>capTourRevue(), tourscr:()=>capTourScripts(), tourdet:()=>capTourDetail(), tourpref:()=>capTourPrefs(), tourdgw:()=>capTourDgw(), about:()=>capAboutOpen()})[a.dataset.act](); return; }
       if(e.target.closest('[data-reset]')){ const keep=['auto','icons','watch','xport','vides'].filter(k=>_capNav[k]!==undefined).map(k=>[k,_capNav[k]]);
         _capNav=JSON.parse(JSON.stringify(CAP_NAV_DEFAULT)); keep.forEach(([k,v])=>_capNav[k]=v);   // ⚙ enregistrement, style, suivi, exports conservés
         capNavSave(); capNavRender(); capNavMenuFill(); }
@@ -419,7 +460,7 @@ function capNavMenuFill(){
   const g=dd.dataset.g;
   if(g==='file'){
     const sc=s=>` <span class="cap-nav-g">${s}</span>`;
-    res.innerHTML=_L(`<div class="ctx-i" data-act="open" title="Remplace le modèle affiché par un autre fichier modèle (Capella : .capella ; SysML v2 : .sysml, .kpar)">📂 Ouvrir un modèle…</div>
+    res.innerHTML=_L(`<div class="ctx-i" data-act="open" title="Remplace le modèle affiché par un autre fichier modèle, de n'importe quel format : ${capEsc(capFormatsLibelle())} (le sélecteur les propose tous d'office)">📂 Ouvrir un modèle…</div>
       <div class="ctx-i" data-act="folder" title="Ouvre le dossier du projet : Capella (.capella, .aird, bibliothèques) ou SysML v2 (les .sysml du projet), chargé en une fois">📁 Ouvrir le dossier du projet…</div>
       <div class="ctx-i" data-act="projet" title="Reprend un projet de travail enregistré en page HTML (💾), même par une version précédente d'Arcalyse (à partir de la 2.1) : modèle, diagrammes, revue, accueil, vues et réglages">📄 Ouvrir un projet de travail (page HTML)…</div>
       <div class="cap-nav-hint">Nouvelle version d'Arcalyse ? Ouvrez-y la page de votre projet enregistrée avec l'ancienne : tout le travail est repris.</div>
@@ -445,6 +486,9 @@ function capNavMenuFill(){
       (v?_L(`<div class="ctx-i" data-act="tourview" title="Présente les menus et les commandes de la vue affichée">🎯 Visite de cette vue <span class="cap-nav-g">${v.l}</span></div>`)
         :_L(`<div class="cap-nav-hint">🎯 Chargez un modèle pour la visite de chaque vue.</div>`))+
       _L(`<div class="ctx-i" data-act="tourrev" title="Présente le panneau 💬 Revue : commentaires, vérification, rapport, revue ciblée, fenêtre séparée">💬 Visite de la revue</div>`)+
+      (capLoaded?_L(`<div class="ctx-i" data-act="tourdet" title="Présente le panneau de détail : en-tête, commentaires, onglets, navigateur sémantique, fenêtre séparée">🔎 Visite du panneau de détail</div>`):'')+
+      (capLoaded&&capDiagReps().length?_L(`<div class="ctx-i" data-act="tourdgw" title="Présente la fenêtre séparée où l'on affiche un second diagramme pour comparer">⧉ Visite de la fenêtre de comparaison</div>`):'')+
+      _L(`<div class="ctx-i" data-act="tourpref" title="Présente la fenêtre ⚙ Préférences rubrique par rubrique">⚙ Visite des préférences</div>`)+
       (capLoaded?_L(`<div class="ctx-i" data-act="tourscr" title="Présente la console 📜 Scripts : bibliothèque, éditeur, exécution, sortie">📜 Visite des scripts</div>`):'')+
       _L(`<div class="cw-m-sep"></div><div class="ctx-i" data-act="about" title="Version, auteur, licence, composants tiers, informations techniques">ℹ À propos</div>`);
     return;

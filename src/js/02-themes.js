@@ -221,6 +221,11 @@ function applyTheme(name) {
   if (fexView && fexView.style.display !== 'none' && fexView._fex) capRenderFunctionalExchange();
   const oavView = document.getElementById('cap-view-oav');
   if (oavView && oavView.style.display !== 'none' && oavView._fex) capRenderFunctionalExchange('OA');
+  // 🧱 / ƒ UML (92) : couleurs des liens et des éléments calculées pour le thème
+  [['umlblk', typeof capRenderUmlBlocs==='function'?capRenderUmlBlocs:null], ['umlact', typeof capRenderUmlActivites==='function'?capRenderUmlActivites:null]].forEach(([k,f])=>{
+    const h=document.querySelector(`#ana-box [data-hold="${k}"]`); if(f&&h&&h.offsetParent&&h._ub) f(h); });
+  // En-têtes collants (48) : leur fond est relevé au rendu, à recalculer pour le nouveau thème
+  if (typeof capTbStickyTous === 'function') requestAnimationFrame(capTbStickyTous);
   // Contraste des textes colorés : remise à l'origine, puis correction si le thème est clair
   capRestoreContrast(); capContrastCss(); capFixContrast(document.body);
 }

@@ -44,7 +44,7 @@ function capOpenDetail(id){
     const elv=CAP_LAYERS[e.layer]||{color:'#8b949e',bg:'rgba(139,148,158,.1)'};
     return `<span class="cap-det-link" onclick="capOpenDetail('${capEsc(e.id)}')" style="cursor:pointer;display:inline-flex;align-items:center;gap:5px;padding:2px 6px;border-radius:4px;border:1px solid var(--c-border);margin:2px 3px 2px 0;font-size:11px;background:var(--c-bg2);" onmouseenter="this.style.borderColor='var(--c-accent)'" onmouseleave="this.style.borderColor='var(--c-border)'">${capIco(e.id,13)}<span style="color:${elv.color};font-size:9px;font-weight:700">${capEsc(e.typeName)}</span><span style="color:var(--c-text)">${capEsc(e.attrs.name||e.id.slice(0,12))}</span></span>`;
   };
-  // Onglet du panneau (77) porté par chaque titre de section : 📋 fiche, 🔗 liens, 🔲 diag, 🔬 ana, 💬 revue
+  // Onglet du panneau (77) porté par chaque titre de section : 📝 desc, 📋 fiche, 🔗 liens, 🔲 diag, 🔬 ana, 💬 revue
   let curTab='fiche';
   const secTitle=(txt,color)=>`<div class="cap-det-sec" data-tab="${curTab}" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:${color||'var(--c-dim)'};margin:16px 0 6px;">${txt}</div>`;
 
@@ -55,8 +55,10 @@ function capOpenDetail(id){
   // 💬 Revue : commenter l'élément, son nom, sa description (55-revue.js)
   if(typeof capRevDetailHead==='function') html+=capRevDetailHead(el);
 
-  // Description Capella (HTML) : affichée mise en forme (balises filtrées), ou son code HTML d'origine
-  if(el.attrs.description) html+=capDescSection(el.id, el.attrs.description, secTitle);
+  // Description Capella (HTML) : affichée mise en forme (balises filtrées), ou son code HTML d'origine ;
+  // seule dans l'onglet 📝 Description (77), et aussi dans 📋 Fiche avec les autres attributs (c'est un attribut du modèle)
+  if(el.attrs.description){ curTab='desc'; html+=capDescSection(el.id, el.attrs.description, secTitle); curTab='fiche';
+    html+=capDescSection(el.id, el.attrs.description, secTitle); }
 
   // Attributs littéraux
   html+=secTitle(_L('Attributs'));
@@ -64,8 +66,7 @@ function capOpenDetail(id){
 
   // 🔲 Diagrammes Capella du projet (.aird) où l'élément est représenté : juste après les attributs
   curTab='diag';
-  if(typeof capDiagDetail==='function') html+=capDiagDetail(el.id, secTitle);
-  if(typeof capSyVuesDetail==='function') html+=capSyVuesDetail(el.id, secTitle);   // 🧩 vues calculées SysML v2 (87)
+  if(typeof capDiagDetail==='function') html+=capDiagDetail(el.id, secTitle);   // Capella (.aird) et vues des lecteurs SysML / UML (87, 88)
   curTab='liens';
 
   // Références sortantes (attributs → autres éléments, cliquables)
@@ -139,9 +140,12 @@ const CAP_DESC_CSS=['font-weight','font-style','text-decoration','text-align','v
  * d'événement, aucune ressource externe), liens Capella « hlink:// » vers les éléments du modèle rendus cliquables,
  * couleurs de texte adaptées au thème, images limitées aux images intégrées (data:).
  * @param {string} html - Description HTML (attribut description du .capella)
+ * @param {{export:boolean}} [opt] - export : HTML pour un document exporté (page à fond blanc, Word) — couleurs
+ *   d'origine gardées, liens « hlink:// » rendus en texte marqué (classe hl) sans commande
  * @returns {string} HTML sûr
  */
-function capSafeHtml(html){
+function capSafeHtml(html, opt){
+  const exp=!!(opt&&opt.export), coul=v=>exp?v:capTextOn(v);
   if(!html) return '';
   const doc=new DOMParser().parseFromString(String(html),'text/html');   // DOMParser n'exécute aucun script
   const nettoie=n=>{
@@ -157,13 +161,14 @@ function capSafeHtml(html){
       const span=c.getAttribute('colspan'), rspan=c.getAttribute('rowspan'), alt=c.getAttribute('alt')||'';
       [...c.attributes].forEach(a=>c.removeAttribute(a.name));
       const css=st.split(';').map(x=>x.split(':')).filter(([p,v])=>p&&v&&CAP_DESC_CSS.includes(p.trim().toLowerCase())&&!/url\(|expression|javascript/i.test(v))
-        .map(([p,v])=>{ p=p.trim().toLowerCase(); v=v.trim(); return p==='color'?p+':'+capTextOn(v):p+':'+v; });
-      if(col) css.push('color:'+capTextOn(col));
+        .map(([p,v])=>{ p=p.trim().toLowerCase(); v=v.trim(); return p==='color'?p+':'+coul(v):p+':'+v; });
+      if(col) css.push('color:'+coul(col));
       if(css.length) c.setAttribute('style',css.join(';'));
       if(span) c.setAttribute('colspan',span); if(rspan) c.setAttribute('rowspan',rspan);
       if(tag==='A'){
         const m=/^hlink:\/\/(.+)$/i.exec(href);
-        if(m){ const s=doc.createElement('span'); s.className='cap-desc-hlink'; s.dataset.hlink=decodeURIComponent(m[1]); s.setAttribute('onclick','capOpenDetailById(this.dataset.hlink)');
+        if(m&&exp){ const s=doc.createElement('span'); s.className='hl'; s.append(...c.childNodes); c.replaceWith(s); }
+        else if(m){ const s=doc.createElement('span'); s.className='cap-desc-hlink'; s.dataset.hlink=decodeURIComponent(m[1]); s.setAttribute('onclick','capOpenDetailById(this.dataset.hlink)');
           s.title=_L('Ouvrir le détail de l\'élément référencé'); s.append(...c.childNodes); c.replaceWith(s); }
         else if(/^(https?:|mailto:)/i.test(href)){ c.setAttribute('href',href); c.setAttribute('target','_blank'); c.setAttribute('rel','noopener noreferrer'); c.title=href; }
       }
@@ -220,10 +225,10 @@ function capUpdateToolbarForView(view){
   const treeGrp=document.getElementById('cap-tb-tree-grp');
   if(layerGrp) layerGrp.style.display=(view==='cards'||view==='table')?'flex':'none';
   if(treeGrp)  treeGrp.style.display=(view==='tree')?'flex':'none';
-  // ▤ Tableau : son propre ⬇ CSV exporte les colonnes affichées ; celui de la barre (attributs bruts) reste pour ▦ Cartes
+  // ▤ Tableau : son propre ⬇ CSV exporte les colonnes affichées ; celui de la barre (attributs bruts) reste pour 🃏 Cartes
   const expCsv=document.getElementById('cap-exp-csv'); if(expCsv) expCsv.style.display=view==='table'?'none':'';
   // Barre de recherche / statistiques et compteur : inutiles dans les vues qui ont leurs propres filtres
-  const own=['home','functions','analyses','dashboard','chains','physlink','compex','fex','oav','scen','diag','cblk','csys','ports'].includes(view);
+  const own=['home','functions','analyses','dashboard','chains','physlink','compex','fex','oav','scen','diag','cblk','csys','ports','matrix'].includes(view);
   const sub=document.getElementById('cap-sub-toolbar'), rc=document.getElementById('cap-result-count');
   // ▤ Tableau : ni recherche ni filtre de couche (filtres par colonne), mais le compteur reste
   // 🌳 Arborescence : sa propre barre (recherche, Arbre / Liste, déplier, JSON) et son compteur
@@ -231,7 +236,7 @@ function capUpdateToolbarForView(view){
   // ▤ Tableau : chaque onglet a ses propres types cochés (51-tableau.js)
   if(typeof capTableTypesView==='function') capTableTypesView(view==='table');
   // Barre latérale des types : inutile dans les vues de 🔗 Liens à 📐 Tableau de bord
-  const noSide=['home','chains','physlink','compex','fex','oav','scen','diag','cblk','csys','ports','functions','analyses','dashboard'].includes(view);
+  const noSide=['home','chains','physlink','compex','fex','oav','scen','diag','cblk','csys','ports','functions','analyses','dashboard','matrix'].includes(view);
   ['cap-sidebar','cap-sidebar-resizer'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display=noSide?'none':'flex'; });
   // Menu 🧭 Explorateur : regroupe Arborescence, Cartes et Index des types (onglets #cap-elem-tabs)
   const isElem=CAP_ELEM_VIEWS.includes(view);

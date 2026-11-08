@@ -7,6 +7,7 @@
 
 /** Onglets du panneau de détail, dans l'ordre d'affichage. */
 var CAP_DET_TABS=[
+  {k:'desc',  l:_L('📝 Description'), t:_L('Description seule, mise en forme comme dans Capella, sur toute la hauteur du panneau')},
   {k:'fiche', l:_L('📋 Fiche'),      t:_L('Description et attributs de l\'élément')},
   {k:'liens', l:_L('🔗 Liens'),      t:_L('Références sortantes et entrantes, owner, éléments contenus')},
   {k:'sem',   l:_L('🧭 Sémantique'), t:_L('Navigateur sémantique façon Capella (Semantic Browser) : éléments référençants, élément courant, éléments référencés')},
@@ -63,6 +64,21 @@ function capDetTabsRefresh(box){
  */
 function capDetTabShow(box, k){
   box.querySelectorAll('.cap-det-tab').forEach(b=>{ const on=b.dataset.dtab===k; b.classList.toggle('active',on); b.setAttribute('aria-selected',on); });
-  // ≡ Tout : sans le 🧭 navigateur sémantique, qui reprend les liens sous une autre forme
-  box.querySelectorAll('.cap-det-pane').forEach(p=>p.classList.toggle('on', (k==='all'&&p.dataset.pane!=='sem')||p.dataset.pane===k));
+  // ≡ Tout : sans le 🧭 navigateur sémantique, qui reprend les liens sous une autre forme, ni 📝 Description (déjà dans 📋 Fiche)
+  box.querySelectorAll('.cap-det-pane').forEach(p=>p.classList.toggle('on', (k==='all'&&p.dataset.pane!=='sem'&&p.dataset.pane!=='desc')||p.dataset.pane===k));
+  if(k==='desc') capDetDescFit(box);
 }
+
+/** 📝 Description : la description occupe la hauteur visible restante du panneau (ou de sa fenêtre séparée) et défile
+ * dans son propre ascenseur quand elle est longue.
+ * @param {HTMLElement} box - Conteneur du contenu
+ */
+function capDetDescFit(box){
+  const w=box.ownerDocument.defaultView||window;
+  let bas=w.innerHeight;
+  for(let n=box; n&&n.nodeType===1; n=n.parentElement){ if(/(auto|scroll|hidden)/.test(w.getComputedStyle(n).overflowY)){ bas=Math.min(bas, n.getBoundingClientRect().bottom); break; } }
+  box.querySelectorAll('.cap-det-pane[data-pane="desc"] .cap-desc').forEach(d=>{ if(!d.offsetParent) return;
+    d.style.maxHeight=Math.max(160, Math.floor(bas-d.getBoundingClientRect().top-14))+'px'; });
+}
+// 📝 Description : hauteur recalculée quand la fenêtre change de taille
+window.addEventListener('resize', ()=>document.querySelectorAll('.cap-det-pane.on[data-pane="desc"]').forEach(p=>capDetDescFit(p.parentElement)));

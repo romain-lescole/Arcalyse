@@ -3,7 +3,7 @@
    lecteur autonome d'Arcature (src/vendor/arcature-lecteur-sysml.js, `window.ArcatureLecteurSysml`, lecture seule,
    hors ligne ; mode d'emploi : docs/SYSML-V2.md). La lecture est convertie en document XML « façon Capella »
    (un élément par élément SysML, `xsi:type="sysml:<métaclasse>"`, références en attributs « #id ») et passée à
-   `capApplyXmlDoc` (20) : 🌳 Arborescence, ▦ Cartes, ▤ Tableau, 🔍 Ctrl+K, panneau de détail (références sortantes /
+   `capApplyXmlDoc` (20) : 🌳 Arborescence, 🃏 Cartes, ▤ Tableau, 🔍 Ctrl+K, panneau de détail (références sortantes /
    entrantes), 🗺 Relation Map (liaisons), 💬 Revue et 💾 page fonctionnent sans changement. En plus : vue 🧩 SysML v2
    (sous-vue `sysml` de 🔬 Analyses : éléments, liaisons, 🩺 diagnostics, fichiers), section du panneau de détail
    (déclaration, liaisons, diagnostics, extrait), contrôles 🩺 (diagnostics du lecteur, repris par 💚 Santé), pastille de
@@ -11,8 +11,9 @@
    « sans données » (41) pour un modèle SysML.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/** Lecture SysML affichée : `lecture` (objet du lecteur), `nom` du fichier ou du dossier, `doc` XML produit (celui de `cap_xmlDoc`). */
-var _capSysml={lecture:null, nom:'', doc:null};
+/** Lecture affichée : `lecture` (objet du lecteur), `nom` du fichier ou du dossier, `doc` XML produit (celui de `cap_xmlDoc`), `L` lecteur
+ * qui l'a produite (null : SysML v2, `ArcatureLecteurSysml` ; UML / SysML v1 : `ArcatureLecteurUml`, 88), `format` (`sysml2`, `uml`, `sysml1`). */
+var _capSysml={lecture:null, nom:'', doc:null, L:null, format:''};
 /** État de la vue 🧩 SysML v2. */
 var _capSy={view:'els', q:'', fam:'', type:'', rel:'', fic:''};
 /** Vues propres à Capella, sans données pour un modèle SysML v2 (retirées des menus en Essentiel, grisées en Complet). */
@@ -31,6 +32,19 @@ function capSysmlDispo(){ return typeof ArcatureLecteurSysml!=='undefined'&&!!Ar
 
 /** Vrai si le nom de fichier est un modèle SysML v2 (.sysml, .kpar) que le lecteur sait lire. @param {string} nom - Nom du fichier @returns {boolean} */
 function capSysmlReconnait(nom){ return capSysmlDispo()&&ArcatureLecteurSysml.reconnait(String(nom||'')); }
+
+/** Lecteur d'Arcature de la lecture affichée : SysML v2 (`ArcatureLecteurSysml`) ou UML / SysML v1 (`ArcatureLecteurUml`, 88) ; même contrat
+ * là où les deux se recouvrent. @returns {object|null} */
+function capSyL(){ return _capSysml.L||(capSysmlDispo()?ArcatureLecteurSysml:null); }
+
+/** Vrai si la lecture affichée est un modèle UML ou SysML v1 (lu par le lecteur de 88). @returns {boolean} */
+function capSyUml(){ return !!_capSysml.lecture&&!!_capSysml.format&&_capSysml.format!=='sysml2'; }
+
+/** Nom du format de la lecture affichée : « SysML v2 », « UML » ou « SysML v1 » (noms des langages, non traduits). @returns {string} */
+function capSyNomFormat(){ return {uml:'UML', sysml1:'SysML v1'}[_capSysml.format]||'SysML v2'; }
+
+/** Sous-vue de 🔬 Analyses qui montre la lecture affichée : `ana:sysml` (SysML v2) ou `ana:uml` (UML / SysML v1, 88). @returns {string} */
+function capSyNavCle(){ return capSyUml()?'ana:uml':'ana:sysml'; }
 
 /** Lit un File SysML (.sysml en texte, .kpar en octets). @param {File} f - Fichier @returns {Promise<object>} Lecture du lecteur */
 function capSysmlLireFichier(f){
@@ -52,6 +66,7 @@ function capSysmlOuvrir(f, handle, confirme){
   const name=(f&&f.name)||'';
   if(capLoaded&&!confirme){ capReplaceConfirm(name).then(ok=>{ if(ok) capSysmlOuvrir(f, handle, true); else capShowWelcome(false); }); return; }
   capWelcomeStatus(_L(`Chargement de « ${name} »…`),'busy'); capShowWelcome(true);
+  capSourcesNoter('sy', name, [{nom:name, chemin:name, lire:()=>Promise.resolve(f)}]);   // 🌐 changement de langue (20)
   capSysmlLireFichier(f).then(lec=>setTimeout(()=>capSysmlAppliquer(lec, name),30))
     .catch(err=>{ capWelcomeStatus(_L('Erreur de chargement : ')+(err&&err.message||err),'err'); capShowWelcome(true); });
 }
@@ -85,31 +100,38 @@ async function capSysmlOuvrirDossier(fichiers, nom, confirme){
     const textes=[];
     for(const f of sy){ const file=await f.lire(); textes.push({chemin:f.chemin||f.nom, texte:await file.text()}); }
     const lec=ArcatureLecteurSysml.lireDossier(textes, nom);
+    capSourcesNoter('syd', nom, sy);   // 🌐 changement de langue (20)
     setTimeout(()=>capSysmlAppliquer(lec, nom),30);
   }catch(err){ capWelcomeStatus(_L('Erreur de chargement : ')+(err&&err.message||err),'err'); capShowWelcome(true); }
 }
 
-/** Remplace le modèle affiché par une lecture SysML v2 : conversion en document XML, pipeline Capella (`capApplyXmlDoc`), accueil.
+/** Remplace le modèle affiché par une lecture d'un lecteur d'Arcature (SysML v2, ou UML / SysML v1 depuis 88) : conversion en document
+ * XML, pipeline Capella (`capApplyXmlDoc`), accueil.
  * @param {object} lecture - Lecture du lecteur d'Arcature
  * @param {string} nom - Nom du fichier ou du projet
+ * @param {object} [L] - Lecteur qui l'a produite (`ArcatureLecteurUml`) ; absent : lecteur SysML v2
+ * @param {string} [format] - `uml` ou `sysml1` avec L ; `sysml2` sinon
  */
-function capSysmlAppliquer(lecture, nom){
+function capSysmlAppliquer(lecture, nom, L, format){
   try{
-    if(!lecture||!lecture.elements||lecture.elements().length<2) throw new Error(_L('Aucun élément SysML v2 reconnu dans ce fichier'));
+    const uml=!!L&&!!format&&format!=='sysml2';
+    if(!lecture||!lecture.elements||lecture.elements().length<2) throw new Error(uml?_L('Aucun élément UML ou SysML v1 reconnu dans ce fichier'):_L('Aucun élément SysML v2 reconnu dans ce fichier'));
     const airdRetire=typeof capDiagAvantNouveauModele==='function'?capDiagAvantNouveauModele():'';   // 🔲 diagrammes d'un ancien modèle Capella
-    const doc=capSysmlVersXml(lecture, nom);
+    const doc=capSysmlVersXml(lecture, nom, uml?format:'sysml2', L);
+    _capSysml={lecture, nom, doc, L:L||null, format:uml?format:'sysml2'};
     capSysmlTypesHumains(lecture);
-    _capSysml={lecture, nom, doc};
     capCurrentView='home';
     if(typeof _capProjetPage!=='undefined') _capProjetPage.nom='';
     capApplyXmlDoc(doc, nom);
+    _capSources=_capSourcesPend;   // fichiers d'origine, relus après un 🌐 changement de langue (20)
     if(typeof _capWatch!=='undefined'&&_capWatch){ _capWatch.handle=null; _capWatch.file=null; if(typeof capWatchUpdateUi==='function') capWatchUpdateUi(); }   // pas de 🔄 suivi d'un .sysml
     capWelcomeStatus('',''); capShowWelcome(false);
     const d=capSysmlDiagnostics();
-    if(d.erreurs||d.avertissements) setTimeout(()=>capToast(_L(`🧩 SysML v2 : ${d.erreurs} erreur(s), ${d.avertissements} avertissement(s) — détail dans 🏗 Architecture › 🧩 SysML v2`)),500);
+    if((d.erreurs||d.avertissements)&&!uml) setTimeout(()=>capToast(_L(`🧩 SysML v2 : ${d.erreurs} erreur(s), ${d.avertissements} avertissement(s) — détail dans 🏗 Architecture › 🧩 SysML v2`)),500);
+    if(d.liste.length&&uml) setTimeout(()=>capToast(_L(`🧬 ${capSyNomFormat()} : ${capUmlImpactTexte(capUmlParImpact(d.liste))} — détail dans 🏗 Architecture › 🧬 UML / SysML v1`)),500);   // par impact réel (98)
     if(airdRetire&&typeof capWatchFlash==='function') setTimeout(()=>capWatchFlash(_L(`🔲 Diagrammes de l'ancien modèle (« ${airdRetire} ») retirés`)),700);
   }catch(err){
-    _capSysml={lecture:null, nom:'', doc:null};
+    _capSysml={lecture:null, nom:'', doc:null, L:null, format:''};
     capWelcomeStatus(_L('Erreur de chargement : ')+(err&&err.message||err),'err'); capShowWelcome(true);
   }
 }
@@ -117,17 +139,22 @@ function capSysmlAppliquer(lecture, nom){
 /** Oublie la lecture SysML quand un autre document (Capella) est appliqué ; appelée en tête de `capApplyXmlDoc` (20).
  * @param {Document} doc - Document qui va être affiché
  */
-function capSysmlAvantModele(doc){ if(_capSysml.lecture&&doc!==_capSysml.doc) _capSysml={lecture:null, nom:'', doc:null}; _capSyVues.cle=''; _capSyVues.sel=''; }
+function capSysmlAvantModele(doc){ if(_capSysml.lecture&&doc!==_capSysml.doc) _capSysml={lecture:null, nom:'', doc:null, L:null, format:''}; _capSyVues.cle=''; _capSyVues.sel=''; }
 
-/** Convertit une lecture SysML v2 en document XML « façon Capella » : un élément XML par élément SysML, imbriqué comme dans le modèle,
- * `xsi:type="sysml:<métaclasse>"`, attributs littéraux (nom, déclaration, mot-clé, famille, visibilité, direction, multiplicité, valeur,
- * documentation → description, fichier, ligne…) et références en attributs « #id » (typedBy, specializes, source, target, extremites…),
- * que le panneau de détail, le ▤ Tableau et la 🗺 Relation Map résolvent comme celles d'un .capella.
+/** Convertit une lecture en document XML « façon Capella » : un élément XML par élément du modèle, imbriqué comme dans le modèle,
+ * `xsi:type="sysml:<métaclasse>"` (SysML v2) ou `xsi:type="uml:<type>"` (UML / SysML v1 : stéréotype SysML ou métaclasse), attributs
+ * littéraux (nom, déclaration, mot-clé, famille, visibilité, direction, multiplicité, valeur, documentation → description, fichier, ligne ;
+ * UML : métaclasse, stéréotypes, agrégation, propriétés des stéréotypes — texte d'une exigence… —) et références en attributs « #id »
+ * (typedBy, specializes, type, general, client, supplier, source, target, extremites…), que le panneau de détail, le ▤ Tableau et la
+ * 🗺 Relation Map résolvent comme celles d'un .capella.
  * @param {object} lec - Lecture
  * @param {string} nom - Nom du modèle (racine)
+ * @param {string} [format] - `sysml2` (défaut), `uml` ou `sysml1`
+ * @param {object} [L] - Lecteur (version notée sur la racine) ; défaut : lecteur SysML v2
  * @returns {Document} Document XML
  */
-function capSysmlVersXml(lec, nom){
+function capSysmlVersXml(lec, nom, format, L){
+  const uml=!!format&&format!=='sysml2', pre=uml?'uml':'sysml', lecteur=uml?'ArcatureLecteurUml':'ArcatureLecteurSysml', version=((L||(capSysmlDispo()?ArcatureLecteurSysml:{})).version)||'';
   const esc=v=>String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g,'');
   const els=lec.elements(), byId={}; els.forEach(e=>{ byId[e.id]=e; });
   const racines=els.filter(e=>!e.proprietaire||!byId[e.proprietaire]);
@@ -158,6 +185,12 @@ function capSysmlVersXml(lec, nom){
     if(e.ligne) a.ligne=String(e.ligne);
     if(e.bibliotheque&&e.bibliotheque.length) a.bibliotheque=e.bibliotheque.join(' ');
     if(e.metadonnees&&e.metadonnees.length) a.metadonnees=e.metadonnees.join(' ');
+    if(uml){   // UML / SysML v1 : métaclasse, stéréotypes, agrégation, propriétés des stéréotypes (« Requirement.text »…)
+      if(e.metaclasse&&e.metaclasse!==e.type) a.metaclasse=e.metaclasse;
+      if(e.stereotypes&&e.stereotypes.length) a.stereotypes=e.stereotypes.join(' ');
+      if(e.agregation&&e.agregation!=='none') a.agregation=e.agregation;
+      if(e.stereotypes&&e.stereotypes.length&&!e.technique&&typeof lec.attributs==='function') (lec.attributs(e.id)||[]).forEach(x=>{ if(/:/.test(x.nom)){ const k=x.nom.replace(/^[A-Za-z0-9_]+:/,''); if(/^[A-Za-z_][\w.-]*$/.test(k)&&!(k in a)) a[k]=x.valeur; } });
+    }
     Object.entries(e.references||{}).forEach(([k,ids])=>{ const l=(ids||[]).filter(i=>i&&byId[i]); if(l.length) a[k]=l.map(i=>'#'+i).join(' '); });
     const ex=(e.extremites||[]).filter(i=>i&&byId[i]); if(ex.length) a.extremites=ex.map(i=>'#'+i).join(' ');
     return a;
@@ -166,14 +199,14 @@ function capSysmlVersXml(lec, nom){
   const ecrire=(e, prof)=>{
     if(vus.has(e.id)||prof>400) return; vus.add(e.id);
     const a=attrs(e), kids=(e.enfants||[]).map(i=>byId[i]).filter(Boolean);
-    out.push(`<ownedElements xsi:type="sysml:${esc(e.type||'Element')}" id="${esc(e.id)}"${Object.entries(a).map(([k,v])=>` ${k}="${esc(v)}"`).join('')}${kids.length?'>':'/>'}`);
+    out.push(`<ownedElements xsi:type="${pre}:${esc(String(e.type||'Element').replace(/[^\w.-]/g,'_'))}" id="${esc(e.id)}"${Object.entries(a).map(([k,v])=>` ${k}="${esc(v)}"`).join('')}${kids.length?'>':'/>'}`);
     if(kids.length){ kids.forEach(k=>ecrire(k, prof+1)); out.push('</ownedElements>'); }
   };
   racines.forEach(e=>ecrire(e,0));
   els.forEach(e=>{ if(!vus.has(e.id)) ecrire(e,0); });   // éléments dont le propriétaire a été écarté : au premier niveau
-  const xml=`<?xml version="1.0" encoding="UTF-8"?>\n<sysml:Model xmlns:sysml="urn:arcalyse:sysml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="${esc(nom)}" lecteur="ArcatureLecteurSysml ${esc(ArcatureLecteurSysml.version||'')}">\n${out.join('\n')}\n</sysml:Model>`;
+  const xml=`<?xml version="1.0" encoding="UTF-8"?>\n<${pre}:Model xmlns:${pre}="urn:arcalyse:${pre}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="${esc(nom)}" lecteur="${lecteur} ${esc(version)}">\n${out.join('\n')}\n</${pre}:Model>`;
   const doc=new DOMParser().parseFromString(xml,'application/xml');
-  if(doc.querySelector('parsererror')) throw new Error(_L('Conversion SysML v2 → XML impossible'));
+  if(doc.querySelector('parsererror')) throw new Error(uml?_L('Conversion UML → XML impossible'):_L('Conversion SysML v2 → XML impossible'));
   return doc;
 }
 
@@ -181,9 +214,10 @@ function capSysmlVersXml(lec, nom){
  * @param {object} lec - Lecture
  */
 function capSysmlTypesHumains(lec){
-  const L=ArcatureLecteurSysml, tech={}, types=new Set();
-  lec.elements().forEach(e=>{ types.add(e.type); const t=tech[e.type]||(tech[e.type]={oui:0, non:0}); if(e.technique) t.oui++; else t.non++; });
+  const L=capSyL()||{}, uml=capSyUml(), tech={}, types=new Set(), meta={};
+  lec.elements().forEach(e=>{ types.add(e.type); if(e.metaclasse) meta[e.type]=e.metaclasse; const t=tech[e.type]||(tech[e.type]={oui:0, non:0}); if(e.technique) t.oui++; else t.non++; });
   types.forEach(t=>{
+    if(!CAP_HUMAN_NAMES[t]&&uml){ const mc=meta[t]||''; CAP_HUMAN_NAMES[t]={h:t.replace(/([a-z])([A-Z])/g,'$1 $2'), d:mc&&mc!==t?_L(`Stéréotype ${capSyNomFormat()} appliqué à la métaclasse UML ${mc}`):_L('Métaclasse UML')}; }
     if(!CAP_HUMAN_NAMES[t]){ const mc=L.motCle?L.motCle(t):''; CAP_HUMAN_NAMES[t]={h:t.replace(/([a-z])([A-Z])/g,'$1 $2')+(mc?' ('+mc+')':''), d:_L('Métaclasse SysML v2')+(mc?_L(` — mot-clé « ${mc} »`):'')}; }
     if(tech[t].oui&&!tech[t].non) CAP_TECHNICAL_TYPES.add(t);   // imports, successions, commentaires… décochés par défaut
   });
@@ -201,18 +235,26 @@ function capSyLien(id){ const e=capSyEl(id); return e?capDetLink(id, capSyNom(e)
 /** Position « fichier:ligne » d'un élément ou d'un diagnostic. @param {object} o - Objet à `fichier` / `ligne` @returns {string} */
 function capSyPosition(o){ return o&&o.fichier?o.fichier+(o.ligne?':'+o.ligne:''):(o&&o.ligne?':'+o.ligne:''); }
 
-/** Diagnostics de la lecture affichée. @returns {{liste:object[], erreurs:number, avertissements:number}} */
-function capSysmlDiagnostics(){
-  const lec=_capSysml.lecture; if(!lec) return {liste:[], erreurs:0, avertissements:0};
-  return {liste:lec.diagnostics||[], erreurs:lec.erreurs||0, avertissements:lec.avertissements||0};
+/** Diagnostics de la lecture affichée, sans ceux des règles désactivées par le 🩺 profil (`capChkRegleOn`, 14) : ce sont eux que
+ * comptent 🏠 Accueil, 💚 Santé, le tableau de bord et l'onglet 🩺 Diagnostics.
+ * @param {boolean} [tous] - Garder aussi les règles désactivées (Σ Répartition par règle, 88)
+ * @returns {{liste:object[], erreurs:number, avertissements:number, masques:number}} masques : diagnostics des règles désactivées
+ */
+function capSysmlDiagnostics(tous){
+  const lec=_capSysml.lecture; if(!lec) return {liste:[], erreurs:0, avertissements:0, masques:0};
+  const brut=lec.diagnostics||[], liste=tous||typeof capChkRegleOn!=='function'?brut:brut.filter(d=>capChkRegleOn(d.code||d.regle||''));
+  const err=liste.filter(d=>d.severite==='erreur').length;
+  return {liste, erreurs:err, avertissements:liste.filter(d=>d.severite==='avertissement').length, masques:brut.length-liste.length};
 }
 
-/** Contrôles 🩺 d'un modèle SysML v2 : diagnostics du lecteur (erreurs ✖, avertissements ⚠), rendus par `capDiagHtml` et repris par
- * 💚 Santé & contrôles (69) et le 🩺 profil (14). Vide sans modèle SysML.
+/** Contrôles 🩺 d'un modèle lu par un lecteur d'Arcature : diagnostics (erreurs ✖, avertissements ⚠), rendus par `capDiagHtml` et repris
+ * par 💚 Santé & contrôles (69) et le 🩺 profil (14). Vide sans lecture du format demandé.
+ * @param {string} [format] - `sysml2` (défaut : vue `ana:sysml`) ou `uml` (vue `ana:uml` : modèles UML et SysML v1)
  * @returns {object[]} Sections {icon, title, tip, sev, cols, items}
  */
-function capSyChecks(){
-  if(!_capSysml.lecture) return [];
+function capSyChecks(format){
+  if(!_capSysml.lecture||(format==='uml')!==capSyUml()) return [];
+  if(capSyUml()) return capUmlChecks();   // 88 : diagnostics de la validation (contraintes UML, SysML, UAF)
   const D=capSysmlDiagnostics(), esc=capEsc;
   const row=d=>`<tr><td>${esc(capSyPosition(d))}</td><td><span class="ana-dim" title="${esc(d.regle||'')}">${esc(d.code||d.regle||'')}</span></td><td>${esc(d.message||'')}</td><td>${d.element?capSyLien(d.element):'<span class="ana-dim">—</span>'}</td></tr>`;
   const cols=[_L('Fichier : ligne'),_L('Règle'),_L('Message'),_L('Élément')];
@@ -228,7 +270,43 @@ function capSyChecks(){
 function capSysmlLiaisons(){ const lec=_capSysml.lecture; try{ return lec?lec.toutesLiaisons():[]; }catch(e){ return []; } }
 
 /** Libellé d'une relation SysML vue de la source (lecteur, sinon la clé). @param {string} rel - Relation @returns {string} */
-function capSyRelLibelle(rel){ try{ return ArcatureLecteurSysml.libelleRelation(rel,'sortant')||rel; }catch(e){ return rel; } }
+function capSyRelLibelle(rel){ try{ return capSyL().libelleRelation(rel,'sortant')||rel; }catch(e){ return rel; } }
+
+/** Index des liaisons du lecteur par relation et par sens, pour le moteur de chemin (21) et la ▦ Matrice (91) :
+ * clé « relation> » (de la source vers la cible) ou « relation< » (en sens inverse) → Map id → ids atteints. En cache dans `_capAnaCache`.
+ * @returns {Object<string, Map<string,string[]>>} Index */
+function capMcSyIndex(){
+  if(_capAnaCache.mcSy) return _capAnaCache.mcSy;
+  const ix={}, put=(k,a,b)=>{ const m=ix[k]||(ix[k]=new Map()); let l=m.get(a); if(!l) m.set(a,l=[]); l.push(b); };
+  capSysmlLiaisons().forEach(l=>{ if(!l.source||!l.cible) return; put(l.relation+'>',l.source,l.cible); put(l.relation+'<',l.cible,l.source); });
+  return _capAnaCache.mcSy=ix;
+}
+
+/** Propriétés « liaison du lecteur » proposées par le moteur de chemin (colonne par chemin du ▤ Tableau, relation par chemin de la
+ * ▦ Matrice) pour un type : une par relation, sens et type atteint réellement observés. Vide pour un modèle Capella.
+ * @param {string} metaclass - Type de départ de l'étape
+ * @returns {object[]} Propriétés {key, label, kind:'sy', relKey, direction, resultType}
+ */
+function capMcSyProps(metaclass){
+  if(!_capSysml.lecture) return [];
+  const lib=(r,s)=>{ try{ return capSyL().libelleRelation(r,s)||r; }catch(e){ return r; } }, props=[];
+  Object.entries(capMcSyIndex()).forEach(([k,m])=>{
+    const rel=k.slice(0,-1), fwd=k.endsWith('>'), types=new Set();
+    m.forEach((ids,id)=>{ const e=capGetElementById_(id); if(!e||e.typeName!==metaclass) return; ids.forEach(t=>{ const x=capGetElementById_(t); if(x) types.add(x.typeName); }); });
+    types.forEach(rt=>props.push({key:'sy:'+rel+':'+(fwd?'fwd':'rev')+':'+rt, label:fwd?lib(rel,'sortant')+' →':'← '+lib(rel,'entrant'), kind:'sy', relKey:rel, direction:fwd?'fwd':'rev', resultType:rt}));
+  });
+  return props;
+}
+
+/** Pas du moteur de chemin le long d'une liaison du lecteur (propriété de `capMcSyProps`).
+ * @param {object} el - Élément de départ (capAllElements)
+ * @param {object} prop - Propriété {relKey, direction, resultType}
+ * @returns {object[]} Éléments atteints du type attendu
+ */
+function capMcSyPas(el, prop){
+  const m=capMcSyIndex()[prop.relKey+(prop.direction==='fwd'?'>':'<')];
+  return m?(m.get(el.id)||[]).map(capGetElementById_).filter(x=>x&&x.typeName===prop.resultType):[];
+}
 
 /** Déclare les relations SysML comme critères de la 🗺 Relation Map (`RCFG`, clé « sysml:<relation> ») ; appelée par
  * `capInjectCapellaRelsToCriteria` (20). Sans modèle SysML : rien. */
@@ -238,7 +316,7 @@ function capSysmlCriteres(){
   presentes.forEach(rel=>{
     const key='sysml:'+rel, st=CAP_SY_REL_STYLE[rel]||['#8b949e',''];
     if(!RCFG[key]) RCFG[key]={color:st[0], dash:st[1], open:false, diamond:rel==='composition', hollowDiamond:rel==='reference', circle:false, noArrow:false, _capella:true, label:''};
-    RCFG[key].label=_L('SysML — ')+capSyRelLibelle(rel);
+    RCFG[key].label=(capSyUml()?_L('UML — '):_L('SysML — '))+capSyRelLibelle(rel);
     if(!(key in S.relF)) S.relF[key]=['typage','composition','connexion','specialisation','allocation','satisfy'].includes(rel);   // les plus parlantes affichées d'emblée
   });
 }
@@ -251,26 +329,31 @@ function capSysmlLiensModel(){
   return capSysmlLiaisons().filter(l=>l.source&&l.cible).map(l=>({src:l.source, tgt:l.cible, type:'sysml:'+l.relation}));
 }
 
-/** Pastille 🧩 SysML v2 de l'en-tête de 🏠 Accueil (nombre d'éléments, erreurs et avertissements du lecteur) ; vide pour un .capella.
+/** Cases « Fichiers du projet » de l'en-tête de 🏠 Accueil pour un modèle SysML v2 (56, `capHomeCase`) : modèle (fichiers, éléments),
+ * vues calculées, lecture (diagnostics du lecteur).
  * @returns {string} HTML
  */
-function capSysmlPastille(){
+function capSysmlCasesAccueil(){
   const lec=_capSysml.lecture; if(!lec) return '';
-  const D=capSysmlDiagnostics(), n=lec.elements().length-1, nf=(lec.fichiers||[]).length, nv=capSyVuesListe().length;
-  const etat=D.erreurs?'err':D.avertissements?'warn':'ok';
-  const txt=D.erreurs||D.avertissements?_L(`${D.erreurs} erreur(s) · ${D.avertissements} avertissement(s)`):_L('lu sans diagnostic');
-  return `<button type="button" class="hm-pill" data-nav="ana:sysml" title="${_L('🧩 Modèle SysML v2 lu par le lecteur d\'Arcature : éléments, liaisons, diagnostics')}"><i class="${etat}"></i>🧩 ${_L(`SysML v2 : ${n} éléments${nf>1?` · ${nf} fichiers`:''} · ${txt}`)}</button>`+
-    `<button type="button" class="hm-pill" data-nav="diag" title="${_L('🔲 Vues calculées depuis le texte (générale, interconnexion, états, flux d\'actions)')}"><i class="${nv?'ok':''}"></i>${_L(`Vues : ${nv}`)}</button>`;
+  const esc=capEsc, D=capSysmlDiagnostics(), n=lec.elements().length-1, fic=lec.fichiers||[], vues=capSyVuesListe();
+  const noms=vues.slice(0,4).map(v=>esc(v.nom||v.titre||'')).join(' · ')+(vues.length>4?' …':'');
+  const etat=D.erreurs?'err':D.avertissements?'todo':'ok';
+  return capHomeCase(_L('Modèle'), esc(_capSysml.nom||capCurrentFileName||'—'), _L(`${fic.length||1} fichier(s) · ${n} éléments`), 'ok')+
+    capHomeCase(_L('Vues calculées'), _L(`${vues.length} vue(s)`), noms, vues.length?'ok':'none', vues.length?`<button type="button" class="cap-lf-btn" data-nav="diag">${_L('🔲 Ouvrir')}</button>`:'')+
+    capHomeCase(_L('Lecture'), D.erreurs||D.avertissements?_L(`${D.erreurs} erreur(s) · ${D.avertissements} avertissement(s)`):_L('Sans diagnostic'), _L('Diagnostics du lecteur SysML v2'), etat,
+      D.liste.length?`<button type="button" class="cap-lf-btn" data-a="sy-diag">${_L('Voir')}</button>`:'');
 }
 
 /** Vue 🧩 SysML v2 (sous-vue `sysml` de 🔬 Analyses) : éléments (par famille et type), liaisons (par relation), 🩺 diagnostics, fichiers.
  * @param {HTMLElement} box - Conteneur
  */
 function capRenderSysml(box){
-  const lec=_capSysml.lecture, st=_capSy, esc=capEsc;
-  if(!capSysmlDispo()){ box.innerHTML=`<div class="phl-empty">${_L('Lecteur SysML v2 absent de cette version.')}</div>`; return; }
+  const lec=_capSysml.lecture, st=_capSy, esc=capEsc, uml=capSyUml();
+  if(!uml&&!capSysmlDispo()){ box.innerHTML=`<div class="phl-empty">${_L('Lecteur SysML v2 absent de cette version.')}</div>`; return; }
   if(!lec){ box.innerHTML=`<div class="phl-empty">${_L('Le modèle affiché n\'est pas un modèle SysML v2 : ouvrez un fichier .sysml, une archive .kpar ou un dossier de .sysml (📁 Dossier du projet).')}</div>`; return; }
-  const L=ArcatureLecteurSysml, q=(st.q||'').trim().toLowerCase(), els=lec.elements().filter(e=>!e.racine&&!e.projet), D=capSysmlDiagnostics(), LI=capSysmlLiaisons();
+  const L=capSyL(), q=(st.q||'').trim().toLowerCase(), els=lec.elements().filter(e=>!e.racine&&!e.projet), D=capSysmlDiagnostics(), LI=capSysmlLiaisons();
+  const avecTextes=(lec.fichiers||[]).some(f=>f.texte!=null);   // UML : fichiers sans texte (XMI, archives) : pas d'onglet 📄
+  if(!avecTextes&&st.view==='fic') st.view='els';
   const fams=L.familles||{STR:'Structure', BEH:'Comportement', REQ:'Exigences & cas', ORG:'Organisation'};
   const puces=(items, cur, key, tout)=>`<span class="tb-grp">`+[['',tout],...items].map(([k,l,n])=>`<button class="cap-lf-btn${cur===k?' active':''}" data-${key}="${esc(k)}">${esc(l)}${n!=null?` <span class="ana-dim">${n}</span>`:''}</button>`).join('')+`</span>`;
   let body='', header=[], rows=[], cnt='', bar='';
@@ -279,11 +362,14 @@ function capRenderSysml(box){
     const shown=els.filter(e=>(!st.fam||e.famille===st.fam)&&(!st.type||e.type===st.type)&&capXtHas(q, e.nom, e.nomQualifie, e.declaration, e.type, e.motCle, e.fichier));
     header=[_L('Famille'),_L('Type'),_L('Nom'),_L('Nom qualifié'),_L('Déclaration'),_L('Fichier : ligne')];
     rows=shown.map(e=>[fams[e.famille]||e.famille, capAnaHuman(e.type), capCx(capSyNom(e), e.id), e.nomQualifie||'', e.declaration||'', capSyPosition(e)]);
-    body=capXtTable(header, shown.map(e=>[`<span style="color:${CAP_SY_FAM_COULEUR[e.famille]||'var(--c-dim)'}">${esc(fams[e.famille]||e.famille||'')}</span>`, `${capIcoType(e.type)} <span class="ana-dim">${esc(e.motCle||capAnaHuman(e.type))}</span>`,
-      capDetLink(e.id, capSyNom(e), 'font-weight:600'), `<span class="ana-dim">${esc(e.nomQualifie||'')}</span>`, `<code style="font-size:11px">${esc(capXtShort(e.declaration||'',120))}</code>`, `<span class="ana-dim">${esc(capSyPosition(e))}</span>`]));
+    if(uml){ header=[_L('Famille'),_L('Type'),_L('Métaclasse'),_L('Nom'),_L('Nom qualifié'),_L('Déclaration'),_L('Ligne')]; rows=shown.map(e=>[fams[e.famille]||e.famille, capAnaHuman(e.type), e.metaclasse||'', capCx(capSyNom(e), e.id), e.nomQualifie||'', e.declaration||'', e.ligne?String(e.ligne):'']); }
+    body=uml?capXtTable(header, shown.map(e=>[`<span style="color:${CAP_SY_FAM_COULEUR[e.famille]||'var(--c-dim)'}">${esc(fams[e.famille]||e.famille||'')}</span>`, `${capIco(e.id)} <span class="ana-dim">${esc(capAnaHuman(e.type))}</span>`,
+      `<span class="ana-dim">${esc(e.metaclasse||'')}</span>`, capDetLink(e.id, capSyNom(e), 'font-weight:600'), `<span class="ana-dim">${esc(e.nomQualifie||'')}</span>`, e.declaration?`<code style="font-size:11px">${esc(e.declaration.length>120?e.declaration.slice(0,119)+'…':e.declaration)}</code>`:'', `<span class="ana-dim">${e.ligne||''}</span>`]))
+      :capXtTable(header, shown.map(e=>[`<span style="color:${CAP_SY_FAM_COULEUR[e.famille]||'var(--c-dim)'}">${esc(fams[e.famille]||e.famille||'')}</span>`, `${capIcoType(e.type)} <span class="ana-dim">${esc(e.motCle||capAnaHuman(e.type))}</span>`,
+      capDetLink(e.id, capSyNom(e), 'font-weight:600'), `<span class="ana-dim">${esc(e.nomQualifie||'')}</span>`, `<code style="font-size:11px">${capXtShort(e.declaration||'',120)}</code>`, `<span class="ana-dim">${esc(capSyPosition(e))}</span>`]));
     const types=Object.entries(parType).sort((a,b)=>b[1]-a[1]);
     bar=puces(Object.keys(fams).filter(k=>parFam[k]).map(k=>[k, fams[k], parFam[k]]), st.fam, 'syfam', _L('Toutes familles'))+
-      ` <select data-xs="type" class="phl-filter-input" title="${_L('Métaclasse')}"><option value="">${_L('Tous types')} (${els.length})</option>${types.map(([t,n])=>`<option value="${esc(t)}"${st.type===t?' selected':''}>${esc(L.motCle?L.motCle(t)||t:t)} · ${esc(t)} (${n})</option>`).join('')}</select> `+
+      ` <select data-xs="type" class="phl-filter-input" title="${_L('Métaclasse')}"><option value="">${_L('Tous types')} (${els.length})</option>${types.map(([t,n])=>`<option value="${esc(t)}"${st.type===t?' selected':''}>${L.motCle?esc(L.motCle(t)||t)+' · ':''}${esc(t)} (${n})</option>`).join('')}</select> `+
       capXtSearch(st.q, _L('Nom, déclaration, type, fichier…'));
     cnt=`${shown.length} / ${els.length}`;
   } else if(st.view==='lia'){
@@ -296,7 +382,7 @@ function capRenderSysml(box){
     bar=puces(Object.entries(parRel).sort((a,b)=>b[1]-a[1]).map(([k,n])=>[k, capSyRelLibelle(k), n]), st.rel, 'syrel', _L('Toutes relations'))+' '+capXtSearch(st.q, _L('Relation, source, cible…'));
     cnt=`${shown.length} / ${LI.length}`;
   } else if(st.view==='diag'){
-    body=capDiagHtml(capSyChecks());
+    body=(uml?capUmlDiagResume():'')+capDiagHtml(capSyChecks(uml?'uml':undefined));   // format requis : sans lui, liste vide pour un modèle UML
   } else {
     const fichiers=lec.fichiers||[], cur=fichiers.find(f=>f.chemin===st.fic)||fichiers[0];
     const nEl=ch=>els.filter(e=>e.fichier===ch).length, nD=ch=>D.liste.filter(d=>d.fichier===ch).length;
@@ -308,9 +394,9 @@ function capRenderSysml(box){
       (cur?`<h4 style="margin:12px 0 4px">📄 ${esc(cur.chemin)}</h4><pre class="sy-texte">${lignes.map((l,i)=>`<span class="sy-ln">${i+1}</span>${esc(l)}`).join('\n')}</pre>`:'');
     cnt=`${fichiers.length}`;
   }
-  const tabs=capXtViewBtns([['els',_L('🧩 Éléments')],['lia',_L('🔗 Liaisons')],['diag',_L(`🩺 Diagnostics${D.liste.length?` (${D.liste.length})`:''}`)],['fic',_L('📄 Fichiers')]], st.view);
-  box.innerHTML=capXtBar(tabs+(bar?`<span class="tsep"></span>${bar}`:''), cnt, st.view!=='diag'&&!!rows.length)+body;
-  capXtBind(box, st, capRenderSysml, ()=>capCsvExport(_L('sysml-v2.csv'), header, rows));
+  const tabs=capXtViewBtns([['els',_L('🧩 Éléments')],['lia',_L('🔗 Liaisons')],['diag',_L(`🩺 Diagnostics${D.liste.length?` (${D.liste.length})`:''}`)],...(avecTextes?[['fic',_L('📄 Fichiers')]]:[])], st.view);
+  box.innerHTML=(uml?capUmlEntete():'')+capXtBar(tabs+(bar?`<span class="tsep"></span>${bar}`:''), cnt, st.view!=='diag'&&!!rows.length)+body;
+  capXtBind(box, st, capRenderSysml, ()=>capCsvExport(uml?_L('uml.csv'):_L('sysml-v2.csv'), header, rows));
   box.querySelectorAll('[data-syfam]').forEach(b=>b.onclick=()=>{ st.fam=b.dataset.syfam; capRenderSysml(box); });
   box.querySelectorAll('[data-syrel]').forEach(b=>b.onclick=()=>{ st.rel=b.dataset.syrel; capRenderSysml(box); });
   box.querySelectorAll('[data-syfic]').forEach(b=>b.onclick=()=>{ st.fic=b.dataset.syfic; capRenderSysml(box); });
@@ -323,7 +409,8 @@ function capRenderSysml(box){
  */
 function capSyDetail(id, secTitle){
   const lec=_capSysml.lecture, e=lec?lec.element(id):null; if(!e) return '';
-  const esc=capEsc, L=ArcatureLecteurSysml, fams=L.familles||{};
+  if(capSyUml()) return capUmlDetail(id, secTitle);   // 88
+  const esc=capEsc, L=capSyL(), fams=L.familles||{};
   const kv=[[_L('Déclaration'), e.declaration?`<code>${esc(e.declaration)}</code>`:''], [_L('Mot-clé'), e.motCle], [_L('Nom qualifié'), e.nomQualifie], [_L('Famille'), e.famille?`<span style="color:${CAP_SY_FAM_COULEUR[e.famille]||'inherit'}">${esc(fams[e.famille]||e.famille)}</span>`:''],
     [_L('Nature'), e.definition?_L('définition'):e.usage?_L('usage'):''], [_L('Visibilité'), e.visibilite], [_L('Modificateurs'), (e.modificateurs||[]).join(' ')], [_L('Direction'), e.direction], [_L('Multiplicité'), e.multiplicite], [_L('Valeur'), e.valeur],
     [_L('Rôle'), e.role], [_L('Déclencheur'), e.declencheur], [_L('Garde'), e.garde], [_L('Effet'), e.effet], [_L('Expression'), e.expression], [_L('Bibliothèque standard'), (e.bibliotheque||[]).join(', ')], [_L('Métadonnées'), (e.metadonnees||[]).join(', ')],
@@ -343,50 +430,62 @@ function capSyDetail(id, secTitle){
  */
 function capSyDashCatalog(add){
   const G=_L('SysML v2'), fams=()=>(capSysmlDispo()&&ArcatureLecteurSysml.familles)||{};
-  const els=()=>_capSysml.lecture?_capSysml.lecture.elements().filter(e=>!e.racine&&!e.projet):[];
+  const els=()=>_capSysml.lecture&&!capSyUml()?_capSysml.lecture.elements().filter(e=>!e.racine&&!e.projet):[];
+  if(typeof capUmlDashCatalog==='function') capUmlDashCatalog(add);   // 88 : indicateurs UML / SysML v1
   add(G,'sy.n',_L('SysML v2 — éléments'),'n',()=>({n:els().length, sub:_L(`${(_capSysml.lecture&&_capSysml.lecture.fichiers||[]).length} fichier(s)`)}));
   add(G,'sy.fam',_L('SysML v2 — éléments par famille'),'series',()=>{ const m={}; els().forEach(e=>{ m[e.famille]=(m[e.famille]||0)+1; }); return {cats:Object.entries(m).map(([k,v])=>({l:fams()[k]||k, v, c:CAP_SY_FAM_COULEUR[k]})).filter(c=>c.v)}; });
   add(G,'sy.type',_L('SysML v2 — éléments par métaclasse'),'series',()=>{ const m={}; els().forEach(e=>{ m[e.type]=(m[e.type]||0)+1; }); return {cats:Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,12).map(([k,v])=>({l:k, v}))}; });
-  add(G,'sy.rel',_L('SysML v2 — liaisons par relation'),'series',()=>{ const m={}; capSysmlLiaisons().forEach(l=>{ m[l.relation]=(m[l.relation]||0)+1; }); return {cats:Object.entries(m).sort((a,b)=>b[1]-a[1]).map(([k,v])=>({l:capSyRelLibelle(k), v, c:(CAP_SY_REL_STYLE[k]||[])[0]}))}; });
-  add(G,'sy.vues',_L('SysML v2 — vues calculées par genre'),'series',()=>{ const m={}; capSyVuesListe().forEach(v=>{ m[v.libelleGenre]=(m[v.libelleGenre]||0)+1; }); return {cats:Object.entries(m).map(([l,v])=>({l, v}))}; });
-  add(G,'sy.diag',_L('SysML v2 — diagnostics du lecteur'),'series',()=>{ const D=capSysmlDiagnostics(); return {cats:[{l:_L('Erreurs'), v:D.erreurs, c:'#f85149'},{l:_L('Avertissements'), v:D.avertissements, c:'#e3b341'}].filter(c=>c.v)}; },_L('Erreurs et avertissements du lecteur SysML v2 d\'Arcature'));
+  add(G,'sy.rel',_L('SysML v2 — liaisons par relation'),'series',()=>{ const m={}; (capSyUml()?[]:capSysmlLiaisons()).forEach(l=>{ m[l.relation]=(m[l.relation]||0)+1; }); return {cats:Object.entries(m).sort((a,b)=>b[1]-a[1]).map(([k,v])=>({l:capSyRelLibelle(k), v, c:(CAP_SY_REL_STYLE[k]||[])[0]}))}; });
+  add(G,'sy.vues',_L('SysML v2 — vues calculées par genre'),'series',()=>{ const m={}; (capSyUml()?[]:capSyVuesListe()).forEach(v=>{ m[v.libelleGenre]=(m[v.libelleGenre]||0)+1; }); return {cats:Object.entries(m).map(([l,v])=>({l, v}))}; });
+  add(G,'sy.diag',_L('SysML v2 — diagnostics du lecteur'),'series',()=>{ const D=capSyUml()?{erreurs:0, avertissements:0}:capSysmlDiagnostics(); return {cats:[{l:_L('Erreurs'), v:D.erreurs, c:'#f85149'},{l:_L('Avertissements'), v:D.avertissements, c:'#e3b341'}].filter(c=>c.v)}; },_L('Erreurs et avertissements du lecteur SysML v2 d\'Arcature'));
 }
 
-/* ── 🖼 Vues calculées (SysML v2 n'a pas de fichier de diagrammes : le lecteur les calcule et les dispose depuis le texte) ──
-   Liste dans 🔲 Diagrammes (à la place de la visionneuse Capella quand le modèle est SysML) : groupes par genre repliables,
-   largeur réglable, icône par genre `capSyVueIco`, ▣ carte sous l'explorateur ou dans la vue (comme pour un diagramme Capella) ; vues d'un élément dans son
-   panneau de détail (onglet 🔲) ; présentation visuelle (SVG du lecteur, thème clair / sombre d'Arcalyse, clic sur une forme ou
-   un lien → panneau de détail par `data-sem`, déplacement à la main, Ctrl+molette, zoom, 📝 notes de revue posées comme sur un
-   diagramme Capella : 55) ou textuelle (`vue.texte` coloré, taille du texte par Ctrl+molette), exports SVG et texte. */
+/* ── 🖼 Vues des lecteurs dans 🔲 Diagrammes (SysML v2 : vues calculées depuis le texte ; UML / SysML v1 : diagrammes du fichier et
+   vues calculées, 88) ── L'enveloppe de la vue 🔲 (barre du haut, explorateur classé, ▣ carte, planches, ⧉ comparaison, ℹ Infos,
+   section « Diagrammes » du détail) est celle de 54, commune avec Capella : ici seulement la partie droite (`#cdg-sy`) — deux lignes
+   au gabarit de la visionneuse (identité · recherche Ctrl+F · thème · ⬇▾ · ✕ ; 📝 notes · ⧩ filtres · zoom · ▣ · 🖼 / ≡), dessin SVG
+   du lecteur (clic → panneau de détail par `data-sem`, main, Ctrl+molette, 📝 notes de revue : 55), rendu textuel coloré, carte sous
+   l'explorateur (`#cdg-carte-sy`) ou dans la vue, raccourcis clavier. */
 
-/** État de la vue 🔲 pour un modèle SysML : vue ouverte, mode visuel / texte, zoom (0 = ajusté), taille du texte, filtre, élément
- * mis en évidence, genres repliés, largeur de la liste, ▣ carte (`panneau` sous l'explorateur, repliable `carteReduite`, ou
- * `diagramme` dans la vue, affichée `carteVue`), défilements à rétablir après un rendu (liste, vue). */
-var _capSyVues={cle:'', mode:'visuel', zoom:0, texteZoom:1, q:'', sel:'', plis:{}, largeur:260, carte:'panneau', carteReduite:false, carteVue:true, listeDefil:0};
+/** État de la partie droite : vue ouverte (`cle`, dernière rendue `rendue`), mode visuel / texte, zoom (0 = ajusté à la largeur), taille du
+ * texte, recherche dans le dessin (`q`, résultat courant `hit`), élément mis en évidence, thème (`auto` = celui d'Arcalyse), filtres
+ * d'affichage (étiquettes des liens, compartiments, liens par genre masqués), ▣ carte dans la vue affichée (`carteVue`), défilement à rétablir. */
+var _capSyVues={cle:'', rendue:'', mode:'visuel', zoom:0, texteZoom:1, q:'', hit:0, sel:'', theme:'auto', filtres:{etiq:true, comp:true, genres:{}}, carteVue:true, defil:null, grille:false};   // grille : # quadrillage du dessin (touche G)
 
-/** Icône d'un genre de vue calculée (GV vue générale, IV interconnexion, STV états, AFV flux d'actions), dessinée comme les
- * icônes des diagrammes Capella de la visionneuse (SVG 16 × 16, classe `ico`), couleur de la famille du genre (STR / BEH).
- * @param {string} genre - Genre (`generale`, `interconnexion`, `etats`, `actions`)
+/** Icône d'un genre de diagramme ou de vue, dessinée par le lecteur d'Arcature (`iconeVue`, SVG de classe `ico`) : cadre de
+ * diagramme et son étiquette, couleur propre au genre (la même pour les genres semblables d'UML et de SysML) ; étiquette pleine
+ * marquée « S » pour un diagramme SysML (SysML v2, et SysML v1 d'après l'outil qui l'a écrit : champ `sysml` de la vue).
+ * @param {string|{genre:string, sysml:boolean}} genre - Genre (`generale`, `interconnexion`, `etats`, `actions` ; UML / SysML v1 :
+ *   `bdd`, `classes`, `activite`…), ou la vue elle-même (genre et marque SysML)
  * @param {number} [taille] - Côté en pixels (14 par défaut)
- * @returns {string} SVG, ou '' pour un genre inconnu
+ * @returns {string} SVG, ou '' pour un genre inconnu (ou un lecteur sans icônes)
  */
 function capSyVueIco(genre, taille){
-  const G=(capSysmlDispo()&&ArcatureLecteurSysml.genresVues||{})[genre], fam=(G&&G.famille)||{generale:'STR', interconnexion:'STR', etats:'BEH', actions:'BEH'}[genre];
-  if(!fam) return '';
-  const [s, f]=CAP_SY_ICO_COULEUR[fam]||CAP_SY_ICO_COULEUR.ORG, n=taille||14;
-  const corps={
-    generale:`<rect x="1.5" y="2" width="13" height="12" rx="1" fill="${f}" stroke="${s}" stroke-width="1.2"/><path d="M1.5 6H14.5" stroke="${s}" stroke-width="1.2"/><path d="M4 9H10M4 11.5H8" stroke="${s}" stroke-width="1.1" stroke-linecap="round"/>`,
-    interconnexion:`<rect x="1" y="3.5" width="5.5" height="9" rx="1" fill="${f}" stroke="${s}" stroke-width="1.2"/><rect x="9.5" y="3.5" width="5.5" height="9" rx="1" fill="${f}" stroke="${s}" stroke-width="1.2"/><rect x="5.3" y="6.8" width="2.4" height="2.4" fill="#fff" stroke="${s}" stroke-width="1"/><rect x="8.3" y="6.8" width="2.4" height="2.4" fill="#fff" stroke="${s}" stroke-width="1"/><path d="M7.7 8H8.3" stroke="${s}" stroke-width="1.4"/>`,
-    etats:`<rect x="1" y="1.5" width="8" height="5.5" rx="2.5" fill="${f}" stroke="${s}" stroke-width="1.2"/><rect x="7" y="9" width="8" height="5.5" rx="2.5" fill="${f}" stroke="${s}" stroke-width="1.2"/><path d="M4.5 7V11.5H6.2" fill="none" stroke="${s}" stroke-width="1.2"/><path d="M5.6 9.9L7.4 11.5L5.6 13.1Z" fill="${s}"/>`,
-    actions:`<circle cx="8" cy="2.6" r="1.8" fill="${s}"/><rect x="2.5" y="5.5" width="11" height="5" rx="2.5" fill="${f}" stroke="${s}" stroke-width="1.2"/><path d="M8 4.4V5.5M8 10.5V13" stroke="${s}" stroke-width="1.2"/><circle cx="8" cy="13.5" r="1.9" fill="none" stroke="${s}" stroke-width="1.1"/><circle cx="8" cy="13.5" r=".9" fill="${s}"/>`
-  }[genre]||`<rect x="1.5" y="2" width="13" height="12" rx="1" fill="${f}" stroke="${s}" stroke-width="1.2"/>`;
-  return `<svg class="ico" viewBox="0 0 16 16" width="${n}" height="${n}" aria-hidden="true" stroke-linejoin="round">${corps}</svg>`;
+  const vue=genre&&typeof genre==='object'?genre:null, g=vue?vue.genre:genre;
+  if(capSyUml()){ try{ return capSyL().iconeVue(vue?{genre:g, sysml:!!vue.sysml}:g, taille||14)||''; }catch(e){ return ''; } }   // 88 : genres des diagrammes UML / SysML v1
+  if(!capSysmlDispo()||typeof ArcatureLecteurSysml.iconeVue!=='function') return '';
+  try{ return ArcatureLecteurSysml.iconeVue(g, taille||14)||''; }catch(e){ return ''; }
 }
 
-/** Vues calculées du modèle affiché (liste des diagrammes), gardées avec la lecture. @returns {object[]} [{cle, genre, sigle, libelleGenre, nom, element}] */
+/** Vue de la liste désignée par son identifiant de représentation « sy:<clé> » (💬 Revue, 🔍 palette).
+ * @param {string} uid - Identifiant « sy:<clé> »
+ * @returns {object|null} Vue de `capSyVuesListe`, ou null
+ */
+function capSyVueParUid(uid){ const cle=String(uid||'').replace(/^sy:/,''); return capSyVuesListe().find(v=>v.cle===cle)||null; }
+
+/** Vue montrée par 🔲 Diagrammes : toutes celles d'un modèle SysML v2 (son texte n'a pas de diagrammes : le lecteur les calcule) ;
+ * pour UML / SysML v1, seulement les diagrammes et tableaux enregistrés dans le fichier (Cameo, Enterprise Architect, Papyrus),
+ * pas les vues que le lecteur calcule depuis le modèle (choix du propriétaire, 2026-11-05).
+ * @param {object} v - Vue du lecteur (`origine`)
+ * @returns {boolean}
+ */
+function capSyVueMontree(v){ return !!v&&!(capSyUml()&&v.origine==='calculee'); }
+
+/** Vues du modèle affiché (liste des diagrammes), gardées avec la lecture ; filtrées par `capSyVueMontree`.
+ * @returns {object[]} [{cle, genre, sigle, libelleGenre, nom, element, origine, tableau}] */
 function capSyVuesListe(){
   const lec=_capSysml.lecture; if(!lec||typeof lec.vues!=='function') return [];
-  if(!_capSysml.vues){ try{ _capSysml.vues=lec.vues()||[]; }catch(e){ console.warn('SysML : vues',e); _capSysml.vues=[]; } }
+  if(!_capSysml.vues){ try{ _capSysml.vues=(lec.vues()||[]).filter(capSyVueMontree); }catch(e){ console.warn('SysML : vues',e); _capSysml.vues=[]; } }
   return _capSysml.vues;
 }
 
@@ -398,14 +497,30 @@ function capSyVue(cle){
   return c[cle];
 }
 
-/** Vues calculées proposées sur un élément. @param {string} id - Identifiant @returns {object[]} */
-function capSyVuesPour(id){ const lec=_capSysml.lecture; if(!lec||typeof lec.vuesPour!=='function') return []; try{ return lec.vuesPour(id)||[]; }catch(e){ return []; } }
+/** Vues proposées sur un élément (filtrées par `capSyVueMontree`). @param {string} id - Identifiant @returns {object[]} */
+function capSyVuesPour(id){ const lec=_capSysml.lecture; if(!lec||typeof lec.vuesPour!=='function') return []; try{ return (lec.vuesPour(id)||[]).filter(capSyVueMontree); }catch(e){ return []; } }
 
-/** Vues SysML présentées comme des représentations pour la 🔍 palette Ctrl+K (67) et 💬 Revue : uid « sy:<clé> ». @returns {object[]} */
-function capSyVuesReps(){ return capSyVuesListe().map(v=>({uid:'sy:'+v.cle, nom:v.nom, type:v.libelleGenre, sigle:v.sigle, genre:v.genre, couche:''})); }
+/** Représentation commune (54) d'une vue du lecteur : `uid` « sy:<clé> », `type` = libellé du genre, `kind` = genre du lecteur, `couche` =
+ * famille (STR / BEH / REQ / ORG : couleur des badges et des planches), `origine` (`cameo`, `ea`, `papyrus`, `calculee`) et son libellé,
+ * `element` porteur ; `genre` = `diagramme` (nature, comme pour Capella).
+ * @param {object} v - Descripteur du lecteur (`vues()`, `vuesPour`, ou la vue elle-même)
+ * @returns {object} Représentation
+ */
+function capSyVueRep(v){
+  const L=capSyL()||{}, G=(L.genresVues||{})[v.genre]||{}, O=L.origines||{}, origine=v.origine||'calculee';
+  return {uid:'sy:'+v.cle, cle:v.cle, nom:v.nom||'', type:v.libelleGenre||G.libelle||v.genre||'', sigle:v.sigle||G.sigle||'', genre:v.tableau?'tableau':'diagramme', kind:v.genre||'', sysml:!!v.sysml,
+    couche:G.famille||'', origine, libelleOrigine:v.libelleOrigine||O[origine]||(origine==='calculee'?_L('Vue calculée'):origine), element:v.element||''};
+}
 
-/** Thème des SVG du lecteur selon celui d'Arcalyse. @returns {'clair'|'sombre'} */
-function capSyTheme(){ return typeof capIsLight==='function'&&capIsLight()?'clair':'sombre'; }
+/** Vues du lecteur présentées comme des représentations communes (explorateur, planches, 🔍 palette, 💬 Revue, ◀ ▶ historique), gardées avec la lecture. @returns {object[]} */
+function capSyVuesReps(){
+  if(!_capSysml.lecture) return [];
+  if(!_capSysml.reps) _capSysml.reps=capSyVuesListe().map(capSyVueRep);
+  return _capSysml.reps;
+}
+
+/** Thème des SVG du lecteur : celui choisi dans la barre (`_capSyVues.theme`), sinon celui d'Arcalyse. @returns {'clair'|'sombre'} */
+function capSyTheme(){ const t=typeof _capSyVues!=='undefined'&&_capSyVues?_capSyVues.theme:'auto'; if(t==='clair'||t==='sombre') return t; return typeof capIsLight==='function'&&capIsLight()?'clair':'sombre'; }   // appelée par applyTheme (02) dès l'initialisation, avant ce module
 
 /** Restreint la feuille de styles des vues du lecteur (écrite pour un document SVG autonome : règles `svg{…}`, `[data-sem]`…)
  * aux dessins de la vue 🔲 : les sélecteurs commençant par `svg` ne visent plus que `svg.sy-vue-svg` et `svg.sy-carte-svg`, les
@@ -431,29 +546,33 @@ function capSyCssPortee(css){
 
 /** Pose une fois la feuille de styles des vues du lecteur dans la page (`ArcatureLecteurSysml.svgCss`, restreinte par `capSyCssPortee`). */
 function capSyVuesCss(){
-  if(document.getElementById('sy-svg-css')||!capSysmlDispo()||!ArcatureLecteurSysml.svgCss) return;
-  const st=document.createElement('style'); st.id='sy-svg-css'; st.textContent=capSyCssPortee(ArcatureLecteurSysml.svgCss); document.head.appendChild(st);
+  const L=capSyL(), id=capSyUml()?'uml-svg-css':'sy-svg-css';   // une feuille par lecteur (SysML v2 : classes syv-… ; UML : uvd-…, s1-…)
+  if(document.getElementById(id)||!L||!L.svgCss) return;
+  const st=document.createElement('style'); st.id=id; st.textContent=capSyCssPortee(L.svgCss); document.head.appendChild(st);
 }
 
-/** Change le thème des SVG affichés quand celui d'Arcalyse change (appelée par `applyTheme`, 02). */
+/** Change le thème des SVG affichés quand celui d'Arcalyse change (appelée par `applyTheme`, 02) ou que la barre en choisit un autre. */
 function capSyVuesTheme(){ const th=capSyTheme(); document.querySelectorAll('svg.sy-vue-svg, svg.sy-carte-svg').forEach(s=>{ s.classList.remove('clair','sombre'); s.classList.add(th); }); }
 
-/** Ouvre une vue calculée dans 🔲 Diagrammes (depuis le panneau de détail, la 🔍 palette, 💬 Revue, la liste).
+/** Ouvre une vue du lecteur dans 🔲 Diagrammes (explorateur, panneau de détail, 🔍 palette, 💬 Revue, ◀ ▶ historique).
  * @param {string} cle - Clé de la vue
  * @param {string} [id] - Élément à mettre en évidence
  */
 function capSyVueOuvrir(cle, id){
-  _capSyVues.cle=cle; _capSyVues.sel=id||'';
-  if(capCurrentView!=='diag') capNavOpen('diag');
-  const box=document.getElementById('cap-view-diag'); if(box&&box.offsetParent!==null) capSyVuesRender(box);
+  const st=_capSyVues; if(st.cle!==cle){ st.zoom=0; st.defil=null; st.q=''; st.hit=0; }
+  st.cle=cle; st.sel=id||'';
+  if(typeof _capDiag!=='undefined') _capDiag.actif='sy:'+cle;
+  if(capCurrentView!=='diag'){ capNavOpen('diag'); return; }   // capRenderDiagrams (54) rend l'enveloppe puis cette partie
+  const box=document.getElementById('cdg-sy'); if(box&&box.offsetParent!==null) capSyVuesRender(box);
+  if(typeof capDiagMarquerActif==='function') capDiagMarquerActif();
 }
 
-/** Contexte de la vue SysML affichée pour les notes de 💬 Revue (55) : identifiant « sy:<clé> », nom, SVG, zone qui porte le calque.
- * @returns {{uid:string, nom:string, svg:SVGSVGElement, zone:HTMLElement, vis:HTMLElement}|null} null si aucune vue SysML n'est affichée en visuel ; `vis` : conteneur défilant (partie visible)
+/** Contexte de la vue affichée pour les notes de 💬 Revue (55) : identifiant « sy:<clé> », nom, SVG, zone qui porte le calque.
+ * @returns {{uid:string, nom:string, svg:SVGSVGElement, zone:HTMLElement, vis:HTMLElement}|null} null si aucune vue n'est affichée en visuel ; `vis` : conteneur défilant (partie visible)
  */
 function capSyRevCtx(){
   if(!_capSysml.lecture||!_capSyVues.cle) return null;
-  const v=document.getElementById('cap-sy-vues'); if(!v||v.style.display==='none'||!v.offsetParent) return null;
+  const v=document.getElementById('cdg-sy'); if(!v||!v.offsetParent) return null;
   const svg=v.querySelector('svg.sy-vue-svg'), zone=v.querySelector('.sy-vue-cadre'); if(!svg||!zone) return null;
   const vue=capSyVue(_capSyVues.cle);
   return {uid:'sy:'+_capSyVues.cle, nom:vue?vue.nom:'', svg, zone, vis:zone.closest('.sy-vue-hote')||zone};
@@ -488,96 +607,107 @@ function capSyTexteHtml(texte){
   }).join('\n');
 }
 
-/** Zone ▣ Carte de l'explorateur (sous la liste des vues), comme `capDiagCarte` (54) : en-tête repliable et bouton ⇲ (carte dans la
- * vue) quand la carte est sous l'explorateur, mention « dans le diagramme » et bouton ⇱ sinon ; vide sans vue visuelle ouverte.
- * @param {object|null} vue - Vue ouverte
- * @param {number[]} vb - viewBox de la vue
- * @param {string} th - Thème des SVG (`clair` / `sombre`)
- * @returns {string} HTML
- */
-function capSyCarteZoneHtml(vue, vb, th){
-  const st=_capSyVues; if(!vue||st.mode!=='visuel') return '';
-  const pan=st.carte==='panneau';
+/** ▣ Carte sous l'explorateur (`#cdg-carte-sy`, zone de 54 propre aux lecteurs) : même en-tête que pour Capella (▾ replier, ⇲ dans la vue,
+ * ⇱ retour ; état `_capDiag.carte` / `carteReduite`, clics traités par `capDiagClic`), miniature du dessin à la largeur du volet, cadre de la
+ * partie affichée ; vide sans vue visuelle ouverte. Appelée après chaque rendu de la partie droite et quand la largeur de l'explorateur change. */
+function capSyCarteRender(){
+  const z=document.getElementById('cdg-carte-sy'); if(!z) return;
+  const st=_capSyVues, vue=st.cle&&_capSysml.lecture?capSyVue(st.cle):null;
+  if(!vue||vue.tableau||st.mode!=='visuel'){ z.innerHTML=''; return; }   // tableau de Cameo (90) : pas de carte
+  const D=_capDiag, pan=D.carte==='panneau', th=capSyTheme(), vb=vue.viewBox||[0,0,800,600];
   const tete=pan
-    ?`<span class="cdg-carte-tog" data-sycarte-tog="1"><span class="cdg-tog">${st.carteReduite?'▸':'▾'}</span><b>${_L('▣ Carte')}</b></span><span style="flex:1"></span><button class="cap-lf-btn" data-sycarte="diagramme" title="${_L('Afficher la carte dans le diagramme')}">⇲</button>`
-    :`<b>${_L('▣ Carte')}</b><span class="cdg-cnt">${_L('dans le diagramme')}</span><span style="flex:1"></span><button class="cap-lf-btn" data-sycarte="panneau" title="${_L('Afficher la carte sous l\'explorateur')}">⇱</button>`;
-  const corps=pan&&!st.carteReduite?`<div class="sy-carte sy-carte-panneau" title="${_L('Carte : clic ou glisser pour se déplacer')}"><svg class="sy-carte-svg ${th}" xmlns="http://www.w3.org/2000/svg" viewBox="${vb.join(' ')}">${vue.svg}</svg><div class="sy-carte-vp"></div></div>`:'';
-  return `<div class="cdg-carte-zone sy-carte-zone"><div class="cdg-carte-tete">${tete}</div><div class="cdg-carte-corps"${corps?'':' hidden'}>${corps}</div></div>`;
+    ?`<span class="cdg-carte-tog" data-carte-tog="1"><span class="cdg-tog">${D.carteReduite?'▸':'▾'}</span><b>${_L('▣ Carte')}</b></span><span style="flex:1"></span><button class="cap-lf-btn" data-carte="diagramme" title="${_L('Afficher la carte dans le diagramme')}">⇲</button>`
+    :`<b>${_L('▣ Carte')}</b><span class="cdg-cnt">${_L('dans le diagramme')}</span><span style="flex:1"></span><button class="cap-lf-btn" data-carte="panneau" title="${_L('Afficher la carte sous l\'explorateur')}">⇱</button>`;
+  const corps=pan&&!D.carteReduite?`<div class="sy-carte sy-carte-panneau" title="${_L('Carte : clic ou glisser pour se déplacer')}"><svg class="sy-carte-svg ${th}" xmlns="http://www.w3.org/2000/svg" viewBox="${vb.join(' ')}">${vue.svg}</svg><div class="sy-carte-vp"></div></div>`:'';
+  z.innerHTML=`<div class="cdg-carte-tete">${tete}</div><div class="cdg-carte-corps"${corps?'':' hidden'}>${corps}</div>`;
+  const box=document.getElementById('cdg-sy'), svg=box&&box.querySelector('svg.sy-vue-svg'), hote=svg&&svg.closest('.sy-vue-hote');
+  if(corps&&svg&&hote) capSyCarte(z, hote, svg);
 }
 
-/** Rend la vue 🔲 Diagrammes pour un modèle SysML v2 : liste des vues par genre à gauche (repliable, largeur réglable, ▣ carte en
- * dessous), vue ouverte à droite (visuel ou texte). Les éléments de la visionneuse Capella présents dans le conteneur sont masqués,
- * pas détruits (`capRenderDiagrams`, 54). Les défilements de la liste et de la vue sont rétablis après le rendu (un clic sur une vue
- * ne ramène pas la liste en haut).
- * @param {HTMLElement} box - Conteneur #cap-view-diag
+/** Partie droite de la vue 🔲 pour une lecture SysML / UML (conteneur `#cdg-sy`, dans l'enveloppe de 54) : ligne 1 (identité, recherche,
+ * thème, ⬇▾, ✕), ligne 2 (📝 notes, ⧩ filtres, zoom, ▣, 🖼 / ≡), dessin ou texte ; la ▣ carte sous l'explorateur est rendue par
+ * `capSyCarteRender`. Le défilement du dessin est rétabli quand la même vue est rendue de nouveau.
+ * @param {HTMLElement} [box] - Conteneur `#cdg-sy`
  */
 function capSyVuesRender(box){
-  const esc=capEsc, st=_capSyVues, L=ArcatureLecteurSysml, G=L.genresVues||{};
-  if(typeof st.carte!=='string') st.carte=st.carte===false?'diagramme':'panneau';   // ancien booléen
-  let v=box.querySelector('#cap-sy-vues'); if(!v){ v=document.createElement('div'); v.id='cap-sy-vues'; v.className='sy-vues'; box.appendChild(v); }
-  const liste0=v.querySelector('.sy-vues-liste'); if(liste0) st.listeDefil=liste0.scrollTop;   // défilement de la liste gardé
-  const boxDefil=box.scrollTop;
-  [...box.children].forEach(c=>{ c.style.display=c===v?'':'none'; });
+  box=box||document.getElementById('cdg-sy'); if(!box) return;
+  const esc=capEsc, st=_capSyVues, D=typeof _capDiag!=='undefined'?_capDiag:{carte:'panneau'};
   capSyVuesCss();
-  const vues=capSyVuesListe(), q=(st.q||'').trim().toLowerCase();
+  const vues=capSyVuesListe(), uml=capSyUml();
   if(st.cle&&!vues.some(x=>x.cle===st.cle)&&!capSyVue(st.cle)) st.cle='';
-  const shown=vues.filter(x=>!q||(x.nom+' '+x.libelleGenre+' '+x.sigle).toLowerCase().includes(q));
-  const groupes=Object.keys(G).filter(g=>shown.some(x=>x.genre===g)).map(g=>({g, l:G[g].libelle, items:shown.filter(x=>x.genre===g), pli:!!st.plis[g]&&!q}));
-  const liste=`<div class="cdg-outils"><input type="search" id="sy-vues-q" placeholder="${_L('🔍 Filtrer les vues…')}" value="${esc(st.q||'')}"></div><div class="sy-vues-liste">`+
-    (groupes.length?groupes.map(gr=>`<div class="sy-grp-h" data-syplg="${esc(gr.g)}" title="${_L('Replier / déplier')}"><span class="sy-grp-chv">${gr.pli?'▸':'▾'}</span><span class="cdg-ico">${capSyVueIco(gr.g, 13)}</span>${esc(gr.l)} <span class="ana-dim">${gr.items.length}</span></div>`+
-      (gr.pli?'':gr.items.map(x=>`<div class="cdg-it sy-vue-it${x.cle===st.cle?' actif':''}" data-cle="${esc(x.cle)}" title="${esc(x.libelleGenre)}"><span class="cdg-ico">${capSyVueIco(x.genre, 14)}</span><span class="cdg-sigle">${esc(x.sigle)}</span><span class="cdg-nom">${esc(x.nom)}</span></div>`).join(''))).join('')
-      :`<div class="cdg-aide">${_L('Aucune vue ne correspond.')}</div>`)+`</div>`;
-  let corps='';
-  const vue=st.cle?capSyVue(st.cle):null, vb=(vue&&vue.viewBox)||[0,0,800,600], th=capSyTheme();
-  const nNotes=typeof _capRev!=='undefined'&&st.cle?_capRev.comments.filter(c=>c.diag&&c.diag.uid==='sy:'+st.cle).length:0;
-  if(!vue) corps=`<div class="cdg-vide">${vues.length?_L(`${vues.length} vue(s) calculée(s) depuis le texte SysML v2 : choisissez-en une à gauche (ou depuis le panneau de détail d'un élément).`):_L('Aucune vue calculable dans ce modèle (pas de définition de part, d\'état ni d\'action).')}</div>`;
-  else {
-    const visuel=st.mode==='visuel';
-    const barre=`<div class="phl-toggle-bar sy-vue-barre"><b class="sy-vue-titre" title="${esc(vue.libelleGenre)}">${capSyVueIco(vue.genre, 16)} <span class="cdg-sigle">${esc(vue.sigle)}</span> ${esc(vue.nom)}</b>`+
-      `<span class="tb-grp"><button class="cap-lf-btn${visuel?' active':''}" data-symode="visuel">🖼 ${_L('Visuel')}</button><button class="cap-lf-btn${!visuel?' active':''}" data-symode="texte">≡ ${_L('Texte')}</button></span>`+
-      `<span class="tb-grp"><button class="cap-lf-btn" data-syzoom="-" title="${visuel?_L('Réduire'):_L('Texte plus petit')}">−</button><button class="cap-lf-btn" data-syzoom="0" title="${visuel?_L('Ajuster à la largeur'):_L('Taille normale du texte')}">⊡</button><button class="cap-lf-btn" data-syzoom="+" title="${visuel?_L('Agrandir'):_L('Texte plus grand')}">+</button>`+
-        (visuel&&st.carte==='diagramme'?`<button class="cap-lf-btn${st.carteVue?' active':''}" data-sycarte-vue="1" title="${_L('Carte : vue d\'ensemble et position affichée (clic : s\'y rendre)')}">${_L('▣ Carte')}</button>`:'')+`</span>`+
-      (visuel&&typeof _capRev!=='undefined'?`<span class="tb-grp"><span class="crv-drag" id="sy-crv-note" draggable="true" title="${_L('Note de revue : glissez-la sur la vue (déposée sur un élément, elle lui est liée) ou cliquez pour la poser au centre. Les notes forment un calque indépendant du modèle.')}"><span class="crv-drag-h">⠿</span>${_L('📝 Note')}</span><button class="cap-lf-btn${_capRev.layer?' active':''}" id="sy-crv-layer" title="${_L('Afficher ou masquer le calque des notes de revue')}">${_L('💬 Calque')} <span class="cdg-nb">${nNotes}</span></button></span>`:'')+
-      `<span style="flex:1"></span><span class="ana-dim" style="font-size:11px">${_L(`${vue.formes.length} forme(s) · ${vue.liens.length} lien(s)`)}</span>`+
-      `<button class="phl-export-btn" data-syexp="svg" title="${_L('Document SVG autonome (styles embarqués)')}">⬇ SVG</button><button class="phl-export-btn" data-syexp="txt" title="${_L('Rendu textuel de la vue')}">⬇ ${_L('Texte')}</button>`+
-      (vue.element?`<button class="cap-lf-btn" data-syel="${esc(vue.element)}" title="${_L('Élément dont c\'est la vue : panneau de détail')}">🔎 ${_L('Élément')}</button>`:'')+`</div>`;
-    if(!visuel) corps=barre+`<pre class="sy-texte sy-vue-texte" style="font-size:${(11.5*(st.texteZoom||1)).toFixed(1)}px" title="${_L('Ctrl + molette : taille du texte')}">${capSyTexteHtml(vue.texte||'')}</pre>`;
-    else corps=barre+`<div class="sy-vue-droite-corps"><div class="sy-vue-hote" title="${_L('Glisser : déplacer la vue · Ctrl + molette : zoom · clic : élément')}"><div class="sy-vue-cadre"><svg class="sy-vue-svg ${th}" xmlns="http://www.w3.org/2000/svg" viewBox="${vb.join(' ')}" data-w="${vb[2]}" data-h="${vb[3]}">${vue.svg}</svg></div></div>`+
-      (st.carte==='diagramme'&&st.carteVue?`<div class="sy-carte" title="${_L('Carte : clic ou glisser pour se déplacer')}"><svg class="sy-carte-svg ${th}" xmlns="http://www.w3.org/2000/svg" viewBox="${vb.join(' ')}">${vue.svg}</svg><div class="sy-carte-vp"></div></div>`:'')+`</div>`;
+  const vue=st.cle?capSyVue(st.cle):null, rep=vue?capSyVueRep(vue):null, vb=(vue&&vue.viewBox)||[0,0,800,600], th=capSyTheme();
+  const h0=box.querySelector('.sy-vue-hote'); if(h0&&!st.defil&&st.rendue===st.cle) st.defil=[h0.scrollLeft,h0.scrollTop];
+  let h='';
+  if(!vue){
+    h=`<div class="cdg-vide">${vues.length?(uml?_L(`${vues.length} diagramme(s) et tableau(x) enregistrés dans le fichier (Cameo, Enterprise Architect, Papyrus) : choisissez-en un à gauche (ou depuis le panneau de détail d'un élément).`):_L(`${vues.length} vue(s) calculée(s) depuis le texte SysML v2 : choisissez-en une à gauche (ou depuis le panneau de détail d'un élément).`)):(uml?_L('Aucun diagramme enregistré dans ce fichier (un .uml de Papyrus montre les siens avec son .notation : ouvrez les deux ensemble).'):_L('Aucune vue calculable dans ce modèle (pas de définition de part, d\'état ni d\'action).'))}</div>`;
+  } else if(vue.tableau){
+    h=capSyTabCorps(vue);   // tableau, matrice, Relation Map de Cameo (90)
+  } else {
+    const visuel=st.mode==='visuel', nNotes=typeof _capRev!=='undefined'?_capRev.comments.filter(c=>c.diag&&c.diag.uid==='sy:'+st.cle).length:0;
+    const F=st.filtres, nF=(F.etiq?0:1)+(F.comp?0:1)+Object.values(F.genres).filter(v=>v===false).length;
+    const genres=[...new Set((vue.liens||[]).map(l=>l.genre).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b)));
+    const opt=(v,l)=>`<option value="${v}"${st.theme===v?' selected':''}>${l}</option>`;
+    // Ligne 1 : identité · recherche · thème · export · fermer
+    h+=`<div class="sy-l1"><span class="cdg-ico">${capSyVueIco(vue,16)}</span><span class="cdg-sigle">${esc(rep.sigle)}</span><b class="sy-vue-titre" title="${esc(rep.type)}">${esc(vue.nom||'')}</b><span class="cdg-cnt">${esc(rep.libelleOrigine)}</span><span style="flex:1"></span>`+
+      (visuel?`<span class="sy-chercher"><input id="sy-q" type="search" placeholder="${_L('Chercher (Ctrl+F)')}" value="${esc(st.q)}" title="${_L('Chercher dans le diagramme — Entrée : suivant · Maj+Entrée : précédent · Échap : effacer')}" autocomplete="off"><button class="cap-lf-btn" data-syq="-1" title="${_L('Résultat précédent (Maj+Entrée)')}">▲</button><button class="cap-lf-btn" data-syq="1" title="${_L('Résultat suivant (Entrée)')}">▼</button><span class="cdg-cnt" id="sy-q-n"></span></span>`:'')+
+      (visuel?`<button class="cap-lf-btn${st.grille?' active':''}" id="sy-grille" title="${_L('Grille : quadrillage sous le dessin (G)')}">#</button>`:'')+
+      `<select id="sy-theme" class="cap-lf-btn" title="${_L('Thème du dessin : celui d\'Arcalyse (Auto), clair ou sombre')}">${opt('auto',_L('◐ Auto'))}${opt('clair',_L('◐ Clair'))}${opt('sombre',_L('◐ Sombre'))}</select>`+
+      `<span class="sy-menu-w"><button class="cap-lf-btn" id="sy-export-bt" title="${_L('Exporter : SVG, PNG, impression ou PDF, texte')}">⬇ ▾</button><div class="sy-menu" id="sy-export" hidden>`+
+        `<button data-syexp="svg">${_L('SVG (vectoriel)')}</button><button data-syexp="png">${_L('PNG, taille réelle')}</button><button data-syexp="png2">${_L('PNG, haute définition (×2)')}</button><button data-syexp="imprimer">${_L('Imprimer / PDF…')}</button><button data-syexp="txt">${_L('Texte')}</button></div></span>`+
+      `<button class="cap-lf-btn" id="sy-fermer" title="${_L('Fermer la vue')}">✕</button></div>`;
+    // Ligne 2 : notes · filtres · zoom · carte · mode
+    h+=`<div class="sy-l2">`+
+      (typeof _capRev!=='undefined'?`<span class="tb-grp"><span class="crv-drag" id="sy-crv-note" draggable="true" title="${_L('Note de revue : glissez-la sur la vue (déposée sur un élément, elle lui est liée) ou cliquez pour la poser au centre. Les notes forment un calque indépendant du modèle.')}"><span class="crv-drag-h">⠿</span>${_L('📝 Note')}</span><button class="cap-lf-btn${_capRev.layer?' active':''}" id="sy-crv-layer" title="${_L('Afficher ou masquer le calque des notes de revue')}">${_L('💬 Calque')} <span class="cdg-nb">${nNotes}</span></button></span><span class="cdg-vd-sep"></span>`:'')+
+      (visuel?`<span class="sy-menu-w"><button class="cap-lf-btn${nF?' active':''}" id="sy-filtres-bt" title="${_L('Filtres d\'affichage, pour toutes les vues : étiquettes des liens, compartiments, liens par genre')}">⧩ ▾${nF?` <span class="cdg-nb">${nF}</span>`:''}</button><div class="sy-menu" id="sy-filtres" hidden>`+
+        `<label><input type="checkbox" data-syf="etiq"${F.etiq?' checked':''}> ${_L('Étiquettes des liens')}</label><label><input type="checkbox" data-syf="comp"${F.comp?' checked':''}> ${_L('Compartiments')}</label>`+
+        (genres.length?`<div class="sy-menu-t">${_L('Liens')}</div>`+genres.map(g=>`<label><input type="checkbox" data-syg="${esc(g)}"${F.genres[g]===false?'':' checked'}> ${esc(capSyRelLibelle(g))} <span class="cdg-cnt">${vue.liens.filter(l=>l.genre===g).length}</span></label>`).join(''):'')+
+        `<button class="cap-lf-btn" data-syf="tout">${_L('Tout afficher')}</button></div></span><span class="cdg-vd-sep"></span>`:'')+
+      `<span class="tb-grp"><button class="cap-lf-btn" data-syzoom="-" title="${visuel?_L('Dézoomer (Ctrl+molette)'):_L('Texte plus petit')}">−</button><span class="cdg-cnt sy-pct" id="sy-zoom-pct"></span><button class="cap-lf-btn" data-syzoom="+" title="${visuel?_L('Zoomer (Ctrl+molette)'):_L('Texte plus grand')}">+</button>`+
+        (visuel?`<button class="cap-lf-btn" data-syzoom="tout" title="${_L('Voir toute la vue')}">⤢</button><button class="cap-lf-btn" data-syzoom="1" title="${_L('Taille réelle (100 %)')}">1:1</button><button class="cap-lf-btn" data-syzoom="sel" title="${_L('Centrer sur l\'élément choisi (F)')}">⌖</button>`:`<button class="cap-lf-btn" data-syzoom="0" title="${_L('Taille normale du texte')}">⊡</button>`)+`</span>`+
+      (visuel&&D.carte==='diagramme'?`<button class="cap-lf-btn${st.carteVue?' active':''}" data-sycarte-vue="1" title="${_L('Carte : vue d\'ensemble et position affichée (clic : s\'y rendre)')}">▣</button>`:'')+
+      `<span style="flex:1"></span><span class="cdg-cnt">${_L(`${vue.formes.length} forme(s) · ${vue.liens.length} lien(s)`)}</span>`+
+      `<span class="tb-grp"><button class="cap-lf-btn${visuel?' active':''}" data-symode="visuel" title="${_L('Dessin de la vue')}">${_L('🖼 Visuel')}</button><button class="cap-lf-btn${!visuel?' active':''}" data-symode="texte" title="${_L('Rendu textuel de la vue')}">${_L('≡ Texte')}</button></span></div>`;
+    if(!visuel) h+=`<pre class="sy-texte sy-vue-texte" style="font-size:${(11.5*(st.texteZoom||1)).toFixed(1)}px" title="${_L('Ctrl + molette : taille du texte')}">${capSyTexteHtml(vue.texte||'')}</pre>`;
+    else h+=`<div class="sy-vue-droite-corps"><div class="sy-vue-hote" title="${_L('Glisser : déplacer la vue · Ctrl + molette : zoom · clic : élément')}"><div class="sy-vue-cadre"><svg class="sy-vue-svg ${th}" xmlns="http://www.w3.org/2000/svg" viewBox="${vb.join(' ')}" data-w="${vb[2]}" data-h="${vb[3]}">${vue.svg}</svg></div></div>`+
+      (D.carte==='diagramme'&&st.carteVue?`<div class="sy-carte" title="${_L('Carte : clic ou glisser pour se déplacer')}"><svg class="sy-carte-svg ${th}" xmlns="http://www.w3.org/2000/svg" viewBox="${vb.join(' ')}">${vue.svg}</svg><div class="sy-carte-vp"></div></div>`:'')+`</div>`;
   }
-  v.innerHTML=`<aside class="sy-vues-gauche" style="width:${Math.max(160, st.largeur||260)}px"><div class="sy-vues-explo">${liste}</div>${capSyCarteZoneHtml(vue, vb, th)}</aside><div class="sy-vues-split" title="${_L('Glisser pour régler la largeur de la liste')}"></div><div class="sy-vues-droite">${corps}</div>`;
-  const liste1=v.querySelector('.sy-vues-liste'); if(liste1&&st.listeDefil) liste1.scrollTop=st.listeDefil;
-  if(boxDefil) box.scrollTop=boxDefil;
-  // Taille du dessin : zoom réglé, sinon ajusté à la largeur disponible ; élément mis en évidence ; clic → détail ; main ; Ctrl+molette ; carte
-  const svg=v.querySelector('svg.sy-vue-svg');
-  if(svg){ const hote=svg.closest('.sy-vue-hote'); capSyZoomPoser(svg, hote, st.zoom);
-    if(st.sel){ svg.querySelectorAll(`[data-sem="${CSS.escape(st.sel)}"]`).forEach(g=>g.classList.add('sy-sel')); }
+  box.innerHTML=h; st.rendue=st.cle;
+  const svg=box.querySelector('svg.sy-vue-svg');
+  if(svg){ const hote=svg.closest('.sy-vue-hote'); capSyZoomPoser(svg, hote, st.zoom); capSyPct(box);
+    if(st.sel) svg.querySelectorAll(`[data-sem="${CSS.escape(st.sel)}"]`).forEach(g=>g.classList.add('sy-sel'));
     if(st.defil){ hote.scrollLeft=st.defil[0]; hote.scrollTop=st.defil[1]; st.defil=null; }
+    else if(st.sel){ const g=svg.querySelector(`[data-sem="${CSS.escape(st.sel)}"]`); if(g) requestAnimationFrame(()=>capSyDefilerVers(hote, g)); }
     svg.addEventListener('click',e=>{ if(hote._deplace) return; const g=e.target.closest('[data-sem]'); if(!g) return; const id=g.dataset.sem; st.sel=id; svg.querySelectorAll('.sy-sel').forEach(x=>x.classList.remove('sy-sel')); svg.querySelectorAll(`[data-sem="${CSS.escape(id)}"]`).forEach(x=>x.classList.add('sy-sel')); if(capGetElementById_(id)) capOpenDetailById(id); });
     capSyVuesMain(hote, box);
-    capSyCarte(v, hote, svg);
+    capSyFiltresAppliquer(svg, vue);
+    capSyGrille(svg);
+    capSyCarte(box, hote, svg);
+    if(st.q) capSyChercher(box, 0);
     if(typeof capRevLayerEnsure==='function') setTimeout(capRevLayerEnsure,0);   // 💬 notes de revue sur la vue (55)
   }
-  const pre=v.querySelector('.sy-vue-texte');   // ≡ texte : Ctrl + molette = taille du texte
+  capSyCarteRender();
+  const pre=box.querySelector('.sy-vue-texte');   // ≡ texte : Ctrl + molette = taille du texte
   if(pre) pre.addEventListener('wheel',e=>{ if(!e.ctrlKey) return; e.preventDefault(); capSyTexteZoom(box, e.deltaY<0?1.15:1/1.15); },{passive:false});
-  const qi=v.querySelector('#sy-vues-q'); if(qi) qi.oninput=()=>{ st.q=qi.value; const p=qi.selectionStart; capSyVuesRender(box); const i=box.querySelector('#sy-vues-q'); if(i){ i.focus(); i.setSelectionRange(p,p); } };
-  v.querySelectorAll('[data-syplg]').forEach(h=>h.onclick=()=>{ st.plis[h.dataset.syplg]=!st.plis[h.dataset.syplg]; capSyVuesRender(box); });
-  v.querySelectorAll('.sy-vue-it').forEach(it=>it.onclick=()=>{ st.cle=it.dataset.cle; st.sel=''; st.zoom=0; st.defil=null; capSyVuesRender(box); });
-  v.querySelectorAll('[data-symode]').forEach(b=>b.onclick=()=>{ st.mode=b.dataset.symode; capSyVuesRender(box); });
-  v.querySelectorAll('[data-syzoom]').forEach(b=>b.onclick=()=>{ const f=b.dataset.syzoom==='0'?0:(b.dataset.syzoom==='+'?1.25:0.8); if(st.mode==='texte') capSyTexteZoom(box, f); else capSyZoom(box, f); });
-  v.querySelectorAll('[data-sycarte]').forEach(b=>b.onclick=()=>{ st.carte=b.dataset.sycarte; capSyVuesRender(box); });
-  v.querySelectorAll('[data-sycarte-tog]').forEach(b=>b.onclick=()=>{ st.carteReduite=!st.carteReduite; capSyVuesRender(box); });
-  v.querySelectorAll('[data-sycarte-vue]').forEach(b=>b.onclick=()=>{ st.carteVue=!st.carteVue; capSyVuesRender(box); });
-  v.querySelectorAll('[data-syexp]').forEach(b=>b.onclick=()=>{ if(!vue) return; const nom=(vue.nom||'vue').replace(/[\\/:*?"<>|]+/g,'-');
-    if(b.dataset.syexp==='svg') capDownloadBlob(new Blob([vue.svgDocument({theme:capSyTheme()})],{type:'image/svg+xml'}), nom+'.svg');
-    else capDownloadBlob(new Blob([vue.texte||''],{type:'text/plain'}), nom+'.txt'); });
-  v.querySelectorAll('[data-syel]').forEach(b=>b.onclick=()=>capOpenDetailById(b.dataset.syel));
-  // Largeur de la liste : séparateur glissé (la carte sous l'explorateur se redessine à la fin)
-  const sp=v.querySelector('.sy-vues-split'), aside=v.querySelector('.sy-vues-gauche');
-  if(sp) sp.onpointerdown=e=>{ e.preventDefault(); const x0=e.clientX, w0=aside.getBoundingClientRect().width; sp.classList.add('on'); sp.setPointerCapture(e.pointerId);
-    const mv=ev=>{ st.largeur=Math.max(160, Math.min(600, w0+ev.clientX-x0)); aside.style.width=st.largeur+'px'; };
-    const fin=()=>{ sp.classList.remove('on'); sp.removeEventListener('pointermove',mv); sp.removeEventListener('pointerup',fin); sp.removeEventListener('pointercancel',fin); if(v.querySelector('.sy-carte-panneau')) capSyVuesRender(box); };
-    sp.addEventListener('pointermove',mv); sp.addEventListener('pointerup',fin); sp.addEventListener('pointercancel',fin); };
+  // Commandes des deux lignes
+  const q=box.querySelector('#sy-q');
+  if(q){ q.oninput=()=>{ st.q=q.value; st.hit=0; capSyChercher(box, 0); };
+    q.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); capSyChercher(box, e.shiftKey?-1:1); } else if(e.key==='Escape'){ q.value=''; st.q=''; capSyChercher(box, 0); } }; }
+  box.querySelectorAll('[data-syq]').forEach(b=>b.onclick=()=>capSyChercher(box, +b.dataset.syq));
+  const sel=box.querySelector('#sy-theme'); if(sel) sel.onchange=()=>{ st.theme=sel.value; capSyVuesTheme(); };
+  const gr=box.querySelector('#sy-grille'); if(gr) gr.onclick=()=>capSyGrilleBascule(box);
+  box.querySelectorAll('.sy-menu-w > button').forEach(b=>b.onclick=e=>{ e.stopPropagation(); const m=b.nextElementSibling, o=m.hidden; box.querySelectorAll('.sy-menu').forEach(x=>{ x.hidden=true; }); m.hidden=!o; });
+  box.querySelectorAll('[data-syexp]').forEach(b=>b.onclick=()=>{ const m=b.closest('.sy-menu'); if(m) m.hidden=true; capSyExporter(vue, b.dataset.syexp); });
+  box.querySelectorAll('[data-syel]').forEach(b=>b.onclick=()=>capOpenDetailById(b.dataset.syel));   // 🔎 Élément d'un tableau (90)
+  if(vue&&vue.tableau) capSyTabWire(box, vue, box);   // commandes du tableau (90)
+  box.querySelectorAll('input[data-syf],input[data-syg]').forEach(c=>c.onchange=()=>{ if(c.dataset.syf) st.filtres[c.dataset.syf]=c.checked; else st.filtres.genres[c.dataset.syg]=c.checked; if(svg) capSyFiltresAppliquer(svg, vue); capSyFiltresBadge(box); });
+  const tout=box.querySelector('button[data-syf="tout"]'); if(tout) tout.onclick=()=>{ st.filtres={etiq:true, comp:true, genres:{}}; capSyVuesRender(box); };
+  const fermer=box.querySelector('#sy-fermer'); if(fermer) fermer.onclick=()=>{ st.cle=''; st.sel=''; if(typeof _capDiag!=='undefined') _capDiag.actif=''; capSyVuesRender(box); if(typeof capDiagMarquerActif==='function') capDiagMarquerActif(); };
+  box.querySelectorAll('[data-symode]').forEach(b=>b.onclick=()=>{ st.mode=b.dataset.symode; capSyVuesRender(box); });
+  box.querySelectorAll('[data-syzoom]').forEach(b=>b.onclick=()=>{ const k=b.dataset.syzoom;
+    if(st.mode==='texte'){ capSyTexteZoom(box, k==='0'?0:(k==='+'?1.25:0.8)); return; }
+    if(k==='tout') capSyZoom(box, 'tout'); else if(k==='1') capSyZoom(box, 'reel'); else if(k==='sel') capSyCentrer(box); else capSyZoom(box, k==='+'?1.25:0.8); });
+  box.querySelectorAll('[data-sycarte-vue]').forEach(b=>b.onclick=()=>{ st.carteVue=!st.carteVue; capSyVuesRender(box); });
+  if(!box._syMenus){ box._syMenus=true; document.addEventListener('click',e=>{ if(!e.target.closest('.sy-menu-w')) box.querySelectorAll('.sy-menu').forEach(x=>{ x.hidden=true; }); }); }
 }
 
 /** Applique un zoom au dessin : largeur et hauteur du SVG (facteur, ou 0 = ajusté à la largeur du conteneur, entre 0,2 et 1,5).
@@ -592,213 +722,259 @@ function capSyZoomPoser(svg, hote, z){
   return k;
 }
 
-/** Zoom de la vue affichée (facteur, ou 0 = ajusté à la largeur), position de défilement conservée au prorata ; le dessin est
- * redimensionné sur place (pas de nouveau rendu : la liste et la carte restent, le calque des notes est redessiné).
- * @param {HTMLElement} box - Conteneur #cap-view-diag
- * @param {number} f - Facteur multiplicatif, ou 0
+/** Pourcentage de zoom affiché dans la ligne 2 (100 % = taille du dessin du lecteur). @param {HTMLElement} box - Conteneur `#cdg-sy` */
+function capSyPct(box){
+  const p=box.querySelector('#sy-zoom-pct'), svg=box.querySelector('svg.sy-vue-svg'); if(!p||!svg) return;
+  const w=+svg.dataset.w||1; p.textContent=Math.round((parseFloat(svg.style.width)||w)/w*100)+' %';
+}
+
+/** Zoom de la vue affichée : facteur multiplicatif, 0 = ajusté à la largeur, `tout` = toute la vue visible (⤢), `reel` = 100 % (1:1) ;
+ * position de défilement conservée au prorata ; le dessin est redimensionné sur place (pas de nouveau rendu : la carte suit, le
+ * calque des notes est redessiné).
+ * @param {HTMLElement} box - Conteneur `#cdg-sy`
+ * @param {number|string} f - Facteur, 0, `tout` ou `reel`
  * @param {number[]} [centre] - Point écran à garder sous le pointeur [x, y] (Ctrl + molette)
  */
 function capSyZoom(box, f, centre){
   const st=_capSyVues, svg=box.querySelector('svg.sy-vue-svg'), hote=svg&&svg.closest('.sy-vue-hote'); if(!svg||!hote) return;
-  const w=+svg.dataset.w||1, cur=parseFloat(svg.style.width)/w||1, z=f?Math.min(4, Math.max(0.1, cur*f)):0;
+  const w=+svg.dataset.w||1, h=+svg.dataset.h||1, cur=parseFloat(svg.style.width)/w||1;
+  let z;
+  if(f==='tout') z=Math.max(0.05, Math.min((hote.clientWidth-24)/w, (hote.clientHeight-24)/h));
+  else if(f==='reel') z=1;
+  else z=f?Math.min(4, Math.max(0.1, cur*f)):0;
   const r=hote.getBoundingClientRect(), px=centre?centre[0]-r.left:r.width/2, py=centre?centre[1]-r.top:r.height/2;
   st.zoom=z;
   const k=capSyZoomPoser(svg, hote, z)/cur;
   hote.scrollLeft=(hote.scrollLeft+px)*k-px; hote.scrollTop=(hote.scrollTop+py)*k-py;
+  capSyPct(box);
   if(hote._carteMaj) hote._carteMaj();
   if(typeof capRevLayerDraw==='function') requestAnimationFrame(capRevLayerDraw);
 }
 
+/** Fait défiler le conteneur pour amener un groupe du SVG au centre de la partie visible.
+ * @param {HTMLElement} hote - Conteneur défilant
+ * @param {Element} g - Groupe du SVG
+ */
+function capSyDefilerVers(hote, g){
+  if(!hote||!g) return;
+  const r=g.getBoundingClientRect(), hr=hote.getBoundingClientRect();
+  hote.scrollLeft+=r.left+r.width/2-(hr.left+hr.width/2); hote.scrollTop+=r.top+r.height/2-(hr.top+hr.height/2);
+  if(hote._carteMaj) hote._carteMaj();
+}
+
+/** ⌖ Centre la vue sur l'élément choisi (`sel`), sinon sur le résultat courant de la recherche ; sans l'un ni l'autre, montre toute la vue.
+ * @param {HTMLElement} box - Conteneur `#cdg-sy` */
+function capSyCentrer(box){
+  const st=_capSyVues, svg=box.querySelector('svg.sy-vue-svg'), hote=svg&&svg.closest('.sy-vue-hote'); if(!svg||!hote) return;
+  const g=(st.sel&&svg.querySelector(`[data-sem="${CSS.escape(st.sel)}"]`))||svg.querySelector('.sy-hit-cur');
+  if(!g){ capSyZoom(box,'tout'); return; }
+  capSyDefilerVers(hote, g);
+}
+
+/** 🔍 Recherche dans le dessin : formes et liens (`[data-sem]`) dont le texte propre contient la saisie ; résultats marqués `sy-hit`,
+ * résultat courant `sy-hit-cur` amené au centre, compteur « i / n ».
+ * @param {HTMLElement} box - Conteneur `#cdg-sy`
+ * @param {number} sens - 0 : recalcul (résultat courant gardé), 1 / -1 : suivant / précédent
+ */
+function capSyChercher(box, sens){
+  const st=_capSyVues, svg=box.querySelector('svg.sy-vue-svg'), n=box.querySelector('#sy-q-n'); if(!svg) return;
+  svg.querySelectorAll('.sy-hit,.sy-hit-cur').forEach(x=>x.classList.remove('sy-hit','sy-hit-cur'));
+  const q=(st.q||'').trim().toLowerCase();
+  if(!q){ if(n) n.textContent=''; return; }
+  const propre=g=>[...g.querySelectorAll('text')].filter(t=>t.closest('[data-sem]')===g).map(t=>t.textContent).join(' ').toLowerCase();   // texte du groupe sans celui des groupes imbriqués
+  const L=[...svg.querySelectorAll('[data-sem]')].filter(g=>!g.classList.contains('sy-off')&&propre(g).includes(q));
+  if(!L.length){ if(n) n.textContent='0'; return; }
+  st.hit=((st.hit+(sens||0))%L.length+L.length)%L.length;
+  L.forEach(g=>g.classList.add('sy-hit')); L[st.hit].classList.add('sy-hit-cur');
+  if(n) n.textContent=`${st.hit+1} / ${L.length}`;
+  capSyDefilerVers(svg.closest('.sy-vue-hote'), L[st.hit]);
+}
+
+/** ⧩ Filtres d'affichage appliqués au SVG (classe `sy-off`) : liens d'un genre masqué, étiquettes des liens, compartiments. Les liens sont
+ * retrouvés par `data-lien` (SysML v2) ou `data-v` (UML), sinon par le `data-sem` de leur élément (groupe sans rectangle).
+ * @param {SVGSVGElement} svg - Dessin
+ * @param {object} vue - Vue du lecteur (`liens`)
+ */
+function capSyFiltresAppliquer(svg, vue){
+  const F=_capSyVues.filtres;
+  svg.querySelectorAll('.sy-off').forEach(x=>x.classList.remove('sy-off'));
+  const grp=l=>svg.querySelector(`[data-lien="${CSS.escape(l.id)}"]`)||svg.querySelector(`[data-v="${CSS.escape(l.id)}"]`)||
+    (l.element?[...svg.querySelectorAll(`[data-sem="${CSS.escape(l.element)}"]`)].find(g=>g.querySelector('path,line,polyline')&&!g.querySelector('rect')):null);
+  (vue.liens||[]).forEach(l=>{ const g=grp(l); if(!g) return; if(F.genres[l.genre]===false) g.classList.add('sy-off'); else if(!F.etiq) g.querySelectorAll('text').forEach(t=>t.classList.add('sy-off')); });
+  if(!F.comp) svg.querySelectorAll('.syv-c,.s1-compartiment').forEach(c=>c.classList.add('sy-off'));
+}
+
+/** Met à jour le bouton ⧩ (actif, nombre de filtres engagés). @param {HTMLElement} box - Conteneur `#cdg-sy` */
+function capSyFiltresBadge(box){
+  const F=_capSyVues.filtres, n=(F.etiq?0:1)+(F.comp?0:1)+Object.values(F.genres).filter(v=>v===false).length, b=box.querySelector('#sy-filtres-bt'); if(!b) return;
+  b.classList.toggle('active',!!n); b.innerHTML='⧩ ▾'+(n?` <span class="cdg-nb">${n}</span>`:'');
+}
+
+/** ⬇ Export de la vue affichée : SVG (document autonome du lecteur, au thème affiché), PNG ×1 / ×2 (fond clair), impression (fenêtre
+ * d'impression du navigateur, PDF par l'imprimante virtuelle), texte.
+ * @param {object} vue - Vue du lecteur
+ * @param {string} fmt - `svg` | `png` | `png2` | `imprimer` | `txt`
+ */
+async function capSyExporter(vue, fmt){
+  if(!vue) return;
+  const nom=capSafeFileName(vue.nom||'vue');
+  if(fmt==='txt'){ capDownloadBlob(new Blob([vue.texte||''],{type:'text/plain'}), nom+'.txt'); return; }
+  if(typeof vue.svgDocument!=='function') return;   // tableau de Cameo (90) : texte seulement
+  const doc=vue.svgDocument({theme:fmt==='svg'?capSyTheme():'clair'});
+  if(fmt==='svg'){ capDownloadBlob(new Blob([doc],{type:'image/svg+xml'}), nom+'.svg'); return; }
+  const vb=vue.viewBox||[0,0,800,600];
+  if(fmt==='imprimer'){
+    const w=window.open('','_blank'); if(!w){ capAlert(_L('Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez.')); return; }
+    w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${capEsc(vue.nom||'')}</title><style>body{margin:10mm;font-family:Segoe UI,Arial,sans-serif}h1{font-size:14pt;margin:0 0 6mm}svg{max-width:100%;height:auto}@page{size:${vb[2]>=vb[3]?'landscape':'portrait'}}</style></head><body><h1>${capEsc(vue.nom||'')}</h1>${doc}</body></html>`);
+    w.document.close(); setTimeout(()=>{ w.focus(); w.print(); },300); return;
+  }
+  try{ const c=await capSvgToCanvas(doc, vb[2], vb[3], fmt==='png2'?2:1); capDownloadBlob(await capCanvasBlob(c,'image/png'), nom+'.png'); }
+  catch(e){ capAlert(_L('⚠ Échec de l\'export : ')+(e&&e.message||e), {level:'err'}); }
+}
+
 /** Taille du texte du rendu ≡ Texte (facteur multiplicatif, ou 0 = taille normale), entre 0,5 et 3.
- * @param {HTMLElement} box - Conteneur #cap-view-diag
+ * @param {HTMLElement} box - Conteneur `#cdg-sy`
  * @param {number} f - Facteur, ou 0
  */
 function capSyTexteZoom(box, f){
   const st=_capSyVues, pre=box.querySelector('.sy-vue-texte'); if(!pre) return;
   st.texteZoom=f?Math.min(3, Math.max(0.5, (st.texteZoom||1)*f)):1;
   pre.style.fontSize=(11.5*st.texteZoom).toFixed(1)+'px';
+  const p=box.querySelector('#sy-zoom-pct'); if(p) p.textContent=Math.round(st.texteZoom*100)+' %';
 }
 
 /** Déplacement à la main (glisser sur la vue) et zoom à la molette avec Ctrl, comme la visionneuse Capella ; un glisser n'ouvre pas l'élément.
  * @param {HTMLElement} hote - Conteneur défilant de la vue
- * @param {HTMLElement} box - Conteneur #cap-view-diag
+ * @param {HTMLElement} box - Conteneur `#cdg-sy`
  */
 function capSyVuesMain(hote, box){
   hote.addEventListener('pointerdown',e=>{
     if(e.button!==0&&e.button!==1) return; if(e.target.closest('.crv-note,.crv-linkbar,.sy-carte')) return;
     const x0=e.clientX, y0=e.clientY, sl=hote.scrollLeft, stp=hote.scrollTop; let bouge=false;
     hote.classList.add('sy-main'); hote._deplace=false;
-    const mv=ev=>{ const dx=ev.clientX-x0, dy=ev.clientY-y0; if(!bouge&&Math.abs(dx)+Math.abs(dy)<4) return; bouge=true; hote._deplace=true; hote.scrollLeft=sl-dx; hote.scrollTop=stp-dy; };
+    const mv=ev=>{ const dx=ev.clientX-x0, dy=ev.clientY-y0; if(!bouge&&Math.abs(dx)+Math.abs(dy)<4) return;
+      if(!bouge){ try{ hote.setPointerCapture(e.pointerId); }catch(err){ /* capture refusée : glisser quand même */ } }   // capture au début du glisser seulement : sinon le clic vise l'hôte et non l'élément
+      bouge=true; hote._deplace=true; hote.scrollLeft=sl-dx; hote.scrollTop=stp-dy; };
     const fin=()=>{ hote.classList.remove('sy-main'); hote.removeEventListener('pointermove',mv); hote.removeEventListener('pointerup',fin); hote.removeEventListener('pointercancel',fin); setTimeout(()=>{ hote._deplace=false; },0); };
     hote.addEventListener('pointermove',mv); hote.addEventListener('pointerup',fin); hote.addEventListener('pointercancel',fin);
-    try{ hote.setPointerCapture(e.pointerId); }catch(err){ /* capture refusée : glisser quand même */ }
   });
   hote.addEventListener('wheel',e=>{ if(!e.ctrlKey) return; e.preventDefault(); capSyZoom(box, e.deltaY<0?1.2:1/1.2, [e.clientX, e.clientY]); },{passive:false});
 }
 
-/** ▣ Carte de la vue : miniature du dessin (sous l'explorateur, à la largeur du volet, ou flottante dans la vue), cadre de la partie
- * affichée suivi au défilement et au zoom, clic ou glisser pour s'y rendre.
- * @param {HTMLElement} v - Conteneur #cap-sy-vues
+/** ▣ Carte de la vue, comme le Zoom de Cameo : boîte de taille fixe (sous l'explorateur : largeur du volet × hauteur réglée par le séparateur
+ * ↕ ; flottante : au format du dessin), fond gris, miniature du dessin calée en haut à gauche, échelle qui contient le dessin et la partie
+ * affichée — le cadre peut donc déborder le dessin quand on dézoome. Cadre suivi au défilement et au zoom. Glisser le cadre le déplace (l'affichage suit) ; un clic ailleurs dans la carte y centre
+ * l'affichage ; les carrés aux angles du cadre règlent la taille de l'affichage (zoom), l'angle opposé restant fixe. Aucune sélection
+ * de texte ni d'élément depuis la carte.
+ * @param {HTMLElement} v - Conteneur qui porte la carte (`#cdg-carte-sy` ou `#cdg-sy`)
  * @param {HTMLElement} hote - Conteneur défilant de la vue
  * @param {SVGSVGElement} svg - Dessin
  */
 function capSyCarte(v, hote, svg){
   const carte=v.querySelector('.sy-carte'), vp=carte&&carte.querySelector('.sy-carte-vp'), mini=carte&&carte.querySelector('svg.sy-carte-svg'); if(!carte||!vp||!mini) return;
-  const w=+svg.dataset.w||1, h=+svg.dataset.h||1, pan=carte.classList.contains('sy-carte-panneau');
+  const w=+svg.dataset.w||1, h=+svg.dataset.h||1, pan=carte.classList.contains('sy-carte-panneau'), box=hote.closest('#cdg-sy')||document.getElementById('cdg-sy');
+  // Boîte de taille fixe (comme le Zoom de Cameo) : sous l'explorateur, largeur du volet × hauteur du séparateur ↕ (54) ; flottante, au format du dessin
   let cw, ch;
-  if(pan){ cw=Math.max(60, carte.parentElement.clientWidth-12); ch=Math.round(cw*h/w); if(ch>190){ ch=190; cw=Math.round(ch*w/h); } }
+  if(pan){ cw=Math.max(60, carte.parentElement.clientWidth-12); ch=Math.max(60, (typeof _capDiag!=='undefined'&&_capDiag.carteH)||190); }
   else { cw=Math.min(220, Math.max(120, Math.round(w/h*110))); ch=Math.round(cw*h/w); }
-  mini.setAttribute('width',cw); mini.setAttribute('height',ch); carte.style.width=cw+'px'; carte.style.height=ch+'px';
-  const maj=()=>{ const zw=parseFloat(svg.style.width)||w, zh=parseFloat(svg.style.height)||h, kx=cw/zw, ky=ch/zh;
-    vp.style.left=Math.round(hote.scrollLeft*kx)+'px'; vp.style.top=Math.round(hote.scrollTop*ky)+'px';
-    vp.style.width=Math.max(8, Math.round(Math.min(hote.clientWidth, zw)*kx))+'px'; vp.style.height=Math.max(8, Math.round(Math.min(hote.clientHeight, zh)*ky))+'px'; };
+  carte.style.width=cw+'px'; carte.style.height=ch+'px';
+  if(!vp.querySelector('.sy-carte-h')) vp.innerHTML=['nw','ne','sw','se'].map(k=>`<span class="sy-carte-h sy-carte-h-${k}" data-h="${k}" title="${_L('Glisser : taille de l\'affichage (zoom)')}"></span>`).join('');
+  const zw=()=>parseFloat(svg.style.width)||w, zh=()=>parseFloat(svg.style.height)||h;   // taille affichée du dessin (zoom courant)
+  const vue=()=>{ const z=zw()/w; return [hote.scrollLeft/z, hote.scrollTop/z, hote.clientWidth/z, hote.clientHeight/z]; };   // partie affichée, en unités du dessin
+  // Échelle de la carte : contient le dessin ET la partie affichée (qui peut le déborder : zone grise), figée pendant un glisser
+  let k=1;
+  const echelle=()=>{ const V=vue(); return Math.min(cw/Math.max(w, V[0]+V[2]), ch/Math.max(h, V[1]+V[3])); };
+  const maj=()=>{ if(!carte._fige) k=echelle(); const V=vue();
+    mini.setAttribute('width',Math.max(1, Math.round(w*k))); mini.setAttribute('height',Math.max(1, Math.round(h*k)));
+    vp.style.left=Math.round(V[0]*k)+'px'; vp.style.top=Math.round(V[1]*k)+'px';
+    vp.style.width=Math.max(8, Math.round(V[2]*k))+'px'; vp.style.height=Math.max(8, Math.round(V[3]*k))+'px'; };
   maj(); hote.addEventListener('scroll',maj); hote._carteMaj=maj;
-  const aller=e=>{ const r=carte.getBoundingClientRect(), zw=parseFloat(svg.style.width)||w, zh=parseFloat(svg.style.height)||h;
-    hote.scrollLeft=(e.clientX-r.left)/cw*zw-hote.clientWidth/2; hote.scrollTop=(e.clientY-r.top)/ch*zh-hote.clientHeight/2; };
-  carte.addEventListener('pointerdown',e=>{ e.preventDefault(); e.stopPropagation(); aller(e); carte.setPointerCapture(e.pointerId);
-    const mv=ev=>aller(ev), fin=()=>{ carte.removeEventListener('pointermove',mv); carte.removeEventListener('pointerup',fin); carte.removeEventListener('pointercancel',fin); };
-    carte.addEventListener('pointermove',mv); carte.addEventListener('pointerup',fin); carte.addEventListener('pointercancel',fin); });
+  const unites=e=>{ const r=carte.getBoundingClientRect(); return [(e.clientX-r.left)/k, (e.clientY-r.top)/k]; };   // point de la carte en unités du dessin
+  const suivre=(e, mv, fin)=>{ carte.setPointerCapture(e.pointerId); carte._fige=true;
+    const stop=()=>{ carte.removeEventListener('pointermove',mv); carte.removeEventListener('pointerup',stop); carte.removeEventListener('pointercancel',stop); carte._fige=false; maj(); if(fin) fin(); };
+    carte.addEventListener('pointermove',mv); carte.addEventListener('pointerup',stop); carte.addEventListener('pointercancel',stop); };
+  carte.addEventListener('pointerdown',e=>{
+    e.preventDefault(); e.stopPropagation();
+    const z=zw()/w, poignee=e.target.closest('.sy-carte-h');
+    if(poignee){   // angle du cadre : taille de l'affichage, l'angle opposé reste fixe ; le cadre peut dépasser le dessin (zone grise)
+      const q=poignee.dataset.h, cwid=hote.clientWidth, chei=hote.clientHeight;
+      const x0=hote.scrollLeft/z, y0=hote.scrollTop/z, x1=x0+cwid/z, y1=y0+chei/z;   // cadre courant en unités
+      const F=[q[1]==='w'?x1:x0, q[0]==='n'?y1:y0];   // angle fixe (opposé)
+      suivre(e, ev=>{ const P=unites(ev); const W=Math.max(Math.abs(P[0]-F[0]), Math.abs(P[1]-F[1])*cwid/chei);
+        const nz=Math.min(4, Math.max(0.05, cwid/Math.max(W, 1)));   // nouveau zoom : largeur visible = W unités
+        _capSyVues.zoom=nz; capSyZoomPoser(svg, hote, nz);
+        hote.scrollLeft=(q[1]==='w'?F[0]-cwid/nz:F[0])*nz; hote.scrollTop=(q[0]==='n'?F[1]-chei/nz:F[1])*nz;
+        maj(); if(box) capSyPct(box); if(typeof capRevLayerDraw==='function') requestAnimationFrame(capRevLayerDraw); });
+      return;
+    }
+    const P=unites(e), dansCadre=e.target===vp||vp.contains(e.target);
+    let dx=hote.clientWidth/2/z, dy=hote.clientHeight/2/z;   // décalage pointeur → coin du cadre : centré, ou gardé si l'on saisit le cadre
+    if(dansCadre){ dx=P[0]-hote.scrollLeft/z; dy=P[1]-hote.scrollTop/z; }
+    const aller=ev=>{ const Q=unites(ev), zz=zw()/w; hote.scrollLeft=(Q[0]-dx)*zz; hote.scrollTop=(Q[1]-dy)*zz; };
+    aller(e); suivre(e, aller);
+  });
 }
 
-/** Section « Vues SysML » du panneau de détail (onglet 🔲) : vues calculées proposées sur l'élément, cliquables.
- * @param {string} id - Identifiant de l'élément
- * @param {Function} secTitle - Titre de section du panneau
- * @returns {string} HTML (vide hors modèle SysML)
+/** # Grille du dessin d'une vue des lecteurs (comme la grille de la visionneuse Capella) : quadrillage fin tous les 10 unités et marqué
+ * tous les 50, posé sous les formes dans le repère du dessin (il suit le zoom, l'export SVG / PNG ne le reprend pas : `capSyExporter` part du
+ * document du lecteur). Rien sans `_capSyVues.grille`.
+ * @param {SVGSVGElement} svg - Dessin de la vue
  */
-function capSyVuesDetail(id, secTitle){
-  if(!_capSysml.lecture) return '';
-  const vs=capSyVuesPour(id); if(!vs.length) return '';
-  return secTitle(_L(`Vues SysML v2 (${vs.length})`),'#58a6ff')+vs.map(v=>`<div class="cap-det-link cdg-lien" onclick="capSyVueOuvrir('${capEsc(v.cle)}','${capEsc(id)}')" title="${capEsc(v.libelleGenre)}">${capSyVueIco(v.genre, 14)} <span class="cdg-sigle">${capEsc(v.sigle)}</span>${capEsc(v.nom)}</div>`).join('');
+function capSyGrille(svg){
+  svg.querySelectorAll('.sy-grille').forEach(x=>x.remove());
+  if(!_capSyVues.grille) return;
+  const vb=(svg.getAttribute('viewBox')||'0 0 800 600').split(/[\s,]+/).map(Number), NS='http://www.w3.org/2000/svg';
+  const g=document.createElementNS(NS,'g'); g.setAttribute('class','sy-grille'); g.setAttribute('pointer-events','none');
+  g.innerHTML=`<defs><pattern id="sy-grille-p" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M10 0H0V10" fill="none" class="sy-grille-f"/></pattern>`+
+    `<pattern id="sy-grille-P" width="50" height="50" patternUnits="userSpaceOnUse"><rect width="50" height="50" fill="url(#sy-grille-p)"/><path d="M50 0H0V50" fill="none" class="sy-grille-F"/></pattern></defs>`+
+    `<rect x="${Math.floor(vb[0]/50)*50}" y="${Math.floor(vb[1]/50)*50}" width="${vb[2]+100}" height="${vb[3]+100}" fill="url(#sy-grille-P)"/>`;
+  svg.insertBefore(g, svg.firstChild);
 }
 
-/* ── 🖼 Icônes des métaclasses SysML v2 (dessinées pour Arcalyse, aucun fichier d'un autre outil repris : un glyphe par nature d'élément, couleur de la famille STR / BEH / REQ / ORG,
-   définition = forme pleine aux angles vifs, usage = forme claire aux angles arrondis, usages de référence (perform, exhibit,
-   satisfy, assert, binding, flow…) = contour en tirets). Appelées par `capIcoPlus` (84) quand la visionneuse ne dessine rien. ── */
-
-/** Couleurs des icônes SysML par famille : trait / fond d'une définition, fond d'un usage. */
-const CAP_SY_ICO_COULEUR={STR:['#1f8ca3','#d4eef3'], BEH:['#3a9a3a','#dcf1dc'], REQ:['#c2387a','#f8dcea'], ORG:['#8250df','#e8ddfa']};
-
-/** Glyphes SVG (viewBox 0 0 16 16) des icônes SysML par nature d'élément, construits au premier appel. Chaque glyphe est une
- * fonction (trait, fond, texte) → SVG, pour être coloré selon la famille et la nature (définition / usage).
- * @returns {Object<string,function(string,string,string):string>} Nature → glyphe
- */
-function capIcoSysmlTable(){
-  if(capIcoSysmlTable._t) return capIcoSysmlTable._t;
-  const tx=(t, x, y, taille, coul, gras)=>`<text x="${x}" y="${y}" font-size="${taille}" font-weight="${gras===false?'400':'700'}" text-anchor="middle" fill="${coul}" stroke="none">${t}</text>`;
-  const fleche=(x1, x2, s, tirets)=>`<path d="M${x1} 8H${x2-2.6}" stroke="${s}" stroke-width="1.6"${tirets?' stroke-dasharray="2.2 1.6"':''}/><path d="M${x2-3.2} 5.6L${x2} 8L${x2-3.2} 10.4Z" fill="${s}"/>`;
-  const doc=(s, f, lignes)=>`<path d="M3.5 1.5H10L12.5 4V14.5H3.5Z" fill="${f}" stroke="${s}" stroke-width="1.2"/><path d="M10 1.5V4H12.5" fill="none" stroke="${s}" stroke-width="1"/>`+(lignes||'');
-  const boite=(s, f, r, x, y, w, h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${f}" stroke="${s}" stroke-width="1.2"/>`;
-  const dossier=(s, f)=>`<path d="M1.5 3.5H6.5L8 5.5H14.5V13.5H1.5Z" fill="${f}" stroke="${s}" stroke-width="1.2"/><path d="M1.5 6.5H14.5" stroke="${s}" stroke-width="1"/>`;
-  const oeil=(s, f)=>`<path d="M1.5 8C4 3.8 12 3.8 14.5 8C12 12.2 4 12.2 1.5 8Z" fill="${f}" stroke="${s}" stroke-width="1.2"/><circle cx="8" cy="8" r="2.3" fill="${s}"/>`;
-  const coche=(s, f, inner)=>boite(s, f, 1.5, 2, 2, 12, 12)+(inner||`<path d="M4.6 8.3L7 10.7L11.6 5.6" fill="none" stroke="${s}" stroke-width="1.8" stroke-linecap="round"/>`);
-  capIcoSysmlTable._t={
-    // Structure
-    Part:(s, f, t)=>`<path d="M2.5 5.3L8 2.5L13.5 5.3V10.7L8 13.5L2.5 10.7Z" fill="${f}" stroke="${s}" stroke-width="1.2"/><path d="M2.5 5.3L8 8L13.5 5.3M8 8V13.5" fill="none" stroke="${s}" stroke-width="1"/>`,
-    Port:(s, f)=>`<path d="M3.5 1.5V14.5" stroke="${s}" stroke-width="1.4"/><rect x="1" y="5.5" width="5" height="5" fill="${f}" stroke="${s}" stroke-width="1.2"/>`+fleche(6.5, 14.5, s),
-    Attribute:(s, f, t)=>boite(s, f, 1.5, 2, 2.5, 12, 11)+`<path d="M4.5 6H11.5M4.5 8.5H11.5M4.5 11H9" stroke="${t}" stroke-width="1.2" stroke-linecap="round"/>`,
-    Item:(s, f)=>`<path d="M2 4H10L14 8L10 12H2Z" fill="${f}" stroke="${s}" stroke-width="1.2"/><circle cx="5" cy="8" r="1.3" fill="${s}"/>`,
-    Interface:(s, f)=>`<circle cx="8" cy="5.5" r="3.6" fill="${f}" stroke="${s}" stroke-width="1.3"/><path d="M8 9.1V14.5M4.5 14.5H11.5" stroke="${s}" stroke-width="1.4"/>`,
-    Connection:(s, f)=>`<rect x="1" y="5" width="4.5" height="6" fill="${f}" stroke="${s}" stroke-width="1.2"/><rect x="10.5" y="5" width="4.5" height="6" fill="${f}" stroke="${s}" stroke-width="1.2"/><path d="M5.5 8H10.5" stroke="${s}" stroke-width="1.6"/>`,
-    Allocation:(s, f)=>`<rect x="1" y="5" width="4.5" height="6" fill="${f}" stroke="${s}" stroke-width="1.2"/><rect x="10.5" y="5" width="4.5" height="6" fill="${f}" stroke="${s}" stroke-width="1.2"/>`+fleche(5.5, 11, s, true),
-    Enumeration:(s, f, t)=>boite(s, f, 1.5, 2, 2.5, 12, 11)+`<circle cx="5" cy="6" r="1" fill="${t}"/><circle cx="5" cy="8.5" r="1" fill="${t}"/><circle cx="5" cy="11" r="1" fill="${t}"/><path d="M7 6H11.5M7 8.5H11.5M7 11H10" stroke="${t}" stroke-width="1.2" stroke-linecap="round"/>`,
-    Reference:(s, f)=>boite(s, f, 1.5, 1.5, 4, 6, 8)+fleche(7.5, 15, s, true),
-    Occurrence:(s, f)=>`<circle cx="8" cy="8" r="6" fill="${f}" stroke="${s}" stroke-width="1.2"/><path d="M8 4.5V8L10.6 9.8" fill="none" stroke="${s}" stroke-width="1.4" stroke-linecap="round"/>`,
-    Individual:(s, f)=>`<path d="M2.5 5.3L8 2.5L13.5 5.3V10.7L8 13.5L2.5 10.7Z" fill="${f}" stroke="${s}" stroke-width="1.2"/><circle cx="8" cy="8.5" r="2.2" fill="${s}"/>`,
-    // Comportement
-    Action:(s, f, t)=>boite(s, f, 3.5, 1.5, 3.5, 13, 9)+`<path d="M6.3 5.8L9.8 8L6.3 10.2Z" fill="${t}"/>`,
-    State:(s, f, t)=>boite(s, f, 4.5, 1.5, 3.5, 13, 9)+`<circle cx="5.2" cy="8" r="1.6" fill="${t}"/><path d="M6.8 8H11.3" stroke="${t}" stroke-width="1.4" stroke-linecap="round"/>`,
-    Calculation:(s, f, t)=>boite(s, f, 3.5, 1.5, 3, 13, 10)+tx('ƒx', 8, 11.2, 7.6, t),
-    Flow:(s, f)=>`<rect x="1" y="5" width="4" height="6" fill="${f}" stroke="${s}" stroke-width="1.2"/>`+fleche(5, 15, s)+`<rect x="8" y="6.5" width="3" height="3" fill="${s}"/>`,
-    Transition:(s)=>`<path d="M2.5 12.5C3 5.5 9.5 3.5 12.6 6.8" fill="none" stroke="${s}" stroke-width="1.5"/><path d="M10.4 7.6L13.6 8.4L13.2 5Z" fill="${s}"/><circle cx="2.5" cy="12.5" r="1.6" fill="${s}"/>`,
-    Succession:(s)=>`<circle cx="3" cy="8" r="1.8" fill="${s}"/>`+fleche(4.5, 15, s),
-    Send:(s, f)=>`<path d="M1.5 4H10L13.5 8L10 12H1.5Z" fill="${f}" stroke="${s}" stroke-width="1.2"/>`,
-    Accept:(s, f)=>`<path d="M2.5 4H14V12H2.5L6 8Z" fill="${f}" stroke="${s}" stroke-width="1.2"/>`,
-    Assignment:(s, f, t)=>boite(s, f, 3.5, 1.5, 3.5, 13, 9)+tx('=', 8, 11.3, 9.5, t),
-    If:(s, f, t)=>boite(s, f, 3.5, 1.5, 3.5, 13, 9)+tx('?', 8, 11.3, 9, t),
-    Loop:(s, f, t)=>boite(s, f, 3.5, 1.5, 3.5, 13, 9)+tx('↻', 8, 11.3, 9, t),
-    Decision:(s, f)=>`<path d="M8 2L14 8L8 14L2 8Z" fill="${f}" stroke="${s}" stroke-width="1.2"/>`,
-    Fork:(s)=>`<rect x="1.5" y="6.5" width="13" height="3" fill="${s}"/>`,
-    Start:(s)=>`<circle cx="8" cy="8" r="4.5" fill="${s}"/>`,
-    Done:(s, f)=>`<circle cx="8" cy="8" r="5.5" fill="${f}" stroke="${s}" stroke-width="1.3"/><circle cx="8" cy="8" r="2.6" fill="${s}"/>`,
-    Event:(s, f)=>`<path d="M9 1.5L4 9H8L7 14.5L12 7H8Z" fill="${f}" stroke="${s}" stroke-width="1.1" stroke-linejoin="round"/>`,
-    // Exigences et cas
-    Requirement:(s, f, t)=>doc(s, f, `<path d="M5.5 7H10.5M5.5 9.5H10.5M5.5 12H8.5" stroke="${t}" stroke-width="1.2" stroke-linecap="round"/>`),
-    Constraint:(s, f, t)=>boite(s, f, 1.5, 1.5, 2.5, 13, 11)+tx('{ }', 8, 11.3, 8.5, t),
-    UseCase:(s, f)=>`<ellipse cx="8" cy="8" rx="6.5" ry="4.3" fill="${f}" stroke="${s}" stroke-width="1.2"/>`,
-    Case:(s, f)=>coche(s, f),
-    Analysis:(s, f, t)=>coche(s, f, `<path d="M4.5 11V8M8 11V5M11.5 11V7" stroke="${t}" stroke-width="1.8" stroke-linecap="round"/>`),
-    Verification:(s, f, t)=>coche(s, f, `<path d="M3.6 8.3L5.8 10.5L9.4 6M7.2 10.5L12.4 5.4" fill="none" stroke="${t}" stroke-width="1.6" stroke-linecap="round"/>`),
-    Concern:(s, f, t)=>coche(s, f, tx('!', 8, 11.6, 10, t)),
-    Viewpoint:(s, f)=>oeil(s, f),
-    // Organisation
-    Package:(s, f)=>dossier(s, f),
-    Library:(s, f)=>dossier(s, f)+`<path d="M5 8.5V12M8 8.5V12M11 8.5V12" stroke="${s}" stroke-width="1.2"/>`,
-    Import:(s, f)=>dossier(s, f)+`<path d="M11 1V7" stroke="${s}" stroke-width="1.6"/><path d="M8.6 5L11 8L13.4 5Z" fill="${s}"/>`,
-    Comment:(s, f, t)=>doc(s, f, tx('“', 7.5, 12.5, 11, t)),
-    Documentation:(s, f, t)=>doc(s, f, `<path d="M5.5 6.5H8.5M5.5 9H10.5M5.5 11.5H10.5" stroke="${t}" stroke-width="1.2" stroke-linecap="round"/>`),
-    Dependency:(s)=>`<rect x="1" y="5" width="4" height="6" fill="none" stroke="${s}" stroke-width="1.2"/>`+fleche(5.5, 15, s, true),
-    Metadata:(s, f)=>`<path d="M2 2H8.5L14 7.5L7.5 14L2 8.5Z" fill="${f}" stroke="${s}" stroke-width="1.2" stroke-linejoin="round"/><circle cx="5.2" cy="5.2" r="1.3" fill="${s}"/>`,
-    View:(s, f)=>oeil(s, f),
-    Rendering:(s, f)=>oeil(s, f)+`<path d="M11 13.5L14.5 10" stroke="${s}" stroke-width="1.8" stroke-linecap="round"/>`,
-    Alias:(s, f, t)=>boite(s, f, 1.5, 1.5, 3, 13, 10)+tx('≡', 8, 11.5, 10, t),
-    Namespace:(s, f, t)=>boite(s, f, 1.5, 1.5, 3, 13, 10)+tx('::', 8, 11.3, 9, t),
-    Multiplicity:(s, f, t)=>tx('[n]', 8, 11.4, 8.4, s),
-    Expression:(s, f, t)=>tx('x', 8, 11.6, 10.5, s),
-    Literal:(s, f, t)=>tx('1', 8, 11.6, 10.5, s),
-    Text:(s, f, t)=>tx('“a”', 8, 11.3, 7.8, s),
-    Membership:(s, f)=>`<circle cx="4" cy="8" r="2.2" fill="${s}"/><path d="M6.5 8H10" stroke="${s}" stroke-width="1.4"/><rect x="10" y="5" width="5" height="6" fill="${f}" stroke="${s}" stroke-width="1.2"/>`,
-    Feature:(s, f)=>`<rect x="2" y="5" width="12" height="6" rx="1" fill="${f}" stroke="${s}" stroke-width="1.2"/>`,
-    Type:(s, f, t)=>boite(s, f, 1, 1.5, 2.5, 13, 11)+tx('T', 8, 11.4, 9, t),
-  };
-  return capIcoSysmlTable._t;
+/** Affiche ou masque la # grille de la vue ouverte (bouton # de la ligne 1, touche G). @param {HTMLElement} box - Conteneur `#cdg-sy` */
+function capSyGrilleBascule(box){
+  _capSyVues.grille=!_capSyVues.grille;
+  const svg=box.querySelector('svg.sy-vue-svg'); if(svg) capSyGrille(svg);
+  const b=box.querySelector('#sy-grille'); if(b) b.classList.toggle('active', _capSyVues.grille);
 }
 
-/** Nature, famille et forme (définition / usage / référence) d'une métaclasse SysML : clé de `capIcoSysmlTable`.
- * @param {string} type - Métaclasse (« PartDefinition », « PerformActionUsage », « Package »…)
- * @returns {{nature:string, fam:string, def:boolean, usage:boolean, ref:boolean}|null} null si la métaclasse n'a pas d'icône
- */
-function capIcoSysmlNature(type){
-  const T=capIcoSysmlTable();
-  const def=/Definition$/.test(type), usage=/(As)?Usage$/.test(type);
-  let n=type.replace(/Definition$|AsUsage$|Usage$/,''), ref=false;
-  const alias={SatisfyRequirement:['Requirement',true], AssertConstraint:['Constraint',true], ExhibitState:['State',true], PerformAction:['Action',true], IncludeUseCase:['UseCase',true],
-    FlowConnection:['Flow',false], SuccessionFlow:['Flow',false], BindingConnection:['Connection',true], Succession:['Succession',false], AnalysisCase:['Analysis',false], VerificationCase:['Verification',false],
-    LibraryPackage:['Library',false], WhileLoopAction:['Loop',false], ForLoopAction:['Loop',false], IfAction:['If',false], SendAction:['Send',false], AcceptAction:['Accept',false], AssignmentAction:['Assignment',false],
-    DecisionNode:['Decision',false], MergeNode:['Decision',false], ForkNode:['Fork',false], JoinNode:['Fork',false], StartNode:['Start',false], DoneNode:['Done',false], ControlNode:['Decision',false],
-    EventOccurrence:['Event',false], MessageEvent:['Event',false], TerminateAction:['Done',false], ReturnParameterMembership:['Membership',false], OwningMembership:['Membership',false], FeatureMembership:['Membership',false],
-    ActorMembership:['Membership',false], SubjectMembership:['Membership',false], ObjectiveMembership:['Membership',false], StateSubactionMembership:['Membership',false], TransitionFeatureMembership:['Membership',false],
-    VariantMembership:['Membership',false], EndFeatureMembership:['Membership',false], Classifier:['Type',false], Class:['Type',false], DataType:['Type',false], Structure:['Type',false], Behavior:['Action',false],
-    Function:['Calculation',false], Predicate:['Constraint',false], Association:['Connection',false], AssociationStructure:['Connection',false], Interaction:['Connection',false], Connector:['Connection',false],
-    Step:['Action',false], BooleanExpression:['Expression',false], Invariant:['Constraint',false], Metaclass:['Metadata',false], AnnotatingElement:['Comment',false], TextualRepresentation:['Documentation',false],
-    Annotation:['Comment',false], Namespace:['Namespace',false], Element:['Feature',false], Relationship:['Dependency',false], Specialization:['Dependency',false], Subsetting:['Dependency',false], Redefinition:['Dependency',false],
-    FeatureTyping:['Dependency',false], Conjugation:['Dependency',false], Differencing:['Dependency',false], Intersecting:['Dependency',false], Unioning:['Dependency',false], Disjoining:['Dependency',false],
-    NamespaceImport:['Import',false], MembershipImport:['Import',false], MultiplicityRange:['Multiplicity',false]};
-  if(alias[n]||alias[type]){ const a=alias[n]||alias[type]; n=a[0]; ref=a[1]; }
-  else if(/Expression$/.test(n)) n='Expression';
-  else if(/^Literal/.test(n)) n=/String/.test(n)?'Text':'Literal';
-  else if(/Membership$/.test(n)) n='Membership';
-  else if(/Node$/.test(n)) n='Decision';
-  else if(/Import$/.test(n)) n='Import';
-  if(!T[n]) return null;
-  const famOf={Part:'STR', Port:'STR', Attribute:'STR', Item:'STR', Interface:'STR', Connection:'STR', Allocation:'STR', Enumeration:'STR', Reference:'STR', Occurrence:'STR', Individual:'STR',
-    Action:'BEH', State:'BEH', Calculation:'BEH', Flow:'BEH', Transition:'BEH', Succession:'BEH', Send:'BEH', Accept:'BEH', Assignment:'BEH', If:'BEH', Loop:'BEH', Decision:'BEH', Fork:'BEH', Start:'BEH', Done:'BEH', Event:'BEH',
-    Requirement:'REQ', Constraint:'REQ', UseCase:'REQ', Case:'REQ', Analysis:'REQ', Verification:'REQ', Concern:'REQ', Viewpoint:'REQ'};
-  let fam=famOf[n];
-  if(!fam){ let f=''; if(capSysmlDispo()&&typeof ArcatureLecteurSysml.famille==='function') f=ArcatureLecteurSysml.famille(type); fam=f&&CAP_SY_ICO_COULEUR[f]?f:'ORG'; }   // nature partagée (membership, import…) : famille du lecteur
-  return {nature:n, fam, def, usage, ref};
-}
+/** Raccourcis de la vue 🔲 pour une lecture SysML / UML (la visionneuse Capella a les siens) : Ctrl+F recherche dans le dessin, F centre
+ * sur l'élément choisi, G affiche ou masque la grille, Échap efface la recherche ; Entrée / Maj+Entrée dans le champ : résultat suivant / précédent (`capSyVuesRender`). */
+document.addEventListener('keydown',e=>{
+  if(typeof capCurrentView==='undefined'||capCurrentView!=='diag'||!_capSysml.lecture||!_capSyVues.cle) return;
+  const box=document.getElementById('cdg-sy'); if(!box||!box.offsetParent) return;
+  const dansChamp=e.target&&e.target.closest&&e.target.closest('input,textarea,select,[contenteditable]');
+  if((e.ctrlKey||e.metaKey)&&!e.altKey&&(e.key==='f'||e.key==='F')){ const q=box.querySelector('#sy-q'); if(q){ e.preventDefault(); q.focus(); q.select(); } return; }
+  if(dansChamp||e.ctrlKey||e.metaKey||e.altKey) return;
+  if(e.key==='f'||e.key==='F'){ e.preventDefault(); capSyCentrer(box); }
+  else if((e.key==='g'||e.key==='G')&&_capSyVues.mode==='visuel'){ e.preventDefault(); capSyGrilleBascule(box); }
+  else if(e.key==='Escape'&&_capSyVues.q){ _capSyVues.q=''; const q=box.querySelector('#sy-q'); if(q) q.value=''; capSyChercher(box,0); }
+});
 
-/** Corps SVG (viewBox 0 0 16 16) de l'icône d'une métaclasse SysML v2, ou '' si elle n'en a pas (icône générique de 84).
- * Définition : glyphe plein de la couleur de la famille (texte blanc), angles vifs ; usage : fond clair, trait de la famille ;
- * usage de référence (perform, exhibit, satisfy…) : trait en tirets ; autres éléments : trait de la famille sur fond clair.
- * @param {string} type - Métaclasse (« PartDefinition »)
+/* ── 🖼 Icônes des métaclasses SysML v2 : dessinées dans Arcature (src/js/sysml/35-icones.js, raisons des dessins dans
+   docs/sysml/ICONES.md d'Arcature) et reprises par le lecteur embarqué (`icone`, `iconeCorps`, `iconeVue`) : une icône par
+   métaclasse de l'OMG, couleur de la famille STR / BEH / REQ / ORG, définition pleine aux angles vifs, usage clair arrondi,
+   référence en tirets, marques de l'élément (direction, rôle, port conjugué, import récursif). Appelées par `capIco` /
+   `capIcoType` (54) avant la visionneuse quand le modèle ouvert est SysML, et par `capIcoPlus` (84) sinon. ── */
+
+/** Le modèle affiché vient-il d'une lecture SysML v2 (et non UML / SysML v1, servis par le même chemin : 88) ? @returns {boolean} */
+function capSysmlActif(){ return !!(_capSysml.lecture&&_capSysml.doc&&typeof cap_xmlDoc!=='undefined'&&cap_xmlDoc===_capSysml.doc)&&!capSyUml(); }
+
+/** Corps SVG (viewBox 0 0 16 16) de l'icône d'une métaclasse SysML v2, ou '' (icône générique de 84).
+ * @param {string|object} typeOuElement - Métaclasse (« PartDefinition ») ou élément de la lecture (marques comprises)
  * @returns {string} Corps SVG
  */
-function capIcoSysml(type){
-  const nat=type&&capIcoSysmlNature(type); if(!nat) return '';
-  const [s, clair]=CAP_SY_ICO_COULEUR[nat.fam]||CAP_SY_ICO_COULEUR.ORG, T=capIcoSysmlTable();
-  let corps=nat.def?T[nat.nature](s, s, '#fff'):T[nat.nature](s, clair, s);
-  if(nat.def) corps=corps.replace(/ rx="[\d.]+"/g,' rx="1"');   // définition : angles vifs
-  if(nat.ref) corps=corps.replace(/(<(?:rect|path|ellipse|circle)\b[^>]*?stroke="[^"]+"[^>]*?)(\/?>)/g,(m, a, z)=>/stroke-dasharray/.test(a)?m:a+' stroke-dasharray="2.4 1.6"'+z);
-  return corps;
+function capIcoSysml(typeOuElement){
+  if(!typeOuElement||!capSysmlDispo()||typeof ArcatureLecteurSysml.iconeCorps!=='function') return '';
+  try{ return ArcatureLecteurSysml.iconeCorps(typeOuElement)||''; }catch(e){ return ''; }
+}
+
+/** Icône SysML v2 d'un élément du modèle affiché (marques de l'élément : direction, rôle…), ou '' s'il n'en a pas.
+ * @param {string} id - Identifiant de l'élément @param {number} [taille] - Côté (14 par défaut)
+ * @returns {string} SVG
+ */
+function capIcoSysmlId(id, taille){
+  if(!capSysmlActif()||typeof ArcatureLecteurSysml.icone!=='function') return '';
+  let e=null; try{ e=_capSysml.lecture.element(id); }catch(x){ e=null; }
+  try{ return e?ArcatureLecteurSysml.icone(e, taille||14)||'':''; }catch(x){ return ''; }
 }

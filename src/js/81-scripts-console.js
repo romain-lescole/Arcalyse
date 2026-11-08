@@ -308,11 +308,20 @@ function capScrSelection(){
  * @returns {string} URL du worker (Blob)
  */
 function capScrUrlWorker(code){
+  const w=capScrCodeWorker(code);
+  _capScr.decalage=w.decalage;
+  _capScr.url=URL.createObjectURL(new Blob([w.texte],{type:'text/javascript'}));
+  return _capScr.url;
+}
+/**
+ * Texte du worker d'un script (prélude, noyau, script enveloppé), partagé avec 🤖 les outils IA (88).
+ * @param {string} code - Texte du script
+ * @returns {{texte:string, decalage:number}} Code du worker et nombre de lignes qui précèdent le script
+ */
+function capScrCodeWorker(code){
   const api=capScrApi();
   const tete=`const CAP_LANG=${JSON.stringify(CAP_LANG)}; const _L=s=>s; const CAP_MM=${JSON.stringify(CAP_MM)};\n(${capScrNoyau.toString()})().servir(async function (${api.parametres().join(', ')}) { return (async () => {\n`;
-  _capScr.decalage=tete.split('\n').length-1;
-  _capScr.url=URL.createObjectURL(new Blob([tete+code+'\n})(); });\n'],{type:'text/javascript'}));
-  return _capScr.url;
+  return {texte:tete+code+'\n})(); });\n', decalage:tete.split('\n').length-1};
 }
 /** Exécute le script de l'éditeur sur un instantané du modèle affiché. */
 async function capScrExecuter(){

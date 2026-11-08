@@ -93,7 +93,7 @@ function capDetPopBack(){
   capDetPopBoutons();
 }
 
-/** Boutons ⧉ des panneaux de détail de la page (créés au chargement du module ; enfoncés pendant que la fenêtre est ouverte). */
+/** Boutons ⧉ des panneaux de détail de la page (créés au chargement du module ; enfoncés pendant que la fenêtre est ouverte), et 🎓 de la visite du panneau de détail. */
 function capDetPopBoutons(){
   CAP_DETPOP_SRC.forEach(([d])=>{
     const det=document.getElementById(d); if(!det) return;
@@ -102,6 +102,9 @@ function capDetPopBoutons(){
       b.title=_L('Ouvrir le panneau de détail dans une fenêtre séparée (par exemple sur un autre écran) : il suit l\'élément choisi');
       b.addEventListener('click', capDetPopOut); det.insertBefore(b, det.firstChild); }
     b.classList.toggle('active', !!capDetPop());
+    if(d==='cap-detail'&&!det.querySelector(':scope > .cap-det-tourb')){   // 🎓 visite du panneau de détail (43)
+      const t=document.createElement('button'); t.type='button'; t.className='cap-det-popb cap-det-tourb'; t.textContent='🎓';
+      t.title=_L('Visite guidée du panneau de détail'); t.addEventListener('click', ()=>capTourDetail()); det.insertBefore(t, det.firstChild); }
   });
 }
 

@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmlns:style="http://www.eclipse.org/papyrus/infra/gmfdiag/style" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
+  <notation:Diagram xmi:id="_D_1" type="PapyrusUMLClassDiagram" name="Domaine" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_v_2" type="Class_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_3" type="Class_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_4" type="Class_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_l_5" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_c_6" type="Class_AttributeCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_i_7" type="Property_ClassAttributeLabel">
+          <element xmi:type="uml:Property" href="Bibliotheque.uml#_Document_titre"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_l_8"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_i_9" type="Property_ClassAttributeLabel">
+          <element xmi:type="uml:Property" href="Bibliotheque.uml#_Document_annee"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_l_10"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_i_11" type="Property_ClassAttributeLabel">
+          <element xmi:type="uml:Property" href="Bibliotheque.uml#_Document_etat"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_l_12"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_s_13"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_14"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_c_15" type="Class_OperationCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_i_16" type="Operation_ClassOperationLabel">
+          <element xmi:type="uml:Operation" href="Bibliotheque.uml#_Document_emprunter"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_l_17"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_s_18"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_19"/>
+      </children>
+      <element xmi:type="uml:Class" href="Bibliotheque.uml#_Document"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_20" x="260" y="40" width="240" height="120"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_v_21" type="Class_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_22" type="Class_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_23" type="Class_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_l_24" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_c_25" type="Class_AttributeCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_i_26" type="Property_ClassAttributeLabel">
+          <element xmi:type="uml:Property" href="Bibliotheque.uml#_Livre_isbn"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_l_27"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_s_28"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_29"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_c_30" type="Class_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_s_31"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_32"/>
+      </children>
+      <element xmi:type="uml:Class" href="Bibliotheque.uml#_Livre"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_33" x="160" y="260" width="140" height="70"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_v_34" type="Class_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_35" type="Class_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_36" type="Class_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_l_37" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_c_38" type="Class_AttributeCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_s_39"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_40"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_c_41" type="Class_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_s_42"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_43"/>
+      </children>
+      <element xmi:type="uml:Class" href="Bibliotheque.uml#_Revue"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_44" x="460" y="260" width="140" height="70"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_v_45" type="Class_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_46" type="Class_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_47" type="Class_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_l_48" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_c_49" type="Class_AttributeCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_i_50" type="Property_ClassAttributeLabel">
+          <element xmi:type="uml:Property" href="Bibliotheque.uml#_Membre_nom"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_l_51"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_s_52"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_53"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_c_54" type="Class_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_s_55"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_56"/>
+      </children>
+      <element xmi:type="uml:Class" href="Bibliotheque.uml#_Membre"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_57" x="-120" y="40" width="180" height="90"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_v_58" type="Interface_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_59" type="Interface_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_60" type="Interface_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_l_61" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_c_62" type="Interface_AttributeCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_s_63"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_64"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_c_65" type="Interface_OperationCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_i_66" type="Operation_InterfaceOperationLabel">
+          <element xmi:type="uml:Operation" href="Bibliotheque.uml#_Empruntable_disponible"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_l_67"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_s_68"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_69"/>
+      </children>
+      <element xmi:type="uml:Interface" href="Bibliotheque.uml#_Empruntable"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_70" x="620" y="40" width="170" height="80"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_v_71" type="Enumeration_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_72" type="Enumeration_NameLabel"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_c_73" type="Enumeration_LiteralCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_i_74" type="EnumerationLiteral_LiteralLabel">
+          <element xmi:type="uml:EnumerationLiteral" href="Bibliotheque.uml#_Etat_Disponible"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_l_75"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_i_76" type="EnumerationLiteral_LiteralLabel">
+          <element xmi:type="uml:EnumerationLiteral" href="Bibliotheque.uml#_Etat_Emprunte"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_l_77"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_i_78" type="EnumerationLiteral_LiteralLabel">
+          <element xmi:type="uml:EnumerationLiteral" href="Bibliotheque.uml#_Etat_Perdu"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_l_79"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_s_80"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_81"/>
+      </children>
+      <element xmi:type="uml:Enumeration" href="Bibliotheque.uml#_Etat"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_82" x="620" y="200" width="140" height="100"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_v_83" type="Component_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_84" type="Component_NameLabel"/>
+      <element xmi:type="uml:Component" href="Bibliotheque.uml#_Catalogue"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_85" x="-120" y="260" width="150" height="60"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_v_86" type="Comment_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_87" type="Comment_BodyLabel"/>
+      <element xmi:type="uml:Comment" href="Bibliotheque.uml#_Note"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_88" x="160" y="400" width="200" height="50"/>
+    </children>
+    <styles xmi:type="notation:StringValueStyle" xmi:id="_s_89" name="diagram_compatibility_version" stringValue="1.4.0"/>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_s_90"/>
+    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_s_91" diagramKindId="org.eclipse.papyrus.uml.diagram.class">
+      <owner xmi:type="uml:Package" href="Bibliotheque.uml#_Domaine"/>
+    </styles>
+    <element xmi:type="uml:Package" href="Bibliotheque.uml#_Domaine"/>
+    <edges xmi:type="notation:Connector" xmi:id="_e_92" type="Generalization_Edge" source="_v_21" target="_v_2">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_93"/>
+      <element xmi:type="uml:Generalization" href="Bibliotheque.uml#_Livre_Document"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_94" points="[0, 0, 70, -120]$[0, -60, 70, -60]$[-70, -60, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a_95" id="(0.5,0.0)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a_96" id="(0.3,1.0)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_97" type="Generalization_Edge" source="_v_34" target="_v_2">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_98"/>
+      <element xmi:type="uml:Generalization" href="Bibliotheque.uml#_Revue_Document"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_99" points="[0, 0, -150, -120]$[-150, -120, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a_100" id="(0.5,0.0)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a_101" id="(0.7,1.0)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_102" type="InterfaceRealization_Edge" source="_v_2" target="_v_58">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_103"/>
+      <element xmi:type="uml:InterfaceRealization" href="Bibliotheque.uml#_Document_Empruntable"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_104" points="[0, 0, 120, 0]$[-120, 0, 0, 0]"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_105" type="Association_Edge" source="_v_45" target="_v_2">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_106"/>
+      <element xmi:type="uml:Association" href="Bibliotheque.uml#_A_emprunts_membre"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_107" points="[0, 0, 200, 0]$[-200, 0, 0, 0]"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_108" type="Usage_Edge" source="_v_45" target="_v_58">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_109"/>
+      <element xmi:type="uml:Usage" href="Bibliotheque.uml#_Membre_utilise"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_110" points="[0, 0, 0, -75]$[0, -70, 735, -75]$[735, -70, 0, -75]$[735, -5, 0, 0]"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_111" type="Comment_AnnotatedElementEdge" source="_v_86" target="_v_21">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_112"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_113" points="[0, 0, 0, -100]$[0, 100, 0, 0]"/>
+    </edges>
+  </notation:Diagram>
+  <notation:Diagram xmi:id="_D_114" type="UseCase" name="Cas" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_v_115" type="Actor_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_116" type="Actor_NameLabel"/>
+      <element xmi:type="uml:Actor" href="Bibliotheque.uml#_Lecteur"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_117" x="40" y="60" width="40" height="60"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_v_118" type="Actor_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_119" type="Actor_NameLabel"/>
+      <element xmi:type="uml:Actor" href="Bibliotheque.uml#_Bibliothecaire"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_120" x="40" y="240" width="40" height="60"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_v_121" type="UseCase_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_122" type="UseCase_NameLabel"/>
+      <element xmi:type="uml:UseCase" href="Bibliotheque.uml#_Emprunter"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_123" x="200" y="60" width="140" height="60"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_v_124" type="UseCase_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_125" type="UseCase_NameLabel"/>
+      <element xmi:type="uml:UseCase" href="Bibliotheque.uml#_Identifier"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_126" x="440" y="20" width="140" height="60"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_v_127" type="UseCase_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_128" type="UseCase_NameLabel"/>
+      <element xmi:type="uml:UseCase" href="Bibliotheque.uml#_Amende"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_129" x="440" y="140" width="150" height="60"/>
+    </children>
+    <styles xmi:type="notation:StringValueStyle" xmi:id="_s_130" name="diagram_compatibility_version" stringValue="1.4.0"/>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_s_131"/>
+    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_s_132" diagramKindId="org.eclipse.papyrus.uml.diagram.usecase">
+      <owner xmi:type="uml:Package" href="Bibliotheque.uml#_Cas"/>
+    </styles>
+    <element xmi:type="uml:Package" href="Bibliotheque.uml#_Cas"/>
+    <edges xmi:type="notation:Connector" xmi:id="_e_133" type="Association_Edge" source="_v_115" target="_v_121">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_134"/>
+      <element xmi:type="uml:Association" href="Bibliotheque.uml#_A_lecteur_emprunter"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_135" points="[0, 0, 150, 0]$[-150, 0, 0, 0]"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_136" type="Include_Edge" source="_v_121" target="_v_124">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_137"/>
+      <element xmi:type="uml:Include" href="Bibliotheque.uml#_Emprunter_identifier"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_138" points="[0, 0, 240, -40]$[-240, 40, 0, 0]"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_139" type="Extend_Edge" source="_v_127" target="_v_121">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_140"/>
+      <element xmi:type="uml:Extend" href="Bibliotheque.uml#_Amende_Emprunter"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_141" points="[0, 0, -245, -80]$[245, 80, 0, 0]"/>
+    </edges>
+  </notation:Diagram>
+  <notation:Diagram xmi:id="_D_142" type="PapyrusUMLStateMachineDiagram" name="CycleExemplaire" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_v_143" type="StateMachine_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_144" type="StateMachine_NameLabel"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_c_145" type="StateMachine_RegionCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_v_146" type="Region_Shape">
+          <children xmi:type="notation:BasicCompartment" xmi:id="_c_147" type="Region_SubvertexCompartment">
+            <children xmi:type="notation:Shape" xmi:id="_v_148" type="Pseudostate_InitialShape">
+              <element xmi:type="uml:Pseudostate" href="Bibliotheque.uml#_Initial"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_149" x="30" y="110" width="20" height="20"/>
+            </children>
+            <children xmi:type="notation:Shape" xmi:id="_v_150" type="State_Shape">
+              <children xmi:type="notation:DecorationNode" xmi:id="_d_151" type="State_NameLabel"/>
+              <element xmi:type="uml:State" href="Bibliotheque.uml#_Disponible"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_152" x="120" y="95" width="120" height="50"/>
+            </children>
+            <children xmi:type="notation:Shape" xmi:id="_v_153" type="State_Shape">
+              <children xmi:type="notation:DecorationNode" xmi:id="_d_154" type="State_NameLabel"/>
+              <element xmi:type="uml:State" href="Bibliotheque.uml#_Emprunte"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_155" x="360" y="95" width="120" height="50"/>
+            </children>
+            <children xmi:type="notation:Shape" xmi:id="_v_156" type="FinalState_Shape">
+              <element xmi:type="uml:FinalState" href="Bibliotheque.uml#_Fin"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_157" x="180" y="210" width="25" height="25"/>
+            </children>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_158"/>
+          </children>
+          <element xmi:type="uml:Region" href="Bibliotheque.uml#_Cycle_region"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_159" x="0" y="0" width="640" height="276"/>
+        </children>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_160"/>
+      </children>
+      <element xmi:type="uml:StateMachine" href="Bibliotheque.uml#_Cycle"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_161" x="20" y="20" width="640" height="300"/>
+    </children>
+    <styles xmi:type="notation:StringValueStyle" xmi:id="_s_162" name="diagram_compatibility_version" stringValue="1.4.0"/>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_s_163"/>
+    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_s_164" diagramKindId="org.eclipse.papyrus.uml.diagram.stateMachine">
+      <owner xmi:type="uml:StateMachine" href="Bibliotheque.uml#_Cycle"/>
+    </styles>
+    <element xmi:type="uml:StateMachine" href="Bibliotheque.uml#_Cycle"/>
+    <edges xmi:type="notation:Connector" xmi:id="_e_165" type="Transition_Edge" source="_v_148" target="_v_150">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_166"/>
+      <element xmi:type="uml:Transition" href="Bibliotheque.uml#_T0"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_167" points="[0, 0, 100, 0]$[-100, 0, 0, 0]"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_168" type="Transition_Edge" source="_v_150" target="_v_153">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_169"/>
+      <element xmi:type="uml:Transition" href="Bibliotheque.uml#_T1"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_170" points="[0, 0, 240, 0]$[-240, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a_171" id="(1.0,0.3)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a_172" id="(0.0,0.3)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_173" type="Transition_Edge" source="_v_153" target="_v_150">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_174"/>
+      <element xmi:type="uml:Transition" href="Bibliotheque.uml#_T2"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_175" points="[0, 0, -240, 0]$[240, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a_176" id="(0.0,0.7)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a_177" id="(1.0,0.7)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_178" type="Transition_Edge" source="_v_150" target="_v_156">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_179"/>
+      <element xmi:type="uml:Transition" href="Bibliotheque.uml#_T3"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_180" points="[0, 0, 12, 90]$[-12, -90, 0, 0]"/>
+    </edges>
+  </notation:Diagram>
+  <notation:Diagram xmi:id="_D_181" type="PapyrusUMLActivityDiagram" name="ProcessusEmprunt" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_v_182" type="Activity_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_183" type="Activity_NameLabel"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_c_184" type="Activity_ActivityNodeCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_v_185" type="InitialNode_Shape">
+          <element xmi:type="uml:InitialNode" href="Bibliotheque.uml#_Debut"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_186" x="250" y="20" width="20" height="20"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_v_187" type="OpaqueAction_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_d_188" type="OpaqueAction_NameLabel"/>
+          <element xmi:type="uml:OpaqueAction" href="Bibliotheque.uml#_Verifier"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_189" x="190" y="80" width="140" height="40"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_v_190" type="DecisionNode_Shape">
+          <element xmi:type="uml:DecisionNode" href="Bibliotheque.uml#_Choix"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_191" x="242" y="160" width="36" height="36"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_v_192" type="OpaqueAction_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_d_193" type="OpaqueAction_NameLabel"/>
+          <element xmi:type="uml:OpaqueAction" href="Bibliotheque.uml#_Enregistrer"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_194" x="60" y="240" width="150" height="40"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_v_195" type="OpaqueAction_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_d_196" type="OpaqueAction_NameLabel"/>
+          <element xmi:type="uml:OpaqueAction" href="Bibliotheque.uml#_Refuser"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_197" x="320" y="240" width="140" height="40"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_v_198" type="MergeNode_Shape">
+          <element xmi:type="uml:MergeNode" href="Bibliotheque.uml#_Fusion"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_199" x="242" y="330" width="36" height="36"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_v_200" type="ActivityFinalNode_Shape">
+          <element xmi:type="uml:ActivityFinalNode" href="Bibliotheque.uml#_Terminer"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_201" x="247" y="420" width="26" height="26"/>
+        </children>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_202"/>
+      </children>
+      <element xmi:type="uml:Activity" href="Bibliotheque.uml#_Processus"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_203" x="20" y="20" width="560" height="520"/>
+    </children>
+    <styles xmi:type="notation:StringValueStyle" xmi:id="_s_204" name="diagram_compatibility_version" stringValue="1.4.0"/>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_s_205"/>
+    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_s_206" diagramKindId="org.eclipse.papyrus.uml.diagram.activity">
+      <owner xmi:type="uml:Activity" href="Bibliotheque.uml#_Processus"/>
+    </styles>
+    <element xmi:type="uml:Activity" href="Bibliotheque.uml#_Processus"/>
+    <edges xmi:type="notation:Connector" xmi:id="_e_207" type="ControlFlow_Edge" source="_v_185" target="_v_187">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_208"/>
+      <element xmi:type="uml:ControlFlow" href="Bibliotheque.uml#_F1"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_209" points="[0, 0, 0, 60]$[0, -60, 0, 0]"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_210" type="ControlFlow_Edge" source="_v_187" target="_v_190">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_211"/>
+      <element xmi:type="uml:ControlFlow" href="Bibliotheque.uml#_F2"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_212" points="[0, 0, 0, 60]$[0, -60, 0, 0]"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_213" type="ControlFlow_Edge" source="_v_190" target="_v_192">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_214"/>
+      <element xmi:type="uml:ControlFlow" href="Bibliotheque.uml#_F3"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_215" points="[0, 0, 0, 60]$[0, -60, 0, 0]"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_216" type="ControlFlow_Edge" source="_v_190" target="_v_195">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_217"/>
+      <element xmi:type="uml:ControlFlow" href="Bibliotheque.uml#_F4"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_218" points="[0, 0, 0, 60]$[0, -60, 0, 0]"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_219" type="ControlFlow_Edge" source="_v_192" target="_v_198">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_220"/>
+      <element xmi:type="uml:ControlFlow" href="Bibliotheque.uml#_F5"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_221" points="[0, 0, 0, 60]$[0, -60, 0, 0]"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_222" type="ControlFlow_Edge" source="_v_195" target="_v_198">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_223"/>
+      <element xmi:type="uml:ControlFlow" href="Bibliotheque.uml#_F6"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_224" points="[0, 0, 0, 60]$[0, -60, 0, 0]"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_e_225" type="ControlFlow_Edge" source="_v_198" target="_v_200">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_226"/>
+      <element xmi:type="uml:ControlFlow" href="Bibliotheque.uml#_F7"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_227" points="[0, 0, 0, 60]$[0, -60, 0, 0]"/>
+    </edges>
+  </notation:Diagram>
+  <notation:Diagram xmi:id="_D_228" type="PapyrusUMLSequenceDiagram" name="SequenceEmprunt" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_v_229" type="Interaction_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_d_230" type="Interaction_NameLabel"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_c_231" type="Interaction_SubfragmentCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_v_232" type="Lifeline_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_d_233" type="Lifeline_NameLabel"/>
+          <element xmi:type="uml:Lifeline" href="Bibliotheque.uml#_LL_lecteur"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_234" x="40" y="20" width="120" height="280"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_v_235" type="Lifeline_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_d_236" type="Lifeline_NameLabel"/>
+          <element xmi:type="uml:Lifeline" href="Bibliotheque.uml#_LL_systeme"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_237" x="280" y="20" width="120" height="280"/>
+        </children>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_238"/>
+      </children>
+      <element xmi:type="uml:Interaction" href="Bibliotheque.uml#_Sequence"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b_239" x="20" y="20" width="460" height="340"/>
+    </children>
+    <styles xmi:type="notation:StringValueStyle" xmi:id="_s_240" name="diagram_compatibility_version" stringValue="1.4.0"/>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_s_241"/>
+    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_s_242" diagramKindId="org.eclipse.papyrus.uml.diagram.sequence">
+      <owner xmi:type="uml:Interaction" href="Bibliotheque.uml#_Sequence"/>
+    </styles>
+    <element xmi:type="uml:Interaction" href="Bibliotheque.uml#_Sequence"/>
+    <edges xmi:type="notation:Connector" xmi:id="_e_243" type="Message_SynchEdge" source="_v_232" target="_v_235">
+      <styles xmi:type="notation:FontStyle" xmi:id="_s_244"/>
+      <element xmi:type="uml:Message" href="Bibliotheque.uml#_M1"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p_245" points="[0, 0, 240, 0]$[-240, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a_246" id="(0.5,0.3)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a_247" id="(0.5,0.3)"/>
+    </edges>
+  </notation:Diagram>
+</xmi:XMI>

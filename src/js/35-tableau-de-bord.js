@@ -190,6 +190,7 @@ function capDashCatalog(){
   capRecDashCatalog(add);   // 📦 REC / RPL (73)
   capDepDashCatalog(add);   // 🖧 déploiement & EPBS (74)
   if(typeof capSyDashCatalog==='function') capSyDashCatalog(add);   // 🧩 SysML v2 (87)
+  if(typeof capMxDashCatalog==='function') capMxDashCatalog(add);   // ▦ Matrice : un indicateur par onglet (90)
 
   add(_L('Mise en page'),'txt',_L('Texte libre (titre, commentaire)'),'text',()=>({}));
   add(_L('Diagrammes et vues'),'diag',_L('🔲 Diagramme Capella'),'diag',()=>({}));

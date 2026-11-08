@@ -644,6 +644,208 @@
   "bibliotheques": 0,
   "declarees": 0
  },
+ "matrice": {
+  "alloc-sa": {
+   "lignes": 44,
+   "colonnes": 5,
+   "cellules": 32,
+   "liens": 32,
+   "lignesSansRelation": 12,
+   "colonnesSansRelation": 0
+  },
+  "alloc-la": {
+   "lignes": 64,
+   "colonnes": 23,
+   "cellules": 48,
+   "liens": 48,
+   "lignesSansRelation": 16,
+   "colonnesSansRelation": 7
+  },
+  "alloc-pa": {
+   "lignes": 103,
+   "colonnes": 64,
+   "cellules": 77,
+   "liens": 77,
+   "lignesSansRelation": 26,
+   "colonnesSansRelation": 36
+  },
+  "alloc-oa": {
+   "lignes": 24,
+   "colonnes": 8,
+   "cellules": 22,
+   "liens": 22,
+   "lignesSansRelation": 2,
+   "colonnesSansRelation": 1
+  },
+  "deploy-pa": {
+   "lignes": 64,
+   "colonnes": 64,
+   "cellules": 22,
+   "liens": 22,
+   "lignesSansRelation": 59,
+   "colonnesSansRelation": 42
+  },
+  "fe-sa": {
+   "lignes": 44,
+   "colonnes": 44,
+   "cellules": 54,
+   "liens": 41,
+   "lignesSansRelation": 21,
+   "colonnesSansRelation": 21
+  },
+  "fe-la": {
+   "lignes": 64,
+   "colonnes": 64,
+   "cellules": 114,
+   "liens": 88,
+   "lignesSansRelation": 22,
+   "colonnesSansRelation": 22
+  },
+  "fe-pa": {
+   "lignes": 103,
+   "colonnes": 103,
+   "cellules": 178,
+   "liens": 120,
+   "lignesSansRelation": 32,
+   "colonnesSansRelation": 32
+  },
+  "ce-sa": {
+   "lignes": 5,
+   "colonnes": 5,
+   "cellules": 0,
+   "liens": 0,
+   "lignesSansRelation": 5,
+   "colonnesSansRelation": 5
+  },
+  "ce-la": {
+   "lignes": 23,
+   "colonnes": 23,
+   "cellules": 22,
+   "liens": 12,
+   "lignesSansRelation": 13,
+   "colonnesSansRelation": 13
+  },
+  "ce-pa": {
+   "lignes": 64,
+   "colonnes": 64,
+   "cellules": 14,
+   "liens": 11,
+   "lignesSansRelation": 53,
+   "colonnesSansRelation": 53
+  },
+  "pl-pa": {
+   "lignes": 64,
+   "colonnes": 64,
+   "cellules": 38,
+   "liens": 21,
+   "lignesSansRelation": 44,
+   "colonnesSansRelation": 44
+  },
+  "cap-fn": {
+   "lignes": 39,
+   "colonnes": 235,
+   "cellules": 65,
+   "liens": 65,
+   "lignesSansRelation": 30,
+   "colonnesSansRelation": 187
+  },
+  "cap-sc": {
+   "lignes": 13,
+   "colonnes": 5,
+   "cellules": 33,
+   "liens": 33,
+   "lignesSansRelation": 0,
+   "colonnesSansRelation": 0
+  },
+  "cap-fc": {
+   "lignes": 36,
+   "colonnes": 35,
+   "cellules": 31,
+   "liens": 31,
+   "lignesSansRelation": 30,
+   "colonnesSansRelation": 4
+  },
+  "mis-cap": {
+   "lignes": 5,
+   "colonnes": 13,
+   "cellules": 12,
+   "liens": 12,
+   "lignesSansRelation": 0,
+   "colonnesSansRelation": 1
+  },
+  "fc-fn": {
+   "lignes": 35,
+   "colonnes": 211,
+   "cellules": 155,
+   "liens": 170,
+   "lignesSansRelation": 16,
+   "colonnesSansRelation": 128
+  },
+  "real-fn-sa": {
+   "lignes": 44,
+   "colonnes": 24,
+   "cellules": 17,
+   "liens": 17,
+   "lignesSansRelation": 29,
+   "colonnesSansRelation": 15
+  },
+  "real-fn-la": {
+   "lignes": 64,
+   "colonnes": 44,
+   "cellules": 61,
+   "liens": 61,
+   "lignesSansRelation": 3,
+   "colonnesSansRelation": 4
+  },
+  "real-fn-pa": {
+   "lignes": 103,
+   "colonnes": 64,
+   "cellules": 65,
+   "liens": 65,
+   "lignesSansRelation": 38,
+   "colonnesSansRelation": 0
+  },
+  "real-cp-la": {
+   "lignes": 23,
+   "colonnes": 5,
+   "cellules": 5,
+   "liens": 5,
+   "lignesSansRelation": 18,
+   "colonnesSansRelation": 0
+  },
+  "real-cp-pa": {
+   "lignes": 64,
+   "colonnes": 23,
+   "cellules": 24,
+   "liens": 24,
+   "lignesSansRelation": 40,
+   "colonnesSansRelation": 0
+  },
+  "ch-pc-lc": {
+   "lignes": 64,
+   "colonnes": 23,
+   "cellules": 17,
+   "liens": 17,
+   "lignesSansRelation": 47,
+   "colonnesSansRelation": 8
+  },
+  "ch-lc-sc": {
+   "lignes": 23,
+   "colonnes": 5,
+   "cellules": 16,
+   "liens": 16,
+   "lignesSansRelation": 7,
+   "colonnesSansRelation": 0
+  },
+  "ch-cap-sc": {
+   "lignes": 13,
+   "colonnes": 5,
+   "cellules": 12,
+   "liens": 12,
+   "lignesSansRelation": 9,
+   "colonnesSansRelation": 0
+  }
+ },
  "sante": {
   "score": 95,
   "points": 91,
@@ -702,6 +904,7 @@
    "Références vers un scénario introuvable": 0
   },
   "sysml": {},
+  "uml": {},
   "exigences": {},
   "pvmt": {},
   "donnees": {
@@ -784,7 +987,18 @@
    "unreach": 4,
    "deadEnd": 19,
    "noTrig": 29
-  }
+  },
+  "umlBlocs": {},
+  "umlActivites": {},
+  "umlExigences": {},
+  "umlEtats": {},
+  "umlInteractions": {},
+  "umlCas": {},
+  "umlTracabilite": {},
+  "umlInterfaces": {},
+  "umlBudgets": {},
+  "umlParametrique": {},
+  "umlLogiciel": {}
  },
  "tableauDeBord": {
   "cap.chk": {
@@ -2363,6 +2577,40 @@
   },
   "tr.up.state": {
    "SA→LA": 53
-  }
+  },
+  "uml.act.chk": null,
+  "uml.act.n": 0,
+  "uml.act.porte": null,
+  "uml.blk.chk": null,
+  "uml.blk.flux": null,
+  "uml.blk.n": 0,
+  "uml.blk.ports": null,
+  "uml.bud.chk": null,
+  "uml.bud.n": 0,
+  "uml.diag": null,
+  "uml.ext": null,
+  "uml.fam": null,
+  "uml.icd.chk": null,
+  "uml.icd.n": 0,
+  "uml.n": 0,
+  "uml.par.chk": null,
+  "uml.par.n": 0,
+  "uml.rel": null,
+  "uml.req.chk": null,
+  "uml.req.n": 0,
+  "uml.req.sat": null,
+  "uml.req.ver": null,
+  "uml.seq.chk": null,
+  "uml.seq.n": 0,
+  "uml.soft.chk": null,
+  "uml.soft.n": 0,
+  "uml.stm.chk": null,
+  "uml.stm.n": 0,
+  "uml.tr.chk": null,
+  "uml.tr.niv": null,
+  "uml.type": null,
+  "uml.uc.chk": null,
+  "uml.uc.n": 0,
+  "uml.vues": null
  }
 }

@@ -21,6 +21,7 @@ function capAboutTech(){
   const d=new Date(document.lastModified);
   return [
     [_L('Version'), CAP_APP_VERSION],
+    [_L('Formats lus'), capEditionNom()+' — '+capFormatsLibelle()],
     [_L('Fichier du'), isNaN(d)?'—':d.toLocaleDateString('fr-FR')],   // date seule, sans l'heure
     [_L('Navigateur'), br],
     [_L('Navigateur de test'), _L('Google Chrome version 155')],
@@ -55,7 +56,7 @@ function capAboutOpen(){
     <div class="cw-d-body">
       <div class="ab-id"><div class="ab-logo">${capLogoSvg(56)}</div><div><div class="ab-name">${e(CAP_APP_NAME)}</div><div class="ab-slogan">${e(CAP_APP_SLOGAN)}</div>
         <div class="ab-ver">Version ${e(CAP_APP_VERSION)} · ${e(tech[1][1])}</div>
-        <div class="ana-dim">Explorateur et analyseur hors ligne de modèles d'architecture — Capella / ARCADIA et SysML v2 : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML.</div></div></div>
+        <div class="ana-dim">Explorateur et analyseur hors ligne de modèles d'architecture — Capella / ARCADIA, SysML v2, UML et SysML v1 : exploration, flux et interfaces, scénarios, analyses, contrôles et exports, dans un seul fichier HTML.</div></div></div>
       <h4>Auteur et licence</h4>
       <table class="ana-t ana-kv">
         <tr><td>Auteur</td><td>© ${yr} ${e(CAP_APP_AUTHOR)} — créateur et titulaire des droits</td></tr>
@@ -68,7 +69,11 @@ function capAboutOpen(){
         <tr><td>D3.js v7.9.0</td><td>Bibliothèque de visualisation, embarquée dans ce fichier — licence ISC, © 2010-2023 Mike Bostock.
           <details><summary class="ana-dim">Texte de la licence</summary><pre class="ab-lic">${e(CAP_D3_LICENSE)}</pre></details></td></tr>
         <tr><td>Visionneuse de diagrammes</td><td>Icônes, styles et outils de diagramme de la visionneuse d'Arcature, adaptés d'Eclipse Capella (© THALES GLOBAL SERVICES et les contributeurs de Capella) et d'Eclipse Sirius — Eclipse Public License 2.0.</td></tr>
+        <tr><td>Lecteurs d'Arcature</td><td>Lecteur SysML v2 et lecteur UML / SysML v1 du projet frère Arcature (même auteur), embarqués dans ce fichier — Apache License 2.0.</td></tr>
+        <tr><td>Documents de l'OMG</td><td>Le lecteur UML / SysML v1 contient les noms des métaclasses d'UML 2.5.1, des stéréotypes de SysML 1.7 et d'UAF 1.2 et le texte des contraintes de ces profils, tirés des documents normatifs de l'Object Management Group (© OMG et les sociétés qui ont soumis ces spécifications), repris selon la licence des spécifications de l'OMG. Arcalyse ne revendique aucune conformité à ces spécifications.</td></tr>
         <tr><td>Capella, ARCADIA</td><td>Marques de leurs détenteurs respectifs (Eclipse Foundation, Thales). Outil indépendant, compatible avec les modèles Capella : ni officiel, ni affilié.</td></tr>
+        <tr><td>UML, SysML, UAF, XMI, OMG</td><td>Marques déposées de l'Object Management Group, Inc.</td></tr>
+        <tr><td>Cameo, MagicDraw, CATIA Magic, Enterprise Architect, Eclipse, Papyrus</td><td>Marques de leurs détenteurs respectifs (Dassault Systèmes, Sparx Systems, Eclipse Foundation), citées pour désigner les formats de fichiers lus. Formats lus pour l'interopérabilité : aucun code ni fichier de ces outils n'est repris. Outil indépendant : ni officiel, ni affilié.</td></tr>
         <tr><td>Modèles de test</td><td>Exemples Capella « In-Flight Entertainment System » (<a href="https://github.com/dbinfrago/Capella-IFE-sample" target="_blank" rel="noopener">github.com/dbinfrago/Capella-IFE-sample</a>) et « AIDA » (<a href="https://sahara.irt-saintexupery.com/AIDA/AIDAArchitecture" target="_blank" rel="noopener">sahara.irt-saintexupery.com/AIDA/AIDAArchitecture</a>).</td></tr>
       </table>
       <h4>Informations techniques</h4>

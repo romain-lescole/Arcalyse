@@ -1,0 +1,706 @@
+I-Logix-RPY-Archive version 8.7.1 C++ 5093211
+{ ISubsystem 
+	- _id = GUID 7a000000-0000-4000-8000-000000000020;
+	- _myState = 8192;
+	- _name = "Architecture";
+	- _description = { IDescription 
+		- _text = "Architecture du thermostat : blocs, ports de flux, parties, comportements.";
+	}
+	- Declaratives = { IRPYRawContainer 
+		- size = 3;
+		- value = 
+		{ ISubsystem 
+			- fileName = "Types";
+			- _id = GUID 7a000000-0000-4000-8000-000000000030;
+		}
+		{ IDiagram 
+			- _id = GUID 7a000000-0000-4000-8000-000000000021;
+			- _name = "Structure du thermostat";
+			- Stereotypes = { IRPYRawContainer 
+				- size = 1;
+				- value = 
+				{ IHandle 
+					- _m2Class = "IStereotype";
+					- _filename = "$OMROOT\\Profiles\\SysML\\SysMLProfile_rpy\\SysML.sbs";
+					- _subsystem = "SysML";
+					- _class = "";
+					- _name = "Block Definition Diagram";
+					- _id = GUID 7a000000-0000-4000-8000-0000000000f9;
+				}
+			}
+			- _graphicChart = { CGIClassChart 
+				- _id = GUID 7a000000-0000-4000-8000-000000000022;
+				- m_type = 0;
+				- m_pModelObject = { IHandle 
+					- _m2Class = "IDiagram";
+					- _id = GUID 7a000000-0000-4000-8000-000000000021;
+				}
+				- m_pParent = ;
+				- m_name = { CGIText 
+					- m_str = "";
+					- m_style = "Arial" 10 0 0 0 1 ;
+					- m_position = 1 0 0  ;
+				}
+				- m_drawBehavior = 0;
+				- m_transform = 1 0 0 1 0 0 ;
+				- m_polygon = 0 ;
+			}
+		}
+		{ IDependency 
+			- _id = GUID 7a000000-0000-4000-8000-000000000023;
+			- _name = "Consigne";
+			- Stereotypes = { IRPYRawContainer 
+				- size = 1;
+				- value = 
+				{ IHandle 
+					- _m2Class = "IStereotype";
+					- _filename = "PredefinedTypes.sbs";
+					- _subsystem = "PredefinedTypes";
+					- _class = "";
+					- _name = "trace";
+					- _id = GUID 7a000000-0000-4000-8000-0000000000f2;
+				}
+			}
+			- _dependsOn = { INObjectHandle 
+				- _m2Class = "IRequirement";
+				- _filename = "Exigences.sbs";
+				- _subsystem = "Exigences";
+				- _class = "";
+				- _name = "Consigne";
+				- _id = GUID 7a000000-0000-4000-8000-000000000011;
+			}
+		}
+	}
+	- _defaultComposite = GUID 7a000000-0000-4000-8000-000000000024;
+	- _eventsBaseID = -1;
+	- Classes = { IRPYRawContainer 
+		- size = 4;
+		- value = 
+		{ IClass 
+			- _id = GUID 7a000000-0000-4000-8000-000000000024;
+			- _name = "TopLevel";
+			- _multiplicity = "";
+			- _itsStateChart = { IHandle 
+				- _m2Class = "";
+			}
+		}
+		{ IClass 
+			- _id = GUID 7a000000-0000-4000-8000-000000000040;
+			- _name = "Thermostat";
+			- Stereotypes = { IRPYRawContainer 
+				- size = 1;
+				- value = 
+				{ IHandle 
+					- _m2Class = "IStereotype";
+					- _filename = "$OMROOT\\Profiles\\SysML\\SysMLProfile_rpy\\SysML.sbs";
+					- _subsystem = "SysML::Blocks";
+					- _class = "";
+					- _name = "block";
+					- _id = GUID 7a000000-0000-4000-8000-0000000000f3;
+				}
+			}
+			- _description = { IDescription 
+				- _text = "Le système : un capteur et un régulateur reliés par un flux de température.";
+			}
+			- _multiplicity = "";
+			- _itsStateChart = { IHandle 
+				- _m2Class = "IStateChart";
+				- _id = GUID 7a000000-0000-4000-8000-000000000060;
+			}
+			- Operations = { IRPYRawContainer 
+				- size = 2;
+				- value = 
+				{ IReception 
+					- _id = GUID 7a000000-0000-4000-8000-000000000041;
+					- _virtual = 0;
+					- Args = { IRPYRawContainer 
+						- size = 0;
+					}
+					- _event = { IHandle 
+						- _m2Class = "IEvent";
+						- _id = GUID 7a000000-0000-4000-8000-000000000050;
+					}
+				}
+				{ IPrimitiveOperation 
+					- _id = GUID 7a000000-0000-4000-8000-000000000042;
+					- _name = "allumer";
+					- Args = { IRPYRawContainer 
+						- size = 1;
+						- value = 
+						{ IArgument 
+							- _id = GUID 7a000000-0000-4000-8000-000000000043;
+							- _name = "puissance";
+							- _typeOf = { IHandle 
+								- _m2Class = "IType";
+								- _filename = "PredefinedTypesC++.sbs";
+								- _subsystem = "PredefinedTypesCpp";
+								- _class = "";
+								- _name = "int";
+								- _id = GUID 7a000000-0000-4000-8000-0000000000f4;
+							}
+							- _argumentDirection = In;
+						}
+					}
+					- _returnType = { IHandle 
+						- _m2Class = "IType";
+						- _filename = "PredefinedTypesC++.sbs";
+						- _subsystem = "PredefinedTypesCpp";
+						- _class = "";
+						- _name = "void";
+						- _id = GUID 7a000000-0000-4000-8000-0000000000f5;
+					}
+					- _abstract = 0;
+					- _itsBody = { IBody 
+						- _bodyData = "std::cout << \"chauffe : \" << puissance << \"\\n\";";
+					}
+				}
+			}
+			- Attrs = { IRPYRawContainer 
+				- size = 2;
+				- value = 
+				{ IAttribute 
+					- _id = GUID 7a000000-0000-4000-8000-000000000044;
+					- _name = "consigne";
+					- ValueSpecifications = { IRPYRawContainer 
+						- size = 1;
+						- value = 
+						{ ILiteralSpecification 
+							- _id = GUID 7a000000-0000-4000-8000-000000000045;
+							- _value = "20";
+						}
+					}
+					- _typeOf = { IHandle 
+						- _m2Class = "IType";
+						- _filename = "Types.sbs";
+						- _subsystem = "Architecture::Types";
+						- _class = "";
+						- _name = "Temperature";
+						- _id = GUID 7a000000-0000-4000-8000-000000000031;
+					}
+					- _isReference = 0;
+				}
+				{ IAttribute 
+					- _id = GUID 7a000000-0000-4000-8000-000000000046;
+					- _name = "mode";
+					- _typeOf = { IHandle 
+						- _m2Class = "IType";
+						- _filename = "Types.sbs";
+						- _subsystem = "Architecture::Types";
+						- _class = "";
+						- _name = "Mode";
+						- _id = GUID 7a000000-0000-4000-8000-000000000032;
+					}
+				}
+			}
+			- Associations = { IRPYRawContainer 
+				- size = 2;
+				- value = 
+				{ IPart 
+					- _id = GUID 7a000000-0000-4000-8000-000000000047;
+					- _name = "capteur";
+					- _multiplicity = "1";
+					- _otherClass = { IClassifierHandle 
+						- _m2Class = "IClass";
+						- _id = GUID 7a000000-0000-4000-8000-000000000400;
+					}
+					- _inverse = { IHandle 
+						- _m2Class = "";
+					}
+				}
+				{ IPart 
+					- _id = GUID 7a000000-0000-4000-8000-000000000048;
+					- _name = "regulateur";
+					- _multiplicity = "1";
+					- _otherClass = { IClassifierHandle 
+						- _m2Class = "IClass";
+						- _id = GUID 7a000000-0000-4000-8000-000000000500;
+					}
+					- _inverse = { IHandle 
+						- _m2Class = "";
+					}
+				}
+			}
+			- ObjectLinks = { IRPYRawContainer 
+				- size = 1;
+				- value = 
+				{ IObjectLink 
+					- _id = GUID 7a000000-0000-4000-8000-000000000049;
+					- _name = "mesure";
+					- _toLink = { IHandle 
+						- _m2Class = "IPart";
+						- _id = GUID 7a000000-0000-4000-8000-000000000048;
+					}
+					- _fromLink = { IHandle 
+						- _m2Class = "IPart";
+						- _id = GUID 7a000000-0000-4000-8000-000000000047;
+					}
+					- _instantiates = { IMetaLinkHandle 
+						- _m2Class = "";
+					}
+					- _toPort = { IHandle 
+						- _m2Class = "ISysMLPort";
+						- _id = GUID 7a000000-0000-4000-8000-000000000501;
+					}
+					- _fromPort = { IHandle 
+						- _m2Class = "ISysMLPort";
+						- _id = GUID 7a000000-0000-4000-8000-000000000401;
+					}
+				}
+			}
+			- Dependencies = { IRPYRawContainer 
+				- size = 1;
+				- value = 
+				{ IDependency 
+					- _id = GUID 7a000000-0000-4000-8000-00000000004a;
+					- _name = "Alarme";
+					- Stereotypes = { IRPYRawContainer 
+						- size = 1;
+						- value = 
+						{ IHandle 
+							- _m2Class = "IStereotype";
+							- _filename = "$OMROOT\\Profiles\\SysML\\SysMLProfile_rpy\\SysML.sbs";
+							- _subsystem = "SysML::Requirements";
+							- _class = "";
+							- _name = "satisfy";
+							- _id = GUID 7a000000-0000-4000-8000-0000000000f6;
+						}
+					}
+					- _dependsOn = { INObjectHandle 
+						- _m2Class = "IRequirement";
+						- _filename = "Exigences.sbs";
+						- _subsystem = "Exigences";
+						- _class = "";
+						- _name = "Alarme";
+						- _id = GUID 7a000000-0000-4000-8000-000000000012;
+					}
+				}
+			}
+			- StateCharts = { IRPYRawContainer 
+				- size = 1;
+				- value = 
+				{ IStateChart 
+					- _id = GUID 7a000000-0000-4000-8000-000000000060;
+					- _name = "statechart_0";
+					- _multiplicity = "";
+					- _itsStateChart = { IHandle 
+						- _m2Class = "";
+					}
+					- Transitions = { IRPYRawContainer 
+						- size = 3;
+						- value = 
+						{ IDefaultDrvdTrans 
+							- _id = GUID 7a000000-0000-4000-8000-000000000061;
+							- _name = "defaulttransition_1";
+							- _itsLabel = { ILabel 
+								- _id = GUID 7a000000-0000-4000-8000-000000000062;
+								- _itsTrigger = NULL;
+								- _itsGuard = NULL;
+								- _itsAction = NULL;
+							}
+							- _itsTarget = GUID 7a000000-0000-4000-8000-000000000066;
+							- _staticReaction = 0;
+							- _itsSource = ;
+							- _ofState = GUID 7a000000-0000-4000-8000-000000000065;
+						}
+						{ ITransition 
+							- _id = GUID 7a000000-0000-4000-8000-000000000063;
+							- _name = "transition_2";
+							- _itsLabel = { ILabel 
+								- _id = GUID 7a000000-0000-4000-8000-000000000068;
+								- _itsTrigger = { IInterfaceItemTrigger 
+									- _id = GUID 7a000000-0000-4000-8000-000000000069;
+									- _body = "evFroid";
+									- _info = "";
+									- _itsInterfaceItem = { IHandle 
+										- _m2Class = "IEvent";
+										- _id = GUID 7a000000-0000-4000-8000-000000000051;
+									}
+								}
+								- _itsGuard = { IGuard 
+									- _id = GUID 7a000000-0000-4000-8000-00000000006a;
+									- _body = "consigne > 18";
+								}
+								- _itsAction = { IAction 
+									- _id = GUID 7a000000-0000-4000-8000-00000000006b;
+									- _body = "allumer(100);";
+								}
+							}
+							- _itsTarget = GUID 7a000000-0000-4000-8000-000000000067;
+							- _staticReaction = 0;
+							- _itsSource = GUID 7a000000-0000-4000-8000-000000000066;
+						}
+						{ ITransition 
+							- _id = GUID 7a000000-0000-4000-8000-000000000064;
+							- _name = "transition_3";
+							- _itsLabel = { ILabel 
+								- _id = GUID 7a000000-0000-4000-8000-00000000006c;
+								- _itsTrigger = { ITimeout 
+									- _id = GUID 7a000000-0000-4000-8000-00000000006d;
+									- _body = "tm(5000)";
+									- _info = "";
+									- _time = "5000";
+								}
+								- _itsGuard = NULL;
+								- _itsAction = NULL;
+							}
+							- _itsTarget = GUID 7a000000-0000-4000-8000-000000000066;
+							- _staticReaction = 0;
+							- _itsSource = GUID 7a000000-0000-4000-8000-000000000067;
+						}
+					}
+					- States = { IRPYRawContainer 
+						- size = 3;
+						- value = 
+						{ IState 
+							- _id = GUID 7a000000-0000-4000-8000-000000000065;
+							- _name = "ROOT";
+							- _parent = ;
+							- _defaultTrans = GUID 7a000000-0000-4000-8000-000000000061;
+						}
+						{ IState 
+							- _id = GUID 7a000000-0000-4000-8000-000000000066;
+							- _name = "Veille";
+							- _parent = GUID 7a000000-0000-4000-8000-000000000065;
+							- _defaultTrans = ;
+						}
+						{ IState 
+							- _id = GUID 7a000000-0000-4000-8000-000000000067;
+							- _name = "Chauffe";
+							- _parent = GUID 7a000000-0000-4000-8000-000000000065;
+							- _entryAction = { IAction 
+								- _id = GUID 7a000000-0000-4000-8000-00000000006e;
+								- _body = "mode = Chauffe;";
+							}
+							- _defaultTrans = ;
+						}
+					}
+					- _diagram = GUID 7a000000-0000-4000-8000-00000000006f;
+					- Views = { IRPYRawContainer 
+						- size = 1;
+						- value = 
+						{ IStateChartDiagram 
+							- _id = GUID 7a000000-0000-4000-8000-00000000006f;
+							- _name = "statechartdiagram_0";
+						}
+					}
+				}
+			}
+		}
+		{ IClass 
+			- _id = GUID 7a000000-0000-4000-8000-000000000400;
+			- _name = "Capteur";
+			- Stereotypes = { IRPYRawContainer 
+				- size = 1;
+				- value = 
+				{ IHandle 
+					- _m2Class = "IStereotype";
+					- _filename = "$OMROOT\\Profiles\\SysML\\SysMLProfile_rpy\\SysML.sbs";
+					- _subsystem = "SysML::Blocks";
+					- _class = "";
+					- _name = "block";
+					- _id = GUID 7a000000-0000-4000-8000-0000000000f3;
+				}
+			}
+			- _multiplicity = "";
+			- Ports = { IRPYRawContainer 
+				- size = 1;
+				- value = 
+				{ ISysMLPort 
+					- _id = GUID 7a000000-0000-4000-8000-000000000401;
+					- _name = "sortie";
+					- Stereotypes = { IRPYRawContainer 
+						- size = 1;
+						- value = 
+						{ IHandle 
+							- _m2Class = "IStereotype";
+							- _filename = "PredefinedTypes.sbs";
+							- _subsystem = "PredefinedTypes";
+							- _class = "";
+							- _name = "flowPort";
+							- _id = GUID 7a000000-0000-4000-8000-0000000000f7;
+						}
+					}
+					- _multiplicity = "1";
+					- _otherClass = { IClassifierHandle 
+						- _m2Class = "IType";
+						- _filename = "Types.sbs";
+						- _subsystem = "Architecture::Types";
+						- _class = "";
+						- _name = "Temperature";
+						- _id = GUID 7a000000-0000-4000-8000-000000000031;
+					}
+					- _direction = Out;
+				}
+			}
+		}
+		{ IClass 
+			- _id = GUID 7a000000-0000-4000-8000-000000000500;
+			- _name = "Regulateur";
+			- Stereotypes = { IRPYRawContainer 
+				- size = 1;
+				- value = 
+				{ IHandle 
+					- _m2Class = "IStereotype";
+					- _filename = "$OMROOT\\Profiles\\SysML\\SysMLProfile_rpy\\SysML.sbs";
+					- _subsystem = "SysML::Blocks";
+					- _class = "";
+					- _name = "block";
+					- _id = GUID 7a000000-0000-4000-8000-0000000000f3;
+				}
+			}
+			- _multiplicity = "";
+			- _itsStateChart = { IHandle 
+				- _m2Class = "IActivityGraph";
+				- _id = GUID 7a000000-0000-4000-8000-000000000070;
+			}
+			- Ports = { IRPYRawContainer 
+				- size = 1;
+				- value = 
+				{ ISysMLPort 
+					- _id = GUID 7a000000-0000-4000-8000-000000000501;
+					- _name = "entree";
+					- Stereotypes = { IRPYRawContainer 
+						- size = 1;
+						- value = 
+						{ IHandle 
+							- _m2Class = "IStereotype";
+							- _filename = "PredefinedTypes.sbs";
+							- _subsystem = "PredefinedTypes";
+							- _class = "";
+							- _name = "flowPort";
+							- _id = GUID 7a000000-0000-4000-8000-0000000000f7;
+						}
+					}
+					- _multiplicity = "1";
+					- _otherClass = { IClassifierHandle 
+						- _m2Class = "IType";
+						- _filename = "Types.sbs";
+						- _subsystem = "Architecture::Types";
+						- _class = "";
+						- _name = "Temperature";
+						- _id = GUID 7a000000-0000-4000-8000-000000000031;
+					}
+					- _direction = In;
+				}
+			}
+			- StateCharts = { IRPYRawContainer 
+				- size = 1;
+				- value = 
+				{ IActivityGraph 
+					- _id = GUID 7a000000-0000-4000-8000-000000000070;
+					- _name = "Reguler";
+					- _multiplicity = "";
+					- Transitions = { IRPYRawContainer 
+						- size = 5;
+						- value = 
+						{ IDefaultDrvdTrans 
+							- _id = GUID 7a000000-0000-4000-8000-000000000071;
+							- _name = "defaulttransition_1";
+							- _itsTarget = GUID 7a000000-0000-4000-8000-000000000076;
+							- _itsSource = ;
+							- _ofState = GUID 7a000000-0000-4000-8000-000000000075;
+						}
+						{ ITransition 
+							- _id = GUID 7a000000-0000-4000-8000-000000000072;
+							- _name = "objectflow_2";
+							- Stereotypes = { IRPYRawContainer 
+								- size = 1;
+								- value = 
+								{ IHandle 
+									- _m2Class = "IStereotype";
+									- _filename = "PredefinedTypes.sbs";
+									- _subsystem = "PredefinedTypes";
+									- _class = "";
+									- _name = "ObjectFlow";
+									- _id = GUID 7a000000-0000-4000-8000-0000000000f8;
+								}
+							}
+							- _itsTarget = GUID 7a000000-0000-4000-8000-000000000077;
+							- _itsSource = GUID 7a000000-0000-4000-8000-00000000007a;
+						}
+						{ ITransition 
+							- _id = GUID 7a000000-0000-4000-8000-000000000073;
+							- _name = "controlflow_3";
+							- _itsTarget = GUID 7a000000-0000-4000-8000-00000000007b;
+							- _itsSource = GUID 7a000000-0000-4000-8000-000000000077;
+						}
+						{ ITransition 
+							- _id = GUID 7a000000-0000-4000-8000-000000000074;
+							- _name = "controlflow_4";
+							- _itsLabel = { ILabel 
+								- _id = GUID 7a000000-0000-4000-8000-00000000007c;
+								- _itsTrigger = NULL;
+								- _itsGuard = { IGuard 
+									- _id = GUID 7a000000-0000-4000-8000-00000000007d;
+									- _body = "trop chaud";
+								}
+								- _itsAction = NULL;
+							}
+							- _itsTarget = GUID 7a000000-0000-4000-8000-000000000078;
+							- _itsSource = GUID 7a000000-0000-4000-8000-00000000007b;
+						}
+						{ ITransition 
+							- _id = GUID 7a000000-0000-4000-8000-00000000007e;
+							- _name = "controlflow_5";
+							- _itsTarget = GUID 7a000000-0000-4000-8000-000000000079;
+							- _itsSource = GUID 7a000000-0000-4000-8000-000000000078;
+						}
+					}
+					- Connectors = { IRPYRawContainer 
+						- size = 2;
+						- value = 
+						{ IPin 
+							- _id = GUID 7a000000-0000-4000-8000-00000000007a;
+							- _name = "mesure";
+							- _parent = GUID 7a000000-0000-4000-8000-000000000076;
+							- _connectorType = OutPin;
+							- m_type = { IHandle 
+								- _m2Class = "IType";
+								- _filename = "Types.sbs";
+								- _subsystem = "Architecture::Types";
+								- _class = "";
+								- _name = "Temperature";
+								- _id = GUID 7a000000-0000-4000-8000-000000000031;
+							}
+							- m_isParameterPin = 0;
+						}
+						{ IConnector 
+							- _id = GUID 7a000000-0000-4000-8000-00000000007b;
+							- _name = "condition_0";
+							- _parent = GUID 7a000000-0000-4000-8000-000000000075;
+							- _connectorType = Condition;
+						}
+					}
+					- States = { IRPYRawContainer 
+						- size = 5;
+						- value = 
+						{ IState 
+							- _id = GUID 7a000000-0000-4000-8000-000000000075;
+							- _name = "ROOT";
+							- _parent = ;
+							- _defaultTrans = GUID 7a000000-0000-4000-8000-000000000071;
+						}
+						{ IState 
+							- _id = GUID 7a000000-0000-4000-8000-000000000076;
+							- _name = "action_1";
+							- _parent = GUID 7a000000-0000-4000-8000-000000000075;
+							- _stateType = Action;
+							- _entryAction = { IAction 
+								- _id = GUID 7a000000-0000-4000-8000-00000000007f;
+								- _body = "Lire la mesure";
+							}
+							- _defaultTrans = ;
+						}
+						{ IState 
+							- _id = GUID 7a000000-0000-4000-8000-000000000077;
+							- _name = "Comparer";
+							- _parent = GUID 7a000000-0000-4000-8000-000000000075;
+							- _stateType = Action;
+							- _defaultTrans = ;
+						}
+						{ IState 
+							- _id = GUID 7a000000-0000-4000-8000-000000000078;
+							- _name = "Couper la chauffe";
+							- _parent = GUID 7a000000-0000-4000-8000-000000000075;
+							- _stateType = Action;
+							- _defaultTrans = ;
+						}
+						{ IState 
+							- _id = GUID 7a000000-0000-4000-8000-000000000079;
+							- _name = "activityfinal_6";
+							- _parent = GUID 7a000000-0000-4000-8000-000000000075;
+							- _stateType = LocalTermination;
+							- _defaultTrans = ;
+						}
+					}
+				}
+			}
+		}
+	}
+	- Events = { IRPYRawContainer 
+		- size = 2;
+		- value = 
+		{ IEvent 
+			- _id = GUID 7a000000-0000-4000-8000-000000000050;
+			- _name = "evAlarme";
+			- _virtual = 0;
+			- Args = { IRPYRawContainer 
+				- size = 0;
+			}
+		}
+		{ IEvent 
+			- _id = GUID 7a000000-0000-4000-8000-000000000051;
+			- _name = "evFroid";
+			- _virtual = 0;
+			- Args = { IRPYRawContainer 
+				- size = 0;
+			}
+		}
+	}
+	- Actors = { IRPYRawContainer 
+		- size = 1;
+		- value = 
+		{ IActor 
+			- _id = GUID 7a000000-0000-4000-8000-000000000080;
+			- _name = "Occupant";
+			- _multiplicity = "";
+			- Associations = { IRPYRawContainer 
+				- size = 1;
+				- value = 
+				{ IAssociationEnd 
+					- _id = GUID 7a000000-0000-4000-8000-000000000081;
+					- _name = "itsRegler la consigne";
+					- _multiplicity = "1";
+					- _otherClass = { IClassifierHandle 
+						- _m2Class = "IUseCase";
+						- _id = GUID 7a000000-0000-4000-8000-000000000082;
+					}
+					- _inverse = { IHandle 
+						- _m2Class = "";
+					}
+					- _linkName = "";
+					- _linkType = Assoc;
+					- _navigability = Navigable;
+				}
+			}
+		}
+	}
+	- UseCases = { IRPYRawContainer 
+		- size = 1;
+		- value = 
+		{ IUseCase 
+			- _id = GUID 7a000000-0000-4000-8000-000000000082;
+			- _name = "Régler la consigne";
+			- Dependencies = { IRPYRawContainer 
+				- size = 1;
+				- value = 
+				{ IDependency 
+					- _id = GUID 7a000000-0000-4000-8000-000000000083;
+					- _name = "Consigne";
+					- Stereotypes = { IRPYRawContainer 
+						- size = 1;
+						- value = 
+						{ IHandle 
+							- _m2Class = "IStereotype";
+							- _filename = "PredefinedTypes.sbs";
+							- _subsystem = "PredefinedTypes";
+							- _class = "";
+							- _name = "trace";
+							- _id = GUID 7a000000-0000-4000-8000-0000000000f2;
+						}
+					}
+					- _dependsOn = { INObjectHandle 
+						- _m2Class = "IRequirement";
+						- _filename = "Exigences.sbs";
+						- _subsystem = "Exigences";
+						- _class = "";
+						- _name = "Consigne";
+						- _id = GUID 7a000000-0000-4000-8000-000000000011;
+					}
+				}
+			}
+			- _multiplicity = "";
+		}
+	}
+}
+

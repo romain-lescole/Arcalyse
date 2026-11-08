@@ -4,7 +4,8 @@
    La visionneuse (src/vendor/arcature-visionneuse*.js, produite par Arcature : node build.js --visionneuse)
    n'expose que window.ArcatureVisionneuse ; elle lit le modèle (texte du .capella) et le .aird, en lecture seule.
    Ici : chargement du .aird (sélecteur ouvert dans le dossier du .capella ; 📁 dossier du projet depuis l'écran d'accueil),
-   liste classée (couche › type de diagramme, repliable, cases à cocher) à la place de celle de la visionneuse,
+   enveloppe commune à tous les formats (barre, explorateur classé — couche › type, genre › origine, 🌳 arborescence… —, ▣ carte, ℹ Infos,
+   ⧉ comparaison, planches) : le dessin seul est confié à la visionneuse (Capella) ou aux lecteurs SysML v2 / UML (87, 88, dans #cdg-sy),
    export groupé en planches (en-tête, cartouche) : PDF, ZIP PNG / SVG, rapport HTML ;
    section « Diagrammes » du panneau de détail. Clic sur un élément d'un diagramme → panneau de détail de l'élément.
    ═══════════════════════════════════════════════════════════════════════ */
@@ -12,14 +13,48 @@
 /** État de la vue : visionneuse, .aird en attente ou chargé, modèle transmis, liste classée, sélection, largeur, carte, options d'export. */
 const _capDiag = { vis: null, texteAird: '', nomAird: '', airdCharge: false, modele: null, nbReps: 0,
   attente: false, poignee: null, dateAird: 0,   // .aird fourni pour le modèle à venir ; accès direct au fichier (relecture après 🔄 mise à jour) ; date du fichier lu
-  classement: 'couche', bascule: new Set(), sel: new Set(), choix: false, filtre: '', actif: '', icones: null, meta: null,
-  largeur: 330, carte: 'panneau', carteReduite: false,
+  classement: 'couche', classementSy: 'genre-origine', bascule: new Set(), sel: new Set(), choix: false, filtre: '', actif: '', icones: null, meta: null,
+  largeur: 330, carte: 'panneau', carteReduite: false, carteH: 170,   // hauteur de la ▣ carte sous l'explorateur (séparateur ↕ `capDiagSplitV`)
+  pret: false, texte: false, texteZoom: 1, parCible: null, parents: null, syIdx: null,   // vue créée ; ≡ Texte (Capella) ; index cible → diagrammes, parents de l'arbre, présences (lecteurs)
   exportOpts: { fmt: 'pdf', portee: 'sel', cadre: true, cartouche: true, desc: true, annexe: true, sommaire: true, scale: 2 } };
-/** Ordre des couches ARCADIA dans la liste et les exports. */
-const CAP_DIAG_COUCHES = ['OA', 'SA', 'LA', 'PA', 'EPBS'];
+/** Ordre des couches ARCADIA (puis des familles SysML / UML) dans la liste et les exports. */
+const CAP_DIAG_COUCHES = ['OA', 'SA', 'LA', 'PA', 'EPBS', 'STR', 'BEH', 'REQ', 'ORG'];
 
 /** @returns {boolean} vrai si la visionneuse d'Arcature est embarquée dans la page */
 function capDiagDispo() { return typeof window.ArcatureVisionneuse === 'object'; }
+
+/* Les vues des lecteurs SysML v2 et UML / SysML v1 (87, 88) passent par la même enveloppe que les diagrammes Capella : `capDiagReps()` les renvoie
+   comme des représentations (uid « sy:<clé> », `couche` = famille STR / BEH / REQ / ORG, `kind` = genre du lecteur, `origine`) ; seul le dessin
+   leur est propre (`capSyVuesRender`, dans #cdg-sy à la place de la visionneuse). */
+
+/** @returns {boolean} vrai si la vue 🔲 montre les vues d'un lecteur d'Arcature (SysML v2, UML / SysML v1) et non la visionneuse Capella */
+function capDiagSy() { return typeof _capSysml !== 'undefined' && !!_capSysml.lecture && typeof capSyVuesReps === 'function'; }
+
+/** @returns {boolean} vrai si des diagrammes ou des vues sont chargés (.aird pour Capella, lecture pour SysML / UML) */
+function capDiagCharge() { return capDiagSy() ? capDiagReps().length > 0 : _capDiag.airdCharge; }
+
+/** @returns {string} nom du fichier d'où viennent les diagrammes (.aird, ou modèle SysML / UML) */
+function capDiagNomSource() { return capDiagSy() ? _capSysml.nom || '' : _capDiag.nomAird; }
+
+/** @returns {string} titre des exports groupés selon le format */
+function capDiagTitreExport() { return capDiagSy() ? _L('Diagrammes et vues') : _L('Diagrammes Capella'); }
+
+/**
+ * Classement de l'explorateur pour le format affiché (Capella : `classement`, lecteurs : `classementSy`).
+ * @param {string} [v] - Nouveau classement
+ * @returns {string} classement courant
+ */
+function capDiagClassement(v) {
+  const k = capDiagSy() ? 'classementSy' : 'classement';
+  if (v !== undefined) _capDiag[k] = v;
+  return _capDiag[k];
+}
+
+/** Oublie ce qui dépend des diagrammes chargés (autre modèle, autre .aird) : index, icônes, sélection, diagramme actif, mode texte. */
+function capDiagOublier() {
+  Object.assign(_capDiag, { parCible: null, parents: null, syIdx: null, icones: null, actif: '', texte: false, filtre: '' });
+  _capDiag.sel.clear();
+}
 
 /* ── Icônes des éléments (dessins façon Capella d'Arcature) ────────────── */
 
@@ -33,16 +68,20 @@ const _capIco = { doc: null, cache: new Map() };
  * @returns {string} élément <svg>, ou '' (visionneuse absente, élément inconnu ou sans dessin)
  */
 function capIco(id, taille) {
+  if (typeof capUmlIcone === 'function') { const u = capUmlIcone(id, taille); if (u != null) return u; }   // 🧬 modèle UML / SysML v1 : jeu d'icônes d'Arcature (88)
   const A = window.ArcatureVisionneuse;
-  if (!id || !cap_xmlDoc || !A || typeof A.icone !== 'function') return '';   // cap_xmlDoc : aussi pendant le chargement (arborescence de la Relation Map)
+  const sy0 = typeof capSysmlActif === 'function' && capSysmlActif();
+  if (!id || !cap_xmlDoc || (!sy0 && (!A || typeof A.icone !== 'function'))) return '';   // SysML v2 : icônes du lecteur, sans la visionneuse ; cap_xmlDoc : aussi pendant le chargement (arborescence de la Relation Map)
   if (_capIco.doc !== cap_xmlDoc) {
     _capIco.cache.clear(); _capIco.doc = cap_xmlDoc;
-    try { capDiagEnsure(); if (_capDiag.vis && _capDiag.modele !== cap_xmlDoc) capDiagSync(); } catch (e) { console.error(e); }
+    if (A) try { capDiagEnsure(); if (_capDiag.vis && _capDiag.modele !== cap_xmlDoc) capDiagSync(); } catch (e) { console.error(e); }
   }
   const k = id + '|' + (taille || 14);
   let s = _capIco.cache.get(k);
   if (s == null) {
-    try { s = A.icone(id, taille || 14) || ''; } catch (e) { s = ''; }
+    const sy = typeof capSysmlActif === 'function' && capSysmlActif();   // 87 : modèle SysML v2, icônes du lecteur (pas celles de Capella aux mêmes noms : Class, DataType…)
+    if (sy) s = capIcoSysmlId(id, taille);
+    else { try { s = A.icone(id, taille || 14) || ''; } catch (e) { s = ''; } }
     if (!s) {   // type sans icône dans la visionneuse : icône de complément (84)
       const el = capAllElements.length ? capGetElementById_(id) : null;
       if (!el) return '';   // modèle en cours de chargement : pas de mise en cache
@@ -59,11 +98,18 @@ function capIco(id, taille) {
  * @returns {string} élément <svg>, ou ''
  */
 function capIcoType(type, taille) {
+  if (typeof capUmlIconeType === 'function') { const u = capUmlIconeType(type, taille); if (u != null) return u; }   // 🧬 types UML / SysML v1 (88)
   const A = window.ArcatureVisionneuse;
-  if (!type || !A || typeof A.iconeType !== 'function') return '';
-  const k = '@' + type + '|' + (taille || 14);
+  if (!type) return '';
+  const sy = typeof capSysmlActif === 'function' && capSysmlActif();
+  if (!sy && (!A || typeof A.iconeType !== 'function')) return '';   // version sans visionneuse : icônes de complément pour SysML v2 seulement   // 87 : modèle SysML v2, la métaclasse avant le type Capella du même nom
+  const k = (sy ? '@sy:' : '@') + type + '|' + (taille || 14);
   let s = _capIco.cache.get(k);
-  if (s == null) { try { s = A.iconeType(type, taille || 14) || ''; } catch (e) { s = ''; } if (!s) s = capIcoPlus(type, taille); _capIco.cache.set(k, s); }   // 84 : complément
+  if (s == null) {
+    if (!sy) { try { s = A.iconeType(type, taille || 14) || ''; } catch (e) { s = ''; } }
+    if (!s) s = capIcoPlus(type, taille);   // 84 : complément (SysML v2 compris)
+    _capIco.cache.set(k, s);
+  }
   return s;
 }
 
@@ -115,6 +161,7 @@ function capDiagAvantNouveauModele() {
   const nom = _capDiag.texteAird && !_capDiag.attente ? _capDiag.nomAird : '';
   if (nom) capDiagSetAird('', '', null, 0);
   _capDiag.attente = false;
+  capDiagOublier();
   if (typeof capDgReset === 'function') capDgReset();   // ⚖ référence de comparaison des diagrammes : propre à l'ancien modèle
   return nom;
 }
@@ -225,7 +272,7 @@ async function capOpenProjectFolder(confirme) {
 }
 
 /**
- * Lit un dossier du projet (sélecteur ou dossier déposé) sur 2 niveaux et charge le modèle et ses diagrammes.
+ * Lit un dossier du projet (sélecteur ou dossier déposé) sur 2 niveaux (plus le dossier « _rpy » d'un projet Rhapsody) et charge le modèle et ses diagrammes.
  * @param {FileSystemDirectoryHandle} d - Dossier
  */
 async function capProjectScanDir(d) {
@@ -233,8 +280,8 @@ async function capProjectScanDir(d) {
   /** Parcourt un dossier jusqu'à la profondeur donnée. */
   const scan = async (dir, chemin, prof) => {
     for await (const [nom, h] of dir.entries()) {
-      if (h.kind === 'file' && /\.(capella|melodymodeller|aird|sysml|kpar)$/i.test(nom)) fichiers.push({ nom, chemin: chemin + nom, h });
-      else if (h.kind === 'directory' && prof > 0 && !nom.startsWith('.')) await scan(h, chemin + nom + '/', prof - 1);
+      if (h.kind === 'file' && (/\.(capella|melodymodeller|aird|sysml|kpar)$/i.test(nom) || (typeof capUmlReconnait === 'function' && (capUmlReconnait(nom) || capUmlAnnexe(nom))))) fichiers.push({ nom, chemin: chemin + nom, h });   // 🧬 UML : modèles et .notation (88)
+      else if (h.kind === 'directory' && (prof > 0 || /_rpy$/i.test(nom)) && !nom.startsWith('.')) await scan(h, chemin + nom + '/', Math.max(prof - 1, 0));   // dossier « _rpy » d'un projet Rhapsody : toujours lu
     }
   };
   try { await scan(d, '', 1); } catch (e) { capWelcomeStatus(_L('Lecture du dossier impossible : ') + (e && e.message || e), 'err'); capShowWelcome(true); return; }
@@ -247,12 +294,18 @@ async function capProjectScanDir(d) {
  * @param {{nom:string, chemin:string, lire:function():Promise<File>, h:?FileSystemFileHandle}[]} fichiers - Fichiers trouvés
  */
 function capProjectFromFiles(fichiers) {
-  const mods = fichiers.filter(f => /\.(capella|melodymodeller)$/i.test(f.nom)).sort((a, b) => a.chemin.split('/').length - b.chemin.split('/').length || a.chemin.localeCompare(b.chemin));
+  const capOk = capFormatsDispo().some(F => F.k === 'capella');   // version réduite à un autre format (CAP_EDITION) : .capella ignorés
+  const mods = fichiers.filter(f => capOk && /\.(capella|melodymodeller)$/i.test(f.nom)).sort((a, b) => a.chemin.split('/').length - b.chemin.split('/').length || a.chemin.localeCompare(b.chemin));
   const airds = fichiers.filter(f => /\.aird$/i.test(f.nom));
   capShowWelcome(true);
   const sysml = fichiers.filter(f => /\.(sysml|kpar)$/i.test(f.nom));
-  if (!mods.length && sysml.length && typeof capSysmlOuvrirDossier === 'function') { capSysmlOuvrirDossier(sysml); return; }   // 🧩 projet SysML v2 en dossier (87)
-  if (!mods.length) { capWelcomeStatus(_L('Aucun fichier .capella ni .sysml dans ce dossier (ni dans ses sous-dossiers).'), 'err'); return; }
+  if (!mods.length && sysml.length && typeof capSysmlOuvrirDossier === 'function' && capSysmlDispo()) { capSysmlOuvrirDossier(sysml); return; }   // 🧩 projet SysML v2 en dossier (87)
+  const uml = typeof capUmlReconnait === 'function' ? fichiers.filter(f => capUmlReconnait(f.nom) || capUmlAnnexe(f.nom)) : [];
+  if (!mods.length && uml.some(f => capUmlReconnait(f.nom))) { capUmlOuvrirDossier(uml); return; }   // 🧬 projet UML / SysML v1 en dossier (88)
+  if (!mods.length) {
+    const ext = n => (n.split('.').pop() || '').toLowerCase(), absent = CAP_EDITION && fichiers.map(f => [f, CAP_FORMATS.find(F => !capFormatsDispo().includes(F) && F.ext.includes(ext(f.nom)) && ext(f.nom) !== 'xml')]).find(x => x[1]);
+    capWelcomeStatus(absent ? capFormatAbsentMsg(absent[0].nom, absent[1]) : _L('Aucun fichier .capella, .sysml, .uml, .xmi, .mdzip ni .qea dans ce dossier (ni dans ses sous-dossiers).'), 'err'); return;
+  }
   /** Charge un modèle et son .aird. */
   const charger = async m => {
     if (capLoaded && !capReplacePreOk() && !(await capReplaceConfirm(m.nom))) { capShowWelcome(false); return; }
@@ -267,30 +320,39 @@ function capProjectFromFiles(fichiers) {
     } catch (e) { capWelcomeStatus(_L('Lecture impossible : ') + (e && e.message || e), 'err'); }
   };
   if (mods.length === 1) { charger(mods[0]); return; }
-  const st = document.getElementById('cw-status');
   capWelcomeStatus(_L(`${mods.length} modèles dans ce dossier : lequel ouvrir ?`), '');
-  const dos = c => { const i = c.lastIndexOf('/'); return i < 0 ? ['', c] : [c.slice(0, i + 1), c.slice(i + 1)]; };   // dossier / nom
-  st.insertAdjacentHTML('beforeend', `<div class="cw-choix"><div class="cw-choix-h">${_L('Les autres .capella seront chargés comme bibliothèques si le modèle choisi y fait référence.')}</div>` +
-    mods.map((m, i) => { const [d, n] = dos(m.chemin); return `<button type="button" class="cw-choix-b" data-mod="${i}">🔷 <span><span class="cw-choix-d">${capEsc(d)}</span><b>${capEsc(n)}</b></span><span class="cw-choix-o">${_L('Ouvrir →')}</span></button>`; }).join('') + `</div>`);
-  st.querySelectorAll('[data-mod]').forEach(b => b.addEventListener('click', ev => { ev.stopPropagation(); charger(mods[+b.dataset.mod]); }));
+  capChoixModele(mods, { ico: '🔷', aide: _L('Les autres .capella seront chargés comme bibliothèques si le modèle choisi y fait référence.') }, charger);   // fenêtre centrée (12)
 }
 
 /** Affiche un message bref dans la barre de la vue. @param {string} t - Texte */
 function capDiagMsg(t) { const s = document.getElementById('cdg-statut'); if (s) s.textContent = t; }
 
-/** Crée la vue (une fois) : barre (ouvrir, export, sélection), liste classée à gauche, hôte de la visionneuse. */
+/**
+ * Crée la vue (une fois) : barre, explorateur classé à gauche (liste, ▣ carte de la visionneuse, ▣ carte des lecteurs), hôte de la
+ * visionneuse (#cdg-hote) et hôte des vues des lecteurs (#cdg-sy, 87) ; la visionneuse n'est créée que pour un modèle Capella.
+ */
 function capDiagEnsure() {
   const box = document.getElementById('cap-view-diag');
-  if (_capDiag.vis || !box || !capDiagDispo()) return;
-  box.innerHTML = `<div class="cdg-barre" id="cdg-barre"></div>` +
-    `<div class="cdg-corps"><aside class="cdg-gauche" id="cdg-gauche" style="width:${_capDiag.largeur}px"><div id="cdg-liste" class="cdg-liste"></div>` +
-    `<div id="cdg-carte-zone" class="cdg-carte-zone"></div></aside>` +
-    `<div class="cdg-split" id="cdg-split" title="${_L('Glisser pour régler la largeur de l\'explorateur')}"></div><div id="cdg-hote" class="cdg-hote"></div></div>` +
-    `<input type="file" id="cdg-fichier" accept=".aird" style="display:none">`;
-  document.getElementById('cdg-fichier').onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (f) capDiagLoadAird(f); };
-  box.addEventListener('click', capDiagClic);
-  box.addEventListener('change', capDiagChange);
-  box.addEventListener('input', e => { if (e.target.id === 'cdg-filtre') { _capDiag.filtre = e.target.value; capDiagListe(); } });
+  if (!box) return;
+  if (!_capDiag.pret) {
+    _capDiag.pret = true;
+    box.innerHTML = `<div class="cdg-barre" id="cdg-barre"></div>` +
+      `<div class="cdg-corps"><aside class="cdg-gauche" id="cdg-gauche" style="width:${_capDiag.largeur}px"><div id="cdg-liste" class="cdg-liste"></div>` +
+      `<div class="cdg-split-v" id="cdg-split-v" title="${_L('Glisser pour régler la hauteur de la carte (double-clic : hauteur par défaut)')}"></div>` +
+      `<div id="cdg-carte-zone" class="cdg-carte-zone"></div><div id="cdg-carte-sy" class="cdg-carte-zone sy-vues"></div></aside>` +
+      `<div class="cdg-split" id="cdg-split" title="${_L('Glisser pour régler la largeur de l\'explorateur')}"></div><div id="cdg-hote" class="cdg-hote"></div><div id="cdg-sy" class="cdg-hote cdg-sy sy-vues"></div></div>` +
+      `<input type="file" id="cdg-fichier" accept=".aird" style="display:none">`;
+    document.getElementById('cdg-fichier').onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (f) capDiagLoadAird(f); };
+    box.addEventListener('click', capDiagClic);
+    box.addEventListener('change', capDiagChange);
+    box.addEventListener('input', e => { if (e.target.id === 'cdg-filtre') { _capDiag.filtre = e.target.value; capDiagListe(); } });
+    window.addEventListener('resize', () => { if (capCurrentView === 'diag') capDiagFit(); });
+    capDiagSplit(document.getElementById('cdg-split'));
+    capDiagSplitV(document.getElementById('cdg-split-v'));
+    document.getElementById('cdg-gauche').style.setProperty('--cdg-carte-h', _capDiag.carteH + 'px');
+    if (window.ResizeObserver) new ResizeObserver(() => { if (capCurrentView === 'diag') capDiagFit(); }).observe(document.getElementById('cdg-barre'));
+  }
+  if (_capDiag.vis || capDiagSy() || !capDiagDispo()) return;
   _capDiag.vis = window.ArcatureVisionneuse.creer(document.getElementById('cdg-hote'), {
     choix: id => { if (typeof capOpenDetailById === 'function') capOpenDetailById(id); else capOpenDetail(id); }
   });
@@ -301,9 +363,6 @@ function capDiagEnsure() {
     if (uid !== _capDiag.actif) { _capDiag.actif = uid; capDiagMarquerActif(); }
     if (uid && !_capDiag.export) capDiagCarte();
   }).observe(liste, { subtree: true, attributes: true, attributeFilter: ['class'], childList: true });
-  window.addEventListener('resize', () => { if (capCurrentView === 'diag') capDiagFit(); });
-  capDiagSplit(document.getElementById('cdg-split'));
-  if (window.ResizeObserver) new ResizeObserver(() => { if (capCurrentView === 'diag') capDiagFit(); }).observe(document.getElementById('cdg-barre'));
 }
 
 /**
@@ -317,10 +376,31 @@ function capDiagSplit(sp) {
     const max = Math.max(260, document.getElementById('cap-view-diag').clientWidth * 0.6);
     const bouge = ev => { _capDiag.largeur = Math.round(Math.min(max, Math.max(200, w0 + ev.clientX - x0))); g.style.width = _capDiag.largeur + 'px'; };
     const fin = () => { sp.classList.remove('on'); sp.removeEventListener('pointermove', bouge); sp.removeEventListener('pointerup', fin);
-      window.dispatchEvent(new Event('resize')); };   // la visionneuse se réajuste
+      window.dispatchEvent(new Event('resize')); if (capDiagSy()) capSyCarteRender(); };   // la visionneuse se réajuste ; carte des lecteurs redessinée
     sp.addEventListener('pointermove', bouge); sp.addEventListener('pointerup', fin);
   });
-  sp.addEventListener('dblclick', () => { _capDiag.largeur = 330; document.getElementById('cdg-gauche').style.width = '330px'; window.dispatchEvent(new Event('resize')); });
+  sp.addEventListener('dblclick', () => { _capDiag.largeur = 330; document.getElementById('cdg-gauche').style.width = '330px'; window.dispatchEvent(new Event('resize')); if (capDiagSy()) capSyCarteRender(); });
+}
+
+/**
+ * Séparateur horizontal entre la liste des diagrammes et la ▣ carte sous l'explorateur : glisser vers le haut agrandit la carte
+ * (`_capDiag.carteH`, variable CSS `--cdg-carte-h` de `#cdg-gauche`, lue par la carte de la visionneuse et par `capSyCarte` de 87) ;
+ * double-clic : hauteur par défaut. Masqué (CSS) quand aucune carte n'est affichée sous l'explorateur.
+ * @param {HTMLElement} sp - Séparateur
+ */
+function capDiagSplitV(sp) {
+  const g = () => document.getElementById('cdg-gauche');
+  const poser = h => { _capDiag.carteH = h; g().style.setProperty('--cdg-carte-h', h + 'px'); };
+  const apres = () => { capDiagCartePoignees(); if (capDiagSy() && typeof capSyCarteRender === 'function') capSyCarteRender(); };
+  sp.addEventListener('pointerdown', e => {
+    e.preventDefault(); sp.setPointerCapture(e.pointerId); sp.classList.add('on');
+    const y0 = e.clientY, h0 = _capDiag.carteH, max = Math.max(120, g().clientHeight - 140);
+    let raf = 0;
+    const bouge = ev => { poser(Math.round(Math.min(max, Math.max(80, h0 - (ev.clientY - y0))))); if (!raf) raf = requestAnimationFrame(() => { raf = 0; apres(); }); };
+    const fin = () => { sp.classList.remove('on'); sp.removeEventListener('pointermove', bouge); sp.removeEventListener('pointerup', fin); apres(); };
+    sp.addEventListener('pointermove', bouge); sp.addEventListener('pointerup', fin);
+  });
+  sp.addEventListener('dblclick', () => { poser(170); apres(); });
 }
 
 /**
@@ -328,7 +408,7 @@ function capDiagSplit(sp) {
  * La carte de la visionneuse est déplacée telle quelle (ses écouteurs suivent) ; son bouton ▣ Carte est masqué sous l'explorateur.
  */
 function capDiagCarte() {
-  const zone = document.getElementById('cdg-carte-zone'), c = document.getElementById('vd-carte');
+  const zone = document.getElementById('cdg-carte-zone'), c = document.getElementById('dgo-carte');   // carte posée par la visionneuse sur le dessin
   if (!zone || !c) return;
   const bt = document.getElementById('vd-carte-bt'), vz = document.getElementById('vd-zone'), pan = _capDiag.carte === 'panneau';
   if (!zone.firstChild) zone.innerHTML = `<div class="cdg-carte-tete"></div><div id="cdg-carte-corps" class="cdg-carte-corps"></div>`;
@@ -340,29 +420,167 @@ function capDiagCarte() {
       `<button class="cap-lf-btn" data-carte="panneau" title="${_L('Afficher la carte sous l\'explorateur')}">⇱</button>`;
   if (pan) {
     if (c.parentElement !== corps) corps.appendChild(c);
-    if (c.hasAttribute('hidden') && bt) bt.click();   // la visionneuse ne dessine la carte qu'affichée
+    if (bt && !bt.classList.contains('actif')) bt.click();   // la visionneuse ne dessine la carte qu'affichée (▣ actif)
     if (bt) bt.style.display = 'none';
     corps.hidden = _capDiag.carteReduite;
   } else {
+    if (c._vb0) { c.setAttribute('viewBox', c._vb0); c._vbNous = ''; c.removeAttribute('preserveAspectRatio'); c.querySelectorAll(':scope > rect.cdg-carte-fond').forEach(r => r.remove()); }   // carte rendue telle quelle à la visionneuse
     if (vz && c.parentElement !== vz) vz.appendChild(c);
     if (bt) bt.style.display = '';
     corps.hidden = true;
   }
+  capDiagCartePoignees();
 }
 
-/** Barre du haut : 📂 Ouvrir le .aird…, ⬇ Exporter…, ☐ Sélectionner…, fichier chargé. */
+/** Facteur de zoom de la visionneuse par 100 unités de molette avec Ctrl (relevé : 1,15 ; continu en fonction de deltaY). */
+const CAP_DIAG_ZOOM_MOLETTE = 1.15;
+
+/**
+ * Carrés aux angles du cadre bleu de la carte de la visionneuse (`.dgo-carte-vue` de `#dgo-carte`) : les glisser règle la taille de
+ * l'affichage, l'angle opposé restant fixe. La visionneuse n'a pas d'API de zoom : le zoom demandé lui est transmis par un événement
+ * molette synthétique avec Ctrl (facteur `CAP_DIAG_ZOOM_MOLETTE` par 100 de `deltaY`, centré sur le point fixe), et elle met à jour
+ * elle-même le pourcentage et le cadre de la carte ; les poignées suivent le cadre par un observateur. Posées à côté de la carte dans
+ * son conteneur du moment (sous l'explorateur ou dans le dessin).
+ */
+function capDiagCartePoignees() {
+  const c = document.getElementById('dgo-carte'), parent = c && c.parentElement; if (!c || !parent) return;
+  let L = document.getElementById('cdg-carte-poignees');
+  if (L && L.parentElement !== parent) { L.remove(); L = null; }
+  if (!L) {
+    L = document.createElement('div'); L.id = 'cdg-carte-poignees'; L.className = 'cdg-carte-poignees';
+    L.innerHTML = ['nw', 'ne', 'sw', 'se'].map(k => `<span class="sy-carte-h sy-carte-h-${k}" data-h="${k}" title="${_L('Glisser : taille de l\'affichage (zoom)')}"></span>`).join('');
+    parent.appendChild(L);
+    L.addEventListener('pointerdown', e => {
+      const po = e.target.closest('.sy-carte-h'); if (!po) return;
+      e.preventDefault(); e.stopPropagation();
+      const k = po.dataset.h, zone = document.getElementById('vd-zone'), svg = document.getElementById('vd-svg'); if (!zone || !svg) return;
+      L.setPointerCapture(e.pointerId);
+      const mv = ev => {
+        const vb = (svg.getAttribute('viewBox') || '').split(/[\s,]+/).map(Number); if (vb.length !== 4) return;
+        const m = c.getScreenCTM(); if (!m) return;
+        const pt = new DOMPoint(ev.clientX, ev.clientY).matrixTransform(m.inverse());   // pointeur en unités du diagramme (repère de la carte)
+        const F = [k[1] === 'w' ? vb[0] + vb[2] : vb[0], k[0] === 'n' ? vb[1] + vb[3] : vb[1]];   // angle fixe (opposé)
+        const W = Math.max(Math.abs(pt.x - F[0]), Math.abs(pt.y - F[1]) * vb[2] / vb[3], vb[2] / 40);
+        const f = vb[2] / W; if (!isFinite(f) || Math.abs(Math.log(f)) < 0.005) return;
+        const r = zone.getBoundingClientRect();   // le point fixe est un angle de la zone : la visionneuse zoome autour du pointeur
+        zone.dispatchEvent(new WheelEvent('wheel', { deltaY: -100 * Math.log(f) / Math.log(CAP_DIAG_ZOOM_MOLETTE), ctrlKey: true, bubbles: true, cancelable: true,
+          clientX: k[1] === 'w' ? r.right - 1 : r.left + 1, clientY: k[0] === 'n' ? r.bottom - 1 : r.top + 1 }));
+      };
+      const fin = () => { L.removeEventListener('pointermove', mv); L.removeEventListener('pointerup', fin); L.removeEventListener('pointercancel', fin); };
+      L.addEventListener('pointermove', mv); L.addEventListener('pointerup', fin); L.addEventListener('pointercancel', fin);
+    });
+  }
+  if (parent.id === 'cdg-carte-corps') capDiagCarteCadre(c);   // sous l'explorateur : la carte montre aussi le cadre qui déborde le dessin
+  const poser = () => {
+    const vue = c.querySelector('.dgo-carte-vue'), m = c.getScreenCTM(), pr = parent.getBoundingClientRect();
+    if (!vue || !m || c.parentElement !== parent || !c.getClientRects().length) { L.hidden = true; return; }
+    const x = +vue.getAttribute('x'), y = +vue.getAttribute('y'), w = +vue.getAttribute('width'), h = +vue.getAttribute('height');
+    const P = (px, py) => { const q = new DOMPoint(px, py).matrixTransform(m); return [q.x - pr.left + parent.scrollLeft, q.y - pr.top + parent.scrollTop]; };
+    const a = P(x, y), b = P(x + w, y + h);
+    L.hidden = false; L.style.left = Math.min(a[0], b[0]) + 'px'; L.style.top = Math.min(a[1], b[1]) + 'px';
+    L.style.width = Math.abs(b[0] - a[0]) + 'px'; L.style.height = Math.abs(b[1] - a[1]) + 'px';
+  };
+  poser();
+  if (!c._cdgObs) { c._cdgObs = new MutationObserver(() => requestAnimationFrame(() => { const l = document.getElementById('cdg-carte-poignees'); if (l) capDiagCartePoignees(); }));
+    c._cdgObs.observe(c, { attributes: true, subtree: true, childList: true }); window.addEventListener('resize', () => capDiagCartePoignees()); }
+}
+
+/**
+ * ▣ Carte Capella sous l'explorateur, comme le Zoom de Cameo : la visionneuse cadre sa carte sur le dessin, si bien qu'en dézoomant le cadre
+ * bleu (partie affichée) la déborde et disparaît avec ses poignées. On élargit ici la zone montrée (`viewBox`) à l'union du dessin et du
+ * cadre, calée en haut à gauche, seulement quand le cadre déborde, et l'on pose sous le dessin un fond (`.cdg-carte-fond`) : le reste apparaît
+ * en gris (CSS) ; les clics sur la carte sont alors convertis (`capDiagCarteTraduire`). Le `viewBox` d'origine de la visionneuse est gardé
+ * dans `c._vb0` (renouvelé quand elle le change : autre diagramme).
+ * @param {SVGSVGElement} c - Carte `#dgo-carte` de la visionneuse
+ */
+function capDiagCarteCadre(c) {
+  const cur = c.getAttribute('viewBox') || '', vue = c.querySelector('.dgo-carte-vue'); if (!cur || !vue) return;
+  if (c._glisse) { if (c._vbNous && cur !== c._vbNous) c.setAttribute('viewBox', c._vbNous); return; }   // glisser en cours : cadrage figé (sinon le mouvement s'amplifie), reposé si la visionneuse le remplace
+  if (cur !== c._vbNous) c._vb0 = cur;   // viewBox posé par la visionneuse
+  const v0 = c._vb0.split(/[\s,]+/).map(Number); if (v0.length !== 4 || v0.some(x => !isFinite(x))) return;
+  const x = +vue.getAttribute('x'), y = +vue.getAttribute('y'), w = +vue.getAttribute('width'), h = +vue.getAttribute('height');
+  if (![x, y, w, h].every(isFinite)) return;
+  const tol = Math.max(v0[2], v0[3]) * 0.002;
+  const deborde = x < v0[0] - tol || y < v0[1] - tol || x + w > v0[0] + v0[2] + tol || y + h > v0[1] + v0[3] + tol;
+  let fond = c.querySelector(':scope > rect.cdg-carte-fond');
+  if (!deborde) {   // cadre dans le dessin : carte telle que la visionneuse la pose
+    if (c._vbNous) { c._vbNous = ''; c.setAttribute('viewBox', c._vb0); c.removeAttribute('preserveAspectRatio'); }
+    if (fond) fond.remove();
+    return;
+  }
+  const m = Math.max(v0[2], v0[3]) * 0.01;   // petite marge pour voir les poignées
+  const x0 = Math.min(v0[0], x) - m, y0 = Math.min(v0[1], y) - m, x1 = Math.max(v0[0] + v0[2], x + w) + m, y1 = Math.max(v0[1] + v0[3], y + h) + m;
+  const nv = [x0, y0, x1 - x0, y1 - y0].map(n => +n.toFixed(2)).join(' ');
+  if (!fond) { fond = document.createElementNS('http://www.w3.org/2000/svg', 'rect'); fond.setAttribute('class', 'cdg-carte-fond'); fond.setAttribute('pointer-events', 'none'); c.insertBefore(fond, c.firstChild); }
+  const f = v0.map(String);
+  if (fond.getAttribute('x') !== f[0] || fond.getAttribute('width') !== f[2]) { fond.setAttribute('x', f[0]); fond.setAttribute('y', f[1]); fond.setAttribute('width', f[2]); fond.setAttribute('height', f[3]); }
+  if (c.getAttribute('preserveAspectRatio') !== 'xMinYMin meet') c.setAttribute('preserveAspectRatio', 'xMinYMin meet');
+  if (cur !== nv) { c._vbNous = nv; c.setAttribute('viewBox', nv); }
+  capDiagCarteTraduire(c);
+}
+
+/** Types d'événements de la carte Capella convertis par `capDiagCarteTraduire`. */
+const CAP_DIAG_CARTE_EVTS = ['pointerdown', 'pointermove', 'pointerup', 'mousedown', 'mousemove', 'mouseup', 'click', 'dblclick'];
+
+/**
+ * Carte Capella recadrée par `capDiagCarteCadre` : la visionneuse calcule la position d'un clic ou d'un glisser sur sa carte d'après son
+ * propre cadrage (`viewBox` d'origine, centré). Tant que la carte est recadrée, chaque événement souris / pointeur sur la carte (et, pendant
+ * un glisser commencé sur elle, sur la fenêtre) est arrêté puis renvoyé avec les coordonnées qu'il aurait eues sur la carte d'origine : le
+ * point visé du dessin reste le même ; pendant le glisser (`c._glisse`), le recadrage est figé. Écouteurs posés une fois (`c._cdgTr`).
+ * @param {SVGSVGElement} c - Carte `#dgo-carte`
+ */
+function capDiagCarteTraduire(c) {
+  if (c._cdgTr) return; c._cdgTr = true;
+  const conv = e => {   // coordonnées écran attendues par la visionneuse pour le même point du dessin
+    const n = String(c._vbNous || '').split(/[\s,]+/).map(Number), v = String(c._vb0 || '').split(/[\s,]+/).map(Number), r = c.getBoundingClientRect();
+    if (n.length !== 4 || v.length !== 4 || !r.width) return null;
+    const k1 = Math.min(r.width / n[2], r.height / n[3]), D = [n[0] + (e.clientX - r.left) / k1, n[1] + (e.clientY - r.top) / k1];   // carte recadrée (xMinYMin meet), calcul indépendant du viewBox du moment
+    const k = Math.min(r.width / v[2], r.height / v[3]);
+    return [r.left + (r.width - v[2] * k) / 2 + (D[0] - v[0]) * k, r.top + (r.height - v[3] * k) / 2 + (D[1] - v[1]) * k];
+  };
+  const renvoyer = e => {
+    if (e._cdgTr || !c._vbNous) return;
+    if (e.target && e.target.closest && e.target.closest('.cdg-carte-poignees')) return;
+    const P = conv(e); if (!P) return;
+    e.stopImmediatePropagation();
+    const init = { bubbles: e.bubbles, cancelable: e.cancelable, composed: true, view: window, clientX: P[0], clientY: P[1], screenX: e.screenX + P[0] - e.clientX, screenY: e.screenY + P[1] - e.clientY,
+      button: e.button, buttons: e.buttons, detail: e.detail, ctrlKey: e.ctrlKey, shiftKey: e.shiftKey, altKey: e.altKey, metaKey: e.metaKey };
+    if (e instanceof PointerEvent) Object.assign(init, { pointerId: e.pointerId, pointerType: e.pointerType, isPrimary: e.isPrimary, width: e.width, height: e.height, pressure: e.pressure });
+    const n = new e.constructor(e.type, init); n._cdgTr = true;
+    if (/down$/.test(e.type)) c._glisse = true;
+    (e.target || c).dispatchEvent(n);
+    if (n.defaultPrevented) e.preventDefault();
+    if (/up$/.test(e.type)) setTimeout(() => { c._glisse = false; capDiagCarteCadre(c); capDiagCartePoignees(); }, 0);
+  };
+  CAP_DIAG_CARTE_EVTS.forEach(t => c.addEventListener(t, renvoyer, true));
+  c._renvoyer = renvoyer;   // glisser : déplacements et relâcher convertis aussi au niveau de la fenêtre (écouteurs posés au chargement, ci-dessous)
+}
+
+// Posés au chargement du module, donc avant ceux que la visionneuse ajoute sur la fenêtre : pendant un glisser commencé sur la carte Capella
+// recadrée, déplacements et relâcher sont convertis avant qu'elle ne les lise (`capDiagCarteTraduire`).
+CAP_DIAG_CARTE_EVTS.filter(t => /move|up/.test(t)).forEach(t => window.addEventListener(t, e => { const c = document.getElementById('dgo-carte'); if (c && c._glisse && c._renvoyer) c._renvoyer(e); }, true));
+
+// Les cartes (visionneuse et lecteurs) servent à se déplacer : pas de sélection de texte ni d'élément en glissant dessus
+document.addEventListener('mousedown', e => { if (e.target.closest && e.target.closest('#dgo-carte,.sy-carte,.cdg-carte-poignees')) e.preventDefault(); }, true);
+
+/** ▣ Carte selon le format : celle de la visionneuse (Capella) ou celle des lecteurs (`capSyCarteRender`, 87). */
+function capDiagCarteMaj() { if (capDiagSy()) { if (typeof capSyVuesRender === 'function') capSyVuesRender(); } else capDiagCarte(); }   // lecteurs : partie droite rendue de nouveau (carte dans le dessin ou sous l'explorateur)
+
+/** Barre du haut, commune aux formats : 📂 Ouvrir le .aird… (Capella), ℹ Infos, ⧉ Comparer, ⬇ Exporter…, ☐ Sélectionner…, fichier chargé, statut. */
 function capDiagBarre() {
   const b = document.getElementById('cdg-barre'); if (!b) return;
-  const n = _capDiag.sel.size;
-  const exp = _capDiag.airdCharge ? `<span class="tb-grp"><button class="tbtn" id="cdg-export" title="${_L('Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML')}">${_L('⬇ Exporter…')}${n ? ` <span class="cdg-nb">${n}</span>` : ''}</button>` +
+  const n = _capDiag.sel.size, sy = capDiagSy(), charge = capDiagCharge(), reps = charge ? capDiagReps() : [];
+  const exp = charge ? `<span class="tb-grp"><button class="tbtn" id="cdg-export" title="${_L('Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML')}">${_L('⬇ Exporter…')}${n ? ` <span class="cdg-nb">${n}</span>` : ''}</button>` +
     `<button class="tbtn${_capDiag.choix ? ' active' : ''}" id="cdg-choix" title="${_L('Choisir les diagrammes à exporter : cases à cocher dans l\'explorateur')}">${_capDiag.choix ? _L('☑ Terminer la sélection') : _L('☐ Sélectionner…')}</button></span>` : '';
-  const infos = _capDiag.airdCharge ? `<button class="tbtn" id="cdg-infos" title="${_L('Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés')}">${_L('ℹ Infos')}</button>` +
+  const infos = charge ? `<button class="tbtn" id="cdg-infos" title="${_L('Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés')}">${_L('ℹ Infos')}</button>` +
     `<button class="tbtn" id="cdg-comparer" title="${_L('Afficher le diagramme ouvert dans la fenêtre de comparaison (fenêtre séparée, par exemple sur un autre écran) ; clic droit sur un diagramme de la liste pour en choisir un autre')}">${_L('⧉ Comparer')}</button>` : '';
-  b.innerHTML = `<span class="tb-grp"><button class="tbtn" id="cdg-ouvrir" title="${_L('Choisir le fichier .aird (le sélecteur s\'ouvre dans le dossier du .capella quand le navigateur le permet)')}">${_L('📂 Ouvrir le .aird…')}</button>` +
-    infos + `</span>` + exp +
-    `<span id="cdg-info" class="cdg-info">${_capDiag.airdCharge ? capEsc(_capDiag.nomAird) + ' — ' + _L(`${_capDiag.nbReps} diagramme(s)`) :
-      _L('Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre.')}</span>` +
-    `<span id="cdg-statut" class="cdg-info"></span>`;
+  const ouvrir = sy ? '' : `<button class="tbtn" id="cdg-ouvrir" title="${_L('Choisir le fichier .aird (le sélecteur s\'ouvre dans le dossier du .capella quand le navigateur le permet)')}">${_L('📂 Ouvrir le .aird…')}</button>`;
+  let info;
+  if (sy) { const nd = reps.filter(r => r.origine !== 'calculee').length;
+    info = charge ? capEsc(capDiagNomSource()) + ' — ' + (nd ? _L(`${nd} diagramme(s) · ${reps.length - nd} vue(s) calculée(s)`) : _L(`${reps.length} vue(s) calculée(s)`)) : _L('Aucun diagramme ni aucune vue calculable dans ce modèle.'); }
+  else info = _capDiag.airdCharge ? capEsc(_capDiag.nomAird) + ' — ' + _L(`${_capDiag.nbReps} diagramme(s)`) : _L('Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre.');
+  b.innerHTML = (ouvrir || infos ? `<span class="tb-grp">${ouvrir}${infos}</span>` : '') + exp +
+    `<span id="cdg-info" class="cdg-info">${info}</span><span id="cdg-statut" class="cdg-info"></span>`;
 }
 
 /** Ajuste la hauteur de la vue à la fenêtre. */
@@ -385,7 +603,7 @@ function capDiagSync() {
   }
   if (_capDiag.texteAird && !_capDiag.airdCharge) {
     _capDiag.nbReps = v.chargerAird(_capDiag.texteAird, _capDiag.nomAird);
-    _capDiag.airdCharge = true; _capDiag.icones = null; _capDiag.meta = null; _capDiag.sel.clear(); _capDiag.actif = '';
+    _capDiag.airdCharge = true; _capDiag.icones = null; _capDiag.meta = null; _capDiag.parCible = null; _capDiag.sel.clear(); _capDiag.actif = '';
   }
   capDiagBarre();
   capDiagListe();
@@ -413,6 +631,7 @@ function capDiagBarreVd() {
   sep(); prendre('#vd-chaine'); prendre(document.getElementById('vd-filtres-bt') && document.getElementById('vd-filtres-bt').parentElement);
   sep(); ['#vd-moins', '#vd-zoom', '#vd-plus', '#vd-ajuster', '#vd-reel', '#vd-zoom-choix', '#vd-carte-bt'].forEach(prendre);
   const ressort = document.createElement('span'); ressort.className = 'ressort'; ressort.style.flex = '1'; l2.appendChild(ressort);
+  const mode = document.createElement('span'); mode.id = 'cdg-mode'; mode.className = 'cdg-mode'; mode.innerHTML = capDiagModeHtml(); l2.appendChild(mode);   // 🖼 Visuel / ≡ Texte, taille du texte
   prendre('#vd-edition'); prendre('#vd-tableau-info');
   // Thème et export : à droite de la ligne 1, avant ✕ (le nom du diagramme est tronqué pour leur laisser la place)
   // Recherche (champ, ▲ ▼, résultats) à droite de la ligne 1, avant le thème : position fixe quel que soit le nom du diagramme
@@ -422,9 +641,52 @@ function capDiagBarreVd() {
   const ponts = document.getElementById('vd-ponts'); if (ponts) ponts.style.display = 'none';
   // Chaînes et chemins : seulement ceux dessinés dans le diagramme ouvert (liste remplie par la visionneuse à chaque ouverture)
   let raf = 0;
-  new MutationObserver(ms => { if (ms.every(m => m.target.closest && m.target.closest('.crv-layer'))) return; cancelAnimationFrame(raf); raf = requestAnimationFrame(capDiagChainesFiltre); })
+  new MutationObserver(ms => { if (ms.every(m => m.target.closest && m.target.closest('.crv-layer,#cdg-texte'))) return; cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { capDiagChainesFiltre(); if (_capDiag.texte) capDiagTexteMaj(); }); })
     .observe(document.getElementById('vue-diagramme'), { subtree: true, childList: true });
   capDiagRevSlot(); capDiagChainesFiltre();
+}
+
+/** Boutons 🖼 Visuel / ≡ Texte et taille du texte (A− A+, en mode texte) de la ligne 2 de la visionneuse. @returns {string} HTML */
+function capDiagModeHtml() {
+  const tx = _capDiag.texte;
+  return `<button class="bt bt-petit${tx ? '' : ' actif'}" id="cdg-mode-vis" title="${_L('Dessin du diagramme')}">${_L('🖼 Visuel')}</button>` +
+    `<button class="bt bt-petit${tx ? ' actif' : ''}" id="cdg-mode-txt" title="${_L('Rendu textuel : éléments représentés, par type (clic : panneau de détail)')}">${_L('≡ Texte')}</button>` +
+    `<button class="bt bt-petit" id="cdg-tx-moins" title="${_L('Texte plus petit')}"${tx ? '' : ' hidden'}>A−</button><button class="bt bt-petit" id="cdg-tx-plus" title="${_L('Texte plus grand')}"${tx ? '' : ' hidden'}>A+</button>`;
+}
+
+/**
+ * ≡ Texte d'un diagramme Capella : la visionneuse n'a pas de rendu textuel, un volet posé sur le dessin (#cdg-texte dans #vd-zone)
+ * liste les éléments représentés par type, avec leur description ; boutons et taille du texte mis à jour. Rafraîchi à chaque
+ * changement de diagramme tant que le mode est actif.
+ */
+function capDiagTexteMaj() {
+  const zone = document.getElementById('vd-zone'); if (!zone) return;
+  let t = document.getElementById('cdg-texte');
+  if (!t) { t = document.createElement('div'); t.id = 'cdg-texte'; t.className = 'cdg-texte'; zone.appendChild(t);
+    t.addEventListener('click', e => { const a = e.target.closest('[data-id]'); if (a) capOpenDetail(a.dataset.id); }); }
+  t.hidden = !_capDiag.texte;
+  const m = document.getElementById('cdg-mode');
+  if (m) { m.querySelector('#cdg-mode-vis').classList.toggle('actif', !_capDiag.texte); m.querySelector('#cdg-mode-txt').classList.toggle('actif', _capDiag.texte);
+    m.querySelectorAll('#cdg-tx-moins,#cdg-tx-plus').forEach(b => { b.hidden = !_capDiag.texte; }); }
+  if (!_capDiag.texte) return;
+  t.style.fontSize = (12 * _capDiag.texteZoom).toFixed(1) + 'px';
+  t.innerHTML = capDiagTexteHtml();
+}
+
+/** Contenu du volet ≡ Texte : nom et description du diagramme, puis les éléments représentés groupés par type (cliquables). @returns {string} HTML */
+function capDiagTexteHtml() {
+  const r = capDiagReps().find(x => x.uid === _capDiag.actif), esc = capEsc;
+  const ids = [...new Set([...document.querySelectorAll('#vd-svg [data-sem]')].map(e => e.getAttribute('data-sem')))];
+  const els = ids.map(id => capGetElementById_(id)).filter(Boolean);
+  const parType = new Map(); els.forEach(e => { if (!parType.has(e.typeName)) parType.set(e.typeName, []); parType.get(e.typeName).push(e); });
+  let h = `<div class="cdg-tx-titre">${r ? esc(r.nom) : ''}<span class="cdg-cnt"> · ${_L(`${els.length} élément(s)`)}</span></div>`;
+  if (r) { const m = capDiagMeta(r.uid); if (m.desc) h += `<div class="cdg-tx-desc">${esc(m.desc)}</div>`; }
+  [...parType.entries()].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0])).forEach(([t, l]) => {
+    h += `<div class="cdg-tx-sec">${esc((CAP_HUMAN_NAMES[t] || {}).h || t)} <span class="cdg-cnt">${l.length}</span></div>` +
+      l.sort((a, b) => String(a.attrs.name || '').localeCompare(String(b.attrs.name || ''))).map(e => `<div class="cdg-tx-el" data-id="${esc(e.id)}">${capIco(e.id, 13)}<span>${esc(e.attrs.name || e.id)}</span>` +
+        (e.attrs.description ? `<span class="cdg-tx-d">${esc(capDiagTexte(e.attrs.description).slice(0, 160))}</span>` : '') + `</div>`).join('');
+  });
+  return els.length ? h : h + `<div class="cdg-aide">${_L('Aucun élément.')}</div>`;
 }
 
 /** Remplit l'emplacement de la revue (📝 Note de revue, 💬 Calque) à côté de la recherche du diagramme. */
@@ -447,51 +709,126 @@ function capDiagChainesFiltre() {
   sel.title = n ? _L('Mettre en évidence une chaîne fonctionnelle ou un chemin physique dessiné dans ce diagramme') : '';
 }
 
-/** Rendu de la vue 🔲 Diagrammes Capella. */
+/** Rendu de la vue 🔲 Diagrammes : enveloppe commune (barre, explorateur, carte) ; dessin par la visionneuse (Capella) ou par les lecteurs (#cdg-sy, 87). */
 function capRenderDiagrams() {
-  const box = document.getElementById('cap-view-diag');
-  if (typeof _capSysml !== 'undefined' && _capSysml.lecture && typeof capSyVuesRender === 'function') { capSyVuesRender(box); return; }   // 🧩 vues calculées SysML v2 (87)
-  const sv = box.querySelector('#cap-sy-vues'); if (sv) { sv.style.display = 'none'; [...box.children].forEach(c => { if (c !== sv) c.style.display = ''; }); }
-  if (!capDiagDispo()) {
+  const box = document.getElementById('cap-view-diag'), sy = capDiagSy();
+  if (!sy && !capDiagDispo()) {
     box.innerHTML = `<div class="cdg-vide">${_L('Visionneuse de diagrammes absente de cette page.')}</div>`;
+    _capDiag.pret = false; _capDiag.vis = null;
     return;
   }
   capDiagEnsure();
-  capDiagSync();
+  box.dataset.fmt = sy ? 'sy' : 'capella';
+  const zc = document.getElementById('cdg-carte-zone'), zs = document.getElementById('cdg-carte-sy');
+  if (zc) zc.hidden = sy; if (zs) zs.hidden = !sy;
+  if (sy) { capDiagBarre(); capDiagListe(); capSyVuesRender(document.getElementById('cdg-sy')); }
+  else capDiagSync();
   capDiagFit();
 }
 
 /* ── Liste classée ─────────────────────────────────────────────────────── */
 
-/** @returns {object[]} représentations du .aird chargé ({uid, nom, type, sigle, genre, couche}) */
-function capDiagReps() { return _capDiag.vis && _capDiag.airdCharge ? _capDiag.vis.representations() : []; }
+/**
+ * Représentations affichables : diagrammes du .aird chargé ({uid, nom, type, sigle, genre, couche}) ou, pour un modèle SysML / UML, les
+ * vues des lecteurs présentées de la même façon (`capSyVuesReps`, 87 : uid « sy:<clé> », `kind`, `origine`, `element`, `couche` = famille).
+ * @returns {object[]} représentations
+ */
+function capDiagReps() {
+  if (capDiagSy()) return capSyVuesReps();
+  return _capDiag.vis && _capDiag.airdCharge ? _capDiag.vis.representations() : [];
+}
 
-/** Libellé et couleur d'une couche ARCADIA. @param {string} c - OA, SA, LA, PA, EPBS… @returns {{label:string,color:string,bg:string}} */
-function capDiagCouche(c) { return CAP_LAYERS[c] || { label: c || _L('Autres'), color: '#8b949e', bg: 'rgba(139,148,158,.15)' }; }
+/**
+ * Libellé et couleur d'une couche ARCADIA (OA, SA, LA, PA, EPBS) ou d'une famille SysML / UML (STR, BEH, REQ, ORG).
+ * @param {string} c - Couche ou famille
+ * @returns {{label:string,color:string,bg:string}} libellé et couleurs
+ */
+function capDiagCouche(c) {
+  if (CAP_LAYERS[c]) return CAP_LAYERS[c];
+  if (c && typeof CAP_SY_FAM_COULEUR !== 'undefined' && CAP_SY_FAM_COULEUR[c]) {
+    const L = typeof capSyL === 'function' ? capSyL() : null, col = CAP_SY_FAM_COULEUR[c];
+    return { label: (L && L.familles && L.familles[c]) || c, color: col, bg: col + '26' };
+  }
+  return { label: c || _L('Autres'), color: '#8b949e', bg: 'rgba(139,148,158,.15)' };
+}
+
+/** Parents et nœuds de l'arbre du modèle (`capTreeData`), pour remonter le chemin d'un élément. @returns {{map:Map<string,object>, noeuds:Map<string,object>}} id → nœud parent, id → nœud */
+function capDiagParents() {
+  if (_capDiag.parents && _capDiag.parents.src === capTreeData) return _capDiag.parents;
+  const map = new Map(), noeuds = new Map();
+  const walk = (n, p) => { if (n.id && !noeuds.has(n.id)) { noeuds.set(n.id, n); if (p) map.set(n.id, p); } (n.children || []).forEach(c => walk(c, n)); };   // premier nœud d'un identifiant (la racine « cap-root » n'est pas la seule à le porter)
+  if (capTreeData) walk(capTreeData, null);
+  return (_capDiag.parents = { src: capTreeData, map, noeuds });
+}
+
+/** Élément représenté par un diagramme : cible du descripteur Capella (.aird), élément porteur d'une vue SysML / UML. @param {object} rep - Représentation @returns {string} identifiant ou '' */
+function capDiagCibleId(rep) {
+  if (capDiagSy()) return rep.element || '';
+  const m = capDiagMeta(rep.uid); return m.cible ? m.cible.id : '';
+}
+
+/** Diagrammes par élément représenté (classement 🌳 Arborescence, vue 🌳 Arborescence du modèle : 21). @returns {Map<string,object[]>} id → représentations */
+function capDiagParCible() {
+  const reps = capDiagReps(), cle = reps.length + '|' + (reps[0] ? reps[0].uid : '');
+  if (_capDiag.parCible && _capDiag.parCible.cle === cle) return _capDiag.parCible.map;
+  const map = new Map();
+  reps.forEach(r => { const id = capDiagCibleId(r); if (!id) return; if (!map.has(id)) map.set(id, []); map.get(id).push(r); });
+  map.forEach(l => l.sort((a, b) => a.nom.localeCompare(b.nom)));
+  _capDiag.parCible = { cle, map };
+  return map;
+}
+
+/**
+ * Diagrammes d'un élément : ceux dont il est la cible (`cibles`) et ceux où il est dessiné (`presences`) — visionneuse pour Capella,
+ * index des `data-sem` des SVG des lecteurs sinon (calculé une fois par lecture).
+ * @param {string} id - Élément
+ * @returns {{cibles:object[], presences:object[]}} représentations
+ */
+function capDiagDe(id) {
+  if (capDiagSy()) { const idx = capDiagSyIdx(); return { cibles: (idx.cibles.get(id) || []).slice(), presences: (idx.presences.get(id) || []).slice() }; }
+  if (!_capDiag.vis || !_capDiag.airdCharge) return { cibles: [], presences: [] };
+  try { return _capDiag.vis.diagrammesDe(id); } catch (e) { return { cibles: [], presences: [] }; }
+}
+
+/** Index des vues des lecteurs : élément porteur → vues, élément dessiné → vues (formes et `data-sem` du SVG). @returns {{lec:object, cibles:Map, presences:Map}} */
+function capDiagSyIdx() {
+  const lec = _capSysml.lecture;
+  if (_capDiag.syIdx && _capDiag.syIdx.lec === lec) return _capDiag.syIdx;
+  const cibles = capDiagParCible(), presences = new Map();
+  capDiagReps().forEach(r => {
+    const v = capSyVue(r.cle); if (!v) return;
+    const ids = new Set((v.svg.match(/data-sem="[^"]+"/g) || []).map(a => a.slice(10, -1)));
+    (v.formes || []).forEach(f => { if (f.element) ids.add(f.element); });
+    ids.forEach(i => { if (i === r.element) return; if (!presences.has(i)) presences.set(i, []); presences.get(i).push(r); });
+  });
+  return (_capDiag.syIdx = { lec, cibles, presences });
+}
 
 /** Rang d'une couche pour le tri. @param {string} c - Couche @returns {number} */
 function capDiagRang(c) { const i = CAP_DIAG_COUCHES.indexOf(c); return i < 0 ? 99 : i; }
 
-/** Icône de chaque diagramme, reprise de la liste (masquée) de la visionneuse. @returns {Map<string,string>} uid → SVG */
+/** Icône de chaque diagramme : reprise de la liste (masquée) de la visionneuse, ou dessinée par le lecteur (`capSyVueIco`). @returns {Map<string,string>} uid → SVG */
 function capDiagIcones() {
   if (_capDiag.icones) return _capDiag.icones;
   const m = new Map();
-  document.querySelectorAll('#diag-liste li[data-diag]').forEach(li => { const i = li.querySelector('.diag-ico'); if (i) m.set(li.dataset.diag, i.innerHTML); });
+  if (capDiagSy()) capDiagReps().forEach(r => m.set(r.uid, capSyVueIco({ genre: r.kind, sysml: r.sysml }, 14)));
+  else document.querySelectorAll('#diag-liste li[data-diag]').forEach(li => { const i = li.querySelector('.diag-ico'); if (i) m.set(li.dataset.diag, i.innerHTML); });
   if (m.size) _capDiag.icones = m;
   return m;
 }
 
-/** Représentations filtrées par la recherche (nom, type, sigle, couche). @returns {object[]} */
+/** Représentations filtrées par la recherche (nom, type, sigle, couche ; origine pour les lecteurs). @returns {object[]} */
 function capDiagFiltrees() {
   const q = _capDiag.filtre.trim().toLowerCase();
   const reps = capDiagReps();
-  return q ? reps.filter(r => `${r.nom} ${r.type} ${r.sigle} ${r.couche}`.toLowerCase().includes(q)) : reps;
+  return q ? reps.filter(r => `${r.nom} ${r.type} ${r.sigle} ${r.couche} ${r.libelleOrigine || ''}`.toLowerCase().includes(q)) : reps;
 }
 
 /**
- * Regroupe les représentations selon le classement choisi.
+ * Regroupe les représentations selon le classement choisi : Capella — couche › type, couche, type, nom ; lecteurs — genre › origine,
+ * genre, origine, nom ; pour les deux, 🌳 Arborescence (`capDiagArbo`).
  * @param {object[]} reps - Représentations
- * @returns {object[]} groupes [{cle, titre, couche, sigle, reps, enfants}] (enfants : sous-groupes par type, ou null)
+ * @returns {object[]} groupes [{cle, titre, couche, sigle, reps, enfants}] (enfants : sous-groupes, ou null)
  */
 function capDiagGroupes(reps) {
   const parNom = (a, b) => a.nom.localeCompare(b.nom);
@@ -509,7 +846,20 @@ function capDiagGroupes(reps) {
     return [...m.entries()].sort((a, b) => capDiagRang(a[0]) - capDiagRang(b[0]) || a[0].localeCompare(b[0]))
       .map(([c, l]) => ({ cle: 'c:' + c, titre: capDiagCouche(c).label, couche: c, reps: l.sort(parNom), enfants: null }));
   };
-  switch (_capDiag.classement) {
+  /** Groupe par genre de diagramme des lecteurs (bdd, ibd, vue générale…), dans l'ordre des genres du lecteur (`genresVues`). */
+  const parGenre = () => {
+    const m = new Map(), G = Object.keys((typeof capSyL === 'function' && capSyL() || {}).genresVues || {}), ordre = k => { const i = G.indexOf(k); return i < 0 ? 99 : i; };
+    reps.forEach(r => { const k = r.kind || r.sigle; if (!m.has(k)) m.set(k, []); m.get(k).push(r); });
+    return [...m.values()].sort((a, b) => ordre(a[0].kind) - ordre(b[0].kind) || a[0].type.localeCompare(b[0].type))
+      .map(l => ({ cle: 'g:' + (l[0].kind || l[0].sigle), titre: l[0].type, sigle: l[0].sigle, couche: l[0].couche, kind: l[0].kind, sysml: l.every(r => r.sysml), reps: l.sort(parNom), enfants: null }));
+  };
+  /** Sous-groupes par origine (Cameo, Enterprise Architect, Papyrus, vue calculée en dernier). */
+  const parOrigine = (liste, prefixe) => {
+    const o = new Map(); liste.forEach(r => { const k = r.origine || ''; if (!o.has(k)) o.set(k, []); o.get(k).push(r); });
+    return [...o.entries()].sort((a, b) => (a[0] === 'calculee') - (b[0] === 'calculee') || a[0].localeCompare(b[0]))
+      .map(([k, lo]) => ({ cle: prefixe + k, titre: lo[0].libelleOrigine || k, sigle: '', couche: lo[0].couche, origine: true, reps: lo.sort(parNom), enfants: null }));
+  };
+  switch (capDiagClassement()) {
     case 'couche': return parCouche();
     case 'type': {
       const m = new Map();
@@ -518,27 +868,65 @@ function capDiagGroupes(reps) {
         reps: l.sort((a, b) => capDiagRang(a.couche) - capDiagRang(b.couche) || parNom(a, b)), enfants: null }));
     }
     case 'nom': return [{ cle: 'tout', titre: '', reps: reps.slice().sort(parNom), enfants: null, plat: true }];
-    default: return parCouche().map(g => Object.assign(g, { enfants: parType(g.reps, g.cle + '/') }));
+    case 'genre': return parGenre();
+    case 'genre-origine': return parGenre().map(g => { const e = parOrigine(g.reps, g.cle + '/'); return e.length > 1 ? Object.assign(g, { enfants: e }) : g; });
+    case 'origine': return parOrigine(reps, 'o:').map(g => Object.assign(g, { reps: g.reps.sort((a, b) => capDiagRang(a.couche) - capDiagRang(b.couche) || a.type.localeCompare(b.type) || parNom(a, b)) }));
+    case 'arbo': return capDiagArbo(reps);
+    default: return capDiagSy() ? parGenre() : parCouche().map(g => Object.assign(g, { enfants: parType(g.reps, g.cle + '/') }));
   }
 }
 
 /**
- * Un groupe est-il ouvert ? Couches ouvertes, types repliés par défaut ; tout est ouvert pendant une recherche.
+ * Classement 🌳 Arborescence : chaque diagramme sous l'élément qu'il représente (cible du descripteur Capella, élément porteur d'une
+ * vue SysML / UML), dans l'arbre du modèle réduit aux chemins qui mènent à un diagramme ; diagrammes sans cible connue à la racine.
+ * @param {object[]} reps - Représentations
+ * @returns {object[]} nœuds [{cle:'a:<id>', id, titre, typeName, couche, reps (tout le sous-arbre), diags (directs), enfants, arbo:true}]
+ */
+function capDiagArbo(reps) {
+  const P = capDiagParents(), racines = [], noeuds = new Map(), sans = [], parNom = (a, b) => a.nom.localeCompare(b.nom);
+  const noeud = id => {
+    if (noeuds.has(id)) return noeuds.get(id);
+    const t = P.noeuds.get(id); if (!t) return null;
+    const n = { cle: 'a:' + id, id, titre: t.name || (CAP_HUMAN_NAMES[t.typeName] || {}).h || t.typeName || '', typeName: t.typeName || '', couche: t.layer || '', reps: [], diags: [], enfants: [], arbo: true };
+    noeuds.set(id, n);
+    const p = P.map.get(id), pn = p && p.id ? noeud(p.id) : null;
+    if (pn) pn.enfants.push(n); else racines.push(n);
+    return n;
+  };
+  reps.forEach(r => { const id = capDiagCibleId(r), n = id ? noeud(id) : null; if (n) n.diags.push(r); else sans.push(r); });
+  const finir = n => { n.enfants.sort((a, b) => a.titre.localeCompare(b.titre)); n.diags.sort(parNom); n.reps = [...n.diags]; n.enfants.forEach(e => { finir(e); n.reps.push(...e.reps); }); };
+  racines.forEach(finir);
+  if (sans.length) racines.push({ cle: 'a:sans', id: '', titre: _L('Sans élément représenté'), typeName: '', couche: '', reps: sans.sort(parNom), diags: sans, enfants: [], arbo: true });
+  return racines;
+}
+
+/**
+ * Ouverture par défaut d'un groupe : couches et nœuds de l'arborescence ouverts, types repliés.
+ * @param {object} g - Groupe
+ * @param {number} niveau - 1 (premier niveau) ou plus
+ * @returns {boolean} vrai si ouvert par défaut
+ */
+function capDiagDefautOuvert(g, niveau) { return g.arbo ? true : niveau === 1; }
+
+/**
+ * Un groupe est-il ouvert ? Selon le défaut (`capDiagDefautOuvert`) et les bascules de l'utilisateur ; tout est ouvert pendant une recherche.
  * @param {object} g - Groupe
  * @param {number} niveau - 1 (couche ou type seul) ou 2 (type dans une couche)
  * @returns {boolean} vrai si déplié
  */
 function capDiagOuvert(g, niveau) {
   if (_capDiag.filtre.trim()) return true;
-  const defaut = niveau === 1;
-  return _capDiag.bascule.has(_capDiag.classement + '|' + g.cle) ? !defaut : defaut;
+  const defaut = capDiagDefautOuvert(g, niveau);
+  return _capDiag.bascule.has(capDiagClassement() + '|' + g.cle) ? !defaut : defaut;
 }
 
-/** Rend la liste classée (panneau gauche). */
+/** Rend la liste classée (panneau gauche), commune aux formats : filtre, classement, ⊞ ⊟, groupes repliables ou 🌳 arborescence compacte, cases à cocher, ℹ. */
 function capDiagListe() {
   const box = document.getElementById('cdg-liste'); if (!box) return;
-  if (!_capDiag.airdCharge) {
-    box.innerHTML = `<div class="cdg-aide">${_L('Aucun .aird chargé.')}<br><br>${_L('📂 Ouvrir le .aird… s\'ouvre dans le dossier du .capella (Edge / Chrome).')}<br>` +
+  const sy = capDiagSy(), cl = capDiagClassement();
+  if (!capDiagCharge()) {
+    box.innerHTML = sy ? `<div class="cdg-aide">${_L('Aucun diagramme ni aucune vue calculable dans ce modèle.')}</div>` :
+      `<div class="cdg-aide">${_L('Aucun .aird chargé.')}<br><br>${_L('📂 Ouvrir le .aird… s\'ouvre dans le dossier du .capella (Edge / Chrome).')}<br>` +
       _L('Ou, depuis l\'écran d\'accueil, 📁 Dossier du projet… : le .capella et ses diagrammes sont chargés ensemble.') + `</div>`;
     return;
   }
@@ -548,35 +936,57 @@ function capDiagListe() {
   /** Case d'un groupe (cochée, partielle ou vide). */
   const caseG = g => { if (!_capDiag.choix) return ''; const n = g.reps.filter(r => S.has(r.uid)).length;
     return `<input type="checkbox" class="cdg-gsel" data-g="${capEsc(g.cle)}"${n && n === g.reps.length ? ' checked' : ''}${n && n < g.reps.length ? ' data-partiel="1"' : ''} title="${_L('Cocher / décocher le groupe')}">`; };
-  /** Ligne d'un diagramme. */
-  const ligne = r => { const lv = capDiagCouche(r.couche);
-    const nom = _capDiag.classement === 'couche-type' || _capDiag.classement === 'type' ? r.nom.replace(/^\[[^\]]*\]\s*/, '') : r.nom;
-    return `<div class="cdg-it${r.uid === _capDiag.actif ? ' actif' : ''}" data-uid="${capEsc(r.uid)}" title="${capEsc(r.type)} · ${capEsc(lv.label)}">` +
+  /** Ligne d'un diagramme (dans l'arborescence : retrait selon le niveau). */
+  const ligne = (r, niv) => { const lv = capDiagCouche(r.couche);
+    const nom = cl === 'couche-type' || cl === 'type' ? r.nom.replace(/^\[[^\]]*\]\s*/, '') : r.nom;
+    const pastille = !sy && cl === 'type' ? r.couche || '—' : r.sigle;
+    return `<div class="cdg-it${r.uid === _capDiag.actif ? ' actif' : ''}${String(r.uid).startsWith('sy:') ? ' sy-vue-it' : ''}" data-uid="${capEsc(r.uid)}" title="${capEsc(r.type)} · ${capEsc(r.libelleOrigine || lv.label)}"${niv ? ` style="padding-left:${niv * 12 + 18}px"` : ''}>` +
       (_capDiag.choix ? `<input type="checkbox" class="cdg-sel" data-uid="${capEsc(r.uid)}"${S.has(r.uid) ? ' checked' : ''}>` : '') +
-      `<span class="cdg-ico">${ico.get(r.uid) || ''}</span><span class="cdg-sigle" style="color:${lv.color};background:${lv.bg}">${capEsc(_capDiag.classement === 'type' ? r.couche || '—' : r.sigle)}</span>` +
-      `<span class="cdg-nom">${capEsc(nom)}</span><span class="cdg-info-b" data-info="${capEsc(r.uid)}" title="${_L('Informations du diagramme (panneau de détail)')}">ℹ</span></div>`; };
+      `<span class="cdg-ico">${ico.get(r.uid) || ''}</span><span class="cdg-sigle" style="color:${lv.color};background:${lv.bg}">${capEsc(pastille)}</span>` +
+      `<span class="cdg-nom">${capEsc(nom)}</span>` + (sy && cl !== 'origine' && cl !== 'genre-origine' && r.origine ? `<span class="cdg-cnt">${capEsc(r.libelleOrigine || '')}</span>` : '') +
+      `<span class="cdg-info-b" data-info="${capEsc(r.uid)}" title="${_L('Informations du diagramme (panneau de détail)')}">ℹ</span></div>`; };
+  /** En-tête d'un groupe : badge de couche, icône de genre, origine ou sigle + titre. */
+  const tete = (g, niveau) => {
+    if (g.kind !== undefined) return `<span class="cdg-ico">${capSyVueIco({ genre: g.kind, sysml: g.sysml }, 13)}</span><span class="cdg-gt">${capEsc(g.titre)}</span><span class="cdg-sigle">${capEsc(g.sigle)}</span>`;
+    if (g.origine) return `<span class="cdg-gt">${capEsc(g.titre)}</span>`;
+    const lv = capDiagCouche(g.couche);
+    return niveau === 1 && cl !== 'type' && g.couche
+      ? `<span class="cdg-badge" style="background:${lv.color};color:${capInk(lv.color)}">${capEsc(g.couche)}</span><span class="cdg-gt">${capEsc(g.titre)}</span>`
+      : `<span class="cdg-sigle cdg-sigle-g">${capEsc(g.sigle || '')}</span><span class="cdg-gt">${capEsc(g.titre)}</span>`;
+  };
   /** Bloc d'un groupe (en-tête repliable + contenu). */
   const bloc = (g, niveau) => {
-    if (g.plat) return g.reps.map(ligne).join('');
-    const ouvert = capDiagOuvert(g, niveau), lv = capDiagCouche(g.couche);
-    const tete = niveau === 1 && _capDiag.classement !== 'type'
-      ? `<span class="cdg-badge" style="background:${lv.color};color:${capInk(lv.color)}">${capEsc(g.couche)}</span><span class="cdg-gt">${capEsc(g.titre)}</span>`
-      : `<span class="cdg-sigle cdg-sigle-g">${capEsc(g.sigle)}</span><span class="cdg-gt">${capEsc(g.titre)}</span>`;
+    if (g.plat) return g.reps.map(r => ligne(r)).join('');
+    if (g.arbo) return blocArbo(g, niveau);
+    const ouvert = capDiagOuvert(g, niveau);
     return `<div class="cdg-g n${niveau}"><div class="cdg-gh" data-tog="${capEsc(g.cle)}" data-niv="${niveau}">` +
-      `<span class="cdg-tog">${ouvert ? '▾' : '▸'}</span>${caseG(g)}${tete}<span class="cdg-cnt">${g.reps.length}</span></div>` +
-      (ouvert ? `<div class="cdg-gc">${g.enfants ? g.enfants.map(e => bloc(e, 2)).join('') : g.reps.map(ligne).join('')}</div>` : '') + `</div>`;
+      `<span class="cdg-tog">${ouvert ? '▾' : '▸'}</span>${caseG(g)}${tete(g, niveau)}<span class="cdg-cnt">${g.reps.length}</span></div>` +
+      (ouvert ? `<div class="cdg-gc">${g.enfants ? g.enfants.map(e => bloc(e, 2)).join('') : g.reps.map(r => ligne(r)).join('')}</div>` : '') + `</div>`;
+  };
+  /** Nœud de l'arborescence compacte : une ligne (icône, nom, type, compteur), puis ses enfants et ses diagrammes. */
+  const blocArbo = (g, niveau) => {
+    const ouvert = capDiagOuvert(g, niveau), hn = g.typeName ? (CAP_HUMAN_NAMES[g.typeName] || {}).h || g.typeName : '';
+    return `<div class="cdg-g cdg-ga"><div class="cdg-gh cdg-an" data-tog="${capEsc(g.cle)}" data-niv="${niveau}" style="padding-left:${niveau * 12 - 6}px" title="${capEsc(hn)}">` +
+      `<span class="cdg-tog">${ouvert ? '▾' : '▸'}</span>${caseG(g)}<span class="cdg-ico">${g.id ? capIco(g.id, 13) : ''}</span><span class="cdg-gt">${capEsc(g.titre)}</span>` +
+      (hn ? `<span class="cdg-at">${capEsc(hn)}</span>` : '') + `<span class="cdg-cnt">${g.reps.length}</span></div>` +
+      (ouvert ? `<div class="cdg-gc">${g.enfants.map(e => blocArbo(e, niveau + 1)).join('')}${g.diags.map(r => ligne(r, niveau)).join('')}</div>` : '') + `</div>`;
   };
   const nSelVis = reps.filter(r => S.has(r.uid)).length;
-  const opt = (v, l) => `<option value="${v}"${_capDiag.classement === v ? ' selected' : ''}>${l}</option>`;
+  const opts = sy
+    ? [['genre-origine', _L('Genre › origine')], ['genre', _L('Genre de diagramme')], ['origine', _L('Origine')], ['nom', _L('Nom (A → Z)')], ['arbo', _L('🌳 Arborescence')]]
+    : [['couche-type', _L('Couche › type')], ['couche', _L('Couche')], ['type', _L('Type de diagramme')], ['nom', _L('Nom (A → Z)')], ['arbo', _L('🌳 Arborescence')]];
+  const opt = ([v, l]) => `<option value="${v}"${cl === v ? ' selected' : ''}>${l}</option>`;
+  const ancien = box.querySelector('.cdg-arbre'), defil = ancien ? ancien.scrollTop : 0;   // défilement gardé (déplier un nœud ne renvoie plus en haut)
   box.innerHTML = `<div class="cdg-outils">` +
-    `<input id="cdg-filtre" type="search" placeholder="${_L('Filtrer (nom, type, sigle, couche)…')}" value="${capEsc(_capDiag.filtre)}" autocomplete="off">` +
-    `<div class="cdg-ligne"><select id="cdg-classement" title="${_L('Classement de la liste')}">${opt('couche-type', _L('Couche › type'))}${opt('couche', _L('Couche'))}${opt('type', _L('Type de diagramme'))}${opt('nom', _L('Nom (A → Z)'))}</select>` +
+    `<input id="cdg-filtre" type="search" placeholder="${sy ? _L('Filtrer (nom, genre, sigle, origine)…') : _L('Filtrer (nom, type, sigle, couche)…')}" value="${capEsc(_capDiag.filtre)}" autocomplete="off">` +
+    `<div class="cdg-ligne"><select id="cdg-classement" title="${_L('Classement de la liste')}">${opts.map(opt).join('')}</select>` +
     `<button class="cap-lf-btn" data-tout="1" title="${_L('Tout déplier')}">⊞</button><button class="cap-lf-btn" data-tout="0" title="${_L('Tout replier')}">⊟</button></div>` +
     (!_capDiag.choix ? `<div class="cdg-ligne cdg-tous">${S.size ? _L(`${S.size} sélectionné(s) pour l'export`) : _L(`${reps.length} diagramme(s)`)}</div>` :
     `<label class="cdg-ligne cdg-tous"><input type="checkbox" id="cdg-tous"${nSelVis && nSelVis === reps.length ? ' checked' : ''}${nSelVis && nSelVis < reps.length ? ' data-partiel="1"' : ''}> ` +
     `<span>${S.size ? _L(`${S.size} sélectionné(s) pour l'export`) : _L(`${reps.length} diagramme(s) — cochez pour exporter`)}</span></label>`) + `</div>` +
     `<div class="cdg-arbre">${reps.length ? groupes.map(g => bloc(g, 1)).join('') : `<div class="cdg-aide">${_L('Aucun diagramme ne correspond.')}</div>`}</div>`;
   box.querySelectorAll('input[data-partiel]').forEach(c => { c.indeterminate = true; });
+  if (defil) { const a = box.querySelector('.cdg-arbre'); if (a) a.scrollTop = defil; }
   if (fo) { const f = document.getElementById('cdg-filtre'); f.focus(); f.setSelectionRange(f.value.length, f.value.length); }
 }
 
@@ -603,31 +1013,44 @@ function capDiagClic(e) {
   if (t.closest('#cdg-export')) { capDiagExportDialog(); return; }
   if (t.closest('#cdg-comparer')) { capDgwOuvrir(_capDiag.actif); return; }   // ⧉ fenêtre de comparaison (83)
   if (t.closest('#cdg-choix')) { _capDiag.choix = !_capDiag.choix; capDiagBarre(); capDiagListe(); return; }
+  if (t.closest('#cdg-mode-vis,#cdg-mode-txt')) { _capDiag.texte = !!t.closest('#cdg-mode-txt'); capDiagTexteMaj(); return; }   // 🖼 / ≡ (Capella)
+  if (t.closest('#cdg-tx-moins,#cdg-tx-plus')) { _capDiag.texteZoom = Math.min(3, Math.max(0.5, _capDiag.texteZoom * (t.closest('#cdg-tx-plus') ? 1.15 : 1 / 1.15))); capDiagTexteMaj(); return; }
   const ca = t.closest('[data-carte]');
-  if (ca) { _capDiag.carte = ca.dataset.carte; capDiagCarte(); return; }
-  if (t.closest('[data-carte-tog]')) { _capDiag.carteReduite = !_capDiag.carteReduite; capDiagCarte(); return; }
+  if (ca) { _capDiag.carte = ca.dataset.carte; capDiagCarteMaj(); return; }
+  if (t.closest('[data-carte-tog]')) { _capDiag.carteReduite = !_capDiag.carteReduite; capDiagCarteMaj(); return; }
   if (t.matches('input[type=checkbox]')) return;   // traité par capDiagChange
   const tout = t.closest('[data-tout]');
   if (tout) {
-    const ouvrir = tout.dataset.tout === '1'; const B = _capDiag.bascule;
-    [...B].filter(k => k.startsWith(_capDiag.classement + '|')).forEach(k => B.delete(k));
-    const parcourir = (gs, niv) => gs.forEach(g => { const defaut = niv === 1; if (ouvrir !== defaut) B.add(_capDiag.classement + '|' + g.cle); if (g.enfants) parcourir(g.enfants, 2); });
+    const ouvrir = tout.dataset.tout === '1'; const B = _capDiag.bascule, cl = capDiagClassement();
+    [...B].filter(k => k.startsWith(cl + '|')).forEach(k => B.delete(k));
+    const parcourir = (gs, niv) => gs.forEach(g => { if (g.plat) return; if (ouvrir !== capDiagDefautOuvert(g, niv)) B.add(cl + '|' + g.cle); if (g.enfants) parcourir(g.enfants, niv + 1); });
     parcourir(capDiagGroupes(capDiagReps()), 1);
     capDiagListe(); return;
   }
   const gh = t.closest('[data-tog]');
-  if (gh) { const k = _capDiag.classement + '|' + gh.dataset.tog; if (_capDiag.bascule.has(k)) _capDiag.bascule.delete(k); else _capDiag.bascule.add(k); capDiagListe(); return; }
+  if (gh) { const k = capDiagClassement() + '|' + gh.dataset.tog; if (_capDiag.bascule.has(k)) _capDiag.bascule.delete(k); else _capDiag.bascule.add(k); capDiagListe(); return; }
   const inf = t.closest('[data-info]');
   if (inf) { capDiagInfo(inf.dataset.info); return; }
   if (t.closest('#cdg-infos')) { if (_capDiag.actif) capDiagInfo(_capDiag.actif); return; }
   const it = t.closest('.cdg-it');
-  if (it) { _capDiag.actif = it.dataset.uid; capDiagMarquerActif(); _capDiag.vis.ouvrir(it.dataset.uid); capDiagCarte(); }
+  if (it) capDiagOuvrirUid(it.dataset.uid);
+}
+
+/**
+ * Ouvre un diagramme ou une vue dans la vue 🔲 déjà affichée : visionneuse (Capella) ou partie droite des lecteurs (87).
+ * @param {string} uid - Représentation
+ * @param {string} [id] - Élément à mettre en évidence
+ */
+function capDiagOuvrirUid(uid, id) {
+  _capDiag.actif = uid; capDiagMarquerActif();
+  if (String(uid).startsWith('sy:')) { if (typeof capSyVueOuvrir === 'function') capSyVueOuvrir(uid.slice(3), id); return; }
+  if (_capDiag.vis) { _capDiag.vis.ouvrir(uid, id); capDiagCarte(); }
 }
 
 /** Cases à cocher (diagramme, groupe, tout) et choix du classement. @param {Event} e */
 function capDiagChange(e) {
   const t = e.target, S = _capDiag.sel;
-  if (t.id === 'cdg-classement') { _capDiag.classement = t.value; capDiagListe(); return; }
+  if (t.id === 'cdg-classement') { capDiagClassement(t.value); capDiagListe(); return; }
   if (t.classList.contains('cdg-sel')) { if (t.checked) S.add(t.dataset.uid); else S.delete(t.dataset.uid); }
   else if (t.classList.contains('cdg-gsel')) capDiagRepsGroupe(t.dataset.g).forEach(r => { if (t.checked) S.add(r.uid); else S.delete(r.uid); });
   else if (t.id === 'cdg-tous') capDiagFiltrees().forEach(r => { if (t.checked) S.add(r.uid); else S.delete(r.uid); });
@@ -641,38 +1064,42 @@ function capDiagChange(e) {
  * @param {string} [id] - élément du modèle à centrer
  */
 function capDiagOpen(uid, id) {
-  if (String(uid).startsWith('sy:') && typeof capSyVueOuvrir === 'function') { capSyVueOuvrir(uid.slice(3), id); return; }   // 🧩 vue SysML v2 (🔍 palette)
   capNavOpen('diag');
-  if (_capDiag.vis) { _capDiag.actif = uid; _capDiag.vis.ouvrir(uid, id); capDiagMarquerActif(); }
+  capDiagOuvrirUid(uid, id);
 }
 
 /**
- * Panneau de détail d'un diagramme (comme pour un élément du modèle) : type, couche, sigle, nature, identifiant,
- * dernière modification, fichier, description Capella, élément représenté, éléments affichés groupés par type
- * (cliquables) et éléments liés. Le diagramme est ouvert s'il ne l'est pas, pour lire ses éléments.
+ * Panneau de détail d'un diagramme (comme pour un élément du modèle), même fiche pour tous les formats : type, couche ou famille,
+ * origine, nature, identifiant, dernière modification, fichier, description, élément représenté (ou porteur), éléments affichés
+ * groupés par type (cliquables). Le diagramme est ouvert s'il ne l'est pas, pour lire ses éléments.
  * @param {string} uid - Représentation
  */
 async function capDiagInfo(uid) {
   const r = capDiagReps().find(x => x.uid === uid); if (!r) return;
+  const sy = capDiagSy(), esc = capEsc;
   if (_capDiag.actif !== uid) { capDiagOpen(uid); await new Promise(res => requestAnimationFrame(() => requestAnimationFrame(res))); }
-  const lv = capDiagCouche(r.couche), m = capDiagMeta(uid), esc = capEsc;
-  const ids = r.genre === 'tableau' ? [] : [...new Set([...document.querySelectorAll('#vd-svg [data-sem]')].map(e => e.getAttribute('data-sem')))];
+  const lv = capDiagCouche(r.couche), m = capDiagMeta(uid), v = sy ? capSyVue(r.cle) : null;
+  const ids = sy ? (v ? [...new Set([...(v.svg.match(/data-sem="[^"]+"/g) || []).map(a => a.slice(10, -1)), ...(v.formes || []).map(f => f.element).filter(Boolean)])] : [])
+    : (r.genre === 'tableau' ? [] : [...new Set([...document.querySelectorAll('#vd-svg [data-sem]')].map(e => e.getAttribute('data-sem')))]);
   const els = ids.map(id => capGetElementById_(id)).filter(Boolean);
   const lien = e => { const c = capDiagCouche(e.layer);
     return `<span class="cap-det-link cdg-det-el" onclick="capOpenDetail('${esc(e.id)}')">${capIco(e.id, 13)}<span style="color:${c.color};font-size:9px;font-weight:700">${esc(e.typeName)}</span><span>${esc(e.attrs.name || e.id.slice(0, 12))}</span></span>`; };
   const titre = (t, c) => `<div class="cdg-det-t" style="color:${c || 'var(--c-dim)'}">${t}</div>`;
   const ligne = (k, v) => v ? `<tr><td class="cdg-det-k">${esc(k)}</td><td class="cdg-det-v">${esc(v)}</td></tr>` : '';
   const genres = { diagramme: _L('Diagramme'), sequence: _L('Diagramme de séquence'), tableau: _L('Tableau') };
+  const kicker = !sy ? _L('🔲 Diagramme Capella') : r.origine && r.origine !== 'calculee' ? _L(`🔲 Diagramme ${r.libelleOrigine}`) : _L(`🔲 Vue calculée ${capSyNomFormat()}`);
   let h = `<span class="cap-type-badge" style="color:${lv.color};background:${lv.bg};display:inline-block;margin-bottom:6px">${esc(r.sigle)} · ${esc(r.type)}</span>` +
-    `<div style="font-size:11px;color:var(--c-accent);font-weight:600;margin-bottom:2px;">${_L('🔲 Diagramme Capella')}</div>` +
+    `<div style="font-size:11px;color:var(--c-accent);font-weight:600;margin-bottom:2px;">${kicker}</div>` +
     `<h3 style="font-size:14px;font-weight:600;margin-bottom:10px;word-break:break-word">${esc(r.nom)}</h3>` +
     `<button class="cap-lf-btn" onclick="capDiagOpen('${esc(uid)}')">${_L('🔲 Afficher le diagramme')}</button>`;
   h += titre(_L('Attributs')) + `<table class="cdg-det-tab">` + ligne(_L('Type'), r.type) + ligne(_L('Sigle'), r.sigle) +
-    ligne(_L('Couche'), `${r.couche || '—'} — ${lv.label}`) + ligne(_L('Nature'), genres[r.genre] || r.genre) +
+    (sy ? ligne(_L('Origine'), r.libelleOrigine) + ligne(_L('Famille'), r.couche ? `${r.couche} — ${lv.label}` : '') : ligne(_L('Couche'), `${r.couche || '—'} — ${lv.label}`)) +
+    ligne(_L('Nature'), genres[r.genre] || r.genre) +
+    (v ? ligne(_L('Contenu'), _L(`${v.formes.length} forme(s) · ${v.liens.length} lien(s)`)) : '') +
     ligne(_L('Éléments'), r.genre === 'tableau' ? '' : String(els.length)) +
-    ligne(_L('Modifié le'), m.modif ? m.modif.toLocaleString('fr-FR') : '') + ligne(_L('Fichier'), _capDiag.nomAird) + ligne('uid', uid) + `</table>`;
+    ligne(_L('Modifié le'), m.modif ? m.modif.toLocaleString('fr-FR') : '') + ligne(_L('Fichier'), capDiagNomSource()) + ligne(sy ? _L('Clé') : 'uid', sy ? r.cle : uid) + `</table>`;
   if (m.desc) h += titre('Description') + `<div class="cdg-det-desc">${esc(m.desc)}</div>`;
-  if (m.cible) { const e = capGetElementById_(m.cible.id); if (e) h += titre(_L('Élément représenté'), '#a78bfa') + `<div>${lien(e)}</div>`; }
+  if (m.cible) { const e = capGetElementById_(m.cible.id); if (e) h += titre(sy ? _L('Élément porteur') : _L('Élément représenté'), '#a78bfa') + `<div>${lien(e)}</div>`; }
   if (els.length) {
     const parType = {}; els.forEach(e => { (parType[e.typeName] = parType[e.typeName] || []).push(e); });
     h += titre(_L(`Éléments affichés (${els.length})`), '#58a6ff') + Object.entries(parType).sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]))
@@ -685,19 +1112,21 @@ async function capDiagInfo(uid) {
 }
 
 /**
- * Section « Diagrammes » du panneau de détail : représentations de l'élément et diagrammes où il est dessiné.
+ * Section « Diagrammes » du panneau de détail, même format pour tous les formats : diagrammes dont l'élément est la cible, diagrammes où
+ * il est dessiné (`capDiagDe`), puis, pour les lecteurs, les vues calculées proposées sur lui (`vuesPour`) ; clic → diagramme centré sur l'élément.
  * @param {string} id - identifiant de l'élément
  * @param {function(string, string):string} secTitle - titre de section du panneau
- * @returns {string} HTML ('' sans .aird chargé ou sans diagramme)
+ * @returns {string} HTML ('' sans diagramme)
  */
 function capDiagDetail(id, secTitle) {
-  if (!_capDiag.vis || !_capDiag.airdCharge) return '';
-  const { cibles, presences } = _capDiag.vis.diagrammesDe(id);
-  const vus = new Set(), liste = [...cibles, ...presences].filter(r => !vus.has(r.uid) && vus.add(r.uid));
+  const { cibles, presences } = capDiagDe(id);
+  const vus = new Set(), liste = [...cibles, ...presences.sort((a, b) => a.nom.localeCompare(b.nom))].filter(r => !vus.has(r.uid) && vus.add(r.uid));
+  if (capDiagSy() && typeof capSyVuesPour === 'function') capSyVuesPour(id).forEach(v => { const r = capSyVueRep(v); if (!vus.has(r.uid)) { vus.add(r.uid); liste.push(r); } });
   if (!liste.length) return '';
-  const lien = r => `<div class="cap-det-link cdg-lien" onclick="capDiagOpen('${capEsc(r.uid)}','${capEsc(id)}')" title="${capEsc(r.type)}">` +
-    `<span class="cdg-sigle">${capEsc(r.sigle)}</span>${capEsc(r.nom || r.type)}</div>`;
-  return secTitle(_L(`Diagrammes (${liste.length})`), '#58a6ff') + liste.sort((a, b) => a.nom.localeCompare(b.nom)).slice(0, 60).map(lien).join('');
+  const ico = capDiagIcones();
+  const lien = r => `<div class="cap-det-link cdg-lien" onclick="capDiagOpen('${capEsc(r.uid)}','${capEsc(id)}')" title="${capEsc(r.type)}${r.libelleOrigine ? ' · ' + capEsc(r.libelleOrigine) : ''}">` +
+    `<span class="cdg-ico">${ico.get(r.uid) || (r.kind ? capSyVueIco({ genre: r.kind, sysml: r.sysml }, 14) : '')}</span><span class="cdg-sigle">${capEsc(r.sigle)}</span>${capEsc(r.nom || r.type)}</div>`;
+  return secTitle(_L(`Diagrammes (${liste.length})`), '#58a6ff') + liste.slice(0, 60).map(lien).join('');
 }
 
 /* ── Export groupé en planches ─────────────────────────────────────────── */
@@ -709,6 +1138,11 @@ function capDiagDetail(id, secTitle) {
  * @returns {Promise<string>} code SVG
  */
 async function capDiagSvg(uid) {
+  if (String(uid).startsWith('sy:')) {   // vue d'un lecteur : document SVG autonome, fond clair (planches, ⧉ comparaison, 📑 dossiers)
+    const v = typeof capSyVue === 'function' ? capSyVue(uid.slice(3)) : null;
+    if (!v) throw new Error(_L('vue introuvable'));
+    return v.svgDocument({ theme: 'clair' }).replace(/^\s*<\?xml[^>]*>\s*/, '');
+  }
   _capDiag.export = true;
   _capDiag.vis.ouvrir(uid);
   await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
@@ -759,7 +1193,7 @@ function capDiagPlanche(rep, svg, o) {
     [_L('Projet'), projet, _L('Couche'), `${rep.couche || '—'} — ${lv.label}`],
     [_L('Diagramme'), nom, _L('Contenu'), _L(`${nbElem} élément(s)`)],
     ['Type', `${rep.sigle} — ${rep.type}`, _L('Date'), new Date().toLocaleDateString('fr-FR')],
-    [_L('Sources'), [capCurrentFileName, _capDiag.nomAird].filter(Boolean).join(' · '), _L('Planche'), o.planche || '—'],
+    [_L('Sources'), [...new Set([capCurrentFileName, capDiagNomSource()])].filter(Boolean).join(' · '), _L('Planche'), o.planche || '—'],
   ];
   const kw = 62, vw1 = 250, vw2 = 200, rh = 17, th = 19;
   const cw = (kw * 2 + vw1 + vw2) * u, ch = o.cartouche ? (th + lignes.length * rh) * u : 0;
@@ -827,11 +1261,26 @@ function capDiagTexte(s) {
 }
 
 /**
+ * Documentation HTML d'un diagramme telle qu'écrite dans Capella (entités de l'attribut XML décodées, non filtrée).
+ * @param {string} s - Valeur brute de l'attribut documentation
+ * @returns {string} HTML (à passer par capSafeHtml avant affichage)
+ */
+function capDiagDocHtml(s) {
+  if (!s) return '';
+  const t = document.createElement('textarea'); t.innerHTML = s;
+  return t.value;
+}
+
+/**
  * Description et élément représenté d'un diagramme, lus dans le .aird (DRepresentationDescriptor : documentation, target).
  * @param {string} uid - Représentation
- * @returns {{desc:string, modif:?Date, cible:?{id:string,nom:string,type:string}}} métadonnées (modif : changeId du descripteur, s'il est une date)
+ * @returns {{desc:string, html:string, modif:?Date, cible:?{id:string,nom:string,type:string}}} métadonnées (html : documentation HTML d'origine, à filtrer avant affichage ; modif : changeId du descripteur, s'il est une date)
  */
 function capDiagMeta(uid) {
+  if (String(uid).startsWith('sy:')) {   // vue d'un lecteur : description = documentation de l'élément porteur
+    const r = capDiagReps().find(x => x.uid === uid), e = r && r.element ? capGetElementById_(r.element) : null, doc = e && e.attrs.description ? e.attrs.description : '';
+    return { desc: capDiagTexte(doc), html: capDiagDocHtml(doc), modif: null, cible: e ? { id: e.id, nom: e.attrs.name || e.id, type: (CAP_HUMAN_NAMES[e.typeName] || {}).h || e.typeName } : null };
+  }
   if (!_capDiag.meta) {
     const m = new Map(), re = /<ownedRepresentationDescriptors\b((?:[^>"]|"[^"]*")*?)(\/>|>([\s\S]*?)<\/ownedRepresentationDescriptors>)/g;
     const att = (a, k) => { const r = a.match(new RegExp('\\s' + k + '="([^"]*)"')); return r ? r[1] : ''; };
@@ -843,7 +1292,7 @@ function capDiagMeta(uid) {
     _capDiag.meta = m;
   }
   const r = _capDiag.meta.get(uid) || { doc: '', cible: '' }, e = r.cible && capGetElementById_(r.cible);
-  return { desc: capDiagTexte(r.doc), modif: r.modif > 1e12 && r.modif < 4e12 ? new Date(r.modif) : null, cible: e ? { id: e.id, nom: e.attrs.name || e.id, type: (CAP_HUMAN_NAMES[e.typeName] || {}).h || e.typeName } : null };
+  return { desc: capDiagTexte(r.doc), html: capDiagDocHtml(r.doc), modif: r.modif > 1e12 && r.modif < 4e12 ? new Date(r.modif) : null, cible: e ? { id: e.id, nom: e.attrs.name || e.id, type: (CAP_HUMAN_NAMES[e.typeName] || {}).h || e.typeName } : null };
 }
 
 /**
@@ -978,7 +1427,7 @@ async function capDiagApercu() {
     const p = capDiagPlanche(rep, await capDiagSvg(rep.uid), { planche: `1 / ${l.length}` });
     box.innerHTML = `<img alt="" src="data:image/svg+xml;charset=utf-8,${encodeURIComponent(p.svg)}">`;
   } catch (e) { box.innerHTML = `<div class="cdg-aide">⚠ ${capEsc(e.message)}</div>`; }
-  if (retour && retour !== rep.uid) _capDiag.vis.ouvrir(retour);
+  if (retour && retour !== rep.uid && _capDiag.vis && !capDiagSy()) _capDiag.vis.ouvrir(retour);
 }
 
 /**
@@ -999,9 +1448,9 @@ function capDiagPdfSommaire(l, pages) {
     const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, W, H);
     x.strokeStyle = '#2b2f36'; x.lineWidth = 3; x.strokeRect(30, 30, W - 60, H - 60);
     x.fillStyle = '#f5f7fa'; x.fillRect(32, 32, W - 64, 150); x.fillStyle = '#5aa2e8'; x.fillRect(32, 178, W - 64, 5);
-    x.fillStyle = '#111'; x.font = '700 46px Segoe UI, Arial, sans-serif'; x.fillText(_L('Diagrammes Capella'), 80, 105);
+    x.fillStyle = '#111'; x.font = '700 46px Segoe UI, Arial, sans-serif'; x.fillText(capDiagTitreExport(), 80, 105);
     x.font = '26px Segoe UI, Arial, sans-serif'; x.fillStyle = '#444';
-    x.fillText(`${projet}${capCurrentFileName ? ' — ' + capCurrentFileName : ''}${_capDiag.nomAird ? ' · ' + _capDiag.nomAird : ''}`, 80, 148);
+    x.fillText(`${projet}${capCurrentFileName ? ' — ' + capCurrentFileName : ''}${capDiagNomSource() && capDiagNomSource() !== capCurrentFileName ? ' · ' + capDiagNomSource() : ''}`, 80, 148);
     x.textAlign = 'right';
     x.fillText(`${new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })} · ${_L(`${l.length} planche(s)`)}${nPages > 1 ? ` · ${k + 1}/${nPages}` : ''}`, W - 80, 148);
     x.textAlign = 'left';
@@ -1092,7 +1541,7 @@ async function capDiagExport(fmt) {
       const it = items[i], r = it.r;
       st(`⏳ ${_L('Planche')} ${i + 1}/${items.length} — ${r.nom}`);
       await new Promise(res => setTimeout(res, 0));
-      const base = `${r.couche || _L('Autres')}/${String(i + 1).padStart(3, '0')} - ${capSafeFileName(r.nom)}`;
+      const base = `${capSafeFileName(r.couche ? capDiagCouche(r.couche).label : _L('Autres'))}/${String(i + 1).padStart(3, '0')} - ${capSafeFileName(r.nom)}`;
       if (fmt !== 'pdf' && fmt !== 'html' && o.annexe) fichiers.push({ name: base + _L(' - annexe') + '.csv', data: enc.encode(capDiagAnnexeCsv(r, it.el)) });
       if (fmt === 'zip-svg') { fichiers.push({ name: base + '.svg', data: enc.encode(it.p.svg) }); continue; }
       if (fmt === 'html') continue;
@@ -1114,7 +1563,7 @@ async function capDiagExport(fmt) {
   } catch (e) { console.error(e); st(_L('⚠ Échec de l\'export : ') + e.message); }
   finally {
     document.querySelectorAll('#cdg-export-ov [data-fmt],#cdg-x-go').forEach(b => { b.disabled = false; });
-    if (retour) { _capDiag.vis.ouvrir(retour); _capDiag.actif = retour; capDiagMarquerActif(); }
+    if (retour && _capDiag.vis && !capDiagSy()) { _capDiag.vis.ouvrir(retour); _capDiag.actif = retour; capDiagMarquerActif(); }
   }
 }
 
@@ -1155,7 +1604,7 @@ function capDiagExportHtml(items, racine) {
     });
     corps += `</details>`;
   });
-  capHtmlReport({ title: _L('🔲 Diagrammes Capella'), subtitle: _L(`${items.length} diagramme(s)`) + (_capDiag.nomAird ? ' · ' + _capDiag.nomAird : ''), active: o.sommaire ? 'sum' : 'pl',
+  capHtmlReport({ title: '🔲 ' + capDiagTitreExport(), subtitle: _L(`${items.length} diagramme(s)`) + (capDiagNomSource() ? ' · ' + capDiagNomSource() : ''), active: o.sommaire ? 'sum' : 'pl',
     tabs: [o.sommaire ? { key: 'sum', label: _L('📋 Sommaire'), html: sommaire } : null, { key: 'pl', label: _L('🔲 Planches'), html: css + corps }].filter(Boolean),
     filename: `${racine}.html` });
 }

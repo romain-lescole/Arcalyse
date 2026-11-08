@@ -40,7 +40,7 @@ function capScrDiagrammes(){
   const cible={}, parElement={}, t0=Date.now();
   for(const e of capAllElements){
     if(Date.now()-t0>4000) break;   // modèle énorme : index partiel (les éléments restants n'ont pas de diagrammes connus)
-    let r; try{ r=_capDiag.vis.diagrammesDe(e.id); }catch(x){ continue; }
+    const r=capDiagDe(e.id);   // visionneuse (Capella) ou index des vues des lecteurs (54)
     const ids=[...new Set([...(r.cibles||[]), ...(r.presences||[])].map(x=>x.uid))];
     if(ids.length) parElement[e.id]=ids;
     (r.cibles||[]).forEach(x=>{ if(!cible[x.uid]) cible[x.uid]=e.id; });
@@ -131,6 +131,7 @@ const CAP_SCR_ANALYSES={
   sysml:()=>typeof _capSysml!=='undefined'&&_capSysml.lecture?capScrNettoyer(Object.assign(_capSysml.lecture.json(), {vues:capSyVuesListe()})):null,   // 🧩 SysML v2 (87) : null pour un modèle Capella
   checks:vue=>capScrControles(vue==null?'':String(vue)),
   nameQuality:nom=>capScrNettoyer(capNameQuality(String(nom==null?'':nom))),
+  matrix:arg=>capScrNettoyer(capMxScr(arg)),   // ▦ Matrice (91) : onglet par son nom, ou définition {rows, columns, relations, direction, show}
   diagramsOf:el=>{ const id=el&&el.$id||String(el||''); return capScrDiagrammes().parElement[id]||[]; }
 };
 

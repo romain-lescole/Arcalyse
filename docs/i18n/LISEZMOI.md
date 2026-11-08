@@ -10,7 +10,7 @@ node build.js --lang multi            # → dist/arcalyse-multi.html : français
 node tests/smoke.js --multi [--fr]    # test navigateur de la version multilingue (anglais par défaut)
 ```
 
-**Version multilingue** (`--lang multi`) : chaque `_L` devient `(CAP_LANG==='en'?anglais:français)` ; l'interface et l'aide des deux langues sont dans deux `<template>`, et un petit script (`cap-lang-boot`) insère celle de la langue choisie avant le script principal : `?lang=fr|en` dans l'adresse, sinon langue de la page enregistrée, sinon langue du navigateur. Le bouton 🌐 (barre et écran d'accueil, ajouté par le build) recharge la page dans l'autre langue en transmettant le modèle chargé par `window.name` (rechargé par `cap-lang-restore`).
+**Version multilingue** (`--lang multi`) : chaque `_L` devient `(CAP_LANG==='en'?anglais:français)` ; l'interface et l'aide des deux langues sont dans deux `<template>`, et un petit script (`cap-lang-boot`) insère celle de la langue choisie avant le script principal : `?lang=fr|en` dans l'adresse, sinon langue de la page enregistrée, sinon langue du navigateur. Le bouton 🌐 (barre et écran d'accueil, ajouté par le build) recharge la page dans l'autre langue en transmettant **tout le travail** par `window.name` (`capLangEtat`, module 20 : blocs de données de la page, modèle Capella et `.aird` ou fichiers d'origine SysML / UML, vue affichée) ; `cap-lang-boot` replace les blocs avant le script principal, `cap-lang-restore` rejoue le modèle et la vue (`capLangRestaurer`). Test : `node tests/langue.js`.
 
 ## Ce qui existe
 

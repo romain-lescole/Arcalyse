@@ -99,3 +99,47 @@ function capToast(msg, o) {
   n.textContent = msg; n.className = o.kind ? 'tk-' + o.kind : ''; n.style.display = 'block';
   clearTimeout(n._t); n._t = setTimeout(() => { n.style.display = 'none'; }, o.ms || 3500);
 }
+
+/** Fenêtre de choix du modèle à ouvrir quand un dossier en contient plusieurs (📁 dossier du projet : .capella de 54, UML / SysML v1
+ * de 88) : boîte centrée sur un fond assombri, au lieu d'une liste perdue en bas de l'écran d'accueil ; filtre dès 8 modèles,
+ * ↑ ↓ Entrée au clavier, Échap ou ✕ pour renoncer (le message de l'accueil reste affiché).
+ * @param {{chemin:string}[]} mods - Modèles candidats
+ * @param {{ico?:string, aide?:string}} o - Pictogramme des lignes, texte d'aide sous le titre
+ * @param {function(object):void} ouvrir - Ouverture du modèle choisi
+ */
+function capChoixModele(mods, o, ouvrir) {
+  const D = document, esc = capEsc, ico = o && o.ico || '📄';
+  const dos = c => { const i = c.lastIndexOf('/'); return i < 0 ? ['', c] : [c.slice(0, i + 1), c.slice(i + 1)]; };   // dossier / nom
+  D.querySelectorAll('.cap-choix-ov').forEach(x => x.remove());
+  const ov = D.createElement('div'); ov.className = 'cap-dlg-ov cap-choix-ov';
+  ov.innerHTML = `<div class="cap-dlg cap-choix" role="dialog" aria-modal="true" aria-labelledby="cap-choix-t">
+    <div class="cap-dlg-h"><span class="cap-dlg-i">📁</span><b id="cap-choix-t">${esc(_L(`${mods.length} modèles dans ce dossier : lequel ouvrir ?`))}</b>
+      <button type="button" class="cap-lf-btn cap-choix-x" data-c="x" title="${_L('Fermer sans ouvrir (Échap)')}">✕</button></div>
+    ${o && o.aide ? `<div class="cw-choix-h">${esc(o.aide)}</div>` : ''}
+    ${mods.length >= 8 ? `<div class="cap-dlg-in"><input type="text" placeholder="${_L('Filtrer par nom ou dossier…')}" autocomplete="off"></div>` : ''}
+    <div class="cw-choix">${mods.map((m, i) => { const [d, n] = dos(m.chemin); return `<button type="button" class="cw-choix-b" data-mod="${i}">${ico} <span><span class="cw-choix-d">${esc(d)}</span><b>${esc(n)}</b></span><span class="cw-choix-o">${_L('Ouvrir →')}</span></button>`; }).join('')}</div>
+  </div>`;
+  const fin = () => { ov.remove(); D.removeEventListener('keydown', key, true); };
+  const btns = () => [...ov.querySelectorAll('.cw-choix-b')].filter(b => b.style.display !== 'none');
+  const key = e => {
+    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); fin(); return; }
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      const l = btns(), i = l.indexOf(D.activeElement); if (!l.length) return;
+      e.preventDefault(); l[(i + (e.key === 'ArrowDown' ? 1 : -1) + l.length) % l.length].focus();
+    } else if (e.key === 'Enter' && e.target && e.target.tagName === 'INPUT') { const l = btns(); if (l.length) { e.preventDefault(); l[0].click(); } }
+  };
+  ov.addEventListener('click', e => {
+    const b = e.target.closest('[data-mod]'); if (b) { e.stopPropagation(); fin(); ouvrir(mods[+b.dataset.mod]); return; }
+    if (e.target.closest('[data-c="x"]') || e.target === ov) fin();
+  });
+  const inp = ov.querySelector('input');
+  if (inp) inp.addEventListener('input', () => { const q = inp.value.trim().toLowerCase(); ov.querySelectorAll('.cw-choix-b').forEach((b, i) => { b.style.display = !q || mods[i].chemin.toLowerCase().includes(q) ? '' : 'none'; }); });
+  D.addEventListener('keydown', key, true);
+  D.body.appendChild(ov);
+  (inp || ov.querySelector('.cw-choix-b')).focus();
+  const st = D.getElementById('cw-status');   // écran d'accueil : bouton pour rouvrir la fenêtre après Échap
+  if (st && !st.querySelector('.cap-choix-re')) {
+    st.insertAdjacentHTML('beforeend', ` <button type="button" class="cap-lf-btn cap-choix-re">${_L('📁 Choisir le modèle…')}</button>`);
+    st.querySelector('.cap-choix-re').addEventListener('click', ev => { ev.stopPropagation(); capChoixModele(mods, o, ouvrir); });
+  }
+}

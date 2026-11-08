@@ -141,6 +141,18 @@
 @@INCLUDE js/85-navigateur-semantique.js@@
 @@INCLUDE js/86-detail-fenetre.js@@
 @@INCLUDE js/87-sysml.js@@
+@@INCLUDE js/88-uml.js@@
+@@INCLUDE js/90-tableaux-cameo.js@@
+@@INCLUDE js/91-matrice.js@@
+@@INCLUDE js/92-uml-blocs-activites.js@@
+@@INCLUDE js/93-uml-exigences.js@@
+@@INCLUDE js/94-uml-etats-interactions.js@@
+@@INCLUDE js/95-uml-cas-tracabilite.js@@
+@@INCLUDE js/96-uml-interfaces-budgets.js@@
+@@INCLUDE js/97-uml-parametrique-logiciel.js@@
+@@INCLUDE js/98-uml-regles-aide.js@@
+@@INCLUDE js/99-uml-diagrammes-calcules.js@@
+@@INCLUDE js/100-rapports-sysml.js@@
 
 </script>
 <!-- Visionneuse de diagrammes d'Arcature (Apache 2.0, même auteur) : produite par « node build.js --visionneuse » dans Arcature,
@@ -153,6 +165,12 @@
      versions fr / en choisies par le build comme la visionneuse -->
 <script id="arcature-lecteur-sysml">
 @@INCLUDE vendor/arcature-lecteur-sysml.js@@
+</script>
+<!-- Lecteur UML / SysML v1 d'Arcature (Apache 2.0, lecture seule, hors ligne : .uml, .xmi, .mdzip, .qea, .notation) : repris par
+     « node build.js --lecteur-uml <dossier d'Arcature> » (origine notée dans src/vendor/LISEZMOI-lecteur-uml.md), ne pas éditer ;
+     window.ArcatureLecteurUml, utilisé par js/88-uml.js ; versions fr / en choisies par le build comme la visionneuse -->
+<script id="arcature-lecteur-uml">
+@@INCLUDE vendor/arcature-lecteur-uml.js@@
 </script>
 </body>
 </html>

@@ -141,7 +141,7 @@ function capPrefDialogFill(ov){
       <div class="cw-d-sub" style="margin-top:10px">Ces réglages sont aussi enregistrés dans la 💾 page HTML du projet.</div>`);
   }
   ov.innerHTML=_L(`<div class="cw-d-box" style="max-width:820px;width:calc(100vw - 32px)">
-    <div class="cw-d-hdr"><b>⚙ Préférences</b><button class="cap-lf-btn" data-pa="x">✕</button></div>
+    <div class="cw-d-hdr"><b>⚙ Préférences</b><span><button class="cap-lf-btn" data-pa="tour" title="Visite guidée des préférences">🎓</button> <button class="cap-lf-btn" data-pa="x">✕</button></span></div>
     <div class="cw-d-body cap-pref-wrap"><nav class="cap-pref-nav" aria-label="Rubriques">${tabs.map(([k,l])=>`<button class="phl-toggle-btn${k===t?' active':''}" data-ptab="${k}">${l}</button>`).join('')}</nav><div class="cap-pref-main">${body}</div></div>
     <div class="cw-d-ftr"><span class="ana-dim" style="flex:1">Réglages enregistrés avec la 💾 Page HTML.</span><button class="cap-lf-btn" data-pa="x">Fermer</button></div></div>`);
   ov.onclick=e=>{
@@ -150,6 +150,7 @@ function capPrefDialogFill(ov){
     const a=e.target.closest('[data-pa]'); if(!a) return;
     const k=a.dataset.pa;
     if(k==='x'){ ov.style.display='none'; return; }
+    if(k==='tour'){ capTourPrefs(); return; }   // 🎓 visite des préférences (43)
     if(k==='themeedit'){ ov.style.display='none'; capThemeEditor(); return; }
     if(k==='cfgsave'){ ov.style.display='none'; capCfgDialog('save'); return; }
     if(k==='cfgload'){ ov.style.display='none'; capCfgLoadFile(); return; }

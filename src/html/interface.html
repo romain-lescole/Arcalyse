@@ -28,8 +28,7 @@
   <div class="tbtn" id="b-scripts" title="Scripts : parcourir et analyser le modèle avec l'API, comme les macros de Catia Magic (Alt+4)" style="display:none">📜<span class="tb-lbl"> Scripts</span></div>
   <!-- 💬 Revue : commentaires de revue (panneau à droite, 55-revue.js) ; ouvert par 💬 Revue & documents › 💬 Commentaires (bouton masqué, badge recopié sur le menu) -->
   <div class="tbtn" id="b-review" style="display:none" title="Revue : commentaires sur le modèle et les diagrammes, vérification après mise à jour, rapport">💬<span class="tb-lbl"> Revue</span><span id="b-review-badge" class="cw-badge" style="display:none"></span></div>
-  <!-- 🎨 Thème : dans ⚙ (menu et Préférences) ; le sélecteur caché reste la référence du thème choisi -->
-  <div class="tbtn" id="b-theme-menu" data-dd="theme" style="display:none" title="Changer le thème, créer ou modifier un thème personnalisé">🎨<span class="tb-lbl"> Thème</span> ▾</div>
+  <!-- 🎨 Thème : bouton 🎨 ▾ placé après ❓ Aide (et la bascule 🌐 de langue) ; le sélecteur caché reste la référence du thème choisi -->
   <select id="theme-sel" title="Changer le thème" style="display:none">
     <option value="dark">🌙 Sombre</option>
     <option value="light">☀️ Clair</option>
@@ -39,6 +38,8 @@
   <div class="tbtn" id="b-theme-edit" title="Créer ou modifier un thème personnalisé (toutes les couleurs)" style="display:none">🎨</div>
   <!-- ❓ Aide ▾ : aide complète et 🎓 visite guidée (menu rempli par capNavMenuFill) -->
   <div class="tbtn" id="b-help" data-dd="help" title="Aide complète, visite guidée de l'outil">❓<span class="tb-lbl"> Aide</span> ▾</div>
+  <!-- 🎨 Thème : à côté de la bascule 🌐 de langue (insérée après ❓ Aide par build.js dans les versions bilingues) -->
+  <div class="tbtn" id="b-theme-menu" data-dd="theme" title="Changer le thème, créer ou modifier un thème personnalisé">🎨 ▾</div>
   <!-- ⚙ Préférences : niveau des menus (Essentiel / Complet), style de la barre, thème, enregistrement automatique (64-preferences.js) -->
   <div class="tbtn" id="b-prefs" data-dd="prefs" title="Préférences : menus, style de la barre, thème, enregistrement automatique, interface et vues">⚙</div>
 </div>
@@ -112,17 +113,21 @@
   <div id="cap-welcome">
     <button id="cw-help" type="button" title="Aide et présentation des fonctionnalités">❓ Aide</button>
     <button id="cw-start" type="button" title="Visite guidée en deux temps : où ouvrir votre modèle, puis, une fois le modèle chargé, où trouver l'aide et les tutoriels">🚀 Bien démarrer <span class="cw-start-sub">· ouvrir un modèle, puis trouver l'aide et les tutoriels</span></button>
-    <div id="cap-drop-zone" title="Cliquer pour parcourir, ou glisser-déposer un fichier modèle">
+    <div id="cap-drop-zone" title="Glisser-déposer un fichier ou un dossier modèle n'importe où, ou cliquer sur le fond pour parcourir">
       <div class="cw-brand"><span class="cw-brand-n"><svg class="cap-logo" width="40" height="40" viewBox="0 0 100 100" aria-hidden="true"><g stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none" opacity=".85"><path d="M50 16L20 84M50 16L80 84"/><path d="M32 58Q50 40 68 58" stroke="#5aa2e8" stroke-width="6"/></g><circle cx="50" cy="16" r="9" fill="#f0a35e"/><circle cx="20" cy="84" r="9" fill="#4fc3a1"/><circle cx="80" cy="84" r="9" fill="#e8c84f"/><circle cx="32" cy="58" r="5" fill="#5aa2e8"/><circle cx="68" cy="58" r="5" fill="#5aa2e8"/></svg>Arcalyse</span><span class="cw-brand-s">Votre modèle, sous toutes ses coutures.</span></div>
       <div class="cw-title" id="cw-title">Ouvrir un modèle</div>
-      <div class="cw-sub" id="cw-sub">Glissez-déposez ici votre fichier modèle, le dossier du projet ou une page de projet <strong>.html</strong>, ou choisissez :</div>
-      <!-- Trois façons d'ouvrir (refonte 3.0) : le dossier du projet est conseillé (modèle, diagrammes et bibliothèques en une fois) -->
-      <div class="cw-btns"><button class="cw-btn cw-btn2" id="cw-browse" type="button" title="Ouvrir un fichier modèle seul (Capella : .capella ; SysML v2 : .sysml, .kpar)"><b>📂 Fichier modèle…</b><span>Un seul fichier. Pour Capella, les diagrammes (.aird) peuvent être ajoutés ensuite.</span></button>
-      <button class="cw-btn" id="cw-folder" type="button" title="Ouvrir le dossier du projet : Capella (.capella, .aird, bibliothèques) ou SysML v2 (les .sysml du projet), chargé en une fois"><b>📁 Dossier du projet…</b><span>Le modèle et ses annexes en une fois : .capella + .aird + bibliothèques, ou les .sysml d'un projet. Conseillé.</span></button>
-      <button class="cw-btn cw-btn2" id="cw-projet" type="button" title="Reprendre un projet de travail enregistré en page HTML (💾), même par une version précédente d'Arcalyse (à partir de la 2.1) : modèle, diagrammes, revue, accueil, vues et réglages sont repris dans cette version"><b>📄 Projet de travail (.html)…</b><span>Reprendre une page enregistrée : modèle, revue, dossiers, réglages. Vous choisissez les parties.</span></button></div>
+      <div class="cw-sub" id="cw-sub">Glissez-déposez un fichier ou un dossier <strong>n'importe où sur cette page</strong> : le format est reconnu tout seul. Ou partez de votre format :</div>
+      <!-- Une carte par format embarqué (refonte de l'accueil : CAP_FORMATS, capFormatsCartesHtml) -->
+      <div class="cw-cards" id="cw-cards"></div>
+      <!-- 💡 Bon à savoir : astuces qui défilent (CAP_ASTUCES, capAstuceMontrer) -->
+      <div class="cw-tips" id="cw-astuces" role="region" aria-label="Bon à savoir"></div>
+      <div class="cw-projet"><span class="cw-fmt" style="--cw-c:#e8c84f"><i></i>Projet de travail</span>
+        <div class="cw-projet-t"><b>Reprendre une page Arcalyse enregistrée</b> <code class="cw-ext">.html</code><br><span>Modèle, diagrammes, revue, dossiers et réglages, quel que soit le format d'origine ; vous choisissez les parties à reprendre.</span></div>
+        <button class="cw-b" id="cw-projet" type="button" title="Reprendre un projet de travail enregistré en page HTML (💾), même par une version précédente d'Arcalyse (à partir de la 2.1) : modèle, diagrammes, revue, accueil, vues et réglages sont repris dans cette version">📄 Ouvrir une page de projet…</button></div>
       <input type="file" id="cw-folder-input" webkitdirectory multiple style="display:none">
+      <input type="file" id="cw-fmt-input" multiple style="display:none">
       <div class="cw-status" id="cw-status"></div>
-      <div class="cw-hint" id="cw-formats">Formats : 🔷 Capella <b>.capella</b> · .melodymodeller · .xml (+ .aird) &nbsp;·&nbsp; 🧩 SysML v2 <b>.sysml</b> · <b>.kpar</b> — le fichier est lu localement, rien n'est envoyé.</div>
+      <div class="cw-hint" id="cw-formats">🔒 Lu dans le navigateur : rien n'est envoyé.</div>
       <a href="#" class="cw-help-link" id="cw-help-link">📖 Que peut-on analyser ? Découvrir les fonctionnalités</a>
       <a href="#" class="cw-help-link" id="cw-tour-link">🎓 Visite guidée de l'interface</a>
       <a href="#" class="cw-help-link" id="cw-about-link">ℹ À propos</a>
@@ -302,7 +307,7 @@
     <div id="cap-elem-tabs" class="cap-lf-bar" style="display:none;gap:6px;padding:6px 12px;border-bottom:1px solid var(--c-border);flex-shrink:0;">
       <span class="tb-grp">
         <button class="cap-lf-btn" data-ev="tree">🌳 Arborescence</button>
-        <button class="cap-lf-btn" data-ev="cards">▦ Cartes</button>
+        <button class="cap-lf-btn" data-ev="cards">🃏 Cartes</button>
       </span>
     </div>
     <!-- Onglets de section (ex. Composants & interfaces) : vues de la même section du menu (remplis par capNavFluxTabs) -->
@@ -394,6 +399,7 @@
       </div>
     </div>
 
+    <div id="cap-view-matrix" style="flex:1;overflow:hidden;display:none;flex-direction:column;min-height:0;"></div>
     <div id="cap-view-tree"   style="flex:1;overflow-y:auto;padding:10px 16px;display:none;"></div>
     <div id="cap-view-chains" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>
     <div id="cap-view-physlink" style="flex:1;overflow-y:auto;padding:12px 16px;display:none;"></div>

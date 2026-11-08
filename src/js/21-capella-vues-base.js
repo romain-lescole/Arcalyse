@@ -29,7 +29,7 @@ function capRenderSidebar(filterStr){
       const lbl=document.createElement('span'); lbl.className='cap-type-label'; lbl.textContent=type; lbl.title=type;
       const cnt=document.createElement('span'); cnt.className='cap-type-count'; cnt.textContent=info.count;
       const ico=capIcoType(type,14); row.appendChild(cb);
-      if(window.ArcatureVisionneuse){ const ic=document.createElement('span'); ic.className='cap-type-ico'; ic.innerHTML=ico; row.appendChild(ic); }   // place gardée même sans icône : noms alignés
+      if(window.ArcatureVisionneuse||ico){ const ic=document.createElement('span'); ic.className='cap-type-ico'; ic.innerHTML=ico; row.appendChild(ic); }   // place gardée même sans icône : noms alignés
       row.appendChild(lbl); row.appendChild(cnt); body.appendChild(row);
     }
     hdr.addEventListener('click',()=>{
@@ -71,10 +71,10 @@ function capGetFiltered(){
 // ── Cards ──
 /** Nombre de cartes par page (une page plus longue rend l'affichage lent). */
 const CAP_CARDS_MAX=500;
-/** Page courante de ▦ Cartes et signature des filtres qui l'ont produite (changement de filtre → page 1). */
+/** Page courante de 🃏 Cartes et signature des filtres qui l'ont produite (changement de filtre → page 1). */
 let _capCardsPg={page:0, sig:''};
 /**
- * Barre de pages de ▦ Cartes : ◀ précédente, numéro de page, éléments affichés, suivante ▶.
+ * Barre de pages de 🃏 Cartes : ◀ précédente, numéro de page, éléments affichés, suivante ▶.
  * @param {number} page - Page courante (à partir de 0)
  * @param {number} nb - Nombre de pages
  * @param {number} total - Nombre d'éléments filtrés
@@ -479,6 +479,9 @@ function capComputeMetachainProperties_(metaclass){
     }
   });
 
+  // 2bis) 🧩 Liaisons des lecteurs SysML v2 / UML (87), dans les deux sens (typage, composition, satisfy…)
+  if (typeof capMcSyProps==='function') capMcSyProps(metaclass).forEach(p=>props.push(p));
+
   // 3) Attributs bruts du XML référençant d'autres éléments par leur ID (source, target,
   //    involved, abstractType, navigableMembers, exchangedItems, constrainedElements...).
   //    Détection dynamique : couvre aussi des cas non modélisés dans CAP_LINK_SECTIONS.
@@ -501,18 +504,11 @@ function capResolveStep(el, prop){
     return prop.childFilterType ? kids.filter(k=>k.typeName===prop.childFilterType) : kids;
   }
   if (prop.kind==='rel') {
-    if (!capLinksData) capLinksData=capComputeLinks();
-    const rows = capLinksData[prop.relKey]||[];
-    const out=[];
-    rows.forEach(r=>{
-      if (prop.direction==='fwd' && r.src.id===el.id) {
-        const t=capGetElementById_(r.tgt.id); if(t) out.push(t);
-      } else if (prop.direction==='rev' && r.tgt.id===el.id) {
-        const s=capGetElementById_(r.src.id); if(s) out.push(s);
-      }
-    });
-    return out;
+    // Index des relations par élément (51) : pas de parcours de toutes les lignes de la relation à chaque élément
+    const ix=capTableRelIndex()[prop.relKey]; if (!ix) return [];
+    return (ix[prop.direction==='fwd'?'out':'in'][el.id]||[]).map(x=>capGetElementById_(x.id)).filter(Boolean);
   }
+  if (prop.kind==='sy') return typeof capMcSyPas==='function' ? capMcSyPas(el, prop) : [];   // 🧩 liaison d'un lecteur (87)
   if (prop.kind==='attr') {
     const raw = el.attrs[prop.attrKey]; if (!raw) return [];
     const out=[];
@@ -604,6 +600,7 @@ function capResolveMetachain(el, steps){
  * l'affichage (en ligne, séparé par virgules, ou empilé verticalement) sans recalculer. */
 function capTableGetValArray(el, colKey){
   if (colKey.startsWith('rel:')) { const v=capTableRelValues(el, colKey); return v.length ? v : ['']; }
+  if (colKey.startsWith('cameo:')) return capSyTabValeurs(el, colKey);   // colonne d'un tableau de Cameo, en lecture seule (90)
   if (colKey==='layer')    return [el.layer||''];
   if (colKey==='typeName') return [el.typeName||''];
   if (colKey==='humanType')return [(CAP_HUMAN_NAMES[el.typeName]||{}).h||''];
@@ -647,6 +644,7 @@ function capTableColLabel(colKey){
   const builtinLabels={layer:_L('Couche'),typeName:'Type',humanType:'Human Type',name:'Name',id:'ID',parent:_L('Owner'),ownedElement:'Owned element'};
   if (builtinLabels[colKey]) return builtinLabels[colKey];
   if (colKey.startsWith('rel:')) return capTableRelLabel(colKey);
+  if (colKey.startsWith('cameo:')) return capSyTabColLabel(colKey);   // tableau de Cameo (90)
   const custom = capTableCustomCols.find(c=>c.key===colKey);
   if (custom) return custom.label;
   return colKey; // attribut brut : son nom XML tel quel
@@ -712,6 +710,8 @@ function capBuildTableToolbar(){
 
   // 🎯 Portée de l'onglet (51-tableau.js)
   tb.appendChild(capTableScopeButton());
+  // 📋 Lignes données d'un onglet ouvert depuis un tableau de Cameo (51-tableau.js, 90)
+  const lignesFixes=capTableLignesButton(); if (lignesFixes) tb.appendChild(lignesFixes);
   // ☰ Lignes / 🌳 Arbre (+ conteneurs, déplier, niveaux)
   capTableTreeControls(tb);
 
@@ -1013,10 +1013,11 @@ function capPpHasResult(el, steps, ad){
 /** Rend la zone « 👁 Aperçu en direct » d'un panneau de colonne par chemin : choix de
  * l'élément d'exemple (recherche, liste, exemple suivant donnant un résultat), taux de
  * remplissage estimé, puis le chemin parcouru étape par étape et le contenu de la cellule.
- * @param {string} which - 'cap' (▤ Tableau)
+ * @param {string} which - 'cap' (▤ Tableau) ou 'mx' (▦ Matrice, relation par chemin)
  * @param {Array} steps - Étapes en cours d'édition
+ * @param {{res:string}} [opt] - Intitulé du résultat final (défaut : « ▣ Cellule dans le tableau »)
  */
-function capPpRender(which, steps){
+function capPpRender(which, steps, opt){
   const host=document.getElementById(which+'-customcol-preview'); if (!host) return;
   const ad = capPpCapAdapter();
   const st=_capPpState[which];
@@ -1061,7 +1062,7 @@ function capPpRender(which, steps){
     else if (shown.some(c=>c.id===st.id)) sel.value=st.id;
     else { st.id=shown[0].id; sel.value=st.id; }
   };
-  const draw=()=>capPpRenderBody(body, cands.find(c=>c.id===st.id), steps, ad, cands, complete);
+  const draw=()=>capPpRenderBody(body, cands.find(c=>c.id===st.id), steps, ad, cands, complete, opt);
   q.oninput=()=>{ st.q=q.value; fillSel(); draw(); };
   sel.onchange=()=>{ st.id=sel.value; st.auto=false; draw(); };
   next.onclick=()=>{
@@ -1083,8 +1084,9 @@ function capPpRender(which, steps){
  * @param {object} ad - Adaptateur de la vue
  * @param {Array} cands - Éléments du type de départ
  * @param {boolean} complete - Toutes les étapes ont-elles une relation ou une valeur ?
+ * @param {{res:string}} [opt] - Intitulé du résultat final
  */
-function capPpRenderBody(body, el, steps, ad, cands, complete){
+function capPpRenderBody(body, el, steps, ad, cands, complete, opt){
   body.innerHTML='';
   if (!el) return;
   // Remplissage estimé : nombre d'éléments du type de départ dont la cellule serait remplie
@@ -1141,7 +1143,7 @@ function capPpRenderBody(body, el, steps, ad, cands, complete){
   const res=document.createElement('div'); res.className='cap-pp-res';
   const last=levels[levels.length-1];
   const vals = !complete ? null : (last && last.values) ? last.values : (last ? last.elems.map(ad.name) : []);
-  res.innerHTML=_L('<div class="cap-pp-st"><span>▣ Cellule dans le tableau</span></div>');
+  res.innerHTML=`<div class="cap-pp-st"><span>${opt&&opt.res?capEsc(opt.res):_L('▣ Cellule dans le tableau')}</span></div>`;
   const cell=document.createElement('div'); cell.className='cap-pp-cell';
   cell.textContent = vals===null ? _L('Chemin incomplet.') : (vals.length ? vals.join(', ') : _L('(vide)'));
   if (!vals || !vals.length) cell.classList.add('empty');
@@ -1399,6 +1401,8 @@ const CAP_TREE_LIST_MAX=300; // lignes au plus en ☰ Liste
 
 /** Rend la vue Arborescence : barre propre (recherche, 🌳 Arbre / ☰ Liste, déplier, réduire, JSON) créée
  * une fois — la recherche garde le focus —, puis le contenu (capRenderTreeBody). */
+/** 🔲 Diagrammes montrés en feuilles de l'arbre, sous l'élément qu'ils représentent (case de la barre). */
+let capTreeDiag=true;
 function capRenderTree(){
   const container=document.getElementById('cap-view-tree'); if(!container) return;
   if(!document.getElementById('cap-tree-bar')){
@@ -1406,6 +1410,7 @@ function capRenderTree(){
       <input class="inp" id="cap-tree-q" placeholder="🔍 Chercher (nom ou type)…">
       <span class="tb-grp" title="Affichage"><button class="phl-toggle-btn" data-tv="tree" title="Arbre ; avec une recherche : résultats dans leurs conteneurs, grisés s'ils ne correspondent pas">🌳 Arbre</button><button class="phl-toggle-btn" data-tv="list" title="Liste à plat triée par nom, avec le chemin des conteneurs (${CAP_TREE_LIST_MAX} lignes au plus)">☰ Liste</button></span>
       <span class="tb-grp" data-tree-only><button class="tbtn" data-ta="open">⊞ Tout déplier</button><button class="tbtn" data-ta="close">⊟ Tout réduire</button><span class="tb-grp-l">Niveau</span><button class="tbtn" data-lvl="1" title="Déplier jusqu'au niveau 1">1</button><button class="tbtn" data-lvl="2" title="Déplier jusqu'au niveau 2">2</button><button class="tbtn" data-lvl="3" title="Déplier jusqu'au niveau 3">3</button></span>
+      <label class="cap-tree-dg" id="cap-tree-dgl" title="Diagrammes du projet sous l'élément qu'ils représentent (clic : vue 🔲 Diagrammes)" hidden><input type="checkbox" id="cap-tree-dg" checked> 🔲 Diagrammes <span class="cdg-sigle" id="cap-tree-dg-n"></span></label>
       <button class="tbtn" data-ta="json" title="Exporter les éléments des types cochés en JSON">⬇ JSON</button>
       <span class="ana-fn-cnt" id="cap-tree-cnt"></span></div><div id="cap-tree-body"></div>`);
     const q=document.getElementById('cap-tree-q'); q.value=capTreeFilter;
@@ -1415,6 +1420,7 @@ function capRenderTree(){
     container.querySelector('[data-ta="close"]').onclick=()=>document.getElementById('cap-collapse-all')?.click();
     container.querySelector('[data-ta="json"]').onclick=()=>document.getElementById('cap-exp-json')?.click();
     container.querySelectorAll('[data-lvl]').forEach(b=>b.onclick=()=>capTreeExpandLevel(+b.dataset.lvl));
+    const dg=document.getElementById('cap-tree-dg'); if(dg) dg.onchange=()=>{ capTreeDiag=dg.checked; capRenderTreeBody(); };
   }
   capRenderTreeBody();
 }
@@ -1440,6 +1446,9 @@ function capRenderTreeBody(){
   document.querySelectorAll('#cap-tree-bar [data-tv]').forEach(b=>b.classList.toggle('active', b.dataset.tv===capTreeView));
   const only=document.querySelector('#cap-tree-bar [data-tree-only]'); if(only) only.style.display=capTreeView==='tree'?'':'none';
   const cnt=document.getElementById('cap-tree-cnt');
+  // 🔲 Diagrammes du projet (Capella : .aird ; SysML / UML : vues des lecteurs) : case affichée quand il y en a
+  const nReps=typeof capDiagReps!=='function'?0:(typeof capDiagSy==='function'&&capDiagSy()?capDiagReps():(typeof capHomeReps==='function'?capHomeReps():capDiagReps())).length;
+  const dgl=document.getElementById('cap-tree-dgl'); if(dgl){ dgl.hidden=!nReps; const nn=document.getElementById('cap-tree-dg-n'); if(nn) nn.textContent=nReps; }
   if(!capTreeData){ if(cnt) cnt.textContent=''; return; }
   const filter=capTreeFilter.trim().toLowerCase();
   const isHit=n=>!filter||[(n.name||''),n.typeName,(CAP_HUMAN_NAMES[n.typeName]||{}).h||''].join(' ').toLowerCase().includes(filter);
@@ -1494,11 +1503,13 @@ function capRenderTreeNode(node,container,depth,filter){
    * @returns {boolean} Vrai si le nœud ou un descendant correspond
    */
   const selfHit=n=>[(n.name||''),n.typeName,(CAP_HUMAN_NAMES[n.typeName]||{}).h||''].join(' ').toLowerCase().includes(filter);
-  function anyMatch(n){if(!filter)return true;if(selfHit(n))return true;if(n.children)for(const c of n.children)if(anyMatch(c))return true;return false;}
+  /** 🔲 Diagrammes dont un nœud est l'élément représenté (54), ceux qui correspondent au filtre. @param {object} n - Nœud @returns {object[]} */
+  const dgDe=n=>{ if(!capTreeDiag||!n.id||typeof capDiagParCible!=='function') return []; const l=capDiagParCible().get(n.id)||[]; return filter?l.filter(r=>`${r.nom} ${r.type} ${r.sigle}`.toLowerCase().includes(filter)):l; };
+  function anyMatch(n){if(!filter)return true;if(selfHit(n)||dgDe(n).length)return true;if(n.children)for(const c of n.children)if(anyMatch(c))return true;return false;}
   const matchSelf=!filter||selfHit(node);
   if(!anyMatch(node)) return;
-  const enabledCh=(node.children||[]).filter(c=>anyMatch(c));
-  const hasCh=enabledCh.length>0;
+  const enabledCh=(node.children||[]).filter(c=>anyMatch(c)), dgs=dgDe(node);
+  const hasCh=enabledCh.length>0||dgs.length>0;
   const nodeEl=document.createElement('div'); nodeEl.className='';
   const row=document.createElement('div'); row.className='cap-tree-row'+(filter?(matchSelf?' cap-hl':' cap-dim'):'');   // recherche : conteneurs grisés s'ils ne correspondent pas
   row.style.paddingLeft=(depth*16+4)+'px';
@@ -1509,13 +1520,19 @@ function capRenderTreeNode(node,container,depth,filter){
   if(svg){ icon.classList.add('cap-tree-svg'); icon.innerHTML=svg; } else { icon.style.cssText=`background:${bg};color:${color};`; icon.textContent=iconTxt; }
   const label=document.createElement('span'); label.className='cap-tree-label'+(name?'':' unnamed'); label.textContent=name||'—'; label.title=name;
   row.appendChild(tog); row.appendChild(icon); row.appendChild(label);
-  if(hasCh){const cnt=document.createElement('span');cnt.className='cap-tree-cnt';cnt.textContent=enabledCh.length;row.appendChild(cnt);}
+  if(hasCh){const cnt=document.createElement('span');cnt.className='cap-tree-cnt';cnt.textContent=enabledCh.length+dgs.length;row.appendChild(cnt);}
   if(node.typeName&&node.typeName!=='Project'){const chip=document.createElement('span');chip.className='cap-tree-chip';chip.style.cssText=`color:${color};background:${bg};`;chip.textContent=node.typeName;row.appendChild(chip);}
   nodeEl.appendChild(row);
   let childEl=null;
   if(hasCh){
     childEl=document.createElement('div'); childEl.className='cap-tree-children'+(filter?' open':'');
-    for(const c of node.children)capRenderTreeNode(c,childEl,depth+1,filter);
+    for(const c of (node.children||[]))capRenderTreeNode(c,childEl,depth+1,filter);
+    dgs.forEach(r=>{   // 🔲 diagramme en feuille : icône, nom, sigle ; clic → vue 🔲 centrée sur l'élément
+      const d=document.createElement('div'); d.className='cap-tree-row cap-tree-diag'+(filter?' cap-hl':''); d.style.paddingLeft=((depth+1)*16+4)+'px'; d.dataset.diag=r.uid;
+      const ico=typeof capDiagIcones==='function'?(capDiagIcones().get(r.uid)||''):'', lv=capDiagCouche(r.couche);
+      d.innerHTML=`<span class="cap-tree-tog leaf"></span><span class="cap-tree-icon cap-tree-svg">${ico}</span><span class="cap-tree-label" title="${capEsc(r.nom)}">${capEsc(r.nom)}</span><span class="cap-tree-chip" style="color:${lv.color};background:${lv.bg}">${capEsc(r.sigle)}</span>`;
+      d.onclick=e=>{ e.stopPropagation(); capDiagOpen(r.uid, node.id); };
+      childEl.appendChild(d); });
     nodeEl.appendChild(childEl);
     tog.addEventListener('click',e=>{e.stopPropagation();const o=childEl.classList.toggle('open');tog.classList.toggle('open',o);});
     row.addEventListener('click',()=>{const o=childEl.classList.toggle('open');tog.classList.toggle('open',o);capOpenDetailNode(node);});

@@ -10,6 +10,7 @@ var CAP_CFG_PARTS=[
   ['toolbar',_L('☰ Barre des vues et ⚙ préférences'),_L('niveau des menus (Essentiel, Complet), vues épinglées, style de la barre, suivi du fichier, enregistrement automatique, format des exports')],
   ['dash',   _L('📐 Tableaux de bord'),_L('pages, indicateurs, disposition')],
   ['table',  _L('▤ Tableau'),_L('onglets de vues, colonnes affichées, colonnes par chemin, tri, filtres, largeurs')],
+  ['matrix', _L('▦ Matrice'),_L('onglets (types, couches, portées, relations, sens, affichage, marques), relations par chemin')],
   ['rm',     _L('🗺 Relation Map'),_L('onglets de vues : contexte, profondeur, disposition, filtres, affichage')],
   ['csv',    _L('⬇ Exports CSV'),_L('colonnes retirées ou ajoutées (ID, owner, attributs…) pour chaque export')],
   ['theme',  _L('🎨 Thème'),_L('thème choisi et thème personnalisé')],
@@ -30,6 +31,7 @@ function capCfgGet(k){
   if(k==='toolbar') return _capNav;
   if(k==='dash') return capDashStore;
   if(k==='table') return capTableCfgGet();
+  if(k==='matrix') return capMxCfgGet();
   if(k==='csv') return _capCsvCfg;
   if(k==='rm') return rmViewsCfgGet();
   if(k==='theme') return {current:currentTheme, custom:capThemeStore};
@@ -51,6 +53,7 @@ function capCfgSet(k, v){
     capTableCfgSet(v);
     if(capLoaded&&capCurrentView==='table') capRenderTable();
   }
+  else if(k==='matrix'){ capMxCfgSet(v); if(capLoaded&&capCurrentView==='matrix') capRenderMatrix(); }
   else if(k==='csv'){ if(typeof v==='object') _capCsvCfg=v; }
   else if(k==='rm') rmViewsCfgSet(v);
   else if(k==='tv'){   // ancienne 📊 Table View : onglets convertis en onglets du ▤ Tableau
@@ -72,7 +75,7 @@ function capCfgSet(k, v){
 function capCfgStoreViews(){
   let el=document.getElementById('cap-ui-views');
   if(!el){ el=document.createElement('script'); el.type='application/json'; el.id='cap-ui-views'; document.head.appendChild(el); }
-  el.textContent=capCfgSer({table:capCfgGet('table'), csv:_capCsvCfg, rm:rmViewsCfgGet(), theme:currentTheme}).replace(/</g,'\\u003c');
+  el.textContent=capCfgSer({table:capCfgGet('table'), matrix:capCfgGet('matrix'), csv:_capCsvCfg, rm:rmViewsCfgGet(), theme:currentTheme}).replace(/</g,'\\u003c');
 }
 
 /** Réapplique à l'ouverture de la page les vues mémorisées par capCfgStoreViews. */
@@ -81,6 +84,7 @@ function capCfgRestoreViews(){
   try{
     const o=capCfgRev(el.textContent);
     if(o.table) capCfgSet('table',o.table);
+    if(o.matrix) capCfgSet('matrix',o.matrix);   // ▦ Matrice (91)
     if(o.csv) capCfgSet('csv',o.csv);
     if(o.rm) capCfgSet('rm',o.rm);
     if(o.tv) capCfgSet('tv',o.tv);   // page enregistrée par une version qui avait la 📊 Table View
@@ -102,6 +106,8 @@ function capCfgDialog(mode, data){
     :k==='table'?(()=>{ const t=(mode==='load'?data.parts.table:capCfgGet('table'))||{}, o=(t.tabs||[]).length||1, n=(t.customCols||[]).length;
       const tv=mode==='load'&&data.parts.tv?_L(` + anciens onglets 📊 Table View`):'';
       return _L(` <span class="ana-dim">(${o} onglet${o>1?'s':''}${n?_L(`, ${n} colonne${n>1?'s':''} par chemin`):''}${tv})</span>`); })()
+    :k==='matrix'?(()=>{ const m=(mode==='load'?data.parts.matrix:capCfgGet('matrix'))||{}, o=(m.tabs||[]).length, n=(m.chemins||[]).length;
+      return _L(` <span class="ana-dim">(${o} onglet${o>1?'s':''}${n?_L(`, ${n} relation${n>1?'s':''} par chemin`):''})</span>`); })()
     :k==='rm'?(()=>{ const r=(mode==='load'?data.parts.rm:capCfgGet('rm'))||{}, o=(r.tabs||[]).length; return _L(` <span class="ana-dim">(${o} vue${o>1?'s':''})</span>`); })():'';
   ov.innerHTML=_L(`<div class="cw-d-box" style="max-width:560px">
     <div class="cw-d-hdr"><b>${mode==='save'?_L('⚙ Enregistrer l\'interface et les vues'):_L('⚙ Charger une interface et des vues')}</b><button class="cap-lf-btn" data-c="x">✕</button></div>

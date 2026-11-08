@@ -273,7 +273,8 @@ function capTableRelPicker(listWrap, q, onToggle){
 function capTableRows(){
   // Types cochés de l'onglet seulement : la recherche et le filtre de couche des autres vues ne s'appliquent pas ici
   const inScope=capTableScopeSet();   // 🎯 portée de l'onglet (null = tout le modèle)
-  let rows=capAllElements.filter(el=>capEnabledTypes.has(el.typeName) && (!inScope||inScope.has(el.id)));
+  const fixes=capTableLignesFixes();   // 📋 lignes données (onglet ouvert depuis un tableau de Cameo, 90), dans leur ordre
+  let rows=(fixes?fixes.map(capGetElementById_).filter(Boolean):capAllElements).filter(el=>capEnabledTypes.has(el.typeName) && (!inScope||inScope.has(el.id)));
   Object.entries(capTableColFilters).forEach(([colKey,val])=>{
     if (!val) return;
     const q=val.toLowerCase();
@@ -455,6 +456,35 @@ function capTableApplyViewFile(data){
   return false;
 }
 
+/* ── 📋 Lignes données ─────────────────────────────────────────────────────────
+ * Un onglet ouvert depuis un tableau de Cameo (🔲 Diagrammes, `capSyTabVersTableau`, 90) garde les lignes de ce tableau
+ * (`lignes` : identifiants, dans leur ordre) et sa source ; types, portée et filtres s'y appliquent encore. Retirer les lignes
+ * données en fait un onglet ordinaire (lignes choisies par type). */
+
+/** Lignes données de l'onglet actif, ou null (onglet ordinaire).
+ * @returns {string[]|null} Identifiants
+ */
+function capTableLignesFixes(){
+  const t=capTableTabs&&capTableTabs[capTableTabIdx];
+  return t&&Array.isArray(t.lignes)&&t.lignes.length?t.lignes:null;
+}
+
+/** Bouton « 📋 Lignes de « … » » de la barre du tableau (onglet à lignes données) : clic = les retirer après confirmation.
+ * @returns {HTMLElement|null} Bouton, ou null pour un onglet ordinaire
+ */
+function capTableLignesButton(){
+  const t=capTableTabs&&capTableTabs[capTableTabIdx], ids=capTableLignesFixes(); if(!ids) return null;
+  const nom=(t.source&&t.source.nom)||t.name;
+  const b=document.createElement('div'); b.className='tbtn active'; b.dataset.tc='lignes';
+  b.textContent=_L(`📋 Lignes de « ${nom} » (${ids.length}) ✕`);
+  b.title=_L('Lignes données par un tableau de Cameo (🔲 Diagrammes), dans son ordre. Clic : les retirer (lignes choisies par type, comme un onglet ordinaire).');
+  b.onclick=async()=>{
+    if(!await capConfirm(_L(`Retirer les lignes données par « ${nom} » ? L'onglet montrera alors tous les éléments des types cochés.`),{ok:_L('Retirer')})) return;
+    delete t.lignes; capPage=0; capRenderTable();
+  };
+  return b;
+}
+
 /* ── 🎯 Portée de l'onglet ──────────────────────────────────────────────────────
  * Critères d'un onglet : types des lignes (barre latérale), portée, filtres par colonne.
  * La portée (facultative) limite les lignes aux éléments contenus dans des éléments choisis du modèle
@@ -510,20 +540,24 @@ function capTableScopeButton(){
 /** Ouvre la fenêtre 🎯 Portée de l'onglet : éléments choisis (✕ pour retirer), mode (à tous les niveaux /
  * directement contenus), arbre du modèle (▶ déplier, case = ajouter / retirer) et recherche par nom ou type.
  * Affichage 🌳 Arbre (avec une recherche : résultats et leurs conteneurs grisés) ou ☰ Liste (≤ 300 lignes).
- * Chaque changement s'applique immédiatement au tableau. */
-function capTableScopeDialog(){
+ * Chaque changement s'applique immédiatement au tableau (ou, avec `opt`, à la vue qui a ouvert la fenêtre : ▦ Matrice, 90).
+ * @param {{scope:object, titre:string, sous:string, change:function}} [opt] - Portée à modifier {ids, direct}, titre, texte
+ *   d'explication (HTML) et fonction appelée à chaque changement ; sans `opt` : portée de l'onglet du ▤ Tableau
+ */
+function capTableScopeDialog(opt){
+  const S=opt&&opt.scope||capTableScope;
   let ov=document.getElementById('cap-scope-ov');
   if (!ov) { ov=document.createElement('div'); ov.id='cap-scope-ov'; document.body.appendChild(ov);
     ov.addEventListener('click',e=>{ if(e.target===ov) ov.style.display='none'; }); }
   const tab=capTableTabs&&capTableTabs[capTableTabIdx];
   ov.innerHTML=_L(`<div class="cw-d-box" style="max-width:640px">
-    <div class="cw-d-hdr"><b>🎯 Portée de l'onglet « ${capEsc(tab?tab.name:'')} »</b><button class="cap-lf-btn" data-c="x">✕</button></div>
+    <div class="cw-d-hdr"><b>${opt&&opt.titre?capEsc(opt.titre):_L(`🎯 Portée de l'onglet « ${capEsc(tab?tab.name:'')} »`)}</b><button class="cap-lf-btn" data-c="x">✕</button></div>
     <div class="cw-d-body">
-      <div class="cw-d-sub">Les lignes du tableau sont les éléments des <b>types cochés</b> (menu de gauche) <b>contenus</b> dans les éléments choisis ici. Sans élément choisi : tout le modèle. Les filtres de colonnes s'appliquent ensuite.</div>
+      <div class="cw-d-sub">${opt&&opt.sous?opt.sous:_L('Les lignes du tableau sont les éléments des <b>types cochés</b> (menu de gauche) <b>contenus</b> dans les éléments choisis ici. Sans élément choisi : tout le modèle. Les filtres de colonnes s\'appliquent ensuite.')}</div>
       <div class="cap-sc-sel"></div>
       <div class="cap-sc-mode">
-        <label><input type="radio" name="cap-sc-m" value="rec"${capTableScope.direct?'':' checked'}> Contenu à tous les niveaux</label>
-        <label><input type="radio" name="cap-sc-m" value="dir"${capTableScope.direct?' checked':''}> Directement contenu seulement</label>
+        <label><input type="radio" name="cap-sc-m" value="rec"${S.direct?'':' checked'}> Contenu à tous les niveaux</label>
+        <label><input type="radio" name="cap-sc-m" value="dir"${S.direct?' checked':''}> Directement contenu seulement</label>
       </div>
       <div class="cap-sc-bar"><input class="inp cap-sc-q" placeholder="🔍 Chercher un élément (nom ou type)…" value="${capEsc(_capScopeQ)}">
         <span class="tb-grp" title="Affichage"><button class="phl-toggle-btn" data-scm="tree" title="Arbre du modèle ; avec une recherche : résultats et leurs conteneurs (grisés)">🌳 Arbre</button><button class="phl-toggle-btn" data-scm="list" title="Liste à plat triée par nom, avec le chemin des conteneurs (300 lignes au plus)">☰ Liste</button></span></div>
@@ -531,15 +565,15 @@ function capTableScopeDialog(){
     </div>
     <div class="cw-d-ftr"><button class="cap-lf-btn" data-c="clr">Vider la portée (tout le modèle)</button><span style="flex:1"></span><button class="phl-export-btn" data-c="x">Fermer</button></div></div>`);
   ov.style.display='flex';
-  const apply=()=>{ _capScopeMemo=null; capPage=0; capTableSyncToTab(); capRenderTable(); drawSel(); };
+  const apply=()=>{ if(opt&&opt.change){ opt.change(); drawSel(); return; } _capScopeMemo=null; capPage=0; capTableSyncToTab(); capRenderTable(); drawSel(); };
   const drawSel=()=>{
-    const box=ov.querySelector('.cap-sc-sel'), ids=capTableScope.ids;
+    const box=ov.querySelector('.cap-sc-sel'), ids=S.ids;
     box.innerHTML=ids.length ? ids.map(id=>{ const e=capGetElementById_(id);
       return `<span class="cap-sc-chip" title="${capEsc(e?((CAP_HUMAN_NAMES[e.typeName]||{}).h||e.typeName):id)}">${capEsc(e?(e.attrs.name||_L('(sans nom)')):id)}<b data-rm="${capEsc(id)}" title="Retirer">✕</b></span>`; }).join('')
       : _L('<span class="ana-dim">Aucun élément choisi : tout le modèle.</span>');
-    box.querySelectorAll('[data-rm]').forEach(x=>x.onclick=()=>{ capTableScope.ids=capTableScope.ids.filter(i=>i!==x.dataset.rm); apply(); drawTree(); });
+    box.querySelectorAll('[data-rm]').forEach(x=>x.onclick=()=>{ S.ids=S.ids.filter(i=>i!==x.dataset.rm); apply(); drawTree(); });
   };
-  const toggle=(id,on)=>{ const s=new Set(capTableScope.ids); if(on) s.add(id); else s.delete(id); capTableScope.ids=[...s]; apply(); };
+  const toggle=(id,on)=>{ const s=new Set(S.ids); if(on) s.add(id); else s.delete(id); S.ids=[...s]; apply(); };
   const isOpen=(id,depth)=>_capScopeOpen[id]!==undefined ? _capScopeOpen[id] : depth===0;   // 1er niveau déplié au départ
   // opt : {dim:conteneur affiché seulement pour situer un résultat, fixed:pas de ▶/▼ cliquable (recherche), path:chemin des conteneurs (liste)}
   const row=(n,depth,hasKids,opt={})=>{
@@ -547,7 +581,7 @@ function capTableScopeDialog(){
     const tog=!hasKids?'':opt.fixed?'▼':(isOpen(n.id,depth)?'▼':'▶');
     return `<div class="cap-sc-row${opt.dim?' dim':''}" style="padding-left:${6+depth*14}px"${opt.dim?_L(' title="Conteneur affiché pour situer les résultats (ne correspond pas à la recherche)"'):''}>
       <span class="cap-sc-tog"${hasKids&&!opt.fixed?` data-tog="${capEsc(n.id)}" data-d="${depth}"`:''}>${tog}</span>
-      <input type="checkbox" data-id="${capEsc(n.id)}"${capTableScope.ids.includes(n.id)?' checked':''}>
+      <input type="checkbox" data-id="${capEsc(n.id)}"${S.ids.includes(n.id)?' checked':''}>
       <span class="cap-sc-t" style="color:${lv.color}">${capEsc((CAP_HUMAN_NAMES[n.typeName]||{}).h||n.typeName)}</span>
       <span class="cap-sc-n">${capEsc(n.name||_L('(sans nom)'))}</span>${opt.path?`<span class="cap-sc-p" title="${capEsc(opt.path)}">${capEsc(opt.path)}</span>`:''}</div>`;
   };
@@ -592,9 +626,9 @@ function capTableScopeDialog(){
   };
   ov.querySelectorAll('[data-scm]').forEach(b=>b.onclick=()=>{ _capScopeView=b.dataset.scm; drawTree(); });
   ov.querySelector('.cap-sc-q').oninput=e=>{ _capScopeQ=e.target.value; drawTree(); };
-  ov.querySelectorAll('input[name="cap-sc-m"]').forEach(r=>r.onchange=()=>{ capTableScope.direct=r.value==='dir'; apply(); });
+  ov.querySelectorAll('input[name="cap-sc-m"]').forEach(r=>r.onchange=()=>{ S.direct=r.value==='dir'; apply(); });
   ov.querySelectorAll('[data-c="x"]').forEach(b=>b.onclick=()=>{ ov.style.display='none'; });
-  ov.querySelector('[data-c="clr"]').onclick=()=>{ capTableScope.ids=[]; apply(); drawTree(); };
+  ov.querySelector('[data-c="clr"]').onclick=()=>{ S.ids=[]; apply(); drawTree(); };
   drawSel(); drawTree();
 }
 

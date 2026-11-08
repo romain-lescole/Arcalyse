@@ -225,16 +225,18 @@ function capRenderCompExchange(){
   }
 
   /** Exporte un rapport HTML autonome : vue courante seule, ou toutes les vues en onglets (filtres appliqués).
-   * @param {boolean} all - true : toutes les vues
+   * @param {boolean} all - true : vues choisies dans une fenêtre (`capHtmlVuesChoix`, 26), Vue Blocs comprise
    */
-  function exportHtml(all){
+  async function exportHtml(all){
     const f=getFiltered();
-    const VIEWS=[['line',_L('≡ Vue Ligne')],['card',_L('▣ Vue Composant')],['matrix',_L('▦ Matrice')],['diag',_L('🩺 Contrôles')]];
-    const keys=all?VIEWS.map(v=>v[0]):[st.view];
+    const VIEWS=[['block',_L('◧ Vue Blocs')],['line',_L('≡ Vue Ligne')],['card',_L('▣ Vue Composant')],['matrix',_L('▦ Matrice')],['diag',_L('🩺 Contrôles')]];
+    const keys=all?await capHtmlVuesChoix(VIEWS):[st.view]; if(!keys) return;   // vues choisies (26), 🩺 Contrôles décoché par défaut
+    const blocs=()=>{ if(!container._cbBlocsHtml) capRenderComponentBlocks('PB', document.createElement('div'), container);   // ◧ Vue Blocs (47), même si elle n'a pas été ouverte
+      return container._cbBlocsHtml?container._cbBlocsHtml():''; };
     // Vue Ligne : une ligne par exchange marquée data-lid (utilisée par la matrice du rapport)
     const lineHtml=f.length?f.map(l=>`<div data-lid="${capEsc(l.linkId)}">${buildContent([l],'line')}</div>`).join(''):buildContent(f,'line');
     const tabs=VIEWS.filter(v=>keys.includes(v[0])||(v[0]==='line'&&keys.includes('matrix'))).map(([k,label])=>({key:k,label,
-      html:k==='line'?lineHtml:k==='card'?buildContent(f,'card').replace(/class="phl-comp-(hdr|body|toggle)"/g,'class="phl-comp-$1 open"'):buildContent(f,k)}));
+      html:k==='block'?blocs():k==='line'?lineHtml:k==='card'?buildContent(f,'card').replace(/class="phl-comp-(hdr|body|toggle)"/g,'class="phl-comp-$1 open"'):buildContent(f,k)}));
     const cells={}; Object.entries(container._cexCells||{}).forEach(([k,ls])=>cells[k]=ls.map(l=>l.linkId));
     const fi=[st.nodeFilter&&_L(`composant « ${st.nodeFilter} »`),st.nameFilter&&_L(`exchange « ${st.nameFilter} »`),st.dirFilter!=='all'&&`sens ${st.dirFilter}`,st.kindFilter!=='all'&&`kind ${st.kindFilter}`].filter(Boolean).join(', ');
     capHtmlReport({title:_L('🔀 Behavior Exchanges (PA)'), subtitle:`${f.length}/${allLinks.length} exchanges${fi?_L(' · filtres : ')+fi:''}`, tabs, active:st.view, cells,
@@ -269,6 +271,7 @@ function capRenderCompExchange(){
    */
   function render(){
     _capCompExView=st.view;
+    container._exportTout=exportHtml;   // « ⬇ HTML (toutes les vues) » de la Vue Blocs hébergée (47) : rapport complet de cette vue
     const filtered=getFiltered();
     if(st.view==='block'){   // ◧ Vue Blocs : rendu commun aux vues 🧱 (47-composants.js), mêmes couleurs que 🧱 Logical Component
       container.innerHTML=_L(`<div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Component Exchanges de la couche <b>PA</b> entre <b>Physical Components Behavior</b>, ou entre un Behavior et un <b>acteur</b> (nœud) qui lui est relié (${allLinks.length} sur ${allLinks.total} dans le modèle).</div>
@@ -306,7 +309,7 @@ function capRenderCompExchange(){
         <div style="margin-left:auto;display:flex;gap:6px;">
           <button class="phl-export-btn" id="cex-exp-csv">⬇ CSV</button>
           <button class="phl-export-btn" id="cex-exp-html" title="Rapport HTML de la vue affichée">⬇ HTML</button>
-          <button class="phl-export-btn" id="cex-exp-html-all" title="Rapport HTML à onglets : Vue Ligne, Vue Composant, Matrice, Contrôles">⬇ HTML (toutes les vues)</button>
+          <button class="phl-export-btn" id="cex-exp-html-all" title="Rapport HTML à onglets : vues choisies dans une fenêtre (Vue Blocs comprise ; Contrôles décochés par défaut)">⬇ HTML (toutes les vues)</button>
         </div>
       </div>
       <div id="cex-main">${buildContent(filtered)}</div>`);

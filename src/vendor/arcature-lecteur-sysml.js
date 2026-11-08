@@ -2300,8 +2300,10 @@ const FMT_SYSML = {
     const t = SY_ICONES[base] || SY_ICONES[el.tag] || el.tag[0];
     return /Usage$/.test(el.tag) && t.length && /^[A-Z]/.test(t) ? t.toLowerCase() : t;
   },
-  /** Icône dessinée : aucune pour SysML v2 (initiales seules). @returns {string} */
-  iconeSvg() { return ''; },
+  /** Icône dessinée de la métaclasse, marques de l'élément comprises (35-icones). @param {object} el @param {object} doc @param {number} taille @returns {string} SVG */
+  iconeSvg(el, doc, taille) { return el && el.tag ? syIconeSvg(el.sy && el.sy.isProject ? 'Package' : el.tag, taille, syIconeMarques(el)) : ''; },
+  /** Icône du type qu'une règle de création produit (sous-menu « Nouveau ▸ »). @param {object} regle @param {number} taille @returns {string} SVG */
+  iconeType(regle, taille) { return regle && regle.tag ? syIconeSvg(regle.tag, taille) : ''; },
   /** @param {object} el @param {string} n @returns {string|undefined} valeur de l'attribut */
   attr(el, n) { const a = el.attrs.find(x => x.n === n); return a ? a.v : undefined; },
   /** Parcours en profondeur. @param {object} racine @param {function(object)} f */
@@ -2384,6 +2386,631 @@ const FMT_SYSML = {
 };
 
 FORMATS.push(FMT_SYSML);
+
+/* ── src/js/sysml/35-icones.js ── */
+/* ═══════════════════════════════════════════════════════════════════════
+   SysML v2 — icônes des métaclasses (sans DOM). Dessins écrits pour Arcature (Apache 2.0), d'après la notation graphique
+   normalisée de SysML v2 / UML et la notation textuelle (dossier d'un paquetage, rectangle arrondi d'une action, ellipse
+   d'un cas d'utilisation, losange d'une décision, triangle creux d'une spécialisation, « :> », « ~ », « ** »…) : aucun
+   dessin d'un autre outil n'est repris (SysON, Pilot Implementation, Cameo…). Raisons de chaque dessin : docs/sysml/ICONES.md.
+
+   Grammaire commune (viewBox 0 0 16 16) :
+   ─ couleur de la famille (STR structure, BEH comportement, REQ exigences et cas, ORG organisation) ;
+   ─ définition : forme pleine de la couleur, angles vifs, signes blancs ; usage : fond clair, trait de la couleur, angles
+     arrondis (la notation de SysML v2 : définitions à angles droits, usages arrondis) ; usage de référence (ref, perform,
+     exhibit, satisfy, include, assert) : contour en tirets ;
+   ─ familles à base commune et variantes : appartenances (⊕ du propriétaire, puis le membre : signe propre à la sorte),
+     relations (source, trait, tête : celle de la notation, signe de la notation textuelle), expressions (pastille arrondie
+     et signe de l'opération), littéraux (case aux angles vifs et valeur), imports et expositions (dossier ou vue, flèche) ;
+   ─ marques d'un élément (pastille sombre en bas à droite) : direction in / out / inout, rôle (acteur, partie prenante,
+     sujet, objectif), port conjugué « ~ », import récursif « ** », vérification d'une exigence.
+
+   API : syIconeNature(type), syIconeCorps(type, marques), syIconeSvg(type, taille, marques), syIconeMarques(nœud),
+   syIconeVue(genre, taille) ; reprises par FMT_SYSML.iconeSvg / iconeType et par le lecteur autonome (icone, iconeVue).
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/** Couleurs par famille : [trait (et fond d'une définition), fond d'un usage]. Contraste vérifié sur fond clair et sombre. */
+const SYI_COULEURS = { STR: ['#1f8ca3', '#d4eef3'], BEH: ['#3a9a3a', '#dcf1dc'], REQ: ['#c2387a', '#f8dcea'], ORG: ['#8250df', '#e8ddfa'] };
+
+/** Fond, trait et encre des pastilles de marques (neutres, lisibles sur les deux thèmes). */
+const SYI_PASTILLE = { fond: '#3d444d', trait: '#ffffff' };
+
+/**
+ * Rayon des angles : vifs pour une définition, celui demandé sinon.
+ * @param {object} c contexte de dessin { s, f, t, def }
+ * @param {number} r rayon d'un usage
+ * @returns {number} rayon
+ */
+function syiR(c, r) { return c.def ? 0.6 : r; }
+
+/**
+ * Rectangle de contour (angles vifs pour une définition).
+ * @param {object} c contexte de dessin
+ * @param {number} x abscisse @param {number} y ordonnée @param {number} w largeur @param {number} h hauteur
+ * @param {number} r rayon d'un usage
+ * @returns {string} SVG
+ */
+function syiBoite(c, x, y, w, h, r) { return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${syiR(c, r)}" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/>`; }
+
+/**
+ * Texte centré (gras par défaut).
+ * @param {string} t texte @param {number} x centre @param {number} y ligne de base @param {number} taille corps
+ * @param {string} coul couleur @param {boolean} [maigre] graisse normale
+ * @returns {string} SVG
+ */
+function syiTexte(t, x, y, taille, coul, maigre) { return `<text x="${x}" y="${y}" font-size="${taille}" font-weight="${maigre ? 400 : 700}" text-anchor="middle" fill="${coul}" stroke="none">${t}</text>`; }
+
+/**
+ * Trait horizontal terminé par une tête pleine.
+ * @param {number} x1 départ @param {number} x2 pointe @param {number} y hauteur @param {string} s couleur
+ * @param {boolean} [tirets] trait en tirets
+ * @returns {string} SVG
+ */
+function syiFleche(x1, x2, y, s, tirets) {
+  return `<path d="M${x1} ${y}H${x2 - 2.6}" stroke="${s}" stroke-width="1.5"${tirets ? ' stroke-dasharray="2.2 1.5"' : ''}/><path d="M${x2 - 3.2} ${y - 2.4}L${x2} ${y}L${x2 - 3.2} ${y + 2.4}Z" fill="${s}"/>`;
+}
+
+/**
+ * Signe dessiné dans un cadre de 10 × 10, posé à l'échelle voulue (membre d'une appartenance, marque d'une pastille).
+ * @param {string} nom signe (SYI_SIGNES)
+ * @param {number} x gauche @param {number} y haut @param {number} k échelle
+ * @param {string} k1 couleur du trait @param {string} f fond
+ * @returns {string} SVG
+ */
+function syiSigne(nom, x, y, k, k1, f) {
+  const g = SYI_SIGNES[nom];
+  return g ? `<g transform="translate(${x} ${y}) scale(${k})">${g(k1, f)}</g>` : '';
+}
+
+/** Signes du cadre 10 × 10 : membres des appartenances et marques des pastilles (trait, fond). */
+const SYI_SIGNES = {
+  // membre non possédé (Membership : le membre vit ailleurs, il n'est que nommé ici)
+  membre: (k, f) => `<rect x="1.5" y="1.5" width="7" height="7" fill="none" stroke="${k}" stroke-width="1.5" stroke-dasharray="1.8 1.3"/>`,
+  // membre possédé (OwningMembership)
+  possede: (k, f) => `<rect x="1.5" y="1.5" width="7" height="7" fill="${f}" stroke="${k}" stroke-width="1.5"/>`,
+  // caractéristique (Feature) : barre arrondie
+  carac: (k, f) => `<rect x=".8" y="3.1" width="8.4" height="3.8" rx="1.9" fill="${f}" stroke="${k}" stroke-width="1.5"/>`,
+  // extrémité (end) : caractéristique butant sur un trait
+  fin: (k, f) => `<rect x=".6" y="3.1" width="6.2" height="3.8" rx="1.9" fill="${f}" stroke="${k}" stroke-width="1.5"/><path d="M8.9 1V9" stroke="${k}" stroke-width="1.8"/>`,
+  // paramètre : « ( ) » de la notation textuelle
+  param: (k) => `<path d="M3.4 1.2Q.9 5 3.4 8.8M6.6 1.2Q9.1 5 6.6 8.8" fill="none" stroke="${k}" stroke-width="1.6" stroke-linecap="round"/><circle cx="5" cy="5" r="1.2" fill="${k}"/>`,
+  // paramètre de retour : flèche qui revient
+  retour: (k) => `<path d="M8.6 1.2V5.8H3.6" fill="none" stroke="${k}" stroke-width="1.7"/><path d="M4.4 3L1 5.8L4.4 8.6Z" fill="${k}"/>`,
+  // expression de résultat : « = »
+  egal: (k) => `<path d="M1.2 3.4H8.8M1.2 6.6H8.8" stroke="${k}" stroke-width="1.8"/>`,
+  // filtre : entonnoir
+  filtre: (k, f) => `<path d="M.8 1.3H9.2L6.1 5V9L3.9 7.9V5Z" fill="${f}" stroke="${k}" stroke-width="1.4" stroke-linejoin="round"/>`,
+  // variante : embranchement
+  variante: (k) => `<path d="M5 9.2V5.4M5 5.4L1.8 1.4M5 5.4L8.2 1.4" fill="none" stroke="${k}" stroke-width="1.7" stroke-linecap="round"/><circle cx="1.8" cy="1.4" r="1.2" fill="${k}"/><circle cx="8.2" cy="1.4" r="1.2" fill="${k}"/>`,
+  // acteur : personnage
+  acteur: (k) => `<circle cx="5" cy="1.9" r="1.5" fill="none" stroke="${k}" stroke-width="1.3"/><path d="M5 3.4V6.4M1.8 4.6H8.2M5 6.4L2.6 9.4M5 6.4L7.4 9.4" fill="none" stroke="${k}" stroke-width="1.4" stroke-linecap="round"/>`,
+  // partie prenante : buste
+  prenante: (k) => `<circle cx="5" cy="2.9" r="2.1" fill="${k}"/><path d="M1 9.6C1.4 6.2 8.6 6.2 9 9.6Z" fill="${k}"/>`,
+  // sujet : loupe (ce qui est examiné)
+  sujet: (k) => `<circle cx="4.1" cy="4.1" r="2.9" fill="none" stroke="${k}" stroke-width="1.6"/><path d="M6.2 6.2L9.2 9.2" stroke="${k}" stroke-width="2.1" stroke-linecap="round"/>`,
+  // objectif : cible
+  objectif: (k) => `<circle cx="5" cy="5" r="4.1" fill="none" stroke="${k}" stroke-width="1.3"/><circle cx="5" cy="5" r="2.2" fill="none" stroke="${k}" stroke-width="1.3"/><circle cx="5" cy="5" r=".9" fill="${k}"/>`,
+  // contrainte : accolades « { } »
+  contrainte: (k) => `<path d="M3.6 1Q2.1 1 2.1 2.6V4Q2.1 5 1 5Q2.1 5 2.1 6V7.4Q2.1 9 3.6 9M6.4 1Q7.9 1 7.9 2.6V4Q7.9 5 9 5Q7.9 5 7.9 6V7.4Q7.9 9 6.4 9" fill="none" stroke="${k}" stroke-width="1.4"/>`,
+  // préoccupation : « ! »
+  alerte: (k) => `<path d="M5 1.2V6.2" stroke="${k}" stroke-width="2.1" stroke-linecap="round"/><circle cx="5" cy="8.6" r="1.2" fill="${k}"/>`,
+  // vérification : coche
+  coche: (k) => `<path d="M1.3 5.3L3.9 7.9L8.8 2.2" fill="none" stroke="${k}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`,
+  // sous-action d'un état (entry / do / exit) : petit état et sa pastille d'entrée
+  etat: (k, f) => `<rect x=".8" y="2" width="8.4" height="6" rx="3" fill="${f}" stroke="${k}" stroke-width="1.4"/><circle cx="3.4" cy="5" r="1.1" fill="${k}"/>`,
+  // caractéristique d'une transition (accept / if / do) : flèche courbe
+  transition: (k) => `<path d="M1.4 8.8C1.8 3.4 5.6 1.6 7.6 3.2" fill="none" stroke="${k}" stroke-width="1.5"/><path d="M5.6 4.4L8.9 4.3L8 1.2Z" fill="${k}"/>`,
+  // rendu d'une vue : pinceau
+  pinceau: (k) => `<path d="M9.2 .8L4.8 5.2" stroke="${k}" stroke-width="1.7" stroke-linecap="round"/><path d="M4.3 4.6L5.4 5.7C5.4 7.6 3.6 9.3 .8 9.2C1.2 7.4 1.6 5 4.3 4.6Z" fill="${k}"/>`,
+  // directions : in (entre jusqu'au trait), out (part du trait), inout (deux sens)
+  in: (k) => `<path d="M.8 5H5.8" stroke="${k}" stroke-width="1.7"/><path d="M5 2.4L8 5L5 7.6Z" fill="${k}"/><path d="M9.2 1V9" stroke="${k}" stroke-width="1.6"/>`,
+  out: (k) => `<path d="M.8 1V9" stroke="${k}" stroke-width="1.6"/><path d="M1.8 5H6.4" stroke="${k}" stroke-width="1.7"/><path d="M5.8 2.4L9 5L5.8 7.6Z" fill="${k}"/>`,
+  inout: (k) => `<path d="M3 5H7" stroke="${k}" stroke-width="1.7"/><path d="M3.6 2.4L.6 5L3.6 7.6ZM6.4 2.4L9.4 5L6.4 7.6Z" fill="${k}"/>`,
+  // port conjugué : « ~ »
+  tilde: (k) => `<path d="M.8 6.2C2.2 2.8 3.8 2.8 5 5C6.2 7.2 7.8 7.2 9.2 3.8" fill="none" stroke="${k}" stroke-width="1.9" stroke-linecap="round"/>`,
+  // import récursif : « ** »
+  recursif: (k) => `<path d="M2.6 1.6V5.4M.9 2.6L4.3 4.4M.9 4.4L4.3 2.6M7.4 4.6V8.4M5.7 5.6L9.1 7.4M5.7 7.4L9.1 5.6" stroke="${k}" stroke-width="1.3" stroke-linecap="round"/>`,
+  // tous les membres : « * »
+  tous: (k) => `<path d="M5 1.2V8.8M1.7 3.1L8.3 6.9M1.7 6.9L8.3 3.1" stroke="${k}" stroke-width="1.6" stroke-linecap="round"/>`,
+  // vue (exposition) : œil
+  oeil: (k, f) => `<path d="M.6 5C2.8 1.6 7.2 1.6 9.4 5C7.2 8.4 2.8 8.4 .6 5Z" fill="${f}" stroke="${k}" stroke-width="1.3"/><circle cx="5" cy="5" r="1.6" fill="${k}"/>`
+};
+
+/**
+ * Base des appartenances, d'après la norme (SysML v2.0 §8.2.3.5–6, p. 199–200) : cercle vide d'un membre non possédé
+ * (`unowned-membership`), ⊕ d'un membre possédé (`owned-membership`), losange plein d'une caractéristique (FeatureMembership
+ * et ses sortes : `composite-feature-membership`) ; puis un trait et le membre.
+ * @param {object} c contexte de dessin
+ * @param {string} signe signe du membre (SYI_SIGNES)
+ * @param {string} [base] 'non' (non possédé), 'possede' (défaut) ou 'carac' (caractéristique)
+ * @returns {string} SVG
+ */
+function syiAppartenance(c, signe, base) {
+  const tete = base === 'carac' ? `<path d="M.8 8L4 4.9L7.2 8L4 11.1Z" fill="${c.s}" stroke="${c.s}" stroke-width="1"/>`
+    : `<circle cx="4" cy="8" r="3" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/>` + (base === 'non' ? '' : `<path d="M4 5.6V10.4M1.6 8H6.4" stroke="${c.s}" stroke-width="1.1"/>`);
+  return tete + `<path d="M7 8H8.6" stroke="${c.s}" stroke-width="1.3"/>` + syiSigne(signe, 8.6, 4.4, 0.72, c.s, c.f);
+}
+
+/**
+ * Base des relations : source à gauche, trait vers la tête à droite (dessins de la norme, SysML v2 Part 1 §8.2.3.6 :
+ * triangle creux, et devant lui deux points pour le typage, quatre pour le sous-ensemble de référence, une barre pour la
+ * redéfinition) ; signe de la notation textuelle au-dessus seulement quand la norme n'a pas de dessin propre.
+ * @param {object} c contexte de dessin
+ * @param {object} o options { source: 'point'|'carre'|'carac'|'port', tete: 'triangle'|'ouverte'|'aucune', deco: 'deux-points'|'quatre-points'|'barre', tirets, signe }
+ * @returns {string} SVG
+ */
+function syiRelation(c, o) {
+  const y = o.signe ? 11.5 : 8, s = c.s;
+  const src = { point: `<circle cx="2.6" cy="${y}" r="1.7" fill="${s}"/>`,
+    carre: `<rect x=".8" y="${y - 2}" width="4" height="4" fill="${c.f}" stroke="${s}" stroke-width="1.1"/>`,
+    carac: `<rect x=".6" y="${y - 1.6}" width="5" height="3.2" rx="1.6" fill="${c.f}" stroke="${s}" stroke-width="1.1"/>`,
+    port: `<rect x=".8" y="${y - 1.8}" width="3.6" height="3.6" fill="${c.f}" stroke="${s}" stroke-width="1.1"/>` }[o.source || 'point'];
+  const x0 = o.source === 'point' || !o.source ? 4.2 : o.source === 'port' ? 4.4 : 5.6;
+  const fin = o.tete === 'aucune' ? 15.2 : 11.6;
+  let tete = '';
+  if (o.tete === 'triangle') tete = `<path d="M11.4 ${y - 3}L15.2 ${y}L11.4 ${y + 3}Z" fill="${c.f}" stroke="${s}" stroke-width="1.1"/>`;
+  else if (o.tete === 'ouverte') tete = `<path d="M11.6 ${y - 3}L15 ${y}L11.6 ${y + 3}" fill="none" stroke="${s}" stroke-width="1.3"/>`;
+  const trait = `<path d="M${x0} ${y}H${o.tete === 'ouverte' ? 14.6 : fin}" stroke="${s}" stroke-width="1.3"${o.tirets ? ' stroke-dasharray="2 1.4"' : ''}/>`;
+  const deco = { 'deux-points': `<circle cx="10" cy="${y - 1.7}" r=".85" fill="${s}"/><circle cx="10" cy="${y + 1.7}" r=".85" fill="${s}"/>`,
+    'quatre-points': `<g fill="${s}"><circle cx="8.6" cy="${y - 1.7}" r=".8"/><circle cx="8.6" cy="${y + 1.7}" r=".8"/><circle cx="10.4" cy="${y - 1.7}" r=".8"/><circle cx="10.4" cy="${y + 1.7}" r=".8"/></g>`,
+    barre: `<path d="M10 ${y - 3}V${y + 3}" stroke="${s}" stroke-width="1.4"/>` }[o.deco] || '';
+  return src + trait + deco + tete + (o.signe ? syiTexte(o.signe, 8.4, 7.4, o.taille || 7.6, s) : '');
+}
+
+/**
+ * Base des expressions : pastille arrondie (un calcul) contenant le signe de l'opération.
+ * @param {object} c contexte de dessin @param {string} interieur SVG du signe (repère 16 × 16)
+ * @returns {string} SVG
+ */
+function syiExpression(c, interieur) { return `<rect x="1" y="3.5" width="14" height="9" rx="4.5" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/>` + interieur; }
+
+/**
+ * Base des littéraux : case aux angles vifs (une valeur écrite) contenant la valeur.
+ * @param {object} c contexte de dessin @param {string} valeur texte @param {number} [taille] corps
+ * @returns {string} SVG
+ */
+function syiLitteral(c, valeur, taille) { return syiEtiquette(c) + syiTexte(valeur, 6.8, 11, taille || 8, c.t); }
+
+/**
+ * Étiquette (pentagone pointé) : base des littéraux, une valeur écrite telle quelle.
+ * @param {object} c contexte de dessin
+ * @returns {string} SVG
+ */
+function syiEtiquette(c) { return `<path d="M1.2 3.8H10.6L14.8 8L10.6 12.2H1.2Z" fill="${c.f}" stroke="${c.s}" stroke-width="1.2" stroke-linejoin="round"/>`; }
+
+/**
+ * Note de la notation (rectangle au coin corné) : base des commentaires.
+ * @param {object} c contexte de dessin @param {string} [interieur] SVG ajouté
+ * @returns {string} SVG
+ */
+function syiNote(c, interieur) {
+  return `<path d="M2 2H10.5L14 5.5V14H2Z" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/><path d="M10.5 2V5.5H14" fill="none" stroke="${c.s}" stroke-width="1"/>` + (interieur || '');
+}
+
+/**
+ * Dossier (paquetage de la notation UML / SysML) : base des paquetages, imports.
+ * @param {object} c contexte de dessin
+ * @returns {string} SVG
+ */
+function syiDossier(c) { return `<path d="M1.5 3.5H6.5L8 5.5H14.5V13.5H1.5Z" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/><path d="M1.5 6.5H14.5" stroke="${c.s}" stroke-width="1"/>`; }
+
+/**
+ * Fenêtre d'une vue (cadre et barre de titre) : base des vues, rendus, expositions.
+ * @param {object} c contexte de dessin @param {string} [interieur] SVG ajouté
+ * @returns {string} SVG
+ */
+function syiFenetre(c, interieur) {
+  return syiBoite(c, 1.5, 2.5, 13, 11, 1.5) + `<path d="M1.5 5.5H14.5" stroke="${c.def ? c.t : c.s}" stroke-width="1.1"/>` + (interieur || '');
+}
+
+/**
+ * Deux blocs reliés : base des connexions (connection, interface, liaison, allocation).
+ * @param {object} c contexte de dessin @param {string} lien SVG du lien entre x = 5.5 et x = 10.5 (y = 8)
+ * @param {boolean} [ports] ports sur les bords intérieurs (interface)
+ * @returns {string} SVG
+ */
+function syiBlocs(c, lien, ports) {
+  const b = (x) => `<rect x="${x}" y="4" width="4.5" height="8" rx="${syiR(c, 1)}" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/>`;
+  const p = ports ? `<rect x="4.3" y="6.6" width="2.6" height="2.8" fill="${c.def ? c.t : c.f}" stroke="${c.s}" stroke-width="1"/><rect x="9.1" y="6.6" width="2.6" height="2.8" fill="${c.def ? c.t : c.f}" stroke="${c.s}" stroke-width="1"/>` : '';
+  return b(1) + b(10.5) + lien + p;
+}
+
+/**
+ * Petite part (cube) en bas à droite : rappelle qu'un acteur ou une partie prenante est une part (PartUsage).
+ * @param {object} c contexte de dessin
+ * @returns {string} SVG
+ */
+function syiPetitePart(c) {
+  return `<path d="M10.6 11L13.2 9.7L15.8 11V13.7L13.2 15L10.6 13.7Z" fill="${c.f}" stroke="${c.s}" stroke-width="1"/><path d="M10.6 11L13.2 12.3L15.8 11M13.2 12.3V15" fill="none" stroke="${c.s}" stroke-width=".8"/>`;
+}
+
+/**
+ * Direction d'un port dessinée dans son carré, comme la norme (SysML v2 §8.2.3.12 : flèche « pdh » dans le port) :
+ * in ← (vers la part), out → (vers l'extérieur), inout ↔.
+ * @param {object} c contexte de dessin (c.m : marques de l'élément)
+ * @returns {string} SVG
+ */
+function syiPortDirection(c) {
+  const d = c.m && c.m.direction, k = c.t;
+  if (d === 'in') return `<path d="M7 8H4.2" stroke="${k}" stroke-width="1.3"/><path d="M5.2 6.2L2.9 8L5.2 9.8Z" fill="${k}"/>`;
+  if (d === 'out') return `<path d="M3 8H5.8" stroke="${k}" stroke-width="1.3"/><path d="M4.8 6.2L7.1 8L4.8 9.8Z" fill="${k}"/>`;
+  if (d === 'inout') return `<path d="M4.4 8H5.6" stroke="${k}" stroke-width="1.3"/><path d="M4.6 6.4L2.8 8L4.6 9.6ZM5.4 6.4L7.2 8L5.4 9.6Z" fill="${k}"/>`;
+  return '';
+}
+
+/**
+ * Flèche d'un import (en tirets comme l'arête « «import» » de la norme), qui entre dans le dossier par le haut ; la pointe,
+ * large et cernée de la couleur du fond, reste lisible sur les traits du dossier.
+ * @param {object} c contexte de dessin
+ * @returns {string} SVG
+ */
+function syiFlecheImport(c) {
+  return `<path d="M11.5 .5V4.6" stroke="${c.s}" stroke-width="1.7" stroke-dasharray="1.7 1"/><path d="M8.6 4.2L11.5 8.8L14.4 4.2Z" fill="${c.s}" stroke="${c.f}" stroke-width=".9" stroke-linejoin="round"/>`;
+}
+
+/**
+ * Flèche entrante en haut à gauche (pointe large, cernée de la couleur du fond) : usage cité par une relation (perform, exhibit, satisfy, verify, include, assert),
+ * que la norme dessine en trait plein avec son mot-clé (« «perform» action »…), contrairement aux références (tirets).
+ * @param {object} c contexte de dessin
+ * @returns {string} SVG
+ */
+function syiRenvoi(c) {
+  return `<path d="M.8 .8L4.2 4.2" stroke="${c.s}" stroke-width="1.7" stroke-linecap="round"/><path d="M7.1 7.1L6.3 1.9L1.9 6.3Z" fill="${c.s}" stroke="${c.f}" stroke-width=".6" stroke-linejoin="round"/>`;
+}
+
+/** Diagrammes de Venn des opérations sur les types : cercles gauche et droite, parties remplies. */
+function syiVenn(c, remplir) {
+  const g = `<circle cx="6" cy="8" r="4.2"/>`, d = `<circle cx="10" cy="8" r="4.2"/>`;
+  return remplir(c) + `<g fill="none" stroke="${c.s}" stroke-width="1.2">${g}${d}</g>`;
+}
+
+/**
+ * Glyphes par nature (repère 16 × 16). Chaque glyphe reçoit le contexte { s : trait, f : fond, t : encre posée sur le fond,
+ * def : définition } ; le premier tracé est le contour (mis en tirets pour un usage de référence).
+ */
+const SYI_GLYPHES = {
+  // ── Structure ──
+  Part: c => `<path d="M2.5 5.3L8 2.5L13.5 5.3V10.7L8 13.5L2.5 10.7Z" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/><path d="M2.5 5.3L8 8L13.5 5.3M8 8V13.5" fill="none" stroke="${c.def ? c.t : c.s}" stroke-width="1"/>`,
+  Acteur: c => `<circle cx="6.5" cy="3.2" r="2.2" fill="${c.f}" stroke="${c.s}" stroke-width="1.3"/><path d="M6.5 5.4V10M2.4 7.3H10.6M6.5 10L3.4 14.6M6.5 10L9.6 14.6" fill="none" stroke="${c.s}" stroke-width="1.5" stroke-linecap="round"/>` + syiPetitePart(c),
+  PartiePrenante: c => `<circle cx="6.5" cy="4.6" r="3.1" fill="${c.s}"/><path d="M.8 15C1.4 9.6 11.6 9.6 12.2 15Z" fill="${c.s}"/>` + syiPetitePart(c),
+  Individual: c => `<path d="M2.5 5.3L8 2.5L13.5 5.3V10.7L8 13.5L2.5 10.7Z" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/><circle cx="8" cy="8.3" r="2.3" fill="${c.t}"/>`,
+  Item: c => syiBoite(c, 2, 4.5, 12, 9.5, 1.2) + `<path d="M8 4.5V14M2 8H14" stroke="${c.t}" stroke-width="1.4"/><path d="M8 4.5C6.2 1.6 4 2.6 5.4 4.5M8 4.5C9.8 1.6 12 2.6 10.6 4.5" fill="none" stroke="${c.s}" stroke-width="1.1"/>`,
+  Payload: c => `<path d="M1 11H15" stroke="${c.s}" stroke-width="1.3"/>` + syiBoite(c, 4.5, 3.5, 7, 6.5, 1) + `<path d="M8 3.5V10M4.5 6.6H11.5" stroke="${c.t}" stroke-width="1.1"/>`,
+  Port: c => `<path d="M5 1.5V14.5" stroke="${c.s}" stroke-width="1.2" opacity=".55"/><path d="M8.5 8H15" stroke="${c.s}" stroke-width="1.4"/><rect x="1.5" y="4.5" width="7" height="7" rx="${syiR(c, 1.2)}" fill="${c.f}" stroke="${c.s}" stroke-width="1.3"/>` + syiPortDirection(c),
+  FlowEnd: c => `<rect x="1" y="5.5" width="5" height="5" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/><path d="M6 8H11" stroke="${c.s}" stroke-width="1.4"/><path d="M11 4.5V11.5" stroke="${c.s}" stroke-width="1.6"/><circle cx="13.5" cy="8" r="1.6" fill="${c.s}"/>`,
+  Attribute: c => syiBoite(c, 2, 2.5, 12, 11, 1.5) + `<path d="M4.2 10.8H11.8M5.2 10.8V8.6M8 10.8V6M10.8 10.8V8.6" fill="none" stroke="${c.t}" stroke-width="1.3" stroke-linecap="round"/>`,
+  Enumeration: c => syiBoite(c, 2, 2.5, 12, 11, 1.5) + `<circle cx="5" cy="5.6" r="1" fill="${c.t}"/><circle cx="5" cy="8.3" r="1" fill="${c.t}"/><circle cx="5" cy="11" r="1" fill="${c.t}"/><path d="M7 5.6H11.5M7 8.3H11.5M7 11H10" stroke="${c.t}" stroke-width="1.2" stroke-linecap="round"/>`,
+  Occurrence: c => syiBoite(c, 1.5, 3.5, 13, 9, 2.5) + `<path d="M3.6 8H12.4" stroke="${c.t}" stroke-width="1.2" stroke-linecap="round"/><path d="M6.2 8H9.8" stroke="${c.t}" stroke-width="3.2"/>`,
+  Reference: c => syiBoite(c, 1.5, 3.5, 7.5, 9, 2.5) + syiFleche(9, 15, 8, c.s),
+  Interface: c => syiBlocs(c, `<path d="M6.9 8H9.1" stroke="${c.s}" stroke-width="1.5"/>`, true),
+  Connection: c => syiBlocs(c, `<path d="M5.5 8H10.5" stroke="${c.s}" stroke-width="1.6"/>`),
+  Connector: c => `<circle cx="2.6" cy="8" r="1.7" fill="${c.s}"/><circle cx="13.4" cy="8" r="1.7" fill="${c.s}"/><path d="M4.2 8H11.8" stroke="${c.s}" stroke-width="1.6"/>`,
+  Binding: c => syiBlocs(c, `<path d="M6.2 6.6H9.8M6.2 9.4H9.8" stroke="${c.s}" stroke-width="1.3"/>`),
+  Allocation: c => `<rect x="1" y="4" width="4.5" height="8" rx="${syiR(c, 1)}" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/><path d="M10.5 5.6L12.8 4.2L15.2 5.6V11L12.8 12.4L10.5 11Z" fill="${c.f}" stroke="${c.s}" stroke-width="1.1"/><path d="M5.5 8H9.8" stroke="${c.s}" stroke-width="1.3"/><path d="M7.8 5.8L10.2 8L7.8 10.2" fill="none" stroke="${c.s}" stroke-width="1.3"/>`,
+  Metadata: c => `<path d="M2 2H8.5L14 7.5L7.5 14L2 8.5Z" fill="${c.f}" stroke="${c.s}" stroke-width="1.2" stroke-linejoin="round"/><circle cx="5.2" cy="5.2" r="1.3" fill="${c.t}"/>`,
+  Metaclass: c => `<path d="M2 2H8.5L14 7.5L7.5 14L2 8.5Z" fill="${c.f}" stroke="${c.s}" stroke-width="1.2" stroke-linejoin="round"/>` + syiTexte('M', 8, 10.6, 6.4, c.t),
+  // ── Comportement ──
+  Action: c => syiBoite(c, 1.5, 3.5, 13, 9, 3.5) + `<path d="M6.3 5.8L9.8 8L6.3 10.2Z" fill="${c.t}"/>`,
+  Step: c => syiBoite(c, 1.5, 3.5, 13, 9, 3.5) + `<path d="M4.5 8H8.2" stroke="${c.t}" stroke-width="1.3"/><path d="M8 5.8L11.4 8L8 10.2Z" fill="${c.t}"/>`,
+  State: c => syiBoite(c, 1.5, 3.5, 13, 9, 4.5) + `<circle cx="5.2" cy="8" r="1.6" fill="${c.t}"/><path d="M6.8 8H11.3" stroke="${c.t}" stroke-width="1.4" stroke-linecap="round"/>`,
+  Calculation: c => syiBoite(c, 1.5, 3, 13, 10, 3.5) + syiTexte('ƒx', 8, 11.2, 7.6, c.t),
+  Flow: c => `<rect x="1" y="5" width="4" height="6" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/>` + syiFleche(5, 15, 8, c.s) + `<rect x="8" y="6.4" width="3.2" height="3.2" fill="${c.s}"/>`,
+  SuccessionFlow: c => `<rect x="1" y="5" width="4" height="6" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/>` + syiFleche(5, 15, 8, c.s, true) + `<rect x="8" y="6.4" width="3.2" height="3.2" fill="${c.s}"/>`,
+  Transition: c => `<path d="M2.5 12.5C3 5.5 9.5 3.5 12.6 6.8" fill="none" stroke="${c.s}" stroke-width="1.5"/><path d="M10.4 7.6L13.6 8.4L13.2 5Z" fill="${c.s}"/><circle cx="2.5" cy="12.5" r="1.6" fill="${c.s}"/>`,
+  Succession: c => `<circle cx="3" cy="8" r="1.8" fill="${c.s}"/>` + syiFleche(4.5, 15, 8, c.s),
+  Send: c => syiBoite(c, 1.5, 3.5, 13, 9, 3.5) + `<path d="M4.4 5.8H9.6L12 8L9.6 10.2H4.4Z" fill="${c.t}"/>`,
+  Accept: c => syiBoite(c, 1.5, 3.5, 13, 9, 3.5) + `<path d="M4 5.8H11.8V10.2H4L6.2 8Z" fill="${c.t}"/>`,
+  Assignment: c => syiBoite(c, 1.5, 3.5, 13, 9, 3.5) + syiTexte(':=', 8, 11.1, 8, c.t),
+  If: c => syiBoite(c, 1.5, 3.5, 13, 9, 3.5) + `<path d="M8 5L11 8L8 11L5 8Z" fill="none" stroke="${c.t}" stroke-width="1.3"/>`,
+  WhileLoop: c => syiBoite(c, 1.5, 3.5, 13, 9, 3.5) + `<path d="M8 5.2A2.8 2.8 0 1 0 10.8 8" fill="none" stroke="${c.t}" stroke-width="1.5"/><path d="M9.2 8.4L10.8 5.6L12.4 8.4Z" fill="${c.t}"/>`,
+  ForLoop: c => syiBoite(c, 1.5, 3.5, 13, 9, 3.5) + syiTexte('∀', 5.2, 11, 7.4, c.t) + `<path d="M10.4 5.9A2.2 2.2 0 1 0 12.6 8.1" fill="none" stroke="${c.t}" stroke-width="1.4"/><path d="M11.2 8.4L12.6 5.9L14 8.4Z" fill="${c.t}"/>`,
+  Terminate: c => `<circle cx="8" cy="8" r="5.5" fill="${c.f}" stroke="${c.s}" stroke-width="1.3"/><path d="M5.2 5.2L10.8 10.8M10.8 5.2L5.2 10.8" stroke="${c.s}" stroke-width="1.6"/>`,
+  Decision: c => `<path d="M8 2L14 8L8 14L2 8Z" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/>`,
+  Merge: c => `<path d="M8 4.5L12 8.5L8 12.5L4 8.5Z" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/><path d="M2 1.5L5.4 5.1M14 1.5L10.6 5.1M8 12.5V15.5" stroke="${c.s}" stroke-width="1.3"/>`,
+  Control: c => `<path d="M8 3.5L12.5 8L8 12.5L3.5 8Z" fill="none" stroke="${c.s}" stroke-width="1.2" stroke-dasharray="1.8 1.2"/>`,
+  Fork: c => `<path d="M8 1V6" stroke="${c.s}" stroke-width="1.3"/><rect x="1.5" y="6" width="13" height="2.6" fill="${c.s}"/><path d="M3.5 8.6V14.5M8 8.6V14.5M12.5 8.6V14.5" stroke="${c.s}" stroke-width="1.3"/>`,
+  Join: c => `<path d="M3.5 1.5V7.4M8 1.5V7.4M12.5 1.5V7.4" stroke="${c.s}" stroke-width="1.3"/><rect x="1.5" y="7.4" width="13" height="2.6" fill="${c.s}"/><path d="M8 10V15" stroke="${c.s}" stroke-width="1.3"/>`,
+  Start: c => `<circle cx="8" cy="8" r="4.5" fill="${c.s}"/>`,
+  Done: c => `<circle cx="8" cy="8" r="5.5" fill="${c.f}" stroke="${c.s}" stroke-width="1.3"/><circle cx="8" cy="8" r="2.6" fill="${c.s}"/>`,
+  Event: c => syiBoite(c, 1.5, 3.5, 13, 9, 2.5) + `<path d="M3.6 8H12.4" stroke="${c.t}" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="8" r="2.2" fill="${c.t}"/>`,
+  // ── Exigences et cas ──
+  Requirement: c => syiBoite(c, 2, 1.5, 12, 13, 1) + `<path d="M2 5H14" stroke="${c.def ? c.t : c.s}" stroke-width="1.2"/><path d="M4.5 8H11.5M4.5 10.5H11.5M4.5 13H9" stroke="${c.t}" stroke-width="1.1" stroke-linecap="round"/>`,
+  Concern: c => syiBoite(c, 2, 1.5, 12, 13, 1) + `<path d="M2 5H14" stroke="${c.def ? c.t : c.s}" stroke-width="1.2"/>` + syiSigne('alerte', 5, 7.4, 0.6, c.t, c.f),
+  Constraint: c => syiBoite(c, 1.5, 2.5, 13, 11, 1.5) + syiSigne('contrainte', 3.5, 3.5, 0.9, c.t, c.f),
+  Invariant: c => syiBoite(c, 1.5, 2.5, 13, 11, 1.5) + syiSigne('contrainte', 3, 3.5, 0.9, c.t, c.f) + syiTexte('∀', 8, 10.8, 6.6, c.t),
+  UseCase: c => `<ellipse cx="8" cy="8" rx="6.5" ry="4.3" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/>`,
+  Case: c => syiBoite(c, 1.5, 2, 13, 12, 2.5) + syiSigne('objectif', 4, 3.5, 0.8, c.t, c.f),
+  Analysis: c => syiBoite(c, 1.5, 2, 13, 12, 2.5) + `<path d="M4.5 11.5V8.5M8 11.5V5M11.5 11.5V7" stroke="${c.t}" stroke-width="1.9"/><path d="M3.5 11.8H12.5" stroke="${c.t}" stroke-width=".9"/>`,
+  Verification: c => syiBoite(c, 1.5, 2, 13, 12, 2.5) + `<circle cx="8" cy="8" r="3.9" fill="none" stroke="${c.t}" stroke-width="1"/>` + syiSigne('coche', 4.6, 4.7, 0.68, c.t, c.f),
+  Viewpoint: c => `<path d="M1 8.5C3.4 4.3 9.6 4.3 12 8.5C9.6 12.7 3.4 12.7 1 8.5Z" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/><circle cx="6.5" cy="8.5" r="2" fill="${c.t}"/><path d="M12.6 6.4L15.4 4.2M12.6 10.6L15.4 12.8" stroke="${c.s}" stroke-width="1.2" stroke-linecap="round"/>`,
+  // ── Organisation ──
+  View: c => syiFenetre(c, syiSigne('oeil', 3.5, 6, 0.9, c.t, c.def ? c.f : '#fff')),
+  Rendering: c => syiFenetre(c, syiSigne('pinceau', 4, 6.4, 0.75, c.t, c.f)),
+  Expose: c => syiFenetre(c, '') + syiFleche(4, 11.6, 9.5, c.t, true),
+  NamespaceExpose: c => syiFenetre(c, '') + syiFleche(3, 9.6, 9.5, c.t, true) + syiSigne('tous', 10, 7, 0.45, c.t, c.f),
+  Package: c => syiDossier(c),
+  Library: c => syiDossier(c) + `<path d="M5 8.5V12M8 8.5V12M11 8.5V12" stroke="${c.def ? c.t : c.s}" stroke-width="1.2"/>`,
+  Import: c => syiDossier(c) + syiFlecheImport(c) + syiSigne('possede', 3.6, 8, 0.5, c.s, c.f),
+  NamespaceImport: c => syiDossier(c) + syiFlecheImport(c) + syiSigne('tous', 3.4, 7.6, 0.55, c.s, c.f),
+  Namespace: c => syiBoite(c, 1.5, 3, 13, 10, 1.5) + syiTexte('::', 8, 11.3, 9, c.t),
+  Alias: c => syiBoite(c, 1.5, 1.5, 9.5, 9.5, 1) + `<rect x="6.8" y="7.3" width="7.7" height="7.7" rx="1" fill="#fff" stroke="${c.s}" stroke-width="1.1"/><path d="M9 13L12.4 9.6M10 9.4H12.6V12" fill="none" stroke="${c.s}" stroke-width="1.3" stroke-linecap="round"/>`,
+  Comment: c => syiNote(c, syiTexte('“', 7.6, 13, 11, c.t)),
+  Documentation: c => syiNote(c, `<path d="M4.5 7H11.5M4.5 9.3H11.5M4.5 11.6H9" stroke="${c.t}" stroke-width="1.2" stroke-linecap="round"/>`),
+  TextualRepresentation: c => syiNote(c, `<path d="M5.6 7.2L3.8 9.4L5.6 11.6M10.4 7.2L12.2 9.4L10.4 11.6M8.8 6.6L7.2 12.2" fill="none" stroke="${c.t}" stroke-width="1.2" stroke-linecap="round"/>`),
+  Annotation: c => `<path d="M7.5 1.5H13.2L15 3.3V8H7.5Z" fill="${c.f}" stroke="${c.s}" stroke-width="1.1"/><path d="M7.5 6.8L2.4 13" stroke="${c.s}" stroke-width="1.3" stroke-dasharray="1.8 1.3"/><circle cx="2.4" cy="13" r="1.6" fill="${c.s}"/>`,
+  Multiplicity: c => syiTexte('[n]', 8, 11.4, 8.4, c.s),
+  MultiplicityRange: c => syiTexte('[..]', 8, 11.4, 7.8, c.s),
+  Feature: c => `<rect x="1.5" y="5" width="13" height="6" rx="3" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/>`,
+  Type: c => syiBoite(c, 1.5, 2.5, 13, 11, 1) + syiTexte('T', 8, 11.4, 9, c.t),
+  Class: c => syiBoite(c, 1.5, 2, 13, 12, 0.6) + `<path d="M1.5 5.5H14.5M1.5 9.5H14.5" stroke="${c.def ? c.t : c.s}" stroke-width="1.1"/>`,
+  DataType: c => syiBoite(c, 1.5, 2, 13, 12, 0.6) + `<path d="M1.5 5.5H14.5" stroke="${c.def ? c.t : c.s}" stroke-width="1.1"/>` + syiTexte('#', 8, 12.6, 7, c.t),
+  Structure: c => syiBoite(c, 1.5, 2, 13, 12, 0.6) + `<path d="M1.5 5.5H14.5" stroke="${c.def ? c.t : c.s}" stroke-width="1.1"/><path d="M5 8.1L8 6.6L11 8.1V11.1L8 12.6L5 11.1Z" fill="none" stroke="${c.t}" stroke-width="1"/>`,
+  Association: c => `<rect x="1" y="1.5" width="5" height="5" fill="${c.f}" stroke="${c.s}" stroke-width="1.1"/><rect x="10" y="9.5" width="5" height="5" fill="${c.f}" stroke="${c.s}" stroke-width="1.1"/><path d="M6 4H8V12H10" fill="none" stroke="${c.s}" stroke-width="1.4"/>`,
+  Element: c => `<rect x="3" y="3" width="10" height="10" rx="1" fill="none" stroke="${c.s}" stroke-width="1.2" stroke-dasharray="2 1.4"/>`,
+  Relationship: c => syiRelation(c, { source: 'point', tete: 'aucune' }) + `<circle cx="13.4" cy="8" r="1.7" fill="${c.s}"/>`,
+  Definition: c => syiBoite(c, 2, 3, 12, 10, 0.6),
+  Usage: c => syiBoite(c, 2, 3, 12, 10, 3.5),
+  // relations (spécialisation et sœurs) : signe de la notation textuelle
+  Specialization: c => syiRelation(c, { tete: 'triangle' }),
+  Subclassification: c => syiRelation(c, { source: 'carre', tete: 'triangle' }),
+  FeatureTyping: c => syiRelation(c, { source: 'carac', tete: 'triangle', deco: 'deux-points' }),
+  ConjugatedPortTyping: c => syiRelation(c, { source: 'port', tete: 'triangle', deco: 'deux-points', signe: '~', taille: 10 }),
+  Subsetting: c => syiRelation(c, { source: 'carac', tete: 'triangle' }),
+  ReferenceSubsetting: c => syiRelation(c, { source: 'carac', tete: 'triangle', deco: 'quatre-points' }),
+  CrossSubsetting: c => syiRelation(c, { source: 'carac', tete: 'triangle', signe: '=>', taille: 7.2 }),
+  Redefinition: c => syiRelation(c, { source: 'carac', tete: 'triangle', deco: 'barre' }),
+  Conjugation: c => syiRelation(c, { source: 'carre', tete: 'ouverte', signe: '~', taille: 10 }),
+  PortConjugation: c => syiRelation(c, { source: 'port', tete: 'ouverte', signe: '~', taille: 10 }),
+  Dependency: c => syiRelation(c, { tete: 'ouverte', tirets: true }),
+  Disjoining: c => `<g fill="${c.f}" stroke="${c.s}" stroke-width="1.2"><circle cx="3.9" cy="8" r="3"/><circle cx="12.1" cy="8" r="3"/></g><path d="M8 3V13" stroke="${c.s}" stroke-width="1.2" stroke-dasharray="1.5 1.2"/>`,
+  Unioning: c => syiVenn(c, c => `<g fill="${c.s}" opacity=".45"><circle cx="6" cy="8" r="4.2"/><circle cx="10" cy="8" r="4.2"/></g>`),
+  Intersecting: c => syiVenn(c, c => `<path d="M8 4.5A4.2 4.2 0 0 1 8 11.5A4.2 4.2 0 0 1 8 4.5Z" fill="${c.s}"/>`),
+  Differencing: c => syiVenn(c, c => `<path d="M8 4.5A4.2 4.2 0 1 0 8 11.5A4.2 4.2 0 0 1 8 4.5Z" fill="${c.s}"/>`),
+  FeatureChaining: c => `<g fill="none" stroke="${c.s}" stroke-width="1.5"><rect x="1" y="5.5" width="8" height="5" rx="2.5"/><rect x="7" y="5.5" width="8" height="5" rx="2.5"/></g>`,
+  FeatureInverting: c => `<path d="M2 5.5H11.8" stroke="${c.s}" stroke-width="1.4"/><path d="M11 3.3L14.2 5.5L11 7.7Z" fill="${c.s}"/><path d="M4.2 10.5H14" stroke="${c.s}" stroke-width="1.4"/><path d="M5 8.3L1.8 10.5L5 12.7Z" fill="${c.s}"/>`,
+  TypeFeaturing: c => `<rect x="4" y="1.5" width="8" height="5" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/><path d="M8 6.5V10" stroke="${c.s}" stroke-width="1.2" stroke-dasharray="1.4 1"/><rect x="2" y="10" width="12" height="4" rx="2" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/>`,
+  FeatureValue: c => `<rect x=".8" y="5.6" width="5.6" height="4.8" rx="2.4" fill="${c.f}" stroke="${c.s}" stroke-width="1.2"/><path d="M7.6 6.8H10.2M7.6 9.2H10.2" stroke="${c.s}" stroke-width="1.3"/>` + syiTexte('1', 13.2, 11.2, 7.4, c.s),
+  // expressions : pastille et opération
+  Expression: c => syiExpression(c, syiTexte('ƒ', 8, 11.2, 8.6, c.t)),
+  BooleanExpression: c => syiExpression(c, syiTexte('?', 5.6, 10.8, 7.4, c.t) + `<path d="M8.6 8.2L10.2 9.8L12.8 6.2" fill="none" stroke="${c.t}" stroke-width="1.4" stroke-linecap="round"/>`),
+  NullExpression: c => syiExpression(c, syiTexte('∅', 8, 11, 8, c.t)),
+  InvocationExpression: c => syiExpression(c, syiTexte('f( )', 8, 10.6, 6.6, c.t)),
+  OperatorExpression: c => syiExpression(c, syiTexte('+', 5.5, 11.2, 8.5, c.t) + syiTexte('×', 10.5, 10.9, 7.6, c.t)),
+  FeatureReferenceExpression: c => syiExpression(c, `<path d="M3.6 8H7.4" stroke="${c.t}" stroke-width="1.3"/><path d="M6.8 6.2L9 8L6.8 9.8Z" fill="${c.t}"/><rect x="9.2" y="6.4" width="4.4" height="3.2" rx="1.6" fill="none" stroke="${c.t}" stroke-width="1.1"/>`),
+  FeatureChainExpression: c => syiExpression(c, `<g fill="none" stroke="${c.t}" stroke-width="1.1"><rect x="3.4" y="6.3" width="5.4" height="3.4" rx="1.7"/><rect x="7.2" y="6.3" width="5.4" height="3.4" rx="1.7"/></g>`),
+  CollectExpression: c => syiExpression(c, syiTexte('{ }', 8, 10.6, 6.4, c.t) + `<circle cx="8" cy="8.2" r=".9" fill="${c.t}"/>`),
+  SelectExpression: c => syiExpression(c, syiSigne('filtre', 5, 5, 0.6, c.t, c.f)),
+  IndexExpression: c => syiExpression(c, syiTexte('#', 8, 10.9, 7.6, c.t)),
+  ConstructorExpression: c => syiExpression(c, syiTexte('new', 8, 10.3, 5.4, c.t)),
+  MetadataAccessExpression: c => syiExpression(c, `<path d="M5 5H8.2L11.4 8L8.2 11H5Z" fill="none" stroke="${c.t}" stroke-width="1.1" stroke-linejoin="round"/><circle cx="6.6" cy="6.6" r=".8" fill="${c.t}"/>`),
+  InstantiationExpression: c => syiExpression(c, syiTexte('T( )', 8, 10.6, 6.2, c.t)),
+  TriggerInvocationExpression: c => syiExpression(c, `<path d="M8.8 4.6L6 8.6H8L7.2 11.4L10 7.4H8Z" fill="${c.t}"/>`),
+  // littéraux : case et valeur
+  LiteralBoolean: c => syiEtiquette(c) + `<path d="M2.8 8.1L4.3 9.6L6.6 6.3M7.8 6.3L10.6 9.7M10.6 6.3L7.8 9.7" fill="none" stroke="${c.t}" stroke-width="1.3" stroke-linecap="round"/>`,
+  LiteralInteger: c => syiLitteral(c, '1', 8.4),
+  LiteralRational: c => syiLitteral(c, '1.5', 6),
+  LiteralString: c => syiLitteral(c, '“a”', 6.2),
+  LiteralInfinity: c => syiLitteral(c, '∞', 8.6),
+  Literal: c => syiLitteral(c, '42', 6.6),
+  // appartenances : ⊕ du propriétaire, puis le membre
+  Membership: c => syiAppartenance(c, 'membre', 'non'),
+  OwningMembership: c => syiAppartenance(c, 'possede'),
+  FeatureMembership: c => syiAppartenance(c, 'carac', 'carac'),
+  EndFeatureMembership: c => syiAppartenance(c, 'fin', 'carac'),
+  ParameterMembership: c => syiAppartenance(c, 'param', 'carac'),
+  ReturnParameterMembership: c => syiAppartenance(c, 'retour', 'carac'),
+  ResultExpressionMembership: c => syiAppartenance(c, 'egal', 'carac'),
+  ElementFilterMembership: c => syiAppartenance(c, 'filtre'),
+  VariantMembership: c => syiAppartenance(c, 'variante'),
+  ActorMembership: c => syiAppartenance(c, 'acteur', 'carac'),
+  SubjectMembership: c => syiAppartenance(c, 'sujet', 'carac'),
+  StakeholderMembership: c => syiAppartenance(c, 'prenante', 'carac'),
+  ObjectiveMembership: c => syiAppartenance(c, 'objectif', 'carac'),
+  RequirementConstraintMembership: c => syiAppartenance(c, 'contrainte', 'carac'),
+  FramedConcernMembership: c => syiAppartenance(c, 'alerte', 'carac'),
+  RequirementVerificationMembership: c => syiAppartenance(c, 'coche', 'carac'),
+  StateSubactionMembership: c => syiAppartenance(c, 'etat', 'carac'),
+  TransitionFeatureMembership: c => syiAppartenance(c, 'transition', 'carac'),
+  ViewRenderingMembership: c => syiAppartenance(c, 'pinceau', 'carac')
+};
+
+/**
+ * Métaclasses (sans suffixe Definition / Usage / AsUsage) → [nature, famille, référence, marques].
+ * Les métaclasses absentes prennent leur nature d'après leur nom (suffixe Expression, Membership…) dans syIconeNature.
+ * Les noms de SysON pour les variantes (ItemUsageIn, Actor…) et les anciens noms (ItemFlow…) y sont aussi.
+ */
+const SYI_NATURES = {
+  // Structure
+  Part: ['Part', 'STR'], Item: ['Item', 'STR'], Port: ['Port', 'STR'], ConjugatedPort: ['Port', 'STR', false, { conjugue: true }],
+  Attribute: ['Attribute', 'STR'], Enumeration: ['Enumeration', 'STR'], Occurrence: ['Occurrence', 'STR'], EventOccurrence: ['Event', 'BEH'],
+  Individual: ['Individual', 'STR'], Reference: ['Reference', 'STR', true], Interface: ['Interface', 'STR'], Connection: ['Connection', 'STR'],
+  Connector: ['Connector', 'STR'], BindingConnector: ['Binding', 'STR'], Allocation: ['Allocation', 'STR'], Metadata: ['Metadata', 'ORG'],
+  MetadataFeature: ['Metadata', 'ORG'], Metaclass: ['Metaclass', 'ORG'], FlowEnd: ['FlowEnd', 'STR'], PayloadFeature: ['Payload', 'STR'],
+  // Comportement
+  Action: ['Action', 'BEH'], StateAction: ['Action', 'BEH'], PerformAction: ['Action', 'BEH', 'renvoi'], Step: ['Step', 'BEH'], Behavior: ['Action', 'BEH', false, { def: true }],
+  State: ['State', 'BEH'], ExhibitState: ['State', 'BEH', 'renvoi'], Calculation: ['Calculation', 'BEH'], Function: ['Calculation', 'BEH', false, { def: true }],
+  Flow: ['Flow', 'BEH'], ItemFlow: ['Flow', 'BEH'], FlowConnection: ['Flow', 'BEH'], Interaction: ['Flow', 'BEH', false, { def: true }],
+  SuccessionFlow: ['SuccessionFlow', 'BEH'], SuccessionItemFlow: ['SuccessionFlow', 'BEH'], SuccessionFlowConnection: ['SuccessionFlow', 'BEH'],
+  Transition: ['Transition', 'BEH'], Succession: ['Succession', 'BEH'], SendAction: ['Send', 'BEH'], AcceptAction: ['Accept', 'BEH'],
+  AssignmentAction: ['Assignment', 'BEH'], IfAction: ['If', 'BEH'], WhileLoopAction: ['WhileLoop', 'BEH'], LoopAction: ['WhileLoop', 'BEH'],
+  ForLoopAction: ['ForLoop', 'BEH'], TerminateAction: ['Terminate', 'BEH'], DecisionNode: ['Decision', 'BEH'], MergeNode: ['Merge', 'BEH'],
+  ForkNode: ['Fork', 'BEH'], JoinNode: ['Join', 'BEH'], ControlNode: ['Control', 'BEH'], StartNode: ['Start', 'BEH'], DoneNode: ['Done', 'BEH'],
+  // Exigences et cas
+  Requirement: ['Requirement', 'REQ'], SatisfyRequirement: ['Requirement', 'REQ', 'renvoi'], VerifyRequirement: ['Requirement', 'REQ', 'renvoi', { role: 'verify' }],
+  Concern: ['Concern', 'REQ'], Constraint: ['Constraint', 'REQ'], AssertConstraint: ['Constraint', 'REQ', 'renvoi'], Predicate: ['Constraint', 'REQ', false, { def: true }],
+  Invariant: ['Invariant', 'REQ'], UseCase: ['UseCase', 'REQ'], IncludeUseCase: ['UseCase', 'REQ', 'renvoi'], Case: ['Case', 'REQ'],
+  AnalysisCase: ['Analysis', 'REQ'], VerificationCase: ['Verification', 'REQ'], Viewpoint: ['Viewpoint', 'REQ'],
+  Actor: ['Acteur', 'STR'], Stakeholder: ['PartiePrenante', 'STR'],
+  Subject: ['Reference', 'STR', true, { role: 'subject' }], Objective: ['Requirement', 'REQ', false, { role: 'objective' }],
+  // Organisation
+  View: ['View', 'ORG'], Rendering: ['Rendering', 'ORG'], MembershipExpose: ['Expose', 'ORG'], NamespaceExpose: ['NamespaceExpose', 'ORG'],
+  Expose: ['Expose', 'ORG'], Package: ['Package', 'ORG'], LibraryPackage: ['Library', 'ORG'], Namespace: ['Namespace', 'ORG'], Alias: ['Alias', 'ORG'],
+  Import: ['Import', 'ORG'], MembershipImport: ['Import', 'ORG'], NamespaceImport: ['NamespaceImport', 'ORG'],
+  MembershipImportRecursive: ['Import', 'ORG', false, { recursif: true }], NamespaceImportRecursive: ['NamespaceImport', 'ORG', false, { recursif: true }],
+  Comment: ['Comment', 'ORG'], AnnotatingElement: ['Comment', 'ORG'], Documentation: ['Documentation', 'ORG'], TextualRepresentation: ['TextualRepresentation', 'ORG'],
+  Annotation: ['Annotation', 'ORG'], Multiplicity: ['Multiplicity', 'ORG'], MultiplicityRange: ['MultiplicityRange', 'ORG'], Feature: ['Feature', 'ORG'],
+  Type: ['Type', 'ORG'], Classifier: ['Type', 'ORG', false, { def: true }], Class: ['Class', 'ORG', false, { def: true }], DataType: ['DataType', 'ORG', false, { def: true }],
+  Structure: ['Structure', 'ORG', false, { def: true }], Association: ['Association', 'STR', false, { def: true }], AssociationStructure: ['Connection', 'STR', false, { def: true }],
+  Element: ['Element', 'ORG'], Relationship: ['Relationship', 'ORG'], Definition: ['Definition', 'ORG'], Usage: ['Usage', 'ORG'],
+  Specialization: ['Specialization', 'ORG'], Subclassification: ['Subclassification', 'ORG'], FeatureTyping: ['FeatureTyping', 'ORG'],
+  ConjugatedPortTyping: ['ConjugatedPortTyping', 'STR'], Subsetting: ['Subsetting', 'ORG'], ReferenceSubsetting: ['ReferenceSubsetting', 'ORG'],
+  CrossSubsetting: ['CrossSubsetting', 'ORG'], Redefinition: ['Redefinition', 'ORG'], Conjugation: ['Conjugation', 'ORG'], PortConjugation: ['PortConjugation', 'STR'],
+  Dependency: ['Dependency', 'ORG'], Disjoining: ['Disjoining', 'ORG'], Unioning: ['Unioning', 'ORG'], Intersecting: ['Intersecting', 'ORG'],
+  Differencing: ['Differencing', 'ORG'], FeatureChaining: ['FeatureChaining', 'ORG'], FeatureInverting: ['FeatureInverting', 'ORG'],
+  TypeFeaturing: ['TypeFeaturing', 'ORG'], FeatureValue: ['FeatureValue', 'ORG'],
+  // appartenances : famille du membre
+  ActorMembership: ['ActorMembership', 'REQ'], SubjectMembership: ['SubjectMembership', 'REQ'], StakeholderMembership: ['StakeholderMembership', 'REQ'],
+  ObjectiveMembership: ['ObjectiveMembership', 'REQ'], RequirementConstraintMembership: ['RequirementConstraintMembership', 'REQ'],
+  FramedConcernMembership: ['FramedConcernMembership', 'REQ'], RequirementVerificationMembership: ['RequirementVerificationMembership', 'REQ'],
+  StateSubactionMembership: ['StateSubactionMembership', 'BEH'], TransitionFeatureMembership: ['TransitionFeatureMembership', 'BEH'],
+  ParameterMembership: ['ParameterMembership', 'BEH'], ReturnParameterMembership: ['ReturnParameterMembership', 'BEH'],
+  // paramètres de SysON (variantes de direction)
+  parameter: ['Feature', 'BEH']
+};
+
+/** Variantes de direction des noms de SysON (ItemUsageIn, PortDefinitionOut, parameterInout…) → marque de direction. */
+const SYI_DIRECTIONS = { In: 'in', Out: 'out', Inout: 'inout' };
+
+/**
+ * Nature, famille et forme d'une métaclasse : glyphe à employer (SYI_GLYPHES), définition / usage, référence, marques propres
+ * au nom (direction, rôle, conjugaison, récursivité des variantes nommées par SysON).
+ * @param {string} type métaclasse (« PartDefinition », « PerformActionUsage », « NamespaceImport »…)
+ * @returns {{nature:string, fam:string, def:boolean, usage:boolean, ref:boolean, marques:object}|null} null si aucune icône
+ */
+function syIconeNature(type) {
+  type = String(type || '');
+  if (!type) return null;
+  const marques = {};
+  let t = type;
+  const dir = /(Inout|In|Out)$/.exec(t);
+  if (dir && /(Definition|Usage|^parameter)(Inout|In|Out)$/.test(t)) { marques.direction = SYI_DIRECTIONS[dir[1]]; t = t.slice(0, -dir[1].length); }
+  let def = /Definition$/.test(t), usage = /(AsUsage|Usage)$/.test(t);
+  let base = t.replace(/AsUsage$|Usage$|Definition$/, '');
+  if (base === 'ConjugatedPort') { marques.conjugue = true; base = 'Port'; }
+  if (base === 'Reference' && def) return null;   // ReferenceDefinition n'existe pas (norme ; icône orpheline de SysON)
+  let e = SYI_NATURES[t] || SYI_NATURES[base];
+  if (!e) {
+    if (/^Literal/.test(base)) e = [SYI_GLYPHES[base] ? base : 'Literal', 'ORG'];
+    else if (/Expression$/.test(base)) e = [SYI_GLYPHES[base] ? base : 'Expression', 'ORG'];
+    else if (/Membership$/.test(base)) e = [SYI_GLYPHES[base] ? base : 'Membership', 'ORG'];
+    else if (/Expose$/.test(base)) e = ['Expose', 'ORG'];
+    else if (/Import$/.test(base)) e = ['Import', 'ORG'];
+    else if (/Node$/.test(base)) e = ['Control', 'BEH'];
+    else if (SYI_GLYPHES[base]) e = [base, 'ORG'];
+    else return null;
+  }
+  const [nature, fam, ref, m] = e;
+  if (m) { if (m.def) def = true; for (const k of Object.keys(m)) if (k !== 'def') marques[k] = m[k]; }
+  return { nature, fam: SYI_COULEURS[fam] ? fam : 'ORG', def, usage, ref: ref === true, renvoi: ref === 'renvoi', marques };
+}
+
+/**
+ * Marques d'un nœud présenté par l'adaptateur (syDocument) ou d'un élément du lecteur : direction, rôle, port conjugué,
+ * usage de référence, import récursif ou de tous les membres.
+ * @param {object} n nœud { tag, attrs, sy } ou élément { type, direction, role, conjugue, modificateurs, nom }
+ * @returns {object} marques { direction, role, conjugue, ref, recursif, tous }
+ */
+function syIconeMarques(n) {
+  const m = {};
+  if (!n) return m;
+  if (n.attrs) {
+    const a = k => { const x = n.attrs.find(y => y.n === k); return x ? x.v : ''; };
+    if (a('direction')) m.direction = a('direction');
+    if (a('role')) m.role = a('role');
+    if (a('isConjugated') === 'true' || (n.sy && n.sy.conjugated)) m.conjugue = true;
+    if (a('isRef') === 'true') m.ref = true;
+    const sy = n.sy || {};
+    if (sy.recursive || /::\*\*$/.test(a('name'))) m.recursif = true;
+    else if (sy.star || /::\*$/.test(a('name'))) m.tous = true;
+  } else {
+    if (n.direction) m.direction = n.direction;
+    if (n.role) m.role = n.role;
+    if (n.conjugue) m.conjugue = true;
+    if ((n.modificateurs || []).includes('ref')) m.ref = true;
+    const nom = n.nom || n.libelle || '';
+    if (/::\*\*$/.test(nom)) m.recursif = true; else if (/::\*$/.test(nom)) m.tous = true;
+  }
+  return m;
+}
+
+/** Signe de la pastille selon la marque : direction, rôle (dont la vérification d'une exigence), conjugaison, récursivité. */
+const SYI_MARQUES = { in: 'in', out: 'out', inout: 'inout', actor: 'acteur', stakeholder: 'prenante', subject: 'sujet', objective: 'objectif', verify: 'coche' };
+
+/**
+ * Corps SVG (viewBox 0 0 16 16) de l'icône d'une métaclasse, avec ses marques.
+ * @param {string} type métaclasse
+ * @param {object} [marques] marques de l'élément (syIconeMarques) : direction, role, conjugue, ref, recursif, tous
+ * @returns {string} SVG, '' si la métaclasse n'a pas d'icône
+ */
+function syIconeCorps(type, marques) {
+  const nat = syIconeNature(type);
+  if (!nat || !SYI_GLYPHES[nat.nature]) return '';
+  const m = Object.assign({}, nat.marques, marques || {});
+  const [s, clair] = SYI_COULEURS[nat.fam];
+  // trait (et plein d'une définition) en currentColor : la couleur de la famille est posée sur le groupe et l'hôte peut la remplacer
+  const k = 'currentColor';
+  const c = nat.def ? { s: k, f: k, t: '#fff', def: true, m } : { s: k, f: clair, t: k, def: false, m };
+  let corps = SYI_GLYPHES[nat.nature](c);
+  // usage de référence (ref, ReferenceUsage : « -ref » de la norme) : contour (premier tracé) en tirets
+  if ((nat.ref || m.ref) && !nat.def) corps = corps.replace(/(<(?:rect|path|ellipse|circle)\b(?![^>]*stroke-dasharray)[^>]*?stroke="[^"]+")/, '$1 stroke-dasharray="2.2 1.5"');
+  // import / exposition de tous les membres d'un espace de noms : « * » (les noms « P::* » des imports du lecteur)
+  if (m.tous && nat.nature === 'Import') corps = SYI_GLYPHES.NamespaceImport(c);
+  else if (m.tous && nat.nature === 'Expose') corps = SYI_GLYPHES.NamespaceExpose(c);
+  // part tenant un rôle d'acteur ou de partie prenante : le rôle en grand (personnage, buste), la part en petit
+  if (nat.nature === 'Part' && (m.role === 'actor' || m.role === 'stakeholder')) { corps = SYI_GLYPHES[m.role === 'actor' ? 'Acteur' : 'PartiePrenante'](c); m.role = ''; }
+  // usage cité par une relation (perform, exhibit, satisfy…) : trait plein, flèche entrante
+  if (nat.renvoi) corps += syiRenvoi(c);
+  // direction d'un port : dans son carré (syiPortDirection), pas en pastille
+  const signe = m.recursif ? 'recursif' : m.conjugue && nat.nature === 'Port' ? 'tilde' : (nat.nature === 'Port' ? '' : SYI_MARQUES[m.direction]) || SYI_MARQUES[m.role] || '';
+  if (signe) corps += `<circle cx="12.2" cy="12.2" r="3.8" fill="${SYI_PASTILLE.fond}" stroke="${SYI_PASTILLE.trait}" stroke-width=".8"/>` + syiSigne(signe, 9.3, 9.3, 0.58, SYI_PASTILLE.trait, SYI_PASTILLE.fond);
+  return `<g color="${s}">${corps}</g>`;
+}
+
+/**
+ * Icône complète (élément `<svg>` de classe `ico`, comme les icônes de Capella d'Arcature).
+ * @param {string} type métaclasse
+ * @param {number} [taille] côté en pixels (16 par défaut)
+ * @param {object} [marques] marques de l'élément
+ * @returns {string} SVG, '' si la métaclasse n'a pas d'icône
+ */
+function syIconeSvg(type, taille, marques) {
+  const corps = syIconeCorps(type, marques);
+  if (!corps) return '';
+  const n = taille || 16;
+  return `<svg class="ico" viewBox="0 0 16 16" width="${n}" height="${n}" aria-hidden="true" stroke-linejoin="round" font-family="Arial,Helvetica,sans-serif">${corps}</svg>`;
+}
+
+/**
+ * Teinte de chaque genre de vue, celle du genre de diagramme UML / SysML v1 le plus proche (mêmes valeurs que
+ * UIC_DIAG_TEINTES d'uml/46-icones.js : vue générale = bdd, interconnexion = ibd, états = stm, flux d'actions = act) ; le
+ * fond du cadre est la teinte éclaircie (16 % de la teinte, 84 % de blanc).
+ */
+const SYI_VUES_TEINTES = { generale: ['#2f63c8', '#dee6f6'], interconnexion: ['#1186a6', '#d9ecf1'], etats: ['#c4412c', '#f6e1dd'], actions: ['#2e8b3a', '#deecdf'] };
+
+/**
+ * Icône d'un genre de vue calculée (GV vue générale, IV interconnexion, STV états, AFV flux d'actions) : le cadre du
+ * diagramme et sa cartouche de nom en haut à gauche (la norme : cadre de vue « view-frame » et compartiment du nom,
+ * §8.2.3.26 p. 253 ; idée reprise du jeu B de la salle blanche), pleine et marquée « S » comme tout diagramme SysML (même
+ * règle que les diagrammes SysML v1 : uml/46-icones.js), puis le contenu propre au genre, couleur du genre.
+ * @param {string} genre `generale`, `interconnexion`, `etats` ou `actions`
+ * @param {number} [taille] côté en pixels (14 par défaut)
+ * @returns {string} SVG, '' pour un genre inconnu
+ */
+function syIconeVue(genre, taille) {
+  if (!SYI_VUES_TEINTES[genre]) return '';
+  const [s, f] = SYI_VUES_TEINTES[genre], n = taille || 14, k = 'currentColor';
+  const cadre = `<rect x="1" y="1.5" width="14" height="13" rx=".8" fill="${f}" stroke="${k}" stroke-width="1.2"/>` +
+    `<path d="M1 2.3Q1 1.5 1.8 1.5H6.8V3.8L5.6 5H1Z" fill="${k}"/><text x="3.75" y="4.4" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="3.6" font-weight="700" fill="#fff">S</text>` +
+    `<path d="M1 5H5.6L6.8 3.8V1.5" fill="none" stroke="${k}" stroke-width="1.1"/>`;
+  const boite = (x, y, w, h, r) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="#fff" stroke="${k}" stroke-width="1"/>`;
+  const contenu = {
+    generale: boite(2.8, 6.6, 4.6, 3.4, .4) + boite(8.6, 10, 4.6, 3.2, 1.2) + `<path d="M7.4 8.3H10.9V10" fill="none" stroke="${k}" stroke-width="1"/><path d="M9.9 9L10.9 10.2L11.9 9Z" fill="${k}"/>`,
+    interconnexion: boite(2.4, 6.8, 4, 6, .8) + boite(9.6, 6.8, 4, 6, .8) + `<rect x="5.5" y="9" width="1.8" height="1.8" fill="${k}"/><rect x="8.7" y="9" width="1.8" height="1.8" fill="${k}"/><path d="M7.3 9.9H8.7" stroke="${k}" stroke-width="1.1"/>`,
+    etats: boite(2.2, 7.4, 4.6, 4, 1.8) + boite(9.2, 7.4, 4.6, 4, 1.8) + `<path d="M6.8 9.4H8.4" stroke="${k}" stroke-width="1.1"/><path d="M8.2 8.2L9.6 9.4L8.2 10.6Z" fill="${k}"/>`,
+    actions: `<circle cx="4.2" cy="7.2" r="1.1" fill="${k}"/><path d="M4.2 8.3V9" stroke="${k}" stroke-width="1"/>` + boite(2.2, 9, 4.2, 3.2, 1.4) + `<path d="M6.4 10.6H9" stroke="${k}" stroke-width="1.1"/><path d="M8.8 9.5L10.2 10.6L8.8 11.7Z" fill="${k}"/>` + boite(10.2, 9, 3.6, 3.2, 1.4)
+  }[genre];
+  return `<svg class="ico" viewBox="0 0 16 16" width="${n}" height="${n}" aria-hidden="true" stroke-linejoin="round" data-diagramme="${genre}" data-sysml=""><g color="${s}">${cadre}${contenu}</g></svg>`;
+}
 
 /* ── src/js/sysml/45-validation.js ── */
 /* ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════
@@ -3732,6 +4359,7 @@ const LEC_SVG_CSS = "svg.clair{--syv-toile:#f6f8fc;--syv-fond:#ffffff;--syv-trai
      analyser(texte, nom)                  → diagnostics d'un seul texte, sans résolution des noms (contrôle rapide)
      reconnait(nom)  binaire(nom)          → extensions reconnues ; fichier à lire en octets (.kpar)
      motCle(type)  famille(type)  citer(nom)  motsReserves  familles  relations  libelleRelation(rel, sens)  regles()
+     icone(typeOuElement, taille)  iconeCorps(typeOuElement)  iconeNature(type)  iconeVue(genre, taille)  iconeCouleurs   → icônes (sysml/35-icones.js)
      bibliotheque.paquetages()  bibliotheque.membres(paquetage)  bibliotheque.contient(nom)
    Une lecture expose des éléments en objets simples (sérialisables, désignés par leur identifiant stable) :
      elements()  element(id)  racine  enfants(id)  proprietaire(id)  descendants(id)  parNomQualifie(nom)  parNom(nom)
@@ -4054,6 +4682,26 @@ const ArcatureLecteurSysml = {
   familles: Object.assign({}, SY_FAMILLES),
   /** Genres de vues calculées : sigle, famille, libellé. */
   genresVues: Object.fromEntries(Object.entries(SYV_GENRES).map(([k, g]) => [k, { sigle: g.sigle, famille: g.famille, libelle: g.libelle }])),
+  /**
+   * Icône d'une métaclasse ou d'un élément de la lecture (marques comprises : direction, rôle, port conjugué, référence,
+   * import récursif), élément `<svg>` de classe `ico` (src/js/sysml/35-icones.js, raisons des dessins : docs/sysml/ICONES.md).
+   * @param {string|object} typeOuElement métaclasse (« PartDefinition ») ou élément d'une lecture
+   * @param {number} [taille] côté en pixels (16 par défaut)
+   * @returns {string} SVG, '' si la métaclasse n'a pas d'icône
+   */
+  icone(typeOuElement, taille) { const e = typeOuElement && typeof typeOuElement === 'object' ? typeOuElement : null; return syIconeSvg(e ? e.type : typeOuElement, taille, e ? syIconeMarques(e) : null); },
+  /**
+   * Corps de l'icône (dessins du repère 0 0 16 16, sans élément `<svg>`), pour l'inclure dans un SVG de l'hôte.
+   * @param {string|object} typeOuElement métaclasse ou élément d'une lecture
+   * @returns {string} SVG, '' si la métaclasse n'a pas d'icône
+   */
+  iconeCorps(typeOuElement) { const e = typeOuElement && typeof typeOuElement === 'object' ? typeOuElement : null; return syIconeCorps(e ? e.type : typeOuElement, e ? syIconeMarques(e) : null); },
+  /** @param {string} type métaclasse @returns {{nature:string, fam:string, def:boolean, usage:boolean, ref:boolean, marques:object}|null} nature de l'icône */
+  iconeNature(type) { return syIconeNature(type); },
+  /** @param {string} genre genre de vue (`generale`, `interconnexion`, `etats`, `actions`) @param {number} [taille] côté @returns {string} SVG */
+  iconeVue(genre, taille) { return syIconeVue(genre, taille); },
+  /** Couleurs des icônes par famille : [trait, fond d'un usage]. */
+  iconeCouleurs: JSON.parse(JSON.stringify(SYI_COULEURS)),
   /** Feuille de styles des dessins SVG (classes syv-…, thèmes « clair » et « sombre » sur l'élément svg), reprise d'Arcature. */
   svgCss: LEC_SVG_CSS,
   /** Mots réservés de SysML v2. */

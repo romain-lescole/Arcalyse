@@ -170,7 +170,7 @@ function capDosOngletHtml(){
   const reimp=`<button class="cap-lf-btn" data-da="import" title="${_L('Réimporter les retours des relecteurs : page HTML enregistrée, .json ou document Word commenté (.docx)')}">${_L('📥 Réimporter des retours…')}</button>`;
   const haut=rap
     ?`<div class="dos-rap" title="${_L('Dossier rempli à partir du modèle selon un plan type, entièrement modifiable ensuite')}"><div class="dos-rap-t">${_L('📘 Plans types')}</div>`+
-      capDosGabarits().map(g=>`<button class="cap-lf-btn dos-rap-b" data-dos-gab="${g.k}" title="${esc(g.t)}">${esc(g.l.replace(/^\S+\s/,''))}</button>`).join('')+
+      capRapPlansHtml()+capDosGabarits().map(g=>`<button class="cap-lf-btn dos-rap-b${capRapPlansHtml()?' dos-rap-cap':''}" data-dos-gab="${g.k}" title="${esc(g.t)}">${esc(g.l.replace(/^\S+\s/,''))}</button>`).join('')+
       `<div class="dos-rap-t" style="margin-top:4px">${_L('🧩 Mes modèles')}</div>`+
       L.filter(x=>x.modele).map(x=>`<button class="cap-lf-btn dos-rap-b" data-rap-go="${x.id}" title="${_L('Générer un rapport à partir de ce modèle')}">▶ ${esc(x.titre||_L('(sans titre)'))}</button>`).join('')+
       `<span class="hm-row" style="margin:0"><button class="cap-lf-btn" data-da="rap-new" title="${_L('Nouveau modèle de rapport (prérempli d\'un exemple de boucles, à adapter)')}">${_L('✚ Nouveau modèle')}</button>`+
@@ -231,6 +231,7 @@ function capDosHtml(d){
     `<button class="cap-lf-btn" data-da="dup" title="${_L('Dupliquer (sans les retours)')}">${_L('⎘ Dupliquer')}</button><button class="cap-lf-btn" data-da="del" title="${_L('Supprimer')}">🗑</button>`+
     (capHomePopWin('dos',d.id)?'':`<button class="cap-lf-btn" data-a="pop" data-kind="dos" data-id="${d.id}" title="${_L('Ouvrir dans une fenêtre séparée (par exemple sur un autre écran)')}">⧉</button>`)+`</span>`+
     (d.modele?'':`<label class="dos-opt dos-com" title="${_L('Décoché : la page HTML exportée est un rapport à lire et imprimer, sans 💬 ni nom de relecteur (le Word reste commentable avec Word)')}"><input type="checkbox" data-dsf="commentaires"${com?' checked':''}> ${_L('💬 Commentaires dans la page HTML')}</label>`)+`</div>`;
+  if(d.modele) h+=capRapSujetHtml(d);   // 🎯 sujet du modèle (100)
   h+=`<div class="hm-plan"><label class="hm-f hm-f-w"><span>${_L('Consignes aux relecteurs')}</span><textarea data-dsf="consignes" rows="2" placeholder="${_L('Ce qu\'il faut regarder, comment répondre…')}">${esc(d.consignes)}</textarea></label>`+
     `<div class="hm-f4"><label class="hm-f"><span>${_L('Retour attendu le')}</span><input type="date" data-dsf="echeance" value="${esc(d.echeance)}"></label>`+
     `<label class="hm-f"><span>${_L('Auteur')}</span><input data-dsf="auteur" value="${esc(d.auteur)}" placeholder="${_L('Nom')}"></label></div>`+
@@ -373,7 +374,7 @@ function capDosBlocHtml(d, b){
   else if(b.k==='mod'){ M=capDosModHtml(b); h+=M.h; }
   else if(b.k==='el') h+=`<span class="dos-ico">◆</span>${capHomeChip(b.ref,'')}<label class="dos-opt"><input type="checkbox" data-bf="desc"${b.desc?' checked':''}> ${_L('Description')}</label>`;
   else if(b.k==='liste') h+=`<span class="dos-ico">▤</span><input class="dos-liste-t" data-bf="titre" value="${esc(b.titre||'')}" placeholder="${_L('Titre du tableau')}">`+
-    `<span class="ana-dim">${_L(`${b.ids.length} élément(s)`)} · ${b.cols==='ech'?_L('échanges : source, cible, éléments échangés'):b.cols==='req'?_L('exigences : identifiant, texte, priorité, vérification, éléments liés'):_L('nom, type, description')}</span>`+
+    `<span class="ana-dim">${capRapListeLib(b)?_L(`${capDosListeLignes(b).rows.length} ligne(s)`)+' · '+capRapListeLib(b):_L(`${b.ids.length} élément(s)`)+' · '+(b.cols==='ech'?_L('échanges : source, cible, éléments échangés'):b.cols==='req'?_L('exigences : identifiant, texte, priorité, vérification, éléments liés'):_L('nom, type, description'))}</span>`+
     `<button class="cap-lf-btn" data-da="liste-voir">${_capDosUi.listes.has(b.id)?_L('▴ Masquer'):_L('▾ Voir / modifier')}</button>`;
   else if(b.k==='auto') h+=capRapAutoHtml(b);
   else if(b.k==='xlay') h+=`<span class="dos-ico">⇶</span><span class="dos-blk-l">${esc(capXlTitre(b.opts||{}))}</span><button class="cap-lf-btn" data-da="xl-open" title="${_L('Ouvrir dans 🔬 Analyses › ⇶ Liens entre couches')}">${_L('⇶ Ouvrir')}</button>`;
@@ -435,6 +436,7 @@ function capDosClick(e){
   const a=t.closest('[data-da]'); if(!a) return false;
   const act=a.dataset.da, d=capDosOf(a), bEl=t.closest('[data-b]'), f=d&&bEl?capDosTrouve(d.blocs, bEl.dataset.b):null;
   if(act.startsWith('tx-')){ capDosTxAct(act, a, d, f, W); return true; }   // textes du modèle, commandes du clic droit (65)
+  if(act.startsWith('rap-')&&capRapAct(act, a, d, f, W, e)) return true;   // 🧩 modèles génériques : sujet, portée, chemins, colonnes, plans SysML (100)
   switch(act){
     case 'new': capDosNouveau(); break;
     case 'import': capDosImporter(W); return true;
@@ -461,7 +463,7 @@ function capDosClick(e){
       f.l.splice(f.i,1); } break;
     case 'ret': { const k=a.dataset.bid; if(u.ret.has(k)) u.ret.delete(k); else u.ret.add(k); capHomeRender(); return true; }
     case 'ret-tous': u.tous=!u.tous; capHomeRender(); return true;
-    case 'boucle-add': if(d){ const c={id:capHomeUid(), k:'chap', titre:'{nom}', ref:null, desc:true, boucle:{type:'fn', couche:'SA', filtre:'', nom:'', max:30}, blocs:[]};
+    case 'boucle-add': if(d){ const c={id:capHomeUid(), k:'chap', titre:'{nom}', ref:null, desc:true, boucle:capRapFormat()==='capella'?{type:'fn', couche:'SA', filtre:'', nom:'', max:30}:{type:'gen', g:'blocs', portee:'tout', max:30}, blocs:[]};
       (f&&f.b.k==='chap'?f.b.blocs:d.blocs).push(c); capHomeSave(); capHomeRender(); } return true;
     case 'auto-add': if(d){ (f&&f.b.k==='chap'?f.b.blocs:d.blocs).push({id:capHomeUid(), k:'auto', quoi:'desc'}); capHomeSave(); capHomeRender(); } return true;
     case 'rap-gen': if(d) capRapGenerer(d); return true;
@@ -495,6 +497,7 @@ function capDosInput(e){
     capHomeSaveLater(); return true; }
   const bEl=t.closest('[data-b]'), f=bEl&&capDosTrouve(d.blocs, bEl.dataset.b);
   // 🧩 modèle de rapport : réglages d'une boucle (data-bb) ou d'un contenu automatique (data-ba)
+  if(f&&t.dataset.bc) return capRapColInput(f.b, t, e);   // colonne d'un tableau générique (100)
   if(f&&(t.dataset.bb||t.dataset.ba)){ const o=t.dataset.bb?f.b.boucle:f.b, k=t.dataset.bb||t.dataset.ba, liste=t.tagName==='SELECT'||t.type==='checkbox';
     if(liste&&e.type!=='change') return true;
     o[k]=t.type==='checkbox'?t.checked:t.value; if(liste){ capHomeSave(); capHomeRender(); } else capHomeSaveLater(); return true; }
@@ -547,7 +550,18 @@ async function capDosDiagSvgs(uids, st){
   return out;
 }
 /**
- * Contenu du dossier prêt à exporter : chapitres numérotés, descriptions (texte), éléments, diagrammes (SVG, dimensions,
+ * Description mise en forme gardée dans les exports (page HTML, Word, aperçu) : HTML de Capella filtré par capSafeHtml
+ * (sans les adaptations au thème de l'application).
+ * @param {string} html - Description d'origine (HTML ou texte)
+ * @returns {string} HTML filtré, ou '' si la description n'a pas de balise (le texte simple suffit)
+ */
+function capDosRiche(html){
+  if(!html||!/<[a-z][^>]*>/i.test(html)) return '';
+  const h=capSafeHtml(html, {export:true});
+  return /\S/.test(capHtmlToText(h))||/<img/i.test(h)?h:'';
+}
+/**
+ * Contenu du dossier prêt à exporter : chapitres numérotés, descriptions (texte, et html : mise en forme d'origine filtrée), éléments, diagrammes (SVG, dimensions,
  * description, éléments représentés), textes ; figures numérotées.
  * @param {object} d - Dossier
  * @param {function(string):void} [st] - Avancement
@@ -557,22 +571,23 @@ async function capDosContenu(d, st){
   const uids=[]; capDosParcours(d.blocs,b=>{ if(b.k==='diag'&&!uids.includes(b.ref.id)) uids.push(b.ref.id); });
   const svgs=uids.length?await capDosDiagSvgs(uids, st):{};
   const reps=capHomeReps(), info=ref=>{ const e=ref&&ref.k==='el'&&capLoaded&&capGetElementById_(ref.id);
-    return {nom:ref?capHomeRefNom(ref):'', type:ref?capHomeRefType(ref):'', couche:e?e.layer||'':ref&&ref.couche||'', desc:e?capHtmlToText(e.attrs.description||''):'', absent:!!ref&&!e}; };
+    return {nom:ref?capHomeRefNom(ref):'', type:ref?capHomeRefType(ref):'', couche:e?e.layer||'':ref&&ref.couche||'', desc:e?capHtmlToText(e.attrs.description||''):'',
+      html:e?capDosRiche(e.attrs.description):'', absent:!!ref&&!e}; };
   let fig=0;
   const conv=(l, pre, niv)=>{ let n=0;
     return l.map(b=>{
       if(b.k==='chap'){ n++; const num=(pre?pre+'.':'')+n, r=b.ref?info(b.ref):null;
-        return {id:b.id, k:'chap', num, niv, titre:capDosTitre(b)||(r&&r.nom)||'', ref:r?{nom:r.nom, type:r.type, couche:r.couche}:null, desc:b.desc&&r?r.desc:'', avecDesc:!!(b.desc&&r), enfants:conv(b.blocs, num, niv+1)}; }
+        return {id:b.id, k:'chap', num, niv, titre:capDosTitre(b)||(r&&r.nom)||'', ref:r?{nom:r.nom, type:r.type, couche:r.couche}:null, desc:b.desc&&r?r.desc:'', html:b.desc&&r?r.html:'', avecDesc:!!(b.desc&&r), enfants:conv(b.blocs, num, niv+1)}; }
       if(b.k==='txt') return {id:b.id, k:'txt', txt:b.txt||''};
-      if(b.k==='mod') return {id:b.id, k:'txt', txt:capDosModTexte(b)};   // texte du modèle, relu à l'export
+      if(b.k==='mod') return {id:b.id, k:'txt', txt:capDosModTexte(b), html:capDosModRiche(b)};   // texte du modèle, relu à l'export
       if(b.k==='liste'){ const t=capDosListeLignes(b); b.elemsExp=t.rows.map(x=>x.id);   // lignes exportées (réimport Word)
         return {id:b.id, k:'liste', titre:b.titre||'', head:t.head, rows:t.rows}; }
       if(b.k==='xlay'){ const r=capXlSvg(b.opts||{});   // ⇶ Liens entre couches, redessinés sur le modèle chargé
         return {id:b.id, k:'diag', fig:++fig, nom:capXlTitre(b.opts||{}), type:_L('Liens entre couches'), couche:'', desc:'', cible:'', svg:r.svg, w:r.w, h:r.h, elems:[]}; }
-      if(b.k==='el'){ const r=info(b.ref); return {id:b.id, k:'el', nom:r.nom, type:r.type, couche:r.couche, desc:b.desc?r.desc:'', avecDesc:!!b.desc, absent:r.absent}; }
+      if(b.k==='el'){ const r=info(b.ref); return {id:b.id, k:'el', nom:r.nom, type:r.type, couche:r.couche, desc:b.desc?r.desc:'', html:b.desc?r.html:'', avecDesc:!!b.desc, absent:r.absent}; }
       const rep=reps.find(x=>x.uid===b.ref.id), svg=svgs[b.ref.id]||'', m=rep?capDiagMeta(rep.uid):null;
       const o={id:b.id, k:'diag', fig:++fig, nom:capDosNomDiag(rep?rep.nom:b.ref.nom), type:capHomeRefType(b.ref), couche:rep?rep.couche||'':b.ref.couche||'',
-        desc:b.desc&&m?m.desc:'', cible:m&&m.cible?m.cible.nom+' ('+m.cible.type+')':'', svg:'', w:0, h:0, elems:[]};
+        desc:b.desc&&m?m.desc:'', html:b.desc&&m?capDosRiche(m.html):'', cible:m&&m.cible?m.cible.nom+' ('+m.cible.type+')':'', svg:'', w:0, h:0, elems:[]};
       if(svg){ const p=capDiagPlanche(rep, svg, {cadre:false, cartouche:false, desc:false}); Object.assign(o,{svg:p.svg, w:p.w, h:p.h});
         if(b.elems){ o.elems=capDosElemsReels(capDiagElements(svg)); b.elemsExp=o.elems.map(x=>x[3]); } }
       return o;
@@ -602,7 +617,7 @@ async function capDosVisu(d, btn){
   const W=capHomeWin(btn), st=m=>capWatchFlash(m);
   let src=d;
   if(d.modele){ if(!capLoaded){ capAlert(_L('Chargez d\'abord un modèle.'),{win:W}); return; }
-    src=Object.assign({}, d, {id:'apercu', modele:false, blocs:capRapEval(d.blocs, null, capDosOutils())}); }
+    const o=capDosOutils(); src=Object.assign({}, d, {id:'apercu', modele:false, blocs:capRapEval(d.blocs, capRapSujetCtx(d, o), o)}); }   // 🎯 sujet du modèle (100)
   if(!src.blocs.length){ capAlert(_L('Le dossier est vide : ajoutez au moins un chapitre.'),{win:W}); return; }
   if(btn) btn.disabled=true;
   try{ const envoi=await capDosEnvoi(src, st), w=capDosVisuWins.get(d.id);
@@ -723,6 +738,7 @@ function capDosBout(v){
  */
 function capDosListeLignes(b){
   if(b.cols==='req') return capDosReqLignes(b.ids||[]);   // tableau d'exigences (66)
+  const gen=capRapLignes(b); if(gen) return gen;   // tableaux des modèles génériques : colonnes au choix, liens, connexions, propriétés, ports (100)
   const nom=e=>e?e.attrs.name||'':'—', noms=v=>capParseAttrRefs_(String(v||'')).map(capGetElementById_).filter(Boolean).map(x=>x.attrs.name||'').filter(Boolean).join(', ');
   const els=(b.ids||[]).map(id=>capLoaded&&capGetElementById_(id)).filter(Boolean);
   if(b.cols==='ech') return {head:[_L('Échange'), _L('Source'), _L('Cible'), _L('Éléments échangés')],
@@ -777,6 +793,7 @@ section.chap{margin-top:18px}h2,h3,h4,h5{margin:16px 0 6px;scroll-margin-top:60p
 .el{border:1px solid #d0d7de;border-radius:6px;padding:6px 10px;margin:8px 0}.el .h{font-weight:600}.el .h span{font-weight:400;color:#57606a;font-size:12px;margin-left:6px}.el .d{white-space:pre-wrap;margin-top:4px}
 figure{margin:12px 0;border:1px solid #d0d7de;border-radius:6px;padding:8px}figure .img{overflow:auto;text-align:center;cursor:zoom-in}figure img{max-width:100%;height:auto}figure .img.z{cursor:zoom-out}figure .img.z img{max-width:none}
 figcaption{text-align:center;font-size:13px;color:#24292f;margin-top:6px}figcaption b{color:#0969da}.fd{white-space:pre-wrap;font-size:13px;color:#24292f;margin-top:6px}.fc{font-size:12px;color:#57606a;text-align:center}
+.rh,.el .d.rh{white-space:normal}.rh p{margin:0 0 6px}.rh ul,.rh ol{margin:2px 0 6px;padding-left:22px}.rh table{width:auto}.rh img{max-width:100%}.rh .hl{color:#0969da}.rh>:last-child{margin-bottom:0}
 table{border-collapse:collapse;width:100%;font-size:12.5px;margin-top:6px}.ec{width:34px;text-align:center}.cbe{padding:0 5px;font-size:12px;opacity:.6}tr:hover .cbe{opacity:1}tr.cz td{border:0;padding:0}.lst .lt{font-weight:600;margin-top:10px}table.lstt td{vertical-align:top}table.lstt .ld{white-space:pre-wrap;font-size:12px;color:#24292f}tr.cz .coms:empty{display:none}details.els summary{font-weight:600}th,td{border:1px solid #d0d7de;padding:3px 6px;text-align:left}th{background:#f6f8fa}details{margin-top:6px}summary{cursor:pointer;color:#0969da;font-size:12.5px}
 .coms{margin:4px 0 8px 14px}.com{border:1px solid #d4a72c;background:#fff8c5;border-radius:6px;padding:5px 9px;margin:5px 0;font-size:13px}.com.other{border-color:#d0d7de;background:#f6f8fa}
 .com .h{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:#57606a}.com .h b{color:#1f2328}.com .x{font-style:italic;color:#57606a;margin-top:2px}.com .t{white-space:pre-wrap;margin-top:2px}
@@ -828,17 +845,17 @@ function node(n){
     var s='<section class="chap" id="s-'+n.id+'"><h'+h+' class="blk"><span class="num">'+esc(n.num)+'</span>'+esc(n.titre)+
       '<label class="relu"><input type="checkbox" data-relu="'+n.id+'"'+(relu?' checked':'')+'> '+esc(T.relu)+'</label>'+btn(n.id)+'</h'+h+'>'+zone(n.id);
     if(n.ref)s+='<div class="refl">'+esc(n.ref.type)+(n.ref.couche?' · '+esc(n.ref.couche):'')+'</div>';
-    if(n.avecDesc)s+='<div class="blk desc">'+(n.desc?esc(n.desc):'<span class="nodesc">'+esc(T.nodesc)+'</span>')+btn(n.id+'.d')+'</div>'+zone(n.id+'.d');
+    if(n.avecDesc)s+='<div class="blk desc'+(n.html?' rh':'')+'">'+(n.html?n.html:n.desc?esc(n.desc):'<span class="nodesc">'+esc(T.nodesc)+'</span>')+btn(n.id+'.d')+'</div>'+zone(n.id+'.d');
     return s+n.enfants.map(node).join('')+'</section>';}
   if(n.k==='liste')return '<div class="blk lst"><div class="lt">▤ '+esc(n.titre)+' <span style="color:#57606a;font-weight:400">('+n.rows.length+')</span></div>'+btn(n.id)+'</div>'+zone(n.id)+
     '<table class="lstt"><tr>'+n.head.map(function(h){return '<th>'+esc(h)+'</th>';}).join('')+'<th></th></tr>'+n.rows.map(function(r){var b=n.id+'~'+r.id;
       return '<tr>'+r.c.map(function(x,i){return '<td'+(i===r.c.length-1?' class="ld"':'')+'>'+esc(x)+'</td>';}).join('')+'<td class="ec"><button class="cbe" data-new="'+esc(b)+'" title="'+esc(T.comment)+'">💬</button></td></tr><tr class="cz"><td colspan="'+(n.head.length+1)+'">'+zone(b)+'</td></tr>';}).join('')+'</table>';
-  if(n.k==='txt')return '<div class="blk txt">'+esc(n.txt)+btn(n.id)+'</div>'+zone(n.id);
+  if(n.k==='txt')return '<div class="blk txt'+(n.html?' rh':'')+'">'+(n.html||esc(n.txt))+btn(n.id)+'</div>'+zone(n.id);
   if(n.k==='el')return '<div class="blk el"><div class="h">◆ '+esc(n.nom)+'<span>'+esc(n.type)+(n.couche?' · '+esc(n.couche):'')+(n.absent?' · '+esc(T.absent):'')+'</span></div>'+
-    (n.avecDesc?'<div class="d">'+(n.desc?esc(n.desc):'<span class="nodesc">'+esc(T.nodesc)+'</span>')+'</div>':'')+btn(n.id)+'</div>'+zone(n.id);
+    (n.avecDesc?'<div class="d'+(n.html?' rh':'')+'">'+(n.html?n.html:n.desc?esc(n.desc):'<span class="nodesc">'+esc(T.nodesc)+'</span>')+'</div>':'')+btn(n.id)+'</div>'+zone(n.id);
   var f='<figure class="blk">'+(n.svg64?'<div class="img" title="'+esc(T.zoom)+'"><img alt="'+esc(n.nom)+'" src="data:image/svg+xml;base64,'+n.svg64+'"></div>':'<div class="fc">'+esc(T.nodiag)+'</div>')+
     '<figcaption><b>'+esc(T.figure)+' '+n.fig+'</b> — '+esc(n.nom)+' <span style="color:#57606a">('+esc(n.type)+')</span></figcaption>'+
-    (n.cible?'<div class="fc">'+esc(T.cible)+' : '+esc(n.cible)+'</div>':'')+(n.desc?'<div class="fd">'+esc(n.desc)+'</div>':'');
+    (n.cible?'<div class="fc">'+esc(T.cible)+' : '+esc(n.cible)+'</div>':'')+(n.html?'<div class="fd rh">'+n.html+'</div>':n.desc?'<div class="fd">'+esc(n.desc)+'</div>':'');
   if(n.elems&&n.elems.length){var ouvert=D.retours.some(function(r){return String(r.bloc).indexOf(n.id+'~')===0;});
     f+='<details class="els"'+(ouvert?' open':'')+'><summary>'+esc(T.elems)+' ('+n.elems.length+') — '+esc(T.elemsAide)+'</summary><table><tr><th>'+esc(T.elem)+'</th><th>'+esc(T.type)+'</th><th>'+esc(T.couche)+'</th><th></th></tr>'+
     n.elems.map(function(e){var b=n.id+'~'+(e[3]||'');return '<tr><td>'+esc(e[0])+'</td><td>'+esc(e[1])+'</td><td>'+esc(e[2])+'</td><td class="ec">'+(e[3]?'<button class="cbe" data-new="'+esc(b)+'" title="'+esc(T.comment)+'">💬</button>':'')+'</td></tr>'+
@@ -891,6 +908,75 @@ render();
 /* ── Document Word (.docx) ─────────────────────────────────────────────── */
 
 /**
+ * Description mise en forme (HTML filtré par capDosRiche) convertie en paragraphes Word : gras, italique, souligné,
+ * barré, indice / exposant, couleur, code, liens (texte souligné), titres, listes à puces ou numérotées (avec retrait),
+ * alignement, tableaux ; une image devient « [image] ».
+ * @param {string} html - HTML filtré
+ * @param {string} [style] - Style de paragraphe Word (ex. ArcDesc)
+ * @returns {string} XML WordprocessingML (paragraphes et tableaux), '' si rien à écrire
+ */
+function capDocxHtml(html, style){
+  const x=s=>String(s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F￾￿]/g,'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  const ctx2=document.createElement('canvas').getContext('2d');
+  const hex=v=>{ ctx2.fillStyle='#010203'; ctx2.fillStyle=v; const m=/^#([0-9a-f]{6})$/i.exec(ctx2.fillStyle); return m&&m[1]!=='010203'?m[1].toUpperCase():''; };   // couleur CSS → RRGGBB
+  const doc=new DOMParser().parseFromString(String(html||''),'text/html');
+  const BLOCS=/^(P|DIV|H[1-6]|LI|BLOCKQUOTE|PRE|DT|DD|CENTER|TABLE|HR|UL|OL|DL|CAPTION)$/;
+  const out=[]; let runs='', pp=null;
+  const ppr=p=>{ const ind=(style?240:0)+p.niv*360;
+    return `<w:pPr>${style?`<w:pStyle w:val="${style}"/>`:''}${p.keep?'<w:keepNext/>':''}${p.bdr||''}${ind||p.puce?`<w:ind w:left="${ind+(p.puce?360:0)}"${p.puce?' w:hanging="360"':''}/>`:''}${p.jc?`<w:jc w:val="${p.jc}"/>`:''}</w:pPr>`; };
+  const flush=()=>{ if(runs.replace(/<w:r><w:t xml:space="preserve"> *<\/w:t><\/w:r>/g,'')) out.push(`<w:p>${ppr(pp||{niv:0})}${runs}</w:p>`); runs=''; };
+  const rpr=f=>(f.code?'<w:rFonts w:ascii="Consolas" w:hAnsi="Consolas" w:cs="Consolas"/>':'')+(f.b?'<w:b/>':'')+(f.i?'<w:i/>':'')+(f.s?'<w:strike/>':'')+
+    (f.color?`<w:color w:val="${f.color}"/>`:'')+(f.sz?`<w:sz w:val="${f.sz}"/>`:'')+(f.u?'<w:u w:val="single"/>':'')+(f.va?`<w:vertAlign w:val="${f.va}"/>`:'');
+  const texte=(t, f)=>{ const r=rpr(f); runs+=`<w:r>${r?`<w:rPr>${r}</w:rPr>`:''}<w:t xml:space="preserve">${x(t)}</w:t></w:r>`; };
+  const css=(el, k)=>{ const m=new RegExp('(?:^|;)\\s*'+k+'\\s*:\\s*([^;]+)','i').exec(el.getAttribute('style')||''); return m?m[1].trim():''; };
+  const marche=(n, f, p)=>{
+    [...n.childNodes].forEach(c=>{
+      if(c.nodeType===3){ let t=f.pre?c.nodeValue:c.nodeValue.replace(/\s+/g,' '); if(!runs&&!f.pre) t=t.replace(/^ /,''); if(!t) return;
+        if(f.pre) t.split('\n').forEach((l,i)=>{ if(i) runs+='<w:r><w:br/></w:r>'; if(l) texte(l, f); }); else texte(t, f); return; }
+      if(c.nodeType!==1) return;
+      const tag=c.tagName, g=Object.assign({}, f);
+      if(/^(B|STRONG)$/.test(tag)||/^(bold|[6-9]00)$/i.test(css(c,'font-weight'))) g.b=true;
+      if(/^(I|EM)$/.test(tag)||/italic/i.test(css(c,'font-style'))) g.i=true;
+      const td=css(c,'text-decoration');
+      if(tag==='U'||tag==='INS'||/underline/i.test(td)) g.u=true;
+      if(/^(S|STRIKE|DEL)$/.test(tag)||/line-through/i.test(td)) g.s=true;
+      if(tag==='SUB') g.va='subscript'; if(tag==='SUP') g.va='superscript';
+      if(tag==='CODE'||tag==='PRE') g.code=true;
+      if(tag==='PRE') g.pre=true;
+      if(tag==='A'||c.classList.contains('hl')){ g.color='0563C1'; g.u=true; }
+      const col=css(c,'color'); if(col){ const h=hex(col); if(h) g.color=h; }
+      if(tag==='BR'){ runs+='<w:r><w:br/></w:r>'; return; }
+      if(tag==='IMG'){ texte('['+(c.getAttribute('alt')||_L('image'))+']', Object.assign({}, g, {i:true})); return; }
+      if(!BLOCS.test(tag)){ marche(c, g, p); return; }
+      // Bloc : le paragraphe en cours se termine, le bloc ouvre le sien
+      flush();
+      if(tag==='HR'){ out.push(`<w:p>${ppr(Object.assign({}, p, {bdr:'<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="1" w:color="D0D7DE"/></w:pBdr>'}))}</w:p>`); return; }
+      if(tag==='TABLE'){ const lignes=[...c.querySelectorAll('tr')].filter(tr=>tr.closest('table')===c);
+        if(!lignes.length) return;
+        const B='<w:top w:val="single" w:sz="4" w:color="D0D7DE"/><w:left w:val="single" w:sz="4" w:color="D0D7DE"/><w:bottom w:val="single" w:sz="4" w:color="D0D7DE"/><w:right w:val="single" w:sz="4" w:color="D0D7DE"/><w:insideH w:val="single" w:sz="4" w:color="D0D7DE"/><w:insideV w:val="single" w:sz="4" w:color="D0D7DE"/>';
+        out.push(`<w:tbl><w:tblPr><w:tblW w:w="0" w:type="auto"/>${style?'<w:tblInd w:w="240" w:type="dxa"/>':''}<w:tblBorders>${B}</w:tblBorders></w:tblPr>`+lignes.map(tr=>'<w:tr>'+[...tr.children].filter(td=>/^T[DH]$/.test(td.tagName)).map(td=>{
+          const sp=+td.getAttribute('colspan')||1, th=td.tagName==='TH', cont=capDocxHtml((th?'<b>':'')+td.innerHTML+(th?'</b>':''), '');
+          return `<w:tc><w:tcPr>${sp>1?`<w:gridSpan w:val="${sp}"/>`:''}${th?'<w:shd w:val="clear" w:color="auto" w:fill="F2F4F7"/>':''}</w:tcPr>${cont||'<w:p/>'}</w:tc>`; }).join('')+'</w:tr>').join('')+'</w:tbl>');
+        out.push('<w:p><w:pPr><w:spacing w:after="0"/></w:pPr></w:p>'); return; }   // un tableau est suivi d'un paragraphe
+      const q=Object.assign({}, p, {puce:false, keep:false});
+      const al=css(c,'text-align')||(tag==='CENTER'?'center':'');
+      if(/^(center|right|justify)$/i.test(al)) q.jc={center:'center', right:'right', justify:'both'}[al.toLowerCase()];
+      if(tag==='UL'||tag==='OL'){ let k=0; const niv=p.niv+(p.liste?1:0);
+        [...c.children].forEach(li=>{ if(li.tagName!=='LI'){ marche(li, g, Object.assign({}, q, {niv})); flush(); return; }
+          k++; pp=Object.assign({}, q, {niv, puce:true}); texte(tag==='OL'?k+'.\t':'•\t', {});
+          marche(li, g, Object.assign({}, q, {niv, liste:true})); flush(); });
+        pp=p; return; }
+      if(/^H[1-6]$/.test(tag)){ g.b=true; g.sz=[30,27,25,23,22,22][+tag[1]-1]; q.keep=true; }
+      if(tag==='BLOCKQUOTE'||tag==='DD') q.niv=p.niv+1;
+      pp=q;
+      marche(c, g, q); flush(); pp=p;
+    });
+  };
+  pp={niv:0};
+  marche(doc.body, {}, pp); flush();
+  return out.join('');
+}
+/**
  * Document Word du dossier : page de titre (projet, auteur, consignes, mode d'emploi), sommaire, chapitres en styles
  * Titre 1 à 4, descriptions, éléments, diagrammes en images PNG avec légende, tableaux des éléments représentés.
  * Chaque bloc porte un signet « arc_<bloc> » : les commentaires de Word y sont rattachés au réimport.
@@ -905,6 +991,7 @@ async function capDosDocx(data, st){
   let bmN=0;
   const bm=(id, contenu)=>{ const n=++bmN; return `<w:bookmarkStart w:id="${n}" w:name="arc_${id.replace(/\./g,'_')}"/>`+contenu+`<w:bookmarkEnd w:id="${n}"/>`; };
   const texte=(t, style)=>String(t||'').split(/\n\s*\n/).map(p=>para(run(p.trim()), style)).join('');
+  const riche=(n, style)=>(n.html&&capDocxHtml(n.html, style))||texte(n.desc, style);   // mise en forme d'origine, sinon texte
   const GRIS='<w:color w:val="57606A"/><w:sz w:val="18"/>';
   const images=[]; let corps='';
   // Page de titre
@@ -923,11 +1010,11 @@ async function capDosDocx(data, st){
     if(n.k==='chap'){
       let s=para(bm(n.id, run(n.num+'  ', '')+run(n.titre)), 'Heading'+Math.min(n.niv+1,4));
       if(n.ref) s+=para(run(n.ref.type+(n.ref.couche?' · '+n.ref.couche:''), GRIS));
-      if(n.avecDesc) s+=bm(n.id+'.d', n.desc?texte(n.desc, 'ArcDesc'):para(run(_L('(pas de description)'), '<w:i/>'+GRIS), 'ArcDesc'));
+      if(n.avecDesc) s+=bm(n.id+'.d', n.desc?riche(n, 'ArcDesc'):para(run(_L('(pas de description)'), '<w:i/>'+GRIS), 'ArcDesc'));
       for(const c of n.enfants) s+=await noeud(c);
       return s;
     }
-    if(n.k==='txt') return bm(n.id, texte(n.txt));
+    if(n.k==='txt') return bm(n.id, riche({desc:n.txt, html:n.html}));
     if(n.k==='liste'){
       const B='<w:top w:val="single" w:sz="4" w:color="D0D7DE"/><w:left w:val="single" w:sz="4" w:color="D0D7DE"/><w:bottom w:val="single" w:sz="4" w:color="D0D7DE"/><w:right w:val="single" w:sz="4" w:color="D0D7DE"/><w:insideH w:val="single" w:sz="4" w:color="D0D7DE"/><w:insideV w:val="single" w:sz="4" w:color="D0D7DE"/>';
       const cell=(t,h,b)=>`<w:tc><w:tcPr>${h?'<w:shd w:val="clear" w:color="auto" w:fill="F2F4F7"/>':''}</w:tcPr>${para(b?bm(b, run(t, (h?'<w:b/>':'')+'<w:sz w:val="18"/>')):run(t, (h?'<w:b/>':'')+'<w:sz w:val="18"/>'), '', '<w:spacing w:after="0"/>')}</w:tc>`;
@@ -935,7 +1022,7 @@ async function capDosDocx(data, st){
         `<w:tr>${n.head.map(h=>cell(h,1)).join('')}</w:tr>`+n.rows.map((r,i)=>`<w:tr>${r.c.map((x,j)=>cell(x,0,j?null:n.id+'_e'+i)).join('')}</w:tr>`).join('')+`</w:tbl>`+para(''):para(run(_L('(aucun élément)'), '<w:i/>'+GRIS)));
     }
     if(n.k==='el') return bm(n.id, para(run('◆ '+n.nom, '<w:b/>')+run('   '+n.type+(n.couche?' · '+n.couche:''), GRIS), '', '<w:keepNext/>')+
-      (n.avecDesc?(n.desc?texte(n.desc, 'ArcDesc'):para(run(_L('(pas de description)'), '<w:i/>'+GRIS), 'ArcDesc')):''));
+      (n.avecDesc?(n.desc?riche(n, 'ArcDesc'):para(run(_L('(pas de description)'), '<w:i/>'+GRIS), 'ArcDesc')):''));
     let s='';
     if(n.svg){
       if(st) st(_L(`⏳ Image ${n.fig} — ${n.nom}`));
@@ -951,7 +1038,7 @@ async function capDosDocx(data, st){
     } else s+=para(run(_L('Diagramme non joint (.aird non chargé lors de l\'export)'), '<w:i/>'+GRIS));
     s+=para(run(_L('Figure')+' '+n.fig, '<w:b/>')+run(' — '+n.nom+' ('+n.type+')'), 'Caption');
     if(n.cible) s+=para(run(_L('Élément représenté')+' : '+n.cible, GRIS), '', '<w:jc w:val="center"/>');
-    if(n.desc) s+=texte(n.desc, 'ArcDesc');
+    if(n.desc) s+=riche(n, 'ArcDesc');
     if(n.elems&&n.elems.length){
       const cell=(t,h)=>`<w:tc><w:tcPr>${h?'<w:shd w:val="clear" w:color="auto" w:fill="F2F4F7"/>':''}</w:tcPr>${para(run(t, (h?'<w:b/>':'')+'<w:sz w:val="18"/>'), '', '<w:spacing w:after="0"/>')}</w:tc>`;
       const B='<w:top w:val="single" w:sz="4" w:color="D0D7DE"/><w:left w:val="single" w:sz="4" w:color="D0D7DE"/><w:bottom w:val="single" w:sz="4" w:color="D0D7DE"/><w:right w:val="single" w:sz="4" w:color="D0D7DE"/><w:insideH w:val="single" w:sz="4" w:color="D0D7DE"/><w:insideV w:val="single" w:sz="4" w:color="D0D7DE"/>';

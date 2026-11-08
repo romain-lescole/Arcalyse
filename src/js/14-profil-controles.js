@@ -21,9 +21,35 @@ const CAP_CHK_POIDS={info:0, warn:1, err:3};   // poids d'origine des gravités 
 const CAP_CHK_VIEWS=[
   ['functions', ()=>capFnChecks(capComputeFunctions(),'all')], ['fex', ()=>capFexChecks('all')], ['csys', ()=>capCbChecks('SA')], ['cblk', ()=>capCbChecks('LA')],
   ['ports', ()=>capPortsDiagSections(capComputePortLinks())], ['chains', ()=>capChChecks('all')], ['scen', ()=>capScChecks()], ['ana:reqs', ()=>capReqChecks()], ['ana:pvmt', ()=>capPvChecks()],
-  ['ana:data', ()=>capDmChecks()], ['ana:cts', ()=>capCtChecks()], ['ana:cats', ()=>capEcChecks()], ['ana:libs', ()=>capLibChecks()], ['ana:rec', ()=>capRecChecks()], ['ana:deploy', ()=>capDepChecks()], ['ana:status', ()=>capStChecks()], ['ana:sysml', ()=>capSyChecks()]];
+  ['ana:data', ()=>capDmChecks()], ['ana:cts', ()=>capCtChecks()], ['ana:cats', ()=>capEcChecks()], ['ana:libs', ()=>capLibChecks()], ['ana:rec', ()=>capRecChecks()], ['ana:deploy', ()=>capDepChecks()], ['ana:status', ()=>capStChecks()], ['ana:sysml', ()=>capSyChecks()], ['ana:uml', ()=>capSyChecks('uml')],
+  ['ana:umlblk', ()=>capUmlBlkChecks()], ['ana:umlact', ()=>capUmlActChecks()], ['ana:umlreq', ()=>capUmlReqChecks()],
+  ['ana:umlstm', ()=>capUmlStmChecks()], ['ana:umlseq', ()=>capUmlSeqChecks()],
+  ['ana:umlucs', ()=>capUmlUcChecks()], ['ana:umltrace', ()=>capUmlTrChecks()],
+  ['ana:umlicd', ()=>capUmlIcdChecks()], ['ana:umlbudget', ()=>capUmlBudgetChecks()],
+  ['ana:umlpar', ()=>capUmlParChecks()], ['ana:umlsoft', ()=>capUmlSoftChecks()]];   // 🧬 UML / SysML v1 : blocs, activités (92), exigences (93), machines à états, interactions (94)
 
-var capChkProfile=(()=>{ try{ const el=document.getElementById('cap-checks'); const p=el?JSON.parse(el.textContent):null; return Object.assign({off:{}, sev:{}, params:{}, poids:{}}, p||{}); }catch(e){ return {off:{}, sev:{}, params:{}, poids:{}}; } })();
+var capChkProfile=(()=>{ try{ const el=document.getElementById('cap-checks'); const p=el?JSON.parse(el.textContent):null; return Object.assign({off:{}, sev:{}, params:{}, poids:{}, regles:{}}, p||{}); }catch(e){ return {off:{}, sev:{}, params:{}, poids:{}, regles:{}}; } })();   // regles : règles des lecteurs d'Arcature activées (true) / désactivées (false)
+/** Règles des lecteurs d'Arcature désactivées par défaut (réactivables par leur case dans Σ Répartition par règle, 88) :
+ * ARC_UML_02 « les classificateurs, paquetages et caractéristiques ont un nom » — règle de bonne pratique d'Arcature, absente de la
+ * norme, qui relève surtout des connecteurs et extrémités d'associations laissés sans nom à dessein (Cameo). */
+const CAP_CHK_REGLES_OFF=['ARC_UML_02'];
+
+/** Une règle d'un lecteur d'Arcature (code d'un diagnostic) est-elle active ? Choix du profil, sinon défaut (`CAP_CHK_REGLES_OFF`).
+ * @param {string} code - Code de la règle (ex. `Namespace::members_distinguishable`, `ARC_UML_02`)
+ * @returns {boolean} vrai si ses diagnostics sont comptés et affichés
+ */
+function capChkRegleOn(code){ const v=(capChkProfile.regles||{})[code]; return v==null?!CAP_CHK_REGLES_OFF.includes(code):!!v; }
+
+/** Active ou désactive une règle d'un lecteur d'Arcature, enregistre le profil et rafraîchit 💚 santé, accueil et vue affichée.
+ * @param {string} code - Code de la règle
+ * @param {boolean} on - Activer
+ */
+function capChkRegleSet(code, on){
+  capChkProfile.regles=capChkProfile.regles||{};
+  if(on===!CAP_CHK_REGLES_OFF.includes(code)) delete capChkProfile.regles[code]; else capChkProfile.regles[code]=!!on;   // valeur par défaut : rien à garder
+  capChkSave(); capChkRefresh(false);
+}
+
 var _capChkSeen={};   // titre → {tip, view} des contrôles déjà affichés (vues sans fonction de contrôles)
 
 /** Enregistre le profil dans la page (bloc `cap-checks`, repris par la 💾 Page HTML). */
@@ -75,12 +101,12 @@ function capChkCatalog(){
 }
 
 /** Applique un profil (fichier ⚙, 📄 projet, import) puis rafraîchit l'affichage.
- * @param {Object} p - Profil {off, sev, params, poids}
+ * @param {Object} p - Profil {off, sev, params, poids, regles}
  */
 function capChkSet(p){
   if(!p||typeof p!=='object') return;
   const full=JSON.stringify(p.params||{})!==JSON.stringify(capChkProfile.params||{});   // seuils changés : tout recalculer (sinon la sous-vue affichée est conservée)
-  capChkProfile={off:p.off||{}, sev:p.sev||{}, params:p.params||{}, poids:p.poids||{}};
+  capChkProfile={off:p.off||{}, sev:p.sev||{}, params:p.params||{}, poids:p.poids||{}, regles:p.regles||{}};
   capChkSave(); capChkRefresh(full);
 }
 
@@ -144,7 +170,7 @@ function capChkDialog(focusTitle){
   ov.querySelectorAll('[data-par]').forEach(i=>i.onchange=()=>{ const k=i.dataset.par, d=(CAP_CHK_PARAMS.find(p=>p[0]===k)||[])[2]; if(i.value===''||+i.value===d) delete P.params[k]; else P.params[k]=+i.value; touch(true); });
   ov.querySelector('[data-c="allon"]').onclick=()=>{ P.off={}; touch(false); capChkDialog(); };
   ov.querySelector('[data-c="alloff"]').onclick=()=>{ ov.querySelectorAll('tr.chk-r').forEach(tr=>{ P.off[tr.dataset.t]=true; }); touch(false); capChkDialog(); };
-  ov.querySelector('[data-c="reset"]').onclick=async()=>{ if(!await capConfirm(_L('Rétablir le profil par défaut : tous les contrôles activés, gravités, poids et seuils d\'origine ?'),{ok:_L('Rétablir')})) return; capChkProfile={off:{},sev:{},params:{},poids:{}}; touch(true); capChkDialog(); };
+  ov.querySelector('[data-c="reset"]').onclick=async()=>{ if(!await capConfirm(_L('Rétablir le profil par défaut : tous les contrôles activés, gravités, poids et seuils d\'origine ?'),{ok:_L('Rétablir')})) return; capChkProfile={off:{},sev:{},params:{},poids:{},regles:{}}; touch(true); capChkDialog(); };
   ov.querySelector('[data-c="exp"]').onclick=()=>capDownloadBlob(new Blob([JSON.stringify({type:'arcalyse-controles', version:1, date:new Date().toISOString(), profil:capChkProfile},null,1)],{type:'application/json'}), _L('profil-controles.json'));
   ov.querySelector('[data-c="imp"]').onclick=()=>{ const inp=document.createElement('input'); inp.type='file'; inp.accept='.json,application/json';
     inp.onchange=async()=>{ const f=inp.files[0]; if(!f) return; let o; try{ o=JSON.parse(await f.text()); }catch(e){ capAlert(_L('Fichier illisible (JSON attendu).'),{level:'err'}); return; }

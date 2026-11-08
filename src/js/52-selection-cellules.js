@@ -9,7 +9,7 @@
  * La copie (capClipCopy) écrit du texte tabulé et un tableau HTML : une cellule à plusieurs lignes reste une seule
  * cellule dans Excel / Word, avec un retour à la ligne par élément.
  */
-var CAP_CS_EXCL='#cap-table, .ana-fnt, .cap-mx, .ana-kv, .fex-box-t, .dash-tbl, .rmcb-t, .dg-t';   // tableaux non concernés
+var CAP_CS_EXCL='#cap-table, .ana-fnt, .cap-mx, .ana-kv, .fex-box-t, .dash-tbl, .rmcb-t, .dg-t, .ud-liste table, .uml-regles';   // .ud-liste : listes 🚦 / 🎬 UML, clic sur la ligne = aperçu (99) ; .uml-regles : Σ Répartition par règle, clic = fiche (88)   // tableaux non concernés
 var _capCs={t:null, cells:new Set(), anchor:null, base:null, down:null, drag:false};          // sélection en cours
 
 /** Copie une grille de cellules dans le presse-papiers : texte tabulé sans guillemets (éditeurs de texte, champs)
