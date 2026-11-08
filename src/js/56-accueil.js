@@ -72,8 +72,9 @@ function capHomeRefEl(id){
   const e=capLoaded&&capGetElementById_(id); if(!e) return null;
   return {k:'el', id, nom:e.attrs.name||id, type:e.typeName, couche:e.layer||''};
 }
-/** Représentations du .aird chargé (la visionneuse est préparée si besoin). @returns {object[]} */
+/** Représentations du .aird chargé (la visionneuse est préparée si besoin), ou diagrammes et vues du lecteur (SysML, UML). @returns {object[]} */
 function capHomeReps(){
+  if(capLoaded&&typeof capDiagSy==='function'&&capDiagSy()) return capDiagReps();   // lecteurs d'Arcature : diagrammes du fichier, vues calculées (SysML v2)
   if(!capLoaded||typeof _capDiag==='undefined'||!_capDiag.texteAird||!capDiagDispo()) return [];
   try{ capDiagEnsure(); if(!_capDiag.airdCharge||_capDiag.modele!==cap_xmlDoc) capDiagSync(); }catch(e){ console.error(e); return []; }
   return capDiagReps();
@@ -152,7 +153,8 @@ function capRenderHome(box){
       tab('rap',_L(`📘 Rapports automatiques`)+(nRap?` <span class="hm-n">${nRap}</span>`:''),_L('Rapports produits à partir du modèle selon un plan type ou un de vos modèles, modifiables, exportables en HTML à commenter ou en Word'))
     :tab('projet',_L('🏠 Projet'),_L('Informations du projet, tâches courantes, fiche, contenu du modèle, revue'));
   box.innerHTML=`<div class="hm-bar"><span class="hm-bar-e">${revue?_L('💬 Revue & documents'):_L('🏠 Accueil')}</span><span class="tb-grp">${onglets}</span>`+
-    (revue?`<button class="cap-lf-btn" data-a="rev" title="${_L('Panneau 💬 Revue : commentaires sur le modèle et les diagrammes, envoi aux relecteurs')}">${_L('💬 Commentaires')}</button>`:'')+
+    (revue?`<button class="cap-lf-btn" data-a="rev" title="${_L('Panneau 💬 Revue : commentaires sur le modèle et les diagrammes, envoi aux relecteurs')}">${_L('💬 Commentaires')}</button>`+
+      `<button class="cap-lf-btn" onclick="capTourStartView()" title="${_L('Visite guidée de 💬 Revue & documents')}">🎓</button>`:'')+
     `<span class="hm-bar-t">${capEsc(capRevProjectName()||capCurrentFileName||'')}</span></div>`+
     `<div class="hm-body">${corps}</div>`;
   if(box._hmCle===cle) capHomeScrollSet(box, pos); box._hmCle=cle;   // même onglet, même document : on reste où l'on était
@@ -206,15 +208,19 @@ function capHomeCartes(){
   const esc=capEsc, F=_capHome.fiche, lig=(k,v)=>v?`<tr><td class="ana-dim">${k}</td><td>${v}</td></tr>`:'';
   const pop=(kind,id)=>`<span class="hm-pop-b" data-a="pop" data-kind="${kind}" data-id="${id}" title="${_L('Ouvrir dans une fenêtre séparée (par exemple sur un autre écran)')}">⧉</span>`;
   return [
-  {k:'projet', l:_L('🔷 Projet'), w:1, f:()=>{ const reps=capHomeReps(), H=typeof _capWatch!=='undefined'?_capWatch.history:[];
+  {k:'projet', l:_L('📋 Projet'), w:1, f:()=>{ const reps=capHomeReps(), H=typeof _capWatch!=='undefined'?_capWatch.history:[], fmt=capHomeFormat(), P=capHomeFormatPuce();
     const par={}; reps.forEach(r=>{ par[r.couche||'—']=(par[r.couche||'—']||0)+1; });
     const diag=_capDiag&&_capDiag.texteAird?`<a href="#" class="hm-lien" data-nav="diag" title="${_L('🔲 Ouvrir les diagrammes')}">${esc(_capDiag.nomAird)}</a>`+(reps.length?' · '+_L(`${reps.length} diagramme(s)`)+
         `<div class="hm-chips">${Object.entries(par).sort((a,b)=>capDiagRang(a[0])-capDiagRang(b[0])).map(([k,n])=>`<span class="hm-stat" style="color:${capDiagCouche(k).color}"><b>${esc(k)}</b> ${n}</span>`).join('')}</div>`:'')
       :`<span class="ana-dim">${_L('aucun .aird chargé')}</span> <button class="cap-lf-btn" data-a="aird">${_L('📂 Ouvrir le .aird…')}</button>`;
     const maj=(H.length?`${capWatchDate(H[0].at)} ${capWatchChips(H[0].counts)||_L('aucune différence')}${H.length>1?` <span class="ana-dim">${_L(`(${H.length} dans la session)`)}</span>`:''}`:`<span class="ana-dim">${_L('aucune depuis l\'ouverture')}</span>`)+
-      ` <button class="cap-lf-btn" data-a="update" title="${_L('Compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour après validation')}">🔄</button>`;
-    return `<table class="hm-kv">`+lig(_L('Projet Capella'),`<b>${esc(capRevProjectName()||'—')}</b>`)+lig(_L('Modèle'),esc(capCurrentFileName||'—'))+
-    lig(_L('Version de Capella'),esc(capHomeCapellaVersion()))+lig(_L('Diagrammes'),diag)+lig(_L('Éléments'),String(capAllElements.length))+
+      ` <button class="cap-lf-btn" data-a="update" title="${_L('Compare un autre fichier au modèle affiché, montre le delta, puis met à jour après validation')}">🔄</button>`;
+    const lec=fmt==='capella'?null:_capSysml.lecture, vues=lec?capSyVuesListe():[], nt=vues.filter(v=>v.tableau).length, nd=vues.length-nt;
+    const format=fmt==='capella'?`${capFmtPuce(P)} ${esc(capHomeCapellaVersion())}`:`${capFmtPuce(P)}${lec.outil?' · '+esc(lec.outil):''}`;
+    const fichiers=lec?(lec.fichiers||[]).map(f=>esc(f.chemin||f.nom||'')).filter(Boolean).join('<br>')||esc(capCurrentFileName||'—'):esc(capCurrentFileName||'—');
+    const dv=fmt==='capella'?diag:fmt==='sysml2'?_L(`${vues.length} vue(s) calculée(s)`):(nt?_L(`${nd} diagramme(s) · ${nt} tableau(x) ou matrice(s)`):_L(`${nd} diagramme(s) de l'outil`));
+    return `<table class="hm-kv">`+lig(_L('Projet'),`<b>${esc(capRevProjectName()||'—')}</b>`)+lig(_L('Format'),format)+lig(fmt==='capella'?_L('Modèle'):_L('Fichier(s)'),fichiers)+
+    lig(fmt==='sysml2'?_L('Vues'):_L('Diagrammes'),dv)+lig(_L('Éléments'),String(lec?lec.elements().length-1:capAllElements.length))+
     lig(_L('Mise à jour'),maj)+lig(_L('Page de projet'),typeof _capProjetPage!=='undefined'&&_capProjetPage.nom?esc(_capProjetPage.nom):'')+lig(_L('Arcalyse'),esc(CAP_APP_VERSION))+`</table>`; }},
   {k:'fiche', l:_L('📝 Fiche projet'), w:2, f:()=>{
     const champ=(k,l,ph,ta)=>`<label class="hm-f"><span>${l}</span>${ta?`<textarea data-ff="${k}" rows="3" placeholder="${ph}">${esc(F[k])}</textarea>`:`<input data-ff="${k}" value="${esc(F[k])}" placeholder="${ph}">`}</label>`;
@@ -225,7 +231,10 @@ function capHomeCartes(){
   {k:'docs', l:_L('☑ Check-lists & plans de revue'), w:1, f:()=>(_capHome.docs.length?`<div class="hm-dl">${_capHome.docs.map(d=>`<div class="hm-dl-i" data-doc="${d.id}"><span>${d.kind==='plan'?'📋':'☑'} ${esc(d.titre||_L('(sans titre)'))}${d.kind==='plan'&&d.head.date?` <span class="ana-dim">${esc(capRevDate(d.head.date))}</span>`:''}</span>${capHomeBar(capHomeProgress(d))}${pop('doc',d.id)}</div>`).join('')}</div>`
       :`<div class="ana-dim">${_L('Aucune check-list ni plan de revue.')}</div>`)+
     `<div class="hm-row"><button class="cap-lf-btn" data-a="quick" title="${_L('Crée une check-list vide et place le curseur sur le premier point')}">${_L('✚ Check-list rapide')}</button><button class="cap-lf-btn" data-a="go-docs" title="${_L('Nouvelle check-list à partir d\'un modèle, nouveau plan de revue')}">${_L('☑ Modèles et plans de revue')}</button></div>`},
-  {k:'contenu', l:_L('🧩 Contenu du modèle'), w:2, f:()=>`<div class="hm-layers">${capHomeCouches().map(c=>{ const lv=CAP_LAYERS[c.k];
+  {k:'contenu', l:_L('🧩 Contenu du modèle'), w:2, f:()=>`<div class="hm-layers">${capHomeFormat()!=='capella'
+    ?capHomeFamilles().map(c=>`<div class="hm-layer" style="--hm-c:${c.c}"><div class="hm-layer-h"><b style="color:${capTextOn(c.c)}">${esc(c.l)}</b><span style="flex:1"></span><b>${c.n}</b></div>`+
+      c.types.map(([t,n])=>`<div class="hm-layer-t"><span>${capIcoType(t,12)} ${esc(capAnaHuman(t))}</span><span>${n}</span></div>`).join('')+`</div>`).join('')
+    :capHomeCouches().map(c=>{ const lv=CAP_LAYERS[c.k];
     return `<div class="hm-layer" style="--hm-c:${lv.color}"><div class="hm-layer-h"><b style="color:${lv.color}">${c.k}</b> <span class="ana-dim">${esc(lv.label)}</span><span style="flex:1"></span><b>${c.n}</b></div>`+
       c.types.map(([t,n])=>{ const H=CAP_HUMAN_NAMES[t]||{}; return `<div class="hm-layer-t" title="${esc(t+(H.d?' — '+H.d:''))}"><span>${capIcoType(t,12)} ${esc(H.h||t)}</span><span>${n}</span></div>`; }).join('')+`</div>`; }).join('')}</div>`},
   {k:'sante', l:_L('💚 Santé du modèle'), w:1, f:()=>capSanteCarte()},   // 69-sante-modele.js
@@ -259,21 +268,73 @@ function capHomeProjetHtml(){
   return `<div class="hm-main">${capHomeEnteteHtml()}${capHomeTachesHtml()}${bar}<div class="hm-grid">${h}</div></div>`;
 }
 
-/** Tâches proposées par « Que voulez-vous faire ? » : [icône, titre, description, clé de vue (capNavOpen), chemin affiché]. */
-function capHomeTaches(){ return [
-  ['🔲', _L('Parcourir les diagrammes'), _L('Ouvrir le .aird du projet et passer d\'un élément à l\'autre par un clic.'), 'diag', _L('🔲 Diagrammes')],
-  ['💚', _L('Vérifier la qualité du modèle'), _L('Tous les contrôles, un score par couche, la liste de ce qu\'il faut corriger.'), 'ana:sante', _L('✅ Vérifier › 💚 Santé & contrôles')],
-  ['💬', _L('Préparer une revue'), _L('Commenter les éléments et les diagrammes, suivre une check-list, faire relire un dossier.'), '@revue', _L('💬 Revue & documents › 💬 Commentaires')],
-  ['⚖', _L('Comparer deux versions'), _L('Ce qui a changé depuis la version précédente du modèle : éléments et diagrammes.'), 'ana:diff', _L('✅ Vérifier › ⚖ Comparaison de versions')],
-  ['▤', _L('Sortir un tableau Excel'), _L('Éléments, attributs et relations, avec les colonnes de votre choix.'), 'table', _L('▤ Tableau')],
-  ['📘', _L('Produire un document'), _L('Rapport automatique : spécification, dossier de conception, SSS / SSDD, en Word ou HTML.'), 'home:rap', _L('💬 Revue & documents › 📘 Rapports automatiques')]
-]; }
+/** Format du modèle affiché. @returns {'capella'|'sysml2'|'uml'} uml : UML et SysML v1 (lecteur UML d'Arcature) */
+function capHomeFormat(){ return typeof _capSysml!=='undefined'&&_capSysml.lecture?(capSyUml()?'uml':'sysml2'):'capella'; }
+/** Pastille du format affiché (nom précis pour UML / SysML v1). @returns {{l:string, c:string}} */
+function capHomeFormatPuce(){ const k=capHomeFormat(), F=CAP_FORMATS.find(f=>f.k===k)||CAP_FORMATS[0]; return {l:k==='uml'?capSyNomFormat():F.l, c:F.c}; }
+/** Vues des menus propres à un autre format que celui du modèle affiché (elles ne sont pas « sans données »). @returns {Set<string>} */
+function capHomeAutresFormats(){
+  const k=capHomeFormat();
+  return new Set(k==='capella'?['ana:sysml','ana:uml']:[...(typeof CAP_SY_VUES_CAPELLA!=='undefined'?CAP_SY_VUES_CAPELLA:[]), k==='uml'?'ana:sysml':'ana:uml']);
+}
+/** Familles d'éléments d'un modèle SysML v2 / UML / SysML v1 (structure, comportement, exigences & cas, organisation), avec leurs types les
+ * plus nombreux. @returns {{k:string, l:string, c:string, n:number, types:Array<[string,number]>}[]} */
+function capHomeFamilles(){
+  const lec=typeof _capSysml!=='undefined'&&_capSysml.lecture; if(!lec) return [];
+  const L=capSyL()||{}, fams=L.familles||{STR:_L('Structure'), BEH:_L('Comportement'), REQ:_L('Exigences & cas'), ORG:_L('Organisation')}, m={};
+  lec.elements().forEach(e=>{ if(e.racine||e.projet) return; const k=e.famille||'—', c=m[k]||(m[k]={n:0, t:{}}); c.n++; c.t[e.type]=(c.t[e.type]||0)+1; });
+  return [...Object.keys(fams).filter(k=>m[k]), ...Object.keys(m).filter(k=>!fams[k])]
+    .map(k=>({k, l:fams[k]||k, c:CAP_SY_FAM_COULEUR[k]||'#7f849c', n:m[k].n, types:Object.entries(m[k].t).sort((a,b)=>b[1]-a[1]).slice(0,5)}));
+}
+/**
+ * Case de « Fichiers du projet » (en-tête de 🏠 Projet) : un fichier attendu pour le format et son état.
+ * @param {string} lbl - Rôle (Modèle, Diagrammes…)
+ * @param {string} val - Valeur (HTML)
+ * @param {string} sub - Précision (HTML)
+ * @param {'ok'|'todo'|'none'|'err'} etat - État : présent, à compléter, sans objet, en erreur
+ * @param {string} [act] - Bouton d'action (HTML)
+ * @returns {string} HTML
+ */
+function capHomeCase(lbl, val, sub, etat, act){
+  return `<div class="hm-case hm-case-${etat}"><i></i><div class="hm-case-c"><span class="hm-case-l">${lbl}</span><b>${val}</b>${sub?`<span class="hm-case-s">${sub}</span>`:''}</div>${act||''}</div>`;
+}
+
+/** Tâches proposées par « Que voulez-vous faire ? », selon le format et l'état du modèle affiché : [icône, titre, description, clé de vue
+ * (capNavOpen) ou action `a:<action>`, chemin affiché, mise en avant `warn` / `err`, étiquette]. La plus utile vient en premier. */
+function capHomeTaches(){
+  const fmt=capHomeFormat(), esc=capEsc;
+  const revue=['💬', _L('Préparer une revue'), _L('Commenter les éléments et les diagrammes, suivre une check-list, faire relire un dossier.'), '@revue', _L('💬 Revue & documents › 💬 Commentaires')];
+  const comparer=['⚖', _L('Comparer deux versions'), _L('Ce qui a changé depuis la version précédente du modèle : éléments et diagrammes.'), 'ana:diff', _L('✅ Vérifier › ⚖ Comparaison de versions')];
+  const excel=['▤', _L('Sortir un tableau Excel'), _L('Éléments, attributs et relations, avec les colonnes de votre choix.'), 'table', _L('▤ Tableau')];
+  const sante=['💚', _L('Vérifier la qualité du modèle'), _L('Tous les contrôles, un score par couche, la liste de ce qu\'il faut corriger.'), 'ana:sante', _L('✅ Vérifier › 💚 Santé & contrôles')];
+  if(fmt==='capella'){
+    const n=capHomeReps().length, aird=_capDiag&&_capDiag.texteAird;
+    const diag=aird?['🔲', _L(`Parcourir les ${n} diagrammes`), _L('Passer d\'un diagramme à l\'autre ; un clic sur un élément ouvre sa fiche.'), 'diag', _L('🔲 Diagrammes')]
+      :['🔲', _L('Ajouter les diagrammes'), _L('Ouvrez le .aird du projet, rangé à côté du .capella : 🔲 Diagrammes s\'ouvre, un clic sur un élément ouvre sa fiche.'), 'a:aird', _L('📂 Ouvrir le .aird…'), 'warn', _L('À faire')];
+    return [diag, sante, revue, comparer, excel,
+      ['📘', _L('Produire un document'), _L('Rapport automatique : spécification, dossier de conception, SSS / SSDD, en Word ou HTML.'), 'home:rap', _L('💬 Revue & documents › 📘 Rapports automatiques')]];
+  }
+  const D=capSysmlDiagnostics(), vues=capSyVuesListe(), nt=vues.filter(v=>v.tableau).length, nd=vues.length-nt, vk=fmt==='uml'?'ana:uml':'ana:sysml';
+  const chemin=fmt==='uml'?_L('🏗 Architecture › 🧬 UML / SysML v1'):_L('🏗 Architecture › 🧩 SysML v2');
+  const vuesT=fmt==='uml'?(vues.length?['🔲', _L(`Parcourir les ${nd} diagrammes`), nt?_L(`Les diagrammes de ${esc(_capSysml.lecture.outil||capSyNomFormat())}, et ses ${nt} tableau(x) ou matrice(s).`):_L(`Les diagrammes de ${esc(_capSysml.lecture.outil||capSyNomFormat())}, tels qu'ils ont été mis en page.`), 'diag', _L('🔲 Diagrammes')]
+      :['🔲', _L('Aucun diagramme dans ce fichier'), _L('Un export .xmi de Cameo ne contient pas les diagrammes : ouvrez le .mdzip ; un .uml de Papyrus montre les siens avec son .notation.'), 'diag', _L('🔲 Diagrammes'), 'warn', _L('À faire')])
+    :['🔲', _L(`Parcourir les ${vues.length} vues calculées`), _L('Vue générale, interconnexions, états, flux d\'actions : dessinées depuis le texte, cliquables.'), 'diag', _L('🔲 Diagrammes')];
+  const explorer=['🔎', _L('Explorer les éléments et liaisons'), fmt==='uml'?_L('Métaclasses, stéréotypes, texte des exigences, extrait XMI.'):_L('Par famille et par type, avec la déclaration et la ligne du fichier source.'), vk, chemin];
+  // UML : selon l'impact réel (98) — seules les incohérences 🔴 passent en tête ; les écarts de forme ne sont pas présentés comme des erreurs
+  const N=fmt==='uml'?capUmlParImpact(D.liste):null, urgent=fmt==='uml'?N.incoh:D.erreurs;
+  const exInc=fmt==='uml'?D.liste.find(d=>capUmlRegleImpact(d.code||d.regle||'')==='incoh'):D.liste.find(d=>d.severite==='erreur');
+  const err=urgent?['🔴', (fmt==='uml'?_L(`Regarder ${N.incoh} incohérence(s) du modèle`):_L(`Corriger ${D.erreurs} erreur(s) de lecture`)), esc((exInc||{}).message||'')+(fmt==='uml'&&N.verif+N.forme?' '+_L(`(et ${N.verif+N.forme} écart(s) moins importants, expliqués règle par règle)`):''), 'a:sy-diag', chemin+' › 🩺', 'err', fmt==='uml'?_L(`${N.incoh} incohérence(s)`):_L(`${D.erreurs} erreur(s)`)]
+    :fmt==='uml'&&N.total?['🟡', _L('Passer en revue les écarts à la norme'), _L(`${capUmlImpactTexte(N)} : chaque règle est expliquée (cause probable, gravité, correction), et peut être désactivée.`), 'a:sy-diag', chemin+' › 🩺']
+    :['💚', _L('Vérifier le modèle'), fmt==='uml'?_L('Validation UML / SysML / UAF et contrôles communs, score de santé.'):_L('Diagnostics du lecteur et contrôles communs, score de santé.'), 'ana:sante', _L('✅ Vérifier › 💚 Santé & contrôles')];
+  return urgent?[err, vuesT, explorer, revue, comparer, excel]:[vuesT, explorer, err, revue, comparer, excel];
+}
 
 /** Section « Que voulez-vous faire ? » de l'onglet 🏠 Projet (masquable, réaffichée par ⚙ Disposer). @returns {string} HTML */
 function capHomeTachesHtml(){
   if(!_capHome.taches) return '';
   return `<section class="hm-taches"><h3>${_L('Que voulez-vous faire ?')}<span style="flex:1"></span><span class="hm-cb" data-a="taches-hide" title="${_L('Masquer cette section (⚙ Disposer les cartes pour la réafficher)')}">✕</span></h3>`+
-    `<div class="hm-taches-g">${capHomeTaches().map(([i,t,d,k,c])=>`<button type="button" class="hm-tache" data-nav="${k}"><span class="hm-tache-i" aria-hidden="true">${i}</span><b>${t}</b><span class="hm-tache-d">${d}</span><span class="hm-tache-c">${c} →</span></button>`).join('')}</div></section>`;
+    `<div class="hm-taches-g">${capHomeTaches().map(([i,t,d,k,c,hl,tag])=>`<button type="button" class="hm-tache${hl?' hm-tache-'+hl:''}" ${k.startsWith('a:')?`data-a="${k.slice(2)}"`:`data-nav="${k}"`}>`+
+      `<span class="hm-tache-h"><span class="hm-tache-i" aria-hidden="true">${i}</span>${tag?`<span class="hm-tache-tag">${tag}</span>`:''}</span><b>${t}</b><span class="hm-tache-d">${d}</span><span class="hm-tache-c">${c} →</span></button>`).join('')}</div></section>`;
 }
 
 /** Bibliothèques du projet et leur état : référencées par le modèle (72, capLibScan) ou chargées sans être référencées.
@@ -286,35 +347,58 @@ function capHomeLibs(){
   return rows;
 }
 
-/** En-tête de l'onglet 🏠 Projet : modèle, couches, état des diagrammes et des bibliothèques (détail dépliable), vues sans données.
+/** En-tête de l'onglet 🏠 Projet : pastille du format, nom du modèle, « Fichiers du projet » (une case par fichier attendu pour ce
+ * format : modèle, diagrammes, bibliothèques pour Capella ; cases de 87 / 88 pour SysML v2 et UML / SysML v1), contenu (couches ARCADIA
+ * ou familles), vues sans données et vues propres à un autre format.
  * @returns {string} HTML
  */
 function capHomeEnteteHtml(){
   if(!capLoaded) return '';
-  const esc=capEsc, u=_capHomeUi, nom=capRevProjectName()||capCurrentFileName||'—', reps=capHomeReps();
-  const couches=capHomeCouches().filter(c=>c.k!=='Shared').map(c=>`<span class="hm-stat"><b style="color:${CAP_LAYERS[c.k].color}">${c.k}</b> ${c.n}</span>`).join('');
-  const aird=_capDiag&&_capDiag.texteAird
-    ?`<button type="button" class="hm-pill" data-nav="diag" title="${_L('🔲 Ouvrir les diagrammes')}"><i class="ok"></i>${_L('Diagrammes :')} ${esc(_capDiag.nomAird)}${reps.length?' · '+reps.length:''}</button>`
-    :`<button type="button" class="hm-pill hm-pill-none" data-a="aird" title="${_L('Les diagrammes Capella sont dans le fichier .aird, à côté du .capella')}"><i></i>${_L('Diagrammes : pas de .aird — Ajouter…')}</button>`;
-  const L=capHomeLibs(), nOk=L.filter(r=>r.lib).length, nTodo=L.filter(r=>r.etat==='absent'||r.etat==='unused').length, nPart=L.some(r=>r.etat==='part');
-  const libs=L.length
-    ?`<button type="button" class="hm-pill${u.libs?' on':''}" data-a="libs" aria-expanded="${u.libs?'true':'false'}" title="${_L('État des bibliothèques Capella référencées par le modèle')}"><i class="${nTodo||nPart?'warn':'ok'}"></i>${_L(`Bibliothèques : ${nOk} chargée(s) · ${nTodo} à traiter`)} ${u.libs?'▴':'▾'}</button>`
-    :`<span class="hm-pill hm-pill-dim" title="${_L('Le modèle ne référence aucun autre fichier .capella')}"><i></i>${_L('Aucune bibliothèque')}</span>`;
-  const ET={ok:['ok',_L('Chargée')], part:['warn',_L('Chargée, cibles absentes')], absent:['warn',_L('Fichier absent')], unused:['dim',_L('Jamais utilisée')], extra:['ok',_L('Chargée, non référencée')]};
-  const table=u.libs&&L.length?`<div class="hm-libs"><table class="ana-t"><thead><tr><th>${_L('Bibliothèque')}</th><th>${_L('État')}</th><th>${_L('Références depuis le modèle')}</th><th></th></tr></thead><tbody>`+
-    L.map(r=>{ const [c,l]=ET[r.etat];
-      const refs=r.etat==='unused'?_L('aucune : la déclaration peut sans doute être retirée dans Capella'):r.etat==='extra'?_L('aucune'):r.etat==='absent'?_L(`${r.n} référence(s), cibles inconnues tant que le fichier n'est pas chargé`)
-        :_L(`${r.n} référence(s)`)+(r.miss?' · <span class="hm-libs-w">'+_L(`${r.miss} cible(s) absente(s) de la bibliothèque`)+'</span>':'');
-      const act=r.etat==='absent'?`<button class="phl-export-btn" data-a="lib-load">${_L('Charger le fichier…')}</button>`:r.n?`<button class="cap-lf-btn" data-a="lib-refs" data-k="${esc(r.key)}">${_L('Voir les références')}</button>`:'';
-      return `<tr><td><b>${esc(r.name)}</b><br><span class="ana-dim">${r.declared?_L('déclarée dans le modèle'):r.etat==='extra'?_L('chargée à la main ou depuis le dossier'):_L('non déclarée (référence directe)')}</span></td>`+
-        `<td><span class="hm-etat hm-etat-${c}"><i></i>${l}</span></td><td>${refs}</td><td style="text-align:right;white-space:nowrap">${act}</td></tr>`; }).join('')+
-    `</tbody></table><div class="hm-libs-f"><span class="ana-dim">${_L('Les éléments venus d\'une bibliothèque se résolvent dans le panneau de détail.')}</span><span style="flex:1"></span>`+
-    `<button class="cap-lf-btn" data-nav="ana:libs">${_L('📚 Vue Bibliothèques et contrôles')}</button><button class="cap-lf-btn" data-a="lib-load">${_L('Charger des bibliothèques…')}</button></div></div>`:'';
-  const sysml=typeof capSysmlPastille==='function'?capSysmlPastille():'';   // 🧩 SysML v2 (87)
-  const V=[...capNavVides()].map(k=>(CAP_NAV_ITEMS.find(i=>i.k===k)||{}).l).filter(Boolean);
-  const vides=V.length&&_capNav.vides!==false?`<div class="hm-vides">${_L('Sans données dans ce modèle, retirées des menus en mode Essentiel :')} ${V.map(esc).join(' · ')}</div>`:'';
-  return `<section class="hm-head"><div class="hm-head-t"><h2>${esc(nom)}</h2><span class="ana-dim">${esc(capCurrentFileName||'')} · ${_L(`${capAllElements.length} éléments`)}</span><span class="hm-chips">${couches}</span></div>`+
-    `<div class="hm-pills"><span class="hm-pill"><i class="ok"></i>${_L('Modèle chargé')}</span>${sysml||aird}${libs}</div>${table}${vides}</section>`;
+  const esc=capEsc, u=_capHomeUi, fmt=capHomeFormat(), P=capHomeFormatPuce(), nom=capRevProjectName()||capCurrentFileName||'—';
+  let cases='', table='', chips='', sous='';
+  if(fmt==='capella'){
+    const reps=capHomeReps(), n=capAllElements.length, par={};
+    reps.forEach(r=>{ par[r.couche||'—']=(par[r.couche||'—']||0)+1; });
+    sous=_L(`Capella ${esc(capHomeCapellaVersion())} · ${n} éléments`);
+    chips=capHomeCouches().filter(c=>c.k!=='Shared').map(c=>`<span class="hm-stat"><b style="color:${CAP_LAYERS[c.k].color}">${c.k}</b> ${c.n}</span>`).join('');
+    const aird=_capDiag&&_capDiag.texteAird
+      ?capHomeCase(_L('Diagrammes'), esc(_capDiag.nomAird), _L(`${reps.length} diagramme(s)`)+(reps.length?' · '+Object.entries(par).sort((a,b)=>capDiagRang(a[0])-capDiagRang(b[0])).map(([k,v])=>`${esc(k)} ${v}`).join(' · '):''), 'ok',
+        `<button type="button" class="cap-lf-btn" data-nav="diag">${_L('🔲 Ouvrir')}</button>`)
+      :capHomeCase(_L('Diagrammes'), _L('Pas de .aird'), _L('Le .aird est rangé à côté du .capella, dans le dossier du projet.'), 'todo',
+        `<button type="button" class="cap-lf-btn" data-a="aird" title="${_L('Les diagrammes Capella sont dans le fichier .aird, à côté du .capella')}">${_L('📂 Ajouter le .aird…')}</button>`);
+    const L=capHomeLibs(), nOk=L.filter(r=>r.lib).length, nTodo=L.filter(r=>r.etat==='absent'||r.etat==='unused').length, nPart=L.some(r=>r.etat==='part');
+    const libs=L.length
+      ?capHomeCase(_L('Bibliothèques'), _L(`${nOk} chargée(s) · ${nTodo} à traiter`), _L('Bibliothèques Capella référencées par le modèle.'), nTodo||nPart?'todo':'ok',
+        `<button type="button" class="cap-lf-btn${u.libs?' active':''}" data-a="libs" aria-expanded="${u.libs?'true':'false'}" title="${_L('État des bibliothèques Capella référencées par le modèle')}">${_L('Détail')} ${u.libs?'▴':'▾'}</button>`)
+      :capHomeCase(_L('Bibliothèques'), _L('Aucune référencée'), _L('Le modèle ne pointe vers aucun autre .capella.'), 'none');
+    cases=capHomeCase(_L('Modèle'), esc(capCurrentFileName||'—'), sous, 'ok')+aird+libs;
+    const ET={ok:['ok',_L('Chargée')], part:['warn',_L('Chargée, cibles absentes')], absent:['warn',_L('Fichier absent')], unused:['dim',_L('Jamais utilisée')], extra:['ok',_L('Chargée, non référencée')]};
+    table=u.libs&&L.length?`<div class="hm-libs"><table class="ana-t"><thead><tr><th>${_L('Bibliothèque')}</th><th>${_L('État')}</th><th>${_L('Références depuis le modèle')}</th><th></th></tr></thead><tbody>`+
+      L.map(r=>{ const [c,l]=ET[r.etat];
+        const refs=r.etat==='unused'?_L('aucune : la déclaration peut sans doute être retirée dans Capella'):r.etat==='extra'?_L('aucune'):r.etat==='absent'?_L(`${r.n} référence(s), cibles inconnues tant que le fichier n'est pas chargé`)
+          :_L(`${r.n} référence(s)`)+(r.miss?' · <span class="hm-libs-w">'+_L(`${r.miss} cible(s) absente(s) de la bibliothèque`)+'</span>':'');
+        const act=r.etat==='absent'?`<button class="phl-export-btn" data-a="lib-load">${_L('Charger le fichier…')}</button>`:r.n?`<button class="cap-lf-btn" data-a="lib-refs" data-k="${esc(r.key)}">${_L('Voir les références')}</button>`:'';
+        return `<tr><td><b>${esc(r.name)}</b><br><span class="ana-dim">${r.declared?_L('déclarée dans le modèle'):r.etat==='extra'?_L('chargée à la main ou depuis le dossier'):_L('non déclarée (référence directe)')}</span></td>`+
+          `<td><span class="hm-etat hm-etat-${c}"><i></i>${l}</span></td><td>${refs}</td><td style="text-align:right;white-space:nowrap">${act}</td></tr>`; }).join('')+
+      `</tbody></table><div class="hm-libs-f"><span class="ana-dim">${_L('Les éléments venus d\'une bibliothèque se résolvent dans le panneau de détail.')}</span><span style="flex:1"></span>`+
+      `<button class="cap-lf-btn" data-nav="ana:libs">${_L('📚 Vue Bibliothèques et contrôles')}</button><button class="cap-lf-btn" data-a="lib-load">${_L('Charger des bibliothèques…')}</button></div></div>`:'';
+  } else {
+    const lec=_capSysml.lecture;
+    sous=_L(`${fmt==='uml'&&lec.outil?esc(lec.outil)+' · ':''}${lec.elements().length-1} éléments`);
+    cases=fmt==='uml'?capUmlCasesAccueil():capSysmlCasesAccueil();   // 88 / 87
+    chips=capHomeFamilles().map(c=>`<span class="hm-stat"><b style="color:${capTextOn(c.c)}">${esc(c.l)}</b> ${c.n}</span>`).join('');
+  }
+  const V=[...capNavVides()], autres=capHomeAutresFormats(), lib=k=>(CAP_NAV_ITEMS.find(i=>i.k===k)||{}).l;
+  const vraies=V.filter(k=>!autres.has(k)).map(lib).filter(Boolean), hors=fmt==='capella'||CAP_EDITION?[]:V.filter(k=>autres.has(k)&&k!=='ana:sysml'&&k!=='ana:uml').map(lib).filter(Boolean);
+  const vides=(vraies.length&&_capNav.vides!==false?`<div>${_L('Sans données dans ce modèle, retirées des menus en mode Essentiel :')} <span class="hm-vides-l">${vraies.map(esc).join(' · ')}</span></div>`:'')+
+    (hors.length?`<div>${_L(`${hors.length} vues ARCADIA, propres à Capella, sont sans objet pour ce format (retirées des menus en mode Essentiel).`)} `+
+      `<button type="button" class="hm-lienb" data-a="vues-autres" aria-expanded="${u.autres?'true':'false'}">${u.autres?_L('Masquer la liste ▴'):_L('Voir la liste ▾')}</button>`+
+      (u.autres?`<div class="hm-vides-l">${hors.map(esc).join(' · ')}</div>`:'')+`</div>`:'');
+  return `<section class="hm-head"><div class="hm-head-t">${capFmtPuce(P, 'cw-fmt-l')}<h2>${esc(nom)}</h2><span class="ana-dim">${sous}</span>`+
+    `<span style="flex:1"></span><button type="button" class="cap-lf-btn" data-a="update" title="${_L('Compare un autre fichier au modèle affiché, montre le delta, puis met à jour après validation')}">${_L('🔄 Mettre à jour…')}</button></div>`+
+    `<div class="hm-cases-t">${_L('Fichiers du projet')}</div><div class="hm-cases">${cases}</div>${table}`+
+    `<div class="hm-head-b"><span class="hm-cases-t">${_L('Contenu')}</span><span class="hm-chips">${chips}</span></div>`+
+    (vides?`<div class="hm-vides">${vides}</div>`:'')+`</section>`;
 }
 
 /* ── Onglet ☑ Check-lists & plans de revue ─────────────────────────────── */
@@ -702,6 +786,8 @@ function capHomeClick(e){
   switch(act){
     case 'aird': capDiagPickAird(); return;
     case 'libs': u.libs=!u.libs; capHomeRender(); return;
+    case 'vues-autres': u.autres=!u.autres; capHomeRender(); return;
+    case 'sy-diag': _capSy.view='diag'; capNavOpen(capHomeFormat()==='uml'?'ana:uml':'ana:sysml'); return;   // 🩺 diagnostics du lecteur (87)
     case 'lib-load': capLibPick(()=>{ capHomeRender(); }); return;
     case 'lib-refs': _capLib.lib=a.dataset.k; _capLib.view='refs'; capNavOpen('ana:libs'); return;
     case 'taches-hide': _capHome.taches=false; capToast(_L('Section masquée — ⚙ Disposer les cartes pour la réafficher')); break;

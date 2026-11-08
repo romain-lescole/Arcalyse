@@ -38,7 +38,7 @@ function capScrNoyau(){
   const SOURCE='arcalyse-script.js';
   /** Analyses proposées par `analysis` (calculées par la page : 82-scripts-analyses.js). */
   const ANALYSES=['functions','chains','traceability','capabilities','states','health','requirements','properties','data','constraints','status',
-    'categories','rec','libraries','scenarios','ports','functionalExchanges','componentExchanges','physicalLinks','deployment','checks','nameQuality','diagramsOf','sysml'];
+    'categories','rec','libraries','scenarios','ports','functionalExchanges','componentExchanges','physicalLinks','deployment','checks','nameQuality','diagramsOf','sysml','matrix'];
 
   /** Erreur levée par l'API, avec un message affichable. @param {string} msg @returns {Error} */
   const erreur=msg=>{ const e=new Error(msg); e.name='ArcalyseError'; return e; };
@@ -161,6 +161,8 @@ function capScrNoyau(){
   /** Types courts présents dans le modèle. @param {object} ctx @returns {Set<string>} */
   function typesModele(ctx){ if(!ctx.types){ ctx.types=new Set(); ctx.snap.elements.forEach(e=>ctx.types.add(e.type)); } return ctx.types; }
   /** Prépare un test « est de ce type » : héritage du métamodèle, ou égalité du type court pour un type hors métamodèle présent dans le modèle.
+   * Un élément lu par un lecteur d'Arcature (type complet « uml:… » ou « sysml:… », hors métamodèle de Capella) se compare par son type
+   * court, même quand le nom est aussi celui d'une métaclasse de Capella (Block, Requirement, Class…).
    * @param {object} ctx @param {string} nom @param {boolean} exact @returns {function(object):boolean} */
   function testType(ctx, nom, exact){
     if(typeof nom!=='string'||!nom) throw erreur(_L('Nom de type attendu.'));
@@ -172,8 +174,9 @@ function capScrNoyau(){
       if(!present) throw erreur(_L(`Type inconnu : ${nom}`));
       return test;
     }
-    if(exact) return e=>mmType(e)===i;
-    return e=>{ const t=mmType(e); return t>=0&&mmAncetres(t).has(i); };
+    const lu=e=>/^(uml|sysml):/.test(e.fullType)&&e.type===nom;   // modèle SysML ou UML (87, 88)
+    if(exact) return e=>{ const t=mmType(e); return t>=0?t===i:lu(e); };
+    return e=>{ const t=mmType(e); return t>=0?mmAncetres(t).has(i):lu(e); };
   }
   /** Compile un filtre public : nom de type, fonction, ou { type, exactType, layer, name, technical, where }.
    * @param {object} ctx @param {*} f @returns {function(object):boolean} */

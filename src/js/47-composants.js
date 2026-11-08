@@ -176,8 +176,9 @@ function capRenderComponentBlocks(L, host, holder){
   /** Sens d'un échange vu depuis un port : de / vers / ⇄ / — . */
   const roleOf=(l,pid)=>{ const src=l.src.portId===pid; return l.dir==='bi'?'⇄':l.dir==='unset'?'—':((l.dir==='fwd')===src?_L('vers'):_L('de')); };
 
-  /** Vue Blocs : chaque composant avec ses ports répartis à gauche (IN) et à droite (OUT), INOUT / UNSET du côté le moins chargé. */
-  function buildBlocks(cs){
+  /** Vue Blocs : chaque composant avec ses ports répartis à gauche (IN) et à droite (OUT), INOUT / UNSET du côté le moins chargé.
+   * @param {object[]} cs - Composants @param {boolean} [exp] - Rapport HTML : listes de fonctions incluses, masquées (dépliées par le rapport) */
+  function buildBlocks(cs, exp){
     return `<div class="fex-blocks">${cs.map(c=>{
       const L=[], R=[];
       c.ports.filter(p=>p.orient==='IN').forEach(p=>L.push(p)); c.ports.filter(p=>p.orient==='OUT').forEach(p=>R.push(p));
@@ -204,7 +205,7 @@ function capRenderComponentBlocks(L, host, holder){
           ${!c.ports.length?_L('<div class="fex-box-empty">aucun port</div>'):''}
         </div>
         <div class="fex-side fex-side-out">${side(R,gR)}</div>
-        ${st.fnOpen.has(c.id)?fnListHtml(c):''}
+        ${exp?(c.fns.length?fnListHtml(c).replace('<div class="cb-fnlist"','<div hidden class="cb-fnlist"'):''):st.fnOpen.has(c.id)?fnListHtml(c):''}
       </div>`;
     }).join('')}</div>`;
   }
@@ -297,7 +298,7 @@ function capRenderComponentBlocks(L, host, holder){
     }
     if(view==='block'){
       const cs=getComps(); if(!cs.length) return _L('<div class="phl-empty">Aucun composant ne correspond au filtre.</div>');
-      if(all) return buildBlocks(cs);
+      if(all) return buildBlocks(cs, true);
       const p=paged(cs,_L('Composants')), bc=st.back&&C.byId[st.back];
       const back=bc?_L(`<div class="fex-backbar"><button class="cap-lf-btn" id="cb-back">↩ Revenir à « ${capEsc(bc.name)} »</button></div>`):'';
       return capBlkThemeHint()+back+p.bar+buildBlocks(p.slice)+p.bar;
@@ -363,10 +364,11 @@ function capRenderComponentBlocks(L, host, holder){
     return _L(`<select id="cb-under" class="phl-filter-input" style="max-width:230px${st.under?';border-color:var(--c-accent)':''}" title="Un composant et ses sous-composants"><option value="">Tous les composants</option>${roots.map(r=>opt(r,0)).join('')}</select>${st.under?'<button class="cap-lf-btn" id="cb-under-x" title="Retirer ce filtre">✕</button>':''}`);
   }
 
-  /** Rapport HTML autonome (vue courante ou toutes les vues). */
-  function exportHtml(all){
+  /** Rapport HTML autonome : vue courante, ou les vues choisies (`capHtmlVuesChoix`, 26 : 🩺 Contrôles décoché par défaut). */
+  async function exportHtml(all){
     const VIEWS=[['block',_L('◧ Vue Blocs')],['card',_L('▣ Vue Composant')],['line',_L('≡ Vue Ligne')],['matrix',_L('▦ Matrice')],['diag',_L('🩺 Contrôles')]].filter(v=>!V0.only||v[0]==='block');
-    const keys=all?VIEWS.map(v=>v[0]):[st.view];
+    if(all&&V0.only&&typeof holder._exportTout==='function') return holder._exportTout(true);   // Vue Blocs de 🔀 / 🔌 : rapport de toutes les vues de la vue hôte
+    const keys=all?await capHtmlVuesChoix(VIEWS):[st.view]; if(!keys) return;
     const tabs=VIEWS.filter(v=>keys.includes(v[0])||(v[0]==='line'&&keys.includes('matrix'))).map(([k,label])=>({key:k,label,html:buildContent(k)}));
     const cells={}; Object.entries(container._cbCells||{}).forEach(([k,ls])=>cells[k]=ls.map(l=>l.linkId));
     const fn=V0.what.toLowerCase().replace(/\s+/g,'-');
@@ -409,12 +411,13 @@ function capRenderComponentBlocks(L, host, holder){
         <input id="cb-name" type="text" class="phl-filter-input" placeholder="Filtrer par composant…" value="${capEsc(st.name)}" style="width:180px;">
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;margin-left:8px;">🔍 ${L==='PN'?_L('Lien'):_L('Échange')} :</span>
         <input id="cb-ex" type="text" class="phl-filter-input" placeholder="${V0.lw.replace(/s$/,'')}…" value="${capEsc(st.ex)}" style="width:170px;">
-        ${pv?_L(`<label style="font-size:11px;color:var(--c-dim);display:flex;align-items:center;gap:4px;margin-left:8px;" title="Masquer les composants sans port (conteneurs le plus souvent)"><input type="checkbox" id="cb-withports"${st.withPorts?' checked':''}> avec ports</label>`):''}
+        ${pv?(()=>{ const n=C.comps.filter(c=>compOk(c)&&!c.ports.length).length;   // composants sans port (conteneurs le plus souvent) : case explicite, avec leur nombre
+          return _L(`<label class="cap-sansport${st.withPorts?' on':''}" title="Composants sans aucun port : le plus souvent des conteneurs, qui n'échangent rien eux-mêmes (leurs sous-composants portent les ports). Cocher pour les retirer de la vue."><input type="checkbox" id="cb-withports"${st.withPorts?' checked':''}> Masquer les composants sans port <b>${n}</b></label>`); })():''}
         <span class="tb-grp ana-ak" style="margin-left:8px" title="Clic : afficher / masquer · double-clic : uniquement celle-ci"><span class="tb-grp-l">Nature</span>${kinds.map(k=>_L(`<label class="ana-ak-chip${st.nk.has(k)?' on':''}" style="--c:${NK[k].c}" title="${NK[k].tip} — double-clic : uniquement ceux-ci"><input type="checkbox" data-nk="${k}"${st.nk.has(k)?' checked':''}>${NK[k].i} ${NK[k].l} <b>${base.filter(c=>c.kind===k).length}</b></label>`)).join('')}${underSelect()}</span>
         <div style="margin-left:auto;display:flex;gap:6px;">
           <button class="phl-export-btn" id="cb-csv">⬇ CSV</button>
           <button class="phl-export-btn" id="cb-html" title="Rapport HTML de la vue affichée (toutes les pages)">⬇ HTML</button>
-          <button class="phl-export-btn" id="cb-html-all" title="Rapport HTML à onglets : toutes les vues">⬇ HTML (toutes les vues)</button>
+          <button class="phl-export-btn" id="cb-html-all" title="Rapport HTML à onglets : vues choisies dans une fenêtre (Vue Blocs comprise ; Contrôles décochés par défaut)">⬇ HTML (toutes les vues)</button>
         </div>
       </div>
       <div id="cb-main">${buildContent()}</div>`);
@@ -433,6 +436,7 @@ function capRenderComponentBlocks(L, host, holder){
     container.querySelector('#cb-html-all')?.addEventListener('click',()=>exportHtml(true));
     wireMain();
   }
+  holder._cbBlocsHtml=()=>buildContent('block');   // Vue Blocs complète (filtres appliqués) pour le rapport « toutes les vues » de 🔀 / 🔌
   render();
   if(_capCbGo&&_capCbGo.L===L){ const g=_capCbGo.id; _capCbGo=null; gotoComp(g); }
 }

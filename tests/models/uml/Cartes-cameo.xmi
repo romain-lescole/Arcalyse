@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xmi:XMI xmlns:uml='http://www.omg.org/spec/UML/20131001' xmlns:xmi='http://www.omg.org/spec/XMI/20131001' xmlns:sysml='http://www.omg.org/spec/SysML/20150709/SysML' xmlns:MagicDraw_Profile='http://www.omg.org/spec/UML/20131001/MagicDrawProfile'>
+	<xmi:Documentation>
+		<xmi:exporter>MagicDraw UML</xmi:exporter>
+		<xmi:exporterVersion>19.0 v9</xmi:exporterVersion>
+	</xmi:Documentation>
+	<uml:Model xmi:type='uml:Model' xmi:id='crt_modele' name='Cartes'>
+		<packagedElement xmi:type='uml:Package' xmi:id='crt_systeme' name='Systeme'>
+			<xmi:Extension extender='MagicDraw UML 19.0'>
+				<modelExtension>
+					<ownedDiagram xmi:type='uml:Diagram' xmi:id='crt_d_carte' name='Carte du système' visibility='public' ownerOfDiagram='crt_systeme'>
+						<xmi:Extension extender='MagicDraw UML 19.0'>
+							<diagramRepresentation>
+								<diagram:DiagramRepresentationObject ID='crt_r_carte' type='Relation Map Diagram' umlType='Class Diagram' xmi:id='crt_x_carte' xmlns:diagram='http://www.nomagic.com/ns/magicdraw/core/diagram/1.0' xmlns:xmi='http://www.omg.org/XMI'>
+									<diagramContents xmi:id='crt_c_carte'/>
+								</diagram:DiagramRepresentationObject>
+							</diagramRepresentation>
+						</xmi:Extension>
+					</ownedDiagram>
+					<ownedDiagram xmi:type='uml:Diagram' xmi:id='crt_d_structure' name='Décomposition du véhicule' visibility='public' ownerOfDiagram='crt_systeme'>
+						<xmi:Extension extender='MagicDraw UML 19.0'>
+							<diagramRepresentation>
+								<diagram:DiagramRepresentationObject ID='crt_r_structure' type='Structure Decomposition Map' umlType='Class Diagram' xmi:id='crt_x_structure' xmlns:diagram='http://www.nomagic.com/ns/magicdraw/core/diagram/1.0' xmlns:xmi='http://www.omg.org/XMI'>
+									<diagramContents xmi:id='crt_c_structure'/>
+								</diagram:DiagramRepresentationObject>
+							</diagramRepresentation>
+						</xmi:Extension>
+					</ownedDiagram>
+					<ownedDiagram xmi:type='uml:Diagram' xmi:id='crt_d_activites' name='Décomposition de Rouler' visibility='public' ownerOfDiagram='crt_systeme'>
+						<xmi:Extension extender='MagicDraw UML 19.0'>
+							<diagramRepresentation>
+								<diagram:DiagramRepresentationObject ID='crt_r_activites' type='Activity Decomposition Map' umlType='Class Diagram' xmi:id='crt_x_activites' xmlns:diagram='http://www.nomagic.com/ns/magicdraw/core/diagram/1.0' xmlns:xmi='http://www.omg.org/XMI'>
+									<diagramContents xmi:id='crt_c_activites'/>
+								</diagram:DiagramRepresentationObject>
+							</diagramRepresentation>
+						</xmi:Extension>
+					</ownedDiagram>
+					<ownedDiagram xmi:type='uml:Diagram' xmi:id='crt_d_heritage' name='Héritage' visibility='public' ownerOfDiagram='crt_systeme'>
+						<xmi:Extension extender='MagicDraw UML 19.0'>
+							<diagramRepresentation>
+								<diagram:DiagramRepresentationObject ID='crt_r_heritage' type='Relation Map Diagram' umlType='Class Diagram' xmi:id='crt_x_heritage' xmlns:diagram='http://www.nomagic.com/ns/magicdraw/core/diagram/1.0' xmlns:xmi='http://www.omg.org/XMI'>
+									<diagramContents xmi:id='crt_c_heritage'/>
+								</diagram:DiagramRepresentationObject>
+							</diagramRepresentation>
+						</xmi:Extension>
+					</ownedDiagram>
+					<ownedDiagram xmi:type='uml:Diagram' xmi:id='crt_d_filtre' name='Activités seulement' visibility='public' ownerOfDiagram='crt_systeme'>
+						<xmi:Extension extender='MagicDraw UML 19.0'>
+							<diagramRepresentation>
+								<diagram:DiagramRepresentationObject ID='crt_r_filtre' type='Relation Map Diagram' umlType='Class Diagram' xmi:id='crt_x_filtre' xmlns:diagram='http://www.nomagic.com/ns/magicdraw/core/diagram/1.0' xmlns:xmi='http://www.omg.org/XMI'>
+									<diagramContents xmi:id='crt_c_filtre'/>
+								</diagram:DiagramRepresentationObject>
+							</diagramRepresentation>
+						</xmi:Extension>
+					</ownedDiagram>
+				</modelExtension>
+			</xmi:Extension>
+			<packagedElement xmi:type='uml:Class' xmi:id='crt_vehicule' name='Vehicule'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='crt_p_moteur' name='moteur' visibility='public' aggregation='composite' type='crt_moteur'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='crt_p_roue' name='roue' visibility='public' aggregation='composite' type='crt_roue' association='crt_as_roue'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Association' xmi:id='crt_as_roue'>
+				<memberEnd xmi:idref='crt_p_roue'/>
+				<memberEnd xmi:idref='crt_e_vehicule'/>
+				<ownedEnd xmi:type='uml:Property' xmi:id='crt_e_vehicule' visibility='public' type='crt_vehicule' association='crt_as_roue'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='crt_moteur' name='Moteur'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='crt_p_piston' name='piston' visibility='public' aggregation='composite' type='crt_piston'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='crt_piston' name='Piston'/>
+			<packagedElement xmi:type='uml:Class' xmi:id='crt_roue' name='Roue'/>
+			<packagedElement xmi:type='uml:Class' xmi:id='crt_sport' name='VehiculeSport'>
+				<generalization xmi:type='uml:Generalization' xmi:id='crt_g_sport' general='crt_vehicule'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Activity' xmi:id='crt_rouler' name='Rouler'>
+				<node xmi:type='uml:CallBehaviorAction' xmi:id='crt_a_demarrer' name='demarrer' visibility='public' behavior='crt_demarrer'/>
+				<node xmi:type='uml:CallBehaviorAction' xmi:id='crt_a_avancer' name='avancer' visibility='public' behavior='crt_avancer'/>
+				<edge xmi:type='uml:ControlFlow' xmi:id='crt_f_rouler' visibility='public' source='crt_a_demarrer' target='crt_a_avancer'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Activity' xmi:id='crt_demarrer' name='Demarrer'>
+				<node xmi:type='uml:CallBehaviorAction' xmi:id='crt_a_allumer' name='allumer' visibility='public' behavior='crt_allumer'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Activity' xmi:id='crt_avancer' name='Avancer'/>
+			<packagedElement xmi:type='uml:Activity' xmi:id='crt_allumer' name='Allumer'/>
+		</packagedElement>
+	</uml:Model>
+	<sysml:Block xmi:id='crt_b_vehicule' base_Class='crt_vehicule'/>
+	<sysml:Block xmi:id='crt_b_moteur' base_Class='crt_moteur'/>
+	<sysml:Block xmi:id='crt_b_piston' base_Class='crt_piston'/>
+	<sysml:Block xmi:id='crt_b_roue' base_Class='crt_roue'/>
+	<sysml:Block xmi:id='crt_b_sport' base_Class='crt_sport'/>
+	<MagicDraw_Profile:RelationMap xmi:id='crt_rm_carte' base_Diagram='crt_d_carte' depth='2' layout='Tree' showSingleNodePerElement='false' includeSubtypes='false' showRelationCriterion='true' showElementType='true' contextElement='crt_systeme'>
+		<relationCriterion>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;callExpressionSpecification xmlns=&quot;http://www.nomagic.com/schemas/MagicDraw/StructuredExpression/2013&quot;&gt;
+    &lt;taggedValues&gt;&lt;entry key=&quot;name&quot;&gt;&lt;value&gt;Membres&lt;/value&gt;&lt;/entry&gt;&lt;/taggedValues&gt;
+    &lt;argument xsi:type=&quot;lookupExpressionSpecification&quot; symbol=&quot;THIS&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;/&gt;
+    &lt;expression xsi:type=&quot;propertyExpressionSpecification&quot; direction=&quot;DIRECT&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+        &lt;property xsi:type=&quot;umlProperty&quot; metaclass=&quot;Namespace&quot; property=&quot;member&quot;/&gt;
+    &lt;/expression&gt;
+&lt;/callExpressionSpecification&gt;
+</relationCriterion>
+		<relationCriterion>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;callExpressionSpecification xmlns=&quot;http://www.nomagic.com/schemas/MagicDraw/StructuredExpression/2013&quot;&gt;
+    &lt;taggedValues&gt;&lt;entry key=&quot;name&quot;&gt;&lt;value&gt;Types des parts&lt;/value&gt;&lt;/entry&gt;&lt;/taggedValues&gt;
+    &lt;argument xsi:type=&quot;lookupExpressionSpecification&quot; symbol=&quot;THIS&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;/&gt;
+    &lt;expression xsi:type=&quot;metaChainExpressionSpecification&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+        &lt;chain xsi:type=&quot;stereotypeProperty&quot; profile=&quot;SysML&quot; stereotype=&quot;Block&quot; tag=&quot;member&quot; derived=&quot;true&quot;/&gt;
+        &lt;chain xsi:type=&quot;stereotypeProperty&quot; profile=&quot;additional_stereotypes&quot; stereotype=&quot;PartProperty&quot; tag=&quot;type&quot; derived=&quot;true&quot;/&gt;
+    &lt;/expression&gt;
+&lt;/callExpressionSpecification&gt;
+</relationCriterion>
+		<expandedElements>crt_moteur
+&lt;-crt_vehicule
+&lt;-crt_systeme</expandedElements>
+	</MagicDraw_Profile:RelationMap>
+	<MagicDraw_Profile:RelationMap xmi:id='crt_rm_structure' base_Diagram='crt_d_structure' depth='3' layout='Tree' includeSubtypes='true' contextElement='crt_vehicule'>
+		<relationCriterion>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;callExpressionSpecification xmlns=&quot;http://www.nomagic.com/schemas/MagicDraw/StructuredExpression/2013&quot;&gt;
+    &lt;taggedValues&gt;&lt;entry key=&quot;name&quot;&gt;&lt;value&gt;Attributs&lt;/value&gt;&lt;/entry&gt;&lt;/taggedValues&gt;
+    &lt;expression xsi:type=&quot;propertyExpressionSpecification&quot; direction=&quot;DIRECT&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+        &lt;property xsi:type=&quot;umlProperty&quot; metaclass=&quot;Class&quot; property=&quot;ownedAttribute&quot;/&gt;
+    &lt;/expression&gt;
+&lt;/callExpressionSpecification&gt;
+</relationCriterion>
+		<relationCriterion>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;callExpressionSpecification xmlns=&quot;http://www.nomagic.com/schemas/MagicDraw/StructuredExpression/2013&quot;&gt;
+    &lt;taggedValues&gt;&lt;entry key=&quot;name&quot;&gt;&lt;value&gt;Attributs du type&lt;/value&gt;&lt;/entry&gt;&lt;/taggedValues&gt;
+    &lt;expression xsi:type=&quot;metaChainExpressionSpecification&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+        &lt;chain xsi:type=&quot;umlProperty&quot; metaclass=&quot;Property&quot; property=&quot;type&quot;/&gt;
+        &lt;chain xsi:type=&quot;umlProperty&quot; metaclass=&quot;Classifier&quot; property=&quot;attribute&quot;/&gt;
+    &lt;/expression&gt;
+&lt;/callExpressionSpecification&gt;
+</relationCriterion>
+		<elementTypes href='http://www.omg.org/spec/UML/20131001/UML.xmi#Property'/>
+		<possibleContextTypes href='http://www.omg.org/spec/UML/20131001/UML.xmi#StructuredClassifier'/>
+	</MagicDraw_Profile:RelationMap>
+	<MagicDraw_Profile:RelationMap xmi:id='crt_rm_activites' base_Diagram='crt_d_activites' depth='2' layout='Tree' contextElement='crt_rouler'>
+		<relationCriterion>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;callExpressionSpecification xmlns=&quot;http://www.nomagic.com/schemas/MagicDraw/StructuredExpression/2013&quot;&gt;
+    &lt;taggedValues&gt;&lt;entry key=&quot;name&quot;&gt;&lt;value&gt;Appels&lt;/value&gt;&lt;/entry&gt;&lt;/taggedValues&gt;
+    &lt;expression xsi:type=&quot;metaChainExpressionSpecification&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+        &lt;chain xsi:type=&quot;umlProperty&quot; metaclass=&quot;Activity&quot; property=&quot;node&quot;/&gt;
+        &lt;chain xsi:type=&quot;umlProperty&quot; metaclass=&quot;CallBehaviorAction&quot; property=&quot;behavior&quot;/&gt;
+    &lt;/expression&gt;
+&lt;/callExpressionSpecification&gt;
+</relationCriterion>
+		<possibleContextTypes href='http://www.omg.org/spec/UML/20131001/UML.xmi#Activity'/>
+	</MagicDraw_Profile:RelationMap>
+	<MagicDraw_Profile:RelationMap xmi:id='crt_rm_heritage' base_Diagram='crt_d_heritage' depth='3' layout='Tree' showSingleNodePerElement='true' contextElement='crt_vehicule'>
+		<relationCriterion>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;callExpressionSpecification xmlns=&quot;http://www.nomagic.com/schemas/MagicDraw/StructuredExpression/2013&quot;&gt;
+    &lt;taggedValues&gt;&lt;entry key=&quot;name&quot;&gt;&lt;value&gt;Spécialisé par&lt;/value&gt;&lt;/entry&gt;&lt;/taggedValues&gt;
+    &lt;expression xsi:type=&quot;relationExpressionSpecification&quot; metaclass=&quot;Generalization&quot; direction=&quot;OPPOSITE&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;/&gt;
+&lt;/callExpressionSpecification&gt;
+</relationCriterion>
+		<relationCriterion>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;callExpressionSpecification xmlns=&quot;http://www.nomagic.com/schemas/MagicDraw/StructuredExpression/2013&quot;&gt;
+    &lt;taggedValues&gt;&lt;entry key=&quot;name&quot;&gt;&lt;value&gt;Spécialise&lt;/value&gt;&lt;/entry&gt;&lt;/taggedValues&gt;
+    &lt;expression xsi:type=&quot;relationExpressionSpecification&quot; metaclass=&quot;Generalization&quot; direction=&quot;DIRECT&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;/&gt;
+&lt;/callExpressionSpecification&gt;
+</relationCriterion>
+	</MagicDraw_Profile:RelationMap>
+	<MagicDraw_Profile:RelationMap xmi:id='crt_rm_filtre' base_Diagram='crt_d_filtre' depth='1' layout='Tree' contextElement='crt_vehicule'>
+		<relationCriterion>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;callExpressionSpecification xmlns=&quot;http://www.nomagic.com/schemas/MagicDraw/StructuredExpression/2013&quot;&gt;
+    &lt;taggedValues&gt;&lt;entry key=&quot;name&quot;&gt;&lt;value&gt;Attributs&lt;/value&gt;&lt;/entry&gt;&lt;/taggedValues&gt;
+    &lt;expression xsi:type=&quot;propertyExpressionSpecification&quot; direction=&quot;DIRECT&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+        &lt;property xsi:type=&quot;umlProperty&quot; metaclass=&quot;Class&quot; property=&quot;ownedAttribute&quot;/&gt;
+    &lt;/expression&gt;
+&lt;/callExpressionSpecification&gt;
+</relationCriterion>
+		<elementTypes href='http://www.omg.org/spec/UML/20131001/UML.xmi#Activity'/>
+	</MagicDraw_Profile:RelationMap>
+</xmi:XMI>

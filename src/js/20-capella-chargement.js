@@ -46,9 +46,8 @@ function capBuildPageHtml(){
 
   // Retire tout bootstrap résiduel d'une sauvegarde précédente, pour éviter les doublons
   // si on sauvegarde plusieurs fois de suite un fichier déjà sauvegardé.
-  const oldXml = doc.querySelector('#cap-embedded-xml'); if (oldXml) oldXml.remove();
-  const oldBoot = doc.querySelector('#cap-embedded-bootstrap'); if (oldBoot) oldBoot.remove();
-  const oldAird = doc.querySelector('#cap-embedded-aird'); if (oldAird) oldAird.remove();
+  // (tous : après un 🌐 changement de langue, le modèle transmis précède celui de la page enregistrée)
+  doc.querySelectorAll('#cap-embedded-xml, #cap-embedded-bootstrap, #cap-embedded-aird').forEach(e => e.remove());
 
   if (capLoaded && cap_xmlDoc) {
     // Sérialise le document XML Capella tel qu'il a été chargé
@@ -122,6 +121,65 @@ function capBuildPageHtml(){
   const pre=[...document.childNodes].filter(n=>n.nodeType===8).map(n=>'<!--'+n.data+'-->\n').join('');
   return '<!DOCTYPE html>\n' + pre + doc.outerHTML;
 }
+/* ── 🌐 Changement de langue (version multilingue) : tout le travail suit ───────────────────────────────
+   La page est rechargée dans l'autre langue (build.js : capLangSwitch, cap-lang-boot, cap-lang-restore). L'état passe par
+   window.name : blocs de données de la page (revue, rapports et dossiers, tableaux de bord, réglages…), modèle — Capella :
+   XML, .aird et script d'amorçage de la 💾 page enregistrée ; SysML / UML : fichiers d'origine relus par leur lecteur —, vue. */
+
+/** Fichiers d'origine du modèle SysML / UML affiché ({k, nom, fichiers:[{nom, chemin, lire}]}), posés quand sa lecture réussit. */
+let _capSources=null, _capSourcesPend=null;
+/**
+ * Retient les fichiers d'une lecture SysML / UML en cours (appelée par 87 et 88) ; gardés si elle aboutit (capSysmlAppliquer).
+ * @param {string} k - 'sy' (un fichier .sysml / .kpar), 'syd' (dossier de .sysml), 'umld' (fichiers UML / SysML v1)
+ * @param {string} nom - Nom affiché
+ * @param {{nom:string, chemin:string, lire:function():Promise<File>}[]} fichiers - Fichiers
+ * @param {string} [choix] - Chemin du modèle principal choisi parmi plusieurs (dossier UML : rouvert sans redemander)
+ */
+function capSourcesNoter(k, nom, fichiers, choix){ _capSourcesPend={k, nom, fichiers, choix:choix||''}; }
+/** Lit un fichier en base 64. @param {Blob} f @returns {Promise<string>} */
+function capLangB64(f){ return new Promise((ok, ko)=>{ const r=new FileReader(); r.onload=()=>ok(String(r.result).replace(/^data:[^,]*,/,'')); r.onerror=()=>ko(r.error); r.readAsDataURL(f); }); }
+/**
+ * État complet de la page à transmettre lors d'un changement de langue.
+ * @returns {Promise<object>} {blocs:[{id, type, nom, texte}], boot, sources, vue}
+ */
+async function capLangEtat(){
+  const st={blocs:[], boot:'', sources:null, vue:null};
+  const d=new DOMParser().parseFromString(capBuildPageHtml(), 'text/html');   // blocs à jour (capCfgStoreViews), modèle embarqué
+  if(_capSources&&typeof _capSysml!=='undefined'&&_capSysml.lecture){   // SysML / UML : fichiers d'origine, relus par leur lecteur dans l'autre langue
+    try{ const f=[]; for(const x of _capSources.fichiers){ const file=await x.lire(); f.push({nom:x.nom, chemin:x.chemin, b64:await capLangB64(file)}); }
+      st.sources={k:_capSources.k, nom:_capSources.nom, choix:_capSources.choix||'', fichiers:f}; }catch(e){ console.warn('Fichiers du modèle illisibles :', e); }
+  }
+  d.querySelectorAll('script[id]').forEach(s=>{
+    const embarque=/^cap-embedded-(xml|aird)$/.test(s.id);
+    if(s.type==='application/json'||(embarque&&!st.sources)) st.blocs.push({id:s.id, type:s.type, nom:s.getAttribute('data-name')||'', texte:s.textContent, corps:embarque});
+    if(s.id==='cap-embedded-bootstrap'&&!st.sources) st.boot=s.textContent;
+  });
+  st.vue={vue:capCurrentView, mode:typeof currentMode!=='undefined'?currentMode:'', tab:typeof _capHomeUi!=='undefined'?_capHomeUi.tab:'', dos:typeof _capDosUi!=='undefined'?_capDosUi.cur:'',
+    sub:typeof capAnaSub!=='undefined'?capAnaSub:''};
+  return st;
+}
+/**
+ * Rejoue l'état transmis par un changement de langue, une fois la page chargée : modèle (amorçage de la page enregistrée, ou lecture
+ * des fichiers SysML / UML d'origine), puis vue affichée. Les blocs de données ont été replacés avant le script principal (cap-lang-boot).
+ * @param {object} w - État (capLangEtat)
+ */
+function capLangRestaurer(w){
+  const vue=()=>{ const v=w.vue; if(!v) return; let n=0;
+    const t=setInterval(()=>{ if(++n>240){ clearInterval(t); return; } if(!capLoaded||(w.sources&&!_capSources)) return; clearInterval(t);   // SysML / UML : lecture d'origine refaite
+      try{ if(typeof capAnaSub!=='undefined'&&v.sub) capAnaSub=v.sub;
+        if(typeof _capHomeUi!=='undefined'&&v.tab) _capHomeUi.tab=v.tab; if(typeof _capDosUi!=='undefined'&&v.dos) _capDosUi.cur=v.dos;
+        if(v.mode&&v.mode!=='capella') applyMode(v.mode); else if(v.vue) capShowView(v.vue); }catch(e){ console.warn('Vue non rétablie :', e); } }, 250); };
+  if(w.sources){
+    const f=w.sources.fichiers.map(x=>{ const b=atob(x.b64), o=new Uint8Array(b.length); for(let i=0;i<b.length;i++) o[i]=b.charCodeAt(i);
+      const file=new File([o], x.nom); return {nom:x.nom, chemin:x.chemin, lire:()=>Promise.resolve(file)}; });
+    try{
+      if(w.sources.k==='sy') f[0].lire().then(file=>capSysmlOuvrir(file, null, true));
+      else if(w.sources.k==='syd') capSysmlOuvrirDossier(f, w.sources.nom, true);
+      else capUmlOuvrirDossier(f, w.sources.nom, true, w.sources.choix);   // modèle principal déjà choisi : pas de nouvelle question
+    }catch(e){ console.error('Modèle non rechargé :', e); }
+  } else if(w.boot&&!capLoaded){ const s=document.createElement('script'); s.textContent=w.boot; document.body.appendChild(s); }   // amorçage de la page enregistrée
+  vue();
+}
 /** Nom de fichier proposé pour la page sauvegardée (celui de la page de projet ouverte, s'il y en a une). */
 function capPageFileName(){ return capLoaded ? (typeof _capProjetPage!=='undefined'&&_capProjetPage.nom||_L('arcalyse-avec-modele.html')) : 'arcalyse.html'; }
 /** Sauvegarde la page en la téléchargeant (dossier Téléchargements du navigateur). */
@@ -191,33 +249,176 @@ document.getElementById('capella-file-input').addEventListener('change',e=>{
   e.target.value=''; // permet de recharger le même fichier
 });
 
-/** Formats de modèles ouverts par Arcalyse : clé, libellé, pictogramme, extensions du fichier principal, fichiers annexes du
- * dossier du projet, types du sélecteur à accès direct, disponibilité (lecteur embarqué dans la page). Tout ce qui nomme un format
- * à l'écran (accueil, sélecteurs, messages, menu 📁) en découle : un nouveau format (SysML v1, UML, ReqIF…) s'ajoute ici. */
+/** Formats de modèles ouverts par Arcalyse : clé, libellé, pictogramme, couleur de la pastille de format (couleurs du logo), extensions du
+ * fichier principal, fichiers annexes du dossier du projet, types du sélecteur à accès direct, disponibilité (lecteur embarqué dans la page),
+ * et contenu de sa carte sur l'écran d'ouverture : `sous` (sous-titre), `ouvrir` (fichiers à ouvrir : `{h, n, conseil}`) ou `outils`
+ * (tableau outil → fichiers), `obtenez` (ce que l'on obtient), `sansObjet`, `actions` (boutons : `dossier` ou `fichier`), `multiple`
+ * (sélection de plusieurs fichiers). Les textes notent les extensions entre accents graves (`capFmtTxt`). Tout ce qui nomme un format
+ * à l'écran (accueil, sélecteurs, messages, menu 📁) en découle : un nouveau format (ReqIF…) s'ajoute ici. */
 const CAP_FORMATS=[
-  {k:'capella', l:'Capella', ico:'🔷', ext:['capella','melodymodeller','xml'], annexes:['aird'], mime:{'application/xml':['.capella','.melodymodeller','.xml']}, dispo:()=>true,
-    dossier:_L('le .capella, ses diagrammes (.aird) et ses bibliothèques')},
-  {k:'sysml2', l:'SysML v2', ico:'🧩', ext:['sysml','kpar'], annexes:[], mime:{'text/plain':['.sysml'], 'application/zip':['.kpar']}, dispo:()=>typeof capSysmlDispo==='function'&&capSysmlDispo(),
-    dossier:_L('les fichiers .sysml d\'un projet, lus ensemble')}
+  {k:'capella', l:'Capella', ico:'🔷', c:'#5aa2e8', ext:['capella','melodymodeller','xml'], annexes:['aird'], mime:{'application/xml':['.capella','.melodymodeller','.xml']}, dispo:()=>!CAP_EDITION||CAP_EDITION==='capella',
+    dossier:_L('le .capella, ses diagrammes (.aird) et ses bibliothèques'),
+    sous:_L('méthode ARCADIA'),
+    ouvrir:[{h:_L('Le dossier du projet'), n:_L('En une fois : `.capella` + diagrammes `.aird` + bibliothèques'), conseil:true},
+      {h:_L('ou le fichier seul `.capella`'), n:_L('(aussi .melodymodeller, .xml) ; le .aird pourra être ajouté ensuite.')}],
+    obtenez:[_L('Toutes les vues ARCADIA, OA → EPBS : fonctions, échanges, composants, chaînes, scénarios, traçabilité'), _L('Les diagrammes Capella, avec le `.aird`'), _L('Contrôles et score de santé par couche')],
+    sansObjet:'', multiple:false,
+    actions:[{l:_L('📁 Dossier du projet…'), a:'dossier', p:true}, {l:_L('Fichier .capella…'), a:'fichier'}]},
+  {k:'sysml2', l:'SysML v2', ico:'🧩', c:'#4fc3a1', ext:['sysml','kpar'], annexes:[], mime:{'text/plain':['.sysml'], 'application/zip':['.kpar']}, dispo:()=>typeof capSysmlDispo==='function'&&capSysmlDispo(),
+    dossier:_L('les fichiers .sysml d\'un projet, lus ensemble'),
+    sous:_L('notation textuelle'),
+    ouvrir:[{h:_L('Un fichier `.sysml` ou une archive `.kpar`'), n:''}, {h:_L('ou un dossier de `.sysml`'), n:_L('Tous les fichiers du projet sont lus ensemble.')}],
+    obtenez:[_L('Éléments et liaisons : typage, spécialisation, composition, connexions, flux'), _L('Vues calculées depuis le texte : générale, interconnexion, états, flux d\'actions'), _L('Diagnostics du lecteur, ligne du fichier source')],
+    sansObjet:_L('Sans objet : vues ARCADIA, propres à Capella'), multiple:true,
+    actions:[{l:_L('📂 Fichier .sysml / .kpar…'), a:'fichier', p:true}, {l:_L('Dossier de .sysml…'), a:'dossier'}]},
+  {k:'uml', l:'UML / SysML v1', ico:'🧬', c:'#f0a35e', ext:['uml','xmi','mdzip','qea','qeax','rpy','rpyx'], annexes:['notation','sbs','cls','cmp','ctd'], mime:{'application/xml':['.uml','.xmi','.notation','.rpyx'], 'application/zip':['.mdzip'], 'application/octet-stream':['.qea','.qeax'], 'text/plain':['.rpy','.sbs','.cls','.cmp','.ctd']},
+    dispo:()=>typeof capUmlDispo==='function'&&capUmlDispo(), dossier:_L('le modèle (.uml, .xmi, .mdzip, .qea) et ses diagrammes de Papyrus (.notation), ou un projet Rhapsody (.rpy et dossier _rpy)'),
+    sous:_L('et UAF'),
+    outils:[[_L('Cameo / CATIA Magic'), _L('`.mdzip` avec diagrammes')], [_L('Enterprise Architect 16+'), _L('`.qea` `.qeax` avec diagrammes')],
+      [_L('Papyrus'), _L('`.uml` + `.notation` ensemble')], [_L('IBM Rhapsody'), _L('dossier du projet (`.rpy` + `_rpy`), sans les diagrammes')], [_L('Export XMI (tout outil)'), _L('`.xmi` sans les diagrammes de Cameo')]],
+    obtenez:[_L('Les diagrammes de l\'outil (bdd, ibd, activité, états, séquence…), les tableaux et matrices de Cameo'), _L('Validation UML 2.5.1, SysML 1.7 et UAF 1.2')],
+    sansObjet:_L('Sans objet : vues ARCADIA, propres à Capella'), multiple:true,
+    actions:[{l:_L('📂 Fichier modèle…'), a:'fichier', p:true}, {l:_L('Dossier (Papyrus, Rhapsody)…'), a:'dossier'}]}
 ];
+/** Pastille du projet de travail (page HTML enregistrée), aux côtés des formats. */
+const CAP_FMT_PAGE={k:'page', l:_L('Projet de travail'), c:'#e8c84f'};
+/** 💡 « Bon à savoir » de l'écran d'ouverture : f = format concerné (clé de CAP_FORMATS, ou `page`), t = texte (extensions entre
+ * accents graves). Seules les astuces des formats embarqués sont montrées. */
+const CAP_ASTUCES=[
+  {f:'uml', t:_L('Un export `.xmi` de Cameo ne contient pas les diagrammes : ouvrez plutôt le `.mdzip` du projet.')},
+  {f:'capella', t:_L('Le `.aird` seul ne suffit pas, il ne contient que les représentations : ouvrez le dossier du projet, ou le `.capella` puis le `.aird`.')},
+  {f:'sysml2', t:_L('Un projet SysML v2 en plusieurs fichiers s\'ouvre par son dossier : tous les `.sysml` sont lus ensemble.')},
+  {f:'uml', t:_L('Papyrus : le `.notation` seul est refusé. Choisissez-le avec son `.uml` (Ctrl + clic), déposez les deux, ou ouvrez le dossier.')},
+  {f:'capella', t:_L('Le dossier du projet charge aussi les bibliothèques référencées par le modèle : leurs éléments se résolvent dans le panneau de détail.')},
+  {f:'uml', t:_L('Les anciens projets d\'Enterprise Architect (`.eap`, `.eapx`, `.feap`) ne sont pas lus : enregistrez-les en `.qea` depuis EA 16+, ou exportez-les en XMI.')},
+  {f:'uml', t:_L('Rhapsody : ouvrez le dossier du projet, qui contient le `.rpy` et son dossier `_rpy` (un paquetage par fichier `.sbs`). Les diagrammes ne sont pas encore lus ; un projet au format XML (`.rpyx`) s\'enregistre au format texte depuis Rhapsody.')},
+  {f:'page', t:_L('Une page de projet `.html` est lue sans être exécutée ; vous choisissez ensuite les parties à reprendre.')},
+  {f:'uml', t:_L('Le `.mdzip` se décompresse dans le navigateur : Chrome / Edge 80+, Firefox 113+ ou Safari 16.4+. Les tableaux et matrices de Cameo sont recalculés d\'après leur définition.')}
+];
+/** Message pour un fichier d'un format que cette version (réduite à un format) ne lit pas.
+ * @param {string} name - Nom du fichier @param {object} F - Format du fichier (CAP_FORMATS) @returns {string} */
+function capFormatAbsentMsg(name, F){
+  return _L(`« ${name} » est un fichier ${F.l} : cette version d'Arcalyse ne lit que ${capFormatsDispo().map(f=>f.l).join(', ')}. Ouvrez-le avec la version ${F.l} ou la version complète d'Arcalyse.`);
+}
+/** Nom de la version : format embarqué (version réduite) ou version complète. @returns {string} */
+function capEditionNom(){ const F=CAP_FORMATS.find(f=>f.k===CAP_EDITION); return F?_L(`${F.l} seul`):_L('complète (tous les formats)'); }
 /** Formats dont le lecteur est embarqué dans la page. @returns {object[]} */
 function capFormatsDispo(){ return CAP_FORMATS.filter(f=>{ try{ return f.dispo(); }catch(e){ return false; } }); }
 /** Extensions (sans point) des fichiers modèles acceptés. @returns {string[]} */
 function capFormatsExt(){ return capFormatsDispo().flatMap(f=>f.ext); }
 /** Valeur de l'attribut accept des sélecteurs de modèle. @returns {string} */
 function capFormatsAccept(){ return capFormatsExt().map(e=>'.'+e).join(','); }
-/** Types du sélecteur à accès direct (showOpenFilePicker). @returns {object[]} */
-function capFormatsTypes(){ return capFormatsDispo().map(f=>({description:f.l, accept:f.mime})); }
+/** Types du sélecteur à accès direct (showOpenFilePicker) : en tête « Tous les modèles » (toutes les extensions réunies, choisi d'office :
+ * plus besoin de changer de type pour ouvrir un autre format), puis un type par format. @returns {object[]} */
+function capFormatsTypes(){
+  const fs=capFormatsDispo(), un=fs.map(f=>({description:f.l, accept:f.mime}));
+  if(fs.length<2) return un;
+  const tout={}; fs.forEach(f=>Object.entries(f.mime||{}).forEach(([m,ex])=>{ tout[m]=[...new Set([...(tout[m]||[]), ...[].concat(ex)])]; }));
+  return [{description:_L('Tous les modèles'), accept:tout}, ...un];
+}
 /** Formats et extensions en clair : « Capella (.capella, .melodymodeller, .xml) · SysML v2 (.sysml, .kpar) ». @returns {string} */
 function capFormatsLibelle(){ return capFormatsDispo().map(f=>`${f.l} (${f.ext.map(e=>'.'+e).join(', ')})`).join(' · '); }
-/** Ligne des formats de l'écran d'accueil (HTML). @returns {string} */
-function capFormatsHint(){
-  return _L('Formats :')+' '+capFormatsDispo().map(f=>`${f.ico} ${capEsc(f.l)} ${f.ext.map(e=>'<b>.'+e+'</b>').join(' · ')}${f.annexes.length?' <span class="ana-dim">(+ '+f.annexes.map(e=>'.'+e).join(', ')+')</span>':''}`).join(' &nbsp;·&nbsp; ')+' — '+_L('le fichier est lu localement, rien n\'est envoyé.');
+/** Texte d'une carte ou d'une astuce : échappé, extensions notées entre accents graves rendues en code. @param {string} s @returns {string} HTML */
+function capFmtTxt(s){ return capEsc(s||'').replace(/`([^`]+)`/g, '<code class="cw-ext">$1</code>'); }
+/** Pastille de format : point de couleur et nom. @param {{l:string, c:string}} f - Format (ou CAP_FMT_PAGE) @param {string} [cls] - Classe en plus @returns {string} HTML */
+function capFmtPuce(f, cls){ return `<span class="cw-fmt${cls?' '+cls:''}" style="--cw-c:${f.c}"><i></i>${capEsc(f.l)}</span>`; }
+/** Cartes de l'écran d'ouverture, une par format embarqué : quoi ouvrir, ce que l'on obtient, boutons. @returns {string} HTML */
+function capFormatsCartesHtml(){
+  const ok=t=>`<li>${capFmtTxt(t)}</li>`;
+  return capFormatsDispo().map(f=>`<section class="cw-card" id="cw-card-${f.k}" style="--cw-c:${f.c}">`+
+    `<div class="cw-card-h">${capFmtPuce(f, 'cw-fmt-l')}<span class="cw-card-s">${capEsc(f.sous||'')}</span></div>`+
+    `<div class="cw-lbl">${f.outils?_L('À ouvrir, selon votre outil'):_L('À ouvrir')}</div>`+
+    (f.outils?`<div class="cw-outils">${f.outils.map(([o,x])=>`<span>${capEsc(o)}</span><span>${capFmtTxt(x)}</span>`).join('')}</div>`
+      :(f.ouvrir||[]).map(o=>`<div class="cw-o${o.conseil?' cw-o-c':''}"><div><b>${capFmtTxt(o.h)}</b>${o.conseil?` <span class="cw-tag">${_L('conseillé')}</span>`:''}</div>${o.n?`<div class="cw-o-n">${capFmtTxt(o.n)}</div>`:''}</div>`).join(''))+
+    `<div class="cw-lbl">${_L('Vous obtenez')}</div><ul class="cw-ok">${(f.obtenez||[]).map(ok).join('')}${f.sansObjet?`<li class="cw-no">${capFmtTxt(f.sansObjet)}</li>`:''}</ul>`+
+    `<div class="cw-card-b">${(f.actions||[]).map(a=>`<button type="button" class="cw-b${a.p?' cw-b-p':''}" data-cw="${a.a}" data-k="${f.k}">${capEsc(a.l)}</button>`).join('')}</div></section>`).join('');
 }
-/** Pose les formats acceptés sur les sélecteurs et l'accueil (au chargement de la page, quand les lecteurs embarqués sont là). */
+/** État du « Bon à savoir » : astuce affichée, pause demandée, survol ou focus, minuteur. */
+const _capAstuce={i:0, pause:false, survol:false, minuteur:0};
+/** Astuces des formats embarqués. @returns {{f:string, t:string}[]} */
+function capAstuces(){ const ks=capFormatsDispo().map(f=>f.k).concat('page'); return CAP_ASTUCES.filter(a=>ks.includes(a.f)); }
+/** Affiche l'astuce courante (pastille, texte, points, rang) dans #cw-astuces. */
+function capAstuceMontrer(){
+  const box=document.getElementById('cw-astuces'), A=capAstuces(); if(!box||!A.length){ if(box) box.innerHTML=''; return; }
+  const n=A.length, i=((_capAstuce.i%n)+n)%n, a=A[i], f=CAP_FORMATS.find(x=>x.k===a.f)||CAP_FMT_PAGE; _capAstuce.i=i;
+  if(!box.firstChild) box.innerHTML=`<span class="cw-tips-t">💡 ${_L('Bon à savoir')}</span><span class="cw-tips-f"></span><div class="cw-tips-x" aria-live="polite"></div>`+
+    `<div class="cw-tips-n"><button type="button" data-tip="-1" title="${_L('Astuce précédente')}">‹</button><span class="cw-tips-d"></span><button type="button" data-tip="+1" title="${_L('Astuce suivante')}">›</button>`+
+    `<button type="button" data-tip="pause"></button><span class="cw-tips-r"></span></div>`;
+  box.querySelector('.cw-tips-f').innerHTML=capFmtPuce(f, 'cw-fmt-s');
+  box.querySelector('.cw-tips-x').innerHTML=capFmtTxt(a.t);
+  box.querySelector('.cw-tips-d').innerHTML=A.map((_,k)=>`<button type="button" class="cw-tips-p${k===i?' on':''}" data-tip="${k}" title="${_L(`Astuce ${k+1} sur ${n}`)}"><i></i></button>`).join('');
+  const p=box.querySelector('[data-tip="pause"]'); p.textContent=_capAstuce.pause?'▶':'⏸';
+  p.title=_capAstuce.pause?_L('Reprendre le défilement des astuces'):_L('Mettre en pause le défilement des astuces');
+  box.querySelector('.cw-tips-r').textContent=`${i+1} / ${n}`;
+}
+/** Branche le défilement des astuces (toutes les 7 s ; arrêté au survol, au focus, quand l'écran d'ouverture est masqué ou si le
+ * système demande moins d'animations) et leurs commandes ‹ › ⏸ et points. Appelée une fois. */
+function capAstucesBrancher(){
+  const box=document.getElementById('cw-astuces'); if(!box||_capAstuce.minuteur) return;
+  try{ if(matchMedia('(prefers-reduced-motion: reduce)').matches) _capAstuce.pause=true; }catch(e){ /* navigateur ancien */ }
+  box.addEventListener('click',ev=>{ ev.stopPropagation(); const b=ev.target.closest('[data-tip]'); if(!b) return; const v=b.dataset.tip;
+    if(v==='pause') _capAstuce.pause=!_capAstuce.pause; else if(v==='-1'||v==='+1') _capAstuce.i+=+v; else _capAstuce.i=+v;
+    capAstuceMontrer(); });
+  const sur=v=>()=>{ _capAstuce.survol=v; };
+  box.addEventListener('mouseenter',sur(true)); box.addEventListener('mouseleave',sur(false));
+  box.addEventListener('focusin',sur(true)); box.addEventListener('focusout',sur(false));
+  _capAstuce.minuteur=setInterval(()=>{
+    const w=document.getElementById('cap-welcome');
+    if(_capAstuce.pause||_capAstuce.survol||document.hidden||!w||w.classList.contains('cw-hidden')) return;
+    _capAstuce.i++; capAstuceMontrer();
+  }, 7000);
+}
+/** Pose les formats acceptés sur les sélecteurs, les cartes de format et les astuces de l'écran d'ouverture (au chargement de la page,
+ * quand les lecteurs embarqués sont là). */
 function capFormatsPoser(){
   const inp=document.getElementById('capella-file-input'); if(inp) inp.accept=capFormatsAccept();
-  const h=document.getElementById('cw-formats'); if(h) h.innerHTML=capFormatsHint();
+  const c=document.getElementById('cw-cards'), ks=capFormatsDispo().map(f=>f.k).join(',');   // cartes refaites quand un lecteur embarqué arrive
+  if(c&&c.dataset.k!==ks){ c.innerHTML=capFormatsCartesHtml(); c.dataset.k=ks; c.style.maxWidth=(capFormatsDispo().length*420)+'px'; }
+  capAstuceMontrer(); capAstucesBrancher(); capAideFiltrer();
+}
+/** Version réduite à un format (CAP_EDITION) : masque dans l'aide les onglets et sections d'un format absent (attribut `data-hfmt`). */
+function capAideFiltrer(){
+  if(!CAP_EDITION) return;
+  const ks=capFormatsDispo().map(f=>f.k);
+  document.querySelectorAll('[data-hfmt]').forEach(n=>{ if(!ks.includes(n.dataset.hfmt)) n.style.display='none'; });
+}
+/**
+ * Bouton « Fichier… » d'une carte de format : sélecteur filtré sur ce format (plusieurs fichiers pour SysML v2 et UML : .sysml d'un
+ * projet, .uml et son .notation), puis ouverture par le lecteur du format.
+ * @param {string} k - Clé du format (CAP_FORMATS)
+ * @param {boolean} [confirme] - true : remplacement du modèle affiché déjà accepté
+ */
+async function capFormatsChoisir(k, confirme){
+  if(capLoaded&&!confirme){ if(await capReplaceConfirm('')) capFormatsChoisir(k, true); return; }
+  _capReplaceOk=capLoaded?Date.now():0;
+  const F=CAP_FORMATS.find(f=>f.k===k); if(!F){ capPickCapellaFile(true); return; }
+  if(window.showOpenFilePicker&&!_capPickerKo){
+    const t0=Date.now();
+    try{
+      const hs=await window.showOpenFilePicker({types:[{description:F.l, accept:F.mime}], multiple:!!F.multiple});
+      capFormatsOuvrir(await Promise.all(hs.map(h=>h.getFile())), hs); return;
+    }catch(e){
+      if(e&&e.name==='AbortError'&&Date.now()-t0>400){ _capReplaceOk=0; return; }   // fenêtre fermée par l'utilisateur
+      console.warn('Sélecteur à accès direct indisponible :', e); _capPickerKo=true;
+    }
+  }
+  const inp=document.getElementById('cw-fmt-input'); if(!inp) return;
+  inp.accept=_capPickerKo?'':[...F.ext, ...(F.k==='uml'?F.annexes:[])].map(e=>'.'+e).join(','); inp.multiple=!!F.multiple;
+  inp.click();
+}
+/**
+ * Ouvre les fichiers choisis par une carte de format : un seul fichier par capLoadFile (avec son accès direct, pour le 🔄 suivi),
+ * plusieurs .sysml ensemble, un modèle UML avec son .notation.
+ * @param {File[]} fs - Fichiers choisis
+ * @param {FileSystemFileHandle[]} [hs] - Accès directs correspondants
+ */
+function capFormatsOuvrir(fs, hs){
+  if(!fs||!fs.length){ _capReplaceOk=0; return; }
+  const ok=capReplacePreOk();
+  if(fs.length===1){ capLoadFile(fs[0], hs&&hs[0]||null, ok); return; }
+  if(fs.every(f=>/\.sysml$/i.test(f.name))&&typeof capSysmlOuvrirFichiers==='function'){ capSysmlOuvrirFichiers(fs, ok); return; }
+  if(typeof capUmlOuvrirFichiers==='function'&&fs.some(f=>capUmlReconnait(f.name))){ capUmlOuvrirFichiers(fs, ok); return; }
+  capLoadFile(fs[0], hs&&hs[0]||null, ok);
 }
 
 /** Charge un fichier modèle (depuis l'explorateur ou un glisser-déposer) : aiguille vers le lecteur du format, vérifie
@@ -231,8 +432,11 @@ function capLoadFile(f, handle, confirme){
   const name=(f&&f.name)||'';
   const ext=(name.split('.').pop()||'').toLowerCase();
   if (typeof capSysmlReconnait==='function' && capSysmlReconnait(name)) { capSysmlOuvrir(f, handle, confirme); return; }   // 🧩 SysML v2 (.sysml, .kpar : 87)
+  if (typeof capUmlReconnait==='function' && (capUmlReconnait(name) || capUmlAnnexe(name))) { capUmlOuvrir(f, handle, confirme); return; }   // 🧬 UML / SysML v1 (.uml, .xmi, .mdzip, .qea : 88)
   if (ext==='aird' && capDiagDispo()) { capDiagLoadAird(f, handle); return; }   // 🔲 Diagrammes Capella du projet
   if (ext==='html' || ext==='htm') { capProjetPageOuvrir(f, handle, confirme); return; }   // 📄 projet de travail (page HTML enregistrée)
+  const absent=CAP_FORMATS.find(F=>[...F.ext, ...F.annexes].includes(ext)&&!capFormatsDispo().includes(F));   // version réduite à un format (CAP_EDITION)
+  if (absent) { capWelcomeStatus(capFormatAbsentMsg(name, absent),'err'); capShowWelcome(true); return; }
   if (ext==='aird' || ext==='afm') {
     capWelcomeStatus(_L(`« ${name} » est un fichier de représentation/métadonnées : déposez le fichier .capella du projet.`),'err');
     capShowWelcome(true); return;
@@ -282,7 +486,7 @@ function capApplyXmlDoc(doc, name){
   cap_xmlDoc=doc;
   capAllElements=[];
   _capParentIndexCache=null; _capElementByIdCache=null; _capRefIndexCache=null; _capMcPropsCache=null; _capTableRelIdx=null; capChainsData=null; capLinksData=null; _capPortsCache=null; capAnaReset();
-  if(typeof capHistReset==='function'&&_capHist.model!==name){ capHistReset(); _capHist.model=name; }   // ◀ ▶ historique vidé pour un autre modèle (76)
+  if(typeof capHistReset==='function'&&_capHist.model!==name){ capHistReset(); _capHist.model=name; const ov=document.getElementById('cdg-maj-ov'); if(ov) ov.remove(); }   // ◀ ▶ historique vidé pour un autre modèle (76) ; question « .aird à jour ? » (54) sans objet
   capTreeData=capBuildTree(doc.documentElement,new Set());
   if(!capAllElements.length) throw new Error(_L('Aucun élément Capella reconnu dans ce fichier'));
   capBuildTypeRegistry();
@@ -372,20 +576,26 @@ function capUpdateWelcome(){ capFormatsPoser(); capShowWelcome(!capLoaded); }
 (function(){
   const zone=document.getElementById('cap-drop-zone');
   const browse=()=>capPickCapellaFile();
-  document.getElementById('cw-browse').addEventListener('click',ev=>{ ev.stopPropagation(); browse(); });
-  // 📁 Dossier du projet : .capella et .aird chargés ensemble (54-diagrammes.js)
-  document.getElementById('cw-folder').addEventListener('click',ev=>{ ev.stopPropagation(); capOpenProjectFolder(); });
+  // Cartes de format : 📁 dossier du projet (54-diagrammes.js : le format est reconnu) ou fichier(s) filtrés sur le format
+  document.getElementById('cw-cards').addEventListener('click',ev=>{
+    ev.stopPropagation(); const b=ev.target.closest('[data-cw]'); if(!b) return;
+    if(b.dataset.cw==='dossier') capOpenProjectFolder(); else capFormatsChoisir(b.dataset.k);
+  });
+  const fmtIn=document.getElementById('cw-fmt-input');
+  fmtIn.addEventListener('click',ev=>ev.stopPropagation());
+  fmtIn.addEventListener('cancel',()=>{ _capReplaceOk=0; });
+  fmtIn.addEventListener('change',()=>{ const fs=[...fmtIn.files]; fmtIn.value=''; capFormatsOuvrir(fs, null); });
   // 📄 Projet de travail : page HTML enregistrée (même par une version antérieure), reprise dans cette version (57-projet-page.js)
   document.getElementById('cw-projet').addEventListener('click',ev=>{ ev.stopPropagation(); capProjetPagePick(); });
   const fin=document.getElementById('cw-folder-input');
   fin.addEventListener('click',ev=>ev.stopPropagation());
   fin.addEventListener('change',()=>{
     const l=[...fin.files].map(f=>{ const p=(f.webkitRelativePath||f.name).split('/'); return {nom:f.name, chemin:p.slice(1).join('/')||f.name, lire:()=>Promise.resolve(f), h:null}; })
-      .filter(f=>f.chemin.split('/').length<=2);
+      .filter(f=>f.chemin.split('/').length<=2||/(^|\/)[^/]+_rpy\/[^/]+$/i.test(f.chemin));   // dossier « _rpy » d'un projet Rhapsody : toujours lu
     fin.value='';
     if(l.length) capProjectFromFiles(l);
   });
-  zone.addEventListener('click',browse);
+  zone.addEventListener('click',ev=>{ if(!ev.target.closest('button,a,input,.cw-card,.cw-tips,.cw-projet')) browse(); });   // clic sur le fond du cadre : sélecteur de tous les formats
   // Clic hors de la zone quand un modèle est chargé : referme la surimpression
   document.getElementById('cap-welcome').addEventListener('click',ev=>{
     if(capLoaded && ev.target.id==='cap-welcome'){ capWelcomeStatus('',''); capShowWelcome(false); }
@@ -411,6 +621,7 @@ function capUpdateWelcome(){ capFormatsPoser(); capShowWelcome(!capLoaded); }
     const tous=[...(ev.dataTransfer.files||[])];
     const sy=tous.filter(x=>/\.sysml$/i.test(x.name));
     if(sy.length>1&&typeof capSysmlOuvrirFichiers==='function'){ capSysmlOuvrirFichiers(sy); return; }   // 🧩 plusieurs .sysml : lus ensemble (87)
+    if(tous.length>1&&typeof capUmlReconnait==='function'&&tous.some(x=>capUmlReconnait(x.name))&&!tous.some(x=>/\.(capella|melodymodeller)$/i.test(x.name))){ capUmlOuvrirFichiers(tous); return; }   // 🧬 modèle UML et son .notation (88)
     const aird=tous.find(x=>/\.aird$/i.test(x.name)), mod=tous.find(x=>/\.(capella|melodymodeller|xml)$/i.test(x.name));
     if(aird && mod && tous.length>1){ const go=()=>{ capLoadFile(mod, null, true); capDiagLoadAird(aird, null, true); };
       if(!capLoaded){ go(); return; }
@@ -880,7 +1091,7 @@ function capInjectChainsToModal(){
  * Met à jour les boutons de vue et les compteurs de stats.
  */
 function capRenderCurrentView(){
-  ['cap-view-cards','cap-view-table','cap-view-tree','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-fex','cap-view-cblk','cap-view-csys','cap-view-oav','cap-view-scen','cap-view-diag','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-home'].forEach(id=>{
+  ['cap-view-cards','cap-view-table','cap-view-matrix','cap-view-tree','cap-view-chains','cap-view-physlink','cap-view-compex','cap-view-fex','cap-view-cblk','cap-view-csys','cap-view-oav','cap-view-scen','cap-view-diag','cap-view-ports','cap-view-functions','cap-view-analyses','cap-view-dashboard','cap-view-home'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.style.display='none';
   });
   const pg=document.getElementById('cap-pagination'); if(pg) pg.style.display='none';
@@ -907,6 +1118,9 @@ function capRenderCurrentView(){
   } else if(capCurrentView==='table'){
     document.getElementById('cap-view-table').style.display='flex';
     capRenderTable();
+  } else if(capCurrentView==='matrix'){
+    document.getElementById('cap-view-matrix').style.display='flex';
+    capRenderMatrix();   // ▦ Matrice (91)
   } else if(capCurrentView==='chains'){
     document.getElementById('cap-view-chains').style.display='block';
     capRenderChains();

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:standard="http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
+  <uml:Model xmi:id="_Bibliotheque" name="Bibliotheque">
+    <ownedComment xmi:type="uml:Comment" xmi:id="_Bibliotheque_doc" annotatedElement="_Bibliotheque">
+      <body>Modèle de démonstration d'Arcature : gestion d'une bibliothèque.</body>
+    </ownedComment>
+    <packageImport xmi:type="uml:PackageImport" xmi:id="_Bibliotheque_import">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="_Domaine" name="Domaine">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_Note" annotatedElement="_Livre">
+        <body>Un livre peut avoir plusieurs exemplaires.</body>
+      </ownedComment>
+      <packagedElement xmi:type="uml:Class" xmi:id="_Document" name="Document" isAbstract="true">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_Document_doc" annotatedElement="_Document">
+          <body>Tout document prêté par la bibliothèque.</body>
+        </ownedComment>
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_Document_Empruntable" client="_Document" supplier="_Empruntable" contract="_Empruntable"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_Document_titre" name="titre" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_Document_annee" name="annee" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Document_annee_bas"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Document_annee_haut" value="1"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_Document_etat" name="etat" type="_Etat"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_Document_emprunter" name="emprunter">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_Document_emprunter_membre" name="membre" type="_Membre"/>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_Document_emprunter_retour" name="retour" direction="return">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+          </ownedParameter>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_Livre" name="Livre">
+        <generalization xmi:type="uml:Generalization" xmi:id="_Livre_Document" general="_Document"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_Livre_isbn" name="isbn">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_Revue" name="Revue">
+        <generalization xmi:type="uml:Generalization" xmi:id="_Revue_Document" general="_Document"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_Membre" name="Membre" clientDependency="_Membre_utilise">
+        <ownedRule xmi:type="uml:Constraint" xmi:id="_Membre_limite" name="limite" constrainedElement="_Membre">
+          <specification xmi:type="uml:OpaqueExpression" xmi:id="_Membre_limite_spec">
+            <language>OCL</language>
+            <body>emprunts->size() &lt;= 5</body>
+          </specification>
+        </ownedRule>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_Membre_nom" name="nom">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_Membre_emprunts" name="emprunts" type="_Document" association="_A_emprunts_membre">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Membre_emprunts_bas"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Membre_emprunts_haut" value="*"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_A_emprunts_membre" name="A_emprunts_membre" memberEnd="_Membre_emprunts _A_emprunts_membre_membre">
+        <ownedEnd xmi:type="uml:Property" xmi:id="_A_emprunts_membre_membre" name="membre" type="_Membre" association="_A_emprunts_membre"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_Empruntable" name="Empruntable">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_Empruntable_disponible" name="disponible" isQuery="true"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Enumeration" xmi:id="_Etat" name="Etat">
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_Etat_Disponible" name="Disponible"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_Etat_Emprunte" name="Emprunte"/>
+        <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_Etat_Perdu" name="Perdu"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_Membre_utilise" name="utilise" client="_Membre" supplier="_Empruntable"/>
+      <packagedElement xmi:type="uml:Component" xmi:id="_Catalogue" name="Catalogue"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_Cas" name="Cas">
+      <packagedElement xmi:type="uml:Actor" xmi:id="_Lecteur" name="Lecteur"/>
+      <packagedElement xmi:type="uml:Actor" xmi:id="_Bibliothecaire" name="Bibliothecaire"/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_Emprunter" name="Emprunter">
+        <include xmi:type="uml:Include" xmi:id="_Emprunter_identifier" addition="_Identifier"/>
+        <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_Emprunter_retard" name="retard"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_Identifier" name="S'identifier"/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_Amende" name="Payer une amende">
+        <extend xmi:type="uml:Extend" xmi:id="_Amende_Emprunter" extendedCase="_Emprunter" extensionLocation="_Emprunter_retard"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_A_lecteur_emprunter" name="A_lecteur_emprunter" memberEnd="_A_lecteur_emprunter_lecteur _A_lecteur_emprunter_emprunter">
+        <ownedEnd xmi:type="uml:Property" xmi:id="_A_lecteur_emprunter_lecteur" name="lecteur" type="_Lecteur" association="_A_lecteur_emprunter"/>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_A_lecteur_emprunter_emprunter" name="emprunter" type="_Emprunter" association="_A_lecteur_emprunter"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:StateMachine" xmi:id="_Cycle" name="CycleExemplaire">
+      <region xmi:type="uml:Region" xmi:id="_Cycle_region" name="Region1">
+        <transition xmi:type="uml:Transition" xmi:id="_T0" source="_Initial" target="_Disponible"/>
+        <transition xmi:type="uml:Transition" xmi:id="_T1" name="emprunt" source="_Disponible" target="_Emprunte"/>
+        <transition xmi:type="uml:Transition" xmi:id="_T2" name="retour" source="_Emprunte" target="_Disponible"/>
+        <transition xmi:type="uml:Transition" xmi:id="_T3" name="retrait" source="_Disponible" target="_Fin"/>
+        <subvertex xmi:type="uml:Pseudostate" xmi:id="_Initial" name="Initial"/>
+        <subvertex xmi:type="uml:State" xmi:id="_Disponible" name="Disponible"/>
+        <subvertex xmi:type="uml:State" xmi:id="_Emprunte" name="Emprunte"/>
+        <subvertex xmi:type="uml:FinalState" xmi:id="_Fin" name="Fin"/>
+      </region>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Activity" xmi:id="_Processus" name="ProcessusEmprunt">
+      <edge xmi:type="uml:ControlFlow" xmi:id="_F1" target="_Verifier" source="_Debut"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_F2" target="_Choix" source="_Verifier"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_F3" name="autorisé" target="_Enregistrer" source="_Choix"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_F4" name="refusé" target="_Refuser" source="_Choix"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_F5" target="_Fusion" source="_Enregistrer"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_F6" target="_Fusion" source="_Refuser"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_F7" target="_Terminer" source="_Fusion"/>
+      <node xmi:type="uml:InitialNode" xmi:id="_Debut" name="Début" outgoing="_F1"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_Verifier" name="Vérifier le membre" outgoing="_F2" incoming="_F1"/>
+      <node xmi:type="uml:DecisionNode" xmi:id="_Choix" name="Choix" outgoing="_F3 _F4" incoming="_F2"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_Enregistrer" name="Enregistrer le prêt" outgoing="_F5" incoming="_F3"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_Refuser" name="Refuser le prêt" outgoing="_F6" incoming="_F4"/>
+      <node xmi:type="uml:MergeNode" xmi:id="_Fusion" name="Fusion" outgoing="_F7" incoming="_F5 _F6"/>
+      <node xmi:type="uml:ActivityFinalNode" xmi:id="_Terminer" name="Terminer" incoming="_F7"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Interaction" xmi:id="_Sequence" name="SequenceEmprunt">
+      <lifeline xmi:type="uml:Lifeline" xmi:id="_LL_lecteur" name="lecteur" coveredBy="_M1_envoi"/>
+      <lifeline xmi:type="uml:Lifeline" xmi:id="_LL_systeme" name="systeme" coveredBy="_M1_reception"/>
+      <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_M1_envoi" name="demanderEnvoi" covered="_LL_lecteur" message="_M1"/>
+      <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_M1_reception" name="demanderReception" covered="_LL_systeme" message="_M1"/>
+      <message xmi:type="uml:Message" xmi:id="_M1" name="demander" receiveEvent="_M1_reception" sendEvent="_M1_envoi"/>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_Bibliotheque_standard">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Bibliotheque_standard_annotation" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
+    </profileApplication>
+  </uml:Model>
+  <standard:Entity xmi:id="_Catalogue_Entity" base_Component="_Catalogue"/>
+</xmi:XMI>

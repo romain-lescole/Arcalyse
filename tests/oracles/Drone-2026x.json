@@ -1,0 +1,857 @@
+{
+ "modele": {
+  "elements": 17,
+  "parCouche": {
+   "Shared": 17
+  },
+  "parType": {
+   "Actor": 1,
+   "Association": 2,
+   "Block": 3,
+   "Model": 1,
+   "Package": 1,
+   "PartProperty": 2,
+   "ProfileApplication": 1,
+   "Property": 3,
+   "Requirement": 1,
+   "UseCase": 1,
+   "XMI": 1
+  }
+ },
+ "relations": {},
+ "chaines": {
+  "nombre": 0,
+  "parType": {},
+  "parCouche": {},
+  "noeuds": 0,
+  "aretes": 0,
+  "vides": 0
+ },
+ "fonctions": {
+  "nombre": 0,
+  "parCouche": {},
+  "feuilles": 0,
+  "allouees": 0,
+  "parAllocation": {},
+  "realisees": 0,
+  "avecDescription": 0
+ },
+ "qualiteNoms": {
+  "langues": {},
+  "defauts": {}
+ },
+ "tracabilite": [],
+ "functionalExchange": {
+  "echanges": 0,
+  "parCouche": {},
+  "fonctions": 0
+ },
+ "composants": {
+  "composants": 0,
+  "parCouche": {},
+  "acteurs": 0,
+  "ports": 0,
+  "liens": 0
+ },
+ "componentExchange": {
+  "nombre": 0,
+  "parCouche": {},
+  "parSens": {},
+  "incoherents": 0,
+  "avecFe": 0,
+  "avecPl": 0
+ },
+ "behaviorExchange": {
+  "nombre": 0
+ },
+ "physicalLink": {
+  "nombre": 0,
+  "avecCe": 0,
+  "ces": 0
+ },
+ "ports": {
+  "fp": 0,
+  "cp": 0,
+  "pp": 0,
+  "fe": 0,
+  "ce": 0,
+  "pl": 0,
+  "feVersCe": 0,
+  "ceVersPl": 0
+ },
+ "scenarios": {
+  "nombre": 0,
+  "parCouche": {},
+  "parType": {},
+  "messages": 0
+ },
+ "capacites": {
+  "nombre": 0,
+  "parCouche": {},
+  "avecFonctions": 0,
+  "avecChaines": 0,
+  "avecScenarios": 0
+ },
+ "etats": {
+  "machines": 0,
+  "etats": 0,
+  "transitions": 0
+ },
+ "exigences": {
+  "nombre": 1,
+  "parSource": {
+   "Requirements Viewpoint": 1
+  },
+  "parType": {
+   "Requirement": 1
+  },
+  "elementsLies": 0
+ },
+ "pvmt": {
+  "definitions": 0,
+  "valeurs": 0,
+  "elementsValues": 0
+ },
+ "donnees": {
+  "exchangeItems": 0,
+  "interfaces": 0,
+  "types": 0,
+  "fes": 0,
+  "ces": 0
+ },
+ "liensCouches": {
+  "fn": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "comp": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "fe": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "ce": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "pl": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "port": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "cap": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "chain": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "scen": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "state": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "data": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  }
+ },
+ "statutRevue": {
+  "elements": 0,
+  "avecStatut": 0,
+  "avecCommentaire": 0,
+  "litteraux": [],
+  "parStatut": {},
+  "parClasse": {}
+ },
+ "categoriesEchanges": {
+  "categories": 0,
+  "parNature": {},
+  "parCouche": {},
+  "echangesCategorises": 0,
+  "introuvables": 0
+ },
+ "deploiement": {
+  "noeuds": 0,
+  "comportements": 0,
+  "deployes": 0,
+  "cis": 0,
+  "ciKinds": {},
+  "ceNonRelies": 0
+ },
+ "recRpl": {
+  "recs": 0,
+  "rpls": 0,
+  "elements": 0,
+  "conformes": 0,
+  "ecarts": []
+ },
+ "bibliotheques": {
+  "references": 0,
+  "bibliotheques": 0,
+  "declarees": 0
+ },
+ "sysml": {
+  "elements": 17,
+  "parType": {
+   "Actor": 1,
+   "Association": 2,
+   "Block": 3,
+   "Model": 1,
+   "Package": 1,
+   "PartProperty": 2,
+   "ProfileApplication": 1,
+   "Property": 3,
+   "Requirement": 1,
+   "UseCase": 1,
+   "XMI": 1
+  },
+  "parFamille": {
+   "ORG": 4,
+   "REQ": 3,
+   "STR": 10
+  },
+  "techniques": 3,
+  "liaisons": {
+   "association": 1,
+   "composition": 1,
+   "typage": 4
+  },
+  "diagnostics": {},
+  "fichiers": 1,
+  "xml": {
+   "elements": 17,
+   "references": 8
+  },
+  "relationMap": {
+   "sysml:association": 1,
+   "sysml:composition": 1,
+   "sysml:typage": 4
+  },
+  "vuesVides": [
+   "ana:caps",
+   "ana:cats",
+   "ana:cts",
+   "ana:data",
+   "ana:deploy",
+   "ana:libs",
+   "ana:pvmt",
+   "ana:rec",
+   "ana:reqs",
+   "ana:states",
+   "ana:status",
+   "ana:sysml",
+   "ana:trace",
+   "ana:umlact",
+   "ana:umlbudget",
+   "ana:umlicd",
+   "ana:umlpar",
+   "ana:umlseq",
+   "ana:umlsoft",
+   "ana:umlstm",
+   "ana:umltrace",
+   "ana:xlay",
+   "cblk",
+   "chains",
+   "compex",
+   "csys",
+   "fex",
+   "functions",
+   "oav",
+   "physlink",
+   "ports",
+   "scen"
+  ],
+  "vues": {
+   "bdd Structure du drone": {
+    "formes": 3,
+    "liens": 1,
+    "texte": 141
+   },
+   "uc Missions": {
+    "formes": 3,
+    "liens": 1,
+    "texte": 167
+   }
+  }
+ },
+ "matrice": {
+  "uml-blk": {
+   "lignes": 3,
+   "colonnes": 3,
+   "cellules": 2,
+   "liens": 1,
+   "lignesSansRelation": 1,
+   "colonnesSansRelation": 1
+  },
+  "uml-uc": {
+   "lignes": 1,
+   "colonnes": 2,
+   "cellules": 1,
+   "liens": 1,
+   "lignesSansRelation": 0,
+   "colonnesSansRelation": 1
+  },
+  "uml-typ": {
+   "lignes": 5,
+   "colonnes": 5,
+   "cellules": 4,
+   "liens": 4,
+   "lignesSansRelation": 1,
+   "colonnesSansRelation": 1
+  },
+  "ch-bloc-parts": {
+   "lignes": 3,
+   "colonnes": 3,
+   "cellules": 1,
+   "liens": 1,
+   "lignesSansRelation": 2,
+   "colonnesSansRelation": 2
+  }
+ },
+ "umlBlocs": {
+  "blocs": 3,
+  "parType": {
+   "Block": 3
+  },
+  "ports": 0,
+  "parOrientation": {},
+  "connecteurs": 0,
+  "parStereotype": {},
+  "parSens": {},
+  "delegations": 0,
+  "itemFlows": 0,
+  "itemFlowsDeduits": 0,
+  "allocations": 0,
+  "contextes": 0,
+  "parts": 1
+ },
+ "umlActivites": {
+  "actions": 0,
+  "parGenre": {},
+  "parPorteur": {},
+  "pins": 0,
+  "liens": 0,
+  "parNature": {},
+  "traversees": 0,
+  "activites": 0,
+  "signaux": {}
+ },
+ "umlExigences": {
+  "exigences": 1,
+  "feuilles": 1,
+  "parStereotype": {
+   "Requirement": 1
+  },
+  "satisfaites": {
+   "-": 1
+  },
+  "verifiees": {
+   "-": 1
+  },
+  "relations": {},
+  "tests": 0,
+  "malOrientees": 0
+ },
+ "umlEtats": {
+  "machines": 0,
+  "etats": 0,
+  "parNature": {},
+  "transitions": 0,
+  "atteints": 0,
+  "declencheurs": {},
+  "gardes": 0,
+  "signauxEmis": 0
+ },
+ "umlInteractions": {
+  "interactions": 0,
+  "lignesDeVie": 0,
+  "messages": 0,
+  "parNature": {},
+  "signatures": {}
+ },
+ "umlCas": {
+  "cas": 1,
+  "acteurs": 1,
+  "associations": 1,
+  "inclusions": 0,
+  "extensions": 0,
+  "avecSujet": 0,
+  "avecComportement": 0
+ },
+ "umlTracabilite": {
+  "elements": 2,
+  "parNiveau": {
+   "req": 1,
+   "uc": 1
+  },
+  "liens": 0,
+  "parRelation": {},
+  "versLeHaut": 0,
+  "versLeBas": 0
+ },
+ "umlInterfaces": {
+  "interfaces": 0,
+  "flux": 0,
+  "operations": 0,
+  "ports": 0,
+  "icd": 0,
+  "incompatibles": 0
+ },
+ "umlParametrique": {
+  "blocs": 0,
+  "equations": 0,
+  "parametres": 0,
+  "usages": 0,
+  "liaisons": 0,
+  "contraintes": 0
+ },
+ "umlLogiciel": {
+  "classes": 0,
+  "parNature": {},
+  "paquetages": {},
+  "cyclesPaquetages": 0,
+  "cyclesHeritage": 0,
+  "noeuds": 0,
+  "artefacts": 0
+ },
+ "umlBudgets": {},
+ "sante": {
+  "score": 89,
+  "points": 2,
+  "bloquants": 0,
+  "info": 3,
+  "pop": 17,
+  "nChecks": 21,
+  "nOk": 17,
+  "couches": {}
+ },
+ "controles": {
+  "fonctions": {
+   "Noms ne commençant pas par un verbe": 0,
+   "Verbes peu précis en tête du nom": 0,
+   "Présentation des noms": 0,
+   "Noms trop longs ou d'un seul mot": 0,
+   "Langue minoritaire dans la couche": 0,
+   "Fonctions sans description": 0,
+   "Descriptions trop courtes ou identiques au nom": 0,
+   "Marqueurs de travail en cours (TODO, TBD, NOT DONE…)": 0,
+   "Noms en double dans une même couche": 0,
+   "Fonctions feuilles non allouées": 0,
+   "Fonctions allouées à plusieurs composants": 0,
+   "Fonctions mères allouées": 0,
+   "Fonctions feuilles sans aucun échange": 0,
+   "Échanges portés par des fonctions mères": 0,
+   "Ports de fonction sans échange": 0,
+   "Fonctions feuilles non réalisées à la couche inférieure": 0,
+   "Fonctions feuilles ne réalisant rien à la couche supérieure": 0
+  },
+  "functionalExchange": {
+   "Ports de fonction orphelins (sans échange)": 0,
+   "Échanges sans Exchange Item": 0,
+   "Fonctions feuilles sans aucun échange": 0,
+   "Fonctions mères portant des ports": 0
+  },
+  "composants": {
+   "Ports de composant orphelins (sans Component Exchange)": 0,
+   "Ports connectés sans orientation (UNSET)": 0,
+   "Échanges aux orientations incohérentes": 0,
+   "Composants feuilles sans port": 0,
+   "Composants feuilles sans fonction allouée": 0
+  },
+  "scenarios": {
+   "Scénarios vides (aucun message)": 0,
+   "Messages sans échange": 0,
+   "Lignes de vie sans élément représenté": 0,
+   "Scénarios hors capacité": 0,
+   "Références vers un scénario introuvable": 0
+  },
+  "sysml": {},
+  "uml": {
+   "Incohérences UML / SysML v1": 0,
+   "Points à vérifier UML / SysML v1": 0,
+   "Écarts de forme à la norme UML / SysML v1": 0,
+   "Références vers d'autres fichiers non lus": 0
+  },
+  "exigences": {
+   "Exigences liées à aucun élément du modèle": 1,
+   "Exigences sans texte": 1,
+   "Exigences sans identifiant": 1,
+   "Identifiants en double": 0,
+   "Relations vers un élément introuvable": 0,
+   "Fonctions feuilles sans exigence": 0,
+   "Composants / acteurs sans exigence": 0
+  },
+  "pvmt": {},
+  "donnees": {},
+  "contraintes": {},
+  "statutRevue": {
+   "Éléments à retravailler": 0,
+   "Éléments en attente de revue": 0,
+   "Brouillons dans une couche majoritairement validée": 0,
+   "Commentaire de revue Capella sans statut": 0,
+   "À retravailler sans commentaire dans 💬 Revue": 0,
+   "Statut référencé introuvable": 0
+  },
+  "chaines": {
+   "Chaînes vides": 0,
+   "Chaînes discontinues": 0,
+   "Implications vers un élément introuvable": 0,
+   "Échanges dont une extrémité n'est pas dans la chaîne": 0,
+   "Références vers une chaîne introuvable": 0,
+   "Références de chaînes cycliques": 0,
+   "Chaînes non réalisées à la couche inférieure": 0,
+   "Chaînes ne réalisant rien à la couche supérieure": 0,
+   "Chaînes hors capacité": 0,
+   "Chaînes sans description": 0,
+   "Chaînes en double": 0,
+   "Étapes portées par des fonctions non allouées": 0,
+   "Liens d'un chemin physique ne reliant pas ses composants voisins": 0,
+   "Composants isolés dans un chemin physique": 0
+  },
+  "categories": {
+   "Échanges sans catégorie": 0,
+   "Catégories vides": 0,
+   "Catégories référençant un échange introuvable": 0,
+   "Catégories en double": 0,
+   "Échanges dans plusieurs catégories": 0
+  },
+  "bibliotheques": {
+   "Références vers une bibliothèque non chargée": 0,
+   "Références introuvables dans une bibliothèque chargée": 0,
+   "Bibliothèques déclarées sans référence": 0,
+   "Références vers une bibliothèque non déclarée": 0
+  },
+  "recRpl": {
+   "Répliques incomplètes": 0,
+   "Répliques enrichies": 0,
+   "Types différents entre REC et réplique": 0,
+   "Noms de réplique hors règle REC + suffixe": 0,
+   "Liens de catalogue vers un élément introuvable": 0,
+   "Répliques dont le REC est introuvable": 0,
+   "REC sans réplique": 0,
+   "REC en double": 0,
+   "Éléments appartenant à plusieurs répliques": 0
+  },
+  "deploiement": {
+   "Comportements non déployés": 0,
+   "Nœuds sans comportement déployé": 0,
+   "Échanges entre comportements sans lien physique entre leurs nœuds": 0,
+   "Comportements déployés sur plusieurs nœuds": 0,
+   "Nœuds physiques non réalisés par un Configuration Item": 0,
+   "Configuration Items vides": 0,
+   "Réalisations EPBS vers un élément introuvable": 0,
+   "Éléments réalisés par plusieurs Configuration Items": 0,
+   "Configuration Items sans nature": 0
+  },
+  "etats": {
+   "noInit": 0,
+   "unreach": 0,
+   "deadEnd": 0,
+   "noTrig": 0
+  },
+  "umlBlocs": {
+   "Ports sans connecteur": 0,
+   "Ports sans type": 0,
+   "Connecteurs aux sens incompatibles": 0,
+   "Flux (ItemFlow) contraires au sens des ports": 0,
+   "Blocs feuilles sans port": 2
+  },
+  "umlActivites": {},
+  "umlExigences": {
+   "Exigences feuilles non satisfaites": 1,
+   "Exigences feuilles non vérifiées": 1,
+   "Exigences sans texte": 0,
+   "Exigences sans identifiant": 0,
+   "Identifiants d'exigence en double": 0,
+   "Dérivations circulaires": 0,
+   "Relations d'exigence mal orientées": 0,
+   "Exigences composites satisfaites directement": 0
+  },
+  "umlEtats": {},
+  "umlInteractions": {},
+  "umlCas": {
+   "Cas d'utilisation sans acteur": 0,
+   "Cas d'utilisation sans comportement": 1,
+   "Acteurs sans cas d'utilisation": 0,
+   "Inclusions cycliques": 0
+  },
+  "umlTracabilite": {},
+  "umlInterfaces": {},
+  "umlBudgets": {},
+  "umlParametrique": {},
+  "umlLogiciel": {}
+ },
+ "tableauDeBord": {
+  "cap.chk": null,
+  "cap.fn": null,
+  "cap.layer": null,
+  "cap.n": 0,
+  "cap.type": null,
+  "cb.chk.LA": null,
+  "cb.chk.PB": null,
+  "cb.chk.PN": null,
+  "cb.chk.SA": null,
+  "cb.n.LA": 0,
+  "cb.n.PB": 0,
+  "cb.n.PN": 0,
+  "cb.n.SA": 0,
+  "cb.ports.LA": null,
+  "cb.ports.PB": null,
+  "cb.ports.PN": null,
+  "cb.ports.SA": null,
+  "ce.comp": null,
+  "ce.dir": null,
+  "ce.fe": null,
+  "ce.kind": null,
+  "ce.layer": null,
+  "ce.n": 0,
+  "ce.orph": 0,
+  "ce.papl": 0,
+  "ch.avg": null,
+  "ch.empty": null,
+  "ch.full": null,
+  "ch.kind": null,
+  "ch.layer": null,
+  "ch.n": 0,
+  "ch.top": null,
+  "ch.type": null,
+  "chk.ce": null,
+  "chk.ch": null,
+  "chk.dep": null,
+  "chk.ec": null,
+  "chk.fn": null,
+  "chk.lib": null,
+  "chk.pl": null,
+  "chk.pt": null,
+  "chk.rec": null,
+  "chk.st": {
+   "Statut référencé introuvable": 0
+  },
+  "chk.sum": {
+   "Exigences": 3
+  },
+  "ct.chk": null,
+  "ct.layer": null,
+  "ct.n": 0,
+  "dep.beh": null,
+  "dep.ci": 0,
+  "dep.cikind": null,
+  "dep.cipct": null,
+  "dep.nodes": 0,
+  "dep.per": null,
+  "dg.cmp": null,
+  "dg.layer": null,
+  "dg.n": null,
+  "dg.orph": null,
+  "dm.chk": null,
+  "dm.fe": null,
+  "dm.n": 0,
+  "dm.used": null,
+  "ec.layer": null,
+  "ec.n": 0,
+  "ec.pct": null,
+  "ec.top": null,
+  "fex.chk": null,
+  "fex.items": null,
+  "fex.layer": null,
+  "fex.n": 0,
+  "fn.L.alloc": null,
+  "fn.L.cap": null,
+  "fn.L.chain": null,
+  "fn.L.depth": null,
+  "fn.L.desc": null,
+  "fn.L.fe": null,
+  "fn.L.leaf": null,
+  "fn.L.n": null,
+  "fn.L.nq": null,
+  "fn.L.trace": null,
+  "fn.ak": null,
+  "fn.nq": null,
+  "fn.top": null,
+  "lib.by": null,
+  "lib.n": 0,
+  "lib.refs": 0,
+  "mdl.layer": {
+   "Transverse": 17
+  },
+  "mdl.n": 17,
+  "mdl.rels": null,
+  "mdl.types": {
+   "Block": 3,
+   "Property": 3,
+   "Part Property": 2,
+   "Association": 2,
+   "XMI": 1,
+   "Model": 1,
+   "Requirement": 1,
+   "Package": 1,
+   "Actor": 1,
+   "Use Case": 1,
+   "Profile Application": 1
+  },
+  "pl.ce": null,
+  "pl.comp": null,
+  "pl.layer": null,
+  "pl.n": 0,
+  "pl.nocp": 0,
+  "pl.orph": 0,
+  "pt.cp": null,
+  "pt.fp": null,
+  "pt.pp": null,
+  "pv.chk": null,
+  "pv.grp": null,
+  "pv.n": 0,
+  "pv.set": null,
+  "rec.by": null,
+  "rec.els": 0,
+  "rec.n": 0,
+  "rec.ok": null,
+  "rec.rpl": 0,
+  "rq.chk": {
+   "Exigences liées à aucun élément du modèle": 1,
+   "Exigences sans texte": 1,
+   "Exigences sans identifiant": 1
+  },
+  "rq.cov": {
+   "pct": 0,
+   "num": 0,
+   "den": 1
+  },
+  "rq.kind": {
+   "Requirement": 1
+  },
+  "rq.layer": null,
+  "rq.n": 1,
+  "sante.err": 0,
+  "sante.layer": null,
+  "sante.pts": 2,
+  "sante.score": {
+   "pct": 89,
+   "num": 89,
+   "den": 100
+  },
+  "sante.vue": {
+   "🧾 Exigences SysML": 1,
+   "🎯 Cas d'utilisation": 1
+  },
+  "sc.chk": null,
+  "sc.kind": null,
+  "sc.layer": null,
+  "sc.n": 0,
+  "sm.chk": null,
+  "sm.n": 0,
+  "sm.owner": null,
+  "st.by": null,
+  "st.cls": null,
+  "st.ko": 0,
+  "st.layer": null,
+  "st.n": 0,
+  "st.pct": {
+   "pct": 0,
+   "num": 0,
+   "den": 17
+  },
+  "st.rev": 0,
+  "sy.diag": null,
+  "sy.fam": null,
+  "sy.n": 0,
+  "sy.rel": null,
+  "sy.type": null,
+  "sy.vues": null,
+  "tr.n": 0,
+  "tr.tab": null,
+  "uml.act.chk": null,
+  "uml.act.n": 0,
+  "uml.act.porte": null,
+  "uml.blk.chk": {
+   "Blocs feuilles sans port": 2
+  },
+  "uml.blk.flux": null,
+  "uml.blk.n": 3,
+  "uml.blk.ports": null,
+  "uml.bud.chk": null,
+  "uml.bud.n": 0,
+  "uml.diag": null,
+  "uml.ext": null,
+  "uml.fam": {
+   "Organisation": 3,
+   "Structure": 10,
+   "Exigences": 3
+  },
+  "uml.icd.chk": null,
+  "uml.icd.n": 0,
+  "uml.n": 16,
+  "uml.par.chk": null,
+  "uml.par.n": 0,
+  "uml.rel": {
+   "Typé par": 4,
+   "Contient (propriété partie)": 1,
+   "Associé à": 1
+  },
+  "uml.req.chk": {
+   "Exigences feuilles non satisfaites": 1,
+   "Exigences feuilles non vérifiées": 1
+  },
+  "uml.req.n": 1,
+  "uml.req.sat": {
+   "pct": 0,
+   "num": 0,
+   "den": 1
+  },
+  "uml.req.ver": {
+   "pct": 0,
+   "num": 0,
+   "den": 1
+  },
+  "uml.seq.chk": null,
+  "uml.seq.n": 0,
+  "uml.soft.chk": null,
+  "uml.soft.n": 0,
+  "uml.stm.chk": null,
+  "uml.stm.n": 0,
+  "uml.tr.chk": null,
+  "uml.tr.niv": {
+   "🧾 Exigences": 1,
+   "🎯 Cas d'utilisation & opérationnel": 1
+  },
+  "uml.type": {
+   "Block": 3,
+   "Property": 3,
+   "PartProperty": 2,
+   "Model": 1,
+   "Requirement": 1,
+   "Package": 1,
+   "Actor": 1,
+   "UseCase": 1
+  },
+  "uml.uc.chk": {
+   "Cas d'utilisation sans comportement": 1
+  },
+  "uml.uc.n": 1,
+  "uml.vues": {
+   "Définition de blocs": 1,
+   "Cas d'utilisation": 1
+  }
+ }
+}

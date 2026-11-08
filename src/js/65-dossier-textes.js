@@ -12,15 +12,26 @@ function capDosQuois(){ return [{k:'nom', l:_L('Nom')}, {k:'desc', l:_L('Descrip
 /**
  * Nom et description actuels d'une référence (élément du modèle chargé, ou diagramme du .aird chargé).
  * @param {object} ref - Référence {k:'el'|'diag', id, nom}
- * @returns {{nom:string, desc:string, ok:boolean}}
+ * @returns {{nom:string, desc:string, html:string, ok:boolean}} html : description mise en forme pour l'export (capDosRiche), vide si texte simple
  */
 function capDosRefTextes(ref){
-  if(!ref) return {nom:'', desc:'', ok:false};
-  if(ref.k==='diag'){ const rep=capHomeReps().find(r=>r.uid===ref.id); let desc='';
-    try{ desc=rep?capDiagMeta(ref.id).desc||'':''; }catch(_){}
-    return {nom:capDosNomDiag(rep?rep.nom:ref.nom), desc, ok:!!rep}; }
+  if(!ref) return {nom:'', desc:'', html:'', ok:false};
+  if(ref.k==='diag'){ const rep=capHomeReps().find(r=>r.uid===ref.id); let desc='', html='';
+    try{ if(rep){ const m=capDiagMeta(ref.id); desc=m.desc||''; html=capDosRiche(m.html); } }catch(_){}
+    return {nom:capDosNomDiag(rep?rep.nom:ref.nom), desc, html, ok:!!rep}; }
   const e=capLoaded&&capGetElementById_(ref.id);
-  return {nom:capHomeRefNom(ref), desc:e?capHtmlToText(e.attrs.description||''):'', ok:!!e};
+  return {nom:capHomeRefNom(ref), desc:e?capHtmlToText(e.attrs.description||''):'', html:e?capDosRiche(e.attrs.description):'', ok:!!e};
+}
+
+/**
+ * Version mise en forme (HTML filtré pour l'export) d'un bloc « texte du modèle » dont la description est en HTML.
+ * @param {object} b - Bloc (k:'mod')
+ * @returns {string} HTML, ou '' si le texte simple suffit (nom seul, description sans mise en forme)
+ */
+function capDosModRiche(b){
+  if(b.quoi==='nom') return '';
+  const r=capDosRefTextes(b.ref);
+  return r.html?(b.quoi==='desc'?'':'<p>'+capEsc(r.nom)+'</p>')+r.html:'';
 }
 
 /**

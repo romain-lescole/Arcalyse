@@ -139,8 +139,8 @@ function capSemData(el){
     add(refd, s.humanLabel, (ri[s.key].out[el.id]||[]).map(t=>byId(t.id)).filter(Boolean), s.key);
     add(refg, s.humanLabel, (ri[s.key].in[el.id]||[]).map(t=>byId(t.id)).filter(Boolean), s.key); });
   // 🔲 Diagrammes du projet (.aird) : représentant l'élément, puis où il apparaît
-  if(typeof _capDiag!=='undefined'&&_capDiag.vis&&_capDiag.airdCharge){
-    try{ const {cibles, presences}=_capDiag.vis.diagrammesDe(el.id), vus=new Set(cibles.map(d=>d.uid));
+  if(typeof capDiagDe==='function'){
+    try{ const {cibles, presences}=capDiagDe(el.id), vus=new Set(cibles.map(d=>d.uid));
       if(cibles.length) refg.push({l:_L('Diagrammes représentant l\'élément'), k:'diag', diag:true, items:cibles});
       const p=presences.filter(d=>!vus.has(d.uid)); if(p.length) refg.push({l:_L('Diagrammes contenant l\'élément'), k:'diag', diag:true, items:p});
     }catch(e){ /* visionneuse indisponible : pas de diagrammes */ }

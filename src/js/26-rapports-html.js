@@ -37,6 +37,31 @@ function capReportClean(html){
     .replace(/<input type="checkbox" class="cap-chx-sel"[^>]*>/g,'');
 }
 
+/** Choix des vues d'un export « ⬇ HTML (toutes les vues) » : fenêtre à cases (vues cochées sauf `off`, 🩺 Contrôles décoché par défaut).
+ * @param {Array<[string,string]>} vues - [clé, libellé]
+ * @param {{off?:string[], titre?:string}} [o] - Clés décochées au départ (défaut : ['diag']), titre
+ * @returns {Promise<?string[]>} Clés choisies, ou null si l'utilisateur annule
+ */
+function capHtmlVuesChoix(vues, o){
+  o=o||{}; const off=new Set(o.off||['diag']), esc=capEsc;
+  if(typeof _capDlgAuto!=='undefined'&&_capDlgAuto) return Promise.resolve(_capDlgAuto==='ok'?vues.map(v=>v[0]).filter(k=>!off.has(k)):null);
+  return new Promise(resolve=>{
+    const ov=document.createElement('div'); ov.className='cap-dlg-ov';
+    ov.innerHTML=`<div class="cap-dlg" role="dialog" aria-modal="true" aria-labelledby="cap-hv-t">
+      <div class="cap-dlg-h"><span class="cap-dlg-i">⬇</span><b id="cap-hv-t">${esc(o.titre||_L('Rapport HTML : vues à inclure'))}</b></div>
+      <div class="cap-dlg-b" style="white-space:normal">${_L('Une vue par onglet ; les filtres affichés sont appliqués, sans pagination.')}
+        <div class="cap-hv-l">${vues.map(([k,l])=>`<label><input type="checkbox" data-hv="${esc(k)}"${off.has(k)?'':' checked'}> ${esc(l)}</label>`).join('')}</div>
+        ${vues.some(v=>v[0]==='matrix')&&vues.some(v=>v[0]==='line')?`<div class="ana-dim" style="font-size:11px">${_L('▦ Matrice : la ≡ Vue Ligne est jointe pour le détail des cellules.')}</div>`:''}</div>
+      <div class="cap-dlg-f"><button class="cap-lf-btn" data-c="cancel">${_L('Annuler')}</button><button class="cap-lf-btn pri" data-c="ok">${_L('⬇ Exporter')}</button></div></div>`;
+    const ok=ov.querySelector('[data-c="ok"]'), maj=()=>{ ok.disabled=!ov.querySelector('[data-hv]:checked'); };
+    const fin=v=>{ ov.remove(); document.removeEventListener('keydown',key,true); resolve(v); };
+    const key=e=>{ if(e.key==='Escape'){ e.preventDefault(); e.stopPropagation(); fin(null); } else if(e.key==='Enter'&&!ok.disabled){ e.preventDefault(); ok.click(); } };
+    ov.addEventListener('change',maj);
+    ov.addEventListener('click',e=>{ const b=e.target.closest('[data-c]'); if(!b) return; fin(b.dataset.c==='ok'?[...ov.querySelectorAll('[data-hv]:checked')].map(c=>c.dataset.hv):null); });
+    document.addEventListener('keydown',key,true); document.body.appendChild(ov); ok.focus(); maj();
+  });
+}
+
 /** Construit et télécharge un rapport HTML autonome à onglets.
  * @param {object} o - {title, subtitle, tabs:[{key,label,html}], active, filename, cells?:object (clé 'i|j' → ids de lignes)}
  *   Les lignes référencées par cells doivent porter data-lid dans l'onglet 'line' (clic cellule → copie des lignes).
@@ -63,6 +88,8 @@ h1{font-size:17px;margin:0 0 3px}.sub{font-size:11.5px;color:var(--c-dim);margin
 main{padding:14px 22px}.rpanel{display:none}.rpanel.on{display:block}
 .rfoot{font-size:10.5px;color:var(--c-dim);padding:10px 22px 18px}
 .cex-det{cursor:default!important}
+.fex-go,.fex-att-go,[data-fnl]{cursor:pointer}.fex-go:hover,.fex-att-go:hover{text-decoration:underline}.r-absent{opacity:.55;cursor:not-allowed!important}
+.fex-blk.r-flash{animation:rflash 1.4s}@keyframes rflash{0%,60%{outline:3px solid var(--c-accent);outline-offset:3px}100%{outline:3px solid transparent}}
 details summary{cursor:pointer}
 @media print{header{position:static}.rsearch{display:none}.rpanel{display:block!important;page-break-after:always}.rtabs{display:none}}
 ${capReportCss()}
@@ -80,7 +107,7 @@ ${capReportCss()}
     document.querySelectorAll('.rtab').forEach(function(x){x.classList.toggle('on',x===b);});
     document.querySelectorAll('.rpanel').forEach(function(p){p.classList.toggle('on',p.id==='p-'+b.dataset.t);}); }; });
   // Recherche : masque les lignes, cartes et lignes de tableau qui ne contiennent pas le texte
-  var SEL='.phl-line,.phl-comp-card,.phl-link-row,.cap-chain-card,.cap-diag-t tr,.prt-t tbody tr,.ana-t tr,.cap-chain-xtable tr';
+  var SEL='.phl-line,.phl-comp-card,.phl-link-row,.cap-chain-card,.cap-diag-t tr,.prt-t tbody tr,.ana-t tr,.cap-chain-xtable tr,.fex-blk';
   document.getElementById('rq').oninput=function(){
     var q=this.value.trim().toLowerCase();
     document.querySelectorAll(SEL).forEach(function(el){
@@ -88,6 +115,22 @@ ${capReportCss()}
       el.style.display=(!q||el.textContent.toLowerCase().indexOf(q)>=0)?'':'none';
     });
   };
+  // ◧ Vue Blocs : « aller au bloc » (composant distant, fonction voisine, fonction mère) → défile jusqu'au bloc et le fait clignoter
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('[data-go]'); if(!a) return;
+    var panel=a.closest('.rpanel')||document, id=a.getAttribute('data-go'), blk=null;
+    panel.querySelectorAll('.fex-blk').forEach(function(x){ if(x.getAttribute('data-fn')===id) blk=x; });
+    if(!blk){ a.title=${JSON.stringify(_L('Ce bloc n\'est pas dans le rapport (filtré à l\'export)'))}; a.classList.add('r-absent'); return; }
+    if(blk.style.display==='none'){ var q=document.getElementById('rq'); q.value=''; q.oninput(); }
+    blk.scrollIntoView({behavior:'smooth',block:'center'});
+    blk.classList.remove('r-flash'); void blk.offsetWidth; blk.classList.add('r-flash');
+  });
+  // ◧ Vue Blocs : « ƒ n fonctions » déplie la liste des fonctions allouées (incluse masquée) ; filtre de la liste
+  document.querySelectorAll('[data-fnl]').forEach(function(t){ t.onclick=function(){
+    var l=t.closest('.fex-blk').querySelector('[data-fnlist]'); if(!l) return; l.hidden=!l.hidden;
+    t.textContent=t.textContent.replace(/[▴▾]$/, l.hidden?'▾':'▴'); }; });
+  document.querySelectorAll('.cb-fnq').forEach(function(q){ q.oninput=function(){ var t=q.value.trim().toLowerCase();
+    q.closest('[data-fnlist]').querySelectorAll('.cb-fn').forEach(function(x){ x.style.display=!t||x.textContent.toLowerCase().indexOf(t)>=0?'':'none'; }); }; });
   // Matrice : clic sur une cellule → copie des lignes correspondantes de la vue Ligne
   document.querySelectorAll('.cap-mx-cell').forEach(function(td){ td.onclick=function(){
     document.querySelectorAll('.cap-mx-cell.sel').forEach(function(x){x.classList.remove('sel');}); td.classList.add('sel');

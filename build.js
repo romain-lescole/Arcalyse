@@ -12,6 +12,12 @@
  *                                   textes de interface.html (« interface », puis « code »), aide src/html/aide.en.html,
  *                                   descriptions des types (« types ») ; textes sans traduction listés dans
  *                                   dist/arcalyse-en-manquants.txt (ils restent en français). Voir docs/i18n/LISEZMOI.md.
+ *   node build.js --format capella|sysml2|uml  → version réduite à un format : seul le composant d'Arcature de ce
+ *                                   format est embarqué (visionneuse pour Capella, lecteur SysML v2, lecteur UML / SysML v1),
+ *                                   CAP_EDITION posé dans 01 ; sortie dist/arcalyse-<format>-<langue>.html.
+ *   node build.js --livrables     → les quatre livrables, bilingues FR + EN (bascule 🌐) : arcalyse-capella.html,
+ *                                   arcalyse-sysml2.html, arcalyse-uml.html (une version par format) et arcalyse-complet.html
+ *                                   (tous les formats), dans dist/ ; avec --livraison : dans livraison/, sans repères.
  *   node build.js --lang multi    → version multilingue dist/arcalyse-multi.html : les deux langues dans un seul fichier,
  *                                   chaque _L devient (CAP_LANG==='en'?anglais:français), interface et aide dans deux
  *                                   <template> ; langue choisie au chargement (?lang=fr|en, langue de la page enregistrée,
@@ -36,36 +42,77 @@ const outArg = args.indexOf('--out');
 const langArg = args.indexOf('--lang');
 const LANG = langArg >= 0 ? String(args[langArg + 1] || '').toLowerCase() : 'fr';
 if (!['fr', 'en', 'multi'].includes(LANG)) { console.error(`✖ Langue inconnue : ${LANG} (fr, en ou multi)`); process.exit(1); }
-const OUT = livraison ? path.join(ROOT, 'livraison', `arcalyse-${LANG}.html`)
-  : outArg >= 0 ? path.resolve(args[outArg + 1]) : path.join(ROOT, 'dist', `arcalyse-${LANG}.html`);
+// Les quatre livrables (bilingues) : un assemblage par livrable, lancé par ce même script
+const LIVRABLES = { complet: [], capella: ['--format', 'capella'], sysml2: ['--format', 'sysml2'], uml: ['--format', 'uml'] };
+if (args.includes('--livrables')) {
+  const { execFileSync } = require('child_process'), dir = livraison ? 'livraison' : 'dist';
+  for (const [nom, opt] of Object.entries(LIVRABLES)) {
+    const sortie = path.join(ROOT, dir, `arcalyse-${nom}.html`);
+    try { process.stdout.write(execFileSync(process.execPath, [__filename, ...opt, '--lang', 'multi', '--out', sortie, ...(livraison ? ['--no-markers'] : [])], { encoding: 'utf8' })); }
+    catch (e) { process.stderr.write(e.stdout || ''); process.stderr.write(e.stderr || ''); process.exit(1); }
+  }
+  if (livraison) console.log(`
+Livrables prêts dans livraison/. Pour les publier (remplacer X.Y) : git add livraison && git commit -m "Livraison vX.Y : …" && git tag vX.Y && git push && git push --tags`);
+  process.exit(0);
+}
+// Version réduite à un format : composants d'Arcature embarqués par format
+const FORMATS = { capella: ['visionneuse'], sysml2: ['lecteur-sysml'], uml: ['lecteur-uml'] };
+const fmtArg = args.indexOf('--format');
+const FORMAT = fmtArg >= 0 ? String(args[fmtArg + 1] || '').toLowerCase() : '';
+if (FORMAT && !FORMATS[FORMAT]) { console.error(`✖ Format inconnu : ${FORMAT} (capella, sysml2 ou uml)`); process.exit(1); }
+if (FORMAT && livraison) { console.error('✖ --format avec --livraison : utiliser node build.js --livrables --livraison'); process.exit(1); }
+const NOM = FORMAT ? `arcalyse-${FORMAT}-${LANG}` : `arcalyse-${LANG}`;
+const OUT = livraison ? path.join(ROOT, 'livraison', `${NOM}.html`)
+  : outArg >= 0 ? path.resolve(args[outArg + 1]) : path.join(ROOT, 'dist', `${NOM}.html`);
 const EN = LANG === 'en', MULTI = LANG === 'multi', TR = EN || MULTI;   // TR : une traduction est nécessaire
-// ── Reprise du lecteur SysML v2 d'Arcature : node build.js --lecteur-sysml [dossier d'Arcature] (ou variable ARCATURE) ──
-// Copie dist/arcature-lecteur-sysml.js et -en.js (assemblés dans Arcature par node build.js --lecteur-sysml [--lang en], lancés
-// ici s'ils manquent) dans src/vendor/ et note l'origine (dépôt, branche, commit, commande) dans src/vendor/LISEZMOI-lecteur-sysml.md.
-if (args.includes('--lecteur-sysml')) {
-  const { execSync } = require('child_process');
-  const i = args.indexOf('--lecteur-sysml'), donne = args[i + 1] && !args[i + 1].startsWith('--') ? args[i + 1] : '';
+// ── Reprise d'un composant d'Arcature : node build.js --lecteur-sysml | --lecteur-uml | --visionneuse [dossier d'Arcature] (ou ARCATURE) ──
+// Copie dist/<fichier>.js et -en.js (assemblés dans Arcature par la même commande, avec --lang en, lancée ici s'ils manquent)
+// dans src/vendor/ et note l'origine (dépôt, branche, commit, commande, licence) dans src/vendor/LISEZMOI-<composant>.md.
+const REPRISES = {
+  '--lecteur-sysml': {
+    fichier: 'arcature-lecteur-sysml', note: 'LISEZMOI-lecteur-sysml.md', titre: "Lecteur SysML v2 d'Arcature",
+    licence: 'Apache 2.0',
+    doc: "Mode d'emploi et contrat : `docs/SYSML-V2.md` (Arcalyse), `docs/LECTEUR-SYSML.md` et `docs/api/lecteur-sysml.d.ts` (Arcature)."
+  },
+  '--lecteur-uml': {
+    fichier: 'arcature-lecteur-uml', note: 'LISEZMOI-lecteur-uml.md', titre: "Lecteur UML / SysML v1 d'Arcature",
+    licence: "Apache 2.0 (aucun fichier sous EPL-2.0 : refusé par le build d'Arcature) ; contient des noms et des textes de\n" +
+      "  contraintes tirés des documents normatifs de l'OMG (UML.xmi, SysML.xmi, UAF.xmi), repris selon la licence des spécifications de l'OMG",
+    doc: "Mode d'emploi et contrat : `docs/UML.md` (Arcalyse), `docs/LECTEUR-UML.md` et `docs/api/lecteur-uml.d.ts` (Arcature)."
+  },
+  '--visionneuse': {
+    fichier: 'arcature-visionneuse', note: 'LISEZMOI-visionneuse.md', titre: "Visionneuse de diagrammes Capella d'Arcature",
+    licence: "Apache 2.0, sauf les modules `23-styles-capella.js`, `26-diagrammes.js` et `27-icones.js` (adaptés d'Eclipse Capella\n" +
+      "  et d'Eclipse Sirius) : Eclipse Public License 2.0 (en-tête de chaque module dans le fichier, `NOTICE.md`, `LICENSES/EPL-2.0.txt`)",
+    doc: "API : `src/visionneuse/socle-fin.js` (Arcature) ; intégration : `src/js/54-diagrammes.js` (Arcalyse)."
+  }
+};
+const optReprise = Object.keys(REPRISES).find(o => args.includes(o));
+if (optReprise) {
+  const R = REPRISES[optReprise], { execSync } = require('child_process');
+  const i = args.indexOf(optReprise), donne = args[i + 1] && !args[i + 1].startsWith('--') ? args[i + 1] : '';
   const cand = [donne, process.env.ARCATURE, path.join(ROOT, '..', 'Arcature'), path.join(ROOT, '..', 'arcature')].filter(Boolean).map(p => path.resolve(p));
   const ARC = cand.find(p => fs.existsSync(path.join(p, 'build.js')));
-  if (!ARC) { console.error('✖ Dossier d\'Arcature introuvable (node build.js --lecteur-sysml <dossier>, ou ARCATURE=<dossier>) : ' + cand.join(', ')); process.exit(1); }
-  const srcFr = path.join(ARC, 'dist', 'arcature-lecteur-sysml.js'), srcEn = path.join(ARC, 'dist', 'arcature-lecteur-sysml-en.js');
+  if (!ARC) { console.error(`✖ Dossier d'Arcature introuvable (node build.js ${optReprise} <dossier>, ou ARCATURE=<dossier>) : ` + cand.join(', ')); process.exit(1); }
+  const srcFr = path.join(ARC, 'dist', R.fichier + '.js'), srcEn = path.join(ARC, 'dist', R.fichier + '-en.js');
   const sh = c => execSync(c, { cwd: ARC, stdio: ['ignore', 'pipe', 'inherit'] }).toString().trim();
-  if (!fs.existsSync(srcFr)) sh('node build.js --lecteur-sysml');
-  if (!fs.existsSync(srcEn)) sh('node build.js --lecteur-sysml --lang en');
+  if (!fs.existsSync(srcFr)) sh(`node build.js ${optReprise}`);
+  if (!fs.existsSync(srcEn)) sh(`node build.js ${optReprise} --lang en`);
   const VENDOR = path.join(SRC, 'vendor');
-  fs.copyFileSync(srcFr, path.join(VENDOR, 'arcature-lecteur-sysml.js'));
-  fs.copyFileSync(srcEn, path.join(VENDOR, 'arcature-lecteur-sysml-en.js'));
+  fs.copyFileSync(srcFr, path.join(VENDOR, R.fichier + '.js'));
+  fs.copyFileSync(srcEn, path.join(VENDOR, R.fichier + '-en.js'));
   let commit = '?', branche = '?'; try { commit = sh('git rev-parse HEAD'); branche = sh('git rev-parse --abbrev-ref HEAD'); } catch (e) { /* pas un dépôt git */ }
   const ko = Math.round(fs.statSync(srcFr).size / 1024);
-  fs.writeFileSync(path.join(VENDOR, 'LISEZMOI-lecteur-sysml.md'), `# Lecteur SysML v2 d'Arcature (fichiers tiers, ne pas modifier à la main)
+  fs.writeFileSync(path.join(VENDOR, R.note), `# ${R.titre} (fichiers tiers, ne pas modifier à la main)
 
-- Fichiers : \`arcature-lecteur-sysml.js\` (français) et \`arcature-lecteur-sysml-en.js\` (anglais), ≈ ${ko} Ko chacun, licence Apache 2.0.
+- Fichiers : \`${R.fichier}.js\` (français) et \`${R.fichier}-en.js\` (anglais), ≈ ${ko} Ko chacun.
+- Licence : ${R.licence}.
 - Origine : dépôt \`romain-lescole/Arcature\`, branche \`${branche}\`, commit \`${commit}\`, repris le ${new Date().toISOString().slice(0, 10)}.
-- Assemblés dans Arcature par \`node build.js --lecteur-sysml\` et \`node build.js --lecteur-sysml --lang en\` ; recopiés ici par
-  \`node build.js --lecteur-sysml <dossier d'Arcature>\` (qui réécrit cette note).
-- Mode d'emploi et contrat : \`docs/SYSML-V2.md\` (Arcalyse), \`docs/LECTEUR-SYSML.md\` et \`docs/api/lecteur-sysml.d.ts\` (Arcature).
+- Assemblés dans Arcature par \`node build.js ${optReprise}\` et \`node build.js ${optReprise} --lang en\` ; recopiés ici par
+  \`node build.js ${optReprise} <dossier d'Arcature>\` (qui réécrit cette note).
+- ${R.doc}
 `);
-  console.log(`✔ src/vendor/arcature-lecteur-sysml.js et -en.js repris d'Arcature (${branche} @ ${commit.slice(0, 7)}, ${ko} Ko) — relancer node build.js`);
+  console.log(`✔ src/vendor/${R.fichier}.js et -en.js repris d'Arcature (${branche} @ ${commit.slice(0, 7)}, ${ko} Ko) — relancer node build.js`);
   process.exit(0);
 }
 const i18n = TR ? require('./tools/i18n.js') : null;
@@ -134,15 +181,26 @@ function multiUi(fr, en) {
     [].slice.call(frag.children).forEach(function(el){ el.setAttribute('data-cap-ui',lang); });
     me.parentNode.insertBefore(frag, me);
   }
+  // changement de langue : blocs de données transmis (revue, rapports, tableaux de bord, réglages…) replacés avant le script principal,
+  // qui les lit au démarrage (<head>) ; modèle Capella embarqué comme dans une page enregistrée (<body>)
+  if(sw&&sw.blocs) sw.blocs.forEach(function(b){
+    var el=document.getElementById(b.id);
+    if(!el){ el=document.createElement('script'); el.type=b.type; el.id=b.id; if(b.corps) me.parentNode.insertBefore(el, me); else document.head.appendChild(el); }
+    el.textContent=b.texte; if(b.nom) el.setAttribute('data-name', b.nom);
+  });
   document.documentElement.lang=lang; document.documentElement.setAttribute('data-lang',lang);
   document.title=lang==='en'?${JSON.stringify(EN_TITLE)}:${JSON.stringify(FR_TITLE)};
-  /** Change de langue : recharge la page dans l'autre langue en gardant le modèle chargé (transmis par window.name). */
+  /** Change de langue : recharge la page dans l'autre langue en gardant tout le travail (capLangEtat, 20 : blocs de données, modèle,
+   * vue), transmis par window.name ; si l'état ne peut pas être transmis, propose d'enregistrer la page d'abord. */
   window.capLangSwitch=function(l){
-    var st={capLangSwitch:1,lang:l};
-    try{ if(typeof capLoaded!=='undefined'&&capLoaded&&cap_xmlDoc){ st.xml=new XMLSerializer().serializeToString(cap_xmlDoc); st.name=capCurrentFileName||''; } }catch(e){}
-    window.name=JSON.stringify(st); window._capNoLeaveWarn=true;
-    var u=location.href.replace(/([?&])lang=(fr|en)&?/,'$1').replace(/[?&]$/,'').replace(/#.*$/,'');
-    location.href=u+(u.indexOf('?')<0?'?':'&')+'lang='+l;
+    var aller=function(st){
+      try{ window.name=JSON.stringify(Object.assign({capLangSwitch:1,lang:l}, st||{})); }
+      catch(e){ window.name=''; if(typeof capAlert==='function') capAlert(l==='en'?'Votre travail ne peut pas être transmis à la version anglaise (trop volumineux). Enregistrez la page (💾) avant de changer de langue.':'Your work cannot be passed to the French version (too large). Save the page (💾) before switching language.',{level:'err'}); return; }
+      window._capNoLeaveWarn=true;
+      var u=location.href.replace(/([?&])lang=(fr|en)&?/,'$1').replace(/[?&]$/,'').replace(/#.*$/,'');
+      location.href=u+(u.indexOf('?')<0?'?':'&')+'lang='+l;
+    };
+    if(typeof capLangEtat==='function') capLangEtat().then(aller, function(e){ console.error(e); aller(null); }); else aller(null);
   };
 })();
 <\/script>`;
@@ -154,9 +212,9 @@ const MULTI_RESTORE = `<script id="cap-lang-restore">
   var w=null; try{ w=JSON.parse(window.name||'null'); }catch(e){}
   if(!w||!w.capLangSwitch) return;
   window.name='';
-  if(!w.xml) return;
-  var emb=document.getElementById('cap-embedded-xml'); if(emb) emb.remove();   // le modèle transmis remplace celui de la page enregistrée
-  capLoadFile(new File([w.xml], w.name||'model.capella', {type:'application/xml'}));
+  // après les scripts de la page (amorçage d'une page enregistrée compris) : modèle et vue rétablis (capLangRestaurer, 20)
+  var go=function(){ if(typeof capLangRestaurer==='function') capLangRestaurer(w); };
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', go); else go();
 })();
 <\/script>`;
 
@@ -174,11 +232,17 @@ if (EN) tplTxt = tplTxt.replace('<html lang="fr">', '<html lang="en">').replace(
 if (EN) tplTxt = tplTxt.replace('@@INCLUDE vendor/arcature-visionneuse.js@@', '@@INCLUDE vendor/arcature-visionneuse-en.js@@');
 if (MULTI) tplTxt = tplTxt.replace(/^@@INCLUDE vendor\/arcature-visionneuse\.js@@$/m,
   "if(document.documentElement.getAttribute('data-lang')==='en'){\n@@INCLUDE vendor/arcature-visionneuse-en.js@@\n}else{\n@@INCLUDE vendor/arcature-visionneuse.js@@\n}");
-// Lecteur SysML v2 d'Arcature : même règle (src/vendor/arcature-lecteur-sysml.js, -en.js)
-if (EN) tplTxt = tplTxt.replace('@@INCLUDE vendor/arcature-lecteur-sysml.js@@', '@@INCLUDE vendor/arcature-lecteur-sysml-en.js@@');
-if (MULTI) tplTxt = tplTxt.replace(/^@@INCLUDE vendor\/arcature-lecteur-sysml\.js@@$/m,
-  "if(document.documentElement.getAttribute('data-lang')==='en'){\n@@INCLUDE vendor/arcature-lecteur-sysml-en.js@@\n}else{\n@@INCLUDE vendor/arcature-lecteur-sysml.js@@\n}");
+// Lecteurs SysML v2 et UML / SysML v1 d'Arcature : même règle (src/vendor/arcature-lecteur-sysml.js, -uml.js, et leur version -en.js)
+for (const cle of ['sysml', 'uml']) {
+  if (EN) tplTxt = tplTxt.replace(`@@INCLUDE vendor/arcature-lecteur-${cle}.js@@`, `@@INCLUDE vendor/arcature-lecteur-${cle}-en.js@@`);
+  if (MULTI) tplTxt = tplTxt.replace(new RegExp(`^@@INCLUDE vendor/arcature-lecteur-${cle}\\.js@@$`, 'm'),
+    `if(document.documentElement.getAttribute('data-lang')==='en'){\n@@INCLUDE vendor/arcature-lecteur-${cle}-en.js@@\n}else{\n@@INCLUDE vendor/arcature-lecteur-${cle}.js@@\n}`);
+}
 if (MULTI) tplTxt = tplTxt.replace(/^@@INCLUDE html\/aide\.html@@$/m, '').replace(/<\/body>\s*<\/html>\s*$/, MULTI_RESTORE + '\n</body>\n</html>\n');
+// Version réduite à un format : composants d'Arcature des autres formats retirés (leur balise <script> devient vide)
+if (FORMAT) for (const c of ['visionneuse', 'lecteur-sysml', 'lecteur-uml'].filter(c => !FORMATS[FORMAT].includes(c)))
+  tplTxt = tplTxt.replace(new RegExp(`^@@INCLUDE vendor/arcature-${c}(-en)?\\.js@@$`, 'gm'), `/* ${c} : absent de cette version (--format ${FORMAT}) */`)
+    .replace(new RegExp(`^if\\(document\\.documentElement\\.getAttribute\\('data-lang'\\)==='en'\\)\\{\\n/\\* ${c} [^\\n]*\\n\\}else\\{\\n(/\\* ${c} [^\\n]*)\\n\\}$`, 'm'), '$1');
 const tpl = tplTxt.split('\n');
 const included = [];
 const out = [];
@@ -193,6 +257,10 @@ for (const line of tpl) {
   if (TR && !rel.startsWith('vendor/')) {
     try { txt = translate(rel, txt); }
     catch (e) { errors.push(`Traduction impossible — src/${rel} : ${e.message}`); }
+  }
+  if (FORMAT && rel === 'js/01-donnees-config.js') {
+    const avant = txt; txt = txt.replace(/^const CAP_EDITION='';$/m, `const CAP_EDITION='${FORMAT}';`);
+    if (txt === avant) errors.push('CAP_EDITION introuvable dans src/js/01-donnees-config.js');
   }
   if (rel.startsWith('js/')) {
     try { new vm.Script(txt, { filename: 'src/' + rel }); }
@@ -234,7 +302,7 @@ if (TR) {
 }
 const kb = (Buffer.byteLength(html) / 1024).toFixed(0);
 warnings.forEach(w => console.warn('⚠ ' + w));
-console.log(`✔ ${path.relative(ROOT, OUT) || OUT} — ${kb} Ko, ${included.length} fichiers, ${jsFiles.length} modules JS, syntaxe OK${markers ? '' : ' (sans repères)'}${EN ? ' — version anglaise' : MULTI ? ' — version multilingue (FR + EN)' : ''}`);
+console.log(`✔ ${path.relative(ROOT, OUT) || OUT} — ${kb} Ko, ${included.length} fichiers, ${jsFiles.length} modules JS, syntaxe OK${markers ? '' : ' (sans repères)'}${EN ? ' — version anglaise' : MULTI ? ' — version multilingue (FR + EN)' : ''}${FORMAT ? ` — version ${FORMAT} seul` : ''}`);
 if (livraison) console.log(`
 Livraison prête. Pour la publier (remplacer X.Y par le numéro de version) :
   git add livraison

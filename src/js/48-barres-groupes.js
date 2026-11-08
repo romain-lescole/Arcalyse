@@ -102,6 +102,9 @@ function capTbSticky(root){
   });
 }
 
+/** Recalcule les en-têtes collants de toutes les vues (après un changement de thème : leur fond est une couleur relevée, `capTbsBg`). */
+function capTbStickyTous(){ CAP_TBS_ROOTS.map(id=>document.getElementById(id)).filter(Boolean).forEach(r=>capTbSticky(r)); }
+
 // Observateurs : recalcul après chaque rendu, à l'affichage de la vue et au redimensionnement
 (function(){
   const roots=CAP_TBS_ROOTS.map(id=>document.getElementById(id)).filter(Boolean);

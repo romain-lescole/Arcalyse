@@ -1,9 +1,9 @@
 # Guide d'utilisation d'Arcalyse
 
-> **Arcalyse** — votre modèle Capella, sous toutes ses coutures.
+> **Arcalyse** — votre modèle (Capella, SysML v2, UML ou SysML v1), sous toutes ses coutures.
 > Ce guide passe en revue **tous les menus, sous-menus, vues et fenêtres** de l'application, explique ce que fait chaque commande et **comment s'en servir** (clics, glisser-déposer, raccourcis), avec des captures d'écran.
 
-Les captures ont été faites avec le modèle d'exemple public *In-Flight Entertainment System* (IFE) livré avec Capella et ses diagrammes (`.aird`), dans le thème **Clair** ; les vues 🧾 Exigences et 🎛 Propriétés utilisent le modèle *AIDA*. Elles sont régénérées par `node tools/guide-captures.js` (voir [Annexe C](#annexe-c--régénérer-les-captures-du-guide)). Sur les captures annotées, les **pastilles rouges numérotées** renvoient aux tableaux qui les suivent.
+Les captures ont été faites avec le modèle d'exemple public *In-Flight Entertainment System* (IFE) livré avec Capella et ses diagrammes (`.aird`), dans le thème **Clair** ; les vues 🧾 Exigences et 🎛 Propriétés utilisent le modèle *AIDA* ; le [§ 24](#24--sysml-v2-et--uml--sysml-v1) utilise les modèles d'essai `VehiculeDemo.sysml` et `Drone-2026x.mdzip` (écrits pour Arcature). Elles sont régénérées par `node tools/guide-captures.js` (voir [Annexe C](#annexe-c--régénérer-les-captures-du-guide)). Sur les captures annotées, les **pastilles rouges numérotées** renvoient aux tableaux qui les suivent.
 
 ---
 
@@ -18,7 +18,7 @@ Les captures ont été faites avec le modèle d'exemple public *In-Flight Entert
 7. [🧭 Explorateur : Arborescence et Cartes](#7--explorateur--arborescence-et-cartes)
 8. [⚡ Chaînes](#8--chaînes)
 9. [📡 Flux & interfaces](#9--flux--interfaces)
-10. [🔲 Diagrammes Capella](#10--diagrammes-capella)
+10. [🔲 Diagrammes](#10--diagrammes)
 11. [ƒ Fonctions](#11-ƒ-fonctions)
 12. [🔬 Analyses](#12--analyses)
 13. [📐 Tableau de bord](#13--tableau-de-bord)
@@ -32,20 +32,23 @@ Les captures ont été faites avec le modèle d'exemple public *In-Flight Entert
 21. [Pas à pas : scénarios d'utilisation](#21-pas-à-pas--scénarios-dutilisation)
 22. [Questions fréquentes et dépannage](#22-questions-fréquentes-et-dépannage)
 23. [📜 Scripts (macros)](#23--scripts-macros)
+24. [🧩 SysML v2 et 🧬 UML / SysML v1](#24--sysml-v2-et--uml--sysml-v1)
+25. [▦ Matrice](#25--matrice)
 
 ---
 
 ## 1. Présentation et prérequis
 
-Arcalyse est une application **autonome** : un **seul fichier HTML** (`arcalyse-fr.html`, `arcalyse-en.html` ou `arcalyse-multi.html`) qui s'ouvre dans un navigateur et **fonctionne hors ligne**. Elle lit un modèle Capella / ARCADIA (`.capella`) **localement** — rien n'est envoyé sur un réseau — pour l'explorer, l'analyser, le contrôler, le commenter et l'exporter, sans ouvrir Capella.
+Arcalyse est une application **autonome** : un **seul fichier HTML** — un par format, chacun bilingue : `arcalyse-capella.html`, `arcalyse-sysml2.html`, `arcalyse-uml.html`, ou `arcalyse-complet.html` pour tous les formats — qui s'ouvre dans un navigateur et **fonctionne hors ligne**. Elle lit un modèle Capella / ARCADIA (`.capella`) **localement** — rien n'est envoyé sur un réseau — pour l'explorer, l'analyser, le contrôler, le commenter et l'exporter, sans ouvrir Capella. Elle lit aussi les modèles **SysML v2** et **UML / SysML v1** ([§ 24](#24--sysml-v2-et--uml--sysml-v1)) : ce guide décrit Capella, la plupart des vues valent pour les trois.
 
 | Point | Détail |
 |---|---|
 | Navigateur conseillé | **Microsoft Edge** ou **Google Chrome** récents : ils permettent l'enregistrement direct (Ctrl+S réécrit le même fichier) et la relecture automatique du `.capella` modifié. Les autres navigateurs fonctionnent, avec téléchargement à la place de l'enregistrement direct. |
-| Fichiers lus | `.capella` (modèle sémantique), `.melodymodeller`, `.xml` ; `.aird` (diagrammes) en complément, dans 🔲 Diagrammes Capella. Un `.aird` ou `.afm` seul ne suffit pas : il ne contient pas les éléments du modèle. |
+| Fichiers lus | **Capella** : `.capella` (modèle sémantique), `.melodymodeller`, `.xml` ; `.aird` (diagrammes) en complément, dans 🔲 Diagrammes. Un `.aird` ou `.afm` seul ne suffit pas : il ne contient pas les éléments du modèle. **SysML v2** : `.sysml`, `.kpar`, dossier de `.sysml`. **UML / SysML v1** : `.uml` (avec son `.notation` de Papyrus), `.xmi` (OMG, Cameo, Papyrus, Enterprise Architect), `.mdzip` (Cameo / CATIA Magic), `.qea` (Enterprise Architect), projet IBM Rhapsody (`.rpy` et dossier `_rpy`, sans les diagrammes). |
 | Fichiers produits | Page HTML autonome (avec le modèle), CSV ou Excel (.xlsx), PDF, ZIP (PNG / SVG), HTML de rapports, JSON (vues, réglages, revue). Tout est produit dans le navigateur. |
 | Lecture seule | Arcalyse **ne modifie jamais** le modèle Capella : c'est un outil de lecture, d'analyse et de revue. |
-| Langues | Version française, anglaise, ou multilingue (bouton 🌐 EN / FR dans `arcalyse-multi.html`, ou adresse `?lang=fr` / `?lang=en`). |
+| Langues | Chaque livrable est bilingue : bouton 🌐 EN / FR, ou adresse `?lang=fr` / `?lang=en` (langue du navigateur par défaut). Changer de langue recharge la page **en gardant tout le travail** : modèle (et ses diagrammes), revue, check-lists, dossiers et rapports, tableaux de bord, réglages, vue affichée. |
+| Formats | Une version par format (Capella, SysML v2, UML / SysML v1), plus légère, ou la version complète ; ℹ À propos indique les formats lus. |
 
 **Couleurs des couches ARCADIA**, utilisées partout : **OA** Analyse opérationnelle · **SA** Analyse système · **LA** Architecture logique · **PA** Architecture physique · **EPBS** Éléments de configuration · *Transverse* (types partagés).
 
@@ -62,21 +65,21 @@ Arcalyse est une application **autonome** : un **seul fichier HTML** (`arcalyse-
 | N° | Commande | Ce qu'elle fait |
 |---|---|---|
 | 1 | **🚀 Bien démarrer** | Courte visite : montre où ouvrir votre fichier ; elle reprend automatiquement une fois le modèle chargé pour montrer où trouver l'aide et les tutoriels. |
-| 2 | **📂 Fichier .capella…** | Ouvre le sélecteur de fichiers pour choisir un `.capella`. |
-| 3 | **📁 Dossier du projet…** | (Edge / Chrome) Choisit le **dossier** du projet Capella : le `.capella` **et** ses diagrammes `.aird` sont chargés ensemble. S'il y a plusieurs modèles dans le dossier, une liste vous laisse choisir. |
-| 4 | **📄 Projet de travail (.html)…** | Reprend une page Arcalyse enregistrée avec une version précédente (à partir de la 2.1) : modèle, diagrammes, revue, accueil, tableaux de bord, ▤ Tableau, vues, barre, thème, règles de nommage — au choix. La page n'est pas exécutée, seules ses données sont lues. |
+| 2 | **Cartes par format** | Une carte par format lu (**Capella**, **SysML v2**, **UML / SysML v1**) : quoi ouvrir (pour UML / SysML v1, selon l'outil : `.mdzip` de Cameo, `.qea` d'Enterprise Architect, `.uml` + `.notation` de Papyrus, dossier d'un projet Rhapsody, `.xmi`), ce que vous obtiendrez, ce qui est sans objet. Ses boutons ouvrent le **dossier du projet** (Edge / Chrome : le `.capella`, ses `.aird` et ses bibliothèques ensemble ; plusieurs modèles : une liste vous laisse choisir) ou un sélecteur **filtré sur ce format** (plusieurs fichiers pour les `.sysml` d'un projet ou un `.uml` et son `.notation`). |
+| 3 | **💡 Bon à savoir** | Astuces qui défilent sur les pièges courants (export `.xmi` de Cameo sans diagrammes, `.notation` seul, anciens projets d'EA…) ; ‹ ›, les points et ⏸ pour les parcourir. |
+| 4 | **📄 Ouvrir une page de projet…** | Reprend une page Arcalyse enregistrée avec une version précédente (à partir de la 2.1) : modèle, diagrammes, revue, accueil, tableaux de bord, ▤ Tableau, vues, barre, thème, règles de nommage — au choix. La page n'est pas exécutée, seules ses données sont lues. |
 | 5 | **📖 Que peut-on analyser ?** | Ouvre l'aide complète (onglet Démarrage). |
 | 6 | **🎓 Visite guidée de l'interface** | Présente chaque zone de l'interface pas à pas (plus complète avec un modèle chargé). |
 | 7 | **ℹ À propos** | Version, auteur, licence, composants tiers, informations techniques. |
 
 ### Les quatre façons d'ouvrir un modèle
 
-1. **Glisser-déposer** : faites glisser le fichier `.capella` depuis l'explorateur de fichiers **n'importe où dans la fenêtre**. Vous pouvez aussi déposer **le `.capella` et le `.aird` ensemble**, ou **le dossier du projet** (Edge / Chrome), ou une **page de projet de travail** `.html`.
-2. **Bouton 📂 Fichier .capella…** de l'écran d'accueil.
-3. **Menu 📁 Fichier › 🔷 Ouvrir un modèle Capella…** (voir [§ 3.3](#33--fichier)). Si un modèle est déjà ouvert, un avertissement rappelle que le travail non enregistré sera perdu et propose d'abord 💾 Enregistrer la page.
+1. **Glisser-déposer** : faites glisser le fichier modèle depuis l'explorateur de fichiers **n'importe où dans la fenêtre** : le format est reconnu. Vous pouvez aussi déposer **le `.capella` et le `.aird` ensemble** (ou un `.uml` et son `.notation`), **le dossier du projet** (Edge / Chrome), ou une **page de projet de travail** `.html`.
+2. **Bouton « Fichier… » de la carte du format** sur l'écran d'accueil (ex. **Fichier .capella…**).
+3. **Menu 📁 Fichier › 📂 Ouvrir un modèle…** (voir [§ 3.3](#33--fichier)). Si un modèle est déjà ouvert, un avertissement rappelle que le travail non enregistré sera perdu et propose d'abord 💾 Enregistrer la page.
 4. **📁 Dossier du projet…** (bouton d'accueil ou 📁 Fichier › 📁 Ouvrir le dossier du projet…).
 
-L'écran d'accueil présente les trois ouvertures côte à côte, chacune expliquée : **📂 Fichier .capella…** (le modèle seul), **📁 Dossier du projet…** (conseillé : modèle, diagrammes et bibliothèques en une fois) et **📄 Projet de travail (.html)…** (reprendre une page enregistrée). Si le dossier contient **plusieurs modèles**, la liste « lequel ouvrir ? » les présente avec leur sous-dossier ; les autres `.capella` du dossier sont chargés comme bibliothèques si le modèle choisi y fait référence.
+L'écran d'accueil présente une carte par format, chacune expliquée (pour Capella : **📁 Dossier du projet…**, conseillé — modèle, diagrammes et bibliothèques en une fois — ou **Fichier .capella…**, le modèle seul), puis le bandeau **Projet de travail** (**📄 Ouvrir une page de projet…** : reprendre une page enregistrée). Si le dossier contient **plusieurs modèles**, la liste « lequel ouvrir ? » les présente avec leur sous-dossier ; les autres `.capella` du dossier sont chargés comme bibliothèques si le modèle choisi y fait référence.
 
 Le modèle est analysé (quelques secondes pour un gros modèle), puis la vue **🏠 Accueil du projet** s'ouvre automatiquement.
 
@@ -96,8 +99,9 @@ Le modèle est analysé (quelques secondes pour un gros modèle), puis la vue **
 |---|---|---|
 | ◀ ▶ | **Historique** | Précédent / Suivant (Alt+← / Alt+→) : vues, éléments du détail et diagrammes ouverts ([§ 3.7](#37--historique-de-navigation)). |
 | 1 | **🏠 Accueil** | Accueil du projet : fiche, contenu du modèle, check-lists et plans de revue ([§ 4](#4--accueil-du-projet)). |
-| 2 | **🔲 Diagrammes** | Diagrammes du projet (`.aird`) dessinés comme dans Capella ([§ 10](#10--diagrammes-capella)). |
+| 2 | **🔲 Diagrammes** | Diagrammes du projet (`.aird`) dessinés comme dans Capella ; pour un modèle UML / SysML v1, diagrammes et tableaux du fichier ; pour SysML v2, vues calculées ([§ 10](#10--diagrammes)). |
 | 3 | **▤ Tableau** | Tous les éléments en tableau configurable ([§ 6](#6--tableau)). |
+| 3b | **▦ Matrice** | Éléments en lignes et en colonnes reliés par les relations choisies, comme la Dependency Matrix de Catia Magic ([§ 25](#25--matrice)). |
 | 4 | **🏗 Architecture ▾** | Comment le système est construit : fonctions et échanges, composants et interfaces, chaînes et scénarios, modes et états, capacités, données, déploiement ; 🗺 Relation Map et 🌳 arborescence ([§ 3.2](#32-menus-des-vues-épingles-et-ctrlk)). |
 | 5 | **✅ Vérifier ▾** | Le modèle est-il juste et complet ? Santé et contrôles, traçabilité, exigences, propriétés, contraintes, comparaison de versions, statut de revue. |
 | 6 | **💬 Revue & documents ▾** | Commentaires de revue (badge : commentaires non clos ; ⚠ n : à vérifier après une mise à jour), check-lists et plans de revue, dossiers à faire relire, rapports automatiques, tableaux de bord. |
@@ -106,6 +110,7 @@ Le modèle est analysé (quelques secondes pour un gros modèle), puis la vue **
 | 9 | **📁 Fichier ▾** | Ouvrir, mettre à jour, 🔄 suivre le fichier, enregistrer, exporter les réglages ([§ 3.3](#33--fichier)). |
 | 10 | **💾** | Enregistrement direct de la page (Ctrl+S ; Maj+clic : enregistrer sous). |
 | 11 | **❓ Aide ▾** | Aide complète, visites guidées, À propos ([§ 19](#19--aide-visites-guidées-à-propos)). |
+| 11b | **🌐 · 🎨 ▾** | Langue de l'interface (FR / EN, versions bilingues) et **thème** : Sombre, Clair, Office 2007, Contraste, personnalisé ([§ 18](#18--thèmes-et-personnalisation)). |
 | 12 | **⚙** | Préférences : niveau des menus, barre en icônes seules, thème, enregistrement automatique ([§ 3.4](#34--préférences)). |
 
 Sans modèle ouvert, la barre se réduit à 📁 Fichier, ❓ Aide et ⚙. Quand une nouvelle version du `.capella` est détectée, un bouton **🔄** apparaît à côté de 📁 Fichier, avec un badge ([§ 16](#16--suivi-du-fichier-et-mises-à-jour-du-modèle)).
@@ -122,13 +127,15 @@ Les vues proches sont réunies en **familles** : une seule entrée de menu, puis
 | **🧱 Composants & interfaces** : SA · System Component, LA · Logical Component, PA · Behavior Exchange, PA · Physical Link, 🧩 Ports | **🧬 Traçabilité entre couches** : tableau de traçabilité, ⇶ graphe des réalisations | ☑ Check-lists & plans de revue |
 | **⚡ Chaînes & scénarios** : ⚡ Chaînes, 🎬 Scénarios | 🧾 Exigences, **🎛 Propriétés & contraintes** (propriétés PVMT, 🔒 contraintes) | 📑 Faire relire (dossiers de relecture) |
 | 🚦 Modes & états, 🎯 Capacités & missions, 🗃 Données & interfaces, 🖧 Déploiement & EPBS | ⚖ Comparaison de versions, 🔖 Statut de revue | 📘 Rapports automatiques, 📐 Tableau de bord |
-| *Explorer* : 🗺 Relation Map, 🌳 Arborescence ; *Complet* : ▦ Cartes | *Avancé (Complet)* : 🏷 Catégories d'échanges, 📦 REC / RPL, 📚 Bibliothèques | *Complet* : 📜 Scripts |
+| *Explorer* : 🗺 Relation Map, 🌳 Arborescence ; *Complet* : 🃏 Cartes | *Avancé (Complet)* : 🏷 Catégories d'échanges, 📦 REC / RPL, 📚 Bibliothèques | *Complet* : 📜 Scripts |
+
+Pour un modèle **UML / SysML v1**, 🏗 Architecture et ✅ Vérifier proposent à la place des vues ARCADIA la famille **🧬 UML / SysML v1** et ses vues de vérification ([§ 24.4](#244--uml--sysml-v1)).
 
 Une famille s'ouvre sur la dernière vue utilisée. **Couche commune** : 🧱 Composants & interfaces a une puce par couche (SA, LA, PA comportement, PA nœuds) ; ƒ Fonctions & échanges et ⚡ Chaînes & scénarios ont un sélecteur **Couche** (Toutes, OA, SA, LA, PA, EPBS). La couche choisie est **mémorisée** (avec la page) et reprise d'une famille à l'autre : choisir LA dans 🧱 puis ouvrir ƒ Fonctions & échanges affiche les fonctions LA. À droite de la barre de famille, la pastille 🩺 mène aux contrôles de la vue dans 💚 Santé & contrôles. Chaque vue reste trouvable seule par la recherche 🔍 et peut être épinglée (📌).
 
 En mode **Essentiel**, les vues marquées *Complet* n'apparaissent pas dans les menus ; une ligne « ➕ n vue(s) avancée(s) en mode Complet » en bas du menu bascule en mode Complet. Elles restent accessibles par la recherche.
 
-Dans chaque menu, l'icône **📌** à droite d'une vue l'**épingle** : elle devient un bouton direct de la barre (un second clic la retire). Par défaut, les boutons directs sont 🏠 Accueil, 🔲 Diagrammes et ▤ Tableau.
+Dans chaque menu, l'icône **📌** à droite d'une vue l'**épingle** : elle devient un bouton direct de la barre (un second clic la retire). Par défaut, les boutons directs sont 🏠 Accueil, 🔲 Diagrammes, ▤ Tableau et ▦ Matrice.
 
 **🔍 Recherche** (champ de la barre, ou **Ctrl+K**) :
 
@@ -144,8 +151,8 @@ Le réglage de la barre est enregistré avec la 💾 page HTML et dans le fichie
 
 | Entrée | Ce qu'elle fait |
 |---|---|
-| **🔷 Ouvrir un modèle Capella…** | Remplace le modèle affiché (avertissement si un modèle est déjà ouvert). |
-| **📁 Ouvrir le dossier du projet…** | Charge le `.capella` et ses `.aird` ensemble (Edge / Chrome). |
+| **📂 Ouvrir un modèle…** | Remplace le modèle affiché par un autre fichier modèle — Capella, SysML v2, UML / SysML v1 (avertissement si un modèle est déjà ouvert). Le sélecteur propose d'office le type **« Tous les modèles »** : pas besoin de changer de type de fichier pour passer d'un format à l'autre. |
+| **📁 Ouvrir le dossier du projet…** | Charge le `.capella` et ses `.aird` ensemble, les `.sysml` d'un projet, un modèle UML et son `.notation`, ou un projet Rhapsody (`.rpy` et son dossier `_rpy`) (Edge / Chrome). Si le dossier contient plusieurs modèles, une **fenêtre au centre de l'écran** demande lequel ouvrir (filtre, flèches, Entrée ; Échap la ferme et « 📁 Choisir le modèle… » la rouvre). |
 | **📄 Ouvrir un projet de travail (page HTML)…** | Reprend une page enregistrée par une version précédente d'Arcalyse ; vous choisissez les parties à reprendre. |
 | **🔄 Charger une mise à jour du modèle…** | Compare un autre `.capella` au modèle affiché, **montre le delta**, puis met à jour après validation ([§ 16](#16--suivi-du-fichier-et-mises-à-jour-du-modèle)). Alerte si moins de la moitié des éléments sont communs. |
 | **🔄 Suivi du fichier…** | Ouvre le menu du suivi : vérifier maintenant, détection automatique, delta en attente, historique ([§ 16](#16--suivi-du-fichier-et-mises-à-jour-du-modèle)). Un badge signale les enregistrements en attente. |
@@ -182,7 +189,7 @@ La roue crantée **⚙** (à droite de ❓ Aide) ouvre un menu rapide (niveau de
 | Niveau | Menus |
 |---|---|
 | **Essentiel** (par défaut) | Les vues les plus utilisées dans 🏗 Architecture, ✅ Vérifier et 💬 Revue & documents. |
-| **Complet** | Ajoute ▦ Cartes, 🏷 Catégories d'échanges, 📦 REC / RPL, 📚 Bibliothèques et 📜 Scripts. |
+| **Complet** | Ajoute 🃏 Cartes, 🏷 Catégories d'échanges, 📦 REC / RPL, 📚 Bibliothèques et 📜 Scripts. |
 
 | Menu ✅ Vérifier en mode Complet | Barre en icônes seules |
 |---|---|
@@ -211,6 +218,8 @@ Tous ces réglages sont enregistrés avec la 💾 page HTML et dans la partie «
 - **activé** ou non : un contrôle désactivé disparaît des vues et des indicateurs du tableau de bord ; il reste listé en bas de l'onglet 🩺 Contrôles pour être réactivé ;
 - **gravité** : ℹ information (compté à part, hors « points à vérifier »), ⚠ à vérifier (défaut), ✖ bloquant (signalé dans le total) ;
 - **seuils** : longueur minimale d'une description, nom trop long (caractères, mots), nombre de statuts pour qu'une couche soit « majoritairement validée ».
+
+Pour un modèle UML / SysML v1, chaque **règle de validation** du lecteur se coche ou se décoche aussi directement dans 🧬 UML / SysML v1 › 🩺 Diagnostics › **Σ Répartition par règle** ([§ 24.4](#244--uml--sysml-v1)) ; une règle décochée n'est plus comptée nulle part (🏠 Accueil, 💚 Santé, tableau de bord), et ce choix est gardé dans le profil.
 
 Le profil est enregistré avec la 💾 page, repris par 📄 Ouvrir un projet et par le fichier ⚙ Interface et vues ; **💾 Exporter / 📂 Importer .json** permettent de partager le profil d'une équipe. Les contrôles sont désignés par leur titre : un profil est propre à une langue de l'interface.
 ### 3.7 ◀ ▶ Historique de navigation
@@ -352,6 +361,8 @@ Un **dossier de relecture** rassemble, chapitre par chapitre, ce que d'autres pe
 | 4.2 Concept d'exécution | chaînes fonctionnelles, scénarios, flux de données, modes et états |
 | 4.3 Conception des interfaces | 4.3.1 diagrammes et liste, puis une interface par échange : éléments échangés, échanges fonctionnels alloués, liens physiques porteurs |
 | 5 Traçabilité | ⇶ liens entre couches, exigences |
+
+**Modèles SysML ou UML** : le cadre propose **🧩 Plans SysML à adapter** (SSS et SSDD livrés comme modèles réglables : type ou stéréotype, portée, relation, ✨ chemin, colonnes au choix, 🎯 sujet) ; tutoriel pas à pas au [§ 21.8](#218-tutoriel--un-ssdd-sur-mesure-pour-un-modèle-sysml).
 
 **Priorité** et **vérification** d'une exigence : attribut d'exigence ou propriété PVMT dont le nom contient « priorit », « vérif », « qualif » ou « méthode » ; sinon la colonne reste vide. Ce que le modèle ne contient pas devient une invite **[À compléter — …]** qui rappelle ce que le DID attend.
 
@@ -672,7 +683,7 @@ Arbre complet du modèle (types cochés dans la barre latérale) :
 - **⬇ JSON** : export de l'arbre ;
 - **clic** sur un élément : panneau de détail.
 
-### 7.2 ▦ Cartes
+### 7.2 🃏 Cartes
 
 ![Cartes](guide/img/30-explorateur-cartes.png)
 
@@ -740,7 +751,7 @@ Troisième présentation de ⚡ Chaînes (à côté de ▦ Diagrammes et 🗺 Vu
 
 ## 9. 📡 Flux & interfaces
 
-Vues d'interfaces, du fonctionnel au physique, accessibles par le menu **🏗 Architecture ▾** (familles *ƒ Fonctions & échanges* : ƒ⇆ échanges fonctionnels, 🟨 activités OA ; *🧱 Composants & interfaces* : System Component, Logical Component, Behavior Exchange, Physical Link, 🧩 Ports ; *⚡ Chaînes & scénarios* : 🎬 Scénarios ; *Explorer* : 🌳 Arborescence, ▦ Cartes) et par la barre de famille.
+Vues d'interfaces, du fonctionnel au physique, accessibles par le menu **🏗 Architecture ▾** (familles *ƒ Fonctions & échanges* : ƒ⇆ échanges fonctionnels, 🟨 activités OA ; *🧱 Composants & interfaces* : System Component, Logical Component, Behavior Exchange, Physical Link, 🧩 Ports ; *⚡ Chaînes & scénarios* : 🎬 Scénarios ; *Explorer* : 🌳 Arborescence, 🃏 Cartes) et par la barre de famille.
 
 **Organisation commune** à ƒ⇆, 🟨, 🧱, 🔀 et 🔌 : chaque vue s'ouvre en **◧ Vue Blocs** (rendu façon Capella, navigation d'un bloc à l'autre) et propose aussi **≡ Vue Ligne**, **▣ Vue Composant / Fonction / Activité**, **▦ Matrice** N² et **🩺 Contrôles**. Les commandes de chaque barre sont **entourées par catégorie** (vues, filtres et champs, exports) et restent visibles en haut lors du défilement.
 
@@ -751,9 +762,9 @@ Vues d'interfaces, du fonctionnel au physique, accessibles par le menu **🏗 Ar
 | Champs **Fonction / Composant** et **🔍 Échange** | Filtre texte (un échange est gardé si l'une de ses deux extrémités correspond). |
 | Cases **Système · Acteurs · Non allouées** (ou Nature) | **Clic** : afficher / masquer ; **double-clic** : uniquement celle-ci (double-clic à nouveau : tout réafficher). |
 | Liste **Tous les allocataires / Tous les composants** | Un acteur précis, ou le système et ses sous-systèmes en arbre (sous-composants compris). |
-| **avec ports** / **avec ports ou échanges** | Masque les blocs sans port (ou les fonctions mères). |
+| **☐ Masquer les composants sans port N** / **☐ Masquer les fonctions sans port ni échange N** | Retire de la vue les blocs sans port (des conteneurs le plus souvent) ou les fonctions mères ; le nombre dit combien seraient retirés, la case est encadrée quand le filtre est actif. |
 | **◀ ▶** | Pages de 100 blocs (exports : tout le résultat filtré). |
-| **⬇ CSV · ⬇ HTML · ⬇ HTML (toutes les vues)** | CSV enrichi ([§ 9.8](#98--csv-enrichi-colonnes-de-lexport)) ; rapport HTML de la vue affichée ; rapport à onglets Ligne / Composant / Matrice / Contrôles, avec recherche et matrice cliquable. |
+| **⬇ CSV · ⬇ HTML · ⬇ HTML (toutes les vues)** | CSV enrichi ([§ 9.8](#98--csv-enrichi-colonnes-de-lexport)) ; rapport HTML de la vue affichée ; rapport à onglets dont on **choisit les vues** dans une fenêtre (◧ Vue Blocs, ≡ Ligne, ▣ Composant / Fonction, ▦ Matrice ; 🩺 Contrôles décoché par défaut), avec recherche (blocs compris), matrice cliquable et, dans la Vue Blocs, liens « aller au bloc » et listes de fonctions dépliables. 🔀 Behavior Exchange et 🔌 Physical Link incluent leur Vue Blocs. |
 
 ### 9.1 ƒ⇆ Functional Exchange
 
@@ -882,9 +893,9 @@ Les choix sont **retenus pour chaque export** et enregistrés avec la 💾 page 
 
 ---
 
-## 10. 🔲 Diagrammes Capella
+## 10. 🔲 Diagrammes
 
-Diagrammes du projet (fichier `.aird`, à côté du `.capella`), dessinés **comme dans Capella** par la visionneuse d'Arcature. Lecture seule.
+Diagrammes du projet (fichier `.aird`, à côté du `.capella`), dessinés **comme dans Capella** par la visionneuse d'Arcature. Lecture seule. La vue est **commune à tous les formats** : même explorateur, même ▣ carte, mêmes ℹ Infos, planches et ⧉ comparaison pour un modèle SysML v2 (vues calculées) ou UML / SysML v1 (diagrammes et tableaux du fichier) — voir [§ 10.5](#105-modèles-sysml-v2-et-uml--sysml-v1).
 
 ### 10.1 Charger les diagrammes
 
@@ -899,11 +910,11 @@ Diagrammes du projet (fichier `.aird`, à côté du `.capella`), dessinés **com
 <img src="guide/img/60-diag-classement.png" alt="Classement" width="340" align="right">
 
 - **Filtrer (nom, type, sigle, couche)…** ;
-- **classement** : *Couche* (défaut), *Couche › type* (OA › OAB…), *Type de diagramme* ou *Nom* ;
+- **classement** : *Couche* (défaut), *Couche › type* (OA › OAB…), *Type de diagramme*, *Nom* ou **🌳 Arborescence** (chaque diagramme sous l'élément qu'il représente, dans l'arbre du modèle ; explorateur compact ; déplier un nœud garde la position dans la liste) ;
 - groupes repliables (**⊞ / ⊟**) ;
 - **largeur réglable** en glissant le séparateur (double-clic : largeur d'origine) ;
 - **ℹ** au survol d'un diagramme : ses informations dans le panneau de détail ;
-- **▣ Carte** sous l'explorateur (▾ pour la replier, **⇲** pour la remettre dans le diagramme, **⇱** pour la ramener).
+- **▣ Carte** sous l'explorateur (▾ pour la replier, **⇲** pour la remettre dans le diagramme, **⇱** pour la ramener). Le **séparateur ↕** entre la liste et la carte règle la hauteur de la carte (double-clic : hauteur d'origine). Comme le Zoom de Cameo, quand on dézoome, le **cadre bleu peut déborder le dessin** : la carte montre alors le dessin et le cadre entier, le reste en gris ; on peut toujours glisser le cadre et le redimensionner par ses coins.
 
 <br clear="right">
 
@@ -917,8 +928,8 @@ Au-dessus du diagramme, **deux lignes** qui ne bougent pas d'un diagramme à l'a
 
 | Ligne | Commandes |
 |---|---|
-| **Identité** | Sigle et nom du diagramme ; **Chercher dans le diagramme** (Ctrl+F) avec **▲ ▼** ; **Thème** (Thème Capella…) ; **⬇ Exporter** (SVG / PNG / impression) ; **✕** fermer. |
-| **Outils** | **📝 Note de revue** et **💬 Calque** ([§ 15.3](#153-notes-de-revue-sur-les-diagrammes)) ; chaînes et chemins (ceux dessinés dans le diagramme) ; **▽ Filtres** (ports, étiquettes, catégories d'échanges) ; **− 99 % +**, **⤢ Ajuster**, **1:1**, mise en page. |
+| **Identité** | Sigle et nom du diagramme ; **Chercher dans le diagramme** (Ctrl+F ; **Entrée** : suivant, **Maj+Entrée** : précédent) ; **#** grille ; **◐** thème ; **⬇▾** exports (SVG / PNG / impression) ; **✕** fermer. L'élément représenté est dans **ℹ Infos**. |
+| **Outils** | **📝 Note de revue** et **💬 Calque** ([§ 15.3](#153-notes-de-revue-sur-les-diagrammes)) ; chaînes et chemins (ceux dessinés dans le diagramme) ; **⧩ Filtres** (ports, étiquettes, catégories d'échanges) ; zoom ; **▣ Carte**. |
 
 Molette : zoom ; glisser : déplacement ; infobulles au survol ; mini-carte.
 
@@ -941,6 +952,26 @@ Molette : zoom ; glisser : déplacement ; infobulles au survol ; mini-carte.
 3. l'**aperçu de la planche** montre le résultat (cadre et en-tête : couche, sigle, nom, type ; élément représenté ; cartouche : projet, type, couche, contenu, sources, date, planche) ;
 4. **⬇ Exporter**. PDF : sommaire, signets, annexes (alerte si le PDF risque de dépasser 40 Mo) ; ZIP : un dossier par couche et un CSV d'annexe par diagramme ; HTML : planches repliables par couche et type.
 
+
+### 10.5 Modèles SysML v2 et UML / SysML v1
+
+Pour un modèle lu par un lecteur d'Arcature, l'explorateur, la ▣ carte, ℹ Infos, les planches et ⧉ Comparer fonctionnent comme ci-dessus ; seul le dessin change :
+
+- **classement** : *Genre › origine* (défaut), *Genre*, *Origine* (Cameo, Enterprise Architect, Papyrus, vue calculée), *Nom* ou **🌳 Arborescence** ;
+- **SysML v2** : le texte n'a pas de diagrammes, le lecteur **calcule des vues** (GV, IV, STV, AFV) ;
+- **UML / SysML v1** : seuls les diagrammes et tableaux **enregistrés dans le fichier** sont montrés (un `.xmi` exporté de Cameo n'a pas de diagrammes : ouvrir le `.mdzip` ; Papyrus : le `.uml` avec son `.notation`) ;
+- au-dessus de la vue, deux lignes : **identité** (nom, origine, 🔍 Ctrl+F — Entrée : suivant —, ◐ thème Auto / Clair / Sombre, ⬇ ▾ SVG, PNG, impression ou PDF, texte, ✕) et **outils** (📝 Note et 💬 Calque, ⧩ filtres : étiquettes des liens, compartiments, liens par genre ; zoom − % +, ⤢ tout voir, 1:1, ⌖ centrer sur l'élément choisi — touche **F** ; ▣ ; **🖼 Visuel** ou **≡ Texte** coloré) ; **#** grille (touche **G**), comme pour Capella ;
+- **clic sur un élément** du dessin : son panneau de détail (glisser déplace la vue sans ouvrir le détail).
+
+**▦ Tableaux, matrices et Relation Map de Cameo** (`.mdzip`) : Cameo n'enregistre que leur définition ; Arcalyse les recalcule et les liste avec les diagrammes (genres Tableau, Matrice, Relation Map).
+
+| Genre | Ce qu'on peut faire |
+|---|---|
+| **Tableau** (Requirement Table, Generic Table, ICD, Instance Table) | tri par clic sur l'en-tête (▲ / ▼ / sans tri), filtre, clic sur un élément → détail ; **▤ Tableau** ouvre ses lignes dans un onglet du ▤ Tableau (colonnes ramenées à celles d'Arcalyse, les autres en lecture seule 🔒 ; 📋 pour retirer les lignes données) |
+| **Matrice** (Dependency Matrix, Allocation, Refine / Satisfy / Verify…) | en-têtes verticaux, propriétaires groupés comme dans Cameo, **Éléments reliés seulement**, cellule = sens des relations (↗ ↙ ⤢) |
+| **Relation Map** (et cartes de décomposition) | arbre dessiné comme la disposition « Tree » de Cameo, liens colorés par critère et légende ; **⊕ / ⊖** déplie ou replie un nœud, **↺ Dépliage enregistré** ; clic sur un diagramme membre : il s'ouvre ; **🗺 Relation Map** l'ouvre dans un onglet de la 🗺 Relation Map d'Arcalyse |
+
+Pour tous : ⬇ CSV (ou Excel), ≡ Texte, **ℹ Infos** (définition, critères, colonnes, remarques). Non évalué, et signalé : portée d'un Smart Package ou d'une requête de Cameo, critères faits d'un script.
 ---
 
 ## 11. ƒ Fonctions
@@ -1259,7 +1290,7 @@ Un **clic sur un nom** (presque partout : cartes, tableaux, blocs, listes, diagr
 <img src="guide/img/90-detail-panneau.png" alt="Détail" width="320" align="right">
 
 - type technique et **Human Type**, description du type ;
-- nom de l'élément, avec son **icône Capella** ;
+- nom de l'élément, avec son **icône** (celle de Capella, ou celle du lecteur d'Arcature pour un modèle SysML v2 ou UML / SysML v1) ;
 - **💬 Commenter**, **💬 le nom**, **💬 la description** (revue) ;
 - **description** mise en forme comme dans Capella (bouton **‹/› HTML** : code d'origine ; liens vers d'autres éléments cliquables) ;
 - **attributs** (un 💬 apparaît au survol de chacun) ;
@@ -1271,11 +1302,15 @@ Un **clic sur un nom** (presque partout : cartes, tableaux, blocs, listes, diagr
 
 Tout est **cliquable** pour naviguer de proche en proche. **×** ferme le panneau.
 
-**🗂 Onglets** : ces sections sont réparties en **📋 Fiche** (description, attributs), **🔗 Liens** (références, owner, éléments contenus), **🔲 Diagrammes**, **🔬 Analyses** (exigences, propriétés, contraintes, scénarios, statut de revue, catégories, bibliothèques, REC / RPL, déploiement) et **💬 Revue** ; **≡ Tout** (par défaut) montre toutes les sections à la suite. Chaque onglet indique son nombre de sections ; un onglet vide pour l'élément n'est pas proposé. L'onglet choisi est gardé d'un élément à l'autre et enregistré avec la 💾 page. Les boutons **◀ ▶** de la barre ([§ 3.7](#37--historique-de-navigation)) reviennent sur les éléments ouverts précédemment.
+**🗂 Onglets** : ces sections sont réparties en **📝 Description** (la description seule, mise en forme, sur toute la hauteur du panneau), **📋 Fiche** (description, attributs), **🔗 Liens** (références, owner, éléments contenus), **🧭 Sémantique**, **🔲 Diagrammes**, **🔬 Analyses** (exigences, propriétés, contraintes, scénarios, statut de revue, catégories, bibliothèques, REC / RPL, déploiement) et **💬 Revue** ; **≡ Tout** (par défaut) montre toutes les sections à la suite (sauf 🧭 Sémantique et 📝 Description, déjà dans 📋 Fiche). Chaque onglet indique son nombre de sections ; un onglet vide pour l'élément n'est pas proposé. L'onglet choisi est gardé d'un élément à l'autre et enregistré avec la 💾 page. Les boutons **◀ ▶** de la barre ([§ 3.7](#37--historique-de-navigation)) reviennent sur les éléments ouverts précédemment.
 
 | ≡ Tout (par défaut) et 📋 Fiche | 🔗 Liens |
 |---|---|
 | ![Onglets du panneau de détail](guide/img/90-detail-onglets.png) | ![Onglet Liens](guide/img/90-detail-onglet-liens.png) |
+
+**🧭 Sémantique** : navigateur sémantique comme le *Semantic Browser* de Capella, en trois colonnes — **← Éléments référençants** (fonctions ou composants réalisants, composants allouant, chaînes et capacités qui l'impliquent, Parts, diagrammes…), **Élément courant** (attributs et éléments contenus, par type) et **Éléments référencés →** (parent, fonctions allouées, éléments réalisés, échanges, attributs de référence…). Un clic sur un élément en fait l'élément courant (◀ ▶ pour revenir) ; le filtre s'applique aux trois colonnes ; **⤢** élargit le panneau.
+
+**⧉ Fenêtre séparée** (en haut du panneau, à côté de ×) : tout le panneau, avec ses onglets, s'ouvre dans une fenêtre séparée (autre écran ; autoriser les fenêtres surgissantes). Elle suit l'élément choisi dans la page ; **⧈**, ou la fermeture de la fenêtre, ramène le panneau dans la page.
 
 <br clear="right">
 
@@ -1410,7 +1445,7 @@ Pour faire relire des commentaires par des personnes qui n'ont **ni Capella ni A
 | Garder tout son travail | **💾** / **Ctrl+S** (Maj+clic ou Ctrl+Maj+S : enregistrer sous) ; **📁 Fichier › 🌐 Télécharger la page HTML** | **Toute l'application avec le modèle embarqué** et ses diagrammes (`.aird`), l'🏠 accueil (fiche projet, check-lists, plans de revue, dossiers), les commentaires de 💬 revue, la barre des vues (menus, épingles), les tableaux de bord, les onglets et colonnes du ▤ Tableau (colonnes par chemin, filtres, largeurs, tri), les vues de la Relation Map, les choix d'export CSV, le thème et les règles de nommage. À l'ouverture du fichier, le modèle se recharge tout seul. |
 | Partager une analyse avec quelqu'un qui n'a pas Capella | Envoyer la page HTML enregistrée | Elle s'ouvre hors ligne dans n'importe quel navigateur. |
 | Réutiliser ses réglages avec un autre modèle | **📁 Fichier › ⚙ Enregistrer l'interface et les vues…** puis **⚙ Charger une interface et des vues…** | Fichier `.json` **sans le modèle**, parties au choix (ci-dessous). |
-| Passer à une nouvelle version d'Arcalyse | **📄 Projet de travail (.html)…** (accueil) ou **📁 Fichier › 📄 Ouvrir un projet de travail** | Reprend les données d'une page enregistrée (≥ 2.1) dans la nouvelle version ; Ctrl+S réécrit ensuite le même fichier. |
+| Passer à une nouvelle version d'Arcalyse | **📄 Ouvrir une page de projet…** (accueil) ou **📁 Fichier › 📄 Ouvrir un projet de travail** | Reprend les données d'une page enregistrée (≥ 2.1) dans la nouvelle version ; Ctrl+S réécrit ensuite le même fichier. |
 | Ne rien perdre en cours de travail | **⚙ › 💾 Enregistrement automatique** (désactivé par défaut) | La page dans son fichier, toutes les 2 à 30 min si elle a changé ; version précédente dans un fichier de secours `….backup.html` (option), [§ 3.4](#34--préférences). |
 | Une vue de la Relation Map ou du ▤ Tableau | **💾 Sauver vue / 📂 Charger vue** | Fichier `.json` de la vue. |
 | Une check-list ou un plan de revue | **💾 .json / 📂 Importer…** (🏠 Accueil) | Le document. |
@@ -1429,7 +1464,7 @@ Ne sont **pas** conservés dans la page : la version chargée pour ⚖ Comparais
 
 <img src="guide/img/01-menu-theme.png" alt="Menu Thème" width="260" align="right">
 
-**⚙ › 🎨 Thème** : **Sombre** (par défaut), **Clair**, **Office 2007**, **Contraste** (🌊 Marine et 🌿 Nature ont été retirés en 3.0 : une page qui les utilisait passe en Sombre), et **🎨 Personnalisé** une fois créé. Les vues se redessinent avec des couleurs adaptées ; en thème clair, les textes colorés sont automatiquement foncés pour rester lisibles.
+Bouton **🎨 ▾** de la barre (à côté de 🌐) ou **⚙ › 🎨 Thème** : **Sombre** (par défaut), **Clair**, **Office 2007**, **Contraste** (🌊 Marine et 🌿 Nature ont été retirés en 3.0 : une page qui les utilisait passe en Sombre), et **🎨 Personnalisé** une fois créé. Les vues se redessinent avec des couleurs adaptées ; en thème clair, les textes colorés sont automatiquement foncés pour rester lisibles.
 
 **⚙ › 🎨 Thème › Personnaliser…** ouvre l'éditeur de thème :
 
@@ -1452,11 +1487,15 @@ Ne sont **pas** conservés dans la page : la version chargée pour ⚖ Comparais
 
 | Entrée | Effet |
 |---|---|
-| **📖 Aide complète** | Documentation intégrée, en onglets (Démarrage, Accueil, Interface, Relation Map, Tableau, Vues Capella, Chaînes, Interfaces & ports, Fonctions · Analyses, Revue, Cas d'usage). |
-| **🎯 Visite de cette vue** | Présente les menus et commandes de la vue affichée (modèle chargé). |
+| **📖 Aide complète** | Documentation intégrée, en onglets (Démarrage, Accueil, Interface, Relation Map, Tableau, ▦ Matrice, Vues Capella, Chaînes, Interfaces & ports, Fonctions · Analyses, Revue, Scripts, **🎨 Icônes**, Cas d'usage). L'onglet **🎨 Icônes** récapitule les icônes de chaque langage, telles que l'application les dessine : Capella par couche ARCADIA, SysML v2 et UML / SysML v1 par famille, avec les genres de diagrammes et de vues ; un champ filtre par nom, type ou sigle. |
+| **🎯 Visite de cette vue** | Présente les menus et commandes de la vue affichée (modèle chargé) : chaque vue de la barre (dont ▦ Matrice et 🔲 Diagrammes, quel que soit le format du modèle) et chaque analyse — pour les analyses, la visite décrit la sous-vue ouverte et ses présentations (vues 🧬 UML / SysML v1 comprises). |
 | **💬 Visite de la revue** | Présente le panneau 💬 Revue pas à pas (aussi par 🎓 dans le panneau). |
+| **🔎 Visite du panneau de détail** | Présente le panneau de détail sur l'élément affiché (ou sur le système du modèle) : en-tête, 💬 Commenter, onglets et leurs volets (📋 Fiche, 🔗 Liens, 🧭 Sémantique, 🔲 Diagrammes, 🔬 Analyses), ⧉ fenêtre séparée, ◀ ▶ historique (aussi par 🎓 en haut du panneau). |
+| **⚙ Visite des préférences** | Ouvre la fenêtre ⚙ Préférences et en présente chaque rubrique (aussi par 🎓 dans son en-tête). |
+| **⧉ Visite de la fenêtre de comparaison** | Ouvre au besoin la fenêtre séparée de comparaison sur le diagramme affiché, puis la présente dans cette fenêtre : choix du diagramme, zoom, dessin, façons de l'ouvrir (aussi par 🎓 dans sa barre). |
+| **🎯 dans 💬 Revue & documents** | Visite propre à cet espace (bouton **🎓** de sa barre, ou 🎯 Visite de cette vue quand il est affiché) : onglets, check-lists, dossiers à faire relire, rapports automatiques, 🧩 modèles (sujet, boucles, contenus, colonnes, ▶ Générer). |
 | **🎓 Visite guidée** | Découverte de l'interface pas à pas : zone mise en évidence, reste de l'écran assombri ; **◀ Précédent / Suivant ▶** ou flèches du clavier ; **✕** ou **Échap** pour quitter. |
-| **ℹ À propos** | Version, auteur, licence Apache 2.0, contact, composants tiers (licence D3.js), **informations techniques** à copier pour signaler un problème. |
+| **ℹ À propos** | Version, auteur, licence Apache 2.0, contact, composants tiers (D3.js sous licence ISC ; visionneuse de diagrammes d'Arcature, dont trois modules sous EPL-2.0 ; lecteurs SysML v2 et UML / SysML v1 d'Arcature ; documents de l'OMG), marques citées, **informations techniques** à copier pour signaler un problème. |
 
 <br clear="right">
 
@@ -1503,7 +1542,7 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 
 1. **Charger** le projet : 📁 Dossier du projet… (ou glisser-déposer le `.capella` et le `.aird`).
 2. **🏠 Accueil** : remplir la **📝 fiche projet** ; **📋 Nouveau plan de revue** à partir du modèle de la couche revue (ex. SA) ; glisser depuis la palette 📎 les diagrammes et éléments du **périmètre**.
-3. **🏠 Accueil › 🧩 Contenu du modèle** : composition du modèle (infobulle : description du type) ; **▦ Cartes** et **🌳 Arborescence** pour parcourir ; panneau de détail pour suivre les références.
+3. **🏠 Accueil › 🧩 Contenu du modèle** : composition du modèle (infobulle : description du type) ; **🃏 Cartes** et **🌳 Arborescence** pour parcourir ; panneau de détail pour suivre les références.
 4. **🔲 Diagrammes Capella** : parcourir les diagrammes de la couche ; **📝 Note de revue** sur les points à discuter.
 5. **ƒ Fonctions › 🩺 Contrôles** et **✍ qualité des noms** ; **📊 Métriques** pour la maturité par couche.
 6. **🏗 Architecture** (vues d'interfaces) : 🧱 System / Logical Component (ports orphelins, non orientés), ƒ⇆ Functional Exchange (échanges sans Exchange Item), 🔌 Physical Link (liens sans CE), 🧩 Ports (alignement FE ↔ CE ↔ PL).
@@ -1548,13 +1587,36 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 2. **⬇ Exporter…** : Cadre, Cartouche, Description, Annexes, Sommaire ; format **📄 PDF** ; **⬇ Exporter**.
 
 
-### 21.5 Compter, lister et exporter avec un script
+### 21.7 Compter, lister et exporter avec un script
 
 1. Ouvrir le modèle, puis **📜 Scripts** (ou **Alt+4**).
 2. Dans l'éditeur, taper `out.print(model.count())` et **Ctrl+Entrée** : le nombre d'éléments du modèle s'affiche.
 3. Pour un détail par couche : `out.table(['OA', 'SA', 'LA', 'PA', 'EPBS'].map(layer => ({ layer, elements: model.count({ layer }) })))`, puis **⬇ CSV** sur le tableau.
 4. Pour une liste d'éléments : `out.table(model.elements({ type: 'LogicalFunction', where: f => !f.description }).map(f => ({ function: f, owner: f.owner })))` — un clic sur une fonction ouvre son panneau de détail.
 5. Pour garder le script : **💾**, lui donner un nom ; il est enregistré dans la page (💾) et repris par 📄 Ouvrir un projet de travail. **⬇** l'exporte en `.js` pour le partager.
+
+### 21.8 Tutoriel : un SSDD sur mesure pour un modèle SysML
+
+En SysML, chaque projet a sa méthode : le plan SSDD est fourni comme un **🧩 modèle de rapport** que l'on règle, puis que l'on régénère à chaque version du modèle. Exemple sur `tests/models/uml/Satellite-sysml1.xmi` (SysML v1) ; même démarche en SysML v2 (`VehiculeDemo.sysml`) ou sur un projet Cameo.
+
+1. **Ouvrir le modèle**, puis **💬 Revue & documents › 📘 Rapports automatiques**. Le cadre propose **🧩 Plans SysML à adapter** : cliquer **SSDD — modèle SysML à adapter**.
+
+   ![Plans SysML à adapter](guide/img/05-rapport-sysml-plans.png)
+
+2. **Vérifier le 🎯 sujet** en tête du modèle : Arcalyse a choisi le système le plus probable (*Satellite*, sujet des cas d'utilisation). Pour le SSDD d'un sous-système, **📍 Choisir…** un autre bloc ou une autre part : rien d'autre à changer.
+3. **Lire et régler les boucles** du chapitre *4.1 Composants du système* : « 🔁 Pour chaque **Parts** contenus dans l'élément englobant, directement, et son type », puis, dedans, *Fonctions allouées* : « pour chaque **Fonction** reliée à l'élément englobant par **allocate / perform** », avec les sous-chapitres *Entrées* et *Sorties* (contenu « Ports, pins et paramètres » : entrées, sorties) et les diagrammes de la fonction.
+
+   ![Éditeur du modèle SSDD](guide/img/05-rapport-sysml-editeur.png)
+
+   Pour suivre votre méthode : changer le **type** (ex. un stéréotype « Function » de votre profil), la **portée** (ex. « dans un paquetage » *Logical Architecture*), la **relation** (ex. `«allocate»` seulement), ou passer par un **✨ chemin** (aperçu en direct).
+4. **Ajouter une information** : **⚙ Contenu automatique** dans un chapitre de boucle — propriétés et valeurs, liens d'une relation, connexions, ✨ information par chemin (ex. *Typé par → Nom*). Dans un tableau « ✨ Au choix », **＋ Colonne** : attribut (`Requirement.text`), relation (*satisfaite par*), chemin.
+5. **▶ Générer le rapport** : un dossier ordinaire est créé, avec la numérotation du DID ; **👁 Aperçu** montre le rendu, **📤 Page HTML à commenter** ou **📝 Word** l'envoient en relecture.
+
+   ![Rapport SSDD généré (aperçu)](guide/img/05-rapport-sysml-genere.png)
+
+6. **Réutiliser** : le modèle reste dans **🧩 Mes modèles** ; à la version suivante du modèle SysML, **▶** le régénère. **💾 .json** le partage avec un autre projet ou une autre équipe.
+
+La visite guidée **🎓** de la barre de 💬 Revue & documents reprend ces commandes à l'écran ; l'aide intégrée (onglet 📘 Rapports) contient ce tutoriel en bref.
 
 ---
 
@@ -1566,11 +1628,15 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 | Rien ne s'affiche dans une analyse. | La rubrique est absente du modèle (pas d'exigences, pas de machine à états…) : elle est signalée comme vide. |
 | Les résultats ne tiennent pas compte de la dernière mise à jour. | **↻ Recalculer** dans 🔬 Analyses. |
 | Ctrl+S télécharge un nouveau fichier au lieu de réécrire le même. | L'enregistrement direct nécessite Edge ou Chrome ; ailleurs, la page est téléchargée. |
-| Le suivi ne détecte pas mes enregistrements Capella. | Ouvrez le modèle par 📁 Fichier › 🔷 Ouvrir ou glisser-déposer (accès direct, Edge / Chrome), cochez la détection automatique, ou utilisez **🔍 Vérifier maintenant** / **📂 Suivre un autre fichier**. |
+| Le suivi ne détecte pas mes enregistrements Capella. | Ouvrez le modèle par 📁 Fichier › 📂 Ouvrir un modèle… ou glisser-déposer (accès direct, Edge / Chrome), cochez la détection automatique, ou utilisez **🔍 Vérifier maintenant** / **📂 Suivre un autre fichier**. |
 | La Vue Blocs est peu lisible en thème sombre. | Passez en **Office 2007** ou **Clair** (🎨 Thème). |
 | La matrice n'affiche pas toutes les fonctions. | Elle est limitée aux 100 plus connectées : filtrez par couche ou par fonction. |
 | Je veux renommer ou supprimer un élément. | Arcalyse est en lecture seule : modifiez le modèle dans Capella, puis 🔄 mettez à jour. |
 | Le panneau de revue en fenêtre séparée ne s'ouvre pas. | Autorisez les fenêtres surgissantes pour le fichier. |
+| Mon `.notation` est refusé. | Les diagrammes de Papyrus ne s'ouvrent qu'avec leur `.uml` : choisissez ou déposez les deux fichiers ensemble, ou ouvrez le 📁 dossier du projet. |
+| Mon `.mdzip` ne s'ouvre pas. | L'archive est décompressée par le navigateur : Chrome / Edge 80+, Firefox 113+, Safari 16.4+. Sinon, exportez le modèle en XMI depuis Cameo. |
+| Mon projet Enterprise Architect `.eap` / `.eapx` / `.feap` est refusé. | Ces anciens formats (base Access) ne sont pas lus : enregistrez le projet en `.qea` avec Enterprise Architect 16+, ou exportez-le en XMI. |
+| Avec un modèle SysML ou UML, des vues sont grisées ou absentes des menus. | Ce sont les vues propres à Capella (fonctions, échanges, chaînes, scénarios, analyses ARCADIA) : elles n'ont pas de données pour ce modèle ([§ 24](#24--sysml-v2-et--uml--sysml-v1)). |
 | Signaler un problème. | **❓ Aide › ℹ À propos** : copiez les informations techniques ; joignez le message de la console (F12). |
 
 ---
@@ -1582,9 +1648,10 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 | 🏠 Accueil | (bouton) | 🏠 Projet (⚙ Disposer les cartes) · ☑ Check-lists & plans de revue · 📑 Dossiers (📘 Rapports) · ⧉ fenêtres séparées |
 | 📘 Rapports | (épinglé) | 🏠 Accueil › 📑 Dossiers : rapports automatiques, 🧩 mes modèles |
 | 🗺 Relation Map | (bouton) | onglets de vues ; vue chaîne |
-| 🔲 Diagrammes Capella | 📡 (épinglé) | liste, diagramme, ℹ Infos, ⬇ Exporter |
-| 🌳 Arborescence · ▦ Cartes | 🧭 Explorateur | — |
-| ▤ Tableau | (épinglé) | onglets, ☰ Lignes / 🌳 Arbre |
+| 🔲 Diagrammes | (bouton) | explorateur (classements, 🌳 arborescence), diagramme ou vue, ℹ Infos, ⧉ Comparer, ⬇ Exporter ; tableaux, matrices et Relation Map de Cameo |
+| 🌳 Arborescence · 🃏 Cartes | 🧭 Explorateur | — |
+| ▤ Tableau | (bouton) | onglets, ☰ Lignes / 🌳 Arbre |
+| ▦ Matrice | (bouton) | onglets, 📚 préréglages, critères, 🎨 marques, ✨ relations par chemin, exports CSV · Excel · .json |
 | ⚡ Chaînes | 📡 | ▦ Diagrammes · 🗺 Vue Relation Map · ℹ Infos |
 | ƒ⇆ Functional Exchange · 🟨 Operational Analysis | 📡 | ◧ Blocs · ≡ Ligne · ▣ Fonction / Activité · ▦ Matrice · 🩺 Contrôles |
 | 🧱 System Component · 🧱 Logical Component · 🔀 Behavior Exchange · 🔌 Physical Link | 📡 | ◧ Blocs · ▣ Composant · ≡ Ligne · ▦ Matrice · 🩺 Contrôles |
@@ -1601,13 +1668,16 @@ Les visites signalent aussi les fenêtres séparées (⧉) : panneau de revue, c
 | 🗃 Données & interfaces | 🔬 | 📦 Exchange Items · 🔌 Interfaces · 🧱 Classes & types · 🩺 Contrôles |
 | 🔒 Contraintes | 🔬 | 📋 Liste · 🩺 Contrôles |
 | 📐 Tableau de bord | (épinglé) | pages, édition, catalogue |
+| 🧩 SysML v2 · 🧬 UML / SysML v1 | 🏗 Architecture (modèle de ce format) | 🧩 Éléments · 🔗 Liaisons · 🩺 Diagnostics · 📄 Fichiers (SysML v2) ; diagrammes et vues calculées dans 🔲 Diagrammes |
+| 🧱 Blocs & ports · ƒ Activités & flux · 🗃 Interfaces · 🚦 Machines à états · 🎬 Interactions · 🎯 Cas d'utilisation · 📦 Paquetages & classes | 🏗 Architecture › 🧬 UML / SysML v1 | voir [§ 24.4](#244--uml--sysml-v1) |
+| 🧾 Exigences SysML · ⇶ Traçabilité par niveaux · ⚖ Budgets · 🔒 Paramétrique & contraintes | ✅ Vérifier (modèle UML / SysML v1) | voir [§ 24.4](#244--uml--sysml-v1) |
 
 ## Annexe B — Formats d'export
 
 | Format | Où |
 |---|---|
 | **Page HTML autonome** (application + modèle) | 💾, 📁 Fichier |
-| **CSV** | ▤ Tableau, ⚡ Chaînes, toutes les vues 📡 et 🔬 (CSV enrichi), Relation Map (arbre par niveaux, relations), 🔄 delta, ⚖ comparaison, 💬 revue, ▦ Cartes |
+| **CSV** | ▤ Tableau, ⚡ Chaînes, toutes les vues 📡 et 🔬 (CSV enrichi), Relation Map (arbre par niveaux, relations), 🔄 delta, ⚖ comparaison, 💬 revue, 🃏 Cartes |
 | **PDF** | ⚡ Chaînes (planches), 🔲 Diagrammes (planches), 📐 / ⚖ / rapports via 🖨 Imprimer |
 | **ZIP PNG / SVG** | ⚡ Chaînes, 🔲 Diagrammes |
 | **PNG / SVG / JPEG / copie d'image** | Relation Map, cartes de chaînes, 🎬 Scénarios, 📊 Métriques, diagrammes Capella |
@@ -1625,7 +1695,7 @@ node tools/guide-captures.js      # toutes les captures → docs/guide/img/
 node tools/guide-captures.js rm tableau   # seulement certaines parties
 ```
 
-Le script (Playwright, Chromium hors ligne, fenêtre 1600 × 900, thème Clair) charge `tests/models/In-Flight_Entertainment_System.capella` et son `.aird`, parcourt les vues, menus et fenêtres, pose les repères numérotés, puis allège les images (PNG 256 couleurs, si ImageMagick est installé). Parties : `accueil`, `rm`, `tableau`, `explorateur`, `chaines`, `flux`, `diagrammes`, `analyses`, `fonctions`, `tableaubord`, `comparaison`, `revue`, `home`, `divers`, `interface`, `aida`.
+Le script (Playwright, Chromium hors ligne, fenêtre 1600 × 900, thème Clair) charge `tests/models/In-Flight_Entertainment_System.capella` et son `.aird`, parcourt les vues, menus et fenêtres, pose les repères numérotés, puis allège les images (PNG 256 couleurs, si ImageMagick est installé). Parties : `accueil`, `rm`, `tableau`, `explorateur`, `chaines`, `flux`, `diagrammes`, `analyses`, `fonctions`, `tableaubord`, `comparaison`, `revue`, `home`, `divers`, `nouveautes`, `scripts`, `aida`, `interface`, `preferences`, `dossiers`.
 
 ---
 
@@ -1649,7 +1719,7 @@ Le script (Playwright, Chromium hors ligne, fenêtre 1600 × 900, thème Clair) 
 | `model` | `elements(filtre)`, `find`, `count`, `findByPath('A/B/C')`, `layer('LA')`, `getElementById`, `root`, `selection`, `types()`, `diagrams` |
 | élément | `id`, `type`, `layer`, `name`, `summary`, `description`, `review`, `owner`, `path`, `isSkeleton`, `isTechnical` ; `children()`, `descendants()`, `attributes()`, `isA('Component')`, `references()`, `referencedBy()`, `links('allocation', 'in')`, `diagrams` |
 | `metamodel` | types de Capella et héritage : `isA`, `supertypes`, `types` |
-| `analysis` (avec `await`) | `functions()`, `chains()`, `traceability()`, `capabilities()`, `states()`, `health()`, `requirements()`, `properties()`, `data()`, `constraints()`, `status()`, `categories()`, `rec()`, `libraries()`, `scenarios()`, `ports()`, `functionalExchanges()`, `componentExchanges()`, `physicalLinks()`, `deployment()`, `checks(vue)`, `nameQuality(nom)` |
+| `analysis` (avec `await`) | `functions()`, `chains()`, `traceability()`, `capabilities()`, `states()`, `health()`, `requirements()`, `properties()`, `data()`, `constraints()`, `status()`, `categories()`, `rec()`, `libraries()`, `scenarios()`, `ports()`, `functionalExchanges()`, `componentExchanges()`, `physicalLinks()`, `deployment()`, `sysml()` (modèle SysML v2 : lecture et vues ; null pour Capella), `checks(vue)`, `nameQuality(nom)` |
 | `out` | `print`, `warn`, `error`, `table`, `csv`, `file`, `progress`, `clear` |
 | `ui` (avec `await`) | `ask`, `confirm`, `choose`, `readFile`, `readCsv`, `parseCsv` |
 
@@ -1677,3 +1747,103 @@ for (const c of await analysis.checks())
 ### 23.4 Isolement
 
 Le script tourne dans un **worker** isolé, sur un instantané du modèle : il n'a accès ni à la page, ni au fichier, ni au réseau (`fetch` retiré) ; il demande ses analyses à Arcalyse, qui les calcule avec ses moteurs. Un script reçu d'un collègue ne peut donc ni envoyer le modèle ailleurs ni modifier quoi que ce soit.
+
+---
+
+## 24. 🧩 SysML v2 et 🧬 UML / SysML v1
+
+Arcalyse lit aussi deux autres familles de modèles, grâce aux **lecteurs autonomes d'Arcature**, le projet frère (Apache 2.0), embarqués dans le fichier : tout se passe sur le poste, **en lecture seule**. Le modèle est converti en éléments comme un `.capella` : les vues génériques fonctionnent de la même façon.
+
+| Format | Fichiers | Lecteur |
+|---|---|---|
+| **SysML v2** (notation textuelle) | `.sysml`, archive `.kpar`, dossier de `.sysml` (noms résolus d'un fichier à l'autre) | lecteur SysML v2 d'Arcature — mode d'emploi technique : [`docs/SYSML-V2.md`](SYSML-V2.md) |
+| **UML 2.5.1**, **SysML v1**, **UAF 1.2** | `.uml` d'Eclipse UML2 / Papyrus (avec son `.notation`), `.xmi` (OMG, Cameo, Papyrus, Enterprise Architect), `.mdzip` (Cameo / CATIA Magic), `.qea` (Enterprise Architect 16+), projet **IBM Rhapsody** au format texte (`.rpy` et son dossier `_rpy`) | lecteur UML / SysML v1 d'Arcature — [`docs/UML.md`](UML.md) |
+
+### 24.1 Ouvrir
+
+Comme un `.capella` ([§ 2](#2-démarrer--écran-daccueil-et-ouverture-dun-modèle)) : glisser-déposer, **📂 Fichier modèle…**, **📁 Fichier › 📂 Ouvrir un modèle…** ou **📁 Dossier du projet…**. Pour Papyrus, déposez ou choisissez **le `.uml` et son `.notation` ensemble** (ou le dossier du projet) : un `.notation` seul est refusé, avec une explication. Une archive `.mdzip` est décompressée par le navigateur (Chrome / Edge 80+, Firefox 113+, Safari 16.4+). Les anciens projets d'Enterprise Architect (`.eap`, `.eapx`, `.feap`) ne sont pas lus : les enregistrer en `.qea` ou exporter en XMI. Pour **Rhapsody**, ouvrez le **dossier du projet** (le `.rpy` et son dossier `_rpy`, un paquetage par fichier `.sbs`) : le modèle est lu, ses diagrammes ne le sont pas encore.
+
+**📎 Projet Papyrus sur plusieurs fichiers** (bibliothèque de types `lib/Types.uml#…`, profil, sous-modèle contrôlé) : ouvrez le dossier du projet ou déposez les fichiers ensemble ; le modèle principal est celui qu'aucun autre ne référence (s'il y en a plusieurs, une fenêtre au centre de l'écran demande lequel ouvrir). Le lecteur ne lit que ce modèle : les références vers les autres fichiers sont **signalées** (ligne 📎 de l'en-tête de 🧬 UML / SysML v1, case « Fichiers référencés » de 🏠 Accueil, contrôle 🩺 « Références vers d'autres fichiers non lus », indicateur du tableau de bord).
+
+### 24.2 Ce qui fonctionne comme pour Capella
+
+🌳 Arborescence, 🃏 Cartes, ▤ Tableau (colonnes des attributs et des références), 🔍 Ctrl+K, panneau de détail (références sortantes et entrantes, section propre au format), 🗺 Relation Map (relations du format : typage, spécialisation, composition, connexions, satisfy, allocations… pour SysML v2 ; généralisations, compositions, associations, satisfy, allocations… pour UML / SysML v1), 💬 Revue (y compris les notes sur les diagrammes et les vues), 📑 dossiers, 💾 page enregistrée, 📐 tableau de bord (indicateurs du format), 💚 Santé & contrôles (diagnostics du lecteur). Les vues propres à Capella (fonctions, échanges, chaînes, scénarios, analyses ARCADIA) n'ont pas de données : elles sont retirées des menus en Essentiel et grisées en Complet. 🏠 Projet est adapté au format : cases **Fichiers du projet** (modèle, diagrammes ou vues, validation), tâches de « Que voulez-vous faire ? » propres au format, contenu par famille. ▦ Matrice propose des préréglages du format ([§ 25](#25--matrice)).
+
+### 24.3 🧩 SysML v2
+
+- **🏗 Architecture › 🧩 SysML v2** : **🧩 Éléments** (puces par famille Structure / Comportement / Exigences & cas / Organisation, métaclasses, recherche), **🔗 Liaisons** (par relation : source, cible, via), **🩺 Diagnostics** (erreurs et avertissements du lecteur : fichier, ligne, règle, message, élément), **📄 Fichiers** (texte de chaque fichier, numéros de ligne) ; ⬇ CSV sur chaque onglet.
+- **🔲 Diagrammes** : SysML v2 n'a pas de fichier de diagrammes ; le lecteur **calcule des vues** depuis le texte et les dispose automatiquement — **GV** vue générale, **IV** interconnexion, **STV** états, **AFV** flux d'actions. Elles s'ouvrent dans la vue 🔲 commune ([§ 10.5](#105-modèles-sysml-v2-et-uml--sysml-v1)) : explorateur par genre ou 🌳 arborescence, recherche, thème, ⧩ filtres, zoom, ▣ carte, 📝 notes de revue, **≡ Texte** coloré, exports, planches.
+- **Icônes** : dessinées dans Arcature, une par métaclasse de la norme (part, port, action, état, exigence, paquet…) — définition pleine aux angles vifs, usage clair arrondi, usage de référence en tirets ; direction, rôle, port conjugué ou import récursif marqués dans un coin. Chaque genre de vue a son icône, dans sa couleur, l'étiquette du cadre marquée **« S »**.
+
+### 24.4 🧬 UML / SysML v1
+
+- **🏗 Architecture › 🧬 UML / SysML v1** : outil et version reconnus, **🧩 Éléments** (famille, type, métaclasse, nom qualifié, déclaration, ligne), **🔗 Liaisons** (par relation), **🩺 Diagnostics** — la validation d'Arcature selon les contraintes de la spécification UML 2.5.1 et des profils SysML 1.7 et UAF 1.2, sous leur nom ; ⬇ CSV.
+- **Comprendre les diagnostics.** Toutes les contraintes de la norme sont vérifiées, alors que Cameo n'en active qu'une partie par défaut : un grand modèle peut en compter des milliers, dus le plus souvent à quelques règles. En tête de l'onglet 🩺 Diagnostics, **Σ Répartition par règle** les regroupe :
+  - **impact réel** de chaque règle, à la place de la gravité de la norme (qui classe presque tout en « erreur ») : 🔴 **incohérence** (le modèle se contredit : flux sans connecteur, cycle, référence vers rien — à regarder en priorité), 🟡 **à vérifier** (oubli ou doublon probable : noms en double, contexte d'une relation, classe active), 🟢 **forme** (écart sans conséquence, souvent dû à l'enregistrement du fichier — hors score de santé) ;
+  - un clic sur une règle déplie sa **fiche** : ce que dit la règle, cause probable, est-ce grave, correction, éléments concernés (fiche aussi accessible depuis les diagnostics du panneau de détail d'un élément) ;
+  - une **case ☑** par règle pour ne plus la compter : elle disparaît alors de 🏠 Accueil, de 💚 Santé et du tableau de bord (choix gardé dans le 🩺 profil). La règle d'Arcature **ARC_UML_02** (éléments sans nom, surtout des connecteurs et extrémités d'associations) est désactivée par défaut.
+  Les contrôles 🩺, la case **Validation** de 🏠 Accueil (« 3 incohérence(s) · 2 à vérifier · 10 écart(s) de forme ») et sa tâche (« Regarder N incohérence(s) ») suivent ce classement.
+- **Type** des éléments : le stéréotype SysML (Block, Requirement, PartProperty…), sinon la métaclasse UML ; les propriétés des stéréotypes (texte et identifiant d'une exigence…) sont des colonnes du ▤ Tableau. Le panneau de détail montre type, métaclasse, stéréotypes, déclaration, attributs écrits, liaisons, diagnostics et un extrait XMI.
+- **🔲 Diagrammes** : les **diagrammes et tableaux enregistrés dans le fichier** — Cameo et Enterprise Architect (bdd, ibd, act, stm, sd, uc, req, par, pkg), Papyrus avec son `.notation` —, dessinés tels qu'ils ont été mis en page dans l'outil, et les **tableaux, matrices et Relation Map de Cameo** recalculés d'après leur définition ([§ 10.5](#105-modèles-sysml-v2-et-uml--sysml-v1)). Pas de vues calculées pour ces formats. Chaque diagramme est dessiné à son ouverture (les plus chargés peuvent demander quelques secondes).
+- **Famille 🏗 Architecture › 🧬 UML / SysML v1** (barre de famille sous la barre principale) et vues de **✅ Vérifier**, chacune avec ses présentations et ses 🩺 contrôles (repris par 💚 Santé) :
+
+| Vue | Menu | Présentations |
+|---|---|---|
+| 🧬 Modèle | 🏗 | 🧩 Éléments · 🔗 Liaisons · 🩺 Diagnostics |
+| 🧱 Blocs & ports | 🏗 | ◧ Vue Blocs (blocs SysML dessinés comme les composants de Capella : ports en notation SysML, connecteurs, ItemFlow, allocations ; **▤ Détaillée** par défaut ou **▦ Compacte**, cartes sur plusieurs colonnes avec le nombre de liens de chaque port et liens dépliables) · ◎ Voisinage (un bloc et ses voisins) · ≡ Vue Ligne · ▦ Matrice · 🩺 Contrôles |
+| ƒ Activités & flux | 🏗 | ⇶ Couloirs (une activité en couloirs par porteur) · ◧ Vue Blocs (actions dessinées comme les fonctions de Capella : pins, flux à travers les nœuds de contrôle ; ▤ Détaillée ou ▦ Compacte) · ≡ Vue Ligne · ▦ Matrice · 🩺 Contrôles |
+| 🗃 Interfaces (ICD) | 🏗 | 📋 Interfaces (FlowProperty, opérations, ports) · ▤ ICD (une ligne par connecteur entre ports, compatibilité) · 🩺 Contrôles |
+| 🚦 Machines à états | 🏗 | 📋 Machines (**clic sur la ligne** : aperçu du diagramme calculé, ajusté à la place disponible ; 🔎 : détail) · 🔎 États & transitions · 🖼 Diagramme calculé (dessiné à partir du modèle, indépendamment des diagrammes du fichier : zoom, exports) · ▦ Matrice · 🩺 Contrôles (états inatteignables ou sans issue, signaux jamais émis…) |
+| 🎬 Interactions | 🏗 | 📋 Interactions (clic sur la ligne : aperçu du diagramme de séquence calculé) · 🔎 Messages · 🖼 Diagramme calculé · ▦ Matrice · 🩺 Contrôles |
+| 🎯 Cas d'utilisation | 🏗 | 📋 Liste · ▦ Matrice acteurs · 🩺 Contrôles |
+| 📦 Paquetages & classes | 🏗 | 📦 Paquetages (métriques de Martin, cycles) · 🧮 Classes · 🖧 Déploiement · 🩺 Contrôles |
+| 🧾 Exigences SysML | ✅ | 📋 Liste · 🌳 Arbre · 📊 Couverture (satisfy, verify, directe ou indirecte) · ▦ Matrice · 🩺 Contrôles |
+| ⇶ Traçabilité par niveaux | ✅ | ⇶ Graphe (exigences, cas d'utilisation, fonctionnel, logique, physique) · 📋 Chemins · 📊 Couverture · 🩺 Contrôles |
+| ⚖ Budgets | ✅ | 📋 Grandeurs · 🌳 Cumul sur l'arbre des parts (multiplicités comprises, limite) · 🩺 Contrôles |
+| 🔒 Paramétrique & contraintes | ✅ | 📋 Blocs de contrainte · 🔗 Liaisons · 🔒 Contraintes (par nature : 📝 texte / OCL, 🧩 expression structurée de Cameo — critère de légende, groupe d'éléments — résumée par ses opérandes, XML repliable, ∅ sans texte) · 🩺 Contrôles |
+
+  Dans le panneau de détail d'un bloc, d'une machine, d'une interaction ou d'un cas, des boutons (◧, 🚦, 🎬, 🎯, 🔲) ouvrent la vue correspondante sur l'élément. Dans 🧱 et ƒ, les filtres **Type / Connecteurs** et **Genre / Flux** sont des menus déroulants (« Type : tous ▾ » ou « 6 / 7 », recherche, Tout / Aucun, « seul » au survol).
+- **Icônes** : le jeu d'Arcature, dessiné d'après la notation graphique des normes UML et SysML, pour chaque élément. Pour les diagrammes, **une couleur par genre**, la même pour un genre d'UML et son semblable de SysML (classes et bdd, activité, états…) ; l'étiquette du cadre est **pleine, marquée « S »**, pour un diagramme SysML (d'après l'outil qui l'a produit), **creuse** pour un diagramme UML.
+
+### 24.5 Limites
+
+| | SysML v2 | UML / SysML v1 |
+|---|---|---|
+| Écriture | non (lecture seule) | non (lecture seule) |
+| Mise en page | vues disposées automatiquement à chaque calcul (⧩ filtres d'affichage) | diagrammes tels que dans l'outil, non modifiables |
+| 🔄 Suivi du fichier, ⚖ comparaison dédiée | non | non |
+| Non couvert | bibliothèque standard connue par ses noms seulement (`ISQ::mass`…) | éléments des autres fichiers d'un projet Papyrus (signalés) ; critères de Relation Map faits d'un script de Cameo ; anciens projets d'EA (`.eap`, `.eapx`, `.feap`) ; diagrammes de Rhapsody |
+| 💾 Page enregistrée | les éléments sont rouverts, mais ni la vue 🧩 ni les vues calculées : relire le `.sysml` | |
+| Taille | lecteur ≈ 0,4 Mo par langue | lecteur ≈ 1,3 Mo par langue (deux fois dans les livrables bilingues) |
+
+---
+
+## 25. ▦ Matrice
+
+Éléments en **lignes** et en **colonnes**, reliés par les relations choisies : allocations, échanges, réalisations, capacités, exigences, liaisons SysML v2 et UML / SysML v1, contenance, ✨ relations par chemin. Bouton direct **▦ Matrice** de la barre (à côté de ▤ Tableau), pour tous les formats ; inspirée de la Dependency Matrix de Catia Magic, en lecture seule. **❓ Aide ▾ › 🎯 Visite de cette vue** la présente pas à pas.
+
+### 25.1 Critères (zone repliable ▾ Critères)
+
+| Réglage | Effet |
+|---|---|
+| **Lignes · Colonnes** | Types (＋ Types… : types présents, par couche ou par famille ; *Mêmes types que les lignes* pour une matrice N × N), couches ARCADIA ou familles SysML / UML (aucune cochée : toutes), 🎯 Portée (contenu d'éléments choisis). |
+| **⇄ Changer d'axes** | Les lignes deviennent les colonnes ; le sens s'inverse, tris, filtres et éléments masqués suivent. |
+| **Critère** | Une ou plusieurs relations (＋ Relations…) : en tête celles qui relient les lignes et les colonnes choisies, avec leur nombre de liens ; puis ✨ relations par chemin, autres relations, et *Avancé* : références par attribut. |
+| **Sens** | → ligne vers colonne, ← colonne vers ligne, ⇄ les deux. |
+| **Afficher** | Avec relations (par défaut), tous les éléments, lignes sans relation (ex. fonctions non allouées), colonnes sans relation. |
+
+### 25.2 Grille
+
+- **Cellule** : *↗ Marques* (diagonale fléchée de la source vers la cible, nombre de liens en petit ; une marque par relation) ou *＃ Nombre* ; **🎨 Marques** : couleur, forme et texte de chaque relation.
+- **Survol** : croix et info-bulle des liens. **Clic** sur une cellule : fenêtre des liens (relation, source → cible, élément porteur, chemins), chacun cliquable ; 💬 Commenter. **Clic droit** sur un nom : détail, commentaire, 🎯 portée, 🙈 masquer.
+- **Clavier** : flèches, Page préc. / suiv., Entrée ou Espace (liens de la cellule), Échap.
+- **Grouper** par propriétaire ou par couche / famille (groupes repliables), **⇅ Tri**, taille des cellules, 🔍 filtres ; **Σ** par ligne et par colonne ; ligne de **statut** (dimensions, liens, éléments masqués).
+- Grandes matrices : seules les cellules visibles sont dessinées ; des milliers d'éléments restent fluides.
+
+### 25.3 Onglets, préréglages, exports
+
+- **Onglets** comme le ▤ Tableau (double-clic : renommer, + : copie), enregistrés avec la 💾 page et dans ⚙ Interface et vues ; cherchables par Ctrl+K.
+- **📚 Préréglages** du format du modèle (grisés quand il n'y a rien à montrer) — Capella : allocation des fonctions, déploiement, échanges, liens physiques, capacités, missions, chaînes, réalisations entre couches, exigences, ✨ composants PA × LA via fonctions… ; SysML v2 : typage, exigences, composition, comportements, allocations, connexions ; UML / SysML v1 : exigences, blocs, cas d'utilisation, typage, allocations.
+- **✨ Relation par chemin** : suit plusieurs relations d'affilée (ex. composant physique → fonction physique → fonction logique réalisée → composant logique) ; même éditeur que la ✨ colonne par chemin du ▤ Tableau ([§ 6.5](#65--colonne-par-chemin-metachain)), avec aperçu en direct.
+- **💾 Enregistrer · 📂 Ouvrir** la définition d'un onglet en `.json` ; **⬇ CSV · ⬇ Excel** (feuilles « Matrice » et « Liens ») ; **📋** copie pour Excel ou Word.
+- **📐 Tableau de bord** : « lignes reliées » et « lignes sans relation » de chaque onglet ; **📜 Scripts** : `await analysis.matrix()`.

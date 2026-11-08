@@ -79,8 +79,77 @@ function capIcoPlusTable(){
  */
 function capIcoPlus(type, taille){
   if(!type) return '';
-  const n=taille||14, t=capIcoPlusTable()[type]||(typeof capIcoSysml==='function'?capIcoSysml(type):'');   // 87 : métaclasses SysML v2
+  const sy=typeof capIcoSysml==='function', t=(sy&&capSysmlActif()&&capIcoSysml(type))||capIcoPlusTable()[type]||(sy?capIcoSysml(type):'');   // 87 : métaclasses SysML v2 (d'abord, pour un modèle SysML)
+  const n=taille||14;
   const corps=t||(()=>{ const ini=(type.match(/[A-Z]/g)||[type[0].toUpperCase()]).slice(0,2).join('');
     return `<rect x="1.5" y="1.5" width="13" height="13" rx="3" fill="#eceef1" stroke="#8b949e" stroke-width="1"/><text x="8" y="10.6" font-size="${ini.length>1?6.4:8}" font-weight="700" text-anchor="middle" fill="#444" stroke="none">${ini}</text>`; })();
   return `<svg class="ico" viewBox="0 0 16 16" width="${n}" height="${n}" aria-hidden="true" stroke-linejoin="round" font-family="Arial,Helvetica,sans-serif">${corps}</svg>`;
 }
+
+/* ── 🎨 Récapitulatif des icônes par langage (onglet « 🎨 Icônes » de l'aide) ── */
+
+/** Types montrés dans le récapitulatif, par langage puis par groupe : [titre du groupe, types]. Les icônes viennent des composants
+ * d'Arcature (visionneuse pour Capella, lecteurs SysML v2 et UML / SysML v1) ; un type sans icône est omis. */
+const CAP_AIDE_ICONES={
+  capella:[
+    [_L('Analyse opérationnelle (OA)'), ['OperationalActivity','OperationalProcess','Entity','OperationalActor','Role','OperationalCapability','CommunicationMean']],
+    [_L('Analyse système (SA)'), ['SystemFunction','SystemComponent','SystemActor','Capability','Mission','FunctionalChain']],
+    [_L('Architecture logique (LA)'), ['LogicalFunction','LogicalComponent','LogicalActor','CapabilityRealization']],
+    [_L('Architecture physique (PA)'), ['PhysicalFunction','PhysicalComponent','PhysicalActor','PhysicalLink','PhysicalPath','PhysicalPort']],
+    [_L('Structure du produit (EPBS)'), ['ConfigurationItem']],
+    [_L('Échanges et ports'), ['FunctionalExchange','ComponentExchange','ExchangeItem','FunctionInputPort','FunctionOutputPort','ComponentPort','Interface']],
+    [_L('Données'), ['Class','DataPkg','Enumeration','BooleanType','NumericType','StringType','Collection','Union']],
+    [_L('Comportement, exigences, autres'), ['StateMachine','State','Mode','Scenario','Requirement','Constraint','Part','PropertyValuePkg']]],
+  sysml2:[
+    ['STR', ['PartDefinition','PartUsage','AttributeDefinition','AttributeUsage','ItemDefinition','ItemUsage','PortDefinition','PortUsage','ConnectionDefinition','ConnectionUsage','InterfaceDefinition','InterfaceUsage','EnumerationDefinition','OccurrenceDefinition']],
+    ['BEH', ['ActionDefinition','ActionUsage','StateDefinition','StateUsage','TransitionUsage','CalculationDefinition','ConstraintDefinition','FlowConnectionUsage','AllocationDefinition','AllocationUsage']],
+    ['REQ', ['RequirementDefinition','RequirementUsage','ConcernDefinition','UseCaseDefinition','AnalysisCaseDefinition','VerificationCaseDefinition','ViewDefinition','ViewpointDefinition']],
+    ['ORG', ['Package','LibraryPackage','Comment','Documentation','Import']]],
+  uml:[
+    ['STR', ['Block','InterfaceBlock','ValueType','ConstraintBlock','Port','ProxyPort','FullPort','FlowProperty','Signal','Interface','Class','Component','DataType','Enumeration']],
+    ['BEH', ['Activity','CallBehaviorAction','OpaqueAction','SendSignalAction','AcceptEventAction','StateMachine','State','Transition','Interaction','Lifeline','Message','Operation']],
+    ['REQ', ['Requirement','TestCase','UseCase','Actor','Satisfy','Verify','DeriveReqt','Refine','Trace','Copy']],
+    ['ORG', ['Package','Model','Profile','Allocate','Connector','ItemFlow','Association','Generalization','Dependency']]]
+};
+
+/**
+ * Contenu de l'onglet « 🎨 Icônes » de l'aide : pour chaque langage embarqué (Capella, SysML v2, UML / SysML v1), les icônes des types
+ * d'éléments par couche ou par famille (nom lisible, type), puis celles des genres de diagrammes et de vues ; filtre par nom. Construit à la
+ * première ouverture de l'onglet (les composants d'Arcature dessinent les icônes sans modèle chargé). Un langage absent de la version
+ * (édition réduite à un format) n'apparaît pas.
+ * @returns {string} HTML
+ */
+function capAideIconesHtml(){
+  const esc=capEsc, V=window.ArcatureVisionneuse, Y=window.ArcatureLecteurSysml, U=window.ArcatureLecteurUml;
+  const sur=(f)=>{ try{ return f()||''; }catch(e){ return ''; } };
+  const tuile=(ico, nom, type)=>ico?`<div class="aic-t" data-q="${esc((nom+' '+type).toLowerCase())}" title="${esc(nom+(type&&type!==nom?' — '+type:''))}"><span class="aic-i">${ico}</span><span class="aic-txt"><span class="aic-n">${esc(nom)}</span>${type&&type!==nom?`<code class="aic-c">${esc(type)}</code>`:''}</span></div>`:'';
+  const groupe=(titre, tuiles)=>tuiles.trim()?`<div class="aic-g"><div class="aic-gt">${esc(titre)}</div><div class="aic-grille">${tuiles}</div></div>`:'';
+  const section=(f, titre, corps)=>corps?`<section class="aic-s"><h3>${capFmtPuce(f)}${titre?` <span class="ana-dim">${esc(titre)}</span>`:''}</h3>${corps}</section>`:'';
+  const fmt=k=>(typeof CAP_FORMATS!=='undefined'&&CAP_FORMATS.find(f=>f.k===k))||{l:k, c:'#888'};
+  let h='';
+  if(V&&typeof V.iconeType==='function'){
+    h+=section(fmt('capella'), _L('méthode ARCADIA, par couche'), CAP_AIDE_ICONES.capella.map(([g,ts])=>groupe(g, ts.map(t=>tuile(sur(()=>V.iconeType(t,20))||sur(()=>capIcoPlus(t,20)), ((typeof CAP_HUMAN_NAMES!=='undefined'&&CAP_HUMAN_NAMES[t])||{}).h||t, t)).join(''))).join(''));
+  }
+  if(Y&&typeof Y.icone==='function'){
+    const fam=Y.familles||{};
+    h+=section(fmt('sysml2'), _L('par famille'), CAP_AIDE_ICONES.sysml2.map(([g,ts])=>groupe(fam[g]||g, ts.map(t=>tuile(sur(()=>Y.icone(t,20)), sur(()=>Y.motCle(t))||t, t)).join(''))).join('')+
+      groupe(_L('Vues calculées'), Object.entries(Y.genresVues||{}).map(([k,g])=>tuile(sur(()=>Y.iconeVue(k,20)), g.libelle||k, g.sigle||'')).join('')));
+  }
+  if(U&&typeof U.icone==='function'){
+    const fam=U.familles||{};
+    h+=section(fmt('uml'), _L('par famille'), CAP_AIDE_ICONES.uml.map(([g,ts])=>groupe(fam[g]||g, ts.map(t=>tuile(sur(()=>U.icone(t,20)), t, '')).join(''))).join('')+
+      groupe(_L('Diagrammes, tableaux et matrices'), Object.entries(U.genresVues||{}).map(([k,g])=>tuile(sur(()=>U.iconeVue(k,20)), g.libelle||k, g.sigle||'')).join('')));
+  }
+  return `<input class="phl-filter-input aic-q" type="search" placeholder="${_L('Filtrer les icônes (nom, type, sigle)…')}" autocomplete="off">`+(h||`<p class="ana-dim">${_L('Aucun composant de dessin dans cette version.')}</p>`);
+}
+
+/** Remplit l'onglet « 🎨 Icônes » de l'aide à sa première ouverture et branche son filtre. */
+function capAideIcones(){
+  const box=document.getElementById('ht-ico-corps'); if(!box||box.dataset.fait) return;
+  box.innerHTML=capAideIconesHtml(); box.dataset.fait='1';
+  const q=box.querySelector('.aic-q');
+  if(q) q.oninput=()=>{ const t=q.value.trim().toLowerCase();
+    box.querySelectorAll('.aic-t').forEach(x=>{ x.style.display=!t||x.dataset.q.includes(t)?'':'none'; });
+    box.querySelectorAll('.aic-g').forEach(g=>{ g.style.display=[...g.querySelectorAll('.aic-t')].some(x=>x.style.display!=='none')?'':'none'; }); };
+}
+document.addEventListener('click', e=>{ if(e.target.closest&&e.target.closest('.htab[data-ht="ico"]')) capAideIcones(); });

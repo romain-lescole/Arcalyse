@@ -1,0 +1,11 @@
+I-Logix-RPY-Archive version 8.7.1 * 5093211
+
+- filesTable = { IRPYRawContainer 
+	- size = 4;
+	- value = "Thermostat.rpy" ""
+	"Thermostat_rpy\\Exigences.sbs" "Exigences"
+	"Thermostat_rpy\\Architecture.sbs" "Architecture"
+	"Thermostat_rpy\\Types.sbs" "Architecture::Types"
+	
+}
+

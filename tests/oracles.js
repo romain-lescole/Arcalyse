@@ -5,7 +5,7 @@
  * Ouvre dist/arcalyse-fr.html dans Chromium HORS LIGNE, charge chaque modèle de test, relève les
  * résultats des moteurs (éléments par couche et par type, relations, chaînes, fonctions, qualité des
  * noms, listes de contrôles de toutes les vues, traçabilité, ports, scénarios, exigences, PVMT,
- * données, et la valeur de tous les indicateurs du tableau de bord), puis compare ce relevé à
+ * données, préréglages de la ▦ Matrice, blocs / activités / exigences UML / SysML v1, et la valeur de tous les indicateurs du tableau de bord), puis compare ce relevé à
  * l'oracle enregistré dans tests/oracles/<modèle>.json. Toute différence est listée chemin par chemin.
  *
  * Installation (une seule fois) :  npm install --save-dev playwright  puis  npx playwright install chromium
@@ -14,7 +14,7 @@
  * Mettre à jour les oracles :      node tests/oracles.js --update [modèle…]     (après un changement voulu des résultats)
  * Version anglaise :               node tests/oracles.js --en                    (après node build.js --lang en ; les titres
  *                                  des contrôles et des indicateurs étant traduits, les oracles sont distincts : <modèle>.en.json)
- * (par défaut : tous les .capella de tests/models/)
+ * (par défaut : tous les .capella et .sysml de tests/models/, et les modèles UML / SysML v1 de tests/models/uml/)
  *
  * Quand une différence est voulue (nouveau contrôle, correction d'un calcul), relancer avec --update et
  * relire le diff du .json avant de le committer : c'est lui qui documente le changement de résultat.
@@ -31,6 +31,8 @@ const modelsDir = path.join(__dirname, 'models'), oraclesDir = path.join(__dirna
 const models = args.filter(a => !a.startsWith('--')).map(a => path.resolve(a));
 if (!models.length && fs.existsSync(modelsDir))
   fs.readdirSync(modelsDir).filter(f => /\.(capella|sysml)$/.test(f)).sort().forEach(f => models.push(path.join(modelsDir, f)));   // .sysml : lus par le lecteur SysML v2 (87)
+if (!args.filter(a => !a.startsWith('--')).length && fs.existsSync(path.join(modelsDir, 'uml')))   // UML / SysML v1 : lus par le lecteur UML (88), sans leur .notation
+  fs.readdirSync(path.join(modelsDir, 'uml')).filter(f => /\.(uml|xmi|mdzip|qea)$/.test(f)).sort().forEach(f => models.push(path.join(modelsDir, 'uml', f)));
 if (!fs.existsSync(page)) { console.error('Lancez d\'abord : node build.js' + (EN ? ' --lang en' : '')); process.exit(2); }
 if (!models.length) { console.error('Aucun modèle : placez un .capella dans tests/models/ ou passez-le en argument'); process.exit(2); }
 
@@ -115,7 +117,7 @@ function releve() {
   const LB = capLibScan();
   R.bibliotheques = { references: LB.refs.length, bibliotheques: LB.libs.length, declarees: LB.declared.size };
 
-  // 🧩 SysML v2 (87) : éléments par métaclasse et famille, liaisons par relation, diagnostics par code
+  // 🧩 SysML v2 (87) et 🧬 UML / SysML v1 (88) : éléments par type et famille, liaisons par relation, diagnostics par code
   if (typeof _capSysml !== 'undefined' && _capSysml.lecture) {
     const lec = _capSysml.lecture, els = lec.elements();
     R.sysml = { elements: els.length, parType: compte(els, e => e.type), parFamille: compte(els, e => e.famille || '(sans)'), techniques: els.filter(e => e.technique).length,
@@ -123,6 +125,39 @@ function releve() {
       xml: { elements: capAllElements.length, references: somme(capAllElements, e => Object.keys(e.attrs).filter(k => /^#/.test(String(e.attrs[k]))).length) },
       relationMap: compte(MODEL.relations.filter(r => String(r.type).startsWith('sysml:')), r => r.type), vuesVides: [...capNavVides()].sort(),
       vues: Object.fromEntries(capSyVuesListe().map(v => { const vue = capSyVue(v.cle); return [v.sigle + ' ' + v.nom, { formes: vue.formes.length, liens: vue.liens.length, texte: vue.texte.length }]; })) };
+  }
+  // ▦ Matrice (91) : chaque préréglage applicable, avec tous les éléments (lignes, colonnes, cellules, liens, sans relation)
+  if (typeof capMxReleve === 'function') R.matrice = capMxReleve();
+  // 🧱 Blocs & ports, ƒ Activités & flux (92) et 🧾 Exigences SysML (93) : vides hors UML / SysML v1
+  if (typeof capUmlLec === 'function' && capUmlLec()) {
+    const S = capUmlStructure(), A = capUmlActivites(), Q = capUmlExigences(), P = Object.values(S.ports);
+    R.umlBlocs = { blocs: S.nodes.length, parType: compte(S.nodes, n => n.type), ports: P.length, parOrientation: compte(P, p => p.orient + (p.conj ? '~' : '')),
+      connecteurs: S.links.length, parStereotype: compte(S.links, l => l.kind), parSens: compte(S.links, l => l.dir), delegations: S.links.filter(l => l.deleg).length,
+      itemFlows: S.flows.length, itemFlowsDeduits: S.flows.filter(f => f.deduit).length, allocations: S.allocs.length, contextes: S.groups.length, parts: somme(S.nodes, n => n.parts.length) };
+    R.umlActivites = { actions: A.nodes.filter(n => n.kind !== 'bord').length, parGenre: compte(A.nodes, n => n.type), parPorteur: compte(A.nodes, n => n.kind), pins: somme(A.nodes, n => n.ports.length),
+      liens: A.links.length, parNature: compte(A.links, l => l.kind), traversees: A.links.filter(l => l.via.length).length, activites: A.groups.length, signaux: compte(A.signaux, s => s.sens) };
+    R.umlExigences = { exigences: Q.list.length, feuilles: Q.list.filter(r => r.leaf).length, parStereotype: compte(Q.list, r => r.type), satisfaites: compte(Q.list, r => r.sat || '-'), verifiees: compte(Q.list, r => r.ver || '-'),
+      relations: Q.used, tests: Q.tests, malOrientees: Q.mauvais.length };
+    const ME = capUmlEtats(), MI = capUmlInteractions(), ET = Object.values(ME.etats);
+    R.umlEtats = { machines: ME.machines.length, etats: ET.length, parNature: compte(ET, s => s.genre), transitions: ME.transitions.length, atteints: ET.filter(s => s.atteint).length,
+      declencheurs: compte(ME.transitions.flatMap(t => t.decl), d => d.nature || '-'), gardes: ME.transitions.filter(t => t.garde).length, signauxEmis: ME.emis.size };
+    R.umlInteractions = { interactions: MI.list.length, lignesDeVie: somme(MI.list, x => x.lifelines.length), messages: somme(MI.list, x => x.messages.length),
+      parNature: compte(MI.list.flatMap(x => x.messages), m => m.sort), signatures: compte(MI.list.flatMap(x => x.messages), m => m.sig ? m.sig.meta : '-') };
+    const UC = capUmlCas(), TR = capUmlTracabilite(), TN = Object.values(TR.noeuds);
+    R.umlCas = { cas: UC.list.length, acteurs: UC.acteurs.length, associations: somme(UC.list, u => u.acteurs.length), inclusions: somme(UC.list, u => u.inclut.length), extensions: somme(UC.list, u => u.etend.length),
+      avecSujet: UC.list.filter(u => u.sujets.length).length, avecComportement: UC.list.filter(u => u.comps.length).length };
+    R.umlTracabilite = { elements: TN.length, parNiveau: compte(TN, n => n.niv), liens: TR.aretes.length, parRelation: compte(TR.aretes, a => a.rel),
+      versLeHaut: TN.filter(n => n.haut.length).length, versLeBas: TN.filter(n => n.bas.length).length };
+    const IC = capUmlInterfaces(), BU = capUmlBudgets();
+    R.umlInterfaces = { interfaces: IC.list.length, flux: somme(IC.list, i => i.flux.length), operations: somme(IC.list, i => i.ops.length), ports: somme(IC.list, i => i.ports.length), icd: IC.icd.length,
+      incompatibles: IC.icd.filter(d => !d.compat).length };
+    const PA = capUmlParametrique(), SO = capUmlLogiciel();
+    R.umlParametrique = { blocs: PA.blocs.length, equations: somme(PA.blocs, b => b.equations.length), parametres: somme(PA.blocs, b => b.params.length), usages: PA.usages.length,
+      liaisons: somme(PA.usages, u => Object.values(u.liens).reduce((n, l) => n + l.length, 0)), contraintes: PA.contraintes.length };
+    R.umlLogiciel = { classes: SO.classes.length, parNature: compte(SO.classes, c => c.meta + (c.abstrait ? ' abstraite' : '')), paquetages: Object.fromEntries(SO.paquetages.map(p => [p.name, { ca: p.ca.size, ce: p.ce.size, I: Math.round(p.I * 100) / 100, A: Math.round(p.A * 100) / 100 }])),
+      cyclesPaquetages: SO.cyclesP.length, cyclesHeritage: SO.cyclesH.length, noeuds: SO.noeuds.length, artefacts: SO.artefacts.length };
+    R.umlBudgets = Object.fromEntries(BU.grandeurs.map(g => [g.cle, { blocs: g.blocs.size, unites: [...g.unites].sort(), limites: g.limites,
+      totaux: Object.fromEntries(capUmlBudgetRacines(g.cle).map(r => { const a = capUmlBudgetArbre(g.cle, r.id); return [r.name, Math.round((a.total || 0) * 1000) / 1000]; })) }]));
   }
   const SA = capSanteCompute();
   R.sante = { score: SA.score, points: SA.points, bloquants: SA.bloquants, info: SA.info, pop: SA.pop, nChecks: SA.nChecks, nOk: SA.nOk, couches: Object.fromEntries(Object.entries(SA.couches).map(([k, v]) => [k, v.score])) };
@@ -132,8 +167,13 @@ function releve() {
   ST.sms.forEach(m => { const c = capStateChecks(m); Object.keys(etatsCtl).forEach(k => { etatsCtl[k] += (c[k] || []).length; }); });
   R.controles = {
     fonctions: sections(capFnChecks(F, 'all')), functionalExchange: sections(capFexChecks('all')), composants: sections(capCbChecks('all')),
-    scenarios: sections(capScChecks()), sysml: sections(capSyChecks()), exigences: sections(capReqChecks()), pvmt: sections(capPvChecks()), donnees: sections(capDmChecks()),
-    contraintes: sections(capCtChecks()), statutRevue: sections(capStChecks()), chaines: sections(capChChecks('all')), categories: sections(capEcChecks()), bibliotheques: sections(capLibChecks()), recRpl: sections(capRecChecks()), deploiement: sections(capDepChecks()), etats: etatsCtl };
+    scenarios: sections(capScChecks()), sysml: sections(capSyChecks()), uml: sections(capSyChecks('uml')), exigences: sections(capReqChecks()), pvmt: sections(capPvChecks()), donnees: sections(capDmChecks()),
+    contraintes: sections(capCtChecks()), statutRevue: sections(capStChecks()), chaines: sections(capChChecks('all')), categories: sections(capEcChecks()), bibliotheques: sections(capLibChecks()), recRpl: sections(capRecChecks()), deploiement: sections(capDepChecks()), etats: etatsCtl,
+    umlBlocs: sections(capUmlBlkChecks()), umlActivites: sections(capUmlActChecks()), umlExigences: sections(capUmlReqChecks()),
+    umlEtats: sections(capUmlStmChecks()), umlInteractions: sections(capUmlSeqChecks()),
+    umlCas: sections(capUmlUcChecks()), umlTracabilite: sections(capUmlTrChecks()),
+    umlInterfaces: sections(capUmlIcdChecks()), umlBudgets: sections(capUmlBudgetChecks()),
+    umlParametrique: sections(capUmlParChecks()), umlLogiciel: sections(capUmlSoftChecks()) };
 
   // 📐 Tableau de bord : valeur de chaque indicateur (texte, diagramme et image exclus : pas de valeur calculée)
   R.tableauDeBord = {};
@@ -177,7 +217,7 @@ function diff(a, b, chemin, out) {
   const browser = await chromium.launch(exe ? { executablePath: exe } : {});
   let ko = 0;
   for (const model of models) {
-    const nom = path.basename(model).replace(/\.(capella|sysml)$/, ''), oracle = path.join(oraclesDir, nom + (EN ? '.en' : '') + '.json');
+    const nom = path.basename(model).replace(/\.(capella|sysml|uml|xmi|mdzip|qea)$/, ''), oracle = path.join(oraclesDir, nom + (EN ? '.en' : '') + '.json');
     const ctx = await browser.newContext({ offline: true, viewport: { width: 1500, height: 900 } });
     const p = await ctx.newPage();
     const errs = []; p.on('pageerror', e => errs.push(e.message)); p.on('dialog', d => d.dismiss());

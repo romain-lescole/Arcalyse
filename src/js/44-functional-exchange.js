@@ -428,11 +428,12 @@ function capRenderFunctionalExchange(mode){
     wireMain();
   }
 
-  /** Rapport HTML autonome : vue courante, ou toutes les vues en onglets (filtres appliqués, sans pagination). */
-  function exportHtml(all){
+  /** Rapport HTML autonome : vue courante, ou les vues choisies en onglets (`capHtmlVuesChoix`, 26 : 🩺 Contrôles décoché par défaut ;
+   * filtres appliqués, sans pagination). */
+  async function exportHtml(all){
     const f=getFiltered();
     const VIEWS=[['block',_L('◧ Vue Blocs')],['line',_L('≡ Vue Ligne')],['card',_L(`▣ Vue ${W.Fn}`)],['matrix',_L('▦ Matrice')],['diag',_L('🩺 Contrôles')]];
-    const keys=all?VIEWS.map(v=>v[0]):[st.view];
+    const keys=all?await capHtmlVuesChoix(VIEWS):[st.view]; if(!keys) return;
     const tabs=VIEWS.filter(v=>keys.includes(v[0])||(v[0]==='line'&&keys.includes('matrix'))).map(([k,label])=>({key:k,label,html:buildContent(f,k)}));
     const cells={}; Object.entries(container._fexCells||{}).forEach(([k,ls])=>cells[k]=ls.map(l=>l.x.id));
     const fi=[st.layer!=='all'&&_L(`couche ${st.layer}`), akOn()&&_L('allocation : ')+[...st.ak].map(k=>CAP_FN_AK[k].l).join(' + '), st.who&&_L(`allocataire « ${((who.act.get(st.who)||who.comp.get(st.who)||{}).name||'')} »`),st.fnFilter&&_L(`fonction « ${st.fnFilter} »`),st.nameFilter&&_L(`échange « ${st.nameFilter} »`)].filter(Boolean).join(', ');
@@ -479,13 +480,14 @@ function capRenderFunctionalExchange(mode){
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;margin-left:8px;">🔍 Échange :</span>
         <input id="fex-name-input" type="text" class="phl-filter-input" placeholder="Échange ou Exchange Item…" value="${capEsc(st.nameFilter)}" style="width:200px;">
         ${capEcSelect('FE', st.cat||'', 'fex-cat')}
-        ${st.view==='block'?_L(`<label style="font-size:11px;color:var(--c-dim);display:flex;align-items:center;gap:4px;margin-left:8px;" title="Masquer les fonctions sans port ni échange (fonctions mères le plus souvent)"><input type="checkbox" id="fex-withports"${st.withPorts?' checked':''}> avec ports ou échanges</label>`):''}
+        ${st.view==='block'?(()=>{ const n=X.fns.filter(fn=>(st.layer==='all'||fn.layer===st.layer)&&!fn.ins.length&&!fn.outs.length&&!fn.fesIn.length&&!fn.fesOut.length&&whoFn(fn.id)&&st.ak.has(akOf(fn.id))).length;   // fonctions sans port ni échange : case explicite, avec leur nombre
+          return _L(`<label class="cap-sansport${st.withPorts?' on':''}" title="Fonctions sans aucun port ni échange : le plus souvent des fonctions mères, dont les sous-fonctions portent les échanges. Cocher pour les retirer de la vue."><input type="checkbox" id="fex-withports"${st.withPorts?' checked':''}> Masquer les ${W.fns} sans port ni échange <b>${n}</b></label>`); })():''}
         ${(()=>{ const base=X.fns.filter(fn=>(st.layer==='all'||fn.layer===st.layer)&&!(st.view==='block'&&st.withPorts&&!fn.ins.length&&!fn.outs.length&&!fn.fesIn.length&&!fn.fesOut.length)&&whoFn(fn.id)), n=k=>base.filter(fn=>akOf(fn.id)===k).length;
           return _L(`<span class="tb-grp ana-ak" style="margin-left:8px" title="Clic : afficher / masquer · double-clic : uniquement celle-ci (ou tout réafficher)${st.view==='block'?'':_L(' — un échange est gardé si l\'une de ses deux fonctions correspond')}"><span class="tb-grp-l">Allocation</span>${['sys','act','none'].map(k=>_L(`<label class="ana-ak-chip${st.ak.has(k)?' on':''}" style="--c:${CAP_FN_AK[k].c}" title="${AKL(k).tip} — double-clic : uniquement celles-ci"><input type="checkbox" data-fak="${k}"${st.ak.has(k)?' checked':''}>${AKL(k).i} ${AKL(k).l} <b>${n(k)}</b></label>`)).join('')}${whoSelect()}</span>`); })()}
         <div style="margin-left:auto;display:flex;gap:6px;">
           <button class="phl-export-btn" id="fex-exp-csv">⬇ CSV</button>
           <button class="phl-export-btn" id="fex-exp-html" title="Rapport HTML de la vue affichée (toutes les pages)">⬇ HTML</button>
-          <button class="phl-export-btn" id="fex-exp-html-all" title="Rapport HTML à onglets : toutes les vues">⬇ HTML (toutes les vues)</button>
+          <button class="phl-export-btn" id="fex-exp-html-all" title="Rapport HTML à onglets : vues choisies dans une fenêtre (Vue Blocs comprise ; Contrôles décochés par défaut)">⬇ HTML (toutes les vues)</button>
         </div>
       </div>
       <div id="fex-main">${buildContent(f)}</div>`);

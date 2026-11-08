@@ -151,19 +151,27 @@ function capScLayout(sc){
   }
   const bottom=y+40;
   // Colonnes : largeur des en-têtes, des étiquettes de messages et des boîtes d'états
+  const {X, hw, width}=capScColonnes(roles, msgs, states.map(s=>{ const f=frags[fIdx[s.st]]; return {r:f?rIdx[cov(f)[0]]:undefined, name:s.name}; }));
+  return {roles, X, hw, Y, frags, fIdx, cov, rIdx, msgs, execs, states, cfs, ius, bottom, width, top:TOP, head:HEAD};
+}
+
+/** Colonnes d'un diagramme de séquence : largeur des en-têtes, écarts selon les étiquettes des messages et les boîtes d'états
+ * (commun aux 🎬 Scénarios Capella et aux 🎬 Interactions UML, 99).
+ * @param {object[]} roles - Lignes de vie {name} @param {object[]} msgs - Messages {from, to, label} (indices de colonnes)
+ * @param {object[]} places - Boîtes d'états {r (colonne), name} @returns {{X:number[], hw:number[], width:number}} Abscisses, demi-largeurs, largeur totale */
+function capScColonnes(roles, msgs, places){
   const n=roles.length, hw=roles.map(r=>Math.min(230,Math.max(120,capScTextW(r.name,12.5)+56)));
   const gap=Array(Math.max(0,n-1)).fill(0).map((_,k)=>(hw[k]+hw[k+1])/2+30);
   msgs.forEach(m=>{ if(m.from===undefined||m.to===undefined) return;
     const a=Math.min(m.from,m.to), b=Math.max(m.from,m.to), w=capScTextW(m.label,12)+30;
     if(a===b){ if(a<n-1) gap[a]=Math.max(gap[a], w+50); return; }
     const need=w/(b-a); for(let k=a;k<b;k++) gap[k]=Math.max(gap[k],need); });
-  states.forEach(s=>{ const f=frags[fIdx[s.st]]; const r=f?rIdx[cov(f)[0]]:undefined; if(r===undefined) return;
+  places.forEach(s=>{ const r=s.r; if(r===undefined) return;
     const w=Math.min(190,capScTextW(s.name,12)+30)/2+12; if(r>0) gap[r-1]=Math.max(gap[r-1],w+hw[r-1]/2-30); if(r<n-1) gap[r]=Math.max(gap[r],w+hw[r+1]/2-30); });
-  const X=[]; let x=24+hw[0]/2+20; roles.forEach((r,i)=>{ X[i]=x; if(i<n-1) x+=gap[i]; });
+  const X=[]; let x=24+(n?hw[0]:0)/2+20; roles.forEach((r,i)=>{ X[i]=x; if(i<n-1) x+=gap[i]; });
   // Étiquettes des messages réflexifs de la dernière colonne : place à droite
   const selfLast=msgs.filter(m=>m.from===n-1&&m.to===n-1).reduce((w,m)=>Math.max(w,capScTextW(m.label,12)+50),0);
-  const width=(n?X[n-1]+Math.max(hw[n-1]/2,selfLast):200)+70;
-  return {roles, X, hw, Y, frags, fIdx, cov, rIdx, msgs, execs, states, cfs, ius, bottom, width, top:TOP, head:HEAD};
+  return {X, hw, width:(n?X[n-1]+Math.max(hw[n-1]/2,selfLast):200)+70};
 }
 
 /** Garde (condition) d'un opérande de fragment combiné. @param {Element} f - InteractionOperand @returns {string} */
@@ -181,10 +189,11 @@ function capScWrap(s, n){
   return out.length>2?[out[0], out.slice(1).join(' ').slice(0,n-1)+'…']:out;
 }
 
-/** Dessine un scénario en SVG façon Capella (fond blanc).
- * @param {object} sc - Scénario @returns {{svg:string,w:number,h:number,L:object}} */
-function capScenarioSvg(sc){
-  const L=capScLayout(sc), C=CAP_SC_COL, e=capEsc, {X,Y,roles,frags,cov,rIdx}=L;
+/** Dessine un scénario en SVG façon Capella (fond blanc). Une mise en page déjà calculée peut être fournie (🎬 Interactions UML, 98 :
+ * `capUmlSeqLayout`) ; elle peut porter `garde(idOpérande)` (condition d'un opérande) et `refLib` (titre des références).
+ * @param {object} sc - Scénario @param {object} [L0] - Mise en page (sinon `capScLayout(sc)`) @returns {{svg:string,w:number,h:number,L:object}} */
+function capScenarioSvg(sc, L0){
+  const L=L0||capScLayout(sc), C=CAP_SC_COL, e=capEsc, {X,Y,roles,frags,cov,rIdx}=L;
   const H=L.bottom+20, W=L.width;
   const yOf=id=>Y[id];
   const roleOfFrag=id=>{ const f=frags[L.fIdx[id]]; return f?rIdx[cov(f)[0]]:undefined; };
@@ -196,18 +205,22 @@ function capScenarioSvg(sc){
     b.r1=rs.length?Math.min(...rs):0; b.r2=rs.length?Math.max(...rs):roles.length-1;
     b.depth=boxes.filter(o=>o!==b&&o.y1<b.y1&&o.y2>b.y2).length; });
   boxes.sort((a,b)=>a.depth-b.depth).forEach(b=>{
-    const m=Math.max(18, 74-b.depth*12), x1=X[b.r1]-Math.min(L.hw[b.r1]/2+6,m), x2=X[b.r2]+Math.min(L.hw[b.r2]/2+6,m), y1=b.y1-14, y2=b.y2;
+    const m=Math.max(18, 74-b.depth*12), x1=X[b.r1]-Math.min(L.hw[b.r1]/2+6,m), y1=b.y1-14, y2=b.y2;
+    let x2=X[b.r2]+Math.min(L.hw[b.r2]/2+6,m);
     if(b.t==='cf'){
       const lab=b.c.op||'?', lw=capScTextW(lab,11)+16;
+      // Abscisse des gardes : après l'étiquette, et (option `gardeApres`, UML, 99) après la barre d'exécution de la première ligne de vie couverte ; cadre élargi si besoin
+      const gx=i=>Math.max(x1+(i>0?8:lw+8), L.gardeApres?X[b.r1]+16:0), gtxt=o=>{ const f=frags[L.fIdx[o]]; return f?(L.garde?L.garde(o):capScOperandGuard(f)):''; };
+      if(L.gardeApres) b.c.operands.forEach((o,i)=>{ const g=gtxt(o); if(g) x2=Math.max(x2, gx(i)+capScTextW(`[${g}]`,11)+10); });
       out+=`<g><rect x="${x1}" y="${y1}" width="${x2-x1}" height="${y2-y1}" fill="url(#scg)" stroke="${C.frag}" stroke-width="1.3"/>
         <path d="M${x1},${y1} H${x1+lw} V${y1+12} L${x1+lw-8},${y1+20} H${x1} Z" fill="#fff" stroke="${C.frag}" stroke-width="1"/>
         <text x="${x1+6}" y="${y1+14}" font-size="11">${e(lab)}</text>`;
-      b.c.operands.forEach((o,i)=>{ const f=frags[L.fIdx[o]]; if(!f) return; const yo=yOf(o), g=capScOperandGuard(f);
+      b.c.operands.forEach((o,i)=>{ const f=frags[L.fIdx[o]]; if(!f) return; const yo=yOf(o), g=L.garde?L.garde(o):capScOperandGuard(f);
         if(i>0) out+=`<line x1="${x1}" y1="${yo}" x2="${x2}" y2="${yo}" stroke="${C.frag}" stroke-dasharray="6,4"/>`;
-        if(g) out+=`<text x="${x1+(i>0?8:lw+8)}" y="${(i>0?yo:y1)+14}" font-size="11" fill="#333">[${e(g)}]</text>`; });
+        if(g) out+=`<text x="${gx(i)}" y="${(i>0?yo:y1)+14}" font-size="11" fill="#333"${L.gardeApres?' class="sc-lab"':''}>[${e(g)}]</text>`; });
       out+='</g>';
     } else {
-      out+=_L(`<g class="sc-iu" data-sc="${e(b.c.scId)}" style="cursor:${b.c.scId?'pointer':'default'}"><title>Référence au scénario ${e(b.c.name)}${b.c.scId?_L(' — clic : l\'ouvrir'):''}</title>
+      out+=_L(`<g class="sc-iu" data-sc="${e(b.c.scId)}" style="cursor:${b.c.scId?'pointer':'default'}"><title>${L.refLib||_L('Référence au scénario')} ${e(b.c.name)}${b.c.scId?_L(' — clic : l\'ouvrir'):''}</title>
         <rect x="${x1}" y="${y1}" width="${x2-x1}" height="${y2-y1}" fill="#fff" stroke="${C.frag}" stroke-width="1.3"/>
         <path d="M${x1},${y1} H${x1+34} V${y1+12} L${x1+26},${y1+20} H${x1} Z" fill="#fff" stroke="${C.frag}"/>
         <text x="${x1+6}" y="${y1+14}" font-size="11">ref</text>
@@ -241,7 +254,14 @@ function capScenarioSvg(sc){
     }
   });
   // Messages
-  L.msgs.forEach(m=>{ const ys=yOf(m.send), yr=yOf(m.recv); if(m.from===undefined||m.to===undefined||ys===undefined) return;
+  L.msgs.forEach(m=>{ const ys=yOf(m.send), yr=yOf(m.recv);
+    if(L.bords&&(m.from===undefined)!==(m.to===undefined)){   // message perdu (sans récepteur) ou trouvé (sans émetteur) : point noir à 70 px (UML, 99)
+      const r=m.from!==undefined?m.from:m.to, yy=m.from!==undefined?ys:yr; if(yy===undefined) return;
+      const x=X[r], sens=r===roles.length-1&&r>0?-1:1, xo=x+sens*70, perdu=m.from!==undefined, xa=perdu?x+sens*5:xo, xb=perdu?xo:x+sens*5;
+      out+=ref(m.id,`<line x1="${xa}" y1="${yy}" x2="${xb}" y2="${yy}" stroke="${C.line}" stroke-width="1.4" marker-end="url(#sco)"/><circle cx="${xo}" cy="${yy}" r="5" fill="${C.line}"/>
+        <text x="${(x+xo)/2}" y="${yy-6}" font-size="12" text-anchor="middle" fill="#111" class="sc-lab">${e(m.label)}</text>`, `${m.name} — ${perdu?_L('message perdu'):_L('message trouvé')}`);
+      return; }
+    if(m.from===undefined||m.to===undefined||ys===undefined) return;
     const y2=yr===undefined?ys:yr, dash=m.kind==='REPLY'||m.kind==='CREATE'?' stroke-dasharray="6,4"':'', head=m.kind==='SYNCHRONOUS_CALL'?'scf':'sco';
     const tip=`${m.name}${m.opType?' — '+m.opType:''} (${m.kind})`;
     if(m.from===m.to){ const x=X[m.from]+5+lvlAt(m.from,ys)*6-(lvlAt(m.from,ys)?6:0), xo=x+34;

@@ -1,0 +1,46 @@
+I-Logix-RPY-Archive version 8.7.1 C++ 5093211
+{ ISubsystem 
+	- _id = GUID 7a000000-0000-4000-8000-000000000010;
+	- _myState = 8192;
+	- _name = "Exigences";
+	- _lastID = 2;
+	- Annotations = { IRPYRawContainer 
+		- size = 3;
+		- value = 
+		{ IRequirement 
+			- _id = GUID 7a000000-0000-4000-8000-000000000011;
+			- _name = "Consigne";
+			- _body = "Le thermostat maintient la température de consigne à ± 0,5 °C.";
+			- reqID = "EX-01";
+		}
+		{ IRequirement 
+			- _id = GUID 7a000000-0000-4000-8000-000000000012;
+			- _name = "Alarme";
+			- _displayName = "Alarme de surchauffe";
+			- _body = "Au-delà de 30 °C, le thermostat émet une alarme
+et coupe la chauffe.";
+			- reqID = "EX-02";
+		}
+		{ IComment 
+			- _id = GUID 7a000000-0000-4000-8000-000000000013;
+			- _name = "comment_0";
+			- _body = "Exigences écrites pour le modèle de test d'Arcature.";
+		}
+	}
+	- _defaultComposite = GUID 7a000000-0000-4000-8000-000000000014;
+	- _eventsBaseID = -1;
+	- Classes = { IRPYRawContainer 
+		- size = 1;
+		- value = 
+		{ IClass 
+			- _id = GUID 7a000000-0000-4000-8000-000000000014;
+			- _name = "TopLevel";
+			- _multiplicity = "";
+			- _itsStateChart = { IHandle 
+				- _m2Class = "";
+			}
+			- _classModifier = Unspecified;
+		}
+	}
+}
+

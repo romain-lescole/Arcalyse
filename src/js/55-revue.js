@@ -480,7 +480,7 @@ function capRevTargetsHtml(c){
   const t=(c.targets||[]).map(x=>{ const s=capRevTargetState(x), lv=CAP_LAYERS[x.layer]||{color:'#8b949e'};
     return `<span class="crv-tg${s==='deleted'?' crv-tg-del':s==='changed'?' crv-tg-chg':''}" data-open="${esc(x.id)}" title="${esc(x.type)}${x.field?' — '+esc(capRevFieldLabel(x.field)):''}">`+
       `${capIco(x.id,13)||capIcoType(x.type,13)}<span style="color:${lv.color};font-size:9px;font-weight:700">${esc(x.layer||'')}</span> ${esc(x.name||x.id.slice(0,12))}${x.field?` <i>· ${esc(capRevFieldLabel(x.field))}</i>`:''}</span>`; }).join('');
-  const dIco=c.diag&&/^sy:/.test(c.diag.uid)&&typeof capSyVueIco==='function'?capSyVueIco(c.diag.uid.split(':')[1],13)||'🔲':'🔲';   // vue SysML v2 : icône du genre (87)
+  const dIco=c.diag&&/^sy:/.test(c.diag.uid)&&typeof capSyVueIco==='function'?capSyVueIco((typeof capSyVueParUid==='function'&&capSyVueParUid(c.diag.uid))||c.diag.uid.split(':')[1],13)||'🔲':'🔲';   // vue SysML / UML : icône du genre (87)
   const d=c.diag?`<span class="crv-tg crv-tg-diag" data-diag="${esc(c.diag.uid)}" title="${_L('Note sur le diagramme')}">${dIco} ${esc(c.diag.nom||c.diag.uid)}</span>`:'';
   return t||d?`<div class="crv-tgs">${d}${t}</div>`:'';
 }

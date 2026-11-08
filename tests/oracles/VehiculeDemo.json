@@ -300,6 +300,18 @@
    "ana:states",
    "ana:status",
    "ana:trace",
+   "ana:uml",
+   "ana:umlact",
+   "ana:umlblk",
+   "ana:umlbudget",
+   "ana:umlicd",
+   "ana:umlpar",
+   "ana:umlreq",
+   "ana:umlseq",
+   "ana:umlsoft",
+   "ana:umlstm",
+   "ana:umltrace",
+   "ana:umlucs",
    "ana:xlay",
    "cblk",
    "chains",
@@ -338,6 +350,56 @@
     "liens": 3,
     "texte": 232
    }
+  }
+ },
+ "matrice": {
+  "sy-typ": {
+   "lignes": 30,
+   "colonnes": 12,
+   "cellules": 13,
+   "liens": 13,
+   "lignesSansRelation": 17,
+   "colonnesSansRelation": 3
+  },
+  "sy-req": {
+   "lignes": 2,
+   "colonnes": 9,
+   "cellules": 2,
+   "liens": 2,
+   "lignesSansRelation": 0,
+   "colonnesSansRelation": 7
+  },
+  "sy-comp": {
+   "lignes": 12,
+   "colonnes": 30,
+   "cellules": 5,
+   "liens": 5,
+   "lignesSansRelation": 9,
+   "colonnesSansRelation": 25
+  },
+  "sy-beh": {
+   "lignes": 9,
+   "colonnes": 2,
+   "cellules": 2,
+   "liens": 2,
+   "lignesSansRelation": 8,
+   "colonnesSansRelation": 0
+  },
+  "sy-cnx": {
+   "lignes": 2,
+   "colonnes": 2,
+   "cellules": 2,
+   "liens": 1,
+   "lignesSansRelation": 0,
+   "colonnesSansRelation": 0
+  },
+  "ch-def-port": {
+   "lignes": 5,
+   "colonnes": 1,
+   "cellules": 2,
+   "liens": 2,
+   "lignesSansRelation": 3,
+   "colonnesSansRelation": 0
   }
  },
  "sante": {
@@ -394,6 +456,7 @@
    "Erreurs SysML v2 (syntaxe, noms introuvables…)": 0,
    "Avertissements SysML v2": 0
   },
+  "uml": {},
   "exigences": {},
   "pvmt": {},
   "donnees": {},
@@ -462,7 +525,18 @@
    "unreach": 0,
    "deadEnd": 0,
    "noTrig": 0
-  }
+  },
+  "umlBlocs": {},
+  "umlActivites": {},
+  "umlExigences": {},
+  "umlEtats": {},
+  "umlInteractions": {},
+  "umlCas": {},
+  "umlTracabilite": {},
+  "umlInterfaces": {},
+  "umlBudgets": {},
+  "umlParametrique": {},
+  "umlLogiciel": {}
  },
  "tableauDeBord": {
   "cap.chk": null,
@@ -675,6 +749,40 @@
    "Vue des états": 1
   },
   "tr.n": 0,
-  "tr.tab": null
+  "tr.tab": null,
+  "uml.act.chk": null,
+  "uml.act.n": 0,
+  "uml.act.porte": null,
+  "uml.blk.chk": null,
+  "uml.blk.flux": null,
+  "uml.blk.n": 0,
+  "uml.blk.ports": null,
+  "uml.bud.chk": null,
+  "uml.bud.n": 0,
+  "uml.diag": null,
+  "uml.ext": null,
+  "uml.fam": null,
+  "uml.icd.chk": null,
+  "uml.icd.n": 0,
+  "uml.n": 0,
+  "uml.par.chk": null,
+  "uml.par.n": 0,
+  "uml.rel": null,
+  "uml.req.chk": null,
+  "uml.req.n": 0,
+  "uml.req.sat": null,
+  "uml.req.ver": null,
+  "uml.seq.chk": null,
+  "uml.seq.n": 0,
+  "uml.soft.chk": null,
+  "uml.soft.n": 0,
+  "uml.stm.chk": null,
+  "uml.stm.n": 0,
+  "uml.tr.chk": null,
+  "uml.tr.niv": null,
+  "uml.type": null,
+  "uml.uc.chk": null,
+  "uml.uc.n": 0,
+  "uml.vues": null
  }
 }

@@ -1,0 +1,237 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Modèle de test d'Arcalyse (UML 2.5, export XMI) pour les diagrammes calculés de 🚦 Machines à états et 🎬 Interactions
+     (module 98) : états composites imbriqués, deux régions orthogonales, pseudo-états initial / final / choix / jonction /
+     historique / fourche / jointure / point d'entrée / terminaison, entry / do / exit, transitions à déclencheur [garde] / effet ;
+     interactions à barres d'exécution, fragments combinés alt / opt / loop / par imbriqués, référence (InteractionUse),
+     invariant d'état, réponses, message réflexif, création et destruction. Écrit pour Arcalyse — Apache 2.0. -->
+<xmi:XMI xmlns:uml='http://www.omg.org/spec/UML/20161101' xmlns:xmi='http://www.omg.org/spec/XMI/20161101'>
+	<uml:Model xmi:type='uml:Model' xmi:id='asc_model' name='Ascenseur'>
+		<packagedElement xmi:type='uml:Package' xmi:id='asc_pkg' name='Commande'>
+			<packagedElement xmi:type='uml:Actor' xmi:id='asc_usager' name='Usager'/>
+			<packagedElement xmi:type='uml:Class' xmi:id='asc_cabine' name='Cabine'>
+				<ownedOperation xmi:type='uml:Operation' xmi:id='asc_op_aller' name='allerA'/>
+				<ownedOperation xmi:type='uml:Operation' xmi:id='asc_op_porte' name='ouvrirPorte'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='asc_moteur' name='Moteur'>
+				<ownedOperation xmi:type='uml:Operation' xmi:id='asc_op_tourner' name='tourner'/>
+				<ownedOperation xmi:type='uml:Operation' xmi:id='asc_op_stop' name='arreter'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='asc_journal' name='Journal'/>
+			<packagedElement xmi:type='uml:Class' xmi:id='asc_ctrl' name='Controleur'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='asc_p_cab' name='cabine' aggregation='composite' type='asc_cabine'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='asc_p_mot' name='moteur' aggregation='composite' type='asc_moteur'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='asc_p_jnl' name='journal' aggregation='composite' type='asc_journal'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='asc_p_usr' name='usager' type='asc_usager'/>
+				<ownedConnector xmi:type='uml:Connector' xmi:id='asc_c1'>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='asc_c1a' role='asc_p_cab'/>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='asc_c1b' role='asc_p_mot'/>
+				</ownedConnector>
+				<ownedConnector xmi:type='uml:Connector' xmi:id='asc_c2'>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='asc_c2a' role='asc_p_cab'/>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='asc_c2b' role='asc_p_jnl'/>
+				</ownedConnector>
+				<!-- Machine à états : composite En service (deux régions), historique, fourche / jointure, choix, jonction -->
+				<ownedBehavior xmi:type='uml:StateMachine' xmi:id='asc_sm' name='Cycle de la cabine'>
+					<region xmi:type='uml:Region' xmi:id='asc_rg'>
+						<subvertex xmi:type='uml:Pseudostate' xmi:id='asc_ini' kind='initial'/>
+						<subvertex xmi:type='uml:State' xmi:id='asc_st_init' name='Initialisation'>
+							<entry xmi:type='uml:OpaqueBehavior' xmi:id='asc_b_auto' name='autotest'/>
+						</subvertex>
+						<subvertex xmi:type='uml:State' xmi:id='asc_st_serv' name='En service'>
+							<entry xmi:type='uml:OpaqueBehavior' xmi:id='asc_b_on' name='allumerVoyant'/>
+							<exit xmi:type='uml:OpaqueBehavior' xmi:id='asc_b_off' name='eteindreVoyant'/>
+							<connectionPoint xmi:type='uml:Pseudostate' xmi:id='asc_ep' name='reprise' kind='entryPoint'/>
+							<region xmi:type='uml:Region' xmi:id='asc_rg_dep' name='Déplacement'>
+								<subvertex xmi:type='uml:Pseudostate' xmi:id='asc_ini2' kind='initial'/>
+								<subvertex xmi:type='uml:Pseudostate' xmi:id='asc_hist' kind='shallowHistory'/>
+								<subvertex xmi:type='uml:State' xmi:id='asc_st_arret' name='A l arret'/>
+								<subvertex xmi:type='uml:State' xmi:id='asc_st_mvt' name='En mouvement'>
+									<doActivity xmi:type='uml:OpaqueBehavior' xmi:id='asc_b_suivre' name='suivreEtage'/>
+									<region xmi:type='uml:Region' xmi:id='asc_rg_mvt'>
+										<subvertex xmi:type='uml:Pseudostate' xmi:id='asc_ini3' kind='initial'/>
+										<subvertex xmi:type='uml:State' xmi:id='asc_st_mont' name='Montee'/>
+										<subvertex xmi:type='uml:State' xmi:id='asc_st_desc' name='Descente'/>
+										<transition xmi:type='uml:Transition' xmi:id='asc_t30' source='asc_ini3' target='asc_st_mont'/>
+										<transition xmi:type='uml:Transition' xmi:id='asc_t31' source='asc_st_mont' target='asc_st_desc'>
+											<trigger xmi:type='uml:Trigger' xmi:id='asc_tg31' event='asc_ev_inv'/>
+										</transition>
+										<transition xmi:type='uml:Transition' xmi:id='asc_t32' source='asc_st_desc' target='asc_st_mont'>
+											<trigger xmi:type='uml:Trigger' xmi:id='asc_tg32' event='asc_ev_inv'/>
+										</transition>
+									</region>
+								</subvertex>
+								<subvertex xmi:type='uml:Pseudostate' xmi:id='asc_choix' kind='choice'/>
+								<transition xmi:type='uml:Transition' xmi:id='asc_t20' source='asc_ini2' target='asc_st_arret'/>
+								<transition xmi:type='uml:Transition' xmi:id='asc_t21' source='asc_st_arret' target='asc_choix'>
+									<trigger xmi:type='uml:Trigger' xmi:id='asc_tg21' event='asc_ev_appel'/>
+								</transition>
+								<transition xmi:type='uml:Transition' xmi:id='asc_t22' source='asc_choix' target='asc_st_mvt'>
+									<guard xmi:type='uml:Constraint' xmi:id='asc_g22'><specification xmi:type='uml:OpaqueExpression' xmi:id='asc_g22e' body='etage != courant'/></guard>
+									<effect xmi:type='uml:OpaqueBehavior' xmi:id='asc_b_dem' name='demarrer'/>
+								</transition>
+								<transition xmi:type='uml:Transition' xmi:id='asc_t23' source='asc_choix' target='asc_st_arret'>
+									<guard xmi:type='uml:Constraint' xmi:id='asc_g23'><specification xmi:type='uml:OpaqueExpression' xmi:id='asc_g23e' body='else'/></guard>
+								</transition>
+								<transition xmi:type='uml:Transition' xmi:id='asc_t24' source='asc_st_mvt' target='asc_st_arret'>
+									<trigger xmi:type='uml:Trigger' xmi:id='asc_tg24' event='asc_ev_arrive'/>
+									<effect xmi:type='uml:OpaqueBehavior' xmi:id='asc_b_stop' name='freiner'/>
+								</transition>
+								<transition xmi:type='uml:Transition' xmi:id='asc_t25' source='asc_ep' target='asc_hist'/>
+								<transition xmi:type='uml:Transition' xmi:id='asc_t26' source='asc_hist' target='asc_st_arret'/>
+							</region>
+							<region xmi:type='uml:Region' xmi:id='asc_rg_porte' name='Porte'>
+								<subvertex xmi:type='uml:Pseudostate' xmi:id='asc_ini4' kind='initial'/>
+								<subvertex xmi:type='uml:State' xmi:id='asc_st_ferm' name='Fermee'/>
+								<subvertex xmi:type='uml:State' xmi:id='asc_st_ouv' name='Ouverte'/>
+								<subvertex xmi:type='uml:Pseudostate' xmi:id='asc_jonc' kind='junction'/>
+								<transition xmi:type='uml:Transition' xmi:id='asc_t40' source='asc_ini4' target='asc_st_ferm'/>
+								<transition xmi:type='uml:Transition' xmi:id='asc_t41' source='asc_st_ferm' target='asc_jonc'>
+									<trigger xmi:type='uml:Trigger' xmi:id='asc_tg41' event='asc_ev_bouton'/>
+								</transition>
+								<transition xmi:type='uml:Transition' xmi:id='asc_t42' source='asc_jonc' target='asc_st_ouv'>
+									<guard xmi:type='uml:Constraint' xmi:id='asc_g42'><specification xmi:type='uml:OpaqueExpression' xmi:id='asc_g42e' body='a l etage'/></guard>
+								</transition>
+								<transition xmi:type='uml:Transition' xmi:id='asc_t43' source='asc_jonc' target='asc_st_ferm'>
+									<guard xmi:type='uml:Constraint' xmi:id='asc_g43'><specification xmi:type='uml:OpaqueExpression' xmi:id='asc_g43e' body='else'/></guard>
+								</transition>
+								<transition xmi:type='uml:Transition' xmi:id='asc_t44' source='asc_st_ouv' target='asc_st_ferm'>
+									<trigger xmi:type='uml:Trigger' xmi:id='asc_tg44' event='asc_ev_delai'/>
+								</transition>
+							</region>
+						</subvertex>
+						<subvertex xmi:type='uml:State' xmi:id='asc_st_maint' name='Maintenance'/>
+						<subvertex xmi:type='uml:Pseudostate' xmi:id='asc_fork' kind='fork'/>
+						<subvertex xmi:type='uml:State' xmi:id='asc_st_diag' name='Diagnostic'>
+							<region xmi:type='uml:Region' xmi:id='asc_rg_d1'>
+								<subvertex xmi:type='uml:State' xmi:id='asc_st_capt' name='Test capteurs'/>
+							</region>
+							<region xmi:type='uml:Region' xmi:id='asc_rg_d2'>
+								<subvertex xmi:type='uml:State' xmi:id='asc_st_frein' name='Test freins'/>
+							</region>
+						</subvertex>
+						<subvertex xmi:type='uml:Pseudostate' xmi:id='asc_join' kind='join'/>
+						<subvertex xmi:type='uml:FinalState' xmi:id='asc_fin'/>
+						<subvertex xmi:type='uml:Pseudostate' xmi:id='asc_term' kind='terminate'/>
+						<transition xmi:type='uml:Transition' xmi:id='asc_t1' source='asc_ini' target='asc_st_init'/>
+						<transition xmi:type='uml:Transition' xmi:id='asc_t2' source='asc_st_init' target='asc_st_serv'>
+							<trigger xmi:type='uml:Trigger' xmi:id='asc_tg2' event='asc_ev_pret'/>
+						</transition>
+						<transition xmi:type='uml:Transition' xmi:id='asc_t3' source='asc_st_serv' target='asc_st_maint'>
+							<trigger xmi:type='uml:Trigger' xmi:id='asc_tg3' event='asc_ev_panne'/>
+						</transition>
+						<transition xmi:type='uml:Transition' xmi:id='asc_t4' source='asc_st_maint' target='asc_ep'>
+							<trigger xmi:type='uml:Trigger' xmi:id='asc_tg4' event='asc_ev_repare'/>
+						</transition>
+						<transition xmi:type='uml:Transition' xmi:id='asc_t5' source='asc_st_maint' target='asc_fork'>
+							<trigger xmi:type='uml:Trigger' xmi:id='asc_tg5' event='asc_ev_diag'/>
+						</transition>
+						<transition xmi:type='uml:Transition' xmi:id='asc_t6' source='asc_fork' target='asc_st_capt'/>
+						<transition xmi:type='uml:Transition' xmi:id='asc_t7' source='asc_fork' target='asc_st_frein'/>
+						<transition xmi:type='uml:Transition' xmi:id='asc_t8' source='asc_st_capt' target='asc_join'/>
+						<transition xmi:type='uml:Transition' xmi:id='asc_t9' source='asc_st_frein' target='asc_join'/>
+						<transition xmi:type='uml:Transition' xmi:id='asc_t10' source='asc_join' target='asc_st_maint'/>
+						<transition xmi:type='uml:Transition' xmi:id='asc_t11' source='asc_st_maint' target='asc_fin'>
+							<trigger xmi:type='uml:Trigger' xmi:id='asc_tg11' event='asc_ev_horsserv'/>
+						</transition>
+						<transition xmi:type='uml:Transition' xmi:id='asc_t12' source='asc_st_serv' target='asc_term'>
+							<trigger xmi:type='uml:Trigger' xmi:id='asc_tg12' event='asc_ev_urgence'/>
+						</transition>
+					</region>
+				</ownedBehavior>
+				<!-- Interaction : appel de la cabine, alt / opt / loop / par imbriqués, exécutions, réponses, référence, invariant -->
+				<ownedBehavior xmi:type='uml:Interaction' xmi:id='asc_int1' name='Appel de la cabine'>
+					<lifeline xmi:type='uml:Lifeline' xmi:id='asc_ll_usr' name='usager' represents='asc_p_usr'/>
+					<lifeline xmi:type='uml:Lifeline' xmi:id='asc_ll_cab' name='cabine' represents='asc_p_cab'/>
+					<lifeline xmi:type='uml:Lifeline' xmi:id='asc_ll_mot' name='moteur' represents='asc_p_mot'/>
+					<lifeline xmi:type='uml:Lifeline' xmi:id='asc_ll_jnl' name='journal' represents='asc_p_jnl'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_s1' covered='asc_ll_usr' message='asc_m1'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_r1' covered='asc_ll_cab' message='asc_m1'/>
+					<fragment xmi:type='uml:BehaviorExecutionSpecification' xmi:id='asc_x1' covered='asc_ll_cab' start='asc_r1' finish='asc_s9'/>
+					<fragment xmi:type='uml:StateInvariant' xmi:id='asc_inv1' covered='asc_ll_cab'>
+						<invariant xmi:type='uml:Constraint' xmi:id='asc_inv1c'><specification xmi:type='uml:OpaqueExpression' xmi:id='asc_inv1e' body='porte fermee'/></invariant>
+					</fragment>
+					<fragment xmi:type='uml:CombinedFragment' xmi:id='asc_cf1' interactionOperator='alt' covered='asc_ll_cab asc_ll_mot asc_ll_jnl'>
+						<operand xmi:type='uml:InteractionOperand' xmi:id='asc_op1a'>
+							<guard xmi:type='uml:InteractionConstraint' xmi:id='asc_op1ag'><specification xmi:type='uml:OpaqueExpression' xmi:id='asc_op1age' body='etage different'/></guard>
+							<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_s2' covered='asc_ll_cab' message='asc_m2'/>
+							<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_r2' covered='asc_ll_mot' message='asc_m2'/>
+							<fragment xmi:type='uml:BehaviorExecutionSpecification' xmi:id='asc_x2' covered='asc_ll_mot' start='asc_r2' finish='asc_s5'/>
+							<fragment xmi:type='uml:CombinedFragment' xmi:id='asc_cf2' interactionOperator='loop' covered='asc_ll_mot'>
+								<operand xmi:type='uml:InteractionOperand' xmi:id='asc_op2'>
+									<guard xmi:type='uml:InteractionConstraint' xmi:id='asc_op2g'><specification xmi:type='uml:OpaqueExpression' xmi:id='asc_op2ge' body='pas a l etage'/></guard>
+									<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_s3' covered='asc_ll_mot' message='asc_m3'/>
+									<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_r3' covered='asc_ll_mot' message='asc_m3'/>
+								</operand>
+							</fragment>
+							<fragment xmi:type='uml:CombinedFragment' xmi:id='asc_cf3' interactionOperator='par' covered='asc_ll_cab asc_ll_mot asc_ll_jnl'>
+								<operand xmi:type='uml:InteractionOperand' xmi:id='asc_op3a'>
+									<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_s4' covered='asc_ll_mot' message='asc_m4'/>
+									<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_r4' covered='asc_ll_cab' message='asc_m4'/>
+								</operand>
+								<operand xmi:type='uml:InteractionOperand' xmi:id='asc_op3b'>
+									<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_s6' covered='asc_ll_cab' message='asc_m6'/>
+									<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_r6' covered='asc_ll_jnl' message='asc_m6'/>
+								</operand>
+							</fragment>
+							<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_s5' covered='asc_ll_mot' message='asc_m5'/>
+							<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_r5' covered='asc_ll_cab' message='asc_m5'/>
+						</operand>
+						<operand xmi:type='uml:InteractionOperand' xmi:id='asc_op1b'>
+							<guard xmi:type='uml:InteractionConstraint' xmi:id='asc_op1bg'><specification xmi:type='uml:OpaqueExpression' xmi:id='asc_op1bge' body='else'/></guard>
+							<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_s7' covered='asc_ll_cab' message='asc_m7'/>
+							<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_r7' covered='asc_ll_jnl' message='asc_m7'/>
+						</operand>
+					</fragment>
+					<fragment xmi:type='uml:CombinedFragment' xmi:id='asc_cf4' interactionOperator='opt' covered='asc_ll_usr asc_ll_cab'>
+						<operand xmi:type='uml:InteractionOperand' xmi:id='asc_op4'>
+							<guard xmi:type='uml:InteractionConstraint' xmi:id='asc_op4g'><specification xmi:type='uml:OpaqueExpression' xmi:id='asc_op4ge' body='surcharge'/></guard>
+							<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_s8' covered='asc_ll_cab' message='asc_m8'/>
+							<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_r8' covered='asc_ll_usr' message='asc_m8'/>
+						</operand>
+					</fragment>
+					<fragment xmi:type='uml:InteractionUse' xmi:id='asc_ref1' refersTo='asc_int2' covered='asc_ll_cab asc_ll_jnl'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_s9' covered='asc_ll_cab' message='asc_m9'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_r9' covered='asc_ll_usr' message='asc_m9'/>
+					<message xmi:type='uml:Message' xmi:id='asc_m1' name='appeler' messageSort='synchCall' sendEvent='asc_s1' receiveEvent='asc_r1' signature='asc_op_aller'/>
+					<message xmi:type='uml:Message' xmi:id='asc_m2' messageSort='synchCall' sendEvent='asc_s2' receiveEvent='asc_r2' signature='asc_op_tourner'/>
+					<message xmi:type='uml:Message' xmi:id='asc_m3' name='compterEtage' messageSort='asynchCall' sendEvent='asc_s3' receiveEvent='asc_r3' signature='asc_op_tourner'/>
+					<message xmi:type='uml:Message' xmi:id='asc_m4' name='position' messageSort='asynchSignal' sendEvent='asc_s4' receiveEvent='asc_r4' signature='asc_sig_pos'/>
+					<message xmi:type='uml:Message' xmi:id='asc_m6' name='tracer' messageSort='asynchSignal' sendEvent='asc_s6' receiveEvent='asc_r6' signature='asc_sig_trace'/>
+					<message xmi:type='uml:Message' xmi:id='asc_m5' name='arrive' messageSort='reply' sendEvent='asc_s5' receiveEvent='asc_r5'/>
+					<message xmi:type='uml:Message' xmi:id='asc_m7' name='tracer' messageSort='asynchSignal' sendEvent='asc_s7' receiveEvent='asc_r7' signature='asc_sig_trace'/>
+					<message xmi:type='uml:Message' xmi:id='asc_m8' name='alarme' messageSort='asynchSignal' sendEvent='asc_s8' receiveEvent='asc_r8' signature='asc_sig_alarme'/>
+					<message xmi:type='uml:Message' xmi:id='asc_m9' name='porte ouverte' messageSort='reply' sendEvent='asc_s9' receiveEvent='asc_r9'/>
+				</ownedBehavior>
+				<!-- Interaction référencée : création et destruction d'une ligne de vie -->
+				<ownedBehavior xmi:type='uml:Interaction' xmi:id='asc_int2' name='Journalisation'>
+					<lifeline xmi:type='uml:Lifeline' xmi:id='asc_ll2_cab' name='cabine' represents='asc_p_cab'/>
+					<lifeline xmi:type='uml:Lifeline' xmi:id='asc_ll2_jnl' name='journal' represents='asc_p_jnl'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_s21' covered='asc_ll2_cab' message='asc_m21'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_r21' covered='asc_ll2_jnl' message='asc_m21'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_s22' covered='asc_ll2_cab' message='asc_m22'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_r22' covered='asc_ll2_jnl' message='asc_m22'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='asc_s23' covered='asc_ll2_cab' message='asc_m23'/>
+					<fragment xmi:type='uml:DestructionOccurrenceSpecification' xmi:id='asc_r23' covered='asc_ll2_jnl' message='asc_m23'/>
+					<message xmi:type='uml:Message' xmi:id='asc_m21' name='creer' messageSort='createMessage' sendEvent='asc_s21' receiveEvent='asc_r21'/>
+					<message xmi:type='uml:Message' xmi:id='asc_m22' name='tracer' messageSort='asynchSignal' sendEvent='asc_s22' receiveEvent='asc_r22' signature='asc_sig_trace'/>
+					<message xmi:type='uml:Message' xmi:id='asc_m23' name='fermer' messageSort='deleteMessage' sendEvent='asc_s23' receiveEvent='asc_r23'/>
+				</ownedBehavior>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Signal' xmi:id='asc_sig_pos' name='Position'/>
+			<packagedElement xmi:type='uml:Signal' xmi:id='asc_sig_trace' name='Trace'/>
+			<packagedElement xmi:type='uml:Signal' xmi:id='asc_sig_alarme' name='Alarme'/>
+			<packagedElement xmi:type='uml:Signal' xmi:id='asc_sig_appel' name='Appel'/>
+			<packagedElement xmi:type='uml:SignalEvent' xmi:id='asc_ev_appel' name='appel' signal='asc_sig_appel'/>
+			<packagedElement xmi:type='uml:SignalEvent' xmi:id='asc_ev_pret' name='pret'/>
+			<packagedElement xmi:type='uml:SignalEvent' xmi:id='asc_ev_panne' name='panne'/>
+			<packagedElement xmi:type='uml:SignalEvent' xmi:id='asc_ev_repare' name='repare'/>
+			<packagedElement xmi:type='uml:SignalEvent' xmi:id='asc_ev_diag' name='diagnostiquer'/>
+			<packagedElement xmi:type='uml:SignalEvent' xmi:id='asc_ev_horsserv' name='horsService'/>
+			<packagedElement xmi:type='uml:SignalEvent' xmi:id='asc_ev_urgence' name='urgence'/>
+			<packagedElement xmi:type='uml:SignalEvent' xmi:id='asc_ev_bouton' name='bouton'/>
+			<packagedElement xmi:type='uml:SignalEvent' xmi:id='asc_ev_arrive' name='arrive'/>
+			<packagedElement xmi:type='uml:SignalEvent' xmi:id='asc_ev_inv' name='inverser'/>
+			<packagedElement xmi:type='uml:TimeEvent' xmi:id='asc_ev_delai' name='5 s'/>
+		</packagedElement>
+	</uml:Model>
+</xmi:XMI>

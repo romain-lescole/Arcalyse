@@ -168,7 +168,7 @@ const idOf = (name, layer) => p.evaluate(([n, l]) => (capAllElements.find(e => e
 /** Écran d'accueil (avant chargement). */
 PARTS.accueil = async () => {
   await shot('00-ecran-accueil');
-  await marks(['#cw-start', '#cw-browse', '#cw-folder', '#cw-projet', '#cw-help-link', '#cw-tour-link', '#cw-about-link']);
+  await marks(['#cw-start', '#cw-cards', '#cw-astuces', '#cw-projet', '#cw-help-link', '#cw-tour-link', '#cw-about-link']);
   await shot('00-ecran-accueil-reperes', { sel: ['#cw-start', '#cap-drop-zone'], pad: 24 });
   await unmark();
 };
@@ -495,7 +495,8 @@ PARTS.divers = async () => {
 
 /** Nouveautés 2.4 : 💚 carte Santé de l'accueil, 🩺 profil de contrôles, ⚡ contrôles des chaînes, ◀ ▶ historique, 🗂 onglets du panneau de détail, ⏭ pagination. */
 PARTS.nouveautes = async () => {
-  await view('home'); await p.evaluate(() => { _capHomeUi.santeOk = true; capHomeRender(); }); await wait(2000); await top();
+  await view('home'); await p.evaluate(() => { _capHomeUi.tab = 'projet'; _capHomeUi.santeOk = true; capHomeRender(); }); await wait(2000); await top();
+  await p.evaluate(() => document.querySelector('[data-carte="sante"]').scrollIntoView({ block: 'center' })); await wait(300);
   await shot('05-home-sante', { sel: '[data-carte="sante"]', pad: 4 });
   await p.evaluate(() => capChkDialog()); await wait(800);
   await tall(async () => { await shot('03-profil-controles', { sel: '#cap-chk-ov > div', pad: 2 }); }, 1200);
@@ -602,7 +603,33 @@ PARTS.dossiers = async () => {
   await p.evaluate(() => { document.getElementById('dos-per-ov').style.display = 'none'; });
 };
 
-{ const a = PARTS.aida; delete PARTS.aida; PARTS.aida = a; }   // AIDA en dernier (remplace le modèle d'exemple)
+/** 🧩 Rapports sur mesure pour SysML (Satellite-sysml1.xmi) : plans SysML à adapter, éditeur du modèle SSDD, rapport généré. */
+PARTS.sysml = async () => {
+  const old = p; p = await old.context().newPage(); await old.close();
+  p.on('pageerror', e => { errs.push(e.message); console.log('  ✖ JS : ' + e.message); }); p.on('dialog', d => d.accept());
+  await p.goto('file://' + PAGE.replace(/\\/g, '/')); await p.evaluate(() => applyTheme('light'));
+  await p.setInputFiles('#capella-file-input', path.join(ROOT, 'tests', 'models', 'uml', 'Satellite-sysml1.xmi'));
+  await p.waitForFunction(() => typeof capLoaded !== 'undefined' && capLoaded, null, { timeout: 180000 }); await wait(1500);
+  const calme = () => p.evaluate(() => document.querySelectorAll('#cap-watch-flash, .cap-toast, #cap-toast').forEach(n => { n.style.display = 'none'; }));   // messages passagers masqués
+  await p.evaluate(() => { capShowView('home'); _capHomeUi.tab = 'rap'; capHomeRender(); }); await wait(500); await calme();
+  await shot('05-rapport-sysml-plans', { sel: '#cap-view-home .dos-rap', pad: 4 });
+  await p.evaluate(() => capRapModeleSs('ssdd')); await wait(800); await calme();
+  /** Fait défiler l'éditeur jusqu'au chapitre de ce titre. @param {string} t - Titre */
+  const vers = t => p.evaluate(t => { const n = [...document.querySelectorAll('#cap-view-home .dos-chap-t')].find(i => i.value === t); if (n) n.closest('.dos-chap').scrollIntoView({ block: 'start' }); }, t);
+  await vers('Composants du système'); await wait(300); await calme();
+  await shot('05-rapport-sysml-editeur');
+  await p.evaluate(() => capRapGenerer(capDosCur())); await wait(1200); await calme();
+  // rendu du rapport généré, tel que l'exportent la page HTML et 👁 Aperçu, ouvert au chapitre de la première part
+  const html = await p.evaluate(async () => capDosPage(await capDosEnvoi(capDosCur())));
+  const app = p; p = await app.context().newPage(); await p.setViewportSize({ width: W, height: H });
+  try {
+    await p.setContent(html); await wait(600);
+    await p.evaluate(() => { const h = [...document.querySelectorAll('h1,h2,h3,h4,h5,h6')].find(x => /Fonctions allouées/.test(x.textContent)); if (h) h.scrollIntoView({ block: 'start' }); window.scrollBy(0, -60); });
+    await wait(300); await shot('05-rapport-sysml-genere');
+  } finally { await p.close(); p = app; }
+};
+
+{ const a = PARTS.aida; delete PARTS.aida; PARTS.aida = a; const s = PARTS.sysml; delete PARTS.sysml; PARTS.sysml = s; }   // AIDA puis Satellite en dernier (remplacent le modèle d'exemple)
 
 if (require.main === module) (async () => {
   const want = process.argv.slice(2);

@@ -1,0 +1,374 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Modèle de test d'Arcalyse (SysML v1, style de l'export XMI de Cameo) : blocs à ports orientés par leurs FlowProperty,
+     connecteurs d'assemblage et de délégation, ItemFlow, allocations, activités à pins et partitions, signaux sur des ports,
+     machines à états, interactions, cas d'utilisation, niveaux de traçabilité, interfaces, budgets (masse, puissance), paramétrique, exigences (satisfy, verify, deriveReqt, refine). Chaque contrôle des vues 🧱 Blocs & ports, ƒ Activités & flux,
+     🧾 Exigences SysML, 🚦 Machines à états, 🎬 Interactions,
+     🎯 Cas d'utilisation, ⇶ Traçabilité par niveaux,
+     🗃 Interfaces, ⚖ Budgets et 🔒 Paramétrique est déclenché au moins une fois. Écrit pour Arcalyse — Apache 2.0. -->
+<xmi:XMI xmlns:uml='http://www.omg.org/spec/UML/20161101' xmlns:xmi='http://www.omg.org/spec/XMI/20161101' xmlns:sysml='http://www.omg.org/spec/SysML/20181001/SysML' xmlns:StandardProfile='http://www.omg.org/spec/UML/20161101/StandardProfile'>
+	<xmi:Documentation>
+		<xmi:exporter>MagicDraw Clean XMI Exporter</xmi:exporter>
+		<xmi:exporterVersion>19.0 v9</xmi:exporterVersion>
+	</xmi:Documentation>
+	<uml:Model xmi:type='uml:Model' xmi:id='sat_model' name='Satellite'>
+		<packagedElement xmi:type='uml:Package' xmi:id='sat_pkg_req' name='Requirements'>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_r1' name='Imaging'>
+				<nestedClassifier xmi:type='uml:Class' xmi:id='sat_r11' name='Resolution'/>
+				<nestedClassifier xmi:type='uml:Class' xmi:id='sat_r12' name='Downlink'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_r2' name='Power budget'/>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_r3' name='Thermal'/>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_r4' name='Derived resolution'/>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_r5' name='Pointing'/>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_r6' name='Stability'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_der4' client='sat_r4' supplier='sat_r11'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_der56' client='sat_r5' supplier='sat_r6'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_der65' client='sat_r6' supplier='sat_r5'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_sat_bad' client='sat_r2' supplier='sat_r3'/>
+		</packagedElement>
+		<packagedElement xmi:type='uml:Package' xmi:id='sat_pkg_str' name='Structure'>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_blk_sat' name='Satellite'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_prt_cam' name='cam' aggregation='composite' type='sat_blk_cam'><upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:id='sat_prt_cam_up' value='2'/></ownedAttribute>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_v_satmax' name='massMax' type='sat_vt_kg' aggregation='composite'><defaultValue xmi:type='uml:LiteralReal' xmi:id='sat_v_satmax_v' value='5'/></ownedAttribute>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_v_satpw' name='power' type='sat_vt_w' aggregation='composite'><defaultValue xmi:type='uml:LiteralReal' xmi:id='sat_v_satpw_v' value='30'/></ownedAttribute>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_prt_obc' name='obc' aggregation='composite' type='sat_blk_obc'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_prt_pwr' name='pwr' aggregation='composite' type='sat_blk_pwr'/>
+				<ownedAttribute xmi:type='uml:Port' xmi:id='sat_p_down' name='down' type='sat_ib_img'/>
+				<ownedConnector xmi:type='uml:Connector' xmi:id='sat_c1' name='video'>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_c1a' role='sat_p_cam_img' partWithPort='sat_prt_cam'/>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_c1b' role='sat_p_obc_img' partWithPort='sat_prt_obc'/>
+				</ownedConnector>
+				<ownedConnector xmi:type='uml:Connector' xmi:id='sat_c2' name='power cam'>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_c2a' role='sat_p_pwr_o1' partWithPort='sat_prt_pwr'/>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_c2b' role='sat_p_cam_pwr' partWithPort='sat_prt_cam'/>
+				</ownedConnector>
+				<ownedConnector xmi:type='uml:Connector' xmi:id='sat_c3' name='power obc'>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_c3a' role='sat_p_pwr_o2' partWithPort='sat_prt_pwr'/>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_c3b' role='sat_p_obc_pwr' partWithPort='sat_prt_obc'/>
+				</ownedConnector>
+				<ownedConnector xmi:type='uml:Connector' xmi:id='sat_c4' name='command'>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_c4a' role='sat_p_obc_ctl' partWithPort='sat_prt_obc'/>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_c4b' role='sat_p_cam_ctl' partWithPort='sat_prt_cam'/>
+				</ownedConnector>
+				<ownedConnector xmi:type='uml:Connector' xmi:id='sat_c5' name='downlink'>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_c5a' role='sat_p_obc_dl' partWithPort='sat_prt_obc'/>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_c5b' role='sat_p_down'/>
+				</ownedConnector>
+				<ownedBehavior xmi:type='uml:Interaction' xmi:id='sat_int1' name='Acquisition sequence'>
+					<lifeline xmi:type='uml:Lifeline' xmi:id='sat_ll_obc' name='obc' represents='sat_prt_obc'/>
+					<lifeline xmi:type='uml:Lifeline' xmi:id='sat_ll_cam' name='cam' represents='sat_prt_cam'/>
+					<lifeline xmi:type='uml:Lifeline' xmi:id='sat_ll_op' name='Operator'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='sat_ms1' covered='sat_ll_obc' message='sat_m1'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='sat_mr1' covered='sat_ll_cam' message='sat_m1'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='sat_ms2' covered='sat_ll_cam' message='sat_m2'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='sat_mr2' covered='sat_ll_obc' message='sat_m2'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='sat_ms3' covered='sat_ll_obc' message='sat_m3'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='sat_mr3' covered='sat_ll_cam' message='sat_m3'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='sat_ms4' covered='sat_ll_cam' message='sat_m4'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='sat_mr4' covered='sat_ll_obc' message='sat_m4'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='sat_ms5' covered='sat_ll_op' message='sat_m5'/>
+					<message xmi:type='uml:Message' xmi:id='sat_m1' messageSort='asynchSignal' sendEvent='sat_ms1' receiveEvent='sat_mr1' signature='sat_sig_cmd'/>
+					<message xmi:type='uml:Message' xmi:id='sat_m2' sendEvent='sat_ms2' receiveEvent='sat_mr2' signature='sat_op_status'/>
+					<message xmi:type='uml:Message' xmi:id='sat_m3' sendEvent='sat_ms3' receiveEvent='sat_mr3' signature='sat_op_status'/>
+					<message xmi:type='uml:Message' xmi:id='sat_m4' name='done' messageSort='asynchSignal' sendEvent='sat_ms4' receiveEvent='sat_mr4'/>
+					<message xmi:type='uml:Message' xmi:id='sat_m5' name='abort' messageSort='asynchSignal' sendEvent='sat_ms5'/>
+				</ownedBehavior>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_cp_mass' name='massEq' aggregation='composite' type='sat_cb_mass'/>
+				<ownedConnector xmi:type='uml:Connector' xmi:id='sat_bc1'>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_bc1a' role='sat_par_m1' partWithPort='sat_cp_mass'/>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_bc1b' role='sat_v_cammass' partWithPort='sat_prt_cam'/>
+				</ownedConnector>
+				<ownedConnector xmi:type='uml:Connector' xmi:id='sat_bc2'>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_bc2a' role='sat_par_m2' partWithPort='sat_cp_mass'/>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_bc2b' role='sat_v_obcmass' partWithPort='sat_prt_obc'/>
+				</ownedConnector>
+				<ownedConnector xmi:type='uml:Connector' xmi:id='sat_bc3'>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_bc3a' role='sat_par_m3' partWithPort='sat_cp_mass'/>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_bc3b' role='sat_v_pwrmass' partWithPort='sat_prt_pwr'/>
+				</ownedConnector>
+				<ownedConnector xmi:type='uml:Connector' xmi:id='sat_bc4'>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_bc4a' role='sat_par_p' partWithPort='sat_cp_mass'/>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_bc4b' role='sat_v_campw' partWithPort='sat_prt_cam'/>
+				</ownedConnector>
+				<ownedConnector xmi:type='uml:Connector' xmi:id='sat_c6' name='wrong'>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_c6a' role='sat_p_cam_img' partWithPort='sat_prt_cam'/>
+					<end xmi:type='uml:ConnectorEnd' xmi:id='sat_c6b' role='sat_p_pwr_o2' partWithPort='sat_prt_pwr'/>
+				</ownedConnector>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_blk_cam' name='Camera'>
+				<ownedAttribute xmi:type='uml:Port' xmi:id='sat_p_cam_img' name='img' type='sat_ib_img'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_v_cammass' name='mass' type='sat_vt_kg' aggregation='composite'><defaultValue xmi:type='uml:LiteralReal' xmi:id='sat_v_cammass_v' value='1.2'/></ownedAttribute>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_v_campw' name='power' type='sat_vt_w' aggregation='composite'><defaultValue xmi:type='uml:LiteralReal' xmi:id='sat_v_campw_v' value='12'/></ownedAttribute>
+				<ownedAttribute xmi:type='uml:Port' xmi:id='sat_p_cam_pwr' name='pwrIn' type='sat_ib_pwr' isConjugated='true'/>
+				<ownedAttribute xmi:type='uml:Port' xmi:id='sat_p_cam_ctl' name='ctlIn' type='sat_ib_cmd'/>
+				<ownedAttribute xmi:type='uml:Port' xmi:id='sat_p_cam_fix' name='fix' type='sat_ib_mech'/>
+				<ownedBehavior xmi:type='uml:StateMachine' xmi:id='sat_sm_cam' name='Camera modes'>
+					<region xmi:type='uml:Region' xmi:id='sat_rg_cam'>
+						<subvertex xmi:type='uml:Pseudostate' xmi:id='sat_ps_init' kind='initial'/>
+						<subvertex xmi:type='uml:State' xmi:id='sat_st_off' name='Off'/>
+						<subvertex xmi:type='uml:State' xmi:id='sat_st_stby' name='Standby'/>
+						<subvertex xmi:type='uml:State' xmi:id='sat_st_img' name='Imaging'>
+							<doActivity xmi:type='uml:OpaqueBehavior' xmi:id='sat_do_img' name='expose'/>
+						</subvertex>
+						<subvertex xmi:type='uml:Pseudostate' xmi:id='sat_ps_choice' kind='choice'/>
+						<subvertex xmi:type='uml:State' xmi:id='sat_st_safe' name='Safe'/>
+						<subvertex xmi:type='uml:State' xmi:id='sat_st_fault' name='Fault'/>
+						<transition xmi:type='uml:Transition' xmi:id='sat_t1' source='sat_ps_init' target='sat_st_off'/>
+						<transition xmi:type='uml:Transition' xmi:id='sat_t2' source='sat_st_off' target='sat_st_stby'>
+							<trigger xmi:type='uml:Trigger' xmi:id='sat_tg2' event='sat_ev_poweron'/>
+						</transition>
+						<transition xmi:type='uml:Transition' xmi:id='sat_t3' source='sat_st_stby' target='sat_st_img'>
+							<trigger xmi:type='uml:Trigger' xmi:id='sat_tg3' event='sat_ev_cmd'/>
+							<effect xmi:type='uml:OpaqueBehavior' xmi:id='sat_ef3' name='prepare'/>
+						</transition>
+						<transition xmi:type='uml:Transition' xmi:id='sat_t4' source='sat_st_stby' target='sat_st_off'>
+							<trigger xmi:type='uml:Trigger' xmi:id='sat_tg4' event='sat_ev_cmd'/>
+						</transition>
+						<transition xmi:type='uml:Transition' xmi:id='sat_t5' source='sat_st_img' target='sat_ps_choice'/>
+						<transition xmi:type='uml:Transition' xmi:id='sat_t6' source='sat_ps_choice' target='sat_st_stby'>
+							<guard xmi:type='uml:Constraint' xmi:id='sat_g6'><specification xmi:type='uml:OpaqueExpression' xmi:id='sat_g6e' body='ok'/></guard>
+						</transition>
+						<transition xmi:type='uml:Transition' xmi:id='sat_t7' source='sat_ps_choice' target='sat_st_safe'>
+							<guard xmi:type='uml:Constraint' xmi:id='sat_g7'><specification xmi:type='uml:OpaqueExpression' xmi:id='sat_g7e' body='ko'/></guard>
+						</transition>
+						<transition xmi:type='uml:Transition' xmi:id='sat_t8' source='sat_st_fault' target='sat_st_off'>
+							<trigger xmi:type='uml:Trigger' xmi:id='sat_tg8' event='sat_ev_ready'/>
+						</transition>
+					</region>
+				</ownedBehavior>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_blk_obc' name='OBC'>
+				<ownedAttribute xmi:type='uml:Port' xmi:id='sat_p_obc_img' name='imgIn' type='sat_ib_img' isConjugated='true'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_v_obcmass' name='mass' type='sat_vt_kg' aggregation='composite'><defaultValue xmi:type='uml:LiteralReal' xmi:id='sat_v_obcmass_v' value='0.8'/></ownedAttribute>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_v_obcpw' name='power' type='sat_vt_w' aggregation='composite'><defaultValue xmi:type='uml:LiteralReal' xmi:id='sat_v_obcpw_v' value='8'/></ownedAttribute>
+				<ownedAttribute xmi:type='uml:Port' xmi:id='sat_p_obc_pwr' name='pwrIn' type='sat_ib_pwr' isConjugated='true'/>
+				<ownedAttribute xmi:type='uml:Port' xmi:id='sat_p_obc_ctl' name='ctl' type='sat_ib_cmd' isConjugated='true'/>
+				<ownedAttribute xmi:type='uml:Port' xmi:id='sat_p_obc_dl' name='dl' type='sat_ib_img'/>
+				<ownedOperation xmi:type='uml:Operation' xmi:id='sat_op_status' name='getStatus'/>
+				<ownedBehavior xmi:type='uml:StateMachine' xmi:id='sat_sm_obc' name='OBC modes'>
+					<region xmi:type='uml:Region' xmi:id='sat_rg_obc'>
+						<subvertex xmi:type='uml:State' xmi:id='sat_st_idle' name='Idle'/>
+					</region>
+				</ownedBehavior>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_blk_pwr' name='PowerUnit'>
+				<ownedAttribute xmi:type='uml:Port' xmi:id='sat_p_pwr_o1' name='out1' type='sat_ib_pwr'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_v_pwrmass' name='mass' type='sat_vt_kg' aggregation='composite'><defaultValue xmi:type='uml:LiteralReal' xmi:id='sat_v_pwrmass_v' value='2.5'/></ownedAttribute>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_v_pwrpw' name='power' type='sat_vt_mw' aggregation='composite'><defaultValue xmi:type='uml:LiteralReal' xmi:id='sat_v_pwrpw_v' value='5'/></ownedAttribute>
+				<ownedAttribute xmi:type='uml:Port' xmi:id='sat_p_pwr_o2' name='out2' type='sat_ib_pwr'/>
+				<ownedAttribute xmi:type='uml:Port' xmi:id='sat_p_pwr_test' name='test'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_blk_gnd' name='Ground station'/>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_blk_mis' name='Mission'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_prt_sat' name='sat' aggregation='composite' type='sat_blk_sat'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_prt_gnd' name='gnd' aggregation='composite' type='sat_blk_gnd'><upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:id='sat_prt_gnd_up' value='*'/></ownedAttribute>
+				<ownedBehavior xmi:type='uml:Interaction' xmi:id='sat_int2' name='Downlink sequence'>
+					<lifeline xmi:type='uml:Lifeline' xmi:id='sat_ll_sat' name='sat' represents='sat_prt_sat'/>
+					<lifeline xmi:type='uml:Lifeline' xmi:id='sat_ll_gnd' name='gnd' represents='sat_prt_gnd'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='sat_ms6' covered='sat_ll_sat' message='sat_m6'/>
+					<fragment xmi:type='uml:MessageOccurrenceSpecification' xmi:id='sat_mr6' covered='sat_ll_gnd' message='sat_m6'/>
+					<message xmi:type='uml:Message' xmi:id='sat_m6' messageSort='asynchSignal' sendEvent='sat_ms6' receiveEvent='sat_mr6' signature='sat_sig_image'/>
+				</ownedBehavior>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_ib_img' name='ImageIF'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_fp_img' name='image' type='sat_sig_image'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_ib_pwr' name='PowerIF'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_fp_pwr' name='power' type='sat_sig_power'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_ib_cmd' name='CommandIF'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_fp_cmd' name='cmd' type='sat_sig_cmd'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_ib_mech' name='MechanicalIF'/>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_ib_tm' name='TelemetryIF'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_fp_tm' name='telemetry'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_cb_mass' name='MassSum'>
+				<ownedRule xmi:type='uml:Constraint' xmi:id='sat_eq_mass'><specification xmi:type='uml:OpaqueExpression' xmi:id='sat_eq_mass_e' body='total = m1 + m2 + m3 + margin'/></ownedRule>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_par_total' name='total' type='sat_vt_kg'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_par_m1' name='m1' type='sat_vt_kg'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_par_m2' name='m2' type='sat_vt_kg'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_par_m3' name='m3' type='sat_vt_kg'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_par_p' name='p' type='sat_vt_kg'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_cb_pw' name='PowerMargin'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='sat_par_pw' name='pw' type='sat_vt_w'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Constraint' xmi:id='sat_ct_free' name='Orbit altitude'/>
+			<packagedElement xmi:type='uml:DataType' xmi:id='sat_vt_kg' name='kg'/>
+			<packagedElement xmi:type='uml:DataType' xmi:id='sat_vt_w' name='W'/>
+			<packagedElement xmi:type='uml:DataType' xmi:id='sat_vt_mw' name='mW'/>
+			<packagedElement xmi:type='uml:Signal' xmi:id='sat_sig_image' name='Image'/>
+			<packagedElement xmi:type='uml:Signal' xmi:id='sat_sig_power' name='Power'/>
+			<packagedElement xmi:type='uml:Signal' xmi:id='sat_sig_cmd' name='Command'/>
+			<packagedElement xmi:type='uml:Signal' xmi:id='sat_sig_ready' name='ImageReady'/>
+			<packagedElement xmi:type='uml:Signal' xmi:id='sat_sig_status' name='Status'/>
+			<packagedElement xmi:type='uml:SignalEvent' xmi:id='sat_ev_ready' name='ImageReady event' signal='sat_sig_ready'/>
+			<packagedElement xmi:type='uml:Signal' xmi:id='sat_sig_poweron' name='PowerOn'/>
+			<packagedElement xmi:type='uml:SignalEvent' xmi:id='sat_ev_poweron' name='PowerOn event' signal='sat_sig_poweron'/>
+			<packagedElement xmi:type='uml:SignalEvent' xmi:id='sat_ev_cmd' name='Command event' signal='sat_sig_cmd'/>
+			<packagedElement xmi:type='uml:InformationFlow' xmi:id='sat_if1' name='images' informationSource='sat_p_cam_img' informationTarget='sat_p_obc_img' realizingConnector='sat_c1'>
+				<conveyed xmi:idref='sat_sig_image'/>
+				<conveyed xmi:idref='sat_sig_ready'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:InformationFlow' xmi:id='sat_if2' name='power to camera' informationSource='sat_p_pwr_o1' informationTarget='sat_p_cam_pwr' realizingConnector='sat_c2' conveyed='sat_sig_power'/>
+			<packagedElement xmi:type='uml:InformationFlow' xmi:id='sat_if3' name='commands' informationSource='sat_p_obc_ctl' informationTarget='sat_p_cam_ctl' conveyed='sat_sig_cmd'/>
+			<packagedElement xmi:type='uml:InformationFlow' xmi:id='sat_if4' name='heat' informationSource='sat_prt_pwr' informationTarget='sat_prt_cam' conveyed='sat_sig_power'/>
+			<packagedElement xmi:type='uml:InformationFlow' xmi:id='sat_if5' name='reverse power' informationSource='sat_p_cam_pwr' informationTarget='sat_p_pwr_o1' realizingConnector='sat_c2' conveyed='sat_sig_power'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_sat1' client='sat_blk_cam' supplier='sat_r11'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_sat2' client='sat_blk_obc' supplier='sat_r12'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_sat3' client='sat_blk_pwr' supplier='sat_r2'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_sat4' client='sat_blk_sat' supplier='sat_r1'/>
+		</packagedElement>
+		<packagedElement xmi:type='uml:Package' xmi:id='sat_pkg_uc' name='Use cases'>
+			<packagedElement xmi:type='uml:Actor' xmi:id='sat_act_op' name='Mission operator'/>
+			<packagedElement xmi:type='uml:Actor' xmi:id='sat_act_mt' name='Maintainer'/>
+			<packagedElement xmi:type='uml:UseCase' xmi:id='sat_uc_acq' name='Acquire images' subject='sat_blk_sat'>
+				<include xmi:type='uml:Include' xmi:id='sat_inc1' addition='sat_uc_plan'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:UseCase' xmi:id='sat_uc_plan' name='Plan acquisition' subject='sat_blk_sat'>
+				<include xmi:type='uml:Include' xmi:id='sat_inc2' addition='sat_uc_check'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:UseCase' xmi:id='sat_uc_check' name='Check plan'>
+				<include xmi:type='uml:Include' xmi:id='sat_inc3' addition='sat_uc_plan'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:UseCase' xmi:id='sat_uc_mnt' name='Maintain' subject='sat_blk_sat'/>
+			<packagedElement xmi:type='uml:Association' xmi:id='sat_as1' memberEnd='sat_as1_a sat_as1_u'>
+				<ownedEnd xmi:type='uml:Property' xmi:id='sat_as1_a' type='sat_act_op' association='sat_as1'/>
+				<ownedEnd xmi:type='uml:Property' xmi:id='sat_as1_u' type='sat_uc_acq' association='sat_as1'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_trc1' client='sat_act_mission' supplier='sat_uc_acq'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_ref2' client='sat_uc_acq' supplier='sat_r1'/>
+		</packagedElement>
+		<packagedElement xmi:type='uml:Package' xmi:id='sat_pkg_phy' name='Physical'>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_blk_board' name='Sensor board'/>
+			<packagedElement xmi:type='uml:Class' xmi:id='sat_blk_rack' name='Avionics rack'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_all3' client='sat_blk_cam' supplier='sat_blk_board'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_all4' client='sat_blk_rack' supplier='sat_blk_obc'/>
+		</packagedElement>
+		<packagedElement xmi:type='uml:Package' xmi:id='sat_pkg_beh' name='Behavior'>
+			<packagedElement xmi:type='uml:Activity' xmi:id='sat_act_mission' name='Imaging mission'>
+				<node xmi:type='uml:InitialNode' xmi:id='sat_n_init'/>
+				<node xmi:type='uml:CallBehaviorAction' xmi:id='sat_a1' name='acquire' behavior='sat_act_acq' inPartition='sat_part_cam'>
+					<argument xmi:type='uml:InputPin' xmi:id='sat_a1_cmd' name='cmd'/>
+					<result xmi:type='uml:OutputPin' xmi:id='sat_a1_img' name='img' type='sat_sig_image'/>
+				</node>
+				<node xmi:type='uml:CallBehaviorAction' xmi:id='sat_a2' behavior='sat_act_proc' inPartition='sat_part_obc'>
+					<argument xmi:type='uml:InputPin' xmi:id='sat_a2_in' name='in' type='sat_sig_image'/>
+					<result xmi:type='uml:OutputPin' xmi:id='sat_a2_out' name='out' type='sat_sig_image'/>
+				</node>
+				<node xmi:type='uml:ForkNode' xmi:id='sat_n_fork'/>
+				<node xmi:type='uml:OpaqueAction' xmi:id='sat_a3' name='Store' inPartition='sat_part_obc'>
+					<inputValue xmi:type='uml:InputPin' xmi:id='sat_a3_data' name='data' type='sat_sig_image'/>
+				</node>
+				<node xmi:type='uml:OpaqueAction' xmi:id='sat_a4' name='Display' inPartition='sat_part_gnd'>
+					<inputValue xmi:type='uml:InputPin' xmi:id='sat_a4_data' name='data' type='sat_sig_image'/>
+				</node>
+				<node xmi:type='uml:CallBehaviorAction' xmi:id='sat_a5' name='Compress'/>
+				<node xmi:type='uml:ActivityFinalNode' xmi:id='sat_n_final'/>
+				<edge xmi:type='uml:ControlFlow' xmi:id='sat_cf1' source='sat_n_init' target='sat_a1'/>
+				<edge xmi:type='uml:ObjectFlow' xmi:id='sat_of1' source='sat_a1_img' target='sat_a2_in'/>
+				<edge xmi:type='uml:ObjectFlow' xmi:id='sat_of2' source='sat_a2_out' target='sat_n_fork'/>
+				<edge xmi:type='uml:ObjectFlow' xmi:id='sat_of3' source='sat_n_fork' target='sat_a3_data'/>
+				<edge xmi:type='uml:ObjectFlow' xmi:id='sat_of4' source='sat_n_fork' target='sat_a4_data'/>
+				<edge xmi:type='uml:ControlFlow' xmi:id='sat_cf2' source='sat_a3' target='sat_n_final'/>
+				<group xmi:type='uml:ActivityPartition' xmi:id='sat_part_cam' name='camera' represents='sat_prt_cam' node='sat_a1'/>
+				<group xmi:type='uml:ActivityPartition' xmi:id='sat_part_obc' name='computer' represents='sat_prt_obc' node='sat_a2 sat_a3'/>
+				<group xmi:type='uml:ActivityPartition' xmi:id='sat_part_gnd' name='ground' represents='sat_blk_gnd' node='sat_a4'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Activity' xmi:id='sat_act_acq' name='Acquire image'>
+				<ownedParameter xmi:type='uml:Parameter' xmi:id='sat_par_img' name='image' direction='out' type='sat_sig_image'/>
+				<node xmi:type='uml:OpaqueAction' xmi:id='sat_b1' name='Capture'>
+					<outputValue xmi:type='uml:OutputPin' xmi:id='sat_b1_px' name='px' type='sat_sig_image'/>
+				</node>
+				<node xmi:type='uml:SendSignalAction' xmi:id='sat_b2' signal='sat_sig_ready' onPort='sat_p_cam_img'/>
+				<node xmi:type='uml:ActivityParameterNode' xmi:id='sat_apn_img' name='image' parameter='sat_par_img'/>
+				<edge xmi:type='uml:ObjectFlow' xmi:id='sat_of5' source='sat_b1_px' target='sat_apn_img'/>
+				<edge xmi:type='uml:ControlFlow' xmi:id='sat_cf3' source='sat_b1' target='sat_b2'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Activity' xmi:id='sat_act_proc' name='Process image'>
+				<node xmi:type='uml:AcceptEventAction' xmi:id='sat_c1x'>
+					<trigger xmi:type='uml:Trigger' xmi:id='sat_trg1' event='sat_ev_ready' port='sat_p_obc_img'/>
+				</node>
+				<node xmi:type='uml:SendSignalAction' xmi:id='sat_c2x' signal='sat_sig_status' onPort='sat_p_obc_dl'/>
+				<edge xmi:type='uml:ControlFlow' xmi:id='sat_cf4' source='sat_c1x' target='sat_c2x'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Activity' xmi:id='sat_act_test' name='Image quality test'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_ver1' client='sat_act_test' supplier='sat_r11'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_ref1' client='sat_act_acq' supplier='sat_r1'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_all1' client='sat_act_acq' supplier='sat_blk_cam'/>
+			<packagedElement xmi:type='uml:Abstraction' xmi:id='sat_all2' client='sat_act_proc' supplier='sat_blk_obc'/>
+		</packagedElement>
+	</uml:Model>
+	<sysml:Requirement xmi:id='sat_r1_app' base_Class='sat_r1' id='SAT-1' text='The satellite shall acquire images of the target area.'/>
+	<sysml:Requirement xmi:id='sat_r11_app' base_Class='sat_r11' id='SAT-1.1' text='Images shall have a ground resolution of 5 m or better.'/>
+	<sysml:Requirement xmi:id='sat_r12_app' base_Class='sat_r12' id='SAT-1.2' text='Images shall be downlinked within 2 hours.'/>
+	<sysml:Requirement xmi:id='sat_r2_app' base_Class='sat_r2' id='SAT-2' text='The payload shall consume less than 40 W.'/>
+	<sysml:Requirement xmi:id='sat_r3_app' base_Class='sat_r3' id='SAT-2'/>
+	<sysml:Requirement xmi:id='sat_r4_app' base_Class='sat_r4' id='SAT-4' text='The camera optics shall resolve 2 arcseconds.'/>
+	<sysml:Requirement xmi:id='sat_r5_app' base_Class='sat_r5' id='SAT-5' text='The satellite shall point within 0.1 degree.'/>
+	<sysml:Requirement xmi:id='sat_r6_app' base_Class='sat_r6' text='The attitude shall be stable within 0.01 degree per second.'/>
+	<sysml:DeriveReqt xmi:id='sat_der4_app' base_Abstraction='sat_der4'/>
+	<sysml:DeriveReqt xmi:id='sat_der56_app' base_Abstraction='sat_der56'/>
+	<sysml:DeriveReqt xmi:id='sat_der65_app' base_Abstraction='sat_der65'/>
+	<sysml:Satisfy xmi:id='sat_sat_bad_app' base_Abstraction='sat_sat_bad'/>
+	<sysml:Satisfy xmi:id='sat_sat1_app' base_Abstraction='sat_sat1'/>
+	<sysml:Satisfy xmi:id='sat_sat2_app' base_Abstraction='sat_sat2'/>
+	<sysml:Satisfy xmi:id='sat_sat3_app' base_Abstraction='sat_sat3'/>
+	<sysml:Satisfy xmi:id='sat_sat4_app' base_Abstraction='sat_sat4'/>
+	<sysml:Verify xmi:id='sat_ver1_app' base_Abstraction='sat_ver1'/>
+	<StandardProfile:Refine xmi:id='sat_ref1_app' base_Abstraction='sat_ref1'/>
+	<sysml:Allocate xmi:id='sat_all1_app' base_Abstraction='sat_all1'/>
+	<sysml:Allocate xmi:id='sat_all2_app' base_Abstraction='sat_all2'/>
+	<sysml:TestCase xmi:id='sat_test_app' base_Behavior='sat_act_test'/>
+	<StandardProfile:Trace xmi:id='sat_trc1_app' base_Abstraction='sat_trc1'/>
+	<StandardProfile:Refine xmi:id='sat_ref2_app' base_Abstraction='sat_ref2'/>
+	<sysml:Allocate xmi:id='sat_all3_app' base_Abstraction='sat_all3'/>
+	<sysml:Allocate xmi:id='sat_all4_app' base_Abstraction='sat_all4'/>
+	<sysml:Block xmi:id='sat_blk_board_app' base_Class='sat_blk_board'/>
+	<sysml:Block xmi:id='sat_blk_rack_app' base_Class='sat_blk_rack'/>
+	<sysml:Block xmi:id='sat_blk_sat_app' base_Class='sat_blk_sat'/>
+	<sysml:Block xmi:id='sat_blk_cam_app' base_Class='sat_blk_cam'/>
+	<sysml:Block xmi:id='sat_blk_obc_app' base_Class='sat_blk_obc'/>
+	<sysml:Block xmi:id='sat_blk_pwr_app' base_Class='sat_blk_pwr'/>
+	<sysml:Block xmi:id='sat_blk_gnd_app' base_Class='sat_blk_gnd'/>
+	<sysml:Block xmi:id='sat_blk_mis_app' base_Class='sat_blk_mis'/>
+	<sysml:InterfaceBlock xmi:id='sat_ib_img_app' base_Class='sat_ib_img'/>
+	<sysml:InterfaceBlock xmi:id='sat_ib_pwr_app' base_Class='sat_ib_pwr'/>
+	<sysml:InterfaceBlock xmi:id='sat_ib_cmd_app' base_Class='sat_ib_cmd'/>
+	<sysml:InterfaceBlock xmi:id='sat_ib_mech_app' base_Class='sat_ib_mech'/>
+	<sysml:InterfaceBlock xmi:id='sat_ib_tm_app' base_Class='sat_ib_tm'/>
+	<sysml:FlowProperty xmi:id='sat_fp_tm_app' base_Property='sat_fp_tm' direction='out'/>
+	<sysml:ValueType xmi:id='sat_vt_kg_app' base_DataType='sat_vt_kg'/>
+	<sysml:ConstraintBlock xmi:id='sat_cb_mass_app' base_Class='sat_cb_mass'/>
+	<sysml:ConstraintBlock xmi:id='sat_cb_pw_app' base_Class='sat_cb_pw'/>
+	<sysml:ConstraintProperty xmi:id='sat_cp_mass_app' base_Property='sat_cp_mass'/>
+	<sysml:BindingConnector xmi:id='sat_bc1_app' base_Connector='sat_bc1'/>
+	<sysml:BindingConnector xmi:id='sat_bc2_app' base_Connector='sat_bc2'/>
+	<sysml:BindingConnector xmi:id='sat_bc3_app' base_Connector='sat_bc3'/>
+	<sysml:BindingConnector xmi:id='sat_bc4_app' base_Connector='sat_bc4'/>
+	<sysml:ValueType xmi:id='sat_vt_w_app' base_DataType='sat_vt_w'/>
+	<sysml:ValueType xmi:id='sat_vt_mw_app' base_DataType='sat_vt_mw'/>
+	<sysml:FlowProperty xmi:id='sat_fp_img_app' base_Property='sat_fp_img' direction='out'/>
+	<sysml:FlowProperty xmi:id='sat_fp_pwr_app' base_Property='sat_fp_pwr' direction='out'/>
+	<sysml:FlowProperty xmi:id='sat_fp_cmd_app' base_Property='sat_fp_cmd' direction='in'/>
+	<sysml:ProxyPort xmi:id='sat_p_down_app' base_Port='sat_p_down'/>
+	<sysml:ProxyPort xmi:id='sat_p_cam_img_app' base_Port='sat_p_cam_img'/>
+	<sysml:ProxyPort xmi:id='sat_p_cam_pwr_app' base_Port='sat_p_cam_pwr'/>
+	<sysml:ProxyPort xmi:id='sat_p_cam_ctl_app' base_Port='sat_p_cam_ctl'/>
+	<sysml:ProxyPort xmi:id='sat_p_cam_fix_app' base_Port='sat_p_cam_fix'/>
+	<sysml:ProxyPort xmi:id='sat_p_obc_img_app' base_Port='sat_p_obc_img'/>
+	<sysml:ProxyPort xmi:id='sat_p_obc_pwr_app' base_Port='sat_p_obc_pwr'/>
+	<sysml:ProxyPort xmi:id='sat_p_obc_ctl_app' base_Port='sat_p_obc_ctl'/>
+	<sysml:ProxyPort xmi:id='sat_p_obc_dl_app' base_Port='sat_p_obc_dl'/>
+	<sysml:ProxyPort xmi:id='sat_p_pwr_o1_app' base_Port='sat_p_pwr_o1'/>
+	<sysml:ProxyPort xmi:id='sat_p_pwr_o2_app' base_Port='sat_p_pwr_o2'/>
+	<sysml:ItemFlow xmi:id='sat_if1_app' base_InformationFlow='sat_if1'/>
+	<sysml:ItemFlow xmi:id='sat_if2_app' base_InformationFlow='sat_if2'/>
+	<sysml:ItemFlow xmi:id='sat_if3_app' base_InformationFlow='sat_if3'/>
+	<sysml:ItemFlow xmi:id='sat_if4_app' base_InformationFlow='sat_if4'/>
+	<sysml:ItemFlow xmi:id='sat_if5_app' base_InformationFlow='sat_if5'/>
+	<xmi:Extension extender='MagicDraw UML 19.0'>
+		<plugin pluginName='SysML' pluginVersion='19.0'/>
+	</xmi:Extension>
+</xmi:XMI>

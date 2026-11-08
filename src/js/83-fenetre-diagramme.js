@@ -4,7 +4,7 @@
    Une seule fenêtre séparée (réutilisée) pour afficher un second diagramme à côté de celui de 🔲 Diagrammes
    Capella, par exemple sur un autre écran, et les comparer. Elle s'ouvre par ⧉ Comparer (barre de la vue),
    par le clic droit sur un diagramme de l'explorateur ou dans le diagramme ouvert, et propose sa propre liste.
-   Le dessin est l'export SVG de la visionneuse (capDiagSvg, 54) : zoom à la molette, déplacement au glisser,
+   Le dessin est l'export SVG de la visionneuse ou le document SVG d'un lecteur (capDiagSvg, 54) : zoom à la molette, déplacement au glisser,
    clic sur un élément → panneau de détail dans la page. Une seule fenêtre : la visionneuse n'a qu'une instance
    (identifiants fixes), et deux diagrammes côte à côte suffisent à comparer.
    ═══════════════════════════════════════════════════════════════════════ */
@@ -25,7 +25,7 @@ function capDgwFermer(){ const w=capDgwWin(); if(w) w.close(); _capDgw.win=null;
  */
 async function capDgwOuvrir(uid){
   if(!uid){ capToast(_L('Ouvrez ou choisissez d\'abord un diagramme.')); return; }
-  if(!_capDiag.vis){ capToast(_L('Ouvrez d\'abord 🔲 Diagrammes Capella.')); return; }
+  if(!capDiagReps().length){ capToast(_L('Ouvrez d\'abord 🔲 Diagrammes.')); return; }
   let w=capDgwWin();
   if(!w){
     w=window.open('', 'arcalyse-diagramme', 'width=1100,height=800');
@@ -37,7 +37,7 @@ async function capDgwOuvrir(uid){
   const avant=_capDiag.actif; let svg='';
   try{ svg=await capDiagSvg(uid); }
   catch(e){ if(z) z.innerHTML=`<div class="dgw-msg">${_L('Diagramme impossible à afficher')} : ${capEsc(e.message||String(e))}</div>`; return; }
-  finally{ if(avant&&avant!==uid&&_capDiag.vis){ _capDiag.vis.ouvrir(avant); _capDiag.actif=avant; capDiagMarquerActif(); } }
+  finally{ if(avant&&avant!==uid&&_capDiag.vis&&!capDiagSy()){ _capDiag.vis.ouvrir(avant); _capDiag.actif=avant; capDiagMarquerActif(); } }   // vues des lecteurs : rien à rétablir (SVG calculé)
   _capDgw.uid=uid;
   capDgwAfficher(w, svg);
 }
@@ -55,10 +55,12 @@ function capDgwPreparer(w){
   D.body.innerHTML=`<div class="dgw-barre"><select id="dgw-choix" class="phl-filter-input" title="${_L('Diagramme affiché dans cette fenêtre')}">${capDgwOptions()}</select>`+
     `<span class="tb-grp"><button class="cap-lf-btn" data-z="moins" title="${_L('Zoom arrière')}">−</button><span id="dgw-pct" class="dgw-pct"></span>`+
     `<button class="cap-lf-btn" data-z="plus" title="${_L('Zoom avant')}">+</button><button class="cap-lf-btn" data-z="ajuster" title="${_L('Ajuster le diagramme à la fenêtre')}">${_L('⤢ Ajuster')}</button></span>`+
-    `<span class="dgw-aide">${_L('Molette : zoom · glisser : déplacer · clic sur un élément : son détail dans la page')}</span></div>`+
+    `<span class="dgw-aide">${_L('Molette : zoom · glisser : déplacer · clic sur un élément : son détail dans la page')}</span>`+
+    `<button class="cap-lf-btn" data-a="tour" title="${_L('Visite guidée de cette fenêtre')}">🎓</button></div>`+
     `<div id="dgw-zone" class="dgw-zone"></div>`;
   D.getElementById('dgw-choix').addEventListener('change',e=>capDgwOuvrir(e.target.value));
-  D.body.addEventListener('click',e=>{ const b=e.target.closest('[data-z]'); if(!b) return; const k=b.dataset.z;
+  D.body.addEventListener('click',e=>{ if(e.target.closest('[data-a="tour"]')){ capTourDgw(); return; }   // 🎓 visite de la fenêtre (43)
+    const b=e.target.closest('[data-z]'); if(!b) return; const k=b.dataset.z;
     if(k==='ajuster') capDgwCadre(w, Object.assign({}, _capDgw.vb0)); else capDgwZoom(w, k==='plus'?1/1.25:1.25); });
   const zone=D.getElementById('dgw-zone');
   zone.addEventListener('wheel',e=>{ e.preventDefault(); capDgwZoom(w, e.deltaY<0?1/1.15:1.15, e.clientX, e.clientY); }, {passive:false});

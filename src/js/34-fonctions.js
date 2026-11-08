@@ -739,7 +739,7 @@ function capRenderAnalyses(){
   }
   capNavSync();   // barre du haut : sous-vue épinglée ou menu 🔬 Analyses
   const box=c.querySelector('#ana-box');
-  const R={trace:capRenderTrace, xlay:capRenderXlay, caps:capRenderCapabilities, states:capRenderStates, diff:capRenderDiff, reqs:capRenderRequirements, pvmt:capRenderPvmt, data:capRenderDataModel, cts:capRenderConstraints, status:capRenderStatus, sante:capRenderSante, cats:capRenderExchangeCategories, libs:capRenderLibs, rec:capRenderRec, deploy:capRenderDeploy, sysml:capRenderSysml}[capAnaSub];
+  const R={trace:capRenderTrace, xlay:capRenderXlay, caps:capRenderCapabilities, states:capRenderStates, diff:capRenderDiff, reqs:capRenderRequirements, pvmt:capRenderPvmt, data:capRenderDataModel, cts:capRenderConstraints, status:capRenderStatus, sante:capRenderSante, cats:capRenderExchangeCategories, libs:capRenderLibs, rec:capRenderRec, deploy:capRenderDeploy, sysml:capRenderSysml, uml:capRenderUml, umlblk:capRenderUmlBlocs, umlact:capRenderUmlActivites, umlreq:capRenderUmlExigences, umlstm:capRenderUmlEtats, umlseq:capRenderUmlInteractions, umlucs:capRenderUmlCas, umltrace:capRenderUmlTracabilite, umlicd:capRenderUmlInterfaces, umlbudget:capRenderUmlBudgets, umlpar:capRenderUmlParametrique, umlsoft:capRenderUmlLogiciel}[capAnaSub];
   const holder=box.querySelector(`[data-hold="${capAnaSub}"]`)||(()=>{ const d=document.createElement('div'); d.dataset.hold=capAnaSub; box.appendChild(d); return d; })();
   box.querySelectorAll('[data-hold]').forEach(h=>h.style.display=h===holder?'':'none');
   R(holder);

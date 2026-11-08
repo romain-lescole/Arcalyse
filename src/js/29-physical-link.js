@@ -170,15 +170,17 @@ function capRenderPhysLink(){
   }
 
   /** Exporte un rapport HTML autonome : vue courante seule, ou toutes les vues en onglets (filtres appliqués).
-   * @param {boolean} all - true : toutes les vues
+   * @param {boolean} all - true : vues choisies dans une fenêtre (`capHtmlVuesChoix`, 26), Vue Blocs comprise
    */
-  function exportHtml(all){
+  async function exportHtml(all){
     const f=getFiltered();
-    const VIEWS=[['line',_L('≡ Vue Ligne')],['card',_L('▣ Vue Composant')],['matrix',_L('▦ Matrice')],['diag',_L('🩺 Contrôles')]];
-    const keys=all?VIEWS.map(v=>v[0]):[st.view];
+    const VIEWS=[['block',_L('◧ Vue Blocs')],['line',_L('≡ Vue Ligne')],['card',_L('▣ Vue Composant')],['matrix',_L('▦ Matrice')],['diag',_L('🩺 Contrôles')]];
+    const keys=all?await capHtmlVuesChoix(VIEWS):[st.view]; if(!keys) return;   // vues choisies (26), 🩺 Contrôles décoché par défaut
+    const blocs=()=>{ if(!container._cbBlocsHtml) capRenderComponentBlocks('PN', document.createElement('div'), container);   // ◧ Vue Blocs (47), même si elle n'a pas été ouverte
+      return container._cbBlocsHtml?container._cbBlocsHtml():''; };
     const lineHtml=f.length?f.map(l=>`<div data-lid="${capEsc(l.linkId)}">${buildContent([l],'line')}</div>`).join(''):buildContent(f,'line');
     const tabs=VIEWS.filter(v=>keys.includes(v[0])||(v[0]==='line'&&keys.includes('matrix'))).map(([k,label])=>({key:k,label,
-      html:k==='line'?lineHtml:k==='card'?buildContent(f,'card').replace(/class="phl-comp-(hdr|body|toggle)"/g,'class="phl-comp-$1 open"'):buildContent(f,k)}));
+      html:k==='block'?blocs():k==='line'?lineHtml:k==='card'?buildContent(f,'card').replace(/class="phl-comp-(hdr|body|toggle)"/g,'class="phl-comp-$1 open"'):buildContent(f,k)}));
     const cells={}; Object.entries(container._phlCells||{}).forEach(([k,ls])=>cells[k]=ls.map(l=>l.linkId));
     const fi=[st.nodeFilter&&_L(`composant « ${st.nodeFilter} »`),st.nameFilter&&_L(`lien « ${st.nameFilter} »`),st.ceFilter!=='all'&&(st.ceFilter==='with'?_L('avec CE'):_L('sans CE'))].filter(Boolean).join(', ');
     capHtmlReport({title:_L('🔌 Physical Links'), subtitle:_L(`${f.length}/${allLinks.length} liens${fi?_L(' · filtres : ')+fi:''}`), tabs, active:st.view, cells,
@@ -216,6 +218,7 @@ function capRenderPhysLink(){
    */
   function render(){
     _capPhysLinkView=st.view;
+    container._exportTout=exportHtml;   // « ⬇ HTML (toutes les vues) » de la Vue Blocs hébergée (47) : rapport complet de cette vue
     const PHL_VIEWS=[['block',_L('◧ Vue Blocs'),_L('Nœuds dessinés comme dans Capella : jaune = nœud du système, bleu clair = nœud acteur ; ports physiques jaunes')],['line',_L('≡ Vue Ligne'),''],['card',_L('▣ Vue Composant'),''],['matrix',_L('▦ Matrice'),_L('Matrice N² composant × composant')],['diag',_L('🩺 Contrôles'),_L('Liens sans CE, ports orphelins, CE non alloués…')]];
     if(st.view==='block'){   // ◧ Vue Blocs : rendu commun aux vues 🧱 (47-composants.js)
       container.innerHTML=_L(`<div class="cap-mx-hint" style="margin:0 0 6px">Périmètre : Physical Links de la couche <b>PA</b> entre <b>Physical Components Node</b> (nœuds du système en jaune, nœuds acteurs en bleu clair).</div><div class="phl-toggle-bar">${PHL_VIEWS.map(([k,l,t])=>`<button class="phl-toggle-btn${st.view===k?' active':''}" data-pv="${k}" title="${t}">${l}</button>`).join('')}</div><div id="phl-blk"></div>`);
@@ -246,7 +249,7 @@ function capRenderPhysLink(){
         <div style="margin-left:auto;display:flex;gap:6px;">
           <button class="phl-export-btn" id="phl-exp-csv">⬇ CSV</button>
           <button class="phl-export-btn" id="phl-exp-html" title="Rapport HTML de la vue affichée">⬇ HTML</button>
-          <button class="phl-export-btn" id="phl-exp-html-all" title="Rapport HTML à onglets : Vue Ligne, Vue Composant, Matrice, Contrôles">⬇ HTML (toutes les vues)</button>
+          <button class="phl-export-btn" id="phl-exp-html-all" title="Rapport HTML à onglets : vues choisies dans une fenêtre (Vue Blocs comprise ; Contrôles décochés par défaut)">⬇ HTML (toutes les vues)</button>
         </div>
       </div>
       <div id="phl-main">${buildContent(filtered)}</div>`);

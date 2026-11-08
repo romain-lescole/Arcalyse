@@ -1,0 +1,55 @@
+I-Logix-RPY-Archive version 8.7.1 C++ 5093211
+{ ISubsystem 
+	- _id = GUID 7a000000-0000-4000-8000-000000000030;
+	- _myState = 8192;
+	- _name = "Types";
+	- _ownerHandle = { IHandle 
+		- _m2Class = "ISubsystem";
+		- _filename = "Architecture.sbs";
+		- _subsystem = "";
+		- _class = "";
+		- _name = "Architecture";
+		- _id = GUID 7a000000-0000-4000-8000-000000000020;
+	}
+	- Types = { IRPYRawContainer 
+		- size = 2;
+		- value = 
+		{ IType 
+			- _id = GUID 7a000000-0000-4000-8000-000000000031;
+			- _name = "Temperature";
+			- Stereotypes = { IRPYRawContainer 
+				- size = 1;
+				- value = 
+				{ IHandle 
+					- _m2Class = "IStereotype";
+					- _filename = "$OMROOT\\Profiles\\SysML\\SysMLProfile_rpy\\SysML.sbs";
+					- _subsystem = "SysML::Blocks";
+					- _class = "";
+					- _name = "ValueType";
+					- _id = GUID 7a000000-0000-4000-8000-0000000000f1;
+				}
+			}
+			- _declaration = "double %s";
+			- _kind = Typedef;
+		}
+		{ IType 
+			- _id = GUID 7a000000-0000-4000-8000-000000000032;
+			- _name = "Mode";
+			- _kind = Enumeration;
+			- Literals = { IRPYRawContainer 
+				- size = 2;
+				- value = 
+				{ IEnumerationLiteral 
+					- _id = GUID 7a000000-0000-4000-8000-000000000033;
+					- _name = "Veille";
+				}
+				{ IEnumerationLiteral 
+					- _id = GUID 7a000000-0000-4000-8000-000000000034;
+					- _name = "Chauffe";
+				}
+			}
+		}
+	}
+	- _eventsBaseID = -1;
+}
+

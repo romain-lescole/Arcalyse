@@ -252,7 +252,7 @@ interface Analysis {
   physicalLinks(): Promise<Analysed[]>;
   /** 🖧 Deployment & EPBS: nodes, behaviors, onNode, hosts, cis (configuration items), ciByEl, ceBad. */
   deployment(): Promise<Analysed>;
-  /** 🧩 SysML v2 (model read by the Arcature reader): nom, projet, fichiers, racine, elements (plain objects of the reader), diagnostics, liaisons, vues (computed views: cle, genre, sigle, nom, element); null for a Capella model. */
+  /** 🧩 SysML v2 and 🧬 UML / SysML v1 (model read by an Arcature reader): format ('sysml2' | 'uml' | 'sysml1'), nom, projet, fichiers, racine, elements (plain objects of the reader: type — SysML stereotype or UML metaclass —, metaclasse, stereotypes…), diagnostics, liaisons, vues (diagrams of the file and computed views: cle, genre, sigle, nom, element, origine); null for a Capella model. */
   sysml(): Promise<Analysed | null>;
   /** 🩺 Checks of every view (or of one view), with the check profile applied. */
   checks(view?: string): Promise<Check[]>;
@@ -260,8 +260,37 @@ interface Analysis {
   nameQuality(name: string): Promise<{ lang: string; verb: boolean; issues: Array<{ code: string; label: string }> }>;
   /** Ids of the diagrams showing an element (same as element.diagrams). */
   diagramsOf(element: Element): Promise<string[]>;
+  /** ▦ Matrix: without argument, the matrix tabs of the page and the relations of the model (key, label, group, count);
+   * with a tab name or a definition, its rows, columns and cells (links of each cell, with the linking element or the paths
+   * of a path relation). Relation keys: Capella `CAP_LINK_SECTIONS` keys (`sc_sf`, `fe_fn`…), `req:el`, `req:req`,
+   * `sy:<relation>` (SysML v2, UML / SysML v1), `own` (containment), `ref:<attribute>`, `ch:<id>` (path relations of the page). */
+  matrix(definition?: string | MatrixDefinition): Promise<MatrixResult | { tabs: string[]; relations: Array<{ key: string; label: string; group: string; count: number }> }>;
   /** Names of the available analyses. */
   names(): string[];
+}
+
+/** One axis of a ▦ matrix definition: element types, layers (Capella) or families (SysML / UML), scope (ids of containers). */
+interface MatrixAxis { types: string[]; layers?: string[]; scope?: string[]; directScope?: boolean; }
+/** ▦ Matrix definition given to `analysis.matrix()`. */
+interface MatrixDefinition {
+  rows: MatrixAxis;
+  columns: MatrixAxis;
+  /** Relation keys (see `analysis.matrix()` without argument). */
+  relations: string[];
+  /** Default: 'both'. */
+  direction?: 'rowToColumn' | 'columnToRow' | 'both';
+  /** Default: 'related' (rows and columns with at least one link). */
+  show?: 'related' | 'all' | 'rowsWithout' | 'columnsWithout';
+}
+/** ▦ Matrix computed by `analysis.matrix()`. */
+interface MatrixResult {
+  name: string;
+  rows: Array<{ id: string; name: string; type: string; links: number; element: Element }>;
+  columns: Array<{ id: string; name: string; type: string; links: number; element: Element }>;
+  cells: Array<{ row: string; column: string; links: Array<{ relation: string; label: string; direction: 'rowToColumn' | 'columnToRow'; via: string | null; paths: string[][] | null }> }>;
+  links: number;
+  rowsWithoutLinks: number;
+  columnsWithoutLinks: number;
 }
 
 /** Table rows: objects (one column per key) or arrays. Cells may hold elements (shown as links) or lists. */

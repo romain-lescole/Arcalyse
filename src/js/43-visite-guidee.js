@@ -8,22 +8,24 @@
 /** Étapes de la visite générale : s = sélecteur CSS de la zone (toutes les correspondances visibles sont encadrées
  * ensemble ; one:true = la première seulement ; absent = bulle centrée), t = titre, x = texte HTML (ou fonction
  * qui le renvoie), m = 'loaded' (seulement avec un modèle chargé) ou 'empty' (seulement sans modèle),
- * pre = action préalable (ex. ouvrir une vue). */
+ * pre = action préalable (ex. ouvrir une vue), skip = fonction qui renvoie true pour sauter l'étape. */
 var CAP_TOUR_STEPS=[
   {t:_L('🎓 Bienvenue dans Arcalyse'),
    x:_L('Cette visite présente les principales zones de l\'outil en quelques étapes.<br>Utilisez <b>Suivant ▶</b> et <b>◀ Précédent</b> (ou les flèches du clavier) ; <b>✕</b> ou <b>Échap</b> pour quitter à tout moment.')},
   {s:'#cap-drop-zone', m:'empty', t:_L('🔷 Ouvrir un modèle'),
-   x:_L('Glissez-déposez un fichier modèle (<b>.capella</b>, <b>.sysml</b>, <b>.kpar</b>) ici, ou cliquez pour le chercher. Le fichier est lu sur ce poste : rien n\'est envoyé.')},
-  {s:'#cw-folder', m:'empty', t:_L('📁 Dossier du projet'),
-   x:_L('Charge ensemble le modèle <b>.capella</b> et ses diagrammes <b>.aird</b> (ou les <b>.sysml</b> d\'un projet) ; après une mise à jour du modèle Capella, le .aird est relu automatiquement.')},
+   x:_L('Glissez-déposez un fichier ou le dossier du projet n\'importe où sur la page : Capella, SysML v2 ou UML / SysML v1, le format est reconnu. Le fichier est lu sur ce poste : rien n\'est envoyé.')},
+  {s:'#cw-cards', m:'empty', t:_L('Une carte par format'),
+   x:_L('Chaque carte dit quoi ouvrir (par outil pour UML / SysML v1), ce que vous obtiendrez et ce qui est sans objet ; ses boutons ouvrent le dossier du projet ou des fichiers de ce format. Pour Capella, le dossier du projet charge aussi le .aird et les bibliothèques.')},
+  {s:'#cw-astuces', m:'empty', t:_L('💡 Bon à savoir'),
+   x:_L('Astuces qui défilent sur les pièges courants (export XMI sans diagrammes, .notation seul, anciens projets d\'EA…) ; ‹ ›, les points et ⏸ pour les parcourir à votre rythme.')},
   {s:'#cw-projet', m:'empty', t:_L('📄 Projet de travail'),
    x:_L('Rouvre une page enregistrée (💾) — même par une version précédente d\'Arcalyse, à partir de la 2.1 : modèle, diagrammes, revue, accueil, vues et réglages sont repris dans cette version.')},
   {s:'#cap-v-home', t:_L('🏠 Accueil'),
    x:_L('Vue ouverte au chargement : informations du projet (en-tête, tâches courantes, cartes réorganisables). <b>❓ Aide ▾ → 🎯 Visite de cette vue</b> la présente en détail.')},
   {s:'#cap-tb-views', t:_L('🧭 Barre des vues'),
    x:_L('Les vues sont rangées par intention : boutons directs (🔲 Diagrammes, ▤ Tableau), trois menus déroulants — <b>🏗 Architecture</b>, <b>✅ Vérifier</b>, <b>💬 Revue & documents</b> — et le champ 🔍 de recherche.')},
-  {s:'#cap-v-diag', t:_L('🔲 Diagrammes Capella'),
-   x:_L('Les diagrammes du projet (.aird) dessinés comme dans Capella, avec export en planches.')},
+  {s:'#cap-v-diag', t:_L('🔲 Diagrammes'),
+   x:_L('Les diagrammes du projet (.aird) dessinés comme dans Capella, les diagrammes et vues SysML v2 / UML, avec export en planches.')},
   {s:'#cap-v-table', t:_L('▤ Tableau'),
    x:_L('Tous les éléments du modèle en tableau : onglets de vues, colonnes d\'attributs, de relations et par chemin, tri, filtres, export CSV.')},
   {s:'#cap-v-arch', t:_L('🏗 Architecture'),
@@ -56,7 +58,7 @@ var CAP_TOUR_STEPS=[
 /** Étapes communes aux sous-vues de 🧭 Explorateur (onglets, types, recherche, couches). */
 var CAP_TOUR_EXPLORE=[
   {s:'#cap-elem-tabs', t:_L('🧭 Sous-vues de l\'Explorateur'),
-   x:_L('Deux façons de parcourir le modèle : <b>🌳 Arborescence</b> (hiérarchie) et <b>▦ Cartes</b> (une carte par élément). Le <b>▤ Tableau</b> a son propre bouton dans la barre.')},
+   x:_L('Deux façons de parcourir le modèle : <b>🌳 Arborescence</b> (hiérarchie) et <b>🃏 Cartes</b> (une carte par élément). Le <b>▤ Tableau</b> a son propre bouton dans la barre.')},
   {s:'#cap-sidebar', t:_L('🏷 Types d\'éléments'),
    x:_L('Types présents dans le modèle, rangés par couche ARCADIA (OA, SA, LA, PA, EPBS, transverse). Cochez ceux à afficher ; <b>Tout cocher</b>, <b>Aucun</b> et <b>Défaut</b> règlent la liste d\'un coup. La bordure droite se tire pour élargir le panneau.')},
   {s:'#cap-stat-chips', t:_L('📊 Répartition'),
@@ -82,7 +84,40 @@ var CAP_TOUR_ANA_TXT={
   pvmt:_L('<b>🎛 Propriétés</b> : propriétés et valeurs (PVMT) appliquées aux éléments.'),
   data:_L('<b>🗃 Données & interfaces</b> : classes, types de données, Exchange Items et interfaces, avec leurs utilisations.'),
   cts:_L('<b>🔒 Contraintes</b> : contraintes du modèle et éléments contraints.'),
-  sysml:_L('<b>🧩 SysML v2</b> : éléments, liaisons et diagnostics du modèle SysML v2 lu par le lecteur d\'Arcature.')
+  sysml:_L('<b>🧩 SysML v2</b> : éléments, liaisons et diagnostics du modèle SysML v2 lu par le lecteur d\'Arcature.'),
+  status:_L('<b>🔖 Statut de revue</b> : statut Capella (DRAFT, TO BE REVIEWED, REVIEWED…) et commentaire de revue de chaque élément — liste, répartition, contrôles ; pont vers 💬 Revue.'),
+  cats:_L('<b>🏷 Catégories d\'échanges</b> : échanges classés par ExchangeCategory, ComponentExchangeCategory ou PhysicalLinkCategory, taux de catégorisation ; une catégorie filtre les vues de flux.'),
+  rec:_L('<b>📦 REC / RPL</b> : éléments réutilisables (REC) et leurs répliques (RPL), comparés élément par élément : manquants, ajoutés, renommés, types différents.'),
+  libs:_L('<b>📚 Bibliothèques</b> : références vers d\'autres fichiers .capella, par bibliothèque et par référence ; chargez une bibliothèque pour résoudre ses éléments.'),
+  deploy:_L('<b>🖧 Déploiement & EPBS</b> : comportements déployés sur les nœuds physiques, Configuration Items de l\'EPBS et ce qu\'ils réalisent, échanges entre nœuds non reliés.'),
+  xlay:_L('<b>⇶ Liens entre couches</b> : graphe des réalisations OA → SA → LA → PA → EPBS, par élément ou par catégorie ; exports SVG, PNG, CSV.'),
+  uml:_L('<b>🧬 UML / SysML v1</b> : modèle lu par le lecteur d\'Arcature (.uml + .notation, .xmi, .mdzip, .qea) — éléments, liaisons, diagnostics de validation (UML 2.5.1, SysML 1.7, UAF 1.2), fichiers référencés non lus. Les autres vues de la famille sont dans la barre ci-dessus.'),
+  umlblk:_L('<b>🧱 Blocs & ports</b> : blocs SysML (et composants UML à ports) dessinés comme les composants de Capella, ports en notation SysML (forme = genre, flèche et couleur = sens) — connecteurs, ItemFlow, allocations ; ◎ Voisinage : un bloc et ses voisins ; clic sur un bloc distant : aller à son bloc.'),
+  umlact:_L('<b>ƒ Activités & flux</b> : une activité en ⇶ couloirs par porteur, actions dans l\'ordre du flux, flux d\'objets et de contrôle, nœuds de contrôle ; ou les actions dessinées comme les fonctions de Capella (◧ Vue Blocs).'),
+  umlreq:_L('<b>🧾 Exigences SysML</b> : «Requirement» et stéréotypes dérivés — identifiant, texte, contenance, satisfy / verify / deriveReqt / refine / trace, couverture directe ou indirecte.'),
+  umlstm:_L('<b>🚦 Machines à états</b> : états, transitions (déclencheur, garde, effet), états inatteignables ou sans issue, signaux attendus mais jamais émis.'),
+  umlseq:_L('<b>🎬 Interactions</b> : lignes de vie, messages dans l\'ordre, fragments combinés ; messages sans signature ou entre parts qu\'aucun connecteur ne relie.'),
+  umlucs:_L('<b>🎯 Cas d\'utilisation</b> : acteurs (directs, ou atteints par inclusion / extension), sujet, comportements et exigences de chaque cas.'),
+  umltrace:_L('<b>⇶ Traçabilité par niveaux</b> : SysML v1 n\'a pas de couches ; chaque élément tracé est classé par niveau (exigences, cas d\'utilisation, fonctionnel, logique, physique) et ses liens vers le haut et le bas sont suivis.'),
+  umlicd:_L('<b>🗃 Interfaces (ICD)</b> : types des ports (InterfaceBlock, Interface) avec leurs FlowProperty et opérations, et l\'ICD des connecteurs entre ports (compatibilité des deux bouts).'),
+  umlbudget:_L('<b>⚖ Budgets</b> : une grandeur (masse, puissance, coût…) cumulée sur l\'arbre des parts, multiplicités comprises, comparée à sa limite.'),
+  umlpar:_L('<b>🔒 Paramétrique & contraintes</b> : blocs de contrainte (équations, paramètres), leurs usages et liaisons aux valeurs (BindingConnector), contraintes UML.'),
+  umlsoft:_L('<b>📦 Paquetages & classes</b> : UML logiciel — dépendances et cycles entre paquetages (métriques de Martin), classes (héritage, couplage), déploiement.')
+};
+/** Présentations proposées par une sous-vue d'analyse (étape « 🖼 Présentations » de la visite de 🔬 Analyses), par `capAnaSub` ;
+ * l'étape est sautée pour une sous-vue absente de la table ou sans boutons de présentation affichés. */
+var CAP_TOUR_ANA_PRES={
+  umlblk:_L('<b>◧ Vue Blocs</b> : blocs dessinés avec leurs ports · <b>◎ Voisinage</b> : un bloc au centre, ses voisins de part et d\'autre · <b>≡ Vue Ligne</b> : un connecteur par ligne · <b>▦ Matrice</b> : bloc × bloc · <b>🩺 Contrôles</b> : ports sans connecteur, connecteurs incohérents…'),
+  umlact:_L('<b>⇶ Couloirs</b> : une activité, un couloir par porteur · <b>◧ Vue Blocs</b> : actions dessinées avec leurs pins · <b>≡ Vue Ligne</b> : un flux par ligne · <b>▦ Matrice</b> : action × action · <b>🩺 Contrôles</b> : pins sans flux, actions isolées…'),
+  umlreq:_L('<b>📋 Liste</b> · <b>🌳 Arbre</b> (contenance) · <b>📊 Couverture</b> (satisfaites, vérifiées, filtres) · <b>▦ Matrice</b> exigence × élément · <b>🩺 Contrôles</b>.'),
+  umlstm:_L('<b>📋 Machines</b> · <b>🔎 États & transitions</b> d\'une machine · <b>🖼 Diagramme calculé</b> (redessiné à partir du modèle : composites, régions, pseudo-états) · <b>▦ Matrice</b> état × état · <b>🩺 Contrôles</b>. 🔲 ouvre le diagramme de la machine quand le fichier en a un.'),
+  umlseq:_L('<b>📋 Interactions</b> · <b>🔎 Messages</b> d\'une interaction, dans l\'ordre · <b>🖼 Diagramme calculé</b> (séquence redessinée : exécutions, fragments alt / opt / loop / par, références) · <b>▦ Matrice</b> ligne de vie × ligne de vie · <b>🩺 Contrôles</b>.'),
+  umlucs:_L('<b>📋 Liste</b> des cas · <b>▦ Matrice acteurs</b> (cas × acteur) · <b>🩺 Contrôles</b> : cas sans acteur ou sans comportement, acteurs sans cas, inclusions cycliques.'),
+  umltrace:_L('<b>⇶ Graphe</b> des niveaux · <b>📋 Chemins</b> · <b>📊 Couverture</b> par niveau · <b>🩺 Contrôles</b> : éléments sans lien vers le haut ou le bas.'),
+  umlicd:_L('<b>📋 Interfaces</b> · <b>▤ ICD</b> : une ligne par connecteur entre ports (bloc, port, interface, flux) · <b>🩺 Contrôles</b>.'),
+  umlbudget:_L('<b>📋 Grandeurs</b> · <b>🌳 Cumul</b> sur l\'arbre des parts (choix de la grandeur et de la racine) · <b>🩺 Contrôles</b> : dépassements, unités mêlées.'),
+  umlpar:_L('<b>📋 Blocs de contrainte</b> · <b>🔗 Liaisons</b> des paramètres · <b>🔒 Contraintes</b> UML · <b>🩺 Contrôles</b> : paramètres non liés, unités différentes…'),
+  umlsoft:_L('<b>📦 Paquetages</b> (instabilité, abstraction, cycles) · <b>🧮 Classes</b> · <b>🖧 Déploiement</b> · <b>🩺 Contrôles</b>.')
 };
 /** Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
  * la racine de l'arborescence si son graphe compte entre 6 et 60 nœuds, sinon le premier élément très relié
@@ -125,8 +160,8 @@ var CAP_TOUR_VIEWS={
     {s:'#legend', t:_L('◉ Légende'), x:_L('Relations présentes dans le graphe affiché et leur nombre ; un clic sur le titre replie ou déplie la légende.')},
     {s:'#panel-close-btn', t:_L('◀ Panneau'), x:_L('Réduit le panneau de gauche pour agrandir le graphe ; ▶ le rouvre.')}
   ]},
-  cards:{l:_L('▦ Cartes'), steps:[...CAP_TOUR_EXPLORE,
-    {s:'#cap-view-cards', t:_L('▦ Cartes'),
+  cards:{l:_L('🃏 Cartes'), steps:[...CAP_TOUR_EXPLORE,
+    {s:'#cap-view-cards', t:_L('🃏 Cartes'),
      x:_L('Une carte par élément, regroupées par couche : type, nom et identifiant. <b>Clic</b> sur une carte : panneau de détail (propriétés, relations, liens).')}]},
   tree:{l:_L('🌳 Arborescence'), steps:[CAP_TOUR_EXPLORE[0], CAP_TOUR_EXPLORE[1],
     {s:'#cap-tree-bar', t:_L('🌳 Commandes'), x:_L('<b>🔍 Recherche</b> par nom ou type. <b>🌳 Arbre</b> : les résultats restent dans leurs conteneurs, grisés quand ils ne correspondent pas ; <b>☰ Liste</b> : liste à plat triée par nom avec le chemin des conteneurs (300 lignes au plus). <b>⊞ Tout déplier</b> / <b>⊟ Tout réduire</b>, <b>Niveau 1 · 2 · 3</b> pour déplier jusqu\'à une profondeur, <b>⬇ JSON</b> exporte.')},
@@ -139,6 +174,13 @@ var CAP_TOUR_VIEWS={
      x:_L('<b>⊞ Colonnes</b> choisit les colonnes : calculées, par chemin, attributs du fichier et <b>relations</b> (→ cibles / ← sources). <b>🎯 Portée</b> limite les lignes au contenu d\'éléments choisis (paquetages, couches, composants…). <b>☰ Lignes / 🌳 Arbre</b> : en arbre, les lignes sont rangées sous leurs conteneurs ; le menu ▾ règle les conteneurs (compact ou grisés), déplier / réduire et niveaux. <b>✨ Colonne par chemin</b> en calcule une en suivant des relations (metachain), avec aperçu en direct. <b>📋 Copier</b> copie les cellules sélectionnées (clic, clic-glisser, Ctrl / Maj+clic ; Ctrl+C), <b>≡ En ligne</b> règle les cellules multiples, <b>⬇ CSV</b> exporte les colonnes affichées, <b>💾 Sauver vue</b> / <b>📂 Charger vue</b> gardent la configuration de l\'onglet, <b>↺ Réinitialiser</b> revient au départ.')},
     {s:'#cap-table-head', t:_L('↕ En-têtes'), x:_L('<b>Clic</b> sur un titre : tri ▲, puis ▼, puis sans tri. <b>Glisser</b> un titre sur un autre : change l\'ordre des colonnes. Le champ <i>Filtrer…</i> filtre la colonne ; le bord droit d\'un titre se tire pour la largeur.')},
     {s:'#cap-pagination', t:_L('📄 Pages'), x:_L('Navigation de page en page et nombre de lignes par page.')}]},
+  matrix:{l:_L('▦ Matrice'), steps:[
+    {t:_L('▦ Matrice'), x:_L('Éléments en <b>lignes</b> et en <b>colonnes</b>, reliés par les relations choisies : allocations, échanges, réalisations, exigences, liaisons SysML / UML, relations par chemin. Comme la Dependency Matrix de Catia Magic, en lecture seule.')},
+    {s:'#cmx-tabs', t:_L('🗂 Onglets et préréglages'), x:_L('Chaque onglet est une matrice, enregistrée avec la page. <b>+</b> copie l\'onglet affiché, double-clic pour renommer. <b>📚 Préréglages</b> : matrices toutes prêtes pour le format du modèle. <b>💾 / 📂</b> : définition .json d\'un onglet.')},
+    {s:'#cmx-crit', t:_L('🎯 Critères'), x:_L('Pour les <b>lignes</b> et les <b>colonnes</b> : types, couches (ou familles) et 🎯 portée. <b>⇄</b> change d\'axes. <b>Critère</b> : relations comptées (＋ Relations…, dont ✨ relation par chemin). <b>Sens</b> et <b>Afficher</b> (avec relations, tous, sans relation). ▾ Critères replie la zone.')},
+    {s:'#cmx-bar', t:_L('🧰 Affichage'), x:_L('<b>Grouper</b> par propriétaire ou par couche (groupes repliables), <b>⇅ Tri</b>, cellule en <b>marques</b> ou en <b>nombre</b>, taille, filtres. <b>🎨 Marques</b> : couleur, forme et texte de chaque relation. Exports CSV / Excel et 📋 copie.')},
+    {s:'#cmx-grid', t:_L('▦ Grille'), x:_L('Diagonale fléchée de la source vers la cible, nombre de liens en petit, Σ par ligne et par colonne. <b>Survol</b> : croix et liens ; <b>clic</b> sur une cellule : ses liens et le panneau de détail ; clic droit sur un nom : détail, commentaire, portée, masquer. Flèches du clavier et Entrée dans la grille. Les bords du coin se tirent.')},
+    {s:'#cmx-status', t:_L('📊 Statut'), x:_L('Dimensions, liens, éléments sans relation masqués (<i>tout afficher</i>, <i>voir les lignes sans relation</i>) et éléments masqués à la main.')}]},
   home:{l:_L('🏠 Accueil'), steps:[
     {pre:()=>capTourHome('projet'), t:_L('🏠 Accueil'), x:_L('La page d\'accueil du projet, ouverte au chargement d\'un modèle ou d\'un projet. Tout ce qui y est saisi est enregistré dans la page (💾).')},
     {s:'#cap-view-home .hm-bar .tb-grp', t:_L('🗂 Deux espaces'), x:_L('<b>🏠 Accueil</b> : 🏠 Projet (informations). <b>💬 Revue & documents</b> (menu du même nom) : ☑ Check-lists & plans de revue, 📑 Faire relire, 📘 Rapports automatiques.')},
@@ -148,12 +190,27 @@ var CAP_TOUR_VIEWS={
     {s:'#cap-view-home [data-carte="fiche"]', t:_L('📝 Fiche projet'), x:_L('Objet, phase, version, responsable, équipe, notes : à remplir librement.')},
     {s:'#cap-view-home [data-carte="docs"]', t:_L('☑ Raccourcis'), x:_L('Vos check-lists et plans de revue : clic pour les ouvrir, ⧉ pour les ouvrir dans une fenêtre séparée ; <b>✚ Check-list rapide</b> en crée une tout de suite.')},
     {s:'#cap-view-home [data-carte="projet"]', t:_L('🔷 Projet'), x:_L('Fichiers, version de Capella, diagrammes chargés (par couche ; clic sur le nom : 🔲 Diagrammes Capella), dernière mise à jour du modèle (🔄 : en charger une).')},
+    {s:'#cap-v-revue', t:_L('💬 Revue & documents'), x:_L('Check-lists, plans de revue, dossiers à faire relire et rapports automatiques sont dans l\'autre espace de cette page, ouvert par le menu <b>💬 Revue & documents</b> ; il a sa propre visite (🎓 dans sa barre, ou ❓ Aide ▾ → 🎯 Visite de cette vue).')}]},
+  revdoc:{l:_L('💬 Revue & documents'), steps:[
+    {pre:()=>capTourHome('docs'), t:_L('💬 Revue & documents'), x:_L('L\'espace des documents du projet : <b>check-lists et plans de revue</b>, <b>dossiers à faire relire</b> (export HTML à commenter ou Word, réimport des retours) et <b>rapports automatiques</b> produits à partir du modèle. Tout est enregistré dans la page (💾) et suit un changement de langue.')},
+    {s:'#cap-view-home .hm-bar .tb-grp', t:_L('🗂 Trois onglets'), x:_L('<b>☑ Check-lists & plans de revue</b> · <b>📑 Faire relire</b> · <b>📘 Rapports automatiques</b> (le nombre de documents de chaque onglet est affiché).')},
+    {s:'#cap-view-home .hm-bar [data-a="rev"]', t:_L('💬 Commentaires'), x:_L('Ouvre le panneau 💬 Revue : commentaires sur les éléments et les diagrammes, vérification après une mise à jour, rapport, envoi aux relecteurs. Il a sa propre visite (🎓 dans le panneau).')},
     {pre:()=>capTourHome('docs'), s:'#cap-view-home .hm-docs-new', t:_L('✚ Créer une check-list'), x:_L('<b>☑ Nouvelle check-list</b> : choisissez « Vide (à remplir) » (curseur sur le premier point, Entrée : point suivant) ou un modèle ARCADIA (qualité, revues OA, SA, LA, PA). <b>📋 Nouveau plan de revue</b> : vide ou avec les points de contrôle d\'un modèle. <b>📂 Importer…</b> : une check-list enregistrée en .json. Le <b>⧉</b> à droite de chaque check-list l\'ouvre dans une fenêtre séparée.')},
     {s:'#cap-view-home .hm-pal', t:_L('📎 Glisser-déposer'), x:_L('Cherchez un diagramme ou un élément et glissez-le sur un point (il y est lié), sur « ✚ Point » (nouveau point lié), ou sur le périmètre d\'un plan. Clic : l\'ouvrir.')},
-    {s:'#cap-view-home .hm-docs-i [data-a="pop"]', one:true, t:_L('⧉ Fenêtre séparée'), x:_L('Ouvre la check-list dans sa propre fenêtre (autre écran) : vous pouvez alors y glisser des diagrammes depuis 🔲 Diagrammes Capella et des éléments depuis 🧭 Explorateur ou ⚡ Chaînes.')},
-    {pre:()=>capTourHome('dos'), s:'#cap-view-home .hm-docs-new [data-da="new"]', t:_L('📑 Dossiers de relecture'), x:_L('Un dossier rassemble, chapitre par chapitre, ce qu\'il faut faire relire : descriptions, diagrammes, éléments, texte libre. Il s\'exporte en page HTML à commenter ou en Word ; <b>📥 Réimporter…</b> rattache les retours à leurs blocs et les verse dans 💬 Revue.')},
-    {pre:()=>capTourHome('rap'), s:'#cap-view-home .dos-rap', t:_L('📘 Rapports automatiques'), x:_L('Plans types remplis à partir du modèle (spécification boîte noire, dossier de conception boîte blanche, SSS et SSDD MIL-STD-498 pour le système ou un sous-système), puis entièrement modifiables ; <b>🧩 Mes modèles</b> : vos propres plans, réutilisables (.json).')},
-    {s:'#cap-view-home .dos-ed', t:_L('🔗 Texte du modèle et clic droit'), x:_L('Un texte libre peut devenir le nom ou la description d\'un élément ou d\'un diagramme, suivi(e) quand le modèle change : glissez l\'élément sur l\'en-tête du bloc ou <b>🔗 Lier…</b>. Le <b>clic droit</b> sur un bloc ou un chapitre propose toutes les commandes (transformer, figer, insérer, convertir, dupliquer, déplacer…).')}]},
+    {pre:()=>capTourDoc('docs'), skip:()=>!_capHome.docs.length, s:'#cap-view-home .hm-docs-i [data-a="pop"]', one:true, t:_L('⧉ Fenêtre séparée'), x:_L('Ouvre le document dans sa propre fenêtre (autre écran) : vous pouvez alors y glisser des diagrammes depuis 🔲 Diagrammes et des éléments depuis les vues.')},
+    {pre:()=>capTourHome('dos'), s:'#cap-view-home .hm-docs-new [data-da="new"]', t:_L('📑 Faire relire'), x:_L('Un dossier rassemble, chapitre par chapitre, ce qu\'il faut faire relire : descriptions, diagrammes, éléments, texte libre. Il s\'exporte en page HTML à commenter ou en Word ; <b>📥 Réimporter…</b> rattache les retours à leurs blocs et les verse dans 💬 Revue.')},
+    {pre:()=>capTourDoc('dos'), skip:()=>!capTourDocs('dos').length, s:'#cap-view-home .dos-ed', one:true, t:_L('🔗 Texte du modèle et clic droit'), x:_L('Un texte libre peut devenir le nom ou la description d\'un élément ou d\'un diagramme, suivi(e) quand le modèle change : glissez l\'élément sur l\'en-tête du bloc ou <b>🔗 Lier…</b>. Le <b>clic droit</b> sur un bloc ou un chapitre propose toutes les commandes (transformer, figer, insérer, convertir, dupliquer, déplacer…).')},
+    {pre:()=>capTourDoc('dos'), skip:()=>!capTourDocs('dos').length, s:'#cap-view-home .dos-ed [data-da="html"], #cap-view-home .dos-ed [data-da="docx"], #cap-view-home .dos-ed [data-da="visu"]', t:_L('📤 Exports'), x:_L('<b>👁 Aperçu</b> du rendu, <b>page HTML à commenter</b> (les relecteurs commentent dans leur navigateur) ou <b>Word</b> (commentaires de Word) ; leurs retours se réimportent ici.')},
+    {pre:()=>capTourHome('rap'), s:'#cap-view-home .dos-rap', t:_L('📘 Rapports automatiques'), x:()=>capDiagSy()?_L('Sur un modèle SysML ou UML : <b>🧩 Plans SysML à adapter</b> (SSS et SSDD MIL-STD-498 livrés comme modèles réglables). Les plans Capella restent proposés mais se remplissent peu sur ce format. <b>🧩 Mes modèles</b> : vos propres plans, réutilisables (.json).')
+      :_L('Plans types remplis à partir du modèle (spécification boîte noire, dossier de conception boîte blanche, SSS et SSDD MIL-STD-498 pour le système ou un sous-système), puis entièrement modifiables ; <b>🧩 Mes modèles</b> : vos propres plans, réutilisables (.json).')},
+    {pre:()=>capTourHome('rap'), skip:()=>capRapFormat()==='capella', s:'#cap-view-home [data-da="rap-sss"], #cap-view-home [data-da="rap-ssdd"]', t:_L('🧩 SSS / SSDD à adapter'), x:_L('Crée un modèle SSS ou SSDD pour SysML : numérotation du DID, boucles et contenus déjà réglés, sujet = système le plus probable. Adaptez-le, puis <b>▶ Générer le rapport</b>.')},
+    {pre:()=>capTourHome('rap'), s:'#cap-view-home [data-da="rap-new"], #cap-view-home [data-da="rap-import"]', t:_L('✚ Nouveau modèle'), x:_L('Un modèle de rapport prérempli d\'un exemple à adapter (exemple SysML sur un modèle SysML), ou un modèle importé (.json).')},
+    {pre:()=>capTourDoc('modele'), skip:()=>!capTourDocs('modele').length, s:'#cap-view-home .dos-sujet', t:_L('🎯 Sujet du rapport'), x:_L('Système ou sous-système décrit : élément englobant des boucles de premier niveau, <code>{sujet}</code> dans les titres. Pour le rapport d\'un sous-système, changez seulement le sujet (📍 Choisir…).')},
+    {pre:()=>capTourDoc('modele'), skip:()=>!capTourDocs('modele','"boucle"').length, s:'#cap-view-home .dos-boucle', one:true, t:_L('🔁 Boucle « pour chaque »'), x:_L('Un chapitre répété pour chaque élément trouvé. Type <b>✨ Au choix</b> : famille (blocs, parts, fonctions, ports, exigences…), type ou stéréotype ; <b>portée</b> : tout le modèle, dans un paquetage ou un bloc, contenus dans l\'élément englobant, à son intérieur, reliés par une relation (allocate, satisfy…), atteints par un ✨ chemin. Les boucles s\'imbriquent : parts → fonctions allouées → entrées / sorties.')},
+    {pre:()=>capTourDoc('modele'), skip:()=>!capTourDocs('modele','"k":"auto"').length, s:'#cap-view-home .dos-k-auto', one:true, t:_L('⚙ Contenu automatique'), x:_L('Calculé pour l\'élément de la boucle : description, diagrammes, propriétés et valeurs, liens, ports / pins / paramètres (entrées, sorties), connexions, information par chemin, tableau d\'éléments.')},
+    {pre:()=>capTourDoc('modele','"type":"gen"'), skip:()=>!capTourDocs('modele','"type":"gen"').length, s:'#cap-view-home .dos-rap-cols', one:true, t:_L('▤ Colonnes au choix'), x:_L('Un tableau d\'éléments « au choix » reçoit ses colonnes : type, description, typé par, identifiant, texte, <b>attribut</b>, <b>relation</b> (satisfaite par, vérifiée par…), <b>✨ chemin</b>.')},
+    {pre:()=>capTourDoc('modele'), skip:()=>!capTourDocs('modele').length, s:'#cap-view-home .hm-doc-h [data-da="rap-gen"]', t:_L('▶ Générer le rapport'), x:_L('Crée un rapport ordinaire (modifiable, exportable en HTML ou Word) ; le modèle reste intact et se régénère après une mise à jour du modèle. <b>💾 .json</b> : le réutiliser dans un autre projet.')},
+    {t:_L('✅ À vous'), x:_L('Cette visite se relance par <b>🎓</b> dans la barre de 💬 Revue & documents, ou par <b>❓ Aide ▾ → 🎯 Visite de cette vue</b>. Un tutoriel pas à pas est dans l\'aide (📘 Rapports).')}]},
   chains:{l:_L('⚡ Chaînes'), steps:[
     {t:_L('⚡ Chaînes'), x:_L('Chaînes fonctionnelles, processus opérationnels et chemins physiques du modèle, avec leur diagramme.')},
     {s:'#cap-view-chains [data-cf]', t:_L('🏷 Type'), x:_L('Filtre par type de chaîne.')},
@@ -201,18 +258,25 @@ var CAP_TOUR_VIEWS={
     {s:'#cap-view-oav #fex-fn-input,#cap-view-oav #fex-name-input', t:_L('🔍 Filtres'), x:_L('Par activité, ou par nom d\'interaction ou d\'Exchange Item.')},
     {s:'#cap-view-oav #fex-exp-csv,#cap-view-oav #fex-exp-html,#cap-view-oav #fex-exp-html-all', t:_L('⬇ Exports'), x:_L('CSV des interactions, rapport HTML de la vue ou de toutes les vues.')},
     {s:'#cap-view-oav #fex-main', t:_L('📋 Résultat'), x:_L('Clic sur une activité ou une interaction pour ouvrir son détail.')}]},
-  diag:{l:_L('🔲 Diagrammes Capella'), steps:[
-    {t:_L('🔲 Diagrammes Capella'), x:_L('Les diagrammes du projet (fichier <b>.aird</b>, à côté du .capella), dessinés comme dans Capella. Lecture seule ; clic sur un élément : son détail.')},
+  diag:{l:_L('🔲 Diagrammes'), steps:[
+    {t:_L('🔲 Diagrammes'), x:()=>!capDiagSy()?_L('Les diagrammes du projet (fichier <b>.aird</b>, à côté du .capella), dessinés comme dans Capella. Lecture seule ; clic sur un élément : son détail.')
+      :capSyUml()?_L('Les diagrammes et tableaux <b>enregistrés dans le fichier</b> (Cameo, Enterprise Architect, Papyrus avec le .notation), dessinés par le lecteur d\'Arcature. Même vue que pour Capella : explorateur, carte, ℹ Infos, planches, ⧉ comparaison. Lecture seule ; clic sur un élément : son détail.')
+      :_L('Les <b>vues calculées</b> depuis le texte SysML v2 (générale, interconnexion, états, flux d\'actions), disposées automatiquement. Même vue que pour Capella : explorateur, carte, ℹ Infos, planches, ⧉ comparaison. Clic sur un élément : son détail.')},
     {s:'#cdg-ouvrir', t:_L('📂 Ouvrir le .aird'), x:_L('Le sélecteur s\'ouvre dans le dossier du .capella (Edge / Chrome). Vous pouvez aussi déposer le .aird sur la fenêtre, ou ouvrir directement le <b>📁 Dossier du projet</b> depuis l\'écran d\'accueil : le .capella et ses diagrammes sont chargés ensemble.')},
     {s:'#cdg-infos', t:_L('ℹ Infos'), x:_L('Le panneau de détail présente le diagramme ouvert : type, couche, date de modification, description, élément représenté et éléments affichés (cliquables). Aussi par ℹ au survol d\'un diagramme de l\'explorateur.')},
     {s:'#cdg-export', t:_L('⬇ Exporter'), x:_L('Plusieurs diagrammes à la fois en <b>planches</b> : en-tête, description, cartouche, annexe des éléments représentés. PDF (sommaire, signets ; alerte si le fichier risque d\'être lourd), ZIP PNG / SVG ou rapport HTML, avec aperçu ; choisissez le format puis <b>⬇ Exporter</b>.')},
     {s:'#cdg-choix', t:_L('☐ Sélectionner'), x:_L('Affiche les cases à cocher de l\'explorateur pour choisir les diagrammes à exporter (un par un, par groupe ou tous). Sans sélection, l\'export porte sur les diagrammes affichés.')},
-    {s:'#cdg-filtre,#cdg-classement', t:_L('🔍 Filtre et classement'), x:_L('Filtre par nom, type, sigle ou couche. Classement par <b>couche</b> (par défaut), couche › type de diagramme (OA › OAB…), type ou nom.')},
+    {s:'#cdg-filtre,#cdg-classement', t:_L('🔍 Filtre et classement'), x:()=>capDiagSy()?_L('Filtre par nom, genre, sigle ou origine. Classement par <b>genre › origine</b> (par défaut), genre, origine, nom ou <b>🌳 arborescence</b> (chaque diagramme sous son élément porteur).')
+      :_L('Filtre par nom, type, sigle ou couche. Classement par <b>couche</b> (par défaut), couche › type de diagramme (OA › OAB…), type, nom ou <b>🌳 arborescence</b> (chaque diagramme sous son élément représenté).')},
     {s:'#cdg-liste .cdg-arbre', t:_L('🗂 Explorateur'), x:_L('Clic sur un en-tête pour replier / déplier le groupe (⊞ / ⊟ : tous). Clic sur un diagramme pour l\'ouvrir ; le diagramme ouvert est encadré.')},
     {s:'#cdg-split', t:_L('↔ Largeur'), x:_L('Glissez ce séparateur pour élargir ou réduire l\'explorateur ; double-clic : largeur d\'origine.')},
     {s:'#cdg-carte-zone', t:_L('▣ Carte'), x:_L('Vue d\'ensemble du diagramme ; clic pour s\'y déplacer. ▾ la replie, ⇲ la place dans le diagramme (⇱ la ramène ici).')},
-    {s:'#cdg-hote .arcv-centre', pre:()=>{ if(!_capDiag.actif){ const r=capDiagReps().find(x=>x.genre!=='tableau'); if(r){ _capDiag.actif=r.uid; _capDiag.vis.ouvrir(r.uid); capDiagMarquerActif(); capDiagCarte(); } } },
-     t:_L('🖼 Diagramme'), x:_L('Molette ou − / + : zoom · <b>Ajuster</b>, <b>1:1</b> · recherche dans le diagramme (Ctrl+F) · <b>Chaînes et chemins</b> : met une chaîne en évidence · <b>Filtres</b> : ports, étiquettes, catégories d\'échanges · <b>⌒ Ponts</b> : petits arcs aux croisements des liens · <b>Exporter</b> : ce diagramme seul (SVG, PNG, impression).')}]},
+    {s:'#cdg-hote .arcv-centre', skip:()=>capDiagSy(), pre:()=>{ if(!_capDiag.actif){ const r=capDiagReps().find(x=>x.genre!=='tableau'); if(r) capDiagOuvrirUid(r.uid); } },
+     t:_L('🖼 Diagramme'), x:_L('Molette ou − / + : zoom · <b>Ajuster</b>, <b>1:1</b> · recherche dans le diagramme (Ctrl+F) · <b>Chaînes et chemins</b> : met une chaîne en évidence · <b>Filtres</b> : ports, étiquettes, catégories d\'échanges · <b>⌒ Ponts</b> : petits arcs aux croisements des liens · <b>Exporter</b> : ce diagramme seul (SVG, PNG, impression).')},
+    {s:'#cdg-sy .sy-l1', skip:()=>{ if(!capDiagSy()) return true; const v=_capSyVues.cle&&capSyVue(_capSyVues.cle); return v?!!v.tableau:!capDiagReps().some(r=>r.genre!=='tableau'); }, pre:()=>{ if(capDiagSy()&&!_capSyVues.cle){ const r=capDiagReps().find(x=>x.genre!=='tableau'); if(r) capDiagOuvrirUid(r.uid); } },
+     t:_L('🖼 Vue ouverte'), x:_L('Nom et origine de la vue, <b>recherche</b> dans le dessin (Ctrl+F ; Entrée : suivant), <b>◐ thème</b> du dessin (Auto, Clair, Sombre), <b>⬇ ▾</b> exports (SVG, PNG, impression ou PDF, texte), ✕ ferme la vue.')},
+    {s:'#cdg-sy .sy-l2', t:_L('🧰 Affichage'), x:_L('<b>📝 Note</b> et calque de 💬 Revue, <b>⧩ filtres</b> (étiquettes des liens, compartiments, liens par genre), zoom − % + (<b>⤢</b> tout voir, <b>1:1</b>, <b>⌖</b> centrer sur l\'élément choisi, touche F), <b>▣</b> carte, <b>🖼 Visuel</b> ou <b>≡ Texte</b> (rendu textuel coloré).')},
+    {s:'#cdg-sy .sy-vue-barre', t:_L('▦ Tableau, matrice ou Relation Map de Cameo'), x:_L('Cameo n\'enregistre que la définition de ses tableaux : Arcalyse les recalcule. Tri par clic sur l\'en-tête, filtre, <b>Éléments reliés seulement</b> (matrice), ⊕ / ⊖ (Relation Map), ⬇ CSV, ℹ Infos, <b>▤ Tableau</b> (ouvre ses lignes dans ▤ Tableau), <b>🗺 Relation Map</b>.')}]},
   scen:{l:_L('🎬 Scénarios'), steps:[CAP_TOUR_FLUX,
     {s:'#cap-view-scen [data-scv]', t:_L('🎬 Diagramme ou contrôles'), x:_L('<b>🎬 Diagramme</b> : diagramme de séquence du scénario choisi · <b>🩺 Contrôles</b> : scénarios vides, messages sans échange, lignes de vie sans élément, scénarios hors capacité, références introuvables.')},
     {s:'#cap-view-scen [data-scl]', t:_L('🧱 Couche et type'), x:_L('Filtre par couche ARCADIA et par type : ES (Exchange Scenario), FS (Functional Scenario), OES / OAS en OA, IS (Interface Scenario).')},
@@ -246,6 +310,7 @@ var CAP_TOUR_VIEWS={
   analyses:{l:_L('🔬 Analyses'), steps:[
     {s:'#cap-tb-views .cap-nav-grp', t:_L('🔬 Analyses'), x:_L('Les analyses s\'ouvrent par les menus 🏗 Architecture et ✅ Vérifier (ou 🔍 Ctrl+K) : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes.')},
     {s:'#cap-tb-views .cap-nav-grp.active, #cap-flux-tabs .phl-toggle-btn.active', t:_L('🔎 Analyse affichée'), x:()=>CAP_TOUR_ANA_TXT[capAnaSub]||_L('Analyse en cours.')},
+    {s:'#ana-box [data-pv], #ana-box [data-xv]', t:_L('🖼 Présentations'), x:()=>CAP_TOUR_ANA_PRES[capAnaSub]||_L('Les présentations de l\'analyse affichée.'), skip:()=>!CAP_TOUR_ANA_PRES[capAnaSub]},
     {s:'#ana-recalc', t:_L('↻ Recalculer'), x:_L('Les résultats sont gardés en mémoire ; ce bouton les recalcule (utile après une mise à jour du modèle).')},
     {s:'#ana-box .phl-filter-bar', one:true, t:_L('🧰 Options'), x:_L('Présentations, filtres et export CSV propres à l\'analyse affichée.')},
     {s:'#ana-box', t:_L('📋 Résultat'), x:_L('Les tableaux se filtrent (champ <i>Filtrer…</i> sous les titres) et se redimensionnent ; clic sur un élément pour ouvrir son détail.')}]},
@@ -262,13 +327,11 @@ var CAP_TOUR_START=[
   {t:_L('🚀 Bien démarrer'),
    x:_L('Deux temps pour bien démarrer :<br><b>1.</b> ouvrir votre modèle ;<br><b>2.</b> une fois le modèle ouvert, savoir où trouver l\'aide et les tutoriels.')},
   {s:'#cap-drop-zone', m:'empty', t:_L('1 · Ouvrir un modèle'),
-   x:_L('Glissez-déposez votre fichier modèle dans ce cadre : Capella (<b>.capella</b>, .melodymodeller, .xml) ou SysML v2 (<b>.sysml</b>, <b>.kpar</b>).<br>Le fichier est lu sur ce poste : rien n\'est envoyé.')},
-  {s:'#cw-browse', m:'empty', t:_L('… ou le chercher'),
-   x:_L('Vous pouvez aussi cliquer sur <b>📂 Fichier modèle…</b> pour le choisir dans l\'explorateur de fichiers.')},
-  {s:'#cw-folder', m:'empty', t:_L('… ou ouvrir le dossier du projet'),
-   x:_L('<b>📁 Dossier du projet…</b> charge ensemble le modèle .capella et ses diagrammes .aird (vue 🔲 Diagrammes), ou les .sysml d\'un projet SysML v2. Recommandé : après une mise à jour du modèle, le .aird est relu lui aussi.')},
+   x:_L('Glissez-déposez votre fichier ou le dossier du projet n\'importe où sur la page : Capella, SysML v2 ou UML / SysML v1, le format est reconnu.<br>Le fichier est lu sur ce poste : rien n\'est envoyé.')},
+  {s:'#cw-cards', m:'empty', t:_L('… ou partir de votre format'),
+   x:_L('Chaque carte dit quoi ouvrir et ce que vous obtiendrez : <b>Capella</b> (le dossier du projet charge aussi le .aird et les bibliothèques), <b>SysML v2</b> (.sysml, .kpar ou un dossier de .sysml), <b>UML / SysML v1</b> (.mdzip de Cameo, .qea d\'Enterprise Architect, .uml + .notation de Papyrus, .xmi).')},
   {s:'#cw-projet', m:'empty', t:_L('… ou reprendre un projet de travail'),
-   x:_L('<b>📄 Projet de travail (.html)…</b> rouvre une page enregistrée avec 💾, même par une version précédente d\'Arcalyse (à partir de la 2.1) : vous choisissez ce qui est repris (modèle, diagrammes, revue, accueil, tableaux de bord, vues, réglages). Pensez ensuite à l\'enregistrer : elle passe dans la nouvelle version.')},
+   x:_L('<b>📄 Ouvrir une page de projet…</b> rouvre une page enregistrée avec 💾, même par une version précédente d\'Arcalyse (à partir de la 2.1) : vous choisissez ce qui est repris (modèle, diagrammes, revue, accueil, tableaux de bord, vues, réglages). Pensez ensuite à l\'enregistrer : elle passe dans la nouvelle version.')},
   {s:'#b-help, #cap-nav-dd', m:'empty', pre:()=>capTourHelpMenu(), t:_L('❓ Aide, en haut à droite'),
    x:_L('Le menu <b>❓ Aide ▾</b> reste accessible à tout moment, avec ou sans modèle : <b>📖 Aide complète</b> et <b>🎓 Visite guidée</b>.<br>Une fois le modèle ouvert, il propose aussi <b>🎯 Visite de cette vue</b> pour chaque vue.')},
   {m:'empty', pre:()=>capNavClose(), t:_L('À vous !'),
@@ -315,6 +378,77 @@ var CAP_TOUR_SCRIPTS=[
   {s:'#scr-sortie', t:_L('📋 Sortie'), x:_L('<code>out.print</code> écrit une ligne, <code>out.table</code> un tableau (bouton <b>⬇ CSV</b>), <code>out.file</code> propose un fichier. Les éléments sont des <b>liens</b> : un clic ouvre le panneau de détail. Une erreur indique la ligne du script (clic : l\'éditeur s\'y place). Les questions du script (<code>ui.ask</code>, <code>ui.choose</code>…) s\'affichent ici.')},
   {s:'.scr-aide', t:_L('📖 Référence'), x:_L('La référence complète de l\'API est dans <code>docs/api/arcalyse.d.ts</code> (autocomplétion VS Code) et <code>docs/api/LISEZMOI.md</code> (recettes) ; l\'aide complète a un onglet 📜 Scripts.')},
   {t:_L('✅ À vous'), x:_L('Cette visite se relance par <b>🎓</b> dans la console ou par <b>❓ Aide ▾ → 📜 Visite des scripts</b>.')} ];
+/** Visite du panneau de détail 🔎 (ce n'est pas une vue : lancée par 🎓 dans le panneau ou par ❓ Aide ▾ → 🔎 Visite du panneau de détail). */
+var CAP_TOUR_DETAIL=[
+  {pre:()=>capTourDetOuvrir(), t:_L('🔎 Panneau de détail'), x:_L('Tout ce que le modèle dit d\'un élément. Il s\'ouvre d\'un <b>clic sur un élément</b> dans n\'importe quelle vue (tableau, liste, diagramme, Relation Map, palette 🔍), à droite de l\'écran ; il partage cette colonne avec le panneau 💬 Revue (onglets 🔎 Propriétés / 💬 Revue en haut). Son bord gauche se tire pour l\'élargir.')},
+  {pre:()=>capTourDetOuvrir(), s:'#cap-detail-content > .cap-type-badge, #cap-detail-content > h3', t:_L('🏷 En-tête'), x:_L('Type de l\'élément (et ce que ce type désigne), icône et nom. Un clic sur un nom de lien, partout dans le panneau, ouvre la fiche de cet autre élément : l\'historique ◀ ▶ permet de revenir.')},
+  {s:'#cap-detail .crv-det-bar', t:_L('💬 Commenter'), x:_L('Crée un commentaire de 💬 Revue sur l\'élément, sur son nom, sa description ou un attribut (💬 à côté de chacun) : il est vérifié après une mise à jour du modèle (valeur changée, élément disparu).')},
+  {s:'#cap-detail .cap-det-tabs', t:_L('🗂 Onglets'), x:_L('Le contenu est rangé en volets, avec leur nombre de sections : <b>📝 Description</b>, <b>📋 Fiche</b>, <b>🔗 Liens</b>, <b>🧭 Sémantique</b>, <b>🔲 Diagrammes</b>, <b>🔬 Analyses</b>, <b>💬 Revue</b>, <b>≡ Tout</b>. Un volet vide est masqué ; l\'onglet choisi est gardé d\'un élément à l\'autre.')},
+  {pre:()=>capTourDetTab('fiche'), skip:()=>!capTourDetA('fiche'), s:'#cap-detail .cap-det-pane[data-pane="fiche"]', t:_L('📋 Fiche'), x:_L('Description (mise en forme comme dans l\'outil d\'origine) et attributs de l\'élément : identifiant, propriétés, stéréotypes et leurs valeurs pour SysML / UML.')},
+  {pre:()=>capTourDetTab('liens'), skip:()=>!capTourDetA('liens'), s:'#cap-detail .cap-det-pane[data-pane="liens"]', t:_L('🔗 Liens'), x:_L('Références sortantes et entrantes (navigation inverse), propriétaire et éléments contenus, groupés par type et paginés. Clic : ouvrir l\'élément.')},
+  {pre:()=>capTourDetTab('sem'), skip:()=>!capTourDetA('sem'), s:'#cap-detail .csb', t:_L('🧭 Sémantique'), x:_L('Navigateur sémantique façon Capella : <b>← éléments qui le référencent</b> · <b>élément courant</b> · <b>éléments qu\'il référence →</b>. Le filtre s\'applique aux trois colonnes ; <b>⤢</b> élargit le panneau pour les voir côte à côte ; un clic recentre sur l\'élément choisi.')},
+  {pre:()=>capTourDetTab('diag'), skip:()=>!capTourDetA('diag'), s:'#cap-detail .cap-det-pane[data-pane="diag"]', t:_L('🔲 Diagrammes'), x:_L('Diagrammes où l\'élément est représenté, et ceux dont il est l\'élément représenté ; clic : ouvrir le diagramme, l\'élément mis en évidence.')},
+  {pre:()=>capTourDetTab('ana'), skip:()=>!capTourDetA('ana'), s:'#cap-detail .cap-det-pane[data-pane="ana"]', t:_L('🔬 Analyses'), x:_L('Ce que les analyses savent de l\'élément : exigences, propriétés, contraintes, scénarios, statut de revue, catégories d\'échanges, bibliothèques, déploiement ; pour SysML / UML, boutons vers les vues 🧱, 🧾, 🚦, 🎯.')},
+  {pre:()=>capTourDetTab('all'), s:'#cap-detail .cap-det-popb', t:_L('⧉ Fenêtre séparée'), x:_L('Ouvre le panneau dans sa propre fenêtre (autre écran) : elle suit l\'élément choisi dans la page ; la fermer le ramène à droite.')},
+  {s:'#b-hist-back, #b-hist-fwd', t:_L('◀ ▶ Historique'), x:_L('Chaque élément ouvert est une étape de l\'historique : ◀ / ▶ (ou Alt+← / Alt+→) y reviennent ; clic droit sur ◀ : liste des étapes.')},
+  {s:'#cap-detail-close', t:_L('× Fermer'), x:_L('Ferme le panneau ; il se rouvre au prochain clic sur un élément.')},
+  {t:_L('✅ À vous'), x:_L('Cette visite se relance par <b>🎓</b> en haut du panneau ou par <b>❓ Aide ▾ → 🔎 Visite du panneau de détail</b>.')} ];
+/** Visite de la fenêtre ⚙ Préférences (lancée par 🎓 dans la fenêtre ou par ❓ Aide ▾ → ⚙ Visite des préférences). */
+var CAP_TOUR_PREFS=[
+  {pre:()=>capTourPref('aff'), s:'#cap-pref-ov .cw-d-box', t:_L('⚙ Préférences'), x:_L('Les réglages de l\'application, rangés par rubrique ; ils sont enregistrés avec la 💾 page HTML. Le menu <b>⚙</b> de la barre donne aussi un accès rapide au niveau des menus et au style de la barre.')},
+  {s:'#cap-pref-ov .cap-pref-nav', t:_L('🗂 Rubriques'), x:_L('Affichage, Thème, Suivi du fichier, Enregistrement, Interface et vues, Contrôles et nommage, Exports.')},
+  {pre:()=>capTourPref('aff'), s:'#cap-pref-ov .cap-pref-main', t:_L('☰ Affichage'), x:_L('<b>Essentiel</b> (vues les plus utilisées) ou <b>Complet</b> (toutes les vues dans les menus) ; masquer les vues sans données dans le modèle ouvert ; barre en <b>icônes et textes</b> ou en <b>icônes seules</b>.')},
+  {pre:()=>capTourPref('theme'), s:'#cap-pref-ov .cap-pref-main', t:_L('🎨 Thème'), x:_L('Sombre, Clair, Office 2007, Contraste ou 🎨 Personnalisé ; <b>Ajuster les couleurs…</b> modifie toutes les couleurs (fonds, textes, statuts, couches ARCADIA) en affichant le contraste.')},
+  {pre:()=>capTourPref('suivi'), s:'#cap-pref-ov .cap-pref-main', t:_L('🔄 Suivi du fichier'), x:_L('Détection des nouvelles versions du .capella enregistrées par Capella (périodique, au retour dans la fenêtre) : vous êtes prévenu, rien n\'est appliqué sans validation.')},
+  {pre:()=>capTourPref('save'), s:'#cap-pref-ov .cap-pref-main', t:_L('💾 Enregistrement'), x:_L('Enregistrement automatique de la page dans son fichier, seulement si quelque chose a changé, et fichier de secours avec la version précédente (Edge ou Chrome).')},
+  {pre:()=>capTourPref('cfg'), s:'#cap-pref-ov .cap-pref-main', t:_L('⚙ Interface et vues'), x:_L('Un fichier .json sans le modèle, pour réutiliser vos réglages (barre, ▤ Tableau, ▦ Matrice, Relation Map, exports, thème…) avec un autre modèle ou les partager ; vous choisissez les parties.')},
+  {pre:()=>capTourPref('ctl'), s:'#cap-pref-ov .cap-pref-main', t:_L('🩺 Contrôles et nommage'), x:_L('Le <b>🩺 profil de contrôles</b> (activer, gravité, seuils ; partageable) et les <b>règles de nommage</b> des fonctions (verbes métier acceptés, mots refusés).')},
+  {pre:()=>capTourPref('exp'), s:'#cap-pref-ov .cap-pref-main', t:_L('⬇ Exports'), x:_L('Format des boutons ⬇ de toutes les vues : <b>Excel</b> (.xlsx) ou <b>CSV</b> ; 📗 classeur Excel de toutes les analyses.')},
+  {s:'#b-prefs', t:_L('⚙ Menu de la barre'), x:_L('Accès rapide : niveau des menus, icônes seules, ⚙ Préférences….')},
+  {pre:()=>capTourPref('aff'), t:_L('✅ À vous'), x:_L('Cette visite se relance par <b>🎓</b> en haut de la fenêtre ⚙ Préférences ou par <b>❓ Aide ▾ → ⚙ Visite des préférences</b>.')} ];
+/**
+ * Visite du panneau de détail : le garde ouvert sur l'élément affiché, sinon l'ouvre sur un élément représentatif
+ * (système de la couche LA ou SA pour Capella, système probable pour SysML / UML).
+ */
+function capTourDetOuvrir(){
+  if(!capLoaded) return;
+  const det=document.getElementById('cap-detail'), box=document.getElementById('cap-detail-content');
+  if(currentMode==='capella'&&det&&det.offsetWidth&&box&&box.innerHTML.trim()) return;
+  if(currentMode!=='capella') capShowView(capCurrentView||'home');
+  let e=null;
+  try{ e=capRapFormat()==='capella'?(capDosOutils().sys('LA')||capDosOutils().sys('SA')):capRapSysteme(); }catch(_){}
+  e=e||capAllElements.find(x=>x.attrs.name&&(capGetParentIndex().childrenOf[x.id]||[]).length>2);
+  if(e) capOpenDetailById(e.id);
+}
+/** Volet du panneau de détail présent (onglet visible). @param {string} k - Clé de CAP_DET_TABS @returns {boolean} */
+function capTourDetA(k){ const b=document.querySelector(`#cap-detail .cap-det-tab[data-dtab="${k}"]`); return !!b&&getComputedStyle(b).display!=='none'; }
+/** Affiche un volet du panneau de détail (sans changer l'onglet retenu). @param {string} k - Clé de CAP_DET_TABS */
+function capTourDetTab(k){ capTourDetOuvrir(); const box=document.getElementById('cap-detail-content'); if(box&&capTourDetA(k)||k==='all') capDetTabShow(box, k); }
+/** Lance la visite du panneau de détail (modèle chargé). */
+function capTourDetail(){ if(!capLoaded){ capToast(_L('Ouvrez d\'abord un modèle.'),{level:'warn'}); return; } capTourDetOuvrir(); capTourStart(CAP_TOUR_DETAIL); }
+/** Visite des préférences : fenêtre ⚙ Préférences ouverte sur une rubrique. @param {string} tab - 'aff' | 'theme' | 'suivi' | 'save' | 'cfg' | 'ctl' | 'exp' */
+function capTourPref(tab){ capPrefDialog(tab); }
+/** Lance la visite de la fenêtre ⚙ Préférences. */
+function capTourPrefs(){ capPrefDialog('aff'); capTourStart(CAP_TOUR_PREFS); }
+
+/** Visite de la ⧉ fenêtre de comparaison des diagrammes (fenêtre séparée : la visite s'y déroule ; lancée par 🎓 dans sa barre
+ * ou par ❓ Aide ▾ → ⧉ Visite de la fenêtre de comparaison). */
+var CAP_TOUR_DGW=[
+  {t:_L('⧉ Comparaison de diagrammes'), x:_L('Une fenêtre séparée pour afficher un second diagramme à côté de celui de 🔲 Diagrammes, par exemple sur un autre écran, et les comparer. Il n\'y en a qu\'une : chaque nouvelle demande la réutilise.')},
+  {s:'#dgw-choix', t:_L('🔲 Diagramme affiché'), x:_L('Choisissez le diagramme de cette fenêtre, rangés par couche (ou par famille pour SysML / UML). Les tableaux et matrices n\'y sont pas proposés.')},
+  {s:'.dgw-barre .tb-grp', t:_L('🔍 Zoom'), x:_L('<b>−</b> / <b>+</b> zooment, le pourcentage indique l\'échelle, <b>⤢ Ajuster</b> remet le diagramme entier dans la fenêtre.')},
+  {s:'#dgw-zone', t:_L('🖼 Dessin'), x:_L('<b>Molette</b> : zoom autour du pointeur · <b>glisser</b> : déplacer · <b>clic sur un élément</b> : sa fiche dans le panneau de détail de la page principale.')},
+  {t:_L('⧉ L\'ouvrir'), x:_L('Depuis 🔲 Diagrammes : bouton <b>⧉ Comparer</b> de la barre (diagramme ouvert), ou <b>clic droit</b> sur un diagramme de l\'explorateur ou dans le diagramme ouvert. Elle se ferme d\'elle-même quand un autre .aird ou un autre modèle est chargé. Autorisez les fenêtres surgissantes pour la page.')},
+  {t:_L('✅ À vous'), x:_L('Cette visite se relance par <b>🎓</b> dans la barre de cette fenêtre ou par <b>❓ Aide ▾ → ⧉ Visite de la fenêtre de comparaison</b>.')} ];
+/** Lance la visite de la fenêtre de comparaison : l'ouvre au besoin sur le diagramme ouvert dans 🔲 (sinon le premier), puis s'y déroule. */
+async function capTourDgw(){
+  if(!capLoaded||!capDiagReps().some(r=>r.genre!=='tableau')){ capToast(_L('Ouvrez d\'abord un modèle et ses diagrammes (🔲 Diagrammes).'),{level:'warn'}); return; }
+  let w=capDgwWin();
+  if(!w){ const r=capDiagReps().find(x=>x.uid===_capDiag.actif&&x.genre!=='tableau')||capDiagReps().find(x=>x.genre!=='tableau');
+    await capDgwOuvrir(r.uid); w=capDgwWin(); if(!w) return; }
+  w.focus(); capTourStart(CAP_TOUR_DGW, w);
+}
+
 /** Lance la visite de la console 📜 Scripts (modèle chargé). */
 function capTourScripts(){ if(!capLoaded){ capToast(_L('Ouvrez d\'abord un modèle.'),{level:'warn'}); return; } capScrToggle(true); capTourStart(CAP_TOUR_SCRIPTS); }
 
@@ -331,12 +465,32 @@ function capTourRevue(){ capTourRev('list'); capTourStart(CAP_TOUR_REVUE); }
  * @param {string} tab - 'projet' | 'docs' | 'dos' | 'rap'
  */
 function capTourHome(tab){ Object.assign(_capHomeUi,{tab, dispo:false}); capHomeRender(); }
+/**
+ * Documents de 💬 Revue & documents d'une sorte (visite revdoc).
+ * @param {string} k - 'dos' (dossiers à faire relire) | 'modele' (🧩 modèles de rapport)
+ * @param {string} [contient] - Texte que la définition du document doit contenir (bloc présenté par l'étape)
+ * @returns {object[]}
+ */
+function capTourDocs(k, contient){ return _capHome.dossiers.filter(d=>(k==='modele'?!!d.modele:capDosOnglet(d)==='dos')&&(!contient||JSON.stringify(d.blocs).includes(contient))); }
+/**
+ * Visite revdoc : affiche l'onglet de la sorte de document présentée, avec un document de cette sorte ouvert s'il y en a un.
+ * @param {string} k - 'docs' | 'dos' | 'modele'
+ * @param {string} [contient] - Texte que la définition du document ouvert doit contenir, si possible
+ */
+function capTourDoc(k, contient){
+  if(k==='docs'){ capTourHome('docs'); return; }
+  Object.assign(_capHomeUi,{tab:k==='modele'?'rap':'dos', dispo:false});
+  const cur=capDosCur(), l=capTourDocs(k, contient);
+  if(!(cur&&l.includes(cur))&&l.length) _capDosUi.cur=l[0].id;
+  capHomeRender();
+}
 
 /** Clé de la vue affichée pour les visites contextuelles.
- * @returns {string} '@rm' ou vue Capella (capCurrentView)
+ * @returns {string} '@rm', 'revdoc' (espace 💬 Revue & documents de la vue home) ou vue Capella (capCurrentView)
  */
 function capTourCtxKey(){
   if(currentMode!=='capella') return '@rm';
+  if(capCurrentView==='home'&&typeof _capHomeUi!=='undefined'&&['docs','dos','rap'].includes(_capHomeUi.tab)) return 'revdoc';   // 💬 Revue & documents
   return capCurrentView;
 }
 
@@ -347,14 +501,17 @@ function capTourCtx(){
   return capLoaded&&CAP_TOUR_VIEWS[capTourCtxKey()]||null;
 }
 
+/** @returns {Window} fenêtre où se déroule la visite en cours (la page, ou une fenêtre séparée comme ⧉ la comparaison de diagrammes) */
+function capTourW(){ return _capTour&&_capTour.win&&!_capTour.win.closed?_capTour.win:window; }
+
 /** Éléments affichés désignés par le sélecteur d'une étape.
  * @param {Object} st - Étape
  * @returns {HTMLElement[]} Éléments visibles (le premier seulement si st.one)
  */
 function capTourEls(st){
   if(!st.s) return [];
-  const vis=e=>{ const r=e.getBoundingClientRect(); return r.width>0&&r.height>0&&getComputedStyle(e).visibility!=='hidden'; };
-  const L=[...document.querySelectorAll(st.s)].filter(vis);
+  const W=capTourW(), vis=e=>{ const r=e.getBoundingClientRect(); return r.width>0&&r.height>0&&W.getComputedStyle(e).visibility!=='hidden'; };
+  const L=[...W.document.querySelectorAll(st.s)].filter(vis);
   return st.one?L.slice(0,1):L;
 }
 
@@ -365,30 +522,35 @@ function capTourEls(st){
 function capTourVisible(st){
   if(st.m==='loaded'&&!capLoaded) return false;
   if(st.m==='empty'&&capLoaded) return false;
+  if(st.skip&&st.skip()) return false;   // condition propre à l'étape (ex. présentations d'une sous-vue d'analyse)
   if(!st.s||st.pre) return true;   // bulle centrée, ou zone qui apparaît après l'action préalable
   return capTourEls(st).length>0;
 }
 
 /** Lance une visite guidée depuis sa première étape.
  * @param {Object[]} [steps] - Étapes (par défaut la visite générale CAP_TOUR_STEPS)
+ * @param {Window} [win] - Fenêtre où se déroule la visite (par défaut la page ; ex. ⧉ fenêtre de comparaison, qui reçoit les styles de la page)
  */
-function capTourStart(steps){
+function capTourStart(steps, win){
+  if(_capTour) capTourEnd();   // une visite à la fois, dans une seule fenêtre
+  const W=win&&!win.closed?win:window, D=W.document;
   if(typeof capNavClose==='function') capNavClose();
   document.getElementById('help-ov')&&(document.getElementById('help-ov').style.display='none');
-  if(!document.getElementById('cap-tour-spot')){
-    const blk=document.createElement('div'); blk.id='cap-tour-block';
-    const spot=document.createElement('div'); spot.id='cap-tour-spot';
-    const pop=document.createElement('div'); pop.id='cap-tour-pop';
-    document.body.append(blk,spot,pop);
+  if(!D.getElementById('cap-tour-spot')){
+    const blk=D.createElement('div'); blk.id='cap-tour-block';
+    const spot=D.createElement('div'); spot.id='cap-tour-spot';
+    const pop=D.createElement('div'); pop.id='cap-tour-pop';
+    D.body.append(blk,spot,pop);
     pop.addEventListener('click',e=>{
       const b=e.target.closest('[data-tour]'); if(!b) return;
       ({prev:()=>capTourGo(-1), next:()=>capTourGo(1), end:()=>capTourEnd()})[b.dataset.tour]();
     });
-    document.addEventListener('keydown',capTourKey,true);
-    window.addEventListener('resize',()=>{ if(_capTour) capTourPlace(); });
+    D.addEventListener('keydown',capTourKey,true);
+    W.addEventListener('resize',()=>{ if(_capTour&&capTourW()===W) capTourPlace(); });
+    if(W!==window) W.addEventListener('pagehide',()=>{ if(_capTour&&_capTour.win===W) _capTour=null; });   // fenêtre séparée fermée pendant la visite
   }
-  _capTour={i:-1, steps:Array.isArray(steps)?steps:CAP_TOUR_STEPS};
-  ['cap-tour-block','cap-tour-spot','cap-tour-pop'].forEach(id=>document.getElementById(id).style.display='block');
+  _capTour={i:-1, steps:Array.isArray(steps)?steps:CAP_TOUR_STEPS, win:W===window?null:W};
+  ['cap-tour-block','cap-tour-spot','cap-tour-pop'].forEach(id=>D.getElementById(id).style.display='block');
   capTourGo(1);
 }
 
@@ -415,7 +577,7 @@ function capTourGo(d){
   if(el&&el.scrollIntoView) el.scrollIntoView({block:'nearest',inline:'nearest'});
   capTourRenderPop();
   // Laisse le temps à l'action préalable (changement de vue) de s'afficher avant de placer le cadre
-  requestAnimationFrame(()=>capTourPlace());
+  capTourW().requestAnimationFrame(()=>capTourPlace());   // fenêtre de la visite (une fenêtre séparée peut être au premier plan)
 }
 
 /** Numéros (rang, total) de l'étape courante parmi les étapes utilisables.
@@ -429,7 +591,7 @@ function capTourPos(){
 
 /** Remplit la bulle de l'étape courante (titre, texte, compteur, boutons). */
 function capTourRenderPop(){
-  const st=_capTour.steps[_capTour.i], p=capTourPos(), pop=document.getElementById('cap-tour-pop');
+  const st=_capTour.steps[_capTour.i], p=capTourPos(), pop=capTourW().document.getElementById('cap-tour-pop');
   const x=typeof st.x==='function'?st.x():st.x;
   pop.innerHTML=_L(`<div class="ct-hd"><span class="ct-t">${st.t}</span><span class="ct-x" data-tour="end" title="Quitter la visite (Échap)">✕</span></div>
     <div class="ct-b">${x}</div>
@@ -442,8 +604,8 @@ function capTourRenderPop(){
 /** Place le cadre clignotant sur la zone de l'étape courante et la bulle à côté (ou au centre). */
 function capTourPlace(){
   if(!_capTour) return;
-  const st=_capTour.steps[_capTour.i], spot=document.getElementById('cap-tour-spot'), pop=document.getElementById('cap-tour-pop');
-  const W=window.innerWidth, H=window.innerHeight, M=6, G=12;
+  const TW=capTourW(), st=_capTour.steps[_capTour.i], spot=TW.document.getElementById('cap-tour-spot'), pop=TW.document.getElementById('cap-tour-pop');
+  const W=TW.innerWidth, H=TW.innerHeight, M=6, G=12;
   // Rectangle englobant toutes les zones de l'étape, limité à l'écran
   let x=Infinity, y=Infinity, x2=-Infinity, y2=-Infinity;
   capTourEls(st).forEach(e=>{ const r=e.getBoundingClientRect();
@@ -475,7 +637,7 @@ function capTourPlace(){
 function capTourKey(e){
   if(!_capTour) return;
   const a={ArrowRight:()=>capTourGo(1), ArrowLeft:()=>capTourGo(-1), Escape:()=>capTourEnd(),
-    Enter:()=>document.querySelector('#cap-tour-pop .ct-next')?.click()}[e.key];
+    Enter:()=>capTourW().document.querySelector('#cap-tour-pop .ct-next')?.click()}[e.key];
   if(!a) return;
   e.preventDefault(); e.stopPropagation(); a();
 }
@@ -483,8 +645,9 @@ function capTourKey(e){
 /** Quitte la visite guidée et retire la mise en évidence. */
 function capTourEnd(){
   if(_capTour&&(_capTour.steps===CAP_TOUR_AFTER||_capTour.steps===CAP_TOUR_START)) capNavClose();
+  const D=capTourW().document;
   _capTour=null;
-  ['cap-tour-block','cap-tour-spot','cap-tour-pop'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='none'; });
+  ['cap-tour-block','cap-tour-spot','cap-tour-pop'].forEach(id=>{ const el=D.getElementById(id); if(el) el.style.display='none'; });
 }
 
 /** Ouvre le menu ❓ Aide ▾ (s'il n'est pas déjà ouvert) pour l'étape qui le présente. */

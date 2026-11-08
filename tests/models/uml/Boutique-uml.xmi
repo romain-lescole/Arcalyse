@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Modèle de test d'Arcalyse (UML 2.5 logiciel, XMI de l'OMG) : paquetages et dépendances (dont un cycle), classes,
+     héritage (dont un cycle), classe abstraite sans sous-classe, interfaces réalisées, requises ou inutilisées, contraintes OCL,
+     déploiement (nœuds, artefacts, manifestations). Chaque contrôle de 📦 Paquetages & classes et de 🔒 Contraintes y est
+     déclenché au moins une fois. Écrit pour Arcalyse — Apache 2.0. -->
+<xmi:XMI xmlns:uml='http://www.omg.org/spec/UML/20161101' xmlns:xmi='http://www.omg.org/spec/XMI/20161101'>
+	<uml:Model xmi:type='uml:Model' xmi:id='bq_model' name='Boutique'>
+		<packagedElement xmi:type='uml:Package' xmi:id='bq_pkg_ui' name='ui'>
+			<packagedElement xmi:type='uml:Class' xmi:id='bq_ecran' name='Ecran'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='bq_ecran_service' name='service' type='bq_svcpanier'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='bq_ecran_panier' name='panier' type='bq_panier'/>
+			</packagedElement>
+		</packagedElement>
+		<packagedElement xmi:type='uml:Package' xmi:id='bq_pkg_svc' name='service'>
+			<packagedElement xmi:type='uml:Interface' xmi:id='bq_ipaiement' name='IPaiement'>
+				<ownedOperation xmi:type='uml:Operation' xmi:id='bq_payer' name='payer' isAbstract='true'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Interface' xmi:id='bq_istock' name='IStock'/>
+			<packagedElement xmi:type='uml:Interface' xmi:id='bq_inotif' name='INotification'>
+				<ownedOperation xmi:type='uml:Operation' xmi:id='bq_notifier_op' name='notifier' isAbstract='true'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='bq_svcpanier' name='ServicePanier'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='bq_svc_panier' name='panier' type='bq_panier'/>
+				<ownedOperation xmi:type='uml:Operation' xmi:id='bq_valider' name='valider' isAbstract='true'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='bq_notifieur' name='Notifieur'>
+				<interfaceRealization xmi:type='uml:InterfaceRealization' xmi:id='bq_ir1' client='bq_notifieur' supplier='bq_inotif' contract='bq_inotif'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Usage' xmi:id='bq_use1' client='bq_svcpanier' supplier='bq_ipaiement'/>
+		</packagedElement>
+		<packagedElement xmi:type='uml:Package' xmi:id='bq_pkg_dom' name='domaine'>
+			<packagedElement xmi:type='uml:Class' xmi:id='bq_entite' name='Entite' isAbstract='true'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='bq_entite_id' name='id'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='bq_article' name='Article'>
+				<generalization xmi:type='uml:Generalization' xmi:id='bq_g1' general='bq_entite'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='bq_article_prix' name='prix'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='bq_panier' name='Panier'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='bq_panier_articles' name='articles' type='bq_article'/>
+				<ownedRule xmi:type='uml:Constraint' xmi:id='bq_ct_max' name='taille' constrainedElement='bq_panier'><specification xmi:type='uml:OpaqueExpression' xmi:id='bq_ct_max_e' body='articles->size() &lt;= 50' language='OCL'/></ownedRule>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='bq_commande' name='Commande'>
+				<generalization xmi:type='uml:Generalization' xmi:id='bq_g2' general='bq_entite'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='bq_commande_journal' name='journal' type='bq_journal'/>
+				<ownedRule xmi:type='uml:Constraint' xmi:id='bq_ct_vide' name='non vide'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='bq_produit' name='Produit' isAbstract='true'/>
+		</packagedElement>
+		<packagedElement xmi:type='uml:Package' xmi:id='bq_pkg_infra' name='infra'>
+			<packagedElement xmi:type='uml:Class' xmi:id='bq_journal' name='Journal'/>
+			<packagedElement xmi:type='uml:Class' xmi:id='bq_bdd' name='BaseDeDonnees'>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='bq_bdd_cmd' name='commandes' type='bq_commande'/>
+			</packagedElement>
+		</packagedElement>
+		<packagedElement xmi:type='uml:Package' xmi:id='bq_pkg_legacy' name='legacy'>
+			<packagedElement xmi:type='uml:Class' xmi:id='bq_boucle1' name='Boucle1'>
+				<generalization xmi:type='uml:Generalization' xmi:id='bq_g3' general='bq_boucle2'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Class' xmi:id='bq_boucle2' name='Boucle2'>
+				<generalization xmi:type='uml:Generalization' xmi:id='bq_g4' general='bq_boucle1'/>
+			</packagedElement>
+		</packagedElement>
+		<packagedElement xmi:type='uml:Package' xmi:id='bq_pkg_dep' name='deploiement'>
+			<packagedElement xmi:type='uml:Artifact' xmi:id='bq_war' name='boutique.war'>
+				<manifestation xmi:type='uml:Manifestation' xmi:id='bq_man1' client='bq_war' supplier='bq_svcpanier' utilizedElement='bq_svcpanier'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Artifact' xmi:id='bq_jar' name='outil.jar'/>
+			<packagedElement xmi:type='uml:Node' xmi:id='bq_serveur' name='Serveur'>
+				<deployment xmi:type='uml:Deployment' xmi:id='bq_dep1' client='bq_serveur' supplier='bq_war' deployedArtifact='bq_war'/>
+			</packagedElement>
+			<packagedElement xmi:type='uml:Device' xmi:id='bq_poste' name='Poste client'/>
+		</packagedElement>
+	</uml:Model>
+</xmi:XMI>
