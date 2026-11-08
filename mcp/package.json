@@ -1,0 +1,12 @@
+{
+  "name": "arcalyse-mcp",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Serveur MCP d'Arcalyse (essai) : analyses d'un modèle Capella, SysML v2 ou UML / SysML v1 pour une application d'IA, en lecture seule, sur le poste",
+  "main": "serveur.js",
+  "bin": { "arcalyse-mcp": "serveur.js" },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "playwright-core": "^1.50.0"
+  }
+}

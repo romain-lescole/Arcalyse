@@ -2468,6 +2468,7 @@
    "num": 134,
    "den": 148
   },
+  "rq.diag": null,
   "rq.kind": {
    "AIDA requirements for RV&V": 117,
    "SystemFunctionalRequirement": 17,
@@ -2481,6 +2482,8 @@
    "PA": 116
   },
   "rq.n": 148,
+  "rq.rel": null,
+  "rq.spec": null,
   "sante.err": 46,
   "sante.layer": {
    "OA": 100,

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * 🌐 Changement de langue (version multilingue) : un aller-retour FR → EN → FR doit garder tout le travail — modèle (et son
- * lecteur pour SysML / UML), dossiers et rapports, commentaires de revue, dossier ouvert, vue affichée.
+ * lecteur pour SysML / UML / ReqIF), dossiers et rapports, commentaires de revue, dossier ouvert, vue affichée.
  *
  * Prérequis : node build.js --lang multi, puis Playwright (comme tests/oracles.js ; CHROMIUM_PATH=… pour un Chromium déjà installé).
  * Lancement : node tests/langue.js
@@ -13,7 +13,7 @@ catch (e) { console.error('Playwright absent : npm install --save-dev playwright
 
 const page = path.join(__dirname, '..', 'dist', 'arcalyse-multi.html'), M = path.join(__dirname, 'models');
 if (!fs.existsSync(page)) { console.error('Lancez d\'abord : node build.js --lang multi'); process.exit(2); }
-const MODELES = [path.join(M, 'In-Flight_Entertainment_System.capella'), path.join(M, 'uml', 'Satellite-sysml1.xmi'), path.join(M, 'VehiculeDemo.sysml')];
+const MODELES = [path.join(M, 'In-Flight_Entertainment_System.capella'), path.join(M, 'uml', 'Satellite-sysml1.xmi'), path.join(M, 'VehiculeDemo.sysml'), path.join(M, 'reqif', 'ExigencesImages.reqifz')];
 
 /** État observé dans la page. @returns {Object} */
 function etat() {

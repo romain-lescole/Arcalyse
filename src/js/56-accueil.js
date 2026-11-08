@@ -217,10 +217,10 @@ function capHomeCartes(){
       ` <button class="cap-lf-btn" data-a="update" title="${_L('Compare un autre fichier au modèle affiché, montre le delta, puis met à jour après validation')}">🔄</button>`;
     const lec=fmt==='capella'?null:_capSysml.lecture, vues=lec?capSyVuesListe():[], nt=vues.filter(v=>v.tableau).length, nd=vues.length-nt;
     const format=fmt==='capella'?`${capFmtPuce(P)} ${esc(capHomeCapellaVersion())}`:`${capFmtPuce(P)}${lec.outil?' · '+esc(lec.outil):''}`;
-    const fichiers=lec?(lec.fichiers||[]).map(f=>esc(f.chemin||f.nom||'')).filter(Boolean).join('<br>')||esc(capCurrentFileName||'—'):esc(capCurrentFileName||'—');
-    const dv=fmt==='capella'?diag:fmt==='sysml2'?_L(`${vues.length} vue(s) calculée(s)`):(nt?_L(`${nd} diagramme(s) · ${nt} tableau(x) ou matrice(s)`):_L(`${nd} diagramme(s) de l'outil`));
+    const fichiers=lec?(fmt==='reqif'?lec.documents.map(d=>esc(d.chemin)):(lec.fichiers||[]).map(f=>esc(f.chemin||f.nom||''))).filter(Boolean).join('<br>')||esc(capCurrentFileName||'—'):esc(capCurrentFileName||'—');
+    const dv=fmt==='capella'?diag:fmt==='reqif'?_L(`${lec.specifications().length} spécification(s) · ${(lec.fichiers||[]).length} pièce(s) jointe(s)`):fmt==='sysml2'?_L(`${vues.length} vue(s) calculée(s)`):(nt?_L(`${nd} diagramme(s) · ${nt} tableau(x) ou matrice(s)`):_L(`${nd} diagramme(s) de l'outil`));
     return `<table class="hm-kv">`+lig(_L('Projet'),`<b>${esc(capRevProjectName()||'—')}</b>`)+lig(_L('Format'),format)+lig(fmt==='capella'?_L('Modèle'):_L('Fichier(s)'),fichiers)+
-    lig(fmt==='sysml2'?_L('Vues'):_L('Diagrammes'),dv)+lig(_L('Éléments'),String(lec?lec.elements().length-1:capAllElements.length))+
+    lig(fmt==='sysml2'?_L('Vues'):fmt==='reqif'?_L('Contenu'):_L('Diagrammes'),dv)+lig(_L('Éléments'),String(lec?lec.elements().length-1:capAllElements.length))+
     lig(_L('Mise à jour'),maj)+lig(_L('Page de projet'),typeof _capProjetPage!=='undefined'&&_capProjetPage.nom?esc(_capProjetPage.nom):'')+lig(_L('Arcalyse'),esc(CAP_APP_VERSION))+`</table>`; }},
   {k:'fiche', l:_L('📝 Fiche projet'), w:2, f:()=>{
     const champ=(k,l,ph,ta)=>`<label class="hm-f"><span>${l}</span>${ta?`<textarea data-ff="${k}" rows="3" placeholder="${ph}">${esc(F[k])}</textarea>`:`<input data-ff="${k}" value="${esc(F[k])}" placeholder="${ph}">`}</label>`;
@@ -269,13 +269,13 @@ function capHomeProjetHtml(){
 }
 
 /** Format du modèle affiché. @returns {'capella'|'sysml2'|'uml'} uml : UML et SysML v1 (lecteur UML d'Arcature) */
-function capHomeFormat(){ return typeof _capSysml!=='undefined'&&_capSysml.lecture?(capSyUml()?'uml':'sysml2'):'capella'; }
+function capHomeFormat(){ return typeof _capSysml!=='undefined'&&_capSysml.lecture?(capSyUml()?'uml':_capSysml.format==='reqif'?'reqif':'sysml2'):'capella'; }
 /** Pastille du format affiché (nom précis pour UML / SysML v1). @returns {{l:string, c:string}} */
 function capHomeFormatPuce(){ const k=capHomeFormat(), F=CAP_FORMATS.find(f=>f.k===k)||CAP_FORMATS[0]; return {l:k==='uml'?capSyNomFormat():F.l, c:F.c}; }
 /** Vues des menus propres à un autre format que celui du modèle affiché (elles ne sont pas « sans données »). @returns {Set<string>} */
 function capHomeAutresFormats(){
   const k=capHomeFormat();
-  return new Set(k==='capella'?['ana:sysml','ana:uml']:[...(typeof CAP_SY_VUES_CAPELLA!=='undefined'?CAP_SY_VUES_CAPELLA:[]), k==='uml'?'ana:sysml':'ana:uml']);
+  return new Set(k==='capella'?['ana:sysml','ana:uml','ana:reqif']:[...(typeof CAP_SY_VUES_CAPELLA!=='undefined'?CAP_SY_VUES_CAPELLA:[]), ...(k==='reqif'?['ana:sysml','ana:uml']:[k==='uml'?'ana:sysml':'ana:uml', 'ana:reqif'])]);
 }
 /** Familles d'éléments d'un modèle SysML v2 / UML / SysML v1 (structure, comportement, exigences & cas, organisation), avec leurs types les
  * plus nombreux. @returns {{k:string, l:string, c:string, n:number, types:Array<[string,number]>}[]} */
@@ -307,6 +307,7 @@ function capHomeTaches(){
   const comparer=['⚖', _L('Comparer deux versions'), _L('Ce qui a changé depuis la version précédente du modèle : éléments et diagrammes.'), 'ana:diff', _L('✅ Vérifier › ⚖ Comparaison de versions')];
   const excel=['▤', _L('Sortir un tableau Excel'), _L('Éléments, attributs et relations, avec les colonnes de votre choix.'), 'table', _L('▤ Tableau')];
   const sante=['💚', _L('Vérifier la qualité du modèle'), _L('Tous les contrôles, un score par couche, la liste de ce qu\'il faut corriger.'), 'ana:sante', _L('✅ Vérifier › 💚 Santé & contrôles')];
+  if(fmt==='reqif') return capReqifTaches();   // 📑 ReqIF (101)
   if(fmt==='capella'){
     const n=capHomeReps().length, aird=_capDiag&&_capDiag.texteAird;
     const diag=aird?['🔲', _L(`Parcourir les ${n} diagrammes`), _L('Passer d\'un diagramme à l\'autre ; un clic sur un élément ouvre sa fiche.'), 'diag', _L('🔲 Diagrammes')]
@@ -385,11 +386,11 @@ function capHomeEnteteHtml(){
   } else {
     const lec=_capSysml.lecture;
     sous=_L(`${fmt==='uml'&&lec.outil?esc(lec.outil)+' · ':''}${lec.elements().length-1} éléments`);
-    cases=fmt==='uml'?capUmlCasesAccueil():capSysmlCasesAccueil();   // 88 / 87
+    cases=fmt==='uml'?capUmlCasesAccueil():fmt==='reqif'?capReqifCasesAccueil():capSysmlCasesAccueil();   // 88 / 101 / 87
     chips=capHomeFamilles().map(c=>`<span class="hm-stat"><b style="color:${capTextOn(c.c)}">${esc(c.l)}</b> ${c.n}</span>`).join('');
   }
   const V=[...capNavVides()], autres=capHomeAutresFormats(), lib=k=>(CAP_NAV_ITEMS.find(i=>i.k===k)||{}).l;
-  const vraies=V.filter(k=>!autres.has(k)).map(lib).filter(Boolean), hors=fmt==='capella'||CAP_EDITION?[]:V.filter(k=>autres.has(k)&&k!=='ana:sysml'&&k!=='ana:uml').map(lib).filter(Boolean);
+  const vraies=V.filter(k=>!autres.has(k)).map(lib).filter(Boolean), hors=fmt==='capella'||CAP_EDITION?[]:V.filter(k=>autres.has(k)&&k!=='ana:sysml'&&k!=='ana:uml'&&k!=='ana:reqif').map(lib).filter(Boolean);
   const vides=(vraies.length&&_capNav.vides!==false?`<div>${_L('Sans données dans ce modèle, retirées des menus en mode Essentiel :')} <span class="hm-vides-l">${vraies.map(esc).join(' · ')}</span></div>`:'')+
     (hors.length?`<div>${_L(`${hors.length} vues ARCADIA, propres à Capella, sont sans objet pour ce format (retirées des menus en mode Essentiel).`)} `+
       `<button type="button" class="hm-lienb" data-a="vues-autres" aria-expanded="${u.autres?'true':'false'}">${u.autres?_L('Masquer la liste ▴'):_L('Voir la liste ▾')}</button>`+
@@ -787,7 +788,8 @@ function capHomeClick(e){
     case 'aird': capDiagPickAird(); return;
     case 'libs': u.libs=!u.libs; capHomeRender(); return;
     case 'vues-autres': u.autres=!u.autres; capHomeRender(); return;
-    case 'sy-diag': _capSy.view='diag'; capNavOpen(capHomeFormat()==='uml'?'ana:uml':'ana:sysml'); return;   // 🩺 diagnostics du lecteur (87)
+    case 'rq-tab': capReqifVersTableau(); return;   // 📑 exigences ReqIF dans ▤ Tableau (101)
+    case 'sy-diag': _capSy.view='diag'; if(capHomeFormat()==='reqif') _capRq.view='chk'; capNavOpen(capSyNavCle()); return;   // 🩺 diagnostics du lecteur (87, 101)
     case 'lib-load': capLibPick(()=>{ capHomeRender(); }); return;
     case 'lib-refs': _capLib.lib=a.dataset.k; _capLib.view='refs'; capNavOpen('ana:libs'); return;
     case 'taches-hide': _capHome.taches=false; capToast(_L('Section masquée — ⚙ Disposer les cartes pour la réafficher')); break;

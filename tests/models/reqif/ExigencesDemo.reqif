@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REQ-IF xmlns="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <THE-HEADER>
+    <REQ-IF-HEADER IDENTIFIER="_entete">
+      <COMMENT>Exigences de démonstration d'Arcature : tous les types de données, titres de chapitre, relations.</COMMENT>
+      <CREATION-TIME>2026-10-01T09:00:00+02:00</CREATION-TIME>
+      <REQ-IF-TOOL-ID>Arcature</REQ-IF-TOOL-ID>
+      <REQ-IF-VERSION>1.0</REQ-IF-VERSION>
+      <SOURCE-TOOL-ID>Écrit à la main</SOURCE-TOOL-ID>
+      <TITLE>Véhicule de démonstration — exigences</TITLE>
+    </REQ-IF-HEADER>
+  </THE-HEADER>
+  <CORE-CONTENT>
+    <REQ-IF-CONTENT>
+      <DATATYPES>
+        <DATATYPE-DEFINITION-STRING IDENTIFIER="_dt_texte" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Texte" MAX-LENGTH="200"/>
+        <DATATYPE-DEFINITION-XHTML IDENTIFIER="_dt_xhtml" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Texte mis en forme"/>
+        <DATATYPE-DEFINITION-INTEGER IDENTIFIER="_dt_entier" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Entier" MAX="5" MIN="1"/>
+        <DATATYPE-DEFINITION-REAL ACCURACY="1" IDENTIFIER="_dt_reel" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Réel" MAX="10000" MIN="0"/>
+        <DATATYPE-DEFINITION-BOOLEAN IDENTIFIER="_dt_booleen" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Booléen"/>
+        <DATATYPE-DEFINITION-DATE IDENTIFIER="_dt_date" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Date"/>
+        <DATATYPE-DEFINITION-ENUMERATION IDENTIFIER="_dt_statut" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Statut">
+          <SPECIFIED-VALUES>
+            <ENUM-VALUE IDENTIFIER="_ev_proposee" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Proposée">
+              <PROPERTIES>
+                <EMBEDDED-VALUE KEY="0" OTHER-CONTENT=""/>
+              </PROPERTIES>
+            </ENUM-VALUE>
+            <ENUM-VALUE IDENTIFIER="_ev_validee" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Validée">
+              <PROPERTIES>
+                <EMBEDDED-VALUE KEY="1" OTHER-CONTENT=""/>
+              </PROPERTIES>
+            </ENUM-VALUE>
+            <ENUM-VALUE IDENTIFIER="_ev_rejetee" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Rejetée">
+              <PROPERTIES>
+                <EMBEDDED-VALUE KEY="2" OTHER-CONTENT=""/>
+              </PROPERTIES>
+            </ENUM-VALUE>
+          </SPECIFIED-VALUES>
+        </DATATYPE-DEFINITION-ENUMERATION>
+        <DATATYPE-DEFINITION-ENUMERATION IDENTIFIER="_dt_lot" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Lot">
+          <SPECIFIED-VALUES>
+            <ENUM-VALUE IDENTIFIER="_ev_meca" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Mécanique">
+              <PROPERTIES>
+                <EMBEDDED-VALUE KEY="0" OTHER-CONTENT=""/>
+              </PROPERTIES>
+            </ENUM-VALUE>
+            <ENUM-VALUE IDENTIFIER="_ev_elec" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Électrique">
+              <PROPERTIES>
+                <EMBEDDED-VALUE KEY="1" OTHER-CONTENT=""/>
+              </PROPERTIES>
+            </ENUM-VALUE>
+            <ENUM-VALUE IDENTIFIER="_ev_logiciel" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Logiciel">
+              <PROPERTIES>
+                <EMBEDDED-VALUE KEY="2" OTHER-CONTENT=""/>
+              </PROPERTIES>
+            </ENUM-VALUE>
+          </SPECIFIED-VALUES>
+        </DATATYPE-DEFINITION-ENUMERATION>
+      </DATATYPES>
+      <SPEC-TYPES>
+        <SPEC-OBJECT-TYPE IDENTIFIER="_t_exigence" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Exigence">
+          <SPEC-ATTRIBUTES>
+            <ATTRIBUTE-DEFINITION-STRING IDENTIFIER="_a_id" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="ReqIF.ForeignID">
+              <TYPE>
+                <DATATYPE-DEFINITION-STRING-REF>_dt_texte</DATATYPE-DEFINITION-STRING-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-STRING>
+            <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_a_chapitre" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="ReqIF.ChapterName">
+              <TYPE>
+                <DATATYPE-DEFINITION-XHTML-REF>_dt_xhtml</DATATYPE-DEFINITION-XHTML-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-XHTML>
+            <ATTRIBUTE-DEFINITION-STRING IDENTIFIER="_a_nom" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="ReqIF.Name">
+              <TYPE>
+                <DATATYPE-DEFINITION-STRING-REF>_dt_texte</DATATYPE-DEFINITION-STRING-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-STRING>
+            <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_a_texte" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="ReqIF.Text">
+              <TYPE>
+                <DATATYPE-DEFINITION-XHTML-REF>_dt_xhtml</DATATYPE-DEFINITION-XHTML-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-XHTML>
+            <ATTRIBUTE-DEFINITION-ENUMERATION IDENTIFIER="_a_statut" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Statut" MULTI-VALUED="false">
+              <DEFAULT-VALUE>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>_a_statut</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>_ev_proposee</ENUM-VALUE-REF>
+                  </VALUES>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+              </DEFAULT-VALUE>
+              <TYPE>
+                <DATATYPE-DEFINITION-ENUMERATION-REF>_dt_statut</DATATYPE-DEFINITION-ENUMERATION-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-ENUMERATION>
+            <ATTRIBUTE-DEFINITION-ENUMERATION IDENTIFIER="_a_lots" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Lots" MULTI-VALUED="true">
+              <TYPE>
+                <DATATYPE-DEFINITION-ENUMERATION-REF>_dt_lot</DATATYPE-DEFINITION-ENUMERATION-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-ENUMERATION>
+            <ATTRIBUTE-DEFINITION-INTEGER IDENTIFIER="_a_priorite" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Priorité">
+              <TYPE>
+                <DATATYPE-DEFINITION-INTEGER-REF>_dt_entier</DATATYPE-DEFINITION-INTEGER-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-INTEGER>
+            <ATTRIBUTE-DEFINITION-REAL IDENTIFIER="_a_masse" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Masse max (kg)">
+              <TYPE>
+                <DATATYPE-DEFINITION-REAL-REF>_dt_reel</DATATYPE-DEFINITION-REAL-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-REAL>
+            <ATTRIBUTE-DEFINITION-BOOLEAN IDENTIFIER="_a_verifiee" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Vérifiée">
+              <TYPE>
+                <DATATYPE-DEFINITION-BOOLEAN-REF>_dt_booleen</DATATYPE-DEFINITION-BOOLEAN-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-BOOLEAN>
+            <ATTRIBUTE-DEFINITION-DATE IDENTIFIER="_a_echeance" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Échéance">
+              <TYPE>
+                <DATATYPE-DEFINITION-DATE-REF>_dt_date</DATATYPE-DEFINITION-DATE-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-DATE>
+            <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_a_commentaire" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Commentaire">
+              <TYPE>
+                <DATATYPE-DEFINITION-XHTML-REF>_dt_xhtml</DATATYPE-DEFINITION-XHTML-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-XHTML>
+            <ATTRIBUTE-DEFINITION-STRING IDENTIFIER="_a_origine" IS-EDITABLE="false" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Origine">
+              <TYPE>
+                <DATATYPE-DEFINITION-STRING-REF>_dt_texte</DATATYPE-DEFINITION-STRING-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-STRING>
+          </SPEC-ATTRIBUTES>
+        </SPEC-OBJECT-TYPE>
+        <SPECIFICATION-TYPE IDENTIFIER="_t_document" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Document">
+          <SPEC-ATTRIBUTES>
+            <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_a_doc_description" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="ReqIF.Description">
+              <TYPE>
+                <DATATYPE-DEFINITION-XHTML-REF>_dt_xhtml</DATATYPE-DEFINITION-XHTML-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-XHTML>
+          </SPEC-ATTRIBUTES>
+        </SPECIFICATION-TYPE>
+        <SPEC-RELATION-TYPE IDENTIFIER="_t_raffine" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Raffine"/>
+        <SPEC-RELATION-TYPE IDENTIFIER="_t_depend" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Dépend de"/>
+        <RELATION-GROUP-TYPE IDENTIFIER="_t_groupe" LAST-CHANGE="2026-10-01T09:00:00+02:00" LONG-NAME="Liens internes"/>
+      </SPEC-TYPES>
+      <SPEC-OBJECTS>
+        <SPEC-OBJECT IDENTIFIER="_ch_generalites" LAST-CHANGE="2026-10-01T09:00:00+02:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_a_chapitre</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div>Généralités</xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_t_exigence</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_r_masse" LAST-CHANGE="2026-10-02T10:15:00+02:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="EX-001">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_a_id</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Masse maximale">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_a_nom</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_a_texte</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div>
+                  <xhtml:p>Le véhicule <xhtml:b>doit</xhtml:b> peser moins de 1&#160;500&#160;kg en ordre de marche.</xhtml:p>
+                  <xhtml:p>Hors passagers &amp; bagages.</xhtml:p>
+                </xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-ENUMERATION>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>_a_statut</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+              </DEFINITION>
+              <VALUES>
+                <ENUM-VALUE-REF>_ev_validee</ENUM-VALUE-REF>
+              </VALUES>
+            </ATTRIBUTE-VALUE-ENUMERATION>
+            <ATTRIBUTE-VALUE-ENUMERATION>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>_a_lots</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+              </DEFINITION>
+              <VALUES>
+                <ENUM-VALUE-REF>_ev_meca</ENUM-VALUE-REF>
+                <ENUM-VALUE-REF>_ev_elec</ENUM-VALUE-REF>
+              </VALUES>
+            </ATTRIBUTE-VALUE-ENUMERATION>
+            <ATTRIBUTE-VALUE-INTEGER THE-VALUE="1">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-INTEGER-REF>_a_priorite</ATTRIBUTE-DEFINITION-INTEGER-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-INTEGER>
+            <ATTRIBUTE-VALUE-REAL THE-VALUE="1500.0">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-REAL-REF>_a_masse</ATTRIBUTE-DEFINITION-REAL-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-REAL>
+            <ATTRIBUTE-VALUE-BOOLEAN THE-VALUE="true">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-BOOLEAN-REF>_a_verifiee</ATTRIBUTE-DEFINITION-BOOLEAN-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-BOOLEAN>
+            <ATTRIBUTE-VALUE-DATE THE-VALUE="2026-12-31T00:00:00+01:00">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-DATE-REF>_a_echeance</ATTRIBUTE-DEFINITION-DATE-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-DATE>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Cahier des charges client, § 3.1">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_a_origine</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_t_exigence</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_r_autonomie" LAST-CHANGE="2026-10-02T10:20:00+02:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="EX-002">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_a_id</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Autonomie">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_a_nom</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_a_texte</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div>L'autonomie doit atteindre 400 km (cycle WLTP).</xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_a_commentaire</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div>À confirmer avec le fournisseur des batteries</xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_t_exigence</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_ch_securite" LAST-CHANGE="2026-10-01T09:00:00+02:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_a_chapitre</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div>Sécurité</xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_t_exigence</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_r_freinage" LAST-CHANGE="2026-10-03T08:00:00+02:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="EX-010">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_a_id</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Freinage d'urgence">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_a_nom</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_a_texte</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div>
+                  <xhtml:p>Le freinage d'urgence doit :</xhtml:p>
+                  <xhtml:ul>
+                    <xhtml:li>arrêter le véhicule depuis 100 km/h en moins de 40 m ;</xhtml:li>
+                    <xhtml:li>rester disponible en cas de perte de l'alimentation principale.</xhtml:li>
+                  </xhtml:ul>
+                </xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-ENUMERATION>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>_a_statut</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+              </DEFINITION>
+              <VALUES>
+                <ENUM-VALUE-REF>_ev_proposee</ENUM-VALUE-REF>
+              </VALUES>
+            </ATTRIBUTE-VALUE-ENUMERATION>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_t_exigence</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_r_alerte" LAST-CHANGE="2026-10-03T08:30:00+02:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="EX-011">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_a_id</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Alerte du conducteur">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_a_nom</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_a_texte</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div>Une alerte sonore et visuelle précède tout freinage automatique.</xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_t_exigence</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <!-- Objet hors spécification : il n'est placé dans aucune hiérarchie -->
+        <SPEC-OBJECT IDENTIFIER="_r_attente" LAST-CHANGE="2026-10-04T08:00:00+02:00" LONG-NAME="Exigence en attente">
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_t_exigence</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+      </SPEC-OBJECTS>
+      <SPEC-RELATIONS>
+        <SPEC-RELATION IDENTIFIER="_rel_raffine" LAST-CHANGE="2026-10-03T09:00:00+02:00">
+          <SOURCE>
+            <SPEC-OBJECT-REF>_r_freinage</SPEC-OBJECT-REF>
+          </SOURCE>
+          <TARGET>
+            <SPEC-OBJECT-REF>_r_masse</SPEC-OBJECT-REF>
+          </TARGET>
+          <TYPE>
+            <SPEC-RELATION-TYPE-REF>_t_raffine</SPEC-RELATION-TYPE-REF>
+          </TYPE>
+        </SPEC-RELATION>
+        <SPEC-RELATION IDENTIFIER="_rel_depend" LAST-CHANGE="2026-10-03T09:05:00+02:00">
+          <SOURCE>
+            <SPEC-OBJECT-REF>_r_alerte</SPEC-OBJECT-REF>
+          </SOURCE>
+          <TARGET>
+            <SPEC-OBJECT-REF>_r_freinage</SPEC-OBJECT-REF>
+          </TARGET>
+          <TYPE>
+            <SPEC-RELATION-TYPE-REF>_t_depend</SPEC-RELATION-TYPE-REF>
+          </TYPE>
+        </SPEC-RELATION>
+      </SPEC-RELATIONS>
+      <SPECIFICATIONS>
+        <SPECIFICATION IDENTIFIER="_spec_vehicule" LAST-CHANGE="2026-10-03T09:10:00+02:00" LONG-NAME="Exigences du véhicule">
+          <VALUES>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_a_doc_description</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div>Exigences de niveau système du véhicule de démonstration.</xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPECIFICATION-TYPE-REF>_t_document</SPECIFICATION-TYPE-REF>
+          </TYPE>
+          <CHILDREN>
+            <SPEC-HIERARCHY IDENTIFIER="_h_generalites" LAST-CHANGE="2026-10-01T09:00:00+02:00">
+              <OBJECT>
+                <SPEC-OBJECT-REF>_ch_generalites</SPEC-OBJECT-REF>
+              </OBJECT>
+              <CHILDREN>
+                <SPEC-HIERARCHY IDENTIFIER="_h_masse" LAST-CHANGE="2026-10-01T09:00:00+02:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_r_masse</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
+                <SPEC-HIERARCHY IDENTIFIER="_h_autonomie" LAST-CHANGE="2026-10-01T09:00:00+02:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_r_autonomie</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
+                <SPEC-HIERARCHY IDENTIFIER="_h_alerte_resume" LAST-CHANGE="2026-10-03T08:30:00+02:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_r_alerte</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
+              </CHILDREN>
+            </SPEC-HIERARCHY>
+            <SPEC-HIERARCHY IDENTIFIER="_h_securite" LAST-CHANGE="2026-10-01T09:00:00+02:00">
+              <OBJECT>
+                <SPEC-OBJECT-REF>_ch_securite</SPEC-OBJECT-REF>
+              </OBJECT>
+              <CHILDREN>
+                <SPEC-HIERARCHY IDENTIFIER="_h_freinage" LAST-CHANGE="2026-10-03T08:00:00+02:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_r_freinage</SPEC-OBJECT-REF>
+                  </OBJECT>
+                  <CHILDREN>
+                    <SPEC-HIERARCHY IDENTIFIER="_h_alerte" LAST-CHANGE="2026-10-03T08:30:00+02:00">
+                      <OBJECT>
+                        <SPEC-OBJECT-REF>_r_alerte</SPEC-OBJECT-REF>
+                      </OBJECT>
+                    </SPEC-HIERARCHY>
+                  </CHILDREN>
+                </SPEC-HIERARCHY>
+              </CHILDREN>
+            </SPEC-HIERARCHY>
+          </CHILDREN>
+        </SPECIFICATION>
+        <SPECIFICATION IDENTIFIER="_spec_logiciel" LAST-CHANGE="2026-10-03T09:10:00+02:00" LONG-NAME="Exigences logicielles">
+          <TYPE>
+            <SPECIFICATION-TYPE-REF>_t_document</SPECIFICATION-TYPE-REF>
+          </TYPE>
+        </SPECIFICATION>
+      </SPECIFICATIONS>
+      <SPEC-RELATION-GROUPS>
+        <RELATION-GROUP IDENTIFIER="_g_internes" LAST-CHANGE="2026-10-03T09:15:00+02:00" LONG-NAME="Liens internes du véhicule">
+          <SOURCE-SPECIFICATION>
+            <SPECIFICATION-REF>_spec_vehicule</SPECIFICATION-REF>
+          </SOURCE-SPECIFICATION>
+          <SPEC-RELATIONS>
+            <SPEC-RELATION-REF>_rel_raffine</SPEC-RELATION-REF>
+            <SPEC-RELATION-REF>_rel_depend</SPEC-RELATION-REF>
+          </SPEC-RELATIONS>
+          <TARGET-SPECIFICATION>
+            <SPECIFICATION-REF>_spec_vehicule</SPECIFICATION-REF>
+          </TARGET-SPECIFICATION>
+          <TYPE>
+            <RELATION-GROUP-TYPE-REF>_t_groupe</RELATION-GROUP-TYPE-REF>
+          </TYPE>
+        </RELATION-GROUP>
+      </SPEC-RELATION-GROUPS>
+    </REQ-IF-CONTENT>
+  </CORE-CONTENT>
+  <TOOL-EXTENSIONS>
+    <REQ-IF-TOOL-EXTENSION>
+      <arc:note xmlns:arc="urn:arcature:essai">Extension d'outil : recopiée telle quelle.</arc:note>
+    </REQ-IF-TOOL-EXTENSION>
+  </TOOL-EXTENSIONS>
+</REQ-IF>

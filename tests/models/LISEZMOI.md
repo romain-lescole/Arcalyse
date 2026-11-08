@@ -56,3 +56,12 @@ en local seulement (`tests/models/rhapsody-local/`, ignoré par git).
 ## Projet UML sur plusieurs fichiers (sous-dossier `uml-multi/`)
 
 `Systeme.uml`, `lib/Types.uml`, `Sous-systeme.uml` et `Profil.profile.uml` sont écrits à la main, dans le style d'Eclipse UML2 / Papyrus, pour tester le relevé des références vers d'autres fichiers (88) : le modèle principal importe un paquetage et vise une généralisation et un type de `lib/Types.uml`, applique `Profil.profile.uml`, range un sous-modèle contrôlé dans `Sous-systeme.uml`, vise un fichier absent (`Station.uml`), un module de Cameo (`Journal.mdxml`, format non lu) et les types standard (`pathmap://`, non relevés). Hors oracles (sous-dossier) ; licence Apache 2.0 comme Arcalyse.
+
+## Exigences ReqIF (sous-dossier `reqif/`)
+
+| Fichier | Origine | Auteur | Licence |
+|---|---|---|---|
+| `reqif/ExigencesDemo.reqif` | [romain-lescole/Arcature](https://github.com/romain-lescole/Arcature) (`tests/models/reqif/`) : exigences de démonstration écrites pour Arcature (tous les types de données, titres de chapitre, double place, objet hors spécification, relations, groupe) | Romain Lescole | **Apache 2.0** |
+| `reqif/ExigencesImages.reqifz` | Arcature (`tests/models/reqif/`, construite par `tests/reqifz-exemple.js`) : archive écrite pour Arcature — deux spécifications, chapitres, textes XHTML avec une image, un objet OLE et son image de repli (écriture de DOORS), une image absente, une pièce jointe PDF, un tableau ; relations « dérive de » et « raffine » | Romain Lescole | **Apache 2.0** |
+
+Elles servent au test du lecteur ReqIF embarqué (oracles, test navigateur, changement de langue).

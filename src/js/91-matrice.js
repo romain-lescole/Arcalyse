@@ -39,12 +39,13 @@ var _capMxX=null;
 /* ── Format du modèle, groupes (couches ou familles), noms ─────────────────────────────────────────────────── */
 
 /** Format du modèle ouvert. @returns {'capella'|'sysml2'|'uml'} */
-function capMxFormat(){ return typeof _capSysml!=='undefined'&&_capSysml.lecture?(capSyUml()?'uml':'sysml2'):'capella'; }
+function capMxFormat(){ return typeof _capSysml!=='undefined'&&_capSysml.lecture?(capSyUml()?'uml':_capSysml.format==='reqif'?'reqif':'sysml2'):'capella'; }
 
 /** Groupes proposés en filtre des axes : couches ARCADIA (Capella) ou familles du lecteur (SysML / UML).
  * @returns {{k:string, l:string, t:string, c:string}[]} Clé, libellé court, libellé long, couleur */
 function capMxGroupes(){
   if(capMxFormat()==='capella') return ['OA','SA','LA','PA','EPBS','Shared'].map(k=>({k, l:k==='Shared'?_L('Transverse'):k, t:(CAP_LAYERS[k]||{}).label||k, c:(CAP_LAYERS[k]||{}).color||'#8b949e'}));
+  if(capMxFormat()==='reqif') return Object.entries((typeof ArcatureLecteurReqif!=='undefined'&&ArcatureLecteurReqif.familles)||{}).map(([k,t])=>({k, l:k, t, c:{SPEC:'#e3b341', REL:'#3fb950', TYPE:'#8b949e'}[k]||'#8b949e'}));   // 📑 parties du fichier ReqIF (101)
   return [['STR',_L('Structure')],['BEH',_L('Comportement')],['REQ',_L('Exigences & cas')],['ORG',_L('Organisation')]].map(([k,l])=>({k, l:k, t:l, c:CAP_SY_FAM_COULEUR[k]||'#8b949e'}));
 }
 
@@ -86,7 +87,7 @@ function capMxRelations(){
     } else {
       const par={};
       capSysmlLiaisons().forEach(l=>{ if(l.source&&l.cible) (par[l.relation]=par[l.relation]||[]).push({s:l.source, t:l.cible, v:l.via||''}); });
-      const G=fmt==='uml'?_L('Liaisons UML / SysML v1'):_L('Liaisons SysML v2');
+      const G=fmt==='uml'?_L('Liaisons UML / SysML v1'):fmt==='reqif'?_L('Relations ReqIF'):_L('Liaisons SysML v2');
       Object.keys(par).forEach(rel=>add('sy:'+rel, capSyRelLibelle(rel), G, (CAP_SY_REL_STYLE[rel]||['#8b949e'])[0], par[rel]));
     }
     const {parentOf}=capGetParentIndex(), own=[];
@@ -183,6 +184,7 @@ function capMxPresetsDef(){
   const AUTRE=(rels,re)=>C=>{ const s=new Set(); rels.forEach(k=>((C.by[k]||{}).liens||[]).forEach(l=>[l.s,l.t].forEach(id=>{ const e=capGetElementById_(id); if(e&&!re.test(e.typeName)) s.add(e.typeName); }))); return [...s]; };
   const P=(fmt,id,nom,lt,lc,ct,cc,rel,sens,vue)=>({fmt,id,nom,lt,lc,ct,cc,rel,sens,vue:vue||{}});
   const F=['SystemFunction','LogicalFunction','PhysicalFunction'], OWN={grouper:'proprietaire'};
+  const RQ=typeof capReqifLec==='function'&&capReqifLec()?[...new Set(capReqifLec().toutesLiaisons().map(l=>'sy:'+l.relation))]:[];   // 📑 relations ReqIF : une clé par type de relation du fichier (101)
   return [
     P('capella','alloc-sa',_L('Allocation des fonctions — SA'),['SystemFunction'],[],['SystemComponent'],[],['sc_sf'],'both',OWN),
     P('capella','alloc-la',_L('Allocation des fonctions — LA'),['LogicalFunction'],[],['LogicalComponent'],[],['lc_lf'],'both',OWN),
@@ -223,6 +225,7 @@ function capMxPresetsDef(){
     P('uml','uml-uc',_L('Cas d\'utilisation × acteurs (association, inclusion)'),['UseCase'],[],['Actor','UseCase'],[],['sy:association','sy:inclusion','sy:extension'],'both'),
     P('uml','uml-typ',_L('Propriétés × types (typage)'),RE(/Property$/),[],BOUT(['sy:typage'],'t'),[],['sy:typage'],'out',OWN),
     P('uml','uml-alloc',_L('Allocations'),BOUT(['sy:allocation'],'s'),[],BOUT(['sy:allocation'],'t'),[],['sy:allocation'],'out'),
+    P('reqif','rq-rel',_L('Exigences × exigences (relations ReqIF)'),['SpecObject'],[],['SpecObject'],[],RQ.length?RQ:['sy:—'],'both',{grouper:'proprietaire'}),
     P('uml','ch-bloc-parts',_L('Blocs × types des parts ✨ contenance puis typage'),['Block'],[],['Block'],[],['ch:bloc_parts'],'out')
   ];
 }
@@ -892,7 +895,7 @@ function capMxPopStyles(btn){
 /** Menu 📚 Préréglages : ceux du format du modèle ouvert (les autres formats grisés), puis les matrices Cameo à venir.
  * @param {HTMLElement} btn - Bouton */
 function capMxMenuPresets(btn){
-  const fmt=capMxFormat(), P=capMxPresets().filter(p=>p.fmt===fmt), items=[{s:{capella:'Capella', sysml2:'SysML v2', uml:'UML / SysML v1'}[fmt]}];
+  const fmt=capMxFormat(), P=capMxPresets().filter(p=>p.fmt===fmt), items=[{s:{capella:'Capella', sysml2:'SysML v2', uml:'UML / SysML v1', reqif:'ReqIF'}[fmt]}];
   [...P.filter(p=>p.ok), ...P.filter(p=>!p.ok)].forEach(p=>items.push({l:'▦ '+capEsc(p.nom), off:!p.ok, h:p.ok?'':_L('rien dans ce modèle'), f:()=>{
     _capMx.tabs.push(capMxTabDePreset(p)); _capMx.idx=_capMx.tabs.length-1; _capMxUi.sel=null; _capMxUi.act=null; capMxTabsChanged(); capRenderMatrix(); capToast(_L('✔ Préréglage ouvert dans un nouvel onglet')); }}));
   items.push({s:_L('Matrices des projets Cameo (.mdzip)')},{l:_L('▦ Dependency Matrix, Allocation Matrix…'), off:true, h:_L('à venir')});

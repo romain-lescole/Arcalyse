@@ -26,8 +26,8 @@ d'Eclipse Sirius. Chacun de ces modules porte son en-tête `SPDX-License-Identif
 Texte : `LICENSES/EPL-2.0.txt`. Arcature prévoit de les réécrire en salle blanche pour les ramener
 sous Apache 2.0 (`docs/LICENCES.md` d'Arcature).
 
-Lecteur SysML v2 et lecteur UML / SysML v1 d'Arcature (`src/vendor/arcature-lecteur-sysml*.js`, `src/vendor/arcature-lecteur-uml*.js`,
-embarqués dans le fichier livré ; origine notée dans `src/vendor/LISEZMOI-lecteur-*.md`) — projet frère, même auteur et titulaire des
+Lecteur SysML v2, lecteur UML / SysML v1 et lecteur ReqIF d'Arcature (`src/vendor/arcature-lecteur-sysml*.js`, `src/vendor/arcature-lecteur-uml*.js`,
+`src/vendor/arcature-lecteur-reqif*.js`, embarqués dans le fichier livré ; origine notée dans `src/vendor/LISEZMOI-lecteur-*.md`) — projet frère, même auteur et titulaire des
 droits, sous Apache License 2.0. Le lecteur UML / SysML v1 ne contient aucun fichier sous Eclipse Public License (le build d'Arcature
 le refuse).
 
@@ -54,7 +54,7 @@ conformité à ces spécifications.
 Ils ne font pas partie du logiciel et restent sous leur propre licence (détails dans `tests/models/LISEZMOI.md`) :
 - `In-Flight_Entertainment_System.capella` — Copyright The Capella contributors — Eclipse Public License 2.0 ;
 - `AIDA.capella` — Copyright (c) 2016-2022 IRT AESE (IRT Saint Exupéry) — Creative Commons BY-SA 4.0 ;
-- `VehiculeDemo.sysml` et les modèles UML / SysML v1 de `tests/models/uml/` — écrits pour Arcature (même auteur) — Apache 2.0.
+- `VehiculeDemo.sysml`, les modèles UML / SysML v1 de `tests/models/uml/` et les exigences ReqIF de `tests/models/reqif/` — écrits pour Arcature (même auteur) — Apache 2.0.
 
 ## Icônes
 

@@ -69,6 +69,7 @@ const _capIco = { doc: null, cache: new Map() };
  */
 function capIco(id, taille) {
   if (typeof capUmlIcone === 'function') { const u = capUmlIcone(id, taille); if (u != null) return u; }   // 🧬 modèle UML / SysML v1 : jeu d'icônes d'Arcature (88)
+  if (typeof capReqifIcone === 'function') { const r = capReqifIcone(id, taille); if (r != null) return r; }   // 📑 ReqIF (101)
   const A = window.ArcatureVisionneuse;
   const sy0 = typeof capSysmlActif === 'function' && capSysmlActif();
   if (!id || !cap_xmlDoc || (!sy0 && (!A || typeof A.icone !== 'function'))) return '';   // SysML v2 : icônes du lecteur, sans la visionneuse ; cap_xmlDoc : aussi pendant le chargement (arborescence de la Relation Map)
@@ -99,6 +100,7 @@ function capIco(id, taille) {
  */
 function capIcoType(type, taille) {
   if (typeof capUmlIconeType === 'function') { const u = capUmlIconeType(type, taille); if (u != null) return u; }   // 🧬 types UML / SysML v1 (88)
+  if (typeof capReqifIconeType === 'function') { const r = capReqifIconeType(type, taille); if (r != null) return r; }   // 📑 ReqIF (101)
   const A = window.ArcatureVisionneuse;
   if (!type) return '';
   const sy = typeof capSysmlActif === 'function' && capSysmlActif();
@@ -302,9 +304,10 @@ function capProjectFromFiles(fichiers) {
   if (!mods.length && sysml.length && typeof capSysmlOuvrirDossier === 'function' && capSysmlDispo()) { capSysmlOuvrirDossier(sysml); return; }   // 🧩 projet SysML v2 en dossier (87)
   const uml = typeof capUmlReconnait === 'function' ? fichiers.filter(f => capUmlReconnait(f.nom) || capUmlAnnexe(f.nom)) : [];
   if (!mods.length && uml.some(f => capUmlReconnait(f.nom))) { capUmlOuvrirDossier(uml); return; }   // 🧬 projet UML / SysML v1 en dossier (88)
+  if (!mods.length && typeof capReqifReconnait === 'function' && fichiers.some(f => capReqifReconnait(f.nom))) { capReqifOuvrirDossier(fichiers); return; }   // 📑 ReqIF et images en dossier (101)
   if (!mods.length) {
     const ext = n => (n.split('.').pop() || '').toLowerCase(), absent = CAP_EDITION && fichiers.map(f => [f, CAP_FORMATS.find(F => !capFormatsDispo().includes(F) && F.ext.includes(ext(f.nom)) && ext(f.nom) !== 'xml')]).find(x => x[1]);
-    capWelcomeStatus(absent ? capFormatAbsentMsg(absent[0].nom, absent[1]) : _L('Aucun fichier .capella, .sysml, .uml, .xmi, .mdzip ni .qea dans ce dossier (ni dans ses sous-dossiers).'), 'err'); return;
+    capWelcomeStatus(absent ? capFormatAbsentMsg(absent[0].nom, absent[1]) : _L('Aucun fichier .capella, .sysml, .uml, .xmi, .mdzip, .qea ni .reqif dans ce dossier (ni dans ses sous-dossiers).'), 'err'); return;
   }
   /** Charge un modèle et son .aird. */
   const charger = async m => {

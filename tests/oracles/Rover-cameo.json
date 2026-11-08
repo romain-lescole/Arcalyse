@@ -263,6 +263,7 @@
    "ana:libs",
    "ana:pvmt",
    "ana:rec",
+   "ana:reqif",
    "ana:reqs",
    "ana:states",
    "ana:status",
@@ -755,11 +756,14 @@
    "num": 0,
    "den": 2
   },
+  "rq.diag": null,
   "rq.kind": {
    "Requirement": 2
   },
   "rq.layer": null,
   "rq.n": 2,
+  "rq.rel": null,
+  "rq.spec": null,
   "sante.err": 0,
   "sante.layer": null,
   "sante.pts": 3,

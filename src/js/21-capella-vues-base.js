@@ -144,6 +144,10 @@ let _capColPickerSearch = '';     // texte de recherche dans le menu ⊞ Colonne
 let capTableColWidths = {};       // { colKey: largeurPx }
 let capTableColFilters = {};      // { colKey: texte de filtre }
 let capTableMultiValDisplay = 'inline'; // 'inline' (en ligne, virgules) | 'stacked' (empilé verticalement)
+/** Colonne Description du ▤ Tableau en texte riche (mise en forme, tableaux, images) : null = selon le format (ReqIF : oui), true / false = choix de l'utilisateur. */
+let capTableRiche = null;
+/** Vrai si la colonne Description s'affiche en texte riche. @returns {boolean} */
+function capTableRicheOn(){ return capTableRiche==null ? (typeof capSyReqif==='function'&&capSyReqif()) : !!capTableRiche; }
 let capTableCustomCols = [];      // [{key, label, steps:[{kind, relKey?, direction?, filterType?}]}]
 let capTableSort = {col:null, dir:1}; // tri de l'onglet actif (dir : 1 croissant, -1 décroissant)
 let capTableScope = {ids:[], direct:false}; // 🎯 portée de l'onglet actif : contenu des éléments choisis (vide = tout le modèle)
@@ -645,6 +649,7 @@ function capTableColLabel(colKey){
   if (builtinLabels[colKey]) return builtinLabels[colKey];
   if (colKey.startsWith('rel:')) return capTableRelLabel(colKey);
   if (colKey.startsWith('cameo:')) return capSyTabColLabel(colKey);   // tableau de Cameo (90)
+  if (typeof capReqifColLabel==='function') { const l=capReqifColLabel(colKey); if (l) return l; }   // 📑 colonnes d'une lecture ReqIF (101)
   const custom = capTableCustomCols.find(c=>c.key===colKey);
   if (custom) return custom.label;
   return colKey; // attribut brut : son nom XML tel quel
@@ -725,6 +730,13 @@ function capBuildTableToolbar(){
     capRenderTable();
   };
   tb.appendChild(displayToggle);
+
+  // Colonne Description : texte simple ou texte riche (mise en forme, tableaux, images des textes ReqIF)
+  const riche=document.createElement('div'); riche.className='tbtn'+(capTableRicheOn()?' active':'');
+  riche.title=_L('Colonne Description : texte riche (mise en forme, tableaux, images) ou texte simple');
+  riche.textContent=_L('🖼 Texte riche');
+  riche.onclick=()=>{ capTableRiche=!capTableRicheOn(); capRenderTable(); };
+  tb.appendChild(riche);
 
   // 📋 Sélection de cellules et copie (51-tableau.js)
   tb.appendChild(capTSelControls());
@@ -1373,6 +1385,12 @@ function capRenderTableBodyOnly(){
       if (colKey==='layer') { td.innerHTML=`<span style="color:${lv.color};font-family:monospace;font-size:11px;font-weight:700;">${capEsc(val)}</span>`; }
       else if (colKey==='typeName') { td.innerHTML=`<span class="cap-type-badge" style="color:${lv.color};background:${lv.bg}">${capEsc(val)}</span>`; }
       else if (colKey==='id') { td.innerHTML=`<span style="font-family:monospace;font-size:10px;color:var(--c-dim);">${capEsc(val)}</span>`; }
+      else if (colKey==='description' && /<[a-z][^>]*>/i.test(el.attrs.description||'') && capTableRicheOn()) {   // texte riche : mise en forme et images (capSafeHtml, 25)
+        td.classList.add('cap-rich-td'); td.innerHTML=`<div class="cap-rich-cell cap-desc">${capSafeHtml(el.attrs.description)}</div>`;
+      }
+      else if (colKey==='description' && /<img\b/i.test(el.attrs.description||'')) {   // texte simple : images signalées
+        const n=(el.attrs.description.match(/<img\b/gi)||[]).length; td.textContent=val; const s=document.createElement('span'); s.className='cap-rich-n'; s.textContent=` 🖼 ${n}`; s.title=_L('Images dans la description : bouton 🖼 Texte riche pour les voir'); td.appendChild(s);
+      }
       else if (capTableMultiValDisplay==='stacked' && valArr.length>1) {
         // Affichage empilé : une valeur par ligne, comme pour les colonnes de relation
         td.classList.add('cap-stacked-td');

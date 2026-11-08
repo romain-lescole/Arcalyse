@@ -142,6 +142,7 @@
 @@INCLUDE js/86-detail-fenetre.js@@
 @@INCLUDE js/87-sysml.js@@
 @@INCLUDE js/88-uml.js@@
+@@INCLUDE js/89-ia-outils.js@@
 @@INCLUDE js/90-tableaux-cameo.js@@
 @@INCLUDE js/91-matrice.js@@
 @@INCLUDE js/92-uml-blocs-activites.js@@
@@ -153,6 +154,7 @@
 @@INCLUDE js/98-uml-regles-aide.js@@
 @@INCLUDE js/99-uml-diagrammes-calcules.js@@
 @@INCLUDE js/100-rapports-sysml.js@@
+@@INCLUDE js/101-reqif.js@@
 
 </script>
 <!-- Visionneuse de diagrammes d'Arcature (Apache 2.0, même auteur) : produite par « node build.js --visionneuse » dans Arcature,
@@ -171,6 +173,12 @@
      window.ArcatureLecteurUml, utilisé par js/88-uml.js ; versions fr / en choisies par le build comme la visionneuse -->
 <script id="arcature-lecteur-uml">
 @@INCLUDE vendor/arcature-lecteur-uml.js@@
+</script>
+<!-- Lecteur ReqIF d'Arcature (Apache 2.0, lecture seule, hors ligne : .reqif, archive .reqifz et ses images) : repris par
+     « node build.js --lecteur-reqif <dossier d'Arcature> » (origine notée dans src/vendor/LISEZMOI-lecteur-reqif.md), ne pas éditer ;
+     window.ArcatureLecteurReqif, utilisé par js/101-reqif.js ; versions fr / en choisies par le build comme la visionneuse -->
+<script id="arcature-lecteur-reqif">
+@@INCLUDE vendor/arcature-lecteur-reqif.js@@
 </script>
 </body>
 </html>

@@ -2314,9 +2314,12 @@
   "rec.rpl": 3,
   "rq.chk": null,
   "rq.cov": null,
+  "rq.diag": null,
   "rq.kind": null,
   "rq.layer": null,
   "rq.n": 0,
+  "rq.rel": null,
+  "rq.spec": null,
   "sante.err": 3,
   "sante.layer": {
    "OA": 87,

@@ -56,7 +56,7 @@ Livrables prêts dans livraison/. Pour les publier (remplacer X.Y) : git add liv
   process.exit(0);
 }
 // Version réduite à un format : composants d'Arcature embarqués par format
-const FORMATS = { capella: ['visionneuse'], sysml2: ['lecteur-sysml'], uml: ['lecteur-uml'] };
+const FORMATS = { capella: ['visionneuse', 'lecteur-reqif'], sysml2: ['lecteur-sysml', 'lecteur-reqif'], uml: ['lecteur-uml', 'lecteur-reqif'] };   // ReqIF (exigences) : dans toutes les versions
 const fmtArg = args.indexOf('--format');
 const FORMAT = fmtArg >= 0 ? String(args[fmtArg + 1] || '').toLowerCase() : '';
 if (FORMAT && !FORMATS[FORMAT]) { console.error(`✖ Format inconnu : ${FORMAT} (capella, sysml2 ou uml)`); process.exit(1); }
@@ -65,7 +65,7 @@ const NOM = FORMAT ? `arcalyse-${FORMAT}-${LANG}` : `arcalyse-${LANG}`;
 const OUT = livraison ? path.join(ROOT, 'livraison', `${NOM}.html`)
   : outArg >= 0 ? path.resolve(args[outArg + 1]) : path.join(ROOT, 'dist', `${NOM}.html`);
 const EN = LANG === 'en', MULTI = LANG === 'multi', TR = EN || MULTI;   // TR : une traduction est nécessaire
-// ── Reprise d'un composant d'Arcature : node build.js --lecteur-sysml | --lecteur-uml | --visionneuse [dossier d'Arcature] (ou ARCATURE) ──
+// ── Reprise d'un composant d'Arcature : node build.js --lecteur-sysml | --lecteur-uml | --lecteur-reqif | --visionneuse [dossier d'Arcature] (ou ARCATURE) ──
 // Copie dist/<fichier>.js et -en.js (assemblés dans Arcature par la même commande, avec --lang en, lancée ici s'ils manquent)
 // dans src/vendor/ et note l'origine (dépôt, branche, commit, commande, licence) dans src/vendor/LISEZMOI-<composant>.md.
 const REPRISES = {
@@ -79,6 +79,11 @@ const REPRISES = {
     licence: "Apache 2.0 (aucun fichier sous EPL-2.0 : refusé par le build d'Arcature) ; contient des noms et des textes de\n" +
       "  contraintes tirés des documents normatifs de l'OMG (UML.xmi, SysML.xmi, UAF.xmi), repris selon la licence des spécifications de l'OMG",
     doc: "Mode d'emploi et contrat : `docs/UML.md` (Arcalyse), `docs/LECTEUR-UML.md` et `docs/api/lecteur-uml.d.ts` (Arcature)."
+  },
+  '--lecteur-reqif': {
+    fichier: 'arcature-lecteur-reqif', note: 'LISEZMOI-lecteur-reqif.md', titre: "Lecteur ReqIF d'Arcature",
+    licence: 'Apache 2.0',
+    doc: "Mode d'emploi et contrat : `docs/REQIF.md` (Arcalyse), `docs/LECTEUR-REQIF.md` et `docs/api/lecteur-reqif.d.ts` (Arcature)."
   },
   '--visionneuse': {
     fichier: 'arcature-visionneuse', note: 'LISEZMOI-visionneuse.md', titre: "Visionneuse de diagrammes Capella d'Arcature",
@@ -233,14 +238,14 @@ if (EN) tplTxt = tplTxt.replace('@@INCLUDE vendor/arcature-visionneuse.js@@', '@
 if (MULTI) tplTxt = tplTxt.replace(/^@@INCLUDE vendor\/arcature-visionneuse\.js@@$/m,
   "if(document.documentElement.getAttribute('data-lang')==='en'){\n@@INCLUDE vendor/arcature-visionneuse-en.js@@\n}else{\n@@INCLUDE vendor/arcature-visionneuse.js@@\n}");
 // Lecteurs SysML v2 et UML / SysML v1 d'Arcature : même règle (src/vendor/arcature-lecteur-sysml.js, -uml.js, et leur version -en.js)
-for (const cle of ['sysml', 'uml']) {
+for (const cle of ['sysml', 'uml', 'reqif']) {
   if (EN) tplTxt = tplTxt.replace(`@@INCLUDE vendor/arcature-lecteur-${cle}.js@@`, `@@INCLUDE vendor/arcature-lecteur-${cle}-en.js@@`);
   if (MULTI) tplTxt = tplTxt.replace(new RegExp(`^@@INCLUDE vendor/arcature-lecteur-${cle}\\.js@@$`, 'm'),
     `if(document.documentElement.getAttribute('data-lang')==='en'){\n@@INCLUDE vendor/arcature-lecteur-${cle}-en.js@@\n}else{\n@@INCLUDE vendor/arcature-lecteur-${cle}.js@@\n}`);
 }
 if (MULTI) tplTxt = tplTxt.replace(/^@@INCLUDE html\/aide\.html@@$/m, '').replace(/<\/body>\s*<\/html>\s*$/, MULTI_RESTORE + '\n</body>\n</html>\n');
 // Version réduite à un format : composants d'Arcature des autres formats retirés (leur balise <script> devient vide)
-if (FORMAT) for (const c of ['visionneuse', 'lecteur-sysml', 'lecteur-uml'].filter(c => !FORMATS[FORMAT].includes(c)))
+if (FORMAT) for (const c of ['visionneuse', 'lecteur-sysml', 'lecteur-uml', 'lecteur-reqif'].filter(c => !FORMATS[FORMAT].includes(c)))
   tplTxt = tplTxt.replace(new RegExp(`^@@INCLUDE vendor/arcature-${c}(-en)?\\.js@@$`, 'gm'), `/* ${c} : absent de cette version (--format ${FORMAT}) */`)
     .replace(new RegExp(`^if\\(document\\.documentElement\\.getAttribute\\('data-lang'\\)==='en'\\)\\{\\n/\\* ${c} [^\\n]*\\n\\}else\\{\\n(/\\* ${c} [^\\n]*)\\n\\}$`, 'm'), '$1');
 const tpl = tplTxt.split('\n');

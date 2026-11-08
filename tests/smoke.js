@@ -514,6 +514,25 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
       for (const v of ['cls', 'dep', 'diag', 'pkg']) { b.querySelector(`[data-xv="${v}"]`).click(); await att(); o['v_' + v] = b.innerText.length > 50; }
       o.sante = capSanteCompute().checks.some(c => c.view === 'ana:umlsoft' && c.n > 0); return o; });
     if (r.pkg !== 5 || !r.cycle || !r.v_cls || !r.v_dep || !r.v_diag || !r.sante) throw new Error('UML logiciel : ' + JSON.stringify(r)); });
+  // 📑 ReqIF (101) : archive .reqifz (images, objet OLE, image absente), vue et ses onglets, détail, ▤ Tableau en texte riche, santé, accueil, ▦ Matrice
+  const reqifz = path.join(models, 'reqif', 'ExigencesImages.reqifz');
+  if (fs.existsSync(reqifz)) await step('📑 ReqIF : archive .reqifz, document et images, onglets, détail, ▤ Tableau en texte riche, santé, accueil, ▦ Matrice', async () => {
+    await p.setInputFiles('#capella-file-input', reqifz); await p.waitForTimeout(300);
+    await p.click('#cap-replace-ov [data-c="go"]');
+    await p.waitForFunction(() => capLoaded && typeof capSyReqif === 'function' && capSyReqif(), null, { timeout: 60000 }); await p.waitForTimeout(400);
+    const r = await p.evaluate(async () => { const att = () => new Promise(r => setTimeout(r, 250)); const o = {};
+      capNavOpen('ana:reqif'); await att(); const b = () => document.querySelector('#ana-box [data-hold="reqif"]');
+      o.imgs = [...b().querySelectorAll('img.rq-img')].filter(i => /^blob:/.test(i.src)).length; o.titres = b().querySelectorAll('.rq-titre').length;
+      for (const v of ['tab', 'rel', 'types', 'pieces', 'chk']) { b().querySelector(`[data-xv="${v}"]`).click(); await att(); o['v_' + v] = b().innerText.length > 80; }
+      b().querySelector('[data-xv="doc"]').click(); await att();
+      capOpenDetailById('_o_s4'); await att(); const d = document.querySelector('#cap-detail'); o.detail = /📑 ReqIF/.test(d.textContent) && /SYS-011/.test(d.textContent) && !!d.querySelector('img.rq-img');
+      capReqifVersTableau(); await att(); o.tableau = document.querySelectorAll('#cap-view-table .cap-rich-cell img').length;
+      o.sante = capSanteCompute().checks.some(c => c.view === 'ana:reqif' && c.n > 0);
+      _capHomeUi.tab = 'projet'; capShowView('home'); capHomeRender(); await att(); o.accueil = /Pièces jointes|Attachments/.test(document.querySelector('#cap-view-home').textContent);
+      o.matrice = capMxPresets().some(x => x.id === 'rq-rel' && x.ok);
+      o.vides = capNavVides().has('functions') && !capNavVides().has('ana:reqif');
+      return o; });
+    if (r.imgs < 3 || r.titres !== 3 || !r.v_tab || !r.v_rel || !r.v_types || !r.v_pieces || !r.v_chk || !r.detail || r.tableau < 2 || !r.sante || !r.accueil || !r.matrice || !r.vides) throw new Error('ReqIF : ' + JSON.stringify(r)); });
   await browser.close();
   if (errs.length) { console.error('\n✖ ' + errs.length + ' erreur(s) :\n  - ' + errs.slice(0, 30).join('\n  - ')); process.exit(1); }
   console.log('\n✔ Aucune erreur.');
