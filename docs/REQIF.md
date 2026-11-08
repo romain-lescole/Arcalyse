@@ -11,7 +11,7 @@ Arcalyse lit des exigences **ReqIF** (Requirements Interchange Format de l'OMG, 
 La lecture est faite par le **lecteur ReqIF d'Arcature** (`src/vendor/arcature-lecteur-reqif*.js`, `window.ArcatureLecteurReqif`,
 Apache 2.0, même auteur), repris par `node build.js --lecteur-reqif <dossier d'Arcature>` (origine dans
 `src/vendor/LISEZMOI-lecteur-reqif.md` ; mode d'emploi et contrat du lecteur : `docs/LECTEUR-REQIF.md` et
-`docs/api/lecteur-reqif.d.ts` d'Arcature). Il est embarqué dans les quatre livrables (≈ 180 Ko par langue).
+`docs/api/lecteur-reqif.d.ts` d'Arcature). Il est embarqué dans la version ReqIF seule `arcalyse-reqif.html` et dans la version complète `arcalyse-complet.html` (≈ 180 Ko par langue) ; les versions Capella, SysML v2 et UML ne l'ont pas.
 
 ## Intégration (module `src/js/101-reqif.js`)
 

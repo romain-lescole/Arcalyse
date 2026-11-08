@@ -36,16 +36,16 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
   p.on('dialog', d => d.dismiss());
   await p.addInitScript(() => { window._capDlgAuto = 'cancel'; });   // dialogues maison (12) : réponse automatique « Annuler » pendant le parcours
   await p.goto('file://' + page.replace(/\\/g, '/').replace(/^([A-Za-z]):/, '/$1:') + (MULTI ? '?lang=' + (args.includes('--fr') ? 'fr' : 'en') : ''));
-  if (FORMAT === 'sysml2' || FORMAT === 'uml') {   // version SysML v2 seul ou UML / SysML v1 seul : parcours propre (pas de .capella)
+  if (FORMAT === 'sysml2' || FORMAT === 'uml' || FORMAT === 'reqif') {   // version SysML v2, UML / SysML v1 ou ReqIF seul : parcours propre (pas de .capella)
     const ok = (c, m) => { if (!c) errs.push(m); console.log((c ? '✔ ' : '✖ ') + m); };
-    const w = await p.evaluate(() => ({ ed: CAP_EDITION, reqif: typeof capReqifDispo === 'function' && capReqifDispo(), cartes: [...document.querySelectorAll('.cw-card')].map(c => c.id), aide: [...document.querySelectorAll('[data-hfmt]')].filter(n => n.style.display !== 'none').map(n => n.dataset.hfmt) }));
-    ok(w.ed === FORMAT && w.cartes.join() === 'cw-card-' + FORMAT + (w.reqif ? ',cw-card-reqif' : ''), 'écran d\'ouverture : la carte du format (et celle de ReqIF, lu par toutes les versions)');
-    ok(w.aide.every(k => k === FORMAT || k === 'reqif'), 'aide : onglets et sections des autres formats masqués');
+    const w = await p.evaluate(() => ({ ed: CAP_EDITION, cartes: [...document.querySelectorAll('.cw-card')].map(c => c.id), aide: [...document.querySelectorAll('[data-hfmt]')].filter(n => n.style.display !== 'none').map(n => n.dataset.hfmt) }));
+    ok(w.ed === FORMAT && w.cartes.join() === 'cw-card-' + FORMAT, 'écran d\'ouverture : une seule carte, celle du format');
+    ok(w.aide.every(k => k === FORMAT), 'aide : onglets et sections des autres formats masqués');
     await p.setInputFiles('#capella-file-input', model); await p.waitForTimeout(800);
     ok(await p.evaluate(() => !capLoaded && /Capella/.test(document.getElementById('cw-status').textContent)), 'fichier .capella refusé avec un message');
-    await p.setInputFiles('#capella-file-input', FORMAT === 'sysml2' ? path.join(models, 'VehiculeDemo.sysml') : path.join(models, 'uml', 'Drone-2026x.mdzip'));
+    await p.setInputFiles('#capella-file-input', FORMAT === 'sysml2' ? path.join(models, 'VehiculeDemo.sysml') : FORMAT === 'reqif' ? path.join(models, 'reqif', 'ExigencesImages.reqifz') : path.join(models, 'uml', 'Drone-2026x.mdzip'));
     await p.waitForFunction(() => capLoaded, null, { timeout: 120000 }); await p.waitForTimeout(500);
-    for (const v of ['home', 'tree', 'cards', 'table', 'diag', FORMAT === 'uml' ? 'ana:uml' : 'ana:sysml', 'ana:sante', 'ana:diff', 'dashboard']) {
+    for (const v of ['home', 'tree', 'cards', 'table', 'diag', FORMAT === 'uml' ? 'ana:uml' : FORMAT === 'reqif' ? 'ana:reqif' : 'ana:sysml', 'ana:sante', 'ana:diff', 'dashboard']) {
       const n = errs.length; try { await p.evaluate(k => capNavOpen(k), v); await p.waitForTimeout(400); } catch (e) { errs.push('vue ' + v + ' : ' + e.message); }
       console.log((errs.length > n ? '✖ ' : '✔ ') + 'vue ' + v);
     }
@@ -53,7 +53,7 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
       const id = capAllElements.find(e => e.attrs && e.attrs.name).id; capOpenDetail(id);
       return { cases: document.querySelectorAll('#cap-view-home .hm-case').length, ico: !!document.querySelector('#cap-view-home .hm-layer-t svg'),
         menus: !E.hide.has('functions') || !E.hide.has(CAP_EDITION === 'uml' ? 'ana:sysml' : 'ana:uml') ? 'vues d\'un autre format visibles' : '', vues: capSyVuesListe().length }; });
-    ok(r.cases === 3 && r.ico && r.vues > 1, 'accueil : cases « Fichiers du projet », icônes, vues ' + JSON.stringify(r));
+    ok(r.cases === 3 && r.ico && (FORMAT === 'reqif' ? r.vues === 0 : r.vues > 1), 'accueil : cases « Fichiers du projet », icônes, vues ' + JSON.stringify(r));
     ok(!r.menus, 'menus : vues des autres formats absentes');
     await browser.close();
     if (errs.length) { console.error('\n✖ ' + errs.length + ' erreur(s) :\n  - ' + errs.join('\n  - ')); process.exit(1); }
@@ -516,7 +516,7 @@ if (!model) { console.error('Aucun modèle : placez un .capella dans tests/model
     if (r.pkg !== 5 || !r.cycle || !r.v_cls || !r.v_dep || !r.v_diag || !r.sante) throw new Error('UML logiciel : ' + JSON.stringify(r)); });
   // 📑 ReqIF (101) : archive .reqifz (images, objet OLE, image absente), vue et ses onglets, détail, ▤ Tableau en texte riche, santé, accueil, ▦ Matrice
   const reqifz = path.join(models, 'reqif', 'ExigencesImages.reqifz');
-  if (fs.existsSync(reqifz)) await step('📑 ReqIF : archive .reqifz, document et images, onglets, détail, ▤ Tableau en texte riche, santé, accueil, ▦ Matrice', async () => {
+  if (fs.existsSync(reqifz) && !FORMAT) await step('📑 ReqIF : archive .reqifz, document et images, onglets, détail, ▤ Tableau en texte riche, santé, accueil, ▦ Matrice', async () => {
     await p.setInputFiles('#capella-file-input', reqifz); await p.waitForTimeout(300);
     await p.click('#cap-replace-ov [data-c="go"]');
     await p.waitForFunction(() => capLoaded && typeof capSyReqif === 'function' && capSyReqif(), null, { timeout: 60000 }); await p.waitForTimeout(400);
