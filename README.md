@@ -37,7 +37,7 @@ A Capella model grows fast: hundreds of functions, exchanges, components and por
 - 💬 **Review**: comments and notes on the elements and the diagrams, severity, assignees, due dates, check after each new version of the model, report.
 - 🩺 **Ready-to-use checks**: unallocated elements, unconnected ports, incomplete traceability, names to review…
 - 📤 **Exports everywhere**: CSV, PNG, SVG, PDF, standalone HTML reports, dashboards printable in A4.
-- 🔄 **File watch**: Arcalyse detects new versions of the `.capella` file and shows what changed.
+- 🔄 **File watch**: Arcalyse detects new versions of the model file — Capella, SysML v2, UML / SysML v1 or ReqIF — and shows what changed.
 - 🏠 **Project home**: project information, checklists, review plans, review packages and automatic reports, saved with the model.
 - 📄 **Your work follows the new versions of Arcalyse**: open a project page saved with an earlier version (2.1 or later) in the new one, everything is carried over.
 
@@ -60,6 +60,7 @@ Load the project's **`.aird`** file (or open the **📁 project folder**: the `.
 - **export of several diagrams at once** as framed **sheets**: header (layer, acronym, name, type), Capella description and represented element, title block (project, layer, content, sources, date, sheet number), appendix of the represented elements — as **PDF** (contents, bookmarks; warning if the file may be heavy), **PNG / SVG ZIP** (one folder per layer, one appendix CSV per diagram) or standalone **HTML report**, with a live preview;
 - **new version of the model**: after a 🔄 update, the `.aird` is re-read from disk (project folder) or the up-to-date one is requested; the diagrams of a previous model are removed when another model is opened; the `.aird` is saved in the 💾 HTML page;
 - **⚖ diagram comparison** with a previous `.aird` (kept automatically at each update): new, deleted, renamed diagrams, elements added to or removed from a diagram, layout-only changes, diagrams showing elements missing from the model or affected by the model changes.
+- **⇄ Before / after** of the open diagram (Capella, UML / SysML v1, SysML v2): ◐ fade where only the differences move, ◧ slider, highlighting of the elements added, removed, moved or renamed — also from ⚖ Version comparison, one diagram after the other.
 
 ![Capella diagrams — explorer by layer › type, diagram on its two-row toolbar and minimap](docs/captures/11-diagrammes.png)
 
@@ -115,9 +116,10 @@ Sequence diagrams (ES, FS, OES, OAS, IS) are redrawn: lifelines, messages, execu
 - **ƒ Functions**: hierarchy with descriptions, Excel-style table (value filters, copy), allocation to the system or to actors, cross-layer traceability, metrics, **name quality** (action verbs in French and English, customisable rules) and printable **functional file**.
 - **🧬 Cross-layer traceability**: OA → SA → LA → PA → EPBS realization rates by category, at a glance, and the list of untraced elements.
 - **🎯 Capabilities & missions**, **🔁 Modes & states**, **🧾 Requirements**, **🎛 Properties**, **🗃 Data & interfaces**, **🔒 Constraints**.
-- **⚖ Version comparison**: elements added, deleted, modified or moved between two versions of the model, with an exportable report — and the **🔲 Diagrams** tab for the `.aird`.
+- **⚖ Version comparison**: elements added, deleted, modified or moved between two versions of the model, with an exportable report, in every format and even between files with different names — and the **🔲 Diagrams** tab (the `.aird`, or the diagrams of the other formats).
 - **💚 Model health**: a 0–100 score built on every check of every view, by layer, with its history across the model versions — and a **🩺 check profile** (enable, severity, thresholds) shared as a file.
 - **🖧 Deployment & EPBS**, **📦 REC / RPL** (replicas compared with their REC), **📚 Libraries** (external references, resolved once the library is loaded), **🏷 Exchange categories**, **🔖 Capella review status**, and **⚡ chain checks** (empty, broken, unallocated, physical paths).
+- **🎚 Variants (150% model)**: progress of each variant of a Capella model marked by the Filtering add-on, PVMT properties or pure::variants, remaining work, elements × variants, consistency checks.
 
 ![Functions — hierarchy and descriptions](docs/captures/06-fonctions.png)
 
@@ -189,7 +191,7 @@ Drop an Eclipse UML2 / Papyrus **`.uml`** file with its **`.notation`** (both to
 2. **Open it** in a recent browser (tested with Google Chrome version 155), even without a network.
 3. **Drag and drop** your model — Capella `.capella`, SysML v2 `.sysml` / `.kpar`, UML / SysML v1 `.mdzip`, `.qea`, `.uml`, `.xmi`, Rhapsody `.rpy`, ReqIF `.reqifz` / `.reqif` — or the 📁 project folder anywhere on the page, or start from your format's card: it says what to open and what you will get. Or reopen a saved 📄 working project. That's all.
 
-> 📦 **File size**: about 8 MB for `arcalyse-complet.html` (all formats, both languages); the single-format files are lighter, as they only embed the Arcature component of their format (Capella diagram viewer, SysML v2 reader, UML / SysML v1 reader or ReqIF reader), plus D3.
+> 📦 **File size**: about 10 MB for `arcalyse-complet.html` (all formats, both languages); the single-format files are lighter, as they only embed the Arcature component of their format (Capella diagram viewer, SysML v2 reader, UML / SysML v1 reader or ReqIF reader), plus D3.
 
 > 📘 **Complete user guide**, menu by menu, with screenshots (in French): [`docs/GUIDE-UTILISATION.md`](docs/GUIDE-UTILISATION.md).
 
@@ -230,7 +232,7 @@ Un modèle Capella grossit vite : des centaines de fonctions, d'échanges, de co
 - 💬 **Revue** : commentaires et notes sur les éléments et les diagrammes, criticité, responsables, échéances, vérification à chaque nouvelle version du modèle, rapport.
 - 🩺 **Des contrôles prêts à l'emploi** : éléments non alloués, ports non connectés, traçabilité incomplète, noms à revoir…
 - 📤 **Exports partout** : CSV, PNG, SVG, PDF, rapports HTML autonomes, tableaux de bord imprimables en A4.
-- 🔄 **Suivi du fichier** : Arcalyse détecte les nouvelles versions du `.capella` et montre ce qui a changé.
+- 🔄 **Suivi du fichier** : Arcalyse détecte les nouvelles versions du fichier du modèle — Capella, SysML v2, UML / SysML v1 ou ReqIF — et montre ce qui a changé.
 - 🏠 **Accueil du projet** : informations, check-lists, plans de revue, dossiers de relecture et rapports automatiques, enregistrés avec le modèle.
 - 📄 **Votre travail suit les nouvelles versions d'Arcalyse** : ouvrez dans la nouvelle version la page de projet enregistrée avec une version précédente (à partir de la 2.1), tout est repris.
 
@@ -253,6 +255,7 @@ Chargez le fichier **`.aird`** du projet (ou ouvrez le **📁 dossier du projet*
 - **export de plusieurs diagrammes à la fois** en **planches** encadrées : en-tête (couche, sigle, nom, type), description Capella et élément représenté, cartouche (projet, couche, contenu, sources, date, numéro de planche), annexe des éléments représentés — en **PDF** (sommaire, signets ; alerte si le fichier risque d'être lourd), **ZIP PNG / SVG** (un dossier par couche, un CSV d'annexe par diagramme) ou **rapport HTML** autonome, avec aperçu en direct ;
 - **nouvelle version du modèle** : après une 🔄 mise à jour, le `.aird` est relu sur le disque (dossier du projet) ou le `.aird` à jour est demandé ; les diagrammes d'un ancien modèle sont retirés quand un autre modèle est ouvert ; le `.aird` est enregistré dans la 💾 page HTML ;
 - **⚖ comparaison des diagrammes** avec un `.aird` précédent (gardé automatiquement à chaque mise à jour) : diagrammes nouveaux, supprimés, renommés, éléments ajoutés ou retirés d'un diagramme, changements de mise en page seuls, diagrammes qui montrent des éléments absents du modèle ou touchés par les changements du modèle.
+- **⇄ Avant / après** du diagramme ouvert (Capella, UML / SysML v1, SysML v2) : ◐ fondu où seuls les écarts bougent, ◧ volet, surbrillance des éléments ajoutés, retirés, déplacés ou renommés — aussi depuis ⚖ Comparaison de versions, un diagramme après l'autre.
 
 ![Diagrammes Capella — explorateur par couche › type, diagramme avec sa barre sur deux lignes et mini-carte](docs/captures/11-diagrammes.png)
 
@@ -308,9 +311,10 @@ Les diagrammes de séquence (ES, FS, OES, OAS, IS) sont redessinés : lignes de 
 - **ƒ Fonctions** : hiérarchie avec descriptions, tableau façon Excel (filtres par valeur, copie), allocation au système ou aux acteurs, traçabilité entre couches, métriques, **qualité des noms** (verbes d'action en français et en anglais, règles personnalisables) et **dossier fonctionnel** imprimable.
 - **🧬 Traçabilité inter-couches** : taux de réalisation OA → SA → LA → PA → EPBS par catégorie, en un coup d'œil, et la liste des éléments non tracés.
 - **🎯 Capacités & missions**, **🔁 Modes & états**, **🧾 Exigences**, **🎛 Propriétés**, **🗃 Données & interfaces**, **🔒 Contraintes**.
-- **⚖ Comparaison de versions** : éléments ajoutés, supprimés, modifiés ou déplacés entre deux versions du modèle, avec rapport exportable — et l'onglet **🔲 Diagrammes** pour les `.aird`.
+- **⚖ Comparaison de versions** : éléments ajoutés, supprimés, modifiés ou déplacés entre deux versions du modèle, avec rapport exportable, dans tous les formats et même entre fichiers de noms différents — et l'onglet **🔲 Diagrammes** (les `.aird`, ou les diagrammes des autres formats).
 - **💚 Santé du modèle** : un score de 0 à 100 bâti sur tous les contrôles de toutes les vues, par couche, avec son historique au fil des versions du modèle — et un **🩺 profil de contrôles** (activation, gravité, seuils) partageable en fichier.
 - **🖧 Déploiement & EPBS**, **📦 REC / RPL** (répliques comparées à leur REC), **📚 Bibliothèques** (références externes, résolues dès que la bibliothèque est chargée), **🏷 Catégories d'échanges**, **🔖 Statut de revue Capella**, et **⚡ contrôles des chaînes** (vides, discontinues, non allouées, chemins physiques).
+- **🎚 Variantes (modèle 150 %)** : avancement de chaque variante d'un modèle Capella marqué par l'add-on Filtering, des propriétés PVMT ou pure::variants, reste à faire, éléments × variantes, contrôles de cohérence.
 
 ![Fonctions — hiérarchie et descriptions](docs/captures/06-fonctions.png)
 
@@ -382,7 +386,7 @@ Déposez un fichier **`.uml`** d'Eclipse UML2 / Papyrus avec son **`.notation`**
 2. **Ouvrez-le** dans un navigateur récent (testé sous Google Chrome version 155), même sans réseau.
 3. **Glissez-déposez** votre modèle — Capella `.capella`, SysML v2 `.sysml` / `.kpar`, UML / SysML v1 `.mdzip`, `.qea`, `.uml`, `.xmi`, Rhapsody `.rpy`, ReqIF `.reqifz` / `.reqif` — ou le 📁 dossier du projet n'importe où sur la page, ou partez de la carte de votre format : elle dit quoi ouvrir et ce que vous obtiendrez. Ou rouvrez un 📄 projet de travail enregistré. C'est tout.
 
-> 📦 **Taille du fichier** : environ 8 Mo pour `arcalyse-complet.html` (tous les formats, deux langues) ; les fichiers d'un seul format sont plus légers, car ils n'embarquent que le composant d'Arcature de leur format (visionneuse de diagrammes Capella, lecteur SysML v2, lecteur UML / SysML v1 ou lecteur ReqIF), plus D3.
+> 📦 **Taille du fichier** : environ 10 Mo pour `arcalyse-complet.html` (tous les formats, deux langues) ; les fichiers d'un seul format sont plus légers, car ils n'embarquent que le composant d'Arcature de leur format (visionneuse de diagrammes Capella, lecteur SysML v2, lecteur UML / SysML v1 ou lecteur ReqIF), plus D3.
 
 > 📘 **Guide d'utilisation complet**, menu par menu, avec captures d'écran : [`docs/GUIDE-UTILISATION.md`](docs/GUIDE-UTILISATION.md).
 
