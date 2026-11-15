@@ -1,5 +1,7 @@
-/* ══ 🔄 SUIVI DU FICHIER .capella ═══════════════════════════════════════════
- * Détecte qu'une nouvelle version du fichier chargé a été enregistrée (par Capella),
+/* ══ 🔄 SUIVI DU FICHIER DU MODÈLE ══════════════════════════════════════════
+ * Détecte qu'une nouvelle version du fichier chargé a été enregistrée (par Capella, Cameo, Papyrus, un éditeur SysML v2,
+ * un outil d'exigences…) — .capella lu ici ; .sysml / .kpar, .uml / .xmi / .mdzip / .qea, .reqif / .reqifz relus par
+ * leur lecteur d'Arcature (`capVersionLire`, autres fichiers du projet repris de l'ouverture : .notation…),
  * calcule le delta avec le modèle affiché (moteur de ⚖ Comparaison de versions) et propose
  * la mise à jour, qui n'est appliquée qu'après validation.
  * - Accès direct (Edge/Chrome, fichier ouvert par 📁 Fichier › 🔷 Ouvrir ou glissé) : relecture possible à tout moment.
@@ -20,8 +22,72 @@ const _capWatch={
   history:[],                                   // mises à jour appliquées (session)
   origDoc:null, origAt:0, prevDoc:null,         // version d'ouverture, version avant la dernière mise à jour
   diffDoc:null,                                 // document placé par le suivi dans ⚖ Comparaison (pour ne pas écraser un choix de l'utilisateur)
-  dismissed:false
+  dismissed:false,
+  lect:null,                                    // modèle lu par un lecteur d'Arcature : {k, nom, autres:[{nom, chemin, lire}], choix}
+  maj:false                                     // mise à jour en cours d'application (capSysmlAppliquer garde alors le suivi)
 };
+let _capWatchSrcPend=null;   // fichier d'un modèle SysML / UML / ReqIF en cours d'ouverture, suivi une fois la lecture appliquée
+
+/**
+ * Famille de format d'un nom de fichier : 'capella', 'sysml2', 'uml' (UML / SysML v1) ou 'reqif'.
+ * @param {string} nom - Nom du fichier
+ * @returns {string}
+ */
+function capVersionFamille(nom){
+  if(typeof capSysmlReconnait==='function'&&capSysmlReconnait(nom)) return 'sysml2';
+  if(typeof capReqifReconnait==='function'&&capReqifReconnait(nom)) return 'reqif';
+  if(typeof capUmlReconnait==='function'&&capUmlReconnait(nom)) return 'uml';
+  return 'capella';
+}
+/** Famille de format du modèle affiché. @returns {string} 'capella' | 'sysml2' | 'uml' | 'reqif' */
+function capVersionFamilleAffichee(){
+  const f=typeof _capSysml!=='undefined'&&_capSysml.lecture?_capSysml.format:'';
+  return !f?'capella':f==='sysml2'?'sysml2':f==='reqif'?'reqif':'uml';
+}
+/** Nom de la famille pour les messages. @param {string} f @returns {string} */
+function capVersionFamilleNom(f){ return {capella:'Capella', sysml2:'SysML v2', uml:'UML / SysML v1', reqif:'ReqIF'}[f]||f; }
+
+/**
+ * Lit une version d'un modèle sans l'afficher : .capella en XML, les autres par leur lecteur d'Arcature, convertis dans le
+ * document XML commun (celui que comparent `capDiffIndex` et ⚖ Comparaison de versions).
+ * @param {File} f - Fichier du modèle
+ * @param {{autres?:object[]}} [lect] - Autres fichiers du projet (.notation de Papyrus, modèles référencés) : `{nom, chemin, lire}`
+ * @returns {Promise<{doc:Document, texte?:string, lecture?:object, L?:object, format?:string}>}
+ * @throws {Error} fichier illisible, lecteur absent
+ */
+async function capVersionLire(f, lect){
+  const n=f.name, fam=capVersionFamille(n);
+  if(fam==='sysml2'){ const lec=await capSysmlLireFichier(f); return {lecture:lec, L:null, format:'sysml2', doc:capSysmlVersXml(lec, n, 'sysml2')}; }
+  if(fam==='reqif'){ const L=window.ArcatureLecteurReqif; if(!L) throw new Error(_L('lecteur ReqIF absent de cette version'));
+    const lec=await L.lire(new Uint8Array(await f.arrayBuffer()), n); return {lecture:lec, L, format:'reqif', doc:capReqifVersXml(lec, n)}; }
+  if(fam==='uml'){ const L=window.ArcatureLecteurUml; if(!L) throw new Error(_L('lecteur UML / SysML v1 absent de cette version'));
+    const lus=[{chemin:n, octets:await capUmlOctets(f)}];
+    for(const x of (lect&&lect.autres)||[]){ if(x.nom===n) continue; try{ lus.push({chemin:x.chemin||x.nom, octets:await capUmlOctets(await x.lire())}); }catch(e){ /* fichier annexe illisible : ignoré */ } }
+    const lec=await L.lireDossier(lus, n); return {lecture:lec, L, format:lec.format, doc:capSysmlVersXml(lec, n, lec.format, L)}; }
+  const texte=await f.text(), doc=new DOMParser().parseFromString(texte,'application/xml');
+  if(doc.querySelector('parsererror')) throw new Error(_L('fichier XML illisible'));
+  return {doc, texte};
+}
+
+/**
+ * Note le fichier d'un modèle SysML / UML / ReqIF en cours d'ouverture (appelée par 87, 88, 101) : il sera suivi une fois la
+ * lecture appliquée (`capWatchApresLecture`).
+ * @param {{nom:string, chemin?:string, lire:function():Promise<File>, h?:FileSystemFileHandle}} principal - Fichier du modèle
+ * @param {{k:string, autres?:object[], choix?:string}} lect - Genre de source (comme `capSourcesNoter`), autres fichiers du projet
+ */
+function capWatchNoterSource(principal, lect){ _capWatchSrcPend={principal, lect:Object.assign({autres:[]}, lect||{})}; }
+
+/** Une lecture SysML / UML / ReqIF vient d'être appliquée (appelée par `capSysmlAppliquer`, 87) : suit son fichier, sauf pendant
+ * l'application d'une mise à jour par le suivi lui-même (le suivi garde alors sa source). */
+async function capWatchApresLecture(){
+  if(_capWatch.maj) return;
+  const s=_capWatchSrcPend; _capWatchSrcPend=null;
+  if(!s){ Object.assign(_capWatch,{handle:null, file:null, lect:null}); capWatchArm(); capWatchUpdateUi(); return; }
+  try{
+    const f=s.principal.h?await s.principal.h.getFile():await s.principal.lire();
+    capWatchSetSource(f, s.principal.h||null, await f.text(), Object.assign({nom:s.principal.nom}, s.lect));
+  }catch(e){ console.warn('Suivi du fichier :', e); }
+}
 
 /** Empreinte rapide d'un texte (FNV-1a 32 bits + longueur), pour reconnaître une version déjà vue.
  * @param {string} s - Contenu du fichier
@@ -64,14 +130,17 @@ function capWatchChips(c){
 /** Enregistre la source suivie après le chargement d'un modèle (remet le suivi à zéro).
  * @param {File} file - Fichier chargé
  * @param {FileSystemFileHandle|null} handle - Accès direct au fichier (Edge/Chrome), sinon null
- * @param {string} text - Contenu chargé
+ * @param {string} text - Contenu chargé (empreinte ; une archive lue en texte convient aussi)
+ * @param {object} [lect] - Modèle lu par un lecteur d'Arcature : {k, nom, autres, choix} (absent : .capella)
  */
-function capWatchSetSource(file, handle, text){
+function capWatchSetSource(file, handle, text, lect){
   const h=capWatchHash(text||'');
-  Object.assign(_capWatch,{handle, file, name:file.name, shownHash:h, shownMtime:file.lastModified||0, shownAt:Date.now(), shownIdx:null,
+  _capWatchSrcPend=null;
+  Object.assign(_capWatch,{handle, file, name:file.name, lect:lect||null, shownHash:h, shownMtime:file.lastModified||0, shownAt:Date.now(), shownIdx:null,
     diskMtime:file.lastModified||0, diskSize:file.size, diskHash:h, state:'', lastCheck:Date.now(), pending:null, history:[],
     origDoc:cap_xmlDoc, origAt:Date.now(), prevDoc:null, dismissed:false});
-  if(_capWatch.diffDoc&&capDiffDoc===_capWatch.diffDoc){ capDiffDoc=null; capDiffName=''; }
+  if(_capWatch.diffDoc&&capDiffDoc===_capWatch.diffDoc){ capDiffDoc=null; capDiffName=''; capDiffLu=null; capDiffDate=0; }
+  _capWatch.origLec=typeof _capSysml!=='undefined'&&_capSysml.lecture||null; _capWatch.prevLec=null;
   _capWatch.diffDoc=null;
   capWatchNote(false);
   capWatchArm();
@@ -173,7 +242,7 @@ async function capWatchReadDisk(full){
     try{ await f.slice(0,1).arrayBuffer(); }catch(e){ return {err:'stale'}; }
     if(!full) return {same:true};
   } else return null;
-  try{ return {text:await f.text(), mtime:f.lastModified, size:f.size}; }
+  try{ return {text:await f.text(), mtime:f.lastModified, size:f.size, file:f}; }
   catch(e){ return {err:_capWatch.handle?'writing':'stale'}; }
 }
 
@@ -208,7 +277,7 @@ async function capWatchCheck(manual){
       if(manual) capWatchFlash(_L('✔ Le fichier correspond au modèle affiché'));
       return;
     }
-    capWatchRegister(r.text, h, r.mtime, manual);
+    await capWatchRegister(r.text, h, r.mtime, manual, r.file);
   }finally{
     _capWatch.busy=false; capWatchUpdateUi();
   }
@@ -216,13 +285,19 @@ async function capWatchCheck(manual){
 
 /** Analyse une nouvelle version lue sur le disque et l'ajoute aux enregistrements en attente :
  * delta cumulé (modèle affiché → cette version) et delta pas à pas (version précédente en attente → cette version).
- * @param {string} text - Contenu XML
+ * Modèle lu par un lecteur d'Arcature : la version est relue par lui (`capVersionLire`) et sa lecture gardée pour l'appliquer.
+ * @param {string} text - Contenu (XML d'un .capella)
  * @param {string} hash - Empreinte du contenu
  * @param {number} mtime - Date de modification du fichier
  * @param {boolean} manual - Vérification demandée par l'utilisateur
+ * @param {File} [file] - Fichier lu (relu par le lecteur d'un modèle SysML / UML / ReqIF)
  */
-function capWatchRegister(text, hash, mtime, manual){
-  const doc=new DOMParser().parseFromString(text,'application/xml');
+async function capWatchRegister(text, hash, mtime, manual, file){
+  let doc, lu=null;
+  if(_capWatch.lect&&file){
+    try{ lu=await capVersionLire(file, _capWatch.lect); doc=lu.doc; }
+    catch(e){ _capWatch.diskHash=''; _capWatch.diskMtime=0; if(manual) capWatchFlash(_L('⚠ Fichier illisible pour l\'instant (enregistrement en cours ?) — réessayez')); return; }
+  } else doc=new DOMParser().parseFromString(text,'application/xml');
   if(doc.querySelector('parsererror')){
     // Enregistrement probablement en cours : on réessaiera au prochain passage
     _capWatch.diskHash=''; _capWatch.diskMtime=0;
@@ -242,7 +317,7 @@ function capWatchRegister(text, hash, mtime, manual){
   }
   const step=p?capDiffCompute(p.idx,newIdx):diff;
   const v={at:Date.now(), mtime, counts:capWatchCounts(step), step:capWatchLite(step)};
-  _capWatch.pending={doc, hash, mtime, idx:newIdx, diff, counts:capWatchCounts(diff), common:capWatchCommon(curIdx,newIdx),
+  _capWatch.pending={doc, lu, file, hash, mtime, idx:newIdx, diff, counts:capWatchCounts(diff), common:capWatchCommon(curIdx,newIdx),
     versions:[...(p?p.versions:[]), v].slice(-30), first:p?p.first:v.at};
   _capWatch.state=''; _capWatch.dismissed=false;
   capWatchNote(true); capWatchModalRefresh(); capWatchUpdateUi();
@@ -274,6 +349,7 @@ function capWatchSuspectHtml(p){
  * le fichier choisi devient la source suivie et son contenu est comparé au modèle affiché, sans le charger. */
 async function capWatchPickNewVersion(){
   const inp=document.getElementById('cap-watch-input');
+  const main=document.getElementById('capella-file-input'); if(main&&main.accept&&!capIsMobile()) inp.accept=main.accept;   // tous les formats ouvrables
   inp.onchange=()=>{ const f=inp.files[0]; inp.value=''; if(f) adopt(f,null); };
   if(!window.showOpenFilePicker||_capPickerKo){ inp.click(); return; }
   const r=await capWatchPick(); if(!r) return;
@@ -281,6 +357,12 @@ async function capWatchPickNewVersion(){
   adopt(r.file, r.handle);
   /** Adopte le fichier choisi comme source et le compare au modèle affiché. */
   async function adopt(f, h){
+    const fam=capVersionFamille(f.name), cur=capVersionFamilleAffichee();
+    if(fam!==cur){ capAlert(_L(`« ${f.name} » est un fichier ${capVersionFamilleNom(fam)} : le modèle affiché est un modèle ${capVersionFamilleNom(cur)}. Choisissez une version du même modèle.`),{level:'err'}); return; }
+    if(cur!=='capella'&&!_capWatch.lect){   // modèle lu par un lecteur, sans source suivie (page rouverte…) : autres fichiers repris de l'ouverture
+      const S=typeof _capSources!=='undefined'&&_capSources;
+      _capWatch.lect={k:S?S.k:'', nom:f.name, autres:S?S.fichiers.filter(x=>x.nom!==f.name):[], choix:S?S.choix:''};
+    }
     if(_capWatch.name&&f.name!==_capWatch.name&&!await capConfirm(_L(`Le fichier choisi (« ${f.name} ») n'a pas le même nom que le modèle affiché (« ${_capWatch.name} »).\nLe comparer quand même ?`),{ok:_L('Comparer')})) return;
     let text; try{ text=await f.text(); }catch(e){ capAlert(_L('Impossible de lire « ')+f.name+' ».',{level:'err'}); return; }
     Object.assign(_capWatch,{handle:h, file:f, name:f.name, state:'', diskMtime:f.lastModified, diskSize:f.size, lastCheck:Date.now()});
@@ -290,7 +372,7 @@ async function capWatchPickNewVersion(){
     if(hash===_capWatch.shownHash){ _capWatch.diskHash=hash; capWatchNote(false); capWatchFlash(_L('✔ Le fichier correspond au modèle affiché')); capWatchUpdateUi(); return; }
     if(_capWatch.pending&&hash===_capWatch.pending.hash){ _capWatch.diskHash=hash; _capWatch.dismissed=false; capWatchNote(true); capWatchUpdateUi(); return; }
     _capWatch.diskHash=hash;
-    capWatchRegister(text, hash, f.lastModified, true);
+    await capWatchRegister(text, hash, f.lastModified, true, f);
     if(!_capWatch.pending) capWatchUpdateUi();
   }
 }
@@ -300,9 +382,10 @@ async function capWatchPickNewVersion(){
 async function capWatchApply(){
   const p=_capWatch.pending; if(!p) return;
   if(p.common!=null&&p.common<CAP_WATCH_SAME_MIN&&!await capConfirm(_L(`Seuls ${Math.round(p.common*100)} % des éléments sont communs avec le modèle affiché : ce n'est peut-être pas le même projet.\n\nRemplacer quand même le modèle affiché par cette version ?`),{ok:_L('Remplacer'),danger:true})) return;
-  const prev=cap_xmlDoc, prevName=capCurrentFileName, mode=currentMode;
+  const prev=cap_xmlDoc, prevName=capCurrentFileName, mode=currentMode, prevLec=typeof _capSysml!=='undefined'&&_capSysml.lecture||null, prevMtime=_capWatch.shownMtime;
   const name=_capWatch.name||capCurrentFileName;
-  try{ capApplyXmlDoc(p.doc, name); }
+  if(p.lu&&p.lu.lecture){ if(!capWatchAppliquerLecture(p, name)) return; }
+  else try{ capApplyXmlDoc(p.doc, name); }
   catch(e){
     capAlert(_L('Mise à jour impossible : ')+e.message+_L('\nLe modèle précédent est conservé.'),{level:'err'});
     try{ capApplyXmlDoc(prev, prevName); }catch(_){}
@@ -312,13 +395,37 @@ async function capWatchApply(){
   const at=Date.now();
   _capWatch.history.unshift({at, from:_capWatch.shownMtime, mtime:p.mtime, counts:p.counts, saves:p.versions.length, diff:capWatchLite(p.diff)});
   _capWatch.history=_capWatch.history.slice(0,30);
-  Object.assign(_capWatch,{prevDoc:prev, shownHash:p.hash, shownMtime:p.mtime, shownAt:at, shownIdx:p.idx, pending:null, dismissed:false});
+  Object.assign(_capWatch,{prevDoc:prev, prevLec, prevMtime, shownHash:p.hash, shownMtime:p.mtime, shownAt:at, shownIdx:p.idx, pending:null, dismissed:false});
   if(!capDiffDoc||capDiffDoc===_capWatch.diffDoc){
     capDiffDoc=prev; capDiffName=_L(`${name} — avant la mise à jour de ${capWatchTime(at)}`); capDiffSwap=false; _capWatch.diffDoc=prev;
+    capDiffLu=prevLec; capDiffDate=prevMtime; if(typeof _capDg!=='undefined') _capDg.cache=null;
   }
   capWatchNote(false); capWatchModalClose(); capWatchUpdateUi();
   capWatchFlash(_L(`✔ Modèle mis à jour (${p.counts.total} différence(s))`));
-  if(typeof capDiagApresMaj==='function') capDiagApresMaj();   // 🔲 diagrammes (.aird) : relus ou à choisir pour cette version
+  if(!p.lu&&typeof capDiagApresMaj==='function') capDiagApresMaj();   // 🔲 diagrammes (.aird) : relus ou à choisir pour cette version
+}
+
+/**
+ * Applique une version relue par un lecteur d'Arcature (SysML v2, UML / SysML v1, ReqIF) : même chemin qu'une ouverture
+ * (`capSysmlAppliquer` par 88 / 101), fichiers d'origine mis à jour (🌐 changement de langue), vue affichée gardée.
+ * @param {object} p - Version en attente (`_capWatch.pending`)
+ * @param {string} name - Nom du fichier
+ * @returns {boolean} vrai si la nouvelle lecture est affichée
+ */
+function capWatchAppliquerLecture(p, name){
+  const lu=p.lu, lect=_capWatch.lect||{}, vue=capCurrentView, sub=typeof capAnaSub!=='undefined'?capAnaSub:'';
+  const f=p.file, principal={nom:name, chemin:name, lire:()=>Promise.resolve(f), h:_capWatch.handle||undefined};
+  if(typeof capSourcesNoter==='function') capSourcesNoter(lect.k||'sy', name, [principal, ...(lect.autres||[]).filter(x=>x.nom!==name)], lect.choix||'');
+  _capWatch.maj=true;
+  try{
+    if(lu.format==='reqif') capReqifAppliquer(lu.lecture, name);
+    else if(lu.format==='sysml2') capSysmlAppliquer(lu.lecture, name);
+    else capUmlAppliquer(lu.lecture, name, null);
+  } finally { _capWatch.maj=false; }
+  if(_capSysml.lecture!==lu.lecture){ capAlert(_L('Mise à jour impossible : la nouvelle version n\'a pas pu être appliquée.\nLe modèle précédent est conservé.'),{level:'err'}); return false; }
+  _capWatch.file=f;
+  try{ if(typeof capAnaSub!=='undefined'&&sub) capAnaSub=sub; if(vue&&vue!=='home') capShowView(vue); }catch(e){ console.warn('Vue non rétablie :', e); }
+  return true;
 }
 
 /** Ouvre ⚖ Comparaison de versions (🔬 Analyses) sur deux versions connues du suivi.
@@ -326,12 +433,12 @@ async function capWatchApply(){
  */
 function capWatchOpenCompare(what){
   const name=_capWatch.name||capCurrentFileName;
-  let doc, label, swap;
-  if(what==='pending'&&_capWatch.pending){ doc=_capWatch.pending.doc; label=_L(`${name} — sur le disque (${capWatchDate(_capWatch.pending.mtime)}), non appliquée`); swap=true; }
-  else if(what==='last'&&_capWatch.prevDoc){ doc=_capWatch.prevDoc; label=_L(`${name} — avant la mise à jour de ${capWatchTime(_capWatch.history[0]&&_capWatch.history[0].at)}`); swap=false; }
-  else if(what==='orig'&&_capWatch.origDoc&&_capWatch.origDoc!==cap_xmlDoc){ doc=_capWatch.origDoc; label=_L(`${name} — version d'ouverture (${capWatchTime(_capWatch.origAt)})`); swap=false; }
+  let doc, label, swap, lec=null, date=0;
+  if(what==='pending'&&_capWatch.pending){ lec=_capWatch.pending.lu?_capWatch.pending.lu.lecture:null; date=_capWatch.pending.mtime; doc=_capWatch.pending.doc; label=_L(`${name} — sur le disque (${capWatchDate(_capWatch.pending.mtime)}), non appliquée`); swap=true; }
+  else if(what==='last'&&_capWatch.prevDoc){ lec=_capWatch.prevLec||null; date=_capWatch.prevMtime||0; doc=_capWatch.prevDoc; label=_L(`${name} — avant la mise à jour de ${capWatchTime(_capWatch.history[0]&&_capWatch.history[0].at)}`); swap=false; }
+  else if(what==='orig'&&_capWatch.origDoc&&_capWatch.origDoc!==cap_xmlDoc){ lec=_capWatch.origLec||null; doc=_capWatch.origDoc; label=_L(`${name} — version d'ouverture (${capWatchTime(_capWatch.origAt)})`); swap=false; }
   else return;
-  capDiffDoc=doc; capDiffName=label; capDiffSwap=swap; _capWatch.diffDoc=doc;
+  capDiffDoc=doc; capDiffName=label; capDiffSwap=swap; _capWatch.diffDoc=doc; capDiffLu=lec; capDiffDate=date; if(typeof _capDg!=='undefined') _capDg.cache=null;
   if(_capAnaCache) delete _capAnaCache.diff;
   capWatchModalClose(); capWatchMenu(false);
   capAnaSub='diff';
@@ -352,7 +459,7 @@ function capWatchUpdateUi(){
   b.classList.toggle('cw-busy',_capWatch.busy);
   b.title=p?_L(`${p.versions.length} enregistrement(s) détecté(s) — ${p.counts.total} différence(s) avec le modèle affiché`)
     :st==='stale'?_L('Le fichier a été modifié : resélectionnez-le pour voir le delta')
-    :_L('Suivi du fichier .capella : vérifier les mises à jour, delta, historique');
+    :_L('Suivi du fichier du modèle : vérifier les mises à jour, delta, historique');
   if(document.getElementById('cap-watch-dd')?.style.display==='block') capWatchMenuRender();
 }
 
@@ -412,7 +519,7 @@ function capWatchMenuRender(){
     ${p?_L(`<div class="ctx-i" data-wm="delta">📋 Voir le delta en attente (${p.versions.length} enreg., ${p.counts.total} diff.)</div>
       <div class="ctx-i" data-wm="apply">✔ Mettre à jour l'affichage</div>`):''}
     <div class="cw-m-sep"></div>
-    <label class="cw-m-opt" title="${src?'':_L('Disponible quand un fichier .capella est suivi')}"><input type="checkbox" data-wm="auto"${w.auto?' checked':''}${src?'':' disabled'}> Détecter les nouvelles versions toutes les
+    <label class="cw-m-opt" title="${src?'':_L('Disponible quand le fichier du modèle est suivi')}"><input type="checkbox" data-wm="auto"${w.auto?' checked':''}${src?'':' disabled'}> Détecter les nouvelles versions toutes les
       <select data-wm="period">${per.map(([v,l])=>`<option value="${v}"${w.period===v?' selected':''}>${l}</option>`).join('')}</select></label>
     <label class="cw-m-opt"><input type="checkbox" data-wm="focus"${w.onFocus?' checked':''}${src?'':' disabled'}> Vérifier au retour dans la fenêtre</label>
     <div class="cw-m-hint">Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation (✔ Mettre à jour). En cas de plusieurs enregistrements, c'est la dernière version qui est appliquée.</div>

@@ -62,6 +62,7 @@ var CAP_NAV_ITEMS=[
   {k:'ana:cts',   l:_L('🔒 Contraintes'),              m:'grp:prop', c:_L('🔒 Contraintes'), g:'verif'},
   {k:'grp:prop',  l:_L('🎛 Propriétés & contraintes'), g:'verif', f:['ana:pvmt','ana:cts'], t:_L('Propriétés PVMT (groupes, valeurs, définitions) et contraintes (expressions, éléments contraints)')},
   {k:'ana:diff',  l:_L('⚖ Comparaison de versions'),  g:'verif'},
+  {k:'ana:variants',l:_L('🎚 Variantes (150 %)'),      g:'verif', t:_L('Modèle 150 % : variantes marquées par l\'add-on Filtering de Capella, des propriétés PVMT ou pure::variants ; avancement de chaque variante, reste à faire, éléments × variantes, contrôles de cohérence')},
   {k:'ana:status',l:_L('🔖 Statut de revue'),          g:'verif', t:_L('Statut (DRAFT, TO BE REVIEWED, REVIEWED…) et commentaire de revue Capella de chaque élément : liste, répartition, contrôles')},
   {k:'ana:cats',  l:_L('🏷 Catégories d\'échanges'),   g:'verif', s:_L('Avancé'), x:1, t:_L('ExchangeCategory, ComponentExchangeCategory, PhysicalLinkCategory : échanges par catégorie, taux de catégorisation, contrôles')},
   {k:'ana:rec',   l:_L('📦 REC / RPL'),                g:'verif', s:_L('Avancé'), x:1, t:_L('Éléments réutilisables : REC (gabarits) et RPL (répliques), comparaison élément par élément, écarts, contrôles')},
@@ -122,6 +123,7 @@ function capNavVides(){
       'ana:pvmt':()=>T.has('PropertyValueGroup')||has(/^(String|Integer|Float|Boolean|Enumeration)PropertyValue$/),
       'ana:cts':()=>T.has('Constraint'),
       'ana:status':()=>capAllElements.some(e=>e.attrs&&(e.attrs.status||e.attrs.review)),
+      'ana:variants':()=>capVarExiste(),   // 🎚 variantes du modèle 150 % (103)
       'ana:cats':()=>has(/^(Exchange|ComponentExchange|PhysicalLink)Category$/),
       'ana:rec':()=>T.has('CatalogElement'),
       'ana:sysml':()=>typeof _capSysml!=='undefined'&&!!_capSysml.lecture&&!(typeof capSyUml==='function'&&capSyUml())&&_capSysml.format!=='reqif',
@@ -467,9 +469,9 @@ function capNavMenuFill(){
       <div class="ctx-i" data-act="folder" title="Ouvre le dossier du projet : Capella (.capella, .aird, bibliothèques) ou SysML v2 (les .sysml du projet), chargé en une fois">📁 Ouvrir le dossier du projet…</div>
       <div class="ctx-i" data-act="projet" title="Reprend un projet de travail enregistré en page HTML (💾), même par une version précédente d'Arcalyse (à partir de la 2.1) : modèle, diagrammes, revue, accueil, vues et réglages">📄 Ouvrir un projet de travail (page HTML)…</div>
       <div class="cap-nav-hint">Nouvelle version d'Arcalyse ? Ouvrez-y la page de votre projet enregistrée avec l'ancienne : tout le travail est repris.</div>
-      <div class="ctx-i" data-act="update" title="Capella : compare un autre fichier .capella au modèle affiché, montre le delta, puis met à jour l'affichage après validation">🔄 Charger une mise à jour du modèle (Capella)…</div>
-      <div class="cap-nav-hint">Mise à jour : delta affiché avant validation ; alerte si les deux fichiers semblent être des projets différents. Diagrammes chargés : le .aird est relu s'il a été ouvert avec un accès direct (dossier du projet), sinon le .aird à jour est demandé.</div>`)+
-      (capLoaded?_L(`<div class="ctx-i" data-act="watch" title="Capella : détecter les nouvelles versions du fichier .capella, voir le delta, historique des mises à jour">🔄 Suivi du fichier (Capella)…${_capWatch.pending?` <span class="cw-badge">${_capWatch.pending.versions.length}</span>`:''}</div>`):'')+
+      <div class="ctx-i" data-act="update" title="Compare une nouvelle version du fichier modèle (Capella, SysML v2, UML / SysML v1, ReqIF) au modèle affiché, montre le delta, puis met à jour l'affichage après validation">🔄 Charger une mise à jour du modèle…</div>
+      <div class="cap-nav-hint">Mise à jour : delta affiché avant validation ; alerte si les deux fichiers semblent être des projets différents. Capella : le .aird est relu s'il a été ouvert avec un accès direct (dossier du projet), sinon le .aird à jour est demandé. SysML, UML, ReqIF : le fichier est relu par son lecteur (.notation et autres fichiers du projet repris de l'ouverture).</div>`)+
+      (capLoaded?_L(`<div class="ctx-i" data-act="watch" title="Détecter les nouvelles versions du fichier du modèle (.capella, .sysml, .kpar, .uml, .xmi, .mdzip, .qea, .reqif…), voir le delta, historique des mises à jour">🔄 Suivi du fichier…${_capWatch.pending?` <span class="cw-badge">${_capWatch.pending.versions.length}</span>`:''}</div>`):'')+
       _L(`<div class="cw-m-sep"></div>
       <div class="ctx-i" data-act="save" title="Page HTML autonome : modèle + interface et vues">💾 Enregistrer${sc(_L('Ctrl+S'))}</div>
       <div class="ctx-i" data-act="saveas">💾 Enregistrer sous…${sc(_L('Ctrl+Maj+S'))}</div>

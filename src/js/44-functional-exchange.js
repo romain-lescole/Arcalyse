@@ -148,6 +148,8 @@ function capRenderFunctionalExchange(mode){
   const fnColor=L=>isLight?({OA:'#a04d00',SA:'#1a7a3a',LA:'#1a4f8a',PA:'#7a6500'}[L]||'#555'):(LAYER_C[L]||'#8b949e');
   const LINK_COLORS=['#0ea5e9','#f97316','#22c55e','#a855f7','#ef4444','#eab308','#06b6d4','#ec4899','#84cc16','#6366f1','#14b8a6'];
   const lc=x=>LINK_COLORS[x.num%LINK_COLORS.length];
+  /** Échanges de chaque fonction (◎ Voisinage), une fois par rendu de la vue. */
+  const fexDe={}; allLinks.forEach(x=>{ (fexDe[x.src.fnId]=fexDe[x.src.fnId]||[]).push(x); if(x.tgt.fnId!==x.src.fnId) (fexDe[x.tgt.fnId]=fexDe[x.tgt.fnId]||[]).push(x); });
   const layersPresent=CAP_ANA_LAYERS.filter(k=>allLinks.some(x=>x.layer===k)||X.fns.some(f=>f.layer===k&&(f.ins.length||f.outs.length)));
 
   /** Lien cliquable ouvrant le panneau de détail. */
@@ -314,7 +316,7 @@ function capRenderFunctionalExchange(mode){
       return `<div class="fex-blk" data-fn="${capEsc(f.id)}" style="--fex-h:${Math.max(74,44+Math.max(gIn.total,gOut.total))}px">
         <div class="fex-side fex-side-in">${side(ins,'IN')}</div>
         <div class="fex-box fex-k-${ak}" data-layer="${f.layer}" title="${capEsc(capAnaHuman(f.type))} — ${f.layer} — ${akT}${f.alloc.length?' : '+capEsc(f.alloc.map(a=>a.name).join(', ')):''}">
-          <div class="fex-box-t">${OAV?'<span class="fex-oa-ic">OA</span>':''}${det(f.id,fnLabel(f.num,f.name))}</div>
+          <div class="fex-box-t">${OAV?'<span class="fex-oa-ic">OA</span>':''}${det(f.id,fnLabel(f.num,f.name))}${st.export?'':_L(` <span class="fex-go vsn-ouvrir" data-focus="${capEsc(f.id)}" title="◎ Voisinage : cette ${W.fn} au centre, les ${W.fns} reliées autour">◎</span>`)}</div>
           ${attachHtml(f)}
           <div class="fex-pins-in">${pins(ins,'IN')}</div><div class="fex-pins-out">${pins(outs,'OUT')}</div>
           ${!ins.length&&!outs.length?_L('<div class="fex-box-empty">aucun port ni échange</div>'):''}
@@ -349,6 +351,46 @@ function capRenderFunctionalExchange(mode){
   }
 
   /** Pagination : liste de la page courante et barre ◀ ▶. */
+  /** Nombre d'échanges d'une fonction (entrants et sortants). @param {object} f - Fonction @returns {number} */
+  const degre=f=>(fexDe[f.id]||[]).length;
+  /** Fonctions proposées au centre de ◎ Voisinage (filtres appliqués), les plus reliées d'abord. @returns {object[]} */
+  const focusCands=()=>{ const fs=getFns(); return fs.filter(degre).sort((a,b)=>degre(b)-degre(a)||a.name.localeCompare(b.name)).concat(fs.filter(f=>!degre(f))); };
+  /** Fonction au centre de ◎ Voisinage (choisie, sinon la plus reliée). @returns {?object} */
+  function focusFn(){
+    let f=X.fnById[st.focus];
+    if(!f||!X.fns.includes(f)){ f=focusCands()[0]||null; st.focus=f?f.id:''; }
+    return f;
+  }
+  /** Genre de bloc d'une fonction (couleur) : allouée au système, à un acteur, ou non allouée ; activité en OA. */
+  const genreFn=id=>OAV?'oa':({sys:'fn', act:'fnact', none:'fnnone'})[akOf(id)]||'fn';
+  /** Sous-titre d'un bloc de fonction : type, couche, allocataires. */
+  const sousFn=f=>f?[capAnaHuman(f.type), f.layer, f.alloc&&f.alloc.length?'→ '+f.alloc.map(a=>a.name).join(', '):''].filter(Boolean).join(' · '):'';
+  /** Liens de la fonction centrale : échanges reçus à gauche, émis à droite, avec la fonction distante et son pin. @param {object} f @returns {object[]} lignes */
+  function focusLignes(f){
+    return (fexDe[f.id]||[]).map(x=>{
+      const sort=x.src.fnId===f.id, me=sort?x.src:x.tgt, o=sort?x.tgt:x.src, of=X.fnById[o.fnId];
+      return {cote:sort?'R':'L', port:me.portId, lien:{id:x.id, nom:x.name, couleur:lc(x), fleche:sort?'pair':'centre',
+          info:[x.items.length?_L('Exchange Items : ')+x.items.map(i=>i.name).join(', '):_L('Aucun Exchange Item'), x.ces.length?_L('Component Exchanges : ')+x.ces.map(c=>c.name).join(', '):'', x.chains.length?_L('Chaînes : ')+x.chains.map(c=>c.name).join(', '):''].filter(Boolean).join('\n')},
+        voisin:{id:o.fnId, nom:o.fnName, sous:sousFn(of), genre:genreFn(o.fnId), centrable:!!of&&X.fns.includes(of), port:o.portId?{id:o.portId, nom:o.portName, orient:sort?'FIP':'FOP'}:null}};
+    });
+  }
+  /** Dessin ◎ Voisinage de la fonction centrale. @param {object} f @param {boolean} [autonome] - Export @returns {string} SVG */
+  function focusSvg(f, autonome){
+    const pied=[], kids=X.fns.filter(k=>k.parentId===f.id), par=f.parentId&&X.fnById[f.parentId];
+    if(kids.length) pied.push(_L(`${kids.length} sous-${W.fns} : `)+kids.slice(0,6).map(k=>k.name).join(', ')+(kids.length>6?' …':''));
+    if(par) pied.push(_L('dans « ')+par.name+' »');
+    return capVoisinageSvg({centre:{id:f.id, nom:f.name, sous:sousFn(f), genre:genreFn(f.id), pied,
+        ports:[...f.ins.map(p=>({id:p.id, nom:p.name, orient:'FIP'})), ...f.outs.map(p=>({id:p.id, nom:p.name, orient:'FOP'}))]},
+      lignes:focusLignes(f), titres:{L:_L('lui envoient'), R:_L('reçoivent d\'elle')}, vide:_L('aucun échange'), zoom:autonome?1:(st.vz||1), autonome});
+  }
+  /** Vue ◎ Voisinage : barre et dessin. @param {boolean} [autonome] - Export (dessin seul) @returns {string} HTML */
+  function buildFocus(autonome){
+    const f=focusFn(); if(!f) return _L(`<div class="phl-empty">Aucune ${W.fn} ne correspond au filtre.</div>`);
+    if(autonome) return focusSvg(f, true);
+    return capVoisinageBarre({cands:focusCands().map(x=>({id:x.id, nom:x.name, n:degre(x)})), courant:f.id, hist:st.hist, nomDe:id=>(X.fnById[id]||{}).name||id, zoom:st.vz||1, quoi:_L(`${W.Fn} au centre`)})+
+      `<div class="cub-scroll">${focusSvg(f)}</div>`;
+  }
+
   function paged(items, unit){
     const pages=Math.max(1,Math.ceil(items.length/CAP_FEX_PAGE));
     if(st.page>=pages) st.page=pages-1;
@@ -363,6 +405,7 @@ function capRenderFunctionalExchange(mode){
   function buildContent(list, forceView){
     const view=forceView||st.view, all=!!forceView;
     if(view==='diag') return capDiagHtml(capFexChecks(st.layer));
+    if(view==='focus') return buildFocus(all);
     if(view==='block'){
       const fns=getFns();
       if(!fns.length) return _L('<div class="phl-empty">Aucune fonction ne correspond au filtre.</div>');
@@ -388,6 +431,7 @@ function capRenderFunctionalExchange(mode){
    * @param {string} [from] - Fonction de départ (pour le retour)
    */
   function gotoFn(id, from){
+    if(st.view==='focus'&&X.fnById[id]){ st.hist=[...(st.hist||[]),st.focus].filter(Boolean).slice(-20); st.focus=id; updateContent(); return; }   // ◎ Voisinage : la fonction passe au centre
     let fns=getFns(), i=fns.findIndex(f=>f.id===id);
     if(i<0){   // masquée par les filtres : on les relâche
       const f=X.fnById[id]; if(!f) return;
@@ -407,6 +451,8 @@ function capRenderFunctionalExchange(mode){
     main.querySelectorAll('[data-comp]').forEach(a=>a.onclick=ev=>{ ev.stopPropagation(); capCbOpenComp(a.dataset.comp); });
     main.querySelector('#fex-back')?.addEventListener('click',()=>{ const b=st.back; st.back=null; if(b) gotoFn(b); });
     main.querySelectorAll('[data-pg]').forEach(b=>b.addEventListener('click',()=>{ st.page+=+b.dataset.pg; updateContent(); container.scrollTop=0; }));
+    main.querySelectorAll('[data-focus]').forEach(a=>a.onclick=ev=>{ ev.stopPropagation(); st.hist=[...(st.hist||[]),st.focus].filter(Boolean).slice(-20); st.focus=a.dataset.focus; st.view='focus'; render(); });
+    if(st.view==='focus'){ const f=focusFn(); if(f) capVoisinageWire(main, st, updateContent, ()=>focusSvg(focusFn(), true), 'voisinage-'+f.name); return; }
     if(st.view!=='matrix') return;
     main.querySelectorAll('.cap-mx-cell').forEach(td=>td.addEventListener('click',()=>{
       main.querySelectorAll('.cap-mx-cell.sel').forEach(x=>x.classList.remove('sel')); td.classList.add('sel');
@@ -417,7 +463,7 @@ function capRenderFunctionalExchange(mode){
 
   /** Texte du compteur (échanges ou fonctions selon la vue). */
   function counterText(f){
-    return st.view==='block'?`${getFns().length}/${X.fns.length} ${W.fns}`:_L(`${f.length}/${allLinks.length} échange${allLinks.length>1?'s':''}`);
+    return st.view==='block'||st.view==='focus'?`${getFns().length}/${X.fns.length} ${W.fns}`:_L(`${f.length}/${allLinks.length} échange${allLinks.length>1?'s':''}`);
   }
   /** Rafraîchit le contenu et le compteur sans reconstruire la barre. */
   function updateContent(){
@@ -432,9 +478,10 @@ function capRenderFunctionalExchange(mode){
    * filtres appliqués, sans pagination). */
   async function exportHtml(all){
     const f=getFiltered();
-    const VIEWS=[['block',_L('◧ Vue Blocs')],['line',_L('≡ Vue Ligne')],['card',_L(`▣ Vue ${W.Fn}`)],['matrix',_L('▦ Matrice')],['diag',_L('🩺 Contrôles')]];
+    const VIEWS=[['block',_L('◧ Vue Blocs')],['focus',_L('◎ Voisinage')],['line',_L('≡ Vue Ligne')],['card',_L(`▣ Vue ${W.Fn}`)],['matrix',_L('▦ Matrice')],['diag',_L('🩺 Contrôles')]];
     const keys=all?await capHtmlVuesChoix(VIEWS):[st.view]; if(!keys) return;
-    const tabs=VIEWS.filter(v=>keys.includes(v[0])||(v[0]==='line'&&keys.includes('matrix'))).map(([k,label])=>({key:k,label,html:buildContent(f,k)}));
+    st.export=true;   // blocs sans bouton ◎ dans le rapport
+    let tabs; try { tabs=VIEWS.filter(v=>keys.includes(v[0])||(v[0]==='line'&&keys.includes('matrix'))).map(([k,label])=>({key:k,label,html:buildContent(f,k)})); } finally { st.export=false; }
     const cells={}; Object.entries(container._fexCells||{}).forEach(([k,ls])=>cells[k]=ls.map(l=>l.x.id));
     const fi=[st.layer!=='all'&&_L(`couche ${st.layer}`), akOn()&&_L('allocation : ')+[...st.ak].map(k=>CAP_FN_AK[k].l).join(' + '), st.who&&_L(`allocataire « ${((who.act.get(st.who)||who.comp.get(st.who)||{}).name||'')} »`),st.fnFilter&&_L(`fonction « ${st.fnFilter} »`),st.nameFilter&&_L(`échange « ${st.nameFilter} »`)].filter(Boolean).join(', ');
     capHtmlReport({title:OAV?_L('🟨 Operational Analysis — activités et interactions'):_L('ƒ⇆ Functional Exchanges'), subtitle:_L(`${f.length}/${allLinks.length} échanges${fi?_L(' · filtres : ')+fi:''}`), tabs, active:st.view, cells,
@@ -443,6 +490,13 @@ function capRenderFunctionalExchange(mode){
 
   /** Export CSV enrichi (53) : un échange par ligne (ou une ligne par port en Vue Blocs). */
   function exportCsv(){
+    if(st.view==='focus'){   // ◎ Voisinage : un échange par ligne, vu depuis la fonction centrale
+      const fc=focusFn(); if(!fc) return;
+      capCsvExport(_L('voisinage-')+fc.name.replace(/[^\p{L}\p{N}]+/gu,'-').slice(0,60)+'.csv',[W.Fn,_L('Port'),_L('Sens'),_L('Functional Exchange'),_L(`${W.Fn} reliée`),_L('Port distant'),_L('Exchange Items')],
+        focusLignes(fc).map(r=>{ const p=[...fc.ins,...fc.outs].find(x=>x.id===r.port), x=allLinks.find(e=>e.id===r.lien.id);
+          return [capCx(fc.name,fc.id),p?capCx(p.name,p.id):'',r.cote==='L'?_L('reçu'):_L('émis'),capCx(r.lien.nom,r.lien.id),capCx(r.voisin.nom,r.voisin.id),r.voisin.port?capCx(r.voisin.port.nom,r.voisin.port.id):'',x?capCxList(x.items):'']; }));
+      return;
+    }
     if(st.view==='block'&&!OAV){   // en OA, pas de ports : export des interactions
       const rows=[]; getFns().forEach(f=>[...f.ins.map(p=>({p,d:_L('Entrée')})),...f.outs.map(p=>({p,d:_L('Sortie')}))].forEach(({p,d})=>{
         const xs=X.portFes[p.id]||[];
@@ -463,6 +517,7 @@ function capRenderFunctionalExchange(mode){
     if(st.who&&!who.act.has(st.who)&&!who.comp.has(st.who)) st.who='';   // allocataire absent de la couche choisie
     const f=getFiltered();
     const V=[['block',_L('◧ Vue Blocs'),OAV?_L('Activités opérationnelles dessinées comme dans Capella (jaune), interactions entrantes à gauche, sortantes à droite ; entité ou acteur porteur en haut du bloc (clic : son détail)'):_L('Fonctions dessinées comme dans Capella : pins d\'entrée (verts) à gauche, de sortie (orange) à droite ; vert = système, bleu = acteur, gris = non allouée')],
+      ['focus',_L('◎ Voisinage'),_L(`Une ${W.fn} au centre avec ses pins, les ${W.fns} qui lui envoient à gauche et celles qui reçoivent d'elle à droite, en blocs ; clic sur une voisine pour la mettre au centre`)],
       ['line',_L('≡ Vue Ligne'),_L(`Un échange par ligne : ${W.fn} source ▶ échange ▶ ${W.fn} cible`)],['card',_L(`▣ Vue ${W.Fn}`),_L(`Échanges regroupés par ${W.fn}`)],
       ['matrix',_L('▦ Matrice'),_L('Matrice fonction × fonction (ligne = source, colonne = cible), 100 fonctions au plus')],['diag',_L('🩺 Contrôles'),_L('Ports orphelins, échanges sans Exchange Item, fonctions sans échange…')]];
     container.innerHTML=_L(`

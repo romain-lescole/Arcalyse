@@ -25,6 +25,8 @@ function capRenderPhysLink(){
   if(!container._phl) container._phl={nameFilter:'',nodeFilter:'',cat:capEcPending('physlink'),view:_capPhysLinkView};   // cat : 🏷 catégorie (71)
   const st=container._phl;
   if(!st.ceFilter) st.ceFilter='all'; // all | with | without (Component Exchanges alloués)
+  if(_capDiagLiensGo&&_capDiagLiensGo.vue==='physlink'){   // ⇄ Liens depuis 🔲 Diagrammes (54) : liens entre les composants du diagramme
+    st.diag=_capDiagLiensGo.uid; st.diagMode='entre'; if(st.view!=='card') st.view='line'; _capDiagLiensGo=null; }
 
   // ── Filter logic ──
   // Couleur du texte des PhysicalComponent selon la nature ET le thème actif.
@@ -62,6 +64,7 @@ function capRenderPhysLink(){
       if(st.ceFilter==='with'&&!l.ces.length) return false;
       if(st.ceFilter==='without'&&l.ces.length) return false;
       if(st.cat&&!capEcMatch(l.linkId, st.cat)) return false;   // 🏷 catégorie (71)
+      if(!capDiagFiltreLien(st, l.linkId, l.src.pcId, l.tgt.pcId)) return false;   // 🔲 diagramme (54)
       if(nf && !l.linkName.toLowerCase().includes(nf) && !l.ces.some(c=>c.name.toLowerCase().includes(nf))) return false;
       if(ndf && !l.src.pcName.toLowerCase().includes(ndf) && !l.tgt.pcName.toLowerCase().includes(ndf)) return false;
       return true;
@@ -182,7 +185,8 @@ function capRenderPhysLink(){
     const tabs=VIEWS.filter(v=>keys.includes(v[0])||(v[0]==='line'&&keys.includes('matrix'))).map(([k,label])=>({key:k,label,
       html:k==='block'?blocs():k==='line'?lineHtml:k==='card'?buildContent(f,'card').replace(/class="phl-comp-(hdr|body|toggle)"/g,'class="phl-comp-$1 open"'):buildContent(f,k)}));
     const cells={}; Object.entries(container._phlCells||{}).forEach(([k,ls])=>cells[k]=ls.map(l=>l.linkId));
-    const fi=[st.nodeFilter&&_L(`composant « ${st.nodeFilter} »`),st.nameFilter&&_L(`lien « ${st.nameFilter} »`),st.ceFilter!=='all'&&(st.ceFilter==='with'?_L('avec CE'):_L('sans CE'))].filter(Boolean).join(', ');
+    const dg=st.diag&&capDiagContenu(st.diag);
+    const fi=[dg&&(st.diagMode==='dessines'?_L(`dessinés dans « ${dg.nom} »`):_L(`entre les composants de « ${dg.nom} »`)),st.nodeFilter&&_L(`composant « ${st.nodeFilter} »`),st.nameFilter&&_L(`lien « ${st.nameFilter} »`),st.ceFilter!=='all'&&(st.ceFilter==='with'?_L('avec CE'):_L('sans CE'))].filter(Boolean).join(', ');
     capHtmlReport({title:_L('🔌 Physical Links'), subtitle:_L(`${f.length}/${allLinks.length} liens${fi?_L(' · filtres : ')+fi:''}`), tabs, active:st.view, cells,
       filename:all?_L('physical-links-rapport.html'):`physical-links-${st.view}.html`});
   }
@@ -240,12 +244,13 @@ function capRenderPhysLink(){
             .map(([k,lab,n])=>`<button class="cap-lf-btn phl-ce-btn${st.ceFilter===k?' active':''}" data-ce="${k}">${lab} (${n})</button>`).join('')}
         </span>
       </div>
-      <div class="phl-filter-bar" style="margin-bottom:8px;">
+      <div class="phl-filter-bar" style="margin-bottom:8px;flex-wrap:wrap;">
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;">🖥 Composant :</span>
         <input id="phl-node-input" type="text" class="phl-filter-input" placeholder="Filtrer par composant…" value="${st.nodeFilter}" style="width:200px;">
         <span style="font-size:11px;color:var(--c-dim);white-space:nowrap;margin-left:8px;">🔍 Lien :</span>
         <input id="phl-name-input" type="text" class="phl-filter-input" placeholder="Lien ou Component Exchange…" value="${st.nameFilter}" style="width:200px;">
         ${capEcSelect('PL', st.cat||'', 'phl-cat')}
+        ${capDiagFiltreHtml('phl', ['PA'], st)}
         <div style="margin-left:auto;display:flex;gap:6px;">
           <button class="phl-export-btn" id="phl-exp-csv">⬇ CSV</button>
           <button class="phl-export-btn" id="phl-exp-html" title="Rapport HTML de la vue affichée">⬇ HTML</button>
@@ -263,6 +268,7 @@ function capRenderPhysLink(){
 
     // ── Text filters — update content only, NO full re-render → focus preserved ──
     container.querySelector('#phl-cat')?.addEventListener('change',e=>{ st.cat=e.target.value; render(); });   // 🏷 catégorie (71)
+    capDiagFiltreWire(container, 'phl', st, render);   // 🔲 diagramme (54)
     let debTimer;
     container.querySelector('#phl-name-input')?.addEventListener('input',e=>{
       st.nameFilter=e.target.value;
@@ -275,11 +281,12 @@ function capRenderPhysLink(){
 
     // ── CSV export (enrichi, 53 : colonnes à retirer, ID / owner / attributs à ajouter) ──
     container.querySelector('#phl-exp-csv')?.addEventListener('click',()=>{
-      const f=getFiltered();
+      const f=getFiltered(), dg=st.diag&&capDiagContenu(st.diag);
+      const suff=dg?'-'+String(dg.nom).replace(/[^\p{L}\p{N}]+/gu,'-').replace(/^-+|-+$/g,'').slice(0,60):'';   // 🔲 diagramme choisi : son nom dans le fichier
       if(st.view!=='card'){
         // Vue en lignes : une ligne par lien
         const cpCell=e=>capCx(e.cps.map(c=>`${c.compName} ⬦ ${c.name} (${c.orient})`).join(', '), e.cps.map(c=>c.id));
-        capCsvExport('physical-links.csv',[_L('N° Lien'),_L('Composant 1'),_L('Port Composant 1'),_L('ComponentPorts alloués 1'),_L('Lien Physique'),_L('Component Exchanges alloués'),_L('Port Composant 2'),_L('ComponentPorts alloués 2'),_L('Composant 2'),_L('Couche')],
+        capCsvExport('physical-links'+suff+'.csv',[_L('N° Lien'),_L('Composant 1'),_L('Port Composant 1'),_L('ComponentPorts alloués 1'),_L('Lien Physique'),_L('Component Exchanges alloués'),_L('Port Composant 2'),_L('ComponentPorts alloués 2'),_L('Composant 2'),_L('Couche')],
           f.map(l=>[linkNumMap[l.linkId]||'',capCx(l.src.pcName,l.src.pcId),capCx(l.src.portName,l.src.portId),cpCell(l.src),capCx(l.linkName,l.linkId),capCxList(l.ces),capCx(l.tgt.portName,l.tgt.portId),cpCell(l.tgt),capCx(l.tgt.pcName,l.tgt.pcId),l.layer]));
       } else {
         // Vue en cartes : deux lignes par lien (les deux sens), même numéro
@@ -287,7 +294,7 @@ function capRenderPhysLink(){
         f.forEach(l=>{ if(seen.has(l.linkId)) return; seen.add(l.linkId); const n=linkNumMap[l.linkId]||'';
           rows.push([n,capCx(l.src.pcName,l.src.pcId),capCx(l.src.portName,l.src.portId),capCx(l.linkName,l.linkId),capCx(l.tgt.portName,l.tgt.portId),capCx(l.tgt.pcName,l.tgt.pcId)]);
           rows.push([n,capCx(l.tgt.pcName,l.tgt.pcId),capCx(l.tgt.portName,l.tgt.portId),capCx(l.linkName,l.linkId),capCx(l.src.portName,l.src.portId),capCx(l.src.pcName,l.src.pcId)]); });
-        capCsvExport(_L('physical-links-sens.csv'),[_L('N° Lien'),_L('Source'),_L('Port Source'),_L('Lien Physique'),_L('Port Cible'),_L('Destination')],rows);
+        capCsvExport(_L('physical-links-sens')+suff+'.csv',[_L('N° Lien'),_L('Source'),_L('Port Source'),_L('Lien Physique'),_L('Port Cible'),_L('Destination')],rows);
       }
     });
 

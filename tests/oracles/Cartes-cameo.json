@@ -272,6 +272,7 @@
    "ana:umlstm",
    "ana:umltrace",
    "ana:umlucs",
+   "ana:variants",
    "ana:xlay",
    "cblk",
    "chains",
@@ -638,6 +639,7 @@
    "Statut référencé introuvable": 0
   },
   "chk.sum": null,
+  "chk.var": null,
   "ct.chk": null,
   "ct.layer": null,
   "ct.n": 0,
@@ -820,6 +822,12 @@
   "uml.uc.n": 0,
   "uml.vues": {
    "Relation Map": 5
-  }
+  },
+  "var.alloc": null,
+  "var.els": null,
+  "var.fe": null,
+  "var.marq": null,
+  "var.n": null,
+  "var.real": null
  }
 }

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--Capella_Version_7.0.1-->
+<!-- Modèle de test écrit pour Arcalyse (Apache 2.0) : modèle 150 % d'une petite gamme de véhicules. -->
+<org.polarsys.capella.core.data.capellamodeller:Project xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:filtering="http://www.polarsys.org/capella/filtering/7.0.0"
+    xmlns:org.polarsys.capella.core.data.capellacore="http://www.polarsys.org/capella/core/core/7.0.0"
+    xmlns:org.polarsys.capella.core.data.capellamodeller="http://www.polarsys.org/capella/core/modeller/7.0.0"
+    xmlns:org.polarsys.capella.core.data.cs="http://www.polarsys.org/capella/core/cs/7.0.0"
+    xmlns:org.polarsys.capella.core.data.ctx="http://www.polarsys.org/capella/core/ctx/7.0.0"
+    xmlns:org.polarsys.capella.core.data.fa="http://www.polarsys.org/capella/core/fa/7.0.0"
+    xmlns:org.polarsys.capella.core.data.la="http://www.polarsys.org/capella/core/la/7.0.0"
+    xmlns:org.polarsys.capella.core.data.oa="http://www.polarsys.org/capella/core/oa/7.0.0"
+    xmlns:org.polarsys.capella.core.data.pa="http://www.polarsys.org/capella/core/pa/7.0.0"
+    id="76d500f4-c08d-5eeb-b93f-f98b262e8c76" name="Vehicule-150">
+  <ownedEnumerationPropertyTypes xsi:type="org.polarsys.capella.core.data.capellacore:EnumerationPropertyType" id="9f7a3a24-80a3-53e0-aaf2-9901587136c9" name="ProgressStatus">
+    <ownedLiterals xsi:type="org.polarsys.capella.core.data.capellacore:EnumerationPropertyLiteral" id="491e4ee2-a515-54be-ae26-accd7b016473" name="DRAFT"/>
+    <ownedLiterals xsi:type="org.polarsys.capella.core.data.capellacore:EnumerationPropertyLiteral" id="4ef860ba-3fc0-562d-82d3-96928611dea8" name="TO_BE_REVIEWED"/>
+    <ownedLiterals xsi:type="org.polarsys.capella.core.data.capellacore:EnumerationPropertyLiteral" id="38bd31d5-52d7-5ef6-bad3-23b6aeec2018" name="REWORK_NECESSARY"/>
+    <ownedLiterals xsi:type="org.polarsys.capella.core.data.capellacore:EnumerationPropertyLiteral" id="b529a60d-f10c-5aa4-a675-a0b94e021690" name="REVIEWED_OK"/>
+  </ownedEnumerationPropertyTypes>
+  <ownedModelRoots xsi:type="org.polarsys.capella.core.data.capellamodeller:SystemEngineering" id="a522dc1c-7488-5ea2-a0fc-913f180c1541" name="Vehicule-150">
+    <ownedExtensions xsi:type="filtering:FilteringModel" id="8e0741ca-17b9-5723-bcbc-2bd618fe8189" name="Critères de la gamme">
+      <ownedFilteringCriteria xsi:type="filtering:FilteringCriterion" id="5b7dabad-3c97-55da-9866-6cb73311f077" name="GPS"/>
+      <ownedFilteringCriteria xsi:type="filtering:FilteringCriterion" id="a5628836-0615-5231-b8ee-a8dab323392f" name="Attelage"/>
+      <ownedFilteringCriterionPkgs xsi:type="filtering:FilteringCriterionPkg" id="f2ab9992-5169-5584-891a-e4478d29fa61" name="Motorisations">
+        <ownedFilteringCriteria xsi:type="filtering:FilteringCriterion" id="e6dec911-36d0-508e-a59f-4d6035be9be2" name="Diesel"/>
+        <ownedFilteringCriteria xsi:type="filtering:FilteringCriterion" id="abae53fd-eef9-59b4-b12c-a163984fd6b0" name="Essence"/>
+        <ownedFilteringCriteria xsi:type="filtering:FilteringCriterion" id="726f6aa1-9ea4-5980-8663-78ed7e57c02e" name="Electrique"/>
+        <ownedFilteringCriteria xsi:type="filtering:FilteringCriterion" id="a4c56835-f506-5cbf-a1fd-ec52e4673388" name="Hydrogene"/>
+      </ownedFilteringCriterionPkgs>
+    </ownedExtensions>
+    <ownedExtensions xsi:type="filtering:FilteringResults" id="ece81da9-4cb8-5328-8540-1fa50b9f1d08" name="Produits">
+      <filteringResults xsi:type="filtering:FilteringResult" id="38fdc194-98a0-5951-8056-d86934c59133" name="Citadine essence" filteringCriteria="#abae53fd-eef9-59b4-b12c-a163984fd6b0"/>
+      <filteringResults xsi:type="filtering:FilteringResult" id="94502ef2-dccc-58a2-9419-58ceb4a48139" name="Routière diesel GPS" filteringCriteria="#e6dec911-36d0-508e-a59f-4d6035be9be2 #5b7dabad-3c97-55da-9866-6cb73311f077"/>
+      <filteringResults xsi:type="filtering:FilteringResult" id="d4151aa1-fd98-501f-802f-ba7ec2b290a6" name="Citadine électrique" filteringCriteria="#726f6aa1-9ea4-5980-8663-78ed7e57c02e #5b7dabad-3c97-55da-9866-6cb73311f077"/>
+      <filteringResults xsi:type="filtering:FilteringResult" id="add9fb0d-51e9-53d2-8c05-4fd2b494a124" name="Gamme à définir"/>
+      <filteringResults xsi:type="filtering:ComposedFilteringResult" id="59bbbe5f-85c4-5188-a85a-d29e7c070f7f" name="Thermiques">
+        <UnionFilteringResultSet xsi:type="filtering:UnionFilteringResultSet" id="766af5da-52d0-51ec-8423-51a5ef6bc436" filteringResults="#38fdc194-98a0-5951-8056-d86934c59133 #94502ef2-dccc-58a2-9419-58ceb4a48139"/>
+      </filteringResults>
+    </ownedExtensions>
+    <ownedArchitectures xsi:type="org.polarsys.capella.core.data.oa:OperationalAnalysis" id="2845b0ea-d2b9-59eb-9382-44341b306973" name="Operational Analysis">
+      <ownedFunctionPkg xsi:type="org.polarsys.capella.core.data.oa:OperationalActivityPkg" id="fa8043d9-60eb-5286-be9c-4f99fb4a0180" name="Operational Activities">
+      <ownedOperationalActivities xsi:type="org.polarsys.capella.core.data.oa:OperationalActivity" id="1acba1d8-bac2-59bf-b327-811993eec0d3" name="Root Operational Activity">
+        <ownedFunctions xsi:type="org.polarsys.capella.core.data.oa:OperationalActivity" id="21dd3177-09aa-56b7-92dc-a16207a666bf" name="Se déplacer" description="Aller d'un point à un autre."/>
+        <ownedFunctions xsi:type="org.polarsys.capella.core.data.oa:OperationalActivity" id="bf96ef1d-8200-5d41-9080-1937296d03fd" name="Recharger le véhicule">
+          <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="47186fe2-2309-575c-8efc-9997b0c4d847" filteringCriteria="#726f6aa1-9ea4-5980-8663-78ed7e57c02e"/>
+        </ownedFunctions>
+      </ownedOperationalActivities>
+      </ownedFunctionPkg>
+      <ownedEntityPkg xsi:type="org.polarsys.capella.core.data.oa:EntityPkg" id="0a8da29c-1485-53e4-bb8b-2bda8a7954f4" name="Operational Entities">
+        <ownedEntities xsi:type="org.polarsys.capella.core.data.oa:Entity" id="ed2008a7-cb36-53a2-ad9d-87db0b6d9dff" name="Conducteur" actor="true">
+          <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="e02c096e-2ec8-5012-958c-d63a4097d7ce" targetElement="#21dd3177-09aa-56b7-92dc-a16207a666bf" sourceElement="#ed2008a7-cb36-53a2-ad9d-87db0b6d9dff"/>
+        </ownedEntities>
+      </ownedEntityPkg>
+    </ownedArchitectures>
+    <ownedArchitectures xsi:type="org.polarsys.capella.core.data.ctx:SystemAnalysis" id="a1dfee13-028f-5311-abfa-efd6a53019ae" name="System Analysis">
+      <ownedFunctionPkg xsi:type="org.polarsys.capella.core.data.ctx:SystemFunctionPkg" id="548018fb-3156-5e57-ac7f-ea4f6588e2a1" name="System Functions">
+      <ownedSystemFunctions xsi:type="org.polarsys.capella.core.data.ctx:SystemFunction" id="f2b43be5-4132-50b0-80e4-7e44befcf04c" name="Root System Function">
+        <ownedFunctions xsi:type="org.polarsys.capella.core.data.ctx:SystemFunction" id="97e58053-6090-5539-a58c-6bbb0a0da947" name="Propulser le véhicule" status="#b529a60d-f10c-5aa4-a675-a0b94e021690">
+          <ownedFunctions xsi:type="org.polarsys.capella.core.data.ctx:SystemFunction" id="8a3694e9-9b0c-5429-92e1-30f374a1e40a" name="Fournir l'énergie thermique" description="Combustion du carburant." status="#b529a60d-f10c-5aa4-a675-a0b94e021690">
+            <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="9c39d86e-86df-583f-8896-b3b98f9ae218" filteringCriteria="#e6dec911-36d0-508e-a59f-4d6035be9be2 #abae53fd-eef9-59b4-b12c-a163984fd6b0"/>
+            <outputs xsi:type="org.polarsys.capella.core.data.fa:FunctionOutputPort" id="a0a6d773-d97d-57ce-baed-bd0e346d447e" name="couple"/>
+            <ownedFunctionRealizations xsi:type="org.polarsys.capella.core.data.fa:FunctionRealization" id="aed36d99-7d07-51e9-acf5-b523f7b47df5" targetElement="#21dd3177-09aa-56b7-92dc-a16207a666bf" sourceElement="#8a3694e9-9b0c-5429-92e1-30f374a1e40a"/>
+            <ownedFunctions xsi:type="org.polarsys.capella.core.data.ctx:SystemFunction" id="08a2894e-64ea-5702-9e64-46c30bf3aac3" name="Préchauffer le moteur">
+              <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="34e39eb0-1d94-53a0-baeb-bb0a9aa5ee8f" filteringCriteria="#e6dec911-36d0-508e-a59f-4d6035be9be2 #726f6aa1-9ea4-5980-8663-78ed7e57c02e"/>
+            </ownedFunctions>
+          </ownedFunctions>
+          <ownedFunctions xsi:type="org.polarsys.capella.core.data.ctx:SystemFunction" id="aaabff95-401a-524a-8e6e-9bce293e7229" name="Fournir l'énergie électrique" status="#4ef860ba-3fc0-562d-82d3-96928611dea8">
+            <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="a95b9b5b-8dc4-50e2-a18c-49ab0915a4cb" filteringCriteria="#726f6aa1-9ea4-5980-8663-78ed7e57c02e"/>
+            <outputs xsi:type="org.polarsys.capella.core.data.fa:FunctionOutputPort" id="84a46af3-13cd-59ea-bbb5-b3bdc6a1c35c" name="couple"/>
+          </ownedFunctions>
+          <ownedFunctions xsi:type="org.polarsys.capella.core.data.ctx:SystemFunction" id="b1ad54d7-6937-5ed2-8483-38de930ddceb" name="Filtrer les particules">
+            <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="3644bc2e-59d3-5d2b-a626-4f29eddb7bc1" filteringCriteria="#e6dec911-36d0-508e-a59f-4d6035be9be2"/>
+          </ownedFunctions>
+          <ownedFunctions xsi:type="org.polarsys.capella.core.data.ctx:SystemFunction" id="74949448-8a0b-5e5e-b3ae-04fa9d39d574" name="Fournir l'énergie hydrogène">
+            <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="73009562-c059-53ef-882e-72c0acde4cde" filteringCriteria="#a4c56835-f506-5cbf-a1fd-ec52e4673388"/>
+          </ownedFunctions>
+          <ownedFunctions xsi:type="org.polarsys.capella.core.data.ctx:SystemFunction" id="01b6126b-466e-565a-9d2c-ad76abd25da4" name="Recharger la batterie">
+            <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="20587643-f723-52d6-a1f4-ef7f724b9b97" filteringCriteria="#726f6aa1-9ea4-5980-8663-78ed7e57c02e"/>
+            <ownedFunctionRealizations xsi:type="org.polarsys.capella.core.data.fa:FunctionRealization" id="ed18c4c3-203a-5e57-a91e-7e83b5a3bbec" targetElement="#bf96ef1d-8200-5d41-9080-1937296d03fd" sourceElement="#01b6126b-466e-565a-9d2c-ad76abd25da4"/>
+          </ownedFunctions>
+          <ownedFunctions xsi:type="org.polarsys.capella.core.data.ctx:SystemFunction" id="8ac4f4b0-3ceb-5096-b056-1d47e9152fd9" name="Transmettre le couple aux roues" description="Boîte et transmission.">
+            <inputs xsi:type="org.polarsys.capella.core.data.fa:FunctionInputPort" id="ecfad823-95ab-5932-b4ff-bbd3ba04e547" name="couple"/>
+          </ownedFunctions>
+          <ownedFunctionalExchanges xsi:type="org.polarsys.capella.core.data.fa:FunctionalExchange" id="0fe13f21-94f1-5de3-a390-e0bbdc852ff7" name="Couple thermique" source="#a0a6d773-d97d-57ce-baed-bd0e346d447e" target="#ecfad823-95ab-5932-b4ff-bbd3ba04e547"/>
+          <ownedFunctionalExchanges xsi:type="org.polarsys.capella.core.data.fa:FunctionalExchange" id="dbb92a6f-2b33-5e36-b22e-f9f4d3203523" name="Couple électrique" source="#84a46af3-13cd-59ea-bbb5-b3bdc6a1c35c" target="#ecfad823-95ab-5932-b4ff-bbd3ba04e547"/>
+        </ownedFunctions>
+        <ownedFunctions xsi:type="org.polarsys.capella.core.data.ctx:SystemFunction" id="054ffa50-26d2-5e0f-b8bb-a32826e94681" name="Guider le conducteur" status="#491e4ee2-a515-54be-ae26-accd7b016473">
+          <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="462855b7-3609-59a9-a710-ecd03419d60b" filteringCriteria="#5b7dabad-3c97-55da-9866-6cb73311f077"/>
+          <ownedPropertyValues xsi:type="org.polarsys.capella.core.data.capellacore:StringPropertyValue" id="10060ad5-e21a-55bb-932c-61b57d261f1f" name="Variante" value="Confort"/>
+          <outputs xsi:type="org.polarsys.capella.core.data.fa:FunctionOutputPort" id="86a570ba-2b4e-5c91-97f0-a886bd821d53" name="route"/>
+        </ownedFunctions>
+        <ownedFunctions xsi:type="org.polarsys.capella.core.data.ctx:SystemFunction" id="353f7641-4ddd-54a1-acb9-2cc12a82bf0e" name="Afficher la vitesse" description="Compteur de vitesse.">
+          <ownedPropertyValues xsi:type="org.polarsys.capella.core.data.capellacore:StringPropertyValue" id="cbe66adc-c087-5b3a-acb6-deafd9174720" name="Variante" value="Sport ; Confort"/>
+          <inputs xsi:type="org.polarsys.capella.core.data.fa:FunctionInputPort" id="c7b5780a-a4c7-5df8-888f-5dac0e8fd8ac" name="route"/>
+        </ownedFunctions>
+        <ownedFunctionalExchanges xsi:type="org.polarsys.capella.core.data.fa:FunctionalExchange" id="d9d379c0-dc77-5bd1-8620-93f959042338" name="Itinéraire" source="#86a570ba-2b4e-5c91-97f0-a886bd821d53" target="#c7b5780a-a4c7-5df8-888f-5dac0e8fd8ac">
+          <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="d7c6f0cf-43fe-55f9-a226-ca2b5a1c9dfc" filteringCriteria="#5b7dabad-3c97-55da-9866-6cb73311f077"/>
+        </ownedFunctionalExchanges>
+      </ownedSystemFunctions>
+      </ownedFunctionPkg>
+      <ownedSystemComponentPkg xsi:type="org.polarsys.capella.core.data.ctx:SystemComponentPkg" id="b66a58cc-2331-5794-8fce-f821dde2825f" name="Structure">
+        <ownedParts xsi:type="org.polarsys.capella.core.data.cs:Part" id="8bf26399-4fbe-5bc3-950b-eb555c8d62e5" name="Véhicule" abstractType="#bbc51fdd-6208-5983-88fd-080b9802f3ad"/>
+        <ownedParts xsi:type="org.polarsys.capella.core.data.cs:Part" id="e7629d3f-6daa-5981-81a7-490e708ce34a" name="Conducteur" abstractType="#5f15f27a-a245-58d6-ab28-340c4f5c4a11"/>
+        <ownedParts xsi:type="org.polarsys.capella.core.data.cs:Part" id="13d306d5-71e4-5511-955f-878caadec712" name="Borne de recharge" abstractType="#f6bd065a-a418-5ab7-aaf5-291fa1728a2b"/>
+        <ownedSystemComponents xsi:type="org.polarsys.capella.core.data.ctx:SystemComponent" id="bbc51fdd-6208-5983-88fd-080b9802f3ad" name="Véhicule" description="Le véhicule de la gamme.">
+          <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="09bddeb0-9c04-5686-8d9b-ab632c0c7512" targetElement="#b1ad54d7-6937-5ed2-8483-38de930ddceb" sourceElement="#bbc51fdd-6208-5983-88fd-080b9802f3ad"/>
+          <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="79fefa70-9df3-5eb8-97b0-2489dbc9de72" targetElement="#8a3694e9-9b0c-5429-92e1-30f374a1e40a" sourceElement="#bbc51fdd-6208-5983-88fd-080b9802f3ad"/>
+          <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="898fb678-1627-5168-a041-b7457f530655" targetElement="#aaabff95-401a-524a-8e6e-9bce293e7229" sourceElement="#bbc51fdd-6208-5983-88fd-080b9802f3ad"/>
+          <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="b6ef71c9-5e35-5d9d-904c-116270f16b4a" targetElement="#01b6126b-466e-565a-9d2c-ad76abd25da4" sourceElement="#bbc51fdd-6208-5983-88fd-080b9802f3ad"/>
+          <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="e8faf018-2bad-506d-9594-8139c8e3b945" targetElement="#8ac4f4b0-3ceb-5096-b056-1d47e9152fd9" sourceElement="#bbc51fdd-6208-5983-88fd-080b9802f3ad"/>
+          <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="e8059935-ac17-5d0a-8542-207009c165ed" targetElement="#054ffa50-26d2-5e0f-b8bb-a32826e94681" sourceElement="#bbc51fdd-6208-5983-88fd-080b9802f3ad"/>
+          <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="7c333af4-584a-569f-8a48-b048f867f1fa" targetElement="#353f7641-4ddd-54a1-acb9-2cc12a82bf0e" sourceElement="#bbc51fdd-6208-5983-88fd-080b9802f3ad"/>
+          <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="35ac5be4-13ad-50c0-a9cb-7e035f170be4" targetElement="#74949448-8a0b-5e5e-b3ae-04fa9d39d574" sourceElement="#bbc51fdd-6208-5983-88fd-080b9802f3ad"/>
+          <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="b87dd4be-7b47-59c2-90fe-798bf6a6ad02" targetElement="#08a2894e-64ea-5702-9e64-46c30bf3aac3" sourceElement="#bbc51fdd-6208-5983-88fd-080b9802f3ad"/>
+        </ownedSystemComponents>
+        <ownedSystemComponents xsi:type="org.polarsys.capella.core.data.ctx:SystemComponent" id="5f15f27a-a245-58d6-ab28-340c4f5c4a11" name="Conducteur" actor="true" human="true"/>
+        <ownedSystemComponents xsi:type="org.polarsys.capella.core.data.ctx:SystemComponent" id="f6bd065a-a418-5ab7-aaf5-291fa1728a2b" name="Borne de recharge" actor="true">
+          <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="117e66dc-07b6-5874-8bee-e75db0d5aa6c" filteringCriteria="#726f6aa1-9ea4-5980-8663-78ed7e57c02e"/>
+        </ownedSystemComponents>
+      </ownedSystemComponentPkg>
+    </ownedArchitectures>
+    <ownedArchitectures xsi:type="org.polarsys.capella.core.data.la:LogicalArchitecture" id="2d834dc6-f281-562f-8b73-0ae3811ee5b5" name="Logical Architecture">
+      <ownedFunctionPkg xsi:type="org.polarsys.capella.core.data.la:LogicalFunctionPkg" id="d07033ca-6709-5422-b0a3-2bd876fdd5b3" name="Logical Functions">
+      <ownedLogicalFunctions xsi:type="org.polarsys.capella.core.data.la:LogicalFunction" id="70dcb293-6f7e-52a9-96a2-19ddb05915b1" name="Root Logical Function">
+        <ownedFunctions xsi:type="org.polarsys.capella.core.data.la:LogicalFunction" id="1d071fa9-48fe-564c-ae2a-66d1d92484bf" name="Injecter le carburant" status="#b529a60d-f10c-5aa4-a675-a0b94e021690">
+          <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="f7a4d93e-5948-5160-8b21-88245f238db3" filteringCriteria="#e6dec911-36d0-508e-a59f-4d6035be9be2 #abae53fd-eef9-59b4-b12c-a163984fd6b0"/>
+          <outputs xsi:type="org.polarsys.capella.core.data.fa:FunctionOutputPort" id="e2d07320-4315-5e95-acb3-dd0a22b4e6c9" name="couple"/>
+          <ownedFunctionRealizations xsi:type="org.polarsys.capella.core.data.fa:FunctionRealization" id="c878b148-5450-5395-82b6-b6439ead53e3" targetElement="#8a3694e9-9b0c-5429-92e1-30f374a1e40a" sourceElement="#1d071fa9-48fe-564c-ae2a-66d1d92484bf"/>
+        </ownedFunctions>
+        <ownedFunctions xsi:type="org.polarsys.capella.core.data.la:LogicalFunction" id="7a4c0460-8509-5857-8a7c-8ea1d030bba6" name="Recycler les vapeurs d'essence">
+          <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="f2fe7e19-80a1-5fd3-a1cd-8eb7aaa2ea72" filteringCriteria="#abae53fd-eef9-59b4-b12c-a163984fd6b0"/>
+        </ownedFunctions>
+        <ownedFunctions xsi:type="org.polarsys.capella.core.data.la:LogicalFunction" id="6b1f2f35-2568-5dd8-bcce-08f4c21e6a1a" name="Gérer la batterie">
+          <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="2959dee2-37b1-5778-981d-3182781abe21" filteringCriteria="#726f6aa1-9ea4-5980-8663-78ed7e57c02e"/>
+          <ownedFunctionRealizations xsi:type="org.polarsys.capella.core.data.fa:FunctionRealization" id="e9cd3e47-104c-5162-b1c7-1335b0878cae" targetElement="#aaabff95-401a-524a-8e6e-9bce293e7229" sourceElement="#6b1f2f35-2568-5dd8-bcce-08f4c21e6a1a"/>
+        </ownedFunctions>
+        <ownedFunctions xsi:type="org.polarsys.capella.core.data.la:LogicalFunction" id="0d94aa9e-3482-51a6-953b-ed996112bbbc" name="Calculer l'itinéraire">
+          <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="036916ba-667f-5249-9daf-0db176774687" filteringCriteria="#5b7dabad-3c97-55da-9866-6cb73311f077"/>
+          <outputs xsi:type="org.polarsys.capella.core.data.fa:FunctionOutputPort" id="f2114056-5788-52e5-89da-20373ef651a3" name="route"/>
+          <ownedFunctionRealizations xsi:type="org.polarsys.capella.core.data.fa:FunctionRealization" id="17551eb7-5b05-50bd-ad28-330009c7f812" targetElement="#054ffa50-26d2-5e0f-b8bb-a32826e94681" sourceElement="#0d94aa9e-3482-51a6-953b-ed996112bbbc"/>
+        </ownedFunctions>
+        <ownedFunctions xsi:type="org.polarsys.capella.core.data.la:LogicalFunction" id="f4edbfae-19eb-5101-9712-07a49209de30" name="Mesurer la vitesse">
+          <ownedFunctionRealizations xsi:type="org.polarsys.capella.core.data.fa:FunctionRealization" id="6f8c1ac8-3a16-5196-8af0-ae69691e68e8" targetElement="#353f7641-4ddd-54a1-acb9-2cc12a82bf0e" sourceElement="#f4edbfae-19eb-5101-9712-07a49209de30"/>
+        </ownedFunctions>
+        <ownedFunctions xsi:type="org.polarsys.capella.core.data.la:LogicalFunction" id="e67d509a-0941-5474-868a-c672a18d764f" name="Afficher les informations">
+          <inputs xsi:type="org.polarsys.capella.core.data.fa:FunctionInputPort" id="eb9ed00f-6343-5344-803e-93ea0ff4ec8e" name="route"/>
+          <ownedFunctionRealizations xsi:type="org.polarsys.capella.core.data.fa:FunctionRealization" id="c7d05191-7594-553e-9f67-b9b9e24b5b5f" targetElement="#353f7641-4ddd-54a1-acb9-2cc12a82bf0e" sourceElement="#e67d509a-0941-5474-868a-c672a18d764f"/>
+        </ownedFunctions>
+        <ownedFunctions xsi:type="org.polarsys.capella.core.data.la:LogicalFunction" id="1b073952-1eec-57d0-ab52-8077ccb63c2a" name="Transmettre le couple">
+          <inputs xsi:type="org.polarsys.capella.core.data.fa:FunctionInputPort" id="3a3d9f5f-a055-5461-84de-6bea37e80845" name="couple"/>
+          <ownedFunctionRealizations xsi:type="org.polarsys.capella.core.data.fa:FunctionRealization" id="300969a9-3da3-5918-bd78-8d928cd6bfa1" targetElement="#8ac4f4b0-3ceb-5096-b056-1d47e9152fd9" sourceElement="#1b073952-1eec-57d0-ab52-8077ccb63c2a"/>
+        </ownedFunctions>
+        <ownedFunctionalExchanges xsi:type="org.polarsys.capella.core.data.fa:FunctionalExchange" id="bba0a9b2-cc15-501c-bce5-182ff90b0619" name="Couple" source="#e2d07320-4315-5e95-acb3-dd0a22b4e6c9" target="#3a3d9f5f-a055-5461-84de-6bea37e80845"/>
+        <ownedFunctionalExchanges xsi:type="org.polarsys.capella.core.data.fa:FunctionalExchange" id="ad912a85-8eb8-561e-b84b-275fb9c8c78f" name="Itinéraire" source="#f2114056-5788-52e5-89da-20373ef651a3" target="#eb9ed00f-6343-5344-803e-93ea0ff4ec8e">
+          <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="dc807bad-f8bc-53c8-b05f-0cf33b5b40c9" filteringCriteria="#5b7dabad-3c97-55da-9866-6cb73311f077"/>
+        </ownedFunctionalExchanges>
+      </ownedLogicalFunctions>
+      </ownedFunctionPkg>
+      <ownedLogicalComponentPkg xsi:type="org.polarsys.capella.core.data.la:LogicalComponentPkg" id="913401d7-f254-51a7-9425-7d8bec23c11c" name="Structure">
+        <ownedParts xsi:type="org.polarsys.capella.core.data.cs:Part" id="192c3580-91a2-5bea-a1ef-206856452707" name="Système logique" abstractType="#91c65680-aa4a-5fc9-8679-7888a036fc38"/>
+        <ownedLogicalComponents xsi:type="org.polarsys.capella.core.data.la:LogicalComponent" id="91c65680-aa4a-5fc9-8679-7888a036fc38" name="Système logique">
+          <ownedComponentRealizations xsi:type="org.polarsys.capella.core.data.cs:ComponentRealization" id="a4eca88a-bdcd-5f98-8c1a-a33732864b93" targetElement="#bbc51fdd-6208-5983-88fd-080b9802f3ad" sourceElement="#91c65680-aa4a-5fc9-8679-7888a036fc38"/>
+          <ownedParts xsi:type="org.polarsys.capella.core.data.cs:Part" id="6cb2527f-81e6-5db9-9422-42f6887928cc" name="Moteur thermique" abstractType="#7dc3bbcd-c860-5d4b-9d61-bdc1779aeb93"/>
+          <ownedParts xsi:type="org.polarsys.capella.core.data.cs:Part" id="da751771-0f94-5002-9c96-7cba0b3bb82f" name="Batterie" abstractType="#e6427693-9803-58cf-b57f-cea70843178b"/>
+          <ownedParts xsi:type="org.polarsys.capella.core.data.cs:Part" id="e47a58f3-bef4-5118-a7de-28d8a76727f9" name="Calculateur de navigation" abstractType="#e9568335-ef36-5c38-ad5f-fa4de4bbe35e"/>
+          <ownedParts xsi:type="org.polarsys.capella.core.data.cs:Part" id="85160f98-70ff-59e1-8c92-79a6062a860b" name="Tableau de bord" abstractType="#775d4abd-7a30-5152-9ff7-3c0f7f507543"/>
+          <ownedParts xsi:type="org.polarsys.capella.core.data.cs:Part" id="620e0d85-2c12-595d-aaea-6b3822129301" name="Boîte de vitesses" abstractType="#31513cf6-91a1-5731-a8fe-65ecfe329efe"/>
+          <ownedComponentExchanges xsi:type="org.polarsys.capella.core.data.fa:ComponentExchange" id="9a67ca56-daf5-56dd-8645-c60c39df7ad9" name="Bus navigation" source="#e089b513-e155-53ad-aa85-bb4a3e8ce5b5" target="#c7fca1de-7332-5c17-a293-f4c902e2b7e8" kind="FLOW">
+            <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="12bb540f-66a8-5358-82a6-889b2d124659" filteringCriteria="#5b7dabad-3c97-55da-9866-6cb73311f077"/>
+            <ownedComponentExchangeFunctionalExchangeAllocations xsi:type="org.polarsys.capella.core.data.fa:ComponentExchangeFunctionalExchangeAllocation" id="820f7dc4-5f07-5aa0-8e10-15dbb8038ca7" targetElement="#ad912a85-8eb8-561e-b84b-275fb9c8c78f" sourceElement="#9a67ca56-daf5-56dd-8645-c60c39df7ad9"/>
+          </ownedComponentExchanges>
+          <ownedLogicalComponents xsi:type="org.polarsys.capella.core.data.la:LogicalComponent" id="7dc3bbcd-c860-5d4b-9d61-bdc1779aeb93" name="Moteur thermique">
+            <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="cf70fc6d-8750-530d-b408-1fe00409f67c" filteringCriteria="#e6dec911-36d0-508e-a59f-4d6035be9be2 #abae53fd-eef9-59b4-b12c-a163984fd6b0"/>
+            <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="6a6272d9-8eb4-5c1f-85f5-77eb3711f1ea" targetElement="#1d071fa9-48fe-564c-ae2a-66d1d92484bf" sourceElement="#7dc3bbcd-c860-5d4b-9d61-bdc1779aeb93"/>
+            <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="a77a3648-d452-5d46-9e4b-54425abbb538" targetElement="#f4edbfae-19eb-5101-9712-07a49209de30" sourceElement="#7dc3bbcd-c860-5d4b-9d61-bdc1779aeb93"/>
+            <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="f6f0f3a3-e8e1-5ad2-b81d-dc24603f76d4" targetElement="#7a4c0460-8509-5857-8a7c-8ea1d030bba6" sourceElement="#7dc3bbcd-c860-5d4b-9d61-bdc1779aeb93"/>
+          </ownedLogicalComponents>
+          <ownedLogicalComponents xsi:type="org.polarsys.capella.core.data.la:LogicalComponent" id="e6427693-9803-58cf-b57f-cea70843178b" name="Batterie" status="#38bd31d5-52d7-5ef6-bad3-23b6aeec2018">
+            <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="8c955391-10e3-5b5d-9078-c5d26a9f702e" filteringCriteria="#726f6aa1-9ea4-5980-8663-78ed7e57c02e"/>
+            <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="4ca52d60-2d65-5466-9b12-87b5d70bab7e" targetElement="#6b1f2f35-2568-5dd8-bcce-08f4c21e6a1a" sourceElement="#e6427693-9803-58cf-b57f-cea70843178b"/>
+          </ownedLogicalComponents>
+          <ownedLogicalComponents xsi:type="org.polarsys.capella.core.data.la:LogicalComponent" id="e9568335-ef36-5c38-ad5f-fa4de4bbe35e" name="Calculateur de navigation">
+            <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="c1279d63-3344-5495-bd4f-2c278ac831bf" filteringCriteria="#5b7dabad-3c97-55da-9866-6cb73311f077"/>
+            <ownedFeatures xsi:type="org.polarsys.capella.core.data.fa:ComponentPort" id="e089b513-e155-53ad-aa85-bb4a3e8ce5b5" name="P" orientation="INOUT" kind="FLOW"/>
+            <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="db50e443-0834-5658-8c25-79eb1217f083" targetElement="#0d94aa9e-3482-51a6-953b-ed996112bbbc" sourceElement="#e9568335-ef36-5c38-ad5f-fa4de4bbe35e"/>
+          </ownedLogicalComponents>
+          <ownedLogicalComponents xsi:type="org.polarsys.capella.core.data.la:LogicalComponent" id="775d4abd-7a30-5152-9ff7-3c0f7f507543" name="Tableau de bord" description="Afficheur central.">
+            <ownedFeatures xsi:type="org.polarsys.capella.core.data.fa:ComponentPort" id="c7fca1de-7332-5c17-a293-f4c902e2b7e8" name="P" orientation="INOUT" kind="FLOW"/>
+            <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="71fc19a4-645e-5cfc-83e8-6c0c8a13943f" targetElement="#e67d509a-0941-5474-868a-c672a18d764f" sourceElement="#775d4abd-7a30-5152-9ff7-3c0f7f507543"/>
+          </ownedLogicalComponents>
+          <ownedLogicalComponents xsi:type="org.polarsys.capella.core.data.la:LogicalComponent" id="31513cf6-91a1-5731-a8fe-65ecfe329efe" name="Boîte de vitesses">
+            <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="b54eedbb-7b47-55dc-baf0-1cc276424b5f" targetElement="#1b073952-1eec-57d0-ab52-8077ccb63c2a" sourceElement="#31513cf6-91a1-5731-a8fe-65ecfe329efe"/>
+          </ownedLogicalComponents>
+        </ownedLogicalComponents>
+      </ownedLogicalComponentPkg>
+    </ownedArchitectures>
+    <ownedArchitectures xsi:type="org.polarsys.capella.core.data.pa:PhysicalArchitecture" id="7cad64a7-58c0-575d-acf7-ec02e414d191" name="Physical Architecture">
+      <ownedFunctionPkg xsi:type="org.polarsys.capella.core.data.pa:PhysicalFunctionPkg" id="a9c2548f-8bba-5895-92ff-1a8111617f64" name="Physical Functions">
+      <ownedPhysicalFunctions xsi:type="org.polarsys.capella.core.data.pa:PhysicalFunction" id="804e0cdf-138e-5f83-bf3b-5026ad619328" name="Root Physical Function">
+        <ownedFunctions xsi:type="org.polarsys.capella.core.data.pa:PhysicalFunction" id="feb3a50c-c94a-5368-ab75-0ec81cd63ede" name="Piloter l'injection">
+          <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="2ce2018f-f09d-55e5-bacf-f4a6ce78324b" filteringCriteria="#e6dec911-36d0-508e-a59f-4d6035be9be2 #abae53fd-eef9-59b4-b12c-a163984fd6b0"/>
+          <ownedFunctionRealizations xsi:type="org.polarsys.capella.core.data.fa:FunctionRealization" id="89a8b263-e555-532e-bc77-73a50d0122ef" targetElement="#1d071fa9-48fe-564c-ae2a-66d1d92484bf" sourceElement="#feb3a50c-c94a-5368-ab75-0ec81cd63ede"/>
+        </ownedFunctions>
+        <ownedFunctions xsi:type="org.polarsys.capella.core.data.pa:PhysicalFunction" id="05e60586-8a0c-5b0c-9c1e-08cc9b73b828" name="Surveiller les cellules">
+          <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="9214b840-ce86-5efc-bbb5-735d34a8ff29" filteringCriteria="#726f6aa1-9ea4-5980-8663-78ed7e57c02e"/>
+          <ownedFunctionRealizations xsi:type="org.polarsys.capella.core.data.fa:FunctionRealization" id="da7087f6-f58d-5832-a075-cc532b1a249e" targetElement="#6b1f2f35-2568-5dd8-bcce-08f4c21e6a1a" sourceElement="#05e60586-8a0c-5b0c-9c1e-08cc9b73b828"/>
+        </ownedFunctions>
+        <ownedFunctions xsi:type="org.polarsys.capella.core.data.pa:PhysicalFunction" id="c9fe07c3-7fc1-5471-a71d-575409f7e932" name="Recevoir le signal GPS">
+          <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="8ad59c9f-664f-5fff-aa33-ff232524fc9e" filteringCriteria="#5b7dabad-3c97-55da-9866-6cb73311f077"/>
+        </ownedFunctions>
+      </ownedPhysicalFunctions>
+      </ownedFunctionPkg>
+      <ownedPhysicalComponentPkg xsi:type="org.polarsys.capella.core.data.pa:PhysicalComponentPkg" id="ce722847-69b6-583d-9088-8d99e3b65f96" name="Structure">
+        <ownedParts xsi:type="org.polarsys.capella.core.data.cs:Part" id="628c6e1f-33ed-522a-922f-9e92399126aa" name="Système physique" abstractType="#cecc8b94-af76-52b6-9376-72aa39d2b41a"/>
+        <ownedPhysicalComponents xsi:type="org.polarsys.capella.core.data.pa:PhysicalComponent" id="cecc8b94-af76-52b6-9376-72aa39d2b41a" name="Système physique">
+          <ownedComponentRealizations xsi:type="org.polarsys.capella.core.data.cs:ComponentRealization" id="bc0a5f38-387e-5638-8c96-c254126fb46b" targetElement="#91c65680-aa4a-5fc9-8679-7888a036fc38" sourceElement="#cecc8b94-af76-52b6-9376-72aa39d2b41a"/>
+          <ownedParts xsi:type="org.polarsys.capella.core.data.cs:Part" id="42ef9714-9f9f-5a02-be31-526338a99588" name="ECU moteur" abstractType="#5aa823c5-717b-5368-b1f9-bcdba565c31c"/>
+          <ownedParts xsi:type="org.polarsys.capella.core.data.cs:Part" id="75783fef-6758-5db9-b982-4a430c4d0e59" name="BMS" abstractType="#d64b3443-9ad7-57fa-898a-9231a5b0cafa"/>
+          <ownedParts xsi:type="org.polarsys.capella.core.data.cs:Part" id="15d44de2-62e4-5291-adc6-2c74a917abbc" name="Module GPS" abstractType="#0aa32065-11e1-5d11-a8ab-fb45c946de93"/>
+          <ownedParts xsi:type="org.polarsys.capella.core.data.cs:Part" id="ed509a02-d378-5c3a-9591-facb242b937c" name="Carte électronique" abstractType="#62f49514-e668-5a6b-b4b3-311f6dd3bec9"/>
+          <ownedPhysicalComponents xsi:type="org.polarsys.capella.core.data.pa:PhysicalComponent" id="5aa823c5-717b-5368-b1f9-bcdba565c31c" name="ECU moteur" nature="BEHAVIOR">
+            <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="b5f4bbdf-d80b-5a7b-90c5-88f7348c9c38" filteringCriteria="#e6dec911-36d0-508e-a59f-4d6035be9be2 #abae53fd-eef9-59b4-b12c-a163984fd6b0"/>
+            <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="647b323e-eca7-527b-a7ca-5a4ffd266ae3" targetElement="#feb3a50c-c94a-5368-ab75-0ec81cd63ede" sourceElement="#5aa823c5-717b-5368-b1f9-bcdba565c31c"/>
+            <ownedComponentRealizations xsi:type="org.polarsys.capella.core.data.cs:ComponentRealization" id="0c99d916-eb49-587d-ab5e-605ddbc72eb5" targetElement="#7dc3bbcd-c860-5d4b-9d61-bdc1779aeb93" sourceElement="#5aa823c5-717b-5368-b1f9-bcdba565c31c"/>
+          </ownedPhysicalComponents>
+          <ownedPhysicalComponents xsi:type="org.polarsys.capella.core.data.pa:PhysicalComponent" id="d64b3443-9ad7-57fa-898a-9231a5b0cafa" name="BMS" nature="BEHAVIOR">
+            <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="e85a46f5-e4b7-5224-9340-bf7a4956f9ab" filteringCriteria="#726f6aa1-9ea4-5980-8663-78ed7e57c02e"/>
+            <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation" id="fb04e428-64c5-55fd-91e9-bf2d7f7291b8" targetElement="#05e60586-8a0c-5b0c-9c1e-08cc9b73b828" sourceElement="#d64b3443-9ad7-57fa-898a-9231a5b0cafa"/>
+            <ownedComponentRealizations xsi:type="org.polarsys.capella.core.data.cs:ComponentRealization" id="24a76dbc-9da9-5a3c-a622-6f9560bc7aa7" targetElement="#e6427693-9803-58cf-b57f-cea70843178b" sourceElement="#d64b3443-9ad7-57fa-898a-9231a5b0cafa"/>
+          </ownedPhysicalComponents>
+          <ownedPhysicalComponents xsi:type="org.polarsys.capella.core.data.pa:PhysicalComponent" id="0aa32065-11e1-5d11-a8ab-fb45c946de93" name="Module GPS" nature="BEHAVIOR">
+            <ownedExtensions xsi:type="filtering:AssociatedFilteringCriterionSet" id="de716fb5-6774-5cd7-aec9-7be22ae14c57" filteringCriteria="#5b7dabad-3c97-55da-9866-6cb73311f077"/>
+            <ownedComponentRealizations xsi:type="org.polarsys.capella.core.data.cs:ComponentRealization" id="0ccad41d-b326-5b03-a96d-2394e079948b" targetElement="#e9568335-ef36-5c38-ad5f-fa4de4bbe35e" sourceElement="#0aa32065-11e1-5d11-a8ab-fb45c946de93"/>
+          </ownedPhysicalComponents>
+          <ownedPhysicalComponents xsi:type="org.polarsys.capella.core.data.pa:PhysicalComponent" id="62f49514-e668-5a6b-b4b3-311f6dd3bec9" name="Carte électronique" nature="NODE">
+          </ownedPhysicalComponents>
+        </ownedPhysicalComponents>
+      </ownedPhysicalComponentPkg>
+    </ownedArchitectures>
+  </ownedModelRoots>
+</org.polarsys.capella.core.data.capellamodeller:Project>

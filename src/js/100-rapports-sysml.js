@@ -50,7 +50,8 @@ const CAP_RAP_FAMILLES=[
 const CAP_RAP_PORTEES=[
   {k:'tout', l:_L('dans tout le modèle')}, {k:'dans', l:_L('dans un paquetage ou un bloc choisi')},
   {k:'ctx', l:_L('contenus dans l\'élément englobant')}, {k:'int', l:_L('à l\'intérieur de l\'élément englobant (contenus, parts et leurs types)')},
-  {k:'rel', l:_L('reliés à l\'élément englobant par une relation')}, {k:'chemin', l:_L('atteints depuis l\'élément englobant par un chemin ✨')}];
+  {k:'rel', l:_L('reliés à l\'élément englobant par une relation')}, {k:'chemin', l:_L('atteints depuis l\'élément englobant par un chemin ✨')},
+  {k:'diag', l:_L('montrés sur le diagramme de la boucle englobante (ou sur les diagrammes de l\'élément englobant)')}];
 /** Sens d'une relation, vu de l'élément englobant (ou de la ligne d'un tableau). */
 const CAP_RAP_SENS=[{k:'out', l:_L('élément englobant → eux')}, {k:'in', l:_L('eux → élément englobant')}, {k:'deux', l:_L('dans les deux sens')}];
 /** Colonnes proposées pour un tableau d'éléments. */
@@ -169,6 +170,7 @@ function capRapGenSel(r, ctx){
   const P=r.portee||'tout', g=r.g||'*', c=ctx&&ctx.el, vt=r.vt!==false;
   let cand=null;
   if(P==='dans'){ if(!r.ref||!r.ref.id) return []; cand=capMxPortee({ids:[r.ref.id], direct:!!r.direct}); }
+  else if(P==='diag') cand=capDosEoDgSet(ctx);   // présence sur les diagrammes (102)
   else if(P!=='tout'){
     if(!c) return [];
     if(P==='ctx'){ const ids=capRapAvecType(c.id, vt); cand=capMxPortee({ids, direct:!!r.direct}); }
@@ -320,7 +322,8 @@ function capRapLignes(b){
   if(!capLoaded) return {head:[_L('Élément')], rows:[]};
   const els=()=>(b.ids||[]).map(id=>capGetElementById_(id)).filter(Boolean);
   if(b.cols==='perso'){ const cols=b.colonnes||[];
-    return {head:[_L('Élément'), ...cols.map(capRapColLib)], rows:els().map(e=>({id:e.id, c:[capMxNom(e), ...cols.map(c=>capRapColVal(e, c))]}))}; }
+    return {head:[_L('Élément'), ...cols.map(capRapColLib)], rows:els().map(e=>Object.assign({id:e.id, c:[capMxNom(e), ...cols.map(c=>capRapColVal(e, c))]},
+      {h:capDosHtmlCellules(e, ['', ...cols.map(c=>c.k)])}))}; }   // description mise en forme (102)
   if(b.cols==='port') return {head:[_L('Port, pin ou paramètre'), _L('Sens'), _L('Typé par'), _L('Relié à')],
     rows:els().map(e=>({id:e.id, c:[capMxNom(e), capRapSens(e), capRapColVal(e,{k:'def'}), [...new Set(capRapLies(e.id, CAP_RAP_CNX, 'deux').map(x=>capRapNomQualif(x.id)))].join(', ')]}))};
   if(b.cols==='cnx') return {head:[_L('Connexion'), _L('De'), _L('Vers'), _L('Transporte')], rows:capRapCnx(b.src, b.quels||'tous', b.vt)};
@@ -333,7 +336,7 @@ function capRapLignes(b){
 /** Description courte d'un tableau propre aux modèles génériques (éditeur du dossier). @param {object} b @returns {string} vide pour les autres */
 function capRapListeLib(b){
   return {perso:_L('colonnes au choix'), rel:_L('liens : relation, sens, élément, type'), cnx:_L('connexions : de, vers, objets transportés'),
-    props:_L('propriétés et valeurs'), port:_L('ports, pins et paramètres : sens, type, connexions')}[b.cols]||'';
+    props:_L('propriétés et valeurs'), port:_L('ports, pins et paramètres : sens, type, connexions'), presence:_L('présence sur les diagrammes')}[b.cols]||'';
 }
 
 /* ── Éditeur : réglages ──────────────────────────────────────────────── */

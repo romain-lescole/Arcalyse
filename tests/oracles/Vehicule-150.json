@@ -1,0 +1,1424 @@
+{
+ "modele": {
+  "elements": 167,
+  "parCouche": {
+   "LA": 26,
+   "OA": 8,
+   "PA": 18,
+   "SA": 26,
+   "Shared": 89
+  },
+  "parType": {
+   "AssociatedFilteringCriterionSet": 25,
+   "ComponentExchange": 1,
+   "ComponentExchangeFunctionalExchangeAllocation": 1,
+   "ComponentFunctionalAllocation": 19,
+   "ComponentPort": 2,
+   "ComponentRealization": 5,
+   "ComposedFilteringResult": 1,
+   "Entity": 1,
+   "EntityPkg": 1,
+   "EnumerationPropertyLiteral": 4,
+   "EnumerationPropertyType": 1,
+   "FilteringCriterion": 6,
+   "FilteringCriterionPkg": 1,
+   "FilteringModel": 1,
+   "FilteringResult": 4,
+   "FilteringResults": 1,
+   "FunctionInputPort": 4,
+   "FunctionOutputPort": 5,
+   "FunctionRealization": 10,
+   "FunctionalExchange": 5,
+   "LogicalArchitecture": 1,
+   "LogicalComponent": 6,
+   "LogicalComponentPkg": 1,
+   "LogicalFunction": 8,
+   "LogicalFunctionPkg": 1,
+   "OperationalActivity": 3,
+   "OperationalActivityPkg": 1,
+   "OperationalAnalysis": 1,
+   "Part": 14,
+   "PhysicalArchitecture": 1,
+   "PhysicalComponent": 5,
+   "PhysicalComponentPkg": 1,
+   "PhysicalFunction": 4,
+   "PhysicalFunctionPkg": 1,
+   "StringPropertyValue": 2,
+   "SystemAnalysis": 1,
+   "SystemComponent": 3,
+   "SystemComponentPkg": 1,
+   "SystemEngineering": 1,
+   "SystemFunction": 11,
+   "SystemFunctionPkg": 1,
+   "UnionFilteringResultSet": 1
+  }
+ },
+ "relations": {
+  "pcRoot_pcAny": 4,
+  "pcBeh_fn": 2,
+  "fn_fn": 3,
+  "lc_lc": 5,
+  "lf_lf": 7,
+  "lc_lf": 7,
+  "sf_sf": 10,
+  "sc_sf": 9,
+  "oa_oa": 2,
+  "entity_oa": 1,
+  "fe_fn": 5,
+  "ce_comp": 1,
+  "fn_real": 10,
+  "comp_real": 5,
+  "ce_fe": 1
+ },
+ "chaines": {
+  "nombre": 0,
+  "parType": {},
+  "parCouche": {},
+  "noeuds": 0,
+  "aretes": 0,
+  "vides": 0
+ },
+ "fonctions": {
+  "nombre": 26,
+  "parCouche": {
+   "LA": 8,
+   "OA": 3,
+   "PA": 4,
+   "SA": 11
+  },
+  "feuilles": 20,
+  "allouees": 19,
+  "parAllocation": {
+   "act": 1,
+   "none": 2,
+   "parent": 5,
+   "sys": 18
+  },
+  "realisees": 9,
+  "avecDescription": 4
+ },
+ "qualiteNoms": {
+  "langues": {
+   "": 4,
+   "EN": 1,
+   "FR": 21
+  },
+  "defauts": {
+   "noverb": 1,
+   "vague": 1
+  }
+ },
+ "tracabilite": [
+  {
+   "cat": "fn",
+   "de": "OA",
+   "vers": "SA",
+   "haut": 3,
+   "hautOk": 2,
+   "bas": 11,
+   "basOk": 2
+  },
+  {
+   "cat": "fn",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 11,
+   "hautOk": 5,
+   "bas": 8,
+   "basOk": 6
+  },
+  {
+   "cat": "fn",
+   "de": "LA",
+   "vers": "PA",
+   "haut": 8,
+   "hautOk": 2,
+   "bas": 4,
+   "basOk": 2
+  },
+  {
+   "cat": "comp",
+   "de": "SA",
+   "vers": "LA",
+   "haut": 3,
+   "hautOk": 1,
+   "bas": 6,
+   "basOk": 1
+  },
+  {
+   "cat": "comp",
+   "de": "LA",
+   "vers": "PA",
+   "haut": 6,
+   "hautOk": 4,
+   "bas": 5,
+   "basOk": 4
+  }
+ ],
+ "functionalExchange": {
+  "echanges": 5,
+  "parCouche": {
+   "LA": 2,
+   "SA": 3
+  },
+  "fonctions": 26
+ },
+ "composants": {
+  "composants": 15,
+  "parCouche": {
+   "LA": 6,
+   "OA": 1,
+   "PA": 5,
+   "SA": 3
+  },
+  "acteurs": 3,
+  "ports": 2,
+  "liens": 1
+ },
+ "componentExchange": {
+  "nombre": 1,
+  "parCouche": {
+   "LA": 1
+  },
+  "parSens": {
+   "bi": 1
+  },
+  "incoherents": 0,
+  "avecFe": 1,
+  "avecPl": 0
+ },
+ "behaviorExchange": {
+  "nombre": 0
+ },
+ "physicalLink": {
+  "nombre": 0,
+  "avecCe": 0,
+  "ces": 0
+ },
+ "ports": {
+  "fp": 9,
+  "cp": 2,
+  "pp": 0,
+  "fe": 5,
+  "ce": 1,
+  "pl": 0,
+  "feVersCe": 1,
+  "ceVersPl": 0
+ },
+ "scenarios": {
+  "nombre": 0,
+  "parCouche": {},
+  "parType": {},
+  "messages": 0
+ },
+ "capacites": {
+  "nombre": 0,
+  "parCouche": {},
+  "avecFonctions": 0,
+  "avecChaines": 0,
+  "avecScenarios": 0
+ },
+ "etats": {
+  "machines": 0,
+  "etats": 0,
+  "transitions": 0
+ },
+ "exigences": {
+  "nombre": 0,
+  "parSource": {},
+  "parType": {},
+  "elementsLies": 0
+ },
+ "pvmt": {
+  "definitions": 0,
+  "valeurs": 2,
+  "elementsValues": 2
+ },
+ "donnees": {
+  "exchangeItems": 0,
+  "interfaces": 0,
+  "types": 0,
+  "fes": 5,
+  "ces": 1
+ },
+ "liensCouches": {
+  "fn": {
+   "noeuds": 16,
+   "aretes": 10,
+   "tronque": false
+  },
+  "comp": {
+   "noeuds": 9,
+   "aretes": 5,
+   "tronque": false
+  },
+  "fe": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "ce": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "pl": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "port": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "cap": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "chain": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "scen": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "state": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  },
+  "data": {
+   "noeuds": 0,
+   "aretes": 0,
+   "tronque": false
+  }
+ },
+ "statutRevue": {
+  "elements": 6,
+  "avecStatut": 6,
+  "avecCommentaire": 0,
+  "litteraux": [
+   "DRAFT:draft",
+   "TO_BE_REVIEWED:ok",
+   "REWORK_NECESSARY:ko",
+   "REVIEWED_OK:ok"
+  ],
+  "parStatut": {
+   "DRAFT": 1,
+   "REVIEWED_OK": 3,
+   "REWORK_NECESSARY": 1,
+   "TO_BE_REVIEWED": 1
+  },
+  "parClasse": {
+   "draft": 1,
+   "ko": 1,
+   "ok": 4
+  }
+ },
+ "categoriesEchanges": {
+  "categories": 0,
+  "parNature": {},
+  "parCouche": {},
+  "echangesCategorises": 0,
+  "introuvables": 0
+ },
+ "deploiement": {
+  "noeuds": 1,
+  "comportements": 3,
+  "deployes": 0,
+  "cis": 0,
+  "ciKinds": {},
+  "ceNonRelies": 0
+ },
+ "recRpl": {
+  "recs": 0,
+  "rpls": 0,
+  "elements": 0,
+  "conformes": 0,
+  "ecarts": []
+ },
+ "bibliotheques": {
+  "references": 0,
+  "bibliotheques": 0,
+  "declarees": 0
+ },
+ "matrice": {
+  "alloc-sa": {
+   "lignes": 11,
+   "colonnes": 3,
+   "cellules": 9,
+   "liens": 9,
+   "lignesSansRelation": 2,
+   "colonnesSansRelation": 2
+  },
+  "alloc-la": {
+   "lignes": 8,
+   "colonnes": 6,
+   "cellules": 7,
+   "liens": 7,
+   "lignesSansRelation": 1,
+   "colonnesSansRelation": 1
+  },
+  "alloc-pa": {
+   "lignes": 4,
+   "colonnes": 5,
+   "cellules": 2,
+   "liens": 2,
+   "lignesSansRelation": 2,
+   "colonnesSansRelation": 3
+  },
+  "alloc-oa": {
+   "lignes": 3,
+   "colonnes": 1,
+   "cellules": 1,
+   "liens": 1,
+   "lignesSansRelation": 2,
+   "colonnesSansRelation": 0
+  },
+  "fe-sa": {
+   "lignes": 11,
+   "colonnes": 11,
+   "cellules": 6,
+   "liens": 3,
+   "lignesSansRelation": 6,
+   "colonnesSansRelation": 6
+  },
+  "fe-la": {
+   "lignes": 8,
+   "colonnes": 8,
+   "cellules": 4,
+   "liens": 2,
+   "lignesSansRelation": 4,
+   "colonnesSansRelation": 4
+  },
+  "fe-pa": {
+   "lignes": 4,
+   "colonnes": 4,
+   "cellules": 0,
+   "liens": 0,
+   "lignesSansRelation": 4,
+   "colonnesSansRelation": 4
+  },
+  "ce-sa": {
+   "lignes": 3,
+   "colonnes": 3,
+   "cellules": 0,
+   "liens": 0,
+   "lignesSansRelation": 3,
+   "colonnesSansRelation": 3
+  },
+  "ce-la": {
+   "lignes": 6,
+   "colonnes": 6,
+   "cellules": 2,
+   "liens": 1,
+   "lignesSansRelation": 4,
+   "colonnesSansRelation": 4
+  },
+  "ce-pa": {
+   "lignes": 5,
+   "colonnes": 5,
+   "cellules": 0,
+   "liens": 0,
+   "lignesSansRelation": 5,
+   "colonnesSansRelation": 5
+  },
+  "real-fn-sa": {
+   "lignes": 11,
+   "colonnes": 3,
+   "cellules": 2,
+   "liens": 2,
+   "lignesSansRelation": 9,
+   "colonnesSansRelation": 1
+  },
+  "real-fn-la": {
+   "lignes": 8,
+   "colonnes": 11,
+   "cellules": 6,
+   "liens": 6,
+   "lignesSansRelation": 2,
+   "colonnesSansRelation": 6
+  },
+  "real-fn-pa": {
+   "lignes": 4,
+   "colonnes": 8,
+   "cellules": 2,
+   "liens": 2,
+   "lignesSansRelation": 2,
+   "colonnesSansRelation": 6
+  },
+  "real-cp-la": {
+   "lignes": 6,
+   "colonnes": 3,
+   "cellules": 1,
+   "liens": 1,
+   "lignesSansRelation": 5,
+   "colonnesSansRelation": 2
+  },
+  "real-cp-pa": {
+   "lignes": 5,
+   "colonnes": 6,
+   "cellules": 4,
+   "liens": 4,
+   "lignesSansRelation": 1,
+   "colonnesSansRelation": 2
+  },
+  "ch-pc-lc": {
+   "lignes": 5,
+   "colonnes": 6,
+   "cellules": 2,
+   "liens": 2,
+   "lignesSansRelation": 3,
+   "colonnesSansRelation": 4
+  },
+  "ch-lc-sc": {
+   "lignes": 6,
+   "colonnes": 3,
+   "cellules": 5,
+   "liens": 5,
+   "lignesSansRelation": 1,
+   "colonnesSansRelation": 2
+  }
+ },
+ "sante": {
+  "score": 73,
+  "points": 26,
+  "bloquants": 1,
+  "info": 52,
+  "pop": 89,
+  "nChecks": 100,
+  "nOk": 75,
+  "couches": {
+   "OA": 82,
+   "SA": 66,
+   "LA": 77,
+   "PA": 94
+  }
+ },
+ "controles": {
+  "fonctions": {
+   "Noms ne commençant pas par un verbe": 1,
+   "Verbes peu précis en tête du nom": 1,
+   "Présentation des noms": 0,
+   "Noms trop longs ou d'un seul mot": 0,
+   "Langue minoritaire dans la couche": 0,
+   "Fonctions sans description": 18,
+   "Descriptions trop courtes ou identiques au nom": 0,
+   "Marqueurs de travail en cours (TODO, TBD, NOT DONE…)": 0,
+   "Noms en double dans une même couche": 0,
+   "Fonctions feuilles non allouées": 2,
+   "Fonctions allouées à plusieurs composants": 0,
+   "Fonctions mères allouées": 1,
+   "Fonctions feuilles sans aucun échange": 7,
+   "Échanges portés par des fonctions mères": 1,
+   "Ports de fonction sans échange": 0,
+   "Fonctions feuilles non réalisées à la couche inférieure": 9,
+   "Fonctions feuilles ne réalisant rien à la couche supérieure": 9
+  },
+  "functionalExchange": {
+   "Ports de fonction orphelins (sans échange)": 0,
+   "Échanges sans Exchange Item": 5,
+   "Fonctions feuilles sans aucun échange": 12,
+   "Fonctions mères portant des ports": 1,
+   "Échanges LA / PA non alloués à un Component Exchange": 1
+  },
+  "composants": {
+   "Ports de composant orphelins (sans Component Exchange)": 0,
+   "Ports connectés sans orientation (UNSET)": 0,
+   "Échanges aux orientations incohérentes": 0,
+   "Composants feuilles sans port": 8,
+   "Composants feuilles sans fonction allouée": 4
+  },
+  "scenarios": {
+   "Scénarios vides (aucun message)": 0,
+   "Messages sans échange": 0,
+   "Lignes de vie sans élément représenté": 0,
+   "Scénarios hors capacité": 0,
+   "Références vers un scénario introuvable": 0
+  },
+  "sysml": {},
+  "uml": {},
+  "exigences": {},
+  "pvmt": {
+   "Éléments concernés par un groupe PVMT mais non renseignés": 0,
+   "Valeurs numériques restées à la valeur par défaut (0)": 0,
+   "Énumérations ou textes non renseignés": 0,
+   "Groupes appliqués dont la définition est introuvable": 0,
+   "Groupes appliqués sans lien vers leur définition": 0
+  },
+  "donnees": {},
+  "contraintes": {},
+  "statutRevue": {
+   "Éléments à retravailler": 1,
+   "Éléments en attente de revue": 0,
+   "Brouillons dans une couche majoritairement validée": 0,
+   "Commentaire de revue Capella sans statut": 0,
+   "À retravailler sans commentaire dans 💬 Revue": 1,
+   "Statut référencé introuvable": 0
+  },
+  "chaines": {
+   "Chaînes vides": 0,
+   "Chaînes discontinues": 0,
+   "Implications vers un élément introuvable": 0,
+   "Échanges dont une extrémité n'est pas dans la chaîne": 0,
+   "Références vers une chaîne introuvable": 0,
+   "Références de chaînes cycliques": 0,
+   "Chaînes non réalisées à la couche inférieure": 0,
+   "Chaînes ne réalisant rien à la couche supérieure": 0,
+   "Chaînes hors capacité": 0,
+   "Chaînes sans description": 0,
+   "Chaînes en double": 0,
+   "Étapes portées par des fonctions non allouées": 0,
+   "Liens d'un chemin physique ne reliant pas ses composants voisins": 0,
+   "Composants isolés dans un chemin physique": 0
+  },
+  "categories": {
+   "Échanges sans catégorie": 0,
+   "Catégories vides": 0,
+   "Catégories référençant un échange introuvable": 0,
+   "Catégories en double": 0,
+   "Échanges dans plusieurs catégories": 0
+  },
+  "bibliotheques": {
+   "Références vers une bibliothèque non chargée": 0,
+   "Références introuvables dans une bibliothèque chargée": 0,
+   "Bibliothèques déclarées sans référence": 0,
+   "Références vers une bibliothèque non déclarée": 0
+  },
+  "recRpl": {
+   "Répliques incomplètes": 0,
+   "Répliques enrichies": 0,
+   "Types différents entre REC et réplique": 0,
+   "Noms de réplique hors règle REC + suffixe": 0,
+   "Liens de catalogue vers un élément introuvable": 0,
+   "Répliques dont le REC est introuvable": 0,
+   "REC sans réplique": 0,
+   "REC en double": 0,
+   "Éléments appartenant à plusieurs répliques": 0
+  },
+  "deploiement": {
+   "Comportements non déployés": 0,
+   "Nœuds sans comportement déployé": 0,
+   "Échanges entre comportements sans lien physique entre leurs nœuds": 0,
+   "Comportements déployés sur plusieurs nœuds": 0,
+   "Nœuds physiques non réalisés par un Configuration Item": 0,
+   "Configuration Items vides": 0,
+   "Réalisations EPBS vers un élément introuvable": 0,
+   "Éléments réalisés par plusieurs Configuration Items": 0,
+   "Configuration Items sans nature": 0
+  },
+  "etats": {
+   "noInit": 0,
+   "unreach": 0,
+   "deadEnd": 0,
+   "noTrig": 0
+  },
+  "umlBlocs": {},
+  "umlActivites": {},
+  "umlExigences": {},
+  "umlEtats": {},
+  "umlInteractions": {},
+  "umlCas": {},
+  "umlTracabilite": {},
+  "umlInterfaces": {},
+  "umlBudgets": {},
+  "umlParametrique": {},
+  "umlLogiciel": {}
+ },
+ "tableauDeBord": {
+  "cap.chk": null,
+  "cap.fn": null,
+  "cap.layer": null,
+  "cap.n": 0,
+  "cap.type": null,
+  "cb.chk.LA": {
+   "Composants feuilles sans port": 3
+  },
+  "cb.chk.PB": null,
+  "cb.chk.PN": null,
+  "cb.chk.SA": {
+   "Composants feuilles sans fonction allouée": 2,
+   "Composants feuilles sans port": 1
+  },
+  "cb.n.LA": 6,
+  "cb.n.PB": 0,
+  "cb.n.PN": 0,
+  "cb.n.SA": 3,
+  "cb.ports.LA": {
+   "pct": 100,
+   "num": 2,
+   "den": 2
+  },
+  "cb.ports.PB": null,
+  "cb.ports.PN": null,
+  "cb.ports.SA": null,
+  "ce.comp": {
+   "Calculateur de navigation": 1,
+   "Tableau de bord": 1
+  },
+  "ce.dir": {
+   "⇄ Bidirectionnel": 1
+  },
+  "ce.fe": {
+   "pct": 100,
+   "num": 1,
+   "den": 1
+  },
+  "ce.kind": {
+   "FLOW": 1
+  },
+  "ce.layer": {
+   "LA": 1
+  },
+  "ce.n": 1,
+  "ce.orph": 0,
+  "ce.papl": 0,
+  "ch.avg": null,
+  "ch.empty": null,
+  "ch.full": null,
+  "ch.kind": null,
+  "ch.layer": null,
+  "ch.n": 0,
+  "ch.top": null,
+  "ch.type": null,
+  "chk.ce": null,
+  "chk.ch": null,
+  "chk.dep": null,
+  "chk.ec": null,
+  "chk.fn": {
+   "Fonctions feuilles non réalisées à la couche inférieure": 9,
+   "Fonctions feuilles sans aucun échange": 7,
+   "Fonctions feuilles non allouées": 2,
+   "Fonctions mères allouées": 1,
+   "Échanges portés par des fonctions mères": 1
+  },
+  "chk.lib": null,
+  "chk.pl": null,
+  "chk.pt": {
+   "Functional Exchange ↔ Component Exchange : ports non alignés": 1
+  },
+  "chk.rec": null,
+  "chk.st": {
+   "Statut référencé introuvable": 0
+  },
+  "chk.sum": {
+   "Fonctions": 20,
+   "Ports": 1
+  },
+  "chk.var": {
+   "Éléments retenus par aucune variante": 1,
+   "Allocation perdue dans une variante": 1,
+   "Réalisation perdue dans une variante": 1,
+   "Référence de variabilité introuvable": 0,
+   "Restriction illisible": 0,
+   "Restriction citant une caractéristique inconnue": 0,
+   "Variante sans critère": 1
+  },
+  "ct.chk": null,
+  "ct.layer": null,
+  "ct.n": 0,
+  "dep.beh": {
+   "pct": 0,
+   "num": 0,
+   "den": 3
+  },
+  "dep.ci": 0,
+  "dep.cikind": null,
+  "dep.cipct": null,
+  "dep.nodes": 1,
+  "dep.per": null,
+  "dg.cmp": null,
+  "dg.layer": null,
+  "dg.n": null,
+  "dg.orph": null,
+  "dm.chk": null,
+  "dm.fe": {
+   "SA": 0,
+   "LA": 0
+  },
+  "dm.n": 0,
+  "dm.used": null,
+  "ec.layer": {
+   "SA": 0,
+   "LA": 0
+  },
+  "ec.n": 0,
+  "ec.pct": null,
+  "ec.top": null,
+  "fex.chk": {
+   "Fonctions feuilles sans aucun échange": 12,
+   "Échanges sans Exchange Item": 5,
+   "Fonctions mères portant des ports": 1,
+   "Échanges LA / PA non alloués à un Component Exchange": 1
+  },
+  "fex.items": {
+   "pct": 0,
+   "num": 0,
+   "den": 5
+  },
+  "fex.layer": {
+   "SA": 3,
+   "LA": 2
+  },
+  "fex.n": 5,
+  "fn.L.alloc": {
+   "OA": 50,
+   "SA": 100,
+   "LA": 100,
+   "PA": 67
+  },
+  "fn.L.cap": {
+   "OA": 0,
+   "SA": 0,
+   "LA": 0,
+   "PA": 0
+  },
+  "fn.L.chain": {
+   "OA": 0,
+   "SA": 0,
+   "LA": 0,
+   "PA": 0
+  },
+  "fn.L.depth": {
+   "OA": 1,
+   "SA": 3,
+   "LA": 1,
+   "PA": 1
+  },
+  "fn.L.desc": {
+   "OA": 50,
+   "SA": 30,
+   "LA": 0,
+   "PA": 0
+  },
+  "fn.L.fe": {
+   "OA": 0,
+   "SA": 50,
+   "LA": 57,
+   "PA": 0
+  },
+  "fn.L.leaf": {
+   "OA": 2,
+   "SA": 8,
+   "LA": 7,
+   "PA": 3
+  },
+  "fn.L.n": {
+   "OA": 3,
+   "SA": 11,
+   "LA": 8,
+   "PA": 4
+  },
+  "fn.L.nq": {
+   "OA": 50,
+   "SA": 100,
+   "LA": 86,
+   "PA": 100
+  },
+  "fn.L.trace": {
+   "OA": 100,
+   "SA": 63,
+   "LA": 86,
+   "PA": 67
+  },
+  "fn.LA.ak": {
+   "Système": 7
+  },
+  "fn.LA.alloc": {
+   "pct": 100,
+   "num": 7,
+   "den": 7
+  },
+  "fn.LA.cap": {
+   "pct": 0,
+   "num": 0,
+   "den": 7
+  },
+  "fn.LA.chain": {
+   "pct": 0,
+   "num": 0,
+   "den": 7
+  },
+  "fn.LA.depth": 1,
+  "fn.LA.desc": {
+   "pct": 0,
+   "num": 0,
+   "den": 7
+  },
+  "fn.LA.fe": {
+   "pct": 57,
+   "num": 4,
+   "den": 7
+  },
+  "fn.LA.leaf": 7,
+  "fn.LA.lvl": {
+   "Niveau 0": 1,
+   "Niveau 1": 7
+  },
+  "fn.LA.n": 8,
+  "fn.LA.nq": {
+   "pct": 86,
+   "num": 6,
+   "den": 7
+  },
+  "fn.LA.sub": {
+   "Moteur thermique": 3,
+   "Batterie": 1,
+   "Calculateur de navigation": 1,
+   "Tableau de bord": 1,
+   "Boîte de vitesses": 1
+  },
+  "fn.LA.trace": {
+   "pct": 86,
+   "num": 6,
+   "den": 7
+  },
+  "fn.LA.who": {
+   "Moteur thermique": 3,
+   "Batterie": 1,
+   "Calculateur de navigation": 1,
+   "Tableau de bord": 1,
+   "Boîte de vitesses": 1
+  },
+  "fn.OA.ak": {
+   "Acteurs": 1,
+   "Non allouées": 1
+  },
+  "fn.OA.alloc": {
+   "pct": 50,
+   "num": 1,
+   "den": 2
+  },
+  "fn.OA.cap": {
+   "pct": 0,
+   "num": 0,
+   "den": 2
+  },
+  "fn.OA.chain": {
+   "pct": 0,
+   "num": 0,
+   "den": 2
+  },
+  "fn.OA.depth": 1,
+  "fn.OA.desc": {
+   "pct": 50,
+   "num": 1,
+   "den": 2
+  },
+  "fn.OA.fe": {
+   "pct": 0,
+   "num": 0,
+   "den": 2
+  },
+  "fn.OA.leaf": 2,
+  "fn.OA.lvl": {
+   "Niveau 0": 1,
+   "Niveau 1": 2
+  },
+  "fn.OA.n": 3,
+  "fn.OA.nq": {
+   "pct": 50,
+   "num": 1,
+   "den": 2
+  },
+  "fn.OA.trace": {
+   "pct": 100,
+   "num": 2,
+   "den": 2
+  },
+  "fn.OA.who": {
+   "👤 Conducteur": 1
+  },
+  "fn.PA.ak": {
+   "Système": 2,
+   "Non allouées": 1
+  },
+  "fn.PA.alloc": {
+   "pct": 67,
+   "num": 2,
+   "den": 3
+  },
+  "fn.PA.cap": {
+   "pct": 0,
+   "num": 0,
+   "den": 3
+  },
+  "fn.PA.chain": {
+   "pct": 0,
+   "num": 0,
+   "den": 3
+  },
+  "fn.PA.depth": 1,
+  "fn.PA.desc": {
+   "pct": 0,
+   "num": 0,
+   "den": 3
+  },
+  "fn.PA.fe": {
+   "pct": 0,
+   "num": 0,
+   "den": 3
+  },
+  "fn.PA.leaf": 3,
+  "fn.PA.lvl": {
+   "Niveau 0": 1,
+   "Niveau 1": 3
+  },
+  "fn.PA.n": 4,
+  "fn.PA.nq": {
+   "pct": 100,
+   "num": 3,
+   "den": 3
+  },
+  "fn.PA.sub": {
+   "ECU moteur": 1,
+   "BMS": 1
+  },
+  "fn.PA.trace": {
+   "pct": 67,
+   "num": 2,
+   "den": 3
+  },
+  "fn.PA.who": {
+   "ECU moteur": 1,
+   "BMS": 1
+  },
+  "fn.SA.ak": {
+   "Système": 8
+  },
+  "fn.SA.alloc": {
+   "pct": 100,
+   "num": 8,
+   "den": 8
+  },
+  "fn.SA.cap": {
+   "pct": 0,
+   "num": 0,
+   "den": 8
+  },
+  "fn.SA.chain": {
+   "pct": 0,
+   "num": 0,
+   "den": 8
+  },
+  "fn.SA.depth": 3,
+  "fn.SA.desc": {
+   "pct": 30,
+   "num": 3,
+   "den": 10
+  },
+  "fn.SA.fe": {
+   "pct": 50,
+   "num": 4,
+   "den": 8
+  },
+  "fn.SA.leaf": 8,
+  "fn.SA.lvl": {
+   "Niveau 0": 1,
+   "Niveau 1": 3,
+   "Niveau 2": 6,
+   "Niveau 3": 1
+  },
+  "fn.SA.n": 11,
+  "fn.SA.nq": {
+   "pct": 100,
+   "num": 10,
+   "den": 10
+  },
+  "fn.SA.trace": {
+   "pct": 63,
+   "num": 5,
+   "den": 8
+  },
+  "fn.SA.who": {
+   "Véhicule": 9
+  },
+  "fn.ak": {
+   "cats": [
+    "OA",
+    "SA",
+    "LA",
+    "PA"
+   ],
+   "series": {
+    "Système": [
+     0,
+     8,
+     7,
+     2
+    ],
+    "Acteurs": [
+     1,
+     0,
+     0,
+     0
+    ],
+    "Non allouées": [
+     1,
+     0,
+     0,
+     1
+    ]
+   }
+  },
+  "fn.nq": {
+   "Pas de verbe en tête": 1,
+   "Verbe vague": 1
+  },
+  "fn.top": {
+   "cols": [
+    "Couche",
+    "N°",
+    "Fonction",
+    "Échanges"
+   ],
+   "lignes": 9,
+   "rows": [
+    [
+     "SA",
+     "1.1.6",
+     "Transmettre le couple aux roues",
+     2
+    ],
+    [
+     "SA",
+     "1.1.1",
+     "Fournir l'énergie thermique",
+     1
+    ],
+    [
+     "SA",
+     "1.1.2",
+     "Fournir l'énergie électrique",
+     1
+    ],
+    [
+     "SA",
+     "1.2",
+     "Guider le conducteur",
+     1
+    ],
+    [
+     "SA",
+     "1.3",
+     "Afficher la vitesse",
+     1
+    ],
+    [
+     "LA",
+     "1.1",
+     "Injecter le carburant",
+     1
+    ],
+    [
+     "LA",
+     "1.4",
+     "Calculer l'itinéraire",
+     1
+    ],
+    [
+     "LA",
+     "1.6",
+     "Afficher les informations",
+     1
+    ],
+    [
+     "LA",
+     "1.7",
+     "Transmettre le couple",
+     1
+    ]
+   ]
+  },
+  "lib.by": null,
+  "lib.n": 0,
+  "lib.refs": 0,
+  "mdl.layer": {
+   "OA": 8,
+   "SA": 26,
+   "LA": 26,
+   "PA": 18,
+   "Transverse": 89
+  },
+  "mdl.n": 167,
+  "mdl.rels": {
+   "Sous-fonction système": 10,
+   "Fonction → fonction réalisée (couche supérieure)": 10,
+   "Système / acteur → fonction (réalise)": 9,
+   "Sous-fonction logique": 7,
+   "Composant logique → fonction (réalise)": 7,
+   "Sous-composant logique": 5,
+   "Échange fonctionnel (fonction → fonction)": 5,
+   "Composant → composant réalisé (couche supérieure)": 5,
+   "Sous-composant physique (nature mixte)": 4,
+   "Sous-fonction physique": 3,
+   "Composant physique → fonction (réalise)": 2,
+   "Sous-activité opérationnelle": 2,
+   "Entité → activité (réalise)": 1,
+   "Échange de composants (composant → composant)": 1,
+   "Échange de composants → échange fonctionnel alloué": 1
+  },
+  "mdl.types": {
+   "AssociatedFilteringCriterionSet": 25,
+   "Component Functional Allocation": 19,
+   "Part": 14,
+   "System Function": 11,
+   "Function Realization": 10,
+   "Logical Function": 8,
+   "FilteringCriterion": 6,
+   "Logical Component": 6,
+   "Function Output Port": 5,
+   "Functional Exchange": 5,
+   "Component Realization": 5,
+   "Physical Component": 5,
+   "Enumeration Property Literal": 4,
+   "FilteringResult": 4,
+   "Function Input Port": 4,
+   "Physical Function": 4,
+   "Operational Activity": 3,
+   "System Component": 3,
+   "StringPropertyValue": 2,
+   "Component Port": 2,
+   "Enumeration Property Type": 1,
+   "System Engineering": 1,
+   "FilteringModel": 1,
+   "FilteringCriterionPkg": 1,
+   "FilteringResults": 1,
+   "ComposedFilteringResult": 1,
+   "UnionFilteringResultSet": 1,
+   "Operational Analysis": 1,
+   "Operational Activity Package": 1,
+   "Entity Package": 1,
+   "Entity": 1,
+   "System Analysis": 1,
+   "System Function Package": 1,
+   "System Component Package": 1,
+   "Logical Architecture": 1,
+   "Logical Function Package": 1,
+   "Logical Component Package": 1,
+   "Component Exchange": 1,
+   "Component Exchange Functional Exchange Allocation": 1,
+   "Physical Architecture": 1,
+   "Physical Function Package": 1,
+   "Physical Component Package": 1
+  },
+  "pl.ce": null,
+  "pl.comp": null,
+  "pl.layer": null,
+  "pl.n": 0,
+  "pl.nocp": 0,
+  "pl.orph": 0,
+  "pt.cp": null,
+  "pt.fp": {
+   "pct": 0,
+   "num": 0,
+   "den": 9
+  },
+  "pt.pp": null,
+  "pv.chk": null,
+  "pv.grp": {
+   "(propriété simple)": 2
+  },
+  "pv.n": 2,
+  "pv.set": {
+   "pct": 100,
+   "num": 2,
+   "den": 2
+  },
+  "rec.by": null,
+  "rec.els": 0,
+  "rec.n": 0,
+  "rec.ok": null,
+  "rec.rpl": 0,
+  "rq.chk": null,
+  "rq.cov": null,
+  "rq.diag": null,
+  "rq.kind": null,
+  "rq.layer": null,
+  "rq.n": 0,
+  "rq.rel": null,
+  "rq.spec": null,
+  "sante.err": 1,
+  "sante.layer": {
+   "OA": 82,
+   "SA": 66,
+   "LA": 77,
+   "PA": 94
+  },
+  "sante.pts": 26,
+  "sante.score": {
+   "pct": 73,
+   "num": 73,
+   "den": 100
+  },
+  "sante.vue": {
+   "ƒ Fonctions": 20,
+   "ƒ⇆ Functional Exchange": 1,
+   "🧩 Ports": 1,
+   "🎚 Variantes (150 %)": 4
+  },
+  "sc.chk": null,
+  "sc.kind": null,
+  "sc.layer": null,
+  "sc.n": 0,
+  "sm.chk": null,
+  "sm.n": 0,
+  "sm.owner": null,
+  "st.by": {
+   "DRAFT": 1,
+   "TO_BE_REVIEWED": 1,
+   "REWORK_NECESSARY": 1,
+   "REVIEWED_OK": 3
+  },
+  "st.cls": {
+   "Brouillon": 1,
+   "Validé": 4,
+   "À retravailler": 1
+  },
+  "st.ko": 1,
+  "st.layer": {
+   "cats": [
+    "SA",
+    "LA"
+   ],
+   "series": {
+    "Brouillon": [
+     1,
+     0
+    ],
+    "Validé": [
+     3,
+     1
+    ],
+    "À retravailler": [
+     0,
+     1
+    ]
+   }
+  },
+  "st.n": 6,
+  "st.pct": {
+   "pct": 7,
+   "num": 6,
+   "den": 89
+  },
+  "st.rev": 0,
+  "sy.diag": null,
+  "sy.fam": null,
+  "sy.n": 0,
+  "sy.rel": null,
+  "sy.type": null,
+  "sy.vues": null,
+  "tr.dn.comp": {
+   "SA→LA": 33,
+   "LA→PA": 67
+  },
+  "tr.dn.fn": {
+   "OA→SA": 100,
+   "SA→LA": 50,
+   "LA→PA": 29
+  },
+  "tr.n": 15,
+  "tr.tab": {
+   "cols": [
+    "Catégorie",
+    "OA→SA",
+    "SA→LA",
+    "LA→PA"
+   ],
+   "lignes": 2,
+   "rows": [
+    [
+     "Fonctions / activités",
+     "▼ 100 % · ▲ 13 %",
+     "▼ 50 % · ▲ 86 %",
+     "▼ 29 % · ▲ 67 %"
+    ],
+    [
+     "Composants / acteurs",
+     "—",
+     "▼ 33 % · ▲ 17 %",
+     "▼ 67 % · ▲ 80 %"
+    ]
+   ]
+  },
+  "tr.up.comp": {
+   "SA→LA": 17,
+   "LA→PA": 80
+  },
+  "tr.up.fn": {
+   "OA→SA": 13,
+   "SA→LA": 86,
+   "LA→PA": 67
+  },
+  "uml.act.chk": null,
+  "uml.act.n": 0,
+  "uml.act.porte": null,
+  "uml.blk.chk": null,
+  "uml.blk.flux": null,
+  "uml.blk.n": 0,
+  "uml.blk.ports": null,
+  "uml.bud.chk": null,
+  "uml.bud.n": 0,
+  "uml.diag": null,
+  "uml.ext": null,
+  "uml.fam": null,
+  "uml.icd.chk": null,
+  "uml.icd.n": 0,
+  "uml.n": 0,
+  "uml.par.chk": null,
+  "uml.par.n": 0,
+  "uml.rel": null,
+  "uml.req.chk": null,
+  "uml.req.n": 0,
+  "uml.req.sat": null,
+  "uml.req.ver": null,
+  "uml.seq.chk": null,
+  "uml.seq.n": 0,
+  "uml.soft.chk": null,
+  "uml.soft.n": 0,
+  "uml.stm.chk": null,
+  "uml.stm.n": 0,
+  "uml.tr.chk": null,
+  "uml.tr.niv": null,
+  "uml.type": null,
+  "uml.uc.chk": null,
+  "uml.uc.n": 0,
+  "uml.vues": null,
+  "var.alloc": {
+   "Citadine essence": 100,
+   "Routière diesel GPS": 92,
+   "Citadine électrique": 79,
+   "Gamme à définir": 71,
+   "Thermiques": 93
+  },
+  "var.els": {
+   "Citadine essence": 31,
+   "Routière diesel GPS": 40,
+   "Citadine électrique": 40,
+   "Gamme à définir": 23,
+   "Thermiques": 41
+  },
+  "var.fe": {
+   "Citadine essence": 0,
+   "Routière diesel GPS": 25,
+   "Citadine électrique": 33,
+   "Gamme à définir": 0,
+   "Thermiques": 25
+  },
+  "var.marq": 25,
+  "var.n": 5,
+  "var.real": {
+   "Citadine essence": 38,
+   "Routière diesel GPS": 38,
+   "Citadine électrique": 38,
+   "Gamme à définir": 20,
+   "Thermiques": 35
+  }
+ }
+}

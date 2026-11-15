@@ -245,16 +245,20 @@ const CAP_RAP_TYPES=[
 /** Filtres d'une boucle ou d'un tableau automatique. */
 const CAP_RAP_FILTRES=[
   {k:'', l:_L('tous')}, {k:'sys', l:_L('alloués au système')}, {k:'act', l:_L('alloués à un acteur')}, {k:'leaf', l:_L('feuilles seulement')},
-  {k:'ctx', l:_L('liés à l\'élément de la boucle englobante')}];
+  {k:'ctx', l:_L('liés à l\'élément de la boucle englobante')},
+  {k:'dg', l:_L('montrés sur le diagramme de la boucle englobante (ou sur les diagrammes de son élément)')},
+  {k:'surdiag', l:_L('montrés sur au moins un diagramme')}, {k:'horsdiag', l:_L('montrés sur aucun diagramme')}];
+/** Filtres d'une boucle sur des diagrammes (selon l'élément de la boucle englobante). */
+const CAP_RAP_DFILTRES=[{k:'', l:_L('tous ces diagrammes')}, {k:'ctx', l:_L('qui montrent l\'élément de la boucle englobante')}, {k:'cible', l:_L('dont il est l\'élément représenté')}];
 /** Contenus automatiques proposés. */
 const CAP_RAP_AUTO=[
-  {k:'desc', l:_L('Description de l\'élément de la boucle')}, {k:'diags', l:_L('Diagrammes dont il est l\'élément représenté')},
+  {k:'desc', l:_L('Description de l\'élément de la boucle')}, {k:'diags', l:_L('Diagrammes de l\'élément de la boucle')},
   {k:'props', l:_L('Propriétés et valeurs de l\'élément')}, {k:'rel', l:_L('Liens de l\'élément (relation au choix)')},
   {k:'ports', l:_L('Ports, pins et paramètres (entrées / sorties)')}, {k:'cnx', l:_L('Connexions de l\'élément')}, {k:'chemin', l:_L('✨ Information par chemin')},
   {k:'liste', l:_L('Tableau d\'éléments (type, portée, colonnes)')},
   {k:'diagtype', l:_L('Diagrammes par couche et par type')}, {k:'fein', l:_L('Échanges fonctionnels entrants'), cap:true}, {k:'feout', l:_L('Échanges fonctionnels sortants'), cap:true},
   {k:'alloc', l:_L('Fonctions allouées (et déployées)'), cap:true}, {k:'pl', l:_L('Liens physiques'), cap:true}, {k:'chaines', l:_L('Chaînes qui impliquent la fonction'), cap:true},
-  {k:'xlay', l:_L('⇶ Liens entre couches'), cap:true}];
+  {k:'xlay', l:_L('⇶ Liens entre couches'), cap:true}, {k:'presence', l:_L('Présence des éléments sur les diagrammes (tableau croisé)')}];
 
 /**
  * Options d'une liste déroulante.
@@ -279,7 +283,9 @@ function capRapBoucleHtml(c){
     `<span class="ana-dim">${_L('→ un chapitre par élément ; titre : {nom}, {type}, {couche}, {sujet}')}</span></div>`;
   return `<div class="dos-boucle"><b>${_L('🔁 Pour chaque')}</b><select data-bb="type">${capRapOpts(types, r.type)}</select>`+
     `<select data-bb="couche">${capRapOpts(capRapCouches(), r.couche)}</select>`+
-    (r.type==='diag'?`<input data-bb="sigles" value="${capEsc(r.sigles||'')}" placeholder="${_L('types : LAB, SDFB… (vide : tous)')}" style="width:150px">`:`<select data-bb="filtre">${capRapOpts(CAP_RAP_FILTRES, r.filtre)}</select>`)+
+    (r.type==='diag'?`<input data-bb="sigles" value="${capEsc(r.sigles||'')}" placeholder="${_L('types : LAB, SDFB… (vide : tous)')}" style="width:150px">`+
+      `<select data-bb="dfiltre" title="${_L('Dans une boucle sur des éléments : garder les diagrammes où figure l\'élément de la boucle englobante')}">${capRapOpts(CAP_RAP_DFILTRES, r.dfiltre)}</select>`+capDosEoBouton(r,'bb')   // 🔲 éléments représentés (102)
+      :`<select data-bb="filtre">${capRapOpts(CAP_RAP_FILTRES, r.filtre)}</select>`)+
     `<input data-bb="nom" value="${capEsc(r.nom||'')}" placeholder="${_L('nom contient…')}" style="width:120px">`+
     `<label>${_L('au plus')} <input data-bb="max" type="number" min="1" max="200" value="${+r.max||30}" style="width:55px"></label>`+
     `<span class="ana-dim">${_L('→ un chapitre par élément ; titre : {nom}, {type}, {couche}')}</span></div>`;
@@ -293,7 +299,9 @@ function capRapAutoHtml(b){
   const sy=capRapFormat()!=='capella', vt=`<label class="dos-opt" title="${_L('Aussi ce que porte son type (bloc d\'une part, part def…)')}"><input type="checkbox" data-ba="vt"${b.vt!==false?' checked':''}> ${_L('et son type')}</label>`;
   const vide=`<label class="dos-opt" title="${_L('Garder le tableau même s\'il est vide')}"><input type="checkbox" data-ba="vide"${b.vide?' checked':''}> ${_L('même vide')}</label>`;
   let h=`<span class="dos-ico">⚙</span><select data-ba="quoi">${capRapOpts(CAP_RAP_AUTO.filter(x=>!sy||!x.cap||x.k===b.quoi), b.quoi)}</select>`;
-  if(b.quoi==='diags') h+=`<input data-ba="sigles" value="${capEsc(b.sigles||'')}" placeholder="${_L('genres : ibd, AD… (vide : tous)')}" style="width:150px">`+vt;
+  if(b.quoi==='diags') h+=`<select data-ba="ou" title="${_L('Diagrammes retenus pour l\'élément de la boucle')}">${capRapOpts([{k:'', l:_L('dont il est l\'élément représenté')}, {k:'present', l:_L('où il est dessiné')}, {k:'tous', l:_L('les deux')}], b.ou)}</select>`+
+    `<input data-ba="sigles" value="${capEsc(b.sigles||'')}" placeholder="${_L('genres : ibd, AD… (vide : tous)')}" style="width:150px">`+
+    `<label title="${_L('Nombre de diagrammes au plus')}">${_L('au plus')} <input data-ba="max" type="number" min="1" max="50" value="${+b.max||6}" style="width:48px"></label>`+vt+capDosEoBouton(b,'ba');
   if(b.quoi==='props') h+=vt+vide;
   if(b.quoi==='rel') h+=`<select data-ba="rel">${capRapRelsOpts(b.rel, true)}</select><select data-ba="sens">${capRapOpts(CAP_RAP_SENS, b.sens||'deux')}</select>`+vt+vide;
   if(b.quoi==='ports') h+=`<select data-ba="sens">${capRapOpts([{k:'', l:_L('entrées et sorties')}, {k:'in', l:_L('entrées')}, {k:'out', l:_L('sorties')}], b.sens)}</select>`+vt+vide;
@@ -301,11 +309,14 @@ function capRapAutoHtml(b){
   if(b.quoi==='chemin') h+=`<button class="cap-lf-btn" data-da="rap-ch" data-ci="" title="${_L('Définir le chemin suivi depuis l\'élément englobant')}">✨ ${capEsc(capRapCheminLib(b.steps))}</button>`+vide;
   if(b.quoi==='liste'&&b.type==='gen') return h+`<select data-ba="type">${capRapOpts(CAP_RAP_TYPES.filter(t=>t.k!=='diag'&&(!sy||t.k==='gen'||t.k===b.type)), b.type)}</select>`+capRapGenHtml(b,'ba')+vide+
     `<input data-ba="titre" value="${capEsc(b.titre||'')}" placeholder="${_L('titre (facultatif, {nom}…)')}" style="width:150px">`+capRapColsHtml(b);
-  if(b.quoi==='diagtype') h+=`<select data-ba="couche">${capRapOpts(capRapCouches(), b.couche)}</select><input data-ba="sigles" value="${capEsc(b.sigles||'')}" placeholder="${_L('types : SAB, ES… (vide : tous)')}" style="width:150px">`;
+  if(b.quoi==='diagtype') h+=`<select data-ba="couche">${capRapOpts(capRapCouches(), b.couche)}</select><input data-ba="sigles" value="${capEsc(b.sigles||'')}" placeholder="${_L('types : SAB, ES… (vide : tous)')}" style="width:150px">`+capDosEoBouton(b,'ba');
+  if(b.quoi==='presence') h+=(sy?'':`<select data-ba="couche">${capRapOpts(capRapCouches(), b.couche)}</select>`)+`<input data-ba="sigles" value="${capEsc(b.sigles||'')}" placeholder="${_L('types : LAB, SDFB… (vide : tous)')}" style="width:150px">`+
+    `<select data-ba="dg" title="${_L('Diagrammes croisés')}">${capRapOpts([{k:'', l:_L('ces diagrammes')}, {k:'ctx', l:_L('ceux de l\'élément (ou du diagramme) de la boucle englobante')}], b.dg)}</select>`+
+    `<button class="cap-lf-btn dos-eo-b" data-da="eo" data-eo="ba" title="${_L('Types d\'éléments retenus dans le tableau')}">⚙ ${capEsc(capDosEoResume(capDosEo(b)).split(' · ')[0])}</button>`+vide;
   if(b.quoi==='liste') h+=`<select data-ba="type">${capRapOpts(CAP_RAP_TYPES.filter(t=>t.k!=='diag'&&(!sy||t.k==='gen'||t.k===b.type)), b.type)}</select><select data-ba="couche">${capRapOpts(capRapCouches(), b.couche)}</select>`+
     `<select data-ba="filtre">${capRapOpts(CAP_RAP_FILTRES, b.filtre)}</select><input data-ba="nom" value="${capEsc(b.nom||'')}" placeholder="${_L('nom contient…')}" style="width:110px">`;
   if(b.quoi==='fein'||b.quoi==='feout') h+=`<label class="dos-opt"><input type="checkbox" data-ba="ext"${b.ext?' checked':''}> ${_L('avec l\'extérieur seulement')}</label>`;
-  if(['diagtype','liste','fein','feout','alloc','pl','chaines','props','rel','ports','cnx','chemin'].includes(b.quoi)) h+=`<input data-ba="titre" value="${capEsc(b.titre||'')}" placeholder="${_L('titre (facultatif, {nom}…)')}" style="width:150px">`;
+  if(['diagtype','liste','fein','feout','alloc','pl','chaines','props','rel','ports','cnx','chemin','presence'].includes(b.quoi)) h+=`<input data-ba="titre" value="${capEsc(b.titre||'')}" placeholder="${_L('titre (facultatif, {nom}…)')}" style="width:150px">`;
   return h;
 }
 /** Libellé d'un bloc « contenu automatique ». @param {object} b @returns {string} */
@@ -343,7 +354,7 @@ function capRapSelect(r, ctx, o){
   const L=r.couche||'', F=o.F, dansL=e=>!L||o.couche(e)===L, t=r.type||'fn';
   if(t==='gen') return capRapGenSel(r, ctx);   // sélecteur générique (100)
   if(t==='diag'){ const sg=String(r.sigles||'').split(/[\s,;]+/).filter(Boolean).map(x=>x.toUpperCase());
-    return o.reps.filter(x=>(!L||x.couche===L)&&(!sg.length||sg.includes(String(x.sigle).toUpperCase()))&&(!r.nom||String(x.nom).toLowerCase().includes(r.nom.toLowerCase()))); }
+    return o.reps.filter(x=>(!L||x.couche===L)&&(!sg.length||sg.includes(String(x.sigle).toUpperCase()))&&(!r.nom||String(x.nom).toLowerCase().includes(r.nom.toLowerCase()))&&capDosEoDiagGarde(x, r.dfiltre, ctx)); }
   const de=tn=>capAllElements.filter(e=>tn.includes(e.typeName)&&dansL(e));
   let l;
   if(t==='fn') l=F.list.filter(f=>!L||f.layer===L).filter(f=>r.filtre==='sys'?f.alloc.some(a=>!a.actor):r.filtre==='act'?f.alloc.length&&f.alloc.every(a=>a.actor):r.filtre==='leaf'?f.leaf:true).map(f=>capGetElementById_(f.id));
@@ -354,6 +365,7 @@ function capRapSelect(r, ctx, o){
   if((r.filtre==='sys'||r.filtre==='act')&&t!=='fn') l=l.filter(e=>t==='actor'?r.filtre==='act':r.filtre==='sys');
   if(r.nom) l=l.filter(e=>String(e.attrs.name||'').toLowerCase().includes(r.nom.toLowerCase()));
   if(r.filtre==='ctx'&&ctx&&ctx.id) l=l.filter(e=>capRapLie(e, t, ctx, o));
+  if(['dg','surdiag','horsdiag'].includes(r.filtre)) l=capDosEoFiltre(l, r.filtre, ctx);   // présence sur les diagrammes (102)
   return l;
 }
 /**
@@ -388,13 +400,16 @@ function capRapLie(e, t, ctx, o){
  */
 function capRapEval(blocs, ctx, o){
   const out=[], id=()=>capHomeUid(), {C, E, Lst, R, X}=o;
-  const diagB=r=>({id:id(), k:'diag', ref:capHomeRefDiag(r), desc:true, elems:false});
+  // Diagramme produit : éléments représentés selon les réglages de la boucle ou du contenu (102), centrés au besoin sur l'élément de la boucle
+  const diagB=(r, src)=>{ const x={id:id(), k:'diag', ref:capHomeRefDiag(r), desc:true, elems:!!(src&&src.elems)};
+    if(src&&src.eo){ x.eo=JSON.parse(JSON.stringify(src.eo)); delete x.eo.foc; if(src.eo.foc&&ctx&&ctx.el) x.eo.focus=ctx.el.id; }
+    return x; };
   (blocs||[]).forEach(b=>{
     if(b.k==='chap'&&b.boucle){
       const r=b.boucle, max=Math.max(1,Math.min(200,+r.max||30)), sel=capRapSelect(r, ctx, o), sujet=ctx?ctx.sujet||'':'';
       sel.slice(0,max).forEach(x=>{
-        if(r.type==='diag'){ const c2={id:x.uid, el:null, nom:x.nom, type:x.type||_L('Diagramme'), couche:x.couche||'', sujet};
-          out.push(C(capRapFill(b.titre||'{nom}', c2), [diagB(x), ...capRapEval(b.blocs, c2, o)])); return; }
+        if(r.type==='diag'){ const c2={id:x.uid, el:null, diag:true, nom:x.nom, type:x.type||_L('Diagramme'), couche:x.couche||'', sujet};
+          out.push(C(capRapFill(b.titre||'{nom}', c2), [diagB(x, r), ...capRapEval(b.blocs, c2, o)])); return; }
         const c2={id:x.id, el:x, nom:x.attrs.name||'', type:(CAP_HUMAN_NAMES[x.typeName]||{}).h||x.typeName, couche:o.couche(x), sujet};
         const ch=C(capRapFill(b.titre||'{nom}', c2), capRapEval(b.blocs, c2, o), b.desc!==false?x:null); out.push(ch); });
       if(!sel.length&&r.vide!=='rien') out.push(R(_L(`aucun élément pour « ${capRapFill(b.titre||'{nom}', null)} »`)));
@@ -407,11 +422,13 @@ function capRapEval(blocs, ctx, o){
     const c=ctx&&ctx.el, f=c&&o.F.byId[c.id], tit=d=>capRapFill(b.titre||d, ctx);
     switch(b.quoi){
       case 'desc': if(c) out.push(E(c)); break;
-      case 'diags': if(ctx){ const sg=String(b.sigles||'').split(/[\s,;]+/).filter(Boolean).map(x=>x.toUpperCase()), vus=new Set();
-        (c&&b.vt!==false&&capRapFormat()!=='capella'?capRapAvecType(c.id, true):[ctx.id]).flatMap(capDosDiagsDe).filter(r=>!vus.has(r.uid)&&vus.add(r.uid)&&(!sg.length||sg.includes(String(r.sigle).toUpperCase())))
-          .slice(0,6).forEach(r=>out.push(diagB(r))); } break;
+      case 'diags': if(ctx&&!ctx.diag){ const sg=String(b.sigles||'').split(/[\s,;]+/).filter(Boolean).map(x=>x.toUpperCase()), vus=new Set();
+        const de=x=>[...(b.ou!=='present'?capDosDiagsDe(x):[]), ...(b.ou==='present'||b.ou==='tous'?capDiagDe(x).presences.slice().sort((p,q)=>String(p.nom).localeCompare(q.nom)):[])];   // ciblés, puis où il est dessiné
+        (c&&b.vt!==false&&capRapFormat()!=='capella'?capRapAvecType(c.id, true):[ctx.id]).flatMap(de).filter(r=>!vus.has(r.uid)&&vus.add(r.uid)&&(!sg.length||sg.includes(String(r.sigle).toUpperCase())))
+          .slice(0,Math.max(1,Math.min(50,+b.max||6))).forEach(r=>out.push(diagB(r, b))); } break;
       case 'diagtype': { const sg=String(b.sigles||'').split(/[\s,;]+/).filter(Boolean).map(x=>x.toUpperCase());
-        o.reps.filter(r=>(!b.couche||r.couche===b.couche)&&(!sg.length||sg.includes(String(r.sigle).toUpperCase()))).slice(0,20).forEach(r=>out.push(diagB(r))); break; }
+        o.reps.filter(r=>(!b.couche||r.couche===b.couche)&&(!sg.length||sg.includes(String(r.sigle).toUpperCase()))).slice(0,20).forEach(r=>out.push(diagB(r, b))); break; }
+      case 'presence': out.push(...capDosEoPresence(b, ctx)); break;   // tableau croisé élément × diagramme (102)
       case 'fein': case 'feout': if(f){ const sens=b.quoi==='fein'?'in':'out';
         const l=b.ext?capDosEchExt(o.F, f, sens):(sens==='in'?f.fesIn:f.fesOut).map(x=>capGetElementById_(x.id)).filter(Boolean);
         out.push(Lst(tit(sens==='in'?_L('Échanges entrants de « {nom} »'):_L('Échanges sortants de « {nom} »')), l, 'ech')); } break;

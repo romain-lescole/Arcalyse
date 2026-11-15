@@ -43,21 +43,22 @@ function capUmlOctets(f){
 
 /** Ouvre un modèle UML / SysML v1 seul (.uml, .xmi, .mdzip, .qea) à la place du modèle affiché (appelée par `capLoadFile`, 20).
  * @param {File} f - Fichier choisi ou déposé
- * @param {FileSystemFileHandle} [handle] - Accès direct (non utilisé : pas de 🔄 suivi pour UML)
+ * @param {FileSystemFileHandle} [handle] - Accès direct (🔄 suivi du fichier relu sans le resélectionner)
  * @param {boolean} [confirme] - true : remplacement du modèle affiché déjà accepté
  */
-function capUmlOuvrir(f, handle, confirme){ capUmlOuvrirFichiers([f], confirme); }
+function capUmlOuvrir(f, handle, confirme){ capUmlOuvrirFichiers([f], confirme, handle); }
 
 /** Ouvre plusieurs fichiers déposés ou choisis ensemble : le modèle et le .notation de Papyrus qui l'accompagne.
  * @param {File[]} files - Fichiers (.uml, .xmi, .mdzip, .qea, .notation)
  * @param {boolean} [confirme] - true : remplacement déjà accepté
+ * @param {FileSystemFileHandle} [handle] - Accès direct au fichier du modèle (🔄 suivi)
  */
-function capUmlOuvrirFichiers(files, confirme){
+function capUmlOuvrirFichiers(files, confirme, handle){
   const mod=files.find(f=>capUmlReconnait(f.name));
   if(!mod){
     capWelcomeStatus(files.some(f=>CAP_UML_RHP_UNITES.test(f.name))?_L('Un fichier .sbs n\'est qu\'une partie d\'un projet Rhapsody : ouvrez le 📁 dossier du projet (le .rpy et son dossier _rpy).')
       :_L('Un fichier .notation ne contient que les diagrammes de Papyrus : ouvrez-le avec son modèle .uml (sélection multiple ou 📁 dossier du projet).'),'err'); capShowWelcome(true); return; }
-  capUmlOuvrirDossier(files.filter(f=>capUmlReconnait(f.name)||capUmlAnnexe(f.name)).map(f=>({nom:f.name, chemin:f.webkitRelativePath||f.name, lire:()=>Promise.resolve(f)})), '', confirme);
+  capUmlOuvrirDossier(files.filter(f=>capUmlReconnait(f.name)||capUmlAnnexe(f.name)).map(f=>({nom:f.name, chemin:f.webkitRelativePath||f.name, lire:()=>Promise.resolve(f), h:f===mod&&handle?handle:undefined})), '', confirme);
 }
 
 /** Ouvre un modèle UML / SysML v1 depuis les fichiers d'un dossier de projet (ou de plusieurs fichiers déposés ensemble). Modèle principal :
@@ -123,6 +124,7 @@ async function capUmlCharger(m, utiles, ana, nom, confirme){
   nom=nom||m.nom;
   if(capLoaded&&!confirme){ if(!(await capReplaceConfirm(nom))){ capShowWelcome(false); return; } }
   capSourcesNoter('umld', nom, utiles, m.chemin);   // 🌐 changement de langue (20) : fichiers du dossier et modèle principal choisi
+  if(typeof capWatchNoterSource==='function') capWatchNoterSource(m, {k:'umld', autres:utiles.filter(x=>x!==m), choix:m.chemin});   // 🔄 suivi du modèle principal (40)
   capWelcomeStatus(_L(`Chargement de « ${nom} »…`),'busy'); capShowWelcome(true);
   try{
     const lus=[]; for(const f of envoi){ const file=await f.lire(); lus.push({chemin:f.chemin||f.nom, nom:f.nom, octets:await capUmlOctets(file)}); }

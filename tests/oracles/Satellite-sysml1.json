@@ -404,6 +404,7 @@
    "ana:sysml",
    "ana:trace",
    "ana:umlsoft",
+   "ana:variants",
    "ana:xlay",
    "cblk",
    "chains",
@@ -931,6 +932,7 @@
    "Contraintes": 8,
    "Modes & états": 1
   },
+  "chk.var": null,
   "ct.chk": {
    "Contraintes sans expression": 4,
    "Contraintes sans élément contraint explicite": 4
@@ -1304,6 +1306,12 @@
    "Cas d'utilisation sans sujet": 1
   },
   "uml.uc.n": 4,
-  "uml.vues": null
+  "uml.vues": null,
+  "var.alloc": null,
+  "var.els": null,
+  "var.fe": null,
+  "var.marq": null,
+  "var.n": null,
+  "var.real": null
  }
 }

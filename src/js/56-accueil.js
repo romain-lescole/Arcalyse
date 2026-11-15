@@ -37,7 +37,8 @@ function capHomeNorm(d){
   return { v:1, fiche:Object.assign({objet:'', phase:'', version:'', resp:'', equipe:'', notes:''}, d.fiche||{}), docs, boards, dossiers:capDosNorm(d.dossiers),
     cartes:{ordre:Array.isArray(c.ordre)?c.ordre:[], masques:Array.isArray(c.masques)?c.masques:[], larges:c.larges&&typeof c.larges==='object'?c.larges:{}},
     taches:d.taches!==false,   // section « Que voulez-vous faire ? » de l'onglet 🏠 Projet
-    largeurs:d.largeurs&&typeof d.largeurs==='object'?d.largeurs:{}, sante:Array.isArray(d.sante)?d.sante:[], santeExclues:Array.isArray(d.santeExclues)?d.santeExclues:[], santeVuesMasquees:Array.isArray(d.santeVuesMasquees)?d.santeVuesMasquees:[] };   // sante : historique 💚, santeExclues : couches décochées (69)
+    largeurs:d.largeurs&&typeof d.largeurs==='object'?d.largeurs:{}, sante:Array.isArray(d.sante)?d.sante:[], santeExclues:Array.isArray(d.santeExclues)?d.santeExclues:[], santeVuesMasquees:Array.isArray(d.santeVuesMasquees)?d.santeVuesMasquees:[],
+    variantes:d.variantes&&typeof d.variantes==='object'?d.variantes:{} };   // sante : historique 💚, santeExclues : couches décochées (69)
 }
 /** Identifiant unique (point, section, document, note). @returns {string} */
 function capHomeUid(){ return 'h'+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
@@ -58,6 +59,7 @@ function capHomeSaveLater(){ clearTimeout(_capHomeSaveT); _capHomeSaveT=setTimeo
 function capHomeSetData(d){
   _capHomePops.forEach(w=>{ try{ w.close(); }catch(_){} }); _capHomePops.clear();
   _capHome=capHomeNorm(d); Object.assign(_capHomeUi,{doc:''}); capHomeSave();
+  if(typeof capVarReset==='function') capVarReset();   // 🎚 réglages des variantes repris du projet (103)
   if(capLoaded&&capCurrentView==='home') capRenderHome(document.getElementById('cap-view-home'));
 }
 

@@ -13,6 +13,7 @@
 /** État de la vue : visionneuse, .aird en attente ou chargé, modèle transmis, liste classée, sélection, largeur, carte, options d'export. */
 const _capDiag = { vis: null, texteAird: '', nomAird: '', airdCharge: false, modele: null, nbReps: 0,
   attente: false, poignee: null, dateAird: 0,   // .aird fourni pour le modèle à venir ; accès direct au fichier (relecture après 🔄 mise à jour) ; date du fichier lu
+  projet: null, projetVis: null,   // lecture des fichiers du 📁 dossier du projet (images des formes) `capDiagLecteurProjet`, celle transmise à la visionneuse
   classement: 'couche', classementSy: 'genre-origine', bascule: new Set(), sel: new Set(), choix: false, filtre: '', actif: '', icones: null, meta: null,
   largeur: 330, carte: 'panneau', carteReduite: false, carteH: 170,   // hauteur de la ▣ carte sous l'explorateur (séparateur ↕ `capDiagSplitV`)
   pret: false, texte: false, texteZoom: 1, parCible: null, parents: null, syIdx: null,   // vue créée ; ≡ Texte (Capella) ; index cible → diagrammes, parents de l'arbre, présences (lecteurs)
@@ -52,7 +53,7 @@ function capDiagClassement(v) {
 
 /** Oublie ce qui dépend des diagrammes chargés (autre modèle, autre .aird) : index, icônes, sélection, diagramme actif, mode texte. */
 function capDiagOublier() {
-  Object.assign(_capDiag, { parCible: null, parents: null, syIdx: null, icones: null, actif: '', texte: false, filtre: '' });
+  Object.assign(_capDiag, { parCible: null, parents: null, syIdx: null, icones: null, actif: '', texte: false, filtre: '', contenus: null });
   _capDiag.sel.clear();
 }
 
@@ -150,6 +151,7 @@ function capDiagLoadAird(f, h, attente) {
  */
 function capDiagSetAird(texte, nom, poignee, date) {
   if (!texte && _capDiag.airdCharge && _capDiag.vis) { try { _capDiag.vis.fermer(); } catch (e) {} }   // diagrammes retirés : la visionneuse se vide
+  if (typeof capAvNoterAird === 'function') capAvNoterAird(_capDiag.texteAird, texte);   // ⇄ .aird d'avant (104)
   if (texte && _capDiag.texteAird && texte !== _capDiag.texteAird && typeof capDgReferenceAuto === 'function') capDgReferenceAuto(_capDiag.texteAird, _capDiag.nomAird);   // ⚖ l'ancien .aird devient la référence
   Object.assign(_capDiag, { texteAird: texte || '', nomAird: texte ? nom || '' : '', poignee: texte ? poignee : null, dateAird: date || 0, airdCharge: false, meta: null });
 }
@@ -162,6 +164,7 @@ function capDiagSetAird(texte, nom, poignee, date) {
 function capDiagAvantNouveauModele() {
   const nom = _capDiag.texteAird && !_capDiag.attente ? _capDiag.nomAird : '';
   if (nom) capDiagSetAird('', '', null, 0);
+  if (!_capDiag.attente) _capDiag.projet = null;   // images du projet : celles du dossier d'où vient le nouveau modèle seulement
   _capDiag.attente = false;
   capDiagOublier();
   if (typeof capDgReset === 'function') capDgReset();   // ⚖ référence de comparaison des diagrammes : propre à l'ancien modèle
@@ -287,15 +290,42 @@ async function capProjectScanDir(d) {
     }
   };
   try { await scan(d, '', 1); } catch (e) { capWelcomeStatus(_L('Lecture du dossier impossible : ') + (e && e.message || e), 'err'); capShowWelcome(true); return; }
-  capProjectFromFiles(fichiers.map(f => ({ nom: f.nom, chemin: f.chemin, lire: () => f.h.getFile(), h: f.h })));
+  /** Fichier du dossier d'après son chemin relatif (images des diagrammes), ou null. */
+  const lire = async chemin => {
+    const p = chemin.split('/');
+    let dir = d;
+    for (const n of p.slice(0, -1)) dir = await dir.getDirectoryHandle(n);
+    return (await dir.getFileHandle(p[p.length - 1])).getFile();
+  };
+  capProjectFromFiles(fichiers.map(f => ({ nom: f.nom, chemin: f.chemin, lire: () => f.h.getFile(), h: f.h })), lire);
+}
+
+/**
+ * Lecture des fichiers du projet pour la visionneuse (images des formes « Set Style to Workspace Image » de Capella) : le chemin de
+ * l'espace de travail « /Projet/images/x.png » est cherché depuis le dossier du modèle (sans le nom du projet), puis depuis le
+ * dossier ouvert, comme dans Arcature.
+ * @param {function(string):Promise<Blob|null>} lire - Fichier du dossier ouvert d'après son chemin relatif (rejet ou null : absent)
+ * @param {string} base - Dossier du modèle dans le dossier ouvert (« » ou « Projet/ »)
+ * @returns {function(string):Promise<Blob|null>} lecteur transmis à `ArcatureVisionneuse.ressources`
+ */
+function capDiagLecteurProjet(lire, base) {
+  return async chemin => {
+    const c = String(chemin || '').replace(/\\/g, '/').split('/').filter(n => n && n !== '.' && n !== '..').join('/'), sansProjet = c.split('/').slice(1).join('/');
+    for (const rel of [...new Set([base + sansProjet, base + c, c, sansProjet])]) {
+      if (!rel || rel.endsWith('/')) continue;
+      try { const b = await lire(rel); if (b) return b; } catch (e) { /* absent : chemin suivant */ }
+    }
+    return null;
+  };
 }
 
 /**
  * Charge un projet à partir des fichiers d'un dossier : le .capella (choisi dans l'écran d'accueil s'il y en a plusieurs)
  * puis le .aird du même nom (ou du même dossier, ou le seul présent).
  * @param {{nom:string, chemin:string, lire:function():Promise<File>, h:?FileSystemFileHandle}[]} fichiers - Fichiers trouvés
+ * @param {function(string):Promise<Blob|null>} [lireDossier] - Tout fichier du dossier d'après son chemin relatif (images des diagrammes)
  */
-function capProjectFromFiles(fichiers) {
+function capProjectFromFiles(fichiers, lireDossier) {
   const capOk = capFormatsDispo().some(F => F.k === 'capella');   // version réduite à un autre format (CAP_EDITION) : .capella ignorés
   const mods = fichiers.filter(f => capOk && /\.(capella|melodymodeller)$/i.test(f.nom)).sort((a, b) => a.chemin.split('/').length - b.chemin.split('/').length || a.chemin.localeCompare(b.chemin));
   const airds = fichiers.filter(f => /\.aird$/i.test(f.nom));
@@ -318,7 +348,9 @@ function capProjectFromFiles(fichiers) {
       const f = await m.lire(), fa = a ? await a.lire() : null;
       capDiagSetAird(fa ? await fa.text() : '', fa ? fa.name : '', a && a.h || null, fa ? fa.lastModified : 0);
       _capDiag.attente = true;   // diagrammes du modèle qui va être chargé (ne pas les retirer comme ceux d'un ancien modèle)
+      _capDiag.projet = lireDossier ? capDiagLecteurProjet(lireDossier, dossier) : null;   // 🖼 images du projet, transmises par `capDiagSync`
       capLibQueue(mods.filter(x => x !== m));   // 📚 autres .capella du dossier : bibliothèques chargées après le modèle si elles sont référencées (72)
+      capVarPvQueue(fichiers.filter(x => /\.(xfm|vdm|ccfm)$/i.test(x.nom)));   // 🟦 fichiers pure::variants du dossier, lus après le modèle (103)
       capLoadFile(f, m.h || null, true);
     } catch (e) { capWelcomeStatus(_L('Lecture impossible : ') + (e && e.message || e), 'err'); }
   };
@@ -576,7 +608,8 @@ function capDiagBarre() {
   const exp = charge ? `<span class="tb-grp"><button class="tbtn" id="cdg-export" title="${_L('Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML')}">${_L('⬇ Exporter…')}${n ? ` <span class="cdg-nb">${n}</span>` : ''}</button>` +
     `<button class="tbtn${_capDiag.choix ? ' active' : ''}" id="cdg-choix" title="${_L('Choisir les diagrammes à exporter : cases à cocher dans l\'explorateur')}">${_capDiag.choix ? _L('☑ Terminer la sélection') : _L('☐ Sélectionner…')}</button></span>` : '';
   const infos = charge ? `<button class="tbtn" id="cdg-infos" title="${_L('Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés')}">${_L('ℹ Infos')}</button>` +
-    `<button class="tbtn" id="cdg-comparer" title="${_L('Afficher le diagramme ouvert dans la fenêtre de comparaison (fenêtre séparée, par exemple sur un autre écran) ; clic droit sur un diagramme de la liste pour en choisir un autre')}">${_L('⧉ Comparer')}</button>` : '';
+    `<button class="tbtn" id="cdg-comparer" title="${_L('Afficher le diagramme ouvert dans la fenêtre de comparaison (fenêtre séparée, par exemple sur un autre écran) ; clic droit sur un diagramme de la liste pour en choisir un autre')}">${_L('⧉ Comparer')}</button>` +
+    (sy ? '' : `<button class="tbtn" id="cdg-liens" title="${_L('Liens entre les composants affichés dans le diagramme ouvert, avec leurs ports, dans la vue de la couche (PA : 🔌 Physical Links ou 🔀 Component Exchanges entre Behavior ; SA, LA : 🧱 Component Exchanges) ; export CSV de la liste')}">${_L('⇄ Liens')}</button>`) + (typeof capAvBouton === 'function' ? capAvBouton() : '') : '';   // ⇄ avant / après (104)
   const ouvrir = sy ? '' : `<button class="tbtn" id="cdg-ouvrir" title="${_L('Choisir le fichier .aird (le sélecteur s\'ouvre dans le dossier du .capella quand le navigateur le permet)')}">${_L('📂 Ouvrir le .aird…')}</button>`;
   let info;
   if (sy) { const nd = reps.filter(r => r.origine !== 'calculee').length;
@@ -604,9 +637,10 @@ function capDiagSync() {
     if (_capDiag.texteAird) _capDiag.airdCharge = false;   // diagrammes relus avec le nouveau modèle
     else if (_capDiag.airdCharge) { _capDiag.airdCharge = false; try { v.fermer(); } catch (e) {} }   // nouveau modèle sans .aird
   }
+  if (_capDiag.projetVis !== _capDiag.projet && typeof v.ressources === 'function') { v.ressources(_capDiag.projet); _capDiag.projetVis = _capDiag.projet; }   // 🖼 images du projet
   if (_capDiag.texteAird && !_capDiag.airdCharge) {
     _capDiag.nbReps = v.chargerAird(_capDiag.texteAird, _capDiag.nomAird);
-    _capDiag.airdCharge = true; _capDiag.icones = null; _capDiag.meta = null; _capDiag.parCible = null; _capDiag.sel.clear(); _capDiag.actif = '';
+    _capDiag.airdCharge = true; _capDiag.contenus = null; _capDiag.icones = null; _capDiag.meta = null; _capDiag.parCible = null; _capDiag.sel.clear(); _capDiag.actif = '';
   }
   capDiagBarre();
   capDiagListe();
@@ -739,6 +773,143 @@ function capRenderDiagrams() {
 function capDiagReps() {
   if (capDiagSy()) return capSyVuesReps();
   return _capDiag.vis && _capDiag.airdCharge ? _capDiag.vis.representations() : [];
+}
+
+/* ── 🔲 Filtre par diagramme des vues de liens (🔌 Physical Link, 🧱 Composants) ─────────────── */
+
+/**
+ * Diagrammes Capella prêts pour un filtre : visionneuse créée et .aird lu (sans ouvrir la vue 🔲 Diagrammes).
+ * @returns {boolean} vrai si des diagrammes Capella sont disponibles
+ */
+function capDiagPrets() {
+  if (capDiagSy() || !_capDiag.texteAird) return false;
+  try { capDiagEnsure(); capDiagSync(); } catch (e) { console.error(e); }
+  return !!(_capDiag.vis && _capDiag.airdCharge);
+}
+
+/**
+ * Contenu d'un diagramme Capella sans l'ouvrir (API `elements` de la visionneuse ; une Part désigne son composant) : éléments du modèle
+ * dessinés en forme (hors formes repliées) et en lien ; gardé jusqu'au prochain .aird.
+ * @param {string} uid - Représentation
+ * @returns {?{nom:string, sigle:string, couche:string, formes:Set<string>, liens:Set<string>}} contenu, ou null
+ */
+function capDiagContenu(uid) {
+  if (!uid || !capDiagPrets()) return null;
+  const c = _capDiag.contenus || (_capDiag.contenus = new Map());
+  if (c.has(uid)) return c.get(uid);
+  const r = capDiagReps().find(x => x.uid === uid); if (!r) return null;
+  let els = []; try { els = _capDiag.vis.elements(uid) || []; } catch (e) { console.warn(e); }
+  const v = { nom: r.nom, sigle: r.sigle, couche: r.couche, formes: new Set(els.filter(e => e.genre === 'forme' && !e.masque).map(e => e.id)),
+    liens: new Set(els.filter(e => e.genre === 'lien').map(e => e.id)) };
+  c.set(uid, v);
+  return v;
+}
+
+/**
+ * Choix « 🔲 Diagramme » d'une vue de liens : diagrammes Capella des couches données (tableaux exclus), puis portée du filtre
+ * (liens dessinés dans le diagramme, ou tous les liens entre les composants qu'il affiche).
+ * @param {string} pre - Préfixe des identifiants (`<pre>-dg`, `<pre>-dgm`)
+ * @param {string[]} couches - Couches proposées (SA, LA, PA)
+ * @param {{diag:string, diagMode:string}} st - État de la vue (diagramme choisi, portée « dessines » ou « entre »)
+ * @returns {string} HTML ('' sans diagramme Capella)
+ */
+function capDiagFiltreHtml(pre, couches, st) {
+  if (!capDiagPrets()) return '';
+  const reps = capDiagReps().filter(r => r.genre !== 'tableau' && couches.includes(r.couche))
+    .sort((a, b) => String(a.sigle).localeCompare(String(b.sigle)) || String(a.nom).localeCompare(String(b.nom)));
+  if (!reps.length) return '';
+  if (st.diag && !reps.some(r => r.uid === st.diag)) st.diag = '';
+  const esc = capEsc, on = !!st.diag;
+  return `<span class="tb-grp" style="margin-left:8px" title="${_L('Ne garder que ce qui est affiché dans un diagramme du .aird')}"><span class="tb-grp-l">${_L('🔲 Diagramme')}</span>` +
+    `<select id="${pre}-dg" class="phl-filter-input" style="max-width:260px${on ? ';border-color:var(--c-accent)' : ''}"><option value="">${_L('Tous les diagrammes')}</option>` +
+    reps.map(r => `<option value="${esc(r.uid)}"${r.uid === st.diag ? ' selected' : ''}>${/^\s*\[/.test(r.nom) ? '' : '[' + esc(r.sigle) + '] '}${esc(r.nom)}</option>`).join('') + `</select>` +
+    (on ? `<select id="${pre}-dgm" class="phl-filter-input" title="${_L('Liens dessinés : ceux qui figurent dans le diagramme. Entre composants affichés : tous les liens du modèle dont les deux extrémités sont dessinées, même s\'ils ne le sont pas eux-mêmes.')}">` +
+      `<option value="entre"${st.diagMode !== 'dessines' ? ' selected' : ''}>${_L('entre composants affichés')}</option>` +
+      `<option value="dessines"${st.diagMode === 'dessines' ? ' selected' : ''}>${_L('liens dessinés')}</option></select>` +
+      `<button class="cap-lf-btn" id="${pre}-dgx" title="${_L('Retirer ce filtre')}">✕</button>` : '') + `</span>`;
+}
+
+/**
+ * Branche le choix « 🔲 Diagramme » rendu par `capDiagFiltreHtml`.
+ * @param {HTMLElement} box - Conteneur de la vue
+ * @param {string} pre - Préfixe des identifiants
+ * @param {{diag:string, diagMode:string}} st - État de la vue
+ * @param {function():void} apres - Rendu après un changement
+ */
+function capDiagFiltreWire(box, pre, st, apres) {
+  box.querySelector('#' + pre + '-dg')?.addEventListener('change', e => { st.diag = e.target.value; apres(); });
+  box.querySelector('#' + pre + '-dgm')?.addEventListener('change', e => { st.diagMode = e.target.value; apres(); });
+  box.querySelector('#' + pre + '-dgx')?.addEventListener('click', () => { st.diag = ''; apres(); });
+}
+
+/**
+ * Filtre « 🔲 Diagramme » d'un lien entre deux composants.
+ * @param {{diag:string, diagMode:string}} st - État de la vue
+ * @param {string} id - Lien (Physical Link, Component Exchange)
+ * @param {string} a - Composant d'une extrémité
+ * @param {string} b - Composant de l'autre extrémité
+ * @returns {boolean} vrai si le lien est gardé
+ */
+function capDiagFiltreLien(st, id, a, b) {
+  if (!st || !st.diag) return true;
+  const c = capDiagContenu(st.diag); if (!c) return true;
+  return st.diagMode === 'dessines' ? c.liens.has(id) : c.formes.has(a) && c.formes.has(b);
+}
+
+/**
+ * Filtre « 🔲 Diagramme » d'un composant (vues par composant) : dessiné dans le diagramme choisi.
+ * @param {{diag:string}} st - État de la vue
+ * @param {string} id - Composant
+ * @returns {boolean} vrai si le composant est gardé
+ */
+function capDiagFiltreForme(st, id) {
+  if (!st || !st.diag) return true;
+  const c = capDiagContenu(st.diag); return !c || c.formes.has(id);
+}
+
+/** Demande en attente d'une vue de liens filtrée sur un diagramme : {vue, uid} (lue par la vue à son prochain rendu). */
+var _capDiagLiensGo = null;
+
+/**
+ * ⇄ Liens : pour un diagramme PA, petit menu sous le bouton (🔌 Physical Links entre les nœuds, ou 🔀 Component Exchanges entre les
+ * Behavior) ; pour SA / LA, ouverture directe (`capDiagLiensOuvrir`).
+ * @param {HTMLElement} bt - Bouton ⇄ Liens
+ * @param {string} uid - Représentation ouverte
+ */
+function capDiagLiensMenu(bt, uid) {
+  const r = uid && capDiagReps().find(x => x.uid === uid);
+  document.getElementById('cdg-liens-menu')?.remove();
+  if (!r || r.couche !== 'PA') { capDiagLiensOuvrir(uid); return; }
+  const m = document.createElement('div'); m.id = 'cdg-liens-menu'; m.className = 'cdg-liens-menu'; m.setAttribute('role', 'menu');
+  m.innerHTML = `<button class="cap-lf-btn" data-lv="physlink" role="menuitem" title="${_L('Physical Links entre les nœuds affichés (ports physiques, Component Exchanges alloués)')}">${_L('🔌 Physical Links')}</button>` +
+    `<button class="cap-lf-btn" data-lv="compex" role="menuitem" title="${_L('Component Exchanges entre les composants Behavior affichés (ports, Functional Exchanges alloués)')}">${_L('🔀 Component Exchanges (Behavior)')}</button>`;
+  const b = bt.getBoundingClientRect();
+  Object.assign(m.style, { left: Math.round(b.left) + 'px', top: Math.round(b.bottom + 2) + 'px' });
+  document.body.appendChild(m);
+  const fermer = () => { m.remove(); document.removeEventListener('mousedown', dehors, true); document.removeEventListener('keydown', touche, true); };
+  const dehors = e => { if (!m.contains(e.target) && e.target !== bt) fermer(); };
+  const touche = e => { if (e.key === 'Escape') { e.preventDefault(); fermer(); bt.focus(); } };
+  m.addEventListener('click', e => { const x = e.target.closest('[data-lv]'); if (!x) return; fermer(); capDiagLiensOuvrir(uid, x.dataset.lv); });
+  document.addEventListener('mousedown', dehors, true); document.addEventListener('keydown', touche, true);
+  m.querySelector('button').focus();
+}
+
+/**
+ * ⇄ Liens du diagramme ouvert : la vue des liens de sa couche, filtrée sur ce diagramme (liens entre les composants affichés) —
+ * PA : 🔌 Physical Link (ou 🔀 Behavior Exchange), SA : 🧱 System Component, LA : 🧱 Logical Component (≡ Vue Ligne, export CSV de la vue).
+ * @param {string} uid - Représentation
+ * @param {string} [choix] - Vue imposée pour un diagramme PA : 'physlink' (défaut) ou 'compex'
+ */
+function capDiagLiensOuvrir(uid, choix) {
+  const r = uid && capDiagReps().find(x => x.uid === uid);
+  if (!r) { capToast(_L('Ouvrez d\'abord un diagramme.')); return; }
+  const vue = r.couche === 'PA' && choix === 'compex' ? 'compex' : { PA: 'physlink', SA: 'csys', LA: 'cblk' }[r.couche];
+  if (!vue) { capToast(_L('⇄ Liens : diagrammes des couches SA, LA et PA seulement.')); return; }
+  _capDiagLiensGo = { vue, uid };
+  if (vue === 'physlink' || vue === 'compex') { const v = document.getElementById('cap-view-' + vue), s = v && (v._phl || v._cex);
+    if (s) { s.diag = uid; s.diagMode = 'entre'; if (s.view !== 'card') s.view = 'line'; _capDiagLiensGo = null; } }
+  else { const v = document.getElementById(vue === 'csys' ? 'cap-view-csys' : 'cap-view-cblk'); if (v && v._cb) { v._cb.diag = uid; v._cb.diagMode = 'entre'; v._cb.view = 'line'; _capDiagLiensGo = null; } }
+  capNavOpen(vue);
 }
 
 /**
@@ -996,6 +1167,7 @@ function capDiagListe() {
 /** Met en évidence le diagramme ouvert dans la liste. */
 function capDiagMarquerActif() {
   document.querySelectorAll('#cdg-gauche .cdg-it').forEach(e => e.classList.toggle('actif', e.dataset.uid === _capDiag.actif));
+  if (typeof capAvSuivre === 'function') capAvSuivre();   // ⇄ avant / après : suit le diagramme ouvert (104)
 }
 
 /**
@@ -1015,6 +1187,7 @@ function capDiagClic(e) {
   if (t.closest('#cdg-ouvrir')) { capDiagPickAird(); return; }
   if (t.closest('#cdg-export')) { capDiagExportDialog(); return; }
   if (t.closest('#cdg-comparer')) { capDgwOuvrir(_capDiag.actif); return; }   // ⧉ fenêtre de comparaison (83)
+  if (t.closest('#cdg-liens')) { capDiagLiensMenu(t.closest('#cdg-liens'), _capDiag.actif); return; }   // ⇄ liens entre les composants affichés
   if (t.closest('#cdg-choix')) { _capDiag.choix = !_capDiag.choix; capDiagBarre(); capDiagListe(); return; }
   if (t.closest('#cdg-mode-vis,#cdg-mode-txt')) { _capDiag.texte = !!t.closest('#cdg-mode-txt'); capDiagTexteMaj(); return; }   // 🖼 / ≡ (Capella)
   if (t.closest('#cdg-tx-moins,#cdg-tx-plus')) { _capDiag.texteZoom = Math.min(3, Math.max(0.5, _capDiag.texteZoom * (t.closest('#cdg-tx-plus') ? 1.15 : 1 / 1.15))); capDiagTexteMaj(); return; }
