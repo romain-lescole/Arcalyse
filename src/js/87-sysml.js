@@ -18,7 +18,7 @@ var _capSysml={lecture:null, nom:'', doc:null, L:null, format:''};
 var _capSy={view:'els', q:'', fam:'', type:'', rel:'', fic:''};
 /** Vues propres à Capella, sans données pour un modèle SysML v2 (retirées des menus en Essentiel, grisées en Complet). */
 const CAP_SY_VUES_CAPELLA=['functions','fex','oav','csys','cblk','compex','physlink','ports','chains','scen',
-  'ana:states','ana:caps','ana:data','ana:deploy','ana:trace','ana:xlay','ana:reqs','ana:pvmt','ana:cts','ana:status','ana:cats','ana:rec','ana:libs'];
+  'ana:states','ana:caps','ana:data','ana:deploy','ana:trace','ana:xlay','ana:reqs','ana:pvmt','ana:cts','ana:status','ana:variants','ana:cats','ana:rec','ana:libs'];
 /** Couleur et trait des relations SysML dans la 🗺 Relation Map (clé RCFG : « sysml:<relation> »). */
 const CAP_SY_REL_STYLE={typage:['#58a6ff',''], specialisation:['#a78bfa','6,3'], 'sous-ensemble':['#a78bfa','3,3'], redefinition:['#a78bfa','2,3'],
   composition:['#e3b341',''], reference:['#e3b341','4,3'], connexion:['#3fb950',''], flux:['#3fb950','6,3'], liaison:['#3fb950','3,3'], allocation:['#f0883e','6,3'],
@@ -59,7 +59,7 @@ function capSysmlLireFichier(f){
 
 /** Ouvre un fichier SysML v2 (.sysml ou .kpar) à la place du modèle affiché (appelée par `capLoadFile`, 20).
  * @param {File} f - Fichier choisi ou déposé
- * @param {FileSystemFileHandle} [handle] - Accès direct (non utilisé : pas de 🔄 suivi pour SysML)
+ * @param {FileSystemFileHandle} [handle] - Accès direct (🔄 suivi du fichier relu sans le resélectionner)
  * @param {boolean} [confirme] - true : remplacement du modèle affiché déjà accepté
  */
 function capSysmlOuvrir(f, handle, confirme){
@@ -67,6 +67,7 @@ function capSysmlOuvrir(f, handle, confirme){
   if(capLoaded&&!confirme){ capReplaceConfirm(name).then(ok=>{ if(ok) capSysmlOuvrir(f, handle, true); else capShowWelcome(false); }); return; }
   capWelcomeStatus(_L(`Chargement de « ${name} »…`),'busy'); capShowWelcome(true);
   capSourcesNoter('sy', name, [{nom:name, chemin:name, lire:()=>Promise.resolve(f)}]);   // 🌐 changement de langue (20)
+  if(typeof capWatchNoterSource==='function') capWatchNoterSource({nom:name, chemin:name, lire:()=>Promise.resolve(f), h:handle||undefined}, {k:'sy'});   // 🔄 suivi (40)
   capSysmlLireFichier(f).then(lec=>setTimeout(()=>capSysmlAppliquer(lec, name),30))
     .catch(err=>{ capWelcomeStatus(_L('Erreur de chargement : ')+(err&&err.message||err),'err'); capShowWelcome(true); });
 }
@@ -118,13 +119,14 @@ function capSysmlAppliquer(lecture, nom, L, format){
     if(!lecture||!lecture.elements||lecture.elements().length<2) throw new Error(rq?_L('Aucune exigence ReqIF reconnue dans ce fichier'):uml?_L('Aucun élément UML ou SysML v1 reconnu dans ce fichier'):_L('Aucun élément SysML v2 reconnu dans ce fichier'));
     const airdRetire=typeof capDiagAvantNouveauModele==='function'?capDiagAvantNouveauModele():'';   // 🔲 diagrammes d'un ancien modèle Capella
     const doc=rq?capReqifVersXml(lecture, nom):capSysmlVersXml(lecture, nom, uml?format:'sysml2', L);   // ReqIF : 101
+    if(typeof capAvNoterLecture==='function') capAvNoterLecture(_capSysml, rq?'reqif':uml?format:'sysml2');   // ⇄ lecture d'avant du même langage (104)
     _capSysml={lecture, nom, doc, L:L||null, format:rq?'reqif':uml?format:'sysml2'};
     if(rq) capReqifTypesHumains(lecture); else capSysmlTypesHumains(lecture);
     capCurrentView='home';
     if(typeof _capProjetPage!=='undefined') _capProjetPage.nom='';
     capApplyXmlDoc(doc, nom);
     _capSources=_capSourcesPend;   // fichiers d'origine, relus après un 🌐 changement de langue (20)
-    if(typeof _capWatch!=='undefined'&&_capWatch){ _capWatch.handle=null; _capWatch.file=null; if(typeof capWatchUpdateUi==='function') capWatchUpdateUi(); }   // pas de 🔄 suivi d'un .sysml
+    if(typeof capWatchApresLecture==='function') capWatchApresLecture();   // 🔄 suivi du fichier du modèle (40)   // pas de 🔄 suivi d'un .sysml
     capWelcomeStatus('',''); capShowWelcome(false);
     const d=capSysmlDiagnostics();
     if((d.erreurs||d.avertissements)&&!uml&&!rq) setTimeout(()=>capToast(_L(`🧩 SysML v2 : ${d.erreurs} erreur(s), ${d.avertissements} avertissement(s) — détail dans 🏗 Architecture › 🧩 SysML v2`)),500);

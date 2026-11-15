@@ -34,13 +34,14 @@ function capReqifLec(){ return capSyReqif()?_capSysml.lecture:null; }
 
 /**
  * Ouvre un fichier ReqIF (.reqif ou archive .reqifz) à la place du modèle affiché (appelée par capLoadFile, 20).
- * @param {File} f - Fichier @param {FileSystemFileHandle} [handle] - Accès direct (non utilisé) @param {boolean} [confirme] - Remplacement déjà accepté
+ * @param {File} f - Fichier @param {FileSystemFileHandle} [handle] - Accès direct (🔄 suivi) @param {boolean} [confirme] - Remplacement déjà accepté
  */
 function capReqifOuvrir(f, handle, confirme){
   const name=(f&&f.name)||'';
   if(capLoaded&&!confirme){ capReplaceConfirm(name).then(ok=>{ if(ok) capReqifOuvrir(f, handle, true); else capShowWelcome(false); }); return; }
   capWelcomeStatus(_L(`Chargement de « ${name} »…`),'busy'); capShowWelcome(true);
   capSourcesNoter('rq', name, [{nom:name, chemin:name, lire:()=>Promise.resolve(f)}]);   // 🌐 changement de langue (20)
+  if(typeof capWatchNoterSource==='function') capWatchNoterSource({nom:name, chemin:name, lire:()=>Promise.resolve(f), h:handle||undefined}, {k:'rq'});   // 🔄 suivi (40)
   f.arrayBuffer().then(b=>ArcatureLecteurReqif.lire(new Uint8Array(b), name)).then(lec=>setTimeout(()=>capReqifAppliquer(lec, name),30))
     .catch(err=>{ capWelcomeStatus(_L('Erreur de chargement : ')+(err&&err.message||err),'err'); capShowWelcome(true); });
 }

@@ -1,5 +1,38 @@
+// ── Groupes : couches ARCADIA (Capella) ou familles (SysML, UML, ReqIF) ──
+/**
+ * Groupes de l'Explorateur (barre latérale des types, 🃏 Cartes, puces de répartition, boutons de filtre), dans l'ordre
+ * d'affichage : couches ARCADIA d'un modèle Capella, familles du lecteur sinon (structure, comportement, exigences,
+ * organisation ; parties d'un fichier ReqIF), suivies de « Autres » pour les éléments sans famille.
+ * @returns {{k:string, court:string, label:string, color:string, bg:string}[]} clé, libellé court (bouton), libellé long, couleurs
+ */
+function capGroupesExplo(){
+  if(capMxFormat()==='capella') return Object.entries(CAP_LAYERS).map(([k,v])=>({k, court:k==='Shared'?_L('Tranv.'):k, label:v.label, color:v.color, bg:v.bg}));
+  return [...capMxGroupes().map(g=>({k:g.k, court:g.l, label:g.t, color:g.c, bg:g.c+'26'})),
+    {k:'?', court:_L('Autres'), label:_L('Sans famille'), color:'#8b949e', bg:'rgba(139,148,158,.15)'}];
+}
+/**
+ * Groupe d'un élément dans l'Explorateur : sa couche (Capella) ou sa famille (« ? » s'il n'en a pas).
+ * @param {object} el - Élément de capAllElements
+ * @param {boolean} [cap] - Modèle Capella (évite de le redemander pour chaque élément)
+ * @returns {string} clé du groupe
+ */
+function capGroupeExplo(el, cap){
+  if(cap===undefined) cap=capMxFormat()==='capella';
+  return cap?el.layer:(el.attrs.famille||'?');
+}
+/** Redessine les boutons de filtre par groupe de la barre (couches ou familles selon le format) ; « Tous » si le groupe choisi n'existe plus. */
+function capGroupesBoutons(){
+  const box=document.getElementById('cap-tb-layer-grp'); if(!box) return;
+  const G=capGroupesExplo(), ok=new Set(['all',...G.map(g=>g.k)]);
+  if(!ok.has(capCurrentLayer)) capCurrentLayer='all';
+  box.querySelectorAll('.tbtn[data-layer]').forEach(b=>b.remove());
+  const avant=box.firstChild, bt=(k,l,t,c)=>{ const b=document.createElement('button'); b.className='tbtn'+(capCurrentLayer===k?' active':''); b.dataset.layer=k; b.textContent=l; if(t) b.title=t; if(c) b.style.color=c; box.insertBefore(b, avant); };
+  bt('all',_L('Tous'),'','');
+  G.forEach(g=>bt(g.k, g.court, g.label, g.color));
+}
+
 // ── Sidebar ──
-/** Rend la sidebar Capella : liste des types par couche avec cases à cocher.
+/** Rend la sidebar : liste des types par couche (Capella) ou par famille (SysML, UML, ReqIF), avec cases à cocher.
  * @param {string} [filterStr] - Filtre texte sur les noms de types (par défaut : le texte saisi dans « Filtrer les types… »,
  *   pour que le filtre ne saute pas quand la liste est redessinée, par exemple après avoir coché un type)
  */
@@ -8,19 +41,20 @@ function capRenderSidebar(filterStr){
   const q=String(filterStr).toLowerCase();
   const list=document.getElementById('cap-type-list'); if(!list) return;
   list.innerHTML='';
-  const byLayer={};
+  const byLayer={}, cap=capMxFormat()==='capella';
   for(const[type,info]of Object.entries(capTypeRegistry)){
     if(q&&!type.toLowerCase().includes(q)) continue;
-    const l=info.layer||'Shared'; if(!byLayer[l])byLayer[l]=[]; byLayer[l].push({type,info});
+    const l=cap?(info.layer||'Shared'):(info.fam||'?'); if(!byLayer[l])byLayer[l]=[]; byLayer[l].push({type,info});
   }
-  for(const[lk,lv]of Object.entries(CAP_LAYERS)){
+  for(const{k:lk, court, label, color}of capGroupesExplo()){
+    const lv={color, label};
     const items=byLayer[lk]; if(!items?.length) continue;
     items.sort((a,b)=>a.type.localeCompare(b.type));
     const isCollapsed=capCollapsedGroups.has(lk);
     const checkedCount=items.filter(({info})=>info.checked).length;
     const grp=document.createElement('div');
     const hdr=document.createElement('div'); hdr.className='cap-layer-grp-hdr';
-    hdr.innerHTML=`<span style="width:7px;height:7px;border-radius:50%;background:${lv.color};flex-shrink:0;display:inline-block"></span><span style="color:${lv.color}">${lk}</span><span style="color:var(--c-dim);font-weight:400;text-transform:none;font-size:10px;letter-spacing:0">— ${lv.label}</span><span style="margin-left:auto;font-size:10px;color:var(--c-dim);font-family:monospace;">${checkedCount}/${items.length}</span><span style="font-size:9px;color:var(--c-dim);transition:transform .15s;margin-left:4px;" class="cap-grp-arr">${isCollapsed?'▶':'▼'}</span>`;
+    hdr.innerHTML=`<span style="width:7px;height:7px;border-radius:50%;background:${lv.color};flex-shrink:0;display:inline-block"></span><span style="color:${lv.color}">${capEsc(cap?lk:court)}</span><span style="color:var(--c-dim);font-weight:400;text-transform:none;font-size:10px;letter-spacing:0">— ${capEsc(lv.label)}</span><span style="margin-left:auto;font-size:10px;color:var(--c-dim);font-family:monospace;">${checkedCount}/${items.length}</span><span style="font-size:9px;color:var(--c-dim);transition:transform .15s;margin-left:4px;" class="cap-grp-arr">${isCollapsed?'▶':'▼'}</span>`;
     const body=document.createElement('div'); body.className='cap-layer-grp-body'+(isCollapsed?' collapsed':'');
     body.style.maxHeight=isCollapsed?'0':(items.length*26+4)+'px';
     for(const{type,info}of items){
@@ -59,10 +93,10 @@ function capRenderSidebar(filterStr){
 // ── Get filtered elements ──
 /** Retourne capAllElements filtré par types activés, couche et texte de recherche. */
 function capGetFiltered(){
-  const q=capSearch.toLowerCase(); const lf=capCurrentLayer;
+  const q=capSearch.toLowerCase(); const lf=capCurrentLayer, cap=capMxFormat()==='capella';
   return capAllElements.filter(el=>{
     if(!capEnabledTypes.has(el.typeName)) return false;
-    if(lf!=='all'&&el.layer!==lf) return false;
+    if(lf!=='all'&&capGroupeExplo(el,cap)!==lf) return false;
     if(q){const hay=[el.typeName,el.id,el.layer,...Object.values(el.attrs)].join(' ').toLowerCase();if(!hay.includes(q))return false;}
     return true;
   });
@@ -88,14 +122,15 @@ function capCardsPager(page, nb, total){
     `<span>${_L(`Page ${page+1} / ${nb} — éléments ${de} à ${a} sur ${total}`)}</span>`+
     `${bt(page+1,_L('Suiv. ▶'),_L('Page suivante'),page>=nb-1)}${bt(nb-1,'⏭',_L('Dernière page'),page>=nb-1)}</div>`;
 }
-/** Rend la vue Cartes : cartes groupées par couche ARCADIA, filtrées, par pages de CAP_CARDS_MAX. */
+/** Rend la vue Cartes : cartes groupées par couche ARCADIA (Capella) ou par famille (SysML, UML, ReqIF), filtrées, par pages de CAP_CARDS_MAX. */
 function capRenderCards(){
   const container=document.getElementById('cap-view-cards'); if(!container) return;
   if(!container._pg){ container._pg=true;
     container.addEventListener('click',e=>{ const b=e.target.closest('[data-cpg]'); if(!b||b.disabled) return;
       _capCardsPg.page=+b.dataset.cpg; capRenderCards(); container.scrollTop=0; }); }
   // Éléments dans l'ordre des couches, puis découpés en pages
-  const ordre=Object.keys(CAP_LAYERS), filtered=capGetFiltered().slice().sort((x,y)=>ordre.indexOf(x.layer)-ordre.indexOf(y.layer));
+  const G=capGroupesExplo(), cap=capMxFormat()==='capella', ordre=G.map(g=>g.k), gr=el=>capGroupeExplo(el,cap);
+  const filtered=capGetFiltered().slice().sort((x,y)=>ordre.indexOf(gr(x))-ordre.indexOf(gr(y)));
   const sig=filtered.length+'|'+capSearch+'|'+capCurrentLayer+'|'+(filtered[0]||{}).id;
   if(sig!==_capCardsPg.sig){ _capCardsPg={page:0, sig}; }
   const nb=Math.max(1,Math.ceil(filtered.length/CAP_CARDS_MAX)), page=Math.min(_capCardsPg.page,nb-1);
@@ -103,11 +138,11 @@ function capRenderCards(){
   const rc=document.getElementById('cap-result-count');
   if(rc)rc.textContent=nb>1?_L(`${filtered.length} élément(s) — page ${page+1} / ${nb}`):_L(`${filtered.length} élément(s) affiché(s)`);
   const parCouche={}, grouped={};
-  for(const el of filtered) parCouche[el.layer]=(parCouche[el.layer]||0)+1;
-  for(const el of vue)(grouped[el.layer]=grouped[el.layer]||[]).push(el);
+  for(const el of filtered) parCouche[gr(el)]=(parCouche[gr(el)]||0)+1;
+  for(const el of vue)(grouped[gr(el)]=grouped[gr(el)]||[]).push(el);
   const pager=capCardsPager(page,nb,filtered.length);
   let html=pager;
-  for(const[lk,lv]of Object.entries(CAP_LAYERS)){
+  for(const{k:lk, court, ...lv}of G){
     const items=grouped[lk]; if(!items?.length) continue;
     const cards=items.map(el=>{
       const name=el.attrs.name||'';
@@ -120,7 +155,7 @@ function capRenderCards(){
       </div>`;
     }).join('');
     const n=parCouche[lk];
-    html+=`<div class="cap-layer-section"><div class="cap-layer-hdr"><span class="cap-layer-badge" style="color:${lv.color}">${lk}</span><span style="font-size:12px;font-weight:600;">${lv.label}</span><span style="margin-left:auto;font-size:11px;color:var(--c-dim);font-family:monospace;">${items.length<n?items.length+' / '+n:n}</span></div><div class="cap-cards-grid">${cards}</div></div>`;
+    html+=`<div class="cap-layer-section"><div class="cap-layer-hdr"><span class="cap-layer-badge" style="color:${lv.color}">${capEsc(cap?lk:court)}</span><span style="font-size:12px;font-weight:600;">${capEsc(lv.label)}</span><span style="margin-left:auto;font-size:11px;color:var(--c-dim);font-family:monospace;">${items.length<n?items.length+' / '+n:n}</span></div><div class="cap-cards-grid">${cards}</div></div>`;
   }
   if(vue.length) html+=pager;
   container.innerHTML=vue.length?html:_L('<div style="text-align:center;padding:40px;color:var(--c-dim)">Aucun résultat</div>');

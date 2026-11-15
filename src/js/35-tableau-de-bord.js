@@ -183,6 +183,7 @@ function capDashCatalog(){
   capScDashCatalog(add, LC);
   capDgDashCatalog(add, LC);
   capStDashCatalog(add, LC);   // 🔖 statut de revue Capella (68)
+  capVarDashCatalog(add);   // 🎚 variantes du modèle 150 % (103)
   capSanteDashCatalog(add, LC);   // 💚 santé du modèle (69)
   capChDashCatalog(add);   // ⚡ contrôles des chaînes (70)
   capEcDashCatalog(add, LC);   // 🏷 catégories d'échanges (71)

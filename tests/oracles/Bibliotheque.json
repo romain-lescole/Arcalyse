@@ -346,6 +346,7 @@
    "ana:umlbudget",
    "ana:umlreq",
    "ana:umltrace",
+   "ana:variants",
    "ana:xlay",
    "cblk",
    "chains",
@@ -753,6 +754,7 @@
    "Contraintes": 2,
    "Modes & états": 1
   },
+  "chk.var": null,
   "ct.chk": {
    "Contraintes sans expression": 1,
    "Contraintes sans élément contraint explicite": 1
@@ -1000,6 +1002,12 @@
    "Acteurs sans cas d'utilisation": 1
   },
   "uml.uc.n": 3,
-  "uml.vues": null
+  "uml.vues": null,
+  "var.alloc": null,
+  "var.els": null,
+  "var.fe": null,
+  "var.marq": null,
+  "var.n": null,
+  "var.real": null
  }
 }

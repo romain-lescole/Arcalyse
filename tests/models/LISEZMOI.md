@@ -31,6 +31,14 @@ et comptes d'éléments) : Copyright (c) 2016-2022 IRT AESE (IRT Saint Exupéry)
 
 Il sert au test du lecteur SysML v2 embarqué (`node tests/sysml.js`), aux oracles (`tests/oracles/VehiculeDemo.json`) et au test navigateur.
 
+## Modèle Capella 150 % (variantes)
+
+| Fichier | Origine | Auteur | Licence |
+|---|---|---|---|
+| `Vehicule-150.capella` | Écrit pour Arcalyse : petite gamme de véhicules (diesel, essence, électrique, option GPS) de OA à PA, marquée avec l'add-on Filtering de Capella (critères dans un paquet ou non, résultats simples, résultat composé, résultat sans critère) et une propriété PVMT simple « Variante » ; la plupart des contrôles de 🎚 Variantes (103) y sont déclenchés (éléments retenus par aucune variante, allocation et réalisation perdues, marque sans effet, critères inutilisés, variante sans critère) | Romain Lescole | **Apache 2.0** |
+
+Il sert aux oracles (`tests/oracles/Vehicule-150.json`) et au test navigateur. Le format de l'add-on Filtering a été lu dans le dépôt [eclipse-capella/capella-filtering](https://github.com/eclipse-capella/capella-filtering) (EPL 2.0) ; rien n'en est recopié.
+
 ## Modèles UML / SysML v1 (sous-dossier `uml/`)
 
 | Fichier | Origine | Auteur | Licence |

@@ -30,7 +30,7 @@ function capSanteChecks(){
     {k:'csys', all:()=>capCbChecks('all'), layer:l=>capCbChecks(l)},
     {k:'ports', all:()=>capPortsDiagSections(capComputePortLinks())}, {k:'chains', all:()=>capChChecks('all'), layer:l=>capChChecks(l)}, {k:'scen', all:()=>capScChecks()},
     {k:'ana:reqs', all:()=>capReqChecks()}, {k:'ana:pvmt', all:()=>capPvChecks()}, {k:'ana:data', all:()=>capDmChecks()}, {k:'ana:cts', all:()=>capCtChecks()},
-    {k:'ana:cats', all:()=>capEcChecks()}, {k:'ana:libs', all:()=>capLibChecks()}, {k:'ana:rec', all:()=>capRecChecks()}, {k:'ana:deploy', all:()=>capDepChecks()}, {k:'ana:status', all:()=>capStChecks()}, {k:'ana:sysml', all:()=>capSyChecks()}, {k:'ana:uml', all:()=>capSyChecks('uml')}, {k:'ana:reqif', all:()=>capSyChecks('reqif')},
+    {k:'ana:cats', all:()=>capEcChecks()}, {k:'ana:libs', all:()=>capLibChecks()}, {k:'ana:rec', all:()=>capRecChecks()}, {k:'ana:deploy', all:()=>capDepChecks()}, {k:'ana:status', all:()=>capStChecks()}, {k:'ana:variants', all:()=>capVarChecks()}, {k:'ana:sysml', all:()=>capSyChecks()}, {k:'ana:uml', all:()=>capSyChecks('uml')}, {k:'ana:reqif', all:()=>capSyChecks('reqif')},
     {k:'ana:umlblk', all:()=>capUmlBlkChecks()}, {k:'ana:umlact', all:()=>capUmlActChecks()}, {k:'ana:umlreq', all:()=>capUmlReqChecks()},
     {k:'ana:umlstm', all:()=>capUmlStmChecks()}, {k:'ana:umlseq', all:()=>capUmlSeqChecks()},
     {k:'ana:umlucs', all:()=>capUmlUcChecks()}, {k:'ana:umltrace', all:()=>capUmlTrChecks()},

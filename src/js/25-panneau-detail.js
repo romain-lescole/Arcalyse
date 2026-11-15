@@ -91,6 +91,7 @@ function capOpenDetail(id){
   curTab='ana';
   html+=capXtDetail(el.id, secTitle);
   html+=capStDetail(el.id, secTitle);   // 🔖 statut de revue Capella (68)
+  html+=capVarDetail(el.id, secTitle);   // 🎚 variantes du modèle 150 % (103)
   html+=capEcDetail(el.id, secTitle);   // 🏷 catégories d'échanges (71)
   html+=capLibDetail(el.id, secTitle);   // 📚 références externes (72)
   html+=capRecDetail(el.id, secTitle);   // 📦 REC / RPL (73)
@@ -279,11 +280,10 @@ document.getElementById('cap-sb-all')?.addEventListener('click',()=>{for(const t
 document.getElementById('cap-sb-none')?.addEventListener('click',()=>{for(const t of Object.keys(capTypeRegistry)){capTypeRegistry[t].checked=false;}capEnabledTypes.clear();capRenderSidebar();capRenderCurrentView();});
 document.getElementById('cap-sb-def')?.addEventListener('click',()=>{for(const t of Object.keys(capTypeRegistry)){capTypeRegistry[t].checked=!CAP_TECHNICAL_TYPES.has(t);}capEnabledTypes=new Set(Object.keys(capTypeRegistry).filter(t=>capTypeRegistry[t].checked));capRenderSidebar();capRenderCurrentView();});
 // Layer filter buttons (in toolbar)
-document.querySelectorAll('#cap-tb-layer-grp .tbtn[data-layer]').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('#cap-tb-layer-grp .tbtn[data-layer]').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');capCurrentLayer=btn.dataset.layer||'all';capPage=0;capRenderCurrentView();
-  });
+document.getElementById('cap-tb-layer-grp')?.addEventListener('click',e=>{   // boutons redessinés selon le format (capGroupesBoutons, 21)
+  const btn=e.target.closest('.tbtn[data-layer]'); if(!btn) return;
+  document.querySelectorAll('#cap-tb-layer-grp .tbtn[data-layer]').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');capCurrentLayer=btn.dataset.layer||'all';capPage=0;capRenderCurrentView();
 });
 document.getElementById('cap-btn-prev')?.addEventListener('click',()=>{capPage--;capRenderTableBodyOnly();});
 document.getElementById('cap-btn-next')?.addEventListener('click',()=>{capPage++;capRenderTableBodyOnly();});
@@ -296,8 +296,8 @@ document.getElementById('cap-exp-json')?.addEventListener('click',()=>{
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='capella-export.json';a.click();URL.revokeObjectURL(a.href);
 });
 document.getElementById('cap-exp-csv')?.addEventListener('click',()=>{
-  const cols=['layer','typeName','id',...CAP_ATTR_KEYS];
+  const cap=capMxFormat()==='capella', cols=[cap?'layer':'famille','typeName','id',...CAP_ATTR_KEYS];   // famille d'un modèle SysML, UML ou ReqIF (21)
   const filtered=capAllElements.filter(e=>capEnabledTypes.has(e.typeName));
-  const rows=filtered.map(el=>cols.map(k=>{const v=k==='layer'?el.layer:k==='typeName'?el.typeName:k==='id'?el.id:(el.attrs[k]||'');return'"'+String(v).replace(/"/g,'""')+'"';}).join(';')).join('\n');
+  const rows=filtered.map(el=>cols.map((k,i)=>{const v=i===0?capGroupeExplo(el,cap):k==='typeName'?el.typeName:k==='id'?el.id:(el.attrs[k]||'');return'"'+String(v).replace(/"/g,'""')+'"';}).join(';')).join('\n');
   const blob=new Blob(['\uFEFF'+cols.join(';')+'\n'+rows],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='capella-export.csv';a.click();URL.revokeObjectURL(a.href);
 });

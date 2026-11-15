@@ -83,11 +83,68 @@ function capDgEl(id){
   return o?{nom:o.name||o.type, type:o.type, couche:o.layer||'', ici:false}:{nom:id.slice(0,13)+'…', type:'', couche:'', ici:false};
 }
 
+const _capDgLec=new WeakMap();   // analyse des vues de chaque lecture d'Arcature (gardée avec elle)
 /**
- * Compare le .aird chargé à la référence et au modèle.
+ * Diagrammes d'une lecture d'Arcature (SysML v2, UML / SysML v1, ReqIF), analysés comme ceux d'un .aird : nom, genre, famille,
+ * éléments montrés (formes et liens) et signature de la mise en page. UML / SysML v1 : diagrammes du fichier seulement (vues
+ * calculées écartées, comme dans 🔲 Diagrammes) ; tableaux et matrices écartés.
+ * @param {object} lec - Lecture
+ * @returns {Map<string, {uid:string, nom:string, type:string, couche:string, ids:Set<string>, corps:string}>} uid « sy:<clé> » → diagramme
+ */
+function capDgAnalyserLecture(lec){
+  if(!lec||typeof lec.vues!=='function') return new Map();
+  if(_capDgLec.has(lec)) return _capDgLec.get(lec);
+  const m=new Map(), uml=lec.format==='uml'||lec.format==='sysml1', r=n=>Math.round(+n||0);
+  let vues=[]; try{ vues=lec.vues()||[]; }catch(e){ vues=[]; }
+  vues.filter(v=>!v.tableau&&!(uml&&v.origine==='calculee')).forEach(v=>{
+    let d=null; try{ d=lec.vue(v.cle); }catch(e){ d=null; }
+    const F=(d&&d.formes)||[], L=(d&&d.liens)||[], rep=capSyVueRep(v);
+    m.set(rep.uid, {uid:rep.uid, nom:rep.nom, type:rep.type, couche:rep.couche, ids:new Set([...F,...L].map(x=>x.element).filter(Boolean)),
+      corps:F.map(f=>[f.element,r(f.x),r(f.y),r(f.w),r(f.h),f.libelle||''].join(',')).join(';')+'|'+L.map(l=>[l.element,(l.points||[]).map(q=>r(q[0])+' '+r(q[1])).join(' '),l.libelle||''].join(',')).join(';')+'|'+(d&&typeof d.svg==='string'?d.svg.replace(/<[^>]*>/g,' ').replace(/\s+/g,' '):'')});   // textes dessinés compris (compartiments, étiquettes)
+  });
+  _capDgLec.set(lec, m);
+  return m;
+}
+
+/**
+ * Compare les diagrammes de la lecture affichée à ceux de la version chargée dans ⚖ Comparaison (SysML, UML, ReqIF).
+ * @returns {{ref:boolean, rows:object[], lecteur:true}|null} même forme que capDgComparer (null sans lecture)
+ */
+function capDgComparerLectures(){
+  const cur=_capSysml.lecture, oth=capDiffLu, chg=capDgChangesModele(), c=_capDg.cache;
+  if(!cur) return null;
+  if(c&&c.lecN===cur&&c.lecO===oth&&c.swap===capDiffSwap&&c.diff===_capAnaCache.diff) return c.res;
+  let N=capDgAnalyserLecture(cur), O=oth?capDgAnalyserLecture(oth):null;
+  if(O&&capDiffSwap){ const t=N; N=O; O=t; }   // modèle affiché = ancienne version
+  const rows=[];
+  N.forEach(n=>{
+    const r={uid:n.uid, nom:n.nom, ancien:'', type:n.type, couche:n.couche, etats:new Set(), plus:[], moins:[], ids:n.ids,
+      orph:[...n.ids].filter(id=>!capGetElementById_(id)), touch:chg?[...n.ids].filter(id=>chg.has(id)):[]};
+    const o=O&&O.get(n.uid);
+    if(O&&!o) r.etats.add('add');
+    if(o){
+      if(o.nom!==n.nom){ r.etats.add('ren'); r.ancien=o.nom; }
+      r.plus=[...n.ids].filter(id=>!o.ids.has(id)); r.moins=[...o.ids].filter(id=>!n.ids.has(id));
+      if(r.plus.length||r.moins.length) r.etats.add('cont'); else if(o.corps!==n.corps) r.etats.add('style');
+    }
+    if(r.orph.length&&!capDiffSwap) r.etats.add('orph');
+    if(r.touch.length) r.etats.add('touch');
+    rows.push(r);
+  });
+  if(O) O.forEach(o=>{ if(!N.has(o.uid)) rows.push({uid:o.uid, nom:o.nom, ancien:'', type:o.type, couche:o.couche, etats:new Set(['del']), plus:[], moins:[...o.ids], ids:o.ids, orph:[], touch:[]}); });
+  rows.sort((x,y)=>capDiagRang(x.couche)-capDiagRang(y.couche)||x.nom.localeCompare(y.nom));
+  const res={ref:!!O, cur:true, rows, lecteur:true};
+  _capDg.cache={lecN:cur, lecO:oth, swap:capDiffSwap, diff:_capAnaCache.diff, res};
+  return res;
+}
+
+/**
+ * Compare le .aird chargé à la référence et au modèle (modèle Capella) ; pour un modèle lu par un lecteur d'Arcature, compare ses
+ * diagrammes à ceux de la version chargée dans ⚖ Comparaison (`capDgComparerLectures`).
  * @returns {{ref:boolean, rows:object[]}|null} lignes {uid, nom, ancien, type, couche, etats:Set, plus, moins, orph, touch} (null sans .aird ni référence)
  */
 function capDgComparer(){
+  if(typeof capDiagSy==='function'&&capDiagSy()) return capDgComparerLectures();
   const a=_capDiag.texteAird, b=_capDg.ref, chg=capDgChangesModele(), c=_capDg.cache;
   if(c&&c.a===a&&c.b===b&&c.doc===cap_xmlDoc&&c.diff===_capAnaCache.diff) return c.res;
   if(!a&&!b) return null;
@@ -119,9 +176,9 @@ function capDgComparer(){
 
 /** Onglets de ⚖ Comparaison de versions : 🔷 Modèle (rapport) / 🔲 Diagrammes. @returns {string} HTML */
 function capDgOnglets(){
-  const b=(k,l,t)=>`<button class="phl-toggle-btn${_capDg.vue===k?' active':''}" data-dgv="${k}" title="${t}">${l}</button>`;
-  return `<div class="dg-tabs"><span class="tb-grp">${b('modele',_L('🔷 Modèle'),_L('Différences entre les deux versions du .capella'))}`+
-    b('diag',_L('🔲 Diagrammes'),_L('Diagrammes ajoutés, supprimés, renommés ou modifiés par rapport à un .aird de référence ; diagrammes touchés par les changements du modèle'))+`</span></div>`;
+  const b=(k,l,t)=>`<button class="phl-toggle-btn${_capDg.vue===k?' active':''}" data-dgv="${k}" title="${t}">${l}</button>`, sy=typeof capDiagSy==='function'&&capDiagSy();
+  return `<div class="dg-tabs"><span class="tb-grp">${b('modele',_L('🔷 Modèle'),sy?_L('Différences entre les deux versions du modèle'):_L('Différences entre les deux versions du .capella'))}`+
+    b('diag',_L('🔲 Diagrammes'),sy?_L('Diagrammes ajoutés, supprimés, renommés ou modifiés entre les deux versions du modèle ; diagrammes touchés par les changements du modèle'):_L('Diagrammes ajoutés, supprimés, renommés ou modifiés par rapport à un .aird de référence ; diagrammes touchés par les changements du modèle'))+`</span></div>`;
 }
 /** @returns {{k:string, l:string, t:string, c:string}[]} états d'un diagramme (filtres, pastilles) */
 function capDgEtats(){ return [
@@ -138,14 +195,15 @@ function capDgEtats(){ return [
  * @param {HTMLElement} host - Conteneur
  */
 function capDgRender(host){
-  const esc=capEsc, R=capDgComparer(), E=capDgEtats(), u=_capDg;
-  let h=`<div class="dg-head"><div class="ana-diff-file"><span class="ana-dim">${_L('.aird de référence (ancien)')}</span><b>${esc(u.refNom||'—')}</b></div>`+
+  const esc=capEsc, R=capDgComparer(), E=capDgEtats(), u=_capDg, sy=typeof capDiagSy==='function'&&capDiagSy();
+  let h=sy?'':`<div class="dg-head"><div class="ana-diff-file"><span class="ana-dim">${_L('.aird de référence (ancien)')}</span><b>${esc(u.refNom||'—')}</b></div>`+
     `<div class="ana-diff-file"><span class="ana-dim">${_L('.aird chargé (nouveau)')}</span><b>${esc(_capDiag.nomAird||'—')}</b></div>`+
     `<label class="cw-btn ana-diff-load">${u.ref?_L('📂 Changer le .aird de référence…'):_L('📂 Charger un .aird de référence…')}<input type="file" id="dg-ref"${capIsMobile()?'':' accept=".aird"'} style="display:none"></label>`+
     (u.ref?`<button class="cap-lf-btn" data-dg="noref" title="${_L('Ne plus comparer à un .aird de référence')}">✕</button>`:'')+
     (_capDiag.texteAird?'':`<button class="cap-lf-btn" data-dg="aird">${_L('📂 Ouvrir le .aird…')}</button>`)+`</div>`;
+  if(sy&&R&&!R.ref) h+=`<div class="crv-help">${_L('Chargez une autre version du modèle (📂 en haut : même format, .mdzip, .xmi, .uml, .sysml, .reqif…) : ses diagrammes seront comparés à ceux du modèle affiché. Une version d\'avant gardée par le 🔄 suivi du fichier ou une mise à jour est reprise d\'elle-même. En attendant, seuls les liens des diagrammes avec le modèle sont vérifiés.')}</div>`;
   if(!R){ host.innerHTML=h+`<div class="phl-empty">${_L('Ouvrez le .aird du projet (🔲 Diagrammes Capella) : ses diagrammes sont comparés au modèle chargé et, avec un .aird de référence, à une version précédente.<br>La référence est gardée automatiquement quand le .aird est relu ou remplacé après une 🔄 mise à jour du modèle ; vous pouvez aussi la choisir.')}</div>`; capDgWire(host); return; }
-  if(!R.ref) h+=`<div class="crv-help">${_L('Pas de .aird de référence : seuls les liens avec le modèle sont vérifiés. Chargez le .aird d\'une version précédente pour voir les diagrammes ajoutés, supprimés, renommés ou modifiés.')}</div>`;
+  if(!R.ref&&!sy) h+=`<div class="crv-help">${_L('Pas de .aird de référence : seuls les liens avec le modèle sont vérifiés. Chargez le .aird d\'une version précédente pour voir les diagrammes ajoutés, supprimés, renommés ou modifiés.')}</div>`;
   const n=k=>R.rows.filter(r=>r.etats.has(k)).length, chgs=R.rows.filter(r=>r.etats.size).length;
   h+=`<div class="hm-chips dg-chips"><span class="hm-stat"><b>${R.rows.length}</b> ${_L('diagramme(s)')}</span>`+
     E.filter(e=>(R.ref||['orph','touch'].includes(e.k))&&n(e.k)).map(e=>`<span class="hm-stat dg-f${u.filtre===e.k?' on':''}" data-f="${e.k}" title="${e.t}" style="color:${e.c}"><b>${n(e.k)}</b> ${e.l}</span>`).join('')+
@@ -153,23 +211,26 @@ function capDgRender(host){
   const opt=(v,l)=>`<option value="${v}"${u.filtre===v?' selected':''}>${l}</option>`;
   h+=`<div class="crv-filters"><select id="dg-filtre">${opt('chg',_L('Diagrammes à regarder'))}${opt('all',_L('Tous les diagrammes'))}${E.map(e=>opt(e.k,e.l)).join('')}</select>`+
     `<input id="dg-q" class="phl-filter-input" placeholder="${_L('🔍 Diagramme…')}" value="${esc(u.q)}" style="max-width:240px">`+
-    `<button class="phl-export-btn" data-dg="csv" style="margin-left:auto">${_L('⬇ CSV')}</button></div>`;
+    `<span style="margin-left:auto"></span>`+(R.ref?`<button class="cap-lf-btn" data-dg="revue" title="${_L('Ouvrir le premier diagramme de la liste en ⇄ Avant / après, puis passer aux suivants par ⏮ ⏭')}">${_L('⇄ Passer en revue')}</button>`:'')+
+    `<button class="phl-export-btn" data-dg="csv">${_L('⬇ CSV')}</button></div>`;
   const norm=s=>String(s||'').toLowerCase(), q=norm(u.q);
   const l=R.rows.filter(r=>(u.filtre==='all'||(u.filtre==='chg'?r.etats.size:r.etats.has(u.filtre)))&&(!q||norm(r.nom+' '+r.ancien+' '+r.type).includes(q)));
   const ouvrable=new Set(capHomeReps().map(r=>r.uid));
   const puce=k=>{ const e=E.find(x=>x.k===k); return `<span class="dg-b" style="color:${e.c};border-color:${e.c}" title="${e.t}">${e.l}</span>`; };
   const els=(t,ids)=>ids.length?`<div class="dg-el"><b>${t}</b> (${ids.length})<div class="hm-chips">${ids.slice(0,300).map(id=>{ const e=capDgEl(id), lv=CAP_LAYERS[e.couche]||{color:'#8b949e'};
-    return `<span class="hm-chip${e.ici?'':' hm-miss'}"${e.ici?` data-open="${esc(id)}"`:''} title="${esc(e.type)}">${e.ici?capIco(id,13):''}<span style="color:${lv.color};font-size:9px;font-weight:700">${esc(e.couche)}</span> ${esc(e.nom)}</span>`; }).join('')}${ids.length>300?' …':''}</div></div>`:'';
-  h+=`<table class="ana-table dg-t"><thead><tr><th></th><th>${_L('Couche')}</th><th>${_L('Diagramme')}</th><th>${_L('Type')}</th><th>${_L('État')}</th><th title="${_L('Éléments du modèle ajoutés au diagramme / retirés')}">${_L('Éléments + / −')}</th><th></th></tr></thead><tbody>`+
+    return `<span class="hm-chip${e.ici?'':' hm-miss'}"${e.ici?` data-open="${esc(id)}"`:''} title="${esc(e.type)}">${e.ici?capIco(id,13):''}${sy?'':`<span style="color:${lv.color};font-size:9px;font-weight:700">${esc(e.couche)}</span> `}${esc(e.nom)}</span>`; }).join('')}${ids.length>300?' …':''}</div></div>`:'';
+  h+=`<table class="ana-table dg-t"><thead><tr><th></th><th>${sy?_L('Famille'):_L('Couche')}</th><th>${_L('Diagramme')}</th><th>${_L('Type')}</th><th>${_L('État')}</th><th title="${_L('Éléments du modèle ajoutés au diagramme / retirés')}">${_L('Éléments + / −')}</th><th></th></tr></thead><tbody>`+
     (l.length?l.map(r=>{ const lv=capDiagCouche(r.couche), o=u.ouverts.has(r.uid), det=r.plus.length||r.moins.length||r.orph.length||r.touch.length;
       return `<tr data-uid="${esc(r.uid)}"><td>${det?`<span class="dg-tog" data-dg="tog">${o?'▾':'▸'}</span>`:''}</td><td style="color:${lv.color};font-weight:700">${esc(r.couche)}</td>`+
         `<td><b>${esc(r.nom)}</b>${r.ancien?`<div class="ana-dim">${_L('avant :')} ${esc(r.ancien)}</div>`:''}</td><td class="ana-dim">${esc(r.type)}</td>`+
         `<td>${[...r.etats].map(puce).join(' ')||`<span class="ana-dim">${R.ref?_L('inchangé'):'—'}</span>`}</td>`+
         `<td>${r.plus.length?`<span style="color:var(--c-ok,#3fb950)">+${r.plus.length}</span> `:''}${r.moins.length?`<span style="color:var(--c-err,#f85149)">−${r.moins.length}</span>`:''}</td>`+
-        `<td>${ouvrable.has(r.uid)?`<button class="cap-lf-btn" data-dg="open" title="${_L('Ouvrir le diagramme')}">🔲</button>`:''}</td></tr>`+
+        `<td class="dg-act">${ouvrable.has(r.uid)?`<button class="cap-lf-btn" data-dg="open" title="${_L('Ouvrir ce diagramme dans 🔲 Diagrammes')}">${_L('🔲 Ouvrir')}</button>`+
+          (R.ref&&!r.etats.has('del')?` <button class="cap-lf-btn" data-dg="avap" title="${_L('Voir les écarts de ce diagramme entre les deux versions (fondu, volet, surbrillance) ; ⏮ ⏭ pour passer aux suivants de la liste')}">${_L('⇄ Avant / après')}</button>`:''):''}</td></tr>`+
         (o?`<tr class="dg-det"><td></td><td colspan="6">${els(_L('➕ Ajoutés au diagramme'),r.plus)}${els(_L('➖ Retirés du diagramme'),r.moins)}${els(_L('⚠ Absents du modèle chargé'),r.orph)}${els(_L('🔷 Ajoutés, supprimés ou modifiés dans le modèle'),r.touch)}</td></tr>`:''); }).join('')
       :`<tr><td colspan="7" class="phl-empty">${_L('Aucun diagramme ne correspond.')}</td></tr>`)+`</tbody></table>`;
   host.innerHTML=h;
+  _capDg.liste=l.filter(r=>ouvrable.has(r.uid)&&!r.etats.has('del')).map(r=>r.uid);   // diagrammes à parcourir en ⇄ Avant / après
   capDgWire(host);
 }
 
@@ -188,6 +249,8 @@ function capDgWire(host){
     switch(a.dataset.dg){
       case 'tog': if(_capDg.ouverts.has(uid)) _capDg.ouverts.delete(uid); else _capDg.ouverts.add(uid); capDgRender(host); return;
       case 'open': capDiagOpen(uid); return;
+      case 'avap': capAvDepuisComparaison(uid, _capDg.liste); return;
+      case 'revue': if(_capDg.liste&&_capDg.liste.length) capAvDepuisComparaison(_capDg.liste[0], _capDg.liste); else capToast(_L('Aucun diagramme à parcourir dans la liste.')); return;
       case 'aird': capDiagPickAird(); return;
       case 'noref': Object.assign(_capDg,{ref:'', refNom:'', manuel:false, cache:null}); capDgRender(host); return;
       case 'csv': capDgCsv(); return;

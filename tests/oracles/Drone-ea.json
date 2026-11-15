@@ -346,6 +346,7 @@
    "ana:umlicd",
    "ana:umlpar",
    "ana:umlsoft",
+   "ana:variants",
    "ana:xlay",
    "cblk",
    "chains",
@@ -826,6 +827,7 @@
    "Exigences": 9,
    "Modes & états": 1
   },
+  "chk.var": null,
   "ct.chk": null,
   "ct.layer": null,
   "ct.n": 0,
@@ -1105,6 +1107,12 @@
    "Machine à états": 1,
    "Cas d'utilisation": 1,
    "Séquence": 1
-  }
+  },
+  "var.alloc": null,
+  "var.els": null,
+  "var.fe": null,
+  "var.marq": null,
+  "var.n": null,
+  "var.real": null
  }
 }

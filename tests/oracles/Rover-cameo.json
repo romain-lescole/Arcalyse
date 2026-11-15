@@ -276,6 +276,7 @@
    "ana:umlsoft",
    "ana:umlstm",
    "ana:umlucs",
+   "ana:variants",
    "ana:xlay",
    "cblk",
    "chains",
@@ -668,6 +669,7 @@
   "chk.sum": {
    "Exigences": 6
   },
+  "chk.var": null,
   "ct.chk": null,
   "ct.layer": null,
   "ct.n": 0,
@@ -881,6 +883,12 @@
   },
   "uml.uc.chk": null,
   "uml.uc.n": 0,
-  "uml.vues": null
+  "uml.vues": null,
+  "var.alloc": null,
+  "var.els": null,
+  "var.fe": null,
+  "var.marq": null,
+  "var.n": null,
+  "var.real": null
  }
 }

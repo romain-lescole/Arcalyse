@@ -60,32 +60,33 @@ var CAP_TOUR_EXPLORE=[
   {s:'#cap-elem-tabs', t:_L('🧭 Sous-vues de l\'Explorateur'),
    x:_L('Deux façons de parcourir le modèle : <b>🌳 Arborescence</b> (hiérarchie) et <b>🃏 Cartes</b> (une carte par élément). Le <b>▤ Tableau</b> a son propre bouton dans la barre.')},
   {s:'#cap-sidebar', t:_L('🏷 Types d\'éléments'),
-   x:_L('Types présents dans le modèle, rangés par couche ARCADIA (OA, SA, LA, PA, EPBS, transverse). Cochez ceux à afficher ; <b>Tout cocher</b>, <b>Aucun</b> et <b>Défaut</b> règlent la liste d\'un coup. La bordure droite se tire pour élargir le panneau.')},
+   x:()=>capTourFmt()!=='capella'?_L('Types présents dans le modèle (métaclasses et stéréotypes), rangés par famille : structure, comportement, exigences, organisation (pour ReqIF : spécifications, relations, types). Cochez ceux à afficher ; <b>Tout cocher</b>, <b>Aucun</b> et <b>Défaut</b> règlent la liste d\'un coup. La bordure droite se tire pour élargir le panneau.'):_L('Types présents dans le modèle, rangés par couche ARCADIA (OA, SA, LA, PA, EPBS, transverse). Cochez ceux à afficher ; <b>Tout cocher</b>, <b>Aucun</b> et <b>Défaut</b> règlent la liste d\'un coup. La bordure droite se tire pour élargir le panneau.')},
   {s:'#cap-stat-chips', t:_L('📊 Répartition'),
-   x:_L('Nombre total d\'éléments du modèle et répartition par couche.')},
+   x:()=>capTourFmt()!=='capella'?_L('Nombre total d\'éléments du modèle et répartition par famille.'):_L('Nombre total d\'éléments du modèle et répartition par couche.')},
   {s:'#cap-search', t:_L('🔍 Recherche'),
    x:_L('Filtre les éléments affichés par nom, type ou identifiant.')},
   {s:'#cap-tb-layer-grp', t:_L('🧱 Couches'),
-   x:_L('Limite l\'affichage à une couche ARCADIA (<b>Tous</b> pour les réafficher). <b>⬇ CSV</b> exporte les éléments affichés.')},
+   x:()=>capTourFmt()!=='capella'?_L('Limite l\'affichage à une famille (<b>Tous</b> pour les réafficher ; <b>Autres</b> : éléments sans famille). <b>⬇ CSV</b> exporte les éléments affichés.'):_L('Limite l\'affichage à une couche ARCADIA (<b>Tous</b> pour les réafficher). <b>⬇ CSV</b> exporte les éléments affichés.')},
   {s:'#cap-result-count', t:_L('🔢 Résultat'),
    x:_L('Nombre d\'éléments qui passent les filtres (types, recherche, couche).')}
 ];
 /** Étape commune aux vues d'une famille (barre de famille sous la barre principale). */
 var CAP_TOUR_FLUX={s:'#cap-flux-tabs', t:_L('🗂 Barre de famille'),
-  x:_L('Les vues d\'une même famille du menu, réunies : pour <b>🧱 Composants & interfaces</b>, une puce par couche (SA, LA, PA comportement, PA nœuds) et 🧩 Ports ; pour <b>ƒ Fonctions & échanges</b> et <b>⚡ Chaînes & scénarios</b>, un sélecteur de <b>couche commun</b>, mémorisé d\'une vue à l\'autre (la couche choisie dans 🧱 est reprise par ƒ). À droite, la pastille 🩺 mène aux contrôles de la vue dans 💚 Santé.')};
+  x:()=>capTourFmt()!=='capella'?_L('Les vues d\'une même famille du menu, réunies : pour <b>🧬 UML / SysML v1</b>, 🧬 Modèle (éléments, liaisons, diagnostics de validation), puis 🧱 Blocs & ports, 🗃 Interfaces, ƒ Activités & flux, 🚦 Machines à états, 🎬 Interactions, 🎯 Cas d\'utilisation, 📦 Paquetages & classes (celles sans données sont grisées). À droite, la pastille 🩺 mène aux contrôles de la vue dans 💚 Santé.'):_L('Les vues d\'une même famille du menu, réunies : pour <b>🧱 Composants & interfaces</b>, une puce par couche (SA, LA, PA comportement, PA nœuds) et 🧩 Ports ; pour <b>ƒ Fonctions & échanges</b> et <b>⚡ Chaînes & scénarios</b>, un sélecteur de <b>couche commun</b>, mémorisé d\'une vue à l\'autre (la couche choisie dans 🧱 est reprise par ƒ). À droite, la pastille 🩺 mène aux contrôles de la vue dans 💚 Santé.')};
 /** Rôle de chaque sous-vue de 🔬 Analyses (texte de l'étape « analyse affichée »). */
 var CAP_TOUR_ANA_TXT={
-  sante:_L('<b>💚 Santé & contrôles</b> : la porte d\'entrée unique des contrôles — score global et par couche, puces <b>Vue</b> et case <b>En défaut seulement</b>, et <b>Ouvrir ↗</b> sur chaque ligne pour aller au contrôle dans sa vue. Les pastilles 🩺 des vues mènent ici, filtrées.'),
+  sante:_L('<b>💚 Santé & contrôles</b> : la porte d\'entrée unique des contrôles — score global et par couche (ou par famille hors Capella), puces <b>Vue</b> et case <b>En défaut seulement</b>, et <b>Ouvrir ↗</b> sur chaque ligne pour aller au contrôle dans sa vue. Les pastilles 🩺 des vues mènent ici, filtrées.'),
   trace:_L('<b>🧬 Traçabilité inter-couches</b> : couverture des réalisations OA → SA → LA → PA (fonctions, composants, échanges), chemins de traçabilité et liens, avec les éléments non réalisés.'),
   caps:_L('<b>🎯 Capacités & missions</b> : qui participe à quelle capacité ou mission (acteurs, fonctions, chaînes) et les capacités sans contenu.'),
   states:_L('<b>🚦 Modes & états</b> : machines d\'états, transitions et éléments disponibles dans chaque mode ou état.'),
-  diff:_L('<b>⚖ Comparaison de versions</b> : chargez une autre version du fichier .capella. Le rapport classe les changements en 8 catégories (créations, suppressions, renommages, descriptions, propriétés, liens, déplacements, types), sur 4 niveaux (Synthèse → Complet), et se copie dans Word, Outlook, Teams ou Excel.'),
+  diff:_L('<b>⚖ Comparaison de versions</b> : chargez une autre version du même modèle (même format, nom de fichier libre). Le rapport classe les changements en 8 catégories (créations, suppressions, renommages, descriptions, propriétés, liens, déplacements, types), sur 4 niveaux (Synthèse → Complet), et se copie dans Word, Outlook, Teams ou Excel.'),
   reqs:_L('<b>🧾 Exigences</b> : exigences du modèle, éléments qui les satisfont et exigences non couvertes.'),
   pvmt:_L('<b>🎛 Propriétés</b> : propriétés et valeurs (PVMT) appliquées aux éléments.'),
   data:_L('<b>🗃 Données & interfaces</b> : classes, types de données, Exchange Items et interfaces, avec leurs utilisations.'),
   cts:_L('<b>🔒 Contraintes</b> : contraintes du modèle et éléments contraints.'),
   sysml:_L('<b>🧩 SysML v2</b> : éléments, liaisons et diagnostics du modèle SysML v2 lu par le lecteur d\'Arcature.'),
   reqif:_L('<b>📑 ReqIF</b> : les exigences d\'un fichier .reqif ou d\'une archive .reqifz — document de chaque spécification (chapitres numérotés, textes et images, valeurs des attributs), relations, types, pièces jointes, contrôles.'),
+  variants:_L('<b>🎚 Variantes (150 %)</b> : variantes d\'un modèle 150 % (add-on Filtering de Capella, propriétés PVMT ou pure::variants) — 📊 avancement de chaque variante, ✅ reste à faire, ▦ éléments × variantes, 🏷 critères et variantes, 🩺 contrôles de cohérence.'),
   status:_L('<b>🔖 Statut de revue</b> : statut Capella (DRAFT, TO BE REVIEWED, REVIEWED…) et commentaire de revue de chaque élément — liste, répartition, contrôles ; pont vers 💬 Revue.'),
   cats:_L('<b>🏷 Catégories d\'échanges</b> : échanges classés par ExchangeCategory, ComponentExchangeCategory ou PhysicalLinkCategory, taux de catégorisation ; une catégorie filtre les vues de flux.'),
   rec:_L('<b>📦 REC / RPL</b> : éléments réutilisables (REC) et leurs répliques (RPL), comparés élément par élément : manquants, ajoutés, renommés, types différents.'),
@@ -108,6 +109,23 @@ var CAP_TOUR_ANA_TXT={
 /** Présentations proposées par une sous-vue d'analyse (étape « 🖼 Présentations » de la visite de 🔬 Analyses), par `capAnaSub` ;
  * l'étape est sautée pour une sous-vue absente de la table ou sans boutons de présentation affichés. */
 var CAP_TOUR_ANA_PRES={
+  trace:_L('<b>▦ Couverture</b> : pour chaque passage de couche (OA → SA → LA → PA → EPBS) et chaque catégorie, éléments réalisés et réalisants · <b>⛓ Chemins de traçabilité</b> : chaque élément suivi d\'une couche à l\'autre · <b>🔗 Liens</b> : tous les liens de réalisation.'),
+  caps:_L('<b>▣ Cartes</b> : une carte par capacité ou mission, rangées par couche (fonctions, chaînes, acteurs impliqués) · <b>▦ Matrice</b> : capacités × acteurs / composants, × fonctions, × chaînes, ou missions × capacités · <b>🩺 Contrôles</b> : capacités sans contenu, missions sans capacité…'),
+  states:_L('<b>◈ Machines à états</b> : une carte par machine (modes, états, transitions), avec son porteur et sa couche · <b>▦ Fonctions × états</b> : les fonctions disponibles dans chaque mode ou état · <b>🩺 Contrôles</b>.'),
+  reqs:_L('<b>📋 Liste</b> : identifiant, nom, type, texte, attributs, éléments et exigences liés · <b>▦ Couverture</b> : exigences liées ou non au modèle · <b>🩺 Contrôles</b>.'),
+  pvmt:_L('<b>▦ Grille par groupe</b> : une ligne par élément, une colonne par propriété du groupe choisi · <b>Σ Synthèse</b> : chaque propriété, ses valeurs et les éléments qui la portent · <b>📖 Définitions</b> : domaines, groupes et propriétés définis · <b>🩺 Contrôles</b>.'),
+  data:_L('<b>📦 Exchange Items</b> : mécanisme, éléments portés, échanges fonctionnels et de composants qui les transportent · <b>🔌 Interfaces</b> : leurs Exchange Items et les ports qui les fournissent ou les requièrent · <b>🧱 Classes & types</b> : classes, types de données et leurs utilisations · <b>🩺 Contrôles</b>.'),
+  cts:_L('<b>📋 Liste</b> : contrainte, rôle, expression et langage, éléments contraints, propriétaire · <b>🩺 Contrôles</b>.'),
+  status:_L('<b>📋 Liste</b> : élément, type, statut Capella et commentaire de revue · <b>▦ Répartition</b> : nombre d\'éléments par statut · <b>🩺 Contrôles</b>.'),
+  cats:_L('<b>🏷 Catégories</b> : une ligne par catégorie d\'échanges, avec ses échanges · <b>⇆ Échanges</b> : les échanges et leurs catégories · <b>🩺 Contrôles</b> : échanges sans catégorie, catégories vides…'),
+  rec:_L('<b>🧬 Répliques</b> : chaque RPL, son REC et sa conformité (manquants, ajoutés, types, renommés) · <b>📦 REC</b> : les éléments réutilisables et leurs répliques · <b>⇄ Comparaison</b> : une réplique comparée élément par élément à son REC · <b>🩺 Contrôles</b>.'),
+  libs:_L('<b>📚 Bibliothèques</b> : les fichiers .capella référencés, chargés ou non · <b>🔗 Références</b> : chaque référence externe, l\'élément et l\'attribut qui la portent, sa cible · <b>🩺 Contrôles</b>.'),
+  deploy:_L('<b>🖧 Déploiement</b> : chaque nœud, les comportements qui y sont déployés et leurs fonctions, puis les comportements non déployés · <b>🧰 EPBS</b> : les Configuration Items et ce qu\'ils réalisent · <b>🩺 Contrôles</b> : échanges entre nœuds non reliés…'),
+  xlay:_L('<b>◎ À partir d\'un élément</b> : le graphe des réalisations d\'un élément choisi, couche par couche · <b>▦ Toute une catégorie</b> : toutes les réalisations d\'une catégorie (fonctions, composants, échanges…).'),
+  sysml:_L('<b>🧩 Éléments</b> : un élément par ligne (famille, genre, nom, déclaration, fichier…) · <b>🔗 Liaisons</b> : typage, spécialisation, satisfy, allocate… · <b>🩺 Diagnostics</b> : les diagnostics du lecteur.'),
+  uml:_L('<b>🧩 Éléments</b> : un élément par ligne (famille, type, métaclasse, nom, propriétaire, fichier…) · <b>🔗 Liaisons</b> : les relations lues (typage, généralisation, satisfy, allocate…) · <b>🩺 Diagnostics</b> : la validation du modèle.'),
+  sante:_L('<b>📋 Contrôles</b> : un contrôle par ligne, avec sa vue, sa gravité et son nombre de lignes · <b>▦ Par vue</b> : contrôles par vue (et par couche pour Capella) · <b>📈 Historique</b> : le score de chaque calcul, gardé dans la page.'),
+  variants:_L('<b>📊 Avancement</b> : une ligne par variante, une barre par mesure (cliquez-la pour le reste à faire) · <b>✅ Reste à faire</b> · <b>▦ Éléments × variantes</b> : présence de chaque élément · <b>🏷 Critères & variantes</b> : sources, ✚ nouvelle variante, propriétés PVMT, fichiers pure::variants · <b>🩺 Contrôles</b>.'),
   umlblk:_L('<b>◧ Vue Blocs</b> : blocs dessinés avec leurs ports · <b>◎ Voisinage</b> : un bloc au centre, ses voisins de part et d\'autre · <b>≡ Vue Ligne</b> : un connecteur par ligne · <b>▦ Matrice</b> : bloc × bloc · <b>🩺 Contrôles</b> : ports sans connecteur, connecteurs incohérents…'),
   umlact:_L('<b>⇶ Couloirs</b> : une activité, un couloir par porteur · <b>◧ Vue Blocs</b> : actions dessinées avec leurs pins · <b>≡ Vue Ligne</b> : un flux par ligne · <b>▦ Matrice</b> : action × action · <b>🩺 Contrôles</b> : pins sans flux, actions isolées…'),
   reqif:_L('<b>📄 Document</b> : plan à gauche, exigences dans l\'ordre, images des textes · <b>▤ Exigences</b> : une colonne par attribut, ▤ Ouvrir dans ▤ Tableau · <b>🔗 Relations</b> par type · <b>🧩 Types</b> · <b>🖼 Pièces jointes</b> (absentes signalées) · <b>🩺 Contrôles</b>.'),
@@ -121,6 +139,94 @@ var CAP_TOUR_ANA_PRES={
   umlpar:_L('<b>📋 Blocs de contrainte</b> · <b>🔗 Liaisons</b> des paramètres · <b>🔒 Contraintes</b> UML · <b>🩺 Contrôles</b> : paramètres non liés, unités différentes…'),
   umlsoft:_L('<b>📦 Paquetages</b> (instabilité, abstraction, cycles) · <b>🧮 Classes</b> · <b>🖧 Déploiement</b> · <b>🩺 Contrôles</b>.')
 };
+/** Étapes propres à une sous-vue de 🔬 Analyses (clé `capAnaSub`), insérées après ses présentations ; zones cherchées dans la sous-vue affichée. */
+var CAP_TOUR_ANA_PLUS={
+  trace:[
+    {s:'#ana-box p.ana-help', one:true, t:_L('▼ ▲ Lecture'), x:_L('<b>▼ réalisés</b> : éléments de la couche haute réalisés par au moins un élément de la couche basse ; <b>▲ réalisants</b> : éléments de la couche basse qui réalisent un élément de la couche haute. Un clic sur une cellule liste les éléments non tracés.')},
+    {s:'#ana-box .cap-chx-opt', t:_L('☑ Options'), x:_L('<b>Fonctions feuilles</b> : les fonctions mères (conteneurs) sont ignorées. <b>Inclure les TransfoLink</b> : compter aussi les liens créés par les transitions automatiques de Capella.')}],
+  caps:[
+    {s:'#ana-box #ana-cp-mx', t:_L('▦ Croisement'), x:_L('Ce que la matrice croise : capacités × acteurs / composants, × fonctions, × chaînes, ou missions × capacités.')},
+    {s:'#ana-box #ana-cp-q', t:_L('🔍 Recherche'), x:_L('Filtre les cartes par nom de capacité ou de mission.')}],
+  status:[
+    {s:'#ana-box p.ana-help', one:true, t:_L('📊 Avancement'), x:_L('Nombre d\'éléments qui ont un statut parmi les éléments nommés, et combien portent un commentaire de revue.')},
+    {s:'#ana-box [data-xs]', t:_L('🧹 Filtres'), x:_L('Par statut (brouillon, en attente, revu, refusé…), par type d\'élément, avec ou sans commentaire de revue Capella.')},
+    {s:'#ana-box [data-strev]', one:true, t:_L('💬 Vers la Revue'), x:_L('Crée un commentaire 💬 Revue sur l\'élément, à partir de son statut et de son commentaire Capella.')}],
+  reqs:[
+    {s:'#ana-box p.ana-help', one:true, t:_L('📊 Couverture'), x:_L('Nombre d\'exigences et part de celles liées au modèle.')},
+    {s:'#ana-box [data-xs]', t:_L('🧹 Filtres'), x:_L('Par famille (Requirements Viewpoint, exigences Capella), par type d\'exigence, par valeur d\'attribut, liées ou non au modèle.')}],
+  pvmt:[
+    {s:'#ana-box [data-xs="grp"]', t:_L('🎛 Groupe'), x:_L('Le groupe de propriétés montré par la grille (« domaine › groupe »), ou les propriétés simples.')}],
+  cats:[
+    {s:'#ana-box [data-ecgo]', one:true, t:_L('▸ Vers la vue de flux'), x:_L('Ouvre la vue de flux (ƒ⇆, 🔀, 🔌) filtrée sur cette catégorie.')}],
+  rec:[
+    {s:'#ana-box p.ana-help', one:true, t:_L('📊 Conformité'), x:_L('Nombre de répliques et part de celles conformes à leur REC ; ⇄ sur une ligne ouvre sa comparaison.')}],
+  deploy:[
+    {s:'#ana-box p.ana-help', one:true, t:_L('📊 Synthèse'), x:_L('Nœuds, comportements déployés ou non, échanges de composants entre nœuds qu\'aucun lien physique ne relie.')}],
+  variants:[
+    {s:'#ana-box [data-vsrc]', t:_L('🧩 Source des variantes'), x:_L('Où lire les variantes : add-on Filtering de Capella, propriétés PVMT ou fichiers pure::variants (une source à la fois).')}],
+  xlay:[
+    {s:'#ana-box #xl-q', t:_L('🔍 Élément de départ'), x:_L('Cherchez la fonction, la chaîne, le composant ou l\'échange dont suivre les réalisations.')},
+    {s:'#ana-box #xl-dir, #ana-box .xl-opt', t:_L('⇅ Sens et contenu'), x:_L('Réalisations vers le haut, vers le bas ou les deux ; <b>Fonctions des chaînes</b> : sous chaque chaîne, ses fonctions et leurs liens.')},
+    {s:'#ana-box [data-xl-x]', t:_L('⬇ Exports'), x:_L('Le graphe en SVG ou PNG, ses liens en CSV ; 📑 au dossier de relecture, 📐 au tableau de bord.')}],
+  sysml:[
+    {s:'#ana-box [data-syfam]', t:_L('🏷 Familles'), x:_L('Une puce par famille (structure, comportement, exigences, organisation) avec son nombre d\'éléments : clic pour n\'en garder qu\'une.')}],
+  uml:[
+    {s:'#ana-box [data-syfam]', t:_L('🏷 Familles'), x:_L('Une puce par famille (structure, comportement, exigences, organisation) avec son nombre d\'éléments : clic pour n\'en garder qu\'une ; <b>Toutes familles</b> les réaffiche.')},
+    {s:'#ana-box [data-xs="type"]', t:_L('🧩 Type'), x:_L('Limite la liste à un type (stéréotype SysML ou métaclasse UML), avec le nombre d\'éléments de chacun.')},
+    {s:'#ana-box [data-xv="diag"]', t:_L('🩺 Diagnostics'), x:_L('La validation d\'Arcature : contraintes d\'UML 2.5.1, de SysML 1.7 et d\'UAF 1.2, classées par impact — 🔴 incohérence, 🟡 à vérifier, 🟢 écart de forme. Chaque règle a sa fiche (ce qu\'elle dit, cause probable, gravité, correction). Les diagnostics comptent dans 💚 Santé.')}],
+  sante:[
+    {s:'#ana-box p.ana-help', one:true, t:_L('💯 Score'), x:_L('Score sur 100 : chaque ligne en défaut pèse selon sa gravité (ℹ, ⚠, ✖), rapportée au nombre d\'éléments nommés du modèle ; niveau atteint et rappel de la formule. Chaque calcul est noté dans 📈 Historique.')},
+    {s:'#ana-box .sante-vues', t:_L('▦ Vue et défauts'), x:_L('Une puce par vue qui a des contrôles, avec son nombre de contrôles en défaut : clic pour ne garder que cette vue. <b>En défaut seulement</b> masque les contrôles sans ligne et trie les autres du plus fréquent au moins fréquent.')},
+    {s:'#ana-box [data-sgo]', one:true, t:_L('Ouvrir ↗'), x:_L('Ouvre l\'onglet 🩺 Contrôles de la vue concernée, sur ce contrôle, pour en voir les lignes.')},
+    {s:'#ana-box [onclick="capChkDialog()"]', t:_L('🩺 Profil'), x:_L('Le profil des contrôles : activer ou désactiver un contrôle, changer sa gravité et son poids dans le score, régler les seuils ; il s\'enregistre avec la page et s\'exporte en .json.')}],
+  umltrace:[
+    {s:'#ana-box p.ana-help', one:true, t:_L('⇶ Niveaux'), x:_L('Chaque élément tracé reçoit un niveau d\'après son genre : exigences, cas d\'utilisation, fonctionnel, logique, physique. Les liens satisfy, verify, deriveReqt, refine, trace, allocate et les réalisations relient les niveaux : un élément d\'un niveau intermédiaire devrait être relié vers le haut et vers le bas.')}],
+  umlreq:[
+    {s:'#ana-box p.ana-help', one:true, t:_L('📊 Couverture'), x:_L('Nombre d\'exigences et de feuilles, part des feuilles satisfaites et vérifiées (directement, ou par une exigence qui en dérive).')},
+    {s:'#ana-box [data-xs="etat"]', t:_L('✔ État'), x:_L('Ne garde que les exigences non satisfaites, satisfaites, non vérifiées ou vérifiées.')}],
+  umlpar:[
+    {s:'#ana-box [data-xv="bind"]', t:_L('🔗 Liaisons'), x:_L('Chaque paramètre d\'un usage de bloc de contrainte et la valeur à laquelle un BindingConnector le lie ; un paramètre sans liaison est signalé dans 🩺 Contrôles, comme des unités différentes de part et d\'autre.')}],
+  umlblk:[
+    {s:'#ana-box #ub-grp', t:_L('🎯 Contexte'), x:_L('Le bloc de contexte dont les parts et les connecteurs sont montrés (nombre de connecteurs entre parenthèses), ou tous.')},
+    {s:'#ana-box #ub-name, #ana-box #ub-ex', t:_L('🔍 Filtres'), x:_L('Filtre par nom de bloc, puis par connecteur ou objet transporté (ItemFlow).')}],
+  umlact:[
+    {s:'#ana-box #ub-grp', t:_L('🎯 Activité'), x:_L('L\'activité montrée (la plus fournie au départ), ou toutes.')},
+    {s:'#ana-box #ub-name, #ana-box #ub-ex, #ana-box [data-cfmb]', t:_L('🔍 Filtres'), x:_L('Filtre par nom d\'action, par flux ou type d\'objet, par genre de nœud et de flux (objet, contrôle).')}],
+  umlstm:[
+    {s:'#ana-box [data-sel], #ana-box [data-dg]', t:_L('🔎 🖼 Sur chaque machine'), x:_L('🔎 ouvre ses états et ses transitions, 🖼 son diagramme calculé (redessiné à partir du modèle).')}],
+  umlseq:[
+    {s:'#ana-box [data-sel], #ana-box [data-dg]', t:_L('🔎 🖼 Sur chaque interaction'), x:_L('🔎 ouvre ses messages dans l\'ordre, 🖼 son diagramme de séquence calculé.')}],
+  umlbudget:[
+    {s:'#ana-box [data-xs="g"], #ana-box [data-xs="r"]', t:_L('⚖ Grandeur et racine'), x:_L('La grandeur cumulée (masse, puissance…, avec son nombre de valeurs) et le bloc racine de l\'arbre des parts.')}]
+};
+/** @returns {string} nom de la sous-vue de 🔬 Analyses affichée (menu ❓ Aide ▾ → 🎯 Visite de cette vue) */
+function capTourAnaLabel(){
+  const it=typeof CAP_NAV_ITEMS!=='undefined'&&CAP_NAV_ITEMS.find(i=>i.k==='ana:'+capAnaSub);
+  return it?it.l:_L('🔬 Analyses');
+}
+/**
+ * Visite de la sous-vue de 🔬 Analyses affichée : la vue elle-même, sa barre de famille, ses présentations, ses étapes propres
+ * (`CAP_TOUR_ANA_PLUS`), recherche, exports, résultat, contrôles, puis les autres analyses du format.
+ * @returns {Object[]} étapes
+ */
+function capTourAnaSteps(){
+  const sub=capAnaSub, plus=CAP_TOUR_ANA_PLUS[sub]||[], propres=new Set(['uml','sante']);
+  return [
+    {s:'#cap-flux-tabs .phl-toggle-btn.active, #cap-tb-views .cap-nav-grp.active', one:true, t:capTourAnaLabel(), x:()=>CAP_TOUR_ANA_TXT[capAnaSub]||_L('Analyse en cours.')},
+    CAP_TOUR_FLUX,
+    {s:'#ana-box [data-pv], #ana-box [data-xv], #ana-box [data-trv], #ana-box [data-cpv], #ana-box [data-smv], #ana-box [data-xl-mode]', t:_L('🖼 Présentations'), x:()=>CAP_TOUR_ANA_PRES[capAnaSub]||_L('Les présentations de l\'analyse affichée.'), skip:()=>!CAP_TOUR_ANA_PRES[capAnaSub]},
+    ...plus,
+    {s:'#ana-box .phl-filter-bar', one:true, skip:()=>!!(CAP_TOUR_ANA_PRES[capAnaSub]||CAP_TOUR_ANA_PLUS[capAnaSub]), t:_L('🧰 Options'), x:_L('Présentations, filtres et export CSV propres à l\'analyse affichée.')},
+    {s:'#ana-box [data-xl], #ana-box [data-cpl], #ana-box [data-sml]', t:_L('🧱 Couche'), x:_L('Limite la vue à une couche ARCADIA, avec le nombre d\'éléments de chacune ; <b>Toutes</b> les réaffiche.')},
+    {s:'#ana-box [data-xq]', t:_L('🔍 Recherche'), x:_L('Filtre les lignes de la présentation affichée ; le compteur à côté donne le nombre de lignes gardées.')},
+    {s:'#ana-box [data-xcsv], #ana-box #ub-csv, #ana-box #ub-html, #ana-box #ub-html-all, #ana-tr-csv, #ana-cp-csv, #ana-sm-csv', t:_L('⬇ Exports'), x:_L('<b>⬇ CSV</b> (ou Excel, selon ⚙ Préférences) de la présentation affichée ; <b>⬇ HTML</b> : rapport de la vue, ou de toutes les vues de la famille.')},
+    {s:'#ana-recalc', t:_L('↻ Recalculer'), x:_L('Les résultats sont gardés en mémoire ; ce bouton les recalcule (utile après une mise à jour du modèle).')},
+    {s:'#ana-box .cap-tf-scroll, #ana-box .ud-liste, #ana-box #ub-main, #ana-box table, #ana-box .phl-comp-card', one:true, t:_L('📋 Résultat'), x:_L('Les tableaux se filtrent (champ <i>Filtrer…</i> sous les titres) et se redimensionnent ; clic sur un élément pour ouvrir son détail.')},
+    {s:'#ana-box [data-xv="diag"], #ana-box [data-pv="diag"], #ana-box [data-cpv="diag"], #ana-box [data-smv="checks"]', skip:()=>propres.has(capAnaSub), t:_L('🩺 Contrôles'), x:_L('Les contrôles de la vue : chacun compte dans 💚 Santé & contrôles, et le 🩺 profil règle sa gravité ou le désactive.')},
+    {s:'#cap-tb-views .cap-nav-grp', t:_L('🔬 Les autres analyses'), x:()=>capTourAnaIntro()||_L('Les analyses s\'ouvrent par les menus 🏗 Architecture et ✅ Vérifier (ou 🔍 Ctrl+K) : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes.')}
+  ];
+}
+
 /** Visite 🗺 Relation Map : si aucun élément n'est au centre du graphe, en choisit un qui donne un visuel lisible —
  * la racine de l'arborescence si son graphe compte entre 6 et 60 nœuds, sinon le premier élément très relié
  * qui tient dans cette fourchette (à défaut, le plus proche) ; le graphe est ensuite ajusté à la fenêtre. */
@@ -136,11 +242,58 @@ function capTourRmCtx(){
   if(best){ setCtx(best.id); setTimeout(()=>document.getElementById('b-fit')?.click(),50); }
 }
 
+/* ── ⚖ Comparaison de versions ───────────────────────────────────────────── */
+
+/** Montre un onglet de ⚖ Comparaison de versions pour une étape de sa visite. @param {string} v - 'modele' ou 'diag' */
+function capTourDiffVue(v){
+  if(_capDg.vue===v) return;
+  const b=document.querySelector(`#cap-view-analyses [data-dgv="${v}"]`); if(b) b.click(); else _capDg.vue=v;
+}
+/** @returns {boolean} vrai si l'onglet 🔲 Diagrammes de la comparaison a deux versions à comparer */
+function capTourDiffDg(){ const R=typeof capDgComparer==='function'?capDgComparer():null; return !!(R&&R.ref); }
+/** Visite de ⚖ Comparaison de versions (🎓 de son en-tête, ou 🎯 Visite de cette vue) : chargement, versions, rapport, diagrammes. */
+var CAP_TOUR_DIFF=[
+  {pre:()=>capTourDiffVue('modele'), t:_L('⚖ Comparaison de versions'),
+   x:()=>_L('Compare le modèle affiché à une autre version du même modèle — .capella, .mdzip, .xmi, .uml, .sysml, .kpar, .reqif… —, même enregistrée sous un autre nom : les éléments sont appariés par leur identifiant. Deux onglets : le <b>rapport</b> des changements et les <b>diagrammes</b> modifiés.')+(capDiffDoc?'':_L('<br><i>Aucune autre version n\'est chargée : les étapes du rapport et des diagrammes apparaîtront quand elle le sera.</i>'))},
+  {pre:()=>capTourDiffVue('modele'), s:'#cap-view-analyses .ana-diff-load', t:_L('📂 Charger une autre version'),
+   x:_L('Choisissez le fichier de l\'autre version, dans le format du modèle affiché (un fichier d\'un autre format est refusé) ; son nom peut être différent. Pour UML, les fichiers annexes (.notation…) sont repris de l\'ouverture. Après une 🔄 mise à jour du modèle, la version remplacée est déjà chargée ici.')},
+  {pre:()=>capTourDiffVue('modele'), s:'#cap-view-analyses .ana-diff-file', t:_L('🏷 Les deux versions'),
+   x:_L('À gauche l\'<b>ancienne version</b> (la référence), à droite la <b>nouvelle</b> : nom du fichier, outil d\'origine, nombre d\'éléments et de diagrammes, date du fichier.')},
+  {pre:()=>capTourDiffVue('modele'), s:'#ana-df-swap', skip:()=>!capDiffDoc, t:_L('⇄ Inverser'),
+   x:_L('Par défaut, la version chargée est l\'ancienne. ⇄ en fait la nouvelle : utile quand le modèle affiché est la version d\'avant. ⇄ Avant / après suit ce sens.')},
+  {pre:()=>capTourDiffVue('modele'), s:'#cap-view-analyses .dg-tabs', t:_L('🗂 Deux onglets'),
+   x:_L('<b>🔷 Modèle</b> : le rapport des changements des éléments. <b>🔲 Diagrammes</b> : diagrammes ajoutés, supprimés, renommés, modifiés, ou touchés par les changements du modèle.')},
+  {pre:()=>capTourDiffVue('modele'), s:'#cap-view-analyses .dr-bar', one:true, skip:()=>!capDiffDoc, t:_L('📊 Niveau et préréglages'),
+   x:_L('<b>Synthèse</b> (compteurs par catégorie, couche, famille), <b>Simple</b> (une phrase par changement), <b>Détaillé</b> (chaque propriété avant → après), <b>Complet</b> (avec identifiants et chemins). Préréglages : 📰 Notes de version, 🔍 Revue, 🛠 Audit.')},
+  {pre:()=>capTourDiffVue('modele'), s:'#cap-view-analyses [data-cat], #dr-fam, #dr-q, #dr-by', skip:()=>!capDiffDoc, t:_L('🧹 Catégories et filtres'),
+   x:_L('8 catégories à cocher (créations, suppressions, renommages, descriptions, propriétés, liens, déplacements, types), couches, famille de types, recherche, regroupement (catégorie, couche, famille, élément parent). « Rattacher le technique » range allocations, réalisations, valeurs… sous l\'élément qu\'elles concernent.')},
+  {pre:()=>capTourDiffVue('modele'), s:'#cap-view-analyses .dr-actions', skip:()=>!capDiffDoc, t:_L('📋 Copier et exporter'),
+   x:_L('Le rapport tel qu\'affiché (niveau, filtres, lignes décochées) : 📋 Copier mis en forme pour Word, Outlook ou Teams (ou en texte brut, en tableau), ⬇ CSV (une ligne par propriété changée), ⬇ HTML autonome, 🖨 Imprimer ou PDF.')},
+  {pre:()=>capTourDiffVue('modele'), s:'#cap-view-analyses .dr-report', skip:()=>!capDiffDoc, t:_L('📄 Rapport'),
+   x:_L('Une ligne par changement : la case à gauche l\'exclut de la copie et des exports, ↗ ouvre l\'élément dans le panneau de détail.')},
+  {pre:()=>capTourDiffVue('diag'), s:'#cap-view-analyses .dg-head', skip:()=>capTourFmt()!=='capella', t:_L('🔲 .aird de référence'),
+   x:_L('Pour Capella, les diagrammes sont dans le .aird : celui du modèle affiché est comparé à un <b>.aird de référence</b> (📂 Charger…), gardé de lui-même quand le .aird est relu ou remplacé après une 🔄 mise à jour.')},
+  {pre:()=>capTourDiffVue('diag'), s:'#cap-view-analyses .dg-chips', skip:()=>!capDgComparer(), t:_L('🔲 Diagrammes'),
+   x:()=>(capTourFmt()==='capella'?'':_L('Les diagrammes des deux versions du fichier, appariés par identifiant. '))+_L('Un compteur par état (clic : filtrer) : ➕ nouveaux, ➖ supprimés, ✎ renommés, 🧩 contenu modifié (éléments ajoutés ou retirés), 🎨 mise en page / style, ⚠ éléments absents du modèle, 🔷 touchés par le modèle (ils montrent un élément modifié).')},
+  {pre:()=>capTourDiffVue('diag'), s:'#dg-filtre, #dg-q', skip:()=>!capDgComparer(), t:_L('🔍 Filtre'),
+   x:_L('Par défaut, les <b>diagrammes à regarder</b> (ceux qui ont changé) ; ou tous, ou un seul état. Recherche par nom ou type.')},
+  {pre:()=>capTourDiffVue('diag'), s:'#cap-view-analyses .dg-t .dg-tog', one:true, skip:()=>!capTourDiffDg(), t:_L('▸ Détail'),
+   x:_L('Déplie un diagramme : éléments ajoutés au diagramme ou retirés, éléments absents du modèle, éléments modifiés dans le modèle (clic : leur détail).')},
+  {pre:()=>capTourDiffVue('diag'), s:'#cap-view-analyses .dg-act', one:true, skip:()=>!capTourDiffDg(), t:_L('🔲 Ouvrir · ⇄ Avant / après'),
+   x:_L('<b>🔲 Ouvrir</b> : le diagramme dans 🔲 Diagrammes. <b>⇄ Avant / après</b> : ses écarts entre les deux versions, en ◐ fondu ou ◧ volet, avec la surbrillance des éléments ajoutés, retirés, déplacés, renommés.')},
+  {pre:()=>capTourDiffVue('diag'), s:'#cap-view-analyses [data-dg="revue"]', skip:()=>!capTourDiffDg(), t:_L('⇄ Passer en revue'),
+   x:_L('Ouvre le premier diagramme de la liste en avant / après ; dans sa barre, ⏮ ⏭ passent au diagramme précédent ou suivant de la liste et ↩ Comparaison ramène ici.')},
+  {pre:()=>capTourDiffVue('diag'), s:'#cap-view-analyses [data-dg="csv"]', skip:()=>!capDgComparer(), t:_L('⬇ CSV'),
+   x:_L('La liste des diagrammes avec leurs états et les éléments ajoutés ou retirés.')},
+  {pre:()=>capTourDiffVue('modele'), t:_L('✅ À vous'),
+   x:_L('Cette visite se relance par 🎓 en haut de la comparaison, ou par ❓ Aide ▾ → 🎯 Visite de cette vue.')}
+];
+
 /** Visites contextuelles, par vue : clé = '@rm' ou vue Capella (capCurrentView) ; l = nom de la vue,
  * steps = étapes (même format que CAP_TOUR_STEPS). */
 var CAP_TOUR_VIEWS={
   '@rm':{l:_L('🗺 Relation Map'), steps:[
-    {pre:()=>capTourRmCtx(), t:_L('🗺 Relation Map'), x:_L('Graphe centré sur un <b>élément de contexte</b> : ses voisins sont affichés jusqu\'à la profondeur choisie, selon les relations Capella cochées.')},
+    {pre:()=>capTourRmCtx(), t:_L('🗺 Relation Map'), x:()=>capTourFmt()!=='capella'?_L('Graphe centré sur un <b>élément de contexte</b> : ses voisins sont affichés jusqu\'à la profondeur choisie, selon les relations du modèle cochées (liaisons lues par le lecteur d\'Arcature : contenance, typage, généralisation, satisfy, allocate…).'):_L('Graphe centré sur un <b>élément de contexte</b> : ses voisins sont affichés jusqu\'à la profondeur choisie, selon les relations Capella cochées.')},
     {s:'#b-zi,#b-zo,#b-fit', t:_L('🔍 Zoom'),
      x:_L('<b>＋</b> / <b>－</b> zooment (Ctrl++ / Ctrl+-), <b>⊡ Fit</b> ajuste le graphe à la fenêtre (Ctrl+W). La molette zoome aussi et le fond se déplace à la souris.')},
     {s:'#b-ea,#b-ca', t:_L('↕ Ouvrir / fermer tout'),
@@ -156,7 +309,7 @@ var CAP_TOUR_VIEWS={
     {s:'#rm-tabs', t:_L('🗂 Vues'),
      x:_L('Onglets de vues, comme dans ▤ Tableau : chacun retient contexte, profondeur, disposition, filtres et affichage. <b>＋</b> crée une copie, une vue vide ou un préréglage (🧱 Structure, ƒ Fonctionnel, 🔌 Interfaces, 🧬 Traçabilité) ; double-clic pour renommer ; 💾 / 📂 enregistrent ou ouvrent une vue.')},
     {s:'#b-filters', t:_L('⚙ Filtres'),
-     x:_L('Ouvre le tiroir des filtres au-dessus du graphe : à gauche les <b>types d\'éléments</b> (couleur de leur couche ARCADIA), à droite les <b>critères de relation</b> à suivre ; recherche, ☑ / ☐ tout cocher ou décocher, compteurs cochés / total. × ou Échap le referme.')},
+     x:()=>capTourFmt()!=='capella'?_L('Ouvre le tiroir des filtres au-dessus du graphe : à gauche les <b>types d\'éléments</b>, à droite les <b>critères de relation</b> à suivre ; recherche, ☑ / ☐ tout cocher ou décocher, compteurs cochés / total. × ou Échap le referme.'):_L('Ouvre le tiroir des filtres au-dessus du graphe : à gauche les <b>types d\'éléments</b> (couleur de leur couche ARCADIA), à droite les <b>critères de relation</b> à suivre ; recherche, ☑ / ☐ tout cocher ou décocher, compteurs cochés / total. × ou Échap le referme.')},
     {s:'#graph', t:_L('🕸 Graphe'),
      x:_L('<b>Clic</b> sur un nœud : sélection · <b>double-clic</b> : il devient le contexte · <b>clic droit</b> : menu (🔎 Détail à droite, contexte, développer, réduire, masquer) · <b>survol</b> : ses voisins restent en évidence.')},
     {s:'#legend', t:_L('◉ Légende'), x:_L('Relations présentes dans le graphe affiché et leur nombre ; un clic sur le titre replie ou déplie la légende.')},
@@ -164,10 +317,10 @@ var CAP_TOUR_VIEWS={
   ]},
   cards:{l:_L('🃏 Cartes'), steps:[...CAP_TOUR_EXPLORE,
     {s:'#cap-view-cards', t:_L('🃏 Cartes'),
-     x:_L('Une carte par élément, regroupées par couche : type, nom et identifiant. <b>Clic</b> sur une carte : panneau de détail (propriétés, relations, liens).')}]},
+     x:()=>capTourFmt()!=='capella'?_L('Une carte par élément, regroupées par famille : type, nom et identifiant. <b>Clic</b> sur une carte : panneau de détail (propriétés, relations, liens).'):_L('Une carte par élément, regroupées par couche : type, nom et identifiant. <b>Clic</b> sur une carte : panneau de détail (propriétés, relations, liens).')}]},
   tree:{l:_L('🌳 Arborescence'), steps:[CAP_TOUR_EXPLORE[0], CAP_TOUR_EXPLORE[1],
     {s:'#cap-tree-bar', t:_L('🌳 Commandes'), x:_L('<b>🔍 Recherche</b> par nom ou type. <b>🌳 Arbre</b> : les résultats restent dans leurs conteneurs, grisés quand ils ne correspondent pas ; <b>☰ Liste</b> : liste à plat triée par nom avec le chemin des conteneurs (300 lignes au plus). <b>⊞ Tout déplier</b> / <b>⊟ Tout réduire</b>, <b>Niveau 1 · 2 · 3</b> pour déplier jusqu\'à une profondeur, <b>⬇ JSON</b> exporte.')},
-    {s:'#cap-view-tree', t:_L('🌳 Arborescence'), x:_L('Hiérarchie du modèle comme dans Capella. ▶ déplie un nœud ; clic sur un élément pour ouvrir son détail.')}]},
+    {s:'#cap-view-tree', t:_L('🌳 Arborescence'), x:()=>capTourFmt()!=='capella'?_L('Hiérarchie du modèle comme dans l\'outil d\'origine (paquetages, éléments contenus). ▶ déplie un nœud ; clic sur un élément pour ouvrir son détail.'):_L('Hiérarchie du modèle comme dans Capella. ▶ déplie un nœud ; clic sur un élément pour ouvrir son détail.')}]},
   table:{l:_L('▤ Tableau'), steps:[
     {s:'#cap-sidebar', t:_L('🏷 Types de l\'onglet'), x:_L('Types d\'éléments listés dans le tableau, propres à l\'onglet affiché (indépendants des autres vues et des autres onglets). Un nouvel onglet n\'a aucun type coché.')},
     CAP_TOUR_EXPLORE[CAP_TOUR_EXPLORE.length-1],
@@ -186,12 +339,12 @@ var CAP_TOUR_VIEWS={
   home:{l:_L('🏠 Accueil'), steps:[
     {pre:()=>capTourHome('projet'), t:_L('🏠 Accueil'), x:_L('La page d\'accueil du projet, ouverte au chargement d\'un modèle ou d\'un projet. Tout ce qui y est saisi est enregistré dans la page (💾).')},
     {s:'#cap-view-home .hm-bar .tb-grp', t:_L('🗂 Deux espaces'), x:_L('<b>🏠 Accueil</b> : 🏠 Projet (informations). <b>💬 Revue & documents</b> (menu du même nom) : ☑ Check-lists & plans de revue, 📑 Faire relire, 📘 Rapports automatiques.')},
-    {s:'#cap-view-home .hm-head', t:_L('🔷 En-tête du projet'), x:_L('Le modèle et ses couches, puis l\'état des <b>diagrammes</b> (.aird chargé, ou « Ajouter… ») et des <b>bibliothèques</b> : un clic sur la pastille déplie leur état (chargée, fichier absent, cibles absentes, jamais utilisée) avec « Charger le fichier… ». En bas, les vues sans données dans ce modèle.')},
+    {s:'#cap-view-home .hm-head', t:_L('🔷 En-tête du projet'), x:()=>capTourFmt()!=='capella'?_L('Le format et l\'outil d\'origine du modèle, son nombre d\'éléments et 🔄 Mettre à jour…, puis les <b>fichiers du projet</b> : le modèle, ses diagrammes (ou vues calculées : 🔲 Ouvrir), la validation ou la lecture (diagnostics : Voir) et le contenu par famille (structure, comportement, exigences, organisation). En bas, les vues sans données dans ce modèle.'):_L('Le modèle et ses couches, puis l\'état des <b>diagrammes</b> (.aird chargé, ou « Ajouter… ») et des <b>bibliothèques</b> : un clic sur la pastille déplie leur état (chargée, fichier absent, cibles absentes, jamais utilisée) avec « Charger le fichier… ». En bas, les vues sans données dans ce modèle.')},
     {s:'#cap-view-home .hm-taches', t:_L('🚀 Que voulez-vous faire ?'), x:_L('Six tâches courantes, chacune ouvre la bonne vue : parcourir les diagrammes, vérifier la qualité, préparer une revue, comparer deux versions, sortir un tableau Excel, produire un document. ✕ masque la section (⚙ Disposer les cartes pour la réafficher).')},
     {s:'#cap-view-home [data-a="dispo"]', t:_L('⚙ Disposer les cartes'), x:_L('Réorganisez la page comme un tableau de bord : glissez une carte par ⠿ sur une autre, ⇔ change sa largeur, ✕ la masque (＋ pour la réafficher), ↺ revient à la disposition par défaut.')},
     {s:'#cap-view-home [data-carte="fiche"]', t:_L('📝 Fiche projet'), x:_L('Objet, phase, version, responsable, équipe, notes : à remplir librement.')},
     {s:'#cap-view-home [data-carte="docs"]', t:_L('☑ Raccourcis'), x:_L('Vos check-lists et plans de revue : clic pour les ouvrir, ⧉ pour les ouvrir dans une fenêtre séparée ; <b>✚ Check-list rapide</b> en crée une tout de suite.')},
-    {s:'#cap-view-home [data-carte="projet"]', t:_L('🔷 Projet'), x:_L('Fichiers, version de Capella, diagrammes chargés (par couche ; clic sur le nom : 🔲 Diagrammes Capella), dernière mise à jour du modèle (🔄 : en charger une).')},
+    {s:'#cap-view-home [data-carte="projet"]', t:_L('🔷 Projet'), x:()=>capTourFmt()!=='capella'?_L('Fichiers, format et outil d\'origine, diagrammes du fichier (ou vues calculées), nombre d\'éléments, dernière mise à jour du modèle (🔄 : en charger une).'):_L('Fichiers, version de Capella, diagrammes chargés (par couche ; clic sur le nom : 🔲 Diagrammes Capella), dernière mise à jour du modèle (🔄 : en charger une).')},
     {s:'#cap-v-revue', t:_L('💬 Revue & documents'), x:_L('Check-lists, plans de revue, dossiers à faire relire et rapports automatiques sont dans l\'autre espace de cette page, ouvert par le menu <b>💬 Revue & documents</b> ; il a sa propre visite (🎓 dans sa barre, ou ❓ Aide ▾ → 🎯 Visite de cette vue).')}]},
   revdoc:{l:_L('💬 Revue & documents'), steps:[
     {pre:()=>capTourHome('docs'), t:_L('💬 Revue & documents'), x:_L('L\'espace des documents du projet : <b>check-lists et plans de revue</b>, <b>dossiers à faire relire</b> (export HTML à commenter ou Word, réimport des retours) et <b>rapports automatiques</b> produits à partir du modèle. Tout est enregistré dans la page (💾) et suit un changement de langue.')},
@@ -263,6 +416,7 @@ var CAP_TOUR_VIEWS={
   diag:{l:_L('🔲 Diagrammes'), steps:[
     {t:_L('🔲 Diagrammes'), x:()=>!capDiagSy()?_L('Les diagrammes du projet (fichier <b>.aird</b>, à côté du .capella), dessinés comme dans Capella. Lecture seule ; clic sur un élément : son détail.')
       :capSyUml()?_L('Les diagrammes et tableaux <b>enregistrés dans le fichier</b> (Cameo, Enterprise Architect, Papyrus avec le .notation), dessinés par le lecteur d\'Arcature. Même vue que pour Capella : explorateur, carte, ℹ Infos, planches, ⧉ comparaison. Lecture seule ; clic sur un élément : son détail.')
+      :capTourFmt()==='reqif'?_L('Un fichier ReqIF n\'a pas de diagrammes : ses exigences se lisent dans 🔬 📑 ReqIF (document, exigences, relations).')
       :_L('Les <b>vues calculées</b> depuis le texte SysML v2 (générale, interconnexion, états, flux d\'actions), disposées automatiquement. Même vue que pour Capella : explorateur, carte, ℹ Infos, planches, ⧉ comparaison. Clic sur un élément : son détail.')},
     {s:'#cdg-ouvrir', t:_L('📂 Ouvrir le .aird'), x:_L('Le sélecteur s\'ouvre dans le dossier du .capella (Edge / Chrome). Vous pouvez aussi déposer le .aird sur la fenêtre, ou ouvrir directement le <b>📁 Dossier du projet</b> depuis l\'écran d\'accueil : le .capella et ses diagrammes sont chargés ensemble.')},
     {s:'#cdg-infos', t:_L('ℹ Infos'), x:_L('Le panneau de détail présente le diagramme ouvert : type, couche, date de modification, description, élément représenté et éléments affichés (cliquables). Aussi par ℹ au survol d\'un diagramme de l\'explorateur.')},
@@ -309,13 +463,8 @@ var CAP_TOUR_VIEWS={
     {s:'#cap-view-functions .ana-ak,#ana-fn-who', t:_L('🎯 Allocation'), x:_L('Fonctions allouées au système, à un acteur ou non allouées (clic : afficher / masquer, double-clic : uniquement celle-ci) ; la liste choisit un acteur ou un sous-système.')},
     {s:'#ana-fn-csv,#ana-fn-html', t:_L('⬇ Exports'), x:_L('<b>⬇ CSV</b> et <b>📄 Dossier fonctionnel</b> : document HTML avec une section par fonction (description, allocation, échanges, traçabilité).')},
     {s:'#cap-view-functions .phl-filter-bar + *', one:true, t:_L('📋 Résultat'), x:_L('Clic sur une fonction pour ouvrir son détail.')}]},
-  analyses:{l:_L('🔬 Analyses'), steps:[
-    {s:'#cap-tb-views .cap-nav-grp', t:_L('🔬 Analyses'), x:_L('Les analyses s\'ouvrent par les menus 🏗 Architecture et ✅ Vérifier (ou 🔍 Ctrl+K) : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes.')},
-    {s:'#cap-tb-views .cap-nav-grp.active, #cap-flux-tabs .phl-toggle-btn.active', t:_L('🔎 Analyse affichée'), x:()=>CAP_TOUR_ANA_TXT[capAnaSub]||_L('Analyse en cours.')},
-    {s:'#ana-box [data-pv], #ana-box [data-xv]', t:_L('🖼 Présentations'), x:()=>CAP_TOUR_ANA_PRES[capAnaSub]||_L('Les présentations de l\'analyse affichée.'), skip:()=>!CAP_TOUR_ANA_PRES[capAnaSub]},
-    {s:'#ana-recalc', t:_L('↻ Recalculer'), x:_L('Les résultats sont gardés en mémoire ; ce bouton les recalcule (utile après une mise à jour du modèle).')},
-    {s:'#ana-box .phl-filter-bar', one:true, t:_L('🧰 Options'), x:_L('Présentations, filtres et export CSV propres à l\'analyse affichée.')},
-    {s:'#ana-box', t:_L('📋 Résultat'), x:_L('Les tableaux se filtrent (champ <i>Filtrer…</i> sous les titres) et se redimensionnent ; clic sur un élément pour ouvrir son détail.')}]},
+  get analyses(){ return {l:capTourAnaLabel(), steps:capTourAnaSteps()}; },   // visite propre à la sous-vue affichée (capAnaSub)
+  diff:{l:_L('⚖ Comparaison de versions'), steps:CAP_TOUR_DIFF},
   dashboard:{l:_L('📐 Tableau de bord'), steps:[
     {t:_L('📐 Tableau de bord'), x:_L('Pages d\'indicateurs, graphiques et tableaux sur le modèle, à composer soi-même et à imprimer.')},
     {s:'#cap-view-dashboard .dash-tabs', t:_L('🗂 Pages'), x:_L('Une page par tableau de bord ; <b>＋</b> en crée une, ✎ ou double-clic la renomme.')},
@@ -487,12 +636,28 @@ function capTourDoc(k, contient){
   capHomeRender();
 }
 
+/** Format du modèle affiché, pour les textes des visites : 'capella', 'uml' (UML / SysML v1), 'sysml2' ou 'reqif'. @returns {string} */
+function capTourFmt(){
+  if(!(typeof capDiagSy==='function'&&capDiagSy())) return 'capella';
+  const f=_capSysml.format; return f==='sysml2'?'sysml2':f==='reqif'?'reqif':'uml';
+}
+/** Première étape de la visite de 🔬 Analyses, hors Capella : les analyses proposées pour le format du modèle. @returns {string} '' pour Capella */
+function capTourAnaIntro(){
+  const f=capTourFmt(), deb=_L('Les analyses s\'ouvrent par les menus 🏗 Architecture et ✅ Vérifier (ou 🔍 Ctrl+K) ; en mode Essentiel, seules celles qui ont des données dans ce modèle y figurent. ');
+  if(f==='uml') return deb+_L('Pour un modèle UML / SysML v1 : la famille 🧬 UML / SysML v1 (modèle, blocs & ports, interfaces, activités, machines à états, interactions, cas d\'utilisation, paquetages), 🧾 exigences SysML, ⇶ traçabilité par niveaux, 🔒 paramétrique & contraintes, ⚖ budgets, 💚 santé & contrôles, ⚖ comparaison de versions.');
+  if(f==='sysml2') return deb+_L('Pour un modèle SysML v2 : 🧩 SysML v2 (éléments, liaisons, diagnostics), 💚 santé & contrôles, ⚖ comparaison de versions.');
+  if(f==='reqif') return deb+_L('Pour un fichier ReqIF : 📑 ReqIF (document, exigences, relations, types, pièces jointes, contrôles), 💚 santé & contrôles, ⚖ comparaison de versions.');
+  return '';
+}
+
+
 /** Clé de la vue affichée pour les visites contextuelles.
  * @returns {string} '@rm', 'revdoc' (espace 💬 Revue & documents de la vue home) ou vue Capella (capCurrentView)
  */
 function capTourCtxKey(){
   if(currentMode!=='capella') return '@rm';
   if(capCurrentView==='home'&&typeof _capHomeUi!=='undefined'&&['docs','dos','rap'].includes(_capHomeUi.tab)) return 'revdoc';   // 💬 Revue & documents
+  if(capCurrentView==='analyses'&&capAnaSub==='diff') return 'diff';   // ⚖ Comparaison de versions
   return capCurrentView;
 }
 

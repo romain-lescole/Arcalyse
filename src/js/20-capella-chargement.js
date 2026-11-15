@@ -136,7 +136,7 @@ let _capSources=null, _capSourcesPend=null;
  * @param {{nom:string, chemin:string, lire:function():Promise<File>}[]} fichiers - Fichiers
  * @param {string} [choix] - Chemin du modèle principal choisi parmi plusieurs (dossier UML : rouvert sans redemander)
  */
-function capSourcesNoter(k, nom, fichiers, choix){ _capSourcesPend={k, nom, fichiers, choix:choix||''}; }
+function capSourcesNoter(k, nom, fichiers, choix){ _capSourcesPend={k, nom, fichiers, choix:choix||''}; if(k==='syd'||k==='rqd') _capWatchSrcPend=null; }   // dossier SysML / ReqIF : pas de fichier unique à suivre (40)
 /** Lit un fichier en base 64. @param {Blob} f @returns {Promise<string>} */
 function capLangB64(f){ return new Promise((ok, ko)=>{ const r=new FileReader(); r.onload=()=>ok(String(r.result).replace(/^data:[^,]*,/,'')); r.onerror=()=>ko(r.error); r.readAsDataURL(f); }); }
 /**
@@ -449,6 +449,10 @@ function capLoadFile(f, handle, confirme){
   if (typeof capUmlReconnait==='function' && (capUmlReconnait(name) || capUmlAnnexe(name))) { capUmlOuvrir(f, handle, confirme); return; }   // 🧬 UML / SysML v1 (.uml, .xmi, .mdzip, .qea : 88)
   if (ext==='aird' && capDiagDispo()) { capDiagLoadAird(f, handle); return; }   // 🔲 Diagrammes Capella du projet
   if (ext==='html' || ext==='htm') { capProjetPageOuvrir(f, handle, confirme); return; }   // 📄 projet de travail (page HTML enregistrée)
+  if (['xfm','vdm','ccfm'].includes(ext) && typeof capVarPvFichiers==='function') {   // 🟦 pure::variants : variantes du modèle ouvert (103)
+    if (capLoaded) { capVarPvFichiers([f]).then(()=>capVarOpen('def')); } else capWelcomeStatus(_L('Ouvrez d\'abord le modèle Capella, puis ses fichiers pure::variants.'), 'err');
+    return;
+  }
   const absent=CAP_FORMATS.find(F=>[...F.ext, ...F.annexes].includes(ext)&&!capFormatsDispo().includes(F));   // version réduite à un format (CAP_EDITION)
   if (absent) { capWelcomeStatus(capFormatAbsentMsg(name, absent),'err'); capShowWelcome(true); return; }
   if (ext==='aird' || ext==='afm') {
@@ -496,6 +500,7 @@ function capLoadFile(f, handle, confirme){
  * @param {string} name - Nom du fichier
  */
 function capApplyXmlDoc(doc, name){
+  if(typeof capAvNoterModele==='function') capAvNoterModele(doc, name);   // ⇄ version d'avant du même fichier (104)
   if(typeof capSysmlAvantModele==='function') capSysmlAvantModele(doc);   // 🧩 lecture SysML oubliée pour un autre document (87)
   cap_xmlDoc=doc;
   capAllElements=[];
@@ -519,6 +524,7 @@ function capApplyXmlDoc(doc, name){
   if(typeof capTourResumeAfterLoad==='function') capTourResumeAfterLoad();   // 🚀 Bien démarrer : 2e temps
   if(typeof capRevOnModelLoad==='function') capRevOnModelLoad();   // 💬 Revue : commentaires à vérifier sur ce modèle
   if(typeof capLibOnModelLoad==='function') capLibOnModelLoad();   // 📚 bibliothèques du dossier du projet référencées par ce modèle (72)
+  if(typeof capVarOnModelLoad==='function') capVarOnModelLoad();   // 🟦 fichiers pure::variants du dossier du projet (103)
   if(typeof capAutoBanner==='function') capAutoBanner();   // ⚙ enregistrement automatique : fichier à choisir
 }
 
@@ -604,10 +610,11 @@ function capUpdateWelcome(){ capFormatsPoser(); capShowWelcome(!capLoaded); }
   const fin=document.getElementById('cw-folder-input');
   fin.addEventListener('click',ev=>ev.stopPropagation());
   fin.addEventListener('change',()=>{
+    const tous=new Map([...fin.files].map(f=>[(f.webkitRelativePath||f.name).split('/').slice(1).join('/')||f.name, f]));   // 🖼 tout le dossier : images des diagrammes (54)
     const l=[...fin.files].map(f=>{ const p=(f.webkitRelativePath||f.name).split('/'); return {nom:f.name, chemin:p.slice(1).join('/')||f.name, lire:()=>Promise.resolve(f), h:null}; })
       .filter(f=>f.chemin.split('/').length<=2||/(^|\/)[^/]+_rpy\/[^/]+$/i.test(f.chemin));   // dossier « _rpy » d'un projet Rhapsody : toujours lu
     fin.value='';
-    if(l.length) capProjectFromFiles(l);
+    if(l.length) capProjectFromFiles(l, async c=>tous.get(c)||null);
   });
   zone.addEventListener('click',ev=>{ if(!ev.target.closest('button,a,input,.cw-card,.cw-tips,.cw-projet')) browse(); });   // clic sur le fond du cadre : sélecteur de tous les formats
   // Clic hors de la zone quand un modèle est chargé : referme la surimpression
@@ -725,7 +732,7 @@ function capRunBulk(fn){
 function capBuildTypeRegistry(){
   capTypeRegistry={};
   for(const el of capAllElements){
-    if(!capTypeRegistry[el.typeName])capTypeRegistry[el.typeName]={count:0,layer:el.layer,checked:!CAP_TECHNICAL_TYPES.has(el.typeName)};
+    if(!capTypeRegistry[el.typeName])capTypeRegistry[el.typeName]={count:0,layer:el.layer,fam:el.attrs.famille||'?',checked:!CAP_TECHNICAL_TYPES.has(el.typeName)};   // fam : famille d'un modèle SysML, UML ou ReqIF (groupes de la barre latérale)
     capTypeRegistry[el.typeName].count++;
   }
   capEnabledTypes=new Set(Object.keys(capTypeRegistry).filter(t=>capTypeRegistry[t].checked));
@@ -1179,14 +1186,16 @@ function capRenderCurrentView(){
   capRenderSidebar();
 }
 
-/** Met à jour les puces de comptage OA/SA/LA/PA/EPBS/Shared/total dans la sous-barre. */
+/** Met à jour les puces de comptage de la sous-barre (total, puis par couche OA/SA/LA/PA/EPBS/Shared d'un modèle Capella ou par
+ * famille d'un modèle SysML, UML ou ReqIF) et les boutons de filtre par groupe (`capGroupesBoutons`, 21). */
 function capUpdateStatChips(){
+  capGroupesBoutons();
   const chips=document.getElementById('cap-stat-chips'); if(!chips) return;
-  const total=capAllElements.length;
+  const total=capAllElements.length, cap=capMxFormat()==='capella';
   const byLayer={};
-  for(const el of capAllElements){byLayer[el.layer]=(byLayer[el.layer]||0)+1;}
+  for(const el of capAllElements){const g=capGroupeExplo(el,cap); byLayer[g]=(byLayer[g]||0)+1;}
   chips.innerHTML='<span style="font-size:11px;color:var(--c-dim);font-weight:600;margin-right:2px">'+total+' total</span>'+
-    Object.entries(CAP_LAYERS).map(([k,v])=>{const c=byLayer[k]||0;if(!c)return'';
-      return`<span style="font-size:11px;color:${v.color};font-family:monospace;background:${v.color}22;padding:2px 6px;border-radius:4px;font-weight:600">${k} ${c}</span>`;
+    capGroupesExplo().map(v=>{const c=byLayer[v.k]||0;if(!c)return'';
+      return`<span style="font-size:11px;color:${v.color};font-family:monospace;background:${v.color}22;padding:2px 6px;border-radius:4px;font-weight:600" title="${capEsc(v.label)}">${capEsc(cap?v.k:v.court)} ${c}</span>`;
     }).join('');
 }

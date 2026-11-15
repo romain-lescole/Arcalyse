@@ -217,7 +217,53 @@ function capRenderStates(box){
   };
 }
 /* ── 4. COMPARAISON DE VERSIONS ─────────────────────────────────── */
+/**
+ * Ligne d'informations d'une des deux versions de l'en-tête de ⚖ Comparaison.
+ * @param {boolean} comparee - Vrai : la version chargée pour comparaison ; faux : le modèle affiché
+ * @returns {string} HTML ('' si rien n'est connu)
+ */
+function capDiffInfoHtml(comparee){
+  const sy=typeof _capSysml!=='undefined'&&_capSysml.lecture;
+  let t;
+  if(comparee){ if(!capDiffDoc) return '';
+    let nb=0; try{ const L=capDiffLu, uml=L&&(L.format==='uml'||L.format==='sysml1'); nb=L&&typeof L.vues==='function'?L.vues().filter(v=>!v.tableau&&!(uml&&v.origine==='calculee')).length:0; }catch(e){ nb=0; }
+    t=capVersionInfos(capDiffLu, capDiffLu?null:capDiffDoc, capDiffDate, nb); }
+  else t=capVersionInfos(sy?_capSysml.lecture:null, sy?null:cap_xmlDoc, typeof _capWatch!=='undefined'?_capWatch.shownMtime:0,
+    sy?capDiagReps().filter(r=>r.genre!=='tableau').length:(typeof _capDiag!=='undefined'&&_capDiag.airdCharge?_capDiag.nbReps:0));
+  return t?`<span class="ana-dim" style="font-size:11px">${capEsc(t)}</span>`:'';
+}
 let capDiffDoc=null, capDiffName='', capDiffSwap=false; // version chargée pour comparaison, et sens (false : elle est l'ANCIENNE)
+let capDiffLu=null, capDiffDate=0;   // lecture d'Arcature de cette version (SysML, UML, ReqIF : diagrammes comparés par 59) et date de son fichier
+
+/**
+ * Informations d'une version, en une ligne : outil et version (Capella : commentaire en tête du fichier ; UML / SysML v1 : outil,
+ * version du projet et du modèle ; SysML v2 : projet ; ReqIF : outil et version du document), date du fichier, nombre d'éléments
+ * et de diagrammes.
+ * @param {?object} lec - Lecture d'Arcature (null : modèle Capella)
+ * @param {?Document} doc - Document XML de la version
+ * @param {number} [date] - Date du fichier
+ * @param {number} [nbDiag] - Nombre de diagrammes, s'il est connu
+ * @returns {string} texte ('' si rien n'est connu)
+ */
+function capVersionInfos(lec, doc, date, nbDiag){
+  const p=[];
+  try{
+    if(lec){
+      const pr=lec.projet, doc0=Array.isArray(lec.documents)&&lec.documents[0];
+      if(doc0) p.push([doc0.outil, doc0.version].filter(Boolean).join(' '));
+      else if(pr&&(pr.outil||pr.version)) p.push([pr.outil||lec.outil, pr.version].filter(Boolean).join(' '));
+      else if(lec.outil) p.push(lec.outil);
+      if(lec.versionModele) p.push(_L(`modèle ${lec.versionModele}`));
+      p.push(_L(`${lec.elements().length} élément(s)`));
+    } else if(doc){
+      for(const n of doc.childNodes){ if(n.nodeType===8){ const m=/Capella_Version_([\w.]+)/.exec(n.data); if(m){ p.push('Capella '+m[1]); break; } } }
+      p.push(_L(`${doc.querySelectorAll('[id]').length} élément(s)`));
+    }
+  }catch(e){ /* informations facultatives */ }
+  if(nbDiag) p.push(_L(`${nbDiag} diagramme(s)`));
+  if(date) p.push(capWatchDate(date));
+  return p.filter(Boolean).join(' · ');
+}
 
 /** Indexe un document Capella pour la comparaison : pour chaque élément identifié, type, nom, parent,
  * attributs normalisés (listes de références triées) et signature du contenu non identifié (textes, corps…).
@@ -226,7 +272,7 @@ let capDiffDoc=null, capDiffName='', capDiffSwap=false; // version chargée pour
  */
 function capDiffIndex(doc){
   const idx={};
-  const SKIP=new Set(['id','xmi:id','xsi:type']);
+  const SKIP=new Set(['id','xmi:id','xsi:type','ligne','nomQualifie','fichier']);   // modèle lu par un lecteur d'Arcature (87) : fichier source (son nom change d'une version à l'autre), ligne (dans le fichier source, décalée par toute ligne ajoutée plus haut) et nom qualifié (déduit du nom et du propriétaire, déjà comparés)
   for(const el of doc.getElementsByTagName('*')){
     const id=capXId(el); if(!id) continue;
     const attrs={};
@@ -236,6 +282,7 @@ function capDiffIndex(doc){
       if(/^#\S+(\s+#\S+)*$/.test(v.trim())) v=v.trim().split(/\s+/).sort().join(' '); // ordre des références sans importance
       attrs[a.name]=v;
     }
+    if(attrs.nature==='racine'&&/\.(mdzip|xmi|uml|sysml|kpar|qeax?|rpy|reqifz?)$/i.test(attrs.name||'')) delete attrs.name;   // racine nommée d'après le fichier lu : nom sans objet
     let content='';
     for(const ch of el.children) if(!capXId(ch)) content+=`<${ch.tagName}>${ch.textContent.trim()}`;
     let p=el.parentElement; while(p&&!capXId(p)) p=p.parentElement;
@@ -288,10 +335,11 @@ function capRenderDiff(box){
   const cur=capCurrentFileName||_L('modèle chargé');
   const oldName=capDiffSwap?cur:capDiffName, newName=capDiffSwap?capDiffName:cur;
   const head=_L(`<div class="ana-diff-head">
-      <div class="ana-diff-file"><span class="ana-dim">Ancienne version (référence)</span><b>${capEsc(oldName||'—')}</b></div>
+      <div class="ana-diff-file"><span class="ana-dim">Ancienne version (référence)</span><b>${capEsc(oldName||'—')}</b>${capDiffInfoHtml(!capDiffSwap)}</div>
       <button class="cap-lf-btn" id="ana-df-swap" title="Inverser ancienne / nouvelle"${capDiffDoc?'':' disabled'}>⇄</button>
-      <div class="ana-diff-file"><span class="ana-dim">Nouvelle version</span><b>${capEsc(newName||'—')}</b></div>
-      <label class="cw-btn ana-diff-load">📂 ${capDiffDoc?_L('Changer la version à comparer…'):_L('Charger une autre version (.capella)…')}<input type="file" id="ana-df-file"${capIsMobile()?'':' accept=".capella,.melodymodeller,.xml"'} style="display:none"></label>
+      <div class="ana-diff-file"><span class="ana-dim">Nouvelle version</span><b>${capEsc(newName||'—')}</b>${capDiffInfoHtml(capDiffSwap)}</div>
+      <label class="cw-btn ana-diff-load">📂 ${capDiffDoc?_L('Changer la version à comparer…'):_L('Charger une autre version…')}<input type="file" id="ana-df-file"${capIsMobile()?'':` accept="${capEsc(capFormatsAccept())}"`} style="display:none"></label>
+      <button class="cap-lf-btn" onclick="capTourStartView()" title="${_L('Visite guidée de ⚖ Comparaison de versions')}">🎓</button>
     </div>`)+capDgOnglets();
   if(_capDg.vue==='diag'){ box.innerHTML=head+'<div id="ana-dg"></div>'; capDgRender(box.querySelector('#ana-dg')); wire(); return; }   // 🔲 Diagrammes (59-comparaison-aird.js)
   if(!capDiffDoc){
@@ -313,11 +361,12 @@ function capRenderDiff(box){
   function wire(){
     box.querySelector('#ana-df-file')?.addEventListener('change',e=>{
       const file=e.target.files[0]; if(!file) return;
-      const r=new FileReader();
-      r.onload=ev=>{ const doc=new DOMParser().parseFromString(ev.target.result,'application/xml');
-        if(doc.querySelector('parsererror')){ capAlert(_L('Fichier XML invalide'),{level:'err'}); return; }
-        capDiffDoc=doc; capDiffName=file.name; delete _capAnaCache.diff; if(box._drState) box._drState.ex.clear(); capRenderDiff(box); };
-      r.readAsText(file);
+      const fam=capVersionFamille(file.name), cur=capVersionFamilleAffichee();   // même format que le modèle affiché (40)
+      if(fam!==cur){ capAlert(_L(`« ${file.name} » est un fichier ${capVersionFamilleNom(fam)} : le modèle affiché est un modèle ${capVersionFamilleNom(cur)}.`),{level:'err'}); return; }
+      const S=typeof _capSources!=='undefined'&&_capSources;   // UML : .notation et autres fichiers du projet repris de l'ouverture
+      capVersionLire(file, {autres:S&&cur!=='capella'?S.fichiers.filter(x=>x.nom!==file.name):[]})
+        .then(r=>{ capDiffDoc=r.doc; capDiffName=file.name; capDiffLu=r.lecture||null; capDiffDate=file.lastModified||0; delete _capAnaCache.diff; if(typeof _capDg!=='undefined') _capDg.cache=null; if(box._drState) box._drState.ex.clear(); capRenderDiff(box); })
+        .catch(err=>capAlert(_L('Fichier illisible : ')+(err&&err.message||err),{level:'err'}));
     });
     box.querySelectorAll('[data-dgv]').forEach(b=>b.addEventListener('click',()=>{ _capDg.vue=b.dataset.dgv; capRenderDiff(box); }));
     box.querySelector('#ana-df-swap')?.addEventListener('click',()=>{ capDiffSwap=!capDiffSwap; if(box._drState) box._drState.ex.clear(); capRenderDiff(box); });

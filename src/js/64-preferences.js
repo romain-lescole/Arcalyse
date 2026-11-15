@@ -114,12 +114,12 @@ function capPrefDialogFill(ov){
   } else if(t==='suivi'){
     const w=_capWatch, src=w.handle||w.file;
     const per=[[10,'10 s'],[30,'30 s'],[60,_L('1 min')],[300,_L('5 min')]];
-    body=_L(`<div class="cw-d-sub">Détection des nouvelles versions du fichier <b>.capella</b> enregistrées par Capella. Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation ; un bouton 🔄 avec un badge apparaît alors à côté de 📁 Fichier.</div>
+    body=_L(`<div class="cw-d-sub">Détection des nouvelles versions du fichier du modèle (<b>.capella</b>, <b>.sysml</b> / <b>.kpar</b>, <b>.uml</b> / <b>.xmi</b> / <b>.mdzip</b> / <b>.qea</b>, <b>.reqif</b> / <b>.reqifz</b>) enregistrées par l'outil de modélisation. Vous êtes seulement prévenu : la mise à jour n'est jamais appliquée sans votre validation ; un bouton 🔄 avec un badge apparaît alors à côté de 📁 Fichier.</div>
       <label class="cap-pref-row"><input type="checkbox" data-pw="auto"${w.auto?' checked':''}> <span><b>Détecter automatiquement</b> les nouvelles versions, toutes les
         <select data-pw="period">${per.map(([v,l])=>`<option value="${v}"${w.period===v?' selected':''}>${l}</option>`).join('')}</select></span></label>
       <label class="cap-pref-row"><input type="checkbox" data-pw="onFocus"${w.onFocus?' checked':''}> <span><b>Vérifier au retour dans la fenêtre</b></span></label>
       <div class="cap-pref-st">Fichier suivi : <b>${src?capEsc(w.name||capCurrentFileName||'—'):_L('aucun')}</b>${src?(w.handle?_L(' — accès direct, relu automatiquement'):_L(' — accès limité : le fichier est à resélectionner après chaque modification')):''}</div>
-      <div class="cw-d-sub" style="margin-top:10px">La détection s'applique au fichier ouvert par 📂 Fichier .capella… ou 📁 Dossier du projet… (Edge / Chrome : accès direct). Une page enregistrée rouverte ne suit plus de fichier : choisissez-le par 📁 Fichier › 🔄 Suivi du fichier.</div>
+      <div class="cw-d-sub" style="margin-top:10px">La détection s'applique au fichier ouvert par 📂 Ouvrir un modèle… ou 📁 Dossier du projet… (Edge / Chrome : accès direct ; un dossier de .sysml ou de .reqif n'est pas suivi). Une page enregistrée rouverte ne suit plus de fichier : choisissez-le par 📁 Fichier › 🔄 Suivi du fichier.</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><button class="phl-export-btn" data-pa="watch"${capLoaded?'':' disabled'}>🔄 Ouvrir le suivi du fichier…</button></div>`);
   } else if(t==='ctl'){
     body=_L(`<div class="cap-pref-card"><span><b>🩺 Profil de contrôles</b><br><span class="ana-dim">Activer ou désactiver chaque contrôle, changer sa gravité (information, à vérifier, bloquant), régler les seuils ; profil partageable en .json. Il s'applique aux vues, à la 💚 santé et au tableau de bord.</span></span>
