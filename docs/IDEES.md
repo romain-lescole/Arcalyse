@@ -275,3 +275,19 @@ formats ; `tests/mcp.js` sur `Bibliotheque.uml` + `.notation`, `Drone-2026x.mdzi
 ## 📑 ReqIF à côté d'un modèle (version 2)
 
 Ouvrir un `.reqif` / `.reqifz` **en plus** d'un modèle Capella, SysML ou UML et comparer le référentiel d'exigences au modèle : exigences absentes du modèle, modifiées (texte, attributs), présentes dans le modèle mais pas dans le ReqIF, non couvertes (satisfy, traces). À décider : règle de rapprochement (identifiant ReqIF / `ReqIFIdentifier` du Requirements Viewpoint de Capella, ReqIF.ForeignID, attribut « id » d'une exigence SysML, nom), présentation (onglet de 📑 ReqIF, contrôles 🩺, rapport). Version 1 faite le 2026-11-08 (`docs/REQIF.md`).
+
+## 🎚 Variantes : fil de la variabilité à travers les couches (proposition C, retenue le 2026-11-16)
+
+Troisième graphe de 🎚 Variantes, après 🧱 Blocs 150 % et 🔀 Critères → variantes (module 107) : **seuls les éléments
+variables**, rangés en colonnes par couche (OA → SA → LA → PA → EPBS), reliés par leurs **réalisations** (gris) et leurs
+**allocations** (bleu pointillé). Chaque bloc porte, à gauche, une barre de couleur par critère (couleurs fixes de
+`capVarGrCouleurCrit`), ses pastilles et « n / N variantes ». On suit un critère de couche en couche et on voit où il se perd
+ou change. Maquette sur Vehicule-150 : `docs/captures/idee-variantes-couches.png`.
+- **Incohérences à signaler** sur le dessin (et en 🩺 Contrôles) : critères d'un élément différents de ceux de l'élément qu'il
+  réalise ou auquel il est alloué (« Préchauffer le moteur » marqué Diesel + Electrique alors que sa réalisation ne l'est
+  pas), élément variable réalisé par un élément commun (ou l'inverse), élément retenu par aucune variante (« Fournir
+  l'énergie hydrogène »), chaîne de réalisations interrompue dans une variante.
+- **Commandes** : critère mis en évidence (les autres estompés), variante choisie, éléments communs voisins montrés pour le
+  contexte (case), clic → détail, zoom / ⤢ ajuster / SVG / PNG (`capVoisinageWire`, 105).
+- **Mise en page** : colonnes de couches, ordre des blocs par barycentre des liens (comme `capXlSvg` de 🔗 Liens entre
+  couches, 62, qu'on pourrait réutiliser) pour limiter les croisements ; limiter aux N premiers éléments sur un gros modèle.

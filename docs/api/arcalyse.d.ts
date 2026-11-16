@@ -41,7 +41,7 @@ type Filter = string | ((e: Element) => boolean) | {
   where?: (e: Element) => boolean;
 };
 
-/** Business relation names (the relationships of the 🔗 Links view, with Arcature's names). */
+/** Business relation names (the relationships of the detail panel and of the ▤ Table relation columns, with Arcature's names). */
 type Relation =
   | 'source' | 'target'                       // ends of an exchange or a physical link (seen from the exchange)
   | 'allocation'                              // component → function (out), function → component (in)
@@ -115,7 +115,7 @@ interface Element {
   references(attribute?: string): Element[];
   /** Elements that reference this element, optionally through one attribute. */
   referencedBy(attribute?: string): Element[];
-  /** Business relationships (allocations, exchanges, realizations, involvements…), as in the 🔗 Links view. */
+  /** Business relationships (allocations, exchanges, realizations, involvements…), as in the detail panel and the ▤ Table relation columns. */
   links(relation?: Relation, direction?: 'in' | 'out'): Link[];
   toString(): string;
   toJSON(): { id: string; type: string; name: string };

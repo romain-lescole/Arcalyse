@@ -332,6 +332,12 @@
    "dérive de": 3,
    "raffine": 1
   },
+  "relationsEntreFichiers": 0,
+  "valeursParDefaut": 0,
+  "premierTexte": "Le drone doit inspecter une ligne électrique de 10 km sans r",
+  "diagnostics": {
+   "RQ-PIECE": 1
+  },
   "pieces": 4,
   "images": 4,
   "imagesResolues": 3,

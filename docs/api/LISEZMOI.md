@@ -14,12 +14,12 @@ ajoute `analysis`, qui rend les résultats de toutes ses analyses (fonctions, ch
 
 ## Lancer un script
 
-**Dans Arcalyse** : bouton **📜 Scripts** de la barre, **Alt+4**, ou ☰ / Ctrl+K « Scripts » (tiroir en bas des vues).
+**Dans Arcalyse** : menu **💬 Revue & documents › 📜 Scripts** (niveau Complet ; bouton direct s'il est épinglé), **Alt+4**, ou 🔍 Ctrl+K « Scripts » (tiroir en bas des vues).
 Choisir un exemple ou écrire un script, puis **Ctrl+Entrée** (ou ▶ Exécuter). Les éléments affichés dans la sortie
 sont des liens : un clic les ouvre dans le panneau de détail. Les tableaux s'exportent en CSV ; les fichiers produits
 par `out.file` sont proposés au téléchargement. **■ Arrêter** interrompt une boucle sans fin.
 Le script porte sur le modèle **tel qu'il est affiché** ; `model.selection` contient l'élément ouvert dans le panneau
-de détail ; `model.diagrams` les diagrammes du `.aird` s'il est chargé (🔲 Diagrammes).
+de détail ; `model.diagrams` les diagrammes de 🔲 Diagrammes : ceux du `.aird` s'il est chargé (Capella), les vues calculées (SysML v2), les diagrammes et tableaux du fichier (UML / SysML v1).
 
 **Bibliothèque** : 💾 enregistre le script dans le projet (bloc de la 💾 page HTML, repris par 📄 Ouvrir un projet
 de travail), 📂 importe des fichiers `.js`, ⬇ exporte le script affiché.
@@ -35,13 +35,13 @@ retrouvé à la prochaine ouverture (le navigateur peut redemander l'autorisatio
 | élément | `id`, `type`, `fullType`, `layer`, `name`, `summary`, `description`, `review`, `label`, `owner`, `path`, `isSkeleton`, `isTechnical` ; `children(f)`, `descendants(f)`, `findByPath(p)`, `attribute(n)`, `attributes()`, `isA(type)`, `references(attr)`, `referencedBy(attr)`, `links(relation, 'in'/'out')` ; `diagrams` (diagrammes qui le montrent) |
 | diagramme | `id`, `name`, `type`, `code` (LAB, SDFB…), `layer`, `kind`, `target` |
 | `metamodel` | `isA(type, parent)`, `supertypes(type)`, `has(type)`, `types()`, `version` |
-| `analysis` (avec `await`) | `functions()`, `chains()`, `traceability({ leafOnly })`, `capabilities()`, `states()`, `health()`, `requirements()`, `properties()`, `data()`, `constraints()`, `status()`, `categories()`, `rec()`, `libraries()`, `scenarios()`, `ports()`, `functionalExchanges()`, `componentExchanges()`, `physicalLinks()`, `deployment()`, `checks(vue)`, `nameQuality(nom)`, `diagramsOf(élément)` |
+| `analysis` (avec `await`) | `functions()`, `chains()`, `traceability({ leafOnly })`, `capabilities()`, `states()`, `health()`, `requirements()`, `properties()`, `data()`, `constraints()`, `status()`, `categories()`, `rec()`, `libraries()`, `scenarios()`, `ports()`, `functionalExchanges()`, `componentExchanges()`, `physicalLinks()`, `deployment()`, `checks(vue)`, `nameQuality(nom)`, `diagramsOf(élément)` ; `sysml()` (modèle lu par un lecteur d'Arcature : SysML v2, UML / SysML v1 ; `null` pour Capella), `matrix(définition)` (▦ Matrice), `names()` (noms des analyses) |
 | `out` | `print`, `warn`, `error`, `table(lignes, colonnes, {title})`, `csv(lignes, colonnes, {separator})`, `file(nom, texte)`, `progress(fait, total)`, `clear()` ; `console.log` = `out.print` |
 | `ui` (avec `await`) | `ask(question, défaut)`, `confirm(question)`, `choose(question, liste, {multiple})`, `readFile()`, `readCsv()` ; `parseCsv(texte)` |
 
 Filtre : un nom de type (`'Component'` : sous-types compris, héritage du métamodèle de Capella), une fonction, ou un
 objet `{ type, exactType, layer, name (texte ou RegExp), technical, where }`.
-Relations de `links()` : celles de la vue 🔗 Liens — `allocation`, `functionalExchange`, `componentExchange`,
+Relations de `links()` : les relations métier d'Arcalyse (celles du panneau de détail et des colonnes de relations du ▤ Tableau) — `allocation`, `functionalExchange`, `componentExchange`,
 `physicalLink`, `exchangedItem`, `realization`, `involvement`, `exploitation`, `deployment`, `exchangeAllocation`,
 `componentExchangeAllocation`, `portAllocation`, `source`, `target` (extrémités d'un échange) — avec l'élément porteur (`via`).
 

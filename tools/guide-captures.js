@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /**
- * Captures d'écran du guide d'utilisation (docs/GUIDE-UTILISATION.md) : ouvre dist/arcalyse-fr.html dans Chromium
+ * Captures d'écran du guide d'utilisation (sommaire docs/GUIDE-UTILISATION.md, un fichier par chapitre dans docs/guide/) : ouvre dist/arcalyse-fr.html dans Chromium
  * HORS LIGNE, thème Clair, charge le modèle d'exemple IFE et ses diagrammes (.aird), puis parcourt les vues, menus
  * et fenêtres en enregistrant des captures (pleine fenêtre, zones recadrées, boutons isolés, repères numérotés)
  * dans docs/guide/img/.
  *
  * Prérequis : node build.js, puis Playwright (npm i -D playwright && npx playwright install chromium).
- * Lancement : node tools/guide-captures.js [partie…]   (sans argument : toutes les parties ; CHROMIUM_PATH=… pour un Chromium déjà installé)
+ * Lancement : node tools/guide-captures.js [partie…]   (sans argument : toutes les parties ; --forcer : réécrire aussi les captures inchangées ; CHROMIUM_PATH=… pour un Chromium déjà installé)
  */
 'use strict';
 const path = require('path'), fs = require('fs'), zlib = require('zlib'), os = require('os');
@@ -20,6 +20,8 @@ const OUT = path.join(ROOT, 'docs', 'guide', 'img');
 const PAGE = path.join(ROOT, 'dist', 'arcalyse-fr.html');
 const MODEL = path.join(ROOT, 'tests', 'models', 'In-Flight_Entertainment_System.capella');
 const AIRD_GZ = MODEL.replace(/\.capella$/, '.aird.gz');
+/** Dossier provisoire des captures : seules celles qui ont vraiment changé sont recopiées dans OUT à la fin (capturesRanger). */
+const NEUF = fs.mkdtempSync(path.join(os.tmpdir(), 'guide-captures-'));
 let W = 1600; const H = 900;
 fs.mkdirSync(OUT, { recursive: true });
 
@@ -62,7 +64,7 @@ async function shot(name, o = {}) {
     clip.height = Math.min(o.maxH ? clip.y + o.maxH : HH, r.y + r.height + pad) - clip.y;
   }
   if (clip && o.maxH) clip.height = Math.min(clip.height, o.maxH);
-  await p.screenshot({ path: path.join(OUT, name + '.png'), clip: clip || undefined });
+  await p.screenshot({ path: path.join(NEUF, name + '.png'), clip: clip || undefined, animations: 'disabled' });
   console.log('✔ ' + name);
 }
 
@@ -107,7 +109,7 @@ async function each(prefix, list) {
     const el = await p.$(s);
     if (!el || !(await el.isVisible())) { console.log('  ⚠ ' + prefix + n + ' invisible : ' + s); continue; }
     const b = await el.boundingBox();
-    await p.screenshot({ path: path.join(OUT, prefix + n + '.png'), clip: { x: Math.max(0, b.x - 2), y: Math.max(0, b.y - 2), width: b.width + 4, height: b.height + 4 } });
+    await p.screenshot({ path: path.join(NEUF, prefix + n + '.png'), clip: { x: Math.max(0, b.x - 2), y: Math.max(0, b.y - 2), width: b.width + 4, height: b.height + 4 }, animations: 'disabled' });
   }
   console.log('✔ ' + prefix + '* (' + list.length + ')');
 }
@@ -220,7 +222,6 @@ PARTS.rm = async () => {
 PARTS.tableau = async () => {
   await view('table'); await top();
   await shot('20-tableau-vue');
-  await shot('20-tableau-barre', { sel: ['#cap-table-tabs', '#cap-table-toolbar'], pad: 2 });
   const tbs = await p.$$eval('#cap-table-toolbar > *', l => l.length);
   await marks(Array.from({ length: tbs }, (_, i) => `#cap-table-toolbar > :nth-child(${i + 1})`), 'tr');
   await shot('20-tableau-barre-reperes', { sel: ['#cap-table-tabs', '#cap-table-toolbar'], pad: 8 }); await unmark();
@@ -305,14 +306,17 @@ PARTS.flux = async () => {
   for (const [k, nom] of [['fex', '50-fex'], ['oav', '51-oav'], ['csys', '52-csys'], ['cblk', '53-cblk'], ['compex', '54-compex'], ['physlink', '55-physlink'], ['ports', '56-ports'], ['scen', '57-scen']]) {
     await view(k); await top(); await wait(400);
     await shot(nom + '-vue');
-    const n = await p.locator(`#cap-view-${k} .phl-toggle-btn:visible`).count();
-    for (let i = 1; i < n; i++) {
-      const b = p.locator(`#cap-view-${k} .phl-toggle-btn:visible`).nth(i);
-      const lab = ((await b.textContent()) || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '').toLowerCase().slice(0, 20);
+    // Libell\u00e9s relev\u00e9s une fois : un clic redessine la vue (la Vue Blocs ajoute sa propre barre), on retrouve donc chaque bouton par son texte
+    const btns = `#cap-view-${k} .phl-toggle-btn:visible`;
+    const labs = [...new Set(await p.locator(btns).allTextContents())].map(s => s.trim()).filter(Boolean);
+    for (const txt of labs.slice(1)) {
+      const b = p.locator(btns).filter({ hasText: txt }).first();
+      if (!(await b.count())) continue;
+      const lab = txt.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '').toLowerCase().slice(0, 20);
       await b.click(); await wait(700); await top();
       await shot(nom + '-' + lab);
     }
-    if (n) { await p.locator(`#cap-view-${k} .phl-toggle-btn:visible`).nth(0).click(); await wait(500); }
+    if (labs.length) { await p.locator(btns).filter({ hasText: labs[0] }).first().click().catch(() => {}); await wait(500); }
   }
 };
 
@@ -326,6 +330,7 @@ PARTS.diagrammes = async () => {
   await p.evaluate(() => { const r = capDiagReps().find(x => /\[LAB\] Cabin|\[LAB\]/.test(x.nom) && x.genre !== 'tableau') || capDiagReps().find(x => x.genre !== 'tableau'); capDiagOpen(r.uid); });
   await wait(2500);
   await shot('60-diag-ouvert');
+  await shot('60-diag-plan', { sel: '#cdg-plan', pad: 4 });
   await shot('60-diag-barres', { sel: ['#cap-view-diag .cdg-vd-barre, #cap-view-diag .vd-barre, #cap-view-diag [class*=barre]'], pad: 2, maxH: 120 });
   // Clic sur un élément du diagramme → panneau de détail
   const el = await p.$('#vd-svg .vd-f[data-sem]');
@@ -629,26 +634,172 @@ PARTS.sysml = async () => {
   } finally { await p.close(); p = app; }
 };
 
-{ const a = PARTS.aida; delete PARTS.aida; PARTS.aida = a; const s = PARTS.sysml; delete PARTS.sysml; PARTS.sysml = s; }   // AIDA puis Satellite en dernier (remplacent le modèle d'exemple)
+/** .aird d'« avant » fabriqué à partir de celui d'IFE (comme tests/avant-apres.js) : sur [SAB] High Level System Overview,
+ * un nœud décalé de 120 px, un autre retiré, un troisième sous un ancien nom.
+ * @param {string} aird - Texte de l'.aird d'IFE
+ * @returns {string} Texte de la version d'avant
+ */
+function airdAvant(aird) {
+  const i0 = aird.indexOf('name="[SAB] High Level System Overview"');
+  const rep = aird.slice(aird.lastIndexOf('<ownedRepresentationDescriptors', i0), aird.indexOf('>', i0));
+  const uid = (rep.match(/repPath="#([^"]+)"/) || [])[1];
+  const debut = aird.indexOf('<data xmi:type="notation:Diagram"', aird.indexOf(`uid="${uid}"`)), finD = aird.indexOf('</data>', debut);
+  const re = /<children xmi:type="notation:Node" xmi:id="([^"]+)" type="(\d+)" element="([^"]+)"/g, noeuds = [];
+  let m; const seg = aird.slice(debut, finD);
+  while ((m = re.exec(seg))) noeuds.push({ type: m[2], el: m[3], pos: debut + m.index });
+  const fin = q => { let d = 0; const t = /<(\/?)children\b[^>]*?(\/?)>/g; t.lastIndex = q; let x;
+    while ((x = t.exec(aird))) { if (x[1]) { d--; if (d === 0) return x.index + x[0].length; } else if (!x[2]) d++; else if (d === 0) return x.index + x[0].length; } return -1; };
+  const c = noeuds.filter(n => n.type === '2002');
+  const s = aird.slice(c[1].pos, fin(c[1].pos)), k = s.lastIndexOf('<layoutConstraint'), b = s.slice(k, s.indexOf('/>', k) + 2);
+  const edits = [{ p: c[1].pos + k, l: b.length, t: b.replace(/ x="(-?\d+)"/, (q, x) => ` x="${+x - 120}"`) }, { p: c[3].pos, l: fin(c[3].pos) - c[3].pos, t: '' }].sort((x, y) => y.p - x.p);
+  let out = aird; for (const e of edits) out = out.slice(0, e.p) + e.t + out.slice(e.p + e.l);
+  const u = out.indexOf(`uid="${c[2].el}"`), b0 = out.lastIndexOf('<', u), b1 = out.indexOf('>', u);
+  return out.slice(0, b0) + out.slice(b0, b1).replace(/ name="([^"]*)"/, ' name="$1 (ancien nom)"') + out.slice(b1);
+}
+
+/** ⇄ Avant / après sur [SAB] High Level System Overview d'IFE : version d'avant fabriquée, puis l'.aird réel rechargé. */
+PARTS.avantapres = async () => {
+  const aird = zlib.gunzipSync(fs.readFileSync(AIRD_GZ)).toString('utf8');
+  await view('diag');
+  await p.evaluate(A => { capDiagSetAird(A, 'In-Flight_Entertainment_System.aird', null, 0); capDiagSync(); }, airdAvant(aird)); await wait(1500);
+  await p.evaluate(A => { capDiagSetAird(A, 'In-Flight_Entertainment_System.aird', null, 0); capDiagSync(); }, aird); await wait(1500);
+  await p.evaluate(() => { const r = capDiagReps().find(x => x.nom === '[SAB] High Level System Overview'); capDiagOuvrirUid(r.uid); }); await wait(1500);
+  await p.evaluate(() => capAvOuvrir()); await wait(1200);
+  await shot('62-avap-fondu');
+  await p.evaluate(() => { _capAv.mode = 'volet'; _capAv.volet = 45; capAvAppliquer(); }); await wait(600);
+  await shot('62-avap-volet');
+  await p.evaluate(() => { _capAv.mode = 'fondu'; capAvAppliquer(); capAvChercherModifies(); });
+  await p.waitForFunction(() => !_capAv.cherche, null, { timeout: 60000 }); await wait(600);
+  await shot('62-avap-modifies');
+  await p.evaluate(() => capAvFermer()); await wait(400);
+  // ⇄ Liens d'un diagramme PA : menu 🔌 Physical Links / 🔀 Component Exchanges
+  await p.evaluate(() => { const r = capDiagReps().find(x => /^\[PAB\]/.test(x.nom)); capDiagOuvrirUid(r.uid); }); await wait(1500);
+  await p.click('#cdg-liens'); await wait(500);
+  await shot('60-diag-liens-menu', { sel: ['#cdg-liens', '#cdg-liens-menu'], pad: 8 });
+  await esc();
+};
+
+/** ◎ Voisinage de 🔀 Behavior Exchange et de 🔌 Physical Link (Vue Blocs, composant au centre choisi par son nom). */
+PARTS.voisinage = async () => {
+  for (const [k, nom, re] of [['compex', '54-compex-voisinage', 'Server|Manager'], ['physlink', '55-physlink-voisinage', 'Switch']]) {
+    await view(k); await top(); await wait(600);
+    const ok = await p.evaluate(([k, re]) => {
+      const l = [...document.querySelectorAll(`#cap-view-${k} .vsn-ouvrir`)];
+      const b = l.find(x => new RegExp(re).test(x.closest('.fex-box-t')?.textContent || '')) || l[0];
+      if (b) b.click(); return !!b;
+    }, [k, re]);
+    if (!ok) { errs.push(nom + ' : aucun bouton ◎'); continue; }
+    await wait(900);
+    // composant au centre : celui dont le nom répond au motif s'il a des liens, sinon le plus relié
+    const val = await p.evaluate(([k, re]) => {
+      const o = [...document.querySelectorAll(`#cap-view-${k} .vsn-choix option`)].map(x => ({ v: x.value, t: x.textContent, n: +(/\((\d+)\)$/.exec(x.textContent) || [0, 0])[1] }));
+      const m = o.find(x => new RegExp(re).test(x.t) && x.n > 0) || o.sort((a, b) => b.n - a.n)[0]; return m && m.v;
+    }, [k, re]);
+    if (val) { await p.selectOption(`#cap-view-${k} .vsn-choix`, val); await wait(900); }
+    await top(); await shot(nom);
+    const b0 = p.locator(`#cap-view-${k} .phl-toggle-btn:visible`).first(); if (await b0.count()) { await b0.click(); await wait(400); }
+  }
+};
+
+/** Ouvre une page neuve (thème Clair) et y charge un modèle autre que celui d'exemple.
+ * @param {string} fichier - Chemin du modèle
+ */
+async function autreModele(fichier) {
+  const old = p; p = await old.context().newPage(); await old.close();
+  p.on('pageerror', e => { errs.push(e.message); console.log('  ✖ JS : ' + e.message); }); p.on('dialog', d => d.accept());
+  await p.goto('file://' + PAGE.replace(/\\/g, '/')); await p.evaluate(() => applyTheme('light'));
+  await p.setInputFiles('#capella-file-input', fichier);
+  await p.waitForFunction(() => typeof capLoaded !== 'undefined' && capLoaded, null, { timeout: 180000 }); await wait(1500);
+  await p.evaluate(() => document.querySelectorAll('#cap-watch-flash, .cap-toast, #cap-toast').forEach(n => { n.style.display = 'none'; }));
+}
+
+/** Capture chaque sous-vue (boutons data-xv) d'une analyse affichée.
+ * @param {string} nom - Préfixe des fichiers (suivi de la clé `data-xv` de l'onglet)
+ */
+async function sousVues(nom) {
+  const btns = '#cap-view-analyses [data-xv]:visible';
+  const cles = [...new Set(await p.$$eval(btns, l => l.map(b => b.dataset.xv)))];
+  await shot(nom);
+  for (const k of cles.slice(1)) {   // fichier nommé d'après la clé de l'onglet (deux libellés peuvent se ressembler)
+    await p.locator(`#cap-view-analyses [data-xv="${k}"]:visible`).first().click(); await wait(900); await top();
+    await shot(nom + '-' + k);
+  }
+}
+
+/** 🎚 Variantes avec le modèle 150 % Vehicule-150 (add-on Filtering et PVMT). */
+PARTS.variantes = async () => {
+  await autreModele(path.join(ROOT, 'tests', 'models', 'Vehicule-150.capella'));
+  await view('ana:variants'); await top(); await wait(800);
+  await sousVues('70-ana-variants');
+};
+
+/** 📑 ReqIF avec l'archive ExigencesImages.reqifz (textes et images). */
+PARTS.reqif = async () => {
+  await autreModele(path.join(ROOT, 'tests', 'models', 'reqif', 'ExigencesImages.reqifz'));
+  await view('ana:reqif'); await top(); await wait(800);
+  await sousVues('82-reqif');
+  // ▤ Tableau des exigences en 🖼 Texte riche (mise en forme et images des textes)
+  await p.evaluate(() => capReqifVersTableau('')); await wait(1200);
+  const riche = p.locator('#cap-table-toolbar .tbtn', { hasText: 'Texte riche' }).first();
+  if (!(await riche.evaluate(e => e.classList.contains('active')))) { await riche.click(); await wait(900); }
+  await wait(3000); await p.evaluate(() => document.querySelectorAll('#cap-watch-flash, .cap-toast, #cap-toast').forEach(n => { n.style.display = 'none'; }));
+  await top(); await shot('20-tableau-texte-riche');
+};
+
+/** 🃏 Cartes d'un modèle SysML v2 (VehiculeDemo) : familles au lieu des couches ARCADIA. */
+PARTS.familles = async () => {
+  await autreModele(path.join(ROOT, 'tests', 'models', 'VehiculeDemo.sysml'));
+  await view('cards'); await top(); await wait(800);
+  await shot('30-explorateur-cartes-sysml');
+};
+
+{ for (const k of ['aida', 'variantes', 'reqif', 'familles', 'sysml']) { const f = PARTS[k]; delete PARTS[k]; PARTS[k] = f; } }   // modèles autres que l'exemple en dernier (ils le remplacent)
+
+/** Écart toléré entre deux versions d'une capture, en pixels (au-delà de 15 % d'écart de couleur, pour ignorer le tramage de la palette de 256 couleurs) : lissage, curseur… */
+const CAPT_SEUIL = 40;
+
+/** Range les captures du dossier provisoire : allège chacune (palette de 256 couleurs, ImageMagick facultatif), puis ne recopie
+ * dans docs/guide/img/ que les nouvelles et celles dont l'image a changé — une capture identique n'est pas réécrite, l'historique
+ * git ne grossit donc pas à chaque régénération. Sans ImageMagick, la comparaison se fait octet par octet.
+ * @param {boolean} [forcer] - Recopier toutes les captures, même inchangées
+ */
+function capturesRanger(forcer) {
+  const { spawnSync } = require('child_process');
+  const im = !spawnSync('convert', ['-version']).error;
+  const n = { neuves: 0, changees: 0, inchangees: 0 };
+  for (const f of fs.readdirSync(NEUF).filter(f => f.endsWith('.png'))) {
+    const src = path.join(NEUF, f), dst = path.join(OUT, f);
+    if (im) spawnSync('convert', [src, '-colors', '256', 'PNG8:' + src]);
+    let pareil = false;
+    if (!forcer && fs.existsSync(dst)) {
+      if (fs.readFileSync(src).equals(fs.readFileSync(dst))) pareil = true;
+      else if (im) {   // compare écrit le nombre de pixels différents sur stderr ; tailles différentes : erreur, donc changée
+        const r = spawnSync('compare', ['-metric', 'AE', '-fuzz', '15%', src, dst, 'null:'], { encoding: 'utf8' });
+        const ae = parseFloat(r.stderr); pareil = r.status !== 2 && isFinite(ae) && ae <= CAPT_SEUIL;
+      }
+    }
+    if (pareil) n.inchangees++;
+    else { n[fs.existsSync(dst) ? 'changees' : 'neuves']++; fs.copyFileSync(src, dst); }
+  }
+  fs.rmSync(NEUF, { recursive: true, force: true });
+  console.log(`✔ ${n.neuves} nouvelle(s), ${n.changees} changée(s), ${n.inchangees} inchangée(s) non réécrite(s)` + (im ? ' — PNG 256 couleurs' : ' — ImageMagick absent : images non allégées, comparées octet par octet'));
+}
 
 if (require.main === module) (async () => {
-  const want = process.argv.slice(2);
+  const want = process.argv.slice(2);   // parties demandées ; --forcer : recopier toutes les captures, même inchangées
   const exe = process.env.CHROMIUM_PATH;   // Chromium déjà installé (sinon : npx playwright install chromium), comme tests/smoke.js
   const browser = await chromium.launch(exe ? { executablePath: exe } : {});
   await setup(browser);
   for (const [k, fn] of Object.entries(PARTS)) {
     if (k !== 'accueil' && !(await p.evaluate(() => typeof capLoaded !== 'undefined' && capLoaded))) await load();
-    if (want.length && !want.includes(k)) continue;
+    if (want.some(w => !w.startsWith('--')) && !want.includes(k)) continue;
     console.log('— ' + k);
     try { await fn(); } catch (e) { errs.push(k + ' : ' + e.message); console.log('  ✖ ' + k + ' : ' + e.message.split('\n')[0]); }
     await unmark(); await esc(); await esc();
     await p.evaluate(() => { const d = document.getElementById('cap-detail'); if (d) d.style.display = 'none'; });
   }
   await browser.close();
-  // Allègement des images (palette de 256 couleurs, ImageMagick facultatif) : les captures d'interface s'y prêtent bien
-  try { const { execFileSync } = require('child_process');
-    for (const f of fs.readdirSync(OUT).filter(f => f.endsWith('.png'))) execFileSync('convert', [path.join(OUT, f), '-colors', '256', 'PNG8:' + path.join(OUT, f)]);
-    console.log('✔ Images allégées (PNG 256 couleurs)'); } catch (e) { console.log('ℹ ImageMagick absent : images non allégées'); }
+  capturesRanger(want.includes('--forcer'));
   if (errs.length) { console.error('\n✖ ' + errs.length + ' problème(s) :\n  - ' + errs.join('\n  - ')); process.exit(1); }
   console.log('\n✔ Captures enregistrées dans docs/guide/img/');
 })();

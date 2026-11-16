@@ -128,12 +128,15 @@ function releve() {
       relationMap: compte(MODEL.relations.filter(r => String(r.type).startsWith('sysml:')), r => r.type), vuesVides: [...capNavVides()].sort(),
       vues: Object.fromEntries(capSyVuesListe().map(v => { const vue = capSyVue(v.cle); return [v.sigle + ' ' + v.nom, { formes: vue.formes.length, liens: vue.liens.length, texte: vue.texte.length }]; })) };
   }
-  // 📑 ReqIF (101) : objets par spécification et par type, relations, contrôles, pièces jointes, images résolues
+  // 📑 ReqIF (101) : objets par spécification et par type, relations (dont celles d'un fichier à l'autre d'une archive), valeurs par
+  // défaut, début du premier texte (encodage), diagnostics du lecteur, contrôles, pièces jointes, images résolues
   if (typeof capReqifLec === 'function' && capReqifLec()) {
     const lec = capReqifLec(), Q = capReqifObjets();
     R.reqif = { documents: lec.documents.length, specifications: Q.specs.map(s => s.nom + ':' + s.n), objets: Q.list.length, titres: Q.list.filter(o => o.titre).length,
       parType: compte(Q.list, o => o.e.typeReqif || '(sans)'), identifiants: Q.list.filter(o => o.e.identifiant).length, attributs: Q.attrs.slice().sort(),
-      relations: compte(Q.rels, r => r.rel), pieces: lec.fichiers.length, images: Q.list.reduce((s, o) => s + o.e.images, 0),
+      relations: compte(Q.rels, r => r.rel), relationsEntreFichiers: Q.rels.filter(r => { const x = lec.element(r.src), y = lec.element(r.tgt); return x && y && x.fichier !== y.fichier; }).length,
+      valeursParDefaut: Q.list.reduce((n, o) => n + o.vals.filter(v => !v.renseigne && v.defaut).length, 0), premierTexte: ((Q.list.find(o => !o.titre && o.e.texte) || { e: {} }).e.texte || '').slice(0, 60),
+      diagnostics: compte(lec.diagnostics, d => d.code), pieces: lec.fichiers.length, images: Q.list.reduce((s, o) => s + o.e.images, 0),
       imagesResolues: Q.list.reduce((s, o) => s + (capReqifTexteHtml(o.id).match(/<img [^>]*src="blob:/g) || []).length, 0),
       controles: Object.fromEntries(capReqifChecks().map(c => [c.title, c.items.length])) };
   }

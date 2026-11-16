@@ -51,15 +51,15 @@ La lecture elle-même est gardée dans `_capSysml.lecture` pour ce que le XML ne
 - Lecture d'un `.sysml`, d'une `.kpar` (octets), d'un dossier de `.sysml` (noms résolus d'un fichier à l'autre, nœud de projet).
 - Éléments, hiérarchie, attributs, références résolues, liaisons métier (typage, spécialisation, sous-ensemble, redéfinition, composition, référence, connexion, flux, liaison, allocation, succession, transition, perform, exhibit, satisfy, verify, sujet, acteur, inclusion, dépendance, import, métadonnée), diagnostics (fichier, ligne, code, règle, message, élément), textes.
 - **Vues calculées** du lecteur (SysML v2 n'a pas de fichier de diagrammes) : vue générale (GV), d'interconnexion (IV), des états (STV), du flux d'actions (AFV), disposées automatiquement, en visuel (SVG, thème clair ou sombre, clic → élément) ou en texte, exportables.
-- Tout ce qui est générique dans Arcalyse : 🌳 Arborescence, ▦ Cartes, ▤ Tableau, panneau de détail, 🔍 Ctrl+K, 🗺 Relation Map, 💬 Revue, 📑 dossiers, 💾 page enregistrée (éléments), ⚖ comparaison de deux documents XML.
+- Tout ce qui est générique dans Arcalyse : 🌳 Arborescence, ▦ Cartes, ▤ Tableau, panneau de détail, 🔍 Ctrl+K, 🗺 Relation Map, 💬 Revue, 📑 dossiers, 💾 page enregistrée (éléments).
+- 🔄 **Suivi du fichier** `.sysml` / `.kpar` (relu par le lecteur, delta puis mise à jour, vue gardée ; un dossier de `.sysml` n'est pas suivi), ⚖ **comparaison de deux versions** (onglet 🔲 Diagrammes : vues calculées des deux lectures comparées, sans `.aird`) et ⇄ **avant / après** d'une vue calculée (`node tests/suivi.js`, `node tests/avant-apres.js`).
 - Versions française, anglaise et multilingue (lecteur dans la langue de la page).
 
 ## Ce qui n'est pas couvert
 
 - **Écriture** : rien n'est modifié (Arcalyse est en lecture seule depuis la 3.0).
 - **Mise en page manuelle** des vues : elles sont disposées automatiquement à chaque calcul, rien n'est déplaçable ni enregistré (pas de fichier de diagrammes en SysML v2) ; pas de filtres (ports, étiquettes…) ni d'animation de simulation (c'est l'interface d'Arcature). Les notes de 💬 Revue posées sur une vue sont retrouvées par la clé de la vue (`sy:<genre>:<id de l'élément>`, stable d'une lecture à l'autre tant que le texte ne change pas de structure).
-- Pas de couche ARCADIA (tout est « Transverse ») : les moteurs Capella (fonctions, échanges, chaînes, traçabilité, exigences…) rendent des résultats vides.
-- Pas de 🔄 suivi du fichier `.sysml` (le suivi relit du XML) ni de ⚖ comparaison dédiée.
+- Pas de couche ARCADIA : les éléments sont rangés par familles (STR structure, BEH comportement, REQ exigences & cas, ORG organisation) ; les vues propres à Capella (fonctions, échanges, chaînes, traçabilité, exigences…) n'ont pas de données : retirées des menus en mode Essentiel, grisées en mode Complet.
 - Une 💾 page enregistrée avec un modèle SysML rouvre le XML converti sans la lecture : la vue 🧩, les vues calculées et la section du détail sont alors vides (relire le `.sysml`).
 - La bibliothèque standard de SysML v2 n'est connue que par ses noms (`ISQ::mass`…), pas détaillée.
 
