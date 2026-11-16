@@ -352,6 +352,12 @@
    "Dépend de": 1,
    "Raffine": 1
   },
+  "relationsEntreFichiers": 0,
+  "valeursParDefaut": 5,
+  "premierTexte": "Le véhicule doit peser moins de 1 500 kg en ordre de marche.",
+  "diagnostics": {
+   "RQ-HORS-SPEC": 1
+  },
   "pieces": 0,
   "images": 0,
   "imagesResolues": 0,

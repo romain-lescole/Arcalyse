@@ -182,7 +182,7 @@ function capDrGroups(ens, by){
 /** Modèle du rapport (indépendant du format) : en-tête, synthèse, groupes.
  * @param {object[]} items - Éléments (capDrBuild)
  * @param {object} st - État (niveau, filtres, exclusions)
- * @param {object} meta - {oldName,newName}
+ * @param {object} meta - {oldName, newName, oldInfo, newInfo : informations de chaque version (capDiffInfoTexte, 32), faits, alertes (capDiffConstats, 32)}
  * @returns {object} Rapport
  */
 function capDrModel(items, st, meta){
@@ -195,7 +195,8 @@ function capDrModel(items, st, meta){
   const filt=[st.cats.size<CAP_DR_CATS.length&&_L('catégories : ')+CAP_DR_CATS.filter(c=>st.cats.has(c.k)).map(c=>c.l).join(', '),
     st.layers.size&&_L('couches : ')+[...st.layers].join(', '), st.fams.size&&_L('familles : ')+[...st.fams].map(capDrFamLabel).join(', '),
     st.q.trim()&&_L(`recherche « ${st.q.trim()} »`), st.ex.size&&_L(`${st.ex.size} ligne(s) exclue(s)`)].filter(Boolean);
-  return {title:_L('Comparaison de versions'), oldName:meta.oldName, newName:meta.newName, date:new Date().toLocaleDateString('fr-FR'),
+  return {title:_L('Comparaison de versions'), oldName:meta.oldName, newName:meta.newName, oldInfo:meta.oldInfo||'', newInfo:meta.newInfo||'',
+    faits:(meta.faits||[]).map(capDrSansHtml), alertes:(meta.alertes||[]).map(capDrSansHtml), date:new Date().toLocaleDateString('fr-FR'),
     total:ens.length, cnt, byLayer, byFam, filt, level:st.level, groups:capDrGroups(ens, st.by), all, ens};
 }
 
@@ -209,7 +210,9 @@ function capDrRichHtml(R){
     ${CAP_DR_CATS.filter(c=>R.cnt[c.k]).map((c,i)=>`<tr><td style="${td}"><span style="color:${c.c}">${c.i}</span> ${E(c.l)}</td>${R.byLayer.map(r=>`<td style="${td}text-align:right">${r.v[CAP_DR_CATS.indexOf(c)]||''}</td>`).join('')}<td style="${td}text-align:right"><b>${R.cnt[c.k]}</b></td></tr>`).join('')}</table>`);
   let h=_L(`<div style="font-family:Segoe UI,Arial,sans-serif;font-size:10.5pt">
     <h2 style="font-size:14pt;margin:0 0 4px">⚖ ${E(R.title)}</h2>
-    <div style="color:#555;margin-bottom:6px">${E(R.oldName||'—')} → ${E(R.newName||'—')} · ${E(R.date)} · <b>${R.total}</b> changement(s)${R.filt.length?_L(' · filtres : ')+E(R.filt.join(' ; ')):''}</div>`);
+    <div style="color:#555;margin-bottom:6px">${E(R.oldName||'—')} → ${E(R.newName||'—')} · ${E(R.date)} · <b>${R.total}</b> changement(s)${R.filt.length?_L(' · filtres : ')+E(R.filt.join(' ; ')):''}</div>`)+
+    (R.oldInfo||R.newInfo?`<div style="color:#555;font-size:9.5pt;margin-bottom:4px">${_L('Ancienne :')} ${E(R.oldInfo||'—')}<br>${_L('Nouvelle :')} ${E(R.newInfo||'—')}${R.faits.length?'<br>'+E(R.faits.join(' · ')):''}</div>`:'')+
+    R.alertes.map(a=>`<div style="color:#9a6700;font-size:9.5pt;margin-bottom:4px">⚠ ${E(a)}</div>`).join('');
   if(R.level==='synth'){
     h+=counts+(R.byFam.length?_L(`<table style="border-collapse:collapse;font-size:10pt;margin:6px 0"><tr><th style="${th}">Famille</th>${CAP_DR_CATS.map(c=>`<th style="${th}" title="${E(c.l)}">${c.i}</th>`).join('')}</tr>
       ${R.byFam.map(r=>`<tr><td style="${td}">${E(r.f)}</td>${r.v.map(v=>`<td style="${td}text-align:right">${v||''}</td>`).join('')}</tr>`).join('')}</table>`):'');
@@ -231,10 +234,16 @@ function capDrRichHtml(R){
   return h+'</div>';
 }
 
+/** Texte d'un fragment HTML échappé (constats et alertes de 32). @param {string} h - HTML @returns {string} texte */
+function capDrSansHtml(h){ const d=document.createElement('div'); d.innerHTML=String(h||''); return d.textContent; }
+
 /** Rapport en texte brut (lignes indentées). @param {object} R - Modèle @returns {string} */
 function capDrText(R){
   const L=[_L(`⚖ ${R.title} — ${R.oldName||'—'} → ${R.newName||'—'} (${R.date}) — ${R.total} changement(s)`)];
   if(R.filt.length) L.push(_L('Filtres : ')+R.filt.join(' ; '));
+  if(R.oldInfo||R.newInfo) L.push(_L('Ancienne : ')+(R.oldInfo||'—'), _L('Nouvelle : ')+(R.newInfo||'—'));
+  if(R.faits.length) L.push(R.faits.join(' · '));
+  R.alertes.forEach(a=>L.push('⚠ '+a));
   if(R.level==='synth'){
     CAP_DR_CATS.filter(c=>R.cnt[c.k]).forEach(c=>L.push(`${c.i} ${c.l} : ${R.cnt[c.k]}  (${R.byLayer.filter(r=>r.v[CAP_DR_CATS.indexOf(c)]).map(r=>`${r.L} ${r.v[CAP_DR_CATS.indexOf(c)]}`).join(', ')})`));
     if(R.byFam.length){ L.push('', _L('Par famille :')); R.byFam.forEach(r=>L.push(`  ${r.f} : `+CAP_DR_CATS.map((c,i)=>r.v[i]?`${c.i} ${r.v[i]}`:'').filter(Boolean).join('  '))); }
@@ -272,6 +281,9 @@ function capDrTable(R){
 function capDrMarkdown(R){
   const md=v=>String(v==null?'':v).replace(/\|/g,'\\|').replace(/\s+/g,' ');
   const L=[`## ⚖ ${R.title}`, '', _L(`**${R.oldName||'—'}** → **${R.newName||'—'}** · ${R.date} · **${R.total}** changement(s)${R.filt.length?_L(' · filtres : ')+R.filt.join(' ; '):''}`)];
+  if(R.oldInfo||R.newInfo) L.push('', _L('- Ancienne : ')+md(R.oldInfo||'—'), _L('- Nouvelle : ')+md(R.newInfo||'—'));
+  if(R.faits.length) L.push('- '+md(R.faits.join(' · ')));
+  R.alertes.forEach(a=>L.push('', '> ⚠ '+md(a)));
   if(R.level==='synth'){
     L.push('', _L(`| Catégorie | ${R.byLayer.map(r=>r.L).join(' | ')} | Total |`), `|---|${R.byLayer.map(()=>'---:').join('|')}|---:|`);
     CAP_DR_CATS.filter(c=>R.cnt[c.k]).forEach(c=>L.push(`| ${c.i} ${c.l} | ${R.byLayer.map(r=>r.v[CAP_DR_CATS.indexOf(c)]||'').join(' | ')} | ${R.cnt[c.k]} |`));
@@ -322,7 +334,7 @@ async function capDrClipboard(html, text){
  * @param {object[]} diffs - Différences brutes (capDiffCompute)
  * @param {object} A - Index de l'ancienne version
  * @param {object} B - Index de la nouvelle version
- * @param {object} meta - {oldName,newName}
+ * @param {object} meta - {oldName, newName, oldInfo, newInfo, faits, alertes} (voir capDrModel)
  */
 function capDrRender(host, diffs, A, B, meta){
   const st=host._dr=host._dr||{level:'simple', by:'cat', cats:new Set(CAP_DR_CATS.map(c=>c.k)), layers:new Set(), fams:new Set(), q:'', ex:new Set(), groupTech:true, fmt:'rich'};

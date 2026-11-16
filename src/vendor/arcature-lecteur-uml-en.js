@@ -629,7 +629,7 @@ function xtToutReecrire(doc) {
    ─ Couches du filtre : couches [[valeur, libellé]], titreCouches.
    ─ Lecture métier : id, type, libelle, couche, chemin, ossature, technique, icone (initiales),
      iconeSvg(el, doc, taille) (icône dessinée, ou ''), iconeType(regle, taille) facultatif (icône du type qu'une règle de
-     création produit : sous-menu « Nouveau ▸ »), attr, parcourir, infos(doc) ; jeux d'icônes facultatifs : jeuxIcones() →
+     création produit : sous-menu « Nouveau ▸ »), attr, parcourir, infos(doc) (version, nom ; `avertissement` facultatif : version du fichier que l'adaptateur ne suit pas, dite à l'ouverture) ; jeux d'icônes facultatifs : jeuxIcones() →
      [{id, libelle}], jeuIcones() → id du jeu en cours, choisirJeuIcones(id) → booléen (UML et SysML v1 : jeu d'Arcature par
      défaut, icônes d'Eclipse UML2 redessinées par Papyrus Web en remplacement).
    ─ Relations : liaisons(doc), groupes(index, el), estReference(nom, valeur) ; titreCategorie(g) facultatif : intitulé d'un
@@ -686,7 +686,21 @@ function xtToutReecrire(doc) {
      presse-papier par colAnalyser, 38-collage.js ; menu des outils de la palette permis au point du collage, éléments et vues
      créés en une opération ; rend true, ou la raison d'un refus) } — Capella : le .aird (29-format-capella.js) ; UML : le .notation de Papyrus
      (créé au besoin par creer) et des vues calculées (uml/50-format.js) ; SysML v2 : vues calculées depuis le texte, sans fichier
-     de diagrammes ni création (sysml/60-vues.js : extensions vide, reconnait faux, enregistrer sans objet). Une opération du journal propre aux diagrammes porte diagrammeSeul (gardée au
+     de diagrammes ni création (sysml/60-vues.js : extensions vide, reconnait faux, enregistrer sans objet).
+     Sous-extension facultative api, SANS DOM, pour l'API de scripts (39-api-diagrammes.js) : api { lister(doc) → [{ id, nom,
+     genre (sigle ou genre court), type, cible (identifiant d'élément ou null), calcule, dessinable, modifiable }],
+     scene(doc, id) → scène neutre { cadre {x, y, w, h} | null, formes [{ id, el (identifiant d'élément ou null), x, y, w, h,
+     parent (id de forme ou null), texte, genre, st? }], liens [{ id, el, source, cible (ids de formes), points, texte, genre, st? }] }
+     (st facultatif : style repris par l'image sans DOM apiDgSvg — formes { fond, bord, epaisseur, arrondi, figure, posTexte,
+     police }, liens { couleur, epaisseur, trait, flecheCible, flecheSource, etiquette } ; Capella le donne) ;
+     facultatifs — fichier des diagrammes confié au worker : instantane() → { nom, texte } | null, ouvrirInstantane(inst)
+     (lu au premier besoin), controler(texte) → raison de ne pas l'écrire ou null ; scènes gardées par le format :
+     oublier(id?), figer() → jeton, retablir(jeton) (aperçu d'un script : la page retrouve ses scènes) ; opérations du
+     journal NON exécutées (une erreur : refus avec sa raison) : opBornes(doc, id, forme, { x, y, w, h }) → op | null,
+     opRetirer(doc, id, vues) → op | null, opMontrer(doc, id, el, { x, y }, dans) → { op, vue (id de la forme ajoutée, ou
+     null) }, opDisposer(doc, id, genre 'couches' | 'arbre' | 'grille') → op | null, types(doc, el) → [{ cle, libelle }],
+     opCreer(doc, el, cle, nom) → { op, id } } — Capella : 41-api-diagrammes-capella.js ; Papyrus et vues calculées :
+     uml/64-api-diagrammes.js ; Cameo, Enterprise Architect : sysml1/49-api-diagrammes.js ; SysML v2 : sysml/60-vues.js. Une opération du journal propre aux diagrammes porte diagrammeSeul (gardée au
      journal si le fichier des diagrammes n'a pas pu être écrit).
    ─ Règles de création : { cle, libelle, tag, type, attrs, secondaire? } ; une règle secondaire n'est pas dans le menu
      contextuel mais dans « Autre élément… » (UML : métaclasses moins usuelles admises par le métamodèle).
@@ -727,8 +741,29 @@ function xtToutReecrire(doc) {
      Un document importé d'un autre outil (SysML v1 : projet Enterprise Architect .qea) porte doc.importe { nom (nom du
      modèle à enregistrer, dans le format : .xmi), message (affiché à l'ouverture) } : le fichier lu n'est jamais réécrit.
    ─ Démarrage et outils (facultatifs) : initialiser() (interface propre au format, appelée une fois pour chaque format
-     inclus), diagnostiquer() (si capacites.diagnostic) ; vuesPropres : clés des vues de la page (.vue[data-vue], écrites dans
-     un bloc @@SI@@) que seul ce format remplit — l'interface les retire pour les autres formats (Capella : « methode »).
+     inclus), diagnostiquer() (si capacites.diagnostic).
+   ─ Méthode (facultative ; vue commune « Méthode » : 62-methode.js, sans onglet pour un format qui n'en a pas) : methode {
+     pages(doc, seule?) → pages de la méthode ARCADIA (seule : clé de la page affichée, les autres peuvent n'être qu'esquissées),
+     jeton() facultatif → ce dont le rendu dépend hors du journal (fichier de diagrammes ouvert) }. Page : { cle, sigle, couleur
+     (couche : OA, SA, LA, PA, EPBS), titre, resume, note, avertissement, element { id, libelle } | null (révélé dans
+     l'explorateur), absent | null (niveau à créer : { nom, parent, regle, raison, manquants [{cle, nom}] }), transitions | null
+     { titre, lignes [{ libelle, raison ('' : possible), infobulle, executer() }] }, etapes [{ titre, lignes [{ icone (HTML),
+     sigle, libelle, infobulle, existants [{ genre 'diagramme', cle (passée à diagrammes.ouvrir) | genre 'element', id ; nom,
+     infobulle }], plus (existants non montrés), creation { raison, calcule? (vue calculée : pas de bouton) } (refus) | { genre 'diagramme', el, choix (diagrammes.creer) }
+     | { genre 'element', parent, regle } | { executer() } ; infobulle }] }] } — Capella : ses architectures, les diagrammes du
+     .aird et les transitions (49-methode-capella.js) ; SysML v1 et SysML v2 : un paquetage par niveau, reconnu par son nom
+     (38-methode.js : mthPages ; sysml1/49-methode.js, sysml/62-methode.js). Autres méthodes proposées par le format
+     (facultatif) : methode.variantes [{ cle, titre, grille? (page « Grille » : 62-trame.js), pages(doc, seule?) → pages de
+     même forme, ossature(doc)? → { nombre, raison } (paquetages qui manquent), appliquer()? → opération exécutée qui les
+     crée dans le modèle ouvert (aussi proposée par « Nouveau projet »), profil? (domaine du profil livré à importer avec) }]
+     — un sélecteur paraît dans la vue, ARCADIA restant la méthode par défaut. Critères de fin contrôlés (facultatif) :
+     regles() → [{ id, nom, severite }] et controler(doc, actives?) → { suivie, cases Map(id → { population, defauts [{ regle, id,
+     nom, message }] }), problemes } — ajoutés à la validation continue par mthValidation (origine « methode », genre « suivi »).
+     Périmètres (facultatif, grilles filles des sous-systèmes) : perimetres(doc) → [{ id ('' : le système), nom, parent, profondeur }] ;
+     pages, ossature, matrices, controler, appliquer prennent alors l'identifiant du périmètre en dernier ; controlerTout(doc,
+     actives), sansGrilleFille(doc, perimetre), creerGrilleFille(nom, perimetre), herite(doc, perimetre). Une étape peut porter son conteneur { id, libelle }. Une ligne porte son genre
+     ('element' | 'diagramme') ; une étape peut porter une fiche { id, volet, question, livrable, fin, parcours } : la
+     méthode Trame de SysML v1 et v2, une étape par case de sa grille (38-trame.js ; sysml1/49-trame.js, sysml/63-trame.js).
    ─ Validation (facultative, absente si le format n'en a pas) : validation { regles() → [{id, categorie, severite ('E' | 'W'),
      actif (par défaut), source ('capella' | 'uml' | 'arcature'…), nom, genre? ('lisibilite' : défauts de dessin d'un
      diagramme, en calque à part ; 'suivi' : justification d'une transition ; profils de 38-problemes.js)}], sources() → [{cle, titre, filtre, prereglage?}] (origines
@@ -754,7 +789,7 @@ function xtToutReecrire(doc) {
      'texte'), valeur (défaut), choix [[valeur, libellé]] (genre 'choix'), aide (bulle), si { cle: valeur } (option montrée
      seulement quand une autre a cette valeur) }], creer(nom, options) → { fichiers: [{ nom, texte }], principal (nom du fichier
      du modèle), diagrammes (nom du fichier des diagrammes parmi fichiers, facultatif), dossier (nom du dossier du projet) } }
-     — gabarit écrit comme l'outil d'origine l'écrit pour un projet vide, identifiants neufs (Capella 7.0.1 : .capella, .aird,
+     — gabarit écrit comme l'outil d'origine l'écrit pour un projet vide, identifiants neufs (Capella 7.1.0 ou 7.0.1 : .capella, .aird,
      .afm, .project ; SysML v2 : .sysml ; UML et SysML v1 : .uml ou .xmi, .notation de Papyrus au choix ; ReqIF : .reqif).
      Le projet s'ouvre comme un fichier tout juste lu, sans accès direct (30-fichier.js : arcOuvrirNeuf) : le premier
      enregistrement écrit tous ses fichiers dans un dossier choisi, sinon les télécharge. diagrammes.neuf(poignee) facultatif :
@@ -766,7 +801,9 @@ function xtToutReecrire(doc) {
      comparé), attributPermis(el, n) → booléen (champ texte name / summary / description que le type de l'élément porte),
      allocations [clés des champs de relations par lesquels allocateTo alloue], echanges [clés des liens que connect trace],
      variantes { suffixe de clé de règle : nom public } } — Capella : 29-format-capella.js ; UML et SysML v1 : métamodèle de
-     l'OMG, stéréotypes de SysML et d'UAF (umlApiExtension).
+     l'OMG, stéréotypes de SysML et d'UAF (umlApiExtension) ; SysML v2 : métaclasses et leur lignée (syApiExtension).
+     Les greffons (39-greffons.js, 64-greffons.js) n'emploient que cette API : leurs règles de validation rejoignent celles
+     de l'extension « validation » ci-dessus (grfValidation), sans rien demander de plus au format.
    ═══════════════════════════════════════════════════════════════════════ */
 
 /** Formats inclus dans cette version, dans l'ordre d'essai à l'ouverture d'un fichier (chaque format s'y ajoute). */
@@ -9258,6 +9295,54 @@ function eaMilieu(pts) {
 }
 
 /**
+ * Couleur d'Enterprise Architect (COLORREF de Windows : 0x00BBGGRR ; -1 ou vide : couleur par défaut) écrite comme Cameo
+ * l'écrit (entier signé de Java, alpha opaque : 0xFFRRGGBB), ou null.
+ * @param {*} v @returns {string|null}
+ */
+function eaCouleur(v) {
+  if (v == null || v === '' || !/^-?\d+$/.test(String(v).trim())) return null;
+  const n = Number(v);
+  if (n < 0 || n > 0xffffff) return null;
+  const r = n & 255, g = (n >> 8) & 255, b = (n >> 16) & 255;
+  return String((0xff000000 | (r << 16) | (g << 8) | b) | 0);
+}
+
+/**
+ * Valeur d'une clé d'un style d'Enterprise Architect (« DUID=…;BCol=255;LWth=2; »), ou undefined.
+ * @param {*} style @param {string} cle @returns {string|undefined}
+ */
+function eaCle(style, cle) { return (String(style || '').match(new RegExp(`(?:^|;)${cle}=([^;]*)`)) || [])[1]; }
+
+/**
+ * Propriétés de présentation d'une vue d'Enterprise Architect, sous la forme qu'écrit Cameo (FILL_COLOR, PEN_COLOR,
+ * TEXT_COLOR, LINE_WIDTH : lues par s1dStyleVue) : style de la forme dans le diagramme (BCol, LCol, BFol, LWth), sinon
+ * couleurs de l'élément (Backcolor, Bordercolor, Fontcolor, BorderWidth) ; lien : Color et LWidth du diagramme, sinon
+ * LineColor du connecteur. Couleur ou épaisseur par défaut (-1, 0) : rien.
+ * @param {object} f forme ({ od, o }) ou lien ({ dl, c }) @returns {string[]} lignes <mdElement> des propriétés
+ */
+function eaProprietes(f) {
+  const res = [];
+  const prop = (cls, id, v) => res.push(`<mdElement elementClass="${cls}"><propertyID>${id}</propertyID><value xmi:value="${v}"></value></mdElement>`);
+  const choisir = (...vs) => { for (const v of vs) { const c = eaCouleur(v); if (c) return c; } return null; };
+  let fond = null, trait, texte = null, ep;
+  if (f.o) {
+    const st = f.od && f.od.ObjectStyle, o = f.o;
+    fond = choisir(eaCle(st, 'BCol'), o.Backcolor);
+    trait = choisir(eaCle(st, 'LCol'), o.Bordercolor);
+    texte = choisir(eaCle(st, 'BFol'), o.Fontcolor);
+    ep = Number(eaCle(st, 'LWth')); if (!(ep > 0)) ep = Number(o.BorderWidth);
+  } else {
+    trait = choisir(eaCle(f.dl && f.dl.Style, 'Color'), f.c && f.c.LineColor);
+    ep = Number(eaCle(f.dl && f.dl.Style, 'LWidth')); if (!(ep > 0)) ep = Number(f.c && f.c.LineWidth);
+  }
+  if (fond) prop('ColorProperty', 'FILL_COLOR', fond);
+  if (trait) prop('ColorProperty', 'PEN_COLOR', trait);
+  if (texte) prop('ColorProperty', 'TEXT_COLOR', texte);
+  if (ep > 1 && ep <= 100) prop('NumberProperty', 'LINE_WIDTH', ep);
+  return res;
+}
+
+/**
  * Diagrammes du dépôt en contenus de même forme que ceux de Cameo (vues <mdElement> imbriquées : élément, géométrie
  * absolue, extrémités des liens) : formes d'après t_diagramobjects (y d'EA vers le haut, retourné), imbriquées par
  * inclusion géométrique (port : sur le bord de sa forme) ; liens des connecteurs dont les deux bouts sont montrés et que
@@ -9286,7 +9371,7 @@ function eaDiagrammes(depot, conv) {
       // Petite partie (paramètre d'une propriété de contrainte, partie au bord) : dessinée comme un port
       if (cls === 'Part' && Math.abs(x2 - x) <= 24 && Math.abs(y2 - y) <= 24) cls = 'Port';
       const duid = (String(od.ObjectStyle || '').match(/(?:^|;)DUID=([0-9A-Fa-f]+)/) || [])[1];
-      const f = { v: `EAV_${dg.Diagram_ID}_${od.Instance_ID || od.Object_ID}`, o, cls, sem: conv.ids.get(o.Object_ID) || null, duid,
+      const f = { v: `EAV_${dg.Diagram_ID}_${od.Instance_ID || od.Object_ID}`, o, od, cls, sem: conv.ids.get(o.Object_ID) || null, duid,
         x: Math.min(x, x2), y: Math.min(y, y2), w: Math.max(1, Math.abs(x2 - x)), h: Math.max(1, Math.abs(y2 - y)), enfants: [],
         texte: /^(TextBox|DiagramShape)$/.test(cls) ? (o.Name || o.Alias || o.Note || '') : null };
       // Étiquette d'un port (LBL : taille CX × CY, à OX, OY du coin du port, y vers le bas ; HDN : masquée)
@@ -9319,8 +9404,9 @@ function eaDiagrammes(depot, conv) {
     // Liens
     // Liens du diagramme : masqués, coudes (Path : « x:y; », y vers le haut), décalages des bouts (Geometry), instances des
     // bouts quand un élément est montré plusieurs fois (Style : SOID, EOID = DUID des objets du diagramme)
-    const masques = new Set(), coudes = new Map(), decalages = new Map(), instances = new Map(), etiquettes = new Map();
+    const masques = new Set(), coudes = new Map(), decalages = new Map(), instances = new Map(), etiquettes = new Map(), styles = new Map();
     for (const l of depot.liensDiagramme.get(dg.Diagram_ID) || []) {
+      styles.set(l.ConnectorID, l);
       if (l.Hidden === 1 || l.Hidden === '1' || l.Hidden === true) masques.add(l.ConnectorID);
       const pts = String(l.Path || '').split(/[;$]/).filter(Boolean).map(s => s.split(':').map(Number)).filter(q => q.length === 2 && q.every(Number.isFinite)).map(([a, b]) => [a, Math.abs(b)]);
       if (pts.length) coudes.set(l.ConnectorID, pts);
@@ -9363,7 +9449,7 @@ function eaDiagrammes(depot, conv) {
       poser(stereo && `«${stereo}»`, 'TextBoxWithIcon', et.LMB, !!c.Name);
       poser(c.Name, 'TextBox', et.LMT, false);
       textes.forEach((x, i) => { x.v = `${v}_t${i}`; });
-      liens.push({ v, cls, sem: cls === 'NoteAnchor' ? null : conv.lieA.get(c.Connector_ID) || null, de: t.v, vers: s.v, pts, textes });
+      liens.push({ v, cls, sem: cls === 'NoteAnchor' ? null : conv.lieA.get(c.Connector_ID) || null, de: t.v, vers: s.v, pts, textes, c, dl: styles.get(c.Connector_ID) || null });
     }
     // Cadre autour de tout
     let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
@@ -9380,6 +9466,8 @@ function eaDiagrammes(depot, conv) {
       lignes.push(`${ind}<mdElement elementClass="${esc(f.cls)}" xmi:id="${esc(f.v)}">`);
       if (f.sem) lignes.push(`${ind}\t<elementID xmi:idref="${esc(f.sem)}"></elementID>`);
       if (f.de) lignes.push(`${ind}\t<linkFirstEndID xmi:idref="${esc(f.de)}"></linkFirstEndID>`, `${ind}\t<linkSecondEndID xmi:idref="${esc(f.vers)}"></linkSecondEndID>`);
+      const props = f.o || f.c ? eaProprietes(f) : [];
+      if (props.length) lignes.push(`${ind}\t<properties>`, ...props.map(x => `${ind}\t\t${x}`), `${ind}\t</properties>`);
       lignes.push(`${ind}\t<geometry>${f.pts ? f.pts.map(([x, y]) => `${x}, ${y}; `).join('') : geo(f)}</geometry>`);
       const sous = (f.pts ? f.textes : [...(f.enfants || []), ...(f.etiquette ? [f.etiquette] : []), ...(f.trait ? [f.trait] : [])]) || [];
       if (sous.length) { lignes.push(`${ind}\t<mdOwnedViews>`); for (const e of sous) ecrire(e, prof + 2); lignes.push(`${ind}\t</mdOwnedViews>`); }
@@ -9413,12 +9501,14 @@ function eaDiagrammesXmi(doc) {
     const id = a(e, 'xmi:idref'), pr = sous(e, 'properties'), mo = sous(e, 'model'), type = a(pr, 'sType') || String(a(e, 'xmi:type') || '').replace(/^uml:/, '');
     if (type === 'Package') { paquets.set(id, { ea_guid: sansPrefixe(id) }); continue; }
     const proprio = a(mo, 'owner');
-    objets.push({ Object_ID: id, Object_Type: type, Name: a(e, 'name'), Alias: a(pr, 'alias'), Note: a(pr, 'documentation'), NType: Number(a(pr, 'nType')) || 0, Stereotype: a(pr, 'stereotype'),
+    const ap = a(sous(e, 'style'), 'appearance') || '', cle = k => eaCle(ap, k);
+    objets.push({ Object_ID: id, Object_Type: type, Backcolor: cle('BackColor'), Bordercolor: cle('BorderColor'), Fontcolor: cle('FontColor'), BorderWidth: cle('BorderWidth'), Name: a(e, 'name'), Alias: a(pr, 'alias'), Note: a(pr, 'documentation'), NType: Number(a(pr, 'nType')) || 0, Stereotype: a(pr, 'stereotype'),
       ParentID: proprio && /^EAID_/.test(proprio) ? proprio : null, Package_ID: a(mo, 'package'), ea_guid: sansPrefixe(id) });
   }
   for (const c of liste(sous(ext, 'connectors'), 'connector')) {
     const pr = sous(c, 'properties'), ap = sous(c, 'appearance');
     connecteurs.push({ Connector_ID: a(c, 'xmi:idref'), ea_guid: sansPrefixe(a(c, 'xmi:idref')), Connector_Type: a(pr, 'ea_type'), Name: a(c, 'name'),
+      LineColor: a(ap, 'linecolor'), LineWidth: a(ap, 'linewidth'),
       Stereotype: a(pr, 'stereotype'), Start_Object_ID: a(sous(c, 'source'), 'xmi:idref'), End_Object_ID: a(sous(c, 'target'), 'xmi:idref'), SeqNo: Number(a(ap, 'seqno')) || 0 });
   }
   const estConnecteur = new Set(connecteurs.map(c => c.Connector_ID));
@@ -10513,9 +10603,11 @@ async function s1dLireProjets(arch) {
  * @returns {Promise<Uint8Array>}
  * @throws {Error} contenu d'un diagramme ou partie partagée qui ne se relit pas
  */
-function s1dEcrireArchive(doc, texte) {
+async function s1dEcrireArchive(doc, texte) {
   const enc = new TextEncoder(), remplacements = new Map(), empreintes = [];
   const parFlux = new Map(s1dIndexer(doc).map(d => [d.flux, d]));
+  // Diagrammes dupliqués encore dans le modèle (s1diagrammeCopie, 46-edition-vues.js) : entrées nouvelles de l'archive
+  const nouvelles = s1dAjoutsActifs(doc), ajouts = new Map();
   for (const [flux, t] of s1mContenusModifies(doc)) {
     let relu;
     try { relu = xtLire(t); } catch (e) { throw new Error(_Lp('Check before writing: a diagram cannot be read back ({m}). Save cancelled.', { m: e.message })); }
@@ -10527,6 +10619,17 @@ function s1dEcrireArchive(doc, texte) {
     if (d.noeud) xtParcourir(d.noeud, x => { if (!dc && x.tag === 'diagramContents' && xtAttr(x, 'contentHash') != null) dc = x; });
     const h = dc && arzSha1(octets);
     if (dc && xtAttr(dc, 'contentHash') !== h) empreintes.push({ dc, ancien: xtDefinirAttr(doc, dc, 'contentHash', h) });
+  }
+  for (const [flux, origine] of nouvelles) {
+    ajouts.set(flux, remplacements.get(flux) || enc.encode(doc.s1d.textes.get(flux)));
+    remplacements.delete(flux);
+    // Listes de propriétés de l'archive qui citent les entrées : la copie y est inscrite à côté de son original
+    for (const nomProps of ['Binaries.properties', 'Records.properties']) {
+      if (!doc.archive.parNom.has(nomProps)) continue;
+      const avant = remplacements.has(nomProps) ? new TextDecoder().decode(remplacements.get(nomProps)) : await arzTexte(doc.archive, nomProps);
+      const apres = s1ePropsAjout(avant, origine, flux);
+      if (apres !== avant) remplacements.set(nomProps, enc.encode(apres));
+    }
   }
   try {
     if (empreintes.length) texte = xtEcrire(doc);
@@ -10543,7 +10646,18 @@ function s1dEcrireArchive(doc, texte) {
   } finally {
     for (const e of empreintes.reverse()) xtDefinirAttr(doc, e.dc, 'contentHash', e.ancien);
   }
-  return arzEcrire(doc.archive, remplacements);
+  return arzEcrire(doc.archive, remplacements, ajouts);
+}
+
+/**
+ * Diagrammes dupliqués (opération « s1diagrammeCopie ») encore présents dans le modèle : leurs entrées sont à ajouter à
+ * l'archive à l'enregistrement.
+ * @param {object} doc @returns {Array<Array<string>>} [entrée de la copie, entrée de l'original]
+ */
+function s1dAjoutsActifs(doc) {
+  if (!doc.s1d || !doc.s1d.ajouts || !doc.s1d.ajouts.size) return [];
+  const presents = new Set(s1dIndexer(doc).map(d => d.flux));
+  return [...doc.s1d.ajouts].filter(([flux]) => presents.has(flux) && !doc.archive.parNom.has(flux));
 }
 
 /**
@@ -10674,6 +10788,41 @@ function s1dEstSysml(d) { return uicDiagrammeSysml(s1dGenreIcone(d), S1D_TYPES_S
 function s1dIcone(d, taille) { return uicIconeDiagramme(s1dGenreIcone(d), taille || 14, s1dEstSysml(d)); }
 
 /**
+ * Couleur écrite par Cameo (entier signé de Java : alpha, rouge, vert, bleu) en couleur CSS : « #rrggbb », « transparent »
+ * pour un alpha nul, null si la valeur n'est pas un entier.
+ * @param {string|null|undefined} v @returns {string|null}
+ */
+function s1dCouleur(v) {
+  if (v == null || !/^-?\d+$/.test(String(v).trim())) return null;
+  const n = Number(v) >>> 0;
+  return (n >>> 24) === 0 ? 'transparent' : '#' + (n & 0xffffff).toString(16).padStart(6, '0');
+}
+
+/**
+ * Style d'une vue de Cameo écrit dans le fichier (propriétés de présentation que l'utilisateur a changées ; les autres
+ * suivent le style par défaut de l'outil, absent du fichier) : couleurs du fond, du trait et du texte, fond retiré
+ * (USE_FILL_COLOR à false), épaisseur du trait, police. Seuls les champs écrits sont rendus.
+ * @param {object} v vue de la scène (s1dScene) @returns {{fond?:string, trait?:string, texte?:string, sansFond?:boolean,
+ *   epaisseur?:number, police?:{nom:string, taille:number, gras:boolean, italique:boolean}}}
+ */
+function s1dStyleVue(v) {
+  const p = v && v.props, res = {};
+  if (!p) return res;
+  const fond = s1dCouleur(p.FILL_COLOR), trait = s1dCouleur(p.PEN_COLOR), texte = s1dCouleur(p.TEXT_COLOR);
+  if (fond) res.fond = fond;
+  if (trait) res.trait = trait;
+  if (texte) res.texte = texte;
+  if (String(p.USE_FILL_COLOR) === 'false') res.sansFond = true;
+  const ep = parseFloat(p.LINE_WIDTH);
+  if (ep > 0 && ep <= 100) res.epaisseur = ep;
+  if (p.FONT) {
+    const [nom, taille, style] = String(p.FONT).split('|'), t = parseFloat(taille), st = parseInt(style, 10) || 0;
+    if (nom || t > 0) res.police = { nom: nom || '', taille: t > 0 ? t : 0, gras: !!(st & 1), italique: !!(st & 2) };
+  }
+  return res;
+}
+
+/**
  * Genre d'un diagramme : dessin (formes et liens), tableau ou matrice (calculés par Cameo : rien à dessiner), ou absent
  * (contenu hors de l'archive : fichier XMI seul, ou diagramme jamais ouvert dans Cameo).
  * @param {object} doc @param {object} d @returns {'dessin'|'tableau'|'absent'}
@@ -10703,7 +10852,11 @@ function s1dScene(doc, d) {
   const proprietes = el => {
     const p = enfant(el, 'properties'); if (!p) return null;
     const res = {};
-    for (const m of p.enfants) { const id = val(m, 'propertyID'); if (id) res[id] = val(m, 'value'); }
+    for (const m of p.enfants) {
+      const id = val(m, 'propertyID'); if (!id) continue;
+      // Police (FontProperty) : nom, taille et style (1 gras, 2 italique) réunis en « nom|taille|style »
+      res[id] = xtAttr(m, 'elementClass') === 'FontProperty' ? [val(m, 'fontName') || '', val(m, 'size') || '', val(m, 'style') || '0'].join('|') : val(m, 'value');
+    }
     return res;
   };
   /** Parcourt une vue et ses vues contenues (tout conteneur d'éléments, hors propriétés de présentation). */
@@ -10793,7 +10946,7 @@ FMT_SYSML1.archives = {
   /** @param {object} doc @param {string} texte @returns {Promise<Uint8Array>} */
   ecrire(doc, texte) { return s1dEcrireArchive(doc, texte); },
   /** @param {object} doc @returns {boolean} un diagramme de l'archive a été mis en page (à enregistrer) */
-  modifiee(doc) { return s1mContenusModifies(doc).size > 0 || (doc.s1.parties || []).some(p => s1dTextePartie(p) !== p.doc.src); }
+  modifiee(doc) { return s1mContenusModifies(doc).size > 0 || s1dAjoutsActifs(doc).length > 0 || (doc.s1.parties || []).some(p => s1dTextePartie(p) !== p.doc.src); }
 };
 
 /**
@@ -10827,6 +10980,12 @@ const S1D_DIAGRAMMES = {
     if (op && (op.type === 's1diagramme' || op.type === 's1vues')) {
       // Mise en page ou édition des vues (faite, annulée ou rétablie) : le diagramme concerné est montré, rien d'autre ne change
       if (typeof S1V !== 'undefined' && (!S1V.d || S1V.d.uid !== op.uid)) s1vOuvrir(op.uid); else if (typeof s1vRendu === 'function') s1vRendu();
+      return true;
+    }
+    if (op && op.type === 's1diagrammeCopie') {
+      // Diagramme dupliqué (ou copie retirée en annulant) : liste et explorateur à jour, copie fermée si elle a disparu
+      if (typeof S1V !== 'undefined' && S1V.d && !s1dIndexer(ARC.doc).includes(S1V.d)) s1vFermer();
+      if (typeof s1vListe === 'function') s1vListe();
       return true;
     }
     // Diagramme affiché parti avec son propriétaire : fermé
@@ -11710,12 +11869,14 @@ async function arzCompresser(o) {
 /**
  * Réécrit l'archive avec des entrées remplacées : chaque autre entrée est recopiée telle quelle (enregistrement local et
  * entrée du répertoire central, position mise à jour) ; une entrée remplacée est recompressée, son en-tête écrit avec
- * ses tailles et son CRC (sans descripteur de données), sa date et son nom gardés. L'ordre des entrées est conservé.
+ * ses tailles et son CRC (sans descripteur de données), sa date et son nom gardés. L'ordre des entrées est conservé. Des entrées
+ * nouvelles peuvent suivre les autres (compressées, datées du moment, version 2.0 et attributs de la dernière entrée existante).
  * @param {object} arch archive (arzLire)
  * @param {Map<string, Uint8Array>} remplacements nouveau contenu (décompressé) par nom d'entrée
+ * @param {Map<string, Uint8Array>} [ajouts] entrées nouvelles (nom absent de l'archive) et leur contenu, écrites à la fin
  * @returns {Promise<Uint8Array>} nouvelle archive
  */
-async function arzEcrire(arch, remplacements) {
+async function arzEcrire(arch, remplacements, ajouts) {
   const o = arch.octets, v = new DataView(o.buffer, o.byteOffset, o.byteLength);
   const morceaux = [], centraux = [];
   let pos = 0;
@@ -11740,9 +11901,30 @@ async function arzEcrire(arch, remplacements) {
     }
     centraux.push(central);
   }
+  // Entrées nouvelles : en-tête local et entrée du répertoire central écrits de toutes pièces
+  const enc = new TextEncoder(), maintenant = new Date(), dernier = arch.entrees[arch.entrees.length - 1];
+  const heure = (maintenant.getHours() << 11) | (maintenant.getMinutes() << 5) | (maintenant.getSeconds() >> 1);
+  const jour = ((Math.max(1980, maintenant.getFullYear()) - 1980) << 9) | ((maintenant.getMonth() + 1) << 5) | maintenant.getDate();
+  let nb = arch.entrees.length;
+  for (const [n, brut] of ajouts || []) {
+    if (arch.entrees.some(e => e.nom === n)) throw new Error(_Lp('Archive: the entry “{n}” already exists.', { n }));
+    const nom = enc.encode(n), comp = await arzCompresser(brut), crc = arzCrc32(brut), utf8 = /[^\x20-\x7e]/.test(n) ? 0x800 : 0;
+    const tete = new Uint8Array(30 + nom.length), vt = new DataView(tete.buffer);
+    vt.setUint32(0, 0x04034b50, true); vt.setUint16(4, 20, true); vt.setUint16(6, utf8, true); vt.setUint16(8, 8, true);
+    vt.setUint16(10, heure, true); vt.setUint16(12, jour, true);
+    vt.setUint32(14, crc, true); vt.setUint32(18, comp.length, true); vt.setUint32(22, brut.length, true);
+    vt.setUint16(26, nom.length, true); vt.setUint16(28, 0, true); tete.set(nom, 30);
+    const central = new Uint8Array(46 + nom.length), vc = new DataView(central.buffer);
+    vc.setUint32(0, 0x02014b50, true); vc.setUint16(4, dernier ? v.getUint16(dernier.central + 4, true) : 20, true); vc.setUint16(6, 20, true);
+    vc.setUint16(8, utf8, true); vc.setUint16(10, 8, true); vc.setUint16(12, heure, true); vc.setUint16(14, jour, true);
+    vc.setUint32(16, crc, true); vc.setUint32(20, comp.length, true); vc.setUint32(24, brut.length, true);
+    vc.setUint16(28, nom.length, true); vc.setUint32(42, pos, true); central.set(nom, 46);
+    morceaux.push(tete, comp); pos += tete.length + comp.length;
+    centraux.push(central); nb++;
+  }
   const debutCentral = pos, tailleCentral = centraux.reduce((t, c) => t + c.length, 0);
   const finCentral = new Uint8Array(22 + arch.commentaire.length), vf = new DataView(finCentral.buffer);
-  vf.setUint32(0, 0x06054b50, true); vf.setUint16(8, arch.entrees.length, true); vf.setUint16(10, arch.entrees.length, true);
+  vf.setUint32(0, 0x06054b50, true); vf.setUint16(8, nb, true); vf.setUint16(10, nb, true);
   vf.setUint32(12, tailleCentral, true); vf.setUint32(16, debutCentral, true); vf.setUint16(20, arch.commentaire.length, true);
   finCentral.set(arch.commentaire, 22);
   const res = new Uint8Array(pos + tailleCentral + finCentral.length);
@@ -15654,6 +15836,46 @@ function umdPreparerSuppressionDiagramme(nd, repId) {
 }
 
 /**
+ * Prépare la duplication d'un diagramme de Papyrus : copie du Diagram juste après l'original, nommée (« Copie de … » par
+ * défaut), avec des identifiants neufs (xmi:id) et les références internes suivies (source et target des liens…) ; les adresses
+ * des éléments du modèle et les ancres (attribut id, partagé par GMF) restent. Une notation faite de ce seul diagramme reçoit
+ * d'abord sa racine <xmi:XMI>, comme Papyrus l'écrit dès le deuxième. Une opération « umlInsertionVues » (ou « groupe »).
+ * @param {object} nd notation @param {string} repId identifiant du diagramme @param {string} [nom] nom de la copie
+ * @returns {{op:(object|null), repId:(string|null), refus:(string|null)}}
+ */
+function umdPreparerDuplicationDiagramme(nd, repId, nom) {
+  const rep = nd && nd.reps.find(r => r.id === repId);
+  if (!rep) return { op: null, repId: null, refus: _L('Diagram not found.') };
+  const n = String(nom == null ? _Lp('Copy of {n}', { n: rep.nom || umdNomGenre(rep.genre) }) : nom).trim();
+  if (!n) return { op: null, repId: null, refus: _L('A diagram needs a name.') };
+  const d = rep.noeud, neufs = new Map();
+  xtParcourir(d, v => { const x = xtAttr(v, 'xmi:id'); if (x && !neufs.has(x)) neufs.set(x, umlNouvelId(nd.doc)); });
+  const suivre = v => v.split(' ').map(j => {
+    if (neufs.has(j)) return neufs.get(j);
+    const k = j.indexOf('#');
+    return k === 0 && neufs.has(j.slice(1)) ? '#' + neufs.get(j.slice(1)) : j;
+  }).join(' ');
+  const copier = x => {
+    const y = xtNouveau(x.tag, x.attrs.map(a => [a.n, a.n === 'name' && x === d ? n : a.n === 'id' ? a.v : suivre(a.v)]));
+    for (const c of x.enfants) { const z = copier(c); z.parent = y; y.enfants.push(z); }
+    if (!x.enfants.length && x.texte != null) y.texte = x.texte;
+    return y;
+  };
+  const copie = copier(d), ops = [];
+  let parent = d.parent, index = parent ? parent.enfants.indexOf(d) + 1 : 1;
+  if (!parent) {
+    // Un seul diagramme à la racine : enveloppé dans <xmi:XMI> (espaces de noms et version déplacés sur elle)
+    parent = xtNouveau('xmi:XMI', []);
+    ops.push({ type: 'umlEnveloppe', nd, enveloppe: parent });
+  }
+  ops.push({ type: 'umlInsertionVues', nd, etapes: [{ noeud: copie, parent, tag: copie.tag, index }], changements: [] });
+  const id = xtAttr(copie, 'xmi:id');
+  const resume = { id: rep.proprietaire, libelle: n, typeEl: _L('diagram duplicated'), resume: _Lp('Diagram “{d}” duplicated as “{n}”', { d: rep.nom || '', n }),
+    resumeSeul: true, symbole: '◫', repId: id, diagrammeSeul: true };
+  return { op: ops.length === 1 ? Object.assign(ops[0], resume) : Object.assign({ type: 'groupe', ops }, resume), repId: id, refus: null };
+}
+
+/**
  * Indique si un segment traverse l'intérieur d'une forme (bord exclu, à 2 px près).
  * @param {number[]} a @param {number[]} b extrémités @param {object} f forme
  * @returns {boolean}
@@ -16344,6 +16566,8 @@ const S1V = { d: null, vb: null, sel: null, glisse: null, edition: false, choix:
 
 /** Mémorisation de la palette de création repliée (navigateur). */
 const S1V_PALETTE_REPLIEE = 'arcature-s1-palette-repliee';
+/** Mémoire du style des diagrammes de Cameo et d'EA : « fichier » (couleurs du fichier, style de CATIA Magic) ou « theme » (thème d'Arcature). */
+const S1V_STYLE = 'arcature-s1-style';
 
 /** Taille du texte des diagrammes (px), et largeur moyenne d'un caractère pour couper les noms. */
 const S1V_TEXTE = 11, S1V_CAR = 6.1;
@@ -16354,13 +16578,15 @@ const S1V_TEXTE = 11, S1V_CAR = 6.1;
 function s1vInitialiser() {
   if (!$('s1d-vue')) return;
   $('s1d-filtre').oninput = s1vListe;
-  ldgBrancher($('s1d-liste'), { attr: 'diag', choisir: s1vChoisirDansListe, ouvrir: uid => s1vOuvrir(uid, undefined, { nouvelOnglet: true }) });   // clic : choisir ; double-clic, Entrée : ouvrir
+  ldgBrancher($('s1d-liste'), { attr: 'diag', choisir: s1vChoisirDansListe, ouvrir: uid => s1vOuvrir(uid, undefined, { nouvelOnglet: true }),
+    menu: typeof s1nMenuListe === 'function' ? s1nMenuListe : null });   // clic : choisir ; double-clic, Entrée : ouvrir
   $('s1d-plus').onclick = () => s1vZoomer(1 / 1.25);
   $('s1d-moins').onclick = () => s1vZoomer(1.25);
   $('s1d-ajuster').onclick = () => { s1vAjuster(); s1vAppliquerVue(); };
   $('s1d-reel').onclick = () => { const z = $('s1d-zone').getBoundingClientRect(); S1V.vb = { x: S1V.vb.x, y: S1V.vb.y, w: z.width || 800, h: z.height || 600 }; s1vAppliquerVue(); };
   $('s1d-fermer').onclick = s1vFermer;
   $('s1d-export').onclick = s1vExporterSvg;
+  $('s1d-style-bt').onclick = () => s1vBasculerStyle();
   $('s1d-csv').onclick = s1vExporterCsv;
   $('s1d-relies').onchange = () => { S1V.relies = $('s1d-relies').checked; s1vRendu(); };
   // Tableaux et matrices : clic sur un élément ou une relation, double-clic : son détail
@@ -16611,9 +16837,29 @@ function s1vInscrireOnglets() {
         boites: sc.vues.filter(v => !v.cache && !v.pts && v.w && v.h && v.cls !== 'DiagramFrame' && !/^(TextBox|TextBoxWithIcon|MessageSignature|ConnectorEnd|Role)$/.test(v.cls)).map(v => ({ x: v.x, y: v.y, w: v.w, h: v.h })) };
     },
     centrer: (x, y) => { if (S1V.vb) { S1V.vb = { ...S1V.vb, x: x - S1V.vb.w / 2, y: y - S1V.vb.h / 2 }; s1vAppliquerVue(); } },
+    plan: () => {
+      const sc = S1V.d && s1dGenre(ARC.doc, S1V.d) === 'dessin' ? s1dScene(ARC.doc, S1V.d) : null;
+      return sc ? { cle: 'cameo:' + S1V.d.uid, entrees: s1vEntreesPlan(sc) } : null;
+    },
     verrouillable: uid => { const d = ARC.doc && ARC.doc.s1d ? s1dIndexer(ARC.doc).find(x => x.uid === uid) : null; return !!d && s1dGenre(ARC.doc, d) === 'dessin'; },
     apresVerrou: () => { s1vMajEdition(); s1vRendu(); }
   });
+}
+
+/**
+ * Entrées de la vue « Plan » (67-plan-diagramme.js) d'une scène de Cameo : une par forme ou lien qui représente un élément
+ * (ni le cadre, ni les étiquettes et les bouts de liens, qui redisent l'élément de leur vue) ; les vues masquées sont dites.
+ * @param {object} sc scène (s1dScene)
+ * @returns {PlnEntree[]}
+ */
+function s1vEntreesPlan(sc) {
+  const res = [];
+  for (const v of sc.vues) {
+    if (!v.sem || v.cls === 'DiagramFrame' || /^(TextBox|TextBoxWithIcon|MessageSignature|ConnectorEnd|Role)$/.test(v.cls)) continue;
+    if (v.pts) { const m = plnMilieu(v.pts); if (m) res.push({ id: v.sem, x: m.x, y: m.y, lien: true, masque: !!v.cache }); }
+    else if (v.w && v.h) res.push({ id: v.sem, x: v.x + v.w / 2, y: v.y + v.h / 2, masque: !!v.cache });
+  }
+  return res;
 }
 
 /**
@@ -16664,7 +16910,11 @@ function s1vRendu(apercu) {
   $('s1d-vue').classList.remove('mode-matrice');
   const base = s1dScene(doc, d), sc = base && apercu ? s1mApercu(base, apercu) : base;
   for (const v of [...S1V.choix]) if (!sc || !sc.parV.has(v)) S1V.choix.delete(v);
-  $('s1d-svg').innerHTML = sc ? '<g id="s1d-grille" class="nav-grille"></g>' + s1vDessin(doc, d, sc) + '<g id="s1d-problemes"></g>' + (S1V.edition ? s1vPoignees(sc) + s1nCalqueSvg() : '') : '';
+  const fichier = s1vStyleFichier(doc, d);
+  $('s1d-svg').classList.toggle('s1-cameo', fichier);
+  $('s1d-zone').classList.toggle('s1d-cameo', fichier);
+  s1vMajBoutonStyle();
+  $('s1d-svg').innerHTML = sc ? '<g id="s1d-grille" class="nav-grille"></g>' + s1vDessin(doc, d, sc, { catia: fichier }) + '<g id="s1d-problemes"></g>' + (S1V.edition ? s1vPoignees(sc) + s1nCalqueSvg() : '') : '';
   s1vMarquerProblemes(sc);
   s1vMajGrille();
   $('s1d-droit').disabled = ![...S1V.choix].some(v => sc && (sc.parV.get(v) || {}).pts);
@@ -17242,6 +17492,150 @@ function s1vAppliquerVue() {
   $('s1d-carte-bt').classList.toggle('actif', dispoVisible('carte'));
 }
 
+/**
+ * Style choisi pour les diagrammes de Cameo : « theme » (par défaut : couleurs du thème d'Arcature) ou « fichier »
+ * (couleurs, traits et polices écrits dans le projet, style par défaut de CATIA Magic pour le reste) ; choix mémorisé.
+ * @returns {'fichier'|'theme'}
+ */
+function s1vStyle() {
+  try { return localStorage.getItem(S1V_STYLE) === 'fichier' ? 'fichier' : 'theme'; } catch (e) { return 'theme'; }
+}
+
+/**
+ * Le diagramme se dessine-t-il dans le style du fichier ? Choix « fichier » : diagramme de Cameo ou d'Enterprise
+ * Architect (couleurs de ses formes et de ses liens ramenées à celles de Cameo par eaProprietes), dans le style de CATIA
+ * Magic pour le reste.
+ * @param {object} doc @param {object} d diagramme @returns {boolean}
+ */
+function s1vStyleFichier(doc, d) { return s1vStyle() === 'fichier' && !!d; }
+
+/** Passe du style du fichier (CATIA Magic) au thème d'Arcature, ou l'inverse, et redessine le diagramme ouvert. */
+function s1vBasculerStyle() {
+  const neuf = s1vStyle() === 'fichier' ? 'theme' : 'fichier';
+  try { localStorage.setItem(S1V_STYLE, neuf); } catch (e) { /* choix non mémorisé */ }
+  uiToast(neuf === 'fichier' ? _L('Cameo and Enterprise Architect diagrams in the file\'s style (CATIA Magic).') : _L('Cameo and Enterprise Architect diagrams in the colors of the Arcature theme.'));
+  s1vRendu();
+}
+
+/** État du bouton du style (enfoncé : style du fichier). */
+function s1vMajBoutonStyle() {
+  const b = $('s1d-style-bt'); if (!b) return;
+  const fichier = s1vStyle() === 'fichier';
+  b.classList.toggle('actif', fichier);
+  b.setAttribute('aria-pressed', String(fichier));
+}
+
+/**
+ * Variables CSS du style écrit pour une vue (s1dStyleVue) : --s1-fond, --s1-trait, --s1-texte, --s1-ep, police ;
+ * employées par les règles « .s1-cameo » de la feuille de styles (style du fichier), ignorées dans le thème d'Arcature.
+ * @param {object} v vue de la scène @returns {string} déclarations « --x:valeur; » (vide si la vue n'a pas de style écrit)
+ */
+function s1vVarsStyle(v) {
+  const st = s1dStyleVue(v), res = [];
+  if (st.sansFond) res.push('--s1-fond:transparent');
+  else if (st.fond) res.push('--s1-fond:' + st.fond);
+  if (st.trait) res.push('--s1-trait:' + st.trait);
+  if (st.texte) res.push('--s1-texte:' + st.texte);
+  if (st.epaisseur) res.push('--s1-ep:' + st.epaisseur);
+  if (st.police) {
+    if (st.police.nom && /^[\w .-]+$/.test(st.police.nom)) res.push(`--s1-police:"${st.police.nom}",Arial,sans-serif`);
+    if (st.police.taille) res.push('--s1-taille:' + st.police.taille + 'px');
+    if (st.police.gras) res.push('--s1-graisse:700');
+    if (st.police.italique) res.push('--s1-italique:italic');
+  }
+  return res.join(';');
+}
+
+/**
+ * Style par défaut de CATIA Magic par sorte de vue, relevé dans l'outil (19.0) par la macro tools/cameo/projet-reference.groovy
+ * (propriétés de présentation de chaque vue d'un projet de référence : docs/sysml1/STYLE-CATIA.md) : [fond, trait, fin du
+ * dégradé (rang dans S1V_CATIA_FINS), taille de la police en gras (paquetages)]. Les vues dont le fichier écrit un style
+ * le gardent (s1vVarsStyle, variables --s1-…) ; celles-ci ne servent que pour le reste (variables --cm-…).
+ */
+const S1V_CATIA = {
+  defaut: ['#ffffcc', '#424242', 0], bloc: ['#ddcd9e', '#99795c', 1], typeValeur: ['#fecccc', '#a05c5c', 0],
+  enumeration: ['#ffc6a8', '#99795c', 3], signal: ['#ffcc99', '#99795c', 2], interface: ['#bdd2c1', '#5c9967', 0],
+  note: ['#f4f4f4', '#424242', 0], exigence: ['#feebe8', '#99795c', 0], partie: ['#fff0b4', '#998d5c', 0],
+  proprieteValeur: ['#fccfcf', '#998d5c', 0], proprieteContrainte: ['#d0d0ff', '#998d5c', 0], portMandataire: ['#bdd2c1', '#5c9967', 0],
+  port: ['#ffffcc', '#5c9967', 0], action: ['#e1e1c3', '#99995c', 0], decision: ['#d5d5d5', '#7c816d', 0],
+  pseudo: ['#ffffff', '#424242', 0], etat: ['#ffffcc', '#99995c', 0], cas: ['#ffffcc', '#666647', 0],
+  ligneVie: ['#c2e3d3', '#5c997c', 0], paquetage: ['#d4ddff', '#6b7599', 0, 13]
+};
+
+/**
+ * Dessin en cours dans le style de CATIA Magic (posé par s1vDessin le temps d'un dessin) : notation de l'outil en plus de
+ * ses couleurs — compartiments masqués par défaut (S1V_MASQUES_CATIA) et leur ordre (S1V_ORDRE_CATIA), exigences sans
+ * propriétés dérivées, noms en haut et en gras (états, actions, paquetages), modèle et interface par leur icône, flèches
+ * fines des ports de flux, «block» d'un couloir qui représente un bloc, titre du cadre (sigle seul en gras).
+ */
+const S1V_RENDU = { catia: false };
+
+/**
+ * Compartiments d'un bloc que CATIA Magic masque par défaut (relevé : SUPPRESS_… à true sur un bloc neuf) : compartiment
+ * d'Arcature → propriété de présentation de l'outil qui le montre ou le masque quand le fichier l'écrit.
+ */
+const S1V_MASQUES_CATIA = { OPERATIONS: 'SUPPRESS_CLASS_OPERATIONS', PORTS: 'SUPPRESS_CLASS_PORTS', PROXY_PORTS: 'SUPPRESS_PROXYPORTS_COMPARTMENT',
+  FULL_PORTS: 'SUPPRESS_FULLPORTS_COMPARTMENT', FLOW_PORTS: 'SUPPRESS_CLASS_PORTS', RECEPTIONS: 'SUPPRESS_SIGNAL_RECEPTIONS',
+  BEHAVIORS: 'SUPPRESS_BEHAVIORS', CLASSIFIER_BEHAVIOR: 'SUPPRESS_BEHAVIORS', NESTED: 'SUPPRESS_STRUCTURE' };
+
+/** Ordre des compartiments d'un bloc dans CATIA Magic (contraintes, parties, références, valeurs, propriétés de flux, puis le reste). */
+const S1V_ORDRE_CATIA = ['CONSTRAINTS', 'PARTS', 'REFERENCES', 'BOUND_REFERENCES', 'VALUES', 'FLOWPROPERTIES'];
+
+/** Couleurs de fin du dégradé de CATIA Magic (de la couleur du fond, en haut à gauche, à celle-ci, en bas à droite). */
+const S1V_CATIA_FINS = ['#ffffff', '#ffffe1', '#ffffda', '#fffff0'];
+
+/** Symboles sans ombre portée dans CATIA Magic (ports, broches, barres, nœuds pleins, lignes de vie, couloirs, cadre). */
+const S1V_SANS_OMBRE = /^(port|port-flux|port-compartiments|port-comportement|broche|barre|initial|jonction|ligne-vie|activation|couloir|region|operande|legende|lien-diagramme|arbre|parametre-activite)$/;
+
+/**
+ * Sorte d'une vue pour le style par défaut de CATIA Magic (clé de S1V_CATIA) : d'après les stéréotypes de SysML de son
+ * élément, sa métaclasse et le symbole dessiné (port, partie et son type).
+ * @param {object} doc @param {object} v vue @param {object|null} el élément montré @param {string} cle symbole (s1vSymbole)
+ * @returns {string}
+ */
+function s1vSorteCatia(doc, v, el, cle) {
+  const mc = el ? umlMetaclasse(el) : '', a = n => !!el && s1A(doc, el, n);
+  if (mc === 'Port' || /^port/.test(cle)) return a('FullPort') ? 'partie' : a('ProxyPort') || a('FlowPort') ? 'portMandataire' : 'port';
+  if (/Pin$/.test(mc) || cle === 'broche') return 'action';
+  if (mc === 'Property') {
+    const t = umlCibles(doc, el, 'type')[0], mt = t ? umlMetaclasse(t) : '';
+    if (t && s1A(doc, t, 'ConstraintBlock')) return 'proprieteContrainte';
+    if (t && (s1A(doc, t, 'ValueType') || /^(DataType|PrimitiveType|Enumeration)$/.test(mt))) return 'proprieteValeur';
+    return 'partie';
+  }
+  if (a('Requirement')) return 'exigence';
+  if (a('Block') || a('InterfaceBlock') || a('ConstraintBlock')) return 'bloc';
+  if (a('ValueType')) return 'typeValeur';
+  if (mc === 'Enumeration') return 'enumeration';
+  if (mc === 'Signal') return 'signal';
+  if (mc === 'Interface') return 'interface';
+  if (mc === 'Comment' || cle === 'note') return 'note';
+  if (/^(Actor|UseCase)$/.test(mc)) return 'cas';
+  if (/^(State|StateMachine)$/.test(mc)) return 'etat';
+  if (/^(Pseudostate|FinalState|ActivityFinalNode|FlowFinalNode)$/.test(mc)) return cle === 'losange' ? 'decision' : 'pseudo';
+  if (/^(DecisionNode|MergeNode)$/.test(mc) || cle === 'losange') return 'decision';
+  if (/Action$/.test(mc) || /^(CentralBufferNode|DataStoreNode|ActivityParameterNode|ExpansionNode|ObjectNode)$/.test(mc)) return 'action';
+  if (mc === 'Lifeline') return 'ligneVie';
+  if (/^(Package|Model|Profile)$/.test(mc)) return 'paquetage';
+  return 'defaut';
+}
+
+/**
+ * Habillage de CATIA Magic d'une forme (visible dans le style du fichier seulement : règles « .s1-cameo ») : ombre portée
+ * grise décalée de 3 avant la forme principale, voile dégradé après elle (du transparent, en haut à gauche, à la couleur de
+ * fin, en bas à droite : le fond passe ainsi de sa couleur à celle de fin, comme dans l'outil).
+ * @param {string} corps SVG du symbole @param {number} fin rang de la couleur de fin @param {boolean} ombre
+ * @returns {string}
+ */
+function s1vHabillageCatia(corps, fin, ombre) {
+  const m = corps.match(/<(rect|path|ellipse|circle)\b([^>]*?)\sclass="(s1-forme|s1-port|s1-note)\b[^"]*"([^>]*?)\/>/);
+  if (!m) return corps;
+  const geo = (m[2] + m[4]).replace(/\s+/g, ' ').trim();
+  const voile = `<${m[1]} class="s1-voile" fill="url(#s1-degrade-${fin})" ${geo}/>`;
+  const portee = ombre && m[3] !== 's1-port' ? `<${m[1]} class="s1-ombre" transform="translate(3 3)" ${geo}/>` : '';
+  return corps.slice(0, m.index) + portee + m[0] + voile + corps.slice(m.index + m[0].length);
+}
+
 /** Redessine la grille (53-navigation-diagramme.js) sur la partie visible, et l'état de son bouton. */
 function s1vMajGrille() {
   const g = document.getElementById('s1d-grille'), v = S1V.vb, z = $('s1d-zone').getBoundingClientRect();
@@ -17528,7 +17922,8 @@ function s1vProprietesExigence(doc, el) {
     const v = s1Attr(el, 's1:Requirement.' + p);
     if (v) res.push((app ? s1NomPropriete(app, p) : p) + ' = "' + s1vTexteBrut(v) + '"');
   }
-  for (const p of ['SatisfiedBy', 'VerifiedBy', 'RefinedBy', 'TracedTo', 'Derived', 'DerivedFrom', 'Master']) {
+  // Propriétés dérivées : montrées dans le thème d'Arcature ; CATIA Magic ne les montre pas par défaut
+  for (const p of S1V_RENDU.catia ? [] : ['SatisfiedBy', 'VerifiedBy', 'RefinedBy', 'TracedTo', 'Derived', 'DerivedFrom', 'Master']) {
     const l = typeof s1tDerivee === 'function' ? s1tDerivee(doc, el, p) : null;
     if (l && l.length) res.push(p + ' = ' + l.map(x => xtAttr(x, 'name') || s1vNomCalcule(doc, x)).join(', '));
   }
@@ -17628,10 +18023,20 @@ const S1V_SYMBOLES = {
 /**
  * SVG d'un diagramme : formes (dans l'ordre du contenu), puis liens, puis textes libres et étiquettes ; chaque vue d'un
  * élément du modèle porte data-sem (choix, mise en évidence) et chaque symbole sa clé (data-symbole, S1V_SYMBOLES).
- * @param {object} doc @param {object} d diagramme @param {object} sc scène (s1dScene)
+ * @param {object} doc @param {object} d diagramme @param {object} sc scène (s1dScene) @param {{catia?:boolean}} [o] style de
+ *   CATIA Magic (notation de l'outil : S1V_RENDU)
  * @returns {string}
  */
-function s1vDessin(doc, d, sc) {
+function s1vDessin(doc, d, sc, o) {
+  S1V_RENDU.catia = !!(o && o.catia);
+  try { return s1vDessinScene(doc, d, sc); } finally { S1V_RENDU.catia = false; }
+}
+
+/**
+ * Corps de s1vDessin (mode de dessin déjà posé dans S1V_RENDU).
+ * @param {object} doc @param {object} d diagramme @param {object} sc scène @returns {string}
+ */
+function s1vDessinScene(doc, d, sc) {
   const formes = [], liens = [], textes = [];
   S1V_FLUX.index = null;
   const etiquettes = new Set(sc.vues.map(v => v.nomId).filter(Boolean)), ctx = s1vContexte(doc);
@@ -17641,7 +18046,8 @@ function s1vDessin(doc, d, sc) {
     const fam = el ? s1Couche(el) || 'ORG' : 'ORG';
     const sem = (el ? ` data-sem="${s1vEsc(v.sem)}"` : '') + ` data-v="${s1vEsc(v.v)}"`;
     const bulle = `<title>${s1vEsc((el ? s1Type(el) + ' — ' + (xtAttr(el, 'name') || s1vNomCalcule(doc, el)) : v.href ? umlNomExterne(v.href, doc) : v.cls))}</title>`;
-    if (v.pts) { liens.push(s1vLien(doc, v, el, sem, bulle, sc, ctx)); continue; }
+    const vars = s1vVarsStyle(v);
+    if (v.pts) { const l = s1vLien(doc, v, el, sem, bulle, sc, ctx); liens.push(vars ? l.replace(/^<g /, `<g style="${s1vEsc(vars)}" `) : l); continue; }
     const { x, y, w, h, cls } = v;
     if (/^(TextBox|TextBoxWithIcon|MessageSignature)$/.test(cls)) {
       // Étiquette : son texte, sinon le nom de l'élément de la vue qu'elle nomme
@@ -17657,13 +18063,24 @@ function s1vDessin(doc, d, sc) {
       const tmax = Math.max(8, Math.floor((w - 24) / S1V_CAR));
       if (t.length > tmax) t = t.slice(0, tmax - 1) + '…';
       const lt = t.length * S1V_CAR + 14, st = d.noeud ? s1vStereoMontre(doc, d.noeud) : '', ho = st ? 30 : 18, lt2 = Math.max(lt, st.length * S1V_CAR + 14);
-      const corps = `<rect class="s1-cadre" x="${x}" y="${y}" width="${w}" height="${h}"/><path class="s1-cadre-onglet" d="M${x} ${y + ho} H${x + lt2} L${x + lt2 + 8} ${y + ho - 8} V${y} H${x} Z"/>`;
-      const titre = (st ? s1vTexte([st], x + lt2 / 2, y + 12, 'middle', 's1-dim') : '') + s1vTexte([t], x + 6, y + ho - 5, 'start', 's1-cadre-t');
+      const arrondi = S1V_RENDU.catia && /Activity/.test(d.type || '') ? ' rx="10"' : '';
+      const corps = `<rect class="s1-cadre" x="${x}" y="${y}" width="${w}" height="${h}"${arrondi}/><path class="s1-cadre-onglet" d="M${x} ${y + ho} H${x + lt2} L${x + lt2 + 8} ${y + ho - 8} V${y} H${x} Z"/>`;
+      // CATIA Magic : sigle seul en gras, nom du diagramme entre crochets espacés (« bdd [Package] P [ D ] »)
+      const m = S1V_RENDU.catia && t.match(/^(\S+)\s+(.*)$/), reste = m ? m[2].replace(/\[([^\]]*)\]$/, '[ $1 ]') : '';
+      const titre = (st ? s1vTexte([st], x + lt2 / 2, y + 12, 'middle', 's1-dim') : '') + (m
+        ? `<text class="s1-t" x="${x + 6}" y="${y + ho - 5}"><tspan class="s1-cadre-t">${s1vEsc(m[1])}</tspan> ${s1vEsc(reste)}</text>`
+        : s1vTexte([t], x + 6, y + ho - 5, 'start', 's1-cadre-t'));
       formes.push(`<g class="s1-f s1-c-cadre" data-symbole="cadre" data-v="${s1vEsc(v.v)}">${corps}${titre}</g>`);
       continue;
     }
-    const s = s1vSymbole(doc, sc, v, el, ctx), teinte = s1vCouleurDomaine(doc, el, ctx);   // type de domaine : sa couleur remplace celle de la famille
-    formes.push(`<g class="s1-f ${s.classe || 's1-c-' + fam}" data-symbole="${s.cle}"${teinte ? ` style="--s1-c:${teinte}"` : ''}${s.sansSem ? ` data-v="${s1vEsc(v.v)}"` : sem}>${s.sansSem ? '' : bulle}${s.corps}${s.titre}</g>`);
+    // Type de domaine : sa couleur remplace celle de la famille (thème d'Arcature) ou teinte le fond par défaut (style du fichier) ;
+    // style par défaut de CATIA Magic de sa sorte (--cm-…), dégradé et ombre (visibles dans le style du fichier seulement)
+    const s = s1vSymbole(doc, sc, v, el, ctx), teinte = s1vCouleurDomaine(doc, el, ctx);
+    const cm = S1V_CATIA[s1vSorteCatia(doc, v, el, s.cle)] || S1V_CATIA.defaut;
+    const style = [`--cm-fond:${cm[0]};--cm-trait:${cm[1]}` + (cm[3] ? `;--cm-taille:${cm[3]}px;--cm-graisse:700` : ''),
+      teinte ? `--s1-c:${teinte};--s1-dom:color-mix(in srgb,${teinte} 28%,#fff)` : '', vars].filter(Boolean).join(';');
+    const corps = s1vHabillageCatia(s.corps, cm[2], !S1V_SANS_OMBRE.test(s.cle));
+    formes.push(`<g class="s1-f ${s.classe || 's1-c-' + fam}" data-symbole="${s.cle}" style="${s1vEsc(style)}"${s.sansSem ? ` data-v="${s1vEsc(v.v)}"` : sem}>${s.sansSem ? '' : bulle}${corps}${s.titre}</g>`);
   }
   return `<defs>
     <marker id="s1-m-fleche" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path class="s1-m-trait" d="M1 1 L9 5 L1 9"/></marker>
@@ -17673,6 +18090,7 @@ function s1vDessin(doc, d, sc) {
     <marker id="s1-m-losange" viewBox="0 0 18 10" refX="17" refY="5" markerWidth="16" markerHeight="9" orient="auto-start-reverse"><path class="s1-m-plein" d="M1 5 L9 1 L17 5 L9 9 Z"/></marker>
     <marker id="s1-m-contenance" viewBox="0 0 14 14" refX="13" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><circle class="s1-m-creux" cx="7" cy="7" r="6"/><path class="s1-m-trait" d="M1 7 H13 M7 1 V13"/></marker>
     <marker id="s1-m-losange-creux" viewBox="0 0 18 10" refX="17" refY="5" markerWidth="16" markerHeight="9" orient="auto-start-reverse"><path class="s1-m-creux" d="M1 5 L9 1 L17 5 L9 9 Z"/></marker>
+    ${S1V_CATIA_FINS.map((c, i) => `<linearGradient id="s1-degrade-${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c}" stop-opacity="0"/><stop offset="1" stop-color="${c}"/></linearGradient>`).join('')}
     <marker id="s1-m-croix" viewBox="0 0 12 12" refX="6" refY="6" markerWidth="12" markerHeight="12" orient="auto"><path class="s1-m-trait" d="M1 1 L11 11 M11 1 L1 11"/></marker>
   </defs>` + formes.join('') + liens.join('') + textes.join('');
 }
@@ -17709,8 +18127,15 @@ function s1vSensFlux(doc, el) {
  * @returns {Array<{titre:string, lignes:string[]}>}
  */
 function s1vCompartiments(doc, el, props, montres, ctx) {
-  const masque = n => props && String(props['SUPPRESS_' + n + '_COMPARTMENT']) === 'true';
-  const res = [], ajouter = (cle, titre, lignes) => { if (lignes.length && !masque(cle)) res.push({ titre, lignes }); };
+  // Masqué si la vue l'écrit ; dans le style de CATIA Magic, un bloc masque aussi par défaut ce que l'outil masque
+  const blocCatia = S1V_RENDU.catia && s1A(doc, el, 'Block');
+  const masque = n => {
+    const k = 'SUPPRESS_' + n + '_COMPARTMENT';
+    if (props && props[k] != null) return String(props[k]) === 'true';
+    const c = blocCatia && S1V_MASQUES_CATIA[n];
+    return c ? !(props && props[c] != null && String(props[c]) !== 'true') : false;
+  };
+  const res = [], ajouter = (cle, titre, lignes) => { if (lignes.length && !masque(cle)) res.push({ titre, lignes, cle }); };
   const allocations = () => { for (const c of s1vRelationsDe(doc, ctx, el, /^allocated/)) ajouter('ALLOCATION', c.titre, c.lignes); };
   // Type d'un autre projet : son nom s'il se lit dans l'adresse (« …PrimitiveValueTypes.Real »), pas un identifiant opaque
   const typeDe = p => umlCibles(doc, p, 'type')[0] || null, nomType = p => { const t = typeDe(p), h = umlRefsDetail(p, 'type').externes[0], n = h ? umlNomExterne(h) : ''; return t ? s1vNomTypePropre(doc, t) : /^_/.test(n) ? '' : n; };
@@ -17744,7 +18169,8 @@ function s1vCompartiments(doc, el, props, montres, ctx) {
     ajouter('PARAMETERS', 'parameters', props2.filter(p => !contraintes.includes(p)).map(ligne));
     return res;
   }
-  if (mc === 'Enumeration') { ajouter('LITERALS', 'literals', el.enfants.filter(c => c.tag === 'ownedLiteral').map(c => xtAttr(c, 'name') || '')); return res; }
+  // Littéraux d'une énumération (CATIA Magic : compartiment sans intitulé)
+  if (mc === 'Enumeration') { ajouter('LITERALS', S1V_RENDU.catia ? '' : 'literals', el.enfants.filter(c => c.tag === 'ownedLiteral').map(c => xtAttr(c, 'name') || '')); return res; }
   ajouter('PARTS', 'parts', parts.map(ligne));
   ajouter('REFERENCES', 'references', refs.map(ligne));
   ajouter('BOUND_REFERENCES', 'bound references', liees.map(ligne));
@@ -17776,6 +18202,10 @@ function s1vCompartiments(doc, el, props, montres, ctx) {
     ajouter('TAGGED_VALUES', '«' + st.nom + '»', l);
   }
   allocations();
+  if (blocCatia) {
+    const rang = c => { const i = S1V_ORDRE_CATIA.indexOf(c.cle); return i < 0 ? S1V_ORDRE_CATIA.length : i; };
+    return res.map((c, i) => [c, i]).sort((a, b) => rang(a[0]) - rang(b[0]) || a[1] - b[1]).map(x => x[0]);
+  }
   return res;
 }
 
@@ -17789,10 +18219,12 @@ function s1vCompartimentsSvg(comps, b, yc) {
   const { x, y, w, h } = b, S = S1V_TEXTE + 2;
   let res = '';
   for (const c of comps) {
-    if (yc + 2 * S > y + h) break;
-    const n = Math.floor((y + h - yc - S - 2) / S), vis = c.lignes.length > n ? [...c.lignes.slice(0, Math.max(0, n - 1)), '…'] : c.lignes;
-    res += `<path class="s1-separateur" d="M${x} ${yc} H${x + w}"/>` + s1vTexte([c.titre], x + w / 2, yc + S1V_TEXTE + 1, 'middle', 's1-compartiment') + s1vTexte(vis.map(l => l.length * S1V_CAR > w - 10 ? l.slice(0, Math.max(3, Math.floor((w - 10) / S1V_CAR) - 1)) + '…' : l), x + 5, yc + S + S1V_TEXTE + 1, 'start');
-    yc += (vis.length + 1) * S + 4;
+    // Compartiment sans intitulé (littéraux dans le style de CATIA Magic) : les lignes commencent sous le trait
+    const t = c.titre ? 1 : 0;
+    if (yc + (1 + t) * S > y + h) break;
+    const n = Math.floor((y + h - yc - t * S - 2) / S), vis = c.lignes.length > n ? [...c.lignes.slice(0, Math.max(0, n - 1)), '…'] : c.lignes;
+    res += `<path class="s1-separateur" d="M${x} ${yc} H${x + w}"/>` + (t ? s1vTexte([c.titre], x + w / 2, yc + S1V_TEXTE + 1, 'middle', 's1-compartiment') : '') + s1vTexte(vis.map(l => l.length * S1V_CAR > w - 10 ? l.slice(0, Math.max(3, Math.floor((w - 10) / S1V_CAR) - 1)) + '…' : l), x + 5, yc + t * S + S1V_TEXTE + 1, 'start');
+    yc += (vis.length + t) * S + 4;
   }
   return res ? `<g data-symbole="compartiments">${res}</g>` : '';
 }
@@ -17880,6 +18312,14 @@ function s1vSymbole(doc, sc, v, el, ctx) {
     const d = sens === 'inout' ? (horiz ? `M${cx - m} ${cy} H${cx + m} M${cx - m * 0.4} ${cy - m * 0.6} L${cx - m} ${cy} L${cx - m * 0.4} ${cy + m * 0.6} M${cx + m * 0.4} ${cy - m * 0.6} L${cx + m} ${cy} L${cx + m * 0.4} ${cy + m * 0.6}`
       : `M${cx} ${cy - m} V${cy + m} M${cx - m * 0.6} ${cy - m * 0.4} L${cx} ${cy - m} L${cx + m * 0.6} ${cy - m * 0.4} M${cx - m * 0.6} ${cy + m * 0.4} L${cx} ${cy + m} L${cx + m * 0.6} ${cy + m * 0.4}`)
       : fleche(sens === 'in' ? dedans : -dedans);
+    if (S1V_RENDU.catia) {
+      // CATIA Magic : trait fin et petite pointe (deux pour inout), à la couleur du trait du port
+      const L = Math.min(w, h) * 0.32, t = Math.max(2, L * 0.45), sg = sens === 'in' ? dedans : sens === 'out' ? -dedans : 1;
+      const pointe = (px, py, s2) => horiz ? `M${px - s2 * t} ${py - t} L${px} ${py} L${px - s2 * t} ${py + t}` : `M${px - t} ${py - s2 * t} L${px} ${py} L${px + t} ${py - s2 * t}`;
+      const [ax, ay, bx, by] = horiz ? [cx - L, cy, cx + L, cy] : [cx, cy - L, cx, cy + L];
+      const fine = `M${ax} ${ay} L${bx} ${by} ` + (sens === 'inout' ? pointe(bx, by, 1) + ' ' + pointe(ax, ay, -1) : sg > 0 ? pointe(bx, by, 1) : pointe(ax, ay, -1));
+      return { cle: 'port-flux', corps: carre + `<path class="s1-fleche-port" d="${fine}"/>`, titre: plus };
+    }
     return { cle: 'port-flux', corps: carre + `<path class="s1-trait s1-fin" d="${d}"/>`, titre: plus };
   }
   // Nœuds de contrôle et pseudo-états
@@ -17921,7 +18361,9 @@ function s1vSymbole(doc, sc, v, el, ctx) {
     // ses allocations, comme Cameo les calcule
     const c = 10, note = `<path class="s1-note" d="M${x} ${y} H${x + w - c} L${x + w} ${y + c} V${y + h} H${x} Z M${x + w - c} ${y} V${y + c} H${x + w}"/>`, nl = Math.max(1, Math.floor((h - 6) / S));
     const corpsTexte = s1vTexteBrut(cls === 'Note' ? v.texte : el ? umlCorps(el) || '' : v.texte);
-    const vals = el && cls !== 'Note' ? s1vValeursEtiquetees(doc, el) : [], tete = el && cls !== 'Note' ? s1vStereoMontre(doc, el) : '';
+    // CATIA Magic : un commentaire sans stéréotype porte le mot-clé «comment» en tête
+    const vals = el && cls !== 'Note' ? s1vValeursEtiquetees(doc, el) : [], st = el && cls !== 'Note' ? s1vStereoMontre(doc, el) : '';
+    const tete = st || (S1V_RENDU.catia && el && cls !== 'Note' && mc === 'Comment' ? '«comment»' : '');
     const alloc = !corpsTexte && el && cls === 'Note' ? s1vAllocations(doc, el) : [];
     const annote = !corpsTexte && !vals.length && !tete && el && cls !== 'Note' ? umlCibles(doc, el, 'annotatedElement') : [];
     const rel = annote.length === 1 ? s1vRelationsDe(doc, ctx, annote[0]) : [];
@@ -17959,7 +18401,9 @@ function s1vSymbole(doc, sc, v, el, ctx) {
   // Partitions (couloirs) : chez Cameo, Swimlane et ses cellules (cadres), SwimlaneHeader (bandeau du nom) ; une partition
   // montrée sans bandeau : son nom en haut ; « «allocate» » d'une partition d'allocation (§ 15.3.1.5)
   if (cls === 'SwimlaneHeader') {
-    const { stereo, nom } = nomEl(), lignes = [...(stereo ? [stereo] : []), ...s1vLignes(nom, w - 8, 2)];
+    // CATIA Magic : un couloir qui représente un élément montre son stéréotype au-dessus du nom (« «block» Systeme »)
+    const { stereo: st0, nom } = nomEl(), rep = S1V_RENDU.catia && el && !st0 ? umlCibles(doc, el, 'represents')[0] : null;
+    const stereo = st0 || (rep ? s1vStereoMontre(doc, rep) : ''), lignes = [...(stereo ? [stereo] : []), ...s1vLignes(nom, w - 8, 2)];
     return { cle: 'couloir', corps: `<rect class="s1-couloir s1-couloir-tete" x="${x}" y="${y}" width="${w}" height="${h}"/>`, titre: s1vTexte(lignes, cx, cy - (lignes.length - 1) * S / 2 + 4, 'middle', 's1-titre') };
   }
   if ((cls === 'Swimlane' || cls === 'SwimlaneCell') && (mc !== 'ActivityPartition' || sc.vues.some(c => c.cls === 'SwimlaneHeader')))
@@ -18010,13 +18454,18 @@ function s1vSymbole(doc, sc, v, el, ctx) {
     return { cle: 'operande', sansSem: true, corps: `<rect class="s1-fond-clic" x="${x}" y="${y}" width="${w}" height="${h}"/><path class="s1-operande" d="${cls === 'Separator' || w > h ? `M${x} ${cy} H${x + w}` : `M${cx} ${y} V${y + h}`}"/>`, titre: '' };
   // Actions et états
   if (/Action$|^(State|StateInvariant|Continuation)$/.test(cls) || /Action$|^(State|Continuation)$/.test(mc)) {
-    const { stereo, nom } = nomEl(), lignes = [...(stereo ? [stereo] : []), ...s1vLignes(nom, w - 8, 4)], p = Math.min(14, h / 2);
-    if (mc === 'SendSignalAction') return { cle: 'envoi-signal', corps: `<path class="s1-forme" d="M${x} ${y} H${x + w - p} L${x + w} ${cy} L${x + w - p} ${y + h} H${x} Z"/>`, titre: titreCentre(lignes) };
+    const { stereo, nom: nom0 } = nomEl(), p = Math.min(14, h / 2), catia = S1V_RENDU.catia;
+    // CATIA Magic : action d'appel nommée « nom : Comportement », noms en haut et en gras (états, actions)
+    const appele = catia && mc === 'CallBehaviorAction' && el ? umlCibles(doc, el, 'behavior')[0] : null;
+    const nom = appele && xtAttr(appele, 'name') && xtAttr(appele, 'name') !== nom0 ? `${nom0} : ${xtAttr(appele, 'name')}` : nom0;
+    const lignes = [...(stereo ? [stereo] : []), ...s1vLignes(nom, w - 8, 4)];
+    const titreCentre = (l, dx = 0) => catia ? s1vTexte(l, cx + dx, y + S1V_TEXTE + 5, 'middle', 's1-titre') : s1vTexte(l, cx + dx, cy - (l.length - 1) * S / 2 + 4);
+    if (mc === 'SendSignalAction') return { cle: 'envoi-signal', corps: `<path class="s1-forme" d="M${x} ${y} H${x + w - p} L${x + w} ${cy} L${x + w - p} ${y + h} H${x} Z"/>`, titre: titreCentre(lignes, catia ? -p / 2 : 0) };
     if (mc === 'AcceptEventAction') {
       // Évènement de temps : sablier (nom dessous) ; sinon encoche à gauche
       const temps = el.enfants.filter(c => c.tag === 'trigger').some(t => { const e = umlCibles(doc, t, 'event')[0]; return e && umlMetaclasse(e) === 'TimeEvent'; });
       if (temps) { const s = Math.min(w, h, 30), hx = cx - s / 2, hy = y; return { cle: 'temporisation', corps: `<path class="s1-forme" d="M${hx} ${hy} H${hx + s} L${hx} ${hy + s} H${hx + s} Z"/>`, titre: s1vTexte(s1vLignes(nom, Math.max(w, 80), 2), cx, hy + s + S1V_TEXTE + 2) }; }
-      return { cle: 'reception-signal', corps: `<path class="s1-forme" d="M${x} ${y} H${x + w} V${y + h} H${x} L${x + p} ${cy} Z"/>`, titre: titreCentre(lignes) };
+      return { cle: 'reception-signal', corps: `<path class="s1-forme" d="M${x} ${y} H${x + w} V${y + h} H${x} L${x + p} ${cy} Z"/>`, titre: titreCentre(lignes, catia ? p / 2 : 0) };
     }
     const arrondi = (classe = '') => `<rect class="s1-forme${classe}" x="${x}" y="${y}" width="${w}" height="${h}" rx="${Math.min(10, h / 3)}"/>`;
     if (/Action$/.test(mc)) {
@@ -18038,7 +18487,8 @@ function s1vSymbole(doc, sc, v, el, ctx) {
       const internes = [['entry', 'entry'], ['doActivity', 'do'], ['exit', 'exit']].flatMap(([t, m]) => el.enfants.filter(c => c.tag === t).map(b => `${m} / ${xtAttr(b, 'name') || s1vNomCalcule(doc, b)}`));
       if (regions.length && enfantsVues.length) {
         const hb = lignes.length * S + 8;
-        return { cle: 'etat-composite', corps: arrondi(' s1-contenant') + `<path class="s1-separateur" d="M${x} ${y + hb} H${x + w}"/>`, titre: s1vTexte(lignes, cx, y + S1V_TEXTE + 4, 'middle', 's1-titre') };
+        // CATIA Magic : pas de trait sous le nom d'un état composite
+        return { cle: 'etat-composite', corps: arrondi(' s1-contenant') + (catia ? '' : `<path class="s1-separateur" d="M${x} ${y + hb} H${x + w}"/>`), titre: s1vTexte(lignes, cx, y + S1V_TEXTE + 4, 'middle', 's1-titre') };
       }
       const cache = regions.some(rg => rg.enfants.some(c => c.tag === 'subvertex')) ? indicateur() : '';
       if (internes.length && h > (lignes.length + 1) * S + 8) {
@@ -18060,7 +18510,11 @@ function s1vSymbole(doc, sc, v, el, ctx) {
     const { stereo, nom } = nomEl(), pts = el ? el.enfants.filter(c => c.tag === 'extensionPoint').map(c => xtAttr(c, 'name') || '') : [];
     const lignes = [...(stereo ? [stereo] : []), ...s1vLignes(nom, w * 0.75, 3)];
     let titre = s1vTexte(lignes, cx, (pts.length ? y + h * 0.28 : cy) - (lignes.length - 1) * S / 2 + 4, 'middle', 's1-titre');
-    if (pts.length) titre += `<path class="s1-separateur" d="M${x + w * 0.07} ${cy} H${x + w * 0.93}"/>` + s1vTexte(['extension points', ...pts].slice(0, Math.max(1, Math.floor(h / 2 / S))), cx, cy + S, 'middle');
+    if (pts.length && S1V_RENDU.catia) {
+      // CATIA Magic : intitulé du compartiment en italique, centré ; points alignés à gauche
+      const n = Math.max(0, Math.floor(h / 2 / S) - 1);
+      titre += `<path class="s1-separateur" d="M${x + w * 0.07} ${cy} H${x + w * 0.93}"/>` + s1vTexte(['extension points'], cx, cy + S - 2, 'middle', 's1-compartiment') + s1vTexte(pts.slice(0, n), x + w * 0.14, cy + 2 * S - 2, 'start');
+    } else if (pts.length) titre += `<path class="s1-separateur" d="M${x + w * 0.07} ${cy} H${x + w * 0.93}"/>` + s1vTexte(['extension points', ...pts].slice(0, Math.max(1, Math.floor(h / 2 / S))), cx, cy + S, 'middle');
     return { cle: 'cas-utilisation', corps: `<ellipse class="s1-forme" cx="${cx}" cy="${cy}" rx="${w / 2}" ry="${h / 2}"/>`, titre };
   }
   // Acteur : bonhomme, nom dessous
@@ -18073,13 +18527,18 @@ function s1vSymbole(doc, sc, v, el, ctx) {
   // Paquetage, modèle, profil : onglet, nom dans le corps (dans l'onglet s'il contient des vues)
   if (/^(Package|Model|Profile)$/.test(cls) || /^(Package|Model|Profile)$/.test(mc)) {
     const { stereo, nom } = nomEl(), lt = Math.min(w * 0.4, Math.max(40, nom.length * S1V_CAR + 12)), ht = 14, contenant = enfantsVues.some(c => !/^(TextBox|TextBoxWithIcon)$/.test(c.cls));
-    const mot = stereo || (mc === 'Profile' ? '«profile»' : mc === 'Model' ? '«model»' : ''), lignes = [...(mot ? [mot] : []), ...s1vLignes(nom, w - 8, 3)];
+    // CATIA Magic : modèle marqué d'un petit triangle en haut à droite (pas de «model»), nom toujours en haut du corps
+    const catia = S1V_RENDU.catia, triangle = catia && mc === 'Model' && !stereo;
+    const mot = stereo || (mc === 'Profile' ? '«profile»' : mc === 'Model' && !triangle ? '«model»' : ''), lignes = [...(mot ? [mot] : []), ...s1vLignes(nom, w - 8, 3)];
     const corps = `<path class="s1-forme" d="M${x} ${y} H${x + lt} V${y + ht} H${x + w} V${y + h} H${x} Z"/><path class="s1-separateur" d="M${x} ${y + ht} H${x + lt}"/>`;
-    // Nom en haut du corps s'il contient des vues (comme Cameo), sinon au milieu
-    return { cle: 'paquetage', corps: corps.replace('class="s1-forme"', `class="s1-forme${contenant ? ' s1-contenant' : ''}"`), titre: s1vTexte(lignes, cx, contenant ? y + ht + S1V_TEXTE + 4 : y + ht + (h - ht) / 2 - (lignes.length - 1) * S / 2 + 4, 'middle', 's1-titre') };
+    const signe = triangle ? `<g data-symbole="modele"><path class="s1-trait" d="M${x + w - 20} ${y + ht + 16} L${x + w - 14} ${y + ht + 6} L${x + w - 8} ${y + ht + 16} Z"/></g>` : '';
+    // Nom en haut du corps s'il contient des vues (comme Cameo) ou dans le style de CATIA Magic, sinon au milieu
+    return { cle: 'paquetage', corps: corps.replace('class="s1-forme"', `class="s1-forme${contenant ? ' s1-contenant' : ''}"`), titre: s1vTexte(lignes, cx, contenant || catia ? y + ht + S1V_TEXTE + 6 : y + ht + (h - ht) / 2 - (lignes.length - 1) * S / 2 + 4, 'middle', 's1-titre') + signe };
   }
   // Bloc, partie, classe, instance, tête de ligne de vie : titre en haut, centré ; compartiments s'il y a la place
-  const { stereo, nom } = nomEl(), contenant = enfantsVues.some(c => !/^(Port|Pin|TextBox|TextBoxWithIcon|ConnectorEnd)$/.test(c.cls));
+  const { stereo: st0, nom } = nomEl(), contenant = enfantsVues.some(c => !/^(Port|Pin|TextBox|TextBoxWithIcon|ConnectorEnd)$/.test(c.cls));
+  // CATIA Magic : une interface sans stéréotype se reconnaît à son icône (rond en haut à droite), pas à «interface»
+  const iconeInterface = S1V_RENDU.catia && mc === 'Interface' && st0 === '«interface»', stereo = iconeInterface ? '' : st0;
   const abstrait = el && xtAttr(el, 'isAbstract') === 'true' && mc !== 'Property';
   const lignes = [...(stereo ? [stereo] : []), ...s1vLignes(nom, w - 8, 3), ...(abstrait ? ['{abstract}'] : [])];
   const typeEl = el && mc === 'Property' ? umlCibles(doc, el, 'type')[0] : null;
@@ -18104,6 +18563,7 @@ function s1vSymbole(doc, sc, v, el, ctx) {
     titre += `<path class="s1-trait" d="M${cx - lg / 2} ${yl} H${cx + lg / 2}"/>`;
   }
   if (cle === 'partie-acteur') titre += `<g data-symbole="acteur">${bonhomme(x + 12, cy - 7, 22, 4)}</g>`;
+  if (iconeInterface) titre += `<g data-symbole="interface-icone"><circle class="s1-trait" cx="${x + w - 12}" cy="${y + 12}" r="6"/></g>`;
   if (abstrait) titre = `<g data-symbole="abstrait">${titre}</g>`;
   if (el && s1A(doc, el, 'Requirement') && !contenant) {
     // Compartiment de l'exigence, comme Cameo : propriétés qui ont une valeur, par ordre alphabétique, sous le nom que le
@@ -18178,7 +18638,7 @@ function s1vLien(doc, v, el, sem, bulle, sc, ctx) {
   const g = (cle, o = {}) => {
     const d = o.trace || pts.map(([x, y], i) => (i ? 'L' : 'M') + x + ' ' + y).join(' ');
     const mots = sansEtiquette ? auMilieu([...(o.mots || []), ...(o.ornements || [])], o.ornements && o.ornements.length && !(o.mots || []).length ? 'ornement' : 'mot-cle') : '';
-    return `<g class="s1-l" data-symbole="${cle}"${sem}>${bulle}<path class="s1-lien-fond" d="${d}"/><path class="s1-lien${o.pointille ? ' s1-pointille' : ''}" d="${d}"` +
+    return `<g class="s1-l" data-symbole="${cle}"${sem}>${bulle}<path class="s1-lien-fond" d="${d}"/><path class="s1-lien${o.pointille ? ' s1-pointille' : ''}${o.classe ? ' ' + o.classe : ''}" d="${d}"` +
       `${o.debut ? ` marker-start="url(#s1-m-${o.debut})"` : ''}${o.fin ? ` marker-end="url(#s1-m-${o.fin})"` : ''}/>${o.extra || ''}${mots}</g>`;
   };
   const semDe = (sc.parV.get(v.de) || {}).sem, semVers = (sc.parV.get(v.vers) || {}).sem;
@@ -18270,7 +18730,9 @@ function s1vLien(doc, v, el, sem, bulle, sc, ctx) {
     return g('dependance', { pointille: true, debut: 'fleche', mots: stereos.length ? stereos : mot ? [mot] : [] });
   if (/Flow$|^Transition$/.test(cls) || umlConforme(mc, 'ActivityEdge') || mc === 'Transition') {
     const transition = /Transition/.test(cls + mc);
-    return g(transition ? 'transition' : 'flot', { debut: 'fleche', ornements: el && !transition ? s1vOrnements(doc, el) : [] });
+    // Flot de contrôle : classe s1-controle (pointillé dans le style de CATIA Magic, trait plein dans le thème d'Arcature)
+    return g(transition ? 'transition' : 'flot', { debut: 'fleche', ornements: el && !transition ? s1vOrnements(doc, el) : [],
+      classe: mc === 'ControlFlow' || cls === 'ControlFlow' ? 's1-controle' : '' });
   }
   return g('connecteur');
 }
@@ -18546,8 +19008,9 @@ function s1vExporterSvg() {
   const css = getComputedStyle(document.documentElement), b = sc.bornes, m = 20;
   const vars = ['--c-bg', '--c-bg2', '--c-bg3', '--c-border', '--c-text', '--c-dim', '--c-accent', '--c-STR', '--c-BEH', '--c-REQ', '--c-ORG'].map(n => `${n}:${css.getPropertyValue(n).trim()}`).join(';');
   const style = [...document.styleSheets].flatMap(s => { try { return [...s.cssRules]; } catch (e) { return []; } }).map(r => r.cssText).filter(t => /\.s1-/.test(t)).join('\n').replace(/#s1d-svg\s*/g, '');
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${b.x - m} ${b.y - m} ${b.w + 2 * m} ${b.h + 2 * m}" width="${b.w + 2 * m}" height="${b.h + 2 * m}" style="${vars}">` +
-    `<style>${style}</style><rect x="${b.x - m}" y="${b.y - m}" width="${b.w + 2 * m}" height="${b.h + 2 * m}" fill="${css.getPropertyValue('--c-bg2').trim()}"/>${s1vDessin(ARC.doc, d, sc)}</svg>`;
+  const fichier = s1vStyleFichier(ARC.doc, d), fond = fichier ? '#ffffff' : css.getPropertyValue('--c-bg2').trim();
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg"${fichier ? ' class="s1-cameo"' : ''} viewBox="${b.x - m} ${b.y - m} ${b.w + 2 * m} ${b.h + 2 * m}" width="${b.w + 2 * m}" height="${b.h + 2 * m}" style="${vars}">` +
+    `<style>${style}</style><rect x="${b.x - m}" y="${b.y - m}" width="${b.w + 2 * m}" height="${b.h + 2 * m}" fill="${fond}"/>${s1vDessin(ARC.doc, d, sc, { catia: fichier })}</svg>`;
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
   a.download = (d.nom || 'diagramme').replace(/[\\/:*?"<>|]+/g, '_') + '.svg';
@@ -18556,7 +19019,7 @@ function s1vExporterSvg() {
 }
 
 /** Feuille de styles des dessins SVG (classes uvd-… et s1-…), reprise de src/css/styles.css par le build. */
-const LEU_SVG_CSS = "svg.sombre{--c-bg:#1e1e2e; --c-bg2:#181825; --c-bg3:#313244; --c-bg4:#252536; --c-border:#45475a; --c-sep:#5c6080; --c-text:#cdd6f4; --c-dim:#a6adc8; --c-accent:#89b4fa; --c-warn:#e3b341; --c-ok:#3fb950; --c-err:#f85149; --c-OA:#f9e2af; --c-SA:#a6e3a1; --c-LA:#89dceb; --c-PA:#fab387; --c-EPBS:#cba6f7; --c-STR:#89dceb; --c-BEH:#a6e3a1; --c-REQ:#f5c2e7; --c-ORG:#cba6f7; /* familles SysML v2 */ --c-SPEC:#f5c2e7; --c-REL:#fab387; --c-TYPE:#94e2d5; /* parties d'un fichier ReqIF */;--uvd-toile:#151826;--uvd-fond:#1f2333;--uvd-note:#2c2a1e;--uvd-trait:#9aa4c4;--uvd-texte:#dfe5f7;--uvd-accent:#7aa7ff}svg.clair{--c-bg:#f6f7fb; --c-bg2:#ffffff; --c-bg3:#eceef5; --c-bg4:#e3e7f2; --c-border:#c7ccdb; --c-sep:#9aa1b8; --c-text:#1f2335; --c-dim:#5b6178; --c-accent:#2f5fd0; --c-warn:#9a6700; --c-ok:#1a7f37; --c-err:#cf222e; --c-OA:#c9a227; --c-SA:#3a9a3a; --c-LA:#1f8ca3; --c-PA:#d0672a; --c-EPBS:#8250df; --c-STR:#1f8ca3; --c-BEH:#3a9a3a; --c-REQ:#c2387a; --c-ORG:#8250df; --c-SPEC:#c2387a; --c-REL:#d0672a; --c-TYPE:#17837a;;--uvd-toile:#f6f8fc;--uvd-fond:#ffffff;--uvd-note:#fffbe6;--uvd-trait:#4a5675;--uvd-texte:#1f2335;--uvd-accent:#2f5fd0}.leu-toile{fill:var(--uvd-toile)}.leu-toile-s1{fill:var(--c-bg2)}.uvd-c{fill:var(--uvd-fond);stroke:var(--uvd-trait);stroke-width:1.2}.uvd-f[data-c=\"STR\"]>.uvd-c{fill:color-mix(in srgb,var(--c-STR) 9%,var(--uvd-fond))}.uvd-f[data-c=\"BEH\"]>.uvd-c{fill:color-mix(in srgb,var(--c-BEH) 9%,var(--uvd-fond))}.uvd-f[data-c=\"REQ\"]>.uvd-c{fill:color-mix(in srgb,var(--c-REQ) 9%,var(--uvd-fond))}.uvd-f[data-dom]>.uvd-c{fill:color-mix(in srgb,var(--dom) 14%,var(--uvd-fond));stroke:var(--dom)}.uvd-note{fill:var(--uvd-note) !important}.uvd-cadre{fill:none !important}.uvd-region{fill:none;stroke:var(--uvd-trait);stroke-dasharray:3 3;opacity:.5}.uvd-zone{fill:transparent}.uvd-plein,.uvd-pointe-pleine{fill:var(--uvd-trait)}.uvd-pointe-vide{fill:var(--uvd-fond);stroke:var(--uvd-trait);stroke-width:1.2}.uvd-sep,.uvd-trait,.uvd-trait-l{fill:none;stroke:var(--uvd-trait);stroke-width:1.2}.uvd-vie{stroke:var(--uvd-trait);stroke-dasharray:5 4}.uvd-tirets{stroke-dasharray:6 4}.uvd-zone-l{fill:none;stroke:transparent;stroke-width:10}.uvd-t{font-size:12px;fill:var(--uvd-texte);font-family:-apple-system,'Segoe UI',sans-serif}.uvd-nom{font-weight:700}.uvd-mc{font-size:11px;opacity:.85}.uvd-abstrait{font-style:italic}.uvd-souligne{text-decoration:underline}.uvd-etiquette{font-size:11px;paint-order:stroke;stroke:var(--uvd-toile);stroke-width:3px}[data-sem]{cursor:pointer}.uvd-absent{opacity:.35}.uvd-lien-choix{fill:none;stroke:var(--uvd-accent);stroke-width:5px;stroke-opacity:.35;pointer-events:none}.s1-t{font:11px system-ui,\"Segoe UI\",Arial,sans-serif;fill:var(--c-text)}.s1-titre tspan{font-weight:600} .s1-titre tspan.s1-stereo{font-weight:400}.s1-etiquette,.s1-dim{fill:var(--c-dim)}.s1-cadre{fill:none;stroke:var(--c-border);stroke-width:1.2}.s1-cadre-onglet{fill:var(--c-bg3);stroke:var(--c-border)}.s1-cadre-t{font-weight:600}.s1-f{--s1-c:var(--c-ORG)}.s1-c-STR{--s1-c:var(--c-STR)} .s1-c-BEH{--s1-c:var(--c-BEH)} .s1-c-REQ{--s1-c:var(--c-REQ)} .s1-c-ORG{--s1-c:var(--c-ORG)}.s1-forme{fill:color-mix(in srgb,var(--s1-c) 13%,var(--c-bg2));stroke:var(--s1-c);stroke-width:1.2}.s1-forme.s1-contenant{fill:color-mix(in srgb,var(--s1-c) 6%,var(--c-bg2))}.s1-port{fill:var(--c-bg2);stroke:var(--s1-c);stroke-width:1.2}.s1-plein{fill:var(--c-text);stroke:none}.s1-trait{stroke:var(--c-text);stroke-width:1.4;fill:none}.s1-note{fill:color-mix(in srgb,var(--c-warn) 12%,var(--c-bg2));stroke:var(--c-dim);stroke-width:1}.s1-region{fill:none;stroke:var(--s1-c);stroke-width:1.2;stroke-dasharray:6 4}.s1-couloir{fill:none;stroke:var(--c-dim);stroke-width:1}.s1-couloir.s1-couloir-tete{fill:var(--c-bg3)}.s1-fond-clic{fill:transparent;stroke:none}.s1-icone-page{fill:var(--c-bg2);stroke:var(--c-dim);stroke-width:1}.s1-acteur{fill:none;stroke:var(--s1-c);stroke-width:1.4}.s1-fragment{fill:none;stroke:var(--c-dim);stroke-width:1.1}.s1-operande{fill:none;stroke:var(--c-dim);stroke-width:1;stroke-dasharray:6 4}.s1-separateur{stroke:var(--s1-c);stroke-width:.8;fill:none}.s1-forme.s1-reference{stroke-dasharray:6 3}.s1-compartiment{font-style:italic;fill:var(--c-dim);font-size:10px}.s1-fin{stroke-width:1.2}.s1-fond{fill:transparent;stroke:none}.s1-acteur circle{fill:color-mix(in srgb,var(--s1-c) 13%,var(--c-bg2));stroke:var(--s1-c);stroke-width:1.3}.s1-acteur path{fill:none;stroke:var(--s1-c);stroke-width:1.3}.s1-legende{fill:var(--c-bg3);stroke:var(--c-border);stroke-width:1}.s1-ligne-vie{stroke:var(--c-dim);stroke-width:1;stroke-dasharray:6 4;fill:none}.s1-activation{fill:var(--c-bg3);stroke:var(--c-dim)}.s1-lien{fill:none;stroke:var(--c-dim);stroke-width:1.3}.s1-lien.s1-pointille,.s1-trait.s1-pointille{stroke-dasharray:5 4}.s1-lien-fond{fill:none;stroke:transparent;stroke-width:8}.s1-m-trait{fill:none;stroke:var(--c-dim);stroke-width:1.4}.s1-m-creux{fill:var(--c-bg2);stroke:var(--c-dim);stroke-width:1.2}.s1-m-plein{fill:var(--c-dim)}.s1-contenance{fill:var(--c-bg2);stroke:var(--c-dim);stroke-width:1.2}";
+const LEU_SVG_CSS = "svg.sombre{--c-bg:#1e1e2e; --c-bg2:#181825; --c-bg3:#313244; --c-bg4:#252536; --c-border:#45475a; --c-sep:#5c6080; --c-text:#cdd6f4; --c-dim:#a6adc8; --c-accent:#89b4fa; --c-warn:#e3b341; --c-ok:#3fb950; --c-err:#f85149; --c-OA:#f9e2af; --c-SA:#a6e3a1; --c-LA:#89dceb; --c-PA:#fab387; --c-EPBS:#cba6f7; --c-STR:#89dceb; --c-BEH:#a6e3a1; --c-REQ:#f5c2e7; --c-ORG:#cba6f7; /* familles SysML v2 */ --c-SPEC:#f5c2e7; --c-REL:#fab387; --c-TYPE:#94e2d5; /* parties d'un fichier ReqIF */;--uvd-toile:#151826;--uvd-fond:#1f2333;--uvd-note:#2c2a1e;--uvd-trait:#9aa4c4;--uvd-texte:#dfe5f7;--uvd-accent:#7aa7ff}svg.clair{--c-bg:#f6f7fb; --c-bg2:#ffffff; --c-bg3:#eceef5; --c-bg4:#e3e7f2; --c-border:#c7ccdb; --c-sep:#9aa1b8; --c-text:#1f2335; --c-dim:#5b6178; --c-accent:#2f5fd0; --c-warn:#9a6700; --c-ok:#1a7f37; --c-err:#cf222e; --c-OA:#c9a227; --c-SA:#3a9a3a; --c-LA:#1f8ca3; --c-PA:#d0672a; --c-EPBS:#8250df; --c-STR:#1f8ca3; --c-BEH:#3a9a3a; --c-REQ:#c2387a; --c-ORG:#8250df; --c-SPEC:#c2387a; --c-REL:#d0672a; --c-TYPE:#17837a;;--uvd-toile:#f6f8fc;--uvd-fond:#ffffff;--uvd-note:#fffbe6;--uvd-trait:#4a5675;--uvd-texte:#1f2335;--uvd-accent:#2f5fd0}.leu-toile{fill:var(--uvd-toile)}.leu-toile-s1{fill:var(--c-bg2)}.leu-toile-blanche{fill:#fff}.uvd-c{fill:var(--uvd-fond);stroke:var(--uvd-trait);stroke-width:1.2}.uvd-f[data-c=\"STR\"]>.uvd-c{fill:color-mix(in srgb,var(--c-STR) 9%,var(--uvd-fond))}.uvd-f[data-c=\"BEH\"]>.uvd-c{fill:color-mix(in srgb,var(--c-BEH) 9%,var(--uvd-fond))}.uvd-f[data-c=\"REQ\"]>.uvd-c{fill:color-mix(in srgb,var(--c-REQ) 9%,var(--uvd-fond))}.uvd-f[data-dom]>.uvd-c{fill:color-mix(in srgb,var(--dom) 14%,var(--uvd-fond));stroke:var(--dom)}.uvd-note{fill:var(--uvd-note) !important}.uvd-cadre{fill:none !important}.uvd-region{fill:none;stroke:var(--uvd-trait);stroke-dasharray:3 3;opacity:.5}.uvd-zone{fill:transparent}.uvd-plein,.uvd-pointe-pleine{fill:var(--uvd-trait)}.uvd-pointe-vide{fill:var(--uvd-fond);stroke:var(--uvd-trait);stroke-width:1.2}.uvd-sep,.uvd-trait,.uvd-trait-l{fill:none;stroke:var(--uvd-trait);stroke-width:1.2}.uvd-vie{stroke:var(--uvd-trait);stroke-dasharray:5 4}.uvd-tirets{stroke-dasharray:6 4}.uvd-zone-l{fill:none;stroke:transparent;stroke-width:10}.uvd-t{font-size:12px;fill:var(--uvd-texte);font-family:-apple-system,'Segoe UI',sans-serif}.uvd-nom{font-weight:700}.uvd-mc{font-size:11px;opacity:.85}.uvd-abstrait{font-style:italic}.uvd-souligne{text-decoration:underline}.uvd-etiquette{font-size:11px;paint-order:stroke;stroke:var(--uvd-toile);stroke-width:3px}[data-sem]{cursor:pointer}.uvd-absent{opacity:.35}.uvd-lien-choix{fill:none;stroke:var(--uvd-accent);stroke-width:5px;stroke-opacity:.35;pointer-events:none}.s1-t{font:11px system-ui,\"Segoe UI\",Arial,sans-serif;fill:var(--c-text)}.s1-titre tspan{font-weight:600} .s1-titre tspan.s1-stereo{font-weight:400}.s1-etiquette,.s1-dim{fill:var(--c-dim)}.s1-cadre{fill:none;stroke:var(--c-border);stroke-width:1.2}.s1-cadre-onglet{fill:var(--c-bg3);stroke:var(--c-border)}.s1-cadre-t{font-weight:600}.s1-f{--s1-c:var(--c-ORG)}.s1-c-STR{--s1-c:var(--c-STR)} .s1-c-BEH{--s1-c:var(--c-BEH)} .s1-c-REQ{--s1-c:var(--c-REQ)} .s1-c-ORG{--s1-c:var(--c-ORG)}.s1-forme{fill:color-mix(in srgb,var(--s1-c) 13%,var(--c-bg2));stroke:var(--s1-c);stroke-width:1.2}.s1-forme.s1-contenant{fill:color-mix(in srgb,var(--s1-c) 6%,var(--c-bg2))}.s1-port{fill:var(--c-bg2);stroke:var(--s1-c);stroke-width:1.2}.s1-plein{fill:var(--c-text);stroke:none}.s1-trait{stroke:var(--c-text);stroke-width:1.4;fill:none}.s1-note{fill:color-mix(in srgb,var(--c-warn) 12%,var(--c-bg2));stroke:var(--c-dim);stroke-width:1}.s1-region{fill:none;stroke:var(--s1-c);stroke-width:1.2;stroke-dasharray:6 4}.s1-couloir{fill:none;stroke:var(--c-dim);stroke-width:1}.s1-couloir.s1-couloir-tete{fill:var(--c-bg3)}.s1-fond-clic{fill:transparent;stroke:none}.s1-icone-page{fill:var(--c-bg2);stroke:var(--c-dim);stroke-width:1}.s1-acteur{fill:none;stroke:var(--s1-c);stroke-width:1.4}.s1-fragment{fill:none;stroke:var(--c-dim);stroke-width:1.1}.s1-operande{fill:none;stroke:var(--c-dim);stroke-width:1;stroke-dasharray:6 4}.s1-separateur{stroke:var(--s1-c);stroke-width:.8;fill:none}.s1-forme.s1-reference{stroke-dasharray:6 3}.s1-compartiment{font-style:italic;fill:var(--c-dim);font-size:10px}.s1-fin{stroke-width:1.2}.s1-fond{fill:transparent;stroke:none}.s1-acteur circle{fill:color-mix(in srgb,var(--s1-c) 13%,var(--c-bg2));stroke:var(--s1-c);stroke-width:1.3}.s1-acteur path{fill:none;stroke:var(--s1-c);stroke-width:1.3}.s1-legende{fill:var(--c-bg3);stroke:var(--c-border);stroke-width:1}.s1-ligne-vie{stroke:var(--c-dim);stroke-width:1;stroke-dasharray:6 4;fill:none}.s1-activation{fill:var(--c-bg3);stroke:var(--c-dim)}.s1-lien{fill:none;stroke:var(--c-dim);stroke-width:1.3}.s1-lien.s1-pointille,.s1-trait.s1-pointille{stroke-dasharray:5 4}.s1-lien-fond{fill:none;stroke:transparent;stroke-width:8}.s1-m-trait{fill:none;stroke:var(--c-dim);stroke-width:1.4}.s1-m-creux{fill:var(--c-bg2);stroke:var(--c-dim);stroke-width:1.2}.s1-m-plein{fill:var(--c-dim)}.s1-contenance{fill:var(--c-bg2);stroke:var(--c-dim);stroke-width:1.2}.s1-voile,.s1-ombre{display:none;pointer-events:none}.s1-voile{stroke:none}.s1-ombre{fill:#b2b2b2;stroke:none}.s1-cameo .s1-voile,.s1-cameo .s1-ombre{display:inline}.s1-cameo{--cm-fond:#ffffcc;--cm-trait:#424242;--cm-lien:#424242;--cm-texte:#000}.s1-cameo .s1-t{font-family:var(--s1-police,Arial,Helvetica,sans-serif);font-size:var(--s1-taille,var(--cm-taille,11px));font-style:var(--s1-italique,normal);fill:var(--s1-texte,var(--cm-texte))}.s1-cameo .s1-titre tspan{font-weight:var(--s1-graisse,700)}.s1-cameo .s1-titre tspan.s1-stereo{font-weight:var(--cm-graisse,400)}.s1-cameo .s1-etiquette,.s1-cameo .s1-dim{fill:var(--s1-texte,var(--cm-texte))}.s1-cameo .s1-compartiment{fill:var(--s1-texte,#7f7f7f)}.s1-cameo .s1-cadre{stroke:#424242;stroke-width:1}.s1-cameo .s1-cadre-onglet{fill:#fff;stroke:#424242}.s1-cameo .s1-forme{fill:var(--s1-fond,var(--s1-dom,var(--cm-fond)));stroke:var(--s1-trait,var(--cm-trait));stroke-width:var(--s1-ep,1)}.s1-cameo .s1-port{fill:var(--s1-fond,var(--cm-fond));stroke:var(--s1-trait,var(--cm-trait));stroke-width:var(--s1-ep,1)}.s1-cameo .s1-plein{fill:var(--s1-trait,#424242)}.s1-cameo .s1-trait{stroke:var(--s1-trait,#424242)}.s1-cameo .s1-note{fill:var(--s1-fond,var(--cm-fond));stroke:var(--s1-trait,var(--cm-trait))}.s1-cameo .s1-region{stroke:var(--s1-trait,var(--cm-trait))}.s1-cameo .s1-couloir{fill:var(--s1-fond,none);stroke:var(--s1-trait,#000);stroke-width:var(--s1-ep,2)}.s1-cameo .s1-couloir.s1-couloir-tete{fill:var(--s1-fond,#fff)}.s1-cameo .s1-icone-page{fill:#fff;stroke:#424242}.s1-cameo .s1-acteur{stroke:var(--s1-trait,var(--cm-trait))}.s1-cameo .s1-acteur circle{fill:var(--s1-fond,var(--cm-fond));stroke:var(--s1-trait,var(--cm-trait))}.s1-cameo .s1-acteur path{stroke:var(--s1-trait,var(--cm-trait))}.s1-cameo .s1-fragment,.s1-cameo .s1-operande{stroke:var(--s1-trait,#424242)}.s1-cameo .s1-separateur{stroke:var(--s1-trait,var(--cm-trait))}.s1-cameo .s1-legende{fill:var(--s1-fond,#fff);stroke:#424242}.s1-cameo .s1-ligne-vie{stroke:var(--s1-trait,#424242)}.s1-cameo .s1-activation{fill:var(--s1-fond,#fff);stroke:var(--s1-trait,#424242)}.s1-cameo .s1-lien{stroke:var(--s1-trait,var(--cm-lien));stroke-width:var(--s1-ep,1)}.s1-cameo .s1-lien.s1-controle{stroke-dasharray:6 4}.s1-fleche-port{fill:none;stroke:var(--c-text);stroke-width:1}.s1-cameo .s1-fleche-port{stroke:var(--s1-trait,var(--cm-trait))}.s1-cameo .s1-m-trait{stroke:var(--s1-trait,var(--cm-lien))}.s1-cameo .s1-m-creux{fill:#fff;stroke:var(--s1-trait,var(--cm-lien))}.s1-cameo .s1-m-plein{fill:var(--s1-trait,var(--cm-lien))}.s1-cameo .s1-contenance{fill:#fff;stroke:var(--s1-trait,var(--cm-lien))}";
 /* ── src/lecteur-uml/socle-fin.js ── */
 /* ═══════════════════════════════════════════════════════════════════════
    LECTEUR UML / SysML v1 — API (après les modules de lecture)
@@ -18918,14 +19381,17 @@ function leuVueTexte(info, formes, liens) {
  * Document SVG autonome d'une vue : espace de noms, boîte englobante, feuille de styles d'Arcature (LEU_SVG_CSS, produite par
  * le build depuis styles.css), fond, puis le dessin.
  * @param {{svg:string, vb:number[]}} dessin dessin @param {string} origine origine de la vue (fond de Cameo ou de Papyrus)
- * @param {{theme?:string, largeur?:number, hauteur?:number}} [o] thème « clair » (défaut) ou « sombre » ; taille (celle de la boîte sinon)
+ * @param {{theme?:string, style?:string, largeur?:number, hauteur?:number}} [o] thème « clair » (défaut) ou « sombre » ; style
+ *   « fichier » d'un diagramme de Cameo ou d'Enterprise Architect (couleurs, traits et polices du projet, style de CATIA
+ *   Magic pour le reste, fond blanc) ; taille
+ *   (celle de la boîte sinon)
  * @returns {string}
  */
 function leuSvgDocument(dessin, origine, o) {
   o = o || {};
-  const vb = dessin.vb, theme = o.theme === 'sombre' ? 'sombre' : 'clair';
-  const w = o.largeur || vb[2], h = o.hauteur || vb[3], toile = origine === 'cameo' || origine === 'ea' ? 'leu-toile-s1' : 'leu-toile';
-  return `<svg xmlns="http://www.w3.org/2000/svg" class="${theme}" viewBox="${vb.join(' ')}" width="${w}" height="${h}" font-family="system-ui,'Segoe UI',Arial,sans-serif">` +
+  const vb = dessin.vb, theme = o.theme === 'sombre' ? 'sombre' : 'clair', fichier = o.style === 'fichier' && (origine === 'cameo' || origine === 'ea');
+  const w = o.largeur || vb[2], h = o.hauteur || vb[3], toile = fichier ? 'leu-toile-blanche' : origine === 'cameo' || origine === 'ea' ? 'leu-toile-s1' : 'leu-toile';
+  return `<svg xmlns="http://www.w3.org/2000/svg" class="${theme}${fichier ? ' s1-cameo' : ''}" viewBox="${vb.join(' ')}" width="${w}" height="${h}" font-family="system-ui,'Segoe UI',Arial,sans-serif">` +
     `<style>${LEU_SVG_CSS}</style><rect class="${toile}" x="${vb[0]}" y="${vb[1]}" width="${vb[2]}" height="${vb[3]}"/>${dessin.svg}</svg>`;
 }
 
@@ -18963,8 +19429,18 @@ function leuVue(ctx, cle) {
   }
   const info = leuVueInfo(v);
   return Object.assign(info, { formes, liens, viewBox: dessin.vb.slice(), svg: dessin.svg, texte: leuVueTexte(info, formes, liens),
-    /** @param {{theme?:string, largeur?:number, hauteur?:number}} [o] @returns {string} document SVG autonome */
-    svgDocument(o) { return leuSvgDocument(dessin, v.origine, o); } });
+    /**
+     * @param {{theme?:string, style?:string, largeur?:number, hauteur?:number}} [o] style « fichier » d'un diagramme de Cameo ou
+     *   d'Enterprise Architect : redessiné dans la notation de CATIA Magic
+     * @returns {string} document SVG autonome
+     */
+    svgDocument(o) {
+      if (o && o.style === 'fichier' && v.d && (v.origine === 'cameo' || v.origine === 'ea')) {
+        leuActiver(ctx);
+        return leuSvgDocument({ svg: s1vDessin(doc, v.d, s1dScene(doc, v.d), { catia: true }), vb: dessin.vb }, v.origine, o);
+      }
+      return leuSvgDocument(dessin, v.origine, o);
+    } });
 }
 
 /* ─────────────────────────────── Tableaux, matrices et Relation Map de Cameo ─────────────────────────────── */

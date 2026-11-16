@@ -466,7 +466,7 @@ function capNavMenuFill(){
   if(g==='file'){
     const sc=s=>` <span class="cap-nav-g">${s}</span>`;
     res.innerHTML=_L(`<div class="ctx-i" data-act="open" title="Remplace le modèle affiché par un autre fichier modèle, de n'importe quel format : ${capEsc(capFormatsLibelle())} (le sélecteur les propose tous d'office)">📂 Ouvrir un modèle…</div>
-      <div class="ctx-i" data-act="folder" title="Ouvre le dossier du projet : Capella (.capella, .aird, bibliothèques) ou SysML v2 (les .sysml du projet), chargé en une fois">📁 Ouvrir le dossier du projet…</div>
+      <div class="ctx-i" data-act="folder" title="Ouvre le dossier du projet, chargé en une fois : Capella (.capella, .aird, bibliothèques, images), SysML v2 (les .sysml du projet), UML / SysML v1 (.uml et .notation, .xmi, .mdzip, .qea, projet Rhapsody) ou ReqIF (.reqif et ses images)">📁 Ouvrir le dossier du projet…</div>
       <div class="ctx-i" data-act="projet" title="Reprend un projet de travail enregistré en page HTML (💾), même par une version précédente d'Arcalyse (à partir de la 2.1) : modèle, diagrammes, revue, accueil, vues et réglages">📄 Ouvrir un projet de travail (page HTML)…</div>
       <div class="cap-nav-hint">Nouvelle version d'Arcalyse ? Ouvrez-y la page de votre projet enregistrée avec l'ancienne : tout le travail est repris.</div>
       <div class="ctx-i" data-act="update" title="Compare une nouvelle version du fichier modèle (Capella, SysML v2, UML / SysML v1, ReqIF) au modèle affiché, montre le delta, puis met à jour l'affichage après validation">🔄 Charger une mise à jour du modèle…</div>

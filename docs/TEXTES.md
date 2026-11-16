@@ -1,6 +1,6 @@
 # Textes affichés par l'application
 
-Généré par `node tools/textes.js --en` — 10451 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
+Généré par `node tools/textes.js --en` — 10614 textes. Ne pas modifier ce fichier : corriger le texte dans le fichier source à la ligne indiquée, puis régénérer.
 L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 
@@ -16,7 +16,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 19 | Ouvrir un modèle, enregistrer la page  (infobulle) | Open a model, save the page |
 | 20 | Enregistrer la page (avec le modèle chargé) directement dans un fichier HTML, sans passer par les téléchargements (Ctrl+S) — Maj+clic ou Ctrl+Maj+S : enregistrer sous  (infobulle) | Save the page (with the loaded model) directly to an HTML file, without going through downloads (Ctrl+S) — Shift+click or Ctrl+Shift+S: save as |
 | 24 | Suivi | Watch |
-| 24 | Suivi du fichier .capella : mises à jour, delta, historique  (infobulle) | Watch the .capella file: updates, delta, history |
+| 24 | Suivi du fichier du modèle (tous formats) : mises à jour, delta, historique  (infobulle) | Model file watch (all formats): updates, delta, history |
 | 28 | Scripts | Scripts |
 | 28 | Scripts : parcourir et analyser le modèle avec l'API, comme les macros de Catia Magic (Alt+4)  (infobulle) | Scripts: browse and analyse the model with the API, like Catia Magic macros (Alt+4) |
 | 30 | Revue | Review |
@@ -870,167 +870,170 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 171 | Attribut d'un type ReqIF | Attribute of a ReqIF type |
 | 172 | Type de données | Data type |
 | 172 | Type de données ReqIF | ReqIF data type |
-| 260 | Identifiant | Identifier |
-| 260 | Type ReqIF | ReqIF type |
-| 260 | Spécification | Specification |
-| 260 | Images | Images |
-| 270 | Aucune exigence à montrer. | No requirement to show. |
-| 272 | Exigences ReqIF | ReqIF requirements |
-| 278 | » ouvert dans ▤ Tableau : | ✔ “…” opened in ▤ Table: … row(s), … column(s) |
-| 278 | ligne(s), | ✔ “…” opened in ▤ Table: … row(s), … column(s) |
-| 278 | colonne(s) | ✔ “…” opened in ▤ Table: … row(s), … column(s) |
-| 291 | hors spécification | outside any specification |
-| 292 | Objet | Purpose |
-| 292 | Spécification | Specification |
-| 294 | Règle | Rule |
-| 294 | Message | Message |
-| 294 | Élément | Element |
-| 299 | ReqIF — références et identifiants | ReqIF — references and identifiers |
-| 299 | Diagnostics du lecteur : référence vers un identifiant absent du fichier, identifiant en double | Reader diagnostics: reference to an identifier missing from the file, duplicate identifier |
-| 301 | ReqIF — pièces jointes absentes | ReqIF — missing attachments |
-| 301 | Image ou pièce citée par un texte mais absente de l'archive .reqifz ou du dossier | Image or attachment referenced by a text but missing from the .reqifz archive or the folder |
-| 302 | ReqIF — autres avertissements de lecture | ReqIF — other reading warnings |
-| 302 | Valeur d'un attribut hors de son type, objet présent dans aucune spécification | Attribute value outside its type, object in no specification |
-| 304 | Exigences ReqIF sans texte | ReqIF requirements without text |
-| 304 | Objet sans ReqIF.Text ni autre texte mis en forme | Object without ReqIF.Text or any other formatted text |
-| 305 | Exigences ReqIF sans identifiant | ReqIF requirements without identifier |
-| 305 | ReqIF.ForeignID vide alors que d'autres exigences en ont un | Empty ReqIF.ForeignID although other requirements have one |
-| 305 | Le fichier ne donne aucun ReqIF.ForeignID | The file gives no ReqIF.ForeignID |
-| 306 | Identifiants d'exigence ReqIF en double | Duplicate ReqIF requirement identifiers |
-| 306 | Même ReqIF.ForeignID sur plusieurs objets | Same ReqIF.ForeignID on several objects |
-| 307 | Exigences ReqIF sans relation | ReqIF requirements without relation |
-| 307 | Aucune relation ReqIF vers ou depuis cette exigence | No ReqIF relation to or from this requirement |
-| 307 | Le fichier ne contient aucune relation | The file contains no relation |
-| 308 | Titres de chapitre ReqIF sans contenu | ReqIF chapter titles without content |
-| 308 | Titre sans objet en dessous dans sa spécification | Title with no object below it in its specification |
-| 310 | Spécifications ReqIF vides | Empty ReqIF specifications |
-| 310 | Spécification sans aucun objet | Specification without any object |
-| 310 | Spécification | Specification |
-| 324 | Identifiant | Identifier |
-| 324 | Type ReqIF | ReqIF type |
-| 324 | Spécification | Specification |
-| 325 | Identifiant ReqIF | ReqIF identifier |
-| 325 | Dernière modification | Last change |
-| 325 | Fichier | File |
-| 326 | 📑 ReqIF | 📑 ReqIF |
-| 328 | Attributs | Attributes |
-| 330 | Relations | Relationships |
-| 332 | Autres places | Other places |
-| 333 | Place de : | Place of: |
-| 335 | Diagnostics | Diagnostics |
-| 336 | Ouvrir dans 🏗 Architecture › 📑 ReqIF, à sa place dans le document | Open in 🏗 Architecture › 📑 ReqIF, at its place in the document |
-| 336 | Voir dans le document | Show in the document |
-| 338 | Extrait du fichier ReqIF | Excerpt of the ReqIF file |
-| 338 | (début) | (beginning) |
-| 359 | Lecteur ReqIF absent de cette version. | ReqIF reader not included in this version. |
-| 361 | Le modèle affiché n'est pas un fichier ReqIF : ouvrez un .reqif, une archive .reqifz (avec ses images) ou un dossier qui en contient. | The displayed model is not a ReqIF file: open a .reqif, a .reqifz archive (with its images) or a folder that contains one. |
-| 365 | 📄 Document | 📄 Document |
-| 365 | ▤ Exigences | ▤ Requirements |
-| 365 | 🔗 Relations | 🔗 Relations |
-| 365 | 🧩 Types | 🧩 Types |
-| 365 | 🖼 Pièces jointes | 🖼 Attachments |
-| 365 | 🩺 Contrôles | 🩺 Checks |
-| 368 | Spécification montrée | Specification shown |
-| 368 | Toutes les spécifications | All specifications |
-| 368 | Hors spécification | Outside any specification |
-| 371 | Type d'objet ReqIF | ReqIF object type |
-| 371 | Tous les types | All types |
-| 372 | · ReqIF | (inchangé, hors _L) |
-| 375 | exigence(s), | … requirement(s), … title(s) |
-| 375 | titre(s) | … requirement(s), … title(s) |
-| 376 | Identifiant, texte, valeur… | Identifier, text, value… |
-| 376 | Valeurs des attributs sous chaque exigence | Attribute values below each requirement |
-| 376 | Valeurs | Values |
-| 380 | Identifiant | Identifier |
-| 380 | Nom | Name |
-| 380 | Texte | Text |
-| 380 | Type | Type |
-| 380 | Spécification | Specification |
-| 380 | Relations sortantes | Outgoing relations |
-| 380 | Relations entrantes | Incoming relations |
-| 391 | Images dans le texte | Images in the text |
-| 392 | (sans texte) | (no text) |
-| 397 | Hors spécification | Outside any specification |
-| 401 | Aucun objet ne correspond aux filtres. | No object matches the filters. |
-| 403 | Les mêmes exigences dans un onglet du ▤ Tableau : tri, filtres par colonne, export Excel | The same requirements in a ▤ Table tab: sorting, column filters, Excel export |
-| 403 | Ouvrir dans ▤ Tableau | Open in ▤ Table |
-| 404 | Colonnes | Columns |
-| 414 | relation(s) | … relation(s) |
-| 415 | Toutes | All |
-| 415 | Type, source, cible… | Type, source, target… |
-| 416 | Relation | Relation |
-| 416 | Source | Source |
-| 416 | Cible | Target |
-| 416 | Attributs de la relation | Relation attributes |
-| 420 | Aucune relation (SPEC-RELATION) dans ce fichier. | No relation (SPEC-RELATION) in this file. |
-| 422 | Objets | Objects |
-| 422 | Spécifications | Specifications |
-| 422 | Relations | Relationships |
-| 422 | Groupes de relations | Relation groups |
-| 423 | type(s) | … type(s) |
-| 424 | Type | Type |
-| 424 | Sorte | Kind |
-| 424 | Éléments | Elements |
-| 424 | Attributs | Attributes |
-| 432 | pièce(s) jointe(s), | … attachment(s), … missing |
-| 432 | absente(s) | … attachment(s), … missing |
-| 434 | Pièce jointe | Attachment |
-| 434 | Type | Type |
-| 434 | Taille (octets) | Size (bytes) |
-| 434 | Citée par | Referenced by |
-| 436 | pièce jointe | attachment |
-| 439 | absente de l'archive | missing from the archive |
-| 439 | pièce jointe | attachment |
-| 441 | Aucune pièce jointe lue : ouvrez l'archive .reqifz, ou le dossier qui contient le .reqif et ses images. | No attachment read: open the .reqifz archive, or the folder that contains the .reqif and its images. |
-| 441 | Aucune pièce jointe dans ce fichier. | No attachment in this file. |
-| 476 | Exigences | Requirements |
-| 476 | fichier(s) · | … file(s) · … specification(s) · … requirement(s) |
-| 476 | spécification(s) · | … file(s) · … specification(s) · … requirement(s) |
-| 476 | exigence(s) | … file(s) · … specification(s) · … requirement(s) |
-| 477 | 📄 Document | 📄 Document |
-| 478 | Pièces jointes | Attachments |
-| 478 | pièce(s), dont | … attachment(s), including … image(s) |
-| 478 | image(s) | … attachment(s), including … image(s) |
-| 478 | Aucune | None |
-| 478 | citée(s) mais absente(s) | … referenced but missing |
-| 478 | Un .reqif seul ne contient pas les images : ouvrez l'archive .reqifz ou le dossier. | A .reqif alone does not contain the images: open the .reqifz archive or the folder. |
-| 479 | Lecture | Reading |
-| 479 | erreur(s) · | … error(s) · … warning(s) |
-| 479 | avertissement(s) | … error(s) · … warning(s) |
-| 479 | Sans diagnostic | No diagnostics |
-| 479 | Diagnostics du lecteur ReqIF | ReqIF reader diagnostics |
-| 480 | Voir | Show |
-| 486 | Lire les | Read the … requirements |
-| 486 | Le document de chaque spécification : chapitres numérotés, textes et images, valeurs des attributs, relations. | The document of each specification: numbered chapters, texts and images, attribute values, relations. |
-| 486 | 🏗 Architecture › 📑 ReqIF | 🏗 Architecture › 📑 ReqIF |
-| 487 | Sortir un tableau Excel | Export an Excel table |
-| 487 | Une ligne par exigence dans l'ordre du document, une colonne par attribut ReqIF, textes et images. | One row per requirement in document order, one column per ReqIF attribute, texts and images. |
-| 487 | ▤ Tableau › Exigences ReqIF | ▤ Table › ReqIF requirements |
-| 488 | Croiser les exigences | Cross the requirements |
-| 488 | Matrice des relations ReqIF (dérive de, raffine…) entre exigences ou spécifications. | Matrix of the ReqIF relations (derives from, refines…) between requirements or specifications. |
-| 488 | ▦ Matrice | ▦ Matrix |
-| 489 | Faire relire les exigences | Have the requirements reviewed |
-| 489 | Commentaires sur chaque exigence, dossier de relecture, rapport Word ou HTML. | Comments on each requirement, review file, Word or HTML report. |
-| 489 | @revue | (inchangé, hors _L) |
-| 489 | 💬 Revue & documents | 💬 Review & documents |
-| 490 | Corriger | Fix … reading error(s) |
-| 490 | erreur(s) de lecture | Fix … reading error(s) |
-| 490 | 📑 ReqIF › 🩺 Contrôles | 📑 ReqIF › 🩺 Checks |
-| 490 | À faire | To do |
-| 491 | Vérifier les exigences | Check the requirements |
-| 491 | Textes manquants, identifiants en double, exigences sans relation, images absentes. | Missing texts, duplicate identifiers, requirements without relation, missing images. |
-| 491 | ✅ Vérifier › 💚 Santé & contrôles | ✅ Check › 💚 Health & checks |
-| 501 | ReqIF — exigences | ReqIF — requirements |
-| 501 | spécification(s) | … specification(s) |
-| 502 | rq.spec | (inchangé, hors _L) |
-| 502 | ReqIF — exigences par spécification | ReqIF — requirements by specification |
-| 503 | rq.rel | (inchangé, hors _L) |
-| 503 | ReqIF — relations par type | ReqIF — relations by type |
-| 504 | rq.diag | (inchangé, hors _L) |
-| 504 | ReqIF — diagnostics du lecteur | ReqIF — reader diagnostics |
-| 504 | Erreurs | Errors |
-| 504 | Avertissements | Warnings |
-| 504 | Erreurs et avertissements du lecteur ReqIF d'Arcature | Errors and warnings of the Arcature ReqIF reader |
+| 266 | Identifiant | Identifier |
+| 266 | Type ReqIF | ReqIF type |
+| 266 | Spécification | Specification |
+| 266 | Images | Images |
+| 276 | Aucune exigence à montrer. | No requirement to show. |
+| 278 | Exigences ReqIF | ReqIF requirements |
+| 284 | » ouvert dans ▤ Tableau : | ✔ “…” opened in ▤ Table: … row(s), … column(s) |
+| 284 | ligne(s), | ✔ “…” opened in ▤ Table: … row(s), … column(s) |
+| 284 | colonne(s) | ✔ “…” opened in ▤ Table: … row(s), … column(s) |
+| 297 | hors spécification | outside any specification |
+| 298 | Objet | Purpose |
+| 298 | Spécification | Specification |
+| 300 | Règle | Rule |
+| 300 | Message | Message |
+| 300 | Élément | Element |
+| 305 | ReqIF — références et identifiants | ReqIF — references and identifiers |
+| 305 | Diagnostics du lecteur : référence vers un identifiant absent du fichier, identifiant en double | Reader diagnostics: reference to an identifier missing from the file, duplicate identifier |
+| 307 | ReqIF — pièces jointes absentes | ReqIF — missing attachments |
+| 307 | Image ou pièce citée par un texte mais absente de l'archive .reqifz ou du dossier | Image or attachment referenced by a text but missing from the .reqifz archive or the folder |
+| 308 | ReqIF — autres avertissements de lecture | ReqIF — other reading warnings |
+| 308 | Valeur d'un attribut hors de son type, objet présent dans aucune spécification, élément écrit hors de sa place dans le fichier (non lu) | Attribute value outside its type, object in no specification, element written outside its place in the file (not read) |
+| 310 | Exigences ReqIF sans texte | ReqIF requirements without text |
+| 310 | Objet sans ReqIF.Text ni autre texte mis en forme | Object without ReqIF.Text or any other formatted text |
+| 311 | Exigences ReqIF sans identifiant | ReqIF requirements without identifier |
+| 311 | ReqIF.ForeignID vide alors que d'autres exigences en ont un | Empty ReqIF.ForeignID although other requirements have one |
+| 311 | Le fichier ne donne aucun ReqIF.ForeignID | The file gives no ReqIF.ForeignID |
+| 312 | Identifiants d'exigence ReqIF en double | Duplicate ReqIF requirement identifiers |
+| 312 | Même ReqIF.ForeignID sur plusieurs objets | Same ReqIF.ForeignID on several objects |
+| 313 | Exigences ReqIF sans relation | ReqIF requirements without relation |
+| 313 | Aucune relation ReqIF vers ou depuis cette exigence | No ReqIF relation to or from this requirement |
+| 313 | Le fichier ne contient aucune relation | The file contains no relation |
+| 314 | Titres de chapitre ReqIF sans contenu | ReqIF chapter titles without content |
+| 314 | Titre sans objet en dessous dans sa spécification | Title with no object below it in its specification |
+| 316 | Spécifications ReqIF vides | Empty ReqIF specifications |
+| 316 | Spécification sans aucun objet | Specification without any object |
+| 316 | Spécification | Specification |
+| 330 | Identifiant | Identifier |
+| 330 | Type ReqIF | ReqIF type |
+| 330 | Spécification | Specification |
+| 331 | Identifiant ReqIF | ReqIF identifier |
+| 331 | Dernière modification | Last change |
+| 331 | Fichier | File |
+| 332 | 📑 ReqIF | 📑 ReqIF |
+| 334 | Attributs | Attributes |
+| 335 | Attributs que l'élément ne renseigne pas : la valeur par défaut de leur définition s'applique | Attributes the element does not set: the default value of their definition applies |
+| 335 | Valeurs par défaut | Default values |
+| 337 | Relations | Relationships |
+| 339 | Autres places | Other places |
+| 340 | Place de : | Place of: |
+| 342 | Diagnostics | Diagnostics |
+| 343 | Ouvrir dans 🏗 Architecture › 📑 ReqIF, à sa place dans le document | Open in 🏗 Architecture › 📑 ReqIF, at its place in the document |
+| 343 | Voir dans le document | Show in the document |
+| 345 | Extrait du fichier ReqIF | Excerpt of the ReqIF file |
+| 345 | (début) | (beginning) |
+| 366 | Lecteur ReqIF absent de cette version. | ReqIF reader not included in this version. |
+| 368 | Le modèle affiché n'est pas un fichier ReqIF : ouvrez un .reqif, une archive .reqifz (avec ses images) ou un dossier qui en contient. | The displayed model is not a ReqIF file: open a .reqif, a .reqifz archive (with its images) or a folder that contains one. |
+| 372 | 📄 Document | 📄 Document |
+| 372 | ▤ Exigences | ▤ Requirements |
+| 372 | 🔗 Relations | 🔗 Relations |
+| 372 | 🧩 Types | 🧩 Types |
+| 372 | 🖼 Pièces jointes | 🖼 Attachments |
+| 372 | 🩺 Contrôles | 🩺 Checks |
+| 375 | Spécification montrée | Specification shown |
+| 375 | Toutes les spécifications | All specifications |
+| 375 | Hors spécification | Outside any specification |
+| 378 | Type d'objet ReqIF | ReqIF object type |
+| 378 | Tous les types | All types |
+| 379 | · ReqIF | (inchangé, hors _L) |
+| 382 | exigence(s), | … requirement(s), … title(s) |
+| 382 | titre(s) | … requirement(s), … title(s) |
+| 383 | Identifiant, texte, valeur… | Identifier, text, value… |
+| 383 | Valeurs des attributs sous chaque exigence | Attribute values below each requirement |
+| 383 | Valeurs | Values |
+| 387 | Identifiant | Identifier |
+| 387 | Nom | Name |
+| 387 | Texte | Text |
+| 387 | Type | Type |
+| 387 | Spécification | Specification |
+| 387 | Relations sortantes | Outgoing relations |
+| 387 | Relations entrantes | Incoming relations |
+| 398 | Images dans le texte | Images in the text |
+| 399 | (sans texte) | (no text) |
+| 404 | Hors spécification | Outside any specification |
+| 408 | Aucun objet ne correspond aux filtres. | No object matches the filters. |
+| 410 | Les mêmes exigences dans un onglet du ▤ Tableau : tri, filtres par colonne, export Excel | The same requirements in a ▤ Table tab: sorting, column filters, Excel export |
+| 410 | Ouvrir dans ▤ Tableau | Open in ▤ Table |
+| 411 | Colonnes | Columns |
+| 421 | relation(s) | … relation(s) |
+| 422 | Toutes | All |
+| 422 | Type, source, cible… | Type, source, target… |
+| 423 | Relation | Relation |
+| 423 | Source | Source |
+| 423 | Cible | Target |
+| 423 | Attributs de la relation | Relation attributes |
+| 427 | Aucune relation (SPEC-RELATION) dans ce fichier. | No relation (SPEC-RELATION) in this file. |
+| 429 | Objets | Objects |
+| 429 | Spécifications | Specifications |
+| 429 | Relations | Relationships |
+| 429 | Groupes de relations | Relation groups |
+| 430 | type(s) | … type(s) |
+| 431 | Type | Type |
+| 431 | Sorte | Kind |
+| 431 | Éléments | Elements |
+| 431 | Attributs | Attributes |
+| 434 | Valeur par défaut : | Default value: |
+| 439 | pièce(s) jointe(s), | … attachment(s), … missing |
+| 439 | absente(s) | … attachment(s), … missing |
+| 441 | Pièce jointe | Attachment |
+| 441 | Type | Type |
+| 441 | Taille (octets) | Size (bytes) |
+| 441 | Citée par | Referenced by |
+| 443 | pièce jointe | attachment |
+| 446 | absente de l'archive | missing from the archive |
+| 446 | pièce jointe | attachment |
+| 448 | Aucune pièce jointe lue : ouvrez l'archive .reqifz, ou le dossier qui contient le .reqif et ses images. | No attachment read: open the .reqifz archive, or the folder that contains the .reqif and its images. |
+| 448 | Aucune pièce jointe dans ce fichier. | No attachment in this file. |
+| 483 | Exigences | Requirements |
+| 483 | fichier(s) · | … file(s) · … specification(s) · … requirement(s) |
+| 483 | spécification(s) · | … file(s) · … specification(s) · … requirement(s) |
+| 483 | exigence(s) | … file(s) · … specification(s) · … requirement(s) |
+| 484 | 📄 Document | 📄 Document |
+| 485 | Pièces jointes | Attachments |
+| 485 | pièce(s), dont | … attachment(s), including … image(s) |
+| 485 | image(s) | … attachment(s), including … image(s) |
+| 485 | Aucune | None |
+| 485 | citée(s) mais absente(s) | … referenced but missing |
+| 485 | Un .reqif seul ne contient pas les images : ouvrez l'archive .reqifz ou le dossier. | A .reqif alone does not contain the images: open the .reqifz archive or the folder. |
+| 486 | Lecture | Reading |
+| 486 | erreur(s) · | … error(s) · … warning(s) |
+| 486 | avertissement(s) | … error(s) · … warning(s) |
+| 486 | Sans diagnostic | No diagnostics |
+| 486 | Diagnostics du lecteur ReqIF | ReqIF reader diagnostics |
+| 487 | Voir | Show |
+| 493 | Lire les | Read the … requirements |
+| 493 | Le document de chaque spécification : chapitres numérotés, textes et images, valeurs des attributs, relations. | The document of each specification: numbered chapters, texts and images, attribute values, relations. |
+| 493 | 🏗 Architecture › 📑 ReqIF | 🏗 Architecture › 📑 ReqIF |
+| 494 | Sortir un tableau Excel | Export an Excel table |
+| 494 | Une ligne par exigence dans l'ordre du document, une colonne par attribut ReqIF, textes et images. | One row per requirement in document order, one column per ReqIF attribute, texts and images. |
+| 494 | ▤ Tableau › Exigences ReqIF | ▤ Table › ReqIF requirements |
+| 495 | Croiser les exigences | Cross the requirements |
+| 495 | Matrice des relations ReqIF (dérive de, raffine…) entre exigences ou spécifications. | Matrix of the ReqIF relations (derives from, refines…) between requirements or specifications. |
+| 495 | ▦ Matrice | ▦ Matrix |
+| 496 | Faire relire les exigences | Have the requirements reviewed |
+| 496 | Commentaires sur chaque exigence, dossier de relecture, rapport Word ou HTML. | Comments on each requirement, review file, Word or HTML report. |
+| 496 | @revue | (inchangé, hors _L) |
+| 496 | 💬 Revue & documents | 💬 Review & documents |
+| 497 | Corriger | Fix … reading error(s) |
+| 497 | erreur(s) de lecture | Fix … reading error(s) |
+| 497 | 📑 ReqIF › 🩺 Contrôles | 📑 ReqIF › 🩺 Checks |
+| 497 | À faire | To do |
+| 498 | Vérifier les exigences | Check the requirements |
+| 498 | Textes manquants, identifiants en double, exigences sans relation, images absentes. | Missing texts, duplicate identifiers, requirements without relation, missing images. |
+| 498 | ✅ Vérifier › 💚 Santé & contrôles | ✅ Check › 💚 Health & checks |
+| 508 | ReqIF — exigences | ReqIF — requirements |
+| 508 | spécification(s) | … specification(s) |
+| 509 | rq.spec | (inchangé, hors _L) |
+| 509 | ReqIF — exigences par spécification | ReqIF — requirements by specification |
+| 510 | rq.rel | (inchangé, hors _L) |
+| 510 | ReqIF — relations par type | ReqIF — relations by type |
+| 511 | rq.diag | (inchangé, hors _L) |
+| 511 | ReqIF — diagnostics du lecteur | ReqIF — reader diagnostics |
+| 511 | Erreurs | Errors |
+| 511 | Avertissements | Warnings |
+| 511 | Erreurs et avertissements du lecteur ReqIF d'Arcature | Errors and warnings of the Arcature ReqIF reader |
 
 ## js/102-dossier-elements.js
 
@@ -1172,187 +1175,211 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 436 | var(--c-ok,#3fb950) | (inchangé, hors _L) |
 | 436 | var(--c-warn,#e3b341) | (inchangé, hors _L) |
 | 436 | var(--c-err,#f85149) | (inchangé, hors _L) |
-| 450 | Élément | Element |
-| 450 | Type | (inchangé, hors _L) |
-| 482 | identifiant(s) cités par les fichiers pure::variants, absents de ce modèle (autre modèle, élément supprimé ?) | identifier(s) quoted by the pure::variants files, absent from this model (other model, deleted element?) |
-| 484 | Éléments retenus par aucune variante | Elements kept by no variant |
-| 484 | Élément marqué que ni ses critères ni sa restriction ne font entrer dans une variante (alors que son conteneur est présent) : élément mort, ou variante à ajouter | Marked element that neither its criteria nor its restriction bring into a variant (while its container is present): dead element, or variant to add |
-| 484 | Marque | Mark |
-| 485 | Allocation perdue dans une variante | Allocation lost in a variant |
-| 485 | Fonction feuille présente dans la variante, allouée dans le modèle 150 %, mais dont tous les composants sont absents de la variante | Leaf function present in the variant, allocated in the 150% model, but whose components are all absent from the variant |
-| 485 | Allouée à | Allocated to |
-| 485 | Variantes | Variants |
-| 486 | Réalisation perdue dans une variante | Realization lost in a variant |
-| 486 | Élément présent dans la variante, réalisé dans le modèle 150 %, dont toutes les réalisations sont absentes de la variante | Element present in the variant, realized in the 150% model, whose realizations are all absent from the variant |
-| 486 | Réalisé par | Realized by |
-| 486 | Variantes | Variants |
-| 487 | Référence de variabilité introuvable | Variability reference not found |
-| 487 | Critère ou résultat cité par un élément, un résultat ou un résultat composé, absent du modèle | Criterion or result quoted by an element, a result or a composed result, absent from the model |
-| 487 | Référence | Reference |
-| 487 | Identifiant | Identifier |
-| 488 | Restriction illisible | Unreadable restriction |
-| 488 | Expression de présence qu'Arcalyse ne sait pas lire (l'élément est alors compté présent partout) | Presence expression that Arcalyse cannot read (the element is then counted as present everywhere) |
-| 488 | Restriction | Restriction |
-| 488 | Erreur | Error |
-| 489 | Restriction citant une caractéristique inconnue | Restriction quoting an unknown feature |
-| 489 | Nom absent des caractéristiques lues dans les fichiers pure::variants | Name missing from the features read in the pure::variants files |
-| 489 | Restriction | Restriction |
-| 489 | Inconnus | Unknown |
-| 490 | Marque sans effet (conteneur absent) | Mark without effect (container absent) |
-| 490 | Les critères de l'élément le retiennent, mais son conteneur est absent de ces variantes : la marque ne sert à rien | The element's criteria keep it, but its container is absent from these variants: the mark is useless |
-| 490 | Marque | Mark |
-| 490 | Variantes | Variants |
-| 491 | Critères sans élément | Criteria without element |
-| 491 | Critère (ou caractéristique) qu'aucun élément du modèle ne cite | Criterion (or feature) quoted by no element of the model |
-| 491 | Critère | Criterion |
-| 491 | Paquet / fichier | Package / file |
-| 492 | Critères retenus par aucune variante | Criteria kept by no variant |
-| 492 | Critère qu'aucune variante définie ne sélectionne : ses éléments n'entrent dans aucun produit | Criterion selected by no defined variant: its elements go into no product |
-| 492 | Critère | Criterion |
-| 492 | Paquet / fichier | Package / file |
-| 493 | Variante sans critère | Variant without criterion |
-| 493 | Résultat de filtrage ou variante sans aucun critère choisi : seuls les éléments communs y entrent | Filtering result or variant without any selected criterion: only common elements go into it |
-| 493 | Variante | Variant |
-| 493 | Définition | Definition |
-| 494 | Variantes identiques | Identical variants |
-| 494 | Variantes qui retiennent exactement les mêmes éléments | Variants that keep exactly the same elements |
-| 494 | Variantes | Variants |
-| 494 | Éléments | Elements |
-| 495 | Identifiants pure::variants hors du modèle | pure::variants identifiers outside the model |
-| 495 | Identifiants Capella cités par les fichiers pure::variants et absents de ce modèle | Capella identifiers quoted by the pure::variants files and absent from this model |
-| 495 | Nombre | Count |
-| 495 | Remarque | Remark |
-| 508 | 📂 Charger des fichiers pure::variants… | 📂 Load pure::variants files… |
-| 515 | 🎛 Propriétés PVMT qui marquent les variantes | 🎛 PVMT properties that mark the variants … |
-| 515 | (détection automatique : cochez ou décochez pour choisir vous-même) | (automatic detection: tick or untick to choose yourself) |
-| 515 | (choix enregistré avec le projet) | (choice saved with the project) |
-| 516 | Propriété | Property |
-| 516 | Domaine | Domain |
-| 516 | Valeurs | Values |
-| 516 | Éléments | Elements |
-| 517 | Nom reconnu comme un marquage de variantes | Name recognized as a variant marking |
-| 518 | ↺ Revenir à la détection automatique | ↺ Back to automatic detection |
-| 532 | Toutes les couches | All layers |
-| 533 | Hors couche | No layer |
-| 534 | Source | Source |
-| 535 | Source des variantes | Source of the variants |
-| 539 | variante(s), | {0} variant(s), {1} criterion(s) · {2} marked element(s) out of {3} named. Each bar gives, for the variant, the share done of what is expected; click a bar to see the remaining work.{4} |
-| 539 | critère(s) · | {0} variant(s), {1} criterion(s) · {2} marked element(s) out of {3} named. Each bar gives, for the variant, the share done of what is expected; click a bar to see the remaining work.{4} |
-| 539 | élément(s) marqué(s) sur | {0} variant(s), {1} criterion(s) · {2} marked element(s) out of {3} named. Each bar gives, for the variant, the share done of what is expected; click a bar to see the remaining work.{4} |
-| 539 | Couche : | (inchangé, hors _L) |
-| 540 | Variante | Variant |
-| 540 | Définition | Definition |
-| 540 | Éléments | Elements |
-| 540 | Propres | Specific |
-| 541 | Variante ajoutée dans Arcalyse | Variant added in Arcalyse |
-| 544 | Éléments nommés par couche dans chaque variante. | Named elements per layer in each variant. |
-| 545 | Variante | Variant |
-| 545 | Hors couche | No layer |
-| 546 | Variante | Variant |
-| 546 | Définition | Definition |
-| 546 | Éléments | Elements |
-| 546 | Propres | Specific |
-| 546 | (faits) | (done) |
-| 546 | (attendus) | (expected) |
-| 554 | Couche | Layer |
-| 554 | Élément | Element |
-| 554 | Type | (inchangé, hors _L) |
-| 554 | Ce qui manque | What is missing |
-| 554 | ✔ Rien à faire pour cette mesure. | ✔ Nothing to do for this measure. |
-| 555 | Variante | Variant |
-| 555 | Mesure | Measure |
-| 555 | Couche | Layer |
-| 555 | Élément | Element |
-| 555 | Type | (inchangé, hors _L) |
-| 555 | Ce qui manque | What is missing |
-| 562 | : ✔ présent, · absent (survol : pourquoi). La marque est celle de l'élément, ou celle de son conteneur (↳). | …: ✔ present, · absent (hover: why). The mark is the element's own, or its container's (↳). |
-| 562 | Tous les éléments nommés | All named elements |
-| 562 | Éléments dont la présence change d'une variante à l'autre | Elements whose presence changes from one variant to another |
-| 563 | Couche | Layer |
-| 563 | Élément | Element |
-| 563 | Type | (inchangé, hors _L) |
-| 563 | Marque | Mark |
-| 566 | Couche | Layer |
-| 566 | Élément | Element |
-| 566 | Type | (inchangé, hors _L) |
-| 566 | Marque | Mark |
-| 570 | 📊 Avancement | 📊 Progress |
-| 570 | ✅ Reste à faire | ✅ Remaining work |
-| 570 | ▦ Éléments × variantes | ▦ Elements × variants |
-| 570 | 🏷 Critères & variantes | 🏷 Criteria & variants |
-| 570 | 🩺 Contrôles | 🩺 Checks |
-| 571 | Tous les types | All types |
-| 574 | Nom, type, ce qui manque… | Name, type, what is missing… |
-| 575 | Nom, type, marque… | Name, type, mark… |
-| 575 | Tous les éléments (pas seulement les variables) | All elements (not only the variable ones) |
-| 589 | (affichée) | (displayed) |
-| 589 | critère(s), | … criterion(s), … marked element(s), … defined variant(s) |
-| 589 | élément(s) marqué(s), | … criterion(s), … marked element(s), … defined variant(s) |
-| 589 | variante(s) définie(s) | … criterion(s), … marked element(s), … defined variant(s) |
-| 590 | Sources lues — la source affichée se choisit dans la barre quand il y en a plusieurs. | Sources read — the displayed source is chosen in the bar when there are several. |
-| 591 | Critères ( | Criteria (…)…. |
-| 591 | : caractéristiques des fichiers pure::variants | : features of the pure::variants files |
-| 591 | : valeurs des propriétés PVMT retenues | : values of the selected PVMT properties |
-| 591 | : FilteringCriterion | (inchangé, hors _L) |
-| 592 | Critère | Criterion |
-| 592 | Paquet / fichier | Package / file |
-| 592 | Éléments marqués | Marked elements |
-| 592 | Variantes qui le retiennent | Variants that keep it |
-| 592 | Aucun critère. | No criterion. |
-| 593 | Variantes ( | Variants (…)… ✚: variant added in Arcalyse (saved with the work project). |
-| 593 | ✚ : variante ajoutée dans Arcalyse (enregistrée avec le projet de travail). | Variants (…)… ✚: variant added in Arcalyse (saved with the work project). |
-| 593 | — aucune variante n'est définie dans la source : une par critère. | — no variant is defined in the source: one per criterion. |
-| 594 | Variante | Variant |
-| 594 | Définition | Definition |
-| 594 | Éléments | Elements |
-| 594 | Propres | Specific |
-| 595 | Retirer cette variante | Remove this variant |
-| 595 | Aucune variante. | No variant. |
-| 596 | ✚ Nouvelle variante | ✚ New variant |
-| 596 | Nom | Name |
-| 598 | Ajouter | Add |
-| 600 | 🟦 Fichiers pure::variants — lecture tolérante : caractéristiques (.xfm), restrictions des éléments qui citent un identifiant Capella (.ccfm, .xml), sélections des modèles de variante (.vdm). Ils sont gardés avec le projet de travail. | 🟦 pure::variants files — lenient reading: features (.xfm), restrictions of the elements that quote a Capella identifier (.ccfm, .xml), selections of the variant models (.vdm). They are kept with the work project. |
-| 601 | Fichier | File |
-| 601 | Caractéristiques | Features |
-| 601 | Éléments restreints | Restricted elements |
-| 601 | Variantes | Variants |
-| 602 | Retirer ce fichier | Remove this file |
-| 602 | Aucun fichier chargé. | No file loaded. |
-| 603 | 📂 Charger des fichiers pure::variants… | 📂 Load pure::variants files… |
-| 604 | identifiant(s) cité(s) par les fichiers pure::variants sont absents de ce modèle. | … identifier(s) quoted by the pure::variants files are absent from this model. |
-| 619 | Donnez un nom à la variante. | Give the variant a name. |
-| 620 | Cochez au moins un critère. | Tick at least one criterion. |
-| 621 | ✔ Variante ajoutée | ✔ Variant added |
-| 624 | .xfm,.vdm,.ccfm,.xml | (inchangé, hors _L) |
-| 640 | fichier(s) pure::variants lu(s) | ✔ … pure::variants file(s) read |
-| 641 | Lecture impossible : | Cannot read: |
-| 664 | Variantes | (inchangé, hors _L) |
-| 669 | Absent : | Absent: |
-| 670 | Marque : | Mark: … |
-| 670 | Hérite de | Inherits from … : … |
-| 670 | Aucune marque : élément commun (sauf conteneur ou extrémité absents) | No mark: common element (unless container or end absent) |
-| 671 | Variantes | Variants |
-| 671 | var(--c-accent,#58a6ff) | (inchangé, hors _L) |
-| 672 | voir dans Éléments × variantes | see in Elements × variants |
-| 679 | Variantes | Variants |
-| 681 | var.n | (inchangé, hors _L) |
-| 681 | Variantes — nombre de variantes | Variants — number of variants |
-| 682 | var.marq | (inchangé, hors _L) |
-| 682 | Variantes — éléments marqués | Variants — marked elements |
-| 683 | var.els | (inchangé, hors _L) |
-| 683 | Variantes — éléments par variante | Variants — elements per variant |
-| 684 | var.alloc | (inchangé, hors _L) |
-| 684 | Variantes — fonctions allouées par variante (%) | Variants — allocated functions per variant (%) |
-| 684 | Fonctions feuilles de chaque variante allouées à un composant présent | Leaf functions of each variant allocated to a present component |
-| 685 | var.real | (inchangé, hors _L) |
-| 685 | Variantes — fonctions réalisées par variante (%) | Variants — realized functions per variant (%) |
-| 685 | Fonctions de chaque variante réalisées dans la couche suivante | Functions of each variant realized in the next layer |
-| 686 | var.fe | (inchangé, hors _L) |
-| 686 | Variantes — échanges alloués par variante (%) | Variants — allocated exchanges per variant (%) |
-| 686 | Functional Exchanges de chaque variante alloués à un Component Exchange présent | Functional Exchanges of each variant allocated to a present Component Exchange |
-| 687 | Contrôles | Checks |
-| 687 | chk.var | (inchangé, hors _L) |
-| 687 | Variantes — contrôles | Variants — checks |
+| 470 | Commun à toutes les variantes | Common to all variants |
+| 470 | Partagé avec d'autres variantes | Shared with other variants |
+| 471 | Exclusif à cette variante | Exclusive to this variant |
+| 471 | Variable (dans une partie des variantes) | Variable (in some of the variants) |
+| 472 | Retenu par aucune variante | Kept by no variant |
+| 478 | variante(s) | variant(s) |
+| 478 | Variantes lues dans la source | Variants read from the source |
+| 479 | éléments nommés (150 %) | named elements (150%) |
+| 479 | Tous les éléments nommés du modèle, toutes variantes confondues | All named elements of the model, all variants together |
+| 480 | socle commun | common core |
+| 480 | élément(s) présents dans toutes les variantes | … element(s) present in every variant |
+| 481 | élément(s) présents dans une partie des variantes seulement | … element(s) present in only some of the variants |
+| 482 | retenu(s) par aucune variante | kept by no variant |
+| 482 | Éléments absents de toutes les variantes : souvent une marque à revoir (voir 🩺 Contrôles) | Elements absent from every variant: often a mark to review (see 🩺 Checks) |
+| 484 | Longueur des barres : nombre d'éléments, à l'échelle du 150 %. Clic sur une couleur : les éléments concernés. | Bar length: number of elements, at the scale of the 150%. Click a colour: the elements concerned. |
+| 486 | sans objet | not applicable |
+| 508 | Élément | Element |
+| 508 | Type | (inchangé, hors _L) |
+| 540 | identifiant(s) cités par les fichiers pure::variants, absents de ce modèle (autre modèle, élément supprimé ?) | identifier(s) quoted by the pure::variants files, absent from this model (other model, deleted element?) |
+| 542 | Éléments retenus par aucune variante | Elements kept by no variant |
+| 542 | Élément marqué que ni ses critères ni sa restriction ne font entrer dans une variante (alors que son conteneur est présent) : élément mort, ou variante à ajouter | Marked element that neither its criteria nor its restriction bring into a variant (while its container is present): dead element, or variant to add |
+| 542 | Marque | Mark |
+| 543 | Allocation perdue dans une variante | Allocation lost in a variant |
+| 543 | Fonction feuille présente dans la variante, allouée dans le modèle 150 %, mais dont tous les composants sont absents de la variante | Leaf function present in the variant, allocated in the 150% model, but whose components are all absent from the variant |
+| 543 | Allouée à | Allocated to |
+| 543 | Variantes | Variants |
+| 544 | Réalisation perdue dans une variante | Realization lost in a variant |
+| 544 | Élément présent dans la variante, réalisé dans le modèle 150 %, dont toutes les réalisations sont absentes de la variante | Element present in the variant, realized in the 150% model, whose realizations are all absent from the variant |
+| 544 | Réalisé par | Realized by |
+| 544 | Variantes | Variants |
+| 545 | Référence de variabilité introuvable | Variability reference not found |
+| 545 | Critère ou résultat cité par un élément, un résultat ou un résultat composé, absent du modèle | Criterion or result quoted by an element, a result or a composed result, absent from the model |
+| 545 | Référence | Reference |
+| 545 | Identifiant | Identifier |
+| 546 | Restriction illisible | Unreadable restriction |
+| 546 | Expression de présence qu'Arcalyse ne sait pas lire (l'élément est alors compté présent partout) | Presence expression that Arcalyse cannot read (the element is then counted as present everywhere) |
+| 546 | Restriction | Restriction |
+| 546 | Erreur | Error |
+| 547 | Restriction citant une caractéristique inconnue | Restriction quoting an unknown feature |
+| 547 | Nom absent des caractéristiques lues dans les fichiers pure::variants | Name missing from the features read in the pure::variants files |
+| 547 | Restriction | Restriction |
+| 547 | Inconnus | Unknown |
+| 548 | Marque sans effet (conteneur absent) | Mark without effect (container absent) |
+| 548 | Les critères de l'élément le retiennent, mais son conteneur est absent de ces variantes : la marque ne sert à rien | The element's criteria keep it, but its container is absent from these variants: the mark is useless |
+| 548 | Marque | Mark |
+| 548 | Variantes | Variants |
+| 549 | Critères sans élément | Criteria without element |
+| 549 | Critère (ou caractéristique) qu'aucun élément du modèle ne cite | Criterion (or feature) quoted by no element of the model |
+| 549 | Critère | Criterion |
+| 549 | Paquet / fichier | Package / file |
+| 550 | Critères retenus par aucune variante | Criteria kept by no variant |
+| 550 | Critère qu'aucune variante définie ne sélectionne : ses éléments n'entrent dans aucun produit | Criterion selected by no defined variant: its elements go into no product |
+| 550 | Critère | Criterion |
+| 550 | Paquet / fichier | Package / file |
+| 551 | Variante sans critère | Variant without criterion |
+| 551 | Résultat de filtrage ou variante sans aucun critère choisi : seuls les éléments communs y entrent | Filtering result or variant without any selected criterion: only common elements go into it |
+| 551 | Variante | Variant |
+| 551 | Définition | Definition |
+| 552 | Variantes identiques | Identical variants |
+| 552 | Variantes qui retiennent exactement les mêmes éléments | Variants that keep exactly the same elements |
+| 552 | Variantes | Variants |
+| 552 | Éléments | Elements |
+| 553 | Identifiants pure::variants hors du modèle | pure::variants identifiers outside the model |
+| 553 | Identifiants Capella cités par les fichiers pure::variants et absents de ce modèle | Capella identifiers quoted by the pure::variants files and absent from this model |
+| 553 | Nombre | Count |
+| 553 | Remarque | Remark |
+| 566 | 📂 Charger des fichiers pure::variants… | 📂 Load pure::variants files… |
+| 573 | 🎛 Propriétés PVMT qui marquent les variantes | 🎛 PVMT properties that mark the variants … |
+| 573 | (détection automatique : cochez ou décochez pour choisir vous-même) | (automatic detection: tick or untick to choose yourself) |
+| 573 | (choix enregistré avec le projet) | (choice saved with the project) |
+| 574 | Propriété | Property |
+| 574 | Domaine | Domain |
+| 574 | Valeurs | Values |
+| 574 | Éléments | Elements |
+| 575 | Nom reconnu comme un marquage de variantes | Name recognized as a variant marking |
+| 576 | ↺ Revenir à la détection automatique | ↺ Back to automatic detection |
+| 590 | Toutes les couches | All layers |
+| 591 | Hors couche | No layer |
+| 592 | Source | Source |
+| 593 | Source des variantes | Source of the variants |
+| 600 | Variante | Variant |
+| 600 | Éléments | Elements |
+| 600 | Communs à toutes | Common to all |
+| 600 | Partagés | Shared |
+| 600 | Exclusifs | Exclusive |
+| 603 | variante(s), | {0} variant(s), {1} criterion(s) · {2} marked element(s) out of {3} named. Each bar gives, for the variant, the share done of what is expected; click a bar to see the remaining work.{4} |
+| 603 | critère(s) · | {0} variant(s), {1} criterion(s) · {2} marked element(s) out of {3} named. Each bar gives, for the variant, the share done of what is expected; click a bar to see the remaining work.{4} |
+| 603 | élément(s) marqué(s) sur | {0} variant(s), {1} criterion(s) · {2} marked element(s) out of {3} named. Each bar gives, for the variant, the share done of what is expected; click a bar to see the remaining work.{4} |
+| 603 | Couche : | (inchangé, hors _L) |
+| 604 | Variante | Variant |
+| 604 | Définition | Definition |
+| 604 | Éléments | Elements |
+| 604 | Propres | Specific |
+| 605 | Variante ajoutée dans Arcalyse | Variant added in Arcalyse |
+| 608 | Éléments nommés par couche dans chaque variante. | Named elements per layer in each variant. |
+| 609 | Variante | Variant |
+| 609 | Hors couche | No layer |
+| 610 | Variante | Variant |
+| 610 | Définition | Definition |
+| 610 | Éléments | Elements |
+| 610 | Propres | Specific |
+| 610 | (faits) | (done) |
+| 610 | (attendus) | (expected) |
+| 618 | Couche | Layer |
+| 618 | Élément | Element |
+| 618 | Type | (inchangé, hors _L) |
+| 618 | Ce qui manque | What is missing |
+| 618 | ✔ Rien à faire pour cette mesure. | ✔ Nothing to do for this measure. |
+| 619 | Variante | Variant |
+| 619 | Mesure | Measure |
+| 619 | Couche | Layer |
+| 619 | Élément | Element |
+| 619 | Type | (inchangé, hors _L) |
+| 619 | Ce qui manque | What is missing |
+| 626 | : ✔ présent, · absent (survol : pourquoi). La marque est celle de l'élément, ou celle de son conteneur (↳). | …: ✔ present, · absent (hover: why). The mark is the element's own, or its container's (↳). |
+| 626 | Tous les éléments nommés | All named elements |
+| 626 | Éléments dont la présence change d'une variante à l'autre | Elements whose presence changes from one variant to another |
+| 627 | Couche | Layer |
+| 627 | Élément | Element |
+| 627 | Type | (inchangé, hors _L) |
+| 627 | Marque | Mark |
+| 630 | Couche | Layer |
+| 630 | Élément | Element |
+| 630 | Type | (inchangé, hors _L) |
+| 630 | Marque | Mark |
+| 634 | 🧱 Blocs 150 % | 🧱 150% blocks |
+| 634 | 🔀 Critères → variantes | 🔀 Criteria → variants |
+| 634 | 📈 Vue d'ensemble | 📈 Overview |
+| 634 | 📊 Avancement | 📊 Progress |
+| 634 | ✅ Reste à faire | ✅ Remaining work |
+| 634 | ▦ Éléments × variantes | ▦ Elements × variants |
+| 634 | 🏷 Critères & variantes | 🏷 Criteria & variants |
+| 634 | 🩺 Contrôles | 🩺 Checks |
+| 635 | Tous les types | All types |
+| 638 | Nom, type, ce qui manque… | Name, type, what is missing… |
+| 639 | Nom, type, marque… | Name, type, mark… |
+| 639 | Tous les éléments (pas seulement les variables) | All elements (not only the variable ones) |
+| 654 | (affichée) | (displayed) |
+| 654 | critère(s), | … criterion(s), … marked element(s), … defined variant(s) |
+| 654 | élément(s) marqué(s), | … criterion(s), … marked element(s), … defined variant(s) |
+| 654 | variante(s) définie(s) | … criterion(s), … marked element(s), … defined variant(s) |
+| 655 | Sources lues — la source affichée se choisit dans la barre quand il y en a plusieurs. | Sources read — the displayed source is chosen in the bar when there are several. |
+| 656 | Critères ( | Criteria (…)…. |
+| 656 | : caractéristiques des fichiers pure::variants | : features of the pure::variants files |
+| 656 | : valeurs des propriétés PVMT retenues | : values of the selected PVMT properties |
+| 656 | : FilteringCriterion | (inchangé, hors _L) |
+| 657 | Critère | Criterion |
+| 657 | Paquet / fichier | Package / file |
+| 657 | Éléments marqués | Marked elements |
+| 657 | Variantes qui le retiennent | Variants that keep it |
+| 657 | Aucun critère. | No criterion. |
+| 658 | Variantes ( | Variants (…)… ✚: variant added in Arcalyse (saved with the work project). |
+| 658 | ✚ : variante ajoutée dans Arcalyse (enregistrée avec le projet de travail). | Variants (…)… ✚: variant added in Arcalyse (saved with the work project). |
+| 658 | — aucune variante n'est définie dans la source : une par critère. | — no variant is defined in the source: one per criterion. |
+| 659 | Variante | Variant |
+| 659 | Définition | Definition |
+| 659 | Éléments | Elements |
+| 659 | Propres | Specific |
+| 660 | Retirer cette variante | Remove this variant |
+| 660 | Aucune variante. | No variant. |
+| 661 | ✚ Nouvelle variante | ✚ New variant |
+| 661 | Nom | Name |
+| 663 | Ajouter | Add |
+| 665 | 🟦 Fichiers pure::variants — lecture tolérante : caractéristiques (.xfm), restrictions des éléments qui citent un identifiant Capella (.ccfm, .xml), sélections des modèles de variante (.vdm). Ils sont gardés avec le projet de travail. | 🟦 pure::variants files — lenient reading: features (.xfm), restrictions of the elements that quote a Capella identifier (.ccfm, .xml), selections of the variant models (.vdm). They are kept with the work project. |
+| 666 | Fichier | File |
+| 666 | Caractéristiques | Features |
+| 666 | Éléments restreints | Restricted elements |
+| 666 | Variantes | Variants |
+| 667 | Retirer ce fichier | Remove this file |
+| 667 | Aucun fichier chargé. | No file loaded. |
+| 668 | 📂 Charger des fichiers pure::variants… | 📂 Load pure::variants files… |
+| 669 | identifiant(s) cité(s) par les fichiers pure::variants sont absents de ce modèle. | … identifier(s) quoted by the pure::variants files are absent from this model. |
+| 686 | Donnez un nom à la variante. | Give the variant a name. |
+| 687 | Cochez au moins un critère. | Tick at least one criterion. |
+| 688 | ✔ Variante ajoutée | ✔ Variant added |
+| 691 | .xfm,.vdm,.ccfm,.xml | (inchangé, hors _L) |
+| 707 | fichier(s) pure::variants lu(s) | ✔ … pure::variants file(s) read |
+| 708 | Lecture impossible : | Cannot read: |
+| 731 | Variantes | (inchangé, hors _L) |
+| 736 | Absent : | Absent: |
+| 737 | Marque : | Mark: … |
+| 737 | Hérite de | Inherits from … : … |
+| 737 | Aucune marque : élément commun (sauf conteneur ou extrémité absents) | No mark: common element (unless container or end absent) |
+| 738 | Variantes | Variants |
+| 738 | var(--c-accent,#58a6ff) | (inchangé, hors _L) |
+| 739 | voir dans Éléments × variantes | see in Elements × variants |
+| 746 | Variantes | Variants |
+| 748 | var.n | (inchangé, hors _L) |
+| 748 | Variantes — nombre de variantes | Variants — number of variants |
+| 749 | var.marq | (inchangé, hors _L) |
+| 749 | Variantes — éléments marqués | Variants — marked elements |
+| 750 | var.els | (inchangé, hors _L) |
+| 750 | Variantes — éléments par variante | Variants — elements per variant |
+| 751 | var.alloc | (inchangé, hors _L) |
+| 751 | Variantes — fonctions allouées par variante (%) | Variants — allocated functions per variant (%) |
+| 751 | Fonctions feuilles de chaque variante allouées à un composant présent | Leaf functions of each variant allocated to a present component |
+| 752 | var.real | (inchangé, hors _L) |
+| 752 | Variantes — fonctions réalisées par variante (%) | Variants — realized functions per variant (%) |
+| 752 | Fonctions de chaque variante réalisées dans la couche suivante | Functions of each variant realized in the next layer |
+| 753 | var.fe | (inchangé, hors _L) |
+| 753 | Variantes — échanges alloués par variante (%) | Variants — allocated exchanges per variant (%) |
+| 753 | Functional Exchanges de chaque variante alloués à un Component Exchange présent | Functional Exchanges of each variant allocated to a present Component Exchange |
+| 754 | Contrôles | Checks |
+| 754 | chk.var | (inchangé, hors _L) |
+| 754 | Variantes — contrôles | Variants — checks |
 
 ## js/104-avant-apres.js
 
@@ -1456,6 +1483,119 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 165 | Télécharger le dessin (PNG, ×2) | Download the drawing (PNG, ×2) |
 | 193 | Export PNG impossible : | PNG export failed: |
 
+## js/106-diagramme-plan.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 187 | @liens | (inchangé, hors _L) |
+| 187 | Liens et échanges | Links and exchanges |
+| 240 | ☷ Plan | ☷ Outline |
+| 240 | Plan du diagramme (Outline) : éléments du modèle présents dans le diagramme ouvert | Diagram outline: model elements present in the open diagram |
+| 241 | élément(s) | … / … element(s) |
+| 242 | Copier la liste affichée (à coller dans Excel ou Word) | Copy the displayed list (to paste into Excel or Word) |
+| 243 | Exporter les éléments des diagrammes (CSV ou Excel, colonnes au choix) | Export the elements of the diagrams (CSV or Excel, columns of your choice) |
+| 245 | Ce diagramme ( | This diagram (… element(s)) |
+| 245 | élément(s)) | This diagram (… element(s)) |
+| 246 | Ce diagramme, liste filtrée ( | This diagram, filtered list (…) |
+| 247 | Diagrammes sélectionnés ( | Selected diagrams (…) |
+| 248 | Tous les diagrammes ( | All diagrams (…) |
+| 249 | Ramener le plan dans la page | Bring the outline back into the page |
+| 250 | Détacher le plan dans une fenêtre séparée (par exemple sur un autre écran) | Detach the outline into a separate window (on another screen, for instance) |
+| 253 | Ouvrez un diagramme : les éléments qu'il montre sont listés ici. | Open a diagram: the elements it shows are listed here. |
+| 254 | 🧩 Composition | 🧩 Composition |
+| 254 | Par type | By type |
+| 254 | Par couche | By layer |
+| 254 | Nom (A → Z) | Name (A → Z) |
+| 254 | 🌳 Arborescence | 🌳 Tree |
+| 257 | Filtrer (nom, type)… | Filter (name, type)… |
+| 259 | Tout déplier | Expand all |
+| 259 | Tout replier | Collapse all |
+| 261 | clic : centrer dans le diagramme et ouvrir le détail | click: centre in the diagram and open the detail |
+| 270 | absent du diagramme | not in the diagram |
+| 275 | Aucun élément ne correspond. | No element matches. |
+| 275 | Aucun élément du modèle dans ce diagramme. | No model element in this diagram. |
+| 290 | Liens d'implication, extrémités, formes sans élément nommé… | Involvement links, ends, shapes without a named element… |
+| 290 | élément(s) technique(s) sans nom, non listé(s) | + … unnamed technical element(s), not listed |
+| 314 | ☷ Plan du diagramme | ☷ Diagram outline |
+| 350 | Diagramme | Diagram |
+| 350 | Type de diagramme | Diagram type |
+| 350 | Famille | Family |
+| 350 | Couche du diagramme | Diagram layer |
+| 350 | Élément | Element |
+| 350 | Type | (inchangé, hors _L) |
+| 350 | Couche | Layer |
+| 350 | Contenu dans | Contained in |
+| 376 | Aucun élément à exporter. | No element to export. |
+| 385 | Élément | Element |
+| 385 | Type | (inchangé, hors _L) |
+| 385 | Couche | Layer |
+| 385 | Contenu dans | Contained in |
+| 386 | élément(s) copié(s) | ✔ … element(s) copied |
+| 417 | ☷ Plan | ☷ Outline |
+| 417 | dans une fenêtre séparée | in a separate window |
+| 418 | Ramener le plan dans la page | Bring the outline back into the page |
+| 429 | width=420,height=780 | (inchangé, hors _L) |
+| 430 | Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez. | The browser blocked the window: allow pop-ups for this page, then try again. |
+
+## js/107-variantes-graphes.js
+
+| Ligne | Texte | Anglais |
+|---:|---|---|
+| 161 | Commun à toutes les variantes | Common to all variants |
+| 161 | Retenu par aucune variante | Kept by no variant |
+| 161 | Présent dans | Present in … variant(s) out of … |
+| 161 | variante(s) sur | Present in … variant(s) out of … |
+| 162 | Critères : | Criteria: … |
+| 162 | Marque héritée de | Mark inherited from …: … |
+| 163 | Absent de « | Absent from “…”: … |
+| 172 | commun à toutes les variantes | common to all variants |
+| 172 | retenu par aucune variante | kept by no variant |
+| 172 | variantes (marque héritée) | … / … variants (inherited mark) |
+| 184 | ⚠ présente dans la variante sans aucun de ses composants | ⚠ present in the variant without any of its components |
+| 184 | ⚠ commune, mais allouée seulement à des composants variables | ⚠ common, but allocated only to variable components |
+| 189 | autre(s) fonction(s) | + … other function(s) |
+| 226 | Variante « | Variant “…” |
+| 226 | 150 % — tout le modèle | 150% — the whole model |
+| 227 | variante(s) confondues | … variant(s) together |
+| 230 | Aucun composant nommé dans cette couche. | No named component in this layer. |
+| 260 | éléments nommés | … named elements |
+| 261 | groupe de critères | criteria group |
+| 277 | élément(s) marqué(s) — clic : ces éléments dans ▦ Éléments × variantes | …: … marked element(s) — click: these elements in ▦ Elements × variants |
+| 278 | élément(s) marqué(s) | … marked element(s) |
+| 279 | ne marque aucun élément | marks no element |
+| 279 | retenu par aucune variante | kept by no variant |
+| 284 | élément(s) sur | …: … — … element(s) out of … — click: its blocks in 🧱 150% blocks |
+| 284 | — clic : ses blocs dans 🧱 Blocs 150 % | …: … — … element(s) out of … — click: its blocks in 🧱 150% blocks |
+| 288 | variante composée | composed variant |
+| 289 | aucun critère : le socle commun seul | no criterion: the common core only |
+| 290 | autre(s) critère(s) non dessiné(s) | … other criterion(s) not drawn |
+| 302 | Réduire | Zoom out |
+| 303 | Agrandir | Zoom in |
+| 303 | Taille réelle | Actual size |
+| 304 | ⬇ SVG | (inchangé, hors _L) |
+| 304 | ⬇ PNG | (inchangé, hors _L) |
+| 304 | Ajuster le dessin à la largeur de la vue | Fit the drawing to the view width |
+| 304 | ⤢ Ajuster | ⤢ Fit |
+| 304 | Télécharger le dessin (SVG) | Download the drawing (SVG) |
+| 304 | Télécharger le dessin (PNG, ×2) | Download the drawing (PNG, ×2) |
+| 318 | commun (trait plein) | common (solid line) |
+| 319 | variable (tirets, couleur du 1er critère) | variable (dashes, colour of the 1st criterion) |
+| 320 | retenu par aucune variante | kept by no variant |
+| 321 | fonction sans composant dans la variante | function without a component in the variant |
+| 324 | Couche | Layer |
+| 325 | Variante | Variant |
+| 326 | Échanges | Exchanges |
+| 328 | composant(s), | {0} component(s), {1} allocated function(s), {2} exchange(s) drawn. Click a block: its detail; hover: criteria and presence in the variants. |
+| 328 | fonction(s) allouée(s), | {0} component(s), {1} allocated function(s), {2} exchange(s) drawn. Click a block: its detail; hover: criteria and presence in the variants. |
+| 329 | fonction(s) sans composant | ⚠ … function(s) without a component |
+| 330 | échanges : les | (… exchanges: only the first …) |
+| 330 | premiers seulement) | (… exchanges: only the first …) |
+| 334 | critère(s), | … criterion(s), … variant(s) |
+| 334 | variante(s) | … criterion(s), … variant(s) |
+| 334 | anomalie(s) | ⚠ … anomaly(ies) |
+| 335 | Lien coloré : la variante retient ce critère | Coloured link: the variant keeps this criterion |
+| 335 | Tirets : variante composée (∪ union, ∩ intersection, ∖ exclusion) | Dashes: composed variant (∪ union, ∩ intersection, ∖ exclusion) |
+
 ## js/11-sauvegarde-toolbar-init.js
 
 | Ligne | Texte | Anglais |
@@ -1490,7 +1630,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 9 | .tbtn,.cav-it,.ctx-i,.cap-nav-it,.cap-det-link,.cex-det,.phl-link-badge,.phl-comp-hdr,.cdg-det-el,.cdg-lien,.cap-fold-btn,.cap-chain-hdr,.cap-card,.cap-tree-tog,.cap-ttab,.cap-ttab-close,.cap-nav-pin,[onclick] | (inchangé, hors _L) |
+| 9 | .tbtn,.cav-it,.ctx-i,.cap-nav-it,.cap-det-link,.cex-det,.phl-link-badge,.phl-comp-hdr,.cdg-det-el,.cdg-lien,.cap-fold-btn,.cap-chain-hdr,.cap-card,.cap-tree-tog,.cap-ttab,.cap-ttab-close,.cap-nav-pin,.cdg-pl-it,.cdg-pl-gh,[onclick] | (inchangé, hors _L) |
 
 ## js/14-profil-controles.js
 
@@ -2573,21 +2713,42 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 215 | Déclencheur | Trigger |
 | 215 | Garde | Guard |
 | 215 | Effet | Effect |
-| 256 | modèle | model … |
-| 257 | élément(s) | … element(s) |
-| 259 | Capella | (inchangé, hors _L) |
-| 260 | élément(s) | … element(s) |
-| 263 | diagramme(s) | … diagram(s) |
-| 324 | propriétaire | owner |
-| 335 | modèle chargé | loaded model |
-| 337 | Ancienne version (référence) | Old version (reference) … … ⇄ New version … … 📂 … 🎓 |
-| 339 | ⇄ Nouvelle version | Old version (reference) … … ⇄ New version … … 📂 … 🎓 |
-| 341 | Changer la version à comparer… | Change the version to compare… |
-| 341 | Charger une autre version… | Load another version… |
-| 342 | Visite guidée de ⚖ Comparaison de versions | Guided tour of ⚖ Version comparison |
-| 365 | » est un fichier | “…” is a … file: the displayed model is a … model. |
-| 365 | : le modèle affiché est un modèle | “…” is a … file: the displayed model is a … model. |
-| 369 | Fichier illisible : | Unreadable file: |
+| 260 | modèle | model … |
+| 261 | élément(s) | … element(s) |
+| 262 | élément(s) | … element(s) |
+| 264 | diagramme(s) | … diagram(s) |
+| 285 | Capella | (inchangé, hors _L) |
+| 287 | Capella | (inchangé, hors _L) |
+| 317 | 🔄 Sur le disque, non appliquée | 🔄 On disk, not applied |
+| 318 | — sur le disque ( | … — on disk (…), not applied |
+| 318 | ), non appliquée | … — on disk (…), not applied |
+| 319 | 🔄 Avant la dernière mise à jour | 🔄 Before the last update |
+| 320 | — avant la mise à jour de | … — before the … update |
+| 321 | 🔄 Version d'ouverture | 🔄 Version at opening |
+| 322 | — version d'ouverture ( | … — opening version (…) |
+| 354 | moins d'une minute | less than a minute |
+| 368 | ⏱ fichiers de même date | ⏱ files with the same date |
+| 368 | entre les deux fichiers | ⏱ … between the two files |
+| 372 | élément(s) commun(s) ( | … element(s) in common (… %) |
+| 373 | Seuls | Only … % of the elements are in common: these two files may not be two versions of the same model. |
+| 373 | % des éléments sont communs : ces deux fichiers ne sont peut-être pas deux versions du même modèle. | Only … % of the elements are in common: these two files may not be two versions of the same model. |
+| 375 | La version présentée comme « ancienne » a été modifiée après la « nouvelle » : ⇄ pour inverser le sens de la comparaison. | The version shown as “old” was modified after the “new” one: ⇄ to reverse the comparison. |
+| 376 | Les deux fichiers n'ont pas le même projet racine (identifiants différents). | The two files do not have the same root project (different identifiers). |
+| 377 | Outils ou versions différents ( | Different tools or versions (… → …): a migration may explain some of the changes. |
+| 377 | ) : une migration peut expliquer une partie des changements. | Different tools or versions (… → …): a migration may explain some of the changes. |
+| 390 | Comparer le modèle affiché avec | Compare the displayed model with |
+| 390 | Versions connues : celles du 🔄 suivi du fichier et les fichiers choisis pendant cette session | Known versions: those of the 🔄 file watch and the files chosen during this session |
+| 391 | — choisir une version — | — choose a version — |
+| 452 | propriétaire | owner |
+| 463 | modèle chargé | loaded model |
+| 470 | Ancienne version (référence) | Old version (reference) … … ⇄ New version … … 📂 … 🎓 |
+| 472 | ⇄ Nouvelle version | Old version (reference) … … ⇄ New version … … 📂 … 🎓 |
+| 474 | Changer la version à comparer… | Change the version to compare… |
+| 474 | Charger une autre version… | Load another version… |
+| 475 | Visite guidée de ⚖ Comparaison de versions | Guided tour of ⚖ Version comparison |
+| 494 | » est un fichier | “…” is a … file: the displayed model is a … model. |
+| 494 | : le modèle affiché est un modèle | “…” is a … file: the displayed model is a … model. |
+| 498 | Fichier illisible : | Unreadable file: |
 
 ## js/33-qualite-noms.js
 
@@ -4054,7 +4215,6 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 125 | 🧩 Éléments : un élément par ligne (famille, genre, nom, déclaration, fichier…) · 🔗 Liaisons : typage, spécialisation, satisfy, allocate… · 🩺 Diagnostics : les diagnostics du lecteur. | 🧩 Elements : one element per line (family, kind, name, declaration, file…) · 🔗 Links : typing, specialization, satisfy, allocate… · 🩺 Diagnostics : the diagnostics of the reader. |
 | 126 | 🧩 Éléments : un élément par ligne (famille, type, métaclasse, nom, propriétaire, fichier…) · 🔗 Liaisons : les relations lues (typage, généralisation, satisfy, allocate…) · 🩺 Diagnostics : la validation du modèle. | 🧩 Elements : one element per line (family, type, metaclass, name, owner, file…) · 🔗 Links : the relations read (typing, generalization, satisfy, allocate…) · 🩺 Diagnostics : the validation of the model. |
 | 127 | 📋 Contrôles : un contrôle par ligne, avec sa vue, sa gravité et son nombre de lignes · ▦ Par vue : contrôles par vue (et par couche pour Capella) · 📈 Historique : le score de chaque calcul, gardé dans la page. | 📋 Checks : one check per line, with its view, severity and number of lines · ▦ Per view : checks by view (and by layer for Capella) · 📈 History : the score of each computation, kept in the page. |
-| 128 | 📊 Avancement : une ligne par variante, une barre par mesure (cliquez-la pour le reste à faire) · ✅ Reste à faire · ▦ Éléments × variantes : présence de chaque élément · 🏷 Critères & variantes : sources, ✚ nouvelle variante, propriétés PVMT, fichiers pure::variants · 🩺 Contrôles . | 📊 Progress : one row per variant, one bar per measure (click it for the remaining work) · ✅ Remaining work · ▦ Elements × variants : presence of each element · 🏷 Criteria & variants : sources, ✚ new variant, PVMT properties, pure::variants files · 🩺 Checks . |
 | 129 | ◧ Vue Blocs : blocs dessinés avec leurs ports · ◎ Voisinage : un bloc au centre, ses voisins de part et d'autre · ≡ Vue Ligne : un connecteur par ligne · ▦ Matrice : bloc × bloc · 🩺 Contrôles : ports sans connecteur, connecteurs incohérents… | ◧ Blocks view : blocks drawn with their ports · ◎ Neighborhood : one block in the center, its neighbors on each side · ≡ Line view : one connector per row · ▦ Matrix : block × block · 🩺 Checks : ports without a connector, inconsistent connectors… |
 | 130 | ⇶ Couloirs : une activité, un couloir par porteur · ◧ Vue Blocs : actions dessinées avec leurs pins · ≡ Vue Ligne : un flux par ligne · ▦ Matrice : action × action · 🩺 Contrôles : pins sans flux, actions isolées… | ⇶ Swimlanes : one activity, one swimlane per owner · ◧ Blocks view : actions drawn with their pins · ≡ Line view : one flow per row · ▦ Matrix : action × action · 🩺 Checks : pins without a flow, isolated actions… |
 | 131 | 📄 Document : plan à gauche, exigences dans l'ordre, images des textes · ▤ Exigences : une colonne par attribut, ▤ Ouvrir dans ▤ Tableau · 🔗 Relations par type · 🧩 Types · 🖼 Pièces jointes (absentes signalées) · 🩺 Contrôles . | 📄 Document : outline on the left, requirements in order, images of the texts · ▤ Requirements : one column per attribute, ▤ Open in ▤ Table · 🔗 Relations by type · 🧩 Types · 🖼 Attachments (missing ones reported) · 🩺 Checks . |
@@ -4103,609 +4263,613 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 164 | #ana-box p.ana-help | (inchangé, hors _L) |
 | 164 | 📊 Synthèse | 📊 Summary |
 | 164 | Nœuds, comportements déployés ou non, échanges de composants entre nœuds qu'aucun lien physique ne relie. | Nodes, behaviours deployed or not, component exchanges between nodes that no physical link connects. |
-| 166 | #ana-box [data-vsrc] | (inchangé, hors _L) |
-| 166 | 🧩 Source des variantes | 🧩 Variant source |
-| 166 | Où lire les variantes : add-on Filtering de Capella, propriétés PVMT ou fichiers pure::variants (une source à la fois). | Where to read the variants: Capella Filtering add-on, PVMT properties or pure::variants files (one source at a time). |
-| 168 | #ana-box #xl-q | (inchangé, hors _L) |
-| 168 | 🔍 Élément de départ | 🔍 Starting element |
-| 168 | Cherchez la fonction, la chaîne, le composant ou l'échange dont suivre les réalisations. | Search for the function, chain, component or exchange whose realizations to follow. |
-| 169 | #ana-box #xl-dir, #ana-box .xl-opt | (inchangé, hors _L) |
-| 169 | ⇅ Sens et contenu | ⇅ Direction and content |
-| 170 | #ana-box [data-xl-x] | (inchangé, hors _L) |
-| 170 | ⬇ Exports | ⬇ Exports |
-| 172 | #ana-box [data-syfam] | (inchangé, hors _L) |
-| 172 | 🏷 Familles | 🏷 Families |
-| 172 | Une puce par famille (structure, comportement, exigences, organisation) avec son nombre d'éléments : clic pour n'en garder qu'une. | One chip per family (structure, behaviour, requirements, organisation) with its number of elements: click to keep only one. |
-| 174 | #ana-box [data-syfam] | (inchangé, hors _L) |
-| 174 | 🏷 Familles | 🏷 Families |
-| 175 | 🧩 Type | 🧩 Type |
-| 175 | Limite la liste à un type (stéréotype SysML ou métaclasse UML), avec le nombre d'éléments de chacun. | Limits the list to one type (SysML stereotype or UML metaclass), with the number of elements of each. |
-| 176 | 🩺 Diagnostics | 🩺 Diagnostics |
-| 176 | La validation d'Arcature : contraintes d'UML 2.5.1, de SysML 1.7 et d'UAF 1.2, classées par impact — 🔴 incohérence, 🟡 à vérifier, 🟢 écart de forme. Chaque règle a sa fiche (ce qu'elle dit, cause probable, gravité, correction). Les diagnostics comptent dans 💚 Santé. | The Arcature validation: UML 2.5.1, SysML 1.7 and UAF 1.2 constraints, sorted by impact — 🔴 inconsistency, 🟡 to check, 🟢 form deviation. Each rule has its sheet (what it says, likely cause, severity, fix). The diagnostics count in 💚 Health. |
-| 178 | #ana-box p.ana-help | (inchangé, hors _L) |
-| 178 | 💯 Score | 💯 Score |
-| 179 | #ana-box .sante-vues | (inchangé, hors _L) |
-| 179 | ▦ Vue et défauts | ▦ View and failures |
-| 179 | Une puce par vue qui a des contrôles, avec son nombre de contrôles en défaut : clic pour ne garder que cette vue. En défaut seulement masque les contrôles sans ligne et trie les autres du plus fréquent au moins fréquent. | One chip per view that has checks, with its number of failing checks: click to keep only this view. Failing only hides the checks without lines and sorts the others from most to least frequent. |
-| 180 | #ana-box [data-sgo] | (inchangé, hors _L) |
-| 180 | Ouvrir ↗ | Open ↗ |
-| 180 | Ouvre l'onglet 🩺 Contrôles de la vue concernée, sur ce contrôle, pour en voir les lignes. | Opens the 🩺 Checks tab of the view concerned, on this check, to see its lines. |
-| 181 | 🩺 Profil | 🩺 Profile |
-| 183 | #ana-box p.ana-help | (inchangé, hors _L) |
-| 183 | ⇶ Niveaux | ⇶ Levels |
-| 183 | Chaque élément tracé reçoit un niveau d'après son genre : exigences, cas d'utilisation, fonctionnel, logique, physique. Les liens satisfy, verify, deriveReqt, refine, trace, allocate et les réalisations relient les niveaux : un élément d'un niveau intermédiaire devrait être relié vers le haut et vers le bas. | Each traced element gets a level from its kind: requirements, use cases, functional, logical, physical. The satisfy, verify, deriveReqt, refine, trace, allocate links and the realizations connect the levels: an element of an intermediate level should be linked upwards and downwards. |
-| 185 | #ana-box p.ana-help | (inchangé, hors _L) |
-| 185 | 📊 Couverture | 📊 Coverage |
-| 185 | Nombre d'exigences et de feuilles, part des feuilles satisfaites et vérifiées (directement, ou par une exigence qui en dérive). | Number of requirements and leaves, share of leaves satisfied and verified (directly, or through a requirement derived from them). |
-| 186 | ✔ État | ✔ State |
-| 186 | Ne garde que les exigences non satisfaites, satisfaites, non vérifiées ou vérifiées. | Keeps only the requirements not satisfied, satisfied, not verified or verified. |
-| 188 | 🔗 Liaisons | 🔗 Links |
-| 190 | #ana-box #ub-grp | (inchangé, hors _L) |
-| 190 | 🎯 Contexte | 🎯 Context |
-| 190 | Le bloc de contexte dont les parts et les connecteurs sont montrés (nombre de connecteurs entre parenthèses), ou tous. | The context block whose parts and connectors are shown (number of connectors in brackets), or all. |
-| 191 | #ana-box #ub-name, #ana-box #ub-ex | (inchangé, hors _L) |
-| 191 | 🔍 Filtres | 🔍 Filters |
-| 191 | Filtre par nom de bloc, puis par connecteur ou objet transporté (ItemFlow). | Filters by block name, then by connector or conveyed item (ItemFlow). |
-| 193 | #ana-box #ub-grp | (inchangé, hors _L) |
-| 193 | 🎯 Activité | 🎯 Activity |
-| 193 | L'activité montrée (la plus fournie au départ), ou toutes. | The activity shown (the richest one at first), or all. |
-| 194 | #ana-box #ub-name, #ana-box #ub-ex, #ana-box [data-cfmb] | (inchangé, hors _L) |
-| 194 | 🔍 Filtres | 🔍 Filters |
-| 194 | Filtre par nom d'action, par flux ou type d'objet, par genre de nœud et de flux (objet, contrôle). | Filters by action name, by flow or object type, by node and flow kind (object, control). |
-| 196 | #ana-box [data-sel], #ana-box [data-dg] | (inchangé, hors _L) |
-| 196 | 🔎 🖼 Sur chaque machine | 🔎 🖼 On each machine |
-| 196 | 🔎 ouvre ses états et ses transitions, 🖼 son diagramme calculé (redessiné à partir du modèle). | 🔎 opens its states and transitions, 🖼 its computed diagram (redrawn from the model). |
-| 198 | #ana-box [data-sel], #ana-box [data-dg] | (inchangé, hors _L) |
-| 198 | 🔎 🖼 Sur chaque interaction | 🔎 🖼 On each interaction |
-| 198 | 🔎 ouvre ses messages dans l'ordre, 🖼 son diagramme de séquence calculé. | 🔎 opens its messages in order, 🖼 its computed sequence diagram. |
-| 200 | ⚖ Grandeur et racine | ⚖ Quantity and root |
-| 200 | La grandeur cumulée (masse, puissance…, avec son nombre de valeurs) et le bloc racine de l'arbre des parts. | The cumulated quantity (mass, power…, with its number of values) and the root block of the part tree. |
-| 205 | 🔬 Analyses | 🔬 Analyses |
-| 215 | #cap-flux-tabs .phl-toggle-btn.active, #cap-tb-views .cap-nav-grp.active | (inchangé, hors _L) |
-| 215 | Analyse en cours. | Current analysis. |
-| 217 | #ana-box [data-pv], #ana-box [data-xv], #ana-box [data-trv], #ana-box [data-cpv], #ana-box [data-smv], #ana-box [data-xl-mode] | (inchangé, hors _L) |
-| 217 | 🖼 Présentations | 🖼 Presentations |
-| 217 | Les présentations de l'analyse affichée. | The presentations of the displayed analysis. |
-| 219 | #ana-box .phl-filter-bar | (inchangé, hors _L) |
-| 219 | 🧰 Options | 🧰 Options |
-| 219 | Présentations, filtres et export CSV propres à l'analyse affichée. | Layouts, filters and CSV export specific to the displayed analysis. |
-| 220 | #ana-box [data-xl], #ana-box [data-cpl], #ana-box [data-sml] | (inchangé, hors _L) |
-| 220 | 🧱 Couche | 🧱 Layer |
-| 221 | #ana-box [data-xq] | (inchangé, hors _L) |
-| 221 | 🔍 Recherche | 🔍 Search |
-| 222 | #ana-box [data-xcsv], #ana-box #ub-csv, #ana-box #ub-html, #ana-box #ub-html-all, #ana-tr-csv, #ana-cp-csv, #ana-sm-csv | (inchangé, hors _L) |
-| 222 | ⬇ Exports | ⬇ Exports |
-| 223 | ↻ Recalculer | ↻ Recompute |
-| 224 | #ana-box .cap-tf-scroll, #ana-box .ud-liste, #ana-box #ub-main, #ana-box table, #ana-box .phl-comp-card | (inchangé, hors _L) |
-| 224 | 📋 Résultat | 📋 Result |
-| 225 | 🩺 Contrôles | 🩺 Checks |
-| 225 | Les contrôles de la vue : chacun compte dans 💚 Santé & contrôles, et le 🩺 profil règle sa gravité ou le désactive. | The checks of the view: each one counts in 💚 Health & checks, and the 🩺 profile sets its severity or disables it. |
-| 226 | #cap-tb-views .cap-nav-grp | (inchangé, hors _L) |
-| 226 | 🔬 Les autres analyses | 🔬 The other analyses |
-| 226 | Les analyses s'ouvrent par les menus 🏗 Architecture et ✅ Vérifier (ou 🔍 Ctrl+K) : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes. | Analyses open from the 🏗 Architecture and ✅ Check menus (or 🔍 Ctrl+K): cross-layer traceability, capabilities & missions, modes & states, version comparison, requirements, properties, data & interfaces, constraints. |
-| 256 | ⚖ Comparaison de versions | ⚖ Version comparison |
-| 257 | Compare le modèle affiché à une autre version du même modèle — .capella, .mdzip, .xmi, .uml, .sysml, .kpar, .reqif… —, même enregistrée sous un autre nom : les éléments sont appariés par leur identifiant. Deux onglets : le rapport des changements et les diagrammes modifiés. | Compares the displayed model with another version of the same model — .capella, .mdzip, .xmi, .uml, .sysml, .kpar, .reqif… —, even saved under another name: elements are matched by their identifier. Two tabs: the report of the changes and the diagrams that changed. |
-| 257 | Aucune autre version n'est chargée : les étapes du rapport et des diagrammes apparaîtront quand elle le sera. | No other version is loaded: the report and diagram steps will appear once it is. |
-| 258 | #cap-view-analyses .ana-diff-load | (inchangé, hors _L) |
-| 258 | 📂 Charger une autre version | 📂 Load another version |
-| 260 | #cap-view-analyses .ana-diff-file | (inchangé, hors _L) |
-| 260 | 🏷 Les deux versions | 🏷 The two versions |
-| 261 | À gauche l' ancienne version (la référence), à droite la nouvelle : nom du fichier, outil d'origine, nombre d'éléments et de diagrammes, date du fichier. | On the left the old version (the reference), on the right the new one : file name, original tool, number of elements and diagrams, file date. |
-| 262 | ⇄ Inverser | ⇄ Swap |
-| 263 | Par défaut, la version chargée est l'ancienne. ⇄ en fait la nouvelle : utile quand le modèle affiché est la version d'avant. ⇄ Avant / après suit ce sens. | By default, the loaded version is the old one. ⇄ makes it the new one: useful when the displayed model is the before version. ⇄ Before / after follows this direction. |
-| 264 | #cap-view-analyses .dg-tabs | (inchangé, hors _L) |
-| 264 | 🗂 Deux onglets | 🗂 Two tabs |
-| 265 | 🔷 Modèle : le rapport des changements des éléments. 🔲 Diagrammes : diagrammes ajoutés, supprimés, renommés, modifiés, ou touchés par les changements du modèle. | 🔷 Model : the report of the changes of the elements. 🔲 Diagrams : diagrams added, deleted, renamed, modified, or touched by the changes of the model. |
-| 266 | #cap-view-analyses .dr-bar | (inchangé, hors _L) |
-| 266 | 📊 Niveau et préréglages | 📊 Level and presets |
-| 267 | Synthèse (compteurs par catégorie, couche, famille), Simple (une phrase par changement), Détaillé (chaque propriété avant → après), Complet (avec identifiants et chemins). Préréglages : 📰 Notes de version, 🔍 Revue, 🛠 Audit. | Summary (counters by category, layer, family), Simple (one sentence per change), Detailed (each property before → after), Full (with identifiers and paths). Presets: 📰 Release notes, 🔍 Review, 🛠 Audit. |
-| 268 | #cap-view-analyses [data-cat], #dr-fam, #dr-q, #dr-by | (inchangé, hors _L) |
-| 268 | 🧹 Catégories et filtres | 🧹 Categories and filters |
-| 269 | 8 catégories à cocher (créations, suppressions, renommages, descriptions, propriétés, liens, déplacements, types), couches, famille de types, recherche, regroupement (catégorie, couche, famille, élément parent). « Rattacher le technique » range allocations, réalisations, valeurs… sous l'élément qu'elles concernent. | 8 categories to tick (creations, deletions, renamings, descriptions, properties, links, moves, types), layers, type family, search, grouping (category, layer, family, parent element). « Attach technical elements » files allocations, realizations, values… under the element they concern. |
-| 270 | #cap-view-analyses .dr-actions | (inchangé, hors _L) |
-| 270 | 📋 Copier et exporter | 📋 Copy and export |
-| 271 | Le rapport tel qu'affiché (niveau, filtres, lignes décochées) : 📋 Copier mis en forme pour Word, Outlook ou Teams (ou en texte brut, en tableau), ⬇ CSV (une ligne par propriété changée), ⬇ HTML autonome, 🖨 Imprimer ou PDF. | The report as displayed (level, filters, unticked lines): 📋 Copy formatted for Word, Outlook or Teams (or as plain text, as a table), ⬇ CSV (one line per changed property), ⬇ standalone HTML, 🖨 Print or PDF. |
-| 272 | #cap-view-analyses .dr-report | (inchangé, hors _L) |
-| 272 | 📄 Rapport | 📄 Report |
-| 273 | Une ligne par changement : la case à gauche l'exclut de la copie et des exports, ↗ ouvre l'élément dans le panneau de détail. | One line per change: the box on the left excludes it from the copy and the exports, ↗ opens the element in the details panel. |
-| 274 | #cap-view-analyses .dg-head | (inchangé, hors _L) |
-| 274 | 🔲 .aird de référence | 🔲 Reference .aird |
-| 275 | Pour Capella, les diagrammes sont dans le .aird : celui du modèle affiché est comparé à un .aird de référence (📂 Charger…), gardé de lui-même quand le .aird est relu ou remplacé après une 🔄 mise à jour. | For Capella, diagrams are in the .aird: the one of the displayed model is compared with a reference .aird (📂 Load…), kept automatically when the .aird is reread or replaced after a 🔄 update. |
-| 276 | #cap-view-analyses .dg-chips | (inchangé, hors _L) |
-| 276 | 🔲 Diagrammes | 🔲 Diagrams |
-| 277 | Les diagrammes des deux versions du fichier, appariés par identifiant. | The diagrams of the two versions of the file, matched by identifier. |
-| 277 | Un compteur par état (clic : filtrer) : ➕ nouveaux, ➖ supprimés, ✎ renommés, 🧩 contenu modifié (éléments ajoutés ou retirés), 🎨 mise en page / style, ⚠ éléments absents du modèle, 🔷 touchés par le modèle (ils montrent un élément modifié). | One counter per state (click: filter): ➕ new, ➖ deleted, ✎ renamed, 🧩 content modified (elements added or removed), 🎨 layout / style, ⚠ elements missing from the model, 🔷 touched by the model (they show a modified element). |
-| 278 | #dg-filtre, #dg-q | (inchangé, hors _L) |
-| 278 | 🔍 Filtre | 🔍 Filter |
-| 280 | #cap-view-analyses .dg-t .dg-tog | (inchangé, hors _L) |
-| 280 | ▸ Détail | ▸ Details |
-| 281 | Déplie un diagramme : éléments ajoutés au diagramme ou retirés, éléments absents du modèle, éléments modifiés dans le modèle (clic : leur détail). | Unfolds a diagram: elements added to the diagram or removed, elements missing from the model, elements modified in the model (click: their details). |
-| 282 | #cap-view-analyses .dg-act | (inchangé, hors _L) |
-| 282 | 🔲 Ouvrir · ⇄ Avant / après | 🔲 Open · ⇄ Before / after |
-| 283 | 🔲 Ouvrir : le diagramme dans 🔲 Diagrammes. ⇄ Avant / après : ses écarts entre les deux versions, en ◐ fondu ou ◧ volet, avec la surbrillance des éléments ajoutés, retirés, déplacés, renommés. | 🔲 Open : the diagram in 🔲 Diagrams. ⇄ Before / after : its differences between the two versions, in ◐ fade or ◧ slider, with the highlighting of added, removed, moved, renamed elements. |
-| 284 | ⇄ Passer en revue | ⇄ Review one by one |
-| 286 | ⬇ CSV | ⬇ CSV |
-| 287 | La liste des diagrammes avec leurs états et les éléments ajoutés ou retirés. | The list of diagrams with their states and the elements added or removed. |
-| 288 | ✅ À vous | ✅ Your turn |
-| 289 | Cette visite se relance par 🎓 en haut de la comparaison, ou par ❓ Aide ▾ → 🎯 Visite de cette vue. | This tour starts again with 🎓 at the top of the comparison, or with ❓ Help ▾ → 🎯 Tour of this view. |
-| 295 | 🗺 Relation Map | 🗺 Relation Map |
+| 166 | #ana-box .var-gr-dessin | (inchangé, hors _L) |
+| 166 | 🧱 Blocs 150 % | 🧱 150% blocks |
+| 167 | #ana-box [data-vsrc] | (inchangé, hors _L) |
+| 167 | 🧩 Source des variantes | 🧩 Variant source |
+| 167 | Où lire les variantes : add-on Filtering de Capella, propriétés PVMT ou fichiers pure::variants (une source à la fois). | Where to read the variants: Capella Filtering add-on, PVMT properties or pure::variants files (one source at a time). |
+| 169 | #ana-box #xl-q | (inchangé, hors _L) |
+| 169 | 🔍 Élément de départ | 🔍 Starting element |
+| 169 | Cherchez la fonction, la chaîne, le composant ou l'échange dont suivre les réalisations. | Search for the function, chain, component or exchange whose realizations to follow. |
+| 170 | #ana-box #xl-dir, #ana-box .xl-opt | (inchangé, hors _L) |
+| 170 | ⇅ Sens et contenu | ⇅ Direction and content |
+| 171 | #ana-box [data-xl-x] | (inchangé, hors _L) |
+| 171 | ⬇ Exports | ⬇ Exports |
+| 173 | #ana-box [data-syfam] | (inchangé, hors _L) |
+| 173 | 🏷 Familles | 🏷 Families |
+| 173 | Une puce par famille (structure, comportement, exigences, organisation) avec son nombre d'éléments : clic pour n'en garder qu'une. | One chip per family (structure, behaviour, requirements, organisation) with its number of elements: click to keep only one. |
+| 175 | #ana-box [data-syfam] | (inchangé, hors _L) |
+| 175 | 🏷 Familles | 🏷 Families |
+| 176 | 🧩 Type | 🧩 Type |
+| 176 | Limite la liste à un type (stéréotype SysML ou métaclasse UML), avec le nombre d'éléments de chacun. | Limits the list to one type (SysML stereotype or UML metaclass), with the number of elements of each. |
+| 177 | 🩺 Diagnostics | 🩺 Diagnostics |
+| 177 | La validation d'Arcature : contraintes d'UML 2.5.1, de SysML 1.7 et d'UAF 1.2, classées par impact — 🔴 incohérence, 🟡 à vérifier, 🟢 écart de forme. Chaque règle a sa fiche (ce qu'elle dit, cause probable, gravité, correction). Les diagnostics comptent dans 💚 Santé. | The Arcature validation: UML 2.5.1, SysML 1.7 and UAF 1.2 constraints, sorted by impact — 🔴 inconsistency, 🟡 to check, 🟢 form deviation. Each rule has its sheet (what it says, likely cause, severity, fix). The diagnostics count in 💚 Health. |
+| 179 | #ana-box p.ana-help | (inchangé, hors _L) |
+| 179 | 💯 Score | 💯 Score |
+| 180 | #ana-box .sante-vues | (inchangé, hors _L) |
+| 180 | ▦ Vue et défauts | ▦ View and failures |
+| 180 | Une puce par vue qui a des contrôles, avec son nombre de contrôles en défaut : clic pour ne garder que cette vue. En défaut seulement masque les contrôles sans ligne et trie les autres du plus fréquent au moins fréquent. | One chip per view that has checks, with its number of failing checks: click to keep only this view. Failing only hides the checks without lines and sorts the others from most to least frequent. |
+| 181 | #ana-box [data-sgo] | (inchangé, hors _L) |
+| 181 | Ouvrir ↗ | Open ↗ |
+| 181 | Ouvre l'onglet 🩺 Contrôles de la vue concernée, sur ce contrôle, pour en voir les lignes. | Opens the 🩺 Checks tab of the view concerned, on this check, to see its lines. |
+| 182 | 🩺 Profil | 🩺 Profile |
+| 184 | #ana-box p.ana-help | (inchangé, hors _L) |
+| 184 | ⇶ Niveaux | ⇶ Levels |
+| 184 | Chaque élément tracé reçoit un niveau d'après son genre : exigences, cas d'utilisation, fonctionnel, logique, physique. Les liens satisfy, verify, deriveReqt, refine, trace, allocate et les réalisations relient les niveaux : un élément d'un niveau intermédiaire devrait être relié vers le haut et vers le bas. | Each traced element gets a level from its kind: requirements, use cases, functional, logical, physical. The satisfy, verify, deriveReqt, refine, trace, allocate links and the realizations connect the levels: an element of an intermediate level should be linked upwards and downwards. |
+| 186 | #ana-box p.ana-help | (inchangé, hors _L) |
+| 186 | 📊 Couverture | 📊 Coverage |
+| 186 | Nombre d'exigences et de feuilles, part des feuilles satisfaites et vérifiées (directement, ou par une exigence qui en dérive). | Number of requirements and leaves, share of leaves satisfied and verified (directly, or through a requirement derived from them). |
+| 187 | ✔ État | ✔ State |
+| 187 | Ne garde que les exigences non satisfaites, satisfaites, non vérifiées ou vérifiées. | Keeps only the requirements not satisfied, satisfied, not verified or verified. |
+| 189 | 🔗 Liaisons | 🔗 Links |
+| 191 | #ana-box #ub-grp | (inchangé, hors _L) |
+| 191 | 🎯 Contexte | 🎯 Context |
+| 191 | Le bloc de contexte dont les parts et les connecteurs sont montrés (nombre de connecteurs entre parenthèses), ou tous. | The context block whose parts and connectors are shown (number of connectors in brackets), or all. |
+| 192 | #ana-box #ub-name, #ana-box #ub-ex | (inchangé, hors _L) |
+| 192 | 🔍 Filtres | 🔍 Filters |
+| 192 | Filtre par nom de bloc, puis par connecteur ou objet transporté (ItemFlow). | Filters by block name, then by connector or conveyed item (ItemFlow). |
+| 194 | #ana-box #ub-grp | (inchangé, hors _L) |
+| 194 | 🎯 Activité | 🎯 Activity |
+| 194 | L'activité montrée (la plus fournie au départ), ou toutes. | The activity shown (the richest one at first), or all. |
+| 195 | #ana-box #ub-name, #ana-box #ub-ex, #ana-box [data-cfmb] | (inchangé, hors _L) |
+| 195 | 🔍 Filtres | 🔍 Filters |
+| 195 | Filtre par nom d'action, par flux ou type d'objet, par genre de nœud et de flux (objet, contrôle). | Filters by action name, by flow or object type, by node and flow kind (object, control). |
+| 197 | #ana-box [data-sel], #ana-box [data-dg] | (inchangé, hors _L) |
+| 197 | 🔎 🖼 Sur chaque machine | 🔎 🖼 On each machine |
+| 197 | 🔎 ouvre ses états et ses transitions, 🖼 son diagramme calculé (redessiné à partir du modèle). | 🔎 opens its states and transitions, 🖼 its computed diagram (redrawn from the model). |
+| 199 | #ana-box [data-sel], #ana-box [data-dg] | (inchangé, hors _L) |
+| 199 | 🔎 🖼 Sur chaque interaction | 🔎 🖼 On each interaction |
+| 199 | 🔎 ouvre ses messages dans l'ordre, 🖼 son diagramme de séquence calculé. | 🔎 opens its messages in order, 🖼 its computed sequence diagram. |
+| 201 | ⚖ Grandeur et racine | ⚖ Quantity and root |
+| 201 | La grandeur cumulée (masse, puissance…, avec son nombre de valeurs) et le bloc racine de l'arbre des parts. | The cumulated quantity (mass, power…, with its number of values) and the root block of the part tree. |
+| 206 | 🔬 Analyses | 🔬 Analyses |
+| 216 | #cap-flux-tabs .phl-toggle-btn.active, #cap-tb-views .cap-nav-grp.active | (inchangé, hors _L) |
+| 216 | Analyse en cours. | Current analysis. |
+| 218 | #ana-box [data-pv], #ana-box [data-xv], #ana-box [data-trv], #ana-box [data-cpv], #ana-box [data-smv], #ana-box [data-xl-mode] | (inchangé, hors _L) |
+| 218 | 🖼 Présentations | 🖼 Presentations |
+| 218 | Les présentations de l'analyse affichée. | The presentations of the displayed analysis. |
+| 220 | #ana-box .phl-filter-bar | (inchangé, hors _L) |
+| 220 | 🧰 Options | 🧰 Options |
+| 220 | Présentations, filtres et export CSV propres à l'analyse affichée. | Layouts, filters and CSV export specific to the displayed analysis. |
+| 221 | #ana-box [data-xl], #ana-box [data-cpl], #ana-box [data-sml] | (inchangé, hors _L) |
+| 221 | 🧱 Couche | 🧱 Layer |
+| 222 | #ana-box [data-xq] | (inchangé, hors _L) |
+| 222 | 🔍 Recherche | 🔍 Search |
+| 223 | #ana-box [data-xcsv], #ana-box #ub-csv, #ana-box #ub-html, #ana-box #ub-html-all, #ana-tr-csv, #ana-cp-csv, #ana-sm-csv | (inchangé, hors _L) |
+| 223 | ⬇ Exports | ⬇ Exports |
+| 224 | ↻ Recalculer | ↻ Recompute |
+| 225 | #ana-box .cap-tf-scroll, #ana-box .ud-liste, #ana-box #ub-main, #ana-box table, #ana-box .phl-comp-card | (inchangé, hors _L) |
+| 225 | 📋 Résultat | 📋 Result |
+| 226 | 🩺 Contrôles | 🩺 Checks |
+| 226 | Les contrôles de la vue : chacun compte dans 💚 Santé & contrôles, et le 🩺 profil règle sa gravité ou le désactive. | The checks of the view: each one counts in 💚 Health & checks, and the 🩺 profile sets its severity or disables it. |
+| 227 | #cap-tb-views .cap-nav-grp | (inchangé, hors _L) |
+| 227 | 🔬 Les autres analyses | 🔬 The other analyses |
+| 227 | Les analyses s'ouvrent par les menus 🏗 Architecture et ✅ Vérifier (ou 🔍 Ctrl+K) : traçabilité inter-couches, capacités & missions, modes & états, comparaison de versions, exigences, propriétés, données & interfaces, contraintes. | Analyses open from the 🏗 Architecture and ✅ Check menus (or 🔍 Ctrl+K): cross-layer traceability, capabilities & missions, modes & states, version comparison, requirements, properties, data & interfaces, constraints. |
+| 257 | ⚖ Comparaison de versions | ⚖ Version comparison |
+| 258 | Compare le modèle affiché à une autre version du même modèle — .capella, .mdzip, .xmi, .uml, .sysml, .kpar, .reqif… —, même enregistrée sous un autre nom : les éléments sont appariés par leur identifiant. Deux onglets : le rapport des changements et les diagrammes modifiés. | Compares the displayed model with another version of the same model — .capella, .mdzip, .xmi, .uml, .sysml, .kpar, .reqif… —, even saved under another name: elements are matched by their identifier. Two tabs: the report of the changes and the diagrams that changed. |
+| 258 | Aucune autre version n'est chargée : les étapes du rapport et des diagrammes apparaîtront quand elle le sera. | No other version is loaded: the report and diagram steps will appear once it is. |
+| 259 | #cap-view-analyses .ana-diff-load | (inchangé, hors _L) |
+| 259 | 📂 Charger une autre version | 📂 Load another version |
+| 261 | #cap-view-analyses .ana-diff-file | (inchangé, hors _L) |
+| 261 | 🏷 Les deux versions | 🏷 The two versions |
+| 262 | À gauche l' ancienne version (la référence), à droite la nouvelle : nom du fichier, outil d'origine, nombre d'éléments et de diagrammes, date du fichier. | On the left the old version (the reference), on the right the new one : file name, original tool, number of elements and diagrams, file date. |
+| 263 | ⇄ Inverser | ⇄ Swap |
+| 264 | Par défaut, la version chargée est l'ancienne. ⇄ en fait la nouvelle : utile quand le modèle affiché est la version d'avant. ⇄ Avant / après suit ce sens. | By default, the loaded version is the old one. ⇄ makes it the new one: useful when the displayed model is the before version. ⇄ Before / after follows this direction. |
+| 265 | #cap-view-analyses .dg-tabs | (inchangé, hors _L) |
+| 265 | 🗂 Deux onglets | 🗂 Two tabs |
+| 266 | 🔷 Modèle : le rapport des changements des éléments. 🔲 Diagrammes : diagrammes ajoutés, supprimés, renommés, modifiés, ou touchés par les changements du modèle. | 🔷 Model : the report of the changes of the elements. 🔲 Diagrams : diagrams added, deleted, renamed, modified, or touched by the changes of the model. |
+| 267 | #cap-view-analyses .dr-bar | (inchangé, hors _L) |
+| 267 | 📊 Niveau et préréglages | 📊 Level and presets |
+| 268 | Synthèse (compteurs par catégorie, couche, famille), Simple (une phrase par changement), Détaillé (chaque propriété avant → après), Complet (avec identifiants et chemins). Préréglages : 📰 Notes de version, 🔍 Revue, 🛠 Audit. | Summary (counters by category, layer, family), Simple (one sentence per change), Detailed (each property before → after), Full (with identifiers and paths). Presets: 📰 Release notes, 🔍 Review, 🛠 Audit. |
+| 269 | #cap-view-analyses [data-cat], #dr-fam, #dr-q, #dr-by | (inchangé, hors _L) |
+| 269 | 🧹 Catégories et filtres | 🧹 Categories and filters |
+| 270 | 8 catégories à cocher (créations, suppressions, renommages, descriptions, propriétés, liens, déplacements, types), couches, famille de types, recherche, regroupement (catégorie, couche, famille, élément parent). « Rattacher le technique » range allocations, réalisations, valeurs… sous l'élément qu'elles concernent. | 8 categories to tick (creations, deletions, renamings, descriptions, properties, links, moves, types), layers, type family, search, grouping (category, layer, family, parent element). « Attach technical elements » files allocations, realizations, values… under the element they concern. |
+| 271 | #cap-view-analyses .dr-actions | (inchangé, hors _L) |
+| 271 | 📋 Copier et exporter | 📋 Copy and export |
+| 272 | Le rapport tel qu'affiché (niveau, filtres, lignes décochées) : 📋 Copier mis en forme pour Word, Outlook ou Teams (ou en texte brut, en tableau), ⬇ CSV (une ligne par propriété changée), ⬇ HTML autonome, 🖨 Imprimer ou PDF. | The report as displayed (level, filters, unticked lines): 📋 Copy formatted for Word, Outlook or Teams (or as plain text, as a table), ⬇ CSV (one line per changed property), ⬇ standalone HTML, 🖨 Print or PDF. |
+| 273 | #cap-view-analyses .dr-report | (inchangé, hors _L) |
+| 273 | 📄 Rapport | 📄 Report |
+| 274 | Une ligne par changement : la case à gauche l'exclut de la copie et des exports, ↗ ouvre l'élément dans le panneau de détail. | One line per change: the box on the left excludes it from the copy and the exports, ↗ opens the element in the details panel. |
+| 275 | #cap-view-analyses .dg-head | (inchangé, hors _L) |
+| 275 | 🔲 .aird de référence | 🔲 Reference .aird |
+| 276 | Pour Capella, les diagrammes sont dans le .aird : celui du modèle affiché est comparé à un .aird de référence (📂 Charger…), gardé de lui-même quand le .aird est relu ou remplacé après une 🔄 mise à jour. | For Capella, diagrams are in the .aird: the one of the displayed model is compared with a reference .aird (📂 Load…), kept automatically when the .aird is reread or replaced after a 🔄 update. |
+| 277 | #cap-view-analyses .dg-chips | (inchangé, hors _L) |
+| 277 | 🔲 Diagrammes | 🔲 Diagrams |
+| 278 | Les diagrammes des deux versions du fichier, appariés par identifiant. | The diagrams of the two versions of the file, matched by identifier. |
+| 278 | Un compteur par état (clic : filtrer) : ➕ nouveaux, ➖ supprimés, ✎ renommés, 🧩 contenu modifié (éléments ajoutés ou retirés), 🎨 mise en page / style, ⚠ éléments absents du modèle, 🔷 touchés par le modèle (ils montrent un élément modifié). | One counter per state (click: filter): ➕ new, ➖ deleted, ✎ renamed, 🧩 content modified (elements added or removed), 🎨 layout / style, ⚠ elements missing from the model, 🔷 touched by the model (they show a modified element). |
+| 279 | #dg-filtre, #dg-q | (inchangé, hors _L) |
+| 279 | 🔍 Filtre | 🔍 Filter |
+| 281 | #cap-view-analyses .dg-t .dg-tog | (inchangé, hors _L) |
+| 281 | ▸ Détail | ▸ Details |
+| 282 | Déplie un diagramme : éléments ajoutés au diagramme ou retirés, éléments absents du modèle, éléments modifiés dans le modèle (clic : leur détail). | Unfolds a diagram: elements added to the diagram or removed, elements missing from the model, elements modified in the model (click: their details). |
+| 283 | #cap-view-analyses .dg-act | (inchangé, hors _L) |
+| 283 | 🔲 Ouvrir · ⇄ Avant / après | 🔲 Open · ⇄ Before / after |
+| 284 | 🔲 Ouvrir : le diagramme dans 🔲 Diagrammes. ⇄ Avant / après : ses écarts entre les deux versions, en ◐ fondu ou ◧ volet, avec la surbrillance des éléments ajoutés, retirés, déplacés, renommés. | 🔲 Open : the diagram in 🔲 Diagrams. ⇄ Before / after : its differences between the two versions, in ◐ fade or ◧ slider, with the highlighting of added, removed, moved, renamed elements. |
+| 285 | ⇄ Passer en revue | ⇄ Review one by one |
+| 287 | ⬇ CSV | ⬇ CSV |
+| 288 | La liste des diagrammes avec leurs états et les éléments ajoutés ou retirés. | The list of diagrams with their states and the elements added or removed. |
+| 289 | ✅ À vous | ✅ Your turn |
+| 290 | Cette visite se relance par 🎓 en haut de la comparaison, ou par ❓ Aide ▾ → 🎯 Visite de cette vue. | This tour starts again with 🎓 at the top of the comparison, or with ❓ Help ▾ → 🎯 Tour of this view. |
 | 296 | 🗺 Relation Map | 🗺 Relation Map |
-| 296 | Graphe centré sur un élément de contexte : ses voisins sont affichés jusqu'à la profondeur choisie, selon les relations du modèle cochées (liaisons lues par le lecteur d'Arcature : contenance, typage, généralisation, satisfy, allocate…). | Graph centred on a context element : its neighbours are displayed up to the chosen depth, following the ticked relations of the model (links read by the Arcature reader: containment, typing, generalization, satisfy, allocate…). |
-| 296 | Graphe centré sur un élément de contexte : ses voisins sont affichés jusqu'à la profondeur choisie, selon les relations Capella cochées. | Graph centred on a context element : its neighbours are displayed up to the chosen depth, according to the checked Capella relations. |
-| 297 | #b-zi,#b-zo,#b-fit | (inchangé, hors _L) |
-| 297 | 🔍 Zoom | 🔍 Zoom |
-| 298 | ＋ / － zooment (Ctrl++ / Ctrl+-), ⊡ Fit ajuste le graphe à la fenêtre (Ctrl+W). La molette zoome aussi et le fond se déplace à la souris. | ＋ / － zoom (Ctrl++ / Ctrl+-), ⊡ Fit fits the graph to the window (Ctrl+W). The mouse wheel also zooms and the background can be dragged with the mouse. |
-| 299 | ↕ Ouvrir / fermer tout | ↕ Open / close all |
-| 300 | Déplie ou replie tous les nœuds du graphe d'un coup. | Expands or collapses all the graph nodes in one go. |
-| 301 | #b-num,#b-leg,#b-rln,#b-cut,#b-single,#b-compact | (inchangé, hors _L) |
-| 301 | 👁 Affichage | 👁 Display |
-| 302 | # Nums numérote les relations, ◉ Légende affiche la légende, ⌁ Relations écrit le nom des relations sur les arêtes, ✂ Noms coupe les noms longs, ⊙ Unique ne déploie chaque élément qu'une fois (autres occurrences grisées ↺), ⬡ Compact réduit les nœuds. | # Nums numbers the relations, ◉ Legend shows the legend, ⌁ Relations writes the relation names on the edges, ✂ Names cuts long names, ⊙ Single expands each element only once (other occurrences greyed out ↺), ⬡ Compact shrinks the nodes. |
-| 303 | #rm-tb-depth,#b-lay-wrap | (inchangé, hors _L) |
-| 303 | 📐 Profondeur & disposition | 📐 Depth & layout |
-| 304 | Profondeur de voisinage (1 à 10) et menu de disposition du graphe : → LR, ↓ TB, ← RL, ◉ radiale, ⚡ zigzag. | Neighbourhood depth (1 to 10) and graph layout menu: → LR, ↓ TB, ← RL, ◉ radial, ⚡ zigzag. |
-| 305 | ⬇ Export | ⬇ Export |
-| 306 | Enregistre le graphe en image PNG , JPEG ou SVG , ou ses données en CSV : ▦ Arbre par niveaux (une colonne par niveau et par relation) ou ⇄ Relations affichées (une ligne par arête). | Saves the graph as an image PNG , JPEG or SVG , or its data as CSV: ▦ Tree by levels (one column per level and per relation) or ⇄ Displayed relations (one row per edge). |
-| 307 | 🌳 Arborescence | 🌳 Tree |
-| 309 | 🗂 Vues | 🗂 Views |
-| 311 | ⚙ Filtres | ⚙ Filters |
-| 313 | 🕸 Graphe | 🕸 Graph |
-| 314 | Clic sur un nœud : sélection · double-clic : il devient le contexte · clic droit : menu (🔎 Détail à droite, contexte, développer, réduire, masquer) · survol : ses voisins restent en évidence. | Click on a node: selection · double-click : it becomes the context · right-click : menu (🔎 Detail on the right, context, expand, collapse, hide) · hover : its neighbours stay highlighted. |
-| 315 | ◉ Légende | ◉ Legend |
-| 316 | ◀ Panneau | ◀ Panel |
-| 318 | 🃏 Cartes | 🃏 Cards |
+| 297 | 🗺 Relation Map | 🗺 Relation Map |
+| 297 | Graphe centré sur un élément de contexte : ses voisins sont affichés jusqu'à la profondeur choisie, selon les relations du modèle cochées (liaisons lues par le lecteur d'Arcature : contenance, typage, généralisation, satisfy, allocate…). | Graph centred on a context element : its neighbours are displayed up to the chosen depth, following the ticked relations of the model (links read by the Arcature reader: containment, typing, generalization, satisfy, allocate…). |
+| 297 | Graphe centré sur un élément de contexte : ses voisins sont affichés jusqu'à la profondeur choisie, selon les relations Capella cochées. | Graph centred on a context element : its neighbours are displayed up to the chosen depth, according to the checked Capella relations. |
+| 298 | #b-zi,#b-zo,#b-fit | (inchangé, hors _L) |
+| 298 | 🔍 Zoom | 🔍 Zoom |
+| 299 | ＋ / － zooment (Ctrl++ / Ctrl+-), ⊡ Fit ajuste le graphe à la fenêtre (Ctrl+W). La molette zoome aussi et le fond se déplace à la souris. | ＋ / － zoom (Ctrl++ / Ctrl+-), ⊡ Fit fits the graph to the window (Ctrl+W). The mouse wheel also zooms and the background can be dragged with the mouse. |
+| 300 | ↕ Ouvrir / fermer tout | ↕ Open / close all |
+| 301 | Déplie ou replie tous les nœuds du graphe d'un coup. | Expands or collapses all the graph nodes in one go. |
+| 302 | #b-num,#b-leg,#b-rln,#b-cut,#b-single,#b-compact | (inchangé, hors _L) |
+| 302 | 👁 Affichage | 👁 Display |
+| 303 | # Nums numérote les relations, ◉ Légende affiche la légende, ⌁ Relations écrit le nom des relations sur les arêtes, ✂ Noms coupe les noms longs, ⊙ Unique ne déploie chaque élément qu'une fois (autres occurrences grisées ↺), ⬡ Compact réduit les nœuds. | # Nums numbers the relations, ◉ Legend shows the legend, ⌁ Relations writes the relation names on the edges, ✂ Names cuts long names, ⊙ Single expands each element only once (other occurrences greyed out ↺), ⬡ Compact shrinks the nodes. |
+| 304 | #rm-tb-depth,#b-lay-wrap | (inchangé, hors _L) |
+| 304 | 📐 Profondeur & disposition | 📐 Depth & layout |
+| 305 | Profondeur de voisinage (1 à 10) et menu de disposition du graphe : → LR, ↓ TB, ← RL, ◉ radiale, ⚡ zigzag. | Neighbourhood depth (1 to 10) and graph layout menu: → LR, ↓ TB, ← RL, ◉ radial, ⚡ zigzag. |
+| 306 | ⬇ Export | ⬇ Export |
+| 307 | Enregistre le graphe en image PNG , JPEG ou SVG , ou ses données en CSV : ▦ Arbre par niveaux (une colonne par niveau et par relation) ou ⇄ Relations affichées (une ligne par arête). | Saves the graph as an image PNG , JPEG or SVG , or its data as CSV: ▦ Tree by levels (one column per level and per relation) or ⇄ Displayed relations (one row per edge). |
+| 308 | 🌳 Arborescence | 🌳 Tree |
+| 310 | 🗂 Vues | 🗂 Views |
+| 312 | ⚙ Filtres | ⚙ Filters |
+| 314 | 🕸 Graphe | 🕸 Graph |
+| 315 | Clic sur un nœud : sélection · double-clic : il devient le contexte · clic droit : menu (🔎 Détail à droite, contexte, développer, réduire, masquer) · survol : ses voisins restent en évidence. | Click on a node: selection · double-click : it becomes the context · right-click : menu (🔎 Detail on the right, context, expand, collapse, hide) · hover : its neighbours stay highlighted. |
+| 316 | ◉ Légende | ◉ Legend |
+| 317 | ◀ Panneau | ◀ Panel |
 | 319 | 🃏 Cartes | 🃏 Cards |
-| 320 | Une carte par élément, regroupées par famille : type, nom et identifiant. Clic sur une carte : panneau de détail (propriétés, relations, liens). | One card per element, grouped by family: type, name and identifier. Click on a card: detail panel (properties, relations, links). |
-| 320 | Une carte par élément, regroupées par couche : type, nom et identifiant. Clic sur une carte : panneau de détail (propriétés, relations, liens). | One card per element, grouped by layer: type, name and identifier. Click on a card: detail panel (properties, relations, links). |
-| 321 | 🌳 Arborescence | 🌳 Tree |
-| 322 | 🌳 Commandes | 🌳 Commands |
-| 323 | 🌳 Arborescence | 🌳 Tree |
-| 324 | ▤ Tableau | ▤ Table |
-| 325 | 🏷 Types de l'onglet | 🏷 Tab types |
-| 325 | Types d'éléments listés dans le tableau, propres à l'onglet affiché (indépendants des autres vues et des autres onglets). Un nouvel onglet n'a aucun type coché. | Element types listed in the table, specific to the displayed tab (independent of the other views and tabs). A new tab has no type checked. |
-| 327 | 🗂 Onglets | 🗂 Tabs |
-| 328 | 🧰 Commandes du tableau | 🧰 Table commands |
-| 330 | ↕ En-têtes | ↕ Headers |
-| 331 | 📄 Pages | 📄 Pages |
-| 331 | Navigation de page en page et nombre de lignes par page. | Page-by-page navigation and number of rows per page. |
-| 332 | ▦ Matrice | ▦ Matrix |
+| 320 | 🃏 Cartes | 🃏 Cards |
+| 321 | Une carte par élément, regroupées par famille : type, nom et identifiant. Clic sur une carte : panneau de détail (propriétés, relations, liens). | One card per element, grouped by family: type, name and identifier. Click on a card: detail panel (properties, relations, links). |
+| 321 | Une carte par élément, regroupées par couche : type, nom et identifiant. Clic sur une carte : panneau de détail (propriétés, relations, liens). | One card per element, grouped by layer: type, name and identifier. Click on a card: detail panel (properties, relations, links). |
+| 322 | 🌳 Arborescence | 🌳 Tree |
+| 323 | 🌳 Commandes | 🌳 Commands |
+| 324 | 🌳 Arborescence | 🌳 Tree |
+| 325 | ▤ Tableau | ▤ Table |
+| 326 | 🏷 Types de l'onglet | 🏷 Tab types |
+| 326 | Types d'éléments listés dans le tableau, propres à l'onglet affiché (indépendants des autres vues et des autres onglets). Un nouvel onglet n'a aucun type coché. | Element types listed in the table, specific to the displayed tab (independent of the other views and tabs). A new tab has no type checked. |
+| 328 | 🗂 Onglets | 🗂 Tabs |
+| 329 | 🧰 Commandes du tableau | 🧰 Table commands |
+| 331 | ↕ En-têtes | ↕ Headers |
+| 332 | 📄 Pages | 📄 Pages |
+| 332 | Navigation de page en page et nombre de lignes par page. | Page-by-page navigation and number of rows per page. |
 | 333 | ▦ Matrice | ▦ Matrix |
-| 333 | Éléments en lignes et en colonnes , reliés par les relations choisies : allocations, échanges, réalisations, exigences, liaisons SysML / UML, relations par chemin. Comme la Dependency Matrix de Catia Magic, en lecture seule. | Elements in rows and columns , linked by the chosen relations: allocations, exchanges, realizations, requirements, SysML / UML relationships, path relations. Like the Dependency Matrix of Catia Magic, read only. |
-| 334 | 🗂 Onglets et préréglages | 🗂 Tabs and presets |
-| 334 | Chaque onglet est une matrice, enregistrée avec la page. + copie l'onglet affiché, double-clic pour renommer. 📚 Préréglages : matrices toutes prêtes pour le format du modèle. 💾 / 📂 : définition .json d'un onglet. | Each tab is a matrix, saved with the page. + copies the tab shown, double-click to rename. 📚 Presets : ready-made matrices for the format of the model. 💾 / 📂 : .json definition of a tab. |
-| 335 | 🎯 Critères | 🎯 Criteria |
-| 335 | Pour les lignes et les colonnes : types, couches (ou familles) et 🎯 portée. ⇄ change d'axes. Critère : relations comptées (＋ Relations…, dont ✨ relation par chemin). Sens et Afficher (avec relations, tous, sans relation). ▾ Critères replie la zone. | For the rows and the columns : types, layers (or families) and 🎯 scope. ⇄ changes axes. Criterion : relations counted (＋ Relations…, including ✨ path relation). Direction and Show (with relations, all, without relations). ▾ Criteria collapses the area. |
-| 336 | 🧰 Affichage | 🧰 Display |
-| 336 | Grouper par propriétaire ou par couche (groupes repliables), ⇅ Tri , cellule en marques ou en nombre , taille, filtres. 🎨 Marques : couleur, forme et texte de chaque relation. Exports CSV / Excel et 📋 copie. | Group by owner or by layer (collapsible groups), ⇅ Sort , cell as marks or as count , size, filters. 🎨 Marks : colour, shape and text of each relation. CSV / Excel exports and 📋 copy. |
-| 337 | ▦ Grille | ▦ Grid |
-| 338 | 📊 Statut | 📊 Status |
-| 338 | Dimensions, liens, éléments sans relation masqués ( tout afficher , voir les lignes sans relation ) et éléments masqués à la main. | Size, links, elements without relations hidden ( show all , see the rows without relations ) and elements hidden by hand. |
-| 339 | 🏠 Accueil | 🏠 Home |
+| 334 | ▦ Matrice | ▦ Matrix |
+| 334 | Éléments en lignes et en colonnes , reliés par les relations choisies : allocations, échanges, réalisations, exigences, liaisons SysML / UML, relations par chemin. Comme la Dependency Matrix de Catia Magic, en lecture seule. | Elements in rows and columns , linked by the chosen relations: allocations, exchanges, realizations, requirements, SysML / UML relationships, path relations. Like the Dependency Matrix of Catia Magic, read only. |
+| 335 | 🗂 Onglets et préréglages | 🗂 Tabs and presets |
+| 335 | Chaque onglet est une matrice, enregistrée avec la page. + copie l'onglet affiché, double-clic pour renommer. 📚 Préréglages : matrices toutes prêtes pour le format du modèle. 💾 / 📂 : définition .json d'un onglet. | Each tab is a matrix, saved with the page. + copies the tab shown, double-click to rename. 📚 Presets : ready-made matrices for the format of the model. 💾 / 📂 : .json definition of a tab. |
+| 336 | 🎯 Critères | 🎯 Criteria |
+| 336 | Pour les lignes et les colonnes : types, couches (ou familles) et 🎯 portée. ⇄ change d'axes. Critère : relations comptées (＋ Relations…, dont ✨ relation par chemin). Sens et Afficher (avec relations, tous, sans relation). ▾ Critères replie la zone. | For the rows and the columns : types, layers (or families) and 🎯 scope. ⇄ changes axes. Criterion : relations counted (＋ Relations…, including ✨ path relation). Direction and Show (with relations, all, without relations). ▾ Criteria collapses the area. |
+| 337 | 🧰 Affichage | 🧰 Display |
+| 337 | Grouper par propriétaire ou par couche (groupes repliables), ⇅ Tri , cellule en marques ou en nombre , taille, filtres. 🎨 Marques : couleur, forme et texte de chaque relation. Exports CSV / Excel et 📋 copie. | Group by owner or by layer (collapsible groups), ⇅ Sort , cell as marks or as count , size, filters. 🎨 Marks : colour, shape and text of each relation. CSV / Excel exports and 📋 copy. |
+| 338 | ▦ Grille | ▦ Grid |
+| 339 | 📊 Statut | 📊 Status |
+| 339 | Dimensions, liens, éléments sans relation masqués ( tout afficher , voir les lignes sans relation ) et éléments masqués à la main. | Size, links, elements without relations hidden ( show all , see the rows without relations ) and elements hidden by hand. |
 | 340 | 🏠 Accueil | 🏠 Home |
-| 340 | La page d'accueil du projet, ouverte au chargement d'un modèle ou d'un projet. Tout ce qui y est saisi est enregistré dans la page (💾). | The project home page, opened when a model or a project is loaded. Everything entered there is saved in the page (💾). |
-| 341 | #cap-view-home .hm-bar .tb-grp | (inchangé, hors _L) |
-| 341 | 🗂 Deux espaces | 🗂 Two spaces |
-| 341 | 🏠 Accueil : 🏠 Projet (informations). 💬 Revue & documents (menu du même nom) : ☑ Check-lists & plans de revue, 📑 Faire relire, 📘 Rapports automatiques. | 🏠 Home : 🏠 Project (information). 💬 Review & documents (menu of the same name): ☑ Checklists & review plans, 📑 Send for review, 📘 Automatic reports. |
-| 342 | #cap-view-home .hm-head | (inchangé, hors _L) |
-| 342 | 🔷 En-tête du projet | 🔷 Project header |
-| 342 | Le format et l'outil d'origine du modèle, son nombre d'éléments et 🔄 Mettre à jour…, puis les fichiers du projet : le modèle, ses diagrammes (ou vues calculées : 🔲 Ouvrir), la validation ou la lecture (diagnostics : Voir) et le contenu par famille (structure, comportement, exigences, organisation). En bas, les vues sans données dans ce modèle. | The format and original tool of the model, its number of elements and 🔄 Update…, then the project files : the model, its diagrams (or computed views: 🔲 Open), the validation or reading (diagnostics: See) and the content by family (structure, behaviour, requirements, organisation). At the bottom, the views without data in this model. |
-| 342 | Le modèle et ses couches, puis l'état des diagrammes (.aird chargé, ou « Ajouter… ») et des bibliothèques : un clic sur la pastille déplie leur état (chargée, fichier absent, cibles absentes, jamais utilisée) avec « Charger le fichier… ». En bas, les vues sans données dans ce modèle. | The model and its layers, then the status of the diagrams (.aird loaded, or “Add…”) and of the libraries : a click on the pill expands their status (loaded, file missing, missing targets, never used) with “Load the file…”. At the bottom, the views without data in this model. |
-| 343 | #cap-view-home .hm-taches | (inchangé, hors _L) |
-| 343 | 🚀 Que voulez-vous faire ? | 🚀 What do you want to do? |
-| 343 | Six tâches courantes, chacune ouvre la bonne vue : parcourir les diagrammes, vérifier la qualité, préparer une revue, comparer deux versions, sortir un tableau Excel, produire un document. ✕ masque la section (⚙ Disposer les cartes pour la réafficher). | Six common tasks, each opens the right view: browse the diagrams, check quality, prepare a review, compare two versions, export an Excel table, produce a document. ✕ hides the section (⚙ Arrange the cards to show it again). |
-| 344 | ⚙ Disposer les cartes | ⚙ Arrange the cards |
-| 344 | Réorganisez la page comme un tableau de bord : glissez une carte par ⠿ sur une autre, ⇔ change sa largeur, ✕ la masque (＋ pour la réafficher), ↺ revient à la disposition par défaut. | Rearrange the page like a dashboard: drag a card by ⠿ onto another, ⇔ changes its width, ✕ hides it (＋ to show it again), ↺ restores the default layout. |
-| 345 | 📝 Fiche projet | 📝 Project sheet |
-| 345 | Objet, phase, version, responsable, équipe, notes : à remplir librement. | Purpose, phase, version, owner, team, notes: fill in freely. |
-| 346 | ☑ Raccourcis | ☑ Shortcuts |
-| 347 | 🔷 Projet | 🔷 Project |
-| 347 | Fichiers, format et outil d'origine, diagrammes du fichier (ou vues calculées), nombre d'éléments, dernière mise à jour du modèle (🔄 : en charger une). | Files, format and original tool, diagrams of the file (or computed views), number of elements, last update of the model (🔄: load one). |
-| 348 | 💬 Revue & documents | 💬 Review & documents |
+| 341 | 🏠 Accueil | 🏠 Home |
+| 341 | La page d'accueil du projet, ouverte au chargement d'un modèle ou d'un projet. Tout ce qui y est saisi est enregistré dans la page (💾). | The project home page, opened when a model or a project is loaded. Everything entered there is saved in the page (💾). |
+| 342 | #cap-view-home .hm-bar .tb-grp | (inchangé, hors _L) |
+| 342 | 🗂 Deux espaces | 🗂 Two spaces |
+| 342 | 🏠 Accueil : 🏠 Projet (informations). 💬 Revue & documents (menu du même nom) : ☑ Check-lists & plans de revue, 📑 Faire relire, 📘 Rapports automatiques. | 🏠 Home : 🏠 Project (information). 💬 Review & documents (menu of the same name): ☑ Checklists & review plans, 📑 Send for review, 📘 Automatic reports. |
+| 343 | #cap-view-home .hm-head | (inchangé, hors _L) |
+| 343 | 🔷 En-tête du projet | 🔷 Project header |
+| 343 | Le format et l'outil d'origine du modèle, son nombre d'éléments et 🔄 Mettre à jour…, puis les fichiers du projet : le modèle, ses diagrammes (ou vues calculées : 🔲 Ouvrir), la validation ou la lecture (diagnostics : Voir) et le contenu par famille (structure, comportement, exigences, organisation). En bas, les vues sans données dans ce modèle. | The format and original tool of the model, its number of elements and 🔄 Update…, then the project files : the model, its diagrams (or computed views: 🔲 Open), the validation or reading (diagnostics: See) and the content by family (structure, behaviour, requirements, organisation). At the bottom, the views without data in this model. |
+| 343 | Le modèle et ses couches, puis l'état des diagrammes (.aird chargé, ou « Ajouter… ») et des bibliothèques : un clic sur la pastille déplie leur état (chargée, fichier absent, cibles absentes, jamais utilisée) avec « Charger le fichier… ». En bas, les vues sans données dans ce modèle. | The model and its layers, then the status of the diagrams (.aird loaded, or “Add…”) and of the libraries : a click on the pill expands their status (loaded, file missing, missing targets, never used) with “Load the file…”. At the bottom, the views without data in this model. |
+| 344 | #cap-view-home .hm-taches | (inchangé, hors _L) |
+| 344 | 🚀 Que voulez-vous faire ? | 🚀 What do you want to do? |
+| 344 | Six tâches courantes, chacune ouvre la bonne vue : parcourir les diagrammes, vérifier la qualité, préparer une revue, comparer deux versions, sortir un tableau Excel, produire un document. ✕ masque la section (⚙ Disposer les cartes pour la réafficher). | Six common tasks, each opens the right view: browse the diagrams, check quality, prepare a review, compare two versions, export an Excel table, produce a document. ✕ hides the section (⚙ Arrange the cards to show it again). |
+| 345 | ⚙ Disposer les cartes | ⚙ Arrange the cards |
+| 345 | Réorganisez la page comme un tableau de bord : glissez une carte par ⠿ sur une autre, ⇔ change sa largeur, ✕ la masque (＋ pour la réafficher), ↺ revient à la disposition par défaut. | Rearrange the page like a dashboard: drag a card by ⠿ onto another, ⇔ changes its width, ✕ hides it (＋ to show it again), ↺ restores the default layout. |
+| 346 | 📝 Fiche projet | 📝 Project sheet |
+| 346 | Objet, phase, version, responsable, équipe, notes : à remplir librement. | Purpose, phase, version, owner, team, notes: fill in freely. |
+| 347 | ☑ Raccourcis | ☑ Shortcuts |
+| 348 | 🔷 Projet | 🔷 Project |
+| 348 | Fichiers, format et outil d'origine, diagrammes du fichier (ou vues calculées), nombre d'éléments, dernière mise à jour du modèle (🔄 : en charger une). | Files, format and original tool, diagrams of the file (or computed views), number of elements, last update of the model (🔄: load one). |
 | 349 | 💬 Revue & documents | 💬 Review & documents |
 | 350 | 💬 Revue & documents | 💬 Review & documents |
-| 350 | L'espace des documents du projet : check-lists et plans de revue , dossiers à faire relire (export HTML à commenter ou Word, réimport des retours) et rapports automatiques produits à partir du modèle. Tout est enregistré dans la page (💾) et suit un changement de langue. | The space for the project's documents: checklists and review plans , review packages (HTML export to comment or Word, re-import of feedback) and automatic reports produced from the model. Everything is saved in the page (💾) and follows a language switch. |
-| 351 | #cap-view-home .hm-bar .tb-grp | (inchangé, hors _L) |
-| 351 | 🗂 Trois onglets | 🗂 Three tabs |
-| 351 | ☑ Check-lists & plans de revue · 📑 Faire relire · 📘 Rapports automatiques (le nombre de documents de chaque onglet est affiché). | ☑ Checklists & review plans · 📑 Send for review · 📘 Automatic reports (the number of documents in each tab is shown). |
-| 352 | 💬 Commentaires | 💬 Comments |
-| 352 | Ouvre le panneau 💬 Revue : commentaires sur les éléments et les diagrammes, vérification après une mise à jour, rapport, envoi aux relecteurs. Il a sa propre visite (🎓 dans le panneau). | Opens the 💬 Review panel: comments on elements and diagrams, check after an update, report, sending to reviewers. It has its own tour (🎓 in the panel). |
-| 353 | #cap-view-home .hm-docs-new | (inchangé, hors _L) |
-| 353 | ✚ Créer une check-list | ✚ Create a checklist |
-| 353 | ☑ Nouvelle check-list : choisissez « Vide (à remplir) » (curseur sur le premier point, Entrée : point suivant) ou un modèle ARCADIA (qualité, revues OA, SA, LA, PA). 📋 Nouveau plan de revue : vide ou avec les points de contrôle d'un modèle. 📂 Importer… : une check-list enregistrée en .json. Le ⧉ à droite de chaque check-list l'ouvre dans une fenêtre séparée. | ☑ New checklist : choose “Empty (to fill in)” (cursor on the first item, Enter: next item) or an ARCADIA template (quality, OA, SA, LA, PA reviews). 📋 New review plan : empty or with the checkpoints of a template. 📂 Import… : a checklist saved as .json. The ⧉ on the right of each checklist opens it in a separate window. |
-| 354 | #cap-view-home .hm-pal | (inchangé, hors _L) |
-| 354 | 📎 Glisser-déposer | 📎 Drag and drop |
-| 354 | Cherchez un diagramme ou un élément et glissez-le sur un point (il y est lié), sur « ✚ Point » (nouveau point lié), ou sur le périmètre d'un plan. Clic : l'ouvrir. | Search for a diagram or an element and drag it onto an item (it is linked to it), onto “✚ Item” (new linked item), or onto the scope of a plan. Click: open it. |
-| 355 | ⧉ Fenêtre séparée | ⧉ Separate window |
-| 355 | Ouvre le document dans sa propre fenêtre (autre écran) : vous pouvez alors y glisser des diagrammes depuis 🔲 Diagrammes et des éléments depuis les vues. | Opens the document in its own window (other screen): you can then drop diagrams from 🔲 Diagrams and elements from the views into it. |
-| 356 | 📑 Faire relire | 📑 Send for review |
-| 357 | #cap-view-home .dos-ed | (inchangé, hors _L) |
-| 357 | 🔗 Texte du modèle et clic droit | 🔗 Model text and right-click |
-| 357 | Un texte libre peut devenir le nom ou la description d'un élément ou d'un diagramme, suivi(e) quand le modèle change : glissez l'élément sur l'en-tête du bloc ou 🔗 Lier… . Le clic droit sur un bloc ou un chapitre propose toutes les commandes (transformer, figer, insérer, convertir, dupliquer, déplacer…). | A free text can become the name or description of an element or diagram, updated when the model changes: drag the element onto the block header or 🔗 Link… . The right-click on a block or chapter offers all the commands (turn into, freeze, insert, convert, duplicate, move…). |
-| 358 | 📤 Exports | 📤 Exports |
-| 359 | #cap-view-home .dos-rap | (inchangé, hors _L) |
-| 359 | 📘 Rapports automatiques | 📘 Automatic reports |
-| 359 | Sur un modèle SysML ou UML : 🧩 Plans SysML à adapter (SSS et SSDD MIL-STD-498 livrés comme modèles réglables). Les plans Capella restent proposés mais se remplissent peu sur ce format. 🧩 Mes modèles : vos propres plans, réutilisables (.json). | In a SysML or UML model: 🧩 SysML outlines to adapt (MIL-STD-498 SSS and SSDD delivered as adjustable templates). The Capella outlines are still offered but are sparsely filled for this format. 🧩 My templates : your own outlines, reusable (.json). |
-| 361 | 🧩 SSS / SSDD à adapter | 🧩 SSS / SSDD to adapt |
-| 361 | Crée un modèle SSS ou SSDD pour SysML : numérotation du DID, boucles et contenus déjà réglés, sujet = système le plus probable. Adaptez-le, puis ▶ Générer le rapport . | Creates an SSS or SSDD template for SysML: DID numbering, loops and contents already set, subject = most likely system. Adapt it, then ▶ Generate the report . |
-| 362 | ✚ Nouveau modèle | ✚ New template |
-| 362 | Un modèle de rapport prérempli d'un exemple à adapter (exemple SysML sur un modèle SysML), ou un modèle importé (.json). | A report template pre-filled with an example to adapt (SysML example in a SysML model), or an imported template (.json). |
-| 363 | #cap-view-home .dos-sujet | (inchangé, hors _L) |
-| 363 | 🎯 Sujet du rapport | 🎯 Report subject |
-| 364 | #cap-view-home .dos-boucle | (inchangé, hors _L) |
-| 364 | 🔁 Boucle « pour chaque » | 🔁 “For each” loop |
-| 365 | k":"auto | (inchangé, hors _L) |
-| 365 | #cap-view-home .dos-k-auto | (inchangé, hors _L) |
-| 365 | ⚙ Contenu automatique | ⚙ Automatic content |
-| 365 | Calculé pour l'élément de la boucle : description, diagrammes, propriétés et valeurs, liens, ports / pins / paramètres (entrées, sorties), connexions, information par chemin, tableau d'éléments. | Computed for the loop element: description, diagrams, properties and values, links, ports / pins / parameters (inputs, outputs), connections, information by path, element table. |
-| 366 | type":"gen | (inchangé, hors _L) |
-| 366 | #cap-view-home .dos-rap-cols | (inchangé, hors _L) |
-| 366 | ▤ Colonnes au choix | ▤ Chosen columns |
-| 366 | Un tableau d'éléments « au choix » reçoit ses colonnes : type, description, typé par, identifiant, texte, attribut , relation (satisfaite par, vérifiée par…), ✨ chemin . | A “custom” element table takes its columns: type, description, typed by, identifier, text, attribute , relation (satisfied by, verified by…), ✨ path . |
-| 367 | ▶ Générer le rapport | ▶ Generate the report |
-| 368 | ✅ À vous | ✅ Your turn |
-| 368 | Cette visite se relance par 🎓 dans la barre de 💬 Revue & documents, ou par ❓ Aide ▾ → 🎯 Visite de cette vue . Un tutoriel pas à pas est dans l'aide (📘 Rapports). | This tour can be restarted with 🎓 in the 💬 Review & documents bar, or through ❓ Help ▾ → 🎯 Tour of this view . A step-by-step tutorial is in the help (📘 Reports). |
-| 369 | ⚡ Chaînes | ⚡ Chains |
+| 351 | 💬 Revue & documents | 💬 Review & documents |
+| 351 | L'espace des documents du projet : check-lists et plans de revue , dossiers à faire relire (export HTML à commenter ou Word, réimport des retours) et rapports automatiques produits à partir du modèle. Tout est enregistré dans la page (💾) et suit un changement de langue. | The space for the project's documents: checklists and review plans , review packages (HTML export to comment or Word, re-import of feedback) and automatic reports produced from the model. Everything is saved in the page (💾) and follows a language switch. |
+| 352 | #cap-view-home .hm-bar .tb-grp | (inchangé, hors _L) |
+| 352 | 🗂 Trois onglets | 🗂 Three tabs |
+| 352 | ☑ Check-lists & plans de revue · 📑 Faire relire · 📘 Rapports automatiques (le nombre de documents de chaque onglet est affiché). | ☑ Checklists & review plans · 📑 Send for review · 📘 Automatic reports (the number of documents in each tab is shown). |
+| 353 | 💬 Commentaires | 💬 Comments |
+| 353 | Ouvre le panneau 💬 Revue : commentaires sur les éléments et les diagrammes, vérification après une mise à jour, rapport, envoi aux relecteurs. Il a sa propre visite (🎓 dans le panneau). | Opens the 💬 Review panel: comments on elements and diagrams, check after an update, report, sending to reviewers. It has its own tour (🎓 in the panel). |
+| 354 | #cap-view-home .hm-docs-new | (inchangé, hors _L) |
+| 354 | ✚ Créer une check-list | ✚ Create a checklist |
+| 354 | ☑ Nouvelle check-list : choisissez « Vide (à remplir) » (curseur sur le premier point, Entrée : point suivant) ou un modèle ARCADIA (qualité, revues OA, SA, LA, PA). 📋 Nouveau plan de revue : vide ou avec les points de contrôle d'un modèle. 📂 Importer… : une check-list enregistrée en .json. Le ⧉ à droite de chaque check-list l'ouvre dans une fenêtre séparée. | ☑ New checklist : choose “Empty (to fill in)” (cursor on the first item, Enter: next item) or an ARCADIA template (quality, OA, SA, LA, PA reviews). 📋 New review plan : empty or with the checkpoints of a template. 📂 Import… : a checklist saved as .json. The ⧉ on the right of each checklist opens it in a separate window. |
+| 355 | #cap-view-home .hm-pal | (inchangé, hors _L) |
+| 355 | 📎 Glisser-déposer | 📎 Drag and drop |
+| 355 | Cherchez un diagramme ou un élément et glissez-le sur un point (il y est lié), sur « ✚ Point » (nouveau point lié), ou sur le périmètre d'un plan. Clic : l'ouvrir. | Search for a diagram or an element and drag it onto an item (it is linked to it), onto “✚ Item” (new linked item), or onto the scope of a plan. Click: open it. |
+| 356 | ⧉ Fenêtre séparée | ⧉ Separate window |
+| 356 | Ouvre le document dans sa propre fenêtre (autre écran) : vous pouvez alors y glisser des diagrammes depuis 🔲 Diagrammes et des éléments depuis les vues. | Opens the document in its own window (other screen): you can then drop diagrams from 🔲 Diagrams and elements from the views into it. |
+| 357 | 📑 Faire relire | 📑 Send for review |
+| 358 | #cap-view-home .dos-ed | (inchangé, hors _L) |
+| 358 | 🔗 Texte du modèle et clic droit | 🔗 Model text and right-click |
+| 358 | Un texte libre peut devenir le nom ou la description d'un élément ou d'un diagramme, suivi(e) quand le modèle change : glissez l'élément sur l'en-tête du bloc ou 🔗 Lier… . Le clic droit sur un bloc ou un chapitre propose toutes les commandes (transformer, figer, insérer, convertir, dupliquer, déplacer…). | A free text can become the name or description of an element or diagram, updated when the model changes: drag the element onto the block header or 🔗 Link… . The right-click on a block or chapter offers all the commands (turn into, freeze, insert, convert, duplicate, move…). |
+| 359 | 📤 Exports | 📤 Exports |
+| 360 | #cap-view-home .dos-rap | (inchangé, hors _L) |
+| 360 | 📘 Rapports automatiques | 📘 Automatic reports |
+| 360 | Sur un modèle SysML ou UML : 🧩 Plans SysML à adapter (SSS et SSDD MIL-STD-498 livrés comme modèles réglables). Les plans Capella restent proposés mais se remplissent peu sur ce format. 🧩 Mes modèles : vos propres plans, réutilisables (.json). | In a SysML or UML model: 🧩 SysML outlines to adapt (MIL-STD-498 SSS and SSDD delivered as adjustable templates). The Capella outlines are still offered but are sparsely filled for this format. 🧩 My templates : your own outlines, reusable (.json). |
+| 362 | 🧩 SSS / SSDD à adapter | 🧩 SSS / SSDD to adapt |
+| 362 | Crée un modèle SSS ou SSDD pour SysML : numérotation du DID, boucles et contenus déjà réglés, sujet = système le plus probable. Adaptez-le, puis ▶ Générer le rapport . | Creates an SSS or SSDD template for SysML: DID numbering, loops and contents already set, subject = most likely system. Adapt it, then ▶ Generate the report . |
+| 363 | ✚ Nouveau modèle | ✚ New template |
+| 363 | Un modèle de rapport prérempli d'un exemple à adapter (exemple SysML sur un modèle SysML), ou un modèle importé (.json). | A report template pre-filled with an example to adapt (SysML example in a SysML model), or an imported template (.json). |
+| 364 | #cap-view-home .dos-sujet | (inchangé, hors _L) |
+| 364 | 🎯 Sujet du rapport | 🎯 Report subject |
+| 365 | #cap-view-home .dos-boucle | (inchangé, hors _L) |
+| 365 | 🔁 Boucle « pour chaque » | 🔁 “For each” loop |
+| 366 | k":"auto | (inchangé, hors _L) |
+| 366 | #cap-view-home .dos-k-auto | (inchangé, hors _L) |
+| 366 | ⚙ Contenu automatique | ⚙ Automatic content |
+| 366 | Calculé pour l'élément de la boucle : description, diagrammes, propriétés et valeurs, liens, ports / pins / paramètres (entrées, sorties), connexions, information par chemin, tableau d'éléments. | Computed for the loop element: description, diagrams, properties and values, links, ports / pins / parameters (inputs, outputs), connections, information by path, element table. |
+| 367 | type":"gen | (inchangé, hors _L) |
+| 367 | #cap-view-home .dos-rap-cols | (inchangé, hors _L) |
+| 367 | ▤ Colonnes au choix | ▤ Chosen columns |
+| 367 | Un tableau d'éléments « au choix » reçoit ses colonnes : type, description, typé par, identifiant, texte, attribut , relation (satisfaite par, vérifiée par…), ✨ chemin . | A “custom” element table takes its columns: type, description, typed by, identifier, text, attribute , relation (satisfied by, verified by…), ✨ path . |
+| 368 | ▶ Générer le rapport | ▶ Generate the report |
+| 369 | ✅ À vous | ✅ Your turn |
+| 369 | Cette visite se relance par 🎓 dans la barre de 💬 Revue & documents, ou par ❓ Aide ▾ → 🎯 Visite de cette vue . Un tutoriel pas à pas est dans l'aide (📘 Rapports). | This tour can be restarted with 🎓 in the 💬 Review & documents bar, or through ❓ Help ▾ → 🎯 Tour of this view . A step-by-step tutorial is in the help (📘 Reports). |
 | 370 | ⚡ Chaînes | ⚡ Chains |
-| 370 | Chaînes fonctionnelles, processus opérationnels et chemins physiques du modèle, avec leur diagramme. | Functional chains, operational processes and physical paths of the model, with their diagram. |
-| 371 | #cap-view-chains [data-cf] | (inchangé, hors _L) |
-| 371 | 🏷 Type | 🏷 Type |
-| 371 | Filtre par type de chaîne. | Filters by chain type. |
-| 372 | #cap-view-chains [data-sv] | (inchangé, hors _L) |
-| 372 | 🖼 Présentation | 🖼 Layout |
-| 372 | ▦ Diagrammes : une carte dépliable par chaîne · 🗺 Vue Relation Map : graphe interactif. | ▦ Diagrams : one expandable card per chain · 🗺 Relation Map view : interactive graph. |
-| 373 | #cap-view-chains [data-lf] | (inchangé, hors _L) |
-| 373 | 🧱 Catégorie | 🧱 Category |
-| 373 | Filtre par couche ARCADIA. | Filters by ARCADIA layer. |
-| 374 | #cap-view-chains [data-ef],#cap-view-chains [data-chsort] | (inchangé, hors _L) |
-| 374 | 🧹 Contenu et tri | 🧹 Content and sort |
-| 374 | Vides : chaînes sans fonction ni échange (à compléter). Tri par nombre de fonctions. | Empty : chains with no function or exchange (to be completed). Sort by number of functions. |
-| 375 | #cap-view-chains .cap-chain-legend | (inchangé, hors _L) |
-| 375 | 🎨 Légende | 🎨 Legend |
-| 375 | Couleur des fonctions selon qu'elles sont portées par un acteur, par le système ou non allouées. | Function colour depending on whether they are carried by an actor, by the system or unallocated. |
-| 376 | #cap-view-chains .cap-chx-bar | (inchangé, hors _L) |
-| 376 | 📦 Export groupé | 📦 Batch export |
-| 376 | Cochez des chaînes (aucune = toutes celles affichées) puis exportez-les en PDF , ZIP d'images PNG ou SVG, ou HTML . Les cases règlent le contenu (cadre, cartouche, légende, description, annexes), la liste ×1 / ×2 la résolution. | Check chains (none = all those displayed) then export them as PDF , ZIP of PNG or SVG images, or HTML . The boxes set the content (frame, title block, legend, description, appendices), the ×1 / ×2 list the resolution. |
-| 377 | #cap-view-chains .cap-chain-card | (inchangé, hors _L) |
-| 377 | ▦ Carte de chaîne | ▦ Chain card |
-| 377 | Clic pour déplier le diagramme : fonctions, échanges, entrées / sorties. Le bouton 🗺 l'ouvre dans la Relation Map. | Click to expand the diagram: functions, exchanges, inputs / outputs. The 🗺 button opens it in the Relation Map. |
-| 378 | 🗺 Vue Relation Map | 🗺 Relation Map view |
-| 378 | Graphe interactif de la chaîne choisie : dispositions, zoom et export. | Interactive graph of the chosen chain: layouts, zoom and export. |
-| 379 | ℹ Infos | ℹ Info |
-| 379 | Informations de la chaîne affichée dans le panneau de détail : type, couche, fonctions, échanges, entrées et sorties, porteurs, capacités qui l'impliquent, description. Aussi dans chaque carte dépliée. | Information of the displayed chain in the detail panel: type, layer, functions, exchanges, inputs and outputs, owners, capabilities involving it, description. Also in each unfolded card. |
-| 380 | 🔀 Behavior Exchange | 🔀 Behavior Exchange |
-| 381 | #cap-view-compex .cap-mx-hint | (inchangé, hors _L) |
-| 381 | 🎯 Périmètre | 🎯 Scope |
-| 381 | Component Exchanges de la couche PA entre Physical Components Behavior, ou entre un Behavior et un acteur (nœud) qui lui est relié. Les échanges SA et LA sont dans 🧱 System / Logical Component, les liens entre nœuds dans 🔌 Physical Link. | PA-layer Component Exchanges between Physical Components Behavior, or between a Behavior and an actor (node) connected to it. SA and LA exchanges are in 🧱 System / Logical Component, links between nodes in 🔌 Physical Link. |
-| 382 | #cap-view-compex .phl-toggle-btn | (inchangé, hors _L) |
-| 382 | 🖼 Présentation | 🖼 Layout |
-| 383 | #cap-view-compex .ana-ak | (inchangé, hors _L) |
-| 383 | 🧩 Nature (Vue Blocs) | 🧩 Nature (Blocks view) |
-| 384 | #cap-view-compex #cb-main | (inchangé, hors _L) |
-| 384 | ◧ Blocs | ◧ Blocks |
-| 385 | 🔢 Compteur | 🔢 Counter |
-| 385 | Échanges affichés après filtres / total. | Exchanges shown after filters / total. |
-| 386 | #cap-view-compex .cex-dir-btn,#cex-kind-sel | (inchangé, hors _L) |
-| 386 | ⇄ Sens et nature | ⇄ Direction and nature |
-| 386 | Filtre par sens de l'échange (orienté, inversé, bidirectionnel) et par nature (FLOW…). | Filters by exchange direction (oriented, reversed, bidirectional) and by nature (FLOW…). |
-| 387 | #cex-node-input,#cex-name-input | (inchangé, hors _L) |
-| 387 | 🔍 Filtres | 🔍 Filters |
-| 387 | Par composant, ou par nom d'échange, d'échange fonctionnel ou d'Exchange Item. | By component, or by name of exchange, functional exchange or Exchange Item. |
-| 388 | #cex-exp-csv,#cex-exp-html,#cex-exp-html-all | (inchangé, hors _L) |
-| 388 | ⬇ Exports | ⬇ Exports |
-| 388 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. | CSV of the view, HTML report of the view, or standalone HTML report with all the views. |
-| 389 | 📋 Résultat | 📋 Result |
-| 389 | Clic sur un composant ou un échange pour ouvrir son détail. | Click a component or an exchange to open its details. |
-| 390 | 🧱 System Component | 🧱 System Component |
-| 391 | #cap-view-csys .phl-toggle-btn | (inchangé, hors _L) |
-| 391 | 🖼 Présentation | 🖼 Layout |
-| 392 | #cap-view-csys #cb-counter | (inchangé, hors _L) |
-| 392 | 🔢 Compteur | 🔢 Counter |
-| 392 | Composants (ou échanges) affichés après filtres / total (SA uniquement). Les listes sont paginées par 100. | Components (or exchanges) shown after filters / total (SA only). Lists are paged by 100. |
-| 393 | #cap-view-csys .ana-ak | (inchangé, hors _L) |
-| 393 | 🧩 Nature | 🧩 Nature |
-| 393 | Système ou acteurs (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants. | System or actors (double-click: only these), or one component and all its sub-components. |
-| 394 | #cap-view-csys #cb-csv,#cap-view-csys #cb-html,#cap-view-csys #cb-html-all | (inchangé, hors _L) |
-| 394 | ⬇ Exports | ⬇ Exports |
-| 394 | CSV (ports ou échanges), rapport HTML de la vue ou de toutes les vues. | CSV (ports or exchanges), HTML report of the view or of all views. |
-| 395 | #cap-view-csys #cb-main | (inchangé, hors _L) |
-| 395 | 📋 Résultat | 📋 Result |
-| 396 | 🧱 Logical Component | 🧱 Logical Component |
-| 397 | #cap-view-cblk .phl-toggle-btn | (inchangé, hors _L) |
-| 397 | 🖼 Présentation | 🖼 Layout |
-| 398 | #cap-view-cblk #cb-counter | (inchangé, hors _L) |
-| 398 | 🔢 Compteur | 🔢 Counter |
-| 398 | Composants (ou échanges) affichés après filtres / total (LA uniquement). Les listes sont paginées par 100. | Components (or exchanges) shown after filters / total (LA only). Lists are paged by 100. |
-| 399 | #cap-view-cblk .ana-ak | (inchangé, hors _L) |
-| 399 | 🧩 Nature | 🧩 Nature |
-| 399 | Système ou acteurs (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants. | System or actors (double-click: only these), or one component and all its sub-components. |
-| 400 | #cap-view-cblk #cb-csv,#cap-view-cblk #cb-html,#cap-view-cblk #cb-html-all | (inchangé, hors _L) |
-| 400 | ⬇ Exports | ⬇ Exports |
-| 400 | CSV (ports ou échanges), rapport HTML de la vue ou de toutes les vues. | CSV (ports or exchanges), HTML report of the view or of all views. |
-| 401 | #cap-view-cblk #cb-main | (inchangé, hors _L) |
-| 401 | 📋 Résultat | 📋 Result |
-| 402 | ƒ⇆ Functional Exchange | ƒ⇆ Functional Exchange |
-| 403 | #cap-view-fex .phl-toggle-btn | (inchangé, hors _L) |
-| 403 | 🖼 Présentation | 🖼 Layout |
-| 404 | #cap-view-fex .ana-ak | (inchangé, hors _L) |
-| 404 | 🧩 Allocation | 🧩 Allocation |
-| 405 | 🔢 Compteur | 🔢 Counter |
-| 405 | Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 100. | Exchanges (or functions in Blocks view) shown after filters / total. Lists are paged by 100. |
-| 406 | #cap-view-fex .fex-layer-btn | (inchangé, hors _L) |
-| 406 | 🧱 Couche | 🧱 Layer |
-| 406 | Filtre par couche ARCADIA (OA, SA, LA, PA). | Filters by ARCADIA layer (OA, SA, LA, PA). |
-| 407 | #fex-fn-input,#fex-name-input | (inchangé, hors _L) |
-| 407 | 🔍 Filtres | 🔍 Filters |
-| 407 | Par fonction, ou par nom d'échange ou d'Exchange Item. | By function, or by exchange or Exchange Item name. |
-| 408 | #fex-exp-csv,#fex-exp-html,#fex-exp-html-all | (inchangé, hors _L) |
-| 408 | ⬇ Exports | ⬇ Exports |
-| 408 | CSV de la vue, rapport HTML de la vue (toutes les pages), ou rapport HTML autonome avec toutes les vues. | CSV of the view, HTML report of the view (all pages), or standalone HTML report with all the views. |
-| 409 | 📋 Résultat | 📋 Result |
-| 409 | Clic sur une fonction ou un échange pour ouvrir son détail. | Click a function or an exchange to open its details. |
-| 410 | 🟨 Operational Analysis | 🟨 Operational Analysis |
-| 411 | #cap-view-oav .phl-toggle-btn | (inchangé, hors _L) |
-| 411 | 🖼 Présentation | 🖼 Layout |
-| 412 | #cap-view-oav .ana-ak | (inchangé, hors _L) |
-| 412 | 🏢 Allocation | 🏢 Allocation |
-| 412 | Activités portées par une entité, par un acteur opérationnel ou non allouées (double-clic : uniquement celles-ci), ou par une entité ou un acteur précis. | Activities carried by an entity, by an operational actor or unallocated (double-click: only these), or by a specific entity or actor. |
-| 413 | #cap-view-oav #fex-fn-input,#cap-view-oav #fex-name-input | (inchangé, hors _L) |
-| 413 | 🔍 Filtres | 🔍 Filters |
-| 413 | Par activité, ou par nom d'interaction ou d'Exchange Item. | By activity, or by interaction or Exchange Item name. |
-| 414 | #cap-view-oav #fex-exp-csv,#cap-view-oav #fex-exp-html,#cap-view-oav #fex-exp-html-all | (inchangé, hors _L) |
-| 414 | ⬇ Exports | ⬇ Exports |
-| 414 | CSV des interactions, rapport HTML de la vue ou de toutes les vues. | CSV of the interactions, HTML report of the view or of all views. |
-| 415 | #cap-view-oav #fex-main | (inchangé, hors _L) |
-| 415 | 📋 Résultat | 📋 Result |
-| 415 | Clic sur une activité ou une interaction pour ouvrir son détail. | Click an activity or an interaction to open its details. |
-| 416 | 🔲 Diagrammes | 🔲 Diagrams |
+| 371 | ⚡ Chaînes | ⚡ Chains |
+| 371 | Chaînes fonctionnelles, processus opérationnels et chemins physiques du modèle, avec leur diagramme. | Functional chains, operational processes and physical paths of the model, with their diagram. |
+| 372 | #cap-view-chains [data-cf] | (inchangé, hors _L) |
+| 372 | 🏷 Type | 🏷 Type |
+| 372 | Filtre par type de chaîne. | Filters by chain type. |
+| 373 | #cap-view-chains [data-sv] | (inchangé, hors _L) |
+| 373 | 🖼 Présentation | 🖼 Layout |
+| 373 | ▦ Diagrammes : une carte dépliable par chaîne · 🗺 Vue Relation Map : graphe interactif. | ▦ Diagrams : one expandable card per chain · 🗺 Relation Map view : interactive graph. |
+| 374 | #cap-view-chains [data-lf] | (inchangé, hors _L) |
+| 374 | 🧱 Catégorie | 🧱 Category |
+| 374 | Filtre par couche ARCADIA. | Filters by ARCADIA layer. |
+| 375 | #cap-view-chains [data-ef],#cap-view-chains [data-chsort] | (inchangé, hors _L) |
+| 375 | 🧹 Contenu et tri | 🧹 Content and sort |
+| 375 | Vides : chaînes sans fonction ni échange (à compléter). Tri par nombre de fonctions. | Empty : chains with no function or exchange (to be completed). Sort by number of functions. |
+| 376 | #cap-view-chains .cap-chain-legend | (inchangé, hors _L) |
+| 376 | 🎨 Légende | 🎨 Legend |
+| 376 | Couleur des fonctions selon qu'elles sont portées par un acteur, par le système ou non allouées. | Function colour depending on whether they are carried by an actor, by the system or unallocated. |
+| 377 | #cap-view-chains .cap-chx-bar | (inchangé, hors _L) |
+| 377 | 📦 Export groupé | 📦 Batch export |
+| 377 | Cochez des chaînes (aucune = toutes celles affichées) puis exportez-les en PDF , ZIP d'images PNG ou SVG, ou HTML . Les cases règlent le contenu (cadre, cartouche, légende, description, annexes), la liste ×1 / ×2 la résolution. | Check chains (none = all those displayed) then export them as PDF , ZIP of PNG or SVG images, or HTML . The boxes set the content (frame, title block, legend, description, appendices), the ×1 / ×2 list the resolution. |
+| 378 | #cap-view-chains .cap-chain-card | (inchangé, hors _L) |
+| 378 | ▦ Carte de chaîne | ▦ Chain card |
+| 378 | Clic pour déplier le diagramme : fonctions, échanges, entrées / sorties. Le bouton 🗺 l'ouvre dans la Relation Map. | Click to expand the diagram: functions, exchanges, inputs / outputs. The 🗺 button opens it in the Relation Map. |
+| 379 | 🗺 Vue Relation Map | 🗺 Relation Map view |
+| 379 | Graphe interactif de la chaîne choisie : dispositions, zoom et export. | Interactive graph of the chosen chain: layouts, zoom and export. |
+| 380 | ℹ Infos | ℹ Info |
+| 380 | Informations de la chaîne affichée dans le panneau de détail : type, couche, fonctions, échanges, entrées et sorties, porteurs, capacités qui l'impliquent, description. Aussi dans chaque carte dépliée. | Information of the displayed chain in the detail panel: type, layer, functions, exchanges, inputs and outputs, owners, capabilities involving it, description. Also in each unfolded card. |
+| 381 | 🔀 Behavior Exchange | 🔀 Behavior Exchange |
+| 382 | #cap-view-compex .cap-mx-hint | (inchangé, hors _L) |
+| 382 | 🎯 Périmètre | 🎯 Scope |
+| 382 | Component Exchanges de la couche PA entre Physical Components Behavior, ou entre un Behavior et un acteur (nœud) qui lui est relié. Les échanges SA et LA sont dans 🧱 System / Logical Component, les liens entre nœuds dans 🔌 Physical Link. | PA-layer Component Exchanges between Physical Components Behavior, or between a Behavior and an actor (node) connected to it. SA and LA exchanges are in 🧱 System / Logical Component, links between nodes in 🔌 Physical Link. |
+| 383 | #cap-view-compex .phl-toggle-btn | (inchangé, hors _L) |
+| 383 | 🖼 Présentation | 🖼 Layout |
+| 384 | #cap-view-compex .ana-ak | (inchangé, hors _L) |
+| 384 | 🧩 Nature (Vue Blocs) | 🧩 Nature (Blocks view) |
+| 385 | #cap-view-compex #cb-main | (inchangé, hors _L) |
+| 385 | ◧ Blocs | ◧ Blocks |
+| 386 | 🔢 Compteur | 🔢 Counter |
+| 386 | Échanges affichés après filtres / total. | Exchanges shown after filters / total. |
+| 387 | #cap-view-compex .cex-dir-btn,#cex-kind-sel | (inchangé, hors _L) |
+| 387 | ⇄ Sens et nature | ⇄ Direction and nature |
+| 387 | Filtre par sens de l'échange (orienté, inversé, bidirectionnel) et par nature (FLOW…). | Filters by exchange direction (oriented, reversed, bidirectional) and by nature (FLOW…). |
+| 388 | #cex-node-input,#cex-name-input | (inchangé, hors _L) |
+| 388 | 🔍 Filtres | 🔍 Filters |
+| 388 | Par composant, ou par nom d'échange, d'échange fonctionnel ou d'Exchange Item. | By component, or by name of exchange, functional exchange or Exchange Item. |
+| 389 | #cex-exp-csv,#cex-exp-html,#cex-exp-html-all | (inchangé, hors _L) |
+| 389 | ⬇ Exports | ⬇ Exports |
+| 389 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. | CSV of the view, HTML report of the view, or standalone HTML report with all the views. |
+| 390 | 📋 Résultat | 📋 Result |
+| 390 | Clic sur un composant ou un échange pour ouvrir son détail. | Click a component or an exchange to open its details. |
+| 391 | 🧱 System Component | 🧱 System Component |
+| 392 | #cap-view-csys .phl-toggle-btn | (inchangé, hors _L) |
+| 392 | 🖼 Présentation | 🖼 Layout |
+| 393 | #cap-view-csys #cb-counter | (inchangé, hors _L) |
+| 393 | 🔢 Compteur | 🔢 Counter |
+| 393 | Composants (ou échanges) affichés après filtres / total (SA uniquement). Les listes sont paginées par 100. | Components (or exchanges) shown after filters / total (SA only). Lists are paged by 100. |
+| 394 | #cap-view-csys .ana-ak | (inchangé, hors _L) |
+| 394 | 🧩 Nature | 🧩 Nature |
+| 394 | Système ou acteurs (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants. | System or actors (double-click: only these), or one component and all its sub-components. |
+| 395 | #cap-view-csys #cb-csv,#cap-view-csys #cb-html,#cap-view-csys #cb-html-all | (inchangé, hors _L) |
+| 395 | ⬇ Exports | ⬇ Exports |
+| 395 | CSV (ports ou échanges), rapport HTML de la vue ou de toutes les vues. | CSV (ports or exchanges), HTML report of the view or of all views. |
+| 396 | #cap-view-csys #cb-main | (inchangé, hors _L) |
+| 396 | 📋 Résultat | 📋 Result |
+| 397 | 🧱 Logical Component | 🧱 Logical Component |
+| 398 | #cap-view-cblk .phl-toggle-btn | (inchangé, hors _L) |
+| 398 | 🖼 Présentation | 🖼 Layout |
+| 399 | #cap-view-cblk #cb-counter | (inchangé, hors _L) |
+| 399 | 🔢 Compteur | 🔢 Counter |
+| 399 | Composants (ou échanges) affichés après filtres / total (LA uniquement). Les listes sont paginées par 100. | Components (or exchanges) shown after filters / total (LA only). Lists are paged by 100. |
+| 400 | #cap-view-cblk .ana-ak | (inchangé, hors _L) |
+| 400 | 🧩 Nature | 🧩 Nature |
+| 400 | Système ou acteurs (double-clic : uniquement ceux-ci), ou un composant et tous ses sous-composants. | System or actors (double-click: only these), or one component and all its sub-components. |
+| 401 | #cap-view-cblk #cb-csv,#cap-view-cblk #cb-html,#cap-view-cblk #cb-html-all | (inchangé, hors _L) |
+| 401 | ⬇ Exports | ⬇ Exports |
+| 401 | CSV (ports ou échanges), rapport HTML de la vue ou de toutes les vues. | CSV (ports or exchanges), HTML report of the view or of all views. |
+| 402 | #cap-view-cblk #cb-main | (inchangé, hors _L) |
+| 402 | 📋 Résultat | 📋 Result |
+| 403 | ƒ⇆ Functional Exchange | ƒ⇆ Functional Exchange |
+| 404 | #cap-view-fex .phl-toggle-btn | (inchangé, hors _L) |
+| 404 | 🖼 Présentation | 🖼 Layout |
+| 405 | #cap-view-fex .ana-ak | (inchangé, hors _L) |
+| 405 | 🧩 Allocation | 🧩 Allocation |
+| 406 | 🔢 Compteur | 🔢 Counter |
+| 406 | Échanges (ou fonctions en Vue Blocs) affichés après filtres / total. Les listes sont paginées par 100. | Exchanges (or functions in Blocks view) shown after filters / total. Lists are paged by 100. |
+| 407 | #cap-view-fex .fex-layer-btn | (inchangé, hors _L) |
+| 407 | 🧱 Couche | 🧱 Layer |
+| 407 | Filtre par couche ARCADIA (OA, SA, LA, PA). | Filters by ARCADIA layer (OA, SA, LA, PA). |
+| 408 | #fex-fn-input,#fex-name-input | (inchangé, hors _L) |
+| 408 | 🔍 Filtres | 🔍 Filters |
+| 408 | Par fonction, ou par nom d'échange ou d'Exchange Item. | By function, or by exchange or Exchange Item name. |
+| 409 | #fex-exp-csv,#fex-exp-html,#fex-exp-html-all | (inchangé, hors _L) |
+| 409 | ⬇ Exports | ⬇ Exports |
+| 409 | CSV de la vue, rapport HTML de la vue (toutes les pages), ou rapport HTML autonome avec toutes les vues. | CSV of the view, HTML report of the view (all pages), or standalone HTML report with all the views. |
+| 410 | 📋 Résultat | 📋 Result |
+| 410 | Clic sur une fonction ou un échange pour ouvrir son détail. | Click a function or an exchange to open its details. |
+| 411 | 🟨 Operational Analysis | 🟨 Operational Analysis |
+| 412 | #cap-view-oav .phl-toggle-btn | (inchangé, hors _L) |
+| 412 | 🖼 Présentation | 🖼 Layout |
+| 413 | #cap-view-oav .ana-ak | (inchangé, hors _L) |
+| 413 | 🏢 Allocation | 🏢 Allocation |
+| 413 | Activités portées par une entité, par un acteur opérationnel ou non allouées (double-clic : uniquement celles-ci), ou par une entité ou un acteur précis. | Activities carried by an entity, by an operational actor or unallocated (double-click: only these), or by a specific entity or actor. |
+| 414 | #cap-view-oav #fex-fn-input,#cap-view-oav #fex-name-input | (inchangé, hors _L) |
+| 414 | 🔍 Filtres | 🔍 Filters |
+| 414 | Par activité, ou par nom d'interaction ou d'Exchange Item. | By activity, or by interaction or Exchange Item name. |
+| 415 | #cap-view-oav #fex-exp-csv,#cap-view-oav #fex-exp-html,#cap-view-oav #fex-exp-html-all | (inchangé, hors _L) |
+| 415 | ⬇ Exports | ⬇ Exports |
+| 415 | CSV des interactions, rapport HTML de la vue ou de toutes les vues. | CSV of the interactions, HTML report of the view or of all views. |
+| 416 | #cap-view-oav #fex-main | (inchangé, hors _L) |
+| 416 | 📋 Résultat | 📋 Result |
+| 416 | Clic sur une activité ou une interaction pour ouvrir son détail. | Click an activity or an interaction to open its details. |
 | 417 | 🔲 Diagrammes | 🔲 Diagrams |
-| 419 | Un fichier ReqIF n'a pas de diagrammes : ses exigences se lisent dans 🔬 📑 ReqIF (document, exigences, relations). | A ReqIF file has no diagrams: its requirements are read in 🔬 📑 ReqIF (document, requirements, relations). |
-| 420 | Les vues calculées depuis le texte SysML v2 (générale, interconnexion, états, flux d'actions), disposées automatiquement. Même vue que pour Capella : explorateur, carte, ℹ Infos, planches, ⧉ comparaison. Clic sur un élément : son détail. | The computed views from the SysML v2 text (general, interconnection, states, action flow), laid out automatically. Same view as for Capella: explorer, map, ℹ Info, plates, ⧉ comparison. Click an element: its details. |
-| 421 | 📂 Ouvrir le .aird | 📂 Open the .aird |
-| 421 | Le sélecteur s'ouvre dans le dossier du .capella (Edge / Chrome). Vous pouvez aussi déposer le .aird sur la fenêtre, ou ouvrir directement le 📁 Dossier du projet depuis l'écran d'accueil : le .capella et ses diagrammes sont chargés ensemble. | The picker opens in the .capella folder (Edge / Chrome). You can also drop the .aird on the window, or directly open the 📁 Project folder from the home screen: the .capella and its diagrams are loaded together. |
-| 422 | ℹ Infos | ℹ Info |
-| 422 | Le panneau de détail présente le diagramme ouvert : type, couche, date de modification, description, élément représenté et éléments affichés (cliquables). Aussi par ℹ au survol d'un diagramme de l'explorateur. | The details panel presents the open diagram: type, layer, modification date, description, represented element and displayed elements (clickable). Also with ℹ when hovering a diagram in the explorer. |
-| 423 | ⬇ Exporter | ⬇ Export |
-| 424 | ☐ Sélectionner | ☐ Select |
-| 424 | Affiche les cases à cocher de l'explorateur pour choisir les diagrammes à exporter (un par un, par groupe ou tous). Sans sélection, l'export porte sur les diagrammes affichés. | Shows the explorer checkboxes to choose the diagrams to export (one by one, by group or all). Without a selection, the export covers the displayed diagrams. |
-| 425 | #cdg-filtre,#cdg-classement | (inchangé, hors _L) |
-| 425 | 🔍 Filtre et classement | 🔍 Filter and grouping |
-| 425 | Filtre par nom, genre, sigle ou origine. Classement par genre › origine (par défaut), genre, origine, nom ou 🌳 arborescence (chaque diagramme sous son élément porteur). | Filter by name, kind, code or origin. Sorted by kind › origin (default), kind, origin, name or 🌳 tree (each diagram under its owning element). |
-| 426 | Filtre par nom, type, sigle ou couche. Classement par couche (par défaut), couche › type de diagramme (OA › OAB…), type, nom ou 🌳 arborescence (chaque diagramme sous son élément représenté). | Filter by name, type, acronym or layer. Grouping by layer (default), layer › diagram type (OA › OAB…), type, name or 🌳 tree (each diagram under its represented element). |
-| 427 | #cdg-liste .cdg-arbre | (inchangé, hors _L) |
-| 427 | 🗂 Explorateur | 🗂 Explorer |
-| 428 | ↔ Largeur | ↔ Width |
-| 429 | ▣ Carte | ▣ Map |
-| 430 | #cdg-hote .arcv-centre | (inchangé, hors _L) |
-| 431 | 🖼 Diagramme | 🖼 Diagram |
-| 431 | Molette ou − / + : zoom · Ajuster , 1:1 · recherche dans le diagramme (Ctrl+F) · Chaînes et chemins : met une chaîne en évidence · Filtres : ports, étiquettes, catégories d'échanges · ⌒ Ponts : petits arcs aux croisements des liens · Exporter : ce diagramme seul (SVG, PNG, impression). | Wheel or − / +: zoom · Fit , 1:1 · search in the diagram (Ctrl+F) · Chains and paths : highlights a chain · Filters : ports, labels, exchange categories · ⌒ Jumps : small arcs where links cross · Export : this diagram only (SVG, PNG, print). |
-| 432 | #cdg-sy .sy-l1 | (inchangé, hors _L) |
-| 433 | 🖼 Vue ouverte | 🖼 Open view |
-| 434 | #cdg-sy .sy-l2 | (inchangé, hors _L) |
-| 434 | 🧰 Affichage | 🧰 Display |
-| 434 | 📝 Note et calque de 💬 Revue, ⧩ filtres (étiquettes des liens, compartiments, liens par genre), zoom − % + ( ⤢ tout voir, 1:1 , ⌖ centrer sur l'élément choisi, touche F), ▣ carte, 🖼 Visuel ou ≡ Texte (rendu textuel coloré). | 📝 Note and 💬 Review layer, ⧩ filters (link labels, compartments, links by kind), zoom − % + ( ⤢ see all, 1:1 , ⌖ centre on the selected element, F key), ▣ map, 🖼 Visual or ≡ Text (coloured text rendering). |
-| 435 | #cdg-sy .sy-vue-barre | (inchangé, hors _L) |
-| 435 | ▦ Tableau, matrice ou Relation Map de Cameo | ▦ Cameo table, matrix or Relation Map |
-| 435 | Cameo n'enregistre que la définition de ses tableaux : Arcalyse les recalcule. Tri par clic sur l'en-tête, filtre, Éléments reliés seulement (matrice), ⊕ / ⊖ (Relation Map), ⬇ CSV, ℹ Infos, ▤ Tableau (ouvre ses lignes dans ▤ Tableau), 🗺 Relation Map . | Cameo only saves the definition of its tables: Arcalyse recomputes them. Sort by clicking the header, filter, Related elements only (matrix), ⊕ / ⊖ (Relation Map), ⬇ CSV, ℹ Info, ▤ Table (opens its rows in ▤ Table), 🗺 Relation Map . |
-| 436 | 🎬 Scénarios | 🎬 Scenarios |
-| 437 | #cap-view-scen [data-scv] | (inchangé, hors _L) |
-| 437 | 🎬 Diagramme ou contrôles | 🎬 Diagram or checks |
-| 437 | 🎬 Diagramme : diagramme de séquence du scénario choisi · 🩺 Contrôles : scénarios vides, messages sans échange, lignes de vie sans élément, scénarios hors capacité, références introuvables. | 🎬 Diagram : sequence diagram of the chosen scenario · 🩺 Checks : empty scenarios, messages without exchange, lifelines without element, scenarios outside any capability, missing references. |
-| 438 | #cap-view-scen [data-scl] | (inchangé, hors _L) |
-| 438 | 🧱 Couche et type | 🧱 Layer and type |
-| 438 | Filtre par couche ARCADIA et par type : ES (Exchange Scenario), FS (Functional Scenario), OES / OAS en OA, IS (Interface Scenario). | Filters by ARCADIA layer and by type: ES (Exchange Scenario), FS (Functional Scenario), OES / OAS in OA, IS (Interface Scenario). |
-| 439 | 🔍 Recherche | 🔍 Search |
-| 439 | Par nom de scénario, de capacité ou de ligne de vie. | By scenario, capability or lifeline name. |
-| 440 | #cap-view-scen .sc-list | (inchangé, hors _L) |
-| 440 | 📋 Scénarios | 📋 Scenarios |
-| 440 | Rangés par couche puis par capacité (clic sur 🎯 : détail de la capacité). Clic sur un scénario pour afficher son diagramme. | Sorted by layer then by capability (click 🎯: capability details). Click a scenario to show its diagram. |
-| 441 | #cap-view-scen .sc-scroll | (inchangé, hors _L) |
-| 441 | 🖼 Diagramme | 🖼 Diagram |
-| 441 | Redessiné à partir du modèle, façon Capella : lignes de vie (bleu clair = acteur, bleu = composant, vert = fonction), messages, barres d'activation, fonctions (vert), états (gris clair) et modes (gris foncé), fragments combinés (ALT, OPT, LOOP, PAR…) avec leurs gardes, références « ref » (clic : ouvrir le scénario). Clic sur un élément : son détail. Les noms des lignes de vie restent visibles en haut au défilement. | Redrawn from the model, Capella-style: lifelines (light blue = actor, blue = component, green = function), messages, activation bars, functions (green), states (light grey) and modes (dark grey), combined fragments (ALT, OPT, LOOP, PAR…) with their guards, “ref” references (click: open the scenario). Click an element: its details. Lifeline names stay visible at the top when scrolling. |
-| 442 | #cap-view-scen [data-sce] | (inchangé, hors _L) |
-| 442 | ⬇ Exports | ⬇ Exports |
-| 442 | Image PNG, SVG, ou copie de l'image dans le presse-papiers. − / + : zoom. | PNG or SVG image, or copy of the image to the clipboard. − / +: zoom. |
-| 443 | 🔌 Physical Link | 🔌 Physical Link |
-| 444 | #cap-view-physlink .phl-toggle-btn | (inchangé, hors _L) |
-| 444 | 🖼 Présentation | 🖼 Layout |
-| 445 | #cap-view-physlink .ana-ak | (inchangé, hors _L) |
-| 445 | 🖥 Nature (Vue Blocs) | 🖥 Nature (Blocks view) |
-| 445 | Nœuds du système ou nœuds acteurs (double-clic : uniquement ceux-ci), ou un nœud et ses sous-composants. | System nodes or actor nodes (double-click: only these), or one node and its sub-components. |
-| 446 | #cap-view-physlink #cb-main | (inchangé, hors _L) |
-| 446 | ◧ Blocs | ◧ Blocks |
-| 446 | Chaque nœud (jaune = système, bleu clair = acteur) avec ses ports physiques jaunes, le Physical Link et le nœud distant (clic : aller à son bloc). | Each node (yellow = system, light blue = actor) with its yellow physical ports, the Physical Link and the remote node (click: go to its block). |
-| 447 | 🔢 Compteur | 🔢 Counter |
-| 447 | Liens affichés après filtres / total. | Links shown after filters / total. |
-| 448 | #cap-view-physlink .phl-ce-btn | (inchangé, hors _L) |
-| 448 | ⇢ Component Exchange | ⇢ Component Exchange |
-| 448 | Liens qui portent (ou non) des échanges de composants alloués. | Links that carry (or not) allocated component exchanges. |
-| 449 | #phl-node-input,#phl-name-input | (inchangé, hors _L) |
-| 449 | 🔍 Filtres | 🔍 Filters |
-| 449 | Par composant, ou par nom de lien ou d'échange. | By component, or by link or exchange name. |
-| 450 | #phl-exp-csv,#phl-exp-html,#phl-exp-html-all | (inchangé, hors _L) |
-| 450 | ⬇ Exports | ⬇ Exports |
-| 450 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. | CSV of the view, HTML report of the view, or standalone HTML report with all the views. |
-| 451 | 📋 Résultat | 📋 Result |
-| 451 | Clic sur un composant ou un lien pour ouvrir son détail. | Click a component or a link to open its details. |
-| 452 | 🧩 Ports | 🧩 Ports |
-| 453 | #cap-view-ports .phl-toggle-btn | (inchangé, hors _L) |
-| 453 | 🖼 Présentation | 🖼 Layout |
-| 453 | ≡ Traçabilité Function Port ↔ Component Port ↔ Physical Port, ▣ Par composant , et 🩺 Contrôles (ports non alloués, chaînes incomplètes). | ≡ Traceability Function Port ↔ Component Port ↔ Physical Port, ▣ By component , and 🩺 Checks (unallocated ports, incomplete chains). |
-| 454 | 🔢 Compteur | 🔢 Counter |
-| 454 | Lignes affichées après filtres / total. | Rows shown after filters / total. |
-| 455 | 🔍 Recherche | 🔍 Search |
-| 455 | Filtre par fonction, composant, port ou échange. La case voisine ne garde que les chaînes incomplètes. | Filters by function, component, port or exchange. The neighbouring box keeps only incomplete chains. |
-| 456 | ⬇ CSV | ⬇ CSV |
-| 456 | Exporte le tableau affiché. | Exports the displayed table. |
-| 457 | 📋 Résultat | 📋 Result |
-| 457 | Les lignes incomplètes sont signalées en couleur. Clic sur un élément pour ouvrir son détail. | Incomplete rows are highlighted in colour. Click an element to open its details. |
-| 458 | ƒ Fonctions | ƒ Functions |
-| 459 | ƒ Fonctions | ƒ Functions |
-| 459 | Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles. | All the model functions, layer by layer: hierarchy, allocation, traceability, metrics and checks. |
-| 460 | #cap-view-functions [data-fv] | (inchangé, hors _L) |
-| 460 | 🖼 Présentation | 🖼 Layout |
-| 460 | 🌳 Hiérarchie · ▤ Tableau façon Excel · ⛓ Traçabilité entre couches · 📊 Métriques · 🩺 Contrôles (qualité des noms, fonctions non allouées…). | 🌳 Hierarchy · ▤ Table Excel-style · ⛓ Traceability between layers · 📊 Metrics · 🩺 Checks (name quality, unallocated functions…). |
-| 461 | #cap-view-functions [data-fl] | (inchangé, hors _L) |
-| 461 | 🧱 Couche | 🧱 Layer |
-| 461 | Choisit la couche ARCADIA étudiée (OA, SA, LA, PA). | Chooses the ARCADIA layer studied (OA, SA, LA, PA). |
-| 462 | #ana-fn-q,#ana-fn-desc,#ana-fn-exp,#ana-fn-col | (inchangé, hors _L) |
-| 462 | 🔍 Recherche et affichage | 🔍 Search and display |
-| 463 | #cap-view-functions .ana-ak,#ana-fn-who | (inchangé, hors _L) |
-| 463 | 🎯 Allocation | 🎯 Allocation |
-| 464 | #ana-fn-csv,#ana-fn-html | (inchangé, hors _L) |
-| 464 | ⬇ Exports | ⬇ Exports |
-| 464 | ⬇ CSV et 📄 Dossier fonctionnel : document HTML avec une section par fonction (description, allocation, échanges, traçabilité). | ⬇ CSV and 📄 Functional file : HTML document with one section per function (description, allocation, exchanges, traceability). |
-| 465 | #cap-view-functions .phl-filter-bar + * | (inchangé, hors _L) |
-| 465 | 📋 Résultat | 📋 Result |
-| 465 | Clic sur une fonction pour ouvrir son détail. | Click a function to open its details. |
-| 467 | ⚖ Comparaison de versions | ⚖ Version comparison |
-| 468 | 📐 Tableau de bord | 📐 Dashboard |
-| 469 | 📐 Tableau de bord | 📐 Dashboard |
-| 469 | Pages d'indicateurs, graphiques et tableaux sur le modèle, à composer soi-même et à imprimer. | Pages of indicators, charts and tables on the model, to build yourself and print. |
-| 470 | #cap-view-dashboard .dash-tabs | (inchangé, hors _L) |
-| 470 | 🗂 Pages | 🗂 Pages |
-| 471 | ✏ Modifier | ✏ Edit |
-| 471 | Passe en édition : ajouter des éléments depuis le catalogue d'indicateurs, les configurer, déplacer et redimensionner. ✔ Terminer pour sortir. | Switches to editing: add items from the indicator catalogue, configure, move and resize them. ✔ Done to leave. |
-| 472 | #dash-orient,#dash-print,#dash-html | (inchangé, hors _L) |
-| 472 | 🖨 Impression | 🖨 Printing |
-| 472 | Format A4 portrait ou paysage, impression, ou export en page HTML autonome. | A4 portrait or landscape format, printing, or export as a standalone HTML page. |
-| 473 | #dash-json,#dash-imp | (inchangé, hors _L) |
-| 473 | ⬇⬆ JSON | ⬇⬆ JSON |
-| 473 | Exporte ou importe la définition des tableaux de bord pour les réutiliser sur un autre modèle. | Exports or imports the dashboard definitions to reuse them on another model. |
-| 474 | #cap-view-dashboard .dash-scroll | (inchangé, hors _L) |
-| 474 | 📐 Page | 📐 Page |
-| 474 | Les éléments du tableau de bord, calculés sur le modèle chargé. | The dashboard items, computed on the loaded model. |
-| 478 | 🚀 Bien démarrer | 🚀 Getting started |
-| 480 | 1 · Ouvrir un modèle | 1 · Open a model |
-| 481 | Glissez-déposez votre fichier ou le dossier du projet n'importe où sur la page : Capella, SysML v2 ou UML / SysML v1, le format est reconnu. Le fichier est lu sur ce poste : rien n'est envoyé. | Drag and drop your file or the project folder anywhere on the page: Capella, SysML v2 or UML / SysML v1, the format is recognised. The file is read on this computer: nothing is sent. |
-| 482 | … ou partir de votre format | … or start from your format |
-| 483 | Chaque carte dit quoi ouvrir et ce que vous obtiendrez : Capella (le dossier du projet charge aussi le .aird et les bibliothèques), SysML v2 (.sysml, .kpar ou un dossier de .sysml), UML / SysML v1 (.mdzip de Cameo, .qea d'Enterprise Architect, .uml + .notation de Papyrus, .xmi). | Each card says what to open and what you will get: Capella (the project folder also loads the .aird and the libraries), SysML v2 (.sysml, .kpar or a folder of .sysml files), UML / SysML v1 (Cameo .mdzip, Enterprise Architect .qea, Papyrus .uml + .notation, .xmi). |
-| 484 | … ou reprendre un projet de travail | … or resume a work project |
-| 485 | 📄 Ouvrir une page de projet… rouvre une page enregistrée avec 💾, même par une version précédente d'Arcalyse (à partir de la 2.1) : vous choisissez ce qui est repris (modèle, diagrammes, revue, accueil, tableaux de bord, vues, réglages). Pensez ensuite à l'enregistrer : elle passe dans la nouvelle version. | 📄 Open a project page… reopens a page saved with 💾, even by an earlier version of Arcalyse (2.1 or later): you choose what is carried over (model, diagrams, review, home, dashboards, views, settings). Then remember to save it: it moves to the new version. |
-| 486 | #b-help, #cap-nav-dd | (inchangé, hors _L) |
-| 486 | ❓ Aide, en haut à droite | ❓ Help, top right |
-| 487 | Le menu ❓ Aide ▾ reste accessible à tout moment, avec ou sans modèle : 📖 Aide complète et 🎓 Visite guidée . Une fois le modèle ouvert, il propose aussi 🎯 Visite de cette vue pour chaque vue. | The ❓ Help ▾ menu remains available at any time, with or without a model: 📖 Full help and 🎓 Guided tour . Once the model is open, it also offers 🎯 Tour of this view for each view. |
-| 488 | À vous ! | Your turn! |
-| 489 | Cliquez sur Terminer ✓ , puis ouvrez votre fichier. Dès que le modèle sera chargé, la visite reprendra pour vous montrer où trouver l'aide et les tutoriels. | Click Finish ✓ , then open your file. As soon as the model is loaded, the tour will resume to show you where to find the help and tutorials. |
-| 493 | ✅ Modèle ouvert | ✅ Model open |
-| 494 | Votre modèle est chargé. Voici où trouver l'aide et les tutoriels, à tout moment. | Your model is loaded. Here is where to find the help and tutorials, at any time. |
-| 495 | 🏠 Accueil du projet | 🏠 Project home |
-| 496 | La vue affichée à l'ouverture : en-tête et fiche du projet, tâches courantes, contenu, santé et revue du modèle. Revenez-y à tout moment par ce bouton. | The view shown on opening: project header and sheet, common tasks, content, health and review of the model. Come back to it at any time with this button. |
-| 497 | ❓ Aide | ❓ Help |
-| 498 | L'aide et toutes les visites guidées sont regroupées dans ce menu. | The help and all the guided tours are grouped in this menu. |
-| 499 | 📚 Aide et tutoriels | 📚 Help and tutorials |
-| 500 | 📖 Aide complète : documentation de toutes les vues. 🎓 Visite guidée : tour complet de l'interface. 🎯 Visite de cette vue : menus et commandes de la vue affichée — disponible dans chaque vue. | 📖 Full help : documentation of all the views. 🎓 Guided tour : full tour of the interface. 🎯 Tour of this view : menus and commands of the displayed view — available in each view. |
-| 501 | 🧭 Et maintenant | 🧭 What next |
-| 502 | Choisissez une vue dans cette barre, puis ❓ Aide ▾ → 🎯 Visite de cette vue pour la découvrir pas à pas. | Choose a view in this bar, then ❓ Help ▾ → 🎯 Tour of this view to discover it step by step. |
-| 510 | 💬 Revue | 💬 Review |
-| 510 | Commentaires de revue sur le modèle et les diagrammes : qui commente quoi, criticité, statut, échéance, réponses. Ils sont enregistrés dans la page (💾). | Review comments on the model and the diagrams: who comments on what, criticality, status, due date, replies. They are saved in the page (💾). |
-| 511 | 💬 Revue & documents | 💬 Review & documents |
-| 512 | #crv-panel .crv-tabs | (inchangé, hors _L) |
-| 512 | 🗂 Onglets | 🗂 Tabs |
-| 512 | 💬 Commentaires (liste, filtres) · 🔁 Vérifier (après une mise à jour) · 📄 Rapport · ⚙ Réglages . | 💬 Comments (list, filters) · 🔁 Check (after an update) · 📄 Report · ⚙ Settings . |
-| 513 | ✚ Nouveau commentaire | ✚ New comment |
-| 513 | Sur l'élément du panneau de détail, ou commentaire général. Seul le texte est obligatoire. On commente aussi par clic droit sur un élément dans les vues, depuis le panneau de détail (💬 à côté du nom, de la description, des attributs) et par 📝 Note de revue sur un diagramme. | On the element of the detail panel, or general comment. Only the text is required. You can also comment by right-click on an element in the views, from the detail panel (💬 next to the name, the description, the attributes) and with 📝 Review note on a diagram. |
-| 514 | #crv-panel .crv-filters | (inchangé, hors _L) |
-| 514 | 🔍 Recherche et filtres | 🔍 Search and filters |
-| 514 | Texte, statut, criticité, personne, portée (diagramme ouvert, élément du panneau de détail, en retard, qui me sont attribués), tri. Clic sur une carte : texte complet, réponses, statut. | Text, status, criticality, person, scope (open diagram, element of the detail panel, overdue, assigned to me), sort. Click a card: full text, replies, status. |
-| 515 | 💾 Revue ▾ | 💾 Review ▾ |
-| 515 | ⬇ Exporter les commentaires (.json), 📂 Importer / fusionner une revue (.json ou page de revue ciblée relue), 📤 Revue ciblée : page HTML à faire relire par d'autres personnes. | ⬇ Export the comments (.json), 📂 Import / merge a review (.json or reviewed targeted review page), 📤 Targeted review : HTML page to be reviewed by other people. |
-| 516 | ⧉ Fenêtre séparée | ⧉ Separate window |
-| 517 | 🔁 Vérifier | 🔁 Check |
-| 518 | 📄 Rapport | 📄 Report |
-| 518 | Synthèse statut × criticité, 📄 Rapport HTML imprimable, ⬇ CSV , et 📤 Revue ciblée : les relecteurs répondent dans une page autonome, leurs réponses se réimportent ici. | Status × criticality summary, 📄 HTML report printable, ⬇ CSV , and 📤 Targeted review : reviewers answer in a standalone page, their answers are imported back here. |
-| 519 | ⚙ Réglages | ⚙ Settings |
-| 519 | Votre nom (auteur des commentaires), participants, champs proposés dans l'éditeur, calque des notes sur les diagrammes, marque 💬 des éléments commentés. | Your name (author of the comments), participants, fields offered in the editor, notes layer on the diagrams, 💬 mark on commented elements. |
-| 520 | ✅ À vous | ✅ Your turn |
-| 520 | Cette visite se relance par 🎓 en haut du panneau ou par ❓ Aide ▾ → 💬 Visite de la revue . L'aide complète a un onglet 💬 Revue. | This tour can be restarted with 🎓 at the top of the panel or with ❓ Help ▾ → 💬 Review tour . The full help has a 💬 Review tab. |
-| 523 | 📜 Scripts (macros) | 📜 Scripts (macros) |
-| 523 | Des scripts JavaScript parcourent et analysent le modèle affiché par une API (celle d'Arcature, en lecture seule), comme les macros de Catia Magic ou Python4Capella. Ils tournent isolés : ni page, ni fichier, ni réseau. | JavaScript scripts browse and analyse the displayed model through an API (Arcature's, read-only), like Catia Magic macros or Python4Capella. They run isolated: no page, no file, no network. |
-| 524 | 📜 Ouvrir la console | 📜 Open the console |
-| 524 | Alt+4 , menu 💬 Revue & documents › 📜 Scripts (mode Complet) ou recherche 🔍 « Scripts ». | Alt+4 , menu 💬 Review & documents › 📜 Scripts (Full mode) or 🔍 search “Scripts”. |
-| 525 | 📚 Bibliothèque | 📚 Library |
-| 525 | Exemples fournis (fonctions sans description, non allouées, matrice d'allocation, statistiques, santé et contrôles, traçabilité, chaînes, exigences, qualité des noms…), scripts du projet et du dossier partagé . Choisir un script l'affiche dans l'éditeur. | Examples provided (functions without description, unallocated, allocation matrix, statistics, health and checks, traceability, chains, requirements, name quality…), scripts of the project and of the shared folder . Choosing a script shows it in the editor. |
-| 526 | #scr-nouveau,#scr-enregistrer,#scr-supprimer,#scr-importer,#scr-exporter,#scr-dossier | (inchangé, hors _L) |
-| 526 | 💾 Enregistrer, importer, exporter | 💾 Save, import, export |
-| 526 | ＋ nouveau script · 💾 enregistre dans le projet (gardé dans la 💾 page HTML) ou dans le dossier partagé · 🗑 supprime · 📂 importe des fichiers .js · ⬇ exporte le script affiché · 📁 dossier de scripts partagé (Chrome / Edge). | ＋ new script · 💾 saves in the project (kept in the 💾 HTML page) or in the shared folder · 🗑 removes · 📂 imports .js files · ⬇ exports the displayed script · 📁 shared script folder (Chrome / Edge). |
-| 527 | ✏ Éditeur | ✏ Editor |
-| 527 | Le script. Il voit model , metamodel , analysis , out , ui et console . Par exemple : out.print(model.count()) affiche le nombre d'éléments du modèle. Tab indente, Ctrl+Entrée exécute. | The script. It sees model , metamodel , analysis , out , ui and console . For instance: out.print(model.count()) prints the number of elements of the model. Tab indents, Ctrl+Enter runs. |
-| 528 | #scr-executer,#scr-arreter,#scr-effacer | (inchangé, hors _L) |
-| 528 | ▶ Exécuter | ▶ Run |
-| 529 | 📋 Sortie | 📋 Output |
-| 529 | out.print écrit une ligne, out.table un tableau (bouton ⬇ CSV ), out.file propose un fichier. Les éléments sont des liens : un clic ouvre le panneau de détail. Une erreur indique la ligne du script (clic : l'éditeur s'y place). Les questions du script ( ui.ask , ui.choose …) s'affichent ici. | out.print writes a line, out.table a table (button ⬇ CSV ), out.file offers a file. Elements are links : a click opens the detail panel. An error gives the line of the script (click: the editor goes there). The script's questions ( ui.ask , ui.choose …) appear here. |
-| 530 | 📖 Référence | 📖 Reference |
-| 531 | ✅ À vous | ✅ Your turn |
-| 531 | Cette visite se relance par 🎓 dans la console ou par ❓ Aide ▾ → 📜 Visite des scripts . | This tour can be restarted with 🎓 in the console or by ❓ Help ▾ → 📜 Scripts tour . |
-| 534 | 🔎 Panneau de détail | 🔎 Detail panel |
-| 535 | #cap-detail-content .cap-type-badge, #cap-detail-content h3 | (inchangé, hors _L) |
-| 535 | 🏷 En-tête | 🏷 Header |
-| 535 | Type de l'élément (et ce que ce type désigne), icône et nom. Un clic sur un nom de lien, partout dans le panneau, ouvre la fiche de cet autre élément : l'historique ◀ ▶ permet de revenir. | Element type (and what this type means), icon and name. A click on a linked name, anywhere in the panel, opens that other element's sheet: the ◀ ▶ history takes you back. |
-| 536 | #cap-detail .crv-det-bar | (inchangé, hors _L) |
-| 536 | 💬 Commenter | 💬 Comment |
-| 536 | Crée un commentaire de 💬 Revue sur l'élément, sur son nom, sa description ou un attribut (💬 à côté de chacun) : il est vérifié après une mise à jour du modèle (valeur changée, élément disparu). | Creates a 💬 Review comment on the element, its name, its description or an attribute (💬 next to each): it is checked after a model update (changed value, element gone). |
-| 537 | #cap-detail .cap-det-tabs | (inchangé, hors _L) |
-| 537 | 🗂 Onglets | 🗂 Tabs |
-| 538 | 📋 Fiche | 📋 Sheet |
-| 538 | Description (mise en forme comme dans l'outil d'origine) et attributs de l'élément : identifiant, propriétés, stéréotypes et leurs valeurs pour SysML / UML. | Description (formatted as in the source tool) and attributes of the element: identifier, properties, stereotypes and their values for SysML / UML. |
-| 539 | 🔗 Liens | 🔗 Links |
-| 539 | Références sortantes et entrantes (navigation inverse), propriétaire et éléments contenus, groupés par type et paginés. Clic : ouvrir l'élément. | Outgoing and incoming references (reverse navigation), owner and contained elements, grouped by type and paged. Click: open the element. |
-| 540 | #cap-detail .csb | (inchangé, hors _L) |
-| 540 | 🧭 Sémantique | 🧭 Semantic |
-| 541 | 🔲 Diagrammes | 🔲 Diagrams |
-| 542 | 🔬 Analyses | 🔬 Analyses |
-| 543 | #cap-detail .cap-det-popb | (inchangé, hors _L) |
-| 543 | ⧉ Fenêtre séparée | ⧉ Separate window |
-| 544 | #b-hist-back, #b-hist-fwd | (inchangé, hors _L) |
-| 544 | ◀ ▶ Historique | ◀ ▶ History |
-| 545 | × Fermer | × Close |
-| 546 | ✅ À vous | ✅ Your turn |
-| 546 | Cette visite se relance par 🎓 en haut du panneau ou par ❓ Aide ▾ → 🔎 Visite du panneau de détail . | This tour can be restarted with 🎓 at the top of the panel or with ❓ Help ▾ → 🔎 Detail panel tour . |
-| 549 | #cap-pref-ov .cw-d-box | (inchangé, hors _L) |
-| 549 | ⚙ Préférences | ⚙ Preferences |
-| 550 | #cap-pref-ov .cap-pref-nav | (inchangé, hors _L) |
-| 550 | 🗂 Rubriques | 🗂 Sections |
-| 550 | Affichage, Thème, Suivi du fichier, Enregistrement, Interface et vues, Contrôles et nommage, Exports. | Display, Theme, File watching, Saving, Interface and views, Checks and naming, Exports. |
-| 551 | #cap-pref-ov .cap-pref-main | (inchangé, hors _L) |
-| 551 | ☰ Affichage | ☰ Display |
-| 552 | #cap-pref-ov .cap-pref-main | (inchangé, hors _L) |
-| 552 | 🎨 Thème | 🎨 Theme |
+| 418 | 🔲 Diagrammes | 🔲 Diagrams |
+| 420 | Un fichier ReqIF n'a pas de diagrammes : ses exigences se lisent dans 🔬 📑 ReqIF (document, exigences, relations). | A ReqIF file has no diagrams: its requirements are read in 🔬 📑 ReqIF (document, requirements, relations). |
+| 421 | Les vues calculées depuis le texte SysML v2 (générale, interconnexion, états, flux d'actions), disposées automatiquement. Même vue que pour Capella : explorateur, carte, ℹ Infos, planches, ⧉ comparaison. Clic sur un élément : son détail. | The computed views from the SysML v2 text (general, interconnection, states, action flow), laid out automatically. Same view as for Capella: explorer, map, ℹ Info, plates, ⧉ comparison. Click an element: its details. |
+| 422 | 📂 Ouvrir le .aird | 📂 Open the .aird |
+| 422 | Le sélecteur s'ouvre dans le dossier du .capella (Edge / Chrome). Vous pouvez aussi déposer le .aird sur la fenêtre, ou ouvrir directement le 📁 Dossier du projet depuis l'écran d'accueil : le .capella et ses diagrammes sont chargés ensemble. | The picker opens in the .capella folder (Edge / Chrome). You can also drop the .aird on the window, or directly open the 📁 Project folder from the home screen: the .capella and its diagrams are loaded together. |
+| 423 | ℹ Infos | ℹ Info |
+| 423 | Le panneau de détail présente le diagramme ouvert : type, couche, date de modification, description, élément représenté et éléments affichés (cliquables). Aussi par ℹ au survol d'un diagramme de l'explorateur. | The details panel presents the open diagram: type, layer, modification date, description, represented element and displayed elements (clickable). Also with ℹ when hovering a diagram in the explorer. |
+| 424 | ⬇ Exporter | ⬇ Export |
+| 425 | ☐ Sélectionner | ☐ Select |
+| 425 | Affiche les cases à cocher de l'explorateur pour choisir les diagrammes à exporter (un par un, par groupe ou tous). Sans sélection, l'export porte sur les diagrammes affichés. | Shows the explorer checkboxes to choose the diagrams to export (one by one, by group or all). Without a selection, the export covers the displayed diagrams. |
+| 426 | #cdg-filtre,#cdg-classement | (inchangé, hors _L) |
+| 426 | 🔍 Filtre et classement | 🔍 Filter and grouping |
+| 426 | Filtre par nom, genre, sigle ou origine. Classement par genre › origine (par défaut), genre, origine, nom ou 🌳 arborescence (chaque diagramme sous son élément porteur). | Filter by name, kind, code or origin. Sorted by kind › origin (default), kind, origin, name or 🌳 tree (each diagram under its owning element). |
+| 427 | Filtre par nom, type, sigle ou couche. Classement par couche (par défaut), couche › type de diagramme (OA › OAB…), type, nom ou 🌳 arborescence (chaque diagramme sous son élément représenté). | Filter by name, type, acronym or layer. Grouping by layer (default), layer › diagram type (OA › OAB…), type, name or 🌳 tree (each diagram under its represented element). |
+| 428 | #cdg-liste .cdg-arbre | (inchangé, hors _L) |
+| 428 | 🗂 Explorateur | 🗂 Explorer |
+| 429 | ↔ Largeur | ↔ Width |
+| 430 | ☷ Plan du diagramme | ☷ Diagram outline |
+| 430 | Les éléments présents dans le diagramme ouvert , en composition (chaque élément sous celui qui le contient dans le dessin : les ports sous leur fonction), par type, par couche, de A à Z ou en arborescence du modèle. Clic : l'élément est centré dans le dessin et son détail s'ouvre. 📋 copie la liste, ⬇ ▾ exporte les éléments de ce diagramme ou de tous les diagrammes (CSV ou Excel, colonnes au choix), ⧉ détache le plan dans une fenêtre séparée. ▾ replie le plan. | The elements present in the open diagram , as a composition (each element under the one that contains it in the drawing: ports under their function), by type, by layer, from A to Z or as a tree of the model. Click: the element is centred in the drawing and its detail opens. 📋 copies the list, ⬇ ▾ exports the elements of this diagram or of all diagrams (CSV or Excel, columns of your choice), ⧉ detaches the outline into a separate window. ▾ folds the outline. |
+| 431 | ▣ Carte | ▣ Map |
+| 432 | #cdg-hote .arcv-centre | (inchangé, hors _L) |
+| 433 | 🖼 Diagramme | 🖼 Diagram |
+| 433 | Molette ou − / + : zoom · Ajuster , 1:1 · recherche dans le diagramme (Ctrl+F) · Chaînes et chemins : met une chaîne en évidence · Filtres : ports, étiquettes, catégories d'échanges · ⌒ Ponts : petits arcs aux croisements des liens · Exporter : ce diagramme seul (SVG, PNG, impression). | Wheel or − / +: zoom · Fit , 1:1 · search in the diagram (Ctrl+F) · Chains and paths : highlights a chain · Filters : ports, labels, exchange categories · ⌒ Jumps : small arcs where links cross · Export : this diagram only (SVG, PNG, print). |
+| 434 | #cdg-sy .sy-l1 | (inchangé, hors _L) |
+| 435 | 🖼 Vue ouverte | 🖼 Open view |
+| 436 | #cdg-sy .sy-l2 | (inchangé, hors _L) |
+| 436 | 🧰 Affichage | 🧰 Display |
+| 436 | 📝 Note et calque de 💬 Revue, ⧩ filtres (étiquettes des liens, compartiments, liens par genre), zoom − % + ( ⤢ tout voir, 1:1 , ⌖ centrer sur l'élément choisi, touche F), ▣ carte, 🖼 Visuel ou ≡ Texte (rendu textuel coloré). | 📝 Note and 💬 Review layer, ⧩ filters (link labels, compartments, links by kind), zoom − % + ( ⤢ see all, 1:1 , ⌖ centre on the selected element, F key), ▣ map, 🖼 Visual or ≡ Text (coloured text rendering). |
+| 437 | #cdg-sy .sy-vue-barre | (inchangé, hors _L) |
+| 437 | ▦ Tableau, matrice ou Relation Map de Cameo | ▦ Cameo table, matrix or Relation Map |
+| 437 | Cameo n'enregistre que la définition de ses tableaux : Arcalyse les recalcule. Tri par clic sur l'en-tête, filtre, Éléments reliés seulement (matrice), ⊕ / ⊖ (Relation Map), ⬇ CSV, ℹ Infos, ▤ Tableau (ouvre ses lignes dans ▤ Tableau), 🗺 Relation Map . | Cameo only saves the definition of its tables: Arcalyse recomputes them. Sort by clicking the header, filter, Related elements only (matrix), ⊕ / ⊖ (Relation Map), ⬇ CSV, ℹ Info, ▤ Table (opens its rows in ▤ Table), 🗺 Relation Map . |
+| 438 | 🎬 Scénarios | 🎬 Scenarios |
+| 439 | #cap-view-scen [data-scv] | (inchangé, hors _L) |
+| 439 | 🎬 Diagramme ou contrôles | 🎬 Diagram or checks |
+| 439 | 🎬 Diagramme : diagramme de séquence du scénario choisi · 🩺 Contrôles : scénarios vides, messages sans échange, lignes de vie sans élément, scénarios hors capacité, références introuvables. | 🎬 Diagram : sequence diagram of the chosen scenario · 🩺 Checks : empty scenarios, messages without exchange, lifelines without element, scenarios outside any capability, missing references. |
+| 440 | #cap-view-scen [data-scl] | (inchangé, hors _L) |
+| 440 | 🧱 Couche et type | 🧱 Layer and type |
+| 440 | Filtre par couche ARCADIA et par type : ES (Exchange Scenario), FS (Functional Scenario), OES / OAS en OA, IS (Interface Scenario). | Filters by ARCADIA layer and by type: ES (Exchange Scenario), FS (Functional Scenario), OES / OAS in OA, IS (Interface Scenario). |
+| 441 | 🔍 Recherche | 🔍 Search |
+| 441 | Par nom de scénario, de capacité ou de ligne de vie. | By scenario, capability or lifeline name. |
+| 442 | #cap-view-scen .sc-list | (inchangé, hors _L) |
+| 442 | 📋 Scénarios | 📋 Scenarios |
+| 442 | Rangés par couche puis par capacité (clic sur 🎯 : détail de la capacité). Clic sur un scénario pour afficher son diagramme. | Sorted by layer then by capability (click 🎯: capability details). Click a scenario to show its diagram. |
+| 443 | #cap-view-scen .sc-scroll | (inchangé, hors _L) |
+| 443 | 🖼 Diagramme | 🖼 Diagram |
+| 443 | Redessiné à partir du modèle, façon Capella : lignes de vie (bleu clair = acteur, bleu = composant, vert = fonction), messages, barres d'activation, fonctions (vert), états (gris clair) et modes (gris foncé), fragments combinés (ALT, OPT, LOOP, PAR…) avec leurs gardes, références « ref » (clic : ouvrir le scénario). Clic sur un élément : son détail. Les noms des lignes de vie restent visibles en haut au défilement. | Redrawn from the model, Capella-style: lifelines (light blue = actor, blue = component, green = function), messages, activation bars, functions (green), states (light grey) and modes (dark grey), combined fragments (ALT, OPT, LOOP, PAR…) with their guards, “ref” references (click: open the scenario). Click an element: its details. Lifeline names stay visible at the top when scrolling. |
+| 444 | #cap-view-scen [data-sce] | (inchangé, hors _L) |
+| 444 | ⬇ Exports | ⬇ Exports |
+| 444 | Image PNG, SVG, ou copie de l'image dans le presse-papiers. − / + : zoom. | PNG or SVG image, or copy of the image to the clipboard. − / +: zoom. |
+| 445 | 🔌 Physical Link | 🔌 Physical Link |
+| 446 | #cap-view-physlink .phl-toggle-btn | (inchangé, hors _L) |
+| 446 | 🖼 Présentation | 🖼 Layout |
+| 447 | #cap-view-physlink .ana-ak | (inchangé, hors _L) |
+| 447 | 🖥 Nature (Vue Blocs) | 🖥 Nature (Blocks view) |
+| 447 | Nœuds du système ou nœuds acteurs (double-clic : uniquement ceux-ci), ou un nœud et ses sous-composants. | System nodes or actor nodes (double-click: only these), or one node and its sub-components. |
+| 448 | #cap-view-physlink #cb-main | (inchangé, hors _L) |
+| 448 | ◧ Blocs | ◧ Blocks |
+| 448 | Chaque nœud (jaune = système, bleu clair = acteur) avec ses ports physiques jaunes, le Physical Link et le nœud distant (clic : aller à son bloc). | Each node (yellow = system, light blue = actor) with its yellow physical ports, the Physical Link and the remote node (click: go to its block). |
+| 449 | 🔢 Compteur | 🔢 Counter |
+| 449 | Liens affichés après filtres / total. | Links shown after filters / total. |
+| 450 | #cap-view-physlink .phl-ce-btn | (inchangé, hors _L) |
+| 450 | ⇢ Component Exchange | ⇢ Component Exchange |
+| 450 | Liens qui portent (ou non) des échanges de composants alloués. | Links that carry (or not) allocated component exchanges. |
+| 451 | #phl-node-input,#phl-name-input | (inchangé, hors _L) |
+| 451 | 🔍 Filtres | 🔍 Filters |
+| 451 | Par composant, ou par nom de lien ou d'échange. | By component, or by link or exchange name. |
+| 452 | #phl-exp-csv,#phl-exp-html,#phl-exp-html-all | (inchangé, hors _L) |
+| 452 | ⬇ Exports | ⬇ Exports |
+| 452 | CSV de la vue, rapport HTML de la vue, ou rapport HTML autonome avec toutes les vues. | CSV of the view, HTML report of the view, or standalone HTML report with all the views. |
+| 453 | 📋 Résultat | 📋 Result |
+| 453 | Clic sur un composant ou un lien pour ouvrir son détail. | Click a component or a link to open its details. |
+| 454 | 🧩 Ports | 🧩 Ports |
+| 455 | #cap-view-ports .phl-toggle-btn | (inchangé, hors _L) |
+| 455 | 🖼 Présentation | 🖼 Layout |
+| 455 | ≡ Traçabilité Function Port ↔ Component Port ↔ Physical Port, ▣ Par composant , et 🩺 Contrôles (ports non alloués, chaînes incomplètes). | ≡ Traceability Function Port ↔ Component Port ↔ Physical Port, ▣ By component , and 🩺 Checks (unallocated ports, incomplete chains). |
+| 456 | 🔢 Compteur | 🔢 Counter |
+| 456 | Lignes affichées après filtres / total. | Rows shown after filters / total. |
+| 457 | 🔍 Recherche | 🔍 Search |
+| 457 | Filtre par fonction, composant, port ou échange. La case voisine ne garde que les chaînes incomplètes. | Filters by function, component, port or exchange. The neighbouring box keeps only incomplete chains. |
+| 458 | ⬇ CSV | ⬇ CSV |
+| 458 | Exporte le tableau affiché. | Exports the displayed table. |
+| 459 | 📋 Résultat | 📋 Result |
+| 459 | Les lignes incomplètes sont signalées en couleur. Clic sur un élément pour ouvrir son détail. | Incomplete rows are highlighted in colour. Click an element to open its details. |
+| 460 | ƒ Fonctions | ƒ Functions |
+| 461 | ƒ Fonctions | ƒ Functions |
+| 461 | Toutes les fonctions du modèle, couche par couche : hiérarchie, allocation, traçabilité, métriques et contrôles. | All the model functions, layer by layer: hierarchy, allocation, traceability, metrics and checks. |
+| 462 | #cap-view-functions [data-fv] | (inchangé, hors _L) |
+| 462 | 🖼 Présentation | 🖼 Layout |
+| 462 | 🌳 Hiérarchie · ▤ Tableau façon Excel · ⛓ Traçabilité entre couches · 📊 Métriques · 🩺 Contrôles (qualité des noms, fonctions non allouées…). | 🌳 Hierarchy · ▤ Table Excel-style · ⛓ Traceability between layers · 📊 Metrics · 🩺 Checks (name quality, unallocated functions…). |
+| 463 | #cap-view-functions [data-fl] | (inchangé, hors _L) |
+| 463 | 🧱 Couche | 🧱 Layer |
+| 463 | Choisit la couche ARCADIA étudiée (OA, SA, LA, PA). | Chooses the ARCADIA layer studied (OA, SA, LA, PA). |
+| 464 | #ana-fn-q,#ana-fn-desc,#ana-fn-exp,#ana-fn-col | (inchangé, hors _L) |
+| 464 | 🔍 Recherche et affichage | 🔍 Search and display |
+| 465 | #cap-view-functions .ana-ak,#ana-fn-who | (inchangé, hors _L) |
+| 465 | 🎯 Allocation | 🎯 Allocation |
+| 466 | #ana-fn-csv,#ana-fn-html | (inchangé, hors _L) |
+| 466 | ⬇ Exports | ⬇ Exports |
+| 466 | ⬇ CSV et 📄 Dossier fonctionnel : document HTML avec une section par fonction (description, allocation, échanges, traçabilité). | ⬇ CSV and 📄 Functional file : HTML document with one section per function (description, allocation, exchanges, traceability). |
+| 467 | #cap-view-functions .phl-filter-bar + * | (inchangé, hors _L) |
+| 467 | 📋 Résultat | 📋 Result |
+| 467 | Clic sur une fonction pour ouvrir son détail. | Click a function to open its details. |
+| 469 | ⚖ Comparaison de versions | ⚖ Version comparison |
+| 470 | 📐 Tableau de bord | 📐 Dashboard |
+| 471 | 📐 Tableau de bord | 📐 Dashboard |
+| 471 | Pages d'indicateurs, graphiques et tableaux sur le modèle, à composer soi-même et à imprimer. | Pages of indicators, charts and tables on the model, to build yourself and print. |
+| 472 | #cap-view-dashboard .dash-tabs | (inchangé, hors _L) |
+| 472 | 🗂 Pages | 🗂 Pages |
+| 473 | ✏ Modifier | ✏ Edit |
+| 473 | Passe en édition : ajouter des éléments depuis le catalogue d'indicateurs, les configurer, déplacer et redimensionner. ✔ Terminer pour sortir. | Switches to editing: add items from the indicator catalogue, configure, move and resize them. ✔ Done to leave. |
+| 474 | #dash-orient,#dash-print,#dash-html | (inchangé, hors _L) |
+| 474 | 🖨 Impression | 🖨 Printing |
+| 474 | Format A4 portrait ou paysage, impression, ou export en page HTML autonome. | A4 portrait or landscape format, printing, or export as a standalone HTML page. |
+| 475 | #dash-json,#dash-imp | (inchangé, hors _L) |
+| 475 | ⬇⬆ JSON | ⬇⬆ JSON |
+| 475 | Exporte ou importe la définition des tableaux de bord pour les réutiliser sur un autre modèle. | Exports or imports the dashboard definitions to reuse them on another model. |
+| 476 | #cap-view-dashboard .dash-scroll | (inchangé, hors _L) |
+| 476 | 📐 Page | 📐 Page |
+| 476 | Les éléments du tableau de bord, calculés sur le modèle chargé. | The dashboard items, computed on the loaded model. |
+| 480 | 🚀 Bien démarrer | 🚀 Getting started |
+| 482 | 1 · Ouvrir un modèle | 1 · Open a model |
+| 483 | Glissez-déposez votre fichier ou le dossier du projet n'importe où sur la page : Capella, SysML v2 ou UML / SysML v1, le format est reconnu. Le fichier est lu sur ce poste : rien n'est envoyé. | Drag and drop your file or the project folder anywhere on the page: Capella, SysML v2 or UML / SysML v1, the format is recognised. The file is read on this computer: nothing is sent. |
+| 484 | … ou partir de votre format | … or start from your format |
+| 485 | Chaque carte dit quoi ouvrir et ce que vous obtiendrez : Capella (le dossier du projet charge aussi le .aird et les bibliothèques), SysML v2 (.sysml, .kpar ou un dossier de .sysml), UML / SysML v1 (.mdzip de Cameo, .qea d'Enterprise Architect, .uml + .notation de Papyrus, .xmi). | Each card says what to open and what you will get: Capella (the project folder also loads the .aird and the libraries), SysML v2 (.sysml, .kpar or a folder of .sysml files), UML / SysML v1 (Cameo .mdzip, Enterprise Architect .qea, Papyrus .uml + .notation, .xmi). |
+| 486 | … ou reprendre un projet de travail | … or resume a work project |
+| 487 | 📄 Ouvrir une page de projet… rouvre une page enregistrée avec 💾, même par une version précédente d'Arcalyse (à partir de la 2.1) : vous choisissez ce qui est repris (modèle, diagrammes, revue, accueil, tableaux de bord, vues, réglages). Pensez ensuite à l'enregistrer : elle passe dans la nouvelle version. | 📄 Open a project page… reopens a page saved with 💾, even by an earlier version of Arcalyse (2.1 or later): you choose what is carried over (model, diagrams, review, home, dashboards, views, settings). Then remember to save it: it moves to the new version. |
+| 488 | #b-help, #cap-nav-dd | (inchangé, hors _L) |
+| 488 | ❓ Aide, en haut à droite | ❓ Help, top right |
+| 489 | Le menu ❓ Aide ▾ reste accessible à tout moment, avec ou sans modèle : 📖 Aide complète et 🎓 Visite guidée . Une fois le modèle ouvert, il propose aussi 🎯 Visite de cette vue pour chaque vue. | The ❓ Help ▾ menu remains available at any time, with or without a model: 📖 Full help and 🎓 Guided tour . Once the model is open, it also offers 🎯 Tour of this view for each view. |
+| 490 | À vous ! | Your turn! |
+| 491 | Cliquez sur Terminer ✓ , puis ouvrez votre fichier. Dès que le modèle sera chargé, la visite reprendra pour vous montrer où trouver l'aide et les tutoriels. | Click Finish ✓ , then open your file. As soon as the model is loaded, the tour will resume to show you where to find the help and tutorials. |
+| 495 | ✅ Modèle ouvert | ✅ Model open |
+| 496 | Votre modèle est chargé. Voici où trouver l'aide et les tutoriels, à tout moment. | Your model is loaded. Here is where to find the help and tutorials, at any time. |
+| 497 | 🏠 Accueil du projet | 🏠 Project home |
+| 498 | La vue affichée à l'ouverture : en-tête et fiche du projet, tâches courantes, contenu, santé et revue du modèle. Revenez-y à tout moment par ce bouton. | The view shown on opening: project header and sheet, common tasks, content, health and review of the model. Come back to it at any time with this button. |
+| 499 | ❓ Aide | ❓ Help |
+| 500 | L'aide et toutes les visites guidées sont regroupées dans ce menu. | The help and all the guided tours are grouped in this menu. |
+| 501 | 📚 Aide et tutoriels | 📚 Help and tutorials |
+| 502 | 📖 Aide complète : documentation de toutes les vues. 🎓 Visite guidée : tour complet de l'interface. 🎯 Visite de cette vue : menus et commandes de la vue affichée — disponible dans chaque vue. | 📖 Full help : documentation of all the views. 🎓 Guided tour : full tour of the interface. 🎯 Tour of this view : menus and commands of the displayed view — available in each view. |
+| 503 | 🧭 Et maintenant | 🧭 What next |
+| 504 | Choisissez une vue dans cette barre, puis ❓ Aide ▾ → 🎯 Visite de cette vue pour la découvrir pas à pas. | Choose a view in this bar, then ❓ Help ▾ → 🎯 Tour of this view to discover it step by step. |
+| 512 | 💬 Revue | 💬 Review |
+| 512 | Commentaires de revue sur le modèle et les diagrammes : qui commente quoi, criticité, statut, échéance, réponses. Ils sont enregistrés dans la page (💾). | Review comments on the model and the diagrams: who comments on what, criticality, status, due date, replies. They are saved in the page (💾). |
+| 513 | 💬 Revue & documents | 💬 Review & documents |
+| 514 | #crv-panel .crv-tabs | (inchangé, hors _L) |
+| 514 | 🗂 Onglets | 🗂 Tabs |
+| 514 | 💬 Commentaires (liste, filtres) · 🔁 Vérifier (après une mise à jour) · 📄 Rapport · ⚙ Réglages . | 💬 Comments (list, filters) · 🔁 Check (after an update) · 📄 Report · ⚙ Settings . |
+| 515 | ✚ Nouveau commentaire | ✚ New comment |
+| 515 | Sur l'élément du panneau de détail, ou commentaire général. Seul le texte est obligatoire. On commente aussi par clic droit sur un élément dans les vues, depuis le panneau de détail (💬 à côté du nom, de la description, des attributs) et par 📝 Note de revue sur un diagramme. | On the element of the detail panel, or general comment. Only the text is required. You can also comment by right-click on an element in the views, from the detail panel (💬 next to the name, the description, the attributes) and with 📝 Review note on a diagram. |
+| 516 | #crv-panel .crv-filters | (inchangé, hors _L) |
+| 516 | 🔍 Recherche et filtres | 🔍 Search and filters |
+| 516 | Texte, statut, criticité, personne, portée (diagramme ouvert, élément du panneau de détail, en retard, qui me sont attribués), tri. Clic sur une carte : texte complet, réponses, statut. | Text, status, criticality, person, scope (open diagram, element of the detail panel, overdue, assigned to me), sort. Click a card: full text, replies, status. |
+| 517 | 💾 Revue ▾ | 💾 Review ▾ |
+| 517 | ⬇ Exporter les commentaires (.json), 📂 Importer / fusionner une revue (.json ou page de revue ciblée relue), 📤 Revue ciblée : page HTML à faire relire par d'autres personnes. | ⬇ Export the comments (.json), 📂 Import / merge a review (.json or reviewed targeted review page), 📤 Targeted review : HTML page to be reviewed by other people. |
+| 518 | ⧉ Fenêtre séparée | ⧉ Separate window |
+| 519 | 🔁 Vérifier | 🔁 Check |
+| 520 | 📄 Rapport | 📄 Report |
+| 520 | Synthèse statut × criticité, 📄 Rapport HTML imprimable, ⬇ CSV , et 📤 Revue ciblée : les relecteurs répondent dans une page autonome, leurs réponses se réimportent ici. | Status × criticality summary, 📄 HTML report printable, ⬇ CSV , and 📤 Targeted review : reviewers answer in a standalone page, their answers are imported back here. |
+| 521 | ⚙ Réglages | ⚙ Settings |
+| 521 | Votre nom (auteur des commentaires), participants, champs proposés dans l'éditeur, calque des notes sur les diagrammes, marque 💬 des éléments commentés. | Your name (author of the comments), participants, fields offered in the editor, notes layer on the diagrams, 💬 mark on commented elements. |
+| 522 | ✅ À vous | ✅ Your turn |
+| 522 | Cette visite se relance par 🎓 en haut du panneau ou par ❓ Aide ▾ → 💬 Visite de la revue . L'aide complète a un onglet 💬 Revue. | This tour can be restarted with 🎓 at the top of the panel or with ❓ Help ▾ → 💬 Review tour . The full help has a 💬 Review tab. |
+| 525 | 📜 Scripts (macros) | 📜 Scripts (macros) |
+| 525 | Des scripts JavaScript parcourent et analysent le modèle affiché par une API (celle d'Arcature, en lecture seule), comme les macros de Catia Magic ou Python4Capella. Ils tournent isolés : ni page, ni fichier, ni réseau. | JavaScript scripts browse and analyse the displayed model through an API (Arcature's, read-only), like Catia Magic macros or Python4Capella. They run isolated: no page, no file, no network. |
+| 526 | 📜 Ouvrir la console | 📜 Open the console |
+| 526 | Alt+4 , menu 💬 Revue & documents › 📜 Scripts (mode Complet) ou recherche 🔍 « Scripts ». | Alt+4 , menu 💬 Review & documents › 📜 Scripts (Full mode) or 🔍 search “Scripts”. |
+| 527 | 📚 Bibliothèque | 📚 Library |
+| 527 | Exemples fournis (fonctions sans description, non allouées, matrice d'allocation, statistiques, santé et contrôles, traçabilité, chaînes, exigences, qualité des noms…), scripts du projet et du dossier partagé . Choisir un script l'affiche dans l'éditeur. | Examples provided (functions without description, unallocated, allocation matrix, statistics, health and checks, traceability, chains, requirements, name quality…), scripts of the project and of the shared folder . Choosing a script shows it in the editor. |
+| 528 | #scr-nouveau,#scr-enregistrer,#scr-supprimer,#scr-importer,#scr-exporter,#scr-dossier | (inchangé, hors _L) |
+| 528 | 💾 Enregistrer, importer, exporter | 💾 Save, import, export |
+| 528 | ＋ nouveau script · 💾 enregistre dans le projet (gardé dans la 💾 page HTML) ou dans le dossier partagé · 🗑 supprime · 📂 importe des fichiers .js · ⬇ exporte le script affiché · 📁 dossier de scripts partagé (Chrome / Edge). | ＋ new script · 💾 saves in the project (kept in the 💾 HTML page) or in the shared folder · 🗑 removes · 📂 imports .js files · ⬇ exports the displayed script · 📁 shared script folder (Chrome / Edge). |
+| 529 | ✏ Éditeur | ✏ Editor |
+| 529 | Le script. Il voit model , metamodel , analysis , out , ui et console . Par exemple : out.print(model.count()) affiche le nombre d'éléments du modèle. Tab indente, Ctrl+Entrée exécute. | The script. It sees model , metamodel , analysis , out , ui and console . For instance: out.print(model.count()) prints the number of elements of the model. Tab indents, Ctrl+Enter runs. |
+| 530 | #scr-executer,#scr-arreter,#scr-effacer | (inchangé, hors _L) |
+| 530 | ▶ Exécuter | ▶ Run |
+| 531 | 📋 Sortie | 📋 Output |
+| 531 | out.print écrit une ligne, out.table un tableau (bouton ⬇ CSV ), out.file propose un fichier. Les éléments sont des liens : un clic ouvre le panneau de détail. Une erreur indique la ligne du script (clic : l'éditeur s'y place). Les questions du script ( ui.ask , ui.choose …) s'affichent ici. | out.print writes a line, out.table a table (button ⬇ CSV ), out.file offers a file. Elements are links : a click opens the detail panel. An error gives the line of the script (click: the editor goes there). The script's questions ( ui.ask , ui.choose …) appear here. |
+| 532 | 📖 Référence | 📖 Reference |
+| 533 | ✅ À vous | ✅ Your turn |
+| 533 | Cette visite se relance par 🎓 dans la console ou par ❓ Aide ▾ → 📜 Visite des scripts . | This tour can be restarted with 🎓 in the console or by ❓ Help ▾ → 📜 Scripts tour . |
+| 536 | 🔎 Panneau de détail | 🔎 Detail panel |
+| 537 | #cap-detail-content .cap-type-badge, #cap-detail-content h3 | (inchangé, hors _L) |
+| 537 | 🏷 En-tête | 🏷 Header |
+| 537 | Type de l'élément (et ce que ce type désigne), icône et nom. Un clic sur un nom de lien, partout dans le panneau, ouvre la fiche de cet autre élément : l'historique ◀ ▶ permet de revenir. | Element type (and what this type means), icon and name. A click on a linked name, anywhere in the panel, opens that other element's sheet: the ◀ ▶ history takes you back. |
+| 538 | #cap-detail .crv-det-bar | (inchangé, hors _L) |
+| 538 | 💬 Commenter | 💬 Comment |
+| 538 | Crée un commentaire de 💬 Revue sur l'élément, sur son nom, sa description ou un attribut (💬 à côté de chacun) : il est vérifié après une mise à jour du modèle (valeur changée, élément disparu). | Creates a 💬 Review comment on the element, its name, its description or an attribute (💬 next to each): it is checked after a model update (changed value, element gone). |
+| 539 | #cap-detail .cap-det-tabs | (inchangé, hors _L) |
+| 539 | 🗂 Onglets | 🗂 Tabs |
+| 540 | 📋 Fiche | 📋 Sheet |
+| 540 | Description (mise en forme comme dans l'outil d'origine) et attributs de l'élément : identifiant, propriétés, stéréotypes et leurs valeurs pour SysML / UML. | Description (formatted as in the source tool) and attributes of the element: identifier, properties, stereotypes and their values for SysML / UML. |
+| 541 | 🔗 Liens | 🔗 Links |
+| 541 | Références sortantes et entrantes (navigation inverse), propriétaire et éléments contenus, groupés par type et paginés. Clic : ouvrir l'élément. | Outgoing and incoming references (reverse navigation), owner and contained elements, grouped by type and paged. Click: open the element. |
+| 542 | #cap-detail .csb | (inchangé, hors _L) |
+| 542 | 🧭 Sémantique | 🧭 Semantic |
+| 543 | 🔲 Diagrammes | 🔲 Diagrams |
+| 544 | 🔬 Analyses | 🔬 Analyses |
+| 545 | #cap-detail .cap-det-popb | (inchangé, hors _L) |
+| 545 | ⧉ Fenêtre séparée | ⧉ Separate window |
+| 546 | #b-hist-back, #b-hist-fwd | (inchangé, hors _L) |
+| 546 | ◀ ▶ Historique | ◀ ▶ History |
+| 547 | × Fermer | × Close |
+| 548 | ✅ À vous | ✅ Your turn |
+| 548 | Cette visite se relance par 🎓 en haut du panneau ou par ❓ Aide ▾ → 🔎 Visite du panneau de détail . | This tour can be restarted with 🎓 at the top of the panel or with ❓ Help ▾ → 🔎 Detail panel tour . |
+| 551 | #cap-pref-ov .cw-d-box | (inchangé, hors _L) |
+| 551 | ⚙ Préférences | ⚙ Preferences |
+| 552 | #cap-pref-ov .cap-pref-nav | (inchangé, hors _L) |
+| 552 | 🗂 Rubriques | 🗂 Sections |
+| 552 | Affichage, Thème, Suivi du fichier, Enregistrement, Interface et vues, Contrôles et nommage, Exports. | Display, Theme, File watching, Saving, Interface and views, Checks and naming, Exports. |
 | 553 | #cap-pref-ov .cap-pref-main | (inchangé, hors _L) |
-| 553 | 🔄 Suivi du fichier | 🔄 File watch |
-| 553 | Détection des nouvelles versions du .capella enregistrées par Capella (périodique, au retour dans la fenêtre) : vous êtes prévenu, rien n'est appliqué sans validation. | Detection of new versions of the .capella saved by Capella (periodic, when coming back to the window): you are notified, nothing is applied without validation. |
+| 553 | ☰ Affichage | ☰ Display |
 | 554 | #cap-pref-ov .cap-pref-main | (inchangé, hors _L) |
-| 554 | 💾 Enregistrement | 💾 Saving |
-| 554 | Enregistrement automatique de la page dans son fichier, seulement si quelque chose a changé, et fichier de secours avec la version précédente (Edge ou Chrome). | Automatic saving of the page into its file, only when something has changed, and a backup file with the previous version (Edge or Chrome). |
+| 554 | 🎨 Thème | 🎨 Theme |
 | 555 | #cap-pref-ov .cap-pref-main | (inchangé, hors _L) |
-| 555 | ⚙ Interface et vues | ⚙ Interface and views |
+| 555 | 🔄 Suivi du fichier | 🔄 File watch |
+| 555 | Détection des nouvelles versions du .capella enregistrées par Capella (périodique, au retour dans la fenêtre) : vous êtes prévenu, rien n'est appliqué sans validation. | Detection of new versions of the .capella saved by Capella (periodic, when coming back to the window): you are notified, nothing is applied without validation. |
 | 556 | #cap-pref-ov .cap-pref-main | (inchangé, hors _L) |
-| 556 | 🩺 Contrôles et nommage | 🩺 Checks and naming |
+| 556 | 💾 Enregistrement | 💾 Saving |
+| 556 | Enregistrement automatique de la page dans son fichier, seulement si quelque chose a changé, et fichier de secours avec la version précédente (Edge ou Chrome). | Automatic saving of the page into its file, only when something has changed, and a backup file with the previous version (Edge or Chrome). |
 | 557 | #cap-pref-ov .cap-pref-main | (inchangé, hors _L) |
-| 557 | ⬇ Exports | ⬇ Exports |
-| 558 | ⚙ Menu de la barre | ⚙ Bar menu |
-| 558 | Accès rapide : niveau des menus, icônes seules, ⚙ Préférences…. | Quick access: menu level, icons only, ⚙ Preferences…. |
-| 559 | ✅ À vous | ✅ Your turn |
-| 559 | Cette visite se relance par 🎓 en haut de la fenêtre ⚙ Préférences ou par ❓ Aide ▾ → ⚙ Visite des préférences . | This tour can be restarted with 🎓 at the top of the ⚙ Preferences window or through ❓ Help ▾ → ⚙ Preferences tour . |
-| 579 | Ouvrez d'abord un modèle. | Open a model first. |
-| 588 | ⧉ Comparaison de diagrammes | ⧉ Diagram comparison |
-| 588 | Une fenêtre séparée pour afficher un second diagramme à côté de celui de 🔲 Diagrammes, par exemple sur un autre écran, et les comparer. Il n'y en a qu'une : chaque nouvelle demande la réutilise. | A separate window to show a second diagram next to the one in 🔲 Diagrams, for example on another screen, and compare them. There is only one: each new request reuses it. |
-| 589 | 🔲 Diagramme affiché | 🔲 Displayed diagram |
-| 589 | Choisissez le diagramme de cette fenêtre, rangés par couche (ou par famille pour SysML / UML). Les tableaux et matrices n'y sont pas proposés. | Choose the diagram of this window, sorted by layer (or by family for SysML / UML). Tables and matrices are not offered. |
-| 590 | .dgw-barre .tb-grp | (inchangé, hors _L) |
-| 590 | 🔍 Zoom | 🔍 Zoom |
-| 590 | − / + zooment, le pourcentage indique l'échelle, ⤢ Ajuster remet le diagramme entier dans la fenêtre. | − / + zoom, the percentage shows the scale, ⤢ Fit fits the whole diagram back in the window. |
-| 591 | 🖼 Dessin | 🖼 Drawing |
-| 591 | Molette : zoom autour du pointeur · glisser : déplacer · clic sur un élément : sa fiche dans le panneau de détail de la page principale. | Wheel : zoom around the pointer · drag : move · click on an element : its sheet in the detail panel of the main page. |
-| 592 | ⧉ L'ouvrir | ⧉ Opening it |
-| 592 | Depuis 🔲 Diagrammes : bouton ⧉ Comparer de la barre (diagramme ouvert), ou clic droit sur un diagramme de l'explorateur ou dans le diagramme ouvert. Elle se ferme d'elle-même quand un autre .aird ou un autre modèle est chargé. Autorisez les fenêtres surgissantes pour la page. | From 🔲 Diagrams: the ⧉ Compare button of the bar (open diagram), or right-click on a diagram of the explorer or in the open diagram. It closes by itself when another .aird or another model is loaded. Allow pop-up windows for the page. |
-| 593 | ✅ À vous | ✅ Your turn |
-| 593 | Cette visite se relance par 🎓 dans la barre de cette fenêtre ou par ❓ Aide ▾ → ⧉ Visite de la fenêtre de comparaison . | This tour can be restarted with 🎓 in the bar of this window or through ❓ Help ▾ → ⧉ Comparison window tour . |
-| 596 | Ouvrez d'abord un modèle et ses diagrammes (🔲 Diagrammes). | Open a model and its diagrams first (🔲 Diagrams). |
-| 604 | Ouvrez d'abord un modèle. | Open a model first. |
-| 647 | Pour un modèle UML / SysML v1 : la famille 🧬 UML / SysML v1 (modèle, blocs & ports, interfaces, activités, machines à états, interactions, cas d'utilisation, paquetages), 🧾 exigences SysML, ⇶ traçabilité par niveaux, 🔒 paramétrique & contraintes, ⚖ budgets, 💚 santé & contrôles, ⚖ comparaison de versions. | For a UML / SysML v1 model: the 🧬 UML / SysML v1 family (model, blocks & ports, interfaces, activities, state machines, interactions, use cases, packages), 🧾 SysML requirements, ⇶ traceability by levels, 🔒 parametrics & constraints, ⚖ budgets, 💚 health & checks, ⚖ version comparison. |
-| 648 | Pour un modèle SysML v2 : 🧩 SysML v2 (éléments, liaisons, diagnostics), 💚 santé & contrôles, ⚖ comparaison de versions. | For a SysML v2 model: 🧩 SysML v2 (elements, links, diagnostics), 💚 health & checks, ⚖ version comparison. |
-| 649 | Pour un fichier ReqIF : 📑 ReqIF (document, exigences, relations, types, pièces jointes, contrôles), 💚 santé & contrôles, ⚖ comparaison de versions. | For a ReqIF file: 📑 ReqIF (document, requirements, relations, types, attachments, checks), 💚 health & checks, ⚖ version comparison. |
-| 764 | Étape | … ✕ … Step … / … ◀ Previous … |
-| 766 | ◀ Précédent | … ✕ … Step … / … ◀ Previous … |
-| 767 | Terminer ✓ | Finish ✓ |
-| 767 | Suivant ▶ | Next ▶ |
+| 557 | ⚙ Interface et vues | ⚙ Interface and views |
+| 558 | #cap-pref-ov .cap-pref-main | (inchangé, hors _L) |
+| 558 | 🩺 Contrôles et nommage | 🩺 Checks and naming |
+| 559 | #cap-pref-ov .cap-pref-main | (inchangé, hors _L) |
+| 559 | ⬇ Exports | ⬇ Exports |
+| 560 | ⚙ Menu de la barre | ⚙ Bar menu |
+| 560 | Accès rapide : niveau des menus, icônes seules, ⚙ Préférences…. | Quick access: menu level, icons only, ⚙ Preferences…. |
+| 561 | ✅ À vous | ✅ Your turn |
+| 561 | Cette visite se relance par 🎓 en haut de la fenêtre ⚙ Préférences ou par ❓ Aide ▾ → ⚙ Visite des préférences . | This tour can be restarted with 🎓 at the top of the ⚙ Preferences window or through ❓ Help ▾ → ⚙ Preferences tour . |
+| 581 | Ouvrez d'abord un modèle. | Open a model first. |
+| 590 | ⧉ Comparaison de diagrammes | ⧉ Diagram comparison |
+| 590 | Une fenêtre séparée pour afficher un second diagramme à côté de celui de 🔲 Diagrammes, par exemple sur un autre écran, et les comparer. Il n'y en a qu'une : chaque nouvelle demande la réutilise. | A separate window to show a second diagram next to the one in 🔲 Diagrams, for example on another screen, and compare them. There is only one: each new request reuses it. |
+| 591 | 🔲 Diagramme affiché | 🔲 Displayed diagram |
+| 591 | Choisissez le diagramme de cette fenêtre, rangés par couche (ou par famille pour SysML / UML). Les tableaux et matrices n'y sont pas proposés. | Choose the diagram of this window, sorted by layer (or by family for SysML / UML). Tables and matrices are not offered. |
+| 592 | .dgw-barre .tb-grp | (inchangé, hors _L) |
+| 592 | 🔍 Zoom | 🔍 Zoom |
+| 592 | − / + zooment, le pourcentage indique l'échelle, ⤢ Ajuster remet le diagramme entier dans la fenêtre. | − / + zoom, the percentage shows the scale, ⤢ Fit fits the whole diagram back in the window. |
+| 593 | 🖼 Dessin | 🖼 Drawing |
+| 593 | Molette : zoom autour du pointeur · glisser : déplacer · clic sur un élément : sa fiche dans le panneau de détail de la page principale. | Wheel : zoom around the pointer · drag : move · click on an element : its sheet in the detail panel of the main page. |
+| 594 | ⧉ L'ouvrir | ⧉ Opening it |
+| 594 | Depuis 🔲 Diagrammes : bouton ⧉ Comparer de la barre (diagramme ouvert), ou clic droit sur un diagramme de l'explorateur ou dans le diagramme ouvert. Elle se ferme d'elle-même quand un autre .aird ou un autre modèle est chargé. Autorisez les fenêtres surgissantes pour la page. | From 🔲 Diagrams: the ⧉ Compare button of the bar (open diagram), or right-click on a diagram of the explorer or in the open diagram. It closes by itself when another .aird or another model is loaded. Allow pop-up windows for the page. |
+| 595 | ✅ À vous | ✅ Your turn |
+| 595 | Cette visite se relance par 🎓 dans la barre de cette fenêtre ou par ❓ Aide ▾ → ⧉ Visite de la fenêtre de comparaison . | This tour can be restarted with 🎓 in the bar of this window or through ❓ Help ▾ → ⧉ Comparison window tour . |
+| 598 | Ouvrez d'abord un modèle et ses diagrammes (🔲 Diagrammes). | Open a model and its diagrams first (🔲 Diagrams). |
+| 606 | Ouvrez d'abord un modèle. | Open a model first. |
+| 649 | Pour un modèle UML / SysML v1 : la famille 🧬 UML / SysML v1 (modèle, blocs & ports, interfaces, activités, machines à états, interactions, cas d'utilisation, paquetages), 🧾 exigences SysML, ⇶ traçabilité par niveaux, 🔒 paramétrique & contraintes, ⚖ budgets, 💚 santé & contrôles, ⚖ comparaison de versions. | For a UML / SysML v1 model: the 🧬 UML / SysML v1 family (model, blocks & ports, interfaces, activities, state machines, interactions, use cases, packages), 🧾 SysML requirements, ⇶ traceability by levels, 🔒 parametrics & constraints, ⚖ budgets, 💚 health & checks, ⚖ version comparison. |
+| 650 | Pour un modèle SysML v2 : 🧩 SysML v2 (éléments, liaisons, diagnostics), 💚 santé & contrôles, ⚖ comparaison de versions. | For a SysML v2 model: 🧩 SysML v2 (elements, links, diagnostics), 💚 health & checks, ⚖ version comparison. |
+| 651 | Pour un fichier ReqIF : 📑 ReqIF (document, exigences, relations, types, pièces jointes, contrôles), 💚 santé & contrôles, ⚖ comparaison de versions. | For a ReqIF file: 📑 ReqIF (document, requirements, relations, types, attachments, checks), 💚 health & checks, ⚖ version comparison. |
+| 766 | Étape | … ✕ … Step … / … ◀ Previous … |
+| 768 | ◀ Précédent | … ✕ … Step … / … ◀ Previous … |
+| 769 | Terminer ✓ | Finish ✓ |
+| 769 | Suivant ▶ | Next ▶ |
 
 ## js/44-functional-exchange.js
 
@@ -4933,77 +5097,83 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 197 | recherche « | search “…” |
 | 197 | ligne(s) exclue(s) | … row(s) excluded |
 | 198 | Comparaison de versions | Version comparison |
-| 208 | Catégorie | Category … Total … |
-| 208 | Total | Category … Total … |
-| 208 | Hors couche | No layer |
-| 212 | changement(s) | ⚖ … … → … · … · … change(s)… |
-| 212 | · filtres : | · filters: |
-| 214 | Famille | Family … … |
-| 225 | Propriété | Property Before After … |
-| 225 | Avant | Property Before After … |
-| 225 | Après | Property Before After … |
-| 236 | changement(s) | ⚖ … — … → … (…) — … change(s) |
-| 237 | Filtres : | Filters: |
-| 240 | Par famille : | By family: |
-| 259 | Catégorie | Category |
-| 259 | Couche | Layer |
-| 259 | Famille | Family |
-| 259 | Type | (inchangé, hors _L) |
-| 259 | Élément | Element |
-| 259 | Ancien nom | Old name |
-| 259 | Parent | (inchangé, hors _L) |
-| 259 | Propriété | Property |
-| 259 | Avant | Before |
-| 259 | Après | After |
-| 259 | Résumé | Summary |
-| 259 | Chemin | Path |
-| 274 | ** changement(s) | **…** → **…** · … · **…** change(s)… |
-| 274 | · filtres : | · filters: |
-| 276 | \| Catégorie \| | \| Category \| … \| Total \| |
-| 276 | \| Total \| | \| Category \| … \| Total \| |
-| 286 | \| Propriété \| Avant \| Après \| | \| Property \| Before \| After \| |
-| 336 | Synthèse | Summary |
-| 336 | Compteurs par catégorie, couche et famille | Counts by category, layer and family |
-| 336 | Simple | Simple |
-| 336 | Une phrase par changement | One sentence per change |
-| 336 | Détaillé | Detailed |
-| 336 | Avec chaque propriété avant → après | With each property before → after |
-| 336 | Complet | Full |
-| 336 | Avec identifiant, type technique et chemin | With identifier, technical type and path |
-| 337 | Catégorie | Category |
-| 337 | Couche | Layer |
-| 337 | Famille | Family |
-| 337 | Élément parent | Parent element |
-| 338 | 📋 Copier (mis en forme) | 📋 Copy (formatted) |
-| 338 | Pour Word, Outlook, Teams, OneNote : titres, listes, tableaux et couleurs | For Word, Outlook, Teams, OneNote: headings, lists, tables and colours |
-| 338 | 📋 Copier (texte brut) | 📋 Copy (plain text) |
-| 338 | Lignes indentées, pour un e-mail simple ou un outil de suivi | Indented lines, for a simple e-mail or a tracking tool |
-| 338 | 📋 Copier (tableau Excel) | 📋 Copy (Excel table) |
-| 338 | Une ligne par changement, colonnes séparées par des tabulations | One row per change, tab-separated columns |
-| 338 | 📋 Copier (Markdown) | 📋 Copy (Markdown) |
-| 338 | Pour GitLab / GitHub, wiki | For GitLab / GitHub, wiki |
-| 353 | Propriété Avant Après | Property Before After … |
-| 354 | lignes affichées sur | … rows shown out of … — the copy and exports contain everything. |
-| 354 | — la copie et les exports contiennent tout. | … rows shown out of … — the copy and exports contain everything. |
-| 355 | Aucun changement pour ces filtres. | No change for these filters. |
-| 358 | Niveau | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
-| 360 | Préréglage 📰 Notes de version 🔍 Revue 🛠 Audit Catégories | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
-| 367 | ✱ Couches | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
-| 371 | Toutes familles | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
-| 371 | Hors couche | No layer |
-| 371 | Aucune sélection = toutes | No selection = all |
-| 373 | Regrouper par | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
-| 375 | Rattacher le technique à son élément | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
-| 378 | changement(s) retenu(s) | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
-| 378 | exclu(s) ↺ tout réinclure | · … excluded ↺ include all again |
-| 380 | 📋 Copier ⬇ CSV ⬇ HTML 🖨 Imprimer | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
-| 380 | 📋 Copier ( | 📋 Copy ( |
-| 380 | Format : | Format: |
-| 418 | ✔ Copié | ✔ Copied |
-| 418 | ⚠ Copie impossible | ⚠ Copy failed |
-| 418 | 📋 Copier | 📋 Copy |
-| 422 | Comparaison de versions | Version comparison … |
-| 427 | Fenêtre bloquée par le navigateur : utilisez ⬇ HTML puis imprimez le fichier. | Window blocked by the browser: use ⬇ HTML then print the file. |
+| 209 | Catégorie | Category … Total … |
+| 209 | Total | Category … Total … |
+| 209 | Hors couche | No layer |
+| 213 | changement(s) | ⚖ … … → … · … · … change(s)… |
+| 213 | · filtres : | · filters: |
+| 214 | Ancienne : | Old: |
+| 214 | Nouvelle : | New: |
+| 217 | Famille | Family … … |
+| 228 | Propriété | Property Before After … |
+| 228 | Avant | Property Before After … |
+| 228 | Après | Property Before After … |
+| 242 | changement(s) | ⚖ … — … → … (…) — … change(s) |
+| 243 | Filtres : | Filters: |
+| 244 | Ancienne : | Old: |
+| 244 | Nouvelle : | New: |
+| 249 | Par famille : | By family: |
+| 268 | Catégorie | Category |
+| 268 | Couche | Layer |
+| 268 | Famille | Family |
+| 268 | Type | (inchangé, hors _L) |
+| 268 | Élément | Element |
+| 268 | Ancien nom | Old name |
+| 268 | Parent | (inchangé, hors _L) |
+| 268 | Propriété | Property |
+| 268 | Avant | Before |
+| 268 | Après | After |
+| 268 | Résumé | Summary |
+| 268 | Chemin | Path |
+| 283 | ** changement(s) | **…** → **…** · … · **…** change(s)… |
+| 283 | · filtres : | · filters: |
+| 284 | - Ancienne : | - Old: |
+| 284 | - Nouvelle : | - New: |
+| 288 | \| Catégorie \| | \| Category \| … \| Total \| |
+| 288 | \| Total \| | \| Category \| … \| Total \| |
+| 298 | \| Propriété \| Avant \| Après \| | \| Property \| Before \| After \| |
+| 348 | Synthèse | Summary |
+| 348 | Compteurs par catégorie, couche et famille | Counts by category, layer and family |
+| 348 | Simple | Simple |
+| 348 | Une phrase par changement | One sentence per change |
+| 348 | Détaillé | Detailed |
+| 348 | Avec chaque propriété avant → après | With each property before → after |
+| 348 | Complet | Full |
+| 348 | Avec identifiant, type technique et chemin | With identifier, technical type and path |
+| 349 | Catégorie | Category |
+| 349 | Couche | Layer |
+| 349 | Famille | Family |
+| 349 | Élément parent | Parent element |
+| 350 | 📋 Copier (mis en forme) | 📋 Copy (formatted) |
+| 350 | Pour Word, Outlook, Teams, OneNote : titres, listes, tableaux et couleurs | For Word, Outlook, Teams, OneNote: headings, lists, tables and colours |
+| 350 | 📋 Copier (texte brut) | 📋 Copy (plain text) |
+| 350 | Lignes indentées, pour un e-mail simple ou un outil de suivi | Indented lines, for a simple e-mail or a tracking tool |
+| 350 | 📋 Copier (tableau Excel) | 📋 Copy (Excel table) |
+| 350 | Une ligne par changement, colonnes séparées par des tabulations | One row per change, tab-separated columns |
+| 350 | 📋 Copier (Markdown) | 📋 Copy (Markdown) |
+| 350 | Pour GitLab / GitHub, wiki | For GitLab / GitHub, wiki |
+| 365 | Propriété Avant Après | Property Before After … |
+| 366 | lignes affichées sur | … rows shown out of … — the copy and exports contain everything. |
+| 366 | — la copie et les exports contiennent tout. | … rows shown out of … — the copy and exports contain everything. |
+| 367 | Aucun changement pour ces filtres. | No change for these filters. |
+| 370 | Niveau | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 372 | Préréglage 📰 Notes de version 🔍 Revue 🛠 Audit Catégories | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 379 | ✱ Couches | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 383 | Toutes familles | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 383 | Hors couche | No layer |
+| 383 | Aucune sélection = toutes | No selection = all |
+| 385 | Regrouper par | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 387 | Rattacher le technique à son élément | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 390 | changement(s) retenu(s) | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 390 | exclu(s) ↺ tout réinclure | · … excluded ↺ include all again |
+| 392 | 📋 Copier ⬇ CSV ⬇ HTML 🖨 Imprimer | Level … Preset 📰 Release notes 🔍 Review 🛠 Audit Categories … ✱ Layers … All families … Group by … Attach technical elements to their element … change(s) kept… … 📋 Copy ⬇ CSV ⬇ HTML 🖨 Print … |
+| 392 | 📋 Copier ( | 📋 Copy ( |
+| 392 | Format : | Format: |
+| 430 | ✔ Copié | ✔ Copied |
+| 430 | ⚠ Copie impossible | ⚠ Copy failed |
+| 430 | 📋 Copier | 📋 Copy |
+| 434 | Comparaison de versions | Version comparison … |
+| 439 | Fenêtre bloquée par le navigateur : utilisez ⬇ HTML puis imprimez le fichier. | Window blocked by the browser: use ⬇ HTML then print the file. |
 
 ## js/46-config-interface.js
 
@@ -5444,240 +5614,241 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 
 | Ligne | Texte | Anglais |
 |---:|---|---|
-| 41 | Diagrammes et vues | Diagrams and views |
-| 41 | Diagrammes Capella | Capella diagrams |
-| 129 | Impossible de lire « | Cannot read “…”. |
-| 135 | Diagrammes « | Diagrams “…” kept: now drop the project's .capella file. |
-| 135 | » gardés : déposez maintenant le fichier .capella du projet. | Diagrams “…” kept: now drop the project's .capella file. |
-| 191 | Relecture du .aird impossible : | ❌ |
-| 196 | 🔲 Diagrammes relus : « | 🔲 Diagrams re-read: “…” was also updated on disk — changes: ⚖ Version comparison › 🔲 Diagrams |
-| 196 | » a aussi été mis à jour sur le disque — changements : ⚖ Comparaison de versions › 🔲 Diagrammes | 🔲 Diagrams re-read: “…” was also updated on disk — changes: ⚖ Version comparison › 🔲 Diagrams |
-| 225 | 🔲 Diagrammes : le .aird est-il à jour ? | 🔲 Diagrams: is the .aird up to date? |
-| 227 | Le modèle vient d'être mis à jour, mais les diagrammes affichés viennent de « | The model has just been updated, but the displayed diagrams come from “ … ”, read before the update. |
-| 227 | », lu avant la mise à jour. | The model has just been updated, but the displayed diagrams come from “ … ”, read before the update. |
-| 228 | Ce fichier n'a pas changé sur le disque : le projet n'a peut-être pas encore été enregistré dans Capella. | This file has not changed on disk: the project may not have been saved in Capella yet. |
-| 229 | élément(s) montré(s) par ces diagrammes n'existent plus dans le modèle mis à jour. | ⚠ … element(s) shown by these diagrams no longer exist in the updated model. |
-| 230 | Capella enregistre le .capella et le .aird ensemble : pour des diagrammes fidèles, ouvrez le .aird de la même version. | Capella saves the .capella and the .aird together: for accurate diagrams, open the .aird of the same version. |
-| 230 | Le .aird actuel servira alors de référence pour ⚖ Comparaison de versions › 🔲 Diagrammes. | The current .aird will then be the reference for ⚖ Version comparison › 🔲 Diagrams. |
-| 232 | Retirer les diagrammes de la page (🔲 Diagrammes Capella vide) | Remove the diagrams from the page (🔲 Capella Diagrams empty) |
-| 232 | 🗑 Retirer les diagrammes | 🗑 Remove the diagrams |
-| 233 | Garder ces diagrammes | Keep these diagrams |
-| 234 | 📂 Choisir le .aird à jour… | 📂 Choose the up-to-date .aird… |
-| 252 | Diagrammes Capella (.aird) | Capella diagrams (.aird) |
-| 292 | Lecture du dossier impossible : | Cannot read the folder: |
-| 340 | Aucun fichier .capella, .sysml, .uml, .xmi, .mdzip, .qea ni .reqif dans ce dossier (ni dans ses sous-dossiers). | No .capella, .sysml, .uml, .xmi, .mdzip, .qea or .reqif file in this folder (nor in its subfolders). |
-| 355 | Lecture impossible : | Cannot read: |
-| 358 | modèles dans ce dossier : lequel ouvrir ? | … models in this folder: which one to open? |
-| 359 | Les autres .capella seront chargés comme bibliothèques si le modèle choisi y fait référence. | The other .capella files will be loaded as libraries if the chosen model refers to them. |
-| 376 | Glisser pour régler la hauteur de la carte (double-clic : hauteur par défaut) | Drag to set the map height (double-click: default height) |
-| 378 | Glisser pour régler la largeur de l'explorateur | Drag to adjust the width of the explorer |
-| 452 | ▣ Carte | ▣ Map |
-| 453 | Afficher la carte dans le diagramme | Show the map in the diagram |
-| 454 | ▣ Carte | ▣ Map |
-| 454 | dans le diagramme | in the diagram |
-| 455 | Afficher la carte sous l'explorateur | Show the map below the explorer |
-| 486 | Glisser : taille de l'affichage (zoom) | Drag: display size (zoom) |
-| 552 | xMinYMin meet | (inchangé, hors _L) |
-| 608 | Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML | Export several diagrams as sheets (header, description, title block, appendix): PDF, PNG / SVG ZIP, HTML report |
-| 608 | ⬇ Exporter… | ⬇ Export… |
-| 609 | Choisir les diagrammes à exporter : cases à cocher dans l'explorateur | Choose the diagrams to export: checkboxes in the explorer |
-| 609 | ☑ Terminer la sélection | ☑ Finish selection |
-| 609 | ☐ Sélectionner… | ☐ Select… |
-| 610 | Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés | Information on the open diagram in the details panel: type, layer, description, represented element, displayed elements |
-| 610 | ℹ Infos | ℹ Info |
-| 611 | ⧉ Comparer | ⧉ Compare |
-| 612 | ⇄ Liens | ⇄ Links |
-| 613 | Choisir le fichier .aird (le sélecteur s'ouvre dans le dossier du .capella quand le navigateur le permet) | Choose the .aird file (the picker opens in the .capella folder when the browser allows it) |
-| 613 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
-| 616 | diagramme(s) · | … diagram(s) · … computed view(s) |
-| 616 | vue(s) calculée(s) | … diagram(s) · … computed view(s) |
-| 616 | Aucun diagramme ni aucune vue calculable dans ce modèle. | No diagram and no computable view in this model. |
-| 617 | diagramme(s) | … diagram(s) |
-| 617 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
-| 661 | vd-barre cdg-vd-l2 | (inchangé, hors _L) |
-| 689 | Dessin du diagramme | Diagram drawing |
-| 689 | 🖼 Visuel | 🖼 Visual |
-| 690 | Rendu textuel : éléments représentés, par type (clic : panneau de détail) | Text rendering: represented elements, by type (click: detail panel) |
-| 690 | ≡ Texte | ≡ Text |
-| 691 | Texte plus petit | Smaller text |
-| 691 | Texte plus grand | Larger text |
-| 719 | élément(s) | … element(s) |
-| 726 | Aucun élément. | No element. |
-| 746 | Mettre en évidence une chaîne fonctionnelle ou un chemin physique dessiné dans ce diagramme | Highlight a functional chain or physical path drawn in this diagram |
-| 753 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
-| 823 | Ne garder que ce qui est affiché dans un diagramme du .aird | Keep only what is shown in a diagram of the .aird |
-| 823 | 🔲 Diagramme | 🔲 Diagram |
-| 824 | Tous les diagrammes | All diagrams |
-| 826 | Liens dessinés : ceux qui figurent dans le diagramme. Entre composants affichés : tous les liens du modèle dont les deux extrémités sont dessinées, même s'ils ne le sont pas eux-mêmes. | Drawn links: those that appear in the diagram. Between shown components: every link of the model whose two ends are drawn, even if the link itself is not. |
-| 827 | entre composants affichés | between shown components |
-| 828 | liens dessinés | drawn links |
-| 829 | Retirer ce filtre | Remove this filter |
-| 884 | Physical Links entre les nœuds affichés (ports physiques, Component Exchanges alloués) | Physical Links between the nodes shown (physical ports, allocated Component Exchanges) |
-| 884 | 🔌 Physical Links | 🔌 Physical Links |
-| 885 | Component Exchanges entre les composants Behavior affichés (ports, Functional Exchanges alloués) | Component Exchanges between the Behavior components shown (ports, allocated Functional Exchanges) |
-| 885 | 🔀 Component Exchanges (Behavior) | 🔀 Component Exchanges (Behavior) |
-| 905 | Ouvrez d'abord un diagramme. | Open a diagram first. |
-| 907 | ⇄ Liens : diagrammes des couches SA, LA et PA seulement. | ⇄ Links: diagrams of the SA, LA and PA layers only. |
-| 926 | Autres | Others |
-| 1073 | Sans élément représenté | No represented element |
-| 1102 | Aucun diagramme ni aucune vue calculable dans ce modèle. | No diagram and no computable view in this model. |
-| 1103 | Aucun .aird chargé. | No .aird loaded. |
-| 1103 | 📂 Ouvrir le .aird… s'ouvre dans le dossier du .capella (Edge / Chrome). | 📂 Open the .aird… opens in the .capella folder (Edge / Chrome). |
-| 1104 | Ou, depuis l'écran d'accueil, 📁 Dossier du projet… : le .capella et ses diagrammes sont chargés ensemble. | Or, from the home screen, 📁 Project folder…: the .capella and its diagrams are loaded together. |
-| 1112 | Cocher / décocher le groupe | Check / uncheck the group |
-| 1121 | Informations du diagramme (panneau de détail) | Diagram information (details panel) |
-| 1150 | Genre › origine | Kind › origin |
-| 1150 | Genre de diagramme | Diagram kind |
-| 1150 | Origine | Origin |
-| 1150 | Nom (A → Z) | Name (A → Z) |
-| 1150 | 🌳 Arborescence | 🌳 Tree |
-| 1151 | Couche › type | Layer › type |
-| 1151 | Couche | Layer |
-| 1151 | Type de diagramme | Diagram type |
-| 1151 | Nom (A → Z) | Name (A → Z) |
-| 1151 | 🌳 Arborescence | 🌳 Tree |
-| 1155 | Filtrer (nom, genre, sigle, origine)… | Filter (name, kind, acronym, origin)… |
-| 1155 | Filtrer (nom, type, sigle, couche)… | Filter (name, type, acronym, layer)… |
-| 1156 | Classement de la liste | List grouping |
-| 1157 | Tout déplier | Expand all |
-| 1157 | Tout replier | Collapse all |
-| 1158 | sélectionné(s) pour l'export | … selected for export |
-| 1158 | diagramme(s) | … diagram(s) |
-| 1160 | sélectionné(s) pour l'export | … selected for export |
-| 1160 | diagramme(s) — cochez pour exporter | … diagram(s) — check to export |
-| 1161 | Aucun diagramme ne correspond. | No matching diagram. |
-| 1263 | var(--c-dim) | (inchangé, hors _L) |
-| 1265 | Diagramme | Diagram |
-| 1265 | Diagramme de séquence | Sequence diagram |
-| 1265 | Tableau | Table |
-| 1266 | 🔲 Diagramme Capella | 🔲 Capella diagram |
-| 1266 | 🔲 Diagramme | 🔲 Diagram … |
-| 1266 | 🔲 Vue calculée | 🔲 Computed … view |
-| 1270 | 🔲 Afficher le diagramme | 🔲 Show the diagram |
-| 1271 | Attributs | Attributes |
-| 1271 | Type | Type |
-| 1271 | Sigle | Acronym |
-| 1272 | Origine | Origin |
-| 1272 | Famille | Family |
-| 1272 | Couche | Layer |
-| 1273 | Nature | Nature |
-| 1274 | Contenu | Content |
-| 1274 | forme(s) · | … shape(s) · … link(s) |
-| 1274 | lien(s) | … shape(s) · … link(s) |
-| 1275 | Éléments | Elements |
-| 1276 | Modifié le | Modified on |
-| 1276 | Fichier | File |
-| 1276 | Clé | Key |
-| 1277 | Description | (inchangé, hors _L) |
-| 1278 | Élément porteur | Owning element |
-| 1278 | Élément représenté | Represented element |
-| 1281 | Éléments affichés ( | Displayed elements (…) |
-| 1305 | Diagrammes ( | Diagrams (…) |
-| 1319 | vue introuvable | view not found |
-| 1333 | export SVG de la visionneuse introuvable | viewer SVG export not found |
-| 1340 | diagramme vide ou non exportable | empty or non-exportable diagram |
-| 1361 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
-| 1362 | Projet Capella | Capella project |
-| 1369 | Projet | Project |
-| 1369 | Couche | Layer |
-| 1370 | Diagramme | Diagram |
-| 1370 | Contenu | Content |
-| 1370 | élément(s) | … element(s) |
-| 1371 | Type | (inchangé, hors _L) |
-| 1371 | Date | Date |
-| 1372 | Sources | Sources |
-| 1372 | Planche | Sheet |
-| 1390 | ) scale( | (inchangé, hors _L) |
-| 1399 | Élément représenté | Represented element |
-| 1401 | ) scale( | (inchangé, hors _L) |
-| 1405 | ) scale( | (inchangé, hors _L) |
-| 1406 | Arcalyse · planche générée le | Arcalyse · sheet generated on … |
-| 1422 | ) scale( | (inchangé, hors _L) |
-| 1494 | Élément représenté | Represented element |
-| 1494 | Description | (inchangé, hors _L) |
-| 1495 | Élément | Element |
-| 1495 | Type | (inchangé, hors _L) |
-| 1495 | Couche | Layer |
-| 1510 | Élément | Element |
-| 1510 | Type | (inchangé, hors _L) |
-| 1510 | Couche | Layer |
-| 1516 | 700 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1517 | 700 28px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1519 | 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1520 | élément(s) représenté(s) | … represented element(s) |
-| 1520 | Planche | Sheet |
-| 1521 | 700 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1524 | 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1561 | ⬇ Exporter des diagrammes | ⬇ Export diagrams |
-| 1563 | Diagrammes | Diagrams |
-| 1564 | Cochés dans la liste | Checked in the list |
-| 1564 | Affichés (filtre en cours) | Displayed (current filter) |
-| 1564 | Tous | All |
-| 1565 | Mise en page | Layout |
-| 1566 | Cadre et en-tête | Frame and header |
-| 1566 | Cadre, bandeau de couche, sigle, nom et type du diagramme | Frame, layer band, acronym, name and type of the diagram |
-| 1567 | Cartouche | Title block |
-| 1567 | Cartouche technique en bas à droite : projet, diagramme, type, couche, contenu, sources, date, planche | Technical title block at the bottom right: project, diagram, type, layer, content, sources, date, sheet |
-| 1568 | Description | Description |
-| 1568 | Description Capella du diagramme et élément représenté, sous l'en-tête | Capella description of the diagram and represented element, below the header |
-| 1569 | Annexes | Appendices |
-| 1569 | Éléments représentés dans chaque diagramme : PDF, page(s) d'annexe après la planche · ZIP, un CSV par diagramme · HTML, tableau repliable | Elements represented in each diagram: PDF, appendix page(s) after the sheet · ZIP, one CSV per diagram · HTML, collapsible table |
-| 1570 | Sommaire | Contents |
-| 1570 | PDF : page de sommaire par couche et type · HTML : onglet Sommaire | PDF: contents page by layer and type · HTML: Contents tab |
-| 1571 | Résolution des images PNG / PDF | Resolution of PNG / PDF images |
-| 1571 | Résolution | Resolution |
-| 1572 | Format | Format |
-| 1574 | 📄 PDF | (inchangé, hors _L) |
-| 1574 | Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets | One PDF: contents, one sheet per diagram (A4, oriented automatically), bookmarks |
-| 1575 | 🗜 ZIP PNG | (inchangé, hors _L) |
-| 1575 | Archive ZIP des planches en PNG, un dossier par couche | ZIP archive of the sheets as PNG, one folder per layer |
-| 1576 | 🗜 ZIP SVG | (inchangé, hors _L) |
-| 1576 | Archive ZIP des planches en SVG (vectoriel), un dossier par couche | ZIP archive of the sheets as SVG (vector), one folder per layer |
-| 1577 | 🌐 HTML | (inchangé, hors _L) |
-| 1577 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
-| 1580 | Aperçu de la planche | Sheet preview |
-| 1581 | Fermer | Close |
-| 1582 | Lancer l'export dans le format choisi | Start the export in the chosen format |
-| 1582 | ⬇ Exporter | ⬇ Export |
-| 1600 | Aucun diagramme. | No diagram. |
-| 1617 | Projet Capella | Capella project |
-| 1627 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1628 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1631 | planche(s) | … sheet(s) |
-| 1639 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1640 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1645 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1646 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
-| 1684 | Aucun diagramme à exporter. | No diagram to export. |
-| 1685 | Capella | (inchangé, hors _L) |
-| 1700 | aucun diagramme exportable | no exportable diagram |
-| 1710 | Le PDF fera environ | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
-| 1710 | pages). Pour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…). Continuer quand même ? | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
-| 1710 | PDF volumineux | Large PDF |
-| 1710 | Continuer | Continue |
-| 1711 | Export annulé : PDF estimé à | Export cancelled: PDF estimated at … MB. |
-| 1714 | Sommaire | Contents |
-| 1718 | Planche | Sheet |
-| 1720 | Autres | Others |
-| 1721 | - annexe | - appendix |
-| 1734 | Diagrammes — | Diagrams — … |
-| 1737 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
-| 1737 | pages) | (… pages) |
-| 1738 | ignoré(s) : | — … skipped: |
-| 1739 | ⚠ Échec de l'export : | ⚠ Export failed: |
-| 1758 | Type | (inchangé, hors _L) |
-| 1758 | Couche | Layer |
-| 1758 | Sigle | Acronym |
-| 1758 | Diagramme | Diagram |
-| 1758 | Éléments | Elements |
-| 1769 | Type | (inchangé, hors _L) |
-| 1769 | Annexe | Appendix |
-| 1769 | élément(s) représenté(s) | … represented element(s) |
-| 1769 | Élément | Element |
-| 1769 | Couche | Layer |
-| 1783 | diagramme(s) | … diagram(s) |
-| 1784 | 📋 Sommaire | 📋 Contents |
-| 1784 | 🔲 Planches | 🔲 Sheets |
+| 42 | Diagrammes et vues | Diagrams and views |
+| 42 | Diagrammes Capella | Capella diagrams |
+| 130 | Impossible de lire « | Cannot read “…”. |
+| 136 | Diagrammes « | Diagrams “…” kept: now drop the project's .capella file. |
+| 136 | » gardés : déposez maintenant le fichier .capella du projet. | Diagrams “…” kept: now drop the project's .capella file. |
+| 192 | Relecture du .aird impossible : | ❌ |
+| 197 | 🔲 Diagrammes relus : « | 🔲 Diagrams re-read: “…” was also updated on disk — changes: ⚖ Version comparison › 🔲 Diagrams |
+| 197 | » a aussi été mis à jour sur le disque — changements : ⚖ Comparaison de versions › 🔲 Diagrammes | 🔲 Diagrams re-read: “…” was also updated on disk — changes: ⚖ Version comparison › 🔲 Diagrams |
+| 226 | 🔲 Diagrammes : le .aird est-il à jour ? | 🔲 Diagrams: is the .aird up to date? |
+| 228 | Le modèle vient d'être mis à jour, mais les diagrammes affichés viennent de « | The model has just been updated, but the displayed diagrams come from “ … ”, read before the update. |
+| 228 | », lu avant la mise à jour. | The model has just been updated, but the displayed diagrams come from “ … ”, read before the update. |
+| 229 | Ce fichier n'a pas changé sur le disque : le projet n'a peut-être pas encore été enregistré dans Capella. | This file has not changed on disk: the project may not have been saved in Capella yet. |
+| 230 | élément(s) montré(s) par ces diagrammes n'existent plus dans le modèle mis à jour. | ⚠ … element(s) shown by these diagrams no longer exist in the updated model. |
+| 231 | Capella enregistre le .capella et le .aird ensemble : pour des diagrammes fidèles, ouvrez le .aird de la même version. | Capella saves the .capella and the .aird together: for accurate diagrams, open the .aird of the same version. |
+| 231 | Le .aird actuel servira alors de référence pour ⚖ Comparaison de versions › 🔲 Diagrammes. | The current .aird will then be the reference for ⚖ Version comparison › 🔲 Diagrams. |
+| 233 | Retirer les diagrammes de la page (🔲 Diagrammes Capella vide) | Remove the diagrams from the page (🔲 Capella Diagrams empty) |
+| 233 | 🗑 Retirer les diagrammes | 🗑 Remove the diagrams |
+| 234 | Garder ces diagrammes | Keep these diagrams |
+| 235 | 📂 Choisir le .aird à jour… | 📂 Choose the up-to-date .aird… |
+| 253 | Diagrammes Capella (.aird) | Capella diagrams (.aird) |
+| 293 | Lecture du dossier impossible : | Cannot read the folder: |
+| 341 | Aucun fichier .capella, .sysml, .uml, .xmi, .mdzip, .qea ni .reqif dans ce dossier (ni dans ses sous-dossiers). | No .capella, .sysml, .uml, .xmi, .mdzip, .qea or .reqif file in this folder (nor in its subfolders). |
+| 356 | Lecture impossible : | Cannot read: |
+| 359 | modèles dans ce dossier : lequel ouvrir ? | … models in this folder: which one to open? |
+| 360 | Les autres .capella seront chargés comme bibliothèques si le modèle choisi y fait référence. | The other .capella files will be loaded as libraries if the chosen model refers to them. |
+| 377 | Glisser pour régler la hauteur du plan du diagramme (double-clic : hauteur par défaut) | Drag to set the height of the diagram outline (double-click: default height) |
+| 378 | Glisser pour régler la hauteur de la carte (double-clic : hauteur par défaut) | Drag to set the map height (double-click: default height) |
+| 380 | Glisser pour régler la largeur de l'explorateur | Drag to adjust the width of the explorer |
+| 456 | ▣ Carte | ▣ Map |
+| 457 | Afficher la carte dans le diagramme | Show the map in the diagram |
+| 458 | ▣ Carte | ▣ Map |
+| 458 | dans le diagramme | in the diagram |
+| 459 | Afficher la carte sous l'explorateur | Show the map below the explorer |
+| 490 | Glisser : taille de l'affichage (zoom) | Drag: display size (zoom) |
+| 556 | xMinYMin meet | (inchangé, hors _L) |
+| 612 | Exporter plusieurs diagrammes en planches (en-tête, description, cartouche, annexe) : PDF, ZIP PNG / SVG, rapport HTML | Export several diagrams as sheets (header, description, title block, appendix): PDF, PNG / SVG ZIP, HTML report |
+| 612 | ⬇ Exporter… | ⬇ Export… |
+| 613 | Choisir les diagrammes à exporter : cases à cocher dans l'explorateur | Choose the diagrams to export: checkboxes in the explorer |
+| 613 | ☑ Terminer la sélection | ☑ Finish selection |
+| 613 | ☐ Sélectionner… | ☐ Select… |
+| 614 | Informations du diagramme ouvert dans le panneau de détail : type, couche, description, élément représenté, éléments affichés (nouveau clic : refermer) | Information on the open diagram in the details panel: type, layer, description, represented element, displayed elements (click again to close) |
+| 614 | ℹ Infos | ℹ Info |
+| 615 | ⧉ Comparer | ⧉ Compare |
+| 616 | ⇄ Liens | ⇄ Links |
+| 617 | Choisir le fichier .aird (le sélecteur s'ouvre dans le dossier du .capella quand le navigateur le permet) | Choose the .aird file (the picker opens in the .capella folder when the browser allows it) |
+| 617 | 📂 Ouvrir le .aird… | 📂 Open the .aird… |
+| 620 | diagramme(s) · | … diagram(s) · … computed view(s) |
+| 620 | vue(s) calculée(s) | … diagram(s) · … computed view(s) |
+| 620 | Aucun diagramme ni aucune vue calculable dans ce modèle. | No diagram and no computable view in this model. |
+| 621 | diagramme(s) | … diagram(s) |
+| 621 | Ouvrez le fichier .aird du projet (à côté du .capella), ou déposez-le sur la fenêtre. | Open the project's .aird file (next to the .capella), or drop it on the window. |
+| 666 | vd-barre cdg-vd-l2 | (inchangé, hors _L) |
+| 694 | Dessin du diagramme | Diagram drawing |
+| 694 | 🖼 Visuel | 🖼 Visual |
+| 695 | Rendu textuel : éléments représentés, par type (clic : panneau de détail) | Text rendering: represented elements, by type (click: detail panel) |
+| 695 | ≡ Texte | ≡ Text |
+| 696 | Texte plus petit | Smaller text |
+| 696 | Texte plus grand | Larger text |
+| 724 | élément(s) | … element(s) |
+| 731 | Aucun élément. | No element. |
+| 762 | Mettre en évidence une chaîne fonctionnelle ou un chemin physique dessiné dans ce diagramme | Highlight a functional chain or physical path drawn in this diagram |
+| 769 | Visionneuse de diagrammes absente de cette page. | Diagram viewer missing from this page. |
+| 839 | Ne garder que ce qui est affiché dans un diagramme du .aird | Keep only what is shown in a diagram of the .aird |
+| 839 | 🔲 Diagramme | 🔲 Diagram |
+| 840 | Tous les diagrammes | All diagrams |
+| 842 | Liens dessinés : ceux qui figurent dans le diagramme. Entre composants affichés : tous les liens du modèle dont les deux extrémités sont dessinées, même s'ils ne le sont pas eux-mêmes. | Drawn links: those that appear in the diagram. Between shown components: every link of the model whose two ends are drawn, even if the link itself is not. |
+| 843 | entre composants affichés | between shown components |
+| 844 | liens dessinés | drawn links |
+| 845 | Retirer ce filtre | Remove this filter |
+| 900 | Physical Links entre les nœuds affichés (ports physiques, Component Exchanges alloués) | Physical Links between the nodes shown (physical ports, allocated Component Exchanges) |
+| 900 | 🔌 Physical Links | 🔌 Physical Links |
+| 901 | Component Exchanges entre les composants Behavior affichés (ports, Functional Exchanges alloués) | Component Exchanges between the Behavior components shown (ports, allocated Functional Exchanges) |
+| 901 | 🔀 Component Exchanges (Behavior) | 🔀 Component Exchanges (Behavior) |
+| 921 | Ouvrez d'abord un diagramme. | Open a diagram first. |
+| 923 | ⇄ Liens : diagrammes des couches SA, LA et PA seulement. | ⇄ Links: diagrams of the SA, LA and PA layers only. |
+| 942 | Autres | Others |
+| 1089 | Sans élément représenté | No represented element |
+| 1118 | Aucun diagramme ni aucune vue calculable dans ce modèle. | No diagram and no computable view in this model. |
+| 1119 | Aucun .aird chargé. | No .aird loaded. |
+| 1119 | 📂 Ouvrir le .aird… s'ouvre dans le dossier du .capella (Edge / Chrome). | 📂 Open the .aird… opens in the .capella folder (Edge / Chrome). |
+| 1120 | Ou, depuis l'écran d'accueil, 📁 Dossier du projet… : le .capella et ses diagrammes sont chargés ensemble. | Or, from the home screen, 📁 Project folder…: the .capella and its diagrams are loaded together. |
+| 1128 | Cocher / décocher le groupe | Check / uncheck the group |
+| 1137 | Informations du diagramme (panneau de détail) | Diagram information (details panel) |
+| 1166 | Genre › origine | Kind › origin |
+| 1166 | Genre de diagramme | Diagram kind |
+| 1166 | Origine | Origin |
+| 1166 | Nom (A → Z) | Name (A → Z) |
+| 1166 | 🌳 Arborescence | 🌳 Tree |
+| 1167 | Couche › type | Layer › type |
+| 1167 | Couche | Layer |
+| 1167 | Type de diagramme | Diagram type |
+| 1167 | Nom (A → Z) | Name (A → Z) |
+| 1167 | 🌳 Arborescence | 🌳 Tree |
+| 1171 | Filtrer (nom, genre, sigle, origine)… | Filter (name, kind, acronym, origin)… |
+| 1171 | Filtrer (nom, type, sigle, couche)… | Filter (name, type, acronym, layer)… |
+| 1172 | Classement de la liste | List grouping |
+| 1173 | Tout déplier | Expand all |
+| 1173 | Tout replier | Collapse all |
+| 1174 | sélectionné(s) pour l'export | … selected for export |
+| 1174 | diagramme(s) | … diagram(s) |
+| 1176 | sélectionné(s) pour l'export | … selected for export |
+| 1176 | diagramme(s) — cochez pour exporter | … diagram(s) — check to export |
+| 1177 | Aucun diagramme ne correspond. | No matching diagram. |
+| 1279 | var(--c-dim) | (inchangé, hors _L) |
+| 1281 | Diagramme | Diagram |
+| 1281 | Diagramme de séquence | Sequence diagram |
+| 1281 | Tableau | Table |
+| 1282 | 🔲 Diagramme Capella | 🔲 Capella diagram |
+| 1282 | 🔲 Diagramme | 🔲 Diagram … |
+| 1282 | 🔲 Vue calculée | 🔲 Computed … view |
+| 1286 | 🔲 Afficher le diagramme | 🔲 Show the diagram |
+| 1287 | Attributs | Attributes |
+| 1287 | Type | Type |
+| 1287 | Sigle | Acronym |
+| 1288 | Origine | Origin |
+| 1288 | Famille | Family |
+| 1288 | Couche | Layer |
+| 1289 | Nature | Nature |
+| 1290 | Contenu | Content |
+| 1290 | forme(s) · | … shape(s) · … link(s) |
+| 1290 | lien(s) | … shape(s) · … link(s) |
+| 1291 | Éléments | Elements |
+| 1292 | Modifié le | Modified on |
+| 1292 | Fichier | File |
+| 1292 | Clé | Key |
+| 1293 | Description | (inchangé, hors _L) |
+| 1294 | Élément porteur | Owning element |
+| 1294 | Élément représenté | Represented element |
+| 1297 | Éléments affichés ( | Displayed elements (…) |
+| 1334 | Diagrammes ( | Diagrams (…) |
+| 1348 | vue introuvable | view not found |
+| 1362 | export SVG de la visionneuse introuvable | viewer SVG export not found |
+| 1369 | diagramme vide ou non exportable | empty or non-exportable diagram |
+| 1390 | Segoe UI,Arial,sans-serif | (inchangé, hors _L) |
+| 1391 | Projet Capella | Capella project |
+| 1398 | Projet | Project |
+| 1398 | Couche | Layer |
+| 1399 | Diagramme | Diagram |
+| 1399 | Contenu | Content |
+| 1399 | élément(s) | … element(s) |
+| 1400 | Type | (inchangé, hors _L) |
+| 1400 | Date | Date |
+| 1401 | Sources | Sources |
+| 1401 | Planche | Sheet |
+| 1419 | ) scale( | (inchangé, hors _L) |
+| 1428 | Élément représenté | Represented element |
+| 1430 | ) scale( | (inchangé, hors _L) |
+| 1434 | ) scale( | (inchangé, hors _L) |
+| 1435 | Arcalyse · planche générée le | Arcalyse · sheet generated on … |
+| 1451 | ) scale( | (inchangé, hors _L) |
+| 1523 | Élément représenté | Represented element |
+| 1523 | Description | (inchangé, hors _L) |
+| 1524 | Élément | Element |
+| 1524 | Type | (inchangé, hors _L) |
+| 1524 | Couche | Layer |
+| 1539 | Élément | Element |
+| 1539 | Type | (inchangé, hors _L) |
+| 1539 | Couche | Layer |
+| 1545 | 700 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1546 | 700 28px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1548 | 20px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1549 | élément(s) représenté(s) | … represented element(s) |
+| 1549 | Planche | Sheet |
+| 1550 | 700 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1553 | 18px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1590 | ⬇ Exporter des diagrammes | ⬇ Export diagrams |
+| 1592 | Diagrammes | Diagrams |
+| 1593 | Cochés dans la liste | Checked in the list |
+| 1593 | Affichés (filtre en cours) | Displayed (current filter) |
+| 1593 | Tous | All |
+| 1594 | Mise en page | Layout |
+| 1595 | Cadre et en-tête | Frame and header |
+| 1595 | Cadre, bandeau de couche, sigle, nom et type du diagramme | Frame, layer band, acronym, name and type of the diagram |
+| 1596 | Cartouche | Title block |
+| 1596 | Cartouche technique en bas à droite : projet, diagramme, type, couche, contenu, sources, date, planche | Technical title block at the bottom right: project, diagram, type, layer, content, sources, date, sheet |
+| 1597 | Description | Description |
+| 1597 | Description Capella du diagramme et élément représenté, sous l'en-tête | Capella description of the diagram and represented element, below the header |
+| 1598 | Annexes | Appendices |
+| 1598 | Éléments représentés dans chaque diagramme : PDF, page(s) d'annexe après la planche · ZIP, un CSV par diagramme · HTML, tableau repliable | Elements represented in each diagram: PDF, appendix page(s) after the sheet · ZIP, one CSV per diagram · HTML, collapsible table |
+| 1599 | Sommaire | Contents |
+| 1599 | PDF : page de sommaire par couche et type · HTML : onglet Sommaire | PDF: contents page by layer and type · HTML: Contents tab |
+| 1600 | Résolution des images PNG / PDF | Resolution of PNG / PDF images |
+| 1600 | Résolution | Resolution |
+| 1601 | Format | Format |
+| 1603 | 📄 PDF | (inchangé, hors _L) |
+| 1603 | Un PDF : sommaire, une planche par diagramme (A4 orientée automatiquement), signets | One PDF: contents, one sheet per diagram (A4, oriented automatically), bookmarks |
+| 1604 | 🗜 ZIP PNG | (inchangé, hors _L) |
+| 1604 | Archive ZIP des planches en PNG, un dossier par couche | ZIP archive of the sheets as PNG, one folder per layer |
+| 1605 | 🗜 ZIP SVG | (inchangé, hors _L) |
+| 1605 | Archive ZIP des planches en SVG (vectoriel), un dossier par couche | ZIP archive of the sheets as SVG (vector), one folder per layer |
+| 1606 | 🌐 HTML | (inchangé, hors _L) |
+| 1606 | Rapport HTML autonome : sommaire et planches classées par couche et type, repliables | Standalone HTML report: contents and sheets grouped by layer and type, collapsible |
+| 1609 | Aperçu de la planche | Sheet preview |
+| 1610 | Fermer | Close |
+| 1611 | Lancer l'export dans le format choisi | Start the export in the chosen format |
+| 1611 | ⬇ Exporter | ⬇ Export |
+| 1629 | Aucun diagramme. | No diagram. |
+| 1646 | Projet Capella | Capella project |
+| 1656 | 700 46px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1657 | 26px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1660 | planche(s) | … sheet(s) |
+| 1668 | 700 17px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1669 | 700 21px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1674 | 700 15px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1675 | 19px Segoe UI, Arial, sans-serif | (inchangé, hors _L) |
+| 1713 | Aucun diagramme à exporter. | No diagram to export. |
+| 1714 | Capella | (inchangé, hors _L) |
+| 1729 | aucun diagramme exportable | no exportable diagram |
+| 1739 | Le PDF fera environ | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
+| 1739 | pages). Pour l'alléger : résolution ×1, sans annexes, ou moins de diagrammes (☐ Sélectionner…). Continuer quand même ? | The PDF will be about … MB (… pages).\n\nTo make it lighter: resolution ×1, no appendices, or fewer diagrams (☐ Select…).\n\nContinue anyway? |
+| 1739 | PDF volumineux | Large PDF |
+| 1739 | Continuer | Continue |
+| 1740 | Export annulé : PDF estimé à | Export cancelled: PDF estimated at … MB. |
+| 1743 | Sommaire | Contents |
+| 1747 | Planche | Sheet |
+| 1749 | Autres | Others |
+| 1750 | - annexe | - appendix |
+| 1763 | Diagrammes — | Diagrams — … |
+| 1766 | diagramme(s) exporté(s) | ✔ … diagram(s) exported |
+| 1766 | pages) | (… pages) |
+| 1767 | ignoré(s) : | — … skipped: |
+| 1768 | ⚠ Échec de l'export : | ⚠ Export failed: |
+| 1787 | Type | (inchangé, hors _L) |
+| 1787 | Couche | Layer |
+| 1787 | Sigle | Acronym |
+| 1787 | Diagramme | Diagram |
+| 1787 | Éléments | Elements |
+| 1798 | Type | (inchangé, hors _L) |
+| 1798 | Annexe | Appendix |
+| 1798 | élément(s) représenté(s) | … represented element(s) |
+| 1798 | Élément | Element |
+| 1798 | Couche | Layer |
+| 1812 | diagramme(s) | … diagram(s) |
+| 1813 | 📋 Sommaire | 📋 Contents |
+| 1813 | 🔲 Planches | 🔲 Sheets |
 
 ## js/55-revue.js
 
@@ -8828,62 +8999,64 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 | 539 | svg.sy-vue-svg | (inchangé, hors _L) |
 | 539 | svg.sy-carte-svg | (inchangé, hors _L) |
 | 604 | var(--c-dim) | (inchangé, hors _L) |
-| 625 | ▣ Carte | ▣ Map |
-| 625 | Afficher la carte dans le diagramme | Show the map in the diagram |
-| 626 | ▣ Carte | ▣ Map |
-| 626 | dans le diagramme | in the diagram |
-| 626 | Afficher la carte sous l'explorateur | Show the map below the explorer |
-| 627 | Carte : clic ou glisser pour se déplacer | Map: click or drag to move around |
-| 648 | diagramme(s) et tableau(x) enregistrés dans le fichier (Cameo, Enterprise Architect, Papyrus) : choisissez-en un à gauche (ou depuis le panneau de détail d'un élément). | … diagram(s) and table(s) saved in the file (Cameo, Enterprise Architect, Papyrus): choose one on the left (or from the detail panel of an element). |
-| 648 | vue(s) calculée(s) depuis le texte SysML v2 : choisissez-en une à gauche (ou depuis le panneau de détail d'un élément). | … view(s) computed from the SysML v2 text: pick one on the left (or from an element's detail panel). |
-| 648 | Aucun diagramme enregistré dans ce fichier (un .uml de Papyrus montre les siens avec son .notation : ouvrez les deux ensemble). | No diagram saved in this file (a Papyrus .uml shows its own with its .notation: open both together). |
-| 648 | Aucune vue calculable dans ce modèle (pas de définition de part, d'état ni d'action). | No view can be computed in this model (no part, state or action definition). |
-| 658 | Chercher (Ctrl+F) | Search (Ctrl+F) |
-| 658 | Chercher dans le diagramme — Entrée : suivant · Maj+Entrée : précédent · Échap : effacer | Search in the diagram — Enter: next · Shift+Enter: previous · Esc: clear |
-| 658 | Résultat précédent (Maj+Entrée) | Previous result (Shift+Enter) |
-| 658 | Résultat suivant (Entrée) | Next result (Enter) |
-| 659 | Grille : quadrillage sous le dessin (G) | Grid: squared background under the drawing (G) |
-| 660 | Thème du dessin : celui d'Arcalyse (Auto), clair ou sombre | Drawing theme: Arcalyse's (Auto), light or dark |
-| 660 | ◐ Auto | ◐ Auto |
-| 660 | ◐ Clair | ◐ Light |
-| 660 | ◐ Sombre | ◐ Dark |
-| 661 | Exporter : SVG, PNG, impression ou PDF, texte | Export: SVG, PNG, print or PDF, text |
-| 662 | SVG (vectoriel) | SVG (vector) |
-| 662 | PNG, taille réelle | PNG, actual size |
-| 662 | PNG, haute définition (×2) | PNG, high definition (×2) |
-| 662 | Imprimer / PDF… | Print / PDF… |
-| 662 | Texte | Text |
-| 663 | Fermer la vue | Close the view |
-| 666 | Note de revue : glissez-la sur la vue (déposée sur un élément, elle lui est liée) ou cliquez pour la poser au centre. Les notes forment un calque indépendant du modèle. | Review note: drag it onto the view (dropped on an element, it is linked to it) or click to place it in the centre. Notes form a layer independent of the model. |
-| 666 | 📝 Note | 📝 Note |
-| 666 | Afficher ou masquer le calque des notes de revue | Show or hide the review notes layer |
-| 666 | 💬 Calque | 💬 Layer |
-| 667 | Filtres d'affichage, pour toutes les vues : étiquettes des liens, compartiments, liens par genre | Display filters, for all views: link labels, compartments, links by kind |
-| 668 | Étiquettes des liens | Link labels |
-| 668 | Compartiments | Compartments |
-| 669 | Liens | Links |
-| 670 | Tout afficher | Show all |
-| 671 | Dézoomer (Ctrl+molette) | Zoom out (Ctrl+wheel) |
-| 671 | Texte plus petit | Smaller text |
-| 671 | Zoomer (Ctrl+molette) | Zoom in (Ctrl+wheel) |
-| 671 | Texte plus grand | Larger text |
-| 672 | Voir toute la vue | See the whole view |
-| 672 | Taille réelle (100 %) | Actual size (100%) |
-| 672 | Centrer sur l'élément choisi (F) | Center on the chosen element (F) |
-| 672 | Taille normale du texte | Normal text size |
-| 673 | Carte : vue d'ensemble et position affichée (clic : s'y rendre) | Map: overview and displayed position (click: go there) |
-| 674 | forme(s) · | … shape(s) · … link(s) |
-| 674 | lien(s) | … shape(s) · … link(s) |
-| 675 | Dessin de la vue | View drawing |
-| 675 | 🖼 Visuel | 🖼 Visual |
-| 675 | Rendu textuel de la vue | Textual rendering of the view |
-| 675 | ≡ Texte | ≡ Text |
-| 676 | Ctrl + molette : taille du texte | Ctrl + wheel: text size |
-| 677 | Glisser : déplacer la vue · Ctrl + molette : zoom · clic : élément | Drag: move the view · Ctrl + wheel: zoom · click: element |
-| 678 | Carte : clic ou glisser pour se déplacer | Map: click or drag to move around |
-| 833 | Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez. | The browser blocked the window: allow pop-ups for this page, then try again. |
-| 838 | ⚠ Échec de l'export : | ⚠ Export failed: |
-| 887 | Glisser : taille de l'affichage (zoom) | Drag: display size (zoom) |
+| 645 | Style Cameo : | (inchangé, hors _L) |
+| 666 | ▣ Carte | ▣ Map |
+| 666 | Afficher la carte dans le diagramme | Show the map in the diagram |
+| 667 | ▣ Carte | ▣ Map |
+| 667 | dans le diagramme | in the diagram |
+| 667 | Afficher la carte sous l'explorateur | Show the map below the explorer |
+| 668 | Carte : clic ou glisser pour se déplacer | Map: click or drag to move around |
+| 689 | diagramme(s) et tableau(x) enregistrés dans le fichier (Cameo, Enterprise Architect, Papyrus) : choisissez-en un à gauche (ou depuis le panneau de détail d'un élément). | … diagram(s) and table(s) saved in the file (Cameo, Enterprise Architect, Papyrus): choose one on the left (or from the detail panel of an element). |
+| 689 | vue(s) calculée(s) depuis le texte SysML v2 : choisissez-en une à gauche (ou depuis le panneau de détail d'un élément). | … view(s) computed from the SysML v2 text: pick one on the left (or from an element's detail panel). |
+| 689 | Aucun diagramme enregistré dans ce fichier (un .uml de Papyrus montre les siens avec son .notation : ouvrez les deux ensemble). | No diagram saved in this file (a Papyrus .uml shows its own with its .notation: open both together). |
+| 689 | Aucune vue calculable dans ce modèle (pas de définition de part, d'état ni d'action). | No view can be computed in this model (no part, state or action definition). |
+| 699 | Chercher (Ctrl+F) | Search (Ctrl+F) |
+| 699 | Chercher dans le diagramme — Entrée : suivant · Maj+Entrée : précédent · Échap : effacer | Search in the diagram — Enter: next · Shift+Enter: previous · Esc: clear |
+| 699 | Résultat précédent (Maj+Entrée) | Previous result (Shift+Enter) |
+| 699 | Résultat suivant (Entrée) | Next result (Enter) |
+| 700 | Grille : quadrillage sous le dessin (G) | Grid: squared background under the drawing (G) |
+| 701 | 🎨 Style Cameo | 🎨 Cameo style |
+| 702 | Thème du dessin : celui d'Arcalyse (Auto), clair ou sombre | Drawing theme: Arcalyse's (Auto), light or dark |
+| 702 | ◐ Auto | ◐ Auto |
+| 702 | ◐ Clair | ◐ Light |
+| 702 | ◐ Sombre | ◐ Dark |
+| 703 | Exporter : SVG, PNG, impression ou PDF, texte | Export: SVG, PNG, print or PDF, text |
+| 704 | SVG (vectoriel) | SVG (vector) |
+| 704 | PNG, taille réelle | PNG, actual size |
+| 704 | PNG, haute définition (×2) | PNG, high definition (×2) |
+| 704 | Imprimer / PDF… | Print / PDF… |
+| 704 | Texte | Text |
+| 705 | Fermer la vue | Close the view |
+| 708 | Note de revue : glissez-la sur la vue (déposée sur un élément, elle lui est liée) ou cliquez pour la poser au centre. Les notes forment un calque indépendant du modèle. | Review note: drag it onto the view (dropped on an element, it is linked to it) or click to place it in the centre. Notes form a layer independent of the model. |
+| 708 | 📝 Note | 📝 Note |
+| 708 | Afficher ou masquer le calque des notes de revue | Show or hide the review notes layer |
+| 708 | 💬 Calque | 💬 Layer |
+| 709 | Filtres d'affichage, pour toutes les vues : étiquettes des liens, compartiments, liens par genre | Display filters, for all views: link labels, compartments, links by kind |
+| 710 | Étiquettes des liens | Link labels |
+| 710 | Compartiments | Compartments |
+| 711 | Liens | Links |
+| 712 | Tout afficher | Show all |
+| 713 | Dézoomer (Ctrl+molette) | Zoom out (Ctrl+wheel) |
+| 713 | Texte plus petit | Smaller text |
+| 713 | Zoomer (Ctrl+molette) | Zoom in (Ctrl+wheel) |
+| 713 | Texte plus grand | Larger text |
+| 714 | Voir toute la vue | See the whole view |
+| 714 | Taille réelle (100 %) | Actual size (100%) |
+| 714 | Centrer sur l'élément choisi (F) | Center on the chosen element (F) |
+| 714 | Taille normale du texte | Normal text size |
+| 715 | Carte : vue d'ensemble et position affichée (clic : s'y rendre) | Map: overview and displayed position (click: go there) |
+| 716 | forme(s) · | … shape(s) · … link(s) |
+| 716 | lien(s) | … shape(s) · … link(s) |
+| 717 | Dessin de la vue | View drawing |
+| 717 | 🖼 Visuel | 🖼 Visual |
+| 717 | Rendu textuel de la vue | Textual rendering of the view |
+| 717 | ≡ Texte | ≡ Text |
+| 718 | Ctrl + molette : taille du texte | Ctrl + wheel: text size |
+| 719 | Glisser : déplacer la vue · Ctrl + molette : zoom · clic : élément | Drag: move the view · Ctrl + wheel: zoom · click: element |
+| 720 | Carte : clic ou glisser pour se déplacer | Map: click or drag to move around |
+| 877 | Le navigateur a bloqué la fenêtre : autorisez les fenêtres surgissantes pour cette page, puis recommencez. | The browser blocked the window: allow pop-ups for this page, then try again. |
+| 882 | ⚠ Échec de l'export : | ⚠ Export failed: |
+| 931 | Glisser : taille de l'affichage (zoom) | Drag: display size (zoom) |
 
 ## js/88-uml.js
 
@@ -10962,7 +11135,7 @@ L'aide utilisateur est dans `src/html/aide.html` (non recopiée ici).
 - `js/40-suivi-fichier.js:223` — Sélecteur à accès direct indisponible :
 - `js/40-suivi-fichier.js:427` — Vue non rétablie :
 - `js/46-config-interface.js:92` — Vues enregistrées illisibles :
-- `js/54-diagrammes.js:191` — Relecture du .aird impossible :
+- `js/54-diagrammes.js:192` — Relecture du .aird impossible :
 - `js/58-revue-ciblee.js:102` — Diagramme non exporté :
 - `js/61-dossier-relecture.js:551` — Diagramme non exporté :
 - `js/69-sante-modele.js:41` — Santé : vue

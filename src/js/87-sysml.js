@@ -616,15 +616,61 @@ function capSyTexteHtml(texte){
 /** ▣ Carte sous l'explorateur (`#cdg-carte-sy`, zone de 54 propre aux lecteurs) : même en-tête que pour Capella (▾ replier, ⇲ dans la vue,
  * ⇱ retour ; état `_capDiag.carte` / `carteReduite`, clics traités par `capDiagClic`), miniature du dessin à la largeur du volet, cadre de la
  * partie affichée ; vide sans vue visuelle ouverte. Appelée après chaque rendu de la partie droite et quand la largeur de l'explorateur change. */
+/**
+ * Vrai si la vue peut être dessinée au style Cameo : diagramme du fichier dessiné par Cameo (CATIA Magic) ou Enterprise Architect.
+ * @param {?object} vue - Vue du lecteur
+ * @returns {boolean} vrai si le lecteur sait la dessiner au style du fichier
+ */
+function capSyCameoPossible(vue){ return !!(vue&&!vue.tableau&&(vue.origine==='cameo'||vue.origine==='ea')&&typeof vue.svgDocument==='function'); }
+
+/**
+ * Vrai si la vue est dessinée au style Cameo : vue de Cameo ou d'Enterprise Architect, et réglage « Style Cameo » de 🔲 Diagrammes
+ * activé (`_capNav.styleCameo`, gardé avec la page) ; par défaut, dessin d'Arcalyse.
+ * @param {?object} vue - Vue du lecteur
+ * @returns {boolean} vrai si le style Cameo s'applique
+ */
+function capSyCameoActif(vue){
+  return capSyCameoPossible(vue)&&typeof _capNav!=='undefined'&&_capNav.styleCameo===true;
+}
+
+/** Instant où le bouton 🎨 Style Cameo a été signalé (clignotement léger, une fois par page). */
+let _capSyCameoSignal=0;
+
+/**
+ * Dessin d'une vue tel qu'il est affiché : celui d'Arcalyse, ou, au style Cameo, le dessin du lecteur au style du fichier
+ * (`svgDocument({style:'fichier'})` : couleurs, polices et symboles de l'outil ; feuille de styles commune, règles `s1-cameo`),
+ * gardé sur la vue.
+ * @param {object} vue - Vue du lecteur
+ * @returns {{svg:string, vb:number[], cls:string}} contenu du SVG, viewBox, classe à ajouter à l'élément svg
+ */
+function capSyDessin(vue){
+  if(!capSyCameoActif(vue)) return {svg:vue.svg, vb:vue.viewBox||[0,0,800,600], cls:''};
+  if(!vue._cameo){
+    let d='';
+    try{ d=vue.svgDocument({style:'fichier', theme:'clair'}).replace(/^\s*<\?xml[^>]*>\s*/,''); }catch(e){ console.warn('Style Cameo :', e); }
+    const m=/^<svg[^>]*viewBox="([^"]+)"/.exec(d);
+    vue._cameo=d?{svg:d.replace(/^<svg[^>]*>/,'').replace(/<style>[\s\S]*?<\/style>/,'').replace(/<\/svg>\s*$/,''), vb:m?m[1].trim().split(/[\s,]+/).map(Number):(vue.viewBox||[0,0,800,600])}:null;
+  }
+  return vue._cameo?{...vue._cameo, cls:' s1-cameo'}:{svg:vue.svg, vb:vue.viewBox||[0,0,800,600], cls:''};
+}
+
+/**
+ * Document SVG autonome d'une vue, au style affiché (Arcalyse ou Cameo) : exports, planches, ⧉ comparaison, ⇄ avant / après.
+ * @param {object} vue - Vue du lecteur
+ * @param {string} theme - 'clair' ou 'sombre'
+ * @returns {string} document SVG
+ */
+function capSyDocument(vue, theme){ return capSyCameoActif(vue)?vue.svgDocument({style:'fichier', theme}):vue.svgDocument({theme}); }
+
 function capSyCarteRender(){
   const z=document.getElementById('cdg-carte-sy'); if(!z) return;
   const st=_capSyVues, vue=st.cle&&_capSysml.lecture?capSyVue(st.cle):null;
   if(!vue||vue.tableau||st.mode!=='visuel'){ z.innerHTML=''; return; }   // tableau de Cameo (90) : pas de carte
-  const D=_capDiag, pan=D.carte==='panneau', th=capSyTheme(), vb=vue.viewBox||[0,0,800,600];
+  const D=_capDiag, pan=D.carte==='panneau', th=capSyTheme(), vb=capSyDessin(vue).vb;
   const tete=pan
     ?`<span class="cdg-carte-tog" data-carte-tog="1"><span class="cdg-tog">${D.carteReduite?'▸':'▾'}</span><b>${_L('▣ Carte')}</b></span><span style="flex:1"></span><button class="cap-lf-btn" data-carte="diagramme" title="${_L('Afficher la carte dans le diagramme')}">⇲</button>`
     :`<b>${_L('▣ Carte')}</b><span class="cdg-cnt">${_L('dans le diagramme')}</span><span style="flex:1"></span><button class="cap-lf-btn" data-carte="panneau" title="${_L('Afficher la carte sous l\'explorateur')}">⇱</button>`;
-  const corps=pan&&!D.carteReduite?`<div class="sy-carte sy-carte-panneau" title="${_L('Carte : clic ou glisser pour se déplacer')}"><svg class="sy-carte-svg ${th}" xmlns="http://www.w3.org/2000/svg" viewBox="${vb.join(' ')}">${vue.svg}</svg><div class="sy-carte-vp"></div></div>`:'';
+  const corps=pan&&!D.carteReduite?`<div class="sy-carte sy-carte-panneau" title="${_L('Carte : clic ou glisser pour se déplacer')}"><svg class="sy-carte-svg ${th}${capSyDessin(vue).cls}" xmlns="http://www.w3.org/2000/svg" viewBox="${vb.join(' ')}">${capSyDessin(vue).svg}</svg><div class="sy-carte-vp"></div></div>`:'';
   z.innerHTML=`<div class="cdg-carte-tete">${tete}</div><div class="cdg-carte-corps"${corps?'':' hidden'}>${corps}</div>`;
   const box=document.getElementById('cdg-sy'), svg=box&&box.querySelector('svg.sy-vue-svg'), hote=svg&&svg.closest('.sy-vue-hote');
   if(corps&&svg&&hote) capSyCarte(z, hote, svg);
@@ -641,7 +687,7 @@ function capSyVuesRender(box){
   capSyVuesCss();
   const vues=capSyVuesListe(), uml=capSyUml();
   if(st.cle&&!vues.some(x=>x.cle===st.cle)&&!capSyVue(st.cle)) st.cle='';
-  const vue=st.cle?capSyVue(st.cle):null, rep=vue?capSyVueRep(vue):null, vb=(vue&&vue.viewBox)||[0,0,800,600], th=capSyTheme();
+  const vue=st.cle?capSyVue(st.cle):null, rep=vue?capSyVueRep(vue):null, dess=vue&&!vue.tableau?capSyDessin(vue):null, vb=(dess&&dess.vb)||(vue&&vue.viewBox)||[0,0,800,600], th=capSyTheme();
   const h0=box.querySelector('.sy-vue-hote'); if(h0&&!st.defil&&st.rendue===st.cle) st.defil=[h0.scrollLeft,h0.scrollTop];
   let h='';
   if(!vue){
@@ -657,6 +703,7 @@ function capSyVuesRender(box){
     h+=`<div class="sy-l1"><span class="cdg-ico">${capSyVueIco(vue,16)}</span><span class="cdg-sigle">${esc(rep.sigle)}</span><b class="sy-vue-titre" title="${esc(rep.type)}">${esc(vue.nom||'')}</b><span class="cdg-cnt">${esc(rep.libelleOrigine)}</span><span style="flex:1"></span>`+
       (visuel?`<span class="sy-chercher"><input id="sy-q" type="search" placeholder="${_L('Chercher (Ctrl+F)')}" value="${esc(st.q)}" title="${_L('Chercher dans le diagramme — Entrée : suivant · Maj+Entrée : précédent · Échap : effacer')}" autocomplete="off"><button class="cap-lf-btn" data-syq="-1" title="${_L('Résultat précédent (Maj+Entrée)')}">▲</button><button class="cap-lf-btn" data-syq="1" title="${_L('Résultat suivant (Entrée)')}">▼</button><span class="cdg-cnt" id="sy-q-n"></span></span>`:'')+
       (visuel?`<button class="cap-lf-btn${st.grille?' active':''}" id="sy-grille" title="${_L('Grille : quadrillage sous le dessin (G)')}">#</button>`:'')+
+      (capSyCameoPossible(vue)?`<button class="cap-lf-btn${capSyCameoActif(vue)?' active':''}" id="sy-cameo" title="${_L('Style Cameo : le diagramme dessiné comme dans Cameo (CATIA Magic) ou Enterprise Architect — couleurs, polices et symboles de l\'outil, pour toutes les vues de Cameo et d\'EA ; sinon, le dessin d\'Arcalyse')}">${_L('🎨 Style Cameo')}</button>`:'')+
       `<select id="sy-theme" class="cap-lf-btn" title="${_L('Thème du dessin : celui d\'Arcalyse (Auto), clair ou sombre')}">${opt('auto',_L('◐ Auto'))}${opt('clair',_L('◐ Clair'))}${opt('sombre',_L('◐ Sombre'))}</select>`+
       `<span class="sy-menu-w"><button class="cap-lf-btn" id="sy-export-bt" title="${_L('Exporter : SVG, PNG, impression ou PDF, texte')}">⬇ ▾</button><div class="sy-menu" id="sy-export" hidden>`+
         `<button data-syexp="svg">${_L('SVG (vectoriel)')}</button><button data-syexp="png">${_L('PNG, taille réelle')}</button><button data-syexp="png2">${_L('PNG, haute définition (×2)')}</button><button data-syexp="imprimer">${_L('Imprimer / PDF…')}</button><button data-syexp="txt">${_L('Texte')}</button></div></span>`+
@@ -674,8 +721,8 @@ function capSyVuesRender(box){
       `<span style="flex:1"></span><span class="cdg-cnt">${_L(`${vue.formes.length} forme(s) · ${vue.liens.length} lien(s)`)}</span>`+
       `<span class="tb-grp"><button class="cap-lf-btn${visuel?' active':''}" data-symode="visuel" title="${_L('Dessin de la vue')}">${_L('🖼 Visuel')}</button><button class="cap-lf-btn${!visuel?' active':''}" data-symode="texte" title="${_L('Rendu textuel de la vue')}">${_L('≡ Texte')}</button></span></div>`;
     if(!visuel) h+=`<pre class="sy-texte sy-vue-texte" style="font-size:${(11.5*(st.texteZoom||1)).toFixed(1)}px" title="${_L('Ctrl + molette : taille du texte')}">${capSyTexteHtml(vue.texte||'')}</pre>`;
-    else h+=`<div class="sy-vue-droite-corps"><div class="sy-vue-hote" title="${_L('Glisser : déplacer la vue · Ctrl + molette : zoom · clic : élément')}"><div class="sy-vue-cadre"><svg class="sy-vue-svg ${th}" xmlns="http://www.w3.org/2000/svg" viewBox="${vb.join(' ')}" data-w="${vb[2]}" data-h="${vb[3]}">${vue.svg}</svg></div></div>`+
-      (D.carte==='diagramme'&&st.carteVue?`<div class="sy-carte" title="${_L('Carte : clic ou glisser pour se déplacer')}"><svg class="sy-carte-svg ${th}" xmlns="http://www.w3.org/2000/svg" viewBox="${vb.join(' ')}">${vue.svg}</svg><div class="sy-carte-vp"></div></div>`:'')+`</div>`;
+    else h+=`<div class="sy-vue-droite-corps"><div class="sy-vue-hote" title="${_L('Glisser : déplacer la vue · Ctrl + molette : zoom · clic : élément')}"><div class="sy-vue-cadre"><svg class="sy-vue-svg ${th}${dess.cls}" xmlns="http://www.w3.org/2000/svg" viewBox="${vb.join(' ')}" data-w="${vb[2]}" data-h="${vb[3]}">${dess.svg}</svg></div></div>`+
+      (D.carte==='diagramme'&&st.carteVue?`<div class="sy-carte" title="${_L('Carte : clic ou glisser pour se déplacer')}"><svg class="sy-carte-svg ${th}${dess.cls}" xmlns="http://www.w3.org/2000/svg" viewBox="${vb.join(' ')}">${dess.svg}</svg><div class="sy-carte-vp"></div></div>`:'')+`</div>`;
   }
   box.innerHTML=h; st.rendue=st.cle;
   const svg=box.querySelector('svg.sy-vue-svg');
@@ -692,6 +739,7 @@ function capSyVuesRender(box){
     if(typeof capRevLayerEnsure==='function') setTimeout(capRevLayerEnsure,0);   // 💬 notes de revue sur la vue (55)
   }
   capSyCarteRender();
+  if(typeof capPlanMaj==='function') capPlanMaj();   // ☷ plan du diagramme (106)
   const pre=box.querySelector('.sy-vue-texte');   // ≡ texte : Ctrl + molette = taille du texte
   if(pre) pre.addEventListener('wheel',e=>{ if(!e.ctrlKey) return; e.preventDefault(); capSyTexteZoom(box, e.deltaY<0?1.15:1/1.15); },{passive:false});
   // Commandes des deux lignes
@@ -700,6 +748,12 @@ function capSyVuesRender(box){
     q.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); capSyChercher(box, e.shiftKey?-1:1); } else if(e.key==='Escape'){ q.value=''; st.q=''; capSyChercher(box, 0); } }; }
   box.querySelectorAll('[data-syq]').forEach(b=>b.onclick=()=>capSyChercher(box, +b.dataset.syq));
   const sel=box.querySelector('#sy-theme'); if(sel) sel.onchange=()=>{ st.theme=sel.value; capSyVuesTheme(); };
+  const cam=box.querySelector('#sy-cameo');
+  if(cam){
+    cam.onclick=()=>{ _capNav.styleCameo=!capSyCameoActif(vue); _capSyCameoSignal=1; if(typeof capNavSave==='function') capNavSave(); st.defil=null; capSyVuesRender(box); };   // 🎨 style Cameo, gardé avec la page
+    if(!_capSyCameoSignal) _capSyCameoSignal=Date.now();   // première apparition du bouton : clignotement léger, une seule fois
+    if(Date.now()-_capSyCameoSignal<3500) cam.classList.add('sy-cameo-signal');
+  }
   const gr=box.querySelector('#sy-grille'); if(gr) gr.onclick=()=>capSyGrilleBascule(box);
   box.querySelectorAll('.sy-menu-w > button').forEach(b=>b.onclick=e=>{ e.stopPropagation(); const m=b.nextElementSibling, o=m.hidden; box.querySelectorAll('.sy-menu').forEach(x=>{ x.hidden=true; }); m.hidden=!o; });
   box.querySelectorAll('[data-syexp]').forEach(b=>b.onclick=()=>{ const m=b.closest('.sy-menu'); if(m) m.hidden=true; capSyExporter(vue, b.dataset.syexp); });
@@ -826,7 +880,7 @@ async function capSyExporter(vue, fmt){
   const nom=capSafeFileName(vue.nom||'vue');
   if(fmt==='txt'){ capDownloadBlob(new Blob([vue.texte||''],{type:'text/plain'}), nom+'.txt'); return; }
   if(typeof vue.svgDocument!=='function') return;   // tableau de Cameo (90) : texte seulement
-  const doc=vue.svgDocument({theme:fmt==='svg'?capSyTheme():'clair'});
+  const doc=capSyDocument(vue, fmt==='svg'?capSyTheme():'clair');   // style affiché (Arcalyse ou Cameo)
   if(fmt==='svg'){ capDownloadBlob(new Blob([doc],{type:'image/svg+xml'}), nom+'.svg'); return; }
   const vb=vue.viewBox||[0,0,800,600];
   if(fmt==='imprimer'){

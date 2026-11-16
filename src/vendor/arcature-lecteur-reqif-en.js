@@ -607,7 +607,7 @@ function xtToutReecrire(doc) {
    ─ Couches du filtre : couches [[valeur, libellé]], titreCouches.
    ─ Lecture métier : id, type, libelle, couche, chemin, ossature, technique, icone (initiales),
      iconeSvg(el, doc, taille) (icône dessinée, ou ''), iconeType(regle, taille) facultatif (icône du type qu'une règle de
-     création produit : sous-menu « Nouveau ▸ »), attr, parcourir, infos(doc) ; jeux d'icônes facultatifs : jeuxIcones() →
+     création produit : sous-menu « Nouveau ▸ »), attr, parcourir, infos(doc) (version, nom ; `avertissement` facultatif : version du fichier que l'adaptateur ne suit pas, dite à l'ouverture) ; jeux d'icônes facultatifs : jeuxIcones() →
      [{id, libelle}], jeuIcones() → id du jeu en cours, choisirJeuIcones(id) → booléen (UML et SysML v1 : jeu d'Arcature par
      défaut, icônes d'Eclipse UML2 redessinées par Papyrus Web en remplacement).
    ─ Relations : liaisons(doc), groupes(index, el), estReference(nom, valeur) ; titreCategorie(g) facultatif : intitulé d'un
@@ -664,7 +664,21 @@ function xtToutReecrire(doc) {
      presse-papier par colAnalyser, 38-collage.js ; menu des outils de la palette permis au point du collage, éléments et vues
      créés en une opération ; rend true, ou la raison d'un refus) } — Capella : le .aird (29-format-capella.js) ; UML : le .notation de Papyrus
      (créé au besoin par creer) et des vues calculées (uml/50-format.js) ; SysML v2 : vues calculées depuis le texte, sans fichier
-     de diagrammes ni création (sysml/60-vues.js : extensions vide, reconnait faux, enregistrer sans objet). Une opération du journal propre aux diagrammes porte diagrammeSeul (gardée au
+     de diagrammes ni création (sysml/60-vues.js : extensions vide, reconnait faux, enregistrer sans objet).
+     Sous-extension facultative api, SANS DOM, pour l'API de scripts (39-api-diagrammes.js) : api { lister(doc) → [{ id, nom,
+     genre (sigle ou genre court), type, cible (identifiant d'élément ou null), calcule, dessinable, modifiable }],
+     scene(doc, id) → scène neutre { cadre {x, y, w, h} | null, formes [{ id, el (identifiant d'élément ou null), x, y, w, h,
+     parent (id de forme ou null), texte, genre, st? }], liens [{ id, el, source, cible (ids de formes), points, texte, genre, st? }] }
+     (st facultatif : style repris par l'image sans DOM apiDgSvg — formes { fond, bord, epaisseur, arrondi, figure, posTexte,
+     police }, liens { couleur, epaisseur, trait, flecheCible, flecheSource, etiquette } ; Capella le donne) ;
+     facultatifs — fichier des diagrammes confié au worker : instantane() → { nom, texte } | null, ouvrirInstantane(inst)
+     (lu au premier besoin), controler(texte) → raison de ne pas l'écrire ou null ; scènes gardées par le format :
+     oublier(id?), figer() → jeton, retablir(jeton) (aperçu d'un script : la page retrouve ses scènes) ; opérations du
+     journal NON exécutées (une erreur : refus avec sa raison) : opBornes(doc, id, forme, { x, y, w, h }) → op | null,
+     opRetirer(doc, id, vues) → op | null, opMontrer(doc, id, el, { x, y }, dans) → { op, vue (id de la forme ajoutée, ou
+     null) }, opDisposer(doc, id, genre 'couches' | 'arbre' | 'grille') → op | null, types(doc, el) → [{ cle, libelle }],
+     opCreer(doc, el, cle, nom) → { op, id } } — Capella : 41-api-diagrammes-capella.js ; Papyrus et vues calculées :
+     uml/64-api-diagrammes.js ; Cameo, Enterprise Architect : sysml1/49-api-diagrammes.js ; SysML v2 : sysml/60-vues.js. Une opération du journal propre aux diagrammes porte diagrammeSeul (gardée au
      journal si le fichier des diagrammes n'a pas pu être écrit).
    ─ Règles de création : { cle, libelle, tag, type, attrs, secondaire? } ; une règle secondaire n'est pas dans le menu
      contextuel mais dans « Autre élément… » (UML : métaclasses moins usuelles admises par le métamodèle).
@@ -705,8 +719,29 @@ function xtToutReecrire(doc) {
      Un document importé d'un autre outil (SysML v1 : projet Enterprise Architect .qea) porte doc.importe { nom (nom du
      modèle à enregistrer, dans le format : .xmi), message (affiché à l'ouverture) } : le fichier lu n'est jamais réécrit.
    ─ Démarrage et outils (facultatifs) : initialiser() (interface propre au format, appelée une fois pour chaque format
-     inclus), diagnostiquer() (si capacites.diagnostic) ; vuesPropres : clés des vues de la page (.vue[data-vue], écrites dans
-     un bloc @@SI@@) que seul ce format remplit — l'interface les retire pour les autres formats (Capella : « methode »).
+     inclus), diagnostiquer() (si capacites.diagnostic).
+   ─ Méthode (facultative ; vue commune « Méthode » : 62-methode.js, sans onglet pour un format qui n'en a pas) : methode {
+     pages(doc, seule?) → pages de la méthode ARCADIA (seule : clé de la page affichée, les autres peuvent n'être qu'esquissées),
+     jeton() facultatif → ce dont le rendu dépend hors du journal (fichier de diagrammes ouvert) }. Page : { cle, sigle, couleur
+     (couche : OA, SA, LA, PA, EPBS), titre, resume, note, avertissement, element { id, libelle } | null (révélé dans
+     l'explorateur), absent | null (niveau à créer : { nom, parent, regle, raison, manquants [{cle, nom}] }), transitions | null
+     { titre, lignes [{ libelle, raison ('' : possible), infobulle, executer() }] }, etapes [{ titre, lignes [{ icone (HTML),
+     sigle, libelle, infobulle, existants [{ genre 'diagramme', cle (passée à diagrammes.ouvrir) | genre 'element', id ; nom,
+     infobulle }], plus (existants non montrés), creation { raison, calcule? (vue calculée : pas de bouton) } (refus) | { genre 'diagramme', el, choix (diagrammes.creer) }
+     | { genre 'element', parent, regle } | { executer() } ; infobulle }] }] } — Capella : ses architectures, les diagrammes du
+     .aird et les transitions (49-methode-capella.js) ; SysML v1 et SysML v2 : un paquetage par niveau, reconnu par son nom
+     (38-methode.js : mthPages ; sysml1/49-methode.js, sysml/62-methode.js). Autres méthodes proposées par le format
+     (facultatif) : methode.variantes [{ cle, titre, grille? (page « Grille » : 62-trame.js), pages(doc, seule?) → pages de
+     même forme, ossature(doc)? → { nombre, raison } (paquetages qui manquent), appliquer()? → opération exécutée qui les
+     crée dans le modèle ouvert (aussi proposée par « Nouveau projet »), profil? (domaine du profil livré à importer avec) }]
+     — un sélecteur paraît dans la vue, ARCADIA restant la méthode par défaut. Critères de fin contrôlés (facultatif) :
+     regles() → [{ id, nom, severite }] et controler(doc, actives?) → { suivie, cases Map(id → { population, defauts [{ regle, id,
+     nom, message }] }), problemes } — ajoutés à la validation continue par mthValidation (origine « methode », genre « suivi »).
+     Périmètres (facultatif, grilles filles des sous-systèmes) : perimetres(doc) → [{ id ('' : le système), nom, parent, profondeur }] ;
+     pages, ossature, matrices, controler, appliquer prennent alors l'identifiant du périmètre en dernier ; controlerTout(doc,
+     actives), sansGrilleFille(doc, perimetre), creerGrilleFille(nom, perimetre), herite(doc, perimetre). Une étape peut porter son conteneur { id, libelle }. Une ligne porte son genre
+     ('element' | 'diagramme') ; une étape peut porter une fiche { id, volet, question, livrable, fin, parcours } : la
+     méthode Trame de SysML v1 et v2, une étape par case de sa grille (38-trame.js ; sysml1/49-trame.js, sysml/63-trame.js).
    ─ Validation (facultative, absente si le format n'en a pas) : validation { regles() → [{id, categorie, severite ('E' | 'W'),
      actif (par défaut), source ('capella' | 'uml' | 'arcature'…), nom, genre? ('lisibilite' : défauts de dessin d'un
      diagramme, en calque à part ; 'suivi' : justification d'une transition ; profils de 38-problemes.js)}], sources() → [{cle, titre, filtre, prereglage?}] (origines
@@ -732,7 +767,7 @@ function xtToutReecrire(doc) {
      'texte'), valeur (défaut), choix [[valeur, libellé]] (genre 'choix'), aide (bulle), si { cle: valeur } (option montrée
      seulement quand une autre a cette valeur) }], creer(nom, options) → { fichiers: [{ nom, texte }], principal (nom du fichier
      du modèle), diagrammes (nom du fichier des diagrammes parmi fichiers, facultatif), dossier (nom du dossier du projet) } }
-     — gabarit écrit comme l'outil d'origine l'écrit pour un projet vide, identifiants neufs (Capella 7.0.1 : .capella, .aird,
+     — gabarit écrit comme l'outil d'origine l'écrit pour un projet vide, identifiants neufs (Capella 7.1.0 ou 7.0.1 : .capella, .aird,
      .afm, .project ; SysML v2 : .sysml ; UML et SysML v1 : .uml ou .xmi, .notation de Papyrus au choix ; ReqIF : .reqif).
      Le projet s'ouvre comme un fichier tout juste lu, sans accès direct (30-fichier.js : arcOuvrirNeuf) : le premier
      enregistrement écrit tous ses fichiers dans un dossier choisi, sinon les télécharge. diagrammes.neuf(poignee) facultatif :
@@ -744,7 +779,9 @@ function xtToutReecrire(doc) {
      comparé), attributPermis(el, n) → booléen (champ texte name / summary / description que le type de l'élément porte),
      allocations [clés des champs de relations par lesquels allocateTo alloue], echanges [clés des liens que connect trace],
      variantes { suffixe de clé de règle : nom public } } — Capella : 29-format-capella.js ; UML et SysML v1 : métamodèle de
-     l'OMG, stéréotypes de SysML et d'UAF (umlApiExtension).
+     l'OMG, stéréotypes de SysML et d'UAF (umlApiExtension) ; SysML v2 : métaclasses et leur lignée (syApiExtension).
+     Les greffons (39-greffons.js, 64-greffons.js) n'emploient que cette API : leurs règles de validation rejoignent celles
+     de l'extension « validation » ci-dessus (grfValidation), sans rien demander de plus au format.
    ═══════════════════════════════════════════════════════════════════════ */
 
 /** Formats inclus dans cette version, dans l'ordre d'essai à l'ouverture d'un fichier (chaque format s'y ajoute). */
@@ -1026,12 +1063,14 @@ async function arzCompresser(o) {
 /**
  * Réécrit l'archive avec des entrées remplacées : chaque autre entrée est recopiée telle quelle (enregistrement local et
  * entrée du répertoire central, position mise à jour) ; une entrée remplacée est recompressée, son en-tête écrit avec
- * ses tailles et son CRC (sans descripteur de données), sa date et son nom gardés. L'ordre des entrées est conservé.
+ * ses tailles et son CRC (sans descripteur de données), sa date et son nom gardés. L'ordre des entrées est conservé. Des entrées
+ * nouvelles peuvent suivre les autres (compressées, datées du moment, version 2.0 et attributs de la dernière entrée existante).
  * @param {object} arch archive (arzLire)
  * @param {Map<string, Uint8Array>} remplacements nouveau contenu (décompressé) par nom d'entrée
+ * @param {Map<string, Uint8Array>} [ajouts] entrées nouvelles (nom absent de l'archive) et leur contenu, écrites à la fin
  * @returns {Promise<Uint8Array>} nouvelle archive
  */
-async function arzEcrire(arch, remplacements) {
+async function arzEcrire(arch, remplacements, ajouts) {
   const o = arch.octets, v = new DataView(o.buffer, o.byteOffset, o.byteLength);
   const morceaux = [], centraux = [];
   let pos = 0;
@@ -1056,9 +1095,30 @@ async function arzEcrire(arch, remplacements) {
     }
     centraux.push(central);
   }
+  // Entrées nouvelles : en-tête local et entrée du répertoire central écrits de toutes pièces
+  const enc = new TextEncoder(), maintenant = new Date(), dernier = arch.entrees[arch.entrees.length - 1];
+  const heure = (maintenant.getHours() << 11) | (maintenant.getMinutes() << 5) | (maintenant.getSeconds() >> 1);
+  const jour = ((Math.max(1980, maintenant.getFullYear()) - 1980) << 9) | ((maintenant.getMonth() + 1) << 5) | maintenant.getDate();
+  let nb = arch.entrees.length;
+  for (const [n, brut] of ajouts || []) {
+    if (arch.entrees.some(e => e.nom === n)) throw new Error(_Lp('Archive: the entry “{n}” already exists.', { n }));
+    const nom = enc.encode(n), comp = await arzCompresser(brut), crc = arzCrc32(brut), utf8 = /[^\x20-\x7e]/.test(n) ? 0x800 : 0;
+    const tete = new Uint8Array(30 + nom.length), vt = new DataView(tete.buffer);
+    vt.setUint32(0, 0x04034b50, true); vt.setUint16(4, 20, true); vt.setUint16(6, utf8, true); vt.setUint16(8, 8, true);
+    vt.setUint16(10, heure, true); vt.setUint16(12, jour, true);
+    vt.setUint32(14, crc, true); vt.setUint32(18, comp.length, true); vt.setUint32(22, brut.length, true);
+    vt.setUint16(26, nom.length, true); vt.setUint16(28, 0, true); tete.set(nom, 30);
+    const central = new Uint8Array(46 + nom.length), vc = new DataView(central.buffer);
+    vc.setUint32(0, 0x02014b50, true); vc.setUint16(4, dernier ? v.getUint16(dernier.central + 4, true) : 20, true); vc.setUint16(6, 20, true);
+    vc.setUint16(8, utf8, true); vc.setUint16(10, 8, true); vc.setUint16(12, heure, true); vc.setUint16(14, jour, true);
+    vc.setUint32(16, crc, true); vc.setUint32(20, comp.length, true); vc.setUint32(24, brut.length, true);
+    vc.setUint16(28, nom.length, true); vc.setUint32(42, pos, true); central.set(nom, 46);
+    morceaux.push(tete, comp); pos += tete.length + comp.length;
+    centraux.push(central); nb++;
+  }
   const debutCentral = pos, tailleCentral = centraux.reduce((t, c) => t + c.length, 0);
   const finCentral = new Uint8Array(22 + arch.commentaire.length), vf = new DataView(finCentral.buffer);
-  vf.setUint32(0, 0x06054b50, true); vf.setUint16(8, arch.entrees.length, true); vf.setUint16(10, arch.entrees.length, true);
+  vf.setUint32(0, 0x06054b50, true); vf.setUint16(8, nb, true); vf.setUint16(10, nb, true);
   vf.setUint32(12, tailleCentral, true); vf.setUint32(16, debutCentral, true); vf.setUint16(20, arch.commentaire.length, true);
   finCentral.set(arch.commentaire, 22);
   const res = new Uint8Array(pos + tailleCentral + finCentral.length);
@@ -1466,7 +1526,11 @@ function rqPresenter(M) {
     const ty = M.types.get(n.rq.type) || null, valeurs = rqValeurs(x);
     n.rq.ty = ty; n.rq.valeurs = valeurs;
     identifiable(n, x, rqSources(M, x, ty, valeurs));
-    n.rq.titre = !!(n.rq.nom.def && n.rq.nom.def.nom === 'ReqIF.ChapterName');
+    // Titre de chapitre : nommé par ReqIF.ChapterName et sans texte. Polarion nomme aussi ses exigences par ReqIF.ChapterName
+    // (titre de l'élément de travail) : avec un texte (ou une image, un tableau), l'objet est une exigence.
+    const texteDef = n.rq.desc.def, texteVal = texteDef && valeurs.get(texteDef.id);
+    const aTexte = !!texteVal && (!!String(rqLireValeur(M, texteVal, 'texte') || '').trim() || /<(?:[\w.-]+:)?(?:object|img|table)\b/i.test(String(rqLireValeur(M, texteVal, 'html') || '')));
+    n.rq.titre = !!(n.rq.nom.def && n.rq.nom.def.nom === 'ReqIF.ChapterName') && !aTexte;
     ajout(n, 'type', n.rq.type);
     const prises = new Set(), cles = new Map();
     const defs = [...(ty ? ty.attributs : []), ...[...valeurs.keys()].filter(id => !ty || !ty.attributs.some(a => a.id === id)).map(id => M.definitions.get(id) || { id, nom: id, genre: rqGenre(valeurs.get(id).tag), orpheline: true })];
@@ -2551,11 +2615,15 @@ const LRQ_REGLES = [
   { id: 'RQ-ID', severite: 'erreur', nom: _L('Duplicate identifier') },
   { id: 'RQ-TYPE', severite: 'avertissement', nom: _L('Value of an attribute that the element\'s type does not define') },
   { id: 'RQ-HORS-SPEC', severite: 'avertissement', nom: _L('Object in no specification') },
-  { id: 'RQ-PIECE', severite: 'avertissement', nom: _L('Referenced attachment missing') }
+  { id: 'RQ-PIECE', severite: 'avertissement', nom: _L('Referenced attachment missing') },
+  { id: 'RQ-STRUCT', severite: 'avertissement', nom: _L('Element written outside its place in the file: not read') }
 ];
 
 /** Genres de présentation (rqPresenter) exposés comme techniques : définitions, types de données, valeurs énumérées. */
 const LRQ_TECHNIQUES = new Set(['definition', 'datatype', 'enum']);
+
+/** Genres que les fichiers d'un même échange se partagent (même identifiant écrit dans chacun) : repris une fois, sans diagnostic. */
+const LRQ_PARTAGES = new Set(['type', 'definition', 'datatype', 'enum']);
 
 /**
  * Chemin normalisé d'une pièce jointe citée par une valeur XHTML (« data » d'un object) : séparateurs « / », « ./ » retiré,
@@ -2690,20 +2758,42 @@ function lrqLecture(docs, nom, pieces, avecPieces) {
     const r = LRQ_REGLES.find(x => x.id === code);
     diagnostics.push({ severite: r ? r.severite : 'avertissement', code, regle: code, message, element: element || null, fichier: fichier || '', ligne: 0, colonne: 0 });
   };
-  const idDe = n => (n ? n.attrs[0].v : null);
+  const idBrut = n => (n ? n.attrs[0].v : null);
   const attr = (n, k) => { const a = n.attrs.find(x => x.n === k); return a ? a.v : undefined; };
+  // Ensemble des fichiers lus : identifiants écrits, objets, types, définitions et valeurs énumérées (un fichier d'une archive peut
+  // citer un élément d'un autre : relation entre objets de deux fichiers, cas TC1700 du guide d'implémentation de ReqIF)
+  const idsParDoc = docs.map(({ doc }) => { const m = new Map(); xtParcourir(doc.M.racine, x => { const id = xtAttr(x, 'IDENTIFIER'); if (id != null) m.set(id, (m.get(id) || 0) + 1); }); return m; });
+  const tous = { ids: new Set(), objets: new Set(), types: new Map(), definitions: new Map(), valeursEnum: new Map() };
+  const docDeDef = new Map();                          // définition d'attribut → rang du fichier qui l'écrit
+  docs.forEach(({ doc }, k) => {
+    for (const id of idsParDoc[k].keys()) tous.ids.add(id);
+    for (const id of doc.M.objets.keys()) tous.objets.add(id);
+    for (const c of ['types', 'definitions', 'valeursEnum']) for (const [id, x] of doc.M[c]) if (!tous[c].has(id)) { tous[c].set(id, x); if (c === 'definitions') docDeDef.set(id, k); }
+  });
+  /** Modèle de lecture des valeurs d'un fichier : son XML, les valeurs énumérées de tous les fichiers lus ensemble. */
+  const Mls = docs.map(({ doc }) => (multi ? { xml: doc.M.xml, valeursEnum: tous.valeursEnum } : doc.M));
+  const fichierDe = new Map(), racines = [];           // identifiant exposé → rang de son fichier ; racine exposée de chaque fichier
   if (multi) {
     const e = { id: racineProjet, type: 'ReqIFProject', genre: 'projet', nom: nom || '', libelle: nom || '', description: '', texte: '', titre: false,
       famille: '', technique: false, racine: true, projet: true, proprietaire: null, enfants: [], references: {}, typeReqif: '', typeId: '',
       identifiant: '', derniereModification: '', images: 0, pieces: 0, objet: null, fichier: '' };
     elements.push(e); parId.set(e.id, e);
   }
-  for (const { chemin, doc } of docs) {
-    const M = doc.M, idsVus = new Map();
+  docs.forEach(({ chemin, doc }, k) => {
+    const M = doc.M, Ml = Mls[k], idsVus = idsParDoc[k];
+    // Identifiant exposé d'un nœud : les nœuds propres à la présentation (dossiers « §… », places sans identifiant) et un en-tête de
+    // même identifiant qu'un fichier déjà lu sont distingués par le rang du fichier (« §types·2 »)
+    const suffixe = k ? '·' + (k + 1) : '';
+    const idDe = n => { const id = idBrut(n); return id != null && suffixe && (id[0] === '§' || (n === doc.racine && parId.has(id) && fichierDe.get(id) !== k)) ? id + suffixe : id; };
     // Éléments : arbre présenté, dans l'ordre du fichier
     const parcourir = (n, parentId) => {
-      const id = idDe(n), rq = n.rq || {}, ty = rq.ty || null;
-      if (parId.has(id)) { diag('RQ-ID', _Lp('Identifier “{id}” already used by another ReqIF file read together: element ignored.', { id }), null, chemin); return; }
+      const id = idDe(n), rq = n.rq || {}, ty = rq.ty || (rq.type && tous.types.get(rq.type)) || null;
+      if (parId.has(id)) {
+        // Identifiant déjà exposé : même élément. Dans le même fichier : signalé plus bas (« écrit k fois ») ; types, définitions et
+        // types de données que les fichiers d'un échange se partagent : repris une fois, sans bruit.
+        if (fichierDe.get(id) !== k && !LRQ_PARTAGES.has(rq.genre)) diag('RQ-ID', _Lp('Identifier “{id}” already used by another ReqIF file read together: element ignored.', { id }), null, chemin);
+        return;
+      }
       const desc = attr(n, 'description') || '';
       const valeurs = rq.valeurs || new Map();
       const foreign = ty ? rqDefNommee(ty, 'ReqIF.ForeignID') : null;
@@ -2711,40 +2801,66 @@ function lrqLecture(docs, nom, pieces, avecPieces) {
       const e = { id, type: n.tag, genre: rq.genre || '', nom: attr(n, 'name') || '', libelle: rq.libelle || attr(n, 'name') || '', description: desc,
         texte: rqXhtmlVersTexte(desc), titre: !!rq.titre, famille: FMT_REQIF.couche(n), technique: LRQ_TECHNIQUES.has(rq.genre),
         racine: rq.genre === 'racine' && !multi, projet: false, proprietaire: n.parent ? idDe(n.parent) : parentId, enfants: n.enfants.map(idDe),
-        references: {}, typeReqif: ty ? ty.nom || ty.id : '', typeId: rq.type || '', identifiant: foreign && valeurs.has(foreign.id) ? String(rqLireValeur(M, valeurs.get(foreign.id), 'texte') || '') : '',
+        references: {}, typeReqif: ty ? ty.nom || ty.id : '', typeId: rq.type || '', identifiant: foreign && valeurs.has(foreign.id) ? String(rqLireValeur(Ml, valeurs.get(foreign.id), 'texte') || '') : '',
         derniereModification: attr(n, 'LAST-CHANGE') || '', images: citees.filter(c => lrqTypeImage(c, '')).length, pieces: citees.length,
         objet: rq.genre === 'occurrence' ? attr(n, 'object') || null : null, fichier: chemin };
       for (const a of n.attrs) { const r = rqEstReference(a.n, a.v, doc.clesEnum); if (r) e.references[a.n] = r; }
-      elements.push(e); parId.set(id, e); noeuds.set(id, n); docDe.set(id, { chemin, doc });
+      elements.push(e); parId.set(id, e); noeuds.set(id, n); docDe.set(id, { chemin, doc, Ml }); fichierDe.set(id, k);
       for (const c of n.enfants) parcourir(c, id);
     };
     parcourir(doc.racine, racineProjet);
-    if (multi) parId.get(racineProjet).enfants.push(idDe(doc.racine));
-    // Diagnostics du fichier : identifiants en double, références introuvables, valeurs hors type, objets hors spécification, pièces absentes
-    xtParcourir(M.racine, x => { const id = xtAttr(x, 'IDENTIFIER'); if (id != null) idsVus.set(id, (idsVus.get(id) || 0) + 1); });
-    for (const [id, k] of idsVus) if (k > 1) diag('RQ-ID', _Lp('Identifier “{id}” written {k} times in the file.', { id, k }), doc.parId.has(id) ? id : null, chemin);
-    const connu = id => idsVus.has(id);
-    for (const h of M.hierarchies.values()) if (h.objet && !M.objets.has(h.objet)) diag('RQ-REF', _Lp('Place {h}: object “{o}” not found.', { h: h.id || '?', o: h.objet }), doc.parId.has(h.id) ? h.id : null, chemin);
-    for (const o of M.objets.values()) if (o.type && !M.types.has(o.type)) diag('RQ-REF', _Lp('Type “{t}” not found.', { t: o.type }), o.id, chemin);
+    racines.push(idDe(doc.racine));
+    if (multi) parId.get(racineProjet).enfants.push(racines[k]);
+    // Diagnostics du fichier : identifiants en double, références introuvables (dans tous les fichiers lus ensemble), valeurs hors
+    // type, objets hors spécification, éléments écrits hors de leur place, pièces absentes
+    for (const [id, n] of idsVus) if (n > 1) diag('RQ-ID', _Lp('Identifier “{id}” written {k} times in the file.', { id, k: n }), doc.parId.has(id) ? id : null, chemin);
+    const connu = id => tous.ids.has(id);
+    for (const h of M.hierarchies.values()) if (h.objet && !tous.objets.has(h.objet)) diag('RQ-REF', _Lp('Place {h}: object “{o}” not found.', { h: h.id || '?', o: h.objet }), doc.parId.has(h.id) ? h.id : null, chemin);
+    for (const o of M.objets.values()) if (o.type && !tous.types.has(o.type)) diag('RQ-REF', _Lp('Type “{t}” not found.', { t: o.type }), o.id, chemin);
     for (const r of M.relations) {
       if (r.source && !connu(r.source)) diag('RQ-REF', _Lp('Relation: source “{s}” not found.', { s: r.source }), doc.parId.has(r.id) ? r.id : null, chemin);
       if (r.cible && !connu(r.cible)) diag('RQ-REF', _Lp('Relation: target “{s}” not found.', { s: r.cible }), doc.parId.has(r.id) ? r.id : null, chemin);
-      if (r.type && !M.types.has(r.type)) diag('RQ-REF', _Lp('Type “{t}” not found.', { t: r.type }), doc.parId.has(r.id) ? r.id : null, chemin);
+      if (r.type && !tous.types.has(r.type)) diag('RQ-REF', _Lp('Type “{t}” not found.', { t: r.type }), doc.parId.has(r.id) ? r.id : null, chemin);
     }
     for (const n of doc.parId.values()) {
       const rq = n.rq || {}, id = idDe(n);
       if (rq.valeurs) for (const [d, v] of rq.valeurs) {
-        if (!M.definitions.has(d)) { diag('RQ-REF', _Lp('Attribute definition “{d}” not found.', { d }), id, chemin); continue; }
-        if (rq.ty && !rq.ty.attributs.some(a => a.id === d)) diag('RQ-TYPE', _Lp('Attribute “{a}” not defined by type “{t}”.', { a: M.definitions.get(d).nom, t: rq.ty.nom || rq.ty.id }), id, chemin);
-        if (rqGenre(v.tag) === 'ENUMERATION') for (const ev of rqRefs(v, 'VALUES')) if (!M.valeursEnum.has(ev)) diag('RQ-REF', _Lp('Enumeration value “{v}” not found.', { v: ev }), id, chemin);
+        if (!tous.definitions.has(d)) { diag('RQ-REF', _Lp('Attribute definition “{d}” not found.', { d }), id, chemin); continue; }
+        if (rq.ty && !rq.ty.attributs.some(a => a.id === d)) diag('RQ-TYPE', _Lp('Attribute “{a}” not defined by type “{t}”.', { a: tous.definitions.get(d).nom, t: rq.ty.nom || rq.ty.id }), id, chemin);
+        if (rqGenre(v.tag) === 'ENUMERATION') for (const ev of rqRefs(v, 'VALUES')) if (!tous.valeursEnum.has(ev)) diag('RQ-REF', _Lp('Enumeration value “{v}” not found.', { v: ev }), id, chemin);
       }
       if (rq.genre === 'objet' && !rq.hier && n.parent && n.parent.rq && n.parent.rq.genre === 'dossier') diag('RQ-HORS-SPEC', _L('Object in no specification.'), id, chemin);
     }
+    // Éléments écrits hors de leur conteneur (fichier qui ne suit pas le schéma ReqIF) : le lecteur ne les lit pas, il le dit
+    if (!M.contenu) diag('RQ-STRUCT', _L('File content not found (CORE-CONTENT, REQ-IF-CONTENT): nothing was read.'), null, chemin);
+    const ecrits = { 'SPEC-OBJECT': 0, 'SPECIFICATION': 0, 'SPEC-RELATION': 0 };
+    xtParcourir(M.racine, x => { const t = rqLocal(x.tag); if (t in ecrits) ecrits[t]++; });
+    const lus = { 'SPEC-OBJECT': rqEnfants(M.conteneurs['SPEC-OBJECTS'], 'SPEC-OBJECT').length, 'SPECIFICATION': M.specs.length, 'SPEC-RELATION': M.relations.length };
+    for (const t of Object.keys(ecrits)) if (ecrits[t] > lus[t]) diag('RQ-STRUCT', _Lp('{n} {t} element(s) written outside their place in the file (ReqIF schema not followed): not read.', { n: ecrits[t] - lus[t], t }), null, chemin);
     // Liaisons : relations (SPEC-RELATION) par type, nommées par le nom de leur type
     const L = rqLiaisons(doc);
     for (const [n, ls] of L.metier) for (const x of ls) if (x.sens === 'sortant') {
-      const t = M.types.get(x.rel.slice(4));
+      if (fichierDe.get(idDe(x.via)) !== k) continue;   // relation déjà lue dans un autre fichier
+      const t = tous.types.get(x.rel.slice(4));
       liaisons.push({ relation: (t && t.nom) || x.rel.slice(4) || _L('relation'), typeRelation: x.rel.slice(4), source: idDe(n), cible: idDe(x.autre), via: idDe(x.via) });
+    }
+  });
+  if (multi) {
+    // Relations d'un fichier vers un objet d'un autre fichier lu avec lui
+    docs.forEach(({ doc }, k) => {
+      for (const r of doc.M.relations) {
+        if (!r.source || !r.cible || fichierDe.get(r.id) !== k || (doc.parId.has(r.source) && doc.parId.has(r.cible)) || !parId.has(r.source) || !parId.has(r.cible)) continue;
+        const t = tous.types.get(r.type);
+        liaisons.push({ relation: (t && t.nom) || r.type || _L('relation'), typeRelation: r.type || '', source: r.source, cible: r.cible, via: r.id });
+      }
+    });
+    // Libellés qui dépendent d'un élément d'un autre fichier (autre place d'un objet, relation sans nom) ; un élément n'a qu'un propriétaire
+    const lib = id => { const x = parId.get(id); return x ? x.libelle || '‹' + x.type + '›' : '?'; };
+    for (const e of elements) {
+      const d = docDe.get(e.id), rq = d && (noeuds.get(e.id).rq || {});
+      if (rq && e.genre === 'occurrence' && e.objet && parId.has(e.objet) && !d.doc.parId.has(e.objet)) e.libelle = lib(e.objet);
+      if (rq && e.genre === 'relation' && !e.nom && rq.relation && !(d.doc.parId.has(rq.relation.source) && d.doc.parId.has(rq.relation.cible))) e.libelle = lib(rq.relation.source) + ' → ' + lib(rq.relation.cible);
+      e.enfants = e.enfants.filter(c => { const x = parId.get(c); return x && x.proprietaire === e.id; });
     }
   }
   // Pièces jointes citées : absentes (seulement si elles pouvaient être fournies)
@@ -2756,17 +2872,19 @@ function lrqLecture(docs, nom, pieces, avecPieces) {
       t.push({ relation: l.relation, libelle: ArcatureLecteurReqif.libelleRelation(l.relation, sens), sens, autre: b, via: l.via });
     }
   }
+  /** Valeur par défaut d'une définition d'attribut (DEFAULT-VALUE), en texte ; '' si elle n'en donne pas. */
+  const defautDe = d => (d.defaut && docDeDef.has(d.id) ? String(rqLireValeur(Mls[docDeDef.get(d.id)], d.defaut, 'texte') ?? '') : '');
   /** Valeurs d'attributs d'un nœud présenté : une par définition du type (et valeurs hors type), dans l'ordre du type. */
   const valeursDe = id => {
     const n = noeuds.get(id), rq = n && n.rq; if (!rq || !rq.valeurs) return [];
-    const M = docDe.get(id).doc.M, ty = rq.ty, out = [];
-    const defs = [...(ty ? ty.attributs : []), ...[...rq.valeurs.keys()].filter(d => !ty || !ty.attributs.some(a => a.id === d)).map(d => M.definitions.get(d) || { id: d, nom: d, genre: rqGenre(rq.valeurs.get(d).tag), orpheline: true })];
+    const M = docDe.get(id).Ml, ty = rq.ty || (rq.type && tous.types.get(rq.type)) || null, out = [];
+    const defs = [...(ty ? ty.attributs : []), ...[...rq.valeurs.keys()].filter(d => !ty || !ty.attributs.some(a => a.id === d)).map(d => tous.definitions.get(d) || { id: d, nom: d, genre: rqGenre(rq.valeurs.get(d).tag), orpheline: true })];
     const cles = new Map([...(rq.cles || new Map())].map(([k, d]) => [d, k]));
     for (const d of defs) {
       const v = rq.valeurs.get(d.id), role = rq.nom && rq.nom.def === d ? 'nom' : rq.desc && rq.desc.def === d ? 'texte' : '';
       out.push({ nom: d.nom, cle: cles.get(d) || d.nom, definition: d.id, genre: d.genre, role, renseigne: !!v,
         valeur: v ? String(rqLireValeur(M, v, 'texte') ?? '') : '', html: v && d.genre === 'XHTML' ? rqLireValeur(M, v, 'html') : '',
-        valeursEnum: v && d.genre === 'ENUMERATION' ? rqRefs(v, 'VALUES') : [] });
+        valeursEnum: v && d.genre === 'ENUMERATION' ? rqRefs(v, 'VALUES') : [], defaut: defautDe(d) });
     }
     return out;
   };
@@ -2775,12 +2893,12 @@ function lrqLecture(docs, nom, pieces, avecPieces) {
     /** Nom du fichier, de l'archive ou du dossier lu. */
     nom: nom || '',
     /** Fichiers ReqIF lus : chemin, titre, version de ReqIF, outil, date de création. */
-    documents: docs.map(({ chemin, doc }) => { const E = doc.entete, c = k => { const x = rqEnfant(E, k); return x && x.texte ? x.texte.trim() : ''; };
-      return { chemin, titre: c('TITLE'), version: c('REQ-IF-VERSION'), outil: c('SOURCE-TOOL-ID') || c('REQ-IF-TOOL-ID'), date: c('CREATION-TIME'), commentaire: c('COMMENT'), racine: idDe(doc.racine) }; }),
+    documents: docs.map(({ chemin, doc }, k) => { const E = doc.entete, c = k => { const x = rqEnfant(E, k); return x && x.texte ? x.texte.trim() : ''; };
+      return { chemin, titre: c('TITLE'), version: c('REQ-IF-VERSION'), outil: c('SOURCE-TOOL-ID') || c('REQ-IF-TOOL-ID'), date: c('CREATION-TIME'), commentaire: c('COMMENT'), racine: racines[k] }; }),
     /** Pièces jointes lues (archive, dossier) : chemin, taille en octets, type d'image ('' si ce n'est pas une image montrable). */
     fichiers: piecesListe.map(p => ({ chemin: p.chemin, taille: p.taille, type: p.type, image: p.image })),
     /** Identifiant de la racine : en-tête du fichier, ou projet si plusieurs fichiers ont été lus ensemble. */
-    racine: multi ? racineProjet : idDe(docs[0].doc.racine),
+    racine: multi ? racineProjet : racines[0],
     /** Diagnostics de la lecture. */
     diagnostics,
     /** Nombre d'erreurs. */
@@ -2803,8 +2921,9 @@ function lrqLecture(docs, nom, pieces, avecPieces) {
     arbre(id) { const e = parId.get(id || lec.racine); if (!e) return null; const rec = x => ({ element: x, enfants: lec.enfants(x.id).map(rec) }); return rec(e); },
     /**
      * Valeurs des attributs d'un élément typé (objet, spécification, relation), dans l'ordre de son type ; rôle « nom » ou
-     * « texte » pour celles qui donnent son nom et sa description.
-     * @param {string} id @returns {Array<{nom:string, cle:string, definition:string, genre:string, role:string, renseigne:boolean, valeur:string, html:string, valeursEnum:string[]}>}
+     * « texte » pour celles qui donnent son nom et sa description ; defaut : valeur par défaut de la définition (DEFAULT-VALUE), qui
+     * vaut pour un attribut non renseigné.
+     * @param {string} id @returns {Array<{nom:string, cle:string, definition:string, genre:string, role:string, renseigne:boolean, valeur:string, html:string, valeursEnum:string[], defaut:string}>}
      */
     attributs(id) { return valeursDe(id); },
     /**
@@ -2862,10 +2981,10 @@ function lrqLecture(docs, nom, pieces, avecPieces) {
       rec(idSpec, 0, '');
       return out;
     },
-    /** @returns {Array<{id:string, nom:string, sorte:string, attributs:Array<{id:string, nom:string, genre:string}>, nombre:number}>} types (objets, spécifications, relations, groupes) et nombre d'éléments de chacun */
+    /** @returns {Array<{id:string, nom:string, sorte:string, attributs:Array<{id:string, nom:string, genre:string, defaut:string}>, nombre:number}>} types (objets, spécifications, relations, groupes), chacun une fois, et nombre d'éléments de chacun */
     types() {
       const nb = new Map(); for (const e of elements) if (e.typeId && e.genre !== 'type') nb.set(e.typeId, (nb.get(e.typeId) || 0) + 1);
-      return docs.flatMap(({ doc }) => [...doc.M.types.values()].map(t => ({ id: t.id, nom: t.nom || t.id, sorte: t.sorte, attributs: t.attributs.map(a => ({ id: a.id, nom: a.nom, genre: a.genre })), nombre: nb.get(t.id) || 0 })));
+      return [...tous.types.values()].map(t => ({ id: t.id, nom: t.nom || t.id, sorte: t.sorte, attributs: t.attributs.map(a => ({ id: a.id, nom: a.nom, genre: a.genre, defaut: defautDe(a) })), nombre: nb.get(t.id) || 0 }));
     },
     /** @returns {Array} aucune vue : ReqIF n'a pas de diagrammes */
     vues() { return []; },
@@ -2893,13 +3012,22 @@ function lrqOctets(contenu) {
 }
 
 /**
- * Texte d'octets : UTF-8 (marque d'ordre retirée), ou UTF-16 si une marque d'ordre l'annonce.
+ * Texte d'octets : UTF-16 si une marque d'ordre l'annonce (ou si le fichier commence par « < » sur deux octets), sinon l'encodage
+ * de la déclaration XML (« ISO-8859-1 », « windows-1252 »… : exports d'anciens outils), sinon UTF-8 (marque d'ordre retirée). Un
+ * encodage inconnu, ou UTF-16 / UTF-32 annoncé par un fichier qui se lit octet par octet, est ignoré : UTF-8.
  * @param {Uint8Array} o @returns {string}
  */
 function lrqTexte(o) {
   if (o[0] === 0xFF && o[1] === 0xFE) return new TextDecoder('utf-16le').decode(o.subarray(2));
   if (o[0] === 0xFE && o[1] === 0xFF) return new TextDecoder('utf-16be').decode(o.subarray(2));
-  return new TextDecoder('utf-8').decode(o).replace(/^﻿/, '');
+  if (o[0] === 0x3C && o[1] === 0 && o[3] === 0) return new TextDecoder('utf-16le').decode(o);
+  if (o[0] === 0 && o[1] === 0x3C && o[2] === 0) return new TextDecoder('utf-16be').decode(o);
+  if (!(o[0] === 0xEF && o[1] === 0xBB && o[2] === 0xBF)) {
+    let tete = ''; for (let i = 0; i < Math.min(o.length, 200); i++) tete += String.fromCharCode(o[i]);
+    const m = /^\s*<\?xml\b[^>]*?\bencoding\s*=\s*["']([\w.:-]+)["']/.exec(tete);
+    if (m && !/^(utf-?8|utf-?16|utf-?32|ucs-?[24]|unicode)/i.test(m[1])) { try { return new TextDecoder(m[1]).decode(o); } catch (e) { /* encodage inconnu du navigateur : lu en UTF-8 */ } }
+  }
+  return new TextDecoder('utf-8').decode(o).replace(/^\uFEFF/, '');
 }
 
 /**

@@ -145,7 +145,7 @@ async function capAvLireFichiers(fs){
  */
 function capAvSvgs(uid, ref){
   if(String(uid).startsWith('sy:')){
-    const cle=uid.slice(3), th=capSyTheme(), doc=v=>{ try{ return v&&typeof v.svgDocument==='function'?v.svgDocument({theme:th}).replace(/^\s*<\?xml[^>]*>\s*/,''):''; }catch(e){ console.warn('⇄',e); return ''; } };
+    const cle=uid.slice(3), th=capSyTheme(), doc=v=>{ try{ return v&&typeof v.svgDocument==='function'?capSyDocument(v, th).replace(/^\s*<\?xml[^>]*>\s*/,''):''; }catch(e){ console.warn('⇄',e); return ''; } };
     let av=null; try{ av=ref.lecture.vue(cle)||null; }catch(e){ av=null; }
     const ici=doc(capSyVue(cle)), la=doc(av);
     return ref.inverse?{apres:la, avant:ici}:{apres:ici, avant:la};   // modèle affiché = ancienne version de la comparaison

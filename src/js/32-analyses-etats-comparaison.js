@@ -232,6 +232,14 @@ function capDiffInfoHtml(comparee){
     sy?capDiagReps().filter(r=>r.genre!=='tableau').length:(typeof _capDiag!=='undefined'&&_capDiag.airdCharge?_capDiag.nbReps:0));
   return t?`<span class="ana-dim" style="font-size:11px">${capEsc(t)}</span>`:'';
 }
+/**
+ * Texte d'informations d'une des deux versions (en tête du rapport copié ou exporté).
+ * @param {boolean} comparee - Vrai : la version chargée pour comparaison ; faux : le modèle affiché
+ * @returns {string} texte ('' si rien n'est connu)
+ */
+function capDiffInfoTexte(comparee){
+  const d=document.createElement('div'); d.innerHTML=capDiffInfoHtml(comparee); return d.textContent.trim();
+}
 let capDiffDoc=null, capDiffName='', capDiffSwap=false; // version chargée pour comparaison, et sens (false : elle est l'ANCIENNE)
 let capDiffLu=null, capDiffDate=0;   // lecture d'Arcature de cette version (SysML, UML, ReqIF : diagrammes comparés par 59) et date de son fichier
 
@@ -246,23 +254,143 @@ let capDiffLu=null, capDiffDate=0;   // lecture d'Arcature de cette version (Sys
  * @returns {string} texte ('' si rien n'est connu)
  */
 function capVersionInfos(lec, doc, date, nbDiag){
-  const p=[];
+  const p=[capVersionOutil(lec, doc)];
   try{
     if(lec){
-      const pr=lec.projet, doc0=Array.isArray(lec.documents)&&lec.documents[0];
-      if(doc0) p.push([doc0.outil, doc0.version].filter(Boolean).join(' '));
-      else if(pr&&(pr.outil||pr.version)) p.push([pr.outil||lec.outil, pr.version].filter(Boolean).join(' '));
-      else if(lec.outil) p.push(lec.outil);
       if(lec.versionModele) p.push(_L(`modèle ${lec.versionModele}`));
       p.push(_L(`${lec.elements().length} élément(s)`));
-    } else if(doc){
-      for(const n of doc.childNodes){ if(n.nodeType===8){ const m=/Capella_Version_([\w.]+)/.exec(n.data); if(m){ p.push('Capella '+m[1]); break; } } }
-      p.push(_L(`${doc.querySelectorAll('[id]').length} élément(s)`));
-    }
+    } else if(doc) p.push(_L(`${doc.querySelectorAll('[id]').length} élément(s)`));
   }catch(e){ /* informations facultatives */ }
   if(nbDiag) p.push(_L(`${nbDiag} diagramme(s)`));
   if(date) p.push(capWatchDate(date));
   return p.filter(Boolean).join(' · ');
+}
+
+/**
+ * Outil et version qui ont écrit une version du modèle : Capella (commentaire « Capella_Version_x.y.z » en tête du fichier, sinon
+ * espace de noms du modeleur), outil et version du projet d'un lecteur d'Arcature (UML / SysML v1, SysML v2, ReqIF).
+ * @param {?object} lec - Lecture d'Arcature (null : modèle Capella)
+ * @param {?Document} doc - Document XML de la version
+ * @returns {string} « Capella 7.0.1 », « Cameo 2024x »… ('' si inconnu)
+ */
+function capVersionOutil(lec, doc){
+  try{
+    if(lec){
+      const pr=lec.projet, doc0=Array.isArray(lec.documents)&&lec.documents[0];
+      if(doc0) return [doc0.outil, doc0.version].filter(Boolean).join(' ');
+      if(pr&&(pr.outil||pr.version)) return [pr.outil||lec.outil, pr.version].filter(Boolean).join(' ');
+      return lec.outil||'';
+    }
+    if(doc){
+      for(const n of doc.childNodes){ if(n.nodeType===8){ const m=/Capella_Version_([\w.]+)/.exec(n.data); if(m) return 'Capella '+m[1]; } }
+      const r=doc.documentElement;
+      if(r) for(const a of r.attributes){ const m=a.name.startsWith('xmlns')&&/\/capella\/core\/modeller\/([\d.]+)/.exec(a.value); if(m) return 'Capella '+m[1]; }
+    }
+  }catch(e){ /* information facultative */ }
+  return '';
+}
+
+/** Versions du modèle choisies à la main pendant la session (fichiers chargés dans ⚖ Comparaison), les plus récentes d'abord. */
+const _capDiffVers=[];
+/** Nombre de versions choisies gardées dans la liste « Comparer avec ». */
+const CAP_DIFF_VERS_MAX=4;
+
+/**
+ * Garde une version choisie à la main dans la liste « Comparer avec » (une entrée par fichier et date).
+ * @param {{doc:Document, lu:?object, nom:string, date:number}} v - Version lue
+ */
+function capDiffRetenir(v){
+  const i=_capDiffVers.findIndex(x=>x.nom===v.nom&&x.date===v.date);
+  if(i>=0) _capDiffVers.splice(i,1);
+  _capDiffVers.unshift(v);
+  _capDiffVers.length=Math.min(_capDiffVers.length, CAP_DIFF_VERS_MAX);
+}
+
+/**
+ * Versions que l'on peut comparer au modèle affiché : celles du 🔄 suivi du fichier (sur le disque non appliquée, avant la
+ * dernière mise à jour, version d'ouverture), puis les fichiers choisis pendant la session.
+ * @returns {{cle:string, libelle:string, doc:Document, lu:?object, nom:string, date:number, swap:boolean}[]} versions
+ */
+function capDiffVersions(){
+  const W=typeof _capWatch!=='undefined'?_capWatch:null, l=[], f=(W&&W.name)||capCurrentFileName||'';
+  const quand=t=>t?' — '+capWatchDate(t):'';
+  if(W&&W.pending) l.push({cle:'disque', libelle:_L('🔄 Sur le disque, non appliquée')+quand(W.pending.mtime), doc:W.pending.doc, lu:W.pending.lu?W.pending.lu.lecture:null,
+    nom:_L(`${f} — sur le disque (${capWatchDate(W.pending.mtime)}), non appliquée`), date:W.pending.mtime||0, swap:true});
+  if(W&&W.prevDoc&&W.prevDoc!==cap_xmlDoc) l.push({cle:'avant', libelle:_L('🔄 Avant la dernière mise à jour')+quand(W.prevMtime), doc:W.prevDoc, lu:W.prevLec||null,
+    nom:_L(`${f} — avant la mise à jour de ${capWatchTime(W.history[0]&&W.history[0].at)}`), date:W.prevMtime||0, swap:false});
+  if(W&&W.origDoc&&W.origDoc!==cap_xmlDoc&&W.origDoc!==W.prevDoc) l.push({cle:'ouverture', libelle:_L('🔄 Version d\'ouverture')+(W.origAt?` (${capWatchTime(W.origAt)})`:''), doc:W.origDoc, lu:W.origLec||null,
+    nom:_L(`${f} — version d'ouverture (${capWatchTime(W.origAt)})`), date:0, swap:false});
+  _capDiffVers.forEach((v,i)=>l.push({cle:'f'+i, libelle:'📂 '+v.nom+quand(v.date), doc:v.doc, lu:v.lu, nom:v.nom, date:v.date, swap:false}));
+  return l;
+}
+
+/**
+ * Place une version dans ⚖ Comparaison de versions.
+ * @param {{doc:Document, lu:?object, nom:string, date:number, swap:boolean}} v - Version (capDiffVersions)
+ */
+function capDiffPoser(v){
+  capDiffDoc=v.doc; capDiffName=v.nom; capDiffLu=v.lu||null; capDiffDate=v.date||0; capDiffSwap=!!v.swap;
+  if(typeof _capWatch!=='undefined'&&v.cle&&!/^f\d/.test(v.cle)) _capWatch.diffDoc=v.doc;   // version du 🔄 suivi : remplacée d'elle-même à la prochaine mise à jour (40)
+  if(typeof _capAnaCache!=='undefined'&&_capAnaCache) delete _capAnaCache.diff;
+  if(typeof _capDg!=='undefined') _capDg.cache=null;
+}
+
+/**
+ * Les deux versions comparées, dans le sens affiché : lecture, document, date du fichier, outil et version, identifiant du
+ * projet racine (Capella).
+ * @returns {{old:object, neu:object}} versions {lec, doc, date, outil, racine}
+ */
+function capDiffDeuxVersions(){
+  const sy=typeof _capSysml!=='undefined'&&_capSysml.lecture;
+  const v=(lec,doc,date)=>({lec, doc, date:date||0, outil:capVersionOutil(lec,doc), racine:!lec&&doc&&doc.documentElement?capXId(doc.documentElement)||'':''});
+  const cur=v(sy||null, sy?null:cap_xmlDoc, typeof _capWatch!=='undefined'?_capWatch.shownMtime:0);
+  const oth=capDiffDoc?v(capDiffLu, capDiffLu?null:capDiffDoc, capDiffDate):null;
+  return capDiffSwap?{old:cur, neu:oth}:{old:oth, neu:cur};
+}
+
+/** Durée lisible entre deux dates. @param {number} ms - Écart en millisecondes @returns {string} */
+function capDiffEcart(ms){
+  const m=Math.round(Math.abs(ms)/60000), h=Math.floor(m/60), j=Math.floor(h/24);
+  if(m<1) return _L('moins d\'une minute');
+  if(h<1) return _L(`${m} min`);
+  if(j<1) return _L(`${h} h ${m%60} min`);
+  return _L(`${j} j ${h%24} h`);
+}
+
+/**
+ * Ce qui sépare les deux versions comparées (durée entre leurs fichiers, éléments communs) et les alertes : dates inversées,
+ * projets racines différents (Capella), outils ou versions d'outil différents, trop peu d'éléments communs.
+ * @returns {{faits:string[], alertes:string[]}} textes (HTML échappé)
+ */
+function capDiffConstats(){
+  const E=capEsc, {old, neu}=capDiffDeuxVersions(), faits=[], alertes=[];
+  if(!old||!neu) return {faits, alertes};
+  if(old.date&&neu.date) faits.push(old.date===neu.date?_L('⏱ fichiers de même date'):_L(`⏱ ${capDiffEcart(neu.date-old.date)} entre les deux fichiers`));
+  if(_capAnaCache&&_capAnaCache.diff&&_capAnaCache.diffIdx&&_capAnaCache.diffSwap===capDiffSwap){
+    const nA=Object.keys(_capAnaCache.diffIdx.A).length, nB=Object.keys(_capAnaCache.diffIdx.B).length, del=_capAnaCache.diff.filter(d=>d.status==='del').length;
+    const communs=nA-del, pct=Math.max(nA,nB)?Math.round(100*communs/Math.max(nA,nB)):100;
+    faits.push(_L(`${communs} élément(s) commun(s) (${pct} %)`));
+    if(pct<30) alertes.push(_L(`Seuls ${pct} % des éléments sont communs : ces deux fichiers ne sont peut-être pas deux versions du même modèle.`));
+  }
+  if(old.date&&neu.date&&old.date>neu.date) alertes.push(_L('La version présentée comme « ancienne » a été modifiée après la « nouvelle » : ⇄ pour inverser le sens de la comparaison.'));
+  if(old.racine&&neu.racine&&old.racine!==neu.racine) alertes.push(_L('Les deux fichiers n\'ont pas le même projet racine (identifiants différents).'));
+  if(old.outil&&neu.outil&&old.outil!==neu.outil) alertes.push(_L(`Outils ou versions différents (${E(old.outil)} → ${E(neu.outil)}) : une migration peut expliquer une partie des changements.`));
+  return {faits, alertes};
+}
+
+/**
+ * Ligne des constats et alertes, puis choix de la version à comparer parmi les versions connues (sous l'en-tête de ⚖ Comparaison).
+ * @returns {string} HTML ('' s'il n'y a rien à dire)
+ */
+function capDiffConstatsHtml(){
+  const {faits, alertes}=capDiffConstats(), V=capDiffVersions(), act=V.find(v=>v.doc===capDiffDoc), E=capEsc;
+  let h='';
+  if(faits.length) h+=`<div class="ana-dv-faits">${faits.map(f=>`<span>${f}</span>`).join('')}</div>`;
+  h+=alertes.map(a=>`<div class="ana-dv-alerte">⚠ ${a}</div>`).join('');
+  if(V.length) h+=`<div class="ana-dv-choix"><label class="ana-dim">${_L('Comparer le modèle affiché avec')} <select class="phl-filter-input" id="ana-df-vers" style="width:auto;max-width:420px" title="${_L('Versions connues : celles du 🔄 suivi du fichier et les fichiers choisis pendant cette session')}">`+
+    (act?'':`<option value="">${capDiffDoc?E(capDiffName):_L('— choisir une version —')}</option>`)+
+    V.map(v=>`<option value="${v.cle}"${v===act?' selected':''}>${E(v.libelle)}</option>`).join('')+`</select></label></div>`;
+  return h;
 }
 
 /** Indexe un document Capella pour la comparaison : pour chaque élément identifié, type, nom, parent,
@@ -334,27 +462,28 @@ function capDiffCompute(A, B){
 function capRenderDiff(box){
   const cur=capCurrentFileName||_L('modèle chargé');
   const oldName=capDiffSwap?cur:capDiffName, newName=capDiffSwap?capDiffName:cur;
+  if(capDiffDoc&&_capDg.vue!=='diag'&&(!_capAnaCache.diff||_capAnaCache.diffSwap!==capDiffSwap)){
+    const cIdx=capDiffIndex(cap_xmlDoc), oIdx=capDiffIndex(capDiffDoc);
+    const A=capDiffSwap?cIdx:oIdx, B=capDiffSwap?oIdx:cIdx;
+    _capAnaCache.diff=capDiffCompute(A,B); _capAnaCache.diffIdx={A,B}; _capAnaCache.diffSwap=capDiffSwap;
+  }
   const head=_L(`<div class="ana-diff-head">
       <div class="ana-diff-file"><span class="ana-dim">Ancienne version (référence)</span><b>${capEsc(oldName||'—')}</b>${capDiffInfoHtml(!capDiffSwap)}</div>
       <button class="cap-lf-btn" id="ana-df-swap" title="Inverser ancienne / nouvelle"${capDiffDoc?'':' disabled'}>⇄</button>
       <div class="ana-diff-file"><span class="ana-dim">Nouvelle version</span><b>${capEsc(newName||'—')}</b>${capDiffInfoHtml(capDiffSwap)}</div>
       <label class="cw-btn ana-diff-load">📂 ${capDiffDoc?_L('Changer la version à comparer…'):_L('Charger une autre version…')}<input type="file" id="ana-df-file"${capIsMobile()?'':` accept="${capEsc(capFormatsAccept())}"`} style="display:none"></label>
       <button class="cap-lf-btn" onclick="capTourStartView()" title="${_L('Visite guidée de ⚖ Comparaison de versions')}">🎓</button>
-    </div>`)+capDgOnglets();
+    </div>`)+capDiffConstatsHtml()+capDgOnglets();
   if(_capDg.vue==='diag'){ box.innerHTML=head+'<div id="ana-dg"></div>'; capDgRender(box.querySelector('#ana-dg')); wire(); return; }   // 🔲 Diagrammes (59-comparaison-aird.js)
   if(!capDiffDoc){
     box.innerHTML=head+_L(`<div class="phl-empty">Chargez une autre version du même modèle (par défaut considérée comme l'<b>ancienne</b> version ; ⇄ pour inverser).<br>Les éléments sont appariés par identifiant ; le rapport classe les changements en créations, suppressions, renommages, descriptions, propriétés, liens, déplacements et changements de type, du plus synthétique au plus complet, et se copie dans Word, Outlook, Teams ou Excel.</div>`);
     wire(); return;
   }
-  if(!_capAnaCache.diff||_capAnaCache.diffSwap!==capDiffSwap){
-    const cIdx=capDiffIndex(cap_xmlDoc), oIdx=capDiffIndex(capDiffDoc);
-    const A=capDiffSwap?cIdx:oIdx, B=capDiffSwap?oIdx:cIdx;
-    _capAnaCache.diff=capDiffCompute(A,B); _capAnaCache.diffIdx={A,B}; _capAnaCache.diffSwap=capDiffSwap;
-  }
   box.innerHTML=head+'<div id="ana-dr"></div>';
   const host=box.querySelector('#ana-dr');
   if(box._drState) host._dr=box._drState;   // réglages conservés d'un rendu à l'autre
-  capDrRender(host, _capAnaCache.diff, _capAnaCache.diffIdx.A, _capAnaCache.diffIdx.B, {oldName, newName});
+  capDrRender(host, _capAnaCache.diff, _capAnaCache.diffIdx.A, _capAnaCache.diffIdx.B, {oldName, newName,
+    oldInfo:capDiffInfoTexte(!capDiffSwap), newInfo:capDiffInfoTexte(capDiffSwap), ...capDiffConstats()});
   box._drState=host._dr;
   wire();
   /** Branche le chargement de la version à comparer et l'inversion. */
@@ -365,10 +494,11 @@ function capRenderDiff(box){
       if(fam!==cur){ capAlert(_L(`« ${file.name} » est un fichier ${capVersionFamilleNom(fam)} : le modèle affiché est un modèle ${capVersionFamilleNom(cur)}.`),{level:'err'}); return; }
       const S=typeof _capSources!=='undefined'&&_capSources;   // UML : .notation et autres fichiers du projet repris de l'ouverture
       capVersionLire(file, {autres:S&&cur!=='capella'?S.fichiers.filter(x=>x.nom!==file.name):[]})
-        .then(r=>{ capDiffDoc=r.doc; capDiffName=file.name; capDiffLu=r.lecture||null; capDiffDate=file.lastModified||0; delete _capAnaCache.diff; if(typeof _capDg!=='undefined') _capDg.cache=null; if(box._drState) box._drState.ex.clear(); capRenderDiff(box); })
+        .then(r=>{ const v={doc:r.doc, lu:r.lecture||null, nom:file.name, date:file.lastModified||0, swap:false}; capDiffRetenir(v); capDiffPoser(v); if(box._drState) box._drState.ex.clear(); capRenderDiff(box); })
         .catch(err=>capAlert(_L('Fichier illisible : ')+(err&&err.message||err),{level:'err'}));
     });
     box.querySelectorAll('[data-dgv]').forEach(b=>b.addEventListener('click',()=>{ _capDg.vue=b.dataset.dgv; capRenderDiff(box); }));
+    box.querySelector('#ana-df-vers')?.addEventListener('change',e=>{ const v=capDiffVersions().find(x=>x.cle===e.target.value); if(!v) return; capDiffPoser(v); if(box._drState) box._drState.ex.clear(); capRenderDiff(box); });
     box.querySelector('#ana-df-swap')?.addEventListener('click',()=>{ capDiffSwap=!capDiffSwap; if(box._drState) box._drState.ex.clear(); capRenderDiff(box); });
   }
 }

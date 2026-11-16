@@ -6,7 +6,7 @@
    boutons à bascule (.active), icônes SVG décoratives masquées aux lecteurs d'écran.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-const CAP_A11Y_CLICK='.tbtn,.cav-it,.ctx-i,.cap-nav-it,.cap-det-link,.cex-det,.phl-link-badge,.phl-comp-hdr,.cdg-det-el,.cdg-lien,.cap-fold-btn,.cap-chain-hdr,.cap-card,.cap-tree-tog,.cap-ttab,.cap-ttab-close,.cap-nav-pin,[onclick]';
+const CAP_A11Y_CLICK='.tbtn,.cav-it,.ctx-i,.cap-nav-it,.cap-det-link,.cex-det,.phl-link-badge,.phl-comp-hdr,.cdg-det-el,.cdg-lien,.cap-fold-btn,.cap-chain-hdr,.cap-card,.cap-tree-tog,.cap-ttab,.cap-ttab-close,.cap-nav-pin,.cdg-pl-it,.cdg-pl-gh,[onclick]';
 const CAP_A11Y_NATIVE=/^(A|BUTTON|INPUT|SELECT|TEXTAREA|SUMMARY|LABEL|OPTION)$/;
 
 /** Vrai si un texte ne contient aucune lettre ni chiffre (pictogrammes, symboles, espaces seulement).

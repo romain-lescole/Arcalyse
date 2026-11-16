@@ -110,7 +110,7 @@ function capReqifVersXml(lec, nom){
   const els=lec.elements(), byId=new Map(els.map(e=>[e.id,e])), num={}, spec={};
   lec.specifications().forEach(s=>lec.plan(s.id).forEach(p=>{ num[p.id]=p.numero; spec[p.id]=s.id; }));
   const attrs=e=>{
-    const a={name:e.libelle||e.nom||('‹'+e.type+'›')};
+    const a={name:e.genre==='spec'?capReqifSpecNom(e):e.libelle||e.nom||('‹'+e.type+'›')};
     if(e.description) a.description=lec.html(e.id,{images:'marque'});
     if(e.identifiant) a.nomCourt=e.identifiant;
     if(e.typeReqif&&e.genre!=='type') a.stereotypes=e.typeReqif;
@@ -224,11 +224,11 @@ function capReqifObjets(){
   const lec=capReqifLec(), R={list:[], byId:{}, specs:[], attrs:[], rels:[]}; if(!lec) return R;
   const vus=new Set(), noms=new Set();
   const lia=lec.toutesLiaisons();
-  const objet=(e, s, p)=>{ const o={id:e.id, e, spec:s?s.id:'', specNom:s?s.libelle:'', numero:p?p.numero:'', niveau:p?p.niveau:0, titre:!!e.titre,
+  const objet=(e, s, p)=>{ const o={id:e.id, e, spec:s?s.id:'', specNom:capReqifSpecNom(s), numero:p?p.numero:'', niveau:p?p.niveau:0, titre:!!e.titre,
     vals:lec.attributs(e.id), out:[], in:[]};
     o.vals.forEach(v=>{ if(v.renseigne&&!v.role&&v.nom!=='ReqIF.ForeignID') noms.add(v.nom); });
     return o; };
-  lec.specifications().forEach(s=>{ const S={id:s.id, nom:s.libelle, n:0, plan:lec.plan(s.id)}; R.specs.push(S);
+  lec.specifications().forEach(s=>{ const S={id:s.id, nom:capReqifSpecNom(s), n:0, plan:lec.plan(s.id)}; R.specs.push(S);
     S.plan.forEach(p=>{ if(p.occurrence||vus.has(p.objet)) return; const e=lec.element(p.objet); if(!e) return; vus.add(e.id); S.n++;
       const o=objet(e, s, p); R.list.push(o); R.byId[o.id]=o; }); });
   lec.elements().filter(e=>e.type==='SpecObject'&&!vus.has(e.id)).forEach(e=>{ const o=objet(e, null, null); R.list.push(o); R.byId[o.id]=o; });
@@ -238,8 +238,14 @@ function capReqifObjets(){
   return _capAnaCache.rqObj=R;
 }
 
+/**
+ * Nom montré d'une spécification : son libellé, sinon son identifiant entre chevrons (ni LONG-NAME ni ReqIF.Name : fichiers d'Eclipse RMF).
+ * @param {object|null} s - Élément de la lecture @returns {string} '' sans spécification
+ */
+function capReqifSpecNom(s){ return s?(s.libelle||s.nom||'‹'+s.id+'›'):''; }
+
 /** Libellé court d'un objet : identifiant (ReqIF.ForeignID) et nom. @param {object} e - Élément de la lecture @returns {string} */
-function capReqifNom(e){ return e?(e.identifiant?e.identifiant+' · ':'')+(e.libelle||e.nom||'‹'+e.type+'›'):'—'; }
+function capReqifNom(e){ return e?(e.identifiant?e.identifiant+' · ':'')+(e.genre==='spec'?capReqifSpecNom(e):e.libelle||e.nom||'‹'+e.type+'›'):'—'; }
 
 /** Lien vers un objet (panneau de détail). @param {string} id @returns {string} HTML */
 function capReqifLien(id){
@@ -299,7 +305,7 @@ function capReqifChecks(){
     {icon:'✖', sev:'err', title:_L('ReqIF — références et identifiants'), tip:_L('Diagnostics du lecteur : référence vers un identifiant absent du fichier, identifiant en double'), cols:dcols,
       items:D.liste.filter(d=>d.severite==='erreur').map(dg)},
     {icon:'🖼', title:_L('ReqIF — pièces jointes absentes'), tip:_L('Image ou pièce citée par un texte mais absente de l\'archive .reqifz ou du dossier'), cols:dcols, items:D.liste.filter(d=>d.code==='RQ-PIECE').map(dg)},
-    {icon:'⚠', title:_L('ReqIF — autres avertissements de lecture'), tip:_L('Valeur d\'un attribut hors de son type, objet présent dans aucune spécification'), cols:dcols,
+    {icon:'⚠', title:_L('ReqIF — autres avertissements de lecture'), tip:_L('Valeur d\'un attribut hors de son type, objet présent dans aucune spécification, élément écrit hors de sa place dans le fichier (non lu)'), cols:dcols,
       items:D.liste.filter(d=>d.severite!=='erreur'&&d.code!=='RQ-PIECE').map(dg)},
     {icon:'✎', title:_L('Exigences ReqIF sans texte'), tip:_L('Objet sans ReqIF.Text ni autre texte mis en forme'), cols, items:ex.filter(o=>!o.e.texte.trim()).map(row)},
     {icon:'#', sev:avecId?'warn':'info', title:_L('Exigences ReqIF sans identifiant'), tip:avecId?_L('ReqIF.ForeignID vide alors que d\'autres exigences en ont un'):_L('Le fichier ne donne aucun ReqIF.ForeignID'), cols, items:ex.filter(o=>!o.e.identifiant).map(row)},
@@ -324,8 +330,9 @@ function capReqifDetail(id, secTitle){
   const kv=[[_L('Identifiant'), e.identifiant], [_L('Type ReqIF'), e.typeReqif], [_L('Spécification'), o&&o.specNom], [_L('N°'), o&&o.numero],
     [_L('Identifiant ReqIF'), e.racine?'':e.id], [_L('Dernière modification'), e.derniereModification], [_L('Fichier'), lec.documents.length>1?e.fichier:'']].filter(([,v])=>v);
   let h=secTitle(_L('📑 ReqIF'),'#e3b341')+`<table class="ana-t ana-kv">${kv.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join('')}</table>`;
-  const vals=lec.attributs(id).filter(v=>v.renseigne&&v.role!=='texte');
+  const tous=lec.attributs(id), vals=tous.filter(v=>v.renseigne&&v.role!=='texte'), defauts=tous.filter(v=>!v.renseigne&&!v.role&&v.defaut);
   if(vals.length) h+=`<div class="ana-dim" style="margin:6px 0 2px;font-size:11px">${_L('Attributs')}</div><table class="ana-t ana-kv">${vals.map(v=>`<tr><td>${esc(v.nom)}</td><td>${v.genre==='XHTML'?`<div class="cap-desc">${capSafeHtml(lec.valeurHtml(id, v.cle, {images:'marque'}))}</div>`:esc(v.valeur)}</td></tr>`).join('')}</table>`;
+  if(defauts.length) h+=`<div class="ana-dim" style="margin:6px 0 2px;font-size:11px" title="${_L('Attributs que l\'élément ne renseigne pas : la valeur par défaut de leur définition s\'applique')}">${_L('Valeurs par défaut')}</div><table class="ana-t ana-kv">${defauts.map(v=>`<tr><td>${esc(v.nom)}</td><td class="ana-dim">${esc(v.defaut)}</td></tr>`).join('')}</table>`;
   const lia=lec.liaisons(id);
   if(lia.length) h+=`<div class="ana-dim" style="margin:6px 0 2px;font-size:11px">${_L('Relations')}</div><table class="ana-t ana-kv">${lia.map(l=>`<tr><td>${esc(l.libelle)}</td><td>${capReqifLien(l.autre)}</td></tr>`).join('')}</table>`;
   const places=lec.elements().filter(x=>x.genre==='occurrence'&&x.objet===id);
@@ -422,9 +429,9 @@ function capRenderReqif(box){
     const T=lec.types(), sortes={'SPEC-OBJECT-TYPE':_L('Objets'), 'SPECIFICATION-TYPE':_L('Spécifications'), 'SPEC-RELATION-TYPE':_L('Relations'), 'RELATION-GROUP-TYPE':_L('Groupes de relations')};
     bar=capXtBar('', _L(`${T.length} type(s)`));
     header=[_L('Type'), _L('Sorte'), _L('Éléments'), _L('Attributs')];
-    rows=T.map(t=>[capCx(t.nom, t.id), sortes[t.sorte]||t.sorte, t.nombre, t.attributs.map(a=>a.nom+' ('+a.genre+')').join(', ')]);
+    rows=T.map(t=>[capCx(t.nom, t.id), sortes[t.sorte]||t.sorte, t.nombre, t.attributs.map(a=>a.nom+' ('+a.genre+(a.defaut?_L(' ; défaut : ')+a.defaut:'')+')').join(', ')]);
     body=`<table class="ana-t"><thead><tr>${header.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${T.map(t=>`<tr><td>${capReqifLien(t.id)}</td><td>${esc(sortes[t.sorte]||t.sorte)}</td><td>${t.nombre}</td>`+
-      `<td>${t.attributs.map(a=>`<span class="rq-puce"><b>${esc(a.nom)}</b> <span class="ana-dim">${esc(a.genre)}</span></span>`).join(' ')}</td></tr>`).join('')}</tbody></table>`;
+      `<td>${t.attributs.map(a=>`<span class="rq-puce"${a.defaut?` title="${_L('Valeur par défaut :')} ${esc(a.defaut)}"`:''}><b>${esc(a.nom)}</b> <span class="ana-dim">${esc(a.genre)}${a.defaut?' = '+esc(a.defaut.length>30?a.defaut.slice(0,29)+'…':a.defaut):''}</span></span>`).join(' ')}</td></tr>`).join('')}</tbody></table>`;
   } else if(st.view==='pieces'){
     const cites={};
     Q.list.forEach(o=>{ (lec.html(o.id,{images:'marque'}).match(/data-reqif(?:-piece)?="([^"]+)"/g)||[]).forEach(m=>{ const c=m.replace(/^[^"]*"|"$/g,''), p=lec.image(c), k=p?p.chemin:c; (cites[k]=cites[k]||[]).push(o.id); }); });

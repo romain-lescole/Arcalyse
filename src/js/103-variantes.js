@@ -39,7 +39,7 @@ const CAP_VAR_MESURES=[
   {k:'cfn',   l:_L('Composants avec fonction'), t:_L('Composants feuilles de la variante (SA, LA, PA, hors nœuds physiques) qui reçoivent au moins une fonction présente')},
   {k:'desc',  l:_L('Éléments décrits'), t:_L('Éléments nommés de la variante dont la description est remplie')},
   {k:'stat',  l:_L('Éléments validés'), t:_L('Éléments nommés de la variante dont le statut de revue Capella est validé (REVIEWED, OK…)')}];
-var _capVarUi={view:'av', layer:'all', v:'', m:'alloc', q:'', type:'', tout:false};   // état de l'affichage (non enregistré)
+var _capVarUi={view:'archi', archL:'LA', archEx:true, vz:1, layer:'all', v:'', m:'alloc', q:'', type:'', tout:false};   // état de l'affichage (non enregistré)
 var _capVarQueue=[];   // fichiers pure::variants du 📁 dossier du projet, lus après le chargement du modèle
 
 /** Réglages des variantes, enregistrés avec le projet de travail (bloc `cap-home`, 56) : source choisie, propriétés PVMT
@@ -437,6 +437,64 @@ function capVarBarre(ok, n, tip){
   return `<span style="display:inline-flex;align-items:center;gap:5px" title="${capEsc(tip||'')}"><span class="hm-prog"><span style="width:${pc}%;background:${c}"></span></span><span class="hm-prog-t"><b style="color:var(--c-text)">${pc} %</b> ${ok}/${n}</span></span>`;
 }
 
+/* ── 📈 Vue d'ensemble ───────────────────────────────────────────────────── */
+
+/** Composition de chaque variante dans le modèle 150 % : éléments nommés communs à toutes les variantes, partagés avec
+ * une partie d'entre elles, exclusifs (cette variante seule) ; pour le 150 %, éléments communs, variables et retenus par aucune.
+ * @param {object} R - capVarCompute()
+ * @param {function(number):boolean} lyr - Filtre de couche
+ * @returns {{tout:object, lignes:object[], max:number}} tout : {n, commun, variable, aucune} ; lignes : {v, n, commun, partage, exclusif}
+ */
+function capVarGraph(R, lyr){
+  const V=R.vars, nV=V.length, nb=new Uint16Array(R.nodes.length);
+  const tout={n:0, commun:0, variable:0, aucune:0};
+  for(let i=0;i<R.nodes.length;i++){ if(!R.elig[i]||!lyr(i)) continue;
+    let k=0; for(const v of V) if(v.a[i]) k++; nb[i]=k; tout.n++;
+    if(k===nV&&nV) tout.commun++; else if(k) tout.variable++; else tout.aucune++; }
+  const lignes=V.map(v=>{ const g={v, n:0, commun:0, partage:0, exclusif:0};
+    for(let i=0;i<R.nodes.length;i++){ if(!v.a[i]||!R.elig[i]||!lyr(i)) continue; g.n++;
+      if(nb[i]===nV) g.commun++; else if(nb[i]===1&&nV>1) g.exclusif++; else g.partage++; }
+    return g; });
+  return {tout, lignes, max:Math.max(tout.n, 1)};
+}
+
+/** Onglet 📈 Vue d'ensemble : chiffres clés, une barre empilée par variante (commun · partagé · exclusif, à la même échelle
+ * que le 150 %) et, à droite, la maturité de chaque variante pour chaque mesure d'avancement (clic : reste à faire).
+ * @param {object} R - capVarCompute()
+ * @param {object[]} M - Mesures (capVarMesures)
+ * @param {function(number):boolean} lyr - Filtre de couche
+ * @returns {string} HTML
+ */
+function capVarGraphHtml(R, M, lyr){
+  const esc=capEsc, G=capVarGraph(R, lyr), T=G.tout, pc=(a,b)=>b?Math.round(100*a/b):0;
+  const SEG={commun:{l:_L('Commun à toutes les variantes'), c:'var-g-commun'}, partage:{l:_L('Partagé avec d\'autres variantes'), c:'var-g-partage'},
+    exclusif:{l:_L('Exclusif à cette variante'), c:'var-g-exclusif'}, variable:{l:_L('Variable (dans une partie des variantes)'), c:'var-g-partage'},
+    aucune:{l:_L('Retenu par aucune variante'), c:'var-g-aucune'}};
+  /** Barre empilée, à l'échelle du 150 %. */
+  const barre=(parts,n)=>`<div class="var-g-bar" style="width:${(100*n/G.max).toFixed(2)}%">`+parts.filter(([,x])=>x).map(([k,x])=>
+    `<span class="var-g-seg ${SEG[k].c}" style="flex:${x} 1 0" data-vgraph="${k}" title="${esc(SEG[k].l)} : ${x} (${pc(x,n)} %)"></span>`).join('')+`</div>`;
+  const tuile=(v,l,t,k)=>`<div class="var-g-tuile"${k?` data-vgraph="${k}" style="cursor:pointer"`:''} title="${esc(t)}"><b>${v}</b><span>${l}</span></div>`;
+  let h=`<div class="var-g-tuiles">`+
+    tuile(R.vars.length, _L('variante(s)'), _L('Variantes lues dans la source'))+
+    tuile(T.n, _L('éléments nommés (150 %)'), _L('Tous les éléments nommés du modèle, toutes variantes confondues'))+
+    tuile(`${pc(T.commun,T.n)} %`, _L('socle commun'), _L(`${T.commun} élément(s) présents dans toutes les variantes`), 'commun')+
+    tuile(`${pc(T.variable,T.n)} %`, _L('variable'), _L(`${T.variable} élément(s) présents dans une partie des variantes seulement`), 'partage')+
+    tuile(T.aucune, _L('retenu(s) par aucune variante'), _L('Éléments absents de toutes les variantes : souvent une marque à revoir (voir 🩺 Contrôles)'), T.aucune?'aucune':'')+`</div>`;
+  h+=`<div class="var-g-legende">`+['commun','partage','exclusif','aucune'].map(k=>`<span><i class="${SEG[k].c}"></i>${esc(SEG[k].l)}</span>`).join('')+
+    `<span class="ana-dim">${_L('Longueur des barres : nombre d\'éléments, à l\'échelle du 150 %. Clic sur une couleur : les éléments concernés.')}</span></div>`;
+  const tete=`<div class="var-g-l var-g-tete"><span></span><span></span><span></span>`+M.map(m=>`<span class="var-g-m" title="${esc(m.t)}">${esc(m.l)}</span>`).join('')+`</div>`;
+  const cellule=(v,m)=>{ const l=capVarMesure(R,v,m.k).filter(x=>lyr(x.i)); if(!l.length) return `<span class="var-g-c vide" title="${esc(m.l)} : ${_L('sans objet')}">—</span>`;
+    const ok=l.filter(x=>x.ok).length, p=pc(ok,l.length), cl=p>=80?'ok':p>=50?'moy':'bas';
+    return `<span class="var-g-c ${cl}" data-vgo="${esc(v.id)}|${m.k}" title="${esc(m.l)} : ${ok} / ${l.length} — ${esc(m.t)}">${p} %</span>`; };
+  const ligne=(nom,b,n,v,tit)=>`<div class="var-g-l"><span class="var-g-nom" title="${esc(tit||nom)}">${nom}</span><div class="var-g-piste">${b}</div><span class="var-g-n">${n}</span>`+
+    M.map(m=>v?cellule(v,m):'<span></span>').join('')+`</div>`;
+  h+=`<div class="var-g" style="--nm:${M.length}">${tete}`+
+    ligne(`<b>${esc(R.tout.nom)}</b>`, barre([['commun',T.commun],['partage',T.variable],['aucune',T.aucune]],T.n), T.n, R.tout, R.tout.def)+
+    G.lignes.map(g=>ligne(esc(g.v.nom), barre([['commun',g.commun],['partage',g.partage],['exclusif',g.exclusif]],g.n), g.n, g.v, g.v.def)).join('')+`</div>`;
+  h+=`<p class="ana-help" style="margin-top:8px">${_L('À droite : part faite de chaque mesure d\'avancement (≥ 80 % vert, ≥ 50 % orange, sinon rouge) ; clic : le reste à faire.')}</p>`;
+  return h;
+}
+
 /* ── Contrôles ───────────────────────────────────────────────────────────── */
 
 /** Contrôles du modèle 150 % : éléments retenus par aucune variante, allocations et réalisations perdues dans une variante,
@@ -535,7 +593,13 @@ function capRenderVariants(box){
     :`<span class="ana-dim" style="margin-left:6px" title="${_L('Source des variantes')}">${CAP_VAR_SRC[R.src].i} ${capEsc(CAP_VAR_SRC[R.src].l)}</span>`;
   const vOpts=toutes.map(v=>[v.id,v.nom]);
   let body='', cnt='', csv=null;
-  if(st.view==='av'){
+  if(st.view==='archi'||st.view==='crit'){
+    body=capVarGraphesHtml(R, st);
+  } else if(st.view==='graph'){
+    body=capVarGraphHtml(R, M, lyr);
+    csv=()=>{ const G=capVarGraph(R, lyr); capCsvExport(_L('variantes-composition.csv'),[_L('Variante'),_L('Éléments'),_L('Communs à toutes'),_L('Partagés'),_L('Exclusifs'),...M.map(m=>m.l+' (%)')],
+      G.lignes.map(g=>[g.v.nom,String(g.n),String(g.commun),String(g.partage),String(g.exclusif),...M.map(m=>{ const l=capVarMesure(R,g.v,m.k).filter(x=>lyr(x.i)); return l.length?String(Math.round(100*l.filter(x=>x.ok).length/l.length)):''; })])); };
+  } else if(st.view==='av'){
     body=_L(`<p class="ana-help"><b>${V.length}</b> variante(s), <b>${R.crit.length}</b> critère(s) · <b>${R.own.filter((m,i)=>m&&R.elig[i]).length}</b> élément(s) marqué(s) sur ${R.tout.n} nommés. Chaque barre donne, pour la variante, la part faite de ce qui est attendu ; cliquez une barre pour voir le reste à faire.${st.layer!=='all'?` Couche : <b>${st.layer}</b>.`:''}</p>`)+
       capXtTable([_L('Variante'),_L('Définition'),_L('Éléments'),_L('Propres'),...M.map(m=>`<span title="${capEsc(m.t)}">${capEsc(m.l)}</span>`)], toutes.map(v=>[
         `<b>${capEsc(v.nom)}</b>${v.perso?` <span class="ana-dim" title="${_L('Variante ajoutée dans Arcalyse')}">✚</span>`:''}`, `<span class="ana-dim">${capXtShort(v.def||'',80)}</span>`,
@@ -567,16 +631,17 @@ function capRenderVariants(box){
     box._vtypes=[...types].sort();
   } else if(st.view==='def') body=capVarDefHtml(R);
   else body=capDiagHtml(capVarChecks());
-  const vues=[['av',_L('📊 Avancement')],['todo',_L('✅ Reste à faire')],['mx',_L('▦ Éléments × variantes')],['def',_L('🏷 Critères & variantes')],['diag',_L('🩺 Contrôles')]];
+  const vues=[['archi',_L('🧱 Blocs 150 %')],['crit',_L('🔀 Critères → variantes')],['graph',_L('📈 Vue d\'ensemble')],['av',_L('📊 Avancement')],['todo',_L('✅ Reste à faire')],['mx',_L('▦ Éléments × variantes')],['def',_L('🏷 Critères & variantes')],['diag',_L('🩺 Contrôles')]];
   const typeSel=()=>capXtSelect('type',[['',_L('Tous les types')],...(box._vtypes||[]).map(t=>[t,t])],st.type);
   box.innerHTML=capXtBar(capXtViewBtns(vues,st.view)+srcSel+
-    (st.view==='av'?layerBtns():'')+
+    (st.view==='av'||st.view==='graph'?layerBtns():'')+
     (st.view==='todo'?`<span class="tsep"></span>${capXtSelect('v',vOpts,st.v)}${capXtSelect('m',M.map(m=>[m.k,m.l]),st.m)}${layerBtns()}<span class="tsep"></span>${capXtSearch(st.q,_L('Nom, type, ce qui manque…'))}`:'')+
     (st.view==='mx'?`${layerBtns()}<span class="tsep"></span>${capXtSearch(st.q,_L('Nom, type, marque…'))}<label class="ana-dim" style="white-space:nowrap"><input type="checkbox" data-xc="tout"${st.tout?' checked':''}> ${_L('Tous les éléments (pas seulement les variables)')}</label>`:''),
     cnt, !!csv)+body;
   if(st.view==='todo'||st.view==='mx'){ const bar=box.querySelector('.phl-filter-bar'), s=document.createElement('span'); s.innerHTML=typeSel(); const sp=bar&&bar.querySelector('.ana-fn-cnt'); if(bar) bar.insertBefore(s.firstChild, sp||null); }
   capXtBind(box, st, capRenderVariants, csv||undefined);
   capVarBind(box);
+  if(st.view==='archi'||st.view==='crit') capVarGraphesWire(box, R, st, ()=>capRenderVariants(box));
 }
 
 /** Onglet 🏷 Critères & variantes : sources, critères, variantes (et ajout de variantes), propriétés PVMT, fichiers pure::variants.
@@ -610,6 +675,8 @@ function capVarDefHtml(R){
 function capVarBind(box){
   const cfg=capVarCfg(), st=_capVarUi;
   box.querySelector('[data-vsrc]')?.addEventListener('change',e=>{ cfg.src=e.target.value; capVarCfgSave(); });
+  box.querySelectorAll('[data-vgraph]').forEach(b=>b.onclick=()=>{ const k=b.dataset.vgraph;
+    if(k==='aucune') Object.assign(st,{view:'diag'}); else Object.assign(st,{view:'mx', tout:k==='commun', q:'', type:''}); capRenderVariants(box); });
   box.querySelectorAll('[data-vgo]').forEach(b=>b.onclick=()=>{ const [v,m]=b.dataset.vgo.split('|'); Object.assign(st,{view:'todo', v, m, q:'', type:''}); capRenderVariants(box); });
   box.querySelectorAll('[data-vprop]').forEach(c=>c.onchange=()=>{ const on=capVarPvmtOn(); if(c.checked) on.add(c.dataset.vprop); else on.delete(c.dataset.vprop); cfg.props=[...on]; capVarCfgSave(); });
   box.querySelector('[data-vpropauto]')?.addEventListener('click',()=>{ cfg.props=null; capVarCfgSave(); });
